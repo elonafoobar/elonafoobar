@@ -40,6 +40,12 @@ struct Version
         return u8"Elona foobar version " + short_string() + " (" + revision + "), compiled on " + platform + " at " + timestamp;
     }
 
+    // Like "Elona_foobar/1.2.3+14db8cb (Darwin-17.4.0)"
+    std::string user_agent() const
+    {
+        return u8"Elona_foobar/" + short_string() + "+" + revision + " (" + platform + ")";
+    }
+
 
     template <typename Archive>
     void serialize(Archive& ar)

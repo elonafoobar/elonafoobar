@@ -1,9 +1,8 @@
 --- Functions to be used inside translations, like "${itemname(_1, _2, _3)}".
-local Chara = Elona.require("Chara")
-local FOV = Elona.require("FOV")
-local I18N = Elona.require("I18N")
-local Item = Elona.require("Item")
-local string = Elona.require("string")
+local FOV = require("game.FOV")
+local I18N = require("game.I18N")
+local Item = require("game.Item")
+local string = require("game.string")
 
 local i18n = {}
 
@@ -324,26 +323,26 @@ end
 i18n.all = {}
 
 function i18n.all.you()
-   return I18N.get("core.locale.chara.you")
+   return I18N.get("core.chara.you")
 end
 
 function i18n.all.name(chara)
    if not chara or not chara.name then
-      return I18N.get("core.locale.chara.something")
+      return I18N.get("core.chara.something")
    end
    return chara.name
 end
 
 function i18n.all.basename(chara)
    if not chara or not chara.name then
-      return I18N.get("core.locale.chara.something")
+      return I18N.get("core.chara.something")
    end
    return chara.basename
 end
 
 function i18n.all.itemname(item, number, needs_article)
    if not item then
-      return I18N.get("core.locale.chara.something")
+      return I18N.get("core.chara.something")
    end
    if number == nil then
       number = item.number
@@ -357,7 +356,7 @@ end
 
 function i18n.all.itembasename(item)
    if not item then
-      return I18N.get("core.locale.chara.something")
+      return I18N.get("core.chara.something")
    end
    return item.basename
 end

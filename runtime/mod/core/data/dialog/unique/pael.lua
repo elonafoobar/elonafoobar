@@ -1,10 +1,10 @@
-local GUI = Elona.require("GUI")
-local Map = Elona.require("Map")
-local I18N = Elona.require("I18N")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
+local GUI = require("game.GUI")
+local Map = require("game.Map")
+local I18N = require("game.I18N")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
 
-local common = require("data/dialog/common")
+local common = require_relative("data/dialog/common")
 
 local function prompt_give_potion(prompt)
    return {
@@ -20,7 +20,7 @@ end
 
 return {
    id = "pael",
-   root = "core.locale.talk.unique.pael",
+   root = "core.talk.unique.pael",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("pael_and_her_mom")
@@ -74,7 +74,7 @@ return {
             function()
                local potion = Item.find("core.potion_of_cure_corruption", "PlayerInventory")
                potion.number = potion.number - 1
-               GUI.txt(I18N.get("core.locale.talk.unique.pael.give.you_give"))
+               GUI.txt(I18N.get("core.talk.unique.pael.give.you_give"))
                GUI.play_sound("core.equip1")
             end,
             {"give.dialog"}

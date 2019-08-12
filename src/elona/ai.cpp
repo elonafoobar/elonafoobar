@@ -123,34 +123,34 @@ TurnResult ai_proc_basic()
                     {
                         tlocx = cdata[tc].position.x;
                         tlocy = cdata[tc].position.y;
-                        int stat = 0;
+                        bool success = false;
                         if (act == -9999)
                         {
                             flt();
                             flttypemajor = 52000;
-                            stat = itemcreate(
+                            success = !!itemcreate(
                                 cc, choice(isetthrowpotionminor), -1, -1, 0);
                         }
                         if (act == -9998)
                         {
                             flt();
                             flttypemajor = 52000;
-                            stat = itemcreate(
+                            success = !!itemcreate(
                                 cc, choice(isetthrowpotionmajor), -1, -1, 0);
                         }
                         if (act == -9997)
                         {
                             flt();
                             flttypemajor = 52000;
-                            stat = itemcreate(
+                            success = !!itemcreate(
                                 cc, choice(isetthrowpotiongreater), -1, -1, 0);
                         }
                         if (act == -9996)
                         {
                             flt();
-                            stat = itemcreate(cc, 698, -1, -1, 0);
+                            success = !!itemcreate(cc, 698, -1, -1, 0);
                         }
-                        if (stat == 1)
+                        if (success)
                         {
                             return do_throw_command();
                         }
@@ -303,26 +303,25 @@ TurnResult proc_npc_movement_event(bool retreat)
             {
                 sell(0) = 0;
                 sell(1) = 0;
-                for (const auto& cnt : items(cc))
+                for (auto&& item : inv.for_chara(cdata[cc]))
                 {
-                    if (inv[cnt].number() == 0)
+                    if (item.number() == 0)
                     {
                         continue;
                     }
-                    int category = the_item_db[inv[cnt].id]->category;
-                    if (category == 77000)
+                    if (the_item_db[item.id]->category == 77000)
                     {
-                        p = inv[cnt].value * inv[cnt].number();
-                        sell += inv[cnt].number();
+                        p = item.value * item.number();
+                        sell += item.number();
                         sell(1) += p;
-                        inv[cnt].remove();
+                        item.remove();
                         earn_gold(cdata[cc], p);
                     }
                 }
                 if (sell != 0)
                 {
                     txt(i18n::s.get(
-                            "core.locale.ai.ally.sells_items",
+                            "core.ai.ally.sells_items",
                             cdata[cc],
                             sell(0),
                             sell(1)),
@@ -335,8 +334,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                 {
                     cdata[cc].gold -= cdata[cc].level * 500;
                     snd("core.ding3");
-                    txt(i18n::s.get(
-                            "core.locale.ai.ally.visits_trainer", cdata[cc]),
+                    txt(i18n::s.get("core.ai.ally.visits_trainer", cdata[cc]),
                         Message::color{ColorIndex::cyan});
                     for (int cnt = 0; cnt < 4; ++cnt)
                     {
@@ -421,7 +419,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                 if (did_swap && is_in_fov(cdata[cc]))
                 {
                     txt(i18n::s.get(
-                        "core.locale.ai.swap.displace", cdata[cc], cdata[tc]));
+                        "core.ai.swap.displace", cdata[cc], cdata[tc]));
                 }
                 if (cdata[tc].continuous_action.type ==
                     ContinuousAction::Type::eat)
@@ -431,9 +429,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                         if (is_in_fov(cdata[cc]))
                         {
                             txt(i18n::s.get(
-                                "core.locale.ai.swap.glare",
-                                cdata[cc],
-                                cdata[tc]));
+                                "core.ai.swap.glare", cdata[cc], cdata[tc]));
                         }
                         cdata[tc].continuous_action.finish();
                     }
@@ -468,7 +464,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                                         if (is_in_fov(cdata[cc]))
                                         {
                                             txt(i18n::s.get(
-                                                "core.locale.ai.crushes_wall",
+                                                "core.ai.crushes_wall",
                                                 cdata[cc]));
                                         }
                                         return TurnResult::turn_end;
@@ -736,7 +732,8 @@ label_2692_internal:
                 {
                     if (rnd(100) == 0)
                     {
-                        dmgcon(cc, StatusAilment::sleep, 4000);
+                        status_ailment_damage(
+                            cdata[cc], StatusAilment::sleep, 4000);
                     }
                 }
             }
@@ -765,8 +762,7 @@ label_2692_internal:
                                 flttypeminor = 52002;
                             }
                         }
-                        int stat = itemcreate(cc, 0, -1, -1, 0);
-                        if (stat == 1)
+                        if (itemcreate(cc, 0, -1, -1, 0))
                         {
                             cdata[cc].item_which_will_be_used = ci;
                         }
@@ -792,15 +788,13 @@ label_2692_internal:
                                     if (is_in_fov(cdata[game_data.fire_giant]))
                                     {
                                         flt();
-                                        int stat =
-                                            itemcreate(cc, 587, -1, -1, 0);
-                                        if (stat == 1)
+                                        if (itemcreate(cc, 587, -1, -1, 0))
                                         {
                                             tlocx = cdata[game_data.fire_giant]
                                                         .position.x;
                                             tlocy = cdata[game_data.fire_giant]
                                                         .position.y;
-                                            txt(i18n::s.get("core.locale.ai."
+                                            txt(i18n::s.get("core.ai."
                                                             "fire_giant"),
                                                 Message::color{
                                                     ColorIndex::cyan});
@@ -828,8 +822,7 @@ label_2692_internal:
                                 if (found_snowman)
                                 {
                                     flt();
-                                    int stat = itemcreate(cc, 587, -1, -1, 0);
-                                    if (stat == 1)
+                                    if (itemcreate(cc, 587, -1, -1, 0))
                                     {
                                         tlocx = inv[ti].position.x;
                                         tlocy = inv[ti].position.y;
@@ -845,17 +838,16 @@ label_2692_internal:
                                         .item_appearances_actual == 0)
                                 {
                                     flt();
-                                    int stat = itemcreate(
-                                        -1,
-                                        541,
-                                        cdata[cc].position.x,
-                                        cdata[cc].position.y,
-                                        0);
-                                    if (stat == 1)
+                                    if (itemcreate(
+                                            -1,
+                                            541,
+                                            cdata[cc].position.x,
+                                            cdata[cc].position.y,
+                                            0))
                                     {
                                         snd("core.snow");
                                         txt(i18n::s.get(
-                                            "core.locale.ai.makes_snowman",
+                                            "core.ai.makes_snowman",
                                             cdata[cc],
                                             inv[ci]));
                                         return TurnResult::turn_end;
@@ -865,12 +857,11 @@ label_2692_internal:
                             if (rnd(12) == 0)
                             {
                                 flt();
-                                int stat = itemcreate(cc, 587, -1, -1, 0);
-                                if (stat == 1)
+                                if (itemcreate(cc, 587, -1, -1, 0))
                                 {
                                     tlocx = cdata.player().position.x;
                                     tlocy = cdata.player().position.y;
-                                    txt(i18n::s.get("core.locale.ai.snowball"),
+                                    txt(i18n::s.get("core.ai.snowball"),
                                         Message::color{ColorIndex::cyan});
                                     return do_throw_command();
                                 }
@@ -908,8 +899,8 @@ label_2692_internal:
                     {
                         flttypeminor = 52002;
                     }
-                    int stat = itemcreate(cc, 0, -1, -1, 0);
-                    if (stat == 1 && the_item_db[inv[ci].id]->is_drinkable)
+                    if (itemcreate(cc, 0, -1, -1, 0) &&
+                        the_item_db[inv[ci].id]->is_drinkable)
                     {
                         if (inv[ci].id == 577)
                         {
@@ -963,12 +954,11 @@ label_2692_internal:
                         tlocx = cdata.player().position.x;
                         tlocy = cdata.player().position.y;
                         flt();
-                        int stat = itemcreate(cc, 698, -1, -1, 0);
-                        if (stat == 1)
+                        if (itemcreate(cc, 698, -1, -1, 0))
                         {
                             if (is_in_fov(cdata[cc]))
                             {
-                                txt(i18n::s.get("core.locale.ai.snail"),
+                                txt(i18n::s.get("core.ai.snail"),
                                     Message::color{ColorIndex::cyan});
                             }
                             return do_throw_command();

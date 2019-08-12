@@ -13,21 +13,25 @@ namespace elona
 namespace lua
 {
 
-EventManager::EventManager(LuaEnv* lua)
+EventManager::EventManager(LuaEnv& lua)
+    : LuaSubmodule(lua)
 {
-    this->lua = lua;
     clear();
 }
 
+
+
 void EventManager::remove_unknown_events()
 {
-    env["remove_unknown_events"](
-        *lua->get_data_manager().get().get_table("core.event"));
+    env()["remove_unknown_events"](
+        *lua().get_data_manager().get().get_table("core.event"));
 }
+
+
 
 EventResult EventManager::trigger(const BaseEvent& event)
 {
-    sol::protected_function trigger = env["Event"]["trigger"];
+    sol::protected_function trigger = env()["Event"]["trigger"];
     auto result =
         trigger(event.id, event.make_event_table(), event.make_event_options());
 
@@ -40,31 +44,30 @@ EventResult EventManager::trigger(const BaseEvent& event)
         std::cerr << message << std::endl;
         ELONA_ERROR("lua.event") << message;
 
-        return EventResult{lua->get_state()->create_table()};
+        return EventResult{lua_state()->create_table()};
     }
 
     sol::object value = result;
 
     if (!value.is<sol::table>())
     {
-        return EventResult{lua->get_state()->create_table_with(1, value)};
+        return EventResult{lua_state()->create_table_with(1, value)};
     }
 
     return EventResult{value.as<sol::table>()};
 }
 
+
+
 void EventManager::clear()
 {
-    env = sol::environment(
-        *(lua->get_state()), sol::create, lua->get_state()->globals());
+    env() = sol::environment(*lua_state(), sol::create, lua_state()->globals());
 
-    lua->get_state()->safe_script_file(
-        filepathutil::to_utf8_path(
-            filesystem::dir::data() / "script" / "kernel" / "event.lua"),
-        env);
+    safe_script_file(
+        filesystem::dirs::data() / "script" / "kernel" / "event.lua");
 
-    sol::table core = lua->get_api_manager().get_core_api_table();
-    core["Event"] = env["Event"];
+    sol::table game = lua().get_api_manager().get_game_api_table();
+    game["Event"] = env()["Event"];
 }
 
 } // namespace lua

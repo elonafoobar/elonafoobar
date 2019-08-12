@@ -60,8 +60,7 @@ void continuous_action_blending()
         if (!cdata[cc].continuous_action)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get(
-                "core.locale.blending.started", cdata[cc], rpname(rpid)));
+            txt(i18n::s.get("core.blending.started", cdata[cc], rpname(rpid)));
             cdata[cc].continuous_action.type = ContinuousAction::Type::blend;
             cdata[cc].continuous_action.turn = rpref(2) % 10000;
             return;
@@ -70,7 +69,7 @@ void continuous_action_blending()
         {
             if (rnd(30) == 0)
             {
-                txt(i18n::s.get("core.locale.blending.sounds"),
+                txt(i18n::s.get("core.blending.sounds"),
                     Message::color{ColorIndex::blue});
             }
             return;
@@ -86,7 +85,7 @@ void continuous_action_blending()
                 render_hud();
                 if (cnt % 5 == 0)
                 {
-                    txt(i18n::s.get("core.locale.blending.sounds"),
+                    txt(i18n::s.get("core.blending.sounds"),
                         Message::color{ColorIndex::blue});
                 }
                 redraw();
@@ -100,7 +99,7 @@ void continuous_action_blending()
                     if (stat == 0)
                     {
                         txt(
-                            i18n::s.get("core.locale.blending.required_"
+                            i18n::s.get("core.blending.required_"
                                         "material_not_found"));
                         break;
                     }
@@ -124,8 +123,7 @@ void continuous_action_blending()
         int stat = blending_find_required_mat();
         if (stat == 0)
         {
-            txt(i18n::s.get(
-                "core.locale.blending.required_material_not_found"));
+            txt(i18n::s.get("core.blending.required_material_not_found"));
             cdata[cc].continuous_action.finish();
             return;
         }
@@ -166,7 +164,7 @@ void initialize_recipe()
     rpsourcelist(4) = 209;
     rpsourcelist(5) = 210;
     rpid = 200;
-    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
+    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
     rpdata(0, rpid) = 10000;
     rpdata(1, rpid) = 10;
     rpdata(2, rpid) = 1;
@@ -177,7 +175,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 57000;
     rpdata(21, rpid) = 620;
     rpid = 201;
-    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
+    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
     rpdata(0, rpid) = 10001;
     rpdata(1, rpid) = 4;
     rpdata(2, rpid) = 1;
@@ -186,7 +184,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 9004;
     rpdata(21, rpid) = 519;
     rpid = 202;
-    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
+    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
     rpdata(0, rpid) = 10002;
     rpdata(1, rpid) = 7;
     rpdata(2, rpid) = 1;
@@ -195,7 +193,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 57000;
     rpdata(21, rpid) = 262;
     rpid = 203;
-    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
+    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
     rpdata(0, rpid) = 10003;
     rpdata(1, rpid) = 15;
     rpdata(2, rpid) = 1;
@@ -204,7 +202,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 9004;
     rpdata(21, rpid) = 736;
     rpid = 204;
-    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
+    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
     rpdata(0, rpid) = 10004;
     rpdata(1, rpid) = 15;
     rpdata(2, rpid) = 1;
@@ -213,7 +211,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 9004;
     rpdata(21, rpid) = 566;
     rpid = 205;
-    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
+    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
     rpdata(0, rpid) = 10005;
     rpdata(1, rpid) = 10;
     rpdata(2, rpid) = 1;
@@ -224,7 +222,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 342;
     rpdata(21, rpid) = 617;
     rpid = 206;
-    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
+    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
     rpdata(0, rpid) = 10006;
     rpdata(1, rpid) = 5;
     rpdata(2, rpid) = 1;
@@ -233,7 +231,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 9004;
     rpdata(21, rpid) = 516;
     rpid = 207;
-    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
+    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
     rpdata(0, rpid) = 10007;
     rpdata(1, rpid) = 3;
     rpdata(2, rpid) = 2;
@@ -242,7 +240,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 60001;
     rpdata(21, rpid) = 52000;
     rpid = 208;
-    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
+    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
     rpdata(0, rpid) = 10008;
     rpdata(1, rpid) = 16;
     rpdata(2, rpid) = 2;
@@ -251,7 +249,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 60001;
     rpdata(21, rpid) = 601;
     rpid = 209;
-    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
+    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
     rpdata(0, rpid) = 10009;
     rpdata(1, rpid) = 16;
     rpdata(2, rpid) = 2;
@@ -260,7 +258,7 @@ void initialize_recipe()
     rpdata(20, rpid) = 9004;
     rpdata(21, rpid) = 9004;
     rpid = 210;
-    rpdatan(rpid) = i18n::s.get_enum("core.locale.blending.recipe", rpid);
+    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
     rpdata(0, rpid) = 10009;
     rpdata(1, rpid) = 16;
     rpdata(2, rpid) = 2;
@@ -345,15 +343,15 @@ void initialize_recipe()
     rpdata(64, rpid) = 60011;
     rpdata(65, rpid) = 200;
     rfnameorg(0, 1) = u8"flavor"s;
-    rfnameorg(1, 1) = i18n::s.get_enum("core.locale.blending.ingredient", 1);
+    rfnameorg(1, 1) = i18n::s.get_enum("core.blending.ingredient", 1);
     rfnameorg(0, 2) = u8"ore"s;
-    rfnameorg(1, 2) = i18n::s.get_enum("core.locale.blending.ingredient", 2);
+    rfnameorg(1, 2) = i18n::s.get_enum("core.blending.ingredient", 2);
     rfnameorg(0, 3) = u8"wood"s;
-    rfnameorg(1, 3) = i18n::s.get_enum("core.locale.blending.ingredient", 3);
+    rfnameorg(1, 3) = i18n::s.get_enum("core.blending.ingredient", 3);
     rfnameorg(0, 5) = u8"fish"s;
-    rfnameorg(1, 5) = i18n::s.get_enum("core.locale.blending.ingredient", 4);
+    rfnameorg(1, 5) = i18n::s.get_enum("core.blending.ingredient", 4);
     rfnameorg(0, 4) = "";
-    rfnameorg(1, 4) = i18n::s.get_enum("core.locale.blending.ingredient", 5);
+    rfnameorg(1, 4) = i18n::s.get_enum("core.blending.ingredient", 5);
 }
 
 void window_recipe2(int val0)
@@ -373,7 +371,7 @@ void window_recipe2(int val0)
     font(15 - en * 2, snail::Font::Style::bold);
     s_at_m183 = ""s + rpsuccessrate(rpdiff(rpid, step, -1));
     bmes(
-        i18n::s.get("core.locale.blending.rate_panel.success_rate", s_at_m183),
+        i18n::s.get("core.blending.rate_panel.success_rate", s_at_m183),
         dx_at_m183 + 140,
         dy_at_m183,
         {235, 235, 235},
@@ -392,14 +390,14 @@ void window_recipe2(int val0)
         p_at_m183 += rpdata(1, rpid) / 10000 * val0 * 10000;
     }
     s_at_m183 =
-        i18n::s.get("core.locale.blending.rate_panel.turns", p_at_m183 % 10000);
+        i18n::s.get("core.blending.rate_panel.turns", p_at_m183 % 10000);
     if (p_at_m183 >= 10000)
     {
         s_at_m183 += i18n::s.get(
-            "core.locale.blending.rate_panel.and_hours", p_at_m183 / 10000);
+            "core.blending.rate_panel.and_hours", p_at_m183 / 10000);
     }
     bmes(
-        i18n::s.get("core.locale.blending.rate_panel.required_time", s_at_m183),
+        i18n::s.get("core.blending.rate_panel.required_time", s_at_m183),
         dx_at_m183 + 140,
         dy_at_m183 + 20,
         {235, 235, 235},
@@ -441,7 +439,7 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
         {234, 220, 188});
     s_at_m184(0) = u8"Page."s + (rppage + 1) + u8"/"s + (rppage(1) + 1);
     s_at_m184(1) = ""s + key_prev + u8","s + key_next + ""s +
-        i18n::s.get("core.locale.blending.recipe.hint");
+        i18n::s.get("core.blending.recipe.hint");
     if (step == -1)
     {
         s_at_m184(1) += strhint3;
@@ -461,7 +459,7 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
     font(12 - en * 2, snail::Font::Style::bold);
     mes(dx_at_m184 - 10,
         dy_at_m184,
-        i18n::s.get("core.locale.blending.window.procedure"));
+        i18n::s.get("core.blending.window.procedure"));
     dy_at_m184 = dy_at_m184 + 18;
     font(13 - en * 2);
     i_at_m184 = 1;
@@ -478,7 +476,7 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
         mes(dx_at_m184,
             dy_at_m184,
             ""s + i_at_m184 + u8"."s +
-                i18n::s.get("core.locale.blending.window.choose_a_recipe"));
+                i18n::s.get("core.blending.window.choose_a_recipe"));
     }
     else
     {
@@ -486,8 +484,7 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
             dy_at_m184,
             ""s + i_at_m184 + u8"."s +
                 i18n::s.get(
-                    "core.locale.blending.window.chose_the_recipe_of",
-                    rpname(rpid)));
+                    "core.blending.window.chose_the_recipe_of", rpname(rpid)));
     }
     dy_at_m184 += 17;
     ++i_at_m184;
@@ -520,13 +517,12 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
             int stat = blendmatnum(rpdata(20 + cnt, rpid), cnt);
             p_at_m184 = stat;
             s_at_m184 = i18n::s.get(
-                "core.locale.blending.window.add", rpmatname(cnt), p_at_m184);
+                "core.blending.window.add", rpmatname(cnt), p_at_m184);
         }
         else
         {
             s_at_m184 = i18n::s.get(
-                "core.locale.blending.window.selected",
-                inv[rpref(10 + cnt * 2)]);
+                "core.blending.window.selected", inv[rpref(10 + cnt * 2)]);
             s_at_m184 = strmid(s_at_m184, 0, 44);
         }
         mes(dx_at_m184, dy_at_m184, ""s + i_at_m184 + u8"."s + s_at_m184);
@@ -544,20 +540,18 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
     }
     mes(dx_at_m184,
         dy_at_m184,
-        ""s + i_at_m184 + u8"."s +
-            i18n::s.get("core.locale.blending.window.start"));
+        ""s + i_at_m184 + u8"."s + i18n::s.get("core.blending.window.start"));
     dy_at_m184 += 30;
     if (rppage == 0)
     {
         font(12 - en * 2, snail::Font::Style::bold);
         mes(dx_at_m184 - 10,
             dy_at_m184,
-            i18n::s.get(
-                "core.locale.blending.window.the_recipe_of", rpname(rpid)));
+            i18n::s.get("core.blending.window.the_recipe_of", rpname(rpid)));
         dy_at_m184 += 20;
         mes(dx_at_m184 - 10,
             dy_at_m184,
-            i18n::s.get("core.locale.blending.window.required_skills"));
+            i18n::s.get("core.blending.window.required_skills"));
         dy_at_m184 = dy_at_m184 + 18;
         font(13 - en * 2);
         for (int cnt = 0; cnt < 5; ++cnt)
@@ -573,7 +567,7 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
             mes(dx_at_m184 + cnt % 2 * 140,
                 dy_at_m184 + cnt / 2 * 17,
                 i18n::s.get_m(
-                    "locale.ability",
+                    "ability",
                     the_ability_db
                         .get_id_from_legacy(rpdata(10 + cnt * 2, rpid))
                         ->get(),
@@ -586,7 +580,7 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
         font(12 - en * 2, snail::Font::Style::bold);
         mes(dx_at_m184 - 10,
             dy_at_m184,
-            i18n::s.get("core.locale.blending.window.required_equipment"));
+            i18n::s.get("core.blending.window.required_equipment"));
         return;
     }
     if (item_index == -1)
@@ -597,12 +591,11 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
     mes(dx_at_m184 - 10, dy_at_m184, itemname(item_index));
     dy_at_m184 += 20;
     font(13 - en * 2);
-    if (inv[item_index].identification_state <=
-        IdentifyState::partly_identified)
+    if (inv[item_index].identify_state <= IdentifyState::partly)
     {
         mes(dx_at_m184,
             dy_at_m184,
-            i18n::s.get("core.locale.blending.window.havent_identified"));
+            i18n::s.get("core.blending.window.havent_identified"));
         dy_at_m184 += 16;
         return;
     }
@@ -632,7 +625,7 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
     {
         mes(dx_at_m184,
             dy_at_m184,
-            i18n::s.get("core.locale.blending.window.no_inherited_effects"));
+            i18n::s.get("core.blending.window.no_inherited_effects"));
         dy_at_m184 += 16;
         ++p_at_m184;
     }
@@ -657,7 +650,7 @@ label_1923:
             rppage = 0;
             window_recipe(list2, -1, wx + ww, wy, 400, wh);
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.blending.prompt.how_many"));
+            txt(i18n::s.get("core.blending.prompt.how_many"));
             p = 10;
             for (int cnt = 0; cnt < 10; ++cnt)
             {
@@ -676,7 +669,7 @@ label_1923:
             }
             rpmode = 1;
 
-            PromptWithNumber prompt(p(0), "core.locale.blending.prompt");
+            PromptWithNumber prompt(p(0), "core.blending.prompt");
             prompt.append("start", snail::Key::key_a);
             prompt.append("go_back", snail::Key::key_b);
             prompt.append("from_the_start", snail::Key::key_c);
@@ -730,9 +723,9 @@ label_1923:
         sort_list_by_column1();
         windowshadow(1) = 1;
         Message::instance().linebreak();
-        txt(i18n::s.get("core.locale.blending.recipe.warning"));
+        txt(i18n::s.get("core.blending.recipe.warning"));
         Message::instance().linebreak();
-        txt(i18n::s.get("core.locale.blending.recipe.which"));
+        txt(i18n::s.get("core.blending.recipe.which"));
         goto label_1924_internal;
     }
     rppage = 1;
@@ -766,16 +759,15 @@ label_1924_internal:
 label_1925_internal:
     windowshadow = windowshadow(1);
     ui_display_window(
-        i18n::s.get("core.locale.blending.recipe.title"),
+        i18n::s.get("core.blending.recipe.title"),
         strhint2,
         (windoww - 780) / 2 + inf_screenx,
         winposy(445),
         380,
         432,
         74);
-    display_topic(
-        i18n::s.get("core.locale.blending.recipe.name"), wx + 28, wy + 30);
-    s = i18n::s.get("core.locale.blending.recipe.counter", listmax);
+    display_topic(i18n::s.get("core.blending.recipe.name"), wx + 28, wy + 30);
+    s = i18n::s.get("core.blending.recipe.counter", listmax);
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     mes(wx + 130, wy + wh - 65 - wh % 8, s);
     keyrange = 0;
@@ -817,7 +809,7 @@ label_1925_internal:
         }
         p = list(0, p);
         rpid = p;
-        s = i18n::s.get("core.locale.blending.recipe.of", cnven(rpname(rpid)));
+        s = i18n::s.get("core.blending.recipe.of", cnven(rpname(rpid)));
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
         cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1);
     }
@@ -874,8 +866,7 @@ label_1925_internal:
 label_1927_internal:
     windowshadow(1) = 1;
     Message::instance().linebreak();
-    txt(i18n::s.get(
-        "core.locale.blending.steps.add_ingredient", rpmatname(step)));
+    txt(i18n::s.get("core.blending.steps.add_ingredient", rpmatname(step)));
 label_1928_internal:
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -890,8 +881,7 @@ label_1928_internal:
     windowshadow = windowshadow(1);
     ui_display_window(
         i18n::s.get(
-            "core.locale.blending.steps.add_ingredient_prompt",
-            rpmatname(step)),
+            "core.blending.steps.add_ingredient_prompt", rpmatname(step)),
         strhint2,
         (windoww - 780) / 2 + inf_screenx,
         winposy(445),
@@ -899,8 +889,8 @@ label_1928_internal:
         432,
         74);
     display_topic(
-        i18n::s.get("core.locale.blending.steps.item_name"), wx + 28, wy + 30);
-    s = i18n::s.get("core.locale.blending.steps.item_counter", listmax);
+        i18n::s.get("core.blending.steps.item_name"), wx + 28, wy + 30);
+    s = i18n::s.get("core.blending.steps.item_counter", listmax);
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     mes(wx + 130, wy + wh - 65 - wh % 8, s);
     keyrange = 0;
@@ -932,7 +922,7 @@ label_1928_internal:
         s = strmid(s, 0, 28);
         if (p >= ELONA_ITEM_ON_GROUND_INDEX)
         {
-            s += i18n::s.get("core.locale.blending.steps.ground");
+            s += i18n::s.get("core.blending.steps.ground");
         }
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
 
@@ -994,13 +984,13 @@ label_1928_internal:
         if (inv[ci].is_marked_as_no_drop())
         {
             snd("core.fail1");
-            txt(i18n::s.get("core.locale.ui.inv.common.set_as_no_drop"));
+            txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
             goto label_1928_internal;
         }
         rpref(10 + step * 2 + 0) = ci;
         rpref(10 + step * 2 + 1) = inv[ci].id;
         snd("core.drink1");
-        txt(i18n::s.get("core.locale.blending.steps.you_add", inv[ci]));
+        txt(i18n::s.get("core.blending.steps.you_add", inv[ci]));
         ++step;
         p = rpdiff(rpid, step, step - 1);
         goto label_1923;
@@ -1065,8 +1055,7 @@ std::string rpmatname(int step)
             return s_at_m177;
         }
         s_at_m177 = i18n::s.get(
-            "core.locale.blending.ingredient.corpse",
-            chara_refstr(p_at_m177, 2));
+            "core.blending.ingredient.corpse", chara_refstr(p_at_m177, 2));
         return s_at_m177;
     }
     return s_at_m177;
@@ -1078,42 +1067,41 @@ std::string rpsuccessrate(int success_rate)
 {
     if (success_rate == 100)
     {
-        return i18n::s.get("core.locale.blending.success_rate.perfect");
+        return i18n::s.get("core.blending.success_rate.perfect");
     }
     if (success_rate >= 90)
     {
-        return i18n::s.get("core.locale.blending.success_rate.piece_of_cake");
+        return i18n::s.get("core.blending.success_rate.piece_of_cake");
     }
     if (success_rate >= 80)
     {
-        return i18n::s.get("core.locale.blending.success_rate.very_likely");
+        return i18n::s.get("core.blending.success_rate.very_likely");
     }
     if (success_rate >= 70)
     {
-        return i18n::s.get("core.locale.blending.success_rate.no_problem");
+        return i18n::s.get("core.blending.success_rate.no_problem");
     }
     if (success_rate >= 60)
     {
-        return i18n::s.get("core.locale.blending.success_rate.probably_ok");
+        return i18n::s.get("core.blending.success_rate.probably_ok");
     }
     if (success_rate >= 50)
     {
-        return i18n::s.get("core.locale.blending.success_rate.maybe");
+        return i18n::s.get("core.blending.success_rate.maybe");
     }
     if (success_rate >= 40)
     {
-        return i18n::s.get("core.locale.blending.success_rate.bad");
+        return i18n::s.get("core.blending.success_rate.bad");
     }
     if (success_rate >= 30)
     {
-        return i18n::s.get("core.locale.blending.success_rate.very_bad");
+        return i18n::s.get("core.blending.success_rate.very_bad");
     }
     if (success_rate >= 20)
     {
-        return i18n::s.get(
-            "core.locale.blending.success_rate.almost_impossible");
+        return i18n::s.get("core.blending.success_rate.almost_impossible");
     }
-    return i18n::s.get("core.locale.blending.success_rate.impossible");
+    return i18n::s.get("core.blending.success_rate.impossible");
 }
 
 
@@ -1171,15 +1159,13 @@ int rpdiff(int, int number_of_ingredients, int current_step)
                 {
                     if (f2_at_m180 < 0)
                     {
-                        txt(i18n::s.get(
-                                "core.locale.blending.success_rate.goes_up"),
+                        txt(i18n::s.get("core.blending.success_rate.goes_up"),
                             Message::color{ColorIndex::green});
                         break;
                     }
                     if (f2_at_m180 > 0)
                     {
-                        txt(i18n::s.get(
-                                "core.locale.blending.success_rate.goes_down"),
+                        txt(i18n::s.get("core.blending.success_rate.goes_down"),
                             Message::color{ColorIndex::red});
                         break;
                     }
@@ -1286,22 +1272,22 @@ int blendcheckmat(int recipe_id)
             {
                 o_at_m181 = 0;
             }
-            for (const auto& cnt : items(o_at_m181))
+            for (const auto& item : o_at_m181 == -1 ? inv.ground() : inv.pc())
             {
-                if (inv[cnt].number() <= 0)
+                if (item.number() <= 0)
                 {
                     continue;
                 }
                 if ((rpdata(2, rpid) <= 0 || step_at_m181 != 0) &&
-                    inv[cnt].own_state > 0)
+                    item.own_state > 0)
                 {
                     continue;
                 }
                 if (o_at_m181 == -1)
                 {
                     if (dist(
-                            inv[cnt].position.x,
-                            inv[cnt].position.y,
+                            item.position.x,
+                            item.position.y,
                             cdata.player().position.x,
                             cdata.player().position.y) > 4)
                     {
@@ -1310,7 +1296,7 @@ int blendcheckmat(int recipe_id)
                 }
                 if (rpdata(40 + rp_at_m181, rpid))
                 {
-                    int stat = blendcheckext(cnt, rp_at_m181);
+                    int stat = blendcheckext(item.index, rp_at_m181);
                     if (stat == 0)
                     {
                         continue;
@@ -1318,7 +1304,7 @@ int blendcheckmat(int recipe_id)
                 }
                 if (id_at_m181 < 9000)
                 {
-                    if (inv[cnt].id == id_at_m181)
+                    if (item.id == id_at_m181)
                     {
                         f_at_m181 = 1;
                         break;
@@ -1328,7 +1314,7 @@ int blendcheckmat(int recipe_id)
                 if (id_at_m181 < 10000)
                 {
                     if (instr(
-                            the_item_db[inv[cnt].id]->rffilter,
+                            the_item_db[item.id]->rffilter,
                             0,
                             u8"/"s + rfnameorg(0, (id_at_m181 - 9000)) +
                                 u8"/"s) != -1 ||
@@ -1339,7 +1325,7 @@ int blendcheckmat(int recipe_id)
                     }
                     continue;
                 }
-                if (the_item_db[inv[cnt].id]->category == id_at_m181)
+                if (the_item_db[item.id]->category == id_at_m181)
                 {
                     f_at_m181 = 1;
                     break;
@@ -1375,21 +1361,21 @@ int blendmatnum(int matcher, int step)
         {
             o_at_m182 = 0;
         }
-        for (const auto& cnt : items(o_at_m182))
+        for (const auto& item : o_at_m182 == -1 ? inv.ground() : inv.pc())
         {
-            if (inv[cnt].number() <= 0)
+            if (item.number() <= 0)
             {
                 continue;
             }
-            if ((rpdata(2, rpid) <= 0 || step != 0) && inv[cnt].own_state > 0)
+            if ((rpdata(2, rpid) <= 0 || step != 0) && item.own_state > 0)
             {
                 continue;
             }
             if (o_at_m182 == -1)
             {
                 if (dist(
-                        inv[cnt].position.x,
-                        inv[cnt].position.y,
+                        item.position.x,
+                        item.position.y,
                         cdata.player().position.x,
                         cdata.player().position.y) > 4)
                 {
@@ -1398,7 +1384,7 @@ int blendmatnum(int matcher, int step)
             }
             if (rpdata(40 + step, rpid))
             {
-                int stat = blendcheckext(cnt, step);
+                int stat = blendcheckext(item.index, step);
                 if (stat == 0)
                 {
                     continue;
@@ -1406,28 +1392,28 @@ int blendmatnum(int matcher, int step)
             }
             if (matcher < 9000)
             {
-                if (inv[cnt].id == matcher)
+                if (item.id == matcher)
                 {
-                    m_at_m182 += inv[cnt].number();
+                    m_at_m182 += item.number();
                 }
                 continue;
             }
             if (matcher < 10000)
             {
                 if (instr(
-                        the_item_db[inv[cnt].id]->rffilter,
+                        the_item_db[item.id]->rffilter,
                         0,
                         u8"/"s + rfnameorg(0, (matcher - 9000)) + u8"/"s) !=
                         -1 ||
                     matcher == 9004)
                 {
-                    m_at_m182 += inv[cnt].number();
+                    m_at_m182 += item.number();
                 }
                 continue;
             }
-            if (the_item_db[inv[cnt].id]->category == matcher)
+            if (the_item_db[item.id]->category == matcher)
             {
-                m_at_m182 += inv[cnt].number();
+                m_at_m182 += item.number();
                 continue;
             }
         }
@@ -1443,7 +1429,6 @@ int blendlist(elona_vector2<int>& result_array, int step)
     int m_at_m183 = 0;
     int o_at_m183 = 0;
     int reftype_at_m183 = 0;
-    int f_at_m183 = 0;
     id_at_m183 = rpdata(20 + step, rpid);
     m_at_m183 = 0;
     for (int cnt = 0; cnt < 2; ++cnt)
@@ -1456,35 +1441,35 @@ int blendlist(elona_vector2<int>& result_array, int step)
         {
             o_at_m183 = 0;
         }
-        for (const auto& cnt : items(o_at_m183))
+        for (const auto& item : o_at_m183 == -1 ? inv.ground() : inv.pc())
         {
             if (m_at_m183 >= 500)
             {
                 break;
             }
-            if (inv[cnt].number() <= 0)
+            if (item.number() <= 0)
             {
                 continue;
             }
-            if ((rpdata(2, rpid) <= 0 || step != 0) && inv[cnt].own_state > 0)
+            if ((rpdata(2, rpid) <= 0 || step != 0) && item.own_state > 0)
             {
                 continue;
             }
             if (o_at_m183 == -1)
             {
                 if (dist(
-                        inv[cnt].position.x,
-                        inv[cnt].position.y,
+                        item.position.x,
+                        item.position.y,
                         cdata.player().position.x,
                         cdata.player().position.y) > 4)
                 {
                     continue;
                 }
             }
-            reftype_at_m183 = the_item_db[inv[cnt].id]->category;
+            reftype_at_m183 = the_item_db[item.id]->category;
             if (rpdata(40 + step, rpid))
             {
-                int stat = blendcheckext(cnt, step);
+                int stat = blendcheckext(item.index, step);
                 if (stat == 0)
                 {
                     continue;
@@ -1492,7 +1477,7 @@ int blendlist(elona_vector2<int>& result_array, int step)
             }
             if (id_at_m183 < 9000)
             {
-                if (inv[cnt].id != id_at_m183)
+                if (item.id != id_at_m183)
                 {
                     continue;
                 }
@@ -1500,7 +1485,7 @@ int blendlist(elona_vector2<int>& result_array, int step)
             else if (id_at_m183 < 10000)
             {
                 if (instr(
-                        the_item_db[inv[cnt].id]->rffilter,
+                        the_item_db[item.id]->rffilter,
                         0,
                         u8"/"s + rfnameorg(0, (id_at_m183 - 9000)) + u8"/"s) ==
                         -1 &&
@@ -1515,22 +1500,22 @@ int blendlist(elona_vector2<int>& result_array, int step)
             }
             if (step > 0)
             {
-                f_at_m183 = cnt;
-                for (int cnt = 0, cnt_end = (step); cnt < cnt_end; ++cnt)
+                bool has_already_used = false;
+                for (int i = 0; i < step; ++i)
                 {
-                    if (rpref(10 + cnt * 2) == f_at_m183)
+                    if (rpref(10 + i * 2) == item.index)
                     {
-                        f_at_m183 = -999;
+                        has_already_used = true;
                         break;
                     }
                 }
-                if (f_at_m183 == -999)
+                if (has_already_used)
                 {
                     continue;
                 }
             }
-            result_array(0, m_at_m183) = cnt;
-            result_array(1, m_at_m183) = reftype_at_m183 * 1000 + inv[cnt].id;
+            result_array(0, m_at_m183) = item.index;
+            result_array(1, m_at_m183) = reftype_at_m183 * 1000 + item.id;
             ++m_at_m183;
         }
     }
@@ -1593,7 +1578,7 @@ int blending_spend_materials()
         {
 
             txt(i18n::s.get(
-                "core.locale.blending.you_lose", inv[rpref(10 + cnt * 2)]));
+                "core.blending.you_lose", inv[rpref(10 + cnt * 2)]));
             inv[rpref(10 + cnt * 2)].modify_number(-1);
         }
         if (chara_unequip(rpref(10 + cnt * 2)))
@@ -1614,7 +1599,7 @@ void blending_start_attempt()
     if (rpdiff(rpid, -1, -1) < rnd(100))
     {
         rpresult = 0;
-        txt(i18n::s.get("core.locale.blending.failed"),
+        txt(i18n::s.get("core.blending.failed"),
             Message::color{ColorIndex::red});
     }
     else
@@ -1627,13 +1612,12 @@ void blending_start_attempt()
         {
             flt();
             nostack = 1;
-            int stat = itemcreate(
-                -1,
-                rpdata(0, rpid),
-                cdata.player().position.x,
-                cdata.player().position.y,
-                0);
-            if (stat != 0)
+            if (itemcreate(
+                    -1,
+                    rpdata(0, rpid),
+                    cdata.player().position.x,
+                    cdata.player().position.y,
+                    0))
             {
                 for (int cnt = 0;; ++cnt)
                 {
@@ -1649,7 +1633,7 @@ void blending_start_attempt()
                         1);
                 }
             }
-            txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]),
+            txt(i18n::s.get("core.blending.succeeded", inv[ci]),
                 Message::color{ColorIndex::green});
             snd("core.drink1");
         }
@@ -1701,54 +1685,48 @@ void blending_proc_on_success_events()
     {
     case 10000:
         inv[ci].is_aphrodisiac() = true;
-        txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]),
+        txt(i18n::s.get("core.blending.succeeded", inv[ci]),
             Message::color{ColorIndex::green});
-        txt(i18n::s.get("core.locale.action.dip.result.love_food.guilty"));
+        txt(i18n::s.get("core.action.dip.result.love_food.guilty"));
         snd("core.offer1");
         break;
     case 10001:
         inv[ci].color = inv[ti].color;
-        txt(i18n::s.get("core.locale.action.dip.result.dyeing", inv[ci]),
+        txt(i18n::s.get("core.action.dip.result.dyeing", inv[ci]),
             Message::color{ColorIndex::green});
         snd("core.drink1");
         break;
     case 10002:
         inv[ci].is_poisoned() = true;
-        txt(i18n::s.get("core.locale.blending.succeeded", inv[ci]),
+        txt(i18n::s.get("core.blending.succeeded", inv[ci]),
             Message::color{ColorIndex::green});
-        txt(i18n::s.get("core.locale.action.dip.result.poisoned_food"));
+        txt(i18n::s.get("core.action.dip.result.poisoned_food"));
         snd("core.offer1");
         break;
     case 10003:
-        txt(i18n::s.get(
-                "core.locale.action.dip.result.put_on", inv[ci], inv[ti]),
+        txt(i18n::s.get("core.action.dip.result.put_on", inv[ci], inv[ti]),
             Message::color{ColorIndex::green});
         if (inv[ci].id == 567)
         {
-            txt(i18n::s.get("core.locale.action.dip.result.good_idea_but"));
+            txt(i18n::s.get("core.action.dip.result.good_idea_but"));
         }
         else
         {
             inv[ci].is_fireproof() = true;
-            txt(i18n::s.get(
-                "core.locale.action.dip.result.gains_fireproof", inv[ci]));
+            txt(i18n::s.get("core.action.dip.result.gains_fireproof", inv[ci]));
         }
         snd("core.drink1");
         break;
     case 10004:
-        txt(i18n::s.get(
-                "core.locale.action.dip.result.put_on", inv[ci], inv[ti]),
+        txt(i18n::s.get("core.action.dip.result.put_on", inv[ci], inv[ti]),
             Message::color{ColorIndex::green});
         inv[ci].is_acidproof() = true;
-        txt(i18n::s.get(
-            "core.locale.action.dip.result.gains_acidproof", inv[ci]));
+        txt(i18n::s.get("core.action.dip.result.gains_acidproof", inv[ci]));
         snd("core.drink1");
         break;
     case 10005:
         txt(i18n::s.get(
-                "core.locale.action.dip.result.bait_attachment",
-                inv[ci],
-                inv[ti]),
+                "core.action.dip.result.bait_attachment", inv[ci], inv[ti]),
             Message::color{ColorIndex::green});
         if (inv[ci].param4 == inv[ti].param1)
         {
@@ -1763,19 +1741,17 @@ void blending_proc_on_success_events()
         break;
     case 10006:
         txt(i18n::s.get(
-                "core.locale.action.dip.result.blessed_item", inv[ci], inv[ti]),
+                "core.action.dip.result.blessed_item", inv[ci], inv[ti]),
             Message::color{ColorIndex::green});
         if (inv[ti].curse_state == CurseState::blessed)
         {
-            txt(i18n::s.get(
-                    "core.locale.action.dip.result.becomes_blessed", inv[ci]),
+            txt(i18n::s.get("core.action.dip.result.becomes_blessed", inv[ci]),
                 Message::color{ColorIndex::orange});
             inv[ci].curse_state = CurseState::blessed;
         }
         if (is_cursed(inv[ti].curse_state))
         {
-            txt(i18n::s.get(
-                    "core.locale.action.dip.result.becomes_cursed", inv[ci]),
+            txt(i18n::s.get("core.action.dip.result.becomes_cursed", inv[ci]),
                 Message::color{ColorIndex::purple});
             inv[ci].curse_state = CurseState::cursed;
         }
@@ -1783,31 +1759,28 @@ void blending_proc_on_success_events()
         break;
     case 10007:
         txt(i18n::s.get(
-            "core.locale.action.dip.result.well_refill", inv[ci], inv[ti]));
+            "core.action.dip.result.well_refill", inv[ci], inv[ti]));
         if (inv[ti].id == 601)
         {
-            txt(i18n::s.get(
-                "core.locale.action.dip.result.empty_bottle_shatters"));
+            txt(i18n::s.get("core.action.dip.result.empty_bottle_shatters"));
             break;
         }
         snd("core.drink1");
         if (inv[ci].id == 602)
         {
-            txt(i18n::s.get(
-                "core.locale.action.dip.result.holy_well_polluted"));
+            txt(i18n::s.get("core.action.dip.result.holy_well_polluted"));
             break;
         }
         if (inv[ci].param3 >= 20)
         {
-            txt(i18n::s.get("core.locale.action.dip.result.well_dry", inv[ci]));
+            txt(i18n::s.get("core.action.dip.result.well_dry", inv[ci]));
             break;
         }
-        txt(i18n::s.get("core.locale.action.dip.result.well_refilled", inv[ci]),
+        txt(i18n::s.get("core.action.dip.result.well_refilled", inv[ci]),
             Message::color{ColorIndex::green});
         if (inv[ti].id == 587)
         {
-            txt(i18n::s.get(
-                "core.locale.action.dip.result.snow_melts.blending"));
+            txt(i18n::s.get("core.action.dip.result.snow_melts.blending"));
         }
         else
         {
@@ -1819,14 +1792,13 @@ void blending_proc_on_success_events()
             (inv[ci].id == 602 && game_data.holy_well_count <= 0))
         {
             txt(i18n::s.get(
-                "core.locale.action.dip.result.natural_potion_dry", inv[ci]));
-            txt(i18n::s.get(
-                "core.locale.action.dip.result.natural_potion_drop"));
+                "core.action.dip.result.natural_potion_dry", inv[ci]));
+            txt(i18n::s.get("core.action.dip.result.natural_potion_drop"));
             break;
         }
         if (inv_getfreeid(0) == -1)
         {
-            txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
+            txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
             break;
         }
         cibk = ci;
@@ -1834,8 +1806,7 @@ void blending_proc_on_success_events()
         {
             --game_data.holy_well_count;
             flt();
-            int stat = itemcreate(0, 516, -1, -1, 0);
-            if (stat != 0)
+            if (itemcreate(0, 516, -1, -1, 0))
             {
                 inv[ci].curse_state = CurseState::blessed;
             }
@@ -1847,8 +1818,8 @@ void blending_proc_on_success_events()
             flttypemajor = 52000;
             itemcreate(0, 0, -1, -1, 0);
         }
-        txt(i18n::s.get("core.locale.action.dip.result.natural_potion"));
-        txt(i18n::s.get("core.locale.action.dip.you_get", inv[ci]),
+        txt(i18n::s.get("core.action.dip.result.natural_potion"));
+        txt(i18n::s.get("core.action.dip.you_get", inv[ci]),
             Message::color{ColorIndex::green});
         item_stack(0, ci, 1);
         item_stack(0, ci);
@@ -1860,7 +1831,7 @@ void blending_proc_on_success_events()
     item_stack(0, ci);
     if (inv[ci].body_part != 0)
     {
-        create_pcpic(0);
+        create_pcpic(cdata.player());
     }
     if (inv_getowner(ci) == -1)
     {

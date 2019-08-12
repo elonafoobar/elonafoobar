@@ -23,22 +23,22 @@ static void _load_politics_list(bool is_town)
 
     list(0, listmax) = 1;
     listn(0, listmax) = i18n::s.get(
-        "core.locale.ui.politics.name", mapname(game_data.politics_map_id));
+        "core.ui.politics.name", mapname(game_data.politics_map_id));
     ++listmax;
 
     if (is_town)
     {
         list(0, listmax) = 0;
         listn(0, listmax) =
-            i18n::s.get("core.locale.ui.politics.taxes", podata(150, city));
+            i18n::s.get("core.ui.politics.taxes", podata(150, city));
         ++listmax;
         p = rnd(1000);
         list(0, listmax) = 0;
         listn(0, listmax) =
-            i18n::s.get("core.locale.ui.politics.well_pollution", p(0));
+            i18n::s.get("core.ui.politics.well_pollution", p(0));
         ++listmax;
         list(0, listmax) = 0;
-        listn(0, listmax) = i18n::s.get("core.locale.ui.politics.lawless");
+        listn(0, listmax) = i18n::s.get("core.ui.politics.lawless");
         ++listmax;
     }
 }
@@ -82,18 +82,17 @@ void UIMenuTownPolitics::_draw_window()
 {
     std::string hint = strhint2 + strhint3b;
     showscroll(hint, wx, wy, ww, wh);
-    display_topic(i18n::s.get("core.locale.ui.politics.law"), wx + 65, wy + 45);
+    display_topic(i18n::s.get("core.ui.politics.law"), wx + 65, wy + 45);
 
     font(12 + sizefix - en * 2);
-    mes(wx + 185, wy + 52, i18n::s.get("core.locale.ui.politics.global"));
+    mes(wx + 185, wy + 52, i18n::s.get("core.ui.politics.global"));
 
     if (map_data.type == mdata_t::MapType::town)
     {
         mes(wx + 285,
             wy + 52,
             i18n::s.get(
-                "core.locale.ui.politics.law_of",
-                mapname(game_data.current_map)));
+                "core.ui.politics.law_of", mapname(game_data.current_map)));
     }
 
     gmode(2);

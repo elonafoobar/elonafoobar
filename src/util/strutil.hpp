@@ -33,6 +33,14 @@ inline bool starts_with(
 
 
 
+inline bool ends_with(const std::string& str, const std::string& suffix)
+{
+    return suffix.size() <= str.size() &&
+        str.find(suffix, str.size() - suffix.size()) != std::string::npos;
+}
+
+
+
 inline std::string to_lower(const std::string& source)
 {
     std::string ret;

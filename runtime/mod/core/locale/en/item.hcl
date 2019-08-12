@@ -252,7 +252,7 @@ locale {
                 }
             }
         }
-        bottle_of_crim_ale {
+        crim_ale {
             name = "crim ale"
             unidentified_name = "clear liquid"
             description {
@@ -1054,16 +1054,16 @@ locale {
                 }
             }
         }
-        statue_ornamented_with_plants {
-            name = "statue ornamented with plants"
+        pillar_ornamented_with_plants {
+            name = "ornamented with plants"
             description {
                 main {
                     text = "A pillar designed after one's common in Eludernia,"
                 }
             }
         }
-        statue_ornamented_with_flowers {
-            name = "statue ornamented with flowers"
+        pillar_ornamented_with_flowers {
+            name = "ornamented with flowers"
             description {
                 main {
                     text = "A pillar designed after one's common in Eludernia,"
@@ -1278,7 +1278,7 @@ locale {
                 }
             }
         }
-        grave_of_ornamented_with_flowers {
+        grave_ornamented_with_flowers {
             name = "ornamented with flowers"
             description {
                 main {
@@ -1608,7 +1608,7 @@ locale {
                 }
             }
         }
-        bow_of_vinderre {
+        bow_of_vindale {
             name = "<Bow of Vindale>"
             unidentified_name = "shaking bow"
         }
@@ -2276,8 +2276,8 @@ locale {
                 }
             }
         }
-        rack_of_good {
-            name = "good"
+        rack_of_goods {
+            name = "goods"
             description {
                 main {
                     text = "Products for display or sale,"
@@ -2618,8 +2618,8 @@ locale {
                 }
             }
         }
-        golden_statue {
-            name = "golden statue"
+        statue_of_money {
+            name = "money"
             description {
                 main {
                     text = "A statue common in Asseria style casinos,"
@@ -5100,7 +5100,7 @@ locale {
         }
         statue_of_opatos {
             name = "Opatos"
-            unidentified_name = "celestial statue"
+            unidentified_name = "god"
             description {
                 main {
                     text = "You feel the ground shake slightly at this statue,"
@@ -5109,7 +5109,7 @@ locale {
         }
         statue_of_lulwy {
             name = "Lulwy"
-            unidentified_name = "celestial statue"
+            unidentified_name = "goddess"
             description {
                 main {
                     text = "A beautiful statue of a winged goddess,"
@@ -5224,7 +5224,7 @@ locale {
         }
         statue_of_jure {
             name = "Jure"
-            unidentified_name = "celestial statue"
+            unidentified_name = "goddess"
         }
         ancient_book {
             name = "ancient book"
@@ -5460,7 +5460,7 @@ locale {
         }
         statue_of_ehekatl {
             name = "Ehekatl"
-            unidentified_name = "celestial statue"
+            unidentified_name = "goddess"
         }
         arbalest {
             name = "<Arbalest>"
@@ -5706,11 +5706,11 @@ locale {
         }
         statue_of_kumiromi {
             name = "Kumiromi"
-            unidentified_name = "celestial statue"
+            unidentified_name = "god"
         }
         statue_of_mani {
             name = "Mani"
-            unidentified_name = "celestial statue"
+            unidentified_name = "god"
         }
         luxury_sofa {
             name = "luxury sofa"
@@ -5746,7 +5746,7 @@ locale {
             name = "skull bow"
         }
         pot_for_testing {
-            name = "pot for testing"
+            name = "for testing"
             description {
                 main {
                     text = "dev item"
@@ -5754,7 +5754,7 @@ locale {
             }
         }
         frying_pan_for_testing {
-            name = "frying pan for testing"
+            name = "for testing"
             description {
                 main {
                     text = "dev item"

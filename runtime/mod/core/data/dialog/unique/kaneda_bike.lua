@@ -1,12 +1,12 @@
-local Chara = Elona.require("Chara")
-local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
+local Chara = require("game.Chara")
+local GUI = require("game.GUI")
+local I18N = require("game.I18N")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
 
 return {
    id = "kaneda_bike",
-   root = "core.locale.talk.unique.kaneda_bike",
+   root = "core.talk.unique.kaneda_bike",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("blue_capsule_drug")
@@ -76,7 +76,7 @@ return {
             function()
                local drug = Item.find("core.blue_capsule_drug", "PlayerInventory")
                drug.number = drug.number - 1
-               GUI.txt(I18N.get("core.locale.talk.unique.kaneda_bike.before_drug.yes.you_hand_him"))
+               GUI.txt(I18N.get("core.talk.unique.kaneda_bike.before_drug.yes.you_hand_him"))
                GUI.play_sound("core.equip1")
             end,
             {"before_drug.yes.dialog"},

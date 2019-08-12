@@ -72,13 +72,12 @@ void shop_load_shoptmp()
 
 void shop_refresh()
 {
-    for (const auto& cnt : items(-1))
+    for (auto&& item : inv.ground())
     {
-        inv[cnt].remove();
+        item.remove();
     }
 
-    lua::call(
-        "exports:core.impl.shop_inventory.generate", lua::handle(cdata[tc]));
+    lua::call("core.impl.shop_inventory.generate", lua::handle(cdata[tc]));
 
     if (Config::instance().restock_interval)
     {

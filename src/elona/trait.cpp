@@ -202,7 +202,7 @@ void trait_format_obtainable(const I18NKey& i18n_prefix, int max)
 
 void trait_format(int tid, int min, int max)
 {
-    I18NKey i18n_prefix = "core.locale.trait._" + std::to_string(tid);
+    I18NKey i18n_prefix = "core.trait._" + std::to_string(tid);
     optional<std::string> text = none;
 
     traitrefn(0) = "";
@@ -811,11 +811,11 @@ void trait_load_desc()
         {
             if (i == -1)
             {
-                s = i18n::s.get("core.locale.trait.window.available_feats");
+                s = i18n::s.get("core.trait.window.available_feats");
             }
             if (i == -2)
             {
-                s = i18n::s.get("core.locale.trait.window.feats_and_traits");
+                s = i18n::s.get("core.trait.window.feats_and_traits");
             }
             listn(0, cnt) = s;
             continue;
@@ -836,8 +836,7 @@ void trait_load_desc()
             }
             if (featrq == -1)
             {
-                s += u8"("s +
-                    i18n::s.get("core.locale.trait.window.requirement") +
+                s += u8"("s + i18n::s.get("core.trait.window.requirement") +
                     u8")"s;
             }
             x = 84;
@@ -847,27 +846,23 @@ void trait_load_desc()
             x = 70;
             if (traitref == 0)
             {
-                s = u8"["s +
-                    i18n::s.get("core.locale.trait.window.category.feat") +
+                s = u8"["s + i18n::s.get("core.trait.window.category.feat") +
                     u8"]"s;
             }
             if (traitref == 1)
             {
                 s = u8"["s +
-                    i18n::s.get("core.locale.trait.window.category.mutation") +
-                    u8"]"s;
+                    i18n::s.get("core.trait.window.category.mutation") + u8"]"s;
             }
             if (traitref == 2)
             {
-                s = u8"["s +
-                    i18n::s.get("core.locale.trait.window.category.race") +
+                s = u8"["s + i18n::s.get("core.trait.window.category.race") +
                     u8"]"s;
             }
             if (traitref == 3)
             {
                 s = u8"["s +
-                    i18n::s.get(
-                        "core.locale.trait.window.category.ether_disease") +
+                    i18n::s.get("core.trait.window.category.ether_disease") +
                     u8"]"s;
             }
             s += traitrefn(2 + std::abs(trait(tid)));
@@ -879,8 +874,8 @@ void trait_load_desc()
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
         listn(0, listmax) = u8"["s +
-            i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s +
-            i18n::s.get("core.locale.trait.incognito");
+            i18n::s.get("core.trait.window.category.etc") + u8"]"s +
+            i18n::s.get("core.trait.incognito");
         ++listmax;
     }
     if (cdata[tc].is_pregnant() == 1)
@@ -888,8 +883,8 @@ void trait_load_desc()
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
         listn(0, listmax) = u8"["s +
-            i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s +
-            i18n::s.get("core.locale.trait.pregnant");
+            i18n::s.get("core.trait.window.category.etc") + u8"]"s +
+            i18n::s.get("core.trait.pregnant");
         ++listmax;
     }
     if (cdata[tc].has_anorexia() == 1)
@@ -897,8 +892,8 @@ void trait_load_desc()
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
         listn(0, listmax) = u8"["s +
-            i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s +
-            i18n::s.get("core.locale.trait.anorexia");
+            i18n::s.get("core.trait.window.category.etc") + u8"]"s +
+            i18n::s.get("core.trait.anorexia");
         ++listmax;
     }
     if (cdata[tc].speed_correction_value != 0)
@@ -906,9 +901,9 @@ void trait_load_desc()
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
         listn(0, listmax) = u8"["s +
-            i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s +
+            i18n::s.get("core.trait.window.category.etc") + u8"]"s +
             i18n::s.get(
-                "core.locale.trait.body_is_complicated",
+                "core.trait.body_is_complicated",
                 cdata[tc].speed_correction_value);
         ++listmax;
     }
@@ -919,8 +914,8 @@ void trait_load_desc()
             list(0, listmax) = 1;
             list(1, listmax) = 99999;
             listn(0, listmax) = u8"["s +
-                i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s +
-                i18n::s.get("core.locale.trait.ether_disease_grows.fast");
+                i18n::s.get("core.trait.window.category.etc") + u8"]"s +
+                i18n::s.get("core.trait.ether_disease_grows.fast");
             ++listmax;
         }
         else
@@ -928,8 +923,8 @@ void trait_load_desc()
             list(0, listmax) = 1;
             list(1, listmax) = 99999;
             listn(0, listmax) = u8"["s +
-                i18n::s.get("core.locale.trait.window.category.etc") + u8"]"s +
-                i18n::s.get("core.locale.trait.ether_disease_grows.slow");
+                i18n::s.get("core.trait.window.category.etc") + u8"]"s +
+                i18n::s.get("core.trait.ether_disease_grows.slow");
             ++listmax;
         }
     }

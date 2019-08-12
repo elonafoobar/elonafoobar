@@ -2,7 +2,6 @@ locale {
     wish {
         what_do_you_wish_for = "何を望む？"
         your_wish = "「${_1}！！」"
-        sent_message = "${_1}${_2}は狂喜して叫んだ。${_3}${_4}"
 
         it_is_sold_out = "あ、それ在庫切れ。"
         something_appears = "足元に${itemname(_1)}が転がってきた。"

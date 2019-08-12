@@ -427,7 +427,7 @@ locale {
                 dies = "${basename(_1)}は自ら命を絶った…"
             }
 
-            garokk {
+            garok {
                 dialog = "見て分からんか、わしゃ忙しいんじゃ。用があるなら手短にな。"
             }
 
@@ -809,7 +809,7 @@ locale {
                     bye = "とんだ愚か者じゃ！"
 
                     give {
-                        deliver = "${itemname(_1)}を納入した。"
+                        deliver = "${itemname(_1, 1)}を納入した。"
                         have = "おうおう、例の品を持ってきてくれたか。これで実験が進むわい。"
                         do_not_have = "さあ、実験体を集めてくるのじゃ。"
                     }

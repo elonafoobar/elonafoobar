@@ -379,8 +379,7 @@ int calc_rate_to_pierce(int id)
 std::string calcage(int cc)
 {
     int n = game_data.date.year - cdata[cc].birth_year;
-    return n >= 0 ? std::to_string(n)
-                  : i18n::s.get("core.locale.chara.age_unknown");
+    return n >= 0 ? std::to_string(n) : i18n::s.get("core.chara.age_unknown");
 }
 
 
@@ -753,7 +752,7 @@ int calcattackdmg(AttackDamageCalculationMode mode)
             pierce = 100;
             if (is_in_fov(cdata[cc]))
             {
-                txt(i18n::s.get("core.locale.damage.vorpal.melee"),
+                txt(i18n::s.get("core.damage.vorpal.melee"),
                     Message::color{ColorIndex::orange});
             }
         }
@@ -765,7 +764,7 @@ int calcattackdmg(AttackDamageCalculationMode mode)
             pierce = 60;
             if (is_in_fov(cdata[cc]))
             {
-                txt(i18n::s.get("core.locale.damage.vorpal.ranged"),
+                txt(i18n::s.get("core.damage.vorpal.ranged"),
                     Message::color{ColorIndex::orange});
             }
         }
@@ -814,9 +813,9 @@ int calcattackdmg(AttackDamageCalculationMode mode)
 
 
 
-int calcmedalvalue(int ci)
+int calcmedalvalue(int item_index)
 {
-    switch (inv[ci].id)
+    switch (inv[item_index].id)
     {
     case 430: return 5;
     case 431: return 8;
@@ -843,45 +842,42 @@ int calcmedalvalue(int ci)
 
 
 
-int calcitemvalue(int ci, int situation)
+int calcitemvalue(int item_index, int situation)
 {
-    int category = the_item_db[inv[ci].id]->category;
+    int category = the_item_db[inv[item_index].id]->category;
     int ret = 0;
-    if (inv[ci].identification_state == IdentifyState::unidentified)
+    if (inv[item_index].identify_state == IdentifyState::unidentified)
     {
         if (situation == 2)
         {
-            ret = inv[ci].value * 4 / 10;
+            ret = inv[item_index].value * 4 / 10;
         }
         else
         {
             ret = cdata.player().level / 5 *
-                    ((game_data.random_seed + ci * 31) % cdata.player().level +
+                    ((game_data.random_seed + item_index * 31) %
+                         cdata.player().level +
                      4) +
                 10;
         }
     }
     else if (category >= 50000)
     {
-        ret = inv[ci].value;
+        ret = inv[item_index].value;
     }
     else
     {
-        switch (inv[ci].identification_state)
+        switch (inv[item_index].identify_state)
         {
         case IdentifyState::unidentified: break;
-        case IdentifyState::partly_identified:
-            ret = inv[ci].value * 2 / 10;
-            break;
-        case IdentifyState::almost_identified:
-            ret = inv[ci].value * 5 / 10;
-            break;
-        case IdentifyState::completely_identified: ret = inv[ci].value; break;
+        case IdentifyState::partly: ret = inv[item_index].value * 2 / 10; break;
+        case IdentifyState::almost: ret = inv[item_index].value * 5 / 10; break;
+        case IdentifyState::completely: ret = inv[item_index].value; break;
         }
     }
-    if (inv[ci].identification_state == IdentifyState::completely_identified)
+    if (inv[item_index].identify_state == IdentifyState::completely)
     {
-        switch (inv[ci].curse_state)
+        switch (inv[item_index].curse_state)
         {
         case CurseState::doomed: ret = ret / 5; break;
         case CurseState::cursed: ret = ret / 2; break;
@@ -891,12 +887,12 @@ int calcitemvalue(int ci, int situation)
     }
     if (category == 57000)
     {
-        if (inv[ci].param2 > 0)
+        if (inv[item_index].param2 > 0)
         {
-            ret = ret * inv[ci].param2 * inv[ci].param2 / 10;
+            ret = ret * inv[item_index].param2 * inv[item_index].param2 / 10;
         }
     }
-    if (inv[ci].id == 333)
+    if (inv[item_index].id == 333)
     {
         if (situation == 0)
         {
@@ -907,13 +903,13 @@ int calcitemvalue(int ci, int situation)
                 800);
         }
     }
-    if (inv[ci].weight < 0)
+    if (inv[item_index].weight < 0)
     {
         if (mode == 6)
         {
             if (category == 92000)
             {
-                ret = ret * trate(inv[ci].param1) / 100;
+                ret = ret * trate(inv[item_index].param1) / 100;
                 if (situation == 1)
                 {
                     ret = ret * 65 / 100;
@@ -922,26 +918,28 @@ int calcitemvalue(int ci, int situation)
             }
         }
     }
-    if (inv[ci].has_charge())
+    if (inv[item_index].has_charge())
     {
-        dbid = inv[ci].id;
-        access_item_db(2);
-        if (inv[ci].count < 0)
+        dbid = inv[item_index].id;
+        item_db_get_charge_level(inv[item_index], dbid);
+        if (inv[item_index].count < 0)
         {
             ret = ret / 10;
         }
         else if (category == 54000)
         {
-            ret = ret / 5 + ret * inv[ci].count / (ichargelevel * 2 + 1);
+            ret =
+                ret / 5 + ret * inv[item_index].count / (ichargelevel * 2 + 1);
         }
         else
         {
-            ret = ret / 2 + ret * inv[ci].count / (ichargelevel * 3 + 1);
+            ret =
+                ret / 2 + ret * inv[item_index].count / (ichargelevel * 3 + 1);
         }
     }
     if (category == 72000)
     {
-        if (inv[ci].param1 == 0)
+        if (inv[item_index].param1 == 0)
         {
             ret = ret / 100 + 1;
         }
@@ -974,7 +972,7 @@ int calcitemvalue(int ci, int situation)
         {
             ret /= 20;
         }
-        if (inv[ci].is_stolen())
+        if (inv[item_index].is_stolen())
         {
             if (game_data.guild.belongs_to_thieves_guild == 0)
             {
@@ -1001,7 +999,7 @@ int calcitemvalue(int ci, int situation)
         {
             ret = 15000;
         }
-        if (inv[ci].is_stolen())
+        if (inv[item_index].is_stolen())
         {
             ret = 1;
         }
@@ -1162,29 +1160,27 @@ int calccostreload(int owner, bool do_reload)
 {
     int cost{};
 
-    for (const auto& cnt : items(owner))
+    for (auto&& item : inv.for_chara(cdata[owner]))
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
             continue;
-        if (the_item_db[inv[cnt].id]->category != 25000)
+        if (the_item_db[item.id]->category != 25000)
             continue;
 
-        int ammo = cnt;
-        for (int cnt = 0; cnt < 15; ++cnt)
+        for (auto&& enc : item.enchantments)
         {
-            if (inv[ammo].enchantments[cnt].id == 0)
+            if (enc.id == 0)
                 break;
 
-            int enc = inv[ammo].enchantments[cnt].id;
-            if (enc / 10000 == 9)
+            if (enc.id / 10000 == 9)
             {
-                int type = enc % 10000;
-                int current = inv[ammo].enchantments[cnt].power % 1000;
-                int max = inv[ammo].enchantments[cnt].power / 1000;
+                int type = enc.id % 10000;
+                int current = enc.power % 1000;
+                int max = enc.power / 1000;
                 cost += (max - current) * (50 + type * type * 10);
                 if (do_reload)
                 {
-                    inv[ammo].enchantments[cnt].power = max * 1000 + max;
+                    enc.power = max * 1000 + max;
                 }
             }
         }
@@ -1223,14 +1219,13 @@ int calcidentifyvalue(int type)
     if (type == 1)
     {
         int need_to_identify{};
-        for (const auto& cnt : items(0))
+        for (const auto& item : inv.pc())
         {
-            if (inv[cnt].number() == 0)
+            if (item.number() == 0)
             {
                 continue;
             }
-            if (inv[cnt].identification_state !=
-                IdentifyState::completely_identified)
+            if (item.identify_state != IdentifyState::completely)
             {
                 ++need_to_identify;
             }
@@ -1537,12 +1532,12 @@ void calcpartyscore2()
         if (cnt.impression >= 53 && cnt.quality >= Quality::miracle)
         {
             score += 20 + cnt.level / 2;
-            txt(i18n::s.get("core.locale.quest.party.is_satisfied", cnt));
+            txt(i18n::s.get("core.quest.party.is_satisfied", cnt));
         }
     }
     if (score != 0)
     {
-        txt(i18n::s.get("core.locale.quest.party.total_bonus", score));
+        txt(i18n::s.get("core.quest.party.total_bonus", score));
     }
     quest_data.immediate().extra_info_2 =
         quest_data.immediate().extra_info_2 * (100 + score) / 100;

@@ -33,54 +33,45 @@ void txtgod(const GodId& id, int type)
     switch (type)
     {
     case 12:
-        message =
-            i18n::s.get_m_optional("locale.god", id, "random").get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "random").get_value_or("");
         break;
     case 9:
-        message =
-            i18n::s.get_m_optional("locale.god", id, "kill").get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "kill").get_value_or("");
         break;
     case 10:
-        message =
-            i18n::s.get_m_optional("locale.god", id, "night").get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "night").get_value_or("");
         break;
     case 11:
-        message = i18n::s.get_m_optional("locale.god", id, "welcome")
-                      .get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "welcome").get_value_or("");
         break;
     case 5:
-        message = i18n::s.get_m_optional("locale.god", id, "believe")
-                      .get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "believe").get_value_or("");
         break;
     case 1:
-        message =
-            i18n::s.get_m_optional("locale.god", id, "betray").get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "betray").get_value_or("");
         break;
     case 2:
-        message = i18n::s.get_m_optional("locale.god", id, "take_over")
-                      .get_value_or("");
+        message =
+            i18n::s.get_m_optional("god", id, "take_over").get_value_or("");
         break;
     case 3:
-        message = i18n::s.get_m_optional("locale.god", id, "fail_to_take_over")
+        message = i18n::s.get_m_optional("god", id, "fail_to_take_over")
                       .get_value_or("");
         break;
     case 4:
-        message =
-            i18n::s.get_m_optional("locale.god", id, "offer").get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "offer").get_value_or("");
         break;
     case 6:
-        message = i18n::s.get_m_optional("locale.god", id, "receive_gift")
-                      .get_value_or("");
+        message =
+            i18n::s.get_m_optional("god", id, "receive_gift").get_value_or("");
         break;
     case 7:
-        message =
-            i18n::s.get_m_optional("locale.god", id, "ready_to_receive_gift")
-                .get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "ready_to_receive_gift")
+                      .get_value_or("");
         break;
     case 8:
-        message =
-            i18n::s.get_m_optional("locale.god", id, "ready_to_receive_gift2")
-                .get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "ready_to_receive_gift2")
+                      .get_value_or("");
         break;
     default: assert(0);
     }
@@ -121,7 +112,7 @@ void god_modify_piety(int amount)
     // Faith skill is not enough.
     if (sdata(181, 0) * 100 < cdata.player().piety_point)
     {
-        txt(i18n::s.get("core.locale.god.indifferent"));
+        txt(i18n::s.get("core.god.indifferent"));
         return;
     }
 
@@ -418,7 +409,7 @@ void god_proc_switching_penalty()
         {
             mode = 9;
             txt(i18n::s.get(
-                    "core.locale.god.enraged", god_name(cdata.player().god_id)),
+                    "core.god.enraged", god_name(cdata.player().god_id)),
                 Message::color{ColorIndex::purple});
             txtgod(cdata.player().god_id, 1);
             redraw();
@@ -449,7 +440,7 @@ void switch_religion()
     spact(25) = 0;
     if (cdata.player().god_id == core_god::eyth)
     {
-        txt(i18n::s.get("core.locale.god.switch.unbeliever"),
+        txt(i18n::s.get("core.god.switch.unbeliever"),
             Message::color{ColorIndex::orange});
     }
     else
@@ -458,8 +449,7 @@ void switch_religion()
         MiracleAnimation().play();
         snd("core.complete1");
         txt(i18n::s.get(
-                "core.locale.god.switch.follower",
-                god_name(cdata.player().god_id)),
+                "core.god.switch.follower", god_name(cdata.player().god_id)),
             Message::color{ColorIndex::orange});
         if (cdata.player().god_id == core_god::itzpalt)
         {
@@ -483,23 +473,22 @@ TurnResult do_pray()
 {
     if (cdata.player().god_id == core_god::eyth)
     {
-        txt(i18n::s.get("core.locale.god.pray.do_not_believe"));
+        txt(i18n::s.get("core.god.pray.do_not_believe"));
         return TurnResult::turn_end;
     }
     Message::instance().linebreak();
-    txt(i18n::s.get("core.locale.god.pray.prompt"));
+    txt(i18n::s.get("core.god.pray.prompt"));
     if (!yes_no())
     {
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
     txt(i18n::s.get(
-        "core.locale.god.pray.you_pray_to", god_name(cdata.player().god_id)));
+        "core.god.pray.you_pray_to", god_name(cdata.player().god_id)));
     if (cdata.player().piety_point < 200 || cdata.player().praying_point < 1000)
     {
         txt(i18n::s.get(
-            "core.locale.god.pray.indifferent",
-            god_name(cdata.player().god_id)));
+            "core.god.pray.indifferent", god_name(cdata.player().god_id)));
         return TurnResult::turn_end;
     }
     animode = 100;
@@ -532,8 +521,7 @@ TurnResult do_pray()
                         if (p >= 2)
                         {
                             f = 1;
-                            txt(i18n::s.get(
-                                "core.locale.god.pray.servant.no_more"));
+                            txt(i18n::s.get("core.god.pray.servant.no_more"));
                             break;
                         }
                     }
@@ -544,13 +532,12 @@ TurnResult do_pray()
                 if (chara_get_free_slot_ally() == 0)
                 {
                     f = 1;
-                    txt(i18n::s.get(
-                        "core.locale.god.pray.servant.party_is_full"));
+                    txt(i18n::s.get("core.god.pray.servant.party_is_full"));
                 }
             }
             if (f)
             {
-                txt(i18n::s.get("core.locale.god.pray.servant.prompt_decline"));
+                txt(i18n::s.get("core.god.pray.servant.prompt_decline"));
                 if (yes_no())
                 {
                     ++game_data.god_rank;
@@ -562,43 +549,43 @@ TurnResult do_pray()
             if (cdata.player().god_id == core_god::mani)
             {
                 dbid = 262;
-                txt(i18n::s.get("core.locale.god.pray.servant.desc.mani"),
+                txt(i18n::s.get("core.god.pray.servant.desc.mani"),
                     Message::color{ColorIndex::blue});
             }
             if (cdata.player().god_id == core_god::lulwy)
             {
                 dbid = 263;
-                txt(i18n::s.get("core.locale.god.pray.servant.desc.lulwy"),
+                txt(i18n::s.get("core.god.pray.servant.desc.lulwy"),
                     Message::color{ColorIndex::blue});
             }
             if (cdata.player().god_id == core_god::itzpalt)
             {
                 dbid = 264;
-                txt(i18n::s.get("core.locale.god.pray.servant.desc.itzpalt"),
+                txt(i18n::s.get("core.god.pray.servant.desc.itzpalt"),
                     Message::color{ColorIndex::blue});
             }
             if (cdata.player().god_id == core_god::ehekatl)
             {
                 dbid = 260;
-                txt(i18n::s.get("core.locale.god.pray.servant.desc.ehekatl"),
+                txt(i18n::s.get("core.god.pray.servant.desc.ehekatl"),
                     Message::color{ColorIndex::blue});
             }
             if (cdata.player().god_id == core_god::opatos)
             {
                 dbid = 265;
-                txt(i18n::s.get("core.locale.god.pray.servant.desc.opatos"),
+                txt(i18n::s.get("core.god.pray.servant.desc.opatos"),
                     Message::color{ColorIndex::blue});
             }
             if (cdata.player().god_id == core_god::jure)
             {
                 dbid = 266;
-                txt(i18n::s.get("core.locale.god.pray.servant.desc.jure"),
+                txt(i18n::s.get("core.god.pray.servant.desc.jure"),
                     Message::color{ColorIndex::blue});
             }
             if (cdata.player().god_id == core_god::kumiromi)
             {
                 dbid = 261;
-                txt(i18n::s.get("core.locale.god.pray.servant.desc.kumiromi"),
+                txt(i18n::s.get("core.god.pray.servant.desc.kumiromi"),
                     Message::color{ColorIndex::blue});
             }
             novoidlv = 1;
@@ -673,8 +660,7 @@ TurnResult do_pray()
                     0);
                 inv[ci].param1 = 166;
             }
-            txt(i18n::s.get(
-                "core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }
         if (game_data.god_rank == 5)
         {
@@ -718,8 +704,7 @@ TurnResult do_pray()
                 cdata.player().position.x,
                 cdata.player().position.y,
                 0);
-            txt(i18n::s.get(
-                "core.locale.common.something_is_put_on_the_ground"));
+            txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }
         ++game_data.god_rank;
     }
@@ -732,11 +717,11 @@ std::string god_name(const GodId& id)
 {
     if (id == core_god::eyth)
     {
-        return i18n::s.get_m("locale.god", "core.eyth", "name");
+        return i18n::s.get_m("god", "core.eyth", "name");
     }
     else
     {
-        return i18n::s.get_m("locale.god", id, "name");
+        return i18n::s.get_m("god", id, "name");
     }
 }
 

@@ -1,2 +1,2 @@
-require "i18n/functions"
-require "i18n/jp_endings"
+require_relative("i18n/functions")
+require_relative("i18n/jp_endings")

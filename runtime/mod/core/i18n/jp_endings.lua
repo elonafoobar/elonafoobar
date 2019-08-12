@@ -1,5 +1,5 @@
-local I18N = Elona.require("I18N")
-local Rand = Elona.require("Rand")
+local I18N = require("game.I18N")
+local Rand = require("game.Rand")
 
 local marks = {"。", "？", "！", ""}
 local endings = {

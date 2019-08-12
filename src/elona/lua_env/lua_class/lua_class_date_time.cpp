@@ -54,6 +54,7 @@ void LuaDateTime::bind(sol::state& lua)
      */
     LuaDateTime.set("hours", &DateTime::hours);
 
+    LuaDateTime.set("__tostring", &DateTime::to_string);
 
     lua.set_usertype("LuaDateTime", LuaDateTime);
 }

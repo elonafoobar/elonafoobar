@@ -373,16 +373,4 @@ data:add_multi(
          value = 25,
          item_id = 619,
       },
-      -- For debug
-      {
-         id = "strange_fish",
-         legacy_id = 37,
-         rank = 0,
-         rarity = 10000,
-         difficulty = 0,
-         weight = 10000,
-         value = 10000,
-         item_id = 618,
-      },
-
 })

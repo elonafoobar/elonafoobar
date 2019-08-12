@@ -43,46 +43,29 @@ TEST_CASE("test formats", "[I18N: Formatting]")
 TEST_CASE("test format chara", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
-    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
-    Character& chara = elona::cdata[elona::rc];
+    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 4, 8);
 
     REQUIRE(
         i18n::fmt_hil("${_1}", chara) ==
         u8"<Character: "s + std::to_string(chara.index) + u8">"s);
-}
-
-TEST_CASE("test format item", "[I18N: Formatting]")
-{
-    testing::start_in_debug_map();
-    REQUIRE(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
-    Item& i = elona::inv[elona::ci];
-
-    REQUIRE(
-        i18n::fmt_hil("${_1}", i) ==
-        u8"<Item: "s + std::to_string(i.index) + u8">"s);
-}
-
-TEST_CASE("test format character by function", "[I18N: Formatting]")
-{
-    testing::start_in_debug_map();
-    testing::set_japanese();
-    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 4, 8);
 
     REQUIRE(i18n::fmt_hil("${name(_1)}", chara) == u8"何か"s);
     REQUIRE(i18n::fmt_hil("${basename(_1)}", chara) == u8"プチ"s);
     REQUIRE(i18n::fmt_hil("${basename(_1)}: ${_2}", chara, 42) == u8"プチ: 42");
 }
 
-TEST_CASE("test format item by function", "[I18N: Formatting]")
+TEST_CASE("test format item", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
-    testing::set_japanese();
     Item& i = testing::create_item(PUTITORO_PROTO_ID, 3);
+
+    REQUIRE(
+        i18n::fmt_hil("${_1}", i) ==
+        u8"<Item: "s + std::to_string(i.index) + u8">"s);
 
     REQUIRE(i18n::fmt_hil("${itemname(_1)}", i) == u8"3個のプチトロ"s);
     REQUIRE(i18n::fmt_hil("${itembasename(_1)}", i) == u8"プチトロ"s);
 }
-
 
 TEST_CASE("test i18n store literal", "[I18N: Store]")
 {
@@ -92,9 +75,8 @@ locale {
 }
 )");
 
-    REQUIRE(store.get(u8"test.locale.foo") == u8"bar");
-    REQUIRE(
-        store.get(u8"test.locale.baz") == u8"<Unknown ID: test.locale.baz>");
+    REQUIRE(store.get(u8"test.foo") == u8"bar");
+    REQUIRE(store.get(u8"test.baz") == u8"<Unknown ID: test.baz>");
 }
 
 TEST_CASE("test i18n store nested literal", "[I18N: Store]")
@@ -107,7 +89,7 @@ locale {
 }
 )");
 
-    REQUIRE(store.get(u8"test.locale.foo.bar") == u8"baz");
+    REQUIRE(store.get(u8"test.foo.bar") == u8"baz");
 }
 
 TEST_CASE("test i18n store multiple nested literals", "[I18N: Store]")
@@ -123,8 +105,8 @@ locale {
 }
 )");
 
-    REQUIRE(store.get(u8"test.locale.foo.bar") == u8"baz");
-    REQUIRE(store.get(u8"test.locale.hoge.fuga") == u8"piyo");
+    REQUIRE(store.get(u8"test.foo.bar") == u8"baz");
+    REQUIRE(store.get(u8"test.hoge.fuga") == u8"piyo");
 }
 
 TEST_CASE("test i18n store enum", "[I18N: Store]")
@@ -138,8 +120,8 @@ locale {
 }
 )");
 
-    REQUIRE(store.get_enum(u8"test.locale.foo", 1) == u8"bar");
-    REQUIRE(store.get_enum(u8"test.locale.foo", 2) == u8"baz");
+    REQUIRE(store.get_enum(u8"test.foo", 1) == u8"bar");
+    REQUIRE(store.get_enum(u8"test.foo", 2) == u8"baz");
 }
 
 
@@ -158,8 +140,8 @@ locale {
 }
 )");
 
-    REQUIRE(store.get_enum_property(u8"test.locale.foo", "name", 1) == u8"bar");
-    REQUIRE(store.get_enum_property(u8"test.locale.foo", "name", 2) == u8"baz");
+    REQUIRE(store.get_enum_property(u8"test.foo", "name", 1) == u8"bar");
+    REQUIRE(store.get_enum_property(u8"test.foo", "name", 2) == u8"baz");
 }
 
 TEST_CASE("test i18n store interpolation", "[I18N: Store]")
@@ -170,10 +152,10 @@ locale {
 }
 )");
 
-    REQUIRE(store.get(u8"test.locale.foo") == u8"bar: <missing>");
-    REQUIRE(store.get(u8"test.locale.foo", 12) == u8"bar: 12");
-    REQUIRE(store.get(u8"test.locale.foo", u8"baz") == u8"bar: baz");
-    REQUIRE(store.get(u8"test.locale.foo", u8"baz", "hoge") == u8"bar: baz");
+    REQUIRE(store.get(u8"test.foo") == u8"bar: <missing>");
+    REQUIRE(store.get(u8"test.foo", 12) == u8"bar: 12");
+    REQUIRE(store.get(u8"test.foo", u8"baz") == u8"bar: baz");
+    REQUIRE(store.get(u8"test.foo", u8"baz", "hoge") == u8"bar: baz");
 }
 
 TEST_CASE("test i18n store multiple interpolation", "[I18N: Store]")
@@ -184,13 +166,11 @@ locale {
 }
 )");
 
-    REQUIRE(store.get(u8"test.locale.foo") == u8"<missing>: <missing>");
-    REQUIRE(store.get(u8"test.locale.foo", 42) == u8"<missing>: 42");
-    REQUIRE(store.get(u8"test.locale.foo", 12, u8"bar") == u8"bar: 12");
-    REQUIRE(store.get(u8"test.locale.foo", u8"bar", u8"baz") == u8"baz: bar");
-    REQUIRE(
-        store.get(u8"test.locale.foo", u8"bar", u8"baz", "hoge") ==
-        u8"baz: bar");
+    REQUIRE(store.get(u8"test.foo") == u8"<missing>: <missing>");
+    REQUIRE(store.get(u8"test.foo", 42) == u8"<missing>: 42");
+    REQUIRE(store.get(u8"test.foo", 12, u8"bar") == u8"bar: 12");
+    REQUIRE(store.get(u8"test.foo", u8"bar", u8"baz") == u8"baz: bar");
+    REQUIRE(store.get(u8"test.foo", u8"bar", u8"baz", "hoge") == u8"baz: bar");
 }
 
 
@@ -210,10 +190,10 @@ locale {
 )");
 
     REQUIRE(
-        store.get_enum_property(u8"test.locale.foo", "name", 1, "dood") ==
+        store.get_enum_property(u8"test.foo", "name", 1, "dood") ==
         u8"bar: dood");
     REQUIRE(
-        store.get_enum_property(u8"test.locale.foo", "name", 2, "dood") ==
+        store.get_enum_property(u8"test.foo", "name", 2, "dood") ==
         u8"baz: dood");
 }
 
@@ -226,7 +206,7 @@ locale {
 }
 )");
 
-    REQUIRE(store.get(u8"test.locale.foo", "dood") == u8"baz: dood");
+    REQUIRE(store.get(u8"test.foo", "dood") == u8"baz: dood");
 }
 
 TEST_CASE("test i18n halfwidth katakana", "[I18N: Store]")
@@ -238,7 +218,7 @@ locale {\
 }\
 "s);
 
-    REQUIRE(store.get(u8"test.locale.ether_disease") == u8"ｴｰﾃﾙ病"s);
+    REQUIRE(store.get(u8"test.ether_disease") == u8"ｴｰﾃﾙ病"s);
 }
 
 TEST_CASE("test loading i18n data from multiple sources", "[I18N: Store]")
@@ -250,6 +230,6 @@ TEST_CASE("test loading i18n data from multiple sources", "[I18N: Store]")
                  "test_i18n_b"}});
 
 
-    REQUIRE(store.get(u8"test_i18n_a.locale.test") == u8"こんばんは"s);
-    REQUIRE(store.get(u8"test_i18n_b.locale.test") == u8"こんにちは"s);
+    REQUIRE(store.get(u8"test_i18n_a.test") == u8"こんばんは"s);
+    REQUIRE(store.get(u8"test_i18n_b.test") == u8"こんにちは"s);
 }

@@ -1,10 +1,10 @@
-local Chara = Elona.require("Chara")
-local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
-local World = Elona.require("World")
-local table = Elona.require("table")
+local Chara = require("game.Chara")
+local GUI = require("game.GUI")
+local I18N = require("game.I18N")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
+local World = require("game.World")
+local table = require("game.table")
 
 local function upgrade_cart_cost()
    return (World.data.current_cart_limit - World.data.initial_cart_limit) / 10000 + 1
@@ -21,7 +21,7 @@ local function upgrade_cargo_limit()
 
    GUI.txtnew()
    GUI.txt(I18N.get(
-          "core.locale.talk.unique.miral.upgrade_cart.give.limit_increased",
+          "core.talk.unique.miral.upgrade_cart.give.limit_increased",
           Item.weight_string(amount)))
    GUI.play_sound("core.build1")
 
@@ -32,7 +32,7 @@ end
 
 return {
    id = "miral",
-   root = "core.locale.talk.unique.miral",
+   root = "core.talk.unique.miral",
    nodes = {
       __start = {
          text = {

@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: elonafoobar/build:latest
+
+    steps:
+      - checkout
+
+      - run:
+          name: clang-format
+          command: make format
+
+      - run:
+          name: putit
+          command: make putit
+
+      - run:
+          name: doc
+          command: |
+            source ~/.cargo/env && make docgen
+            make ldoc
+
+      - run:
+          name: luacheck
+          command: make luacheck || true

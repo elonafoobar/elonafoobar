@@ -100,9 +100,9 @@ static void _update_pets_moving_status()
 static void _prompt_initialize_map()
 {
     tmpload(filepathutil::u8path(u8"mdata_"s + mid + u8".s2"));
-    if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
+    if (fs::exists(filesystem::dirs::tmp() / (u8"mdata_"s + mid + u8".s2")))
     {
-        int stat = dialog(i18n::s.get("core.locale.map.prompt_initialize"), 3);
+        int stat = dialog(i18n::s.get("core.map.prompt_initialize"), 3);
         if (stat == 6)
         {
             ctrl_file(FileOperation::map_delete);
@@ -205,7 +205,7 @@ static void _relocate_overlapping_area(Area& area)
             continue;
         }
         dialog(i18n::s.get(
-            "core.locale.map.location_changed",
+            "core.map.location_changed",
             mapname(p),
             area.position.x,
             area.position.y,
@@ -335,7 +335,7 @@ static void _proc_three_years_later()
             game_data.player_next_move_direction = 1;
             game_data.player_x_on_map_leave = -1;
             Message::instance().buffered_message_begin(
-                "  " + i18n::s.get("core.locale.scenario.three_years_later"));
+                "  " + i18n::s.get("core.scenario.three_years_later"));
         }
     }
 }
@@ -818,7 +818,7 @@ static void _update_quest_flags_lesimas()
 
 static void _update_paels_mom()
 {
-    tc = chara_find(222);
+    tc = chara_find("core.lily");
     if (tc != 0)
     {
         if (game_data.quest_flags.pael_and_her_mom >= 10)
@@ -904,8 +904,7 @@ static void _proc_no_dungeon_master()
         if (area_data[game_data.current_map].has_been_conquered == -1)
         {
             Message::instance().buffered_message_append(i18n::s.get(
-                "core.locale.map.no_dungeon_master",
-                mapname(game_data.current_map)));
+                "core.map.no_dungeon_master", mapname(game_data.current_map)));
         }
     }
 }
@@ -945,7 +944,7 @@ static void _notify_distance_traveled()
 {
     p = game_data.date.hours() - game_data.departure_date;
     txt(i18n::s.get(
-        "core.locale.map.since_leaving.time_passed",
+        "core.map.since_leaving.time_passed",
         p / 24,
         p % 24,
         mapname(game_data.left_town_map),
@@ -970,13 +969,13 @@ static void _notify_distance_traveled()
     if (p == 1)
     {
         txt(i18n::s.get(
-            "core.locale.map.since_leaving.walked.you",
+            "core.map.since_leaving.walked.you",
             game_data.distance_between_town));
     }
     else
     {
         txt(i18n::s.get(
-            "core.locale.map.since_leaving.walked.you_and_allies",
+            "core.map.since_leaving.walked.you_and_allies",
             game_data.distance_between_town));
     }
     chara_gain_skill_exp(
@@ -990,21 +989,21 @@ static void _notify_distance_traveled()
 
 static void _remove_lomias_and_larnneire()
 {
-    if (chara_find(33) != 0)
+    if (chara_find("core.larnneire") != 0)
     {
-        chara_vanquish(chara_find(33));
+        chara_vanquish(chara_find("core.larnneire"));
     }
-    if (chara_find(34) != 0)
+    if (chara_find("core.lomias") != 0)
     {
-        chara_vanquish(chara_find(34));
+        chara_vanquish(chara_find("core.lomias"));
     }
 }
 
 static void _remove_xabi()
 {
-    if (chara_find(80) != 0)
+    if (chara_find("core.xabi") != 0)
     {
-        chara_vanquish(chara_find(80));
+        chara_vanquish(chara_find("core.xabi"));
     }
 }
 
@@ -1272,7 +1271,7 @@ init_map_begin:
     }
 
     tmpload(filepathutil::u8path(u8"mdata_"s + mid + u8".s2"));
-    if (fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
+    if (fs::exists(filesystem::dirs::tmp() / (u8"mdata_"s + mid + u8".s2")))
     {
         ctrl_file(FileOperation::map_read);
         if (map_data.refresh_type == 0)
@@ -1311,7 +1310,7 @@ init_map_after_refresh:
     {
         if (medit == 0)
         {
-            dialog(i18n::s.get("core.locale.map.loading_failed"));
+            dialog(i18n::s.get("core.map.loading_failed"));
             mode = 2;
             game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
             game_data.current_dungeon_level = 1;

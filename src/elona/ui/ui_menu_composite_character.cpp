@@ -15,19 +15,15 @@ void UIMenuCompositeCharacter::add_menus()
     push_back(
         std::make_unique<UIMenuCharacterSheet>(CharacterSheetOperation::normal),
         9,
-        "core.locale.ui.menu.chara.chara");
+        "core.ui.menu.chara.chara");
     push_back(
-        std::make_unique<UIMenuEquipment>(),
-        10,
-        "core.locale.ui.menu.chara.wear");
+        std::make_unique<UIMenuEquipment>(), 10, "core.ui.menu.chara.wear");
     push_back(
         std::make_unique<UIMenuFeats>(UIMenuFeats::Operation::normal),
         11,
-        "core.locale.ui.menu.chara.feat");
+        "core.ui.menu.chara.feat");
     push_back(
-        std::make_unique<UIMenuMaterials>(),
-        12,
-        "core.locale.ui.menu.chara.material");
+        std::make_unique<UIMenuMaterials>(), 12, "core.ui.menu.chara.material");
 }
 
 } // namespace ui

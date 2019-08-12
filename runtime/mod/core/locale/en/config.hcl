@@ -57,6 +57,7 @@ locale {
 
             formatter {
                 wait = "${_1} wait"
+                every_minutes = "Every ${_1} min."
             }
         }
 
@@ -102,12 +103,12 @@ DOC
                 name = "Screen & Sound"
                 sound {
                     name = "Sound*"
-                    yes_no = core.locale.config.common.yes_no.on_off
+                    yes_no = core.config.common.yes_no.on_off
                     doc = "Enable or disable sound."
                 }
                 music {
                     name = "Music*"
-                    yes_no = core.locale.config.common.yes_no.on_off
+                    yes_no = core.config.common.yes_no.on_off
                     doc = "Enable or disable music."
                 }
                 stereo_sound {
@@ -161,12 +162,12 @@ DOC
                 high_quality_shadows {
                     name = "Shadow Quality"
                     doc = "Render shadows at higher quality."
-                    yes_no = core.locale.config.common.yes_no.high_low
+                    yes_no = core.config.common.yes_no.high_low
                 }
                 object_shadows {
                     name = "Object Shadow"
                     doc = "Display shadows under items on the ground."
-                    yes_no = core.locale.config.common.yes_no.slow_fast
+                    yes_no = core.config.common.yes_no.slow_fast
                 }
                 heartbeat {
                     name = "Heartbeat Sound"
@@ -190,21 +191,71 @@ DOC
 
             net {
                 name = "Network Setting"
-                enabled {
+                is_enabled {
                     name = "Use Network"
                     doc = <<DOC
-Enable network features (chat, alias, and moongate).
-Currently unimplemented.
+Enable or disable network-related features.
+The following options are available only if the option is set to Yes.
 DOC
                 }
-                wish {
-                    name = "Constantly Connect"
-                }
                 chat {
-                    name = "Filter Chat"
+                    name = "Chat Log"
+                    variants {
+                        "disabled" = "Disable"
+                        "receive" = "Only receive"
+                        "send_receive" = "Send & receive"
+                    }
                 }
-                server_list {
-                    name = "Use Custom Server"
+                death {
+                    name = "Death Log"
+                    variants {
+                        "disabled" = "Disable"
+                        "receive" = "Only receive"
+                        "send_receive" = "Send & receive"
+                    }
+                }
+                wish {
+                    name = "Wish Log"
+                    variants {
+                        "disabled" = "Disable"
+                        "receive" = "Only receive"
+                        "send_receive" = "Send & receive"
+                    }
+                }
+                news {
+                    name = "Palmia Times"
+                    variants {
+                        "disabled" = "Disable"
+                        "receive" = "Only receive"
+                        "send_receive" = "Send & receive"
+                    }
+                }
+                is_alias_vote_enabled {
+                    name = "Alias Vote"
+                    yes_no = core.config.common.yes_no.enable_disable
+                }
+                hide_your_name {
+                    name = "Hide Your Name"
+                    doc = <<DOC
+If you set the option Yes, your character's name is replaced with a random name
+when sending chat, death or wish log.
+When you register your name, the converted one is used, too.
+DOC
+                }
+                hide_your_alias {
+                    name = "Hide Your Alias"
+                    doc = <<DOC
+If you set the option Yes, your character's alias is replaced with a random alias
+when sending chat, death or wish log.
+When you register your alias, the converted one is used, too.
+DOC
+                }
+                chat_receive_interval {
+                    name = "Chat Interval"
+                    formatter = core.config.common.formatter.every_minutes
+                    doc = <<DOC
+Set the interval between receiving chat, death wish and news log.
+DOC
                 }
             }
 
@@ -227,7 +278,7 @@ DOC
                 }
                 general_wait {
                     name = "General Wait"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                     doc = <<DOC
 Number of frames to wait for most animations/actions.
 For example, it controls the amount of delay for input polling.
@@ -235,7 +286,7 @@ DOC
                 }
                 anime_wait {
                     name = "Animation Wait"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                     doc = <<DOC
 Number of frames to wait for animations.
 This also acts as multiplier for the speed of auto-turn actions.
@@ -270,7 +321,7 @@ DOC
                 }
                 title_effect {
                     name = "Title Water Effect"
-                    yes_no = core.locale.config.common.yes_no.on_off
+                    yes_no = core.config.common.yes_no.on_off
                     doc = <<DOC
 Play animations at the title screen.
 DOC
@@ -281,7 +332,7 @@ DOC
                 }
                 screen_refresh {
                     name = "Screen Refresh"
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                     doc = <<DOC
 Number of frames to wait between updates to animations in the screen, like rain/lighting.
 This does not affect key delay or animations that block input.
@@ -302,12 +353,12 @@ DOC
                 walk_wait {
                     name = "Walk Speed"
                     doc = "Number of frames to wait between movement commands when walking."
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 run_wait {
                     name = "Run Speed"
                     doc = "Number of frames to wait between movement commands when running."
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 start_run_wait {
                     name = "Run Start Wait"
@@ -317,31 +368,41 @@ DOC
                 attack_wait {
                     name = "Attack Interval"
                     doc = "Number of frames to wait between consecutive attacks when running into enemies."
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 key_wait {
                     name = "Key Wait"
                     doc = "Number of frames to wait between presses of shortcut keys."
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
+                }
+                initial_key_repeat_wait {
+                    name = "Initial key repeat wait"
+                    doc = "Number of frames to wait between the first action and the second."
+                    formatter = core.config.common.formatter.wait
+                }
+                key_repeat_wait {
+                    name = "Key repeat wait"
+                    doc = "Number of frames to wait between any actions."
+                    formatter = core.config.common.formatter.wait
                 }
                 select_wait {
                     name = "Select Wait"
                     doc = "Number of frames to wait between item selection initially."
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 select_fast_start_wait {
                     name = "Select Fast Start Wait"
                     doc = "Number of selections to wait before selecting quickly."
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 select_fast_wait {
                     name = "Select Fast Wait"
                     doc = "Number of frames to wait between item selection when selecting quickly."
-                    formatter = core.locale.config.common.formatter.wait
+                    formatter = core.config.common.formatter.wait
                 }
                 joypad {
                     name = "Game Pad"
-                    yes_no = core.locale.config.common.yes_no.unsupported #core.locale.config.common.yes_no.use_dont_use
+                    yes_no = core.config.common.yes_no.unsupported #core.config.common.yes_no.use_dont_use
                     doc = <<DOC
 Enable gamepads.
 Currently unimplemented.
@@ -461,19 +522,19 @@ DOC
                 }
                 leash_icon {
                     name = "Leash icon"
-                    yes_no = core.locale.config.common.yes_no.show_dont_show
+                    yes_no = core.config.common.yes_no.show_dont_show
                     doc = <<DOC
 Display a leash icon for leashed pets.
 DOC
                 }
                 autopick {
                     name = "Autopick"
-                    yes_no = core.locale.config.common.yes_no.use_dont_use
+                    yes_no = core.config.common.yes_no.use_dont_use
                     doc = "Automatically pick up items you pass over."
                 }
                 autosave {
                     name = "Autosave"
-                    yes_no = core.locale.config.common.yes_no.enable_disable
+                    yes_no = core.config.common.yes_no.enable_disable
                     doc = <<DOC
 Automatically save the game at certain intervals.
 These include (but are not limited to):
@@ -484,7 +545,7 @@ DOC
                 }
                 damage_popup {
                     name = "Damage popup"
-                    yes_no = core.locale.config.common.yes_no.on_off
+                    yes_no = core.config.common.yes_no.on_off
                     doc = "Show damage popups."
                 }
                 max_damage_popup {
@@ -511,7 +572,7 @@ DOC
 
                 show_fps {
                     name = "Show FPS"
-                    yes_no = core.locale.config.common.yes_no.show_dont_show
+                    yes_no = core.config.common.yes_no.show_dont_show
                 }
 
                 skip_confirm_at_shop {

@@ -45,8 +45,9 @@ namespace
 
 void initialize_directories()
 {
-    const boost::filesystem::path paths[] = {filesystem::dir::save(),
-                                             filesystem::dir::tmp()};
+    const boost::filesystem::path paths[] = {filesystem::dirs::save(),
+                                             filesystem::dirs::screenshot(),
+                                             filesystem::dirs::tmp()};
 
     for (const auto& path : paths)
     {
@@ -61,7 +62,6 @@ void initialize_directories()
 
 void load_character_sprite()
 {
-    usernpcmax = 0;
     DIM3(userdata, 70, 1);
     SDIM4(userdatan, 40, 10, 1);
 }
@@ -136,7 +136,7 @@ namespace elona
 void initialize_lua()
 {
     // Scan mods under "mods/" folder.
-    lua::lua->get_mod_manager().load_mods(filesystem::dir::mod());
+    lua::lua->get_mod_manager().load_mods(filesystem::dirs::mod());
 
     // Initialize "console" mod.
     lua::lua->get_console().init_environment();
@@ -164,7 +164,7 @@ void initialize_config()
 
     if (defines::is_android)
     {
-        snail::TouchInput::instance().initialize(filesystem::dir::graphic());
+        snail::TouchInput::instance().initialize(filesystem::dirs::graphic());
     }
 
     time_warn = timeGetTime() / 1000;
@@ -194,21 +194,16 @@ void initialize_i18n()
 
     // Load built-in translations in data/locale/(jp|en).
     std::vector<i18n::Store::Location> locations{
-        {filesystem::dir::locale() / language, "core"}};
+        {filesystem::dirs::locale() / language, "core"}};
 
     // Load translations for each mod.
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::mod(), filesystem::DirEntryRange::Type::dir))
+    for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dirs::mod()))
     {
-        const auto manifest_path = entry.path() / "mod.hcl";
-        if (fs::exists(manifest_path))
+        const auto manifest = lua::ModManifest::load(mod_dir / "mod.hcl");
+        const auto locale_path = mod_dir / "locale" / language;
+        if (fs::exists(locale_path))
         {
-            lua::ModManifest manifest = lua::ModManifest::load(manifest_path);
-            const auto locale_path = entry.path() / "locale" / language;
-            if (fs::exists(locale_path))
-            {
-                locations.emplace_back(locale_path, manifest.id);
-            }
+            locations.emplace_back(locale_path, manifest.id);
         }
     }
 
@@ -230,7 +225,7 @@ void initialize_elona()
     buffer(8, windoww, windowh);
     gsel(0);
     buffer(1, 1584, 1200);
-    picload(filesystem::dir::graphic() / u8"item.bmp", 0, 0, false);
+    picload(filesystem::dirs::graphic() / u8"item.bmp", 0, 0, false);
     if (inf_tiles != 48)
     {
         gcopy(1, 0, 0, 1584, 1200, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
@@ -261,7 +256,6 @@ void initialize_elona()
     SDIM3(qname, 40, 500);
     DIM2(gdata, 1000);
     DIM2(genetemp, 1000);
-    SDIM3(gdatan, 40, 50);
     DIM2(mdatatmp, 100);
     map_data.clear();
     SDIM3(mdatan, 20, 2);
@@ -424,7 +418,8 @@ void initialize_elona()
     initialize_cell_object_data();
     load_random_title_table();
     load_random_name_table();
-    game_data.random_seed = rnd(800) + 2;
+    game_data.random_seed = 1 + rnd(2000000000);
+    game_data.random_seed_offset = 0;
     set_item_info();
     clear_trait_data();
     initialize_rankn();
@@ -570,7 +565,8 @@ void initialize_debug_globals()
     game_data.pc_x_in_world_map = 22;
     game_data.pc_y_in_world_map = 21;
     game_data.previous_map = -1;
-    game_data.random_seed = rnd(800) + 2;
+    game_data.random_seed = 1 + rnd(2000000000);
+    game_data.random_seed_offset = 0;
     game_data.current_map = static_cast<int>(mdata_t::MapId::north_tyris);
     game_data.current_dungeon_level = 0;
     game_data.entrance_type = 7;
@@ -621,7 +617,7 @@ void initialize_debug_globals()
         mat(cnt) = 200;
     }
     create_all_adventurers();
-    create_pcpic(0);
+    create_pcpic(cdata.player());
     cdatan(1, 0) = random_title(RandomTitleType::character);
     cdatan(0, 0) = random_name();
 }
@@ -697,18 +693,13 @@ void initialize_config_defs()
     Config::instance().clear();
 
     // Somewhat convoluted as mods haven't been loaded yet by the mod manager.
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::mod(), filesystem::DirEntryRange::Type::dir))
+    for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dirs::mod()))
     {
-        const auto manifest_path = entry.path() / "mod.hcl";
-        if (fs::exists(manifest_path))
+        const auto manifest = lua::ModManifest::load(mod_dir / "mod.hcl");
+        const auto config_def_path = mod_dir / "config_def.hcl";
+        if (fs::exists(config_def_path))
         {
-            lua::ModManifest manifest = lua::ModManifest::load(manifest_path);
-            const auto config_def_path = entry.path() / "config_def.hcl";
-            if (fs::exists(config_def_path))
-            {
-                Config::instance().load_def(config_def_path, manifest.id);
-            }
+            Config::instance().load_def(config_def_path, manifest.id);
         }
     }
 }
@@ -738,7 +729,7 @@ void init()
         // If no font is specified in `config.hcl`, use a pre-defined font
         // depending on each language.
         Config::instance().font_filename =
-            i18n::s.get("core.locale.meta.default_font");
+            i18n::s.get("core.meta.default_font");
         if (jp)
         {
             // TODO: work around
@@ -751,6 +742,13 @@ void init()
     initialize_elona();
 
     Config::instance().save();
+
+    // It is necessary to calculate PC's birth year correctly.
+    game_data.date.year = 517;
+    game_data.date.month = 8;
+    game_data.date.day = 12;
+    game_data.date.hour = 16;
+    game_data.date.minute = 10;
 
     quickpage = 1;
 

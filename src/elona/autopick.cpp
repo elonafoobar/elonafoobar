@@ -22,7 +22,7 @@ struct ModifierMatchResult
 
 struct ModifierMatcher
 {
-    // It does not contain the prefix, "core.locale.autopick.modifier."
+    // It does not contain the prefix, "core.autopick.modifier."
     const char* locale_key;
     std::function<bool(const Item&)> predicate;
 };
@@ -33,20 +33,19 @@ std::vector<ModifierMatcher> _modifier_matchers = {
     {"all", [](const Item&) { return true; }},
     {"unknown",
      [](const Item& item) {
-         return item.identification_state == IdentifyState::unidentified;
+         return item.identify_state == IdentifyState::unidentified;
      }},
     {"identify_stage1",
      [](const Item& item) {
-         return item.identification_state == IdentifyState::partly_identified;
+         return item.identify_state == IdentifyState::partly;
      }},
     {"identify_stage2",
      [](const Item& item) {
-         return item.identification_state == IdentifyState::almost_identified;
+         return item.identify_state == IdentifyState::almost;
      }},
     {"identify_stage3",
      [](const Item& item) {
-         return item.identification_state ==
-             IdentifyState::completely_identified;
+         return item.identify_state == IdentifyState::completely;
      }},
     {"worthless", [](const Item& item) { return item.value <= 10; }},
     {"rotten", [](const Item& item) { return item.param3 < 0; }},
@@ -56,52 +55,52 @@ std::vector<ModifierMatcher> _modifier_matchers = {
      }},
     {"bad",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identify_state >= IdentifyState::almost &&
              item.quality == Quality::bad;
      }},
     {"good",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identify_state >= IdentifyState::almost &&
              item.quality == Quality::good;
      }},
     {"great",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identify_state >= IdentifyState::almost &&
              item.quality == Quality::great;
      }},
     {"miracle",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identify_state >= IdentifyState::almost &&
              item.quality == Quality::miracle;
      }},
     {"godly",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identify_state >= IdentifyState::almost &&
              item.quality == Quality::godly;
      }},
     {"special",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identify_state >= IdentifyState::almost &&
              item.quality == Quality::special;
      }},
     {"precious",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identify_state >= IdentifyState::almost &&
              item.is_precious();
      }},
     {"blessed",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identify_state >= IdentifyState::almost &&
              item.curse_state == CurseState::blessed;
      }},
     {"cursed",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identify_state >= IdentifyState::almost &&
              item.curse_state == CurseState::cursed;
      }},
     {"doomed",
      [](const Item& item) {
-         return item.identification_state >= IdentifyState::almost_identified &&
+         return item.identify_state >= IdentifyState::almost &&
              item.curse_state == CurseState::doomed;
      }},
     {"alive", [](const Item& item) { return item.is_alive(); }},
@@ -111,7 +110,7 @@ std::vector<ModifierMatcher> _modifier_matchers = {
 
 ModifierMatchResult _check_modifiers(const std::string& text, const Item& item)
 {
-    const auto word_separator = i18n::s.get("core.locale.meta.word_separator");
+    const auto word_separator = i18n::s.get("core.meta.word_separator");
 
     ModifierMatchResult result{
         true, false, word_separator + text + word_separator};
@@ -119,8 +118,7 @@ ModifierMatchResult _check_modifiers(const std::string& text, const Item& item)
     for (const auto& matcher : _modifier_matchers)
     {
         const auto word = word_separator +
-            i18n::s.get(
-                "core.locale.autopick.modifier."s + matcher.locale_key) +
+            i18n::s.get("core.autopick.modifier."s + matcher.locale_key) +
             word_separator;
         if (strutil::contains(result.text_without_modifier, word))
         {
@@ -145,14 +143,14 @@ ModifierMatchResult _check_modifiers(const std::string& text, const Item& item)
 bool _check_category(const std::string& text, const Item& item)
 {
     const auto category = the_item_db[item.id]->category;
-    const auto word_separator = i18n::s.get("core.locale.meta.word_separator");
+    const auto word_separator = i18n::s.get("core.meta.word_separator");
     const auto text_ = word_separator + text + word_separator;
 
 #define ELONA_AUTOPICK_CATEGORY(locale_key, expected_category) \
     if (strutil::contains( \
             text_, \
             word_separator + \
-                i18n::s.get("core.locale.autopick.category." #locale_key) + \
+                i18n::s.get("core.autopick.category." #locale_key) + \
                 word_separator)) \
     { \
         return category == expected_category; \
@@ -160,15 +158,14 @@ bool _check_category(const std::string& text, const Item& item)
 
     if (strutil::contains(
             text_,
-            word_separator + i18n::s.get("core.locale.autopick.category.item") +
+            word_separator + i18n::s.get("core.autopick.category.item") +
                 word_separator))
     {
         return true;
     }
     if (strutil::contains(
             text_,
-            word_separator +
-                i18n::s.get("core.locale.autopick.category.equipment") +
+            word_separator + i18n::s.get("core.autopick.category.equipment") +
                 word_separator))
     {
         return category < 50000;
@@ -230,9 +227,9 @@ void Autopick::load(const std::string& player_id)
     _clear();
 
     // Priority: save/xxx/autopick > save/autopick > /autopick
-    for (const auto directory : {filesystem::dir::save(player_id),
-                                 filesystem::dir::save(),
-                                 filesystem::dir::exe()})
+    for (const auto directory : {filesystem::dirs::save(player_id),
+                                 filesystem::dirs::save(),
+                                 filesystem::dirs::exe()})
     {
         for (const auto filename :
              {u8"autopick", u8"autopick.txt", u8"autopick.txt.txt"})
@@ -377,7 +374,7 @@ bool Autopick::Matcher::matches(const Item& ci) const
     const auto item_name = cnvitemname(ci.id);
     // You have to know that the item is known as the name to match by the name.
     const auto you_know_the_name =
-        ci.identification_state != IdentifyState::unidentified;
+        ci.identify_state != IdentifyState::unidentified;
     const auto item_name_matched_with_text = you_know_the_name &&
         strutil::contains(item_name,
                           modifier_match_result.text_without_modifier);

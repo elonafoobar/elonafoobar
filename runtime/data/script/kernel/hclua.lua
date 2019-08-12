@@ -1,5 +1,5 @@
-local Parser = require 'hclua.parser'
-local Decoder = require 'hclua.decoder'
+local Parser = require_relative("hclua.parser")
+local Decoder = require_relative("hclua.decoder")
 local open = io.open
 
 local function parse(source)

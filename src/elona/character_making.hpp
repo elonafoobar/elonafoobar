@@ -16,6 +16,6 @@ MainMenuResult character_making_customize_appearance();
 MainMenuResult character_making_final_phase();
 
 void character_making_draw_background(const std::string& key);
-void draw_race_or_class_info();
+void draw_race_or_class_info(const std::string& description);
 
 } // namespace elona

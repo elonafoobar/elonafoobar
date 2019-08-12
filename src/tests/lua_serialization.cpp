@@ -18,87 +18,87 @@ using namespace elona::testing;
 TEST_CASE("Test that store can be reset", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
-        "test", "Store.global.thing = 1"));
+        "test", "mod.store.global.thing = 1"));
 
     lua.get_mod_manager().clear_mod_stores();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", "assert(Store.global.thing == nil)"));
+        "test", "assert(mod.store.global.thing == nil)"));
 }
 
 TEST_CASE("Test that store can be assigned", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
-Store.global.thing = 1
-assert(Store.global.thing == 1)
+mod.store.global.thing = 1
+assert(mod.store.global.thing == 1)
 )"));
 
     REQUIRE_NOTHROW(
-        lua.get_mod_manager().run_in_mod("test", R"(Store.global = {})"));
+        lua.get_mod_manager().run_in_mod("test", R"(mod.store.global = {})"));
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test", R"(
-Store.global = true
-assert(Store.global == true)
+mod.store.global = true
+assert(mod.store.global == true)
 )"));
 }
 
 TEST_CASE("Test that store cannot have new fields", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_THROWS(lua.get_mod_manager().load_mod_from_script("test", R"(
-Store.test = {}
+mod.store.test = {}
 )"));
 }
 
 TEST_CASE("Test that store can be reset across mods", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
-        "test1", "Store.global.mine = false; Store.global.thing = 1"));
+        "test1", "mod.store.global.mine = false; mod.store.global.thing = 1"));
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
-        "test2", "Store.global.theirs = true; Store.global.thing = 2"));
+        "test2", "mod.store.global.theirs = true; mod.store.global.thing = 2"));
 
     lua.get_mod_manager().clear_mod_stores();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test1", "assert(Store.global.thing == nil)"));
+        "test1", "assert(mod.store.global.thing == nil)"));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test1", "assert(Store.global.mine == nil)"));
+        "test1", "assert(mod.store.global.mine == nil)"));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test2", "assert(Store.global.thing == nil)"));
+        "test2", "assert(mod.store.global.thing == nil)"));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test2", "assert(Store.global.theirs == nil)"));
+        "test2", "assert(mod.store.global.theirs == nil)"));
 }
 
 TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", ""));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(Rand = Elona.require("Rand"); assert(Rand ~= nil))"));
+        "test", R"(Rand = require("game.Rand"); assert(Rand ~= nil))"));
 
     lua.get_mod_manager().clear_mod_stores();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", R"(Rand = Elona.require("Rand"); assert(Rand ~= nil))"));
+        "test", R"(Rand = require("game.Rand"); assert(Rand ~= nil))"));
 }
 
 TEST_CASE("Test that globals aren't reset", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", ""));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
@@ -115,13 +115,13 @@ TEST_CASE(
     "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_map_init_hook()
-   Store.global.val = 42
+   mod.store.global.val = 42
 end
 
 Event.register("core.map_initialized", my_map_init_hook)
@@ -130,17 +130,17 @@ Event.register("core.map_initialized", my_map_init_hook)
     lua.get_event_manager().trigger(
         elona::lua::MapInitializedEvent(true, "", 0));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", "assert(Store.global.val == 42)"));
+        "test", "assert(mod.store.global.val == 42)"));
 
     lua.get_mod_manager().clear_mod_stores();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", "assert(Store.global.thing == nil)"));
+        "test", "assert(mod.store.global.thing == nil)"));
 
     lua.get_event_manager().trigger(
         elona::lua::MapInitializedEvent(true, "", 0));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
-        "test", "assert(Store.global.val == 42)"));
+        "test", "assert(mod.store.global.val == 42)"));
 }
 
 TEST_CASE("Test preservation of global data", "[Lua: Serialization]")
@@ -149,19 +149,19 @@ TEST_CASE("Test preservation of global data", "[Lua: Serialization]")
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_serial_global", R"(
-Store.global.val = 42
+mod.store.global.val = 42
 )"));
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-        "test_serial_global", "assert(Store.global.val == 42)"));
+        "test_serial_global", "assert(mod.store.global.val == 42)"));
 
     run_in_temporary_map(6, 1, []() {
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-            "test_serial_global", "assert(Store.global.val == 42)"));
+            "test_serial_global", "assert(mod.store.global.val == 42)"));
     });
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-        "test_serial_global", "assert(Store.global.val == 42)"));
+        "test_serial_global", "assert(mod.store.global.val == 42)"));
 }
 
 
@@ -171,19 +171,19 @@ TEST_CASE("Test preservation of map local data", "[Lua: Serialization]")
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_serial_map", R"(
-Store.map.val = 42
+mod.store.map.val = 42
 )"));
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-        "test_serial_map", "assert(Store.map.val == 42)"));
+        "test_serial_map", "assert(mod.store.map.val == 42)"));
 
     run_in_temporary_map(6, 1, []() {
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-            "test_serial_map", "assert(Store.map.val == nil)"));
+            "test_serial_map", "assert(mod.store.map.val == nil)"));
     });
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-        "test_serial_map", "assert(Store.map.val == 42)"));
+        "test_serial_map", "assert(mod.store.map.val == 42)"));
 }
 
 
@@ -193,29 +193,29 @@ TEST_CASE("Test preservation of data across reloads", "[Lua: Serialization]")
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_serial_reload", R"(
-Store.global.val = 42
-Store.map.val = "hoge"
+mod.store.global.val = 42
+mod.store.map.val = "hoge"
 )"));
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-        "test_serial_reload", "assert(Store.global.val == 42)"));
+        "test_serial_reload", "assert(mod.store.global.val == 42)"));
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-        "test_serial_reload", "assert(Store.map.val == \"hoge\")"));
+        "test_serial_reload", "assert(mod.store.map.val == \"hoge\")"));
 
     save();
 
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().run_in_mod("test_serial_reload", R"(
-Store.global.val = 0
-Store.map.val = ""
+mod.store.global.val = 0
+mod.store.map.val = ""
 )"));
 
     load();
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-        "test_serial_reload", "assert(Store.global.val == 42)"));
+        "test_serial_reload", "assert(mod.store.global.val == 42)"));
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-        "test_serial_reload", "assert(Store.map.val == \"hoge\")"));
+        "test_serial_reload", "assert(mod.store.map.val == \"hoge\")"));
 }
 
 
@@ -228,13 +228,13 @@ TEST_CASE("Test preservation of handles across reloads", "[Lua: Serialization]")
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_handle_reload", R"(
-local Chara = Elona.require("Chara")
-local Item = Elona.require("Item")
+local Chara = require("game.Chara")
+local Item = require("game.Item")
 
-Store.global.chara = Chara.create(4, 8, "core.putit")
-Store.global.item = Item.create(4, 8, "core.putitoro", 0)
-Store.map.chara = Chara.create(4, 8, "core.putit")
-Store.map.item = Item.create(4, 8, "core.putitoro", 0)
+mod.store.global.chara = Chara.create(4, 8, "core.putit")
+mod.store.global.item = Item.create(4, 8, "core.putitoro", 0)
+mod.store.map.chara = Chara.create(4, 8, "core.putit")
+mod.store.map.item = Item.create(4, 8, "core.putitoro", 0)
         )"));
 
     auto mod = elona::lua::lua->get_mod_manager().get_enabled_mod(
@@ -252,10 +252,10 @@ Store.map.item = Item.create(4, 8, "core.putitoro", 0)
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_handle_reload", R"(
-Store.global.chara = 0
-Store.global.item = 0
-Store.map.chara = 0
-Store.map.item = 0
+mod.store.global.chara = 0
+mod.store.global.item = 0
+mod.store.map.chara = 0
+mod.store.map.item = 0
         )"));
 
     load();
@@ -267,18 +267,18 @@ Store.map.item = 0
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_handle_reload", R"(
-assert(Store.global.chara.__uuid == uuid_chara_global)
-assert(Store.global.item.__uuid == uuid_item_global)
-assert(Store.map.chara.__uuid == uuid_chara_map)
-assert(Store.map.item.__uuid == uuid_item_map)
+assert(mod.store.global.chara.__uuid == uuid_chara_global)
+assert(mod.store.global.item.__uuid == uuid_item_global)
+assert(mod.store.map.chara.__uuid == uuid_chara_map)
+assert(mod.store.map.item.__uuid == uuid_item_map)
         )"));
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_handle_reload", R"(
-assert(Store.global.chara:is_valid())
-assert(Store.global.item:is_valid())
-assert(Store.map.chara:is_valid())
-assert(Store.map.item:is_valid())
+assert(mod.store.global.chara:is_valid())
+assert(mod.store.global.item:is_valid())
+assert(mod.store.map.chara:is_valid())
+assert(mod.store.map.item:is_valid())
         )"));
 }
 
@@ -294,13 +294,13 @@ TEST_CASE(
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_handle_map_change", R"(
-local Chara = Elona.require("Chara")
+local Chara = require("game.Chara")
 
-Store.global.chara = Chara.create(4, 8, "core.putit")
-Store.global.chara_local = Chara.create(4, 8, "core.putit")
+mod.store.global.chara = Chara.create(4, 8, "core.putit")
+mod.store.global.chara_local = Chara.create(4, 8, "core.putit")
 
-Store.global.chara:recruit_as_ally()
-Store.global.it = 0
+mod.store.global.chara:recruit_as_ally()
+mod.store.global.it = 0
 )"));
 
     auto mod = elona::lua::lua->get_mod_manager().get_enabled_mod(
@@ -316,25 +316,25 @@ Store.global.it = 0
     run_in_temporary_map(6, 1, [uuid_chara]() {
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
             "test_serial_handle_map_change", R"(
-assert(Store.global.chara.__uuid == uuid_chara)
-assert(Store.global.chara_local.__uuid == uuid_chara_local)
+assert(mod.store.global.chara.__uuid == uuid_chara)
+assert(mod.store.global.chara_local.__uuid == uuid_chara_local)
 )"));
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
             "test_serial_handle_map_change", R"(
-assert(Store.global.chara:is_valid())
-assert(not Store.global.chara_local:is_valid())
+assert(mod.store.global.chara:is_valid())
+assert(not mod.store.global.chara_local:is_valid())
 )"));
     });
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_handle_map_change", R"(
-assert(Store.global.chara.__uuid == uuid_chara)
-assert(Store.global.chara_local.__uuid == uuid_chara_local)
+assert(mod.store.global.chara.__uuid == uuid_chara)
+assert(mod.store.global.chara_local.__uuid == uuid_chara_local)
 )"));
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_handle_map_change", R"(
-assert(Store.global.chara:is_valid())
-assert(Store.global.chara_local:is_valid())
+assert(mod.store.global.chara:is_valid())
+assert(mod.store.global.chara_local:is_valid())
 )"));
 }
 
@@ -350,11 +350,11 @@ TEST_CASE(
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_handle_map_change_local", R"(
-local Chara = Elona.require("Chara")
-local Item = Elona.require("Item")
+local Chara = require("game.Chara")
+local Item = require("game.Item")
 
-Store.map.chara = Chara.create(4, 8, "core.putit")
-Store.map.item = Item.create(4, 8, "core.putitoro", 0)
+mod.store.map.chara = Chara.create(4, 8, "core.putit")
+mod.store.map.item = Item.create(4, 8, "core.putitoro", 0)
 )"));
 
     auto mod = elona::lua::lua->get_mod_manager().get_enabled_mod(
@@ -367,8 +367,8 @@ Store.map.item = Item.create(4, 8, "core.putitoro", 0)
     run_in_temporary_map(6, 1, [uuid_chara, uuid_item]() {
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
             "test_serial_handle_map_change_local", R"(
-assert(Store.map.chara == nil)
-assert(Store.map.item == nil)
+assert(mod.store.map.chara == nil)
+assert(mod.store.map.item == nil)
 )"));
     });
 
@@ -377,13 +377,13 @@ assert(Store.map.item == nil)
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_handle_map_change_local", R"(
-assert(Store.map.chara.__uuid == uuid_chara)
-assert(Store.map.item.__uuid == uuid_item)
+assert(mod.store.map.chara.__uuid == uuid_chara)
+assert(mod.store.map.item.__uuid == uuid_item)
 )"));
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_handle_map_change_local", R"(
-assert(Store.map.chara:is_valid())
-assert(Store.map.item:is_valid())
+assert(mod.store.map.chara:is_valid())
+assert(mod.store.map.item:is_valid())
 )"));
 }
 
@@ -397,22 +397,22 @@ TEST_CASE("Test serialization of recursive table", "[Lua: Serialization]")
 local t = {}
 t[1] = t
 
-Store.global.t = t
+mod.store.global.t = t
 )"));
 
     save();
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_recursive", R"(
-Store.global.t = {}
+mod.store.global.t = {}
 )"));
 
     load();
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_recursive", R"(
-assert(type(Store.global.t) == "table")
-assert(type(Store.global.t[1]) == "table")
+assert(type(mod.store.global.t) == "table")
+assert(type(mod.store.global.t[1]) == "table")
 )"));
 }
 
@@ -423,21 +423,21 @@ TEST_CASE("Test serialization of plain value", "[Lua: Serialization]")
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_serial_plain", R"(
-Store.global = true
+mod.store.global = 42
 )"));
 
     save();
 
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().run_in_mod("test_serial_plain", R"(
-Store.global = {}
+mod.store.global = 0
 )"));
 
     load();
 
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().run_in_mod("test_serial_plain", R"(
-assert(Store.global == true)
+assert(mod.store.global == 42)
 )"));
 }
 
@@ -451,26 +451,26 @@ TEST_CASE("Test serialization of single handle", "[Lua: Serialization]")
 
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().run_in_mod("test_serial_handle", R"(
-local Chara = Elona.require("Chara")
+local Chara = require("game.Chara")
 
-Store.global = Chara.create(4, 8, "core.putit")
-assert(Store.global.__handle == true)
-assert(Store.global.position.x == 4)
+mod.store.global.cute_creature = Chara.create(4, 8, "core.putit")
+assert(mod.store.global.cute_creature.__handle == true)
+assert(mod.store.global.cute_creature.position.x == 4)
 )"));
 
     save();
 
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().run_in_mod("test_serial_handle", R"(
-Store.global = {}
+mod.store.global = {}
 )"));
 
     load();
 
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().run_in_mod("test_serial_handle", R"(
-assert(Store.global.__handle == true)
-assert(Store.global.position.x == 4)
+assert(mod.store.global.cute_creature.__handle == true)
+assert(mod.store.global.cute_creature.position.x == 4)
 )"));
 }
 
@@ -481,14 +481,14 @@ TEST_CASE("Test that disabled mods are not serialized", "[Lua: Serialization]")
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_serial_disabled", R"(
-Store.global.val = 42
+mod.store.global.val = 42
 )"));
 
     save();
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_disabled", R"(
-Store.global.val = 0
+mod.store.global.val = 0
 )"));
 
     elona::lua::lua->get_mod_manager().disable_mod("test_serial_disabled");
@@ -500,6 +500,96 @@ Store.global.val = 0
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_disabled", R"(
-assert(Store.global.val == nil)
+assert(mod.store.global.val == nil)
+)"));
+}
+
+
+TEST_CASE("Test private fields are not serialized", "[Lua: Serialization]")
+{
+    start_in_debug_map();
+
+    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
+        "test_serial_private", R"(
+mod.store.global.public = true
+mod.store.global.public2 = {
+   public = true,
+   public2 = {
+      public = true,
+      _private = true,
+   },
+   _private = true,
+   _private2 = {
+      public = true,
+      _private = true,
+   },
+}
+mod.store.global._private = true
+mod.store.global._private2 = {
+   public = true,
+   public2 = {
+      public = true,
+      _private = true,
+   },
+   _private = true,
+   _private2 = {
+      public = true,
+      _private = true,
+   },
+}
+)"));
+
+    save();
+
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().run_in_mod("test_serial_private", R"(
+-- Private fields are skipped on serialization, but they are not removed from
+-- the mod.store table.
+assert(mod.store.global.public)
+assert(mod.store.global.public2)
+assert(mod.store.global.public2.public)
+assert(mod.store.global.public2.public2)
+assert(mod.store.global.public2.public2.public)
+assert(mod.store.global.public2.public2._private)
+assert(mod.store.global.public2._private)
+assert(mod.store.global.public2._private2)
+assert(mod.store.global.public2._private2.public)
+assert(mod.store.global.public2._private2._private)
+
+assert(mod.store.global._private)
+assert(mod.store.global._private2)
+assert(mod.store.global._private2.public)
+assert(mod.store.global._private2.public2)
+assert(mod.store.global._private2.public2.public)
+assert(mod.store.global._private2.public2._private)
+assert(mod.store.global._private2._private)
+assert(mod.store.global._private2._private2)
+assert(mod.store.global._private2._private2.public)
+assert(mod.store.global._private2._private2._private)
+
+mod.store.global = {} -- clear store
+)"));
+
+    load();
+
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().run_in_mod("test_serial_private", R"(
+-- Non-private fields are restored.
+assert(mod.store.global.public)
+assert(mod.store.global.public2)
+assert(mod.store.global.public2.public)
+assert(mod.store.global.public2.public2)
+assert(mod.store.global.public2.public2.public)
+
+-- Non-top-level private fields are restored.
+assert(mod.store.global.public2.public2._private)
+assert(mod.store.global.public2._private)
+assert(mod.store.global.public2._private2)
+assert(mod.store.global.public2._private2.public)
+assert(mod.store.global.public2._private2._private)
+
+-- Top-level private fields are NOT restored.
+assert(not mod.store.global._private)
+assert(not mod.store.global._private2)
 )"));
 }

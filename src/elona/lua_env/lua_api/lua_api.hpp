@@ -21,6 +21,7 @@
 #include "lua_api_rand.hpp"
 #include "lua_api_skill.hpp"
 #include "lua_api_trait.hpp"
+#include "lua_api_wish.hpp"
 #include "lua_api_world.hpp"
 
 /***

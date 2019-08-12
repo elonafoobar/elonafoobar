@@ -5,6 +5,7 @@
 #include <type_traits>
 #include <utility>
 #include <vector>
+#include "../thirdparty/xoshiro256//xoshiro256.hpp"
 #include "optional.hpp"
 
 // DO NOT use `std::uniform_int_distribution` because its algorithm is
@@ -20,16 +21,17 @@ namespace elona
 
 namespace detail
 {
-extern std::mt19937 engine;
+extern xoshiro256::xoshiro256_engine engine;
 } // namespace detail
 
 
 
-// TODO: pass more proper seed
-// This function is called very frequently in a certain circumstances.
-// In general, std::random_device is slower than other generators.
-inline void randomize(
-    std::random_device::result_type seed = std::random_device{}())
+// Reset random seed to the global seed.
+void randomize();
+
+
+
+inline void randomize(int seed)
 {
     detail::engine.seed(seed);
 }

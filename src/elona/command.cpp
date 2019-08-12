@@ -8,7 +8,6 @@
 #include "buff.hpp"
 #include "building.hpp"
 #include "calc.hpp"
-#include "card.hpp"
 #include "casino.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
@@ -34,11 +33,12 @@
 #include "mef.hpp"
 #include "menu.hpp"
 #include "message.hpp"
-#include "network.hpp"
+#include "net.hpp"
 #include "quest.hpp"
 #include "random.hpp"
 #include "save.hpp"
 #include "shop.hpp"
+#include "tcg.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -87,19 +87,19 @@ namespace elona
 
 TurnResult do_give_command()
 {
-    txt(i18n::s.get("core.locale.action.which_direction.default"));
+    txt(i18n::s.get("core.action.which_direction.default"));
     update_screen();
     int stat = ask_direction();
     if (stat == 0)
     {
-        txt(i18n::s.get("core.locale.ui.invalid_target"));
+        txt(i18n::s.get("core.ui.invalid_target"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
     tc = cell_data.at(x, y).chara_index_plus_one;
     if (tc == 0)
     {
-        txt(i18n::s.get("core.locale.ui.invalid_target"));
+        txt(i18n::s.get("core.ui.invalid_target"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -128,33 +128,33 @@ TurnResult do_give_command()
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
-    txt(i18n::s.get("core.locale.ui.invalid_target"));
+    txt(i18n::s.get("core.ui.invalid_target"));
     update_screen();
     return TurnResult::pc_turn_user_error;
 }
 
 TurnResult do_interact_command()
 {
-    txt(i18n::s.get("core.locale.action.interact.choose"));
+    txt(i18n::s.get("core.action.interact.choose"));
     int stat = ask_direction();
     if (stat == 0)
     {
-        txt(i18n::s.get("core.locale.ui.invalid_target"));
+        txt(i18n::s.get("core.ui.invalid_target"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
     tc = cell_data.at(x, y).chara_index_plus_one;
     if (tc == 0)
     {
-        txt(i18n::s.get("core.locale.ui.invalid_target"));
+        txt(i18n::s.get("core.ui.invalid_target"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
     tc -= 1;
-    txt(i18n::s.get("core.locale.action.interact.prompt", cdata[tc]));
+    txt(i18n::s.get("core.action.interact.prompt", cdata[tc]));
     p = 0;
 
-    Prompt prompt("core.locale.action.interact.choices");
+    Prompt prompt("core.action.interact.choices");
     if (tc != 0)
     {
         if (cdata.player().confused == 0)
@@ -265,8 +265,7 @@ TurnResult do_interact_command()
     }
     if (p == 7)
     {
-        txt(i18n::s.get(
-            "core.locale.action.interact.change_tone.prompt", cdata[tc]));
+        txt(i18n::s.get("core.action.interact.change_tone.prompt", cdata[tc]));
         inputlog = "";
         input_text_dialog((windoww - 360) / 2 + inf_screenx, winposy(90), 20);
         cdata[tc].has_custom_talk() = false;
@@ -285,10 +284,7 @@ TurnResult do_interact_command()
     if (p == 8)
     {
         gsel(0);
-        ccbk = cc;
-        cc = tc;
-        change_appearance();
-        cc = ccbk;
+        menu_change_appearance(cdata[tc]);
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -296,7 +292,7 @@ TurnResult do_interact_command()
     {
         snd("core.build1");
         cdata[tc].is_hung_on_sand_bag() = false;
-        txt(i18n::s.get("core.locale.action.interact.release", cdata[tc]));
+        txt(i18n::s.get("core.action.interact.release", cdata[tc]));
         flt();
         itemcreate(-1, 733, cdata[tc].position.x, cdata[tc].position.y, 0);
     }
@@ -311,19 +307,18 @@ TurnResult do_interact_command()
 
 TurnResult call_npc()
 {
-    txt(i18n::s.get("core.locale.action.interact.name.prompt", cdata[tc]));
+    txt(i18n::s.get("core.action.interact.name.prompt", cdata[tc]));
     inputlog = "";
     input_text_dialog((windoww - 220) / 2 + inf_screenx, winposy(90), 12);
     if (inputlog == ""s)
     {
-        txt(i18n::s.get("core.locale.action.interact.name.cancel"));
+        txt(i18n::s.get("core.action.interact.name.cancel"));
     }
     else
     {
         cdatan(0, tc) = ""s + inputlog;
         cdata[tc].has_own_name() = true;
-        txt(i18n::s.get(
-            "core.locale.action.interact.name.you_named", cdata[tc]));
+        txt(i18n::s.get("core.action.interact.name.you_named", cdata[tc]));
     }
     gmode(2);
     update_screen();
@@ -333,11 +328,11 @@ TurnResult call_npc()
 
 TurnResult do_bash_command()
 {
-    txt(i18n::s.get("core.locale.action.bash.prompt"));
+    txt(i18n::s.get("core.action.bash.prompt"));
     int stat = ask_direction();
     if (stat == 0)
     {
-        txt(i18n::s.get("core.locale.common.it_is_impossible"));
+        txt(i18n::s.get("core.common.it_is_impossible"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -346,11 +341,11 @@ TurnResult do_bash_command()
 
 TurnResult do_dig_command()
 {
-    txt(i18n::s.get("core.locale.action.dig.prompt"));
+    txt(i18n::s.get("core.action.dig.prompt"));
     int stat = ask_direction();
     if (stat == 0)
     {
-        txt(i18n::s.get("core.locale.common.it_is_impossible"));
+        txt(i18n::s.get("core.common.it_is_impossible"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -371,7 +366,7 @@ TurnResult do_dig_command()
         chip_data.for_cell(x, y).kind == 3 ||
         map_data.type == mdata_t::MapType::world_map)
     {
-        txt(i18n::s.get("core.locale.common.it_is_impossible"));
+        txt(i18n::s.get("core.common.it_is_impossible"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -383,29 +378,29 @@ TurnResult do_dig_command()
 static void _search_for_crystal()
 {
     p = 9999;
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (inv[cnt].own_state != 5)
+        if (item.own_state != 5)
         {
             continue;
         }
-        if (inv[cnt].id != 748)
+        if (item.id != 748)
         {
             continue;
         }
         if (p > dist(
-                    inv[cnt].position.x,
-                    inv[cnt].position.y,
+                    item.position.x,
+                    item.position.y,
                     cdata.player().position.x,
                     cdata.player().position.y))
         {
             p = dist(
-                inv[cnt].position.x,
-                inv[cnt].position.y,
+                item.position.x,
+                item.position.y,
                 cdata.player().position.x,
                 cdata.player().position.y);
         }
@@ -416,19 +411,19 @@ static void _search_for_crystal()
         {
             if (p <= 3)
             {
-                txt(i18n::s.get("core.locale.action.search.crystal.close"));
+                txt(i18n::s.get("core.action.search.crystal.close"));
             }
             if (p <= 9)
             {
-                txt(i18n::s.get("core.locale.action.search.crystal.normal"));
+                txt(i18n::s.get("core.action.search.crystal.normal"));
                 break;
             }
             if (p <= 16)
             {
-                txt(i18n::s.get("core.locale.action.search.crystal.far"));
+                txt(i18n::s.get("core.action.search.crystal.far"));
                 break;
             }
-            txt(i18n::s.get("core.locale.action.search.crystal.sense"));
+            txt(i18n::s.get("core.action.search.crystal.sense"));
             break;
         }
     }
@@ -439,7 +434,7 @@ static void _try_to_reveal_small_coin()
     if (cdata[cc].position.x == x && cdata[cc].position.y == y)
     {
         snd("core.ding2");
-        txt(i18n::s.get("core.locale.action.search.small_coin.find"));
+        txt(i18n::s.get("core.action.search.small_coin.find"));
         cell_data.at(x, y).feats = 0;
         flt();
         itemcreate(-1, 622, x, y, 0);
@@ -449,13 +444,13 @@ static void _try_to_reveal_small_coin()
         if (dist(cdata[cc].position.x, cdata[cc].position.y, x, y) > 2)
         {
             txt(
-                i18n::s.get("core.locale.action.search."
+                i18n::s.get("core.action.search."
                             "small_coin.far"));
         }
         else
         {
             txt(
-                i18n::s.get("core.locale.action.search."
+                i18n::s.get("core.action.search."
                             "small_coin.close"));
         }
     }
@@ -477,7 +472,7 @@ static void _search_for_map_feats()
                 if (stat == 1)
                 {
                     discover_trap();
-                    txt(i18n::s.get("core.locale.action.search.discover.trap"));
+                    txt(i18n::s.get("core.action.search.discover.trap"));
                 }
             }
         }
@@ -488,7 +483,7 @@ static void _search_for_map_feats()
             {
                 discover_hidden_path();
                 txt(
-                    i18n::s.get("core.locale.action.search."
+                    i18n::s.get("core.action.search."
                                 "discover.hidden_path"));
             }
         }
@@ -574,8 +569,7 @@ static void _dig_material_spot()
 
 TurnResult do_search_command()
 {
-    txt(i18n::s.get("core.locale.action.search.execute"),
-        Message::only_once{true});
+    txt(i18n::s.get("core.action.search.execute"), Message::only_once{true});
     if (game_data.current_map == mdata_t::MapId::show_house)
     {
         _search_for_crystal();
@@ -615,8 +609,7 @@ TurnResult do_throw_command()
     int ccthrowpotion = 0;
     if (is_in_fov(cdata[cc]))
     {
-        txt(i18n::s.get(
-            "core.locale.action.throw.execute", cdata[cc], inv[ci]));
+        txt(i18n::s.get("core.action.throw.execute", cdata[cc], inv[ci]));
     }
     if (dist(cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy) * 4 >
             rnd(sdata(111, cc) + 10) + sdata(111, cc) / 4 ||
@@ -673,7 +666,7 @@ TurnResult do_throw_command()
         if (cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
         {
             tc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
-            txt(i18n::s.get("core.locale.action.throw.hits", cdata[tc]));
+            txt(i18n::s.get("core.action.throw.hits", cdata[tc]));
             if (inv[ci].id == 685)
             {
                 if (tc < ELONA_MAX_PARTY_CHARACTERS ||
@@ -682,27 +675,26 @@ TurnResult do_throw_command()
                     cdata[tc].is_lord_of_dungeon() == 1)
                 {
                     txt(
-                        i18n::s.get("core.locale.action.throw.monster_ball."
+                        i18n::s.get("core.action.throw.monster_ball."
                                     "cannot_be_captured"));
                     return TurnResult::turn_end;
                 }
                 if (cdata[tc].level > inv[ci].param2)
                 {
                     txt(
-                        i18n::s.get("core.locale.action.throw.monster_ball.not_"
+                        i18n::s.get("core.action.throw.monster_ball.not_"
                                     "enough_power"));
                     return TurnResult::turn_end;
                 }
                 if (cdata[tc].hp > cdata[tc].max_hp / 10)
                 {
                     txt(
-                        i18n::s.get("core.locale.action.throw.monster_ball.not_"
+                        i18n::s.get("core.action.throw.monster_ball.not_"
                                     "weak_enough"));
                     return TurnResult::turn_end;
                 }
                 txt(i18n::s.get(
-                        "core.locale.action.throw.monster_ball.capture",
-                        cdata[tc]),
+                        "core.action.throw.monster_ball.capture", cdata[tc]),
                     Message::color{ColorIndex::green});
                 animeload(8, tc);
                 inv[ci].subname = cdata[tc].id;
@@ -714,13 +706,13 @@ TurnResult do_throw_command()
             {
                 if (cdata[tc].id != 319 || tc < 16)
                 {
-                    txt(i18n::s.get("core.locale.common.nothing_happens"));
+                    txt(i18n::s.get("core.common.nothing_happens"));
                     return TurnResult::turn_end;
                 }
                 if (map_prevents_monster_ball())
                 {
                     txt(i18n::s.get(
-                        "core.locale.action.throw.monster_ball.does_not_work"));
+                        "core.action.throw.monster_ball.does_not_work"));
                     return TurnResult::turn_end;
                 }
                 rc = tc;
@@ -751,8 +743,7 @@ TurnResult do_throw_command()
                 tc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
                 if (is_in_fov(cdata[tc]))
                 {
-                    txt(i18n::s.get(
-                        "core.locale.action.throw.hits", cdata[tc]));
+                    txt(i18n::s.get("core.action.throw.hits", cdata[tc]));
                     wet(tc, 25);
                 }
                 rowact_check(tc);
@@ -762,8 +753,7 @@ TurnResult do_throw_command()
                     {
                         if (tc != 0)
                         {
-                            txt(i18n::s.get(
-                                    "core.locale.action.throw.snow.dialog"),
+                            txt(i18n::s.get("core.action.throw.snow.dialog"),
                                 Message::color{ColorIndex::cyan});
                         }
                     }
@@ -773,7 +763,7 @@ TurnResult do_throw_command()
                 {
                     if (is_in_fov(cdata[tc]))
                     {
-                        txt(i18n::s.get("core.locale.action.throw.tomato"),
+                        txt(i18n::s.get("core.action.throw.tomato"),
                             Message::color{ColorIndex::blue});
                     }
                     if (inv[ci].param3 == -1)
@@ -781,7 +771,7 @@ TurnResult do_throw_command()
                         if (is_in_fov(cdata[tc]))
                         {
                             txt(i18n::s.get(
-                                    "core.locale.damage.is_engulfed_in_fury",
+                                    "core.damage.is_engulfed_in_fury",
                                     cdata[tc]),
                                 Message::color{ColorIndex::blue});
                         }
@@ -797,7 +787,7 @@ TurnResult do_throw_command()
                 potionthrow = 100;
                 cc = tc;
                 dbid = inv[ci].id;
-                access_item_db(15);
+                item_db_on_drink(inv[ci], dbid);
                 cc = ccthrowpotion;
                 return TurnResult::turn_end;
             }
@@ -815,7 +805,7 @@ TurnResult do_throw_command()
                             if (is_in_fov({tlocx, tlocy}))
                             {
                                 txt(i18n::s.get(
-                                    "core.locale.action.throw.snow.hits_"
+                                    "core.action.throw.snow.hits_"
                                     "snowman",
                                     inv[p(0)]));
                             }
@@ -839,18 +829,18 @@ TurnResult do_throw_command()
                 }
                 if (is_in_fov({tlocx, tlocy}))
                 {
-                    txt(i18n::s.get("core.locale.action.throw.snow.melts"));
+                    txt(i18n::s.get("core.action.throw.snow.melts"));
                 }
             }
             else if (is_in_fov({tlocx, tlocy}))
             {
-                txt(i18n::s.get("core.locale.action.throw.shatters"));
+                txt(i18n::s.get("core.action.throw.shatters"));
             }
             if (inv[ci].id == 772)
             {
                 if (is_in_fov({tlocx, tlocy}))
                 {
-                    txt(i18n::s.get("core.locale.action.throw.tomato"),
+                    txt(i18n::s.get("core.action.throw.tomato"),
                         Message::color{ColorIndex::blue});
                 }
                 return TurnResult::turn_end;
@@ -883,7 +873,7 @@ TurnResult do_throw_command()
     }
     if (is_in_fov({tlocx, tlocy}))
     {
-        txt(i18n::s.get("core.locale.action.throw.shatters"));
+        txt(i18n::s.get("core.action.throw.shatters"));
         snd("core.crush2");
     }
     if (inv[ci].id == 578)
@@ -899,25 +889,25 @@ TurnResult do_close_command()
     int stat = ask_direction_to_close();
     if (stat == 0)
     {
-        txt(i18n::s.get("core.locale.common.it_is_impossible"));
+        txt(i18n::s.get("core.common.it_is_impossible"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
     cell_featread(x, y);
     if (feat(1) != 20)
     {
-        txt(i18n::s.get("core.locale.action.close.nothing_to_close"));
+        txt(i18n::s.get("core.action.close.nothing_to_close"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
     if (cell_data.at(x, y).chara_index_plus_one != 0)
     {
-        txt(i18n::s.get("core.locale.action.close.blocked"));
+        txt(i18n::s.get("core.action.close.blocked"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
     cell_featset(x, y, tile_doorclosed, 21, -1, -1);
-    txt(i18n::s.get("core.locale.action.close.execute", cdata[cc]));
+    txt(i18n::s.get("core.action.close.execute", cdata[cc]));
     return TurnResult::turn_end;
 }
 
@@ -940,7 +930,7 @@ TurnResult do_change_ammo_command()
     }
     if (f == 0)
     {
-        txt(i18n::s.get("core.locale.action.ammo.need_to_equip"));
+        txt(i18n::s.get("core.action.ammo.need_to_equip"));
         return TurnResult::pc_turn_user_error;
     }
     listmax = 0;
@@ -971,7 +961,7 @@ TurnResult do_change_ammo_command()
     if (listmax == 0)
     {
         inv[ci].count = -1;
-        txt(i18n::s.get("core.locale.action.ammo.is_not_capable", inv[ci]));
+        txt(i18n::s.get("core.action.ammo.is_not_capable", inv[ci]));
         return TurnResult::pc_turn_user_error;
     }
     snd("core.ammo");
@@ -985,13 +975,13 @@ TurnResult do_change_ammo_command()
         inv[ci].count = list(0, cs);
     }
     Message::instance().linebreak();
-    txt(i18n::s.get("core.locale.action.ammo.current") + ":");
+    txt(i18n::s.get("core.action.ammo.current") + ":");
     for (int cnt = 0, cnt_end = (listmax + 1); cnt < cnt_end; ++cnt)
     {
         if (cnt == 0)
         {
-            s(0) = i18n::s.get("core.locale.action.ammo.normal");
-            s(1) = i18n::s.get("core.locale.action.ammo.unlimited");
+            s(0) = i18n::s.get("core.action.ammo.normal");
+            s(1) = i18n::s.get("core.action.ammo.unlimited");
         }
         else
         {
@@ -1020,15 +1010,13 @@ TurnResult do_offer_command()
 {
     if (cdata.player().god_id == core_god::eyth)
     {
-        txt(i18n::s.get("core.locale.action.offer.do_not_believe"));
+        txt(i18n::s.get("core.action.offer.do_not_believe"));
         return TurnResult::turn_end;
     }
     rowact_item(ci);
     item_separate(ci);
     txt(i18n::s.get(
-        "core.locale.action.offer.execute",
-        inv[ci],
-        god_name(cdata.player().god_id)));
+        "core.action.offer.execute", inv[ci], god_name(cdata.player().god_id)));
     snd("core.offer2");
     const auto tcbk = tc(0);
     tc = 0;
@@ -1063,13 +1051,12 @@ TurnResult do_offer_command()
         {
             f = 1;
             txt(i18n::s.get(
-                "core.locale.action.offer.claim",
-                god_name(cdata.player().god_id)));
+                "core.action.offer.claim", god_name(cdata.player().god_id)));
         }
         else
         {
             txt(i18n::s.get(
-                "core.locale.action.offer.take_over.attempt",
+                "core.action.offer.take_over.attempt",
                 god_name(cdata.player().god_id),
                 god_name(inv[ti].param1)));
             if (rnd(17) <= i)
@@ -1090,10 +1077,10 @@ TurnResult do_offer_command()
             snd("core.pray2");
             if (inv[ti].param1 != 0)
             {
-                txt(i18n::s.get("core.locale.action.offer.take_over.shadow"));
+                txt(i18n::s.get("core.action.offer.take_over.shadow"));
             }
             txt(i18n::s.get(
-                    "core.locale.action.offer.take_over.succeed",
+                    "core.action.offer.take_over.succeed",
                     god_name(cdata.player().god_id),
                     inv[ti]),
                 Message::color{ColorIndex::orange});
@@ -1103,8 +1090,7 @@ TurnResult do_offer_command()
         else
         {
             txt(i18n::s.get(
-                "core.locale.action.offer.take_over.fail",
-                god_name(inv[ti].param1)));
+                "core.action.offer.take_over.fail", god_name(inv[ti].param1)));
             txtgod(core_god::int2godid(inv[ti].param1), 3);
             god_fail_to_take_over_penalty();
         }
@@ -1113,23 +1099,23 @@ TurnResult do_offer_command()
     {
         if (i >= 15)
         {
-            txt(i18n::s.get("core.locale.action.offer.result.best", inv[ci]),
+            txt(i18n::s.get("core.action.offer.result.best", inv[ci]),
                 Message::color{ColorIndex::green});
             txtgod(cdata.player().god_id, 4);
         }
         else if (i >= 10)
         {
-            txt(i18n::s.get("core.locale.action.offer.result.good", inv[ci]),
+            txt(i18n::s.get("core.action.offer.result.good", inv[ci]),
                 Message::color{ColorIndex::green});
         }
         else if (i >= 5)
         {
-            txt(i18n::s.get("core.locale.action.offer.result.okay", inv[ci]),
+            txt(i18n::s.get("core.action.offer.result.okay", inv[ci]),
                 Message::color{ColorIndex::green});
         }
         else if (i >= 1)
         {
-            txt(i18n::s.get("core.locale.action.offer.result.poor", inv[ci]),
+            txt(i18n::s.get("core.action.offer.result.poor", inv[ci]),
                 Message::color{ColorIndex::green});
         }
         god_modify_piety(i);
@@ -1148,7 +1134,7 @@ TurnResult do_look_command()
     build_target_list();
     if (listmax == 0)
     {
-        txt(i18n::s.get("core.locale.action.look.find_nothing"),
+        txt(i18n::s.get("core.action.look.find_nothing"),
             Message::only_once{true});
         update_screen();
         return TurnResult::pc_turn_user_error;
@@ -1281,7 +1267,7 @@ label_1953_internal:
     {
         cdata.player().enemy_id = p;
         snd("core.ok1");
-        txt(i18n::s.get("core.locale.action.look.target", cdata[p(0)]));
+        txt(i18n::s.get("core.action.look.target", cdata[p(0)]));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -1319,9 +1305,7 @@ TurnResult do_dip_command()
         inv[cidip].modify_number(-1);
         snd("core.equip1");
         txt(i18n::s.get(
-            "core.locale.action.dip.result.bait_attachment",
-            inv[ci],
-            inv[cidip]));
+            "core.action.dip.result.bait_attachment", inv[ci], inv[cidip]));
         if (inv[ci].param4 == inv[cidip].param1)
         {
             inv[ci].count += rnd(10) + 15;
@@ -1343,24 +1327,24 @@ TurnResult do_dip_command()
             if (inv[cidip].id != 601)
             {
                 txt(i18n::s.get(
-                    "core.locale.action.dip.execute", inv[ci], inv[cidip]));
+                    "core.action.dip.execute", inv[ci], inv[cidip]));
                 if (inv[ci].id == 602)
                 {
                     txt(i18n::s.get(
-                        "core.locale.action.dip.result.holy_well_polluted"));
+                        "core.action.dip.result.holy_well_polluted"));
                     return TurnResult::turn_end;
                 }
                 if (inv[ci].param3 >= 20)
                 {
                     txt(i18n::s.get(
-                        "core.locale.action.dip.result.well_dry", inv[ci]));
+                        "core.action.dip.result.well_dry", inv[ci]));
                     return TurnResult::turn_end;
                 }
                 txt(i18n::s.get(
-                    "core.locale.action.dip.result.well_refilled", inv[ci]));
+                    "core.action.dip.result.well_refilled", inv[ci]));
                 if (inv[cidip].id == 587)
                 {
-                    i18n::s.get("core.locale.action.dip.result.snow_melts.dip");
+                    txt(i18n::s.get("core.action.dip.result.snow_melts.dip"));
                 }
                 else
                 {
@@ -1374,24 +1358,21 @@ TurnResult do_dip_command()
                     (inv[ci].id == 602 && game_data.holy_well_count <= 0))
                 {
                     txt(i18n::s.get(
-                        "core.locale.action.dip.result.natural_potion_dry",
-                        inv[ci]));
+                        "core.action.dip.result.natural_potion_dry", inv[ci]));
                     txt(i18n::s.get(
-                        "core.locale.action.dip.result.natural_potion_drop"));
+                        "core.action.dip.result.natural_potion_drop"));
                     return TurnResult::turn_end;
                 }
                 if (inv_getfreeid(0) == -1)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.ui.inv.common.inventory_is_full"));
+                    txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                     return TurnResult::turn_end;
                 }
                 if (inv[ci].id == 602)
                 {
                     --game_data.holy_well_count;
                     flt();
-                    int stat = itemcreate(0, 516, -1, -1, 0);
-                    if (stat != 0)
+                    if (itemcreate(0, 516, -1, -1, 0))
                     {
                         inv[ci].curse_state = CurseState::blessed;
                     }
@@ -1403,9 +1384,8 @@ TurnResult do_dip_command()
                     flttypemajor = 52000;
                     itemcreate(0, 0, -1, -1, 0);
                 }
-                txt(i18n::s.get(
-                    "core.locale.action.dip.result.natural_potion"));
-                txt(i18n::s.get("core.locale.action.dip.you_get", inv[ci]));
+                txt(i18n::s.get("core.action.dip.result.natural_potion"));
+                txt(i18n::s.get("core.action.dip.you_get", inv[ci]));
                 item_stack(0, ci, 1);
                 return TurnResult::turn_end;
             }
@@ -1418,10 +1398,10 @@ TurnResult do_dip_command()
             inv[cidip].modify_number(-1);
             item_separate(ci);
             txt(i18n::s.get(
-                    "core.locale.action.dip.result.love_food.made",
+                    "core.action.dip.result.love_food.made",
                     inv[ci],
                     inv[cidip]) +
-                i18n::s.get("core.locale.action.dip.result.love_food.grin"));
+                i18n::s.get("core.action.dip.result.love_food.grin"));
             if (is_cursed(inv[cidip].curse_state))
             {
                 dipcursed(ci);
@@ -1437,10 +1417,10 @@ TurnResult do_dip_command()
             inv[cidip].modify_number(-1);
             item_separate(ci);
             txt(i18n::s.get(
-                    "core.locale.action.dip.result.love_food.made",
+                    "core.action.dip.result.love_food.made",
                     inv[ci],
                     inv[cidip]) +
-                i18n::s.get("core.locale.action.dip.result.love_food.guilty"));
+                i18n::s.get("core.action.dip.result.love_food.guilty"));
             if (is_cursed(inv[cidip].curse_state))
             {
                 dipcursed(ci);
@@ -1462,14 +1442,14 @@ TurnResult do_dip_command()
         }
         inv[cidip].modify_number(-1);
         inv[ci].color = inv[cidip].color;
-        txt(i18n::s.get("core.locale.action.dip.result.dyeing", inv[ci]));
+        txt(i18n::s.get("core.action.dip.result.dyeing", inv[ci]));
         if (inv_getowner(ci) == -1)
         {
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
         if (inv[ci].body_part != 0)
         {
-            create_pcpic(cc);
+            create_pcpic(cdata[cc]);
         }
         return TurnResult::turn_end;
     }
@@ -1484,8 +1464,7 @@ TurnResult do_dip_command()
             in = 1;
             item_separate(ci);
         }
-        txt(i18n::s.get(
-            "core.locale.action.dip.result.put_on", inv[ci], inv[cidip]));
+        txt(i18n::s.get("core.action.dip.result.put_on", inv[ci], inv[cidip]));
         if (is_cursed(inv[cidip].curse_state))
         {
             dipcursed(ci);
@@ -1493,8 +1472,7 @@ TurnResult do_dip_command()
         else
         {
             inv[ci].is_acidproof() = true;
-            txt(i18n::s.get(
-                "core.locale.action.dip.result.gains_acidproof", inv[ci]));
+            txt(i18n::s.get("core.action.dip.result.gains_acidproof", inv[ci]));
         }
         inv[cidip].modify_number(-1);
         return TurnResult::turn_end;
@@ -1510,21 +1488,19 @@ TurnResult do_dip_command()
             in = 1;
             item_separate(ci);
         }
-        txt(i18n::s.get(
-            "core.locale.action.dip.result.put_on", inv[ci], inv[cidip]));
+        txt(i18n::s.get("core.action.dip.result.put_on", inv[ci], inv[cidip]));
         if (is_cursed(inv[cidip].curse_state))
         {
             dipcursed(ci);
         }
         else if (inv[ci].id == 567)
         {
-            txt(i18n::s.get("core.locale.action.dip.result.good_idea_but"));
+            txt(i18n::s.get("core.action.dip.result.good_idea_but"));
         }
         else
         {
             inv[ci].is_fireproof() = true;
-            txt(i18n::s.get(
-                "core.locale.action.dip.result.gains_fireproof", inv[ci]));
+            txt(i18n::s.get("core.action.dip.result.gains_fireproof", inv[ci]));
         }
         inv[cidip].modify_number(-1);
         return TurnResult::turn_end;
@@ -1534,8 +1510,7 @@ TurnResult do_dip_command()
         inv[cidip].modify_number(-1);
         if (inv[cidip].curse_state == CurseState::blessed)
         {
-            txt(i18n::s.get(
-                    "core.locale.action.dip.result.becomes_blessed", inv[ci]),
+            txt(i18n::s.get("core.action.dip.result.becomes_blessed", inv[ci]),
                 Message::color{ColorIndex::green});
             inv[ci].curse_state = CurseState::blessed;
             chara_refresh(cc);
@@ -1543,15 +1518,14 @@ TurnResult do_dip_command()
         }
         if (is_cursed(inv[cidip].curse_state))
         {
-            txt(i18n::s.get(
-                    "core.locale.action.dip.result.becomes_cursed", inv[ci]),
+            txt(i18n::s.get("core.action.dip.result.becomes_cursed", inv[ci]),
                 Message::color{ColorIndex::purple});
             inv[ci].curse_state = CurseState::cursed;
             chara_refresh(cc);
             return TurnResult::turn_end;
         }
     }
-    txt(i18n::s.get("core.locale.common.nothing_happens"));
+    txt(i18n::s.get("core.common.nothing_happens"));
     return TurnResult::turn_end;
 }
 
@@ -1590,8 +1564,7 @@ TurnResult do_use_command()
         if (game_data.date.hours() < inv[ci].count)
         {
             txt(i18n::s.get(
-                "core.locale.action.use.useable_again_at",
-                cnvdate(inv[ci].count)));
+                "core.action.use.useable_again_at", cnvdate(inv[ci].count)));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
@@ -1602,7 +1575,7 @@ TurnResult do_use_command()
     {
         if (inv[ci].count <= 0)
         {
-            txt(i18n::s.get("core.locale.action.use.out_of_charge"));
+            txt(i18n::s.get("core.action.use.out_of_charge"));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
@@ -1621,7 +1594,7 @@ TurnResult do_use_command()
     {
         if (game_data.continuous_active_hours < 15)
         {
-            txt(i18n::s.get("core.locale.action.use.not_sleepy"));
+            txt(i18n::s.get("core.action.use.not_sleepy"));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
@@ -1653,19 +1626,18 @@ TurnResult do_use_command()
     {
         if (inv[ci].param2 < calcexpalive(inv[ci].param1))
         {
-            txt(i18n::s.get("core.locale.action.use.living.needs_more_blood"));
+            txt(i18n::s.get("core.action.use.living.needs_more_blood"));
         }
         else
         {
             Message::instance().linebreak();
-            txt(i18n::s.get(
-                "core.locale.action.use.living.ready_to_grow", inv[ci]));
+            txt(i18n::s.get("core.action.use.living.ready_to_grow", inv[ci]));
             randomize(inv[ci].subname);
             if (inv[ci].param1 >= 4 + rnd(12))
             {
-                txt(i18n::s.get("core.locale.action.use.living.weird"));
+                txt(i18n::s.get("core.action.use.living.weird"));
             }
-            txt(i18n::s.get("core.locale.action.use.living.it"));
+            txt(i18n::s.get("core.action.use.living.it"));
             reftype = item_data->category;
             listmax = 0;
 
@@ -1700,14 +1672,13 @@ TurnResult do_use_command()
             }
             list(0, listmax) = -1;
             ++listmax;
-            s = i18n::s.get("core.locale.action.use.living.bonus");
+            s = i18n::s.get("core.action.use.living.bonus");
             prompt.append(s);
             rtval = prompt.query(promptx, prompty, 400);
             Message::instance().linebreak();
             if (rtval == -1)
             {
-                txt(i18n::s.get(
-                    "core.locale.action.use.living.displeased", inv[ci]));
+                txt(i18n::s.get("core.action.use.living.displeased", inv[ci]));
             }
             else
             {
@@ -1719,19 +1690,18 @@ TurnResult do_use_command()
                 {
                     enchantment_add(ci, list(0, rtval), list(1, rtval), 0, 1);
                 }
-                txt(i18n::s.get(
-                        "core.locale.action.use.living.pleased", inv[ci]),
+                txt(i18n::s.get("core.action.use.living.pleased", inv[ci]),
                     Message::color{ColorIndex::green});
                 randomize(inv[ci].subname);
                 if (inv[ci].param1 >= 4 + rnd(12))
                 {
                     txt(i18n::s.get(
-                        "core.locale.action.use.living.becoming_a_threat"));
+                        "core.action.use.living.becoming_a_threat"));
                     if (!enchantment_add(ci, 45, 50))
                     {
                         inv[ci].enchantments[14].id = 0;
                         txt(i18n::s.get(
-                            "core.locale.action.use.living.removes_enchantment",
+                            "core.action.use.living.removes_enchantment",
                             inv[ci]));
                     }
                 }
@@ -1751,33 +1721,31 @@ TurnResult do_use_command()
         y = cdata[cc].position.y;
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txt(i18n::s.get("core.locale.action.use.mine.cannot_use_here"));
+            txt(i18n::s.get("core.action.use.mine.cannot_use_here"));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
         if (cell_data.at(x, y).feats != 0)
         {
-            txt(i18n::s.get("core.locale.action.use.mine.cannot_place_here"));
+            txt(i18n::s.get("core.action.use.mine.cannot_place_here"));
             return TurnResult::pc_turn_user_error;
         }
         inv[ci].modify_number(-1);
         cell_featset(x, y, 0, 14, 7, cc);
-        txt(i18n::s.get("core.locale.action.use.mine.you_set_up"));
+        txt(i18n::s.get("core.action.use.mine.you_set_up"));
         snd("core.build1");
         break;
     case 44:
         if (inv_getowner(ci) != -1)
         {
-            txt(i18n::s.get(
-                "core.locale.action.use.chair.needs_place_on_ground"));
+            txt(i18n::s.get("core.action.use.chair.needs_place_on_ground"));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
         {
-            txt(i18n::s.get(
-                "core.locale.action.use.chair.you_sit_on", inv[ci]));
+            txt(i18n::s.get("core.action.use.chair.you_sit_on", inv[ci]));
 
-            Prompt prompt("core.locale.action.use.chair.choices");
+            Prompt prompt("core.action.use.chair.choices");
             prompt.append("relax", 0);
             if (inv[ci].param1 != 1)
             {
@@ -1802,26 +1770,24 @@ TurnResult do_use_command()
         }
         if (rtval == 0)
         {
-            txt(i18n::s.get("core.locale.action.use.chair.relax"));
+            txt(i18n::s.get("core.action.use.chair.relax"));
             break;
         }
         if (rtval == 1)
         {
-            txt(i18n::s.get("core.locale.action.use.chair.my_chair", inv[ci]));
+            txt(i18n::s.get("core.action.use.chair.my_chair", inv[ci]));
             inv[ci].param1 = 1;
             break;
         }
         if (rtval == 2)
         {
-            txt(i18n::s.get(
-                "core.locale.action.use.chair.guest_chair", inv[ci]));
+            txt(i18n::s.get("core.action.use.chair.guest_chair", inv[ci]));
             inv[ci].param1 = 2;
             break;
         }
         if (rtval == 3)
         {
-            txt(i18n::s.get(
-                "core.locale.action.use.chair.free_chair", inv[ci]));
+            txt(i18n::s.get("core.action.use.chair.free_chair", inv[ci]));
             inv[ci].param1 = 0;
             break;
         }
@@ -1829,8 +1795,7 @@ TurnResult do_use_command()
     case 8:
         if (map_data.type != mdata_t::MapType::player_owned)
         {
-            txt(i18n::s.get(
-                "core.locale.action.use.house_board.cannot_use_it_here"));
+            txt(i18n::s.get("core.action.use.house_board.cannot_use_it_here"));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
@@ -1849,7 +1814,7 @@ TurnResult do_use_command()
         }
         else
         {
-            txt(i18n::s.get("core.locale.action.use.dresser.prompt"));
+            txt(i18n::s.get("core.action.use.dresser.prompt"));
             int stat = ask_direction();
             if (stat != 0)
             {
@@ -1865,14 +1830,11 @@ TurnResult do_use_command()
             tc = chara;
             screenupdate = -1;
             update_screen();
-            ccbk = cc;
-            cc = tc;
-            change_appearance_equipment();
-            cc = ccbk;
+            change_appearance_equipment(cdata[tc]);
         }
         else
         {
-            txt(i18n::s.get("core.locale.common.it_is_impossible"));
+            txt(i18n::s.get("core.common.it_is_impossible"));
         }
         update_screen();
         return TurnResult::pc_turn_user_error;
@@ -1894,7 +1856,7 @@ TurnResult do_use_command()
         {
             if (inv[ci].number() < 5)
             {
-                txt(i18n::s.get("core.locale.action.use.snow.need_more"));
+                txt(i18n::s.get("core.action.use.snow.need_more"));
                 update_screen();
                 return TurnResult::pc_turn_user_error;
             }
@@ -1906,8 +1868,7 @@ TurnResult do_use_command()
         if (is_in_fov(cdata[cc]))
         {
             snd("core.snow");
-            txt(i18n::s.get(
-                "core.locale.action.use.snow.make_snowman", cdata[cc]));
+            txt(i18n::s.get("core.action.use.snow.make_snowman", cdata[cc]));
         }
         break;
     case 13:
@@ -1915,12 +1876,12 @@ TurnResult do_use_command()
         if (game_data.torch == 0)
         {
             game_data.torch = 1;
-            txt(i18n::s.get("core.locale.action.use.torch.light"));
+            txt(i18n::s.get("core.action.use.torch.light"));
         }
         else
         {
             game_data.torch = 0;
-            txt(i18n::s.get("core.locale.action.use.torch.put_out"));
+            txt(i18n::s.get("core.action.use.torch.put_out"));
         }
         chara_refresh(0);
         break;
@@ -1939,13 +1900,13 @@ TurnResult do_use_command()
     }
     break;
     case 5:
-        txt(i18n::s.get("core.locale.action.use.stethoscope.prompt"));
+        txt(i18n::s.get("core.action.use.stethoscope.prompt"));
         update_screen();
         {
             int stat = ask_direction();
             if (stat == 0)
             {
-                txt(i18n::s.get("core.locale.common.it_is_impossible"));
+                txt(i18n::s.get("core.common.it_is_impossible"));
                 update_screen();
                 return TurnResult::pc_turn_user_error;
             }
@@ -1953,7 +1914,7 @@ TurnResult do_use_command()
         tc = cell_data.at(x, y).chara_index_plus_one - 1;
         if (tc == 0)
         {
-            txt(i18n::s.get("core.locale.action.use.stethoscope.self"));
+            txt(i18n::s.get("core.action.use.stethoscope.self"));
             game_data.chara_last_attacked_by_player = 0;
             return TurnResult::turn_end;
         }
@@ -1966,21 +1927,19 @@ TurnResult do_use_command()
                 {
                     cdata[tc].has_been_used_stethoscope() = false;
                     txt(i18n::s.get(
-                        "core.locale.action.use.stethoscope.other.stop",
-                        cdata[tc]));
+                        "core.action.use.stethoscope.other.stop", cdata[tc]));
                     return TurnResult::turn_end;
                 }
                 txt(i18n::s.get(
-                    "core.locale.action.use.stethoscope.other.start.text",
-                    cdata[tc]));
+                    "core.action.use.stethoscope.other.start.text", cdata[tc]));
                 if (cdata[tc].sex == 1)
                 {
                     txt(i18n::s.get(
-                        "core.locale.action.use.stethoscope.other.start.female."
+                        "core.action.use.stethoscope.other.start.female."
                         "text",
                         cdata[tc]));
                     txt(i18n::s.get(
-                            "core.locale.action.use.stethoscope.other.start."
+                            "core.action.use.stethoscope.other.start."
                             "female."
                             "dialog",
                             cdata[tc]),
@@ -1990,12 +1949,12 @@ TurnResult do_use_command()
                 return TurnResult::turn_end;
             }
         }
-        txt(i18n::s.get("core.locale.common.it_is_impossible"));
+        txt(i18n::s.get("core.common.it_is_impossible"));
         update_screen();
         return TurnResult::pc_turn_user_error;
         break;
     case 23:
-        txt(i18n::s.get("core.locale.action.use.leash.prompt"));
+        txt(i18n::s.get("core.action.use.leash.prompt"));
         update_screen();
         {
             int stat = ask_direction();
@@ -2007,7 +1966,7 @@ TurnResult do_use_command()
                     tc = cell_data.at(x, y).chara_index_plus_one - 1;
                     if (tc == 0)
                     {
-                        txt(i18n::s.get("core.locale.action.use.leash.self"));
+                        txt(i18n::s.get("core.action.use.leash.self"));
                     }
                     else if (cdata[tc].is_leashed() == 0)
                     {
@@ -2016,7 +1975,7 @@ TurnResult do_use_command()
                             if (rnd(5) == 0)
                             {
                                 txt(i18n::s.get(
-                                    "core.locale.action.use.leash.other.start."
+                                    "core.action.use.leash.other.start."
                                     "resists",
                                     cdata[tc]));
                                 inv[ci].modify_number(-1);
@@ -2028,10 +1987,10 @@ TurnResult do_use_command()
                         }
                         cdata[tc].is_leashed() = true;
                         txt(i18n::s.get(
-                            "core.locale.action.use.leash.other.start.text",
+                            "core.action.use.leash.other.start.text",
                             cdata[tc]));
                         txt(i18n::s.get(
-                                "core.locale.action.use.leash.other.start."
+                                "core.action.use.leash.other.start."
                                 "dialog",
                                 cdata[tc]),
                             Message::color{ColorIndex::cyan});
@@ -2040,10 +1999,10 @@ TurnResult do_use_command()
                     {
                         cdata[tc].is_leashed() = false;
                         txt(i18n::s.get(
-                            "core.locale.action.use.leash.other.stop.text",
+                            "core.action.use.leash.other.stop.text",
                             cdata[tc]));
                         txt(i18n::s.get(
-                                "core.locale.action.use.leash.other.stop."
+                                "core.action.use.leash.other.stop."
                                 "dialog",
                                 cdata[tc]),
                             Message::color{ColorIndex::cyan});
@@ -2055,17 +2014,17 @@ TurnResult do_use_command()
         }
         if (f == 0)
         {
-            txt(i18n::s.get("core.locale.common.it_is_impossible"));
+            txt(i18n::s.get("core.common.it_is_impossible"));
         }
         break;
     case 45:
         if (game_data.current_map == mdata_t::MapId::show_house)
         {
-            txt(i18n::s.get("core.locale.action.use.sandbag.cannot_use_here"));
+            txt(i18n::s.get("core.action.use.sandbag.cannot_use_here"));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        txt(i18n::s.get("core.locale.action.use.sandbag.prompt"));
+        txt(i18n::s.get("core.action.use.sandbag.prompt"));
         update_screen();
         {
             int stat = ask_direction();
@@ -2078,36 +2037,34 @@ TurnResult do_use_command()
                     if (cdata[tc].hp >= cdata[tc].max_hp / 5)
                     {
                         txt(i18n::s.get(
-                            "core.locale.action.use.sandbag.not_weak_enough"));
+                            "core.action.use.sandbag.not_weak_enough"));
                         return TurnResult::pc_turn_user_error;
                     }
                     if (tc != 0)
                     {
                         if (tc < 16)
                         {
-                            txt(i18n::s.get(
-                                "core.locale.action.use.sandbag.ally"));
+                            txt(i18n::s.get("core.action.use.sandbag.ally"));
                             return TurnResult::pc_turn_user_error;
                         }
                     }
                     if (cdata[tc].is_hung_on_sand_bag())
                     {
-                        txt(i18n::s.get(
-                            "core.locale.action.use.sandbag.already"));
+                        txt(i18n::s.get("core.action.use.sandbag.already"));
                         return TurnResult::pc_turn_user_error;
                     }
                     if (tc == 0)
                     {
-                        txt(i18n::s.get("core.locale.action.use.sandbag.self"));
+                        txt(i18n::s.get("core.action.use.sandbag.self"));
                     }
                     else
                     {
                         snd("core.build1");
                         cdata[tc].is_hung_on_sand_bag() = true;
                         txt(i18n::s.get(
-                            "core.locale.action.use.sandbag.start", cdata[tc]));
+                            "core.action.use.sandbag.start", cdata[tc]));
                         txt(i18n::s.get(
-                            "core.locale.action.use.leash.other.start.dialog",
+                            "core.action.use.leash.other.start.dialog",
                             cdata[tc]));
                         animeload(8, tc);
                         inv[ci].modify_number(-1);
@@ -2120,12 +2077,12 @@ TurnResult do_use_command()
         }
         if (f == 0)
         {
-            txt(i18n::s.get("core.locale.common.it_is_impossible"));
+            txt(i18n::s.get("core.common.it_is_impossible"));
         }
         break;
     case 6:
     {
-        txt(i18n::s.get("core.locale.action.use.music_disc.play", inv[ci]));
+        txt(i18n::s.get("core.action.use.music_disc.play", inv[ci]));
         auto music = inv[ci].param1 + 50 + 1;
         if (music > 97)
         {
@@ -2154,12 +2111,12 @@ TurnResult do_use_command()
                 if (game_data.current_map == mdata_t::MapId::fields)
                 {
                     txt(i18n::s.get(
-                        "core.locale.action.use.shelter.only_in_world_map"));
+                        "core.action.use.shelter.only_in_world_map"));
                 }
                 else
                 {
                     txt(i18n::s.get(
-                        "core.locale.action.use.shelter.cannot_build_it_here"));
+                        "core.action.use.shelter.cannot_build_it_here"));
                 }
                 update_screen();
                 return TurnResult::pc_turn_user_error;
@@ -2176,8 +2133,7 @@ TurnResult do_use_command()
             {
                 if (area_data[game_data.current_map].has_been_conquered != -1)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.action.use.shelter.during_quest"));
+                    txt(i18n::s.get("core.action.use.shelter.during_quest"));
                     if (!yes_no())
                     {
                         update_screen();
@@ -2192,14 +2148,13 @@ TurnResult do_use_command()
     case 11:
         if (moneybox(inv[ci].param2) > cdata.player().gold)
         {
-            txt(i18n::s.get(
-                "core.locale.action.use.money_box.not_enough_gold"));
+            txt(i18n::s.get("core.action.use.money_box.not_enough_gold"));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
         if (inv[ci].param1 >= 1000000000)
         {
-            txt(i18n::s.get("core.locale.action.use.money_box.full"));
+            txt(i18n::s.get("core.action.use.money_box.full"));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
@@ -2214,31 +2169,29 @@ TurnResult do_use_command()
         efp = 400;
         magic();
         break;
-    case 47:
-        txt(i18n::s.get("core.locale.action.use.summoning_crystal.use"));
-        break;
+    case 47: txt(i18n::s.get("core.action.use.summoning_crystal.use")); break;
     case 22:
         snd("core.enc");
         if (map_data.type != mdata_t::MapType::town &&
             map_data.type != mdata_t::MapType::guild)
         {
-            txt(i18n::s.get("core.locale.action.use.rune.only_in_town"));
+            txt(i18n::s.get("core.action.use.rune.only_in_town"));
             break;
         }
         inv[ci].modify_number(-1);
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        txt(i18n::s.get("core.locale.action.use.rune.use"));
+        txt(i18n::s.get("core.action.use.rune.use"));
         // Showroom is not supported now.
         break;
     case 49:
-        txt(i18n::s.get("core.locale.action.use.hammer.use", inv[ci]));
+        txt(i18n::s.get("core.action.use.hammer.use", inv[ci]));
         snd("core.build1");
         efid = 49;
         efp = 100;
         magic();
         break;
     case 21:
-        txt(i18n::s.get("core.locale.action.use.hammer.use", inv[ci]));
+        txt(i18n::s.get("core.action.use.hammer.use", inv[ci]));
         snd("core.build1");
         inv[ci].modify_number(-1);
         fixmaterial = inv[ci].material;
@@ -2247,41 +2200,40 @@ TurnResult do_use_command()
         magic();
         break;
     case 25:
-        txt(i18n::s.get("core.locale.action.use.unicorn_horn.use", inv[ci]));
+        txt(i18n::s.get("core.action.use.unicorn_horn.use", inv[ci]));
         inv[ci].modify_number(-1);
         efid = 637;
         efp = 500;
         magic();
         break;
     case 26:
-        txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
+        txt(i18n::s.get("core.action.use.statue.activate", inv[ci]));
         game_data.diastrophism_flag = 1;
         snd("core.pray1");
-        txt(i18n::s.get("core.locale.action.use.statue.opatos"),
+        txt(i18n::s.get("core.action.use.statue.opatos"),
             Message::color{ColorIndex::orange});
         break;
     case 34:
-        txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
-        txt(i18n::s.get("core.locale.action.use.statue.jure"),
+        txt(i18n::s.get("core.action.use.statue.activate", inv[ci]));
+        txt(i18n::s.get("core.action.use.statue.jure"),
             Message::color{ColorIndex::orange});
         efid = 637;
         efp = 5000;
         magic();
         break;
     case 43:
-        txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
+        txt(i18n::s.get("core.action.use.statue.activate", inv[ci]));
         snd("core.pray1");
-        txt(i18n::s.get("core.locale.action.use.statue.ehekatl"),
+        txt(i18n::s.get("core.action.use.statue.ehekatl"),
             Message::color{ColorIndex::orange});
         buff_add(cdata[tc], "core.luck", 77, 2500);
         break;
     case 27:
-        txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
+        txt(i18n::s.get("core.action.use.statue.activate", inv[ci]));
         snd("core.pray1");
         if (game_data.weather == 1)
         {
-            txt(i18n::s.get(
-                    "core.locale.action.use.statue.lulwy.during_etherwind"),
+            txt(i18n::s.get("core.action.use.statue.lulwy.during_etherwind"),
                 Message::color{ColorIndex::orange});
             break;
         }
@@ -2309,15 +2261,15 @@ TurnResult do_use_command()
                 break;
             }
         }
-        txt(i18n::s.get("core.locale.action.use.statue.lulwy.normal"),
+        txt(i18n::s.get("core.action.use.statue.lulwy.normal"),
             Message::color{ColorIndex::orange});
-        txt(i18n::s.get("core.locale.action.weather.changes"));
+        txt(i18n::s.get("core.action.weather.changes"));
         sound_play_environmental();
         break;
     case 28:
         if (map_data.type == mdata_t::MapType::world_map)
         {
-            txt(i18n::s.get("core.locale.action.use.nuke.cannot_place_here"));
+            txt(i18n::s.get("core.action.use.nuke.cannot_place_here"));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
@@ -2325,7 +2277,7 @@ TurnResult do_use_command()
         {
             if (game_data.quest_flags.red_blossom_in_palmia == 1)
             {
-                txt(i18n::s.get("core.locale.action.use.nuke.not_quest_goal"));
+                txt(i18n::s.get("core.action.use.nuke.not_quest_goal"));
                 if (!yes_no())
                 {
                     update_screen();
@@ -2335,7 +2287,7 @@ TurnResult do_use_command()
         }
         inv[ci].modify_number(-1);
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        txt(i18n::s.get("core.locale.action.use.nuke.set_up"));
+        txt(i18n::s.get("core.action.use.nuke.set_up"));
         snd("core.build1");
         mef_add(
             cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
@@ -2344,10 +2296,10 @@ TurnResult do_use_command()
         if (game_data.current_map != mdata_t::MapId::show_house ||
             usermapid == 0)
         {
-            txt(i18n::s.get("core.locale.action.use.statue.creator.normal"));
+            txt(i18n::s.get("core.action.use.statue.creator.normal"));
             break;
         }
-        txt(i18n::s.get("core.locale.action.use.statue.creator.in_usermap"));
+        txt(i18n::s.get("core.action.use.statue.creator.in_usermap"));
         break;
     case 29:
         trait(inv[ci].param1) = 1;
@@ -2360,12 +2312,12 @@ TurnResult do_use_command()
             trait(169) = 0;
         }
         inv[ci].modify_number(-1);
-        txt(i18n::s.get("core.locale.action.use.secret_treasure.use"));
+        txt(i18n::s.get("core.action.use.secret_treasure.use"));
         animeload(10, 0);
         chara_refresh(cc);
         break;
     case 30:
-        txt(i18n::s.get("core.locale.action.use.statue.activate", inv[ci]));
+        txt(i18n::s.get("core.action.use.statue.activate", inv[ci]));
         efid = inv[ci].param1;
         efp = inv[ci].param2;
         tc = cc;
@@ -2378,7 +2330,7 @@ TurnResult do_use_command()
             cdata.player().level)
         {
             txt(
-                i18n::s.get("core.locale.action.use.secret_experience.kumiromi."
+                i18n::s.get("core.action.use.secret_experience.kumiromi."
                             "not_enough_exp"));
             update_screen();
             return TurnResult::pc_turn_user_error;
@@ -2389,19 +2341,18 @@ TurnResult do_use_command()
         inv[ci].modify_number(-1);
         ++game_data.acquirable_feat_count;
         txt(i18n::s.get(
-            "core.locale.action.use.secret_experience.kumiromi.use.dialog"));
-        txt(i18n::s.get(
-                "core.locale.action.use.secret_experience.kumiromi.use.text"),
+            "core.action.use.secret_experience.kumiromi.use.dialog"));
+        txt(i18n::s.get("core.action.use.secret_experience.kumiromi.use.text"),
             Message::color{ColorIndex::orange});
         break;
     case 42:
         snd("core.curse1");
-        txt(i18n::s.get("core.locale.action.use.secret_experience.lomias"),
+        txt(i18n::s.get("core.action.use.secret_experience.lomias"),
             Message::color{ColorIndex::purple});
         break;
     case 46:
         Message::instance().linebreak();
-        txt(i18n::s.get("core.locale.action.use.rope.prompt"));
+        txt(i18n::s.get("core.action.use.rope.prompt"));
         if (!yes_no())
         {
             return TurnResult::turn_end;
@@ -2411,16 +2362,15 @@ TurnResult do_use_command()
     case 33:
         if (inv[ci].subname == 0)
         {
-            txt(i18n::s.get("core.locale.action.use.monster_ball.empty"));
+            txt(i18n::s.get("core.action.use.monster_ball.empty"));
             break;
         }
         if (chara_get_free_slot_ally() == 0)
         {
-            txt(i18n::s.get(
-                "core.locale.action.use.monster_ball.party_is_full"));
+            txt(i18n::s.get("core.action.use.monster_ball.party_is_full"));
             break;
         }
-        txt(i18n::s.get("core.locale.action.use.monster_ball.use", inv[ci]));
+        txt(i18n::s.get("core.action.use.monster_ball.use", inv[ci]));
         inv[ci].modify_number(-1);
         flt();
         novoidlv = 1;
@@ -2434,34 +2384,32 @@ TurnResult do_use_command()
         cell_featread(x, y);
         if (feat(1) != 29)
         {
-            txt(i18n::s.get(
-                "core.locale.action.use.gem_stone.kumiromi.no_plant"));
+            txt(i18n::s.get("core.action.use.gem_stone.kumiromi.no_plant"));
             break;
         }
         if (feat == tile_plant + 2)
         {
             txt(i18n::s.get(
-                "core.locale.action.use.gem_stone.kumiromi.already_grown"));
+                "core.action.use.gem_stone.kumiromi.already_grown"));
             break;
         }
         if (feat == tile_plant + 3)
         {
             feat = tile_plant + 1;
             try_to_grow_plant();
-            txt(i18n::s.get(
-                "core.locale.action.use.gem_stone.kumiromi.revives"));
+            txt(i18n::s.get("core.action.use.gem_stone.kumiromi.revives"));
         }
         else
         {
             ++feat;
-            txt(i18n::s.get("core.locale.action.use.gem_stone.kumiromi.grows"));
+            txt(i18n::s.get("core.action.use.gem_stone.kumiromi.grows"));
         }
         cell_featset(x, y, feat, feat(1), feat(2), feat(3));
         animeload(8, 0);
         break;
     case 32:
         Message::instance().linebreak();
-        txt(i18n::s.get("core.locale.action.use.gene_machine.choose_original"));
+        txt(i18n::s.get("core.action.use.gene_machine.choose_original"));
         rc = 0;
         {
             int stat = ctrl_ally(ControlAllyOperation::gene_engineer);
@@ -2472,7 +2420,7 @@ TurnResult do_use_command()
             rc = stat;
         }
         Message::instance().linebreak();
-        txt(i18n::s.get("core.locale.action.use.gene_machine.choose_subject"));
+        txt(i18n::s.get("core.action.use.gene_machine.choose_subject"));
         {
             int chara;
             while (true)
@@ -2485,7 +2433,7 @@ TurnResult do_use_command()
                 if (cdata[chara].has_been_used_stethoscope())
                 {
                     txt(i18n::s.get(
-                        "core.locale.action.use.gene_machine.precious_ally",
+                        "core.action.use.gene_machine.precious_ally",
                         cdata[chara]));
                     continue;
                 }
@@ -2500,16 +2448,14 @@ TurnResult do_use_command()
         update_screen();
         Message::instance().linebreak();
         txt(i18n::s.get(
-            "core.locale.action.use.gene_machine.prompt",
-            cdata[tc],
-            cdata[rc]));
+            "core.action.use.gene_machine.prompt", cdata[tc], cdata[rc]));
         if (!yes_no())
         {
             return TurnResult::turn_end;
         }
         Message::instance().linebreak();
         txt(i18n::s.get(
-                "core.locale.action.use.gene_machine.has_inherited",
+                "core.action.use.gene_machine.has_inherited",
                 cdata[rc],
                 cdata[tc]),
             Message::color{ColorIndex::orange});
@@ -2520,9 +2466,9 @@ TurnResult do_use_command()
             {
                 cdata[rc].body_parts[stat - 100] = rtval * 10000;
                 txt(i18n::s.get(
-                        "core.locale.action.use.gene_machine.gains.body_part",
+                        "core.action.use.gene_machine.gains.body_part",
                         cdata[rc],
-                        i18n::s.get_enum("core.locale.ui.body_part", rtval)),
+                        i18n::s.get_enum("core.ui.body_part", rtval)),
                     Message::color{ColorIndex::green});
                 refresh_speed_correction_value(cdata[rc]);
             }
@@ -2539,10 +2485,10 @@ TurnResult do_use_command()
                     }
                     chara_gain_skill(cdata[rc], rtval(cnt), 1);
                     txt(i18n::s.get(
-                            "core.locale.action.use.gene_machine.gains.ability",
+                            "core.action.use.gene_machine.gains.ability",
                             cdata[rc],
                             i18n::s.get_m(
-                                "locale.ability",
+                                "ability",
                                 the_ability_db.get_id_from_legacy(rtval(cnt))
                                     ->get(),
                                 "name")),
@@ -2559,7 +2505,7 @@ TurnResult do_use_command()
                 gain_level(cdata[rc]);
             }
             txt(i18n::s.get(
-                    "core.locale.action.use.gene_machine.gains.level",
+                    "core.action.use.gene_machine.gains.level",
                     cdata[rc],
                     cdata[rc].level),
                 Message::color{ColorIndex::green});
@@ -2595,30 +2541,48 @@ TurnResult do_use_command()
         cc = 0;
         break;
     case 35:
-        txt(i18n::s.get("core.locale.action.use.iron_maiden.use"));
-        txt(i18n::s.get("core.locale.action.use.iron_maiden.interesting"),
+        txt(i18n::s.get("core.action.use.iron_maiden.use"));
+        txt(i18n::s.get("core.action.use.iron_maiden.interesting"),
             Message::color{ColorIndex::cyan});
-        txt(i18n::s.get(
-            "core.locale.action.use.iron_maiden.someone_activates"));
-        txt(i18n::s.get("core.locale.action.use.iron_maiden.grin"),
+        txt(i18n::s.get("core.action.use.iron_maiden.someone_activates"));
+        txt(i18n::s.get("core.action.use.iron_maiden.grin"),
             Message::color{ColorIndex::cyan});
         damage_hp(cdata.player(), 9999, -18);
         break;
     case 36:
-        txt(i18n::s.get("core.locale.action.use.guillotine.use"));
-        txt(i18n::s.get("core.locale.action.use.iron_maiden.interesting"),
+        txt(i18n::s.get("core.action.use.guillotine.use"));
+        txt(i18n::s.get("core.action.use.iron_maiden.interesting"),
             Message::color{ColorIndex::cyan});
-        txt(i18n::s.get("core.locale.action.use.guillotine.someone_activates"));
-        txt(i18n::s.get("core.locale.action.use.iron_maiden.grin"),
+        txt(i18n::s.get("core.action.use.guillotine.someone_activates"));
+        txt(i18n::s.get("core.action.use.iron_maiden.grin"),
             Message::color{ColorIndex::cyan});
         damage_hp(cdata.player(), 9999, -19);
         break;
     case 39:
-        txt(i18n::s.get("core.locale.action.use.whistle.use"),
+        txt(i18n::s.get("core.action.use.whistle.use"),
             Message::color{ColorIndex::cyan});
         make_sound(cdata[cc].position.x, cdata[cc].position.y, 10, 1, 1, cc);
         break;
-    case 37: show_card_collection(); break;
+    case 37:
+        tcgdeck();
+        draw_prepare_map_chips();
+        update_entire_screen();
+        Message::instance().linebreak();
+        txt(i18n::s.get("core.action.use.deck.put_away"));
+        break;
+    case 38:
+        if (inv_find(701, 0) == -1)
+        {
+            txt(i18n::s.get("core.action.use.deck.no_deck"));
+            update_screen();
+            return TurnResult::pc_turn_user_error;
+        }
+        snd("core.card1");
+        inv[ci].modify_number(-1);
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        txt(i18n::s.get("core.action.use.deck.add_card", inv[ci]));
+        ++card(0, inv[ci].subname);
+        break;
     }
 
     refresh_burden_state();
@@ -2667,18 +2631,10 @@ TurnResult do_open_command(bool play_sound)
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
-    if (inv[ci].id == 701)
-    {
-        invctrl(0) = 24;
-        invctrl(1) = 8;
-        snd_("core.inv");
-        ctrl_inventory();
-        return TurnResult::turn_end;
-    }
     if (inv[ci].id == 600)
     {
         snd_("core.locked1");
-        txt(i18n::s.get("core.locale.action.open.shackle.text"));
+        txt(i18n::s.get("core.action.open.shackle.text"));
         if (game_data.current_map == mdata_t::MapId::noyel)
         {
             if (game_data.current_dungeon_level == 1)
@@ -2688,16 +2644,17 @@ TurnResult do_open_command(bool play_sound)
                     if (cdata[game_data.fire_giant].state() ==
                         Character::State::alive)
                     {
-                        tc = chara_find(203);
-                        if (tc != 0)
+                        tc = chara_find("core.moyer");
+                        if (tc != 0 &&
+                            cdata[tc].state() == Character::State::alive)
                         {
-                            txt(i18n::s.get(
-                                    "core.locale.action.open.shackle.dialog"),
+                            txt(i18n::s.get("core.action.open.shackle.dialog"),
                                 Message::color{ColorIndex::cyan});
                             cdata[game_data.fire_giant].enemy_id = tc;
                             cdata[game_data.fire_giant].hate = 1000;
                         }
                         game_data.released_fire_giant = 1;
+                        net_send_news("fire");
                     }
                 }
             }
@@ -2721,7 +2678,7 @@ TurnResult do_open_command(bool play_sound)
         {
             if (game_data.current_map != mdata_t::MapId::your_home)
             {
-                txt(i18n::s.get("core.locale.action.open.only_in_home"));
+                txt(i18n::s.get("core.action.open.only_in_home"));
                 update_screen();
                 return TurnResult::pc_turn_user_error;
             }
@@ -2730,7 +2687,7 @@ TurnResult do_open_command(bool play_sound)
         {
             if (area_data[game_data.current_map].id != mdata_t::MapId::shop)
             {
-                txt(i18n::s.get("core.locale.action.open.only_in_shop"));
+                txt(i18n::s.get("core.action.open.only_in_shop"));
                 update_screen();
                 return TurnResult::pc_turn_user_error;
             }
@@ -2738,16 +2695,16 @@ TurnResult do_open_command(bool play_sound)
         ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
         tmpload(filepathutil::u8path(u8"shop"s + invfile + u8".s2"));
         if (fs::exists(
-                filesystem::dir::tmp() / (u8"shop"s + invfile + u8".s2")))
+                filesystem::dirs::tmp() / (u8"shop"s + invfile + u8".s2")))
         {
             ctrl_file(
                 FileOperation2::map_items_read, u8"shop"s + invfile + u8".s2");
         }
         else
         {
-            for (const auto& cnt : items(-1))
+            for (auto&& item : inv.ground())
             {
-                inv[cnt].remove();
+                item.remove();
             }
         }
         shoptrade = 0;
@@ -2757,7 +2714,7 @@ TurnResult do_open_command(bool play_sound)
         if (invfile == 3)
         {
             txt(i18n::s.get(
-                "core.locale.ui.inv.take.can_claim_more",
+                "core.ui.inv.take.can_claim_more",
                 game_data.rights_to_succeed_to));
             invctrl(1) = 1;
         }
@@ -2810,7 +2767,7 @@ TurnResult do_open_command(bool play_sound)
     }
     if (inv[ci].param1 == 0)
     {
-        txt(i18n::s.get("core.locale.action.open.empty"));
+        txt(i18n::s.get("core.action.open.empty"));
     }
     else
     {
@@ -2834,7 +2791,7 @@ TurnResult do_use_stairs_command(int val0)
     int movelevelbystairs = 0;
     if (dbg_freemove)
     {
-        txt(i18n::s.get("core.locale.action.use_stairs.cannot_during_debug"));
+        txt(i18n::s.get("core.action.use_stairs.cannot_during_debug"));
         return TurnResult::pc_turn_user_error;
     }
     int stat = item_find(631, 3, ItemFindLocation::ground);
@@ -2852,13 +2809,13 @@ TurnResult do_use_stairs_command(int val0)
     {
         if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 753) != -1)
         {
-            txt(i18n::s.get("core.locale.action.use_stairs.kotatsu.prompt"));
+            txt(i18n::s.get("core.action.use_stairs.kotatsu.prompt"));
             if (!yes_no())
             {
                 update_screen();
                 return TurnResult::pc_turn_user_error;
             }
-            txt(i18n::s.get("core.locale.action.use_stairs.kotatsu.use"));
+            txt(i18n::s.get("core.action.use_stairs.kotatsu.use"));
             cdata.player().blind += 2;
             return TurnResult::turn_end;
         }
@@ -2873,8 +2830,7 @@ TurnResult do_use_stairs_command(int val0)
                 if (game_data.current_dungeon_level >=
                     area_data[game_data.current_map].deepest_level)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.action.use_stairs.cannot_go.down"));
+                    txt(i18n::s.get("core.action.use_stairs.cannot_go.down"));
                     return TurnResult::pc_turn_user_error;
                 }
                 else
@@ -2891,8 +2847,7 @@ TurnResult do_use_stairs_command(int val0)
                 if (game_data.current_dungeon_level <=
                     area_data[game_data.current_map].danger_level)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.action.use_stairs.cannot_go.up"));
+                    txt(i18n::s.get("core.action.use_stairs.cannot_go.up"));
                     return TurnResult::pc_turn_user_error;
                 }
                 else
@@ -2910,8 +2865,7 @@ TurnResult do_use_stairs_command(int val0)
             {
                 if (feat(1) != 11)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.action.use_stairs.no.downstairs"));
+                    txt(i18n::s.get("core.action.use_stairs.no.downstairs"));
                     update_screen();
                     return TurnResult::pc_turn_user_error;
                 }
@@ -2923,7 +2877,7 @@ TurnResult do_use_stairs_command(int val0)
                             game_data.void_next_lord_floor)
                     {
                         txt(
-                            i18n::s.get("core.locale.action.use_stairs.blocked_"
+                            i18n::s.get("core.action.use_stairs.blocked_"
                                         "by_barrier"));
                         return TurnResult::pc_turn_user_error;
                     }
@@ -2933,8 +2887,7 @@ TurnResult do_use_stairs_command(int val0)
             {
                 if (feat(1) != 10)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.action.use_stairs.no.upstairs"));
+                    txt(i18n::s.get("core.action.use_stairs.no.upstairs"));
                     update_screen();
                     return TurnResult::pc_turn_user_error;
                 }
@@ -2980,11 +2933,11 @@ TurnResult do_use_stairs_command(int val0)
         {
             if (game_data.current_dungeon_level == 44)
             {
-                txt(i18n::s.get("core.locale.action.use_stairs.unlock.stones"));
+                txt(i18n::s.get("core.action.use_stairs.unlock.stones"));
             }
             else
             {
-                txt(i18n::s.get("core.locale.action.use_stairs.unlock.normal"));
+                txt(i18n::s.get("core.action.use_stairs.unlock.normal"));
             }
             snd("core.chest1");
             cell_featset(
@@ -2995,7 +2948,7 @@ TurnResult do_use_stairs_command(int val0)
             return TurnResult::turn_end;
         }
         snd("core.locked1");
-        txt(i18n::s.get("core.locale.action.use_stairs.locked"));
+        txt(i18n::s.get("core.action.use_stairs.locked"));
         return TurnResult::turn_end;
     }
     if (area_data[game_data.current_map].id == mdata_t::MapId::random_dungeon)
@@ -3005,8 +2958,7 @@ TurnResult do_use_stairs_command(int val0)
         {
             if (area_data[game_data.current_map].has_been_conquered != -1)
             {
-                txt(i18n::s.get(
-                    "core.locale.action.use_stairs.prompt_give_up_quest"));
+                txt(i18n::s.get("core.action.use_stairs.prompt_give_up_quest"));
                 if (!yes_no())
                 {
                     update_screen();
@@ -3022,7 +2974,7 @@ TurnResult do_use_stairs_command(int val0)
         {
             if (!ok || rnd(5 - cdata.player().inventory_weight_type) == 0)
             {
-                txt(i18n::s.get("core.locale.action.use_stairs.lost_balance"));
+                txt(i18n::s.get("core.action.use_stairs.lost_balance"));
                 damage_hp(
                     cdata[cc],
                     cdata[cc].max_hp *
@@ -3092,8 +3044,7 @@ static TurnResult _bump_into_character()
                 ui_scroll_screen();
             }
             cell_swap(cc, tc);
-            txt(i18n::s.get(
-                "core.locale.action.move.displace.text", cdata[tc]));
+            txt(i18n::s.get("core.action.move.displace.text", cdata[tc]));
             if (cdata[tc].id == 271)
             {
                 if (rnd(5) == 0)
@@ -3111,7 +3062,7 @@ static TurnResult _bump_into_character()
                             cdata[cc].gold -= p;
                             earn_gold(cdata[tc], p);
                             txt(i18n::s.get(
-                                "core.locale.action.move.displace.dialog"));
+                                "core.action.move.displace.dialog"));
                         }
                     }
                 }
@@ -3120,8 +3071,7 @@ static TurnResult _bump_into_character()
             {
                 if (cdata[tc].continuous_action.turn > 0)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.action.move.interrupt", cdata[tc]));
+                    txt(i18n::s.get("core.action.move.interrupt", cdata[tc]));
                     cdata[tc].continuous_action.type =
                         ContinuousAction::Type::none;
                     cdata[tc].continuous_action.turn = 0;
@@ -3182,7 +3132,7 @@ TurnResult do_movement_command()
     {
         if (rnd(5) == 0)
         {
-            txt(i18n::s.get("core.locale.action.move.drunk"),
+            txt(i18n::s.get("core.action.move.drunk"),
                 Message::color{ColorIndex::cyan});
             f = 1;
         }
@@ -3199,8 +3149,7 @@ TurnResult do_movement_command()
             if (cdata[game_data.mount].continuous_action.turn > 0)
             {
                 txt(i18n::s.get(
-                    "core.locale.action.move.interrupt",
-                    cdata[game_data.mount]));
+                    "core.action.move.interrupt", cdata[game_data.mount]));
                 cdata[game_data.mount].continuous_action.type =
                     ContinuousAction::Type::none;
                 cdata[game_data.mount].continuous_action.turn = 0;
@@ -3210,7 +3159,7 @@ TurnResult do_movement_command()
     cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
     if (cdata.player().inventory_weight_type >= 4)
     {
-        txt(i18n::s.get("core.locale.action.move.carry_too_much"),
+        txt(i18n::s.get("core.action.move.carry_too_much"),
             Message::only_once{true});
         update_screen();
         return TurnResult::pc_turn_user_error;
@@ -3252,13 +3201,12 @@ TurnResult do_movement_command()
             cdata[cc].next_position.y < 0 ||
             cdata[cc].next_position.y > map_data.height - 1)
         {
-            txt(i18n::s.get("core.locale.action.move.leave.prompt", mdatan(0)));
+            txt(i18n::s.get("core.action.move.leave.prompt", mdatan(0)));
             if (map_data.type == mdata_t::MapType::temporary)
             {
                 if (game_data.executing_immediate_quest_status != 3)
                 {
-                    txt(i18n::s.get(
-                        "core.locale.action.move.leave.abandoning_quest"));
+                    txt(i18n::s.get("core.action.move.leave.abandoning_quest"));
                 }
             }
             const auto yesno_result = yes_no();
@@ -3290,7 +3238,7 @@ TurnResult do_movement_command()
         if (cellfeat == 31)
         {
             snd("core.chat");
-            // Voting box is not supported now.
+            menu_voting_box();
             return TurnResult::turn_end;
         }
         if (cellfeat == 33)
@@ -3302,8 +3250,7 @@ TurnResult do_movement_command()
     }
     if (cdata.player().confused != 0)
     {
-        txt(i18n::s.get("core.locale.action.move.confused"),
-            Message::only_once{true});
+        txt(i18n::s.get("core.action.move.confused"), Message::only_once{true});
         update_screen();
     }
     return TurnResult::pc_turn_user_error;
@@ -3315,13 +3262,13 @@ TurnResult do_read_command()
     {
         if (inv[ci].subname == 0)
         {
-            txt(i18n::s.get("core.locale.action.read.recipe.info"));
+            txt(i18n::s.get("core.action.read.recipe.info"));
             return TurnResult::turn_end;
         }
     }
     efid = 0;
     dbid = inv[ci].id;
-    access_item_db(13);
+    item_db_on_read(inv[ci], dbid);
     if (efid == 1115)
     {
         return build_new_building();
@@ -3341,7 +3288,7 @@ TurnResult do_eat_command()
         }
         if (itemusingfind(ci) > 0)
         {
-            txt(i18n::s.get("core.locale.action.someone_else_is_using"));
+            txt(i18n::s.get("core.action.someone_else_is_using"));
             return TurnResult::pc_turn_user_error;
         }
     }
@@ -3354,7 +3301,7 @@ TurnResult do_eat_command()
             if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
-                    "core.locale.action.eat.snatches", cdata[cc], cdata[tc]));
+                    "core.action.eat.snatches", cdata[cc], cdata[tc]));
             }
         }
     }
@@ -3366,14 +3313,14 @@ TurnResult do_eat_command()
 TurnResult do_drink_command()
 {
     dbid = inv[ci].id;
-    access_item_db(15);
+    item_db_on_drink(inv[ci], dbid);
     return TurnResult::turn_end;
 }
 
 TurnResult do_zap_command()
 {
     dbid = inv[ci].id;
-    access_item_db(14);
+    item_db_on_zap(inv[ci], dbid);
     int stat = do_zap();
     if (stat == 0)
     {
@@ -3410,21 +3357,21 @@ TurnResult do_fire_command()
         int stat = can_do_ranged_attack();
         if (stat == -1)
         {
-            txt(i18n::s.get("core.locale.action.ranged.equip.need_weapon"),
+            txt(i18n::s.get("core.action.ranged.equip.need_weapon"),
                 Message::only_once{true});
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
         if (stat == -2)
         {
-            txt(i18n::s.get("core.locale.action.ranged.equip.need_ammo"),
+            txt(i18n::s.get("core.action.ranged.equip.need_ammo"),
                 Message::only_once{true});
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
         if (stat == -3)
         {
-            txt(i18n::s.get("core.locale.action.ranged.equip.wrong_ammo"),
+            txt(i18n::s.get("core.action.ranged.equip.wrong_ammo"),
                 Message::only_once{true});
             update_screen();
             return TurnResult::pc_turn_user_error;
@@ -3449,7 +3396,7 @@ TurnResult do_get_command()
         {
             if (feat < tile_plant + 2)
             {
-                txt(i18n::s.get("core.locale.action.get.plant.young"));
+                txt(i18n::s.get("core.action.get.plant.young"));
                 cell_data
                     .at(cdata.player().position.x, cdata.player().position.y)
                     .feats = 0;
@@ -3457,7 +3404,7 @@ TurnResult do_get_command()
             }
             if (feat == tile_plant + 3)
             {
-                txt(i18n::s.get("core.locale.action.get.plant.dead"));
+                txt(i18n::s.get("core.action.get.plant.dead"));
                 cell_data
                     .at(cdata.player().position.x, cdata.player().position.y)
                     .feats = 0;
@@ -3465,7 +3412,7 @@ TurnResult do_get_command()
             }
             if (!inv_getspace(0))
             {
-                txt(i18n::s.get("core.locale.ui.inv.common.inventory_is_full"));
+                txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                 update_screen();
                 return TurnResult::pc_turn_user_error;
             }
@@ -3487,7 +3434,7 @@ TurnResult do_get_command()
         if (map_data.type == mdata_t::MapType::world_map && feat(1) == 15 &&
             feat(2) + feat(3) * 100 >= 300 && feat(2) + feat(3) * 100 < 450)
         {
-            txt(i18n::s.get("core.locale.action.get.building.prompt"));
+            txt(i18n::s.get("core.action.get.building.prompt"));
             if (!yes_no())
             {
                 update_screen();
@@ -3501,7 +3448,7 @@ TurnResult do_get_command()
             map_global_prepare();
             ctrl_file(FileOperation::temp_dir_delete_area);
             snd("core.build1");
-            txt(i18n::s.get("core.locale.action.get.building.remove"));
+            txt(i18n::s.get("core.action.get.building.remove"));
             return TurnResult::turn_end;
         }
     }
@@ -3515,27 +3462,24 @@ TurnResult do_get_command()
                     .kind == 4)
         {
             snd("core.foot2a");
-            txt(i18n::s.get("core.locale.action.get.snow"));
+            txt(i18n::s.get("core.action.get.snow"));
             if (!action_sp(cdata.player(), 10))
             {
-                txt(i18n::s.get("core.locale.magic.common.too_exhausted"));
+                txt(i18n::s.get("core.magic.common.too_exhausted"));
                 return TurnResult::turn_end;
             }
             flt();
             {
-                int stat = itemcreate(0, 587, -1, -1, 0);
-                if (stat != 0)
+                if (itemcreate(0, 587, -1, -1, 0))
                 {
                     inv[ci].curse_state = CurseState::none;
-                    inv[ci].identification_state =
-                        IdentifyState::completely_identified;
+                    inv[ci].identify_state = IdentifyState::completely;
                     item_stack(0, ci, 1);
                 }
             }
             return TurnResult::turn_end;
         }
-        txt(i18n::s.get("core.locale.action.get.air"),
-            Message::only_once{true});
+        txt(i18n::s.get("core.action.get.air"), Message::only_once{true});
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -3555,12 +3499,12 @@ TurnResult do_get_command()
         snd("core.fail1");
         if (inv[ci].own_state == 2)
         {
-            txt(i18n::s.get("core.locale.action.get.cannot_carry"),
+            txt(i18n::s.get("core.action.get.cannot_carry"),
                 Message::only_once{true});
         }
         if (inv[ci].own_state == 1 || inv[ci].own_state == 5)
         {
-            txt(i18n::s.get("core.locale.action.get.not_owned"),
+            txt(i18n::s.get("core.action.get.not_owned"),
                 Message::only_once{true});
         }
         update_screen();
@@ -3596,7 +3540,7 @@ TurnResult do_short_cut_command(int sc_)
     menucycle = 0;
     if (game_data.skill_shortcuts.at(sc_) == 0)
     {
-        txt(i18n::s.get("core.locale.action.shortcut.unassigned"),
+        txt(i18n::s.get("core.action.shortcut.unassigned"),
             Message::only_once{true});
         update_screen();
         return TurnResult::pc_turn_user_error;
@@ -3620,7 +3564,7 @@ TurnResult do_short_cut_command(int sc_)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return TurnResult::pc_turn_user_error;
         }
@@ -3628,8 +3572,7 @@ TurnResult do_short_cut_command(int sc_)
         {
             if (spact(efid - 600) == 0)
             {
-                txt(i18n::s.get(
-                    "core.locale.action.shortcut.cannot_use_anymore"));
+                txt(i18n::s.get("core.action.shortcut.cannot_use_anymore"));
                 update_screen();
                 return TurnResult::pc_turn_user_error;
             }
@@ -3641,14 +3584,13 @@ TurnResult do_short_cut_command(int sc_)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return TurnResult::pc_turn_user_error;
         }
         if (spell(efid - 400) <= 0)
         {
-            txt(i18n::s.get(
-                    "core.locale.action.shortcut.cannot_use_spell_anymore"),
+            txt(i18n::s.get("core.action.shortcut.cannot_use_spell_anymore"),
                 Message::only_once{true});
             update_screen();
             return TurnResult::pc_turn_user_error;
@@ -3663,15 +3605,15 @@ TurnResult do_exit_command()
     Message::instance().linebreak();
     if (game_data.current_map == mdata_t::MapId::show_house)
     {
-        txt(i18n::s.get("core.locale.action.exit.cannot_save_in_usermap"),
+        txt(i18n::s.get("core.action.exit.cannot_save_in_usermap"),
             Message::color{ColorIndex::red});
     }
     else
     {
-        txt(i18n::s.get("core.locale.action.exit.prompt"));
+        txt(i18n::s.get("core.action.exit.prompt"));
     }
 
-    Prompt prompt("core.locale.action.exit.choices");
+    Prompt prompt("core.action.exit.choices");
     prompt.append("exit", snail::Key::key_a);
     prompt.append("cancel", snail::Key::key_b);
     prompt.append("game_setting", snail::Key::key_c);
@@ -3681,11 +3623,9 @@ TurnResult do_exit_command()
     {
         if (game_data.current_map != mdata_t::MapId::show_house)
         {
-            snd("core.write1");
-            save_game();
-            txt(i18n::s.get("core.locale.action.exit.saved"));
-            txt(i18n::s.get(
-                "core.locale.action.exit.you_close_your_eyes", cdata[cc]));
+            save_game(save_game_no_message);
+            txt(i18n::s.get("core.action.exit.saved"));
+            txt(i18n::s.get("core.action.exit.you_close_your_eyes", cdata[cc]));
             msg_halt();
             update_screen();
         }
@@ -3728,7 +3668,7 @@ int ask_direction_to_close()
         return 1;
     }
 
-    txt(i18n::s.get("core.locale.action.which_direction.door"));
+    txt(i18n::s.get("core.action.which_direction.door"));
     update_screen();
     return ask_direction();
 }

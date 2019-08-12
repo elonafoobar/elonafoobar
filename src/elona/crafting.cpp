@@ -29,10 +29,8 @@ void initialize_craft_material_data()
 
     for (int cnt = 0; cnt < 55; cnt++)
     {
-        matname(cnt) =
-            i18n::s.get_enum_property("core.locale.material", "name", cnt);
-        matdesc(cnt) =
-            i18n::s.get_enum_property("core.locale.material", "desc", cnt);
+        matname(cnt) = i18n::s.get_enum_property("core.material", "name", cnt);
+        matdesc(cnt) = i18n::s.get_enum_property("core.material", "desc", cnt);
     }
 
     matref(0, 0) = 0;
@@ -399,7 +397,7 @@ static void _craft_item(int matid, const CraftingRecipe& recipe)
     flt(calcobjlv(sdata(recipe.skill_used, 0)), calcfixlv(fixlv));
     nostack = 1;
     itemcreate(0, matid, -1, -1, 0);
-    txt(i18n::s.get("core.locale.crafting.you_crafted", inv[ci]));
+    txt(i18n::s.get("core.crafting.you_crafted", inv[ci]));
     item_stack(0, ci, 0);
 }
 
@@ -426,7 +424,7 @@ void crafting_menu()
             _craft_item(matid, *recipe);
 
             r2 = matuse;
-            gain_crafting_experience(recipe->skill_used, matuse);
+            chara_gain_exp_crafting(cdata.player(), recipe->skill_used, matuse);
             chara_refresh(0);
 
             // NOTE: page_load is called in UIMenuCrafting.

@@ -14,9 +14,11 @@
 
 
 
-namespace
+namespace elona
 {
 
+namespace
+{
 
 int calc_power_decreased_by_resistance(int cc, int power, Element element)
 {
@@ -34,17 +36,14 @@ int calc_power_decreased_by_resistance(int cc, int power, Element element)
     }
 }
 
-
 } // namespace
 
 
 
-namespace elona
-{
-
-
-
-void dmgcon(int cc, StatusAilment status_ailment, int power)
+void status_ailment_damage(
+    Character& chara,
+    StatusAilment status_ailment,
+    int power)
 {
     if (power <= 0)
         return;
@@ -54,270 +53,265 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
     switch (status_ailment)
     {
     case StatusAilment::blinded:
-        if (cdata[cc].is_immune_to_blindness())
+        if (chara.is_immune_to_blindness())
             return;
-        if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 2 + 1))
+        if (chara.quality > Quality::great && rnd(chara.level / 2 + 1))
             return;
-        power =
-            calc_power_decreased_by_resistance(cc, power, Element::darkness);
+        power = calc_power_decreased_by_resistance(
+            chara.index, power, Element::darkness);
         turn = power / 6;
         if (turn <= 0)
             return;
-        if (cdata[cc].blind == 0)
+        if (chara.blind == 0)
         {
-            cdata[cc].blind = turn;
-            if (is_in_fov(cdata[cc]))
+            chara.blind = turn;
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.blinded.apply",
-                        cdata[cc]),
+                        "core.status_ailment.message.blinded.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
         else
         {
-            cdata[cc].blind += turn / 3 + 1;
+            chara.blind += turn / 3 + 1;
         }
-        cdata[cc].continuous_action.finish();
+        chara.continuous_action.finish();
         return;
     case StatusAilment::confused:
-        if (cdata[cc].is_immune_to_confusion())
+        if (chara.is_immune_to_confusion())
             return;
-        if (buff_has(cdata[cc], "core.hero"))
+        if (buff_has(chara, "core.hero"))
             return;
-        if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 2 + 1))
+        if (chara.quality > Quality::great && rnd(chara.level / 2 + 1))
             return;
-        power = calc_power_decreased_by_resistance(cc, power, Element::mind);
+        power = calc_power_decreased_by_resistance(
+            chara.index, power, Element::mind);
         turn = power / 7;
         if (turn <= 0)
             return;
-        if (cdata[cc].confused == 0)
+        if (chara.confused == 0)
         {
-            cdata[cc].confused = turn;
-            if (is_in_fov(cdata[cc]))
+            chara.confused = turn;
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.confused.apply",
-                        cdata[cc]),
+                        "core.status_ailment.message.confused.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
         else
         {
-            cdata[cc].confused += turn / 3 + 1;
+            chara.confused += turn / 3 + 1;
         }
-        cdata[cc].continuous_action.finish();
+        chara.continuous_action.finish();
         return;
     case StatusAilment::paralyzed:
-        if (cdata[cc].is_immune_to_paralyzation())
+        if (chara.is_immune_to_paralyzation())
             return;
-        if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level + 1))
+        if (chara.quality > Quality::great && rnd(chara.level + 1))
             return;
-        power = calc_power_decreased_by_resistance(cc, power, Element::nerve);
+        power = calc_power_decreased_by_resistance(
+            chara.index, power, Element::nerve);
         turn = power / 10;
         if (turn <= 0)
             return;
-        if (cdata[cc].paralyzed == 0)
+        if (chara.paralyzed == 0)
         {
-            cdata[cc].paralyzed = turn;
-            if (is_in_fov(cdata[cc]))
+            chara.paralyzed = turn;
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.paralyzed.apply",
-                        cdata[cc]),
+                        "core.status_ailment.message.paralyzed.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
         else
         {
-            cdata[cc].paralyzed += turn / 3 + 1;
+            chara.paralyzed += turn / 3 + 1;
         }
-        cdata[cc].continuous_action.finish();
+        chara.continuous_action.finish();
         return;
     case StatusAilment::poisoned:
-        if (cdata[cc].is_immune_to_poison())
+        if (chara.is_immune_to_poison())
             return;
-        if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 3 + 1))
+        if (chara.quality > Quality::great && rnd(chara.level / 3 + 1))
             return;
-        power = calc_power_decreased_by_resistance(cc, power, Element::poison);
+        power = calc_power_decreased_by_resistance(
+            chara.index, power, Element::poison);
         turn = power / 5;
         if (turn <= 0)
             return;
-        if (cdata[cc].poisoned == 0)
+        if (chara.poisoned == 0)
         {
-            cdata[cc].poisoned = turn;
-            if (is_in_fov(cdata[cc]))
+            chara.poisoned = turn;
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.poisoned.apply",
-                        cdata[cc]),
+                        "core.status_ailment.message.poisoned.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
         else
         {
-            cdata[cc].poisoned += turn / 3 + 3;
+            chara.poisoned += turn / 3 + 3;
         }
-        cdata[cc].continuous_action.finish();
+        chara.continuous_action.finish();
         return;
     case StatusAilment::sleep:
-        if (cdata[cc].is_immune_to_sleep())
+        if (chara.is_immune_to_sleep())
             return;
-        if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 5 + 1))
+        if (chara.quality > Quality::great && rnd(chara.level / 5 + 1))
             return;
-        power = calc_power_decreased_by_resistance(cc, power, Element::nerve);
+        power = calc_power_decreased_by_resistance(
+            chara.index, power, Element::nerve);
         turn = power / 4;
         if (turn <= 0)
             return;
-        if (cdata[cc].sleep == 0)
+        if (chara.sleep == 0)
         {
-            cdata[cc].sleep = turn;
-            if (is_in_fov(cdata[cc]))
+            chara.sleep = turn;
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.sleep.apply",
-                        cdata[cc]),
+                        "core.status_ailment.message.sleep.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
         else
         {
-            cdata[cc].sleep += turn / 3 + 1;
+            chara.sleep += turn / 3 + 1;
         }
-        cdata[cc].continuous_action.finish();
+        chara.continuous_action.finish();
         return;
     case StatusAilment::fear:
-        if (cdata[cc].is_immune_to_fear())
+        if (chara.is_immune_to_fear())
             return;
-        if (buff_has(cdata[cc], "core.holy_shield"))
+        if (buff_has(chara, "core.holy_shield"))
             return;
-        if (buff_has(cdata[cc], "core.hero"))
+        if (buff_has(chara, "core.hero"))
             return;
-        if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 5 + 1))
+        if (chara.quality > Quality::great && rnd(chara.level / 5 + 1))
             return;
-        power = calc_power_decreased_by_resistance(cc, power, Element::mind);
+        power = calc_power_decreased_by_resistance(
+            chara.index, power, Element::mind);
         turn = power / 7;
         if (turn <= 0)
             return;
-        if (cdata[cc].fear == 0)
+        if (chara.fear == 0)
         {
-            cdata[cc].fear = turn;
+            chara.fear = turn;
         }
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(chara))
         {
-            txt(i18n::s.get(
-                "core.locale.status_ailment.message.fear.apply", cdata[cc]));
+            txt(i18n::s.get("core.status_ailment.message.fear.apply", chara));
         }
         return;
     case StatusAilment::dimmed:
-        if (cdata[cc].quality > Quality::great && rnd(cdata[cc].level / 3 + 1))
+        if (chara.quality > Quality::great && rnd(chara.level / 3 + 1))
             return;
-        if (cdatan(2, cc) == u8"golem"s)
+        if (cdatan(2, chara.index) == u8"golem"s)
             return;
-        power = calc_power_decreased_by_resistance(cc, power, Element::sound);
+        power = calc_power_decreased_by_resistance(
+            chara.index, power, Element::sound);
         turn = power / 8;
         if (turn <= 0)
             return;
-        if (cdata[cc].dimmed == 0)
+        if (chara.dimmed == 0)
         {
-            cdata[cc].dimmed = turn;
-            if (is_in_fov(cdata[cc]))
+            chara.dimmed = turn;
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.dimmed.apply",
-                        cdata[cc]),
+                        "core.status_ailment.message.dimmed.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
         else
         {
-            cdata[cc].dimmed += turn / 3 + 1;
+            chara.dimmed += turn / 3 + 1;
         }
-        cdata[cc].continuous_action.finish();
+        chara.continuous_action.finish();
         return;
     case StatusAilment::bleeding:
-        if (cdata[cc].quality > Quality::great)
+        if (chara.quality > Quality::great)
         {
             power /= 2;
         }
         turn = power / 25;
         if (turn <= 0)
             return;
-        if (cdata[cc].bleeding == 0)
+        if (chara.bleeding == 0)
         {
-            cdata[cc].bleeding = turn;
-            if (is_in_fov(cdata[cc]))
+            chara.bleeding = turn;
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.bleeding.apply",
-                        cdata[cc]),
+                        "core.status_ailment.message.bleeding.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
         else
         {
-            cdata[cc].bleeding += turn;
+            chara.bleeding += turn;
         }
-        cdata[cc].continuous_action.finish();
+        chara.continuous_action.finish();
         return;
     case StatusAilment::drunk:
         turn = power / 10;
         if (turn <= 0)
             return;
-        if (cdata[cc].drunk == 0)
+        if (chara.drunk == 0)
         {
-            cdata[cc].drunk = turn;
-            if (is_in_fov(cdata[cc]))
+            chara.drunk = turn;
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                    "core.locale.status_ailment.message.drunk.apply",
-                    cdata[cc]));
+                    "core.status_ailment.message.drunk.apply", chara));
             }
         }
         else
         {
-            cdata[cc].drunk += turn;
+            chara.drunk += turn;
         }
         return;
     case StatusAilment::insane:
         turn = power / 8;
         if (turn <= 0)
             return;
-        if (cdata[cc].insane == 0)
+        if (chara.insane == 0)
         {
-            cdata[cc].insane = turn;
-            if (is_in_fov(cdata[cc]))
+            chara.insane = turn;
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.insane.apply",
-                        cdata[cc]),
+                        "core.status_ailment.message.insane.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
         else
         {
-            cdata[cc].insane += turn / 3 + 1;
+            chara.insane += turn / 3 + 1;
         }
-        cdata[cc].continuous_action.finish();
+        chara.continuous_action.finish();
         return;
     case StatusAilment::sick:
         turn = power / 10;
         if (turn <= 0)
             return;
-        if (cdata[cc].sick == 0)
+        if (chara.sick == 0)
         {
-            cdata[cc].sick = turn;
-            if (is_in_fov(cdata[cc]))
+            chara.sick = turn;
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                        "core.locale.status_ailment.message.sick.apply",
-                        cdata[cc]),
+                        "core.status_ailment.message.sick.apply", chara),
                     Message::color{ColorIndex::purple});
             }
         }
         else
         {
-            cdata[cc].sick += turn / 10 + 1;
+            chara.sick += turn / 10 + 1;
         }
         return;
     default:
@@ -328,265 +322,257 @@ void dmgcon(int cc, StatusAilment status_ailment, int power)
 
 
 
-void healcon(int cc, StatusAilment status_ailment, int power)
+void status_ailment_heal(
+    Character& chara,
+    StatusAilment status_ailment,
+    int power)
 {
     switch (status_ailment)
     {
     case StatusAilment::fear:
-        if (cdata[cc].fear > 0)
+        if (chara.fear > 0)
         {
             if (power == 0)
             {
-                cdata[cc].fear = 0;
+                chara.fear = 0;
             }
             else
             {
-                cdata[cc].fear -= power;
+                chara.fear -= power;
             }
-            if (cdata[cc].fear <= 0)
+            if (chara.fear <= 0)
             {
-                cdata[cc].fear = 0;
-                if (is_in_fov(cdata[cc]))
+                chara.fear = 0;
+                if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.fear.heal",
-                        cdata[cc]));
+                        "core.status_ailment.message.fear.heal", chara));
                 }
             }
             return;
         }
         break;
     case StatusAilment::blinded:
-        if (cdata[cc].blind > 0)
+        if (chara.blind > 0)
         {
             if (power == 0)
             {
-                cdata[cc].blind = 0;
+                chara.blind = 0;
             }
             else
             {
-                cdata[cc].blind -= power;
+                chara.blind -= power;
             }
-            if (cdata[cc].blind <= 0)
+            if (chara.blind <= 0)
             {
-                cdata[cc].blind = 0;
-                if (is_in_fov(cdata[cc]))
+                chara.blind = 0;
+                if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.blinded.heal",
-                        cdata[cc]));
+                        "core.status_ailment.message.blinded.heal", chara));
                 }
             }
             return;
         }
         break;
     case StatusAilment::confused:
-        if (cdata[cc].confused > 0)
+        if (chara.confused > 0)
         {
             if (power == 0)
             {
-                cdata[cc].confused = 0;
+                chara.confused = 0;
             }
             else
             {
-                cdata[cc].confused -= power;
+                chara.confused -= power;
             }
-            if (cdata[cc].confused <= 0)
+            if (chara.confused <= 0)
             {
-                cdata[cc].confused = 0;
-                if (is_in_fov(cdata[cc]))
+                chara.confused = 0;
+                if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.confused.heal",
-                        cdata[cc]));
+                        "core.status_ailment.message.confused.heal", chara));
                 }
             }
             return;
         }
         break;
     case StatusAilment::paralyzed:
-        if (cdata[cc].paralyzed > 0)
+        if (chara.paralyzed > 0)
         {
             if (power == 0)
             {
-                cdata[cc].paralyzed = 0;
+                chara.paralyzed = 0;
             }
             else
             {
-                cdata[cc].paralyzed -= power;
+                chara.paralyzed -= power;
             }
-            if (cdata[cc].paralyzed <= 0)
+            if (chara.paralyzed <= 0)
             {
-                cdata[cc].paralyzed = 0;
-                if (is_in_fov(cdata[cc]))
+                chara.paralyzed = 0;
+                if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.paralyzed.heal",
-                        cdata[cc]));
+                        "core.status_ailment.message.paralyzed.heal", chara));
                 }
             }
             return;
         }
         break;
     case StatusAilment::poisoned:
-        if (cdata[cc].poisoned > 0)
+        if (chara.poisoned > 0)
         {
             if (power == 0)
             {
-                cdata[cc].poisoned = 0;
+                chara.poisoned = 0;
             }
             else
             {
-                cdata[cc].poisoned -= power;
+                chara.poisoned -= power;
             }
-            if (cdata[cc].poisoned <= 0)
+            if (chara.poisoned <= 0)
             {
-                cdata[cc].poisoned = 0;
-                if (is_in_fov(cdata[cc]))
+                chara.poisoned = 0;
+                if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.poisoned.heal",
-                        cdata[cc]));
+                        "core.status_ailment.message.poisoned.heal", chara));
                 }
             }
             return;
         }
         break;
     case StatusAilment::sleep:
-        if (cdata[cc].sleep > 0)
+        if (chara.sleep > 0)
         {
             if (power == 0)
             {
-                cdata[cc].sleep = 0;
+                chara.sleep = 0;
             }
             else
             {
-                cdata[cc].sleep -= power;
+                chara.sleep -= power;
             }
-            if (cdata[cc].sleep <= 0)
+            if (chara.sleep <= 0)
             {
-                cdata[cc].sleep = 0;
-                if (is_in_fov(cdata[cc]))
+                chara.sleep = 0;
+                if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.sleep.heal",
-                        cdata[cc]));
+                        "core.status_ailment.message.sleep.heal", chara));
                 }
             }
             return;
         }
         break;
     case StatusAilment::dimmed:
-        if (cdata[cc].dimmed > 0)
+        if (chara.dimmed > 0)
         {
             if (power == 0)
             {
-                cdata[cc].dimmed = 0;
+                chara.dimmed = 0;
             }
             else
             {
-                cdata[cc].dimmed -= power;
+                chara.dimmed -= power;
             }
-            if (cdata[cc].dimmed <= 0)
+            if (chara.dimmed <= 0)
             {
-                cdata[cc].dimmed = 0;
-                if (is_in_fov(cdata[cc]))
+                chara.dimmed = 0;
+                if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.dimmed.heal",
-                        cdata[cc]));
+                        "core.status_ailment.message.dimmed.heal", chara));
                 }
             }
         }
         break;
     case StatusAilment::bleeding:
-        if (cdata[cc].bleeding > 0)
+        if (chara.bleeding > 0)
         {
             if (power == 0)
             {
-                cdata[cc].bleeding = 0;
+                chara.bleeding = 0;
             }
             else
             {
-                cdata[cc].bleeding -= power;
+                chara.bleeding -= power;
             }
-            if (cdata[cc].bleeding <= 0)
+            if (chara.bleeding <= 0)
             {
-                cdata[cc].bleeding = 0;
-                if (is_in_fov(cdata[cc]))
+                chara.bleeding = 0;
+                if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.bleeding.heal",
-                        cdata[cc]));
+                        "core.status_ailment.message.bleeding.heal", chara));
                 }
             }
         }
         break;
     case StatusAilment::drunk:
-        if (cdata[cc].drunk > 0)
+        if (chara.drunk > 0)
         {
             if (power == 0)
             {
-                cdata[cc].drunk = 0;
+                chara.drunk = 0;
             }
             else
             {
-                cdata[cc].drunk -= power;
+                chara.drunk -= power;
             }
-            if (cdata[cc].drunk <= 0)
+            if (chara.drunk <= 0)
             {
-                cdata[cc].drunk = 0;
-                if (is_in_fov(cdata[cc]))
+                chara.drunk = 0;
+                if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.drunk.heal",
-                        cdata[cc]));
+                        "core.status_ailment.message.drunk.heal", chara));
                 }
             }
         }
         break;
     case StatusAilment::insane:
-        if (cdata[cc].insane > 0)
+        if (chara.insane > 0)
         {
             if (power == 0)
             {
-                cdata[cc].insane = 0;
+                chara.insane = 0;
             }
             else
             {
-                cdata[cc].insane -= power;
+                chara.insane -= power;
             }
-            if (cdata[cc].insane <= 0)
+            if (chara.insane <= 0)
             {
-                cdata[cc].insane = 0;
-                if (is_in_fov(cdata[cc]))
+                chara.insane = 0;
+                if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.insane.heal",
-                        cdata[cc]));
+                        "core.status_ailment.message.insane.heal", chara));
                 }
             }
         }
         break;
     case StatusAilment::sick:
-        if (cdata[cc].sick > 0)
+        if (chara.sick > 0)
         {
             if (power == 0)
             {
-                cdata[cc].sick = 0;
+                chara.sick = 0;
             }
             else
             {
-                cdata[cc].sick -= power;
+                chara.sick -= power;
             }
-            if (cdata[cc].sick <= 0)
+            if (chara.sick <= 0)
             {
-                cdata[cc].sick = 0;
-                if (is_in_fov(cdata[cc]))
+                chara.sick = 0;
+                if (is_in_fov(chara))
                 {
                     txt(i18n::s.get(
-                        "core.locale.status_ailment.message.sick.heal",
-                        cdata[cc]));
+                        "core.status_ailment.message.sick.heal", chara));
                 }
             }
         }
@@ -596,7 +582,5 @@ void healcon(int cc, StatusAilment status_ailment, int power)
                                  int(status_ailment)};
     }
 }
-
-
 
 } // namespace elona

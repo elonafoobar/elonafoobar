@@ -44,7 +44,7 @@ impl ModuleComment {
             format!("--  @classmod {}", self.module)
         } else {
             format!(
-                "--  @usage local {0} = Elona.require(\"{0}\")\nmodule \"{0}\"",
+                "--  @usage local {0} = require(\"game.{0}\")\nmodule \"{0}\"",
                 self.module
             )
         }
@@ -395,8 +395,21 @@ fn strip_comment(text: &str) -> Option<(String, Metadata)> {
     let mut parts = text.lines().skip(1).collect::<Vec<_>>();
     parts.pop();
 
+    // " *   foo" => "foo"
+    // "     foo" => "foo"
     let re = Regex::new(r"^[ *]*(.*)").unwrap();
     let strip = |i| re.captures(i).and_then(|c| c.get(1)).unwrap().as_str();
+
+    // " *   foo" => "foo"
+    // "     foo" => "foo"
+    // " >   foo" => "  foo"
+    // " *>  foo" => "  foo"
+    // "   > foo" => "foo"
+    let re_preserve_leading_space_in_lua_code_block =
+        Regex::new(r"^[ *]*(?:> )?(.*)").unwrap();
+    let strip_preserve_leading_space_in_lua_code_block =
+        |i| re_preserve_leading_space_in_lua_code_block.captures(i).and_then(|c| c.get(1)).unwrap().as_str();
+
     let mut meta: Metadata;
 
     match parts.first() {
@@ -413,7 +426,7 @@ fn strip_comment(text: &str) -> Option<(String, Metadata)> {
     let mut reached = false;
 
     for i in parts.iter().skip(1) {
-        let stripped = strip(i);
+        let stripped = strip_preserve_leading_space_in_lua_code_block(i);
         if !reached && stripped.is_empty() {
             continue;
         }

@@ -1,6 +1,8 @@
 #include "../../renderer.hpp"
 #include <sstream>
 #include "../../detail/sdl.hpp"
+#include "../../surface.hpp"
+
 
 
 namespace elona
@@ -153,6 +155,12 @@ void render_image_crop(::SDL_Texture*, int, int, int, int, int, int)
 {
 }
 
+
+
+Surface Renderer::take_screenshot()
+{
+    return Surface{nullptr};
+}
 
 } // namespace snail
 } // namespace elona

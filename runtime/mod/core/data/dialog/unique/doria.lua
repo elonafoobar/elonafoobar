@@ -1,15 +1,16 @@
-local Chara = Elona.require("Chara")
-local Internal = Elona.require("Internal")
-local Rand = Elona.require("Rand")
-local GUI = Elona.require("GUI")
-local Math = Elona.require("Math")
-local I18N = Elona.require("I18N")
-local Item = Elona.require("Item")
-local World = Elona.require("World")
-local table = Elona.require("table")
-local string = Elona.require("string")
+local Chara = require("game.Chara")
+local Data = require("game.Data")
+local Internal = require("game.Internal")
+local Rand = require("game.Rand")
+local GUI = require("game.GUI")
+local Math = require("game.Math")
+local I18N = require("game.I18N")
+local Item = require("game.Item")
+local World = require("game.World")
+local table = require("game.table")
+local string = require("game.string")
 
-local common = require("data/dialog/common")
+local common = require_relative("data/dialog/common")
 
 local function start_trial()
     World.data.joining_fighters_guild = 1
@@ -23,10 +24,10 @@ local function join_guild()
 
     World.join_guild("fighters")
 
-    GUI.txt(I18N.get("core.locale.quest.completed"))
+    GUI.txt(I18N.get("core.quest.completed"))
     GUI.play_sound("core.complete1")
     GUI.show_journal_update_message()
-    GUI.txt(I18N.get("core.locale.talk.unique.doria.nonmember.joined"), "Orange")
+    GUI.txt(I18N.get("core.talk.unique.doria.nonmember.joined"), "Orange")
 end
 
 local function move_self(t)
@@ -58,15 +59,15 @@ local function extract_id_parts(key)
 end
 
 local function quota_args()
-   local id = data.by_legacy["core.chara"][World.data.fighters_guild_target]
+   local id = Data.get_id_by_legacy("core.chara", World.data.fighters_guild_target)
    local mod_id, instance_id = extract_id_parts(id)
-   local name = I18N.get(mod_id .. ".locale.chara." .. instance_id .. ".name")
+   local name = I18N.get(mod_id .. ".chara." .. instance_id .. ".name")
    return {World.data.fighters_guild_quota, name}
 end
 
 return {
    id = "doria",
-   root = "core.locale.talk.unique.doria",
+   root = "core.talk.unique.doria",
    nodes = {
       __start = function()
          if World.belongs_to_guild("fighters") == false then
@@ -138,9 +139,9 @@ return {
          choices = function()
             local choices = {}
             if not World.data.fighters_guild_quota_recurring then
-               table.insert(choices, {"guild_quota_new", "core.locale.talk.unique.lexus.member.choices.new_quota"})
+               table.insert(choices, {"guild_quota_new", "core.talk.unique.lexus.member.choices.new_quota"})
             else
-               table.insert(choices, {"guild_quota_check", "core.locale.talk.unique.lexus.member.choices.report_quota"})
+               table.insert(choices, {"guild_quota_check", "core.talk.unique.lexus.member.choices.report_quota"})
             end
             table.insert(choices, {"__END__", "__BYE__"})
 
@@ -164,7 +165,7 @@ return {
       end,
       guild_quota_waiting = {
          text = {
-            {"core.locale.talk.unique.lexus.member.report_quota.waiting"},
+            {"core.talk.unique.lexus.member.report_quota.waiting"},
          },
          choices = {
             {"__start", "__MORE__"},
@@ -173,7 +174,7 @@ return {
       guild_quota_finish = {
          text = {
             receive_reward,
-            {"core.locale.talk.unique.lexus.member.report_quota.end"},
+            {"core.talk.unique.lexus.member.report_quota.end"},
          },
       },
    }

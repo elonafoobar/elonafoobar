@@ -43,10 +43,8 @@ void _update_save_data_0(const fs::path& save_dir)
 void _update_save_data_1(const fs::path& save_dir)
 {
     // Prepend "core." prefix to old race ID.
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(cdatan.*\.s[12])"}))
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(cdatan.*\.s[12])"}))
     {
         std::vector<std::string> lines;
         range::copy(
@@ -103,10 +101,8 @@ void _update_save_data_1(const fs::path& save_dir)
 void _update_save_data_2(const fs::path& save_dir)
 {
     // Prepend "core." prefix to old class ID.
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(cdatan.*\.s[12])"}))
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(cdatan.*\.s[12])"}))
     {
         std::vector<std::string> lines;
         range::copy(
@@ -163,10 +159,8 @@ void _update_save_data_2(const fs::path& save_dir)
 void _update_save_data_3(const fs::path& save_dir)
 {
     // Prepend "core." prefix to old class ID.
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"((g_)?cdata(_.*)?\.s[12])"}))
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"((g_)?cdata(_.*)?\.s[12])"}))
     {
         // Open file.
         std::ifstream fin{entry.path().native(), std::ios::binary};
@@ -611,10 +605,8 @@ void _update_save_data_3(const fs::path& save_dir)
 void _update_save_data_4(const fs::path& save_dir)
 {
     // Replace double bed and happy bed's image.
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"((g_)?inv(_.*)?\.s[12])"}))
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"((g_)?inv(_.*)?\.s[12])"}))
     {
         // Open file.
         std::ifstream fin{entry.path().native(), std::ios::binary};
@@ -645,7 +637,7 @@ void _update_save_data_4(const fs::path& save_dir)
             Quality quality = Quality::none;
             Position position;
             int weight = 0;
-            IdentifyState identification_state = IdentifyState::unidentified;
+            IdentifyState identify_state = IdentifyState::unidentified;
             int count = 0;
             int dice_x = 0;
             int dice_y = 0;
@@ -682,7 +674,7 @@ void _update_save_data_4(const fs::path& save_dir)
                 iar(quality);
                 iar(position);
                 iar(weight);
-                iar(identification_state);
+                iar(identify_state);
                 iar(count);
                 iar(dice_x);
                 iar(dice_y);
@@ -725,7 +717,7 @@ void _update_save_data_4(const fs::path& save_dir)
                 oar(quality);
                 oar(position);
                 oar(weight);
-                oar(identification_state);
+                oar(identify_state);
                 oar(count);
                 oar(dice_x);
                 oar(dice_y);
@@ -843,10 +835,8 @@ std::string _update_save_data_5_convert_portrait_id(int old_id, int sex)
 void _update_save_data_5(const fs::path& save_dir)
 {
     // Convert portrait field.
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"((g_)?cdata(_.*)?\.s[12])"}))
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"((g_)?cdata(_.*)?\.s[12])"}))
     {
         // Open file.
         std::ifstream fin{entry.path().native(), std::ios::binary};
@@ -1352,10 +1342,8 @@ void _update_save_data_6(const fs::path& save_dir)
 /// up/downstairs.
 void _update_save_data_7(const fs::path& save_dir)
 {
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(mdata_(\d+)_(\d+)\.s2)"}))
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"(mdata_(\d+)_(\d+)\.s2)"}))
     {
         // Temporary data for contents of each `mdata` file.
         std::vector<int> data(100, 0);
@@ -1473,10 +1461,8 @@ void _update_save_data_7(const fs::path& save_dir)
 void _update_save_data_8(const fs::path& save_dir)
 {
     // Character data
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"((g_)?cdata(_.*)?\.s[12])"}))
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"((g_)?cdata(_.*)?\.s[12])"}))
     {
         // Open file.
         std::ifstream fin{entry.path().native(), std::ios::binary};
@@ -1902,10 +1888,8 @@ void _update_save_data_8(const fs::path& save_dir)
     }
 
     // Item data
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"((g_)?inv(_.*)?\.s[12])"}))
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"((g_)?inv(_.*)?\.s[12])"}))
     {
         // Open file.
         std::ifstream fin{entry.path().native(), std::ios::binary};
@@ -1936,7 +1920,7 @@ void _update_save_data_8(const fs::path& save_dir)
             Quality quality = Quality::none;
             Position position;
             int weight = 0;
-            IdentifyState identification_state = IdentifyState::unidentified;
+            IdentifyState identify_state = IdentifyState::unidentified;
             int count = 0;
             int dice_x = 0;
             int dice_y = 0;
@@ -1973,7 +1957,7 @@ void _update_save_data_8(const fs::path& save_dir)
                 iar(quality);
                 iar(position);
                 iar(weight);
-                iar(identification_state);
+                iar(identify_state);
                 iar(count);
                 iar(dice_x);
                 iar(dice_y);
@@ -2010,7 +1994,7 @@ void _update_save_data_8(const fs::path& save_dir)
                 oar(quality);
                 oar(position);
                 oar(weight);
-                oar(identification_state);
+                oar(identify_state);
                 oar(count);
                 oar(dice_x);
                 oar(dice_y);
@@ -2051,7 +2035,7 @@ void _update_save_data_8(const fs::path& save_dir)
 /// Create new mod save data for saves without it.
 void _update_save_data_9(const fs::path& save_dir)
 {
-    lua::ModSerializer mod_serializer(lua::lua.get());
+    lua::ModSerializer mod_serializer(*lua::lua);
 
     // Global mod data
     {
@@ -2116,10 +2100,8 @@ void _update_save_data_9(const fs::path& save_dir)
     }
 
     // Map local mod data
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(map(_.*)?\.s2)"}))
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(map(_.*)?\.s2)"}))
     {
         fs::path outpath = save_dir /
             ("mod_"s + filepathutil::to_utf8_path(entry.path().filename()));
@@ -2130,10 +2112,8 @@ void _update_save_data_9(const fs::path& save_dir)
     }
 
     // Map local character handles
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(cdata(_.*)?\.s2)"}))
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(cdata(_.*)?\.s2)"}))
     {
         std::ifstream fin{entry.path().native(), std::ios::binary};
         putit::BinaryIArchive iar{fin};
@@ -2161,10 +2141,8 @@ void _update_save_data_9(const fs::path& save_dir)
     }
 
     // Map local item handles
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(inv(_.*)?\.s2)"}))
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(inv(_.*)?\.s2)"}))
     {
         std::ifstream fin{entry.path().native(), std::ios::binary};
         putit::BinaryIArchive iar{fin};
@@ -2199,14 +2177,12 @@ void _update_save_data_9(const fs::path& save_dir)
 /// files.
 void _update_save_data_10(const fs::path& save_dir)
 {
-    lua::ModSerializer mod_serializer(lua::lua.get());
+    lua::ModSerializer mod_serializer(*lua::lua);
 
     // _update_save_data_8
     // shop*.s2 files
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(shop.*\.s2)"}))
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(shop.*\.s2)"}))
     {
         if (fs::exists(
                 save_dir /
@@ -2243,7 +2219,7 @@ void _update_save_data_10(const fs::path& save_dir)
             Quality quality = Quality::none;
             Position position;
             int weight = 0;
-            IdentifyState identification_state = IdentifyState::unidentified;
+            IdentifyState identify_state = IdentifyState::unidentified;
             int count = 0;
             int dice_x = 0;
             int dice_y = 0;
@@ -2280,7 +2256,7 @@ void _update_save_data_10(const fs::path& save_dir)
                 iar(quality);
                 iar(position);
                 iar(weight);
-                iar(identification_state);
+                iar(identify_state);
                 iar(count);
                 iar(dice_x);
                 iar(dice_y);
@@ -2317,7 +2293,7 @@ void _update_save_data_10(const fs::path& save_dir)
                 oar(quality);
                 oar(position);
                 oar(weight);
-                oar(identification_state);
+                oar(identify_state);
                 oar(count);
                 oar(dice_x);
                 oar(dice_y);
@@ -2354,10 +2330,8 @@ void _update_save_data_10(const fs::path& save_dir)
 
     // _update_save_data_9
     // shop*.s2 files
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(shop.*\.s2)"}))
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(shop.*\.s2)"}))
     {
         if (fs::exists(
                 save_dir /
@@ -2820,10 +2794,8 @@ void _update_save_data_11(const fs::path& save_dir)
 /// Remove "core.item#kiroku.counter".
 void _update_save_data_12(const fs::path& save_dir)
 {
-    for (const auto& entry : filesystem::dir_entries(
-             save_dir,
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"((g_)?inv(_.*)?\.s[12]|shop.*\.s2)"}))
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"((g_)?inv(_.*)?\.s[12]|shop.*\.s2)"}))
     {
         // Open file.
         std::ifstream fin{entry.path().native(), std::ios::binary};
@@ -2852,7 +2824,7 @@ void _update_save_data_12(const fs::path& save_dir)
             Quality quality = Quality::none;
             Position position;
             int weight = 0;
-            IdentifyState identification_state = IdentifyState::unidentified;
+            IdentifyState identify_state = IdentifyState::unidentified;
             int count = 0;
             int dice_x = 0;
             int dice_y = 0;
@@ -2887,7 +2859,7 @@ void _update_save_data_12(const fs::path& save_dir)
                 iar(quality);
                 iar(position);
                 iar(weight);
-                iar(identification_state);
+                iar(identify_state);
                 iar(count);
                 iar(dice_x);
                 iar(dice_y);
@@ -2938,7 +2910,7 @@ void _update_save_data_12(const fs::path& save_dir)
                 oar(quality);
                 oar(position);
                 oar(weight);
-                oar(identification_state);
+                oar(identify_state);
                 oar(count);
                 oar(dice_x);
                 oar(dice_y);
@@ -3104,6 +3076,174 @@ void _update_save_data_13(const fs::path& save_dir)
 
 
 
+/// Update save data from v14 to v15.
+/// Remove some of foobar extensions.
+void _update_save_data_14(const fs::path& save_dir)
+{
+    for (const auto& entry : filesystem::glob_files(
+             save_dir, std::regex{u8R"((g_)?inv(_.*)?\.s[12]|shop.*\.s2)"}))
+    {
+        // Open file.
+        std::ifstream fin{entry.path().native(), std::ios::binary};
+        putit::BinaryIArchive iar{fin};
+
+        // Prepare a temporary output stream.
+        std::ostringstream out;
+        putit::BinaryOArchive oar{out};
+
+        const auto is_invs1 = entry.path().filename() == "inv.s1" ||
+            entry.path().filename() == "g_inv.s1";
+        const auto begin = is_invs1 ? 0 : 1320;
+        const auto end = is_invs1 ? 1320 : 5480;
+
+        for (int idx = begin; idx < end; ++idx)
+        {
+            // DO NOT use usual serialization utilities to migrate old data
+            // safely because they may be changed in the future version.
+
+            // Prepare variables.
+            int number_ = 0;
+            int value = 0;
+            int image = 0;
+            int id = 0;
+            Quality quality = Quality::none;
+            Position position;
+            int weight = 0;
+            IdentifyState identify_state = IdentifyState::unidentified;
+            int count = 0;
+            int dice_x = 0;
+            int dice_y = 0;
+            int damage_bonus = 0;
+            int hit_bonus = 0;
+            int dv = 0;
+            int pv = 0;
+            int skill = 0;
+            int curse_state = 0;
+            int body_part = 0;
+            int function = 0;
+            int enhancement = 0;
+            int own_state = 0;
+            int color = 0;
+            int subname = 0;
+            int material = 0;
+            int param1 = 0;
+            int param2 = 0;
+            int param3 = 0;
+            int param4 = 0;
+            int difficulty_of_identification = 0;
+            int turn = 0;
+            std::bitset<32> _flags;
+            std::vector<Enchantment> enchantments(15);
+
+            // Load item data.
+            {
+                iar(number_);
+                iar(value);
+                iar(image);
+                iar(id);
+                iar(quality);
+                iar(position);
+                iar(weight);
+                iar(identify_state);
+                iar(count);
+                iar(dice_x);
+                iar(dice_y);
+                iar(damage_bonus);
+                iar(hit_bonus);
+                iar(dv);
+                iar(pv);
+                iar(skill);
+                iar(curse_state);
+                iar(body_part);
+                iar(function);
+                iar(enhancement);
+                iar(own_state);
+                iar(color);
+                iar(subname);
+                iar(material);
+                iar(param1);
+                iar(param2);
+                iar(param3);
+                iar(param4);
+                iar(difficulty_of_identification);
+                iar(turn);
+                iar(_flags);
+                iar(enchantments);
+            }
+
+            // Replace "strange_fish" with gold piece.
+            if (id == 618 && subname == 37)
+            {
+                ELONA_LOG("save.update")
+                    << filepathutil::to_utf8_path(entry.path().filename())
+                    << ":" << idx << ": Replace strange_fish -> whale";
+                subname = 34;
+            }
+            // Add function to card.
+            if (id == 504 && function == 0)
+            {
+                ELONA_LOG("save.update")
+                    << filepathutil::to_utf8_path(entry.path().filename())
+                    << ":" << idx << ": Add function 38 to card";
+                function = 38;
+            }
+            // Fix curse state's value.
+            ELONA_LOG("save.update")
+                << filepathutil::to_utf8_path(entry.path().filename()) << ":"
+                << idx << ": Fix curse state";
+            curse_state -= 2;
+
+            // Dump item data to the memory stream.
+            {
+                oar(number_);
+                oar(value);
+                oar(image);
+                oar(id);
+                oar(quality);
+                oar(position);
+                oar(weight);
+                oar(identify_state);
+                oar(count);
+                oar(dice_x);
+                oar(dice_y);
+                oar(damage_bonus);
+                oar(hit_bonus);
+                oar(dv);
+                oar(pv);
+                oar(skill);
+                oar(curse_state);
+                oar(body_part);
+                oar(function);
+                oar(enhancement);
+                oar(own_state);
+                oar(color);
+                oar(subname);
+                oar(material);
+                oar(param1);
+                oar(param2);
+                oar(param3);
+                oar(param4);
+                oar(difficulty_of_identification);
+                oar(turn);
+                oar(_flags);
+                oar(enchantments);
+            }
+        }
+
+        // Close the file and reopen to write.
+        fin.close();
+
+        {
+            // Open the file to write.
+            std::ofstream fout{entry.path().native(), std::ios::binary};
+            // Write the data.
+            fout.write(out.str().c_str(), out.str().size());
+        }
+    }
+}
+
+
+
 void _update_save_data(const fs::path& save_dir, int serial_id)
 {
 #define ELONA_CASE(n) \
@@ -3125,6 +3265,7 @@ void _update_save_data(const fs::path& save_dir, int serial_id)
         ELONA_CASE(11)
         ELONA_CASE(12)
         ELONA_CASE(13)
+        ELONA_CASE(14)
     default: assert(0); break;
     }
 #undef ELONA_CASE

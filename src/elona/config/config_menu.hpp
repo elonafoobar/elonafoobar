@@ -46,7 +46,7 @@ public:
         }
         else
         {
-            return i18n::s.get("core.locale.config.common.no_desc");
+            return i18n::s.get("core.config.common.no_desc");
         }
     }
 };
@@ -148,6 +148,7 @@ public:
     int variable;
     int min;
     int max;
+    int step;
     std::string text;
 
     ConfigMenuItemInteger(
@@ -156,18 +157,20 @@ public:
         int variable,
         int min,
         int max,
+        int step,
         const std::string& text)
         : ConfigMenuItemBase(key, locale_key)
         , variable(variable)
         , min(min)
         , max(max)
+        , step(step)
         , text(text)
     {
     }
 
     void change(int delta) override
     {
-        variable = clamp(variable + delta, min, max);
+        variable = clamp(variable + delta * step, min, max);
         Config::instance().set(key, variable);
     }
 
@@ -335,7 +338,7 @@ public:
         font(12 + sizefix - en * 2);
         mes(wx + 40,
             wy + wh - 70,
-            i18n::s.get("core.locale.config.common.require_restart"));
+            i18n::s.get("core.config.common.require_restart"));
     }
 };
 

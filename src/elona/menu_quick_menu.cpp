@@ -135,11 +135,11 @@ void QuickMenu::_create_entries_list()
     if (_page == 0)
     {
         _entries.emplace_back(0, "", "aaa");
-        _entries.emplace_back(1, "core.locale.ui.quick_menu.help",     "help");
-        _entries.emplace_back(2, "core.locale.ui.quick_menu.log",      "message_log");
-        _entries.emplace_back(3, "core.locale.ui.quick_menu.chara",    "chara_info");
+        _entries.emplace_back(1, "core.ui.quick_menu.help",     "help");
+        _entries.emplace_back(2, "core.ui.quick_menu.log",      "message_log");
+        _entries.emplace_back(3, "core.ui.quick_menu.chara",    "chara_info");
         _entries.emplace_back(4, "", "aaa");
-        _entries.emplace_back(5, "core.locale.ui.quick_menu.journal",  "journal");
+        _entries.emplace_back(5, "core.ui.quick_menu.journal",  "journal");
         _entries.emplace_back(6, "", "aaa");
         _entries.emplace_back(7, "", "aaa");
         _entries.emplace_back(8, "", "aaa");
@@ -147,23 +147,23 @@ void QuickMenu::_create_entries_list()
     if (_page == 1)
     {
         _entries.emplace_back(0, "", "aaa");
-        _entries.emplace_back(1, "core.locale.ui.quick_menu.wear",     "wear");
-        _entries.emplace_back(2, "core.locale.ui.quick_menu.rest",     "rest");
-        _entries.emplace_back(3, "core.locale.ui.quick_menu.spell",    "cast");
+        _entries.emplace_back(1, "core.ui.quick_menu.wear",     "wear");
+        _entries.emplace_back(2, "core.ui.quick_menu.rest",     "rest");
+        _entries.emplace_back(3, "core.ui.quick_menu.spell",    "cast");
         _entries.emplace_back(4, "", "aaa");
-        _entries.emplace_back(5, "core.locale.ui.quick_menu.skill",    "skill");
-        _entries.emplace_back(6, "core.locale.ui.quick_menu.fire",     "fire");
-        _entries.emplace_back(7, "core.locale.ui.quick_menu.dig",      "dig");
+        _entries.emplace_back(5, "core.ui.quick_menu.skill",    "skill");
+        _entries.emplace_back(6, "core.ui.quick_menu.fire",     "fire");
+        _entries.emplace_back(7, "core.ui.quick_menu.dig",      "dig");
         _entries.emplace_back(8, "", "aaa");
     }
     if (_page == 2)
     {
         _entries.emplace_back(0, "", "aaa");
-        _entries.emplace_back(1, "core.locale.ui.quick_menu.pray",     "pray");
-        _entries.emplace_back(2, "core.locale.ui.quick_menu.ammo",     "ammo");
-        _entries.emplace_back(3, "core.locale.ui.quick_menu.interact", "interact");
+        _entries.emplace_back(1, "core.ui.quick_menu.pray",     "pray");
+        _entries.emplace_back(2, "core.ui.quick_menu.ammo",     "ammo");
+        _entries.emplace_back(3, "core.ui.quick_menu.interact", "interact");
         _entries.emplace_back(4, "", "aaa");
-        _entries.emplace_back(5, "core.locale.ui.quick_menu.bash",     "bash");
+        _entries.emplace_back(5, "core.ui.quick_menu.bash",     "bash");
         _entries.emplace_back(6, "", "aaa");
         _entries.emplace_back(7, "", "aaa");
         _entries.emplace_back(8, "", "aaa");
@@ -173,9 +173,9 @@ void QuickMenu::_create_entries_list()
 
 void QuickMenu::_add_pagination_to_entries()
 {
-    s(0) = i18n::s.get("core.locale.ui.quick_menu.info");
-    s(1) = i18n::s.get("core.locale.ui.quick_menu.action");
-    s(2) = i18n::s.get("core.locale.ui.quick_menu.etc");
+    s(0) = i18n::s.get("core.ui.quick_menu.info");
+    s(1) = i18n::s.get("core.ui.quick_menu.action");
+    s(2) = i18n::s.get("core.ui.quick_menu.etc");
     s(3) = "null";
 
     // Leftmost entry for switching menus.

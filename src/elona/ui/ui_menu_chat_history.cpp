@@ -2,30 +2,7 @@
 #include "../audio.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
-
-
-
-namespace
-{
-
-void _load_chat_history()
-{
-    std::string scroll_text = i18n::s.get("core.locale.ui.chat.key_hint");
-    showscroll(scroll_text, wx, wy, ww, wh);
-}
-
-
-
-void _draw_messages()
-{
-    font(13 - en * 2);
-    i = 0;
-    s = u8"No new messages received."s;
-    i += talk_conv(s, (ww - 110 - en * 50) / 7);
-    mes(wx + 48, (19 - i) * 16 + wy + 48, s, {30, 20, 10});
-}
-
-} // namespace
+#include "../net.hpp"
 
 
 
@@ -79,6 +56,39 @@ optional<UIMenuChatHistory::ResultType> UIMenuChatHistory::on_key(
     }
 
     return none;
+}
+
+
+
+void UIMenuChatHistory::_load_chat_history()
+{
+    std::string scroll_text = i18n::s.get("core.ui.chat.key_hint");
+    showscroll(scroll_text, wx, wy, ww, wh);
+
+    for (const auto& chat : net_receive_chats(false))
+    {
+        _chats.push_back(chat.as_chat_history());
+    }
+
+    if (_chats.empty())
+    {
+        _chats.push_back("No new messages received.");
+    }
+}
+
+
+
+void UIMenuChatHistory::_draw_messages()
+{
+    font(13 - en * 2);
+
+    int i{};
+    while (i < std::min(20, static_cast<int>(_chats.size())))
+    {
+        std::string msg = _chats.at(i);
+        i += talk_conv(msg, (ww - 110 - en * 50) / 7) + 1;
+        mes(wx + 48, (19 - i) * 16 + wy + 48, msg, {30, 20, 10});
+    }
 }
 
 } // namespace ui

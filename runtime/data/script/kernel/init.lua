@@ -1,14 +1,14 @@
 --- WARNING: This file is always implicitly loaded by C++.
 --- Don't change anything here unless you know what you're doing!
 
-Elona.core.Debug.inspect = require("inspect").inspect
-Elona.core.HCL = require "hclua"
-Elona.core.Iter = require "iter"
-Elona.core.ReadOnly = require "readonly"
-Elona.core.string = require "string"
+Elona.game.Debug.inspect = require_relative("inspect").inspect
+Elona.game.HCL = require_relative("hclua")
+Elona.game.Iter = require_relative("iter")
+Elona.game.ReadOnly = require_relative("readonly")
+Elona.game.string = require_relative("string")
 
-Elona.core.Math = require "math_ext"
-Elona.core.table = require "table_ext"
-Elona.core.coroutine = require "coroutine"
+Elona.game.Math = require_relative("math_ext")
+Elona.game.table = require_relative("table_ext")
+Elona.game.coroutine = require_relative("coroutine")
 
 _LOADED = true

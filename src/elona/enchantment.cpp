@@ -159,7 +159,7 @@ std::string enchantment_print_level(int level)
             s += u8"+";
             break;
         }
-        s += i18n::s.get("core.locale.enchantment.level");
+        s += i18n::s.get("core.enchantment.level");
     }
     return s;
 }
@@ -194,13 +194,13 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             {
                 rtval = static_cast<int>(ItemDescriptionType::negative_effect);
                 const auto skill_name = i18n::s.get_m(
-                    "locale.ability",
+                    "ability",
                     the_ability_db.get_id_from_legacy(sid)->get(),
                     "name");
                 if (category == 57000)
                 {
                     s = i18n::s.get(
-                        "core.locale.enchantment.with_parameters.attribute.in_"
+                        "core.enchantment.with_parameters.attribute.in_"
                         "food.decreases",
                         skill_name);
                     s += enchantment_level_string(power / 50);
@@ -208,7 +208,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 else
                 {
                     s = i18n::s.get(
-                        "core.locale.enchantment.with_parameters.attribute."
+                        "core.enchantment.with_parameters.attribute."
                         "other.decreases",
                         skill_name,
                         std::abs(power / 50 + 1));
@@ -217,13 +217,13 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             else
             {
                 const auto skill_name = i18n::s.get_m(
-                    "locale.ability",
+                    "ability",
                     the_ability_db.get_id_from_legacy(sid)->get(),
                     "name");
                 if (category == 57000)
                 {
                     s = i18n::s.get(
-                        "core.locale.enchantment.with_parameters.attribute.in_"
+                        "core.enchantment.with_parameters.attribute.in_"
                         "food.increases",
                         skill_name);
                     s += enchantment_level_string(power / 50);
@@ -231,7 +231,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 else
                 {
                     s = i18n::s.get(
-                        "core.locale.enchantment.with_parameters.attribute."
+                        "core.enchantment.with_parameters.attribute."
                         "other.increases",
                         skill_name,
                         std::abs(power / 50 + 1));
@@ -244,10 +244,10 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             {
                 rtval = static_cast<int>(ItemDescriptionType::negative_effect);
                 s = i18n::s.get(
-                    "core.locale.enchantment.with_parameters.resistance."
+                    "core.enchantment.with_parameters.resistance."
                     "decreases",
                     i18n::s.get_m(
-                        "locale.ability",
+                        "ability",
                         the_ability_db.get_id_from_legacy(sid)->get(),
                         "name"));
             }
@@ -255,17 +255,17 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             {
                 s = i18n::s
                         .get_m_optional(
-                            "locale.ability",
+                            "ability",
                             the_ability_db.get_id_from_legacy(sid)->get(),
                             "enchantment_description")
                         .get_value_or("");
                 if (s == ""s)
                 {
                     s = i18n::s.get(
-                        "core.locale.enchantment.with_parameters.resistance."
+                        "core.enchantment.with_parameters.resistance."
                         "increases",
                         i18n::s.get_m(
-                            "locale.ability",
+                            "ability",
                             the_ability_db.get_id_from_legacy(sid)->get(),
                             "name"));
                 }
@@ -278,9 +278,9 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             {
                 rtval = static_cast<int>(ItemDescriptionType::negative_effect);
                 s = i18n::s.get(
-                    "core.locale.enchantment.with_parameters.skill.decreases",
+                    "core.enchantment.with_parameters.skill.decreases",
                     i18n::s.get_m(
-                        "locale.ability",
+                        "ability",
                         the_ability_db.get_id_from_legacy(sid)->get(),
                         "name"));
             }
@@ -288,17 +288,17 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             {
                 s = i18n::s
                         .get_m_optional(
-                            "locale.ability",
+                            "ability",
                             the_ability_db.get_id_from_legacy(sid)->get(),
                             "enchantment_description")
                         .get_value_or("");
                 if (s == ""s)
                 {
                     s = i18n::s.get(
-                        "core.locale.enchantment.with_parameters.skill."
+                        "core.enchantment.with_parameters.skill."
                         "increases",
                         i18n::s.get_m(
-                            "locale.ability",
+                            "ability",
                             the_ability_db.get_id_from_legacy(sid)->get(),
                             "name"));
                 }
@@ -310,10 +310,10 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             if (category == 57000)
             {
                 s = i18n::s.get(
-                    "core.locale.enchantment.with_parameters.skill_maintenance."
+                    "core.enchantment.with_parameters.skill_maintenance."
                     "in_food",
                     i18n::s.get_m(
-                        "locale.ability",
+                        "ability",
                         the_ability_db.get_id_from_legacy(sid)->get(),
                         "name"));
                 s += enchantment_level_string(power / 50);
@@ -321,10 +321,10 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             else
             {
                 s = i18n::s.get(
-                    "core.locale.enchantment.with_parameters.skill_maintenance."
+                    "core.enchantment.with_parameters.skill_maintenance."
                     "other",
                     i18n::s.get_m(
-                        "locale.ability",
+                        "ability",
                         the_ability_db.get_id_from_legacy(sid)->get(),
                         "name"));
             }
@@ -333,16 +333,16 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             rtval = static_cast<int>(ItemDescriptionType::enchantment);
             s = i18n::s
                     .get_m_optional(
-                        "locale.ability",
+                        "ability",
                         the_ability_db.get_id_from_legacy(sid)->get(),
                         "enchantment_description")
                     .get_value_or("");
             if (s == ""s)
             {
                 s = i18n::s.get(
-                    "core.locale.enchantment.with_parameters.extra_damage",
+                    "core.enchantment.with_parameters.extra_damage",
                     i18n::s.get_m(
-                        "locale.ability",
+                        "ability",
                         the_ability_db.get_id_from_legacy(sid)->get(),
                         "name"));
             }
@@ -352,9 +352,9 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             rtval = static_cast<int>(ItemDescriptionType::enchantment);
             sid = encprocref(0, sid);
             s = i18n::s.get(
-                "core.locale.enchantment.with_parameters.invokes",
+                "core.enchantment.with_parameters.invokes",
                 i18n::s.get_m(
-                    "locale.ability",
+                    "ability",
                     the_ability_db.get_id_from_legacy(sid)->get(),
                     "name"));
             s += enchantment_level_string(power / 50);
@@ -362,19 +362,17 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
         case 9:
             rtval = static_cast<int>(ItemDescriptionType::enchantment);
             s = i18n::s.get(
-                "core.locale.enchantment.with_parameters.ammo.text",
-                ammoname(sid));
+                "core.enchantment.with_parameters.ammo.text", ammoname(sid));
             s += " [" +
                 i18n::s.get(
-                    "core.locale.enchantment.with_parameters.ammo.max",
-                    power / 1000) +
+                    "core.enchantment.with_parameters.ammo.max", power / 1000) +
                 "]";
             break;
         }
         return;
     }
 
-    s = i18n::s.get_enum("core.locale.enchantment.no_parameters", val0);
+    s = i18n::s.get_enum("core.enchantment.no_parameters", val0);
 
     switch (val0)
     {
@@ -626,7 +624,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
 
 
 bool enchantment_add(
-    int ci,
+    int item_index,
     int type,
     int power,
     int flip_percentage,
@@ -634,7 +632,7 @@ bool enchantment_add(
     bool only_check,
     bool force)
 {
-    const auto category = the_item_db[inv[ci].id]->category;
+    const auto category = the_item_db[inv[item_index].id]->category;
 
     if (type == 0)
     {
@@ -750,14 +748,14 @@ bool enchantment_add(
     i_at_m48 = -1;
     for (int cnt = 0; cnt < 15; ++cnt)
     {
-        if (inv[ci].enchantments[cnt].id == enc)
+        if (inv[item_index].enchantments[cnt].id == enc)
         {
             i_at_m48 = cnt;
             continue;
         }
         if (i_at_m48 == -1)
         {
-            if (inv[ci].enchantments[cnt].id == 0)
+            if (inv[item_index].enchantments[cnt].id == 0)
             {
                 i_at_m48 = cnt;
             }
@@ -768,7 +766,7 @@ bool enchantment_add(
         return false;
     }
 
-    if (inv[ci].enchantments[i_at_m48].id == enc)
+    if (inv[item_index].enchantments[i_at_m48].id == enc)
     {
         if (category == 25000)
         {
@@ -787,12 +785,12 @@ bool enchantment_add(
         return true;
     }
 
-    if (inv[ci].enchantments[i_at_m48].id == enc)
+    if (inv[item_index].enchantments[i_at_m48].id == enc)
     {
-        encp += inv[ci].enchantments[i_at_m48].power;
+        encp += inv[item_index].enchantments[i_at_m48].power;
     }
-    inv[ci].enchantments[i_at_m48].id = enc;
-    inv[ci].enchantments[i_at_m48].power = encp;
+    inv[item_index].enchantments[i_at_m48].id = enc;
+    inv[item_index].enchantments[i_at_m48].power = encp;
 
     if (type < 10000)
     {
@@ -802,11 +800,12 @@ bool enchantment_add(
     {
         p_at_m48 = type / 10000;
     }
-    if (inv[ci].value * encref(1, p_at_m48) / 100 > 0)
+    if (inv[item_index].value * encref(1, p_at_m48) / 100 > 0)
     {
-        inv[ci].value = inv[ci].value * encref(1, p_at_m48) / 100;
+        inv[item_index].value =
+            inv[item_index].value * encref(1, p_at_m48) / 100;
     }
-    enchantment_sort(inv[ci]);
+    enchantment_sort(inv[item_index]);
 
     return true;
 }
@@ -1108,8 +1107,7 @@ void initialize_ego_data()
 
     for (int cnt = 0; cnt < 11; cnt++)
     {
-        egoname(cnt) =
-            i18n::s.get_enum("core.locale.enchantment.item_ego.major", cnt);
+        egoname(cnt) = i18n::s.get_enum("core.enchantment.item_ego.major", cnt);
     }
 
     egoref(0, 1) = 0;
@@ -1183,7 +1181,7 @@ void initialize_ego_data()
     for (int cnt = 0; cnt < 10; cnt++)
     {
         egominorn(cnt) =
-            i18n::s.get_enum("core.locale.enchantment.item_ego.minor", cnt);
+            i18n::s.get_enum("core.enchantment.item_ego.minor", cnt);
     }
 
     maxegominorn = egominorn.size();
@@ -1236,7 +1234,7 @@ void enchantment_init()
     for (int cnt = 0; cnt < 6; cnt++)
     {
         ammoname(cnt) = i18n::s.get_enum(
-            "core.locale.enchantment.with_parameters.ammo.kinds", cnt);
+            "core.enchantment.with_parameters.ammo.kinds", cnt);
     }
 
     encref(0, 21) = -1;

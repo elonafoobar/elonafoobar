@@ -80,7 +80,7 @@ void UIMenuMods::_load_mods()
     {
         draw();
         DownloadModsInitPrompt(
-            i18n::s.get("core.locale.main_menu.mods.download.failed"))
+            i18n::s.get("core.main_menu.mod_list.download.failed"))
             .query();
         _is_download = false;
         _load_mods();
@@ -149,30 +149,29 @@ void UIMenuMods::_draw_key(int cnt, int index)
 void UIMenuMods::_draw_window()
 {
     auto hint = ""s + key_enter + " " +
-        i18n::s.get("core.locale.main_menu.mods.hint.toggle") + "  " +
-        key_identify + " " +
-        i18n::s.get("core.locale.main_menu.mods.hint.info");
+        i18n::s.get("core.main_menu.mod_list.hint.toggle") + "  " +
+        key_identify + " " + i18n::s.get("core.main_menu.mod_list.hint.info");
 
     if (_is_download)
     {
         hint += "  " + key_mode + " " +
-            i18n::s.get("core.locale.main_menu.mods.hint.installed");
+            i18n::s.get("core.main_menu.mod_list.hint.installed");
     }
     else
     {
         hint += "  " + key_mode + " " +
-            i18n::s.get("core.locale.main_menu.mods.hint.download");
+            i18n::s.get("core.main_menu.mod_list.hint.download");
     }
 
 
     std::string title;
     if (_is_download)
     {
-        title = i18n::s.get("core.locale.main_menu.mods.title.download");
+        title = i18n::s.get("core.main_menu.mod_list.title.download");
     }
     else
     {
-        title = i18n::s.get("core.locale.main_menu.mods.title.installed");
+        title = i18n::s.get("core.main_menu.mod_list.title.installed");
     }
 
     ui_display_window(
@@ -196,11 +195,9 @@ void UIMenuMods::_draw_window()
     }
 
     display_topic(
-        i18n::s.get("core.locale.main_menu.mods.info.name"), wx + 46, wy + 36);
+        i18n::s.get("core.main_menu.mod_list.info.name"), wx + 46, wy + 36);
     display_topic(
-        i18n::s.get("core.locale.main_menu.mods.info.version"),
-        wx + 255,
-        wy + 36);
+        i18n::s.get("core.main_menu.mod_list.info.version"), wx + 255, wy + 36);
 }
 
 

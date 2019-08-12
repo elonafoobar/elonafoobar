@@ -6,6 +6,7 @@
 #include <boost/circular_buffer.hpp>
 #include "../../thirdparty/sol2/sol.hpp"
 #include "../optional.hpp"
+#include "lua_submodule.hpp"
 
 
 
@@ -14,7 +15,6 @@ namespace elona
 namespace lua
 {
 
-class LuaEnv;
 struct ModInfo;
 
 
@@ -32,12 +32,12 @@ struct ModInfo;
  * "COMMANDS" table. You can access any commands like this
  * "COMMANDS[namespace][command_name]" in Lua mode.
  */
-class Console
+class Console : public LuaSubmodule
 {
 public:
     typedef boost::circular_buffer<std::string> buffer;
 
-    explicit Console(LuaEnv*);
+    explicit Console(LuaEnv&);
 
     void init_constants();
     void init_environment();
@@ -77,7 +77,6 @@ private:
     void add_line(std::string);
     const char* prompt() const;
 
-    sol::environment _env();
     sol::table _command_table();
 
     void _init_builtin_lua_functions();
@@ -104,10 +103,6 @@ private:
     bool _cursor_visible = false;
 
     bool _in_lua_mode = false;
-
-    ModInfo* _console_mod;
-
-    LuaEnv* _lua;
 };
 
 } // namespace lua

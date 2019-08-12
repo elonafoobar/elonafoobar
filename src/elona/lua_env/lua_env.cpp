@@ -1,6 +1,8 @@
 #include "lua_env.hpp"
 
+#include "../character.hpp"
 #include "../config/config.hpp"
+#include "../item.hpp"
 #include "api_manager.hpp"
 #include "console.hpp"
 #include "data_manager.hpp"
@@ -9,6 +11,8 @@
 #include "handle_manager.hpp"
 #include "i18n_function_manager.hpp"
 #include "mod_manager.hpp"
+
+
 
 namespace elona
 {
@@ -32,22 +36,25 @@ LuaEnv::LuaEnv()
         sol::lib::coroutine);
 
     // Add executable directory to package.path
-    fs::path exe_path = filesystem::dir::data() / "script" / "kernel";
+    fs::path exe_path = filesystem::dirs::data() / "script" / "kernel";
     std::string normalized = filepathutil::to_forward_slashes(exe_path);
     lua_->safe_script(
         u8"package.path = \""s + normalized + u8"/?.lua;\"..package.path"s);
 
+    (*lua_)["require_relative"] = (*lua_)["require"];
+    (*lua_)["require"] = sol::lua_nil;
+
     // Make sure the API environment is initialized first so any
     // dependent managers can add new internal C++ methods to it (like
     // the event manager registering Elona.Event)
-    api_mgr = std::make_unique<APIManager>(this);
-    event_mgr = std::make_unique<EventManager>(this);
-    mod_mgr = std::make_unique<ModManager>(this);
-    handle_mgr = std::make_unique<HandleManager>(this);
-    data_mgr = std::make_unique<DataManager>(this);
-    export_mgr = std::make_unique<ExportManager>(this);
-    i18n_function_mgr = std::make_unique<I18NFunctionManager>(this);
-    console = std::make_unique<Console>(this);
+    api_mgr = std::make_unique<APIManager>(*this);
+    event_mgr = std::make_unique<EventManager>(*this);
+    mod_mgr = std::make_unique<ModManager>(*this);
+    handle_mgr = std::make_unique<HandleManager>(*this);
+    data_mgr = std::make_unique<DataManager>(*this);
+    export_mgr = std::make_unique<ExportManager>(*this);
+    i18n_function_mgr = std::make_unique<I18NFunctionManager>(*this);
+    console = std::make_unique<Console>(*this);
 }
 
 

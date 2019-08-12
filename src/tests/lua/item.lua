@@ -1,6 +1,6 @@
-require "tests/lua/support/minctest"
+require_relative("tests/lua/support/minctest")
 
-local Item = Elona.require("Item")
+local Item = require("game.Item")
 
 lrun("test Item.create", function()
         Testing.start_in_debug_map()
@@ -20,25 +20,12 @@ lrun("test Item.create", function()
 end)
 
 lrun("test Item.has_enchantment", function()
-        Testing.start_in_debug_map()
+        -- Testing.start_in_debug_map()
 
         local item_pos = LuaPosition.new(4, 8)
         local item = Item.create(item_pos, "core.dragon_slayer", 3) -- spawns with fixed enchantments
         lequal(Item.has_enchantment(item, 57), true)
         lequal(Item.has_enchantment(item, 20), false)
-end)
-
-lrun("test Item.count", function()
-        Testing.start_in_debug_map()
-
-        Item.create(0, 0, "core.putitoro", 3)
-        Item.create(0, 1, "core.putitoro", 3)
-
-        lequal(Item.count(), 2)
-
-        Item.create(0, 2, "core.putitoro", 3)
-
-        lequal(Item.count(), 3)
 end)
 
 local function tally()
@@ -51,17 +38,17 @@ local function tally()
    return count
 end
 
-lrun("test Item.iter", function()
+lrun("test Item.count/iter", function()
         Testing.start_in_debug_map()
 
         Item.create(0, 0, "core.putitoro", 3)
         Item.create(0, 1, "core.putitoro", 3)
 
-        local count = tally()
-        lequal(count, 2)
+        lequal(Item.count(), 2)
+        lequal(tally(), 2)
 
         Item.create(0, 2, "core.putitoro", 3)
 
-        count = tally()
-        lequal(count, 3)
+        lequal(Item.count(), 3)
+        lequal(tally(), 3)
 end)

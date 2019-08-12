@@ -29,6 +29,7 @@ protected:
     void _build_description();
     void _draw_mod_page();
     void _draw_window();
+    optional<fs::path> _find_readme(const fs::path& mod_dir);
 
 private:
     const ModDescription& _desc;

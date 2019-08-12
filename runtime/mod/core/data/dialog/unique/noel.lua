@@ -1,14 +1,14 @@
-local Chara = Elona.require("Chara")
-local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
-local table = Elona.require("table")
+local Chara = require("game.Chara")
+local GUI = require("game.GUI")
+local I18N = require("game.I18N")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
+local table = require("game.table")
 
-local common = require("data/dialog/common")
+local common = require_relative("data/dialog/common")
 
 local function buy_nuke()
-   GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
+   GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
    Chara.player().gold = Chara.player().gold - 12000
    GUI.play_sound("core.paygold1")
    Item.create(Chara.player().position, "core.nuclear_bomb", 0)
@@ -16,7 +16,7 @@ end
 
 return {
    id = "noel",
-   root = "core.locale.talk.unique.noel",
+   root = "core.talk.unique.noel",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("red_blossom_in_palmia")

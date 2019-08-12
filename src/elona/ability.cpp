@@ -196,9 +196,9 @@ void gain_special_action()
         {
             spact(29) = 1;
             txt(i18n::s.get(
-                    "core.locale.skill.gained",
+                    "core.skill.gained",
                     i18n::s.get_m(
-                        "locale.ability",
+                        "ability",
                         the_ability_db.get_id_from_legacy(629)->get(),
                         "name")),
                 Message::color{ColorIndex::orange});
@@ -207,9 +207,9 @@ void gain_special_action()
         {
             spact(30) = 1;
             txt(i18n::s.get(
-                    "core.locale.skill.gained",
+                    "core.skill.gained",
                     i18n::s.get_m(
-                        "locale.ability",
+                        "ability",
                         the_ability_db.get_id_from_legacy(630)->get(),
                         "name")),
                 Message::color{ColorIndex::orange});
@@ -221,9 +221,9 @@ void gain_special_action()
         {
             spact(31) = 1;
             txt(i18n::s.get(
-                    "core.locale.skill.gained",
+                    "core.skill.gained",
                     i18n::s.get_m(
-                        "locale.ability",
+                        "ability",
                         the_ability_db.get_id_from_legacy(631)->get(),
                         "name")),
                 Message::color{ColorIndex::orange});
@@ -430,144 +430,134 @@ void chara_gain_skill_exp(
 
 
 
-void gain_digging_experience()
+void chara_gain_exp_digging(Character& chara)
 {
-    chara_gain_skill_exp(cdata.player(), 163, 100);
+    chara_gain_skill_exp(chara, 163, 100);
 }
 
 
 
-void gain_literacy_experience()
+void chara_gain_exp_literacy(Character& chara)
 {
-    chara_gain_skill_exp(cdata.player(), 150, 15, 10, 100);
+    chara_gain_skill_exp(chara, 150, 15, 10, 100);
 }
 
 
 
-void gain_negotiation_experience(int cc, int gold)
+void chara_gain_exp_negotiation(Character& chara, int gold)
 {
-    int current_level = sdata(156, cc);
+    const auto current_level = sdata(156, chara.index);
     if (gold >= calc_exp_gain_negotiation_gold_threshold(current_level))
     {
         chara_gain_skill_exp(
-            cdata[cc], 156, calc_exp_gain_negotiation(gold, current_level), 10);
+            chara, 156, calc_exp_gain_negotiation(gold, current_level), 10);
     }
 }
 
 
 
-void gain_lock_picking_experience(int cc)
+void chara_gain_exp_lock_picking(Character& chara)
 {
-    chara_gain_skill_exp(cdata[cc], 158, 100);
+    chara_gain_skill_exp(chara, 158, 100);
 }
 
 
 
-void gain_detection_experience(int cc)
+void chara_gain_exp_detection(Character& chara)
 {
     chara_gain_skill_exp(
-        cdata[cc],
-        159,
-        calc_exp_gain_detection(game_data.current_dungeon_level));
+        chara, 159, calc_exp_gain_detection(game_data.current_dungeon_level));
 }
 
 
 
-void gain_casting_experience(int cc, int spell_id)
+void chara_gain_exp_casting(Character& chara, int spell_id)
 {
-    if (cc == 0)
+    if (chara.index == 0)
     {
         chara_gain_skill_exp(
-            cdata[cc], spell_id, calc_spell_exp_gain(spell_id), 4, 5);
-        chara_gain_skill_exp(
-            cdata[cc], 172, calc_exp_gain_casting(spell_id), 5);
+            chara, spell_id, calc_spell_exp_gain(spell_id), 4, 5);
+        chara_gain_skill_exp(chara, 172, calc_exp_gain_casting(spell_id), 5);
     }
     else
     {
-        chara_gain_skill_exp(
-            cdata[cc], 172, calc_exp_gain_casting(spell_id), 5);
+        chara_gain_skill_exp(chara, 172, calc_exp_gain_casting(spell_id), 5);
     }
 }
 
 
 
-void gain_mana_capacity_experience(int cc)
+void chara_gain_exp_mana_capacity(Character& chara)
+{
+    chara_gain_skill_exp(chara, 164, calc_exp_gain_mana_capacity(chara));
+}
+
+
+
+void chara_gain_exp_healing_and_meditation(Character& chara)
+{
+    chara_gain_skill_exp(chara, 154, calc_exp_gain_healing(chara), 1000);
+    chara_gain_skill_exp(chara, 155, calc_exp_gain_meditation(chara), 1000);
+}
+
+
+
+void chara_gain_exp_stealth(Character& chara)
+{
+    chara_gain_skill_exp(chara, 157, calc_exp_gain_stealth(), 0, 1000);
+}
+
+
+
+void chara_gain_exp_investing(Character& chara)
+{
+    chara_gain_skill_exp(chara, 160, 600);
+}
+
+
+
+void chara_gain_exp_weight_lifting(Character& chara)
 {
     chara_gain_skill_exp(
-        cdata[cc], 164, calc_exp_gain_mana_capacity(cdata[cc]));
+        chara, 153, calc_exp_gain_weight_lifting(chara), 0, 1000);
 }
 
 
 
-void gain_healing_and_meditation_experience(int cc)
+void chara_gain_exp_magic_device(Character& chara)
 {
-    chara_gain_skill_exp(
-        cdata[cc], 154, calc_exp_gain_healing(cdata[cc]), 1000);
-    chara_gain_skill_exp(
-        cdata[cc], 155, calc_exp_gain_meditation(cdata[cc]), 1000);
-}
-
-
-
-void gain_stealth_experience(int cc)
-{
-    chara_gain_skill_exp(cdata[cc], 157, calc_exp_gain_stealth(), 0, 1000);
-}
-
-
-
-void gain_investing_experience(int cc)
-{
-    chara_gain_skill_exp(cdata[cc], 160, 600);
-}
-
-
-
-void gain_weight_lifting_experience(int cc)
-{
-    chara_gain_skill_exp(
-        cdata[cc], 153, calc_exp_gain_weight_lifting(cdata[cc]), 0, 1000);
-}
-
-
-
-void gain_magic_device_experience(int cc)
-{
-    if (cc == 0)
+    if (chara.index == 0)
     {
-        chara_gain_skill_exp(cdata[cc], 174, 40);
+        chara_gain_skill_exp(chara, 174, 40);
     }
 }
 
 
 
-void gain_fishing_experience(int cc)
+void chara_gain_exp_fishing(Character& chara)
 {
-    chara_gain_skill_exp(cdata[cc], 185, 100);
+    chara_gain_skill_exp(chara, 185, 100);
 }
 
 
 
-void gain_memorization_experience(int cc)
+void chara_gain_exp_memorization(Character& chara, int spell_id)
 {
-    chara_gain_skill_exp(cdata[cc], 165, calc_exp_gain_memorization(efid));
+    chara_gain_skill_exp(chara, 165, calc_exp_gain_memorization(spell_id));
 }
 
 
 
-void gain_crafting_experience(int skill, int mat_amount)
+void chara_gain_exp_crafting(Character& chara, int skill, int material_amount)
 {
-    chara_gain_skill_exp(
-        cdata.player(), skill, calc_exp_gain_crafting(mat_amount));
+    chara_gain_skill_exp(chara, skill, calc_exp_gain_crafting(material_amount));
 }
 
 
 
-void gain_disarm_trap_experience()
+void chara_gain_exp_disarm_trap(Character& chara)
 {
-    chara_gain_skill_exp(cdata[cc], 175, 50);
+    chara_gain_skill_exp(chara, 175, 50);
 }
-
-
 
 } // namespace elona

@@ -848,7 +848,7 @@ locale {
         yerles_elite_machine_infantry {
             name = "Yerles elite machine infantry"
         }
-        gilbert_the_colonel {
+        gilbert {
             name = "<Gilbert> the colonel"
             text_100 = ["\"Help the helpless! Crush the vileness!\"", "\"Atten-TION! Salute!\"", "\"For the Kingdom, we shall never fall!\"", "\"Who's house? Mah House!\""]
         }
@@ -952,7 +952,7 @@ locale {
         master_of_pet_arena {
             name = "master of pet arena"
         }
-        garokk {
+        garok {
             name = "<Garok> the legendary smith"
             text_100 = ["You hear the rhythmic clang of a hammer on steel.", "You hear the whoosh of a bellows being pumped.", "You hear the perfect ring of steel-on-steel. It makes your blood race.", "\"And just what shall you be, oh noble ingot? A dagger perhaps, an axe blade by chance? Let us find out...\"", "\"Ah! A good shipment of steel today. Oh, what to make, decisions, decisions...\"", "\"With this, I have created half a legend. Your wielder will make the other half with you.\"", "\"Let's just sit you on the shelf oh noble blade, for soon your brothers shall join you.\""]
         }
@@ -1054,7 +1054,7 @@ locale {
             name = "<Ebon> the fire giant"
             text_100 = ["You hear a bonfire in the distance, only it sounds like it's breathing."]
         }
-        moyer_the_crooked {
+        moyer {
             name = "<Moyer> the crooked"
             text_100 = ["\"Hey now, I stopped, I stopped!\"", "\"Behold! a Legendary Giant of Fire! Be careful you aren't burned now.\"", "\"And if you think that's special, wait till you see what I got over here!\""]
         }

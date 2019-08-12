@@ -1,4 +1,4 @@
-clone_folder: C:\projects\ElonaFoobar
+clone_folder: C:\projects\elonafoobar
 
 os:
   - Visual Studio 2017
@@ -6,9 +6,11 @@ os:
 environment:
   matrix:
   - CMAKE_ARGS: -G "Visual Studio 15 2017 Win64"
-    BOOST_VERSION: 1.66.0
-    BOOST_ROOT: C:\Libraries\boost_1_66_0
+    BOOST_VERSION: 1.69.0
+    BOOST_ROOT: C:\Libraries\boost_1_69_0
     PREFIX: C:\SDK
+    OPENSSL_ROOT_DIR: C:\OpenSSL-v111-Win64
+    ZLIB_ROOT: C:\SDK
 
 build:
   verbosity: detailed
@@ -34,46 +36,19 @@ branches:
 
 cache:
   - C:\SDK -> appveyor.yml
-  - C:\projects/ElonaFoobar/bin -> appveyor.yml
+  - C:\projects\elonafoobar\bin -> appveyor.yml
 
 before_build:
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
-  - cd C:\projects\ElonaFoobar
+  - cd C:\projects\elonafoobar
   - ps: "$(git ls-files) -split \"`r`n\" | where { $_ -match '\\.(c|h|cpp|hpp|cxx|hxx|cc|hh)$' } | foreach { Set-ItemProperty $_ -Name LastWriteTime -Value $([DateTime]::Parse($(git log --format=%cI -n1 $_))) }"
   - if exist %PREFIX% set NEEDDEPENDS=rem
   - |-
-    %NEEDDEPENDS% mkdir %PREFIX%\include\SDL2
-    %NEEDDEPENDS% mkdir %PREFIX%\lib
-    %NEEDDEPENDS% cd %TEMP%
-  - |-
-    %NEEDDEPENDS% appveyor DownloadFile http://www.libsdl.org/release/SDL2-devel-2.0.8-VC.zip
-    %NEEDDEPENDS% 7z x -y SDL2-devel-2.0.8-VC.zip > nul
-    %NEEDDEPENDS% copy SDL2-2.0.8\include\* %PREFIX%\include > nul
-    %NEEDDEPENDS% copy SDL2-2.0.8\lib\x64\* %PREFIX%\lib > nul
-  - |-
-    %NEEDDEPENDS% appveyor DownloadFile http://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-devel-2.0.2-VC.zip
-    %NEEDDEPENDS% 7z x -y SDL2_mixer-devel-2.0.2-VC.zip > nul
-    %NEEDDEPENDS% copy SDL2_mixer-2.0.2\include\* %PREFIX%\include > nul
-    %NEEDDEPENDS% copy SDL2_mixer-2.0.2\lib\x64\* %PREFIX%\lib > nul
-  - |-
-    %NEEDDEPENDS% appveyor DownloadFile https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-2.0.14-VC.zip
-    %NEEDDEPENDS% 7z x -y SDL2_ttf-devel-2.0.14-VC.zip > nul
-    %NEEDDEPENDS% copy SDL2_ttf-2.0.14\include\* %PREFIX%\include > nul
-    %NEEDDEPENDS% copy SDL2_ttf-2.0.14\lib\x64\* %PREFIX%\lib > nul
-  - |-
-    %NEEDDEPENDS% appveyor DownloadFile http://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-2.0.3-VC.zip
-    %NEEDDEPENDS% 7z x -y SDL2_image-devel-2.0.3-VC.zip > nul
-    %NEEDDEPENDS% copy SDL2_image-2.0.3\include\* %PREFIX%\include > nul
-    %NEEDDEPENDS% copy SDL2_image-2.0.3\lib\x64\* %PREFIX%\lib > nul
-  - |-
-    %NEEDDEPENDS% appveyor DownloadFile https://www.lua.org/ftp/lua-5.3.4.tar.gz
-    %NEEDDEPENDS% mkdir %PREFIX%\lib\lua\src > nul
-    %NEEDDEPENDS% copy %APPVEYOR_BUILD_FOLDER%\cmake\lua\* %PREFIX%\lib\lua > nul
-    %NEEDDEPENDS% 7z x lua-5.3.4.tar.gz -so | 7z x -aoa -si -ttar > nul
-    %NEEDDEPENDS% xcopy /s /e /y lua-5.3.4\src\* %PREFIX%\lib\lua\src > nul
-    %NEEDDEPENDS% cd %PREFIX%\lib\lua\src
-    %NEEDDEPENDS% patch -p0 --binary < ..\lua_wstring_5.3.4.patch
-    %NEEDDEPENDS% cd %TEMP%
+    %NEEDDEPENDS% mkdir %PREFIX%
+    %NEEDDEPENDS% cp C:\projects\elonafoobar\deps\install.bat %PREFIX%
+    %NEEDDEPENDS% cd %PREFIX%
+    %NEEDDEPENDS% git clone --depth=1 https://github.com/elonafoobar/windows_deps windows
+    %NEEDDEPENDS% call .\install.bat
 
 build_script:
   - chcp 65001

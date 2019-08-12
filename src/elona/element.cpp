@@ -47,21 +47,21 @@ std::string elename(int ele)
 {
     if (efid == 614)
     {
-        return i18n::s.get("core.locale.element.name.starving");
+        return i18n::s.get("core.element.name.starving");
     }
     if (efid == 613)
     {
-        return i18n::s.get("core.locale.element.name.rotten");
+        return i18n::s.get("core.element.name.rotten");
     }
     if (efid == 617)
     {
-        return i18n::s.get("core.locale.element.name.fearful");
+        return i18n::s.get("core.element.name.fearful");
     }
     if (efid == 618)
     {
-        return i18n::s.get("core.locale.element.name.silky");
+        return i18n::s.get("core.element.name.silky");
     }
-    if (auto text = i18n::s.get_enum_optional("core.locale.element.name", ele))
+    if (auto text = i18n::s.get_enum_optional("core.element.name", ele))
     {
         return *text;
     }
@@ -97,7 +97,7 @@ void resistmod(int cc, int element, int delta)
     if (delta >= 50)
     {
         if (auto text = i18n::s.get_enum_optional(
-                "core.locale.element.resist.gain", element, cdata[cc]))
+                "core.element.resist.gain", element, cdata[cc]))
         {
             txt(*text, Message::color{ColorIndex::green});
         }
@@ -109,7 +109,7 @@ void resistmod(int cc, int element, int delta)
     else if (delta <= 50 * -1)
     {
         if (auto text = i18n::s.get_enum_optional(
-                "core.locale.element.resist.lose", element, cdata[cc]))
+                "core.element.resist.lose", element, cdata[cc]))
         {
             txt(*text, Message::color{ColorIndex::purple});
         }
@@ -134,21 +134,20 @@ void txteledmg(int type, int attacker, int target, int element)
     if (type == 0 && is_in_fov(cdata[target]))
     {
         auto text = i18n::s.get_enum_optional(
-            "core.locale.element.damage"s, element, cdata[target]);
+            "core.element.damage"s, element, cdata[target]);
         if (text)
         {
             txt(*text);
         }
         else
         {
-            txt(i18n::s.get(
-                "core.locale.element.damage.default", cdata[target]));
+            txt(i18n::s.get("core.element.damage.default", cdata[target]));
         }
     }
     else if (type == 1)
     {
         auto text = i18n::s.get_enum_property_opt(
-            "core.locale.death_by.element"s,
+            "core.death_by.element"s,
             "active",
             element,
             cdata[target],
@@ -160,7 +159,7 @@ void txteledmg(int type, int attacker, int target, int element)
         else
         {
             txt(i18n::s.get(
-                "core.locale.death_by.element.default.active",
+                "core.death_by.element.default.active",
                 cdata[target],
                 cdata[attacker]));
         }
@@ -168,7 +167,7 @@ void txteledmg(int type, int attacker, int target, int element)
     else if (type == 2)
     {
         auto text = i18n::s.get_enum_property_opt(
-            "core.locale.death_by.element"s,
+            "core.death_by.element"s,
             "passive",
             element,
             cdata[target],
@@ -180,7 +179,7 @@ void txteledmg(int type, int attacker, int target, int element)
         else
         {
             txt(i18n::s.get(
-                "core.locale.death_by.element.default.passive",
+                "core.death_by.element.default.passive",
                 cdata[target],
                 cdata[attacker]));
         }

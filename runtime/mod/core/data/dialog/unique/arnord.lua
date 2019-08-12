@@ -1,13 +1,13 @@
-local Chara = Elona.require("Chara")
-local GUI = Elona.require("GUI")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
+local Chara = require("game.Chara")
+local GUI = require("game.GUI")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
 
-local common = require("data/dialog/common")
+local common = require_relative("data/dialog/common")
 
 return {
    id = "arnord",
-   root = "core.locale.talk.unique.arnord",
+   root = "core.talk.unique.arnord",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("kamikaze_attack")

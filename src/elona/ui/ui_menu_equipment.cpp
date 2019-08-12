@@ -119,7 +119,7 @@ void UIMenuEquipment::update()
 void UIMenuEquipment::_draw_window_background()
 {
     ui_display_window(
-        i18n::s.get("core.locale.ui.equip.title"),
+        i18n::s.get("core.ui.equip.title"),
         strhint5 + strhint5b + strhint3,
         (windoww - 690) / 2 + inf_screenx,
         winposy(428),
@@ -127,8 +127,8 @@ void UIMenuEquipment::_draw_window_background()
         428,
         64);
     display_topic(
-        i18n::s.get("core.locale.ui.equip.category") + "/" +
-            i18n::s.get("core.locale.ui.equip.name"),
+        i18n::s.get("core.ui.equip.category") + "/" +
+            i18n::s.get("core.ui.equip.name"),
         wx + 28,
         wy + 30);
 }
@@ -137,8 +137,7 @@ void UIMenuEquipment::_draw_window_deco(bool show_additional_info)
 {
     if (!show_additional_info)
     {
-        display_topic(
-            i18n::s.get("core.locale.ui.equip.weight"), wx + 524, wy + 30);
+        display_topic(i18n::s.get("core.ui.equip.weight"), wx + 524, wy + 30);
     }
     draw_indexed("inventory_icon", wx + 46, wy - 16, 10);
     elona::draw("deco_wear_a", wx + ww - 106, wy);
@@ -149,11 +148,10 @@ void UIMenuEquipment::_draw_window_deco(bool show_additional_info)
 void UIMenuEquipment::_draw_window_headers()
 {
     display_note(
-        i18n::s.get("core.locale.ui.equip.equip_weight") + ": " +
+        i18n::s.get("core.ui.equip.equip_weight") + ": " +
         cnvweight(cdata[cc].sum_of_equipment_weight) + cnveqweight(cc) + " " +
-        i18n::s.get("core.locale.ui.equip.hit_bonus") + ":" +
-        cdata[cc].hit_bonus + " " +
-        i18n::s.get("core.locale.ui.equip.damage_bonus") + ":" +
+        i18n::s.get("core.ui.equip.hit_bonus") + ":" + cdata[cc].hit_bonus +
+        " " + i18n::s.get("core.ui.equip.damage_bonus") + ":" +
         cdata[cc].damage_bonus + u8"  DV/PV:"s + cdata[cc].dv + u8"/"s +
         cdata[cc].pv);
 }
@@ -175,12 +173,11 @@ void UIMenuEquipment::_draw_key(int cnt, int p_, bool is_main_hand)
     std::string body_part_name;
     if (is_main_hand)
     {
-        body_part_name = i18n::s.get("core.locale.ui.equip.main_hand");
+        body_part_name = i18n::s.get("core.ui.equip.main_hand");
     }
     else
     {
-        body_part_name =
-            i18n::s.get_enum("core.locale.ui.body_part", list(1, p_));
+        body_part_name = i18n::s.get_enum("core.ui.body_part", list(1, p_));
     }
 
     draw_indexed(
@@ -286,14 +283,14 @@ static void _unequip_item()
     ci = cdata[cc].body_parts[body - 100] % 10000 - 1;
     if (is_cursed(inv[ci].curse_state))
     {
-        txt(i18n::s.get("core.locale.ui.equip.cannot_be_taken_off", inv[ci]));
+        txt(i18n::s.get("core.ui.equip.cannot_be_taken_off", inv[ci]));
         return;
     }
     unequip_item(cc);
     chara_refresh(cc);
     snd("core.equip1");
     Message::instance().linebreak();
-    txt(i18n::s.get("core.locale.ui.equip.you_unequip", inv[ci]));
+    txt(i18n::s.get("core.ui.equip.you_unequip", inv[ci]));
     if (cdata[cc].body_parts[body - 100] / 10000 == 5)
     {
         equip_melee_weapon();
@@ -397,7 +394,7 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     else if (action == "cancel")
     {
         menucycle = 0;
-        create_pcpic(cc);
+        create_pcpic(cdata[cc]);
         update_screen();
         // result.turn_result = TurnResult::pc_turn_user_error
         return UIMenuEquipment::Result::cancel();

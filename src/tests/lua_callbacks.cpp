@@ -19,13 +19,13 @@ TEST_CASE("Test character created callback", "[Lua: Callbacks]")
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_chara_created", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_chara_created_handler(e)
-   Store.global.charas[e.chara.index] = e.chara
+   mod.store.global.charas[e.chara.index] = e.chara
 end
 
-Store.global.charas = {}
+mod.store.global.charas = {}
 
 Event.register("core.character_created", my_chara_created_handler)
 )"));
@@ -39,7 +39,7 @@ Event.register("core.character_created", my_chara_created_handler)
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_chara_created",
-        R"(assert(Store.global.charas[idx].index == idx))"));
+        R"(assert(mod.store.global.charas[idx].index == idx))"));
 }
 
 TEST_CASE("Test character hurt callback", "[Lua: Callbacks]")
@@ -48,15 +48,15 @@ TEST_CASE("Test character hurt callback", "[Lua: Callbacks]")
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_chara_hurt", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_chara_hurt_handler(e)
-   Store.global.hurt_idx = e.chara.index
-   Store.global.hurt_amount = e.damage
+   mod.store.global.hurt_idx = e.chara.index
+   mod.store.global.hurt_amount = e.damage
 end
 
-Store.global.hurt_idx = -1
-Store.global.hurt_amount = -1
+mod.store.global.hurt_idx = -1
+mod.store.global.hurt_amount = -1
 
 Event.register("core.character_damaged", my_chara_hurt_handler)
 )"));
@@ -71,9 +71,9 @@ Event.register("core.character_damaged", my_chara_hurt_handler)
     elona::heal_hp(cdata[idx], 45);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-        "test_chara_hurt", R"(assert(Store.global.hurt_idx == idx))"));
+        "test_chara_hurt", R"(assert(mod.store.global.hurt_idx == idx))"));
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-        "test_chara_hurt", R"(assert(Store.global.hurt_amount == 4))"));
+        "test_chara_hurt", R"(assert(mod.store.global.hurt_amount == 4))"));
 }
 
 TEST_CASE("Test character removed callback", "[Lua: Callbacks]")
@@ -82,13 +82,13 @@ TEST_CASE("Test character removed callback", "[Lua: Callbacks]")
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_chara_removed", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_chara_removed_handler(e)
-   Store.global.removed_idx = e.chara.index
+   mod.store.global.removed_idx = e.chara.index
 end
 
-Store.global.removed_idx = -1
+mod.store.global.removed_idx = -1
 
 Event.register("core.character_removed", my_chara_removed_handler)
 )"));
@@ -102,7 +102,8 @@ Event.register("core.character_removed", my_chara_removed_handler)
     testing::invalidate_chara(cdata[idx]);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-        "test_chara_removed", R"(assert(Store.global.removed_idx == idx))"));
+        "test_chara_removed",
+        R"(assert(mod.store.global.removed_idx == idx))"));
 }
 
 TEST_CASE("Test character killed callback", "[Lua: Callbacks]")
@@ -111,13 +112,13 @@ TEST_CASE("Test character killed callback", "[Lua: Callbacks]")
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_chara_killed", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_chara_killed_handler(e)
-   Store.global.killed_idx = e.chara.index
+   mod.store.global.killed_idx = e.chara.index
 end
 
-Store.global.killed_idx = -1
+mod.store.global.killed_idx = -1
 
 Event.register("core.character_killed", my_chara_killed_handler)
 )"));
@@ -132,7 +133,7 @@ Event.register("core.character_killed", my_chara_killed_handler)
     elona::damage_hp(cdata[idx], chara.max_hp + 1, -11);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-        "test_chara_killed", R"(assert(Store.global.killed_idx == idx))"));
+        "test_chara_killed", R"(assert(mod.store.global.killed_idx == idx))"));
 }
 
 TEST_CASE(
@@ -143,23 +144,23 @@ TEST_CASE(
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_townsperson_killed", R"(
-local Chara = Elona.require("Chara")
-local Event = Elona.require("Event")
+local Chara = require("game.Chara")
+local Event = require("game.Event")
 
-Store.global.townsperson = Chara.create(0, 0, "core.putit")
-Store.global.townsperson.role = 14
-Store.global.idx = Store.global.townsperson.index
+mod.store.global.townsperson = Chara.create(0, 0, "core.putit")
+mod.store.global.townsperson.role = 14
+mod.store.global.idx = mod.store.global.townsperson.index
 
 local function my_chara_removed_handler(e)
-   Store.global.removed_idx = e.chara.index
+   mod.store.global.removed_idx = e.chara.index
 end
 
 local function my_chara_killed_handler(e)
-   Store.global.killed_idx = e.chara.index
+   mod.store.global.killed_idx = e.chara.index
 end
 
-Store.global.removed_idx = -1
-Store.global.killed_idx = -1
+mod.store.global.removed_idx = -1
+mod.store.global.killed_idx = -1
 
 Event.register("core.character_killed", my_chara_killed_handler)
 Event.register("core.character_removed", my_chara_removed_handler)
@@ -168,14 +169,14 @@ Event.register("core.character_removed", my_chara_removed_handler)
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_townsperson_killed",
-        R"(Store.global.townsperson:damage_hp(Store.global.townsperson.max_hp + 1))"));
+        R"(mod.store.global.townsperson:damage_hp(mod.store.global.townsperson.max_hp + 1))"));
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_townsperson_killed",
-        R"(assert(Store.global.killed_idx == Store.global.idx))"));
+        R"(assert(mod.store.global.killed_idx == mod.store.global.idx))"));
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_townsperson_killed",
-        R"(assert(Store.global.removed_idx == -1))"));
+        R"(assert(mod.store.global.removed_idx == -1))"));
 }
 
 TEST_CASE(
@@ -187,18 +188,18 @@ TEST_CASE(
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_special_chara_killed", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_chara_removed_handler(e)
-   Store.global.removed_idx = e.chara.index
+   mod.store.global.removed_idx = e.chara.index
 end
 
 local function my_chara_killed_handler(e)
-   Store.global.killed_idx = e.chara.index
+   mod.store.global.killed_idx = e.chara.index
 end
 
-Store.global.removed_idx = -1
-Store.global.killed_idx = -1
+mod.store.global.removed_idx = -1
+mod.store.global.killed_idx = -1
 
 Event.register("core.character_killed", my_chara_killed_handler)
 Event.register("core.character_removed", my_chara_removed_handler)
@@ -218,10 +219,10 @@ Event.register("core.character_removed", my_chara_removed_handler)
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_special_chara_killed",
-        R"(assert(Store.global.killed_idx == idx))"));
+        R"(assert(mod.store.global.killed_idx == idx))"));
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_special_chara_killed",
-        R"(assert(Store.global.removed_idx == -1))"));
+        R"(assert(mod.store.global.removed_idx == -1))"));
 }
 
 
@@ -231,10 +232,10 @@ TEST_CASE("Test character refreshed callback", "[Lua: Callbacks]")
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_chara_refreshed", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_chara_refreshed_handler(e)
-   Store.global.idx = e.chara.index
+   mod.store.global.idx = e.chara.index
 end
 
 Event.register("core.character_refreshed", my_chara_refreshed_handler)
@@ -249,7 +250,7 @@ Event.register("core.character_refreshed", my_chara_refreshed_handler)
     elona::chara_refresh(idx);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-        "test_chara_refreshed", R"(assert(Store.global.idx == idx))"));
+        "test_chara_refreshed", R"(assert(mod.store.global.idx == idx))"));
 }
 
 
@@ -259,18 +260,18 @@ TEST_CASE("Test item created callback", "[Lua: Callbacks]")
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_item_created", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_item_created_handler(e)
-   Store.global.items[e.item.index] = e.item
+   mod.store.global.items[e.item.index] = e.item
 end
 
-Store.global.items = {}
+mod.store.global.items = {}
 
 Event.register("core.item_created", my_item_created_handler)
 )"));
 
-    REQUIRE(elona::itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
+    REQUIRE_SOME(elona::itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
     int idx = elona::ci;
     REQUIRE(idx != -1);
     elona::lua::lua->get_mod_manager()
@@ -279,7 +280,7 @@ Event.register("core.item_created", my_item_created_handler)
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_item_created",
-        R"(assert(Store.global.items[idx].index == idx))"));
+        R"(assert(mod.store.global.items[idx].index == idx))"));
 }
 
 TEST_CASE("Test map unloading callback", "[Lua: Callbacks]")
@@ -288,20 +289,20 @@ TEST_CASE("Test map unloading callback", "[Lua: Callbacks]")
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_map_unloading", R"(
-local Event = Elona.require("Event")
+local Event = require("game.Event")
 
 local function my_map_unloading_handler()
-   Store.global.map_unloaded = true
+   mod.store.global.map_unloaded = true
 end
 
-Store.global.map_unloaded = false
+mod.store.global.map_unloaded = false
 
 Event.register("core.before_map_unload", my_map_unloading_handler)
 )"));
 
     run_in_temporary_map(6, 1, []() {
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
-            "test_map_unloading", R"(assert(Store.global.map_unloaded))"));
+            "test_map_unloading", R"(assert(mod.store.global.map_unloaded))"));
     });
 }
 
@@ -314,27 +315,27 @@ TEST_CASE(
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
         "test_map_local_chara", R"(
-local Chara = Elona.require("Chara")
+local Chara = require("game.Chara")
 
-Store.global.chara = Chara.create(24, 24, "core.putit")
-Store.global.player = Chara.player()
-Store.global.ally = Chara.create(24, 24, "core.putit")
-Store.global.ally:recruit_as_ally()
+mod.store.global.chara = Chara.create(24, 24, "core.putit")
+mod.store.global.player = Chara.player()
+mod.store.global.ally = Chara.create(24, 24, "core.putit")
+mod.store.global.ally:recruit_as_ally()
 )"));
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_map_local_chara",
-        R"(assert(Store.global.chara:is_valid() == true))"));
+        R"(assert(mod.store.global.chara:is_valid() == true))"));
 
     run_in_temporary_map(6, 1, []() {
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
             "test_map_local_chara",
-            R"(assert(Store.global.chara:is_valid() == false))"));
+            R"(assert(mod.store.global.chara:is_valid() == false))"));
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
             "test_map_local_chara",
-            R"(assert(Store.global.player:is_valid() == true))"));
+            R"(assert(mod.store.global.player:is_valid() == true))"));
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
             "test_map_local_chara",
-            R"(assert(Store.global.ally:is_valid() == true))"));
+            R"(assert(mod.store.global.ally:is_valid() == true))"));
     });
 }

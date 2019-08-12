@@ -1,5 +1,6 @@
-local Item = Elona.require("Item")
-local Rand = Elona.require("Rand")
+local Data = require("game.Data")
+local Item = require("game.Item")
+local Rand = require("game.Rand")
 
 local chara_drop = {}
 
@@ -35,7 +36,7 @@ end
 
 function chara_drop.drop(chara, drops)
    for _, drop_id in ipairs(drops) do
-      local drop_data = data.raw["core.chara_drop"][drop_id]
+      local drop_data = Data.get("core.chara_drop", drop_id)
       if drop_data then
          chara_drop.run_drop(chara, drop_data)
       end
@@ -43,7 +44,7 @@ function chara_drop.drop(chara, drops)
 end
 
 function chara_drop.drop_from_chara(chara)
-   local drops = data.raw["core.chara"][chara.id].drops
+   local drops = Data.get("core.chara", chara.id).drops
 
    if drops then
       chara_drop.drop(chara, drops)

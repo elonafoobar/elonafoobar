@@ -1,4 +1,4 @@
-local unique = require("data/dialog/unique")
+local unique = require_relative("data/dialog/unique")
 
 data:define_type("dialog")
 data:add_multi(
@@ -6,7 +6,7 @@ data:add_multi(
    {
       {
          id = "ignored",
-         root = "core.locale.talk",
+         root = "core.talk",
          nodes = {
             __start = {
                text = {

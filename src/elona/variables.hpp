@@ -18,7 +18,6 @@ namespace elona
 
 
 ELONA_EXTERN(elona_vector1<int> ap);
-ELONA_EXTERN(int wishfilter);
 ELONA_EXTERN(int nooracle);
 
 // casino.cpp / casino_card.cpp
@@ -139,21 +138,14 @@ ELONA_EXTERN(int catitem);
 ELONA_EXTERN(int rollanatomy);
 ELONA_EXTERN(int rtdmg);
 
-// draw.cpp
-ELONA_EXTERN(elona_vector1<std::string> tname);
-
 // turn_sequence.cpp
 ELONA_EXTERN(int tgloc);
-ELONA_EXTERN(std::string chatnew);
 ELONA_EXTERN(int dbg_skipevent);
 ELONA_EXTERN(int findlocmode);
 ELONA_EXTERN(int dirsub);
 ELONA_EXTERN(int mousex);
 ELONA_EXTERN(int mousey);
 ELONA_EXTERN(bool player_queried_for_input);
-
-// network.cpp
-ELONA_EXTERN(elona_vector1<std::string> netbuf);
 
 // activity.cpp
 ELONA_EXTERN(elona_vector1<int> fsetperform);
@@ -225,13 +217,11 @@ ELONA_EXTERN(std::vector<std::string> artifactlocation);
 ELONA_EXTERN(elona_vector1<std::string> booktitle);
 ELONA_EXTERN(elona_vector1<std::string> buff);
 ELONA_EXTERN(elona_vector1<std::string> buffboard);
-ELONA_EXTERN(elona_vector1<std::string> cardrefn);
 ELONA_EXTERN(elona_vector1<std::string> description);
 ELONA_EXTERN(elona_vector1<std::string> egominorn);
 ELONA_EXTERN(elona_vector1<std::string> egoname);
 ELONA_EXTERN(elona_vector1<std::string> filtern);
 ELONA_EXTERN(elona_vector1<std::string> fltnrace);
-ELONA_EXTERN(elona_vector1<std::string> gdatan);
 ELONA_EXTERN(elona_vector1<std::string> ialphanameref);
 ELONA_EXTERN(elona_vector1<std::string> iknownnameref);
 ELONA_EXTERN(elona_vector1<std::string> inputlog);
@@ -341,15 +331,6 @@ ELONA_EXTERN(int atxspot);
 ELONA_EXTERN(int body);
 ELONA_EXTERN(int bonus);
 ELONA_EXTERN(int camera);
-ELONA_EXTERN(int cardrefattack);
-ELONA_EXTERN(int cardrefcost);
-ELONA_EXTERN(int cardrefdomain);
-ELONA_EXTERN(int cardrefhp);
-ELONA_EXTERN(int cardrefpic);
-ELONA_EXTERN(int cardrefrare);
-ELONA_EXTERN(int cardrefskill);
-ELONA_EXTERN(int cardrefskillcost);
-ELONA_EXTERN(int cardreftype);
 ELONA_EXTERN(int cc);
 ELONA_EXTERN(int ccbk);
 ELONA_EXTERN(int cellaccess);
@@ -363,7 +344,6 @@ ELONA_EXTERN(int cm);
 ELONA_EXTERN(int cmbg);
 ELONA_EXTERN(int cmsex);
 ELONA_EXTERN(int cmshade);
-ELONA_EXTERN(int comctrl);
 ELONA_EXTERN(int cooktool);
 ELONA_EXTERN(int creaturepack);
 ELONA_EXTERN(int critical);
@@ -509,8 +489,6 @@ ELONA_EXTERN(int radery);
 ELONA_EXTERN(int range_);
 ELONA_EXTERN(int rapidmagic);
 ELONA_EXTERN(int rc);
-ELONA_EXTERN(int ref1);
-ELONA_EXTERN(int ref2);
 ELONA_EXTERN(int reftype);
 ELONA_EXTERN(int reftypeminor);
 ELONA_EXTERN(int returnfromidentify);
@@ -530,7 +508,6 @@ ELONA_EXTERN(int scx);
 ELONA_EXTERN(int scxbk);
 ELONA_EXTERN(int scy);
 ELONA_EXTERN(int scybk);
-ELONA_EXTERN(int sexvalue);
 ELONA_EXTERN(int shoptrade);
 ELONA_EXTERN(int size);
 ELONA_EXTERN(int sizefix);
@@ -555,7 +532,6 @@ ELONA_EXTERN(int tlocy);
 ELONA_EXTERN(int tx);
 ELONA_EXTERN(int txt3rd);
 ELONA_EXTERN(int ty);
-ELONA_EXTERN(int usernpcmax);
 ELONA_EXTERN(int userrelation);
 ELONA_EXTERN(int vfix);
 ELONA_EXTERN(int voidlv);
@@ -569,8 +545,6 @@ ELONA_EXTERN(int x1);
 ELONA_EXTERN(int x2);
 ELONA_EXTERN(int y1);
 ELONA_EXTERN(int y2);
-ELONA_EXTERN(std::string cardrefrace);
-ELONA_EXTERN(std::string classname);
 ELONA_EXTERN(std::string cmaka);
 ELONA_EXTERN(std::string dbidn);
 ELONA_EXTERN(std::string defload);
@@ -599,81 +573,6 @@ int calcmagiccontrol(int = 0, int = 0);
 int calcstartcard(int = 0);
 int randskill();
 
-//// TCG
-void actionproc();
-void tcgdeck();
-void tcgdraw();
-void tcgdrawbg();
-void tcgdrawcard(int = 0, int = 0);
-void tcginit();
-void tcgmain();
-void gravecard(int = 0);
-void calcdecksize();
-void calcdomain();
-void calcstartattb(int = 0);
-void cardpos(int = 0, int = 0);
-void cdbitmod(int = 0, int = 0, int = 0);
-void cpflip();
-void csfix();
-void cslinedown();
-void cslineup();
-int pileremain();
-void delbottomcard(int = 0);
-int gameover();
-void getrandomcard(int = 0);
-void opencard(int = 0);
-void saccard(int = 0, int = 0);
-void makecardlist();
-void efllistadd(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-
-// Game phases
-void tcg_game_over();
-void tcg_phase_one();
-void tcg_phase_two();
-void tcg_phase_three();
-void tcg_phase_four();
-void tcg_update_mana();
-
-// Game flow
-void tcg_show_refs();
-void tcg_clear_stack();
-void tcg_draw_selection();
-void tcg_draw_deck_editor();
-void tcg_prepare_cnt2();
-void tcg_update_page();
-void tcg_draw_menu();
-void tcg_prompt_action();
-void tcg_clear_cursor();
-void tcg_update_selection();
-void tcg_card_selected();
-void tcg_proc_ai_elist();
-void tcg_proc_ai();
-void tcg_proc_ai_sacrifice();
-int tcg_draw_background();
-int tcg_try_sacrifice();
-void dmgcard(int = 0, int = 0);
-void dmgplayer(int = 0, int = 0);
-
-// Game actions
-int getdecksum(int = 0);
-int getholdersum(int = 0);
-int getspotsum(int = 0);
-void cpisenemy();
-void cpisme();
-
-// Card queries
-int get_card_info();
-int card_ref(int = 0);
-int cardcanblock(int = 0);
-int cardcandeclareattack(int = 0);
-int cardcanuseskill(int = 0);
-int cdbit(int = 0, int = 0);
-
-// Card actions
-int create_card(int = 0, int = 0);
-int putcard(int = 0, int = 0);
-
-
 //// Init
 void initialize_pc_character();
 int initialize_world_map();
@@ -691,9 +590,6 @@ void clear_existing_quest_list();
 
 //// Character querying
 int relationbetween(int, int);
-
-//// Character generation
-void get_random_npc_id();
 
 
 //// Character manipulation
@@ -721,10 +617,8 @@ void gain_race_feat();
 // Item status querying
 int cargocheck();
 void getinheritance(int, elona_vector1<int>&, int&);
-int iequiploc(int = 0);
 
 // Item manipulation
-int access_item_db(int);
 int convertartifact(int = 0, int = 0);
 int discsetmc();
 void set_item_info();
@@ -889,11 +783,6 @@ int blending_spend_materials();
 void blending_start_attempt();
 void blending_proc_on_success_events();
 
-
-//// Menus
-int change_appearance_equipment();
-
-
 //// Map
 int map_barrel(int = 0, int = 0);
 int map_connectroom();
@@ -1005,8 +894,6 @@ std::string fixtxt(const std::string&, int = 0);
 std::string sncnv(const std::string&);
 void cutname(std::string&, int = 0);
 void lenfix(std::string&, int = 0);
-void fix_input_chat(std::string&);
-void fix_input_chat2(std::string&);
 
 
 

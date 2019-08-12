@@ -1597,8 +1597,7 @@ void generate_debug_map()
         }
     }
 
-    mdatan(0) =
-        i18n::s.get_enum_property("core.locale.map.unique", "name", 499);
+    mdatan(0) = i18n::s.get_enum_property("core.map.unique", "name", 499);
     map_converttile();
 
     mapstartx = 25;
@@ -2175,7 +2174,7 @@ int initialize_quest_map_crop()
                 (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
         }
     }
-    mdatan(0) = i18n::s.get("core.locale.map.quest.field");
+    mdatan(0) = i18n::s.get("core.map.quest.field");
     map_randomtile(9, 10);
     map_randomtile(10, 10);
     map_randomtile(0, 30);
@@ -2598,7 +2597,7 @@ int initialize_quest_map_party()
     game_data.left_minutes_of_executing_quest = 60;
     game_data.executing_immediate_quest_time_left_display_period = 9999;
     rdroomsizemin = 5;
-    mdatan(0) = i18n::s.get("core.locale.map.quest.party_room");
+    mdatan(0) = i18n::s.get("core.map.quest.party_room");
     map_data.indoors_flag = 1;
     map_data.tileset = 11;
     map_data.width = 38;
@@ -2908,11 +2907,11 @@ int initialize_quest_map_party()
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
     }
-    for (const auto& cnt : items(-1))
+    for (auto&& item : inv.ground())
     {
-        if (inv[cnt].number() > 0)
+        if (item.number() > 0)
         {
-            inv[cnt].own_state = 1;
+            item.own_state = 1;
         }
     }
     return 1;
@@ -2925,7 +2924,7 @@ void initialize_quest_map_town()
     map_data.max_crowd_density = 0;
     map_data.indoors_flag = 2;
     map_initcustom(map_get_custom_map_name(game_data.previous_map2));
-    mdatan(0) = i18n::s.get("core.locale.map.quest.urban_area");
+    mdatan(0) = i18n::s.get("core.map.quest.urban_area");
     randomize();
     game_data.entrance_type = 5;
     map_placeplayer();
@@ -2954,20 +2953,20 @@ void initialize_quest_map_town()
             cdata[rc].original_relationship = -3;
         }
     }
-    for (const auto& cnt : items(-1))
+    for (auto&& item : inv.ground())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
         f = 0;
-        if (inv[cnt].id == 109 || inv[cnt].id == 173)
+        if (item.id == 109 || item.id == 173)
         {
-            inv[cnt].param1 = -10;
+            item.param1 = -10;
         }
-        if (inv[cnt].id == 241)
+        if (item.id == 241)
         {
-            inv[cnt].param1 = 0;
+            item.param1 = 0;
         }
     }
     for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
@@ -3724,7 +3723,7 @@ void initialize_home_mdata()
 
 void map_initcustom(const std::string& map_filename)
 {
-    fmapfile = (filesystem::dir::map() / map_filename).generic_string();
+    fmapfile = (filesystem::dirs::map() / map_filename).generic_string();
     ctrl_file(FileOperation::custom_map_read);
     map_tileset(map_data.tileset);
     nooracle = 1;
@@ -3737,9 +3736,12 @@ void map_initcustom(const std::string& map_filename)
         if (cmapdata(4, cnt) == 0)
         {
             flt();
-            int stat = itemcreate(
-                -1, cmapdata(0, cnt), cmapdata(1, cnt), cmapdata(2, cnt), 0);
-            if (stat != 0)
+            if (itemcreate(
+                    -1,
+                    cmapdata(0, cnt),
+                    cmapdata(1, cnt),
+                    cmapdata(2, cnt),
+                    0))
             {
                 inv[ci].own_state = cmapdata(3, cnt);
             }

@@ -23,17 +23,15 @@ static std::string _action_category_to_name(ActionCategory category)
     switch (category)
     {
     case ActionCategory::default_:
-        return i18n::s.get("core.locale.keybind.category.default");
+        return i18n::s.get("core.keybind.category.default");
     case ActionCategory::shortcut:
-        return i18n::s.get("core.locale.keybind.category.shortcut");
+        return i18n::s.get("core.keybind.category.shortcut");
     case ActionCategory::selection:
-        return i18n::s.get("core.locale.keybind.category.selection");
-    case ActionCategory::menu:
-        return i18n::s.get("core.locale.keybind.category.menu");
-    case ActionCategory::game:
-        return i18n::s.get("core.locale.keybind.category.game");
+        return i18n::s.get("core.keybind.category.selection");
+    case ActionCategory::menu: return i18n::s.get("core.keybind.category.menu");
+    case ActionCategory::game: return i18n::s.get("core.keybind.category.game");
     case ActionCategory::wizard:
-        return i18n::s.get("core.locale.keybind.category.wizard");
+        return i18n::s.get("core.keybind.category.wizard");
     }
 
     return "<unknown category>";
@@ -46,7 +44,7 @@ static std::string _get_localized_action_name(
 {
     std::string localized_name;
 
-    // core.locale.keybind.chat_box
+    // core.keybind.chat_box
     switch (action_category)
     {
     case ActionCategory::shortcut:
@@ -56,19 +54,19 @@ static std::string _get_localized_action_name(
         {
             action_index_plus_1 -= 10;
         }
-        localized_name = i18n::s.get(mod_id + ".locale.keybind.shortcut") +
+        localized_name = i18n::s.get(mod_id + ".keybind.shortcut") +
             std::to_string(action_index_plus_1);
         break;
     }
     case ActionCategory::selection:
     {
         const auto action_index_plus_1 = keybind_index_number(action_id) + 1;
-        localized_name = i18n::s.get(mod_id + ".locale.keybind.select") +
+        localized_name = i18n::s.get(mod_id + ".keybind.select") +
             std::to_string(action_index_plus_1);
         break;
     }
     default:
-        localized_name = i18n::s.get(mod_id + ".locale.keybind."s + action_id);
+        localized_name = i18n::s.get(mod_id + ".keybind."s + action_id);
         break;
     }
 
@@ -193,8 +191,8 @@ void UIMenuKeybindings::update()
 void UIMenuKeybindings::_draw_window()
 {
     ui_display_window(
-        i18n::s.get("core.locale.config.menu.keybindings.name"),
-        i18n::s.get("core.locale.keybind.menu.hint") + strhint2 + strhint3b,
+        i18n::s.get("core.config.menu.keybindings.name"),
+        i18n::s.get("core.keybind.menu.hint") + strhint2 + strhint3b,
         wx,
         wy,
         ww,
@@ -204,19 +202,19 @@ void UIMenuKeybindings::_draw_window()
 void UIMenuKeybindings::_draw_topics()
 {
     display_topic(
-        i18n::s.get("core.locale.keybind.menu.topics.name"),
+        i18n::s.get("core.keybind.menu.topics.name"),
         wx + _x_align_action_name - 28,
         wy + 36);
     display_topic(
-        i18n::s.get("core.locale.keybind.menu.topics.primary"),
+        i18n::s.get("core.keybind.menu.topics.primary"),
         wx + _x_align_binding_primary - 10,
         wy + 36);
     display_topic(
-        i18n::s.get("core.locale.keybind.menu.topics.alternate"),
+        i18n::s.get("core.keybind.menu.topics.alternate"),
         wx + _x_align_binding_alternate - 10,
         wy + 36);
     display_topic(
-        i18n::s.get("core.locale.keybind.menu.topics.joystick"),
+        i18n::s.get("core.keybind.menu.topics.joystick"),
         wx + _x_align_binding_joystick - 10,
         wy + 36);
 }
@@ -396,12 +394,12 @@ private:
 
     void _print_conflicts(std::ostream& out)
     {
-        out << i18n::s.get("core.locale.keybind.menu.conflict.text") << "\n";
+        out << i18n::s.get("core.keybind.menu.conflict.text") << "\n";
         for (const auto& action_id : _action_ids_in_conflict)
         {
             _print_conflict(out, action_id);
         }
-        out << i18n::s.get("core.locale.keybind.menu.conflict.prompt");
+        out << i18n::s.get("core.keybind.menu.conflict.prompt");
     }
 
     void _print_conflict(std::ostream& out, const std::string& action_id)
@@ -447,7 +445,7 @@ public:
     KeyPrompt()
         : SimplePrompt()
     {
-        _message = i18n::s.get("core.locale.keybind.menu.prompt");
+        _message = i18n::s.get("core.keybind.menu.prompt");
     }
 
 protected:

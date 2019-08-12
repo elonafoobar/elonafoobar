@@ -1,8 +1,8 @@
-local Internal = Elona.require("Internal")
+local Internal = require("game.Internal")
 
 return {
    id = "stersha",
-   root = "core.locale.talk.unique.stersha",
+   root = "core.talk.unique.stersha",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("main_quest")

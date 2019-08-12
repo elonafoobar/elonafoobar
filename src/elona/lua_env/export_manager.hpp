@@ -1,18 +1,19 @@
 #pragma once
+
 #include <string>
 #include "../enums.hpp"
 #include "../filesystem.hpp"
 #include "../message.hpp"
 #include "../variables.hpp"
-#include "lua_env.hpp"
+#include "lua_submodule.hpp"
 #include "wrapped_function.hpp"
+
+
 
 namespace elona
 {
 namespace lua
 {
-
-class LuaEnv;
 
 /***
  * Stores references to Lua functions that can be provided by mods by
@@ -22,17 +23,17 @@ class LuaEnv;
  * corpse is eaten, a trap is activated, and so forth, without having
  * to hardcode anything in C++.
  */
-class ExportManager
+class ExportManager : public LuaSubmodule
 {
 public:
-    explicit ExportManager(LuaEnv*);
+    explicit ExportManager(LuaEnv&);
 
     /***
      * Registers function exports that are inside the "Exports" table
      * inside the API tables returned by mods. They will then be
      * accessable by the id
      *
-     * "exports:<mod_id>.<namespaces>.<...>"
+     * "<mod_id>.<namespaces>.<...>"
      *
      * corresponding to the nested table layout of the Exports table.
      */
@@ -40,7 +41,7 @@ public:
 
     /***
      * Obtains a Lua callback where name is like
-     * "exports:<mod_id>.<namespaces>", if it exists.
+     * "<mod_id>.<namespaces>", if it exists.
      */
     optional<WrappedFunction> get_exported_function(
         const std::string& name) const;
@@ -103,14 +104,6 @@ public:
             return default_value;
         }
     }
-
-private:
-    /***
-     * The isolated Lua environment where data is stored.
-     */
-    sol::environment export_env;
-
-    LuaEnv* lua_;
 };
 
 } // namespace lua

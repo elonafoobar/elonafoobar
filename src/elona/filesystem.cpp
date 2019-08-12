@@ -1,4 +1,6 @@
 #include "filesystem.hpp"
+#include "../util/strutil.hpp"
+#include "config/config.hpp"
 #include "defines.hpp"
 
 
@@ -29,7 +31,7 @@ namespace elona
 namespace filesystem
 {
 
-namespace dir
+namespace dirs
 {
 
 fs::path current_profile_dir;
@@ -73,6 +75,13 @@ fs::path save()
 
 
 
+fs::path screenshot()
+{
+    return current_profile() / "screenshot";
+}
+
+
+
 fs::path user()
 {
     return base_user_dir;
@@ -82,21 +91,21 @@ fs::path user()
 
 void set_current_profile_directory(const fs::path& current_profile_dir)
 {
-    dir::current_profile_dir = current_profile_dir;
+    dirs::current_profile_dir = current_profile_dir;
 }
 
 
 
 void set_base_save_directory(const fs::path& base_save_dir)
 {
-    dir::base_save_dir = base_save_dir;
+    dirs::base_save_dir = base_save_dir;
 }
 
 
 
 void set_base_user_directory(const fs::path& base_user_dir)
 {
-    dir::base_user_dir = base_user_dir;
+    dirs::base_user_dir = base_user_dir;
 }
 
 
@@ -129,7 +138,7 @@ void set_profile_directory(const fs::path& profile_dir)
     set_base_user_directory(profile_dir / u8"user");
 }
 
-} // namespace dir
+} // namespace dirs
 
 
 
@@ -143,7 +152,7 @@ fs::path path(const std::string& str)
 fs::path resolve_path_for_mod(const std::string& mod_local_path)
 {
     // TODO: standardize mod naming convention.
-    std::regex mod_id_regex("^__([a-zA-Z0-9_]+)__/(.*)");
+    std::regex mod_id_regex("^<([a-zA-Z0-9_]+)>/(.*)");
     std::smatch match;
     std::string mod_id, rest;
 
@@ -158,13 +167,15 @@ fs::path resolve_path_for_mod(const std::string& mod_local_path)
         throw std::runtime_error("Invalid filepath syntax: " + mod_local_path);
     }
 
-    if (mod_id == "BUILTIN")
+    rest = strutil::replace(rest, "<LANGUAGE>", Config::instance().language);
+
+    if (mod_id == "_builtin_")
     {
-        return dir::exe() / rest;
+        return dirs::exe() / rest;
     }
     else
     {
-        return dir::for_mod(mod_id) / rest;
+        return dirs::for_mod(mod_id) / rest;
     }
 }
 
@@ -183,7 +194,7 @@ void copy_recursively(const fs::path& source, const fs::path& destination)
     {
         throw std::runtime_error(
             "Destination must not exist: " +
-            filepathutil::to_utf8_path(source));
+            filepathutil::to_utf8_path(destination));
     }
 
     // mkdir destination

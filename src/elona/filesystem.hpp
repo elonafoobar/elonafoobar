@@ -4,6 +4,8 @@
 #include <regex>
 #include "../util/filepathutil.hpp"
 
+
+
 namespace fs = boost::filesystem;
 
 
@@ -24,10 +26,6 @@ struct hash<fs::path>
 
 
 
-#include "../util/range.hpp"
-
-
-
 namespace elona
 {
 namespace filesystem
@@ -35,7 +33,7 @@ namespace filesystem
 
 
 // Pre-defined directories.
-namespace dir
+namespace dirs
 {
 
 fs::path exe();
@@ -50,6 +48,7 @@ fs::path profile_root();
 fs::path current_profile();
 fs::path save();
 fs::path save(const std::string& player_id);
+fs::path screenshot();
 fs::path sound();
 fs::path tmp();
 fs::path user();
@@ -60,7 +59,7 @@ void set_base_save_directory(const fs::path& base_save_dir);
 void set_base_user_directory(const fs::path& base_user_dir);
 void set_profile_directory(const fs::path& profile_dir);
 
-} // namespace dir
+} // namespace dirs
 
 
 
@@ -202,12 +201,29 @@ private:
 
 
 
-inline DirEntryRange dir_entries(
+inline DirEntryRange glob_entries(
     const fs::path& base_dir,
-    DirEntryRange::Type entry_type,
     const std::regex& pattern = std::regex{u8".*"})
 {
-    return {base_dir, entry_type, pattern};
+    return {base_dir, DirEntryRange::Type::all, pattern};
+}
+
+
+
+inline DirEntryRange glob_files(
+    const fs::path& base_dir,
+    const std::regex& pattern = std::regex{u8".*"})
+{
+    return {base_dir, DirEntryRange::Type::file, pattern};
+}
+
+
+
+inline DirEntryRange glob_dirs(
+    const fs::path& base_dir,
+    const std::regex& pattern = std::regex{u8".*"})
+{
+    return {base_dir, DirEntryRange::Type::dir, pattern};
 }
 
 

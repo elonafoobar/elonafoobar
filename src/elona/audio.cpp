@@ -400,7 +400,7 @@ void stop_music()
 {
     mmstop();
     DMSTOP();
-    DMLOADFNAME(filesystem::dir::sound() / u8"gm_on.mid", 0);
+    DMLOADFNAME(filesystem::dirs::sound() / u8"gm_on.mid", 0);
     DMPLAY(1, 0);
 }
 

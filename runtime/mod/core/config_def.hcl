@@ -79,6 +79,7 @@ config {
                 default = 25
                 min = 1
                 max = 50
+                step = 5
             }
 
             skip_random_event_popups = false
@@ -88,10 +89,47 @@ config {
     net = {
         type = "section"
         options = {
-            enabled = false
-            wish = false
-            chat = false
-            server_list = false
+            is_enabled = false
+            chat = {
+                type = "enum"
+                default = "disabled"
+                variants = ["disabled", "receive", "send_receive"]
+            }
+            death = {
+                type = "enum"
+                default = "disabled"
+                variants = ["disabled", "receive", "send_receive"]
+            }
+            wish = {
+                type = "enum"
+                default = "disabled"
+                variants = ["disabled", "receive", "send_receive"]
+            }
+            news = {
+                type = "enum"
+                default = "disabled"
+                variants = ["disabled", "receive", "send_receive"]
+            }
+            is_alias_vote_enabled = false
+            hide_your_name = false
+            hide_your_alias = false
+            chat_receive_interval = {
+                default = 5
+                min = 1
+                max = 30
+            }
+            # language_blacklist = {
+            #     default = []
+            #     visible = false
+            # }
+            # word_blacklist = {
+            #     default = []
+            #     visible = false
+            # }
+            # player_blacklist = {
+            #     default = []
+            #     visible = false
+            # }
         }
     }
 
@@ -193,6 +231,18 @@ config {
                 max = 10
             }
 
+            initial_key_repeat_wait = {
+                default = 5
+                min = 1
+                max = 20
+            }
+
+            key_repeat_wait = {
+                default = 1
+                min = 1
+                max = 5
+            }
+
             select_wait = {
                 default = 10
                 min = 1
@@ -266,7 +316,7 @@ config {
         type = "section"
         options = {
             restock_interval = {
-                default = 3
+                default = 7
                 min = 0
                 max = 10
             }
@@ -298,25 +348,27 @@ config {
         options = {
             hp_bar_position = {
                 type = "enum"
-                default = "right"
+                default = "hide"
                 variants = ["hide", "left", "right"]
             }
-            allow_enhanced_skill_tracking =true
+            allow_enhanced_skill_tracking = false
             enhanced_skill_tracking_lowerbound = {
                 default = 50
                 min = 0
                 max = 390
+                step = 10
             }
             enhanced_skill_tracking_upperbound = {
                 default = 100
                 min = 10
                 max = 400
+                step = 10
             }
-            leash_icon = true
-            autopick = true
+            leash_icon = false
+            autopick = false
             autosave = false
             damage_popup = {
-                default = true
+                default = false
 
                 platform_default {
                     android = false
@@ -326,6 +378,7 @@ config {
                 default = 100
                 min = 10
                 max = 100
+                step = 10
             }
 
             startup_script = {

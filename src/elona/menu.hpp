@@ -7,6 +7,9 @@ namespace elona
 {
 
 enum class TurnResult;
+struct Character;
+
+
 
 struct MenuResult
 {
@@ -55,7 +58,19 @@ TurnResult play_scene();
 TurnResult show_spell_list();
 TurnResult show_skill_list();
 std::string make_spell_description(int skill_id);
-int change_appearance();
+
+
+enum class ChangeAppearanceResult
+{
+    proceed,
+    canceled,
+    show_help,
+};
+
+ChangeAppearanceResult menu_change_appearance(Character& chara);
+void change_appearance_equipment(Character& chara);
+
+
 MenuResult menu_feats();
 MenuResult menu_materials();
 
@@ -85,5 +100,8 @@ int change_npc_tone();
 void item_show_description();
 
 MenuResult ctrl_inventory();
+
+void menu_chat_dialog();
+void menu_voting_box();
 
 } // namespace elona

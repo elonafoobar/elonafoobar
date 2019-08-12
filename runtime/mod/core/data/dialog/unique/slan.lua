@@ -1,14 +1,14 @@
-local Chara = Elona.require("Chara")
-local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
-local Map = Elona.require("Map")
-local Rand = Elona.require("Rand")
+local Chara = require("game.Chara")
+local GUI = require("game.GUI")
+local I18N = require("game.I18N")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
+local Map = require("game.Map")
+local Rand = require("game.Rand")
 
 return {
    id = "slan",
-   root = "core.locale.talk.unique.slan",
+   root = "core.talk.unique.slan",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("main_quest")
@@ -41,8 +41,8 @@ return {
             local item = Item.create(Chara.player().position, "core.bejeweled_chest", 0)
             item.param2 = 0
             GUI.play_sound("core.write1")
-            GUI.txt(I18N.get("core.locale.talk.unique.slan.you_receive"))
-            GUI.txt(I18N.get("core.locale.talk.unique.slan.dies", t.speaker))
+            GUI.txt(I18N.get("core.talk.unique.slan.you_receive"))
+            GUI.txt(I18N.get("core.talk.unique.slan.dies", t.speaker))
             t.speaker:vanquish()
          end
       }

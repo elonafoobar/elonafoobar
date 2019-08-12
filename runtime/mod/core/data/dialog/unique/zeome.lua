@@ -1,8 +1,8 @@
-local Internal = Elona.require("Internal")
+local Internal = require("game.Internal")
 
 return {
    id = "zeome",
-   root = "core.locale.talk.unique.zeome",
+   root = "core.talk.unique.zeome",
 
    nodes = {
       __start = {

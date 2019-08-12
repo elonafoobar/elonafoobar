@@ -12,7 +12,7 @@ struct MusicData
     fs::path file;
 };
 
-ELONA_DEFINE_LUA_DB(MusicDB, MusicData, true, "core.music")
+ELONA_DEFINE_LUA_DB(MusicDB, MusicData, "core.music")
 
 extern MusicDB the_music_db;
 

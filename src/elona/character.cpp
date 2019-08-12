@@ -36,6 +36,56 @@ using namespace elona;
 namespace
 {
 
+int _calc_chara_generation_rate(const CharacterData& data)
+{
+    const auto R = data.rarity;
+    const auto D = std::abs(data.level - objlv);
+    const auto C = data.coefficient;
+
+    return R / (500 + D * C) + 1;
+}
+
+
+
+int _get_random_npc_id()
+{
+    WeightedRandomSampler<int> sampler;
+
+    for (const auto& data : the_character_db.values())
+    {
+        if (data.level > objlv)
+            continue;
+        if (fltselect != data.fltselect)
+            continue;
+        if (fltselect == 2 && npcmemory(1, data.legacy_id) != 0)
+            continue;
+        if (flttypemajor != 0 && flttypemajor != data.category)
+            continue;
+        if (!fltnrace(0).empty() && fltnrace(0) != data.race)
+            continue;
+        if (filtermax != 0)
+        {
+            // FIXME: use std::all_of
+            bool ok = true;
+            for (int i = 0; i < filtermax; ++i)
+            {
+                if (data.filter.find(filtern(i)) == std::string::npos)
+                {
+                    ok = false;
+                    break;
+                }
+            }
+            if (!ok)
+                continue;
+        }
+        sampler.add(data.legacy_id, _calc_chara_generation_rate(data));
+    }
+
+    return sampler.get().value_or(0);
+}
+
+
+
 int chara_create_internal()
 {
     if (rc == -1)
@@ -48,7 +98,6 @@ int chara_create_internal()
         }
     }
     chara_delete(rc);
-    cequipment = 0;
     if (rc == 0)
     {
         p = 10;
@@ -77,7 +126,7 @@ int chara_create_internal()
             }
         }
         dbmode = 1;
-        get_random_npc_id();
+        dbid = _get_random_npc_id();
         if (dbid == 0)
         {
             if (fltselect == 2 || fixlv == Quality::special)
@@ -86,14 +135,7 @@ int chara_create_internal()
             }
             flt(objlv + 10, fixlv);
             dbmode = 1;
-            get_random_npc_id();
-        }
-    }
-    else if (dbid == 343)
-    {
-        if (usernpcmax > 0)
-        {
-            cdata[rc].cnpc_id = rnd(usernpcmax);
+            dbid = _get_random_npc_id();
         }
     }
 
@@ -112,7 +154,7 @@ int chara_create_internal()
             cmshade = 1;
             flt(objlv, fixlv);
             dbmode = 1;
-            get_random_npc_id();
+            dbid = _get_random_npc_id();
         }
     }
     if (game_data.current_map == mdata_t::MapId::the_void)
@@ -134,7 +176,7 @@ int chara_create_internal()
     }
     if (cmshade)
     {
-        cdatan(0, rc) = i18n::s.get("core.locale.chara.job.shade");
+        cdatan(0, rc) = i18n::s.get("core.chara.job.shade");
         cdata[rc].image = 280;
     }
     cdata[rc].quality = static_cast<Quality>(fixlv);
@@ -377,11 +419,11 @@ void failed_to_place_character(Character& cc)
     if (cc.index < 16)
     {
         cc.set_state(Character::State::pet_in_other_map);
-        txt(i18n::s.get("core.locale.chara.place_failure.ally", cc));
+        txt(i18n::s.get("core.chara.place_failure.ally", cc));
     }
     else
     {
-        txt(i18n::s.get("core.locale.chara.place_failure.other", cc));
+        txt(i18n::s.get("core.chara.place_failure.other", cc));
         cc.set_state(Character::State::empty);
         // Exclude town residents because they occupy character slots even
         // if they are dead.
@@ -1033,14 +1075,13 @@ void chara_refresh(int cc)
     {
         cdata[cc].max_hp += 10;
     }
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& buff : cdata[cc].buffs)
     {
-        rp = cdata[cc].buffs[cnt].id;
-        if (rp == 0)
+        if (buff.id == 0)
         {
             break;
         }
-        apply_buff(cc, rp, cdata[cc].buffs[cnt].power);
+        buff_apply(cdata[cc], buff.id, buff.power);
     }
     if (cdata[cc].equipment_type & 4)
     {
@@ -1081,7 +1122,11 @@ int relationbetween(int c1, int c2)
     return 0;
 }
 
-
+int chara_find(const std::string& chara_id)
+{
+    // Note: if `chara_id` not found, `ensure()` throws an exception.
+    return chara_find(the_character_db.ensure(chara_id).legacy_id);
+}
 
 int chara_find(int id)
 {
@@ -1160,7 +1205,7 @@ int chara_custom_talk(int cc, int talk_type)
     if (cdata[cc].has_custom_talk())
     {
         const auto filepath =
-            filesystem::dir::user() / u8"talk" / cdatan(4, cc);
+            filesystem::dirs::user() / u8"talk" / cdatan(4, cc);
         if (!fs::exists(filepath))
             return 0;
         range::copy(
@@ -1188,7 +1233,7 @@ int chara_custom_talk(int cc, int talk_type)
         default: assert(0);
         }
 
-        tag += u8"," + i18n::s.get("core.locale.meta.tag");
+        tag += u8"," + i18n::s.get("core.meta.tag");
         const auto start_text = range::find_if(
             talk_file_buffer,
             [&](const auto& line) { return strutil::contains(line, tag); });
@@ -1305,9 +1350,9 @@ void chara_modify_impression(Character& cc, int delta)
     if (level1 > level2)
     {
         txt(i18n::s.get(
-                "core.locale.chara.impression.lose",
+                "core.chara.impression.lose",
                 cc,
-                i18n::s.get_enum("core.locale.ui.impression", level2)),
+                i18n::s.get_enum("core.ui.impression", level2)),
             Message::color{ColorIndex::purple});
     }
     else if (level2 > level1)
@@ -1315,9 +1360,9 @@ void chara_modify_impression(Character& cc, int delta)
         if (cc.relationship != -3)
         {
             txt(i18n::s.get(
-                    "core.locale.chara.impression.gain",
+                    "core.chara.impression.gain",
                     cc,
-                    i18n::s.get_enum("core.locale.ui.impression", level2)),
+                    i18n::s.get_enum("core.ui.impression", level2)),
                 Message::color{ColorIndex::green});
         }
     }
@@ -1347,7 +1392,8 @@ void chara_vanquish(int cc)
     {
         const auto storage_filename = filepathutil::u8path(
             "shop"s + std::to_string(cdata[cc].shop_store_id) + ".s2");
-        const auto storage_filepath = filesystem::dir::tmp() / storage_filename;
+        const auto storage_filepath =
+            filesystem::dirs::tmp() / storage_filename;
         tmpload(storage_filename);
         if (fs::exists(storage_filepath))
         {
@@ -1470,9 +1516,9 @@ void chara_delete(int cc)
         chara_remove(cdata[cc]);
     }
 
-    for (const auto& cnt : items(cc))
+    for (auto&& item : inv.for_chara(cdata[cc]))
     {
-        inv[cnt].remove();
+        item.remove();
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -1523,9 +1569,9 @@ void chara_relocate(
     const auto invhead = tmp.first;
     const auto invrange = tmp.second;
     int p = invhead;
-    for (const auto& cnt : items(slot))
+    for (auto&& item : inv.for_chara(cdata[slot]))
     {
-        if (cnt == invrange)
+        if (item.index == invrange)
         {
             break;
         }
@@ -1533,12 +1579,12 @@ void chara_relocate(
         {
             if (ci == p)
             {
-                ci = cnt;
+                ci = item.index;
             }
         }
-        Item::copy(inv[p], inv[cnt]);
+        Item::copy(inv[p], item);
         inv[p].clear();
-        inv[cnt].body_part = 0;
+        item.body_part = 0;
         ++p;
     }
 
@@ -1707,13 +1753,12 @@ void chara_add_quality_parens()
     if (fixlv == Quality::miracle)
     {
         cdatan(0, rc) =
-            i18n::s.get("core.locale.chara.quality.miracle", cdatan(0, rc));
+            i18n::s.get("core.chara.quality.miracle", cdatan(0, rc));
         cdata[rc].level = cdata[rc].level * 10 / 8;
     }
     else if (fixlv == Quality::godly)
     {
-        cdatan(0, rc) =
-            i18n::s.get("core.locale.chara.quality.godly", cdatan(0, rc));
+        cdatan(0, rc) = i18n::s.get("core.chara.quality.godly", cdatan(0, rc));
         cdata[rc].level = cdata[rc].level * 10 / 6;
     }
 }

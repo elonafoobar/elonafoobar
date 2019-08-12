@@ -112,10 +112,10 @@ void inject_save_files(Config& conf)
     std::vector<std::string> saves;
     saves.push_back("");
 
-    if (fs::exists(filesystem::dir::save()))
+    if (fs::exists(filesystem::dirs::save()))
     {
-        for (const auto& entry : filesystem::dir_entries(
-                 filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
+        for (const auto& entry :
+             filesystem::glob_dirs(filesystem::dirs::save()))
         {
             std::string folder =
                 filepathutil::to_utf8_path(entry.path().filename());
@@ -138,8 +138,7 @@ void inject_languages(Config& conf)
     bool has_jp = false;
     bool has_en = false;
 
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::locale(), filesystem::DirEntryRange::Type::dir))
+    for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::locale()))
     {
         std::string identifier =
             filepathutil::to_utf8_path(entry.path().filename());
@@ -320,7 +319,7 @@ void config_query_language()
 void load_config()
 {
     const fs::path config_file =
-        filesystem::dir::current_profile() / "config.hcl";
+        filesystem::dirs::current_profile() / "config.hcl";
     auto& conf = Config::instance();
 
     // TODO do inversions
@@ -361,6 +360,8 @@ void load_config()
     CONFIG_OPTION("input.attack_wait"s, int, Config::instance().attack_wait);
     CONFIG_OPTION("input.autodisable_numlock"s, bool, Config::instance().autodisable_numlock);
     CONFIG_OPTION("input.key_wait"s, int, Config::instance().key_wait);
+    CONFIG_OPTION("input.initial_key_repeat_wait"s, int, Config::instance().initial_key_repeat_wait);
+    CONFIG_OPTION("input.key_repeat_wait"s, int, Config::instance().key_repeat_wait);
     CONFIG_OPTION("input.walk_wait"s, int, Config::instance().walk_wait);
     CONFIG_OPTION("input.run_wait"s, int, Config::instance().run_wait);
     CONFIG_OPTION("input.start_run_wait"s, int, Config::instance().start_run_wait);
@@ -369,10 +370,7 @@ void load_config()
     CONFIG_OPTION("input.select_fast_wait"s, int, Config::instance().select_fast_wait);
     CONFIG_OPTION("message.add_timestamps"s, bool, Config::instance().message_add_timestamps);
     CONFIG_OPTION("message.transparency"s, int, Config::instance().message_transparency);
-    CONFIG_OPTION("net.chat"s, bool, Config::instance().net_chat);
-    CONFIG_OPTION("net.enabled"s, bool, Config::instance().net);
-    CONFIG_OPTION("net.server_list"s, bool, Config::instance().server_list);
-    CONFIG_OPTION("net.wish"s, bool, Config::instance().net_wish);
+    CONFIG_OPTION("net.is_enabled"s, bool, Config::instance().net);
     CONFIG_OPTION("anime.always_center"s, bool, Config::instance().always_center);
     CONFIG_OPTION("screen.music"s, bool, Config::instance().music);
     CONFIG_OPTION("screen.sound"s, bool, Config::instance().sound);
@@ -423,7 +421,7 @@ void load_config()
 void initialize_config_preload()
 {
     const fs::path config_file =
-        filesystem::dir::current_profile() / "config.hcl";
+        filesystem::dirs::current_profile() / "config.hcl";
 
     auto& conf = Config::instance();
 
@@ -656,14 +654,14 @@ bool Config::verify_types(
 
 void Config::save()
 {
-    std::ofstream file{(filesystem::dir::current_profile() / u8"config.hcl").native(),
+    std::ofstream file{(filesystem::dirs::current_profile() / u8"config.hcl").native(),
                        std::ios::binary};
     if (!file)
     {
         throw ConfigLoadingError{
             u8"Failed to open: "s
             + filepathutil::make_preferred_path_in_utf8(
-                  filesystem::dir::current_profile() / u8"config.hcl")};
+                  filesystem::dirs::current_profile() / u8"config.hcl")};
     }
 
     // Create a top level "config" section.

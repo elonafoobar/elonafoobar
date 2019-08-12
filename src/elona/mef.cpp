@@ -180,7 +180,7 @@ void mef_update()
         }
         if (mef(0, cnt) == 7)
         {
-            txt(i18n::s.get("core.locale.mef.bomb_counter", mef(4, cnt)),
+            txt(i18n::s.get("core.mef.bomb_counter", mef(4, cnt)),
                 Message::color{ColorIndex::red});
         }
         if (mef(4, cnt) != -1)
@@ -216,7 +216,7 @@ void mef_proc(int tc)
                 if (is_in_fov(cdata[tc]))
                 {
                     snd("core.water2");
-                    txt(i18n::s.get("core.locale.mef.melts", cdata[tc]));
+                    txt(i18n::s.get("core.mef.melts", cdata[tc]));
                 }
                 if (mef(6, ef) == 0)
                 {
@@ -243,7 +243,7 @@ void mef_proc(int tc)
         if (is_in_fov(cdata[tc]))
         {
             snd("core.fire1");
-            txt(i18n::s.get("core.locale.mef.is_burnt", cdata[tc]));
+            txt(i18n::s.get("core.mef.is_burnt", cdata[tc]));
         }
         if (mef(6, ef) == 0)
         {
@@ -266,7 +266,7 @@ void mef_proc(int tc)
             if (is_in_fov(cdata[tc]))
             {
                 snd("core.water2");
-                txt(i18n::s.get("core.locale.mef.steps_in_pool", cdata[tc]));
+                txt(i18n::s.get("core.mef.steps_in_pool", cdata[tc]));
             }
             wet(tc, 25);
             if (mef(6, ef) == 0)
@@ -279,7 +279,7 @@ void mef_proc(int tc)
             potionspill = 1;
             efstatus = static_cast<CurseState>(mef(8, ef)); // TODO
             dbid = mef(7, ef);
-            access_item_db(15);
+            item_db_on_drink(inv[ci], dbid);
             if (cdata[tc].state() == Character::State::empty)
             {
                 check_kill(mef(6, ef), tc);
@@ -308,8 +308,7 @@ bool mef_proc_from_movement(int cc)
             {
                 if (is_in_fov(cdata[cc]))
                 {
-                    txt(i18n::s.get(
-                        "core.locale.mef.destroys_cobweb", cdata[cc]));
+                    txt(i18n::s.get("core.mef.destroys_cobweb", cdata[cc]));
                 }
                 mef_delete(i);
             }
@@ -318,8 +317,7 @@ bool mef_proc_from_movement(int cc)
                 mef(5, i) = mef(5, i) * 3 / 4;
                 if (is_in_fov(cdata[cc]))
                 {
-                    txt(i18n::s.get(
-                        "core.locale.mef.is_caught_in_cobweb", cdata[cc]));
+                    txt(i18n::s.get("core.mef.is_caught_in_cobweb", cdata[cc]));
                 }
                 return true;
             }
@@ -345,7 +343,7 @@ bool mef_proc_from_physical_attack(int tc)
             if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
-                    "core.locale.mef.attacks_illusion_in_mist", cdata[cc]));
+                    "core.mef.attacks_illusion_in_mist", cdata[cc]));
                 add_damage_popup(u8"miss", tc, {191, 191, 191});
             }
             return true;

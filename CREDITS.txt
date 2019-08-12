@@ -7,12 +7,6 @@ Ruin0x11
 tamanugi
     Fixed glitch in list view.
 
-Morganeon
-    Enhanced skill tracker, fixed docs. refactored the codebase.
-
-nanbansenji
-    Fixed glitch in Credits/License view.
-
 Doorknob
     Main english translator of omake and omake overhaul. Foobar ported the works from these two variants.
 
@@ -20,13 +14,16 @@ AnnaBannana
     Translated main scenario's cutscenes into English. It is originally for Elonaplus Custom, and foobar ported the works. In addition, foobar ported many missing translation and typos from E+C.
 
 LordAlfredo
-    Supported porting E+C's cutscene files to vanilla and foobar.
+    Supported porting E+C's cutscene files to foobar.
 
-hapiemp
-    Drew some of graphics.
+Morganeon
+    Enhanced skill tracker, fixed docs, and refactored the codebase.
 
-jack
-    Drew some of pixelarts.
+nanbansenji
+    Fixed glitch in Credits/License view.
 
-相良 祐
-    Drew some of graphics.
+Vorlent
+    Fixed regression bug, crash, build error, and so on. Also refactored codebase.
+
+Sora
+    Fixed mojibake and crash bug.

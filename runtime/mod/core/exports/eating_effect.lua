@@ -1,16 +1,15 @@
-local Chara = Elona.require("Chara")
-local Enums = Elona.require("Enums")
-local FOV = Elona.require("FOV")
-local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
-local Math = Elona.require("Math")
-local Skill = Elona.require("Skill")
-local Rand = Elona.require("Rand")
+local Chara = require("game.Chara")
+local Enums = require("game.Enums")
+local FOV = require("game.FOV")
+local GUI = require("game.GUI")
+local I18N = require("game.I18N")
+local Math = require("game.Math")
+local Rand = require("game.Rand")
 
 local eating_effect = {}
 
 local function eat_message(eater, locale_id, color)
-   local locale_key = "core.locale.food.effect.corpse." .. locale_id
+   local locale_key = "core.food.effect.corpse." .. locale_id
    if FOV.you_see(eater) then
       GUI.txt(I18N.get(locale_key, eater), color)
    end

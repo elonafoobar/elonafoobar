@@ -73,10 +73,8 @@ void UIMenuTownEconomy::_draw_window()
 
 void UIMenuTownEconomy::_draw_economy_info(int _city)
 {
-    display_topic(
-        i18n::s.get("core.locale.ui.economy.information"), wx + 65, wy + 50);
-    display_topic(
-        i18n::s.get("core.locale.ui.economy.finance"), wx + 65, wy + 150);
+    display_topic(i18n::s.get("core.ui.economy.information"), wx + 65, wy + 50);
+    display_topic(i18n::s.get("core.ui.economy.finance"), wx + 65, wy + 150);
 
     font(14 - en * 2);
     x = wx + 50;
@@ -84,7 +82,7 @@ void UIMenuTownEconomy::_draw_economy_info(int _city)
     _show_economy_info(
         x,
         y,
-        i18n::s.get("core.locale.ui.economy.population"),
+        i18n::s.get("core.ui.economy.population"),
         podata(100, _city),
         podata(101, _city));
 
@@ -93,14 +91,14 @@ void UIMenuTownEconomy::_draw_economy_info(int _city)
     _show_economy_info(
         x,
         y,
-        i18n::s.get("core.locale.ui.economy.basic_tax") + u8" ("s +
+        i18n::s.get("core.ui.economy.basic_tax") + u8" ("s +
             game_data.politics_tax_amount + u8"%)"s,
         podata(102, _city),
         podata(103, _city));
     _show_economy_info(
         x,
         y + 16,
-        i18n::s.get("core.locale.ui.economy.excise_tax") + u8" ("s +
+        i18n::s.get("core.ui.economy.excise_tax") + u8" ("s +
             podata(150, _city) + u8"%)"s,
         podata(104, _city),
         podata(105, _city));
@@ -109,13 +107,9 @@ void UIMenuTownEconomy::_draw_economy_info(int _city)
 void UIMenuTownEconomy::_draw_economy_details()
 {
     display_topic(
-        i18n::s.get("core.locale.ui.economy.population_detail"),
-        wx + 65,
-        wy + 50);
+        i18n::s.get("core.ui.economy.population_detail"), wx + 65, wy + 50);
     display_topic(
-        i18n::s.get("core.locale.ui.economy.finance_detail"),
-        wx + 65,
-        wy + 200);
+        i18n::s.get("core.ui.economy.finance_detail"), wx + 65, wy + 200);
     font(14 - en * 2);
 }
 
@@ -142,9 +136,7 @@ void UIMenuTownEconomy::draw()
     }
     else
     {
-        mes(wx + 40,
-            wy + 60,
-            i18n::s.get("core.locale.ui.city_chart.no_economy"));
+        mes(wx + 40, wy + 60, i18n::s.get("core.ui.city_chart.no_economy"));
     }
 }
 

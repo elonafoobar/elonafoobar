@@ -1,7 +1,7 @@
-local Chara = Elona.require("Chara")
-local Item = Elona.require("Item")
-local Map = Elona.require("Map")
-local Rand = Elona.require("Rand")
+local Chara = require("game.Chara")
+local Item = require("game.Item")
+local Map = require("game.Map")
+local Rand = require("game.Rand")
 
 -- Returns 'drops' table from array of item IDs.
 local function make_drops(ids)
@@ -88,7 +88,7 @@ data:add_multi(
       {
          id = "tuwen",
          on_generate = function()
-            if Map.id() == 257 then
+            if Map.id() == "core.pyramid" then
                return make_drops({ "core.statue_of_opatos",
                                    "core.platinum_coin",
                                    "core.platinum_coin",

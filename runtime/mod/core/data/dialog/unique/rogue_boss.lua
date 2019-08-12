@@ -1,11 +1,11 @@
-local Chara = Elona.require("Chara")
-local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
-local World = Elona.require("World")
+local Chara = require("game.Chara")
+local GUI = require("game.GUI")
+local I18N = require("game.I18N")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
+local World = require("game.World")
 
-local common = require("data/dialog/common")
+local common = require_relative("data/dialog/common")
 
 local function surrender_cost()
    return Chara.player().gold / 5
@@ -17,7 +17,7 @@ local function surrender()
 
    for _, item in Item.iter(0, 200) do
       if item.number > 0 and item.prototype.is_cargo then
-         GUI.txt(I18N.get("core.locale.talk.npc.common.hand_over", item))
+         GUI.txt(I18N.get("core.talk.npc.common.hand_over", item))
          item:remove()
       end
    end
@@ -27,7 +27,7 @@ end
 
 return {
    id = "rogue_boss",
-   root = "core.locale.talk.unique.rogue_boss",
+   root = "core.talk.unique.rogue_boss",
    nodes = {
       __start = function()
          if Chara.player().gold <= 10 then

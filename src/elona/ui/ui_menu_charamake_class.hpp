@@ -9,8 +9,11 @@ namespace ui
 class UIMenuCharamakeClass : public UIMenu<std::string>
 {
 public:
-    UIMenuCharamakeClass(const std::string& race)
-        : _race(race)
+    UIMenuCharamakeClass(
+        const std::string& race_id,
+        const std::string& race_name)
+        : _race_id(race_id)
+        , _race_name(race_name)
     {
     }
 
@@ -26,7 +29,8 @@ private:
     void _draw_choice(int, const std::string&);
     void _draw_choices();
 
-    std::string _race;
+    std::string _race_id;
+    std::string _race_name;
 };
 
 } // namespace ui

@@ -51,16 +51,6 @@ void arrayfile_read(const std::string& fmode_str, const fs::path& filepath)
             ++itr;
         }
     }
-    else if (fmode_str == u8"gdatan"s)
-    {
-        lines.resize(50);
-        auto itr = std::begin(lines);
-        for (int i = 0; i < 50; ++i)
-        {
-            gdatan(i) = *itr;
-            ++itr;
-        }
-    }
     else if (fmode_str == u8"mdatan"s)
     {
         lines.resize(2);
@@ -141,13 +131,6 @@ void arrayfile_write(const std::string& fmode_str, const fs::path& filepath)
         for (int i = 0; i < 500; ++i)
         {
             out << qname(i) << std::endl;
-        }
-    }
-    else if (fmode_str == u8"gdatan"s)
-    {
-        for (int i = 0; i < 50; ++i)
-        {
-            out << gdatan(i) << std::endl;
         }
     }
     else if (fmode_str == u8"mdatan"s)
@@ -771,7 +754,13 @@ void fmode_7_8(bool read, const fs::path& dir)
 
     arrayfile(read, u8"cdatan1", dir / u8"cdatan.s1");
     arrayfile(read, u8"qname", dir / u8"qname.s1");
-    arrayfile(read, u8"gdatan", dir / u8"gdatan.s1");
+
+    // TODO: Delete this line when the v1.0.0 stable is released!
+    if (!read && fs::exists(dir / u8"gdatan.s1"))
+    {
+        fs::remove(dir / u8"gdatan.s1");
+    }
+
     if (!read)
     {
         bsave(dir / u8"evnum.s1", evnum);
@@ -799,7 +788,7 @@ void fmode_7_8(bool read, const fs::path& dir)
         }
     }
 
-    lua::ModSerializer mod_serializer(lua::lua.get());
+    lua::ModSerializer mod_serializer(*lua::lua);
     int index_start, index_end;
     if (read)
     {
@@ -883,7 +872,7 @@ void fmode_7_8(bool read, const fs::path& dir)
 void fmode_14_15(bool read)
 {
     const auto dir =
-        read ? filesystem::dir::save(geneuse) : filesystem::dir::tmp();
+        read ? filesystem::dirs::save(geneuse) : filesystem::dirs::tmp();
     if (!read)
     {
         playerheader =
@@ -1053,7 +1042,7 @@ void fmode_14_15(bool read)
 // does not read/write cdata or sdata for player or party characters.
 void fmode_1_2(bool read)
 {
-    const auto dir = filesystem::dir::tmp();
+    const auto dir = filesystem::dirs::tmp();
 
     {
         const auto filepath = dir / (u8"mdata_"s + mid + u8".s2");
@@ -1188,7 +1177,7 @@ void fmode_1_2(bool read)
     arrayfile(read, u8"cdatan2", dir / (u8"cdatan_"s + mid + u8".s2"));
     arrayfile(read, u8"mdatan", dir / (u8"mdatan_"s + mid + u8".s2"));
 
-    lua::ModSerializer mod_serializer(lua::lua.get());
+    lua::ModSerializer mod_serializer(*lua::lua);
     int index_start, index_end;
     if (read)
     {
@@ -1345,7 +1334,7 @@ void fmode_5_6(bool read)
 // does not read/write player or party character inventories.
 void fmode_3_4(bool read, const fs::path& filename)
 {
-    const auto filepath = filesystem::dir::tmp() / filename;
+    const auto filepath = filesystem::dirs::tmp() / filename;
     if (read)
     {
         tmpload(filename);
@@ -1365,8 +1354,8 @@ void fmode_3_4(bool read, const fs::path& filename)
 
     // Mod handle data of map-local items
     const auto mod_filename = "mod_"s + filepathutil::to_utf8_path(filename);
-    const auto mod_filepath = filesystem::dir::tmp() / mod_filename;
-    lua::ModSerializer mod_serializer(lua::lua.get());
+    const auto mod_filepath = filesystem::dirs::tmp() / mod_filename;
+    lua::ModSerializer mod_serializer(*lua::lua);
     int index_start, index_end;
     if (read)
     {
@@ -1400,12 +1389,12 @@ void fmode_23_24(bool read, const fs::path& filepath)
 {
     if (read)
     {
-        Save::instance().add(filepath.filename());
-        save_v1(filepath, deck, 0, 1000);
+        load_v1(filepath, deck, 0, 1000);
     }
     else
     {
-        load_v1(filepath, deck, 0, 1000);
+        Save::instance().add(filepath.filename());
+        save_v1(filepath, deck, 0, 1000);
     }
 }
 
@@ -1413,7 +1402,7 @@ void fmode_23_24(bool read, const fs::path& filepath)
 // reads character and skill data when upgrading the character's home.
 void fmode_17()
 {
-    const auto dir = filesystem::dir::tmp();
+    const auto dir = filesystem::dirs::tmp();
 
     if (!fs::exists(dir / (u8"cdata_"s + mid + u8".s2")))
         return;
@@ -1451,10 +1440,8 @@ void fmode_17()
 
 void fmode_10()
 {
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::tmp(),
-             filesystem::DirEntryRange::Type::file,
-             std::regex{u8R"(.*\..*)"}))
+    for (const auto& entry : filesystem::glob_files(
+             filesystem::dirs::tmp(), std::regex{u8R"(.*\..*)"}))
     {
         fs::remove_all(entry.path());
     }
@@ -1464,7 +1451,7 @@ void fmode_10()
 // deletes a saved game.
 void fmode_9()
 {
-    fs::remove_all(filesystem::dir::save(playerid));
+    fs::remove_all(filesystem::dirs::save(playerid));
 }
 
 
@@ -1476,20 +1463,21 @@ void fmode_11_12(FileOperation file_operation)
     if (file_operation == FileOperation::map_delete_preserve_items)
     {
         tmpload(u8"mdata_"s + mid + u8".s2");
-        if (!fs::exists(filesystem::dir::tmp() / (u8"mdata_"s + mid + u8".s2")))
+        if (!fs::exists(
+                filesystem::dirs::tmp() / (u8"mdata_"s + mid + u8".s2")))
         {
             // We tried preserving the characters/items, but the home
             // map to transfer them from didn't exist.
             return;
         }
     }
-    auto filepath = filesystem::dir::tmp() / (u8"map_"s + mid + u8".s2");
+    auto filepath = filesystem::dirs::tmp() / (u8"map_"s + mid + u8".s2");
     tmpload(u8"map_"s + mid + u8".s2");
     if (!fs::exists(filepath))
         return;
 
     auto delete_file = [](const fs::path& tmpfile) {
-        auto filepath = filesystem::dir::tmp() / tmpfile;
+        auto filepath = filesystem::dirs::tmp() / tmpfile;
         if (fs::exists(filepath))
         {
             fs::remove_all(filepath);
@@ -1524,17 +1512,15 @@ void fmode_13()
 {
     area_data[area].clear();
 
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::save(playerid),
-             filesystem::DirEntryRange::Type::file,
+    for (const auto& entry : filesystem::glob_files(
+             filesystem::dirs::save(playerid),
              std::regex{u8R"(.*_)"s + area + u8R"(_.*\..*)"}))
     {
         writeloadedbuff(entry.path().filename());
         Save::instance().remove(entry.path().filename());
     }
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::tmp(),
-             filesystem::DirEntryRange::Type::file,
+    for (const auto& entry : filesystem::glob_files(
+             filesystem::dirs::tmp(),
              std::regex{u8R"(.*_)"s + area + u8R"(_.*\..*)"}))
     {
         Save::instance().remove(entry.path().filename());
@@ -1590,7 +1576,7 @@ void Save::save(const fs::path& save_dir)
         if (is_saved)
         {
             fs::copy_file(
-                filesystem::dir::tmp() / filename,
+                filesystem::dirs::tmp() / filename,
                 save_dir / filename,
                 fs::copy_option::overwrite_if_exists);
         }
@@ -1680,7 +1666,7 @@ void tmpload(const fs::path& filename)
     }
 
     // Then, needs copy.
-    const auto original_file = filesystem::dir::save(playerid) / filename;
+    const auto original_file = filesystem::dirs::save(playerid) / filename;
     if (fs::exists(original_file))
     {
         ELONA_LOG("save.ctrl_file")
@@ -1688,7 +1674,7 @@ void tmpload(const fs::path& filename)
 
         fs::copy_file(
             original_file,
-            filesystem::dir::tmp() / filename,
+            filesystem::dirs::tmp() / filename,
             fs::copy_option::overwrite_if_exists);
     }
 }

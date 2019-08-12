@@ -1,6 +1,5 @@
 #include "loading_screen.hpp"
 #include "../snail/application.hpp"
-#include "filesystem.hpp"
 #include "variables.hpp"
 
 
@@ -89,45 +88,10 @@ void _draw_progress_bar(int progress, const std::string& message)
 
 
 
-void _draw_rolling_putit(int frame, snail::Image& cute_creature)
-{
-    const std::vector<int> animation_frames{13, 12, 11, 10, 9, 8,  7,  6, 5,
-                                            4,  3,  2,  1,  0, 1,  2,  3, 4,
-                                            5,  6,  7,  8,  9, 10, 11, 12};
-
-    const std::vector<int> x_offset{
-        289,
-        289,
-        280,
-        264,
-        238,
-        208,
-        160,
-        125,
-        64,
-        28,
-        2,
-        0,
-        0,
-        0,
-    };
-    const auto animation_frame =
-        animation_frames[(frame / 8) % animation_frames.size()];
-    const auto dst_x = (windoww - 374) / 2 + x_offset[animation_frame];
-    const auto dst_y = (windowh + frame_height) / 2 - 80 + 2;
-
-    auto& renderer = snail::Application::instance().get_renderer();
-    renderer.render_image(
-        cute_creature, animation_frame * 85, 0, 85, 80, dst_x, dst_y);
-}
-
-
-
-void _draw(int frame, int progress, snail::Image& cute_creature)
+void _draw(int frame, int progress)
 {
     _draw_background();
     _draw_progress_bar(progress % 101, "Load mod core");
-    _draw_rolling_putit(frame, cute_creature);
 }
 
 } // namespace
@@ -139,13 +103,10 @@ namespace elona
 
 void show_loading_screen()
 {
-    const auto path = filesystem::dir::graphic() / "rolling_putit.png";
-    snail::Image cute_creature(path);
-
     int frame = 0;
     for (int progress = 0; progress <= 100; ++progress)
     {
-        _draw(frame, progress, cute_creature);
+        _draw(frame, progress);
         redraw();
         await(30);
         ++frame;

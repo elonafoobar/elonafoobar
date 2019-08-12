@@ -117,7 +117,7 @@ void prepare_house_board_tiles()
 
 
 
-int calc_heirloom_value(Item& heirloom)
+int calc_heirloom_value(const Item& heirloom)
 {
     const auto category = the_item_db[heirloom.id]->category;
 
@@ -138,7 +138,7 @@ using ItemAndValue = std::pair<int, int>;
 
 void add_heirloom_if_valuable_enough(
     std::vector<ItemAndValue>& heirlooms,
-    Item& heirloom)
+    const Item& heirloom)
 {
     const auto category = the_item_db[heirloom.id]->category;
     if (category == 60000)
@@ -266,7 +266,7 @@ static TurnResult _build_new_home(int home_scale)
         area_data[static_cast<int>(mdata_t::MapId::your_home)].position.y;
 
     snd("core.build1");
-    txt(i18n::s.get("core.locale.building.built_new_house"),
+    txt(i18n::s.get("core.building.built_new_house"),
         Message::color{ColorIndex::green});
     msg_halt();
 
@@ -295,7 +295,7 @@ TurnResult build_new_building()
 {
     if (map_data.type != mdata_t::MapType::world_map)
     {
-        txt(i18n::s.get("core.locale.building.can_only_use_in_world_map"));
+        txt(i18n::s.get("core.building.can_only_use_in_world_map"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -303,7 +303,7 @@ TurnResult build_new_building()
     cell_featread(cdata.player().position.x, cdata.player().position.y);
     if (feat(0) != 0)
     {
-        txt(i18n::s.get("core.locale.building.cannot_build_it_here"));
+        txt(i18n::s.get("core.building.cannot_build_it_here"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -311,12 +311,12 @@ TurnResult build_new_building()
     area = _find_free_area_slot();
     if (area == -1)
     {
-        txt(i18n::s.get("core.locale.building.cannot_build_anymore"));
+        txt(i18n::s.get("core.building.cannot_build_anymore"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
 
-    txt(i18n::s.get("core.locale.building.really_build_it_here"));
+    txt(i18n::s.get("core.building.really_build_it_here"));
     if (!yes_no())
     {
         update_screen();
@@ -348,9 +348,9 @@ TurnResult build_new_building()
     area_generate_from_mapdef(
         area, *map, game_data.destination_outer_map, pos.x, pos.y);
 
-    s = i18n::s.get_enum("core.locale.building.names", inv[ci].id);
+    s = i18n::s.get_enum("core.building.names", inv[ci].id);
     snd("core.build1");
-    txt(i18n::s.get("core.locale.building.built_new", s(0)),
+    txt(i18n::s.get("core.building.built_new", s(0)),
         Message::color{ColorIndex::orange});
 
     map_global_prepare();
@@ -386,7 +386,7 @@ TurnResult show_house_board()
     Message::instance().linebreak();
     if (map_data.type != mdata_t::MapType::player_owned)
     {
-        txt(i18n::s.get("core.locale.building.house_board.only_use_in_home"),
+        txt(i18n::s.get("core.building.house_board.only_use_in_home"),
             Message::only_once{true});
         update_screen();
         return TurnResult::pc_turn_user_error;
@@ -394,12 +394,12 @@ TurnResult show_house_board()
     p(0) = 0;
     p(1) = 0;
     p(2) = 0;
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
         ++p(2);
-        if (inv[cnt].number() != 0)
+        if (item.number() != 0)
         {
-            if (the_item_db[inv[cnt].id]->category != 60000)
+            if (the_item_db[item.id]->category != 60000)
             {
                 ++p;
             }
@@ -414,7 +414,7 @@ TurnResult show_house_board()
         p(2) = map_data.max_item_count;
     }
     txt(i18n::s.get(
-        "core.locale.building.house_board.item_count",
+        "core.building.house_board.item_count",
         mapname(game_data.current_map),
         p(0),
         p(1),
@@ -424,13 +424,12 @@ TurnResult show_house_board()
         if (getworker(game_data.current_map) != -1)
         {
             txt(i18n::s.get(
-                "core.locale.building.shop.current_shopkeeper",
+                "core.building.shop.current_shopkeeper",
                 cdata[getworker(game_data.current_map)]));
         }
         else
         {
-            txt(i18n::s.get(
-                "core.locale.building.shop.no_assigned_shopkeeper"));
+            txt(i18n::s.get("core.building.shop.no_assigned_shopkeeper"));
         }
     }
     if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
@@ -438,12 +437,12 @@ TurnResult show_house_board()
         if (getworker(game_data.current_map) != -1)
         {
             txt(i18n::s.get(
-                "core.locale.building.ranch.current_breeder",
+                "core.building.ranch.current_breeder",
                 cdata[getworker(game_data.current_map)]));
         }
         else
         {
-            txt(i18n::s.get("core.locale.building.ranch.no_assigned_breeder"));
+            txt(i18n::s.get("core.building.ranch.no_assigned_breeder"));
         }
     }
     if (game_data.current_map == mdata_t::MapId::your_home)
@@ -461,15 +460,15 @@ TurnResult show_house_board()
             }
         }
         txt(i18n::s.get(
-            "core.locale.building.home.staying.count",
+            "core.building.home.staying.count",
             p(0),
             game_data.home_scale + 2));
     }
     Message::instance().linebreak();
-    txt(i18n::s.get("core.locale.building.house_board.what_do"));
+    txt(i18n::s.get("core.building.house_board.what_do"));
     p = 0;
 
-    Prompt prompt("core.locale.building.house_board.choices");
+    Prompt prompt("core.building.house_board.choices");
 
     if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
     {
@@ -478,7 +477,7 @@ TurnResult show_house_board()
         {
             prompt.append(
                 i18n::s.get(
-                    "core.locale.building.house_board.choices.extend",
+                    "core.building.house_board.choices.extend",
                     calcshopreform()),
                 5);
         }
@@ -544,7 +543,7 @@ void prompt_hiring()
     }
     if (p >= game_data.home_scale + 2)
     {
-        txt(i18n::s.get("core.locale.building.home.hire.too_many_guests"));
+        txt(i18n::s.get("core.building.home.hire.too_many_guests"));
         return;
     }
     for (int cnt = 0; cnt < 10; ++cnt)
@@ -578,38 +577,38 @@ void prompt_hiring()
             if (p == 0)
             {
                 cdata[rc].character_role = 1001;
-                cdatan(0, rc) = i18n::s.get(
-                    "core.locale.building.guests.armory", cdata[rc]);
+                cdatan(0, rc) =
+                    i18n::s.get("core.building.guests.armory", cdata[rc]);
             }
             if (p == 1)
             {
                 cdata[rc].character_role = 1006;
                 cdatan(0, rc) = i18n::s.get(
-                    "core.locale.building.guests.general_store", cdata[rc]);
+                    "core.building.guests.general_store", cdata[rc]);
             }
             if (p == 2)
             {
                 cdata[rc].character_role = 1004;
-                cdatan(0, rc) = i18n::s.get(
-                    "core.locale.building.guests.magic_store", cdata[rc]);
+                cdatan(0, rc) =
+                    i18n::s.get("core.building.guests.magic_store", cdata[rc]);
             }
             if (p == 3)
             {
                 cdata[rc].character_role = 1008;
-                cdatan(0, rc) = i18n::s.get(
-                    "core.locale.building.guests.goods_store", cdata[rc]);
+                cdatan(0, rc) =
+                    i18n::s.get("core.building.guests.goods_store", cdata[rc]);
             }
             if (p == 4)
             {
                 cdata[rc].character_role = 1001;
-                cdatan(0, rc) = i18n::s.get(
-                    "core.locale.building.guests.armory", cdata[rc]);
+                cdatan(0, rc) =
+                    i18n::s.get("core.building.guests.armory", cdata[rc]);
             }
             if (p == 5)
             {
                 cdata[rc].character_role = 1007;
-                cdatan(0, rc) = i18n::s.get(
-                    "core.locale.building.guests.blackmarket", cdata[rc]);
+                cdatan(0, rc) =
+                    i18n::s.get("core.building.guests.blackmarket", cdata[rc]);
             }
             randomize();
             cdata[rc].shop_rank = rnd(15) + 1;
@@ -629,7 +628,7 @@ void prompt_hiring()
     }
     randomize();
     Message::instance().linebreak();
-    txt(i18n::s.get("core.locale.building.home.hire.who"));
+    txt(i18n::s.get("core.building.home.hire.who"));
     int stat = show_hire_menu(HireOperation::hire);
     if (stat != -1)
     {
@@ -637,7 +636,7 @@ void prompt_hiring()
         Message::instance().linebreak();
         if (cdata.player().gold < calchirecost(tc) * 20)
         {
-            txt(i18n::s.get("core.locale.building.not_enough_money"));
+            txt(i18n::s.get("core.building.not_enough_money"));
         }
         else
         {
@@ -645,8 +644,7 @@ void prompt_hiring()
             cdata.player().gold -= calchirecost(tc) * 20;
             await(Config::instance().animation_wait * 10);
             cdata[tc].set_state(Character::State::alive);
-            txt(i18n::s.get(
-                    "core.locale.building.home.hire.you_hire", cdata[tc]),
+            txt(i18n::s.get("core.building.home.hire.you_hire", cdata[tc]),
                 Message::color{ColorIndex::green});
             snd("core.pray1");
         }
@@ -697,7 +695,7 @@ void start_home_map_mode()
     prepare_house_board_tiles();
 
     Message::instance().linebreak();
-    txt(i18n::s.get("core.locale.building.home.design.help"));
+    txt(i18n::s.get("core.building.home.design.help"));
 
     tlocinitx = cdata.player().position.x;
     tlocinity = cdata.player().position.y;
@@ -753,17 +751,17 @@ void show_home_value()
 
     windowshadow = 1;
     ui_display_window(
-        i18n::s.get("core.locale.building.home.rank.title"),
-        i18n::s.get("core.locale.building.home.rank.enter_key") +
-            i18n::s.get("core.locale.ui.hint.close"),
+        i18n::s.get("core.building.home.rank.title"),
+        i18n::s.get("core.building.home.rank.enter_key") +
+            i18n::s.get("core.ui.hint.close"),
         (windoww - 440) / 2 + inf_screenx,
         winposy(360),
         440,
         360);
     display_topic(
-        i18n::s.get("core.locale.building.home.rank.value"), wx + 28, wy + 36);
+        i18n::s.get("core.building.home.rank.value"), wx + 28, wy + 36);
     display_topic(
-        i18n::s.get("core.locale.building.home.rank.heirloom_rank"),
+        i18n::s.get("core.building.home.rank.heirloom_rank"),
         wx + 28,
         wy + 106);
     ++cmbg;
@@ -782,10 +780,10 @@ void show_home_value()
         y);
     gmode(2);
     calc_home_rank();
-    s(0) = i18n::s.get("core.locale.building.home.rank.type.base");
-    s(1) = i18n::s.get("core.locale.building.home.rank.type.deco");
-    s(2) = i18n::s.get("core.locale.building.home.rank.type.heir");
-    s(3) = i18n::s.get("core.locale.building.home.rank.type.total");
+    s(0) = i18n::s.get("core.building.home.rank.type.base");
+    s(1) = i18n::s.get("core.building.home.rank.type.deco");
+    s(2) = i18n::s.get("core.building.home.rank.type.heir");
+    s(3) = i18n::s.get("core.building.home.rank.type.total");
     p(0) = game_data.basic_point_of_home_rank;
     p(1) = game_data.total_deco_value;
     p(2) = game_data.total_heirloom_value;
@@ -802,7 +800,7 @@ void show_home_value()
              ++cnt)
         {
             bmes(
-                i18n::s.get("core.locale.building.home.rank.star"),
+                i18n::s.get("core.building.home.rank.star"),
                 x + 35 + cnt * 13 + en * 8,
                 y - 2,
                 {255, 255, 50});
@@ -824,8 +822,7 @@ void show_home_value()
 
         mes(wx + 68,
             cnt * 16 + wy + 138,
-            i18n::s.get(
-                "core.locale.building.home.rank.place", cnvrank(cnt + 1)));
+            i18n::s.get("core.building.home.rank.place", cnvrank(cnt + 1)));
         mes(wx + 110, cnt * 16 + wy + 138, itemname(p));
     }
 
@@ -847,7 +844,7 @@ void prompt_move_ally()
     while (true)
     {
         Message::instance().linebreak();
-        txt(i18n::s.get("core.locale.building.home.move.who"));
+        txt(i18n::s.get("core.building.home.move.who"));
         int stat = show_hire_menu(HireOperation::move);
         if (stat == -1)
         {
@@ -857,8 +854,7 @@ void prompt_move_ally()
         {
             Message::instance().linebreak();
             txt(i18n::s.get(
-                    "core.locale.building.home.move.dont_touch_me",
-                    cdata[stat]),
+                    "core.building.home.move.dont_touch_me", cdata[stat]),
                 Message::color{ColorIndex::cyan});
             break;
         }
@@ -868,8 +864,7 @@ void prompt_move_ally()
         while (true)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get(
-                "core.locale.building.home.move.where", cdata[stat]));
+            txt(i18n::s.get("core.building.home.move.where", cdata[stat]));
             int stat = target_position();
             if (stat == -1)
             {
@@ -878,7 +873,7 @@ void prompt_move_ally()
             if (chip_data.for_cell(tlocx, tlocy).effect & 4 ||
                 cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
             {
-                txt(i18n::s.get("core.locale.building.home.move.invalid"));
+                txt(i18n::s.get("core.building.home.move.invalid"));
             }
             else
             {
@@ -893,7 +888,7 @@ void prompt_move_ally()
             Position{tlocx, tlocy};
         cdata[tc].continuous_action.finish();
         Message::instance().linebreak();
-        txt(i18n::s.get("core.locale.building.home.move.is_moved", cdata[tc]));
+        txt(i18n::s.get("core.building.home.move.is_moved", cdata[tc]));
         snd("core.foot");
     }
 }
@@ -915,15 +910,13 @@ void prompt_ally_staying()
                 {
                     cdata[c].current_map = 0;
                     txt(i18n::s.get(
-                        "core.locale.building.home.staying.remove.ally",
-                        cdata[c]));
+                        "core.building.home.staying.remove.ally", cdata[c]));
                 }
                 else
                 {
                     removeworker(game_data.current_map);
                     txt(i18n::s.get(
-                        "core.locale.building.home.staying.remove.worker",
-                        cdata[c]));
+                        "core.building.home.staying.remove.worker", cdata[c]));
                 }
             }
             else
@@ -933,15 +926,13 @@ void prompt_ally_staying()
                     cdata[c].initial_position.x = cdata[c].position.x;
                     cdata[c].initial_position.y = cdata[c].position.y;
                     txt(i18n::s.get(
-                        "core.locale.building.home.staying.add.ally",
-                        cdata[c]));
+                        "core.building.home.staying.add.ally", cdata[c]));
                 }
                 else
                 {
                     removeworker(game_data.current_map);
                     txt(i18n::s.get(
-                        "core.locale.building.home.staying.add.worker",
-                        cdata[c]));
+                        "core.building.home.staying.add.worker", cdata[c]));
                 }
                 cdata[c].current_map = game_data.current_map;
             }
@@ -954,15 +945,14 @@ void try_extend_shop()
     Message::instance().linebreak();
     if (cdata.player().gold < calcshopreform())
     {
-        txt(i18n::s.get("core.locale.building.not_enough_money"));
+        txt(i18n::s.get("core.building.not_enough_money"));
     }
     else
     {
         snd("core.paygold1");
         cdata.player().gold -= calcshopreform();
         map_data.max_item_count = clamp(map_data.max_item_count + 10, 1, 400);
-        txt(i18n::s.get(
-                "core.locale.building.shop.extend", map_data.max_item_count),
+        txt(i18n::s.get("core.building.shop.extend", map_data.max_item_count),
             Message::color{ColorIndex::green});
     }
 }
@@ -996,11 +986,10 @@ void show_shop_log()
     int dblistmax = 0;
     const auto worker = getworker(area);
     std::string shop_mark =
-        u8"["s + i18n::s.get("core.locale.building.shop.info") + u8"]"s;
+        u8"["s + i18n::s.get("core.building.shop.info") + u8"]"s;
     if (worker == -1)
     {
-        txt(shop_mark +
-            i18n::s.get("core.locale.building.shop.log.no_shopkeeper"));
+        txt(shop_mark + i18n::s.get("core.building.shop.log.no_shopkeeper"));
         return;
     }
     sold = 0;
@@ -1025,54 +1014,54 @@ void show_shop_log()
     }
     mode = 6;
     dblistmax = 0;
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() <= 0)
+        if (item.number() <= 0)
         {
             continue;
         }
-        if (inv[cnt].id == 561)
+        if (item.id == 561)
         {
             continue;
         }
-        if (inv[cnt].id == 562)
+        if (item.id == 562)
         {
             continue;
         }
-        if (inv[cnt].id == 24)
+        if (item.id == 24)
         {
             continue;
         }
-        if (inv[cnt].id == 54)
+        if (item.id == 54)
         {
             continue;
         }
-        if (inv[cnt].id == 555)
+        if (item.id == 555)
         {
             continue;
         }
-        if (inv[cnt].id == 344)
+        if (item.id == 344)
         {
             continue;
         }
-        if (inv[cnt].weight < 0)
+        if (item.weight < 0)
         {
             continue;
         }
-        if (inv[cnt].quality >= Quality::special)
+        if (item.quality >= Quality::special)
         {
             continue;
         }
-        if (inv[cnt].value < 50)
+        if (item.value < 50)
         {
             continue;
         }
-        int category = the_item_db[inv[cnt].id]->category;
+        int category = the_item_db[item.id]->category;
         if (category == 60000)
         {
             continue;
         }
-        dblist(0, dblistmax) = cnt;
+        dblist(0, dblistmax) = item.index;
         dblist(1, dblistmax) = category;
         ++dblistmax;
     }
@@ -1148,15 +1137,15 @@ void show_shop_log()
         ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
     }
     tmpload(filepathutil::u8path(u8"shop5.s2"));
-    if (fs::exists(filesystem::dir::tmp() / u8"shop5.s2"))
+    if (fs::exists(filesystem::dirs::tmp() / u8"shop5.s2"))
     {
         ctrl_file(FileOperation2::map_items_read, u8"shop5.s2");
     }
     else
     {
-        for (const auto& cnt : items(-1))
+        for (auto&& item : inv.ground())
         {
-            inv[cnt].remove();
+            item.remove();
         }
     }
     mode = 6;
@@ -1173,30 +1162,32 @@ void show_shop_log()
             flt(list(0, cnt2), static_cast<Quality>(list(1, cnt2)));
             flttypemajor = elona::stoi(listn(0, cnt2));
             nostack = 1;
-            int stat = itemcreate(-1, 0, -1, -1, 0);
-            if (stat == 0)
+            if (itemcreate(-1, 0, -1, -1, 0))
             {
-                f = 0;
-                break;
-            }
-            if (inv[ci].value > elona::stoi(listn(1, cnt2)) * 2)
-            {
-                item_stack(-1, ci);
-                f = 1;
-                break;
-            }
-            else
-            {
-                inv[ci].remove();
-                if (cnt == 3)
+                if (inv[ci].value > elona::stoi(listn(1, cnt2)) * 2)
                 {
-                    f = 0;
+                    item_stack(-1, ci);
+                    f = 1;
                     break;
                 }
                 else
                 {
-                    continue;
+                    inv[ci].remove();
+                    if (cnt == 3)
+                    {
+                        f = 0;
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
+            }
+            else
+            {
+                f = 0;
+                break;
             }
         }
         if (f == 0)
@@ -1215,7 +1206,7 @@ void show_shop_log()
         {
             txt(shop_mark +
                 i18n::s.get(
-                    "core.locale.building.shop.log.could_not_sell",
+                    "core.building.shop.log.could_not_sell",
                     customer,
                     cdata[worker]));
         }
@@ -1224,16 +1215,15 @@ void show_shop_log()
     {
         if (!Config::instance().hide_shop_updates)
         {
-            s = i18n::s.get("core.locale.building.shop.log.gold", income(0));
+            s = i18n::s.get("core.building.shop.log.gold", income(0));
             if (income(1) != 0)
             {
-                s += i18n::s.get(
-                    "core.locale.building.shop.log.and_items", income(1));
+                s += i18n::s.get("core.building.shop.log.and_items", income(1));
             }
             snd("core.ding2");
             txt(shop_mark +
                     i18n::s.get(
-                        "core.locale.building.shop.log.sold_items",
+                        "core.building.shop.log.sold_items",
                         customer,
                         cdata[worker],
                         sold,
@@ -1264,14 +1254,14 @@ void update_shop()
             cell_data.at(cnt, y).light = 0;
         }
     }
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() <= 0)
+        if (item.number() <= 0)
         {
             continue;
         }
-        x = inv[cnt].position.x;
-        y = inv[cnt].position.y;
+        x = item.position.x;
+        y = item.position.y;
         if (x < 0 || x >= map_data.width || y < 0 || y >= map_data.height)
         {
             continue;
@@ -1319,26 +1309,26 @@ void update_museum()
     rankorg = game_data.ranks.at(3);
     rankcur = 0;
     DIM3(dblist, 2, 800);
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
-        if (inv[cnt].id != 503 && inv[cnt].id != 504)
+        if (item.id != 503 && item.id != 504)
         {
             continue;
         }
         if (wpeek(
-                cell_data.at(inv[cnt].position.x, inv[cnt].position.y)
+                cell_data.at(item.position.x, item.position.y)
                     .item_appearances_actual,
-                0) != inv[cnt].image)
+                0) != item.image)
         {
             continue;
         }
-        dbid = inv[cnt].subname;
-        calc_collection_value(inv[cnt].id != 503);
-        if (inv[cnt].id == 503)
+        dbid = item.subname;
+        calc_collection_value(item.id != 503);
+        if (item.id == 503)
         {
             rankcur += rtval;
         }
@@ -1365,7 +1355,7 @@ void update_museum()
         }
         Message::instance().linebreak();
         txt(i18n::s.get(
-            "core.locale.building.museum.rank_change",
+            "core.building.museum.rank_change",
             cnvrank(rankorg / 100),
             cnvrank(rankcur / 100),
             ranktitle(3),
@@ -1388,21 +1378,21 @@ void calc_home_rank()
     game_data.total_heirloom_value = 0;
 
     std::vector<ItemAndValue> heirlooms{heirloom_list_size};
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() == 0)
+        if (item.number() == 0)
         {
             continue;
         }
         if (wpeek(
-                cell_data.at(inv[cnt].position.x, inv[cnt].position.y)
+                cell_data.at(item.position.x, item.position.y)
                     .item_appearances_actual,
-                0) != inv[cnt].image)
+                0) != item.image)
         {
             continue;
         }
 
-        add_heirloom_if_valuable_enough(heirlooms, inv[cnt]);
+        add_heirloom_if_valuable_enough(heirlooms, item);
     }
     size_t i{};
     for (const auto& heirloom : heirlooms)
@@ -1448,7 +1438,7 @@ void calc_home_rank()
         }
         Message::instance().linebreak();
         txt(i18n::s.get(
-            "core.locale.building.home.rank.change",
+            "core.building.home.rank.change",
             game_data.total_deco_value / 100,
             game_data.total_heirloom_value / 100,
             cnvrank(rankorg / 100),
@@ -1561,8 +1551,7 @@ void update_ranch()
                     (cdatan(2, chara.index) == "core.chicken" && rnd(20) == 0))
                 {
                     ++egg_or_milk_count;
-                    int stat = itemcreate(-1, 573, x, y, 0);
-                    if (stat)
+                    if (itemcreate(-1, 573, x, y, 0))
                     {
                         inv[ci].subname = chara.id;
                         inv[ci].weight = chara.weight * 10 + 250;
@@ -1577,8 +1566,7 @@ void update_ranch()
                     (cdatan(2, chara.index) == "core.sheep" && rnd(20) == 0))
                 {
                     ++egg_or_milk_count;
-                    int stat = itemcreate(-1, 574, x, y, 0);
-                    if (stat)
+                    if (itemcreate(-1, 574, x, y, 0))
                     {
                         inv[ci].subname = chara.id;
                     }
@@ -1588,8 +1576,7 @@ void update_ranch()
                 // Shit
                 if (rnd(80) == 0)
                 {
-                    int stat = itemcreate(-1, 575, x, y, 0);
-                    if (stat)
+                    if (itemcreate(-1, 575, x, y, 0))
                     {
                         inv[ci].subname = chara.id;
                         inv[ci].weight = chara.weight * 40 + 300;

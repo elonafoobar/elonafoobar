@@ -22,7 +22,7 @@
 #include "magic.hpp"
 #include "menu.hpp"
 #include "message.hpp"
-#include "network.hpp"
+#include "net.hpp"
 #include "pic_loader/pic_loader.hpp"
 #include "pic_loader/tinted_buffers.hpp"
 #include "quest.hpp"
@@ -47,6 +47,7 @@
 #include "ui/ui_menu_skills.hpp"
 #include "ui/ui_menu_spell_writer.hpp"
 #include "ui/ui_menu_spells.hpp"
+#include "ui/ui_menu_voting_box.hpp"
 
 #include "ui/ui_menu_composite_character.hpp"
 #include "ui/ui_menu_composite_message.hpp"
@@ -57,7 +58,7 @@
 namespace
 {
 
-void _set_pcc_info(int val0)
+void _set_pcc_info(Character& chara, int val0)
 {
     rtval = -2;
     if (page == 0)
@@ -71,47 +72,47 @@ void _set_pcc_info(int val0)
             rtval(0) = 100;
             rtval(1) = 0;
             rtval(2) = -2;
-            rtvaln = cdata[cc].portrait;
+            rtvaln = chara.portrait;
         }
         if (val0 == 2)
         {
             rtval(0) = 1;
             rtval(1) = 0;
-            rtval(2) = pcc(1, cc) % 1000;
+            rtval(2) = pcc(1, chara.index) % 1000;
             rtvaln = u8"hair"s;
         }
         if (val0 == 3)
         {
             rtval(0) = 10;
             rtval(1) = 0;
-            rtval(2) = pcc(10, cc) % 1000;
+            rtval(2) = pcc(10, chara.index) % 1000;
             rtvaln = u8"subhair"s;
         }
         if (val0 == 4)
         {
             rtval(0) = 1;
             rtval(1) = 1;
-            rtval(2) = pcc(1, cc) / 1000;
+            rtval(2) = pcc(1, chara.index) / 1000;
         }
         if (val0 == 5)
         {
             rtval(0) = 15;
             rtval(1) = 0;
-            rtval(2) = pcc(15, cc) % 1000;
+            rtval(2) = pcc(15, chara.index) % 1000;
             rtvaln = u8"body"s;
         }
         if (val0 == 6)
         {
             rtval(0) = 9;
             rtval(1) = 0;
-            rtval(2) = pcc(9, cc) % 1000;
+            rtval(2) = pcc(9, chara.index) % 1000;
             rtvaln = u8"cloth"s;
         }
         if (val0 == 7)
         {
             rtval(0) = 7;
             rtval(1) = 0;
-            rtval(2) = pcc(7, cc) % 1000;
+            rtval(2) = pcc(7, chara.index) % 1000;
             rtvaln = u8"pants"s;
         }
         if (val0 == 8)
@@ -121,17 +122,17 @@ void _set_pcc_info(int val0)
         }
         if (val0 == 9)
         {
-            if (cc != 0)
+            if (chara.index != 0)
             {
                 rtval(0) = 101;
                 rtval(1) = 0;
-                rtval(2) = cdata[cc].has_own_sprite();
+                rtval(2) = chara.has_own_sprite();
             }
             else
             {
                 rtval(0) = 16;
                 rtval(1) = 0;
-                rtval(2) = pcc(16, cc) % 1000;
+                rtval(2) = pcc(16, chara.index) % 1000;
                 rtvaln = u8"ride"s;
             }
         }
@@ -142,46 +143,46 @@ void _set_pcc_info(int val0)
         {
             rtval(0) = 15;
             rtval(1) = 1;
-            rtval(2) = pcc(15, cc) / 1000;
+            rtval(2) = pcc(15, chara.index) / 1000;
         }
         if (val0 == 1)
         {
             rtval(0) = 9;
             rtval(1) = 1;
-            rtval(2) = pcc(9, cc) / 1000;
+            rtval(2) = pcc(9, chara.index) / 1000;
         }
         if (val0 == 2)
         {
             rtval(0) = 7;
             rtval(1) = 1;
-            rtval(2) = pcc(7, cc) / 1000;
+            rtval(2) = pcc(7, chara.index) / 1000;
         }
         if (val0 == 3)
         {
             rtval(0) = 11;
             rtval(1) = 0;
-            rtval(2) = pcc(11, cc) % 1000;
+            rtval(2) = pcc(11, chara.index) % 1000;
             rtvaln = u8"etc"s;
         }
         if (val0 == 4)
         {
             rtval(0) = 12;
             rtval(1) = 0;
-            rtval(2) = pcc(12, cc) % 1000;
+            rtval(2) = pcc(12, chara.index) % 1000;
             rtvaln = u8"etc"s;
         }
         if (val0 == 5)
         {
             rtval(0) = 13;
             rtval(1) = 0;
-            rtval(2) = pcc(13, cc) % 1000;
+            rtval(2) = pcc(13, chara.index) % 1000;
             rtvaln = u8"etc"s;
         }
         if (val0 == 6)
         {
             rtval(0) = 14;
             rtval(1) = 0;
-            rtval(2) = pcc(14, cc) % 1000;
+            rtval(2) = pcc(14, chara.index) % 1000;
             rtvaln = u8"eye"s;
         }
         if (val0 == 7)
@@ -201,16 +202,15 @@ namespace elona
 
 void text_set()
 {
-    strhint1 = i18n::s.get("core.locale.ui.hint.cursor");
+    strhint1 = i18n::s.get("core.ui.hint.cursor");
     strhint2 = ""s + key_pageup + u8","s + key_pagedown +
-        i18n::s.get("core.locale.ui.hint.page");
-    strhint3 = i18n::s.get("core.locale.ui.hint.close");
-    strhint3b = i18n::s.get("core.locale.ui.hint.back");
-    strhint4 = i18n::s.get("core.locale.ui.hint.enter");
-    strhint5 =
-        ""s + key_identify + i18n::s.get("core.locale.ui.hint.known_info");
-    strhint5b = ""s + key_mode + i18n::s.get("core.locale.ui.hint.mode");
-    strhint7 = i18n::s.get("core.locale.ui.hint.shortcut");
+        i18n::s.get("core.ui.hint.page");
+    strhint3 = i18n::s.get("core.ui.hint.close");
+    strhint3b = i18n::s.get("core.ui.hint.back");
+    strhint4 = i18n::s.get("core.ui.hint.enter");
+    strhint5 = ""s + key_identify + i18n::s.get("core.ui.hint.known_info");
+    strhint5b = ""s + key_mode + i18n::s.get("core.ui.hint.mode");
+    strhint7 = i18n::s.get("core.ui.hint.shortcut");
 
     SDIM4(_melee, 20, 3, 8);
     if (jp)
@@ -348,13 +348,12 @@ void show_ex_help(int id)
             buff(0) += tmp + '\n';
         }
     }
-    p = instr(
-        buff, 0, u8"%"s + id + u8","s + i18n::s.get("core.locale.meta.tag"));
+    p = instr(buff, 0, u8"%"s + id + u8","s + i18n::s.get("core.meta.tag"));
     if (p == -1)
     {
         dialog(
             u8"help index not found %"s + id + u8","s +
-            i18n::s.get("core.locale.meta.tag"));
+            i18n::s.get("core.meta.tag"));
         return;
     }
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
@@ -379,7 +378,7 @@ void show_ex_help(int id)
         draw("deco_help_b", wx + 10, wy + 42);
         font(16 - en * 2, snail::Font::Style::bold);
         bmes(
-            i18n::s.get("core.locale.ui.exhelp.title"),
+            i18n::s.get("core.ui.exhelp.title"),
             wx + 142,
             wy + 13,
             {255, 245, 235},
@@ -493,12 +492,13 @@ TurnResult show_skill_list()
 
 static std::string _make_buff_power_string(int skill_id)
 {
-    p = the_ability_db[skill_id]->ability_type % 1000;
-    const auto duration = calc_buff_duration(p, calcspellpower(skill_id, cc));
+    const auto buff_id = the_ability_db[skill_id]->ability_type % 1000;
+    const auto duration =
+        buff_calc_duration(buff_id, calcspellpower(skill_id, cc));
     const auto description =
-        get_buff_description(p, calcspellpower(skill_id, cc));
-    return ""s + duration + i18n::s.get("core.locale.ui.spell.turn_counter") +
-        description;
+        buff_get_description(buff_id, calcspellpower(skill_id, cc));
+    return std::to_string(duration) +
+        i18n::s.get("core.ui.spell.turn_counter") + " " + description;
 }
 
 std::string make_spell_description(int skill_id)
@@ -548,13 +548,13 @@ std::string make_spell_description(int skill_id)
         }
         else
         {
-            result += i18n::s.get("core.locale.ui.spell.power") + bonus;
+            result += i18n::s.get("core.ui.spell.power") + bonus;
         }
         result += u8" "s;
     }
     result += i18n::s
                   .get_m_optional(
-                      "locale.ability",
+                      "ability",
                       the_ability_db.get_id_from_legacy(skill_id)->get(),
                       "description")
                   .get_value_or("");
@@ -668,9 +668,9 @@ MenuResult menu_feats_character_making()
 
 
 
-int change_appearance()
+ChangeAppearanceResult menu_change_appearance(Character& chara)
 {
-    create_pcpic(cc, false);
+    create_pcpic(chara, false);
     page = 0;
     pagesize = 19;
     cs = 0;
@@ -686,52 +686,46 @@ int change_appearance()
     windowshadow = 1;
 
     bool init = true;
-
+    int tick = 0;
     while (true)
     {
+        ++tick;
         if (init)
         {
             init = false;
             listmax = 0;
             if (page == 0)
             {
-                s(0) = i18n::s.get("core.locale.ui.appearance.basic.done");
-                s(1) = i18n::s.get("core.locale.ui.appearance.basic.portrait");
-                s(2) = i18n::s.get("core.locale.ui.appearance.basic.hair");
-                s(3) = i18n::s.get("core.locale.ui.appearance.basic.sub_hair");
-                s(4) =
-                    i18n::s.get("core.locale.ui.appearance.basic.hair_color");
-                s(5) = i18n::s.get("core.locale.ui.appearance.basic.body");
-                s(6) = i18n::s.get("core.locale.ui.appearance.basic.cloth");
-                s(7) = i18n::s.get("core.locale.ui.appearance.basic.pants");
-                s(8) =
-                    i18n::s.get("core.locale.ui.appearance.basic.set_detail");
-                if (cc != 0)
+                s(0) = i18n::s.get("core.ui.appearance.basic.done");
+                s(1) = i18n::s.get("core.ui.appearance.basic.portrait");
+                s(2) = i18n::s.get("core.ui.appearance.basic.hair");
+                s(3) = i18n::s.get("core.ui.appearance.basic.sub_hair");
+                s(4) = i18n::s.get("core.ui.appearance.basic.hair_color");
+                s(5) = i18n::s.get("core.ui.appearance.basic.body");
+                s(6) = i18n::s.get("core.ui.appearance.basic.cloth");
+                s(7) = i18n::s.get("core.ui.appearance.basic.pants");
+                s(8) = i18n::s.get("core.ui.appearance.basic.set_detail");
+                if (chara.index != 0)
                 {
-                    s(9) =
-                        i18n::s.get("core.locale.ui.appearance.basic.custom");
+                    s(9) = i18n::s.get("core.ui.appearance.basic.custom");
                 }
                 else
                 {
-                    s(9) =
-                        i18n::s.get("core.locale.ui.appearance.basic.riding");
+                    s(9) = i18n::s.get("core.ui.appearance.basic.riding");
                 }
-                p = 9 + (cc != 0) + (cc == 0) * (game_data.mount != 0);
+                p = 9 + (chara.index != 0) +
+                    (chara.index == 0) * (game_data.mount != 0);
             }
             else
             {
-                s(0) =
-                    i18n::s.get("core.locale.ui.appearance.detail.body_color");
-                s(1) =
-                    i18n::s.get("core.locale.ui.appearance.detail.cloth_color");
-                s(2) =
-                    i18n::s.get("core.locale.ui.appearance.detail.pants_color");
-                s(3) = i18n::s.get("core.locale.ui.appearance.detail.etc_1");
-                s(4) = i18n::s.get("core.locale.ui.appearance.detail.etc_2");
-                s(5) = i18n::s.get("core.locale.ui.appearance.detail.etc_3");
-                s(6) = i18n::s.get("core.locale.ui.appearance.detail.eyes");
-                s(7) =
-                    i18n::s.get("core.locale.ui.appearance.detail.set_basic");
+                s(0) = i18n::s.get("core.ui.appearance.detail.body_color");
+                s(1) = i18n::s.get("core.ui.appearance.detail.cloth_color");
+                s(2) = i18n::s.get("core.ui.appearance.detail.pants_color");
+                s(3) = i18n::s.get("core.ui.appearance.detail.etc_1");
+                s(4) = i18n::s.get("core.ui.appearance.detail.etc_2");
+                s(5) = i18n::s.get("core.ui.appearance.detail.etc_3");
+                s(6) = i18n::s.get("core.ui.appearance.detail.eyes");
+                s(7) = i18n::s.get("core.ui.appearance.detail.set_basic");
                 p = 8;
             }
             for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
@@ -755,34 +749,22 @@ int change_appearance()
 
         pagesize = 0;
         ui_display_window(
-            i18n::s.get("core.locale.ui.appearance.basic.title"),
-            i18n::s.get("core.locale.ui.appearance.hint"),
+            i18n::s.get("core.ui.appearance.basic.title"),
+            i18n::s.get("core.ui.appearance.hint"),
             (windoww - 380) / 2 + inf_screenx,
             winposy(340) - 12,
             380,
             340);
         pagesize = listmax;
         display_topic(
-            i18n::s.get("core.locale.ui.appearance.basic.category"),
-            wx + 34,
-            wy + 36);
+            i18n::s.get("core.ui.appearance.basic.category"), wx + 34, wy + 36);
         draw("deco_mirror_a", wx + ww - 40, wy);
-        ++i;
-        if (i % 100 < 45)
-        {
-            f = i % 16;
-        }
-        else
-        {
-            ++f;
-        }
         window2(wx + 234, wy + 71, 88, 120, 1, 1);
         if (cs == 1 && page == 0)
         {
-            if (cdata[cc].portrait != "")
+            if (chara.portrait != "")
             {
-                if (const auto rect =
-                        draw_get_rect_portrait(cdata[cc].portrait))
+                if (const auto rect = draw_get_rect_portrait(chara.portrait))
                 {
                     gcopy(
                         rect->buffer,
@@ -795,27 +777,31 @@ int change_appearance()
                 }
             }
         }
-        else if (cdata[cc].has_own_sprite())
+        else if (chara.has_own_sprite())
         {
             gmode(2);
             const auto is_fullscale =
                 Config::instance().pcc_graphic_scale == "fullscale";
-            const auto width = is_fullscale ? (32 * 2) : (24 * 2);
-            const auto height = is_fullscale ? (48 * 2) : (40 * 2);
-            gcopy_c(
-                cc + 10 + PicLoader::max_buffers + TintedBuffers::max_buffers,
-                f / 4 % 4 * 32,
-                f / 16 % 4 * 48,
-                32,
-                48,
-                wx + 280,
-                wy + 130,
-                width,
-                height);
+            const auto width = is_fullscale ? 32 : 24;
+            const auto height = is_fullscale ? 48 : 40;
+            for (int i = 0; i < 4; ++i)
+            {
+                gcopy_c(
+                    chara.index + 10 + PicLoader::max_buffers +
+                        TintedBuffers::max_buffers,
+                    tick / 5 % 4 * 32,
+                    i % 4 * 48,
+                    32,
+                    48,
+                    wx + 238 + i % 2 * (32 + 8) + (32 + 8) / 2,
+                    wy + 75 + i / 2 * (48 + 8) + (48 + 8) / 2,
+                    width,
+                    height);
+            }
         }
         else
         {
-            draw_chara(cdata[cc], wx + 280, wy + 130);
+            draw_chara(chara, wx + 280, wy + 130);
         }
         gmode(2);
         font(14 - en * 2);
@@ -827,7 +813,7 @@ int change_appearance()
             {
                 break;
             }
-            _set_pcc_info(cnt);
+            _set_pcc_info(chara, cnt);
             s = listn(0, p);
             if (rtval >= 0)
             {
@@ -857,14 +843,14 @@ int change_appearance()
         }
         redraw();
         auto action = cursor_check_ex();
-        _set_pcc_info(cs);
-        p = 0;
+        _set_pcc_info(chara, cs);
+        bool changed = false;
         if (rtval == -2)
         {
             if (action == "enter")
             {
-                create_pcpic(cc);
-                return 1;
+                create_pcpic(chara);
+                return ChangeAppearanceResult::proceed;
             }
             if (action == "next_page" || action == "previous_page")
             {
@@ -898,30 +884,30 @@ int change_appearance()
             snd("core.cursor1");
             if (rtval == 100)
             {
-                cdata[cc].portrait =
-                    the_portrait_db.get_next_portrait(cdata[cc].portrait);
+                chara.portrait =
+                    the_portrait_db.get_next_portrait(chara.portrait);
                 continue;
             }
             if (rtval == 101)
             {
-                cdata[cc].has_own_sprite() = true;
+                chara.has_own_sprite() = true;
                 continue;
             }
             if (rtval(1) == 0)
             {
                 if (fs::exists(
-                        filesystem::dir::graphic() /
+                        filesystem::dirs::graphic() /
                         (u8"pcc_"s + rtvaln + u8"_" +
-                         (pcc(rtval, cc) % 1000 + 1) + u8".bmp")))
+                         (pcc(rtval, chara.index) % 1000 + 1) + u8".bmp")))
                 {
-                    ++pcc(rtval, cc);
-                    p = 1;
+                    ++pcc(rtval, chara.index);
+                    changed = true;
                 }
             }
-            else if (pcc(rtval, cc) / 1000 < 21)
+            else if (pcc(rtval, chara.index) / 1000 < 21)
             {
-                pcc(rtval, cc) += 1000;
-                p = 1;
+                pcc(rtval, chara.index) += 1000;
+                changed = true;
             }
         }
         if (action == "previous_page")
@@ -929,52 +915,67 @@ int change_appearance()
             snd("core.cursor1");
             if (rtval == 100)
             {
-                cdata[cc].portrait =
-                    the_portrait_db.get_previous_portrait(cdata[cc].portrait);
+                chara.portrait =
+                    the_portrait_db.get_previous_portrait(chara.portrait);
                 continue;
             }
             if (rtval == 101)
             {
-                cdata[cc].has_own_sprite() = false;
+                chara.has_own_sprite() = false;
                 continue;
             }
             if (rtval(1) == 0)
             {
-                if ((pcc(rtval, cc) % 1000 == 1 && rtval != 15) ||
+                if ((pcc(rtval, chara.index) % 1000 == 1 && rtval != 15) ||
                     fs::exists(
-                        filesystem::dir::graphic() /
+                        filesystem::dirs::graphic() /
                         (u8"pcc_"s + rtvaln + u8"_"s +
-                         (pcc(rtval, cc) % 1000 - 1) + u8".bmp"s)))
+                         (pcc(rtval, chara.index) % 1000 - 1) + u8".bmp"s)))
                 {
-                    --pcc(rtval, cc);
-                    p = 1;
+                    --pcc(rtval, chara.index);
+                    changed = true;
                 }
             }
-            else if (pcc(rtval, cc) / 1000 > 0)
+            else if (pcc(rtval, chara.index) / 1000 > 0)
             {
-                pcc(rtval, cc) -= 1000;
-                p = 1;
+                pcc(rtval, chara.index) -= 1000;
+                changed = true;
             }
         }
-        create_pcpic(cc, false);
+        if (changed)
+        {
+            create_pcpic(chara, false);
+        }
         if (action == "cancel")
         {
-            create_pcpic(cc);
-            return 0;
+            if (page == 0)
+            {
+                create_pcpic(chara);
+                return ChangeAppearanceResult::canceled;
+            }
+            else
+            {
+                page = 0;
+                cs = 8;
+                init = true;
+                continue;
+            }
         }
         if (mode == 1)
         {
             if (getkey(snail::Key::f1))
             {
-                return -1;
+                return ChangeAppearanceResult::show_help;
             }
         }
     }
 }
 
-int change_appearance_equipment()
+
+
+void change_appearance_equipment(Character& chara)
 {
-    create_pcpic(cc);
+    create_pcpic(chara);
     snd("core.pop2");
     page = 0;
     pagesize = 18;
@@ -982,12 +983,12 @@ int change_appearance_equipment()
     cs_bk = -1;
     windowshadow = 1;
     listmax = 0;
-    s(0) = i18n::s.get("core.locale.ui.appearance.equipment.done");
-    s(1) = i18n::s.get("core.locale.ui.appearance.equipment.chest");
-    s(2) = i18n::s.get("core.locale.ui.appearance.equipment.leg");
-    s(3) = i18n::s.get("core.locale.ui.appearance.equipment.belt");
-    s(4) = i18n::s.get("core.locale.ui.appearance.equipment.glove");
-    s(5) = i18n::s.get("core.locale.ui.appearance.equipment.mantle");
+    s(0) = i18n::s.get("core.ui.appearance.equipment.done");
+    s(1) = i18n::s.get("core.ui.appearance.equipment.chest");
+    s(2) = i18n::s.get("core.ui.appearance.equipment.leg");
+    s(3) = i18n::s.get("core.ui.appearance.equipment.belt");
+    s(4) = i18n::s.get("core.ui.appearance.equipment.glove");
+    s(5) = i18n::s.get("core.ui.appearance.equipment.mantle");
     p = 6;
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
@@ -1007,40 +1008,41 @@ int change_appearance_equipment()
         ++keyrange;
     }
 
-    while (1)
+    int tick = 0;
+    while (true)
     {
+        ++tick;
         pagesize = 0;
         ui_display_window(
-            i18n::s.get("core.locale.ui.appearance.equipment.title"),
-            i18n::s.get("core.locale.ui.appearance.hint"),
+            i18n::s.get("core.ui.appearance.equipment.title"),
+            i18n::s.get("core.ui.appearance.hint"),
             (windoww - 360) / 2 + inf_screenx,
             winposy(289) - 12,
             360,
             289);
-        s = i18n::s.get("core.locale.ui.appearance.equipment.part");
+        s = i18n::s.get("core.ui.appearance.equipment.part");
         pagesize = listmax;
         display_topic(s, wx + 34, wy + 36);
-        ++i;
-        if (i % 100 < 45)
-        {
-            f = i % 16;
-        }
-        else
-        {
-            ++f;
-        }
         window2(wx + 234, wy + 60, 88, 120, 1, 1);
         gmode(2);
-        gcopy_c(
-            cc + 10 + PicLoader::max_buffers + TintedBuffers::max_buffers,
-            f / 4 % 4 * 32,
-            f / 16 % 4 * 48,
-            32,
-            48,
-            wx + 280,
-            wy + 120,
-            48,
-            80);
+        const auto is_fullscale =
+            Config::instance().pcc_graphic_scale == "fullscale";
+        const auto width = is_fullscale ? 32 : 24;
+        const auto height = is_fullscale ? 48 : 40;
+        for (int i = 0; i < 4; ++i)
+        {
+            gcopy_c(
+                chara.index + 10 + PicLoader::max_buffers +
+                    TintedBuffers::max_buffers,
+                tick / 5 % 4 * 32,
+                i % 4 * 48,
+                32,
+                48,
+                wx + 238 + i % 2 * (32 + 8) + (32 + 8) / 2,
+                wy + 64 + i / 2 * (48 + 8) + (48 + 8) / 2,
+                width,
+                height);
+        }
         gmode(2);
         font(14 - en * 2);
         cs_listbk();
@@ -1054,7 +1056,7 @@ int change_appearance_equipment()
             s = listn(0, p);
             if (cnt != 0)
             {
-                if (pcc(20 + cnt - 1, cc) == 0)
+                if (pcc(20 + cnt - 1, chara.index) == 0)
                 {
                     s += u8"On"s;
                 }
@@ -1081,26 +1083,28 @@ int change_appearance_equipment()
             }
             if (action == "next_page" || action == "previous_page")
             {
-                if (pcc(20 + cs - 1, cc) == 0)
+                if (pcc(20 + cs - 1, chara.index) == 0)
                 {
-                    pcc(20 + cs - 1, cc) = 1;
+                    pcc(20 + cs - 1, chara.index) = 1;
                 }
                 else
                 {
-                    pcc(20 + cs - 1, cc) = 0;
+                    pcc(20 + cs - 1, chara.index) = 0;
                 }
-                create_pcpic(cc);
+                create_pcpic(chara);
                 snd("core.cursor1");
             }
         }
-        if ((cs == 0 && action == "entry") || action == "cancel")
+        if ((cs == 0 && action == "enter") || action == "cancel")
         {
             snd("core.ok1");
-            create_pcpic(cc);
-            return 1;
+            create_pcpic(chara);
+            return;
         }
     }
 }
+
+
 
 void append_accuracy_info(int val0)
 {
@@ -1129,22 +1133,21 @@ void append_accuracy_info(int val0)
         {
             attackskill = inv[cw].skill;
             ++p(1);
-            s(1) =
-                i18n::s.get("core.locale.ui.chara_sheet.damage.melee") + p(1);
+            s(1) = i18n::s.get("core.ui.chara_sheet.damage.melee") + p(1);
             ++attacknum;
             show_weapon_dice(val0);
         }
     }
     if (attackskill == 106)
     {
-        s(1) = i18n::s.get("core.locale.ui.chara_sheet.damage.unarmed");
+        s(1) = i18n::s.get("core.ui.chara_sheet.damage.unarmed");
         show_weapon_dice(val0);
     }
     attacknum = 0;
     int stat = can_do_ranged_attack();
     if (stat == 1)
     {
-        s(1) = i18n::s.get("core.locale.ui.chara_sheet.damage.dist");
+        s(1) = i18n::s.get("core.ui.chara_sheet.damage.dist");
         show_weapon_dice(val0);
     }
 }
@@ -1157,7 +1160,7 @@ void show_weapon_dice(int val0)
     {
         mes(wx + 590,
             wy + 281 + p(2) * 16,
-            i18n::s.get("core.locale.ui.chara_sheet.damage.hit"),
+            i18n::s.get("core.ui.chara_sheet.damage.hit"),
             {20, 10, 0});
         mes(wx + 417, wy + 281 + p(2) * 16, s(1), {20, 10, 0});
     }
@@ -1383,13 +1386,13 @@ label_1965_internal:
         page = 0;
     }
     ui_display_window(
-        i18n::s.get("core.locale.ui.analysis.title"),
+        i18n::s.get("core.ui.analysis.title"),
         strhint2 + strhint3b,
         (windoww - 400) / 2 + inf_screenx,
         winposy(448),
         400,
         448);
-    s = i18n::s.get("core.locale.ui.analysis.result");
+    s = i18n::s.get("core.ui.analysis.result");
     display_topic(s, wx + 28, wy + 36);
     font(14 - en * 2);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
@@ -1443,8 +1446,7 @@ int change_npc_tone()
 
     snd("core.ok1");
     txt(i18n::s.get(
-        "core.locale.action.interact.change_tone.is_somewhat_different",
-        cdata[tc]));
+        "core.action.interact.change_tone.is_somewhat_different", cdata[tc]));
 
     if (result.value)
     {
@@ -1472,7 +1474,7 @@ void item_show_description()
 {
     if (ci < 0)
     {
-        dialog(i18n::s.get("core.locale.item.desc.window.error"));
+        dialog(i18n::s.get("core.item.desc.window.error"));
         return;
     }
 
@@ -1481,5 +1483,33 @@ void item_show_description()
     returnfromidentify = 1;
 }
 
+
+
+void menu_chat_dialog()
+{
+    if (!net_can_send_chat_now())
+    {
+        txt(i18n::s.get("core.net.chat.wait_more"));
+        return;
+    }
+
+    inputlog = "";
+    input_text_dialog(80, windowh - inf_verh - 70, 38);
+    if (inputlog(0).empty())
+    {
+        return;
+    }
+
+    const auto message = i18n::s.get("core.net.chat.message", inputlog(0));
+    txt(message);
+    net_send_chat(message);
+}
+
+
+
+void menu_voting_box()
+{
+    ui::UIMenuVotingBox().show();
+}
 
 } // namespace elona

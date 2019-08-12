@@ -1,10 +1,10 @@
-local Chara = Elona.require("Chara")
-local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
+local Chara = require("game.Chara")
+local GUI = require("game.GUI")
+local I18N = require("game.I18N")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
 
-local common = require("data/dialog/common")
+local common = require_relative("data/dialog/common")
 
 local function take_books()
    local taken_books = {}
@@ -20,7 +20,7 @@ end
 
 return {
    id = "renton",
-   root = "core.locale.talk.unique.renton",
+   root = "core.talk.unique.renton",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("rare_books")

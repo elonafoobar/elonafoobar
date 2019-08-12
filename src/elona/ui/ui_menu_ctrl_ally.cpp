@@ -133,21 +133,21 @@ bool UIMenuCtrlAlly::init()
 
 static void _update_call_back()
 {
-    txt(i18n::s.get("core.locale.ui.ally_list.call.prompt"));
-    s(10) = i18n::s.get("core.locale.ui.ally_list.call.title");
+    txt(i18n::s.get("core.ui.ally_list.call.prompt"));
+    s(10) = i18n::s.get("core.ui.ally_list.call.title");
     s(11) = strhint2 + strhint3;
-    s(12) = i18n::s.get("core.locale.ui.ally_list.name");
-    s(13) = i18n::s.get("core.locale.ui.ally_list.status");
+    s(12) = i18n::s.get("core.ui.ally_list.name");
+    s(13) = i18n::s.get("core.ui.ally_list.status");
     x = 0;
 }
 
 static void _update_sell()
 {
-    txt(i18n::s.get("core.locale.ui.ally_list.sell.prompt"));
-    s(10) = i18n::s.get("core.locale.ui.ally_list.sell.title");
+    txt(i18n::s.get("core.ui.ally_list.sell.prompt"));
+    s(10) = i18n::s.get("core.ui.ally_list.sell.title");
     s(11) = strhint2 + strhint3;
-    s(12) = i18n::s.get("core.locale.ui.ally_list.name");
-    s(13) = i18n::s.get("core.locale.ui.ally_list.sell.value");
+    s(12) = i18n::s.get("core.ui.ally_list.name");
+    s(13) = i18n::s.get("core.ui.ally_list.sell.value");
     x = 20;
 }
 
@@ -166,12 +166,12 @@ static void _update_pet_arena()
     {
         Message::instance().txtef(ColorIndex::blue);
     }
-    txt(i18n::s.get("core.locale.ui.ally_list.pet_arena.prompt") + ": " + i +
+    txt(i18n::s.get("core.ui.ally_list.pet_arena.prompt") + ": " + i +
         u8" / "s + arenaop(1));
-    s(10) = i18n::s.get("core.locale.ui.ally_list.pet_arena.title");
+    s(10) = i18n::s.get("core.ui.ally_list.pet_arena.title");
     s(11) = strhint2 + strhint3;
-    s(12) = i18n::s.get("core.locale.ui.ally_list.name");
-    s(13) = i18n::s.get("core.locale.ui.ally_list.status");
+    s(12) = i18n::s.get("core.ui.ally_list.name");
+    s(13) = i18n::s.get("core.ui.ally_list.status");
     x = 20;
 }
 
@@ -179,44 +179,43 @@ static void _update_staying()
 {
     if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
     {
-        txt(i18n::s.get("core.locale.ui.ally_list.shop.prompt"));
-        s(10) = i18n::s.get("core.locale.ui.ally_list.shop.title");
+        txt(i18n::s.get("core.ui.ally_list.shop.prompt"));
+        s(10) = i18n::s.get("core.ui.ally_list.shop.title");
         s(11) = strhint2 + strhint3;
-        s(12) = i18n::s.get("core.locale.ui.ally_list.name");
-        s(13) = i18n::s.get("core.locale.ui.ally_list.shop.chr_negotiation");
+        s(12) = i18n::s.get("core.ui.ally_list.name");
+        s(13) = i18n::s.get("core.ui.ally_list.shop.chr_negotiation");
     }
     if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
     {
-        txt(i18n::s.get("core.locale.ui.ally_list.ranch.prompt"));
-        s(10) = i18n::s.get("core.locale.ui.ally_list.ranch.title");
+        txt(i18n::s.get("core.ui.ally_list.ranch.prompt"));
+        s(10) = i18n::s.get("core.ui.ally_list.ranch.title");
         s(11) = strhint2 + strhint3;
-        s(12) = i18n::s.get("core.locale.ui.ally_list.name");
-        s(13) = i18n::s.get("core.locale.ui.ally_list.ranch.breed_power");
+        s(12) = i18n::s.get("core.ui.ally_list.name");
+        s(13) = i18n::s.get("core.ui.ally_list.ranch.breed_power");
     }
     if (game_data.current_map == mdata_t::MapId::your_home)
     {
-        txt(i18n::s.get("core.locale.ui.ally_list.stayer.prompt"));
-        s(10) = i18n::s.get("core.locale.ui.ally_list.stayer.title");
+        txt(i18n::s.get("core.ui.ally_list.stayer.prompt"));
+        s(10) = i18n::s.get("core.ui.ally_list.stayer.title");
         s(11) = strhint2 + strhint3;
-        s(12) = i18n::s.get("core.locale.ui.ally_list.name");
-        s(13) = i18n::s.get("core.locale.ui.ally_list.status");
+        s(12) = i18n::s.get("core.ui.ally_list.name");
+        s(13) = i18n::s.get("core.ui.ally_list.status");
     }
     x = 20;
 }
 
 static void _update_investigate_and_gene_engineer(bool is_gene_engineer)
 {
-    txt(i18n::s.get("core.locale.ui.ally_list.gene_engineer.prompt"));
-    s(10) = i18n::s.get("core.locale.ui.ally_list.gene_engineer.title");
+    txt(i18n::s.get("core.ui.ally_list.gene_engineer.prompt"));
+    s(10) = i18n::s.get("core.ui.ally_list.gene_engineer.title");
     s(11) = strhint2 + strhint3;
-    s(12) = i18n::s.get("core.locale.ui.ally_list.name");
-    s(13) = i18n::s.get("core.locale.ui.ally_list.status");
+    s(12) = i18n::s.get("core.ui.ally_list.name");
+    s(13) = i18n::s.get("core.ui.ally_list.status");
     if (is_gene_engineer)
     {
         if (rc != 0)
         {
-            s(13) = i18n::s.get(
-                "core.locale.ui.ally_list.gene_engineer.body_skill");
+            s(13) = i18n::s.get("core.ui.ally_list.gene_engineer.body_skill");
         }
     }
     x = 0;
@@ -256,7 +255,7 @@ void UIMenuCtrlAlly::_draw_info_pet_arena(
 {
     if (followerin(chara.index) == 1)
     {
-        _s += i18n::s.get("core.locale.ui.ally_list.pet_arena.in");
+        _s += i18n::s.get("core.ui.ally_list.pet_arena.in");
     }
 }
 
@@ -300,25 +299,25 @@ std::string UIMenuCtrlAlly::_get_general_ally_info(const Character& chara)
 
     if (chara.state() == Character::State::pet_dead)
     {
-        ally_info += i18n::s.get("core.locale.ui.ally_list.dead");
+        ally_info += i18n::s.get("core.ui.ally_list.dead");
     }
     if (chara.state() == Character::State::pet_waiting)
     {
         if (_operation == ControlAllyOperation::call_back)
         {
-            ally_info += i18n::s.get("core.locale.ui.ally_list.call.waiting");
+            ally_info += i18n::s.get("core.ui.ally_list.call.waiting");
         }
         else
         {
             ally_info += u8"(Hp: "s + chara.hp * 100 / chara.max_hp + u8"%) "s +
-                i18n::s.get("core.locale.ui.ally_list.waiting");
+                i18n::s.get("core.ui.ally_list.waiting");
         }
     }
     if (chara.state() == Character::State::alive)
     {
         if (_operation == ControlAllyOperation::call_back)
         {
-            ally_info += i18n::s.get("core.locale.ui.ally_list.alive");
+            ally_info += i18n::s.get("core.ui.ally_list.alive");
         }
         else
         {
@@ -382,12 +381,11 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
             int stat = transplant_body_parts();
             if (stat == -1)
             {
-                ally_info =
-                    i18n::s.get("core.locale.ui.ally_list.gene_engineer.none");
+                ally_info = i18n::s.get("core.ui.ally_list.gene_engineer.none");
             }
             else
             {
-                ally_info = i18n::s.get_enum("core.locale.ui.body_part", rtval);
+                ally_info = i18n::s.get_enum("core.ui.body_part", rtval);
             }
         }
         ally_info += u8"/"s;
@@ -396,20 +394,20 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
             if (stat == 0)
             {
                 ally_info +=
-                    i18n::s.get("core.locale.ui.ally_list.gene_engineer.none");
+                    i18n::s.get("core.ui.ally_list.gene_engineer.none");
             }
             else
             {
                 ally_info += ""s +
                     i18n::s.get_m(
-                        "locale.ability",
+                        "ability",
                         the_ability_db.get_id_from_legacy(rtval)->get(),
                         "name");
                 if (rtval(1) != -1)
                 {
                     ally_info += u8", "s +
                         i18n::s.get_m(
-                            "locale.ability",
+                            "ability",
                             the_ability_db.get_id_from_legacy(rtval(1))->get(),
                             "name");
                 }
@@ -428,8 +426,8 @@ void UIMenuCtrlAlly::_draw_ally_list_entry_sell(int cnt, const Character& chara)
 
     cs_list(cs == cnt, ally_name, wx + 84, wy + 66 + cnt * 19 - 1);
 
-    std::string ally_info = ""s + calcslavevalue(chara.index) * 2 / 3 +
-        i18n::s.get("core.locale.ui.gold");
+    std::string ally_info =
+        ""s + calcslavevalue(chara.index) * 2 / 3 + i18n::s.get("core.ui.gold");
 
     mes(wx + 390, wy + 66 + cnt * 19 + 2, ally_info);
 }
@@ -518,7 +516,7 @@ void UIMenuCtrlAlly::draw()
         {
             cs_list(
                 cs == cnt,
-                i18n::s.get("core.locale.ui.ally_list.proceed"),
+                i18n::s.get("core.ui.ally_list.proceed"),
                 wx + 84,
                 wy + 66 + cnt * 19 - 1);
             continue;
@@ -537,8 +535,7 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_gene_engineer(int _p)
     if (cdata[_p].level > sdata(151, 0) + 5)
     {
         snd("core.fail1");
-        txt(i18n::s.get(
-            "core.locale.ui.ally_list.gene_engineer.skill_too_low"));
+        txt(i18n::s.get("core.ui.ally_list.gene_engineer.skill_too_low"));
         set_reupdate();
         return none;
     }
@@ -562,7 +559,7 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_pet_arena(int _p)
         if (i == 0)
         {
             txt(
-                i18n::s.get("core.locale.ui.ally_list.pet_arena.need_"
+                i18n::s.get("core.ui.ally_list.pet_arena.need_"
                             "at_least_one"));
             snd("core.fail1");
             set_reupdate();
@@ -575,8 +572,7 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_pet_arena(int _p)
     }
     else if (cdata[_p].state() == Character::State::pet_dead)
     {
-        txt(i18n::s.get(
-            "core.locale.ui.ally_list.pet_arena.is_dead", cdata[_p]));
+        txt(i18n::s.get("core.ui.ally_list.pet_arena.is_dead", cdata[_p]));
         snd("core.fail1");
         set_reupdate();
     }
@@ -585,7 +581,7 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_pet_arena(int _p)
         if (i >= arenaop(1))
         {
             snd("core.fail1");
-            txt(i18n::s.get("core.locale.ui.ally_list.pet_arena.too_many"));
+            txt(i18n::s.get("core.ui.ally_list.pet_arena.too_many"));
             set_reupdate();
         }
         else

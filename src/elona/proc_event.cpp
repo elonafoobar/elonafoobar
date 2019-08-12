@@ -18,6 +18,7 @@
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "message.hpp"
+#include "net.hpp"
 #include "quest.hpp"
 #include "random.hpp"
 #include "random_event.hpp"
@@ -49,24 +50,24 @@ void proc_event()
         switch (game_data.executing_immediate_quest_type)
         {
         case 1009:
-            txt(i18n::s.get("core.locale.quest.party.is_over"));
+            txt(i18n::s.get("core.quest.party.is_over"));
             calcpartyscore();
             calcpartyscore2();
             txt(i18n::s.get(
-                "core.locale.quest.party.final_score",
+                "core.quest.party.final_score",
                 quest_data.immediate().extra_info_2));
             if (quest_data.immediate().extra_info_1 <=
                 quest_data.immediate().extra_info_2)
             {
                 game_data.executing_immediate_quest_status = 3;
                 quest_data.immediate().progress = 3;
-                txt(i18n::s.get("core.locale.quest.party.complete"),
+                txt(i18n::s.get("core.quest.party.complete"),
                     Message::color{ColorIndex::green});
                 msg_halt();
             }
             else
             {
-                txt(i18n::s.get("core.locale.quest.party.fail"),
+                txt(i18n::s.get("core.quest.party.fail"),
                     Message::color{ColorIndex::purple});
             }
             break;
@@ -76,18 +77,18 @@ void proc_event()
             {
                 game_data.executing_immediate_quest_status = 3;
                 quest_data.immediate().progress = 3;
-                txt(i18n::s.get("core.locale.quest.collect.complete"),
+                txt(i18n::s.get("core.quest.collect.complete"),
                     Message::color{ColorIndex::green});
                 msg_halt();
             }
             else
             {
-                txt(i18n::s.get("core.locale.quest.collect.fail"),
+                txt(i18n::s.get("core.quest.collect.fail"),
                     Message::color{ColorIndex::purple});
             }
             break;
         case 1008:
-            txt(i18n::s.get("core.locale.quest.conquer.fail"),
+            txt(i18n::s.get("core.quest.conquer.fail"),
                 Message::color{ColorIndex::purple});
             break;
         }
@@ -112,11 +113,11 @@ void proc_event()
             319,
             evdata1(evnum - (evnum != 0) * 1),
             evdata2(evnum - (evnum != 0) * 1));
-        txt(i18n::s.get("core.locale.event.little_sister_slips"),
+        txt(i18n::s.get("core.event.little_sister_slips"),
             Message::color{ColorIndex::blue});
         break;
     case 28:
-        txt(i18n::s.get("core.locale.event.ehekatl"),
+        txt(i18n::s.get("core.event.ehekatl"),
             Message::color{ColorIndex::orange});
         msg_halt();
         RagnarokAnimation().play();
@@ -128,7 +129,7 @@ void proc_event()
             evdata2(evnum - (evnum != 0) * 1));
         break;
     case 2:
-        tc = chara_find(34);
+        tc = chara_find("core.lomias");
         talk_to_npc();
         break;
     case 24:
@@ -136,15 +137,15 @@ void proc_event()
         initialize_economy();
         break;
     case 3:
-        tc = chara_find(2);
+        tc = chara_find("core.zeome");
         talk_to_npc();
         break;
     case 11:
-        tc = chara_find(1);
+        tc = chara_find("core.shopkeeper");
         talk_to_npc();
         break;
     case 23:
-        tc = chara_find(302);
+        tc = chara_find("core.rogue_boss");
         talk_to_npc();
         game_data.rogue_boss_encountered = 23;
         break;
@@ -155,11 +156,11 @@ void proc_event()
             for (int i = 0; i < 4; ++i)
             {
                 choices.push_back(i18n::s.get_enum(
-                    "core.locale.event.popup.reunion_with_pet.choices", i));
+                    "core.event.popup.reunion_with_pet.choices", i));
             }
             int result = show_random_event_window(
-                i18n::s.get("core.locale.event.popup.reunion_with_pet.title"),
-                i18n::s.get("core.locale.event.popup.reunion_with_pet.text"),
+                i18n::s.get("core.event.popup.reunion_with_pet.title"),
+                i18n::s.get("core.event.popup.reunion_with_pet.text"),
                 choices,
                 u8"bg_re13");
             p = 3;
@@ -189,9 +190,9 @@ void proc_event()
     case 13:
         play_music("core.mcWedding");
         show_random_event_window(
-            i18n::s.get("core.locale.event.popup.marriage.title"),
-            i18n::s.get("core.locale.event.popup.marriage.text", cdata[marry]),
-            {i18n::s.get_enum("core.locale.event.popup.marriage.choices", 0)},
+            i18n::s.get("core.event.popup.marriage.title"),
+            i18n::s.get("core.event.popup.marriage.text", cdata[marry]),
+            {i18n::s.get_enum("core.event.popup.marriage.choices", 0)},
             u8"bg_re14");
         for (int i = 0; i < 5; ++i)
         {
@@ -209,7 +210,7 @@ void proc_event()
             cdata.player().position.x,
             cdata.player().position.y,
             rnd(3) + 2);
-        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         save_set_autosave();
         break;
     case 29:
@@ -230,10 +231,14 @@ void proc_event()
         tc = rc;
         area_data[game_data.current_map].has_been_conquered = tc;
         txt(i18n::s.get(
-                "core.locale.event.guarded_by_lord",
+                "core.event.guarded_by_lord",
                 mapname(game_data.current_map),
                 cdata[tc]),
             Message::color{ColorIndex::red});
+        if (game_data.current_dungeon_level % 50 == 0)
+        {
+            net_send_news("void", cnvrank(game_data.current_dungeon_level));
+        }
     }
     break;
     case 4:
@@ -256,9 +261,9 @@ void proc_event()
         tc = rc;
         area_data[game_data.current_map].has_been_conquered = tc;
         cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
-        txt(i18n::s.get("core.locale.event.reached_deepest_level"));
+        txt(i18n::s.get("core.event.reached_deepest_level"));
         txt(i18n::s.get(
-                "core.locale.event.guarded_by_lord",
+                "core.event.guarded_by_lord",
                 mapname(game_data.current_map),
                 cdata[tc]),
             Message::color{ColorIndex::red});
@@ -289,15 +294,15 @@ void proc_event()
         itemcreate(
             -1, 239, cdata.player().position.x, cdata.player().position.y, 0);
         inv[ci].param2 = 0;
-        txt(i18n::s.get("core.locale.quest.completed"),
+        txt(i18n::s.get("core.quest.completed"),
             Message::color{ColorIndex::green});
         snd("core.complete1");
-        txt(i18n::s.get("core.locale.common.something_is_put_on_the_ground"));
+        txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         modrank(2, 300, 8);
         game_data.executing_immediate_quest_fame_gained =
             calcfame(0, game_data.current_dungeon_level * 30 + 200);
         txt(i18n::s.get(
-                "core.locale.quest.gain_fame",
+                "core.quest.gain_fame",
                 game_data.executing_immediate_quest_fame_gained),
             Message::color{ColorIndex::green});
         cdata.player().fame += game_data.executing_immediate_quest_fame_gained;
@@ -305,7 +310,7 @@ void proc_event()
         {
             area_data[game_data.current_map].has_been_conquered = 0;
             game_data.void_next_lord_floor = game_data.void_next_lord_floor + 5;
-            txt(i18n::s.get("core.locale.event.seal_broken"));
+            txt(i18n::s.get("core.event.seal_broken"));
         }
         else
         {
@@ -313,7 +318,7 @@ void proc_event()
         }
         break;
     case 16:
-        txt(i18n::s.get("core.locale.quest.escort.complete"));
+        txt(i18n::s.get("core.quest.escort.complete"));
         tc = evdata2(evnum - (evnum != 0) * 1);
         talk_to_npc();
         rq = evdata1(evnum - (evnum != 0) * 1);
@@ -349,13 +354,13 @@ void proc_event()
         }
         else
         {
-            txt(i18n::s.get("core.locale.event.death_penalty_not_applied"));
+            txt(i18n::s.get("core.event.death_penalty_not_applied"));
         }
         if (game_data.ether_disease_stage >= 20000)
         {
             modify_ether_disease_stage(-2000);
         }
-        txt(i18n::s.get("core.locale.event.you_lost_some_money"));
+        txt(i18n::s.get("core.event.you_lost_some_money"));
         cdata.player().gold -= cdata.player().gold / 3;
         decfame(0, 10);
         chara_refresh(0);
@@ -374,12 +379,12 @@ void proc_event()
             cdata[evdata1(evnum - (evnum != 0) * 1)].position.y,
             4);
         game_data.quest_flags.pael_and_her_mom = 1001;
-        tc = chara_find(221);
+        tc = chara_find("core.pael");
         if (tc != 0)
         {
             if (cdata[tc].state() == Character::State::alive)
             {
-                txt(i18n::s.get("core.locale.event.pael"),
+                txt(i18n::s.get("core.event.pael"),
                     Message::color{ColorIndex::blue});
                 cdata[tc].relationship = -3;
                 cdata[tc].hate = 1000;
@@ -399,7 +404,7 @@ void proc_event()
         --game_data.number_of_waiting_guests;
         if (chara_get_free_slot() == -1)
         {
-            txt(i18n::s.get("core.locale.event.guest_lost_his_way"));
+            txt(i18n::s.get("core.event.guest_lost_his_way"));
             break;
         }
         if (rnd(3) == 0)
@@ -499,7 +504,7 @@ void proc_event()
             }
             if (tc == 0)
             {
-                txt(i18n::s.get("core.locale.event.guest_already_left"));
+                txt(i18n::s.get("core.event.guest_already_left"));
                 break;
             }
             cdata[tc].set_state(Character::State::alive);
@@ -534,20 +539,19 @@ void proc_event()
             }
             p(0) = 0;
             p(1) = 6;
-            for (const auto& ci : items(-1))
+            for (const auto& item : inv.ground())
             {
-                if (inv[ci].number() == 0)
+                if (item.number() == 0)
                     continue;
-                if (inv[ci].function != 44)
+                if (item.function != 44)
                     continue;
                 if (c == tc)
                 {
-                    if (inv[ci].param1 == 2)
+                    if (item.param1 == 2)
                     {
-                        cell_swap(
-                            c, -1, inv[ci].position.x, inv[ci].position.y);
-                        i = ci;
-                        p = ci;
+                        cell_swap(c, -1, item.position.x, item.position.y);
+                        i = item.index;
+                        p = item.index;
                         break;
                     }
                     else
@@ -559,28 +563,28 @@ void proc_event()
                 {
                     break;
                 }
-                else if (ci == i)
+                else if (item.index == i)
                 {
                     continue;
                 }
                 p(2) = dist(
-                    inv[ci].position.x,
-                    inv[ci].position.y,
+                    item.position.x,
+                    item.position.y,
                     inv[i].position.x,
                     inv[i].position.y);
                 if (p(2) < p(1))
                 {
-                    if (cell_data.at(inv[ci].position.x, inv[ci].position.y)
+                    if (cell_data.at(item.position.x, item.position.y)
                                 .chara_index_plus_one == 0 ||
                         c == 0 || c == tc)
                     {
-                        p(0) = ci;
+                        p(0) = item.index;
                         p(1) = p(2);
                     }
                 }
-                if (c == 0 && inv[ci].param1 == 1)
+                if (c == 0 && item.param1 == 1)
                 {
-                    p = ci;
+                    p = item.index;
                     break;
                 }
             }
@@ -609,7 +613,7 @@ void proc_event()
             if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
             {
                 cdata[cc].emotion_icon = 2010;
-                txt(i18n::s.get("core.locale.event.my_eyes", cdata[cc]));
+                txt(i18n::s.get("core.event.my_eyes", cdata[cc]));
             }
         }
         break;
@@ -636,7 +640,7 @@ void proc_event()
         }
         for (int j = 0; j < clamp(i(0), 0, 3); ++j)
         {
-            txt(i18n::s.get("core.locale.event.okaeri"),
+            txt(i18n::s.get("core.event.okaeri"),
                 Message::color{ColorIndex::cyan});
         }
         if (game_data.number_of_waiting_guests != 0)
@@ -661,11 +665,10 @@ void proc_event()
     case 21:
         if (map_data.type == mdata_t::MapType::world_map)
             break;
-        txt(i18n::s.get("core.locale.event.bomb"),
-            Message::color{ColorIndex::red});
+        txt(i18n::s.get("core.event.bomb"), Message::color{ColorIndex::red});
         msg_halt();
         gsel(7);
-        picload(filesystem::dir::graphic() / u8"bg22.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"bg22.bmp", 0, 0, true);
         gsel(4);
         gmode(0);
         gcopy_c(
@@ -679,7 +682,7 @@ void proc_event()
             windoww + 4,
             windowh + 4);
         gsel(7);
-        picload(filesystem::dir::graphic() / u8"anime9.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime9.bmp", 0, 0, true);
         gsel(0);
         dx = windoww / 2;
         dy = (windowh - inf_verh) / 2;
@@ -858,13 +861,14 @@ void proc_event()
         {
             modify_karma(cdata.player(), -10);
         }
+        net_send_news("bomb", mapname(game_data.current_map));
         break;
     case 18:
         if (map_data.type == mdata_t::MapType::world_map)
             break;
         game_data.weather = 1;
         sound_play_environmental();
-        txt(i18n::s.get("core.locale.event.ragnarok"));
+        txt(i18n::s.get("core.event.ragnarok"));
         msg_halt();
         RagnarokAnimation().play();
         for (int i = 0; i < 200; ++i)
@@ -927,8 +931,7 @@ void proc_event()
     case 22:
         if (evdata1(evnum - (evnum != 0) * 1) != 0)
             break;
-        txt(i18n::s.get("core.locale.event.alarm"),
-            Message::color{ColorIndex::red});
+        txt(i18n::s.get("core.event.alarm"), Message::color{ColorIndex::red});
         for (auto&& cc : cdata.others())
         {
             if (cc.state() == Character::State::alive)
@@ -942,7 +945,7 @@ void proc_event()
     case 26:
         if (map_data.type == mdata_t::MapType::world_map)
             break;
-        txt(i18n::s.get("core.locale.event.beggars"));
+        txt(i18n::s.get("core.event.beggars"));
         for (int i = 0; i < 3; ++i)
         {
             flt();

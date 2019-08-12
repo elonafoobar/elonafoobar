@@ -112,160 +112,140 @@ static void _load_item_main_description_text(
     }
 }
 
-static void _load_item_stat_text(int ci, int& p)
+static void _load_item_stat_text(int item_index, int& p)
 {
-    if (inv[ci].material != 0)
+    if (inv[item_index].material != 0)
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
         listn(0, p) = i18n::s.get(
-            "core.locale.item.desc.it_is_made_of",
+            "core.item.desc.it_is_made_of",
             i18n::s.get_m(
-                "locale.item_material",
-                the_item_material_db.get_id_from_legacy(inv[ci].material)
+                "item_material",
+                the_item_material_db
+                    .get_id_from_legacy(inv[item_index].material)
                     ->get(),
                 "name"));
         ++p;
     }
-    if (inv[ci].material == 8)
+    if (inv[item_index].material == 8)
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) =
-            i18n::s.get("core.locale.item.desc.speeds_up_ether_disease");
+        listn(0, p) = i18n::s.get("core.item.desc.speeds_up_ether_disease");
         ++p;
     }
-    if (inv[ci].is_acidproof())
+    if (inv[item_index].is_acidproof())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.locale.item.desc.bit.acidproof");
+        listn(0, p) = i18n::s.get("core.item.desc.bit.acidproof");
         ++p;
     }
-    if (inv[ci].is_fireproof())
+    if (inv[item_index].is_fireproof())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.locale.item.desc.bit.fireproof");
+        listn(0, p) = i18n::s.get("core.item.desc.bit.fireproof");
         ++p;
     }
-    if (inv[ci].is_precious())
+    if (inv[item_index].is_precious())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.locale.item.desc.bit.precious");
+        listn(0, p) = i18n::s.get("core.item.desc.bit.precious");
         ++p;
     }
-    if (inv[ci].is_blessed_by_ehekatl())
+    if (inv[item_index].is_blessed_by_ehekatl())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) =
-            i18n::s.get("core.locale.item.desc.bit.blessed_by_ehekatl");
+        listn(0, p) = i18n::s.get("core.item.desc.bit.blessed_by_ehekatl");
         ++p;
     }
-    if (inv[ci].is_stolen())
+    if (inv[item_index].is_stolen())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.locale.item.desc.bit.stolen");
+        listn(0, p) = i18n::s.get("core.item.desc.bit.stolen");
         ++p;
     }
-    if (inv[ci].is_alive())
+    if (inv[item_index].is_alive())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.locale.item.desc.bit.alive") +
-            u8" [Lv:"s + inv[ci].param1 + u8" Exp:"s +
-            clamp(inv[ci].param2 * 100 / calcexpalive(inv[ci].param1), 0, 100) +
+        listn(0, p) = i18n::s.get("core.item.desc.bit.alive") + u8" [Lv:"s +
+            inv[item_index].param1 + u8" Exp:"s +
+            clamp(inv[item_index].param2 * 100 /
+                      calcexpalive(inv[item_index].param1),
+                  0,
+                  100) +
             u8"%]"s;
         ++p;
     }
-    if (inv[ci].is_showroom_only())
+    if (inv[item_index].is_showroom_only())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.locale.item.desc.bit.show_room_only");
+        listn(0, p) = i18n::s.get("core.item.desc.bit.show_room_only");
         ++p;
     }
-    if (inv[ci].is_handmade())
+    if (inv[item_index].is_handmade())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.locale.item.desc.bit.handmade");
+        listn(0, p) = i18n::s.get("core.item.desc.bit.handmade");
         ++p;
     }
-    if (inv[ci].dice_x != 0)
+    if (inv[item_index].dice_x != 0)
     {
-        const auto pierce = calc_rate_to_pierce(inv[ci].id);
+        const auto pierce = calc_rate_to_pierce(inv[item_index].id);
         list(0, p) = static_cast<int>(ItemDescriptionType::weapon_info);
-        listn(0, p) =
-            i18n::s.get("core.locale.item.desc.weapon.it_can_be_wielded") +
-            u8" ("s + inv[ci].dice_x + u8"d"s + inv[ci].dice_y +
-            i18n::s.get("core.locale.item.desc.weapon.pierce") + pierce +
-            u8"%)"s;
+        listn(0, p) = i18n::s.get("core.item.desc.weapon.it_can_be_wielded") +
+            u8" ("s + inv[item_index].dice_x + u8"d"s + inv[item_index].dice_y +
+            i18n::s.get("core.item.desc.weapon.pierce") + pierce + u8"%)"s;
         ++p;
         if (reftype == 10000)
         {
-            if (inv[ci].weight <= 1500)
+            if (inv[item_index].weight <= 1500)
             {
                 list(0, p) = static_cast<int>(ItemDescriptionType::weapon_info);
-                listn(0, p) = i18n::s.get("core.locale.item.desc.weapon.light");
+                listn(0, p) = i18n::s.get("core.item.desc.weapon.light");
                 ++p;
             }
-            if (inv[ci].weight >= 4000)
+            if (inv[item_index].weight >= 4000)
             {
                 list(0, p) = static_cast<int>(ItemDescriptionType::weapon_info);
-                listn(0, p) = i18n::s.get("core.locale.item.desc.weapon.heavy");
+                listn(0, p) = i18n::s.get("core.item.desc.weapon.heavy");
                 ++p;
             }
         }
     }
-    if (inv[ci].hit_bonus != 0 || inv[ci].damage_bonus != 0)
+    if (inv[item_index].hit_bonus != 0 || inv[item_index].damage_bonus != 0)
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::weapon_info);
         listn(0, p) = i18n::s.get(
-            "core.locale.item.desc.bonus",
-            inv[ci].hit_bonus,
-            inv[ci].damage_bonus);
+            "core.item.desc.bonus",
+            inv[item_index].hit_bonus,
+            inv[item_index].damage_bonus);
         ++p;
     }
-    if (inv[ci].pv != 0 || inv[ci].dv != 0)
+    if (inv[item_index].pv != 0 || inv[item_index].dv != 0)
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::armor_info);
-        listn(0, p) =
-            i18n::s.get("core.locale.item.desc.dv_pv", inv[ci].dv, inv[ci].pv);
-        ++p;
-    }
-    if (inv[ci].id == 701)
-    {
-        int card_count{};
-        for (int i = 0; i < 1000; ++i)
-        {
-            if (card(0, i))
-                ++card_count;
-        }
-        int npc_count{};
-        for (const auto& discord : the_character_db.values())
-        {
-            UNUSED(discord);
-            ++npc_count;
-        }
-        const auto percentage = std::min(100 * card_count / npc_count, 100);
-        list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.locale.item.desc.deck") + u8": "s +
-            card_count + u8"/" + npc_count + u8"(" + percentage + u8"%)";
+        listn(0, p) = i18n::s.get(
+            "core.item.desc.dv_pv", inv[item_index].dv, inv[item_index].pv);
         ++p;
     }
 }
 
-static void _load_item_enchantment_desc(int ci, int& p)
+static void _load_item_enchantment_desc(int item_index, int& p)
 {
     int inhmax = 0;
     elona_vector1<int> inhlist;
-    getinheritance(ci, inhlist, inhmax);
+    getinheritance(item_index, inhlist, inhmax);
 
     for (int cnt = 0; cnt < 15; ++cnt)
     {
-        if (inv[ci].enchantments[cnt].id == 0)
+        if (inv[item_index].enchantments[cnt].id == 0)
         {
             break;
         }
         get_enchantment_description(
-            inv[ci].enchantments[cnt].id,
-            inv[ci].enchantments[cnt].power,
+            inv[item_index].enchantments[cnt].id,
+            inv[item_index].enchantments[cnt].power,
             reftype);
-        listn(0, p) = i18n::s.get("core.locale.enchantment.it") + s;
+        listn(0, p) = i18n::s.get("core.enchantment.it") + s;
         list(0, p) = rtval;
         list(1, p) = rtval(1);
         if (inhmax > 0)
@@ -282,43 +262,44 @@ static void _load_item_enchantment_desc(int ci, int& p)
         }
         ++p;
     }
-    if (inv[ci].is_eternal_force())
+    if (inv[item_index].is_eternal_force())
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::enchantment);
-        listn(0, p) = i18n::s.get("core.locale.item.desc.bit.eternal_force");
+        listn(0, p) = i18n::s.get("core.item.desc.bit.eternal_force");
         ++p;
     }
 }
 
 
-void item_load_desc(int ci, int& p)
+
+void item_load_desc(int item_index, int& p)
 {
     const I18NKey& locale_key_prefix =
-        the_item_db[inv[ci].id]->locale_key_prefix;
+        the_item_db[inv[item_index].id]->locale_key_prefix;
 
-    if (inv[ci].identification_state == IdentifyState::completely_identified)
+    if (inv[item_index].identify_state == IdentifyState::completely)
     {
         _load_item_main_description_text(locale_key_prefix, p);
     }
-    if (inv[ci].identification_state >= IdentifyState::almost_identified)
+    if (inv[item_index].identify_state >= IdentifyState::almost)
     {
-        _load_item_stat_text(ci, p);
+        _load_item_stat_text(item_index, p);
     }
-    if (inv[ci].identification_state <= IdentifyState::partly_identified)
+    if (inv[item_index].identify_state <= IdentifyState::partly)
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::normal);
-        listn(0, p) = i18n::s.get("core.locale.item.desc.have_to_identify");
+        listn(0, p) = i18n::s.get("core.item.desc.have_to_identify");
         ++p;
     }
-    if (inv[ci].identification_state == IdentifyState::completely_identified)
+    if (inv[item_index].identify_state == IdentifyState::completely)
     {
-        _load_item_enchantment_desc(ci, p);
+        _load_item_enchantment_desc(item_index, p);
         _load_item_description_text(locale_key_prefix, p);
     }
     if (p == 0)
     {
         list(0, p) = static_cast<int>(ItemDescriptionType::normal);
-        listn(0, p) = i18n::s.get("core.locale.item.desc.no_information");
+        listn(0, p) = i18n::s.get("core.item.desc.no_information");
         ++p;
     }
 }

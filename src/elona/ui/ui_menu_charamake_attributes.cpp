@@ -21,27 +21,26 @@ bool UIMenuCharamakeAttributes::init()
 void UIMenuCharamakeAttributes::_reroll_attributes()
 {
     chara_delete(0);
-    access_race_info(3, _race);
-    access_class_info(3, _klass);
-    cdata[rc].level = 1;
+    race_init_chara(cdata.player(), _race);
+    class_init_chara(cdata.player(), _klass);
+    cdata.player().level = 1;
     for (int cnt = 10; cnt < 18; ++cnt)
     {
         if (_locked_attributes(cnt - 10) == 0)
         {
             if (_minimum)
             {
-                sdata.get(cnt, rc).original_level -=
-                    sdata.get(cnt, rc).original_level / 2;
+                sdata.get(cnt, 0).original_level -=
+                    sdata.get(cnt, 0).original_level / 2;
             }
             else
             {
-                sdata.get(cnt, rc).original_level -=
-                    rnd(sdata.get(cnt, rc).original_level / 2 + 1);
+                sdata.get(cnt, 0).original_level -=
+                    rnd(sdata.get(cnt, 0).original_level / 2 + 1);
             }
-            _attributes(cnt - 10) =
-                sdata.get(cnt, rc).original_level * 1000000 +
-                sdata.get(cnt, rc).experience * 1000 +
-                sdata.get(cnt, rc).potential;
+            _attributes(cnt - 10) = sdata.get(cnt, 0).original_level * 1000000 +
+                sdata.get(cnt, 0).experience * 1000 +
+                sdata.get(cnt, 0).potential;
         }
     }
 }
@@ -50,19 +49,16 @@ static void _load_attributes_list(elona_vector1<int>& _attributes)
 {
     listmax = 0;
     list(0, 0) = 0;
-    listn(0, 0) = i18n::s.get("core.locale.chara_making.common.reroll");
+    listn(0, 0) = i18n::s.get("core.chara_making.common.reroll");
     ++listmax;
     list(0, 1) = 0;
-    listn(0, 1) =
-        i18n::s.get("core.locale.chara_making.roll_attributes.proceed");
+    listn(0, 1) = i18n::s.get("core.chara_making.roll_attributes.proceed");
     ++listmax;
     for (int cnt = 10; cnt < 18; ++cnt)
     {
         list(0, listmax) = _attributes(cnt - 10);
         listn(0, listmax) = i18n::s.get_m(
-            "locale.ability",
-            the_ability_db.get_id_from_legacy(cnt)->get(),
-            "name");
+            "ability", the_ability_db.get_id_from_legacy(cnt)->get(), "name");
         ++listmax;
     }
 }
@@ -74,7 +70,7 @@ void UIMenuCharamakeAttributes::update()
     pagesize = 0;
 
     character_making_draw_background(
-        "core.locale.chara_making.roll_attributes.caption");
+        "core.chara_making.roll_attributes.caption");
 
     _reroll_attributes();
     _minimum = false;
@@ -87,11 +83,9 @@ void UIMenuCharamakeAttributes::update()
 void UIMenuCharamakeAttributes::_draw_window_background()
 {
     ui_display_window(
-        i18n::s.get(
-            "core.locale.chara_making.roll_attributes.attribute_reroll"),
+        i18n::s.get("core.chara_making.roll_attributes.attribute_reroll"),
         strhint3b + key_mode2 + " [" +
-            i18n::s.get("core.locale.chara_making.roll_attributes.min_roll") +
-            "]",
+            i18n::s.get("core.chara_making.roll_attributes.min_roll") + "]",
         (windoww - 360) / 2 + inf_screenx,
         winposy(352, 1) - 20,
         360,
@@ -106,7 +100,7 @@ void UIMenuCharamakeAttributes::_draw_window_topic()
     gcopy_c(2, 0, 0, 180, 300, wx + 85, wy + wh / 2, x, y);
     gmode(2);
     display_topic(
-        i18n::s.get("core.locale.chara_making.roll_attributes.title"),
+        i18n::s.get("core.chara_making.roll_attributes.title"),
         wx + 28,
         wy + 30);
 }
@@ -116,13 +110,12 @@ void UIMenuCharamakeAttributes::_draw_window_desc(int locks_left)
     font(12 + sizefix - en * 2);
     mes(wx + 175,
         wy + 52,
-        i18n::s.get(
-            "core.locale.chara_making.roll_attributes.locked_items_desc"));
+        i18n::s.get("core.chara_making.roll_attributes.locked_items_desc"));
     font(13 - en * 2, snail::Font::Style::bold);
     mes(wx + 180,
         wy + 84,
-        i18n::s.get("core.locale.chara_making.roll_attributes.locks_left") +
-            u8": "s + locks_left);
+        i18n::s.get("core.chara_making.roll_attributes.locks_left") + u8": "s +
+            locks_left);
 }
 
 void UIMenuCharamakeAttributes::_draw_window(int locks_left)

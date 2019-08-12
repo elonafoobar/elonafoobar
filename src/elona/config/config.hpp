@@ -68,7 +68,9 @@ public:
     bool hide_shop_updates;
     bool high_quality_shadow;
     std::string hp_bar_position;
+    int initial_key_repeat_wait;
     bool joypad;
+    int key_repeat_wait;
     int key_wait;
     std::string language;
     bool leash_icon;
@@ -77,8 +79,6 @@ public:
     int message_transparency;
     bool music;
     bool net;
-    bool net_chat;
-    bool net_wish;
     bool object_shadow;
     std::string pcc_graphic_scale;
     int restock_interval;
@@ -89,7 +89,6 @@ public:
     int select_fast_start_wait;
     int select_fast_wait;
     int select_wait;
-    bool server_list;
     bool skip_confirm_at_shop;
     bool skip_overcasting_warning;
     bool skip_random_event_popups;

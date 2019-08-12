@@ -22,11 +22,11 @@ LOCAL_CPP_FEATURES := exceptions rtti
 LOCAL_C_INCLUDES += $(LOCAL_PATH)
 LOCAL_EXPORT_C_INCLUDES += $(LOCAL_C_INCLUDES)
 
-LOCAL_SHARED_LIBRARIES := SDL2 SDL2_mixer SDL2_image SDL2_ttf boost_filesystem boost_system lua util snail
+LOCAL_SHARED_LIBRARIES := SDL2 SDL2_mixer SDL2_image SDL2_ttf boost_filesystem boost_system lua util snail spider
 
-LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog
+LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog -lz
 
-LOCAL_CFLAGS += -Wextra -Wall -ffast-math $(LTO)
+LOCAL_CFLAGS += -Wextra -Wall -ffast-math $(LTO) -DBOOST_ALLOW_DEPRECATED_HEADERS
 
 LOCAL_LDFLAGS += $(LOCAL_CFLAGS) $(LTO) -fPIC
 

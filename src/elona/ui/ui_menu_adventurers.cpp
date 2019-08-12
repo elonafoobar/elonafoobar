@@ -50,20 +50,18 @@ void UIMenuAdventurers::update()
 void UIMenuAdventurers::_draw_window()
 {
     ui_display_window(
-        i18n::s.get("core.locale.ui.adventurers.title"),
+        i18n::s.get("core.ui.adventurers.title"),
         strhint2 + strhint3,
         (windoww - 640) / 2 + inf_screenx,
         winposy(448),
         640,
         448);
     display_topic(
-        i18n::s.get("core.locale.ui.adventurers.name_and_rank"),
-        wx + 28,
-        wy + 36);
+        i18n::s.get("core.ui.adventurers.name_and_rank"), wx + 28, wy + 36);
     display_topic(
-        i18n::s.get("core.locale.ui.adventurers.fame_lv"), wx + 320, wy + 36);
+        i18n::s.get("core.ui.adventurers.fame_lv"), wx + 320, wy + 36);
     display_topic(
-        i18n::s.get("core.locale.ui.adventurers.location"), wx + 420, wy + 36);
+        i18n::s.get("core.ui.adventurers.location"), wx + 420, wy + 36);
 }
 
 void UIMenuAdventurers::_draw_key(int cnt)
@@ -98,8 +96,7 @@ _draw_list_entry_pic_and_rank(int cnt, const Character& chara, int _p)
 
     mes(wx + 84,
         wy + 66 + cnt * 19 + 2,
-        cnvrank(_p + 1) +
-            i18n::s.get("core.locale.ui.adventurers.rank_counter"));
+        cnvrank(_p + 1) + i18n::s.get("core.ui.adventurers.rank_counter"));
 }
 
 void UIMenuAdventurers::_draw_list_entry_name(int cnt, const Character& chara)
@@ -125,11 +122,11 @@ void UIMenuAdventurers::_draw_list_entry_map_name(
 
     if (map_name == ""s)
     {
-        map_name = i18n::s.get("core.locale.ui.adventurers.unknown");
+        map_name = i18n::s.get("core.ui.adventurers.unknown");
     }
     if (chara.state() == Character::State::adventurer_dead)
     {
-        map_name = i18n::s.get("core.locale.ui.adventurers.hospital");
+        map_name = i18n::s.get("core.ui.adventurers.hospital");
     }
 
     mes(wx + 435, wy + 66 + cnt * 19 + 2, map_name);

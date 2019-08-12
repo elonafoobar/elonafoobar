@@ -1,0 +1,28 @@
+LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := spider
+
+SDL_PATH := ../../android/external
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/boost/include \
+$(LOCAL_PATH)/../thirdparty/uri/include
+
+LOCAL_CPP_FEATURES := exceptions rtti
+
+# Add your application source files here...
+@ANDROID_MK_SOURCES@
+
+LOCAL_C_INCLUDES += $(LOCAL_PATH)
+LOCAL_EXPORT_C_INCLUDES += $(LOCAL_C_INCLUDES)
+
+LOCAL_SHARED_LIBRARIES := boost_system util
+
+LOCAL_LDLIBS := -lGLESv1_CM -lGLESv2 -llog
+
+LOCAL_CFLAGS += -Wextra -Wall -ffast-math $(LTO) -DBOOST_ALLOW_DEPRECATED_HEADERS
+
+LOCAL_LDFLAGS += $(LOCAL_CFLAGS) $(LTO) -fPIC
+
+include $(BUILD_SHARED_LIBRARY)

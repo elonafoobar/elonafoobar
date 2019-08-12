@@ -1,12 +1,17 @@
 #pragma once
+
 #include <array>
 #include "../version.hpp"
+
+
 
 namespace elona
 {
 
 template <typename T>
 struct elona_vector1;
+
+
 
 struct DateTime
 {
@@ -21,7 +26,13 @@ struct DateTime
     {
         return hour + (day * 24) + (month * 24 * 30) + (year * 24 * 30 * 12);
     }
+
+    // It is for debugging, not for showing to end-users.
+    // E.g., "518/02/03 14:56'30"
+    std::string to_string() const;
 };
+
+
 
 struct QuestFlags
 {
@@ -58,6 +69,8 @@ struct QuestFlags
     int gift_count_of_little_sister;
 };
 
+
+
 struct GuildData
 {
     int belongs_to_mages_guild;
@@ -78,6 +91,8 @@ struct GuildData
     int thieves_guild_quota_recurring;
 };
 
+
+
 /**
  * Global game data that is serialized. Replaces gdata.
  */
@@ -95,6 +110,7 @@ struct GameData
     int pc_y_in_world_map;
     int play_days;
     int random_seed;
+    int random_seed_offset;
     DateTime date;
     int next_inventory_serial_id;
     int weather;
@@ -241,6 +257,5 @@ extern FoobarData foobar_data;
 
 // TODO: Make gdata class and make this function method.
 void modify_crowd_density(int cc, int delta);
-
 
 } // namespace elona

@@ -181,13 +181,13 @@ void cell_movechara(int cc, int x, int y)
 int cell_itemlist(int x, int y)
 {
     listmax = 0;
-    for (const auto& cnt : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[cnt].number() > 0)
+        if (item.number() > 0)
         {
-            if (inv[cnt].position.x == x && inv[cnt].position.y == y)
+            if (item.position.x == x && item.position.y == y)
             {
-                list(0, listmax) = cnt;
+                list(0, listmax) = item.index;
                 ++listmax;
             }
         }
@@ -201,18 +201,18 @@ int cell_itemlist(int x, int y)
 std::pair<int, int> cell_itemoncell(const Position& pos)
 {
     int number{};
-    int item{};
+    int item_{};
 
-    for (const auto& ci : items(-1))
+    for (const auto& item : inv.ground())
     {
-        if (inv[ci].number() > 0 && inv[ci].position == pos)
+        if (item.number() > 0 && item.position == pos)
         {
             ++number;
-            item = ci;
+            item_ = item.index;
         }
     }
 
-    return std::make_pair(number, item);
+    return std::make_pair(number, item_);
 }
 
 

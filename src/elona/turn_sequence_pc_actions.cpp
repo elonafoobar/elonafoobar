@@ -1,3 +1,6 @@
+#include <chrono>
+#include "../snail/application.hpp"
+#include "../snail/surface.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
 #include "audio.hpp"
@@ -18,28 +21,58 @@
 #include "mdata.hpp"
 #include "menu.hpp"
 #include "message.hpp"
-#include "network.hpp"
 #include "optional.hpp"
 #include "save.hpp"
+#include "tcg.hpp"
 #include "ui.hpp"
-#include "variables.hpp"
 #include "wish.hpp"
-
-
-
-namespace
-{
-
-int mousel;
-
-}
 
 
 
 namespace elona
 {
 
-static bool _proc_autodig()
+namespace
+{
+
+void _take_screenshot()
+{
+    using namespace std::chrono;
+
+    const auto now = system_clock::now();
+    const auto now_time_t = system_clock::to_time_t(now);
+    const auto now_tm = std::localtime(&now_time_t);
+
+    constexpr size_t len = 4 /*Y*/ + 2 /*m*/ + 2 /*d*/ + 2 /*H*/ + 2 /*M*/;
+    char buf[len + 1];
+    std::strftime(buf, len, "%Y%m%d%H%M", now_tm);
+
+    auto filepath =
+        filesystem::dirs::screenshot() / (playerid + "-" + buf + ".png");
+    for (int i = 2;; ++i)
+    {
+        if (fs::exists(filepath))
+        {
+            filepath = filesystem::dirs::screenshot() /
+                (playerid + "-" + buf + "-" + std::to_string(i) + ".png");
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    auto ss = snail::Application::instance().get_renderer().take_screenshot();
+    ss.save(filepath);
+    txt(i18n::s.get("core.action.take_screenshot"));
+    Message::instance().linebreak();
+    txt(filepathutil::to_utf8_path(filepath));
+    snd("core.screenshot");
+}
+
+
+
+bool _proc_autodig()
 {
     int x = cdata.player().next_position.x;
     int y = cdata.player().next_position.y;
@@ -61,6 +94,10 @@ static bool _proc_autodig()
     }
     return false;
 }
+
+} // namespace
+
+
 
 optional<TurnResult> handle_pc_action(std::string& action)
 {
@@ -114,8 +151,8 @@ optional<TurnResult> handle_pc_action(std::string& action)
     if (action == "quicksave")
     {
         key = "";
-        save_game();
-        txt(i18n::s.get("core.locale.action.quicksave"));
+        save_game(save_game_no_message, save_game_silent);
+        txt(i18n::s.get("core.action.quicksave"));
         return none;
     }
     if (action == "quickload")
@@ -188,7 +225,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     if (action == "reload_autopick")
     {
         Autopick::instance().load(playerid);
-        txt(i18n::s.get("core.locale.action.autopick.reloaded_autopick_file"));
+        txt(i18n::s.get("core.action.autopick.reloaded_autopick_file"));
         return none;
     }
 
@@ -209,48 +246,48 @@ optional<TurnResult> handle_pc_action(std::string& action)
             action = "search";
         }
         p = 0;
-        for (const auto& ci : items(-1))
+        for (const auto& item : inv.ground())
         {
-            if (inv[ci].number() == 0)
+            if (item.number() == 0)
                 continue;
-            if (inv[ci].position != cdata[cc].position)
+            if (item.position != cdata[cc].position)
                 continue;
-            if (the_item_db[inv[ci].id]->category == 72000)
+            if (the_item_db[item.id]->category == 72000)
             {
                 p = 1;
             }
-            if (the_item_db[inv[ci].id]->subcategory == 60001)
+            if (the_item_db[item.id]->subcategory == 60001)
             {
                 p = 2;
             }
-            if (the_item_db[inv[ci].id]->category == 60002)
+            if (the_item_db[item.id]->category == 60002)
             {
                 p(0) = 3;
-                p(1) = ci;
+                p(1) = item.index;
             }
-            if (inv[ci].function != 0 || the_item_db[inv[ci].id]->is_usable)
+            if (item.function != 0 || the_item_db[item.id]->is_usable)
             {
                 p = 4;
             }
-            if (the_item_db[inv[ci].id]->is_readable)
+            if (the_item_db[item.id]->is_readable)
             {
                 p = 5;
             }
-            if (inv[ci].id == 631)
+            if (item.id == 631)
             {
                 action = "go_down";
             }
-            if (inv[ci].id == 750 &&
+            if (item.id == 750 &&
                 game_data.current_map == mdata_t::MapId::your_home)
             {
                 action = "go_up";
             }
-            if (inv[ci].id == 751 &&
+            if (item.id == 751 &&
                 game_data.current_map == mdata_t::MapId::your_home)
             {
                 action = "go_down";
             }
-            if (inv[ci].id == 753)
+            if (item.id == 753)
             {
                 action = "go_down";
             }
@@ -292,27 +329,46 @@ optional<TurnResult> handle_pc_action(std::string& action)
         }
     }
 
-    if (mousel == 1)
+    const auto input = stick();
+    if (input == StickKey::mouse_left)
     {
-        ematan(p, windoww / 2 - mousex, (windowh - inf_verh) / 2 - mousey);
-        p = p * 360 / 255;
-        if (p >= 338)
+        static const char* move_actions[] = {
+            "east",
+            "northeast",
+            "north",
+            "northwest",
+            "west",
+            "southwest",
+            "south",
+            "southeast",
+        };
+
+        const auto y = (windowh - inf_verh) / 2 - mousey;
+        const auto x = mousex - windoww / 2;
+        if (y == 0 && x == 0)
         {
-            p = p - 360;
+            // Do nothing.
         }
-        s(0) = "south";
-        s(1) = "southwest";
-        s(2) = "west";
-        s(3) = "northwest";
-        s(4) = "north";
-        s(5) = "northeast";
-        s(6) = "east";
-        s(7) = "southeast";
-        for (int cnt = 0; cnt < 8; ++cnt)
+        else if (x == 0)
         {
-            if (p <= cnt * 45 + 23 && p > cnt * 45 - 23)
+            action = y < 0 ? "west" : "east";
+        }
+        else
+        {
+            constexpr auto pi = 3.141592653589793238;
+            auto angle = std::atan2(y, x);
+            if (angle < 0)
             {
-                action = s(cnt);
+                angle += 2 * pi;
+            }
+            // Then, angle is in [0, 2π]. 0 means east.
+
+            for (int i = 0; i < 8; ++i)
+            {
+                if (std::abs(angle - pi / 4 * i) < pi / 8)
+                {
+                    action = move_actions[i];
+                }
             }
         }
         await(100);
@@ -349,7 +405,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return none;
         }
@@ -375,7 +431,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return none;
         }
@@ -417,7 +473,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return none;
         }
@@ -443,7 +499,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return none;
         }
@@ -461,7 +517,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return none;
         }
@@ -493,7 +549,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return none;
         }
@@ -507,7 +563,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return none;
         }
@@ -530,7 +586,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return none;
         }
@@ -558,7 +614,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return none;
         }
@@ -579,7 +635,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return none;
         }
@@ -593,7 +649,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return none;
         }
@@ -631,7 +687,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         foobar_data.is_autodig_enabled = !foobar_data.is_autodig_enabled;
         txt(i18n::s.get(
-            "core.locale.ui.autodig."s +
+            "core.ui.autodig."s +
             (foobar_data.is_autodig_enabled ? "enabled" : "disabled")));
         return none;
     }
@@ -641,7 +697,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return none;
         }
@@ -659,7 +715,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return none;
         }
@@ -673,7 +729,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (map_data.type == mdata_t::MapType::world_map)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.locale.action.cannot_do_in_global"));
+            txt(i18n::s.get("core.action.cannot_do_in_global"));
             redraw();
             return none;
         }
@@ -688,7 +744,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     }
     if (action == "chat_box")
     {
-        show_chat_dialog();
+        menu_chat_dialog();
         update_screen();
         return none;
     }
@@ -784,15 +840,20 @@ optional<TurnResult> handle_pc_action(std::string& action)
         update_screen();
         return none;
     }
+    if (action == "screenshot")
+    {
+        _take_screenshot();
+        await(100);
+        return none;
+    }
     if (action != ""s && action != "cancel" /* && key != key_alter */)
     {
-        txt(i18n::s.get("core.locale.action.hit_key_for_help"),
+        txt(i18n::s.get("core.action.hit_key_for_help"),
             Message::only_once{true});
         update_screen();
     }
 
     return none;
 }
-
 
 } // namespace elona

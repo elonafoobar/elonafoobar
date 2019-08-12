@@ -200,7 +200,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.holy_one",
+         corpse_eating_callback = "core.eating_effect.holy_one",
       },
       {
          id = "nun",
@@ -227,7 +227,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.holy_one",
+         corpse_eating_callback = "core.eating_effect.holy_one",
       },
       {
          id = "elder",
@@ -331,7 +331,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.guard",
+         corpse_eating_callback = "core.eating_effect.guard",
       },
       {
          id = "guard",
@@ -357,7 +357,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.guard",
+         corpse_eating_callback = "core.eating_effect.guard",
       },
       {
          id = "palmian_elite_soldier",
@@ -439,7 +439,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.at",
+         corpse_eating_callback = "core.eating_effect.at",
       },
       {
          id = "orphe",
@@ -600,7 +600,7 @@ data:add_multi(
          category = 0,
          rarity = 1000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.vesda",
+         corpse_eating_callback = "core.eating_effect.vesda",
       },
       {
          id = "miches",
@@ -904,7 +904,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.insanity",
+         corpse_eating_callback = "core.eating_effect.insanity",
       },
       {
          id = "wynan",
@@ -1196,7 +1196,7 @@ data:add_multi(
          rarity = 80000,
          coefficient = 400,
          flags = { "IsSuitableForMount" },
-         corpse_eating_callback = "exports:core.eating_effect.putit",
+         corpse_eating_callback = "core.eating_effect.putit",
       },
       {
          id = "red_putit",
@@ -1224,7 +1224,7 @@ data:add_multi(
          rarity = 70000,
          coefficient = 400,
          flags = { "IsSuitableForMount" },
-         corpse_eating_callback = "exports:core.eating_effect.putit",
+         corpse_eating_callback = "core.eating_effect.putit",
       },
       {
          id = "slime",
@@ -2089,7 +2089,7 @@ data:add_multi(
          category = 5,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.poisonous",
+         corpse_eating_callback = "core.eating_effect.poisonous",
       },
       {
          id = "yeek",
@@ -2341,7 +2341,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.poisonous",
+         corpse_eating_callback = "core.eating_effect.poisonous",
       },
       {
          id = "mushroom",
@@ -2384,7 +2384,7 @@ data:add_multi(
          category = 0,
          rarity = 50000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.poisonous",
+         corpse_eating_callback = "core.eating_effect.poisonous",
       },
       {
          id = "chaos_mushroom",
@@ -2826,7 +2826,7 @@ data:add_multi(
          category = 2,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.troll",
+         corpse_eating_callback = "core.eating_effect.troll",
       },
       {
          id = "warrior_of_elea",
@@ -3014,7 +3014,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.mandrake",
+         corpse_eating_callback = "core.eating_effect.mandrake",
       },
       {
          id = "beetle",
@@ -3036,7 +3036,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.beetle",
+         corpse_eating_callback = "core.eating_effect.beetle",
       },
       {
          id = "orc_warrior",
@@ -3103,7 +3103,7 @@ data:add_multi(
          category = 9,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.eating_effect.rotten_one",
          drops = { "core.zombie" },
       },
       {
@@ -3202,7 +3202,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.fire_ent",
+         corpse_eating_callback = "core.eating_effect.fire_ent",
       },
       {
          id = "ice_ent",
@@ -3230,7 +3230,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.ice_ent",
+         corpse_eating_callback = "core.eating_effect.ice_ent",
       },
       {
          id = "lich",
@@ -3253,7 +3253,7 @@ data:add_multi(
          category = 0,
          rarity = 60000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.eating_effect.rotten_one",
       },
       {
          id = "master_lich",
@@ -3277,7 +3277,7 @@ data:add_multi(
          category = 0,
          rarity = 50000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.eating_effect.rotten_one",
       },
       {
          id = "demi_lich",
@@ -3301,7 +3301,7 @@ data:add_multi(
          category = 0,
          rarity = 40000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.eating_effect.rotten_one",
       },
       {
          id = "executioner",
@@ -3675,7 +3675,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.calm",
+         corpse_eating_callback = "core.eating_effect.calm",
       },
       {
          id = "killer_squirrel",
@@ -3699,7 +3699,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.calm",
+         corpse_eating_callback = "core.eating_effect.calm",
       },
       {
          id = "grudge",
@@ -3722,7 +3722,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsFloating" },
-         corpse_eating_callback = "exports:core.eating_effect.grudge",
+         corpse_eating_callback = "core.eating_effect.grudge",
       },
       {
          id = "hungry_demon",
@@ -3745,7 +3745,7 @@ data:add_multi(
          rarity = 70000,
          coefficient = 400,
          flags = { "IsFloating" },
-         corpse_eating_callback = "exports:core.eating_effect.grudge",
+         corpse_eating_callback = "core.eating_effect.grudge",
       },
       {
          id = "hungry_sea_lion",
@@ -3820,7 +3820,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsFloating", "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.electric_cloud",
+         corpse_eating_callback = "core.eating_effect.electric_cloud",
       },
       {
          id = "chaos_cloud",
@@ -3847,7 +3847,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsFloating", "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.chaos_cloud",
+         corpse_eating_callback = "core.eating_effect.chaos_cloud",
       },
       {
          id = "floating_eye",
@@ -3874,7 +3874,7 @@ data:add_multi(
          rarity = 80000,
          coefficient = 400,
          flags = { "IsFloating", "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.floating_eye",
+         corpse_eating_callback = "core.eating_effect.floating_eye",
       },
       {
          id = "chaos_eye",
@@ -3904,7 +3904,7 @@ data:add_multi(
          rarity = 60000,
          coefficient = 400,
          flags = { "IsFloating", "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.chaos_eye",
+         corpse_eating_callback = "core.eating_effect.chaos_eye",
       },
       {
          id = "mad_gaze",
@@ -3934,7 +3934,7 @@ data:add_multi(
          rarity = 60000,
          coefficient = 400,
          flags = { "IsFloating", "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.mad_gaze",
+         corpse_eating_callback = "core.eating_effect.mad_gaze",
       },
       {
          id = "death_gaze",
@@ -3965,7 +3965,7 @@ data:add_multi(
          rarity = 60000,
          coefficient = 400,
          flags = { "IsFloating", "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.floating_eye",
+         corpse_eating_callback = "core.eating_effect.floating_eye",
       },
       {
          id = "wyvern",
@@ -4082,7 +4082,7 @@ data:add_multi(
          rarity = 60000,
          coefficient = 400,
          flags = { "IsQuickTempered" },
-         corpse_eating_callback = "exports:core.eating_effect.cyclops",
+         corpse_eating_callback = "core.eating_effect.cyclops",
       },
       {
          id = "titan",
@@ -4107,7 +4107,7 @@ data:add_multi(
          rarity = 50000,
          coefficient = 400,
          flags = { "IsQuickTempered" },
-         corpse_eating_callback = "exports:core.eating_effect.titan",
+         corpse_eating_callback = "core.eating_effect.titan",
       },
       {
          id = "imp",
@@ -4131,7 +4131,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsFloating" },
-         corpse_eating_callback = "exports:core.eating_effect.imp",
+         corpse_eating_callback = "core.eating_effect.imp",
          drops = { "core.imp" },
       },
       {
@@ -4156,7 +4156,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsFloating" },
-         corpse_eating_callback = "exports:core.eating_effect.imp",
+         corpse_eating_callback = "core.eating_effect.imp",
          drops = { "core.imp" },
       },
       {
@@ -4181,7 +4181,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsFloating" },
-         corpse_eating_callback = "exports:core.eating_effect.imp",
+         corpse_eating_callback = "core.eating_effect.imp",
          drops = { "core.imp" },
       },
       {
@@ -4205,7 +4205,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.hand",
+         corpse_eating_callback = "core.eating_effect.hand",
       },
       {
          id = "hand_of_the_chaos",
@@ -4229,7 +4229,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.hand",
+         corpse_eating_callback = "core.eating_effect.hand",
       },
       {
          id = "hand_of_the_murderer",
@@ -4254,7 +4254,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.hand",
+         corpse_eating_callback = "core.eating_effect.hand",
       },
       {
          id = "ghost",
@@ -4278,7 +4278,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsFloating" },
-         corpse_eating_callback = "exports:core.eating_effect.ghost",
+         corpse_eating_callback = "core.eating_effect.ghost",
       },
       {
          id = "nymph",
@@ -4306,7 +4306,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsFloating" },
-         corpse_eating_callback = "exports:core.eating_effect.nymph",
+         corpse_eating_callback = "core.eating_effect.nymph",
       },
       {
          id = "man_eater_flower",
@@ -4374,7 +4374,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.cobra",
+         corpse_eating_callback = "core.eating_effect.cobra",
       },
       {
          id = "king_cobra",
@@ -4397,7 +4397,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.cobra",
+         corpse_eating_callback = "core.eating_effect.cobra",
       },
       {
          id = "fire_drake",
@@ -4469,7 +4469,7 @@ data:add_multi(
          category = 13,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.eating_effect.rotten_one",
          drops = { "core.mummy" },
       },
       {
@@ -4495,7 +4495,7 @@ data:add_multi(
          category = 13,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.eating_effect.rotten_one",
       },
       {
          id = "greater_mummy",
@@ -4520,7 +4520,7 @@ data:add_multi(
          category = 13,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.eating_effect.rotten_one",
       },
       {
          id = "tuwen",
@@ -4547,7 +4547,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsDeathMaster" },
-         corpse_eating_callback = "exports:core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.eating_effect.rotten_one",
          drops = { "core.tuwen" }
       },
       {
@@ -4571,7 +4571,7 @@ data:add_multi(
          category = 13,
          rarity = 50000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.eating_effect.rotten_one",
       },
       {
          id = "goblin",
@@ -4782,7 +4782,7 @@ data:add_multi(
          category = 11,
          rarity = 50000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.mammoth",
+         corpse_eating_callback = "core.eating_effect.mammoth",
       },
       {
          id = "living_armor",
@@ -4805,7 +4805,7 @@ data:add_multi(
          rarity = 40000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "steel_mass",
@@ -4829,7 +4829,7 @@ data:add_multi(
          rarity = 30000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "golden_armor",
@@ -4853,7 +4853,7 @@ data:add_multi(
          rarity = 30000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "death_armor",
@@ -4878,7 +4878,7 @@ data:add_multi(
          rarity = 30000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "medusa",
@@ -4967,7 +4967,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsFloating" },
-         corpse_eating_callback = "exports:core.eating_effect.cupid_of_love",
+         corpse_eating_callback = "core.eating_effect.cupid_of_love",
          drops = { "core.cupid_of_love" },
       },
       {
@@ -5235,7 +5235,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.cobra",
+         corpse_eating_callback = "core.eating_effect.cobra",
       },
       {
          id = "king_scorpion",
@@ -5262,7 +5262,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.cobra",
+         corpse_eating_callback = "core.eating_effect.cobra",
       },
       {
          id = "spider",
@@ -5315,7 +5315,7 @@ data:add_multi(
          category = 6,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.cobra",
+         corpse_eating_callback = "core.eating_effect.cobra",
       },
       {
          id = "paralyzer",
@@ -5343,7 +5343,7 @@ data:add_multi(
          category = 6,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.cobra",
+         corpse_eating_callback = "core.eating_effect.cobra",
       },
       {
          id = "tarantula",
@@ -5371,7 +5371,7 @@ data:add_multi(
          category = 6,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.cobra",
+         corpse_eating_callback = "core.eating_effect.cobra",
       },
       {
          id = "blood_spider",
@@ -5422,7 +5422,7 @@ data:add_multi(
          rarity = 40000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "stone_golem",
@@ -5445,7 +5445,7 @@ data:add_multi(
          rarity = 40000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "steel_golem",
@@ -5470,7 +5470,7 @@ data:add_multi(
          rarity = 40000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "golden_golem",
@@ -5495,7 +5495,7 @@ data:add_multi(
          rarity = 30000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "mithril_golem",
@@ -5520,7 +5520,7 @@ data:add_multi(
          rarity = 20000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "sky_golem",
@@ -5545,7 +5545,7 @@ data:add_multi(
          rarity = 15000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "adamantium_golem",
@@ -5570,7 +5570,7 @@ data:add_multi(
          rarity = 15000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "fire_crab",
@@ -5595,7 +5595,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.fire_crab",
+         corpse_eating_callback = "core.eating_effect.fire_crab",
       },
       {
          id = "fire_centipede",
@@ -5621,7 +5621,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.fire_centipede",
+         corpse_eating_callback = "core.eating_effect.fire_centipede",
       },
       {
          id = "cultist_of_fire",
@@ -5740,7 +5740,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "rook",
@@ -5763,7 +5763,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "bishop",
@@ -5787,7 +5787,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "knight",
@@ -5811,7 +5811,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "queen",
@@ -5835,7 +5835,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "king",
@@ -5859,7 +5859,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "mercenary_warrior",
@@ -6089,7 +6089,7 @@ data:add_multi(
          coefficient = 400,
       },
       {
-         id = "gilbert_the_colonel",
+         id = "gilbert",
          legacy_id = 231,
          item_type = 3,
          tags = { "man" },
@@ -6229,7 +6229,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsSuitableForMount" },
-         corpse_eating_callback = "exports:core.eating_effect.cat",
+         corpse_eating_callback = "core.eating_effect.cat",
       },
       {
          id = "silver_cat",
@@ -6253,7 +6253,7 @@ data:add_multi(
          category = 0,
          rarity = 1000,
          coefficient = 0,
-         corpse_eating_callback = "exports:core.eating_effect.cat",
+         corpse_eating_callback = "core.eating_effect.cat",
       },
       {
          id = "stray_cat",
@@ -6278,7 +6278,7 @@ data:add_multi(
          category = 0,
          rarity = 10000,
          coefficient = 0,
-         corpse_eating_callback = "exports:core.eating_effect.cat",
+         corpse_eating_callback = "core.eating_effect.cat",
       },
       {
          id = "lion",
@@ -6519,7 +6519,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.calm",
+         corpse_eating_callback = "core.eating_effect.calm",
          drops = { "core.hermit_crab" },
       },
       {
@@ -6727,7 +6727,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.insanity",
+         corpse_eating_callback = "core.eating_effect.insanity",
          drops = { "core.god_boss" },
       },
       {
@@ -6753,7 +6753,7 @@ data:add_multi(
          coefficient = 400,
       },
       {
-         id = "garokk",
+         id = "garok",
          legacy_id = 208,
          item_type = 3,
          tags = { "man" },
@@ -6776,7 +6776,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         dialog_id = "core.garokk",
+         dialog_id = "core.garok",
       },
       {
          id = "miral",
@@ -6998,7 +6998,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "blade_alpha",
@@ -7023,7 +7023,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "blade_omega",
@@ -7048,7 +7048,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "kaneda_bike",
@@ -7074,7 +7074,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
          flags = { "IsImmuneToFear", "IsSuitableForMount" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
          dialog_id = "core.kaneda_bike",
       },
       {
@@ -7100,7 +7100,7 @@ data:add_multi(
          rarity = 5000,
          coefficient = 400,
          flags = { "IsImmuneToFear", "IsSuitableForMount" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "mine_dog",
@@ -7124,7 +7124,7 @@ data:add_multi(
          rarity = 25000,
          coefficient = 400,
          flags = { "IsImmuneToFear", "IsImmuneToMine", "CuresMpFrequently" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
          drops = { "core.mine_dog" },
       },
       {
@@ -7150,7 +7150,7 @@ data:add_multi(
          rarity = 50000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "deformed_eye",
@@ -7174,7 +7174,7 @@ data:add_multi(
          rarity = 60000,
          coefficient = 400,
          flags = { "IsFloating", "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.deformed_eye",
+         corpse_eating_callback = "core.eating_effect.deformed_eye",
          drops = { "core.deformed_eye" },
       },
       {
@@ -7200,7 +7200,7 @@ data:add_multi(
          rarity = 60000,
          coefficient = 400,
          flags = { "IsFloating", "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.deformed_eye",
+         corpse_eating_callback = "core.eating_effect.deformed_eye",
          drops = { "core.deformed_eye" },
       },
       {
@@ -7227,7 +7227,7 @@ data:add_multi(
          rarity = 50000,
          coefficient = 400,
          flags = { "IsFloating", "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.ether",
+         corpse_eating_callback = "core.eating_effect.ether",
       },
       {
          id = "hedgehog",
@@ -7273,7 +7273,7 @@ data:add_multi(
          category = 0,
          rarity = 70000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.ether",
+         corpse_eating_callback = "core.eating_effect.ether",
       },
       {
          id = "chicken",
@@ -7318,7 +7318,7 @@ data:add_multi(
          category = 0,
          rarity = 60000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.pumpkin",
+         corpse_eating_callback = "core.eating_effect.pumpkin",
       },
       {
          id = "puppy",
@@ -7344,7 +7344,7 @@ data:add_multi(
          rarity = 20000,
          coefficient = 400,
          flags = { "IsInvisible" },
-         corpse_eating_callback = "exports:core.eating_effect.pumpkin",
+         corpse_eating_callback = "core.eating_effect.pumpkin",
       },
       {
          id = "greater_pumpkin",
@@ -7370,7 +7370,7 @@ data:add_multi(
          rarity = 60000,
          coefficient = 400,
          flags = { "IsInvisible" },
-         corpse_eating_callback = "exports:core.eating_effect.greater_pumpkin",
+         corpse_eating_callback = "core.eating_effect.greater_pumpkin",
       },
       {
          id = "halloween_nightmare",
@@ -7396,7 +7396,7 @@ data:add_multi(
          rarity = 60000,
          coefficient = 400,
          flags = { "IsInvisible" },
-         corpse_eating_callback = "exports:core.eating_effect.halloween_nightmare",
+         corpse_eating_callback = "core.eating_effect.halloween_nightmare",
       },
       {
          id = "stalker",
@@ -7420,7 +7420,7 @@ data:add_multi(
          rarity = 30000,
          coefficient = 400,
          flags = { "IsInvisible", "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.stalker",
+         corpse_eating_callback = "core.eating_effect.stalker",
       },
       {
          id = "shadow_stalker",
@@ -7445,7 +7445,7 @@ data:add_multi(
          rarity = 30000,
          coefficient = 400,
          flags = { "IsInvisible", "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.stalker",
+         corpse_eating_callback = "core.eating_effect.stalker",
       },
       {
          id = "ebon",
@@ -7476,7 +7476,7 @@ data:add_multi(
          coefficient = 400,
       },
       {
-         id = "moyer_the_crooked",
+         id = "moyer",
          legacy_id = 203,
          item_type = 3,
          tags = { "man" },
@@ -7979,7 +7979,7 @@ data:add_multi(
          rarity = 20000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.yith",
+         corpse_eating_callback = "core.eating_effect.yith",
       },
       {
          id = "shub_niggurath",
@@ -8007,7 +8007,7 @@ data:add_multi(
          rarity = 40000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.yith",
+         corpse_eating_callback = "core.eating_effect.yith",
       },
       {
          id = "gagu",
@@ -8031,7 +8031,7 @@ data:add_multi(
          category = 0,
          rarity = 80000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.yith",
+         corpse_eating_callback = "core.eating_effect.yith",
       },
       {
          id = "spiral_king",
@@ -8059,7 +8059,7 @@ data:add_multi(
          rarity = 30000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.yith",
+         corpse_eating_callback = "core.eating_effect.yith",
       },
       {
          id = "fairy",
@@ -8296,7 +8296,7 @@ data:add_multi(
          rarity = 10000,
          coefficient = 400,
          flags = { "IsSuitableForMount" },
-         corpse_eating_callback = "exports:core.eating_effect.horse",
+         corpse_eating_callback = "core.eating_effect.horse",
       },
       {
          id = "wild_horse",
@@ -8322,7 +8322,7 @@ data:add_multi(
          rarity = 10000,
          coefficient = 400,
          flags = { "IsSuitableForMount" },
-         corpse_eating_callback = "exports:core.eating_effect.horse",
+         corpse_eating_callback = "core.eating_effect.horse",
       },
       {
          id = "noyel_horse",
@@ -8348,7 +8348,7 @@ data:add_multi(
          rarity = 10000,
          coefficient = 400,
          flags = { "IsSuitableForMount" },
-         corpse_eating_callback = "exports:core.eating_effect.horse",
+         corpse_eating_callback = "core.eating_effect.horse",
       },
       {
          id = "yowyn_horse",
@@ -8374,7 +8374,7 @@ data:add_multi(
          rarity = 10000,
          coefficient = 400,
          flags = { "IsSuitableForMount" },
-         corpse_eating_callback = "exports:core.eating_effect.horse",
+         corpse_eating_callback = "core.eating_effect.horse",
       },
       {
          id = "wild_horse2",
@@ -8400,7 +8400,7 @@ data:add_multi(
          rarity = 10000,
          coefficient = 400,
          flags = { "IsSuitableForMount" },
-         corpse_eating_callback = "exports:core.eating_effect.horse",
+         corpse_eating_callback = "core.eating_effect.horse",
       },
       {
          id = "mutant",
@@ -8694,7 +8694,7 @@ data:add_multi(
          rarity = 50000,
          coefficient = 400,
          flags = { "IsImmuneToFear" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
       },
       {
          id = "little_sister",
@@ -8794,7 +8794,7 @@ data:add_multi(
          rarity = 10000,
          coefficient = 0,
          flags = { "IsFloating" },
-         corpse_eating_callback = "exports:core.eating_effect.ghost",
+         corpse_eating_callback = "core.eating_effect.ghost",
       },
       {
          id = "quickling",
@@ -8817,7 +8817,7 @@ data:add_multi(
          rarity = 15000,
          coefficient = 400,
          flags = { "IsUnsuitableForMount", "IsImmuneToElementalDamage" },
-         corpse_eating_callback = "exports:core.eating_effect.quickling",
+         corpse_eating_callback = "core.eating_effect.quickling",
       },
       {
          id = "quickling_archer",
@@ -8842,7 +8842,7 @@ data:add_multi(
          rarity = 15000,
          coefficient = 400,
          flags = { "IsUnsuitableForMount", "IsImmuneToElementalDamage" },
-         corpse_eating_callback = "exports:core.eating_effect.quickling",
+         corpse_eating_callback = "core.eating_effect.quickling",
       },
       {
          id = "silver_bell",
@@ -8866,7 +8866,7 @@ data:add_multi(
          rarity = 2000,
          coefficient = 0,
          flags = { "IsUnsuitableForMount", "IsMetal", "IsImmuneToElementalDamage", "IsFloating" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
          drops = { "core.silver_bell" },
       },
       {
@@ -8892,7 +8892,7 @@ data:add_multi(
          rarity = 5000,
          coefficient = 0,
          flags = { "IsUnsuitableForMount", "IsMetal", "IsImmuneToElementalDamage", "IsFloating" },
-         corpse_eating_callback = "exports:core.eating_effect.iron",
+         corpse_eating_callback = "core.eating_effect.iron",
          drops = { "core.gold_bell" },
       },
       {
@@ -8919,7 +8919,7 @@ data:add_multi(
          category = 0,
          rarity = 40000,
          coefficient = 400,
-         corpse_eating_callback = "exports:core.eating_effect.alien",
+         corpse_eating_callback = "core.eating_effect.alien",
       },
       -- For debug
       -- chara spiral_putit {

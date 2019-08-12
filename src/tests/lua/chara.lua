@@ -1,7 +1,6 @@
-require "tests/lua/support/minctest"
+require_relative("tests/lua/support/minctest")
 
-local Chara = Elona.require("Chara")
-local Enums = Elona.require("Enums")
+local Chara = require("game.Chara")
 
 lrun("test Chara.is_alive", function()
         Testing.start_in_debug_map()
@@ -14,7 +13,7 @@ lrun("test Chara.is_alive", function()
 end)
 
 lrun("test Chara.is_player", function()
-        Testing.start_in_debug_map()
+        -- Testing.start_in_debug_map()
 
         lequal(Chara.is_player(Chara.player()), true)
 
@@ -23,7 +22,7 @@ lrun("test Chara.is_player", function()
 end)
 
 lrun("test Chara.is_ally", function()
-        Testing.start_in_debug_map()
+        -- Testing.start_in_debug_map()
 
         lequal(Chara.is_ally(Chara.player()), false)
 
@@ -35,28 +34,15 @@ lrun("test Chara.is_ally", function()
         -- lequal(Chara.is_ally(putit), true)
 end)
 
-lrun("test Chara.count", function()
-        Testing.start_in_debug_map()
-
-        Chara.create(0, 0, "core.putit")
-        Chara.create(0, 1, "core.putit")
-
-        lequal(Chara.count(), 2)
-
-        Chara.create(0, 2, "core.putit")
-
-        lequal(Chara.count(), 3)
-end)
-
 lrun("test Chara.player", function()
-        Testing.start_in_debug_map()
+        -- Testing.start_in_debug_map()
 
         local player = Chara.player()
         lequal(player.index, 0)
 end)
 
 lrun("test Chara.create", function()
-        Testing.start_in_debug_map()
+        -- Testing.start_in_debug_map()
 
         local putit = Chara.create(4, 8, "core.putit")
         lok(putit ~= nil, "Character was nil.")
@@ -66,21 +52,23 @@ end)
 
 local function tally()
    local count = 0
-   for _, _ in Chara.iter(0, 245) do
+   for _, c in Chara.iter(0, 245) do
       count = count + 1
    end
    return count
 end
 
-lrun("test Chara.iter", function()
+lrun("test Chara.count/iter", function()
         Testing.start_in_debug_map()
 
         Chara.create(0, 0, "core.putit")
         Chara.create(0, 1, "core.putit")
 
+        lequal(Chara.count(), 2)
         local count = tally()
 
         Chara.create(0, 2, "core.putit")
 
+        lequal(Chara.count(), 3)
         lequal(tally(), count + 1)
 end)

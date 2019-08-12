@@ -1,13 +1,13 @@
-local Chara = Elona.require("Chara")
-local Map = Elona.require("Map")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
+local Chara = require("game.Chara")
+local Map = require("game.Map")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
 
-local common = require("data/dialog/common")
+local common = require_relative("data/dialog/common")
 
 return {
    id = "tam",
-   root = "core.locale.talk.unique.tam",
+   root = "core.talk.unique.tam",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("cat_house")

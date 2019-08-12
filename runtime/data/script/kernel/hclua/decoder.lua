@@ -1,4 +1,4 @@
-local Util = require "hclua.util"
+local Util = require_relative("hclua.util")
 
 local Decoder = {}
 

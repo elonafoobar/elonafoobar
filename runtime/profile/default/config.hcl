@@ -69,10 +69,18 @@ config {
         }
 
         net {
-            enabled = false
-            wish = false
-            chat = false
-            server_list = false
+            is_enabled = false
+            chat = "disabled"
+            death = "disabled"
+            wish = "disabled"
+            news = "disabled"
+            is_alias_vote_enabled = false
+            hide_your_name = false
+            hide_your_alias = false
+            chat_receive_interval = 5
+            language_blacklist = []
+            word_blacklist = []
+            player_blacklist = []
         }
 
         font {
@@ -142,6 +150,14 @@ config {
             # Number of frames to wait between presses of shortcut keys.
             # Valid values are 1 - 10.
             key_wait = 5
+
+            # Number of frames to wait between the first action and the second.
+            # Valid values are 1 - 20.
+            initial_key_repeat_wait = 5
+
+            # Number of frames to wait between any actions.
+            # Valid values are 1 - 5.
+            key_repeat_wait = 1
         }
 
         # These settings affect game balance.

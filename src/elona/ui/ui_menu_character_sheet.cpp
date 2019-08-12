@@ -85,8 +85,7 @@ static void _load_resistances_list()
 {
     list(0, listmax) = -1;
     list(1, listmax) = 40000;
-    listn(0, listmax) =
-        i18n::s.get("core.locale.ui.chara_sheet.category.resistance");
+    listn(0, listmax) = i18n::s.get("core.ui.chara_sheet.category.resistance");
     ++listmax;
     for (int cnt = 50; cnt < 100; ++cnt)
     {
@@ -104,12 +103,11 @@ static void _load_list_skill_category(CharacterSheetOperation op)
 {
     list(0, listmax) = -1;
     list(1, listmax) = 20000;
-    listn(0, listmax) =
-        i18n::s.get("core.locale.ui.chara_sheet.category.skill");
+    listn(0, listmax) = i18n::s.get("core.ui.chara_sheet.category.skill");
     ++listmax;
     if (op == CharacterSheetOperation::learn_skill)
     {
-        map_get_trainer_skills();
+        map_get_trainer_skills(cdata[cc]);
     }
     else
     {
@@ -122,7 +120,7 @@ static void _load_list_proficiency_category(CharacterSheetOperation op)
     list(0, listmax) = -1;
     list(1, listmax) = 30000;
     listn(0, listmax) =
-        i18n::s.get("core.locale.ui.chara_sheet.category.weapon_proficiency");
+        i18n::s.get("core.ui.chara_sheet.category.weapon_proficiency");
     ++listmax;
     _load_weapon_proficiency_list(op);
 
@@ -168,14 +166,14 @@ bool UIMenuCharacterSheet::init()
     wy = winposy(data.height) - 10;
     ww = data.width;
     wh = data.height;
-    s = i18n::s.get("core.locale.ui.chara_sheet.title.default");
+    s = i18n::s.get("core.ui.chara_sheet.title.default");
     if (_operation == CharacterSheetOperation::train_skill)
     {
-        s = i18n::s.get("core.locale.ui.chara_sheet.title.training");
+        s = i18n::s.get("core.ui.chara_sheet.title.training");
     }
     if (_operation == CharacterSheetOperation::learn_skill)
     {
-        s = i18n::s.get("core.locale.ui.chara_sheet.title.learning");
+        s = i18n::s.get("core.ui.chara_sheet.title.learning");
     }
     if (_operation != CharacterSheetOperation::character_making)
     {
@@ -193,7 +191,7 @@ bool UIMenuCharacterSheet::init()
     if (_operation == CharacterSheetOperation::train_skill)
     {
         Message::instance().linebreak();
-        txt(i18n::s.get("core.locale.ui.chara_sheet.train_which_skill"));
+        txt(i18n::s.get("core.ui.chara_sheet.train_which_skill"));
     }
     _returned_from_portrait = false;
 
@@ -203,25 +201,25 @@ bool UIMenuCharacterSheet::init()
 void UIMenuCharacterSheet::_draw_title(CharacterSheetOperation op)
 {
     std::string title = "";
-    std::string strhint6 = i18n::s.get("core.locale.ui.hint.portrait");
+    std::string strhint6 = i18n::s.get("core.ui.hint.portrait");
 
     switch (op)
     {
     case CharacterSheetOperation::normal:
         if (page == 0)
         {
-            title = i18n::s.get("core.locale.ui.chara_sheet.hint.hint") +
-                strhint6 + strhint2 + strhint3;
+            title = i18n::s.get("core.ui.chara_sheet.hint.hint") + strhint6 +
+                strhint2 + strhint3;
         }
         else
         {
-            title = i18n::s.get("core.locale.ui.chara_sheet.hint.spend_bonus") +
+            title = i18n::s.get("core.ui.chara_sheet.hint.spend_bonus") +
                 strhint2 + strhint3;
         }
         break;
     case CharacterSheetOperation::character_making:
-        title = i18n::s.get("core.locale.ui.chara_sheet.hint.reroll") +
-            strhint6 + i18n::s.get("core.locale.ui.chara_sheet.hint.confirm");
+        title = i18n::s.get("core.ui.chara_sheet.hint.reroll") + strhint6 +
+            i18n::s.get("core.ui.chara_sheet.hint.confirm");
         break;
     case CharacterSheetOperation::train_skill:
         if (page == 0)
@@ -230,7 +228,7 @@ void UIMenuCharacterSheet::_draw_title(CharacterSheetOperation op)
         }
         else
         {
-            title = i18n::s.get("core.locale.ui.chara_sheet.hint.train_skill") +
+            title = i18n::s.get("core.ui.chara_sheet.hint.train_skill") +
                 strhint2 + strhint3;
         }
         break;
@@ -241,15 +239,14 @@ void UIMenuCharacterSheet::_draw_title(CharacterSheetOperation op)
         }
         else
         {
-            title = i18n::s.get("core.locale.ui.chara_sheet.hint.learn_skill") +
+            title = i18n::s.get("core.ui.chara_sheet.hint.learn_skill") +
                 strhint2 + strhint3;
         }
         break;
     case CharacterSheetOperation::investigate_ally:
         if (page == 0)
         {
-            title =
-                i18n::s.get("core.locale.ui.chara_sheet.hint.blessing_info") +
+            title = i18n::s.get("core.ui.chara_sheet.hint.blessing_info") +
                 strhint6 + strhint2 + strhint3;
         }
         else
@@ -264,8 +261,7 @@ void UIMenuCharacterSheet::_draw_title(CharacterSheetOperation op)
         if (page != 0)
         {
             title += ""s + key_mode2 + u8" ["s +
-                i18n::s.get("core.locale.ui.chara_sheet.hint.track_skill") +
-                u8"]"s;
+                i18n::s.get("core.ui.chara_sheet.hint.track_skill") + u8"]"s;
         }
     }
 
@@ -303,8 +299,7 @@ void UIMenuCharacterSheet::_draw_window(bool show_bonus)
     if (show_bonus && page != 0)
     {
         tips = i18n::s.get(
-            "core.locale.ui.chara_sheet.you_can_spend_bonus",
-            cdata[cc].skill_bonus);
+            "core.ui.chara_sheet.you_can_spend_bonus", cdata[cc].skill_bonus);
     }
     ui_display_window2(
         tips, (windoww - 700) / 2 + inf_screenx, winposy(400) - 10, 700, 400);
@@ -314,23 +309,17 @@ void UIMenuCharacterSheet::_draw_window(bool show_bonus)
 void UIMenuCharacterSheet::_draw_first_page_topics()
 {
     display_topic(
-        i18n::s.get("core.locale.ui.chara_sheet.attributes"),
-        wx + 28,
-        wy + 122);
+        i18n::s.get("core.ui.chara_sheet.attributes"), wx + 28, wy + 122);
     display_topic(
-        i18n::s.get("core.locale.ui.chara_sheet.combat_rolls"),
-        wx + 400,
-        wy + 253);
+        i18n::s.get("core.ui.chara_sheet.combat_rolls"), wx + 400, wy + 253);
     display_topic(
-        i18n::s.get("core.locale.ui.chara_sheet.history"), wx + 28, wy + 273);
+        i18n::s.get("core.ui.chara_sheet.history"), wx + 28, wy + 273);
     display_topic(
-        i18n::s.get("core.locale.ui.chara_sheet.blessing_and_hex"),
+        i18n::s.get("core.ui.chara_sheet.blessing_and_hex"),
         wx + 400,
         wy + 122);
     display_topic(
-        i18n::s.get("core.locale.ui.chara_sheet.extra_info"),
-        wx + 220,
-        wy + 273);
+        i18n::s.get("core.ui.chara_sheet.extra_info"), wx + 220, wy + 273);
 }
 
 void UIMenuCharacterSheet::_draw_portrait_face()
@@ -383,11 +372,11 @@ void UIMenuCharacterSheet::_draw_first_page_portrait()
 void UIMenuCharacterSheet::_draw_first_page_text_exp()
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    s(0) = i18n::s.get("core.locale.ui.chara_sheet.exp.level");
-    s(1) = i18n::s.get("core.locale.ui.chara_sheet.exp.exp");
-    s(2) = i18n::s.get("core.locale.ui.chara_sheet.exp.next_level");
-    s(3) = i18n::s.get("core.locale.ui.chara_sheet.exp.god");
-    s(4) = i18n::s.get("core.locale.ui.chara_sheet.exp.guild");
+    s(0) = i18n::s.get("core.ui.chara_sheet.exp.level");
+    s(1) = i18n::s.get("core.ui.chara_sheet.exp.exp");
+    s(2) = i18n::s.get("core.ui.chara_sheet.exp.next_level");
+    s(3) = i18n::s.get("core.ui.chara_sheet.exp.god");
+    s(4) = i18n::s.get("core.ui.chara_sheet.exp.guild");
     for (int cnt = 0; cnt < 5; ++cnt)
     {
         mes(wx + 355, wy + 46 + cnt * 15, s(cnt), {20, 10, 0});
@@ -396,14 +385,14 @@ void UIMenuCharacterSheet::_draw_first_page_text_exp()
 
 void UIMenuCharacterSheet::_draw_first_page_text_personal()
 {
-    s(0) = i18n::s.get("core.locale.ui.chara_sheet.personal.name");
-    s(1) = i18n::s.get("core.locale.ui.chara_sheet.personal.aka");
-    s(2) = i18n::s.get("core.locale.ui.chara_sheet.personal.race");
-    s(3) = i18n::s.get("core.locale.ui.chara_sheet.personal.sex");
-    s(4) = i18n::s.get("core.locale.ui.chara_sheet.personal.class");
-    s(5) = i18n::s.get("core.locale.ui.chara_sheet.personal.age");
-    s(6) = i18n::s.get("core.locale.ui.chara_sheet.personal.height");
-    s(7) = i18n::s.get("core.locale.ui.chara_sheet.personal.weight");
+    s(0) = i18n::s.get("core.ui.chara_sheet.personal.name");
+    s(1) = i18n::s.get("core.ui.chara_sheet.personal.aka");
+    s(2) = i18n::s.get("core.ui.chara_sheet.personal.race");
+    s(3) = i18n::s.get("core.ui.chara_sheet.personal.sex");
+    s(4) = i18n::s.get("core.ui.chara_sheet.personal.class");
+    s(5) = i18n::s.get("core.ui.chara_sheet.personal.age");
+    s(6) = i18n::s.get("core.ui.chara_sheet.personal.height");
+    s(7) = i18n::s.get("core.ui.chara_sheet.personal.weight");
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         mes(wx + 30 + cnt / 4 * 190,
@@ -428,17 +417,17 @@ void UIMenuCharacterSheet::_draw_first_page_text_attribute()
             wy + 157 + cnt * 15);
         mes(wx + 54,
             wy + 151 + cnt * 15,
-            i18n::s.get_enum("core.locale.ui.attribute", cnt),
+            i18n::s.get_enum("core.ui.attribute", cnt),
             {20, 10, 0});
     }
 }
 
 void UIMenuCharacterSheet::_draw_first_page_text_time()
 {
-    s(0) = i18n::s.get("core.locale.ui.chara_sheet.time.turns");
-    s(1) = i18n::s.get("core.locale.ui.chara_sheet.time.days");
-    s(2) = i18n::s.get("core.locale.ui.chara_sheet.time.kills");
-    s(3) = i18n::s.get("core.locale.ui.chara_sheet.time.time");
+    s(0) = i18n::s.get("core.ui.chara_sheet.time.turns");
+    s(1) = i18n::s.get("core.ui.chara_sheet.time.days");
+    s(2) = i18n::s.get("core.ui.chara_sheet.time.kills");
+    s(3) = i18n::s.get("core.ui.chara_sheet.time.time");
     s(4) = "";
     s(5) = "";
     for (int cnt = 0; cnt < 5; ++cnt)
@@ -449,10 +438,10 @@ void UIMenuCharacterSheet::_draw_first_page_text_time()
 
 void UIMenuCharacterSheet::_draw_first_page_text_weight()
 {
-    s(0) = i18n::s.get("core.locale.ui.chara_sheet.weight.cargo_weight");
-    s(1) = i18n::s.get("core.locale.ui.chara_sheet.weight.cargo_limit");
-    s(2) = i18n::s.get("core.locale.ui.chara_sheet.weight.equip_weight");
-    s(3) = i18n::s.get("core.locale.ui.chara_sheet.weight.deepest_level");
+    s(0) = i18n::s.get("core.ui.chara_sheet.weight.cargo_weight");
+    s(1) = i18n::s.get("core.ui.chara_sheet.weight.cargo_limit");
+    s(2) = i18n::s.get("core.ui.chara_sheet.weight.equip_weight");
+    s(3) = i18n::s.get("core.ui.chara_sheet.weight.deepest_level");
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         mes(wx + 224, wy + 301 + cnt * 15, s(cnt), {20, 10, 0});
@@ -477,19 +466,18 @@ void UIMenuCharacterSheet::_draw_first_page_text_name()
 {
     s(0) = cdatan(0, cc);
     s(1) = cdatan(1, cc);
-    s(2) = cnven(i18n::s.get_m("locale.race", cdatan(2, cc), "name"));
-    access_class_info(2, cdatan(3, cc));
-    s(4) = cnven(classname);
+    s(2) = cnven(i18n::s.get_m("race", cdatan(2, cc), "name"));
+    s(4) = cnven(class_get_name(cdatan(3, cc)));
     if (cdata[cc].sex == 0)
     {
-        s(3) = cnven(i18n::s.get("core.locale.ui.sex3.male"));
+        s(3) = cnven(i18n::s.get("core.ui.sex3.male"));
     }
     else
     {
-        s(3) = cnven(i18n::s.get("core.locale.ui.sex3.female"));
+        s(3) = cnven(i18n::s.get("core.ui.sex3.female"));
     }
     s(5) = ""s + calcage(cc) + u8" "s +
-        i18n::s.get("core.locale.ui.chara_sheet.personal.age_counter");
+        i18n::s.get("core.ui.chara_sheet.personal.age_counter");
     s(6) = ""s + cdata[cc].height + u8" cm"s;
     s(7) = ""s + cdata[cc].weight + u8" kg"s;
     for (int cnt = 0; cnt < 8; ++cnt)
@@ -560,11 +548,11 @@ void UIMenuCharacterSheet::_draw_first_page_weapon_info()
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     mes(wx + 417,
         wy + 281 + p(2) * 16,
-        i18n::s.get("core.locale.ui.chara_sheet.damage.protect"),
+        i18n::s.get("core.ui.chara_sheet.damage.protect"),
         {20, 10, 0});
     mes(wx + 590 - en * 16,
         wy + 281 + p(2) * 16,
-        i18n::s.get("core.locale.ui.chara_sheet.damage.evade"),
+        i18n::s.get("core.ui.chara_sheet.damage.evade"),
         {20, 10, 0});
     attackskill = 106;
     int evade = calc_evasion(tc);
@@ -580,16 +568,16 @@ void UIMenuCharacterSheet::_draw_first_page_weapon_info()
 
 void UIMenuCharacterSheet::_draw_first_page_text_fame()
 {
-    s(0) = i18n::s.get("core.locale.ui.chara_sheet.attribute.life");
-    s(1) = i18n::s.get("core.locale.ui.chara_sheet.attribute.mana");
-    s(2) = i18n::s.get("core.locale.ui.chara_sheet.attribute.sanity");
-    s(3) = i18n::s.get("core.locale.ui.chara_sheet.attribute.speed");
+    s(0) = i18n::s.get("core.ui.chara_sheet.attribute.life");
+    s(1) = i18n::s.get("core.ui.chara_sheet.attribute.mana");
+    s(2) = i18n::s.get("core.ui.chara_sheet.attribute.sanity");
+    s(3) = i18n::s.get("core.ui.chara_sheet.attribute.speed");
     s(4) = "";
-    s(5) = i18n::s.get("core.locale.ui.chara_sheet.attribute.fame");
-    s(6) = i18n::s.get("core.locale.ui.chara_sheet.attribute.karma");
+    s(5) = i18n::s.get("core.ui.chara_sheet.attribute.fame");
+    s(6) = i18n::s.get("core.ui.chara_sheet.attribute.karma");
     s(7) = "";
-    s(8) = i18n::s.get("core.locale.ui.chara_sheet.attribute.melee");
-    s(9) = i18n::s.get("core.locale.ui.chara_sheet.attribute.shoot");
+    s(8) = i18n::s.get("core.ui.chara_sheet.attribute.melee");
+    s(9) = i18n::s.get("core.ui.chara_sheet.attribute.shoot");
     s(10) = "";
     s(11) = "";
     s(12) = "";
@@ -625,9 +613,9 @@ void UIMenuCharacterSheet::_draw_first_page_stats_fame()
 void UIMenuCharacterSheet::_draw_first_page_stats_time()
 {
     s(0) = i18n::s.get(
-        "core.locale.ui.chara_sheet.time.turn_counter", game_data.play_turns);
+        "core.ui.chara_sheet.time.turn_counter", game_data.play_turns);
     s(1) = i18n::s.get(
-        "core.locale.ui.chara_sheet.time.days_counter", game_data.play_days);
+        "core.ui.chara_sheet.time.days_counter", game_data.play_days);
     s(2) = ""s + game_data.kill_count;
     s(3) = ""s +
         cnvplaytime((game_data.play_time + timeGetTime() / 1000 - time_begin));
@@ -646,7 +634,7 @@ void UIMenuCharacterSheet::_draw_first_page_stats_weight()
     s(2) =
         cnvweight(cdata[cc].sum_of_equipment_weight) + u8" "s + cnveqweight(cc);
     s(3) = i18n::s.get(
-        "core.locale.ui.chara_sheet.weight.level_counter",
+        "core.ui.chara_sheet.weight.level_counter",
         cnvrank(game_data.deepest_dungeon_level));
     for (int cnt = 0; cnt < 4; ++cnt)
     {
@@ -682,21 +670,20 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
 
     if (_cs_buffmax != 0)
     {
-        const auto duration = calc_buff_duration(
+        const auto duration = buff_calc_duration(
             cdata[cc].buffs[_cs_buff].id, cdata[cc].buffs[_cs_buff].power);
-        const auto description = get_buff_description(
+        const auto description = buff_get_description(
             cdata[cc].buffs[_cs_buff].id, cdata[cc].buffs[_cs_buff].power);
         buff_desc = ""s +
             i18n::s.get_enum_property(
-                "core.locale.buff", "name", cdata[cc].buffs[_cs_buff].id) +
+                "core.buff", "name", cdata[cc].buffs[_cs_buff].id) +
             ": "s + cdata[cc].buffs[_cs_buff].turns +
-            i18n::s.get("core.locale.ui.chara_sheet.buff.duration", duration) +
+            i18n::s.get("core.ui.chara_sheet.buff.duration", duration) +
             description;
     }
     else
     {
-        buff_desc =
-            i18n::s.get("core.locale.ui.chara_sheet.buff.is_not_currently");
+        buff_desc = i18n::s.get("core.ui.chara_sheet.buff.is_not_currently");
     }
 
     font(13 - en * 2);
@@ -704,7 +691,7 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
     font(11 + sizefix * 2 - en * 2, snail::Font::Style::bold);
     mes(wx + 70,
         wy + 369 - en * 3,
-        i18n::s.get("core.locale.ui.chara_sheet.buff.hint") + ":",
+        i18n::s.get("core.ui.chara_sheet.buff.hint") + ":",
         {20, 10, 0});
 }
 
@@ -741,16 +728,14 @@ void UIMenuCharacterSheet::_draw_first_page(int& _cs_buff, int& _cs_buffmax)
 void UIMenuCharacterSheet::_draw_other_pages_topics()
 {
     display_topic(
-        i18n::s.get("core.locale.ui.chara_sheet.skill.name"), wx + 28, wy + 36);
+        i18n::s.get("core.ui.chara_sheet.skill.name"), wx + 28, wy + 36);
     display_topic(
-        i18n::s.get("core.locale.ui.chara_sheet.skill.level") + "(" +
-            i18n::s.get("core.locale.ui.chara_sheet.skill.potential") + ")",
+        i18n::s.get("core.ui.chara_sheet.skill.level") + "(" +
+            i18n::s.get("core.ui.chara_sheet.skill.potential") + ")",
         wx + 182,
         wy + 36);
     display_topic(
-        i18n::s.get("core.locale.ui.chara_sheet.skill.detail"),
-        wx + 320,
-        wy + 36);
+        i18n::s.get("core.ui.chara_sheet.skill.detail"), wx + 320, wy + 36);
 }
 
 void UIMenuCharacterSheet::_draw_other_pages_keys()
@@ -838,14 +823,12 @@ static bool _is_resistance(int skill)
 void UIMenuCharacterSheet::_draw_skill_name(int cnt, int skill_id)
 {
     std::string skill_name = i18n::s.get_m(
-        "locale.ability",
-        the_ability_db.get_id_from_legacy(skill_id)->get(),
-        "name");
+        "ability", the_ability_db.get_id_from_legacy(skill_id)->get(), "name");
 
     if (_is_resistance(skill_id))
     {
-        skill_name = i18n::s.get(
-            "core.locale.ui.chara_sheet.skill.resist", cnven(skill_name));
+        skill_name =
+            i18n::s.get("core.ui.chara_sheet.skill.resist", cnven(skill_name));
     }
 
     // [TRACKING] Shows the star in the (c) menu
@@ -870,7 +853,7 @@ void UIMenuCharacterSheet::_draw_skill_power(int cnt, int skill_id)
     if (_is_resistance(skill_id))
     {
         power = clamp(sdata(skill_id, cc) / 50, 0, 6);
-        desc = i18n::s.get_enum("core.locale.ui.resistance", power);
+        desc = i18n::s.get_enum("core.ui.resistance", power);
     }
     else
     {
@@ -894,7 +877,7 @@ void UIMenuCharacterSheet::_draw_skill_desc(int cnt, int skill_id)
         wy + 66 + cnt * 19 + 2,
         i18n::s
             .get_m_optional(
-                "locale.ability",
+                "ability",
                 the_ability_db.get_id_from_legacy(skill_id)->get(),
                 "description")
             .get_value_or(""));
@@ -1080,7 +1063,7 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
         {
             if (cc < 16)
             {
-                change_appearance();
+                menu_change_appearance(cdata[cc]);
                 if (_operation != CharacterSheetOperation::character_making)
                 {
                     nowindowanime = 1;

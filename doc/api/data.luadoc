@@ -1,6 +1,6 @@
 --- Functions for managing the asset system. With this module it is possible to
 --  reload built-in assets like textures and music.
---  @usage local Data = Elona.require("Data")
+--  @usage local Data = require("game.Data")
 module "Data"
 
 --- Reloads the UI assets defined in the <code>core.asset</code> table. Call this
@@ -12,3 +12,26 @@ function reload_assets() end
 --  if you want changes to the <code>core.chara</code> table to be visible.
 --  @function reload_charas
 function reload_charas() end
+
+--- Get the data for the prototype ID and the data ID.
+--  @tparam string prototype_id a namespaced prototype ID.
+--  @tparam string data_id a namespaced data ID.
+--  @treturn[1] table the data.
+--  @treturn[2] nil if not found.
+--  @function get
+function get(prototype_id, data_id) end
+
+--- Get the data table for the prototype ID.
+--  @tparam string prototype_id a namespaced prototype ID.
+--  @treturn[1] table the table which stores data.
+--  @treturn[2] nil if not found.
+--  @function get_table
+function get_table(prototype_id) end
+
+--- Get new ID by legacy ID.
+--  @tparam string prototype_id a namespaced prototype ID.
+--  @tparam num legacy_data_id a legacy data ID.
+--  @treturn[1] string the corresponding new ID.
+--  @treturn[2] nil if not found.
+--  @function get_id_by_legacy
+function get_id_by_legacy(prototype_id, legacy_data_id) end

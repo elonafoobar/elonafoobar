@@ -42,7 +42,7 @@ int calculate_original_value(const Item& ci)
 namespace elona
 {
 
-int itemcreate(int slot, int id, int x, int y, int number)
+optional<int> itemcreate(int slot, int id, int x, int y, int number)
 {
     if (flttypeminor != 0)
     {
@@ -94,7 +94,9 @@ void get_random_item_id()
     dbid = sampler.get().value_or(25);
 }
 
-int do_create_item(int slot, int x, int y)
+
+
+optional<int> do_create_item(int slot, int x, int y)
 {
     if ((slot == 0 || slot == -1) && fixlv < Quality::godly)
     {
@@ -106,7 +108,7 @@ int do_create_item(int slot, int x, int y)
 
     ci = inv_getfreeid(slot);
     if (ci == -1)
-        return 0;
+        return none;
 
     item_delete(ci);
     inv[ci].index = ci;
@@ -168,7 +170,7 @@ int do_create_item(int slot, int x, int y)
             }
         }
         if (!ok)
-            return 0;
+            return none;
     }
 
     if (dbid == -1)
@@ -210,8 +212,8 @@ int do_create_item(int slot, int x, int y)
         dbid = 501;
     }
 
-    access_item_db(3);
-    access_item_db(2);
+    item_db_set_full_stats(inv[ci], dbid);
+    item_db_get_charge_level(inv[ci], dbid);
 
     inv[ci].color = generate_color(the_item_db[inv[ci].id]->color, inv[ci].id);
 
@@ -240,7 +242,7 @@ int do_create_item(int slot, int x, int y)
             if (cdata[owner].character_role == 13)
             {
                 artifactlocation.push_back(i18n::s.get(
-                    "core.locale.magic.oracle.was_held_by",
+                    "core.magic.oracle.was_held_by",
                     cnven(iknownnameref(inv[ci].id)),
                     cdata[owner],
                     mapname(cdata[owner].current_map),
@@ -256,7 +258,7 @@ int do_create_item(int slot, int x, int y)
         if (owner == -1)
         {
             artifactlocation.push_back(i18n::s.get(
-                "core.locale.magic.oracle.was_created_at",
+                "core.magic.oracle.was_created_at",
                 iknownnameref(inv[ci].id),
                 mdatan(0),
                 game_data.date.day,
@@ -304,7 +306,7 @@ int do_create_item(int slot, int x, int y)
         {
             earn_gold(cdata[slot], inv[ci].number());
             inv[ci].remove();
-            return 1;
+            return ci;
         }
     }
 
@@ -437,17 +439,17 @@ int do_create_item(int slot, int x, int y)
 
     if (mode == 6)
     {
-        inv[ci].identification_state = IdentifyState::completely_identified;
+        inv[ci].identify_state = IdentifyState::completely;
     }
     if (reftype == 68000 || reftype == 69000 || inv[ci].id == 622 ||
         inv[ci].id == 724 || inv[ci].id == 730 || inv[ci].id == 615)
     {
         inv[ci].curse_state = CurseState::none;
-        inv[ci].identification_state = IdentifyState::completely_identified;
+        inv[ci].identify_state = IdentifyState::completely;
     }
     if (reftype == 92000)
     {
-        inv[ci].identification_state = IdentifyState::completely_identified;
+        inv[ci].identify_state = IdentifyState::completely;
         inv[ci].curse_state = CurseState::none;
         itemmemory(0, inv[ci].id) = 1;
     }
@@ -461,7 +463,7 @@ int do_create_item(int slot, int x, int y)
         {
             if (rnd(sdata(162, 0) + 1) > 5)
             {
-                inv[ci].identification_state = IdentifyState::almost_identified;
+                inv[ci].identify_state = IdentifyState::almost;
             }
         }
     }
@@ -485,7 +487,7 @@ int do_create_item(int slot, int x, int y)
         if (stat == 1)
         {
             ci = ti;
-            return 1;
+            return ci;
         }
     }
 
@@ -493,8 +495,10 @@ int do_create_item(int slot, int x, int y)
     {
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
     }
-    return 1;
+    return ci;
 }
+
+
 
 void init_item_quality_curse_state_material_and_equipments(Item& item)
 {
@@ -684,7 +688,7 @@ void change_item_material(Item& item, int material_id)
     const auto original_value = calculate_original_value(item);
 
     dbid = item.id;
-    access_item_db(10);
+    item_db_set_basic_stats(inv[ci], dbid);
     item.value = original_value;
     if (material_id != 0)
     {

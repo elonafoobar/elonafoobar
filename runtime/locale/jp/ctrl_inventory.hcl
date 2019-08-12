@@ -192,8 +192,6 @@ locale {
                     you_pay = "${itemname(_1)}を支払った。"
                 }
 
-                deck = "${itemname(_1, 1)}をデッキに加えた。"
-
                 harvest = "${itemname(_1)}を納入した。 +${_2}  納入済み(${_3}) 納入ノルマ(${_4})"
             }
 

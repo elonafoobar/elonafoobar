@@ -10,7 +10,8 @@ namespace profile
 bool is_valid_id(const ProfileId& profile_id)
 {
     const std::regex pattern{u8"[0-9A-Za-z_]+"};
-    return std::regex_match(profile_id, pattern);
+    return std::regex_match(profile_id, pattern) &&
+        filepathutil::is_portable_path(filepathutil::u8path(profile_id));
 }
 
 
@@ -33,7 +34,7 @@ bool exists(const ProfileId& profile_id)
 fs::path get_dir_for(const ProfileId& profile_id)
 {
     assert(is_valid_id(profile_id));
-    return filesystem::dir::profile_root() / filepathutil::u8path(profile_id);
+    return filesystem::dirs::profile_root() / filepathutil::u8path(profile_id);
 }
 
 } // namespace profile

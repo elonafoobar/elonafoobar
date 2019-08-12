@@ -1,5 +1,4 @@
 #include "main_menu.hpp"
-
 #include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
 #include "../version.hpp"
@@ -12,17 +11,23 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "keybind/keybind.hpp"
+#include "lua_env/mod_manager.hpp"
 #include "macro.hpp"
 #include "main_menu.hpp"
 #include "menu.hpp"
 #include "random.hpp"
 #include "ui.hpp"
+#include "ui/menu_cursor_history.hpp"
+#include "ui/simple_prompt.hpp"
 #include "ui/ui_menu_mods.hpp"
 #include "variables.hpp"
 
 
 
 namespace elona
+{
+
+namespace
 {
 
 struct Release
@@ -112,6 +117,34 @@ private:
 
 
 
+class ModCreatePrompt : public ui::SimplePrompt<ui::DummyResult>
+{
+public:
+    ModCreatePrompt(const std::string& message)
+        : ui::SimplePrompt<ui::DummyResult>(message)
+    {
+    }
+
+
+protected:
+    virtual optional<ui::DummyResult> update() override
+    {
+        await(Config::instance().general_wait);
+        auto action = key_check();
+
+        if (action != "")
+        {
+            return ui::DummyResult{};
+        }
+
+        return none;
+    }
+};
+
+} // namespace
+
+
+
 bool main_menu_loop()
 {
     MainMenuResult result = main_menu_wrapper();
@@ -147,6 +180,12 @@ MainMenuResult main_title_menu()
     cs = 0;
     cs_bk = -1;
     pagesize = 0;
+
+    if (const auto cursor =
+            ui::MenuCursorHistory::instance().restore("core.main_title_menu"))
+    {
+        cs = cursor->position();
+    }
 
     load_background_variants(2);
 
@@ -212,15 +251,15 @@ MainMenuResult main_title_menu()
     };
     std::vector<MainMenuItem> items = {
         {u8"Restore an Adventurer",
-         i18n::s.get("core.locale.main_menu.title_menu.continue")},
+         i18n::s.get("core.main_menu.title_menu.continue")},
         {u8"Generate an Adventurer",
-         i18n::s.get("core.locale.main_menu.title_menu.new")},
+         i18n::s.get("core.main_menu.title_menu.new")},
         {u8"Incarnate an Adventurer",
-         i18n::s.get("core.locale.main_menu.title_menu.incarnate")},
-        {u8"About", i18n::s.get("core.locale.main_menu.title_menu.about")},
-        {u8"Options", i18n::s.get("core.locale.main_menu.title_menu.options")},
-        {u8"Mods", i18n::s.get("core.locale.main_menu.title_menu.mods")},
-        {u8"Exit", i18n::s.get("core.locale.main_menu.title_menu.exit")},
+         i18n::s.get("core.main_menu.title_menu.incarnate")},
+        {u8"About", i18n::s.get("core.main_menu.title_menu.about")},
+        {u8"Options", i18n::s.get("core.main_menu.title_menu.options")},
+        {u8"Mods", i18n::s.get("core.main_menu.title_menu.mods")},
+        {u8"Exit", i18n::s.get("core.main_menu.title_menu.exit")},
     };
 
     keyrange = items.size();
@@ -328,13 +367,20 @@ MainMenuResult main_title_menu()
         int index{};
         cursor_check_ex(index);
 
+        if (index != -1)
+        {
+            ui::MenuCursorHistory::instance().save(
+                "core.main_title_menu", ui::MenuCursor{cs});
+        }
+
         switch (index)
         {
+        case -1: break;
+        case 0: snd("core.ok1"); return MainMenuResult::main_menu_continue;
         case 1:
             snd("core.ok1");
             geneuse = "";
             return MainMenuResult::main_menu_new_game;
-        case 0: snd("core.ok1"); return MainMenuResult::main_menu_continue;
         case 2: snd("core.ok1"); return MainMenuResult::main_menu_incarnate;
         case 3: snd("core.ok1"); return MainMenuResult::main_menu_about;
         case 4:
@@ -343,6 +389,7 @@ MainMenuResult main_title_menu()
             return MainMenuResult::main_title_menu;
         case 5: snd("core.ok1"); return MainMenuResult::main_menu_mods;
         case 6: snd("core.ok1"); return MainMenuResult::finish_elona;
+        default: break;
         }
 
         ++frame;
@@ -382,6 +429,12 @@ MainMenuResult main_menu_wrapper()
             result = main_menu_about_credits();
             break;
         case MainMenuResult::main_menu_mods: result = main_menu_mods(); break;
+        case MainMenuResult::main_menu_mods_list:
+            result = main_menu_mods_list();
+            break;
+        case MainMenuResult::main_menu_mods_develop:
+            result = main_menu_mods_develop();
+            break;
         case MainMenuResult::main_title_menu:
             // Loop back to the start.
             result = MainMenuResult::main_title_menu;
@@ -478,11 +531,10 @@ MainMenuResult main_menu_continue()
     pagesize = 5;
     keyrange = 0;
 
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
+    for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
     {
         s = filepathutil::to_utf8_path(entry.path().filename());
-        const auto header_filepath = filesystem::dir::save(s) / u8"header.txt";
+        const auto header_filepath = filesystem::dirs::save(s) / u8"header.txt";
         if (!fs::exists(header_filepath))
         {
             continue;
@@ -516,13 +568,12 @@ MainMenuResult main_menu_continue()
         }
 
         clear_background_in_continue();
-        ui_draw_caption(
-            i18n::s.get("core.locale.main_menu.continue.which_save"));
+        ui_draw_caption(i18n::s.get("core.main_menu.continue.which_save"));
         windowshadow = 1;
     savegame_draw_page:
         ui_display_window(
-            i18n::s.get("core.locale.main_menu.continue.title"),
-            i18n::s.get("core.locale.main_menu.continue.key_hint") + strhint2 +
+            i18n::s.get("core.main_menu.continue.title"),
+            i18n::s.get("core.main_menu.continue.key_hint") + strhint2 +
                 strhint3b,
             (windoww - 440) / 2 + inf_screenx,
             winposy(288, 1),
@@ -552,7 +603,7 @@ MainMenuResult main_menu_continue()
             font(14 - en * 2);
             mes(wx + 140,
                 wy + 120,
-                i18n::s.get("core.locale.main_menu.continue.no_save"));
+                i18n::s.get("core.main_menu.continue.no_save"));
         }
         redraw();
 
@@ -589,13 +640,13 @@ MainMenuResult main_menu_continue()
                     p = list(0, cs);
                     playerid = listn(0, p);
                     ui_draw_caption(i18n::s.get(
-                        "core.locale.main_menu.continue.delete", playerid));
+                        "core.main_menu.continue.delete", playerid));
                     if (!yes_no())
                     {
                         return MainMenuResult::main_menu_continue;
                     }
                     ui_draw_caption(i18n::s.get(
-                        "core.locale.main_menu.continue.delete2", playerid));
+                        "core.main_menu.continue.delete2", playerid));
                     if (yes_no())
                     {
                         snd("core.ok1");
@@ -643,15 +694,14 @@ MainMenuResult main_menu_incarnate()
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
-    ui_draw_caption(i18n::s.get("core.locale.main_menu.incarnate.which_gene"));
+    ui_draw_caption(i18n::s.get("core.main_menu.incarnate.which_gene"));
     keyrange = 0;
     listmax = 0;
-    for (const auto& entry : filesystem::dir_entries(
-             filesystem::dir::save(), filesystem::DirEntryRange::Type::dir))
+    for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
     {
         s = filepathutil::to_utf8_path(entry.path().filename());
         const auto gene_header_filepath =
-            filesystem::dir::save(s) / u8"gene_header.txt";
+            filesystem::dirs::save(s) / u8"gene_header.txt";
         if (!fs::exists(gene_header_filepath))
         {
             continue;
@@ -669,7 +719,7 @@ MainMenuResult main_menu_incarnate()
     while (1)
     {
         ui_display_window(
-            i18n::s.get("core.locale.main_menu.incarnate.title"),
+            i18n::s.get("core.main_menu.incarnate.title"),
             strhint3b,
             (windoww - 440) / 2 + inf_screenx,
             winposy(288, 1),
@@ -692,7 +742,7 @@ MainMenuResult main_menu_incarnate()
             font(14 - en * 2);
             mes(wx + 140,
                 wy + 120,
-                i18n::s.get("core.locale.main_menu.incarnate.no_gene"));
+                i18n::s.get("core.main_menu.incarnate.no_gene"));
         }
         redraw();
 
@@ -741,18 +791,18 @@ MainMenuResult main_menu_about()
 
     windowshadow = 1;
     ui_display_window(
-        i18n::s.get("core.locale.main_menu.about.title"),
+        i18n::s.get("core.main_menu.about.title"),
         strhint3b,
         (windoww - 440) / 2 + inf_screenx,
         winposy(288, 1),
         440,
         288);
 
-    s(0) = i18n::s.get("core.locale.main_menu.about.vanilla_homepage");
-    s(1) = i18n::s.get("core.locale.main_menu.about.foobar_homepage");
-    s(2) = i18n::s.get("core.locale.main_menu.about.foobar_changelog");
-    s(3) = i18n::s.get("core.locale.main_menu.about.license");
-    s(4) = i18n::s.get("core.locale.main_menu.about.credits");
+    s(0) = i18n::s.get("core.main_menu.about.vanilla_homepage");
+    s(1) = i18n::s.get("core.main_menu.about.foobar_homepage");
+    s(2) = i18n::s.get("core.main_menu.about.foobar_changelog");
+    s(3) = i18n::s.get("core.main_menu.about.license");
+    s(4) = i18n::s.get("core.main_menu.about.credits");
 
     gsel(0);
 
@@ -872,7 +922,7 @@ void main_menu_about_one_changelog(const Release& release)
     gmode(2);
     gsel(0);
 
-    ui_draw_caption(i18n::s.get("core.locale.main_menu.about_changelog.title"));
+    ui_draw_caption(i18n::s.get("core.main_menu.about_changelog.title"));
 
     while (true)
     {
@@ -953,7 +1003,7 @@ MainMenuResult main_menu_about_changelogs()
     gmode(2);
     gsel(0);
 
-    ui_draw_caption(i18n::s.get("core.locale.main_menu.about_changelog.title"));
+    ui_draw_caption(i18n::s.get("core.main_menu.about_changelog.title"));
 
     Changelog changelog;
     if (jp)
@@ -1131,7 +1181,7 @@ MainMenuResult main_menu_about_license()
     gmode(2);
     gsel(0);
 
-    ui_draw_caption(i18n::s.get("core.locale.main_menu.about.license"));
+    ui_draw_caption(i18n::s.get("core.main_menu.about.license"));
 
     while (true)
     {
@@ -1253,7 +1303,7 @@ MainMenuResult main_menu_about_credits()
     gmode(2);
     gsel(0);
 
-    ui_draw_caption(i18n::s.get("core.locale.main_menu.about.credits"));
+    ui_draw_caption(i18n::s.get("core.main_menu.about.credits"));
 
     while (true)
     {
@@ -1321,8 +1371,234 @@ MainMenuResult main_menu_about_credits()
 
 MainMenuResult main_menu_mods()
 {
+    cs = 0;
+    cs_bk = -1;
+    keyrange = 2;
+    listmax = 2;
+
+    gmode(0);
+    asset_load("void");
+    draw("void", 0, 0, windoww, windowh);
+    gmode(2);
+
+    windowshadow = 1;
+    ui_display_window(
+        i18n::s.get("core.main_menu.mods.title"),
+        strhint3b,
+        (windoww - 440) / 2 + inf_screenx,
+        winposy(288, 1),
+        440,
+        288);
+
+    s(0) = i18n::s.get("core.main_menu.mods.menu.list");
+    s(1) = i18n::s.get("core.main_menu.mods.menu.develop");
+
+    gsel(0);
+
+    while (true)
+    {
+        gmode(0);
+        gcopy(4, 0, 0, windoww, windowh, 0, 0);
+        gmode(2);
+
+        cs_listbk();
+        for (int cnt = 0; cnt < 2; ++cnt)
+        {
+            const auto x = wx + 40;
+            const auto y = cnt * 35 + wy + 50;
+            display_key(x, y, cnt);
+            font(14 - en * 2);
+            cs_list(cs == cnt, s(cnt), x + 40, y + 1);
+        }
+        cs_bk = cs;
+
+        redraw();
+
+        int index{};
+        auto action = cursor_check_ex(index);
+
+        if (index == 0)
+        {
+            snd("core.ok1");
+            return MainMenuResult::main_menu_mods_list;
+        }
+        if (index == 1)
+        {
+            snd("core.ok1");
+            return MainMenuResult::main_menu_mods_develop;
+        }
+
+        if (action == "cancel")
+        {
+            return MainMenuResult::main_title_menu;
+        }
+    }
+}
+
+
+
+MainMenuResult main_menu_mods_list()
+{
     ui::UIMenuMods().show();
-    return MainMenuResult::main_title_menu;
+    return MainMenuResult::main_menu_mods;
+}
+
+
+
+MainMenuResult main_menu_mods_develop()
+{
+    int template_count = 0;
+    int index = 0;
+    cs = 0;
+    cs_bk = -1;
+    page = 0;
+    pagesize = 16;
+    keyrange = 0;
+
+    for (const auto& tmpl : lua::lua->get_mod_manager().get_templates())
+    {
+        list(0, template_count) = template_count;
+        listn(0, template_count) = tmpl.id;
+        listn(1, template_count) = tmpl.name;
+        key_list(template_count) = key_select(template_count);
+        ++template_count;
+    }
+    listmax = template_count;
+
+    bool init = true;
+    while (true)
+    {
+        if (init)
+        {
+            init = false;
+            cs_bk = -1;
+            pagemax = (listmax - 1) / pagesize;
+            if (page < 0)
+            {
+                page = pagemax;
+            }
+            else if (page > pagemax)
+            {
+                page = 0;
+            }
+
+            clear_background_in_continue();
+            ui_draw_caption(
+                i18n::s.get("core.main_menu.mod_develop.lets_create"));
+            windowshadow = 1;
+        }
+
+        ui_display_window(
+            i18n::s.get("core.main_menu.mod_develop.title"),
+            i18n::s.get("core.main_menu.mod_develop.key_hint") + strhint2 +
+                strhint3b,
+            (windoww - 440) / 2 + inf_screenx,
+            winposy(288, 1),
+            440,
+            288);
+        cs_listbk();
+        keyrange = 0;
+        for (int cnt = 0, cnt_end = pagesize; cnt < cnt_end; ++cnt)
+        {
+            index = pagesize * page + cnt;
+            if (index >= listmax)
+            {
+                break;
+            }
+            x = wx + 20;
+            y = cnt * 40 + wy + 50;
+            display_key(x + 20, y - 2, cnt);
+            font(11 - en * 2);
+            mes(x + 48, y - 4, listn(0, index));
+            font(13 - en * 2);
+            cs_list(cs == cnt, listn(1, index), x + 48, y + 8);
+            ++keyrange;
+        }
+        cs_bk = cs;
+        if (template_count == 0)
+        {
+            font(14 - en * 2);
+            mes(wx + 140,
+                wy + 120,
+                i18n::s.get("core.main_menu.mod_develop.no_template"));
+        }
+        redraw();
+
+        int cursor{};
+        auto action = cursor_check_ex(cursor);
+
+        p = -1;
+        for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+        {
+            index = pagesize * page + cnt;
+            if (index >= listmax)
+            {
+                break;
+            }
+            if (cursor == cnt)
+            {
+                p = list(0, index);
+                break;
+            }
+        }
+        if (p != -1)
+        {
+            inputlog = "";
+            const auto canceled = input_text_dialog(
+                (windoww - 230) / 2 + inf_screenx, winposy(120), 10, true);
+            if (!canceled && !inputlog(0).empty())
+            {
+                const auto new_mod_id = inputlog(0);
+                if (!lua::is_valid_mod_id(new_mod_id))
+                {
+                    ModCreatePrompt(i18n::s.get(
+                                        "core.main_menu.mod_develop.invalid_id",
+                                        new_mod_id))
+                        .query();
+                }
+                else if (lua::lua->get_mod_manager().exists(new_mod_id))
+                {
+                    ModCreatePrompt(
+                        i18n::s.get(
+                            "core.main_menu.mod_develop.exist", new_mod_id))
+                        .query();
+                }
+                else
+                {
+                    lua::lua->get_mod_manager().create_mod_from_template(
+                        new_mod_id, listn(0, p));
+                    snd("core.write1");
+                }
+                init = true;
+                continue;
+            }
+            continue;
+        }
+        if (action == "next_page")
+        {
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                ++page;
+                init = true;
+                continue;
+            }
+        }
+        if (action == "previous_page")
+        {
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                --page;
+                init = true;
+                continue;
+            }
+        }
+        if (action == "cancel")
+        {
+            return MainMenuResult::main_menu_mods;
+        }
+    }
 }
 
 } // namespace elona

@@ -48,7 +48,7 @@ struct MapDefData
 
 
 
-ELONA_DEFINE_LUA_DB(MapDefDB, MapDefData, true, "core.map")
+ELONA_DEFINE_LUA_DB(MapDefDB, MapDefData, "core.map")
 
 
 

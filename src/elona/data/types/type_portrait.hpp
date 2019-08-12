@@ -19,7 +19,7 @@ struct PortraitData
 
 
 
-ELONA_DEFINE_LUA_DB(_PortraitDBBase, PortraitData, false, "core.portrait")
+ELONA_DEFINE_LUA_DB(_PortraitDBBase, PortraitData, "core.portrait")
 
 
 

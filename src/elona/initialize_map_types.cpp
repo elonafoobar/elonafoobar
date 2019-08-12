@@ -544,14 +544,13 @@ static void _init_map_larna()
     chara_create(-1, 1, 9, 44);
     cdata[rc].character_role = 1017;
     cdata[rc].shop_rank = 5;
-    cdatan(0, rc) =
-        i18n::s.get("core.locale.chara.job.dye_vendor", cdatan(0, rc));
+    cdatan(0, rc) = i18n::s.get("core.chara.job.dye_vendor", cdatan(0, rc));
     flt();
     chara_create(-1, 1, 13, 37);
     cdata[rc].character_role = 1018;
     cdata[rc].shop_rank = 30;
     cdatan(0, rc) =
-        i18n::s.get("core.locale.chara.job.souvenir_vendor", cdatan(0, rc));
+        i18n::s.get("core.chara.job.souvenir_vendor", cdatan(0, rc));
     flt();
     chara_create(-1, 70, 24, 48);
     cdata[rc].character_role = 9;
@@ -782,15 +781,15 @@ static void _init_map_your_home()
             // map if the home was upgraded.
             ctrl_file(
                 FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
-            for (const auto& cnt : items(-1))
+            for (auto&& item : inv.ground())
             {
-                if (inv[cnt].number() == 0)
+                if (item.number() == 0)
                 {
                     continue;
                 }
-                inv[cnt].position.x = map_data.width / 2;
-                inv[cnt].position.y = map_data.height / 2;
-                cell_refresh(inv[cnt].position.x, inv[cnt].position.y);
+                item.position.x = map_data.width / 2;
+                item.position.y = map_data.height / 2;
+                cell_refresh(item.position.x, item.position.y);
             }
             ctrl_file(FileOperation::map_home_upgrade);
             for (auto&& cnt : cdata.others())
@@ -910,7 +909,7 @@ static void _init_map_derphy_town()
     flt();
     chara_create(-1, 1, 29, 4);
     cdata[rc].character_role = 17;
-    cdatan(0, rc) = i18n::s.get("core.locale.chara.job.slave_master");
+    cdatan(0, rc) = i18n::s.get("core.chara.job.slave_master");
     flt();
     chara_create(-1, 1, 10, 6);
     cdata[rc].character_role = 1001;
@@ -922,8 +921,7 @@ static void _init_map_derphy_town()
     flt();
     chara_create(-1, 38, 9, 18);
     cdata[rc].character_role = 6;
-    cdatan(0, rc) =
-        i18n::s.get("core.locale.chara.job.of_derphy", cdatan(0, rc));
+    cdatan(0, rc) = i18n::s.get("core.chara.job.of_derphy", cdatan(0, rc));
     flt();
     chara_create(-1, 40, 13, 18);
     cdata[rc].character_role = 7;
@@ -961,7 +959,7 @@ static void _init_map_derphy_thieves_guild()
     map_data.max_crowd_density = 25;
     map_data.bgm = 79;
     map_data.should_regenerate = 0;
-    mdatan(0) = i18n::s.get("core.locale.map.unique.thieves_guild.name");
+    mdatan(0) = i18n::s.get("core.map.unique.thieves_guild.name");
     map_placeplayer();
     flt();
     chara_create(-1, 292, 21, 9);
@@ -987,7 +985,7 @@ static void _init_map_derphy_thieves_guild()
     chara_create(-1, 1, 21, 19);
     cdata[rc].character_role = 1021;
     cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = i18n::s.get("core.locale.chara.job.fence", cdatan(0, rc));
+    cdatan(0, rc) = i18n::s.get("core.chara.job.fence", cdatan(0, rc));
     for (int cnt = 0; cnt < 16; ++cnt)
     {
         flt();
@@ -1093,8 +1091,7 @@ static void _init_map_palmia()
     flt();
     chara_create(-1, 38, 49, 11);
     cdata[rc].character_role = 6;
-    cdatan(0, rc) =
-        i18n::s.get("core.locale.chara.job.of_palmia", cdatan(0, rc));
+    cdatan(0, rc) = i18n::s.get("core.chara.job.of_palmia", cdatan(0, rc));
     flt();
     chara_create(-1, 40, 30, 27);
     cdata[rc].character_role = 7;
@@ -1247,8 +1244,7 @@ static void _init_map_lumiest_town()
     flt();
     chara_create(-1, 38, 3, 38);
     cdata[rc].character_role = 6;
-    cdatan(0, rc) =
-        i18n::s.get("core.locale.chara.job.of_lumiest", cdatan(0, rc));
+    cdatan(0, rc) = i18n::s.get("core.chara.job.of_lumiest", cdatan(0, rc));
     flt();
     chara_create(-1, 40, 21, 28);
     cdata[rc].character_role = 7;
@@ -1292,7 +1288,7 @@ static void _init_map_lumiest_mages_guild()
     map_data.max_crowd_density = 25;
     map_data.bgm = 79;
     map_data.should_regenerate = 0;
-    mdatan(0) = i18n::s.get("core.locale.map.unique.mages_guild.name");
+    mdatan(0) = i18n::s.get("core.map.unique.mages_guild.name");
     map_placeplayer();
     flt();
     chara_create(-1, 288, 24, 3);
@@ -1300,8 +1296,7 @@ static void _init_map_lumiest_mages_guild()
     flt();
     chara_create(-1, 41, 27, 8);
     cdata[rc].character_role = 1020;
-    cdatan(0, rc) =
-        i18n::s.get("core.locale.chara.job.spell_writer", cdatan(0, rc));
+    cdatan(0, rc) = i18n::s.get("core.chara.job.spell_writer", cdatan(0, rc));
     flt();
     chara_create(-1, 41, 22, 8);
     cdata[rc].character_role = 1004;
@@ -1333,7 +1328,7 @@ static void _init_map_lumiest_sewer()
     map_data.max_crowd_density = 0;
     map_data.bgm = 61;
     map_data.should_regenerate = 1;
-    mdatan(0) = i18n::s.get("core.locale.map.unique.the_sewer.name");
+    mdatan(0) = i18n::s.get("core.map.unique.the_sewer.name");
     quest_place_target();
     game_data.entrance_type = 1;
     map_placeplayer();
@@ -1397,8 +1392,7 @@ static void _init_map_yowyn_town()
     flt();
     chara_create(-1, 1, 35, 18);
     cdata[rc].character_role = 22;
-    cdatan(0, rc) =
-        i18n::s.get("core.locale.chara.job.horse_master", cdatan(0, rc));
+    cdatan(0, rc) = i18n::s.get("core.chara.job.horse_master", cdatan(0, rc));
     flt();
     chara_create(-1, 267, 33, 16);
     cdata[rc].character_role = 3;
@@ -1414,8 +1408,7 @@ static void _init_map_yowyn_town()
     flt();
     chara_create(-1, 38, 3, 4);
     cdata[rc].character_role = 6;
-    cdatan(0, rc) =
-        i18n::s.get("core.locale.chara.job.of_yowyn", cdatan(0, rc));
+    cdatan(0, rc) = i18n::s.get("core.chara.job.of_yowyn", cdatan(0, rc));
     flt();
     chara_create(-1, 40, 20, 14);
     cdata[rc].character_role = 7;
@@ -1462,7 +1455,7 @@ static void _init_map_yowyn_cat_mansion()
     map_data.max_crowd_density = 0;
     map_data.bgm = 61;
     map_data.should_regenerate = 1;
-    mdatan(0) = i18n::s.get("core.locale.map.unique.cat_mansion.name");
+    mdatan(0) = i18n::s.get("core.map.unique.cat_mansion.name");
     quest_place_target();
     map_placeplayer();
 }
@@ -1477,7 +1470,7 @@ static void _init_map_yowyn_battle_field()
     map_data.bgm = 61;
     map_data.should_regenerate = 1;
     map_data.refresh_type = 0;
-    mdatan(0) = i18n::s.get("core.locale.map.unique.battle_field.name");
+    mdatan(0) = i18n::s.get("core.map.unique.battle_field.name");
     quest_place_target();
     game_data.entrance_type = 8;
     map_placeplayer();
@@ -1601,8 +1594,7 @@ static void _init_map_noyel()
     flt();
     chara_create(-1, 38, 5, 18);
     cdata[rc].character_role = 6;
-    cdatan(0, rc) =
-        i18n::s.get("core.locale.chara.job.of_noyel", cdatan(0, rc));
+    cdatan(0, rc) = i18n::s.get("core.chara.job.of_noyel", cdatan(0, rc));
     flt();
     chara_create(-1, 40, 18, 20);
     cdata[rc].character_role = 7;
@@ -1725,8 +1717,7 @@ static void _init_map_port_kapul_town()
     flt();
     chara_create(-1, 38, 8, 12);
     cdata[rc].character_role = 6;
-    cdatan(0, rc) =
-        i18n::s.get("core.locale.chara.job.of_port_kapul", cdatan(0, rc));
+    cdatan(0, rc) = i18n::s.get("core.chara.job.of_port_kapul", cdatan(0, rc));
     flt();
     chara_create(-1, 40, 16, 4);
     cdata[rc].character_role = 7;
@@ -1781,7 +1772,7 @@ static void _init_map_port_kapul_fighters_guild()
     map_data.max_crowd_density = 25;
     map_data.bgm = 79;
     map_data.should_regenerate = 0;
-    mdatan(0) = i18n::s.get("core.locale.map.unique.fighters_guild.name");
+    mdatan(0) = i18n::s.get("core.map.unique.fighters_guild.name");
     map_placeplayer();
     flt();
     chara_create(-1, 291, 27, 4);
@@ -1818,7 +1809,7 @@ static void _init_map_port_kapul_doom_ground()
     map_data.bgm = 61;
     map_data.should_regenerate = 1;
     map_data.refresh_type = 0;
-    mdatan(0) = i18n::s.get("core.locale.map.unique.doom_ground.name");
+    mdatan(0) = i18n::s.get("core.map.unique.doom_ground.name");
     game_data.entrance_type = 4;
     game_data.quest_flags.duration_of_kamikaze_attack = 0;
     map_placeplayer();
@@ -1933,8 +1924,7 @@ static void _init_map_vernis_town()
     flt();
     chara_create(-1, 38, 10, 7);
     cdata[rc].character_role = 6;
-    cdatan(0, rc) =
-        i18n::s.get("core.locale.chara.job.of_vernis", cdatan(0, rc));
+    cdatan(0, rc) = i18n::s.get("core.chara.job.of_vernis", cdatan(0, rc));
     flt();
     chara_create(-1, 40, 27, 16);
     cdata[rc].character_role = 7;
@@ -1975,7 +1965,7 @@ static void _init_map_vernis_the_mine()
     map_data.max_crowd_density = 0;
     map_data.bgm = 61;
     map_data.should_regenerate = 1;
-    mdatan(0) = i18n::s.get("core.locale.map.unique.the_mine.name");
+    mdatan(0) = i18n::s.get("core.map.unique.the_mine.name");
     quest_place_target();
     map_placeplayer();
 }
@@ -1989,7 +1979,7 @@ static void _init_map_vernis_robbers_hideout()
     map_data.max_crowd_density = 0;
     map_data.bgm = 61;
     map_data.should_regenerate = 1;
-    mdatan(0) = i18n::s.get("core.locale.map.unique.robbers_hideout.name");
+    mdatan(0) = i18n::s.get("core.map.unique.robbers_hideout.name");
     quest_place_target();
     map_placeplayer();
 }
@@ -2003,7 +1993,7 @@ static void _init_map_vernis_test_site()
     map_data.max_crowd_density = 0;
     map_data.bgm = 61;
     map_data.should_regenerate = 1;
-    mdatan(0) = i18n::s.get("core.locale.map.unique.test_site.name");
+    mdatan(0) = i18n::s.get("core.map.unique.test_site.name");
     quest_place_target();
     game_data.entrance_type = 7;
     mapstartx = 6;
@@ -2033,8 +2023,7 @@ static void _init_map_vernis()
 
 static void _init_map_fields_forest()
 {
-    mdatan(0) =
-        i18n::s.get_enum_property("core.locale.map.unique", "forest", 2);
+    mdatan(0) = i18n::s.get_enum_property("core.map.unique", "forest", 2);
     map_randomtile(8, 25);
     map_randomtile(0, 10);
     map_randomtile(1, 4);
@@ -2051,13 +2040,12 @@ static void _init_map_fields_forest()
 
 static void _init_map_fields_sea()
 {
-    mdatan(0) = i18n::s.get_enum_property("core.locale.map.unique", "sea", 2);
+    mdatan(0) = i18n::s.get_enum_property("core.map.unique", "sea", 2);
 }
 
 static void _init_map_fields_grassland()
 {
-    mdatan(0) =
-        i18n::s.get_enum_property("core.locale.map.unique", "grassland", 2);
+    mdatan(0) = i18n::s.get_enum_property("core.map.unique", "grassland", 2);
     map_randomtile(9, 10);
     map_randomtile(10, 10);
     map_randomtile(0, 30);
@@ -2077,8 +2065,7 @@ static void _init_map_fields_grassland()
 
 static void _init_map_fields_desert()
 {
-    mdatan(0) =
-        i18n::s.get_enum_property("core.locale.map.unique", "desert", 2);
+    mdatan(0) = i18n::s.get_enum_property("core.map.unique", "desert", 2);
     map_randomtile(18, 25);
     map_randomtile(17, 10);
     map_randomtile(19, 2);
@@ -2094,8 +2081,7 @@ static void _init_map_fields_desert()
 
 static void _init_map_fields_snow_field()
 {
-    mdatan(0) =
-        i18n::s.get_enum_property("core.locale.map.unique", "snow_field", 2);
+    mdatan(0) = i18n::s.get_enum_property("core.map.unique", "snow_field", 2);
     map_randomtile(57, 4);
     map_randomtile(56, 4);
     map_randomtile(49, 2);
@@ -2115,8 +2101,7 @@ static void _init_map_fields_snow_field()
 
 static void _init_map_fields_plain_field()
 {
-    mdatan(0) =
-        i18n::s.get_enum_property("core.locale.map.unique", "plain_field", 2);
+    mdatan(0) = i18n::s.get_enum_property("core.map.unique", "plain_field", 2);
     map_randomtile(1, 10);
     map_randomtile(2, 2);
     map_randomtile(3, 2);
@@ -2159,7 +2144,6 @@ static void _init_map_fields_maybe_generate_encounter()
             chara_create(-1, 303 + rnd(3), 14, 11);
             cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
         }
-        gdatan(1) = random_title(RandomTitleType::party);
         event_add(23);
     }
     if (encounter == 3)
@@ -2191,8 +2175,8 @@ static void _init_map_fields_maybe_generate_encounter()
         chara_create(-1, 1, 10, 11);
         cdata[rc].character_role = 1010;
         cdata[rc].shop_rank = encounterlv;
-        cdatan(0, rc) = i18n::s.get(
-            "core.locale.chara.job.wandering_vendor", cdatan(0, rc));
+        cdatan(0, rc) =
+            i18n::s.get("core.chara.job.wandering_vendor", cdatan(0, rc));
         generatemoney(rc);
         for (int cnt = 0, cnt_end = (encounterlv / 2 + 1); cnt < cnt_end; ++cnt)
         {
@@ -2321,8 +2305,8 @@ static void _init_map_lesimas()
             map_data.max_crowd_density = 0;
             map_data.refresh_type = 0;
             map_data.bgm = 66;
-            mdatan(0) = i18n::s.get_enum_property(
-                "core.locale.map.unique", "the_depth", 3);
+            mdatan(0) =
+                i18n::s.get_enum_property("core.map.unique", "the_depth", 3);
             if (game_data.quest_flags.main_quest < 170)
             {
                 event_add(3);
@@ -2514,10 +2498,9 @@ void initialize_map_from_map_type()
     {
         if (mdatan(0) == ""s ||
             mdatan(0) ==
-                i18n::s.get_enum_property("core.locale.map.unique", "name", 4))
+                i18n::s.get_enum_property("core.map.unique", "name", 4))
         {
-            mdatan(0) =
-                i18n::s.get_enum_property("core.locale.map.unique", "name", 7);
+            mdatan(0) = i18n::s.get_enum_property("core.map.unique", "name", 7);
         }
     }
     else

@@ -75,10 +75,10 @@ enum class ColorIndex : int
 
 enum class CurseState : int
 {
-    doomed = 0,
-    cursed = 1,
-    none = 2,
-    blessed = 3,
+    doomed = -2,
+    cursed = -1,
+    none = 0,
+    blessed = 1,
 };
 
 
@@ -91,9 +91,9 @@ inline bool is_cursed(CurseState s)
 enum class IdentifyState : int
 {
     unidentified = 0,
-    partly_identified = 1,
-    almost_identified = 2,
-    completely_identified = 3,
+    partly = 1,
+    almost = 2,
+    completely = 3,
 };
 
 
@@ -189,7 +189,6 @@ enum class AdditionalItemInfo
     none,
     resistance,
     maintenance_and_ailment,
-    all_attributes,
 
     _size,
 };

@@ -1,5 +1,87 @@
 # Changelog
 
+## [0.5.0] - 2019-08-12
+
+### Added
+
+- Support `README.markdown`, `README.txt` and `README` besides `README.md` in mod details menu.
+- Add "Mods" menu to the main title menu.
+- Experimental: Implement mod template which allows you to create a mod from template. You can try it through "Mods">"Develop" menu.
+- Add new options to control key repeat.
+  - `initial_key_repeat_wait`: Number of frames to wait between the first action and the second.
+  - `key_repeat_wait`: Number of frames to wait between each action.
+- Improve performance on change appearance menu. PCC images are loaded only if you change something.
+- Improve change appearance menu: show 4 directions at once.
+- Sort mods by name in mod config menu.
+- Expand mod config if the mod has only one config section.
+- Restore vanilla's chat and vote feature.
+  - Add relevant options to configure what you want to send and receive.
+- Experimental: Implement Plamia Times, advanced game play log.
+- Experimental: Support mouse partially.
+- Improve item name's plural rule in English.
+- Check system-reserved path when foobar internally creates new file or folder.
+- Experimental: Implement screenshot feature. You can take a screenshot via `Print Screen` (the key can be changed). Screenshots are saved in `profile/[current profile]/screenshot` folder.
+  - For now, you can take a screenshot only when the player character can act.
+- [mod] Add Lua API: `Wish` module. It allows you to add custom wish.
+- [mod] Add Lua API: `Data` module to retrieve arbitrary data defined in `data.lua`.
+- [mod] Support `data-update.lua` to modify existing data definition from mods.
+- [mod] Don't save "volatile" data in store object. Top level fields of store starting  with `_` are considered as "volatile" and skipped on saving.
+- [mod] Expand `<LANGUAGE>` in path string to the current language ID.
+- [mod] Add `step` property to integer config options. The option which has the property is incremented/decremented by the amount of `step`.
+
+
+### Changed
+
+- Change random number generator from mt19937 to xoshiro256, an xorshift variant.
+- Make random number generation deterministic in some degree.
+- [mod] Rename some data IDs.
+- [mod] Remove `locale` from locale resource IDs.
+- [mod] Remove `exports:` prefix from exported function IDs.
+- [mod] Change notation to refer to other mod's directory: `__mod_name_here__` to `<mod_name_here>`
+  - [mod] Also change `BUILTIN` to `_builtin_`, a special pseudo-mod to refer to executable path.
+- [mod] Change `Store` object to `mod.store`.
+- [mod] Change how to export modules. See `mod/core/init.lua`.
+- [mod] Change `Elona.require()` to `require()` and `require()` to `require_relative()`. See `core` mod for details.
+
+
+### Removed
+
+- Delete `gdatan.s1`, unused save file.
+- Roll back some foobar's features.
+  - Delete strange fish. They are replaced by whale.
+  - Remove card collection feature.
+  - Turn off some of newly-added options by default. You can manually enable them again.
+    - `hp_bar_position`: right -> hide
+    - `allow_enhanced_skill_tracking`: on -> off
+    - `leash_icon`: on -> off
+    - `autopick`: on -> off
+    - `damage_popup`: on -> off
+    - `restore_interval`: 3 -> 7
+
+
+### Fixed
+
+- [vanilla] Fix wield behavior when you present gift.
+  - When you give present to NPC or to ally, your burden state won't be refreshed.
+  - When you give present to NPC, the game turn does not pass unlike other items.
+  - When you give present to ally, you cannot give other items continuously.
+  - After you give present to ally, `x`, opening inventory menu most recently used, shows the ally's `G`ive menu.
+- [vanilla] Fix wield message log "You see ." in global map.
+- [vanilla] Fix that you cannot go back from detail submenu to change appearance menu by pressing ESC.
+- [vanilla] Fix stack height and offset Y of simple rack's item chip.
+- [vanilla] Fix one Easter Egg not working.
+- [vanilla] Fix that Moyer says his line even if he is dead.
+- Fix text color of damage popup of atomic bomb.
+- Fix that you cannot close change appearance equipment menu by Enter key.
+- Fix keyhint in `F`eat menu, which does not reflect keybinding settings.
+- Fix crash on pressing F11.
+- Fix PC's birth year. Newly created player character in v0.4.3 ages a lot.
+- Fix main menu crash when unavailable menu item is selected.
+- Fix some system messages not shown.
+- Fix that Tuwen does not drop anything.
+- Fix typos.
+
+
 ## [0.4.3] - 2019-05-31
 
 ### Added
@@ -40,7 +122,6 @@
 - Fix the bug that ghost monster ball (you can see, but cannot pick it up) appeared on throwing the ball.
 - Fix error when you canceled a dialog window by pressing `Shift` or `ESC`.
 - Fix failure to update the save from v0.4.0. The bug could break the save completely.
-- Adjust the position of the additional item information such as enchantment icons in `w`ear menu.
 - Replace item `kiroku.counter` with gold pieces. `kiroku.counter` is a mod item defined by `kiroku` mod, one of the sample mods. `kiroku` was deleted in v0.4.0, which caused undefined item error.
 - Fix snow field map not generated even if you enter field map from snow title.
 
@@ -83,12 +164,10 @@
   - `mod_cdata_<xxx>.s2`: map local, references to characters
   - `mod_inv_<xxx>.s2`: map local, references to items
 - Show "maintains XX" and "negates the effect of XX" enchantments in item list menus.
-- Show all enchantment's icons and fireproof/acidproof in item list menus.
   - You can switch the mode via `z` in the same way to toggle resistance's visibility.
-  - None -> Resistances -> Maintenance and status ailments -> All enchantments -> None -> ...
+  - None -> Resistances -> Maintenance and status ailments -> None -> ...
 - Add mod list menu to the main title menu. You can only see the installed mods so far.
 - Improve performance of text rendering with shadow.
-- Add some images. Great thank you for awesome paintings and pixelarts!
 
 
 ### Changed

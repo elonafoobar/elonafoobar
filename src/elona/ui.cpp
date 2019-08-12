@@ -600,9 +600,8 @@ void render_clock()
         ""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s +
             game_data.date.day);
     bmes(
-        i18n::s.get_enum("core.locale.ui.time", game_data.date.hour / 4) +
-            u8" "s +
-            i18n::s.get_enum("core.locale.ui.weather", game_data.weather),
+        i18n::s.get_enum("core.ui.time", game_data.date.hour / 4) + u8" "s +
+            i18n::s.get_enum("core.ui.weather", game_data.weather),
         inf_clockw + 6,
         inf_clocky + 35);
 }
@@ -628,7 +627,7 @@ void render_skill_trackers()
         bmes(
             strutil::take_by_width(
                 i18n::s.get_m(
-                    "locale.ability",
+                    "ability",
                     the_ability_db.get_id_from_legacy(skill)->get(),
                     "name"),
                 6),
@@ -768,8 +767,7 @@ void render_status_ailments()
             if (nutrition >= 12)
                 index = 12;
 
-            return i18n::s.get_enum(
-                "core.locale.status_ailment.name.hunger", index);
+            return i18n::s.get_enum("core.status_ailment.name.hunger", index);
         },
         [](auto nutrition) {
             return (nutrition >= 10)
@@ -788,8 +786,7 @@ void render_status_ailments()
             if (turn >= 30)
                 index = 1;
 
-            return i18n::s.get_enum(
-                "core.locale.status_ailment.name.sick", index);
+            return i18n::s.get_enum("core.status_ailment.name.sick", index);
         },
         {80, 120, 0});
 
@@ -803,8 +800,7 @@ void render_status_ailments()
             if (turn >= 30)
                 index = 1;
 
-            return i18n::s.get_enum(
-                "core.locale.status_ailment.name.poison", index);
+            return i18n::s.get_enum("core.status_ailment.name.poison", index);
         },
         {0, 150, 0});
 
@@ -818,8 +814,7 @@ void render_status_ailments()
             if (turn >= 30)
                 index = 1;
 
-            return i18n::s.get_enum(
-                "core.locale.status_ailment.name.sleep", index);
+            return i18n::s.get_enum("core.status_ailment.name.sleep", index);
         },
         {0, 50, 50});
 
@@ -828,7 +823,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::s.get("core.locale.status_ailment.name.blind"),
+        i18n::s.get("core.status_ailment.name.blind"),
         {100, 100, 0});
 
     y = render_one_status_ailment(
@@ -836,7 +831,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::s.get("core.locale.status_ailment.name.paralyzed"),
+        i18n::s.get("core.status_ailment.name.paralyzed"),
         {0, 100, 100});
 
     y = render_one_status_ailment(
@@ -844,7 +839,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::s.get("core.locale.status_ailment.name.choked"),
+        i18n::s.get("core.status_ailment.name.choked"),
         {0, 100, 100});
 
     y = render_one_status_ailment(
@@ -852,7 +847,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::s.get("core.locale.status_ailment.name.confused"),
+        i18n::s.get("core.status_ailment.name.confused"),
         {100, 0, 100});
 
     y = render_one_status_ailment(
@@ -860,7 +855,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::s.get("core.locale.status_ailment.name.fear"),
+        i18n::s.get("core.status_ailment.name.fear"),
         {100, 0, 100});
 
     y = render_one_status_ailment(
@@ -875,8 +870,7 @@ void render_status_ailments()
             if (turn >= 60)
                 index = 2;
 
-            return i18n::s.get_enum(
-                "core.locale.status_ailment.name.dimmed", index);
+            return i18n::s.get_enum("core.status_ailment.name.dimmed", index);
         },
         {0, 100, 100});
 
@@ -890,8 +884,7 @@ void render_status_ailments()
             if (turn >= 30)
                 index = 1;
 
-            return i18n::s.get_enum(
-                "core.locale.status_ailment.name.angry", index);
+            return i18n::s.get_enum("core.status_ailment.name.angry", index);
         },
         {150, 0, 0});
 
@@ -907,8 +900,7 @@ void render_status_ailments()
             if (turn >= 20)
                 index = 2;
 
-            return i18n::s.get_enum(
-                "core.locale.status_ailment.name.bleeding", index);
+            return i18n::s.get_enum("core.status_ailment.name.bleeding", index);
         },
         {150, 0, 0});
 
@@ -924,8 +916,7 @@ void render_status_ailments()
             if (turn >= 50)
                 index = 2;
 
-            return i18n::s.get_enum(
-                "core.locale.status_ailment.name.insane", index);
+            return i18n::s.get_enum("core.status_ailment.name.insane", index);
         },
         {150, 100, 0});
 
@@ -934,7 +925,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::s.get("core.locale.status_ailment.name.drunk"),
+        i18n::s.get("core.status_ailment.name.drunk"),
         {100, 0, 100});
 
     y = render_one_status_ailment(
@@ -942,7 +933,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::s.get("core.locale.status_ailment.name.wet"),
+        i18n::s.get("core.status_ailment.name.wet"),
         {0, 0, 160});
 
     y = render_one_status_ailment(
@@ -950,7 +941,7 @@ void render_status_ailments()
         x,
         y,
         [](auto turn) { return turn != 0; },
-        i18n::s.get("core.locale.status_ailment.name.gravity"),
+        i18n::s.get("core.status_ailment.name.gravity"),
         {0, 80, 80});
 
     y = render_one_status_ailment(
@@ -965,8 +956,7 @@ void render_status_ailments()
             if (hours >= 50)
                 index = 2;
 
-            return i18n::s.get_enum(
-                "core.locale.status_ailment.name.sleepy", index);
+            return i18n::s.get_enum("core.status_ailment.name.sleepy", index);
         },
         [](auto hours) {
             return (hours >= 50) ? snail::Color{255, 0, 0}
@@ -986,8 +976,7 @@ void render_status_ailments()
             if (sp < 0)
                 index = 2;
 
-            return i18n::s.get_enum(
-                "core.locale.status_ailment.name.tired", index);
+            return i18n::s.get_enum("core.status_ailment.name.tired", index);
         },
         [](auto sp) {
             return (sp < 0)
@@ -1001,8 +990,7 @@ void render_status_ailments()
         y,
         [](auto state) { return state != 0; },
         [](auto state) {
-            return i18n::s.get_enum(
-                "core.locale.status_ailment.name.burden", state);
+            return i18n::s.get_enum("core.status_ailment.name.burden", state);
         },
         [](auto state) {
             return snail::Color{0,
@@ -1015,7 +1003,7 @@ void render_status_ailments()
         x,
         y,
         [](auto is_enabled) { return is_enabled == 1; },
-        i18n::s.get("core.locale.ui.autodig.mode"),
+        i18n::s.get("core.ui.autodig.mode"),
         {0, 0, 0});
 }
 
@@ -1528,24 +1516,24 @@ void load_continuous_action_animation()
     if (cdata.player().continuous_action.type ==
         ContinuousAction::Type::dig_wall)
     {
-        picload(filesystem::dir::graphic() / u8"anime1.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime1.bmp", 0, 0, true);
     }
     if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
     {
         if (rowactre)
         {
-            picload(filesystem::dir::graphic() / u8"anime2.bmp", 0, 0, true);
+            picload(filesystem::dirs::graphic() / u8"anime2.bmp", 0, 0, true);
         }
     }
     if (cdata.player().continuous_action.type ==
         ContinuousAction::Type::search_material)
     {
-        picload(filesystem::dir::graphic() / u8"anime3.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime3.bmp", 0, 0, true);
     }
     if (cdata.player().continuous_action.type ==
         ContinuousAction::Type::dig_ground)
     {
-        picload(filesystem::dir::graphic() / u8"anime4.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / u8"anime4.bmp", 0, 0, true);
     }
     gsel(0);
 }
@@ -2322,7 +2310,7 @@ void load_background_variants(int buffer)
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         picload(
-            filesystem::dir::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"),
+            filesystem::dirs::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"),
             cnt % 4 * 180,
             cnt / 4 * 300,
             false);
@@ -2464,7 +2452,7 @@ snail::Color cs_list_get_item_color(const Item& item)
         return {120, 80, 0};
     }
 
-    if (item.identification_state == IdentifyState::completely_identified)
+    if (item.identify_state == IdentifyState::completely)
     {
         switch (item.curse_state)
         {

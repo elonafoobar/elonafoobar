@@ -1,10 +1,10 @@
-local Chara = Elona.require("Chara")
-local Input = Elona.require("Input")
-local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
-local table = Elona.require("table")
+local Chara = require("game.Chara")
+local Input = require("game.Input")
+local GUI = require("game.GUI")
+local I18N = require("game.I18N")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
+local table = require("game.table")
 
 local function give_wife(raphael, wife)
    if not table.contains(wife.prototype.tags, "man") then
@@ -19,7 +19,7 @@ end
 
 return {
    id = "raphael",
-   root = "core.locale.talk.unique.raphael",
+   root = "core.talk.unique.raphael",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("wife_collector")
@@ -98,7 +98,7 @@ return {
             t:say("bring_wife.this_one.not_human")
          elseif Internal.get_quest_flag("wife_collector") == 1 then
             Item.create(Chara.player().position, "core.gold_piece", 5000)
-            GUI.txt(I18N.get("core.locale.quest.completed"))
+            GUI.txt(I18N.get("core.quest.completed"))
             GUI.show_journal_update_message()
             Internal.set_quest_flag("wife_collector", 1000)
          end
@@ -122,7 +122,7 @@ return {
                GUI.play_sound("core.complete1")
                Item.create(Chara.player().position, "core.unicorn_horn", 2)
                Item.create(Chara.player().position, "core.platinum_coin", 2)
-               GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
+               GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
             end,
             {"bring_wife.this_one.end"}
          }

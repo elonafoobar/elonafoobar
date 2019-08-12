@@ -6,8 +6,13 @@ namespace elona
 {
 
 void load_save_data();
-void do_save_game();
-void save_game();
+
+
+constexpr bool save_game_silent = true;
+constexpr bool save_game_no_message = true;
+
+void save_game(bool no_message = false, bool silent = false);
+
 
 // Will autosave in the next PC's turn.
 void save_set_autosave();

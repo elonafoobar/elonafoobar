@@ -18,7 +18,7 @@ struct ClassData
 
 
 
-ELONA_DEFINE_LUA_DB(ClassDB, ClassData, true, "core.class")
+ELONA_DEFINE_LUA_DB(ClassDB, ClassData, "core.class")
 
 
 

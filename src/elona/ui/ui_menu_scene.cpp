@@ -57,7 +57,7 @@ bool UIMenuScene::init()
 
     _load_scenes();
 
-    txt(i18n::s.get("core.locale.ui.scene.which"));
+    txt(i18n::s.get("core.ui.scene.which"));
 
     return true;
 }
@@ -116,14 +116,14 @@ void UIMenuScene::_draw_title()
         snail::Font::Style::italic | snail::Font::Style::underline);
     mes(wx + 90, wy + 50, u8"Elona - Scene playback"s);
     font(12 - en * 2);
-    mes(wx + 390, wy + 50, i18n::s.get("core.locale.ui.scene.you_can_play"));
+    mes(wx + 390, wy + 50, i18n::s.get("core.ui.scene.you_can_play"));
 }
 
 void UIMenuScene::_draw_list_entry(int cnt, int list_item)
 {
     cs_list(
         cs == cnt,
-        i18n::s.get("core.locale.ui.scene.scene_no") + list_item,
+        i18n::s.get("core.ui.scene.scene_no") + list_item,
         wx + 424,
         wy + 91 + cnt * 22 - 1);
 }
@@ -175,7 +175,7 @@ static void _do_play_scene(int scene_id)
     screenupdate = -1;
     update_entire_screen();
     Message::instance().linebreak();
-    txt(i18n::s.get("core.locale.ui.scene.has_been_played"));
+    txt(i18n::s.get("core.ui.scene.has_been_played"));
 }
 
 optional<UIMenuScene::ResultType> UIMenuScene::on_key(const std::string& action)

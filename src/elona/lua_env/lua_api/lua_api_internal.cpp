@@ -219,8 +219,7 @@ void LuaApiInternal::strange_scientist_pick_reward()
         if (f)
         {
             flt(cdata.player().level * 3 / 2, calcfixlv(Quality::good));
-            int stat = itemcreate(-1, cnt, -1, -1, 0);
-            if (stat == 1)
+            if (itemcreate(-1, cnt, -1, -1, 0))
             {
                 if (inv[ci].quality < Quality::miracle)
                 {
@@ -231,7 +230,7 @@ void LuaApiInternal::strange_scientist_pick_reward()
         randomize();
     }
     txt(
-        i18n::s.get("core.locale.talk.unique.strange_scientist."
+        i18n::s.get("core.talk.unique.strange_scientist."
                     "reward.choose_one"));
     invsubroutine = 1;
     invctrl(0) = 22;

@@ -1,4 +1,4 @@
-local inspect = require "inspect"
+local inspect = require_relative("inspect")
 
 local function insert(node, k, v)
    if node.key == k then

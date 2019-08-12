@@ -429,7 +429,7 @@ locale {
                 dies = "${basename(_1)} kills himself..."
             }
 
-            garokk {
+            garok {
                 dialog = "Don't you see I'm busy!"
             }
 
@@ -812,7 +812,7 @@ locale {
                     bye = "Then get out of my way you fool!"
 
                     give {
-                        deliver = "You deliver ${itemname(_1)}." # TODO duplicate
+                        deliver = "You deliver ${itemname(_1, 1)}." # TODO duplicate
                         have = "Oh oh! What a fine batch of samples you've brought me. I can finally proceed with the final stage."
                         do_not_have = "Let's go over this one last time... I need five samples to proceed. FIVE."
                     }

@@ -1,6 +1,6 @@
-require "tests/lua/support/minctest"
+require_relative("tests/lua/support/minctest")
 
-local Trait = Elona.require("Trait")
+local Trait = require("game.Trait")
 
 lrun("test Trait.level", function()
         Testing.start_in_debug_map()
@@ -9,14 +9,14 @@ lrun("test Trait.level", function()
 end)
 
 lrun("test Trait.min", function()
-        Testing.start_in_debug_map()
+        -- Testing.start_in_debug_map()
         lequal(Trait.min(9), 0)
         lequal(Trait.min(26), -3)
         lequal(Trait.min(999), nil)
 end)
 
 lrun("test Trait.max", function()
-        Testing.start_in_debug_map()
+        -- Testing.start_in_debug_map()
         lequal(Trait.max(9), 3)
         lequal(Trait.max(26), 3)
         lequal(Trait.max(999), nil)

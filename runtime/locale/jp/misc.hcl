@@ -79,7 +79,6 @@ locale {
             crawl_up = "這い上がる"
             lie_on_your_back = "埋まる"
             you_have_been_buried = "あなたは埋められた。さようなら…（キーを押すと終了します）"
-            sent_message = "${_1}${_2}は${_4}で${_3}${_5}"
         }
 
         score {

@@ -2,7 +2,6 @@
 set(ELONA_SOURCES
   ability.cpp
   access_character_info.cpp
-  access_item_db.cpp
   activity.cpp
   adventurer.cpp
   ai.cpp
@@ -15,7 +14,6 @@ set(ELONA_SOURCES
   buff.cpp
   building.cpp
   calc.cpp
-  card.cpp
   casino.cpp
   casino_card.cpp
   cell_draw.cpp
@@ -32,6 +30,7 @@ set(ELONA_SOURCES
   dmgheal.cpp
   draw.cpp
   draw_asset.cpp
+  dump_player_info.cpp
   element.cpp
   elonacore.cpp
   enchantment.cpp
@@ -43,7 +42,6 @@ set(ELONA_SOURCES
   fov.cpp
   gdata.cpp
   get_card_info.cpp
-  get_random_npc_id.cpp
   globals.cpp
   god.cpp
   i18n.cpp
@@ -53,6 +51,7 @@ set(ELONA_SOURCES
   input.cpp
   input_prompt.cpp
   item.cpp
+  item_db.cpp
   item_load_desc.cpp
   item_material.cpp
   itemgen.cpp
@@ -72,7 +71,7 @@ set(ELONA_SOURCES
   menu_quick_menu.cpp
   message.cpp
   message_log.cpp
-  network.cpp
+  net.cpp
   proc_event.cpp
   quest.cpp
   race.cpp

@@ -38,7 +38,7 @@ void normalize_item(Item& i)
 {
     i.quality = Quality::great;
     i.curse_state = CurseState::none;
-    i.identification_state = IdentifyState::completely_identified;
+    i.identify_state = IdentifyState::completely;
     i.material = 34;
     i.quality = Quality::bad;
     i.dv = 0;
@@ -54,7 +54,7 @@ void normalize_item(Item& i)
 
 std::string test_itemname(int id, int number, bool prefix)
 {
-    REQUIRE(itemcreate(-1, id, 0, 0, number) == 1);
+    REQUIRE_SOME(itemcreate(-1, id, 0, 0, number));
     int index = elona::ci;
     normalize_item(elona::inv[index]);
     std::string name = itemname(index, number, prefix ? 0 : 1);
@@ -71,7 +71,7 @@ Character& create_chara(int id, int x, int y)
 
 Item& create_item(int id, int number)
 {
-    REQUIRE(itemcreate(-1, id, 0, 0, number) == 1);
+    REQUIRE_SOME(itemcreate(-1, id, 0, 0, number));
     normalize_item(elona::inv[elona::ci]);
     return elona::inv[elona::ci];
 }
@@ -87,7 +87,7 @@ void invalidate_item(Item& item)
     item_delete(old_index);
     do
     {
-        REQUIRE(itemcreate(-1, old_id, old_x, old_y, 3) == 1);
+        REQUIRE_SOME(itemcreate(-1, old_id, old_x, old_y, 3));
     } while (elona::ci != old_index);
 }
 
@@ -112,20 +112,18 @@ void register_lua_function(
     std::string callback_signature,
     std::string callback_body)
 {
-    lua.get_mod_manager().load_mods(filesystem::dir::mod());
+    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
         mod_id,
         "\
-local Exports = {}\
+local exports = {}\
 \
-function Exports." +
+function exports." +
             callback_signature + "\n" + callback_body + R"(
 end
 
-return {
-    Exports = Exports
-}
+return exports
 )"));
     lua.get_export_manager().register_all_exports();
 }

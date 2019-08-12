@@ -26,24 +26,41 @@ bool UIMenuModInfo::init()
     return true;
 }
 
+
+
+optional<fs::path> UIMenuModInfo::_find_readme(const fs::path& mod_dir)
+{
+    for (const auto& filename :
+         {"README.md", "README.markdown", "README.txt", "README"})
+    {
+        if (fs::exists(mod_dir / filename))
+        {
+            return mod_dir / filename;
+        }
+    }
+    return none;
+}
+
+
+
 void UIMenuModInfo::_build_description()
 {
     _readme_pages.clear();
     _desc_page = 0;
 
     auto readme_path =
-        filesystem::dir::for_mod(_desc.manifest.id) / "README.md";
+        _find_readme(filesystem::dirs::for_mod(_desc.manifest.id));
 
-    if (!fs::exists(readme_path))
+    if (!readme_path)
     {
         _readme_pages.push_back(
-            i18n::s.get("core.locale.main_menu.mods.no_readme"));
+            i18n::s.get("core.main_menu.mod_list.no_readme"));
     }
     else
     {
         std::vector<std::string> description_lines;
         range::copy(
-            fileutil::read_by_line(readme_path),
+            fileutil::read_by_line(*readme_path),
             std::back_inserter(description_lines));
 
         const size_t text_width = 90 - 2;
@@ -81,13 +98,14 @@ void UIMenuModInfo::_build_description()
         if (description_lines.empty())
         {
             _readme_pages.push_back(
-                i18n::s.get("core.locale.main_menu.mods.no_readme"));
+                i18n::s.get("core.main_menu.mod_list.no_readme"));
         }
     }
 
     listmax = _readme_pages.size();
 
-    auto image_path = filesystem::dir::for_mod(_desc.manifest.id) / "image.png";
+    auto image_path =
+        filesystem::dirs::for_mod(_desc.manifest.id) / "image.png";
     if (fs::exists(image_path))
     {
         _mod_image = snail::Image{image_path};
@@ -110,12 +128,12 @@ void UIMenuModInfo::update()
 void UIMenuModInfo::_draw_mod_page()
 {
     display_topic(
-        i18n::s.get("core.locale.main_menu.mods.info.title"), wx + 30, wy + 36);
+        i18n::s.get("core.main_menu.mod_list.info.title"), wx + 30, wy + 36);
 
     int y = wy + 60;
 
     gmes(
-        "<b>" + i18n::s.get("core.locale.main_menu.mods.info.id") + ":<def> " +
+        "<b>" + i18n::s.get("core.main_menu.mod_list.info.id") + ":<def> " +
             _desc.manifest.id,
         wx + 30,
         y,
@@ -123,15 +141,15 @@ void UIMenuModInfo::_draw_mod_page()
         {30, 30, 30},
         false);
     gmes(
-        "<b>" + i18n::s.get("core.locale.main_menu.mods.info.author") +
-            ":<def> " + _desc.manifest.author,
+        "<b>" + i18n::s.get("core.main_menu.mod_list.info.author") + ":<def> " +
+            _desc.manifest.author,
         wx + 30,
         y + 16,
         570,
         {30, 30, 30},
         false);
     gmes(
-        "<b>" + i18n::s.get("core.locale.main_menu.mods.info.version") +
+        "<b>" + i18n::s.get("core.main_menu.mod_list.info.version") +
             ":<def> " + _desc.manifest.version.to_string(),
         wx + 30,
         y + 32,
@@ -139,7 +157,7 @@ void UIMenuModInfo::_draw_mod_page()
         {30, 30, 30},
         false);
     gmes(
-        "<b>" + i18n::s.get("core.locale.main_menu.mods.info.description") +
+        "<b>" + i18n::s.get("core.main_menu.mod_list.info.description") +
             ":<def> " + _desc.manifest.description,
         wx + 30,
         y + 48,

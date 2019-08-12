@@ -127,7 +127,7 @@ void UIMenuItemDesc::_draw_message(
 void UIMenuItemDesc::draw()
 {
     ui_display_window(
-        i18n::s.get("core.locale.item.desc.window.title"),
+        i18n::s.get("core.item.desc.window.title"),
         strhint4 + strhint3,
         (windoww - 600) / 2 + inf_screenx,
         winposy(408),

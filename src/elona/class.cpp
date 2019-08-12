@@ -5,49 +5,29 @@
 #include "variables.hpp"
 
 
+
 namespace elona
 {
 
-int cequipment = 0;
-
-
-
-int access_class_info(int dbmode, const std::string& class_id)
+void class_init_chara(Character& chara, const std::string& class_id)
 {
     if (class_id.empty())
     {
-        classname = i18n::s.get("core.locale.class.unemployed");
-        cequipment = 0;
-        return 0;
+        return;
     }
 
     const auto data = the_class_db[class_id];
     if (!data)
-        return 0;
-
-    switch (dbmode)
     {
-    case 2:
-        classname = i18n::s.get_m("locale.class", class_id, "name");
-        return 0;
-    case 9: return data->is_extra;
-    case 11:
-        classname = i18n::s.get_m("locale.class", class_id, "name");
-        buff = i18n::s.get_m_optional("locale.class", class_id, "description")
-                   .get_value_or("");
-        return 0;
-    case 16: return data->item_type;
-    case 3: break;
-    default: assert(0);
+        return;
     }
 
-    cdatan(3, rc) = class_id;
-    cequipment = data->equipment_type;
+    cdatan(3, chara.index) = class_id;
     for (const auto& pair : data->skills)
     {
         if (const auto ability_data = the_ability_db[pair.first])
         {
-            chara_init_skill(cdata[rc], ability_data->legacy_id, pair.second);
+            chara_init_skill(chara, ability_data->legacy_id, pair.second);
         }
         else
         {
@@ -56,8 +36,56 @@ int access_class_info(int dbmode, const std::string& class_id)
                                    << " (class " << class_id << ")";
         }
     }
+}
 
-    return 0;
+
+
+std::string class_get_name(const std::string& class_id)
+{
+    if (class_id.empty())
+    {
+        return i18n::s.get("core.class.unemployed");
+    }
+    else
+    {
+        return i18n::s.get_m("class", class_id, "name");
+    }
+}
+
+
+
+int class_get_equipment_type(const std::string& class_id)
+{
+    if (class_id.empty())
+    {
+        return 0;
+    }
+    else if (const auto data = the_class_db[class_id])
+    {
+        return data->equipment_type;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+
+
+int class_get_item_type(const std::string& class_id)
+{
+    if (class_id.empty())
+    {
+        return 0;
+    }
+    else if (const auto data = the_class_db[class_id])
+    {
+        return data->item_type;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 

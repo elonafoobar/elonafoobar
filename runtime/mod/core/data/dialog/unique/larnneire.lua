@@ -1,6 +1,6 @@
 return {
    id = "larnneire",
-   root = "core.locale.talk.unique.larnneire",
+   root = "core.talk.unique.larnneire",
    nodes = {
       __start = {
          text = {

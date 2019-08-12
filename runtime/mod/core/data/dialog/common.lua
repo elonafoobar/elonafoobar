@@ -1,16 +1,16 @@
-local Chara = Elona.require("Chara")
-local Map = Elona.require("Map")
-local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
+local Chara = require("game.Chara")
+local Map = require("game.Map")
+local GUI = require("game.GUI")
+local I18N = require("game.I18N")
 
 local function create_downstairs(x, y, dungeon_level)
    Map.set_feat(x, y, 231, 11, dungeon_level)
 end
 
 local function quest_completed()
-   GUI.txt(I18N.get("core.locale.quest.completed"))
+   GUI.txt(I18N.get("core.quest.completed"))
    GUI.play_sound("core.complete1")
-   GUI.txt(I18N.get("core.locale.common.something_is_put_on_the_ground"))
+   GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
    GUI.show_journal_update_message()
 end
 

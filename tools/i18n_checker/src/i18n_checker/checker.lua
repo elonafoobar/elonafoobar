@@ -27,7 +27,7 @@ local dispatchers = {}
 local function try_get_key(args)
    local strings = capture_strings(args[1])
    local locale_key = strings[1]
-   if locale_key and sfind(locale_key, "core%.locale%.") then
+   if locale_key and sfind(locale_key, "core%.") then
       return locale_key
    end
    return nil

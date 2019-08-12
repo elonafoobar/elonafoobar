@@ -120,9 +120,9 @@ void await(int msec)
         {
             ELONA_LOG("gui") << "Focus lost, quicksaving game.";
             snail::android::toast(
-                i18n::s.get("core.locale.ui.save_on_suspend"),
+                i18n::s.get("core.ui.save_on_suspend"),
                 snail::android::ToastLength::long_length);
-            save_game();
+            save_game(save_game_no_message, save_game_silent);
         }
     }
 }
@@ -1090,12 +1090,6 @@ void wpoke(int& x, size_t index, int y)
 void set_color_mod(int r, int g, int b, int window_id)
 {
     snail::hsp::set_color_mod(r, g, b, window_id);
-}
-
-
-
-void ematan(int, int, int)
-{
 }
 
 

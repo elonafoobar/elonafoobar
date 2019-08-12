@@ -15,7 +15,7 @@ TEST_CASE("test reading invalid HCL file", "[Lua: Data]")
 
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(
-        filesystem::dir::mod(), {base_path / "invalid"});
+        filesystem::dirs::mod(), {base_path / "invalid"});
 
     REQUIRE_THROWS(lua.get_data_manager().init_from_mods());
 }
@@ -26,7 +26,7 @@ TEST_CASE("test declaring and loading datatype", "[Lua: Data]")
 
     elona::lua::LuaEnv lua;
     lua.get_mod_manager().load_mods(
-        filesystem::dir::mod(), {base_path / "putit"});
+        filesystem::dirs::mod(), {base_path / "putit"});
 
     REQUIRE_NOTHROW(lua.get_data_manager().init_from_mods());
 
@@ -50,7 +50,7 @@ TEST_CASE("test declaring and loading datatype", "[Lua: Data]")
 //
 //     elona::lua::LuaEnv lua;
 //     lua.get_mod_manager().load_mods(
-//         filesystem::dir::mod(), {base_path / "putit", base_path /
+//         filesystem::dirs::mod(), {base_path / "putit", base_path /
 //         "putit_b"});
 //
 //     REQUIRE_NOTHROW(lua.get_data_manager().init_from_mods());
@@ -68,10 +68,25 @@ TEST_CASE(
     "[Lua: Data]")
 {
     elona::lua::LuaEnv lua;
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_mods(
-        filesystem::dir::mod(),
+    REQUIRE_THROWS(lua.get_mod_manager().load_mods(
+        filesystem::dirs::mod(),
         {testing::get_test_data_path() / "mods" / "test_export_keys"}));
+}
 
-    REQUIRE_NONE(lua.get_export_manager().get_exported_function(
-        "exports:test_export_keys.0"));
+TEST_CASE("test order of script execution", "[Lua: Data]")
+{
+    const auto base_path = testing::get_test_data_path() / "registry";
+
+    elona::lua::LuaEnv lua;
+    lua.get_mod_manager().load_mods(
+        filesystem::dirs::mod(), {base_path / "load_order"});
+
+    REQUIRE_NOTHROW(lua.get_data_manager().init_from_mods());
+
+    auto& table = lua.get_data_manager().get();
+
+    auto spell = table.raw("core.ability", "load_order.expecto_patronum");
+    REQUIRE_SOME(spell);
+    REQUIRE((*spell)["related_basic_attribute"].get<int>() == 17);
+    REQUIRE((*spell)["cost"].get<int>() == 100);
 }

@@ -75,6 +75,8 @@ void switch_religion(Character&, const std::string&);
 
 int get_ailment(Character&, const EnumString&);
 
+std::string metamethod_tostring(const Character&);
+
 
 void bind(sol::state&);
 } // namespace LuaCharacter

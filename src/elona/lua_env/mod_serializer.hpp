@@ -1,10 +1,13 @@
 #pragma once
+
 #include "../../thirdparty/sol2/sol.hpp"
 #include "../filesystem.hpp"
 #include "../log.hpp"
 #include "handle_manager.hpp"
-#include "lua_env.hpp"
+#include "lua_submodule.hpp"
 #include "mod_manager.hpp"
+
+
 
 namespace elona
 {
@@ -17,20 +20,16 @@ std::pair<int, int> get_start_end_indices(
 
 std::string get_store_name(ModInfo::StoreType store_type);
 
-class LuaEnv;
 
-class ModSerializer
+
+class ModSerializer : public LuaSubmodule
 {
 public:
-    explicit ModSerializer(LuaEnv* lua)
-        : _lua(lua)
+    explicit ModSerializer(LuaEnv& lua)
+        : LuaSubmodule(lua)
     {
-        _serial_env = sol::environment(
-            *(_lua->get_state()), sol::create, _lua->get_state()->globals());
-
         // Load the Lua chunk for saving/loading data.
-        _lua->get_state()->safe_script(
-            R"(Serial = require "serial")", _serial_env);
+        safe_script(R"(Serial = require_relative("serial"))");
     }
 
     template <typename T, typename Archive>
@@ -40,7 +39,7 @@ public:
         std::tie(index_start, index_end) =
             get_start_end_indices(T::lua_type(), store_type);
 
-        auto handles = _lua->get_handle_manager().get_handle_range(
+        auto handles = lua().get_handle_manager().get_handle_range(
             T::lua_type(), index_start, index_end);
         save(handles, putit_archive);
 
@@ -62,7 +61,7 @@ public:
 
         sol::object handles = load(putit_archive);
 
-        auto& handle_mgr = _lua->get_handle_manager();
+        auto& handle_mgr = lua().get_handle_manager();
         handle_mgr.clear_handle_range(T::lua_type(), index_start, index_end);
         handle_mgr.merge_handles(T::lua_type(), handles);
 
@@ -78,7 +77,7 @@ public:
         Archive& putit_archive,
         ModInfo::StoreType store_type)
     {
-        const auto& mod_mgr = _lua->get_mod_manager();
+        const auto& mod_mgr = lua().get_mod_manager();
 
         unsigned mod_count = static_cast<unsigned>(mod_mgr.enabled_mod_count());
         putit_archive(mod_count);
@@ -105,7 +104,7 @@ public:
         Archive& putit_archive,
         ModInfo::StoreType store_type)
     {
-        auto& mod_mgr = _lua->get_mod_manager();
+        auto& mod_mgr = lua().get_mod_manager();
 
         unsigned mod_count;
         putit_archive(mod_count);
@@ -146,10 +145,9 @@ private:
     template <typename Archive>
     void save(sol::object data, Archive& ar)
     {
-        _serial_env["_TO_SERIALIZE"] = data;
-        auto result = _lua->get_state()->safe_script(
-            R"(return Serial.save(_TO_SERIALIZE))", _serial_env);
-        _serial_env["_TO_SERIALIZE"] = sol::lua_nil;
+        env()["_TO_SERIALIZE"] = data;
+        auto result = safe_script(R"(return Serial.save(_TO_SERIALIZE))");
+        env()["_TO_SERIALIZE"] = sol::lua_nil;
 
         if (result.valid())
         {
@@ -169,10 +167,9 @@ private:
         std::string dump;
         ar(dump);
 
-        _serial_env["_TO_DESERIALIZE"] = dump;
-        auto result = _lua->get_state()->safe_script(
-            R"(return Serial.load(_TO_DESERIALIZE))", _serial_env);
-        _serial_env["_TO_DESERIALIZE"] = sol::lua_nil;
+        env()["_TO_DESERIALIZE"] = dump;
+        auto result = safe_script(R"(return Serial.load(_TO_DESERIALIZE))");
+        env()["_TO_DESERIALIZE"] = sol::lua_nil;
 
         if (result.valid())
         {
@@ -184,14 +181,6 @@ private:
             throw err;
         }
     }
-
-    /***
-     * The isolated Lua environment that loads the Lua serialization
-     * code.
-     */
-    sol::environment _serial_env;
-
-    LuaEnv* _lua;
 };
 
 } // namespace lua

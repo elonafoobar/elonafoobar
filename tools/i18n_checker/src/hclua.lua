@@ -1,1 +1,1 @@
-../../../runtime/data/lua/hclua.lua
+../../../runtime/data/script/kernel/hclua.lua

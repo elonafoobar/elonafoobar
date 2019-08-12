@@ -1,4 +1,6 @@
 #include "gdata.hpp"
+#include <iomanip>
+#include <sstream>
 #include "variables.hpp"
 
 
@@ -6,9 +8,10 @@
 namespace elona
 {
 
-
 GameData game_data;
 FoobarData foobar_data;
+
+
 
 #define GDATA_PACK(x, ident) gdata(x) = ident;
 #define GDATA_UNPACK(x, ident) ident = gdata(x);
@@ -27,6 +30,7 @@ FoobarData foobar_data;
     SERIALIZE(6, pc_y_in_world_map); \
     SERIALIZE(7, play_days); \
     SERIALIZE(8, random_seed); \
+    SERIALIZE(9, random_seed_offset); \
     SERIALIZE(10, date.year); \
     SERIALIZE(11, date.month); \
     SERIALIZE(12, date.day); \
@@ -209,5 +213,19 @@ void modify_crowd_density(int cc, int delta)
 }
 
 
+
+std::string DateTime::to_string() const
+{
+    std::stringstream ss;
+    // clang-format off
+    ss << std::setfill('0') << year << '/'
+       << std::setw(2) << month << '/'
+       << std::setw(2) << day << ' '
+       << std::setw(2) << hour << ':'
+       << std::setw(2) << minute << ':'
+       << std::setw(2) << second;
+    // clang-format on
+    return ss.str();
+}
 
 } // namespace elona

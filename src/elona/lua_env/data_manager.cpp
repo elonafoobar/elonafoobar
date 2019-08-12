@@ -1,5 +1,4 @@
 #include "data_manager.hpp"
-
 #include "../../util/natural_order_comparator.hpp"
 #include "../log.hpp"
 #include "api_manager.hpp"
@@ -12,19 +11,23 @@ namespace elona
 namespace lua
 {
 
-DataManager::DataManager(LuaEnv* lua)
+DataManager::DataManager(LuaEnv& lua)
+    : LuaSubmodule(lua)
 {
-    _lua = lua;
-    _data = DataTable(_lua->get_state()->create_table());
+    _data = DataTable(lua_state()->create_table());
     clear();
 }
 
+
+
 void DataManager::clear()
 {
-    sol::table data = _lua->get_state()->script_file(filepathutil::to_utf8_path(
-        filesystem::dir::data() / "script" / "kernel" / "data.lua"));
+    sol::table data = safe_script_file_in_global_env(
+        filesystem::dirs::data() / "script" / "kernel" / "data.lua");
     _data.storage() = data;
 }
+
+
 
 void DataManager::_init_from_mod(ModInfo& mod)
 {
@@ -32,23 +35,30 @@ void DataManager::_init_from_mod(ModInfo& mod)
     // new global variables.
     mod.env.raw_set("data", _data.storage());
 
-    if (mod.manifest.path)
+    if (!mod.manifest.path)
     {
-        // The name of the mod for which the current data script is being ran is
-        // present in the mod's environment table. However, it is not present in
-        // the chunk where the 'data' table originates from, as it originated
-        // outside of a mod environment. To determine which mod is adding new
-        // types/data in the data chunk, it has to be set on the global Lua
-        // state temporarily during the data loading process.
-        _lua->get_state()->set("_MOD_ID", mod.manifest.id);
+        return; // psuedo-mod
+    }
 
-        const auto data_script = *mod.manifest.path / "data.lua";
-        if (fs::exists(data_script))
+    // The name of the mod for which the current data script is being ran is
+    // present in the mod's environment table. However, it is not present in
+    // the chunk where the 'data' table originates from, as it originated
+    // outside of a mod environment. To determine which mod is adding new
+    // types/data in the data chunk, it has to be set on the global Lua
+    // state temporarily during the data loading process.
+    lua_state()->set("_MOD_ID", mod.manifest.id);
+
+    // for (const auto filename : {"data.lua",
+    //                             "extensions.lua",
+    //                             "data-update.lua",
+    //                             "extensions-update.lua"})
+    for (const auto filename : {"data.lua", "data-update.lua"})
+    {
+        const auto script_filepath = *mod.manifest.path / filename;
+        if (fs::exists(script_filepath))
         {
-            auto result = _lua->get_state()->safe_script_file(
-                filepathutil::to_utf8_path(data_script),
-                mod.env,
-                sol::script_pass_on_error);
+            auto result = safe_script_file(
+                script_filepath, mod.env, sol::script_pass_on_error);
 
             if (!result.valid())
             {
@@ -59,15 +69,17 @@ void DataManager::_init_from_mod(ModInfo& mod)
     }
 }
 
+
+
 void DataManager::init_from_mods()
 {
-    for (const auto& mod_id : _lua->get_mod_manager().calculate_loading_order())
+    for (const auto& mod_id : lua().get_mod_manager().calculate_loading_order())
     {
-        const auto& mod = _lua->get_mod_manager().get_enabled_mod(mod_id);
+        const auto& mod = lua().get_mod_manager().get_enabled_mod(mod_id);
         _init_from_mod(*mod);
     }
 
-    _lua->get_state()->set("_MOD_ID", sol::lua_nil);
+    lua_state()->set("_MOD_ID", sol::lua_nil);
 
     // Prevent modifications to the 'data' table.
     sol::table metatable = _data.storage().create_with(

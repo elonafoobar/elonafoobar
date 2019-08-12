@@ -1,10 +1,10 @@
-local Chara = Elona.require("Chara")
-local Map = Elona.require("Map")
-local Item = Elona.require("Item")
+local Chara = require("game.Chara")
+local Map = require("game.Map")
+local Item = require("game.Item")
 
 return {
    id = "part_time_worker",
-   root = "core.locale.talk.unique.part_time_worker",
+   root = "core.talk.unique.part_time_worker",
    nodes = {
       __start = function()
          if not (Map.id() == "core.noyel" and Map.area().christmas_festival) then

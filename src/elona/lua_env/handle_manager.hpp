@@ -6,7 +6,9 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 #include "../../util/noncopyable.hpp"
-#include "lua_env.hpp"
+#include "lua_submodule.hpp"
+
+
 
 namespace elona
 {
@@ -14,10 +16,12 @@ namespace elona
 struct Character;
 struct Item;
 
+
+
 namespace lua
 {
 
-class LuaEnv;
+
 
 /***
  * Provides and manages references to C++ objects as Lua tables
@@ -36,10 +40,10 @@ class LuaEnv;
  *
  * See data/script/kernel/handle.lua for more information.
  */
-class HandleManager : public lib::noncopyable
+class HandleManager : public LuaSubmodule
 {
 public:
-    explicit HandleManager(LuaEnv*);
+    explicit HandleManager(LuaEnv&);
 
     /***
      * Creates a new handle in the isolated handle environment.
@@ -78,8 +82,7 @@ public:
     template <typename T>
     sol::optional<T&> get_ref(sol::table handle)
     {
-        sol::object obj =
-            handle_env["Handle"]["get_ref"](handle, T::lua_type());
+        sol::object obj = env()["Handle"]["get_ref"](handle, T::lua_type());
         if (obj == sol::lua_nil)
         {
             return sol::nullopt;
@@ -95,7 +98,7 @@ public:
 
     bool handle_is_valid(sol::table handle)
     {
-        return handle_env["Handle"]["is_valid"](handle);
+        return env()["Handle"]["is_valid"](handle);
     }
 
 
@@ -110,7 +113,7 @@ public:
             return sol::lua_nil;
         }
 
-        sol::object handle = handle_env["Handle"]["get_handle"](index, type);
+        sol::object handle = env()["Handle"]["get_handle"](index, type);
         if (!handle.is<sol::table>())
         {
             return sol::lua_nil;
@@ -132,33 +135,32 @@ public:
     sol::table
     get_handle_range(const std::string& kind, int index_start, int index_end)
     {
-        return handle_env["Handle"]["get_handle_range"](
+        return env()["Handle"]["get_handle_range"](
             kind, index_start, index_end);
     }
 
     void
     clear_handle_range(const std::string& kind, int index_start, int index_end)
     {
-        handle_env["Handle"]["clear_handle_range"](
-            kind, index_start, index_end);
+        env()["Handle"]["clear_handle_range"](kind, index_start, index_end);
     }
 
     void merge_handles(const std::string& kind, sol::table handles)
     {
-        handle_env["Handle"]["merge_handles"](kind, handles);
+        env()["Handle"]["merge_handles"](kind, handles);
     }
 
     template <typename T>
     void relocate_handle(const T& source, const T& destination, int new_index)
     {
-        handle_env["Handle"]["relocate_handle"](
+        env()["Handle"]["relocate_handle"](
             source, destination, new_index, T::lua_type());
     }
 
     template <typename T>
     void swap_handles(const T& obj_a, const T& obj_b)
     {
-        handle_env["Handle"]["swap_handles"](obj_a, obj_b, T::lua_type());
+        env()["Handle"]["swap_handles"](obj_a, obj_b, T::lua_type());
     }
 
     template <typename T>
@@ -167,7 +169,7 @@ public:
         auto handle = get_handle<T>(obj);
         if (handle != sol::lua_nil)
         {
-            handle_env["Handle"]["set_ref"](handle, obj);
+            env()["Handle"]["set_ref"](handle, obj);
         }
     }
 
@@ -186,26 +188,18 @@ private:
     void create_handle(T& obj)
     {
         std::string uuid = boost::lexical_cast<std::string>(uuid_generator());
-        handle_env["Handle"]["create_handle"](obj, T::lua_type(), uuid);
+        env()["Handle"]["create_handle"](obj, T::lua_type(), uuid);
     }
 
     template <typename T>
     void remove_handle(T& obj)
     {
-        handle_env["Handle"]["remove_handle"](obj, T::lua_type());
+        env()["Handle"]["remove_handle"](obj, T::lua_type());
     }
 
     void bind(LuaEnv&);
 
     boost::uuids::random_generator uuid_generator;
-
-    /***
-     * The isolated Lua environment where the handles are stored and
-     * managed.
-     */
-    sol::environment handle_env;
-
-    LuaEnv* lua;
 };
 
 } // namespace lua

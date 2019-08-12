@@ -1,10 +1,10 @@
-local Chara = Elona.require("Chara")
-local GUI = Elona.require("GUI")
-local I18N = Elona.require("I18N")
-local Internal = Elona.require("Internal")
-local Item = Elona.require("Item")
+local Chara = require("game.Chara")
+local GUI = require("game.GUI")
+local I18N = require("game.I18N")
+local Internal = require("game.Internal")
+local Item = require("game.Item")
 
-local common = require("data/dialog/common")
+local common = require_relative("data/dialog/common")
 
 local function give_monster_balls()
    local flag = Internal.get_quest_flag("ambitious_scientist")
@@ -17,10 +17,8 @@ local function give_monster_balls()
 
       if item.number > 0 and item.id == "core.monster_ball" and item.subname ~= 0 then
          found = true
-
-         GUI.txt(I18N.get("core.locale.talk.unique.icolle.quest.give.deliver", item));
-
          while item.number > 0 and flag < 6 do
+            GUI.txt(I18N.get("core.talk.unique.icolle.quest.give.deliver", item));
             item.number = item.number - 1
             flag = flag + 1
          end
@@ -35,7 +33,7 @@ end
 
 return {
    id = "icolle",
-   root = "core.locale.talk.unique.icolle",
+   root = "core.talk.unique.icolle",
    nodes = {
       __start = function()
          local flag = Internal.get_quest_flag("ambitious_scientist")
