@@ -1514,8 +1514,7 @@ void cell_draw()
 
                 if (py_ < windowh - inf_verh - 24)
                 {
-                    if (cdata.player().continuous_action.type ==
-                        ContinuousAction::Type::fish)
+                    if (cdata.player().activity.type == Activity::Type::fish)
                     {
                         ani_ = 0;
                     }

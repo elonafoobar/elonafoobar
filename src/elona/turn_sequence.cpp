@@ -340,8 +340,8 @@ TurnResult npc_turn()
                             cdata.player().position.y <
                                 cdata[cc].position.y + 10)
                         {
-                            if (cdata.player().continuous_action.type !=
-                                ContinuousAction::Type::perform)
+                            if (cdata.player().activity.type !=
+                                Activity::Type::perform)
                             {
                                 if (cdata[cc].hate <= 0)
                                 {
@@ -744,7 +744,7 @@ TurnResult turn_begin()
     bool update_turn_cost = true;
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        if (cdata.player().continuous_action.turn > 2)
+        if (cdata.player().activity.turn > 2)
         {
             cdata.player().turn_cost = map_data.turn_cost;
             update_turn_cost = false;
@@ -871,7 +871,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
         }
         if (p == 4)
         {
-            if (!cdata.player().continuous_action)
+            if (!cdata.player().activity)
             {
                 heal_sp(cdata.player(), 2);
             }
@@ -1101,7 +1101,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
             return TurnResult::turn_end;
         }
     }
-    if (cdata[cc].stops_continuous_action_if_damaged == 1)
+    if (cdata[cc].stops_activity_if_damaged == 1)
     {
         activity_handle_damage(cdata[cc]);
     }
@@ -1120,7 +1120,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
             proc_pregnant();
         }
     }
-    if (cdata[cc].continuous_action)
+    if (cdata[cc].activity)
     {
         if (auto result = activity_proc(cdata[cc]))
         {
@@ -1187,8 +1187,8 @@ TurnResult turn_end()
             if (game_data.character_and_status_for_gene < 10000)
             {
                 game_data.character_and_status_for_gene += 10000;
-                game_data.continuous_action_about_to_start = 100;
-                continuous_action_others();
+                game_data.activity_about_to_start = 100;
+                activity_others();
             }
         }
         if (cdata.player().inventory_weight_type >= 3)

@@ -122,7 +122,7 @@ void talk_to_npc(Character &chara)
         talk_wrapper(TalkResult::talk_sleeping);
         return;
     }
-    if (chara.continuous_action)
+    if (chara.activity)
     {
         talk_wrapper(TalkResult::talk_busy);
         return;

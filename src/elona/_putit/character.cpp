@@ -85,13 +85,13 @@ void serialize(Archive& _putit_archive_)
     PUTIT_SERIALIZE_FIELD(nullify_damage);
     PUTIT_SERIALIZE_FIELD(cut_counterattack);
     PUTIT_SERIALIZE_FIELD(anorexia_count);
-    PUTIT_SERIALIZE_FIELD(continuous_action);
-    PUTIT_SERIALIZE_FIELD(stops_continuous_action_if_damaged);
+    PUTIT_SERIALIZE_FIELD(activity);
+    PUTIT_SERIALIZE_FIELD(stops_activity_if_damaged);
     PUTIT_SERIALIZE_FIELD(quality_of_performance);
     PUTIT_SERIALIZE_FIELD(tip_gold);
     PUTIT_SERIALIZE_FIELD(character_role);
     PUTIT_SERIALIZE_FIELD(shop_rank);
-    PUTIT_SERIALIZE_FIELD(continuous_action_target);
+    PUTIT_SERIALIZE_FIELD(activity_target);
     PUTIT_SERIALIZE_FIELD(shop_store_id);
     PUTIT_SERIALIZE_FIELD(time_to_restore);
     PUTIT_SERIALIZE_FIELD(cnpc_id);

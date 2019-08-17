@@ -165,14 +165,14 @@ struct GameData
     int time_when_textbook_becomes_available;
     int light;
     int continuous_active_hours;
-    int continuous_action_about_to_start;
+    int activity_about_to_start;
     int sleep_experience;
     int acquirable_feat_count;
     int chara_last_attacked_by_player;
     int wish_count;
     int version;
     int rights_to_succeed_to;
-    int character_and_status_for_gene; // tc + (0 if continuous action not
+    int character_and_status_for_gene; // tc + (0 if activity not
                                        // started, 10000 if so)
     int next_voting_time;
     ArrayType<20> ranks;

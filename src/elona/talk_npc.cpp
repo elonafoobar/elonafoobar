@@ -1107,7 +1107,7 @@ TalkResult talk_sex()
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.talk.npc.common.sex.response"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    continuous_action_sex();
+    activity_sex();
     return TalkResult::talk_end;
 }
 
@@ -1152,7 +1152,7 @@ TalkResult talk_prostitute_buy()
     ELONA_TALK_SCENE_CUT();
     cc = tc;
     tc = 0;
-    continuous_action_sex();
+    activity_sex();
     cc = 0;
     return TalkResult::talk_end;
 }

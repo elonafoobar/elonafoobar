@@ -13,12 +13,12 @@ void rowact_item(int item_index);
 void activity_handle_damage(Character&);
 optional<TurnResult> activity_proc(Character&);
 
-void continuous_action_perform();
-void continuous_action_sex();
-void continuous_action_blending();
-void continuous_action_eating();
-void continuous_action_eating_finish();
-void continuous_action_others();
+void activity_perform();
+void activity_sex();
+void activity_blending();
+void activity_eating();
+void activity_eating_finish();
+void activity_others();
 
 int search_material_spot();
 void spot_fishing();

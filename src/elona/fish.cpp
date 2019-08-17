@@ -26,7 +26,7 @@ void fish_get(int legacy_fish_id)
 
 int fish_select_at_random()
 {
-    const auto bait = inv[cdata.player().continuous_action.item].param4;
+    const auto bait = inv[cdata.player().activity.item].param4;
     WeightedRandomSampler<int> sampler;
     for (const auto& fish : the_fish_db.values())
     {

@@ -38,7 +38,7 @@ struct Buff
 
 
 /// @putit
-struct ContinuousAction
+struct Activity
 {
     enum class Type : int
     {
@@ -58,7 +58,7 @@ struct ContinuousAction
     };
 
     /// @putit
-    Type type = ContinuousAction::Type::none;
+    Type type = Activity::Type::none;
 
     /// @putit
     int turn = 0;
@@ -69,7 +69,7 @@ struct ContinuousAction
 
     bool is_doing_nothing() const
     {
-        return type == ContinuousAction::Type::none;
+        return type == Activity::Type::none;
     }
 
 
@@ -87,13 +87,13 @@ struct ContinuousAction
 
     void finish()
     {
-        type = ContinuousAction::Type::none;
+        type = Activity::Type::none;
         turn = 0;
         item = 0;
     }
 
 
-#include "_putit/continuous_action.cpp"
+#include "_putit/activity.cpp"
 };
 
 
@@ -378,10 +378,10 @@ public:
     int anorexia_count = 0;
 
     /// @putit
-    ContinuousAction continuous_action;
+    Activity activity;
 
     /// @putit
-    int stops_continuous_action_if_damaged = 0;
+    int stops_activity_if_damaged = 0;
 
     /// @putit
     int quality_of_performance = 0;
@@ -396,7 +396,7 @@ public:
     int shop_rank = 0;
 
     /// @putit
-    int continuous_action_target = 0;
+    int activity_target = 0;
 
     /// @putit
     int shop_store_id = 0;

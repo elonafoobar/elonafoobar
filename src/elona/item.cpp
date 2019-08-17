@@ -264,9 +264,8 @@ int itemusingfind(int ci, bool disallow_pc)
         {
             continue;
         }
-        if (cnt.continuous_action &&
-            cnt.continuous_action.type != ContinuousAction::Type::sex &&
-            cnt.continuous_action.turn > 0 && cnt.continuous_action.item == ci)
+        if (cnt.activity && cnt.activity.type != Activity::Type::sex &&
+            cnt.activity.turn > 0 && cnt.activity.item == ci)
         {
             if (!disallow_pc || cnt.index != 0)
             {
