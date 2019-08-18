@@ -9,14 +9,15 @@
 #include "../hcl.hpp"
 #include "../optional.hpp"
 
+
+
 namespace elona
 {
 
 namespace
 {
 
-
-static void add_platform(ConfigDef::MetaData& dat, const hcl::Object& item)
+void add_platform(ConfigDef::MetaData& dat, const hcl::Object& item)
 {
     std::string platform = item.at("platform").as<std::string>();
 
@@ -34,7 +35,9 @@ static void add_platform(ConfigDef::MetaData& dat, const hcl::Object& item)
     }
 }
 
-static void set_default_from_platform(
+
+
+void set_default_from_platform(
     ConfigDef::MetaData& dat,
     const hcl::Object& item)
 {
@@ -46,11 +49,13 @@ static void set_default_from_platform(
     hcl::Value* value = platform_default.find(platform);
     if (value)
     {
-        dat.default_value = *value;
+        dat.platform_default_value = *value;
     }
 }
 
 } // namespace
+
+
 
 #define CONFIG_DEF_METADATA(item, name) \
     if (item.find(#name) != item.end()) \
@@ -58,10 +63,14 @@ static void set_default_from_platform(
         dat.name = item.at(#name).as<bool>(); \
     }
 
+
+
 void ConfigDef::post_visit(const SpecKey& current_key, const spec::SectionDef&)
 {
     data.emplace(current_key, MetaData{});
 }
+
+
 
 void ConfigDef::pre_visit_section(
     const SpecKey& current_key,
@@ -80,12 +89,16 @@ void ConfigDef::pre_visit_section(
     data.emplace(current_key, dat);
 }
 
+
+
 void ConfigDef::pre_visit_bare_value(
     const SpecKey& current_key,
     const hcl::Value&)
 {
     data.emplace(current_key, MetaData{});
 }
+
+
 
 void ConfigDef::pre_visit_item(
     const SpecKey& current_key,
@@ -110,6 +123,7 @@ void ConfigDef::pre_visit_item(
 
     data.emplace(current_key, dat);
 }
+
 
 
 bool ConfigDef::is_child_visible(const SpecKey& child_key)

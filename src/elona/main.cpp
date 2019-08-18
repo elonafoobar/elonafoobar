@@ -3,6 +3,7 @@
 #include "config/config.hpp"
 #include "init.hpp"
 #include "lua_env/event_manager.hpp"
+#include "lua_env/lson.hpp"
 #include "lua_env/lua_event/base_event.hpp"
 #include "main_menu.hpp"
 #include "profile/profile_manager.hpp"
@@ -21,6 +22,21 @@ tinyargparser::ArgParser _make_argparser()
     return tinyargparser::ArgParser("Elona foobar")
         .add('v', "version", "Show version.")
         .add('p', "profile", "Specify profile.");
+}
+
+
+
+std::string _get_default_profile()
+{
+    const auto path = filesystem::files::global_config();
+    if (!fs::exists(path))
+    {
+        return profile::default_profile_id;
+    }
+
+    auto conf = lua::lson::parse_file(filesystem::files::global_config());
+    return conf.get<std::string>("profile").value_or(
+        profile::default_profile_id);
 }
 
 
@@ -113,7 +129,8 @@ int run(int argc, const char* const* argv)
                   << std::endl;
         return 0;
     }
-    const auto profile = args.get_or("profile", profile::default_profile_id);
+
+    const auto profile = args.get_or("profile", _get_default_profile());
     profile::ProfileManager::instance().init(profile);
 
     init();

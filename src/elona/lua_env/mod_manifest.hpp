@@ -18,13 +18,13 @@ struct ModManifest
         std::unordered_map<std::string, semver::VersionRequirement>;
 
     /**
-     * Loads a mod manifest from a mod.hcl file.
+     * Loads a mod manifest from a mod.lua file.
      */
     static ModManifest load(const fs::path& path);
 
     std::string id;
     std::string name;
-    std::string author;
+    std::string authors;
     std::string description;
     std::string license;
     semver::Version version;

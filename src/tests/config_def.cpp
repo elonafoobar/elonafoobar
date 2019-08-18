@@ -138,14 +138,14 @@ config {
 )");
 
     REQUIRE(
-        static_cast<bool>(def.get_metadata("spec_test.foo").default_value) ==
-        false);
+        static_cast<bool>(
+            def.get_metadata("spec_test.foo").platform_default_value) == false);
     REQUIRE(
-        def.get_metadata("spec_test.bar").default_value->as<std::string>() ==
-        "hoge");
+        def.get_metadata("spec_test.bar")
+            .platform_default_value->as<std::string>() == "hoge");
     REQUIRE(
-        static_cast<bool>(def.get_metadata("spec_test.baz").default_value) ==
-        false);
+        static_cast<bool>(
+            def.get_metadata("spec_test.baz").platform_default_value) == false);
 }
 
 TEST_CASE("Test metadata: is_visible()", "[Config: Definition]")

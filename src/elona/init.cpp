@@ -197,13 +197,15 @@ void initialize_i18n()
         {filesystem::dirs::locale() / language, "core"}};
 
     // Load translations for each mod.
-    for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dirs::mod()))
+    for (const auto& mod_and_path :
+         lua::normal_mod_dirs(filesystem::dirs::mod()))
     {
-        const auto manifest = lua::ModManifest::load(mod_dir / "mod.hcl");
-        const auto locale_path = mod_dir / "locale" / language;
+        const auto& id = mod_and_path.first;
+        const auto& path = mod_and_path.second;
+        const auto locale_path = path / "locale" / language;
         if (fs::exists(locale_path))
         {
-            locations.emplace_back(locale_path, manifest.id);
+            locations.emplace_back(locale_path, id);
         }
     }
 
@@ -693,13 +695,15 @@ void initialize_config_defs()
     Config::instance().clear();
 
     // Somewhat convoluted as mods haven't been loaded yet by the mod manager.
-    for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dirs::mod()))
+    for (const auto& mod_and_path :
+         lua::normal_mod_dirs(filesystem::dirs::mod()))
     {
-        const auto manifest = lua::ModManifest::load(mod_dir / "mod.hcl");
-        const auto config_def_path = mod_dir / "config_def.hcl";
+        const auto& id = mod_and_path.first;
+        const auto& path = mod_and_path.second;
+        const auto config_def_path = path / "config_def.hcl";
         if (fs::exists(config_def_path))
         {
-            Config::instance().load_def(config_def_path, manifest.id);
+            Config::instance().load_def(config_def_path, id);
         }
     }
 }

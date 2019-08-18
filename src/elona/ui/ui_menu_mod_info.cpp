@@ -142,7 +142,7 @@ void UIMenuModInfo::_draw_mod_page()
         false);
     gmes(
         "<b>" + i18n::s.get("core.main_menu.mod_list.info.author") + ":<def> " +
-            _desc.manifest.author,
+            _desc.manifest.authors,
         wx + 30,
         y + 16,
         570,

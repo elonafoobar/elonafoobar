@@ -16,6 +16,7 @@
 #include "../variables.hpp"
 
 
+
 namespace
 {
 
@@ -29,16 +30,6 @@ struct ConfigLoadingError : public std::runtime_error
 
 
 
-template <typename Iterator, typename Function>
-void for_each_with_index(Iterator first, Iterator last, Function f)
-{
-    for (size_t index = 0; first != last; ++first, ++index)
-    {
-        (void)f(index, *first);
-    }
-}
-
-
 void write_default_config(const fs::path& location)
 {
     std::ofstream out{location.native()};
@@ -46,6 +37,7 @@ void write_default_config(const fs::path& location)
     object["config"] = hcl::Object();
     out << object << std::endl;
 }
+
 
 
 /***
@@ -104,6 +96,8 @@ void inject_display_modes(Config& conf)
     }
 }
 
+
+
 /***
  * Initializes the list of save files that can be chosen at startup.
  */
@@ -125,6 +119,8 @@ void inject_save_files(Config& conf)
 
     conf.inject_enum("core.game.default_save", saves, "");
 }
+
+
 
 /***
  * Initializes the list of languages by adding the names of folders in
@@ -237,7 +233,6 @@ void set_touch_quick_action_size(int factor)
 namespace elona
 {
 
-
 void config_query_language()
 {
     constexpr snail::Color bg_color{160, 145, 128};
@@ -308,6 +303,8 @@ void config_query_language()
     Config::instance().font_filename = prev_font;
 }
 
+
+
 #define CONFIG_OPTION(confkey, type, getter) \
     conf.bind_getter("core."s + confkey, [&]() { return (getter); }); \
     conf.bind_setter<type>( \
@@ -315,6 +312,8 @@ void config_query_language()
 
 #define CONFIG_KEY(confkey, keyname) \
     CONFIG_OPTION((confkey), std::string, keyname)
+
+
 
 void load_config()
 {
@@ -418,6 +417,8 @@ void load_config()
     }
 }
 
+
+
 void initialize_config_preload()
 {
     const fs::path config_file =
@@ -468,8 +469,12 @@ void initialize_config_preload()
     inf_tiles = 48;
 }
 
+
+
 #undef CONFIG_OPTION
 #undef CONFIG_KEY
+
+
 
 snail::Window::FullscreenMode config_get_fullscreen_mode()
 {
@@ -487,23 +492,23 @@ snail::Window::FullscreenMode config_get_fullscreen_mode()
     }
 }
 
-Config& Config::instance()
-{
-    static Config the_instance;
-    return the_instance;
-}
+
 
 void Config::load_def(std::istream& is, const std::string& mod_id)
 {
     def.load(is, "[input stream]", mod_id);
-    mod_ids_.emplace(mod_id);
+    mod_ids_.emplace_back(mod_id);
 }
+
+
 
 void Config::load_def(const fs::path& config_def_path, const std::string& mod_id)
 {
     def.load(config_def_path, mod_id);
-    mod_ids_.emplace(mod_id);
+    mod_ids_.emplace_back(mod_id);
 }
+
+
 
 void Config::load_defaults(bool preload)
 {
@@ -522,6 +527,8 @@ void Config::load_defaults(bool preload)
         }
     }
 }
+
+
 
 void Config::load(std::istream& is, const std::string& hcl_file, bool preload)
 {
@@ -567,6 +574,8 @@ void Config::load(std::istream& is, const std::string& hcl_file, bool preload)
     }
 }
 
+
+
 void Config::visit_object(
     const hcl::Object& object,
     const std::string& current_key,
@@ -578,6 +587,8 @@ void Config::visit_object(
         visit(pair.second, current_key + "." + pair.first, hcl_file, preload);
     }
 }
+
+
 
 void Config::visit(
     const hcl::Value& value,
@@ -604,6 +615,8 @@ void Config::visit(
         }
     }
 }
+
+
 
 bool Config::verify_types(
     const hcl::Value& value,
@@ -652,23 +665,12 @@ bool Config::verify_types(
     return false;
 }
 
+
+
 void Config::save()
 {
-    std::ofstream file{(filesystem::dirs::current_profile() / u8"config.hcl").native(),
-                       std::ios::binary};
-    if (!file)
-    {
-        throw ConfigLoadingError{
-            u8"Failed to open: "s
-            + filepathutil::make_preferred_path_in_utf8(
-                  filesystem::dirs::current_profile() / u8"config.hcl")};
-    }
-
     // Create a top level "config" section.
-    hcl::Value out = hcl::Value(hcl::Object());
-    out.set("config", hcl::Object());
-    hcl::Value* parent = out.find("config");
-    assert(parent);
+    sol::table root = lua::lua->get_state()->create_table();
 
     // Create sections under the top-level "config" section for each mod that
     // has config options, then write their individual config sections.
@@ -744,7 +746,14 @@ void Config::save()
         current->set(key, value);
     }
 
-    file << out;
+    std::ofstream file{filesystem::files::profile_local_config().native()};
+    if (!file)
+    {
+        throw ConfigLoadingError{u8"Failed to open: "s +
+            filepathutil::make_preferred_path_in_utf8(filesystem::files::profile_local_config())};
+    }
+    // TODO
+    lson::write_table(file, root);
 }
 
 } // namespace elona

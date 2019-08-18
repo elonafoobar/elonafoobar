@@ -487,11 +487,8 @@ bool ConfigScreenCreator::visit_config_item(
 
 std::vector<std::string> ConfigScreenCreator::get_sorted_mod_list()
 {
-    const auto& mods = config_.get_mod_ids();
-    std::vector<std::string> ret{std::begin(mods), std::end(mods)};
-
+    auto ret = config_.get_mod_ids();
     range::sort(ret, lib::natural_order_comparator{});
-
     return ret;
 }
 

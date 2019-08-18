@@ -544,10 +544,12 @@ private:
 };
 
 
-
-std::vector<fs::path> all_mod_dirs(const fs::path& base_dir);
-std::vector<fs::path> normal_mod_dirs(const fs::path& base_dir);
-std::vector<fs::path> template_mod_dirs(const fs::path& base_dir);
+std::vector<std::pair<std::string, fs::path>> all_mod_dirs(
+    const fs::path& base_dir);
+std::vector<std::pair<std::string, fs::path>> normal_mod_dirs(
+    const fs::path& base_dir);
+std::vector<std::pair<std::string, fs::path>> template_mod_dirs(
+    const fs::path& base_dir);
 
 bool is_valid_mod_id(const std::string& id);
 

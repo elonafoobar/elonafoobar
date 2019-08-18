@@ -111,6 +111,7 @@ set(ELONA_SOURCES
   lua_env/handle_manager.cpp
   lua_env/i18n_function_manager.cpp
   lua_env/interface.cpp
+  lua_env/lson.cpp
   lua_env/lua_env.cpp
   lua_env/mod_manager.cpp
   lua_env/mod_manifest.cpp

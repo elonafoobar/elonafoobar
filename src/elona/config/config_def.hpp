@@ -1,9 +1,11 @@
 #pragma once
+
+#include <iostream>
 #include "../defines.hpp"
 #include "../hcl.hpp"
 #include "../spec.hpp"
 
-#include <iostream>
+
 
 namespace elona
 {
@@ -21,6 +23,8 @@ public:
         desktop,
         android,
     };
+
+
 
     struct MetaData
     {
@@ -42,7 +46,7 @@ public:
 
         // Overridden default value from platform_default field if the
         // specified platform matches ("android" or "desktop").
-        optional<hcl::Value> default_value = none;
+        optional<hcl::Value> platform_default_value = none;
 
         bool is_visible() const
         {
@@ -56,12 +60,17 @@ public:
         }
     };
 
+
+
     ConfigDef()
         : spec::Object("config")
     {
     }
 
+
     ~ConfigDef() = default;
+
+
 
     void clear()
     {
@@ -69,12 +78,14 @@ public:
         data.clear();
     }
 
+
+
     hcl::Value get_default(const std::string& key) const
     {
-        if (data.find(key) != data.end())
+        const auto itr = data.find(key);
+        if (itr != data.end())
         {
-            auto value = data.at(key).default_value;
-            if (value)
+            if (auto value = itr->second.platform_default_value)
             {
                 return *value;
             }
@@ -83,15 +94,21 @@ public:
         return spec::Object::get_default(key);
     }
 
+
+
     const MetaData& get_metadata(const SpecKey& key) const
     {
         return data.at(key);
     }
 
+
+
     void post_visit(const SpecKey&, const spec::SectionDef&);
     void pre_visit_section(const SpecKey&, const hcl::Object&);
     void pre_visit_item(const SpecKey&, const hcl::Object&);
     void pre_visit_bare_value(const SpecKey&, const hcl::Value&);
+
+
 
 private:
     /***
@@ -103,4 +120,5 @@ private:
 
     std::map<std::string, MetaData> data;
 };
+
 } // namespace elona

@@ -40,17 +40,22 @@ bool _is_alnum_only(const std::string& str)
 
 
 template <typename F>
-std::vector<fs::path> mod_dirs_internal(const fs::path& base_dir, F predicate)
+std::vector<std::pair<std::string, fs::path>> mod_dirs_internal(
+    const fs::path& base_dir,
+    F predicate)
 {
-    std::vector<fs::path> result;
+    std::vector<std::pair<std::string, fs::path>> result;
     for (const auto& entry :
          filesystem::glob_dirs(base_dir, std::regex{"[a-z][a-z0-9_]*"}))
     {
-        if (fs::exists(entry.path() / "mod.hcl"))
+        const auto path = entry.path();
+        if (fs::exists(path / "mod.lua"))
         {
-            if (predicate(entry.path()))
+            const auto mod_id = filepathutil::to_utf8_path(path.filename());
+            const auto pair = std::make_pair(mod_id, path);
+            if (predicate(pair))
             {
-                result.push_back(entry.path());
+                result.push_back(pair);
             }
         }
     }
@@ -167,7 +172,7 @@ void ModManager::load_mod(ModInfo& mod)
 
 void ModManager::scan_mod(const fs::path& mod_dir)
 {
-    ModManifest manifest = ModManifest::load(mod_dir / "mod.hcl");
+    ModManifest manifest = ModManifest::load(mod_dir / "mod.lua");
 
     const std::string& mod_id = manifest.id;
     ELONA_LOG("lua.mod") << "Found mod " << mod_id;
@@ -190,9 +195,9 @@ void ModManager::scan_all_mods(const fs::path& mods_dir)
         throw std::runtime_error("Mods have already been scanned!");
     }
 
-    for (const auto& mod_dir : normal_mod_dirs(mods_dir))
+    for (const auto& mod_and_path : normal_mod_dirs(mods_dir))
     {
-        scan_mod(mod_dir);
+        scan_mod(mod_and_path.second);
     }
     stage_ = ModLoadingStage::scan_finished;
 }
@@ -519,9 +524,9 @@ std::vector<std::string> ModManager::calculate_loading_order()
 std::vector<ModManifest> ModManager::get_templates()
 {
     std::vector<ModManifest> result;
-    for (const auto& path : template_mod_dirs(filesystem::dirs::mod()))
+    for (const auto& mod_and_path : template_mod_dirs(filesystem::dirs::mod()))
     {
-        auto manifest = ModManifest::load(path / "mod.hcl");
+        auto manifest = ModManifest::load(mod_and_path.second / "mod.lua");
         result.push_back(manifest);
     }
     return result;
@@ -542,9 +547,9 @@ void ModManager::create_mod_from_template(
 
 bool ModManager::exists(const std::string& mod_id)
 {
-    for (const auto& dir : all_mod_dirs(filesystem::dirs::mod()))
+    for (const auto& mod_and_path : all_mod_dirs(filesystem::dirs::mod()))
     {
-        if (mod_id == filepathutil::to_utf8_path(dir.filename()))
+        if (mod_id == mod_and_path.first)
         {
             return true;
         }
@@ -624,27 +629,30 @@ void ModManager::run_in_mod(const std::string& name, const std::string& script)
 
 
 
-std::vector<fs::path> all_mod_dirs(const fs::path& base_dir)
+std::vector<std::pair<std::string, fs::path>> all_mod_dirs(
+    const fs::path& base_dir)
 {
     return mod_dirs_internal(base_dir, [](const auto&) { return true; });
 }
 
 
 
-std::vector<fs::path> normal_mod_dirs(const fs::path& base_dir)
+std::vector<std::pair<std::string, fs::path>> normal_mod_dirs(
+    const fs::path& base_dir)
 {
-    return mod_dirs_internal(base_dir, [](const auto& path) {
-        const auto mod_id = filepathutil::to_utf8_path(path.filename());
+    return mod_dirs_internal(base_dir, [](const auto& mod_and_path) {
+        const auto& mod_id = mod_and_path.first;
         return !strutil::has_prefix(mod_id, "template_");
     });
 }
 
 
 
-std::vector<fs::path> template_mod_dirs(const fs::path& base_dir)
+std::vector<std::pair<std::string, fs::path>> template_mod_dirs(
+    const fs::path& base_dir)
 {
-    return mod_dirs_internal(base_dir, [](const auto& path) {
-        const auto mod_id = filepathutil::to_utf8_path(path.filename());
+    return mod_dirs_internal(base_dir, [](const auto& mod_and_path) {
+        const auto& mod_id = mod_and_path.first;
         return strutil::has_prefix(mod_id, "template_");
     });
 }

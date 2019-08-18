@@ -18,20 +18,28 @@ namespace elona
 
 class ConfigDef;
 
+
+
 class Config
 {
 public:
-    static Config& instance();
-
-    Config()
+    static Config& instance()
     {
+        static Config the_instance;
+        return the_instance;
     }
+
+
+
+    Config() = default;
     ~Config() = default;
+
 
     void load_def(std::istream& is, const std::string& mod_id);
     void load_def(const fs::path& config_def_path, const std::string& mod_id);
     void load(std::istream&, const std::string&, bool);
     void save();
+
 
     void clear()
     {
@@ -40,6 +48,7 @@ public:
         getters_.clear();
         setters_.clear();
     }
+
 
     // If your are vimmer, ex command ":sort /\w\+;/ r" can sort the list well.
     int alert_wait;
@@ -104,15 +113,21 @@ public:
 
     bool is_test = false; // testing use only
 
-    const std::unordered_set<std::string>& get_mod_ids()
+
+
+    const std::vector<std::string>& get_mod_ids()
     {
         return mod_ids_;
     }
+
+
 
     bool is_visible(const std::string& key) const
     {
         return def.get_metadata(key).is_visible();
     }
+
+
 
     void bind_getter(
         const std::string& key,
@@ -124,6 +139,8 @@ public:
         }
         getters_[key] = getter;
     }
+
+
 
     template <typename T>
     void bind_setter(
@@ -138,6 +155,8 @@ public:
             setter(value.as<T>());
         };
     }
+
+
 
     void inject_enum(
         const std::string& key,
@@ -168,6 +187,8 @@ public:
                 EnumDef.get_default()); // Set the enum to its default value.
         }
     }
+
+
 
     template <typename T>
     T get(const std::string& key) const
@@ -201,6 +222,8 @@ public:
                 "Error on getting config value " + key + ": " + e.what());
         }
     }
+
+
 
     void set(const std::string& key, const hcl::Value value)
     {
@@ -238,25 +261,17 @@ public:
         }
     }
 
-    void run_setter(const std::string& key)
-    {
-        if (storage_.find(key) == storage_.end())
-        {
-            return;
-        }
-        if (setters_.find(key) != setters_.end())
-        {
-            setters_[key](storage_.at(key));
-        }
-    }
+
 
     const ConfigDef& get_def() const
     {
         return def;
     }
 
+
+
 private:
-    void load_defaults(bool);
+    void load_defaults(bool preload);
 
     void visit(const hcl::Value&, const std::string&, const std::string&, bool);
     void visit_object(
@@ -266,12 +281,14 @@ private:
         bool);
     bool verify_types(const hcl::Value&, const std::string&);
 
+
+
     ConfigDef def;
     tsl::ordered_map<std::string, hcl::Value> storage_;
     tsl::ordered_map<std::string, std::function<hcl::Value(void)>> getters_;
     tsl::ordered_map<std::string, std::function<void(const hcl::Value&)>>
         setters_;
-    std::unordered_set<std::string> mod_ids_;
+    std::vector<std::string> mod_ids_;
 };
 
 
@@ -285,11 +302,6 @@ void initialize_config_preload();
 
 void load_config();
 
-void set_config(const std::string& key, int value);
-void set_config(const std::string& key, const std::string& value);
-void set_config(const std::string& key, const std::string& value1, int value2);
-
 snail::Window::FullscreenMode config_get_fullscreen_mode();
-
 
 } // namespace elona

@@ -1,0 +1,6 @@
+id = "template_blank"
+name = "Template blank"
+authors = "Your name here"
+version = "0.1.0"
+license = "Elona foobar License v1"
+description = "Mod description here"
