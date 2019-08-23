@@ -22,4 +22,7 @@ xcopy /y /e /s .\windows\lua-5.3.4-wstring\lib\x64 .\lib
 xcopy /y /e /s .\windows\zlib-1.2.11\include .\include
 xcopy /y /e /s .\windows\zlib-1.2.11\lib\x64 .\lib
 
+xcopy /y /e /s .\windows\openssl-1.1.1c\include .\include
+xcopy /y /e /s .\windows\openssl-1.1.1c\lib .\lib
+
 echo Done.

@@ -9,7 +9,7 @@ environment:
     BOOST_VERSION: 1.69.0
     BOOST_ROOT: C:\Libraries\boost_1_69_0
     PREFIX: C:\SDK
-    OPENSSL_ROOT_DIR: C:\OpenSSL-v111-Win64
+    OPENSSL_ROOT_DIR: C:\SDK
     ZLIB_ROOT: C:\SDK
 
 build:
@@ -49,6 +49,11 @@ before_build:
     %NEEDDEPENDS% cd %PREFIX%
     %NEEDDEPENDS% git clone --depth=1 https://github.com/elonafoobar/windows_deps windows
     %NEEDDEPENDS% call .\install.bat
+    rem Debug versions are the same as optimized, but they are necessary to override system-provided ones.
+    %NEEDDEPENDS% cp .\lib\VC\libcrypto.dll .\lib\VC\libcryptod.dll
+    %NEEDDEPENDS% cp .\lib\VC\libcrypto.lib .\lib\VC\libcryptod.lib
+    %NEEDDEPENDS% cp .\lib\VC\libssl.dll .\lib\VC\libssld.dll
+    %NEEDDEPENDS% cp .\lib\VC\libssl.lib .\lib\VC\libssld.lib
 
 build_script:
   - chcp 65001
@@ -76,6 +81,8 @@ after_build:
   - mv CHANGELOG*.md bin\Elona_foobar
   - mv LICENSE.txt bin\Elona_foobar
   - mv CREDITS.txt bin\Elona_foobar
+  - cp %OPENSSL_ROOT_DIR%\lib\VC\libcrypto.dll bin\Elona_foobar\libcrypto-1_1-x64.dll
+  - cp %OPENSSL_ROOT_DIR%\lib\VC\libssl.dll bin\Elona_foobar\libssl.dll
   - del bin\Elona_foobar\*.ilk
   - del bin\Elona_foobar\*.pdb
   - rd /q /s bin\Elona_foobar\graphic
