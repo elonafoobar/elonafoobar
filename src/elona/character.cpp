@@ -559,7 +559,7 @@ void initialize_character()
     cdata[rc].interest = 100;
     cdata[rc].impression = 50;
     cdata[rc].vision_distance = 14;
-    if (cdata[rc].id == 205)
+    if (cdata[rc].id == CharaId::maid)
     {
         cdata[rc].image = rnd(33) * 2 + cdata[rc].sex + 1;
     }
@@ -639,7 +639,7 @@ int chara_create(int slot, int chara_id, int x, int y)
         if (rc == 56)
         {
             cdata[rc].set_state(Character::State::empty);
-            --npcmemory(1, cdata[rc].id);
+            --npcmemory(1, charaid2int(cdata[rc].id));
             return 1;
         }
         if (rc != 0)
@@ -701,7 +701,7 @@ void chara_refresh(int cc)
             }
         }
     }
-    else if (cdata[cc].id == 343)
+    else if (cdata[cc].id == CharaId::user)
     {
         for (size_t i = 0; i < 32 * 30; ++i)
         {
@@ -714,7 +714,8 @@ void chara_refresh(int cc)
     {
         for (size_t i = 0; i < 32 * 30; ++i)
         {
-            cdata[cc]._flags[i] = the_character_db[cdata[cc].id]->_flags[i];
+            cdata[cc]._flags[i] =
+                the_character_db[charaid2int(cdata[cc].id)]->_flags[i];
         }
     }
     for (auto&& growth_buff : cdata[cc].growth_buffs)
@@ -1139,7 +1140,7 @@ int chara_find(int id)
                 continue;
             }
         }
-        if (i.id == id)
+        if (i.id == int2charaid(id))
         {
             return i.index;
         }
@@ -1157,7 +1158,7 @@ int chara_find_ally(int id)
         {
             continue;
         }
-        if (cdata[i].id == id)
+        if (cdata[i].id == int2charaid(id))
         {
             return i;
         }
@@ -1213,7 +1214,7 @@ int chara_custom_talk(int cc, int talk_type)
             std::back_inserter(talk_file_buffer));
         use_external_file = true;
     }
-    else if (cdata[cc].id == 343)
+    else if (cdata[cc].id == CharaId::user)
     {
         talk_file_buffer = strutil::split_lines(usertxt(cdata[cc].cnpc_id));
         use_external_file = true;
@@ -1286,7 +1287,7 @@ int chara_custom_talk(int cc, int talk_type)
 
     if (cdata[cc].can_talk != 0)
     {
-        dbid = cdata[cc].id;
+        dbid = charaid2int(cdata[cc].id);
         dbmode = talk_type;
         access_character_info();
         return 1;
@@ -1472,7 +1473,7 @@ int chara_copy(const Character& source)
     // Increase crowd density.
     modify_crowd_density(slot, 1);
     // Increase the generation counter.
-    ++npcmemory(1, destination.id);
+    ++npcmemory(1, charaid2int(destination.id));
 
     return slot;
 }

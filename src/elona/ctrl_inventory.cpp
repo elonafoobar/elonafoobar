@@ -1445,7 +1445,7 @@ label_2061_internal:
             f = 0;
             p = sdata(10, tc) * 500 + sdata(11, tc) * 500 +
                 sdata(153, tc) * 2500 + 25000;
-            if (cdata[tc].id == 265)
+            if (cdata[tc].id == CharaId::golden_knight)
             {
                 p *= 5;
             }
@@ -1453,7 +1453,7 @@ label_2061_internal:
             {
                 f = 1;
             }
-            if (cdata[tc].id != 265)
+            if (cdata[tc].id != CharaId::golden_knight)
             {
                 if (reftype == 60000)
                 {

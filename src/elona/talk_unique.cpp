@@ -11,7 +11,7 @@ TalkResult talk_unique()
     listmax = 0;
 
     auto& chara = cdata[tc];
-    const auto& dialog_id = the_character_db[chara.id]->dialog_id;
+    const auto& dialog_id = the_character_db[charaid2int(chara.id)]->dialog_id;
 
     if (dialog_id)
     {

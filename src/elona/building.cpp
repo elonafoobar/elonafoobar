@@ -573,7 +573,7 @@ void prompt_hiring()
         }
         cdata[rc].set_state(Character::State::servant_being_selected);
         cdata[rc].character_role = isethirerole(hire);
-        if (cdata[rc].id == 1)
+        if (cdata[rc].id == CharaId::shopkeeper)
         {
             p = rnd(6);
             if (p == 0)
@@ -1278,7 +1278,7 @@ void calc_collection_value(bool val0)
     fixlv = Quality::good;
     dbmode = 3;
     access_character_info();
-    ++dblist(val0 ? 1 : 0, cdata.tmp().id);
+    ++dblist(val0 ? 1 : 0, charaid2int(cdata.tmp().id));
     if (fixlv == Quality::special)
     {
         rtval = 70 + cdata.tmp().level;
@@ -1290,13 +1290,13 @@ void calc_collection_value(bool val0)
         {
             rtval = rtval / 2 * 3 + 40;
         }
-        p = the_character_db[cdata.tmp().id]->rarity / 1000;
+        p = the_character_db[charaid2int(cdata.tmp().id)]->rarity / 1000;
         if (p < 80)
         {
             rtval = rtval + 80 - p;
         }
     }
-    if (dblist(val0 ? 1 : 0, cdata.tmp().id) > 1)
+    if (dblist(val0 ? 1 : 0, charaid2int(cdata.tmp().id)) > 1)
     {
         rtval /= 3;
         if (rtval > 15)
@@ -1472,7 +1472,7 @@ void update_ranch()
             flt(calcobjlv(cdata[worker].level), Quality::bad);
             if (rnd(2))
             {
-                dbid = cdata[worker].id;
+                dbid = charaid2int(cdata[worker].id);
             }
             else
             {
@@ -1482,7 +1482,7 @@ void update_ranch()
             {
                 fltnrace = cdatan(2, worker);
             }
-            if (cdata[worker].id == 319)
+            if (cdata[worker].id == CharaId::little_sister)
             {
                 // Little sister -> younger sister
                 dbid = 176;
@@ -1555,7 +1555,7 @@ void update_ranch()
                     ++egg_or_milk_count;
                     if (itemcreate(-1, 573, x, y, 0))
                     {
-                        inv[ci].subname = chara.id;
+                        inv[ci].subname = charaid2int(chara.id);
                         inv[ci].weight = chara.weight * 10 + 250;
                         inv[ci].value = clamp(
                             chara.weight * chara.weight / 10000, 200, 40000);
@@ -1570,7 +1570,7 @@ void update_ranch()
                     ++egg_or_milk_count;
                     if (itemcreate(-1, 574, x, y, 0))
                     {
-                        inv[ci].subname = chara.id;
+                        inv[ci].subname = charaid2int(chara.id);
                     }
                 }
                 break;
@@ -1580,7 +1580,7 @@ void update_ranch()
                 {
                     if (itemcreate(-1, 575, x, y, 0))
                     {
-                        inv[ci].subname = chara.id;
+                        inv[ci].subname = charaid2int(chara.id);
                         inv[ci].weight = chara.weight * 40 + 300;
                         inv[ci].value =
                             clamp(chara.weight * chara.weight / 5000, 1, 20000);

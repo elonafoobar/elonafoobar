@@ -41,7 +41,7 @@ int access_character_info()
         default: assert(0);
         }
     case 3:
-        cdata[rc].id = dbid;
+        cdata[rc].id = int2charaid(dbid);
         cdata[rc].level = initlv != 0 ? initlv : data->level;
         if (voidlv != 0)
         {
@@ -116,7 +116,7 @@ int access_character_info()
             cdata[rc].portrait = data->portrait_female;
         }
         {
-            int color = generate_color(data->color, cdata[rc].id);
+            int color = generate_color(data->color, charaid2int(cdata[rc].id));
             cdata[rc].image += color * 1000;
         }
         eqammo(0) = data->eqammo_0;

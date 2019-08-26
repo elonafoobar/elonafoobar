@@ -148,7 +148,7 @@ int LuaApiInternal::generate_fighters_guild_target(int level)
     {
         flt(level);
         chara_create(56, 0, -3, 0);
-        if (the_character_db[cdata.tmp().id]->rarity / 1000 < 70)
+        if (the_character_db[charaid2int(cdata.tmp().id)]->rarity / 1000 < 70)
         {
             continue;
         }
@@ -163,7 +163,7 @@ int LuaApiInternal::generate_fighters_guild_target(int level)
         break;
     }
 
-    auto id = cdata.tmp().id;
+    auto id = charaid2int(cdata.tmp().id);
     chara_vanquish(56);
 
     return id;

@@ -1015,7 +1015,7 @@ static void _update_quest_escort(int cnt2)
         {
             if (cdata[cnt].state() == Character::State::alive)
             {
-                if (cdata[cnt].id == quest_data[cnt2].extra_info_2)
+                if (cdata[cnt].id == int2charaid(quest_data[cnt2].extra_info_2))
                 {
                     if (quest_data[cnt2].extra_info_1 == game_data.current_map)
                     {
@@ -1139,7 +1139,7 @@ static void _update_aggro_and_crowd_density()
     for (auto&& cnt : cdata.all())
     {
         cnt.turn_cost = 0;
-        if (cnt.id == 343) // cnpc
+        if (cnt.id == CharaId::user) // cnpc
         {
             // Vanilla-compatible CNPC is not supported now.
         }

@@ -22,12 +22,14 @@ TEST_CASE("test i18n builtin: characters", "[I18N: Builtins]")
     elona::cdatan(0, you.index) = u8"Orville";
     you.sex = 0;
 
-    Character& out_of_fov = testing::create_chara(PUTIT_PROTO_ID, 0, 0);
+    Character& out_of_fov =
+        testing::create_chara(charaid2int(PUTIT_PROTO_ID), 0, 0);
 
     SECTION("Japanese")
     {
         testing::set_japanese();
-        Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
+        Character& chara =
+            testing::create_chara(charaid2int(PUTIT_PROTO_ID), 23, 23);
         chara.sex = 1;
         update_slight();
 
@@ -47,7 +49,8 @@ TEST_CASE("test i18n builtin: characters", "[I18N: Builtins]")
     SECTION("English")
     {
         testing::set_english();
-        Character& chara = testing::create_chara(PUTIT_PROTO_ID, 23, 23);
+        Character& chara =
+            testing::create_chara(charaid2int(PUTIT_PROTO_ID), 23, 23);
         chara.sex = 1;
         update_slight();
 

@@ -842,11 +842,12 @@ void LuaCharacter::bind(sol::state& lua)
      *
      * [R] The prototype data of the character.
      */
-    LuaCharacter.set("prototype", sol::property([](Character& self) {
-                         auto id = the_character_db.get_id_from_legacy(self.id);
-                         return *lua::lua->get_data_manager().get().raw(
-                             "core.chara", id->get());
-                     }));
+    LuaCharacter.set(
+        "prototype", sol::property([](Character& self) {
+            auto id = the_character_db.get_id_from_legacy(charaid2int(self.id));
+            return *lua::lua->get_data_manager().get().raw(
+                "core.chara", id->get());
+        }));
 
     // Methods
     LuaCharacter.set(

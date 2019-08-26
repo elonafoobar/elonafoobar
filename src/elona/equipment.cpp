@@ -770,56 +770,59 @@ void supply_initial_equipments()
     if (cspecialeq)
     {
         dbmode = 4;
-        dbid = cdata[rc].id;
+        dbid = charaid2int(cdata[rc].id);
         access_character_info();
     }
     if (eqtwohand)
     {
         eqshield = 0;
     }
-    if (cdata[rc].id == 9)
+    if (cdata[rc].id == CharaId::beggar)
     {
         if (rnd(120) == 0)
         {
             eqamulet1 = 705;
         }
     }
-    if (cdata[rc].id == 274)
+    if (cdata[rc].id == CharaId::noble)
     {
         if (rnd(100) == 0)
         {
             eqrange = 718;
         }
     }
-    if (cdata[rc].id == 163)
+    if (cdata[rc].id == CharaId::rock_thrower)
     {
         if (rnd(200) == 0)
         {
             eqrange = 716;
         }
     }
-    if (cdata[rc].id == 186 || cdata[rc].id == 187 || cdata[rc].id == 188)
+    if (cdata[rc].id == CharaId::blade ||
+        cdata[rc].id == CharaId::blade_alpha ||
+        cdata[rc].id == CharaId::blade_omega)
     {
         if (rnd(800) == 0)
         {
             eqgirdle = 728;
         }
     }
-    if (cdata[rc].id == 317)
+    if (cdata[rc].id == CharaId::silver_eyed_witch)
     {
         if (rnd(150) == 0)
         {
             eqweapon1 = 719;
         }
     }
-    if (cdata[rc].id == 309 || cdata[rc].id == 310 || cdata[rc].id == 311)
+    if (cdata[rc].id == CharaId::asura || cdata[rc].id == CharaId::mitra ||
+        cdata[rc].id == CharaId::varuna)
     {
         if (rnd(600) == 0)
         {
             eqamulet1 = 723;
         }
     }
-    if (cdata[rc].id == 304)
+    if (cdata[rc].id == CharaId::rogue_archer)
     {
         if (rnd(250) == 0)
         {
@@ -1243,7 +1246,7 @@ void supply_initial_equipments()
             continue;
         }
     }
-    if (cdata[rc].id == 326)
+    if (cdata[rc].id == CharaId::bard)
     {
         if (rnd(150) == 0)
         {
@@ -1257,7 +1260,8 @@ void supply_initial_equipments()
             itemcreate(rc, 0, -1, -1, 0);
         }
     }
-    if (cdata[rc].id == 351 || cdata[rc].id == 352)
+    if (cdata[rc].id == CharaId::the_leopard_warrior ||
+        cdata[rc].id == CharaId::silvia)
     {
         for (int cnt = 0; cnt < 6; ++cnt)
         {

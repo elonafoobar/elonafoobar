@@ -2316,12 +2316,12 @@ static void _init_map_lesimas()
             cell_featset(x, y, tile_upstairs, 10);
             map_data.stair_up_pos = y * 1000 + x;
             map_placeplayer();
-            if (npcmemory(0, 2) == 0)
+            if (npcmemory(0, charaid2int(CharaId::zeome)) == 0)
             {
                 flt();
                 chara_create(-1, 2, 16, 6);
             }
-            else if (npcmemory(0, 23) == 0)
+            else if (npcmemory(0, charaid2int(CharaId::orphe)) == 0)
             {
                 flt();
                 chara_create(-1, 23, 16, 6);

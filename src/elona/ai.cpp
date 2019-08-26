@@ -770,7 +770,8 @@ label_2692_internal:
             }
             if (map_villagers_make_snowmen())
             {
-                if (cdata[cc].id == 35 || cdata[cc].id == 211)
+                if (cdata[cc].id == CharaId::town_child ||
+                    cdata[cc].id == CharaId::young_lady)
                 {
                     if (is_in_fov(cdata[cc]))
                     {
@@ -927,7 +928,7 @@ label_2692_internal:
     }
     if (cdata[cc].ai_calm == 5)
     {
-        if (cdata[cc].id == 326)
+        if (cdata[cc].id == CharaId::bard)
         {
             if (rnd(5) == 0)
             {
@@ -936,7 +937,7 @@ label_2692_internal:
                 return TurnResult::turn_end;
             }
         }
-        if (cdata[cc].id == 320 || cdata[cc].id == 280)
+        if (cdata[cc].id == CharaId::cleaner || cdata[cc].id == CharaId::balzak)
         {
             if (is_in_fov(cdata[cc]))
             {
@@ -966,7 +967,8 @@ label_2692_internal:
                 }
             }
         }
-        if (cdata[cc].id == 335 || cdata[cc].id == 352)
+        if (cdata[cc].id == CharaId::prostitute ||
+            cdata[cc].id == CharaId::silvia)
         {
             if (rnd(10) == 0)
             {

@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include "../util/range.hpp"
+#include "consts.hpp"
 #include "data/types/type_character.hpp"
 #include "god.hpp"
 #include "lua_env/wrapped_function.hpp"
@@ -204,7 +205,7 @@ public:
     int turn = 0;
 
     /// @putit
-    int id = 0;
+    CharaId id = CharaId::none;
 
     /// @putit
     int vision_distance = 0;
@@ -551,7 +552,7 @@ public:
 
     SharedId new_id() const
     {
-        return *the_character_db.get_id_from_legacy(this->id);
+        return *the_character_db.get_id_from_legacy(charaid2int(this->id));
     }
 
 

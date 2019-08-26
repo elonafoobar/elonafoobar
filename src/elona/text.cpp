@@ -1035,7 +1035,7 @@ void get_npc_talk()
                 buff, 0, u8"%ALLY_DEFAULT,"s + i18n::s.get("core.meta.tag"));
             break;
         }
-        if (cdata[tc].id == 335)
+        if (cdata[tc].id == CharaId::prostitute)
         {
             p = instr(buff, 0, u8"%BITCH,"s + i18n::s.get("core.meta.tag"));
             break;

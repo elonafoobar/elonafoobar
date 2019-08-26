@@ -1325,7 +1325,7 @@ void hostileaction(int chara_index1, int chara_index2)
         {
             modify_karma(cdata.player(), -2);
         }
-        if (cdata[chara_index2].id == 202)
+        if (cdata[chara_index2].id == CharaId::ebon)
         {
             if (game_data.released_fire_giant == 0)
             {
@@ -1751,7 +1751,7 @@ void check_kill(int killer_chara_index, int victim_chara_index)
             {
                 ++game_data.kill_count;
                 if (cdata[victim_chara_index].id ==
-                    game_data.guild.fighters_guild_target)
+                    int2charaid(game_data.guild.fighters_guild_target))
                 {
                     if (game_data.guild.fighters_guild_quota > 0)
                     {
@@ -1762,15 +1762,15 @@ void check_kill(int killer_chara_index, int victim_chara_index)
                 {
                     p_at_m137 = -2;
                 }
-                if (cdata[victim_chara_index].id == 183)
+                if (cdata[victim_chara_index].id == CharaId::rich_person)
                 {
                     p_at_m137 = -15;
                 }
-                if (cdata[victim_chara_index].id == 184)
+                if (cdata[victim_chara_index].id == CharaId::noble_child)
                 {
                     p_at_m137 = -10;
                 }
-                if (cdata[victim_chara_index].id == 185)
+                if (cdata[victim_chara_index].id == CharaId::tourist)
                 {
                     p_at_m137 = -5;
                 }
@@ -2551,7 +2551,7 @@ void revive_player()
             gain_level(cdata[rc]);
         }
     }
-    if (cdata[rc].id == 326)
+    if (cdata[rc].id == CharaId::bard)
     {
         chara_gain_fixed_skill_exp(cdata[rc], 183, 1000);
     }
@@ -3068,11 +3068,11 @@ void character_drops_item()
     }
     if (game_data.current_map == mdata_t::MapId::noyel)
     {
-        if (cdata[rc].id == 185)
+        if (cdata[rc].id == CharaId::tourist)
         {
             return;
         }
-        if (cdata[rc].id == 204)
+        if (cdata[rc].id == CharaId::palmian_elite_soldier)
         {
             return;
         }
@@ -3269,7 +3269,7 @@ void character_drops_item()
         break;
     }
 
-    dbid = cdata[rc].id;
+    dbid = charaid2int(cdata[rc].id);
     dbmode = 16;
     dbspec = 3;
     switch (access_character_info())
@@ -3530,7 +3530,7 @@ void character_drops_item()
             flt();
             itemcreate(-1, 504, cdata[rc].position.x, cdata[rc].position.y, 0);
             inv[ci].param1 = cdata[rc].image;
-            inv[ci].subname = cdata[rc].id;
+            inv[ci].subname = charaid2int(cdata[rc].id);
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
         if (rnd(175) == 0 || cdata[rc].quality == Quality::special || 0 ||
@@ -3540,7 +3540,7 @@ void character_drops_item()
             flt();
             itemcreate(-1, 503, cdata[rc].position.x, cdata[rc].position.y, 0);
             inv[ci].param1 = cdata[rc].image;
-            inv[ci].subname = cdata[rc].id;
+            inv[ci].subname = charaid2int(cdata[rc].id);
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
     }
@@ -3858,7 +3858,7 @@ void lovemiracle(int chara_index)
                 cdata[chara_index].position.y,
                 0))
         {
-            inv[ci].subname = cdata[chara_index].id;
+            inv[ci].subname = charaid2int(cdata[chara_index].id);
             inv[ci].weight = cdata[chara_index].weight * 10 + 250;
             inv[ci].value = clamp(
                 cdata[chara_index].weight * cdata[chara_index].weight / 10000,
@@ -3875,7 +3875,7 @@ void lovemiracle(int chara_index)
                 cdata[chara_index].position.y,
                 0))
         {
-            inv[ci].subname = cdata[chara_index].id;
+            inv[ci].subname = charaid2int(cdata[chara_index].id);
         }
     }
     ci = cibk;
@@ -4364,7 +4364,7 @@ TurnResult exit_map()
         {
             if (cnt.state() != Character::State::empty)
             {
-                --npcmemory(1, cnt.id);
+                --npcmemory(1, charaid2int(cnt.id));
             }
         }
 
@@ -10704,7 +10704,7 @@ void proc_weapon_enchantments()
         }
         if (enc == 57)
         {
-            s = chara_refstr(cdata[tc].id, 8);
+            s = chara_refstr(charaid2int(cdata[tc].id), 8);
             if (strutil::contains(s(0), u8"/dragon/"))
             {
                 game_data.proc_damage_events_flag = 1;
@@ -10714,7 +10714,7 @@ void proc_weapon_enchantments()
         }
         if (enc == 61)
         {
-            s = chara_refstr(cdata[tc].id, 8);
+            s = chara_refstr(charaid2int(cdata[tc].id), 8);
             if (strutil::contains(s(0), u8"/god/"))
             {
                 game_data.proc_damage_events_flag = 1;
@@ -10724,7 +10724,7 @@ void proc_weapon_enchantments()
         }
         if (enc == 58)
         {
-            s = chara_refstr(cdata[tc].id, 8);
+            s = chara_refstr(charaid2int(cdata[tc].id), 8);
             if (strutil::contains(s(0), u8"/undead/"))
             {
                 game_data.proc_damage_events_flag = 1;
@@ -10870,7 +10870,7 @@ int gain_skills_by_geen_engineering()
     {
         return 0;
     }
-    randomize(cdata[tc].id);
+    randomize(charaid2int(cdata[tc].id));
     int dbmax = 0;
     for (int cnt = 0; cnt < 100; ++cnt)
     {
@@ -10909,7 +10909,7 @@ int gain_skills_by_geen_engineering()
 int transplant_body_parts()
 {
     int dbmax = 0;
-    s(1) = chara_refstr(cdata[tc].id, 8);
+    s(1) = chara_refstr(charaid2int(cdata[tc].id), 8);
     if (strutil::contains(s(1), u8"/man/"))
     {
         return -1;
@@ -10947,7 +10947,7 @@ int transplant_body_parts()
     {
         return -1;
     }
-    randomize(cdata[tc].id);
+    randomize(charaid2int(cdata[tc].id));
     for (int cnt = 0; cnt < 3; ++cnt)
     {
         rtval = dblist(0, rnd(dbmax));

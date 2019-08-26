@@ -43,7 +43,7 @@ TEST_CASE("test formats", "[I18N: Formatting]")
 TEST_CASE("test format chara", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
-    Character& chara = testing::create_chara(PUTIT_PROTO_ID, 4, 8);
+    Character& chara = testing::create_chara(charaid2int(PUTIT_PROTO_ID), 4, 8);
 
     REQUIRE(
         i18n::fmt_hil("${_1}", chara) ==

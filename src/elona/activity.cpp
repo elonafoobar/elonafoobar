@@ -354,7 +354,7 @@ void activity_perform()
                                 cdata[tc]));
                         }
                         dmg = rnd(cdata[tc].level + 1) + 1;
-                        if (cdata[tc].id == 29)
+                        if (cdata[tc].id == CharaId::loyter)
                         {
                             dmg = cdata[tc].level * 2 + rnd(100);
                         }
@@ -1190,7 +1190,7 @@ void activity_others()
                 p = inv_getowner(ci);
                 if (tg != -1)
                 {
-                    if (cdata[p].id != 202)
+                    if (cdata[p].id != CharaId::ebon)
                     {
                         if (cdata[tg].sleep == 0)
                         {

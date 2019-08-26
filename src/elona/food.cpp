@@ -282,7 +282,7 @@ void chara_vomit(Character& cc)
             {
                 if (cc.index != 0)
                 {
-                    inv[ci].subname = cc.id;
+                    inv[ci].subname = charaid2int(cc.id);
                 }
             }
         }
@@ -1224,7 +1224,7 @@ void apply_general_eating_effect(int cieat)
                     rnd(30000 / std::max(1, cdata[cc].nutrition) + 2) == 0);
         }
     }
-    if (cdata[cc].id == 261)
+    if (cdata[cc].id == CharaId::cute_fairy)
     {
         if (nutrition >= 2000)
         {

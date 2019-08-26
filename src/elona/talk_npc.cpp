@@ -294,7 +294,7 @@ TalkResult talk_arena_master(int chatval_)
             }
             break;
         }
-        arenaop(1) = cdata[rc].id;
+        arenaop(1) = charaid2int(cdata[rc].id);
         buff = i18n::s.get(
             "core.talk.npc.arena_master.enter.target",
             cdatan(0, rc),
@@ -721,7 +721,7 @@ TalkResult talk_slave_sell()
             }
             if (cdata[rc].is_escorted() == 1)
             {
-                event_add(15, cdata[rc].id);
+                event_add(15, charaid2int(cdata[rc].id));
             }
             chara_delete(rc);
             buff = i18n::s.get("core.talk.npc.common.thanks", cdata[tc]);
@@ -1616,7 +1616,7 @@ TalkResult talk_quest_giver()
             rc = 56;
             new_ally_joins();
             cdata[rc].is_escorted() = true;
-            quest_data[rq].extra_info_2 = cdata[rc].id;
+            quest_data[rq].extra_info_2 = charaid2int(cdata[rc].id);
         }
         quest_data[rq].progress = 1;
         if (quest_data[rq].deadline_days == -1)
@@ -1998,7 +1998,7 @@ TalkResult talk_npc()
             }
         }
     }
-    if (cdata[tc].id == 335)
+    if (cdata[tc].id == CharaId::prostitute)
     {
         if (event_id() == -1)
         {

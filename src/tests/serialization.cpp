@@ -18,7 +18,7 @@ using namespace elona::testing;
 TEST_CASE("Test character saving and reloading", "[C++: Serialization]")
 {
     start_in_debug_map();
-    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
     int index = elona::rc;
     cdata[index].is_floating() = true;
 
@@ -27,7 +27,7 @@ TEST_CASE("Test character saving and reloading", "[C++: Serialization]")
     REQUIRE(elona::cdata[index].state() != Character::State::empty);
     REQUIRE(elona::cdata[index].position.x == 4);
     REQUIRE(elona::cdata[index].position.y == 8);
-    REQUIRE(elona::cdata[index].id == 3);
+    REQUIRE(elona::cdata[index].id == PUTIT_PROTO_ID);
     REQUIRE(elona::cdata[index].is_floating() == true);
 }
 
@@ -56,7 +56,7 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
 TEST_CASE("Test party character index preservation", "[C++: Serialization]")
 {
     start_in_debug_map();
-    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 0, 0));
+    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 0, 0));
     REQUIRE(new_ally_joins());
     int index = elona::rc;
 
@@ -68,7 +68,7 @@ TEST_CASE("Test party character index preservation", "[C++: Serialization]")
 TEST_CASE("Test other character index preservation", "[C++: Serialization]")
 {
     start_in_debug_map();
-    REQUIRE(chara_create(-1, PUTIT_PROTO_ID, 0, 0));
+    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 0, 0));
     int index = elona::rc;
 
     save_and_reload();

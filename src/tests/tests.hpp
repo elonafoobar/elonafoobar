@@ -1,6 +1,6 @@
 #pragma once
 #include "util.hpp"
-#define PUTIT_PROTO_ID 3
+#define PUTIT_PROTO_ID int2charaid(3)
 #define PUTITORO_PROTO_ID int2itemid(792)
 
 // macros for boost::optional results

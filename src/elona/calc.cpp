@@ -1306,7 +1306,7 @@ int calcinitgold(int owner)
             1;
     }
 
-    switch (cdata[owner].id)
+    switch (charaid2int(cdata[owner].id))
     {
     case 183: return 5000 + rnd(11000);
     case 184: return 2000 + rnd(5000);

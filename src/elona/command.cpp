@@ -697,14 +697,14 @@ TurnResult do_throw_command()
                         "core.action.throw.monster_ball.capture", cdata[tc]),
                     Message::color{ColorIndex::green});
                 animeload(8, tc);
-                inv[ci].subname = cdata[tc].id;
+                inv[ci].subname = charaid2int(cdata[tc].id);
                 inv[ci].param3 = cdata[tc].level;
                 inv[ci].weight = clamp(cdata[tc].weight, 10000, 100000);
                 inv[ci].value = 1000;
             }
             else
             {
-                if (cdata[tc].id != 319 || tc < 16)
+                if (cdata[tc].id != CharaId::little_sister || tc < 16)
                 {
                     txt(i18n::s.get("core.common.nothing_happens"));
                     return TurnResult::turn_end;
@@ -3049,7 +3049,7 @@ static TurnResult _bump_into_character()
             }
             cell_swap(cc, tc);
             txt(i18n::s.get("core.action.move.displace.text", cdata[tc]));
-            if (cdata[tc].id == 271)
+            if (cdata[tc].id == CharaId::rogue)
             {
                 if (rnd(5) == 0)
                 {

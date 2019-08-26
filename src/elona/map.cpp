@@ -856,7 +856,7 @@ static void _restock_character_inventories()
             continue;
         }
         generatemoney(cnt.index);
-        if (cnt.id == 326)
+        if (cnt.id == CharaId::bard)
         {
             _proc_generate_bard_items(cnt);
         }
