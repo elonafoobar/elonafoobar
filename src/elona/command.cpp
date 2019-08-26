@@ -388,7 +388,7 @@ static void _search_for_crystal()
         {
             continue;
         }
-        if (item.id != 748)
+        if (item.id != ItemId::summoning_crystal)
         {
             continue;
         }
@@ -639,7 +639,7 @@ TurnResult do_throw_command()
         {tlocx, tlocy}, cdata[cc].position, inv[ci].image, inv[ci].color)
         .play();
     ti = inv_getfreeid(-1);
-    if (inv[ci].id == 685 && ti != -1)
+    if (inv[ci].id == ItemId::monster_ball && ti != -1)
     {
         item_copy(ci, ti);
         inv[ti].position.x = tlocx;
@@ -659,7 +659,7 @@ TurnResult do_throw_command()
     x = tlocx;
     y = tlocy;
     BreakingAnimation({x, y}).play();
-    if (inv[ci].id == 685 || inv[ci].id == 699)
+    if (inv[ci].id == ItemId::monster_ball || inv[ci].id == ItemId::little_ball)
     {
         snd("core.throw2");
         cell_refresh(inv[ci].position.x, inv[ci].position.y);
@@ -667,7 +667,7 @@ TurnResult do_throw_command()
         {
             tc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
             txt(i18n::s.get("core.action.throw.hits", cdata[tc]));
-            if (inv[ci].id == 685)
+            if (inv[ci].id == ItemId::monster_ball)
             {
                 if (tc < ELONA_MAX_PARTY_CHARACTERS ||
                     cdata[tc].character_role != 0 ||
@@ -723,13 +723,14 @@ TurnResult do_throw_command()
         }
         return TurnResult::turn_end;
     }
-    if (the_item_db[inv[ci].id]->category == 52000 || inv[ci].id == 772)
+    if (the_item_db[itemid2int(inv[ci].id)]->category == 52000 ||
+        inv[ci].id == ItemId::tomato)
     {
-        if (inv[ci].id != 601)
+        if (inv[ci].id != ItemId::empty_bottle)
         {
             if (is_in_fov({tlocx, tlocy}))
             {
-                if (inv[ci].id == 587)
+                if (inv[ci].id == ItemId::handful_of_snow)
                 {
                     snd("core.snow");
                 }
@@ -747,7 +748,7 @@ TurnResult do_throw_command()
                     wet(tc, 25);
                 }
                 rowact_check(tc);
-                if (inv[ci].id == 587)
+                if (inv[ci].id == ItemId::handful_of_snow)
                 {
                     if (is_in_fov(cdata[tc]))
                     {
@@ -759,7 +760,7 @@ TurnResult do_throw_command()
                     }
                     return TurnResult::turn_end;
                 }
-                if (inv[ci].id == 772)
+                if (inv[ci].id == ItemId::tomato)
                 {
                     if (is_in_fov(cdata[tc]))
                     {
@@ -786,12 +787,12 @@ TurnResult do_throw_command()
                 ccthrowpotion = cc;
                 potionthrow = 100;
                 cc = tc;
-                dbid = inv[ci].id;
+                dbid = itemid2int(inv[ci].id);
                 item_db_on_drink(inv[ci], dbid);
                 cc = ccthrowpotion;
                 return TurnResult::turn_end;
             }
-            if (inv[ci].id == 587)
+            if (inv[ci].id == ItemId::handful_of_snow)
             {
                 if (cell_data.at(tlocx, tlocy).item_appearances_actual != 0)
                 {
@@ -800,7 +801,7 @@ TurnResult do_throw_command()
                     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
                     {
                         p = list(0, cnt);
-                        if (inv[p].id == 541)
+                        if (inv[p].id == ItemId::snow_man)
                         {
                             if (is_in_fov({tlocx, tlocy}))
                             {
@@ -821,7 +822,7 @@ TurnResult do_throw_command()
                     }
                 }
             }
-            if (inv[ci].id == 587)
+            if (inv[ci].id == ItemId::handful_of_snow)
             {
                 if (chip_data.for_cell(tlocx, tlocy).kind == 4)
                 {
@@ -836,7 +837,7 @@ TurnResult do_throw_command()
             {
                 txt(i18n::s.get("core.action.throw.shatters"));
             }
-            if (inv[ci].id == 772)
+            if (inv[ci].id == ItemId::tomato)
             {
                 if (is_in_fov({tlocx, tlocy}))
                 {
@@ -846,12 +847,12 @@ TurnResult do_throw_command()
                 return TurnResult::turn_end;
             }
             efp = 50 + sdata(111, cc) * 10;
-            if (inv[ci].id == 392)
+            if (inv[ci].id == ItemId::bottle_of_sulfuric)
             {
                 mef_add(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc);
                 return TurnResult::turn_end;
             }
-            if (inv[ci].id == 577)
+            if (inv[ci].id == ItemId::molotov)
             {
                 mef_add(tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc);
                 mapitem_fire(tlocx, tlocy);
@@ -865,7 +866,7 @@ TurnResult do_throw_command()
                 -1,
                 efp,
                 cc,
-                inv[ci].id,
+                itemid2int(inv[ci].id),
                 static_cast<int>(inv[ci].curse_state), // TODO
                 inv[ci].color);
             return TurnResult::turn_end;
@@ -876,7 +877,7 @@ TurnResult do_throw_command()
         txt(i18n::s.get("core.action.throw.shatters"));
         snd("core.crush2");
     }
-    if (inv[ci].id == 578)
+    if (inv[ci].id == ItemId::kitty_bank)
     {
         flt();
         itemcreate(-1, 54, tlocx, tlocy, inv[ci].param1);
@@ -1032,7 +1033,7 @@ TurnResult do_offer_command()
     {
         return TurnResult::turn_end;
     }
-    if (inv[ci].id == 204)
+    if (inv[ci].id == ItemId::corpse)
     {
         i = clamp(inv[ci].weight / 200, 1, 50);
         if (inv[ci].param3 < 0)
@@ -1299,7 +1300,7 @@ label_1953_internal:
 
 TurnResult do_dip_command()
 {
-    if (inv[cidip].id == 617)
+    if (inv[cidip].id == ItemId::bait)
     {
         item_separate(ci);
         inv[cidip].modify_number(-1);
@@ -1318,17 +1319,17 @@ TurnResult do_dip_command()
         return TurnResult::turn_end;
     }
     snd("core.drink1");
-    if (the_item_db[inv[cidip].id]->category == 52000)
+    if (the_item_db[itemid2int(inv[cidip].id)]->category == 52000)
     {
-        if (the_item_db[inv[ci].id]->subcategory == 60001)
+        if (the_item_db[itemid2int(inv[ci].id)]->subcategory == 60001)
         {
             item_separate(ci);
             inv[cidip].modify_number(-1);
-            if (inv[cidip].id != 601)
+            if (inv[cidip].id != ItemId::empty_bottle)
             {
                 txt(i18n::s.get(
                     "core.action.dip.execute", inv[ci], inv[cidip]));
-                if (inv[ci].id == 602)
+                if (inv[ci].id == ItemId::holy_well)
                 {
                     txt(i18n::s.get(
                         "core.action.dip.result.holy_well_polluted"));
@@ -1342,7 +1343,7 @@ TurnResult do_dip_command()
                 }
                 txt(i18n::s.get(
                     "core.action.dip.result.well_refilled", inv[ci]));
-                if (inv[cidip].id == 587)
+                if (inv[cidip].id == ItemId::handful_of_snow)
                 {
                     txt(i18n::s.get("core.action.dip.result.snow_melts.dip"));
                 }
@@ -1355,7 +1356,8 @@ TurnResult do_dip_command()
             else
             {
                 if (inv[ci].param1 < -5 || inv[ci].param3 >= 20 ||
-                    (inv[ci].id == 602 && game_data.holy_well_count <= 0))
+                    (inv[ci].id == ItemId::holy_well &&
+                     game_data.holy_well_count <= 0))
                 {
                     txt(i18n::s.get(
                         "core.action.dip.result.natural_potion_dry", inv[ci]));
@@ -1368,7 +1370,7 @@ TurnResult do_dip_command()
                     txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                     return TurnResult::turn_end;
                 }
-                if (inv[ci].id == 602)
+                if (inv[ci].id == ItemId::holy_well)
                 {
                     --game_data.holy_well_count;
                     flt();
@@ -1391,9 +1393,9 @@ TurnResult do_dip_command()
             }
         }
     }
-    if (inv[cidip].id == 262)
+    if (inv[cidip].id == ItemId::poison)
     {
-        if (the_item_db[inv[ci].id]->category == 57000)
+        if (the_item_db[itemid2int(inv[ci].id)]->category == 57000)
         {
             inv[cidip].modify_number(-1);
             item_separate(ci);
@@ -1410,9 +1412,9 @@ TurnResult do_dip_command()
             return TurnResult::turn_end;
         }
     }
-    if (inv[cidip].id == 620)
+    if (inv[cidip].id == ItemId::love_potion)
     {
-        if (the_item_db[inv[ci].id]->category == 57000)
+        if (the_item_db[itemid2int(inv[ci].id)]->category == 57000)
         {
             inv[cidip].modify_number(-1);
             item_separate(ci);
@@ -1429,7 +1431,7 @@ TurnResult do_dip_command()
             return TurnResult::turn_end;
         }
     }
-    if (inv[cidip].id == 519)
+    if (inv[cidip].id == ItemId::bottle_of_dye)
     {
         if (inv[cidip].curse_state == CurseState::blessed)
         {
@@ -1453,7 +1455,7 @@ TurnResult do_dip_command()
         }
         return TurnResult::turn_end;
     }
-    if (inv[cidip].id == 566)
+    if (inv[cidip].id == ItemId::acidproof_liquid)
     {
         if (inv[cidip].curse_state == CurseState::blessed)
         {
@@ -1477,7 +1479,7 @@ TurnResult do_dip_command()
         inv[cidip].modify_number(-1);
         return TurnResult::turn_end;
     }
-    if (inv[cidip].id == 736)
+    if (inv[cidip].id == ItemId::fireproof_liquid)
     {
         if (inv[cidip].curse_state == CurseState::blessed)
         {
@@ -1493,7 +1495,7 @@ TurnResult do_dip_command()
         {
             dipcursed(ci);
         }
-        else if (inv[ci].id == 567)
+        else if (inv[ci].id == ItemId::fireproof_blanket)
         {
             txt(i18n::s.get("core.action.dip.result.good_idea_but"));
         }
@@ -1505,7 +1507,7 @@ TurnResult do_dip_command()
         inv[cidip].modify_number(-1);
         return TurnResult::turn_end;
     }
-    if (inv[cidip].id == 516)
+    if (inv[cidip].id == ItemId::bottle_of_water)
     {
         inv[cidip].modify_number(-1);
         if (inv[cidip].curse_state == CurseState::blessed)
@@ -1538,7 +1540,7 @@ TurnResult do_use_command()
     tc = cc;
     tlocx = cdata[cc].position.x;
     tlocy = cdata[cc].position.y;
-    auto item_data = the_item_db[inv[ci].id];
+    auto item_data = the_item_db[itemid2int(inv[ci].id)];
 
     if (item_data->on_use_callback)
     {
@@ -1602,12 +1604,14 @@ TurnResult do_use_command()
         activity_others();
         return TurnResult::turn_end;
     }
-    if (inv[ci].id == 413 || inv[ci].id == 414)
+    if (inv[ci].id == ItemId::red_treasure_machine ||
+        inv[ci].id == ItemId::blue_treasure_machine)
     {
         return do_gatcha();
     }
-    if (inv[ci].id == 312 || inv[ci].id == 313 || inv[ci].id == 314 ||
-        inv[ci].id == 315)
+    if (inv[ci].id == ItemId::pachisuro_machine ||
+        inv[ci].id == ItemId::casino_table ||
+        inv[ci].id == ItemId::slot_machine || inv[ci].id == ItemId::darts_board)
     {
         atxid = 1;
         casino_dealer();
@@ -2601,7 +2605,7 @@ TurnResult do_open_command(bool play_sound)
     };
 
     int refweight = 0;
-    if (inv[ci].id == 361)
+    if (inv[ci].id == ItemId::shopkeepers_trunk)
     {
         modify_karma(cdata.player(), -10);
         invctrl(0) = 22;
@@ -2613,7 +2617,7 @@ TurnResult do_open_command(bool play_sound)
         update_screen();
         return TurnResult::turn_end;
     }
-    if (inv[ci].id == 560)
+    if (inv[ci].id == ItemId::masters_delivery_chest)
     {
         invctrl(0) = 24;
         invctrl(1) = 0;
@@ -2622,7 +2626,7 @@ TurnResult do_open_command(bool play_sound)
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
-    if (inv[ci].id == 616)
+    if (inv[ci].id == ItemId::tax_masters_tax_box)
     {
         invctrl(0) = 24;
         invctrl(1) = 2;
@@ -2631,7 +2635,7 @@ TurnResult do_open_command(bool play_sound)
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
-    if (inv[ci].id == 600)
+    if (inv[ci].id == ItemId::giants_shackle)
     {
         snd_("core.locked1");
         txt(i18n::s.get("core.action.open.shackle.text"));
@@ -2664,9 +2668,9 @@ TurnResult do_open_command(bool play_sound)
     if (inv[ci].count != 0)
     {
         invfile = inv[ci].count;
-        invcontainer(1) = inv[ci].id;
+        invcontainer(1) = itemid2int(inv[ci].id);
         const auto container_ci = ci;
-        if (inv[ci].id == 641)
+        if (inv[ci].id == ItemId::cooler_box)
         {
             refweight = -1;
         }
@@ -2771,7 +2775,7 @@ TurnResult do_open_command(bool play_sound)
     }
     else
     {
-        if (inv[ci].id == 752)
+        if (inv[ci].id == ItemId::new_years_gift)
         {
             open_new_year_gift();
         }
@@ -3256,7 +3260,7 @@ TurnResult do_movement_command()
 
 TurnResult do_read_command()
 {
-    if (inv[ci].id == 783)
+    if (inv[ci].id == ItemId::recipe)
     {
         if (inv[ci].subname == 0)
         {
@@ -3265,7 +3269,7 @@ TurnResult do_read_command()
         }
     }
     efid = 0;
-    dbid = inv[ci].id;
+    dbid = itemid2int(inv[ci].id);
     item_db_on_read(inv[ci], dbid);
     if (efid == 1115)
     {
@@ -3310,14 +3314,14 @@ TurnResult do_eat_command()
 
 TurnResult do_drink_command()
 {
-    dbid = inv[ci].id;
+    dbid = itemid2int(inv[ci].id);
     item_db_on_drink(inv[ci], dbid);
     return TurnResult::turn_end;
 }
 
 TurnResult do_zap_command()
 {
-    dbid = inv[ci].id;
+    dbid = itemid2int(inv[ci].id);
     item_db_on_zap(inv[ci], dbid);
     int stat = do_zap();
     if (stat == 0)

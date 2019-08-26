@@ -372,7 +372,9 @@ void supply_new_equipment()
                     if (haveweapon == 0)
                     {
                         if (the_item_db
-                                [inv[cdata[rc].body_parts[cnt] % 10000 - 1].id]
+                                [itemid2int(
+                                     inv[cdata[rc].body_parts[cnt] % 10000 - 1]
+                                         .id)]
                                     ->category == 10000)
                         {
                             haveweapon = 1;
@@ -424,7 +426,7 @@ void supply_new_equipment()
             inv[ci].identify_state = IdentifyState::completely;
             if (inv[ci].quality >= Quality::miracle)
             {
-                if (the_item_db[inv[ci].id]->category < 50000)
+                if (the_item_db[itemid2int(inv[ci].id)]->category < 50000)
                 {
                     if (cdata[rc].character_role == 13)
                     {

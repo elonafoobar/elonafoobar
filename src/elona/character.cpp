@@ -1703,7 +1703,7 @@ void chara_relocate(
 
 void chara_set_item_which_will_be_used(Character& cc)
 {
-    int category = the_item_db[inv[ci].id]->category;
+    int category = the_item_db[itemid2int(inv[ci].id)]->category;
     if (category == 57000 || category == 52000 || category == 53000)
     {
         cc.item_which_will_be_used = ci;

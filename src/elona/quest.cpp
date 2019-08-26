@@ -650,7 +650,7 @@ int quest_generate()
             {
                 inv[ci].count = rq;
                 i(0) = n;
-                i(1) = inv[ci].id;
+                i(1) = itemid2int(inv[ci].id);
                 inv[ci].is_quest_target() = true;
                 break;
             }

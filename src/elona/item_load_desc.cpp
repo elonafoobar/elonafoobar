@@ -189,7 +189,7 @@ static void _load_item_stat_text(int item_index, int& p)
     }
     if (inv[item_index].dice_x != 0)
     {
-        const auto pierce = calc_rate_to_pierce(inv[item_index].id);
+        const auto pierce = calc_rate_to_pierce(itemid2int(inv[item_index].id));
         list(0, p) = static_cast<int>(ItemDescriptionType::weapon_info);
         listn(0, p) = i18n::s.get("core.item.desc.weapon.it_can_be_wielded") +
             u8" ("s + inv[item_index].dice_x + u8"d"s + inv[item_index].dice_y +
@@ -275,7 +275,7 @@ static void _load_item_enchantment_desc(int item_index, int& p)
 void item_load_desc(int item_index, int& p)
 {
     const I18NKey& locale_key_prefix =
-        the_item_db[inv[item_index].id]->locale_key_prefix;
+        the_item_db[itemid2int(inv[item_index].id)]->locale_key_prefix;
 
     if (inv[item_index].identify_state == IdentifyState::completely)
     {

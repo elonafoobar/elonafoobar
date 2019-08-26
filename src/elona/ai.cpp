@@ -309,7 +309,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                     {
                         continue;
                     }
-                    if (the_item_db[item.id]->category == 77000)
+                    if (the_item_db[itemid2int(item.id)]->category == 77000)
                     {
                         p = item.value * item.number();
                         sell += item.number();
@@ -899,9 +899,9 @@ label_2692_internal:
                         flttypeminor = 52002;
                     }
                     if (itemcreate(cc, 0, -1, -1, 0) &&
-                        the_item_db[inv[ci].id]->is_drinkable)
+                        the_item_db[itemid2int(inv[ci].id)]->is_drinkable)
                     {
-                        if (inv[ci].id == 577)
+                        if (inv[ci].id == ItemId::molotov)
                         {
                             if (rnd(5) == 0)
                             {

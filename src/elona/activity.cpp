@@ -827,7 +827,7 @@ void activity_eating()
                 txt(i18n::s.get(
                     "core.activity.eat.start.normal", cdata[cc], inv[ci]));
             }
-            if (inv[ci].id == 204 && inv[ci].subname == 344)
+            if (inv[ci].id == ItemId::corpse && inv[ci].subname == 344)
             {
                 txt(i18n::s.get("core.activity.eat.start.mammoth"));
             }
@@ -901,7 +901,8 @@ void activity_eating_finish()
         }
     }
     chara_anorexia(cdata[cc]);
-    if ((inv[ci].id == 755 && rnd(3)) || (inv[ci].id == 756 && rnd(10) == 0))
+    if ((inv[ci].id == ItemId::kagami_mochi && rnd(3)) ||
+        (inv[ci].id == ItemId::mochi && rnd(10) == 0))
     {
         if (is_in_fov(cdata[cc]))
         {
@@ -977,7 +978,7 @@ void activity_others()
             }
             game_data.time_when_textbook_becomes_available =
                 game_data.date.hours() + 48;
-            if (inv[ci].id == 563)
+            if (inv[ci].id == ItemId::textbook)
             {
                 txt(i18n::s.get(
                     "core.activity.study.start.studying",
@@ -1056,7 +1057,7 @@ void activity_others()
                     game_data.date.minute += 30;
                 }
             }
-            if (inv[ci].id == 563)
+            if (inv[ci].id == ItemId::textbook)
             {
                 if (rnd(p(0)) == 0)
                 {
@@ -1070,7 +1071,7 @@ void activity_others()
         }
         if (game_data.activity_about_to_start == 105)
         {
-            if (inv[ci].id == 688)
+            if (inv[ci].id == ItemId::iron_maiden)
             {
                 if (rnd(15) == 0)
                 {
@@ -1080,7 +1081,7 @@ void activity_others()
                     return;
                 }
             }
-            if (inv[ci].id == 689)
+            if (inv[ci].id == ItemId::guillotine)
             {
                 if (rnd(15) == 0)
                 {
@@ -1281,7 +1282,7 @@ void activity_others()
             return;
         }
         in = 1;
-        if (inv[ci].id == 54)
+        if (inv[ci].id == ItemId::gold_piece)
         {
             in = inv[ci].number();
         }
@@ -1314,7 +1315,7 @@ void activity_others()
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
         }
         txt(i18n::s.get("core.activity.steal.succeed", inv[ti]));
-        if (inv[ci].id == 54)
+        if (inv[ci].id == ItemId::gold_piece)
         {
             snd("core.getgold1");
             earn_gold(cdata.player(), in);
@@ -1372,7 +1373,7 @@ void activity_others()
     }
     if (game_data.activity_about_to_start == 104)
     {
-        if (inv[ci].id == 563)
+        if (inv[ci].id == ItemId::textbook)
         {
             txt(i18n::s.get(
                 "core.activity.study.finish.studying",
@@ -1606,7 +1607,7 @@ void spot_digging()
             {
                 continue;
             }
-            if (item.id == 621 && item.param1 != 0 &&
+            if (item.id == ItemId::treasure_map && item.param1 != 0 &&
                 item.param1 == cdata.player().position.x &&
                 item.param2 == cdata.player().position.y)
             {

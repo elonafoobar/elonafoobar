@@ -273,7 +273,7 @@ int LuaApiItem::trade_rate(LuaItemHandle handle)
     auto& item_ref = lua::ref<Item>(handle);
 
     // Item must be in the cargo category.
-    if (the_item_db[item_ref.id]->category != 92000)
+    if (the_item_db[itemid2int(item_ref.id)]->category != 92000)
     {
         return 0;
     }

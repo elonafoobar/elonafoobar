@@ -603,22 +603,22 @@ bool wish_for_item(const std::string& input)
                 // Remove this item and retry.
                 selector.remove(id);
                 inv[ci].remove();
-                --itemmemory(1, inv[ci].id);
+                --itemmemory(1, itemid2int(inv[ci].id));
                 cell_refresh(inv[ci].position.x, inv[ci].position.y);
                 continue;
             }
         }
 
-        if (inv[ci].id == 54)
+        if (inv[ci].id == ItemId::gold_piece)
         {
             inv[ci].set_number(
                 cdata.player().level * cdata.player().level * 50 + 20000);
         }
-        else if (inv[ci].id == 55)
+        else if (inv[ci].id == ItemId::platinum_coin)
         {
             inv[ci].set_number(8 + rnd(5));
         }
-        else if (inv[ci].id == 602)
+        else if (inv[ci].id == ItemId::holy_well)
         {
             inv[ci].remove();
             flt();
@@ -626,8 +626,8 @@ bool wish_for_item(const std::string& input)
             inv[ci].curse_state = CurseState::blessed;
             txt(i18n::s.get("core.wish.it_is_sold_out"));
         }
-        if (the_item_db[inv[ci].id]->category == 52000 ||
-            the_item_db[inv[ci].id]->category == 53000)
+        if (the_item_db[itemid2int(inv[ci].id)]->category == 52000 ||
+            the_item_db[itemid2int(inv[ci].id)]->category == 53000)
         {
             inv[ci].set_number(3 + rnd(2));
             if (inv[ci].value >= 20000)
@@ -642,7 +642,7 @@ bool wish_for_item(const std::string& input)
             {
                 inv[ci].set_number(3);
             }
-            switch (inv[ci].id)
+            switch (itemid2int(inv[ci].id))
             {
             case 559: inv[ci].set_number(2 + rnd(2)); break;
             case 502: inv[ci].set_number(2); break;

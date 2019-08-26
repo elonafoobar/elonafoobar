@@ -2057,7 +2057,7 @@ TalkResult talk_npc()
                         {
                             continue;
                         }
-                        if (item.id == p)
+                        if (item.id == int2itemid(p))
                         {
                             deliver(1) = item.index;
                             break;
@@ -2088,7 +2088,7 @@ TalkResult talk_npc()
                 }
                 if (quest_data[rq].id == 1003)
                 {
-                    if (the_item_db[item.id]->category == 57000 &&
+                    if (the_item_db[itemid2int(item.id)]->category == 57000 &&
                         item.param1 / 1000 == quest_data[rq].extra_info_1 &&
                         item.param2 == quest_data[rq].extra_info_2)
                     {
@@ -2098,7 +2098,7 @@ TalkResult talk_npc()
                 }
                 if (quest_data[rq].id == 1004 || quest_data[rq].id == 1011)
                 {
-                    if (item.id == quest_data[rq].target_item_id)
+                    if (item.id == int2itemid(quest_data[rq].target_item_id))
                     {
                         supply = item.index;
                         break;

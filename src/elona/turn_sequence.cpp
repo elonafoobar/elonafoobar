@@ -415,7 +415,7 @@ TurnResult npc_turn()
         cdata[cc].item_which_will_be_used = 0;
     }
     {
-        int category = the_item_db[inv[ci].id]->category;
+        int category = the_item_db[itemid2int(inv[ci].id)]->category;
         if (category == 57000)
         {
             if (cdata[cc].relationship != 10 || cdata[cc].nutrition <= 6000)
@@ -468,7 +468,7 @@ label_2689_internal:
                     if (number == 1)
                     {
                         ci = item;
-                        p = the_item_db[inv[ci].id]->category;
+                        p = the_item_db[itemid2int(inv[ci].id)]->category;
                         if (cdata[cc].nutrition <= 6000)
                         {
                             if (p == 57000)
@@ -489,7 +489,7 @@ label_2689_internal:
                                     {
                                         if (inv[ci].param3 < 20)
                                         {
-                                            if (inv[ci].id != 602)
+                                            if (inv[ci].id != ItemId::holy_well)
                                             {
                                                 return do_drink_command();
                                             }
@@ -1490,9 +1490,9 @@ TurnResult pc_turn(bool advance_time)
         {
             ci = get_random_inv(0);
             if (inv[ci].number() > 0 &&
-                the_item_db[inv[ci].id]->category == 52000)
+                the_item_db[itemid2int(inv[ci].id)]->category == 52000)
             {
-                dbid = inv[ci].id;
+                dbid = itemid2int(inv[ci].id);
                 item_db_on_drink(inv[ci], dbid);
             }
         }

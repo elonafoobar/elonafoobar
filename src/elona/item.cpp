@@ -200,7 +200,7 @@ int item_find(int matcher, int matcher_type, ItemFindLocation location_type)
             }
             if (matcher_type == 0)
             {
-                if (the_item_db[inv[cnt].id]->category == matcher)
+                if (the_item_db[itemid2int(inv[cnt].id)]->category == matcher)
                 {
                     p_at_m52 = cnt;
                 }
@@ -218,14 +218,15 @@ int item_find(int matcher, int matcher_type, ItemFindLocation location_type)
             }
             if (matcher_type == 2)
             {
-                if (the_item_db[inv[cnt].id]->subcategory == matcher)
+                if (the_item_db[itemid2int(inv[cnt].id)]->subcategory ==
+                    matcher)
                 {
                     p_at_m52 = cnt;
                 }
             }
             if (matcher_type == 3)
             {
-                if (inv[cnt].id == matcher)
+                if (inv[cnt].id == int2itemid(matcher))
                 {
                     p_at_m52 = cnt;
                 }
@@ -246,7 +247,7 @@ std::vector<int> itemlist(int owner, int id)
         {
             continue;
         }
-        if (item.id == id)
+        if (item.id == int2itemid(id))
         {
             ret.push_back(item.index);
         }
@@ -289,7 +290,7 @@ int itemfind(int inventory_id, int matcher, int matcher_type)
             {
                 continue;
             }
-            if (item.id == matcher)
+            if (item.id == int2itemid(matcher))
             {
                 f_at_m54 = item.index;
                 break;
@@ -305,7 +306,7 @@ int itemfind(int inventory_id, int matcher, int matcher_type)
             {
                 continue;
             }
-            if (the_item_db[item.id]->subcategory == matcher)
+            if (the_item_db[itemid2int(item.id)]->subcategory == matcher)
             {
                 f_at_m54 = item.index;
                 break;
@@ -325,7 +326,7 @@ int mapitemfind(int x, int y, int id)
         {
             continue;
         }
-        if (item.id == id && item.position == Position{x, y})
+        if (item.id == int2itemid(id) && item.position == Position{x, y})
         {
             return item.index;
         }
@@ -365,9 +366,9 @@ void cell_refresh(int x, int y)
                     cell_data.at(x, y).item_appearances_actual, 0, item.image);
                 wpoke(
                     cell_data.at(x, y).item_appearances_actual, 2, item.color);
-                if (ilight(item.id) != 0)
+                if (ilight(itemid2int(item.id)) != 0)
                 {
-                    cell_data.at(x, y).light = ilight(item.id);
+                    cell_data.at(x, y).light = ilight(itemid2int(item.id));
                 }
             }
         }
@@ -612,7 +613,8 @@ bool chara_unequip(int ci)
 
 IdentifyState item_identify(Item& ci, IdentifyState level)
 {
-    if (level == IdentifyState::almost && the_item_db[ci.id]->category >= 50000)
+    if (level == IdentifyState::almost &&
+        the_item_db[itemid2int(ci.id)]->category >= 50000)
     {
         level = IdentifyState::completely;
     }
@@ -624,7 +626,7 @@ IdentifyState item_identify(Item& ci, IdentifyState level)
     ci.identify_state = level;
     if (ci.identify_state >= IdentifyState::partly)
     {
-        itemmemory(0, ci.id) = 1;
+        itemmemory(0, itemid2int(ci.id)) = 1;
     }
     idtresult = level;
     return idtresult;
@@ -646,7 +648,7 @@ void item_checkknown(int ci)
     {
         inv[ci].identify_state = IdentifyState::completely;
     }
-    if (itemmemory(0, inv[ci].id) &&
+    if (itemmemory(0, itemid2int(inv[ci].id)) &&
         inv[ci].identify_state == IdentifyState::unidentified)
     {
         item_identify(inv[ci], IdentifyState::partly);
@@ -657,12 +659,12 @@ void item_checkknown(int ci)
 
 void itemname_additional_info(int item_index)
 {
-    if (inv[item_index].id == 578)
+    if (inv[item_index].id == ItemId::kitty_bank)
     {
         s_ += i18n::s.get_enum(
             "core.item.kitty_bank_rank", inv[item_index].param2);
     }
-    if (inv[item_index].id == 617)
+    if (inv[item_index].id == ItemId::bait)
     {
         s_ += lang(
             ""s +
@@ -672,7 +674,7 @@ void itemname_additional_info(int item_index)
                     "core.item.bait_rank", inv[item_index].param1) +
                 u8">"s);
     }
-    if (inv[item_index].id == 687)
+    if (inv[item_index].id == ItemId::ancient_book)
     {
         if (jp)
         {
@@ -696,7 +698,7 @@ void itemname_additional_info(int item_index)
                     u8">"s);
         }
     }
-    if (inv[item_index].id == 783)
+    if (inv[item_index].id == ItemId::recipe)
     {
         if (inv[item_index].param1 == 0)
         {
@@ -715,7 +717,7 @@ void itemname_additional_info(int item_index)
     }
     if (a_ == 55000)
     {
-        if (inv[item_index].id == 563)
+        if (inv[item_index].id == ItemId::textbook)
         {
             s_ += lang(
                 u8"《"s +
@@ -735,12 +737,12 @@ void itemname_additional_info(int item_index)
                         "name") +
                     u8">"s);
         }
-        else if (inv[item_index].id == 668)
+        else if (inv[item_index].id == ItemId::book_of_rachel)
         {
             s_ += lang(u8"第"s, u8" of Rachel No."s) + inv[item_index].param2 +
                 lang(u8"巻目の"s, ""s);
         }
-        else if (inv[item_index].id == 24)
+        else if (inv[item_index].id == ItemId::book_b)
         {
             s_ += lang(
                 u8"《"s + booktitle(inv[item_index].param1) +
@@ -764,7 +766,7 @@ void itemname_additional_info(int item_index)
             if (inv[item_index].param2 != 0)
             {
                 skip_ = 1;
-                if (inv[item_index].id == 618)
+                if (inv[item_index].id == ItemId::fish_a)
                 {
                     s_ =
                         s_ +
@@ -784,7 +786,7 @@ void itemname_additional_info(int item_index)
                     s_ = s_ +
                         foodname(
                              inv[item_index].param1 / 1000,
-                             ioriginalnameref(inv[item_index].id),
+                             ioriginalnameref(itemid2int(inv[item_index].id)),
                              inv[item_index].param2,
                              inv[item_index].subname);
                 }
@@ -800,7 +802,8 @@ void itemname_additional_info(int item_index)
     }
     if (inv[item_index].subname != 0)
     {
-        if (inv[item_index].id == 618 || inv[item_index].id == 619)
+        if (inv[item_index].id == ItemId::fish_a ||
+            inv[item_index].id == ItemId::fish_b)
         {
             if (inv[item_index].subname < 0 || inv[item_index].subname >= 100)
             {
@@ -813,9 +816,11 @@ void itemname_additional_info(int item_index)
                 "name");
         }
         else if (
-            a_ == 57000 || a_ == 62000 || inv[item_index].id == 503 ||
-            inv[item_index].id == 504 || inv[item_index].id == 575 ||
-            inv[item_index].id == 574)
+            a_ == 57000 || a_ == 62000 ||
+            inv[item_index].id == ItemId::figurine ||
+            inv[item_index].id == ItemId::card ||
+            inv[item_index].id == ItemId::shit ||
+            inv[item_index].id == ItemId::bottle_of_milk)
         {
             if (inv[item_index].subname < 0 || inv[item_index].subname >= 800)
             {
@@ -847,19 +852,19 @@ void itemname_additional_info(int item_index)
                 }
             }
         }
-        if (inv[item_index].id == 344)
+        if (inv[item_index].id == ItemId::deed)
         {
             s_ += lang(""s, u8" of "s) +
                 i18n::s.get_enum("core.ui.home", inv[item_index].param1) +
                 lang(u8"の"s, ""s);
         }
-        if (inv[item_index].id == 615)
+        if (inv[item_index].id == ItemId::bill)
         {
             s_ += lang(
                 ""s + inv[item_index].subname + u8"goldの"s,
                 u8" <"s + inv[item_index].subname + u8" gp>"s);
         }
-        if (inv[item_index].id == 704)
+        if (inv[item_index].id == ItemId::vomit)
         {
             if (inv[item_index].subname < 0 || inv[item_index].subname >= 800)
             {
@@ -871,7 +876,7 @@ void itemname_additional_info(int item_index)
                 u8" of "s + chara_refstr(inv[item_index].subname, 2));
         }
     }
-    if (inv[item_index].id == 672)
+    if (inv[item_index].id == ItemId::secret_treasure)
     {
         if (inv[item_index].param1 == 169)
         {
@@ -911,8 +916,9 @@ std::string itemname(int item_index, int number, int skip_article)
     int alpha_ = 0;
     std::string s4_;
     elona_vector1<std::string> buf_;
-    if (inv[item_index].id >= maxitemid - 2 ||
-        size_t(inv[item_index].id) > ioriginalnameref.size())
+    if (itemid2int(inv[item_index].id) >= maxitemid - 2 ||
+        static_cast<size_t>(itemid2int(inv[item_index].id)) >
+            ioriginalnameref.size())
     {
         return i18n::s.get("core.item.unknown_item");
     }
@@ -929,7 +935,7 @@ std::string itemname(int item_index, int number, int skip_article)
     {
         num2_ = number;
     }
-    a_ = the_item_db[inv[item_index].id]->category;
+    a_ = the_item_db[itemid2int(inv[item_index].id)]->category;
     if (jp)
     {
         if (num2_ > 1)
@@ -941,7 +947,7 @@ std::string itemname(int item_index, int number, int skip_article)
             }
             if (a_ == 54000 || a_ == 55000)
             {
-                if (inv[item_index].id == 783)
+                if (inv[item_index].id == ItemId::recipe)
                 {
                     s2_ = u8"枚の"s;
                 }
@@ -966,12 +972,14 @@ std::string itemname(int item_index, int number, int skip_article)
             {
                 s2_ = u8"対の"s;
             }
-            if (a_ == 68000 || a_ == 69000 || inv[item_index].id == 622 ||
-                inv[item_index].id == 724 || inv[item_index].id == 730)
+            if (a_ == 68000 || a_ == 69000 ||
+                inv[item_index].id == ItemId::small_medal ||
+                inv[item_index].id == ItemId::music_ticket ||
+                inv[item_index].id == ItemId::token_of_friendship)
             {
                 s2_ = u8"枚の"s;
             }
-            if (inv[item_index].id == 618)
+            if (inv[item_index].id == ItemId::fish_a)
             {
                 s2_ = u8"匹の"s;
             }
@@ -1017,21 +1025,22 @@ std::string itemname(int item_index, int number, int skip_article)
                 break;
             }
         }
-        if (irandomname(inv[item_index].id) == 1 &&
+        if (irandomname(itemid2int(inv[item_index].id)) == 1 &&
             inv[item_index].identify_state == IdentifyState::unidentified)
         {
             s2_ = "";
         }
         else
         {
-            s2_ = ""s + ioriginalnameref2(inv[item_index].id);
+            s2_ = ""s + ioriginalnameref2(itemid2int(inv[item_index].id));
             if (strutil::contains(
-                    ioriginalnameref(inv[item_index].id), u8"with"))
+                    ioriginalnameref(itemid2int(inv[item_index].id)), u8"with"))
             {
                 s3_ = "";
             }
             else if (strutil::contains(
-                         ioriginalnameref(inv[item_index].id), u8"for testing"))
+                         ioriginalnameref(itemid2int(inv[item_index].id)),
+                         u8"for testing"))
             {
                 s3_ = "";
             }
@@ -1119,16 +1128,18 @@ std::string itemname(int item_index, int number, int skip_article)
                     u8" "s;
             }
         }
-        if (inv[item_index].id == 687 && inv[item_index].param2 != 0)
+        if (inv[item_index].id == ItemId::ancient_book &&
+            inv[item_index].param2 != 0)
         {
             s_ += u8"undecoded "s;
         }
-        if (inv[item_index].id == 783 && inv[item_index].subname == 0)
+        if (inv[item_index].id == ItemId::recipe &&
+            inv[item_index].subname == 0)
         {
             s_ += u8"custom "s;
         }
     }
-    if (inv[item_index].id == 630)
+    if (inv[item_index].id == ItemId::material_kit)
     {
         s_ += ""s +
             i18n::s.get_m(
@@ -1168,7 +1179,7 @@ std::string itemname(int item_index, int number, int skip_article)
                 u8"work "s;
         }
     }
-    if (inv[item_index].id == 729)
+    if (inv[item_index].id == ItemId::gift)
     {
         s_ += i18n::s.get_enum("core.item.gift_rank", inv[item_index].param4) +
             i18n::space_if_needed();
@@ -1243,17 +1254,17 @@ std::string itemname(int item_index, int number, int skip_article)
     }
     if (inv[item_index].identify_state == IdentifyState::unidentified)
     {
-        s_ += iknownnameref(inv[item_index].id);
+        s_ += iknownnameref(itemid2int(inv[item_index].id));
     }
     else if (inv[item_index].identify_state != IdentifyState::completely)
     {
         if (inv[item_index].quality < Quality::miracle || a_ >= 50000)
         {
-            s_ += ioriginalnameref(inv[item_index].id);
+            s_ += ioriginalnameref(itemid2int(inv[item_index].id));
         }
         else
         {
-            s_ += iknownnameref(inv[item_index].id);
+            s_ += iknownnameref(itemid2int(inv[item_index].id));
         }
     }
     else if (
@@ -1262,11 +1273,11 @@ std::string itemname(int item_index, int number, int skip_article)
     {
         if (jp)
         {
-            s_ = u8"★"s + s_ + ioriginalnameref(inv[item_index].id);
+            s_ = u8"★"s + s_ + ioriginalnameref(itemid2int(inv[item_index].id));
         }
         else
         {
-            s_ += ioriginalnameref(inv[item_index].id);
+            s_ += ioriginalnameref(itemid2int(inv[item_index].id));
         }
     }
     else
@@ -1277,11 +1288,11 @@ std::string itemname(int item_index, int number, int skip_article)
         }
         if (alpha_ == 1 && jp)
         {
-            s_ += ialphanameref(inv[item_index].id);
+            s_ += ialphanameref(itemid2int(inv[item_index].id));
         }
         else
         {
-            s_ += ioriginalnameref(inv[item_index].id);
+            s_ += ioriginalnameref(itemid2int(inv[item_index].id));
         }
         if (en && a_ < 50000 && inv[item_index].subname >= 10000 &&
             inv[item_index].subname < 20000)
@@ -1332,7 +1343,7 @@ label_0313_internal:
                 }
             }
         }
-        if (s2_ == "" && inv[item_index].id != 618 && num2_ > 1)
+        if (s2_ == "" && inv[item_index].id != ItemId::fish_a && num2_ > 1)
         {
             switch (s_.back())
             {
@@ -1445,11 +1456,14 @@ label_0313_internal:
                 u8"]"s;
         }
     }
-    if (en && (inv[item_index].id == 284 || inv[item_index].id == 283))
+    if (en &&
+        (inv[item_index].id == ItemId::wallet ||
+         inv[item_index].id == ItemId::suitcase))
     {
         s_ += u8"(Lost property)"s;
     }
-    if (inv[item_index].id == 342 && inv[item_index].count != 0)
+    if (inv[item_index].id == ItemId::fishing_pole &&
+        inv[item_index].count != 0)
     {
         s_ += lang(
             u8"("s +
@@ -1461,7 +1475,7 @@ label_0313_internal:
                     "core.item.bait_rank", inv[item_index].param4) +
                 u8")"s);
     }
-    if (inv[item_index].id == 685)
+    if (inv[item_index].id == ItemId::monster_ball)
     {
         if (inv[item_index].subname == 0)
         {
@@ -1473,7 +1487,7 @@ label_0313_internal:
             s_ += u8" ("s + chara_refstr(inv[item_index].subname, 2) + u8")"s;
         }
     }
-    if (inv[item_index].id == 734)
+    if (inv[item_index].id == ItemId::small_gamble_chest)
     {
         s_ += lang(u8" Lv"s, u8" Level "s) + inv[item_index].param2;
     }
@@ -1517,7 +1531,7 @@ label_0313_internal:
     }
     if (a_ == 72000)
     {
-        if (inv[item_index].id == 361)
+        if (inv[item_index].id == ItemId::shopkeepers_trunk)
         {
             s_ += lang(u8"(移動時消滅)"s, u8"(Temporal)"s);
         }
@@ -1552,11 +1566,11 @@ label_0313_internal:
             u8"(Next: "s + (inv[item_index].count - game_data.date.hours()) +
                 u8"h.)"s);
     }
-    if (inv[item_index].id == 555 && inv[item_index].count != 0)
+    if (inv[item_index].id == ItemId::shelter && inv[item_index].count != 0)
     {
         s_ += lang(u8" シリアルNo."s, u8" serial no."s) + inv[item_index].count;
     }
-    if (inv[item_index].id == 544)
+    if (inv[item_index].id == ItemId::disc)
     {
         s_ += u8" <BGM"s + inv[item_index].param1 + u8">"s;
     }
@@ -1576,7 +1590,7 @@ void remain_make(int ci, int cc)
     inv[ci].color = cdata[cc].image / 1000;
     inv[ci].weight = cdata[cc].weight;
 
-    if (inv[ci].id == 204)
+    if (inv[ci].id == ItemId::corpse)
     {
         inv[ci].weight = 250 * (inv[ci].weight + 100) / 100 + 500;
         inv[ci].value = inv[ci].weight / 5;
@@ -1600,7 +1614,7 @@ void remain_make(int ci, int cc)
 int item_stack(int inventory_id, int ci, int show_message)
 {
     if (inv[ci].quality == Quality::special &&
-        the_item_db[inv[ci].id]->category < 50000)
+        the_item_db[itemid2int(inv[ci].id)]->category < 50000)
     {
         return 0;
     }
@@ -1613,7 +1627,7 @@ int item_stack(int inventory_id, int ci, int show_message)
             continue;
 
         bool stackable;
-        if (item.id == 622)
+        if (item.id == ItemId::small_medal)
             stackable = inventory_id != -1 || mode == 6 ||
                 item.position == inv[ci].position;
         else
@@ -1649,9 +1663,9 @@ int item_stack(int inventory_id, int ci, int show_message)
 
 void item_dump_desc(const Item& i)
 {
-    reftype = the_item_db[i.id]->category;
+    reftype = the_item_db[itemid2int(i.id)]->category;
 
-    dbid = i.id;
+    dbid = itemid2int(i.id);
     item_db_get_charge_level(inv[ci], dbid);
     item_db_get_description(inv[ci], dbid);
 
@@ -1693,7 +1707,7 @@ void item_acid(const Character& owner, int ci)
         }
     }
 
-    if (the_item_db[inv[ci].id]->category >= 50000)
+    if (the_item_db[itemid2int(inv[ci].id)]->category >= 50000)
     {
         return;
     }
@@ -1736,7 +1750,7 @@ bool item_fire(int owner, int ci)
             {
                 continue;
             }
-            if (item.id == 567)
+            if (item.id == ItemId::fireproof_blanket)
             {
                 if (blanket == -1)
                 {
@@ -1771,7 +1785,7 @@ bool item_fire(int owner, int ci)
             continue;
         }
 
-        int a_ = the_item_db[inv[ci_].id]->category;
+        int a_ = the_item_db[itemid2int(inv[ci_].id)]->category;
         if (a_ == 57000 && inv[ci_].param2 == 0)
         {
             if (owner == -1)
@@ -1967,7 +1981,7 @@ bool item_cold(int owner, int ci)
             {
                 continue;
             }
-            if (item.id == 568)
+            if (item.id == ItemId::coldproof_blanket)
             {
                 if (blanket == -1)
                 {
@@ -2000,7 +2014,7 @@ bool item_cold(int owner, int ci)
             continue;
         }
 
-        int a_ = the_item_db[inv[ci_].id]->category;
+        int a_ = the_item_db[itemid2int(inv[ci_].id)]->category;
         if (a_ == 72000 || a_ == 59000 || a_ == 68000)
         {
             continue;
@@ -2150,7 +2164,7 @@ int inv_find(int id, int owner)
         {
             continue;
         }
-        if (item.id == id)
+        if (item.id == int2itemid(id))
         {
             return item.index;
         }
@@ -2340,7 +2354,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
         txt(i18n::s.get("core.action.drop.execute", itemname(ti, num)));
     }
 
-    if (inv[ti].id == 516) // Water
+    if (inv[ti].id == ItemId::bottle_of_water) // Water
     {
         int altar = item_find(60002, 0);
         if (altar != -1)
@@ -2381,7 +2395,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
             calc_home_rank();
         }
     }
-    if (inv[ti].id == 255)
+    if (inv[ti].id == ItemId::campfire)
     {
         map_data.play_campfire_sound = 1;
         play_music();
@@ -2399,7 +2413,7 @@ void item_build_shelter(Item& shelter)
 
 int iequiploc(const Item& item)
 {
-    switch (the_item_db[item.id]->category)
+    switch (the_item_db[itemid2int(item.id)]->category)
     {
     case 12000: return 1;
     case 34000: return 2;

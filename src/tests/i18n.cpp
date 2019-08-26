@@ -57,7 +57,7 @@ TEST_CASE("test format chara", "[I18N: Formatting]")
 TEST_CASE("test format item", "[I18N: Formatting]")
 {
     testing::start_in_debug_map();
-    Item& i = testing::create_item(PUTITORO_PROTO_ID, 3);
+    Item& i = testing::create_item(itemid2int(PUTITORO_PROTO_ID), 3);
 
     REQUIRE(
         i18n::fmt_hil("${_1}", i) ==

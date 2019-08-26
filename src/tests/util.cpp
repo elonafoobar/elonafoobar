@@ -79,7 +79,7 @@ Item& create_item(int id, int number)
 void invalidate_item(Item& item)
 {
     int old_index = item.index;
-    int old_id = item.id;
+    int old_id = itemid2int(item.id);
     int old_x = item.position.x;
     int old_y = item.position.y;
 
