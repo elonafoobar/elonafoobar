@@ -8,6 +8,7 @@
 #include "area.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
+#include "chara_db.hpp"
 #include "character_status.hpp"
 #include "class.hpp"
 #include "ctrl_file.hpp"
@@ -171,8 +172,7 @@ int chara_create_internal()
     }
     else
     {
-        dbmode = 3;
-        access_character_info();
+        chara_db_set_stats(int2charaid(dbid));
     }
     if (cmshade)
     {
@@ -1287,23 +1287,10 @@ int chara_custom_talk(int cc, int talk_type)
 
     if (cdata[cc].can_talk != 0)
     {
-        dbid = charaid2int(cdata[cc].id);
-        dbmode = talk_type;
-        access_character_info();
+        chara_db_get_talk(cdata[cc].id, talk_type);
         return 1;
     }
     return 0;
-}
-
-
-
-std::string chara_refstr(int id, int info_type)
-{
-    dbmode = 16;
-    dbid = id;
-    dbspec = info_type;
-    access_character_info();
-    return refstr;
 }
 
 

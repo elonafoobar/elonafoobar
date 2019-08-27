@@ -15,6 +15,7 @@
 #include "calc.hpp"
 #include "casino.hpp"
 #include "casino_card.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "class.hpp"
@@ -3269,10 +3270,7 @@ void character_drops_item()
         break;
     }
 
-    dbid = charaid2int(cdata[rc].id);
-    dbmode = 16;
-    dbspec = 3;
-    switch (access_character_info())
+    switch (chara_db_get_item_type(cdata[rc].id))
     {
     case 3:
         if (rnd(40) == 0)
@@ -10704,7 +10702,7 @@ void proc_weapon_enchantments()
         }
         if (enc == 57)
         {
-            s = chara_refstr(charaid2int(cdata[tc].id), 8);
+            s = chara_db_get_filter(cdata[tc].id);
             if (strutil::contains(s(0), u8"/dragon/"))
             {
                 game_data.proc_damage_events_flag = 1;
@@ -10714,7 +10712,7 @@ void proc_weapon_enchantments()
         }
         if (enc == 61)
         {
-            s = chara_refstr(charaid2int(cdata[tc].id), 8);
+            s = chara_db_get_filter(cdata[tc].id);
             if (strutil::contains(s(0), u8"/god/"))
             {
                 game_data.proc_damage_events_flag = 1;
@@ -10724,7 +10722,7 @@ void proc_weapon_enchantments()
         }
         if (enc == 58)
         {
-            s = chara_refstr(charaid2int(cdata[tc].id), 8);
+            s = chara_db_get_filter(cdata[tc].id);
             if (strutil::contains(s(0), u8"/undead/"))
             {
                 game_data.proc_damage_events_flag = 1;
@@ -10909,7 +10907,7 @@ int gain_skills_by_geen_engineering()
 int transplant_body_parts()
 {
     int dbmax = 0;
-    s(1) = chara_refstr(charaid2int(cdata[tc].id), 8);
+    s(1) = chara_db_get_filter(cdata[tc].id);
     if (strutil::contains(s(1), u8"/man/"))
     {
         return -1;

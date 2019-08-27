@@ -1,6 +1,7 @@
 #include "equipment.hpp"
 #include "adventurer.hpp"
 #include "calc.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "class.hpp"
@@ -769,9 +770,7 @@ void supply_initial_equipments()
     }
     if (cspecialeq)
     {
-        dbmode = 4;
-        dbid = charaid2int(cdata[rc].id);
-        access_character_info();
+        chara_db_get_special_equipments(cdata[rc].id);
     }
     if (eqtwohand)
     {

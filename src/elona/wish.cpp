@@ -8,6 +8,7 @@
 #include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "config/config.hpp"
@@ -233,7 +234,7 @@ int select_wished_character(const std::string& input)
     for (int i = 0; i < 800; ++i)
     {
         int similarity{};
-        auto name = chara_refstr(i, 2);
+        auto name = chara_db_get_name(int2charaid(i));
         if (en)
         {
             name = to_lower(name);

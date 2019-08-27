@@ -4,6 +4,7 @@
 #include "audio.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "data/types/type_item.hpp"
@@ -701,7 +702,7 @@ void apply_general_eating_effect(int cieat)
                 {
                     if (inv[ci].id == ItemId::corpse)
                     {
-                        s = chara_refstr(inv[ci].subname, 8);
+                        s = chara_db_get_filter(int2charaid(inv[ci].subname));
                         if (strutil::contains(s(0), u8"/man/"))
                         {
                             txt(i18n::s.get(
@@ -1136,7 +1137,7 @@ void apply_general_eating_effect(int cieat)
     }
     if (inv[ci].id == ItemId::corpse)
     {
-        s = chara_refstr(inv[ci].subname, 8);
+        s = chara_db_get_filter(int2charaid(inv[ci].subname));
         if (cc == 0)
         {
             if (strutil::contains(s(0), u8"/man/"))
@@ -1175,9 +1176,7 @@ void apply_general_eating_effect(int cieat)
         ((inv[ci].id == ItemId::jerky || inv[ci].id == ItemId::egg) &&
          rnd(3) == 0))
     {
-        dbmode = 12;
-        dbid = inv[ci].subname;
-        access_character_info();
+        chara_db_invoke_eating_effect(int2charaid(inv[ci].subname));
     }
     for (int cnt = 0, cnt_end = (fdmax); cnt < cnt_end; ++cnt)
     {
@@ -1459,7 +1458,7 @@ foodname(int type, const std::string& ingredient_, int rank, int character_id)
         }
         else
         {
-            ingredient = chara_refstr(character_id, 2);
+            ingredient = chara_db_get_name(int2charaid(character_id));
         }
     }
     else if (type == 5 || type == 7)

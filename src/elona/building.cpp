@@ -5,6 +5,7 @@
 #include "area.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "config/config.hpp"
 #include "ctrl_file.hpp"
@@ -1276,8 +1277,7 @@ void calc_collection_value(bool val0)
 {
     rc = 56;
     fixlv = Quality::good;
-    dbmode = 3;
-    access_character_info();
+    chara_db_set_stats(int2charaid(dbid));
     ++dblist(val0 ? 1 : 0, charaid2int(cdata.tmp().id));
     if (fixlv == Quality::special)
     {

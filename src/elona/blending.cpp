@@ -2,6 +2,7 @@
 #include "ability.hpp"
 #include "activity.hpp"
 #include "audio.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "config/config.hpp"
 #include "data/types/type_item.hpp"
@@ -1055,7 +1056,8 @@ std::string rpmatname(int step)
             return s_at_m177;
         }
         s_at_m177 = i18n::s.get(
-            "core.blending.ingredient.corpse", chara_refstr(p_at_m177, 2));
+            "core.blending.ingredient.corpse",
+            chara_db_get_name(int2charaid(p_at_m177)));
         return s_at_m177;
     }
     return s_at_m177;

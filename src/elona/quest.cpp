@@ -4,6 +4,7 @@
 #include "area.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "dmgheal.hpp"
@@ -403,7 +404,7 @@ void quest_set_data(int val0)
     {
         s = u8"%CONQUER"s;
         parse_quest_board_text(val0);
-        s(4) = chara_refstr(quest_data[rq].extra_info_1, 2);
+        s(4) = chara_db_get_name(int2charaid(quest_data[rq].extra_info_1));
         if (quest_data[rq].extra_info_1 == 343)
         {
             s(4) = i18n::s.get("core.quest.info.conquer.unknown_monster");
@@ -415,7 +416,7 @@ void quest_set_data(int val0)
     {
         s = u8"%HUNTEX"s;
         parse_quest_board_text(val0);
-        s(4) = chara_refstr(quest_data[rq].extra_info_1, 2);
+        s(4) = chara_db_get_name(int2charaid(quest_data[rq].extra_info_1));
         s(10) = ""s + quest_data[rq].difficulty * 3 / 2;
         s(6) = i18n::s.get("core.quest.info.huntex.text");
     }
@@ -1098,7 +1099,8 @@ void quest_enter_map()
     {
         txt(i18n::s.get(
                 "core.map.quest.on_enter.conquer",
-                chara_refstr(quest_data.immediate().extra_info_1, 2),
+                chara_db_get_name(
+                    int2charaid(quest_data.immediate().extra_info_1)),
                 game_data.left_minutes_of_executing_quest),
             Message::color{ColorIndex::cyan});
     }
