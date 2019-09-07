@@ -1,7 +1,7 @@
 悩める魔術士『レントン』
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -10,7 +10,7 @@ wizard
 
 掃除屋『バルザック』
 
-norland
+core.norland
 
 
 
@@ -20,8 +20,8 @@ norland
 
 魔術士ギルドの番人『レクサス』
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -30,8 +30,8 @@ wizard
 
 清掃員のシュデア
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -40,8 +40,8 @@ gunner
 
 吟遊詩人のネロサ
 
-juere
-pianist
+core.juere
+core.pianist
 
 
 
@@ -50,8 +50,8 @@ pianist
 
 吟遊詩人のコバモス
 
-juere
-pianist
+core.juere
+core.pianist
 
 
 
@@ -60,8 +60,8 @@ pianist
 
 吟遊詩人のイルネス
 
-juere
-pianist
+core.juere
+core.pianist
 
 
 
@@ -70,8 +70,8 @@ pianist
 
 吟遊詩人のカニック
 
-juere
-pianist
+core.juere
+core.pianist
 
 
 
@@ -80,8 +80,8 @@ pianist
 
 吟遊詩人のハネイル
 
-juere
-pianist
+core.juere
+core.pianist
 
 
 
@@ -90,8 +90,8 @@ pianist
 
 バーテンダーのトミー
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -100,8 +100,8 @@ gunner
 
 癒し手のオルポンド
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -110,8 +110,8 @@ warrior
 
 雑貨屋の店主のオスオン
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -120,8 +120,8 @@ gunner
 
 宿屋の店主のゲバルド
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -130,8 +130,8 @@ gunner
 
 武具店の店主のカスニック
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -140,8 +140,8 @@ gunner
 
 パン屋の店主のアレク
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -150,8 +150,8 @@ gunner
 
 魔法店の魔術士のイルシーク
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -160,8 +160,8 @@ wizard
 
 交易店の店主のヘダオス
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -170,8 +170,8 @@ gunner
 
 釣具店の店主のダル
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -180,8 +180,8 @@ gunner
 
 ルミエストの長のアローボス
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -190,8 +190,8 @@ gunner
 
 ギルドのトレイナーのアリド
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -200,8 +200,8 @@ warrior
 
 魔術士のギザガー
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -210,8 +210,8 @@ wizard
 
 情報屋のトムツェン
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -220,8 +220,8 @@ warrior
 
 市民のクターメス
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -230,8 +230,8 @@ warrior
 
 市民のエイ
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -240,8 +240,8 @@ warrior
 
 市民のセイヘド
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -250,8 +250,8 @@ warrior
 
 市民のヌピン
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -260,8 +260,8 @@ warrior
 
 市民のギザ
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -270,8 +270,8 @@ warrior
 
 市民のコピン
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -280,8 +280,8 @@ warrior
 
 市民のアネットー
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -290,8 +290,8 @@ warrior
 
 市民のダイッチ
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -300,8 +300,8 @@ warrior
 
 市民のニービー
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -310,8 +310,8 @@ warrior
 
 市民のノロロンド
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -320,8 +320,8 @@ warrior
 
 市民のオズファラ
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -330,8 +330,8 @@ warrior
 
 市民のアレア
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -340,8 +340,8 @@ warrior
 
 ガードのカスゲン
 
-yerles
-archer
+core.yerles
+core.archer
 
 
 
@@ -350,8 +350,8 @@ archer
 
 ガードのナバリッタ
 
-yerles
-archer
+core.yerles
+core.archer
 
 
 
@@ -360,8 +360,8 @@ archer
 
 ガードのゴルアン
 
-yerles
-archer
+core.yerles
+core.archer
 
 
 
@@ -370,8 +370,8 @@ archer
 
 ガードのタイレア
 
-yerles
-archer
+core.yerles
+core.archer
 
 
 
@@ -380,8 +380,8 @@ archer
 
 ガードのガンダミック
 
-yerles
-archer
+core.yerles
+core.archer
 
 
 
@@ -390,8 +390,8 @@ archer
 
 ガードのセイバン
 
-yerles
-archer
+core.yerles
+core.archer
 
 
 
@@ -400,8 +400,8 @@ archer
 
 ガードのチューン
 
-yerles
-archer
+core.yerles
+core.archer
 
 
 
@@ -410,8 +410,8 @@ archer
 
 芸術家のセルデリア
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -420,8 +420,8 @@ wizard
 
 乞食のキザニー
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -430,8 +430,8 @@ tourist
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -440,8 +440,8 @@ warrior
 
 芸術家のラライ
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -450,8 +450,8 @@ wizard
 
 街の子供のチュタマ
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -460,8 +460,8 @@ tourist
 
 芸術家のキネス
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -470,8 +470,8 @@ wizard
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -480,8 +480,8 @@ warrior
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -490,8 +490,8 @@ warrior
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -500,8 +500,8 @@ warrior
 
 乞食のハディ
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -510,8 +510,8 @@ tourist
 
 芸術家のヌゲン
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -520,8 +520,8 @@ wizard
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -530,8 +530,8 @@ warrior
 
 老人のエリスフェス
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -540,8 +540,8 @@ tourist
 
 芸術家のエバ
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -550,8 +550,8 @@ wizard
 
 乞食のニコドー
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -560,8 +560,8 @@ tourist
 
 芸術家のカバダン
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -570,8 +570,8 @@ wizard
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -580,8 +580,8 @@ warrior
 
 街の子供のサイフィス
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -590,8 +590,8 @@ tourist
 
 芸術家のエロシーク
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -600,8 +600,8 @@ wizard
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -610,8 +610,8 @@ warrior
 
 芸術家のエリゼス
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -620,8 +620,8 @@ wizard
 
 街の子供のアロコール
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -630,8 +630,8 @@ tourist
 
 老人のゴゾフ
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -640,8 +640,8 @@ tourist
 
 乞食のゼハエラ
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -650,8 +650,8 @@ tourist
 
 芸術家のイルメス
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -660,8 +660,8 @@ wizard
 
 街の子供のセル
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -670,8 +670,8 @@ tourist
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -680,8 +680,8 @@ warrior
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -690,8 +690,8 @@ warrior
 
 貴族のカザフォス
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 

@@ -1,7 +1,7 @@
 稀代の泥棒『マークス』
 
-juere
-thief
+core.juere
+core.thief
 
 
 
@@ -10,8 +10,8 @@ thief
 
 爆弾魔『ノエル』
 
-juere
-thief
+core.juere
+core.thief
 
 
 
@@ -20,8 +20,8 @@ thief
 
 盗賊ギルドの番人『アビス』
 
-juere
-thief
+core.juere
+core.thief
 
 
 
@@ -30,8 +30,8 @@ thief
 
 交易店の店主のゼミック
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -40,8 +40,8 @@ gunner
 
 バーテンダーのヌーフォード
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -50,8 +50,8 @@ gunner
 
 雑貨屋の店主のセスルス
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -60,8 +60,8 @@ gunner
 
 宿屋の店主のセズーネ
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -70,8 +70,8 @@ gunner
 
 何でも屋の店主のシレル
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -80,8 +80,8 @@ gunner
 
 ブラックマーケットの店主のミダオス
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -90,8 +90,8 @@ gunner
 
 謎の奴隷商人
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -100,8 +100,8 @@ gunner
 
 武具店の店主のケフエン
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -110,8 +110,8 @@ gunner
 
 アリーナマスターのガンダル
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -120,8 +120,8 @@ warrior
 
 ダルフィ長のライオザスタン
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -130,8 +130,8 @@ gunner
 
 ギルドのトレイナーのソラフ
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -140,8 +140,8 @@ warrior
 
 魔術士のタオーロート
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -150,8 +150,8 @@ wizard
 
 情報屋のソイダー
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -160,8 +160,8 @@ warrior
 
 市民のテシャック
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -170,8 +170,8 @@ warrior
 
 市民のチャミス
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -180,8 +180,8 @@ warrior
 
 市民のサイニック
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -190,8 +190,8 @@ warrior
 
 市民のカガ
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -200,8 +200,8 @@ warrior
 
 市民のルーホーク
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -210,8 +210,8 @@ warrior
 
 市民のダイフィー
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -220,8 +220,8 @@ warrior
 
 市民のオベピン
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -230,8 +230,8 @@ warrior
 
 市民のノロコルド
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -240,8 +240,8 @@ warrior
 
 娼婦のラザ
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -250,8 +250,8 @@ thief
 
 街の子供のオゾアス
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -260,8 +260,8 @@ tourist
 
 娼婦のタムンバ
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -270,8 +270,8 @@ thief
 
 娼婦のアデルシャック
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -280,8 +280,8 @@ thief
 
 街の子供のナハド
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -290,8 +290,8 @@ tourist
 
 娼婦のアフズス
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -300,8 +300,8 @@ thief
 
 娼婦のトミダオラ
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -310,8 +310,8 @@ thief
 
 娼婦のキザ
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -320,8 +320,8 @@ thief
 
 ならずもののアヘタ
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -330,8 +330,8 @@ thief
 
 娼婦のセモラ
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -340,8 +340,8 @@ thief
 
 ならずもののゴルロイ
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -350,8 +350,8 @@ thief
 
 乞食のネエッタ
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -360,8 +360,8 @@ tourist
 
 娼婦のトムナ
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -370,8 +370,8 @@ thief
 
 娼婦のセイルッタ
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -380,8 +380,8 @@ thief
 
 ならずもののカンザディス
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -390,8 +390,8 @@ thief
 
 娼婦のエボットー
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -400,8 +400,8 @@ thief
 
 娼婦のソレズ
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -410,8 +410,8 @@ thief
 
 乞食のウラリッタ
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -420,8 +420,8 @@ tourist
 
 街の子供のサルンゴ
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -430,8 +430,8 @@ tourist
 
 娼婦のサモナン
 
-norland
-thief
+core.norland
+core.thief
 
 
 
@@ -440,8 +440,8 @@ thief
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -450,8 +450,8 @@ warrior
 
 乞食のオミデスタン
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -460,8 +460,8 @@ tourist
 
 乞食のレバネック
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -470,8 +470,8 @@ tourist
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -480,8 +480,8 @@ warrior
 
 老人のカズデア
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -490,8 +490,8 @@ tourist
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -500,8 +500,8 @@ warrior
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -510,8 +510,8 @@ warrior
 
 乞食のクタガ
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -520,8 +520,8 @@ tourist
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -530,8 +530,8 @@ warrior
 
 乞食のエリナック
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -540,8 +540,8 @@ tourist
 
 老人のウラッテイ
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -550,8 +550,8 @@ tourist
 
 街の子供のサロット
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -560,8 +560,8 @@ tourist
 
 街の子供のアジラッタ
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -570,8 +570,8 @@ tourist
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 

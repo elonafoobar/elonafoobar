@@ -1,7 +1,7 @@
 『虚空を這いずる者』
 
-juere
-warrior
+core.juere
+core.warrior
 
 
 
@@ -10,8 +10,8 @@ warrior
 
 ザナンの紅の英雄『ロイター』
 
-juere
-warrior
+core.juere
+core.warrior
 
 
 
@@ -20,8 +20,8 @@ warrior
 
 見習い『ミシェス』
 
-norland
-archer
+core.norland
+core.archer
 
 
 
@@ -30,8 +30,8 @@ archer
 
 看板娘『シーナ』
 
-juere
-warrior
+core.juere
+core.warrior
 
 
 
@@ -40,8 +40,8 @@ warrior
 
 『ダンジョンクリーナー』
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -50,7 +50,7 @@ warrior
 
 犬好きの少女『リリアン』
 
-roran
+core.roran
 
 
 
@@ -60,8 +60,8 @@ roran
 
 吟遊詩人のアイシャック
 
-juere
-pianist
+core.juere
+core.pianist
 
 
 
@@ -70,8 +70,8 @@ pianist
 
 釣具店の店主のカブハエラ
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -80,8 +80,8 @@ gunner
 
 武具店の店主のフレアヨン
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -90,8 +90,8 @@ gunner
 
 交易店の店主のナバーフィス
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -100,8 +100,8 @@ gunner
 
 雑貨屋の店主のアロナイル
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -110,8 +110,8 @@ gunner
 
 魔法店の魔術士のギコ
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -120,8 +120,8 @@ wizard
 
 宿屋の店主のカザーサンダー
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -130,8 +130,8 @@ gunner
 
 パン屋の店主のエイミアン
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -140,8 +140,8 @@ gunner
 
 魔術士のセサー
 
-norland
-wizard
+core.norland
+core.wizard
 
 
 
@@ -150,8 +150,8 @@ wizard
 
 バーテンダーのモデア
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -160,8 +160,8 @@ gunner
 
 癒し手のネネス
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -170,8 +170,8 @@ warrior
 
 ヴェルニースの長のオグディス
 
-norland
-gunner
+core.norland
+core.gunner
 
 
 
@@ -180,8 +180,8 @@ gunner
 
 ギルドのトレイナーのケハルト
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -190,8 +190,8 @@ warrior
 
 情報屋のメナルド
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -200,8 +200,8 @@ warrior
 
 市民のフレインバ
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -210,8 +210,8 @@ warrior
 
 市民のチャウン
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -220,8 +220,8 @@ warrior
 
 市民のトミアン
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -230,8 +230,8 @@ warrior
 
 市民のセログ
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -240,8 +240,8 @@ warrior
 
 市民のオベゴス
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -250,8 +250,8 @@ warrior
 
 市民のラザ
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -260,8 +260,8 @@ warrior
 
 市民のホー
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -270,8 +270,8 @@ warrior
 
 市民のミシャエッタ
 
-yerles
-warrior
+core.yerles
+core.warrior
 
 
 
@@ -280,8 +280,8 @@ warrior
 
 ガードのタオロフ
 
-yerles
-archer
+core.yerles
+core.archer
 
 
 
@@ -290,8 +290,8 @@ archer
 
 ガードのセイネコ
 
-yerles
-archer
+core.yerles
+core.archer
 
 
 
@@ -300,8 +300,8 @@ archer
 
 ガードのスワート
 
-yerles
-archer
+core.yerles
+core.archer
 
 
 
@@ -310,8 +310,8 @@ archer
 
 ガードのコタマ
 
-yerles
-archer
+core.yerles
+core.archer
 
 
 
@@ -320,8 +320,8 @@ archer
 
 老人のギユン
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -330,8 +330,8 @@ tourist
 
 鉱夫のワイハエル
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -340,8 +340,8 @@ tourist
 
 老人のゲジス
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -350,8 +350,8 @@ tourist
 
 鉱夫のポジス
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -360,8 +360,8 @@ tourist
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -370,8 +370,8 @@ warrior
 
 鉱夫のアハート
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -380,8 +380,8 @@ tourist
 
 乞食のウラルイン
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -390,8 +390,8 @@ tourist
 
 鉱夫のアマフック
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -400,8 +400,8 @@ tourist
 
 鉱夫のコブダオラ
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -410,8 +410,8 @@ tourist
 
 老人のレバーゲン
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -420,8 +420,8 @@ tourist
 
 街の子供のライオサンド
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -430,8 +430,8 @@ tourist
 
 乞食のジルレル
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -440,8 +440,8 @@ tourist
 
 鉱夫のワグ
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -450,8 +450,8 @@ tourist
 
 鉱夫のブフィー
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -460,8 +460,8 @@ tourist
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -470,8 +470,8 @@ warrior
 
 乞食のセイッテイ
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -480,8 +480,8 @@ tourist
 
 鉱夫のツエイス
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -490,8 +490,8 @@ tourist
 
 街の子供のカブーラーガ
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -500,8 +500,8 @@ tourist
 
 街の子供のニスー
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -510,8 +510,8 @@ tourist
 
 鉱夫のデルロート
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -520,8 +520,8 @@ tourist
 
 鉱夫のアロダス
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -530,8 +530,8 @@ tourist
 
 鉱夫のマナルク
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -540,8 +540,8 @@ tourist
 
 傭兵
 
-norland
-warrior
+core.norland
+core.warrior
 
 
 
@@ -550,8 +550,8 @@ warrior
 
 街の子供のギコルス
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
@@ -560,8 +560,8 @@ tourist
 
 老人のアルシド
 
-norland
-tourist
+core.norland
+core.tourist
 
 
 
