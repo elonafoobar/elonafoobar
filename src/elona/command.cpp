@@ -1598,8 +1598,8 @@ TurnResult do_use_command()
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        game_data.continuous_action_about_to_start = 100;
-        continuous_action_others();
+        game_data.activity_about_to_start = 100;
+        activity_others();
         return TurnResult::turn_end;
     }
     if (inv[ci].id == 413 || inv[ci].id == 414)
@@ -2121,8 +2121,8 @@ TurnResult do_use_command()
                 update_screen();
                 return TurnResult::pc_turn_user_error;
             }
-            game_data.continuous_action_about_to_start = 101;
-            continuous_action_others();
+            game_data.activity_about_to_start = 101;
+            activity_others();
             return TurnResult::turn_end;
         }
         if (area_data[game_data.current_map].id ==
@@ -2142,8 +2142,8 @@ TurnResult do_use_command()
                 }
             }
         }
-        game_data.continuous_action_about_to_start = 102;
-        continuous_action_others();
+        game_data.activity_about_to_start = 102;
+        activity_others();
         break;
     case 11:
         if (moneybox(inv[ci].param2) > cdata.player().gold)
@@ -3067,14 +3067,13 @@ static TurnResult _bump_into_character()
                     }
                 }
             }
-            if (cdata[tc].continuous_action.type == ContinuousAction::Type::eat)
+            if (cdata[tc].activity.type == Activity::Type::eat)
             {
-                if (cdata[tc].continuous_action.turn > 0)
+                if (cdata[tc].activity.turn > 0)
                 {
                     txt(i18n::s.get("core.action.move.interrupt", cdata[tc]));
-                    cdata[tc].continuous_action.type =
-                        ContinuousAction::Type::none;
-                    cdata[tc].continuous_action.turn = 0;
+                    cdata[tc].activity.type = Activity::Type::none;
+                    cdata[tc].activity.turn = 0;
                 }
             }
             sense_map_feats_on_move();
@@ -3144,15 +3143,14 @@ TurnResult do_movement_command()
     }
     if (game_data.mount != 0)
     {
-        if (cdata[game_data.mount].continuous_action)
+        if (cdata[game_data.mount].activity)
         {
-            if (cdata[game_data.mount].continuous_action.turn > 0)
+            if (cdata[game_data.mount].activity.turn > 0)
             {
                 txt(i18n::s.get(
                     "core.action.move.interrupt", cdata[game_data.mount]));
-                cdata[game_data.mount].continuous_action.type =
-                    ContinuousAction::Type::none;
-                cdata[game_data.mount].continuous_action.turn = 0;
+                cdata[game_data.mount].activity.type = Activity::Type::none;
+                cdata[game_data.mount].activity.turn = 0;
             }
         }
     }
@@ -3297,7 +3295,7 @@ TurnResult do_eat_command()
         tc = itemusingfind(ci);
         if (tc != cc)
         {
-            cdata[tc].continuous_action.finish();
+            cdata[tc].activity.finish();
             if (is_in_fov(cdata[cc]))
             {
                 txt(i18n::s.get(
@@ -3306,7 +3304,7 @@ TurnResult do_eat_command()
         }
     }
     cdata[cc].emotion_icon = 116;
-    continuous_action_eating();
+    activity_eating();
     return TurnResult::turn_end;
 }
 

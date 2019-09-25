@@ -309,7 +309,7 @@ bool maybe_show_ex_help(int id, bool should_update_screen)
         {
             if (mode == 0)
             {
-                if (cdata.player().continuous_action.turn == 0)
+                if (cdata.player().activity.turn == 0)
                 {
                     game_data.exhelp_flags.at(id) = 1;
                     show_ex_help(id);

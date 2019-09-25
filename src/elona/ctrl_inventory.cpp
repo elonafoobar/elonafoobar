@@ -1689,11 +1689,11 @@ label_2061_internal:
                 txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
                 goto label_2060_internal;
             }
-            if (cdata[tc].continuous_action)
+            if (cdata[tc].activity)
             {
-                cdata[tc].continuous_action.type = ContinuousAction::Type::none;
-                cdata[tc].continuous_action.turn = 0;
-                cdata[tc].continuous_action.item = 0;
+                cdata[tc].activity.type = Activity::Type::none;
+                cdata[tc].activity.turn = 0;
+                cdata[tc].activity.item = 0;
             }
             snd("core.equip1");
             inv[citrade].is_quest_target() = false;

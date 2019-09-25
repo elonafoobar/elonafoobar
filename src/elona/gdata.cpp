@@ -90,7 +90,7 @@ FoobarData foobar_data;
     SERIALIZE(88, time_when_textbook_becomes_available); \
     SERIALIZE(89, light); \
     SERIALIZE(90, continuous_active_hours); \
-    SERIALIZE(91, continuous_action_about_to_start); \
+    SERIALIZE(91, activity_about_to_start); \
     SERIALIZE(92, sleep_experience); \
     SERIALIZE(93, acquirable_feat_count); \
     SERIALIZE(94, chara_last_attacked_by_player); \

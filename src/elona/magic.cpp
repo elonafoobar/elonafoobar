@@ -574,7 +574,7 @@ bool _magic_183()
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    continuous_action_perform();
+    activity_perform();
     return true;
 }
 
@@ -3408,7 +3408,7 @@ bool _magic_651()
         txt(i18n::s.get("core.magic.scavenge.eats", cdata[cc], inv[ci]));
     }
     heal_hp(cdata[cc], cdata[cc].max_hp / 3);
-    continuous_action_eating_finish();
+    activity_eating_finish();
     refresh_burden_state();
     return true;
 }
@@ -4394,7 +4394,7 @@ optional<bool> _proc_general_magic()
                             "core.magic.teleport.disappears", cdata[tc]));
                     }
                 }
-                cdata[cc].continuous_action.finish();
+                cdata[cc].activity.finish();
                 ccprev = cc;
                 cc = tc;
                 move_character();

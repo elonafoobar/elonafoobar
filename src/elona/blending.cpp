@@ -47,25 +47,25 @@ elona_vector1<int> inhlist_at_m184;
 
 
 
-void continuous_action_blending()
+void activity_blending()
 {
     while (true)
     {
         rpid = rpref(0);
         if (rpid == 0)
         {
-            cdata[cc].continuous_action.finish();
+            cdata[cc].activity.finish();
             return;
         }
-        if (!cdata[cc].continuous_action)
+        if (!cdata[cc].activity)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.blending.started", cdata[cc], rpname(rpid)));
-            cdata[cc].continuous_action.type = ContinuousAction::Type::blend;
-            cdata[cc].continuous_action.turn = rpref(2) % 10000;
+            cdata[cc].activity.type = Activity::Type::blend;
+            cdata[cc].activity.turn = rpref(2) % 10000;
             return;
         }
-        if (cdata[cc].continuous_action.turn > 0)
+        if (cdata[cc].activity.turn > 0)
         {
             if (rnd(30) == 0)
             {
@@ -76,7 +76,7 @@ void continuous_action_blending()
         }
         if (rpref(2) >= 10000)
         {
-            cdata[cc].continuous_action.turn = rpref(2) / 10000;
+            cdata[cc].activity.turn = rpref(2) / 10000;
             for (int cnt = 0;; ++cnt)
             {
                 mode = 12;
@@ -92,8 +92,8 @@ void continuous_action_blending()
                 await(Config::instance().animation_wait * 5);
                 game_data.date.minute = 0;
                 cc = 0;
-                --cdata[cc].continuous_action.turn;
-                if (cdata[cc].continuous_action.turn <= 0)
+                --cdata[cc].activity.turn;
+                if (cdata[cc].activity.turn <= 0)
                 {
                     int stat = blending_find_required_mat();
                     if (stat == 0)
@@ -106,7 +106,7 @@ void continuous_action_blending()
                     blending_start_attempt();
                     if (rpref(1) > 0)
                     {
-                        cdata[cc].continuous_action.turn = rpref(2) / 10000;
+                        cdata[cc].activity.turn = rpref(2) / 10000;
                         cnt = 0 - 1;
                         continue;
                     }
@@ -116,7 +116,7 @@ void continuous_action_blending()
                     }
                 }
             }
-            cdata[cc].continuous_action.finish();
+            cdata[cc].activity.finish();
             mode = 0;
             return;
         }
@@ -124,13 +124,13 @@ void continuous_action_blending()
         if (stat == 0)
         {
             txt(i18n::s.get("core.blending.required_material_not_found"));
-            cdata[cc].continuous_action.finish();
+            cdata[cc].activity.finish();
             return;
         }
         blending_start_attempt();
         if (rpref(1) > 0)
         {
-            cdata[cc].continuous_action.type = ContinuousAction::Type::none;
+            cdata[cc].activity.type = Activity::Type::none;
         }
         else
         {
@@ -138,7 +138,7 @@ void continuous_action_blending()
         }
     }
 
-    cdata[cc].continuous_action.finish();
+    cdata[cc].activity.finish();
 }
 
 
@@ -682,7 +682,7 @@ label_1923:
                 rpref(1) = result.number;
                 rpref(2) = rpdata(1, rpid);
                 rpref(3) = rpdiff(rpid, step, -1);
-                continuous_action_blending();
+                activity_blending();
                 return TurnResult::turn_end;
             }
             if (rtval == 2)

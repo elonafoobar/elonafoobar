@@ -55,7 +55,7 @@ void update_screen();
 void update_minimap();
 void ui_render_from_screensync();
 void render_hud();
-void load_continuous_action_animation();
+void load_activity_animation();
 void ui_draw_caption(const std::string& text);
 void update_scrolling_info();
 void update_slight();

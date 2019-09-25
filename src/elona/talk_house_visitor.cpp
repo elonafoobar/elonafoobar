@@ -889,7 +889,7 @@ TalkResult _talk_hv_punk()
             }
         }
 
-        continuous_action_sex();
+        activity_sex();
 
         return TalkResult::talk_end;
     }
@@ -942,7 +942,7 @@ TalkResult _talk_hv_mysterious_producer()
             }
         }
 
-        continuous_action_sex();
+        activity_sex();
 
         return TalkResult::talk_end;
     }

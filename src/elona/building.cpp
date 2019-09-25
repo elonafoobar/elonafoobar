@@ -886,7 +886,7 @@ void prompt_move_ally()
         cell_data.at(tlocx, tlocy).chara_index_plus_one = tc + 1;
         cdata[tc].position = cdata[tc].initial_position =
             Position{tlocx, tlocy};
-        cdata[tc].continuous_action.finish();
+        cdata[tc].activity.finish();
         Message::instance().linebreak();
         txt(i18n::s.get("core.building.home.move.is_moved", cdata[tc]));
         snd("core.foot");
@@ -1116,13 +1116,13 @@ void show_shop_log()
                 {
                     continue;
                 }
-                if (!cnt.continuous_action || cnt.continuous_action.turn == 0)
+                if (!cnt.activity || cnt.activity.turn == 0)
                 {
                     continue;
                 }
-                if (cnt.continuous_action.item == ci)
+                if (cnt.activity.item == ci)
                 {
-                    cdata[cnt.index].continuous_action.finish();
+                    cdata[cnt.index].activity.finish();
                 }
             }
         }

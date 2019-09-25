@@ -76,7 +76,7 @@ void status_ailment_damage(
         {
             chara.blind += turn / 3 + 1;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::confused:
         if (chara.is_immune_to_confusion())
@@ -104,7 +104,7 @@ void status_ailment_damage(
         {
             chara.confused += turn / 3 + 1;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::paralyzed:
         if (chara.is_immune_to_paralyzation())
@@ -130,7 +130,7 @@ void status_ailment_damage(
         {
             chara.paralyzed += turn / 3 + 1;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::poisoned:
         if (chara.is_immune_to_poison())
@@ -156,7 +156,7 @@ void status_ailment_damage(
         {
             chara.poisoned += turn / 3 + 3;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::sleep:
         if (chara.is_immune_to_sleep())
@@ -182,7 +182,7 @@ void status_ailment_damage(
         {
             chara.sleep += turn / 3 + 1;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::fear:
         if (chara.is_immune_to_fear())
@@ -231,7 +231,7 @@ void status_ailment_damage(
         {
             chara.dimmed += turn / 3 + 1;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::bleeding:
         if (chara.quality > Quality::great)
@@ -255,7 +255,7 @@ void status_ailment_damage(
         {
             chara.bleeding += turn;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::drunk:
         turn = power / 10;
@@ -293,7 +293,7 @@ void status_ailment_damage(
         {
             chara.insane += turn / 3 + 1;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::sick:
         turn = power / 10;

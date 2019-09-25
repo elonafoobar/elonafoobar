@@ -166,7 +166,7 @@ optional<RandomEvent> generate_random_event()
     }
     if (map_data.type != mdata_t::MapType::world_map)
     {
-        if (cdata.player().continuous_action)
+        if (cdata.player().activity)
         {
             return none;
         }
@@ -544,7 +544,7 @@ void run_random_event(RandomEvent event)
     }
 
     cc = 0;
-    load_continuous_action_animation();
+    load_activity_animation();
 }
 
 
