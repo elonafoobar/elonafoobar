@@ -2960,11 +2960,11 @@ void initialize_quest_map_town()
             continue;
         }
         f = 0;
-        if (item.id == 109 || item.id == 173)
+        if (item.id == ItemId::well || item.id == ItemId::fountain)
         {
             item.param1 = -10;
         }
-        if (item.id == 241)
+        if (item.id == ItemId::safe)
         {
             item.param1 = 0;
         }

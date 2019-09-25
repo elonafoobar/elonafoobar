@@ -141,24 +141,27 @@ label_20591:
                 item.remove();
                 continue;
             }
-            if (item.id == 488)
+            if (item.id == ItemId::training_machine)
             {
                 item.function = 9;
             }
-            if (item.id >= maxitemid || item.id < 0)
+            if (itemid2int(item.id) >= maxitemid || itemid2int(item.id) < 0)
             {
                 dialog(i18n::s.get(
-                    "core.ui.inv.common.invalid", item.index, item.id));
+                    "core.ui.inv.common.invalid",
+                    item.index,
+                    itemid2int(item.id)));
                 item.remove();
-                item.id = 0;
+                item.id = ItemId::none;
                 continue;
             }
             if (map_data.type == mdata_t::MapType::world_map)
             {
                 if (invctrl == 7)
                 {
-                    if (the_item_db[item.id]->subcategory != 53100 &&
-                        item.id != 621)
+                    if (the_item_db[itemid2int(item.id)]->subcategory !=
+                            53100 &&
+                        item.id != ItemId::treasure_map)
                     {
                         continue;
                     }
@@ -183,7 +186,7 @@ label_20591:
                 }
             }
             item_checkknown(item.index);
-            reftype = the_item_db[item.id]->category;
+            reftype = the_item_db[itemid2int(item.id)]->category;
             if (item.own_state == 5)
             {
                 if (!item.is_showroom_only() || invctrl != 14)
@@ -228,28 +231,29 @@ label_20591:
             }
             if (invctrl == 7)
             {
-                if (!the_item_db[item.id]->is_readable)
+                if (!the_item_db[itemid2int(item.id)]->is_readable)
                 {
                     continue;
                 }
             }
             if (invctrl == 8)
             {
-                if (!the_item_db[item.id]->is_drinkable)
+                if (!the_item_db[itemid2int(item.id)]->is_drinkable)
                 {
                     continue;
                 }
             }
             if (invctrl == 9)
             {
-                if (!the_item_db[item.id]->is_zappable)
+                if (!the_item_db[itemid2int(item.id)]->is_zappable)
                 {
                     continue;
                 }
             }
             if (invctrl == 11)
             {
-                if (item.id == 54 || item.id == 55)
+                if (item.id == ItemId::gold_piece ||
+                    item.id == ItemId::platinum_coin)
                 {
                     continue;
                 }
@@ -300,7 +304,8 @@ label_20591:
             }
             if (invctrl == 14)
             {
-                if (item.function == 0 && !the_item_db[item.id]->is_usable &&
+                if (item.function == 0 &&
+                    !the_item_db[itemid2int(item.id)]->is_usable &&
                     !item.is_alive())
                 {
                     continue;
@@ -326,28 +331,28 @@ label_20591:
             }
             if (invctrl == 17)
             {
-                if (reftype != 52000 && item.id != 617)
+                if (reftype != 52000 && item.id != ItemId::bait)
                 {
                     continue;
                 }
             }
             if (invctrl == 18)
             {
-                if (inv[cidip].id == 617)
+                if (inv[cidip].id == ItemId::bait)
                 {
-                    if (item.id != 342)
+                    if (item.id != ItemId::fishing_pole)
                     {
                         continue;
                     }
                 }
-                if (cidip == item.index || item.id == 516)
+                if (cidip == item.index || item.id == ItemId::bottle_of_water)
                 {
                     continue;
                 }
             }
             if (invctrl == 19)
             {
-                dbid = item.id;
+                dbid = itemid2int(item.id);
                 dbspec = 12;
                 bool is_offerable = item_db_is_offerable(inv[ci], dbid);
                 if (is_offerable == 0)
@@ -357,7 +362,8 @@ label_20591:
             }
             if (invctrl == 20)
             {
-                if (item.id == 54 || item.id == 55)
+                if (item.id == ItemId::gold_piece ||
+                    item.id == ItemId::platinum_coin)
                 {
                     continue;
                 }
@@ -423,7 +429,7 @@ label_20591:
                 }
                 if (invctrl(1) == 6)
                 {
-                    if (item.weight <= 0 || item.id == 641)
+                    if (item.weight <= 0 || item.id == ItemId::cooler_box)
                     {
                         continue;
                     }
@@ -442,7 +448,7 @@ label_20591:
                 {
                     if (game_data.current_map == mdata_t::MapId::lumiest)
                     {
-                        if (item.id != 687 || item.param2 == 0)
+                        if (item.id != ItemId::ancient_book || item.param2 == 0)
                         {
                             continue;
                         }
@@ -458,7 +464,7 @@ label_20591:
                 }
                 if (invctrl(1) == 2)
                 {
-                    if (item.id != 615)
+                    if (item.id != ItemId::bill)
                     {
                         continue;
                     }
@@ -485,12 +491,13 @@ label_20591:
             }
             if (invctrl == 26)
             {
-                if (reftype != 52000 && item.id != 578 && item.id != 685 &&
-                    item.id != 699 && item.id != 772)
+                if (reftype != 52000 && item.id != ItemId::kitty_bank &&
+                    item.id != ItemId::monster_ball &&
+                    item.id != ItemId::little_ball && item.id != ItemId::tomato)
                 {
                     continue;
                 }
-                if (item.id == 685)
+                if (item.id == ItemId::monster_ball)
                 {
                     if (item.subname != 0)
                     {
@@ -509,8 +516,8 @@ label_20591:
                 }
             }
             list(0, listmax) = item.index;
-            list(1, listmax) = reftype * 1000 + item.id;
-            if (item.id == 544)
+            list(1, listmax) = reftype * 1000 + itemid2int(item.id);
+            if (item.id == ItemId::disc)
             {
                 list(1, listmax) += item.param1 + 900;
             }
@@ -683,7 +690,7 @@ label_2060_internal:
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
             p = list(0, cnt);
-            if (inv[p].id == invsc)
+            if (inv[p].id == int2itemid(invsc))
             {
                 ci = p;
                 f = 1;
@@ -963,7 +970,7 @@ label_2061_internal:
         for (int cnt = 0; cnt < 20; ++cnt)
         {
             if (game_data.skill_shortcuts.at(cnt) ==
-                inv[p].id + invctrl * 10000)
+                itemid2int(inv[p].id) + invctrl * 10000)
             {
                 s +=
                     u8"{"s + get_bound_shortcut_key_name_by_index(cnt) + u8"}"s;
@@ -1060,7 +1067,7 @@ label_2061_internal:
             {
                 if (inv_sum(-1) >= map_data.max_item_count)
                 {
-                    if (the_item_db[inv[ci].id]->category != 60000)
+                    if (the_item_db[itemid2int(inv[ci].id)]->category != 60000)
                     {
                         txt(i18n::s.get("core.ui.inv.drop.cannot_anymore"));
                         snd("core.fail1");
@@ -1417,8 +1424,8 @@ label_2061_internal:
                 snd("core.fail1");
                 goto label_2060_internal;
             }
-            reftype = the_item_db[inv[ci].id]->category;
-            if (inv[ci].id == 729)
+            reftype = the_item_db[itemid2int(inv[ci].id)]->category;
+            if (inv[ci].id == ItemId::gift)
             {
                 txt(i18n::s.get(
                     "core.ui.inv.give.present.text", cdata[tc], inv[ci]));
@@ -1438,7 +1445,7 @@ label_2061_internal:
             f = 0;
             p = sdata(10, tc) * 500 + sdata(11, tc) * 500 +
                 sdata(153, tc) * 2500 + 25000;
-            if (cdata[tc].id == 265)
+            if (cdata[tc].id == CharaId::golden_knight)
             {
                 p *= 5;
             }
@@ -1446,7 +1453,7 @@ label_2061_internal:
             {
                 f = 1;
             }
-            if (cdata[tc].id != 265)
+            if (cdata[tc].id != CharaId::golden_knight)
             {
                 if (reftype == 60000)
                 {
@@ -1491,12 +1498,13 @@ label_2061_internal:
                 {
                     f = 1;
                     if (strutil::contains(
-                            the_item_db[inv[ci].id]->filter, u8"/neg/"))
+                            the_item_db[itemid2int(inv[ci].id)]->filter,
+                            u8"/neg/"))
                     {
                         f = 0;
                     }
                     // scroll of teleport/treasure map/deeds
-                    switch (inv[ci].id)
+                    switch (itemid2int(inv[ci].id))
                     {
                     case 16:
                     case 245:
@@ -1514,7 +1522,8 @@ label_2061_internal:
                 if (reftype == 52000)
                 {
                     f = 1;
-                    if (the_item_db[inv[ci].id]->subcategory == 52002)
+                    if (the_item_db[itemid2int(inv[ci].id)]->subcategory ==
+                        52002)
                     {
                         if (cdata[tc].drunk)
                         {
@@ -1525,19 +1534,22 @@ label_2061_internal:
                         }
                     }
                     if (strutil::contains(
-                            the_item_db[inv[ci].id]->filter, u8"/neg/"))
+                            the_item_db[itemid2int(inv[ci].id)]->filter,
+                            u8"/neg/"))
                     {
                         f = 0;
                     }
                     if (strutil::contains(
-                            the_item_db[inv[ci].id]->filter, u8"/nogive/"))
+                            the_item_db[itemid2int(inv[ci].id)]->filter,
+                            u8"/nogive/"))
                     {
                         f = 0;
                     }
                     if (cdata[tc].is_pregnant())
                     {
-                        if (inv[ci].id == 262 || inv[ci].id == 519 ||
-                            inv[ci].id == 392)
+                        if (inv[ci].id == ItemId::poison ||
+                            inv[ci].id == ItemId::bottle_of_dye ||
+                            inv[ci].id == ItemId::bottle_of_sulfuric)
                         {
                             f = 1;
                             txt(i18n::s.get("core.ui.inv.give.abortion"));
@@ -1550,14 +1562,15 @@ label_2061_internal:
                 snd("core.equip1");
                 txt(i18n::s.get(
                     "core.ui.inv.give.you_hand", inv[ci], cdata[tc]));
-                if (inv[ci].id == 477 || inv[ci].id == 473)
+                if (inv[ci].id == ItemId::engagement_ring ||
+                    inv[ci].id == ItemId::engagement_amulet)
                 {
                     txt(i18n::s.get("core.ui.inv.give.engagement", cdata[tc]),
                         Message::color{ColorIndex::green});
                     chara_modify_impression(cdata[tc], 15);
                     cdata[tc].emotion_icon = 317;
                 }
-                if (inv[ci].id == 620)
+                if (inv[ci].id == ItemId::love_potion)
                 {
                     txt(i18n::s.get(
                             "core.ui.inv.give.love_potion.text",
@@ -1817,7 +1830,7 @@ label_2061_internal:
                 txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                 goto label_2060_internal;
             }
-            if (the_item_db[inv[ci].id]->category == 77000)
+            if (the_item_db[itemid2int(inv[ci].id)]->category == 77000)
             {
                 snd("core.fail1");
                 txt(i18n::s.get(
@@ -1837,7 +1850,8 @@ label_2061_internal:
                     cdata[tc].body_parts[p - 100] / 10000 * 10000;
                 inv[ci].body_part = 0;
             }
-            if (inv[ci].id == 477 || inv[ci].id == 473)
+            if (inv[ci].id == ItemId::engagement_ring ||
+                inv[ci].id == ItemId::engagement_amulet)
             {
                 txt(i18n::s.get(
                         "core.ui.inv.take_ally.swallows_ring",
@@ -1852,7 +1866,7 @@ label_2061_internal:
             }
             snd("core.equip1");
             inv[ci].is_quest_target() = false;
-            if (inv[ci].id == 54)
+            if (inv[ci].id == ItemId::gold_piece)
             {
                 in = inv[ci].number();
             }
@@ -1862,7 +1876,7 @@ label_2061_internal:
             }
             txt(i18n::s.get(
                 "core.ui.inv.take_ally.you_take", itemname(ci, in)));
-            if (inv[ci].id == 54)
+            if (inv[ci].id == ItemId::gold_piece)
             {
                 earn_gold(cdata.player(), in);
                 inv[ci].remove();
@@ -2144,7 +2158,8 @@ label_2061_internal:
                 goto label_20591;
             }
             snd("core.ok1");
-            p = inv[list(0, pagesize * page + cs)].id + invctrl * 10000;
+            p = itemid2int(inv[list(0, pagesize * page + cs)].id) +
+                invctrl * 10000;
             if (game_data.skill_shortcuts.at(*shortcut) == p)
             {
                 game_data.skill_shortcuts.at(*shortcut) = 0;

@@ -2,6 +2,7 @@
 #include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
 #include "area.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "data/types/type_ability.hpp"
 #include "elona.hpp"
@@ -1035,7 +1036,7 @@ void get_npc_talk()
                 buff, 0, u8"%ALLY_DEFAULT,"s + i18n::s.get("core.meta.tag"));
             break;
         }
-        if (cdata[tc].id == 335)
+        if (cdata[tc].id == CharaId::prostitute)
         {
             p = instr(buff, 0, u8"%BITCH,"s + i18n::s.get("core.meta.tag"));
             break;
@@ -1907,7 +1908,8 @@ void append_subquest_journal(int val0)
                 "core.quest.journal.sub.joining_fighters_guild.progress",
                 0,
                 game_data.guild.fighters_guild_quota,
-                chara_refstr(game_data.guild.fighters_guild_target, 2));
+                chara_db_get_name(
+                    int2charaid(game_data.guild.fighters_guild_target)));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1962,7 +1964,8 @@ void append_subquest_journal(int val0)
                 "core.quest.journal.sub.quota_fighters_guild.progress",
                 0,
                 game_data.guild.fighters_guild_quota,
-                chara_refstr(game_data.guild.fighters_guild_target, 2));
+                chara_db_get_name(
+                    int2charaid(game_data.guild.fighters_guild_target)));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);

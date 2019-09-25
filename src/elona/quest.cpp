@@ -4,6 +4,7 @@
 #include "area.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "dmgheal.hpp"
@@ -403,7 +404,7 @@ void quest_set_data(int val0)
     {
         s = u8"%CONQUER"s;
         parse_quest_board_text(val0);
-        s(4) = chara_refstr(quest_data[rq].extra_info_1, 2);
+        s(4) = chara_db_get_name(int2charaid(quest_data[rq].extra_info_1));
         if (quest_data[rq].extra_info_1 == 343)
         {
             s(4) = i18n::s.get("core.quest.info.conquer.unknown_monster");
@@ -415,7 +416,7 @@ void quest_set_data(int val0)
     {
         s = u8"%HUNTEX"s;
         parse_quest_board_text(val0);
-        s(4) = chara_refstr(quest_data[rq].extra_info_1, 2);
+        s(4) = chara_db_get_name(int2charaid(quest_data[rq].extra_info_1));
         s(10) = ""s + quest_data[rq].difficulty * 3 / 2;
         s(6) = i18n::s.get("core.quest.info.huntex.text");
     }
@@ -650,7 +651,7 @@ int quest_generate()
             {
                 inv[ci].count = rq;
                 i(0) = n;
-                i(1) = inv[ci].id;
+                i(1) = itemid2int(inv[ci].id);
                 inv[ci].is_quest_target() = true;
                 break;
             }
@@ -698,7 +699,7 @@ int quest_generate()
                 }
                 break;
             }
-            quest_data[rq].extra_info_1 = cdata.tmp().id;
+            quest_data[rq].extra_info_1 = charaid2int(cdata.tmp().id);
             quest_data[rq].deadline_hours =
                 (rnd(6) + 2) * 24 + game_data.date.hours();
             quest_data[rq].reward_item_id = 0;
@@ -734,7 +735,7 @@ int quest_generate()
                 }
                 break;
             }
-            quest_data[rq].extra_info_1 = cdata.tmp().id;
+            quest_data[rq].extra_info_1 = charaid2int(cdata.tmp().id);
             quest_data[rq].deadline_hours =
                 (rnd(6) + 2) * 24 + game_data.date.hours();
             quest_data[rq].reward_item_id = 0;
@@ -1098,7 +1099,8 @@ void quest_enter_map()
     {
         txt(i18n::s.get(
                 "core.map.quest.on_enter.conquer",
-                chara_refstr(quest_data.immediate().extra_info_1, 2),
+                chara_db_get_name(
+                    int2charaid(quest_data.immediate().extra_info_1)),
                 game_data.left_minutes_of_executing_quest),
             Message::color{ColorIndex::cyan});
     }
@@ -1193,7 +1195,8 @@ void quest_failed(int val0)
                 {
                     if (cdata[cnt].is_escorted() == 1)
                     {
-                        if (quest_data[rq].extra_info_2 == cdata[cnt].id)
+                        if (quest_data[rq].extra_info_2 ==
+                            charaid2int(cdata[cnt].id))
                         {
                             tc = cnt;
                             cdata[cnt].is_escorted() = false;

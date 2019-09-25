@@ -381,7 +381,7 @@ void LuaApiInput::start_dialog(LuaCharacterHandle speaker)
 {
     auto& speaker_ref = lua::ref<Character>(speaker);
 
-    auto data = the_character_db.ensure(speaker_ref.id);
+    auto data = the_character_db.ensure(charaid2int(speaker_ref.id));
     if (!data.dialog_id)
     {
         throw sol::error(

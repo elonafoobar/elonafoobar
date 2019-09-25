@@ -4,6 +4,7 @@
 #include "audio.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "data/types/type_item.hpp"
@@ -50,7 +51,7 @@ void _food_gets_rotten(int chara_idx, int food_idx)
     }
 
     // Is it corpse(s) on a dryrock?
-    if (chara_idx == -1 && food.id == 204 &&
+    if (chara_idx == -1 && food.id == ItemId::corpse &&
         chip_data.for_cell(food.position.x, food.position.y).kind == 1)
     {
         if (game_data.weather != 0)
@@ -63,7 +64,7 @@ void _food_gets_rotten(int chara_idx, int food_idx)
             food));
         food.param3 = game_data.date.hours() + 2160;
         food.image = 337;
-        food.id = 571;
+        food.id = ItemId::jerky;
         food.param1 = 0;
         food.param2 = 5;
         cell_refresh(food.position.x, food.position.y);
@@ -269,7 +270,7 @@ void chara_vomit(Character& cc)
         {
             if (item.number() > 0)
             {
-                if (item.id == 704)
+                if (item.id == ItemId::vomit)
                 {
                     ++p;
                 }
@@ -282,7 +283,7 @@ void chara_vomit(Character& cc)
             {
                 if (cc.index != 0)
                 {
-                    inv[ci].subname = cc.id;
+                    inv[ci].subname = charaid2int(cc.id);
                 }
             }
         }
@@ -486,7 +487,7 @@ void apply_general_eating_effect(int cieat)
         fdlist(1, cnt) = 0;
     }
     nutrition = 2500;
-    if (the_item_db[inv[ci].id]->is_cargo)
+    if (the_item_db[itemid2int(inv[ci].id)]->is_cargo)
     {
         nutrition += 2500;
     }
@@ -662,7 +663,7 @@ void apply_general_eating_effect(int cieat)
         }
         nutrition = 3500;
     }
-    if (the_item_db[inv[ci].id]->category == 57000)
+    if (the_item_db[itemid2int(inv[ci].id)]->category == 57000)
     {
         nutrition = nutrition * (100 + inv[ci].param2 * 15) / 100;
     }
@@ -699,9 +700,9 @@ void apply_general_eating_effect(int cieat)
             {
                 if (trait(41))
                 {
-                    if (inv[ci].id == 204)
+                    if (inv[ci].id == ItemId::corpse)
                     {
-                        s = chara_refstr(inv[ci].subname, 8);
+                        s = chara_db_get_filter(int2charaid(inv[ci].subname));
                         if (strutil::contains(s(0), u8"/man/"))
                         {
                             txt(i18n::s.get(
@@ -769,7 +770,7 @@ void apply_general_eating_effect(int cieat)
             txt(i18n::s.get("core.food.effect.raw_glum", cdata[cc]));
         }
     }
-    if (inv[ci].id == 425)
+    if (inv[ci].id == ItemId::curaria)
     {
         fdmax = 0;
         if (fdmax < 10)
@@ -827,7 +828,7 @@ void apply_general_eating_effect(int cieat)
                 Message::color{ColorIndex::green});
         }
     }
-    if (inv[ci].id == 422)
+    if (inv[ci].id == ItemId::morgia)
     {
         fdmax = 0;
         if (fdmax < 10)
@@ -887,7 +888,7 @@ void apply_general_eating_effect(int cieat)
                 Message::color{ColorIndex::green});
         }
     }
-    if (inv[ci].id == 423)
+    if (inv[ci].id == ItemId::mareilon)
     {
         fdmax = 0;
         if (fdmax < 10)
@@ -947,7 +948,7 @@ void apply_general_eating_effect(int cieat)
                 Message::color{ColorIndex::green});
         }
     }
-    if (inv[ci].id == 424)
+    if (inv[ci].id == ItemId::spenseweed)
     {
         fdmax = 0;
         if (fdmax < 10)
@@ -1007,7 +1008,7 @@ void apply_general_eating_effect(int cieat)
                 Message::color{ColorIndex::green});
         }
     }
-    if (inv[ci].id == 426)
+    if (inv[ci].id == ItemId::alraunia)
     {
         fdmax = 0;
         if (fdmax < 10)
@@ -1067,7 +1068,7 @@ void apply_general_eating_effect(int cieat)
                 Message::color{ColorIndex::green});
         }
     }
-    if (inv[ci].id == 427)
+    if (inv[ci].id == ItemId::stomafillia)
     {
         fdmax = 0;
         if (fdmax < 10)
@@ -1120,7 +1121,7 @@ void apply_general_eating_effect(int cieat)
         }
         nutrition = 20000;
     }
-    if (inv[ci].id == 738)
+    if (inv[ci].id == ItemId::fortune_cookie)
     {
         nutrition = 750;
     }
@@ -1134,9 +1135,9 @@ void apply_general_eating_effect(int cieat)
             }
         }
     }
-    if (inv[ci].id == 204)
+    if (inv[ci].id == ItemId::corpse)
     {
-        s = chara_refstr(inv[ci].subname, 8);
+        s = chara_db_get_filter(int2charaid(inv[ci].subname));
         if (cc == 0)
         {
             if (strutil::contains(s(0), u8"/man/"))
@@ -1171,12 +1172,11 @@ void apply_general_eating_effect(int cieat)
             }
         }
     }
-    if (inv[ci].id == 204 ||
-        ((inv[ci].id == 571 || inv[ci].id == 573) && rnd(3) == 0))
+    if (inv[ci].id == ItemId::corpse ||
+        ((inv[ci].id == ItemId::jerky || inv[ci].id == ItemId::egg) &&
+         rnd(3) == 0))
     {
-        dbmode = 12;
-        dbid = inv[ci].subname;
-        access_character_info();
+        chara_db_invoke_eating_effect(int2charaid(inv[ci].subname));
     }
     for (int cnt = 0, cnt_end = (fdmax); cnt < cnt_end; ++cnt)
     {
@@ -1223,7 +1223,7 @@ void apply_general_eating_effect(int cieat)
                     rnd(30000 / std::max(1, cdata[cc].nutrition) + 2) == 0);
         }
     }
-    if (cdata[cc].id == 261)
+    if (cdata[cc].id == CharaId::cute_fairy)
     {
         if (nutrition >= 2000)
         {
@@ -1236,7 +1236,7 @@ void apply_general_eating_effect(int cieat)
             ci = cibk;
         }
     }
-    if (inv[ci].id == 204)
+    if (inv[ci].id == ItemId::corpse)
     {
         if (inv[ci].subname == 319)
         {
@@ -1266,28 +1266,28 @@ void apply_general_eating_effect(int cieat)
             }
         }
     }
-    if (inv[ci].id == 755)
+    if (inv[ci].id == ItemId::kagami_mochi)
     {
         txt(i18n::s.get("core.food.effect.hero_cheese"));
         chara_gain_fixed_skill_exp(cdata[cc], 19, 2000);
     }
-    if (inv[ci].id == 702)
+    if (inv[ci].id == ItemId::rabbits_tail)
     {
         chara_gain_fixed_skill_exp(cdata[cc], 19, 1000);
     }
-    if (inv[ci].id == 639)
+    if (inv[ci].id == ItemId::happy_apple)
     {
         chara_gain_fixed_skill_exp(cdata[cc], 19, 20000);
     }
-    if (inv[ci].id == 655)
+    if (inv[ci].id == ItemId::hero_cheese)
     {
         chara_gain_fixed_skill_exp(cdata[cc], 2, 3000);
     }
-    if (inv[ci].id == 662)
+    if (inv[ci].id == ItemId::magic_fruit)
     {
         chara_gain_fixed_skill_exp(cdata[cc], 3, 3000);
     }
-    if (inv[ci].id == 738)
+    if (inv[ci].id == ItemId::fortune_cookie)
     {
         if (cc < 16)
         {
@@ -1301,7 +1301,7 @@ void apply_general_eating_effect(int cieat)
             txt(""s + buff, Message::color{ColorIndex::orange});
         }
     }
-    if (inv[ci].id == 667)
+    if (inv[ci].id == ItemId::sisters_love_fueled_lunch)
     {
         txt(i18n::s.get(
             "core.food.effect.sisters_love_fueled_lunch", cdata[cc]));
@@ -1458,7 +1458,7 @@ foodname(int type, const std::string& ingredient_, int rank, int character_id)
         }
         else
         {
-            ingredient = chara_refstr(character_id, 2);
+            ingredient = chara_db_get_name(int2charaid(character_id));
         }
     }
     else if (type == 5 || type == 7)

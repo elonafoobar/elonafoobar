@@ -133,7 +133,7 @@ Character::State dmgheal_set_death_status(Character& victim)
             victim.current_map = 0;
             if (victim.is_escorted() == 1)
             {
-                event_add(15, victim.id);
+                event_add(15, charaid2int(victim.id));
                 new_state = Character::State::empty;
             }
             if (victim.is_escorted_in_sub_quest() == 1)
@@ -1012,32 +1012,32 @@ int damage_hp(
             {
                 if (game_data.current_map != mdata_t::MapId::the_void)
                 {
-                    if (victim.id == 2)
+                    if (victim.id == CharaId::zeome)
                     {
                         event_add(1);
                     }
-                    if (victim.id == 141)
+                    if (victim.id == CharaId::issizzle)
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.fool"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_fool = 1;
                     }
-                    if (victim.id == 143)
+                    if (victim.id == CharaId::wynan)
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.king"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_king = 1;
                     }
-                    if (victim.id == 144)
+                    if (victim.id == CharaId::quruiza)
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.sage"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_sage = 1;
                     }
-                    if (victim.id == 242)
+                    if (victim.id == CharaId::rodlob)
                     {
                         if (game_data.quest_flags.novice_knight < 1000)
                         {
@@ -1045,7 +1045,7 @@ int damage_hp(
                             quest_update_journal_msg();
                         }
                     }
-                    if (victim.id == 257)
+                    if (victim.id == CharaId::tuwen)
                     {
                         if (game_data.quest_flags.pyramid_trial < 1000)
                         {
@@ -1055,7 +1055,7 @@ int damage_hp(
                             snd("core.complete1");
                         }
                     }
-                    if (victim.id == 300)
+                    if (victim.id == CharaId::ungaga)
                     {
                         if (game_data.quest_flags.minotaur_king < 1000)
                         {
@@ -1063,11 +1063,11 @@ int damage_hp(
                             quest_update_journal_msg();
                         }
                     }
-                    if (victim.id == 318)
+                    if (victim.id == CharaId::big_daddy)
                     {
                         event_add(27, victim.position.x, victim.position.y);
                     }
-                    if (victim.id == 319)
+                    if (victim.id == CharaId::little_sister)
                     {
                         ++game_data.quest_flags.kill_count_of_little_sister;
                         txt(i18n::s.get(
@@ -1091,7 +1091,7 @@ int damage_hp(
                             event_add(5);
                         }
                     }
-                    if (victim.id == 331)
+                    if (victim.id == CharaId::ehekatl)
                     {
                         if (rnd(4) == 0)
                         {
@@ -1113,7 +1113,7 @@ int damage_hp(
         }
         if (victim.index != 0)
         {
-            ++npcmemory(0, victim.id);
+            ++npcmemory(0, charaid2int(victim.id));
             chara_custom_talk(victim.index, 102);
             if (victim.index < 16)
             {
@@ -1143,7 +1143,7 @@ int damage_hp(
         }
         if (attacker)
         {
-            if (attacker->id == 260)
+            if (attacker->id == CharaId::black_cat)
             {
                 catitem = attacker->index;
             }

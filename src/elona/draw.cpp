@@ -108,7 +108,7 @@ double easing(double t)
 
 void _set_pcc_depending_on_equipments(Character& chara, const Item& equipment)
 {
-    int item_appearance = the_item_db[equipment.id]->appearance;
+    int item_appearance = the_item_db[itemid2int(equipment.id)]->appearance;
     if (item_appearance == 0)
     {
         item_appearance = 1;

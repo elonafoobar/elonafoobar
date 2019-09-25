@@ -104,7 +104,7 @@ void talk_to_npc(Character &chara)
     chatval_show_impress = true;
     if (chara.quality == Quality::special && tc >= 16)
     {
-        chatval_unique_chara_id = chara.id;
+        chatval_unique_chara_id = charaid2int(chara.id);
         chatval_show_impress = false;
     }
     if (event_id() == 2)

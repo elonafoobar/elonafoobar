@@ -1,7 +1,6 @@
 # Source files
 set(ELONA_SOURCES
   ability.cpp
-  access_character_info.cpp
   activity.cpp
   adventurer.cpp
   ai.cpp
@@ -17,6 +16,7 @@ set(ELONA_SOURCES
   casino.cpp
   casino_card.cpp
   cell_draw.cpp
+  chara_db.cpp
   character.cpp
   character_making.cpp
   character_status.cpp

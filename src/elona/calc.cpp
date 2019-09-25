@@ -439,7 +439,8 @@ int calc_accuracy(bool consider_distance)
                         1,
                     0,
                     9);
-                const auto effective_range = calc_effective_range(inv[cw].id);
+                const auto effective_range =
+                    calc_effective_range(itemid2int(inv[cw].id));
                 accuracy = accuracy * effective_range[rangedist] / 100;
             }
         }
@@ -657,13 +658,14 @@ int calcattackdmg(AttackDamageCalculationMode mode)
                      sdata(attackskill, cc) / 5 + sdata(152, cc) * 2)) /
                     45;
         }
-        pierce = calc_rate_to_pierce(inv[cw].id);
+        pierce = calc_rate_to_pierce(itemid2int(inv[cw].id));
     }
     if (attackrange)
     {
         if (mode == AttackDamageCalculationMode::actual_damage)
         {
-            const auto effective_range = calc_effective_range(inv[cw].id);
+            const auto effective_range =
+                calc_effective_range(itemid2int(inv[cw].id));
             dmgmulti = dmgmulti * effective_range[rangedist] / 100;
         }
     }
@@ -815,7 +817,7 @@ int calcattackdmg(AttackDamageCalculationMode mode)
 
 int calcmedalvalue(int item_index)
 {
-    switch (inv[item_index].id)
+    switch (itemid2int(inv[item_index].id))
     {
     case 430: return 5;
     case 431: return 8;
@@ -844,7 +846,7 @@ int calcmedalvalue(int item_index)
 
 int calcitemvalue(int item_index, int situation)
 {
-    int category = the_item_db[inv[item_index].id]->category;
+    int category = the_item_db[itemid2int(inv[item_index].id)]->category;
     int ret = 0;
     if (inv[item_index].identify_state == IdentifyState::unidentified)
     {
@@ -892,7 +894,7 @@ int calcitemvalue(int item_index, int situation)
             ret = ret * inv[item_index].param2 * inv[item_index].param2 / 10;
         }
     }
-    if (inv[item_index].id == 333)
+    if (inv[item_index].id == ItemId::cargo_travelers_food)
     {
         if (situation == 0)
         {
@@ -920,7 +922,7 @@ int calcitemvalue(int item_index, int situation)
     }
     if (inv[item_index].has_charge())
     {
-        dbid = inv[item_index].id;
+        dbid = itemid2int(inv[item_index].id);
         item_db_get_charge_level(inv[item_index], dbid);
         if (inv[item_index].count < 0)
         {
@@ -1164,7 +1166,7 @@ int calccostreload(int owner, bool do_reload)
     {
         if (item.number() == 0)
             continue;
-        if (the_item_db[item.id]->category != 25000)
+        if (the_item_db[itemid2int(item.id)]->category != 25000)
             continue;
 
         for (auto&& enc : item.enchantments)
@@ -1304,7 +1306,7 @@ int calcinitgold(int owner)
             1;
     }
 
-    switch (cdata[owner].id)
+    switch (charaid2int(cdata[owner].id))
     {
     case 183: return 5000 + rnd(11000);
     case 184: return 2000 + rnd(5000);

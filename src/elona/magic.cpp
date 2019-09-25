@@ -2466,7 +2466,7 @@ bool _magic_21_1127()
                 inv[ci]));
             inv[ci].modify_number(-1);
             flt();
-            itemcreate(0, inv[ci].id, -1, -1, 0);
+            itemcreate(0, itemid2int(inv[ci].id), -1, -1, 0);
         }
         else
         {
@@ -2601,11 +2601,13 @@ bool _magic_630_1129()
         MenuResult result = ctrl_inventory();
         if (result.succeeded)
         {
-            dbid = inv[ci].id;
+            dbid = itemid2int(inv[ci].id);
             item_db_get_charge_level(inv[ci], dbid);
-            if (ichargelevel < 1 || inv[ci].id == 290 || inv[ci].id == 480 ||
-                inv[ci].id == 289 || inv[ci].id == 732 ||
-                (inv[ci].id == 687 && inv[ci].param2 != 0))
+            if (ichargelevel < 1 || inv[ci].id == ItemId::rod_of_wishing ||
+                inv[ci].id == ItemId::rod_of_domination ||
+                inv[ci].id == ItemId::spellbook_of_wishing ||
+                inv[ci].id == ItemId::spellbook_of_harvest ||
+                (inv[ci].id == ItemId::ancient_book && inv[ci].param2 != 0))
             {
                 txt(i18n::s.get("core.magic.fill_charge.cannot_recharge"));
                 return true;
@@ -2625,7 +2627,7 @@ bool _magic_630_1129()
             {
                 f = 0;
             }
-            if (the_item_db[inv[ci].id]->category == 54000)
+            if (the_item_db[itemid2int(inv[ci].id)]->category == 54000)
             {
                 if (rnd(4) == 0)
                 {
@@ -2643,7 +2645,7 @@ bool _magic_630_1129()
                 {
                     p = ichargelevel - inv[ci].count + 1;
                 }
-                if (the_item_db[inv[ci].id]->category == 54000)
+                if (the_item_db[itemid2int(inv[ci].id)]->category == 54000)
                 {
                     p = 1;
                 }
@@ -2690,7 +2692,7 @@ bool _magic_629()
         MenuResult result = ctrl_inventory();
         if (result.succeeded)
         {
-            dbid = inv[ci].id;
+            dbid = itemid2int(inv[ci].id);
             item_db_get_charge_level(inv[ci], dbid);
             for (int cnt = 0; cnt < 1; ++cnt)
             {
@@ -2874,7 +2876,7 @@ bool _magic_1132(int& fltbk, int& valuebk)
     {
         save_set_autosave();
         animeload(8, cc);
-        fltbk = the_item_db[inv[ci].id]->category;
+        fltbk = the_item_db[itemid2int(inv[ci].id)]->category;
         valuebk = calcitemvalue(ci, 0);
         inv[ci].remove();
         for (int cnt = 0;; ++cnt)
@@ -3362,7 +3364,7 @@ bool _magic_651()
         {
             continue;
         }
-        if (item.id == 618)
+        if (item.id == ItemId::fish_a)
         {
             p = item.index;
             break;
@@ -3380,7 +3382,7 @@ bool _magic_651()
             {
                 continue;
             }
-            if (the_item_db[item.id]->category != 57000)
+            if (the_item_db[itemid2int(item.id)]->category != 57000)
             {
                 continue;
             }

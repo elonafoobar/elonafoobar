@@ -309,7 +309,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                     {
                         continue;
                     }
-                    if (the_item_db[item.id]->category == 77000)
+                    if (the_item_db[itemid2int(item.id)]->category == 77000)
                     {
                         p = item.value * item.number();
                         sell += item.number();
@@ -770,7 +770,8 @@ label_2692_internal:
             }
             if (map_villagers_make_snowmen())
             {
-                if (cdata[cc].id == 35 || cdata[cc].id == 211)
+                if (cdata[cc].id == CharaId::town_child ||
+                    cdata[cc].id == CharaId::young_lady)
                 {
                     if (is_in_fov(cdata[cc]))
                     {
@@ -899,9 +900,9 @@ label_2692_internal:
                         flttypeminor = 52002;
                     }
                     if (itemcreate(cc, 0, -1, -1, 0) &&
-                        the_item_db[inv[ci].id]->is_drinkable)
+                        the_item_db[itemid2int(inv[ci].id)]->is_drinkable)
                     {
-                        if (inv[ci].id == 577)
+                        if (inv[ci].id == ItemId::molotov)
                         {
                             if (rnd(5) == 0)
                             {
@@ -927,7 +928,7 @@ label_2692_internal:
     }
     if (cdata[cc].ai_calm == 5)
     {
-        if (cdata[cc].id == 326)
+        if (cdata[cc].id == CharaId::bard)
         {
             if (rnd(5) == 0)
             {
@@ -936,7 +937,7 @@ label_2692_internal:
                 return TurnResult::turn_end;
             }
         }
-        if (cdata[cc].id == 320 || cdata[cc].id == 280)
+        if (cdata[cc].id == CharaId::cleaner || cdata[cc].id == CharaId::balzak)
         {
             if (is_in_fov(cdata[cc]))
             {
@@ -966,7 +967,8 @@ label_2692_internal:
                 }
             }
         }
-        if (cdata[cc].id == 335 || cdata[cc].id == 352)
+        if (cdata[cc].id == CharaId::prostitute ||
+            cdata[cc].id == CharaId::silvia)
         {
             if (rnd(10) == 0)
             {

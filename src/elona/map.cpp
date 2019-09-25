@@ -353,7 +353,7 @@ void map_reload(const std::string& map_filename)
         {
             if (item.own_state == 1)
             {
-                if (the_item_db[item.id]->category == 57000)
+                if (the_item_db[itemid2int(item.id)]->category == 57000)
                 {
                     item.remove();
                     cell_refresh(item.position.x, item.position.y);
@@ -705,7 +705,7 @@ static void _modify_items_on_regenerate()
         }
 
         // Update tree of fruits.
-        if (item.id == 526)
+        if (item.id == ItemId::tree_of_fruits)
         {
             if (item.param1 < 10)
             {
@@ -856,7 +856,7 @@ static void _restock_character_inventories()
             continue;
         }
         generatemoney(cnt.index);
-        if (cnt.id == 326)
+        if (cnt.id == CharaId::bard)
         {
             _proc_generate_bard_items(cnt);
         }
@@ -946,7 +946,7 @@ void map_reload_noyel()
 {
     for (auto&& item : inv.ground())
     {
-        if (item.id == 555 || item.id == 600)
+        if (item.id == ItemId::shelter || item.id == ItemId::giants_shackle)
         {
             continue;
         }

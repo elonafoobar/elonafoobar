@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include "../util/range.hpp"
+#include "consts.hpp"
 #include "data/types/type_character.hpp"
 #include "god.hpp"
 #include "lua_env/wrapped_function.hpp"
@@ -204,7 +205,7 @@ public:
     int turn = 0;
 
     /// @putit
-    int id = 0;
+    CharaId id = CharaId::none;
 
     /// @putit
     int vision_distance = 0;
@@ -551,7 +552,7 @@ public:
 
     SharedId new_id() const
     {
-        return *the_character_db.get_id_from_legacy(this->id);
+        return *the_character_db.get_id_from_legacy(charaid2int(this->id));
     }
 
 
@@ -721,7 +722,6 @@ int chara_get_free_slot();
 int chara_get_free_slot_ally();
 bool chara_unequip(int);
 int chara_custom_talk(int = 0, int = 0);
-std::string chara_refstr(int = 0, int = 0);
 int chara_impression_level(int = 0);
 void chara_modify_impression(Character& cc, int delta);
 void chara_set_item_which_will_be_used(Character& cc);
@@ -729,8 +729,6 @@ int chara_armor_class(const Character& cc);
 int chara_breed_power(const Character&);
 
 void chara_add_quality_parens();
-
-int access_character_info();
 
 bool belong_to_same_team(const Character& c1, const Character& c2);
 

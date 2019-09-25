@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include "../util/range.hpp"
+#include "consts.hpp"
 #include "data/types/type_item.hpp"
 #include "enums.hpp"
 #include "position.hpp"
@@ -67,7 +68,7 @@ public:
     int image = 0;
 
     /// @putit
-    int id = 0;
+    ItemId id = ItemId::none;
 
     /// @putit
     Quality quality = Quality::none;
@@ -177,7 +178,7 @@ public:
 
     SharedId new_id() const
     {
-        return *the_item_db.get_id_from_legacy(this->id);
+        return *the_item_db.get_id_from_legacy(itemid2int(this->id));
     }
 
 

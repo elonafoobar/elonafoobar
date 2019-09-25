@@ -2,6 +2,7 @@
 #include "ability.hpp"
 #include "activity.hpp"
 #include "audio.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "config/config.hpp"
 #include "data/types/type_item.hpp"
@@ -612,7 +613,7 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
             get_enchantment_description(
                 inv[item_index].enchantments[cnt2_at_m184].id,
                 inv[item_index].enchantments[cnt2_at_m184].power,
-                the_item_db[inv[item_index].id]->category);
+                the_item_db[itemid2int(inv[item_index].id)]->category);
             const auto text_color =
                 inv[item_index].enchantments[cnt2_at_m184].power < 0
                 ? snail::Color{180, 0, 0}
@@ -988,7 +989,7 @@ label_1928_internal:
             goto label_1928_internal;
         }
         rpref(10 + step * 2 + 0) = ci;
-        rpref(10 + step * 2 + 1) = inv[ci].id;
+        rpref(10 + step * 2 + 1) = itemid2int(inv[ci].id);
         snd("core.drink1");
         txt(i18n::s.get("core.blending.steps.you_add", inv[ci]));
         ++step;
@@ -1055,7 +1056,8 @@ std::string rpmatname(int step)
             return s_at_m177;
         }
         s_at_m177 = i18n::s.get(
-            "core.blending.ingredient.corpse", chara_refstr(p_at_m177, 2));
+            "core.blending.ingredient.corpse",
+            chara_db_get_name(int2charaid(p_at_m177)));
         return s_at_m177;
     }
     return s_at_m177;
@@ -1304,7 +1306,7 @@ int blendcheckmat(int recipe_id)
                 }
                 if (id_at_m181 < 9000)
                 {
-                    if (item.id == id_at_m181)
+                    if (item.id == int2itemid(id_at_m181))
                     {
                         f_at_m181 = 1;
                         break;
@@ -1314,7 +1316,7 @@ int blendcheckmat(int recipe_id)
                 if (id_at_m181 < 10000)
                 {
                     if (instr(
-                            the_item_db[item.id]->rffilter,
+                            the_item_db[itemid2int(item.id)]->rffilter,
                             0,
                             u8"/"s + rfnameorg(0, (id_at_m181 - 9000)) +
                                 u8"/"s) != -1 ||
@@ -1325,7 +1327,7 @@ int blendcheckmat(int recipe_id)
                     }
                     continue;
                 }
-                if (the_item_db[item.id]->category == id_at_m181)
+                if (the_item_db[itemid2int(item.id)]->category == id_at_m181)
                 {
                     f_at_m181 = 1;
                     break;
@@ -1392,7 +1394,7 @@ int blendmatnum(int matcher, int step)
             }
             if (matcher < 9000)
             {
-                if (item.id == matcher)
+                if (item.id == int2itemid(matcher))
                 {
                     m_at_m182 += item.number();
                 }
@@ -1401,7 +1403,7 @@ int blendmatnum(int matcher, int step)
             if (matcher < 10000)
             {
                 if (instr(
-                        the_item_db[item.id]->rffilter,
+                        the_item_db[itemid2int(item.id)]->rffilter,
                         0,
                         u8"/"s + rfnameorg(0, (matcher - 9000)) + u8"/"s) !=
                         -1 ||
@@ -1411,7 +1413,7 @@ int blendmatnum(int matcher, int step)
                 }
                 continue;
             }
-            if (the_item_db[item.id]->category == matcher)
+            if (the_item_db[itemid2int(item.id)]->category == matcher)
             {
                 m_at_m182 += item.number();
                 continue;
@@ -1466,7 +1468,7 @@ int blendlist(elona_vector2<int>& result_array, int step)
                     continue;
                 }
             }
-            reftype_at_m183 = the_item_db[item.id]->category;
+            reftype_at_m183 = the_item_db[itemid2int(item.id)]->category;
             if (rpdata(40 + step, rpid))
             {
                 int stat = blendcheckext(item.index, step);
@@ -1477,7 +1479,7 @@ int blendlist(elona_vector2<int>& result_array, int step)
             }
             if (id_at_m183 < 9000)
             {
-                if (item.id != id_at_m183)
+                if (item.id != int2itemid(id_at_m183))
                 {
                     continue;
                 }
@@ -1485,7 +1487,7 @@ int blendlist(elona_vector2<int>& result_array, int step)
             else if (id_at_m183 < 10000)
             {
                 if (instr(
-                        the_item_db[item.id]->rffilter,
+                        the_item_db[itemid2int(item.id)]->rffilter,
                         0,
                         u8"/"s + rfnameorg(0, (id_at_m183 - 9000)) + u8"/"s) ==
                         -1 &&
@@ -1515,7 +1517,8 @@ int blendlist(elona_vector2<int>& result_array, int step)
                 }
             }
             result_array(0, m_at_m183) = item.index;
-            result_array(1, m_at_m183) = reftype_at_m183 * 1000 + item.id;
+            result_array(1, m_at_m183) =
+                reftype_at_m183 * 1000 + itemid2int(item.id);
             ++m_at_m183;
         }
     }
@@ -1548,7 +1551,7 @@ int blending_find_required_mat()
             break;
         }
         if (inv[rpref(10 + cnt * 2)].number() <= 0 ||
-            inv[rpref(10 + cnt * 2)].id != rpref(11 + cnt * 2))
+            inv[rpref(10 + cnt * 2)].id != int2itemid(rpref(11 + cnt * 2)))
         {
             f = 0;
             break;
@@ -1706,7 +1709,7 @@ void blending_proc_on_success_events()
     case 10003:
         txt(i18n::s.get("core.action.dip.result.put_on", inv[ci], inv[ti]),
             Message::color{ColorIndex::green});
-        if (inv[ci].id == 567)
+        if (inv[ci].id == ItemId::fireproof_blanket)
         {
             txt(i18n::s.get("core.action.dip.result.good_idea_but"));
         }
@@ -1760,13 +1763,13 @@ void blending_proc_on_success_events()
     case 10007:
         txt(i18n::s.get(
             "core.action.dip.result.well_refill", inv[ci], inv[ti]));
-        if (inv[ti].id == 601)
+        if (inv[ti].id == ItemId::empty_bottle)
         {
             txt(i18n::s.get("core.action.dip.result.empty_bottle_shatters"));
             break;
         }
         snd("core.drink1");
-        if (inv[ci].id == 602)
+        if (inv[ci].id == ItemId::holy_well)
         {
             txt(i18n::s.get("core.action.dip.result.holy_well_polluted"));
             break;
@@ -1778,7 +1781,7 @@ void blending_proc_on_success_events()
         }
         txt(i18n::s.get("core.action.dip.result.well_refilled", inv[ci]),
             Message::color{ColorIndex::green});
-        if (inv[ti].id == 587)
+        if (inv[ti].id == ItemId::handful_of_snow)
         {
             txt(i18n::s.get("core.action.dip.result.snow_melts.blending"));
         }
@@ -1789,7 +1792,7 @@ void blending_proc_on_success_events()
         break;
     case 10008:
         if (inv[ci].param1 < -5 || inv[ci].param3 >= 20 ||
-            (inv[ci].id == 602 && game_data.holy_well_count <= 0))
+            (inv[ci].id == ItemId::holy_well && game_data.holy_well_count <= 0))
         {
             txt(i18n::s.get(
                 "core.action.dip.result.natural_potion_dry", inv[ci]));
@@ -1802,7 +1805,7 @@ void blending_proc_on_success_events()
             break;
         }
         cibk = ci;
-        if (inv[ci].id == 602)
+        if (inv[ci].id == ItemId::holy_well)
         {
             --game_data.holy_well_count;
             flt();
