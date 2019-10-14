@@ -208,8 +208,8 @@ bool LuaCharacter::get_flag(Character& chara, const EnumString& flag)
  * @see core.event
  * @usage local Event = require("game.Event")
  *
- * local function make_invisible(chara)
- * chara:set_flag("IsInvisible", true) -- intrinsic, reset on refresh
+ * local function make_invisible(e)
+ * e.chara:set_flag("IsInvisible", true) -- intrinsic, reset on refresh
  * end
  *
  * -- force this flag to be overridden after this character is refreshed.
