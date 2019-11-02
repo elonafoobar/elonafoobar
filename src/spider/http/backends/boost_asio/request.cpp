@@ -447,6 +447,8 @@ private:
                 do_redirect(_response[field::location].to_string());
                 return;
             }
+            break;
+        default: break;
         }
 
         _done(_construct_response());
