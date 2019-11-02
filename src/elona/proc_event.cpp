@@ -945,7 +945,7 @@ void proc_event()
     case 26:
         if (map_data.type == mdata_t::MapType::world_map)
             break;
-        txt(i18n::s.get("core.event.beggars"));
+        txt(i18n::s.get("core.event.blaggers"));
         for (int i = 0; i < 3; ++i)
         {
             flt();
