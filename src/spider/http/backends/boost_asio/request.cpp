@@ -166,7 +166,8 @@ public:
         _timeout = request.timeout();
 
         // 120; old IE's maximum redirect count.
-        _redirects = std::min(120, std::max(0, request.max_redirects()));
+        _redirects_max = std::min(120, std::max(0, request.max_redirects()));
+        _redirects = _redirects_max;
 
         const auto parsed_url = parse_url(request.url());
         if (!parsed_url)
@@ -211,6 +212,7 @@ private:
     RawRequest _request;
     RawResponse _response;
     int _timeout; // in milliseconds
+    int _redirects_max;
     int _redirects;
     FullfilledHandler _done;
     RejectedHandler _failed;
@@ -445,9 +447,14 @@ private:
             if (0 < _redirects)
             {
                 do_redirect(_response[field::location].to_string());
-                return;
             }
-            break;
+            else
+            {
+                fail(
+                    "Too many redirects, over " +
+                    std::to_string(_redirects_max) + " times");
+            }
+            return;
         default: break;
         }
 
