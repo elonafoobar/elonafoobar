@@ -723,7 +723,7 @@ void init()
 
     if (Config::instance().font_filename.empty())
     {
-        // If no font is specified in `config.hcl`, use a pre-defined font
+        // If no font is specified in `config.json`, use a pre-defined font
         // depending on each language.
         Config::instance().font_filename =
             i18n::s.get("core.meta.default_font");

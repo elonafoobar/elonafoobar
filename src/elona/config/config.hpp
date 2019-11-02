@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_set>
 #include "../../snail/window.hpp"
+#include "../../thirdparty/json5/json5.hpp"
 #include "../../thirdparty/ordered_map/ordered_map.h"
 #include "../../util/noncopyable.hpp"
 #include "../elona.hpp"
@@ -21,25 +22,25 @@ class ConfigDef;
 class Config
 {
 public:
-    static Config& instance();
-
-    Config()
+    static Config& instance()
     {
+        static Config the_instance;
+        return the_instance;
     }
+
+
+
+    Config() = default;
     ~Config() = default;
+
+
 
     void load_def(std::istream& is, const std::string& mod_id);
     void load_def(const fs::path& config_def_path, const std::string& mod_id);
     void load(std::istream&, const std::string&, bool);
     void save();
 
-    void clear()
-    {
-        def.clear();
-        storage_.clear();
-        getters_.clear();
-        setters_.clear();
-    }
+    void clear();
 
     // If your are vimmer, ex command ":sort /\w\+;/ r" can sort the list well.
     int alert_wait;
@@ -104,19 +105,32 @@ public:
 
     bool is_test = false; // testing use only
 
+
+
     const std::unordered_set<std::string>& get_mod_ids()
     {
         return mod_ids_;
     }
+
+
 
     bool is_visible(const std::string& key) const
     {
         return def.get_metadata(key).is_visible();
     }
 
+
+
+    void inject_enum(
+        const std::string& key,
+        std::vector<std::string> variants,
+        std::string default_variant);
+
+
+
     void bind_getter(
         const std::string& key,
-        std::function<hcl::Value(void)> getter)
+        std::function<json5::value(void)> getter)
     {
         if (!def.exists(key))
         {
@@ -124,6 +138,8 @@ public:
         }
         getters_[key] = getter;
     }
+
+
 
     template <typename T>
     void bind_setter(
@@ -134,40 +150,12 @@ public:
         {
             throw std::runtime_error("No such config value " + key);
         }
-        setters_[key] = [setter](const hcl::Value& value) {
-            setter(value.as<T>());
+        setters_[key] = [setter](const json5::value& value) {
+            setter(value.get<T>());
         };
     }
 
-    void inject_enum(
-        const std::string& key,
-        std::vector<std::string> variants,
-        std::string default_variant)
-    {
-        def.inject_enum(key, variants, default_variant);
 
-        auto EnumDef = def.get<spec::EnumDef>(key);
-        if (storage_.find(key) != storage_.end())
-        {
-            // Check if this enum has an invalid value. If so, set it to the
-            // default.
-            std::string current = get<std::string>(key);
-            if (!EnumDef.get_index_of(current))
-            {
-                ELONA_WARN("config")
-                    << "Config key "s << key << " had invalid variant "s
-                    << current << ". "s
-                    << "("s << def.type_to_string(key) << ")"s
-                    << "Setting to "s << EnumDef.get_default() << "."s;
-                set(key, EnumDef.get_default());
-            }
-        }
-        else
-        {
-            set(key,
-                EnumDef.get_default()); // Set the enum to its default value.
-        }
-    }
 
     template <typename T>
     T get(const std::string& key) const
@@ -188,11 +176,11 @@ public:
         {
             if (getters_.find(key) != getters_.end())
             {
-                return getters_.at(key)().as<T>();
+                return getters_.at(key)().get<T>();
             }
             else
             {
-                return storage_.at(key).as<T>();
+                return storage_.at(key).get<T>();
             }
         }
         catch (std::exception& e)
@@ -202,88 +190,67 @@ public:
         }
     }
 
-    template <typename T>
-    bool check_type(const std::string& key) const
-    {
-        const auto itr = storage_.find(key);
-        if (itr == storage_.end())
-        {
-            throw std::runtime_error("No such config value " + key);
-        }
-        return itr->second.is<T>();
-    }
 
-    void set(const std::string& key, const hcl::Value value)
-    {
-        ELONA_LOG("config") << "Set: " << key << " to " << value;
 
-        if (!def.exists(key))
-        {
-            throw std::runtime_error("No such config key " + key);
-        }
-        if (verify_types(value, key))
-        {
-            if (value.is<int>())
-            {
-                int temp = value.as<int>();
-                temp = clamp(temp, def.get_min(key), def.get_max(key));
-                storage_[key] = temp;
-            }
-            else
-            {
-                storage_[key] = std::move(value);
-            }
+    bool check_type(const std::string& key, json5::value_type type) const;
 
-            if (setters_.find(key) != setters_.end())
-            {
-                setters_[key](storage_.at(key));
-            }
-        }
-        else
-        {
-            std::stringstream ss;
-            ss << "Wrong config item type for key " << key << ": ";
-            ss << def.type_to_string(key) << " expected, got ";
-            ss << value;
-            throw std::runtime_error(ss.str());
-        }
-    }
+    void set(const std::string& key, const json5::value& value);
 
-    void run_setter(const std::string& key)
-    {
-        if (storage_.find(key) == storage_.end())
-        {
-            return;
-        }
-        if (setters_.find(key) != setters_.end())
-        {
-            setters_[key](storage_.at(key));
-        }
-    }
+    void run_setter(const std::string& key);
+
+
 
     const ConfigDef& get_def() const
     {
         return def;
     }
 
+
+
 private:
     void load_defaults(bool);
 
-    void visit(const hcl::Value&, const std::string&, const std::string&, bool);
+    void visit(
+        const json5::value& value,
+        const std::string& current_key,
+        const std::string& config_filename,
+        bool preload);
     void visit_object(
-        const hcl::Object&,
-        const std::string&,
-        const std::string&,
-        bool);
-    bool verify_types(const hcl::Value&, const std::string&);
+        const json5::value::object_type& object,
+        const std::string& current_key,
+        const std::string& config_filename,
+        bool preload);
+    bool verify_types(
+        const json5::value& value,
+        const std::string& current_key);
 
     ConfigDef def;
-    tsl::ordered_map<std::string, hcl::Value> storage_;
-    tsl::ordered_map<std::string, std::function<hcl::Value(void)>> getters_;
-    tsl::ordered_map<std::string, std::function<void(const hcl::Value&)>>
+    tsl::ordered_map<std::string, json5::value> storage_;
+    tsl::ordered_map<std::string, std::function<json5::value(void)>> getters_;
+    tsl::ordered_map<std::string, std::function<void(const json5::value&)>>
         setters_;
     std::unordered_set<std::string> mod_ids_;
 };
+
+
+
+template <>
+inline void Config::bind_setter<int>(
+    const std::string& key,
+    std::function<void(const int&)> setter)
+{
+    std::function<void(const json5::integer_type&)> f =
+        [=](const json5::integer_type& value) { setter(value); };
+    bind_setter(key, f);
+}
+
+
+
+template <>
+inline int Config::get<int>(const std::string& key) const
+{
+    return static_cast<int>(get<json5::value::integer_type>(key));
+}
 
 
 
@@ -296,11 +263,6 @@ void initialize_config_preload();
 
 void load_config();
 
-void set_config(const std::string& key, int value);
-void set_config(const std::string& key, const std::string& value);
-void set_config(const std::string& key, const std::string& value1, int value2);
-
 snail::Window::FullscreenMode config_get_fullscreen_mode();
-
 
 } // namespace elona

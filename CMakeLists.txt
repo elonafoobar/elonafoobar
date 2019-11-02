@@ -549,7 +549,7 @@ else()
   set(RUNTIME_DIR "${ASSET_DIR}")
 endif()
 
-# Copy and overwrite runtime folders/files (except config.hcl)
+# Copy and overwrite runtime folders/files (except config.json)
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/data/ "${RUNTIME_DIR}/data/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/font/ "${RUNTIME_DIR}/font/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/graphic/ "${RUNTIME_DIR}/graphic/")

@@ -16,6 +16,7 @@
 #include "../variables.hpp"
 
 
+
 namespace
 {
 
@@ -39,13 +40,22 @@ void for_each_with_index(Iterator first, Iterator last, Function f)
 }
 
 
-void write_default_config(const fs::path& location)
+
+void write_default_config(const fs::path& filepath)
 {
-    std::ofstream out{location.native()};
-    hcl::Object object;
-    object["config"] = hcl::Object();
-    out << object << std::endl;
+    // { core: {} }
+    json5::value::object_type object;
+    object.emplace("core", json5::value::object_type{});
+
+    std::ofstream out{filepath.native()};
+    json5::stringify_options opts;
+    opts.prettify = true;
+    opts.sort_by_key = true;
+    opts.unquote_key = true;
+    opts.insert_trailing_comma = true;
+    out << json5::stringify(object, opts) << std::endl;
 }
+
 
 
 /***
@@ -237,7 +247,6 @@ void set_touch_quick_action_size(int factor)
 namespace elona
 {
 
-
 void config_query_language()
 {
     constexpr snail::Color bg_color{160, 145, 128};
@@ -308,6 +317,7 @@ void config_query_language()
     Config::instance().font_filename = prev_font;
 }
 
+
 #define CONFIG_OPTION(confkey, type, getter) \
     conf.bind_getter("core."s + confkey, [&]() { return (getter); }); \
     conf.bind_setter<type>( \
@@ -316,38 +326,38 @@ void config_query_language()
 #define CONFIG_KEY(confkey, keyname) \
     CONFIG_OPTION((confkey), std::string, keyname)
 
+
 void load_config()
 {
-    const fs::path config_file =
-        filesystem::dirs::current_profile() / "config.hcl";
+    const fs::path config_file = filesystem::files::profile_local_config();
     auto& conf = Config::instance();
 
     // TODO do inversions
     // clang-format off
-    CONFIG_OPTION("anime.alert_wait"s, int, Config::instance().alert_wait);
-    CONFIG_OPTION("anime.anime_wait"s, int, Config::instance().animation_wait);
+    CONFIG_OPTION("anime.alert_wait"s, json5::integer_type, Config::instance().alert_wait);
+    CONFIG_OPTION("anime.anime_wait"s, json5::integer_type, Config::instance().animation_wait);
     CONFIG_OPTION("anime.attack_anime"s, bool, Config::instance().attack_animation);
     CONFIG_OPTION("anime.auto_turn_speed"s, std::string, Config::instance().auto_turn_speed);
-    CONFIG_OPTION("anime.general_wait"s, int, Config::instance().general_wait);
-    CONFIG_OPTION("anime.screen_refresh"s, int, Config::instance().screen_refresh_wait);
+    CONFIG_OPTION("anime.general_wait"s, json5::integer_type, Config::instance().general_wait);
+    CONFIG_OPTION("anime.screen_refresh"s, json5::integer_type, Config::instance().screen_refresh_wait);
     CONFIG_OPTION("anime.scroll"s, bool, Config::instance().scroll);
     CONFIG_OPTION("anime.scroll_when_run"s, bool, Config::instance().scroll_when_run);
     CONFIG_OPTION("anime.title_effect"s, bool, Config::instance().title_effect);
     CONFIG_OPTION("anime.weather_effect"s, bool, Config::instance().weather_effect);
     CONFIG_OPTION("anime.window_anime"s, bool, Config::instance().window_animation);
-    CONFIG_OPTION("balance.restock_interval"s, int, Config::instance().restock_interval);
+    CONFIG_OPTION("balance.restock_interval"s, json5::integer_type, Config::instance().restock_interval);
     CONFIG_OPTION("font.file"s, std::string, Config::instance().font_filename);
-    CONFIG_OPTION("font.size_adjustment"s, int, sizefix);
-    CONFIG_OPTION("font.vertical_offset"s, int, vfix);
+    CONFIG_OPTION("font.size_adjustment"s, json5::integer_type, sizefix);
+    CONFIG_OPTION("font.vertical_offset"s, json5::integer_type, vfix);
     CONFIG_OPTION("foobar.autopick"s, bool, Config::instance().autopick);
     CONFIG_OPTION("foobar.autosave"s, bool, Config::instance().autosave);
     CONFIG_OPTION("foobar.damage_popup"s, bool, Config::instance().damage_popup);
     CONFIG_OPTION("foobar.hp_bar_position"s, std::string, Config::instance().hp_bar_position);
     CONFIG_OPTION("foobar.leash_icon"s, bool, Config::instance().leash_icon);
-    CONFIG_OPTION("foobar.max_damage_popup"s, int, Config::instance().max_damage_popup);
+    CONFIG_OPTION("foobar.max_damage_popup"s, json5::integer_type, Config::instance().max_damage_popup);
     CONFIG_OPTION("foobar.allow_enhanced_skill_tracking"s, bool, Config::instance().allow_enhanced_skill);
-    CONFIG_OPTION("foobar.enhanced_skill_tracking_lowerbound"s, int, Config::instance().enhanced_skill_lowerbound);
-    CONFIG_OPTION("foobar.enhanced_skill_tracking_upperbound"s, int, Config::instance().enhanced_skill_upperbound);
+    CONFIG_OPTION("foobar.enhanced_skill_tracking_lowerbound"s, json5::integer_type, Config::instance().enhanced_skill_lowerbound);
+    CONFIG_OPTION("foobar.enhanced_skill_tracking_upperbound"s, json5::integer_type, Config::instance().enhanced_skill_upperbound);
     CONFIG_OPTION("foobar.startup_script"s, std::string, Config::instance().startup_script);
     CONFIG_OPTION("foobar.pcc_graphic_scale"s, std::string, Config::instance().pcc_graphic_scale);
     CONFIG_OPTION("foobar.skip_confirm_at_shop"s, bool, Config::instance().skip_confirm_at_shop);
@@ -357,19 +367,19 @@ void load_config()
     CONFIG_OPTION("game.hide_autoidentify"s, bool, Config::instance().hide_autoidentify);
     CONFIG_OPTION("game.hide_shop_updates"s, bool, Config::instance().hide_shop_updates);
     CONFIG_OPTION("game.story"s, bool, Config::instance().story);
-    CONFIG_OPTION("input.attack_wait"s, int, Config::instance().attack_wait);
+    CONFIG_OPTION("input.attack_wait"s, json5::integer_type, Config::instance().attack_wait);
     CONFIG_OPTION("input.autodisable_numlock"s, bool, Config::instance().autodisable_numlock);
-    CONFIG_OPTION("input.key_wait"s, int, Config::instance().key_wait);
-    CONFIG_OPTION("input.initial_key_repeat_wait"s, int, Config::instance().initial_key_repeat_wait);
-    CONFIG_OPTION("input.key_repeat_wait"s, int, Config::instance().key_repeat_wait);
-    CONFIG_OPTION("input.walk_wait"s, int, Config::instance().walk_wait);
-    CONFIG_OPTION("input.run_wait"s, int, Config::instance().run_wait);
-    CONFIG_OPTION("input.start_run_wait"s, int, Config::instance().start_run_wait);
-    CONFIG_OPTION("input.select_wait"s, int, Config::instance().select_wait);
-    CONFIG_OPTION("input.select_fast_start_wait"s, int, Config::instance().select_fast_start_wait);
-    CONFIG_OPTION("input.select_fast_wait"s, int, Config::instance().select_fast_wait);
+    CONFIG_OPTION("input.key_wait"s, json5::integer_type, Config::instance().key_wait);
+    CONFIG_OPTION("input.initial_key_repeat_wait"s, json5::integer_type, Config::instance().initial_key_repeat_wait);
+    CONFIG_OPTION("input.key_repeat_wait"s, json5::integer_type, Config::instance().key_repeat_wait);
+    CONFIG_OPTION("input.walk_wait"s, json5::integer_type, Config::instance().walk_wait);
+    CONFIG_OPTION("input.run_wait"s, json5::integer_type, Config::instance().run_wait);
+    CONFIG_OPTION("input.start_run_wait"s, json5::integer_type, Config::instance().start_run_wait);
+    CONFIG_OPTION("input.select_wait"s, json5::integer_type, Config::instance().select_wait);
+    CONFIG_OPTION("input.select_fast_start_wait"s, json5::integer_type, Config::instance().select_fast_start_wait);
+    CONFIG_OPTION("input.select_fast_wait"s, json5::integer_type, Config::instance().select_fast_wait);
     CONFIG_OPTION("message.add_timestamps"s, bool, Config::instance().message_add_timestamps);
-    CONFIG_OPTION("message.transparency"s, int, Config::instance().message_transparency);
+    CONFIG_OPTION("message.transparency"s, json5::integer_type, Config::instance().message_transparency);
     CONFIG_OPTION("net.is_enabled"s, bool, Config::instance().net);
     CONFIG_OPTION("anime.always_center"s, bool, Config::instance().always_center);
     CONFIG_OPTION("screen.music"s, bool, Config::instance().music);
@@ -418,10 +428,11 @@ void load_config()
     }
 }
 
+
+
 void initialize_config_preload()
 {
-    const fs::path config_file =
-        filesystem::dirs::current_profile() / "config.hcl";
+    const fs::path config_file = filesystem::files::profile_local_config();
 
     auto& conf = Config::instance();
 
@@ -437,7 +448,7 @@ void initialize_config_preload()
     CONFIG_OPTION("balance.extra_race"s, bool, Config::instance().extra_race);
     CONFIG_OPTION("balance.extra_class"s, bool, Config::instance().extra_class);
     CONFIG_OPTION("input.joypad"s, bool, Config::instance().joypad);
-    CONFIG_OPTION("input.key_wait"s, int, Config::instance().key_wait);
+    CONFIG_OPTION("input.key_wait"s, json5::integer_type, Config::instance().key_wait);
     CONFIG_OPTION("game.default_save"s, std::string, defload); // TODO runtime enum
     CONFIG_OPTION("debug.wizard"s, bool, Config::instance().wizard);
     CONFIG_OPTION("screen.display_mode"s, std::string, Config::instance().display_mode);
@@ -471,6 +482,7 @@ void initialize_config_preload()
 #undef CONFIG_OPTION
 #undef CONFIG_KEY
 
+
 snail::Window::FullscreenMode config_get_fullscreen_mode()
 {
     if (Config::instance().fullscreen == "fullscreen")
@@ -487,11 +499,7 @@ snail::Window::FullscreenMode config_get_fullscreen_mode()
     }
 }
 
-Config& Config::instance()
-{
-    static Config the_instance;
-    return the_instance;
-}
+
 
 void Config::load_def(std::istream& is, const std::string& mod_id)
 {
@@ -499,11 +507,15 @@ void Config::load_def(std::istream& is, const std::string& mod_id)
     mod_ids_.emplace(mod_id);
 }
 
+
+
 void Config::load_def(const fs::path& config_def_path, const std::string& mod_id)
 {
     def.load(config_def_path, mod_id);
     mod_ids_.emplace(mod_id);
 }
+
+
 
 void Config::load_defaults(bool preload)
 {
@@ -517,80 +529,100 @@ void Config::load_defaults(bool preload)
         {
             if (preload == def.get_metadata(key).preload)
             {
-                set(key, def.get_default(key));
+                const auto hcl_value = def.get_default(key);
+                json5::value json_value;
+                switch (hcl_value.type())
+                {
+                case hcl::Value::Type::BOOL_TYPE:
+                    json_value = hcl_value.as<bool>();
+                    break;
+                case hcl::Value::Type::INT_TYPE:
+                    json_value = hcl_value.as<int>();
+                    break;
+                case hcl::Value::Type::DOUBLE_TYPE:
+                    json_value = hcl_value.as<double>();
+                    break;
+                case hcl::Value::Type::STRING_TYPE:
+                    json_value = hcl_value.as<std::string>();
+                    break;
+                default:
+                    assert(0);
+                    break;
+                }
+                set(key, json_value);
             }
         }
     }
 }
 
-void Config::load(std::istream& is, const std::string& hcl_file, bool preload)
+
+
+void Config::load(std::istream& is, const std::string& config_filename, bool preload)
 {
     load_defaults(preload);
 
-    hcl::ParseResult parseResult = hcl::parse(is);
-
-    if (!parseResult.valid())
+    std::string file_content{std::istreambuf_iterator<char>{is}, std::istreambuf_iterator<char>{}};
+    json5::value value;
+    try
     {
-        std::cerr << parseResult.errorReason << std::endl;
-        throw ConfigLoadingError(
-            u8"Failed to read " + hcl_file + u8": " + parseResult.errorReason);
+        value = json5::parse(file_content);
+    }
+    catch (json5::syntax_error& err)
+    {
+        std::cerr << err.what() << std::endl;
+        throw ConfigLoadingError{u8"Failed to read " + config_filename + u8": " + err.what()};
     }
 
     // TODO: This pattern seems to be shared in various places in the
     // code.
-    const hcl::Value& value = parseResult.value;
-
-    if (!value.is<hcl::Object>() || !value.has("config"))
+    if (!value.is_object())
     {
         throw ConfigLoadingError(
-            hcl_file + ": \"config\" object not found at top level");
+            config_filename + ": \"config\" object not found at top level");
     }
 
-    const hcl::Value conf = value["config"];
-    if (!conf.is<hcl::Object>())
-    {
-        throw ConfigLoadingError(
-            hcl_file + ": mod section object not found after \"config\"");
-    }
-
-    for (const auto& pair : conf.as<hcl::Object>())
+    for (const auto& pair : value.get_object())
     {
         const auto& mod_id = pair.first;
         const auto& mod_section = pair.second;
 
-        if (!mod_section.is<hcl::Object>())
+        if (!mod_section.is_object())
         {
             continue;
         }
 
-        visit_object(mod_section.as<hcl::Object>(), mod_id, hcl_file, preload);
+        visit_object(mod_section.get_object(), mod_id, config_filename, preload);
     }
 }
 
+
+
 void Config::visit_object(
-    const hcl::Object& object,
+    const json5::value::object_type& object,
     const std::string& current_key,
-    const std::string& hcl_file,
+    const std::string& config_filename,
     bool preload)
 {
     for (const auto& pair : object)
     {
-        visit(pair.second, current_key + "." + pair.first, hcl_file, preload);
+        visit(pair.second, current_key + "." + pair.first, config_filename, preload);
     }
 }
 
+
+
 void Config::visit(
-    const hcl::Value& value,
+    const json5::value& value,
     const std::string& current_key,
-    const std::string& hcl_file,
+    const std::string& config_filename,
     bool preload)
 {
-    if (value.is<hcl::Object>())
+    if (value.is_object())
     {
         if (def.is<spec::SectionDef>(current_key))
         {
             visit_object(
-                value.as<hcl::Object>(), current_key, hcl_file, preload);
+                value.get_object(), current_key, config_filename, preload);
         }
     }
     else
@@ -605,8 +637,10 @@ void Config::visit(
     }
 }
 
+
+
 bool Config::verify_types(
-    const hcl::Value& value,
+    const json5::value& value,
     const std::string& current_key)
 {
     if (def.is<spec::SectionDef>(current_key))
@@ -614,19 +648,19 @@ bool Config::verify_types(
         // It doesn't make sense to set a section as a value.
         return false;
     }
-    if (value.is<bool>())
+    if (value.is_boolean())
     {
         return def.is<spec::BoolDef>(current_key);
     }
-    if (value.is<int>())
+    if (value.is_integer())
     {
         return def.is<spec::IntDef>(current_key);
     }
-    if (value.is<hcl::List>())
+    if (value.is_array())
     {
         return def.is<spec::ListDef>(current_key);
     }
-    if (value.is<std::string>())
+    if (value.is_string())
     {
         if (def.is<spec::EnumDef>(current_key))
         {
@@ -640,61 +674,77 @@ bool Config::verify_types(
             else
             {
                 return static_cast<bool>(
-                    EnumDef.get_index_of(value.as<std::string>()));
+                    EnumDef.get_index_of(value.get_string()));
             }
         }
         else
-        {
-            return def.is<spec::StringDef>(current_key);
+        { return def.is<spec::StringDef>(current_key);
         }
     }
 
     return false;
 }
 
+
+
 void Config::save()
 {
-    std::ofstream file{(filesystem::dirs::current_profile() / u8"config.hcl").native(),
-                       std::ios::binary};
-    if (!file)
-    {
-        throw ConfigLoadingError{
-            u8"Failed to open: "s
-            + filepathutil::make_preferred_path_in_utf8(
-                  filesystem::dirs::current_profile() / u8"config.hcl")};
-    }
+    json5::value::object_type object;
 
-    // Create a top level "config" section.
-    hcl::Value out = hcl::Value(hcl::Object());
-    out.set("config", hcl::Object());
-    hcl::Value* parent = out.find("config");
-    assert(parent);
-
-    // Create sections under the top-level "config" section for each mod that
+    // Create sections under the top-level object for each mod that
     // has config options, then write their individual config sections.
     for (auto&& pair : storage_)
     {
         std::string key = pair.first;
-        hcl::Value value = pair.second;
+        json5::value value = pair.second;
 
         // Don't save hidden options if their value is the same as the default.
-        if (!def.get_metadata(key).is_visible()
-            && value == def.get_default(key))
+        if (!def.get_metadata(key).is_visible())
         {
-            continue;
+            const auto hcl_value = def.get_default(key);
+            switch (hcl_value.type())
+            {
+            case hcl::Value::Type::BOOL_TYPE:
+                if (value.get_boolean() == hcl_value.as<bool>())
+                {
+                    continue;
+                }
+                break;
+            case hcl::Value::Type::INT_TYPE:
+                if (value.get_integer() == hcl_value.as<int>())
+                {
+                    continue;
+                }
+                break;
+            case hcl::Value::Type::DOUBLE_TYPE:
+                if (value.get_number() == hcl_value.as<double>())
+                {
+                    continue;
+                }
+                break;
+            case hcl::Value::Type::STRING_TYPE:
+                if (value.get_string() == hcl_value.as<std::string>())
+                {
+                    continue;
+                }
+                break;
+            default:
+                assert(0);
+                continue;
+            }
         }
 
         // Don't save injected enum values that are still unknown
         // (though this should never happen)
         if (def.is<spec::EnumDef>(key)
-            && value.as<std::string>() == spec::unknown_enum_variant)
+            && value.get_string() == spec::unknown_enum_variant)
         {
             continue;
         }
 
         size_t pos = 0;
         std::string token;
-        hcl::Value* current = parent;
+        json5::value::object_type* current = &object;
 
         // Function to split the flat key ("core.some.option")
         // on the next period and set the token to the split section
@@ -713,15 +763,15 @@ void Config::save()
         // Function that either creates a new object for holding the
         // nested config value or finds an existing one.
         auto set = [&current](std::string key) {
-            hcl::Value* existing = current->find(key);
-            if (existing)
+            const auto itr = current->find(key);
+            if (itr != std::end(*current))
             {
-                current = existing;
+                current = &itr->second.get_object();
             }
             else
             {
-                current->set(key, hcl::Object());
-                current = current->find(key);
+                current->emplace(key, json5::value::object_type{});
+                current = &current->find(key)->second.get_object();
                 assert(current);
             }
         };
@@ -741,10 +791,130 @@ void Config::save()
         }
 
         // Set the value in the bottommost object ("some { option = 'value' }")
-        current->set(key, value);
+        current->emplace(key, value);
     }
 
-    file << out;
+    std::ofstream file{filesystem::files::profile_local_config().native(), std::ios::binary};
+    if (!file)
+    {
+        throw ConfigLoadingError{
+            u8"Failed to open: "s
+            + filepathutil::make_preferred_path_in_utf8(
+                  filesystem::files::profile_local_config())};
+    }
+    json5::stringify_options opts;
+    opts.prettify = true;
+    opts.sort_by_key = true;
+    opts.unquote_key = true;
+    opts.insert_trailing_comma = true;
+    file << json5::stringify(object, opts);
+}
+
+
+
+void Config::clear()
+{
+    def.clear();
+    storage_.clear();
+    getters_.clear();
+    setters_.clear();
+}
+
+
+
+void Config::inject_enum(
+    const std::string& key,
+    std::vector<std::string> variants,
+    std::string default_variant)
+{
+    def.inject_enum(key, variants, default_variant);
+
+    auto EnumDef = def.get<spec::EnumDef>(key);
+    if (storage_.find(key) != storage_.end())
+    {
+        // Check if this enum has an invalid value. If so, set it to the
+        // default.
+        std::string current = get<std::string>(key);
+        if (!EnumDef.get_index_of(current))
+        {
+            ELONA_WARN("config")
+                << "Config key "s << key << " had invalid variant "s
+                << current << ". "s
+                << "("s << def.type_to_string(key) << ")"s
+                << "Setting to "s << EnumDef.get_default() << "."s;
+            set(key, EnumDef.get_default());
+        }
+    }
+    else
+    {
+        set(key,
+            EnumDef.get_default()); // Set the enum to its default value.
+    }
+}
+
+
+
+bool Config::check_type(const std::string& key, json5::value_type type) const
+{
+    const auto itr = storage_.find(key);
+    if (itr == storage_.end())
+    {
+        throw std::runtime_error("No such config value " + key);
+    }
+    return itr->second.type() == type;
+}
+
+
+
+void Config::set(const std::string& key, const json5::value& value)
+{
+    ELONA_LOG("config")
+        << "Set: " << key << " to " << json5::stringify(value);
+
+    if (!def.exists(key))
+    {
+        throw std::runtime_error("No such config key " + key);
+    }
+    if (verify_types(value, key))
+    {
+        if (value.is_integer())
+        {
+            int temp = value.get_integer();
+            temp = clamp(temp, def.get_min(key), def.get_max(key));
+            storage_[key] = temp;
+        }
+        else
+        {
+            storage_[key] = value;
+        }
+
+        if (setters_.find(key) != setters_.end())
+        {
+            setters_[key](storage_.at(key));
+        }
+    }
+    else
+    {
+        std::stringstream ss;
+        ss << "Wrong config item type for key " << key << ": ";
+        ss << def.type_to_string(key) << " expected, got ";
+        ss << json5::stringify(value);
+        throw std::runtime_error(ss.str());
+    }
+}
+
+
+
+void Config::run_setter(const std::string& key)
+{
+    if (storage_.find(key) == storage_.end())
+    {
+        return;
+    }
+    if (setters_.find(key) != setters_.end())
+    {
+        setters_[key](storage_.at(key));
+    }
 }
 
 } // namespace elona

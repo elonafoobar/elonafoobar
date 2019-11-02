@@ -26,7 +26,8 @@ void LuaApiConfig::set(const std::string& key, sol::object value)
     // https://github.com/ThePhD/sol2/issues/247
     if (value.is<int>())
     {
-        Config::instance().set(key, value.as<int>());
+        Config::instance().set(
+            key, static_cast<json5::integer_type>(value.as<int>()));
     }
     else if (value.is<bool>())
     {
@@ -57,15 +58,15 @@ sol::object LuaApiConfig::get(const std::string& key, sol::this_state s)
     sol::state_view lua(s);
     // TODO: int / float
     // https://github.com/ThePhD/sol2/issues/247
-    if (Config::instance().check_type<int>(key))
+    if (Config::instance().check_type(key, json5::value_type::integer))
     {
         return sol::make_object(lua, Config::instance().get<int>(key));
     }
-    else if (Config::instance().check_type<bool>(key))
+    else if (Config::instance().check_type(key, json5::value_type::boolean))
     {
         return sol::make_object(lua, Config::instance().get<bool>(key));
     }
-    else if (Config::instance().check_type<std::string>(key))
+    else if (Config::instance().check_type(key, json5::value_type::string))
     {
         return sol::make_object(lua, Config::instance().get<std::string>(key));
     }

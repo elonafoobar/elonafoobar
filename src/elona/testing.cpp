@@ -168,9 +168,8 @@ void pre_init()
     log::Logger::instance().init();
     profile::ProfileManager::instance().init(u8"testing");
 
-    const fs::path source_config_file = get_test_data_path() / "config.hcl";
-    const fs::path config_file =
-        filesystem::dirs::current_profile() / "config.hcl";
+    const fs::path source_config_file = get_test_data_path() / "config.json";
+    const fs::path config_file = filesystem::files::profile_local_config();
     fs::copy_file(
         source_config_file, config_file, fs::copy_option::overwrite_if_exists);
 

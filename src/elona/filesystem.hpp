@@ -67,9 +67,10 @@ void set_profile_directory(const fs::path& profile_dir);
 namespace files
 {
 
+fs::path profile_local_config();
 fs::path keybinding_config();
 
-}
+} // namespace files
 
 
 
