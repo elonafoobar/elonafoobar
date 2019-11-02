@@ -202,6 +202,17 @@ public:
         }
     }
 
+    template <typename T>
+    bool check_type(const std::string& key) const
+    {
+        const auto itr = storage_.find(key);
+        if (itr == storage_.end())
+        {
+            throw std::runtime_error("No such config value " + key);
+        }
+        return itr->second.is<T>();
+    }
+
     void set(const std::string& key, const hcl::Value value)
     {
         ELONA_LOG("config") << "Set: " << key << " to " << value;

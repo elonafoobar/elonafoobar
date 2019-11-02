@@ -65,8 +65,8 @@ config {
         options = {
             # Corresponds to "<mod_name>.section.section_option".
             #
-            # Config.get_bool("mymod.section.section_option")
-            # Config.set_bool("mymod.section.section_option", false)
+            # Config.get("mymod.section.section_option")
+            # Config.set("mymod.section.section_option", false)
             section_option = true
         }
     }
@@ -229,8 +229,8 @@ To access and change config options from mods, use the [Config](../modules/Confi
 ```lua
 local Config = require("game.Config")
 
-print(Config.get_bool("core.game.extra_help"))
-print(Config.set_int("core.balance.restock_interval", 10))
+print(Config.get("core.game.extra_help"))
+print(Config.set("core.balance.restock_interval", 10))
 Config.save()
 ```
 

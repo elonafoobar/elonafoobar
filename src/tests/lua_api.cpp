@@ -83,6 +83,11 @@ assert(Env.MOD_API_VERSION, "0.1")
 )"));
 }
 
+TEST_CASE("Core API: Config", "[Lua: API]")
+{
+    lua_testcase("config.lua");
+}
+
 TEST_CASE("Core API: FOV", "[Lua: API]")
 {
     lua_testcase("fov.lua");
