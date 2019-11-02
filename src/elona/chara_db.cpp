@@ -294,6 +294,7 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
                 return;
             }
         }
+        break;
     }
     case CharaId::maid:
     {
@@ -332,6 +333,7 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
                 return;
             }
         }
+        break;
     }
     case CharaId::younger_cat_sister:
     {
@@ -363,6 +365,7 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
                 return;
             }
         }
+        break;
     }
     case CharaId::younger_sister_of_mansion:
     {
@@ -394,6 +397,7 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
                 return;
             }
         }
+        break;
     }
     default: break;
     }
