@@ -308,9 +308,17 @@ void event_handler_quest_time_is_up()
             Message::color{ColorIndex::purple});
         break;
     }
-    levelexitby = 4;
-    snd("core.exitmap1");
-    chatteleport = 1;
+
+    // In the case you exited the quest map at the turn when time is up, you
+    // have already left the map when this event is being processed. Therefore
+    // you need not exit twice, or you will go to the continent map. See #1450
+    // for details.
+    if (game_data.current_map == mdata_t::MapId::quest)
+    {
+        levelexitby = 4;
+        snd("core.exitmap1");
+        chatteleport = 1;
+    }
 }
 
 
