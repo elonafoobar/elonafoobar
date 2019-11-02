@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdexcept>
 #include <string>
 
 
@@ -11,23 +12,12 @@ namespace spider
 namespace http
 {
 
-struct Error
+struct Error : public std::runtime_error
 {
-    Error(const std::string& what)
-        : _what(what)
+    Error(const std::string& error_message)
+        : std::runtime_error(error_message)
     {
     }
-
-
-    const std::string& what() const
-    {
-        return _what;
-    }
-
-
-
-private:
-    std::string _what;
 };
 
 } // namespace http
