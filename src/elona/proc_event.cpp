@@ -28,18 +28,8 @@
 
 
 
-namespace
-{
-
-std::string usermsg;
-
-}
-
-
-
 namespace elona
 {
-
 
 void proc_event()
 {
@@ -392,14 +382,7 @@ void proc_event()
             }
         }
         break;
-    case 7:
-        event_7_setup();
-        wait_key_pressed();
-        screenupdate = -1;
-        update_entire_screen();
-        break;
     case 10: quest_check_all_for_failed(); break;
-    case 19: txt(""s + usermsg, Message::color{ColorIndex::yellow}); break;
     case 25:
         --game_data.number_of_waiting_guests;
         if (chara_get_free_slot() == -1)
@@ -956,7 +939,5 @@ void proc_event()
         break;
     }
 }
-
-
 
 } // namespace elona
