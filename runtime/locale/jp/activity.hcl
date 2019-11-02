@@ -103,7 +103,7 @@ locale {
             start = "${itemname(_1, 1)}に目星をつけた。"
             notice {
                 in_fov = "${name(_1)}は窃盗を見咎めた。"
-                out_of_fov = "${name(_1)}は不振な物音に気づいた。"
+                out_of_fov = "${name(_1)}は不審な物音に気づいた。"
                 dialog {
                     guard = "「貴様、何をしている！」"
                     other = "「ガード！ガード！」"
