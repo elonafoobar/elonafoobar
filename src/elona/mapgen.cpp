@@ -1457,7 +1457,7 @@ int map_connectroom()
     while (cr < roomsum - 1)
     {
         bool ok = false;
-        for (int i = 0; i < rnd(rdroomentrance + 1) + 1; ++i)
+        for (int i = 0, n = rnd(rdroomentrance + 1) + 1; i < n; ++i)
         {
             for (int j = cr; j < cr + 2; ++j)
             {

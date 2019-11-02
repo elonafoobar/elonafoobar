@@ -3423,7 +3423,7 @@ bool _magic_464()
     std::string messages;
 
     animeload(10, tc);
-    for (int i = 0; i < clamp(4 + rnd(efp / 50 + 1), 1, 15); ++i)
+    for (int i = 0, n = clamp(4 + rnd(efp / 50 + 1), 1, 15); i < n; ++i)
     {
         snd("core.pray1");
         flt(calcobjlv(efp / 10), calcfixlv(Quality::good));
