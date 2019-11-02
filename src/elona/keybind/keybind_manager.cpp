@@ -8,36 +8,54 @@
 
 
 
+namespace elona
+{
+
 namespace
 {
 
-std::string key_autodig;
-std::string key_east;
-std::string key_look;
-std::string key_north;
-std::string key_northeast;
-std::string key_northwest;
-std::string key_quick;
-std::string key_quickload;
-std::string key_quicksave;
-std::string key_rest;
-std::string key_south;
-std::string key_southeast;
-std::string key_southwest;
-std::string key_west;
+std::string _binding_name(
+    KeybindManager& keybind_manager,
+    const std::string& action_id)
+{
+    if (!keybind_manager.is_registered(action_id))
+    {
+        return "";
+    }
+
+    std::string result = "";
+    auto& binding = keybind_manager.binding(action_id);
+    if (!binding.primary.empty())
+    {
+        result = binding.primary.to_string();
+    }
+    if (result == "" && !binding.alternate.empty())
+    {
+        result = binding.primary.to_string();
+    }
+    if (result == "" && binding.joystick != snail::Key::none)
+    {
+        if (auto name_opt = keybind_key_name(binding.joystick))
+        {
+            result = *name_opt;
+        }
+    }
+
+    strutil::try_remove_prefix(result, "Keypad ");
+    return result;
+}
 
 } // namespace
 
 
-
-namespace elona
-{
 
 KeybindManager& KeybindManager::instance()
 {
     static KeybindManager the_instance;
     return the_instance;
 }
+
+
 
 KeybindManager::GroupedMapType KeybindManager::create_category_to_action_list()
 {
@@ -53,6 +71,8 @@ KeybindManager::GroupedMapType KeybindManager::create_category_to_action_list()
     return result;
 }
 
+
+
 void KeybindManager::save()
 {
     auto path = filesystem::dirs::exe() / u8"keybindings.hcl";
@@ -66,6 +86,8 @@ void KeybindManager::save()
 
     KeybindSerializer(*this).save(file);
 }
+
+
 
 void KeybindManager::load()
 {
@@ -87,6 +109,8 @@ void KeybindManager::load()
     }
 }
 
+
+
 void KeybindManager::initialize_known_actions(const ActionMap& actions)
 {
     for (const auto& pair : actions)
@@ -96,6 +120,8 @@ void KeybindManager::initialize_known_actions(const ActionMap& actions)
         register_binding(action_id);
     }
 }
+
+
 
 void KeybindManager::load_permanent_bindings(const ActionMap& actions)
 {
@@ -116,6 +142,8 @@ void KeybindManager::load_permanent_bindings(const ActionMap& actions)
         }
     }
 }
+
+
 
 void KeybindManager::load_default_bindings(const ActionMap& actions)
 {
@@ -148,6 +176,8 @@ void KeybindManager::load_default_bindings(const ActionMap& actions)
         }
     }
 }
+
+
 
 std::vector<std::string> KeybindManager::find_conflicts(
     const std::string& action_id,
@@ -182,36 +212,6 @@ std::vector<std::string> KeybindManager::find_conflicts(
 }
 
 
-static std::string _binding_name(
-    KeybindManager& keybind_manager,
-    const std::string& action_id)
-{
-    if (!keybind_manager.is_registered(action_id))
-    {
-        return "";
-    }
-
-    std::string result = "";
-    auto& binding = keybind_manager.binding(action_id);
-    if (!binding.primary.empty())
-    {
-        result = binding.primary.to_string();
-    }
-    if (result == "" && !binding.alternate.empty())
-    {
-        result = binding.primary.to_string();
-    }
-    if (result == "" && binding.joystick != snail::Key::none)
-    {
-        if (auto name_opt = keybind_key_name(binding.joystick))
-        {
-            result = *name_opt;
-        }
-    }
-
-    strutil::try_remove_prefix(result, "Keypad ");
-    return result;
-}
 
 // TODO: delete this.
 void keybind_regenerate_key_names()
@@ -219,23 +219,14 @@ void keybind_regenerate_key_names()
     auto& km = KeybindManager::instance();
 
     // clang-format off
-    key_north     = _binding_name(km, "north");
-    key_south     = _binding_name(km, "south");
-    key_west      = _binding_name(km, "west");
-    key_east      = _binding_name(km, "east");
-    key_northwest = _binding_name(km, "northwest");
-    key_northeast = _binding_name(km, "northeast");
-    key_southwest = _binding_name(km, "southwest");
-    key_southeast = _binding_name(km, "southeast");
-    key_prev      = key_northwest;
-    key_next      = key_northeast;
+    key_prev      = _binding_name(km, "northwest");
+    key_next      = _binding_name(km, "northeast");
     key_wait      = _binding_name(km, "wait");
     key_cancel    = _binding_name(km, "cancel");
     key_pageup    = _binding_name(km, "next_page");
     key_pagedown  = _binding_name(km, "previous_page");
     key_mode      = _binding_name(km, "switch_mode");
     key_mode2     = _binding_name(km, "switch_mode_2");
-    key_quick     = _binding_name(km, "quick_menu");
     key_zap       = _binding_name(km, "zap");
     key_inventory = _binding_name(km, "inventory");
     key_get       = _binding_name(km, "get");
@@ -256,7 +247,6 @@ void keybind_regenerate_key_names()
     key_identify  = _binding_name(km, "identify");
     key_skill     = _binding_name(km, "skill");
     key_close     = _binding_name(km, "close");
-    key_rest      = _binding_name(km, "rest");
     key_target    = _binding_name(km, "target");
     key_dig       = _binding_name(km, "dig");
     key_use       = _binding_name(km, "use");
@@ -268,13 +258,9 @@ void keybind_regenerate_key_names()
     key_journal   = _binding_name(km, "journal");
     key_material  = _binding_name(km, "material");
     key_trait     = _binding_name(km, "trait");
-    key_look      = _binding_name(km, "look");
     key_give      = _binding_name(km, "give");
     key_throw     = _binding_name(km, "throw");
     key_ammo      = _binding_name(km, "ammo");
-    key_autodig   = _binding_name(km, "autodig");
-    key_quicksave = _binding_name(km, "quicksave");
-    key_quickload = _binding_name(km, "quickload");
     key_help      = _binding_name(km, "help");
     key_msglog    = _binding_name(km, "message_log");
     // clang-format on
