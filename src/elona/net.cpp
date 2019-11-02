@@ -2,7 +2,7 @@
 #include <chrono>
 #include <sstream>
 #include "../spider/http.hpp"
-#include "../thirdparty/nlohmannjson/json.hpp"
+#include "../thirdparty/json5/json5.hpp"
 #include "../thirdparty/xxHash/xxhashcpp.hpp"
 #include "../util/scope_guard.hpp"
 #include "config/config.hpp"
@@ -13,7 +13,6 @@
 #include "variables.hpp"
 
 using namespace std::literals::chrono_literals;
-using namespace nlohmann;
 using namespace spider::http;
 
 
@@ -98,12 +97,14 @@ void send_chat(ChatKind kind, const std::string& message)
         return;
     }
 
-    json payload;
-    payload["kind"] = static_cast<int>(kind);
+    json5::value::object_type payload;
+    payload["kind"] = static_cast<json5::integer_type>(kind);
     payload["message"] = replace_f_word(message);
 
-    Request req{
-        Verb::POST, chat_url, common_headers_post, Body{payload.dump()}};
+    Request req{Verb::POST,
+                chat_url,
+                common_headers_post,
+                Body{json5::stringify(payload)}};
     req.send(
         [](const auto& response) {
             if (response.status / 100 != 2)
@@ -208,11 +209,12 @@ std::vector<ChatData> net_receive_chats(bool skip_old_chat)
                 return;
             }
 
-            const auto chats_json = json::parse(response.body);
-            for (const json& chat_json : chats_json)
+            const auto& chats_json = json5::parse(response.body);
+            for (const auto& chat_json : chats_json.get_array())
             {
-                auto kind = chat_json["kind"].get<int>();
-                auto id = chat_json["id"].get<int>();
+                const auto& chat = chat_json.get_object();
+                auto kind = chat.find("kind")->second.get_integer();
+                auto id = chat.find("id")->second.get_integer();
                 if (id <= last_received_chat_id)
                 {
                     if (skip_old_chat)
@@ -257,8 +259,8 @@ std::vector<ChatData> net_receive_chats(bool skip_old_chat)
                 chats.emplace_back(
                     id,
                     static_cast<ChatKind>(kind),
-                    chat_json["created_at"].get<std::string>(),
-                    chat_json["message"].get<std::string>());
+                    chat.find("created_at")->second.get_string(),
+                    chat.find("message")->second.get_string());
             }
             done = true;
         },
@@ -306,13 +308,14 @@ std::vector<PollData> net_receive_polls()
                 return;
             }
 
-            const auto polls_json = json::parse(response.body);
-            for (const json& poll_json : polls_json)
+            const auto& polls_json = json5::parse(response.body);
+            for (const auto& poll_json : polls_json.get_array())
             {
+                const auto& poll = poll_json.get_object();
                 polls.emplace_back(
-                    poll_json["id"].get<int>(),
-                    poll_json["name"].get<std::string>(),
-                    poll_json["vote_count"].get<int>());
+                    poll.find("id")->second.get_integer(),
+                    poll.find("name")->second.get_string(),
+                    poll.find("vote_count")->second.get_integer());
             }
             done = true;
         },
@@ -451,11 +454,13 @@ void net_register_your_name()
         return;
     }
 
-    json payload;
+    json5::value::object_type payload;
     payload["name"] = get_pc_alias() + i18n::space_if_needed() + get_pc_name();
 
-    Request req{
-        Verb::POST, poll_url, common_headers_post, Body{payload.dump()}};
+    Request req{Verb::POST,
+                poll_url,
+                common_headers_post,
+                Body{json5::stringify(payload)}};
     req.send(
         [](const auto& response) {
             if (response.status / 100 != 2)
@@ -485,11 +490,13 @@ void net_send_vote(int poll_id)
         return;
     }
 
-    json payload;
-    payload["poll"] = poll_id;
+    json5::value::object_type payload;
+    payload["poll"] = static_cast<json5::integer_type>(poll_id);
 
-    Request req{
-        Verb::POST, vote_url, common_headers_post, Body{payload.dump()}};
+    Request req{Verb::POST,
+                vote_url,
+                common_headers_post,
+                Body{json5::stringify(payload)}};
     req.send(
         [](const auto& response) {
             if (response.status / 100 != 2)
