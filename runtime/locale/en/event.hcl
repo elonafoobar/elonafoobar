@@ -33,7 +33,7 @@ locale {
 
         alarm = "*beeeeeep!* An alarm sounds loudly!"
 
-        beggars = "Blaggers pick on you!"
+        blaggers = "Blaggers pick on you!"
 
         popup {
             skip = "\"${_1}\""

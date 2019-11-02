@@ -65,8 +65,6 @@ void ui_initialize_minimap();
 void fade_out();
 void ui_win_screen_fade();
 void animation_fade_in();
-void event_7_setup();
-void event_7_modify_screen();
 void render_fishing_animation();
 void load_background_variants(int buffer);
 void clear_background_in_character_making();

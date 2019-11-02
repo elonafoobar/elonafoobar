@@ -34,7 +34,7 @@ locale {
 
         alarm = "けたたましい警報が鳴り響いた！"
 
-        beggars = "強盗があなたに目をつけた！"
+        blaggers = "強盗があなたに目をつけた！"
 
         popup {
             skip = "「${_1}」"

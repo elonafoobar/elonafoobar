@@ -1145,11 +1145,6 @@ namespace elona
 {
 
 int msgy = 0;
-int evx = 0;
-int evy = 0;
-int evtiles = 0;
-int evscrh = 0;
-int evscrw = 0;
 
 
 
@@ -1949,56 +1944,6 @@ void animation_fade_in()
         redraw();
     }
     gmode(2);
-}
-
-
-
-void event_7_setup()
-{
-    boxf();
-    evx = 12;
-    evy = 14;
-    evtiles = 48;
-    evscrh = windowh / evtiles - 1;
-    evscrw = windoww / evtiles + 2;
-    event_7_modify_screen();
-    redraw();
-}
-
-
-
-void event_7_modify_screen()
-{
-    for (int cnt = 0, cnt_end = (evscrh); cnt < cnt_end; ++cnt)
-    {
-        y = cnt;
-        dy = cnt + evy;
-        if (dy >= map_data.height)
-        {
-            dy = map_data.height;
-        }
-        for (int cnt = 0, cnt_end = (evscrw); cnt < cnt_end; ++cnt)
-        {
-            x = cnt;
-            dx = cnt + evx;
-            if (dx >= map_data.width)
-            {
-                dx = map_data.width;
-            }
-            ap = cell_data.at(dx, dy).chip_id_actual;
-            gmode(0);
-            gcopy_c(
-                2,
-                ap % 33 * inf_tiles,
-                ap / 33 * inf_tiles,
-                inf_tiles,
-                inf_tiles,
-                x * evtiles,
-                y * evtiles,
-                evtiles,
-                evtiles);
-        }
-    }
 }
 
 
