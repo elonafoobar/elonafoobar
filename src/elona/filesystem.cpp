@@ -142,6 +142,18 @@ void set_profile_directory(const fs::path& profile_dir)
 
 
 
+namespace files
+{
+
+fs::path keybinding_config()
+{
+    return path("keybindings.json");
+}
+
+} // namespace files
+
+
+
 fs::path path(const std::string& str)
 {
     return get_executable_dir() / filepathutil::u8path(str);

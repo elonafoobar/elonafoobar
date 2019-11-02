@@ -1,16 +1,25 @@
 #pragma once
+
 #include <iosfwd>
+#include <string>
 #include "../optional.hpp"
+
+
 
 namespace elona
 {
+
 namespace snail
 {
 enum class Key;
 }
 
+
+
 struct Keybind;
 class KeybindManager;
+
+
 
 class KeybindSerializer
 {
@@ -20,7 +29,11 @@ public:
     {
     }
 
+
+
     void save(std::ostream& out);
+
+
 
 private:
     optional<std::string> _serialize_keybind(const Keybind& keybind);
