@@ -1,6 +1,6 @@
 #include "filesystem.hpp"
 #include "../util/strutil.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "defines.hpp"
 
 
@@ -186,7 +186,7 @@ fs::path resolve_path_for_mod(const std::string& mod_local_path)
         throw std::runtime_error("Invalid filepath syntax: " + mod_local_path);
     }
 
-    rest = strutil::replace(rest, "<LANGUAGE>", Config::instance().language);
+    rest = strutil::replace(rest, "<LANGUAGE>", g_config.language());
 
     if (mod_id == "_builtin_")
     {

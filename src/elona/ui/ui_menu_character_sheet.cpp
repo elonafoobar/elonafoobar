@@ -832,8 +832,7 @@ void UIMenuCharacterSheet::_draw_skill_name(int cnt, int skill_id)
     }
 
     // [TRACKING] Shows the star in the (c) menu
-    for (int cnt = 0;
-         cnt < (elona::Config::instance().allow_enhanced_skill ? 10 : 3);
+    for (int cnt = 0; cnt < (elona::g_config.allow_enhanced_skill() ? 10 : 3);
          ++cnt)
     {
         if (game_data.tracked_skills.at(cnt) == cc * 10000 + skill_id)
@@ -1013,8 +1012,7 @@ void UIMenuCharacterSheet::draw()
 static void _track_skill(int skill_id)
 {
     int tracked_skill_index = 0;
-    int max_tracked_skills =
-        elona::Config::instance().allow_enhanced_skill ? 10 : 3;
+    int max_tracked_skills = elona::g_config.allow_enhanced_skill() ? 10 : 3;
 
     for (int cnt = 0; cnt < max_tracked_skills; ++cnt)
     {

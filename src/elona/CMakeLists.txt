@@ -22,6 +22,8 @@ set(ELONA_SOURCES
   character_status.cpp
   class.cpp
   command.cpp
+  config.cpp
+  config_menu.cpp
   crafting.cpp
   ctrl_file.cpp
   ctrl_inventory.cpp
@@ -80,7 +82,6 @@ set(ELONA_SOURCES
   save_update.cpp
   set_item_info.cpp
   shop.cpp
-  spec.cpp
   status_ailment.cpp
   std.cpp
   talk.cpp
@@ -103,6 +104,7 @@ set(ELONA_SOURCES
   data/util.cpp
 
   lua_env/api_manager.cpp
+  lua_env/config_manager.cpp
   lua_env/console.cpp
   lua_env/data_manager.cpp
   lua_env/event_manager.cpp
@@ -129,11 +131,6 @@ set(ELONA_SOURCES
   lua_env/lua_class/lua_class_map_data.cpp
   lua_env/lua_class/lua_class_map_generator.cpp
   lua_env/lua_class/lua_class_position.cpp
-
-  config/config.cpp
-  config/config_def.cpp
-  config/set_option.cpp
-  config/create_config_screen.cpp
 
   keybind/input_context.cpp
   keybind/key_names.cpp

@@ -10,7 +10,7 @@
 #include "../../util/strutil.hpp"
 #include "../ability.hpp"
 #include "../character.hpp"
-#include "../config/config.hpp"
+#include "../config.hpp"
 #include "../debug.hpp"
 #include "../filesystem.hpp"
 #include "../input.hpp"
@@ -399,13 +399,11 @@ void Console::grab_input()
     auto pressed = [](Key key, ModKey modifiers = ModKey::none) {
         if (modifiers == ModKey::none)
         {
-            return Input::instance().is_pressed(
-                key, Config::instance().key_wait);
+            return Input::instance().is_pressed(key, g_config.key_wait());
         }
         else
         {
-            return Input::instance().is_pressed(
-                       key, Config::instance().key_wait) &&
+            return Input::instance().is_pressed(key, g_config.key_wait()) &&
                 (Input::instance().modifiers() & modifiers) != ModKey::none;
         }
     };
@@ -413,8 +411,8 @@ void Console::grab_input()
     while (_focused)
     {
         ++frame;
-        if (Config::instance().screen_refresh_wait > 0 &&
-            frame % Config::instance().screen_refresh_wait == 0)
+        if (g_config.screen_refresh_wait() > 0 &&
+            frame % g_config.screen_refresh_wait() == 0)
         {
             ++scrturn;
             ui_render_from_screensync();
@@ -426,7 +424,7 @@ void Console::grab_input()
 
         noteget(_input, 0);
 
-        await(Config::instance().general_wait);
+        await(g_config.general_wait());
         key_check(KeyWaitDelay::walk_run);
 
         if (keyhalt)

@@ -20,7 +20,7 @@
 #include "character_status.hpp"
 #include "class.hpp"
 #include "command.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
@@ -120,7 +120,7 @@ void select_house_board_tile()
 
         gmode(2);
         redraw();
-        await(Config::instance().general_wait);
+        await(g_config.general_wait());
         const auto input = stick();
         if (input == StickKey::mouse_left)
         {
@@ -517,17 +517,17 @@ void auto_turn(int delay)
         return;
 
     autoturn = 1;
-    if (Config::instance().auto_turn_speed == "normal")
+    if (g_config.auto_turn_speed() == "normal")
     {
         await(delay);
         ++scrturn;
     }
-    if (Config::instance().auto_turn_speed != "highest" || firstautoturn == 1)
+    if (g_config.auto_turn_speed() != "highest" || firstautoturn == 1)
     {
         screenupdate = -1;
         update_screen();
     }
-    if (Config::instance().auto_turn_speed == "normal")
+    if (g_config.auto_turn_speed() == "normal")
     {
         redraw();
     }
@@ -679,7 +679,7 @@ void initialize_picfood()
 
 void finish_elona()
 {
-    if (Config::instance().autodisable_numlock)
+    if (g_config.autodisable_numlock())
     {
         snail::Input::instance().restore_numlock();
     }
@@ -1464,7 +1464,7 @@ void animeload(int animation_type, int chara_index)
     {
         return;
     }
-    if (Config::instance().animation_wait == 0)
+    if (g_config.animation_wait() == 0)
     {
         return;
     }
@@ -1486,7 +1486,7 @@ void animeload(int animation_type, int chara_index)
     gsel(0);
     gmode(2);
     i_at_m133(0) = 5;
-    i_at_m133(1) = Config::instance().animation_wait * 3.5;
+    i_at_m133(1) = g_config.animation_wait() * 3.5;
     r_at_m133 = 0;
     if (animation_type == 8)
     {
@@ -1495,21 +1495,21 @@ void animeload(int animation_type, int chara_index)
     if (animation_type == 10)
     {
         i_at_m133(0) = 8;
-        i_at_m133(1) = Config::instance().animation_wait * 2.5;
+        i_at_m133(1) = g_config.animation_wait() * 2.5;
         r_at_m133 = 0.2;
         snd("core.enc2");
     }
     if (animation_type == 11)
     {
         i_at_m133(0) = 5;
-        i_at_m133(1) = Config::instance().animation_wait * 3.5;
+        i_at_m133(1) = g_config.animation_wait() * 3.5;
         r_at_m133 = 0;
         snd("core.enc");
     }
     if (animation_type == 14)
     {
         i_at_m133(0) = 6;
-        i_at_m133(1) = Config::instance().animation_wait * 3.5;
+        i_at_m133(1) = g_config.animation_wait() * 3.5;
     }
     for (int cnt = 0, cnt_end = (i_at_m133); cnt < cnt_end; ++cnt)
     {
@@ -1537,7 +1537,7 @@ void animeblood(int cc, int animation_type, int element)
 {
     if (is_in_fov(cdata[cc]) == 0)
         return;
-    if (Config::instance().animation_wait == 0)
+    if (g_config.animation_wait() == 0)
         return;
 
     int cnt2_at_m133 = 0;
@@ -1655,9 +1655,7 @@ void animeblood(int cc, int animation_type, int element)
         gmode(0);
         redraw();
         gcopy(4, 0, 0, 144, 160, dx_at_m133 - 48, dy_at_m133 - 56);
-        await(
-            Config::instance().animation_wait *
-            (ele2_at_m133 == 0 ? 1.75 : 2.75));
+        await(g_config.animation_wait() * (ele2_at_m133 == 0 ? 1.75 : 2.75));
     }
 
     gmode(2);
@@ -3808,7 +3806,7 @@ void auto_identify()
             s = itemname(ci);
             item_identify(inv[ci], IdentifyState::completely);
             itemmemory(0, itemid2int(inv[ci].id)) = 1;
-            if (!Config::instance().hide_autoidentify)
+            if (!g_config.hide_autoidentify())
             {
                 txt(i18n::s.get(
                     "core.misc.identify.fully_identified", s(0), inv[ci]));
@@ -3819,7 +3817,7 @@ void auto_identify()
         {
             if (p > rnd(p(1)))
             {
-                if (!Config::instance().hide_autoidentify)
+                if (!g_config.hide_autoidentify())
                 {
                     txt(i18n::s.get(
                         "core.misc.identify.almost_identified",
@@ -6483,7 +6481,7 @@ void disarm_trap()
 void move_character()
 {
 label_21451_internal:
-    if (Config::instance().scroll)
+    if (g_config.scroll())
     {
         if (cc == 0)
         {
@@ -6765,7 +6763,7 @@ void sleep_start()
     {
         gmode(2, cnt * 10);
         draw_sleep_background_frame();
-        await(Config::instance().animation_wait * 10);
+        await(g_config.animation_wait() * 10);
     }
     gmode(2);
     cc = 0;
@@ -6820,7 +6818,7 @@ void sleep_start()
         game_data.date.minute = 0;
         cc = 0;
         draw_sleep_background_frame();
-        await(Config::instance().animation_wait * 25);
+        await(g_config.animation_wait() * 25);
     }
     if (game_data.character_and_status_for_gene != 0)
     {
@@ -7371,7 +7369,7 @@ int do_cast_magic_attempt()
     {
         if (calcspellcostmp(efid, cc) > cdata[cc].mp)
         {
-            if (!Config::instance().skip_overcasting_warning)
+            if (!g_config.skip_overcasting_warning())
             {
                 txt(i18n::s.get("core.action.cast.overcast_warning"));
                 if (!yes_no())
@@ -9191,7 +9189,7 @@ TurnResult proc_movement_event()
 
 void proc_autopick()
 {
-    if (!Config::instance().autopick)
+    if (!g_config.autopick())
         return;
     if (is_modifier_pressed(snail::ModKey::ctrl))
         return;
@@ -9367,8 +9365,8 @@ void sense_map_feats_on_move()
                     10,
                     dirsub,
                     rnd(2));
-                if (keybd_wait <= Config::instance().walk_wait *
-                            Config::instance().start_run_wait ||
+                if (keybd_wait <=
+                        g_config.walk_wait() * g_config.start_run_wait() ||
                     cdata.player().turn % 2 == 0 ||
                     map_data.type == mdata_t::MapType::world_map)
                 {
@@ -9906,7 +9904,7 @@ TurnResult try_to_open_locked_door()
             {
                 screenupdate = -1;
                 update_screen();
-                await(Config::instance().animation_wait * 5);
+                await(g_config.animation_wait() * 5);
                 return TurnResult::turn_end;
             }
             feat(2) = 0;
@@ -9967,7 +9965,7 @@ TurnResult try_to_open_locked_door()
     }
     if (cc == 0)
     {
-        await(Config::instance().animation_wait * 5);
+        await(g_config.animation_wait() * 5);
     }
     return TurnResult::turn_end;
 }
@@ -10243,7 +10241,7 @@ label_22191_internal:
         attackdmg = dmg;
         if (cc == 0)
         {
-            if (Config::instance().attack_animation)
+            if (g_config.attack_animation())
             {
                 int damage_percent = dmg * 100 / cdata[tc].max_hp;
                 MeleeAttackAnimation(
@@ -11342,7 +11340,7 @@ void do_play_scene()
     {
         game_data.played_scene = sceneid;
     }
-    if (!Config::instance().story)
+    if (!g_config.story())
     {
         return;
     }

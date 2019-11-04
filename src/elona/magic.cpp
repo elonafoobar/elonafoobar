@@ -8,7 +8,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_asset.hpp"
 #include "data/types/type_item.hpp"
@@ -3419,7 +3419,7 @@ bool _magic_651()
 
 bool _magic_464()
 {
-    bool fastest = Config::instance().animation_wait == 0;
+    bool fastest = g_config.animation_wait() == 0;
     std::string messages;
 
     animeload(10, tc);
@@ -3455,7 +3455,7 @@ bool _magic_464()
         else
         {
             txt(message);
-            await(Config::instance().animation_wait * 4);
+            await(g_config.animation_wait() * 4);
             redraw();
         }
     }

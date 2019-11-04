@@ -87,7 +87,6 @@ after_build:
   - del bin\Elona_foobar\*.pdb
   - rd /q /s bin\Elona_foobar\graphic
   - rd /q /s bin\Elona_foobar\log
-  - rd /q /s bin\Elona_foobar\save
   - rd /q /s bin\Elona_foobar\sound
   - rd /q /s bin\Elona_foobar\tests
   - rd /q /s bin\Elona_foobar\tmp

@@ -1,9 +1,10 @@
 #include "lua_env.hpp"
 
 #include "../character.hpp"
-#include "../config/config.hpp"
+#include "../config.hpp"
 #include "../item.hpp"
 #include "api_manager.hpp"
+#include "config_manager.hpp"
 #include "console.hpp"
 #include "data_manager.hpp"
 #include "event_manager.hpp"
@@ -55,6 +56,7 @@ LuaEnv::LuaEnv()
     export_mgr = std::make_unique<ExportManager>(*this);
     i18n_function_mgr = std::make_unique<I18NFunctionManager>(*this);
     console = std::make_unique<Console>(*this);
+    config_mgr = std::make_unique<ConfigManager>(*this);
 }
 
 
@@ -88,13 +90,16 @@ void LuaEnv::clear()
     mod_mgr->clear_mod_stores();
     data_mgr->clear();
     handle_mgr->clear_all_handles();
+    // ConfigManager::clear() will be called elsewhere.
     lua_->collect_garbage();
 }
+
+
 
 void LuaEnv::reload()
 {
     clear(); // Unload character/item handles while they're still available.
-    get_state()->set("_IS_TEST", Config::instance().is_test);
+    get_state()->set("_IS_TEST", g_config.is_test());
 }
 
 } // namespace lua

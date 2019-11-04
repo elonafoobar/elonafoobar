@@ -11,7 +11,7 @@
 #include "casino.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
@@ -3028,8 +3028,7 @@ static TurnResult _bump_into_character()
 {
     tc = cellchara;
     if (cdata[tc].relationship >= 10 ||
-        (cdata[tc].relationship == -1 &&
-         !Config::instance().attack_neutral_npcs) ||
+        (cdata[tc].relationship == -1 && !g_config.attack_neutral_npcs()) ||
         (cdata[tc].relationship == 0 &&
          (area_data[game_data.current_map].is_museum_or_shop() ||
           is_modifier_pressed(snail::ModKey::shift))))
@@ -3040,7 +3039,7 @@ static TurnResult _bump_into_character()
             {
                 return _pre_proc_movement_event();
             }
-            if (Config::instance().scroll)
+            if (g_config.scroll())
             {
                 cdata.player().next_position.x = cdata[tc].position.x;
                 cdata.player().next_position.y = cdata[tc].position.y;
@@ -3635,7 +3634,7 @@ TurnResult do_exit_command()
     if (rtval == 2)
     {
         snd("core.ok1");
-        set_option();
+        show_option_menu();
     }
     update_screen();
     return TurnResult::pc_turn_user_error;

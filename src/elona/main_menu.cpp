@@ -5,7 +5,7 @@
 #include "audio.hpp"
 #include "browser.hpp"
 #include "character_making.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
@@ -129,7 +129,7 @@ public:
 protected:
     virtual optional<ui::DummyResult> update() override
     {
-        await(Config::instance().general_wait);
+        await(g_config.general_wait());
         auto action = key_check();
 
         if (action != "")
@@ -278,7 +278,7 @@ MainMenuResult main_title_menu()
 
     while (true)
     {
-        if (Config::instance().autodisable_numlock)
+        if (g_config.autodisable_numlock())
         {
             snail::Input::instance().disable_numlock();
         }
@@ -287,7 +287,7 @@ MainMenuResult main_title_menu()
         gcopy(4, 0, 0, windoww, windowh, 0, 0);
         gmode(2);
 
-        if (Config::instance().title_effect)
+        if (g_config.title_effect())
         {
             if (frame % 20 == 0)
             {
@@ -385,7 +385,7 @@ MainMenuResult main_title_menu()
         case 3: snd("core.ok1"); return MainMenuResult::main_menu_about;
         case 4:
             snd("core.ok1");
-            set_option();
+            show_option_menu();
             return MainMenuResult::main_title_menu;
         case 5: snd("core.ok1"); return MainMenuResult::main_menu_mods;
         case 6: snd("core.ok1"); return MainMenuResult::finish_elona;
@@ -500,7 +500,7 @@ MainMenuResult main_menu_wrapper()
 
 MainMenuResult main_menu_new_game()
 {
-    if (Config::instance().wizard)
+    if (g_config.wizard())
     {
         game_data.wizard = 1;
     }

@@ -1,6 +1,6 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../elona/config/config.hpp"
+#include "../elona/config.hpp"
 #include "../elona/enums.hpp"
 #include "../elona/i18n.hpp"
 #include "../elona/init.hpp"
@@ -18,7 +18,7 @@ namespace testing
 
 void set_english()
 {
-    Config::instance().set("core.language.language", "en");
+    config_set_string("core.language.language", "en");
     elona::jp = 0;
     elona::en = 1;
     initialize_i18n();
@@ -27,7 +27,7 @@ void set_english()
 
 void set_japanese()
 {
-    Config::instance().set("core.language.language", "jp");
+    config_set_string("core.language.language", "jp");
     elona::jp = 1;
     elona::en = 0;
     initialize_i18n();

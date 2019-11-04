@@ -1,7 +1,7 @@
 #include "input_context.hpp"
 #include "../../util/range.hpp"
 #include "../audio.hpp"
-#include "../config/config.hpp"
+#include "../config.hpp"
 #include "../variables.hpp"
 #include "keybind_manager.hpp"
 #include "macro_action_queue.hpp"
@@ -306,17 +306,16 @@ std::string InputContext::_delay_movement_action(
     {
         if (keybd_attacking != 0)
         {
-            if (keybd_wait % Config::instance().attack_wait != 0)
+            if (keybd_wait % g_config.attack_wait() != 0)
             {
                 return ""s;
             }
         }
-        else if (!Config::instance().scroll)
+        else if (!g_config.scroll())
         {
-            if (keybd_wait < Config::instance().walk_wait *
-                    Config::instance().start_run_wait)
+            if (keybd_wait < g_config.walk_wait() * g_config.start_run_wait())
             {
-                if (keybd_wait % Config::instance().walk_wait != 0)
+                if (keybd_wait % g_config.walk_wait() != 0)
                 {
                     return ""s;
                 }
@@ -326,7 +325,7 @@ std::string InputContext::_delay_movement_action(
                 running = 1;
                 if (keybd_wait < 100000)
                 {
-                    if (keybd_wait % Config::instance().run_wait != 0)
+                    if (keybd_wait % g_config.run_wait() != 0)
                     {
                         return ""s;
                     }
@@ -344,11 +343,11 @@ std::string InputContext::_delay_movement_action(
                 }
             }
         }
-        else if (keybd_wait > Config::instance().start_run_wait)
+        else if (keybd_wait > g_config.start_run_wait())
         {
-            if (!Config::instance().scroll_when_run)
+            if (!g_config.scroll_when_run())
             {
-                if (keybd_wait % Config::instance().run_wait != 0)
+                if (keybd_wait % g_config.run_wait() != 0)
                 {
                     return ""s;
                 }
@@ -357,17 +356,16 @@ std::string InputContext::_delay_movement_action(
         }
     }
     else if (
-        keybd_wait < Config::instance().select_fast_start_wait *
-            Config::instance().select_wait)
+        keybd_wait < g_config.select_fast_start_wait() * g_config.select_wait())
     {
-        if (keybd_wait % Config::instance().select_wait != 0)
+        if (keybd_wait % g_config.select_wait() != 0)
         {
             return ""s;
         }
     }
     else if (keybd_wait < 1000)
     {
-        if (keybd_wait % Config::instance().select_fast_wait != 0)
+        if (keybd_wait % g_config.select_fast_wait() != 0)
         {
             return ""s;
         }
@@ -403,8 +401,8 @@ bool InputContext::_delay_normal_action(const Keybind& keybind)
 
     bool delayed = _is_keypress_delayed(
         last_held_key_frames,
-        Config::instance().key_repeat_wait,
-        Config::instance().initial_key_repeat_wait);
+        g_config.key_repeat_wait(),
+        g_config.initial_key_repeat_wait());
 
     last_held_key_frames++;
 

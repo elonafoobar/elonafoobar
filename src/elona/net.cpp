@@ -5,7 +5,7 @@
 #include "../thirdparty/json5/json5.hpp"
 #include "../thirdparty/xxHash/xxhashcpp.hpp"
 #include "../util/scope_guard.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "message.hpp"
@@ -67,7 +67,7 @@ Headers common_headers_post{{"Connection", "close"},
 Duration chat_receive_interval()
 {
     return std::chrono::minutes{
-        Config::instance().get<int>("core.net.chat_receive_interval")};
+        config_get_integer("core.net.chat_receive_interval")};
 }
 
 
@@ -137,7 +137,7 @@ auto eval_with_random_seed(Seed seed, F func)
 
 std::string get_pc_name()
 {
-    if (Config::instance().get<bool>("core.net.hide_your_name"))
+    if (config_get_boolean("core.net.hide_your_name"))
     {
         const auto seed = xxhash::xxhash32(cdatan(0, 0));
         return eval_with_random_seed(seed, []() { return random_name(); });
@@ -152,7 +152,7 @@ std::string get_pc_name()
 
 std::string get_pc_alias()
 {
-    if (Config::instance().get<bool>("core.net.hide_your_alias"))
+    if (config_get_boolean("core.net.hide_your_alias"))
     {
         const auto seed = xxhash::xxhash32(cdatan(1, 0));
         return eval_with_random_seed(
@@ -184,7 +184,7 @@ std::string get_date()
 
 std::vector<ChatData> net_receive_chats(bool skip_old_chat)
 {
-    if (!Config::instance().net)
+    if (!g_config.net())
     {
         return {};
     }
@@ -230,26 +230,22 @@ std::vector<ChatData> net_receive_chats(bool skip_old_chat)
                 switch (static_cast<ChatKind>(kind))
                 {
                 case ChatKind::chat:
-                    if (Config::instance().get<std::string>("core.net.chat") ==
-                        "disabled")
+                    if (config_get_string("core.net.chat") == "disabled")
                     {
                         continue;
                     }
                 case ChatKind::death:
-                    if (Config::instance().get<std::string>("core.net.death") ==
-                        "disabled")
+                    if (config_get_string("core.net.death") == "disabled")
                     {
                         continue;
                     }
                 case ChatKind::wish:
-                    if (Config::instance().get<std::string>("core.net.wish") ==
-                        "disabled")
+                    if (config_get_string("core.net.wish") == "disabled")
                     {
                         continue;
                     }
                 case ChatKind::news:
-                    if (Config::instance().get<std::string>("core.net.news") ==
-                        "disabled")
+                    if (config_get_string("core.net.news") == "disabled")
                     {
                         continue;
                     }
@@ -284,11 +280,11 @@ std::vector<ChatData> net_receive_chats(bool skip_old_chat)
 
 std::vector<PollData> net_receive_polls()
 {
-    if (!Config::instance().net)
+    if (!g_config.net())
     {
         return {};
     }
-    if (!Config::instance().get<bool>("core.net.is_alias_vote_enabled"))
+    if (!config_get_boolean("core.net.is_alias_vote_enabled"))
     {
         return {};
     }
@@ -338,11 +334,11 @@ std::vector<PollData> net_receive_polls()
 
 void net_send_chat(const std::string& message)
 {
-    if (!Config::instance().net)
+    if (!g_config.net())
     {
         return;
     }
-    if (Config::instance().get<std::string>("core.net.chat") != "send_receive")
+    if (config_get_string("core.net.chat") != "send_receive")
     {
         return;
     }
@@ -363,11 +359,11 @@ void net_send_death(
     const std::string& map,
     const std::string& last_words)
 {
-    if (!Config::instance().net)
+    if (!g_config.net())
     {
         return;
     }
-    if (Config::instance().get<std::string>("core.net.death") != "send_receive")
+    if (config_get_string("core.net.death") != "send_receive")
     {
         return;
     }
@@ -391,11 +387,11 @@ void net_send_death(
 
 void net_send_wish(const std::string& input, const std::string& result)
 {
-    if (!Config::instance().net)
+    if (!g_config.net())
     {
         return;
     }
-    if (Config::instance().get<std::string>("core.net.wish") != "send_receive")
+    if (config_get_string("core.net.wish") != "send_receive")
     {
         return;
     }
@@ -418,11 +414,11 @@ void net_send_wish(const std::string& input, const std::string& result)
 
 void net_send_news(const std::string& locale_id, const std::string& extra_info)
 {
-    if (!Config::instance().net)
+    if (!g_config.net())
     {
         return;
     }
-    if (Config::instance().get<std::string>("core.net.news") != "send_receive")
+    if (config_get_string("core.net.news") != "send_receive")
     {
         return;
     }
@@ -445,11 +441,11 @@ void net_send_news(const std::string& locale_id, const std::string& extra_info)
 
 void net_register_your_name()
 {
-    if (!Config::instance().net)
+    if (!g_config.net())
     {
         return;
     }
-    if (!Config::instance().get<bool>("core.net.is_alias_vote_enabled"))
+    if (!config_get_boolean("core.net.is_alias_vote_enabled"))
     {
         return;
     }
@@ -481,11 +477,11 @@ void net_register_your_name()
 
 void net_send_vote(int poll_id)
 {
-    if (!Config::instance().net)
+    if (!g_config.net())
     {
         return;
     }
-    if (!Config::instance().get<bool>("core.net.is_alias_vote_enabled"))
+    if (!config_get_boolean("core.net.is_alias_vote_enabled"))
     {
         return;
     }

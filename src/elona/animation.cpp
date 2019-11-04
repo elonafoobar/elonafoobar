@@ -2,7 +2,7 @@
 #include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "data/types/type_asset.hpp"
 #include "data/types/type_item.hpp"
 #include "draw.hpp"
@@ -99,7 +99,7 @@ void do_animation(
         gmode(2);
         draw(image_key, center, t);
         redraw();
-        await(Config::instance().animation_wait);
+        await(g_config.animation_wait());
     }
 }
 
@@ -139,7 +139,7 @@ void do_particle_animation(
             draw(image_key, center, t, particles[i], i);
         }
         redraw();
-        await(Config::instance().animation_wait);
+        await(g_config.animation_wait());
     }
 }
 
@@ -201,7 +201,7 @@ void AbstractAnimation::play()
 {
     if (mode == 9)
         return;
-    if (Config::instance().animation_wait == 0)
+    if (g_config.animation_wait() == 0)
         return;
 
     if (updates_screen())
@@ -293,11 +293,11 @@ void BrightAuraAnimation::do_play()
     {
         if (type == Type::healing_rain)
         {
-            await(Config::instance().animation_wait / 4);
+            await(g_config.animation_wait() / 4);
         }
         else
         {
-            await(Config::instance().animation_wait);
+            await(g_config.animation_wait());
         }
         gcopy(
             4,
@@ -382,7 +382,7 @@ void BreathAnimation::do_play()
         }
         if (did_draw)
         {
-            await(Config::instance().animation_wait);
+            await(g_config.animation_wait());
             redraw();
         }
     }
@@ -488,7 +488,7 @@ void BallAnimation::do_play()
         redraw();
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh, 0, 0);
-        await(Config::instance().animation_wait);
+        await(g_config.animation_wait());
     }
 
     // Play sound.
@@ -589,7 +589,7 @@ void BoltAnimation::do_play()
         }
         if (did_draw)
         {
-            await(Config::instance().animation_wait * 1.75);
+            await(g_config.animation_wait() * 1.75);
             redraw();
         }
     }
@@ -642,7 +642,7 @@ void ThrowingObjectAnimation::do_play()
         gmode(0);
         gcopy(4, 0, 0, inf_tiles, inf_tiles, x, y - inf_tiles / 2);
         gmode(2);
-        await(Config::instance().animation_wait);
+        await(g_config.animation_wait());
     }
 }
 
@@ -730,7 +730,7 @@ void RangedAttackAnimation::do_play()
         gmode(0);
         gcopy(4, 0, 0, inf_tiles, inf_tiles, ax, ay - inf_tiles / 2);
         gmode(2);
-        await(Config::instance().animation_wait);
+        await(g_config.animation_wait());
     }
 
     if (anisound)
@@ -862,7 +862,7 @@ void MeleeAttackAnimation::do_play()
         gmode(0);
         gcopy(4, 0, 0, 96, 144, anidx - 24, anidy - 48);
         gmode(2);
-        await(Config::instance().animation_wait);
+        await(g_config.animation_wait());
     }
 }
 
@@ -895,7 +895,7 @@ void GeneEngineeringAnimation::do_play()
             gcopy(7, t / 2 * 96, (i == 0) * 96, 96, 96, anidx, anidy - i * 96);
         }
 
-        await(Config::instance().animation_wait * 2.25);
+        await(g_config.animation_wait() * 2.25);
         redraw();
     }
 }
@@ -1035,7 +1035,7 @@ void MiracleAnimation::do_play()
         {
             break;
         }
-        await(Config::instance().animation_wait * 2.25);
+        await(g_config.animation_wait() * 2.25);
         redraw();
     }
 }
@@ -1123,10 +1123,10 @@ void MeteorAnimation::do_play()
         {
             break;
         }
-        await(Config::instance().animation_wait * 3);
+        await(g_config.animation_wait() * 3);
         redraw();
     }
-    await(Config::instance().animation_wait);
+    await(g_config.animation_wait());
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
@@ -1196,11 +1196,11 @@ void RagnarokAnimation::do_play()
         {
             break;
         }
-        await(Config::instance().animation_wait * 3);
+        await(g_config.animation_wait() * 3);
         redraw();
     }
 
-    await(Config::instance().animation_wait);
+    await(g_config.animation_wait());
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);

@@ -2,7 +2,7 @@
 #include <cmath>
 #include "../snail/application.hpp"
 #include "character.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "data/types/type_asset.hpp"
 #include "data/types/type_chara_chip.hpp"
 #include "data/types/type_item.hpp"
@@ -408,7 +408,7 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
                 draw_bar("ally_health_bar", x_, y_, width * 3, 9, width);
 
                 // Show leash icon.
-                if (Config::instance().leash_icon && cdata[i].is_leashed())
+                if (g_config.leash_icon() && cdata[i].is_leashed())
                 {
                     constexpr int leash = 631;
                     auto rect = prepare_item_image(leash, 2);
@@ -450,7 +450,7 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
 void initialize_damage_popups()
 {
     damage_popups_active = 0;
-    damage_popups.resize(Config::instance().max_damage_popup);
+    damage_popups.resize(g_config.max_damage_popup());
 }
 
 
@@ -460,8 +460,8 @@ void add_damage_popup(
     int character,
     const snail::Color& color)
 {
-    damage_popups.resize(Config::instance().max_damage_popup);
-    if (damage_popups_active == Config::instance().max_damage_popup)
+    damage_popups.resize(g_config.max_damage_popup());
+    if (damage_popups_active == g_config.max_damage_popup())
     {
         // Substitute a new damage popup for popup whose frame is the maximum.
         auto oldest = std::max_element(
@@ -503,7 +503,7 @@ void clear_damage_popups()
 
 void show_damage_popups()
 {
-    if (Config::instance().damage_popup == 0)
+    if (g_config.damage_popup() == 0)
     {
         return;
     }

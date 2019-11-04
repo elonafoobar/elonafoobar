@@ -20,7 +20,7 @@ static void _load_race_list()
         list(0, listmax) = 0;
         ++listmax;
     }
-    if (Config::instance().extra_race)
+    if (g_config.extra_race())
     {
         for (const auto& race : race_get_available(true))
         {

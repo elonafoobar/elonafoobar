@@ -19,7 +19,7 @@ namespace LuaApiConfig
 {
 
 void set(const std::string& key, sol::object value);
-sol::object get(const std::string& key, sol::this_state s);
+sol::object get(const std::string& key);
 void save();
 
 void bind(sol::table&);

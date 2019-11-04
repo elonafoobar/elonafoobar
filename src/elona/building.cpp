@@ -7,7 +7,7 @@
 #include "calc.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_map.hpp"
@@ -645,7 +645,7 @@ void prompt_hiring()
         {
             snd("core.paygold1");
             cdata.player().gold -= calchirecost(tc) * 20;
-            await(Config::instance().animation_wait * 10);
+            await(g_config.animation_wait() * 10);
             cdata[tc].set_state(Character::State::alive);
             txt(i18n::s.get("core.building.home.hire.you_hire", cdata[tc]),
                 Message::color{ColorIndex::green});
@@ -705,7 +705,7 @@ void start_home_map_mode()
     tile = 0;
     while (1)
     {
-        await(Config::instance().general_wait);
+        await(g_config.general_wait());
         int stat = target_position();
         if (stat == -1)
         {
@@ -1205,7 +1205,7 @@ void show_shop_log()
     }
     if (sold == 0)
     {
-        if (!Config::instance().hide_shop_updates)
+        if (!g_config.hide_shop_updates())
         {
             txt(shop_mark +
                 i18n::s.get(
@@ -1216,7 +1216,7 @@ void show_shop_log()
     }
     else
     {
-        if (!Config::instance().hide_shop_updates)
+        if (!g_config.hide_shop_updates())
         {
             s = i18n::s.get("core.building.shop.log.gold", income(0));
             if (income(1) != 0)

@@ -1,5 +1,5 @@
 #include "i18n_function_manager.hpp"
-#include "../config/config.hpp"
+#include "../config.hpp"
 #include "lua_env.hpp"
 
 
@@ -42,7 +42,7 @@ void I18NFunctionManager::register_function(
 optional<sol::protected_function> I18NFunctionManager::find_function(
     const std::string& name)
 {
-    const std::string& language = Config::instance().language;
+    const std::string& language = g_config.language();
 
     if (env()[language] == sol::lua_nil)
     {

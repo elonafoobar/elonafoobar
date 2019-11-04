@@ -81,7 +81,7 @@ Saved game to be loaded on startup.
 These are calculated when the game loads.
 If one is missing, restart the game to have it appear.
 DOC
-                    variants {
+                    enum {
                         "" = "None"
                     }
                 }
@@ -120,7 +120,7 @@ DOC
                 }
                 fullscreen {
                     name = "Screen Mode*"
-                    variants {
+                    enum {
                         windowed = "Window mode"
                         fullscreen = "Full screen"
                         desktop_fullscreen = "Desktop fullscr"
@@ -137,11 +137,11 @@ DOC
 Screen resolution to use.
 The available options may change depending on the graphics hardware you use.
 DOC
-                    # Variants are injected at runtime.
+                    # "enum" are injected at runtime.
                 }
                 orientation {
                     name = "Screen Orientation"
-                    variants {
+                    enum {
                         sensor_landscape = "Landscape (Auto)"
                         sensor_portrait = "Portrait (Auto)"
                         sensor = "Any"
@@ -200,7 +200,7 @@ DOC
                 }
                 chat {
                     name = "Chat Log"
-                    variants {
+                    enum {
                         "disabled" = "Disable"
                         "receive" = "Only receive"
                         "send_receive" = "Send & receive"
@@ -208,7 +208,7 @@ DOC
                 }
                 death {
                     name = "Death Log"
-                    variants {
+                    enum {
                         "disabled" = "Disable"
                         "receive" = "Only receive"
                         "send_receive" = "Send & receive"
@@ -216,7 +216,7 @@ DOC
                 }
                 wish {
                     name = "Wish Log"
-                    variants {
+                    enum {
                         "disabled" = "Disable"
                         "receive" = "Only receive"
                         "send_receive" = "Send & receive"
@@ -224,7 +224,7 @@ DOC
                 }
                 news {
                     name = "Palmia Times"
-                    variants {
+                    enum {
                         "disabled" = "Disable"
                         "receive" = "Only receive"
                         "send_receive" = "Send & receive"
@@ -301,7 +301,7 @@ DOC
                 }
                 auto_turn_speed {
                     name = "Auto Turn Speed"
-                    variants {
+                    enum {
                         normal = "Normal"
                         high = "High"
                         highest = "Highest"
@@ -433,7 +433,7 @@ DOC
                     doc = <<DOC
 Text rendering quality. High is beautiful, but slow. Low is cheap, but fast.
 DOC
-                    variants {
+                    enum {
                         low = "Low"
                         high = "High"
                     }
@@ -481,7 +481,7 @@ DOC
 
                 language {
                     name = "Language*"
-                    variants {
+                    enum {
                         jp = "Japanese"
                         en = "English"
                     }
@@ -494,7 +494,7 @@ DOC
 
                 hp_bar_position {
                     name = "Pets' HP bar"
-                    variants {
+                    enum {
                         hide = "Don't show"
                         left = "Show left side"
                         right = "Show right side"
@@ -564,7 +564,7 @@ DOC
 
                 pcc_graphic_scale = {
                     name = "PCC Graphic"
-                    variants {
+                    enum {
                         shrinked = "Shrinked"
                         fullscale = "Full-scale"
                     }
@@ -634,7 +634,7 @@ DOC
                 name = "Mod Settings"
                 doc = <<DOC
 Settings provided by individual mods.
-These can be created by editing the config_def.hcl file in the mod's folder.
+These can be created by editing the config-schema.lua file in the mod's folder.
 DOC
             }
         }
