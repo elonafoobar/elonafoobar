@@ -7,9 +7,9 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "config/config.hpp"
+#include "deferred_event.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
-#include "event.hpp"
 #include "food.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -391,7 +391,7 @@ void run_random_event(RandomEvent event)
                 efp = 200;
                 magic();
             }
-            else if (event_id() == -1)
+            else if (!event_has_pending_events())
             {
                 event_add(26);
             }

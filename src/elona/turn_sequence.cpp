@@ -13,9 +13,9 @@
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
+#include "deferred_event.hpp"
 #include "dmgheal.hpp"
 #include "elona.hpp"
-#include "event.hpp"
 #include "food.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
@@ -732,7 +732,7 @@ TurnResult turn_begin()
         gspd = 10;
     }
     turncost = (map_data.turn_cost - cdata.player().turn_cost) / gspd + 1;
-    if (event_was_set())
+    if (event_has_pending_events())
     {
         return event_start_proc(); // TODO avoid evnum side effect
     }
@@ -885,7 +885,8 @@ TurnResult pass_one_turn(bool label_2738_flg)
                 txt(i18n::s.get("core.magic.return.prevented.normal"));
                 goto label_2740_internal;
             }
-            if (game_data.is_returning_or_escaping <= 0 && !event_was_set())
+            if (game_data.is_returning_or_escaping <= 0 &&
+                !event_has_pending_events())
             {
                 f = 0;
                 for (int cnt = 1; cnt < 16; ++cnt)

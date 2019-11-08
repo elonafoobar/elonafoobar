@@ -10,11 +10,11 @@
 #include "character_status.hpp"
 #include "config/config.hpp"
 #include "debug.hpp"
+#include "deferred_event.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "element.hpp"
 #include "elona.hpp"
-#include "event.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
@@ -334,12 +334,9 @@ int damage_hp(
         game_data.player_cellaccess_check_flag = 0;
         if (victim.hp < 0)
         {
-            if (event_id() != -1)
+            if (event_has_pending_events() && event_processing_event() != 21)
             {
-                if (event_id() != 21)
-                {
-                    victim.hp = 1;
-                }
+                victim.hp = 1;
             }
             if (game_data.current_map == mdata_t::MapId::pet_arena)
             {

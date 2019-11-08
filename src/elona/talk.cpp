@@ -3,9 +3,9 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "config/config.hpp"
+#include "deferred_event.hpp"
 #include "draw.hpp"
 #include "enums.hpp"
-#include "event.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -60,7 +60,7 @@ bool talk_setup_variables(Character &chara)
     chatesc = 1;
     if (chara.relationship <= -1)
     {
-        if (evnum == 0)
+        if (!event_has_pending_events())
         {
             txt(i18n::s.get("core.talk.will_not_listen", chara));
             quest_teleport = false;
@@ -107,12 +107,12 @@ void talk_to_npc(Character &chara)
         chatval_unique_chara_id = charaid2int(chara.id);
         chatval_show_impress = false;
     }
-    if (event_id() == 2)
+    if (event_processing_event() == 2)
     {
         talk_wrapper(TalkResult::talk_game_begin);
         return;
     }
-    if (event_id() == 16)
+    if (event_processing_event() == 16)
     {
         talk_wrapper(TalkResult::talk_finish_escort);
         return;
