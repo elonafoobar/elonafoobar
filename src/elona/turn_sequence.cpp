@@ -204,7 +204,7 @@ TurnResult npc_turn()
                     txt(i18n::s.get("core.action.npc.arena"),
                         Message::color{ColorIndex::blue});
                 }
-                return ai_proc_misc_map_events();
+                return ai_proc_misc_map_events(cdata[cc]);
             }
         }
         cdata[cc].hate = 100;
@@ -444,14 +444,14 @@ label_2689_internal:
         {
             if (rnd(10) > 2)
             {
-                return ai_proc_misc_map_events();
+                return ai_proc_misc_map_events(cdata[cc]);
             }
         }
         if (cdata[cc].confused != 0)
         {
             if (rnd(10) > 3)
             {
-                return ai_proc_misc_map_events();
+                return ai_proc_misc_map_events(cdata[cc]);
             }
         }
         if (cdata[cc].relationship == 10)
@@ -525,7 +525,7 @@ label_2689_internal:
                 {
                     if (cdata[cc].is_contracting() == 0)
                     {
-                        return ai_proc_misc_map_events();
+                        return ai_proc_misc_map_events(cdata[cc]);
                     }
                 }
                 if (distance > 2 || rnd(3))
@@ -534,7 +534,7 @@ label_2689_internal:
                 }
                 else
                 {
-                    return ai_proc_misc_map_events();
+                    return ai_proc_misc_map_events(cdata[cc]);
                 }
             }
         }
@@ -546,7 +546,7 @@ label_2689_internal:
         {
             if (rnd(3))
             {
-                return ai_proc_misc_map_events();
+                return ai_proc_misc_map_events(cdata[cc]);
             }
         }
         if (distance != cdata[cc].ai_dist)
@@ -629,7 +629,7 @@ label_2689_internal:
             }
         }
     }
-    return ai_proc_misc_map_events();
+    return ai_proc_misc_map_events(cdata[cc]);
 }
 
 
