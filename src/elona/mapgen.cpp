@@ -219,7 +219,8 @@ void map_initialize()
 }
 
 
-void initialize_cell_object_data()
+
+void map_init_cell_object_data()
 {
     const int tile_doorclosed2 = 728;
     const int tile_doorclosed3 = 730;

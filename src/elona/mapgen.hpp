@@ -35,6 +35,9 @@ int initialize_random_nefia_rdtype3();
 int initialize_quest_map_party();
 void initialize_home_mdata();
 
+// Functions called from `init.cpp`.
+void map_init_cell_object_data();
+
 
 
 enum class FieldMapType
