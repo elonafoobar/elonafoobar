@@ -19,64 +19,91 @@
 #include "status_ailment.hpp"
 #include "variables.hpp"
 
-namespace elona
-{
-
 // TODO integrate chunks of npc_turn() here
 
-int blockedbychara = 0;
 
-int ai_check()
+
+namespace
 {
+
+bool _blockedbychara = false;
+
+
+
+enum class Direction
+{
+    south,
+    west,
+    east,
+    north,
+};
+
+
+
+bool _ai_check(Character& chara, Direction direction, int p)
+{
+    assert(p == 0 || p == 1);
+
+    elona_vector2<int> dirchk;
+    DIM3(dirchk, 3, 2);
+
+    dirchk(0, 0) = -1;
+    dirchk(1, 0) = 0;
+    dirchk(2, 0) = 1;
+    dirchk(0, 1) = 1;
+    dirchk(1, 1) = 0;
+    dirchk(2, 1) = -1;
+
     for (int cnt = 0; cnt < 3; ++cnt)
     {
-        if (dir == 2)
+        switch (direction)
         {
-            cdata[cc].next_position.x = cdata[cc].position.x + 1;
-            cdata[cc].next_position.y = dirchk(cnt, p) + cdata[cc].position.y;
+        case Direction::south:
+            chara.next_position.y = chara.position.y + 1;
+            chara.next_position.x = dirchk(cnt, p) + chara.position.x;
+            break;
+        case Direction::west:
+            chara.next_position.x = chara.position.x - 1;
+            chara.next_position.y = dirchk(cnt, p) + chara.position.y;
+            break;
+        case Direction::east:
+            chara.next_position.x = chara.position.x + 1;
+            chara.next_position.y = dirchk(cnt, p) + chara.position.y;
+            break;
+        case Direction::north:
+            chara.next_position.y = chara.position.y - 1;
+            chara.next_position.x = dirchk(cnt, p) + chara.position.x;
+            break;
         }
-        if (dir == 1)
-        {
-            cdata[cc].next_position.x = cdata[cc].position.x - 1;
-            cdata[cc].next_position.y = dirchk(cnt, p) + cdata[cc].position.y;
-        }
-        if (dir == 3)
-        {
-            cdata[cc].next_position.y = cdata[cc].position.y - 1;
-            cdata[cc].next_position.x = dirchk(cnt, p) + cdata[cc].position.x;
-        }
-        if (dir == 0)
-        {
-            cdata[cc].next_position.y = cdata[cc].position.y + 1;
-            cdata[cc].next_position.x = dirchk(cnt, p) + cdata[cc].position.x;
-        }
-        cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
+
+        cell_check(chara.next_position.x, chara.next_position.y);
+
         if (cellaccess == 1)
         {
             break;
         }
         if (cellchara != -1)
         {
-            if (cdata[cc].relationship == 10)
+            if (chara.relationship == 10)
             {
                 if (cdata[cellchara].relationship == -3)
                 {
-                    cdata[cc].enemy_id = cellchara;
+                    chara.enemy_id = cellchara;
                 }
                 else
                 {
-                    blockedbychara = 1;
+                    _blockedbychara = true;
                 }
             }
-            if (cdata[cc].relationship == -3)
+            if (chara.relationship == -3)
             {
                 if (cdata[cellchara].relationship == 10)
                 {
-                    cdata[cc].enemy_id = cellchara;
+                    chara.enemy_id = cellchara;
                 }
                 else
                 {
-                    blockedbychara = 1;
+                    _blockedbychara = true;
                 }
             }
         }
@@ -89,12 +116,17 @@ int ai_check()
             }
         }
     }
-    if (cellaccess == 1)
-    {
-        return 1;
-    }
-    return 0;
+
+    return cellaccess == 1;
 }
+
+} // namespace
+
+
+
+namespace elona
+{
+
 
 TurnResult ai_proc_basic()
 {
@@ -382,7 +414,7 @@ TurnResult proc_npc_movement_event(bool retreat)
     {
         --cdata[cc]._203;
     }
-    blockedbychara = 0;
+    _blockedbychara = false;
     cdata[cc].next_position.x = (cdata[cc]._205 > cdata[cc].position.x) -
         (cdata[cc]._205 < cdata[cc].position.x) + cdata[cc].position.x;
     cdata[cc].next_position.y = (cdata[cc]._206 > cdata[cc].position.y) -
@@ -523,7 +555,7 @@ TurnResult proc_npc_movement_event(bool retreat)
     }
     else
     {
-        if (blockedbychara == 1)
+        if (_blockedbychara)
         {
             cdata[cc]._203 = 3;
         }
@@ -571,8 +603,8 @@ int ai_dir_check_1()
         dir(0) = 2;
         dir(1) = 0;
         dir(2) = 3;
-        int stat = ai_check();
-        if (stat == 1)
+        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        if (ok)
         {
             return 1;
         }
@@ -590,8 +622,8 @@ int ai_dir_check_1()
         dir(0) = 1;
         dir(1) = 0;
         dir(2) = 3;
-        int stat = ai_check();
-        if (stat == 1)
+        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        if (ok)
         {
             return 1;
         }
@@ -614,8 +646,8 @@ int ai_dir_check_2()
         dir(0) = 0;
         dir(1) = 1;
         dir(2) = 2;
-        int stat = ai_check();
-        if (stat == 1)
+        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        if (ok)
         {
             return 1;
         }
@@ -633,8 +665,8 @@ int ai_dir_check_2()
         dir(0) = 3;
         dir(1) = 1;
         dir(2) = 2;
-        int stat = ai_check();
-        if (stat == 1)
+        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        if (ok)
         {
             return 1;
         }

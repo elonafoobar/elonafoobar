@@ -230,14 +230,6 @@ void initialize_elona()
     DIM2(invmark, 35);
     DIM2(commark, 3);
     DIM2(feat, 5);
-    DIM3(dirchk, 3, 2);
-
-    dirchk(0, 0) = -1;
-    dirchk(1, 0) = 0;
-    dirchk(2, 0) = 1;
-    dirchk(0, 1) = 1;
-    dirchk(1, 1) = 0;
-    dirchk(2, 1) = -1;
 
     DIM3(pcc, 30, 20);
 
@@ -323,15 +315,6 @@ void initialize_elona()
     c_col(0, 20) = 45;
     c_col(1, 20) = 5;
     c_col(2, 20) = 95;
-
-    DIM3(dirchk, 3, 2);
-
-    dirchk(0, 0) = -1;
-    dirchk(1, 0) = 0;
-    dirchk(2, 0) = 1;
-    dirchk(0, 1) = 1;
-    dirchk(1, 1) = 0;
-    dirchk(2, 1) = -1;
 
     DIM2(floorstack, 400);
     SDIM3(key_list, 2, 20);

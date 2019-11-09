@@ -284,7 +284,6 @@ ELONA_EXTERN(elona_vector2<int> card);
 ELONA_EXTERN(elona_vector2<int> cmapdata);
 ELONA_EXTERN(elona_vector2<int> cycle);
 ELONA_EXTERN(elona_vector2<int> dblist);
-ELONA_EXTERN(elona_vector2<int> dirchk);
 ELONA_EXTERN(elona_vector2<int> dirxy);
 ELONA_EXTERN(elona_vector2<int> encprocref);
 ELONA_EXTERN(elona_vector1<int> eqweapon1);
