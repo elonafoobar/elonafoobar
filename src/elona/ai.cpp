@@ -124,9 +124,9 @@ bool _ai_check(Character& chara, Direction direction, int p)
 
 bool _ai_dir_check_x()
 {
-    if (cdata[cc]._205 > cdata[cc].position.x)
+    if (cdata[cc].target_position.x > cdata[cc].position.x)
     {
-        if (cdata[cc]._206 > cdata[cc].position.y)
+        if (cdata[cc].target_position.y > cdata[cc].position.y)
         {
             p = 1;
         }
@@ -143,9 +143,9 @@ bool _ai_dir_check_x()
             return true;
         }
     }
-    if (cdata[cc]._205 < cdata[cc].position.x)
+    if (cdata[cc].target_position.x < cdata[cc].position.x)
     {
-        if (cdata[cc]._206 < cdata[cc].position.y)
+        if (cdata[cc].target_position.y < cdata[cc].position.y)
         {
             p = 0;
         }
@@ -169,9 +169,9 @@ bool _ai_dir_check_x()
 
 bool _ai_dir_check_y()
 {
-    if (cdata[cc]._206 > cdata[cc].position.y)
+    if (cdata[cc].target_position.y > cdata[cc].position.y)
     {
-        if (cdata[cc]._205 > cdata[cc].position.x)
+        if (cdata[cc].target_position.x > cdata[cc].position.x)
         {
             p = 1;
         }
@@ -188,9 +188,9 @@ bool _ai_dir_check_y()
             return true;
         }
     }
-    if (cdata[cc]._206 < cdata[cc].position.y)
+    if (cdata[cc].target_position.y < cdata[cc].position.y)
     {
-        if (cdata[cc]._205 > cdata[cc].position.x)
+        if (cdata[cc].target_position.x > cdata[cc].position.x)
         {
             p = 0;
         }
@@ -784,13 +784,12 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
 
     if (chara._203 <= 0)
     {
-        chara._205 = cdata[tc].position.x;
-        chara._206 = cdata[tc].position.y;
+        chara.target_position = cdata[tc].position;
         if (retreat || chara.ai_dist > distance)
         {
-            chara._205 =
+            chara.target_position.x =
                 chara.position.x + (chara.position.x - cdata[tc].position.x);
-            chara._206 =
+            chara.target_position.y =
                 chara.position.y + (chara.position.y - cdata[tc].position.y);
         }
     }
@@ -800,10 +799,10 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
     }
 
     _blockedbychara = false;
-    chara.next_position.x = (chara._205 > chara.position.x) -
-        (chara._205 < chara.position.x) + chara.position.x;
-    chara.next_position.y = (chara._206 > chara.position.y) -
-        (chara._206 < chara.position.y) + chara.position.y;
+    chara.next_position.x = (chara.target_position.x > chara.position.x) -
+        (chara.target_position.x < chara.position.x) + chara.position.x;
+    chara.next_position.y = (chara.target_position.y > chara.position.y) -
+        (chara.target_position.y < chara.position.y) + chara.position.y;
     x = chara.next_position.x;
     y = chara.next_position.y;
     cell_check(x, y);
@@ -865,8 +864,8 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
         }
     }
 
-    if (std::abs(chara._205 - chara.position.x) >=
-        std::abs(chara._206 - chara.position.y))
+    if (std::abs(chara.target_position.x - chara.position.x) >=
+        std::abs(chara.target_position.y - chara.position.y))
     {
         {
             int stat = _ai_dir_check_x();
@@ -924,23 +923,23 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
         dir = dir(1 + rnd(2));
         if (dir == 1)
         {
-            chara._205 = chara.position.x - 6;
-            chara._206 = cdata[tc].position.y;
+            chara.target_position.x = chara.position.x - 6;
+            chara.target_position.y = cdata[tc].position.y;
         }
         if (dir == 2)
         {
-            chara._205 = chara.position.x + 6;
-            chara._206 = cdata[tc].position.y;
+            chara.target_position.x = chara.position.x + 6;
+            chara.target_position.y = cdata[tc].position.y;
         }
         if (dir == 3)
         {
-            chara._206 = chara.position.y - 6;
-            chara._205 = cdata[tc].position.x;
+            chara.target_position.y = chara.position.y - 6;
+            chara.target_position.x = cdata[tc].position.x;
         }
         if (dir == 0)
         {
-            chara._206 = chara.position.y + 6;
-            chara._205 = cdata[tc].position.x;
+            chara.target_position.y = chara.position.y + 6;
+            chara.target_position.x = cdata[tc].position.x;
         }
     }
 
