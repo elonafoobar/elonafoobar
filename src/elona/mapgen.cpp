@@ -37,6 +37,21 @@ std::vector<CellObjData> cellobjdata;
 
 
 
+/// @a func takes (x, y) and returns nothing.
+template <typename F>
+void for_each_cell(F func)
+{
+    for (int y = 0; y < map_data.height; ++y)
+    {
+        for (int x = 0; x < map_data.width; ++x)
+        {
+            func(x, y);
+        }
+    }
+}
+
+
+
 void place_chara_on_entrance(Character& chara, int entrance_type)
 {
     int x{};
@@ -154,6 +169,39 @@ void place_chara_on_entrance(Character& chara, int entrance_type)
     cxinit = x;
     cyinit = y;
     chara_place(chara);
+}
+
+
+
+void convert_tiles_at_random()
+{
+    for_each_cell([&](int x, int y) {
+        auto& chip = cell_data.at(x, y).chip_id_actual;
+
+        if (chip == 0)
+        {
+            chip = tile_default +
+                (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
+        }
+        else if (chip == 1)
+        {
+            chip = tile_wall + (rnd(tile_wall(2)) == 0) * rnd(tile_wall(1));
+        }
+        else if (chip == 3)
+        {
+            chip = tile_room + (rnd(tile_room(2)) == 0) * rnd(tile_room(1));
+        }
+        else if (chip == 4)
+        {
+            chip = tile_default +
+                (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
+        }
+        else if (chip >= 100)
+        {
+            chip =
+                tile_tunnel + (rnd(tile_tunnel(2)) == 0) * rnd(tile_tunnel(1));
+        }
+    });
 }
 
 } // namespace
@@ -296,50 +344,6 @@ void map_init_cell_object_data()
             tile_doorclosed4,
         },
     };
-}
-
-
-
-void map_converttile()
-{
-    for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
-    {
-        y = cnt;
-        for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
-        {
-            x = cnt;
-            if (cell_data.at(x, y).chip_id_actual == 0)
-            {
-                cell_data.at(x, y).chip_id_actual = tile_default +
-                    (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
-                continue;
-            }
-            if (cell_data.at(x, y).chip_id_actual >= 100)
-            {
-                cell_data.at(x, y).chip_id_actual = tile_tunnel +
-                    (rnd(tile_tunnel(2)) == 0) * rnd(tile_tunnel(1));
-                continue;
-            }
-            if (cell_data.at(x, y).chip_id_actual == 1)
-            {
-                cell_data.at(x, y).chip_id_actual =
-                    tile_wall + (rnd(tile_wall(2)) == 0) * rnd(tile_wall(1));
-                continue;
-            }
-            if (cell_data.at(x, y).chip_id_actual == 3)
-            {
-                cell_data.at(x, y).chip_id_actual =
-                    tile_room + (rnd(tile_room(2)) == 0) * rnd(tile_room(1));
-                continue;
-            }
-            if (cell_data.at(x, y).chip_id_actual == 4)
-            {
-                cell_data.at(x, y).chip_id_actual = tile_default +
-                    (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
-                continue;
-            }
-        }
-    }
 }
 
 
@@ -1541,7 +1545,7 @@ void generate_debug_map()
     }
 
     mdatan(0) = i18n::s.get_enum_property("core.map.unique", "name", 499);
-    map_converttile();
+    convert_tiles_at_random();
 
     mapstartx = 25;
     mapstarty = 25;
@@ -1876,7 +1880,7 @@ void generate_random_nefia()
             break;
         }
     }
-    map_converttile();
+    convert_tiles_at_random();
     map_placeplayer();
     rdmonsterhouse = 0;
     rdcreaturepack = 0;
@@ -2076,7 +2080,7 @@ void initialize_random_nefia_rdtype6()
         tile_room(0) = 45;
         tile_room(1) = 6;
     }
-    map_converttile();
+    convert_tiles_at_random();
     map_placeplayer();
     map_data.max_crowd_density = 0;
     for (int cnt = 0, cnt_end = (10 + rnd(6)); cnt < cnt_end; ++cnt)
@@ -2572,7 +2576,7 @@ int initialize_quest_map_party()
     {
         map_createroom(4);
     }
-    map_converttile();
+    convert_tiles_at_random();
     for (int cnt = 0; cnt < 500; ++cnt)
     {
         dx = rnd(map_data.width - 5);
