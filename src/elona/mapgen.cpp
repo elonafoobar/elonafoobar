@@ -35,6 +35,127 @@ int tile_votebox;
 
 std::vector<CellObjData> cellobjdata;
 
+
+
+void place_chara_on_entrance(Character& chara, int entrance_type)
+{
+    int x{};
+    int y{};
+
+    switch (entrance_type)
+    {
+    case 0:
+        // Debug map (ID: 499) does not have valid entrance type.
+        break;
+    case 1: // Upstairs
+        x = map_data.stair_up_pos % 1000;
+        y = map_data.stair_up_pos / 1000;
+        break;
+    case 2: // Downstairs
+        x = map_data.stair_down_pos % 1000;
+        y = map_data.stair_down_pos / 1000;
+        break;
+    case 3: // Direction
+        switch (game_data.player_next_move_direction)
+        {
+        case 0: // North
+            x = map_data.width / 2;
+            y = 1;
+            if (game_data.current_map == mdata_t::MapId::noyel)
+            {
+                x = 5;
+            }
+            if (game_data.current_map == mdata_t::MapId::lumiest)
+            {
+                x = 25;
+                y = 1;
+            }
+            break;
+        case 1: // East
+            x = map_data.width - 2;
+            y = map_data.height / 2;
+            if (game_data.current_map == mdata_t::MapId::palmia)
+            {
+                y = 22;
+            }
+            if (game_data.current_map == mdata_t::MapId::lumiest)
+            {
+                x = 58;
+                y = 21;
+            }
+            break;
+        case 2: // West
+            x = 1;
+            y = map_data.height / 2;
+            if (game_data.current_map == mdata_t::MapId::noyel)
+            {
+                y = 3;
+            }
+            if (game_data.current_map == mdata_t::MapId::lumiest)
+            {
+                x = 25;
+                y = 1;
+            }
+            break;
+        case 3: // South
+            x = map_data.width / 2;
+            y = map_data.height - 2;
+            if (game_data.current_map == mdata_t::MapId::palmia)
+            {
+                x = 30;
+            }
+            if (game_data.current_map == mdata_t::MapId::noyel)
+            {
+                x = 28;
+            }
+            if (game_data.current_map == mdata_t::MapId::lumiest)
+            {
+                x = 58;
+                y = 21;
+            }
+            break;
+        default: assert(0); break;
+        }
+
+        if (game_data.current_map == mdata_t::MapId::larna)
+        {
+            x = 1;
+            y = 14;
+        }
+        if (game_data.player_x_on_map_leave != -1)
+        {
+            x = game_data.player_x_on_map_leave;
+            y = game_data.player_y_on_map_leave;
+        }
+        break;
+    case 4: // Center
+        x = map_data.width / 2;
+        y = map_data.height / 2;
+        break;
+    case 5: // Random
+        x = rnd(map_data.width - 5) + 2;
+        y = rnd(map_data.height - 5) + 2;
+        break;
+    case 6: // World map
+        x = game_data.pc_x_in_world_map + rnd(chara.index / 5 + 1);
+        y = game_data.pc_y_in_world_map + rnd(chara.index / 5 + 1);
+        break;
+    case 7: // Custom
+        x = mapstartx;
+        y = mapstarty;
+        break;
+    case 8: // Bottom
+        x = map_data.width / 2;
+        y = map_data.height - 2;
+        break;
+    default: assert(0); break;
+    }
+
+    cxinit = x;
+    cyinit = y;
+    chara_place(chara);
+}
+
 } // namespace
 
 
@@ -222,125 +343,6 @@ void map_converttile()
 
 
 
-void map_place_chara_on_entrance(Character& chara, int entrance_type)
-{
-    int x = 0;
-    int y = 0;
-    if (entrance_type == 1)
-    {
-        x = map_data.stair_up_pos % 1000;
-        y = map_data.stair_up_pos / 1000;
-    }
-    if (entrance_type == 2)
-    {
-        x = map_data.stair_down_pos % 1000;
-        y = map_data.stair_down_pos / 1000;
-    }
-    if (entrance_type == 3)
-    {
-        if (game_data.player_next_move_direction == 1)
-        {
-            x = map_data.width - 2;
-            y = map_data.height / 2;
-            if (game_data.current_map == mdata_t::MapId::palmia)
-            {
-                y = 22;
-            }
-            if (game_data.current_map == mdata_t::MapId::lumiest)
-            {
-                x = 58;
-                y = 21;
-            }
-        }
-        if (game_data.player_next_move_direction == 2)
-        {
-            x = 1;
-            y = map_data.height / 2;
-            if (game_data.current_map == mdata_t::MapId::noyel)
-            {
-                y = 3;
-            }
-            if (game_data.current_map == mdata_t::MapId::lumiest)
-            {
-                x = 25;
-                y = 1;
-            }
-        }
-        if (game_data.player_next_move_direction == 3)
-        {
-            x = map_data.width / 2;
-            y = map_data.height - 2;
-            if (game_data.current_map == mdata_t::MapId::palmia)
-            {
-                x = 30;
-            }
-            if (game_data.current_map == mdata_t::MapId::noyel)
-            {
-                x = 28;
-            }
-            if (game_data.current_map == mdata_t::MapId::lumiest)
-            {
-                x = 58;
-                y = 21;
-            }
-        }
-        if (game_data.player_next_move_direction == 0)
-        {
-            x = map_data.width / 2;
-            y = 1;
-            if (game_data.current_map == mdata_t::MapId::noyel)
-            {
-                x = 5;
-            }
-            if (game_data.current_map == mdata_t::MapId::lumiest)
-            {
-                x = 25;
-                y = 1;
-            }
-        }
-        if (game_data.current_map == mdata_t::MapId::larna)
-        {
-            x = 1;
-            y = 14;
-        }
-        if (game_data.player_x_on_map_leave != -1)
-        {
-            x = game_data.player_x_on_map_leave;
-            y = game_data.player_y_on_map_leave;
-        }
-    }
-    if (entrance_type == 4)
-    {
-        x = map_data.width / 2;
-        y = map_data.height / 2;
-    }
-    if (entrance_type == 8)
-    {
-        x = map_data.width / 2;
-        y = map_data.height - 2;
-    }
-    if (entrance_type == 5)
-    {
-        x = rnd(map_data.width - 5) + 2;
-        y = rnd(map_data.height - 5) + 2;
-    }
-    if (entrance_type == 6)
-    {
-        x = game_data.pc_x_in_world_map + rnd(chara.index / 5 + 1);
-        y = game_data.pc_y_in_world_map + rnd(chara.index / 5 + 1);
-    }
-    if (entrance_type == 7)
-    {
-        x = mapstartx;
-        y = mapstarty;
-    }
-    cxinit = x;
-    cyinit = y;
-    chara_place(chara);
-}
-
-
-
 void map_place_chara_on_pet_arena(Character& chara, bool is_enemy)
 {
     while (true)
@@ -418,7 +420,7 @@ void map_placeplayer()
                 continue;
             }
         }
-        map_place_chara_on_entrance(chara, game_data.entrance_type);
+        place_chara_on_entrance(chara, game_data.entrance_type);
     }
 }
 

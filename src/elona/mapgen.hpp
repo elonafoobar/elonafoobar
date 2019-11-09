@@ -20,7 +20,6 @@ void map_makedoor();
 void map_nextdir1(int = 0, int = 0);
 void map_nextdir2(int = 0, int = 0);
 void map_place_chara_on_pet_arena(Character& chara, bool is_enemy);
-void map_place_chara_on_entrance(Character& chara, int entrance_type);
 void map_placeplayer();
 void map_randomtile(int = 0, int = 0);
 void map_setfog(int = 0, int = 0);
