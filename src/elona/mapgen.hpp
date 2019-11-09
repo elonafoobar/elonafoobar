@@ -40,7 +40,7 @@ void map_set_fog();
 void map_place_upstairs(int x, int y);
 void map_place_downstairs(int x, int y);
 
-void generate_debug_map();
+void map_generate_debug_map();
 void generate_random_nefia();
 int initialize_quest_map_crop();
 int initialize_random_nefia_rdtype1();

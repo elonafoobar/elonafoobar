@@ -3301,7 +3301,7 @@ void initialize_map_from_map_type()
     case mdata_t::MapId::noyel:                      _init_map_noyel();                     break;
     case mdata_t::MapId::port_kapul:                 _init_map_port_kapul();                break;
     case mdata_t::MapId::vernis:                     _init_map_vernis();                    break;
-    case mdata_t::MapId::debug_map:                  generate_debug_map();                  break;
+    case mdata_t::MapId::debug_map:                  map_generate_debug_map();                  break;
     case mdata_t::MapId::fields:                     _init_map_fields();                    break;
     case mdata_t::MapId::the_void:                   _init_map_the_void();                  break;
     case mdata_t::MapId::lesimas:                    _init_map_lesimas();                   break;

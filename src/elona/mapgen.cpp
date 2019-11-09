@@ -1513,7 +1513,8 @@ void map_makedoor()
 }
 
 
-void generate_debug_map()
+
+void map_generate_debug_map()
 {
     map_data.width = 50;
     map_data.height = 50;
@@ -1526,13 +1527,7 @@ void generate_debug_map()
     map_data.refresh_type = 1;
     map_initialize();
 
-    for (int y = 0; y < map_data.height; ++y)
-    {
-        for (int x = 0; x < map_data.width; ++x)
-        {
-            cell_data.at(x, y).chip_id_actual = 3;
-        }
-    }
+    for_each_cell([&](int x, int y) { cell_data.at(x, y).chip_id_actual = 3; });
 
     mdatan(0) = i18n::s.get_enum_property("core.map.unique", "name", 499);
     convert_tiles_at_random();
