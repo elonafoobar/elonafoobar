@@ -820,8 +820,6 @@ void cnvbonus(int = 0, int = 0);
 TurnResult proc_ai_basic();
 TurnResult proc_misc_npc_map_events();
 TurnResult proc_ally_town_training(bool = false);
-int ai_dir_check_1();
-int ai_dir_check_2();
 
 
 //// UI

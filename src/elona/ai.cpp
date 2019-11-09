@@ -120,6 +120,96 @@ bool _ai_check(Character& chara, Direction direction, int p)
     return cellaccess == 1;
 }
 
+
+
+bool _ai_dir_check_x()
+{
+    if (cdata[cc]._205 > cdata[cc].position.x)
+    {
+        if (cdata[cc]._206 > cdata[cc].position.y)
+        {
+            p = 1;
+        }
+        else
+        {
+            p = 0;
+        }
+        dir(0) = 2;
+        dir(1) = 0;
+        dir(2) = 3;
+        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        if (ok)
+        {
+            return true;
+        }
+    }
+    if (cdata[cc]._205 < cdata[cc].position.x)
+    {
+        if (cdata[cc]._206 < cdata[cc].position.y)
+        {
+            p = 0;
+        }
+        else
+        {
+            p = 1;
+        }
+        dir(0) = 1;
+        dir(1) = 0;
+        dir(2) = 3;
+        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        if (ok)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+bool _ai_dir_check_y()
+{
+    if (cdata[cc]._206 > cdata[cc].position.y)
+    {
+        if (cdata[cc]._205 > cdata[cc].position.x)
+        {
+            p = 1;
+        }
+        else
+        {
+            p = 0;
+        }
+        dir(0) = 0;
+        dir(1) = 1;
+        dir(2) = 2;
+        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        if (ok)
+        {
+            return true;
+        }
+    }
+    if (cdata[cc]._206 < cdata[cc].position.y)
+    {
+        if (cdata[cc]._205 > cdata[cc].position.x)
+        {
+            p = 0;
+        }
+        else
+        {
+            p = 1;
+        }
+        dir(0) = 3;
+        dir(1) = 1;
+        dir(2) = 2;
+        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        if (ok)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 } // namespace
 
 
@@ -512,14 +602,14 @@ TurnResult proc_npc_movement_event(bool retreat)
         std::abs(cdata[cc]._206 - cdata[cc].position.y))
     {
         {
-            int stat = ai_dir_check_1();
+            int stat = _ai_dir_check_x();
             if (stat == 1)
             {
                 return proc_movement_event();
             }
         }
         {
-            int stat = ai_dir_check_2();
+            int stat = _ai_dir_check_y();
             if (stat == 1)
             {
                 return proc_movement_event();
@@ -529,14 +619,14 @@ TurnResult proc_npc_movement_event(bool retreat)
     else
     {
         {
-            int stat = ai_dir_check_2();
+            int stat = _ai_dir_check_y();
             if (stat == 1)
             {
                 return proc_movement_event();
             }
         }
         {
-            int stat = ai_dir_check_1();
+            int stat = _ai_dir_check_x();
             if (stat == 1)
             {
                 return proc_movement_event();
@@ -588,91 +678,7 @@ TurnResult proc_npc_movement_event(bool retreat)
     return TurnResult::turn_end;
 }
 
-int ai_dir_check_1()
-{
-    if (cdata[cc]._205 > cdata[cc].position.x)
-    {
-        if (cdata[cc]._206 > cdata[cc].position.y)
-        {
-            p = 1;
-        }
-        else
-        {
-            p = 0;
-        }
-        dir(0) = 2;
-        dir(1) = 0;
-        dir(2) = 3;
-        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
-        if (ok)
-        {
-            return 1;
-        }
-    }
-    if (cdata[cc]._205 < cdata[cc].position.x)
-    {
-        if (cdata[cc]._206 < cdata[cc].position.y)
-        {
-            p = 0;
-        }
-        else
-        {
-            p = 1;
-        }
-        dir(0) = 1;
-        dir(1) = 0;
-        dir(2) = 3;
-        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
-        if (ok)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
 
-int ai_dir_check_2()
-{
-    if (cdata[cc]._206 > cdata[cc].position.y)
-    {
-        if (cdata[cc]._205 > cdata[cc].position.x)
-        {
-            p = 1;
-        }
-        else
-        {
-            p = 0;
-        }
-        dir(0) = 0;
-        dir(1) = 1;
-        dir(2) = 2;
-        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
-        if (ok)
-        {
-            return 1;
-        }
-    }
-    if (cdata[cc]._206 < cdata[cc].position.y)
-    {
-        if (cdata[cc]._205 > cdata[cc].position.x)
-        {
-            p = 0;
-        }
-        else
-        {
-            p = 1;
-        }
-        dir(0) = 3;
-        dir(1) = 1;
-        dir(2) = 2;
-        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
-        if (ok)
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
 
 TurnResult ai_proc_misc_map_events()
 {
