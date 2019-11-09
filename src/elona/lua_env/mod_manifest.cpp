@@ -1,6 +1,7 @@
 #include "mod_manifest.hpp"
+#include "../../thirdparty/json5/json5.hpp"
 
-#include "../hcl.hpp"
+
 
 namespace elona
 {
@@ -12,16 +13,14 @@ namespace
 
 std::string _read_string(
     const std::string key,
-    const hcl::Value& value,
+    const json5::value::object_type& obj,
     const fs::path& path)
 {
-    std::string result;
-
     // TODO: Clean up, as with lua::ConfigTable
-    const hcl::Value* object = value.find(key);
-    if (object && object->is<std::string>())
+    const auto itr = obj.find(key);
+    if (itr != std::end(obj) && itr->second.is_string())
     {
-        result = object->as<std::string>();
+        return itr->second.get_string();
     }
     else
     {
@@ -29,25 +28,25 @@ std::string _read_string(
             filepathutil::to_utf8_path(path) + ": Missing \"" + key +
             "\" in mod manifest");
     }
-
-    return result;
 }
 
 
 
-semver::Version _read_mod_version(const hcl::Value& value, const fs::path& path)
+semver::Version _read_mod_version(
+    const json5::value::object_type& obj,
+    const fs::path& path)
 {
     // TODO: Clean up, as with lua::ConfigTable
-    const hcl::Value* object = value.find("version");
-    if (!object)
+    const auto itr = obj.find("version");
+    if (itr == std::end(obj))
     {
         return semver::Version{};
     }
 
-    if (object->is<std::string>())
+    if (itr->second.is_string())
     {
         if (const auto result =
-                semver::Version::parse(object->as<std::string>()))
+                semver::Version::parse(itr->second.get_string()))
         {
             return result.right();
         }
@@ -67,30 +66,28 @@ semver::Version _read_mod_version(const hcl::Value& value, const fs::path& path)
 
 
 ModManifest::Dependencies _read_dependencies(
-    const hcl::Value& value,
+    const json5::value::object_type& obj,
     const fs::path& path)
 {
     ModManifest::Dependencies result;
 
-    const hcl::Value* object = value.find("dependencies");
-    if (object)
+    const auto itr = obj.find("dependencies");
+    if (itr != std::end(obj))
     {
-        if (object->is<hcl::Object>())
+        if (itr->second.is_object())
         {
-            const auto& dependencies = object->as<hcl::Object>();
+            const auto& dependencies = itr->second.get_object();
 
             for (const auto& kvp : dependencies)
             {
-                hcl::Value mod;
-                hcl::Value version;
-                std::tie(mod, version) = kvp;
-
-                if (mod.is<std::string>() && version.is<std::string>())
+                const auto& mod = kvp.first;
+                const auto& version = kvp.second;
+                if (version.is_string())
                 {
                     if (const auto req = semver::VersionRequirement::parse(
-                            version.as<std::string>()))
+                            version.get_string()))
                     {
-                        result.emplace(mod.as<std::string>(), req.right());
+                        result.emplace(mod, req.right());
                     }
                     else
                     {
@@ -124,18 +121,21 @@ ModManifest::Dependencies _read_dependencies(
 
 ModManifest ModManifest::load(const fs::path& path)
 {
-    auto parsed = hclutil::load(path);
-    const auto& value = hclutil::skip_sections(
-        parsed, {"mod"}, filepathutil::to_utf8_path(path));
+    // TODO loading error handling.
+    std::ifstream in{path.native()};
+    std::string source{std::istreambuf_iterator<char>{in},
+                       std::istreambuf_iterator<char>{}};
+    const auto value = json5::parse(source);
+    const auto& obj = value.get_object();
 
-    const auto mod_id = _read_string("id", value, path);
-    const auto mod_name = _read_string("name", value, path);
-    const auto mod_author = _read_string("author", value, path);
-    const auto mod_description = _read_string("description", value, path);
-    const auto mod_license = _read_string("license", value, path);
-    const auto version = _read_mod_version(value, path);
+    const auto mod_id = _read_string("id", obj, path);
+    const auto mod_name = _read_string("name", obj, path);
+    const auto mod_author = _read_string("author", obj, path);
+    const auto mod_description = _read_string("description", obj, path);
+    const auto mod_license = _read_string("license", obj, path);
+    const auto version = _read_mod_version(obj, path);
     const auto mod_path = path.parent_path();
-    const auto dependencies = _read_dependencies(value, path);
+    const auto dependencies = _read_dependencies(obj, path);
 
     return ModManifest{mod_id,
                        mod_name,

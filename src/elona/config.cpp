@@ -641,7 +641,7 @@ void config_load_all_schema()
 {
     for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dirs::mod()))
     {
-        const auto manifest = lua::ModManifest::load(mod_dir / "mod.hcl");
+        const auto manifest = lua::ModManifest::load(mod_dir / "mod.json");
         const auto path = mod_dir / "config-schema.lua";
         std::ifstream in{path.native()};
         lua::lua->get_config_manager().load_schema(

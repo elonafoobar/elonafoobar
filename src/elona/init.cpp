@@ -159,7 +159,7 @@ void initialize_i18n()
     // Load translations for each mod.
     for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dirs::mod()))
     {
-        const auto manifest = lua::ModManifest::load(mod_dir / "mod.hcl");
+        const auto manifest = lua::ModManifest::load(mod_dir / "mod.json");
         const auto locale_path = mod_dir / "locale" / language;
         if (fs::exists(locale_path))
         {

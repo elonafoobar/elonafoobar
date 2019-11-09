@@ -18,7 +18,7 @@ struct ModManifest
         std::unordered_map<std::string, semver::VersionRequirement>;
 
     /**
-     * Loads a mod manifest from a mod.hcl file.
+     * Loads a mod manifest from a mod.json file.
      */
     static ModManifest load(const fs::path& path);
 
