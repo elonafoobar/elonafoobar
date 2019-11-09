@@ -250,6 +250,8 @@ int rw = 0;
 int ry = 0;
 int rh = 0;
 
+
+
 void map_initialize()
 {
     if (rdroomnum >= 30)
@@ -348,33 +350,38 @@ void map_init_cell_object_data()
 
 
 
-void map_place_chara_on_pet_arena(Character& chara, bool is_enemy)
+void map_place_chara_on_pet_arena(Character& chara, ArenaCharaType chara_type)
 {
     while (true)
     {
-        x = rnd(7) + 5;
-        y = rnd(6) + 6;
-        if (!is_enemy)
+        int x = rnd(7) + 5;
+        int y = rnd(6) + 6;
+        if (chara_type == ArenaCharaType::allies)
         {
             x += 8;
         }
         cxinit = x;
         cyinit = y;
         chara_place(chara);
-        if (!is_enemy)
+
+        if (chara_type == ArenaCharaType::allies)
         {
             if (chara.position.x >= 13 && chara.position.y >= 6 &&
                 chara.position.x < 20 && chara.position.y < 12)
             {
-                break;
+                return; // okay.
             }
         }
-        else if (
-            chara.position.x >= 5 && chara.position.y >= 6 &&
-            chara.position.x < 12 && chara.position.y < 12)
+        else
         {
-            break;
+            if (chara.position.x >= 5 && chara.position.y >= 6 &&
+                chara.position.x < 12 && chara.position.y < 12)
+            {
+                return; // okay.
+            }
         }
+
+        // Invalid position, reset the position and retry.
         cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one =
             0;
     }
@@ -411,7 +418,7 @@ void map_placeplayer()
                 {
                     camera = chara.index;
                 }
-                map_place_chara_on_pet_arena(chara, false);
+                map_place_chara_on_pet_arena(chara, ArenaCharaType::allies);
                 continue;
             }
         }
