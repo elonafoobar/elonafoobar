@@ -210,6 +210,92 @@ bool _ai_dir_check_y()
     return false;
 }
 
+
+
+// TODO: move it to random.hpp
+bool _percent(int percentage)
+{
+    return percentage <= 0 ? false : percentage > rnd(100);
+}
+
+
+
+bool _is_special_throwing_action(int action_id)
+{
+    return -9999 <= action_id && action_id <= -9996;
+}
+
+
+
+// TODO: move it to fov.cpp
+bool fov_los_helper(const Position& a, const Position& b)
+{
+    return fov_los(a.x, a.y, b.x, b.y);
+}
+
+
+
+// TODO: move it to fov.cpp
+bool fov_los_helper(const Character& a, const Character& b)
+{
+    return fov_los_helper(a.position, b.position);
+}
+
+
+
+bool _try_generate_special_throwing_item(const Character& chara, int action_id)
+{
+    flt();
+    switch (action_id)
+    {
+    case -9999:
+        flttypemajor = 52000;
+        return !!itemcreate(
+            chara.index, choice(isetthrowpotionminor), -1, -1, 0);
+    case -9998:
+        flttypemajor = 52000;
+        return !!itemcreate(
+            chara.index, choice(isetthrowpotionmajor), -1, -1, 0);
+    case -9997:
+        flttypemajor = 52000;
+        return !!itemcreate(
+            chara.index, choice(isetthrowpotiongreater), -1, -1, 0);
+    case -9996: return !!itemcreate(chara.index, 698, -1, -1, 0);
+    default: assert(0); return false;
+    }
+}
+
+
+
+// Helper function: normalize the return value of `can_do_ranged_attack()` to
+// boolean.
+bool can_do_ranged_attack_helper()
+{
+    int stat = can_do_ranged_attack();
+    return stat == 1;
+}
+
+
+
+bool _try_do_melee_attack(const Character& attacker, const Character& target)
+{
+    if (distance >= 6)
+    {
+        return false; // Too far.
+    }
+    if (!fov_los_helper(attacker, target))
+    {
+        return false; // Cannot see the target.
+    }
+    if (!can_do_ranged_attack_helper())
+    {
+        return false; // Cannot do ranged attack.
+    }
+
+    do_ranged_attack();
+    return true;
+}
+
 } // namespace
 
 
@@ -217,76 +303,41 @@ bool _ai_dir_check_y()
 namespace elona
 {
 
-
-TurnResult ai_proc_basic()
+TurnResult ai_proc_basic(Character& chara)
 {
     if (tc == 0)
     {
-        pcattacker = cc;
+        pcattacker = chara.index;
     }
-    int act = choice(cdata[cc].normal_actions);
-    if (cdata[cc].ai_act_sub_freq != 0)
+
+    int act = choice(chara.normal_actions);
+
+    if (_percent(chara.ai_act_sub_freq))
     {
-        if (cdata[cc].ai_act_sub_freq > rnd(100))
+        if (!chara.special_actions.empty())
         {
-            if (!cdata[cc].special_actions.empty())
+            act = choice(chara.special_actions);
+        }
+        if (_is_special_throwing_action(act) && distance < 8 &&
+            fov_los_helper(chara, cdata[tc]))
+        {
+            tlocx = cdata[tc].position.x;
+            tlocy = cdata[tc].position.y;
+            const auto ok = _try_generate_special_throwing_item(chara, act);
+            if (ok)
             {
-                act = choice(cdata[cc].special_actions);
+                return do_throw_command();
             }
-            if (act >= -10000 && act < -9995)
-            {
-                if (distance < 8)
-                {
-                    if (fov_los(
-                            cdata[cc].position.x,
-                            cdata[cc].position.y,
-                            cdata[tc].position.x,
-                            cdata[tc].position.y))
-                    {
-                        tlocx = cdata[tc].position.x;
-                        tlocy = cdata[tc].position.y;
-                        bool success = false;
-                        if (act == -9999)
-                        {
-                            flt();
-                            flttypemajor = 52000;
-                            success = !!itemcreate(
-                                cc, choice(isetthrowpotionminor), -1, -1, 0);
-                        }
-                        if (act == -9998)
-                        {
-                            flt();
-                            flttypemajor = 52000;
-                            success = !!itemcreate(
-                                cc, choice(isetthrowpotionmajor), -1, -1, 0);
-                        }
-                        if (act == -9997)
-                        {
-                            flt();
-                            flttypemajor = 52000;
-                            success = !!itemcreate(
-                                cc, choice(isetthrowpotiongreater), -1, -1, 0);
-                        }
-                        if (act == -9996)
-                        {
-                            flt();
-                            success = !!itemcreate(cc, 698, -1, -1, 0);
-                        }
-                        if (success)
-                        {
-                            return do_throw_command();
-                        }
-                        return TurnResult::turn_end;
-                    }
-                }
-            }
+            return TurnResult::turn_end;
         }
     }
+
+    // Move around randomly.
     if (act == -4)
     {
-        cdata[cc].next_position.x = rnd(3) - 1 + cdata[cc].position.x;
-        cdata[cc].next_position.y = rnd(3) - 1 + cdata[cc].position.y;
-        cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
+        chara.next_position.x = rnd(3) - 1 + chara.position.x;
+        chara.next_position.y = rnd(3) - 1 + chara.position.y;
+        cell_check(chara.next_position.x, chara.next_position.y);
         if (cellaccess == 1)
         {
             return proc_movement_event();
@@ -296,105 +347,85 @@ TurnResult ai_proc_basic()
             return TurnResult::turn_end;
         }
     }
+
+    // Do ranged attack.
     if (act == -2)
     {
-        if (distance < 6)
-        {
-            if (fov_los(
-                    cdata[cc].position.x,
-                    cdata[cc].position.y,
-                    cdata[tc].position.x,
-                    cdata[tc].position.y))
-            {
-                int stat = can_do_ranged_attack();
-                if (stat == 1)
-                {
-                    do_ranged_attack();
-                    return TurnResult::turn_end;
-                }
-            }
-        }
-    }
-    if (act >= 400)
-    {
-        if (act < 467)
-        {
-            efid = act;
-            if (cdata[cc].mp < cdata[cc].max_mp / 7)
-            {
-                if (rnd(3) || cc < 16 ||
-                    cdata[cc].quality >= Quality::miracle ||
-                    cdata[cc].cures_mp_frequently())
-                {
-                    cdata[cc].mp += cdata[cc].level / 4 + 5;
-                    return TurnResult::turn_end;
-                }
-            }
-            int stat = do_cast_magic();
-            if (stat == 1)
-            {
-                return TurnResult::turn_end;
-            }
-        }
-    }
-    if (act >= 600)
-    {
-        efid = act;
-        int stat = do_magic_attempt();
-        if (stat == 1)
+        const auto ok = _try_do_melee_attack(chara, cdata[tc]);
+        if (ok)
         {
             return TurnResult::turn_end;
         }
     }
+
+    // Do any spact.
+    if (act >= 400 && act < 467)
+    {
+        efid = act;
+        if (chara.mp < chara.max_mp / 7)
+        {
+            if (rnd(3) || chara.index < 16 ||
+                chara.quality >= Quality::miracle ||
+                chara.cures_mp_frequently())
+            {
+                chara.mp += chara.level / 4 + 5;
+                return TurnResult::turn_end;
+            }
+        }
+        const auto ok = do_cast_magic();
+        if (ok)
+        {
+            return TurnResult::turn_end;
+        }
+    }
+
+    // Cast any spell.
+    if (act >= 600)
+    {
+        efid = act;
+        const auto ok = do_magic_attempt();
+        if (ok)
+        {
+            return TurnResult::turn_end;
+        }
+    }
+
+    // Do melee attack if the attacker stands next to the enemy; otherwise, try
+    // to do ranged attack if possible.
     if (act == -3)
     {
         if (distance == 1)
         {
             try_to_melee_attack();
         }
-        else if (rnd(3) == 0 || cc < 16)
+        else if (rnd(3) == 0 || chara.index < 16)
         {
-            if (distance < 6)
+            const auto ok = _try_do_melee_attack(chara, cdata[tc]);
+            if (ok)
             {
-                if (fov_los(
-                        cdata[cc].position.x,
-                        cdata[cc].position.y,
-                        cdata[tc].position.x,
-                        cdata[tc].position.y))
-                {
-                    int stat = can_do_ranged_attack();
-                    if (stat == 1)
-                    {
-                        do_ranged_attack();
-                        return TurnResult::turn_end;
-                    }
-                }
+                return TurnResult::turn_end;
             }
         }
         return TurnResult::turn_end;
     }
+
+    // Do melee attack if the attacker stands next to the enemy.
     if (distance == 1)
     {
         try_to_melee_attack();
         return TurnResult::turn_end;
     }
-    if (distance < 6)
+
+    // Try to do ranged attack if possible.
     {
-        if (fov_los(
-                cdata[cc].position.x,
-                cdata[cc].position.y,
-                cdata[tc].position.x,
-                cdata[tc].position.y))
+        const auto ok = _try_do_melee_attack(chara, cdata[tc]);
+        if (ok)
         {
-            int stat = can_do_ranged_attack();
-            if (stat == 1)
-            {
-                do_ranged_attack();
-                return TurnResult::turn_end;
-            }
+            return TurnResult::turn_end;
         }
     }
-    if (cdata[cc].ai_dist <= distance)
+
+    if (chara.ai_dist <= distance)
     {
         if (rnd(3) == 0)
         {
@@ -403,9 +434,9 @@ TurnResult ai_proc_basic()
     }
     if (rnd(5) == 0)
     {
-        --cdata[cc].hate;
+        --chara.hate;
     }
-    if (rnd(100) < cdata[cc].ai_move)
+    if (rnd(100) < chara.ai_move)
     {
         return proc_npc_movement_event();
     }
@@ -414,6 +445,8 @@ TurnResult ai_proc_basic()
         return TurnResult::turn_end;
     }
 }
+
+
 
 TurnResult proc_npc_movement_event(bool retreat)
 {
@@ -528,7 +561,7 @@ TurnResult proc_npc_movement_event(bool retreat)
                 cdata[tc].position.y,
                 cdata[cc].position.x,
                 cdata[cc].position.y);
-            return ai_proc_basic();
+            return ai_proc_basic(cdata[cc]);
         }
         else if (
             (cdata[cc].quality > Quality::great &&

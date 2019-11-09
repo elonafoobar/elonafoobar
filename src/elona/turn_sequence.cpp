@@ -556,7 +556,7 @@ label_2689_internal:
                 return proc_npc_movement_event();
             }
         }
-        return ai_proc_basic();
+        return ai_proc_basic(cdata[cc]);
     }
     if (cdata[cc].turn % 10 == 1)
     {

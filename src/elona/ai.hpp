@@ -4,9 +4,9 @@ namespace elona
 {
 
 enum class TurnResult;
+struct Character;
 
-int ai_check();
-TurnResult ai_proc_basic();
+TurnResult ai_proc_basic(Character& chara);
 TurnResult ai_proc_misc_map_events();
 TurnResult proc_npc_movement_event(bool = false);
 
