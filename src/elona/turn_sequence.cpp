@@ -530,7 +530,7 @@ label_2689_internal:
                 }
                 if (distance > 2 || rnd(3))
                 {
-                    return proc_npc_movement_event();
+                    return proc_npc_movement_event(cdata[cc]);
                 }
                 else
                 {
@@ -540,7 +540,7 @@ label_2689_internal:
         }
         if (cdata[cc].fear != 0)
         {
-            return proc_npc_movement_event(true);
+            return proc_npc_movement_event(cdata[cc], true);
         }
         if (cdata[cc].blind != 0)
         {
@@ -553,7 +553,7 @@ label_2689_internal:
         {
             if (rnd(100) < cdata[cc].ai_move)
             {
-                return proc_npc_movement_event();
+                return proc_npc_movement_event(cdata[cc]);
             }
         }
         return ai_proc_basic(cdata[cc]);
