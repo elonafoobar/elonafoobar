@@ -22,6 +22,12 @@ namespace elona
 {
 
 // TODO
+extern elona_vector1<int> roomheight;
+extern elona_vector1<int> roomwidth;
+extern elona_vector1<int> roomx;
+extern elona_vector1<int> roomy;
+extern int cr;
+extern int roomsum;
 extern int tile_pot;
 
 } // namespace elona
@@ -398,6 +404,49 @@ void place_barrel()
 {
     _place_trap_web_or_barrel_internal(
         [&](int x, int y) { cell_featset(x, y, tile_pot, 30); });
+}
+
+
+
+void make_door()
+{
+    for (cr = 0; cr < roomsum; ++cr)
+    {
+        /*
+        A -------------- B
+        |................|
+        |.a dungeon room.|
+        |................|
+        D -------------- C
+
+        i in [  0,     W   ) => from A to B
+        i in [  W,    W+H  ) => from B to C
+        i in [ W+H,  2W+H  ) => from C to D
+        i in [ 2W+H, 2W+2H ) => from D to A
+        */
+        const int W = roomwidth(cr);
+        const int H = roomheight(cr);
+        for (int i = 0; i < (W + H) * 2; ++i)
+        {
+            const int k = i % (W + H);
+            int dx = k < W ? k : W - 1;
+            int dy = k < W ? 0 : k - W;
+            if (W + H <= i)
+            {
+                dx = W - 1 - dx;
+                dy = H - 1 - dy;
+            }
+
+            const int x = dx + roomx(cr);
+            const int y = dy + roomy(cr);
+            if (cell_data.at(x, y).chip_id_actual != 1)
+            {
+                const int lock = rnd_capped(
+                    std::abs(game_data.current_dungeon_level * 3 / 2) + 1);
+                cell_featset(x, y, tile_doorclosed, 21, lock);
+            }
+        }
+    }
 }
 
 } // namespace
@@ -1395,54 +1444,6 @@ int map_connectroom()
 
 
 
-void map_makedoor()
-{
-    for (cr = 0; cr < roomsum; ++cr)
-    {
-        tx = 0;
-        ty = 0;
-        for (int cnt = 0, cnt_end = (roomheight(cr) * 2 + roomwidth(cr) * 2);
-             cnt < cnt_end;
-             ++cnt)
-        {
-            if (tx == 0)
-            {
-                if (cnt != 0)
-                {
-                    --ty;
-                }
-            }
-            if (ty == roomheight(cr) - 1)
-            {
-                --tx;
-            }
-            if (tx == roomwidth(cr) - 1)
-            {
-                ++ty;
-            }
-            if (ty == 0)
-            {
-                ++tx;
-            }
-            dx = tx + roomx(cr);
-            dy = ty + roomy(cr);
-            if (cell_data.at(dx, dy).chip_id_actual == 1)
-            {
-                continue;
-            }
-            cell_featset(
-                dx,
-                dy,
-                tile_doorclosed,
-                21,
-                rnd_capped(
-                    std::abs(game_data.current_dungeon_level * 3 / 2) + 1));
-        }
-    }
-}
-
-
-
 void map_generate_debug_map()
 {
     map_data.width = 50;
@@ -2177,7 +2178,7 @@ int initialize_random_nefia_rdtype1()
             return 0;
         }
     }
-    map_makedoor();
+    make_door();
     return 1;
 }
 

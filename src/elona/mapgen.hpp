@@ -14,7 +14,6 @@ struct Character;
 void map_initialize();
 void map_init_static_map(const std::string&);
 void map_tileset(int = 0);
-void map_makedoor();
 void map_nextdir1(int = 0, int = 0);
 void map_nextdir2(int = 0, int = 0);
 
