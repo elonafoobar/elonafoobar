@@ -122,6 +122,16 @@ Range2 sampled(const Range1& range, Distance n)
 
 
 
+template <typename Range>
+void shuffle(Range&& range)
+{
+    using std::begin;
+    using std::end;
+    std::shuffle(begin(range), end(range), detail::engine);
+}
+
+
+
 template <typename T>
 struct WeightedRandomSampler
 {

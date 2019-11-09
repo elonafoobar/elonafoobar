@@ -29,11 +29,35 @@ struct CellObjData
 
 
 
+enum class Direction
+{
+    north = 0,
+    east = 1,
+    west = 2,
+    south = 3,
+};
+
+
+
 int tile_board;
 int tile_townboard;
 int tile_votebox;
 
 std::vector<CellObjData> cellobjdata;
+
+
+
+bool is_N_or_S(Direction d)
+{
+    return d == Direction::north || d == Direction::south;
+}
+
+
+
+bool is_E_or_W(Direction d)
+{
+    return d == Direction::east || d == Direction::west;
+}
 
 
 
@@ -217,6 +241,79 @@ bool can_dig_cell(int x, int y)
         return true;
     }
     return cell_data.at(x, y).chip_id_actual == 0;
+}
+
+
+
+void create_room_door(
+    Direction door_direction,
+    bool roomdoor_is_not_3,
+    int room_x,
+    int room_y,
+    int room_w,
+    int room_h)
+{
+    std::vector<int> door_positions(
+        is_N_or_S(door_direction) ? room_w - 2 : room_h - 2);
+    for (size_t i = 0; i < door_positions.size(); ++i)
+    {
+        door_positions[i] = static_cast<int>(i);
+    }
+    shuffle(door_positions);
+
+    for (const auto& door_pos : door_positions)
+    {
+        int x{};
+        int y{};
+        switch (door_direction)
+        {
+        case Direction::north:
+            x = door_pos + room_x + 1;
+            y = room_y;
+            break;
+        case Direction::east:
+            x = room_x + room_w - 1;
+            y = door_pos + room_y + 1;
+            break;
+        case Direction::west:
+            x = room_x;
+            y = door_pos + room_y + 1;
+            break;
+        case Direction::south:
+            x = door_pos + room_x + 1;
+            y = room_y + room_h - 1;
+            break;
+        }
+
+        bool can_create_door = true;
+        for (const auto& n : {-1, 1})
+        {
+            const auto dx = is_N_or_S(door_direction) ? x : x + n;
+            const auto dy = is_N_or_S(door_direction) ? y + n : y;
+            if (dx < 0 || map_data.width <= dx || dy < 0 ||
+                map_data.height <= dy)
+            {
+                can_create_door = false;
+                break;
+            }
+            if (cell_data.at(dx, dy).chip_id_actual == 1)
+            {
+                can_create_door = false;
+                break;
+            }
+        }
+        if (can_create_door)
+        {
+            cell_data.at(x, y).chip_id_actual = 3;
+            if (roomdoor_is_not_3)
+            {
+                const auto lock = rnd_capped(
+                    std::abs(game_data.current_dungeon_level * 3 / 2) + 1);
+                cell_featset(x, y, tile_doorclosed, 21, lock);
+            }
+            break;
+        }
+    }
 }
 
 } // namespace
@@ -810,115 +907,6 @@ void map_set_fog()
 
 
 
-void rndshuffle(elona_vector1<int>& array)
-{
-    int p_at_m68 = 0;
-    int r_at_m68 = 0;
-    p_at_m68 = array.size();
-    for (int cnt = 0, cnt_end = (p_at_m68); cnt < cnt_end; ++cnt)
-    {
-        r_at_m68 = rnd(p_at_m68);
-        --p_at_m68;
-        i_at_m68 = array(r_at_m68);
-        array(r_at_m68) = array(p_at_m68);
-        array(p_at_m68) = i_at_m68;
-    }
-}
-
-
-
-void map_createroomdoor()
-{
-    elona_vector1<int> rddoorpos;
-    if (rdpos == 3 || rdpos == 0)
-    {
-        p = roomwidth(cr);
-    }
-    else
-    {
-        p = roomheight(cr);
-    }
-    DIM1(rddoorpos);
-    for (int cnt = 0, cnt_end = (p - 2); cnt < cnt_end; ++cnt)
-    {
-        rddoorpos(cnt) = cnt;
-    }
-    rndshuffle(rddoorpos);
-    for (int cnt = 0, cnt_end = (p - 2); cnt < cnt_end; ++cnt)
-    {
-        if (rdpos == 3)
-        {
-            x = rddoorpos(cnt) + roomx(cr) + 1;
-            y = roomy(cr) + roomheight(cr) - 1;
-            p(0) = 0;
-            p(1) = 0;
-            p(2) = -1;
-            p(3) = 1;
-        }
-        if (rdpos == 0)
-        {
-            x = rddoorpos(cnt) + roomx(cr) + 1;
-            y = roomy(cr);
-            p(0) = 0;
-            p(1) = 0;
-            p(2) = -1;
-            p(3) = 1;
-        }
-        if (rdpos == 1)
-        {
-            y = rddoorpos(cnt) + roomy(cr) + 1;
-            x = roomx(cr) + roomwidth(cr) - 1;
-            p(0) = -1;
-            p(1) = 1;
-            p(2) = 0;
-            p(3) = 0;
-        }
-        if (rdpos == 2)
-        {
-            y = rddoorpos(cnt) + roomy(cr) + 1;
-            x = roomx(cr);
-            p(0) = -1;
-            p(1) = 1;
-            p(2) = 0;
-            p(3) = 0;
-        }
-        f = 1;
-        for (int cnt = 0; cnt < 2; ++cnt)
-        {
-            dx = x + p(cnt);
-            dy = y + p((cnt + 2));
-            if ((dx >= 0 && dy >= 0 && dx < map_data.width &&
-                 dy < map_data.height) == 0)
-            {
-                f = 0;
-                break;
-            }
-            if (cell_data.at(dx, dy).chip_id_actual == 1)
-            {
-                f = 0;
-                break;
-            }
-        }
-        if (f == 1)
-        {
-            cell_data.at(x, y).chip_id_actual = 3;
-            if (roomdoor != 3)
-            {
-                cell_featset(
-                    x,
-                    y,
-                    tile_doorclosed,
-                    21,
-                    rnd_capped(
-                        std::abs(game_data.current_dungeon_level * 3 / 2) + 1));
-            }
-            break;
-        }
-    }
-}
-
-
-
 int map_createroom(int type)
 {
     int roompos = 0;
@@ -1198,14 +1186,26 @@ int map_createroom(int type)
     }
     if (roomdoor == 1)
     {
-        map_createroomdoor();
+        create_room_door(
+            static_cast<Direction>(rdpos),
+            roomdoor != 3,
+            roomx(cr),
+            roomy(cr),
+            roomwidth(cr),
+            roomheight(cr));
     }
     if (roomdoor == 2 || roomdoor == 3)
     {
         for (int cnt = 0; cnt < 4; ++cnt)
         {
             rdpos = cnt;
-            map_createroomdoor();
+            create_room_door(
+                static_cast<Direction>(rdpos),
+                roomdoor != 3,
+                roomx(cr),
+                roomy(cr),
+                roomwidth(cr),
+                roomheight(cr));
         }
     }
     return 1;
