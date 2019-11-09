@@ -2352,4 +2352,29 @@ void sense_map_feats_on_move(Character& chara)
     }
 }
 
+
+
+int dist_town()
+{
+    int distance = 1000;
+
+    for (int y = 0; y < map_data.height; ++y)
+    {
+        for (int x = 0; x < map_data.width; ++x)
+        {
+            cell_featread(x, y);
+            if (area_data[feat(2)].type == mdata_t::MapType::town)
+            {
+                int d = dist(cdata.player().position, x, y);
+                if (d < distance)
+                {
+                    distance = d;
+                }
+            }
+        }
+    }
+
+    return distance;
+}
+
 } // namespace elona

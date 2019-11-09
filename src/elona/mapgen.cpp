@@ -221,34 +221,6 @@ void map_converttile()
 }
 
 
-int dist_town()
-{
-    int p_at_m165 = 0;
-    int y_at_m165 = 0;
-    int x_at_m165 = 0;
-    int i_at_m165 = 0;
-    p_at_m165 = 1000;
-    for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
-    {
-        y_at_m165 = cnt;
-        for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
-        {
-            x_at_m165 = cnt;
-            cell_featread(x_at_m165, y_at_m165);
-            if (area_data[feat(2)].type == mdata_t::MapType::town)
-            {
-                i_at_m165 = dist(cdata.player().position, x_at_m165, y_at_m165);
-                if (i_at_m165 < p_at_m165)
-                {
-                    p_at_m165 = i_at_m165;
-                }
-            }
-        }
-    }
-    return p_at_m165;
-}
-
-
 
 void map_place_chara_on_entrance(Character& chara, int entrance_type)
 {
