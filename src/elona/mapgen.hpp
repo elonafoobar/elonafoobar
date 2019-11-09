@@ -30,7 +30,12 @@ void map_place_chara_on_pet_arena(Character& chara, ArenaCharaType chara_type);
 
 void map_place_player_and_allies();
 
-void map_randomtile(int = 0, int = 0);
+/// Replace random tiles by @a tile_id.
+/// @param tile_id Tile ID. Some of tiles in the current map will be replaced by
+/// the tile.
+/// @param density Density in percentage
+void map_replace_random_tiles(int tile_id, int density);
+
 void map_setfog(int = 0, int = 0);
 
 void generate_debug_map();

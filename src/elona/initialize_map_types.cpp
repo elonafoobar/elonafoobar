@@ -2687,10 +2687,10 @@ static void _init_map_vernis()
 static void _init_map_fields_forest()
 {
     mdatan(0) = i18n::s.get_enum_property("core.map.unique", "forest", 2);
-    map_randomtile(8, 25);
-    map_randomtile(0, 10);
-    map_randomtile(1, 4);
-    map_randomtile(4, 2);
+    map_replace_random_tiles(8, 25);
+    map_replace_random_tiles(0, 10);
+    map_replace_random_tiles(1, 4);
+    map_replace_random_tiles(4, 2);
     for (int cnt = 0, cnt_end = (20 + rnd(20)); cnt < cnt_end; ++cnt)
     {
         flt();
@@ -2716,14 +2716,14 @@ static void _init_map_fields_sea()
 static void _init_map_fields_grassland()
 {
     mdatan(0) = i18n::s.get_enum_property("core.map.unique", "grassland", 2);
-    map_randomtile(9, 10);
-    map_randomtile(10, 10);
-    map_randomtile(0, 30);
-    map_randomtile(1, 4);
-    map_randomtile(4, 2);
-    map_randomtile(3, 2);
-    map_randomtile(4, 2);
-    map_randomtile(5, 2);
+    map_replace_random_tiles(9, 10);
+    map_replace_random_tiles(10, 10);
+    map_replace_random_tiles(0, 30);
+    map_replace_random_tiles(1, 4);
+    map_replace_random_tiles(4, 2);
+    map_replace_random_tiles(3, 2);
+    map_replace_random_tiles(4, 2);
+    map_replace_random_tiles(5, 2);
     for (int cnt = 0, cnt_end = (10 + rnd(10)); cnt < cnt_end; ++cnt)
     {
         flt();
@@ -2740,11 +2740,11 @@ static void _init_map_fields_grassland()
 static void _init_map_fields_desert()
 {
     mdatan(0) = i18n::s.get_enum_property("core.map.unique", "desert", 2);
-    map_randomtile(18, 25);
-    map_randomtile(17, 10);
-    map_randomtile(19, 2);
-    map_randomtile(20, 4);
-    map_randomtile(21, 2);
+    map_replace_random_tiles(18, 25);
+    map_replace_random_tiles(17, 10);
+    map_replace_random_tiles(19, 2);
+    map_replace_random_tiles(20, 4);
+    map_replace_random_tiles(21, 2);
     for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
     {
         flt();
@@ -2760,13 +2760,13 @@ static void _init_map_fields_desert()
 static void _init_map_fields_snow_field()
 {
     mdatan(0) = i18n::s.get_enum_property("core.map.unique", "snow_field", 2);
-    map_randomtile(57, 4);
-    map_randomtile(56, 4);
-    map_randomtile(49, 2);
-    map_randomtile(46, 1);
-    map_randomtile(47, 1);
-    map_randomtile(48, 1);
-    map_randomtile(51, 1);
+    map_replace_random_tiles(57, 4);
+    map_replace_random_tiles(56, 4);
+    map_replace_random_tiles(49, 2);
+    map_replace_random_tiles(46, 1);
+    map_replace_random_tiles(47, 1);
+    map_replace_random_tiles(48, 1);
+    map_replace_random_tiles(51, 1);
     for (int cnt = 0, cnt_end = (3 + rnd(5)); cnt < cnt_end; ++cnt)
     {
         flt();
@@ -2784,12 +2784,12 @@ static void _init_map_fields_snow_field()
 static void _init_map_fields_plain_field()
 {
     mdatan(0) = i18n::s.get_enum_property("core.map.unique", "plain_field", 2);
-    map_randomtile(1, 10);
-    map_randomtile(2, 2);
-    map_randomtile(3, 2);
-    map_randomtile(4, 2);
-    map_randomtile(5, 2);
-    map_randomtile(6, 2);
+    map_replace_random_tiles(1, 10);
+    map_replace_random_tiles(2, 2);
+    map_replace_random_tiles(3, 2);
+    map_replace_random_tiles(4, 2);
+    map_replace_random_tiles(5, 2);
+    map_replace_random_tiles(6, 2);
     for (int cnt = 0, cnt_end = (5 + rnd(5)); cnt < cnt_end; ++cnt)
     {
         flt();

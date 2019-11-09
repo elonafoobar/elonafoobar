@@ -558,7 +558,7 @@ void Map_clear_feat(const Position& position)
  */
 void Map_spray_tile(int tile, int amount)
 {
-    elona::map_randomtile(tile, amount);
+    elona::map_replace_random_tiles(tile, amount);
 }
 
 

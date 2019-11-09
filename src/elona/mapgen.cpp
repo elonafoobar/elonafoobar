@@ -441,7 +441,7 @@ void map_place_player_and_allies()
 
 
 
-void map_randomtile(int tile_id, int density)
+void map_replace_random_tiles(int tile_id, int density)
 {
     const auto n = map_data.width * map_data.height * density / 100 + 1;
     for (int i = 0; i < n; ++i)
@@ -2134,14 +2134,14 @@ int initialize_quest_map_crop()
         }
     }
     mdatan(0) = i18n::s.get("core.map.quest.field");
-    map_randomtile(9, 10);
-    map_randomtile(10, 10);
-    map_randomtile(0, 30);
-    map_randomtile(1, 4);
-    map_randomtile(4, 2);
-    map_randomtile(3, 2);
-    map_randomtile(4, 2);
-    map_randomtile(5, 2);
+    map_replace_random_tiles(9, 10);
+    map_replace_random_tiles(10, 10);
+    map_replace_random_tiles(0, 30);
+    map_replace_random_tiles(1, 4);
+    map_replace_random_tiles(4, 2);
+    map_replace_random_tiles(3, 2);
+    map_replace_random_tiles(4, 2);
+    map_replace_random_tiles(5, 2);
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         int w = rnd(5) + 5;
