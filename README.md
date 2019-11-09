@@ -105,7 +105,7 @@ For files under [runtime/graphic](runtime/graphic/) folder of the repository, se
 * microhil: see [src/thirdparty/microhil/LICENSE](src/thirdparty/microhil/LICENSE).
 * Catch2: see [src/thirdparty/catch2/LICENSE](src/thirdparty/catch2/LICENSE).
 * hayai: see [src/thirdparty/hayai/LICENSE](src/thirdparty/hayai/LICENSE).
-* sol2: see [src/thirdparty/sol2/LICENSE](src/thirdparty/sol2/LICENSE).
+* sol2: see [src/thirdparty/sol2/LICENSE.txt](src/thirdparty/sol2/LICENSE.txt).
 * ordered_map: see [src/thirdparty/ordered_map/LICENSE](src/thirdparty/ordered_map/LICENSE).
 * boostrandom: see [src/thirdparty/boostrandom/LICENSE_1_0.txt](src/thirdparty/LICENSE_1_0.txt).
 * cmake/FindXXX.cmake: see [cmake/LICENSE](cmake/LICENSE).
