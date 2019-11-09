@@ -2893,7 +2893,7 @@ void initialize_quest_map_town()
 {
     map_data.max_crowd_density = 0;
     map_data.indoors_flag = 2;
-    map_initcustom(map_get_custom_map_name(game_data.previous_map2));
+    map_init_static_map(map_get_custom_map_name(game_data.previous_map2));
     mdatan(0) = i18n::s.get("core.map.quest.urban_area");
     randomize();
     game_data.entrance_type = 5;
@@ -3695,37 +3695,42 @@ void initialize_home_mdata()
     }
 }
 
-void map_initcustom(const std::string& map_filename)
+
+
+void map_init_static_map(const std::string& map_filename)
 {
-    fmapfile =
-        (filesystem::dirs::map() / fs::u8path(map_filename)).to_u8string();
-    ctrl_file_custom_map_read();
+    ctrl_file_custom_map_read(
+        filesystem::dirs::map() / fs::u8path(map_filename));
+
     map_tileset(map_data.tileset);
+
     nooracle = 1;
-    for (int cnt = 0; cnt < 400; ++cnt)
+    for (int i = 0; i < 400; ++i)
     {
-        if (cmapdata(0, cnt) == 0)
-        {
+        const int id = cmapdata(0, i);
+        const int x = cmapdata(1, i);
+        const int y = cmapdata(2, i);
+        const int ex_info = cmapdata(3, i);
+        const int type = cmapdata(4, i);
+
+        if (id == 0)
             continue;
-        }
-        if (cmapdata(4, cnt) == 0)
+
+        switch (type)
         {
+        case 0:
             flt();
-            if (const auto item = itemcreate_map_inv(
-                    cmapdata(0, cnt), cmapdata(1, cnt), cmapdata(2, cnt), 0))
+            if (const auto item = itemcreate_map_inv(id, x, y, 0))
             {
-                item->own_state = static_cast<OwnState>(cmapdata(3, cnt));
+                item->own_state = static_cast<OwnState>(ex_info);
             }
-        }
-        if (cmapdata(4, cnt) == 1)
-        {
+            break;
+        case 1:
             flt();
-            chara_create(
-                -1, cmapdata(0, cnt), cmapdata(1, cnt), cmapdata(2, cnt));
-        }
-        if (cmapdata(4, cnt) == 2)
-        {
-            const auto& obj_data = cellobjdata[cmapdata(0, cnt)];
+            chara_create(-1, id, x, y);
+            break;
+        case 2: {
+            const auto& obj_data = cellobjdata[id];
             if (mapupdate)
             {
                 if (obj_data.type == 32)
@@ -3734,24 +3739,26 @@ void map_initcustom(const std::string& map_filename)
                 }
             }
             cell_featset(
-                cmapdata(1, cnt),
-                cmapdata(2, cnt),
+                x,
+                y,
                 obj_data.tile,
                 obj_data.type,
-                cmapdata(3, cnt) % 1000,
-                cmapdata(3, cnt) / 1000);
+                ex_info % 1000,
+                ex_info / 1000);
             if (obj_data.type == 10)
             {
-                map_data.stair_up_pos =
-                    cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
+                map_data.stair_up_pos = y * 1000 + x;
             }
             if (obj_data.type == 11)
             {
-                map_data.stair_down_pos =
-                    cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
+                map_data.stair_down_pos = y * 1000 + x;
             }
+            break;
+        }
+        default: assert(0); break;
         }
     }
+
     nooracle = 0;
     map_data.user_map_flag = 1;
 }

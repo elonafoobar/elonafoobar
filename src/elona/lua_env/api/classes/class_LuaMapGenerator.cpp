@@ -87,7 +87,7 @@ void LuaMapGenerator_create(int width, int height)
  */
 void LuaMapGenerator_load_custom(const std::string& name)
 {
-    elona::map_initcustom(name);
+    elona::map_init_static_map(name);
 }
 
 

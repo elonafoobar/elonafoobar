@@ -441,7 +441,6 @@ ELONA_EXTERN(int x1);
 ELONA_EXTERN(int x2);
 ELONA_EXTERN(int y1);
 ELONA_EXTERN(int y2);
-ELONA_EXTERN(std::string fmapfile);
 ELONA_EXTERN(std::string geneuse);
 ELONA_EXTERN(std::string mid);
 ELONA_EXTERN(std::string playerid);

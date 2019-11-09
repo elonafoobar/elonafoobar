@@ -272,9 +272,8 @@ void CellData::load_tile_grid(const std::vector<int>& tile_grid)
 
 void map_reload(const std::string& map_filename)
 {
-    fmapfile =
-        (filesystem::dirs::map() / fs::u8path(map_filename)).to_u8string();
-    ctrl_file_map_load_map_obj_files();
+    ctrl_file_map_load_map_obj_files(
+        filesystem::dirs::map() / fs::u8path(map_filename));
 
     for (int y = 0; y < map_data.height; ++y)
     {

@@ -870,15 +870,16 @@ void ctrl_file_map_items_write(const fs::path& filename)
 
 
 
-void ctrl_file_custom_map_read()
+void ctrl_file_custom_map_read(const fs::path& filename_base)
 {
-    ELONA_LOG("save.ctrl_file") << "custom_map_read() BEGIN";
+    ELONA_LOG("save.ctrl_file")
+        << "custom_map_read(" << filename_base.to_u8string() << ") BEGIN";
 
     DIM3(cmapdata, 5, 400);
     DIM3(mef, 9, MEF_MAX);
 
     {
-        const auto filepath = fs::u8path(fmapfile + u8".idx"s);
+        const auto filepath = filename_base.replace_extension("idx");
         load_v1(filepath, mdatatmp, 0, 100);
         for (int j = 0; j < 5; ++j)
         {
@@ -892,7 +893,7 @@ void ctrl_file_custom_map_read()
     }
 
     {
-        const auto filepath = fs::u8path(fmapfile + u8".map"s);
+        const auto filepath = filename_base.replace_extension("map");
         DIM3(mapsync, map_data.width,
              map_data.height); // TODO length_exception
         cell_data.init(map_data.width, map_data.height);
@@ -902,36 +903,43 @@ void ctrl_file_custom_map_read()
     }
 
     {
-        const auto filepath = fs::u8path(fmapfile + u8".obj"s);
+        const auto filepath = filename_base.replace_extension("obj");
         if (fs::exists(filepath))
         {
             load_v2(filepath, cmapdata, 0, 5, 0, 400);
         }
     }
 
-    ELONA_LOG("save.ctrl_file") << "custom_map_read() END";
+    ELONA_LOG("save.ctrl_file")
+        << "custom_map_read(" << filename_base.to_u8string() << ") END";
 }
 
 
 
-void ctrl_file_map_load_map_obj_files()
+void ctrl_file_map_load_map_obj_files(const fs::path& filename_base)
 {
-    ELONA_LOG("save.ctrl_file") << "map_load_map_obj_files() BEGIN";
+    ELONA_LOG("save.ctrl_file") << "map_load_map_obj_files("
+                                << filename_base.to_u8string() << ") BEGIN";
 
     DIM3(cmapdata, 5, 400);
 
-    std::vector<int> tile_grid(cell_data.width() * cell_data.height());
-    load_vec(fs::u8path(fmapfile + u8".map"), tile_grid);
-    cell_data.load_tile_grid(tile_grid);
-
-    const auto filepath = fs::u8path(fmapfile + u8".obj"s);
-    if (!fs::exists(filepath))
     {
-        return;
+        const auto filepath = filename_base.replace_extension("map");
+        std::vector<int> tile_grid(cell_data.width() * cell_data.height());
+        load_vec(filepath, tile_grid);
+        cell_data.load_tile_grid(tile_grid);
     }
-    load_v2(filepath, cmapdata, 0, 5, 0, 400);
 
-    ELONA_LOG("save.ctrl_file") << "map_load_map_obj_files() END";
+    {
+        const auto filepath = filename_base.replace_extension("obj");
+        if (fs::exists(filepath))
+        {
+            load_v2(filepath, cmapdata, 0, 5, 0, 400);
+        }
+    }
+
+    ELONA_LOG("save.ctrl_file")
+        << "map_load_map_obj_files(" << filename_base.to_u8string() << ") END";
 }
 
 
