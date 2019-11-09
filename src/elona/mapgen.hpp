@@ -37,6 +37,9 @@ void map_replace_random_tiles(int tile_id, int density);
 
 void map_set_fog();
 
+void map_place_upstairs(int x, int y);
+void map_place_downstairs(int x, int y);
+
 void generate_debug_map();
 void generate_random_nefia();
 int initialize_quest_map_crop();

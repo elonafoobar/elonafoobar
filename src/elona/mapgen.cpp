@@ -316,6 +316,20 @@ void create_room_door(
     }
 }
 
+
+
+void place_upstairs_at_random_pos(int x, int y, int w, int h)
+{
+    map_place_upstairs(rnd(w - 2) + x + 1, rnd(h - 2) + y + 1);
+}
+
+
+
+void place_downstairs_at_random_pos(int x, int y, int w, int h)
+{
+    map_place_downstairs(rnd(w - 2) + x + 1, rnd(h - 2) + y + 1);
+}
+
 } // namespace
 
 
@@ -1213,52 +1227,24 @@ int map_createroom(int type)
 
 
 
-int map_placeupstairs(int x, int y)
+void map_place_upstairs(int x, int y)
 {
-    int found_x;
-    int found_y;
-    if (x == 0)
-    {
-        found_x = rnd(roomwidth(cr) - 2) + roomx(cr) + 1;
-        found_y = rnd(roomheight(cr) - 2) + roomy(cr) + 1;
-    }
-    else
-    {
-        found_x = x;
-        found_y = y;
-    }
-    cell_featset(found_x, found_y, tile_upstairs, 10);
-    map_data.stair_up_pos = found_y * 1000 + found_x;
+    cell_featset(x, y, tile_upstairs, 10);
+    map_data.stair_up_pos = y * 1000 + x;
     rdroomupstair = cr;
-    return 1;
 }
 
 
 
-int map_placedownstairs(int x, int y)
+void map_place_downstairs(int x, int y)
 {
-    int found_x;
-    int found_y;
+    if (area_data[game_data.current_map].deepest_level <=
+        game_data.current_dungeon_level)
+        return;
 
-    if (game_data.current_dungeon_level >=
-        area_data[game_data.current_map].deepest_level)
-    {
-        return 0;
-    }
-    if (x == 0)
-    {
-        found_x = rnd(roomwidth(cr) - 2) + roomx(cr) + 1;
-        found_y = rnd(roomheight(cr) - 2) + roomy(cr) + 1;
-    }
-    else
-    {
-        found_x = x;
-        found_y = y;
-    }
-    cell_featset(found_x, found_y, tile_downstairs, 11);
-    map_data.stair_down_pos = found_y * 1000 + found_x;
+    cell_featset(x, y, tile_downstairs, 11);
+    map_data.stair_down_pos = y * 1000 + x;
     rdroomdownstair = cr;
-    return 1;
 }
 
 
@@ -2245,7 +2231,8 @@ int initialize_random_nefia_rdtype1()
     {
         return 0;
     }
-    map_placeupstairs();
+    place_upstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     {
         int stat = map_createroom(1);
         if (stat == 0)
@@ -2253,7 +2240,8 @@ int initialize_random_nefia_rdtype1()
             return 0;
         }
     }
-    map_placedownstairs();
+    place_downstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     for (int cnt = 0, cnt_end = (rdroomnum); cnt < cnt_end; ++cnt)
     {
         map_createroom(1);
@@ -2295,7 +2283,8 @@ int initialize_random_nefia_rdtype4()
     {
         return 0;
     }
-    map_placeupstairs();
+    place_upstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     {
         int stat = map_createroom(2);
         if (stat == 0)
@@ -2303,7 +2292,8 @@ int initialize_random_nefia_rdtype4()
             return 0;
         }
     }
-    map_placedownstairs();
+    place_downstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     for (int cnt = 0, cnt_end = (rdroomnum); cnt < cnt_end; ++cnt)
     {
         map_createroom(2);
@@ -2362,7 +2352,8 @@ int initialize_random_nefia_rdtype5()
     {
         return 0;
     }
-    map_placeupstairs();
+    place_upstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     {
         int stat = map_createroom(2);
         if (stat == 0)
@@ -2370,7 +2361,8 @@ int initialize_random_nefia_rdtype5()
             return 0;
         }
     }
-    map_placedownstairs();
+    place_downstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     for (int cnt = 0, cnt_end = (rdroomnum); cnt < cnt_end; ++cnt)
     {
         map_createroom(2);
@@ -2459,7 +2451,8 @@ int initialize_random_nefia_rdtype2()
     {
         return 0;
     }
-    map_placeupstairs();
+    place_upstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     {
         int stat = map_createroom();
         if (stat == 0)
@@ -2467,7 +2460,8 @@ int initialize_random_nefia_rdtype2()
             return 0;
         }
     }
-    map_placedownstairs();
+    place_downstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     for (int cnt = 0, cnt_end = (rdroomnum); cnt < cnt_end; ++cnt)
     {
         map_createroom(0);
@@ -2542,8 +2536,8 @@ int initialize_random_nefia_rdtype3()
         p = p(1);
         p(1) = p(2);
     }
-    map_placeupstairs(p, rnd(map_data.height - 4) + 2);
-    map_placedownstairs(p(1), rnd(map_data.height - 4) + 2);
+    map_place_upstairs(p, rnd(map_data.height - 4) + 2);
+    map_place_downstairs(p(1), rnd(map_data.height - 4) + 2);
     return 1;
 }
 
@@ -3029,7 +3023,7 @@ void initialize_random_nefia_rdtype8()
         y = rnd(15);
         if (cell_data.at(x, y).chip_id_actual == 100)
         {
-            map_placeupstairs(x, y);
+            map_place_upstairs(x, y);
             break;
         }
     }
@@ -3039,7 +3033,7 @@ void initialize_random_nefia_rdtype8()
         y = map_data.height - rnd(15) - 1;
         if (cell_data.at(x, y).chip_id_actual == 100)
         {
-            map_placedownstairs(x, y);
+            map_place_downstairs(x, y);
             break;
         }
     }
@@ -3271,8 +3265,8 @@ void mapgen_dig_maze()
                 continue;
             }
         }
-        map_placeupstairs(x, y);
-        map_placedownstairs(dx, dy);
+        map_place_upstairs(x, y);
+        map_place_downstairs(dx, dy);
         break;
     }
 }
