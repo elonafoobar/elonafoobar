@@ -21,9 +21,19 @@
 namespace
 {
 
+struct CellObjData
+{
+    int type;
+    int tile;
+};
+
+
+
 int tile_board;
 int tile_townboard;
 int tile_votebox;
+
+std::vector<CellObjData> cellobjdata;
 
 } // namespace
 
@@ -32,7 +42,6 @@ int tile_votebox;
 namespace elona
 {
 
-elona_vector2<int> cellobjdata;
 int i_at_m68;
 int tx_at_m168 = 0;
 int ty_at_m168 = 0;
@@ -91,13 +100,10 @@ void map_initialize()
 
 void initialize_cell_object_data()
 {
-    int tile_doorclosed2 = 0;
-    int tile_doorclosed3 = 0;
-    int maxobjid = 0;
+    const int tile_doorclosed2 = 728;
+    const int tile_doorclosed3 = 730;
     tile_trap = 234;
     tile_doorclosed = 726;
-    tile_doorclosed2 = 728;
-    tile_doorclosed3 = 730;
     tile_doorclosed4 = 733;
     tile_dooropen = 236;
     tile_downstairs = 231;
@@ -109,78 +115,65 @@ void initialize_cell_object_data()
     tile_board = 727;
     tile_votebox = 729;
     tile_townboard = 732;
-    DIM3(cellobjdata, 5, 50);
-    maxobjid = 0;
-    cellobjdata(0, maxobjid) = 21;
-    cellobjdata(1, maxobjid) = tile_doorclosed;
-    cellobjdata(2, maxobjid) = 99;
-    cellobjdata(3, maxobjid) = tile_doorclosed;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 21;
-    cellobjdata(1, maxobjid) = tile_doorclosed;
-    cellobjdata(2, maxobjid) = 99;
-    cellobjdata(3, maxobjid) = tile_doorclosed;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 21;
-    cellobjdata(1, maxobjid) = tile_doorclosed;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_doorclosed;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 14;
-    cellobjdata(1, maxobjid) = tile_trap;
-    cellobjdata(2, maxobjid) = 100;
-    cellobjdata(3, maxobjid) = 0;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 14;
-    cellobjdata(1, maxobjid) = tile_trap;
-    cellobjdata(2, maxobjid) = 100;
-    cellobjdata(3, maxobjid) = 0;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 10;
-    cellobjdata(1, maxobjid) = tile_upstairs;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_upstairs;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 11;
-    cellobjdata(1, maxobjid) = tile_downstairs;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_downstairs;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 21;
-    cellobjdata(1, maxobjid) = tile_doorclosed2;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_doorclosed2;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 23;
-    cellobjdata(1, maxobjid) = tile_board;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_board;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 31;
-    cellobjdata(1, maxobjid) = tile_votebox;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_votebox;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 32;
-    cellobjdata(1, maxobjid) = tile_trap;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = 0;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 21;
-    cellobjdata(1, maxobjid) = tile_doorclosed3;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_doorclosed3;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 33;
-    cellobjdata(1, maxobjid) = tile_townboard;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_townboard;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 21;
-    cellobjdata(1, maxobjid) = tile_doorclosed4;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_doorclosed4;
-    ++maxobjid;
+
+    cellobjdata = {
+        {
+            21,
+            tile_doorclosed,
+        },
+        {
+            21,
+            tile_doorclosed,
+        },
+        {
+            21,
+            tile_doorclosed,
+        },
+        {
+            14,
+            0,
+        },
+        {
+            14,
+            0,
+        },
+        {
+            10,
+            tile_upstairs,
+        },
+        {
+            11,
+            tile_downstairs,
+        },
+        {
+            21,
+            tile_doorclosed2,
+        },
+        {
+            23,
+            tile_board,
+        },
+        {
+            31,
+            tile_votebox,
+        },
+        {
+            32,
+            0,
+        },
+        {
+            21,
+            tile_doorclosed3,
+        },
+        {
+            33,
+            tile_townboard,
+        },
+        {
+            21,
+            tile_doorclosed4,
+        },
+    };
 }
 
 
@@ -3755,9 +3748,10 @@ void map_initcustom(const std::string& map_filename)
         }
         if (cmapdata(4, cnt) == 2)
         {
+            const auto& obj_data = cellobjdata[cmapdata(0, cnt)];
             if (mapupdate)
             {
-                if (cellobjdata(0, cmapdata(0, cnt)) == 32)
+                if (obj_data.type == 32)
                 {
                     continue;
                 }
@@ -3765,16 +3759,16 @@ void map_initcustom(const std::string& map_filename)
             cell_featset(
                 cmapdata(1, cnt),
                 cmapdata(2, cnt),
-                cellobjdata(3, cmapdata(0, cnt)),
-                cellobjdata(0, cmapdata(0, cnt)),
+                obj_data.tile,
+                obj_data.type,
                 cmapdata(3, cnt) % 1000,
                 cmapdata(3, cnt) / 1000);
-            if (cellobjdata(0, cmapdata(0, cnt)) == 10)
+            if (obj_data.type == 10)
             {
                 map_data.stair_up_pos =
                     cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
             }
-            if (cellobjdata(0, cmapdata(0, cnt)) == 11)
+            if (obj_data.type == 11)
             {
                 map_data.stair_down_pos =
                     cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
