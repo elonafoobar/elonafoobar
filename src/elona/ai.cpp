@@ -215,7 +215,7 @@ bool _ai_dir_check_y()
 // TODO: move it to random.hpp
 bool _percent(int percentage)
 {
-    return percentage <= 0 ? false : percentage > rnd(100);
+    return rnd(100) < percentage;
 }
 
 
@@ -259,22 +259,24 @@ int dist_helper(const Character& a, const Character& b)
 
 bool _try_generate_special_throwing_item(const Character& chara, int action_id)
 {
-    flt();
     switch (action_id)
     {
     case -9999:
+        flt();
         flttypemajor = 52000;
         return !!itemcreate(
             chara.index, choice(isetthrowpotionminor), -1, -1, 0);
     case -9998:
+        flt();
         flttypemajor = 52000;
         return !!itemcreate(
             chara.index, choice(isetthrowpotionmajor), -1, -1, 0);
     case -9997:
+        flt();
         flttypemajor = 52000;
         return !!itemcreate(
             chara.index, choice(isetthrowpotiongreater), -1, -1, 0);
-    case -9996: return !!itemcreate(chara.index, 698, -1, -1, 0);
+    case -9996: flt(); return !!itemcreate(chara.index, 698, -1, -1, 0);
     default: assert(0); return false;
     }
 }
@@ -323,8 +325,7 @@ void _ally_sells_item(Character& chara)
         {
             continue;
         }
-        int category = the_item_db[itemid2int(item.id)]->category;
-        if (category == 77000)
+        if (the_item_db[itemid2int(item.id)]->category == 77000)
         {
             sold_item_count += item.number();
             const auto total_value = item.value * item.number();
@@ -367,7 +368,7 @@ void _ally_trains(Character& chara)
     txt(i18n::s.get("core.ai.ally.visits_trainer", chara),
         Message::color{ColorIndex::cyan});
 
-    for (int i = 0; i < 4; ++i)
+    for (int _i = 0; _i < 4; ++_i)
     {
         while (true)
         {
@@ -397,7 +398,7 @@ bool _will_crush_wall(const Character& chara, int x, int y)
 {
     return chara.index >= 16 && chara.quality >= Quality::miracle &&
         chara.relationship <= -2 && _is_valid_position(x, y) &&
-        chip_data.for_cell(x, y).effect & 4;
+        (chip_data.for_cell(x, y).effect & 4);
 }
 
 
@@ -579,11 +580,12 @@ void _proc_hungry(Character& chara)
     {
         flt(20);
         p = rnd(4);
+        // TODO: maybe, is "!chara.has_anorexia()" intended?
         if (p == 0 || chara.has_anorexia())
         {
             flttypemajor = 57000;
         }
-        else if (p == 1)
+        if (p == 1)
         {
             flttypemajor = 52000;
         }
@@ -591,20 +593,26 @@ void _proc_hungry(Character& chara)
         {
             flttypeminor = 52002;
         }
-        int stat = itemcreate(chara.index, 0, -1, -1, 0);
-        if (stat == 1 && the_item_db[itemid2int(inv[ci].id)]->is_drinkable)
+        if (itemcreate(chara.index, 0, -1, -1, 0))
         {
-            if (inv[ci].id == ItemId::molotov)
+            if (the_item_db[itemid2int(inv[ci].id)]->is_drinkable)
             {
-                if (rnd(5) == 0)
+                if (inv[ci].id == ItemId::molotov)
                 {
-                    inv[ci].remove();
+                    if (rnd(5) == 0)
+                    {
+                        inv[ci].remove();
+                    }
+                }
+                else
+                {
+                    chara.item_which_will_be_used = ci;
+                    _change_nutrition(chara);
                 }
             }
             else
             {
-                chara.item_which_will_be_used = ci;
-                _change_nutrition(chara);
+                inv[ci].remove();
             }
         }
     }
@@ -991,13 +999,13 @@ TurnResult ai_proc_misc_map_events(Character& chara)
                 {
                     flttypemajor = 57000;
                 }
-                else if (rnd(8))
-                {
-                    flttypeminor = 52002;
-                }
                 else
                 {
                     flttypemajor = 52000;
+                    if (rnd(8))
+                    {
+                        flttypeminor = 52002;
+                    }
                 }
                 if (itemcreate(chara.index, 0, -1, -1, 0))
                 {
@@ -1010,8 +1018,8 @@ TurnResult ai_proc_misc_map_events(Character& chara)
             if ((chara.id == CharaId::town_child ||
                  chara.id == CharaId::young_lady) &&
                 is_in_fov(chara) &&
-                chip_data.for_cell(cdata[cc].position.x, cdata[cc].position.y)
-                        .kind == 4)
+                chip_data.for_cell(chara.position.x, chara.position.y).kind ==
+                    4)
             {
                 const auto turn_result = _proc_make_snowman(chara);
                 if (turn_result)
@@ -1029,7 +1037,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
     // Special AIs.
     if (chara.ai_calm == 5)
     {
-        if (cdata[cc].id == CharaId::bard)
+        if (chara.id == CharaId::bard)
         {
             if (rnd(5) == 0)
             {
@@ -1038,7 +1046,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
                 return TurnResult::turn_end;
             }
         }
-        if (cdata[cc].id == CharaId::cleaner || cdata[cc].id == CharaId::balzak)
+        if (chara.id == CharaId::cleaner || chara.id == CharaId::balzak)
         {
             if (is_in_fov(chara))
             {
@@ -1064,8 +1072,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
                 }
             }
         }
-        if (cdata[cc].id == CharaId::prostitute ||
-            cdata[cc].id == CharaId::silvia)
+        if (chara.id == CharaId::prostitute || chara.id == CharaId::silvia)
         {
             if (rnd(10) == 0)
             {
