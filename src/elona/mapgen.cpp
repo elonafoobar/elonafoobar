@@ -204,6 +204,21 @@ void convert_tiles_at_random()
     });
 }
 
+
+
+bool can_dig_cell(int x, int y)
+{
+    if (x < 1 || map_data.width - 2 < x || y < 1 || map_data.height - 2 < y)
+    {
+        return false; // out of range
+    }
+    if (cell_data.at(x, y).chip_id_actual == 100)
+    {
+        return true;
+    }
+    return cell_data.at(x, y).chip_id_actual == 0;
+}
+
 } // namespace
 
 
@@ -454,21 +469,6 @@ void map_replace_random_tiles(int tile_id, int density)
 
 
 
-int map_digcheck(int x, int y)
-{
-    if (x < 1 || y < 1 || x > map_data.width - 2 || y > map_data.height - 2)
-    {
-        return 0;
-    }
-    if (cell_data.at(x, y).chip_id_actual == 100)
-    {
-        return 100;
-    }
-    return cell_data.at(x, y).chip_id_actual == 0;
-}
-
-
-
 void map_nextdir1(int x, int y)
 {
     if (tx_at_m168 >= x - 4 && tx_at_m168 <= x + 4)
@@ -577,7 +577,7 @@ void map_nextdir2(int x, int y)
     {
         if (dir2_at_m168 == 1)
         {
-            if (map_digcheck(tx_at_m168 - 1, ty_at_m168))
+            if (can_dig_cell(tx_at_m168 - 1, ty_at_m168))
             {
                 if (tx_at_m168 == x)
                 {
@@ -594,7 +594,7 @@ void map_nextdir2(int x, int y)
         }
         if (dir2_at_m168 == 2)
         {
-            if (map_digcheck(tx_at_m168 + 1, ty_at_m168))
+            if (can_dig_cell(tx_at_m168 + 1, ty_at_m168))
             {
                 if (tx_at_m168 == x)
                 {
@@ -611,7 +611,7 @@ void map_nextdir2(int x, int y)
         }
         if (dir2_at_m168 == 3)
         {
-            if (map_digcheck(tx_at_m168, ty_at_m168 - 1))
+            if (can_dig_cell(tx_at_m168, ty_at_m168 - 1))
             {
                 if (ty_at_m168 == y)
                 {
@@ -628,7 +628,7 @@ void map_nextdir2(int x, int y)
         }
         if (dir2_at_m168 == 0)
         {
-            if (map_digcheck(tx_at_m168, ty_at_m168 + 1))
+            if (can_dig_cell(tx_at_m168, ty_at_m168 + 1))
             {
                 if (ty_at_m168 == y)
                 {
@@ -650,7 +650,7 @@ void map_nextdir2(int x, int y)
         {
             if (ty_at_m168 > y)
             {
-                if (map_digcheck(tx_at_m168, ty_at_m168 - 1))
+                if (can_dig_cell(tx_at_m168, ty_at_m168 - 1))
                 {
                     dir2_at_m168 = dir_at_m168;
                     dir_at_m168 = 3;
@@ -658,7 +658,7 @@ void map_nextdir2(int x, int y)
             }
             if (ty_at_m168 < y)
             {
-                if (map_digcheck(tx_at_m168, ty_at_m168 + 1))
+                if (can_dig_cell(tx_at_m168, ty_at_m168 + 1))
                 {
                     dir2_at_m168 = dir_at_m168;
                     dir_at_m168 = 0;
@@ -673,7 +673,7 @@ void map_nextdir2(int x, int y)
         {
             if (tx_at_m168 > x)
             {
-                if (map_digcheck(tx_at_m168 - 1, ty_at_m168))
+                if (can_dig_cell(tx_at_m168 - 1, ty_at_m168))
                 {
                     dir2_at_m168 = dir_at_m168;
                     dir_at_m168 = 1;
@@ -681,7 +681,7 @@ void map_nextdir2(int x, int y)
             }
             if (tx_at_m168 < x)
             {
-                if (map_digcheck(tx_at_m168 + 1, ty_at_m168))
+                if (can_dig_cell(tx_at_m168 + 1, ty_at_m168))
                 {
                     dir2_at_m168 = dir_at_m168;
                     dir_at_m168 = 2;
@@ -742,7 +742,7 @@ int map_digtoentrance1(int x1, int y1, int x2, int y2)
         {
             ++dy_at_m168;
         }
-        if (map_digcheck(dx_at_m168, dy_at_m168))
+        if (can_dig_cell(dx_at_m168, dy_at_m168))
         {
             tx_at_m168 = dx_at_m168;
             ty_at_m168 = dy_at_m168;
@@ -757,7 +757,7 @@ int map_digtoentrance1(int x1, int y1, int x2, int y2)
         {
             if (dest_at_m168 == 1)
             {
-                if (map_digcheck(tx_at_m168 - 1, ty_at_m168))
+                if (can_dig_cell(tx_at_m168 - 1, ty_at_m168))
                 {
                     dir_at_m168 = 1;
                     dest_at_m168 = -2;
@@ -765,7 +765,7 @@ int map_digtoentrance1(int x1, int y1, int x2, int y2)
             }
             if (dest_at_m168 == 2)
             {
-                if (map_digcheck(tx_at_m168 + 1, ty_at_m168))
+                if (can_dig_cell(tx_at_m168 + 1, ty_at_m168))
                 {
                     dir_at_m168 = 2;
                     dest_at_m168 = -2;
@@ -773,7 +773,7 @@ int map_digtoentrance1(int x1, int y1, int x2, int y2)
             }
             if (dest_at_m168 == 3)
             {
-                if (map_digcheck(tx_at_m168, ty_at_m168 - 1))
+                if (can_dig_cell(tx_at_m168, ty_at_m168 - 1))
                 {
                     dir_at_m168 = 3;
                     dest_at_m168 = -2;
@@ -781,7 +781,7 @@ int map_digtoentrance1(int x1, int y1, int x2, int y2)
             }
             if (dest_at_m168 == 0)
             {
-                if (map_digcheck(tx_at_m168, ty_at_m168 + 1))
+                if (can_dig_cell(tx_at_m168, ty_at_m168 + 1))
                 {
                     dir_at_m168 = 0;
                     dest_at_m168 = -2;
