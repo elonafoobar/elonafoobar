@@ -449,6 +449,250 @@ void make_door()
     }
 }
 
+
+
+optional<int> _setup_map_generation_parameters()
+{
+    const auto& area = area_data[game_data.current_map];
+
+    int dungeon_type = 1;
+    if (rnd(30) == 0)
+    {
+        dungeon_type = 3;
+    }
+
+    if (area.type == mdata_t::MapType::dungeon)
+    {
+        dungeon_type = 2;
+        if (rnd(4) == 0)
+        {
+            dungeon_type = 1;
+        }
+        if (rnd(6) == 0)
+        {
+            dungeon_type = 10;
+        }
+        if (rnd(10) == 0)
+        {
+            dungeon_type = 4;
+        }
+        if (rnd(25) == 0)
+        {
+            dungeon_type = 8;
+        }
+        if (rnd(20) == 0)
+        {
+            map_data.tileset = 10;
+        }
+    }
+    if (area.type == mdata_t::MapType::dungeon_forest)
+    {
+        dungeon_type = 2;
+        if (rnd(6) == 0)
+        {
+            dungeon_type = 1;
+        }
+        if (rnd(6) == 0)
+        {
+            dungeon_type = 10;
+        }
+        if (rnd(25) == 0)
+        {
+            dungeon_type = 8;
+        }
+        if (rnd(20) == 0)
+        {
+            dungeon_type = 4;
+        }
+    }
+    if (area.type == mdata_t::MapType::dungeon_tower)
+    {
+        dungeon_type = 1;
+        if (rnd(5) == 0)
+        {
+            dungeon_type = 4;
+        }
+        if (rnd(10) == 0)
+        {
+            dungeon_type = 3;
+        }
+        if (rnd(25) == 0)
+        {
+            dungeon_type = 2;
+        }
+        if (rnd(40) == 0)
+        {
+            map_data.tileset = 10;
+        }
+    }
+    if (area.type == mdata_t::MapType::dungeon_castle)
+    {
+        dungeon_type = 1;
+        if (rnd(5) == 0)
+        {
+            dungeon_type = 4;
+        }
+        if (rnd(6) == 0)
+        {
+            dungeon_type = 5;
+        }
+        if (rnd(7) == 0)
+        {
+            dungeon_type = 2;
+        }
+        if (rnd(40) == 0)
+        {
+            map_data.tileset = 10;
+        }
+    }
+
+    if (area.id == mdata_t::MapId::lesimas)
+    {
+        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
+        map_data.tileset = 101;
+        if (rnd(20) == 0)
+        {
+            map_data.tileset = 10;
+        }
+        if (game_data.current_dungeon_level < 35)
+        {
+            map_data.tileset = 0;
+        }
+        if (game_data.current_dungeon_level < 20)
+        {
+            map_data.tileset = 100;
+        }
+        if (game_data.current_dungeon_level < 10)
+        {
+            map_data.tileset = 200;
+        }
+        if (game_data.current_dungeon_level < 5)
+        {
+            map_data.tileset = 0;
+        }
+        dungeon_type = 1;
+        for (int cnt = 0; cnt < 1; ++cnt)
+        {
+            if (game_data.current_dungeon_level == 1)
+            {
+                dungeon_type = 2;
+                break;
+            }
+            if (game_data.current_dungeon_level == 5)
+            {
+                dungeon_type = 5;
+                break;
+            }
+            if (game_data.current_dungeon_level == 10)
+            {
+                dungeon_type = 3;
+                break;
+            }
+            if (game_data.current_dungeon_level == 15)
+            {
+                dungeon_type = 5;
+                break;
+            }
+            if (game_data.current_dungeon_level == 20)
+            {
+                dungeon_type = 3;
+                break;
+            }
+            if (game_data.current_dungeon_level == 25)
+            {
+                dungeon_type = 5;
+                break;
+            }
+            if (game_data.current_dungeon_level == 30)
+            {
+                dungeon_type = 3;
+                break;
+            }
+            if (game_data.current_dungeon_level < 30)
+            {
+                if (rnd(4) == 0)
+                {
+                    dungeon_type = 2;
+                }
+            }
+            if (rnd(5) == 0)
+            {
+                dungeon_type = 4;
+            }
+            if (rnd(20) == 0)
+            {
+                dungeon_type = 8;
+            }
+            if (rnd(6) == 0)
+            {
+                dungeon_type = 10;
+            }
+        }
+    }
+    if (area.id == mdata_t::MapId::tower_of_fire)
+    {
+        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
+        map_data.tileset = 7;
+        dungeon_type = 1;
+    }
+    if (area.id == mdata_t::MapId::crypt_of_the_damned)
+    {
+        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
+        map_data.tileset = 0;
+        dungeon_type = 1;
+    }
+    if (area.id == mdata_t::MapId::ancient_castle)
+    {
+        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
+        map_data.tileset = 200;
+        dungeon_type = 1;
+    }
+    if (area.id == mdata_t::MapId::mountain_pass)
+    {
+        dungeon_type = 8;
+    }
+    if (area.id == mdata_t::MapId::puppy_cave)
+    {
+        dungeon_type = 10;
+    }
+    if (area.id == mdata_t::MapId::minotaurs_nest)
+    {
+        dungeon_type = 9;
+    }
+    if (area.id == mdata_t::MapId::quest)
+    {
+        if (game_data.executing_immediate_quest_type == 1001)
+        {
+            map_data.tileset = 300;
+            map_data.width = 28 + rnd(6);
+            map_data.height = 20 + rnd(6);
+            dungeon_type = 6;
+        }
+        if (game_data.executing_immediate_quest_type == 1009)
+        {
+            initialize_quest_map_party();
+            return none;
+        }
+        if (game_data.executing_immediate_quest_type == 1006)
+        {
+            initialize_quest_map_crop();
+            return none;
+        }
+        if (game_data.executing_immediate_quest_type == 1008)
+        {
+            initialize_quest_map_town();
+            return none;
+        }
+        if (game_data.executing_immediate_quest_type == 1010)
+        {
+            initialize_quest_map_town();
+            return none;
+        }
+    }
+
+    return dungeon_type;
+}
+
 } // namespace
 
 
@@ -1467,248 +1711,7 @@ void map_generate_debug_map()
     map_place_player_and_allies();
 }
 
-static optional<int> _setup_map_generation_parameters()
-{
-    int rdtype = 1;
 
-    if (rnd(30) == 0)
-    {
-        rdtype = 3;
-    }
-    if (area_data[game_data.current_map].type == mdata_t::MapType::dungeon)
-    {
-        rdtype = 2;
-        if (rnd(4) == 0)
-        {
-            rdtype = 1;
-        }
-        if (rnd(6) == 0)
-        {
-            rdtype = 10;
-        }
-        if (rnd(10) == 0)
-        {
-            rdtype = 4;
-        }
-        if (rnd(25) == 0)
-        {
-            rdtype = 8;
-        }
-        if (rnd(20) == 0)
-        {
-            map_data.tileset = 10;
-        }
-    }
-    if (area_data[game_data.current_map].type ==
-        mdata_t::MapType::dungeon_forest)
-    {
-        rdtype = 2;
-        if (rnd(6) == 0)
-        {
-            rdtype = 1;
-        }
-        if (rnd(6) == 0)
-        {
-            rdtype = 10;
-        }
-        if (rnd(25) == 0)
-        {
-            rdtype = 8;
-        }
-        if (rnd(20) == 0)
-        {
-            rdtype = 4;
-        }
-    }
-    if (area_data[game_data.current_map].type ==
-        mdata_t::MapType::dungeon_tower)
-    {
-        rdtype = 1;
-        if (rnd(5) == 0)
-        {
-            rdtype = 4;
-        }
-        if (rnd(10) == 0)
-        {
-            rdtype = 3;
-        }
-        if (rnd(25) == 0)
-        {
-            rdtype = 2;
-        }
-        if (rnd(40) == 0)
-        {
-            map_data.tileset = 10;
-        }
-    }
-    if (area_data[game_data.current_map].type ==
-        mdata_t::MapType::dungeon_castle)
-    {
-        rdtype = 1;
-        if (rnd(5) == 0)
-        {
-            rdtype = 4;
-        }
-        if (rnd(6) == 0)
-        {
-            rdtype = 5;
-        }
-        if (rnd(7) == 0)
-        {
-            rdtype = 2;
-        }
-        if (rnd(40) == 0)
-        {
-            map_data.tileset = 10;
-        }
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::lesimas)
-    {
-        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
-        map_data.tileset = 101;
-        if (rnd(20) == 0)
-        {
-            map_data.tileset = 10;
-        }
-        if (game_data.current_dungeon_level < 35)
-        {
-            map_data.tileset = 0;
-        }
-        if (game_data.current_dungeon_level < 20)
-        {
-            map_data.tileset = 100;
-        }
-        if (game_data.current_dungeon_level < 10)
-        {
-            map_data.tileset = 200;
-        }
-        if (game_data.current_dungeon_level < 5)
-        {
-            map_data.tileset = 0;
-        }
-        rdtype = 1;
-        for (int cnt = 0; cnt < 1; ++cnt)
-        {
-            if (game_data.current_dungeon_level == 1)
-            {
-                rdtype = 2;
-                break;
-            }
-            if (game_data.current_dungeon_level == 5)
-            {
-                rdtype = 5;
-                break;
-            }
-            if (game_data.current_dungeon_level == 10)
-            {
-                rdtype = 3;
-                break;
-            }
-            if (game_data.current_dungeon_level == 15)
-            {
-                rdtype = 5;
-                break;
-            }
-            if (game_data.current_dungeon_level == 20)
-            {
-                rdtype = 3;
-                break;
-            }
-            if (game_data.current_dungeon_level == 25)
-            {
-                rdtype = 5;
-                break;
-            }
-            if (game_data.current_dungeon_level == 30)
-            {
-                rdtype = 3;
-                break;
-            }
-            if (game_data.current_dungeon_level < 30)
-            {
-                if (rnd(4) == 0)
-                {
-                    rdtype = 2;
-                }
-            }
-            if (rnd(5) == 0)
-            {
-                rdtype = 4;
-            }
-            if (rnd(20) == 0)
-            {
-                rdtype = 8;
-            }
-            if (rnd(6) == 0)
-            {
-                rdtype = 10;
-            }
-        }
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::tower_of_fire)
-    {
-        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
-        map_data.tileset = 7;
-        rdtype = 1;
-    }
-    if (area_data[game_data.current_map].id ==
-        mdata_t::MapId::crypt_of_the_damned)
-    {
-        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
-        map_data.tileset = 0;
-        rdtype = 1;
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::ancient_castle)
-    {
-        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
-        map_data.tileset = 200;
-        rdtype = 1;
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::mountain_pass)
-    {
-        rdtype = 8;
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::puppy_cave)
-    {
-        rdtype = 10;
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::minotaurs_nest)
-    {
-        rdtype = 9;
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::quest)
-    {
-        if (game_data.executing_immediate_quest_type == 1001)
-        {
-            map_data.tileset = 300;
-            map_data.width = 28 + rnd(6);
-            map_data.height = 20 + rnd(6);
-            rdtype = 6;
-        }
-        if (game_data.executing_immediate_quest_type == 1009)
-        {
-            initialize_quest_map_party();
-            return none;
-        }
-        if (game_data.executing_immediate_quest_type == 1006)
-        {
-            initialize_quest_map_crop();
-            return none;
-        }
-        if (game_data.executing_immediate_quest_type == 1008)
-        {
-            initialize_quest_map_town();
-            return none;
-        }
-        if (game_data.executing_immediate_quest_type == 1010)
-        {
-            initialize_quest_map_town();
-            return none;
-        }
-    }
-
-    return rdtype;
-}
 
 void generate_random_nefia()
 {
