@@ -816,12 +816,6 @@ int transplant_body_parts();
 void cnvbonus(int = 0, int = 0);
 
 
-//// AI
-TurnResult proc_ai_basic();
-TurnResult proc_misc_npc_map_events();
-TurnResult proc_ally_town_training(bool = false);
-
-
 //// UI
 void help_halt();
 int winposy(int = 0, int = 0);
