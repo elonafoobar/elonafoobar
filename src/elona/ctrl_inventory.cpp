@@ -353,7 +353,6 @@ label_20591:
             if (invctrl == 19)
             {
                 dbid = itemid2int(item.id);
-                dbspec = 12;
                 bool is_offerable = item_db_is_offerable(inv[ci], dbid);
                 if (is_offerable == 0)
                 {

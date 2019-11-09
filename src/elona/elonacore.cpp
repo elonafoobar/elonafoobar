@@ -4717,12 +4717,8 @@ int random_material(int level, int rarity)
 
 void atxinit()
 {
-    if (atxthrough == 0)
-    {
-        atbuff = "";
-        notesel(atbuff);
-    }
-    atxthrough = 0;
+    atbuff = "";
+    notesel(atbuff);
     listmax = 0;
     cs = 0;
     page = 0;
@@ -10091,7 +10087,6 @@ void do_ranged_attack()
         efp = sdata(attackskill, cc) * 8 + 10;
         magic();
     }
-    attackvar = 0;
     ammoproc = -1;
     ammoprocbk = -1;
 }
@@ -10183,7 +10178,6 @@ void try_to_melee_attack()
         extraattack = 0;
         do_physical_attack();
     }
-    attackvar = 0;
 }
 
 

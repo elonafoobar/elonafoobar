@@ -1832,7 +1832,7 @@ int search_material_spot()
         return 0;
     }
     atxspot = 11;
-    atxlv = game_data.current_dungeon_level;
+    int atxlv = game_data.current_dungeon_level;
     if (map_data.type == mdata_t::MapType::dungeon)
     {
         atxspot = 9;

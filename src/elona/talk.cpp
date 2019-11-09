@@ -56,7 +56,6 @@ bool talk_setup_variables(Character &chara)
         map_proc_regen_and_update();
     }
     cs = 0;
-    chatflag = 0;
     chatesc = 1;
     if (chara.relationship <= -1)
     {

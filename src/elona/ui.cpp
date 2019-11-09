@@ -19,6 +19,10 @@
 namespace
 {
 
+int raderh;
+int raderw;
+int raderx;
+int radery;
 
 int inf_barh;
 int inf_bary;
@@ -1306,7 +1310,6 @@ void initialize_ui_constants()
     inf_maxmsglen = static_cast<size_t>(inf_maxmsglen_i);
     inf_maxlog = (inf_msgy - 100) / inf_msgspace + 3;
     inf_very = windowh - inf_verh;
-    screenmsgy = inf_screeny + inf_tiles * 2;
     prompty = (windowh - inf_verh - 30) / 2 - 4;
     promptx = (windoww - 10) / 2 + 3;
 }
