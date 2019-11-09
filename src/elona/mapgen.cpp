@@ -18,6 +18,16 @@
 
 
 
+namespace elona
+{
+
+// TODO
+extern int tile_pot;
+
+} // namespace elona
+
+
+
 namespace
 {
 
@@ -330,6 +340,66 @@ void place_downstairs_at_random_pos(int x, int y, int w, int h)
     map_place_downstairs(rnd(w - 2) + x + 1, rnd(h - 2) + y + 1);
 }
 
+
+
+template <typename F>
+void _place_trap_web_or_barrel_internal(F put_object)
+{
+    for (int _i = 0; _i < 4; ++_i)
+    {
+        const int x = rnd(map_data.width - 5) + 2;
+        const int y = rnd(map_data.height - 5) + 2;
+        if ((chip_data.for_cell(x, y).effect & 4) == 0)
+        {
+            if (cell_data.at(x, y).feats == 0)
+            {
+                put_object(x, y);
+                return;
+            }
+        }
+    }
+}
+
+
+
+void place_trap()
+{
+    _place_trap_web_or_barrel_internal([&](int x, int y) {
+        const int trap_type = rnd(8);
+        if (game_data.current_dungeon_level <= 5)
+        {
+            if (trap_type == 1 || trap_type == 5 || trap_type == 6)
+            {
+                return;
+            }
+        }
+        if (game_data.current_dungeon_level <= 25)
+        {
+            if (trap_type == 7)
+            {
+                return;
+            }
+        }
+        cell_featset(x, y, 0, 14, trap_type);
+    });
+}
+
+
+
+void place_web(int power)
+{
+    _place_trap_web_or_barrel_internal(
+        [&](int x, int y) { mef_add(x, y, 1, 11, -1, power); });
+}
+
+
+
+void place_barrel()
+{
+    _place_trap_web_or_barrel_internal(
+        [&](int x, int y) { cell_featset(x, y, tile_pot, 30); });
+}
+
 } // namespace
 
 
@@ -361,9 +431,6 @@ int rdroomsizemax = 0;
 int rdroomsizemin = 0;
 int rdroomupstair = 0;
 int rdroomdownstair = 0;
-int dx_at_m170 = 0;
-int dy_at_m170 = 0;
-int p_at_m170 = 0;
 int tmp_at_m172;
 int rdroomentrance = 0;
 elona_vector1<int> rdval;
@@ -1249,144 +1316,6 @@ void map_place_downstairs(int x, int y)
 
 
 
-int map_trap(int x, int y, int, int trap_type)
-{
-    int trap_at_m170 = 0;
-    dx_at_m170 = x;
-    dy_at_m170 = y;
-    p_at_m170 = 0;
-    while (1)
-    {
-        if (p_at_m170 >= 3)
-        {
-            return 0;
-        }
-        if (x == 0)
-        {
-            dx_at_m170 = rnd(map_data.width - 5) + 2;
-            dy_at_m170 = rnd(map_data.height - 5) + 2;
-        }
-        else
-        {
-            dx_at_m170 = x;
-            dy_at_m170 = y;
-        }
-        if ((chip_data.for_cell(dx_at_m170, dy_at_m170).effect & 4) == 0)
-        {
-            if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
-            {
-                if (trap_type == 0)
-                {
-                    trap_at_m170 = rnd(8);
-                }
-                else
-                {
-                    trap_at_m170 = trap_type;
-                }
-                if (game_data.current_dungeon_level <= 5)
-                {
-                    if (trap_at_m170 == 6)
-                    {
-                        return 0;
-                    }
-                    if (trap_at_m170 == 1)
-                    {
-                        return 0;
-                    }
-                    if (trap_at_m170 == 5)
-                    {
-                        return 0;
-                    }
-                }
-                if (game_data.current_dungeon_level <= 25)
-                {
-                    if (trap_at_m170 == 7)
-                    {
-                        return 0;
-                    }
-                }
-                cell_featset(dx_at_m170, dy_at_m170, 0, 14, trap_at_m170);
-                return 1;
-            }
-        }
-        p_at_m170 += 1;
-    }
-}
-
-
-
-int map_web(int x, int y, int power)
-{
-    dx_at_m170 = x;
-    dy_at_m170 = y;
-    p_at_m170 = 0;
-
-    while (1)
-    {
-        if (p_at_m170 >= 3)
-        {
-            return 0;
-        }
-        if (x == 0)
-        {
-            dx_at_m170 = rnd(map_data.width - 5) + 2;
-            dy_at_m170 = rnd(map_data.height - 5) + 2;
-        }
-        else
-        {
-            dx_at_m170 = x;
-            dy_at_m170 = y;
-        }
-        if ((chip_data.for_cell(dx_at_m170, dy_at_m170).effect & 4) == 0)
-        {
-            if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
-            {
-                mef_add(dx_at_m170, dy_at_m170, 1, 11, -1, power);
-                return 1;
-            }
-        }
-        p_at_m170 += 1;
-    }
-}
-
-
-
-int map_barrel(int x, int y)
-{
-    dx_at_m170 = x;
-    dy_at_m170 = y;
-    p_at_m170 = 0;
-
-    while (1)
-    {
-        if (p_at_m170 >= 3)
-        {
-            return 0;
-        }
-        if (x == 0)
-        {
-            dx_at_m170 = rnd(map_data.width - 5) + 2;
-            dy_at_m170 = rnd(map_data.height - 5) + 2;
-        }
-        else
-        {
-            dx_at_m170 = x;
-            dy_at_m170 = y;
-        }
-        if ((chip_data.for_cell(dx_at_m170, dy_at_m170).effect & 4) == 0)
-        {
-            if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
-            {
-                cell_featset(dx_at_m170, dy_at_m170, tile_pot, 30);
-                return 1;
-            }
-        }
-        p_at_m170 += 1;
-    }
-}
-
-
-
 int map_connectroom()
 {
     cr = 0;
@@ -1994,7 +1923,7 @@ void generate_random_nefia()
          cnt < cnt_end;
          ++cnt)
     {
-        map_trap(0, 0, game_data.current_dungeon_level);
+        place_trap();
     }
     if (rnd(5) == 0)
     {
@@ -2005,7 +1934,7 @@ void generate_random_nefia()
         }
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            map_web(0, 0, game_data.current_dungeon_level * 10 + 100);
+            place_web(game_data.current_dungeon_level * 10 + 100);
         }
     }
     if (rnd(4) == 0)
@@ -2013,7 +1942,7 @@ void generate_random_nefia()
         p = clamp(rnd(map_data.width * map_data.height / 500 + 1) + 1, 3, 15);
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            map_barrel(0, 0);
+            place_barrel();
         }
     }
     if (map_data.refresh_type == 1)
