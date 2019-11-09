@@ -36,7 +36,7 @@ void map_place_player_and_allies();
 /// @param density Density in percentage
 void map_replace_random_tiles(int tile_id, int density);
 
-void map_setfog(int = 0, int = 0);
+void map_set_fog();
 
 void generate_debug_map();
 void generate_random_nefia();

@@ -800,18 +800,12 @@ int map_digtoentrance1(int x1, int y1, int x2, int y2)
 
 
 
-void map_setfog(int, int)
+void map_set_fog()
 {
-    for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
-    {
-        y = cnt;
-        for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
-        {
-            x = cnt;
-            cell_data.at(x, y).chip_id_memory =
-                tile_fog + (rnd(tile_fog(2)) == 0) * rnd(tile_fog(1));
-        }
-    }
+    for_each_cell([&](int x, int y) {
+        cell_data.at(x, y).chip_id_memory =
+            tile_fog + (rnd(tile_fog(2)) == 0) * rnd(tile_fog(1));
+    });
 }
 
 

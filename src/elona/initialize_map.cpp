@@ -164,7 +164,7 @@ void _reveal_map()
 
 void _init_map_visibility()
 {
-    map_setfog();
+    map_set_fog();
     if (map_should_reveal_fog())
     {
         _reveal_map();
