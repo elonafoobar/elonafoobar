@@ -195,7 +195,7 @@ void LuaMapGenerator_set_no_aggro_refresh(bool flag)
  */
 void LuaMapGenerator_place_player()
 {
-    elona::map_placeplayer();
+    elona::map_place_player_and_allies();
 }
 
 
@@ -216,7 +216,7 @@ void LuaMapGenerator_place_player_xy(int x, int y)
 
     mapstartx = x;
     mapstarty = y;
-    elona::map_placeplayer();
+    elona::map_place_player_and_allies();
 }
 
 

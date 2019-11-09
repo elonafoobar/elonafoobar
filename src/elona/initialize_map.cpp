@@ -1361,7 +1361,7 @@ int initialize_map_pregenerate()
         ctrl_file_map_items_read(fs::u8path(u8"inv_"s + mid + u8".s2"));
         if (mode == 2)
         {
-            map_placeplayer();
+            map_place_player_and_allies();
         }
         return 1;
     }

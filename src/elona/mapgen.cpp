@@ -389,19 +389,18 @@ void map_place_chara_on_pet_arena(Character& chara, ArenaCharaType chara_type)
 
 
 
-void map_placeplayer()
+void map_place_player_and_allies()
 {
     if (mode == 11)
-    {
-        return;
-    }
+        return; // during the first initialization of all towns
+
     camera = 0;
     for (auto&& chara : cdata.player_and_allies())
     {
         if (chara.state() != Character::State::alive)
-        {
             continue;
-        }
+
+        // Mount
         if (!chara.is_player())
         {
             if (game_data.mount == chara.index)
@@ -410,6 +409,7 @@ void map_placeplayer()
                 continue;
             }
         }
+        // Arena fighters
         if (game_data.current_map == mdata_t::MapId::pet_arena)
         {
             if (followerin(chara.index) == 1)
@@ -422,6 +422,7 @@ void map_placeplayer()
                 continue;
             }
         }
+        // Pets staying in the current map (home, ranch, shop, etc.)
         if (chara.current_map == game_data.current_map)
         {
             if (!chara.is_player())
@@ -432,6 +433,8 @@ void map_placeplayer()
                 continue;
             }
         }
+
+        // PC and pets following you
         place_chara_on_entrance(chara, game_data.entrance_type);
     }
 }
@@ -1556,7 +1559,7 @@ void generate_debug_map()
 
     mapstartx = 25;
     mapstarty = 25;
-    map_placeplayer();
+    map_place_player_and_allies();
 }
 
 static optional<int> _setup_map_generation_parameters()
@@ -1888,7 +1891,7 @@ void generate_random_nefia()
         }
     }
     convert_tiles_at_random();
-    map_placeplayer();
+    map_place_player_and_allies();
     rdmonsterhouse = 0;
     rdcreaturepack = 0;
     for (int cnt = 0, cnt_end = (roomsum); cnt < cnt_end; ++cnt)
@@ -2088,7 +2091,7 @@ void initialize_random_nefia_rdtype6()
         tile_room(1) = 6;
     }
     convert_tiles_at_random();
-    map_placeplayer();
+    map_place_player_and_allies();
     map_data.max_crowd_density = 0;
     for (int cnt = 0, cnt_end = (10 + rnd(6)); cnt < cnt_end; ++cnt)
     {
@@ -2199,7 +2202,7 @@ int initialize_quest_map_crop()
     game_data.entrance_type = 7;
     mapstartx = rnd(map_data.width / 3) + map_data.width / 3;
     mapstarty = rnd(map_data.height / 3) + map_data.height / 3;
-    map_placeplayer();
+    map_place_player_and_allies();
     flt();
     if (const auto item = itemcreate_map_inv(
             560, cdata.player().position.x + 1, cdata.player().position.y, 0))
@@ -2788,7 +2791,7 @@ int initialize_quest_map_party()
     game_data.entrance_type = 7;
     mapstartx = rnd(map_data.width / 3) + map_data.width / 3;
     mapstarty = rnd(map_data.height / 3) + map_data.height / 3;
-    map_placeplayer();
+    map_place_player_and_allies();
     map_data.max_crowd_density = 0;
     for (int cnt = 0, cnt_end = (25 + rnd(10)); cnt < cnt_end; ++cnt)
     {
@@ -2906,7 +2909,7 @@ void initialize_quest_map_town()
     mdatan(0) = i18n::s.get("core.map.quest.urban_area");
     randomize();
     game_data.entrance_type = 5;
-    map_placeplayer();
+    map_place_player_and_allies();
     map_data.user_map_flag = 0;
     if (game_data.executing_immediate_quest_type == 1008)
     {

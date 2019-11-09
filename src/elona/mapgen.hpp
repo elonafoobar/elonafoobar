@@ -28,7 +28,8 @@ enum class ArenaCharaType
 
 void map_place_chara_on_pet_arena(Character& chara, ArenaCharaType chara_type);
 
-void map_placeplayer();
+void map_place_player_and_allies();
+
 void map_randomtile(int = 0, int = 0);
 void map_setfog(int = 0, int = 0);
 
