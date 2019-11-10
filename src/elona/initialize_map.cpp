@@ -9,9 +9,9 @@
 #include "config/config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_map.hpp"
+#include "deferred_event.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
-#include "event.hpp"
 #include "food.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
@@ -1375,13 +1375,13 @@ init_map_after_refresh:
             screenupdate = -1;
             update_screen();
             lua::lua->get_event_manager().trigger(event);
-            if (evnum == 0)
+            if (event_has_pending_events())
             {
-                return TurnResult::pc_turn_user_error;
+                return TurnResult::turn_begin;
             }
             else
             {
-                return TurnResult::turn_begin;
+                return TurnResult::pc_turn_user_error;
             }
         }
         else

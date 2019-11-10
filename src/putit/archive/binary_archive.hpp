@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <deque>
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -271,6 +272,31 @@ void serialize(BinaryOArchive& ar, std::vector<T>& data)
     const uint64_t length = data.size();
     ar(length);
     ar.primitive_array(data.data(), length);
+}
+
+
+
+template <typename T>
+void serialize(BinaryIArchive& ar, std::deque<T>& data)
+{
+    uint64_t length;
+    ar(length);
+    std::unique_ptr<T[]> buf{new T[length]};
+    ar.primitive_array(buf.get(), length);
+    data = std::deque<T>(buf.get(), buf.get() + length);
+}
+
+
+
+template <typename T>
+void serialize(BinaryOArchive& ar, std::deque<T>& data)
+{
+    const uint64_t length = data.size();
+    ar(length);
+    for (auto&& element : data)
+    {
+        ar(element);
+    }
 }
 
 

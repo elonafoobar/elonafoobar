@@ -4,7 +4,7 @@
 #include "character_status.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_map.hpp"
-#include "event.hpp"
+#include "deferred_event.hpp"
 #include "gdata.hpp"
 #include "i18n.hpp"
 #include "itemgen.hpp"

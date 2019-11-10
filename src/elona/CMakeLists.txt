@@ -26,6 +26,7 @@ set(ELONA_SOURCES
   ctrl_file.cpp
   ctrl_inventory.cpp
   debug.cpp
+  deferred_event.cpp
   dialog.cpp
   dmgheal.cpp
   draw.cpp
@@ -35,7 +36,6 @@ set(ELONA_SOURCES
   elonacore.cpp
   enchantment.cpp
   equipment.cpp
-  event.cpp
   filesystem.cpp
   fish.cpp
   food.cpp
@@ -72,7 +72,6 @@ set(ELONA_SOURCES
   message.cpp
   message_log.cpp
   net.cpp
-  proc_event.cpp
   quest.cpp
   race.cpp
   random.cpp

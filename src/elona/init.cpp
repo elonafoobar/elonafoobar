@@ -13,9 +13,9 @@
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
 #include "data/init.hpp"
+#include "deferred_event.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
-#include "event.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "keybind/keybind.hpp"
@@ -280,7 +280,6 @@ void initialize_elona()
     dirchk(1, 1) = 0;
     dirchk(2, 1) = -1;
 
-    DIM2(evlist, 10);
     DIM3(pcc, 30, 20);
 
     SDIM1(fltnrace);

@@ -5,6 +5,7 @@
 #include "area.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "deferred_event.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "item.hpp"
@@ -763,28 +764,13 @@ void fmode_7_8(bool read, const fs::path& dir)
 
     if (!read)
     {
-        bsave(dir / u8"evnum.s1", evnum);
-        bsave(dir / u8"evdata1.s1", evdata1);
-        bsave(dir / u8"evdata2.s1", evdata2);
-        bsave(dir / u8"evlist.s1", evlist);
+        event_save(dir / "deferred_events.s1");
     }
     else
     {
-        if (fs::exists(dir / u8"evnum.s1"))
+        if (fs::exists(dir / "deferred_events.s1"))
         {
-            bload(dir / u8"evnum.s1", evnum);
-        }
-        if (fs::exists(dir / u8"evdata1.s1"))
-        {
-            bload(dir / u8"evdata1.s1", evdata1);
-        }
-        if (fs::exists(dir / u8"evdata2.s1"))
-        {
-            bload(dir / u8"evdata2.s1", evdata2);
-        }
-        if (fs::exists(dir / u8"evlist.s1"))
-        {
-            bload(dir / u8"evlist.s1", evlist);
+            event_load(dir / "deferred_events.s1");
         }
     }
 
