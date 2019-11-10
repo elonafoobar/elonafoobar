@@ -1169,7 +1169,6 @@ void show_weapon_dice(int val0)
     {
         attackrange = 1;
     }
-    attackvar = 0;
     int tohit = calc_accuracy(false);
     dmg = calcattackdmg(AttackDamageCalculationMode::raw_damage);
     font(14 - en * 2);

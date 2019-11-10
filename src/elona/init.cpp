@@ -63,7 +63,6 @@ void initialize_directories()
 void load_character_sprite()
 {
     DIM3(userdata, 70, 1);
-    SDIM4(userdatan, 40, 10, 1);
 }
 
 
@@ -246,7 +245,6 @@ void initialize_elona()
     DIM3(list, 3, 500);
     SDIM4(listn, 40, 2, 500);
     DIM2(invctrl, 2);
-    SDIM4(promptl, 50, 3, 20);
     SDIM3(description, 1000, 3);
     DIM3(mef, 9, MEF_MAX);
     DIM3(adata, 40, 500);

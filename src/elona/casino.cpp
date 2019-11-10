@@ -34,21 +34,15 @@ elona_vector1<int> mattile;
 void casino_dealer()
 {
     begintempinv();
-    atxthrough = 0;
     atxpic = 0;
     snd("core.pop3");
     mode = 9;
     atxbg = u8"bg13"s;
     atxbgbk = "";
     SDIM3(atxinfon, 80, 5);
-    if (atxid == 1)
-    {
-        txt(i18n::s.get("core.casino.talk_to_dealer"));
-        play_music("core.mcCasino");
-        casino_wrapper();
-        return;
-    }
-    casino_acquire_items();
+    txt(i18n::s.get("core.casino.talk_to_dealer"));
+    play_music("core.mcCasino");
+    casino_wrapper();
 }
 
 
@@ -376,7 +370,6 @@ void casino_acquire_items()
         }
     }
     mode = 0;
-    atxid = 0;
     exittempinv();
     await(100);
     snd("core.pop3");

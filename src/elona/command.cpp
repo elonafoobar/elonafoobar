@@ -1613,7 +1613,6 @@ TurnResult do_use_command()
         inv[ci].id == ItemId::casino_table ||
         inv[ci].id == ItemId::slot_machine || inv[ci].id == ItemId::darts_board)
     {
-        atxid = 1;
         casino_dealer();
         return TurnResult::turn_end;
     }
