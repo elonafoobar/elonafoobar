@@ -86,7 +86,7 @@ locale {
                 }
                 default_save {
                     name = "デフォルトセーブ"
-                    variants {
+                    enum {
                         "" = "使用しない"
                     }
                     doc = <<DOC
@@ -130,7 +130,7 @@ DOC
                 }
                 fullscreen {
                     name = "画面モード*"
-                    variants {
+                    enum {
                         windowed = "ウィンドウ"
                         fullscreen = "フルスクリーン"
                         desktop_fullscreen = "フルスクリーン2"
@@ -142,11 +142,11 @@ DOC
                 }
                 display_mode {
                     name = "画面の大きさ*"
-                    # Variants are injected at runtime.
+                    # "enum" are injected at runtime.
                 }
                 orientation {
                     name = "画面の向き"
-                    variants {
+                    enum {
                         sensor_landscape = "横向き (自動)"
                         sensor_portrait = "縦向き (自動)"
                         sensor = "自動回転"
@@ -204,7 +204,7 @@ DOC
                 }
                 chat {
                     name = "チャット"
-                    variants {
+                    enum {
                         "disabled" = "使用しない"
                         "receive" = "受信のみ"
                         "send_receive" = "送信/受信"
@@ -212,7 +212,7 @@ DOC
                 }
                 death {
                     name = "死亡ログ"
-                    variants {
+                    enum {
                         "disabled" = "使用しない"
                         "receive" = "受信のみ"
                         "send_receive" = "送信/受信"
@@ -220,7 +220,7 @@ DOC
                 }
                 wish {
                     name = "願いログ"
-                    variants {
+                    enum {
                         "disabled" = "使用しない"
                         "receive" = "受信のみ"
                         "send_receive" = "送信/受信"
@@ -228,7 +228,7 @@ DOC
                 }
                 news {
                     name = "パルミア・タイムズ"
-                    variants {
+                    enum {
                         "disabled" = "使用しない"
                         "receive" = "受信のみ"
                         "send_receive" = "送信/受信"
@@ -292,7 +292,7 @@ DOC
                 }
                 auto_turn_speed {
                     name = "オートターンの挙動"
-                    variants {
+                    enum {
                         normal = "普通"
                         high = "速め"
                         highest = "省略"
@@ -394,7 +394,7 @@ DOC
 テキスト描写の品質です。「高品質」は綺麗に表示されますが遅くなります。
 「低品質」は文字の描写がやや汚くなりますが動作は速くなります。
 DOC
-                    variants {
+                    enum {
                         low = "低品質"
                         high = "高品質"
                     }
@@ -434,7 +434,7 @@ DOC
 
                 language {
                     name = "言語*"
-                    variants {
+                    enum {
                         jp = "Japanese"
                         en = "English"
                     }
@@ -446,7 +446,7 @@ DOC
 
                 hp_bar_position {
                     name = "ペットのHPバー"
-                    variants {
+                    enum {
                         hide = "表示しない"
                         left = "左側に表示"
                         right = "右側に表示"
@@ -503,7 +503,7 @@ DOC
 
                 pcc_graphic_scale = {
                     name = "PCC表示"
-                    variants {
+                    enum {
                         shrinked = "縮小(通常)"
                         fullscale = "原寸"
                     }

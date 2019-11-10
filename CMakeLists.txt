@@ -182,7 +182,6 @@ else()
       src/tests/config.cpp
       src/tests/config_def.cpp
       src/tests/filesystem.cpp
-      src/tests/spec.cpp
       src/tests/lua_api.cpp
       src/tests/lua_callbacks.cpp
       src/tests/lua_events.cpp
@@ -549,7 +548,7 @@ else()
   set(RUNTIME_DIR "${ASSET_DIR}")
 endif()
 
-# Copy and overwrite runtime folders/files (except config.hcl)
+# Copy and overwrite runtime folders/files (except config.json)
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/data/ "${RUNTIME_DIR}/data/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/font/ "${RUNTIME_DIR}/font/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/graphic/ "${RUNTIME_DIR}/graphic/")

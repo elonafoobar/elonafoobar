@@ -6,7 +6,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "enums.hpp"
@@ -564,7 +564,7 @@ void eh_ragnarok(const DeferredEvent& event)
             {
                 snd("core.crush1");
             }
-            await(Config::instance().animation_wait);
+            await(g_config.animation_wait());
         }
     }
 }
@@ -741,7 +741,7 @@ void eh_nuclear_bomb(const DeferredEvent& event)
             192,
             96);
         redraw();
-        await(Config::instance().animation_wait * 3.5);
+        await(g_config.animation_wait() * 3.5);
     }
     gmode(2);
     update_entire_screen();

@@ -94,13 +94,6 @@ std::string Application::get_default_display_mode()
 
 
 
-::SDL_DisplayMode get_display_mode()
-{
-    return ::SDL_DisplayMode{};
-}
-
-
-
 void Application::set_display_mode(const std::string&)
 {
 }

@@ -11,7 +11,7 @@
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
 #include "deferred_event.hpp"

@@ -3,7 +3,7 @@
 #include "ability.hpp"
 #include "adventurer.hpp"
 #include "character.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "map.hpp"

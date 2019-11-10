@@ -12,7 +12,7 @@
 #include "../snail/window.hpp"
 #include "../util/fps_counter.hpp"
 #include "../util/strutil.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "defines.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
@@ -115,7 +115,7 @@ void await(int msec)
         snail::Application::instance().was_focus_lost_just_now())
     {
         if (player_queried_for_input &&
-            Config::instance().get<bool>("core.android.quicksave") &&
+            config_get_boolean("core.android.quicksave") &&
             !std::uncaught_exception())
         {
             ELONA_LOG("gui") << "Focus lost, quicksaving game.";
@@ -291,7 +291,7 @@ void font(int size, snail::Font::Style style)
         size,
         style,
         filesystem::path(u8"font") /
-            filepathutil::u8path(Config::instance().font_filename));
+            filepathutil::u8path(g_config.font_filename()));
 }
 
 
@@ -605,7 +605,7 @@ void mes(int x, int y, const std::string& text, const snail::Color& color)
  */
 void mesbox(std::string& buffer, bool text)
 {
-    snail::hsp::mesbox(buffer, Config::instance().key_wait, text);
+    snail::hsp::mesbox(buffer, g_config.key_wait(), text);
 }
 
 
@@ -862,7 +862,7 @@ static void _draw_fps()
  */
 void redraw()
 {
-    if (Config::instance().get<bool>("core.foobar.show_fps"))
+    if (config_get_boolean("core.foobar.show_fps"))
     {
         _draw_fps();
     }

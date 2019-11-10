@@ -17,6 +17,7 @@ class HandleManager;
 class I18NFunctionManager;
 class ModManager;
 class Console;
+class ConfigManager;
 
 
 
@@ -82,6 +83,11 @@ public:
         return *console;
     }
 
+    ConfigManager& get_config_manager()
+    {
+        return *config_mgr;
+    }
+
     /***
      * Clears and reset the Lua state to directly after loading the
      * core mod.
@@ -115,6 +121,7 @@ private:
     std::unique_ptr<DataManager> data_mgr;
     std::unique_ptr<I18NFunctionManager> i18n_function_mgr;
     std::unique_ptr<Console> console;
+    std::unique_ptr<ConfigManager> config_mgr;
 };
 
 

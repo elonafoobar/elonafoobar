@@ -46,7 +46,7 @@ std::vector<fs::path> mod_dirs_internal(const fs::path& base_dir, F predicate)
     for (const auto& entry :
          filesystem::glob_dirs(base_dir, std::regex{"[a-z][a-z0-9_]*"}))
     {
-        if (fs::exists(entry.path() / "mod.hcl"))
+        if (fs::exists(entry.path() / "mod.json"))
         {
             if (predicate(entry.path()))
             {
@@ -167,7 +167,7 @@ void ModManager::load_mod(ModInfo& mod)
 
 void ModManager::scan_mod(const fs::path& mod_dir)
 {
-    ModManifest manifest = ModManifest::load(mod_dir / "mod.hcl");
+    ModManifest manifest = ModManifest::load(mod_dir / "mod.json");
 
     const std::string& mod_id = manifest.id;
     ELONA_LOG("lua.mod") << "Found mod " << mod_id;
@@ -521,7 +521,7 @@ std::vector<ModManifest> ModManager::get_templates()
     std::vector<ModManifest> result;
     for (const auto& path : template_mod_dirs(filesystem::dirs::mod()))
     {
-        auto manifest = ModManifest::load(path / "mod.hcl");
+        auto manifest = ModManifest::load(path / "mod.json");
         result.push_back(manifest);
     }
     return result;

@@ -1,6 +1,6 @@
 #include "tcg.hpp"
 #include "audio.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_asset.hpp"
 #include "draw.hpp"

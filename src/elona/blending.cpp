@@ -4,7 +4,7 @@
 #include "audio.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "data/types/type_item.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -90,7 +90,7 @@ void activity_blending()
                         Message::color{ColorIndex::blue});
                 }
                 redraw();
-                await(Config::instance().animation_wait * 5);
+                await(g_config.animation_wait() * 5);
                 game_data.date.minute = 0;
                 cc = 0;
                 --cdata[cc].activity.turn;

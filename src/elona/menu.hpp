@@ -52,7 +52,7 @@ void show_ex_help(int id);
 void show_game_help();
 TurnResult show_chat_history();
 TurnResult show_message_log();
-void set_option();
+void show_option_menu();
 TurnResult play_scene();
 
 TurnResult show_spell_list();

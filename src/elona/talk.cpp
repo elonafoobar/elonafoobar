@@ -2,7 +2,7 @@
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "deferred_event.hpp"
 #include "draw.hpp"
 #include "enums.hpp"
@@ -40,7 +40,7 @@ bool talk_setup_variables(Character &chara)
     keyhalt = 1;
     if (chara.character_role == 1005)
     {
-        if (Config::instance().extra_help)
+        if (g_config.extra_help())
         {
             maybe_show_ex_help(7, true);
         }

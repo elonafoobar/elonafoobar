@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <string>
 #include "../util/range.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 
 #ifdef ELONA_OS_WINDOWS
 #include <windows.h>
@@ -35,7 +35,7 @@ namespace elona
 
 void open_browser(const char* url)
 {
-    if (Config::instance().is_test)
+    if (g_config.is_test())
     {
         return;
     }

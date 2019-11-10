@@ -63,6 +63,17 @@ void set_profile_directory(const fs::path& profile_dir);
 
 
 
+// Pre-defined files.
+namespace files
+{
+
+fs::path profile_local_config();
+fs::path keybinding_config();
+
+} // namespace files
+
+
+
 fs::path path(const std::string&);
 fs::path resolve_path_for_mod(const std::string& mod_local_path);
 

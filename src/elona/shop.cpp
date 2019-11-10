@@ -2,7 +2,7 @@
 #include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "food.hpp"
@@ -79,10 +79,10 @@ void shop_refresh()
 
     lua::call("core.impl.shop_inventory.generate", lua::handle(cdata[tc]));
 
-    if (Config::instance().restock_interval)
+    if (g_config.restock_interval())
     {
         cdata[tc].time_to_restore =
-            game_data.date.hours() + 24 * Config::instance().restock_interval;
+            game_data.date.hours() + 24 * g_config.restock_interval();
     }
     else
     {

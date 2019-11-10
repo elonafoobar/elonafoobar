@@ -8,7 +8,7 @@
 #include "buff.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "debug.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
@@ -654,20 +654,19 @@ int damage_hp(
         }
         if (victim.index == 0)
         {
-            if (Config::instance().sound)
+            if (g_config.sound())
             {
-                if (Config::instance().heartbeat)
+                if (g_config.heartbeat())
                 {
-                    int threshold = Config::instance().get<int>(
-                        "core.screen.heartbeat_threshold");
+                    int threshold =
+                        config_get_integer("core.screen.heartbeat_threshold");
                     if (victim.hp < victim.max_hp * (threshold * 0.01))
                     {
                         if (!CHECKPLAY(32))
                         {
                             snd("core.Heart1");
 
-                            if (Config::instance().get<bool>(
-                                    "core.android.vibrate"))
+                            if (config_get_boolean("core.android.vibrate"))
                             {
                                 snail::android::vibrate_pulse();
                             }

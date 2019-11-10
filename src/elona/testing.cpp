@@ -3,7 +3,7 @@
 #include <sstream>
 
 #include "../version.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_music.hpp"
@@ -110,6 +110,9 @@ void configure_lua()
     Testing.set_function("load_translations", load_translations);
     Testing.set_function(
         "reinit_core_and_load_translations", reinit_core_and_load_translations);
+
+    config_load_all_schema();
+    config_load_options();
 }
 
 void start_in_map(int map, int level)
@@ -168,27 +171,29 @@ void pre_init()
     log::Logger::instance().init();
     profile::ProfileManager::instance().init(u8"testing");
 
-    const fs::path source_config_file = get_test_data_path() / "config.hcl";
-    const fs::path config_file =
-        filesystem::dirs::current_profile() / "config.hcl";
+    const fs::path source_config_file = get_test_data_path() / "config.json";
+    const fs::path config_file = filesystem::files::profile_local_config();
     fs::copy_file(
         source_config_file, config_file, fs::copy_option::overwrite_if_exists);
 
-    initialize_config_defs();
-    initialize_config_preload();
+    config_load_preinit_options();
 
     title(u8"Elona foobar version "s + latest_version.short_string());
 
     init_assets();
     filesystem::dirs::set_base_save_directory(fs::path("save"));
-    initialize_config();
 
     configure_lua();
+
     initialize_i18n();
 
+    if (!fs::exists(filesystem::dirs::tmp()))
+    {
+        fs::create_directory(filesystem::dirs::tmp());
+    }
     initialize_elona();
 
-    Config::instance().is_test = true;
+    g_config.set_is_test(true);
 
     lua::lua->get_event_manager().trigger(
         lua::BaseEvent("core.game_initialized"));
@@ -217,7 +222,7 @@ void reset_state()
     elona::en = 0;
     set_item_info();
 
-    Config::instance().is_test = true;
+    g_config.set_is_test(true);
 
     lua::lua->get_event_manager().trigger(
         lua::BaseEvent("core.game_initialized"));

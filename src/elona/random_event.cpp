@@ -6,7 +6,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
@@ -576,7 +576,7 @@ int show_random_event_window(
 {
     assert(!choices.empty());
 
-    if (Config::instance().skip_random_event_popups && choices.size() == 1)
+    if (g_config.skip_random_event_popups() && choices.size() == 1)
     {
         // Skip this event.
         snd("core.pop4");

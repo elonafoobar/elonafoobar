@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-#include "../../thirdparty/nlohmannjson/json.hpp"
+#include "../../thirdparty/json5/json5.hpp"
 #include "../../util/filepathutil.hpp"
 #include "archive_base.hpp"
 
@@ -14,12 +14,6 @@ namespace elona
 {
 namespace putit
 {
-
-using json = nlohmann::json;
-
-
-
-#define PUTIT_EMPTY_TOKEN
 
 #define PUTIT_DEFINE_ONE_PRIMITIVE_TYPE(type) \
     void operator()(type& data, const char* field_name) \
@@ -62,7 +56,7 @@ private:
     {
     public:
         JsonOArchiveInternal()
-            : _obj({})
+            : _obj()
         {
         }
 
@@ -91,12 +85,14 @@ private:
         template <typename T, PUTIT_ENABLE_IF(std::is_class<T>::value)>
         void operator()(std::vector<T>& data, const char* field_name = nullptr)
         {
+            json5::value::array_type array;
             for (auto&& element : data)
             {
                 JsonOArchiveInternal ar_;
                 element.serialize(ar_);
-                _obj[field_name].push_back(ar_.object());
+                array.push_back(ar_.object());
             }
+            _obj[field_name] = array;
         }
 
 
@@ -106,25 +102,32 @@ private:
                 !std::is_class<T>::value && !std::is_enum<T>::value)>
         void operator()(std::vector<T>& data, const char* field_name = nullptr)
         {
-            _obj[field_name] = data;
+            json5::value::array_type array;
+            for (auto&& element : data)
+            {
+                array.push_back(element);
+            }
+            _obj[field_name] = array;
         }
 
 
         template <typename E, PUTIT_ENABLE_IF(std::is_enum<E>::value)>
         void operator()(std::vector<E>& data, const char* field_name = nullptr)
         {
+            json5::value::array_type array;
             for (auto&& element : data)
             {
-                _obj[field_name].push_back(
+                array.push_back(
                     static_cast<std::underlying_type_t<E>>(element));
             }
+            _obj[field_name] = array;
         }
 
 
         template <size_t N, PUTIT_ENABLE_IF(N <= 32)>
         void operator()(std::bitset<N>& data, const char* field_name = nullptr)
         {
-            _obj[field_name] = static_cast<uint32_t>(data.to_ulong());
+            _obj[field_name] = data.to_ulong();
         }
 
 
@@ -132,7 +135,7 @@ private:
         template <size_t N, PUTIT_ENABLE_IF(32 < N && N <= 64)>
         void operator()(std::bitset<N>& data, const char* field_name = nullptr)
         {
-            _obj[field_name] = static_cast<uint64_t>(data.to_ulong());
+            _obj[field_name] = data.to_ulong();
         }
 
 
@@ -144,14 +147,14 @@ private:
         }
 
 
-        const json& object() const
+        const json5::value::object_type& object() const
         {
             return _obj;
         }
 
 
     private:
-        json _obj;
+        json5::value::object_type _obj;
     };
 
 
@@ -195,7 +198,7 @@ public:
 
     void _save(const JsonOArchiveInternal& ar_)
     {
-        out << ar_.object();
+        out << json5::stringify(ar_.object());
     }
 
 
@@ -217,6 +220,7 @@ void serialize(JsonOArchive& ar, T& data)
 
 #undef PUTIT_ENABLE_IF
 #undef PUTIT_DEFINE_PRIMITIVE_TYPES
+#undef PUTIT_DEFINE_ONE_PRIMITIVE_TYPE
 
 } // namespace putit
 } // namespace elona

@@ -1,13 +1,19 @@
 #pragma once
+
 #include <iosfwd>
 #include "../../snail/input.hpp"
-#include "../hcl.hpp"
+#include "../../thirdparty/json5/json5.hpp"
 #include "../optional.hpp"
+
+
 
 namespace elona
 {
+
 struct Keybind;
 class KeybindManager;
+
+
 
 class KeybindDeserializer
 {
@@ -17,22 +23,20 @@ public:
     {
     }
 
+
+
     void load(std::istream& in);
 
-private:
-    optional<Keybind> _deserialize_keybind(
-        const hcl::Value& object,
-        const std::string& id);
-    optional<snail::Key> _deserialize_key(
-        const hcl::Value& object,
-        const std::string& id);
 
-    void visit_object(const hcl::Object& object);
+
+private:
+    KeybindManager& _keybind_manager;
+
+
+    void visit_object(const json5::value::object_type& object);
     void visit_keybinding(
         const std::string& action_id,
-        const hcl::Value& object);
-
-    KeybindManager& _keybind_manager;
+        const json5::value& object);
 };
 
 } // namespace elona

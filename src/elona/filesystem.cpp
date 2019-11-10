@@ -1,6 +1,6 @@
 #include "filesystem.hpp"
 #include "../util/strutil.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "defines.hpp"
 
 
@@ -142,6 +142,25 @@ void set_profile_directory(const fs::path& profile_dir)
 
 
 
+namespace files
+{
+
+fs::path profile_local_config()
+{
+    return dirs::current_profile() / "config.json";
+}
+
+
+
+fs::path keybinding_config()
+{
+    return path("keybindings.json");
+}
+
+} // namespace files
+
+
+
 fs::path path(const std::string& str)
 {
     return get_executable_dir() / filepathutil::u8path(str);
@@ -167,7 +186,7 @@ fs::path resolve_path_for_mod(const std::string& mod_local_path)
         throw std::runtime_error("Invalid filepath syntax: " + mod_local_path);
     }
 
-    rest = strutil::replace(rest, "<LANGUAGE>", Config::instance().language);
+    rest = strutil::replace(rest, "<LANGUAGE>", g_config.language());
 
     if (mod_id == "_builtin_")
     {

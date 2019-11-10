@@ -1,7 +1,7 @@
 #include "save.hpp"
 #include "audio.hpp"
 #include "character_status.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
@@ -156,7 +156,7 @@ void save_autosave_if_needed()
         if (!game_data.wizard &&
             game_data.current_map != mdata_t::MapId::show_house &&
             game_data.current_map != mdata_t::MapId::pet_arena &&
-            Config::instance().autosave)
+            g_config.autosave())
         {
             save_game();
         }

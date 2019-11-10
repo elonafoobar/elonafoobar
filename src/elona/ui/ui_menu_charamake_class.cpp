@@ -20,7 +20,7 @@ static void _load_class_list()
         listn(1, listmax) = class_.get().id;
         ++listmax;
     }
-    if (Config::instance().extra_class)
+    if (g_config.extra_class())
     {
         for (const auto& class_ : class_get_available(true))
         {

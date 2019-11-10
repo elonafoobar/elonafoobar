@@ -40,7 +40,7 @@ public:
 protected:
     optional<DummyResult> update() override
     {
-        await(Config::instance().general_wait);
+        await(g_config.general_wait());
         auto action = key_check();
 
         if (action != ""s)

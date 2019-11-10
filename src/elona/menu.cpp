@@ -8,7 +8,8 @@
 #include "character_status.hpp"
 #include "class.hpp"
 #include "command.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
+#include "config_menu.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_portrait.hpp"
 #include "defines.hpp"
@@ -303,7 +304,7 @@ void text_set()
 
 bool maybe_show_ex_help(int id, bool should_update_screen)
 {
-    if (Config::instance().extra_help)
+    if (g_config.extra_help())
     {
         if (game_data.exhelp_flags.at(id) == 0)
         {
@@ -781,7 +782,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
         {
             gmode(2);
             const auto is_fullscale =
-                Config::instance().pcc_graphic_scale == "fullscale";
+                g_config.pcc_graphic_scale() == "fullscale";
             const auto width = is_fullscale ? 32 : 24;
             const auto height = is_fullscale ? 48 : 40;
             for (int i = 0; i < 4; ++i)
@@ -1025,8 +1026,7 @@ void change_appearance_equipment(Character& chara)
         display_topic(s, wx + 34, wy + 36);
         window2(wx + 234, wy + 60, 88, 120, 1, 1);
         gmode(2);
-        const auto is_fullscale =
-            Config::instance().pcc_graphic_scale == "fullscale";
+        const auto is_fullscale = g_config.pcc_graphic_scale() == "fullscale";
         const auto width = is_fullscale ? 32 : 24;
         const auto height = is_fullscale ? 48 : 40;
         for (int i = 0; i < 4; ++i)
@@ -1509,6 +1509,55 @@ void menu_chat_dialog()
 void menu_voting_box()
 {
     ui::UIMenuVotingBox().show();
+}
+
+
+
+void show_option_menu()
+{
+    struct ConfigMenuHistory
+    {
+        int cs;
+        int submenu;
+    };
+
+
+    int submenu = 0;
+    cs = 0;
+    std::stack<ConfigMenuHistory> history;
+
+    const auto config_menu = config_build_menu();
+
+    while (true)
+    {
+        auto& menu_def = config_menu.at(submenu);
+        const auto result = menu_def->query();
+
+        if (result)
+        {
+            if (result->go_back)
+            {
+                {
+                    const auto& prev = history.top();
+                    cs = prev.cs;
+                    submenu = prev.submenu;
+                }
+                history.pop();
+            }
+            // Don't push history if the submenu index returned is the same
+            // (user viewed and exited the help text of an option)
+            else if (result->submenu != submenu)
+            {
+                history.push({cs, submenu});
+                cs = 0;
+                submenu = result->submenu;
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
 }
 
 } // namespace elona

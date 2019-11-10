@@ -5,7 +5,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "command.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "data/types/type_item.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
@@ -1231,7 +1231,7 @@ label_2061_internal:
             }
             if (mode == 6 && invctrl != 22 && invctrl != 24)
             {
-                if (!Config::instance().skip_confirm_at_shop)
+                if (!g_config.skip_confirm_at_shop())
                 {
                     if (invctrl == 11)
                     {

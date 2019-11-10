@@ -3,7 +3,7 @@
 
 #include <fstream>
 #include <memory>
-#include "config/config.hpp"
+#include "config.hpp"
 #include "defines.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"

@@ -8,8 +8,11 @@
 using namespace elona;
 using namespace elona::snail;
 
+
+
 namespace
 {
+
 KeybindManager load(KeybindManager& manager, std::string config)
 {
     KeybindDeserializer deserializer(manager);
@@ -19,18 +22,20 @@ KeybindManager load(KeybindManager& manager, std::string config)
 
     return manager;
 }
+
 } // namespace
+
+
 
 TEST_CASE(
     "When given no bindings, KeybindDeserializer should load nothing",
     "[Keybind]")
 {
     KeybindManager manager;
-    load(manager, R"(keybindings {
-    core {}
+    load(manager, R"({ core: {} })");
 }
-)");
-}
+
+
 
 TEST_CASE(
     "When given invalid bindings, KeybindDeserializer should not load them",
@@ -41,19 +46,16 @@ TEST_CASE(
     keybind::actions.emplace("test1", Action{ActionCategory::game, {}});
     keybind::actions.emplace("test2", Action{ActionCategory::game, {}});
     keybind::actions.emplace("test3", Action{ActionCategory::game, {}});
-    keybind::actions.emplace("dupe", Action{ActionCategory::game, {}});
 
     KeybindManager manager;
     manager.load_default_bindings(keybind::actions);
-    load(manager, R"(keybindings {
-    core {
-        foo = 42
-        test1 {}
-        test2 { primary = "dood" }
-        test3 { alternate = "dood" }
-        dupe { primary = "a" }
-        dupe { primary = "b" }
-    }
+    load(manager, R"({
+  core: {
+    foo: 42,
+    test1: {},
+    test2: { primary: "dood" },
+    test3: { alternate: "dood" },
+  }
 }
 )");
 
@@ -61,8 +63,9 @@ TEST_CASE(
     REQUIRE(manager.binding("test1").primary.main == snail::Key::none);
     REQUIRE(manager.binding("test2").primary.main == snail::Key::none);
     REQUIRE(manager.binding("test3").alternate.main == snail::Key::none);
-    REQUIRE(manager.binding("dupe").primary.main == snail::Key::none);
 }
+
+
 
 TEST_CASE(
     "When given an unknown action, KeybindDeserializer should not load its "
@@ -73,17 +76,19 @@ TEST_CASE(
 
     KeybindManager manager;
     manager.load_default_bindings(keybind::actions);
-    load(manager, R"(keybindings {
-    core {
-        test1 {
-            primary = "A"
-        }
+    load(manager, R"({
+  core: {
+    test1: {
+      primary: "A"
     }
+  }
 }
 )");
 
     REQUIRE(!manager.is_registered("test1"));
 }
+
+
 
 TEST_CASE(
     "When given valid bindings, KeybindDeserializer should load them",
@@ -96,17 +101,17 @@ TEST_CASE(
 
     KeybindManager manager;
     manager.load_default_bindings(keybind::actions);
-    load(manager, R"(keybindings {
-    core {
-        foo = 42
-        test1 {
-            primary = "A"
-        }
-        test2 {
-            primary = "dood"
-            alternate = "Ctrl+Keypad *"
-        }
+    load(manager, R"({
+  core: {
+    foo: 42,
+    test1: {
+      primary: "A"
+    },
+    test2: {
+      primary: "dood",
+      alternate: "Ctrl+Keypad *",
     }
+  }
 }
 )");
 

@@ -9,7 +9,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "command.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
@@ -1017,9 +1017,9 @@ TurnResult pass_one_turn(bool label_2738_flg)
         {
             if (cdata[cc].choked)
             {
-                await(Config::instance().animation_wait * 6);
+                await(g_config.animation_wait() * 6);
             }
-            await(Config::instance().animation_wait * 3);
+            await(g_config.animation_wait() * 3);
             sxfix = 0;
             syfix = 0;
             update_screen();
@@ -1236,7 +1236,7 @@ TurnResult turn_end()
             if (cc != 0)
             {
                 update_screen();
-                await(Config::instance().animation_wait * 10);
+                await(g_config.animation_wait() * 10);
             }
             txt(u8" *tick* "s, Message::color{ColorIndex::cyan});
             return TurnResult::pass_one_turn_freeze_time;
@@ -1279,7 +1279,7 @@ TurnResult pc_turn(bool advance_time)
         }
         if (game_data.player_cellaccess_check_flag)
         {
-            await(Config::instance().general_wait / 3);
+            await(g_config.general_wait() / 3);
             for (int dy = -1; dy <= 1; ++dy)
             {
                 y = cdata.player().position.y + dy;
@@ -1540,8 +1540,8 @@ label_2747:
         return TurnResult::turn_end;
     }
     ++t;
-    if (Config::instance().screen_refresh_wait > 0 &&
-        t % Config::instance().screen_refresh_wait == 0)
+    if (g_config.screen_refresh_wait() > 0 &&
+        t % g_config.screen_refresh_wait() == 0)
     {
         ++scrturn;
         ui_render_from_screensync();
@@ -1567,7 +1567,7 @@ label_2747:
     // queried, but it would probably be dangerous to allow the game
     // to quicksave at any place await() could be called.
     player_queried_for_input = true;
-    await(Config::instance().general_wait);
+    await(g_config.general_wait());
     auto command = key_check_pc_turn(KeyWaitDelay::walk_run);
     player_queried_for_input = false;
 

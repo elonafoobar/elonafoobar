@@ -3,7 +3,7 @@
 #include "audio.hpp"
 #include "character.hpp"
 #include "class.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
 #include "input.hpp"

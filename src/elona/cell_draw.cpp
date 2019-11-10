@@ -1,6 +1,6 @@
 #include "area.hpp"
 #include "character.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "data/types/type_asset.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
@@ -28,8 +28,7 @@ int pcc_size(int shrinked, int fullscale)
 {
     assert(shrinked < fullscale);
 
-    const auto is_fullscale =
-        Config::instance().pcc_graphic_scale == "fullscale";
+    const auto is_fullscale = g_config.pcc_graphic_scale() == "fullscale";
     return is_fullscale ? fullscale : shrinked;
 }
 
@@ -1292,8 +1291,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
                 }
                 else
                 {
-                    if (Config::instance().object_shadow &&
-                        item_chips[p_].shadow)
+                    if (g_config.object_shadow() && item_chips[p_].shadow)
                     {
                         draw_item_chip_shadow(
                             dx, dy - stack_height, *rect, p_, 70);
@@ -1331,7 +1329,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
             }
             else
             {
-                if (Config::instance().object_shadow && item_chips[p_].shadow)
+                if (g_config.object_shadow() && item_chips[p_].shadow)
                 {
                     draw_item_chip_shadow(dx, dy, *rect, p_, 80);
                 }
@@ -1698,7 +1696,7 @@ void cell_draw()
     // Work around
     light_ *= 1.3;
 
-    if (Config::instance().high_quality_shadow)
+    if (g_config.high_quality_shadow())
     {
         render_shadow_high(light_, sxfix_, syfix_);
     }

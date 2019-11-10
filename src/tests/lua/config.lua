@@ -2,11 +2,6 @@ require_relative("tests/lua/support/minctest")
 
 local Config = require("game.Config")
 
-local function lfail(f)
-   local ok = pcall(f)
-   lequal(ok, false)
-end
-
 
 
 lrun("test Config.get", function()
@@ -22,9 +17,7 @@ lrun("test Config.get", function()
    lequal(type(font_quality), "string")
    lequal(font_quality, "high")
 
-   lfail(function()
-      Config.get("core.foo") -- not exist
-   end)
+   lequal(Config.get("core.not_found"), nil)
 end)
 
 
@@ -39,13 +32,11 @@ lrun("test Config.set", function()
    Config.set("core.font.quality", "low")
    lequal(Config.get("core.font.quality"), "low")
 
-   lfail(function()
-      Config.set("core.foo", 1) -- not exist
-   end)
+   Config.set("core.not_found", 1)
 
-   lfail(function()
-      Config.set("core.font.quality", 1) -- invalid type
-   end)
+   -- invalid type
+   local ok = pcall(function() Config.set("core.font.quality", 1) end)
+   lequal(ok, false)
 
    -- Setting nil does nothing.
    Config.set("core.message.transparency", nil)
