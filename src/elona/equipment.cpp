@@ -323,32 +323,32 @@ void supply_new_equipment()
     for (int cnt = 0; cnt < 100; ++cnt)
     {
         f = 0;
-        for (int cnt = 0; cnt < 4; ++cnt)
+        for (int _j = 0; _j < 4; ++_j)
         {
-            ci = get_random_inv(rc);
-            if (inv[ci].number() == 0)
+            auto&& item = get_random_inv(rc);
+            if (item.number() == 0)
             {
                 f = 1;
                 break;
             }
-            if (inv[ci].body_part != 0)
+            if (item.body_part != 0)
             {
                 continue;
             }
-            if (inv[ci].is_quest_target())
+            if (item.is_quest_target())
             {
                 continue;
             }
-            if (inv[ci].number() != 0)
+            if (item.number() != 0)
             {
-                inv[ci].remove();
+                item.remove();
                 f = 1;
                 break;
             }
         }
         if (f == 0)
         {
-            ci = invhead + invrange - 1;
+            break;
         }
         if (cdata[rc].character_role == 13)
         {

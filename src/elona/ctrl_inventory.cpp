@@ -1045,7 +1045,7 @@ label_2061_internal:
         }
         if (invctrl == 1)
         {
-            item_show_description();
+            item_show_description(inv[ci]);
             goto label_20591;
         }
         if (invctrl == 2)
@@ -1969,7 +1969,7 @@ label_2061_internal:
         if (listmax != 0)
         {
             ci = list(0, pagesize * page + cs);
-            item_show_description();
+            item_show_description(inv[ci]);
             goto label_20591;
         }
     }

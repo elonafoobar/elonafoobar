@@ -29,10 +29,8 @@
 namespace
 {
 
-void _food_gets_rotten(int chara_idx, int food_idx)
+void _food_gets_rotten(int chara_idx, Item& food)
 {
-    auto& food = inv[food_idx];
-
     if (food.material != 35)
     {
         return;
@@ -407,54 +405,50 @@ void get_hungry(Character& cc)
 
 
 
-void cook()
+void cook(Item& cook_tool, Item& food)
 {
     snd("core.cook1");
-    item_separate(ci);
-    s = itemname(ci);
-    p = rnd(sdata(184, cc) + 6) + rnd((inv[cooktool].param1 / 50 + 1));
-    if (p > sdata(184, cc) / 5 + 7)
+    item_separate(food.index);
+
+    const auto item_name_prev = itemname(food.index);
+
+    int dish_rank = rnd(sdata(184, cc) + 6) + rnd(cook_tool.param1 / 50 + 1);
+    if (dish_rank > sdata(184, cc) / 5 + 7)
     {
-        p = sdata(184, cc) / 5 + 7;
+        dish_rank = sdata(184, cc) / 5 + 7;
     }
-    p = rnd(p + 1);
-    if (p > 3)
+    dish_rank = rnd(dish_rank + 1);
+    if (dish_rank > 3)
     {
-        p = rnd(p(0));
+        dish_rank = rnd(dish_rank);
     }
     if (sdata(184, cc) >= 5)
     {
-        if (p < 3)
+        if (dish_rank < 3)
         {
             if (rnd(4) == 0)
             {
-                p = 3;
+                dish_rank = 3;
             }
         }
     }
     if (sdata(184, cc) >= 10)
     {
-        if (p < 3)
+        if (dish_rank < 3)
         {
             if (rnd(3) == 0)
             {
-                p = 3;
+                dish_rank = 3;
             }
         }
     }
-    p += inv[cooktool].param1 / 100;
-    if (p > 9)
-    {
-        p = 9;
-    }
-    if (p < 1)
-    {
-        p = 1;
-    }
-    make_dish(ci, p);
-    txt(i18n::s.get("core.food.cook", s(0), inv[cooktool], inv[ci]));
-    item_stack(0, ci, 1);
-    int rank = inv[ci].param2;
+    dish_rank += cook_tool.param1 / 100;
+    dish_rank = clamp(dish_rank, 1, 9);
+
+    make_dish(food, dish_rank);
+    txt(i18n::s.get("core.food.cook", item_name_prev, cook_tool, food));
+    item_stack(0, food.index, 1);
+    const auto rank = food.param2;
     if (rank > 2)
     {
         chara_gain_skill_exp(cdata[cc], 184, 30 + rank * 5);
@@ -464,14 +458,14 @@ void cook()
 
 
 
-void make_dish(int ingredient, int type)
+void make_dish(Item& food, int dish_rank)
 {
-    inv[ingredient].image = picfood(type, inv[ingredient].param1 / 1000);
-    inv[ingredient].weight = 500;
-    inv[ingredient].param2 = type;
-    if (inv[ingredient].material == 35 && inv[ingredient].param3 >= 0)
+    food.image = picfood(dish_rank, food.param1 / 1000);
+    food.weight = 500;
+    food.param2 = dish_rank;
+    if (food.material == 35 && 0 <= food.param3)
     {
-        inv[ingredient].param3 = game_data.date.hours() + 72;
+        food.param3 = game_data.date.hours() + 72;
     }
 }
 
@@ -1501,13 +1495,13 @@ void foods_get_rotten()
             continue;
         }
 
-        for (const auto& item : inv.by_index(chara))
+        for (auto&& item : inv.by_index(chara))
         {
             if (item.number() == 0)
             {
                 continue;
             }
-            _food_gets_rotten(chara, item.index);
+            _food_gets_rotten(chara, item);
         }
     }
 }

@@ -58,7 +58,7 @@ std::string test_itemname(int id, int number, bool prefix)
     int index = elona::ci;
     normalize_item(elona::inv[index]);
     std::string name = itemname(index, number, prefix ? 0 : 1);
-    item_delete(index);
+    item_delete(inv[index]);
     return name;
 }
 
@@ -84,7 +84,7 @@ void invalidate_item(Item& item)
     int old_y = item.position.y;
 
     // Delete the item and create new ones until the index is taken again.
-    item_delete(old_index);
+    item_delete(inv[old_index]);
     do
     {
         REQUIRE_SOME(itemcreate(-1, old_id, old_x, old_y, 3));

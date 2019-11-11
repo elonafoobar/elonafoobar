@@ -718,45 +718,6 @@ void csvsort(
 
 
 
-void getinheritance(int item_index, elona_vector1<int>& inhlist_, int& inhmax_)
-{
-    int p_at_m42 = 0;
-    int f_at_m42 = 0;
-    randomize(inv[item_index].turn + 1);
-    DIM2(inhlist_, 15);
-    inhmax_ = 0;
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        p_at_m42 = rnd(15);
-        if (inv[item_index].enchantments[p_at_m42].id == 0)
-        {
-            continue;
-        }
-        f_at_m42 = 0;
-        for (int cnt = 0, cnt_end = (inhmax_ + 1); cnt < cnt_end; ++cnt)
-        {
-            if (p_at_m42 == inhlist_(cnt))
-            {
-                f_at_m42 = 1;
-                break;
-            }
-        }
-        if (f_at_m42 == 1)
-        {
-            continue;
-        }
-        if (rnd(4) > inhmax_ ||
-            inv[item_index].enchantments[p_at_m42].power < 0)
-        {
-            inhlist_(inhmax_) = p_at_m42;
-            ++inhmax_;
-        }
-    }
-    randomize();
-}
-
-
-
 void flt(int level, Quality quality)
 {
     filtermax = 0;
@@ -3152,7 +3113,7 @@ void character_drops_item()
                 item.is_blessed_by_ehekatl() = true;
                 reftype = the_item_db[itemid2int(item.id)]->category;
                 enchantment_add(
-                    ci,
+                    item,
                     enchantment_generate(enchantment_gen_level(rnd(4))),
                     enchantment_gen_p());
                 animeload(8, rc);
@@ -3166,7 +3127,7 @@ void character_drops_item()
         }
         inv[ci].position.x = cdata[rc].position.x;
         inv[ci].position.y = cdata[rc].position.y;
-        itemturn(ci);
+        itemturn(inv[ci]);
         int stat = item_stack(-1, ci);
         if (stat == 0)
         {
@@ -7300,7 +7261,7 @@ int read_normal_book()
     }
     tc = cc;
     item_identify(inv[ci], IdentifyState::partly);
-    show_book_window();
+    show_book_window(inv[ci]);
     return 1;
 }
 

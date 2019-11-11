@@ -230,7 +230,7 @@ static optional<const MapDefData&> _find_map_from_deed(int item_id)
     if (!map_id)
     {
         txt("Cannot find map which is created by item '"s +
-                itemid2int(inv[ci].id) + "'."s,
+                std::to_string(item_id) + "'."s,
             Message::color(ColorIndex::red));
         return none;
     }

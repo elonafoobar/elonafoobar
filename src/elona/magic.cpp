@@ -587,7 +587,7 @@ bool _magic_184()
         txt(i18n::s.get("core.magic.cook.do_not_know"));
         return false;
     }
-    cooktool = ci;
+    auto&& cook_tool = inv[ci];
     invsubroutine = 1;
     invctrl = 16;
     snd("core.inv");
@@ -614,7 +614,7 @@ bool _magic_184()
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    cook();
+    cook(cook_tool, inv[ci]);
     return true;
 }
 
@@ -2067,12 +2067,13 @@ bool _magic_645_1114()
     {
         for (int cnt = 0; cnt < 200; ++cnt)
         {
-            p = get_random_inv(tc);
-            if (inv[p].number() == 0)
+            const auto& item = get_random_inv(tc);
+            p = item.index;
+            if (item.number() == 0)
             {
                 continue;
             }
-            if (inv[p].curse_state == CurseState::blessed)
+            if (item.curse_state == CurseState::blessed)
             {
                 if (rnd(10))
                 {
@@ -2399,7 +2400,7 @@ bool _magic_49(int efcibk)
     {
         randomize(inv[efcibk].param1);
         enchantment_add(
-            ci,
+            inv[ci],
             enchantment_generate(enchantment_gen_level(egolv)),
             enchantment_gen_p() + (fixlv == Quality::godly) * 100 +
                 (inv[ci].is_eternal_force()) * 100,

@@ -14,7 +14,7 @@ struct Item;
 
 
 bool enchantment_add(
-    int item_index,
+    Item& item,
     int type,
     int power,
     int flip_percentage = 0,
@@ -70,10 +70,9 @@ int enchantment_gen_p(int multiplier = 100);
 
 std::string enchantment_print_level(int level);
 void get_enchantment_description(int, int, int, bool = false);
-void add_enchantments();
+void add_enchantments(Item& item);
 
 void initialize_ego_data();
-void ego_add(int = 0, int = 0);
 
 
 

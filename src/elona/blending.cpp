@@ -44,7 +44,6 @@ int rpid = 0;
 int rpmode = 0;
 elona_vector1<int> rppage;
 int rpresult = 0;
-elona_vector1<int> inhlist_at_m184;
 
 
 
@@ -407,16 +406,14 @@ void window_recipe2(int val0)
 
 
 
-void window_recipe_(int item_index, int x, int y, int width, int height)
+void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
 {
-    elona_vector1<std::string> s_at_m184;
-    int xfix2_at_m184 = 0;
-    int dx_at_m184 = 0;
-    int dy_at_m184 = 0;
-    int i_at_m184 = 0;
-    int p_at_m184 = 0;
-    int cnt2_at_m184 = 0;
-    SDIM1(s_at_m184);
+    elona_vector1<std::string> s_;
+    int xfix2_ = 0;
+    int dx_ = 0;
+    int dy_ = 0;
+    int i_ = 0;
+
     if (windowshadow == 1)
     {
         window(x + 4, y + 4, width, height - height % 8, true);
@@ -438,122 +435,106 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
         x + width - 40,
         y + height - 49 - height % 8,
         {234, 220, 188});
-    s_at_m184(0) = u8"Page."s + (rppage + 1) + u8"/"s + (rppage(1) + 1);
-    s_at_m184(1) = ""s + key_prev + u8","s + key_next + ""s +
+    s_(0) = u8"Page."s + (rppage + 1) + u8"/"s + (rppage(1) + 1);
+    s_(1) = ""s + key_prev + u8","s + key_next + ""s +
         i18n::s.get("core.blending.recipe.hint");
     if (step == -1)
     {
-        s_at_m184(1) += strhint3;
+        s_(1) += strhint3;
     }
     else
     {
-        s_at_m184(1) += strhint3b;
+        s_(1) += strhint3b;
     }
     font(12 + sizefix - en * 2);
-    mes(x + 25 + 0, y + height - 43 - height % 8, s_at_m184(1));
+    mes(x + 25 + 0, y + height - 43 - height % 8, s_(1));
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    mes(x + width - strlen_u(s_at_m184) * 7 - 40 - xfix2_at_m184,
+    mes(x + width - strlen_u(s_) * 7 - 40 - xfix2_,
         y + height - 65 - height % 8,
-        s_at_m184);
-    dx_at_m184 = x + 35;
-    dy_at_m184 = y + 48;
+        s_);
+    dx_ = x + 35;
+    dy_ = y + 48;
     font(12 - en * 2, snail::Font::Style::bold);
-    mes(dx_at_m184 - 10,
-        dy_at_m184,
-        i18n::s.get("core.blending.window.procedure"));
-    dy_at_m184 = dy_at_m184 + 18;
+    mes(dx_ - 10, dy_, i18n::s.get("core.blending.window.procedure"));
+    dy_ = dy_ + 18;
     font(13 - en * 2);
-    i_at_m184 = 1;
-    if (step == i_at_m184 - 2)
+    i_ = 1;
+    if (step == i_ - 2)
     {
-        boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {60, 20, 10, 32});
+        boxf(dx_ - 10, dy_ - 2, width - 60, 17, {60, 20, 10, 32});
     }
-    else if (step > i_at_m184 - 2)
+    else if (step > i_ - 2)
     {
-        boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {20, 20, 20, 32});
+        boxf(dx_ - 10, dy_ - 2, width - 60, 17, {20, 20, 20, 32});
     }
     if (step == -1)
     {
-        mes(dx_at_m184,
-            dy_at_m184,
-            ""s + i_at_m184 + u8"."s +
+        mes(dx_,
+            dy_,
+            ""s + i_ + u8"."s +
                 i18n::s.get("core.blending.window.choose_a_recipe"));
     }
     else
     {
-        mes(dx_at_m184,
-            dy_at_m184,
-            ""s + i_at_m184 + u8"."s +
+        mes(dx_,
+            dy_,
+            ""s + i_ + u8"."s +
                 i18n::s.get(
                     "core.blending.window.chose_the_recipe_of", rpname(rpid)));
     }
-    dy_at_m184 += 17;
-    ++i_at_m184;
+    dy_ += 17;
+    ++i_;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (rpdata(20 + cnt, rpid) == 0)
         {
             break;
         }
-        if (step == i_at_m184 - 2)
+        if (step == i_ - 2)
         {
-            boxf(
-                dx_at_m184 - 10,
-                dy_at_m184 - 2,
-                width - 60,
-                17,
-                {60, 20, 10, 32});
+            boxf(dx_ - 10, dy_ - 2, width - 60, 17, {60, 20, 10, 32});
         }
-        else if (step > i_at_m184 - 2)
+        else if (step > i_ - 2)
         {
-            boxf(
-                dx_at_m184 - 10,
-                dy_at_m184 - 2,
-                width - 60,
-                17,
-                {20, 20, 20, 32});
+            boxf(dx_ - 10, dy_ - 2, width - 60, 17, {20, 20, 20, 32});
         }
         if (step <= cnt)
         {
             int stat = blendmatnum(rpdata(20 + cnt, rpid), cnt);
-            p_at_m184 = stat;
-            s_at_m184 = i18n::s.get(
-                "core.blending.window.add", rpmatname(cnt), p_at_m184);
+            s_ = i18n::s.get("core.blending.window.add", rpmatname(cnt), stat);
         }
         else
         {
-            s_at_m184 = i18n::s.get(
+            s_ = i18n::s.get(
                 "core.blending.window.selected", inv[rpref(10 + cnt * 2)]);
-            s_at_m184 = strmid(s_at_m184, 0, 44);
+            s_ = strmid(s_, 0, 44);
         }
-        mes(dx_at_m184, dy_at_m184, ""s + i_at_m184 + u8"."s + s_at_m184);
-        dy_at_m184 += 17;
-        ++i_at_m184;
+        mes(dx_, dy_, ""s + i_ + u8"."s + s_);
+        dy_ += 17;
+        ++i_;
     }
     draw("deco_blend_b", wx + ww + 243, wy - 4);
-    if (step == i_at_m184 - 2)
+    if (step == i_ - 2)
     {
-        boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {60, 20, 10, 32});
+        boxf(dx_ - 10, dy_ - 2, width - 60, 17, {60, 20, 10, 32});
     }
-    else if (step > i_at_m184 - 2)
+    else if (step > i_ - 2)
     {
-        boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {20, 20, 20, 32});
+        boxf(dx_ - 10, dy_ - 2, width - 60, 17, {20, 20, 20, 32});
     }
-    mes(dx_at_m184,
-        dy_at_m184,
-        ""s + i_at_m184 + u8"."s + i18n::s.get("core.blending.window.start"));
-    dy_at_m184 += 30;
+    mes(dx_,
+        dy_,
+        ""s + i_ + u8"."s + i18n::s.get("core.blending.window.start"));
+    dy_ += 30;
     if (rppage == 0)
     {
         font(12 - en * 2, snail::Font::Style::bold);
-        mes(dx_at_m184 - 10,
-            dy_at_m184,
+        mes(dx_ - 10,
+            dy_,
             i18n::s.get("core.blending.window.the_recipe_of", rpname(rpid)));
-        dy_at_m184 += 20;
-        mes(dx_at_m184 - 10,
-            dy_at_m184,
-            i18n::s.get("core.blending.window.required_skills"));
-        dy_at_m184 = dy_at_m184 + 18;
+        dy_ += 20;
+        mes(dx_ - 10, dy_, i18n::s.get("core.blending.window.required_skills"));
+        dy_ = dy_ + 18;
         font(13 - en * 2);
         for (int cnt = 0; cnt < 5; ++cnt)
         {
@@ -565,8 +546,8 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
                                      sdata(rpdata(10 + cnt * 2, rpid), 0))
                 ? snail::Color{150, 0, 0}
                 : snail::Color{0, 120, 0};
-            mes(dx_at_m184 + cnt % 2 * 140,
-                dy_at_m184 + cnt / 2 * 17,
+            mes(dx_ + cnt % 2 * 140,
+                dy_ + cnt / 2 * 17,
                 i18n::s.get_m(
                     "ability",
                     the_ability_db
@@ -577,58 +558,50 @@ void window_recipe_(int item_index, int x, int y, int width, int height)
                     sdata(rpdata((10 + cnt * 2), rpid), 0) + u8")"s,
                 text_color);
         }
-        dy_at_m184 += 50;
+        dy_ += 50;
         font(12 - en * 2, snail::Font::Style::bold);
-        mes(dx_at_m184 - 10,
-            dy_at_m184,
+        mes(dx_ - 10,
+            dy_,
             i18n::s.get("core.blending.window.required_equipment"));
         return;
     }
-    if (item_index == -1)
-    {
+
+    if (!item)
         return;
-    }
+
     font(12 - en * 2, snail::Font::Style::bold);
-    mes(dx_at_m184 - 10, dy_at_m184, itemname(item_index));
-    dy_at_m184 += 20;
+    mes(dx_ - 10, dy_, itemname(item->index));
+    dy_ += 20;
     font(13 - en * 2);
-    if (inv[item_index].identify_state <= IdentifyState::partly)
+    if (item->identify_state <= IdentifyState::partly)
     {
-        mes(dx_at_m184,
-            dy_at_m184,
-            i18n::s.get("core.blending.window.havent_identified"));
-        dy_at_m184 += 16;
+        mes(dx_, dy_, i18n::s.get("core.blending.window.havent_identified"));
+        dy_ += 16;
         return;
     }
-    getinheritance(item_index, inhlist_at_m184, p_at_m184);
-    if (p_at_m184 > 0)
+
+    const auto inheritance = item_get_inheritance(*item);
+    if (inheritance.empty())
     {
-        for (int cnt = 0, cnt_end = (p_at_m184); cnt < cnt_end; ++cnt)
-        {
-            cnt2_at_m184 = inhlist_at_m184(cnt);
-            if (inv[item_index].enchantments[cnt2_at_m184].id == 0)
-            {
-                break;
-            }
-            get_enchantment_description(
-                inv[item_index].enchantments[cnt2_at_m184].id,
-                inv[item_index].enchantments[cnt2_at_m184].power,
-                the_item_db[itemid2int(inv[item_index].id)]->category);
-            const auto text_color =
-                inv[item_index].enchantments[cnt2_at_m184].power < 0
-                ? snail::Color{180, 0, 0}
-                : snail::Color{0, 0, 100};
-            mes(dx_at_m184, dy_at_m184, cnven(s), text_color);
-            dy_at_m184 += 16;
-        }
+        mes(dx_, dy_, i18n::s.get("core.blending.window.no_inherited_effects"));
     }
     else
     {
-        mes(dx_at_m184,
-            dy_at_m184,
-            i18n::s.get("core.blending.window.no_inherited_effects"));
-        dy_at_m184 += 16;
-        ++p_at_m184;
+        for (const auto& inh : inheritance)
+        {
+            if (item->enchantments[inh].id == 0)
+                break;
+
+            get_enchantment_description(
+                item->enchantments[inh].id,
+                item->enchantments[inh].power,
+                the_item_db[itemid2int(item->id)]->category);
+            const auto text_color = item->enchantments[inh].power < 0
+                ? snail::Color{180, 0, 0}
+                : snail::Color{0, 0, 100};
+            mes(dx_, dy_, cnven(s), text_color);
+            dy_ += 16;
+        }
     }
 }
 
@@ -649,7 +622,7 @@ label_1923:
         if (rpdata(20 + step, rpid) == 0)
         {
             rppage = 0;
-            window_recipe(list2, -1, wx + ww, wy, 400, wh);
+            window_recipe(none, wx + ww, wy, 400, wh);
             Message::instance().linebreak();
             txt(i18n::s.get("core.blending.prompt.how_many"));
             p = 10;
@@ -818,7 +791,7 @@ label_1925_internal:
     {
         rpid = list(0, pagesize * page + cs);
         windowshadow = windowshadow(1);
-        window_recipe(list2, -1, wx + ww, wy, 400, wh);
+        window_recipe(none, wx + ww, wy, 400, wh);
     }
     if (keyrange != 0)
     {
@@ -950,7 +923,8 @@ label_1928_internal:
     if (cs_bk != cs)
     {
         windowshadow = windowshadow(1);
-        window_recipe(list2, p, wx + ww, wy, 400, wh);
+        window_recipe(
+            p == -1 ? none : optional_ref<Item>(inv[p]), wx + ww, wy, 400, wh);
     }
     if (keyrange != 0)
     {
@@ -1629,7 +1603,7 @@ void blending_start_attempt()
                         break;
                     }
                     enchantment_add(
-                        ci,
+                        inv[ci],
                         rpdata(50 + cnt * 2, rpid),
                         rpdata(51 + cnt * 2, rpid),
                         0,

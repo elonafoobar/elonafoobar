@@ -1463,21 +1463,16 @@ int change_npc_tone()
 
 
 
-void show_book_window()
+void show_book_window(const Item& book)
 {
-    ui::UIMenuBook(inv[ci].param1).show();
+    ui::UIMenuBook(book.param1).show();
 }
 
 
-void item_show_description()
-{
-    if (ci < 0)
-    {
-        dialog(i18n::s.get("core.item.desc.window.error"));
-        return;
-    }
 
-    ui::UIMenuItemDesc(inv[ci]).show();
+void item_show_description(const Item& item)
+{
+    ui::UIMenuItemDesc(item).show();
 
     returnfromidentify = 1;
 }
