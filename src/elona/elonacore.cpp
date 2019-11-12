@@ -2069,7 +2069,7 @@ int try_to_perceive_npc(int cc)
 void start_stealing()
 {
     game_data.activity_about_to_start = 105;
-    activity_others();
+    activity_others(cdata[cc]);
 }
 
 
@@ -2280,7 +2280,7 @@ void proc_turn_end(int cc)
                         cdata[cc], rnd(2) + cdata.player().max_hp / 50, -3);
                     if (game_data.play_turns % 10 == 0)
                     {
-                        rowact_check(cc);
+                        rowact_check(cdata[cc]);
                         if (rnd(50) == 0)
                         {
                             modify_weight(cdata[cc], -1);
@@ -2660,18 +2660,6 @@ void initialize_set_of_random_generation()
     fsetrare(2) = 77000;
     fsetrare(3) = 55000;
     fsetrare(4) = 57000;
-    fsetperform(0) = 77000;
-    fsetperform(1) = 57000;
-    fsetperform(2) = 57000;
-    fsetperform(3) = 57000;
-    fsetperform(4) = 60000;
-    fsetperform(5) = 18000;
-    fsetperform(6) = 20000;
-    fsetperform(7) = 32000;
-    fsetperform(8) = 34000;
-    fsetperform(9) = 52000;
-    fsetperform(10) = 64000;
-    fsetperform(11) = 64000;
     fsetdeliver(0) = 60000;
     fsetdeliver(1) = 77000;
     fsetdeliver(2) = 54000;
@@ -6091,7 +6079,7 @@ int read_textbook()
         }
     }
     game_data.activity_about_to_start = 104;
-    activity_others();
+    activity_others(cdata[cc]);
     return 1;
 }
 
@@ -6949,7 +6937,7 @@ void map_global_proc_travel_events()
                 txt(i18n::s.get(
                     "core.misc.finished_eating", cdata[cc], inv[ci]));
             }
-            activity_eating_finish();
+            activity_eating_finish(cdata[cc], inv[ci]);
         }
     }
     if (game_data.weather == 2 ||
@@ -8324,7 +8312,7 @@ int pick_up_item(bool play_sound)
                         return 0;
                     }
                     game_data.activity_about_to_start = 103;
-                    activity_others();
+                    activity_others(cdata[cc]);
                     return -1;
                 }
             }
@@ -10535,7 +10523,7 @@ bool do_physical_attack_internal()
     {
         game_data.player_cellaccess_check_flag = 0;
     }
-    rowact_check(tc);
+    rowact_check(cdata[tc]);
     if (attackskill != 106)
     {
         if (cdata[tc].state() != Character::State::alive)

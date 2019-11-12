@@ -455,7 +455,7 @@ int damage_hp(
                         attacker_is_player),
                     Message::color{ColorIndex::red});
             }
-            rowact_check(victim.index);
+            rowact_check(victim);
         }
         else
         {
@@ -499,7 +499,7 @@ int damage_hp(
             }
         }
 
-        rowact_check(victim.index);
+        rowact_check(victim);
         if (victim.hp < victim.max_hp / 5)
         {
             if (victim.index != 0)
