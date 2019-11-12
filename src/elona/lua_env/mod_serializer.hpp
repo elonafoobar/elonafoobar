@@ -122,8 +122,7 @@ public:
             {
                 // Skip this piece of data.
                 ELONA_WARN("lua.mod")
-                    << "WARNING: skipping mod store loading as mod "
-                       "wasn't loaded: "
+                    << "WARNING: skipping mod store loading as mod wasn't loaded: "
                     << mod_id;
 
                 std::string raw_data;

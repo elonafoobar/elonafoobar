@@ -590,8 +590,7 @@ bool casino_blackjack()
             {
                 list(0, listmax) = 0;
                 listn(0, listmax) = i18n::s.get(
-                    "core.casino.blackjack.game.result.choices.next_"
-                    "round");
+                    "core.casino.blackjack.game.result.choices.next_round");
                 ++listmax;
             }
             if (winner == 0)
@@ -652,9 +651,8 @@ bool casino_blackjack()
                     {
                         if (rnd(sdata(19, 0)) > 40)
                         {
-                            txt(
-                                i18n::s.get("core.casino.blackjack.game."
-                                            "bad_feeling"));
+                            txt(i18n::s.get(
+                                "core.casino.blackjack.game.bad_feeling"));
                             trashcard(p);
                             int stat = servecard(1);
                             p = stat;

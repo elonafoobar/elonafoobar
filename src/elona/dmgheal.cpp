@@ -529,8 +529,7 @@ int damage_hp(
                             if (is_in_fov(victim))
                             {
                                 txt(i18n::s.get(
-                                        "core.damage.runs_away_in_"
-                                        "terror",
+                                        "core.damage.runs_away_in_terror",
                                         victim),
                                     Message::color{ColorIndex::blue});
                             }
@@ -821,16 +820,14 @@ int damage_hp(
                     {
                         Message::instance().continue_sentence();
                         txt(i18n::s.get(
-                            "core.death_by.chara.transformed_into_meat."
-                            "active",
+                            "core.death_by.chara.transformed_into_meat.active",
                             victim,
                             attacker_is_player));
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.death_by.chara.transformed_into_meat."
-                            "passive",
+                            "core.death_by.chara.transformed_into_meat.passive",
                             victim,
                             attacker_is_player));
                     }
@@ -1067,9 +1064,7 @@ int damage_hp(
                     {
                         ++game_data.quest_flags.kill_count_of_little_sister;
                         txt(i18n::s.get(
-                                "core.talk.unique.strange_scientist."
-                                "saved_"
-                                "count",
+                                "core.talk.unique.strange_scientist.saved_count",
                                 game_data.quest_flags
                                     .save_count_of_little_sister,
                                 game_data.quest_flags

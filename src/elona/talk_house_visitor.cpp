@@ -240,8 +240,7 @@ TalkResult _talk_hv_adventurer_train()
     if (sdata.get(skill_id, 0).original_level == 0)
     {
         buff = i18n::s.get(
-            "core.talk.visitor.adventurer.train.learn."
-            "dialog",
+            "core.talk.visitor.adventurer.train.learn.dialog",
             i18n::s.get_m(
                 "ability",
                 the_ability_db.get_id_from_legacy(skill_id)->get(),
@@ -252,17 +251,15 @@ TalkResult _talk_hv_adventurer_train()
         if (cdata.player().platinum_coin >= calclearncost(skill_id, cc, true))
         {
             list(0, listmax) = 1;
-            listn(0, listmax) = i18n::s.get(
-                "core.talk.visitor.adventurer.train.choices."
-                "learn");
+            listn(0, listmax) =
+                i18n::s.get("core.talk.visitor.adventurer.train.choices.learn");
             ++listmax;
         }
     }
     else
     {
         buff = i18n::s.get(
-            "core.talk.visitor.adventurer.train.train."
-            "dialog",
+            "core.talk.visitor.adventurer.train.train.dialog",
             i18n::s.get_m(
                 "ability",
                 the_ability_db.get_id_from_legacy(skill_id)->get(),
@@ -273,9 +270,8 @@ TalkResult _talk_hv_adventurer_train()
         if (cdata.player().platinum_coin >= calctraincost(skill_id, cc, true))
         {
             list(0, listmax) = 2;
-            listn(0, listmax) = i18n::s.get(
-                "core.talk.visitor.adventurer.train.choices."
-                "train");
+            listn(0, listmax) =
+                i18n::s.get("core.talk.visitor.adventurer.train.choices.train");
             ++listmax;
         }
     }
@@ -351,9 +347,8 @@ void _adventurer_receive_coin()
 {
     if (inv_getfreeid(-1) == -1)
     {
-        txt(
-            i18n::s.get("core.talk.visitor.adventurer."
-                        "friendship.no_empty_spot"));
+        txt(i18n::s.get(
+            "core.talk.visitor.adventurer.friendship.no_empty_spot"));
     }
     else
     {
@@ -401,9 +396,8 @@ void _adventurer_receive_souvenir()
 {
     if (inv_getfreeid(0) == -1)
     {
-        txt(
-            i18n::s.get("core.talk.visitor.adventurer."
-                        "souvenir.inventory_is_full"));
+        txt(i18n::s.get(
+            "core.talk.visitor.adventurer.souvenir.inventory_is_full"));
     }
     else
     {

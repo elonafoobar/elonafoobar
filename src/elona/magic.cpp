@@ -1491,8 +1491,7 @@ bool _magic_1119()
                 else
                 {
                     s = i18n::s.get(
-                        "core.magic.gain_skill_potential."
-                        "furthermore_the");
+                        "core.magic.gain_skill_potential.furthermore_the");
                 }
                 if (!is_cursed(efstatus))
                 {
@@ -1501,9 +1500,7 @@ bool _magic_1119()
                         snd("core.ding2");
                         txt(s +
                                 i18n::s.get(
-                                    "core.magic.gain_skill_"
-                                    "potential."
-                                    "increases",
+                                    "core.magic.gain_skill_potential.increases",
                                     cdata[tc],
                                     i18n::s.get_m(
                                         "ability",
@@ -1517,8 +1514,7 @@ bool _magic_1119()
                 {
                     snd("core.curse3");
                     txt(i18n::s.get(
-                            "core.magic.gain_skill_potential."
-                            "decreases",
+                            "core.magic.gain_skill_potential.decreases",
                             cdata[tc],
                             i18n::s.get_m(
                                 "ability",
@@ -4298,8 +4294,7 @@ optional<bool> _proc_general_magic()
                 cdata[tc].is_protected_from_thieves() == 1)
             {
                 txt(i18n::s.get(
-                    "core.magic.teleport.suspicious_hand."
-                    "prevented",
+                    "core.magic.teleport.suspicious_hand.prevented",
                     cdata[tc]));
                 p = 0;
             }
@@ -4308,8 +4303,7 @@ optional<bool> _proc_general_magic()
                 snd("core.paygold1");
                 cdata[tc].gold -= p;
                 txt(i18n::s.get(
-                    "core.magic.teleport.suspicious_hand."
-                    "succeeded",
+                    "core.magic.teleport.suspicious_hand.succeeded",
                     cdata[cc],
                     cdata[tc],
                     p(0)));
@@ -4386,9 +4380,8 @@ optional<bool> _proc_general_magic()
                 {
                     if (efidprev == 635)
                     {
-                        txt(
-                            i18n::s.get("core.magic.teleport."
-                                        "suspicious_hand.after"));
+                        txt(i18n::s.get(
+                            "core.magic.teleport.suspicious_hand.after"));
                     }
                     else
                     {

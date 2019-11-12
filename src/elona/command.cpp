@@ -443,15 +443,11 @@ static void _try_to_reveal_small_coin()
     {
         if (dist(cdata[cc].position.x, cdata[cc].position.y, x, y) > 2)
         {
-            txt(
-                i18n::s.get("core.action.search."
-                            "small_coin.far"));
+            txt(i18n::s.get("core.action.search.small_coin.far"));
         }
         else
         {
-            txt(
-                i18n::s.get("core.action.search."
-                            "small_coin.close"));
+            txt(i18n::s.get("core.action.search.small_coin.close"));
         }
     }
 }
@@ -482,9 +478,7 @@ static void _search_for_map_feats()
             if (stat == 1 || 0)
             {
                 discover_hidden_path();
-                txt(
-                    i18n::s.get("core.action.search."
-                                "discover.hidden_path"));
+                txt(i18n::s.get("core.action.search.discover.hidden_path"));
             }
         }
     }
@@ -674,23 +668,20 @@ TurnResult do_throw_command()
                     cdata[tc].quality == Quality::special ||
                     cdata[tc].is_lord_of_dungeon() == 1)
                 {
-                    txt(
-                        i18n::s.get("core.action.throw.monster_ball."
-                                    "cannot_be_captured"));
+                    txt(i18n::s.get(
+                        "core.action.throw.monster_ball.cannot_be_captured"));
                     return TurnResult::turn_end;
                 }
                 if (cdata[tc].level > inv[ci].param2)
                 {
-                    txt(
-                        i18n::s.get("core.action.throw.monster_ball.not_"
-                                    "enough_power"));
+                    txt(i18n::s.get(
+                        "core.action.throw.monster_ball.not_enough_power"));
                     return TurnResult::turn_end;
                 }
                 if (cdata[tc].hp > cdata[tc].max_hp / 10)
                 {
-                    txt(
-                        i18n::s.get("core.action.throw.monster_ball.not_"
-                                    "weak_enough"));
+                    txt(i18n::s.get(
+                        "core.action.throw.monster_ball.not_weak_enough"));
                     return TurnResult::turn_end;
                 }
                 txt(i18n::s.get(
@@ -806,8 +797,7 @@ TurnResult do_throw_command()
                             if (is_in_fov({tlocx, tlocy}))
                             {
                                 txt(i18n::s.get(
-                                    "core.action.throw.snow.hits_"
-                                    "snowman",
+                                    "core.action.throw.snow.hits_snowman",
                                     inv[p(0)]));
                             }
                             inv[p].modify_number(-1);
@@ -1938,13 +1928,10 @@ TurnResult do_use_command()
                 if (cdata[tc].sex == 1)
                 {
                     txt(i18n::s.get(
-                        "core.action.use.stethoscope.other.start.female."
-                        "text",
+                        "core.action.use.stethoscope.other.start.female.text",
                         cdata[tc]));
                     txt(i18n::s.get(
-                            "core.action.use.stethoscope.other.start."
-                            "female."
-                            "dialog",
+                            "core.action.use.stethoscope.other.start.female.dialog",
                             cdata[tc]),
                         Message::color{ColorIndex::blue});
                 }
@@ -1978,8 +1965,7 @@ TurnResult do_use_command()
                             if (rnd(5) == 0)
                             {
                                 txt(i18n::s.get(
-                                    "core.action.use.leash.other.start."
-                                    "resists",
+                                    "core.action.use.leash.other.start.resists",
                                     cdata[tc]));
                                 inv[ci].modify_number(-1);
                                 cell_refresh(
@@ -1993,8 +1979,7 @@ TurnResult do_use_command()
                             "core.action.use.leash.other.start.text",
                             cdata[tc]));
                         txt(i18n::s.get(
-                                "core.action.use.leash.other.start."
-                                "dialog",
+                                "core.action.use.leash.other.start.dialog",
                                 cdata[tc]),
                             Message::color{ColorIndex::cyan});
                     }
@@ -2005,8 +1990,7 @@ TurnResult do_use_command()
                             "core.action.use.leash.other.stop.text",
                             cdata[tc]));
                         txt(i18n::s.get(
-                                "core.action.use.leash.other.stop."
-                                "dialog",
+                                "core.action.use.leash.other.stop.dialog",
                                 cdata[tc]),
                             Message::color{ColorIndex::cyan});
                     }
@@ -2332,9 +2316,8 @@ TurnResult do_use_command()
                 .next_level_minus_one_kumiromis_experience_becomes_available >
             cdata.player().level)
         {
-            txt(
-                i18n::s.get("core.action.use.secret_experience.kumiromi."
-                            "not_enough_exp"));
+            txt(i18n::s.get(
+                "core.action.use.secret_experience.kumiromi.not_enough_exp"));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
@@ -2879,9 +2862,8 @@ TurnResult do_use_stairs_command(int val0)
                         game_data.current_dungeon_level >=
                             game_data.void_next_lord_floor)
                     {
-                        txt(
-                            i18n::s.get("core.action.use_stairs.blocked_"
-                                        "by_barrier"));
+                        txt(i18n::s.get(
+                            "core.action.use_stairs.blocked_by_barrier"));
                         return TurnResult::pc_turn_user_error;
                     }
                 }

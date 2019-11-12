@@ -1289,9 +1289,8 @@ void make_sound(
                                         "core.misc.sound.get_anger",
                                         cdata[cnt]),
                                     Message::color{ColorIndex::cyan});
-                                txt(
-                                    i18n::s.get("core.misc.sound.can_no_"
-                                                "longer_stand"));
+                                txt(i18n::s.get(
+                                    "core.misc.sound.can_no_longer_stand"));
                             }
                             turn_aggro(cnt, source_chara_index, 80);
                         }
@@ -3753,8 +3752,8 @@ void proc_negative_equipments()
                         {
                             if (is_in_fov(cdata[cc]))
                             {
-                                txt(i18n::s.get("core.misc.curse."
-                                                "creature_summoned"),
+                                txt(i18n::s.get(
+                                        "core.misc.curse.creature_summoned"),
                                     Message::color{ColorIndex::purple});
                             }
                             for (int cnt = 0, cnt_end = (1 + rnd(3));
@@ -4098,9 +4097,8 @@ TurnResult exit_map()
                     {
                         if (game_data.quest_flags.pyramid_trial == 0)
                         {
-                            txt(
-                                i18n::s.get("core.action.exit_map.no_"
-                                            "invitation_to_pyramid"));
+                            txt(i18n::s.get(
+                                "core.action.exit_map.no_invitation_to_pyramid"));
                             msg_halt();
                             game_data.current_map =
                                 static_cast<int>(mdata_t::MapId::fields);
@@ -5629,8 +5627,7 @@ void equip_melee_weapon()
                 if (inv[cw].weight >= 4000)
                 {
                     txt(i18n::s.get(
-                        "core.action.equip.two_handed.too_heavy_when_"
-                        "riding",
+                        "core.action.equip.two_handed.too_heavy_when_riding",
                         inv[cw]));
                 }
             }
@@ -6060,9 +6057,8 @@ void try_to_return()
             {
                 if (area_data[game_data.current_map].has_been_conquered != -1)
                 {
-                    txt(
-                        i18n::s.get("core.misc.return.lord_of_dungeon_"
-                                    "might_disappear"));
+                    txt(i18n::s.get(
+                        "core.misc.return.lord_of_dungeon_might_disappear"));
                 }
             }
         }
@@ -6654,17 +6650,15 @@ label_21451_internal:
                 {
                     if (is_in_fov(cdata[cc]))
                     {
-                        txt(
-                            i18n::s.get("core.action.move.trap.activate."
-                                        "spears.text"));
+                        txt(i18n::s.get(
+                            "core.action.move.trap.activate.spears.text"));
                     }
                     if (cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0)
                     {
                         if (is_in_fov(cdata[cc]))
                         {
                             txt(i18n::s.get(
-                                "core.action.move.trap.activate.spears."
-                                "target_floating",
+                                "core.action.move.trap.activate.spears.target_floating",
                                 cdata[cc]));
                         }
                     }
@@ -7031,8 +7025,8 @@ void map_global_proc_travel_events()
                 if (cdata.player().is_floating() == 0 ||
                     cdata.player().gravity > 0)
                 {
-                    txt(i18n::s.get("core.action.move.global.weather."
-                                    "snow.sound"),
+                    txt(i18n::s.get(
+                            "core.action.move.global.weather.snow.sound"),
                         Message::color{ColorIndex::cyan});
                     cdata[cc].activity.turn += 10;
                 }
@@ -7067,8 +7061,7 @@ void map_global_proc_travel_events()
                     cdata.player().gravity > 0)
                 {
                     txt(i18n::s.get(
-                            "core.action.move.global.weather.heavy_rain."
-                            "sound"),
+                            "core.action.move.global.weather.heavy_rain.sound"),
                         Message::color{ColorIndex::cyan});
                     cdata[cc].activity.turn += 5;
                 }
@@ -7078,8 +7071,7 @@ void map_global_proc_travel_events()
                 if (rnd(500) == 0)
                 {
                     txt(i18n::s.get(
-                            "core.action.move.global.weather.heavy_rain."
-                            "message"),
+                            "core.action.move.global.weather.heavy_rain.message"),
                         Message::color{ColorIndex::purple});
                     cdata.player().confused = 10;
                 }
@@ -7748,8 +7740,8 @@ int drink_well()
         {
             if (rnd(game_data.wish_count + 1))
             {
-                txt(i18n::s.get("core.action.drink.well.effect.wish_too_"
-                                "frequent"),
+                txt(i18n::s.get(
+                        "core.action.drink.well.effect.wish_too_frequent"),
                     Message::color{ColorIndex::orange});
                 break;
             }
@@ -8114,9 +8106,8 @@ int prompt_magic_location()
                 {
                     if (stat == 0)
                     {
-                        txt(
-                            i18n::s.get("core.action.which_direction."
-                                        "cannot_see_location"));
+                        txt(i18n::s.get(
+                            "core.action.which_direction.cannot_see_location"));
                         update_screen();
                     }
                     obvious = 0;
@@ -8132,9 +8123,8 @@ int prompt_magic_location()
                 {
                     if (stat == 0)
                     {
-                        txt(
-                            i18n::s.get("core.action.which_direction."
-                                        "cannot_see_location"));
+                        txt(i18n::s.get(
+                            "core.action.which_direction.cannot_see_location"));
                         update_screen();
                     }
                     obvious = 0;
@@ -8478,9 +8468,8 @@ int pick_up_item(bool play_sound)
             inv[ci].set_number(inumbk + in);
             if (invctrl == 12)
             {
-                txt(
-                    i18n::s.get("core.action.pick_up.shopkeepers_"
-                                "inventory_is_full"));
+                txt(i18n::s.get(
+                    "core.action.pick_up.shopkeepers_inventory_is_full"));
             }
             else
             {
@@ -9129,14 +9118,13 @@ TurnResult proc_movement_event()
                 {
                     encounterlv = 1;
                 }
-                auto valn = i18n::s.get(
-                                "core.action.move.global.ambush."
-                                "distance_from_nearest_town",
-                                p(0)) +
+                auto valn =
+                    i18n::s.get(
+                        "core.action.move.global.ambush.distance_from_nearest_town",
+                        p(0)) +
                     " " +
                     i18n::s.get(
-                        "core.action.move.global.ambush.enemy_"
-                        "strength");
+                        "core.action.move.global.ambush.enemy_strength");
                 for (int cnt = 0; cnt < 1; ++cnt)
                 {
                     if (encounterlv < 5)
@@ -9154,8 +9142,7 @@ TurnResult proc_movement_event()
                     if (encounterlv < 20)
                     {
                         valn += i18n::s.get(
-                            "core.action.move.global.ambush.rank."
-                            "grizzly_bear");
+                            "core.action.move.global.ambush.rank.grizzly_bear");
                         break;
                     }
                     if (encounterlv < 30)
@@ -9746,9 +9733,8 @@ void open_new_year_gift()
         {
             if (is_in_fov(cdata[cc]))
             {
-                txt(
-                    i18n::s.get("core.action.open.new_year_gift."
-                                "something_jumps_out"));
+                txt(i18n::s.get(
+                    "core.action.open.new_year_gift.something_jumps_out"));
             }
             for (int cnt = 0, cnt_end = (3 + rnd(3)); cnt < cnt_end; ++cnt)
             {
@@ -10489,8 +10475,7 @@ label_22191_internal:
                         if (is_in_fov(cdata[cc]))
                         {
                             txt(i18n::s.get(
-                                    "core.damage.reactive_attack.ether_"
-                                    "thorns",
+                                    "core.damage.reactive_attack.ether_thorns",
                                     cdata[cc]),
                                 Message::color{ColorIndex::purple});
                         }
@@ -11622,8 +11607,8 @@ void weather_changes()
                         if (rnd(15) < game_data.date.day + 5)
                         {
                             game_data.weather = 1;
-                            txt(i18n::s.get("core.action.weather.ether_"
-                                            "wind.starts"),
+                            txt(i18n::s.get(
+                                    "core.action.weather.ether_wind.starts"),
                                 Message::color{ColorIndex::red});
                             game_data.last_etherwind_month =
                                 game_data.date.month;

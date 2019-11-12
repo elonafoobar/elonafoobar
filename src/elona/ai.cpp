@@ -794,8 +794,8 @@ label_2692_internal:
                                                         .position.x;
                                             tlocy = cdata[game_data.fire_giant]
                                                         .position.y;
-                                            txt(i18n::s.get("core.ai."
-                                                            "fire_giant"),
+                                            txt(i18n::s.get(
+                                                    "core.ai.fire_giant"),
                                                 Message::color{
                                                     ColorIndex::cyan});
                                             return do_throw_command();

@@ -558,9 +558,7 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_pet_arena(int _p)
     {
         if (i == 0)
         {
-            txt(
-                i18n::s.get("core.ui.ally_list.pet_arena.need_"
-                            "at_least_one"));
+            txt(i18n::s.get("core.ui.ally_list.pet_arena.need_at_least_one"));
             snd("core.fail1");
             set_reupdate();
         }

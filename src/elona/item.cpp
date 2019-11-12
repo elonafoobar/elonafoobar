@@ -1800,8 +1800,7 @@ bool item_fire(int owner, int ci)
                 if (is_in_fov(inv[ci_].position))
                 {
                     txt(i18n::s.get(
-                            "core.item.item_on_the_ground_get_"
-                            "broiled",
+                            "core.item.item_on_the_ground_get_broiled",
                             inv[ci_]),
                         Message::color{ColorIndex::gold});
                 }
@@ -1811,8 +1810,7 @@ bool item_fire(int owner, int ci)
                 if (is_in_fov(cdata[owner]))
                 {
                     txt(i18n::s.get(
-                            "core.item.item_on_the_ground_get_"
-                            "broiled",
+                            "core.item.item_on_the_ground_get_broiled",
                             inv[ci_],
                             cdata[owner]),
                         Message::color{ColorIndex::gold});
@@ -1889,8 +1887,7 @@ bool item_fire(int owner, int ci)
                 if (is_in_fov(cdata[owner]))
                 {
                     txt(i18n::s.get(
-                            "core.item.item_someone_equips_turns_to_"
-                            "dust",
+                            "core.item.item_someone_equips_turns_to_dust",
                             itemname(inv[ci_].index, p_),
                             p_,
                             cdata[owner]),
@@ -2057,8 +2054,7 @@ bool item_cold(int owner, int ci)
                 if (is_in_fov(cdata[owner]))
                 {
                     txt(i18n::s.get(
-                        "core.item.coldproof_blanket_is_broken_to_"
-                        "pieces",
+                        "core.item.coldproof_blanket_is_broken_to_pieces",
                         inv[blanket]));
                 }
                 break;
