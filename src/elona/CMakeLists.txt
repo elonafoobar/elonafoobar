@@ -27,6 +27,7 @@ set(ELONA_SOURCES
   crafting.cpp
   ctrl_file.cpp
   ctrl_inventory.cpp
+  death.cpp
   debug.cpp
   deferred_event.cpp
   dialog.cpp
