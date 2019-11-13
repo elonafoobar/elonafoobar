@@ -110,7 +110,7 @@ optional<int> do_create_item(int slot, int x, int y)
     if (ci == -1)
         return none;
 
-    item_delete(ci);
+    item_delete(inv[ci]);
     inv[ci].index = ci;
 
     if (slot == -1 && mode != 6 && mode != 9)
@@ -474,7 +474,7 @@ optional<int> do_create_item(int slot, int x, int y)
 
     calc_furniture_value(inv[ci]);
 
-    itemturn(ci);
+    itemturn(inv[ci]);
 
     if (initnum != 0)
     {
@@ -548,7 +548,7 @@ void init_item_quality_curse_state_material_and_equipments(Item& item)
                 break;
             }
             enchantment_add(
-                ci,
+                item,
                 fixeditemenc(cnt * 2),
                 fixeditemenc(cnt * 2 + 1),
                 0,
@@ -559,7 +559,7 @@ void init_item_quality_curse_state_material_and_equipments(Item& item)
     }
     if (reftype < 52000)
     {
-        add_enchantments();
+        add_enchantments(item);
     }
     else if (item.quality != Quality::special)
     {
@@ -780,7 +780,7 @@ void set_material_specific_attributes(Item& item)
     p = item.material;
     for (auto e : the_item_material_db[p]->enchantments)
     {
-        enchantment_add(ci, e.first, e.second, 0, 1);
+        enchantment_add(item, e.first, e.second, 0, 1);
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {

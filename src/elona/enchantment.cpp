@@ -22,7 +22,6 @@ elona_vector1<int> p_at_m47;
 elona_vector2<int> enclist;
 elona_vector2<int> egoenc;
 elona_vector2<int> egoref;
-elona_vector1<int> egolist;
 int maxegominorn = 0;
 int p_at_m48 = 0;
 
@@ -86,36 +85,52 @@ void enchantment_sort(Item& item)
 
 
 
-void add_enchantment_by_fixed_ego()
+void add_one_enchantment_by_fixed_ego(Item& item, int ego_type)
 {
-    p = 0;
-    for (int cnt = 0; cnt < 11; ++cnt)
+    for (int i = 0; i < 10; ++i)
     {
-        if (egoref(0, cnt) != egolv)
+        if (egoenc(i * 2, ego_type) == 0)
         {
-            continue;
+            break;
         }
-        if (egoref(1, cnt) != 0)
+        enchantment_add(
+            item,
+            egoenc(i * 2, ego_type),
+            enchantment_gen_p(egoenc(i * 2 + 1, ego_type)));
+    }
+}
+
+
+
+void add_enchantment_by_fixed_ego(Item& item, int egolv)
+{
+    std::vector<int> ego_list;
+    for (int i = 0; i < 11; ++i)
+    {
+        if (egoref(0, i) != egolv)
+            continue;
+
+        if (egoref(1, i) != 0)
         {
-            if (!enchantment_filter(reftype, egoref(1, cnt)))
+            if (!enchantment_filter(reftype, egoref(1, i)))
             {
                 continue;
             }
         }
-        egolist(p) = cnt;
-        ++p;
+
+        ego_list.push_back(i);
     }
-    if (p == 0)
-    {
+
+    if (ego_list.empty())
         return;
-    }
-    p = egolist(rnd(p(0)));
-    inv[ci].subname = 10000 + p;
-    ego_add(ci, p);
+
+    const auto ego_id = choice(ego_list);
+    item.subname = 10000 + ego_id;
+    add_one_enchantment_by_fixed_ego(item, ego_id);
     if (rnd(2) == 0)
     {
         enchantment_add(
-            ci,
+            item,
             enchantment_generate(enchantment_gen_level(egolv)),
             enchantment_gen_p(),
             20);
@@ -123,7 +138,7 @@ void add_enchantment_by_fixed_ego()
     if (rnd(4) == 0)
     {
         enchantment_add(
-            ci,
+            item,
             enchantment_generate(enchantment_gen_level(egolv)),
             enchantment_gen_p(),
             25);
@@ -132,17 +147,18 @@ void add_enchantment_by_fixed_ego()
 
 
 
-void add_enchantments_depending_on_ego()
+void add_enchantments_depending_on_ego(Item& item, int egolv)
 {
-    for (int cnt = 0, cnt_end = (rnd(rnd(5) + 1) + 1); cnt < cnt_end; ++cnt)
+    const auto num_of_enc = rnd(rnd(5) + 1) + 1;
+    for (int _i = 0; _i < num_of_enc; ++_i)
     {
         enchantment_add(
-            ci,
+            item,
             enchantment_generate(enchantment_gen_level(egolv)),
             enchantment_gen_p(),
             8);
     }
-    inv[ci].subname = 20000 + rnd(maxegominorn);
+    item.subname = 20000 + rnd(maxegominorn);
 }
 
 } // namespace
@@ -615,7 +631,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
 
 
 bool enchantment_add(
-    int item_index,
+    Item& item,
     int type,
     int power,
     int flip_percentage,
@@ -623,7 +639,7 @@ bool enchantment_add(
     bool only_check,
     bool force)
 {
-    const auto category = the_item_db[itemid2int(inv[item_index].id)]->category;
+    const auto category = the_item_db[itemid2int(item.id)]->category;
 
     if (type == 0)
     {
@@ -739,14 +755,14 @@ bool enchantment_add(
     i_at_m48 = -1;
     for (int cnt = 0; cnt < 15; ++cnt)
     {
-        if (inv[item_index].enchantments[cnt].id == enc)
+        if (item.enchantments[cnt].id == enc)
         {
             i_at_m48 = cnt;
             continue;
         }
         if (i_at_m48 == -1)
         {
-            if (inv[item_index].enchantments[cnt].id == 0)
+            if (item.enchantments[cnt].id == 0)
             {
                 i_at_m48 = cnt;
             }
@@ -757,7 +773,7 @@ bool enchantment_add(
         return false;
     }
 
-    if (inv[item_index].enchantments[i_at_m48].id == enc)
+    if (item.enchantments[i_at_m48].id == enc)
     {
         if (category == 25000)
         {
@@ -776,12 +792,12 @@ bool enchantment_add(
         return true;
     }
 
-    if (inv[item_index].enchantments[i_at_m48].id == enc)
+    if (item.enchantments[i_at_m48].id == enc)
     {
-        encp += inv[item_index].enchantments[i_at_m48].power;
+        encp += item.enchantments[i_at_m48].power;
     }
-    inv[item_index].enchantments[i_at_m48].id = enc;
-    inv[item_index].enchantments[i_at_m48].power = encp;
+    item.enchantments[i_at_m48].id = enc;
+    item.enchantments[i_at_m48].power = encp;
 
     if (type < 10000)
     {
@@ -791,12 +807,11 @@ bool enchantment_add(
     {
         p_at_m48 = type / 10000;
     }
-    if (inv[item_index].value * encref(1, p_at_m48) / 100 > 0)
+    if (item.value * encref(1, p_at_m48) / 100 > 0)
     {
-        inv[item_index].value =
-            inv[item_index].value * encref(1, p_at_m48) / 100;
+        item.value = item.value * encref(1, p_at_m48) / 100;
     }
-    enchantment_sort(inv[item_index]);
+    enchantment_sort(item);
 
     return true;
 }
@@ -935,11 +950,11 @@ int enchantment_gen_p(int multiplier)
 
 
 
-void add_enchantments()
+void add_enchantments(Item& item)
 {
     if (reftype == 25000)
     {
-        inv[ci].count = -1;
+        item.count = -1;
     }
     if (fixlv <= Quality::good)
     {
@@ -952,8 +967,8 @@ void add_enchantments()
     else
     {
         egolv = rnd(clamp(rnd(objlv / 10 + 3), 0, 4) + 1);
-        inv[ci].value = inv[ci].value * 3;
-        inv[ci].difficulty_of_identification = 50 +
+        item.value = item.value * 3;
+        item.difficulty_of_identification = 50 +
             rnd(std::abs(
                     static_cast<int>(fixlv) - static_cast<int>(Quality::good)) *
                     100 +
@@ -965,25 +980,25 @@ void add_enchantments()
         {
             if (rnd(10) == 0)
             {
-                enchantment_add(ci, 34, enchantment_gen_p());
+                enchantment_add(item, 34, enchantment_gen_p());
             }
             if (rnd(10) == 0)
             {
-                enchantment_add(ci, 10016, enchantment_gen_p());
+                enchantment_add(item, 10016, enchantment_gen_p());
             }
             if (rnd(10) == 0)
             {
-                enchantment_add(ci, 30172, enchantment_gen_p());
+                enchantment_add(item, 30172, enchantment_gen_p());
                 break;
             }
             if (rnd(10) == 0)
             {
-                enchantment_add(ci, 10003, enchantment_gen_p());
+                enchantment_add(item, 10003, enchantment_gen_p());
                 break;
             }
             if (rnd(10) == 0)
             {
-                enchantment_add(ci, 30164, enchantment_gen_p());
+                enchantment_add(item, 30164, enchantment_gen_p());
                 break;
             }
         }
@@ -992,27 +1007,28 @@ void add_enchantments()
     {
         if (rnd(2))
         {
-            add_enchantments_depending_on_ego();
+            add_enchantments_depending_on_ego(item, egolv);
         }
         else
         {
-            add_enchantment_by_fixed_ego();
+            add_enchantment_by_fixed_ego(item, egolv);
         }
     }
     if (fixlv == Quality::miracle || fixlv == Quality::godly)
     {
-        inv[ci].subname = 40000 + rnd(30000);
+        item.subname = 40000 + rnd(30000);
         if (fixlv == Quality::godly ||
             (fixlv == Quality::miracle && rnd(10) == 0))
         {
-            enchantment_add(ci, enchantment_generate(99), enchantment_gen_p());
+            enchantment_add(
+                item, enchantment_generate(99), enchantment_gen_p());
         }
         if (rnd(100) == 0 || 0)
         {
             if (reftype == 24000 || reftype == 10000)
             {
-                inv[ci].is_alive() = true;
-                inv[ci].param1 = 1;
+                item.is_alive() = true;
+                item.param1 = 1;
                 return;
             }
         }
@@ -1030,22 +1046,22 @@ void add_enchantments()
             {
                 if (rnd(10) == 0)
                 {
-                    inv[ci].is_eternal_force() = true;
+                    item.is_eternal_force() = true;
                     enchantment_add(
-                        ci, enchantment_generate(99), enchantment_gen_p());
-                    inv[ci].curse_state = CurseState::blessed;
+                        item, enchantment_generate(99), enchantment_gen_p());
+                    item.curse_state = CurseState::blessed;
                 }
             }
         }
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             enchantment_add(
-                ci,
+                item,
                 enchantment_generate(enchantment_gen_level(egolv)),
                 enchantment_gen_p() + (fixlv == Quality::godly) * 100 +
-                    (inv[ci].is_eternal_force()) * 100,
+                    (item.is_eternal_force()) * 100,
                 20 - (fixlv == Quality::godly) * 10 -
-                    (inv[ci].is_eternal_force()) * 20);
+                    (item.is_eternal_force()) * 20);
         }
     }
     if (fixlv == Quality::special)
@@ -1053,36 +1069,37 @@ void add_enchantments()
         for (int cnt = 0, cnt_end = (rnd(3)); cnt < cnt_end; ++cnt)
         {
             enchantment_add(
-                ci,
+                item,
                 enchantment_generate(enchantment_gen_level(egolv)),
                 enchantment_gen_p(),
                 10);
         }
     }
-    if (is_cursed(inv[ci].curse_state))
+    if (is_cursed(item.curse_state))
     {
         enchantment_add(
-            ci,
+            item,
             enchantment_generate(enchantment_gen_level(egolv)),
             clamp(enchantment_gen_p(), 250, 10000) *
-                (125 + (inv[ci].curse_state == CurseState::doomed) * 25) / 100);
+                (125 + (item.curse_state == CurseState::doomed) * 25) / 100);
         for (int cnt = 0,
                  cnt_end = cnt +
-                 (1 + (inv[ci].curse_state == CurseState::doomed) + rnd(2));
+                 (1 + (item.curse_state == CurseState::doomed) + rnd(2));
              cnt < cnt_end;
              ++cnt)
         {
             if (rnd(3) == 0)
             {
-                enchantment_add(ci, 2, enchantment_gen_p() * 3 / 2, 100);
+                enchantment_add(item, 2, enchantment_gen_p() * 3 / 2, 100);
                 continue;
             }
             if (rnd(3) == 0)
             {
-                enchantment_add(ci, 1, enchantment_gen_p() * 5 / 2, 100);
+                enchantment_add(item, 1, enchantment_gen_p() * 5 / 2, 100);
                 continue;
             }
-            enchantment_add(ci, enchantment_generate(-1), enchantment_gen_p());
+            enchantment_add(
+                item, enchantment_generate(-1), enchantment_gen_p());
         }
     }
 }
@@ -1094,7 +1111,6 @@ void initialize_ego_data()
     SDIM1(egoname);
     DIM3(egoenc, 20, 11);
     DIM3(egoref, 2, 11);
-    DIM2(egolist, 11);
 
     for (int cnt = 0; cnt < 11; cnt++)
     {
@@ -1176,23 +1192,6 @@ void initialize_ego_data()
     }
 
     maxegominorn = egominorn.size();
-}
-
-
-
-void ego_add(int item_index, int ego_type)
-{
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        if (egoenc(cnt * 2, ego_type) == 0)
-        {
-            break;
-        }
-        enchantment_add(
-            item_index,
-            egoenc(cnt * 2, ego_type),
-            enchantment_gen_p(egoenc(cnt * 2 + 1, ego_type)));
-    }
 }
 
 

@@ -318,11 +318,11 @@ void item_checkknown(int = 0);
 int inv_compress(int);
 void item_copy(int = 0, int = 0);
 void item_acid(const Character& owner, int item_index = -1);
-void item_delete(int);
+void item_delete(Item& item);
 void item_exchange(int = 0, int = 0);
 void item_modify_num(Item&, int);
 void item_set_num(Item&, int);
-void itemturn(int = 0);
+void itemturn(Item& item);
 int itemfind(int = 0, int = 0, int = 0);
 int itemusingfind(int, bool = false);
 
@@ -348,7 +348,7 @@ void mapitem_cold(int x, int y);
 
 // TODO unsure how these are separate from item
 int inv_find(int = 0, int = 0);
-int get_random_inv(int owner);
+Item& get_random_inv(int owner);
 int inv_getfreeid(int = 0);
 int inv_getowner(int = 0);
 int inv_sum(int = 0);
@@ -378,7 +378,7 @@ enum class ItemDescriptionType : int
     small_font_italic = -2,
 };
 
-void item_load_desc(int item_index, int& p);
+size_t item_load_desc(const Item& item);
 
 
 int iequiploc(const Item& item);
@@ -391,5 +391,8 @@ void item_db_set_full_stats(Item& item, int legacy_id);
 void item_db_on_read(Item& item, int legacy_id);
 void item_db_on_zap(Item& item, int legacy_id);
 void item_db_on_drink(Item& item, int legacy_id);
+
+
+std::vector<int> item_get_inheritance(const Item& item);
 
 } // namespace elona

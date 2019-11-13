@@ -331,7 +331,6 @@ ELONA_EXTERN(int cm);
 ELONA_EXTERN(int cmbg);
 ELONA_EXTERN(int cmsex);
 ELONA_EXTERN(int cmshade);
-ELONA_EXTERN(int cooktool);
 ELONA_EXTERN(int creaturepack);
 ELONA_EXTERN(int critical);
 ELONA_EXTERN(int crop);
@@ -585,7 +584,6 @@ void gain_race_feat();
 
 // Item status querying
 int cargocheck();
-void getinheritance(int, elona_vector1<int>&, int&);
 
 // Item manipulation
 int convertartifact(int = 0, int = 0);

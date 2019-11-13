@@ -1639,7 +1639,7 @@ TurnResult do_use_command()
             {
                 randomize(inv[ci].subname + inv[ci].param1 * 10 + cnt);
                 if (enchantment_add(
-                        ci,
+                        inv[ci],
                         enchantment_generate(enchantment_gen_level(4)),
                         enchantment_gen_p(),
                         0,
@@ -1681,7 +1681,8 @@ TurnResult do_use_command()
                 }
                 else
                 {
-                    enchantment_add(ci, list(0, rtval), list(1, rtval), 0, 1);
+                    enchantment_add(
+                        inv[ci], list(0, rtval), list(1, rtval), 0, 1);
                 }
                 txt(i18n::s.get("core.action.use.living.pleased", inv[ci]),
                     Message::color{ColorIndex::green});
@@ -1690,7 +1691,7 @@ TurnResult do_use_command()
                 {
                     txt(i18n::s.get(
                         "core.action.use.living.becoming_a_threat"));
-                    if (!enchantment_add(ci, 45, 50))
+                    if (!enchantment_add(inv[ci], 45, 50))
                     {
                         inv[ci].enchantments[14].id = 0;
                         txt(i18n::s.get(

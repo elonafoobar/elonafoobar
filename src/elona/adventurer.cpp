@@ -320,25 +320,25 @@ void adventurer_update()
 int adventurer_discover_equipment()
 {
     f = 0;
-    for (int cnt = 0; cnt < 10; ++cnt)
+    for (int _i = 0; _i < 10; ++_i)
     {
-        ci = get_random_inv(rc);
-        if (inv[ci].number() == 0)
+        auto&& item = get_random_inv(rc);
+        if (item.number() == 0)
         {
             f = 1;
             break;
         }
-        if (inv[ci].body_part != 0)
+        if (item.body_part != 0)
         {
             continue;
         }
-        if (inv[ci].number() != 0)
+        if (item.number() != 0)
         {
-            if (cdata[rc].item_which_will_be_used == ci)
+            if (cdata[rc].item_which_will_be_used == item.index)
             {
                 cdata[rc].item_which_will_be_used = 0;
             }
-            inv[ci].remove();
+            item.remove();
             f = 1;
             break;
         }

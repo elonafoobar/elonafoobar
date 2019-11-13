@@ -435,15 +435,16 @@ void cell_refresh(int x, int y)
 
 
 
-void itemturn(int ci)
+void itemturn(Item& item)
 {
+    ++game_data.item_turns;
     if (game_data.item_turns < 0)
     {
-        game_data.item_turns = 0;
+        game_data.item_turns = 1;
     }
-    ++game_data.item_turns;
-    inv[ci].turn = game_data.item_turns;
+    item.turn = game_data.item_turns;
 }
+
 
 
 void item_copy(int a, int b)
@@ -491,13 +492,14 @@ void Item::remove()
     number_ = 0;
 }
 
-void item_delete(int ci)
-{
-    inv[ci].remove();
 
-    inv[ci].clear();
-    // Restore "index".
-    inv[ci].index = ci;
+
+void item_delete(Item& item)
+{
+    const auto index = item.index;
+    item.remove();
+    item.clear();
+    item.index = index; // Restore "index".
 }
 
 
@@ -581,7 +583,7 @@ int item_separate(int src)
             inv[src].position = cdata[inv_getowner(src)].position;
         }
         inv[dst].position = inv[src].position;
-        itemturn(dst);
+        itemturn(inv[dst]);
         cell_refresh(inv[dst].position.x, inv[dst].position.y);
         if (inv_getowner(src) != -1)
         {
@@ -1676,7 +1678,7 @@ void item_dump_desc(const Item& i)
     item_db_get_charge_level(inv[ci], dbid);
     item_db_get_description(inv[ci], dbid);
 
-    item_load_desc(ci, p(0));
+    p = item_load_desc(inv[ci]);
 
     listmax = p;
     pagemax = (listmax - 1) / pagesize;
@@ -1816,7 +1818,7 @@ bool item_fire(int owner, int ci)
                         Message::color{ColorIndex::gold});
                 }
             }
-            make_dish(ci_, rnd(5) + 1);
+            make_dish(inv[ci_], rnd(5) + 1);
             burned = true;
             continue;
         }
@@ -2120,11 +2122,14 @@ void mapitem_cold(int x, int y)
 
 
 
-int get_random_inv(int owner)
+Item& get_random_inv(int owner)
 {
     const auto tmp = inv_getheader(owner);
-    return tmp.first + rnd(tmp.second);
+    const auto index = tmp.first + rnd(tmp.second);
+    return inv[index];
 }
+
+
 
 std::pair<int, int> inv_getheader(int owner)
 {
@@ -2247,16 +2252,15 @@ int inv_compress(int owner)
     if (slot == -1)
     {
         // Destroy 1 existing item forcely.
-        slot = get_random_inv(owner);
-        inv[slot].remove();
+        auto&& item = get_random_inv(owner);
+        slot = item.index;
+        item.remove();
         if (mode != 6)
         {
-            if (inv[slot].position.x >= 0 &&
-                inv[slot].position.x < map_data.width &&
-                inv[slot].position.y >= 0 &&
-                inv[slot].position.y < map_data.height)
+            if (item.position.x >= 0 && item.position.x < map_data.width &&
+                item.position.y >= 0 && item.position.y < map_data.height)
             {
-                cell_refresh(inv[slot].position.x, inv[slot].position.y);
+                cell_refresh(item.position.x, item.position.y);
             }
         }
     }
@@ -2343,7 +2347,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
     item_copy(item_in_inventory.index, ti);
     inv[ti].position = cdata[cc].position;
     inv[ti].set_number(num);
-    itemturn(ti);
+    itemturn(inv[ti]);
 
     if (building_shelter)
     {
@@ -2432,6 +2436,36 @@ int iequiploc(const Item& item)
     case 19000: return 8;
     default: return 0;
     }
+}
+
+
+
+std::vector<int> item_get_inheritance(const Item& item)
+{
+    std::vector<int> result;
+
+    randomize(item.turn + 1);
+    for (int _i = 0; _i < 10; ++_i)
+    {
+        const auto enc_index = rnd(15);
+        if (enc_index == 0)
+            continue;
+        if (item.enchantments[enc_index].id == 0)
+            continue;
+
+        const auto exists = range::find(result, enc_index) != std::end(result);
+        if (exists)
+            continue;
+
+        if (item.enchantments[enc_index].power < 0 ||
+            static_cast<int>(result.size()) < rnd(4))
+        {
+            result.push_back(enc_index);
+        }
+    }
+    randomize();
+
+    return result;
 }
 
 } // namespace elona

@@ -1486,12 +1486,13 @@ TurnResult pc_turn(bool advance_time)
         }
         if (trait(210) != 0 && rnd(5) == 0)
         {
-            ci = get_random_inv(0);
-            if (inv[ci].number() > 0 &&
-                the_item_db[itemid2int(inv[ci].id)]->category == 52000)
+            auto&& item = get_random_inv(0);
+            if (item.number() > 0 &&
+                the_item_db[itemid2int(item.id)]->category == 52000)
             {
-                dbid = itemid2int(inv[ci].id);
-                item_db_on_drink(inv[ci], dbid);
+                ci = item.index;
+                dbid = itemid2int(item.id);
+                item_db_on_drink(item, dbid);
             }
         }
         if (trait(214) != 0 && rnd(250) == 0 &&
