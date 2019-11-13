@@ -232,8 +232,8 @@ void modify_karma(Character& cc, int delta)
     {
         if (cc.karma < -30 && cc.karma + delta >= -30)
         {
-            txt(i18n::s.get("core.chara_status.karma.you_are_no_longer_"
-                            "criminal"),
+            txt(i18n::s.get(
+                    "core.chara_status.karma.you_are_no_longer_criminal"),
                 Message::color{ColorIndex::green});
         }
     }

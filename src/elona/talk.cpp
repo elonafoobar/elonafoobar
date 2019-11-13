@@ -331,8 +331,8 @@ TalkResult talk_game_begin()
         update_screen();
         await(3000);
         Message::instance().linebreak();
-        txt(i18n::s.get("core.talk.unique.lomias.begin.easter_egg."
-                        "something_is_killed"),
+        txt(i18n::s.get(
+                "core.talk.unique.lomias.begin.easter_egg.something_is_killed"),
             Message::color{ColorIndex::red});
         txt(i18n::s.get("core.talk.unique.lomias.begin.easter_egg.ugh"));
         snd("core.kill1");

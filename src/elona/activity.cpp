@@ -332,8 +332,8 @@ void activity_perform()
                 {
                     if (is_in_fov(cdata[cc]))
                     {
-                        txt(i18n::s.get("core.activity.perform.dialog."
-                                        "disinterest"),
+                        txt(i18n::s.get(
+                                "core.activity.perform.dialog.disinterest"),
                             Message::color{ColorIndex::cyan});
                     }
                     cdata[tc].interest = 0;
@@ -346,8 +346,8 @@ void activity_perform()
                         cdata[cc].quality_of_performance -= cdata[tc].level / 2;
                         if (is_in_fov(cdata[cc]))
                         {
-                            txt(i18n::s.get("core.activity.perform."
-                                            "dialog.angry"),
+                            txt(i18n::s.get(
+                                    "core.activity.perform.dialog.angry"),
                                 Message::color{ColorIndex::cyan});
                             txt(i18n::s.get(
                                 "core.activity.perform.throws_rock",
@@ -434,8 +434,7 @@ void activity_perform()
                         if (is_in_fov(cdata[cc]))
                         {
                             txt(i18n::s.get(
-                                    "core.activity.perform.dialog."
-                                    "interest",
+                                    "core.activity.perform.dialog.interest",
                                     cdata[tc],
                                     cdata[cc]),
                                 Message::color{ColorIndex::cyan});
@@ -1612,8 +1611,7 @@ void spot_digging()
                 item.param2 == cdata.player().position.y)
             {
                 snd("core.chest1");
-                txt(i18n::s.get("core.activity.dig_spot."
-                                "something_is_there"),
+                txt(i18n::s.get("core.activity.dig_spot.something_is_there"),
                     Message::color{ColorIndex::orange});
                 msg_halt();
                 snd("core.ding2");
@@ -1654,9 +1652,7 @@ void spot_digging()
                         cdata.player().position.y,
                         0);
                 }
-                txt(
-                    i18n::s.get("core.common.something_is_"
-                                "put_on_the_ground"));
+                txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
                 save_set_autosave();
                 item.modify_number(-1);
                 break;

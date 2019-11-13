@@ -99,9 +99,8 @@ void activity_blending()
                     int stat = blending_find_required_mat();
                     if (stat == 0)
                     {
-                        txt(
-                            i18n::s.get("core.blending.required_"
-                                        "material_not_found"));
+                        txt(i18n::s.get(
+                            "core.blending.required_material_not_found"));
                         break;
                     }
                     blending_start_attempt();

@@ -101,8 +101,7 @@ TurnResult npc_turn()
                                 {
                                     cdata[cc].is_leashed() = false;
                                     txt(i18n::s.get(
-                                            "core.action.npc.leash."
-                                            "untangle",
+                                            "core.action.npc.leash.untangle",
                                             cdata[cc]),
                                         Message::color{ColorIndex::cyan});
                                 }
@@ -1076,13 +1075,11 @@ TurnResult pass_one_turn(bool label_2738_flg)
                             if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
                             {
                                 txt(i18n::s.get(
-                                        "core.action.npc.drunk.annoyed."
-                                        "text",
+                                        "core.action.npc.drunk.annoyed.text",
                                         cdata[tc]),
                                     Message::color{ColorIndex::cyan});
-                                txt(
-                                    i18n::s.get("core.action.npc.drunk."
-                                                "annoyed.dialog"));
+                                txt(i18n::s.get(
+                                    "core.action.npc.drunk.annoyed.dialog"));
                             }
                             cdata[tc].hate = 20;
                             cdata[tc].enemy_id = cc;

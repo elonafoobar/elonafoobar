@@ -886,13 +886,13 @@ TalkResult talk_informer_investigate_ally()
         {
             ELONA_APPEND_RESPONSE(
                 1,
-                i18n::s.get("core.talk.npc.informer.investigate_ally."
-                            "choices.pay"));
+                i18n::s.get(
+                    "core.talk.npc.informer.investigate_ally.choices.pay"));
         }
         ELONA_APPEND_RESPONSE(
             0,
-            i18n::s.get("core.talk.npc.informer.investigate_ally."
-                        "choices.go_back"));
+            i18n::s.get(
+                "core.talk.npc.informer.investigate_ally.choices.go_back"));
         chatesc = 1;
         int chatval_ = talk_window_query();
         if (chatval_ == 1)
@@ -1167,8 +1167,8 @@ TalkResult talk_caravan_master_hire()
         {
             ELONA_APPEND_RESPONSE(
                 0,
-                i18n::s.get("core.talk.npc.caravan_master.hire.choices."
-                            "go_back"));
+                i18n::s.get(
+                    "core.talk.npc.caravan_master.hire.choices.go_back"));
             break;
         }
         ELONA_APPEND_RESPONSE(p(cnt), mapname(p(cnt)));
@@ -1810,8 +1810,8 @@ TalkResult talk_npc()
                 {
                     ELONA_APPEND_RESPONSE(
                         38,
-                        i18n::s.get("core.talk.npc.ally.choices.ask_for_"
-                                    "marriage"));
+                        i18n::s.get(
+                            "core.talk.npc.ally.choices.ask_for_marriage"));
                 }
                 else if (game_data.continuous_active_hours >= 15)
                 {
@@ -1825,15 +1825,15 @@ TalkResult talk_npc()
                     {
                         ELONA_APPEND_RESPONSE(
                             48,
-                            i18n::s.get("core.talk.npc.ally.choices."
-                                        "silence.start"));
+                            i18n::s.get(
+                                "core.talk.npc.ally.choices.silence.start"));
                     }
                     else
                     {
                         ELONA_APPEND_RESPONSE(
                             48,
-                            i18n::s.get("core.talk.npc.ally.choices."
-                                        "silence.stop"));
+                            i18n::s.get(
+                                "core.talk.npc.ally.choices.silence.stop"));
                     }
                 }
                 ELONA_APPEND_RESPONSE(
@@ -2117,8 +2117,8 @@ TalkResult talk_npc()
             {
                 ELONA_APPEND_RESPONSE(
                     24,
-                    i18n::s.get("core.talk.npc.quest_giver.choices."
-                                "about_the_work"));
+                    i18n::s.get(
+                        "core.talk.npc.quest_giver.choices.about_the_work"));
             }
         }
         else if (quest_data[rq].id != 0)
@@ -2162,8 +2162,8 @@ TalkResult talk_npc()
                 {
                     ELONA_APPEND_RESPONSE(
                         52,
-                        i18n::s.get("core.talk.npc.moyer.choices.sell_"
-                                    "paels_mom"));
+                        i18n::s.get(
+                            "core.talk.npc.moyer.choices.sell_paels_mom"));
                 }
             }
         }

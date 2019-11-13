@@ -1205,22 +1205,19 @@ void quest_failed(int val0)
                                 if (quest_data[rq].escort_difficulty == 0)
                                 {
                                     s = i18n::s.get(
-                                        "core.quest.escort.failed."
-                                        "assassin");
+                                        "core.quest.escort.failed.assassin");
                                     p = -11;
                                 }
                                 if (quest_data[rq].escort_difficulty == 1)
                                 {
                                     s = i18n::s.get(
-                                        "core.quest.escort.failed."
-                                        "poison");
+                                        "core.quest.escort.failed.poison");
                                     p = -4;
                                 }
                                 if (quest_data[rq].escort_difficulty == 2)
                                 {
                                     s = i18n::s.get(
-                                        "core.quest.escort.failed."
-                                        "deadline",
+                                        "core.quest.escort.failed.deadline",
                                         cdata[tc]);
                                     mef_add(
                                         cdata.player().position.x,

@@ -1143,9 +1143,8 @@ label_2061_internal:
                     if (inv[ci].weight <= 0)
                     {
                         snd("core.fail1");
-                        txt(
-                            i18n::s.get("core.ui.inv.put.container."
-                                        "cannot_hold_cargo"));
+                        txt(i18n::s.get(
+                            "core.ui.inv.put.container.cannot_hold_cargo"));
                         goto label_2060_internal;
                     }
                 }

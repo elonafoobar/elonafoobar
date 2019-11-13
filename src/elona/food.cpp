@@ -58,10 +58,7 @@ void _food_gets_rotten(int chara_idx, int food_idx)
         {
             return;
         }
-        txt(i18n::s.get(
-            "core.misc.corpse_is_dried_"
-            "up",
-            food));
+        txt(i18n::s.get("core.misc.corpse_is_dried_up", food));
         food.param3 = game_data.date.hours() + 2160;
         food.image = 337;
         food.id = ItemId::jerky;

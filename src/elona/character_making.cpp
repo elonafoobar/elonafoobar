@@ -393,9 +393,8 @@ MainMenuResult character_making_final_phase()
             gmode(0);
             gcopy(2, 0, 0, windoww, windowh - 100, 0, 100);
             gmode(2);
-            ui_draw_caption(
-                i18n::s.get("core.chara_making.final_screen.name_is_already_"
-                            "taken"));
+            ui_draw_caption(i18n::s.get(
+                "core.chara_making.final_screen.name_is_already_taken"));
         }
     }
 
@@ -436,8 +435,8 @@ void draw_race_or_class_info(const std::string& description)
     tx = wx + 200;
     ty = wy + 166;
     display_topic(
-        i18n::s.get("core.chara_making.select_race.race_info.attribute_"
-                    "bonus.text"),
+        i18n::s.get(
+            "core.chara_making.select_race.race_info.attribute_bonus.text"),
         tx,
         ty);
     ty += 34;
@@ -445,9 +444,7 @@ void draw_race_or_class_info(const std::string& description)
     for (int cnt = 0; cnt < 8; cnt++)
     {
         s(cnt) = i18n::s.get_enum(
-            "core.chara_making.select_race.race_info.attribute_"
-            "bonus",
-            cnt);
+            "core.chara_making.select_race.race_info.attribute_bonus", cnt);
     }
     for (int cnt = 0; cnt < 3; ++cnt)
     {
@@ -528,16 +525,15 @@ void draw_race_or_class_info(const std::string& description)
     }
     ty = wy + 260;
     display_topic(
-        i18n::s.get("core.chara_making.select_race.race_info.trained_"
-                    "skill.text"),
+        i18n::s.get(
+            "core.chara_making.select_race.race_info.trained_skill.text"),
         tx,
         ty);
     ty += 34;
     font(14 - en * 2);
     r = 0;
     s = i18n::s.get(
-        "core.chara_making.select_race.race_info.trained_skill."
-        "proficient_in");
+        "core.chara_making.select_race.race_info.trained_skill.proficient_in");
     for (int cnt = 100; cnt < 150; ++cnt)
     {
         if (sdata.get(cnt, 0).original_level != 0)

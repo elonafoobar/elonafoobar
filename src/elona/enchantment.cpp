@@ -200,16 +200,14 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 if (category == 57000)
                 {
                     s = i18n::s.get(
-                        "core.enchantment.with_parameters.attribute.in_"
-                        "food.decreases",
+                        "core.enchantment.with_parameters.attribute.in_food.decreases",
                         skill_name);
                     s += enchantment_level_string(power / 50);
                 }
                 else
                 {
                     s = i18n::s.get(
-                        "core.enchantment.with_parameters.attribute."
-                        "other.decreases",
+                        "core.enchantment.with_parameters.attribute.other.decreases",
                         skill_name,
                         std::abs(power / 50 + 1));
                 }
@@ -223,16 +221,14 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 if (category == 57000)
                 {
                     s = i18n::s.get(
-                        "core.enchantment.with_parameters.attribute.in_"
-                        "food.increases",
+                        "core.enchantment.with_parameters.attribute.in_food.increases",
                         skill_name);
                     s += enchantment_level_string(power / 50);
                 }
                 else
                 {
                     s = i18n::s.get(
-                        "core.enchantment.with_parameters.attribute."
-                        "other.increases",
+                        "core.enchantment.with_parameters.attribute.other.increases",
                         skill_name,
                         std::abs(power / 50 + 1));
                 }
@@ -244,8 +240,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             {
                 rtval = static_cast<int>(ItemDescriptionType::negative_effect);
                 s = i18n::s.get(
-                    "core.enchantment.with_parameters.resistance."
-                    "decreases",
+                    "core.enchantment.with_parameters.resistance.decreases",
                     i18n::s.get_m(
                         "ability",
                         the_ability_db.get_id_from_legacy(sid)->get(),
@@ -262,8 +257,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 if (s == ""s)
                 {
                     s = i18n::s.get(
-                        "core.enchantment.with_parameters.resistance."
-                        "increases",
+                        "core.enchantment.with_parameters.resistance.increases",
                         i18n::s.get_m(
                             "ability",
                             the_ability_db.get_id_from_legacy(sid)->get(),
@@ -295,8 +289,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                 if (s == ""s)
                 {
                     s = i18n::s.get(
-                        "core.enchantment.with_parameters.skill."
-                        "increases",
+                        "core.enchantment.with_parameters.skill.increases",
                         i18n::s.get_m(
                             "ability",
                             the_ability_db.get_id_from_legacy(sid)->get(),
@@ -310,8 +303,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             if (category == 57000)
             {
                 s = i18n::s.get(
-                    "core.enchantment.with_parameters.skill_maintenance."
-                    "in_food",
+                    "core.enchantment.with_parameters.skill_maintenance.in_food",
                     i18n::s.get_m(
                         "ability",
                         the_ability_db.get_id_from_legacy(sid)->get(),
@@ -321,8 +313,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             else
             {
                 s = i18n::s.get(
-                    "core.enchantment.with_parameters.skill_maintenance."
-                    "other",
+                    "core.enchantment.with_parameters.skill_maintenance.other",
                     i18n::s.get_m(
                         "ability",
                         the_ability_db.get_id_from_legacy(sid)->get(),
