@@ -185,7 +185,6 @@ ELONA_EXTERN(elona_vector1<int> reph);
 ELONA_EXTERN(elona_vector1<int> repw);
 ELONA_EXTERN(elona_vector1<int> rowactre);
 ELONA_EXTERN(elona_vector1<int> rtval);
-ELONA_EXTERN(elona_vector1<int> sell);
 ELONA_EXTERN(elona_vector1<int> spact);
 ELONA_EXTERN(elona_vector1<int> spell);
 ELONA_EXTERN(elona_vector1<int> sx);
@@ -284,7 +283,6 @@ ELONA_EXTERN(elona_vector2<int> card);
 ELONA_EXTERN(elona_vector2<int> cmapdata);
 ELONA_EXTERN(elona_vector2<int> cycle);
 ELONA_EXTERN(elona_vector2<int> dblist);
-ELONA_EXTERN(elona_vector2<int> dirchk);
 ELONA_EXTERN(elona_vector2<int> dirxy);
 ELONA_EXTERN(elona_vector2<int> encprocref);
 ELONA_EXTERN(elona_vector1<int> eqweapon1);
@@ -815,14 +813,6 @@ int transplant_body_parts();
 
 // objet of heart
 void cnvbonus(int = 0, int = 0);
-
-
-//// AI
-TurnResult proc_ai_basic();
-TurnResult proc_misc_npc_map_events();
-TurnResult proc_ally_town_training(bool = false);
-int ai_dir_check_1();
-int ai_dir_check_2();
 
 
 //// UI

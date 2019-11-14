@@ -505,10 +505,7 @@ public:
     int _203 = 0;
 
     /// @putit
-    int _205 = 0;
-
-    /// @putit
-    int _206 = 0;
+    Position target_position;
 
     void clear();
     void clear_flags();

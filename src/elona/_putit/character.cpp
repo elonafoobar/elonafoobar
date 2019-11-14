@@ -127,8 +127,7 @@ void serialize(Archive& _putit_archive_)
     PUTIT_SERIALIZE_FIELD(_flags);
     PUTIT_SERIALIZE_FIELD(_156);
     PUTIT_SERIALIZE_FIELD(_203);
-    PUTIT_SERIALIZE_FIELD(_205);
-    PUTIT_SERIALIZE_FIELD(_206);
+    PUTIT_SERIALIZE_FIELD(target_position);
 }
 #undef PUTIT_SERIALIZE_FIELD
 /* clang-format on */

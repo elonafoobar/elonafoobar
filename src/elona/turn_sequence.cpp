@@ -204,7 +204,7 @@ TurnResult npc_turn()
                     txt(i18n::s.get("core.action.npc.arena"),
                         Message::color{ColorIndex::blue});
                 }
-                return ai_proc_misc_map_events();
+                return ai_proc_misc_map_events(cdata[cc]);
             }
         }
         cdata[cc].hate = 100;
@@ -444,14 +444,14 @@ label_2689_internal:
         {
             if (rnd(10) > 2)
             {
-                return ai_proc_misc_map_events();
+                return ai_proc_misc_map_events(cdata[cc]);
             }
         }
         if (cdata[cc].confused != 0)
         {
             if (rnd(10) > 3)
             {
-                return ai_proc_misc_map_events();
+                return ai_proc_misc_map_events(cdata[cc]);
             }
         }
         if (cdata[cc].relationship == 10)
@@ -525,38 +525,38 @@ label_2689_internal:
                 {
                     if (cdata[cc].is_contracting() == 0)
                     {
-                        return ai_proc_misc_map_events();
+                        return ai_proc_misc_map_events(cdata[cc]);
                     }
                 }
                 if (distance > 2 || rnd(3))
                 {
-                    return proc_npc_movement_event();
+                    return proc_npc_movement_event(cdata[cc]);
                 }
                 else
                 {
-                    return ai_proc_misc_map_events();
+                    return ai_proc_misc_map_events(cdata[cc]);
                 }
             }
         }
         if (cdata[cc].fear != 0)
         {
-            return proc_npc_movement_event(true);
+            return proc_npc_movement_event(cdata[cc], true);
         }
         if (cdata[cc].blind != 0)
         {
             if (rnd(3))
             {
-                return ai_proc_misc_map_events();
+                return ai_proc_misc_map_events(cdata[cc]);
             }
         }
         if (distance != cdata[cc].ai_dist)
         {
             if (rnd(100) < cdata[cc].ai_move)
             {
-                return proc_npc_movement_event();
+                return proc_npc_movement_event(cdata[cc]);
             }
         }
-        return ai_proc_basic();
+        return ai_proc_basic(cdata[cc]);
     }
     if (cdata[cc].turn % 10 == 1)
     {
@@ -629,7 +629,7 @@ label_2689_internal:
             }
         }
     }
-    return ai_proc_misc_map_events();
+    return ai_proc_misc_map_events(cdata[cc]);
 }
 
 
