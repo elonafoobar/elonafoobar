@@ -417,51 +417,17 @@ void _proc_drunk_cat(Character& chara)
     {
         chara.drunk += 40;
     }
-    if (jp)
+
+    if (const auto music =
+            i18n::s.get_optional("core.ai.dragostea_din_tei.music"))
     {
-        if (rnd(3) == 0)
+        if (rnd(25) < 3)
         {
-            txt(u8"「米さ米種だろ♪」"s,
-                u8"「飲ま飲まイェイ！！」"s,
-                u8"「飲ま飲ま飲まイェイ！！」"s);
-        }
-        else if (rnd(4) == 0)
-        {
-            txt(u8"「字ベロ♪指♪ラマ♪ｸﾏｰ!!して♪パンチラ♪」"s,
-                u8"「アロー♪アーロン♪スゲェ♪ピカソ♪算段ビーフ♪」"s,
-                u8"「キスすごい肉♪脱線してんの♪さらに肉♪」"s);
-        }
-        else if (rnd(4) == 0)
-        {
-            txt(u8"「キープダルシム♪アゴスタディーイェイ♪並フェイスで大きい筆入れ♪」"s,
-                u8"「ハロー♪猿ー♪すげー♪うん入る♪」"s);
-        }
-        else if (rnd(4) == 0)
-        {
-            txt(u8" *ﾋﾟﾛﾘ〜ﾋﾟﾛﾘ〜* "s, Message::color{ColorIndex::blue});
-        }
-        else
-        {
-            txt(u8"「マイアヒー♪」"s,
-                u8"「マイアフゥー♪」"s,
-                u8"「マイアホー♪」"s);
+            txt(*music, Message::color{ColorIndex::blue});
+            return;
         }
     }
-    else
-    {
-        if (rnd(2) == 0)
-        {
-            txt(u8"\"Vrei sa pleci dar♪\""s,
-                u8"\"Numa numa yay!!\""s,
-                u8"\"Numa numa numa yay!!\""s);
-        }
-        else
-        {
-            txt(u8"\"Mai-Ya-Hi♪\""s,
-                u8"\"Mai-Ya-Hoo♪\""s,
-                u8"\"Mai-Ya-Ha Ma Mi A♪\""s);
-        }
-    }
+    txt(i18n::s.get("core.ai.dragostea_din_tei.sing"));
 }
 
 

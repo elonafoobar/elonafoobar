@@ -449,9 +449,9 @@ void Message::_txt_conv()
 
 
 
-void Message::_txt_internal(std::vector<std::string> args)
+void Message::_txt_internal(const std::string& message)
 {
-    msgtemp = choice(args);
+    msgtemp = message;
     _txt_conv();
     text_color = {255, 255, 255, 255};
 }
