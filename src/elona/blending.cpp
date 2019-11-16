@@ -1621,7 +1621,7 @@ int blending_spend_materials()
                 "core.blending.you_lose", inv[rpref(10 + cnt * 2)]));
             inv[rpref(10 + cnt * 2)].modify_number(-1);
         }
-        if (chara_unequip(rpref(10 + cnt * 2)))
+        if (chara_unequip(inv[rpref(10 + cnt * 2)]))
         {
             chara_refresh(0);
         }
@@ -1652,12 +1652,8 @@ void blending_start_attempt()
         {
             flt();
             nostack = 1;
-            if (itemcreate(
-                    -1,
-                    rpdata(0, rpid),
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    0))
+            if (const auto item = itemcreate_extra_inv(
+                    rpdata(0, rpid), cdata.player().position, 0))
             {
                 for (int cnt = 0;; ++cnt)
                 {
@@ -1666,16 +1662,16 @@ void blending_start_attempt()
                         break;
                     }
                     enchantment_add(
-                        inv[ci],
+                        *item,
                         rpdata(50 + cnt * 2, rpid),
                         rpdata(51 + cnt * 2, rpid),
                         0,
                         1);
                 }
+                txt(i18n::s.get("core.blending.succeeded", *item),
+                    Message::color{ColorIndex::green});
+                snd("core.drink1");
             }
-            txt(i18n::s.get("core.blending.succeeded", inv[ci]),
-                Message::color{ColorIndex::green});
-            snd("core.drink1");
         }
         for (int cnt = 0; cnt < 5; ++cnt)
         {
@@ -1846,9 +1842,9 @@ void blending_proc_on_success_events()
         {
             --game_data.holy_well_count;
             flt();
-            if (itemcreate(0, 516, -1, -1, 0))
+            if (const auto item = itemcreate_player_inv(516, 0))
             {
-                inv[ci].curse_state = CurseState::blessed;
+                item->curse_state = CurseState::blessed;
             }
         }
         else
@@ -1856,19 +1852,19 @@ void blending_proc_on_success_events()
             inv[ci].param1 -= 3;
             flt(20);
             flttypemajor = 52000;
-            itemcreate(0, 0, -1, -1, 0);
+            itemcreate_player_inv(0, 0);
         }
         txt(i18n::s.get("core.action.dip.result.natural_potion"));
         txt(i18n::s.get("core.action.dip.you_get", inv[ci]),
             Message::color{ColorIndex::green});
-        item_stack(0, ci, 1);
-        item_stack(0, ci);
+        item_stack(0, inv[ci], true);
+        item_stack(0, inv[ci]);
         ci = cibk;
         snd("core.drink1");
         break;
     }
 
-    item_stack(0, ci);
+    item_stack(0, inv[ci]);
     if (inv[ci].body_part != 0)
     {
         create_pcpic(cdata.player());

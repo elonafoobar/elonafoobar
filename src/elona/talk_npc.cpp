@@ -123,7 +123,7 @@ TalkResult talk_wizard_identify(int chatval_)
             if (item.identify_state != IdentifyState::completely)
             {
                 const auto result = item_identify(item, 250);
-                item_stack(0, item.index, 1);
+                item_stack(0, item, true);
                 ++p(1);
                 if (result >= IdentifyState::completely)
                 {
@@ -449,7 +449,7 @@ TalkResult talk_quest_delivery()
     inv[ti].set_number(1);
     ci = ti;
     rc = tc;
-    chara_set_item_which_will_be_used(cdata[tc]);
+    chara_set_item_which_will_be_used(cdata[tc], inv[ci]);
     rq = deliver;
     inv[deliver(1)].modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", inv[deliver(1)]));
@@ -468,7 +468,7 @@ TalkResult talk_quest_supply()
     cdata[tc].was_passed_item_by_you_just_now() = true;
     ci = ti;
     rc = tc;
-    chara_set_item_which_will_be_used(cdata[tc]);
+    chara_set_item_which_will_be_used(cdata[tc], inv[ci]);
     inv[supply].modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", inv[supply]));
     quest_set_data(3);
@@ -499,13 +499,15 @@ TalkResult talk_shop_attack()
 TalkResult talk_guard_return_item()
 {
     listmax = 0;
-    p = itemfind(0, 284);
-    if (p == -1)
+    auto wallet_opt = itemfind(0, 284);
+    if (!wallet_opt)
     {
-        p = itemfind(0, 283);
+        wallet_opt = itemfind(0, 283);
     }
-    inv[p].modify_number(-1);
-    if (inv[p].param1 == 0)
+    Item& wallet = *wallet_opt;
+    p = wallet.index;
+    wallet.modify_number(-1);
+    if (wallet.param1 == 0)
     {
         buff = i18n::s.get("core.talk.npc.guard.lost.empty.dialog", cdata[tc]);
         ELONA_APPEND_RESPONSE(
@@ -1629,12 +1631,7 @@ TalkResult talk_quest_giver()
             ++quest_data[quest_data[rq].target_chara_index]
                   .delivery_has_package_flag;
             flt();
-            itemcreate(
-                0,
-                quest_data[rq].target_item_id,
-                cdata.player().position.x,
-                cdata.player().position.y,
-                0);
+            itemcreate_player_inv(quest_data[rq].target_item_id, 0);
             txt(i18n::s.get("core.common.you_put_in_your_backpack", inv[ci]));
             snd("core.inv");
             refresh_burden_state();
@@ -1960,12 +1957,12 @@ TalkResult talk_npc()
                         cdata[rtval(cnt)]));
             }
         }
-        if (itemfind(0, 284) != -1)
+        if (itemfind(0, 284))
         {
             ELONA_APPEND_RESPONSE(
                 32, i18n::s.get("core.talk.npc.guard.choices.lost_wallet"));
         }
-        else if (itemfind(0, 283) != -1)
+        else if (itemfind(0, 283))
         {
             ELONA_APPEND_RESPONSE(
                 32, i18n::s.get("core.talk.npc.guard.choices.lost_suitcase"));

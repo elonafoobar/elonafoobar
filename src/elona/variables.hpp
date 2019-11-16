@@ -16,6 +16,7 @@
 namespace elona
 {
 
+struct Item;
 struct Character;
 
 
@@ -580,7 +581,7 @@ void gain_race_feat();
 //// Items
 
 // Item status querying
-int cargocheck();
+bool cargocheck(const Item& item);
 
 // Item manipulation
 int convertartifact(int = 0, int = 0);
@@ -641,7 +642,7 @@ int can_evade_trap();
 int try_to_disarm_trap();
 int try_to_perceive_npc(int);
 
-int read_textbook();
+bool read_textbook(Item& textbook);
 int decode_book();
 int read_normal_book();
 
@@ -659,11 +660,11 @@ int unlock_box(int);
 void do_ranged_attack();
 
 //// Command
-TurnResult step_into_gate();
+TurnResult step_into_gate(Item& moon_gate);
 optional<TurnResult> check_angband();
 TurnResult do_bash();
 TurnResult do_enter_strange_gate();
-TurnResult do_gatcha();
+TurnResult do_gatcha(Item& gatcha_machine);
 TurnResult do_use_magic();
 TurnResult do_use_stairs_command(int);
 TurnResult try_interact_with_npc();
@@ -717,7 +718,7 @@ void make_sound(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 
 //// pass_one_turn
 void proc_pregnant();
-void proc_negative_equipments();
+void proc_negative_enchantments(Character& chara);
 void damage_by_cursed_equipments();
 
 
@@ -909,9 +910,6 @@ void dump_player_info();
 //// dmgheal
 void character_drops_item();
 void check_kill(int = 0, int = 0);
-
-// character_drops_item
-void remain_make(int = 0, int = 0);
 
 
 //// Journal

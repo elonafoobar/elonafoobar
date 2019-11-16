@@ -50,13 +50,12 @@ TalkResult _talk_hv_visitor()
 void _adventurer_give_new_year_gift()
 {
     flt();
-    if (itemcreate(
-            -1, 752, cdata.player().position.x, cdata.player().position.y, 0))
+    if (const auto item = itemcreate_extra_inv(752, cdata.player().position, 0))
     {
-        inv[ci].param3 = cdata[tc].impression + rnd(50);
+        item->param3 = cdata[tc].impression + rnd(50);
+        txt(i18n::s.get(
+            "core.talk.visitor.adventurer.new_year.throws", cdata[tc], *item));
     }
-    txt(i18n::s.get(
-        "core.talk.visitor.adventurer.new_year.throws", cdata[tc], inv[ci]));
 }
 
 TalkResult _talk_hv_adventurer_new_year()
@@ -136,7 +135,7 @@ void _adventurer_hate_action()
         for (int cnt = 0, cnt_end = (8 + rnd(6)); cnt < cnt_end; ++cnt)
         {
             flt();
-            itemcreate(-1, 704, -1, -1, 0);
+            itemcreate_extra_inv(704, -1, -1, 0);
             txt(i18n::s.get("core.food.vomits", cdata[tc]));
             snd("core.vomit");
             await(g_config.animation_wait() / 2);
@@ -172,10 +171,11 @@ void _adventurer_become_best_friend()
 {
     cdata[tc].is_best_friend() = true;
     flt();
-    itemcreate(
-        -1, 730, cdata.player().position.x, cdata.player().position.y, 0);
-    txt(i18n::s.get("core.talk.visitor.receive", inv[ci], cdata[tc]));
-    txt(i18n::s.get("core.talk.visitor.adventurer.like.wonder_if"));
+    if (const auto item = itemcreate_extra_inv(730, cdata.player().position, 0))
+    {
+        txt(i18n::s.get("core.talk.visitor.receive", *item, cdata[tc]));
+        txt(i18n::s.get("core.talk.visitor.adventurer.like.wonder_if"));
+    }
 }
 
 void _talk_hv_adventurer_best_friend()
@@ -361,10 +361,12 @@ void _adventurer_receive_coin()
             p = 622;
         }
         flt();
-        itemcreate(
-            -1, p, cdata.player().position.x, cdata.player().position.y, 0);
-        txt(i18n::s.get("core.talk.visitor.receive", inv[ci], cdata[tc]));
-        snd("core.get1");
+        if (const auto item =
+                itemcreate_extra_inv(p, cdata.player().position, 0))
+        {
+            txt(i18n::s.get("core.talk.visitor.receive", *item, cdata[tc]));
+            snd("core.get1");
+        }
     }
 }
 
@@ -392,6 +394,8 @@ TalkResult _talk_hv_adventurer_friendship()
     return TalkResult::talk_end;
 }
 
+
+
 void _adventurer_receive_souvenir()
 {
     if (inv_getfreeid(0) == -1)
@@ -402,12 +406,16 @@ void _adventurer_receive_souvenir()
     else
     {
         flt();
-        itemcreate(0, 729, -1, -1, 0);
-        txt(i18n::s.get(
-            "core.talk.visitor.adventurer.souvenir.receive", inv[ci]));
-        snd("core.get1");
+        if (const auto item = itemcreate_player_inv(729, 0))
+        {
+            txt(i18n::s.get(
+                "core.talk.visitor.adventurer.souvenir.receive", *item));
+            snd("core.get1");
+        }
     }
 }
+
+
 
 TalkResult _talk_hv_adventurer_souvenir()
 {

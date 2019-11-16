@@ -391,15 +391,21 @@ static Quality _determine_crafted_fixlv(const CraftingRecipe& recipe)
     return ret;
 }
 
+
+
 static void _craft_item(int matid, const CraftingRecipe& recipe)
 {
     fixlv = _determine_crafted_fixlv(recipe);
     flt(calcobjlv(sdata(recipe.skill_used, 0)), calcfixlv(fixlv));
     nostack = 1;
-    itemcreate(0, matid, -1, -1, 0);
-    txt(i18n::s.get("core.crafting.you_crafted", inv[ci]));
-    item_stack(0, ci, 0);
+    if (const auto item = itemcreate_player_inv(matid, 0))
+    {
+        txt(i18n::s.get("core.crafting.you_crafted", *item));
+        item_stack(0, *item);
+    }
 }
+
+
 
 void crafting_menu()
 {

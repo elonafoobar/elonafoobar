@@ -1201,12 +1201,13 @@ int map_createroom(int type)
                                         p(1) = 300;
                                         p(2) = 312;
                                         p(3) = 604;
-                                        itemcreate(-1, p(rnd(4)), x, y + 1, 0);
+                                        itemcreate_extra_inv(
+                                            p(rnd(4)), x, y + 1, 0);
                                     }
                                     else if (cnt % 2 == 1)
                                     {
                                         flt();
-                                        itemcreate(-1, 584, x, y + 1, 0);
+                                        itemcreate_extra_inv(584, x, y + 1, 0);
                                     }
                                 }
                                 tile = 1;
@@ -1230,12 +1231,13 @@ int map_createroom(int type)
                                     p(1) = 300;
                                     p(2) = 312;
                                     p(3) = 604;
-                                    itemcreate(-1, p(rnd(4)), x, y + 1, 0);
+                                    itemcreate_extra_inv(
+                                        p(rnd(4)), x, y + 1, 0);
                                 }
                                 else if (cnt % 2 == 1)
                                 {
                                     flt();
-                                    itemcreate(-1, 584, x, y + 1, 0);
+                                    itemcreate_extra_inv(584, x, y + 1, 0);
                                 }
                                 tile = 1;
                             }
@@ -1951,7 +1953,7 @@ void generate_random_nefia()
                 flt(calcobjlv(game_data.current_dungeon_level),
                     calcfixlv(Quality::bad));
                 flttypemajor = fltsetdungeon();
-                itemcreate(-1, 0, rnd(rw) + rx, rnd(rh) + ry, 0);
+                itemcreate_extra_inv(0, rnd(rw) + rx, rnd(rh) + ry, 0);
             }
             map_set_chara_generation_filter();
             int stat = chara_create(-1, 0, rnd(rw) + rx, rnd(rh) + ry);
@@ -2012,7 +2014,8 @@ void generate_random_nefia()
                         {
                             flt();
                             flttypemajor = 72000;
-                            itemcreate(-1, 0, rnd(rw) + rx, rnd(rh) + ry, 0);
+                            itemcreate_extra_inv(
+                                0, rnd(rw) + rx, rnd(rh) + ry, 0);
                         }
                     }
                 }
@@ -2026,7 +2029,7 @@ void generate_random_nefia()
         flt();
         flttypemajor = choice(fsetwear);
         fixlv = Quality::miracle;
-        itemcreate(-1, 0, -1, -1, 0);
+        itemcreate_extra_inv(0, -1, -1, 0);
         mobdensity = map_data.max_crowd_density / 2;
         itemdensity = map_data.max_crowd_density / 3;
     }
@@ -2055,7 +2058,7 @@ void generate_random_nefia()
         flt(calcobjlv(game_data.current_dungeon_level),
             calcfixlv(Quality::bad));
         flttypemajor = fltsetdungeon();
-        itemcreate(-1, 0, -1, -1, 0);
+        itemcreate_extra_inv(0, -1, -1, 0);
     }
     for (int cnt = 0, cnt_end = (rnd(map_data.width * map_data.height / 80));
          cnt < cnt_end;
@@ -2149,8 +2152,10 @@ void initialize_random_nefia_rdtype6()
     {
         flt();
         flttypemajor = 80000;
-        itemcreate(-1, 0, -1, -1, 0);
-        inv[ci].own_state = 1;
+        if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
+        {
+            item->own_state = 1;
+        }
     }
 }
 
@@ -2229,11 +2234,13 @@ int initialize_quest_map_crop()
                     dbid = choice(isetcrop);
                 }
                 flt();
-                itemcreate(-1, dbid, x, y, 0);
-                inv[ci].own_state = 4;
-                p = clamp(size + rnd((rnd(4) + 1)), 0, 9);
-                inv[ci].weight = inv[ci].weight * (80 + p * p * 100) / 100;
-                inv[ci].subname = p;
+                if (const auto item = itemcreate_extra_inv(dbid, x, y, 0))
+                {
+                    item->own_state = 4;
+                    p = clamp(size + rnd(rnd(4) + 1), 0, 9);
+                    item->weight = item->weight * (80 + p * p * 100) / 100;
+                    item->subname = p;
+                }
             }
         }
     }
@@ -2242,29 +2249,31 @@ int initialize_quest_map_crop()
     mapstarty = rnd(map_data.height / 3) + map_data.height / 3;
     map_placeplayer();
     flt();
-    itemcreate(
-        -1, 560, cdata.player().position.x + 1, cdata.player().position.y, 0);
-    inv[ci].own_state = 1;
+    if (const auto item = itemcreate_extra_inv(
+            560, cdata.player().position.x + 1, cdata.player().position.y, 0))
+    {
+        item->own_state = 1;
+    }
     for (int cnt = 0, cnt_end = (70 + rnd(20)); cnt < cnt_end; ++cnt)
     {
         x = rnd(map_data.width);
         y = rnd(map_data.height);
         if (cell_data.at(x, y).chip_id_actual != 30 &&
-            cell_data.at(x, y).chip_id_actual != 31)
+            cell_data.at(x, y).chip_id_actual != 31 &&
+            cell_data.at(x, y).item_appearances_actual == 0)
         {
-            if (cell_data.at(x, y).item_appearances_actual == 0)
+            if (rnd(8))
             {
-                if (rnd(8))
+                flt();
+                flttypemajor = 80000;
+                if (const auto item = itemcreate_extra_inv(0, x, y, 0))
                 {
-                    flt();
-                    flttypemajor = 80000;
-                    itemcreate(-1, 0, x, y, 0);
-                    inv[ci].own_state = 1;
+                    item->own_state = 1;
                 }
-                else
-                {
-                    cell_featset(x, y, tile_pot, 30);
-                }
+            }
+            else
+            {
+                cell_featset(x, y, tile_pot, 30);
             }
         }
     }
@@ -2678,7 +2687,7 @@ int initialize_quest_map_party()
                         {
                             cell_data.at(x, y).chip_id_actual = 206;
                             flt();
-                            itemcreate(-1, 91, x, y, 0);
+                            itemcreate_extra_inv(91, x, y, 0);
                         }
                     }
                     if (n == 3)
@@ -2687,7 +2696,7 @@ int initialize_quest_map_party()
                         {
                             cell_data.at(x, y).chip_id_actual = 204;
                             flt();
-                            itemcreate(-1, 585, x, y, 0);
+                            itemcreate_extra_inv(585, x, y, 0);
                         }
                     }
                     if (n == 4)
@@ -2696,7 +2705,7 @@ int initialize_quest_map_party()
                         {
                             flt();
                             cell_data.at(x, y).chip_id_actual = 69;
-                            itemcreate(-1, 138, x, y, 0);
+                            itemcreate_extra_inv(138, x, y, 0);
                         }
                     }
                 }
@@ -2705,26 +2714,26 @@ int initialize_quest_map_party()
         if (p(1) == 1)
         {
             flt();
-            itemcreate(-1, 83, dx + 1, dy + 1, 0);
+            itemcreate_extra_inv(83, dx + 1, dy + 1, 0);
             if (rnd(2))
             {
                 flt();
-                itemcreate(-1, 92, dx + 1, dy, 0);
+                itemcreate_extra_inv(92, dx + 1, dy, 0);
             }
             if (rnd(2))
             {
                 flt();
-                itemcreate(-1, 92, dx + 1, dy + 2, 0);
+                itemcreate_extra_inv(92, dx + 1, dy + 2, 0);
             }
             if (rnd(2))
             {
                 flt();
-                itemcreate(-1, 92, dx, dy + 1, 0);
+                itemcreate_extra_inv(92, dx, dy + 1, 0);
             }
             if (rnd(2))
             {
                 flt();
-                itemcreate(-1, 92, dx + 2, dy + 1, 0);
+                itemcreate_extra_inv(92, dx + 2, dy + 1, 0);
             }
         }
     }
@@ -2773,7 +2782,7 @@ int initialize_quest_map_party()
             if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
-                itemcreate(-1, 88, x, y, 0);
+                itemcreate_extra_inv(88, x, y, 0);
             }
         }
         if (rnd(3) == 0)
@@ -2783,7 +2792,7 @@ int initialize_quest_map_party()
             if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
-                itemcreate(-1, 313, x, y, 0);
+                itemcreate_extra_inv(313, x, y, 0);
             }
         }
         if (rnd(2) == 0)
@@ -2793,7 +2802,7 @@ int initialize_quest_map_party()
             if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
-                itemcreate(-1, 156, x, y, 0);
+                itemcreate_extra_inv(156, x, y, 0);
             }
         }
         if (rnd(3) == 0)
@@ -2803,7 +2812,7 @@ int initialize_quest_map_party()
             if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
-                itemcreate(-1, 606, x, y, 0);
+                itemcreate_extra_inv(606, x, y, 0);
             }
         }
         for (int cnt = 0,
@@ -2845,7 +2854,7 @@ int initialize_quest_map_party()
         p(6) = 152;
         p(7) = 91;
         p(8) = 189;
-        itemcreate(-1, p(rnd(9)), x, y, 0);
+        itemcreate_extra_inv(p(rnd(9)), x, y, 0);
     }
     flt();
     chara_create(-1, 29, -3, 0);
@@ -3736,14 +3745,10 @@ void map_initcustom(const std::string& map_filename)
         if (cmapdata(4, cnt) == 0)
         {
             flt();
-            if (itemcreate(
-                    -1,
-                    cmapdata(0, cnt),
-                    cmapdata(1, cnt),
-                    cmapdata(2, cnt),
-                    0))
+            if (const auto item = itemcreate_extra_inv(
+                    cmapdata(0, cnt), cmapdata(1, cnt), cmapdata(2, cnt), 0))
             {
-                inv[ci].own_state = cmapdata(3, cnt);
+                item->own_state = cmapdata(3, cnt);
             }
         }
         if (cmapdata(4, cnt) == 1)

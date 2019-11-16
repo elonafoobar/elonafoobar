@@ -647,12 +647,12 @@ int quest_generate()
             }
             flt(40, Quality::good);
             flttypemajor = choice(fsetcollect);
-            if (itemcreate(n, 0, -1, -1, 0))
+            if (const auto item = itemcreate_chara_inv(n, 0, 0))
             {
-                inv[ci].count = rq;
+                item->count = rq;
                 i(0) = n;
-                i(1) = itemid2int(inv[ci].id);
-                inv[ci].is_quest_target() = true;
+                i(1) = itemid2int(item->id);
+                item->is_quest_target() = true;
                 break;
             }
             else
@@ -1386,8 +1386,7 @@ void quest_complete()
     if (p != 0)
     {
         flt();
-        itemcreate(
-            -1, 54, cdata.player().position.x, cdata.player().position.y, p);
+        itemcreate_extra_inv(54, cdata.player().position, p);
     }
     if (quest_data[rq].id == 1002)
     {
@@ -1402,18 +1401,16 @@ void quest_complete()
         p = 2 + (rnd(100) < rnd(cdata.player().fame / 5000 + 1));
     }
     flt();
-    itemcreate(-1, 55, cdata.player().position.x, cdata.player().position.y, p);
+    itemcreate_extra_inv(55, cdata.player().position, p);
     if (quest_data[rq].id == 1009)
     {
         if (quest_data[rq].extra_info_1 * 150 / 100 <
             quest_data[rq].extra_info_2)
         {
             flt();
-            itemcreate(
-                -1,
+            itemcreate_extra_inv(
                 724,
-                cdata.player().position.x,
-                cdata.player().position.y,
+                cdata.player().position,
                 1 + quest_data[rq].extra_info_2 / 10);
         }
     }
@@ -1464,8 +1461,7 @@ void quest_complete()
             {
                 flttypemajor = quest_data[rq].reward_item_id;
             }
-            itemcreate(
-                -1, 0, cdata.player().position.x, cdata.player().position.y, 0);
+            itemcreate_extra_inv(0, cdata.player().position, 0);
         }
     }
     modify_karma(cdata.player(), 1);

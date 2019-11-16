@@ -36,7 +36,8 @@ TEST_CASE("Test that handle properties can be read", "[Lua: Handles]")
     }
     SECTION("Items")
     {
-        REQUIRE_SOME(itemcreate(-1, itemid2int(PUTITORO_PROTO_ID), 4, 8, 3));
+        REQUIRE_SOME(
+            itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3));
         int idx = elona::ci;
         Item& item = elona::inv[idx];
         auto handle = handle_mgr.get_handle(item);
@@ -77,7 +78,8 @@ TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
     }
     SECTION("Items")
     {
-        REQUIRE_SOME(itemcreate(-1, itemid2int(PUTITORO_PROTO_ID), 0, 0, 1));
+        REQUIRE_SOME(
+            itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 0, 0, 1));
         Item& item = elona::inv[elona::ci];
         auto handle = handle_mgr.get_handle(item);
         elona::lua::lua->get_state()->set("item", handle);
@@ -149,7 +151,8 @@ TEST_CASE("Test that handles go invalid", "[Lua: Handles]")
     }
     SECTION("Items")
     {
-        REQUIRE_SOME(itemcreate(-1, itemid2int(PUTITORO_PROTO_ID), 4, 8, 3));
+        REQUIRE_SOME(
+            itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3));
         Item& item = elona::inv[elona::ci];
         auto handle = handle_mgr.get_handle(item);
         elona::lua::lua->get_state()->set("item", handle);
@@ -195,7 +198,8 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
     }
     SECTION("Items")
     {
-        REQUIRE_SOME(itemcreate(-1, itemid2int(PUTITORO_PROTO_ID), 4, 8, 3));
+        REQUIRE_SOME(
+            itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3));
         Item& item = elona::inv[elona::ci];
         auto handle = handle_mgr.get_handle(item);
 
@@ -286,7 +290,8 @@ print(Chara.is_ally(mod.store.global.charas[0]))
     }
     SECTION("Items")
     {
-        REQUIRE_SOME(itemcreate(-1, itemid2int(PUTITORO_PROTO_ID), 4, 8, 3));
+        REQUIRE_SOME(
+            itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3));
         Item& item = elona::inv[elona::ci];
         auto handle = handle_mgr.get_handle(item);
 
@@ -360,7 +365,7 @@ TEST_CASE(
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
-    REQUIRE_SOME(itemcreate(-1, itemid2int(PUTITORO_PROTO_ID), 4, 8, 1));
+    REQUIRE_SOME(itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 1));
     elona::cc = 0;
     elona::in = inv[elona::ci].number();
 
@@ -526,7 +531,8 @@ TEST_CASE(
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     int amount = 2;
 
-    REQUIRE_SOME(itemcreate(-1, itemid2int(PUTITORO_PROTO_ID), 4, 8, amount));
+    REQUIRE_SOME(
+        itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount));
     Item& i = elona::inv[elona::ci];
     auto handle = handle_mgr.get_handle(i);
     auto old_uuid = handle["__uuid"].get<std::string>();
@@ -559,7 +565,8 @@ TEST_CASE("Test separation of item handles", "[Lua: Handles]")
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     int amount = 3;
 
-    REQUIRE_SOME(itemcreate(-1, itemid2int(PUTITORO_PROTO_ID), 4, 8, amount));
+    REQUIRE_SOME(
+        itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount));
     Item& i = elona::inv[elona::ci];
     sol::table handle = handle_mgr.get_handle(i);
 
@@ -582,7 +589,8 @@ TEST_CASE("Test copying of item handles", "[Lua: Handles]")
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     int amount = 1;
 
-    REQUIRE_SOME(itemcreate(-1, itemid2int(PUTITORO_PROTO_ID), 4, 8, amount));
+    REQUIRE_SOME(
+        itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount));
     Item& i = elona::inv[elona::ci];
     sol::table handle = handle_mgr.get_handle(i);
 
@@ -614,10 +622,12 @@ TEST_CASE("Test copying of item handles after removal", "[Lua: Handles]")
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     int amount = 1;
 
-    REQUIRE_SOME(itemcreate(-1, itemid2int(PUTITORO_PROTO_ID), 4, 8, amount));
+    REQUIRE_SOME(
+        itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount));
     Item& a = elona::inv[elona::ci];
 
-    REQUIRE_SOME(itemcreate(-1, itemid2int(PUTITORO_PROTO_ID), 4, 9, amount));
+    REQUIRE_SOME(
+        itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 9, amount));
     Item& b = elona::inv[elona::ci];
 
     // Mark the handle in b's slot as invalid.
@@ -633,11 +643,11 @@ TEST_CASE("Test swapping of item handles", "[Lua: Handles]")
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
-    REQUIRE_SOME(itemcreate(-1, itemid2int(PUTITORO_PROTO_ID), 4, 8, 1));
+    REQUIRE_SOME(itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 1));
     Item& item_a = elona::inv[elona::ci];
     sol::table handle_a = handle_mgr.get_handle(item_a);
 
-    REQUIRE_SOME(itemcreate(-1, itemid2int(PUTITORO_PROTO_ID), 4, 9, 1));
+    REQUIRE_SOME(itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 9, 1));
     Item& item_b = elona::inv[elona::ci];
     sol::table handle_b = handle_mgr.get_handle(item_b);
 

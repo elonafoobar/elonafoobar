@@ -228,67 +228,6 @@ TalkResult talk_ignored()
     return TalkResult::talk_end;
 }
 
-static void _give_potion_of_cure_corruption(int stat)
-{
-    inv[stat].modify_number(-1);
-    txt(i18n::s.get("core.talk.unique.pael.give.you_give"));
-    snd("core.equip1");
-}
-
-bool talk_give_potion_of_cure_corruption()
-{
-    list(0, listmax) = 1;
-    listn(0, listmax) = i18n::s.get("core.talk.unique.pael.give.choice");
-    ++listmax;
-    list(0, listmax) = 0;
-    listn(0, listmax) = i18n::s.get("core.ui.bye");
-    ++listmax;
-    int chatval_ = talk_window_query();
-    if (chatval_ != 1)
-    {
-        return false;
-    }
-    int stat = inv_find(559, 0);
-    if (stat == -1)
-    {
-        listmax = 0;
-        buff = i18n::s.get("core.talk.unique.pael.give.do_not_have");
-        tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::s.get("core.ui.more");
-        ++listmax;
-        chatesc = 1;
-        talk_window_query();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                return false;
-            }
-        }
-        return false;
-    }
-
-    _give_potion_of_cure_corruption(stat);
-
-    listmax = 0;
-    buff = i18n::s.get("core.talk.unique.pael.give.dialog", cdatan(0, 0));
-    tc = tc * 1 + 0;
-    list(0, listmax) = 0;
-    listn(0, listmax) = i18n::s.get("core.ui.more");
-    ++listmax;
-    chatesc = 1;
-    talk_window_query();
-    if (scenemode)
-    {
-        if (scene_cut == 1)
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
 
 
 TalkResult talk_game_begin()
@@ -338,7 +277,7 @@ TalkResult talk_game_begin()
         snd("core.kill1");
         spillblood(28, 6, 10);
         flt();
-        itemcreate(-1, 705, 28, 6, 0);
+        itemcreate_extra_inv(705, 28, 6, 0);
         update_screen();
         await(500);
         await(500);

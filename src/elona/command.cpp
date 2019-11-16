@@ -44,6 +44,9 @@
 
 
 
+namespace elona
+{
+
 namespace
 {
 
@@ -76,14 +79,315 @@ bool any_of_characters_around_you(F predicate, bool ignore_pc = true)
 }
 
 
+
+void _search_for_crystal()
+{
+    p = 9999;
+    for (const auto& item : inv.ground())
+    {
+        if (item.number() == 0)
+        {
+            continue;
+        }
+        if (item.own_state != 5)
+        {
+            continue;
+        }
+        if (item.id != ItemId::summoning_crystal)
+        {
+            continue;
+        }
+        if (p > dist(
+                    item.position.x,
+                    item.position.y,
+                    cdata.player().position.x,
+                    cdata.player().position.y))
+        {
+            p = dist(
+                item.position.x,
+                item.position.y,
+                cdata.player().position.x,
+                cdata.player().position.y);
+        }
+    }
+    if (p != 9999)
+    {
+        while (1)
+        {
+            if (p <= 3)
+            {
+                txt(i18n::s.get("core.action.search.crystal.close"));
+            }
+            if (p <= 9)
+            {
+                txt(i18n::s.get("core.action.search.crystal.normal"));
+                break;
+            }
+            if (p <= 16)
+            {
+                txt(i18n::s.get("core.action.search.crystal.far"));
+                break;
+            }
+            txt(i18n::s.get("core.action.search.crystal.sense"));
+            break;
+        }
+    }
+}
+
+
+
+void _try_to_reveal_small_coin()
+{
+    if (cdata[cc].position.x == x && cdata[cc].position.y == y)
+    {
+        snd("core.ding2");
+        txt(i18n::s.get("core.action.search.small_coin.find"));
+        cell_data.at(x, y).feats = 0;
+        flt();
+        itemcreate_extra_inv(622, x, y, 0);
+    }
+    else
+    {
+        if (dist(cdata[cc].position.x, cdata[cc].position.y, x, y) > 2)
+        {
+            txt(i18n::s.get("core.action.search.small_coin.far"));
+        }
+        else
+        {
+            txt(i18n::s.get("core.action.search.small_coin.close"));
+        }
+    }
+}
+
+
+
+void _search_for_map_feats()
+{
+    cell_featread(x, y);
+    refx = x;
+    refy = y;
+    if (std::abs(cdata[cc].position.y - y) <= 1 &&
+        std::abs(cdata[cc].position.x - x) <= 1)
+    {
+        if (feat(1) == 14)
+        {
+            if (feat(0) == 0)
+            {
+                int stat = try_to_reveal();
+                if (stat == 1)
+                {
+                    discover_trap();
+                    txt(i18n::s.get("core.action.search.discover.trap"));
+                }
+            }
+        }
+        if (feat(1) == 22)
+        {
+            int stat = try_to_reveal();
+            if (stat == 1 || 0)
+            {
+                discover_hidden_path();
+                txt(i18n::s.get("core.action.search.discover.hidden_path"));
+            }
+        }
+    }
+    if (feat(1) == 32)
+    {
+        if (game_data.current_map != mdata_t::MapId::show_house)
+        {
+            _try_to_reveal_small_coin();
+        }
+    }
+}
+
+
+
+void _search_surroundings()
+{
+    for (int cnt = 0; cnt < 11; ++cnt)
+    {
+        y = cdata[cc].position.y + cnt - 5;
+        if (y < 0 || y >= map_data.height)
+        {
+            continue;
+        }
+        for (int cnt = 0; cnt < 11; ++cnt)
+        {
+            x = cdata[cc].position.x + cnt - 5;
+            if (x < 0 || x >= map_data.width)
+            {
+                continue;
+            }
+            if (cell_data.at(x, y).feats != 0)
+            {
+                _search_for_map_feats();
+            }
+        }
+    }
+}
+
+
+
+void _proc_manis_disassembly(Character& chara)
+{
+    if (feat(1) == 14 && feat(0) == tile_trap && chara.index == 0 &&
+        chara.god_id == core_god::mani)
+    {
+        disarm_trap(chara, chara.position.x, chara.position.y);
+    }
+}
+
+
+
+void _dig_material_spot()
+{
+    rowactre(0) = 1;
+    rowactre(1) = cdata[cc].position.x;
+    rowactre(2) = cdata[cc].position.y;
+    if (feat(1) == 24)
+    {
+        spot_digging();
+    }
+    if (feat(1) == 27)
+    {
+        spot_digging();
+    }
+    if (feat(1) == 26)
+    {
+        spot_fishing();
+    }
+    if (feat(1) == 25)
+    {
+        spot_mining_or_wall();
+    }
+    if (feat(1) == 28)
+    {
+        spot_material();
+    }
+}
+
+
+
+TurnResult _pre_proc_movement_event()
+{
+    if (map_data.type == mdata_t::MapType::world_map)
+    {
+        if (264 <= cell_data
+                       .at(cdata[cc].next_position.x, cdata[cc].next_position.y)
+                       .chip_id_actual &&
+            cell_data.at(cdata[cc].next_position.x, cdata[cc].next_position.y)
+                    .chip_id_actual < 363)
+        {
+            return TurnResult::pc_turn_user_error;
+        }
+    }
+    return proc_movement_event();
+}
+
+
+
+TurnResult _bump_into_character()
+{
+    tc = cellchara;
+    if (cdata[tc].relationship >= 10 ||
+        (cdata[tc].relationship == -1 && !g_config.attack_neutral_npcs()) ||
+        (cdata[tc].relationship == 0 &&
+         (area_data[game_data.current_map].is_museum_or_shop() ||
+          is_modifier_pressed(snail::ModKey::shift))))
+    {
+        if (cdata[tc].is_hung_on_sand_bag() == 0)
+        {
+            if (map_data.type == mdata_t::MapType::world_map)
+            {
+                return _pre_proc_movement_event();
+            }
+            if (g_config.scroll())
+            {
+                cdata.player().next_position.x = cdata[tc].position.x;
+                cdata.player().next_position.y = cdata[tc].position.y;
+                ui_scroll_screen();
+            }
+            cell_swap(cc, tc);
+            txt(i18n::s.get("core.action.move.displace.text", cdata[tc]));
+            if (cdata[tc].id == CharaId::rogue)
+            {
+                if (rnd(5) == 0)
+                {
+                    if (cdata[tc].sleep == 0)
+                    {
+                        p = rnd(clamp(cdata[cc].gold, 0, 20) + 1);
+                        if (cdata[cc].is_protected_from_thieves())
+                        {
+                            p = 0;
+                        }
+                        if (p != 0)
+                        {
+                            snd("core.getgold1");
+                            cdata[cc].gold -= p;
+                            earn_gold(cdata[tc], p);
+                            txt(i18n::s.get(
+                                "core.action.move.displace.dialog"));
+                        }
+                    }
+                }
+            }
+            if (cdata[tc].activity.type == Activity::Type::eat)
+            {
+                if (cdata[tc].activity.turn > 0)
+                {
+                    txt(i18n::s.get("core.action.move.interrupt", cdata[tc]));
+                    cdata[tc].activity.type = Activity::Type::none;
+                    cdata[tc].activity.turn = 0;
+                }
+            }
+            sense_map_feats_on_move();
+            return TurnResult::turn_end;
+        }
+    }
+    if (running)
+    {
+        if (cdata[tc].relationship >= -2 || keybd_wait >= 40)
+        {
+            return TurnResult::pc_turn_user_error;
+        }
+    }
+    if (cdata[tc].relationship <= -1)
+    {
+        cdata.player().enemy_id = tc;
+        if (cdata[tc].is_invisible() == 1)
+        {
+            if (cdata.player().can_see_invisible() == 0)
+            {
+                if (cdata[tc].wet == 0)
+                {
+                    cdata.player().enemy_id = 0;
+                }
+            }
+        }
+        if (keybd_attacking == 0)
+        {
+            keybd_wait = 1;
+            keybd_attacking = 1;
+        }
+        try_to_melee_attack();
+        return TurnResult::turn_end;
+    }
+    talk_to_npc();
+    if (chatteleport == 1)
+    {
+        chatteleport = 0;
+        return TurnResult::exit_map;
+    }
+    return TurnResult::turn_end;
+}
+
 } // namespace
 
 
 
-namespace elona
-{
-
 // TODO organize by order in pc_turn()
+
+
 
 TurnResult do_give_command()
 {
@@ -132,6 +436,8 @@ TurnResult do_give_command()
     update_screen();
     return TurnResult::pc_turn_user_error;
 }
+
+
 
 TurnResult do_interact_command()
 {
@@ -294,7 +600,7 @@ TurnResult do_interact_command()
         cdata[tc].is_hung_on_sand_bag() = false;
         txt(i18n::s.get("core.action.interact.release", cdata[tc]));
         flt();
-        itemcreate(-1, 733, cdata[tc].position.x, cdata[tc].position.y, 0);
+        itemcreate_extra_inv(733, cdata[tc].position, 0);
     }
     if (p == 10)
     {
@@ -303,6 +609,7 @@ TurnResult do_interact_command()
     update_screen();
     return TurnResult::pc_turn_user_error;
 }
+
 
 
 TurnResult call_npc()
@@ -326,6 +633,7 @@ TurnResult call_npc()
 }
 
 
+
 TurnResult do_bash_command()
 {
     txt(i18n::s.get("core.action.bash.prompt"));
@@ -338,6 +646,8 @@ TurnResult do_bash_command()
     }
     return do_bash();
 }
+
+
 
 TurnResult do_dig_command()
 {
@@ -375,185 +685,7 @@ TurnResult do_dig_command()
     return do_dig_after_sp_check(cdata.player());
 }
 
-static void _search_for_crystal()
-{
-    p = 9999;
-    for (const auto& item : inv.ground())
-    {
-        if (item.number() == 0)
-        {
-            continue;
-        }
-        if (item.own_state != 5)
-        {
-            continue;
-        }
-        if (item.id != ItemId::summoning_crystal)
-        {
-            continue;
-        }
-        if (p > dist(
-                    item.position.x,
-                    item.position.y,
-                    cdata.player().position.x,
-                    cdata.player().position.y))
-        {
-            p = dist(
-                item.position.x,
-                item.position.y,
-                cdata.player().position.x,
-                cdata.player().position.y);
-        }
-    }
-    if (p != 9999)
-    {
-        while (1)
-        {
-            if (p <= 3)
-            {
-                txt(i18n::s.get("core.action.search.crystal.close"));
-            }
-            if (p <= 9)
-            {
-                txt(i18n::s.get("core.action.search.crystal.normal"));
-                break;
-            }
-            if (p <= 16)
-            {
-                txt(i18n::s.get("core.action.search.crystal.far"));
-                break;
-            }
-            txt(i18n::s.get("core.action.search.crystal.sense"));
-            break;
-        }
-    }
-}
 
-static void _try_to_reveal_small_coin()
-{
-    if (cdata[cc].position.x == x && cdata[cc].position.y == y)
-    {
-        snd("core.ding2");
-        txt(i18n::s.get("core.action.search.small_coin.find"));
-        cell_data.at(x, y).feats = 0;
-        flt();
-        itemcreate(-1, 622, x, y, 0);
-    }
-    else
-    {
-        if (dist(cdata[cc].position.x, cdata[cc].position.y, x, y) > 2)
-        {
-            txt(i18n::s.get("core.action.search.small_coin.far"));
-        }
-        else
-        {
-            txt(i18n::s.get("core.action.search.small_coin.close"));
-        }
-    }
-}
-
-static void _search_for_map_feats()
-{
-    cell_featread(x, y);
-    refx = x;
-    refy = y;
-    if (std::abs(cdata[cc].position.y - y) <= 1 &&
-        std::abs(cdata[cc].position.x - x) <= 1)
-    {
-        if (feat(1) == 14)
-        {
-            if (feat(0) == 0)
-            {
-                int stat = try_to_reveal();
-                if (stat == 1)
-                {
-                    discover_trap();
-                    txt(i18n::s.get("core.action.search.discover.trap"));
-                }
-            }
-        }
-        if (feat(1) == 22)
-        {
-            int stat = try_to_reveal();
-            if (stat == 1 || 0)
-            {
-                discover_hidden_path();
-                txt(i18n::s.get("core.action.search.discover.hidden_path"));
-            }
-        }
-    }
-    if (feat(1) == 32)
-    {
-        if (game_data.current_map != mdata_t::MapId::show_house)
-        {
-            _try_to_reveal_small_coin();
-        }
-    }
-}
-
-static void _search_surroundings()
-{
-    for (int cnt = 0; cnt < 11; ++cnt)
-    {
-        y = cdata[cc].position.y + cnt - 5;
-        if (y < 0 || y >= map_data.height)
-        {
-            continue;
-        }
-        for (int cnt = 0; cnt < 11; ++cnt)
-        {
-            x = cdata[cc].position.x + cnt - 5;
-            if (x < 0 || x >= map_data.width)
-            {
-                continue;
-            }
-            if (cell_data.at(x, y).feats != 0)
-            {
-                _search_for_map_feats();
-            }
-        }
-    }
-}
-
-
-
-static void _proc_manis_disassembly(Character& chara)
-{
-    if (feat(1) == 14 && feat(0) == tile_trap && chara.index == 0 &&
-        chara.god_id == core_god::mani)
-    {
-        disarm_trap(chara, chara.position.x, chara.position.y);
-    }
-}
-
-
-
-static void _dig_material_spot()
-{
-    rowactre(0) = 1;
-    rowactre(1) = cdata[cc].position.x;
-    rowactre(2) = cdata[cc].position.y;
-    if (feat(1) == 24)
-    {
-        spot_digging();
-    }
-    if (feat(1) == 27)
-    {
-        spot_digging();
-    }
-    if (feat(1) == 26)
-    {
-        spot_fishing();
-    }
-    if (feat(1) == 25)
-    {
-        spot_mining_or_wall();
-    }
-    if (feat(1) == 28)
-    {
-        spot_material();
-    }
-}
 
 TurnResult do_search_command()
 {
@@ -576,13 +708,14 @@ TurnResult do_search_command()
     return TurnResult::turn_end;
 }
 
+
+
 TurnResult do_pray_command()
 {
-    int stat = item_find(60002);
-    if (stat != -1)
+    if (const auto altar = item_find(60002))
     {
-        ci = stat;
-        int god_id_int = inv[ci].param1;
+        ci = altar->index;
+        int god_id_int = altar->param1;
         if (core_god::int2godid(god_id_int) != cdata.player().god_id)
         {
             begin_to_believe_god(god_id_int);
@@ -591,6 +724,8 @@ TurnResult do_pray_command()
     }
     return do_pray();
 }
+
+
 
 TurnResult do_throw_command()
 {
@@ -864,10 +999,12 @@ TurnResult do_throw_command()
     if (inv[ci].id == ItemId::kitty_bank)
     {
         flt();
-        itemcreate(-1, 54, tlocx, tlocy, inv[ci].param1);
+        itemcreate_extra_inv(54, tlocx, tlocy, inv[ci].param1);
     }
     return TurnResult::turn_end;
 }
+
+
 
 TurnResult do_close_command()
 {
@@ -895,6 +1032,8 @@ TurnResult do_close_command()
     txt(i18n::s.get("core.action.close.execute", cdata[cc]));
     return TurnResult::turn_end;
 }
+
+
 
 TurnResult do_change_ammo_command()
 {
@@ -991,6 +1130,8 @@ TurnResult do_change_ammo_command()
     return TurnResult::pc_turn_user_error;
 }
 
+
+
 TurnResult do_offer_command()
 {
     if (cdata.player().god_id == core_god::eyth)
@@ -1008,10 +1149,9 @@ TurnResult do_offer_command()
     BrightAuraAnimation(cdata[tc].position, BrightAuraAnimation::Type::offering)
         .play();
     tc = tcbk;
-    int stat = item_find(60002);
-    if (stat != -1)
+    if (const auto altar = item_find(60002))
     {
-        ti = stat;
+        ti = altar->index;
     }
     else
     {
@@ -1372,9 +1512,9 @@ TurnResult do_dip_command()
                 {
                     --game_data.holy_well_count;
                     flt();
-                    if (itemcreate(0, 516, -1, -1, 0))
+                    if (const auto item = itemcreate_player_inv(516, 0))
                     {
-                        inv[ci].curse_state = CurseState::blessed;
+                        item->curse_state = CurseState::blessed;
                     }
                 }
                 else
@@ -1382,11 +1522,11 @@ TurnResult do_dip_command()
                     inv[ci].param1 -= 3;
                     flt(20);
                     flttypemajor = 52000;
-                    itemcreate(0, 0, -1, -1, 0);
+                    itemcreate_player_inv(0, 0);
                 }
                 txt(i18n::s.get("core.action.dip.result.natural_potion"));
                 txt(i18n::s.get("core.action.dip.you_get", inv[ci]));
-                item_stack(0, ci, 1);
+                item_stack(0, inv[ci], true);
                 return TurnResult::turn_end;
             }
         }
@@ -1605,7 +1745,7 @@ TurnResult do_use_command()
     if (inv[ci].id == ItemId::red_treasure_machine ||
         inv[ci].id == ItemId::blue_treasure_machine)
     {
-        return do_gatcha();
+        return do_gatcha(inv[ci]);
     }
     if (inv[ci].id == ItemId::pachisuro_machine ||
         inv[ci].id == ItemId::casino_table ||
@@ -1865,8 +2005,7 @@ TurnResult do_use_command()
             inv[ci].modify_number(-5);
         }
         flt();
-        itemcreate(
-            -1, 541, cdata.player().position.x, cdata.player().position.y, 0);
+        itemcreate_extra_inv(541, cdata.player().position, 0);
         if (is_in_fov(cdata[cc]))
         {
             snd("core.snow");
@@ -1889,8 +2028,7 @@ TurnResult do_use_command()
         break;
     case 9:
     {
-        int stat = read_textbook();
-        if (stat == 1)
+        if (read_textbook(inv[ci]))
         {
             return TurnResult::turn_end;
         }
@@ -2774,12 +2912,14 @@ TurnResult do_open_command(bool play_sound)
         {
             open_box();
         }
-        item_stack(cc, ri);
+        item_stack(cc, inv[ri]);
     }
     screenupdate = -1;
     update_screen();
     return TurnResult::turn_end;
 }
+
+
 
 TurnResult do_use_stairs_command(int val0)
 {
@@ -2789,13 +2929,12 @@ TurnResult do_use_stairs_command(int val0)
         txt(i18n::s.get("core.action.use_stairs.cannot_during_debug"));
         return TurnResult::pc_turn_user_error;
     }
-    int stat = item_find(631, 3, ItemFindLocation::ground);
-    if (stat != -1)
+    if (const auto moon_gate = item_find(631, 3, ItemFindLocation::ground))
     {
         if (map_is_town_or_guild())
         {
-            ci = stat;
-            return step_into_gate();
+            ci = moon_gate->index;
+            return step_into_gate(*moon_gate);
         }
     }
     cell_featread(cdata[cc].position.x, cdata[cc].position.y);
@@ -2999,116 +3138,7 @@ TurnResult do_use_stairs_command(int val0)
     return TurnResult::exit_map;
 }
 
-static TurnResult _pre_proc_movement_event()
-{
-    if (map_data.type == mdata_t::MapType::world_map)
-    {
-        if (264 <= cell_data
-                       .at(cdata[cc].next_position.x, cdata[cc].next_position.y)
-                       .chip_id_actual &&
-            cell_data.at(cdata[cc].next_position.x, cdata[cc].next_position.y)
-                    .chip_id_actual < 363)
-        {
-            return TurnResult::pc_turn_user_error;
-        }
-    }
-    return proc_movement_event();
-}
 
-static TurnResult _bump_into_character()
-{
-    tc = cellchara;
-    if (cdata[tc].relationship >= 10 ||
-        (cdata[tc].relationship == -1 && !g_config.attack_neutral_npcs()) ||
-        (cdata[tc].relationship == 0 &&
-         (area_data[game_data.current_map].is_museum_or_shop() ||
-          is_modifier_pressed(snail::ModKey::shift))))
-    {
-        if (cdata[tc].is_hung_on_sand_bag() == 0)
-        {
-            if (map_data.type == mdata_t::MapType::world_map)
-            {
-                return _pre_proc_movement_event();
-            }
-            if (g_config.scroll())
-            {
-                cdata.player().next_position.x = cdata[tc].position.x;
-                cdata.player().next_position.y = cdata[tc].position.y;
-                ui_scroll_screen();
-            }
-            cell_swap(cc, tc);
-            txt(i18n::s.get("core.action.move.displace.text", cdata[tc]));
-            if (cdata[tc].id == CharaId::rogue)
-            {
-                if (rnd(5) == 0)
-                {
-                    if (cdata[tc].sleep == 0)
-                    {
-                        p = rnd(clamp(cdata[cc].gold, 0, 20) + 1);
-                        if (cdata[cc].is_protected_from_thieves())
-                        {
-                            p = 0;
-                        }
-                        if (p != 0)
-                        {
-                            snd("core.getgold1");
-                            cdata[cc].gold -= p;
-                            earn_gold(cdata[tc], p);
-                            txt(i18n::s.get(
-                                "core.action.move.displace.dialog"));
-                        }
-                    }
-                }
-            }
-            if (cdata[tc].activity.type == Activity::Type::eat)
-            {
-                if (cdata[tc].activity.turn > 0)
-                {
-                    txt(i18n::s.get("core.action.move.interrupt", cdata[tc]));
-                    cdata[tc].activity.type = Activity::Type::none;
-                    cdata[tc].activity.turn = 0;
-                }
-            }
-            sense_map_feats_on_move();
-            return TurnResult::turn_end;
-        }
-    }
-    if (running)
-    {
-        if (cdata[tc].relationship >= -2 || keybd_wait >= 40)
-        {
-            return TurnResult::pc_turn_user_error;
-        }
-    }
-    if (cdata[tc].relationship <= -1)
-    {
-        cdata.player().enemy_id = tc;
-        if (cdata[tc].is_invisible() == 1)
-        {
-            if (cdata.player().can_see_invisible() == 0)
-            {
-                if (cdata[tc].wet == 0)
-                {
-                    cdata.player().enemy_id = 0;
-                }
-            }
-        }
-        if (keybd_attacking == 0)
-        {
-            keybd_wait = 1;
-            keybd_attacking = 1;
-        }
-        try_to_melee_attack();
-        return TurnResult::turn_end;
-    }
-    talk_to_npc();
-    if (chatteleport == 1)
-    {
-        chatteleport = 0;
-        return TurnResult::exit_map;
-    }
-    return TurnResult::turn_end;
-}
 
 TurnResult do_movement_command()
 {
@@ -3247,6 +3277,8 @@ TurnResult do_movement_command()
     return TurnResult::pc_turn_user_error;
 }
 
+
+
 TurnResult do_read_command()
 {
     if (inv[ci].id == ItemId::recipe)
@@ -3267,25 +3299,26 @@ TurnResult do_read_command()
     return TurnResult::turn_end;
 }
 
+
+
 TurnResult do_eat_command()
 {
     if (cc == 0)
     {
-        int stat = cargocheck();
-        if (stat == 0)
+        if (!cargocheck(inv[ci]))
         {
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        if (itemusingfind(ci) > 0)
+        if (itemusingfind(inv[ci]) > 0)
         {
             txt(i18n::s.get("core.action.someone_else_is_using"));
             return TurnResult::pc_turn_user_error;
         }
     }
-    else if (itemusingfind(ci) != -1)
+    else if (itemusingfind(inv[ci]) != -1)
     {
-        tc = itemusingfind(ci);
+        tc = itemusingfind(inv[ci]);
         if (tc != cc)
         {
             cdata[tc].activity.finish();
@@ -3301,12 +3334,16 @@ TurnResult do_eat_command()
     return TurnResult::turn_end;
 }
 
+
+
 TurnResult do_drink_command()
 {
     dbid = itemid2int(inv[ci].id);
     item_db_on_drink(inv[ci], dbid);
     return TurnResult::turn_end;
 }
+
+
 
 TurnResult do_zap_command()
 {
@@ -3321,11 +3358,15 @@ TurnResult do_zap_command()
     return TurnResult::turn_end;
 }
 
+
+
 TurnResult do_rest_command()
 {
     do_rest();
     return TurnResult::turn_end;
 }
+
+
 
 TurnResult do_fire_command()
 {
@@ -3371,6 +3412,8 @@ TurnResult do_fire_command()
     do_ranged_attack();
     return TurnResult::turn_end;
 }
+
+
 
 TurnResult do_get_command()
 {
@@ -3461,11 +3504,11 @@ TurnResult do_get_command()
             }
             flt();
             {
-                if (itemcreate(0, 587, -1, -1, 0))
+                if (const auto item = itemcreate_player_inv(587, 0))
                 {
-                    inv[ci].curse_state = CurseState::none;
-                    inv[ci].identify_state = IdentifyState::completely;
-                    item_stack(0, ci, 1);
+                    item->curse_state = CurseState::none;
+                    item->identify_state = IdentifyState::completely;
+                    item_stack(0, *item, true);
                 }
             }
             return TurnResult::turn_end;
@@ -3515,6 +3558,8 @@ TurnResult do_get_command()
     }
 }
 
+
+
 TurnResult do_cast_command()
 {
     tc = cc;
@@ -3525,6 +3570,8 @@ TurnResult do_cast_command()
     }
     return TurnResult::turn_end;
 }
+
+
 
 TurnResult do_short_cut_command(int sc_)
 {
@@ -3591,6 +3638,8 @@ TurnResult do_short_cut_command(int sc_)
     return TurnResult::pc_turn_user_error;
 }
 
+
+
 TurnResult do_exit_command()
 {
     Message::instance().linebreak();
@@ -3630,6 +3679,8 @@ TurnResult do_exit_command()
     update_screen();
     return TurnResult::pc_turn_user_error;
 }
+
+
 
 int ask_direction_to_close()
 {

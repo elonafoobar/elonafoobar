@@ -396,7 +396,7 @@ void apply_god_blessing(int cc)
 
 
 
-void god_proc_switching_penalty()
+void god_proc_switching_penalty(const GodId& new_religion)
 {
     if (rtval == 0)
     {
@@ -421,7 +421,7 @@ void god_proc_switching_penalty()
             mode = 0;
             await(g_config.animation_wait() * 20);
         }
-        cdata.player().god_id = core_god::int2godid(inv[ci].param1);
+        cdata.player().god_id = new_religion;
         switch_religion();
         msg_halt();
     }
@@ -619,46 +619,37 @@ TurnResult do_pray()
                 {
                     dbid = 559;
                 }
-                itemcreate(
-                    -1,
-                    dbid,
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    0);
+                itemcreate_extra_inv(dbid, cdata.player().position, 0);
             }
             else
             {
                 nostack = 1;
-                itemcreate(
-                    -1,
-                    672,
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    0);
-                if (cdata.player().god_id == core_god::itzpalt)
+                if (const auto item =
+                        itemcreate_extra_inv(672, cdata.player().position, 0))
                 {
-                    inv[ci].param1 = 165;
-                }
-                if (cdata.player().god_id == core_god::ehekatl)
-                {
-                    inv[ci].param1 = 163;
-                }
-                if (cdata.player().god_id == core_god::opatos)
-                {
-                    inv[ci].param1 = 164;
+                    if (cdata.player().god_id == core_god::itzpalt)
+                    {
+                        item->param1 = 165;
+                    }
+                    if (cdata.player().god_id == core_god::ehekatl)
+                    {
+                        item->param1 = 163;
+                    }
+                    if (cdata.player().god_id == core_god::opatos)
+                    {
+                        item->param1 = 164;
+                    }
                 }
             }
             if (cdata.player().god_id == core_god::jure)
             {
                 flt();
                 nostack = 1;
-                itemcreate(
-                    -1,
-                    672,
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    0);
-                inv[ci].param1 = 166;
+                if (const auto item =
+                        itemcreate_extra_inv(672, cdata.player().position, 0))
+                {
+                    item->param1 = 166;
+                }
             }
             txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }
@@ -698,12 +689,7 @@ TurnResult do_pray()
             {
                 dbid = 621;
             }
-            itemcreate(
-                -1,
-                dbid,
-                cdata.player().position.x,
-                cdata.player().position.y,
-                0);
+            itemcreate_extra_inv(dbid, cdata.player().position, 0);
             txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }
         ++game_data.god_rank;

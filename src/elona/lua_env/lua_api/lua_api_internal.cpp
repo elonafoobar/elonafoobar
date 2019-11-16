@@ -180,9 +180,9 @@ void LuaApiInternal::strange_scientist_pick_reward()
     begintempinv();
     mode = 6;
     flt();
-    itemcreate(-1, 283, -1, -1, 0);
+    itemcreate_extra_inv(283, -1, -1, 0);
     flt();
-    itemcreate(-1, 284, -1, -1, 0);
+    itemcreate_extra_inv(284, -1, -1, 0);
     for (int cnt = 0; cnt < 800; ++cnt)
     {
         if (cnt == 672)
@@ -219,11 +219,11 @@ void LuaApiInternal::strange_scientist_pick_reward()
         if (f)
         {
             flt(cdata.player().level * 3 / 2, calcfixlv(Quality::good));
-            if (itemcreate(-1, cnt, -1, -1, 0))
+            if (const auto item = itemcreate_extra_inv(cnt, -1, -1, 0))
             {
-                if (inv[ci].quality < Quality::miracle)
+                if (item->quality < Quality::miracle)
                 {
-                    inv[ci].remove();
+                    item->remove();
                 }
             }
         }

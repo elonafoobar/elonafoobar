@@ -55,7 +55,6 @@ TalkResult talk_busy();
 TalkResult talk_ignored();
 TalkResult talk_house_visitor();
 TalkResult talk_game_begin();
-bool talk_give_potion_of_cure_corruption();
 
 void talk_wrapper(TalkResult);
 TalkResult talk_npc();

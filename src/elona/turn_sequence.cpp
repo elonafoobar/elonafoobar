@@ -1110,7 +1110,7 @@ TurnResult pass_one_turn(bool time_passing)
         }
         if (cdata[cc].has_cursed_equipments())
         {
-            proc_negative_equipments();
+            proc_negative_enchantments(cdata[cc]);
         }
         if (cdata[cc].is_pregnant())
         {

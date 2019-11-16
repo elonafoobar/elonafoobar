@@ -356,14 +356,14 @@ int adventurer_discover_equipment()
     {
         flttypemajor = choice(fsetitem);
     }
-    if (itemcreate(rc, 0, -1, -1, 0))
+    if (const auto item = itemcreate_chara_inv(rc, 0, 0))
     {
-        inv[ci].identify_state = IdentifyState::completely;
-        if (inv[ci].quality >= Quality::miracle)
+        item->identify_state = IdentifyState::completely;
+        if (item->quality >= Quality::miracle)
         {
-            if (the_item_db[itemid2int(inv[ci].id)]->category < 50000)
+            if (the_item_db[itemid2int(item->id)]->category < 50000)
             {
-                addnews(1, rc, 0, itemname(ci));
+                addnews(1, rc, 0, itemname(item->index));
             }
         }
         wear_most_valuable_equipment();

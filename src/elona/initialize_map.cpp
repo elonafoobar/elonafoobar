@@ -121,9 +121,9 @@ void _clear_map_and_objects()
     {
         cnt.set_state(Character::State::empty);
     }
-    for (int cnt = ELONA_OTHER_INVENTORIES_INDEX; cnt < ELONA_MAX_ITEMS; ++cnt)
+    for (auto&& item : inv.map_local())
     {
-        inv[cnt].remove();
+        item.remove();
     }
 
     map_data.clear();

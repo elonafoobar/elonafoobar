@@ -5,10 +5,14 @@
 #include "optional.hpp"
 
 
+
 namespace elona
 {
 
 struct Character;
+struct Item;
+
+
 
 struct SkillDamage
 {
@@ -40,8 +44,8 @@ enum class AttackDamageCalculationMode
 };
 int calcattackdmg(AttackDamageCalculationMode);
 
-int calcmedalvalue(int = 0);
-int calcitemvalue(int = 0, int = 0);
+int calcmedalvalue(const Item& item);
+int calcitemvalue(const Item& item, int calc_mode);
 int calcinvestvalue();
 int calcguiltvalue();
 int calchireadv(int = 0);
