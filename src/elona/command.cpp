@@ -515,24 +515,18 @@ static void _search_surroundings()
     }
 }
 
-static void _proc_manis_disassembly()
+
+
+static void _proc_manis_disassembly(Character& chara)
 {
-    if (feat(1) == 14)
+    if (feat(1) == 14 && feat(0) == tile_trap && chara.index == 0 &&
+        chara.god_id == core_god::mani)
     {
-        if (feat(0) == tile_trap)
-        {
-            if (cdata.player().god_id == core_god::mani)
-            {
-                if (cc == 0)
-                {
-                    movx = cdata[cc].position.x;
-                    movy = cdata[cc].position.y;
-                    disarm_trap();
-                }
-            }
-        }
+        disarm_trap(chara, chara.position.x, chara.position.y);
     }
 }
+
+
 
 static void _dig_material_spot()
 {
@@ -573,7 +567,7 @@ TurnResult do_search_command()
 
     cell_featread(cdata[cc].position.x, cdata[cc].position.y);
 
-    _proc_manis_disassembly();
+    _proc_manis_disassembly(cdata[cc]);
 
     if (feat(1) >= 24 && feat(1) <= 28)
     {
@@ -1116,6 +1110,8 @@ TurnResult do_offer_command()
     return TurnResult::turn_end;
 }
 
+
+
 TurnResult do_look_command()
 {
     std::string action;
@@ -1139,154 +1135,166 @@ TurnResult do_look_command()
             page = cnt / pagesize;
         }
     }
-label_1952_internal:
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
+
+    bool init = true;
+    while (true)
     {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-label_1953_internal:
-    if (cs != cs_bk)
-    {
-        screenupdate = -1;
-        update_screen();
-        keyrange = 0;
-        font(20 - en * 2, snail::Font::Style::bold);
-        for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+        if (init)
         {
-            p = pagesize * page + cnt;
-            if (p >= listmax)
+            init = false;
+            cs_bk = -1;
+            pagemax = (listmax - 1) / pagesize;
+            if (page < 0)
             {
-                break;
+                page = pagemax;
             }
-            key_list(cnt) = key_select(cnt);
-            ++keyrange;
-            x = list(1, p) - scx;
-            y = list(2, p) - scy;
-            if (cs == cnt)
+            else if (page > pagemax)
             {
-                i = p;
-                get_route(
-                    cdata[cc].position.x,
-                    cdata[cc].position.y,
-                    cdata[list(0, p)].position.x,
-                    cdata[list(0, p)].position.y);
-                dx = (tlocx - scx) * inf_tiles + inf_screenx;
-                dy = (tlocy - scy) * inf_tiles + inf_screeny;
-                if (maxroute != 0)
+                page = 0;
+            }
+        }
+
+        if (cs != cs_bk)
+        {
+            screenupdate = -1;
+            update_screen();
+            keyrange = 0;
+            font(20 - en * 2, snail::Font::Style::bold);
+            for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+            {
+                p = pagesize * page + cnt;
+                if (p >= listmax)
                 {
-                    dx = cdata[cc].position.x;
-                    dy = cdata[cc].position.y;
-                    for (int cnt = 0; cnt < 100; ++cnt)
+                    break;
+                }
+                key_list(cnt) = key_select(cnt);
+                ++keyrange;
+                x = list(1, p) - scx;
+                y = list(2, p) - scy;
+                if (cs == cnt)
+                {
+                    i = p;
+                    get_route(
+                        cdata[cc].position.x,
+                        cdata[cc].position.y,
+                        cdata[list(0, p)].position.x,
+                        cdata[list(0, p)].position.y);
+                    dx = (tlocx - scx) * inf_tiles + inf_screenx;
+                    dy = (tlocy - scy) * inf_tiles + inf_screeny;
+                    if (maxroute != 0)
                     {
-                        int stat = route_info(dx, dy, cnt);
-                        if (stat == 0)
+                        dx = cdata[cc].position.x;
+                        dy = cdata[cc].position.y;
+                        for (int cnt = 0; cnt < 100; ++cnt)
                         {
-                            break;
-                        }
-                        else if (stat == -1)
-                        {
-                            continue;
-                        }
-                        sx = (dx - scx) * inf_tiles + inf_screenx;
-                        sy = (dy - scy) * inf_tiles + inf_screeny;
-                        if (sy + inf_tiles <= windowh - inf_verh)
-                        {
-                            snail::Application::instance()
-                                .get_renderer()
-                                .set_blend_mode(snail::BlendMode::blend);
-                            snail::Application::instance()
-                                .get_renderer()
-                                .set_draw_color({255, 255, 255, 25});
-                            snail::Application::instance()
-                                .get_renderer()
-                                .fill_rect(
-                                    sx,
-                                    sy * (sy > 0),
-                                    inf_tiles -
-                                        (sx + inf_tiles > windoww) *
-                                            (sx + inf_tiles - windoww),
-                                    inf_tiles + (sy < 0) * inf_screeny -
-                                        (sy + inf_tiles > windowh - inf_verh) *
-                                            (sy + inf_tiles - windowh +
-                                             inf_verh));
+                            int stat = route_info(dx, dy, cnt);
+                            if (stat == 0)
+                            {
+                                break;
+                            }
+                            else if (stat == -1)
+                            {
+                                continue;
+                            }
+                            sx = (dx - scx) * inf_tiles + inf_screenx;
+                            sy = (dy - scy) * inf_tiles + inf_screeny;
+                            if (sy + inf_tiles <= windowh - inf_verh)
+                            {
+                                snail::Application::instance()
+                                    .get_renderer()
+                                    .set_blend_mode(snail::BlendMode::blend);
+                                snail::Application::instance()
+                                    .get_renderer()
+                                    .set_draw_color({255, 255, 255, 25});
+                                snail::Application::instance()
+                                    .get_renderer()
+                                    .fill_rect(
+                                        sx,
+                                        sy * (sy > 0),
+                                        inf_tiles -
+                                            (sx + inf_tiles > windoww) *
+                                                (sx + inf_tiles - windoww),
+                                        inf_tiles + (sy < 0) * inf_screeny -
+                                            (sy + inf_tiles >
+                                             windowh - inf_verh) *
+                                                (sy + inf_tiles - windowh +
+                                                 inf_verh));
+                            }
                         }
                     }
+                    sx = x * inf_tiles + inf_screenx;
+                    sy = y * inf_tiles + inf_screeny;
+                    if (sy + inf_tiles <= windowh - inf_verh)
+                    {
+                        snail::Application::instance()
+                            .get_renderer()
+                            .set_blend_mode(snail::BlendMode::blend);
+                        snail::Application::instance()
+                            .get_renderer()
+                            .set_draw_color({127, 127, 255, 50});
+                        snail::Application::instance().get_renderer().fill_rect(
+                            sx,
+                            sy * (sy > 0),
+                            inf_tiles,
+                            inf_tiles + (sy < 0) * inf_screeny -
+                                (sy + inf_tiles > windowh - inf_verh) *
+                                    (sy + inf_tiles - windowh + inf_verh));
+                    }
                 }
-                sx = x * inf_tiles + inf_screenx;
-                sy = y * inf_tiles + inf_screeny;
-                if (sy + inf_tiles <= windowh - inf_verh)
-                {
-                    snail::Application::instance()
-                        .get_renderer()
-                        .set_blend_mode(snail::BlendMode::blend);
-                    snail::Application::instance()
-                        .get_renderer()
-                        .set_draw_color({127, 127, 255, 50});
-                    snail::Application::instance().get_renderer().fill_rect(
-                        sx,
-                        sy * (sy > 0),
-                        inf_tiles,
-                        inf_tiles + (sy < 0) * inf_screeny -
-                            (sy + inf_tiles > windowh - inf_verh) *
-                                (sy + inf_tiles - windowh + inf_verh));
-                }
+                display_key(
+                    x * inf_tiles + inf_screenx - 12,
+                    y * inf_tiles + inf_screeny - 12,
+                    cnt);
             }
-            display_key(
-                x * inf_tiles + inf_screenx - 12,
-                y * inf_tiles + inf_screeny - 12,
-                cnt);
+            txttargetnpc(
+                cdata[list(0, i)].position.x, cdata[list(0, i)].position.y);
+            cs_bk = cs;
+            render_hud();
+            redraw();
         }
-        txttargetnpc(
-            cdata[list(0, i)].position.x, cdata[list(0, i)].position.y);
-        cs_bk = cs;
-        render_hud();
-        redraw();
-    }
-    if (action == "target")
-    {
-        // TODO will not be detected since input is in "menu" mode
-        action = "select_"s + (cs + 1);
-    }
-    action = get_selected_item(p(0));
-    if (p != -1)
-    {
-        cdata.player().enemy_id = p;
-        snd("core.ok1");
-        txt(i18n::s.get("core.action.look.target", cdata[p(0)]));
-        update_screen();
-        return TurnResult::pc_turn_user_error;
-    }
-    if (action == "next_page")
-    {
-        if (pagemax != 0)
+        if (action == "target")
         {
-            snd("core.pop1");
-            ++page;
-            goto label_1952_internal;
+            // TODO will not be detected since input is in "menu" mode
+            action = "select_"s + (cs + 1);
         }
-    }
-    if (action == "previous_page")
-    {
-        if (pagemax != 0)
+        action = get_selected_item(p(0));
+        if (p != -1)
         {
-            snd("core.pop1");
-            --page;
-            goto label_1952_internal;
+            cdata.player().enemy_id = p;
+            snd("core.ok1");
+            txt(i18n::s.get("core.action.look.target", cdata[p(0)]));
+            update_screen();
+            return TurnResult::pc_turn_user_error;
+        }
+        if (action == "next_page")
+        {
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                ++page;
+                init = true;
+                continue;
+            }
+        }
+        if (action == "previous_page")
+        {
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                --page;
+                init = true;
+                continue;
+            }
+        }
+        if (action == "cancel")
+        {
+            update_screen();
+            return TurnResult::pc_turn_user_error;
         }
     }
-    if (action == "cancel")
-    {
-        update_screen();
-        return TurnResult::pc_turn_user_error;
-    }
-    goto label_1953_internal;
 }
+
+
 
 TurnResult do_dip_command()
 {
