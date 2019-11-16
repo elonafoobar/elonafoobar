@@ -3247,59 +3247,15 @@ bool _magic_638_648()
         if (is_in_fov(cdata[tc]))
         {
             txt(i18n::s.get("core.magic.insult.apply", cdata[cc], cdata[tc]));
-            if (jp)
+            if (cdata[cc].sex == 0)
             {
-                if (cdata[cc].sex == 0)
-                {
-                    txt(u8"「すっこんでろ雑魚め」"s,
-                        u8"「オマエ程度が戦うだと？」"s,
-                        u8"「すぐに殺してやるよ」"s,
-                        u8"「消えろザコめ」"s,
-                        u8"「このかたつむり野郎」"s,
-                        u8"「すぐにミンチにしてやるよ」"s,
-                        Message::color{ColorIndex::cyan});
-                }
-                else if (rnd(2))
-                {
-                    txt(u8"「グシャグシャにしてやるわ」"s,
-                        u8"「地べたを這いずりなさい」"s,
-                        u8"「ウージッムシ♪ウージッムシ♪」"s,
-                        u8"「目障りよ」"s,
-                        u8"「もがけ。苦しめ！」"s,
-                        u8"「その下品な眼をくりぬくの」"s,
-                        Message::color{ColorIndex::cyan});
-                }
-                else
-                {
-                    txt(u8"「このカタツムリが」"s,
-                        u8"「どうしたの？もう終わりなの？」"s,
-                        u8"「潔く、くたばりなさい」"s,
-                        u8"「生まれてきたことを後悔するのね」"s,
-                        u8"「このブタめ」"s,
-                        u8"「すぐにミンチにしてあげる」"s,
-                        Message::color{ColorIndex::cyan});
-                }
+                txt(i18n::s.get("core.magic.insult.man"),
+                    Message::color{ColorIndex::cyan});
             }
             else
             {
-                if (rnd(2))
-                {
-                    txt(u8"\"You suck!\""s,
-                        u8"\"You will die alone.\""s,
-                        u8"\"Bow down before me.\""s,
-                        u8"\"Go jump off a bridge.\""s,
-                        u8"\"Bang your head against the wall!\""s,
-                        u8"\"Why do you sniff under your dog's tail?\""s,
-                        Message::color{ColorIndex::cyan});
-                }
-                else
-                {
-                    txt(u8"\"The world is against you because you are a unsavory decomposing virus.\""s,
-                        u8"\"You are no better than a immoral guzzling bureaucrat.\""s,
-                        u8"\"You are so lowly.\""s,
-                        u8"\"Get off me.\""s,
-                        Message::color{ColorIndex::cyan});
-                }
+                txt(i18n::s.get("core.magic.insult.woman"),
+                    Message::color{ColorIndex::cyan});
             }
         }
     }

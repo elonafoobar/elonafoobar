@@ -265,32 +265,25 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
     switch (chara_id)
     {
     case CharaId::younger_sister:
+    case CharaId::younger_sister_of_mansion:
     {
         std::string text = i18n::s.get_enum("core.ui.onii", cdata.player().sex);
 
         if (talk_type == 100)
         {
-            if (jp)
+            if (const auto msg =
+                    i18n::s.get_optional("core.ui.young_sister.random", text))
             {
-                txt(u8"「" + text + u8"ちゃんー」",
-                    u8"「" + text + u8"ちゃん！」",
-                    u8"「" + text + u8"ちゃ〜ん」",
-                    u8"「" + text + u8"ちゃんっ」",
-                    u8"「" + text + u8"ちゃん？」",
-                    u8"「" + text + u8"〜ちゃん」",
-                    u8"「" + text + u8"ちゃん♪」",
-                    Message::color{ColorIndex::cyan});
+                txt(*msg, Message::color{ColorIndex::cyan});
                 return;
             }
         }
         if (talk_type == 104)
         {
-            if (jp)
+            if (const auto msg =
+                    i18n::s.get_optional("core.ui.young_sister.okaeri", text))
             {
-                txt(u8"「おかえり、" + text + u8"ちゃん！」",
-                    u8"「おかえりなさーい、" + text + u8"ちゃん♪」",
-                    u8"「待ってたよ、" + text + u8"ちゃん」",
-                    Message::color{ColorIndex::cyan});
+                txt(*msg, Message::color{ColorIndex::cyan});
                 return;
             }
         }
@@ -303,33 +296,28 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
 
         if (talk_type == 100)
         {
-            if (jp)
+            if (const auto msg =
+                    i18n::s.get_optional("core.ui.maid.random", text))
             {
-                txt(u8"「" + text + u8"〜」",
-                    text + u8"〜",
-                    u8"「用事はありませんか♪」",
-                    u8"メイドの熱い視線を感じる…",
-                    Message::color{ColorIndex::cyan});
+                txt(*msg, Message::color{ColorIndex::cyan});
                 return;
             }
         }
         if (talk_type == 102)
         {
-            if (jp)
+            if (const auto msg =
+                    i18n::s.get_optional("core.ui.maid.died", text))
             {
-                txt(u8"「ダメぇ！」",
-                    u8"「" + text + u8"ー！」",
-                    Message::color{ColorIndex::cyan});
+                txt(*msg, Message::color{ColorIndex::cyan});
                 return;
             }
         }
         if (talk_type == 104)
         {
-            if (jp)
+            if (const auto msg =
+                    i18n::s.get_optional("core.ui.maid.okaeri", text))
             {
-                txt(u8"「おかえりなさいませ、" + text + u8"〜」",
-                    u8"「おかえりなさいまし〜」",
-                    Message::color{ColorIndex::cyan});
+                txt(*msg, Message::color{ColorIndex::cyan});
                 return;
             }
         }
@@ -341,59 +329,19 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
 
         if (talk_type == 100)
         {
-            if (jp)
+            if (const auto msg =
+                    i18n::s.get_optional("core.ui.cat_sister.random", text))
             {
-                txt(u8"「" + text + u8"ちゃんー」",
-                    u8"「" + text + u8"ちゃん！」",
-                    u8"「" + text + u8"ちゃ〜ん」",
-                    u8"「" + text + u8"ちゃんっ」",
-                    u8"「" + text + u8"ちゃん？」",
-                    u8"「" + text + u8"〜ちゃん」",
-                    u8"「" + text + u8"ちゃん♪」",
-                    Message::color{ColorIndex::cyan});
+                txt(*msg, Message::color{ColorIndex::cyan});
                 return;
             }
         }
         if (talk_type == 104)
         {
-            if (jp)
+            if (const auto msg =
+                    i18n::s.get_optional("core.ui.cat_sister.okaeri", text))
             {
-                txt(u8"「おかえりにゃ、" + text + u8"ちゃん！」",
-                    u8"「おかえりなさいにゃー、" + text + u8"ちゃん♪」",
-                    u8"「待ってたにゃ、" + text + u8"ちゃん」",
-                    Message::color{ColorIndex::cyan});
-                return;
-            }
-        }
-        break;
-    }
-    case CharaId::younger_sister_of_mansion:
-    {
-        std::string text = i18n::s.get_enum("core.ui.onii", cdata.player().sex);
-
-        if (talk_type == 100)
-        {
-            if (jp)
-            {
-                txt(u8"「" + text + u8"ちゃんー」",
-                    u8"「" + text + u8"ちゃん！」",
-                    u8"「" + text + u8"ちゃ〜ん」",
-                    u8"「" + text + u8"ちゃんっ」",
-                    u8"「" + text + u8"ちゃん？」",
-                    u8"「" + text + u8"〜ちゃん」",
-                    u8"「" + text + u8"ちゃん♪」",
-                    Message::color{ColorIndex::cyan});
-                return;
-            }
-        }
-        if (talk_type == 104)
-        {
-            if (jp)
-            {
-                txt(u8"「おかえり、" + text + u8"ちゃん！」",
-                    u8"「おかえりなさーい、" + text + u8"ちゃん♪」",
-                    u8"「待ってたよ、" + text + u8"ちゃん」",
-                    Message::color{ColorIndex::cyan});
+                txt(*msg, Message::color{ColorIndex::cyan});
                 return;
             }
         }

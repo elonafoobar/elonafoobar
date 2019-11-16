@@ -48,11 +48,10 @@ public:
 
 
     template <typename... Args>
-    void txt(Args&&... args)
+    void txt(const std::string& message, Args&&... args)
     {
-        std::vector<std::string> messages;
-        _txt_unpack(messages, args...);
-        _txt_internal(messages);
+        _txt_unpack(args...);
+        _txt_internal(message);
     }
 
 
@@ -122,71 +121,28 @@ private:
 
 
 
-    void _txt_unpack(std::vector<std::string>&)
+    void _txt_unpack()
     {
     }
 
 
 
     template <typename... Args>
-    void
-    _txt_unpack(std::vector<std::string>& messages, only_once, Args&&... args)
+    void _txt_unpack(only_once, Args&&... args)
     {
         show_only_once = true;
 
-        _txt_unpack(messages, std::forward<Args>(args)...);
+        _txt_unpack(std::forward<Args>(args)...);
     }
 
 
 
     template <typename... Args>
-    void _txt_unpack(
-        std::vector<std::string>& messages,
-        color color_,
-        Args&&... args)
+    void _txt_unpack(color color_, Args&&... args)
     {
         txtef(color_);
 
-        _txt_unpack(messages, std::forward<Args>(args)...);
-    }
-
-
-
-    template <typename... Args>
-    void _txt_unpack(
-        std::vector<std::string>& messages,
-        const char* s,
-        Args&&... args)
-    {
-        messages.emplace_back(s);
-
-        _txt_unpack(messages, std::forward<Args>(args)...);
-    }
-
-
-
-    template <typename... Args>
-    void _txt_unpack(
-        std::vector<std::string>& messages,
-        const std::string& s,
-        Args&&... args)
-    {
-        messages.push_back(s);
-
-        _txt_unpack(messages, std::forward<Args>(args)...);
-    }
-
-
-
-    template <typename... Args>
-    void _txt_unpack(
-        std::vector<std::string>& messages,
-        std::string&& s,
-        Args&&... args)
-    {
-        messages.push_back(std::move(s));
-
-        _txt_unpack(messages, std::forward<Args>(args)...);
+        _txt_unpack(std::forward<Args>(args)...);
     }
 
 
@@ -194,15 +150,15 @@ private:
     void _msg_write(std::string& message);
     void _msg_newline();
     void _txt_conv();
-    void _txt_internal(std::vector<std::string> args);
+    void _txt_internal(const std::string& message);
 };
 
 
 
 template <typename... Args>
-void txt(Args&&... args)
+void txt(const std::string& message, Args&&... args)
 {
-    Message::instance().txt(std::forward<Args>(args)...);
+    Message::instance().txt(message, std::forward<Args>(args)...);
 }
 
 } // namespace elona

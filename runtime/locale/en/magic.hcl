@@ -463,6 +463,64 @@ locale {
 
         insult {
             apply = "${name(_1)} insult${s(_1)} ${name(_2)}."
+
+            # In English, there is no difference between man's words and woman's.
+            man = [
+                # They are duplicated to emulate vanilla's behavior.
+                "\"You suck!\"",
+                "\"You suck!\"",
+                "\"You will die alone.\"",
+                "\"You will die alone.\"",
+                "\"Bow down before me.\"",
+                "\"Bow down before me.\"",
+                "\"Go jump off a bridge.\"",
+                "\"Go jump off a bridge.\"",
+                "\"Bang your head against the wall!\"",
+                "\"Bang your head against the wall!\"",
+                "\"Why do you sniff under your dog's tail?\"",
+                "\"Why do you sniff under your dog's tail?\"",
+                "\"The world is against you because you are a unsavory decomposing virus.\"",
+                "\"The world is against you because you are a unsavory decomposing virus.\"",
+                "\"The world is against you because you are a unsavory decomposing virus.\"",
+                "\"You are no better than a immoral guzzling bureaucrat.\"",
+                "\"You are no better than a immoral guzzling bureaucrat.\"",
+                "\"You are no better than a immoral guzzling bureaucrat.\"",
+                "\"You are so lowly.\"",
+                "\"You are so lowly.\"",
+                "\"You are so lowly.\"",
+                "\"Get off me.\"",
+                "\"Get off me.\"",
+                "\"Get off me.\"",
+            ]
+
+            # In English, there is no difference between man's words and woman's.
+            woman = [
+                # They are duplicated to emulate vanilla's behavior.
+                "\"You suck!\"",
+                "\"You suck!\"",
+                "\"You will die alone.\"",
+                "\"You will die alone.\"",
+                "\"Bow down before me.\"",
+                "\"Bow down before me.\"",
+                "\"Go jump off a bridge.\"",
+                "\"Go jump off a bridge.\"",
+                "\"Bang your head against the wall!\"",
+                "\"Bang your head against the wall!\"",
+                "\"Why do you sniff under your dog's tail?\"",
+                "\"Why do you sniff under your dog's tail?\"",
+                "\"The world is against you because you are a unsavory decomposing virus.\"",
+                "\"The world is against you because you are a unsavory decomposing virus.\"",
+                "\"The world is against you because you are a unsavory decomposing virus.\"",
+                "\"You are no better than a immoral guzzling bureaucrat.\"",
+                "\"You are no better than a immoral guzzling bureaucrat.\"",
+                "\"You are no better than a immoral guzzling bureaucrat.\"",
+                "\"You are so lowly.\"",
+                "\"You are so lowly.\"",
+                "\"You are so lowly.\"",
+                "\"Get off me.\"",
+                "\"Get off me.\"",
+                "\"Get off me.\"",
+            ]
         }
 
         gaze = "${name(_1)} gaze${s(_1)} at ${name(_2)}."
