@@ -648,19 +648,17 @@ void init()
 
     lua::lua->get_api_manager().lock();
 
-    /*
     if (g_config.font_filename().empty())
     {
         // If no font is specified in `config.json`, use a pre-defined font
         // depending on each language.
-        g_config.font_filename() = i18n::s.get("core.meta.default_font");
+        g_config.set_font_filename(i18n::s.get("core.meta.default_font"));
         if (jp)
         {
             // TODO: work around
-            g_config.set()("core.font.vertical_offset", -3);
+            elona::vfix = -3;
         }
     }
-     */
 
     initialize_keybindings();
 
