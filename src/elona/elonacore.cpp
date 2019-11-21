@@ -6097,19 +6097,6 @@ int read_textbook()
 
 
 
-void remove_card_and_figures()
-{
-    for (auto&& item : inv.ground())
-    {
-        if (item.id == ItemId::card || item.id == ItemId::figurine)
-        {
-            item.remove();
-        }
-    }
-}
-
-
-
 void clear_existing_quest_list()
 {
     ++game_data.map_regenerate_count;
@@ -6410,13 +6397,13 @@ int efstatusfix(int doomed, int cursed, int none, int blessed)
 
 
 
-void disarm_trap()
+void disarm_trap(Character& chara, int x, int y)
 {
-    cell_featset(movx, movy, 0);
-    if (cdata[cc].god_id == core_god::mani)
+    cell_featset(x, y, 0);
+    if (chara.god_id == core_god::mani)
     {
         txt(i18n::s.get("core.action.move.trap.disarm.dismantle"));
-        for (int cnt = 0, cnt_end = (rnd(3) + 1); cnt < cnt_end; ++cnt)
+        for (int _i = 0, n = rnd(3) + 1; _i < n; ++_i)
         {
             atxspot = 19;
             matgetmain(
@@ -6434,240 +6421,231 @@ void disarm_trap()
 
 
 
-void move_character()
+bool move_character_internal(Character& chara)
 {
-label_21451_internal:
     if (g_config.scroll())
     {
-        if (cc == 0)
+        if (chara.index == 0)
         {
             ui_scroll_screen();
         }
     }
-    cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-        .chara_index_plus_one = 0;
-    cdata[cc].position.x = cdata[cc].next_position.x;
-    cdata[cc].position.y = cdata[cc].next_position.y;
-    cell_data.at(cdata[cc].next_position.x, cdata[cc].next_position.y)
-        .chara_index_plus_one = cc + 1;
-    if (cc == 0)
+
+    cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one = 0;
+    chara.position = chara.next_position;
+    cell_data.at(chara.next_position.x, chara.next_position.y)
+        .chara_index_plus_one = chara.index + 1;
+
+    if (chara.index == 0 && game_data.mount != 0)
     {
-        if (game_data.mount != 0)
+        cdata[game_data.mount].position = cdata.player().position;
+    }
+
+    auto movx = chara.position.x;
+    auto movy = chara.position.y;
+
+    if (cell_data.at(movx, movy).feats == 0)
+        return false;
+
+    cell_featread(movx, movy);
+    if (feat(1) != 14)
+        return false;
+
+    if (feat(2) == 7)
+    {
+        if ((chara.is_floating() && chara.gravity == 0) ||
+            chara.is_immune_to_mine())
         {
-            cdata[game_data.mount].position.x = cdata.player().position.x;
-            cdata[game_data.mount].position.y = cdata.player().position.y;
+            return false;
         }
     }
-    movx = cdata[cc].position.x;
-    movy = cdata[cc].position.y;
-    if (cell_data.at(movx, movy).feats != 0)
+    if (feat(0) != tile_trap && chara.index == 0)
     {
-        cell_featread(movx, movy);
-        if (feat(1) == 14)
+        if (try_to_reveal())
         {
-            if (feat(2) == 7)
+            refx = movx;
+            refy = movy;
+            discover_trap();
+            feat(0) = tile_trap;
+        }
+    }
+    refdiff = 100 + game_data.current_dungeon_level * 3;
+    if (feat(0) == tile_trap)
+    {
+        refdiff = refdiff / 3;
+        if (chara.index == 0)
+        {
+            if (sdata(175, chara.index) != 0)
             {
-                if ((cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0) ||
-                    cdata[cc].is_immune_to_mine() == 1)
+                if (try_to_disarm_trap())
                 {
-                    return;
+                    disarm_trap(chara, movx, movy);
+                    return false;
+                }
+                else
+                {
+                    txt(i18n::s.get("core.action.move.trap.disarm.fail"));
                 }
             }
-            if (feat(0) != tile_trap && cc == 0)
+        }
+    }
+
+    if (can_evade_trap())
+    {
+        if (is_in_fov(chara))
+        {
+            txt(i18n::s.get("core.action.move.trap.evade", chara));
+        }
+        if (chara.index == 0)
+        {
+            refx = movx;
+            refy = movy;
+            discover_trap();
+        }
+    }
+    else
+    {
+        if (chara.index == 0)
+        {
+            refx = movx;
+            refy = movy;
+            discover_trap();
+            snd("core.trap1");
+        }
+        efsource = 5;
+        if (is_in_fov(chara))
+        {
+            txt(i18n::s.get("core.action.move.trap.activate.text", chara));
+        }
+
+        if (feat(2) == 0)
+        {
+            if (is_in_fov(chara))
             {
-                int stat = try_to_reveal();
-                if (stat == 1)
-                {
-                    refx = movx;
-                    refy = movy;
-                    discover_trap();
-                    feat(0) = tile_trap;
-                }
+                txt(i18n::s.get("core.action.move.trap.activate.spears.text"));
             }
-            refdiff = 100 + game_data.current_dungeon_level * 3;
-            if (feat(0) == tile_trap)
+            if (chara.is_floating() && chara.gravity == 0)
             {
-                refdiff = refdiff / 3;
-                if (cc == 0)
+                if (is_in_fov(chara))
                 {
-                    if (sdata(175, cc) != 0)
-                    {
-                        int stat = try_to_disarm_trap();
-                        if (stat == 1)
-                        {
-                            disarm_trap();
-                            return;
-                        }
-                        else
-                        {
-                            txt(i18n::s.get(
-                                "core.action.move.trap.disarm.fail"));
-                        }
-                    }
-                }
-            }
-            int stat = can_evade_trap();
-            if (stat == 1)
-            {
-                if (is_in_fov(cdata[cc]))
-                {
-                    txt(i18n::s.get("core.action.move.trap.evade", cdata[cc]));
-                }
-                if (cc == 0)
-                {
-                    refx = movx;
-                    refy = movy;
-                    discover_trap();
+                    txt(i18n::s.get(
+                        "core.action.move.trap.activate.spears.target_floating",
+                        chara));
                 }
             }
             else
             {
-                if (cc == 0)
-                {
-                    refx = movx;
-                    refy = movy;
-                    discover_trap();
-                    snd("core.trap1");
-                }
-                efsource = 5;
-                if (is_in_fov(cdata[cc]))
-                {
-                    txt(i18n::s.get(
-                        "core.action.move.trap.activate.text", cdata[cc]));
-                }
-                if (feat(2) == 4)
-                {
-                    if (is_in_fov(cdata[cc]))
-                    {
-                        txt(i18n::s.get(
-                            "core.action.move.trap.activate.blind"));
-                    }
-                    status_ailment_damage(
-                        cdata[cc],
-                        StatusAilment::blinded,
-                        100 + game_data.current_dungeon_level * 2);
-                }
-                if (feat(2) == 6)
-                {
-                    if (is_in_fov(cdata[cc]))
-                    {
-                        txt(i18n::s.get(
-                            "core.action.move.trap.activate.paralyze"));
-                    }
-                    status_ailment_damage(
-                        cdata[cc],
-                        StatusAilment::paralyzed,
-                        100 + game_data.current_dungeon_level * 2);
-                }
-                if (feat(2) == 5)
-                {
-                    if (is_in_fov(cdata[cc]))
-                    {
-                        txt(i18n::s.get(
-                            "core.action.move.trap.activate.confuse"));
-                    }
-                    status_ailment_damage(
-                        cdata[cc],
-                        StatusAilment::confused,
-                        100 + game_data.current_dungeon_level * 2);
-                }
-                if (feat(2) == 3)
-                {
-                    cell_featset(movx, movy, 0);
-                    if (enchantment_find(cdata[cc], 22))
-                    {
-                        if (is_in_fov(cdata[cc]))
-                        {
-                            txt(i18n::s.get("core.magic.teleport.prevented"));
-                        }
-                        return;
-                    }
-                    for (int cnt = 0; cnt < 200; ++cnt)
-                    {
-                        cdata[cc].next_position.x = rnd(map_data.width - 2) + 1;
-                        cdata[cc].next_position.y =
-                            rnd(map_data.height - 2) + 1;
-                        cell_check(
-                            cdata[cc].next_position.x,
-                            cdata[cc].next_position.y);
-                        if (cellaccess == 1)
-                        {
-                            if (is_in_fov(cdata[cc]))
-                            {
-                                snd("core.teleport1");
-                                txt(i18n::s.get(
-                                    "core.magic.teleport.disappears",
-                                    cdata[cc]));
-                            }
-                            cdata[cc].activity.finish();
-                            update_screen();
-                            break;
-                        }
-                    }
-                    goto label_21451_internal;
-                }
-                if (feat(2) == 0)
-                {
-                    if (is_in_fov(cdata[cc]))
-                    {
-                        txt(i18n::s.get(
-                            "core.action.move.trap.activate.spears.text"));
-                    }
-                    if (cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0)
-                    {
-                        if (is_in_fov(cdata[cc]))
-                        {
-                            txt(i18n::s.get(
-                                "core.action.move.trap.activate.spears.target_floating",
-                                cdata[cc]));
-                        }
-                    }
-                    else
-                    {
-                        damage_hp(
-                            cdata[cc],
-                            rnd(game_data.current_dungeon_level * 2 + 10),
-                            -1);
-                    }
-                }
-                if (feat(2) == 1)
-                {
-                    if (is_in_fov(cdata[cc]))
-                    {
-                        txt(i18n::s.get(
-                            "core.action.move.trap.activate.poison"));
-                    }
-                    status_ailment_damage(
-                        cdata[cc],
-                        StatusAilment::poisoned,
-                        100 + game_data.current_dungeon_level * 2);
-                }
-                if (feat(2) == 2)
-                {
-                    if (is_in_fov(cdata[cc]))
-                    {
-                        txt(i18n::s.get(
-                            "core.action.move.trap.activate.sleep"));
-                    }
-                    status_ailment_damage(
-                        cdata[cc],
-                        StatusAilment::sleep,
-                        100 + game_data.current_dungeon_level * 2);
-                }
-                if (feat(2) == 7)
-                {
-                    txt(i18n::s.get("core.action.move.trap.activate.mine"),
-                        Message::color{ColorIndex::cyan});
-                    BallAnimation(
-                        {movx, movy}, 0, BallAnimation::Type::ball, ele)
-                        .play();
-                    cell_featset(movx, movy, 0);
-                    damage_hp(cdata[cc], 100 + rnd(200), -1);
-                }
-                efsource = 0;
+                damage_hp(
+                    chara, rnd(game_data.current_dungeon_level * 2 + 10), -1);
             }
         }
+        if (feat(2) == 1)
+        {
+            if (is_in_fov(chara))
+            {
+                txt(i18n::s.get("core.action.move.trap.activate.poison"));
+            }
+            status_ailment_damage(
+                chara,
+                StatusAilment::poisoned,
+                100 + game_data.current_dungeon_level * 2);
+        }
+        if (feat(2) == 2)
+        {
+            if (is_in_fov(chara))
+            {
+                txt(i18n::s.get("core.action.move.trap.activate.sleep"));
+            }
+            status_ailment_damage(
+                chara,
+                StatusAilment::sleep,
+                100 + game_data.current_dungeon_level * 2);
+        }
+        if (feat(2) == 3)
+        {
+            cell_featset(movx, movy, 0);
+            if (enchantment_find(chara, 22))
+            {
+                if (is_in_fov(chara))
+                {
+                    txt(i18n::s.get("core.magic.teleport.prevented"));
+                }
+                return false;
+            }
+            for (int _i = 0; _i < 200; ++_i)
+            {
+                chara.next_position.x = rnd(map_data.width - 2) + 1;
+                chara.next_position.y = rnd(map_data.height - 2) + 1;
+                cell_check(chara.next_position.x, chara.next_position.y);
+                if (cellaccess == 1)
+                {
+                    if (is_in_fov(chara))
+                    {
+                        snd("core.teleport1");
+                        txt(i18n::s.get(
+                            "core.magic.teleport.disappears", chara));
+                    }
+                    chara.activity.finish();
+                    update_screen();
+                    break;
+                }
+            }
+            return true;
+        }
+        if (feat(2) == 4)
+        {
+            if (is_in_fov(chara))
+            {
+                txt(i18n::s.get("core.action.move.trap.activate.blind"));
+            }
+            status_ailment_damage(
+                chara,
+                StatusAilment::blinded,
+                100 + game_data.current_dungeon_level * 2);
+        }
+        if (feat(2) == 5)
+        {
+            if (is_in_fov(chara))
+            {
+                txt(i18n::s.get("core.action.move.trap.activate.confuse"));
+            }
+            status_ailment_damage(
+                chara,
+                StatusAilment::confused,
+                100 + game_data.current_dungeon_level * 2);
+        }
+        if (feat(2) == 6)
+        {
+            if (is_in_fov(chara))
+            {
+                txt(i18n::s.get("core.action.move.trap.activate.paralyze"));
+            }
+            status_ailment_damage(
+                chara,
+                StatusAilment::paralyzed,
+                100 + game_data.current_dungeon_level * 2);
+        }
+        if (feat(2) == 7)
+        {
+            txt(i18n::s.get("core.action.move.trap.activate.mine"),
+                Message::color{ColorIndex::cyan});
+            BallAnimation({movx, movy}, 0, BallAnimation::Type::ball, ele)
+                .play();
+            cell_featset(movx, movy, 0);
+            damage_hp(chara, 100 + rnd(200), -1);
+        }
+        efsource = 0;
     }
+
+    return false;
+}
+
+
+
+void move_character()
+{
+    while (move_character_internal(cdata[cc]))
+        ;
 }
 
 
@@ -7799,58 +7777,62 @@ int read_scroll()
 
 
 
-int do_zap()
+bool do_zap_internal(Character& doer, Item& rod)
 {
-    if (inv[ci].count <= 0)
+    if (rod.count <= 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(doer))
         {
-            txt(i18n::s.get("core.action.zap.execute", inv[ci]));
+            txt(i18n::s.get("core.action.zap.execute", rod));
             txt(i18n::s.get("core.common.nothing_happens"));
         }
-        return 0;
+        return false;
     }
-    efstatus = inv[ci].curse_state;
+
+    efstatus = rod.curse_state;
     if (efstatus == CurseState::blessed)
     {
         efstatus = CurseState::none;
     }
     efsource = 1;
+
     int stat = prompt_magic_location();
     if (stat == 0)
     {
         efsource = 0;
-        return 0;
+        return false;
     }
     if (efid >= 400 && efid < 467)
     {
-        if ((stat == 0 && the_ability_db[efid]->range / 1000 * 1000 == 2000) ||
-            noeffect == 1)
+        if (noeffect == 1)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(doer))
             {
-                txt(i18n::s.get("core.action.zap.execute", inv[ci]));
+                txt(i18n::s.get("core.action.zap.execute", rod));
                 txt(i18n::s.get("core.common.nothing_happens"));
             }
-            goto label_2173_internal;
+            return true;
         }
     }
-    if (is_in_fov(cdata[cc]))
+
+    if (is_in_fov(doer))
     {
-        txt(i18n::s.get("core.action.zap.execute", inv[ci]));
+        txt(i18n::s.get("core.action.zap.execute", rod));
     }
+
     efp = efp *
-        (100 + sdata(174, cc) * 10 + sdata(16, cc) / 2 + sdata(13, cc) / 2) /
+        (100 + sdata(174, doer.index) * 10 + sdata(16, doer.index) / 2 +
+         sdata(13, doer.index) / 2) /
         100;
     if (efid >= 400 && efid < 467)
     {
         f = 0;
-        int skill = sdata(174, cc) * 20 + 100;
-        if (inv[ci].curse_state == CurseState::blessed)
+        int skill = sdata(174, doer.index) * 20 + 100;
+        if (rod.curse_state == CurseState::blessed)
         {
             skill = skill * 125 / 100;
         }
-        if (is_cursed(inv[ci].curse_state))
+        if (is_cursed(rod.curse_state))
         {
             skill = skill * 50 / 100;
         }
@@ -7867,27 +7849,40 @@ int do_zap()
     {
         f = 1;
     }
+
     if (rnd(30) == 0)
     {
         f = 0;
     }
-    if (f == 1 || inv[ci].id == ItemId::rod_of_wishing || cc != 0)
+
+    if (f == 1 || rod.id == ItemId::rod_of_wishing || doer.index != 0)
     {
         magic();
-        if (cc == 0)
+        if (doer.index == 0)
         {
             if (obvious == 1)
             {
-                item_identify(inv[ci], IdentifyState::partly);
+                item_identify(rod, IdentifyState::partly);
             }
         }
-        chara_gain_exp_magic_device(cdata[cc]);
+        chara_gain_exp_magic_device(doer);
     }
-    else if (is_in_fov(cdata[cc]))
+    else if (is_in_fov(doer))
     {
-        txt(i18n::s.get("core.action.zap.fail", cdata[cc]));
+        txt(i18n::s.get("core.action.zap.fail", doer));
     }
-label_2173_internal:
+
+    return true;
+}
+
+
+
+int do_zap()
+{
+    const auto zapped = do_zap_internal(cdata[cc], inv[ci]);
+    if (!zapped)
+        return 0;
+
     efsource = 0;
     if (inv[ci].number() == 0)
     {
@@ -10126,24 +10121,23 @@ void try_to_melee_attack()
 
 
 
-void do_physical_attack()
+bool do_physical_attack_internal()
 {
     int attackdmg;
-    int expmodifer = 0;
-label_22191_internal:
+
     if (cdata[cc].state() != Character::State::alive)
     {
-        return;
+        return false;
     }
     if (cdata[tc].state() != Character::State::alive)
     {
-        return;
+        return false;
     }
     if (cdata[cc].fear != 0)
     {
         txt(i18n::s.get("core.damage.is_frightened", cdata[cc]),
             Message::only_once{true});
-        return;
+        return false;
     }
     if (cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
             .mef_index_plus_one != 0)
@@ -10151,7 +10145,7 @@ label_22191_internal:
         bool return_now = mef_proc_from_physical_attack(tc);
         if (return_now)
         {
-            return;
+            return false;
         }
     }
     if (attackrange == 1)
@@ -10165,11 +10159,9 @@ label_22191_internal:
             inv[cw].image / 1000)
             .play();
     }
-    if (attacknum > 1 || cc != 0)
-    {
-    }
-    expmodifer = 1 + cdata[tc].is_hung_on_sand_bag() * 15 + cdata[tc].splits() +
-        cdata[tc].splits2() +
+
+    const auto expmodifer = 1 + cdata[tc].is_hung_on_sand_bag() * 15 +
+        cdata[tc].splits() + cdata[tc].splits2() +
         (game_data.current_map == mdata_t::MapId::show_house);
     int hit = calcattackhit();
     i = 0;
@@ -10574,15 +10566,25 @@ label_22191_internal:
             {
                 ammoproc = -1;
                 ++extraattack;
-                goto label_22191_internal;
+                return true;
             }
         }
         else if (rnd(100) < cdata[cc].extra_attack)
         {
             ++extraattack;
-            goto label_22191_internal;
+            return true;
         }
     }
+
+    return false;
+}
+
+
+
+void do_physical_attack()
+{
+    while (do_physical_attack_internal())
+        ;
 }
 
 
@@ -11278,9 +11280,6 @@ int new_ally_joins()
 
 void do_play_scene()
 {
-    int scidx = 0;
-    int scidxtop = 0;
-    int val0{};
     if (game_data.played_scene < sceneid)
     {
         game_data.played_scene = sceneid;
@@ -11289,6 +11288,11 @@ void do_play_scene()
     {
         return;
     }
+
+    int scidx = 0;
+    int scidxtop = 0;
+    int val0{};
+
     scene_cut = 0;
     scenemode = 1;
     SDIM4(actor, 20, 3, 10);
@@ -11314,212 +11318,223 @@ void do_play_scene()
         scene_fade_to_black();
         return;
     }
+
     scidx += s(0).size();
-label_2681:
-    const auto input = stick(StickKey::escape);
-    if (input == StickKey::escape)
+
+    bool init = true;
+    while (true)
     {
-        scene_cut = 1;
-    }
-    if (scene_cut == 1)
-    {
-        scene_fade_to_black();
-        return;
-    }
-    notesel(buff);
-    {
-        buff(0).clear();
-        std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "scene.hsp").native(),
-            std::ios::binary};
-        std::string tmp;
-        while (std::getline(in, tmp))
+        if (init)
         {
-            buff(0) += tmp + '\n';
+            init = false;
+            const auto input = stick(StickKey::escape);
+            if (input == StickKey::escape)
+            {
+                scene_cut = 1;
+            }
+            if (scene_cut == 1)
+            {
+                scene_fade_to_black();
+                return;
+            }
+            notesel(buff);
+            {
+                buff(0).clear();
+                std::ifstream in{
+                    (i18n::s.get_locale_dir("core") / "lazy" / "scene.hsp")
+                        .native(),
+                    std::ios::binary};
+                std::string tmp;
+                while (std::getline(in, tmp))
+                {
+                    buff(0) += tmp + '\n';
+                }
+            }
+            cs = 0;
+            key_list = key_enter;
+            scidxtop = scidx;
+            scidxtop = 0;
+            val0 = 0;
         }
-    }
-    cs = 0;
-    key_list = key_enter;
-    scidxtop = scidx;
-    scidxtop = 0;
-    val0 = 0;
-label_2682_internal:
-    p(1) = instr(buff, scidx, u8"{"s) + scidx;
-    if (p(1) == -1)
-    {
-        scene_fade_to_black();
-        return;
-    }
-    p(2) = instr(buff, scidx, u8"}"s) + scidx + 1;
-    if (p(2) == -1)
-    {
-        scene_fade_to_black();
-        return;
-    }
-    if (scidxtop != 0)
-    {
-        scidx = p(1);
-        goto label_2684_internal;
-        return;
-    }
-    s = strmid(buff, p(1), p(2) - p(1));
-    scidx = p(2) + 1;
-    if (s == u8"{txt}"s)
-    {
-        scidxtop = scidx;
-        val0 = 0;
-        goto label_2682_internal;
-    }
-    if (strutil::contains(s(0), u8"{chat_"))
-    {
-        rc = elona::stoi(strmid(s, 6, 1));
-        scidxtop = scidx;
-        val0 = 1;
-        goto label_2682_internal;
-    }
-    if (s == u8"{fade}"s)
-    {
-        gsel(4);
-        boxf(0, 0, windoww, windowh, {0, 0, 0, 255});
-        gsel(0);
-        animation_fade_in();
-        goto label_2682_internal;
-    }
-    if (s == u8"{fadein}"s)
-    {
-        for (int cnt = 0; cnt < 25; ++cnt)
+
+        p(1) = instr(buff, scidx, u8"{"s) + scidx;
+        if (p(1) == -1)
         {
-            redraw();
-            gmode(2, cnt * 15);
+            scene_fade_to_black();
+            return;
+        }
+        p(2) = instr(buff, scidx, u8"}"s) + scidx + 1;
+        if (p(2) == -1)
+        {
+            scene_fade_to_black();
+            return;
+        }
+
+        if (scidxtop != 0)
+        {
+            scidx = p(1);
+            buff = strmid(buff, scidxtop, scidx - scidxtop);
+            p = noteinfo();
+            for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
+            {
+                noteget(s, p - cnt - 1);
+                if (s == ""s)
+                {
+                    notedel(p - cnt - 1);
+                }
+            }
+            gmode(0);
+            asset_load(file);
+            draw(file, 0, y1, windoww, y2 - y1);
+            gmode(2);
+            boxf(0, 0, windoww, y1, {5, 5, 5});
+            boxf(0, y2, windoww, windowh - y2, {5, 5, 5});
+            if (val0 == 1)
+            {
+                gsel(0);
+                gmode(0);
+                gcopy(4, 0, 0, windoww, windowh, 0, 0);
+                gmode(2);
+                tc = 0;
+                talk_to_npc();
+                init = true;
+                continue;
+            }
+            if (val0 == 2)
+            {
+                gsel(0);
+                gmode(0);
+                gcopy(4, 0, 0, windoww, windowh, 0, 0);
+                gmode(2);
+                redraw();
+                await(1000);
+                init = true;
+                continue;
+            }
+            font(16 - en * 2);
+            x = 44;
+            for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
+            {
+                y = y1 + 31 + (9 - noteinfo() / 2 + cnt) * 20;
+                noteget(s, cnt);
+                x = windoww / 2 - s(0).size() * 4;
+                dx = 80 + strlen_u(s(0)) * 8;
+                if (dx < 180)
+                {
+                    dx = 0;
+                }
+                gmode(2, 95);
+                draw_centered("scene_title", windoww / 2, y + 4, dx, 72);
+            }
+            x = 40;
+            for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
+            {
+                y = y1 + 28 + (9 - noteinfo() / 2 + cnt) * 20;
+                noteget(s, cnt);
+                x = windoww / 2 - strlen_u(s(0)) * 4;
+                gmode(2);
+                bmes(s, x, y, {240, 240, 240}, {10, 10, 10});
+            }
+            gsel(0);
+            for (int cnt = 1; cnt < 16; ++cnt)
+            {
+                await(30);
+                const auto input = stick(StickKey::escape);
+                if (input == StickKey::escape)
+                {
+                    scene_cut = 1;
+                }
+                gmode(2, cnt * 16);
+                gcopy(4, 0, 0, windoww, windowh, 0, 0);
+                redraw();
+            }
+            gmode(2);
+            gmode(0);
             gcopy(4, 0, 0, windoww, windowh, 0, 0);
             gmode(2);
-            await(10);
+            anime_halt(windoww - 120, windowh - 60);
+            boxf(0, 0, windoww, y1, {5, 5, 5});
+            boxf(0, y2, windoww, windowh - y2, {5, 5, 5});
+            init = true;
+            continue;
         }
-        goto label_2682_internal;
-    }
-    if (s == u8"{wait}"s)
-    {
-        scidxtop = scidx;
-        val0 = 2;
-        goto label_2682_internal;
-    }
-    if (s == u8"{end}"s)
-    {
-        await(1000);
-        scene_fade_to_black();
-        return;
-    }
-    p(3) = instr(buff, scidx, u8"\""s) + scidx + 1;
-    p(4) = instr(buff, p(3), u8"\""s) + p(3);
-    s(1) = strmid(buff, p(3), p(4) - p(3));
-    scidx = p(4) + 1;
-    if (s == u8"{pic}"s)
-    {
-        file = s(1);
-        goto label_2682_internal;
-    }
-    if (s == u8"{mc}"s)
-    {
-        SharedId music_id(s(1));
-        play_music(music_id);
-        goto label_2682_internal;
-    }
-    if (s == u8"{se}"s)
-    {
-        SharedId sound_id(s(1));
-        snd(sound_id);
-        goto label_2682_internal;
-    }
-    if (strutil::contains(s(0), u8"{actor_"))
-    {
-        rc = elona::stoi(strmid(s, 7, 1));
-        csvsort(s, s(1), 44);
-        actor(0, rc) = s;
-        actor(1, rc) = s(1);
-    }
-    goto label_2682_internal;
-label_2684_internal:
-    buff = strmid(buff, scidxtop, scidx - scidxtop);
-    p = noteinfo();
-    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
-    {
-        noteget(s, p - cnt - 1);
-        if (s == ""s)
+
+        s = strmid(buff, p(1), p(2) - p(1));
+        scidx = p(2) + 1;
+        if (s == u8"{txt}"s)
         {
-            notedel(p - cnt - 1);
+            scidxtop = scidx;
+            val0 = 0;
+            continue;
         }
-    }
-    gmode(0);
-    asset_load(file);
-    draw(file, 0, y1, windoww, y2 - y1);
-    gmode(2);
-    boxf(0, 0, windoww, y1, {5, 5, 5});
-    boxf(0, y2, windoww, windowh - y2, {5, 5, 5});
-    if (val0 == 1)
-    {
-        gsel(0);
-        gmode(0);
-        gcopy(4, 0, 0, windoww, windowh, 0, 0);
-        gmode(2);
-        tc = 0;
-        talk_to_npc();
-        goto label_2681;
-    }
-    if (val0 == 2)
-    {
-        gsel(0);
-        gmode(0);
-        gcopy(4, 0, 0, windoww, windowh, 0, 0);
-        gmode(2);
-        redraw();
-        await(1000);
-        goto label_2681;
-    }
-    font(16 - en * 2);
-    x = 44;
-    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
-    {
-        y = y1 + 31 + (9 - noteinfo() / 2 + cnt) * 20;
-        noteget(s, cnt);
-        x = windoww / 2 - s(0).size() * 4;
-        dx = 80 + strlen_u(s(0)) * 8;
-        if (dx < 180)
+        if (strutil::contains(s(0), u8"{chat_"))
         {
-            dx = 0;
+            rc = elona::stoi(strmid(s, 6, 1));
+            scidxtop = scidx;
+            val0 = 1;
+            continue;
         }
-        gmode(2, 95);
-        draw_centered("scene_title", windoww / 2, y + 4, dx, 72);
-    }
-    x = 40;
-    for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
-    {
-        y = y1 + 28 + (9 - noteinfo() / 2 + cnt) * 20;
-        noteget(s, cnt);
-        x = windoww / 2 - strlen_u(s(0)) * 4;
-        gmode(2);
-        bmes(s, x, y, {240, 240, 240}, {10, 10, 10});
-    }
-    gsel(0);
-    for (int cnt = 1; cnt < 16; ++cnt)
-    {
-        await(30);
-        const auto input = stick(StickKey::escape);
-        if (input == StickKey::escape)
+        if (s == u8"{fade}"s)
         {
-            scene_cut = 1;
+            gsel(4);
+            boxf(0, 0, windoww, windowh, {0, 0, 0, 255});
+            gsel(0);
+            animation_fade_in();
+            continue;
         }
-        gmode(2, cnt * 16);
-        gcopy(4, 0, 0, windoww, windowh, 0, 0);
-        redraw();
+        if (s == u8"{fadein}"s)
+        {
+            for (int cnt = 0; cnt < 25; ++cnt)
+            {
+                redraw();
+                gmode(2, cnt * 15);
+                gcopy(4, 0, 0, windoww, windowh, 0, 0);
+                gmode(2);
+                await(10);
+            }
+            continue;
+        }
+        if (s == u8"{wait}"s)
+        {
+            scidxtop = scidx;
+            val0 = 2;
+            continue;
+        }
+        if (s == u8"{end}"s)
+        {
+            await(1000);
+            scene_fade_to_black();
+            return;
+        }
+        p(3) = instr(buff, scidx, u8"\""s) + scidx + 1;
+        p(4) = instr(buff, p(3), u8"\""s) + p(3);
+        s(1) = strmid(buff, p(3), p(4) - p(3));
+        scidx = p(4) + 1;
+        if (s == u8"{pic}"s)
+        {
+            file = s(1);
+            continue;
+        }
+        if (s == u8"{mc}"s)
+        {
+            SharedId music_id(s(1));
+            play_music(music_id);
+            continue;
+        }
+        if (s == u8"{se}"s)
+        {
+            SharedId sound_id(s(1));
+            snd(sound_id);
+            continue;
+        }
+        if (strutil::contains(s(0), u8"{actor_"))
+        {
+            rc = elona::stoi(strmid(s, 7, 1));
+            csvsort(s, s(1), 44);
+            actor(0, rc) = s;
+            actor(1, rc) = s(1);
+        }
     }
-    gmode(2);
-    gmode(0);
-    gcopy(4, 0, 0, windoww, windowh, 0, 0);
-    gmode(2);
-    anime_halt(windoww - 120, windowh - 60);
-    boxf(0, 0, windoww, y1, {5, 5, 5});
-    boxf(0, y2, windoww, windowh - y2, {5, 5, 5});
-    goto label_2681;
 }
 
 

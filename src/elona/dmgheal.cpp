@@ -396,11 +396,6 @@ int damage_hp(
         {
             spillblood(victim.position.x, victim.position.y, 1 + rnd(2));
         }
-        if (game_data.proc_damage_events_flag == 1)
-        {
-            txteledmg(0, attacker_is_player ? 0 : -1, victim.index, element);
-            goto label_1369_internal;
-        }
         if (damage_level > 0)
         {
             if (victim.max_hp / 2 > victim.hp)
@@ -416,7 +411,11 @@ int damage_hp(
                 }
             }
         }
-        if (game_data.proc_damage_events_flag == 2)
+        if (game_data.proc_damage_events_flag == 1)
+        {
+            txteledmg(0, attacker_is_player ? 0 : -1, victim.index, element);
+        }
+        else if (game_data.proc_damage_events_flag == 2)
         {
             Message::instance().continue_sentence();
             if (damage_level == -1)
@@ -457,47 +456,49 @@ int damage_hp(
                     Message::color{ColorIndex::red});
             }
             rowact_check(victim.index);
-            goto label_1369_internal;
         }
-        if (damage_level == 1)
+        else
         {
-            if (is_in_fov(victim))
+            if (damage_level == 1)
             {
-                txt(i18n::s.get("core.damage.reactions.screams", victim),
-                    Message::color{ColorIndex::gold});
+                if (is_in_fov(victim))
+                {
+                    txt(i18n::s.get("core.damage.reactions.screams", victim),
+                        Message::color{ColorIndex::gold});
+                }
+            }
+            if (damage_level == 2)
+            {
+                if (is_in_fov(victim))
+                {
+                    txt(i18n::s.get(
+                            "core.damage.reactions.writhes_in_pain", victim),
+                        Message::color{ColorIndex::light_red});
+                }
+            }
+            if (damage_level >= 3)
+            {
+                if (is_in_fov(victim))
+                {
+                    txt(i18n::s.get(
+                            "core.damage.reactions.is_severely_hurt", victim),
+                        Message::color{ColorIndex::red});
+                }
+            }
+            if (dmg_at_m141 < 0)
+            {
+                if (victim.hp > victim.max_hp)
+                {
+                    victim.hp = victim.max_hp;
+                }
+                if (is_in_fov(victim))
+                {
+                    txt(i18n::s.get("core.damage.is_healed", victim),
+                        Message::color{ColorIndex::blue});
+                }
             }
         }
-        if (damage_level == 2)
-        {
-            if (is_in_fov(victim))
-            {
-                txt(i18n::s.get(
-                        "core.damage.reactions.writhes_in_pain", victim),
-                    Message::color{ColorIndex::light_red});
-            }
-        }
-        if (damage_level >= 3)
-        {
-            if (is_in_fov(victim))
-            {
-                txt(i18n::s.get(
-                        "core.damage.reactions.is_severely_hurt", victim),
-                    Message::color{ColorIndex::red});
-            }
-        }
-        if (dmg_at_m141 < 0)
-        {
-            if (victim.hp > victim.max_hp)
-            {
-                victim.hp = victim.max_hp;
-            }
-            if (is_in_fov(victim))
-            {
-                txt(i18n::s.get("core.damage.is_healed", victim),
-                    Message::color{ColorIndex::blue});
-            }
-        }
-    label_1369_internal:
+
         rowact_check(victim.index);
         if (victim.hp < victim.max_hp / 5)
         {

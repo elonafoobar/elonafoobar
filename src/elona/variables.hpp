@@ -16,6 +16,9 @@
 namespace elona
 {
 
+struct Character;
+
+
 
 ELONA_EXTERN(elona_vector1<int> ap);
 ELONA_EXTERN(int nooracle);
@@ -674,7 +677,6 @@ TurnResult try_to_open_locked_door();
 void build_target_list();
 void equip_melee_weapon();
 void get_inheritance();
-void remove_card_and_figures();
 
 void try_to_melee_attack();
 void do_physical_attack();
@@ -688,7 +690,7 @@ void harvest_plant(int);
 void create_harvested_item();
 
 // Searching
-void disarm_trap();
+void disarm_trap(Character& chara, int x, int y);
 void discover_trap();
 void discover_hidden_path();
 

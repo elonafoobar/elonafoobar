@@ -1189,142 +1189,143 @@ std::string itemname(int item_index, int number, int skip_article)
         s_ += i18n::s.get_enum("core.item.gift_rank", inv[item_index].param4) +
             i18n::space_if_needed();
     }
-    if (skip_ == 1)
+    if (skip_ != 1)
     {
-        goto label_0313_internal;
-    }
-    alpha_ = 0;
-    if (inv[item_index].identify_state == IdentifyState::completely &&
-        a_ < 50000)
-    {
-        if (inv[item_index].is_eternal_force())
+        alpha_ = 0;
+        if (inv[item_index].identify_state == IdentifyState::completely &&
+            a_ < 50000)
         {
-            alpha_ = 1;
-            s_ += lang(u8"エターナルフォース"s, u8"eternal force"s) +
-                i18n::space_if_needed();
-        }
-        else
-        {
-            if (inv[item_index].subname >= 10000)
+            if (inv[item_index].is_eternal_force())
             {
-                if (inv[item_index].subname < 20000)
-                {
-                    if (jp)
-                    {
-                        s_ += egoname(inv[item_index].subname - 10000) +
-                            i18n::space_if_needed();
-                    }
-                }
-                else if (inv[item_index].subname < 40000)
-                {
-                    s_ += egominorn(inv[item_index].subname - 20000) +
-                        i18n::space_if_needed();
-                }
-            }
-            if (inv[item_index].quality != Quality::special)
-            {
-                if (inv[item_index].quality >= Quality::miracle)
-                {
-                    s_ += i18n::s.get_m(
-                              "item_material",
-                              the_item_material_db
-                                  .get_id_from_legacy(inv[item_index].material)
-                                  ->get(),
-                              "alias") +
-                        i18n::space_if_needed();
-                }
-                else
-                {
-                    s_ += i18n::s.get_m(
-                              "item_material",
-                              the_item_material_db
-                                  .get_id_from_legacy(inv[item_index].material)
-                                  ->get(),
-                              "name") +
-                        i18n::space_if_needed();
-                    if (jp)
-                    {
-                        if (/* TODO is_katakana */ false)
-                        {
-                            alpha_ = 1;
-                        }
-                        else
-                        {
-                            s_ += u8"の"s;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    if (inv[item_index].identify_state == IdentifyState::unidentified)
-    {
-        s_ += iknownnameref(itemid2int(inv[item_index].id));
-    }
-    else if (inv[item_index].identify_state != IdentifyState::completely)
-    {
-        if (inv[item_index].quality < Quality::miracle || a_ >= 50000)
-        {
-            s_ += ioriginalnameref(itemid2int(inv[item_index].id));
-        }
-        else
-        {
-            s_ += iknownnameref(itemid2int(inv[item_index].id));
-        }
-    }
-    else if (
-        inv[item_index].quality == Quality::special ||
-        inv[item_index].is_precious())
-    {
-        if (jp)
-        {
-            s_ = u8"★"s + s_ + ioriginalnameref(itemid2int(inv[item_index].id));
-        }
-        else
-        {
-            s_ += ioriginalnameref(itemid2int(inv[item_index].id));
-        }
-    }
-    else
-    {
-        if (inv[item_index].quality >= Quality::miracle && jp)
-        {
-            s_ = u8"☆"s + s_;
-        }
-        if (alpha_ == 1 && jp)
-        {
-            s_ += ialphanameref(itemid2int(inv[item_index].id));
-        }
-        else
-        {
-            s_ += ioriginalnameref(itemid2int(inv[item_index].id));
-        }
-        if (en && a_ < 50000 && inv[item_index].subname >= 10000 &&
-            inv[item_index].subname < 20000)
-        {
-            s_ += u8" "s + egoname((inv[item_index].subname - 10000));
-        }
-        if (inv[item_index].subname >= 40000)
-        {
-            randomize(inv[item_index].subname - 40000);
-            if (inv[item_index].quality == Quality::miracle)
-            {
-                s_ += i18n::space_if_needed() +
-                    i18n::s.get(
-                        "core.item.miracle_paren",
-                        random_title(RandomTitleType::weapon));
+                alpha_ = 1;
+                s_ += lang(u8"エターナルフォース"s, u8"eternal force"s) +
+                    i18n::space_if_needed();
             }
             else
             {
-                s_ += i18n::space_if_needed() +
-                    i18n::s.get(
-                        "core.item.godly_paren",
-                        random_title(RandomTitleType::weapon));
+                if (inv[item_index].subname >= 10000)
+                {
+                    if (inv[item_index].subname < 20000)
+                    {
+                        if (jp)
+                        {
+                            s_ += egoname(inv[item_index].subname - 10000) +
+                                i18n::space_if_needed();
+                        }
+                    }
+                    else if (inv[item_index].subname < 40000)
+                    {
+                        s_ += egominorn(inv[item_index].subname - 20000) +
+                            i18n::space_if_needed();
+                    }
+                }
+                if (inv[item_index].quality != Quality::special)
+                {
+                    if (inv[item_index].quality >= Quality::miracle)
+                    {
+                        s_ += i18n::s.get_m(
+                                  "item_material",
+                                  the_item_material_db
+                                      .get_id_from_legacy(
+                                          inv[item_index].material)
+                                      ->get(),
+                                  "alias") +
+                            i18n::space_if_needed();
+                    }
+                    else
+                    {
+                        s_ += i18n::s.get_m(
+                                  "item_material",
+                                  the_item_material_db
+                                      .get_id_from_legacy(
+                                          inv[item_index].material)
+                                      ->get(),
+                                  "name") +
+                            i18n::space_if_needed();
+                        if (jp)
+                        {
+                            if (/* TODO is_katakana */ false)
+                            {
+                                alpha_ = 1;
+                            }
+                            else
+                            {
+                                s_ += u8"の"s;
+                            }
+                        }
+                    }
+                }
             }
-            randomize();
+        }
+        if (inv[item_index].identify_state == IdentifyState::unidentified)
+        {
+            s_ += iknownnameref(itemid2int(inv[item_index].id));
+        }
+        else if (inv[item_index].identify_state != IdentifyState::completely)
+        {
+            if (inv[item_index].quality < Quality::miracle || a_ >= 50000)
+            {
+                s_ += ioriginalnameref(itemid2int(inv[item_index].id));
+            }
+            else
+            {
+                s_ += iknownnameref(itemid2int(inv[item_index].id));
+            }
+        }
+        else if (
+            inv[item_index].quality == Quality::special ||
+            inv[item_index].is_precious())
+        {
+            if (jp)
+            {
+                s_ = u8"★"s + s_ +
+                    ioriginalnameref(itemid2int(inv[item_index].id));
+            }
+            else
+            {
+                s_ += ioriginalnameref(itemid2int(inv[item_index].id));
+            }
+        }
+        else
+        {
+            if (inv[item_index].quality >= Quality::miracle && jp)
+            {
+                s_ = u8"☆"s + s_;
+            }
+            if (alpha_ == 1 && jp)
+            {
+                s_ += ialphanameref(itemid2int(inv[item_index].id));
+            }
+            else
+            {
+                s_ += ioriginalnameref(itemid2int(inv[item_index].id));
+            }
+            if (en && a_ < 50000 && inv[item_index].subname >= 10000 &&
+                inv[item_index].subname < 20000)
+            {
+                s_ += u8" "s + egoname((inv[item_index].subname - 10000));
+            }
+            if (inv[item_index].subname >= 40000)
+            {
+                randomize(inv[item_index].subname - 40000);
+                if (inv[item_index].quality == Quality::miracle)
+                {
+                    s_ += i18n::space_if_needed() +
+                        i18n::s.get(
+                            "core.item.miracle_paren",
+                            random_title(RandomTitleType::weapon));
+                }
+                else
+                {
+                    s_ += i18n::space_if_needed() +
+                        i18n::s.get(
+                            "core.item.godly_paren",
+                            random_title(RandomTitleType::weapon));
+                }
+                randomize();
+            }
         }
     }
-label_0313_internal:
     if (en)
     {
         if (skip_article == 0)

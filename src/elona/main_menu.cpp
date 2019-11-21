@@ -553,24 +553,28 @@ MainMenuResult main_menu_continue()
     }
     listmax = save_data_count;
 
+    bool init = true;
     while (true)
     {
-    savegame_change_page:
-        cs_bk = -1;
-        pagemax = (listmax - 1) / pagesize;
-        if (page < 0)
+        if (init)
         {
-            page = pagemax;
-        }
-        else if (page > pagemax)
-        {
-            page = 0;
+            init = false;
+            cs_bk = -1;
+            pagemax = (listmax - 1) / pagesize;
+            if (page < 0)
+            {
+                page = pagemax;
+            }
+            else if (page > pagemax)
+            {
+                page = 0;
+            }
+
+            clear_background_in_continue();
+            ui_draw_caption(i18n::s.get("core.main_menu.continue.which_save"));
+            windowshadow = 1;
         }
 
-        clear_background_in_continue();
-        ui_draw_caption(i18n::s.get("core.main_menu.continue.which_save"));
-        windowshadow = 1;
-    savegame_draw_page:
         ui_display_window(
             i18n::s.get("core.main_menu.continue.title"),
             i18n::s.get("core.main_menu.continue.key_hint") + strhint2 +
@@ -662,7 +666,8 @@ MainMenuResult main_menu_continue()
             {
                 snd("core.pop1");
                 ++page;
-                goto savegame_change_page;
+                init = true;
+                continue;
             }
         }
         if (action == "previous_page")
@@ -671,14 +676,14 @@ MainMenuResult main_menu_continue()
             {
                 snd("core.pop1");
                 --page;
-                goto savegame_change_page;
+                init = true;
+                continue;
             }
         }
         if (action == "cancel")
         {
             return MainMenuResult::main_title_menu;
         }
-        goto savegame_draw_page;
     }
 }
 
@@ -924,25 +929,29 @@ void main_menu_about_one_changelog(const Release& release)
 
     ui_draw_caption(i18n::s.get("core.main_menu.about_changelog.title"));
 
+    bool init = true;
     while (true)
     {
-    savegame_change_page:
-        gmode(0);
-        gcopy(4, 0, 0, windoww, windowh, 0, 0);
-        gmode(2);
-
-        cs_bk = -1;
-        if (page < 0)
+        if (init)
         {
-            page = pagemax;
-        }
-        else if (page > pagemax)
-        {
-            page = 0;
+            init = false;
+            gmode(0);
+            gcopy(4, 0, 0, windoww, windowh, 0, 0);
+            gmode(2);
+
+            cs_bk = -1;
+            if (page < 0)
+            {
+                page = pagemax;
+            }
+            else if (page > pagemax)
+            {
+                page = 0;
+            }
+
+            windowshadow = 1;
         }
 
-        windowshadow = 1;
-    savegame_draw_page:
         ui_display_window(
             release.title(),
             strhint2 + strhint3b,
@@ -966,7 +975,8 @@ void main_menu_about_one_changelog(const Release& release)
             {
                 snd("core.pop1");
                 ++page;
-                goto savegame_change_page;
+                init = true;
+                continue;
             }
         }
         if (action == "previous_page")
@@ -975,14 +985,14 @@ void main_menu_about_one_changelog(const Release& release)
             {
                 snd("core.pop1");
                 --page;
-                goto savegame_change_page;
+                init = true;
+                continue;
             }
         }
         if (action == "cancel")
         {
             return;
         }
-        goto savegame_draw_page;
     }
 }
 
@@ -1024,26 +1034,30 @@ MainMenuResult main_menu_about_changelogs()
         ++listmax;
     }
 
+    bool init = true;
     while (true)
     {
-    savegame_change_page:
-        gmode(0);
-        gcopy(4, 0, 0, windoww, windowh, 0, 0);
-        gmode(2);
-
-        cs_bk = -1;
-        pagemax = (listmax - 1) / pagesize;
-        if (page < 0)
+        if (init)
         {
-            page = pagemax;
-        }
-        else if (page > pagemax)
-        {
-            page = 0;
+            init = false;
+            gmode(0);
+            gcopy(4, 0, 0, windoww, windowh, 0, 0);
+            gmode(2);
+
+            cs_bk = -1;
+            pagemax = (listmax - 1) / pagesize;
+            if (page < 0)
+            {
+                page = pagemax;
+            }
+            else if (page > pagemax)
+            {
+                page = 0;
+            }
+
+            windowshadow = 1;
         }
 
-        windowshadow = 1;
-    savegame_draw_page:
         ui_display_window(
             "",
             strhint2 + strhint3b,
@@ -1095,7 +1109,8 @@ MainMenuResult main_menu_about_changelogs()
             main_menu_about_one_changelog(changelog.at(p));
             page = page_save;
             pagemax = pagemax_save;
-            goto savegame_change_page;
+            init = true;
+            continue;
         }
         if (action == "next_page")
         {
@@ -1103,7 +1118,8 @@ MainMenuResult main_menu_about_changelogs()
             {
                 snd("core.pop1");
                 ++page;
-                goto savegame_change_page;
+                init = true;
+                continue;
             }
         }
         if (action == "previous_page")
@@ -1112,14 +1128,14 @@ MainMenuResult main_menu_about_changelogs()
             {
                 snd("core.pop1");
                 --page;
-                goto savegame_change_page;
+                init = true;
+                continue;
             }
         }
         if (action == "cancel")
         {
             return MainMenuResult::main_menu_about;
         }
-        goto savegame_draw_page;
     }
 }
 
@@ -1183,25 +1199,29 @@ MainMenuResult main_menu_about_license()
 
     ui_draw_caption(i18n::s.get("core.main_menu.about.license"));
 
+    bool init = true;
     while (true)
     {
-    savegame_change_page:
-        gmode(0);
-        gcopy(4, 0, 0, windoww, windowh, 0, 0);
-        gmode(2);
-
-        cs_bk = -1;
-        if (page < 0)
+        if (init)
         {
-            page = pagemax;
-        }
-        else if (page > pagemax)
-        {
-            page = 0;
+            init = false;
+            gmode(0);
+            gcopy(4, 0, 0, windoww, windowh, 0, 0);
+            gmode(2);
+
+            cs_bk = -1;
+            if (page < 0)
+            {
+                page = pagemax;
+            }
+            else if (page > pagemax)
+            {
+                page = 0;
+            }
+
+            windowshadow = 1;
         }
 
-        windowshadow = 1;
-    savegame_draw_page:
         ui_display_window(
             "",
             strhint2 + strhint3b,
@@ -1225,7 +1245,8 @@ MainMenuResult main_menu_about_license()
             {
                 snd("core.pop1");
                 ++page;
-                goto savegame_change_page;
+                init = true;
+                continue;
             }
         }
         if (action == "previous_page")
@@ -1234,14 +1255,14 @@ MainMenuResult main_menu_about_license()
             {
                 snd("core.pop1");
                 --page;
-                goto savegame_change_page;
+                init = true;
+                continue;
             }
         }
         if (action == "cancel")
         {
             return MainMenuResult::main_menu_about;
         }
-        goto savegame_draw_page;
     }
 }
 
@@ -1305,25 +1326,29 @@ MainMenuResult main_menu_about_credits()
 
     ui_draw_caption(i18n::s.get("core.main_menu.about.credits"));
 
+    bool init = true;
     while (true)
     {
-    savegame_change_page:
-        gmode(0);
-        gcopy(4, 0, 0, windoww, windowh, 0, 0);
-        gmode(2);
-
-        cs_bk = -1;
-        if (page < 0)
+        if (init)
         {
-            page = pagemax;
-        }
-        else if (page > pagemax)
-        {
-            page = 0;
+            init = false;
+            gmode(0);
+            gcopy(4, 0, 0, windoww, windowh, 0, 0);
+            gmode(2);
+
+            cs_bk = -1;
+            if (page < 0)
+            {
+                page = pagemax;
+            }
+            else if (page > pagemax)
+            {
+                page = 0;
+            }
+
+            windowshadow = 1;
         }
 
-        windowshadow = 1;
-    savegame_draw_page:
         ui_display_window(
             "",
             strhint2 + strhint3b,
@@ -1347,7 +1372,8 @@ MainMenuResult main_menu_about_credits()
             {
                 snd("core.pop1");
                 ++page;
-                goto savegame_change_page;
+                init = true;
+                continue;
             }
         }
         if (action == "previous_page")
@@ -1356,14 +1382,14 @@ MainMenuResult main_menu_about_credits()
             {
                 snd("core.pop1");
                 --page;
-                goto savegame_change_page;
+                init = true;
+                continue;
             }
         }
         if (action == "cancel")
         {
             return MainMenuResult::main_menu_about;
         }
-        goto savegame_draw_page;
     }
 }
 

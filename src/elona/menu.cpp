@@ -1373,66 +1373,78 @@ void screen_analyze_self()
     buff += u8"\n"s;
     buff += u8"<title1>◆ 特徴と特殊状態による能力の恩恵<def>\n"s;
     listmax = noteinfo();
-label_1965_internal:
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
+
+    bool init = true;
+    while (true)
     {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-    ui_display_window(
-        i18n::s.get("core.ui.analysis.title"),
-        strhint2 + strhint3b,
-        (windoww - 400) / 2 + inf_screenx,
-        winposy(448),
-        400,
-        448);
-    s = i18n::s.get("core.ui.analysis.result");
-    display_topic(s, wx + 28, wy + 36);
-    font(14 - en * 2);
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
+        if (init)
         {
-            break;
+            init = false;
+
+            cs_bk = -1;
+            pagemax = (listmax - 1) / pagesize;
+            if (page < 0)
+            {
+                page = pagemax;
+            }
+            else if (page > pagemax)
+            {
+                page = 0;
+            }
+            ui_display_window(
+                i18n::s.get("core.ui.analysis.title"),
+                strhint2 + strhint3b,
+                (windoww - 400) / 2 + inf_screenx,
+                winposy(448),
+                400,
+                448);
+            s = i18n::s.get("core.ui.analysis.result");
+            display_topic(s, wx + 28, wy + 36);
+            font(14 - en * 2);
+            for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+            {
+                p = pagesize * page + cnt;
+                if (p >= listmax)
+                {
+                    break;
+                }
+                noteget(s, p);
+                gmes(s, wx, wy + 66 + cnt * 19 + 2, 600, {30, 30, 30}, false);
+            }
+            redraw();
         }
-        noteget(s, p);
-        gmes(s, wx, wy + 66 + cnt * 19 + 2, 600, {30, 30, 30}, false);
-    }
-    redraw();
-label_1966_internal:
-    redraw();
-    auto action = get_selected_item(p(0));
-    p = -1;
-    if (action == "next_page")
-    {
-        if (pagemax != 0)
+
+        redraw();
+        auto action = get_selected_item(p(0));
+        p = -1;
+        if (action == "next_page")
         {
-            snd("core.pop1");
-            ++page;
-            goto label_1965_internal;
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                ++page;
+                init = true;
+                continue;
+            }
         }
-    }
-    if (action == "previous_page")
-    {
-        if (pagemax != 0)
+        if (action == "previous_page")
         {
-            snd("core.pop1");
-            --page;
-            goto label_1965_internal;
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                --page;
+                init = true;
+                continue;
+            }
+        }
+        if (action == "cancel")
+        {
+            return;
         }
     }
-    if (action == "cancel")
-    {
-        return;
-    }
-    goto label_1966_internal;
 }
+
+
 
 int change_npc_tone()
 {
