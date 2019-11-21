@@ -41,6 +41,7 @@ local function process_section_internal(schema, options)
       children_keys[#children_keys+1] = name
    end
 
+   is_hidden = is_hidden or options.is_hidden
    return schema, is_hidden, children_keys
 end
 
