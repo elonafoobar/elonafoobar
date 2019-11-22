@@ -581,8 +581,8 @@ void initialize_game()
         initialize_world();
         create_all_adventurers();
         mode = 2;
-        event_add(2);
         event_add(24);
+        event_add(2);
         sceneid = 0;
         do_play_scene();
     }
