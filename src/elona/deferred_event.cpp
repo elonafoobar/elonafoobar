@@ -71,10 +71,10 @@ struct DeferredEvent
 class DeferredEventQueue
 {
 public:
-    int front() const
+    DeferredEvent& front()
     {
         assert(!_queue.empty());
-        return _queue.front().id;
+        return _queue.front();
     }
 
 
@@ -102,12 +102,9 @@ public:
 
 
 
-    DeferredEvent dequeue()
+    void dequeue()
     {
-        assert(!_queue.empty());
-        auto ret = _queue.front();
         _queue.pop_front();
-        return ret;
     }
 
 
@@ -1191,7 +1188,7 @@ void proc_one_event(const DeferredEvent& event)
 
 int event_processing_event()
 {
-    return g_event_queue.empty() ? -1 : g_event_queue.front();
+    return g_event_queue.empty() ? -1 : g_event_queue.front().id;
 }
 
 
@@ -1219,8 +1216,9 @@ void event_add(int event_type, int param1, int param2)
 
 TurnResult event_start_proc()
 {
-    const auto event = g_event_queue.dequeue();
+    const auto event = g_event_queue.front();
     proc_one_event(event);
+    g_event_queue.dequeue();
 
     if (chatteleport == 1)
     {
