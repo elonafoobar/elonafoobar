@@ -54,7 +54,7 @@ cache:
 before_install:
   - if [[ "$BUILD_TYPE" == "osx" ]]; then
       brew update &&
-      brew upgrade cmake boost &&
+      brew upgrade cmake boost wget &&
       brew install sdl2 sdl2_ttf sdl2_image sdl2_mixer lua openssl;
     fi
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
