@@ -1185,7 +1185,7 @@ TurnResult turn_end()
             {
                 game_data.character_and_status_for_gene += 10000;
                 game_data.activity_about_to_start = 100;
-                activity_others();
+                activity_others(cdata[cc]);
             }
         }
         if (cdata.player().inventory_weight_type >= 3)

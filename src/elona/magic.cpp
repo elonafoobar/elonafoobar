@@ -574,7 +574,7 @@ bool _magic_183()
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    activity_perform();
+    activity_perform(cdata[cc]);
     return true;
 }
 
@@ -3354,14 +3354,14 @@ bool _magic_651()
         }
         return true;
     }
-    rowact_item(ci);
+    rowact_item(inv[ci]);
     if (is_in_fov(cdata[tc]))
     {
         snd("core.eat1");
         txt(i18n::s.get("core.magic.scavenge.eats", cdata[cc], inv[ci]));
     }
     heal_hp(cdata[cc], cdata[cc].max_hp / 3);
-    activity_eating_finish();
+    activity_eating_finish(cdata[cc], inv[ci]);
     refresh_burden_state();
     return true;
 }

@@ -372,7 +372,7 @@ TurnResult do_dig_command()
     }
     screenupdate = -1;
     update_screen();
-    return do_dig_after_sp_check();
+    return do_dig_after_sp_check(cdata.player());
 }
 
 static void _search_for_crystal()
@@ -732,7 +732,7 @@ TurnResult do_throw_command()
                     txt(i18n::s.get("core.action.throw.hits", cdata[tc]));
                     wet(tc, 25);
                 }
-                rowact_check(tc);
+                rowact_check(cdata[tc]);
                 if (inv[ci].id == ItemId::handful_of_snow)
                 {
                     if (is_in_fov(cdata[tc]))
@@ -998,7 +998,7 @@ TurnResult do_offer_command()
         txt(i18n::s.get("core.action.offer.do_not_believe"));
         return TurnResult::turn_end;
     }
-    rowact_item(ci);
+    rowact_item(inv[ci]);
     item_separate(ci);
     txt(i18n::s.get(
         "core.action.offer.execute", inv[ci], god_name(cdata.player().god_id)));
@@ -1599,7 +1599,7 @@ TurnResult do_use_command()
             return TurnResult::pc_turn_user_error;
         }
         game_data.activity_about_to_start = 100;
-        activity_others();
+        activity_others(cdata[cc]);
         return TurnResult::turn_end;
     }
     if (inv[ci].id == ItemId::red_treasure_machine ||
@@ -2118,7 +2118,7 @@ TurnResult do_use_command()
                 return TurnResult::pc_turn_user_error;
             }
             game_data.activity_about_to_start = 101;
-            activity_others();
+            activity_others(cdata[cc]);
             return TurnResult::turn_end;
         }
         if (area_data[game_data.current_map].id ==
@@ -2139,7 +2139,7 @@ TurnResult do_use_command()
             }
         }
         game_data.activity_about_to_start = 102;
-        activity_others();
+        activity_others(cdata[cc]);
         break;
     case 11:
         if (moneybox(inv[ci].param2) > cdata.player().gold)
@@ -3297,7 +3297,7 @@ TurnResult do_eat_command()
         }
     }
     cdata[cc].emotion_icon = 116;
-    activity_eating();
+    activity_eating(cdata[cc], inv[ci]);
     return TurnResult::turn_end;
 }
 

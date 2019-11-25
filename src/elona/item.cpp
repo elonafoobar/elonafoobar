@@ -1789,7 +1789,7 @@ bool item_fire(int owner, int ci)
         {
             continue;
         }
-        rowact_item(ci_);
+        rowact_item(inv[ci_]);
         if (inv[ci_].is_fireproof() || inv[ci_].is_precious())
         {
             continue;
@@ -2015,7 +2015,7 @@ bool item_cold(int owner, int ci)
         {
             continue;
         }
-        rowact_item(ci_);
+        rowact_item(inv[ci_]);
         if (inv[ci_].is_precious())
         {
             continue;

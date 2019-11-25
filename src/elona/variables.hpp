@@ -144,9 +144,6 @@ ELONA_EXTERN(int mousex);
 ELONA_EXTERN(int mousey);
 ELONA_EXTERN(bool player_queried_for_input);
 
-// activity.cpp
-ELONA_EXTERN(elona_vector1<int> fsetperform);
-
 // initialize_map.cpp
 ELONA_EXTERN(int noaggrorefresh);
 
@@ -384,7 +381,6 @@ ELONA_EXTERN(int fltselect);
 ELONA_EXTERN(int flttypemajor);
 ELONA_EXTERN(int flttypeminor);
 ELONA_EXTERN(int foot);
-ELONA_EXTERN(int gold);
 ELONA_EXTERN(int grown);
 ELONA_EXTERN(int hire);
 ELONA_EXTERN(int homemapmode);

@@ -819,7 +819,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (_proc_autodig())
         {
-            return do_dig_after_sp_check();
+            return do_dig_after_sp_check(cdata.player());
         }
 
         return do_movement_command();
