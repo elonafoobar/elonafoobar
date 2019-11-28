@@ -185,16 +185,16 @@ json5::value::object_type parse_json5_file(const fs::path& path)
     }
     catch (json5::syntax_error& err)
     {
-        ELONA_WARN("warn") << "JSON5 syntax error in '"
-                           << filepathutil::to_utf8_path(path)
-                           << "': " << err.what();
+        ELONA_WARN("config")
+            << "JSON5 syntax error in '" << filepathutil::to_utf8_path(path)
+            << "': " << err.what();
         return {};
     }
     catch (json5::invalid_type_error& err)
     {
-        ELONA_WARN("warn") << "JSON5 type error in '"
-                           << filepathutil::to_utf8_path(path)
-                           << "': " << err.what();
+        ELONA_WARN("config")
+            << "JSON5 type error in '" << filepathutil::to_utf8_path(path)
+            << "': " << err.what();
         return {};
     }
 }
@@ -594,19 +594,23 @@ void config_load_preinit_options()
     do \
     { \
         g_config.set_##option(get_value_by_nesting_key( \
-            obj, {#category, #option}, json5::T##_type{default_value})); \
+            obj, \
+            {"core", #category, #option}, \
+            json5::T##_type{default_value})); \
     } while (0)
 
 
     // screen.fullscreen (default: "windowed")
     g_config.set_fullscreen(convert_to_fullscreen(get_value_by_nesting_key(
-        obj, {"screen", "fullscreen"}, json5::string_type{"windowed"})));
+        obj,
+        {"core", "screen", "fullscreen"},
+        json5::string_type{"windowed"})));
 
     if (defines::is_android)
     {
         // screen.window_mode (default: "")
         g_config.set_display_mode(get_value_by_nesting_key(
-            obj, {"screen", "window_mode"}, json5::string_type{""}));
+            obj, {"core", "screen", "window_mode"}, json5::string_type{""}));
     }
     else
     {
