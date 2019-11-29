@@ -2,7 +2,7 @@ config {
    section "game", {
       option "extra_help", true,
 
-      option "attack_neutral_npcs", true,
+      option "attack_neutral_npcs", false,
 
       option "default_save", "",
 

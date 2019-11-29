@@ -239,6 +239,7 @@ public:
     {
         _index =
             clamp(_index + delta, 0, static_cast<int>(_choices.size() - 1));
+        config_set_string(_key, _choices[_index].value);
     }
 
 
