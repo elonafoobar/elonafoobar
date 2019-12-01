@@ -20,19 +20,6 @@ namespace snail
 class Application final : public lib::noncopyable
 {
 public:
-    enum class Orientation
-    {
-        portrait,
-        landscape
-    };
-
-    static const constexpr bool is_android =
-#ifdef ANDROID
-        true;
-#else
-        false;
-#endif
-
     size_t frame() const noexcept
     {
         return _frame;
@@ -63,23 +50,6 @@ public:
     float dpi() const noexcept
     {
         return _dpi;
-    }
-
-    Orientation orientation() const noexcept
-    {
-        return _orientation;
-    }
-
-    Rect window_pos() const noexcept
-    {
-        return _window_pos;
-    }
-
-    bool was_focus_lost_just_now() noexcept
-    {
-        bool result = _focus_lost_just_now;
-        _focus_lost_just_now = false;
-        return result;
     }
 
     const std::string& title() const noexcept
@@ -137,8 +107,6 @@ public:
     void set_display_mode(const std::string&);
     void set_display_mode(const ::SDL_DisplayMode);
 
-    // For Android
-    void set_subwindow_display_mode(const std::string&);
 
     void set_window_size(int width, int height);
 
@@ -146,6 +114,7 @@ public:
     {
         _call_redraw = call_redraw;
     }
+
 
 
 private:
@@ -160,15 +129,12 @@ private:
     int _physical_height = 600;
     float _dpi = 96.0f;
     std::string _title;
-    Orientation _orientation = Orientation::landscape;
-    Rect _window_pos; // Window draw position for Android
 
     uint32_t _last_wait_time = 0;
     bool _call_redraw = true;
 
     size_t _frame = 0;
     bool _will_quit = false;
-    bool _focus_lost_just_now = false;
     std::unique_ptr<Window> _window;
     std::unique_ptr<Renderer> _renderer;
     std::vector<lib::scope_guard> _finalizers;
@@ -178,13 +144,10 @@ private:
 
     void initialize_dpi();
 
-    void update_orientation();
     void handle_event(const ::SDL_Event& event);
 
     void handle_window_event(const ::SDL_WindowEvent& event);
     void on_size_changed(const ::SDL_WindowEvent& event);
-
-    Rect calculate_android_window_pos();
 };
 
 } // namespace snail

@@ -29,22 +29,5 @@ GRTAGS
 GTAGS
 .luacheckcache
 
-# Android-related
-*.iml
-.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries/
-.DS_Store
-/build/
-/captures/
-.externalNativeBuild
-android/.idea/
-android/distribution/
-android/app/src/main/assets/
-android/gradle.properties
-Android.mk
-.ccls-cache
-compile_commands.json
 target/
 **/*.rs.bk

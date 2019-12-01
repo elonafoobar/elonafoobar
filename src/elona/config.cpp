@@ -4,9 +4,7 @@
 #include <functional>
 #include <stdexcept>
 #include <string>
-#include "../snail/android.hpp"
 #include "../snail/application.hpp"
-#include "../snail/touch_input.hpp"
 #include "../thirdparty/json5/json5.hpp"
 #include "../util/fps_counter.hpp"
 #include "../util/range.hpp"
@@ -63,25 +61,6 @@ snail::Window::FullscreenMode convert_to_fullscreen(const std::string& str)
 namespace setters
 {
 
-void android_quick_action_size(const int& factor)
-{
-    g_config.set_quick_action_size(factor);
-
-    snail::TouchInput::instance().set_base_quick_action_size(0.025f * factor);
-    snail::TouchInput::instance().initialize_quick_actions();
-}
-
-
-
-void android_quick_action_transparency(const int& factor)
-{
-    g_config.set_quick_action_transparency(factor);
-
-    snail::TouchInput::instance().set_quick_action_transparency(0.05f * factor);
-}
-
-
-
 void font_quality(const std::string& variant)
 {
     if (variant == "low")
@@ -136,27 +115,6 @@ void game_default_save(const std::string& value)
 void screen_fullscreen(const std::string& value)
 {
     g_config.set_fullscreen(convert_to_fullscreen(value));
-}
-
-
-
-void screen_orientation(const std::string& variant)
-{
-    using namespace snail::android;
-    static const std::map<std::string, Orientation> orientations = {
-        {"sensor_landscape", Orientation::sensor_landscape},
-        {"sensor_portait", Orientation::sensor_portrait},
-        {"sensor", Orientation::sensor},
-        {"landscape", Orientation::landscape},
-        {"portrait", Orientation::portrait},
-        {"reverse_landscape", Orientation::reverse_landscape},
-        {"reverse_portrait", Orientation::reverse_portrait}};
-
-    const auto it = orientations.find(variant);
-    if (it == orientations.end())
-        return;
-
-    set_requested_orientation(it->second);
 }
 
 } // namespace setters
@@ -232,16 +190,6 @@ T get_value_by_nesting_key(
     {
         return default_value;
     }
-}
-
-
-
-void run_setters_of_preinit_options()
-{
-    snail::android::set_navigation_bar_visibility(!g_config.hide_navigation());
-    setters::android_quick_action_size(g_config.quick_action_size());
-    setters::android_quick_action_transparency(
-        g_config.quick_action_transparency());
 }
 
 
@@ -438,11 +386,6 @@ void bind_setters()
     CONFIG_OPTION("screen.sound", bool, sound);
     // clang-format on
 
-    conf.bind_setter(
-        "core.android.quick_action_size", &setters::android_quick_action_size);
-    conf.bind_setter(
-        "core.android.quick_action_transparency",
-        &setters::android_quick_action_transparency);
     conf.bind_setter("core.font.quality", &setters::font_quality);
     conf.bind_setter(
         "core.font.size_adjustment", &setters::font_size_adjustment);
@@ -450,7 +393,6 @@ void bind_setters()
         "core.font.vertical_offset", &setters::font_vertical_offset);
     conf.bind_setter("core.game.default_save", &setters::game_default_save);
     conf.bind_setter("core.foobar.show_fps", &setters::foobar_show_fps);
-    conf.bind_setter("core.screen.orientation", &setters::screen_orientation);
     conf.bind_setter("core.screen.fullscreen", &setters::screen_fullscreen);
 
 #undef CONFIG_OPTION
@@ -535,11 +477,6 @@ void load_options_internal(std::istream& in, const std::string& filepath)
     windoww = snail::Application::instance().width();
     windowh = snail::Application::instance().height();
 
-    if (defines::is_android)
-    {
-        snail::TouchInput::instance().initialize(filesystem::dirs::graphic());
-    }
-
     time_warn = timeGetTime() / 1000;
     time_begin = timeGetTime() / 1000;
 
@@ -606,32 +543,13 @@ void config_load_preinit_options()
         {"core", "screen", "fullscreen"},
         json5::string_type{"windowed"})));
 
-    if (defines::is_android)
-    {
-        // screen.window_mode (default: "")
-        g_config.set_display_mode(get_value_by_nesting_key(
-            obj, {"core", "screen", "window_mode"}, json5::string_type{""}));
-    }
-    else
-    {
-        // screen.display_mode (default: "")
-        ELONA_PREINIT_OPT(screen, display_mode, string, "");
-    }
-
-    // android.hide_navigation (default: false)
-    ELONA_PREINIT_OPT(android, hide_navigation, boolean, false);
-
-    // android.quick_action_size (default: 24)
-    ELONA_PREINIT_OPT(android, quick_action_size, integer, 24);
-
-    // android.quick_action_transparency (default: 10)
-    ELONA_PREINIT_OPT(android, quick_action_transparency, integer, 10);
+    // screen.display_mode (default: "")
+    ELONA_PREINIT_OPT(screen, display_mode, string, "");
 
 #undef ELONA_PREINIT_OPT
 
 
     validate_display_mode();
-    run_setters_of_preinit_options();
 
     // TODO: move it somewhere else or make it constant. "inf_tiles" is too
     // frequently used to find out where it should be initialized. Thus, it is

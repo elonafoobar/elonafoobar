@@ -78,16 +78,8 @@ std::string show_quick_menu()
 {
     int tx, ty;
 
-    if (defines::is_android)
-    {
-        tx = (windoww / 2) - 100;
-        ty = (windowh / 2) - 100;
-    }
-    else
-    {
-        tx = 50;
-        ty = windowh - 255;
-    }
+    tx = 50;
+    ty = windowh - 255;
 
     listmax = 0;
     snd("core.cursor1");

@@ -1,5 +1,4 @@
 #include "dmgheal.hpp"
-#include "../snail/android.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
@@ -665,11 +664,6 @@ int damage_hp(
                         if (!CHECKPLAY(32))
                         {
                             snd("core.Heart1");
-
-                            if (config_get_boolean("core.android.vibrate"))
-                            {
-                                snail::android::vibrate_pulse();
-                            }
                         }
                     }
                 }

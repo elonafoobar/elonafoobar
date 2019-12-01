@@ -6,7 +6,7 @@
 * It is still in an early stage of development.
 * It features high extensibility through a mod system. [####+]
 * It can be localized in multiple languages. [####+]
-* It works on Windows, Linux, macOS, and Android. [####+]
+* It works on Windows, Linux and macOS. [####+]
 
 
 # How To Build
@@ -69,15 +69,6 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 To debug with Visual Studio, open `bin\Elona_foobar.sln`.
 
 
-### Android
-
-Building has only been tested on Linux so far.
-1. Copy `android/local.properties.sample` to `android/local.properties` and edit it to point to your Android SDK and NDK installation paths.
-2. `cd path/to/Elona_foobar; make android` (for release, run `make android_release`)
-
-A standalone APK will be output in `bin/`.
-
-By default, assets from vanilla Elona in `deps/` are not bundled with the APK, to respect the original content authors. To bundle these assets, pass the flag `-DANDROID_BUNDLE_ASSETS` to `cmake`. If original assets are not detected on startup, the app will prompt for the location of `elona122.zip`.
 
 # How To Play
 

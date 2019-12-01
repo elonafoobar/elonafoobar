@@ -70,10 +70,6 @@ void open_browser(const char* url)
     std::system(("open "s + url).c_str());
 #elif defined(ELONA_OS_LINUX)
     std::system(("xdg-open "s + url).c_str());
-#elif defined(ELONA_OS_ANDROID)
-    // TODO: implement for android.
-    (void)url;
-    return;
 #else
 #error "Unsupported OS"
 #endif

@@ -106,19 +106,7 @@ void Application::set_display_mode(const ::SDL_DisplayMode)
 
 
 
-void Application::set_subwindow_display_mode(const std::string&)
-{
-}
-
-
-
 void Application::initialize_dpi()
-{
-}
-
-
-
-void Application::update_orientation()
 {
 }
 
@@ -138,13 +126,6 @@ void Application::handle_window_event(const ::SDL_WindowEvent&)
 
 void Application::on_size_changed(const ::SDL_WindowEvent&)
 {
-}
-
-
-
-Rect Application::calculate_android_window_pos()
-{
-    return {};
 }
 
 

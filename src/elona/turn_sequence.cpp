@@ -1582,15 +1582,8 @@ TurnResult pc_turn(bool advance_time)
             txt(s, Message::color{ColorIndex::orange});
         }
 
-        // Provide the opportunity for the game to quicksave if app focus
-        // is lost on Android by setting whether or not player input is
-        // being queried. This won't be true for any other place input is
-        // queried, but it would probably be dangerous to allow the game
-        // to quicksave at any place await() could be called.
-        player_queried_for_input = true;
         await(g_config.general_wait());
         auto command = key_check_pc_turn(KeyWaitDelay::walk_run);
-        player_queried_for_input = false;
 
         const auto input = stick();
         if (command == ""s && key == ""s && input != StickKey::mouse_left)

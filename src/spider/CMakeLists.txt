@@ -18,9 +18,5 @@ set(SPIDER_SOURCES
   http/backends/${SPIDER_DIR}/core.cpp
   )
 
-if(ANDROID_GENERATE_BUILD_FILES)
-  generate_android_mk(spider SOURCES ${SPIDER_SOURCES})
-else()
-  add_library(${SPIDER_LIBRARY} STATIC ${SPIDER_SOURCES})
-  include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/uri/include")
-endif()
+add_library(${SPIDER_LIBRARY} STATIC ${SPIDER_SOURCES})
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/uri/include")

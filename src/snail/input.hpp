@@ -244,8 +244,6 @@ enum class Key
     keypad_enter,
     keypad_equal,
 
-    android_back,
-
     _size,
 };
 
@@ -340,10 +338,6 @@ public:
 
     bool is_ime_active() const;
 
-    void show_soft_keyboard();
-    void hide_soft_keyboard();
-    void toggle_soft_keyboard();
-
     const PressedKeys& pressed_keys() const
     {
         return _pressed_key_identifiers;
@@ -416,7 +410,6 @@ public:
     void _handle_event(const ::SDL_KeyboardEvent& event);
     void _handle_event(const ::SDL_TextInputEvent& event);
     void _handle_event(const ::SDL_TextEditingEvent& event);
-    void _handle_event(const ::SDL_TouchFingerEvent& event);
     void _handle_event(const ::SDL_MouseButtonEvent& event);
 
     void _update_modifier_keys();
@@ -428,9 +421,6 @@ private:
     std::string _text;
     bool _is_ime_active{};
     bool _needs_restore_numlock{};
-
-    // For Android
-    optional<snail::Key> _last_quick_action_key = none;
 
     Mouse _mouse;
 
