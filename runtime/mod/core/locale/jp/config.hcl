@@ -522,6 +522,11 @@ DOC
                     name = "マナ不足の警告を省略"
                     doc = "マナが足りないときに表示される警告画面を省略します。"
                 }
+
+                digital_clock {
+                    name = "Digital clock"
+                    doc = "Replace default clock with a simple 24 hours digital clock."
+                }
             }
 
             android {

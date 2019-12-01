@@ -399,6 +399,7 @@ void bind_setters()
     CONFIG_OPTION("foobar.autopick", bool, autopick);
     CONFIG_OPTION("foobar.autosave", bool, autosave);
     CONFIG_OPTION("foobar.damage_popup", bool, damage_popup);
+    CONFIG_OPTION("foobar.digital_clock", bool, digital_clock);
     CONFIG_OPTION("foobar.enhanced_skill_tracking_lowerbound", int, enhanced_skill_lowerbound);
     CONFIG_OPTION("foobar.enhanced_skill_tracking_upperbound", int, enhanced_skill_upperbound);
     CONFIG_OPTION("foobar.hp_bar_position", std::string, hp_bar_position);
