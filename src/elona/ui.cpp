@@ -580,7 +580,7 @@ void render_buffs()
 
 
 
-void render_clock()
+void render_analogue_clock()
 {
     const auto& info = get_image_info("clock_hand");
 
@@ -1499,7 +1499,7 @@ void render_hud()
     gmode(2);
 
     // Clock
-    g_config.digital_clock() ? render_digital_clock() : render_clock();
+    g_config.digital_clock() ? render_digital_clock() : render_analogue_clock();
 
     // Skill trackers
     render_skill_trackers();

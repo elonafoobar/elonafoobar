@@ -884,5 +884,10 @@ locale {
             destroyed = "${name(_1)} was destroyed."
             do_you_really_open = "Open ${name(_1)}?"
         }
+
+        digital_clock {
+            time = "${_1}:${_2}:${_3}"
+            date = "${_1}/${_2}/${3}"
+        }
     }
 }
