@@ -586,8 +586,8 @@ DOC
                 }
 
                 digital_clock {
-                    name = "時計をデジタル表示"
-                    doc = "左上の時計を24時間のデジタル表示に置き換えます。"
+                    name = "Digital clock"
+                    doc = "Replace default clock with a simple 24 hours digital clock."
                 }
             }
 
