@@ -340,6 +340,7 @@ config {
       option "show_fps", false,
       option "skip_confirm_at_shop", false,
       option "skip_overcasting_warning", false,
+      option "digital_clock", false,
    },
 
    -- Hidden sections

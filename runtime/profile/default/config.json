@@ -205,6 +205,9 @@
 
       // Skip confirm to over-cast spells.
       skip_overcasting_warning: false,
+
+      // Replace default clock with a simple 24 hours digital clock
+      digital_clock: false,
     },
   }
 }

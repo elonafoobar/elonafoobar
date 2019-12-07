@@ -584,6 +584,11 @@ DOC
                     name = "Skip over-casting warning"
                     doc = "Skip warning prompt displayed when you are going to over-cast spells."
                 }
+
+                digital_clock {
+                    name = "Digital clock"
+                    doc = "Replace default clock with a simple 24 hours digital clock."
+                }
             }
 
             android {

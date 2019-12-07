@@ -580,7 +580,7 @@ void render_buffs()
 
 
 
-void render_clock()
+void render_analogue_clock()
 {
     const auto& info = get_image_info("clock_hand");
 
@@ -608,6 +608,27 @@ void render_clock()
             i18n::s.get_enum("core.ui.weather", game_data.weather),
         inf_clockw + 6,
         inf_clocky + 35);
+}
+
+
+
+void render_digital_clock()
+{
+    // 24 hour digital clock, 57 pixels wide
+    font(16 - en * 2);
+    bmes(""s + game_data.date.hour + u8":"s + game_data.date.minute + u8":"s + game_data.date.second,
+         8, 8);
+
+    // date, 64 pixel wide
+    font(15 - en * 2);
+    int datex = 8 + 57 + 18;
+    bmes(""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s + game_data.date.day,
+         datex, 8);
+
+    // time of day + weather
+    bmes(i18n::s.get_enum("core.ui.time", game_data.date.hour / 4) + u8" "s +
+            i18n::s.get_enum("core.ui.weather", game_data.weather),
+         datex + 64 + 12, 8);
 }
 
 
@@ -1469,7 +1490,8 @@ void render_hud()
     render_status_ailments();
 
     // Date label
-    render_date_label();
+    if (!g_config.digital_clock())
+        render_date_label();
 
     // Buffs
     gmode(2, 180);
@@ -1477,7 +1499,7 @@ void render_hud()
     gmode(2);
 
     // Clock
-    render_clock();
+    g_config.digital_clock() ? render_digital_clock() : render_analogue_clock();
 
     // Skill trackers
     render_skill_trackers();
