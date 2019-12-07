@@ -70,11 +70,11 @@ LuaEnv::~LuaEnv() = default;
 
 void LuaEnv::clear()
 {
-    for (int i = 0; i < ELONA_MAX_ITEMS; i++)
+    for (auto&& item : inv.all())
     {
-        if (inv[i].number() != 0)
+        if (item.number() != 0)
         {
-            handle_mgr->remove_item_handle(inv[i]);
+            handle_mgr->remove_item_handle(item);
         }
     }
 

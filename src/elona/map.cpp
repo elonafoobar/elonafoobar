@@ -63,16 +63,20 @@ void _map_randsite()
             if (rnd(25) == 0)
             {
                 flt();
-                itemcreate(-1, 173, pos->x, pos->y, 0);
-                inv[ci].own_state = 1;
+                if (const auto item = itemcreate_extra_inv(173, *pos, 0))
+                {
+                    item->own_state = 1;
+                }
                 return;
             }
             if (rnd(100) == 0)
             {
                 flt();
-                itemcreate(-1, 172, pos->x, pos->y, 0);
-                inv[ci].own_state = 1;
-                inv[ci].param1 = choice(isetgod);
+                if (const auto item = itemcreate_extra_inv(172, *pos, 0))
+                {
+                    item->own_state = 1;
+                    item->param1 = choice(isetgod);
+                }
                 return;
             }
         }
@@ -109,25 +113,25 @@ void _map_randsite()
         if (rnd(3) == 0)
         {
             flt();
-            itemcreate(-1, 631, pos->x, pos->y, 0);
+            itemcreate_extra_inv(631, *pos, 0);
             return;
         }
         if (rnd(15) == 0)
         {
             flt();
-            itemcreate(-1, 55, pos->x, pos->y, 0);
+            itemcreate_extra_inv(55, *pos, 0);
             return;
         }
         if (rnd(20) == 0)
         {
             flt();
-            itemcreate(-1, 284, pos->x, pos->y, 0);
+            itemcreate_extra_inv(284, *pos, 0);
             return;
         }
         if (rnd(15) == 0)
         {
             flt();
-            itemcreate(-1, 283, pos->x, pos->y, 0);
+            itemcreate_extra_inv(283, *pos, 0);
             return;
         }
         if (rnd(18) == 0)
@@ -135,12 +139,12 @@ void _map_randsite()
             flt(calcobjlv(rnd(cdata.player().level + 10)),
                 calcfixlv(Quality::good));
             flttypemajor = choice(fsetwear);
-            itemcreate(-1, 0, pos->x, pos->y, 0);
+            itemcreate_extra_inv(0, *pos, 0);
             return;
         }
         flt(10);
         flttypeminor = 64100;
-        itemcreate(-1, 0, pos->x, pos->y, 0);
+        itemcreate_extra_inv(0, *pos, 0);
         return;
     }
 }
@@ -373,9 +377,10 @@ void map_reload(const std::string& map_filename)
             if (cell_data.at(x, y).item_appearances_actual == 0)
             {
                 flt();
-                if (itemcreate(-1, cmapdata(0, i), x, y, 0))
+                if (const auto item =
+                        itemcreate_extra_inv(cmapdata(0, i), x, y, 0))
                 {
-                    inv[ci].own_state = cmapdata(3, i);
+                    item->own_state = cmapdata(3, i);
                 }
             }
             cell_refresh(x, y);
@@ -815,20 +820,20 @@ static void _grow_plants()
 
 static void _proc_generate_bard_items(Character& chara)
 {
-    if (itemfind(chara.index, 60005, 1) == -1)
+    if (!itemfind(chara.index, 60005, 1))
     {
         if (rnd(150) == 0)
         {
             // Stradivarius
             flt();
-            itemcreate(chara.index, 707, -1, -1, 0);
+            itemcreate_chara_inv(chara.index, 707, 0);
         }
         else
         {
             // Random instrument
             flt(calcobjlv(chara.level), calcfixlv());
             flttypeminor = 60005;
-            itemcreate(chara.index, 0, -1, -1, 0);
+            itemcreate_chara_inv(chara.index, 0, 0);
         }
     }
 }
@@ -837,11 +842,11 @@ static void _proc_generate_bard_items(Character& chara)
 static void _generate_bad_quality_item()
 {
     flt(calcobjlv(cdata[rc].level), calcfixlv(Quality::bad));
-    if (itemcreate(rc, 0, -1, -1, 0))
+    if (const auto item = itemcreate_chara_inv(rc, 0, 0))
     {
-        if (inv[ci].weight <= 0 || inv[ci].weight >= 4000)
+        if (item->weight <= 0 || item->weight >= 4000)
         {
-            inv[ci].remove();
+            item->remove();
         }
     }
 }
@@ -958,25 +963,25 @@ void map_reload_noyel()
     if (area_data[game_data.current_map].christmas_festival)
     {
         flt();
-        if (itemcreate(-1, 763, 29, 16, 0))
+        if (const auto item = itemcreate_extra_inv(763, 29, 16, 0))
         {
-            inv[ci].own_state = 1;
+            item->own_state = 1;
         }
         flt();
-        if (itemcreate(-1, 686, 29, 16, 0))
+        if (const auto item = itemcreate_extra_inv(686, 29, 16, 0))
         {
-            inv[ci].own_state = 1;
+            item->own_state = 1;
         }
         flt();
-        if (itemcreate(-1, 171, 29, 17, 0))
+        if (const auto item = itemcreate_extra_inv(171, 29, 17, 0))
         {
-            inv[ci].param1 = 6;
-            inv[ci].own_state = 1;
+            item->param1 = 6;
+            item->own_state = 1;
         }
         flt();
-        if (itemcreate(-1, 756, 29, 17, 0))
+        if (const auto item = itemcreate_extra_inv(756, 29, 17, 0))
         {
-            inv[ci].own_state = 5;
+            item->own_state = 5;
         }
         {
             flt();

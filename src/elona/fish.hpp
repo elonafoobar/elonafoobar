@@ -8,6 +8,6 @@ namespace elona
 {
 
 void fish_get(int legacy_fish_id);
-int fish_select_at_random();
+int fish_select_at_random(int bait);
 
 } // namespace elona

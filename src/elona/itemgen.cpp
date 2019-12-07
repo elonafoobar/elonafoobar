@@ -42,7 +42,11 @@ int calculate_original_value(const Item& ci)
 namespace elona
 {
 
-optional<int> itemcreate(int slot, int id, int x, int y, int number)
+optional_ref<Item> do_create_item(int, int, int);
+
+
+
+optional_ref<Item> itemcreate(int slot, int id, int x, int y, int number)
 {
     if (flttypeminor != 0)
     {
@@ -52,6 +56,42 @@ optional<int> itemcreate(int slot, int id, int x, int y, int number)
     initnum = number;
     return do_create_item(slot, x, y);
 }
+
+
+
+optional_ref<Item> itemcreate(int slot, int id, const Position& pos, int number)
+{
+    return itemcreate(slot, id, pos.x, pos.y, number);
+}
+
+
+
+optional_ref<Item> itemcreate_player_inv(int id, int number)
+{
+    return itemcreate_chara_inv(0, id, number);
+}
+
+
+
+optional_ref<Item> itemcreate_chara_inv(int chara_index, int id, int number)
+{
+    return itemcreate(chara_index, id, -1, -1, number);
+}
+
+
+
+optional_ref<Item> itemcreate_extra_inv(int id, int x, int y, int number)
+{
+    return itemcreate(-1, id, x, y, number);
+}
+
+
+
+optional_ref<Item> itemcreate_extra_inv(int id, const Position& pos, int number)
+{
+    return itemcreate_extra_inv(id, pos.x, pos.y, number);
+}
+
 
 
 void get_random_item_id()
@@ -96,7 +136,7 @@ void get_random_item_id()
 
 
 
-optional<int> do_create_item(int slot, int x, int y)
+optional_ref<Item> do_create_item(int slot, int x, int y)
 {
     if ((slot == 0 || slot == -1) && fixlv < Quality::godly)
     {
@@ -110,8 +150,10 @@ optional<int> do_create_item(int slot, int x, int y)
     if (ci == -1)
         return none;
 
-    item_delete(inv[ci]);
-    inv[ci].index = ci;
+    auto&& item = inv[ci];
+
+    item_delete(item);
+    item.index = ci; // needed?
 
     if (slot == -1 && mode != 6 && mode != 9)
     {
@@ -148,8 +190,8 @@ optional<int> do_create_item(int slot, int x, int y)
             if (x != -1 && i == 0)
             {
                 ok = true;
-                inv[ci].position.x = sx;
-                inv[ci].position.y = sy;
+                item.position.x = sx;
+                item.position.y = sy;
                 break;
             }
             if (cell_data.at(sx, sy).feats != 0)
@@ -164,8 +206,8 @@ optional<int> do_create_item(int slot, int x, int y)
             if ((chip_data.for_cell(sx, sy).effect & 4) == 0)
             {
                 ok = true;
-                inv[ci].position.x = sx;
-                inv[ci].position.y = sy;
+                item.position.x = sx;
+                item.position.y = sy;
                 break;
             }
         }
@@ -212,39 +254,39 @@ optional<int> do_create_item(int slot, int x, int y)
         dbid = 501;
     }
 
-    item_db_set_full_stats(inv[ci], dbid);
-    item_db_get_charge_level(inv[ci], dbid);
+    item_db_set_full_stats(item, dbid);
+    item_db_get_charge_level(item, dbid);
 
-    inv[ci].color = generate_color(
-        the_item_db[itemid2int(inv[ci].id)]->color, itemid2int(inv[ci].id));
+    item.color = generate_color(
+        the_item_db[itemid2int(item.id)]->color, itemid2int(item.id));
 
-    if (inv[ci].id == ItemId::book_b && inv[ci].param1 == 0)
+    if (item.id == ItemId::book_b && item.param1 == 0)
     {
-        inv[ci].param1 = choice(isetbook);
+        item.param1 = choice(isetbook);
     }
-    if (inv[ci].id == ItemId::textbook && inv[ci].param1 == 0)
+    if (item.id == ItemId::textbook && item.param1 == 0)
     {
-        inv[ci].param1 = randskill();
+        item.param1 = randskill();
     }
-    if (inv[ci].id == ItemId::recipe)
+    if (item.id == ItemId::recipe)
     {
-        inv[ci].subname = choice(rpsourcelist);
-        inv[ci].param1 = 1;
+        item.subname = choice(rpsourcelist);
+        item.param1 = 1;
     }
 
     ++itemmemory(1, dbid);
 
-    inv[ci].quality = static_cast<Quality>(fixlv);
+    item.quality = static_cast<Quality>(fixlv);
     if (fixlv == Quality::special && mode != 6 && nooracle == 0)
     {
-        int owner = inv_getowner(ci);
+        int owner = inv_getowner(item.index);
         if (owner != -1)
         {
             if (cdata[owner].character_role == 13)
             {
                 artifactlocation.push_back(i18n::s.get(
                     "core.magic.oracle.was_held_by",
-                    cnven(iknownnameref(itemid2int(inv[ci].id))),
+                    cnven(iknownnameref(itemid2int(item.id))),
                     cdata[owner],
                     mapname(cdata[owner].current_map),
                     game_data.date.day,
@@ -260,7 +302,7 @@ optional<int> do_create_item(int slot, int x, int y)
         {
             artifactlocation.push_back(i18n::s.get(
                 "core.magic.oracle.was_created_at",
-                iknownnameref(itemid2int(inv[ci].id)),
+                iknownnameref(itemid2int(item.id)),
                 mdatan(0),
                 game_data.date.day,
                 game_data.date.month,
@@ -268,198 +310,194 @@ optional<int> do_create_item(int slot, int x, int y)
         }
     }
 
-    if (inv[ci].id == ItemId::bait)
+    if (item.id == ItemId::bait)
     {
-        inv[ci].param1 = rnd(6);
-        inv[ci].image = 385 + inv[ci].param1;
-        inv[ci].value = inv[ci].param1 * inv[ci].param1 * 500 + 200;
+        item.param1 = rnd(6);
+        item.image = 385 + item.param1;
+        item.value = item.param1 * item.param1 * 500 + 200;
     }
 
-    if (inv[ci].id == ItemId::deed)
+    if (item.id == ItemId::deed)
     {
-        inv[ci].param1 = rnd(5) + 1;
+        item.param1 = rnd(5) + 1;
         if (mode != 6)
         {
-            inv[ci].param1 = 2;
+            item.param1 = 2;
         }
-        inv[ci].subname = inv[ci].param1;
-        inv[ci].value = 5000 +
-            4500 * inv[ci].param1 * inv[ci].param1 * inv[ci].param1 +
-            inv[ci].param1 * 20000;
-        if (inv[ci].param1 == 5)
+        item.subname = item.param1;
+        item.value = 5000 + 4500 * item.param1 * item.param1 * item.param1 +
+            item.param1 * 20000;
+        if (item.param1 == 5)
         {
-            inv[ci].value *= 2;
+            item.value *= 2;
         }
     }
 
-    if (inv[ci].id == ItemId::gold_piece)
+    if (item.id == ItemId::gold_piece)
     {
-        inv[ci].set_number(calcinitgold(slot));
-        if (inv[ci].quality == Quality::great)
+        item.set_number(calcinitgold(slot));
+        if (item.quality == Quality::great)
         {
-            inv[ci].set_number(inv[ci].number() * 2);
+            item.set_number(item.number() * 2);
         }
-        if (inv[ci].quality >= Quality::miracle)
+        if (item.quality >= Quality::miracle)
         {
-            inv[ci].set_number(inv[ci].number() * 4);
+            item.set_number(item.number() * 4);
         }
         if (slot >= 0)
         {
-            earn_gold(cdata[slot], inv[ci].number());
-            inv[ci].remove();
-            return ci;
+            earn_gold(cdata[slot], item.number());
+            item.remove();
+            return item; // TODO: invalid return value!
         }
     }
 
-    if (inv[ci].id == ItemId::gift)
+    if (item.id == ItemId::gift)
     {
-        inv[ci].param4 = rnd(rnd(rnd(giftvalue.size()) + 1) + 1);
-        inv[ci].value = inv[ci].param4 * 2500 + 500;
+        item.param4 = rnd(rnd(rnd(giftvalue.size()) + 1) + 1);
+        item.value = item.param4 * 2500 + 500;
     }
 
-    if (inv[ci].id == ItemId::kitty_bank)
+    if (item.id == ItemId::kitty_bank)
     {
-        inv[ci].param2 = rnd(rnd(moneybox.size()) + 1);
-        inv[ci].value =
-            inv[ci].param2 * inv[ci].param2 * inv[ci].param2 * 1000 + 1000;
+        item.param2 = rnd(rnd(moneybox.size()) + 1);
+        item.value = item.param2 * item.param2 * item.param2 * 1000 + 1000;
     }
 
-    if (inv[ci].id == ItemId::monster_ball)
+    if (item.id == ItemId::monster_ball)
     {
-        inv[ci].param2 = rnd(objlv + 1) + 1;
-        inv[ci].value =
-            2000 + inv[ci].param2 * inv[ci].param2 + inv[ci].param2 * 100;
+        item.param2 = rnd(objlv + 1) + 1;
+        item.value = 2000 + item.param2 * item.param2 + item.param2 * 100;
     }
 
-    if (inv[ci].id == ItemId::material_kit)
+    if (item.id == ItemId::material_kit)
     {
-        initialize_item_material(inv[ci]);
+        initialize_item_material(item);
     }
 
-    if (inv[ci].id == ItemId::ancient_book)
+    if (item.id == ItemId::ancient_book)
     {
-        inv[ci].param1 = rnd(rnd(clamp(objlv / 2, 1, 15)) + 1);
+        item.param1 = rnd(rnd(clamp(objlv / 2, 1, 15)) + 1);
     }
 
-    if (inv[ci].id == ItemId::sisters_love_fueled_lunch)
+    if (item.id == ItemId::sisters_love_fueled_lunch)
     {
-        inv[ci].is_handmade() = true;
+        item.is_handmade() = true;
     }
 
-    if (inv[ci].id == ItemId::cooler_box)
+    if (item.id == ItemId::cooler_box)
     {
         ++game_data.next_inventory_serial_id;
-        inv[ci].count = game_data.next_inventory_serial_id;
+        item.count = game_data.next_inventory_serial_id;
     }
 
-    if (inv[ci].id == ItemId::heir_trunk)
+    if (item.id == ItemId::heir_trunk)
     {
-        inv[ci].count = 3;
+        item.count = 3;
     }
 
-    if (inv[ci].id == ItemId::shop_strongbox)
+    if (item.id == ItemId::shop_strongbox)
     {
-        inv[ci].count = 5;
+        item.count = 5;
     }
 
-    if (inv[ci].id == ItemId::salary_chest)
+    if (item.id == ItemId::salary_chest)
     {
-        inv[ci].count = 4;
+        item.count = 4;
     }
 
-    if (inv[ci].id == ItemId::freezer)
+    if (item.id == ItemId::freezer)
     {
-        inv[ci].count = 6;
+        item.count = 6;
     }
 
     if (reftype == 72000)
     {
-        inv[ci].param1 = game_data.current_dungeon_level *
+        item.param1 = game_data.current_dungeon_level *
                 (game_data.current_map != mdata_t::MapId::shelter_) +
             5;
-        if (inv[ci].id == ItemId::suitcase)
+        if (item.id == ItemId::suitcase)
         {
-            inv[ci].param1 = (rnd(10) + 1) * (cdata.player().level / 10 + 1);
+            item.param1 = (rnd(10) + 1) * (cdata.player().level / 10 + 1);
         }
-        if (inv[ci].id == ItemId::treasure_ball ||
-            inv[ci].id == ItemId::rare_treasure_ball)
+        if (item.id == ItemId::treasure_ball ||
+            item.id == ItemId::rare_treasure_ball)
         {
-            inv[ci].param1 = cdata.player().level;
+            item.param1 = cdata.player().level;
         }
-        inv[ci].param2 =
+        item.param2 =
             rnd(std::abs(game_data.current_dungeon_level) *
                     (game_data.current_map != mdata_t::MapId::shelter_) +
                 1);
-        if (inv[ci].id == ItemId::wallet || inv[ci].id == ItemId::suitcase)
+        if (item.id == ItemId::wallet || item.id == ItemId::suitcase)
         {
-            inv[ci].param2 = rnd(15);
+            item.param2 = rnd(15);
         }
-        inv[ci].param3 = rnd(30000);
-        if (inv[ci].id == ItemId::small_gamble_chest)
+        item.param3 = rnd(30000);
+        if (item.id == ItemId::small_gamble_chest)
         {
-            inv[ci].param2 = rnd(rnd(100) + 1) + 1;
-            inv[ci].value = inv[ci].param2 * 25 + 150;
+            item.param2 = rnd(rnd(100) + 1) + 1;
+            item.value = item.param2 * 25 + 150;
             initnum = rnd(8);
         }
     }
 
-    if (reftype == 57000 && inv[ci].param1 != 0)
+    if (reftype == 57000 && item.param1 != 0)
     {
         if (mode == 6)
         {
             if (rnd(2) == 0)
             {
-                inv[ci].param2 = 0;
+                item.param2 = 0;
             }
             else
             {
-                inv[ci].param2 = 3 + rnd(3);
+                item.param2 = 3 + rnd(3);
             }
         }
-        if (inv[ci].param2 != 0)
+        if (item.param2 != 0)
         {
-            inv[ci].image = picfood(inv[ci].param2, inv[ci].param1 / 1000);
+            item.image = picfood(item.param2, item.param1 / 1000);
         }
-        if (inv[ci].material == 35)
+        if (item.material == 35)
         {
-            inv[ci].param3 += game_data.date.hours();
+            item.param3 += game_data.date.hours();
         }
     }
 
-    init_item_quality_curse_state_material_and_equipments(inv[ci]);
+    init_item_quality_curse_state_material_and_equipments(item);
     if (reftype == 60000)
     {
         if (rnd(3) == 0)
         {
-            inv[ci].subname = rnd(rnd(12) + 1);
+            item.subname = rnd(rnd(12) + 1);
         }
         else
         {
-            inv[ci].subname = 0;
+            item.subname = 0;
         }
     }
 
     if (mode == 6)
     {
-        inv[ci].identify_state = IdentifyState::completely;
+        item.identify_state = IdentifyState::completely;
     }
     if (reftype == 68000 || reftype == 69000 ||
-        inv[ci].id == ItemId::small_medal ||
-        inv[ci].id == ItemId::music_ticket ||
-        inv[ci].id == ItemId::token_of_friendship || inv[ci].id == ItemId::bill)
+        item.id == ItemId::small_medal || item.id == ItemId::music_ticket ||
+        item.id == ItemId::token_of_friendship || item.id == ItemId::bill)
     {
-        inv[ci].curse_state = CurseState::none;
-        inv[ci].identify_state = IdentifyState::completely;
+        item.curse_state = CurseState::none;
+        item.identify_state = IdentifyState::completely;
     }
     if (reftype == 92000)
     {
-        inv[ci].identify_state = IdentifyState::completely;
-        inv[ci].curse_state = CurseState::none;
-        itemmemory(0, itemid2int(inv[ci].id)) = 1;
+        item.identify_state = IdentifyState::completely;
+        item.curse_state = CurseState::none;
+        itemmemory(0, itemid2int(item.id)) = 1;
     }
     if (reftype == 62000 || reftype == 64000 || reftype == 77000)
     {
-        inv[ci].curse_state = CurseState::none;
+        item.curse_state = CurseState::none;
     }
     if (mode != 6)
     {
@@ -467,18 +505,18 @@ optional<int> do_create_item(int slot, int x, int y)
         {
             if (rnd(sdata(162, 0) + 1) > 5)
             {
-                inv[ci].identify_state = IdentifyState::almost;
+                item.identify_state = IdentifyState::almost;
             }
         }
     }
 
-    calc_furniture_value(inv[ci]);
+    calc_furniture_value(item);
 
-    itemturn(inv[ci]);
+    itemturn(item);
 
     if (initnum != 0)
     {
-        inv[ci].set_number(initnum);
+        item.set_number(initnum);
     }
 
     if (nostack == 1)
@@ -487,19 +525,18 @@ optional<int> do_create_item(int slot, int x, int y)
     }
     else
     {
-        int stat = item_stack(slot, ci);
-        if (stat == 1)
+        if (item_stack(slot, item))
         {
             ci = ti;
-            return ci;
+            return inv[ti];
         }
     }
 
     if (slot == -1)
     {
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        cell_refresh(item.position.x, item.position.y);
     }
-    return ci;
+    return item;
 }
 
 
@@ -567,6 +604,8 @@ void init_item_quality_curse_state_material_and_equipments(Item& item)
     }
 }
 
+
+
 void calc_furniture_value(Item& item)
 {
     if (reftype == 60000)
@@ -579,11 +618,14 @@ void calc_furniture_value(Item& item)
 }
 
 
+
 void initialize_item_material(Item& item)
 {
     determine_item_material(item);
     apply_item_material(item);
 }
+
+
 
 void determine_item_material(Item& item)
 {
@@ -678,6 +720,8 @@ void determine_item_material(Item& item)
     }
 }
 
+
+
 void change_item_material(Item& item, int material_id)
 {
     item.color = 0;
@@ -692,7 +736,7 @@ void change_item_material(Item& item, int material_id)
     const auto original_value = calculate_original_value(item);
 
     dbid = itemid2int(item.id);
-    item_db_set_basic_stats(inv[ci], dbid);
+    item_db_set_basic_stats(item, dbid);
     item.value = original_value;
     if (material_id != 0)
     {
@@ -707,6 +751,8 @@ void change_item_material(Item& item, int material_id)
     calc_furniture_value(item);
     chara_refresh(cc);
 }
+
+
 
 void apply_item_material(Item& item)
 {
@@ -774,6 +820,8 @@ void apply_item_material(Item& item)
     }
     set_material_specific_attributes(item);
 }
+
+
 
 void set_material_specific_attributes(Item& item)
 {

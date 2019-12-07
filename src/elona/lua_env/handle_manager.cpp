@@ -175,9 +175,9 @@ void HandleManager::clear_map_local_handles()
     {
         remove_chara_handle(cdata[i]);
     }
-    for (int i = ELONA_OTHER_INVENTORIES_INDEX; i < ELONA_MAX_ITEMS; i++)
+    for (auto&& item : inv.map_local())
     {
-        remove_item_handle(inv[i]);
+        remove_item_handle(item);
     }
 }
 

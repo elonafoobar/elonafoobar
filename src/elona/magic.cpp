@@ -1154,7 +1154,7 @@ bool _magic_412()
             {
                 ++p(1);
                 item.curse_state = CurseState::none;
-                item_stack(tc, ci, 1);
+                item_stack(tc, item, true);
             }
             else
             {
@@ -2097,7 +2097,7 @@ bool _magic_645_1114()
         chara_refresh(tc);
         snd("core.curse3");
         animeload(14, tc);
-        item_stack(tc, i, 1);
+        item_stack(tc, inv[i], true);
     }
     else
     {
@@ -2461,7 +2461,7 @@ bool _magic_21_1127()
                 inv[ci]));
             inv[ci].modify_number(-1);
             flt();
-            itemcreate(0, itemid2int(inv[ci].id), -1, -1, 0);
+            itemcreate_player_inv(itemid2int(inv[ci].id), 0);
         }
         else
         {
@@ -2872,7 +2872,7 @@ bool _magic_1132(int& fltbk, int& valuebk)
         save_set_autosave();
         animeload(8, cc);
         fltbk = the_item_db[itemid2int(inv[ci].id)]->category;
-        valuebk = calcitemvalue(ci, 0);
+        valuebk = calcitemvalue(inv[ci], 0);
         inv[ci].remove();
         for (int cnt = 0;; ++cnt)
         {
@@ -2881,11 +2881,11 @@ bool _magic_1132(int& fltbk, int& valuebk)
             {
                 flttypemajor = fltbk;
             }
-            if (itemcreate(0, 0, -1, -1, 0))
+            if (const auto item = itemcreate_player_inv(0, 0))
             {
-                if (inv[ci].value > valuebk * 3 / 2 + 1000)
+                if (item->value > valuebk * 3 / 2 + 1000)
                 {
-                    inv[ci].remove();
+                    item->remove();
                     continue;
                 }
                 else
@@ -3396,8 +3396,7 @@ bool _magic_464()
             number = 1;
         }
         nostack = 1;
-        itemcreate(
-            -1, dbid, cdata[cc].position.x, cdata[cc].position.y, number);
+        itemcreate_extra_inv(dbid, cdata[cc].position, number);
         const auto message = i18n::s.get("core.magic.wizards_harvest", inv[ci]);
         if (fastest)
         {

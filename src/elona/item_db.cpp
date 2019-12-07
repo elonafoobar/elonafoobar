@@ -129,7 +129,7 @@ void item_db_get_description(Item& item, int legacy_id)
 
 
 
-void item_db_get_charge_level(Item& item, int legacy_id)
+void item_db_get_charge_level(const Item& item, int legacy_id)
 {
     (void)item;
 

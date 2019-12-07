@@ -705,7 +705,7 @@ bool casino_blackjack()
     {
         atxinit();
         noteadd(i18n::s.get("core.casino.blackjack.game.total_wins", winrow));
-        for (int cnt = 0; cnt < 1; ++cnt)
+        while (true)
         {
             Quality quality = Quality::good;
             if (winrow > 2)
@@ -729,27 +729,28 @@ bool casino_blackjack()
             flt(calcobjlv(rnd(stake + winrow * 2) + winrow * 3 / 2 + stake / 2),
                 quality);
             flttypemajor = choice(fsetwear);
-            itemcreate(-1, 0, -1, -1, 0);
-            if (inv[ci].number() == 0)
+            if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
             {
-                --cnt;
-                continue;
+                snd("core.get3");
+                noteadd(
+                    "@GR" +
+                    i18n::s.get("core.casino.blackjack.game.loot", *item));
+                break;
             }
         }
-        snd("core.get3");
-        noteadd(
-            "@GR" + i18n::s.get("core.casino.blackjack.game.loot", inv[ci]));
         if (winrow > 3)
         {
             // Potion of cure corruption
             if (winrow + 1 > rnd(10))
             {
                 flt();
-                itemcreate(-1, 559, -1, -1, 0);
-                snd("core.get3");
-                noteadd(
-                    "@GR" +
-                    i18n::s.get("core.casino.blackjack.game.loot", inv[ci]));
+                if (const auto item = itemcreate_extra_inv(559, -1, -1, 0))
+                {
+                    snd("core.get3");
+                    noteadd(
+                        "@GR" +
+                        i18n::s.get("core.casino.blackjack.game.loot", *item));
+                }
             }
         }
         list(0, listmax) = 0;

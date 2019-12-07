@@ -365,45 +365,57 @@ void initialize_pc_character()
     cdata.player().original_relationship = 10;
     cdata.player().has_own_sprite() = true;
     flt();
-    itemcreate(0, 333, -1, -1, 0);
-    inv[ci].set_number(8);
+    if (const auto item = itemcreate_player_inv(333, 0))
+    {
+        item->set_number(8);
+    }
     flt();
-    itemcreate(0, 233, -1, -1, 0);
-    inv[ci].set_number(4);
+    if (const auto item = itemcreate_player_inv(233, 0))
+    {
+        item->set_number(4);
+    }
     flt();
-    itemcreate(0, 31, -1, -1, 0);
-    inv[ci].set_number(2);
+    if (const auto item = itemcreate_player_inv(31, 0))
+    {
+        item->set_number(2);
+    }
     if (sdata(150, 0) == 0)
     {
         flt();
-        itemcreate(0, 68, -1, -1, 0);
-        inv[ci].set_number(3);
+        if (const auto item = itemcreate_player_inv(68, 0))
+        {
+            item->set_number(3);
+        }
     }
     if (cdatan(3, 0) == u8"core.pianist"s)
     {
         flt();
-        itemcreate(0, 88, -1, -1, 0);
+        itemcreate_player_inv(88, 0);
     }
     if (cdatan(3, 0) == u8"core.farmer"s)
     {
         flt();
-        itemcreate(0, 256, -1, -1, 0);
+        itemcreate_player_inv(256, 0);
     }
     if (cdatan(3, 0) == u8"core.wizard"s || cdatan(3, 0) == u8"core.warmage"s)
     {
         flt();
-        itemcreate(0, 116, -1, -1, 0);
+        itemcreate_player_inv(116, 0);
         flt();
-        itemcreate(0, 257, -1, -1, 0);
-        inv[ci].set_number(3);
+        if (const auto item = itemcreate_player_inv(257, 0))
+        {
+            item->set_number(3);
+        }
     }
     if (cdatan(3, 0) == u8"core.priest"s)
     {
         flt();
-        itemcreate(0, 249, -1, -1, 0);
-        inv[ci].set_number(3);
+        if (const auto item = itemcreate_player_inv(249, 0))
+        {
+            item->set_number(3);
+        }
         flt();
-        itemcreate(0, 378, -1, -1, 0);
+        itemcreate_player_inv(378, 0);
     }
     gain_race_feat();
     cdata.player().skill_bonus = 5 + trait(154);
@@ -773,12 +785,11 @@ int fltsetdungeon()
 
 
 
-int cargocheck()
+bool cargocheck(const Item& item)
 {
-    if (!the_item_db[itemid2int(inv[ci].id)]->is_cargo)
-    {
-        return 1;
-    }
+    if (!the_item_db[itemid2int(item.id)]->is_cargo)
+        return true;
+
     if (map_data.type != mdata_t::MapType::world_map &&
         map_data.type != mdata_t::MapType::player_owned &&
         map_data.type != mdata_t::MapType::town &&
@@ -789,11 +800,11 @@ int cargocheck()
         txt(i18n::s.get("core.ui.inv.cannot_use_cargo_items"),
             Message::only_once{true});
         snd("core.fail1");
-        return 0;
+        return false;
     }
     else
     {
-        return 1;
+        return true;
     }
 }
 
@@ -2576,19 +2587,14 @@ int convertartifact(int item_index, int ignore_external_container)
     }
     n_at_m163 = ""s + itemname(item_index);
 
-    while (1)
+    while (true)
     {
         flt(the_item_db[itemid2int(inv[item_index].id)]->level,
             Quality::miracle);
         flttypeminor = the_item_db[itemid2int(inv[item_index].id)]->subcategory;
         inv[item_index].remove();
 
-        itemcreate(
-            inv_getowner(item_index),
-            0,
-            inv[item_index].position.x,
-            inv[item_index].position.y,
-            0);
+        itemcreate(inv_getowner(item_index), 0, inv[item_index].position, 0);
         if (inv[item_index].quality != Quality::special)
         {
             break;
@@ -2981,8 +2987,8 @@ void character_drops_item()
             }
             item.position.x = cdata[rc].position.x;
             item.position.y = cdata[rc].position.y;
-            int stat = item_stack(-1, ci);
-            if (stat == 0)
+            const auto stacked = item_stack(-1, inv[ci]);
+            if (!stacked)
             {
                 ti = inv_getfreeid(-1);
                 if (ti == -1)
@@ -3114,8 +3120,8 @@ void character_drops_item()
         inv[ci].position.x = cdata[rc].position.x;
         inv[ci].position.y = cdata[rc].position.y;
         itemturn(inv[ci]);
-        int stat = item_stack(-1, ci);
-        if (stat == 0)
+        const auto stacked = item_stack(-1, inv[ci]);
+        if (!stacked)
         {
             ti = inv_getfreeid(-1);
             if (ti == -1)
@@ -3132,11 +3138,9 @@ void character_drops_item()
         if (cdata[rc].gold > 0)
         {
             flt();
-            itemcreate(
-                -1,
+            itemcreate_extra_inv(
                 54,
-                cdata[rc].position.x,
-                cdata[rc].position.y,
+                cdata[rc].position,
                 cdata[rc].gold / (1 + 3 * (cdata[rc].drops_gold() == 0)));
             cdata[rc].gold -=
                 cdata[rc].gold / (1 + 3 * (cdata[rc].drops_gold() == 0));
@@ -3152,7 +3156,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         break;
     case 7:
@@ -3162,7 +3166,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         break;
     case 3:
@@ -3172,7 +3176,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         break;
     case 2:
@@ -3182,7 +3186,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -3190,7 +3194,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         break;
     case 4:
@@ -3200,7 +3204,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         break;
     case 5:
@@ -3210,7 +3214,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         break;
     }
@@ -3224,7 +3228,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -3232,7 +3236,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -3240,7 +3244,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -3248,7 +3252,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -3256,7 +3260,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         break;
     case 1:
@@ -3266,8 +3270,11 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 62000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
-            remain_make(ci, rc);
+            if (const auto item =
+                    itemcreate_extra_inv(0, cdata[rc].position, 0))
+            {
+                remain_make(*item, cdata[rc]);
+            }
         }
         break;
     case 2:
@@ -3277,8 +3284,11 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 62000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
-            remain_make(ci, rc);
+            if (const auto item =
+                    itemcreate_extra_inv(0, cdata[rc].position, 0))
+            {
+                remain_make(*item, cdata[rc]);
+            }
         }
         break;
     case 6:
@@ -3288,7 +3298,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 32000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -3296,7 +3306,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 34000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -3304,7 +3314,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -3312,7 +3322,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -3320,7 +3330,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -3328,7 +3338,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -3336,7 +3346,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -3344,7 +3354,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 77000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         break;
     case 4:
@@ -3354,7 +3364,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -3362,7 +3372,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -3370,7 +3380,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(4) == 0)
         {
@@ -3378,7 +3388,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         break;
     case 5:
@@ -3388,7 +3398,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -3396,7 +3406,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(15) == 0)
         {
@@ -3404,7 +3414,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -3412,7 +3422,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -3420,7 +3430,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -3428,7 +3438,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(4) == 0)
         {
@@ -3436,7 +3446,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         if (rnd(4) == 0)
         {
@@ -3444,7 +3454,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 77000;
             flttypeminor = 0;
-            itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
+            itemcreate_extra_inv(0, cdata[rc].position, 0);
         }
         break;
     }
@@ -3455,8 +3465,10 @@ void character_drops_item()
         flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
         flttypemajor = 62000;
         flttypeminor = 0;
-        itemcreate(-1, 0, cdata[rc].position.x, cdata[rc].position.y, 0);
-        remain_make(ci, rc);
+        if (const auto item = itemcreate_extra_inv(0, cdata[rc].position, 0))
+        {
+            remain_make(*item, cdata[rc]);
+        }
     }
     if (game_data.current_map == mdata_t::MapId::show_house)
     {
@@ -3471,41 +3483,49 @@ void character_drops_item()
             (cdata[rc].quality == Quality::godly && rnd(3) == 0))
         {
             flt();
-            itemcreate(-1, 504, cdata[rc].position.x, cdata[rc].position.y, 0);
-            inv[ci].param1 = cdata[rc].image;
-            inv[ci].subname = charaid2int(cdata[rc].id);
-            cell_refresh(inv[ci].position.x, inv[ci].position.y);
+            if (const auto item =
+                    itemcreate_extra_inv(504, cdata[rc].position, 0))
+            {
+                item->param1 = cdata[rc].image;
+                item->subname = charaid2int(cdata[rc].id);
+                cell_refresh(item->position.x, item->position.y);
+            }
         }
         if (rnd(175) == 0 || cdata[rc].quality == Quality::special || 0 ||
             (cdata[rc].quality == Quality::miracle && rnd(2) == 0) ||
             (cdata[rc].quality == Quality::godly && rnd(3) == 0))
         {
             flt();
-            itemcreate(-1, 503, cdata[rc].position.x, cdata[rc].position.y, 0);
-            inv[ci].param1 = cdata[rc].image;
-            inv[ci].subname = charaid2int(cdata[rc].id);
-            cell_refresh(inv[ci].position.x, inv[ci].position.y);
+            if (const auto item =
+                    itemcreate_extra_inv(503, cdata[rc].position, 0))
+            {
+                item->param1 = cdata[rc].image;
+                item->subname = charaid2int(cdata[rc].id);
+                cell_refresh(item->position.x, item->position.y);
+            }
         }
     }
     if (cdata[rc].character_role == 1010)
     {
         flt();
-        itemcreate(-1, 361, cdata[rc].position.x, cdata[rc].position.y, 0);
-        inv[ci].param1 = cdata[rc].shop_store_id;
-        inv[ci].own_state = 2;
+        if (const auto item = itemcreate_extra_inv(361, cdata[rc].position, 0))
+        {
+            item->param1 = cdata[rc].shop_store_id;
+            item->own_state = 2;
+        }
     }
     if (rollanatomy == 1 || cdata[rc].quality >= Quality::miracle || 0 ||
         cdata[rc].is_livestock() == 1 || 0)
     {
         flt();
-        if (itemcreate(-1, 204, cdata[rc].position.x, cdata[rc].position.y, 0))
+        if (const auto item = itemcreate_extra_inv(204, cdata[rc].position, 0))
         {
-            remain_make(ci, rc);
+            remain_make(*item, cdata[rc]);
             if (cdata[rc].is_livestock() == 1)
             {
                 if (sdata(161, 0) != 0)
                 {
-                    inv[ci].modify_number(
+                    item->modify_number(
                         rnd(1 + (sdata(161, 0) > cdata[rc].level)));
                 }
             }
@@ -3614,114 +3634,94 @@ void proc_pregnant()
 
 
 
-void proc_negative_equipments()
+void proc_one_equipment_with_negative_enchantments(
+    Character& chara,
+    Item& equipment)
 {
-    for (int i = 0; i < 30; ++i)
+    for (const auto& enc : equipment.enchantments)
     {
-        if (cdata[cc].body_parts[i] % 10000 == 0)
+        if (enc.id == 0)
+            break;
+
+        switch (enc.id)
+        {
+        case 21:
+            if (map_data.type != mdata_t::MapType::world_map)
+            {
+                if (rnd(25) < clamp(std::abs(enc.power) / 50, 1, 25))
+                {
+                    efid = 408;
+                    tc = chara.index;
+                    magic();
+                }
+            }
+            break;
+        case 45:
+            if (rnd(4) == 0)
+            {
+                if (is_in_fov(chara))
+                {
+                    txt(i18n::s.get("core.misc.curse.blood_sucked", chara),
+                        Message::color{ColorIndex::purple});
+                }
+                chara.bleeding += std::abs(enc.power) / 25 + 3;
+            }
+            break;
+        case 46:
+            if (rnd(20) == 0)
+            {
+                if (is_in_fov(chara))
+                {
+                    txt(i18n::s.get(
+                            "core.misc.curse.experience_reduced", chara),
+                        Message::color{ColorIndex::purple});
+                }
+                chara.experience -= chara.required_experience /
+                        (300 - clamp(std::abs(enc.power) / 2, 0, 50)) +
+                    rnd(100);
+                if (chara.experience < 0)
+                {
+                    chara.experience = 0;
+                }
+            }
+            break;
+        case 47:
+            if (map_data.type != mdata_t::MapType::world_map &&
+                map_data.type != mdata_t::MapType::player_owned)
+            {
+                if (rnd(50) < clamp(std::abs(enc.power) / 50, 1, 50))
+                {
+                    if (is_in_fov(chara))
+                    {
+                        txt(i18n::s.get("core.misc.curse.creature_summoned"),
+                            Message::color{ColorIndex::purple});
+                    }
+                    for (int _i = 0, n = 1 + rnd(3); _i < n; ++_i)
+                    {
+                        flt(calcobjlv(cdata.player().level * 3 / 2 + 3),
+                            calcfixlv(Quality::bad));
+                        chara_create(-1, 0, chara.position.x, chara.position.y);
+                    }
+                }
+            }
+            break;
+        default: break;
+        }
+    }
+}
+
+
+
+void proc_negative_enchantments(Character& chara)
+{
+    for (const auto& body_part : chara.body_parts)
+    {
+        if (body_part % 10000 == 0)
         {
             continue;
         }
-        ci = cdata[cc].body_parts[i] % 10000 - 1;
-        for (int cnt = 0; cnt < 15; ++cnt)
-        {
-            if (inv[ci].enchantments[cnt].id == 0)
-            {
-                break;
-            }
-            if (inv[ci].enchantments[cnt].id == 21)
-            {
-                if (map_data.type != mdata_t::MapType::world_map)
-                {
-                    if (rnd(25) <
-                        clamp(
-                            std::abs(inv[ci].enchantments[cnt].power) / 50,
-                            1,
-                            25))
-                    {
-                        efid = 408;
-                        tc = cc;
-                        magic();
-                        continue;
-                    }
-                }
-            }
-            if (inv[ci].enchantments[cnt].id == 45)
-            {
-                if (rnd(4) == 0)
-                {
-                    if (is_in_fov(cdata[cc]))
-                    {
-                        txt(i18n::s.get(
-                                "core.misc.curse.blood_sucked", cdata[cc]),
-                            Message::color{ColorIndex::purple});
-                    }
-                    cdata[cc].bleeding +=
-                        std::abs(inv[ci].enchantments[cnt].power) / 25 + 3;
-                    continue;
-                }
-            }
-            if (inv[ci].enchantments[cnt].id == 46)
-            {
-                if (rnd(20) == 0)
-                {
-                    if (is_in_fov(cdata[cc]))
-                    {
-                        txt(i18n::s.get(
-                                "core.misc.curse.experience_reduced",
-                                cdata[cc]),
-                            Message::color{ColorIndex::purple});
-                    }
-                    cdata[cc].experience -= cdata[cc].required_experience /
-                            (300 -
-                             clamp(
-                                 std::abs(inv[ci].enchantments[cnt].power) / 2,
-                                 0,
-                                 50)) +
-                        rnd(100);
-                    if (cdata[cc].experience < 0)
-                    {
-                        cdata[cc].experience = 0;
-                    }
-                    continue;
-                }
-            }
-            if (inv[ci].enchantments[cnt].id == 47)
-            {
-                if (map_data.type != mdata_t::MapType::world_map)
-                {
-                    if (map_data.type != mdata_t::MapType::player_owned)
-                    {
-                        if (rnd(50) <
-                            clamp(
-                                std::abs(inv[ci].enchantments[cnt].power) / 50,
-                                1,
-                                50))
-                        {
-                            if (is_in_fov(cdata[cc]))
-                            {
-                                txt(i18n::s.get(
-                                        "core.misc.curse.creature_summoned"),
-                                    Message::color{ColorIndex::purple});
-                            }
-                            for (int cnt = 0, cnt_end = (1 + rnd(3));
-                                 cnt < cnt_end;
-                                 ++cnt)
-                            {
-                                flt(calcobjlv(cdata.player().level * 3 / 2 + 3),
-                                    calcfixlv(Quality::bad));
-                                chara_create(
-                                    -1,
-                                    0,
-                                    cdata[cc].position.x,
-                                    cdata[cc].position.y);
-                            }
-                            continue;
-                        }
-                    }
-                }
-            }
-        }
+        ci = body_part % 10000 - 1;
+        proc_one_equipment_with_negative_enchantments(chara, inv[ci]);
     }
 }
 
@@ -3734,7 +3734,8 @@ void auto_identify()
     {
         return;
     }
-    for (const auto& item : inv.pc())
+
+    for (auto&& item : inv.pc())
     {
         if (item.number() == 0 ||
             item.identify_state == IdentifyState::completely)
@@ -3745,35 +3746,35 @@ void auto_identify()
         {
             continue;
         }
-        ci = item.index;
-        p(0) = sdata(13, 0) + sdata(162, 0) * 5;
-        p(1) = 1500 + item.difficulty_of_identification * 5;
-        if (p > rnd(p(1) * 5))
+
+        const auto skill = sdata(13, 0) + sdata(162, 0) * 5;
+        const auto difficulty = 1500 + item.difficulty_of_identification * 5;
+        if (skill > rnd(difficulty * 5))
         {
-            s = itemname(ci);
-            item_identify(inv[ci], IdentifyState::completely);
-            itemmemory(0, itemid2int(inv[ci].id)) = 1;
+            const auto prev_name = itemname(item.index);
+            item_identify(item, IdentifyState::completely);
+            itemmemory(0, itemid2int(item.id)) = 1;
             if (!g_config.hide_autoidentify())
             {
                 txt(i18n::s.get(
-                    "core.misc.identify.fully_identified", s(0), inv[ci]));
+                    "core.misc.identify.fully_identified", prev_name, item));
             }
             chara_gain_skill_exp(cdata.player(), 162, 50);
         }
-        if (inv[ci].identify_state <= IdentifyState::partly)
+        if (item.identify_state <= IdentifyState::partly)
         {
-            if (p > rnd(p(1)))
+            if (skill > rnd(difficulty))
             {
                 if (!g_config.hide_autoidentify())
                 {
                     txt(i18n::s.get(
                         "core.misc.identify.almost_identified",
-                        inv[ci],
+                        item,
                         i18n::s.get_enum(
                             u8"core.ui.quality",
-                            static_cast<int>(inv[ci].quality))));
+                            static_cast<int>(item.quality))));
                 }
-                item_identify(inv[ci], IdentifyState::almost);
+                item_identify(item, IdentifyState::almost);
                 chara_gain_skill_exp(cdata.player(), 162, 50);
             }
         }
@@ -3794,16 +3795,12 @@ void lovemiracle(int chara_index)
     flt();
     if (rnd(2))
     {
-        if (itemcreate(
-                -1,
-                573,
-                cdata[chara_index].position.x,
-                cdata[chara_index].position.y,
-                0))
+        if (const auto item =
+                itemcreate_extra_inv(573, cdata[chara_index].position, 0))
         {
-            inv[ci].subname = charaid2int(cdata[chara_index].id);
-            inv[ci].weight = cdata[chara_index].weight * 10 + 250;
-            inv[ci].value = clamp(
+            item->subname = charaid2int(cdata[chara_index].id);
+            item->weight = cdata[chara_index].weight * 10 + 250;
+            item->value = clamp(
                 cdata[chara_index].weight * cdata[chara_index].weight / 10000,
                 200,
                 40000);
@@ -3811,14 +3808,10 @@ void lovemiracle(int chara_index)
     }
     else
     {
-        if (itemcreate(
-                -1,
-                574,
-                cdata[chara_index].position.x,
-                cdata[chara_index].position.y,
-                0))
+        if (const auto item =
+                itemcreate_extra_inv(574, cdata[chara_index].position, 0))
         {
-            inv[ci].subname = charaid2int(cdata[chara_index].id);
+            item->subname = charaid2int(cdata[chara_index].id);
         }
     }
     ci = cibk;
@@ -4031,7 +4024,7 @@ TurnResult exit_map()
                     if (area_data[game_data.current_map].id ==
                         mdata_t::MapId::the_void)
                     {
-                        if (itemfind(0, 742) == -1)
+                        if (!itemfind(0, 742))
                         {
                             txt(i18n::s.get(
                                 "core.action.exit_map.not_permitted"));
@@ -4832,7 +4825,7 @@ void supply_income()
             rnd((calcincome(cnt) / 3 + 1));
         income += p;
         flt();
-        itemcreate(-1, 54, -1, -1, p);
+        itemcreate_extra_inv(54, -1, -1, p);
         if (cnt == 5 || cnt == 6)
         {
             continue;
@@ -4858,7 +4851,7 @@ void supply_income()
             {
                 dbid = 559;
             }
-            itemcreate(-1, dbid, -1, -1, 0);
+            itemcreate_extra_inv(dbid, -1, -1, 0);
             ++income(1);
         }
     }
@@ -4871,7 +4864,7 @@ void supply_income()
         }
         income += p;
         flt();
-        itemcreate(-1, 54, -1, -1, p);
+        itemcreate_extra_inv(54, -1, -1, p);
     }
     if (income != 0 || income(1) != 0)
     {
@@ -4910,10 +4903,12 @@ void supply_income()
                 inv_compress(-1);
             }
             flt();
-            itemcreate(-1, 615, -1, -1, 0);
-            inv[ci].subname =
-                game_data.cost_to_hire + calccostbuilding() + calccosttax();
-            inv[ci].subname = inv[ci].subname * (100 + rnd(20)) / 100;
+            if (const auto item = itemcreate_extra_inv(615, -1, -1, 0))
+            {
+                item->subname =
+                    game_data.cost_to_hire + calccostbuilding() + calccosttax();
+                item->subname = item->subname * (100 + rnd(20)) / 100;
+            }
             mode = 0;
             ++game_data.left_bill;
             txt(i18n::s.get("core.misc.tax.bill"));
@@ -5161,7 +5156,7 @@ int key_direction(const std::string& action)
 
 
 
-TurnResult step_into_gate()
+TurnResult step_into_gate(Item& moon_gate)
 {
     if (maybe_show_ex_help(17, true))
     {
@@ -5173,7 +5168,7 @@ TurnResult step_into_gate()
         save_game();
     }
     txt(i18n::s.get("core.action.exit_map.gate.step_into"));
-    inv[ci].modify_number(-1);
+    moon_gate.modify_number(-1);
     txt(i18n::s.get("core.action.exit_map.gate.need_network"));
     update_screen();
     return TurnResult::pc_turn_user_error;
@@ -6019,45 +6014,33 @@ void try_to_return()
 
 
 
-TurnResult do_gatcha()
+TurnResult do_gatcha(Item& gatcha_machine)
 {
-    int tmat = 0;
     screenupdate = -1;
     update_screen();
-    if (inv[ci].id == ItemId::red_treasure_machine)
-    {
-        tmat = 40;
-    }
-    if (inv[ci].id == ItemId::blue_treasure_machine)
-    {
-        tmat = 41;
-    }
-    txt(i18n::s.get("core.action.gatcha.prompt", matname(tmat)));
+    const auto required_material =
+        gatcha_machine.id == ItemId::red_treasure_machine ? 40 : 41;
+    txt(i18n::s.get("core.action.gatcha.prompt", matname(required_material)));
     if (yes_no())
     {
-        if (mat(tmat) > 0)
+        if (mat(required_material) > 0)
         {
             snd("core.gasha");
-            matdelmain(tmat);
-            if (inv[ci].id == ItemId::red_treasure_machine)
-            {
-                p = 415;
-            }
-            else
-            {
-                p = 416;
-            }
+            matdelmain(required_material);
+            const auto gatcha_ball_id =
+                gatcha_machine.id == ItemId::red_treasure_machine ? 415 : 416;
             flt();
-            if (itemcreate(
-                    -1, p, cdata[cc].position.x, cdata[cc].position.y, 0))
+            if (const auto item =
+                    itemcreate_extra_inv(gatcha_ball_id, cdata[cc].position, 0))
             {
-                inv[ci].param2 = 0;
+                item->param2 = 0;
             }
             txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }
         else
         {
-            txt(i18n::s.get("core.action.gatcha.do_not_have", matname(tmat)));
+            txt(i18n::s.get(
+                "core.action.gatcha.do_not_have", matname(required_material)));
         }
     }
     return TurnResult::turn_end;
@@ -6065,22 +6048,22 @@ TurnResult do_gatcha()
 
 
 
-int read_textbook()
+bool read_textbook(Item& textbook)
 {
-    if (inv[ci].id == ItemId::textbook)
+    if (textbook.id == ItemId::textbook)
     {
-        if (sdata.get(inv[ci].param1, 0).original_level == 0)
+        if (sdata.get(textbook.param1, 0).original_level == 0)
         {
             txt(i18n::s.get("core.action.read.book.not_interested"));
             if (!yes_no())
             {
-                return 0;
+                return false;
             }
         }
     }
     game_data.activity_about_to_start = 104;
     activity_others(cdata[cc]);
-    return 1;
+    return true;
 }
 
 
@@ -7020,6 +7003,7 @@ void map_global_proc_travel_events()
 }
 
 
+
 int decode_book()
 {
     int cibkread = 0;
@@ -7142,7 +7126,7 @@ int decode_book()
         inv[ci].param2 = 1;
         inv[ci].count = 1;
         inv[ci].has_charge() = false;
-        item_stack(0, ci, 1);
+        item_stack(0, inv[ci], true);
     }
     else
     {
@@ -7200,15 +7184,7 @@ int read_normal_book()
     }
     if (inv[ci].id == ItemId::textbook)
     {
-        int stat = read_textbook();
-        if (stat == 1)
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
+        return read_textbook(inv[ci]);
     }
     if (inv[ci].id == ItemId::book_of_rachel)
     {
@@ -7601,12 +7577,8 @@ int drink_well()
         if (p > 55)
         {
             flt();
-            itemcreate(
-                -1,
-                54,
-                cdata[cc].position.x,
-                cdata[cc].position.y,
-                rnd(sdata(159, cc) / 2 * 50 + 100) + 1);
+            itemcreate_extra_inv(
+                54, cdata[cc].position, rnd(sdata(159, cc) / 2 * 50 + 100) + 1);
             txt(i18n::s.get(
                 "core.action.drink.well.effect.finds_gold", cdata[cc]));
             break;
@@ -8401,9 +8373,9 @@ int pick_up_item(bool play_sound)
         inv[ci].own_state = 0;
     }
     inv[ci].is_quest_target() = false;
-    item_checkknown(ci);
-    int stat = item_stack(cc, ci);
-    if (stat == 0)
+    item_checkknown(inv[ci]);
+    const auto stacked = item_stack(cc, inv[ci]);
+    if (!stacked)
     {
         ti = inv_getfreeid(cc);
         if (ti == -1)
@@ -8458,18 +8430,18 @@ int pick_up_item(bool play_sound)
         if (invctrl == 11)
         {
             txt(i18n::s.get("core.action.pick_up.you_buy", itemname(ti, in)));
-            sellgold = calcitemvalue(ti, 0) * in;
+            sellgold = calcitemvalue(inv[ti], 0) * in;
             snd_("core.paygold1");
             cdata.player().gold -= sellgold;
             earn_gold(cdata[tc], sellgold);
             if (the_item_db[itemid2int(inv[ti].id)]->category == 92000)
             {
-                inv[ti].param2 = calcitemvalue(ti, 0);
+                inv[ti].param2 = calcitemvalue(inv[ti], 0);
             }
         }
         if (invctrl == 12)
         {
-            sellgold = calcitemvalue(ci, 1) * in;
+            sellgold = calcitemvalue(inv[ci], 1) * in;
             if (!inv[ti].is_stolen())
             {
                 txt(i18n::s.get(
@@ -8626,7 +8598,7 @@ void unequip_item(int cc)
     cdata[cc].body_parts[body - 100] =
         cdata[cc].body_parts[body - 100] / 10000 * 10000;
     inv[ci].body_part = 0;
-    item_stack(cc, ci);
+    item_stack(cc, inv[ci]);
 }
 
 
@@ -8680,9 +8652,9 @@ TurnResult do_bash()
                 }
             }
             flt();
-            itemcreate(-1, inv[ci].param2, x, y, 0);
+            itemcreate_extra_inv(inv[ci].param2, x, y, 0);
             txt(i18n::s.get("core.action.bash.tree.falls_down", inv[ci]));
-            item_stack(-1, ci);
+            item_stack(-1, inv[ci]);
             return TurnResult::turn_end;
         }
     }
@@ -8749,7 +8721,7 @@ TurnResult do_bash()
                     (game_data.current_map != mdata_t::MapId::shelter_)),
                 calcfixlv(Quality::bad));
             flttypemajor = choice(fsetbarrel);
-            itemcreate(-1, 0, x, y, 0);
+            itemcreate_extra_inv(0, x, y, 0);
             if (is_in_fov(cdata[cc]))
             {
                 snd("core.bash1");
@@ -9139,7 +9111,7 @@ void proc_autopick()
         if (item.own_state > 0)
             continue;
 
-        item_checkknown(item.index);
+        item_checkknown(item);
 
         const auto x = cdata.player().position.x;
         const auto y = cdata.player().position.y;
@@ -9426,18 +9398,20 @@ void sense_map_feats_on_move()
 
 int unlock_box(int difficulty)
 {
-    int stat = item_find(636, 3);
-    if (stat == -1)
+    if (const auto lockpick = item_find(636, 3))
+    {
+        ti = lockpick->index;
+    }
+    else
     {
         txt(i18n::s.get("core.action.unlock.do_not_have_lockpicks"));
         return 0;
     }
-    ti = stat;
+
     txt(i18n::s.get("core.action.unlock.use_lockpick"));
     snd("core.locked1");
     {
-        int stat = item_find(637, 3);
-        if (stat != -1)
+        if (item_find(637, 3))
         {
             i = sdata(158, 0) * 150 / 100 + 5;
             txt(i18n::s.get("core.action.unlock.use_skeleton_key"));
@@ -9619,8 +9593,7 @@ void open_box()
                 in = rnd(20000) + 10000;
             }
         }
-        itemcreate(
-            -1, dbid, cdata.player().position.x, cdata.player().position.y, in);
+        itemcreate_extra_inv(dbid, cdata.player().position, in);
     }
     randomize();
     f = 0;
@@ -9641,8 +9614,7 @@ void open_box()
     if (f)
     {
         flt();
-        itemcreate(
-            -1, 622, cdata.player().position.x, cdata.player().position.y, 1);
+        itemcreate_extra_inv(622, cdata.player().position, 1);
     }
     snd("core.ding2");
     txt(i18n::s.get("core.action.open.goods", inv[ri]));
@@ -9760,12 +9732,7 @@ void open_new_year_gift()
             txt(i18n::s.get("core.action.open.new_year_gift.something_inside"));
         }
         flt();
-        itemcreate(
-            -1,
-            choice(isetgiftminor),
-            cdata.player().position.x,
-            cdata.player().position.y,
-            1);
+        itemcreate_extra_inv(choice(isetgiftminor), cdata.player().position, 1);
         return;
     }
     if (rnd(3) == 0)
@@ -9798,12 +9765,7 @@ void open_new_year_gift()
             txt(i18n::s.get("core.action.open.new_year_gift.wonderful"));
         }
         flt();
-        itemcreate(
-            -1,
-            choice(isetgiftgrand),
-            cdata.player().position.x,
-            cdata.player().position.y,
-            1);
+        itemcreate_extra_inv(choice(isetgiftgrand), cdata.player().position, 1);
         return;
     }
     if (is_in_fov(cdata[cc]))
@@ -9811,12 +9773,7 @@ void open_new_year_gift()
         txt(i18n::s.get("core.action.open.new_year_gift.something_inside"));
     }
     flt();
-    itemcreate(
-        -1,
-        choice(isetgiftmajor),
-        cdata.player().position.x,
-        cdata.player().position.y,
-        1);
+    itemcreate_extra_inv(choice(isetgiftmajor), cdata.player().position, 1);
 }
 
 
@@ -11137,9 +11094,11 @@ void create_harvested_item()
     {
         flttypemajor = 56000;
     }
-    itemcreate(0, dbid, -1, -1, 0);
-    txt(i18n::s.get("core.action.plant.harvest", inv[ci]));
-    item_stack(0, ci, 1);
+    if (const auto item = itemcreate_player_inv(dbid, 0))
+    {
+        txt(i18n::s.get("core.action.plant.harvest", *item));
+        item_stack(0, *item, true);
+    }
 }
 
 

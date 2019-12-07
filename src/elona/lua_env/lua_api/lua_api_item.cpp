@@ -192,10 +192,9 @@ LuaApiItem::create_xy(int x, int y, sol::table args)
         id = data.legacy_id;
     }
 
-    if (itemcreate(slot, id, x, y, number) != 0)
+    if (const auto item = itemcreate(slot, id, x, y, number))
     {
-        LuaItemHandle handle =
-            lua::lua->get_handle_manager().get_handle(inv[ci]);
+        LuaItemHandle handle = lua::lua->get_handle_manager().get_handle(*item);
         return handle;
     }
     else
@@ -249,7 +248,7 @@ sol::optional<LuaItemHandle> LuaApiItem::stack(
     auto& item_ref = lua::ref<Item>(handle);
 
     int tibk = ti;
-    item_stack(inventory_id, item_ref.index);
+    item_stack(inventory_id, item_ref);
     auto& item = inv[ti];
     ti = tibk;
 
@@ -297,13 +296,14 @@ sol::optional<LuaItemHandle> LuaApiItem::find(
     auto location_value =
         LuaEnums::ItemFindLocationTable.ensure_from_string(location);
 
-    auto stat = item_find(data.legacy_id, 3, location_value);
-    if (stat == -1)
+    if (const auto item = item_find(data.legacy_id, 3, location_value))
+    {
+        return lua::handle(*item);
+    }
+    else
     {
         return sol::nullopt;
     }
-
-    return lua::handle(inv[stat]);
 }
 
 

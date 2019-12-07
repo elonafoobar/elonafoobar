@@ -325,7 +325,7 @@ void make_item_list(int& mainweapon, int citrade)
             }
 
             // ここで呼び出す?
-            item_checkknown(item.index);
+            item_checkknown(item);
 
             // reftype使ってるとこ案外減ってる
             reftype = the_item_db[itemid2int(item.id)]->category;
@@ -519,8 +519,9 @@ void make_item_list(int& mainweapon, int citrade)
             }
             if (invctrl == 21)
             {
-                if (calcitemvalue(item.index, 0) * item.number() <
-                    calcitemvalue(citrade, 0) * inv[citrade].number() / 2 * 3)
+                if (calcitemvalue(item, 0) * item.number() <
+                    calcitemvalue(inv[citrade], 0) * inv[citrade].number() / 2 *
+                        3)
                 {
                     continue;
                 }
@@ -689,7 +690,7 @@ void make_item_list(int& mainweapon, int citrade)
             }
             if (invctrl == 28)
             {
-                list(1, listmax) = calcmedalvalue(item.index);
+                list(1, listmax) = calcmedalvalue(item);
             }
 
             ++listmax;
@@ -728,8 +729,7 @@ optional<MenuResult> check_command(int citrade)
     }
     if (invctrl == 19)
     {
-        int stat = item_find(60002, 2);
-        if (stat == -1)
+        if (!item_find(60002, 2))
         {
             txt(i18n::s.get("core.ui.inv.offer.no_altar"),
                 Message::only_once{true});
@@ -835,10 +835,10 @@ void show_message(int citrade)
         }
         if (invctrl == 28)
         {
-            int stat = item_find(622, 3, ItemFindLocation::player_inventory);
-            if (stat != -1)
+            if (const auto small_medals =
+                    item_find(622, 3, ItemFindLocation::player_inventory))
             {
-                p = inv[stat].number();
+                p = small_medals->number();
             }
             else
             {
@@ -1165,17 +1165,17 @@ void draw_item_list(int mainweapon)
         if (invctrl == 11)
         {
             s += u8" "s + cnvweight(inv[p].weight);
-            s(1) = ""s + calcitemvalue(p, 0) + u8" gp"s;
+            s(1) = ""s + calcitemvalue(inv[p], 0) + u8" gp"s;
         }
         if (invctrl == 12)
         {
             s += u8" "s + cnvweight(inv[p].weight);
-            s(1) = ""s + calcitemvalue(p, 1) + u8" gp"s;
+            s(1) = ""s + calcitemvalue(inv[p], 1) + u8" gp"s;
         }
         if (invctrl == 28)
         {
             s(1) = i18n::s.get(
-                "core.ui.inv.trade_medals.medal_value", calcmedalvalue(p));
+                "core.ui.inv.trade_medals.medal_value", calcmedalvalue(inv[p]));
         }
         if (invctrl != 3 && invctrl != 11 && invctrl != 22 && invctrl != 27 &&
             invctrl != 28)
@@ -1282,8 +1282,7 @@ OnEnterResult on_enter(int& citrade, bool dropcontinue)
         cc = 0;
     }
 
-    int stat = cargocheck();
-    if (stat == 0)
+    if (!cargocheck(inv[ci]))
     {
         return OnEnterResult{3};
     }
@@ -1478,14 +1477,14 @@ OnEnterResult on_enter(int& citrade, bool dropcontinue)
                     txt(i18n::s.get(
                         "core.ui.inv.buy.prompt",
                         itemname(ci, in),
-                        (in * calcitemvalue(ci, 0))));
+                        (in * calcitemvalue(inv[ci], 0))));
                 }
                 if (invctrl == 12)
                 {
                     txt(i18n::s.get(
                         "core.ui.inv.sell.prompt",
                         itemname(ci, in),
-                        (in * calcitemvalue(ci, 1))));
+                        (in * calcitemvalue(inv[ci], 1))));
                 }
                 if (!yes_no())
                 {
@@ -1496,7 +1495,7 @@ OnEnterResult on_enter(int& citrade, bool dropcontinue)
             }
             if (invctrl == 11)
             {
-                if (calcitemvalue(ci, 0) * in > cdata.player().gold)
+                if (calcitemvalue(inv[ci], 0) * in > cdata.player().gold)
                 {
                     screenupdate = -1;
                     update_screen();
@@ -1508,7 +1507,7 @@ OnEnterResult on_enter(int& citrade, bool dropcontinue)
             {
                 if (cdata[tc].character_role != 1009)
                 {
-                    if (calcitemvalue(ci, 1) * in > cdata[tc].gold)
+                    if (calcitemvalue(inv[ci], 1) * in > cdata[tc].gold)
                     {
                         screenupdate = -1;
                         update_screen();
@@ -1822,10 +1821,10 @@ OnEnterResult on_enter(int& citrade, bool dropcontinue)
             item_copy(ci, ti);
             inv[ci].modify_number(-1);
             inv[ti].set_number(1);
-            item_stack(tc, ti, 1);
+            item_stack(tc, inv[ti], true);
             ci = ti;
             rc = tc;
-            chara_set_item_which_will_be_used(cdata[tc]);
+            chara_set_item_which_will_be_used(cdata[tc], inv[ci]);
             wear_most_valuable_equipment_for_all_body_parts();
             if (tc < 16)
             {
@@ -1862,7 +1861,7 @@ OnEnterResult on_enter(int& citrade, bool dropcontinue)
         {
             txt(i18n::s.get("core.ui.inv.identify.fully", inv[ci]));
         }
-        item_stack(0, ci, 1);
+        item_stack(0, inv[ci], true);
         refresh_burden_state();
         invsubroutine = 0;
         result.succeeded = true;
@@ -2115,7 +2114,7 @@ OnEnterResult on_enter(int& citrade, bool dropcontinue)
             item_copy(ci, ti);
             inv[ci].modify_number((-in));
             inv[ti].set_number(in);
-            item_stack(0, ti, 1);
+            item_stack(0, inv[ti], true);
             convertartifact(ti);
         }
         rc = tc;
@@ -2169,27 +2168,27 @@ OnEnterResult on_enter(int& citrade, bool dropcontinue)
             snd("core.fail1");
             return OnEnterResult{1};
         }
-        int stat = item_find(622, 3, ItemFindLocation::player_inventory);
-        if (stat != -1)
+        if (const auto small_medals =
+                item_find(622, 3, ItemFindLocation::player_inventory))
         {
-            i = stat;
-            p = inv[i].number();
+            i = small_medals->index;
+            p = small_medals->number();
         }
         else
         {
             p = 0;
         }
-        if (p < calcmedalvalue(ci))
+        if (p < calcmedalvalue(inv[ci]))
         {
             txt(i18n::s.get("core.ui.inv.trade_medals.not_enough_medals"));
             snd("core.fail1");
             return OnEnterResult{1};
         }
-        inv[i].modify_number(-calcmedalvalue(ci));
+        inv[i].modify_number(-calcmedalvalue(inv[ci]));
         snd("core.paygold1");
         item_copy(ci, ti);
         txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", inv[ti]));
-        item_stack(0, ti, 1);
+        item_stack(0, inv[ti], true);
         convertartifact(ti, 1);
         return OnEnterResult{1};
     }

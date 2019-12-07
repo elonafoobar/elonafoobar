@@ -1152,6 +1152,8 @@ void append_accuracy_info(int val0)
     }
 }
 
+
+
 void show_weapon_dice(int val0)
 {
     tc = cc;
@@ -1197,6 +1199,8 @@ void show_weapon_dice(int val0)
     }
     ++p(2);
 }
+
+
 
 static TurnResult _visit_quest_giver(int quest_index)
 {
@@ -1299,7 +1303,7 @@ void begin_to_believe_god(int god_id)
     if (!result.canceled && result.value)
     {
         rtval = *result.value;
-        god_proc_switching_penalty();
+        god_proc_switching_penalty(core_god::int2godid(god_id));
     }
 }
 

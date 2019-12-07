@@ -1689,12 +1689,12 @@ void chara_relocate(
 
 
 
-void chara_set_item_which_will_be_used(Character& cc)
+void chara_set_item_which_will_be_used(Character& chara, const Item& item)
 {
-    int category = the_item_db[itemid2int(inv[ci].id)]->category;
+    const auto category = the_item_db[itemid2int(item.id)]->category;
     if (category == 57000 || category == 52000 || category == 53000)
     {
-        cc.item_which_will_be_used = ci;
+        chara.item_which_will_be_used = item.index;
     }
 }
 

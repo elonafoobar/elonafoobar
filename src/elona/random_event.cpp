@@ -347,8 +347,10 @@ void run_random_event(RandomEvent event)
         break;
     case 19:
         flt();
-        itemcreate(0, 621, -1, -1, 0);
-        txt(i18n::s.get("core.common.you_put_in_your_backpack", inv[ci]));
+        if (const auto item = itemcreate_player_inv(621, 0))
+        {
+            txt(i18n::s.get("core.common.you_put_in_your_backpack", *item));
+        }
         listmax = 1;
         event_bg = u8"bg_re15";
         break;
@@ -359,8 +361,10 @@ void run_random_event(RandomEvent event)
         break;
     case 21:
         flt();
-        itemcreate(0, 721, -1, -1, 0);
-        txt(i18n::s.get("core.common.you_put_in_your_backpack", inv[ci]));
+        if (const auto item = itemcreate_player_inv(721, 0))
+        {
+            txt(i18n::s.get("core.common.you_put_in_your_backpack", *item));
+        }
         listmax = 1;
         event_bg = u8"bg_re15";
         net_send_news("ehekatl");
@@ -501,12 +505,7 @@ void run_random_event(RandomEvent event)
             {
                 flt();
                 flttypemajor = choice(fsetremain);
-                itemcreate(
-                    -1,
-                    0,
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    0);
+                itemcreate_extra_inv(0, cdata.player().position, 0);
             }
             txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }
@@ -527,12 +526,7 @@ void run_random_event(RandomEvent event)
                 {
                     flttypemajor = choice(fsetremain);
                 }
-                itemcreate(
-                    -1,
-                    0,
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    0);
+                itemcreate_extra_inv(0, cdata.player().position, 0);
             }
             txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }

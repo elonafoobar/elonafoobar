@@ -192,25 +192,25 @@ void eh_conquer_nefia(const DeferredEvent&)
     snd("core.complete1");
     flt(0, calcfixlv());
     flttypemajor = 54000;
-    itemcreate(-1, 0, cdata.player().position.x, cdata.player().position.y, 0);
+    itemcreate_extra_inv(0, cdata.player().position, 0);
     flt();
-    itemcreate(
-        -1, 236, cdata.player().position.x, cdata.player().position.y, 0);
+    itemcreate_extra_inv(236, cdata.player().position, 0);
     nostack = 1;
     flt();
-    itemcreate(-1, 54, cdata.player().position.x, cdata.player().position.y);
-    inv[ci].set_number(200 + inv[ci].number() * 5);
+    if (const auto item = itemcreate_extra_inv(54, cdata.player().position, 0))
+    {
+        item->set_number(200 + item->number() * 5);
+    }
     flt();
-    itemcreate(
-        -1,
+    itemcreate_extra_inv(
         55,
-        cdata.player().position.x,
-        cdata.player().position.y,
+        cdata.player().position,
         clamp(rnd(3) + game_data.current_dungeon_level / 10, 1, 6));
     flt();
-    itemcreate(
-        -1, 239, cdata.player().position.x, cdata.player().position.y, 0);
-    inv[ci].param2 = 0;
+    if (const auto item = itemcreate_extra_inv(239, cdata.player().position, 0))
+    {
+        item->param2 = 0;
+    }
     txt(i18n::s.get("core.quest.completed"), Message::color{ColorIndex::green});
     snd("core.complete1");
     txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
@@ -343,18 +343,11 @@ void eh_marriage(const DeferredEvent&)
     {
         flt(calcobjlv(cdata[marry].level + 5), calcfixlv(Quality::good));
         flttypemajor = choice(fsetchest);
-        itemcreate(
-            -1, 0, cdata.player().position.x, cdata.player().position.y, 0);
+        itemcreate_extra_inv(0, cdata.player().position, 0);
     }
-    itemcreate(
-        -1, 559, cdata.player().position.x, cdata.player().position.y, 0);
+    itemcreate_extra_inv(559, cdata.player().position, 0);
     flt();
-    itemcreate(
-        -1,
-        55,
-        cdata.player().position.x,
-        cdata.player().position.y,
-        rnd(3) + 2);
+    itemcreate_extra_inv(55, cdata.player().position, rnd(3) + 2);
     txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
     save_set_autosave();
 }
@@ -576,12 +569,7 @@ void eh_lily_killed(const DeferredEvent& event)
     cdata[event.param1].character_role = 0;
     cdata[event.param1].set_state(Character::State::empty);
     flt();
-    itemcreate(
-        -1,
-        55,
-        cdata[event.param1].position.x,
-        cdata[event.param1].position.y,
-        4);
+    itemcreate_extra_inv(55, cdata[event.param1].position, 4);
     game_data.quest_flags.pael_and_her_mom = 1001;
     tc = chara_find("core.pael");
     if (tc != 0)
@@ -851,67 +839,62 @@ void eh_guest_visit(const DeferredEvent&)
         txt(i18n::s.get("core.event.guest_lost_his_way"));
         return;
     }
+
     if (rnd(3) == 0)
     {
         flt(0, Quality::good);
-        for (int i = 0; i < 1; ++i)
+        if ((game_data.last_month_when_trainer_visited !=
+                 game_data.date.month ||
+             rnd(5) == 0) &&
+            rnd(3))
         {
-            if (game_data.last_month_when_trainer_visited !=
-                    game_data.date.month ||
-                rnd(5) == 0)
-            {
-                if (rnd(3))
-                {
-                    chara_create(-1, 333, -3, 0);
-                    cdata[rc].character_role = 2005;
-                    break;
-                }
-            }
-            if (rnd(10) == 0)
-            {
-                chara_create(-1, 334, -3, 0);
-                cdata[rc].character_role = 2006;
-                break;
-            }
-            if (rnd(10) == 0)
-            {
-                chara_create(-1, 1, -3, 0);
-                cdata[rc].character_role = 2003;
-                cdata[rc].shop_rank = clamp(cdata.player().fame / 100, 20, 100);
-                break;
-            }
-            if (rnd(4) == 0)
-            {
-                chara_create(-1, 9, -3, 0);
-                cdata[rc].character_role = 2000;
-                break;
-            }
-            if (rnd(4) == 0)
-            {
-                chara_create(-1, 174, -3, 0);
-                cdata[rc].character_role = 2001;
-                break;
-            }
+            chara_create(-1, 333, -3, 0);
+            cdata[rc].character_role = 2005;
+        }
+        else if (rnd(10) == 0)
+        {
+            chara_create(-1, 334, -3, 0);
+            cdata[rc].character_role = 2006;
+        }
+        else if (rnd(10) == 0)
+        {
+            chara_create(-1, 1, -3, 0);
+            cdata[rc].character_role = 2003;
+            cdata[rc].shop_rank = clamp(cdata.player().fame / 100, 20, 100);
+        }
+        else if (rnd(4) == 0)
+        {
+            chara_create(-1, 9, -3, 0);
+            cdata[rc].character_role = 2000;
+        }
+        else if (rnd(4) == 0)
+        {
+            chara_create(-1, 174, -3, 0);
+            cdata[rc].character_role = 2001;
+        }
+        else
+        {
             chara_create(-1, 16, -3, 0);
             cdata[rc].character_role = 2002;
-            break;
         }
+        cdata[rc].relationship = 0;
+        cdata[rc].original_relationship = 0;
+        cdata[rc].is_temporary() = true;
         tc = rc;
-        cdata[tc].relationship = 0;
-        cdata[tc].original_relationship = 0;
-        cdata[tc].is_temporary() = true;
     }
     else
     {
-        p = 0;
+        int p = 0;
         tc = 0;
-        for (int j = 0; j < 100; ++j)
+        for (int _i = 0; _i < 100; ++_i)
         {
-            i = rnd(39) + 16;
-            if (cdata[i].state() == Character::State::adventurer_in_other_map &&
-                cdata[i].is_contracting() == 0 &&
-                cdata[i].current_map != game_data.current_map &&
-                cdata[i].relationship >= 0)
+            const auto adventurer_index = rnd(39) + 16;
+            const auto& adventurer = cdata[adventurer_index];
+            if (adventurer.state() ==
+                    Character::State::adventurer_in_other_map &&
+                !adventurer.is_contracting() &&
+                adventurer.current_map != game_data.current_map &&
+                adventurer.relationship >= 0)
             {
                 if (rnd(25) < p)
                 {
@@ -919,16 +902,16 @@ void eh_guest_visit(const DeferredEvent&)
                 }
                 if (tc == 0)
                 {
-                    tc = i;
+                    tc = adventurer_index;
                     ++p;
-                    if (cdata[tc].impression < 25)
+                    if (adventurer.impression < 25)
                     {
                         if (rnd(12) == 0)
                         {
                             break;
                         }
                     }
-                    if (cdata[tc].impression < 0)
+                    if (adventurer.impression < 0)
                     {
                         if (rnd(4))
                         {
@@ -937,9 +920,9 @@ void eh_guest_visit(const DeferredEvent&)
                     }
                     continue;
                 }
-                if (cdata[tc].impression < cdata[i].impression)
+                if (cdata[tc].impression < adventurer.impression)
                 {
-                    tc = i;
+                    tc = adventurer_index;
                     ++p;
                 }
             }
@@ -955,45 +938,37 @@ void eh_guest_visit(const DeferredEvent&)
         cyinit = cdata.player().position.y;
         chara_place();
     }
+
     cdata[tc].visited_just_now() = true;
-    i = 0;
-    for (int cnt = 0; cnt < 17; ++cnt) // 17?
+    optional_ref<const Item> chair_for_guest;
+    for (int cnt = 0; cnt < 17; ++cnt)
     {
-        int c{};
-        if (cnt == 0)
-        {
-            c = tc;
-        }
-        else
-        {
-            c = cnt - 1;
-        }
-        if (cdata[c].state() != Character::State::alive)
+        const auto chara_index = cnt == 0 ? tc : cnt - 1;
+        auto&& chara = cdata[chara_index];
+        if (chara.state() != Character::State::alive)
         {
             continue;
         }
-        if (game_data.mount != 0)
+        if (game_data.mount != 0 && chara.index == game_data.mount)
         {
-            if (c == game_data.mount)
-            {
-                continue;
-            }
+            continue;
         }
-        p(0) = 0;
-        p(1) = 6;
+        optional_ref<const Item> chair;
+        auto distance_to_guest_chair = 6;
         for (const auto& item : inv.ground())
         {
             if (item.number() == 0)
                 continue;
             if (item.function != 44)
                 continue;
-            if (c == tc)
+            if (chara.index == tc)
             {
                 if (item.param1 == 2)
                 {
-                    cell_swap(c, -1, item.position.x, item.position.y);
-                    i = item.index;
-                    p = item.index;
+                    cell_swap(
+                        chara.index, -1, item.position.x, item.position.y);
+                    chair_for_guest = item;
+                    chair = item;
                     break;
                 }
                 else
@@ -1001,49 +976,50 @@ void eh_guest_visit(const DeferredEvent&)
                     continue;
                 }
             }
-            if (i == 0)
+            if (!chair_for_guest)
             {
                 break;
             }
-            else if (item.index == i)
+            else if (item.index == chair_for_guest->index)
             {
                 continue;
             }
-            p(2) = dist(
+            const auto d = dist(
                 item.position.x,
                 item.position.y,
-                inv[i].position.x,
-                inv[i].position.y);
-            if (p(2) < p(1))
+                chair_for_guest->position.x,
+                chair_for_guest->position.y);
+            if (d < distance_to_guest_chair)
             {
                 if (cell_data.at(item.position.x, item.position.y)
                             .chara_index_plus_one == 0 ||
-                    c == 0 || c == tc)
+                    chara.index == 0 || chara.index == tc)
                 {
-                    p(0) = item.index;
-                    p(1) = p(2);
+                    chair = item;
+                    distance_to_guest_chair = d;
                 }
             }
-            if (c == 0 && item.param1 == 1)
+            if (chara.index == 0 && item.param1 == 1)
             {
-                p = item.index;
+                chair = item;
                 break;
             }
         }
-        if (p != 0)
+        if (chair)
         {
-            cell_swap(c, -1, inv[p].position.x, inv[p].position.y);
+            cell_swap(chara.index, -1, chair->position.x, chair->position.y);
         }
-        cdata[c].direction = direction(
-            cdata[c].position.x,
-            cdata[c].position.y,
+        chara.direction = direction(
+            chara.position.x,
+            chara.position.y,
             cdata[tc].position.x,
             cdata[tc].position.y);
-        if (c == 0)
+        if (chara.index == 0)
         {
-            game_data.player_next_move_direction = cdata[c].direction;
+            game_data.player_next_move_direction = chara.direction;
         }
     }
+
     talk_to_npc();
 }
 

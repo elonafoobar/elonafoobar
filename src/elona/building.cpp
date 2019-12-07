@@ -1077,7 +1077,7 @@ void show_shop_log()
         p = rnd(dblistmax);
         ci = dblist(0, p);
         int category = dblist(1, p);
-        int val0 = calcitemvalue(ci, 2);
+        int val0 = calcitemvalue(inv[ci], 2);
         val0 = val0 * int((10 + std::sqrt(sdata(156, worker) * 200))) / 100;
         if (val0 <= 1)
         {
@@ -1155,7 +1155,7 @@ void show_shop_log()
     if (income != 0)
     {
         flt();
-        itemcreate(-1, 54, -1, -1, income);
+        itemcreate_extra_inv(54, -1, -1, income);
     }
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
@@ -1165,17 +1165,17 @@ void show_shop_log()
             flt(list(0, cnt2), static_cast<Quality>(list(1, cnt2)));
             flttypemajor = elona::stoi(listn(0, cnt2));
             nostack = 1;
-            if (itemcreate(-1, 0, -1, -1, 0))
+            if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
             {
-                if (inv[ci].value > elona::stoi(listn(1, cnt2)) * 2)
+                if (item->value > elona::stoi(listn(1, cnt2)) * 2)
                 {
-                    item_stack(-1, ci);
+                    item_stack(-1, *item);
                     f = 1;
                     break;
                 }
                 else
                 {
-                    inv[ci].remove();
+                    item->remove();
                     if (cnt == 3)
                     {
                         f = 0;
@@ -1195,7 +1195,7 @@ void show_shop_log()
         }
         if (f == 0)
         {
-            itemcreate(-1, 54, -1, -1, elona::stoi(listn(1, cnt)));
+            itemcreate_extra_inv(54, -1, -1, elona::stoi(listn(1, cnt)));
             income += elona::stoi(listn(1, cnt));
         }
         else
@@ -1553,11 +1553,11 @@ void update_ranch()
                     (cdatan(2, chara.index) == "core.chicken" && rnd(20) == 0))
                 {
                     ++egg_or_milk_count;
-                    if (itemcreate(-1, 573, x, y, 0))
+                    if (const auto item = itemcreate_extra_inv(573, x, y, 0))
                     {
-                        inv[ci].subname = charaid2int(chara.id);
-                        inv[ci].weight = chara.weight * 10 + 250;
-                        inv[ci].value = clamp(
+                        item->subname = charaid2int(chara.id);
+                        item->weight = chara.weight * 10 + 250;
+                        item->value = clamp(
                             chara.weight * chara.weight / 10000, 200, 40000);
                     }
                 }
@@ -1568,9 +1568,9 @@ void update_ranch()
                     (cdatan(2, chara.index) == "core.sheep" && rnd(20) == 0))
                 {
                     ++egg_or_milk_count;
-                    if (itemcreate(-1, 574, x, y, 0))
+                    if (const auto item = itemcreate_extra_inv(574, x, y, 0))
                     {
-                        inv[ci].subname = charaid2int(chara.id);
+                        item->subname = charaid2int(chara.id);
                     }
                 }
                 break;
@@ -1578,11 +1578,11 @@ void update_ranch()
                 // Shit
                 if (rnd(80) == 0)
                 {
-                    if (itemcreate(-1, 575, x, y, 0))
+                    if (const auto item = itemcreate_extra_inv(575, x, y, 0))
                     {
-                        inv[ci].subname = charaid2int(chara.id);
-                        inv[ci].weight = chara.weight * 40 + 300;
-                        inv[ci].value =
+                        item->subname = charaid2int(chara.id);
+                        item->weight = chara.weight * 40 + 300;
+                        item->value =
                             clamp(chara.weight * chara.weight / 5000, 1, 20000);
                     }
                 }
@@ -1596,7 +1596,7 @@ void update_ranch()
                     {
                         dbid = 45;
                     }
-                    itemcreate(-1, dbid, x, y, 0);
+                    itemcreate_extra_inv(dbid, x, y, 0);
                 }
                 break;
             case 4:

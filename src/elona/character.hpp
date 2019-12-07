@@ -17,8 +17,13 @@
 #define ELONA_MAX_OTHER_CHARACTERS 188
 
 
+
 namespace elona
 {
+
+struct Item;
+
+
 
 /// @putit
 struct Buff
@@ -717,11 +722,11 @@ int chara_find(int id);
 int chara_find_ally(int id);
 int chara_get_free_slot();
 int chara_get_free_slot_ally();
-bool chara_unequip(int);
+bool chara_unequip(Item& item);
 int chara_custom_talk(int = 0, int = 0);
 int chara_impression_level(int = 0);
 void chara_modify_impression(Character& cc, int delta);
-void chara_set_item_which_will_be_used(Character& cc);
+void chara_set_item_which_will_be_used(Character& chara, const Item& item);
 int chara_armor_class(const Character& cc);
 int chara_breed_power(const Character&);
 

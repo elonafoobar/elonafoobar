@@ -298,17 +298,16 @@ void activity_perform_generate_item(
         }
     }
 
-    if (itemcreate(-1, dbid, x, y, 1))
+    if (const auto item = itemcreate_extra_inv(dbid, x, y, 1))
     {
-        // NOTE: may cause Lua creation
-        // callbacks to run twice.
-        inv[ci].modify_number(-1);
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        // NOTE: may cause Lua creation callbacks to run twice.
+        item->modify_number(-1);
+        cell_refresh(item->position.x, item->position.y);
         ThrowingObjectAnimation(
-            inv[ci].position, performer.position, inv[ci].image, inv[ci].color)
+            item->position, performer.position, item->image, item->color)
             .play();
-        inv[ci].modify_number(1);
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        item->modify_number(1);
+        cell_refresh(item->position.x, item->position.y);
         ++performance_tips;
     }
 }
@@ -964,7 +963,7 @@ void activity_others_doing(Character& doer)
                 f = 1;
             }
         }
-        if (itemusingfind(ci, true) != -1)
+        if (itemusingfind(inv[ci], true) != -1)
         {
             if (f != 1)
             {
@@ -1039,7 +1038,7 @@ void activity_others_end(Character& doer)
         }
         else
         {
-            item_stack(0, ti, 1);
+            item_stack(0, inv[ti], true);
             sound_pick_up();
         }
         refresh_burden_state();
@@ -1429,8 +1428,7 @@ void activity_sex()
         {
             chara_modify_impression(cdata[tc], 5);
             flt();
-            itemcreate(
-                -1, 54, cdata[cc].position.x, cdata[cc].position.y, sexvalue);
+            itemcreate_extra_inv(54, cdata[cc].position, sexvalue);
             dialog_after +=
                 i18n::s.get("core.common.something_is_put_on_the_ground");
             modify_karma(cdata.player(), -1);
@@ -1479,14 +1477,14 @@ void activity_eating_finish(Character& eater, Item& food)
     // `ci` may be overwritten in apply_general_eating_effect() call. E.g.,
     // vomit is created.
     const auto ci_save = food.index;
-    apply_general_eating_effect(food.index);
+    apply_general_eating_effect(eater, food);
     ci = ci_save;
 
     if (eater.index == 0)
     {
         item_identify(food, IdentifyState::partly);
     }
-    if (chara_unequip(food.index))
+    if (chara_unequip(food))
     {
         chara_refresh(eater.index);
     }
@@ -1604,7 +1602,7 @@ void spot_fishing()
         if (rnd(5) == 0)
         {
             fishstat = 1;
-            fish = fish_select_at_random();
+            fish = fish_select_at_random(inv[cdata[cc].activity.item].param4);
         }
         if (fishstat == 1)
         {
@@ -1798,26 +1796,12 @@ void spot_digging()
                 msg_halt();
                 snd("core.ding2");
                 flt();
-                itemcreate(
-                    -1,
-                    622,
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    2 + rnd(3));
+                itemcreate_extra_inv(622, cdata.player().position, 2 + rnd(3));
                 flt();
-                itemcreate(
-                    -1,
-                    55,
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    1 + rnd(3));
+                itemcreate_extra_inv(55, cdata.player().position, 1 + rnd(3));
                 flt();
-                itemcreate(
-                    -1,
-                    54,
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    rnd(10000) + 2000);
+                itemcreate_extra_inv(
+                    54, cdata.player().position, rnd(10000) + 2000);
                 for (int i = 0; i < 4; ++i)
                 {
                     flt(calcobjlv(cdata.player().level + 10),
@@ -1827,12 +1811,7 @@ void spot_digging()
                         fixlv = Quality::godly;
                     }
                     flttypemajor = choice(fsetchest);
-                    itemcreate(
-                        -1,
-                        0,
-                        cdata.player().position.x,
-                        cdata.player().position.y,
-                        0);
+                    itemcreate_extra_inv(0, cdata.player().position, 0);
                 }
                 txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
                 save_set_autosave();
@@ -1944,8 +1923,10 @@ void spot_mining_or_wall()
                 game_data.current_map == mdata_t::MapId::your_home)
             {
                 flt();
-                itemcreate(-1, 208, digx, digy, 0);
-                inv[ci].curse_state = CurseState::cursed;
+                if (const auto item = itemcreate_extra_inv(208, digx, digy, 0))
+                {
+                    item->curse_state = CurseState::cursed;
+                }
                 txt(i18n::s.get("core.activity.dig_mining.finish.find"));
                 game_data.quest_flags.tutorial = 3;
             }
@@ -1955,14 +1936,14 @@ void spot_mining_or_wall()
                 if (rtval > 0)
                 {
                     flt();
-                    itemcreate(-1, rtval, digx, digy, 0);
+                    itemcreate_extra_inv(rtval, digx, digy, 0);
                 }
                 else if (rtval == -1)
                 {
                     flt(calcobjlv(game_data.current_dungeon_level),
                         calcfixlv(Quality::good));
                     flttypemajor = 77000;
-                    itemcreate(-1, 0, digx, digy, 0);
+                    itemcreate_extra_inv(0, digx, digy, 0);
                 }
                 txt(i18n::s.get("core.activity.dig_mining.finish.find"));
             }
