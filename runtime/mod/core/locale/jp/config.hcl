@@ -527,6 +527,11 @@ DOC
                     name = "時計をデジタル表示"
                     doc = "左上の時計を24時間のデジタル表示に置き換えます。"
                 }
+
+                auto_target {
+                    name = "Party auto target"
+                    doc = ""
+                }
             }
 
             android {

@@ -78,6 +78,7 @@ public:
     ELONA_DEFINE_OPTION(bool, autodisable_numlock)
     ELONA_DEFINE_OPTION(bool, autopick)
     ELONA_DEFINE_OPTION(bool, autosave)
+    ELONA_DEFINE_OPTION(bool, auto_target)
     ELONA_DEFINE_OPTION(bool, damage_popup)
     ELONA_DEFINE_OPTION(bool, digital_clock)
     ELONA_DEFINE_OPTION(std::string, display_mode)

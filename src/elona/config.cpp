@@ -398,6 +398,7 @@ void bind_setters()
     CONFIG_OPTION("foobar.allow_enhanced_skill_tracking", bool, allow_enhanced_skill);
     CONFIG_OPTION("foobar.autopick", bool, autopick);
     CONFIG_OPTION("foobar.autosave", bool, autosave);
+    CONFIG_OPTION("foobar.auto_target", bool, auto_target);
     CONFIG_OPTION("foobar.damage_popup", bool, damage_popup);
     CONFIG_OPTION("foobar.digital_clock", bool, digital_clock);
     CONFIG_OPTION("foobar.enhanced_skill_tracking_lowerbound", int, enhanced_skill_lowerbound);
