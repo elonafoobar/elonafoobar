@@ -75,8 +75,6 @@ void Quest::clear()
 
 Quest& QuestData::immediate()
 {
-    assert(game_data.executing_immediate_quest != 0);
-
     return quest_data[game_data.executing_immediate_quest];
 }
 
