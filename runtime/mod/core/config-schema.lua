@@ -19,37 +19,12 @@ config {
       option "stereo_sound", true,
 
       option "fullscreen", {
-         platform = "desktop",
          enum = {"windowed", "fullscreen", "desktop_fullscreen"},
          default = "windowed",
       },
 
       option "display_mode", {
          type = "string",
-         platform = "desktop",
-      },
-
-      option "window_mode", {
-         platform = "android",
-
-         enum = {
-            "800x600", "1024x600", "1280x720",
-            "800x696", "1024x768", "1152x864",
-            "1280x768", "1280x1024", "1366x768",
-            "1600x900", "1600x1200"
-         },
-         default = "1024x600",
-      },
-
-      option "orientation", {
-         platform = "android",
-
-         enum = {
-            "sensor_landscape", "sensor_portrait", "sensor",
-            "landscape", "portrait",
-            "reverse_landscape", "reverse_portrait"
-         },
-         default = "sensor_landscape",
       },
 
       option "high_quality_shadows", true,
@@ -110,13 +85,7 @@ config {
    },
 
    section "anime", {
-      option "scroll", {
-         default = true,
-
-         platform_default = {
-            android = false,
-         },
-      },
+      option "scroll", true,
       option "always_center", true,
       option "scroll_when_run", true,
 
@@ -130,20 +99,12 @@ config {
          default = 20,
          min = 0,
          max = 20,
-
-         platform_default = {
-            android = 10,
-         },
       },
 
       option "alert_wait", {
          default = 50,
          min = 0,
          max = 50,
-
-         platform_default = {
-            android = 25,
-         },
       },
 
       option "auto_turn_speed", {
@@ -160,10 +121,6 @@ config {
          default = 3,
          min = 0,
          max = 15,
-
-         platform_default = {
-            android = 5,
-         },
       },
    },
 
@@ -216,10 +173,6 @@ config {
          default = 10,
          min = 1,
          max = 20,
-
-         platform_default = {
-            android = 8,
-         },
       },
 
       option "select_fast_start_wait", {
@@ -232,10 +185,6 @@ config {
          default = 2,
          min = 1,
          max = 20,
-
-         platform_default = {
-            android = 2,
-         },
       },
 
       option "joypad", false,
@@ -308,13 +257,7 @@ config {
       option "leash_icon", false,
       option "autopick", false,
       option "autosave", false,
-      option "damage_popup", {
-         default = false,
-
-         platform_default = {
-            android = false,
-         },
-      },
+      option "damage_popup", false,
       option "max_damage_popup", {
          default = 100,
          min = 10,
@@ -344,33 +287,6 @@ config {
    },
 
    -- Hidden sections
-
-   section "android", {
-      option "quicksave", true,
-      option "vibrate", true,
-
-      option "vibrate_duration", {
-         default = 8,
-         min = 1,
-         max = 40,
-      },
-
-      option "hide_navigation", false,
-
-      option "quick_action_transparency", {
-         default = 10,
-         min = 1,
-         max = 20,
-      },
-
-      option "quick_action_size", {
-         default = 24,
-         min = 20,
-         max = 40,
-      },
-
-      platform = "android",
-   },
 
    section "debug", {
       option "wizard", false,

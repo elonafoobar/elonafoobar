@@ -144,21 +144,6 @@ DOC
                     name = "画面の大きさ*"
                     # "enum" are injected at runtime.
                 }
-                orientation {
-                    name = "画面の向き"
-                    enum {
-                        sensor_landscape = "横向き (自動)"
-                        sensor_portrait = "縦向き (自動)"
-                        sensor = "自動回転"
-                        landscape = "横向き"
-                        portrait = "縦向き"
-                        reverse_landscape = "横向き (反転)"
-                        reverse_portrait = "縦向き (反転)"
-                    }
-                }
-                window_mode {
-                    name = "ウィンドウの大きさ*"
-                }
                 high_quality_shadows {
                     name = "光源の描写"
                     yes_no = core.config.common.yes_no.kougashitsu_teigashitsu
@@ -526,34 +511,6 @@ DOC
                 digital_clock {
                     name = "時計をデジタル表示"
                     doc = "左上の時計を24時間のデジタル表示に置き換えます。"
-                }
-            }
-
-            android {
-                name = "アンドロイド設定"
-
-                vibrate {
-                    name = "振動"
-                }
-
-                vibrate_duration {
-                    name = "振動の期間"
-                }
-
-                hide_navigation {
-                    name = "ナビゲーションバーの非表示*"
-                }
-
-                quicksave {
-                    name = "中断した時のセーブ"
-                }
-
-                quick_action_transparency {
-                    name = "ボタンの透明度"
-                }
-
-                quick_action_size {
-                    name = "ボタンのサイズ"
                 }
             }
 

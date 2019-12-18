@@ -143,7 +143,6 @@ ELONA_EXTERN(int findlocmode);
 ELONA_EXTERN(int dirsub);
 ELONA_EXTERN(int mousex);
 ELONA_EXTERN(int mousey);
-ELONA_EXTERN(bool player_queried_for_input);
 
 // initialize_map.cpp
 ELONA_EXTERN(int noaggrorefresh);

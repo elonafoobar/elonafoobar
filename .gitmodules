@@ -1,21 +1,3 @@
-[submodule "android/external/lua"]
-	path = android/external/lua
-	url = https://github.com/elonafoobar/lua53-android.git
-[submodule "android/external/SDL2"]
-	path = android/external/SDL2
-	url = https://github.com/elonafoobar/SDL2.git
-[submodule "android/external/SDL2_mixer"]
-	path = android/external/SDL2_mixer
-	url = https://github.com/elonafoobar/SDL2_mixer.git
-[submodule "android/external/SDL2_image"]
-	path = android/external/SDL2_image
-	url = https://github.com/elonafoobar/SDL2_image.git
-[submodule "android/external/SDL2_ttf"]
-	path = android/external/SDL2_ttf
-	url = https://github.com/elonafoobar/SDL2_ttf.git
-[submodule "android/external/boost"]
-	path = android/external/boost
-	url = https://github.com/elonafoobar/libboost-1.69-android.git
 [submodule "deps/windows"]
 	path = deps/windows
 	url = https://github.com/elonafoobar/windows_deps.git

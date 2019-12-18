@@ -139,26 +139,6 @@ The available options may change depending on the graphics hardware you use.
 DOC
                     # "enum" are injected at runtime.
                 }
-                orientation {
-                    name = "Screen Orientation"
-                    enum {
-                        sensor_landscape = "Landscape (Auto)"
-                        sensor_portrait = "Portrait (Auto)"
-                        sensor = "Any"
-                        landscape = "Landscape"
-                        portrait = "Portrait"
-                        reverse_landscape = "Reverse Landscape"
-                        reverse_portrait = "Reverse Portrait"
-                    }
-                    doc = <<DOC
-Screen orientation to use when running the app.
-Portrait modes will display the game in a window at the top.
-Landscape modes will fill the entire screen.
-DOC
-                }
-                window_mode {
-                    name = "Window Size*"
-                }
                 high_quality_shadows {
                     name = "Shadow Quality"
                     doc = "Render shadows at higher quality."
@@ -588,46 +568,6 @@ DOC
                 digital_clock {
                     name = "Digital clock"
                     doc = "Replace default clock with a simple 24 hours digital clock."
-                }
-            }
-
-            android {
-                name = "Android Setting"
-
-                vibrate {
-                    name = "Vibrate"
-                    doc = <<DOC
-Vibrate on important events and low health.
-DOC
-                }
-
-                vibrate_duration {
-                    name = "Vibrate Duration"
-                    doc = "Controls the duration of the vibration in 'Vibrate'."
-                }
-
-                hide_navigation {
-                    name = "Hide Nav Buttons*"
-                    doc = <<DOC
-Hides the software navigation buttons for handsets without hardware navigation buttons.
-DOC
-                }
-
-                quicksave {
-                    name = "Save On Suspend"
-                    doc = <<DOC
-Quicksave the game if you're being queried for input and app focus is lost.
-DOC
-                }
-
-                quick_action_transparency {
-                    name = "Quick Action Transp."
-                    doc = "Controls transparency of touch actions."
-                }
-
-                quick_action_size {
-                    name = "Quick Action Size"
-                    doc = "Controls size of touch actions."
                 }
             }
 

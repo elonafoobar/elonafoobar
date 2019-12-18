@@ -90,25 +90,6 @@ config {
          enum = ["windowed", "fullscreen", "desktop_fullscreen"],
          default = "windowed",
       },
-
-      -- "platform" specifies valid platforms for this option. Only used internally, so it can
-      -- be ignored. Valid values are "desktop", "android" or "all".
-      option "display_mode" {
-         platform = "android",
-         type = "string",
-         enum = ["landscape", "portrait"],
-         default = "landscape",
-      },
-
-      -- "platform_default" specifies a different default to use on the given platform. Valid
-      -- values are "desktop", "android" or "all.
-      option "scroll", {
-         default = true,
-
-         platform_default = {
-            android = false
-         },
-      }
    }
 }
 ```

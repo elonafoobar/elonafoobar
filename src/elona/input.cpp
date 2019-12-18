@@ -1,5 +1,4 @@
 #include "input.hpp"
-#include "../snail/android.hpp"
 #include "../util/strutil.hpp"
 #include "audio.hpp"
 #include "blending.hpp"
@@ -278,21 +277,12 @@ bool input_text_dialog(
     return canceled;
 }
 
-static void _proc_android_vibrate()
-{
-    if (config_get_boolean("core.android.vibrate"))
-    {
-        int duration = config_get_integer("core.android.vibrate_duration");
-        snail::android::vibrate(static_cast<long>(duration * 25));
-    }
-}
+
 
 static void _handle_msgalert()
 {
     if (g_config.alert_wait() > 1)
     {
-        _proc_android_vibrate();
-
         for (int i = 0; i < g_config.alert_wait(); ++i)
         {
             await(g_config.general_wait());
@@ -300,6 +290,8 @@ static void _handle_msgalert()
         keylog = "";
     }
 }
+
+
 
 static void _update_pressed_key_name()
 {
@@ -317,6 +309,7 @@ static void _update_pressed_key_name()
 }
 
 
+
 std::string key_check(KeyWaitDelay delay_type)
 {
     if (msgalert == 1)
@@ -330,6 +323,7 @@ std::string key_check(KeyWaitDelay delay_type)
     await(g_config.general_wait());
     return InputContext::for_menu().check_for_command(delay_type);
 }
+
 
 
 std::string key_check_pc_turn(KeyWaitDelay delay_type)
@@ -347,6 +341,7 @@ std::string key_check_pc_turn(KeyWaitDelay delay_type)
 }
 
 
+
 std::string cursor_check_ex(int& index)
 {
     if (msgalert == 1)
@@ -361,11 +356,14 @@ std::string cursor_check_ex(int& index)
     return InputContext::for_menu().check_for_command_with_list(index);
 }
 
+
+
 std::string cursor_check_ex()
 {
     int index;
     return cursor_check_ex(index);
 }
+
 
 
 std::string get_selected_item(int& p_)
@@ -427,6 +425,7 @@ bool is_modifier_pressed(snail::ModKey modifier)
 }
 
 
+
 void wait_key_released()
 {
     while (1)
@@ -473,7 +472,5 @@ void wait_key_pressed(bool only_enter_or_cancel)
     }
     keyhalt = 1;
 }
-
-
 
 } // namespace elona

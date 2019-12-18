@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <iostream>
 #include <tuple>
-#include "touch_input.hpp"
 #ifdef _WIN32
 #include <windows.h> // GetKeyboardState, keybd_event
 #endif
@@ -162,7 +161,6 @@ Key sdlkey2key(::SDL_Keycode k)
     case SDLK_KP_PLUSMINUS: return Key::keypad_plusminus;
     case SDLK_KP_ENTER: return Key::keypad_enter;
     case SDLK_KP_EQUALS: return Key::keypad_equal;
-    case SDLK_AC_BACK: return Key::android_back;
     default: return Key::none;
     }
 }
@@ -268,27 +266,6 @@ bool Input::is_ime_active() const
     return _is_ime_active;
 }
 
-
-
-void Input::show_soft_keyboard()
-{
-    _is_ime_active = true;
-    ::SDL_StartTextInput();
-}
-
-void Input::hide_soft_keyboard()
-{
-    ::SDL_StopTextInput();
-    _is_ime_active = false;
-}
-
-void Input::toggle_soft_keyboard()
-{
-    if (::SDL_IsTextInputActive())
-        hide_soft_keyboard();
-    else
-        show_soft_keyboard();
-}
 
 
 void Input::disable_numlock()
@@ -408,11 +385,6 @@ void Input::_handle_event(const ::SDL_KeyboardEvent& event)
         else
         {
             the_key._release();
-
-            if (k == Key::android_back)
-            {
-                toggle_soft_keyboard();
-            }
         }
         _pressed_key_identifiers.erase(k);
     }
@@ -439,36 +411,6 @@ void Input::_handle_event(const ::SDL_TextEditingEvent& event)
     (void)event;
 
     _is_ime_active = true;
-}
-
-
-void Input::_handle_event(const ::SDL_TouchFingerEvent& event)
-{
-    TouchInput::instance().on_touch_event(event);
-
-    auto action = TouchInput::instance().last_touched_quick_action();
-
-    if (action)
-    {
-        if (_last_quick_action_key && *_last_quick_action_key != action->key)
-        {
-            _keys[static_cast<size_t>(*_last_quick_action_key)]._release();
-            _pressed_key_identifiers.erase(*_last_quick_action_key);
-        }
-
-        _keys[static_cast<size_t>(action->key)]._press();
-        _pressed_key_identifiers.insert(action->key);
-
-        _last_quick_action_key = action->key;
-    }
-    else if (_last_quick_action_key)
-    {
-        _keys[static_cast<size_t>(*_last_quick_action_key)]._release();
-        _pressed_key_identifiers.erase(*_last_quick_action_key);
-        _last_quick_action_key = none;
-    }
-
-    _update_modifier_keys();
 }
 
 

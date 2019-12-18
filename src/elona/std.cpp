@@ -6,7 +6,6 @@
 #include <regex>
 #include <sstream>
 
-#include "../snail/android.hpp"
 #include "../snail/application.hpp"
 #include "../snail/hsp.hpp"
 #include "../snail/window.hpp"
@@ -107,24 +106,6 @@ std::string operator+(elona_vector1<std::string>& lhs, const std::string& rhs)
 void await(int msec)
 {
     snail::hsp::await(msec);
-
-    // On Android, potentially quicksave if SDL detects that the app's
-    // focus was lost and the player is being queried for input in
-    // pc_turn().
-    if (defines::is_android &&
-        snail::Application::instance().was_focus_lost_just_now())
-    {
-        if (player_queried_for_input &&
-            config_get_boolean("core.android.quicksave") &&
-            !std::uncaught_exception())
-        {
-            ELONA_LOG("gui") << "Focus lost, quicksaving game.";
-            snail::android::toast(
-                i18n::s.get("core.ui.save_on_suspend"),
-                snail::android::ToastLength::long_length);
-            save_game(save_game_no_message, save_game_silent);
-        }
-    }
 }
 
 

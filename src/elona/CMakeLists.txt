@@ -148,8 +148,4 @@ set(ELONA_SOURCES
   profile/profile_manager.cpp
   )
 
-if(ANDROID_GENERATE_BUILD_FILES)
-  generate_android_mk(elona SOURCES ${ELONA_SOURCES})
-else()
-  add_library(elona STATIC ${ELONA_SOURCES})
-endif()
+add_library(elona STATIC ${ELONA_SOURCES})
