@@ -19,7 +19,7 @@
 * Boost 1.69
 * Lua 5.3
 * SDL2, SDL2_image, SDL2_ttf and SDL2_mixer
-* `clang-format`, `find` and `xargs`(Optional)
+* `clang-format`, `find` and `xargs` (Optional)
 
 ### Additional requirements for Windows
 
@@ -67,6 +67,14 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 5. `cd path/to/Elona_foobar & nmake build -f Makefile.win`
 
 To debug with Visual Studio, open `bin\Elona_foobar.sln`.
+
+
+### Note for parallel build
+
+There are mainly 2 ways to build Elona foobar in parallel.
+
+* [Ninja-build](https://ninja-build.org/) supports parallel build by default. CMake can generate build rule for ninja like this: `make CMAKE_ARGS="-GNinja" <BUILD TARGET>`
+* `CMAKE_BUILD_PARALLEL_LEVEL` also works like this: `CMAKE_BUILD_PARALLEL_LEVEL=8 make <BUILD TARGET>`
 
 
 
