@@ -566,9 +566,12 @@ void config_load_all_schema()
     {
         const auto manifest = lua::ModManifest::load(mod_dir / "mod.json");
         const auto path = mod_dir / "config-schema.lua";
-        std::ifstream in{path.native()};
-        lua::lua->get_config_manager().load_schema(
-            in, filepathutil::to_utf8_path(path), SharedId{manifest.id});
+        if (fs::exists(path))
+        {
+            std::ifstream in{path.native()};
+            lua::lua->get_config_manager().load_schema(
+                in, filepathutil::to_utf8_path(path), SharedId{manifest.id});
+        }
     }
 }
 

@@ -253,7 +253,11 @@ end
 
 
 function Config.get_children_keys(option_key)
-   return _schemas[option_key].children_keys
+   if _schemas[option_key] then
+      return _schemas[option_key].children_keys
+   else
+      return {}
+   end
 end
 
 
