@@ -922,7 +922,6 @@ int quest_generate()
             }
             quest_data[rq].target_chara_index = i;
             flt();
-            dbmode = 1;
             flttypemajor = choice(fsetdeliver);
             get_random_item_id();
             quest_data[rq].extra_info_1 = flttypemajor;
@@ -998,7 +997,6 @@ int quest_generate()
         quest_data[rq].client_chara_type = 3;
         quest_data[rq].deadline_days = rnd(6) + 2;
         flt();
-        dbmode = 1;
         flttypemajor = choice(fsetsupply);
         get_random_item_id();
         quest_data[rq].reward_item_id = 5;
