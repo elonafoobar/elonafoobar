@@ -529,8 +529,8 @@ DOC
                 }
 
                 auto_target {
-                    name = "Party auto target"
-                    doc = ""
+                    name = "ペットの自動ターゲット"
+                    doc = "ペットがPCの近くの敵を自動的にターゲットするようになります。"
                 }
             }
 
