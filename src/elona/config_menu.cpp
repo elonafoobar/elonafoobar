@@ -451,8 +451,9 @@ std::vector<std::string> ConfigScreenCreator::get_sorted_mod_list()
 {
     auto mods = lua::lua->get_mod_manager().enabled_mods();
     std::vector<std::string> ret;
-    range::transform(
-        mods, std::back_inserter(ret), [](const auto& m) { return m.first; });
+    range::transform(mods, std::back_inserter(ret), [](const auto& m) {
+        return m.second->manifest.id;
+    });
     range::sort(ret, lib::natural_order_comparator{});
     return ret;
 }
