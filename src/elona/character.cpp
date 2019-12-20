@@ -571,8 +571,9 @@ void initialize_character()
     {
         cdata[rc].nutrition = 5000 + rnd(4000);
     }
-    cdata[rc].height = cdata[rc].height + rnd((cdata[rc].height / 5 + 1)) -
-        rnd((cdata[rc].height / 5 + 1));
+    cdata[rc].height = cdata[rc].height +
+        rnd_capped((cdata[rc].height / 5 + 1)) -
+        rnd_capped((cdata[rc].height / 5 + 1));
     cdata[rc].weight =
         cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
     update_required_experience(cdata[rc]);

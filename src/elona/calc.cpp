@@ -304,7 +304,7 @@ int calcfame(int cc, int base)
 int decfame(int cc, int base)
 {
     int ret = cdata[cc].fame / base + 5;
-    ret = ret + rnd(ret / 2) - rnd(ret / 2);
+    ret = ret + rnd_capped(ret / 2) - rnd_capped(ret / 2);
     cdata[cc].fame -= ret;
     if (cdata[cc].fame < 0)
     {
@@ -558,21 +558,21 @@ int calcattackhit()
             int evaderef = evasion * 100 / clamp(tohit, 1, tohit);
             if (evaderef > 300)
             {
-                if (rnd(sdata(187, tc) + 250) > 100)
+                if (rnd_capped(sdata(187, tc) + 250) > 100)
                 {
                     return -2;
                 }
             }
             if (evaderef > 200)
             {
-                if (rnd(sdata(187, tc) + 250) > 150)
+                if (rnd_capped(sdata(187, tc) + 250) > 150)
                 {
                     return -2;
                 }
             }
             if (evaderef > 150)
             {
-                if (rnd(sdata(187, tc) + 250) > 200)
+                if (rnd_capped(sdata(187, tc) + 250) > 200)
                 {
                     return -2;
                 }
@@ -605,7 +605,7 @@ int calcattackhit()
     {
         return 1;
     }
-    if (rnd(tohit) > rnd(evasion * 3 / 2))
+    if (rnd_capped(tohit) > rnd_capped(evasion * 3 / 2))
     {
         return 1;
     }
@@ -1070,7 +1070,7 @@ int calchirecost(int cc)
 
 void generatemoney(int cc)
 {
-    int gold = rnd(100) + rnd(cdata[cc].level * 50 + 1);
+    int gold = rnd(100) + rnd_capped(cdata[cc].level * 50 + 1);
     if ((cdata[cc].character_role >= 1000 && cdata[cc].character_role < 2000) ||
         cdata[cc].character_role == 2003)
     {
@@ -1298,7 +1298,8 @@ int calcinitgold(int owner)
 {
     if (owner < 0)
     {
-        return rnd(game_data.current_dungeon_level * 25 *
+        return rnd_capped(
+                   game_data.current_dungeon_level * 25 *
                        (game_data.current_map != mdata_t::MapId::shelter_) +
                    10) +
             1;
@@ -1309,7 +1310,7 @@ int calcinitgold(int owner)
     case 183: return 5000 + rnd(11000);
     case 184: return 2000 + rnd(5000);
     case 185: return 1000 + rnd(3000);
-    default: return rnd(cdata[owner].level * 25 + 10) + 1;
+    default: return rnd_capped(cdata[owner].level * 25 + 10) + 1;
     }
 }
 
@@ -1699,7 +1700,8 @@ int calc_chara_exp_from_skill_exp(
     int skill_exp,
     int divisor)
 {
-    return rnd(int(double(chara.required_experience) * skill_exp / 1000 /
+    return rnd_capped(
+               int(double(chara.required_experience) * skill_exp / 1000 /
                    (chara.level + divisor)) +
                1) +
         rnd(2);

@@ -1083,7 +1083,7 @@ void show_shop_log()
         {
             continue;
         }
-        if (rnd(val0) > shoplv * 100 + 500)
+        if (rnd_capped(val0) > shoplv * 100 + 500)
         {
             continue;
         }
@@ -1095,7 +1095,7 @@ void show_shop_log()
         {
             continue;
         }
-        in = rnd(inv[ci].number()) + 1;
+        in = rnd_capped(inv[ci].number()) + 1;
         inv[ci].modify_number((-in));
         sold += in;
         val0 = val0 * in;

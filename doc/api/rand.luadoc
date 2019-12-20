@@ -8,6 +8,13 @@ module "Rand"
 --  @function rnd
 function rnd(n) end
 
+--- Returns a random number from 0 to min(n, 32768), exclusive. It emulates
+--  vanilla's random number generation, capped by the upper limit.
+--  @tparam num n
+--  @treturn num a number in [0, min(n, 32768))
+--  @function rnd_capped
+function rnd_capped(n) end
+
 --- Returns true one out of every n times.
 --  @tparam num n
 --  @treturn bool true one out of every n times

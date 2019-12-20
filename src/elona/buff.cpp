@@ -161,7 +161,7 @@ void buff_add(
     if (buff->type == BuffType::hex)
     {
         bool resists{};
-        if (sdata(60, chara.index) / 2 > rnd(power * 2 + 100))
+        if (sdata(60, chara.index) / 2 > rnd_capped(power * 2 + 100))
         {
             resists = true;
         }
@@ -191,7 +191,7 @@ void buff_add(
         if (const auto& holy_veil = buff_find(chara, "core.holy_veil"))
         {
             if (holy_veil->power + 50 > power * 5 / 2 ||
-                rnd(holy_veil->power + 50) > rnd(power + 1))
+                rnd_capped(holy_veil->power + 50) > rnd_capped(power + 1))
             {
                 txt(i18n::s.get("core.magic.buff.holy_veil_repels"));
                 return;

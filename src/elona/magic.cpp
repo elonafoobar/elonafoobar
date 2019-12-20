@@ -48,7 +48,7 @@ bool _magic_636()
 {
     txt(i18n::s.get("core.magic.insanity", cdata[cc], cdata[tc]),
         Message::color{ColorIndex::purple});
-    damage_insanity(cdata[tc], rnd(roll(dice1, dice2, bonus) + 1));
+    damage_insanity(cdata[tc], rnd_capped(roll(dice1, dice2, bonus) + 1));
     return true;
 }
 
@@ -763,7 +763,7 @@ bool _magic_406_407()
         {
             continue;
         }
-        if (rnd(efp * 2 + 1) > rnd(cdata[tc].buffs[i].power + 1))
+        if (rnd_capped(efp * 2 + 1) > rnd_capped(cdata[tc].buffs[i].power + 1))
         {
             buff_delete(cdata[tc], i);
             ++p;
@@ -1657,7 +1657,7 @@ bool _magic_430_429()
                     }
                     continue;
                 }
-                if (p < 7 || rnd(efp + 1) > rnd(p * 8 + 1) ||
+                if (p < 7 || rnd_capped(efp + 1) > rnd(p * 8 + 1) ||
                     efstatus == CurseState::blessed)
                 {
                     if (efid == 429)
@@ -1914,7 +1914,7 @@ bool _magic_428()
 
 bool _magic_621()
 {
-    heal_mp(cdata[tc], efp / 2 + rnd((efp / 2 + 1)));
+    heal_mp(cdata[tc], efp / 2 + rnd_capped(efp / 2 + 1));
     if (is_in_fov(cdata[tc]))
     {
         txt(i18n::s.get("core.magic.harvest_mana", cdata[tc]));
@@ -2025,7 +2025,7 @@ bool _magic_645_1114()
     {
         p += *anticurse / 2;
     }
-    if (rnd(p(0)) > efp / 2 + (is_cursed(efstatus)) * 100)
+    if (rnd_capped(p(0)) > efp / 2 + (is_cursed(efstatus)) * 100)
     {
         return true;
     }
@@ -2199,7 +2199,7 @@ bool _magic_435()
             efp = efp * 3 / 2;
         }
     }
-    if (rnd(efp / 15 + 5) < cdata[tc].level)
+    if (rnd_capped(efp / 15 + 5) < cdata[tc].level)
     {
         f = 0;
     }
@@ -2232,32 +2232,32 @@ bool _magic_436_437_455_634_456()
     if (efid == 436)
     {
         p(0) = 3;
-        p(1) = 2 + rnd((efp / 50 + 1));
+        p(1) = 2 + rnd_capped(efp / 50 + 1);
         txt(i18n::s.get("core.magic.map_effect.web"));
     }
     if (efid == 437)
     {
         txt(i18n::s.get("core.magic.map_effect.fog"));
         p(0) = 3;
-        p(1) = 2 + rnd((efp / 50 + 1));
+        p(1) = 2 + rnd_capped(efp / 50 + 1);
     }
     if (efid == 455)
     {
         txt(i18n::s.get("core.magic.map_effect.acid"));
         p(0) = 2;
-        p(1) = 2 + rnd((efp / 50 + 1));
+        p(1) = 2 + rnd_capped(efp / 50 + 1);
     }
     if (efid == 456)
     {
         txt(i18n::s.get("core.magic.map_effect.fire"));
         p(0) = 2;
-        p(1) = 2 + rnd((efp / 50 + 1));
+        p(1) = 2 + rnd_capped(efp / 50 + 1);
     }
     if (efid == 634)
     {
         txt(i18n::s.get("core.magic.map_effect.ether_mist"));
         p(0) = 2;
-        p(1) = 1 + rnd((efp / 100 + 2));
+        p(1) = 1 + rnd_capped(efp / 100 + 2);
     }
     snd("core.web");
     for (int cnt = 0, cnt_end = (p(1)); cnt < cnt_end; ++cnt)
@@ -2308,7 +2308,7 @@ bool _magic_436_437_455_634_456()
         }
         if (efid == 437)
         {
-            mef_add(x, y, 2, 30, 8 + rnd((15 + efp / 25)), efp);
+            mef_add(x, y, 2, 30, 8 + rnd_capped(15 + efp / 25), efp);
         }
     }
     return true;
@@ -2512,7 +2512,7 @@ bool _magic_1128()
         return true;
     }
     snd("core.ding2");
-    p = rnd((efp + 1)) / 100 + 1;
+    p = rnd_capped(efp + 1) / 100 + 1;
     game_data.rights_to_succeed_to += p;
     txt(i18n::s.get("core.magic.deed_of_inheritance.claim", p(0)),
         Message::color{ColorIndex::orange});
@@ -2618,7 +2618,7 @@ bool _magic_630_1129()
                     "core.magic.fill_charge.cannot_recharge_anymore", inv[ci]));
                 return true;
             }
-            if (rnd(efp / 25 + 1) == 0)
+            if (rnd_capped(efp / 25 + 1) == 0)
             {
                 f = 0;
             }
@@ -2971,7 +2971,7 @@ bool _magic_457_438()
                 return true;
             }
             txt(i18n::s.get("core.magic.create.door.apply"));
-            cell_featset(x, y, tile_doorclosed, 21, rnd(efp / 10 + 1));
+            cell_featset(x, y, tile_doorclosed, 21, rnd_capped(efp / 10 + 1));
             if (chip_data.for_cell(x, y).effect & 4)
             {
                 cell_data.at(x, y).chip_id_actual = tile_tunnel;
@@ -3374,12 +3374,12 @@ bool _magic_464()
     std::string messages;
 
     animeload(10, tc);
-    for (int i = 0, n = clamp(4 + rnd(efp / 50 + 1), 1, 15); i < n; ++i)
+    for (int i = 0, n = clamp(4 + rnd_capped(efp / 50 + 1), 1, 15); i < n; ++i)
     {
         snd("core.pray1");
         flt(calcobjlv(efp / 10), calcfixlv(Quality::good));
         dbid = 54;
-        int number = 400 + rnd(efp);
+        int number = 400 + rnd_capped(efp);
         if (rnd(30) == 0)
         {
             dbid = 55;
@@ -4260,8 +4260,8 @@ optional<bool> _proc_general_magic()
                 }
                 return true;
             }
-            p = rnd(cdata[tc].gold / 10 + 1);
-            if (rnd(sdata(13, tc)) > rnd(sdata(12, cc) * 4) ||
+            p = rnd_capped(cdata[tc].gold / 10 + 1);
+            if (rnd_capped(sdata(13, tc)) > rnd_capped(sdata(12, cc) * 4) ||
                 cdata[tc].is_protected_from_thieves() == 1)
             {
                 txt(i18n::s.get(

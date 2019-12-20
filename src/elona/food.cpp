@@ -84,7 +84,7 @@ void _food_gets_rotten(int chara_idx, Item& food)
         if (rnd(3) == 0)
         {
             txt(i18n::s.get("core.misc.extract_seed", food));
-            const auto seed_num = rnd(food.number()) + 1;
+            const auto seed_num = rnd_capped(food.number()) + 1;
             food.modify_number(-food.number());
             flt(calcobjlv(cdata.player().level));
             flttypeminor = 58500;
@@ -271,7 +271,7 @@ void chara_vomit(Character& cc)
                 }
             }
         }
-        if (rnd(p * p * p) == 0 || cc.index == 0)
+        if (rnd_capped(p * p * p) == 0 || cc.index == 0)
         {
             flt();
             if (const auto item = itemcreate_extra_inv(704, cc.position, 0))
@@ -409,7 +409,8 @@ void cook(Item& cook_tool, Item& food)
 
     const auto item_name_prev = itemname(food.index);
 
-    int dish_rank = rnd(sdata(184, cc) + 6) + rnd(cook_tool.param1 / 50 + 1);
+    int dish_rank =
+        rnd_capped(sdata(184, cc) + 6) + rnd(cook_tool.param1 / 50 + 1);
     if (dish_rank > sdata(184, cc) / 5 + 7)
     {
         dish_rank = sdata(184, cc) / 5 + 7;
@@ -1232,13 +1233,15 @@ void apply_general_eating_effect(Character& eater, Item& food)
         {
             txt(i18n::s.get("core.food.effect.little_sister", eater),
                 Message::color{ColorIndex::green});
-            if (rnd(sdata.get(2, eater.index).original_level *
+            if (rnd_capped(
+                    sdata.get(2, eater.index).original_level *
                         sdata.get(2, eater.index).original_level +
                     1) < 2000)
             {
                 chara_gain_fixed_skill_exp(eater, 2, 1000);
             }
-            if (rnd(sdata.get(3, eater.index).original_level *
+            if (rnd_capped(
+                    sdata.get(3, eater.index).original_level *
                         sdata.get(3, eater.index).original_level +
                     1) < 2000)
             {
@@ -1343,13 +1346,13 @@ void apply_general_eating_effect(Character& eater, Item& food)
         enc = food.enchantments[cnt].id;
         if (enc == 36)
         {
-            p = rnd(food.enchantments[cnt].power / 50 + 1) + 1;
+            p = rnd_capped(food.enchantments[cnt].power / 50 + 1) + 1;
             heal_sp(eater, p);
             continue;
         }
         if (enc == 38)
         {
-            p = rnd(food.enchantments[cnt].power / 25 + 1) + 1;
+            p = rnd_capped(food.enchantments[cnt].power / 25 + 1) + 1;
             heal_mp(eater, p / 5);
             continue;
         }

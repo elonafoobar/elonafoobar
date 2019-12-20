@@ -136,7 +136,7 @@ void _map_randsite()
         }
         if (rnd(18) == 0)
         {
-            flt(calcobjlv(rnd(cdata.player().level + 10)),
+            flt(calcobjlv(rnd_capped(cdata.player().level + 10)),
                 calcfixlv(Quality::good));
             flttypemajor = choice(fsetwear);
             itemcreate_extra_inv(0, *pos, 0);
@@ -1243,7 +1243,7 @@ static void _create_nefia(int index, int x, int y)
     area.type = static_cast<int>(mdata_t::MapType::dungeon) + rnd(4);
     if (rnd(3))
     {
-        area.danger_level = rnd(cdata.player().level + 5) + 1;
+        area.danger_level = rnd_capped(cdata.player().level + 5) + 1;
     }
     else
     {

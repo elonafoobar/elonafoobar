@@ -14,6 +14,7 @@ namespace lua
 namespace LuaApiRand
 {
 int rnd(int n);
+int rnd_capped(int n);
 
 bool one_in(int n);
 

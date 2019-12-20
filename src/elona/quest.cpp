@@ -678,8 +678,8 @@ int quest_generate()
     {
         if (rnd(13) == 0)
         {
-            quest_data[rq].difficulty = rnd(cdata.player().level + 10) +
-                rnd((cdata.player().fame / 2500 + 1));
+            quest_data[rq].difficulty = rnd_capped(cdata.player().level + 10) +
+                rnd_capped(cdata.player().fame / 2500 + 1);
             quest_data[rq].difficulty =
                 roundmargin(quest_data[rq].difficulty, cdata.player().level);
             minlevel = clamp(quest_data[rq].difficulty / 7, 5, 30);
@@ -714,8 +714,8 @@ int quest_generate()
     {
         if (rnd(20) == 0)
         {
-            quest_data[rq].difficulty = rnd(cdata.player().level + 10) +
-                rnd((cdata.player().fame / 2500 + 1));
+            quest_data[rq].difficulty = rnd_capped(cdata.player().level + 10) +
+                rnd_capped(cdata.player().fame / 2500 + 1);
             quest_data[rq].difficulty =
                 roundmargin(quest_data[rq].difficulty, cdata.player().level);
             minlevel = clamp(quest_data[rq].difficulty / 4, 5, 30);
@@ -775,8 +775,8 @@ int quest_generate()
                     2;
             quest_data[rq].deadline_days = rnd(8) + 6;
             quest_data[rq].difficulty = clamp(
-                rnd(cdata.player().level + 10) +
-                    rnd((cdata.player().fame / 500 + 1)) + 1,
+                rnd_capped(cdata.player().level + 10) +
+                    rnd_capped(cdata.player().fame / 500 + 1) + 1,
                 1,
                 80);
         }
@@ -815,7 +815,7 @@ int quest_generate()
         (game_data.current_map == mdata_t::MapId::palmia && rnd(8) == 0))
     {
         quest_data[rq].difficulty = clamp(
-            rnd(sdata(183, 0) + 10),
+            rnd_capped(sdata(183, 0) + 10),
             int(1.5 * std::sqrt(sdata(183, 0))) + 1,
             cdata.player().fame / 1000 + 10);
         quest_data[rq].deadline_hours =
@@ -835,8 +835,8 @@ int quest_generate()
         (game_data.current_map == mdata_t::MapId::yowyn && rnd(2) == 0))
     {
         quest_data[rq].difficulty = clamp(
-            rnd(cdata.player().level + 5) +
-                rnd((cdata.player().fame / 800 + 1)) + 1,
+            rnd_capped(cdata.player().level + 5) +
+                rnd_capped(cdata.player().fame / 800 + 1) + 1,
             1,
             50);
         quest_data[rq].deadline_hours =
@@ -854,8 +854,8 @@ int quest_generate()
     if (rnd(8) == 0)
     {
         quest_data[rq].difficulty = clamp(
-            rnd(cdata.player().level + 10) +
-                rnd((cdata.player().fame / 500 + 1)) + 1,
+            rnd_capped(cdata.player().level + 10) +
+                rnd_capped(cdata.player().fame / 500 + 1) + 1,
             1,
             80);
         quest_data[rq].difficulty =
@@ -1004,7 +1004,7 @@ int quest_generate()
         quest_data[rq].reward_item_id = 5;
         quest_data[rq].target_item_id = dbid;
         quest_data[rq].difficulty =
-            clamp(rnd(cdata.player().level + 5) + 1, 1, 30);
+            clamp(rnd_capped(cdata.player().level + 5) + 1, 1, 30);
         rewardfix = 65 + quest_data[rq].difficulty;
         return 0;
     }
@@ -1015,7 +1015,7 @@ void quest_gen_scale_by_level()
 {
     quest_data[rq].reward_gold =
         ((quest_data[rq].difficulty + 3) * 100 +
-         rnd((quest_data[rq].difficulty * 30 + 200)) + 400) *
+         rnd_capped(quest_data[rq].difficulty * 30 + 200) + 400) *
         rewardfix / 100;
     quest_data[rq].reward_gold = quest_data[rq].reward_gold * 100 /
         (100 + quest_data[rq].difficulty * 2 / 3);
@@ -1396,7 +1396,7 @@ void quest_complete()
     }
     if (quest_data[rq].id == 1008 || quest_data[rq].id == 1010)
     {
-        p = 2 + (rnd(100) < rnd(cdata.player().fame / 5000 + 1));
+        p = 2 + (rnd(100) < rnd_capped(cdata.player().fame / 5000 + 1));
     }
     flt();
     itemcreate_extra_inv(55, cdata.player().position, p);

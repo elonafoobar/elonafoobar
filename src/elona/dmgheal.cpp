@@ -247,7 +247,7 @@ int damage_hp(
     }
     if (victim.is_metal())
     {
-        dmg_at_m141 = rnd(dmg_at_m141 / 10 + 2);
+        dmg_at_m141 = rnd_capped(dmg_at_m141 / 10 + 2);
     }
     if (victim.is_contracting_with_reaper())
     {
@@ -321,7 +321,8 @@ int damage_hp(
                 heal_hp(
                     *attacker,
                     clamp(
-                        rnd(dmg_at_m141 * (150 + element_power * 2) / 1000 +
+                        rnd_capped(
+                            dmg_at_m141 * (150 + element_power * 2) / 1000 +
                             10),
                         1,
                         attacker->max_hp / 10 + rnd(5)));
@@ -547,35 +548,35 @@ int damage_hp(
                     status_ailment_damage(
                         victim,
                         StatusAilment::blinded,
-                        rnd(element_power / 3 * 2 + 1));
+                        rnd_capped(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     status_ailment_damage(
                         victim,
                         StatusAilment::paralyzed,
-                        rnd(element_power / 3 * 2 + 1));
+                        rnd_capped(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     status_ailment_damage(
                         victim,
                         StatusAilment::confused,
-                        rnd(element_power / 3 * 2 + 1));
+                        rnd_capped(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     status_ailment_damage(
                         victim,
                         StatusAilment::poisoned,
-                        rnd(element_power / 3 * 2 + 1));
+                        rnd_capped(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     status_ailment_damage(
                         victim,
                         StatusAilment::sleep,
-                        rnd(element_power / 3 * 2 + 1));
+                        rnd_capped(element_power / 3 * 2 + 1));
                 }
             }
             if (element == 52)
@@ -588,38 +589,50 @@ int damage_hp(
             if (element == 53)
             {
                 status_ailment_damage(
-                    victim, StatusAilment::blinded, rnd(element_power + 1));
+                    victim,
+                    StatusAilment::blinded,
+                    rnd_capped(element_power + 1));
             }
             if (element == 58)
             {
                 status_ailment_damage(
-                    victim, StatusAilment::paralyzed, rnd(element_power + 1));
+                    victim,
+                    StatusAilment::paralyzed,
+                    rnd_capped(element_power + 1));
             }
             if (element == 54)
             {
                 status_ailment_damage(
-                    victim, StatusAilment::confused, rnd(element_power + 1));
+                    victim,
+                    StatusAilment::confused,
+                    rnd_capped(element_power + 1));
             }
             if (element == 57)
             {
                 status_ailment_damage(
-                    victim, StatusAilment::confused, rnd(element_power + 1));
+                    victim,
+                    StatusAilment::confused,
+                    rnd_capped(element_power + 1));
             }
             if (element == 55)
             {
                 status_ailment_damage(
-                    victim, StatusAilment::poisoned, rnd(element_power + 1));
+                    victim,
+                    StatusAilment::poisoned,
+                    rnd_capped(element_power + 1));
             }
             if (element == 61)
             {
                 status_ailment_damage(
-                    victim, StatusAilment::bleeding, rnd(element_power + 1));
+                    victim,
+                    StatusAilment::bleeding,
+                    rnd_capped(element_power + 1));
             }
             if (element == 62)
             {
                 if (victim.index == 0)
                 {
-                    modify_ether_disease_stage(rnd(element_power + 1));
+                    modify_ether_disease_stage(rnd_capped(element_power + 1));
                 }
             }
             if (element == 63)
@@ -926,7 +939,8 @@ int damage_hp(
                 {
                     heal_hp(
                         *attacker,
-                        rnd(dmg_at_m141 * (200 + element_power) / 1000 + 5));
+                        rnd_capped(
+                            dmg_at_m141 * (200 + element_power) / 1000 + 5));
                 }
             }
         }
@@ -1304,7 +1318,8 @@ void damage_insanity(Character& cc, int delta)
     }
     delta = std::max(delta, 0);
     cc.insanity += delta;
-    if (rnd(10) == 0 || rnd(delta + 1) > 5 || rnd(cc.insanity + 1) > 50)
+    if (rnd(10) == 0 || rnd_capped(delta + 1) > 5 ||
+        rnd_capped(cc.insanity + 1) > 50)
     {
         status_ailment_damage(cc, StatusAilment::insane, 100);
     }

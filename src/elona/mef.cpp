@@ -227,7 +227,7 @@ void mef_proc(int tc)
                 }
                 int stat = damage_hp(
                     cdata[tc],
-                    rnd(mef(5, ef) / 25 + 5) + 1,
+                    rnd_capped(mef(5, ef) / 25 + 5) + 1,
                     -15,
                     63,
                     mef(5, ef));
@@ -253,7 +253,7 @@ void mef_proc(int tc)
             }
         }
         int stat = damage_hp(
-            cdata[tc], rnd(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
+            cdata[tc], rnd_capped(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
         if (stat == 0)
         {
             check_kill(mef(6, ef), tc);
@@ -303,7 +303,8 @@ bool mef_proc_from_movement(int cc)
     {
         if (cdatan(2, cc) != u8"core.spider"s)
         {
-            if (rnd(mef(5, i) + 25) < rnd(sdata(10, cc) + sdata(12, cc) + 1) ||
+            if (rnd_capped(mef(5, i) + 25) <
+                    rnd_capped(sdata(10, cc) + sdata(12, cc) + 1) ||
                 cdata[cc].weight > 100)
             {
                 if (is_in_fov(cdata[cc]))

@@ -961,7 +961,8 @@ void map_createroomdoor()
                     y,
                     tile_doorclosed,
                     21,
-                    rnd(std::abs(game_data.current_dungeon_level * 3 / 2) + 1));
+                    rnd_capped(
+                        std::abs(game_data.current_dungeon_level * 3 / 2) + 1));
             }
             break;
         }
@@ -1572,7 +1573,8 @@ void map_makedoor()
                 dy,
                 tile_doorclosed,
                 21,
-                rnd(std::abs(game_data.current_dungeon_level * 3 / 2) + 1));
+                rnd_capped(
+                    std::abs(game_data.current_dungeon_level * 3 / 2) + 1));
         }
     }
 }
@@ -2774,7 +2776,8 @@ int initialize_quest_map_party()
         ry = roomy(cnt) + 1;
         rh = roomheight(cnt) - 2;
         rdsize = rw * rh;
-        roomdiff = clamp(rnd(quest_data.immediate().difficulty / 3 + 3), 0, 9);
+        roomdiff =
+            clamp(rnd_capped(quest_data.immediate().difficulty / 3 + 3), 0, 9);
         if (rnd(2) == 0)
         {
             x = rnd(rw) + rx;
@@ -3475,7 +3478,8 @@ void initialize_random_nefia_rdtype10()
                                 y,
                                 tile_doorclosed,
                                 21,
-                                rnd(std::abs(
+                                rnd_capped(
+                                    std::abs(
                                         game_data.current_dungeon_level * 3 /
                                         2) +
                                     1));
@@ -3497,7 +3501,8 @@ void initialize_random_nefia_rdtype10()
                                 y,
                                 tile_doorclosed,
                                 21,
-                                rnd(std::abs(
+                                rnd_capped(
+                                    std::abs(
                                         game_data.current_dungeon_level * 3 /
                                         2) +
                                     1));

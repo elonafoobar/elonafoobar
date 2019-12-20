@@ -38,7 +38,7 @@ struct RandomEvent
 
     bool is_evadable(int luck) const
     {
-        return luck_threshold != 0 && rnd(luck + 1) > luck_threshold;
+        return luck_threshold != 0 && rnd_capped(luck + 1) > luck_threshold;
     }
 };
 
@@ -404,7 +404,7 @@ void run_random_event(RandomEvent event)
         event_bg = u8"bg_re5";
         break;
     case 8:
-        p = rnd(cdata.player().gold / 8 + 1);
+        p = rnd_capped(cdata.player().gold / 8 + 1);
         if (cdata.player().is_protected_from_thieves())
         {
             p = 0;
@@ -458,7 +458,7 @@ void run_random_event(RandomEvent event)
         event_bg = u8"bg_re1";
         break;
     case 16:
-        p = rnd(cdata.player().gold / 10 + 1000) + 1;
+        p = rnd_capped(cdata.player().gold / 10 + 1000) + 1;
         earn_gold(cdata.player(), p);
         txt(i18n::s.get_enum_property(
             "core.event.popup", "you_pick_up", 16, p(0)));

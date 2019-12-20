@@ -1722,7 +1722,7 @@ TalkResult talk_npc()
                     {
                         if (cdata[tc].impression < 100)
                         {
-                            if (rnd(sdata(17, 0) + 1) > 10)
+                            if (rnd_capped(sdata(17, 0) + 1) > 10)
                             {
                                 chara_modify_impression(cdata[tc], rnd(3));
                             }

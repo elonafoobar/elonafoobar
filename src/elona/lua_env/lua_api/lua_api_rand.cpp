@@ -20,6 +20,19 @@ int LuaApiRand::rnd(int n)
 /**
  * @luadoc
  *
+ * Returns a random number from 0 to min(n, 32768), exclusive. It emulates
+ * vanilla's random number generation, capped by the upper limit.
+ * @tparam num n
+ * @treturn num a number in [0, min(n, 32768))
+ */
+int LuaApiRand::rnd_capped(int n)
+{
+    return elona::rnd_capped(n);
+}
+
+/**
+ * @luadoc
+ *
  * Returns true one out of every n times.
  * @tparam num n
  * @treturn bool true one out of every n times
@@ -78,6 +91,7 @@ sol::object LuaApiRand::choice(sol::table table)
 void LuaApiRand::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, rnd);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiRand, rnd_capped);
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, one_in);
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, coinflip);
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, between);
