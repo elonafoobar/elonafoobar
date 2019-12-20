@@ -284,6 +284,7 @@ config {
       option "skip_confirm_at_shop", false,
       option "skip_overcasting_warning", false,
       option "digital_clock", false,
+      option "auto_target", false,
    },
 
    -- Hidden sections

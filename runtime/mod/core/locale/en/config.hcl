@@ -569,6 +569,11 @@ DOC
                     name = "Digital clock"
                     doc = "Replace default clock with a simple 24 hours digital clock."
                 }
+
+                auto_target {
+                    name = "Party auto target"
+                    doc = "Party members will automatically attack enemies that are visible to you."
+                }
             }
 
             keybindings {

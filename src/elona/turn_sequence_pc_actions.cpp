@@ -6,6 +6,7 @@
 #include "audio.hpp"
 #include "autopick.hpp"
 #include "command.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
@@ -101,6 +102,9 @@ bool _proc_autodig()
 
 optional<TurnResult> handle_pc_action(std::string& action)
 {
+    if (g_config.auto_target())
+        find_enemy_target(true);
+
     if (game_data.wizard)
     {
         if (action == "wizard_open_console")

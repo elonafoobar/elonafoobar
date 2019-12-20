@@ -5681,7 +5681,7 @@ void savecycle()
 
 
 
-int find_enemy_target()
+int find_enemy_target(bool silent)
 {
     if (cdata[cdata[cc].enemy_id].state() != Character::State::alive)
     {
@@ -5730,7 +5730,7 @@ int find_enemy_target()
     }
     if (cdata[cc].enemy_id == 0 || cdata[cc].blind != 0)
     {
-        if (cc == 0)
+        if (cc == 0 && !silent)
         {
             txt(i18n::s.get("core.action.ranged.no_target"));
             update_screen();

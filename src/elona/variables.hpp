@@ -632,7 +632,7 @@ int prompt_magic_location();
 int prompt_really_attack();
 
 // Action calculation
-int find_enemy_target();
+int find_enemy_target(bool silent = false);
 int can_do_ranged_attack();
 
 // Main action body
