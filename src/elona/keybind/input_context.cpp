@@ -289,6 +289,7 @@ std::string InputContext::_delay_movement_action(
     snail::ModKey modifiers,
     KeyWaitDelay delay_type)
 {
+    const auto fast_run = keybd_wait >= 100000;
     if (keybd_wait >= 100000)
     {
         if ((modifiers & snail::ModKey::shift) != snail::ModKey::shift)
@@ -306,7 +307,7 @@ std::string InputContext::_delay_movement_action(
     {
         if (keybd_attacking != 0)
         {
-            if (keybd_wait % g_config.attack_wait() != 0)
+            if (keybd_wait % g_config.attack_wait() != 0 && !fast_run)
             {
                 return ""s;
             }
@@ -315,7 +316,7 @@ std::string InputContext::_delay_movement_action(
         {
             if (keybd_wait < g_config.walk_wait() * g_config.start_run_wait())
             {
-                if (keybd_wait % g_config.walk_wait() != 0)
+                if (keybd_wait % g_config.walk_wait() != 0 && !fast_run)
                 {
                     return ""s;
                 }
@@ -325,7 +326,7 @@ std::string InputContext::_delay_movement_action(
                 running = 1;
                 if (keybd_wait < 100000)
                 {
-                    if (keybd_wait % g_config.run_wait() != 0)
+                    if (keybd_wait % g_config.run_wait() != 0 && !fast_run)
                     {
                         return ""s;
                     }
@@ -347,7 +348,7 @@ std::string InputContext::_delay_movement_action(
         {
             if (!g_config.scroll_when_run())
             {
-                if (keybd_wait % g_config.run_wait() != 0)
+                if (keybd_wait % g_config.run_wait() != 0 && !fast_run)
                 {
                     return ""s;
                 }
