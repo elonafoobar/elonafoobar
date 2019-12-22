@@ -38,7 +38,7 @@ void create_all_adventurers()
 void create_adventurer()
 {
     flt(0, Quality::miracle);
-    initlv = rnd(60 + cdata.player().level) + 1;
+    initlv = rnd_capped(60 + cdata.player().level) + 1;
     p(0) = 75;
     p(1) = 41;
     p(2) = 160;
@@ -74,7 +74,7 @@ void create_adventurer()
     cdata[rc].current_map = p;
     cdata[rc].current_dungeon_level = 1;
     cdata[rc].fame = cdata[rc].level * cdata[rc].level * 30 +
-        rnd((cdata[rc].level * 200 + 100)) + rnd(500);
+        rnd_capped(cdata[rc].level * 200 + 100) + rnd(500);
 }
 
 
@@ -287,14 +287,16 @@ void adventurer_update()
         }
         if (rnd(20) == 0)
         {
-            cdata[rc].fame += rnd(cdata[rc].level * cdata[rc].level / 40 + 5) -
-                rnd((cdata[rc].level * cdata[rc].level / 50 + 5));
+            cdata[rc].fame +=
+                rnd_capped(cdata[rc].level * cdata[rc].level / 40 + 5) -
+                rnd_capped(cdata[rc].level * cdata[rc].level / 50 + 5);
         }
         if (rnd(2000) == 0)
         {
             cdata[rc].experience += clamp(cdata[rc].level, 1, 1000) *
                 clamp(cdata[rc].level, 1, 1000) * 100;
-            int fame = rnd(cdata[rc].level * cdata[rc].level / 20 + 10) + 10;
+            int fame =
+                rnd_capped(cdata[rc].level * cdata[rc].level / 20 + 10) + 10;
             cdata[rc].fame += fame;
             addnews(4, rc, fame);
             adventurer_discover_equipment();

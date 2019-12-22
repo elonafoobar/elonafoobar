@@ -402,7 +402,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
         }
     }
 
-    // Chocked
+    // Choked
     if (chara.relationship >= 0)
     {
         if (cdata.player().choked)

@@ -735,7 +735,7 @@ TurnResult do_throw_command()
         txt(i18n::s.get("core.action.throw.execute", cdata[cc], inv[ci]));
     }
     if (dist(cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy) * 4 >
-            rnd(sdata(111, cc) + 10) + sdata(111, cc) / 4 ||
+            rnd_capped(sdata(111, cc) + 10) + sdata(111, cc) / 4 ||
         rnd(10) == 0)
     {
         x = tlocx + rnd(2) - rnd(2);

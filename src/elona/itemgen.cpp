@@ -366,7 +366,7 @@ optional_ref<Item> do_create_item(int slot, int x, int y)
 
     if (item.id == ItemId::monster_ball)
     {
-        item.param2 = rnd(objlv + 1) + 1;
+        item.param2 = rnd_capped(objlv + 1) + 1;
         item.value = 2000 + item.param2 * item.param2 + item.param2 * 100;
     }
 
@@ -377,7 +377,7 @@ optional_ref<Item> do_create_item(int slot, int x, int y)
 
     if (item.id == ItemId::ancient_book)
     {
-        item.param1 = rnd(rnd(clamp(objlv / 2, 1, 15)) + 1);
+        item.param1 = rnd(rnd_capped(clamp(objlv / 2, 1, 15)) + 1);
     }
 
     if (item.id == ItemId::sisters_love_fueled_lunch)
@@ -425,10 +425,10 @@ optional_ref<Item> do_create_item(int slot, int x, int y)
         {
             item.param1 = cdata.player().level;
         }
-        item.param2 =
-            rnd(std::abs(game_data.current_dungeon_level) *
-                    (game_data.current_map != mdata_t::MapId::shelter_) +
-                1);
+        item.param2 = rnd_capped(
+            std::abs(game_data.current_dungeon_level) *
+                (game_data.current_map != mdata_t::MapId::shelter_) +
+            1);
         if (item.id == ItemId::wallet || item.id == ItemId::suitcase)
         {
             item.param2 = rnd(15);
@@ -503,7 +503,7 @@ optional_ref<Item> do_create_item(int slot, int x, int y)
     {
         if (reftype < 50000)
         {
-            if (rnd(sdata(162, 0) + 1) > 5)
+            if (rnd_capped(sdata(162, 0) + 1) > 5)
             {
                 item.identify_state = IdentifyState::almost;
             }

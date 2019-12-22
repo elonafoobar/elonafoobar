@@ -649,7 +649,7 @@ bool casino_blackjack()
                 {
                     if (pileremain() > 10)
                     {
-                        if (rnd(sdata(19, 0)) > 40)
+                        if (rnd_capped(sdata(19, 0)) > 40)
                         {
                             txt(i18n::s.get(
                                 "core.casino.blackjack.game.bad_feeling"));
@@ -676,7 +676,7 @@ bool casino_blackjack()
             {
                 p = 60;
             }
-            if (rnd(sdata(12, 0)) < rnd(p(0)))
+            if (rnd_capped(sdata(12, 0)) < rnd(p(0)))
             {
                 atxinit();
                 noteadd(i18n::s.get("core.casino.blackjack.game.cheat.dialog"));

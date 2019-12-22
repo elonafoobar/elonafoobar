@@ -16,7 +16,7 @@ function set(key, value) end
 --  @raise if the config item does not exist or is not a boolean, an integer, or
 --  a string.
 --  @function get
-function get(key, s) end
+function get(key) end
 
 --- Saves the current sate of the config to the config options file. Be sure to
 --  call this when you modify the config using this API.

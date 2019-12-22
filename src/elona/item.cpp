@@ -1883,7 +1883,7 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
             continue;
         }
 
-        int p_ = rnd(item.number()) / 2 + 1;
+        int p_ = rnd_capped(item.number()) / 2 + 1;
         if (owner != -1)
         {
             if (item.body_part != 0)
@@ -2065,7 +2065,7 @@ bool item_cold(int owner, optional_ref<Item> destroyed_item)
             }
             continue;
         }
-        int p_ = rnd(item.number()) / 2 + 1;
+        int p_ = rnd_capped(item.number()) / 2 + 1;
         if (owner != -1)
         {
             if (is_in_fov(cdata[owner]))

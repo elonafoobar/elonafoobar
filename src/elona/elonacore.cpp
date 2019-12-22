@@ -513,9 +513,9 @@ void gain_race_feat()
 int roundmargin(int x, int y)
 {
     if (x > y)
-        return x - rnd(x - y);
+        return x - rnd_capped(x - y);
     else if (x < y)
-        return x + rnd(y - x);
+        return x + rnd_capped(y - x);
     else
         return x;
 }
@@ -1096,7 +1096,7 @@ int roll(int x, int y, int z)
     int ret = 0;
     for (int i = 0; i < x; ++i)
     {
-        ret += rnd(y) + 1;
+        ret += rnd_capped(y) + 1;
     }
     return ret + z;
 }
@@ -1894,7 +1894,7 @@ int try_to_cast_spell()
         {
             r4 = sdata(the_ability_db[r3]->related_basic_attribute, cc);
         }
-        if (rnd(sdata(150, cc) * r4 * 4 + 250) < rnd(r2 + 1))
+        if (rnd_capped(sdata(150, cc) * r4 * 4 + 250) < rnd_capped(r2 + 1))
         {
             if (rnd(7) == 0)
             {
@@ -1902,21 +1902,21 @@ int try_to_cast_spell()
             }
             if (r4 * 10 < r2)
             {
-                if (rnd(r4 * 10 + 1) < rnd(r2 + 1))
+                if (rnd_capped(r4 * 10 + 1) < rnd_capped(r2 + 1))
                 {
                     f = 0;
                 }
             }
             if (r4 * 20 < r2)
             {
-                if (rnd(r4 * 20 + 1) < rnd(r2 + 1))
+                if (rnd_capped(r4 * 20 + 1) < rnd_capped(r2 + 1))
                 {
                     f = 0;
                 }
             }
             if (r4 * 30 < r2)
             {
-                if (rnd(r4 * 30 + 1) < rnd(r2 + 1))
+                if (rnd_capped(r4 * 30 + 1) < rnd_capped(r2 + 1))
                 {
                     f = 0;
                 }
@@ -1999,8 +1999,8 @@ int try_to_cast_spell()
 
 int try_to_reveal()
 {
-    if (rnd(sdata(159, cc) * 15 + 20 + sdata(13, cc)) >
-        rnd(game_data.current_dungeon_level * 8 + 60))
+    if (rnd_capped(sdata(159, cc) * 15 + 20 + sdata(13, cc)) >
+        rnd_capped(game_data.current_dungeon_level * 8 + 60))
     {
         chara_gain_exp_detection(cdata[cc]);
         return 1;
@@ -2018,7 +2018,7 @@ int can_evade_trap()
     }
     if (cc < 16)
     {
-        if (rnd(refdiff + 1) < sdata(13, cc) + sdata(159, cc) * 4)
+        if (rnd_capped(refdiff + 1) < sdata(13, cc) + sdata(159, cc) * 4)
         {
             return 1;
         }
@@ -2034,8 +2034,8 @@ int can_evade_trap()
 
 int try_to_disarm_trap()
 {
-    if (rnd(sdata(175, cc) * 15 + 20 + sdata(12, cc)) >
-        rnd(game_data.current_dungeon_level * 12 + 100))
+    if (rnd_capped(sdata(175, cc) * 15 + 20 + sdata(12, cc)) >
+        rnd_capped(game_data.current_dungeon_level * 12 + 100))
     {
         chara_gain_exp_disarm_trap(cdata[cc]);
         return 1;
@@ -2066,7 +2066,7 @@ int try_to_perceive_npc(int cc)
                     cdata[r2].position.y) *
                     150 +
                 (sdata(157, cc) * 100 + 150) + 1;
-            if (rnd(p(0)) < rnd(sdata(13, r2) * 60 + 150))
+            if (rnd_capped(p(0)) < rnd_capped(sdata(13, r2) * 60 + 150))
             {
                 return 1;
             }
@@ -2101,7 +2101,7 @@ void proc_turn_end(int cc)
     }
     if (cdata[cc].poisoned > 0)
     {
-        damage_hp(cdata[cc], rnd(2 + sdata(11, cc) / 10), -4);
+        damage_hp(cdata[cc], rnd_capped(2 + sdata(11, cc) / 10), -4);
         status_ailment_heal(cdata[cc], StatusAilment::poisoned, 1);
         if (cdata[cc].poisoned > 0)
         {
@@ -2230,7 +2230,8 @@ void proc_turn_end(int cc)
     {
         damage_hp(
             cdata[cc],
-            rnd(cdata[cc].hp * (1 + cdata[cc].bleeding / 4) / 100 + 3) + 1,
+            rnd_capped(cdata[cc].hp * (1 + cdata[cc].bleeding / 4) / 100 + 3) +
+                1,
             -13);
         status_ailment_heal(
             cdata[cc],
@@ -2351,11 +2352,11 @@ void proc_turn_end(int cc)
     {
         if (rnd(6) == 0)
         {
-            heal_hp(cdata[cc], rnd(sdata(154, cc) / 3 + 1) + 1);
+            heal_hp(cdata[cc], rnd_capped(sdata(154, cc) / 3 + 1) + 1);
         }
         if (rnd(5) == 0)
         {
-            heal_mp(cdata[cc], rnd(sdata(155, cc) / 2 + 1) + 1);
+            heal_mp(cdata[cc], rnd_capped(sdata(155, cc) / 2 + 1) + 1);
         }
     }
 }
@@ -3568,7 +3569,7 @@ void damage_by_cursed_equipments()
     {
         if (cdata[cc].gold > 0)
         {
-            p = rnd(cdata[cc].gold) / 100 + rnd(10) + 1;
+            p = rnd_capped(cdata[cc].gold) / 100 + rnd(10) + 1;
             if (p > cdata[cc].gold)
             {
                 p = cdata[cc].gold;
@@ -4821,8 +4822,8 @@ void supply_income()
         {
             continue;
         }
-        p = calcincome(cnt) + rnd((calcincome(cnt) / 3 + 1)) -
-            rnd((calcincome(cnt) / 3 + 1));
+        p = calcincome(cnt) + rnd_capped(calcincome(cnt) / 3 + 1) -
+            rnd_capped(calcincome(cnt) / 3 + 1);
         income += p;
         flt();
         itemcreate_extra_inv(54, -1, -1, p);
@@ -6507,7 +6508,9 @@ bool move_character_internal(Character& chara)
             else
             {
                 damage_hp(
-                    chara, rnd(game_data.current_dungeon_level * 2 + 10), -1);
+                    chara,
+                    rnd_capped(game_data.current_dungeon_level * 2 + 10),
+                    -1);
             }
         }
         if (feat(2) == 1)
@@ -7207,13 +7210,13 @@ int calcmagiccontrol(int caster_chara_index, int target_chara_index)
         if (belong_to_same_team(
                 cdata[caster_chara_index], cdata[target_chara_index]))
         {
-            if (sdata(188, caster_chara_index) * 5 > rnd(dmg + 1))
+            if (sdata(188, caster_chara_index) * 5 > rnd_capped(dmg + 1))
             {
                 dmg = 0;
             }
             else
             {
-                dmg = rnd(
+                dmg = rnd_capped(
                     dmg * 100 / (100 + sdata(188, caster_chara_index) * 10) +
                     1);
             }
@@ -7578,7 +7581,9 @@ int drink_well()
         {
             flt();
             itemcreate_extra_inv(
-                54, cdata[cc].position, rnd(sdata(159, cc) / 2 * 50 + 100) + 1);
+                54,
+                cdata[cc].position,
+                rnd_capped(sdata(159, cc) / 2 * 50 + 100) + 1);
             txt(i18n::s.get(
                 "core.action.drink.well.effect.finds_gold", cdata[cc]));
             break;
@@ -8739,7 +8744,7 @@ TurnResult do_bash()
             {
                 p *= 20;
             }
-            if (rnd(p(0)) < sdata(10, cc) && rnd(2))
+            if (rnd_capped(p(0)) < sdata(10, cc) && rnd(2))
             {
                 txt(i18n::s.get("core.action.bash.door.destroyed"));
                 if (feat(2) > sdata(10, cc))
@@ -8948,7 +8953,8 @@ TurnResult proc_movement_event()
                         encounter = 2;
                     }
                 }
-                if (rnd(220 + cdata.player().level * 10 -
+                if (rnd_capped(
+                        220 + cdata.player().level * 10 -
                         clamp(
                             game_data.cargo_weight * 150 /
                                 (game_data.current_cart_limit + 1),
@@ -9437,7 +9443,7 @@ int unlock_box(int difficulty)
         {
             txt(i18n::s.get("core.action.unlock.easy"));
         }
-        else if (rnd(rnd(i * 2) + 1) < difficulty)
+        else if (rnd(rnd_capped(i * 2) + 1) < difficulty)
         {
             txt(i18n::s.get("core.action.unlock.fail"));
             f = 1;
@@ -9573,7 +9579,7 @@ void open_box()
             }
             else
             {
-                in = rnd(inv[ci].value / 10 + 1) + 1;
+                in = rnd_capped(inv[ci].value / 10 + 1) + 1;
             }
         }
         if (inv[ri].id == ItemId::wallet)
@@ -10024,7 +10030,7 @@ void try_to_melee_attack()
                 txt(i18n::s.get(
                     "core.action.melee.shield_bash", cdata[cc], cdata[tc]));
             }
-            damage_hp(cdata[tc], rnd(sdata(168, cc)) + 1, cc);
+            damage_hp(cdata[tc], rnd_capped(sdata(168, cc)) + 1, cc);
             status_ailment_damage(
                 cdata[tc],
                 StatusAilment::dimmed,
@@ -10490,7 +10496,8 @@ bool do_physical_attack_internal()
             {
                 if (inv[cw].param2 < calcexpalive(inv[cw].param1))
                 {
-                    inv[cw].param2 += rnd(cdata[tc].level / inv[cw].param1 + 1);
+                    inv[cw].param2 +=
+                        rnd_capped(cdata[tc].level / inv[cw].param1 + 1);
                     if (inv[cw].param2 >= calcexpalive(inv[cw].param1))
                     {
                         snd("core.ding3");
@@ -10546,14 +10553,14 @@ void proc_weapon_enchantments()
         enc = inv[cw].enchantments[cnt].id;
         if (enc == 36)
         {
-            p = rnd(inv[cw].enchantments[cnt].power / 50 + 1) + 1;
+            p = rnd_capped(inv[cw].enchantments[cnt].power / 50 + 1) + 1;
             heal_sp(cdata[cc], p);
             damage_sp(cdata[tc], p / 2);
             continue;
         }
         if (enc == 38)
         {
-            p = rnd(inv[cw].enchantments[cnt].power / 25 + 1) + 1;
+            p = rnd_capped(inv[cw].enchantments[cnt].power / 25 + 1) + 1;
             heal_mp(cdata[cc], p / 5);
             if (cdata[tc].state() != Character::State::alive)
             {
@@ -10632,7 +10639,8 @@ void proc_weapon_enchantments()
                 game_data.proc_damage_events_flag = 1;
                 damage_hp(
                     cdata[tc],
-                    rnd(orgdmg * (100 + inv[cw].enchantments[cnt].power) /
+                    rnd_capped(
+                        orgdmg * (100 + inv[cw].enchantments[cnt].power) /
                             1000 +
                         1) +
                         5,

@@ -85,7 +85,7 @@ void search_material_spot()
         atxlv = cdata.player().level / 2 + rnd(10);
         if (atxlv > 30)
         {
-            atxlv = 30 + rnd((rnd(atxlv - 30) + 1));
+            atxlv = 30 + rnd(rnd_capped(atxlv - 30) + 1);
         }
         if (4 <= game_data.stood_world_map_tile &&
             game_data.stood_world_map_tile < 9)
@@ -133,7 +133,7 @@ void search_material_spot()
             i = 5;
             if (atxspot == 14)
             {
-                if (sdata(163, 0) < rnd(atxlv * 2 + 1) || rnd(10) == 0)
+                if (sdata(163, 0) < rnd_capped(atxlv * 2 + 1) || rnd(10) == 0)
                 {
                     txt(i18n::s.get("core.activity.material.digging.fails"));
                     break;
@@ -143,7 +143,7 @@ void search_material_spot()
             }
             if (atxspot == 13)
             {
-                if (sdata(185, 0) < rnd(atxlv * 2 + 1) || rnd(10) == 0)
+                if (sdata(185, 0) < rnd_capped(atxlv * 2 + 1) || rnd(10) == 0)
                 {
                     txt(i18n::s.get("core.activity.material.fishing.fails"));
                     break;
@@ -153,7 +153,7 @@ void search_material_spot()
             }
             if (atxspot == 15)
             {
-                if (sdata(180, 0) < rnd(atxlv * 2 + 1) || rnd(10) == 0)
+                if (sdata(180, 0) < rnd_capped(atxlv * 2 + 1) || rnd(10) == 0)
                 {
                     txt(i18n::s.get("core.activity.material.searching.fails"));
                     break;
@@ -403,7 +403,7 @@ std::pair<bool, int> activity_perform_proc_audience(
                     Message::color{ColorIndex::cyan});
                 txt(i18n::s.get("core.activity.perform.throws_rock", audience));
             }
-            dmg = rnd(audience.level + 1) + 1;
+            dmg = rnd_capped(audience.level + 1) + 1;
             if (audience.id == CharaId::loyter)
             {
                 dmg = audience.level * 2 + rnd(100);
@@ -429,7 +429,7 @@ std::pair<bool, int> activity_perform_proc_audience(
     {
         return std::make_pair(false, gold);
     }
-    if (rnd(performer_skill + 1) > rnd(audience.level * 2 + 1))
+    if (rnd_capped(performer_skill + 1) > rnd_capped(audience.level * 2 + 1))
     {
         if (game_data.executing_immediate_quest_type == 1009)
         {
@@ -439,7 +439,7 @@ std::pair<bool, int> activity_perform_proc_audience(
                 calcpartyscore();
             }
         }
-        const auto p = rnd(audience.level + 1) + 1;
+        const auto p = rnd_capped(audience.level + 1) + 1;
         if (rnd(2) == 0)
         {
             performer.quality_of_performance += p;
@@ -456,7 +456,7 @@ std::pair<bool, int> activity_perform_proc_audience(
             status_ailment_damage(audience, StatusAilment::drunk, 500);
         }
     }
-    if (rnd(performer_skill + 1) > rnd(audience.level * 5 + 1))
+    if (rnd_capped(performer_skill + 1) > rnd_capped(audience.level * 5 + 1))
     {
         if (rnd(3) == 0)
         {
@@ -471,7 +471,7 @@ std::pair<bool, int> activity_perform_proc_audience(
             performer.quality_of_performance += audience.level + 5;
             if (performer.index == 0 && audience.index >= 16)
             {
-                if (rnd(performance_tips * 2 + 2) == 0)
+                if (rnd_capped(performance_tips * 2 + 2) == 0)
                 {
                     activity_perform_generate_item(
                         performer, audience, instrument);
@@ -854,7 +854,7 @@ void activity_others_doing(Character& doer)
                     continue;
                 }
             }
-            p = rnd((i + 1)) *
+            p = rnd_capped(i + 1) *
                 (80 + (is_in_fov(cdata[cnt]) == 0) * 50 +
                  dist(
                      cdata[cnt].position.x,
@@ -867,7 +867,7 @@ void activity_others_doing(Character& doer)
             {
                 p = p * 2 / 3;
             }
-            if (rnd(sdata(13, cnt) + 1) > p)
+            if (rnd_capped(sdata(13, cnt) + 1) > p)
             {
                 if (is_in_fov(cdata[cnt]))
                 {
@@ -1678,7 +1678,7 @@ void spot_fishing()
                     await(g_config.animation_wait() * 2);
                 }
             }
-            if (the_fish_db[fish]->difficulty >= rnd(sdata(185, 0) + 1))
+            if (the_fish_db[fish]->difficulty >= rnd_capped(sdata(185, 0) + 1))
             {
                 fishstat = 0;
             }
