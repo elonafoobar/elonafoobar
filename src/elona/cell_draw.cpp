@@ -1378,8 +1378,8 @@ namespace elona
 
 void cell_draw()
 {
-    int scrturnbk_ = 0;
-    int scrturnnew_ = 0;
+    static int prev_scrturn = 0;
+
     elona_vector1<int> p_;
     int ground_ = 0;
     int ani_ = 0;
@@ -1388,15 +1388,8 @@ void cell_draw()
     const int sxfix_ = (scx != scxbk) * sxfix;
     const int scrturn_ = scrturn / 5;
 
-    if (scrturn_ != scrturnbk_)
-    {
-        scrturnbk_ = scrturn_;
-        scrturnnew_ = 1;
-    }
-    else
-    {
-        scrturnnew_ = 0;
-    }
+    const bool update_frame = scrturn_ != prev_scrturn;
+    prev_scrturn = scrturn_;
 
     int light_ = game_data.light;
     randomize(scrturn_);
@@ -1601,7 +1594,7 @@ void cell_draw()
             }
 
             draw_blood_pool_and_fragments(x_, y, dx_, dy_);
-            draw_efmap(x_, y, dx_, dy_, scrturnnew_ == 1);
+            draw_efmap(x_, y, dx_, dy_, update_frame);
             draw_nefia_icons(x_, y, dx_, dy_);
             draw_mefs(x_, y, dx_, dy_, scrturn_);
             draw_items(x_, y, dx_, dy_, scrturn_);
