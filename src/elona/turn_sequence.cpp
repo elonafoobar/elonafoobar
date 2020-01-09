@@ -1518,7 +1518,6 @@ optional<TurnResult> pc_turn_advance_time()
     t = 1;
     keylog = "";
     key = "";
-    objprm(0, ""s);
 
     return none;
 }

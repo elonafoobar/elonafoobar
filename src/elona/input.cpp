@@ -168,7 +168,6 @@ bool input_text_dialog(
     {
         if (ginfo(2) != 0)
         {
-            objprm(1, ""s);
             inputlog = "";
             await(100);
             --cnt;
@@ -239,7 +238,6 @@ bool input_text_dialog(
         }
         if (strutil::contains(inputlog(0), u8"\t"))
         {
-            objprm(1, ""s);
             inputlog = "";
             if (is_cancelable)
             {
