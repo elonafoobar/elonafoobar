@@ -6264,7 +6264,7 @@ int ask_direction()
         {
             tlocx = x;
             tlocy = y;
-            keyhalt = 1;
+            input_halt_input(HaltInput::force);
             return 1;
         }
         if (action == "north")
@@ -6337,7 +6337,7 @@ int ask_direction()
             {
                 x = cdata.player().position.x;
                 y = cdata.player().position.y;
-                keyhalt = 1;
+                input_halt_input(HaltInput::force);
                 return 0;
             }
             if (x == cdata.player().position.x &&
@@ -6347,7 +6347,7 @@ int ask_direction()
             }
             tlocx = x;
             tlocy = y;
-            keyhalt = 1;
+            input_halt_input(HaltInput::force);
             return 1;
         }
     }

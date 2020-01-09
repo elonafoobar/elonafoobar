@@ -30,7 +30,7 @@ namespace lua
  */
 sol::optional<bool> LuaApiInput::yes_no(const std::string& message)
 {
-    keyhalt = 1;
+    input_halt_input(HaltInput::force);
     txt(message + i18n::space_if_needed());
     const auto result = elona::yes_no();
     if (result == YesNo::canceled)

@@ -590,7 +590,7 @@ int show_random_event_window(
     }
 
 
-    keyhalt = 1;
+    input_halt_input(HaltInput::force);
     cs = 0;
     page = 0;
     pagemax = 0;

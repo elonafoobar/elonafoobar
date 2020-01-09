@@ -541,7 +541,7 @@ static void _prompt_for_key(const std::string& action_id)
 
     // Prevent Shift from firing the cancel action.
     keywait = 1;
-    keyhalt = 1;
+    input_halt_input(HaltInput::force);
 }
 
 optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(

@@ -14,6 +14,7 @@
 #include "elona.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
@@ -383,17 +384,17 @@ void get_hungry(Character& cc)
     {
         if (p == 1)
         {
-            msgalert = 1;
+            input_halt_input(HaltInput::alert);
             txt(i18n::s.get("core.food.hunger_status.starving"));
         }
         else if (p == 2)
         {
-            msgalert = 1;
+            input_halt_input(HaltInput::alert);
             txt(i18n::s.get("core.food.hunger_status.very_hungry"));
         }
         else if (p == 5)
         {
-            msgalert = 1;
+            input_halt_input(HaltInput::alert);
             txt(i18n::s.get("core.food.hunger_status.hungry"));
         }
         refresh_speed(cc);

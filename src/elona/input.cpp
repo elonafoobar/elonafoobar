@@ -18,6 +18,17 @@
 namespace elona
 {
 
+namespace
+{
+
+// Flags which control input behavior.
+
+bool msgalert = false;
+
+} // namespace
+
+
+
 void input_number_dialog(int x, int y, int max_number, int initial_number)
 {
     snd("core.pop2");
@@ -268,7 +279,7 @@ bool input_text_dialog(
     inputlog = strutil::remove_line_ending(inputlog);
     onkey_0();
 
-    keyhalt = 1;
+    input_halt_input(HaltInput::force);
 
     return canceled;
 }
@@ -280,7 +291,7 @@ static void _handle_msgalert()
     if (!msgalert)
         return;
 
-    msgalert = 0;
+    msgalert = false;
     if (g_config.alert_wait() > 1) // TODO: maybe ">= 1"?
     {
         for (int i = 0; i < g_config.alert_wait(); ++i)
@@ -456,7 +467,22 @@ void wait_key_pressed(bool only_enter_or_cancel)
             }
         }
     }
-    keyhalt = 1;
+    input_halt_input(HaltInput::force);
+}
+
+
+
+void input_halt_input(HaltInput mode)
+{
+    switch (mode)
+    {
+    case HaltInput::force:
+        InputContext::instance().halt_input();
+        InputContext::for_menu().halt_input();
+        break;
+    case HaltInput::alert: msgalert = true; break;
+    default: assert(0); break;
+    }
 }
 
 } // namespace elona

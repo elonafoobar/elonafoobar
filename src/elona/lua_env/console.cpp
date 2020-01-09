@@ -525,7 +525,7 @@ void Console::grab_input()
             _input = "";
             _pos = 0;
 
-            keyhalt = 1;
+            input_halt_input(HaltInput::force);
         }
         _last_size = _input.size();
     }

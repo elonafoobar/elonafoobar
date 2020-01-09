@@ -43,6 +43,18 @@ void wait_key_pressed(bool only_enter_or_cancel = false);
 
 
 
+enum class HaltInput
+{
+    // Halt all input regardless of configuration.
+    force,
+    // Halt all input if `core.animation.alert_wait` is non-zero.
+    alert,
+};
+
+void input_halt_input(HaltInput mode);
+
+
+
 /**
  * The result of yes_no() function. There are 3 kinds of result, cancled,
  * yes, and no.

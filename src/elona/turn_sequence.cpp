@@ -1160,7 +1160,7 @@ void update_emoicon()
         if (cc == 0)
         {
             snd("core.ding1");
-            msgalert = 1;
+            input_halt_input(HaltInput::alert);
         }
         r2 = 0;
         gain_level(cdata[cc]);

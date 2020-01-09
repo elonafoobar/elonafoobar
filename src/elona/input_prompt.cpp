@@ -101,7 +101,7 @@ void Prompt::_draw_keys_and_background(int x, int y, int width)
     sx = x - width / 2;
     sy = y - _promptmax * 10;
     boxf(sx + 12, sy + 12, width - 17, _promptmax * 20 + 25, {60, 60, 60, 128});
-    keyhalt = 1;
+    input_halt_input(HaltInput::force);
 }
 
 void Prompt::_draw_main_frame(int width)

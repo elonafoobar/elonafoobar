@@ -3250,7 +3250,7 @@ TurnResult do_movement_command()
         {
             return proc_movement_event();
         }
-        keyhalt = 1;
+        input_halt_input(HaltInput::force);
         if (cellfeat == 23)
         {
             snd("core.chat");
