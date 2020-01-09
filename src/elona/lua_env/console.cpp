@@ -425,12 +425,6 @@ void Console::grab_input()
         noteget(_input, 0);
 
         await(g_config.general_wait());
-        key_check(KeyWaitDelay::walk_run);
-
-        if (keyhalt)
-        {
-            continue;
-        }
 
         if (_last_size != _input.size())
         {
