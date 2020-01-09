@@ -18,12 +18,6 @@ enum class PromptType
     with_number,
 };
 
-// int show_prompt(
-//     int x,
-//     int y,
-//     int width,
-//     PromptType type = PromptType::normal,
-//     int initial_number = 0);
 
 
 void input_number_dialog(int x, int y, int max_number, int initial_number = 0);

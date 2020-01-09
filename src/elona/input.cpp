@@ -460,6 +460,7 @@ void wait_key_pressed(bool only_enter_or_cancel)
         }
         else
         {
+            // TODO: 押されたキーに対応する action がなくとも break すべき
             if (action != "")
             {
                 break;
