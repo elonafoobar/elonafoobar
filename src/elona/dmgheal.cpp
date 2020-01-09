@@ -331,7 +331,6 @@ int damage_hp(
     }
     if (victim.index == 0)
     {
-        game_data.player_cellaccess_check_flag = 0;
         if (victim.hp < 0)
         {
             if (event_has_pending_events() && event_processing_event() != 21)

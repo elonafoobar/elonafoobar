@@ -49,11 +49,6 @@ FoobarData foobar_data;
     SERIALIZE(27, next_shelter_serial_id); \
     SERIALIZE(28, seven_league_boot_effect); \
     SERIALIZE(29, protects_from_etherwind); \
-    SERIALIZE(30, player_cellaccess_check_flag); \
-    SERIALIZE(31, player_cellaccess_w); \
-    SERIALIZE(32, player_cellaccess_n); \
-    SERIALIZE(33, player_cellaccess_e); \
-    SERIALIZE(34, player_cellaccess_s); \
     SERIALIZE(35, player_next_move_direction); \
     SERIALIZE(36, played_scene); \
     SERIALIZE(37, torch); \
