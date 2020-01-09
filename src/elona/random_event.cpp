@@ -596,8 +596,6 @@ int show_random_event_window(
     pagemax = 0;
     pagesize = 16;
     cs_bk = -1;
-    key = "";
-    keylog = "";
     if (listmax <= 1)
     {
         chatesc = 0;
@@ -680,7 +678,6 @@ int show_random_event_window(
         if (rtval != -1)
         {
             snd("core.click1");
-            key = "";
             return rtval;
         }
     }

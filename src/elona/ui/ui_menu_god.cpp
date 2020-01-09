@@ -37,8 +37,6 @@ bool UIMenuGod::init()
     pagemax = 0;
     pagesize = 16;
     cs_bk = -1;
-    key = "";
-    keylog = "";
     listmax = 0;
     chatesc = _cancel_choice;
 

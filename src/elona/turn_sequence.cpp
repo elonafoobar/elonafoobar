@@ -1516,8 +1516,6 @@ optional<TurnResult> pc_turn_advance_time()
         player.enemy_id = 0;
     }
     t = 1;
-    keylog = "";
-    key = "";
 
     return none;
 }

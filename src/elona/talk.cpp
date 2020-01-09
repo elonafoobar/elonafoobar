@@ -556,8 +556,6 @@ int talk_window_query(
         ++keyrange;
     }
     keyrange = listmax;
-    key = "";
-    keylog = "";
     talk_window_init(text);
 
     while (true)

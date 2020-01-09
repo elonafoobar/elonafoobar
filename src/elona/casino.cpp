@@ -55,8 +55,6 @@ void casino_choose_card()
         if (init)
         {
             init = false;
-            key = "";
-            keylog = "";
             screenupdate = -1;
             update_screen();
             for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)

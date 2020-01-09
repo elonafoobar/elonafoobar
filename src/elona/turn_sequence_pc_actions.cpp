@@ -154,14 +154,12 @@ optional<TurnResult> handle_pc_action(std::string& action)
 
     if (action == "quicksave")
     {
-        key = "";
         save_game(save_game_no_message, save_game_silent);
         txt(i18n::s.get("core.action.quicksave"));
         return none;
     }
     if (action == "quickload")
     {
-        key = "";
         Message::instance().clear();
         firstturn = 1;
         load_save_data();
