@@ -1,5 +1,6 @@
 #include "menu.hpp"
 #include <iostream>
+#include <stack>
 #include "ability.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
