@@ -1,3 +1,4 @@
+#include <stack>
 #include "../util/scope_guard.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
