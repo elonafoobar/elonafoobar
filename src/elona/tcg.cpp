@@ -2897,7 +2897,6 @@ void tcg_prompt_action()
             tcgdraw();
             tcg_update_selection();
             cc_at_tcg = clist_at_tcg(cs_at_tcg, csline_at_tcg);
-            key = "";
             if (f_at_tcg == -1)
             {
                 continue;

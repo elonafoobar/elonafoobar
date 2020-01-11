@@ -131,12 +131,11 @@ void initialize_keybind_actions(ActionMap& actions)
     actions.emplace("tcg",                   Action{ActionCategory::game,      {{Key::f3,              ModKey::none}}});
     actions.emplace("update_screen",         Action{ActionCategory::game,      {{Key::f9,              ModKey::none}}});
     actions.emplace("dump_player_info",      Action{ActionCategory::game,      {{Key::f11,             ModKey::none}}});
-    actions.emplace("enable_voldemort",      Action{ActionCategory::game,      {{Key::f12,             ModKey::none}}});
     actions.emplace("reload_autopick",       Action{ActionCategory::game,      {{Key::backspace,       ModKey::shift}}});
     actions.emplace("screenshot",            Action{ActionCategory::game,      {{Key::printscreen,     ModKey::none}}});
+    actions.emplace("toggle_console",        Action{ActionCategory::game,      {{Key::f12,             ModKey::none}}});
+    actions.emplace("open_console",          Action{ActionCategory::game,      {{Key::f12,             ModKey::shift}}});
 
-    actions.emplace("wizard_toggle_console", Action{ActionCategory::wizard,    {{Key::backquote,       ModKey::none}}});
-    actions.emplace("wizard_open_console",   Action{ActionCategory::wizard,    {{Key::backquote,       ModKey::shift}}});
     actions.emplace("wizard_mewmewmew",      Action{ActionCategory::wizard,    {{Key::f3,              ModKey::none}}});
     actions.emplace("wizard_wish",           Action{ActionCategory::wizard,    {{Key::f5,              ModKey::none}}});
     actions.emplace("wizard_advance_time",   Action{ActionCategory::wizard,    {{Key::f6,              ModKey::none}}});

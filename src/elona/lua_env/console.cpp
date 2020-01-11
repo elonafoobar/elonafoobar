@@ -425,12 +425,6 @@ void Console::grab_input()
         noteget(_input, 0);
 
         await(g_config.general_wait());
-        key_check(KeyWaitDelay::walk_run);
-
-        if (keyhalt)
-        {
-            continue;
-        }
 
         if (_last_size != _input.size())
         {
@@ -531,7 +525,7 @@ void Console::grab_input()
             _input = "";
             _pos = 0;
 
-            keyhalt = 1;
+            input_halt_input(HaltInput::force);
         }
         _last_size = _input.size();
     }
@@ -622,7 +616,6 @@ void Console::_init_builtin_lua_functions()
         game_data.wizard = 1;
         cdatan(1, 0) = "*Debug*";
         print("Wizard mode activated.");
-        print("Please get on Ylva Express on Platform 9 ¾.");
     };
 
     funcs["voldemort"] = [this]() {
@@ -651,14 +644,6 @@ void Console::_init_builtin_lua_functions()
         game_data.wizard = 0;
         cdatan(1, 0) = random_title(RandomTitleType::character);
         print("Wizard mode inactivated.");
-        print("I am perfectly normal, thank you very much.");
-    };
-
-    funcs["httpget"] = [this](const std::string& url) {
-        spider::http::Request req{spider::http::Verb::GET, url};
-        req.send(
-            [this](const auto& res) { print(res.body); },
-            [this](const auto& err) { print(err.what()); });
     };
 
     // Map functions stored in COMMANDS._BUILTIN_ to global.

@@ -7,15 +7,6 @@
 
 
 
-namespace
-{
-
-int quickkeywait;
-
-}
-
-
-
 namespace elona
 {
 
@@ -387,7 +378,6 @@ optional<std::string> QuickMenu::_on_action(std::string& action)
     quickpage = _page;
     cs = 0;
     update_screen();
-    quickkeywait = 1;
 
     // If canceling by using escape, don't make the escape menu pop up
     // immediately upon exiting.

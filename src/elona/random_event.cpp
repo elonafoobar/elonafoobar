@@ -590,15 +590,12 @@ int show_random_event_window(
     }
 
 
-    keyhalt = 1;
+    input_halt_input(HaltInput::force);
     cs = 0;
     page = 0;
     pagemax = 0;
     pagesize = 16;
     cs_bk = -1;
-    key = "";
-    objprm(0, ""s);
-    keylog = "";
     if (listmax <= 1)
     {
         chatesc = 0;
@@ -681,7 +678,6 @@ int show_random_event_window(
         if (rtval != -1)
         {
             snd("core.click1");
-            key = "";
             return rtval;
         }
     }

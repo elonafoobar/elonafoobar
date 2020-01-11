@@ -1160,7 +1160,7 @@ void update_emoicon()
         if (cc == 0)
         {
             snd("core.ding1");
-            msgalert = 1;
+            input_halt_input(HaltInput::alert);
         }
         r2 = 0;
         gain_level(cdata[cc]);
@@ -1438,9 +1438,6 @@ optional<TurnResult> pc_turn_advance_time()
         player.enemy_id = 0;
     }
     t = 1;
-    keylog = "";
-    key = "";
-    objprm(0, ""s);
 
     return none;
 }

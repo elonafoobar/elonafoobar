@@ -51,6 +51,14 @@ public:
     static InputContext& instance();
     static InputContext& for_menu();
 
+
+    // Halt all input.
+    void halt_input()
+    {
+        _halt_input = true;
+    }
+
+
 private:
     /**
      * Adds all actions that are a part of the given category.
@@ -93,6 +101,8 @@ private:
     // "northeast" to cycle between multiple menus, e.g. in the inventory menu.
     // Using the arrow keys together should not cause the menu to cycle.
     bool _menu_cycle_key_pressed{};
+
+    bool _halt_input = false;
 };
 
 } // namespace elona

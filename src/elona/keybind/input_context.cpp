@@ -454,7 +454,7 @@ std::string InputContext::check_for_command(KeyWaitDelay delay_type)
     const auto& keys = snail::Input::instance().pressed_keys();
     auto modifiers = snail::Input::instance().modifiers();
 
-    if (/* !shortcut && */ keyhalt != 0)
+    if (_halt_input)
     {
         if (keys.size() > 0)
         {
@@ -463,7 +463,7 @@ std::string InputContext::check_for_command(KeyWaitDelay delay_type)
         }
         else
         {
-            keyhalt = 0;
+            _halt_input = false;
         }
     }
 

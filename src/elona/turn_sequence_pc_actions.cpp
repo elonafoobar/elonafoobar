@@ -107,16 +107,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
 
     if (game_data.wizard)
     {
-        if (action == "wizard_open_console")
-        {
-            lua::lua->get_console().grab_input();
-            return none;
-        }
-        if (action == "wizard_toggle_console")
-        {
-            lua::lua->get_console().toggle();
-            return none;
-        }
         if (action == "wizard_mewmewmew")
         {
             efid = 657;
@@ -154,14 +144,12 @@ optional<TurnResult> handle_pc_action(std::string& action)
 
     if (action == "quicksave")
     {
-        key = "";
         save_game(save_game_no_message, save_game_silent);
         txt(i18n::s.get("core.action.quicksave"));
         return none;
     }
     if (action == "quickload")
     {
-        key = "";
         Message::instance().clear();
         firstturn = 1;
         load_save_data();
@@ -207,22 +195,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         dump_player_info();
         await(500);
-        return none;
-    }
-    if (action == "enable_voldemort")
-    {
-        debug::voldemort = true;
-        if (debug::voldemort)
-        {
-            game_data.wizard = 1;
-            for (int i = 400; i < 467; ++i)
-            {
-                if (i != 426 && i != 427)
-                {
-                    chara_gain_skill(cdata.player(), i, 100, 10000);
-                }
-            }
-        }
         return none;
     }
 
@@ -849,6 +821,16 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         _take_screenshot();
         await(100);
+        return none;
+    }
+    if (action == "open_console")
+    {
+        lua::lua->get_console().grab_input();
+        return none;
+    }
+    if (action == "toggle_console")
+    {
+        lua::lua->get_console().toggle();
         return none;
     }
     if (action != ""s && action != "cancel" /* && key != key_alter */)

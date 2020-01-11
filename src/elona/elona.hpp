@@ -522,9 +522,6 @@ int notesel(std::string&);
 void noteunsel();
 
 
-void objprm(int, const std::string&);
-
-
 
 void pget(int x, int y);
 

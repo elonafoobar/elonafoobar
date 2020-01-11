@@ -37,7 +37,7 @@ void talk_start()
 
 bool talk_setup_variables(Character &chara)
 {
-    keyhalt = 1;
+    input_halt_input(HaltInput::force);
     if (chara.character_role == 1005)
     {
         if (g_config.extra_help())
@@ -556,9 +556,6 @@ int talk_window_query(
         ++keyrange;
     }
     keyrange = listmax;
-    key = "";
-    objprm(0, ""s);
-    keylog = "";
     talk_window_init(text);
 
     while (true)

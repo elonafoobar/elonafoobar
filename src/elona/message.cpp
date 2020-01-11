@@ -73,9 +73,6 @@ void unsubscribe_log(LogObserver* observer)
 
 void anime_halt(int x_at_txtfunc, int y_at_txtfunc)
 {
-    key = "";
-    objprm(0, ""s);
-    keylog = "";
     gmode(0);
     gsel(3);
     asset_copy_from(0, x_at_txtfunc, y_at_txtfunc, "label_more_scratch");
