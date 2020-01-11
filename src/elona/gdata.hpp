@@ -124,11 +124,6 @@ struct GameData
     int next_shelter_serial_id;
     int seven_league_boot_effect;
     int protects_from_etherwind;
-    int player_cellaccess_check_flag;
-    int player_cellaccess_w;
-    int player_cellaccess_n;
-    int player_cellaccess_e;
-    int player_cellaccess_s;
     int player_next_move_direction;
     int played_scene;
     int torch;

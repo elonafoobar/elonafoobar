@@ -9214,23 +9214,6 @@ void sense_map_feats_on_move()
         game_data.player_y_on_map_leave = -1;
         x = cdata.player().position.x;
         y = cdata.player().position.y;
-        if (getkey(snail::Key::shift) &&
-            game_data.player_cellaccess_check_flag == 0 &&
-            cdata.player().confused == 0 && cdata.player().dimmed == 0)
-        {
-            if (map_data.type != mdata_t::MapType::world_map)
-            {
-                game_data.player_cellaccess_check_flag = 1;
-                cell_check(cdata[cc].position.x + 1, cdata[cc].position.y);
-                game_data.player_cellaccess_e = cellaccess;
-                cell_check(cdata[cc].position.x - 1, cdata[cc].position.y);
-                game_data.player_cellaccess_w = cellaccess;
-                cell_check(cdata[cc].position.x, cdata[cc].position.y + 1);
-                game_data.player_cellaccess_s = cellaccess;
-                cell_check(cdata[cc].position.x, cdata[cc].position.y - 1);
-                game_data.player_cellaccess_n = cellaccess;
-            }
-        }
         if (cell_data.at(x, y).item_appearances_actual != 0)
         {
             if (cdata.player().blind == 0)
@@ -10481,10 +10464,6 @@ bool do_physical_attack_internal()
             }
             add_damage_popup(u8"evade!!", tc, {191, 191, 191});
         }
-    }
-    if (tc == 0)
-    {
-        game_data.player_cellaccess_check_flag = 0;
     }
     rowact_check(cdata[tc]);
     if (attackskill != 106)
