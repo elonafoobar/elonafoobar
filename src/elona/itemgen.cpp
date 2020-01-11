@@ -234,7 +234,6 @@ optional_ref<Item> do_create_item(int slot, int x, int y)
                 }
             }
         }
-        dbmode = 1;
         get_random_item_id();
         if (dbid == 25)
         {
@@ -244,7 +243,6 @@ optional_ref<Item> do_create_item(int slot, int x, int y)
             }
             objlv += 10;
             fltselect = 0;
-            dbmode = 1;
             get_random_item_id();
         }
     }

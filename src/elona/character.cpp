@@ -126,7 +126,6 @@ int chara_create_internal()
                 }
             }
         }
-        dbmode = 1;
         dbid = _get_random_npc_id();
         if (dbid == 0)
         {
@@ -135,7 +134,6 @@ int chara_create_internal()
                 fixlv = Quality::miracle;
             }
             flt(objlv + 10, fixlv);
-            dbmode = 1;
             dbid = _get_random_npc_id();
         }
     }
@@ -154,7 +152,6 @@ int chara_create_internal()
             }
             cmshade = 1;
             flt(objlv, fixlv);
-            dbmode = 1;
             dbid = _get_random_npc_id();
         }
     }
@@ -704,12 +701,7 @@ void chara_refresh(int cc)
     }
     else if (cdata[cc].id == CharaId::user)
     {
-        for (size_t i = 0; i < 32 * 30; ++i)
-        {
-            cdata[cc]._flags[i] =
-                userdata(40 + i / (8 * sizeof(int)), cdata[cc].cnpc_id) &
-                (1 << (i % (8 * sizeof(int))));
-        }
+        // Vanilla-compatible CNPC is not supported now.
     }
     else
     {

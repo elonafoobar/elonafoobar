@@ -59,13 +59,6 @@ void initialize_directories()
 
 
 
-void load_character_sprite()
-{
-    DIM3(userdata, 70, 1);
-}
-
-
-
 void initialize_screen()
 {
     title(
@@ -372,7 +365,6 @@ void initialize_elona()
     initialize_nefia_names();
     initialize_home_adata();
     initialize_damage_popups();
-    load_character_sprite();
     if (g_config.music())
     {
         bool err = DMINIT() == 0;
