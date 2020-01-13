@@ -647,7 +647,6 @@ int quest_generate()
             flttypemajor = choice(fsetcollect);
             if (const auto item = itemcreate_chara_inv(n, 0, 0))
             {
-                item->count = rq;
                 i(0) = n;
                 i(1) = itemid2int(item->id);
                 item->is_quest_target() = true;
