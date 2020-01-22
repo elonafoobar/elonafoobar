@@ -301,9 +301,8 @@ static bool _validate_save_path(const std::string& playerid)
 {
     if (range::any_of(
             filesystem::glob_entries(filesystem::dirs::save()),
-            [&](const auto& entry) {
-                return filepathutil::to_utf8_path(entry.path().filename()) ==
-                    playerid;
+            [&](const auto& path) {
+                return filepathutil::to_utf8_path(path.filename()) == playerid;
             }))
     {
         return false;

@@ -79,162 +79,65 @@ fs::path resolve_path_for_mod(const std::string& mod_local_path);
 
 
 
-struct DirEntryRange
+namespace detail
 {
-    enum class Type
-    {
-        dir,
-        file,
-        all,
-    };
 
-
-    DirEntryRange(
-        const fs::path& base_dir,
-        Type entry_type,
-        const std::regex& pattern)
-        : base_dir(base_dir)
-        , entry_type(entry_type)
-        , pattern(pattern)
+template <typename F>
+std::vector<fs::path> glob_entries_internal(
+    const fs::path& base_dir,
+    const std::regex& pattern,
+    F predicate)
+{
+    std::vector<fs::path> ret;
+    for (auto itr = fs::directory_iterator{base_dir},
+              end = fs::directory_iterator{};
+         itr != end;
+         ++itr)
     {
+        if (fs::exists(itr->path()) && predicate(itr->path()) &&
+            std::regex_match(
+                filepathutil::to_utf8_path(itr->path().filename()), pattern))
+        {
+            ret.push_back(itr->path());
+        }
     }
+    return ret;
+}
 
-
-    struct iterator
-    {
-        using value_type = fs::directory_iterator::value_type;
-        using difference_type = fs::directory_iterator::difference_type;
-        using pointer = fs::directory_iterator::pointer;
-        using reference = fs::directory_iterator::reference;
-        using iterator_category = fs::directory_iterator::iterator_category;
-
-
-        // begin
-        iterator(
-            const fs::directory_iterator& itr,
-            std::function<bool(const fs::directory_iterator)> predicate)
-            : itr(itr)
-            , predicate(predicate)
-        {
-            while (predicate(this->itr))
-            {
-                ++this->itr;
-            }
-        }
-
-
-        // end
-        iterator()
-        {
-        }
-
-
-        void operator++()
-        {
-            do
-            {
-                ++itr;
-            } while (predicate(itr));
-        }
-
-
-        reference operator*() const
-        {
-            return *itr;
-        }
-
-
-        pointer operator->() const
-        {
-            return itr.operator->();
-        }
-
-
-        bool operator==(const iterator& other) const
-        {
-            return itr == other.itr;
-        }
-
-
-        bool operator!=(const iterator& other) const
-        {
-            return itr != other.itr;
-        }
-
-
-    private:
-        fs::directory_iterator itr;
-        std::function<bool(const fs::directory_iterator)> predicate;
-    };
-
-
-    iterator begin() const
-    {
-        return {fs::directory_iterator{base_dir}, [this](const auto& itr) {
-                    if (itr == fs::directory_iterator{})
-                        return false;
-                    if (!fs::exists(itr->path()))
-                        return true;
-                    switch (entry_type)
-                    {
-                    case Type::dir:
-                        if (!fs::is_directory(itr->path()))
-                        {
-                            return true;
-                        }
-                        break;
-                    case Type::file:
-                        if (!fs::is_regular_file(itr->path()))
-                        {
-                            return true;
-                        }
-                        break;
-                    case Type::all: break;
-                    }
-                    return !std::regex_match(
-                        filepathutil::to_utf8_path(itr->path().filename()),
-                        pattern);
-                }};
-    }
-
-
-    iterator end() const
-    {
-        return {};
-    }
-
-
-private:
-    const fs::path base_dir;
-    const Type entry_type;
-    const std::regex pattern;
-};
+} // namespace detail
 
 
 
-inline DirEntryRange glob_entries(
+inline std::vector<fs::path> glob_entries(
     const fs::path& base_dir,
     const std::regex& pattern = std::regex{u8".*"})
 {
-    return {base_dir, DirEntryRange::Type::all, pattern};
+    return detail::glob_entries_internal(
+        base_dir, pattern, [](const auto&) { return true; });
 }
 
 
 
-inline DirEntryRange glob_files(
+inline std::vector<fs::path> glob_files(
     const fs::path& base_dir,
     const std::regex& pattern = std::regex{u8".*"})
 {
-    return {base_dir, DirEntryRange::Type::file, pattern};
+    return detail::glob_entries_internal(
+        base_dir, pattern, [](const auto& path) {
+            return fs::is_regular_file(path);
+        });
 }
 
 
 
-inline DirEntryRange glob_dirs(
+inline std::vector<fs::path> glob_dirs(
     const fs::path& base_dir,
     const std::regex& pattern = std::regex{u8".*"})
 {
-    return {base_dir, DirEntryRange::Type::dir, pattern};
+    return detail::glob_entries_internal(
+        base_dir, pattern, [](const auto& path) {
+            return fs::is_directory(path);
+        });
 }
 
 

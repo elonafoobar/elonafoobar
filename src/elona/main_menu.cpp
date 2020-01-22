@@ -531,9 +531,9 @@ MainMenuResult main_menu_continue()
     pagesize = 5;
     keyrange = 0;
 
-    for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
+    for (const auto& path : filesystem::glob_dirs(filesystem::dirs::save()))
     {
-        s = filepathutil::to_utf8_path(entry.path().filename());
+        s = filepathutil::to_utf8_path(path.filename());
         const auto header_filepath = filesystem::dirs::save(s) / u8"header.txt";
         if (!fs::exists(header_filepath))
         {
@@ -702,9 +702,9 @@ MainMenuResult main_menu_incarnate()
     ui_draw_caption(i18n::s.get("core.main_menu.incarnate.which_gene"));
     keyrange = 0;
     listmax = 0;
-    for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
+    for (const auto& path : filesystem::glob_dirs(filesystem::dirs::save()))
     {
-        s = filepathutil::to_utf8_path(entry.path().filename());
+        s = filepathutil::to_utf8_path(path.filename());
         const auto gene_header_filepath =
             filesystem::dirs::save(s) / u8"gene_header.txt";
         if (!fs::exists(gene_header_filepath))

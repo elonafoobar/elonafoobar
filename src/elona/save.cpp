@@ -37,9 +37,9 @@ void _do_save_game()
     ctrl_file(FileOperation::map_write);
     ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
     save_f = 0;
-    for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
+    for (const auto& path : filesystem::glob_dirs(filesystem::dirs::save()))
     {
-        if (filepathutil::to_utf8_path(entry.path().filename()) == playerid)
+        if (filepathutil::to_utf8_path(path.filename()) == playerid)
         {
             save_f = 1;
             break;

@@ -43,14 +43,14 @@ template <typename F>
 std::vector<fs::path> mod_dirs_internal(const fs::path& base_dir, F predicate)
 {
     std::vector<fs::path> result;
-    for (const auto& entry :
+    for (const auto& path :
          filesystem::glob_dirs(base_dir, std::regex{"[a-z][a-z0-9_]*"}))
     {
-        if (fs::exists(entry.path() / "mod.json"))
+        if (fs::exists(path / "mod.json"))
         {
-            if (predicate(entry.path()))
+            if (predicate(path))
             {
-                result.push_back(entry.path());
+                result.push_back(path);
             }
         }
     }

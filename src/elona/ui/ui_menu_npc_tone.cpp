@@ -20,12 +20,12 @@ static int _load_talk_entries()
     const auto base_dir = filesystem::dirs::user() / u8"talk";
     if (fs::exists(base_dir))
     {
-        for (const auto& entry :
+        for (const auto& path :
              filesystem::glob_files(base_dir, std::regex{u8R"(.*\.txt)"}))
         {
             list(0, _listmax) = _listmax;
-            listn(0, _listmax) = filepathutil::to_utf8_path(
-                fs::relative(entry.path(), base_dir));
+            listn(0, _listmax) =
+                filepathutil::to_utf8_path(fs::relative(path, base_dir));
             ++_listmax;
         }
     }

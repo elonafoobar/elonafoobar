@@ -35,17 +35,17 @@ void Store::init(const std::vector<Store::Location>& locations)
 
 void Store::load(const fs::path& path, const std::string& mod_id)
 {
-    for (const auto& entry : filesystem::glob_files(path))
+    for (const auto& path : filesystem::glob_files(path))
     {
-        std::ifstream ifs(entry.path().native());
+        std::ifstream ifs(path.native());
         if (!ifs)
         {
             throw std::runtime_error{
                 "Failed to open " +
-                filepathutil::make_preferred_path_in_utf8(entry.path())};
+                filepathutil::make_preferred_path_in_utf8(path)};
         }
 
-        load(ifs, filepathutil::to_utf8_path(entry.path()), mod_id);
+        load(ifs, filepathutil::to_utf8_path(path), mod_id);
     }
 }
 

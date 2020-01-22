@@ -234,11 +234,9 @@ void inject_save_files()
 
     if (fs::exists(filesystem::dirs::save()))
     {
-        for (const auto& entry :
-             filesystem::glob_dirs(filesystem::dirs::save()))
+        for (const auto& path : filesystem::glob_dirs(filesystem::dirs::save()))
         {
-            saves.push_back(
-                filepathutil::to_utf8_path(entry.path().filename()));
+            saves.push_back(filepathutil::to_utf8_path(path.filename()));
         }
     }
 
@@ -262,10 +260,9 @@ void inject_languages()
     bool has_jp = false;
     bool has_en = false;
 
-    for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::locale()))
+    for (const auto& path : filesystem::glob_dirs(filesystem::dirs::locale()))
     {
-        const auto identifier =
-            filepathutil::to_utf8_path(entry.path().filename());
+        const auto identifier = filepathutil::to_utf8_path(path.filename());
         locales.push_back(identifier);
 
         if (identifier == "en")

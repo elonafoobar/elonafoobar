@@ -1426,10 +1426,10 @@ void fmode_17()
 
 void fmode_10()
 {
-    for (const auto& entry : filesystem::glob_files(
+    for (const auto& path : filesystem::glob_files(
              filesystem::dirs::tmp(), std::regex{u8R"(.*\..*)"}))
     {
-        fs::remove_all(entry.path());
+        fs::remove_all(path);
     }
 }
 
@@ -1498,19 +1498,19 @@ void fmode_13()
 {
     area_data[area].clear();
 
-    for (const auto& entry : filesystem::glob_files(
+    for (const auto& path : filesystem::glob_files(
              filesystem::dirs::save(playerid),
              std::regex{u8R"(.*_)"s + area + u8R"(_.*\..*)"}))
     {
-        writeloadedbuff(entry.path().filename());
-        Save::instance().remove(entry.path().filename());
+        writeloadedbuff(path.filename());
+        Save::instance().remove(path.filename());
     }
-    for (const auto& entry : filesystem::glob_files(
+    for (const auto& path : filesystem::glob_files(
              filesystem::dirs::tmp(),
              std::regex{u8R"(.*_)"s + area + u8R"(_.*\..*)"}))
     {
-        Save::instance().remove(entry.path().filename());
-        fs::remove_all(entry.path());
+        Save::instance().remove(path.filename());
+        fs::remove_all(path);
     }
 }
 
