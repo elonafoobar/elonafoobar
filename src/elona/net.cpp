@@ -234,21 +234,25 @@ std::vector<ChatData> net_receive_chats(bool skip_old_chat)
                     {
                         continue;
                     }
+                    break;
                 case ChatKind::death:
                     if (config_get_string("core.net.death") == "disabled")
                     {
                         continue;
                     }
+                    break;
                 case ChatKind::wish:
                     if (config_get_string("core.net.wish") == "disabled")
                     {
                         continue;
                     }
+                    break;
                 case ChatKind::news:
                     if (config_get_string("core.net.news") == "disabled")
                     {
                         continue;
                     }
+                    break;
                 default: break;
                 }
 
