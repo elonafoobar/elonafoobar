@@ -15,7 +15,6 @@ string(TOLOWER ${SNAIL_BACKEND} SNAIL_DIR)
 # Source files
 set(SNAIL_SOURCES
   font.cpp
-  image.cpp
   input.cpp
   surface.cpp
 
@@ -24,10 +23,11 @@ set(SNAIL_SOURCES
   backends/${SNAIL_DIR}/detail.cpp
   backends/${SNAIL_DIR}/filedialog.cpp
   backends/${SNAIL_DIR}/hsp.cpp
+  backends/${SNAIL_DIR}/image.cpp
   backends/${SNAIL_DIR}/messagebox.cpp
   backends/${SNAIL_DIR}/renderer.cpp
-  backends/${SNAIL_DIR}/window.cpp
   backends/${SNAIL_DIR}/surface.cpp
+  backends/${SNAIL_DIR}/window.cpp
   )
 
 add_library(${SNAIL_LIBRARY} STATIC ${SNAIL_SOURCES})

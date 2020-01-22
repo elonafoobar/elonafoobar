@@ -1,7 +1,7 @@
-#include "image.hpp"
-#include "application.hpp"
-#include "renderer.hpp"
-#include "surface.hpp"
+#include "../../image.hpp"
+#include "../../application.hpp"
+#include "../../renderer.hpp"
+#include "../../surface.hpp"
 
 
 
