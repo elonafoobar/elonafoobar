@@ -38,7 +38,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: deps/elona
-        key: elona122
+        key: elona122-${{ runner.os }}
 
     - name: Download Vanilla Elona
       run: |
@@ -81,7 +81,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: deps/elona
-        key: elona122
+        key: elona122-${{ runner.os }}
 
     - name: Download Vanilla Elona
       run: |
