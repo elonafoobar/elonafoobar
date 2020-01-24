@@ -352,6 +352,8 @@ public:
 
     bool exists(const std::string& mod_id);
 
+    fs::path resolve_path_for_mod(const std::string& path);
+
 
 private:
     //********************* Lifecycle methods **********************//

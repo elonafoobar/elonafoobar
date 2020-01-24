@@ -8,6 +8,7 @@
 #include "../../util/range.hpp"
 #include "../../util/topological_sorter.hpp"
 #include "../character.hpp"
+#include "../config.hpp"
 #include "../elona.hpp"
 #include "../filesystem.hpp"
 #include "../i18n.hpp"
@@ -531,8 +532,12 @@ void ModManager::create_mod_from_template(
     const std::string& new_mod_id,
     const std::string& template_mod_id)
 {
-    const auto from = filesystem::dirs::for_mod(template_mod_id);
-    const auto to = filesystem::dirs::for_mod(new_mod_id);
+    const auto template_mod_version = *get_enabled_version(template_mod_id);
+    const auto new_mod_version = semver::Version{0, 1, 0};
+
+    const auto from =
+        filesystem::dirs::for_mod(template_mod_id, template_mod_version);
+    const auto to = filesystem::dirs::for_mod(new_mod_id, new_mod_version);
     filesystem::copy_recursively(from, to);
 }
 
@@ -617,6 +622,45 @@ void ModManager::run_in_mod(const std::string& name, const std::string& script)
     {
         sol::error err = result;
         throw err;
+    }
+}
+
+
+
+fs::path ModManager::resolve_path_for_mod(const std::string& path)
+{
+    // TODO: standardize mod naming convention.
+    std::regex mod_id_regex("^<([a-zA-Z0-9_]+)>/(.*)");
+    std::smatch match;
+    std::string mod_id, rest;
+
+    if (std::regex_match(path, match, mod_id_regex) && match.size() == 3)
+    {
+        mod_id = match.str(1);
+        rest = match.str(2);
+    }
+    else
+    {
+        throw std::runtime_error("Invalid filepath syntax: " + path);
+    }
+
+    rest = strutil::replace(rest, "<LANGUAGE>", g_config.language());
+
+    if (mod_id == "_builtin_")
+    {
+        return filesystem::dirs::exe() / rest;
+    }
+    else
+    {
+        if (const auto version = get_enabled_version(mod_id))
+        {
+            return filesystem::dirs::for_mod(mod_id, *version) / rest;
+        }
+        else
+        {
+            throw std::runtime_error{"Mod '" + mod_id +
+                                     "' is disabled: " + path};
+        }
     }
 }
 

@@ -1,4 +1,5 @@
 #include "type_asset.hpp"
+#include "../../lua_env/interface.hpp"
 
 
 namespace
@@ -64,7 +65,7 @@ AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string& id)
     optional<fs::path> file_path = none;
     if (file)
     {
-        file_path = filesystem::resolve_path_for_mod(*file);
+        file_path = lua::resolve_path_for_mod(*file);
     }
 
     return AssetData{SharedId{id},

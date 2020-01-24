@@ -1,6 +1,7 @@
 #include "interface.hpp"
 #include "config_table.hpp"
 #include "data_manager.hpp"
+#include "mod_manager.hpp"
 
 
 
@@ -28,6 +29,13 @@ optional<ConfigTable> data(const char* type, int legacy_id)
     }
 
     return none;
+}
+
+
+
+fs::path resolve_path_for_mod(const std::string& path)
+{
+    return lua::lua->get_mod_manager().resolve_path_for_mod(path);
 }
 
 } // namespace lua

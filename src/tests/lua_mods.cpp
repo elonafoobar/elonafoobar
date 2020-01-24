@@ -331,3 +331,31 @@ TEST_CASE(
 
     REQUIRE_THROWS(lua.get_mod_manager().calculate_loading_order());
 }
+
+
+
+#if 0
+TEST_CASE("Test resolve_path_for_mod", "[Lua: Mods]")
+{
+    using namespace filesystem;
+
+    REQUIRE(
+        lua::resolve_path_for_mod("<_builtin_>/dood") == dirs::exe() / "dood");
+    REQUIRE(
+        lua::resolve_path_for_mod("<test>/dood") ==
+        dirs::for_mod("test") / "dood");
+    REQUIRE(
+        lua::resolve_path_for_mod("<test>/<dood>/file.txt") ==
+        dirs::for_mod("test") / "<dood>" / "file.txt");
+    REQUIRE(
+        lua::resolve_path_for_mod("<test>/file-<LANGUAGE>.txt") ==
+        dirs::for_mod("test") / "file-jp.txt");
+    REQUIRE(
+        lua::resolve_path_for_mod("<test>/<LANGUAGE>/file-<LANGUAGE>.txt") ==
+        dirs::for_mod("test") / "jp" / "file-jp.txt");
+
+    REQUIRE_THROWS(lua::resolve_path_for_mod("file.txt"));
+    REQUIRE_THROWS(lua::resolve_path_for_mod("<>"));
+    REQUIRE_THROWS(lua::resolve_path_for_mod("<$>/file.txt"));
+}
+#endif

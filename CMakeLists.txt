@@ -422,6 +422,14 @@ function(copy_dir source target)
     ${target})
 endfunction()
 
+function(copy_mod_dirs mod_root_dir target)
+  add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND}
+    -Dmod_root_dir=${mod_root_dir}
+    -Dtarget=${target}
+    -P ${CMAKE_MODULE_PATH}/copy_mod_dirs.cmake)
+endfunction()
+
 function(copy_file source target)
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy
@@ -444,17 +452,16 @@ copy_dir(${CMAKE_SOURCE_DIR}/runtime/font/ "${RUNTIME_DIR}/font/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/graphic/ "${RUNTIME_DIR}/graphic/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/locale/ "${RUNTIME_DIR}/locale/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/map/ "${RUNTIME_DIR}/map/")
-copy_dir(${CMAKE_SOURCE_DIR}/runtime/mod/ "${RUNTIME_DIR}/mod/")
+copy_mod_dirs(${CMAKE_SOURCE_DIR}/runtime/mod/ "${RUNTIME_DIR}/mod/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/profile/ "${RUNTIME_DIR}/profile/")
 
 # Copy assets from Elona 1.22 if they are present.
 if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
   copy_dir("${CMAKE_PREFIX_PATH}/elona/graphic" "${ASSET_DIR}/graphic")
   copy_dir("${CMAKE_PREFIX_PATH}/elona/sound" "${ASSET_DIR}/sound")
-  copy_dir("${CMAKE_PREFIX_PATH}/elona/user" "${ASSET_DIR}/user")
   message("Elona 1.22 distribution found.")
 else()
-  message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic', 'sound' and 'user' directories from Elona 1.22 to the ${PROJECT_NAME} output path after building.")
+  message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic' and 'sound' directories from Elona 1.22 to the ${PROJECT_NAME} output path after building.")
 endif()
 
 if((ELONA_BUILD_TARGET STREQUAL "TESTS") OR (ELONA_BUILD_TARGET STREQUAL "BENCH"))
