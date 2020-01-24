@@ -490,7 +490,6 @@ void load_options_internal(std::istream& in, const std::string& filepath)
     SDIM3(s, 160, 40);
     DIM2(p, 100);
     DIM2(rtval, 10);
-    SDIM3(rtvaln, 50, 10);
     SDIM3(key_select, 2, 20);
     SDIM2(buff, 10000);
 

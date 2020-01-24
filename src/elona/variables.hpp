@@ -271,7 +271,6 @@ ELONA_EXTERN(elona_vector1<std::string> newsbuff);
 ELONA_EXTERN(elona_vector1<std::string> playerheader);
 ELONA_EXTERN(elona_vector1<std::string> q);
 ELONA_EXTERN(elona_vector1<std::string> qname);
-ELONA_EXTERN(elona_vector1<std::string> rtvaln);
 ELONA_EXTERN(elona_vector1<std::string> s1);
 ELONA_EXTERN(elona_vector1<std::string> s);
 ELONA_EXTERN(elona_vector1<std::string> traitrefn2);
