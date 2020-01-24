@@ -9,7 +9,7 @@ namespace elona
 namespace lua
 {
 
-struct ModInfo;
+struct ModEnv;
 
 
 

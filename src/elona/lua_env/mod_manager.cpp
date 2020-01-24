@@ -130,7 +130,7 @@ void report_error(sol::error err)
 
 
 
-void ModManager::load_mod(ModInfo& mod)
+void ModManager::load_mod(ModEnv& mod)
 {
     setup_and_lock_mod_globals(mod);
 
@@ -227,7 +227,7 @@ void ModManager::load_scanned_mods()
     // depended on are loaded before their dependent mods.
     for (const auto& mod_id : calculate_loading_order())
     {
-        ModInfo* mod = get_enabled_mod(mod_id);
+        ModEnv* mod = get_enabled_mod(mod_id);
         if (mod_id_is_reserved(mod_id))
         {
             // TODO warn about reserved mod IDs.
@@ -259,7 +259,7 @@ void ModManager::run_startup_script(const std::string& name)
         throw std::runtime_error("Startup script was already run.");
     }
 
-    ModInfo* script_mod = create_mod("script", none, true);
+    ModEnv* script_mod = create_mod("script", none, true);
 
     safe_script_file(filesystem::dirs::user_script() / name, script_mod->env);
 
@@ -352,7 +352,7 @@ void ModManager::bind_store(sol::state& L, sol::table& table)
 
 
 
-void ModManager::setup_mod_globals(ModInfo& mod, sol::table& table)
+void ModManager::setup_mod_globals(ModEnv& mod, sol::table& table)
 {
     // Create the globals "Elona" and "store" for this mod's
     // environment.
@@ -389,7 +389,7 @@ void ModManager::setup_mod_globals(ModInfo& mod, sol::table& table)
 
 
 
-void ModManager::setup_and_lock_mod_globals(ModInfo& mod)
+void ModManager::setup_and_lock_mod_globals(ModEnv& mod)
 {
     sol::table env_metatable = lua_state()->create_table_with();
 
@@ -406,10 +406,10 @@ void ModManager::setup_and_lock_mod_globals(ModInfo& mod)
 
 
 
-ModInfo* ModManager::create_mod(const ModManifest& manifest, bool readonly)
+ModEnv* ModManager::create_mod(const ModManifest& manifest, bool readonly)
 {
-    std::unique_ptr<ModInfo> info =
-        std::make_unique<ModInfo>(manifest, *lua_state());
+    std::unique_ptr<ModEnv> info = std::make_unique<ModEnv>(
+        manifest, sol::environment(*lua_state(), sol::create));
 
     if (readonly)
     {
@@ -432,7 +432,7 @@ ModInfo* ModManager::create_mod(const ModManifest& manifest, bool readonly)
 
 
 
-ModInfo* ModManager::create_mod(
+ModEnv* ModManager::create_mod(
     const std::string& id,
     optional<fs::path> mod_dir,
     bool readonly)
@@ -573,7 +573,7 @@ void ModManager::load_mod_from_script(
         }
     }
 
-    ModInfo* mod = create_mod(name, none, readonly);
+    ModEnv* mod = create_mod(name, none, readonly);
 
     // Run the provided script string.
     auto result = safe_script(script, mod->env);

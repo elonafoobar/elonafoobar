@@ -240,9 +240,9 @@ mod.store.map.item = Item.create(4, 8, "core.putitoro", 0)
     auto mod = elona::lua::lua->get_mod_manager().get_enabled_mod(
         "test_serial_handle_reload");
     auto global =
-        mod->get_store(elona::lua::ModInfo::StoreType::global).as<sol::table>();
+        mod->get_store(elona::lua::ModEnv::StoreType::global).as<sol::table>();
     auto map =
-        mod->get_store(elona::lua::ModInfo::StoreType::map).as<sol::table>();
+        mod->get_store(elona::lua::ModEnv::StoreType::map).as<sol::table>();
     std::string uuid_chara_global = global["chara"]["__uuid"];
     std::string uuid_item_global = global["item"]["__uuid"];
     std::string uuid_chara_map = map["chara"]["__uuid"];
@@ -306,7 +306,7 @@ mod.store.global.it = 0
     auto mod = elona::lua::lua->get_mod_manager().get_enabled_mod(
         "test_serial_handle_map_change");
     auto store =
-        mod->get_store(elona::lua::ModInfo::StoreType::global).as<sol::table>();
+        mod->get_store(elona::lua::ModEnv::StoreType::global).as<sol::table>();
     std::string uuid_chara = store["chara"]["__uuid"];
     std::string uuid_chara_local = store["chara_local"]["__uuid"];
 
@@ -360,7 +360,7 @@ mod.store.map.item = Item.create(4, 8, "core.putitoro", 0)
     auto mod = elona::lua::lua->get_mod_manager().get_enabled_mod(
         "test_serial_handle_map_change_local");
     auto store =
-        mod->get_store(elona::lua::ModInfo::StoreType::map).as<sol::table>();
+        mod->get_store(elona::lua::ModEnv::StoreType::map).as<sol::table>();
     std::string uuid_chara = store["chara"]["__uuid"];
     std::string uuid_item = store["item"]["__uuid"];
 

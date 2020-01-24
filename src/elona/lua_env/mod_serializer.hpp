@@ -16,9 +16,9 @@ namespace lua
 
 std::pair<int, int> get_start_end_indices(
     const std::string& kind,
-    ModInfo::StoreType store_type);
+    ModEnv::StoreType store_type);
 
-std::string get_store_name(ModInfo::StoreType store_type);
+std::string get_store_name(ModEnv::StoreType store_type);
 
 
 
@@ -33,7 +33,7 @@ public:
     }
 
     template <typename T, typename Archive>
-    void save_handles(Archive& putit_archive, ModInfo::StoreType store_type)
+    void save_handles(Archive& putit_archive, ModEnv::StoreType store_type)
     {
         int index_start, index_end;
         std::tie(index_start, index_end) =
@@ -53,7 +53,7 @@ public:
     template <typename T, typename Archive>
     std::pair<int, int> load_handles(
         Archive& putit_archive,
-        ModInfo::StoreType store_type)
+        ModEnv::StoreType store_type)
     {
         int index_start, index_end;
         std::tie(index_start, index_end) =
@@ -75,7 +75,7 @@ public:
     template <typename Archive>
     void save_mod_store_data(
         Archive& putit_archive,
-        ModInfo::StoreType store_type)
+        ModEnv::StoreType store_type)
     {
         const auto& mod_mgr = lua().get_mod_manager();
 
@@ -102,7 +102,7 @@ public:
     template <typename Archive>
     void load_mod_store_data(
         Archive& putit_archive,
-        ModInfo::StoreType store_type)
+        ModEnv::StoreType store_type)
     {
         auto& mod_mgr = lua().get_mod_manager();
 

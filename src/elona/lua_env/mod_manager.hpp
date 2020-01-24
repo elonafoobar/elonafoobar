@@ -1,13 +1,8 @@
 #pragma once
 
-#include <map>
-#include <vector>
 #include <boost/range/adaptor/filtered.hpp>
-#include "../filesystem.hpp"
-#include "../optional.hpp"
-#include "loaded_chunk_cache.hpp"
 #include "lua_submodule.hpp"
-#include "mod_manifest.hpp"
+#include "mod_env.hpp"
 
 
 
@@ -17,83 +12,6 @@ namespace lua
 {
 
 using namespace std::literals::string_literals;
-
-/***
- * Stores the Lua environment and internal storage for a single mod.
- *
- * Mods each have a sanitized environment with a whitelist of safe functions,
- * so things like dofile can't be called. They also have storage object for
- * storing, serializing and deserializing mod data alongside the base game
- * data.
- */
-struct ModInfo
-{
-    enum class StoreType
-    {
-        global,
-        map,
-    };
-
-
-
-    explicit ModInfo(const ModManifest& manifest, sol::state& state)
-        : manifest(manifest)
-        // This environment is created with no globals.
-        , env(sol::environment(state, sol::create))
-    {
-        if (manifest.path)
-        {
-            chunk_cache = LoadedChunkCache{*manifest.path};
-        }
-    }
-
-
-
-    ModInfo(const ModInfo&) = delete;
-    ModInfo(ModInfo&&) = delete;
-    ModInfo& operator=(const ModInfo&) = delete;
-    ModInfo& operator=(ModInfo&&) = delete;
-    ~ModInfo() = default;
-
-
-
-    sol::object get_store(StoreType store_type) const
-    {
-        const auto table_name = convert_store_type_to_table_name(store_type);
-        return env.get<sol::object>(std::tie("mod", "store", table_name));
-    }
-
-
-
-    void set_store(StoreType store_type, sol::object data)
-    {
-        const auto table_name = convert_store_type_to_table_name(store_type);
-        // bypass metatable that forces store table reference to be
-        // unchangeable (set in mod_manager::bind_store)
-        sol::table store = env.get<sol::table>(std::tie("mod", "store"));
-        store.raw_set(table_name, data);
-    }
-
-
-
-    ModManifest manifest;
-    optional<LoadedChunkCache> chunk_cache;
-    sol::environment env;
-
-
-
-private:
-    static constexpr const char* convert_store_type_to_table_name(
-        StoreType store_type)
-    {
-        switch (store_type)
-        {
-        case StoreType::global: return "global";
-        case StoreType::map: return "map";
-        default: assert(0); return nullptr;
-        }
-    }
-};
 
 
 
@@ -118,7 +36,7 @@ enum class ModLoadingStage : unsigned
 class ModManager : public LuaSubmodule
 {
     using ModStorageType =
-        std::unordered_map<std::string, std::unique_ptr<ModInfo>>;
+        std::unordered_map<std::string, std::unique_ptr<ModEnv>>;
     using ModVersionsType = std::unordered_map<std::string, semver::Version>;
 
 public:
@@ -343,7 +261,7 @@ public:
      *
      * @return a pointer to the created mod.
      */
-    ModInfo* create_mod(const ModManifest& manifest, bool readonly);
+    ModEnv* create_mod(const ModManifest& manifest, bool readonly);
 
     /***
      * Creates a new mod, optionally setting its global environment to be read
@@ -353,7 +271,7 @@ public:
      *
      * @return a pointer to the created mod.
      */
-    ModInfo* create_mod(
+    ModEnv* create_mod(
         const std::string& id,
         optional<fs::path> mod_dir = none,
         bool readonly = false);
@@ -362,7 +280,7 @@ public:
      * Retrieves a pointer to an instantiated mod. @a id_and_version is of
      * format "mod_id-0.1.0".
      */
-    optional<ModInfo*> get_mod_optional(const std::string& id_and_version)
+    optional<ModEnv*> get_mod_optional(const std::string& id_and_version)
     {
         auto val = mods_.find(id_and_version);
         if (val == mods_.end())
@@ -378,7 +296,7 @@ public:
      *
      * For testing use only.
      */
-    ModInfo* get_mod(const std::string& id_and_version)
+    ModEnv* get_mod(const std::string& id_and_version)
     {
         auto val = mods_.find(id_and_version);
         if (val == mods_.end())
@@ -392,7 +310,7 @@ public:
      *
      * Will throw if no such mod matches and is enabled.
      */
-    ModInfo* get_enabled_mod(const std::string& id)
+    ModEnv* get_enabled_mod(const std::string& id)
     {
         auto val = get_enabled_mod_optional(id);
         if (!val)
@@ -404,7 +322,7 @@ public:
      * Finds the mod info of a mod that is currently enabled. Only one version
      * of any given mod can be enabled at a time. @a id is of format "mod_id".
      */
-    optional<ModInfo*> get_enabled_mod_optional(const std::string& id)
+    optional<ModEnv*> get_enabled_mod_optional(const std::string& id)
     {
         auto version = get_enabled_version(id);
         if (!version)
@@ -481,18 +399,18 @@ private:
      *
      * Will throw if there was an error on running the script.
      */
-    void load_mod(ModInfo& mod);
+    void load_mod(ModEnv& mod);
 
     /***
      * Sets up the global variables of a mod and locks them so they
      * cannot be overwritten.
      */
-    void setup_and_lock_mod_globals(ModInfo&);
+    void setup_and_lock_mod_globals(ModEnv&);
 
     /***
      * Sets the global variables of a mod on the given table.
      */
-    void setup_mod_globals(ModInfo& mod, sol::table&);
+    void setup_mod_globals(ModEnv& mod, sol::table&);
 
 
     /***

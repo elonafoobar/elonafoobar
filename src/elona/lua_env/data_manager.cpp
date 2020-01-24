@@ -29,7 +29,7 @@ void DataManager::clear()
 
 
 
-void DataManager::_init_from_mod(ModInfo& mod)
+void DataManager::_init_from_mod(ModEnv& mod)
 {
     // Bypass the metatable on the mod's environment preventing creation of
     // new global variables.
