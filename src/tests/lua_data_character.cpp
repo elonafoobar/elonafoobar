@@ -14,8 +14,7 @@ static lua::DataTable load(elona::lua::LuaEnv& lua, const std::string& name)
 {
     const auto base_path = testing::get_test_data_path() / "registry";
 
-    lua.get_mod_manager().load_mods(
-        filesystem::dirs::mod(), {base_path / name});
+    lua.get_mod_manager().load_mods({base_path / name});
 
     REQUIRE_NOTHROW(lua.get_data_manager().init_from_mods());
 
@@ -42,8 +41,7 @@ TEST_CASE("test reading duplicate keys", "[Lua: Data]")
     const auto base_path = testing::get_test_data_path() / "registry";
 
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(
-        filesystem::dirs::mod(), {base_path / "chara_duplicate_key"});
+    lua.get_mod_manager().load_mods({base_path / "chara_duplicate_key"});
 
     REQUIRE_THROWS(lua.get_data_manager().init_from_mods());
 }

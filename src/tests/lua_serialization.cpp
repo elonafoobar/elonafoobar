@@ -18,9 +18,9 @@ using namespace elona::testing;
 TEST_CASE("Test that store can be reset", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
+    lua.get_mod_manager().load_mods();
 
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_testing_mod_from_script(
         "test", "mod.store.global.thing = 1"));
 
     lua.get_mod_manager().clear_mod_stores();
@@ -32,9 +32,10 @@ TEST_CASE("Test that store can be reset", "[Lua: Serialization]")
 TEST_CASE("Test that store can be assigned", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
+    lua.get_mod_manager().load_mods();
 
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
+    REQUIRE_NOTHROW(
+        lua.get_mod_manager().load_testing_mod_from_script("test", R"(
 mod.store.global.thing = 1
 assert(mod.store.global.thing == 1)
 )"));
@@ -51,9 +52,10 @@ assert(mod.store.global == true)
 TEST_CASE("Test that store cannot have new fields", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
+    lua.get_mod_manager().load_mods();
 
-    REQUIRE_THROWS(lua.get_mod_manager().load_mod_from_script("test", R"(
+    REQUIRE_THROWS(
+        lua.get_mod_manager().load_testing_mod_from_script("test", R"(
 mod.store.test = {}
 )"));
 }
@@ -61,11 +63,11 @@ mod.store.test = {}
 TEST_CASE("Test that store can be reset across mods", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
+    lua.get_mod_manager().load_mods();
 
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_testing_mod_from_script(
         "test1", "mod.store.global.mine = false; mod.store.global.thing = 1"));
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_testing_mod_from_script(
         "test2", "mod.store.global.theirs = true; mod.store.global.thing = 2"));
 
     lua.get_mod_manager().clear_mod_stores();
@@ -83,9 +85,10 @@ TEST_CASE("Test that store can be reset across mods", "[Lua: Serialization]")
 TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
+    lua.get_mod_manager().load_mods();
 
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", ""));
+    REQUIRE_NOTHROW(
+        lua.get_mod_manager().load_testing_mod_from_script("test", ""));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", R"(Rand = require("game.Rand"); assert(Rand ~= nil))"));
 
@@ -98,9 +101,10 @@ TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
 TEST_CASE("Test that globals aren't reset", "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
+    lua.get_mod_manager().load_mods();
 
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", ""));
+    REQUIRE_NOTHROW(
+        lua.get_mod_manager().load_testing_mod_from_script("test", ""));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", R"(assert(_MOD_ID == "test"))"));
 
@@ -115,9 +119,10 @@ TEST_CASE(
     "[Lua: Serialization]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
+    lua.get_mod_manager().load_mods();
 
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
+    REQUIRE_NOTHROW(
+        lua.get_mod_manager().load_testing_mod_from_script("test", R"(
 local Event = require("game.Event")
 
 local function my_map_init_hook()
@@ -147,8 +152,9 @@ TEST_CASE("Test preservation of global data", "[Lua: Serialization]")
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_serial_global", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_serial_global", R"(
 mod.store.global.val = 42
 )"));
 
@@ -169,8 +175,9 @@ TEST_CASE("Test preservation of map local data", "[Lua: Serialization]")
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_serial_map", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_serial_map", R"(
 mod.store.map.val = 42
 )"));
 
@@ -191,8 +198,9 @@ TEST_CASE("Test preservation of data across reloads", "[Lua: Serialization]")
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_serial_reload", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_serial_reload", R"(
 mod.store.global.val = 42
 mod.store.map.val = "hoge"
 )"));
@@ -221,8 +229,9 @@ mod.store.map.val = ""
 
 TEST_CASE("Test preservation of handles across reloads", "[Lua: Serialization]")
 {
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_serial_handle_reload", ""));
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_serial_handle_reload", ""));
 
     start_in_debug_map();
 
@@ -287,8 +296,9 @@ TEST_CASE(
     "Test preservation of handles across map changes",
     "[Lua: Serialization]")
 {
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_serial_handle_map_change", ""));
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_serial_handle_map_change", ""));
 
     start_in_debug_map();
 
@@ -343,8 +353,9 @@ TEST_CASE(
     "Test preservation of map local handles across map changes",
     "[Lua: Serialization]")
 {
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_serial_handle_map_change_local", ""));
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_serial_handle_map_change_local", ""));
 
     start_in_debug_map();
 
@@ -392,8 +403,9 @@ TEST_CASE("Test serialization of recursive table", "[Lua: Serialization]")
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_serial_recursive", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_serial_recursive", R"(
 local t = {}
 t[1] = t
 
@@ -421,8 +433,9 @@ TEST_CASE("Test serialization of plain value", "[Lua: Serialization]")
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_serial_plain", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_serial_plain", R"(
 mod.store.global = 42
 )"));
 
@@ -444,8 +457,9 @@ assert(mod.store.global == 42)
 
 TEST_CASE("Test serialization of single handle", "[Lua: Serialization]")
 {
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_serial_handle", ""));
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_serial_handle", ""));
 
     start_in_debug_map();
 
@@ -479,8 +493,9 @@ TEST_CASE("Test that disabled mods are not serialized", "[Lua: Serialization]")
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_serial_disabled", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_serial_disabled", R"(
 mod.store.global.val = 42
 )"));
 
@@ -495,8 +510,9 @@ mod.store.global.val = 0
 
     load();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_serial_disabled", ""));
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_serial_disabled", ""));
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_disabled", R"(
@@ -509,8 +525,9 @@ TEST_CASE("Test private fields are not serialized", "[Lua: Serialization]")
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_serial_private", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_serial_private", R"(
 mod.store.global.public = true
 mod.store.global.public2 = {
    public = true,

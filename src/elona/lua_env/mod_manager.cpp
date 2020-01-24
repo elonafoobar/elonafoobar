@@ -75,30 +75,28 @@ bool ModManager::mod_id_is_reserved(const std::string& mod_id)
 
 
 
-void ModManager::load_mods(const fs::path& mod_dir)
+void ModManager::load_mods()
 {
     if (stage_ != ModLoadingStage::not_started)
     {
         throw std::runtime_error("Mods have already been loaded.");
     }
 
-    scan_all_mods(mod_dir);
+    scan_all_mods();
     load_lua_support_libraries();
     load_scanned_mods();
 }
 
 
 
-void ModManager::load_mods(
-    const fs::path& mod_dir,
-    const std::vector<fs::path> additional_mod_paths)
+void ModManager::load_mods(const std::vector<fs::path>& additional_mod_paths)
 {
     if (stage_ != ModLoadingStage::not_started)
     {
         throw std::runtime_error("Mods have already been loaded.");
     }
 
-    scan_all_mods(mod_dir);
+    scan_all_mods();
     for (const auto& path : additional_mod_paths)
     {
         scan_mod(path);
@@ -135,7 +133,7 @@ void ModManager::load_mod(ModEnv& mod)
     setup_and_lock_mod_globals(mod);
 
     // Skip initializing mods not created from files, because the
-    // string passed to load_mod_from_script acts as the
+    // string passed to load_testing_mod_from_script acts as the
     // initialization script.
     if (!mod.manifest.path)
     {
@@ -182,7 +180,7 @@ void ModManager::scan_mod(const fs::path& mod_dir)
 
 
 
-void ModManager::scan_all_mods(const fs::path& mods_dir)
+void ModManager::scan_all_mods()
 {
     if (stage_ != ModLoadingStage::not_started &&
         stage_ != ModLoadingStage::scan_finished)
@@ -190,7 +188,7 @@ void ModManager::scan_all_mods(const fs::path& mods_dir)
         throw std::runtime_error("Mods have already been scanned!");
     }
 
-    for (const auto& mod_dir : normal_mod_dirs(mods_dir))
+    for (const auto& mod_dir : normal_mod_dirs(filesystem::dirs::mod()))
     {
         scan_mod(mod_dir);
     }
@@ -555,7 +553,7 @@ bool ModManager::exists(const std::string& mod_id)
 
 
 // For testing use
-void ModManager::load_mod_from_script(
+void ModManager::load_testing_mod_from_script(
     const std::string& name,
     const std::string& script,
     bool readonly)

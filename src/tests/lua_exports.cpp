@@ -12,9 +12,10 @@
 TEST_CASE("test registering Lua functions", "[Lua: Exports]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
+    lua.get_mod_manager().load_mods();
 
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script("test", R"(
+    REQUIRE_NOTHROW(
+        lua.get_mod_manager().load_testing_mod_from_script("test", R"(
 local exports = {}
 exports.nesting = {}
 
@@ -77,8 +78,9 @@ TEST_CASE(
     "test registering Lua functions with userdata arguments",
     "[Lua: Exports]")
 {
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_registry_chara_callback", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_registry_chara_callback", R"(
 local exports = {}
 
 function exports.my_callback(chara)
@@ -114,7 +116,7 @@ TEST_CASE("test calling unknown exported function for result", "[Lua: Exports]")
 {
     elona::lua::LuaEnv lua;
 
-    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
+    lua.get_mod_manager().load_mods();
     lua.get_export_manager().register_all_exports();
 
     bool result = lua.get_export_manager().call_with_result("dood", false);

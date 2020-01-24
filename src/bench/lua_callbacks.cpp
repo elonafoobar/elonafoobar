@@ -40,7 +40,8 @@ public:
 
     void AddCallbacks(int amount)
     {
-        elona::lua::lua->get_mod_manager().load_mod_from_script("bench", "");
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "bench", "");
         for (int i = 0; i < amount; i++)
         {
             elona::lua::lua->get_mod_manager().run_in_mod("bench", R"(

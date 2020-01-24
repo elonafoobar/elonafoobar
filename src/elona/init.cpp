@@ -119,7 +119,7 @@ namespace elona
 void initialize_lua()
 {
     // Scan mods under "mods/" folder.
-    lua::lua->get_mod_manager().load_mods(filesystem::dirs::mod());
+    lua::lua->get_mod_manager().load_mods();
 
     // Initialize "console" mod.
     lua::lua->get_console().init_environment();

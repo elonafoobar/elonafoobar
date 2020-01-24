@@ -186,7 +186,7 @@ public:
      * Scans and loads all mods at the the given mods/ root directory,
      * binding their APIs to the API manager.
      */
-    void load_mods(const fs::path&);
+    void load_mods();
 
     /***
      * Wipes the entire state of all mods.
@@ -232,14 +232,14 @@ public:
      *
      * For testing use only.
      */
-    void load_mods(const fs::path&, const std::vector<fs::path>);
+    void load_mods(const std::vector<fs::path>&);
 
     /***
      * Instantiates a new mod by running the given Lua code.
      *
      * For testing use only.
      */
-    void load_mod_from_script(
+    void load_testing_mod_from_script(
         const std::string& id,
         const std::string& script,
         bool readonly = false);
@@ -364,7 +364,7 @@ private:
      * scanning multiple directories).
      * Stage after is scan_finished.
      */
-    void scan_all_mods(const fs::path&);
+    void scan_all_mods();
 
     /***
      * Adds the parts of the API implemented in Lua to the API
