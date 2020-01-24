@@ -4,6 +4,11 @@
 #include <regex>
 #include "../util/filepathutil.hpp"
 
+#include "defines.hpp"
+#ifdef ELONA_OS_LINUX
+#include <dirent.h>
+#endif
+
 
 
 namespace fs = boost::filesystem;
@@ -78,6 +83,98 @@ fs::path path(const std::string&);
 fs::path resolve_path_for_mod(const std::string& mod_local_path);
 
 
+
+#ifdef ELONA_OS_LINUX
+struct DirEntry
+{
+    explicit DirEntry(const fs::path& path)
+        : _path(path)
+    {
+    }
+
+
+    const fs::path& path() const
+    {
+        return _path;
+    }
+
+
+private:
+    fs::path _path;
+};
+
+
+
+namespace detail
+{
+template <typename F>
+std::vector<DirEntry> glob_entries_internal(
+    const fs::path& base_dir,
+    const std::regex& pattern,
+    F predicate)
+{
+    std::vector<DirEntry> entries;
+
+    struct dirent* entry = nullptr;
+    DIR* dp = opendir(base_dir.native().c_str());
+    if (dp)
+    {
+        while ((entry = readdir(dp)))
+        {
+            const auto path = base_dir / fs::path{entry->d_name};
+            if (!std::regex_match(
+                    filepathutil::to_utf8_path(path.filename()), pattern))
+            {
+                continue;
+            }
+            if (!predicate(path))
+            {
+                continue;
+            }
+            entries.emplace_back(path);
+        }
+        closedir(dp);
+    }
+
+    return entries;
+}
+} // namespace detail
+
+
+
+inline std::vector<DirEntry> glob_entries(
+    const fs::path& base_dir,
+    const std::regex& pattern = std::regex{u8".*"})
+{
+    return detail::glob_entries_internal(
+        base_dir, pattern, [](const fs::path&) { return true; });
+}
+
+
+
+inline std::vector<DirEntry> glob_files(
+    const fs::path& base_dir,
+    const std::regex& pattern = std::regex{u8".*"})
+{
+    return detail::glob_entries_internal(
+        base_dir, pattern, [](const fs::path& p) {
+            return fs::is_regular_file(p);
+        });
+}
+
+
+
+inline std::vector<DirEntry> glob_dirs(
+    const fs::path& base_dir,
+    const std::regex& pattern = std::regex{u8".*"})
+{
+    return detail::glob_entries_internal(
+        base_dir, pattern, [](const fs::path& p) {
+            return fs::is_directory(p);
+        });
+}
+
+#else
 
 struct DirEntryRange
 {
@@ -236,7 +333,7 @@ inline DirEntryRange glob_dirs(
 {
     return {base_dir, DirEntryRange::Type::dir, pattern};
 }
-
+#endif
 
 
 // Emulates std::filesystem::copy_options::recursive in C++17.
