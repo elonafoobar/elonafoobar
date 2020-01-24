@@ -176,7 +176,7 @@ void pre_init()
     fs::copy_file(
         source_config_file, config_file, fs::copy_option::overwrite_if_exists);
 
-    config_load_preinit_options();
+    (void)PreinitConfigOptions::from_file(config_file);
 
     title(u8"Elona foobar version "s + latest_version.short_string());
 

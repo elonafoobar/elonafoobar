@@ -2,6 +2,7 @@
 #include <cassert>
 #include <fstream>
 #include <functional>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include "../snail/application.hpp"
@@ -130,12 +131,13 @@ std::string read_whole_file(std::istream& in)
 
 
 
-json5::value::object_type parse_json5_file(const fs::path& path)
+json5::value::object_type parse_json5_file(
+    std::istream& in,
+    const std::string& filepath)
 {
-    if (!fs::exists(path))
+    if (!in)
         return {};
 
-    std::ifstream in{path.native()};
     const auto file_content = read_whole_file(in);
     try
     {
@@ -144,15 +146,13 @@ json5::value::object_type parse_json5_file(const fs::path& path)
     catch (json5::syntax_error& err)
     {
         ELONA_WARN("config")
-            << "JSON5 syntax error in '" << filepathutil::to_utf8_path(path)
-            << "': " << err.what();
+            << "JSON5 syntax error in '" << filepath << "': " << err.what();
         return {};
     }
     catch (json5::invalid_type_error& err)
     {
         ELONA_WARN("config")
-            << "JSON5 type error in '" << filepathutil::to_utf8_path(path)
-            << "': " << err.what();
+            << "JSON5 type error in '" << filepath << "': " << err.what();
         return {};
     }
 }
@@ -297,21 +297,16 @@ void inject_languages()
  * Validate the display mode setting. If the display mode is unavailable, set
  * the default value.
  */
-void validate_display_mode()
+std::string validate_display_mode(const std::string& current_value)
 {
-    const auto display_modes =
-        snail::Application::instance().get_display_modes();
-    const auto default_display_mode =
-        snail::Application::instance().get_default_display_mode();
+    auto& app = snail::Application::instance();
+    const auto display_modes = app.get_display_modes();
+    const auto default_display_mode = app.get_default_display_mode();
 
     const auto found = range::any_of(
-        display_modes, [current = g_config.display_mode()](const auto& d) {
-            return d.first == current;
-        });
-    if (!found)
-    {
-        g_config.set_display_mode(default_display_mode);
-    }
+        display_modes, [&](const auto& d) { return d.first == current_value; });
+
+    return found ? current_value : default_display_mode;
 }
 
 
@@ -524,39 +519,46 @@ Config g_config;
 
 
 
-void config_load_preinit_options()
+PreinitConfigOptions PreinitConfigOptions::from_file(const fs::path& path)
 {
-    const auto obj =
-        parse_json5_file(filesystem::files::profile_local_config());
+    std::ifstream in{path.native()};
+    return from_stream(in, filepathutil::to_utf8_path(path));
+}
 
-#define ELONA_PREINIT_OPT(category, option, T, default_value) \
-    do \
-    { \
-        g_config.set_##option(get_value_by_nesting_key( \
-            obj, \
-            {"core", #category, #option}, \
-            json5::T##_type{default_value})); \
-    } while (0)
 
+
+PreinitConfigOptions PreinitConfigOptions::from_string(const std::string& str)
+{
+    std::istringstream in{str};
+    return from_stream(in, "[string]");
+}
+
+
+
+PreinitConfigOptions PreinitConfigOptions::from_stream(
+    std::istream& in,
+    const std::string& filepath)
+{
+    const auto obj = parse_json5_file(in, filepath);
 
     // screen.fullscreen (default: "windowed")
-    g_config.set_fullscreen(convert_to_fullscreen(get_value_by_nesting_key(
-        obj,
-        {"core", "screen", "fullscreen"},
-        json5::string_type{"windowed"})));
+    auto fullscreen = convert_to_fullscreen(get_value_by_nesting_key(
+        obj, {"core", "screen", "fullscreen"}, json5::string_type{"windowed"}));
 
     // screen.display_mode (default: "")
-    ELONA_PREINIT_OPT(screen, display_mode, string, "");
+    auto display_mode = get_value_by_nesting_key(
+        obj, {"core", "screen", "display_mode"}, json5::string_type{""});
 
-#undef ELONA_PREINIT_OPT
+    display_mode = validate_display_mode(display_mode);
 
-
-    validate_display_mode();
 
     // TODO: move it somewhere else or make it constant. "inf_tiles" is too
     // frequently used to find out where it should be initialized. Thus, it is
     // initialized as close to the previous position as possilbe.
     inf_tiles = 48;
+
+
+    return PreinitConfigOptions{fullscreen, display_mode};
 }
 
 

@@ -1,3 +1,59 @@
+#include "../thirdparty/catch2/catch.hpp"
+
+#include "../elona/config.hpp"
+
+using namespace std::literals::string_literals;
+using namespace elona;
+using FullscreenMode = snail::Window::FullscreenMode;
+
+
+
+namespace
+{
+
+void check_default_values(const PreinitConfigOptions& opts)
+{
+    REQUIRE(opts.fullscreen() == FullscreenMode::windowed);
+    REQUIRE(opts.display_mode() == "");
+}
+
+} // namespace
+
+
+
+TEST_CASE("Test invalid config format", "[Config: Loading]")
+{
+    check_default_values(PreinitConfigOptions::from_file("404.not_found"));
+
+    check_default_values(PreinitConfigOptions::from_string(""));
+
+    check_default_values(
+        PreinitConfigOptions::from_string("{ invalid JSON5 }"));
+
+    check_default_values(PreinitConfigOptions::from_string(
+        "{ core: { screen: { fullscreen: 42 } } }"));
+
+    check_default_values(PreinitConfigOptions::from_string(
+        "{ core: { screen: { fullscreen: \"lomias\" } } }"));
+}
+
+
+
+TEST_CASE("Test loading valid config", "[Config: Loading]")
+{
+    REQUIRE(
+        PreinitConfigOptions::from_string(
+            "{ core: { screen: { fullscreen: \"fullscreen\" } } }")
+            .fullscreen() == FullscreenMode::fullscreen);
+
+    REQUIRE(
+        PreinitConfigOptions::from_string(
+            "{ core: { screen: { display_mode: \"\" } } }")
+            .display_mode() == "");
+}
+
+
+
 // TODO don't skip these test!
 #if 0
 #include "../thirdparty/catch2/catch.hpp"

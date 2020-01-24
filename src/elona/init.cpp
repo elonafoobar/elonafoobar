@@ -59,12 +59,12 @@ void initialize_directories()
 
 
 
-void initialize_screen()
+void initialize_screen(const PreinitConfigOptions& opts)
 {
     title(
         u8"Elona foobar version "s + latest_version.short_string(),
-        g_config.display_mode(),
-        g_config.fullscreen());
+        opts.display_mode(),
+        opts.fullscreen());
 }
 
 
@@ -622,18 +622,20 @@ void initialize_game()
 
 void init()
 {
+    const auto preinit_config_options = PreinitConfigOptions::from_file(
+        filesystem::files::profile_local_config());
+
+    initialize_screen(preinit_config_options);
+
     lua::lua = std::make_unique<lua::LuaEnv>();
-
-    config_load_preinit_options();
-    config_load_all_schema();
-
-    initialize_screen();
 
     initialize_directories();
 
+    initialize_lua();
+
+    config_load_all_schema();
     config_load_options();
 
-    initialize_lua();
     // Load translations from scanned mods.
     initialize_i18n();
 
