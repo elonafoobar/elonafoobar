@@ -88,16 +88,11 @@ public:
         return *config_mgr;
     }
 
-    /***
-     * Clears and reset the Lua state to directly after loading the
-     * core mod.
-     *
-     * Used when modifying startup scripts.
-     */
-    void reload();
+
+    void load_mods();
 
 
-    //****************** Methods for testing use *******************//
+    /****************** Methods for testing use *******************/
 
     /***
      * Unloads all characters and items tracked by handles.

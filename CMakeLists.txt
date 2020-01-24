@@ -85,6 +85,7 @@ if(ELONA_BUILD_TARGET STREQUAL "TESTS")
     src/tests/lua_events.cpp
     src/tests/lua_exports.cpp
     src/tests/lua_handles.cpp
+    src/tests/lua_mod_resolve.cpp
     src/tests/lua_mods.cpp
     src/tests/lua_data.cpp
     src/tests/lua_data_character.cpp

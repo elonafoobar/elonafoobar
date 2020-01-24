@@ -12,7 +12,7 @@
 TEST_CASE("test registering Lua functions", "[Lua: Exports]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods();
+    lua.load_mods();
 
     REQUIRE_NOTHROW(
         lua.get_mod_manager().load_testing_mod_from_script("test", R"(
@@ -105,8 +105,8 @@ return exports
     REQUIRE_NOTHROW(function->call(handle));
 
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_registry_chara_callback")
-        ->env.set("index", elona::rc);
+        .get_mod("test_registry_chara_callback")
+        ->env.raw_set("index", elona::rc);
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_registry_chara_callback",
         R"(assert(mod.store.global.found_index == index))"));
@@ -116,7 +116,7 @@ TEST_CASE("test calling unknown exported function for result", "[Lua: Exports]")
 {
     elona::lua::LuaEnv lua;
 
-    lua.get_mod_manager().load_mods();
+    lua.load_mods();
     lua.get_export_manager().register_all_exports();
 
     bool result = lua.get_export_manager().call_with_result("dood", false);

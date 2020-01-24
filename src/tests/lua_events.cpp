@@ -44,7 +44,7 @@ Event.register("core.some_unknown_event", handler)
 TEST_CASE("Test registering of callback", "[Lua: Events]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods();
+    lua.load_mods();
 
     REQUIRE_NOTHROW(
         lua.get_mod_manager().load_testing_mod_from_script("test", R"(
@@ -69,7 +69,7 @@ Event.register("core.all_turns_finished", my_handler)
 TEST_CASE("Test registering of callback multiple times", "[Lua: Events]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods();
+    lua.load_mods();
 
     REQUIRE_THROWS(
         lua.get_mod_manager().load_testing_mod_from_script("test", R"(
@@ -93,7 +93,7 @@ TEST_CASE(
     "[Lua: Events]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods();
+    lua.load_mods();
 
     REQUIRE_NOTHROW(
         lua.get_mod_manager().load_testing_mod_from_script("test", R"(
@@ -123,7 +123,7 @@ Event.register("core.all_turns_finished", second)
 TEST_CASE("Test unregistering of callback", "[Lua: Events]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods();
+    lua.load_mods();
 
     REQUIRE_NOTHROW(
         lua.get_mod_manager().load_testing_mod_from_script("test", R"(
@@ -148,7 +148,7 @@ Event.unregister("core.all_turns_finished", my_handler)
 TEST_CASE("Test unregistering of callback multiple times", "[Lua: Events]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods();
+    lua.load_mods();
 
     REQUIRE_NOTHROW(
         lua.get_mod_manager().load_testing_mod_from_script("test", R"(
@@ -176,7 +176,7 @@ Event.unregister("core.all_turns_finished", my_handler)
 TEST_CASE("Test unregistering of callback without registering", "[Lua: Events]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods();
+    lua.load_mods();
 
     REQUIRE_NOTHROW(
         lua.get_mod_manager().load_testing_mod_from_script("test", R"(
@@ -200,7 +200,7 @@ Event.unregister("core.all_turns_finished", my_handler)
 TEST_CASE("Test unregistering of callback inside callback", "[Lua: Events]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods();
+    lua.load_mods();
 
     REQUIRE_NOTHROW(
         lua.get_mod_manager().load_testing_mod_from_script("test", R"(
@@ -228,7 +228,7 @@ TEST_CASE(
     "[Lua: Events]")
 {
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods();
+    lua.load_mods();
 
     REQUIRE_NOTHROW(
         lua.get_mod_manager().load_testing_mod_from_script("test", R"(

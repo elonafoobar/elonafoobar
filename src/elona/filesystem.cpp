@@ -158,6 +158,13 @@ fs::path keybinding_config()
     return path("keybindings.json");
 }
 
+
+
+fs::path mod_list()
+{
+    return dirs::current_profile() / "mods.json";
+}
+
 } // namespace files
 
 

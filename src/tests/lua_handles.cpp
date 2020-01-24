@@ -187,7 +187,7 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
 
         REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script("test", ""));
 
-        mod_mgr.get_enabled_mod("test")->env.set("chara", handle);
+        mod_mgr.get_mod("test")->env.raw_set("chara", handle);
         REQUIRE_NOTHROW(mod_mgr.run_in_mod(
             "test", "mod.store.global.charas = {[0]=chara}"));
 
@@ -205,7 +205,7 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
 
         REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script("test2", ""));
 
-        mod_mgr.get_enabled_mod("test2")->env.set("item", handle);
+        mod_mgr.get_mod("test2")->env.raw_set("item", handle);
         REQUIRE_NOTHROW(
             mod_mgr.run_in_mod("test2", "mod.store.global.items = {[0]=item}"));
 
@@ -230,10 +230,11 @@ TEST_CASE("Test invalid references to handles from Lua side", "[Lua: Handles]")
             mod_mgr.load_testing_mod_from_script("test_invalid_chara", R"(
 local Chara = require("game.Chara")
 local chara = Chara.create(0, 0, "core.putit")
-idx = chara.index
+mod.store.global.idx = chara.index
 mod.store.global.charas = {[0]=chara}
 )"));
-        int idx = mod_mgr.get_enabled_mod("test_invalid_chara")->env["idx"];
+        int idx = mod_mgr.get_mod("test_invalid_chara")
+                      ->env.get<int>(std::tie("mod", "store", "global", "idx"));
 
         testing::invalidate_chara(elona::cdata[idx]);
 
@@ -246,10 +247,11 @@ mod.store.global.charas = {[0]=chara}
             mod_mgr.load_testing_mod_from_script("test_invalid_item", R"(
 local Item = require("game.Item")
 local item = Item.create(0, 0, "core.putitoro", 3)
-idx = item.index
+mod.store.global.idx = item.index
 mod.store.global.items = {[0]=items}
 )"));
-        int idx = mod_mgr.get_enabled_mod("test_invalid_item")->env["idx"];
+        int idx = mod_mgr.get_mod("test_invalid_item")
+                      ->env.get<int>(std::tie("mod", "store", "global", "idx"));
 
         testing::invalidate_item(elona::inv[idx]);
 
@@ -275,7 +277,7 @@ TEST_CASE(
 
         REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script(
             "test_chara_arg", "mod.store.global.charas = {}"));
-        mod_mgr.get_enabled_mod("test_chara_arg")->env.set("chara", handle);
+        mod_mgr.get_mod("test_chara_arg")->env.raw_set("chara", handle);
 
         REQUIRE_NOTHROW(mod_mgr.run_in_mod("test_chara_arg", R"(
 mod.store.global.charas[0] = chara
@@ -299,7 +301,7 @@ print(Chara.is_ally(mod.store.global.charas[0]))
 
         REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script(
             "test_item_arg", "mod.store.global.items = {}"));
-        mod_mgr.get_enabled_mod("test_item_arg")->env.set("item", handle);
+        mod_mgr.get_mod("test_item_arg")->env.raw_set("item", handle);
 
         REQUIRE_NOTHROW(mod_mgr.run_in_mod("test_item_arg", R"(
 mod.store.global.items[0] = item
@@ -676,8 +678,7 @@ TEST_CASE("Test validity check of lua reference userdata", "[Lua: Handles]")
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
     auto& mod_mgr = elona::lua::lua->get_mod_manager();
 
-    REQUIRE_NOTHROW(mod_mgr.create_mod("test_lua_ref"));
-    REQUIRE_NOTHROW(mod_mgr.run_in_mod("test_lua_ref", R"(
+    REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script("test_lua_ref", R"(
 local Chara = require("game.Chara")
 local chara = Chara.create(0, 0, "core.putit")
 local skill = chara:get_skill("core.attribute_strength")

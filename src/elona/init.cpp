@@ -44,9 +44,11 @@ namespace
 
 void initialize_directories()
 {
-    const boost::filesystem::path paths[] = {filesystem::dirs::save(),
-                                             filesystem::dirs::screenshot(),
-                                             filesystem::dirs::tmp()};
+    const fs::path paths[] = {
+        filesystem::dirs::save(),
+        filesystem::dirs::screenshot(),
+        filesystem::dirs::tmp(),
+    };
 
     for (const auto& path : paths)
     {
@@ -118,8 +120,8 @@ namespace elona
 
 void initialize_lua()
 {
-    // Scan mods under "mods/" folder.
-    lua::lua->get_mod_manager().load_mods();
+    // Load mods.
+    lua::lua->load_mods();
 
     // Initialize "console" mod.
     lua::lua->get_console().init_environment();
@@ -149,13 +151,16 @@ void initialize_i18n()
         {filesystem::dirs::locale() / language, "core"}};
 
     // Load translations for each mod.
-    for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dirs::mod()))
+    for (const auto& pair : lua::lua->get_mod_manager().mods())
     {
-        const auto manifest = lua::ModManifest::load(mod_dir / "mod.json");
-        const auto locale_path = mod_dir / "locale" / language;
-        if (fs::exists(locale_path))
+        const auto& mod_manifest = pair.second.manifest;
+        if (mod_manifest.path)
         {
-            locations.emplace_back(locale_path, manifest.id);
+            const auto locale_path = *mod_manifest.path / "locale" / language;
+            if (fs::exists(locale_path))
+            {
+                locations.emplace_back(locale_path, mod_manifest.id);
+            }
         }
     }
 

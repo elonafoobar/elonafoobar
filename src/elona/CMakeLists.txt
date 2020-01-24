@@ -117,6 +117,7 @@ set(ELONA_SOURCES
   lua_env/mod_manager.cpp
   lua_env/mod_manifest.cpp
   lua_env/mod_serializer.cpp
+  lua_env/mod_version_resolver.cpp
 
   lua_env/enums/enums.cpp
 

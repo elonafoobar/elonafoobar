@@ -87,15 +87,15 @@ void UIMenuMods::_load_mods()
     }
     else
     {
-        for (const auto& mod : lua::lua->get_mod_manager().all_mods())
+        for (const auto& pair : lua::lua->get_mod_manager().mods())
         {
-            const auto& id = mod->second->manifest.id;
+            const auto& id = pair.second.manifest.id;
 
-            if (lua::ModManager::mod_id_is_reserved(id))
+            if (lua::is_reserved_mod_id(id))
                 continue;
 
             ModDescription mod_desc{
-                mod->second->manifest,
+                pair.second.manifest,
                 static_cast<bool>(
                     lua::lua->get_mod_manager().get_enabled_version(id))};
 
@@ -136,6 +136,8 @@ void UIMenuMods::update()
 
 void UIMenuMods::_draw_key(int cnt, int index)
 {
+    (void)index;
+
     if (cnt % 2 == 0)
     {
         boxf(wx + 57, wy + 66 + cnt * 19, 640, 18, {12, 14, 16, 16});

@@ -75,6 +75,7 @@ namespace files
 
 fs::path profile_local_config();
 fs::path keybinding_config();
+fs::path mod_list();
 
 } // namespace files
 

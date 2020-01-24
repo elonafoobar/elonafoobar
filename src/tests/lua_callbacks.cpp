@@ -35,8 +35,8 @@ Event.register("core.character_created", my_chara_created_handler)
     int idx = elona::rc;
     REQUIRE(idx != -1);
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_chara_created")
-        ->env.set("idx", idx);
+        .get_mod("test_chara_created")
+        ->env.raw_set("idx", idx);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_chara_created",
@@ -66,8 +66,8 @@ Event.register("core.character_damaged", my_chara_hurt_handler)
     REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
     int idx = elona::rc;
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_chara_hurt")
-        ->env.set("idx", idx);
+        .get_mod("test_chara_hurt")
+        ->env.raw_set("idx", idx);
 
     elona::damage_hp(cdata[idx], 4, -1);
     elona::heal_hp(cdata[idx], 45);
@@ -99,8 +99,8 @@ Event.register("core.character_removed", my_chara_removed_handler)
     REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
     int idx = elona::rc;
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_chara_removed")
-        ->env.set("idx", idx);
+        .get_mod("test_chara_removed")
+        ->env.raw_set("idx", idx);
 
     testing::invalidate_chara(cdata[idx]);
 
@@ -131,8 +131,8 @@ Event.register("core.character_killed", my_chara_killed_handler)
     int idx = elona::rc;
     elona::Character& chara = elona::cdata[idx];
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_chara_killed")
-        ->env.set("idx", idx);
+        .get_mod("test_chara_killed")
+        ->env.raw_set("idx", idx);
 
     elona::damage_hp(cdata[idx], chara.max_hp + 1, -11);
 
@@ -215,8 +215,8 @@ Event.register("core.character_removed", my_chara_removed_handler)
     int idx = elona::rc;
     elona::Character& chara = elona::cdata[idx];
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_special_chara_killed")
-        ->env.set("idx", idx);
+        .get_mod("test_special_chara_killed")
+        ->env.raw_set("idx", idx);
 
     // Give this character a role besides a townsperson.
     chara.character_role = 2002;
@@ -251,8 +251,8 @@ Event.register("core.character_refreshed", my_chara_refreshed_handler)
     REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
     int idx = elona::rc;
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_chara_refreshed")
-        ->env.set("idx", idx);
+        .get_mod("test_chara_refreshed")
+        ->env.raw_set("idx", idx);
 
     elona::chara_refresh(idx);
 
@@ -284,8 +284,8 @@ Event.register("core.item_created", my_item_created_handler)
     int idx = elona::ci;
     REQUIRE(idx != -1);
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_item_created")
-        ->env.set("idx", idx);
+        .get_mod("test_item_created")
+        ->env.raw_set("idx", idx);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_item_created",

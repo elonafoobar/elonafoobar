@@ -565,15 +565,20 @@ PreinitConfigOptions PreinitConfigOptions::from_stream(
 
 void config_load_all_schema()
 {
-    for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dirs::mod()))
+    for (const auto& pair : lua::lua->get_mod_manager().mods())
     {
-        const auto manifest = lua::ModManifest::load(mod_dir / "mod.json");
-        const auto path = mod_dir / "config-schema.lua";
-        if (fs::exists(path))
+        const auto& mod_manifest = pair.second.manifest;
+        if (mod_manifest.path)
         {
-            std::ifstream in{path.native()};
-            lua::lua->get_config_manager().load_schema(
-                in, filepathutil::to_utf8_path(path), SharedId{manifest.id});
+            const auto schema_path = *mod_manifest.path / "config-schema.lua";
+            if (fs::exists(schema_path))
+            {
+                std::ifstream in{schema_path.native()};
+                lua::lua->get_config_manager().load_schema(
+                    in,
+                    filepathutil::to_utf8_path(schema_path),
+                    SharedId{mod_manifest.id});
+            }
         }
     }
 }

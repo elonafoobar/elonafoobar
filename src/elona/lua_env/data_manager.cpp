@@ -73,10 +73,9 @@ void DataManager::_init_from_mod(ModEnv& mod)
 
 void DataManager::init_from_mods()
 {
-    for (const auto& mod_id : lua().get_mod_manager().calculate_loading_order())
+    for (const auto& mod_id : lua().get_mod_manager().sorted_mods())
     {
-        const auto& mod = lua().get_mod_manager().get_enabled_mod(mod_id);
-        _init_from_mod(*mod);
+        _init_from_mod(*lua().get_mod_manager().get_mod(mod_id));
     }
 
     lua_state()->set("_MOD_ID", sol::lua_nil);

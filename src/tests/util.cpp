@@ -112,7 +112,7 @@ void register_lua_function(
     std::string callback_signature,
     std::string callback_body)
 {
-    lua.get_mod_manager().load_mods();
+    lua.load_mods();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_testing_mod_from_script(
         mod_id,
