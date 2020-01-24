@@ -1580,17 +1580,18 @@ TalkResult talk_quest_giver()
             }
             for (int cnt = 0;; ++cnt)
             {
+                int chara_id;
                 if (cnt == 99)
                 {
-                    dbid = 35;
+                    chara_id = 35;
                 }
                 else
                 {
-                    dbid = 0;
+                    chara_id = 0;
                 }
                 flt(quest_data[rq].difficulty + cnt, Quality::bad);
                 fltn(u8"man"s);
-                int stat = chara_create(56, dbid, -3, 0);
+                int stat = chara_create(56, chara_id, -3, 0);
                 f = stat;
                 if (f == 1)
                 {

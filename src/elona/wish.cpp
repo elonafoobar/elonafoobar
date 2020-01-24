@@ -257,10 +257,12 @@ int select_wished_character(const std::string& input)
 void wish_for_character()
 {
     inputlog = strutil::remove_str(inputlog, u8"summon");
-    dbid = select_wished_character(inputlog);
     flt();
     chara_create(
-        -1, dbid, cdata.player().position.x, cdata.player().position.y);
+        -1,
+        select_wished_character(inputlog),
+        cdata.player().position.x,
+        cdata.player().position.y);
     cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
     txt(cdatan(0, rc) + " is summoned.");
 }
@@ -269,9 +271,8 @@ void wish_for_character()
 
 void wish_for_card()
 {
-    dbid = select_wished_character(inputlog);
     flt();
-    chara_create(56, dbid, -3, 0);
+    chara_create(56, select_wished_character(inputlog), -3, 0);
     flt();
     if (const auto item = itemcreate_extra_inv(504, cdata.player().position, 0))
     {
@@ -287,9 +288,8 @@ void wish_for_card()
 
 void wish_for_figure()
 {
-    dbid = select_wished_character(inputlog);
     flt();
-    chara_create(56, dbid, -3, 0);
+    chara_create(56, select_wished_character(inputlog), -3, 0);
     flt();
     if (const auto item = itemcreate_extra_inv(503, cdata.player().position, 0))
     {

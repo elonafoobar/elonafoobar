@@ -28,7 +28,7 @@ optional_ref<Item>
 itemcreate_extra_inv(int id, const Position& pos, int number = 0);
 
 
-void get_random_item_id();
+int get_random_item_id();
 void init_item_quality_curse_state_material_and_equipments(Item&);
 void calc_furniture_value(Item&);
 void initialize_item_material(Item&);

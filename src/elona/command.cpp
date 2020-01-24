@@ -907,8 +907,7 @@ TurnResult do_throw_command()
                 ccthrowpotion = cc;
                 potionthrow = 100;
                 cc = tc;
-                dbid = itemid2int(inv[ci].id);
-                item_db_on_drink(inv[ci], dbid);
+                item_db_on_drink(inv[ci], itemid2int(inv[ci].id));
                 cc = ccthrowpotion;
                 return TurnResult::turn_end;
             }
@@ -3290,8 +3289,7 @@ TurnResult do_read_command()
         }
     }
     efid = 0;
-    dbid = itemid2int(inv[ci].id);
-    item_db_on_read(inv[ci], dbid);
+    item_db_on_read(inv[ci], itemid2int(inv[ci].id));
     if (efid == 1115)
     {
         return build_new_building();
@@ -3338,8 +3336,7 @@ TurnResult do_eat_command()
 
 TurnResult do_drink_command()
 {
-    dbid = itemid2int(inv[ci].id);
-    item_db_on_drink(inv[ci], dbid);
+    item_db_on_drink(inv[ci], itemid2int(inv[ci].id));
     return TurnResult::turn_end;
 }
 
@@ -3347,8 +3344,7 @@ TurnResult do_drink_command()
 
 TurnResult do_zap_command()
 {
-    dbid = itemid2int(inv[ci].id);
-    item_db_on_zap(inv[ci], dbid);
+    item_db_on_zap(inv[ci], itemid2int(inv[ci].id));
     int stat = do_zap();
     if (stat == 0)
     {

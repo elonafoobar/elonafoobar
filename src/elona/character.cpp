@@ -87,7 +87,7 @@ int _get_random_npc_id()
 
 
 
-int chara_create_internal()
+int chara_create_internal(int chara_id)
 {
     if (rc == -1)
     {
@@ -107,7 +107,7 @@ int chara_create_internal()
     {
         p = 4;
     }
-    if (dbid == -1)
+    if (chara_id == -1)
     {
         if (fltselect == 0 && filtermax == 0 && fltnrace(0).empty())
         {
@@ -126,22 +126,22 @@ int chara_create_internal()
                 }
             }
         }
-        dbid = _get_random_npc_id();
-        if (dbid == 0)
+        chara_id = _get_random_npc_id();
+        if (chara_id == 0)
         {
             if (fltselect == 2 || fixlv == Quality::special)
             {
                 fixlv = Quality::miracle;
             }
             flt(objlv + 10, fixlv);
-            dbid = _get_random_npc_id();
+            chara_id = _get_random_npc_id();
         }
     }
 
     cm = 1;
     cmshade = 0;
-    ++npcmemory(1, dbid);
-    if (dbid == 323)
+    ++npcmemory(1, chara_id);
+    if (chara_id == 323)
     {
         if (rnd(5))
         {
@@ -152,7 +152,7 @@ int chara_create_internal()
             }
             cmshade = 1;
             flt(objlv, fixlv);
-            dbid = _get_random_npc_id();
+            chara_id = _get_random_npc_id();
         }
     }
     if (game_data.current_map == mdata_t::MapId::the_void)
@@ -163,13 +163,13 @@ int chara_create_internal()
         }
     }
     novoidlv = 0;
-    if (dbid == 343)
+    if (chara_id == 343)
     {
         // Vanila-copatible CNPC is not supported now.
     }
     else
     {
-        chara_db_set_stats(int2charaid(dbid));
+        chara_db_set_stats(int2charaid(chara_id));
     }
     if (cmshade)
     {
@@ -620,16 +620,8 @@ int chara_create(int slot, int chara_id, int x, int y)
         cxinit = x;
         cyinit = y;
     }
-    if (chara_id == 0)
-    {
-        dbid = -1;
-    }
-    else
-    {
-        dbid = chara_id;
-    }
     rc = slot;
-    int stat = chara_create_internal();
+    int stat = chara_create_internal(chara_id == 0 ? -1 : chara_id);
     initlv = 0;
     voidlv = 0;
     if (stat == 1)

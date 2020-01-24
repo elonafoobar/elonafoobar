@@ -7,15 +7,15 @@
 namespace elona
 {
 
-int get_card_info(int dbid, CardInfo& card_info)
+int get_card_info(int card_id, CardInfo& card_info)
 {
     std::string card_name;
     if (const auto card_name_opt =
-            i18n::s.get_enum_optional("core.card_info", dbid))
+            i18n::s.get_enum_optional("core.card_info", card_id))
     {
         card_name = *card_name_opt;
     }
-    else if (const auto chara_id = the_character_db.get_id_from_legacy(dbid))
+    else if (const auto chara_id = the_character_db.get_id_from_legacy(card_id))
     {
         card_name = i18n::s.get_m("chara", *chara_id, "name");
     }
@@ -26,7 +26,7 @@ int get_card_info(int dbid, CardInfo& card_info)
 
     card_info.cardrefn = card_name;
 
-    if (dbid == 0)
+    if (card_id == 0)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -35,7 +35,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"slime"s;
         return 1;
     }
-    if (dbid == 343)
+    if (card_id == 343)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -44,7 +44,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"god"s;
         return 1;
     }
-    if (dbid == 1)
+    if (card_id == 1)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -53,7 +53,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 353)
+    if (card_id == 353)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -62,7 +62,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 70)
+    if (card_id == 70)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -71,7 +71,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 69)
+    if (card_id == 69)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -80,7 +80,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 73)
+    if (card_id == 73)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -89,7 +89,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 74)
+    if (card_id == 74)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -98,7 +98,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 206)
+    if (card_id == 206)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -107,7 +107,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 38)
+    if (card_id == 38)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -116,7 +116,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 40)
+    if (card_id == 40)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -125,7 +125,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 333)
+    if (card_id == 333)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -134,7 +134,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 76)
+    if (card_id == 76)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -143,7 +143,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 77)
+    if (card_id == 77)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -152,7 +152,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 204)
+    if (card_id == 204)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -161,7 +161,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 2)
+    if (card_id == 2)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -170,7 +170,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"elea"s;
         return 1;
     }
-    if (dbid == 37)
+    if (card_id == 37)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -179,7 +179,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 23)
+    if (card_id == 23)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 1;
@@ -188,7 +188,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 26)
+    if (card_id == 26)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 1;
@@ -197,7 +197,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 27)
+    if (card_id == 27)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 1;
@@ -206,7 +206,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 28)
+    if (card_id == 28)
     {
         card_info.cardreftype = 10;
         card_info.cardrefdomain = 3;
@@ -218,7 +218,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 29)
+    if (card_id == 29)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 1;
@@ -227,7 +227,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 140)
+    if (card_id == 140)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 1;
@@ -236,7 +236,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
-    if (dbid == 30)
+    if (card_id == 30)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -245,7 +245,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 31)
+    if (card_id == 31)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -254,7 +254,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 351)
+    if (card_id == 351)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -263,7 +263,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"cat"s;
         return 1;
     }
-    if (dbid == 352)
+    if (card_id == 352)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -272,7 +272,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 32)
+    if (card_id == 32)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -281,7 +281,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 33)
+    if (card_id == 33)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -290,7 +290,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"elea"s;
         return 1;
     }
-    if (dbid == 34)
+    if (card_id == 34)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -299,7 +299,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"elea"s;
         return 1;
     }
-    if (dbid == 139)
+    if (card_id == 139)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -308,7 +308,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 146)
+    if (card_id == 146)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -317,7 +317,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 142)
+    if (card_id == 142)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -326,7 +326,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 141)
+    if (card_id == 141)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -335,7 +335,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"lich"s;
         return 1;
     }
-    if (dbid == 143)
+    if (card_id == 143)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -344,7 +344,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 144)
+    if (card_id == 144)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -353,7 +353,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 145)
+    if (card_id == 145)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -362,7 +362,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
-    if (dbid == 306)
+    if (card_id == 306)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -371,7 +371,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"god"s;
         return 1;
     }
-    if (dbid == 331)
+    if (card_id == 331)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -380,7 +380,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"god"s;
         return 1;
     }
-    if (dbid == 336)
+    if (card_id == 336)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -389,7 +389,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"god"s;
         return 1;
     }
-    if (dbid == 338)
+    if (card_id == 338)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -398,7 +398,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"god"s;
         return 1;
     }
-    if (dbid == 339)
+    if (card_id == 339)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -407,7 +407,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"god"s;
         return 1;
     }
-    if (dbid == 342)
+    if (card_id == 342)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -416,7 +416,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"god"s;
         return 1;
     }
-    if (dbid == 340)
+    if (card_id == 340)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -425,7 +425,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"god"s;
         return 1;
     }
-    if (dbid == 3)
+    if (card_id == 3)
     {
         card_info.cardreftype = 10;
         card_info.cardrefdomain = 0;
@@ -437,7 +437,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"slime"s;
         return 1;
     }
-    if (dbid == 4)
+    if (card_id == 4)
     {
         card_info.cardreftype = 10;
         card_info.cardrefdomain = 0;
@@ -449,7 +449,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"slime"s;
         return 1;
     }
-    if (dbid == 169)
+    if (card_id == 169)
     {
         card_info.cardreftype = 10;
         card_info.cardrefskill = 1;
@@ -463,7 +463,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"slime"s;
         return 1;
     }
-    if (dbid == 194)
+    if (card_id == 194)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 70;
@@ -472,7 +472,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"slime"s;
         return 1;
     }
-    if (dbid == 286)
+    if (card_id == 286)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 25;
@@ -481,7 +481,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"slime"s;
         return 1;
     }
-    if (dbid == 285)
+    if (card_id == 285)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 25;
@@ -490,7 +490,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"slime"s;
         return 1;
     }
-    if (dbid == 287)
+    if (card_id == 287)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 25;
@@ -499,7 +499,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"drake"s;
         return 1;
     }
-    if (dbid == 327)
+    if (card_id == 327)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 15;
@@ -508,7 +508,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"machine"s;
         return 1;
     }
-    if (dbid == 5)
+    if (card_id == 5)
     {
         card_info.cardreftype = 10;
         card_info.cardrefdomain = 2;
@@ -520,7 +520,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"rabbit"s;
         return 1;
     }
-    if (dbid == 6)
+    if (card_id == 6)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -529,7 +529,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"snail"s;
         return 1;
     }
-    if (dbid == 7)
+    if (card_id == 7)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -538,7 +538,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 8)
+    if (card_id == 8)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -547,7 +547,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 9)
+    if (card_id == 9)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -556,7 +556,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 269)
+    if (card_id == 269)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -565,7 +565,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 320)
+    if (card_id == 320)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 10;
@@ -574,7 +574,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 273)
+    if (card_id == 273)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -583,7 +583,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 326)
+    if (card_id == 326)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -592,7 +592,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 270)
+    if (card_id == 270)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -601,7 +601,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 349)
+    if (card_id == 349)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -610,7 +610,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 348)
+    if (card_id == 348)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -619,7 +619,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 347)
+    if (card_id == 347)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -628,7 +628,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 271)
+    if (card_id == 271)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -637,7 +637,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 335)
+    if (card_id == 335)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -646,7 +646,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 337)
+    if (card_id == 337)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -655,7 +655,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 272)
+    if (card_id == 272)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -664,7 +664,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 274)
+    if (card_id == 274)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -673,7 +673,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 289)
+    if (card_id == 289)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -682,7 +682,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"eulderna"s;
         return 1;
     }
-    if (dbid == 293)
+    if (card_id == 293)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -691,7 +691,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 295)
+    if (card_id == 295)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -700,7 +700,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 35)
+    if (card_id == 35)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -709,7 +709,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 36)
+    if (card_id == 36)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -718,7 +718,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 174)
+    if (card_id == 174)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 60;
@@ -727,7 +727,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 10)
+    if (card_id == 10)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 30;
@@ -736,7 +736,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"sheep"s;
         return 1;
     }
-    if (dbid == 11)
+    if (card_id == 11)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -745,7 +745,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"frog"s;
         return 1;
     }
-    if (dbid == 12)
+    if (card_id == 12)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -754,7 +754,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 13)
+    if (card_id == 13)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -763,7 +763,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"kobold"s;
         return 1;
     }
-    if (dbid == 236)
+    if (card_id == 236)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -772,7 +772,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yeek"s;
         return 1;
     }
-    if (dbid == 238)
+    if (card_id == 238)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -781,7 +781,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yeek"s;
         return 1;
     }
-    if (dbid == 241)
+    if (card_id == 241)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -790,7 +790,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yeek"s;
         return 1;
     }
-    if (dbid == 240)
+    if (card_id == 240)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -799,7 +799,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yeek"s;
         return 1;
     }
-    if (dbid == 237)
+    if (card_id == 237)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 150;
@@ -808,7 +808,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yeek"s;
         return 1;
     }
-    if (dbid == 244)
+    if (card_id == 244)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 25;
@@ -817,7 +817,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 245)
+    if (card_id == 245)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 20;
@@ -826,7 +826,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"rock"s;
         return 1;
     }
-    if (dbid == 321)
+    if (card_id == 321)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 15;
@@ -835,7 +835,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 242)
+    if (card_id == 242)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -844,7 +844,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yeek"s;
         return 1;
     }
-    if (dbid == 239)
+    if (card_id == 239)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -853,7 +853,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 14)
+    if (card_id == 14)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -862,7 +862,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"centipede"s;
         return 1;
     }
-    if (dbid == 15)
+    if (card_id == 15)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -871,7 +871,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"mushroom"s;
         return 1;
     }
-    if (dbid == 283)
+    if (card_id == 283)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -880,7 +880,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"mushroom"s;
         return 1;
     }
-    if (dbid == 284)
+    if (card_id == 284)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -889,7 +889,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"mushroom"s;
         return 1;
     }
-    if (dbid == 16)
+    if (card_id == 16)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -898,7 +898,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 39)
+    if (card_id == 39)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -907,7 +907,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 171)
+    if (card_id == 171)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -916,7 +916,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 172)
+    if (card_id == 172)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -925,7 +925,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 173)
+    if (card_id == 173)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -934,7 +934,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 71)
+    if (card_id == 71)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -943,7 +943,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 72)
+    if (card_id == 72)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -952,7 +952,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 79)
+    if (card_id == 79)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -961,7 +961,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 80)
+    if (card_id == 80)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -970,7 +970,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 17)
+    if (card_id == 17)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -979,7 +979,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"orc"s;
         return 1;
     }
-    if (dbid == 281)
+    if (card_id == 281)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -988,7 +988,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"lizardman"s;
         return 1;
     }
-    if (dbid == 282)
+    if (card_id == 282)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 70;
@@ -997,7 +997,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"minotaur"s;
         return 1;
     }
-    if (dbid == 296)
+    if (card_id == 296)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 70;
@@ -1006,7 +1006,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"minotaur"s;
         return 1;
     }
-    if (dbid == 298)
+    if (card_id == 298)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 70;
@@ -1015,7 +1015,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"minotaur"s;
         return 1;
     }
-    if (dbid == 299)
+    if (card_id == 299)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -1024,7 +1024,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"minotaur"s;
         return 1;
     }
-    if (dbid == 300)
+    if (card_id == 300)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -1033,7 +1033,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"minotaur"s;
         return 1;
     }
-    if (dbid == 251)
+    if (card_id == 251)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1042,7 +1042,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"troll"s;
         return 1;
     }
-    if (dbid == 18)
+    if (card_id == 18)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1051,7 +1051,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"elea"s;
         return 1;
     }
-    if (dbid == 24)
+    if (card_id == 24)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1060,7 +1060,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"elea"s;
         return 1;
     }
-    if (dbid == 309)
+    if (card_id == 309)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1069,7 +1069,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"asura"s;
         return 1;
     }
-    if (dbid == 310)
+    if (card_id == 310)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1078,7 +1078,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"asura"s;
         return 1;
     }
-    if (dbid == 311)
+    if (card_id == 311)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1087,7 +1087,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"asura"s;
         return 1;
     }
-    if (dbid == 41)
+    if (card_id == 41)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1096,7 +1096,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 75)
+    if (card_id == 75)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1105,7 +1105,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 19)
+    if (card_id == 19)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1114,7 +1114,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"mandrake"s;
         return 1;
     }
-    if (dbid == 22)
+    if (card_id == 22)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1123,7 +1123,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"beetle"s;
         return 1;
     }
-    if (dbid == 20)
+    if (card_id == 20)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1132,7 +1132,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"orc"s;
         return 1;
     }
-    if (dbid == 25)
+    if (card_id == 25)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1141,7 +1141,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"orc"s;
         return 1;
     }
-    if (dbid == 21)
+    if (card_id == 21)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1150,7 +1150,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"zombie"s;
         return 1;
     }
-    if (dbid == 42)
+    if (card_id == 42)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1159,7 +1159,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"bat"s;
         return 1;
     }
-    if (dbid == 43)
+    if (card_id == 43)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 70;
@@ -1168,7 +1168,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"bat"s;
         return 1;
     }
-    if (dbid == 44)
+    if (card_id == 44)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 60;
@@ -1177,7 +1177,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"bat"s;
         return 1;
     }
-    if (dbid == 45)
+    if (card_id == 45)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1186,7 +1186,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"ent"s;
         return 1;
     }
-    if (dbid == 46)
+    if (card_id == 46)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1195,7 +1195,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"ent"s;
         return 1;
     }
-    if (dbid == 47)
+    if (card_id == 47)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 60;
@@ -1204,7 +1204,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"lich"s;
         return 1;
     }
-    if (dbid == 48)
+    if (card_id == 48)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -1213,7 +1213,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"lich"s;
         return 1;
     }
-    if (dbid == 49)
+    if (card_id == 49)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -1222,7 +1222,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"lich"s;
         return 1;
     }
-    if (dbid == 307)
+    if (card_id == 307)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 10;
@@ -1231,7 +1231,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"lich"s;
         return 1;
     }
-    if (dbid == 308)
+    if (card_id == 308)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 10;
@@ -1240,7 +1240,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"lich"s;
         return 1;
     }
-    if (dbid == 50)
+    if (card_id == 50)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 80;
@@ -1249,7 +1249,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hound"s;
         return 1;
     }
-    if (dbid == 51)
+    if (card_id == 51)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 70;
@@ -1258,7 +1258,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hound"s;
         return 1;
     }
-    if (dbid == 52)
+    if (card_id == 52)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 70;
@@ -1267,7 +1267,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hound"s;
         return 1;
     }
-    if (dbid == 53)
+    if (card_id == 53)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 70;
@@ -1276,7 +1276,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hound"s;
         return 1;
     }
-    if (dbid == 54)
+    if (card_id == 54)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 70;
@@ -1285,7 +1285,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hound"s;
         return 1;
     }
-    if (dbid == 55)
+    if (card_id == 55)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -1294,7 +1294,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hound"s;
         return 1;
     }
-    if (dbid == 56)
+    if (card_id == 56)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -1303,7 +1303,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hound"s;
         return 1;
     }
-    if (dbid == 57)
+    if (card_id == 57)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -1312,7 +1312,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hound"s;
         return 1;
     }
-    if (dbid == 58)
+    if (card_id == 58)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -1321,7 +1321,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hound"s;
         return 1;
     }
-    if (dbid == 59)
+    if (card_id == 59)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -1330,7 +1330,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hound"s;
         return 1;
     }
-    if (dbid == 60)
+    if (card_id == 60)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -1339,7 +1339,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hound"s;
         return 1;
     }
-    if (dbid == 61)
+    if (card_id == 61)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1348,7 +1348,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"rabbit"s;
         return 1;
     }
-    if (dbid == 62)
+    if (card_id == 62)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1357,7 +1357,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"rabbit"s;
         return 1;
     }
-    if (dbid == 63)
+    if (card_id == 63)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1366,7 +1366,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"ghost"s;
         return 1;
     }
-    if (dbid == 64)
+    if (card_id == 64)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 70;
@@ -1375,7 +1375,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"ghost"s;
         return 1;
     }
-    if (dbid == 312)
+    if (card_id == 312)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -1384,7 +1384,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"ent"s;
         return 1;
     }
-    if (dbid == 313)
+    if (card_id == 313)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -1393,7 +1393,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"ent"s;
         return 1;
     }
-    if (dbid == 65)
+    if (card_id == 65)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1402,7 +1402,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"spirit"s;
         return 1;
     }
-    if (dbid == 66)
+    if (card_id == 66)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1411,7 +1411,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"spirit"s;
         return 1;
     }
-    if (dbid == 67)
+    if (card_id == 67)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 80;
@@ -1420,7 +1420,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"eye"s;
         return 1;
     }
-    if (dbid == 315)
+    if (card_id == 315)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 60;
@@ -1429,7 +1429,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"eye"s;
         return 1;
     }
-    if (dbid == 316)
+    if (card_id == 316)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 60;
@@ -1438,7 +1438,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"eye"s;
         return 1;
     }
-    if (dbid == 314)
+    if (card_id == 314)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 60;
@@ -1447,7 +1447,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"eye"s;
         return 1;
     }
-    if (dbid == 68)
+    if (card_id == 68)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -1456,7 +1456,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"wyvern"s;
         return 1;
     }
-    if (dbid == 78)
+    if (card_id == 78)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1465,7 +1465,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"eulderna"s;
         return 1;
     }
-    if (dbid == 81)
+    if (card_id == 81)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1474,7 +1474,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"wasp"s;
         return 1;
     }
-    if (dbid == 82)
+    if (card_id == 82)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1483,7 +1483,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"wasp"s;
         return 1;
     }
-    if (dbid == 83)
+    if (card_id == 83)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 60;
@@ -1492,7 +1492,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"giant"s;
         return 1;
     }
-    if (dbid == 84)
+    if (card_id == 84)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -1501,7 +1501,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"giant"s;
         return 1;
     }
-    if (dbid == 85)
+    if (card_id == 85)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1510,7 +1510,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"imp"s;
         return 1;
     }
-    if (dbid == 86)
+    if (card_id == 86)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1519,7 +1519,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"imp"s;
         return 1;
     }
-    if (dbid == 87)
+    if (card_id == 87)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1528,7 +1528,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"imp"s;
         return 1;
     }
-    if (dbid == 88)
+    if (card_id == 88)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1537,7 +1537,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hand"s;
         return 1;
     }
-    if (dbid == 89)
+    if (card_id == 89)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1546,7 +1546,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hand"s;
         return 1;
     }
-    if (dbid == 90)
+    if (card_id == 90)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1555,7 +1555,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hand"s;
         return 1;
     }
-    if (dbid == 91)
+    if (card_id == 91)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1564,7 +1564,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"ghost"s;
         return 1;
     }
-    if (dbid == 92)
+    if (card_id == 92)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1573,7 +1573,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"ghost"s;
         return 1;
     }
-    if (dbid == 93)
+    if (card_id == 93)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1582,7 +1582,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"mandrake"s;
         return 1;
     }
-    if (dbid == 94)
+    if (card_id == 94)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1591,7 +1591,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"mandrake"s;
         return 1;
     }
-    if (dbid == 95)
+    if (card_id == 95)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1600,7 +1600,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"snake"s;
         return 1;
     }
-    if (dbid == 96)
+    if (card_id == 96)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1609,7 +1609,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"snake"s;
         return 1;
     }
-    if (dbid == 97)
+    if (card_id == 97)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1618,7 +1618,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"drake"s;
         return 1;
     }
-    if (dbid == 98)
+    if (card_id == 98)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1627,7 +1627,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"drake"s;
         return 1;
     }
-    if (dbid == 99)
+    if (card_id == 99)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1636,7 +1636,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"zombie"s;
         return 1;
     }
-    if (dbid == 100)
+    if (card_id == 100)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1645,7 +1645,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"zombie"s;
         return 1;
     }
-    if (dbid == 101)
+    if (card_id == 101)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1654,7 +1654,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"zombie"s;
         return 1;
     }
-    if (dbid == 257)
+    if (card_id == 257)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1663,7 +1663,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"zombie"s;
         return 1;
     }
-    if (dbid == 254)
+    if (card_id == 254)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -1672,7 +1672,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"zombie"s;
         return 1;
     }
-    if (dbid == 102)
+    if (card_id == 102)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1681,7 +1681,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"goblin"s;
         return 1;
     }
-    if (dbid == 103)
+    if (card_id == 103)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1690,7 +1690,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"goblin"s;
         return 1;
     }
-    if (dbid == 104)
+    if (card_id == 104)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1699,7 +1699,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"goblin"s;
         return 1;
     }
-    if (dbid == 105)
+    if (card_id == 105)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1708,7 +1708,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"goblin"s;
         return 1;
     }
-    if (dbid == 106)
+    if (card_id == 106)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1717,7 +1717,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"ghost"s;
         return 1;
     }
-    if (dbid == 107)
+    if (card_id == 107)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1726,7 +1726,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"ghost"s;
         return 1;
     }
-    if (dbid == 108)
+    if (card_id == 108)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1735,7 +1735,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"bear"s;
         return 1;
     }
-    if (dbid == 109)
+    if (card_id == 109)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1744,7 +1744,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"bear"s;
         return 1;
     }
-    if (dbid == 344)
+    if (card_id == 344)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -1753,7 +1753,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"bear"s;
         return 1;
     }
-    if (dbid == 110)
+    if (card_id == 110)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -1762,7 +1762,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"armor"s;
         return 1;
     }
-    if (dbid == 111)
+    if (card_id == 111)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 30;
@@ -1771,7 +1771,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"armor"s;
         return 1;
     }
-    if (dbid == 112)
+    if (card_id == 112)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 30;
@@ -1780,7 +1780,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"armor"s;
         return 1;
     }
-    if (dbid == 113)
+    if (card_id == 113)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 30;
@@ -1789,7 +1789,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"armor"s;
         return 1;
     }
-    if (dbid == 114)
+    if (card_id == 114)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1798,7 +1798,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"medusa"s;
         return 1;
     }
-    if (dbid == 115)
+    if (card_id == 115)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1807,7 +1807,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"medusa"s;
         return 1;
     }
-    if (dbid == 116)
+    if (card_id == 116)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1816,7 +1816,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"medusa"s;
         return 1;
     }
-    if (dbid == 117)
+    if (card_id == 117)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1825,7 +1825,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"cupid"s;
         return 1;
     }
-    if (dbid == 118)
+    if (card_id == 118)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1834,7 +1834,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"phantom"s;
         return 1;
     }
-    if (dbid == 248)
+    if (card_id == 248)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -1843,7 +1843,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"dinosaur"s;
         return 1;
     }
-    if (dbid == 119)
+    if (card_id == 119)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1852,7 +1852,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"harpy"s;
         return 1;
     }
-    if (dbid == 120)
+    if (card_id == 120)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 30;
@@ -1861,7 +1861,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
-    if (dbid == 121)
+    if (card_id == 121)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 20;
@@ -1870,7 +1870,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
-    if (dbid == 122)
+    if (card_id == 122)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 20;
@@ -1879,7 +1879,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
-    if (dbid == 123)
+    if (card_id == 123)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 20;
@@ -1888,7 +1888,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
-    if (dbid == 124)
+    if (card_id == 124)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 10;
@@ -1897,7 +1897,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
-    if (dbid == 125)
+    if (card_id == 125)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 10;
@@ -1906,7 +1906,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"dragon"s;
         return 1;
     }
-    if (dbid == 126)
+    if (card_id == 126)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -1915,7 +1915,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"cerberus"s;
         return 1;
     }
-    if (dbid == 255)
+    if (card_id == 255)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1924,7 +1924,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"centipede"s;
         return 1;
     }
-    if (dbid == 256)
+    if (card_id == 256)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1933,7 +1933,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"centipede"s;
         return 1;
     }
-    if (dbid == 127)
+    if (card_id == 127)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1942,7 +1942,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"spider"s;
         return 1;
     }
-    if (dbid == 128)
+    if (card_id == 128)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1951,7 +1951,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"spider"s;
         return 1;
     }
-    if (dbid == 129)
+    if (card_id == 129)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1960,7 +1960,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"spider"s;
         return 1;
     }
-    if (dbid == 130)
+    if (card_id == 130)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1969,7 +1969,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"spider"s;
         return 1;
     }
-    if (dbid == 131)
+    if (card_id == 131)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -1978,7 +1978,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"spider"s;
         return 1;
     }
-    if (dbid == 132)
+    if (card_id == 132)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -1987,7 +1987,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"golem"s;
         return 1;
     }
-    if (dbid == 133)
+    if (card_id == 133)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -1996,7 +1996,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"golem"s;
         return 1;
     }
-    if (dbid == 134)
+    if (card_id == 134)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -2005,7 +2005,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"golem"s;
         return 1;
     }
-    if (dbid == 135)
+    if (card_id == 135)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 30;
@@ -2014,7 +2014,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"golem"s;
         return 1;
     }
-    if (dbid == 136)
+    if (card_id == 136)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 20;
@@ -2023,7 +2023,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"golem"s;
         return 1;
     }
-    if (dbid == 137)
+    if (card_id == 137)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 15;
@@ -2032,7 +2032,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"golem"s;
         return 1;
     }
-    if (dbid == 138)
+    if (card_id == 138)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 15;
@@ -2041,7 +2041,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"golem"s;
         return 1;
     }
-    if (dbid == 147)
+    if (card_id == 147)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2050,7 +2050,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"crab"s;
         return 1;
     }
-    if (dbid == 148)
+    if (card_id == 148)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2059,7 +2059,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"centipede"s;
         return 1;
     }
-    if (dbid == 149)
+    if (card_id == 149)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2068,7 +2068,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"goblin"s;
         return 1;
     }
-    if (dbid == 150)
+    if (card_id == 150)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2077,7 +2077,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"skeleton"s;
         return 1;
     }
-    if (dbid == 151)
+    if (card_id == 151)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2086,7 +2086,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"skeleton"s;
         return 1;
     }
-    if (dbid == 152)
+    if (card_id == 152)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2095,7 +2095,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"eulderna"s;
         return 1;
     }
-    if (dbid == 153)
+    if (card_id == 153)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2104,7 +2104,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"piece"s;
         return 1;
     }
-    if (dbid == 154)
+    if (card_id == 154)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2113,7 +2113,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"piece"s;
         return 1;
     }
-    if (dbid == 155)
+    if (card_id == 155)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2122,7 +2122,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"piece"s;
         return 1;
     }
-    if (dbid == 156)
+    if (card_id == 156)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2131,7 +2131,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"piece"s;
         return 1;
     }
-    if (dbid == 157)
+    if (card_id == 157)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2140,7 +2140,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"piece"s;
         return 1;
     }
-    if (dbid == 158)
+    if (card_id == 158)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2149,7 +2149,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"piece"s;
         return 1;
     }
-    if (dbid == 159)
+    if (card_id == 159)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 25;
@@ -2158,7 +2158,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 160)
+    if (card_id == 160)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 25;
@@ -2167,7 +2167,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 161)
+    if (card_id == 161)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 25;
@@ -2176,7 +2176,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 302)
+    if (card_id == 302)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 25;
@@ -2185,7 +2185,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 303)
+    if (card_id == 303)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 25;
@@ -2194,7 +2194,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 304)
+    if (card_id == 304)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 25;
@@ -2203,7 +2203,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 305)
+    if (card_id == 305)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 25;
@@ -2212,7 +2212,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 162)
+    if (card_id == 162)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2221,7 +2221,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 234)
+    if (card_id == 234)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2230,7 +2230,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 231)
+    if (card_id == 231)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2239,7 +2239,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 232)
+    if (card_id == 232)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2248,7 +2248,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 233)
+    if (card_id == 233)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2257,7 +2257,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 235)
+    if (card_id == 235)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2266,7 +2266,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 163)
+    if (card_id == 163)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2275,7 +2275,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 164)
+    if (card_id == 164)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2284,7 +2284,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"cat"s;
         return 1;
     }
-    if (dbid == 246)
+    if (card_id == 246)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 1;
@@ -2293,7 +2293,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"cat"s;
         return 1;
     }
-    if (dbid == 332)
+    if (card_id == 332)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 10;
@@ -2302,7 +2302,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"cat"s;
         return 1;
     }
-    if (dbid == 229)
+    if (card_id == 229)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2311,7 +2311,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"cat"s;
         return 1;
     }
-    if (dbid == 230)
+    if (card_id == 230)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2320,7 +2320,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"catgod"s;
         return 1;
     }
-    if (dbid == 228)
+    if (card_id == 228)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2329,7 +2329,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"cat"s;
         return 1;
     }
-    if (dbid == 165)
+    if (card_id == 165)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2338,7 +2338,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"dog"s;
         return 1;
     }
-    if (dbid == 225)
+    if (card_id == 225)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2347,7 +2347,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"dog"s;
         return 1;
     }
-    if (dbid == 226)
+    if (card_id == 226)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2356,7 +2356,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"roran"s;
         return 1;
     }
-    if (dbid == 227)
+    if (card_id == 227)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2365,7 +2365,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 166)
+    if (card_id == 166)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2374,7 +2374,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"roran"s;
         return 1;
     }
-    if (dbid == 167)
+    if (card_id == 167)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2383,7 +2383,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"rat"s;
         return 1;
     }
-    if (dbid == 168)
+    if (card_id == 168)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2392,7 +2392,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"shell"s;
         return 1;
     }
-    if (dbid == 170)
+    if (card_id == 170)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2401,7 +2401,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 175)
+    if (card_id == 175)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2410,7 +2410,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"catgod"s;
         return 1;
     }
-    if (dbid == 176)
+    if (card_id == 176)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2419,7 +2419,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"roran"s;
         return 1;
     }
-    if (dbid == 249)
+    if (card_id == 249)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2428,7 +2428,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"roran"s;
         return 1;
     }
-    if (dbid == 210)
+    if (card_id == 210)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2437,7 +2437,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"catsister"s;
         return 1;
     }
-    if (dbid == 211)
+    if (card_id == 211)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2446,7 +2446,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"roran"s;
         return 1;
     }
-    if (dbid == 177)
+    if (card_id == 177)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2455,7 +2455,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"machinegod"s;
         return 1;
     }
-    if (dbid == 178)
+    if (card_id == 178)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2464,7 +2464,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"undeadgod"s;
         return 1;
     }
-    if (dbid == 179)
+    if (card_id == 179)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2473,7 +2473,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 208)
+    if (card_id == 208)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2482,7 +2482,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"dwarf"s;
         return 1;
     }
-    if (dbid == 209)
+    if (card_id == 209)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2491,7 +2491,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"dwarf"s;
         return 1;
     }
-    if (dbid == 180)
+    if (card_id == 180)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2500,7 +2500,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"cat"s;
         return 1;
     }
-    if (dbid == 181)
+    if (card_id == 181)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2509,7 +2509,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"hound"s;
         return 1;
     }
-    if (dbid == 182)
+    if (card_id == 182)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2518,7 +2518,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 183)
+    if (card_id == 183)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 20;
@@ -2527,7 +2527,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 184)
+    if (card_id == 184)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -2536,7 +2536,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 185)
+    if (card_id == 185)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2545,7 +2545,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 350)
+    if (card_id == 350)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2554,7 +2554,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 186)
+    if (card_id == 186)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2563,7 +2563,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"machine"s;
         return 1;
     }
-    if (dbid == 187)
+    if (card_id == 187)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2572,7 +2572,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"machine"s;
         return 1;
     }
-    if (dbid == 188)
+    if (card_id == 188)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2581,7 +2581,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"machine"s;
         return 1;
     }
-    if (dbid == 345)
+    if (card_id == 345)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2590,7 +2590,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"bike"s;
         return 1;
     }
-    if (dbid == 346)
+    if (card_id == 346)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 5;
@@ -2599,7 +2599,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"bike"s;
         return 1;
     }
-    if (dbid == 341)
+    if (card_id == 341)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 25;
@@ -2608,7 +2608,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"machine"s;
         return 1;
     }
-    if (dbid == 258)
+    if (card_id == 258)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -2617,7 +2617,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"machine"s;
         return 1;
     }
-    if (dbid == 189)
+    if (card_id == 189)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 60;
@@ -2626,7 +2626,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"eye"s;
         return 1;
     }
-    if (dbid == 190)
+    if (card_id == 190)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 60;
@@ -2635,7 +2635,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"eye"s;
         return 1;
     }
-    if (dbid == 191)
+    if (card_id == 191)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -2644,7 +2644,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"wisp"s;
         return 1;
     }
-    if (dbid == 192)
+    if (card_id == 192)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2653,7 +2653,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"crab"s;
         return 1;
     }
-    if (dbid == 193)
+    if (card_id == 193)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 70;
@@ -2662,7 +2662,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"crab"s;
         return 1;
     }
-    if (dbid == 195)
+    if (card_id == 195)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 30;
@@ -2671,7 +2671,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"chicken"s;
         return 1;
     }
-    if (dbid == 196)
+    if (card_id == 196)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 60;
@@ -2680,7 +2680,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"mandrake"s;
         return 1;
     }
-    if (dbid == 201)
+    if (card_id == 201)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 20;
@@ -2689,7 +2689,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"mandrake"s;
         return 1;
     }
-    if (dbid == 197)
+    if (card_id == 197)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 60;
@@ -2698,7 +2698,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"mandrake"s;
         return 1;
     }
-    if (dbid == 198)
+    if (card_id == 198)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 60;
@@ -2707,7 +2707,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"mandrake"s;
         return 1;
     }
-    if (dbid == 199)
+    if (card_id == 199)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 30;
@@ -2716,7 +2716,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"stalker"s;
         return 1;
     }
-    if (dbid == 200)
+    if (card_id == 200)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 30;
@@ -2725,7 +2725,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"stalker"s;
         return 1;
     }
-    if (dbid == 202)
+    if (card_id == 202)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2734,7 +2734,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"giant"s;
         return 1;
     }
-    if (dbid == 203)
+    if (card_id == 203)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2743,7 +2743,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 205)
+    if (card_id == 205)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2752,7 +2752,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 207)
+    if (card_id == 207)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2761,7 +2761,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"giant"s;
         return 1;
     }
-    if (dbid == 212)
+    if (card_id == 212)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2770,7 +2770,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 213)
+    if (card_id == 213)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2779,7 +2779,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"roran"s;
         return 1;
     }
-    if (dbid == 221)
+    if (card_id == 221)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2788,7 +2788,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"roran"s;
         return 1;
     }
-    if (dbid == 222)
+    if (card_id == 222)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2797,7 +2797,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"roran"s;
         return 1;
     }
-    if (dbid == 223)
+    if (card_id == 223)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2806,7 +2806,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 224)
+    if (card_id == 224)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2815,7 +2815,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 243)
+    if (card_id == 243)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2824,7 +2824,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 247)
+    if (card_id == 247)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2833,7 +2833,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 252)
+    if (card_id == 252)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2842,7 +2842,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 253)
+    if (card_id == 253)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2851,7 +2851,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 259)
+    if (card_id == 259)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2860,7 +2860,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 301)
+    if (card_id == 301)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -2869,7 +2869,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 214)
+    if (card_id == 214)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 30;
@@ -2878,7 +2878,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 215)
+    if (card_id == 215)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 30;
@@ -2887,7 +2887,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 217)
+    if (card_id == 217)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 30;
@@ -2896,7 +2896,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 216)
+    if (card_id == 216)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 20;
@@ -2905,7 +2905,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yith"s;
         return 1;
     }
-    if (dbid == 218)
+    if (card_id == 218)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -2914,7 +2914,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yith"s;
         return 1;
     }
-    if (dbid == 219)
+    if (card_id == 219)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 80;
@@ -2923,7 +2923,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"orc"s;
         return 1;
     }
-    if (dbid == 220)
+    if (card_id == 220)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 30;
@@ -2932,7 +2932,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yith"s;
         return 1;
     }
-    if (dbid == 250)
+    if (card_id == 250)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -2941,7 +2941,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"fairy"s;
         return 1;
     }
-    if (dbid == 260)
+    if (card_id == 260)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -2950,7 +2950,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"servant"s;
         return 1;
     }
-    if (dbid == 261)
+    if (card_id == 261)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -2959,7 +2959,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"servant"s;
         return 1;
     }
-    if (dbid == 262)
+    if (card_id == 262)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -2968,7 +2968,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"servant"s;
         return 1;
     }
-    if (dbid == 263)
+    if (card_id == 263)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -2977,7 +2977,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"servant"s;
         return 1;
     }
-    if (dbid == 264)
+    if (card_id == 264)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -2986,7 +2986,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"servant"s;
         return 1;
     }
-    if (dbid == 265)
+    if (card_id == 265)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -2995,7 +2995,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"servant"s;
         return 1;
     }
-    if (dbid == 266)
+    if (card_id == 266)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -3004,7 +3004,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"servant"s;
         return 1;
     }
-    if (dbid == 267)
+    if (card_id == 267)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 10;
@@ -3013,7 +3013,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"horse"s;
         return 1;
     }
-    if (dbid == 276)
+    if (card_id == 276)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 10;
@@ -3022,7 +3022,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"horse"s;
         return 1;
     }
-    if (dbid == 275)
+    if (card_id == 275)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 10;
@@ -3031,7 +3031,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"horse"s;
         return 1;
     }
-    if (dbid == 268)
+    if (card_id == 268)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 10;
@@ -3040,7 +3040,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"horse"s;
         return 1;
     }
-    if (dbid == 277)
+    if (card_id == 277)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 10;
@@ -3049,7 +3049,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"horse"s;
         return 1;
     }
-    if (dbid == 278)
+    if (card_id == 278)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 70;
@@ -3058,7 +3058,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"mutant"s;
         return 1;
     }
-    if (dbid == 279)
+    if (card_id == 279)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -3067,7 +3067,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"yerles"s;
         return 1;
     }
-    if (dbid == 280)
+    if (card_id == 280)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -3076,7 +3076,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 288)
+    if (card_id == 288)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -3085,7 +3085,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 290)
+    if (card_id == 290)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -3094,7 +3094,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 292)
+    if (card_id == 292)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -3103,7 +3103,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 294)
+    if (card_id == 294)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -3112,7 +3112,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 291)
+    if (card_id == 291)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -3121,7 +3121,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 297)
+    if (card_id == 297)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 100;
@@ -3130,7 +3130,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"norland"s;
         return 1;
     }
-    if (dbid == 317)
+    if (card_id == 317)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -3139,7 +3139,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"roran"s;
         return 1;
     }
-    if (dbid == 318)
+    if (card_id == 318)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -3148,7 +3148,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"machinegod"s;
         return 1;
     }
-    if (dbid == 319)
+    if (card_id == 319)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -3157,7 +3157,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"mutant"s;
         return 1;
     }
-    if (dbid == 322)
+    if (card_id == 322)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -3166,7 +3166,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"roran"s;
         return 1;
     }
-    if (dbid == 334)
+    if (card_id == 334)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 50;
@@ -3175,7 +3175,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"juere"s;
         return 1;
     }
-    if (dbid == 323)
+    if (card_id == 323)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 10;
@@ -3184,7 +3184,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"ghost"s;
         return 1;
     }
-    if (dbid == 324)
+    if (card_id == 324)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 15;
@@ -3193,7 +3193,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"quickling"s;
         return 1;
     }
-    if (dbid == 325)
+    if (card_id == 325)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 15;
@@ -3202,7 +3202,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"quickling"s;
         return 1;
     }
-    if (dbid == 328)
+    if (card_id == 328)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 2;
@@ -3211,7 +3211,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"metal"s;
         return 1;
     }
-    if (dbid == 329)
+    if (card_id == 329)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 5;
@@ -3220,7 +3220,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"metal"s;
         return 1;
     }
-    if (dbid == 330)
+    if (card_id == 330)
     {
         card_info.cardreftype = 0;
         card_info.cardrefrare = 40;
@@ -3229,7 +3229,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = u8"dinosaur"s;
         return 1;
     }
-    if (dbid == 502)
+    if (card_id == 502)
     {
         card_info.cardreftype = 30;
         card_info.cardrefdomain = 1;
@@ -3239,7 +3239,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = "";
         return 1;
     }
-    if (dbid == 503)
+    if (card_id == 503)
     {
         card_info.cardreftype = 30;
         card_info.cardrefdomain = 1;
@@ -3249,7 +3249,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = "";
         return 1;
     }
-    if (dbid == 500)
+    if (card_id == 500)
     {
         card_info.cardreftype = 30;
         card_info.cardrefdomain = 0;
@@ -3259,7 +3259,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = "";
         return 1;
     }
-    if (dbid == 501)
+    if (card_id == 501)
     {
         card_info.cardreftype = 30;
         card_info.cardrefdomain = 0;
@@ -3269,7 +3269,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = "";
         return 1;
     }
-    if (dbid == 504)
+    if (card_id == 504)
     {
         card_info.cardreftype = 30;
         card_info.cardrefdomain = 2;
@@ -3279,7 +3279,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = "";
         return 1;
     }
-    if (dbid == 505)
+    if (card_id == 505)
     {
         card_info.cardreftype = 30;
         card_info.cardrefdomain = 2;
@@ -3289,7 +3289,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = "";
         return 1;
     }
-    if (dbid == 506)
+    if (card_id == 506)
     {
         card_info.cardreftype = 30;
         card_info.cardrefdomain = 3;
@@ -3299,7 +3299,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = "";
         return 1;
     }
-    if (dbid == 507)
+    if (card_id == 507)
     {
         card_info.cardreftype = 30;
         card_info.cardrefdomain = 3;
@@ -3309,7 +3309,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = "";
         return 1;
     }
-    if (dbid == 508)
+    if (card_id == 508)
     {
         card_info.cardreftype = 20;
         card_info.cardrefskill = 2;
@@ -3320,7 +3320,7 @@ int get_card_info(int dbid, CardInfo& card_info)
         card_info.cardrefrace = "";
         return 1;
     }
-    if (dbid == 509)
+    if (card_id == 509)
     {
         card_info.cardreftype = 20;
         card_info.cardrefskill = 3;

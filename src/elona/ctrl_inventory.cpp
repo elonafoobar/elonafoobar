@@ -502,8 +502,8 @@ void make_item_list(int& mainweapon, int citrade)
             }
             if (invctrl == 19)
             {
-                dbid = itemid2int(item.id);
-                bool is_offerable = item_db_is_offerable(inv[ci], dbid);
+                bool is_offerable =
+                    item_db_is_offerable(inv[ci], itemid2int(item.id));
                 if (is_offerable == 0)
                 {
                     continue;

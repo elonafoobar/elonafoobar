@@ -2597,8 +2597,7 @@ bool _magic_630_1129()
         MenuResult result = ctrl_inventory();
         if (result.succeeded)
         {
-            dbid = itemid2int(inv[ci].id);
-            item_db_get_charge_level(inv[ci], dbid);
+            item_db_get_charge_level(inv[ci], itemid2int(inv[ci].id));
             if (ichargelevel < 1 || inv[ci].id == ItemId::rod_of_wishing ||
                 inv[ci].id == ItemId::rod_of_domination ||
                 inv[ci].id == ItemId::spellbook_of_wishing ||
@@ -2688,8 +2687,7 @@ bool _magic_629()
         MenuResult result = ctrl_inventory();
         if (result.succeeded)
         {
-            dbid = itemid2int(inv[ci].id);
-            item_db_get_charge_level(inv[ci], dbid);
+            item_db_get_charge_level(inv[ci], itemid2int(inv[ci].id));
             for (int cnt = 0; cnt < 1; ++cnt)
             {
                 if (ichargelevel == 1)
@@ -3379,25 +3377,25 @@ bool _magic_464()
     {
         snd("core.pray1");
         flt(calcobjlv(efp / 10), calcfixlv(Quality::good));
-        dbid = 54;
+        int item_id = 54;
         int number = 400 + rnd_capped(efp);
         if (rnd(30) == 0)
         {
-            dbid = 55;
+            item_id = 55;
             number = 1;
         }
         if (rnd(80) == 0)
         {
-            dbid = 622;
+            item_id = 622;
             number = 1;
         }
         if (rnd(2000) == 0)
         {
-            dbid = 290;
+            item_id = 290;
             number = 1;
         }
         nostack = 1;
-        itemcreate_extra_inv(dbid, cdata[cc].position, number);
+        itemcreate_extra_inv(item_id, cdata[cc].position, number);
         const auto message = i18n::s.get("core.magic.wizards_harvest", inv[ci]);
         if (fastest)
         {
@@ -4155,7 +4153,7 @@ optional<bool> _proc_general_magic()
         for (int cnt = 0, cnt_end = (1 + rnd(p(0))); cnt < cnt_end; ++cnt)
         {
             flt(calcobjlv(efp), Quality::good);
-            dbid = 0;
+            int chara_id = 0;
             if (efid == 425)
             {
                 fltn(u8"wild"s);
@@ -4178,10 +4176,10 @@ optional<bool> _proc_general_magic()
             }
             if (efid == 643)
             {
-                dbid = 176;
+                chara_id = 176;
             }
             const auto success = chara_create(
-                -1, dbid, cdata[tc].position.x, cdata[tc].position.y);
+                -1, chara_id, cdata[tc].position.x, cdata[tc].position.y);
             if (success && efid != 643)
             {
                 if (cdata[rc].id == cdata[cc].id)

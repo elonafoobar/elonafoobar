@@ -1422,8 +1422,7 @@ optional<TurnResult> pc_turn_advance_time()
             the_item_db[itemid2int(item.id)]->category == 52000)
         {
             ci = item.index;
-            dbid = itemid2int(item.id);
-            item_db_on_drink(item, dbid);
+            item_db_on_drink(item, itemid2int(item.id));
         }
     }
     if (trait(214) != 0 && rnd(250) == 0 &&

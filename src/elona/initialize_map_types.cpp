@@ -1043,7 +1043,6 @@ static void _init_map_derphy_town()
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        dbid = 0;
         map_set_chara_generation_filter();
         chara_create(-1, dbid, -3, 0);
     }
@@ -1261,7 +1260,6 @@ static void _init_map_palmia()
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 25; ++cnt)
     {
-        dbid = 0;
         map_set_chara_generation_filter();
         chara_create(-1, dbid, -3, 0);
     }
@@ -1380,7 +1378,6 @@ static void _init_map_lumiest_town()
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 25; ++cnt)
     {
-        dbid = 0;
         map_set_chara_generation_filter();
         chara_create(-1, dbid, -3, 0);
     }
@@ -1555,7 +1552,6 @@ static void _init_map_yowyn_town()
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 15; ++cnt)
     {
-        dbid = 0;
         map_set_chara_generation_filter();
         chara_create(-1, dbid, -3, 0);
     }
@@ -1752,7 +1748,6 @@ static void _init_map_noyel()
     }
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        dbid = 0;
         map_set_chara_generation_filter();
         chara_create(-1, dbid, rnd(55), rnd(map_data.height));
     }
@@ -2083,7 +2078,6 @@ static void _init_map_vernis_town()
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 25; ++cnt)
     {
-        dbid = 0;
         map_set_chara_generation_filter();
         chara_create(-1, dbid, -3, 0);
     }

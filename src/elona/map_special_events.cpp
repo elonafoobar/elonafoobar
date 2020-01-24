@@ -48,20 +48,20 @@ static void _map_events_quest_party()
         if (game_data.crowd_density <
             game_data.left_minutes_of_executing_quest / 60)
         {
-            dbid = 0;
+            int chara_id = 0;
             if (rnd(4) == 0)
             {
-                dbid = 204;
+                chara_id = 204;
             }
             if (rnd(10) == 0)
             {
-                dbid = 185;
+                chara_id = 185;
             }
-            if (dbid != 0)
+            if (chara_id != 0)
             {
                 flt();
                 objlv = 1;
-                int stat = chara_create(-1, dbid, -3, 0);
+                int stat = chara_create(-1, chara_id, -3, 0);
                 if (stat != 0)
                 {
                     cdata[rc].relationship = -1;

@@ -42,7 +42,7 @@ int calculate_original_value(const Item& ci)
 namespace elona
 {
 
-optional_ref<Item> do_create_item(int, int, int);
+optional_ref<Item> do_create_item(int, int, int, int);
 
 
 
@@ -52,9 +52,8 @@ optional_ref<Item> itemcreate(int slot, int id, int x, int y, int number)
     {
         flttypemajor = 0;
     }
-    dbid = id == 0 ? -1 : id;
     initnum = number;
-    return do_create_item(slot, x, y);
+    return do_create_item(id == 0 ? -1 : id, slot, x, y);
 }
 
 
@@ -94,7 +93,7 @@ optional_ref<Item> itemcreate_extra_inv(int id, const Position& pos, int number)
 
 
 
-void get_random_item_id()
+int get_random_item_id()
 {
     WeightedRandomSampler<int> sampler;
 
@@ -131,12 +130,12 @@ void get_random_item_id()
                 1);
     }
 
-    dbid = sampler.get().value_or(25);
+    return sampler.get().value_or(25);
 }
 
 
 
-optional_ref<Item> do_create_item(int slot, int x, int y)
+optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
 {
     if ((slot == 0 || slot == -1) && fixlv < Quality::godly)
     {
@@ -215,7 +214,7 @@ optional_ref<Item> do_create_item(int slot, int x, int y)
             return none;
     }
 
-    if (dbid == -1)
+    if (item_id == -1)
     {
         if (fltselect == 0 && mode != 6)
         {
@@ -234,8 +233,8 @@ optional_ref<Item> do_create_item(int slot, int x, int y)
                 }
             }
         }
-        get_random_item_id();
-        if (dbid == 25)
+        item_id = get_random_item_id();
+        if (item_id == 25)
         {
             if (fltselect == 2)
             {
@@ -243,17 +242,17 @@ optional_ref<Item> do_create_item(int slot, int x, int y)
             }
             objlv += 10;
             fltselect = 0;
-            get_random_item_id();
+            item_id = get_random_item_id();
         }
     }
 
-    if (dbid == 25 && flttypemajor == 60002)
+    if (item_id == 25 && flttypemajor == 60002)
     {
-        dbid = 501;
+        item_id = 501;
     }
 
-    item_db_set_full_stats(item, dbid);
-    item_db_get_charge_level(item, dbid);
+    item_db_set_full_stats(item, item_id);
+    item_db_get_charge_level(item, item_id);
 
     item.color = generate_color(
         the_item_db[itemid2int(item.id)]->color, itemid2int(item.id));
@@ -272,7 +271,7 @@ optional_ref<Item> do_create_item(int slot, int x, int y)
         item.param1 = 1;
     }
 
-    ++itemmemory(1, dbid);
+    ++itemmemory(1, item_id);
 
     item.quality = static_cast<Quality>(fixlv);
     if (fixlv == Quality::special && mode != 6 && nooracle == 0)
@@ -733,8 +732,7 @@ void change_item_material(Item& item, int material_id)
 
     const auto original_value = calculate_original_value(item);
 
-    dbid = itemid2int(item.id);
-    item_db_set_basic_stats(item, dbid);
+    item_db_set_basic_stats(item, itemid2int(item.id));
     item.value = original_value;
     if (material_id != 0)
     {

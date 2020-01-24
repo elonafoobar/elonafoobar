@@ -922,8 +922,7 @@ int calcitemvalue(const Item& item, int calc_mode)
     }
     if (item.has_charge())
     {
-        dbid = itemid2int(item.id);
-        item_db_get_charge_level(item, dbid);
+        item_db_get_charge_level(item, itemid2int(item.id));
         if (item.count < 0)
         {
             ret = ret / 10;
