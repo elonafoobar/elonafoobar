@@ -60,8 +60,10 @@
 namespace
 {
 
-void _set_pcc_info(Character& chara, int val0)
+std::string _set_pcc_info(Character& chara, int val0)
 {
+    std::string text;
+
     rtval = -2;
     if (page == 0)
     {
@@ -74,21 +76,21 @@ void _set_pcc_info(Character& chara, int val0)
             rtval(0) = 100;
             rtval(1) = 0;
             rtval(2) = -2;
-            rtvaln = chara.portrait;
+            text = chara.portrait;
         }
         if (val0 == 2)
         {
             rtval(0) = 1;
             rtval(1) = 0;
             rtval(2) = pcc(1, chara.index) % 1000;
-            rtvaln = u8"hair"s;
+            text = u8"hair"s;
         }
         if (val0 == 3)
         {
             rtval(0) = 10;
             rtval(1) = 0;
             rtval(2) = pcc(10, chara.index) % 1000;
-            rtvaln = u8"subhair"s;
+            text = u8"subhair"s;
         }
         if (val0 == 4)
         {
@@ -101,26 +103,26 @@ void _set_pcc_info(Character& chara, int val0)
             rtval(0) = 15;
             rtval(1) = 0;
             rtval(2) = pcc(15, chara.index) % 1000;
-            rtvaln = u8"body"s;
+            text = u8"body"s;
         }
         if (val0 == 6)
         {
             rtval(0) = 9;
             rtval(1) = 0;
             rtval(2) = pcc(9, chara.index) % 1000;
-            rtvaln = u8"cloth"s;
+            text = u8"cloth"s;
         }
         if (val0 == 7)
         {
             rtval(0) = 7;
             rtval(1) = 0;
             rtval(2) = pcc(7, chara.index) % 1000;
-            rtvaln = u8"pants"s;
+            text = u8"pants"s;
         }
         if (val0 == 8)
         {
             rtval = -1;
-            rtvaln = "";
+            text = "";
         }
         if (val0 == 9)
         {
@@ -135,7 +137,7 @@ void _set_pcc_info(Character& chara, int val0)
                 rtval(0) = 16;
                 rtval(1) = 0;
                 rtval(2) = pcc(16, chara.index) % 1000;
-                rtvaln = u8"ride"s;
+                text = u8"ride"s;
             }
         }
     }
@@ -164,35 +166,37 @@ void _set_pcc_info(Character& chara, int val0)
             rtval(0) = 11;
             rtval(1) = 0;
             rtval(2) = pcc(11, chara.index) % 1000;
-            rtvaln = u8"etc"s;
+            text = u8"etc"s;
         }
         if (val0 == 4)
         {
             rtval(0) = 12;
             rtval(1) = 0;
             rtval(2) = pcc(12, chara.index) % 1000;
-            rtvaln = u8"etc"s;
+            text = u8"etc"s;
         }
         if (val0 == 5)
         {
             rtval(0) = 13;
             rtval(1) = 0;
             rtval(2) = pcc(13, chara.index) % 1000;
-            rtvaln = u8"etc"s;
+            text = u8"etc"s;
         }
         if (val0 == 6)
         {
             rtval(0) = 14;
             rtval(1) = 0;
             rtval(2) = pcc(14, chara.index) % 1000;
-            rtvaln = u8"eye"s;
+            text = u8"eye"s;
         }
         if (val0 == 7)
         {
             rtval = -1;
-            rtvaln = "";
+            text = "";
         }
     }
+
+    return text;
 }
 
 } // namespace
@@ -815,7 +819,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
             {
                 break;
             }
-            _set_pcc_info(chara, cnt);
+            const auto text = _set_pcc_info(chara, cnt);
             s = listn(0, p);
             if (rtval >= 0)
             {
@@ -829,7 +833,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                 }
                 else
                 {
-                    s += " " + rtvaln;
+                    s += " " + text;
                 }
             }
             cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1);
@@ -845,7 +849,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
         }
         redraw();
         auto action = cursor_check_ex();
-        _set_pcc_info(chara, cs);
+        const auto text = _set_pcc_info(chara, cs);
         bool changed = false;
         if (rtval == -2)
         {
@@ -899,7 +903,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
             {
                 if (fs::exists(
                         filesystem::dirs::graphic() /
-                        (u8"pcc_"s + rtvaln + u8"_" +
+                        (u8"pcc_"s + text + u8"_" +
                          (pcc(rtval, chara.index) % 1000 + 1) + u8".bmp")))
                 {
                     ++pcc(rtval, chara.index);
@@ -931,7 +935,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                 if ((pcc(rtval, chara.index) % 1000 == 1 && rtval != 15) ||
                     fs::exists(
                         filesystem::dirs::graphic() /
-                        (u8"pcc_"s + rtvaln + u8"_"s +
+                        (u8"pcc_"s + text + u8"_"s +
                          (pcc(rtval, chara.index) % 1000 - 1) + u8".bmp"s)))
                 {
                     --pcc(rtval, chara.index);

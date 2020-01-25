@@ -26,7 +26,6 @@ int ch_at_tcg = 0;
 int th_at_tcg = 0;
 int ct_at_tcg = 0;
 elona_vector1<std::string> s_at_tcg;
-int cardrefbg = 0;
 elona_vector1<std::string> domname_at_tcg;
 elona_vector1<std::string> cdrefn_at_tcg;
 elona_vector2<int> clist_at_tcg;
@@ -217,7 +216,7 @@ std::string cnvrare(int rarity)
 
 
 
-int card_ref(int id, CardInfo& card_info)
+std::pair<int, std::string> card_ref(int id, CardInfo& card_info)
 {
     card_info.cardrefattack = 0;
     card_info.cardrefcost = 0;
@@ -230,18 +229,22 @@ int card_ref(int id, CardInfo& card_info)
     card_info.cardrefskillcost = 0;
     card_info.cardreftype = 0;
     card_info.cardrefrace = "";
+
     dbid = id;
     get_card_info(id, card_info);
+
     if (card_info.cardreftype == 0)
     {
         card_info.cardreftype = 10;
         card_info.cardrefdomain = 4;
     }
-    rtvaln = card_info.cardrefn;
+
+    int cardrefbg{};
+    std::string card_desc = card_info.cardrefn;
     if (card_info.cardreftype == 10)
     {
         cardrefbg = card_info.cardrefdomain;
-        rtvaln += " <" + i18n::s.get("core.tcg.card.creature") + ">  " +
+        card_desc += " <" + i18n::s.get("core.tcg.card.creature") + ">  " +
             i18n::s.get("core.tcg.card.race") + ":" + card_info.cardrefrace +
             u8"  Hp:"s + card_info.cardrefhp + u8"  Atk:"s +
             card_info.cardrefattack;
@@ -249,16 +252,16 @@ int card_ref(int id, CardInfo& card_info)
     if (card_info.cardreftype == 30)
     {
         cardrefbg = 6;
-        rtvaln += " <" + i18n::s.get("core.tcg.card.land") + ">";
+        card_desc += " <" + i18n::s.get("core.tcg.card.land") + ">";
     }
     if (card_info.cardreftype == 20)
     {
         cardrefbg = 5;
-        rtvaln += " <" + i18n::s.get("core.tcg.card.spell") + ">";
+        card_desc += " <" + i18n::s.get("core.tcg.card.spell") + ">";
     }
-    rtvaln += "  " + i18n::s.get("core.tcg.card.domain") + ":" +
+    card_desc += "  " + i18n::s.get("core.tcg.card.domain") + ":" +
         domname_at_tcg(card_info.cardrefdomain);
-    rtvaln += "  " + i18n::s.get("core.tcg.card.rare") + ":" +
+    card_desc += "  " + i18n::s.get("core.tcg.card.rare") + ":" +
         cnvrare(card_info.cardrefrare);
     if (card_info.cardrefskill != 0)
     {
@@ -269,9 +272,10 @@ int card_ref(int id, CardInfo& card_info)
         }
         s_at_tcg += cdrefn_at_tcg(card_info.cardrefskill);
         talk_conv(s_at_tcg, 95);
-        rtvaln += u8"\n"s + s_at_tcg;
+        card_desc += u8"\n"s + s_at_tcg;
     }
-    return dbid;
+
+    return std::make_pair(cardrefbg, card_desc);
 }
 
 
@@ -844,16 +848,16 @@ void efllistadd(
 int create_card(int card_index, int card_id)
 {
     CardInfo card_info;
-    int stat = card_ref(card_id, card_info);
-    card_at_tcg(18, card_index) = stat;
+    const auto bg_and_desc = card_ref(card_id, card_info);
+    card_at_tcg(18, card_index) = card_id;
     card_at_tcg(9, card_index) = card_info.cardreftype;
     card_at_tcg(10, card_index) = card_info.cardrefcost;
     card_at_tcg(16, card_index) = card_info.cardrefhp;
     card_at_tcg(11, card_index) = card_info.cardrefattack;
     card_at_tcg(13, card_index) = card_info.cardrefskill;
     card_at_tcg(17, card_index) = card_info.cardrefpic;
-    card_at_tcg(19, card_index) = cardrefbg;
-    carddetailn_at_tcg(card_index) = rtvaln;
+    card_at_tcg(19, card_index) = bg_and_desc.first;
+    carddetailn_at_tcg(card_index) = bg_and_desc.second;
     cardn_at_tcg(0, card_index) = card_info.cardrefrace;
     card_at_tcg(20, card_index) = card_info.cardrefskillcost;
     card_at_tcg(23, card_index) = card_info.cardrefdomain;
@@ -1254,10 +1258,10 @@ void saccard(int card_index, int player_index)
     }
     ++cpdata_at_tcg(6, player_index);
     ++cpdata_at_tcg(5, player_index);
+    int card_id = 500 + card_at_tcg(23, card_index) * 2 + rnd(2);
     CardInfo card_info;
-    int stat =
-        card_ref(500 + card_at_tcg(23, card_index) * 2 + rnd(2), card_info);
-    create_card(card_index, stat);
+    card_ref(card_id, card_info);
+    create_card(card_index, card_id);
     cdbitmod(1, card_index, 1);
     card_at_tcg(4, card_index) = landix_at_tcg(player_index) +
         landsum_at_tcg(player_index) *
@@ -1841,14 +1845,15 @@ void tcgmain()
         for (int cnt = 0; cnt < 30; ++cnt)
         {
             cc_at_tcg = rp_at_tcg * 40 + cnt;
+            int card_id = rnd(1000);
             CardInfo card_info;
-            int stat = card_ref(rnd(1000), card_info);
+            card_ref(card_id, card_info);
             if (card_info.cardrefcost == 0)
             {
                 --cnt;
                 continue;
             }
-            create_card(cc_at_tcg, stat);
+            create_card(cc_at_tcg, card_id);
             card_at_tcg(0, cc_at_tcg) = -1;
             card_at_tcg(1, cc_at_tcg) = rp_at_tcg;
         }

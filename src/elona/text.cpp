@@ -10,6 +10,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "map.hpp"
+#include "map_cell.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -2591,6 +2592,66 @@ std::string name(int cc)
         }
     }
     return cdatan(0, cc);
+}
+
+
+
+std::string txtitemoncell(int x, int y)
+{
+    const auto item_info = cell_itemoncell({x, y});
+    const auto number = item_info.first;
+    const auto item = item_info.second;
+
+    if (number <= 3)
+    {
+        std::string items_text;
+        if (cell_data.at(x, y).item_appearances_memory < 0)
+        {
+            std::array<int, 3> item_indice;
+            const auto i = -cell_data.at(x, y).item_appearances_memory;
+            item_indice[0] = i % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            item_indice[1] = i / 1000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            item_indice[2] = i / 1000000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            size_t counter{};
+            for (const auto& item_index : item_indice)
+            {
+                if (item_index == 6079)
+                {
+                    continue;
+                }
+                if (counter != 0)
+                {
+                    items_text += i18n::s.get("core.misc.and");
+                }
+                items_text += itemname(item_index);
+                ++counter;
+            }
+        }
+        else
+        {
+            items_text = itemname(item);
+        }
+        if (inv[item].own_state <= 0)
+        {
+            return i18n::s.get(
+                "core.action.move.item_on_cell.item", items_text);
+        }
+        else if (inv[item].own_state == 3)
+        {
+            return i18n::s.get(
+                "core.action.move.item_on_cell.building", items_text);
+        }
+        else
+        {
+            return i18n::s.get(
+                "core.action.move.item_on_cell.not_owned", items_text);
+        }
+    }
+    else
+    {
+        return i18n::s.get(
+            "core.action.move.item_on_cell.more_than_three", number);
+    }
 }
 
 } // namespace elona
