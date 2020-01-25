@@ -2,6 +2,7 @@
 
 #include <string>
 #include "../snail/window.hpp"
+#include "filesystem.hpp"
 #include "shared_id.hpp"
 
 
@@ -9,12 +10,46 @@
 namespace elona
 {
 
-/***
- * Loads config options that are marked to be loaded before the application
- * instance is initialized, like screen size. The config file is loaded from the
- * current profile.
- */
-void config_load_preinit_options();
+struct PreinitConfigOptions
+{
+public:
+    static PreinitConfigOptions from_file(const fs::path& path);
+
+    // for testing
+    static PreinitConfigOptions from_string(const std::string& str);
+    static PreinitConfigOptions from_stream(
+        std::istream& in,
+        const std::string& filepath);
+
+
+    snail::Window::FullscreenMode fullscreen() const noexcept
+    {
+        return _fullscreen;
+    }
+
+
+    const std::string& display_mode() const noexcept
+    {
+        return _display_mode;
+    }
+
+
+
+private:
+    snail::Window::FullscreenMode _fullscreen;
+    std::string _display_mode;
+
+
+    PreinitConfigOptions(
+        snail::Window::FullscreenMode fullscreen,
+        const std::string& display_mode)
+        : _fullscreen(fullscreen)
+        , _display_mode(display_mode)
+    {
+    }
+};
+
+
 
 void config_load_all_schema();
 

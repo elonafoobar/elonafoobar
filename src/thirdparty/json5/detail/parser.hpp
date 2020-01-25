@@ -48,7 +48,7 @@ private:
         case token_type::integer: return value{tok.get_integer()};
         case token_type::number: return value{tok.get_number()};
         case token_type::string: return value{tok.get_string()};
-        default: throw parse_error{tok, "any JSON5 value"};
+        default: throw parse_error(tok, "any JSON5 value");
         }
     }
 
@@ -62,8 +62,8 @@ private:
         {
             if (_ts.peek().type() == token_type::eof)
             {
-                throw parse_error{token{token_type::eof},
-                                  "any JSON5 value or ']'"};
+                throw parse_error(
+                    token{token_type::eof}, "any JSON5 value or ']'");
             }
             else if (_ts.peek().type() == token_type::bracket_right)
             {
@@ -80,7 +80,7 @@ private:
             }
             else if (delimiter.type() != token_type::comma)
             {
-                throw parse_error{delimiter, "']' or ','"};
+                throw parse_error(delimiter, "']' or ','");
             }
         }
         return array;
@@ -96,8 +96,8 @@ private:
         {
             if (_ts.peek().type() == token_type::eof)
             {
-                throw parse_error{token{token_type::eof},
-                                  "any JSON5 value or '}'"};
+                throw parse_error(
+                    token{token_type::eof}, "any JSON5 value or '}'");
             }
             else if (_ts.peek().type() == token_type::brace_right)
             {
@@ -109,7 +109,7 @@ private:
             const auto kv_separator = _ts.get();
             if (kv_separator.type() != token_type::colon)
             {
-                throw parse_error{kv_separator, "':'"};
+                throw parse_error(kv_separator, "':'");
             }
             const auto v = parse_value();
             object.emplace(k, v);
@@ -121,7 +121,7 @@ private:
             }
             else if (delimiter.type() != token_type::comma)
             {
-                throw parse_error{delimiter, "'}' or ','"};
+                throw parse_error(delimiter, "'}' or ','");
             }
         }
         return object;
@@ -141,8 +141,18 @@ private:
         case token_type::nan: return "NaN";
         case token_type::string:
         case token_type::identifier: return tok.get_string();
-        default: throw parse_error{tok, "string or identifier"};
+        default: throw parse_error(tok, "string or identifier");
         }
+    }
+
+
+
+    syntax_error parse_error(
+        const detail::token& actual_token,
+        const char* expected_token)
+    {
+        return syntax_error{std::string{"expect "} + expected_token +
+                            ", but actually " + actual_token.to_string()};
     }
 };
 

@@ -68,6 +68,28 @@ LuaEnv::~LuaEnv() = default;
 
 
 
+void LuaEnv::load_mods()
+{
+    const auto list = ModList::from_file(filesystem::files::mod_list());
+    const auto lock = ModLock{};
+    // const auto index = ModIndex::traverse(filesystem::dirs::mod());
+    const auto index = ModIndex{
+        {{"core", {ModIndex::IndexEntry{semver::Version{0, 2, 6}, {}}}}}};
+
+    ModVersionResolver resolver;
+    const auto resolve_result = resolver.resolve(list, lock, index);
+    if (resolve_result)
+    {
+        mod_mgr->load_mods(resolve_result.right());
+    }
+    else
+    {
+        throw std::runtime_error{resolve_result.left()};
+    }
+}
+
+
+
 void LuaEnv::clear()
 {
     for (auto&& item : inv.all())
@@ -92,14 +114,6 @@ void LuaEnv::clear()
     handle_mgr->clear_all_handles();
     // ConfigManager::clear() will be called elsewhere.
     lua_->collect_garbage();
-}
-
-
-
-void LuaEnv::reload()
-{
-    clear(); // Unload character/item handles while they're still available.
-    get_state()->set("_IS_TEST", g_config.is_test());
 }
 
 } // namespace lua

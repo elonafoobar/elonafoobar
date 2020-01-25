@@ -16,9 +16,9 @@ namespace lua
 
 std::pair<int, int> get_start_end_indices(
     const std::string& kind,
-    ModInfo::StoreType store_type);
+    ModEnv::StoreType store_type);
 
-std::string get_store_name(ModInfo::StoreType store_type);
+std::string get_store_name(ModEnv::StoreType store_type);
 
 
 
@@ -33,7 +33,7 @@ public:
     }
 
     template <typename T, typename Archive>
-    void save_handles(Archive& putit_archive, ModInfo::StoreType store_type)
+    void save_handles(Archive& putit_archive, ModEnv::StoreType store_type)
     {
         int index_start, index_end;
         std::tie(index_start, index_end) =
@@ -53,7 +53,7 @@ public:
     template <typename T, typename Archive>
     std::pair<int, int> load_handles(
         Archive& putit_archive,
-        ModInfo::StoreType store_type)
+        ModEnv::StoreType store_type)
     {
         int index_start, index_end;
         std::tie(index_start, index_end) =
@@ -75,22 +75,22 @@ public:
     template <typename Archive>
     void save_mod_store_data(
         Archive& putit_archive,
-        ModInfo::StoreType store_type)
+        ModEnv::StoreType store_type)
     {
         const auto& mod_mgr = lua().get_mod_manager();
 
-        unsigned mod_count = static_cast<unsigned>(mod_mgr.enabled_mod_count());
+        unsigned mod_count = static_cast<unsigned>(mod_mgr.mods().size());
         putit_archive(mod_count);
 
-        for (const auto& pair : mod_mgr.enabled_mods())
+        for (const auto& pair : mod_mgr.mods())
         {
-            std::string mod_id = pair.second->manifest.id;
-            semver::Version mod_version = pair.second->manifest.version;
+            std::string mod_id = pair.second.manifest.id;
+            semver::Version mod_version = pair.second.manifest.version;
 
             putit_archive(mod_id);
             putit_archive(mod_version);
 
-            sol::object data = pair.second->get_store(store_type);
+            sol::object data = pair.second.get_store(store_type);
             save(data, putit_archive);
 
             ELONA_LOG("lua.mod")
@@ -102,7 +102,7 @@ public:
     template <typename Archive>
     void load_mod_store_data(
         Archive& putit_archive,
-        ModInfo::StoreType store_type)
+        ModEnv::StoreType store_type)
     {
         auto& mod_mgr = lua().get_mod_manager();
 
@@ -117,12 +117,24 @@ public:
             putit_archive(mod_id);
             putit_archive(mod_version);
 
-            auto mod = mod_mgr.get_enabled_mod_optional(mod_id);
+            auto mod = mod_mgr.get_mod(mod_id);
             if (!mod)
             {
                 // Skip this piece of data.
                 ELONA_WARN("lua.mod")
                     << "WARNING: skipping mod store loading as mod wasn't loaded: "
+                    << mod_id;
+
+                std::string raw_data;
+                putit_archive(raw_data);
+
+                continue;
+            }
+            if (mod->manifest.version != mod_version)
+            {
+                // TODO: implement migration
+                ELONA_WARN("lua.mod")
+                    << "WARNING: skipping mod store loading as mod is upgraded or downgraded: "
                     << mod_id;
 
                 std::string raw_data;
@@ -136,7 +148,7 @@ public:
 
             sol::object data = load(putit_archive);
 
-            (*mod)->set_store(store_type, data);
+            mod->set_store(store_type, data);
         }
     }
 

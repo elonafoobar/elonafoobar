@@ -90,7 +90,6 @@ after_build:
   - rd /q /s bin\Elona_foobar\sound
   - rd /q /s bin\Elona_foobar\tests
   - rd /q /s bin\Elona_foobar\tmp
-  - rd /q /s bin\Elona_foobar\user
   - xcopy /s /e /y runtime\* bin\Elona_foobar
   - ps: "$env:ELONAFOOBAR_VERSION=(Select-String 'project\\(Elona_foobar VERSION (.*)\\)' CMakeLists.txt).Matches.Groups[1].Value"
   - cd bin

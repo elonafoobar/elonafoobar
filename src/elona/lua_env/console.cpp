@@ -594,11 +594,7 @@ void Console::_init_builtin_lua_functions()
     };
 
     funcs["ls"] = [this]() {
-        std::vector<std::string> mods;
-        range::transform(
-            lua().get_mod_manager().calculate_loading_order(),
-            std::back_inserter(mods),
-            [](const auto& mod_id) { return mod_id; });
+        auto mods = lua().get_mod_manager().sorted_mods();
         range::sort(mods);
 
         sol::table ret = env().create();

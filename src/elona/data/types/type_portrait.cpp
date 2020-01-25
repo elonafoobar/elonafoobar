@@ -1,5 +1,6 @@
 #include "type_portrait.hpp"
 #include <iostream>
+#include "../../lua_env/interface.hpp"
 
 
 
@@ -46,7 +47,7 @@ PortraitData _PortraitDBBase::convert(
     else
     {
         std::string filepath_str = source.as<std::string>();
-        filepath = filesystem::resolve_path_for_mod(filepath_str);
+        filepath = lua::resolve_path_for_mod(filepath_str);
         if (!fs::exists(*filepath))
         {
             throw std::runtime_error(

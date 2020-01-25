@@ -14,8 +14,8 @@ TEST_CASE("test reading invalid HCL file", "[Lua: Data]")
     const auto base_path = testing::get_test_data_path() / "registry";
 
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(
-        filesystem::dirs::mod(), {base_path / "invalid"});
+    lua.load_mods();
+    lua.get_mod_manager().load_testing_mod_from_file(base_path / "invalid");
 
     REQUIRE_THROWS(lua.get_data_manager().init_from_mods());
 }
@@ -25,8 +25,8 @@ TEST_CASE("test declaring and loading datatype", "[Lua: Data]")
     const auto base_path = testing::get_test_data_path() / "registry";
 
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(
-        filesystem::dirs::mod(), {base_path / "putit"});
+    lua.load_mods();
+    lua.get_mod_manager().load_testing_mod_from_file(base_path / "putit");
 
     REQUIRE_NOTHROW(lua.get_data_manager().init_from_mods());
 
@@ -43,34 +43,33 @@ TEST_CASE("test declaring and loading datatype", "[Lua: Data]")
     REQUIRE((*red)["legacy_id"].get<int>() == 4);
 }
 
-// NOTE: requires dependencies on mods to be implemented.
-// TEST_CASE("test loading datatype originating from other mod", "[Lua: Data]")
-// {
-//     const auto base_path = testing::get_test_data_path() / "registry";
-//
-//     elona::lua::LuaEnv lua;
-//     lua.get_mod_manager().load_mods(
-//         filesystem::dirs::mod(), {base_path / "putit", base_path /
-//         "putit_b"});
-//
-//     REQUIRE_NOTHROW(lua.get_data_manager().init_from_mods());
-//
-//     auto& table = lua.get_data_manager().get();
-//
-//     auto green = table.raw("putit.putit", "putit_b.green");
-//     REQUIRE_SOME(green);
-//     REQUIRE((*green)["display_name"].get<std::string>() == "green putit");
-//     REQUIRE((*green)["legacy_id"].get<int>() == 5);
-// }
+TEST_CASE("test loading datatype originating from other mod", "[Lua: Data]")
+{
+    const auto base_path = testing::get_test_data_path() / "registry";
+
+    elona::lua::LuaEnv lua;
+    lua.load_mods();
+    lua.get_mod_manager().load_testing_mod_from_file(base_path / "putit");
+    lua.get_mod_manager().load_testing_mod_from_file(base_path / "putit_b");
+
+    REQUIRE_NOTHROW(lua.get_data_manager().init_from_mods());
+
+    auto& table = lua.get_data_manager().get();
+
+    auto green = table.raw("putit.putit", "putit_b.green");
+    REQUIRE_SOME(green);
+    REQUIRE((*green)["display_name"].get<std::string>() == "green putit");
+    REQUIRE((*green)["legacy_id"].get<int>() == 5);
+}
 
 TEST_CASE(
     "test verification that Exports table only have string keys",
     "[Lua: Data]")
 {
     elona::lua::LuaEnv lua;
-    REQUIRE_THROWS(lua.get_mod_manager().load_mods(
-        filesystem::dirs::mod(),
-        {testing::get_test_data_path() / "mods" / "test_export_keys"}));
+    lua.load_mods();
+    REQUIRE_THROWS(lua.get_mod_manager().load_testing_mod_from_file(
+        testing::get_test_data_path() / "mods" / "test_export_keys"));
 }
 
 TEST_CASE("test order of script execution", "[Lua: Data]")
@@ -78,8 +77,8 @@ TEST_CASE("test order of script execution", "[Lua: Data]")
     const auto base_path = testing::get_test_data_path() / "registry";
 
     elona::lua::LuaEnv lua;
-    lua.get_mod_manager().load_mods(
-        filesystem::dirs::mod(), {base_path / "load_order"});
+    lua.load_mods();
+    lua.get_mod_manager().load_testing_mod_from_file(base_path / "load_order");
 
     REQUIRE_NOTHROW(lua.get_data_manager().init_from_mods());
 

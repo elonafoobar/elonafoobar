@@ -1484,8 +1484,9 @@ MainMenuResult main_menu_mods_develop()
     for (const auto& tmpl : lua::lua->get_mod_manager().get_templates())
     {
         list(0, template_count) = template_count;
-        listn(0, template_count) = tmpl.id;
+        listn(0, template_count) = tmpl.id + " v" + tmpl.version.to_string();
         listn(1, template_count) = tmpl.name;
+        listn(2, template_count) = tmpl.id;
         key_list(template_count) = key_select(template_count);
         ++template_count;
     }
@@ -1592,7 +1593,7 @@ MainMenuResult main_menu_mods_develop()
                 else
                 {
                     lua::lua->get_mod_manager().create_mod_from_template(
-                        new_mod_id, listn(0, p));
+                        new_mod_id, listn(2, p));
                     snd("core.write1");
                 }
                 init = true;

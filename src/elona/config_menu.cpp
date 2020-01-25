@@ -449,11 +449,9 @@ void ConfigScreenCreator::add_item_section(
 
 std::vector<std::string> ConfigScreenCreator::get_sorted_mod_list()
 {
-    auto mods = lua::lua->get_mod_manager().enabled_mods();
-    std::vector<std::string> ret;
-    range::transform(mods, std::back_inserter(ret), [](const auto& m) {
-        return m.second->manifest.id;
-    });
+    // Note: The result of ModManager::sorted_mods() is sorted by the loading
+    // order. The function returns the list of mod IDs sorted in natural order.
+    auto ret = lua::lua->get_mod_manager().sorted_mods();
     range::sort(ret, lib::natural_order_comparator{});
     return ret;
 }

@@ -29,7 +29,7 @@ void DataManager::clear()
 
 
 
-void DataManager::_init_from_mod(ModInfo& mod)
+void DataManager::_init_from_mod(ModEnv& mod)
 {
     // Bypass the metatable on the mod's environment preventing creation of
     // new global variables.
@@ -73,10 +73,9 @@ void DataManager::_init_from_mod(ModInfo& mod)
 
 void DataManager::init_from_mods()
 {
-    for (const auto& mod_id : lua().get_mod_manager().calculate_loading_order())
+    for (const auto& mod_id : lua().get_mod_manager().sorted_mods())
     {
-        const auto& mod = lua().get_mod_manager().get_enabled_mod(mod_id);
-        _init_from_mod(*mod);
+        _init_from_mod(*lua().get_mod_manager().get_mod(mod_id));
     }
 
     lua_state()->set("_MOD_ID", sol::lua_nil);

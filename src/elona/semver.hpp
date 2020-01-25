@@ -467,6 +467,23 @@ private:
 } // namespace elona
 
 
+
+namespace std
+{
+
+template <>
+struct hash<::elona::semver::Version>
+{
+    size_t operator()(const ::elona::semver::Version& v) const noexcept
+    {
+        return std::hash<decltype(v.to_integer())>{}(v.to_integer());
+    }
+};
+
+} // namespace std
+
+
+
 #ifdef ELONA_MAJOR_AND_MINOR_MACRO_DEFINED
 // Restore undefined macros. See also the top of this file.
 #pragma pop_macro("major")

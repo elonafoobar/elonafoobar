@@ -52,48 +52,6 @@ private:
 
 
 
-struct parse_error : public std::runtime_error
-{
-    parse_error(const detail::token& actual_token, const char* expected_token)
-        : std::runtime_error(build_error_message(actual_token, expected_token))
-        , _actual_token(actual_token)
-        , _expected_token(expected_token)
-    {
-    }
-
-
-
-    const detail::token& actual_token() const noexcept
-    {
-        return _actual_token;
-    }
-
-
-
-    const char* expected_token() const noexcept
-    {
-        return _expected_token;
-    }
-
-
-
-private:
-    const detail::token& _actual_token;
-    const char* _expected_token;
-
-
-
-    static std::string build_error_message(
-        const detail::token& actual_token,
-        const char* expected_token)
-    {
-        return std::string{"expect "} + expected_token + ", but actually " +
-            actual_token.to_string();
-    }
-};
-
-
-
 struct syntax_error : public std::runtime_error
 {
     syntax_error(const char* error_message)

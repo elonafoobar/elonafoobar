@@ -1,13 +1,11 @@
 #include "mod_manager.hpp"
-
 #include <map>
 #include <sstream>
 #include <unordered_set>
 #include <vector>
-
 #include "../../util/range.hpp"
-#include "../../util/topological_sorter.hpp"
 #include "../character.hpp"
+#include "../config.hpp"
 #include "../elona.hpp"
 #include "../filesystem.hpp"
 #include "../i18n.hpp"
@@ -43,8 +41,9 @@ template <typename F>
 std::vector<fs::path> mod_dirs_internal(const fs::path& base_dir, F predicate)
 {
     std::vector<fs::path> result;
-    for (const auto& entry :
-         filesystem::glob_dirs(base_dir, std::regex{"[a-z][a-z0-9_]*"}))
+    // E.g., lomias-1.2.3
+    for (const auto& entry : filesystem::glob_dirs(
+             base_dir, std::regex{R"([a-z][a-z0-9_]+-[0-9]\.[0-9]\.[0-9])"}))
     {
         if (fs::exists(entry.path() / "mod.json"))
         {
@@ -57,258 +56,28 @@ std::vector<fs::path> mod_dirs_internal(const fs::path& base_dir, F predicate)
     return result;
 }
 
-} // namespace
 
 
-
-ModManager::ModManager(LuaEnv& lua)
-    : LuaSubmodule(lua)
+std::vector<fs::path> all_mod_dirs(const fs::path& base_dir)
 {
+    return mod_dirs_internal(base_dir, [](const auto&) { return true; });
 }
 
 
 
-bool ModManager::mod_id_is_reserved(const std::string& mod_id)
+std::vector<fs::path> template_mod_dirs(const fs::path& base_dir)
 {
-    return mod_id == "script" || mod_id == "_builtin_";
-}
-
-
-
-void ModManager::load_mods(const fs::path& mod_dir)
-{
-    if (stage_ != ModLoadingStage::not_started)
-    {
-        throw std::runtime_error("Mods have already been loaded.");
-    }
-
-    scan_all_mods(mod_dir);
-    load_lua_support_libraries();
-    load_scanned_mods();
-}
-
-
-
-void ModManager::load_mods(
-    const fs::path& mod_dir,
-    const std::vector<fs::path> additional_mod_paths)
-{
-    if (stage_ != ModLoadingStage::not_started)
-    {
-        throw std::runtime_error("Mods have already been loaded.");
-    }
-
-    scan_all_mods(mod_dir);
-    for (const auto& path : additional_mod_paths)
-    {
-        scan_mod(path);
-    }
-    load_lua_support_libraries();
-    load_scanned_mods();
-}
-
-
-
-void ModManager::unload_mods()
-{
-    if (stage_ != ModLoadingStage::all_mods_loaded)
-    {
-        return;
-    }
-
-    mods_ = ModStorageType();
-    stage_ = ModLoadingStage::not_started;
-}
-
-
-
-void report_error(sol::error err)
-{
-    std::string what = err.what();
-    ELONA_ERROR("lua.mod") << what;
-}
-
-
-
-void ModManager::load_mod(ModInfo& mod)
-{
-    setup_and_lock_mod_globals(mod);
-
-    // Skip initializing mods not created from files, because the
-    // string passed to load_mod_from_script acts as the
-    // initialization script.
-    if (!mod.manifest.path)
-    {
-        return;
-    }
-
-    auto result = safe_script_file(*mod.manifest.path / u8"init.lua", mod.env);
-
-    // Add the API table returned by the mod's init.lua, if one
-    // was returned.
-    if (result.valid())
-    {
-        sol::optional<sol::object> object = result.get<sol::object>();
-        if (object && object->is<sol::table>())
-        {
-            sol::table api_table = object->as<sol::table>();
-            lua().get_api_manager().add_api(mod.manifest.id, api_table);
-        }
-    }
-    else
-    {
-        sol::error err = result;
-        report_error(err);
-        throw std::runtime_error("Failed initializing mod "s + mod.manifest.id);
-    }
-}
-
-
-
-void ModManager::scan_mod(const fs::path& mod_dir)
-{
-    ModManifest manifest = ModManifest::load(mod_dir / "mod.json");
-
-    const std::string& mod_id = manifest.id;
-    ELONA_LOG("lua.mod") << "Found mod " << mod_id;
-
-    if (!is_valid_mod_id(mod_id))
-    {
-        throw std::runtime_error("Mod ID \"" + mod_id + "\" is invalid.");
-    }
-
-    create_mod(manifest, false);
-}
-
-
-
-void ModManager::scan_all_mods(const fs::path& mods_dir)
-{
-    if (stage_ != ModLoadingStage::not_started &&
-        stage_ != ModLoadingStage::scan_finished)
-    {
-        throw std::runtime_error("Mods have already been scanned!");
-    }
-
-    for (const auto& mod_dir : normal_mod_dirs(mods_dir))
-    {
-        scan_mod(mod_dir);
-    }
-    stage_ = ModLoadingStage::scan_finished;
-}
-
-
-
-void ModManager::load_lua_support_libraries()
-{
-    if (stage_ == ModLoadingStage::not_started)
-    {
-        throw std::runtime_error("Mods haven't been scanned yet!");
-    }
-
-    // Add special API tables from data/lua to the core mod. The core
-    // mod's API table will be modified in-place by the Lua API code
-    // under data/lua.
-    lua().get_api_manager().load_lua_support_libraries();
-
-    stage_ = ModLoadingStage::lua_libraries_loaded;
-}
-
-
-
-void ModManager::load_scanned_mods()
-{
-    if (stage_ != ModLoadingStage::lua_libraries_loaded)
-    {
-        throw std::runtime_error("Lua libraries weren't loaded!");
-    }
-
-    // Ensure that mods are loaded in order, such that all mods that are
-    // depended on are loaded before their dependent mods.
-    for (const auto& mod_id : calculate_loading_order())
-    {
-        ModInfo* mod = get_enabled_mod(mod_id);
-        if (mod_id_is_reserved(mod_id))
-        {
-            // TODO warn about reserved mod IDs.
-            continue;
-        }
-        else
-        {
-            load_mod(*mod);
-        }
-        ELONA_LOG("lua.mod") << "Loaded mod " << mod->manifest.id;
-    }
-
-    lua().get_export_manager().register_all_exports();
-
-    stage_ = ModLoadingStage::all_mods_loaded;
-    lua().get_event_manager().trigger(BaseEvent("core.all_mods_loaded"));
-}
-
-
-
-void ModManager::run_startup_script(const std::string& name)
-{
-    if (stage_ < ModLoadingStage::lua_libraries_loaded)
-    {
-        throw std::runtime_error("Lua libraries weren't loaded!");
-    }
-    if (get_enabled_mod_optional(name))
-    {
-        throw std::runtime_error("Startup script was already run.");
-    }
-
-    ModInfo* script_mod = create_mod("script", none, true);
-
-    safe_script_file(filesystem::dirs::user_script() / name, script_mod->env);
-
-    // Bypass read-only metatable
-    script_mod->env.raw_set("data", lua().get_data_manager().get().storage());
-
-    ELONA_LOG("lua.mod") << "Loaded startup script " << name;
-    txt(i18n::s.get("core.mod.loaded_script", name),
-        Message::color{ColorIndex::purple});
-    Message::instance().linebreak();
-}
-
-
-
-void ModManager::clear_map_local_stores()
-{
-    for (auto&& pair : this->enabled_mods())
-    {
-        auto& mod = pair.second;
-        mod->env.get<sol::table>(std::tie("mod", "store"))
-            .raw_set("map", lua_state()->create_table());
-    }
-}
-
-
-
-void ModManager::clear_global_stores()
-{
-    for (auto&& pair : this->enabled_mods())
-    {
-        auto& mod = pair.second;
-        mod->env.get<sol::table>(std::tie("mod", "store"))
-            .raw_set("global", lua_state()->create_table());
-    }
-}
-
-
-
-void ModManager::clear_mod_stores()
-{
-    clear_map_local_stores();
-    clear_global_stores();
+    return mod_dirs_internal(base_dir, [](const auto& path) {
+        const auto id_and_version = filepathutil::to_utf8_path(path.filename());
+        return strutil::has_prefix(id_and_version, "template_");
+    });
 }
 
 
 
 // Callback to be called in Lua for preventing write access to unknown
 // globals.
-int deny(
+int deny_new_fields(
     sol::table table,
     sol::object key,
     sol::object value,
@@ -334,184 +103,245 @@ int deny(
 
 
 
-void ModManager::bind_store(sol::state& L, sol::table& table)
+sol::table create_store_table(sol::state& L)
 {
-    sol::table store = L.create_table();
-    sol::table metatable = L.create_table();
+    auto store_tbl = L.create_table();
 
-    // Bind store.global and store.map.
-    store["global"] = L.create_table();
-    store["map"] = L.create_table();
+    store_tbl["global"] = L.create_table();
+    store_tbl["map"] = L.create_table();
 
-    // Prevent creating new variables in the store table.
-    metatable[sol::meta_function::new_index] = deny;
+    auto mt = L.create_table();
+    mt[sol::meta_function::new_index] = deny_new_fields;
+    store_tbl[sol::metatable_key] = mt;
 
-    store[sol::metatable_key] = metatable;
-    table["store"] = store;
+    return store_tbl;
 }
 
 
 
-void ModManager::setup_mod_globals(ModInfo& mod, sol::table& table)
+sol::table create_mod_table(sol::state& L)
 {
-    // Create the globals "Elona" and "store" for this mod's
-    // environment.
-    sol::table mod_tbl = lua_state()->create_table();
-    sol::table metatable = lua_state()->create_table();
-    bind_store(*lua_state(), metatable);
-    // Prevent creating new variables in the store table.
-    metatable[sol::meta_function::new_index] = deny;
-    metatable[sol::meta_function::index] = metatable;
-    mod_tbl[sol::metatable_key] = metatable;
-    table["mod"] = mod_tbl;
+    auto mod_tbl = L.create_table();
+    auto mt = L.create_table();
 
-    lua().get_api_manager().bind(lua(), table);
-    table["_MOD_ID"] = mod.manifest.id;
+    mt["store"] = create_store_table(L);
 
-    // Add a list of whitelisted standard library functions to the
-    // environment.
-    setup_sandbox(*lua_state(), table);
+    mt[sol::meta_function::new_index] = deny_new_fields;
+    mt[sol::meta_function::index] = mt;
+    mod_tbl[sol::metatable_key] = mt;
+    return mod_tbl;
+}
 
-    // Add a custom version of "require" for use within mods. (Not
-    // added for scripts/console environment)
-    if (mod.chunk_cache)
+
+
+/***
+ * Whitelists functions that are safe for usage in user-written scripts.
+ */
+void setup_sandbox(sol::state& state, sol::table table)
+{
+    // This list can be expanded.
+    const char* safe_functions[] = {
+        "assert",
+        "error",
+        "ipairs",
+        "next",
+        "pairs",
+        "pcall",
+        "print",
+        "tostring",
+        "type",
+        "xpcall",
+    };
+
+    for (const auto& function_name : safe_functions)
     {
-        auto state = lua_state();
-        auto& chunk_cache = *mod.chunk_cache;
-        table["require_relative"] = [state, &chunk_cache](
-                                        const std::string& name,
-                                        sol::this_environment this_env) {
-            sol::environment env = this_env;
-            return chunk_cache.require(name, env, *state);
-        };
+        table[function_name] = state[function_name];
     }
 }
 
 
 
-void ModManager::setup_and_lock_mod_globals(ModInfo& mod)
+void report_error(sol::error err)
 {
-    sol::table env_metatable = lua_state()->create_table_with();
-
-    // Globals have to be set on the metatable, not the mod's
-    // environment itself.
-    setup_mod_globals(mod, env_metatable);
-
-    // Prevent writing of new globals.
-    env_metatable[sol::meta_function::new_index] = deny;
-    env_metatable[sol::meta_function::index] = env_metatable;
-
-    mod.env[sol::metatable_key] = env_metatable;
+    std::string what = err.what();
+    ELONA_ERROR("lua.mod") << what;
 }
 
 
 
-ModInfo* ModManager::create_mod(const ModManifest& manifest, bool readonly)
+template <typename F>
+void internal_init_mod(ModEnv& mod, APIManager& api_manager, F run_script)
 {
-    std::unique_ptr<ModInfo> info =
-        std::make_unique<ModInfo>(manifest, *lua_state());
+    auto result = run_script(mod.env);
 
-    if (readonly)
+    // Add the API table returned by the mod's init.lua, if one was returned.
+    if (result.valid())
     {
-        setup_and_lock_mod_globals(*info);
+        sol::optional<sol::object> object = result.template get<sol::object>();
+        if (object && object->is<sol::table>())
+        {
+            sol::table api_table = object->as<sol::table>();
+            api_manager.add_api(mod.manifest.id, api_table);
+        }
     }
     else
     {
-        // Set the globals directly on the environment table for testing use.
-        setup_mod_globals(*info, info->env);
+        sol::error err = result;
+        report_error(err);
+        throw std::runtime_error("Failed initializing mod "s + mod.manifest.id);
     }
+}
 
-    // TODO: Enable based on user config/dependency resolution. Always enable
-    // built-in mods.
-    enable_mod(manifest.id, manifest.version, true);
+} // namespace
 
-    auto mod_id_with_version = manifest.id + "-" + manifest.version.to_string();
-    mods_[mod_id_with_version] = std::move(info);
-    return mods_[mod_id_with_version].get();
+
+
+ModManager::ModManager(LuaEnv& lua)
+    : LuaSubmodule(lua)
+{
 }
 
 
 
-ModInfo* ModManager::create_mod(
+void ModManager::load_mods(const ResolvedModList& resolved_mod_list)
+{
+    _mod_versions = resolved_mod_list.mod_versions();
+    _sorted_mods = resolved_mod_list.sorted_mods();
+
+    lua().get_api_manager().load_lua_support_libraries();
+
+    create_all_mod_env(resolved_mod_list.mod_versions());
+
+    // Ensure that mods are loaded in order, such that all mods that are
+    // depended on are loaded before their dependent mods.
+    for (const auto& id : sorted_mods())
+    {
+        auto& mod = _mods.at(id);
+        init_mod(mod);
+        ELONA_LOG("lua.mod") << "Loaded mod " << mod.manifest.id;
+    }
+
+    lua().get_export_manager().register_all_exports();
+
+    lua().get_event_manager().trigger(BaseEvent("core.all_mods_loaded"));
+}
+
+
+
+void ModManager::init_mod(ModEnv& mod)
+{
+    if (mod.manifest.path)
+    {
+        internal_init_mod(
+            mod,
+            lua().get_api_manager(),
+            [this, path = (*mod.manifest.path / "init.lua")](auto env) {
+                return safe_script_file(path, env);
+            });
+    }
+}
+
+
+
+void ModManager::run_startup_script(const fs::path& script_filename)
+{
+    auto& script_mod = create_mod_env_from_script("script");
+
+    safe_script_file(
+        filesystem::dirs::user_script() / script_filename, script_mod.env);
+
+    ELONA_LOG("lua.mod") << "Loaded startup script " << script_filename;
+    txt(i18n::s.get(
+            "core.mod.loaded_script",
+            filepathutil::to_utf8_path(script_filename)),
+        Message::color{ColorIndex::purple});
+    Message::instance().linebreak();
+}
+
+
+
+void ModManager::clear_map_local_stores()
+{
+    for (auto&& pair : mods())
+    {
+        auto& mod = pair.second;
+        mod.env.get<sol::table>(std::tie("mod", "store"))
+            .raw_set("map", lua_state()->create_table());
+    }
+}
+
+
+
+void ModManager::clear_global_stores()
+{
+    for (auto&& pair : mods())
+    {
+        auto& mod = pair.second;
+        mod.env.get<sol::table>(std::tie("mod", "store"))
+            .raw_set("global", lua_state()->create_table());
+    }
+}
+
+
+
+void ModManager::clear_mod_stores()
+{
+    clear_map_local_stores();
+    clear_global_stores();
+}
+
+
+
+void ModManager::load_testing_mod_from_script(
     const std::string& id,
-    optional<fs::path> mod_dir,
-    bool readonly)
+    const std::string& script)
 {
-    ModManifest manifest;
-    manifest.id = id;
-    manifest.path = mod_dir;
-    manifest.version = semver::Version(0, 1, 0);
+    auto& mod = create_mod_env_from_script(id);
 
-    return create_mod(manifest, readonly);
+    internal_init_mod(mod, lua().get_api_manager(), [this, &script](auto env) {
+        return safe_script(script, env);
+    });
+
+    _mod_versions.emplace(mod.manifest.id, mod.manifest.version);
+    // Testing mods are always at the end.
+    _sorted_mods.push_back(mod.manifest.id);
 }
 
 
 
-std::vector<std::string> ModManager::calculate_loading_order()
+void ModManager::load_testing_mod_from_file(const fs::path& mod_dir)
 {
-    TopologicalSorter<std::string> sorter;
+    auto& mod = create_mod_env_from_manifest_file(mod_dir / "mod.json");
 
-    for (const auto& pair : this->enabled_mods())
+    init_mod(mod);
+
+    _mod_versions.emplace(mod.manifest.id, mod.manifest.version);
+    // Testing mods are always at the end.
+    _sorted_mods.push_back(mod.manifest.id);
+}
+
+
+
+void ModManager::run_in_mod(const std::string& id, const std::string& script)
+{
+    auto mod = get_mod(id);
+    if (!mod)
     {
-        const auto& mod = pair.second;
-        sorter.add(mod->manifest.id);
-
-        for (const auto& pair : mod->manifest.dependencies)
-        {
-            const auto& mod_id = pair.first;
-            const auto& version_req = pair.second;
-
-            const auto dependent_mod = get_enabled_mod_optional(mod_id);
-            if (!dependent_mod)
-            {
-                throw std::runtime_error(
-                    "The dependency '" + mod_id + "' of mod '" +
-                    mod->manifest.id +
-                    "' could not be found in the list of scanned mods.");
-            }
-            const auto& ver = (*dependent_mod)->manifest.version;
-            if (!version_req.is_satisfied(ver))
-            {
-                // Error message example:
-                // The dependency requirement 'base' (>= 2.0.0) of mod 'derived'
-                // could not be satisfied by 'base v1.5.0'.
-                std::stringstream ss;
-                ss << "The dependency requirement '" << mod_id << "' ("
-                   << version_req.to_string() << ") of mod '"
-                   << mod->manifest.id << "'could not be satisfied by '"
-                   << mod_id << " v" << ver.to_string() << "'.";
-                throw std::runtime_error(ss.str());
-            }
-
-            sorter.add_dependency(mod->manifest.id, mod_id);
-        }
+        throw std::runtime_error("No such mod "s + id + "."s);
     }
 
-    std::vector<std::string> result;
-    std::vector<std::string> cyclic_dependencies;
-    std::tie(result, cyclic_dependencies) = sorter.sort();
+    // Prevent outputting things in the test log on errors, but still
+    // throw if the result is invalid so tests can catch it.
+    const auto ignore_handler =
+        [](lua_State*, sol::protected_function_result pfr) { return pfr; };
 
-    if (cyclic_dependencies.size() > 0)
+    auto result = safe_script(script, mod->env, ignore_handler);
+
+    if (!result.valid())
     {
-        std::string cycle;
-
-        for (const auto& dependency : cyclic_dependencies)
-        {
-            if (cycle == "")
-            {
-                cycle = dependency;
-            }
-            else
-            {
-                cycle += " -> " + dependency;
-            }
-        }
-
-        throw std::runtime_error(
-            "Cyclic dependency detected when loading mods: " + cycle);
+        sol::error err = result;
+        throw err;
     }
-
-    return result;
 }
 
 
@@ -533,8 +363,12 @@ void ModManager::create_mod_from_template(
     const std::string& new_mod_id,
     const std::string& template_mod_id)
 {
-    const auto from = filesystem::dirs::for_mod(template_mod_id);
-    const auto to = filesystem::dirs::for_mod(new_mod_id);
+    const auto template_mod_version = *get_enabled_version(template_mod_id);
+    const auto new_mod_version = semver::Version{0, 1, 0};
+
+    const auto from =
+        filesystem::dirs::for_mod(template_mod_id, template_mod_version);
+    const auto to = filesystem::dirs::for_mod(new_mod_id, new_mod_version);
     filesystem::copy_recursively(from, to);
 }
 
@@ -554,99 +388,127 @@ bool ModManager::exists(const std::string& mod_id)
 
 
 
-// For testing use
-void ModManager::load_mod_from_script(
-    const std::string& name,
-    const std::string& script,
-    bool readonly)
+fs::path ModManager::resolve_path_for_mod(const std::string& path)
 {
-    if (stage_ < ModLoadingStage::lua_libraries_loaded)
-    {
-        throw std::runtime_error("Lua libraries weren't loaded!");
-    }
-    {
-        auto val = get_enabled_mod_optional(name);
-        if (val)
-        {
-            throw std::runtime_error(
-                "Mod "s + name + " was already initialized."s);
-        }
-    }
+    // TODO: standardize mod naming convention.
+    std::regex mod_id_regex("^<([a-zA-Z0-9_]+)>/(.*)");
+    std::smatch match;
+    std::string mod_id, rest;
 
-    ModInfo* mod = create_mod(name, none, readonly);
-
-    // Run the provided script string.
-    auto result = safe_script(script, mod->env);
-
-    // Add the API table returned by the mod's initialization script,
-    // if one was returned.
-    if (result.valid())
+    if (std::regex_match(path, match, mod_id_regex) && match.size() == 3)
     {
-        sol::optional<sol::object> object = result.get<sol::object>();
-        if (object && object->is<sol::table>())
-        {
-            sol::table api_table = object->as<sol::table>();
-            lua().get_api_manager().add_api(name, api_table);
-        }
+        mod_id = match.str(1);
+        rest = match.str(2);
     }
     else
     {
-        sol::error err = result;
-        report_error(err);
-        throw std::runtime_error("Failed initializing mod "s + name);
+        throw std::runtime_error("Invalid filepath syntax: " + path);
     }
-}
 
+    rest = strutil::replace(rest, "<LANGUAGE>", g_config.language());
 
-
-void ModManager::run_in_mod(const std::string& name, const std::string& script)
-{
-    auto val = get_enabled_mod_optional(name);
-    if (!val)
+    if (mod_id == "_builtin_")
     {
-        throw std::runtime_error("No such mod "s + name + "."s);
+        return filesystem::dirs::exe() / rest;
     }
-
-    // Prevent outputting things in the test log on errors, but still
-    // throw if the result is invalid so tests can catch it.
-    auto ignore_handler = [](lua_State*, sol::protected_function_result pfr) {
-        return pfr;
-    };
-
-    auto result = safe_script(script, (*val)->env, ignore_handler);
-
-    if (!result.valid())
+    else
     {
-        sol::error err = result;
-        throw err;
+        if (const auto version = get_enabled_version(mod_id))
+        {
+            return filesystem::dirs::for_mod(mod_id, *version) / rest;
+        }
+        else
+        {
+            throw std::runtime_error{"Mod '" + mod_id +
+                                     "' is disabled: " + path};
+        }
     }
 }
 
 
 
-std::vector<fs::path> all_mod_dirs(const fs::path& base_dir)
+void ModManager::create_all_mod_env(
+    const ResolvedModList::ModVersionMap& mod_versions)
 {
-    return mod_dirs_internal(base_dir, [](const auto&) { return true; });
+    for (const auto& pair : mod_versions)
+    {
+        const auto& id = pair.first;
+        const auto& version = pair.second;
+
+        create_mod_env_from_manifest_file(
+            filesystem::dirs::for_mod(id, version) / "mod.json");
+    }
 }
 
 
 
-std::vector<fs::path> normal_mod_dirs(const fs::path& base_dir)
+ModEnv& ModManager::create_mod_env_from_manifest_file(
+    const fs::path& manifest_filepath)
 {
-    return mod_dirs_internal(base_dir, [](const auto& path) {
-        const auto mod_id = filepathutil::to_utf8_path(path.filename());
-        return !strutil::has_prefix(mod_id, "template_");
-    });
+    const auto manifest = ModManifest::load(manifest_filepath);
+    return create_mod_env_manifest(manifest);
 }
 
 
 
-std::vector<fs::path> template_mod_dirs(const fs::path& base_dir)
+ModEnv& ModManager::create_mod_env_from_script(const std::string& id)
 {
-    return mod_dirs_internal(base_dir, [](const auto& path) {
-        const auto mod_id = filepathutil::to_utf8_path(path.filename());
-        return strutil::has_prefix(mod_id, "template_");
-    });
+    ModManifest manifest;
+    manifest.id = id;
+    manifest.version = semver::Version{0, 1, 0};
+    return create_mod_env_manifest(manifest);
+}
+
+
+
+ModEnv& ModManager::create_mod_env_manifest(const ModManifest& manifest)
+{
+    ELONA_LOG("lua.mod") << "Found mod " << manifest.id;
+
+    const auto emplace_result = _mods.emplace(
+        std::piecewise_construct,
+        std::make_tuple(manifest.id),
+        std::make_tuple(manifest, sol::environment{*lua_state(), sol::create}));
+    assert(emplace_result.second); // The element was newly inserted just now.
+    auto& mod = emplace_result.first->second;
+    setup_mod_globals(mod);
+    return mod;
+}
+
+
+
+void ModManager::setup_mod_globals(ModEnv& mod)
+{
+    auto& L = *lua_state();
+
+    auto mt = L.create_table();
+
+    mt["mod"] = create_mod_table(L);
+
+    lua().get_api_manager().bind(lua(), mt);
+    mt["_MOD_ID"] = mod.manifest.id;
+
+    // Add a list of whitelisted standard library functions to the
+    // environment.
+    setup_sandbox(*lua_state(), mt);
+
+    // Add a custom version of "require" for use within mods. (Not
+    // added for scripts/console environment)
+    if (mod.chunk_cache)
+    {
+        auto state = lua_state();
+        auto& chunk_cache = *mod.chunk_cache;
+        mt["require_relative"] = [state, &chunk_cache](
+                                     const std::string& name,
+                                     sol::this_environment this_env) {
+            sol::environment env = this_env;
+            return chunk_cache.require(name, env, *state);
+        };
+    }
+
+    mt[sol::meta_function::new_index] = deny_new_fields;
+    mt[sol::meta_function::index] = mt;
+    mod.env[sol::metatable_key] = mt;
 }
 
 
@@ -655,7 +517,14 @@ bool is_valid_mod_id(const std::string& id)
 {
     return !id.empty() && _is_alnum_only(id) &&
         filepathutil::is_portable_path(filepathutil::u8path(id)) &&
-        !lua->get_mod_manager().mod_id_is_reserved(id);
+        !is_reserved_mod_id(id);
+}
+
+
+
+bool is_reserved_mod_id(const std::string& id)
+{
+    return id == "script" || id == "_builtin_";
 }
 
 } // namespace lua

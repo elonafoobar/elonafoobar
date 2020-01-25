@@ -33,9 +33,15 @@ struct hash<fs::path>
 
 namespace elona
 {
+
+namespace semver
+{
+struct Version;
+}
+
+
 namespace filesystem
 {
-
 
 // Pre-defined directories.
 namespace dirs
@@ -48,7 +54,7 @@ fs::path locale();
 fs::path log();
 fs::path map();
 fs::path mod();
-fs::path for_mod(const std::string& mod_id);
+fs::path for_mod(const std::string& id, const semver::Version& version);
 fs::path profile_root();
 fs::path current_profile();
 fs::path save();
@@ -74,13 +80,13 @@ namespace files
 
 fs::path profile_local_config();
 fs::path keybinding_config();
+fs::path mod_list();
 
 } // namespace files
 
 
 
 fs::path path(const std::string&);
-fs::path resolve_path_for_mod(const std::string& mod_local_path);
 
 
 

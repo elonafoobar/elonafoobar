@@ -103,5 +103,7 @@ optional<ConfigTable> data(const char* type, const std::string& id);
  */
 optional<ConfigTable> data(const char* type, int legacy_id);
 
+fs::path resolve_path_for_mod(const std::string& path);
+
 } // namespace lua
 } // namespace elona
