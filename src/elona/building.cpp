@@ -564,10 +564,10 @@ void prompt_hiring()
         {
             hire = rnd(isethire.size());
         }
-        dbid = isethire(hire);
+        const auto chara_id = isethire(hire);
         randomize(game_data.date.day + cnt);
         flt(20);
-        int stat = chara_create(-1, dbid, -3, 0);
+        int stat = chara_create(-1, chara_id, -3, 0);
         if (stat == 0)
         {
             continue;
@@ -1273,11 +1273,13 @@ void update_shop()
     }
 }
 
-void calc_collection_value(bool val0)
+
+
+void calc_collection_value(int chara_id, bool val0)
 {
     rc = 56;
     fixlv = Quality::good;
-    chara_db_set_stats(int2charaid(dbid));
+    chara_db_set_stats(int2charaid(chara_id));
     ++dblist(val0 ? 1 : 0, charaid2int(cdata.tmp().id));
     if (fixlv == Quality::special)
     {
@@ -1328,8 +1330,7 @@ void update_museum()
         {
             continue;
         }
-        dbid = item.subname;
-        calc_collection_value(item.id != ItemId::figurine);
+        calc_collection_value(item.subname, item.id != ItemId::figurine);
         if (item.id == ItemId::figurine)
         {
             rankcur += rtval;
@@ -1470,13 +1471,14 @@ void update_ranch()
             _livestock_will_breed(cdata[worker], livestock_count))
         {
             flt(calcobjlv(cdata[worker].level), Quality::bad);
+            int chara_id;
             if (rnd(2))
             {
-                dbid = charaid2int(cdata[worker].id);
+                chara_id = charaid2int(cdata[worker].id);
             }
             else
             {
-                dbid = 0;
+                chara_id = 0;
             }
             if (rnd(10) != 0)
             {
@@ -1485,9 +1487,9 @@ void update_ranch()
             if (cdata[worker].id == CharaId::little_sister)
             {
                 // Little sister -> younger sister
-                dbid = 176;
+                chara_id = 176;
             }
-            int stat = chara_create(-1, dbid, 4 + rnd(11), 4 + rnd(8));
+            int stat = chara_create(-1, chara_id, 4 + rnd(11), 4 + rnd(8));
             if (stat != 0)
             {
                 cdata[rc].is_livestock() = true;
@@ -1591,12 +1593,12 @@ void update_ranch()
                 // Garbage
                 if (rnd(80) == 0)
                 {
-                    dbid = 222;
+                    int item_id = 222;
                     if (rnd(2))
                     {
-                        dbid = 45;
+                        item_id = 45;
                     }
-                    itemcreate_extra_inv(dbid, x, y, 0);
+                    itemcreate_extra_inv(item_id, x, y, 0);
                 }
                 break;
             case 4:

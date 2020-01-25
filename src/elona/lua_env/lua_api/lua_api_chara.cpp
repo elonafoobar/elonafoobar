@@ -173,9 +173,7 @@ sol::optional<LuaCharacterHandle> LuaApiChara::generate_from_map_xy(
     int x,
     int y)
 {
-    dbid = 0;
     map_set_chara_generation_filter();
-
     if (elona::chara_create(-1, dbid, x, y) != 0)
     {
         return lua::handle(elona::cdata[elona::rc]);

@@ -1680,9 +1680,8 @@ void item_dump_desc(const Item& i)
 {
     reftype = the_item_db[itemid2int(i.id)]->category;
 
-    dbid = itemid2int(i.id);
-    item_db_get_charge_level(inv[ci], dbid);
-    item_db_get_description(inv[ci], dbid);
+    item_db_get_charge_level(inv[ci], itemid2int(i.id));
+    item_db_get_description(inv[ci], itemid2int(i.id));
 
     p = item_load_desc(inv[ci]);
 

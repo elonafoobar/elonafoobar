@@ -4839,7 +4839,7 @@ void supply_income()
         int rank_id = cnt;
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            dbid = 0;
+            int item_id = 0;
             flt(calcobjlv((100 - game_data.ranks.at(rank_id) / 100) / 2 + 1),
                 calcfixlv(
                     (rnd(12) < trait(39)) ? Quality::miracle : Quality::great));
@@ -4850,9 +4850,9 @@ void supply_income()
             }
             if (rnd(100 + game_data.ranks.at(rank_id) / 5) < 2)
             {
-                dbid = 559;
+                item_id = 559;
             }
-            itemcreate_extra_inv(dbid, -1, -1, 0);
+            itemcreate_extra_inv(item_id, -1, -1, 0);
             ++income(1);
         }
     }
@@ -8277,8 +8277,7 @@ int pick_up_item(bool play_sound)
             {
                 if (inv[ci].count > 0)
                 {
-                    dbid = itemid2int(inv[ci].id);
-                    item_db_on_zap(inv[ci], dbid);
+                    item_db_on_zap(inv[ci], itemid2int(inv[ci].id));
                     txt(i18n::s.get(
                         "core.action.pick_up.you_absorb_magic", inv[ci]));
                     if (efid >= 400 && efid < 467)
@@ -9419,7 +9418,7 @@ void open_box()
     randomize(inv[ri].param3);
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
-        dbid = 0;
+        int item_id = 0;
         Quality base_quality;
         if (cnt == 0)
         {
@@ -9441,7 +9440,7 @@ void open_box()
             }
             if (rnd(60) == 0)
             {
-                dbid = 559;
+                item_id = 559;
             }
         }
         flt(calcobjlv(inv[ri].param1), calcfixlv(base_quality));
@@ -9487,13 +9486,13 @@ void open_box()
             }
             if (rnd(30) == 0)
             {
-                dbid = 559;
+                item_id = 559;
             }
         }
         in = 0;
         if (inv[ri].id == ItemId::small_gamble_chest)
         {
-            dbid = 54;
+            item_id = 54;
             randomize();
             if (rnd(75) == 0)
             {
@@ -9506,7 +9505,7 @@ void open_box()
         }
         if (inv[ri].id == ItemId::wallet)
         {
-            dbid = 54;
+            item_id = 54;
             in = rnd(1000) + 1;
             if (rnd(5) == 0)
             {
@@ -9521,7 +9520,7 @@ void open_box()
                 in = rnd(20000) + 10000;
             }
         }
-        itemcreate_extra_inv(dbid, cdata.player().position, in);
+        itemcreate_extra_inv(item_id, cdata.player().position, in);
     }
     randomize();
     f = 0;
@@ -10985,13 +10984,13 @@ void create_harvested_item()
     chara_gain_skill_exp(cdata.player(), 180, 75);
     snd("core.bush1");
     flt(sdata(180, 0) / 2 + 15, Quality::good);
-    dbid = 0;
+    int item_id = 0;
     if (feat(2) == 39)
     {
         flttypemajor = choice(fsetplantunknown);
         if (rnd(100) == 0)
         {
-            dbid = 559;
+            item_id = 559;
         }
     }
     if (feat(2) == 40 || (feat(2) == 39 && rnd(50) == 0))
@@ -11020,7 +11019,7 @@ void create_harvested_item()
     {
         flttypemajor = 56000;
     }
-    if (const auto item = itemcreate_player_inv(dbid, 0))
+    if (const auto item = itemcreate_player_inv(item_id, 0))
     {
         txt(i18n::s.get("core.action.plant.harvest", *item));
         item_stack(0, *item, true);

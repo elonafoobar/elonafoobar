@@ -229,8 +229,6 @@ std::pair<int, std::string> card_ref(int id, CardInfo& card_info)
     card_info.cardrefskillcost = 0;
     card_info.cardreftype = 0;
     card_info.cardrefrace = "";
-
-    dbid = id;
     get_card_info(id, card_info);
 
     if (card_info.cardreftype == 0)

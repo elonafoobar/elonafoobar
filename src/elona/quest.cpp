@@ -922,7 +922,6 @@ int quest_generate()
             quest_data[rq].target_chara_index = i;
             flt();
             flttypemajor = choice(fsetdeliver);
-            get_random_item_id();
             quest_data[rq].extra_info_1 = flttypemajor;
             quest_data[rq].reward_item_id = 5;
             if (flttypemajor == 54000)
@@ -941,7 +940,7 @@ int quest_generate()
             {
                 quest_data[rq].reward_item_id = 60000;
             }
-            quest_data[rq].target_item_id = dbid;
+            quest_data[rq].target_item_id = get_random_item_id();
             quest_data[rq].id = 1002;
             quest_data[rq].client_chara_type = 2;
             quest_data[rq].escort_difficulty = 0;
@@ -997,9 +996,8 @@ int quest_generate()
         quest_data[rq].deadline_days = rnd(6) + 2;
         flt();
         flttypemajor = choice(fsetsupply);
-        get_random_item_id();
         quest_data[rq].reward_item_id = 5;
-        quest_data[rq].target_item_id = dbid;
+        quest_data[rq].target_item_id = get_random_item_id();
         quest_data[rq].difficulty =
             clamp(rnd_capped(cdata.player().level + 5) + 1, 1, 30);
         rewardfix = 65 + quest_data[rq].difficulty;

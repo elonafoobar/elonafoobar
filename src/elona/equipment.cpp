@@ -839,19 +839,20 @@ void supply_initial_equipments()
         {
             if (eqamulet1)
             {
+                int item_id;
                 if (eqamulet1 >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqamulet1(1))));
                     flttypeminor = eqamulet1;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqamulet1;
+                    item_id = eqamulet1;
                 }
-                itemcreate_chara_inv(rc, dbid, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqamulet1 = 0;
@@ -859,19 +860,20 @@ void supply_initial_equipments()
             }
             if (eqamulet2)
             {
+                int item_id;
                 if (eqamulet2 >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqamulet2(1))));
                     flttypeminor = eqamulet2;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqamulet2;
+                    item_id = eqamulet2;
                 }
-                itemcreate_chara_inv(rc, dbid, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqamulet2 = 0;
@@ -882,19 +884,20 @@ void supply_initial_equipments()
         {
             if (eqring1)
             {
+                int item_id;
                 if (eqring1 >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqring1(1))));
                     flttypeminor = eqring1;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqring1;
+                    item_id = eqring1;
                 }
-                itemcreate_chara_inv(rc, dbid, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqring1 = 0;
@@ -902,19 +905,20 @@ void supply_initial_equipments()
             }
             if (eqring2)
             {
+                int item_id;
                 if (eqring2 >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqring2(1))));
                     flttypeminor = eqring2;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqring2;
+                    item_id = eqring2;
                 }
-                itemcreate_chara_inv(rc, dbid, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqring2 = 0;
@@ -925,19 +929,20 @@ void supply_initial_equipments()
         {
             if (eqcloack)
             {
+                int item_id;
                 if (eqcloack >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqcloack(1))));
                     flttypeminor = eqcloack;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqcloack;
+                    item_id = eqcloack;
                 }
-                itemcreate_chara_inv(rc, dbid, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqcloack = 0;
@@ -949,19 +954,20 @@ void supply_initial_equipments()
         {
             if (eqgirdle)
             {
+                int item_id;
                 if (eqgirdle >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqgirdle(1))));
                     flttypeminor = eqgirdle;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqgirdle;
+                    item_id = eqgirdle;
                 }
-                itemcreate_chara_inv(rc, dbid, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqgirdle = 0;
@@ -973,19 +979,20 @@ void supply_initial_equipments()
         {
             if (eqhelm)
             {
+                int item_id;
                 if (eqhelm >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqhelm(1))));
                     flttypeminor = eqhelm;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqhelm;
+                    item_id = eqhelm;
                 }
-                itemcreate_chara_inv(rc, dbid, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqhelm = 0;
@@ -997,19 +1004,20 @@ void supply_initial_equipments()
         {
             if (eqarmor)
             {
+                int item_id;
                 if (eqarmor >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqarmor(1))));
                     flttypeminor = eqarmor;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqarmor;
+                    item_id = eqarmor;
                 }
-                itemcreate_chara_inv(rc, dbid, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqarmor = 0;
@@ -1021,19 +1029,20 @@ void supply_initial_equipments()
         {
             if (eqglove)
             {
+                int item_id;
                 if (eqglove >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqglove(1))));
                     flttypeminor = eqglove;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqglove;
+                    item_id = eqglove;
                 }
-                itemcreate_chara_inv(rc, dbid, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqglove = 0;
@@ -1045,19 +1054,20 @@ void supply_initial_equipments()
         {
             if (eqboots)
             {
+                int item_id;
                 if (eqboots >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqboots(1))));
                     flttypeminor = eqboots;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqboots;
+                    item_id = eqboots;
                 }
-                itemcreate_chara_inv(rc, dbid, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqboots = 0;
@@ -1099,8 +1109,7 @@ void supply_initial_equipments()
                             calcfixlv(
                                 static_cast<Quality>(fixeq + eqweapon1(1))));
                         flttypeminor = eqweapon1;
-                        dbid = -1;
-                        itemcreate_chara_inv(rc, dbid, 0);
+                        itemcreate_chara_inv(rc, -1, 0);
                         if (eqtwohand)
                         {
                             if (inv[ci].weight < 4000)
@@ -1129,8 +1138,7 @@ void supply_initial_equipments()
                 else
                 {
                     flt();
-                    dbid = eqweapon1;
-                    itemcreate_chara_inv(rc, dbid, 0);
+                    itemcreate_chara_inv(rc, eqweapon1, 0);
                 }
                 body = 100 + i;
                 equip_item(rc);
@@ -1147,8 +1155,7 @@ void supply_initial_equipments()
                             calcfixlv(
                                 static_cast<Quality>(fixeq + eqweapon2(1))));
                         flttypeminor = eqweapon2;
-                        dbid = -1;
-                        itemcreate_chara_inv(rc, dbid, 0);
+                        itemcreate_chara_inv(rc, -1, 0);
                         if (eqtwowield)
                         {
                             if (inv[ci].weight > 1500)
@@ -1166,8 +1173,7 @@ void supply_initial_equipments()
                 else
                 {
                     flt();
-                    dbid = eqweapon2;
-                    itemcreate_chara_inv(rc, dbid, 0);
+                    itemcreate_chara_inv(rc, eqweapon2, 0);
                 }
                 eqweapon2 = 0;
                 body = 100 + i;
@@ -1176,19 +1182,20 @@ void supply_initial_equipments()
             }
             if (eqshield)
             {
+                int item_id;
                 if (eqshield >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqshield(1))));
                     flttypeminor = eqshield;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqshield;
+                    item_id = eqshield;
                 }
-                itemcreate_chara_inv(rc, dbid, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqshield = 0;
@@ -1200,19 +1207,20 @@ void supply_initial_equipments()
         {
             if (eqrange)
             {
+                int item_id;
                 if (eqrange >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqrange(1))));
                     flttypeminor = eqrange;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqrange;
+                    item_id = eqrange;
                 }
-                itemcreate_chara_inv(rc, dbid, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqrange = 0;
@@ -1224,19 +1232,20 @@ void supply_initial_equipments()
         {
             if (eqammo)
             {
+                int item_id;
                 if (eqammo >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqammo(1))));
                     flttypeminor = eqammo;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqammo;
+                    item_id = eqammo;
                 }
-                itemcreate_chara_inv(rc, dbid, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqammo = 0;

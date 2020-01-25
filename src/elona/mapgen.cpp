@@ -2227,16 +2227,17 @@ int initialize_quest_map_crop()
                 {
                     continue;
                 }
+                int item_id;
                 if (rnd(4))
                 {
-                    dbid = crop;
+                    item_id = crop;
                 }
                 else
                 {
-                    dbid = choice(isetcrop);
+                    item_id = choice(isetcrop);
                 }
                 flt();
-                if (const auto item = itemcreate_extra_inv(dbid, x, y, 0))
+                if (const auto item = itemcreate_extra_inv(item_id, x, y, 0))
                 {
                     item->own_state = 4;
                     p = clamp(size + rnd(rnd(4) + 1), 0, 9);
@@ -2825,8 +2826,8 @@ int initialize_quest_map_party()
         {
             flt(roomdiff * 5, calcfixlv(Quality::bad));
             initlv = roomdiff * 7 + rnd(5);
-            dbid = list(rnd(3), roomdiff);
-            chara_create(-1, dbid, rnd(rw) + rx, rnd(rh) + ry);
+            chara_create(
+                -1, list(rnd(3), roomdiff), rnd(rw) + rx, rnd(rh) + ry);
             cdata[rc].character_role = 3;
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;

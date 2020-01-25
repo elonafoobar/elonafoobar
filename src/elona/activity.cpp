@@ -260,29 +260,29 @@ void activity_perform_generate_item(
     }
 
     flttypemajor = choice(fsetperform);
-    dbid = 0;
+    int item_id = 0;
     if (game_data.executing_immediate_quest_type == 1009)
     {
         if (rnd(150) == 0)
         {
-            dbid = 241;
+            item_id = 241;
         }
         if (rnd(150) == 0)
         {
-            dbid = 622;
+            item_id = 622;
         }
         if (audience.level > 15)
         {
             if (rnd(1000) == 0)
             {
-                dbid = 725;
+                item_id = 725;
             }
         }
         if (audience.level > 10)
         {
             if (rnd(800) == 0)
             {
-                dbid = 726;
+                item_id = 726;
             }
         }
     }
@@ -290,15 +290,15 @@ void activity_perform_generate_item(
     {
         if (rnd(10) == 0)
         {
-            dbid = 724;
+            item_id = 724;
         }
         if (rnd(250) == 0)
         {
-            dbid = 55;
+            item_id = 55;
         }
     }
 
-    if (const auto item = itemcreate_extra_inv(dbid, x, y, 1))
+    if (const auto item = itemcreate_extra_inv(item_id, x, y, 1))
     {
         // NOTE: may cause Lua creation callbacks to run twice.
         item->modify_number(-1);
