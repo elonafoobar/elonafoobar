@@ -117,6 +117,7 @@ static std::unordered_map<snail::Key, KeyName> key_names = {
     {Key::period,           {".", ">"}},
     {Key::semicolon,        {";", ":"}},
     {Key::slash,            {"/", "?"}},
+    {Key::colon,            {":", "*"}},
 
     {Key::keypad_0,         {"Keypad 0"}},
     {Key::keypad_1,         {"Keypad 1"}},

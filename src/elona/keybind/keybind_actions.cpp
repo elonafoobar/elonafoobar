@@ -107,7 +107,7 @@ void initialize_keybind_actions(ActionMap& actions)
     actions.emplace("skill",                 Action{ActionCategory::game,      {{Key::key_a,           ModKey::none}}});
     actions.emplace("close",                 Action{ActionCategory::game,      {{Key::key_c,           ModKey::shift}}});
     actions.emplace("rest",                  Action{ActionCategory::game,      {{Key::key_r,           ModKey::shift}}});
-    actions.emplace("target",                Action{ActionCategory::game,      {{Key::keypad_asterisk, ModKey::none}}});
+    actions.emplace("target",                Action{ActionCategory::game,      {{Key::keypad_asterisk, ModKey::none}, {Key::colon, ModKey::shift}}});
     actions.emplace("dig",                   Action{ActionCategory::game,      {{Key::key_d,           ModKey::shift}}});
     actions.emplace("use",                   Action{ActionCategory::game,      {{Key::key_t,           ModKey::none}}});
     actions.emplace("bash",                  Action{ActionCategory::game,      {{Key::key_b,           ModKey::none}}});
