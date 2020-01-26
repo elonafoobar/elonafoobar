@@ -2,6 +2,8 @@
 #include "../../util/topological_sorter.hpp"
 #include "../json5util.hpp"
 #include "../log.hpp"
+#include "interface.hpp"
+#include "mod_manifest.hpp"
 
 
 
@@ -138,6 +140,29 @@ ModList ModList::from_stream(std::istream& in, const std::string& filepath)
     mods.emplace(std::make_pair(
         "core", semver::VersionRequirement::parse("= 0.2.6").right()));
     return ModList{mods};
+}
+
+
+
+ModIndex ModIndex::traverse(const fs::path& mod_root_dir)
+{
+    std::unordered_map<std::string, std::vector<IndexEntry>> mods;
+
+    for (const auto& mod_dir : normal_mod_dirs(mod_root_dir))
+    {
+        ModManifest manifest = ModManifest::load(mod_dir / "mod.json");
+        const auto& id = manifest.id;
+        const auto& version = manifest.version;
+        const auto& dependencies = manifest.dependencies;
+
+        if (mods.find(id) == std::end(mods))
+        {
+            mods.emplace(id, std::vector<IndexEntry>{});
+        }
+        mods[id].push_back(IndexEntry{version, dependencies});
+    }
+
+    return ModIndex{mods};
 }
 
 

@@ -67,6 +67,9 @@ public:
         either::either<std::string, std::reference_wrapper<const IndexEntry>>;
 
 
+    static ModIndex traverse(const fs::path& mod_root_dir);
+
+
     ModIndex(
         const std::unordered_map<std::string, std::vector<IndexEntry>>& mods)
         : _mods(mods)
