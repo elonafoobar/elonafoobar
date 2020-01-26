@@ -8,6 +8,16 @@ local eval_in_dsl_env = require_relative("config_dsl")
 
 
 
+local function stype(v)
+   if type(v) == "number" then
+      return math.type(v)
+   else
+      return type(v)
+   end
+end
+
+
+
 local function make_schema(schema)
    local result = {}
 
@@ -71,8 +81,42 @@ end
 
 
 local function validate(schema, value)
-   -- TODO
-   return value
+   local default = schema.default
+
+   -- Check 'type'.
+   if stype(value) ~= schema.type then
+      return default
+   end
+
+   -- Check 'enum'.
+   if schema.enum then
+      for _, e in ipairs(schema.enum) do
+         if e == value then
+            return value
+         end
+      end
+      if value == "__unknown__" then
+         return value
+      else
+         return default
+      end
+   end
+
+   -- Check 'min'.
+   if schema.min then
+      if value < schema.min then
+         return schema.min
+      end
+   end
+
+   -- Check 'max'.
+   if schema.max then
+      if schema.max < value then
+         return schema.max
+      end
+   end
+
+   return value -- It is perfectly valid.
 end
 
 
@@ -232,7 +276,7 @@ function Config.set(option_key, value)
    if value == nil then return end
 
    if exists(option_key) then
-      value = validate(option_key, value)
+      value = Config.validate(option_key, value)
       _options[option_key] = value
       if _setters[option_key] then
          _setters[option_key](value)

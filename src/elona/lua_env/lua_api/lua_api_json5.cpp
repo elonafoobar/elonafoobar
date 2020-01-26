@@ -96,6 +96,17 @@ sol::object to_lua_value(const json5::value& value, sol::state_view lua)
     }
 }
 
+
+
+using LuaParseResult = std::pair<sol::object, sol::optional<std::string>>;
+
+
+template <typename T, typename U>
+LuaParseResult make_parse_result(T&& a, U&& b)
+{
+    return LuaParseResult{std::piecewise_construct, std::tie(a), std::tie(b)};
+}
+
 } // namespace
 
 
@@ -104,11 +115,26 @@ sol::object to_lua_value(const json5::value& value, sol::state_view lua)
  * @luadoc
  *
  * Parses JSON5 text.
+ *
+ * @tparam string source JSON5 text
+ * @treturn[1] any Parsed object
+ * @treturn[2] nil If failed
+ * @treturn[2] string Error message
  */
-sol::object LuaApiJSON5::parse(const std::string& source, sol::this_state state)
+LuaParseResult LuaApiJSON5::parse(
+    const std::string& source,
+    sol::this_state state)
 {
-    sol::state_view lua{state};
-    return to_lua_value(json5::parse(source), lua);
+    try
+    {
+        sol::state_view lua{state};
+        return make_parse_result(
+            to_lua_value(json5::parse(source), lua), sol::nullopt);
+    }
+    catch (json5::syntax_error& err)
+    {
+        return make_parse_result(sol::lua_nil, err.what());
+    }
 }
 
 
