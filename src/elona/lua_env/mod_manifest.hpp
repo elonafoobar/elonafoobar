@@ -22,6 +22,12 @@ struct ModManifest
      */
     static ModManifest load(const fs::path& path);
 
+    /**
+     * Save itself to `path`.
+     * If you call it against the mod whose `path` is none, throws exception.
+     */
+    void save() const;
+
     std::string id;
     std::string name;
     std::string author;

@@ -137,14 +137,57 @@ ModManifest ModManifest::load(const fs::path& path)
     const auto mod_path = path.parent_path();
     const auto dependencies = _read_dependencies(obj, path);
 
-    return ModManifest{mod_id,
-                       mod_name,
-                       mod_author,
-                       mod_description,
-                       mod_license,
-                       version,
-                       mod_path,
-                       dependencies};
+    return {
+        mod_id,
+        mod_name,
+        mod_author,
+        mod_description,
+        mod_license,
+        version,
+        mod_path,
+        dependencies,
+    };
+}
+
+
+
+void ModManifest::save() const
+{
+    if (!path)
+    {
+        throw std::runtime_error{
+            "attempt to save mod manifest having no physical path"};
+    }
+
+    json5::value::object_type root_obj;
+    root_obj["id"] = id;
+    root_obj["name"] = name;
+    root_obj["author"] = author;
+    root_obj["description"] = description;
+    root_obj["license"] = license;
+    root_obj["version"] = version.to_string();
+
+    json5::value::object_type deps;
+    for (const auto& dep : dependencies)
+    {
+        deps[dep.first] = dep.second.to_string();
+    }
+    root_obj["dependencies"] = deps;
+
+    json5::stringify_options opts;
+    opts.prettify = true;
+    opts.insert_trailing_comma = true;
+    opts.unquote_key = true;
+    opts.sort_by_key = true;
+
+    const auto manifest_filepath = (*path) / "mod.json";
+    std::ofstream out{manifest_filepath.native()};
+    if (!out)
+    {
+        throw std::runtime_error{"failed to open mod manifest file to write: " +
+                                 filepathutil::to_utf8_path(manifest_filepath)};
+    }
+    out << json5::stringify(root_obj, opts) << std::endl;
 }
 
 } // namespace lua
