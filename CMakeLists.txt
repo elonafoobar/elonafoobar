@@ -123,7 +123,7 @@ elseif(ELONA_BUILD_TARGET STREQUAL "BENCH")
   add_executable(${PROJECT_NAME} src/version.cpp ${BENCH_SOURCES})
   target_link_libraries(${PROJECT_NAME} hayai_main ${LIB_TIMING})
 elseif(ELONA_BUILD_TARGET STREQUAL "GAME")
-  add_executable(${PROJECT_NAME} WIN32 src/main.cpp src/version.cpp)
+  add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE src/main.cpp src/version.cpp)
 elseif(ELONA_BUILD_TARGET STREQUAL "LAUNCHER")
   add_executable(${PROJECT_NAME} WIN32 src/launcher_main.cpp src/version.cpp)
   set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "Elona foobar Launcher")
@@ -388,25 +388,26 @@ endif()
 add_subdirectory(src/thirdparty/minizip)
 target_link_libraries(${PROJECT_NAME} minizip)
 
-install(TARGETS ${PROJECT_NAME}
-  BUNDLE DESTINATION . COMPONENT Runtime
-  RUNTIME DESTINATION bin COMPONENT Runtime)
 
-# Create macOS .app bundle
-set(APPS "\${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}")
+# Install target
 if(APPLE)
-  set(APPS "\${CMAKE_INSTALL_PREFIX}/${PROJECT_NAME}.app")
-endif(APPLE)
-if(WIN32)
-  set(APPS "\${CMAKE_INSTALL_PREFIX}/bin/${PROJECT_NAME}.exe")
-endif(WIN32)
+  set(ELONA_INSTALL_PATH "${CMAKE_CURRENT_LIST_DIR}/bin/bundled")
+  set(ELONA_INSTALL_APP "${ELONA_INSTALL_PATH}/${PROJECT_NAME}.app")
 
-set(DIRS ${LINK_DIRECTORIES})
+  install(
+    TARGETS ${PROJECT_NAME}
+    BUNDLE
+    DESTINATION ${ELONA_INSTALL_PATH}
+    COMPONENT Runtime
+  )
 
-install(CODE "
-  include(BundleUtilities)
-  fixup_bundle(\"${APPS}\" \"\" \"${DIRS}\")
-  " COMPONENT Runtime)
+  install(CODE "
+    include(BundleUtilities)
+
+    fixup_bundle(\"${ELONA_INSTALL_APP}\" \"\" \"\")
+    " COMPONENT Runtime)
+endif()
+
 
 function(copy_nonexisting source target)
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
