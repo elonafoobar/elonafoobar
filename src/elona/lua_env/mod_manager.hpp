@@ -161,7 +161,8 @@ public:
 
     void create_mod_from_template(
         const std::string& new_mod_id,
-        const std::string& template_mod_id);
+        const std::string& template_mod_id,
+        const semver::Version& template_mod_version);
 
     bool exists(const std::string& mod_id);
 

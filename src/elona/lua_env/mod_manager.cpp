@@ -361,11 +361,12 @@ std::vector<ModManifest> ModManager::get_templates()
 
 void ModManager::create_mod_from_template(
     const std::string& new_mod_id,
-    const std::string& template_mod_id)
+    const std::string& template_mod_id,
+    const semver::Version& template_mod_version)
 {
-    const auto template_mod_version = *get_enabled_version(template_mod_id);
     const auto new_mod_version = semver::Version{0, 1, 0};
 
+    // Copy all files from the template mod to the new mod.
     const auto from =
         filesystem::dirs::for_mod(template_mod_id, template_mod_version);
     const auto to = filesystem::dirs::for_mod(new_mod_id, new_mod_version);

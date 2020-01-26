@@ -1481,12 +1481,13 @@ MainMenuResult main_menu_mods_develop()
     pagesize = 16;
     keyrange = 0;
 
+    std::vector<std::pair<std::string, semver::Version>> mod_id_and_versions;
     for (const auto& tmpl : lua::lua->get_mod_manager().get_templates())
     {
         list(0, template_count) = template_count;
         listn(0, template_count) = tmpl.id + " v" + tmpl.version.to_string();
         listn(1, template_count) = tmpl.name;
-        listn(2, template_count) = tmpl.id;
+        mod_id_and_versions.emplace_back(tmpl.id, tmpl.version);
         key_list(template_count) = key_select(template_count);
         ++template_count;
     }
@@ -1593,7 +1594,9 @@ MainMenuResult main_menu_mods_develop()
                 else
                 {
                     lua::lua->get_mod_manager().create_mod_from_template(
-                        new_mod_id, listn(2, p));
+                        new_mod_id,
+                        mod_id_and_versions.at(p).first,
+                        mod_id_and_versions.at(p).second);
                     snd("core.write1");
                 }
                 init = true;
