@@ -110,6 +110,21 @@ public:
     }
 
 
+    bool can_disable_mod(const std::string& id) const noexcept
+    {
+        // `core` mod cannot be disabled!
+        return id != "core";
+    }
+
+
+    /**
+     * Enable/disable mod. When disabling, @a version must be the same as the
+     * currently enabled version. This function, so far, only edits the mod list
+     * file. You need to re-launch foobar to apply the changes.
+     */
+    void toggle_mod(const std::string& id, const semver::Version& version);
+
+
     void load_mods(const ResolvedModList& resolved_mod_list);
 
 

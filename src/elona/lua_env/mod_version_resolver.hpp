@@ -26,6 +26,17 @@ public:
     static ModList from_stream(std::istream& in, const std::string& filepath);
 
 
+    // Save the mod list to `path`.
+    void save(const fs::path& path);
+
+
+
+    RequirementList& mods() noexcept
+    {
+        return _mods;
+    }
+
+
     const RequirementList& mods() const noexcept
     {
         return _mods;

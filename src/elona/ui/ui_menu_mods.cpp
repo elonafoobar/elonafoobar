@@ -32,10 +32,10 @@ bool UIMenuMods::init()
 
 
 
-class DownloadModsInitPrompt : public SimplePrompt<DummyResult>
+class NotificationPrompt : public SimplePrompt<DummyResult>
 {
 public:
-    DownloadModsInitPrompt(std::string message)
+    NotificationPrompt(std::string message)
         : SimplePrompt(message)
     {
     }
@@ -83,7 +83,7 @@ void UIMenuMods::_load_mods()
     if (_is_download)
     {
         draw();
-        DownloadModsInitPrompt(
+        NotificationPrompt(
             i18n::s.get("core.main_menu.mod_list.download.failed"))
             .query();
         _is_download = false;
@@ -248,6 +248,27 @@ void UIMenuMods::_draw_mod_list()
 
 
 
+void UIMenuMods::_try_to_toggle_mod(ModDescription& desc)
+{
+    if (!lua::lua->get_mod_manager().can_disable_mod(desc.manifest.id))
+    {
+        NotificationPrompt(
+            i18n::s.get("core.main_menu.mod_list.toggle.cannot_disable"))
+            .query();
+    }
+    else
+    {
+        snd("core.ok1");
+        desc.enabled = !desc.enabled;
+        lua::lua->get_mod_manager().toggle_mod(
+            desc.manifest.id, desc.manifest.version);
+        // TODO: currently, you need to re-launch foobar to reflect the
+        // configuration.
+    }
+}
+
+
+
 void UIMenuMods::draw()
 {
     if (_redraw)
@@ -269,8 +290,7 @@ optional<UIMenuMods::ResultType> UIMenuMods::on_key(const std::string& action)
         auto& desc = _mod_descriptions.at(pagesize * page + cs);
         if (cs_bk == cs)
         {
-            snd("core.ok1");
-            desc.enabled = !desc.enabled;
+            _try_to_toggle_mod(desc);
         }
         else
         {

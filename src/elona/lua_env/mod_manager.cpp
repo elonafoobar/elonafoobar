@@ -207,6 +207,37 @@ std::vector<ModManifest> ModManager::installed_mods() const
 
 
 
+void ModManager::toggle_mod(
+    const std::string& id,
+    const semver::Version& version)
+{
+    auto mod_list = ModList::from_file(filesystem::files::mod_list());
+
+    if (const auto current_version = get_enabled_version(id))
+    {
+        // Disable
+        assert(can_disable_mod(id));
+        assert(*current_version == version);
+        ELONA_LOG("lua.mod")
+            << "Disable mod " << id << "-" << version.to_string();
+
+        mod_list.mods().erase(id);
+    }
+    else
+    {
+        // Enable
+        ELONA_LOG("lua.mod")
+            << "Enable mod " << id << "-" << version.to_string();
+
+        mod_list.mods().emplace(
+            id, semver::VersionRequirement::from_version(version));
+    }
+
+    mod_list.save(filesystem::files::mod_list());
+}
+
+
+
 void ModManager::load_mods(const ResolvedModList& resolved_mod_list)
 {
     _mod_versions = resolved_mod_list.mod_versions();

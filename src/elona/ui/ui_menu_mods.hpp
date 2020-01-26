@@ -45,6 +45,9 @@ private:
 
     bool _redraw;
     bool _is_download;
+
+
+    void _try_to_toggle_mod(ModDescription& desc);
 };
 
 } // namespace ui

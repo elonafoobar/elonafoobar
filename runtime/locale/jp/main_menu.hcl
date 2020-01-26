@@ -63,7 +63,7 @@ locale {
             }
 
             download {
-                failed = "MODリストのダウンロードに失敗しました。"
+                failed = "MODリストのダウンロードに失敗しました"
             }
 
             hint {
@@ -71,6 +71,10 @@ locale {
                 info = "[MODの情報]"
                 download = "[ダウンロード]"
                 installed = "[インストール済み]"
+            }
+
+            toggle {
+                cannot_disable = "このMODは無効にできません"
             }
         }
 
