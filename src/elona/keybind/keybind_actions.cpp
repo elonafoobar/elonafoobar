@@ -23,123 +23,152 @@ void initialize_keybind_actions(ActionMap& actions)
     // ModKey::shift.
 
     // clang-format off
-    actions.emplace("escape",                Action{ActionCategory::default_,  {{Key::escape,          ModKey::none}}});
-    actions.emplace("cancel",                Action{ActionCategory::default_,  {{Key::shift,           ModKey::none}}});
-    actions.emplace("enter",                 Action{ActionCategory::default_,  {{Key::enter,           ModKey::none}, {Key::keypad_enter, ModKey::none}}});
-    actions.emplace("north",                 Action{ActionCategory::default_,  {{Key::up,              ModKey::none}, {Key::keypad_8,     ModKey::none}}});
-    actions.emplace("south",                 Action{ActionCategory::default_,  {{Key::down,            ModKey::none}, {Key::keypad_2,     ModKey::none}}});
-    actions.emplace("east",                  Action{ActionCategory::default_,  {{Key::left,            ModKey::none}, {Key::keypad_4,     ModKey::none}}});
-    actions.emplace("west",                  Action{ActionCategory::default_,  {{Key::right,           ModKey::none}, {Key::keypad_6,     ModKey::none}}});
-    actions.emplace("northwest",             Action{ActionCategory::default_,  {{Key::home,            ModKey::none}, {Key::keypad_7,     ModKey::none}}});
-    actions.emplace("northeast",             Action{ActionCategory::default_,  {{Key::pageup,          ModKey::none}, {Key::keypad_9,     ModKey::none}}});
-    actions.emplace("southwest",             Action{ActionCategory::default_,  {{Key::end,             ModKey::none}, {Key::keypad_1,     ModKey::none}}});
-    actions.emplace("southeast",             Action{ActionCategory::default_,  {{Key::pagedown,        ModKey::none}, {Key::keypad_3,     ModKey::none}}});
 
-    actions.emplace("shortcut_1",            Action{ActionCategory::shortcut,  {{Key::key_1,           ModKey::none}}});
-    actions.emplace("shortcut_2",            Action{ActionCategory::shortcut,  {{Key::key_2,           ModKey::none}}});
-    actions.emplace("shortcut_3",            Action{ActionCategory::shortcut,  {{Key::key_3,           ModKey::none}}});
-    actions.emplace("shortcut_4",            Action{ActionCategory::shortcut,  {{Key::key_4,           ModKey::none}}});
-    actions.emplace("shortcut_5",            Action{ActionCategory::shortcut,  {{Key::key_5,           ModKey::none}}});
-    actions.emplace("shortcut_6",            Action{ActionCategory::shortcut,  {{Key::key_6,           ModKey::none}}});
-    actions.emplace("shortcut_7",            Action{ActionCategory::shortcut,  {{Key::key_7,           ModKey::none}}});
-    actions.emplace("shortcut_8",            Action{ActionCategory::shortcut,  {{Key::key_8,           ModKey::none}}});
-    actions.emplace("shortcut_9",            Action{ActionCategory::shortcut,  {{Key::key_9,           ModKey::none}}});
-    actions.emplace("shortcut_10",           Action{ActionCategory::shortcut,  {{Key::key_0,           ModKey::none}}});
-    actions.emplace("shortcut_11",           Action{ActionCategory::shortcut,  {{Key::key_1,           ModKey::ctrl}, {Key::key_1, ModKey::shift}}});
-    actions.emplace("shortcut_12",           Action{ActionCategory::shortcut,  {{Key::key_2,           ModKey::ctrl}, {Key::key_2, ModKey::shift}}});
-    actions.emplace("shortcut_13",           Action{ActionCategory::shortcut,  {{Key::key_3,           ModKey::ctrl}, {Key::key_3, ModKey::shift}}});
-    actions.emplace("shortcut_14",           Action{ActionCategory::shortcut,  {{Key::key_4,           ModKey::ctrl}, {Key::key_4, ModKey::shift}}});
-    actions.emplace("shortcut_15",           Action{ActionCategory::shortcut,  {{Key::key_5,           ModKey::ctrl}, {Key::key_5, ModKey::shift}}});
-    actions.emplace("shortcut_16",           Action{ActionCategory::shortcut,  {{Key::key_6,           ModKey::ctrl}, {Key::key_6, ModKey::shift}}});
-    actions.emplace("shortcut_17",           Action{ActionCategory::shortcut,  {{Key::key_7,           ModKey::ctrl}, {Key::key_7, ModKey::shift}}});
-    actions.emplace("shortcut_18",           Action{ActionCategory::shortcut,  {{Key::key_8,           ModKey::ctrl}, {Key::key_8, ModKey::shift}}});
-    actions.emplace("shortcut_19",           Action{ActionCategory::shortcut,  {{Key::key_9,           ModKey::ctrl}, {Key::key_9, ModKey::shift}}});
-    actions.emplace("shortcut_20",           Action{ActionCategory::shortcut,  {{Key::key_0,           ModKey::ctrl}, {Key::key_0, ModKey::shift}}});
+#define K(type)       {Key::type, ModKey::none}
+#define SHIFT_K(type) {Key::type, ModKey::shift}
+#define CTRL_K(type)  {Key::type, ModKey::ctrl}
 
-    actions.emplace("select_1",              Action{ActionCategory::selection, {{Key::key_a,           ModKey::none}}});
-    actions.emplace("select_2",              Action{ActionCategory::selection, {{Key::key_b,           ModKey::none}}});
-    actions.emplace("select_3",              Action{ActionCategory::selection, {{Key::key_c,           ModKey::none}}});
-    actions.emplace("select_4",              Action{ActionCategory::selection, {{Key::key_d,           ModKey::none}}});
-    actions.emplace("select_5",              Action{ActionCategory::selection, {{Key::key_e,           ModKey::none}}});
-    actions.emplace("select_6",              Action{ActionCategory::selection, {{Key::key_f,           ModKey::none}}});
-    actions.emplace("select_7",              Action{ActionCategory::selection, {{Key::key_g,           ModKey::none}}});
-    actions.emplace("select_8",              Action{ActionCategory::selection, {{Key::key_h,           ModKey::none}}});
-    actions.emplace("select_9",              Action{ActionCategory::selection, {{Key::key_i,           ModKey::none}}});
-    actions.emplace("select_10",             Action{ActionCategory::selection, {{Key::key_j,           ModKey::none}}});
-    actions.emplace("select_11",             Action{ActionCategory::selection, {{Key::key_k,           ModKey::none}}});
-    actions.emplace("select_12",             Action{ActionCategory::selection, {{Key::key_l,           ModKey::none}}});
-    actions.emplace("select_13",             Action{ActionCategory::selection, {{Key::key_m,           ModKey::none}}});
-    actions.emplace("select_14",             Action{ActionCategory::selection, {{Key::key_n,           ModKey::none}}});
-    actions.emplace("select_15",             Action{ActionCategory::selection, {{Key::key_o,           ModKey::none}}});
-    actions.emplace("select_16",             Action{ActionCategory::selection, {{Key::key_p,           ModKey::none}}});
-    actions.emplace("select_17",             Action{ActionCategory::selection, {{Key::key_q,           ModKey::none}}});
-    actions.emplace("select_18",             Action{ActionCategory::selection, {{Key::key_r,           ModKey::none}}});
-    actions.emplace("select_19",             Action{ActionCategory::selection, {{Key::key_s,           ModKey::none}}});
+#define BIND(action_name, ...) \
+    actions.emplace(#action_name, Action{ \
+        ActionCategory::CATEGORY, \
+        { __VA_ARGS__ }, \
+    })
 
-    actions.emplace("next_page",             Action{ActionCategory::menu,      {{Key::keypad_plus,     ModKey::none}}});
-    actions.emplace("previous_page",         Action{ActionCategory::menu,      {{Key::keypad_minus,    ModKey::none}}});
-    actions.emplace("next_menu",             Action{ActionCategory::menu,      {{Key::tab,             ModKey::none}}});
-    actions.emplace("previous_menu",         Action{ActionCategory::menu,      {{Key::tab,             ModKey::ctrl}}});
-    actions.emplace("switch_mode",           Action{ActionCategory::menu,      {{Key::key_z,           ModKey::none}}});
-    actions.emplace("switch_mode_2",         Action{ActionCategory::menu,      {{Key::keypad_asterisk, ModKey::none}}});
-    actions.emplace("identify",              Action{ActionCategory::menu,      {{Key::key_x,           ModKey::none}}});
-    actions.emplace("portrait",              Action{ActionCategory::menu,      {{Key::key_p,           ModKey::none}}});
+#define CATEGORY default_
 
-    actions.emplace("wait",                  Action{ActionCategory::game,      {{Key::period,          ModKey::none}, {Key::keypad_5, ModKey::none}}});
-    actions.emplace("quick_menu",            Action{ActionCategory::game,      {{Key::key_z,           ModKey::none}}});
-    actions.emplace("zap",                   Action{ActionCategory::game,      {{Key::key_z,           ModKey::shift}}});
-    actions.emplace("quick_inventory",       Action{ActionCategory::game,      {{Key::key_x,           ModKey::none}}});
-    actions.emplace("inventory",             Action{ActionCategory::game,      {{Key::key_x,           ModKey::shift}}});
-    actions.emplace("get",                   Action{ActionCategory::game,      {{Key::key_g,           ModKey::none}, {Key::keypad_0, ModKey::none}}});
-    actions.emplace("drop",                  Action{ActionCategory::game,      {{Key::key_d,           ModKey::none}}});
-    actions.emplace("chara_info",            Action{ActionCategory::game,      {{Key::key_c,           ModKey::none}}});
-    actions.emplace("eat",                   Action{ActionCategory::game,      {{Key::key_e,           ModKey::none}}});
-    actions.emplace("wear",                  Action{ActionCategory::game,      {{Key::key_w,           ModKey::none}}});
-    actions.emplace("cast",                  Action{ActionCategory::game,      {{Key::key_v,           ModKey::none}}});
-    actions.emplace("drink",                 Action{ActionCategory::game,      {{Key::key_q,           ModKey::none}}});
-    actions.emplace("read",                  Action{ActionCategory::game,      {{Key::key_r,           ModKey::none}}});
-    actions.emplace("fire",                  Action{ActionCategory::game,      {{Key::key_f,           ModKey::none}}});
-    actions.emplace("go_down",               Action{ActionCategory::game,      {{Key::period,          ModKey::shift}}});
-    actions.emplace("go_up",                 Action{ActionCategory::game,      {{Key::comma,           ModKey::shift}}});
-    actions.emplace("save",                  Action{ActionCategory::game,      {{Key::key_s,           ModKey::shift}}});
-    actions.emplace("search",                Action{ActionCategory::game,      {{Key::key_s,           ModKey::none}}});
-    actions.emplace("interact",              Action{ActionCategory::game,      {{Key::key_i,           ModKey::none}}});
-    actions.emplace("skill",                 Action{ActionCategory::game,      {{Key::key_a,           ModKey::none}}});
-    actions.emplace("close",                 Action{ActionCategory::game,      {{Key::key_c,           ModKey::shift}}});
-    actions.emplace("rest",                  Action{ActionCategory::game,      {{Key::key_r,           ModKey::shift}}});
-    actions.emplace("target",                Action{ActionCategory::game,      {{Key::keypad_asterisk, ModKey::none}}});
-    actions.emplace("dig",                   Action{ActionCategory::game,      {{Key::key_d,           ModKey::shift}}});
-    actions.emplace("use",                   Action{ActionCategory::game,      {{Key::key_t,           ModKey::none}}});
-    actions.emplace("bash",                  Action{ActionCategory::game,      {{Key::key_b,           ModKey::none}}});
-    actions.emplace("open",                  Action{ActionCategory::game,      {{Key::key_o,           ModKey::none}}});
-    actions.emplace("dip",                   Action{ActionCategory::game,      {{Key::key_b,           ModKey::shift}}});
-    actions.emplace("pray",                  Action{ActionCategory::game,      {{Key::key_p,           ModKey::none}}});
-    actions.emplace("offer",                 Action{ActionCategory::game,      {{Key::key_o,           ModKey::shift}}});
-    actions.emplace("journal",               Action{ActionCategory::game,      {{Key::key_j,           ModKey::none}}});
-    actions.emplace("material",              Action{ActionCategory::game,      {{Key::key_m,           ModKey::none}}});
-    actions.emplace("trait",                 Action{ActionCategory::game,      {{Key::key_f,           ModKey::shift}}});
-    actions.emplace("look",                  Action{ActionCategory::game,      {{Key::key_l,           ModKey::none}}});
-    actions.emplace("give",                  Action{ActionCategory::game,      {{Key::key_g,           ModKey::shift}}});
-    actions.emplace("throw",                 Action{ActionCategory::game,      {{Key::key_t,           ModKey::shift}}});
-    actions.emplace("ammo",                  Action{ActionCategory::game,      {{Key::key_a,           ModKey::shift}}});
-    actions.emplace("autodig",               Action{ActionCategory::game,      {{Key::key_h,           ModKey::shift}}});
-    actions.emplace("quicksave",             Action{ActionCategory::game,      {{Key::f1,              ModKey::none}}});
-    actions.emplace("quickload",             Action{ActionCategory::game,      {{Key::f2,              ModKey::none}}});
-    actions.emplace("help",                  Action{ActionCategory::game,      {{Key::slash,           ModKey::shift}}});
-    actions.emplace("message_log",           Action{ActionCategory::game,      {{Key::slash,           ModKey::none}}});
-    actions.emplace("chat_box",              Action{ActionCategory::game,      {{Key::tab,             ModKey::none}}});
-    actions.emplace("tcg",                   Action{ActionCategory::game,      {{Key::f3,              ModKey::none}}});
-    actions.emplace("update_screen",         Action{ActionCategory::game,      {{Key::f9,              ModKey::none}}});
-    actions.emplace("dump_player_info",      Action{ActionCategory::game,      {{Key::f11,             ModKey::none}}});
-    actions.emplace("reload_autopick",       Action{ActionCategory::game,      {{Key::backspace,       ModKey::shift}}});
-    actions.emplace("screenshot",            Action{ActionCategory::game,      {{Key::printscreen,     ModKey::none}}});
-    actions.emplace("toggle_console",        Action{ActionCategory::game,      {{Key::f12,             ModKey::none}}});
-    actions.emplace("open_console",          Action{ActionCategory::game,      {{Key::f12,             ModKey::shift}}});
+    BIND(escape,     K(escape) );
+    BIND(cancel,     K(shift)  );
+    BIND(enter,      K(enter),    K(keypad_enter) );
+    BIND(north,      K(up),       K(keypad_8)     );
+    BIND(south,      K(down),     K(keypad_2)     );
+    BIND(east,       K(left),     K(keypad_4)     );
+    BIND(west,       K(right),    K(keypad_6)     );
+    BIND(northwest,  K(home),     K(keypad_7)     );
+    BIND(northeast,  K(pageup),   K(keypad_9)     );
+    BIND(southwest,  K(end),      K(keypad_1)     );
+    BIND(southeast,  K(pagedown), K(keypad_3)     );
 
-    actions.emplace("wizard_mewmewmew",      Action{ActionCategory::wizard,    {{Key::f3,              ModKey::none}}});
-    actions.emplace("wizard_wish",           Action{ActionCategory::wizard,    {{Key::f5,              ModKey::none}}});
-    actions.emplace("wizard_advance_time",   Action{ActionCategory::wizard,    {{Key::f6,              ModKey::none}}});
-    actions.emplace("wizard_delete_map",     Action{ActionCategory::wizard,    {{Key::f7,              ModKey::none}}});
+#undef CATEGORY
+#define CATEGORY shortcut
+
+    BIND(shortcut_1,   K(key_1) );
+    BIND(shortcut_2,   K(key_2) );
+    BIND(shortcut_3,   K(key_3) );
+    BIND(shortcut_4,   K(key_4) );
+    BIND(shortcut_5,   K(key_5) );
+    BIND(shortcut_6,   K(key_6) );
+    BIND(shortcut_7,   K(key_7) );
+    BIND(shortcut_8,   K(key_8) );
+    BIND(shortcut_9,   K(key_9) );
+    BIND(shortcut_10,  K(key_0) );
+    BIND(shortcut_11,  CTRL_K(key_1), SHIFT_K(key_1) );
+    BIND(shortcut_12,  CTRL_K(key_2), SHIFT_K(key_2) );
+    BIND(shortcut_13,  CTRL_K(key_3), SHIFT_K(key_3) );
+    BIND(shortcut_14,  CTRL_K(key_4), SHIFT_K(key_4) );
+    BIND(shortcut_15,  CTRL_K(key_5), SHIFT_K(key_5) );
+    BIND(shortcut_16,  CTRL_K(key_6), SHIFT_K(key_6) );
+    BIND(shortcut_17,  CTRL_K(key_7), SHIFT_K(key_7) );
+    BIND(shortcut_18,  CTRL_K(key_8), SHIFT_K(key_8) );
+    BIND(shortcut_19,  CTRL_K(key_9), SHIFT_K(key_9) );
+    BIND(shortcut_20,  CTRL_K(key_0), SHIFT_K(key_0) );
+
+#undef CATEGORY
+#define CATEGORY selection
+
+    BIND(select_1,   K(key_a) );
+    BIND(select_2,   K(key_b) );
+    BIND(select_3,   K(key_c) );
+    BIND(select_4,   K(key_d) );
+    BIND(select_5,   K(key_e) );
+    BIND(select_6,   K(key_f) );
+    BIND(select_7,   K(key_g) );
+    BIND(select_8,   K(key_h) );
+    BIND(select_9,   K(key_i) );
+    BIND(select_10,  K(key_j) );
+    BIND(select_11,  K(key_k) );
+    BIND(select_12,  K(key_l) );
+    BIND(select_13,  K(key_m) );
+    BIND(select_14,  K(key_n) );
+    BIND(select_15,  K(key_o) );
+    BIND(select_16,  K(key_p) );
+    BIND(select_17,  K(key_q) );
+    BIND(select_18,  K(key_r) );
+    BIND(select_19,  K(key_s) );
+
+#undef CATEGORY
+#define CATEGORY menu
+
+    BIND(next_page,      K(keypad_plus)     );
+    BIND(previous_page,  K(keypad_minus)    );
+    BIND(next_menu,      K(tab)             );
+    BIND(previous_menu,  CTRL_K(tab)        );
+    BIND(switch_mode,    K(key_z)           );
+    BIND(switch_mode_2,  K(keypad_asterisk) );
+    BIND(identify,       K(key_x)           );
+    BIND(portrait,       K(key_p)           );
+
+#undef CATEGORY
+#define CATEGORY game
+
+    BIND(wait,              K(period),          K(keypad_5) );
+    BIND(quick_menu,        K(key_z)       );
+    BIND(zap,               SHIFT_K(key_z) );
+    BIND(quick_inventory,   K(key_x)       );
+    BIND(inventory,         SHIFT_K(key_x) );
+    BIND(get,               K(key_g),           K(keypad_0) );
+    BIND(drop,              K(key_d)       );
+    BIND(chara_info,        K(key_c)       );
+    BIND(eat,               K(key_e)       );
+    BIND(wear,              K(key_w)       );
+    BIND(cast,              K(key_v)       );
+    BIND(drink,             K(key_q)       );
+    BIND(read,              K(key_r)       );
+    BIND(fire,              K(key_f)       );
+    BIND(go_down,           SHIFT_K(period) );
+    BIND(go_up,             SHIFT_K(comma) );
+    BIND(save,              SHIFT_K(key_s) );
+    BIND(search,            K(key_s)       );
+    BIND(interact,          K(key_i)       );
+    BIND(skill,             K(key_a)       );
+    BIND(close,             SHIFT_K(key_c) );
+    BIND(rest,              SHIFT_K(key_r) );
+    BIND(target,            K(keypad_asterisk), SHIFT_K(colon) );
+    BIND(dig,               SHIFT_K(key_d) );
+    BIND(use,               K(key_t)       );
+    BIND(bash,              K(key_b)       );
+    BIND(open,              K(key_o)       );
+    BIND(dip,               SHIFT_K(key_b) );
+    BIND(pray,              K(key_p)       );
+    BIND(offer,             SHIFT_K(key_o) );
+    BIND(journal,           K(key_j)       );
+    BIND(material,          K(key_m)       );
+    BIND(trait,             SHIFT_K(key_f) );
+    BIND(look,              K(key_l)       );
+    BIND(give,              SHIFT_K(key_g) );
+    BIND(throw,             SHIFT_K(key_t) );
+    BIND(ammo,              SHIFT_K(key_a) );
+    BIND(autodig,           SHIFT_K(key_h) );
+    BIND(quicksave,         K(f1)          );
+    BIND(quickload,         K(f2)          );
+    BIND(help,              SHIFT_K(slash) );
+    BIND(message_log,       K(slash)       );
+    BIND(chat_box,          K(tab)         );
+    BIND(tcg,               K(f3)          );
+    BIND(update_screen,     K(f9)          );
+    BIND(dump_player_info,  K(f11)         );
+    BIND(reload_autopick,   SHIFT_K(backspace) );
+    BIND(screenshot,        K(printscreen) );
+    BIND(toggle_console,    K(f12)         );
+    BIND(open_console,      SHIFT_K(f12)   );
+
+#undef CATEGORY
+#define CATEGORY wizard
+
+    BIND(wizard_mewmewmew,     K(f3) );
+    BIND(wizard_wish,          K(f5) );
+    BIND(wizard_advance_time,  K(f6) );
+    BIND(wizard_delete_map,    K(f7) );
+
     // clang-format on
 }
 
