@@ -1,6 +1,8 @@
 #include "ui_menu_mods.hpp"
 
 #include "../../util/fileutil.hpp"
+#include "../../util/natural_order_comparator.hpp"
+#include "../../util/range.hpp"
 #include "../../util/strutil.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"
@@ -29,6 +31,7 @@ bool UIMenuMods::init()
 }
 
 
+
 class DownloadModsInitPrompt : public SimplePrompt<DummyResult>
 {
 public:
@@ -51,6 +54,7 @@ protected:
         return none;
     }
 };
+
 
 
 void UIMenuMods::_load_mods()
@@ -87,23 +91,24 @@ void UIMenuMods::_load_mods()
     }
     else
     {
-        for (const auto& pair : lua::lua->get_mod_manager().mods())
+        for (const auto& manifest :
+             lua::lua->get_mod_manager().installed_mods())
         {
-            const auto& id = pair.second.manifest.id;
-
+            const auto& id = manifest.id;
             if (lua::is_reserved_mod_id(id))
                 continue;
 
-            ModDescription mod_desc{
-                pair.second.manifest,
-                static_cast<bool>(
-                    lua::lua->get_mod_manager().get_enabled_version(id))};
-
-            _mod_descriptions.emplace_back(mod_desc);
+            ModDescription desc{manifest,
+                                lua::lua->get_mod_manager().is_enabled(id)};
+            _mod_descriptions.emplace_back(desc);
             listmax++;
         }
     }
+    range::sort(_mod_descriptions, [](const auto& a, const auto& b) {
+        return lib::natural_order_comparator{}(a.manifest.id, b.manifest.id);
+    });
 }
+
 
 
 optional<ModDescription> UIMenuMods::_find_enabled_mod(const std::string& name)

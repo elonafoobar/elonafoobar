@@ -36,6 +36,14 @@ public:
 
 
     /**
+     * Gets list of the installed mods.
+     * "Installed" means that the mod is unpacked under `mod` folder.
+     * This returns only latest versions.
+     */
+    std::vector<ModManifest> installed_mods() const;
+
+
+    /**
      * Finds the mod that is currently loaded.
      */
     optional_ref<const ModEnv> get_mod(const std::string& id) const noexcept
@@ -93,6 +101,12 @@ public:
         {
             return itr->second;
         }
+    }
+
+
+    bool is_enabled(const std::string& id) const noexcept
+    {
+        return static_cast<bool>(get_enabled_version(id));
     }
 
 
