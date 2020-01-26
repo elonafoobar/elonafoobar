@@ -1598,6 +1598,10 @@ MainMenuResult main_menu_mods_develop()
                         mod_id_and_versions.at(p).first,
                         mod_id_and_versions.at(p).second);
                     snd("core.write1");
+                    ModCreatePrompt(
+                        i18n::s.get(
+                            "core.main_menu.mod_develop.created", new_mod_id))
+                        .query();
                 }
                 init = true;
                 continue;
