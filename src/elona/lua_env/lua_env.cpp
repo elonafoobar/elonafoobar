@@ -72,9 +72,7 @@ void LuaEnv::load_mods()
 {
     const auto list = ModList::from_file(filesystem::files::mod_list());
     const auto lock = ModLock{};
-    // const auto index = ModIndex::traverse(filesystem::dirs::mod());
-    const auto index = ModIndex{
-        {{"core", {ModIndex::IndexEntry{semver::Version{0, 2, 6}, {}}}}}};
+    const auto index = ModIndex::traverse(filesystem::dirs::mod());
 
     ModVersionResolver resolver;
     const auto resolve_result = resolver.resolve(list, lock, index);

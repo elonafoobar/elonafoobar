@@ -37,44 +37,6 @@ bool _is_alnum_only(const std::string& str)
 
 
 
-template <typename F>
-std::vector<fs::path> mod_dirs_internal(const fs::path& base_dir, F predicate)
-{
-    std::vector<fs::path> result;
-    // E.g., lomias-1.2.3
-    for (const auto& entry : filesystem::glob_dirs(
-             base_dir, std::regex{R"([a-z][a-z0-9_]+-[0-9]\.[0-9]\.[0-9])"}))
-    {
-        if (fs::exists(entry.path() / "mod.json"))
-        {
-            if (predicate(entry.path()))
-            {
-                result.push_back(entry.path());
-            }
-        }
-    }
-    return result;
-}
-
-
-
-std::vector<fs::path> all_mod_dirs(const fs::path& base_dir)
-{
-    return mod_dirs_internal(base_dir, [](const auto&) { return true; });
-}
-
-
-
-std::vector<fs::path> template_mod_dirs(const fs::path& base_dir)
-{
-    return mod_dirs_internal(base_dir, [](const auto& path) {
-        const auto id_and_version = filepathutil::to_utf8_path(path.filename());
-        return strutil::has_prefix(id_and_version, "template_");
-    });
-}
-
-
-
 // Callback to be called in Lua for preventing write access to unknown
 // globals.
 int deny_new_fields(
