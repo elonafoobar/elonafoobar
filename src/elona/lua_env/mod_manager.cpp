@@ -371,6 +371,13 @@ void ModManager::create_mod_from_template(
         filesystem::dirs::for_mod(template_mod_id, template_mod_version);
     const auto to = filesystem::dirs::for_mod(new_mod_id, new_mod_version);
     filesystem::copy_recursively(from, to);
+
+    // Edit the new mod's manifest file.
+    auto new_mod_manifest = ModManifest::load(to / "mod.json");
+    new_mod_manifest.id = new_mod_id;
+    new_mod_manifest.version = new_mod_version;
+    new_mod_manifest.name = new_mod_id;
+    new_mod_manifest.save();
 }
 
 
