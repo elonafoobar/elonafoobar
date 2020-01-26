@@ -3,6 +3,11 @@
 module "JSON5"
 
 --- Parses JSON5 text.
+--
+--  @tparam string source JSON5 text
+--  @treturn[1] any Parsed object
+--  @treturn[2] nil If failed
+--  @treturn[2] string Error message
 --  @function parse
 function parse(source, state) end
 
