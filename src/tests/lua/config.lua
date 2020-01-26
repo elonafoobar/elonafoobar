@@ -34,9 +34,9 @@ lrun("test Config.set", function()
 
    Config.set("core.not_found", 1)
 
-   -- invalid type
+   -- Setting an invalid type should be ignored without raising an error.
    local ok = pcall(function() Config.set("core.font.quality", 1) end)
-   lequal(ok, false)
+   lequal(ok, true)
 
    -- Setting nil does nothing.
    Config.set("core.message.transparency", nil)
