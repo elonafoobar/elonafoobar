@@ -36,6 +36,14 @@ public:
 
 
     /**
+     * Gets list of the installed mods.
+     * "Installed" means that the mod is unpacked under `mod` folder.
+     * This returns only latest versions.
+     */
+    std::vector<ModManifest> installed_mods() const;
+
+
+    /**
      * Finds the mod that is currently loaded.
      */
     optional_ref<const ModEnv> get_mod(const std::string& id) const noexcept
@@ -94,6 +102,27 @@ public:
             return itr->second;
         }
     }
+
+
+    bool is_enabled(const std::string& id) const noexcept
+    {
+        return static_cast<bool>(get_enabled_version(id));
+    }
+
+
+    bool can_disable_mod(const std::string& id) const noexcept
+    {
+        // `core` mod cannot be disabled!
+        return id != "core";
+    }
+
+
+    /**
+     * Enable/disable mod. When disabling, @a version must be the same as the
+     * currently enabled version. This function, so far, only edits the mod list
+     * file. You need to re-launch foobar to apply the changes.
+     */
+    void toggle_mod(const std::string& id, const semver::Version& version);
 
 
     void load_mods(const ResolvedModList& resolved_mod_list);

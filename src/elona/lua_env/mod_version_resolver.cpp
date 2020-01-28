@@ -144,6 +144,33 @@ ModList ModList::from_stream(std::istream& in, const std::string& filepath)
 
 
 
+void ModList::save(const fs::path& path)
+{
+    json5::value::object_type root_obj;
+    json5::value::object_type requirements;
+    for (const auto& pair : _mods)
+    {
+        requirements[pair.first] = pair.second.to_string();
+    }
+    root_obj["mods"] = requirements;
+
+    json5::stringify_options opts;
+    opts.prettify = true;
+    opts.insert_trailing_comma = true;
+    opts.unquote_key = true;
+    opts.sort_by_key = true;
+
+    std::ofstream out{path.native()};
+    if (!out)
+    {
+        throw std::runtime_error{"failed to open mod list file to write: " +
+                                 filepathutil::to_utf8_path(path)};
+    }
+    out << json5::stringify(root_obj, opts) << std::endl;
+}
+
+
+
 ModIndex ModIndex::traverse(const fs::path& mod_root_dir)
 {
     std::unordered_map<std::string, std::vector<IndexEntry>> mods;

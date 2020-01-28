@@ -72,6 +72,10 @@ locale {
                 download = "[Switch To Download]"
                 installed = "[Switch To Installed]"
             }
+
+            toggle {
+                cannot_disable = "This mod cannot be disabled."
+            }
         }
 
         mod_develop {

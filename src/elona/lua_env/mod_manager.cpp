@@ -165,6 +165,79 @@ ModManager::ModManager(LuaEnv& lua)
 
 
 
+std::vector<ModManifest> ModManager::installed_mods() const
+{
+    // Traverse `mod` directory, and gather the latest versions.
+    std::unordered_map<std::string, std::pair<semver::Version, fs::path>>
+        mod_dirs;
+    for (const auto& dir : normal_mod_dirs(filesystem::dirs::mod()))
+    {
+        // Get mod ID and version from folder name.
+        const auto dir_name = filepathutil::to_utf8_path(dir.filename());
+        std::string id;
+        std::string version_str;
+        std::tie(id, version_str) = strutil::split_on_string(dir_name, "-");
+        const auto version = semver::Version::parse(version_str).right();
+
+        const auto itr = mod_dirs.find(id);
+        if (itr == std::end(mod_dirs))
+        {
+            mod_dirs[id] = std::make_pair(version, dir);
+        }
+        else
+        {
+            // Update the table only if it is the latest one.
+            if (itr->second.first < version)
+            {
+                mod_dirs[id] = std::make_pair(version, dir);
+            }
+        }
+    }
+
+    // Load each manifest.
+    std::vector<ModManifest> ret;
+    for (const auto& pair : mod_dirs)
+    {
+        const auto& dir = pair.second.second;
+        ModManifest manifest = ModManifest::load(dir / "mod.json");
+        ret.emplace_back(manifest);
+    }
+    return ret;
+}
+
+
+
+void ModManager::toggle_mod(
+    const std::string& id,
+    const semver::Version& version)
+{
+    auto mod_list = ModList::from_file(filesystem::files::mod_list());
+
+    if (const auto current_version = get_enabled_version(id))
+    {
+        // Disable
+        assert(can_disable_mod(id));
+        assert(*current_version == version);
+        ELONA_LOG("lua.mod")
+            << "Disable mod " << id << "-" << version.to_string();
+
+        mod_list.mods().erase(id);
+    }
+    else
+    {
+        // Enable
+        ELONA_LOG("lua.mod")
+            << "Enable mod " << id << "-" << version.to_string();
+
+        mod_list.mods().emplace(
+            id, semver::VersionRequirement::from_version(version));
+    }
+
+    mod_list.save(filesystem::files::mod_list());
+}
+
+
+
 void ModManager::load_mods(const ResolvedModList& resolved_mod_list)
 {
     _mod_versions = resolved_mod_list.mod_versions();
