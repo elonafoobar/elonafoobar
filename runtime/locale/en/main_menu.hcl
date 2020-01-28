@@ -81,6 +81,7 @@ locale {
             no_template = "No template found"
             invalid_id = "'${_1}' is invalid. Only letters, digits, and underscore are allowed."
             exist = "Mod '${_1}' already exists."
+            created = "Mod '${_1}' was successfully created!"
         }
     }
 }

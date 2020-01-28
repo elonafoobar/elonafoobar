@@ -81,6 +81,7 @@ locale {
             no_template = "No template found"
             invalid_id = "'${_1}' は無効です。アルファベット、数字、アンダーバーのみ使用できます"
             exist = "MOD '${_1}' はすでに存在します"
+            created = "MOD '${_1}' を作成しました。"
         }
     }
 }
