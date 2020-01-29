@@ -1,15 +1,18 @@
 #include "save.hpp"
 
 #include "audio.hpp"
+#include "character.hpp"
 #include "character_status.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
 #include "lua_env/lua_env.hpp"
+#include "message.hpp"
 #include "putit.hpp"
 #include "save_update.hpp"
 #include "ui.hpp"
+#include "variables.hpp"
 
 
 

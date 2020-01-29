@@ -2759,8 +2759,8 @@ void initialize_set_of_random_generation()
 
     bool in_booktitle_definition = false;
     int isetbook_index = 0;
-    for (const auto& line : fileutil::read_by_line(
-             i18n::s.get_locale_dir("core") / "lazy" / "book.txt"))
+    for (const auto& line : fileutil::read_by_line(lua::resolve_path_for_mod(
+             "<core>/locale/<LANGUAGE>/lazy/book.txt")))
     {
         if (line == u8"%DEFINE")
         {
@@ -10005,7 +10005,7 @@ bool do_physical_attack_internal()
                 }
                 else
                 {
-                    weapon_name = i18n::s.get_enum_property_opt(
+                    weapon_name = i18n::s.get_enum_property_optional(
                         "core.damage.weapon", "name", attackskill);
                 }
                 if (weapon_name)
@@ -11032,7 +11032,8 @@ void do_play_scene()
     {
         buff(0).clear();
         std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "scene.hsp").native(),
+            lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/scene.hsp")
+                .native(),
             std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -11069,10 +11070,10 @@ void do_play_scene()
             notesel(buff);
             {
                 buff(0).clear();
-                std::ifstream in{
-                    (i18n::s.get_locale_dir("core") / "lazy" / "scene.hsp")
-                        .native(),
-                    std::ios::binary};
+                std::ifstream in{lua::resolve_path_for_mod(
+                                     "<core>/locale/<LANGUAGE>/lazy/scene.hsp")
+                                     .native(),
+                                 std::ios::binary};
                 std::string tmp;
                 while (std::getline(in, tmp))
                 {

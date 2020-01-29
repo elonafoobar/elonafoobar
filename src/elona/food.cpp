@@ -1415,7 +1415,7 @@ void apply_general_eating_effect(Character& eater, Item& food)
                 if (is_in_fov(eater))
                 {
                     txt(i18n::s.get_enum_property(
-                        "core.buff", enc + 10, "apply", eater));
+                        "core.buff", "apply", enc + 10, eater));
                 }
 
                 int legacy_id = 20 + (enc - 10);
@@ -1475,7 +1475,7 @@ foodname(int type, const std::string& ingredient_, int rank, int character_id)
     else
     {
         return i18n::s.get_enum_property(
-            "core.food.names", type, "_" + std::to_string(rank), ingredient);
+            "core.food.names", "_" + std::to_string(rank), type, ingredient);
     }
 }
 

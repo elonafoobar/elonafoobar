@@ -156,7 +156,7 @@ void trait_format_other_parameterless(
 bool trait_is_obtainable(const I18NKey& i18n_prefix, int tid)
 {
     return trait(tid) >= 0 &&
-        i18n::s.get_enum_property_opt(i18n_prefix + ".levels", "name", 0);
+        i18n::s.get_enum_property_optional(i18n_prefix + ".levels", "name", 0);
 }
 
 

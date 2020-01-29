@@ -1,6 +1,7 @@
 #include "enchantment.hpp"
 
 #include "../util/range.hpp"
+#include "character.hpp"
 #include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
 #include "element.hpp"

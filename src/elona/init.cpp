@@ -335,7 +335,8 @@ void initialize_elona()
     {
         buffboard(0).clear();
         std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "board.txt").native(),
+            lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/board.txt")
+                .native(),
             std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))

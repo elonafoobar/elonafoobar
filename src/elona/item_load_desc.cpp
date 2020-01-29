@@ -5,6 +5,7 @@
 #include "enchantment.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "variables.hpp"
 
 
 

@@ -100,8 +100,6 @@ For files under [runtime/graphic](runtime/graphic/) folder of the repository, se
 
 ## Thirdparty libraries
 
-* microhcl: see [src/thirdparty/microhcl/LICENSE](src/thirdparty/microhcl/LICENSE).
-* microhil: see [src/thirdparty/microhil/LICENSE](src/thirdparty/microhil/LICENSE).
 * Catch2: see [src/thirdparty/catch2/LICENSE](src/thirdparty/catch2/LICENSE).
 * hayai: see [src/thirdparty/hayai/LICENSE](src/thirdparty/hayai/LICENSE).
 * sol2: see [src/thirdparty/sol2/LICENSE.txt](src/thirdparty/sol2/LICENSE.txt).

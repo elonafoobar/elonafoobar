@@ -6,6 +6,7 @@
 #include "activity.hpp"
 #include "audio.hpp"
 #include "autopick.hpp"
+#include "character.hpp"
 #include "command.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"

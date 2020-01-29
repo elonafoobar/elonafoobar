@@ -10,6 +10,7 @@
 #include "config.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "log.hpp"
 #include "message.hpp"
 #include "text.hpp"
 #include "variables.hpp"

@@ -177,7 +177,8 @@ public:
 
     virtual std::string get_message() override
     {
-        return i18n::fmt_hil(_text, _value);
+        // return i18n::fmt_hil(_text, _value);
+        return std::to_string(_value);
     }
 
 

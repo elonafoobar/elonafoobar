@@ -5,6 +5,7 @@
 #include "../../input.hpp"
 #include "../../input_prompt.hpp"
 #include "../../keybind/macro_action_queue.hpp"
+#include "../../macro.hpp"
 #include "../../message.hpp"
 
 namespace elona

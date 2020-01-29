@@ -14,7 +14,7 @@ class DataManager;
 class EventManager;
 class ExportManager;
 class HandleManager;
-class I18NFunctionManager;
+class I18NManager;
 class ModManager;
 class Console;
 class ConfigManager;
@@ -63,9 +63,9 @@ public:
         return *handle_mgr;
     }
 
-    I18NFunctionManager& get_i18n_function_manager()
+    I18NManager& get_i18n_manager()
     {
-        return *i18n_function_mgr;
+        return *i18n_mgr;
     }
 
     ModManager& get_mod_manager()
@@ -114,7 +114,7 @@ private:
     std::unique_ptr<ExportManager> export_mgr;
     std::unique_ptr<HandleManager> handle_mgr;
     std::unique_ptr<DataManager> data_mgr;
-    std::unique_ptr<I18NFunctionManager> i18n_function_mgr;
+    std::unique_ptr<I18NManager> i18n_mgr;
     std::unique_ptr<Console> console;
     std::unique_ptr<ConfigManager> config_mgr;
 };

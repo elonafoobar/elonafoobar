@@ -13,7 +13,6 @@
 #include "data/types/type_portrait.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
-#include "hcl.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "map.hpp"

@@ -11,6 +11,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "macro.hpp"
 #include "map.hpp"
 #include "menu.hpp"
 #include "message.hpp"

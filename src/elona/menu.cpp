@@ -22,6 +22,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
+#include "lua_env/interface.hpp"
 #include "macro.hpp"
 #include "magic.hpp"
 #include "menu.hpp"
@@ -345,9 +346,10 @@ void show_ex_help(int id)
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "exhelp.txt").native(),
-            std::ios::binary};
+        std::ifstream in{lua::resolve_path_for_mod(
+                             "<core>/locale/<LANGUAGE>/lazy/exhelp.txt")
+                             .native(),
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
