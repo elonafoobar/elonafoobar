@@ -1,6 +1,5 @@
 #include "init.hpp"
 
-#include "../snail/touch_input.hpp"
 #include "adventurer.hpp"
 #include "area.hpp"
 #include "audio.hpp"
@@ -9,13 +8,13 @@
 #include "building.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
 #include "data/init.hpp"
+#include "deferred_event.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
-#include "event.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "keybind/keybind.hpp"
@@ -45,9 +44,11 @@ namespace
 
 void initialize_directories()
 {
-    const boost::filesystem::path paths[] = {filesystem::dirs::save(),
-                                             filesystem::dirs::screenshot(),
-                                             filesystem::dirs::tmp()};
+    const fs::path paths[] = {
+        filesystem::dirs::save(),
+        filesystem::dirs::screenshot(),
+        filesystem::dirs::tmp(),
+    };
 
     for (const auto& path : paths)
     {
@@ -60,28 +61,12 @@ void initialize_directories()
 
 
 
-void load_character_sprite()
+void initialize_screen(const PreinitConfigOptions& opts)
 {
-    DIM3(userdata, 70, 1);
-    SDIM4(userdatan, 40, 10, 1);
-}
-
-
-
-void initialize_screen()
-{
-    std::string display_mode = Config::instance().display_mode;
-
-    if (defines::is_android)
-    {
-        display_mode =
-            Config::instance().get<std::string>("core.screen.window_mode");
-    }
-
     title(
         u8"Elona foobar version "s + latest_version.short_string(),
-        display_mode,
-        config_get_fullscreen_mode());
+        opts.display_mode(),
+        opts.fullscreen());
 }
 
 
@@ -135,8 +120,8 @@ namespace elona
 
 void initialize_lua()
 {
-    // Scan mods under "mods/" folder.
-    lua::lua->get_mod_manager().load_mods(filesystem::dirs::mod());
+    // Load mods.
+    lua::lua->load_mods();
 
     // Initialize "console" mod.
     lua::lua->get_console().init_environment();
@@ -157,37 +142,6 @@ void initialize_lua()
 
 
 
-void initialize_config()
-{
-    windoww = snail::Application::instance().width();
-    windowh = snail::Application::instance().height();
-
-    if (defines::is_android)
-    {
-        snail::TouchInput::instance().initialize(filesystem::dirs::graphic());
-    }
-
-    time_warn = timeGetTime() / 1000;
-    time_begin = timeGetTime() / 1000;
-
-    mesbox(keylog);
-
-    initialize_directories();
-
-    // The config setup routine needs these variables allocated to
-    // handle the language selection menu.
-    SDIM3(s, 160, 40);
-    DIM2(p, 100);
-    DIM2(rtval, 10);
-    SDIM3(rtvaln, 50, 10);
-    SDIM3(key_select, 2, 20);
-    SDIM2(buff, 10000);
-
-    load_config();
-}
-
-
-
 void initialize_i18n()
 {
     const std::string language = jp ? "jp" : "en";
@@ -197,13 +151,16 @@ void initialize_i18n()
         {filesystem::dirs::locale() / language, "core"}};
 
     // Load translations for each mod.
-    for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dirs::mod()))
+    for (const auto& pair : lua::lua->get_mod_manager().mods())
     {
-        const auto manifest = lua::ModManifest::load(mod_dir / "mod.hcl");
-        const auto locale_path = mod_dir / "locale" / language;
-        if (fs::exists(locale_path))
+        const auto& mod_manifest = pair.second.manifest;
+        if (mod_manifest.path)
         {
-            locations.emplace_back(locale_path, manifest.id);
+            const auto locale_path = *mod_manifest.path / "locale" / language;
+            if (fs::exists(locale_path))
+            {
+                locations.emplace_back(locale_path, mod_manifest.id);
+            }
         }
     }
 
@@ -246,7 +203,6 @@ void initialize_elona()
     DIM3(list, 3, 500);
     SDIM4(listn, 40, 2, 500);
     DIM2(invctrl, 2);
-    SDIM4(promptl, 50, 3, 20);
     SDIM3(description, 1000, 3);
     DIM3(mef, 9, MEF_MAX);
     DIM3(adata, 40, 500);
@@ -271,16 +227,7 @@ void initialize_elona()
     DIM2(invmark, 35);
     DIM2(commark, 3);
     DIM2(feat, 5);
-    DIM3(dirchk, 3, 2);
 
-    dirchk(0, 0) = -1;
-    dirchk(1, 0) = 0;
-    dirchk(2, 0) = 1;
-    dirchk(0, 1) = 1;
-    dirchk(1, 1) = 0;
-    dirchk(2, 1) = -1;
-
-    DIM2(evlist, 10);
     DIM3(pcc, 30, 20);
 
     SDIM1(fltnrace);
@@ -366,15 +313,6 @@ void initialize_elona()
     c_col(1, 20) = 5;
     c_col(2, 20) = 95;
 
-    DIM3(dirchk, 3, 2);
-
-    dirchk(0, 0) = -1;
-    dirchk(1, 0) = 0;
-    dirchk(2, 0) = 1;
-    dirchk(0, 1) = 1;
-    dirchk(1, 1) = 0;
-    dirchk(2, 1) = -1;
-
     DIM2(floorstack, 400);
     SDIM3(key_list, 2, 20);
     SDIM2(playerheader, 100);
@@ -432,22 +370,21 @@ void initialize_elona()
     initialize_nefia_names();
     initialize_home_adata();
     initialize_damage_popups();
-    load_character_sprite();
-    if (Config::instance().music)
+    if (g_config.music())
     {
         bool err = DMINIT() == 0;
         if (err)
         {
-            Config::instance().music = false;
+            throw std::runtime_error{"failed to init music"};
         }
     }
     DSINIT();
-    if (Config::instance().joypad)
+    if (g_config.joypad())
     {
         DIINIT();
         if (DIGETJOYNUM() == 0)
         {
-            Config::instance().joypad = false;
+            throw std::runtime_error{"failed to init joypad"};
         }
     }
     initialize_sound_file();
@@ -542,7 +479,7 @@ void initialize_elona()
     invicon(28) = -1;
     invicon(29) = -1;
 
-    if (Config::instance().autodisable_numlock)
+    if (g_config.autodisable_numlock())
     {
         snail::Input::instance().disable_numlock();
     }
@@ -632,16 +569,15 @@ void initialize_game()
 
     mtilefilecur = -1;
     firstturn = 1;
-    Message::instance().buffered_message_begin(
-        "  Lafrontier presents Elona ver 1.22. Welcome traveler! ");
+    Message::instance().buffered_message_begin("   Welcome traveler! ");
 
     if (mode == 5)
     {
         initialize_world();
         create_all_adventurers();
         mode = 2;
-        event_add(2);
         event_add(24);
+        event_add(2);
         sceneid = 0;
         do_play_scene();
     }
@@ -663,16 +599,16 @@ void initialize_game()
     {
         load_save_data();
 
-        if (Config::instance().get<bool>("core.foobar.run_script_in_save"))
+        if (config_get_boolean("core.foobar.run_script_in_save"))
         {
             will_load_script = true;
         }
     }
 
-    if (will_load_script && Config::instance().startup_script != ""s)
+    if (will_load_script && g_config.startup_script() != ""s)
     {
         lua::lua->get_mod_manager().run_startup_script(
-            Config::instance().startup_script);
+            g_config.startup_script());
         script_loaded = true;
     }
 
@@ -688,52 +624,36 @@ void initialize_game()
 
 
 
-void initialize_config_defs()
-{
-    Config::instance().clear();
-
-    // Somewhat convoluted as mods haven't been loaded yet by the mod manager.
-    for (const auto& mod_dir : lua::normal_mod_dirs(filesystem::dirs::mod()))
-    {
-        const auto manifest = lua::ModManifest::load(mod_dir / "mod.hcl");
-        const auto config_def_path = mod_dir / "config_def.hcl";
-        if (fs::exists(config_def_path))
-        {
-            Config::instance().load_def(config_def_path, manifest.id);
-        }
-    }
-}
-
-
-
 void init()
 {
+    const auto preinit_config_options = PreinitConfigOptions::from_file(
+        filesystem::files::profile_local_config());
+
+    initialize_screen(preinit_config_options);
+
     lua::lua = std::make_unique<lua::LuaEnv>();
 
-    initialize_config_defs();
-
-    initialize_config_preload();
-
-    initialize_screen();
-
-    initialize_config();
+    initialize_directories();
 
     initialize_lua();
+
+    config_load_all_schema();
+    config_load_options();
+
     // Load translations from scanned mods.
     initialize_i18n();
 
     lua::lua->get_api_manager().lock();
 
-    if (Config::instance().font_filename.empty())
+    if (g_config.font_filename().empty())
     {
-        // If no font is specified in `config.hcl`, use a pre-defined font
+        // If no font is specified in `config.json`, use a pre-defined font
         // depending on each language.
-        Config::instance().font_filename =
-            i18n::s.get("core.meta.default_font");
+        g_config.set_font_filename(i18n::s.get("core.meta.default_font"));
         if (jp)
         {
             // TODO: work around
-            Config::instance().set("core.font.vertical_offset", -3);
+            elona::vfix = -3;
         }
     }
 
@@ -741,7 +661,7 @@ void init()
 
     initialize_elona();
 
-    Config::instance().save();
+    config_save();
 
     // It is necessary to calculate PC's birth year correctly.
     game_data.date.year = 517;

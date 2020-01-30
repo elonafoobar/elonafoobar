@@ -8,6 +8,8 @@
 using namespace elona;
 using namespace elona::snail;
 
+
+
 TEST_CASE(
     "When given no bindings, KeybindSerializer should output nothing",
     "[Keybind]")
@@ -18,12 +20,13 @@ TEST_CASE(
 
     serializer.save(ss);
 
-    REQUIRE(ss.str() == R"(keybindings {
-   core {
-   }
+    REQUIRE(ss.str() == R"({
+  core: {
+  },
+})");
 }
-)");
-}
+
+
 
 TEST_CASE(
     "When given invalid bindings, KeybindSerializer should not output them",
@@ -37,12 +40,13 @@ TEST_CASE(
 
     serializer.save(ss);
 
-    REQUIRE(ss.str() == R"(keybindings {
-   core {
-   }
+    REQUIRE(ss.str() == R"({
+  core: {
+  },
+})");
 }
-)");
-}
+
+
 
 TEST_CASE(
     "When given valid bindings, KeybindSerializer should output them",
@@ -66,16 +70,15 @@ TEST_CASE(
 
     serializer.save(ss);
 
-    REQUIRE(ss.str() == R"(keybindings {
-   core {
-       game_action1 {
-           primary = "a"
-           alternate = "Ctrl+Shift+1"
-       }
-       menu_action1 {
-           primary = "B"
-       }
-   }
-}
-)");
+    REQUIRE(ss.str() == R"({
+  core: {
+    game_action1: {
+      alternate: "Ctrl+Shift+1",
+      primary: "a",
+    },
+    menu_action1: {
+      primary: "B",
+    },
+  },
+})");
 }

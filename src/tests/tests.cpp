@@ -6,7 +6,7 @@
 #ifdef ELONA_OS_WINDOWS
 #include <crtdbg.h>
 
-#include <windows>
+#include <windows.h>
 // Prevent assertion dialogs from appearing on Windows, hanging CI test runs
 int WindowsCrtReportHook(int reportType, char* message, int* returnValue)
 {

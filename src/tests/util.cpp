@@ -1,6 +1,6 @@
 #include "../thirdparty/catch2/catch.hpp"
 
-#include "../elona/config/config.hpp"
+#include "../elona/config.hpp"
 #include "../elona/enums.hpp"
 #include "../elona/i18n.hpp"
 #include "../elona/init.hpp"
@@ -18,7 +18,7 @@ namespace testing
 
 void set_english()
 {
-    Config::instance().set("core.language.language", "en");
+    config_set_string("core.language.language", "en");
     elona::jp = 0;
     elona::en = 1;
     initialize_i18n();
@@ -27,7 +27,7 @@ void set_english()
 
 void set_japanese()
 {
-    Config::instance().set("core.language.language", "jp");
+    config_set_string("core.language.language", "jp");
     elona::jp = 1;
     elona::en = 0;
     initialize_i18n();
@@ -54,11 +54,11 @@ void normalize_item(Item& i)
 
 std::string test_itemname(int id, int number, bool prefix)
 {
-    REQUIRE_SOME(itemcreate(-1, id, 0, 0, number));
+    REQUIRE_SOME(itemcreate_extra_inv(id, 0, 0, number));
     int index = elona::ci;
     normalize_item(elona::inv[index]);
     std::string name = itemname(index, number, prefix ? 0 : 1);
-    item_delete(index);
+    item_delete(inv[index]);
     return name;
 }
 
@@ -71,7 +71,7 @@ Character& create_chara(int id, int x, int y)
 
 Item& create_item(int id, int number)
 {
-    REQUIRE_SOME(itemcreate(-1, id, 0, 0, number));
+    REQUIRE_SOME(itemcreate_extra_inv(id, 0, 0, number));
     normalize_item(elona::inv[elona::ci]);
     return elona::inv[elona::ci];
 }
@@ -79,22 +79,22 @@ Item& create_item(int id, int number)
 void invalidate_item(Item& item)
 {
     int old_index = item.index;
-    int old_id = item.id;
+    int old_id = itemid2int(item.id);
     int old_x = item.position.x;
     int old_y = item.position.y;
 
     // Delete the item and create new ones until the index is taken again.
-    item_delete(old_index);
+    item_delete(inv[old_index]);
     do
     {
-        REQUIRE_SOME(itemcreate(-1, old_id, old_x, old_y, 3));
+        REQUIRE_SOME(itemcreate_extra_inv(old_id, old_x, old_y, 3));
     } while (elona::ci != old_index);
 }
 
 void invalidate_chara(Character& chara)
 {
     int old_index = chara.index;
-    int old_id = chara.id;
+    int old_id = charaid2int(chara.id);
     int old_x = chara.position.x;
     int old_y = chara.position.y;
 
@@ -112,9 +112,9 @@ void register_lua_function(
     std::string callback_signature,
     std::string callback_body)
 {
-    lua.get_mod_manager().load_mods(filesystem::dirs::mod());
+    lua.load_mods();
 
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_mod_from_script(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_testing_mod_from_script(
         mod_id,
         "\
 local exports = {}\

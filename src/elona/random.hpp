@@ -18,7 +18,6 @@
 namespace elona
 {
 
-
 namespace detail
 {
 extern xoshiro256::xoshiro256_engine engine;
@@ -47,6 +46,20 @@ inline Integer rnd(Integer max)
 {
     using Dist = boostrandom::uniform_int_distribution<Integer>;
     return Dist{Integer{0}, std::max(Integer{0}, max - 1)}(detail::engine);
+}
+
+
+
+// [0, M) where M is min { max, 32768 }
+// Vanilla-compatible rnd() function. HSP rnd() returns [0, 32768). The upper
+// limit comes from RAND_MAX in C lang.
+template <
+    typename Integer,
+    std::enable_if_t<std::is_integral<Integer>::value, std::nullptr_t> =
+        nullptr>
+inline Integer rnd_capped(Integer max)
+{
+    return rnd(std::min<Integer>(max, 32768));
 }
 
 

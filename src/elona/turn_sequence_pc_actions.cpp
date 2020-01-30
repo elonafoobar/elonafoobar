@@ -6,6 +6,7 @@
 #include "audio.hpp"
 #include "autopick.hpp"
 #include "command.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
@@ -101,18 +102,11 @@ bool _proc_autodig()
 
 optional<TurnResult> handle_pc_action(std::string& action)
 {
+    if (g_config.auto_target())
+        find_enemy_target(true);
+
     if (game_data.wizard)
     {
-        if (action == "wizard_open_console")
-        {
-            lua::lua->get_console().grab_input();
-            return none;
-        }
-        if (action == "wizard_toggle_console")
-        {
-            lua::lua->get_console().toggle();
-            return none;
-        }
         if (action == "wizard_mewmewmew")
         {
             efid = 657;
@@ -150,14 +144,12 @@ optional<TurnResult> handle_pc_action(std::string& action)
 
     if (action == "quicksave")
     {
-        key = "";
         save_game(save_game_no_message, save_game_silent);
         txt(i18n::s.get("core.action.quicksave"));
         return none;
     }
     if (action == "quickload")
     {
-        key = "";
         Message::instance().clear();
         firstturn = 1;
         load_save_data();
@@ -205,22 +197,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         await(500);
         return none;
     }
-    if (action == "enable_voldemort")
-    {
-        debug::voldemort = true;
-        if (debug::voldemort)
-        {
-            game_data.wizard = 1;
-            for (int i = 400; i < 467; ++i)
-            {
-                if (i != 426 && i != 427)
-                {
-                    chara_gain_skill(cdata.player(), i, 100, 10000);
-                }
-            }
-        }
-        return none;
-    }
 
     if (action == "reload_autopick")
     {
@@ -252,42 +228,43 @@ optional<TurnResult> handle_pc_action(std::string& action)
                 continue;
             if (item.position != cdata[cc].position)
                 continue;
-            if (the_item_db[item.id]->category == 72000)
+            if (the_item_db[itemid2int(item.id)]->category == 72000)
             {
                 p = 1;
             }
-            if (the_item_db[item.id]->subcategory == 60001)
+            if (the_item_db[itemid2int(item.id)]->subcategory == 60001)
             {
                 p = 2;
             }
-            if (the_item_db[item.id]->category == 60002)
+            if (the_item_db[itemid2int(item.id)]->category == 60002)
             {
                 p(0) = 3;
                 p(1) = item.index;
             }
-            if (item.function != 0 || the_item_db[item.id]->is_usable)
+            if (item.function != 0 ||
+                the_item_db[itemid2int(item.id)]->is_usable)
             {
                 p = 4;
             }
-            if (the_item_db[item.id]->is_readable)
+            if (the_item_db[itemid2int(item.id)]->is_readable)
             {
                 p = 5;
             }
-            if (item.id == 631)
+            if (item.id == ItemId::moon_gate)
             {
                 action = "go_down";
             }
-            if (item.id == 750 &&
+            if (item.id == ItemId::upstairs &&
                 game_data.current_map == mdata_t::MapId::your_home)
             {
                 action = "go_up";
             }
-            if (item.id == 751 &&
+            if (item.id == ItemId::downstairs &&
                 game_data.current_map == mdata_t::MapId::your_home)
             {
                 action = "go_down";
             }
-            if (item.id == 753)
+            if (item.id == ItemId::kotatsu)
             {
                 action = "go_down";
             }
@@ -818,7 +795,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         if (_proc_autodig())
         {
-            return do_dig_after_sp_check();
+            return do_dig_after_sp_check(cdata.player());
         }
 
         return do_movement_command();
@@ -844,6 +821,16 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         _take_screenshot();
         await(100);
+        return none;
+    }
+    if (action == "open_console")
+    {
+        lua::lua->get_console().grab_input();
+        return none;
+    }
+    if (action == "toggle_console")
+    {
+        lua::lua->get_console().toggle();
         return none;
     }
     if (action != ""s && action != "cancel" /* && key != key_alter */)

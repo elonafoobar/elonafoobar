@@ -1,5 +1,8 @@
 #include "type_map_chip.hpp"
+#include "../../lua_env/interface.hpp"
 #include "../../variables.hpp"
+
+
 
 namespace elona
 {
@@ -42,7 +45,7 @@ MapChip MapChipDB::convert(const lua::ConfigTable& data, const std::string& id)
     else
     {
         std::string filepath_str = source.as<std::string>();
-        filepath = filesystem::resolve_path_for_mod(filepath_str);
+        filepath = lua::resolve_path_for_mod(filepath_str);
         if (!fs::exists(*filepath))
         {
             throw std::runtime_error(

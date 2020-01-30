@@ -23,8 +23,8 @@ namespace
 int calc_power_decreased_by_resistance(int cc, int power, Element element)
 {
     const auto resistance_level = sdata(int(element), cc) / 50;
-    power =
-        (rnd(power / 2 + 1) + power / 2) * 100 / (50 + resistance_level * 50);
+    power = (rnd_capped(power / 2 + 1) + power / 2) * 100 /
+        (50 + resistance_level * 50);
 
     if (resistance_level >= 3 && power < 40)
     {
@@ -55,7 +55,7 @@ void status_ailment_damage(
     case StatusAilment::blinded:
         if (chara.is_immune_to_blindness())
             return;
-        if (chara.quality > Quality::great && rnd(chara.level / 2 + 1))
+        if (chara.quality > Quality::great && rnd_capped(chara.level / 2 + 1))
             return;
         power = calc_power_decreased_by_resistance(
             chara.index, power, Element::darkness);
@@ -76,14 +76,14 @@ void status_ailment_damage(
         {
             chara.blind += turn / 3 + 1;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::confused:
         if (chara.is_immune_to_confusion())
             return;
         if (buff_has(chara, "core.hero"))
             return;
-        if (chara.quality > Quality::great && rnd(chara.level / 2 + 1))
+        if (chara.quality > Quality::great && rnd_capped(chara.level / 2 + 1))
             return;
         power = calc_power_decreased_by_resistance(
             chara.index, power, Element::mind);
@@ -104,12 +104,12 @@ void status_ailment_damage(
         {
             chara.confused += turn / 3 + 1;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::paralyzed:
         if (chara.is_immune_to_paralyzation())
             return;
-        if (chara.quality > Quality::great && rnd(chara.level + 1))
+        if (chara.quality > Quality::great && rnd_capped(chara.level + 1))
             return;
         power = calc_power_decreased_by_resistance(
             chara.index, power, Element::nerve);
@@ -130,12 +130,12 @@ void status_ailment_damage(
         {
             chara.paralyzed += turn / 3 + 1;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::poisoned:
         if (chara.is_immune_to_poison())
             return;
-        if (chara.quality > Quality::great && rnd(chara.level / 3 + 1))
+        if (chara.quality > Quality::great && rnd_capped(chara.level / 3 + 1))
             return;
         power = calc_power_decreased_by_resistance(
             chara.index, power, Element::poison);
@@ -156,12 +156,12 @@ void status_ailment_damage(
         {
             chara.poisoned += turn / 3 + 3;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::sleep:
         if (chara.is_immune_to_sleep())
             return;
-        if (chara.quality > Quality::great && rnd(chara.level / 5 + 1))
+        if (chara.quality > Quality::great && rnd_capped(chara.level / 5 + 1))
             return;
         power = calc_power_decreased_by_resistance(
             chara.index, power, Element::nerve);
@@ -182,7 +182,7 @@ void status_ailment_damage(
         {
             chara.sleep += turn / 3 + 1;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::fear:
         if (chara.is_immune_to_fear())
@@ -191,7 +191,7 @@ void status_ailment_damage(
             return;
         if (buff_has(chara, "core.hero"))
             return;
-        if (chara.quality > Quality::great && rnd(chara.level / 5 + 1))
+        if (chara.quality > Quality::great && rnd_capped(chara.level / 5 + 1))
             return;
         power = calc_power_decreased_by_resistance(
             chara.index, power, Element::mind);
@@ -208,7 +208,7 @@ void status_ailment_damage(
         }
         return;
     case StatusAilment::dimmed:
-        if (chara.quality > Quality::great && rnd(chara.level / 3 + 1))
+        if (chara.quality > Quality::great && rnd_capped(chara.level / 3 + 1))
             return;
         if (cdatan(2, chara.index) == u8"golem"s)
             return;
@@ -231,7 +231,7 @@ void status_ailment_damage(
         {
             chara.dimmed += turn / 3 + 1;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::bleeding:
         if (chara.quality > Quality::great)
@@ -255,7 +255,7 @@ void status_ailment_damage(
         {
             chara.bleeding += turn;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::drunk:
         turn = power / 10;
@@ -293,7 +293,7 @@ void status_ailment_damage(
         {
             chara.insane += turn / 3 + 1;
         }
-        chara.continuous_action.finish();
+        chara.activity.finish();
         return;
     case StatusAilment::sick:
         turn = power / 10;

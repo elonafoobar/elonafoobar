@@ -11,7 +11,8 @@ TEST_CASE("Test that index of copied item is set", "[C++: Item]")
     testing::start_in_debug_map();
     int amount = 1;
 
-    REQUIRE_SOME(itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, amount));
+    REQUIRE_SOME(
+        itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount));
     Item& i = elona::inv[elona::ci];
 
     int ti = elona::inv_getfreeid(-1);

@@ -18,12 +18,6 @@ enum class PromptType
     with_number,
 };
 
-// int show_prompt(
-//     int x,
-//     int y,
-//     int width,
-//     PromptType type = PromptType::normal,
-//     int initial_number = 0);
 
 
 void input_number_dialog(int x, int y, int max_number, int initial_number = 0);
@@ -46,6 +40,18 @@ optional<int> get_shortcut(const std::string& action);
 bool is_modifier_pressed(snail::ModKey modifier);
 void wait_key_released();
 void wait_key_pressed(bool only_enter_or_cancel = false);
+
+
+
+enum class HaltInput
+{
+    // Halt all input regardless of configuration.
+    force,
+    // Halt all input if `core.animation.alert_wait` is non-zero.
+    alert,
+};
+
+void input_halt_input(HaltInput mode);
 
 
 

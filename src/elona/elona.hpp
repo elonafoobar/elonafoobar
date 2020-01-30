@@ -522,9 +522,6 @@ int notesel(std::string&);
 void noteunsel();
 
 
-void objprm(int, const std::string&);
-
-
 
 void pget(int x, int y);
 
@@ -593,21 +590,9 @@ void onkey_0();
 
 
 void bload(const fs::path& filename, std::string& data, int size = 0, int = 0);
-void bload(
-    const fs::path& filename,
-    int& data,
-    int size = sizeof(int),
-    int = 0);
-void bload(
-    const fs::path& filename,
-    elona_vector1<int>& data,
-    int size = 0,
-    int = 0);
 
 
 void bsave(const fs::path& filename, const std::string& data);
-void bsave(const fs::path& filename, int data);
-void bsave(const fs::path& filename, elona_vector1<int>& data);
 
 
 template <typename T>

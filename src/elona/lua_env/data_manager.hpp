@@ -13,7 +13,7 @@ namespace elona
 namespace lua
 {
 
-struct ModInfo;
+struct ModEnv;
 
 
 
@@ -44,7 +44,7 @@ public:
 
 
 private:
-    void _init_from_mod(ModInfo& mod);
+    void _init_from_mod(ModEnv& mod);
 
     DataTable _data;
 };

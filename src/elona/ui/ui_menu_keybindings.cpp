@@ -346,7 +346,7 @@ public:
 protected:
     optional<bool> update() override
     {
-        await(Config::instance().general_wait);
+        await(g_config.general_wait());
 
         const auto& keys = snail::Input::instance().pressed_keys();
 
@@ -451,7 +451,7 @@ public:
 protected:
     optional<KeyPromptResult> update() override
     {
-        await(Config::instance().general_wait);
+        await(g_config.general_wait());
 
         const auto& keys = snail::Input::instance().pressed_keys();
         auto modifiers = snail::Input::instance().modifiers();
@@ -541,7 +541,7 @@ static void _prompt_for_key(const std::string& action_id)
 
     // Prevent Shift from firing the cancel action.
     keywait = 1;
-    keyhalt = 1;
+    input_halt_input(HaltInput::force);
 }
 
 optional<UIMenuKeybindings::ResultType> UIMenuKeybindings::on_key(

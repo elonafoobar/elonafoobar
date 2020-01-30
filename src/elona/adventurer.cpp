@@ -38,7 +38,7 @@ void create_all_adventurers()
 void create_adventurer()
 {
     flt(0, Quality::miracle);
-    initlv = rnd(60 + cdata.player().level) + 1;
+    initlv = rnd_capped(60 + cdata.player().level) + 1;
     p(0) = 75;
     p(1) = 41;
     p(2) = 160;
@@ -74,7 +74,7 @@ void create_adventurer()
     cdata[rc].current_map = p;
     cdata[rc].current_dungeon_level = 1;
     cdata[rc].fame = cdata[rc].level * cdata[rc].level * 30 +
-        rnd((cdata[rc].level * 200 + 100)) + rnd(500);
+        rnd_capped(cdata[rc].level * 200 + 100) + rnd(500);
 }
 
 
@@ -287,14 +287,16 @@ void adventurer_update()
         }
         if (rnd(20) == 0)
         {
-            cdata[rc].fame += rnd(cdata[rc].level * cdata[rc].level / 40 + 5) -
-                rnd((cdata[rc].level * cdata[rc].level / 50 + 5));
+            cdata[rc].fame +=
+                rnd_capped(cdata[rc].level * cdata[rc].level / 40 + 5) -
+                rnd_capped(cdata[rc].level * cdata[rc].level / 50 + 5);
         }
         if (rnd(2000) == 0)
         {
             cdata[rc].experience += clamp(cdata[rc].level, 1, 1000) *
                 clamp(cdata[rc].level, 1, 1000) * 100;
-            int fame = rnd(cdata[rc].level * cdata[rc].level / 20 + 10) + 10;
+            int fame =
+                rnd_capped(cdata[rc].level * cdata[rc].level / 20 + 10) + 10;
             cdata[rc].fame += fame;
             addnews(4, rc, fame);
             adventurer_discover_equipment();
@@ -320,25 +322,25 @@ void adventurer_update()
 int adventurer_discover_equipment()
 {
     f = 0;
-    for (int cnt = 0; cnt < 10; ++cnt)
+    for (int _i = 0; _i < 10; ++_i)
     {
-        ci = get_random_inv(rc);
-        if (inv[ci].number() == 0)
+        auto&& item = get_random_inv(rc);
+        if (item.number() == 0)
         {
             f = 1;
             break;
         }
-        if (inv[ci].body_part != 0)
+        if (item.body_part != 0)
         {
             continue;
         }
-        if (inv[ci].number() != 0)
+        if (item.number() != 0)
         {
-            if (cdata[rc].item_which_will_be_used == ci)
+            if (cdata[rc].item_which_will_be_used == item.index)
             {
                 cdata[rc].item_which_will_be_used = 0;
             }
-            inv[ci].remove();
+            item.remove();
             f = 1;
             break;
         }
@@ -356,14 +358,14 @@ int adventurer_discover_equipment()
     {
         flttypemajor = choice(fsetitem);
     }
-    if (itemcreate(rc, 0, -1, -1, 0))
+    if (const auto item = itemcreate_chara_inv(rc, 0, 0))
     {
-        inv[ci].identify_state = IdentifyState::completely;
-        if (inv[ci].quality >= Quality::miracle)
+        item->identify_state = IdentifyState::completely;
+        if (item->quality >= Quality::miracle)
         {
-            if (the_item_db[inv[ci].id]->category < 50000)
+            if (the_item_db[itemid2int(item->id)]->category < 50000)
             {
-                addnews(1, rc, 0, itemname(ci));
+                addnews(1, rc, 0, itemname(item->index));
             }
         }
         wear_most_valuable_equipment();

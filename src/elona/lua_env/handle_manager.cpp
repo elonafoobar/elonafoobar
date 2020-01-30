@@ -2,7 +2,7 @@
 #include <cassert>
 #include <set>
 #include "../character.hpp"
-#include "../config/config.hpp"
+#include "../config.hpp"
 #include "../item.hpp"
 #include "../log.hpp"
 #include "../macro.hpp"
@@ -22,7 +22,7 @@ namespace lua
 HandleManager::HandleManager(LuaEnv& lua)
     : LuaSubmodule(lua)
 {
-    lua_state()->set("_IS_TEST", Config::instance().is_test);
+    lua_state()->set("_IS_TEST", g_config.is_test());
 
     // Load the Lua chunk for storing handles.
     safe_script(R"(Handle = require_relative("handle"))");
@@ -175,9 +175,9 @@ void HandleManager::clear_map_local_handles()
     {
         remove_chara_handle(cdata[i]);
     }
-    for (int i = ELONA_OTHER_INVENTORIES_INDEX; i < ELONA_MAX_ITEMS; i++)
+    for (auto&& item : inv.map_local())
     {
-        remove_item_handle(inv[i]);
+        remove_item_handle(item);
     }
 }
 

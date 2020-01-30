@@ -8,31 +8,27 @@ import sys
 
 
 class Version:
-    def __init__(self, major, minor, patch, android):
+    def __init__(self, major, minor, patch):
         self.major = major
         self.minor = minor
         self.patch = patch
-        self.android = android
 
     def inc(self, mode):
         if mode == 'major':
             return Version(
                 self.major + 1,
                 0,
-                0,
-                self.android + 1)
+                0)
         elif mode == 'minor':
             return Version(
                 self.major,
                 self.minor + 1,
-                0,
-                self.android + 1)
+                0)
         elif mode == 'patch':
             return Version(
                 self.major,
                 self.minor,
-                self.patch + 1,
-                self.android + 1)
+                self.patch + 1)
 
     def __str__(self):
         return '{}.{}.{}'.format(
@@ -56,35 +52,31 @@ def main():
         cmakelist = file.read()
 
         ver = r'project\(Elona_foobar VERSION (\d+)\.(\d+)\.(\d+)\)'
-        ver_android = r'set\(PROJECT_VERSION_CODE (\d+)\)'
 
         ver_match = re.search(ver, cmakelist)
-        ver_android_match = re.search(ver_android, cmakelist)
 
         old_ver = Version(
             int(ver_match.group(1)),
             int(ver_match.group(2)),
-            int(ver_match.group(3)),
-            int(ver_android_match.group(1)))
+            int(ver_match.group(3)))
         new_ver = old_ver.inc(args.mode)
 
         cmakelist = re.sub(
             ver,
-            'project(Elona_foobar VERSION {}.{}.{})'.format(new_ver.major, new_ver.minor, new_ver.patch),
-            cmakelist)
-        cmakelist = re.sub(
-            ver_android,
-            'set(PROJECT_VERSION_CODE {})'.format(new_ver.android),
+            'project(Elona_foobar VERSION {}.{}.{})'.format(
+                new_ver.major, new_ver.minor, new_ver.patch),
             cmakelist)
 
     if not args.dry_run:
         with open('CMakeLists.txt', 'w') as file:
             file.write(cmakelist)
 
-        cmd = 'git commit -a -m "Increment {} version: {} -> {}"'.format(args.mode, old_ver, new_ver)
+        cmd = 'git commit -a -m "Increment {} version: {} -> {}"'.format(
+            args.mode, old_ver, new_ver)
         subprocess.call(cmd, shell=True)
 
-        print('Elona foobar''s {} version is successfully incremented: {} -> {}'.format(args.mode, old_ver, new_ver))
+        print('Elona foobar''s {} version is successfully incremented: {} -> {}'.format(
+            args.mode, old_ver, new_ver))
     else:
         print('Elona foobar''s {} version will be incremented: {} -> {}'.format(args.mode, old_ver, new_ver))
 

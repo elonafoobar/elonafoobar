@@ -2,6 +2,7 @@
 #include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
 #include "area.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "data/types/type_ability.hpp"
 #include "elona.hpp"
@@ -9,6 +10,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "map.hpp"
+#include "map_cell.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -89,7 +91,6 @@ namespace elona
 
 int p_at_m34 = 0;
 int talkref = 0;
-elona_vector1<int> p_at_m41;
 
 
 
@@ -1035,7 +1036,7 @@ void get_npc_talk()
                 buff, 0, u8"%ALLY_DEFAULT,"s + i18n::s.get("core.meta.tag"));
             break;
         }
-        if (cdata[tc].id == 335)
+        if (cdata[tc].id == CharaId::prostitute)
         {
             p = instr(buff, 0, u8"%BITCH,"s + i18n::s.get("core.meta.tag"));
             break;
@@ -1907,7 +1908,8 @@ void append_subquest_journal(int val0)
                 "core.quest.journal.sub.joining_fighters_guild.progress",
                 0,
                 game_data.guild.fighters_guild_quota,
-                chara_refstr(game_data.guild.fighters_guild_target, 2));
+                chara_db_get_name(
+                    int2charaid(game_data.guild.fighters_guild_target)));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1962,7 +1964,8 @@ void append_subquest_journal(int val0)
                 "core.quest.journal.sub.quota_fighters_guild.progress",
                 0,
                 game_data.guild.fighters_guild_quota,
-                chara_refstr(game_data.guild.fighters_guild_target, 2));
+                chara_db_get_name(
+                    int2charaid(game_data.guild.fighters_guild_target)));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -2186,158 +2189,142 @@ void load_random_title_table()
 
 
 
-std::string random_title(RandomTitleType type)
+std::string random_title_base(RandomTitleType type)
 {
-    std::string ret;
-
-    elona_vector1<std::string> randn2_at_m41;
-    int rtval_at_m41 = 0;
-redo:
-    for (int cnt = 0; cnt < 1; ++cnt)
+    while (true)
     {
-        p_at_m41(2) = rnd(_rnlist.j_size());
-        p_at_m41(1) = rnd(14);
-        if (_rnlist(p_at_m41(1), p_at_m41(2)) == ""s)
+        int row;
+        int column;
+        while (true)
         {
-            --cnt;
-            continue;
+            row = rnd(_rnlist.j_size());
+            column = rnd(14);
+            if (_rnlist(column, row) != "")
+            {
+                break;
+            }
         }
-    }
 
-    if (type == RandomTitleType::weapon ||
-        type == RandomTitleType::living_weapon)
-    {
-        if (_rnlist(14, p_at_m41(2)) == u8"具"s)
+        const auto category = _rnlist(14, row);
+        if (type == RandomTitleType::weapon ||
+            type == RandomTitleType::living_weapon)
         {
-            goto redo;
+            if (category == u8"具"s)
+            {
+                continue;
+            }
         }
-    }
-    randn2_at_m41(0) = _rnlist(p_at_m41(1), p_at_m41(2));
-    randn2_at_m41(1) = _rnlist(14, p_at_m41(2));
-    rtval_at_m41 = -1;
-    if (jp)
-    {
-        for (int cnt = 0; cnt < 1; ++cnt)
+
+        auto title = _rnlist(column, row);
+        if (jp)
         {
-            if (p_at_m41(1) == 10 || p_at_m41(1) == 11)
+            if (column == 10 || column == 11)
             {
                 if (rnd(5) == 0)
                 {
-                    p_at_m41(1) = 0;
-                    p_at_m41(3) = rnd(2);
-                    if (p_at_m41(3) == 0)
+                    column = 0;
+                    if (rnd(2) == 0)
                     {
-                        randn2_at_m41 += u8"の"s;
+                        title += u8"の"s;
                     }
-                    break;
                 }
-                p_at_m41 = rnd(5);
-                if (p_at_m41 == 0)
+                else
                 {
-                    randn2_at_m41 += u8"・オブ・"s;
-                }
-                if (p_at_m41 == 1)
-                {
-                    randn2_at_m41 = u8"ザ・"s + randn2_at_m41;
-                    rtval_at_m41 = 1;
-                    break;
-                }
-                if (p_at_m41 == 2)
-                {
-                    randn2_at_m41 += u8"・"s;
+                    const auto p = rnd(5);
+                    if (p == 0)
+                    {
+                        title += u8"・オブ・"s;
+                    }
+                    if (p == 1)
+                    {
+                        return u8"ザ・"s + title;
+                    }
+                    if (p == 2)
+                    {
+                        title += u8"・"s;
+                    }
                 }
             }
-            if (p_at_m41(1) == 0 || p_at_m41(1) == 1)
+            else if (column == 0 || column == 1)
             {
-                randn2_at_m41 += u8"の"s;
-                p_at_m41(3) = rnd(10);
-                if (p_at_m41(3) == 0)
+                title += u8"の"s;
+                if (rnd(10) == 0)
                 {
-                    p_at_m41(1) = 10;
+                    column = 10;
                 }
             }
-        }
-    }
-    else
-    {
-        for (int cnt = 0; cnt < 1; ++cnt)
-        {
-            if (p_at_m41(1) == 0 || p_at_m41(1) == 1)
-            {
-                if (rnd(6) == 0)
-                {
-                    randn2_at_m41 += u8" of"s;
-                }
-                else if (rnd(6) == 0)
-                {
-                    randn2_at_m41 = u8"the "s + randn2_at_m41;
-                    rtval_at_m41 = 1;
-                    break;
-                }
-            }
-            randn2_at_m41 += u8" "s;
-        }
-        randn2_at_m41 = cnven(randn2_at_m41);
-    }
-
-    if (rtval_at_m41 == 1)
-    {
-        ret = randn2_at_m41;
-        goto skip;
-    }
-
-    rtval_at_m41 = -1;
-
-    for (int cnt = 0; cnt < 100; ++cnt)
-    {
-        p_at_m41(4) = rnd(_rnlist.j_size());
-        if (p_at_m41(4) == p_at_m41(2))
-        {
-            continue;
-        }
-        if (_rnlist(14, p_at_m41(4)) == randn2_at_m41(1))
-        {
-            if (_rnlist(14, p_at_m41(4)) != u8"万能"s)
-            {
-                if (randn2_at_m41(1) != u8"万能"s)
-                {
-                    continue;
-                }
-            }
-        }
-        if (p_at_m41(1) < 10)
-        {
-            p_at_m41(1) = rnd(2);
         }
         else
         {
-            p_at_m41(1) = rnd(2);
-            p_at_m41(1) += 10;
+            if (column == 0 || column == 1)
+            {
+                if (rnd(6) == 0)
+                {
+                    title += u8" of"s;
+                }
+                else if (rnd(6) == 0)
+                {
+                    return u8"the "s + title;
+                }
+            }
+            title = cnven(title + " ");
         }
-        if (_rnlist(p_at_m41(1), p_at_m41(4)) == ""s)
+
+        bool success = false;
+        int new_row;
+        for (int _i = 0; _i < 100; ++_i)
+        {
+            new_row = rnd(_rnlist.j_size());
+            if (new_row == row)
+            {
+                continue;
+            }
+            if (_rnlist(14, new_row) == category && category != u8"万能"s)
+            {
+                continue;
+            }
+            if (column < 10)
+            {
+                column = rnd(2);
+            }
+            else
+            {
+                column = rnd(2);
+                column += 10;
+            }
+            if (_rnlist(column, new_row) == "")
+            {
+                continue;
+            }
+            success = true;
+            break;
+        }
+
+        if (!success)
         {
             continue;
         }
-        rtval_at_m41 = 1;
-        break;
-    }
-    if (rtval_at_m41 == -1)
-    {
-        goto redo;
-    }
-    if (en)
-    {
-        _rnlist(p_at_m41(1), p_at_m41(4)) =
-            cnven(_rnlist(p_at_m41(1), p_at_m41(4)));
-    }
-    randn2_at_m41 += _rnlist(p_at_m41(1), p_at_m41(4));
-    ret = randn2_at_m41;
-    if (strlen_u(ret) >= 28)
-    {
-        goto redo;
-    }
 
-skip:
+        if (en)
+        {
+            _rnlist(column, new_row) = cnven(_rnlist(column, new_row));
+        }
+
+        title += _rnlist(column, new_row);
+        if (strlen_u(title) >= 28)
+        {
+            continue;
+        }
+
+        return title;
+    }
+}
+
+
+
+std::string random_title(RandomTitleType type)
+{
+    auto ret = random_title_base(type);
 
     if (type == RandomTitleType::party)
     {
@@ -2360,27 +2347,30 @@ skip:
                 });
             }
         }
-        else if (rnd(2))
-        {
-            ret = choice(std::initializer_list<const char*>{
-                      u8"The army of ",
-                      u8"The party of ",
-                      u8"The house of ",
-                      u8"Clan ",
-                  }) +
-                ret;
-        }
         else
         {
-            ret += choice(std::initializer_list<const char*>{
-                u8" Clan",
-                u8" Party",
-                u8" Band",
-                u8" Gangs",
-                u8" Gathering",
-                u8" House",
-                u8" Army",
-            });
+            if (rnd(2))
+            {
+                ret = choice(std::initializer_list<const char*>{
+                          u8"The army of ",
+                          u8"The party of ",
+                          u8"The house of ",
+                          u8"Clan ",
+                      }) +
+                    ret;
+            }
+            else
+            {
+                ret += choice(std::initializer_list<const char*>{
+                    u8" Clan",
+                    u8" Party",
+                    u8" Band",
+                    u8" Gangs",
+                    u8" Gathering",
+                    u8" House",
+                    u8" Army",
+                });
+            }
         }
     }
 
@@ -2602,6 +2592,66 @@ std::string name(int cc)
         }
     }
     return cdatan(0, cc);
+}
+
+
+
+std::string txtitemoncell(int x, int y)
+{
+    const auto item_info = cell_itemoncell({x, y});
+    const auto number = item_info.first;
+    const auto item = item_info.second;
+
+    if (number <= 3)
+    {
+        std::string items_text;
+        if (cell_data.at(x, y).item_appearances_memory < 0)
+        {
+            std::array<int, 3> item_indice;
+            const auto i = -cell_data.at(x, y).item_appearances_memory;
+            item_indice[0] = i % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            item_indice[1] = i / 1000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            item_indice[2] = i / 1000000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            size_t counter{};
+            for (const auto& item_index : item_indice)
+            {
+                if (item_index == 6079)
+                {
+                    continue;
+                }
+                if (counter != 0)
+                {
+                    items_text += i18n::s.get("core.misc.and");
+                }
+                items_text += itemname(item_index);
+                ++counter;
+            }
+        }
+        else
+        {
+            items_text = itemname(item);
+        }
+        if (inv[item].own_state <= 0)
+        {
+            return i18n::s.get(
+                "core.action.move.item_on_cell.item", items_text);
+        }
+        else if (inv[item].own_state == 3)
+        {
+            return i18n::s.get(
+                "core.action.move.item_on_cell.building", items_text);
+        }
+        else
+        {
+            return i18n::s.get(
+                "core.action.move.item_on_cell.not_owned", items_text);
+        }
+    }
+    else
+    {
+        return i18n::s.get(
+            "core.action.move.item_on_cell.more_than_three", number);
+    }
 }
 
 } // namespace elona

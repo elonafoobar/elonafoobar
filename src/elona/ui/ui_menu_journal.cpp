@@ -76,7 +76,7 @@ bool UIMenuJournal::init()
     {
         noteadd(""s);
     }
-    gold = 0;
+    int gold = 0;
     p = clamp(cdata.player().fame / 10, 100, 25000);
     if (cdata.player().fame >= 25000)
     {

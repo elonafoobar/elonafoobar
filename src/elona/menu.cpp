@@ -1,5 +1,6 @@
 #include "menu.hpp"
 #include <iostream>
+#include <stack>
 #include "ability.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
@@ -8,7 +9,8 @@
 #include "character_status.hpp"
 #include "class.hpp"
 #include "command.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
+#include "config_menu.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_portrait.hpp"
 #include "defines.hpp"
@@ -58,8 +60,10 @@
 namespace
 {
 
-void _set_pcc_info(Character& chara, int val0)
+std::string _set_pcc_info(Character& chara, int val0)
 {
+    std::string text;
+
     rtval = -2;
     if (page == 0)
     {
@@ -72,21 +76,21 @@ void _set_pcc_info(Character& chara, int val0)
             rtval(0) = 100;
             rtval(1) = 0;
             rtval(2) = -2;
-            rtvaln = chara.portrait;
+            text = chara.portrait;
         }
         if (val0 == 2)
         {
             rtval(0) = 1;
             rtval(1) = 0;
             rtval(2) = pcc(1, chara.index) % 1000;
-            rtvaln = u8"hair"s;
+            text = u8"hair"s;
         }
         if (val0 == 3)
         {
             rtval(0) = 10;
             rtval(1) = 0;
             rtval(2) = pcc(10, chara.index) % 1000;
-            rtvaln = u8"subhair"s;
+            text = u8"subhair"s;
         }
         if (val0 == 4)
         {
@@ -99,26 +103,26 @@ void _set_pcc_info(Character& chara, int val0)
             rtval(0) = 15;
             rtval(1) = 0;
             rtval(2) = pcc(15, chara.index) % 1000;
-            rtvaln = u8"body"s;
+            text = u8"body"s;
         }
         if (val0 == 6)
         {
             rtval(0) = 9;
             rtval(1) = 0;
             rtval(2) = pcc(9, chara.index) % 1000;
-            rtvaln = u8"cloth"s;
+            text = u8"cloth"s;
         }
         if (val0 == 7)
         {
             rtval(0) = 7;
             rtval(1) = 0;
             rtval(2) = pcc(7, chara.index) % 1000;
-            rtvaln = u8"pants"s;
+            text = u8"pants"s;
         }
         if (val0 == 8)
         {
             rtval = -1;
-            rtvaln = "";
+            text = "";
         }
         if (val0 == 9)
         {
@@ -133,7 +137,7 @@ void _set_pcc_info(Character& chara, int val0)
                 rtval(0) = 16;
                 rtval(1) = 0;
                 rtval(2) = pcc(16, chara.index) % 1000;
-                rtvaln = u8"ride"s;
+                text = u8"ride"s;
             }
         }
     }
@@ -162,35 +166,37 @@ void _set_pcc_info(Character& chara, int val0)
             rtval(0) = 11;
             rtval(1) = 0;
             rtval(2) = pcc(11, chara.index) % 1000;
-            rtvaln = u8"etc"s;
+            text = u8"etc"s;
         }
         if (val0 == 4)
         {
             rtval(0) = 12;
             rtval(1) = 0;
             rtval(2) = pcc(12, chara.index) % 1000;
-            rtvaln = u8"etc"s;
+            text = u8"etc"s;
         }
         if (val0 == 5)
         {
             rtval(0) = 13;
             rtval(1) = 0;
             rtval(2) = pcc(13, chara.index) % 1000;
-            rtvaln = u8"etc"s;
+            text = u8"etc"s;
         }
         if (val0 == 6)
         {
             rtval(0) = 14;
             rtval(1) = 0;
             rtval(2) = pcc(14, chara.index) % 1000;
-            rtvaln = u8"eye"s;
+            text = u8"eye"s;
         }
         if (val0 == 7)
         {
             rtval = -1;
-            rtvaln = "";
+            text = "";
         }
     }
+
+    return text;
 }
 
 } // namespace
@@ -303,13 +309,13 @@ void text_set()
 
 bool maybe_show_ex_help(int id, bool should_update_screen)
 {
-    if (Config::instance().extra_help)
+    if (g_config.extra_help())
     {
         if (game_data.exhelp_flags.at(id) == 0)
         {
             if (mode == 0)
             {
-                if (cdata.player().continuous_action.turn == 0)
+                if (cdata.player().activity.turn == 0)
                 {
                     game_data.exhelp_flags.at(id) = 1;
                     show_ex_help(id);
@@ -781,7 +787,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
         {
             gmode(2);
             const auto is_fullscale =
-                Config::instance().pcc_graphic_scale == "fullscale";
+                g_config.pcc_graphic_scale() == "fullscale";
             const auto width = is_fullscale ? 32 : 24;
             const auto height = is_fullscale ? 48 : 40;
             for (int i = 0; i < 4; ++i)
@@ -813,7 +819,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
             {
                 break;
             }
-            _set_pcc_info(chara, cnt);
+            const auto text = _set_pcc_info(chara, cnt);
             s = listn(0, p);
             if (rtval >= 0)
             {
@@ -827,7 +833,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                 }
                 else
                 {
-                    s += " " + rtvaln;
+                    s += " " + text;
                 }
             }
             cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1);
@@ -843,7 +849,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
         }
         redraw();
         auto action = cursor_check_ex();
-        _set_pcc_info(chara, cs);
+        const auto text = _set_pcc_info(chara, cs);
         bool changed = false;
         if (rtval == -2)
         {
@@ -897,7 +903,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
             {
                 if (fs::exists(
                         filesystem::dirs::graphic() /
-                        (u8"pcc_"s + rtvaln + u8"_" +
+                        (u8"pcc_"s + text + u8"_" +
                          (pcc(rtval, chara.index) % 1000 + 1) + u8".bmp")))
                 {
                     ++pcc(rtval, chara.index);
@@ -929,7 +935,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                 if ((pcc(rtval, chara.index) % 1000 == 1 && rtval != 15) ||
                     fs::exists(
                         filesystem::dirs::graphic() /
-                        (u8"pcc_"s + rtvaln + u8"_"s +
+                        (u8"pcc_"s + text + u8"_"s +
                          (pcc(rtval, chara.index) % 1000 - 1) + u8".bmp"s)))
                 {
                     --pcc(rtval, chara.index);
@@ -1025,8 +1031,7 @@ void change_appearance_equipment(Character& chara)
         display_topic(s, wx + 34, wy + 36);
         window2(wx + 234, wy + 60, 88, 120, 1, 1);
         gmode(2);
-        const auto is_fullscale =
-            Config::instance().pcc_graphic_scale == "fullscale";
+        const auto is_fullscale = g_config.pcc_graphic_scale() == "fullscale";
         const auto width = is_fullscale ? 32 : 24;
         const auto height = is_fullscale ? 48 : 40;
         for (int i = 0; i < 4; ++i)
@@ -1152,6 +1157,8 @@ void append_accuracy_info(int val0)
     }
 }
 
+
+
 void show_weapon_dice(int val0)
 {
     tc = cc;
@@ -1165,11 +1172,10 @@ void show_weapon_dice(int val0)
         mes(wx + 417, wy + 281 + p(2) * 16, s(1), {20, 10, 0});
     }
     attackrange = 0;
-    if (the_item_db[inv[cw].id]->category == 24000) // TODO coupling
+    if (the_item_db[itemid2int(inv[cw].id)]->category == 24000) // TODO coupling
     {
         attackrange = 1;
     }
-    attackvar = 0;
     int tohit = calc_accuracy(false);
     dmg = calcattackdmg(AttackDamageCalculationMode::raw_damage);
     font(14 - en * 2);
@@ -1198,6 +1204,8 @@ void show_weapon_dice(int val0)
     }
     ++p(2);
 }
+
+
 
 static TurnResult _visit_quest_giver(int quest_index)
 {
@@ -1300,7 +1308,7 @@ void begin_to_believe_god(int god_id)
     if (!result.canceled && result.value)
     {
         rtval = *result.value;
-        god_proc_switching_penalty();
+        god_proc_switching_penalty(core_god::int2godid(god_id));
     }
 }
 
@@ -1374,66 +1382,78 @@ void screen_analyze_self()
     buff += u8"\n"s;
     buff += u8"<title1>◆ 特徴と特殊状態による能力の恩恵<def>\n"s;
     listmax = noteinfo();
-label_1965_internal:
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
+
+    bool init = true;
+    while (true)
     {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-    ui_display_window(
-        i18n::s.get("core.ui.analysis.title"),
-        strhint2 + strhint3b,
-        (windoww - 400) / 2 + inf_screenx,
-        winposy(448),
-        400,
-        448);
-    s = i18n::s.get("core.ui.analysis.result");
-    display_topic(s, wx + 28, wy + 36);
-    font(14 - en * 2);
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
+        if (init)
         {
-            break;
+            init = false;
+
+            cs_bk = -1;
+            pagemax = (listmax - 1) / pagesize;
+            if (page < 0)
+            {
+                page = pagemax;
+            }
+            else if (page > pagemax)
+            {
+                page = 0;
+            }
+            ui_display_window(
+                i18n::s.get("core.ui.analysis.title"),
+                strhint2 + strhint3b,
+                (windoww - 400) / 2 + inf_screenx,
+                winposy(448),
+                400,
+                448);
+            s = i18n::s.get("core.ui.analysis.result");
+            display_topic(s, wx + 28, wy + 36);
+            font(14 - en * 2);
+            for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+            {
+                p = pagesize * page + cnt;
+                if (p >= listmax)
+                {
+                    break;
+                }
+                noteget(s, p);
+                gmes(s, wx, wy + 66 + cnt * 19 + 2, 600, {30, 30, 30}, false);
+            }
+            redraw();
         }
-        noteget(s, p);
-        gmes(s, wx, wy + 66 + cnt * 19 + 2, 600, {30, 30, 30}, false);
-    }
-    redraw();
-label_1966_internal:
-    redraw();
-    auto action = get_selected_item(p(0));
-    p = -1;
-    if (action == "next_page")
-    {
-        if (pagemax != 0)
+
+        redraw();
+        auto action = get_selected_item(p(0));
+        p = -1;
+        if (action == "next_page")
         {
-            snd("core.pop1");
-            ++page;
-            goto label_1965_internal;
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                ++page;
+                init = true;
+                continue;
+            }
         }
-    }
-    if (action == "previous_page")
-    {
-        if (pagemax != 0)
+        if (action == "previous_page")
         {
-            snd("core.pop1");
-            --page;
-            goto label_1965_internal;
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                --page;
+                init = true;
+                continue;
+            }
+        }
+        if (action == "cancel")
+        {
+            return;
         }
     }
-    if (action == "cancel")
-    {
-        return;
-    }
-    goto label_1966_internal;
 }
+
+
 
 int change_npc_tone()
 {
@@ -1464,21 +1484,16 @@ int change_npc_tone()
 
 
 
-void show_book_window()
+void show_book_window(const Item& book)
 {
-    ui::UIMenuBook(inv[ci].param1).show();
+    ui::UIMenuBook(book.param1).show();
 }
 
 
-void item_show_description()
-{
-    if (ci < 0)
-    {
-        dialog(i18n::s.get("core.item.desc.window.error"));
-        return;
-    }
 
-    ui::UIMenuItemDesc(inv[ci]).show();
+void item_show_description(const Item& item)
+{
+    ui::UIMenuItemDesc(item).show();
 
     returnfromidentify = 1;
 }
@@ -1510,6 +1525,55 @@ void menu_chat_dialog()
 void menu_voting_box()
 {
     ui::UIMenuVotingBox().show();
+}
+
+
+
+void show_option_menu()
+{
+    struct ConfigMenuHistory
+    {
+        int cs;
+        int submenu;
+    };
+
+
+    int submenu = 0;
+    cs = 0;
+    std::stack<ConfigMenuHistory> history;
+
+    const auto config_menu = config_build_menu();
+
+    while (true)
+    {
+        auto& menu_def = config_menu.at(submenu);
+        const auto result = menu_def->query();
+
+        if (result)
+        {
+            if (result->go_back)
+            {
+                {
+                    const auto& prev = history.top();
+                    cs = prev.cs;
+                    submenu = prev.submenu;
+                }
+                history.pop();
+            }
+            // Don't push history if the submenu index returned is the same
+            // (user viewed and exited the help text of an option)
+            else if (result->submenu != submenu)
+            {
+                history.push({cs, submenu});
+                cs = 0;
+                submenu = result->submenu;
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
 }
 
 } // namespace elona

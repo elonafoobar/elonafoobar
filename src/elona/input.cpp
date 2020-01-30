@@ -1,9 +1,8 @@
 #include "input.hpp"
-#include "../snail/android.hpp"
 #include "../util/strutil.hpp"
 #include "audio.hpp"
 #include "blending.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
@@ -18,6 +17,17 @@
 
 namespace elona
 {
+
+namespace
+{
+
+// Flags which control input behavior.
+
+bool msgalert = false;
+
+} // namespace
+
+
 
 void input_number_dialog(int x, int y, int max_number, int initial_number)
 {
@@ -139,7 +149,6 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
         rtval = -1;
     }
     keywait = 1;
-    key = "";
     rtval = 0;
 }
 
@@ -169,13 +178,12 @@ bool input_text_dialog(
     {
         if (ginfo(2) != 0)
         {
-            objprm(1, ""s);
             inputlog = "";
             await(100);
             --cnt;
             continue;
         }
-        await(Config::instance().general_wait);
+        await(g_config.general_wait());
         window2(x, y, dx, 36, 0, 2);
         draw("label_input", x + dx / 2 - 60, y - 32);
 
@@ -240,7 +248,6 @@ bool input_text_dialog(
         }
         if (strutil::contains(inputlog(0), u8"\t"))
         {
-            objprm(1, ""s);
             inputlog = "";
             if (is_cancelable)
             {
@@ -253,7 +260,6 @@ bool input_text_dialog(
             {
                 inputlog = "";
                 keywait = 1;
-                key = "";
                 break;
             }
         }
@@ -273,34 +279,31 @@ bool input_text_dialog(
     inputlog = strutil::remove_line_ending(inputlog);
     onkey_0();
 
-    keyhalt = 1;
+    input_halt_input(HaltInput::force);
 
     return canceled;
 }
 
-static void _proc_android_vibrate()
-{
-    if (Config::instance().get<bool>("core.android.vibrate"))
-    {
-        int duration =
-            Config::instance().get<int>("core.android.vibrate_duration");
-        snail::android::vibrate(static_cast<long>(duration * 25));
-    }
-}
+
 
 static void _handle_msgalert()
 {
-    if (Config::instance().alert_wait > 1)
-    {
-        _proc_android_vibrate();
+    if (!msgalert)
+        return;
 
-        for (int i = 0; i < Config::instance().alert_wait; ++i)
+    msgalert = false;
+    if (g_config.alert_wait() > 1) // TODO: maybe ">= 1"?
+    {
+        for (int i = 0; i < g_config.alert_wait(); ++i)
         {
-            await(Config::instance().general_wait);
+            await(g_config.general_wait());
+            // TODO: break if no input
         }
         keylog = "";
     }
 }
+
+
 
 static void _update_pressed_key_name()
 {
@@ -318,49 +321,42 @@ static void _update_pressed_key_name()
 }
 
 
+
 std::string key_check(KeyWaitDelay delay_type)
 {
-    if (msgalert == 1)
-    {
-        _handle_msgalert();
-        msgalert = 0;
-    }
+    _handle_msgalert();
 
     _update_pressed_key_name();
 
-    await(Config::instance().general_wait);
+    await(g_config.general_wait());
     return InputContext::for_menu().check_for_command(delay_type);
 }
 
 
+
 std::string key_check_pc_turn(KeyWaitDelay delay_type)
 {
-    if (msgalert == 1)
-    {
-        _handle_msgalert();
-        msgalert = 0;
-    }
+    _handle_msgalert();
 
     _update_pressed_key_name();
 
-    await(Config::instance().general_wait);
+    await(g_config.general_wait());
     return InputContext::instance().check_for_command(delay_type);
 }
 
 
+
 std::string cursor_check_ex(int& index)
 {
-    if (msgalert == 1)
-    {
-        _handle_msgalert();
-        msgalert = 0;
-    }
+    _handle_msgalert();
 
     _update_pressed_key_name();
 
-    await(Config::instance().general_wait);
+    await(g_config.general_wait());
     return InputContext::for_menu().check_for_command_with_list(index);
 }
+
+
 
 std::string cursor_check_ex()
 {
@@ -369,18 +365,15 @@ std::string cursor_check_ex()
 }
 
 
+
 std::string get_selected_item(int& p_)
 {
-    if (msgalert == 1)
-    {
-        _handle_msgalert();
-        msgalert = 0;
-    }
+    _handle_msgalert();
 
     _update_pressed_key_name();
 
     int index{};
-    await(Config::instance().general_wait);
+    await(g_config.general_wait());
     auto command = InputContext::for_menu().check_for_command_with_list(index);
 
     p_ = -1;
@@ -428,15 +421,16 @@ bool is_modifier_pressed(snail::ModKey modifier)
 }
 
 
+
 void wait_key_released()
 {
     while (1)
     {
-        await(Config::instance().general_wait);
+        await(g_config.general_wait());
         const auto input = stick(StickKey::mouse_left | StickKey::mouse_right);
         if (input == StickKey::none)
         {
-            await(Config::instance().general_wait);
+            await(g_config.general_wait());
             auto action = key_check();
             if (action == "")
             {
@@ -450,12 +444,12 @@ void wait_key_released()
 
 void wait_key_pressed(bool only_enter_or_cancel)
 {
-    if (Config::instance().is_test)
+    if (g_config.is_test())
         return;
 
     while (1)
     {
-        await(Config::instance().general_wait);
+        await(g_config.general_wait());
         auto action = key_check();
         if (only_enter_or_cancel)
         {
@@ -466,15 +460,29 @@ void wait_key_pressed(bool only_enter_or_cancel)
         }
         else
         {
+            // TODO: 押されたキーに対応する action がなくとも break すべき
             if (action != "")
             {
                 break;
             }
         }
     }
-    keyhalt = 1;
+    input_halt_input(HaltInput::force);
 }
 
 
+
+void input_halt_input(HaltInput mode)
+{
+    switch (mode)
+    {
+    case HaltInput::force:
+        InputContext::instance().halt_input();
+        InputContext::for_menu().halt_input();
+        break;
+    case HaltInput::alert: msgalert = true; break;
+    default: assert(0); break;
+    }
+}
 
 } // namespace elona

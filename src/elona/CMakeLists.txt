@@ -1,7 +1,6 @@
 # Source files
 set(ELONA_SOURCES
   ability.cpp
-  access_character_info.cpp
   activity.cpp
   adventurer.cpp
   ai.cpp
@@ -17,15 +16,20 @@ set(ELONA_SOURCES
   casino.cpp
   casino_card.cpp
   cell_draw.cpp
+  chara_db.cpp
   character.cpp
   character_making.cpp
   character_status.cpp
   class.cpp
   command.cpp
+  config.cpp
+  config_menu.cpp
   crafting.cpp
   ctrl_file.cpp
   ctrl_inventory.cpp
+  death.cpp
   debug.cpp
+  deferred_event.cpp
   dialog.cpp
   dmgheal.cpp
   draw.cpp
@@ -35,7 +39,6 @@ set(ELONA_SOURCES
   elonacore.cpp
   enchantment.cpp
   equipment.cpp
-  event.cpp
   filesystem.cpp
   fish.cpp
   food.cpp
@@ -72,7 +75,6 @@ set(ELONA_SOURCES
   message.cpp
   message_log.cpp
   net.cpp
-  proc_event.cpp
   quest.cpp
   race.cpp
   random.cpp
@@ -81,7 +83,6 @@ set(ELONA_SOURCES
   save_update.cpp
   set_item_info.cpp
   shop.cpp
-  spec.cpp
   status_ailment.cpp
   std.cpp
   talk.cpp
@@ -104,6 +105,7 @@ set(ELONA_SOURCES
   data/util.cpp
 
   lua_env/api_manager.cpp
+  lua_env/config_manager.cpp
   lua_env/console.cpp
   lua_env/data_manager.cpp
   lua_env/event_manager.cpp
@@ -115,6 +117,7 @@ set(ELONA_SOURCES
   lua_env/mod_manager.cpp
   lua_env/mod_manifest.cpp
   lua_env/mod_serializer.cpp
+  lua_env/mod_version_resolver.cpp
 
   lua_env/enums/enums.cpp
 
@@ -130,11 +133,6 @@ set(ELONA_SOURCES
   lua_env/lua_class/lua_class_map_data.cpp
   lua_env/lua_class/lua_class_map_generator.cpp
   lua_env/lua_class/lua_class_position.cpp
-
-  config/config.cpp
-  config/config_def.cpp
-  config/set_option.cpp
-  config/create_config_screen.cpp
 
   keybind/input_context.cpp
   keybind/key_names.cpp
@@ -152,8 +150,4 @@ set(ELONA_SOURCES
   profile/profile_manager.cpp
   )
 
-if(ANDROID_GENERATE_BUILD_FILES)
-  generate_android_mk(elona SOURCES ${ELONA_SOURCES})
-else()
-  add_library(elona STATIC ${ELONA_SOURCES})
-endif()
+add_library(elona STATIC ${ELONA_SOURCES})

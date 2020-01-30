@@ -1,7 +1,6 @@
 locale {
     map {
         prompt_initialize = "Initialize this map? (Warning, only do this if an error occurs when loading this map. Make sure make a backup of the current save folder before doing this.)"
-        loading_failed = "Map loading failed."
         location_changed = "The location of ${_1} has been changed from x${_2}:y${_3} to x${_4}:y${_5}."
 
         no_dungeon_master = "This place is pretty dull. The dungeon master is no longer sighted here."
@@ -283,5 +282,14 @@ locale {
 
         you_see = "You see ${_1}."
         you_see_an_entrance = "You see an entrance leading to ${_1}.(Approximate danger level: ${_2}) "
+
+        # TODO: translate
+        # museum {
+        #     rank_lowest = ...
+        #     rank_low = ...
+        #     rank_middle = ...
+        #     rank_high = ...
+        #     rank_highest = ...
+        # }
     }
 }

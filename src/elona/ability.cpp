@@ -6,6 +6,7 @@
 #include "character_status.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "input.hpp"
 #include "message.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -384,7 +385,7 @@ void chara_gain_skill_exp(
             {
                 snd("core.ding3");
                 Message::instance().txtef(ColorIndex::green);
-                msgalert = 1;
+                input_halt_input(HaltInput::alert);
             }
             txt(txtskillchange(id, cc.index, true));
         }
@@ -415,7 +416,7 @@ void chara_gain_skill_exp(
             {
                 if (lv_delta != 0)
                 {
-                    msgalert = 1;
+                    input_halt_input(HaltInput::alert);
                     txt(txtskillchange(id, cc.index, false),
                         Message::color{ColorIndex::red});
                 }

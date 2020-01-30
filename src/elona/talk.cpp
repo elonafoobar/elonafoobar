@@ -2,10 +2,10 @@
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
+#include "deferred_event.hpp"
 #include "draw.hpp"
 #include "enums.hpp"
-#include "event.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -37,10 +37,10 @@ void talk_start()
 
 bool talk_setup_variables(Character &chara)
 {
-    keyhalt = 1;
+    input_halt_input(HaltInput::force);
     if (chara.character_role == 1005)
     {
-        if (Config::instance().extra_help)
+        if (g_config.extra_help())
         {
             maybe_show_ex_help(7, true);
         }
@@ -56,11 +56,10 @@ bool talk_setup_variables(Character &chara)
         map_proc_regen_and_update();
     }
     cs = 0;
-    chatflag = 0;
     chatesc = 1;
     if (chara.relationship <= -1)
     {
-        if (evnum == 0)
+        if (!event_has_pending_events())
         {
             txt(i18n::s.get("core.talk.will_not_listen", chara));
             quest_teleport = false;
@@ -104,15 +103,15 @@ void talk_to_npc(Character &chara)
     chatval_show_impress = true;
     if (chara.quality == Quality::special && tc >= 16)
     {
-        chatval_unique_chara_id = chara.id;
+        chatval_unique_chara_id = charaid2int(chara.id);
         chatval_show_impress = false;
     }
-    if (event_id() == 2)
+    if (event_processing_event() == 2)
     {
         talk_wrapper(TalkResult::talk_game_begin);
         return;
     }
-    if (event_id() == 16)
+    if (event_processing_event() == 16)
     {
         talk_wrapper(TalkResult::talk_finish_escort);
         return;
@@ -122,7 +121,7 @@ void talk_to_npc(Character &chara)
         talk_wrapper(TalkResult::talk_sleeping);
         return;
     }
-    if (chara.continuous_action)
+    if (chara.activity)
     {
         talk_wrapper(TalkResult::talk_busy);
         return;
@@ -229,67 +228,6 @@ TalkResult talk_ignored()
     return TalkResult::talk_end;
 }
 
-static void _give_potion_of_cure_corruption(int stat)
-{
-    inv[stat].modify_number(-1);
-    txt(i18n::s.get("core.talk.unique.pael.give.you_give"));
-    snd("core.equip1");
-}
-
-bool talk_give_potion_of_cure_corruption()
-{
-    list(0, listmax) = 1;
-    listn(0, listmax) = i18n::s.get("core.talk.unique.pael.give.choice");
-    ++listmax;
-    list(0, listmax) = 0;
-    listn(0, listmax) = i18n::s.get("core.ui.bye");
-    ++listmax;
-    int chatval_ = talk_window_query();
-    if (chatval_ != 1)
-    {
-        return false;
-    }
-    int stat = inv_find(559, 0);
-    if (stat == -1)
-    {
-        listmax = 0;
-        buff = i18n::s.get("core.talk.unique.pael.give.do_not_have");
-        tc = tc * 1 + 0;
-        list(0, listmax) = 0;
-        listn(0, listmax) = i18n::s.get("core.ui.more");
-        ++listmax;
-        chatesc = 1;
-        talk_window_query();
-        if (scenemode)
-        {
-            if (scene_cut == 1)
-            {
-                return false;
-            }
-        }
-        return false;
-    }
-
-    _give_potion_of_cure_corruption(stat);
-
-    listmax = 0;
-    buff = i18n::s.get("core.talk.unique.pael.give.dialog", cdatan(0, 0));
-    tc = tc * 1 + 0;
-    list(0, listmax) = 0;
-    listn(0, listmax) = i18n::s.get("core.ui.more");
-    ++listmax;
-    chatesc = 1;
-    talk_window_query();
-    if (scenemode)
-    {
-        if (scene_cut == 1)
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
 
 
 TalkResult talk_game_begin()
@@ -332,14 +270,14 @@ TalkResult talk_game_begin()
         update_screen();
         await(3000);
         Message::instance().linebreak();
-        txt(i18n::s.get("core.talk.unique.lomias.begin.easter_egg."
-                        "something_is_killed"),
+        txt(i18n::s.get(
+                "core.talk.unique.lomias.begin.easter_egg.something_is_killed"),
             Message::color{ColorIndex::red});
         txt(i18n::s.get("core.talk.unique.lomias.begin.easter_egg.ugh"));
         snd("core.kill1");
         spillblood(28, 6, 10);
         flt();
-        itemcreate(-1, 705, 28, 6, 0);
+        itemcreate_extra_inv(705, 28, 6, 0);
         update_screen();
         await(500);
         await(500);
@@ -618,9 +556,6 @@ int talk_window_query(
         ++keyrange;
     }
     keyrange = listmax;
-    key = "";
-    objprm(0, ""s);
-    keylog = "";
     talk_window_init(text);
 
     while (true)

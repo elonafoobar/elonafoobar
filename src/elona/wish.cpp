@@ -8,13 +8,14 @@
 #include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
+#include "deferred_event.hpp"
 #include "dmgheal.hpp"
-#include "event.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -233,7 +234,7 @@ int select_wished_character(const std::string& input)
     for (int i = 0; i < 800; ++i)
     {
         int similarity{};
-        auto name = chara_refstr(i, 2);
+        auto name = chara_db_get_name(int2charaid(i));
         if (en)
         {
             name = to_lower(name);
@@ -256,10 +257,12 @@ int select_wished_character(const std::string& input)
 void wish_for_character()
 {
     inputlog = strutil::remove_str(inputlog, u8"summon");
-    dbid = select_wished_character(inputlog);
     flt();
     chara_create(
-        -1, dbid, cdata.player().position.x, cdata.player().position.y);
+        -1,
+        select_wished_character(inputlog),
+        cdata.player().position.x,
+        cdata.player().position.y);
     cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
     txt(cdatan(0, rc) + " is summoned.");
 }
@@ -268,34 +271,34 @@ void wish_for_character()
 
 void wish_for_card()
 {
-    dbid = select_wished_character(inputlog);
     flt();
-    chara_create(56, dbid, -3, 0);
+    chara_create(56, select_wished_character(inputlog), -3, 0);
     flt();
-    itemcreate(
-        -1, 504, cdata.player().position.x, cdata.player().position.y, 0);
-    inv[ci].subname = cdata.tmp().id;
-    inv[ci].param1 = cdata.tmp().image;
-    chara_vanquish(56);
-    cell_refresh(cdata.player().position.x, cdata.player().position.y);
-    txt(i18n::s.get("core.wish.something_appears_from_nowhere", inv[ci]));
+    if (const auto item = itemcreate_extra_inv(504, cdata.player().position, 0))
+    {
+        item->subname = charaid2int(cdata.tmp().id);
+        item->param1 = cdata.tmp().image;
+        chara_vanquish(56);
+        cell_refresh(cdata.player().position.x, cdata.player().position.y);
+        txt(i18n::s.get("core.wish.something_appears_from_nowhere", *item));
+    }
 }
 
 
 
 void wish_for_figure()
 {
-    dbid = select_wished_character(inputlog);
     flt();
-    chara_create(56, dbid, -3, 0);
+    chara_create(56, select_wished_character(inputlog), -3, 0);
     flt();
-    itemcreate(
-        -1, 503, cdata.player().position.x, cdata.player().position.y, 0);
-    inv[ci].subname = cdata.tmp().id;
-    inv[ci].param1 = cdata.tmp().image;
-    chara_vanquish(56);
-    cell_refresh(cdata.player().position.x, cdata.player().position.y);
-    txt(i18n::s.get("core.wish.something_appears_from_nowhere", inv[ci]));
+    if (const auto item = itemcreate_extra_inv(503, cdata.player().position, 0))
+    {
+        item->subname = charaid2int(cdata.tmp().id);
+        item->param1 = cdata.tmp().image;
+        chara_vanquish(56);
+        cell_refresh(cdata.player().position.x, cdata.player().position.y);
+        txt(i18n::s.get("core.wish.something_appears_from_nowhere", *item));
+    }
 }
 
 
@@ -450,11 +453,9 @@ bool grant_special_wishing(const std::string& wish)
         txt(i18n::s.get("core.wish.wish_gold"),
             Message::color{ColorIndex::orange});
         flt();
-        itemcreate(
-            -1,
+        itemcreate_extra_inv(
             54,
-            cdata.player().position.x,
-            cdata.player().position.y,
+            cdata.player().position,
             (cdata.player().level / 3 + 1) * 10000);
     }
     else if (match_special_wish(
@@ -465,20 +466,14 @@ bool grant_special_wishing(const std::string& wish)
         txt(i18n::s.get("core.wish.wish_small_medal"),
             Message::color{ColorIndex::orange});
         flt();
-        itemcreate(
-            -1,
-            622,
-            cdata.player().position.x,
-            cdata.player().position.y,
-            3 + rnd(3));
+        itemcreate_extra_inv(622, cdata.player().position, 3 + rnd(3));
     }
     else if (match_special_wish(wish, "platinum", {"platinum", "platina"}))
     {
         txt(i18n::s.get("core.wish.wish_platinum"),
             Message::color{ColorIndex::orange});
         flt();
-        itemcreate(
-            -1, 55, cdata.player().position.x, cdata.player().position.y, 5);
+        itemcreate_extra_inv(55, cdata.player().position, 5);
     }
     else if (game_data.wizard)
     {
@@ -572,7 +567,7 @@ bool wish_for_item(const std::string& input)
     if (selector.empty())
         return false;
 
-    while (1)
+    while (true)
     {
         const auto opt_id = selector.get();
         if (!opt_id)
@@ -592,76 +587,87 @@ bool wish_for_item(const std::string& input)
 
         nostack = 1;
         nooracle = 1;
-        itemcreate(-1, id, cdata[cc].position.x, cdata[cc].position.y, 0);
+        auto item = itemcreate_extra_inv(id, cdata[cc].position, 0);
         nooracle = 0;
 
+        if (!item)
+            continue;
+
         // Unwishable item
-        if (inv[ci].is_precious() || inv[ci].quality == Quality::special)
+        if (item->is_precious() || item->quality == Quality::special)
         {
             if (!game_data.wizard)
             {
                 // Remove this item and retry.
                 selector.remove(id);
-                inv[ci].remove();
-                --itemmemory(1, inv[ci].id);
-                cell_refresh(inv[ci].position.x, inv[ci].position.y);
+                item->remove();
+                --itemmemory(1, itemid2int(item->id));
+                cell_refresh(item->position.x, item->position.y);
                 continue;
             }
         }
 
-        if (inv[ci].id == 54)
+        if (item->id == ItemId::gold_piece)
         {
-            inv[ci].set_number(
+            item->set_number(
                 cdata.player().level * cdata.player().level * 50 + 20000);
         }
-        else if (inv[ci].id == 55)
+        else if (item->id == ItemId::platinum_coin)
         {
-            inv[ci].set_number(8 + rnd(5));
+            item->set_number(8 + rnd(5));
         }
-        else if (inv[ci].id == 602)
+        else if (item->id == ItemId::holy_well)
         {
-            inv[ci].remove();
+            item->remove();
             flt();
-            itemcreate(-1, 516, cdata[cc].position.x, cdata[cc].position.y, 3);
-            inv[ci].curse_state = CurseState::blessed;
-            txt(i18n::s.get("core.wish.it_is_sold_out"));
+            if (const auto well =
+                    itemcreate_extra_inv(516, cdata[cc].position, 3))
+            {
+                well->curse_state = CurseState::blessed;
+                txt(i18n::s.get("core.wish.it_is_sold_out"));
+                item = well;
+            }
+            else
+            {
+                continue;
+            }
         }
-        if (the_item_db[inv[ci].id]->category == 52000 ||
-            the_item_db[inv[ci].id]->category == 53000)
+        if (the_item_db[itemid2int(item->id)]->category == 52000 ||
+            the_item_db[itemid2int(item->id)]->category == 53000)
         {
-            inv[ci].set_number(3 + rnd(2));
-            if (inv[ci].value >= 20000)
+            item->set_number(3 + rnd(2));
+            if (item->value >= 20000)
             {
-                inv[ci].set_number(1);
+                item->set_number(1);
             }
-            else if (inv[ci].value >= 10000)
+            else if (item->value >= 10000)
             {
-                inv[ci].set_number(2);
+                item->set_number(2);
             }
-            else if (inv[ci].value >= 5000)
+            else if (item->value >= 5000)
             {
-                inv[ci].set_number(3);
+                item->set_number(3);
             }
-            switch (inv[ci].id)
+            switch (itemid2int(item->id))
             {
-            case 559: inv[ci].set_number(2 + rnd(2)); break;
-            case 502: inv[ci].set_number(2); break;
-            case 243: inv[ci].set_number(1); break;
-            case 621: inv[ci].set_number(1); break;
-            case 706: inv[ci].set_number(1); break;
+            case 559: item->set_number(2 + rnd(2)); break;
+            case 502: item->set_number(2); break;
+            case 243: item->set_number(1); break;
+            case 621: item->set_number(1); break;
+            case 706: item->set_number(1); break;
             }
         }
         if (debug::voldemort && number_of_items != 0)
         {
-            inv[ci].set_number(number_of_items);
+            item->set_number(number_of_items);
         }
         if (debug::voldemort && curse_state)
         {
-            inv[ci].curse_state = curse_state.get();
+            item->curse_state = curse_state.get();
         }
 
-        item_identify(inv[ci], IdentifyState::completely);
-        txt(i18n::s.get("core.wish.something_appears", inv[ci]));
+        item_identify(*item, IdentifyState::completely);
+        txt(i18n::s.get("core.wish.something_appears", *item));
         return true;
     }
 

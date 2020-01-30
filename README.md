@@ -6,7 +6,7 @@
 * It is still in an early stage of development.
 * It features high extensibility through a mod system. [####+]
 * It can be localized in multiple languages. [####+]
-* It works on Windows, Linux, macOS, and Android. [####+]
+* It works on Windows, Linux and macOS. [####+]
 
 
 # How To Build
@@ -19,7 +19,7 @@
 * Boost 1.69
 * Lua 5.3
 * SDL2, SDL2_image, SDL2_ttf and SDL2_mixer
-* `clang-format`, `find` and `xargs`(Optional)
+* `clang-format`, `find` and `xargs` (Optional)
 
 ### Additional requirements for Windows
 
@@ -69,15 +69,14 @@ sudo apt-get install cmake liblua5.3-dev libboost-all-dev libsdl2-dev libsdl2-im
 To debug with Visual Studio, open `bin\Elona_foobar.sln`.
 
 
-### Android
+### Note for parallel build
 
-Building has only been tested on Linux so far.
-1. Copy `android/local.properties.sample` to `android/local.properties` and edit it to point to your Android SDK and NDK installation paths.
-2. `cd path/to/Elona_foobar; make android` (for release, run `make android_release`)
+There are mainly 2 ways to build Elona foobar in parallel.
 
-A standalone APK will be output in `bin/`.
+* [Ninja-build](https://ninja-build.org/) supports parallel build by default. CMake can generate build rule for ninja like this: `make CMAKE_ARGS="-GNinja" <BUILD TARGET>`
+* `CMAKE_BUILD_PARALLEL_LEVEL` also works like this: `CMAKE_BUILD_PARALLEL_LEVEL=8 make <BUILD TARGET>`
 
-By default, assets from vanilla Elona in `deps/` are not bundled with the APK, to respect the original content authors. To bundle these assets, pass the flag `-DANDROID_BUNDLE_ASSETS` to `cmake`. If original assets are not detected on startup, the app will prompt for the location of `elona122.zip`.
+
 
 # How To Play
 
@@ -105,16 +104,16 @@ For files under [runtime/graphic](runtime/graphic/) folder of the repository, se
 * microhil: see [src/thirdparty/microhil/LICENSE](src/thirdparty/microhil/LICENSE).
 * Catch2: see [src/thirdparty/catch2/LICENSE](src/thirdparty/catch2/LICENSE).
 * hayai: see [src/thirdparty/hayai/LICENSE](src/thirdparty/hayai/LICENSE).
-* sol2: see [src/thirdparty/sol2/LICENSE](src/thirdparty/sol2/LICENSE).
+* sol2: see [src/thirdparty/sol2/LICENSE.txt](src/thirdparty/sol2/LICENSE.txt).
 * ordered_map: see [src/thirdparty/ordered_map/LICENSE](src/thirdparty/ordered_map/LICENSE).
 * boostrandom: see [src/thirdparty/boostrandom/LICENSE_1_0.txt](src/thirdparty/LICENSE_1_0.txt).
 * cmake/FindXXX.cmake: see [cmake/LICENSE](cmake/LICENSE).
 * nativefiledialog: see [src/thirdparty/nfd/LICENSE](src/thirdparty/nfd/LICENSE).
-* nlohmann/json: see [src/thirdparty/nlohmannjson/LICENSE.MIT](src/thirdparty/nlohmannjson/LICENSE.MIT).
 * cpp-netlib/uri: see [src/thirdparty/uri/LICENSE_1_0.txt](src/thirdparty/uri/LICENSE_1_0.txt).
 * xxHash: see [src/thirdparty/xxHash/LICENSE](src/thirdparty/xxHash/LICENSE).
 * zstr: see [src/thirdparty/zstr/LICENSE](src/thirdparty/zstr/LICENSE).
 * minizip: see [src/thirdparty/minizip/LICENSE](src/thirdparty/minizip/LICENSE).
+* json5: see [src/thirdparty/json5/LICENSE](src/thirdparty/json5/LICENSE).
 
 ## Lua libraries
 

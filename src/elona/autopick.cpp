@@ -51,7 +51,8 @@ std::vector<ModifierMatcher> _modifier_matchers = {
     {"rotten", [](const Item& item) { return item.param3 < 0; }},
     {"empty",
      [](const Item& item) {
-         return the_item_db[item.id]->category == 72000 && item.param1 == 0;
+         return the_item_db[itemid2int(item.id)]->category == 72000 &&
+             item.param1 == 0;
      }},
     {"bad",
      [](const Item& item) {
@@ -142,7 +143,7 @@ ModifierMatchResult _check_modifiers(const std::string& text, const Item& item)
 
 bool _check_category(const std::string& text, const Item& item)
 {
-    const auto category = the_item_db[item.id]->category;
+    const auto category = the_item_db[itemid2int(item.id)]->category;
     const auto word_separator = i18n::s.get("core.meta.word_separator");
     const auto text_ = word_separator + text + word_separator;
 
@@ -371,7 +372,7 @@ bool Autopick::Matcher::matches(const Item& ci) const
     }
 
     /* Check item's name. */
-    const auto item_name = cnvitemname(ci.id);
+    const auto item_name = cnvitemname(itemid2int(ci.id));
     // You have to know that the item is known as the name to match by the name.
     const auto you_know_the_name =
         ci.identify_state != IdentifyState::unidentified;

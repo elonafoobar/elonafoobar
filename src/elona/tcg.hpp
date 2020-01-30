@@ -21,8 +21,7 @@ typedef struct
 } CardInfo;
 
 // Card queries
-int get_card_info(int dbid, CardInfo& card_info);
-int card_ref(int id, CardInfo& card_info);
+int get_card_info(int card_id, CardInfo& card_info);
 int cardcanblock(int = 0);
 int cardcandeclareattack(int = 0);
 int cardcanuseskill(int = 0);

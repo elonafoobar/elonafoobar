@@ -15,6 +15,7 @@
 #include "lua_api_input.cpp"
 #include "lua_api_internal.cpp"
 #include "lua_api_item.cpp"
+#include "lua_api_json5.cpp"
 #include "lua_api_magic.cpp"
 #include "lua_api_map.cpp"
 #include "lua_api_math.cpp"
@@ -55,14 +56,17 @@ void LuaApi::bind(sol::table& game)
     LUA_API_BIND(game, Internal);
     LUA_API_BIND(game, Item);
     LUA_API_BIND(game, Magic);
-    LUA_API_BIND(game, Math);
     LUA_API_BIND(game, Map);
+    LUA_API_BIND(game, Math);
     LUA_API_BIND(game, Pos);
     LUA_API_BIND(game, Rand);
     LUA_API_BIND(game, Skill);
     LUA_API_BIND(game, Trait);
     LUA_API_BIND(game, Wish);
     LUA_API_BIND(game, World);
+
+    // TODO: move it to lib module.
+    LUA_API_BIND(game, JSON5);
 }
 
 #undef LUA_API_BIND

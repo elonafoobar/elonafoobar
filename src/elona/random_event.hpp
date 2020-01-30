@@ -11,7 +11,7 @@ namespace elona
 void proc_random_event();
 
 /**
- * Show random event window. If Config::instance().skiprandevents is enabled and
+ * Show random event window. If g_config.skiprandevents() is enabled and
  * choices has only one choice, doesn't show a window and returns -1
  * immediately.
  * @param[in] title

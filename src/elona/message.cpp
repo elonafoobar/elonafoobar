@@ -6,7 +6,7 @@
 #include "../util/strutil.hpp"
 #include "audio.hpp"
 #include "character.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
@@ -73,16 +73,13 @@ void unsubscribe_log(LogObserver* observer)
 
 void anime_halt(int x_at_txtfunc, int y_at_txtfunc)
 {
-    key = "";
-    objprm(0, ""s);
-    keylog = "";
     gmode(0);
     gsel(3);
     asset_copy_from(0, x_at_txtfunc, y_at_txtfunc, "label_more_scratch");
     gsel(0);
     for (int cnt = 0; cnt < 12; ++cnt)
     {
-        await(Config::instance().general_wait / 3);
+        await(g_config.general_wait() / 3);
         draw(
             "label_more",
             x_at_txtfunc,
@@ -95,7 +92,7 @@ void anime_halt(int x_at_txtfunc, int y_at_txtfunc)
     snd("core.ok1");
     for (int cnt = 0; cnt < 7; ++cnt)
     {
-        await(Config::instance().general_wait / 3);
+        await(g_config.general_wait() / 3);
         draw("label_more_scratch", x_at_txtfunc, y_at_txtfunc);
         if (cnt != 6)
         {
@@ -283,10 +280,10 @@ void Message::_txt_conv()
     {
         _msg_newline();
         _new_turn = false;
-        if (Config::instance().message_transparency)
+        if (g_config.message_transparency())
         {
             int p_at_txtfunc = (windoww - inf_msgx) / 192;
-            gmode(2, Config::instance().message_transparency * 20);
+            gmode(2, g_config.message_transparency() * 20);
             for (int i = 0; i < p_at_txtfunc + 1; ++i)
             {
                 int x_at_txtfunc;
@@ -306,7 +303,7 @@ void Message::_txt_conv()
                     inf_msgspace * 3);
             }
         }
-        if (Config::instance().message_add_timestamps)
+        if (g_config.message_add_timestamps())
         {
             std::stringstream ss;
             ss << "[" << std::setw(2) << std::setfill('0')
@@ -449,9 +446,9 @@ void Message::_txt_conv()
 
 
 
-void Message::_txt_internal(std::vector<std::string> args)
+void Message::_txt_internal(const std::string& message)
 {
-    msgtemp = choice(args);
+    msgtemp = message;
     _txt_conv();
     text_color = {255, 255, 255, 255};
 }

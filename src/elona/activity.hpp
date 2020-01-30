@@ -1,32 +1,37 @@
 #pragma once
+
 #include "optional.hpp"
-#include "turn_sequence.hpp"
+
+
 
 namespace elona
 {
 
 struct Character;
+struct Item;
+enum class TurnResult;
 
-void rowact_check(int chara_index);
-void rowact_item(int item_index);
 
-void activity_handle_damage(Character&);
-optional<TurnResult> activity_proc(Character&);
 
-void continuous_action_perform();
-void continuous_action_sex();
-void continuous_action_blending();
-void continuous_action_eating();
-void continuous_action_eating_finish();
-void continuous_action_others();
+void rowact_check(Character& chara);
+void rowact_item(const Item& item);
 
-int search_material_spot();
+void activity_handle_damage(Character& chara);
+optional<TurnResult> activity_proc(Character& chara);
+
+void activity_perform(Character& performer);
+void activity_sex();
+void activity_blending();
+void activity_eating(Character& eater, Item& food);
+void activity_eating_finish(Character& eater, Item& food);
+void activity_others(Character& doer);
+
 void spot_fishing();
 void spot_material();
 void spot_digging();
 void spot_mining_or_wall();
-TurnResult do_dig_after_sp_check();
-void matdelmain(int = 0, int = 0);
-void matgetmain(int = 0, int = 0, int = 0);
+TurnResult do_dig_after_sp_check(Character& chara);
+void matdelmain(int material_id, int amount = 1);
+void matgetmain(int material_id, int amount = 1, int spot_type = 0);
 
 } // namespace elona

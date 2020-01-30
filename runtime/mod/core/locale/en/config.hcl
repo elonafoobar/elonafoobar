@@ -81,7 +81,7 @@ Saved game to be loaded on startup.
 These are calculated when the game loads.
 If one is missing, restart the game to have it appear.
 DOC
-                    variants {
+                    enum {
                         "" = "None"
                     }
                 }
@@ -120,7 +120,7 @@ DOC
                 }
                 fullscreen {
                     name = "Screen Mode*"
-                    variants {
+                    enum {
                         windowed = "Window mode"
                         fullscreen = "Full screen"
                         desktop_fullscreen = "Desktop fullscr"
@@ -137,27 +137,7 @@ DOC
 Screen resolution to use.
 The available options may change depending on the graphics hardware you use.
 DOC
-                    # Variants are injected at runtime.
-                }
-                orientation {
-                    name = "Screen Orientation"
-                    variants {
-                        sensor_landscape = "Landscape (Auto)"
-                        sensor_portrait = "Portrait (Auto)"
-                        sensor = "Any"
-                        landscape = "Landscape"
-                        portrait = "Portrait"
-                        reverse_landscape = "Reverse Landscape"
-                        reverse_portrait = "Reverse Portrait"
-                    }
-                    doc = <<DOC
-Screen orientation to use when running the app.
-Portrait modes will display the game in a window at the top.
-Landscape modes will fill the entire screen.
-DOC
-                }
-                window_mode {
-                    name = "Window Size*"
+                    # "enum" are injected at runtime.
                 }
                 high_quality_shadows {
                     name = "Shadow Quality"
@@ -200,7 +180,7 @@ DOC
                 }
                 chat {
                     name = "Chat Log"
-                    variants {
+                    enum {
                         "disabled" = "Disable"
                         "receive" = "Only receive"
                         "send_receive" = "Send & receive"
@@ -208,7 +188,7 @@ DOC
                 }
                 death {
                     name = "Death Log"
-                    variants {
+                    enum {
                         "disabled" = "Disable"
                         "receive" = "Only receive"
                         "send_receive" = "Send & receive"
@@ -216,7 +196,7 @@ DOC
                 }
                 wish {
                     name = "Wish Log"
-                    variants {
+                    enum {
                         "disabled" = "Disable"
                         "receive" = "Only receive"
                         "send_receive" = "Send & receive"
@@ -224,7 +204,7 @@ DOC
                 }
                 news {
                     name = "Palmia Times"
-                    variants {
+                    enum {
                         "disabled" = "Disable"
                         "receive" = "Only receive"
                         "send_receive" = "Send & receive"
@@ -301,7 +281,7 @@ DOC
                 }
                 auto_turn_speed {
                     name = "Auto Turn Speed"
-                    variants {
+                    enum {
                         normal = "Normal"
                         high = "High"
                         highest = "Highest"
@@ -433,7 +413,7 @@ DOC
                     doc = <<DOC
 Text rendering quality. High is beautiful, but slow. Low is cheap, but fast.
 DOC
-                    variants {
+                    enum {
                         low = "Low"
                         high = "High"
                     }
@@ -481,7 +461,7 @@ DOC
 
                 language {
                     name = "Language*"
-                    variants {
+                    enum {
                         jp = "Japanese"
                         en = "English"
                     }
@@ -494,7 +474,7 @@ DOC
 
                 hp_bar_position {
                     name = "Pets' HP bar"
-                    variants {
+                    enum {
                         hide = "Don't show"
                         left = "Show left side"
                         right = "Show right side"
@@ -564,7 +544,7 @@ DOC
 
                 pcc_graphic_scale = {
                     name = "PCC Graphic"
-                    variants {
+                    enum {
                         shrinked = "Shrinked"
                         fullscale = "Full-scale"
                     }
@@ -584,45 +564,15 @@ DOC
                     name = "Skip over-casting warning"
                     doc = "Skip warning prompt displayed when you are going to over-cast spells."
                 }
-            }
 
-            android {
-                name = "Android Setting"
-
-                vibrate {
-                    name = "Vibrate"
-                    doc = <<DOC
-Vibrate on important events and low health.
-DOC
+                digital_clock {
+                    name = "Digital clock"
+                    doc = "Replace default clock with a simple 24 hours digital clock."
                 }
 
-                vibrate_duration {
-                    name = "Vibrate Duration"
-                    doc = "Controls the duration of the vibration in 'Vibrate'."
-                }
-
-                hide_navigation {
-                    name = "Hide Nav Buttons*"
-                    doc = <<DOC
-Hides the software navigation buttons for handsets without hardware navigation buttons.
-DOC
-                }
-
-                quicksave {
-                    name = "Save On Suspend"
-                    doc = <<DOC
-Quicksave the game if you're being queried for input and app focus is lost.
-DOC
-                }
-
-                quick_action_transparency {
-                    name = "Quick Action Transp."
-                    doc = "Controls transparency of touch actions."
-                }
-
-                quick_action_size {
-                    name = "Quick Action Size"
-                    doc = "Controls size of touch actions."
+                auto_target {
+                    name = "Party auto target"
+                    doc = "Party members will automatically attack enemies that are visible to you."
                 }
             }
 
@@ -634,7 +584,7 @@ DOC
                 name = "Mod Settings"
                 doc = <<DOC
 Settings provided by individual mods.
-These can be created by editing the config_def.hcl file in the mod's folder.
+These can be created by editing the config-schema.lua file in the mod's folder.
 DOC
             }
         }

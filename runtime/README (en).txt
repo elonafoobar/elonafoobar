@@ -7,7 +7,7 @@
 * It is still in an early stage of development.
 * It features high extensibility through a mod system. [####+]
 * It can be localized in multiple languages. [####+]
-* It works on Windows, Linux, macOS, and Android. [####+]
+* It works on Windows, Linux and macOS. [####+]
 
 
 

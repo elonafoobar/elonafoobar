@@ -5,7 +5,7 @@
 #include "casino_card.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -34,21 +34,15 @@ elona_vector1<int> mattile;
 void casino_dealer()
 {
     begintempinv();
-    atxthrough = 0;
     atxpic = 0;
     snd("core.pop3");
     mode = 9;
     atxbg = u8"bg13"s;
     atxbgbk = "";
     SDIM3(atxinfon, 80, 5);
-    if (atxid == 1)
-    {
-        txt(i18n::s.get("core.casino.talk_to_dealer"));
-        play_music("core.mcCasino");
-        casino_wrapper();
-        return;
-    }
-    casino_acquire_items();
+    txt(i18n::s.get("core.casino.talk_to_dealer"));
+    play_music("core.mcCasino");
+    casino_wrapper();
 }
 
 
@@ -61,8 +55,6 @@ void casino_choose_card()
         if (init)
         {
             init = false;
-            key = "";
-            keylog = "";
             screenupdate = -1;
             update_screen();
             for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
@@ -376,7 +368,6 @@ void casino_acquire_items()
         }
     }
     mode = 0;
-    atxid = 0;
     exittempinv();
     await(100);
     snd("core.pop3");
@@ -597,8 +588,7 @@ bool casino_blackjack()
             {
                 list(0, listmax) = 0;
                 listn(0, listmax) = i18n::s.get(
-                    "core.casino.blackjack.game.result.choices.next_"
-                    "round");
+                    "core.casino.blackjack.game.result.choices.next_round");
                 ++listmax;
             }
             if (winner == 0)
@@ -657,11 +647,10 @@ bool casino_blackjack()
                 {
                     if (pileremain() > 10)
                     {
-                        if (rnd(sdata(19, 0)) > 40)
+                        if (rnd_capped(sdata(19, 0)) > 40)
                         {
-                            txt(
-                                i18n::s.get("core.casino.blackjack.game."
-                                            "bad_feeling"));
+                            txt(i18n::s.get(
+                                "core.casino.blackjack.game.bad_feeling"));
                             trashcard(p);
                             int stat = servecard(1);
                             p = stat;
@@ -685,7 +674,7 @@ bool casino_blackjack()
             {
                 p = 60;
             }
-            if (rnd(sdata(12, 0)) < rnd(p(0)))
+            if (rnd_capped(sdata(12, 0)) < rnd(p(0)))
             {
                 atxinit();
                 noteadd(i18n::s.get("core.casino.blackjack.game.cheat.dialog"));
@@ -714,7 +703,7 @@ bool casino_blackjack()
     {
         atxinit();
         noteadd(i18n::s.get("core.casino.blackjack.game.total_wins", winrow));
-        for (int cnt = 0; cnt < 1; ++cnt)
+        while (true)
         {
             Quality quality = Quality::good;
             if (winrow > 2)
@@ -738,27 +727,28 @@ bool casino_blackjack()
             flt(calcobjlv(rnd(stake + winrow * 2) + winrow * 3 / 2 + stake / 2),
                 quality);
             flttypemajor = choice(fsetwear);
-            itemcreate(-1, 0, -1, -1, 0);
-            if (inv[ci].number() == 0)
+            if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
             {
-                --cnt;
-                continue;
+                snd("core.get3");
+                noteadd(
+                    "@GR" +
+                    i18n::s.get("core.casino.blackjack.game.loot", *item));
+                break;
             }
         }
-        snd("core.get3");
-        noteadd(
-            "@GR" + i18n::s.get("core.casino.blackjack.game.loot", inv[ci]));
         if (winrow > 3)
         {
             // Potion of cure corruption
             if (winrow + 1 > rnd(10))
             {
                 flt();
-                itemcreate(-1, 559, -1, -1, 0);
-                snd("core.get3");
-                noteadd(
-                    "@GR" +
-                    i18n::s.get("core.casino.blackjack.game.loot", inv[ci]));
+                if (const auto item = itemcreate_extra_inv(559, -1, -1, 0))
+                {
+                    snd("core.get3");
+                    noteadd(
+                        "@GR" +
+                        i18n::s.get("core.casino.blackjack.game.loot", *item));
+                }
             }
         }
         list(0, listmax) = 0;

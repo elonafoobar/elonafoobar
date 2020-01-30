@@ -8,6 +8,7 @@ namespace elona
 
 enum class TurnResult;
 struct Character;
+struct Item;
 
 
 
@@ -52,7 +53,7 @@ void show_ex_help(int id);
 void show_game_help();
 TurnResult show_chat_history();
 TurnResult show_message_log();
-void set_option();
+void show_option_menu();
 TurnResult play_scene();
 
 TurnResult show_spell_list();
@@ -95,9 +96,9 @@ void show_city_chart();
 void begin_to_believe_god(int);
 void screen_analyze_self();
 int ctrl_ally(ControlAllyOperation);
-void show_book_window();
+void show_book_window(const Item& book);
 int change_npc_tone();
-void item_show_description();
+void item_show_description(const Item& item);
 
 MenuResult ctrl_inventory();
 

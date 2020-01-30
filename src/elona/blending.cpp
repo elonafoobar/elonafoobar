@@ -2,8 +2,9 @@
 #include "ability.hpp"
 #include "activity.hpp"
 #include "audio.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "data/types/type_item.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -23,18 +24,13 @@
 
 
 
+namespace elona
+{
+
 namespace
 {
 
 int step;
-
-}
-
-
-
-namespace elona
-{
-
 elona_vector2<int> rpdata;
 elona_vector2<std::string> rfnameorg;
 elona_vector1<std::string> rpdatan;
@@ -43,29 +39,583 @@ int rpid = 0;
 int rpmode = 0;
 elona_vector1<int> rppage;
 int rpresult = 0;
-elona_vector1<int> inhlist_at_m184;
 
 
 
-void continuous_action_blending()
+void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
+{
+    elona_vector1<std::string> s_;
+    int xfix2_ = 0;
+    int dx_ = 0;
+    int dy_ = 0;
+    int i_ = 0;
+
+    if (windowshadow == 1)
+    {
+        window(x + 4, y + 4, width, height - height % 8, true);
+        boxf(x + width - 522, 0, 486, 69, {30, 30, 30});
+        windowshadow = 0;
+    }
+    window(x, y, width, height - height % 8);
+    window_recipe2();
+    gmode(2);
+    line(
+        x + 50 + 0,
+        y + height - 48 - height % 8,
+        x + width - 40,
+        y + height - 48 - height % 8,
+        {194, 170, 146});
+    line(
+        x + 50 + 0,
+        y + height - 49 - height % 8,
+        x + width - 40,
+        y + height - 49 - height % 8,
+        {234, 220, 188});
+    s_(0) = u8"Page."s + (rppage + 1) + u8"/"s + (rppage(1) + 1);
+    s_(1) = ""s + key_prev + u8","s + key_next + ""s +
+        i18n::s.get("core.blending.recipe.hint");
+    if (step == -1)
+    {
+        s_(1) += strhint3;
+    }
+    else
+    {
+        s_(1) += strhint3b;
+    }
+    font(12 + sizefix - en * 2);
+    mes(x + 25 + 0, y + height - 43 - height % 8, s_(1));
+    font(12 + sizefix - en * 2, snail::Font::Style::bold);
+    mes(x + width - strlen_u(s_) * 7 - 40 - xfix2_,
+        y + height - 65 - height % 8,
+        s_);
+    dx_ = x + 35;
+    dy_ = y + 48;
+    font(12 - en * 2, snail::Font::Style::bold);
+    mes(dx_ - 10, dy_, i18n::s.get("core.blending.window.procedure"));
+    dy_ = dy_ + 18;
+    font(13 - en * 2);
+    i_ = 1;
+    if (step == i_ - 2)
+    {
+        boxf(dx_ - 10, dy_ - 2, width - 60, 17, {60, 20, 10, 32});
+    }
+    else if (step > i_ - 2)
+    {
+        boxf(dx_ - 10, dy_ - 2, width - 60, 17, {20, 20, 20, 32});
+    }
+    if (step == -1)
+    {
+        mes(dx_,
+            dy_,
+            ""s + i_ + u8"."s +
+                i18n::s.get("core.blending.window.choose_a_recipe"));
+    }
+    else
+    {
+        mes(dx_,
+            dy_,
+            ""s + i_ + u8"."s +
+                i18n::s.get(
+                    "core.blending.window.chose_the_recipe_of", rpname(rpid)));
+    }
+    dy_ += 17;
+    ++i_;
+    for (int cnt = 0; cnt < 10; ++cnt)
+    {
+        if (rpdata(20 + cnt, rpid) == 0)
+        {
+            break;
+        }
+        if (step == i_ - 2)
+        {
+            boxf(dx_ - 10, dy_ - 2, width - 60, 17, {60, 20, 10, 32});
+        }
+        else if (step > i_ - 2)
+        {
+            boxf(dx_ - 10, dy_ - 2, width - 60, 17, {20, 20, 20, 32});
+        }
+        if (step <= cnt)
+        {
+            int stat = blendmatnum(rpdata(20 + cnt, rpid), cnt);
+            s_ = i18n::s.get("core.blending.window.add", rpmatname(cnt), stat);
+        }
+        else
+        {
+            s_ = i18n::s.get(
+                "core.blending.window.selected", inv[rpref(10 + cnt * 2)]);
+            s_ = strmid(s_, 0, 44);
+        }
+        mes(dx_, dy_, ""s + i_ + u8"."s + s_);
+        dy_ += 17;
+        ++i_;
+    }
+    draw("deco_blend_b", wx + ww + 243, wy - 4);
+    if (step == i_ - 2)
+    {
+        boxf(dx_ - 10, dy_ - 2, width - 60, 17, {60, 20, 10, 32});
+    }
+    else if (step > i_ - 2)
+    {
+        boxf(dx_ - 10, dy_ - 2, width - 60, 17, {20, 20, 20, 32});
+    }
+    mes(dx_,
+        dy_,
+        ""s + i_ + u8"."s + i18n::s.get("core.blending.window.start"));
+    dy_ += 30;
+    if (rppage == 0)
+    {
+        font(12 - en * 2, snail::Font::Style::bold);
+        mes(dx_ - 10,
+            dy_,
+            i18n::s.get("core.blending.window.the_recipe_of", rpname(rpid)));
+        dy_ += 20;
+        mes(dx_ - 10, dy_, i18n::s.get("core.blending.window.required_skills"));
+        dy_ = dy_ + 18;
+        font(13 - en * 2);
+        for (int cnt = 0; cnt < 5; ++cnt)
+        {
+            if (rpdata(10 + cnt * 2, rpid) == 0)
+            {
+                break;
+            }
+            const auto text_color = (rpdata(11 + cnt * 2, rpid) >
+                                     sdata(rpdata(10 + cnt * 2, rpid), 0))
+                ? snail::Color{150, 0, 0}
+                : snail::Color{0, 120, 0};
+            mes(dx_ + cnt % 2 * 140,
+                dy_ + cnt / 2 * 17,
+                i18n::s.get_m(
+                    "ability",
+                    the_ability_db
+                        .get_id_from_legacy(rpdata(10 + cnt * 2, rpid))
+                        ->get(),
+                    "name") +
+                    u8"  "s + rpdata((11 + cnt * 2), rpid) + u8"("s +
+                    sdata(rpdata((10 + cnt * 2), rpid), 0) + u8")"s,
+                text_color);
+        }
+        dy_ += 50;
+        font(12 - en * 2, snail::Font::Style::bold);
+        mes(dx_ - 10,
+            dy_,
+            i18n::s.get("core.blending.window.required_equipment"));
+        return;
+    }
+
+    if (!item)
+        return;
+
+    font(12 - en * 2, snail::Font::Style::bold);
+    mes(dx_ - 10, dy_, itemname(item->index));
+    dy_ += 20;
+    font(13 - en * 2);
+    if (item->identify_state <= IdentifyState::partly)
+    {
+        mes(dx_, dy_, i18n::s.get("core.blending.window.havent_identified"));
+        dy_ += 16;
+        return;
+    }
+
+    const auto inheritance = item_get_inheritance(*item);
+    if (inheritance.empty())
+    {
+        mes(dx_, dy_, i18n::s.get("core.blending.window.no_inherited_effects"));
+    }
+    else
+    {
+        for (const auto& inh : inheritance)
+        {
+            if (item->enchantments[inh].id == 0)
+                break;
+
+            get_enchantment_description(
+                item->enchantments[inh].id,
+                item->enchantments[inh].power,
+                the_item_db[itemid2int(item->id)]->category);
+            const auto text_color = item->enchantments[inh].power < 0
+                ? snail::Color{180, 0, 0}
+                : snail::Color{0, 0, 100};
+            mes(dx_, dy_, cnven(s), text_color);
+            dy_ += 16;
+        }
+    }
+}
+
+
+
+int calc_max_number_of_products_you_can_blend(int recipe_id)
+{
+    int ret = 10;
+    for (int i = 0; i < 10; ++i)
+    {
+        const auto item_index = rpref(10 + i * 2);
+        if (item_index == -1)
+        {
+            break;
+        }
+        if (rpdata(2, recipe_id) == 2 && i == 0)
+        {
+            continue;
+        }
+        if (inv[item_index].number() < ret)
+        {
+            ret = inv[item_index].number();
+        }
+    }
+    return ret;
+}
+
+
+
+bool all_ingredient_are_added(int step, int recipe_id)
+{
+    return step != -1 && rpdata(20 + step, recipe_id) == 0;
+}
+
+
+
+optional<TurnResult> blending_menu_1()
+{
+    elona_vector1<int> blendchecklist;
+
+    bool init = true;
+    while (true)
+    {
+        if (init)
+        {
+            init = false;
+            cs_bk = -1;
+            pagemax = (listmax - 1) / pagesize;
+            if (page < 0)
+            {
+                page = pagemax;
+            }
+            else if (page > pagemax)
+            {
+                page = 0;
+            }
+            DIM2(blendchecklist, pagesize);
+            for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+            {
+                p = pagesize * page + cnt;
+                if (p >= listmax)
+                {
+                    break;
+                }
+                blendchecklist(cnt) = blendcheckmat(list(0, p));
+            }
+        }
+
+        windowshadow = windowshadow(1);
+        ui_display_window(
+            i18n::s.get("core.blending.recipe.title"),
+            strhint2,
+            (windoww - 780) / 2 + inf_screenx,
+            winposy(445),
+            380,
+            432,
+            74);
+        display_topic(
+            i18n::s.get("core.blending.recipe.name"), wx + 28, wy + 30);
+        s = i18n::s.get("core.blending.recipe.counter", listmax);
+        font(12 + sizefix - en * 2, snail::Font::Style::bold);
+        mes(wx + 130, wy + wh - 65 - wh % 8, s);
+        keyrange = 0;
+        gmode(2);
+        for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+        {
+            p = pagesize * page + cnt;
+            if (p >= listmax)
+            {
+                break;
+            }
+            key_list(cnt) = key_select(cnt);
+            ++keyrange;
+            if (cnt % 2 == 0)
+            {
+                boxf(
+                    wx + 70,
+                    wy + 60 + cnt * 19,
+                    ww - 100,
+                    18,
+                    {12, 14, 16, 16});
+            }
+
+            draw_item_material(
+                550, wx + 37, wy + 70 + cnt * 19); // Recipe image
+
+            if (blendchecklist(cnt) == 1)
+            {
+                draw("blend_ingredient", wx + 330, wy + 53 + cnt * 19);
+            }
+            rpid = list(0, p);
+
+            int difficulty = (4 - rpdiff(rpid, -1, -1) / 25);
+            draw_indexed(
+                "recipe_difficulty", wx + 317, wy + 60 + cnt * 19, difficulty);
+        }
+        font(14 - en * 2);
+        cs_listbk();
+        for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+        {
+            p = pagesize * page + cnt;
+            if (p >= listmax)
+            {
+                break;
+            }
+            p = list(0, p);
+            rpid = p;
+            s = i18n::s.get("core.blending.recipe.of", cnven(rpname(rpid)));
+            display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
+            cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1);
+        }
+        if (cs_bk != cs)
+        {
+            rpid = list(0, pagesize * page + cs);
+            windowshadow = windowshadow(1);
+            window_recipe(none, wx + ww, wy, 400, wh);
+        }
+        if (keyrange != 0)
+        {
+            cs_bk = cs;
+        }
+        windowshadow(1) = 0;
+        draw("deco_blend_c", wx + 10, wy + wh - 100);
+        redraw();
+
+        const auto action = get_selected_item(p(0));
+        if (p != -1)
+        {
+            rpid = p;
+            step = 0;
+            rppage(0) = 1;
+            rppage(1) = 1;
+            rpref(0) = rpid;
+            return none;
+        }
+        if (action == "next_page")
+        {
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                ++page;
+                init = true;
+                continue;
+            }
+        }
+        if (action == "previous_page")
+        {
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                --page;
+                init = true;
+                continue;
+            }
+        }
+        if (action == "cancel")
+        {
+            screenupdate = 0;
+            update_screen();
+            return TurnResult::pc_turn_user_error;
+        }
+    }
+}
+
+
+
+void blending_menu_2()
+{
+    while (true)
+    {
+        cs_bk = -1;
+        pagemax = (listmax - 1) / pagesize;
+        if (page < 0)
+        {
+            page = pagemax;
+        }
+        else if (page > pagemax)
+        {
+            page = 0;
+        }
+        windowshadow = windowshadow(1);
+        ui_display_window(
+            i18n::s.get(
+                "core.blending.steps.add_ingredient_prompt", rpmatname(step)),
+            strhint2,
+            (windoww - 780) / 2 + inf_screenx,
+            winposy(445),
+            380,
+            432,
+            74);
+        display_topic(
+            i18n::s.get("core.blending.steps.item_name"), wx + 28, wy + 30);
+        s = i18n::s.get("core.blending.steps.item_counter", listmax);
+        font(12 + sizefix - en * 2, snail::Font::Style::bold);
+        mes(wx + 130, wy + wh - 65 - wh % 8, s);
+        keyrange = 0;
+        for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+        {
+            p = pagesize * page + cnt;
+            if (p >= listmax)
+            {
+                break;
+            }
+            key_list(cnt) = key_select(cnt);
+            ++keyrange;
+            if (cnt % 2 == 0)
+            {
+                boxf(
+                    wx + 70,
+                    wy + 60 + cnt * 19,
+                    ww - 100,
+                    18,
+                    {12, 14, 16, 16});
+            }
+        }
+        font(14 - en * 2);
+        cs_listbk();
+        for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
+        {
+            p = pagesize * page + cnt;
+            if (p >= listmax)
+            {
+                break;
+            }
+            p = list(0, p);
+            s = itemname(p, inv[p].number());
+            s = strmid(s, 0, 28);
+            if (p >= ELONA_ITEM_ON_GROUND_INDEX)
+            {
+                s += i18n::s.get("core.blending.steps.ground");
+            }
+            display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
+
+            draw_item_with_portrait_scale_height(
+                inv[p], wx + 37, wy + 69 + cnt * 19);
+
+            if (inv[p].body_part != 0)
+            {
+                draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
+            }
+            cs_list(
+                cs == cnt,
+                s,
+                wx + 84,
+                wy + 60 + cnt * 19 - 1,
+                0,
+                cs_list_get_item_color(inv[p]));
+        }
+        p = list(0, pagesize * page + cs);
+        if (listmax == 0)
+        {
+            p = -1;
+        }
+        if (cs_bk != cs)
+        {
+            windowshadow = windowshadow(1);
+            window_recipe(
+                p == -1 ? none : optional_ref<Item>(inv[p]),
+                wx + ww,
+                wy,
+                400,
+                wh);
+        }
+        if (keyrange != 0)
+        {
+            cs_bk = cs;
+        }
+        windowshadow(1) = 0;
+        draw("deco_blend_c", wx + 10, wy + wh - 100);
+        redraw();
+
+        const auto action = get_selected_item(p(0));
+        if (action == "next_page")
+        {
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                ++page;
+                continue;
+            }
+        }
+        if (action == "previous_page")
+        {
+            if (pagemax != 0)
+            {
+                snd("core.pop1");
+                --page;
+                continue;
+            }
+        }
+        if (p != -1)
+        {
+            ci = p;
+            if (inv[ci].is_marked_as_no_drop())
+            {
+                snd("core.fail1");
+                txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
+                continue;
+            }
+            rpref(10 + step * 2 + 0) = ci;
+            rpref(10 + step * 2 + 1) = itemid2int(inv[ci].id);
+            snd("core.drink1");
+            txt(i18n::s.get("core.blending.steps.you_add", inv[ci]));
+            ++step;
+            p = rpdiff(rpid, step, step - 1);
+            return;
+        }
+        if (action == "previous_menu")
+        {
+            snd("core.pop1");
+            --rppage;
+            cs_bk = -1;
+            if (rppage < 0)
+            {
+                rppage = rppage(1);
+            }
+        }
+        if (action == "next_menu")
+        {
+            snd("core.pop1");
+            ++rppage;
+            cs_bk = -1;
+            if (rppage > rppage(1))
+            {
+                rppage = 0;
+            }
+        }
+        if (action == "cancel")
+        {
+            --step;
+            return;
+        }
+    }
+}
+
+} // namespace
+
+
+
+void activity_blending()
 {
     while (true)
     {
         rpid = rpref(0);
         if (rpid == 0)
         {
-            cdata[cc].continuous_action.finish();
+            cdata[cc].activity.finish();
             return;
         }
-        if (!cdata[cc].continuous_action)
+        if (!cdata[cc].activity)
         {
             Message::instance().linebreak();
             txt(i18n::s.get("core.blending.started", cdata[cc], rpname(rpid)));
-            cdata[cc].continuous_action.type = ContinuousAction::Type::blend;
-            cdata[cc].continuous_action.turn = rpref(2) % 10000;
+            cdata[cc].activity.type = Activity::Type::blend;
+            cdata[cc].activity.turn = rpref(2) % 10000;
             return;
         }
-        if (cdata[cc].continuous_action.turn > 0)
+        if (cdata[cc].activity.turn > 0)
         {
             if (rnd(30) == 0)
             {
@@ -76,7 +626,7 @@ void continuous_action_blending()
         }
         if (rpref(2) >= 10000)
         {
-            cdata[cc].continuous_action.turn = rpref(2) / 10000;
+            cdata[cc].activity.turn = rpref(2) / 10000;
             for (int cnt = 0;; ++cnt)
             {
                 mode = 12;
@@ -89,24 +639,23 @@ void continuous_action_blending()
                         Message::color{ColorIndex::blue});
                 }
                 redraw();
-                await(Config::instance().animation_wait * 5);
+                await(g_config.animation_wait() * 5);
                 game_data.date.minute = 0;
                 cc = 0;
-                --cdata[cc].continuous_action.turn;
-                if (cdata[cc].continuous_action.turn <= 0)
+                --cdata[cc].activity.turn;
+                if (cdata[cc].activity.turn <= 0)
                 {
                     int stat = blending_find_required_mat();
                     if (stat == 0)
                     {
-                        txt(
-                            i18n::s.get("core.blending.required_"
-                                        "material_not_found"));
+                        txt(i18n::s.get(
+                            "core.blending.required_material_not_found"));
                         break;
                     }
                     blending_start_attempt();
                     if (rpref(1) > 0)
                     {
-                        cdata[cc].continuous_action.turn = rpref(2) / 10000;
+                        cdata[cc].activity.turn = rpref(2) / 10000;
                         cnt = 0 - 1;
                         continue;
                     }
@@ -116,7 +665,7 @@ void continuous_action_blending()
                     }
                 }
             }
-            cdata[cc].continuous_action.finish();
+            cdata[cc].activity.finish();
             mode = 0;
             return;
         }
@@ -124,13 +673,13 @@ void continuous_action_blending()
         if (stat == 0)
         {
             txt(i18n::s.get("core.blending.required_material_not_found"));
-            cdata[cc].continuous_action.finish();
+            cdata[cc].activity.finish();
             return;
         }
         blending_start_attempt();
         if (rpref(1) > 0)
         {
-            cdata[cc].continuous_action.type = ContinuousAction::Type::none;
+            cdata[cc].activity.type = Activity::Type::none;
         }
         else
         {
@@ -138,7 +687,7 @@ void continuous_action_blending()
         }
     }
 
-    cdata[cc].continuous_action.finish();
+    cdata[cc].activity.finish();
 }
 
 
@@ -406,621 +955,110 @@ void window_recipe2(int val0)
 
 
 
-void window_recipe_(int item_index, int x, int y, int width, int height)
-{
-    elona_vector1<std::string> s_at_m184;
-    int xfix2_at_m184 = 0;
-    int dx_at_m184 = 0;
-    int dy_at_m184 = 0;
-    int i_at_m184 = 0;
-    int p_at_m184 = 0;
-    int cnt2_at_m184 = 0;
-    SDIM1(s_at_m184);
-    if (windowshadow == 1)
-    {
-        window(x + 4, y + 4, width, height - height % 8, true);
-        boxf(x + width - 522, 0, 486, 69, {30, 30, 30});
-        windowshadow = 0;
-    }
-    window(x, y, width, height - height % 8);
-    window_recipe2();
-    gmode(2);
-    line(
-        x + 50 + 0,
-        y + height - 48 - height % 8,
-        x + width - 40,
-        y + height - 48 - height % 8,
-        {194, 170, 146});
-    line(
-        x + 50 + 0,
-        y + height - 49 - height % 8,
-        x + width - 40,
-        y + height - 49 - height % 8,
-        {234, 220, 188});
-    s_at_m184(0) = u8"Page."s + (rppage + 1) + u8"/"s + (rppage(1) + 1);
-    s_at_m184(1) = ""s + key_prev + u8","s + key_next + ""s +
-        i18n::s.get("core.blending.recipe.hint");
-    if (step == -1)
-    {
-        s_at_m184(1) += strhint3;
-    }
-    else
-    {
-        s_at_m184(1) += strhint3b;
-    }
-    font(12 + sizefix - en * 2);
-    mes(x + 25 + 0, y + height - 43 - height % 8, s_at_m184(1));
-    font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    mes(x + width - strlen_u(s_at_m184) * 7 - 40 - xfix2_at_m184,
-        y + height - 65 - height % 8,
-        s_at_m184);
-    dx_at_m184 = x + 35;
-    dy_at_m184 = y + 48;
-    font(12 - en * 2, snail::Font::Style::bold);
-    mes(dx_at_m184 - 10,
-        dy_at_m184,
-        i18n::s.get("core.blending.window.procedure"));
-    dy_at_m184 = dy_at_m184 + 18;
-    font(13 - en * 2);
-    i_at_m184 = 1;
-    if (step == i_at_m184 - 2)
-    {
-        boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {60, 20, 10, 32});
-    }
-    else if (step > i_at_m184 - 2)
-    {
-        boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {20, 20, 20, 32});
-    }
-    if (step == -1)
-    {
-        mes(dx_at_m184,
-            dy_at_m184,
-            ""s + i_at_m184 + u8"."s +
-                i18n::s.get("core.blending.window.choose_a_recipe"));
-    }
-    else
-    {
-        mes(dx_at_m184,
-            dy_at_m184,
-            ""s + i_at_m184 + u8"."s +
-                i18n::s.get(
-                    "core.blending.window.chose_the_recipe_of", rpname(rpid)));
-    }
-    dy_at_m184 += 17;
-    ++i_at_m184;
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        if (rpdata(20 + cnt, rpid) == 0)
-        {
-            break;
-        }
-        if (step == i_at_m184 - 2)
-        {
-            boxf(
-                dx_at_m184 - 10,
-                dy_at_m184 - 2,
-                width - 60,
-                17,
-                {60, 20, 10, 32});
-        }
-        else if (step > i_at_m184 - 2)
-        {
-            boxf(
-                dx_at_m184 - 10,
-                dy_at_m184 - 2,
-                width - 60,
-                17,
-                {20, 20, 20, 32});
-        }
-        if (step <= cnt)
-        {
-            int stat = blendmatnum(rpdata(20 + cnt, rpid), cnt);
-            p_at_m184 = stat;
-            s_at_m184 = i18n::s.get(
-                "core.blending.window.add", rpmatname(cnt), p_at_m184);
-        }
-        else
-        {
-            s_at_m184 = i18n::s.get(
-                "core.blending.window.selected", inv[rpref(10 + cnt * 2)]);
-            s_at_m184 = strmid(s_at_m184, 0, 44);
-        }
-        mes(dx_at_m184, dy_at_m184, ""s + i_at_m184 + u8"."s + s_at_m184);
-        dy_at_m184 += 17;
-        ++i_at_m184;
-    }
-    draw("deco_blend_b", wx + ww + 243, wy - 4);
-    if (step == i_at_m184 - 2)
-    {
-        boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {60, 20, 10, 32});
-    }
-    else if (step > i_at_m184 - 2)
-    {
-        boxf(dx_at_m184 - 10, dy_at_m184 - 2, width - 60, 17, {20, 20, 20, 32});
-    }
-    mes(dx_at_m184,
-        dy_at_m184,
-        ""s + i_at_m184 + u8"."s + i18n::s.get("core.blending.window.start"));
-    dy_at_m184 += 30;
-    if (rppage == 0)
-    {
-        font(12 - en * 2, snail::Font::Style::bold);
-        mes(dx_at_m184 - 10,
-            dy_at_m184,
-            i18n::s.get("core.blending.window.the_recipe_of", rpname(rpid)));
-        dy_at_m184 += 20;
-        mes(dx_at_m184 - 10,
-            dy_at_m184,
-            i18n::s.get("core.blending.window.required_skills"));
-        dy_at_m184 = dy_at_m184 + 18;
-        font(13 - en * 2);
-        for (int cnt = 0; cnt < 5; ++cnt)
-        {
-            if (rpdata(10 + cnt * 2, rpid) == 0)
-            {
-                break;
-            }
-            const auto text_color = (rpdata(11 + cnt * 2, rpid) >
-                                     sdata(rpdata(10 + cnt * 2, rpid), 0))
-                ? snail::Color{150, 0, 0}
-                : snail::Color{0, 120, 0};
-            mes(dx_at_m184 + cnt % 2 * 140,
-                dy_at_m184 + cnt / 2 * 17,
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db
-                        .get_id_from_legacy(rpdata(10 + cnt * 2, rpid))
-                        ->get(),
-                    "name") +
-                    u8"  "s + rpdata((11 + cnt * 2), rpid) + u8"("s +
-                    sdata(rpdata((10 + cnt * 2), rpid), 0) + u8")"s,
-                text_color);
-        }
-        dy_at_m184 += 50;
-        font(12 - en * 2, snail::Font::Style::bold);
-        mes(dx_at_m184 - 10,
-            dy_at_m184,
-            i18n::s.get("core.blending.window.required_equipment"));
-        return;
-    }
-    if (item_index == -1)
-    {
-        return;
-    }
-    font(12 - en * 2, snail::Font::Style::bold);
-    mes(dx_at_m184 - 10, dy_at_m184, itemname(item_index));
-    dy_at_m184 += 20;
-    font(13 - en * 2);
-    if (inv[item_index].identify_state <= IdentifyState::partly)
-    {
-        mes(dx_at_m184,
-            dy_at_m184,
-            i18n::s.get("core.blending.window.havent_identified"));
-        dy_at_m184 += 16;
-        return;
-    }
-    getinheritance(item_index, inhlist_at_m184, p_at_m184);
-    if (p_at_m184 > 0)
-    {
-        for (int cnt = 0, cnt_end = (p_at_m184); cnt < cnt_end; ++cnt)
-        {
-            cnt2_at_m184 = inhlist_at_m184(cnt);
-            if (inv[item_index].enchantments[cnt2_at_m184].id == 0)
-            {
-                break;
-            }
-            get_enchantment_description(
-                inv[item_index].enchantments[cnt2_at_m184].id,
-                inv[item_index].enchantments[cnt2_at_m184].power,
-                the_item_db[inv[item_index].id]->category);
-            const auto text_color =
-                inv[item_index].enchantments[cnt2_at_m184].power < 0
-                ? snail::Color{180, 0, 0}
-                : snail::Color{0, 0, 100};
-            mes(dx_at_m184, dy_at_m184, cnven(s), text_color);
-            dy_at_m184 += 16;
-        }
-    }
-    else
-    {
-        mes(dx_at_m184,
-            dy_at_m184,
-            i18n::s.get("core.blending.window.no_inherited_effects"));
-        dy_at_m184 += 16;
-        ++p_at_m184;
-    }
-}
-
-
-
 TurnResult blending_menu()
 {
     std::string action;
-    elona_vector1<int> blendchecklist;
     step = -1;
     rpid = 0;
     asset_load("deco_blend");
     gsel(0);
     clear_rprefmat();
-label_1923:
-    if (step != -1)
+
+    while (true)
     {
-        if (rpdata(20 + step, rpid) == 0)
+        if (all_ingredient_are_added(step, rpid))
         {
             rppage = 0;
-            window_recipe(list2, -1, wx + ww, wy, 400, wh);
+            window_recipe(none, wx + ww, wy, 400, wh);
             Message::instance().linebreak();
             txt(i18n::s.get("core.blending.prompt.how_many"));
-            p = 10;
-            for (int cnt = 0; cnt < 10; ++cnt)
-            {
-                if (rpref(10 + cnt * 2) == -1)
-                {
-                    break;
-                }
-                if (rpdata(2, rpid) == 2 && cnt == 0)
-                {
-                    continue;
-                }
-                if (inv[rpref(10 + cnt * 2)].number() < p)
-                {
-                    p = inv[rpref(10 + cnt * 2)].number();
-                }
-            }
-            rpmode = 1;
 
+            p = calc_max_number_of_products_you_can_blend(rpid);
+
+            rpmode = 1;
             PromptWithNumber prompt(p(0), "core.blending.prompt");
             prompt.append("start", snail::Key::key_a);
             prompt.append("go_back", snail::Key::key_b);
             prompt.append("from_the_start", snail::Key::key_c);
             const auto result = prompt.query(promptx, prompty, 220);
             rtval = result.index;
-
             rpmode = 0;
-            if (rtval == 0)
+
+            if (rtval == 0) // start
             {
                 rpref(1) = result.number;
                 rpref(2) = rpdata(1, rpid);
                 rpref(3) = rpdiff(rpid, step, -1);
-                continuous_action_blending();
+                activity_blending();
                 return TurnResult::turn_end;
             }
-            if (rtval == 2)
+            else if (rtval == 2) // from the start
             {
                 step = -1;
-                goto label_1923;
+                continue;
             }
-            --step;
-            goto label_1923;
+            else
+            {
+                --step; // go back
+                continue;
+            }
         }
-    }
-    page = 0;
-    pagesize = 16;
-    listmax = 0;
-    cs = 0;
-    cs_bk = -1;
-    cc = 0;
-    screenupdate = -1;
-    update_screen();
-    if (step == -1)
-    {
-        rppage(0) = 0;
-        rppage(1) = 0;
+
+        page = 0;
+        pagesize = 16;
         listmax = 0;
-        for (int cnt = 0; cnt < 1200; ++cnt)
+        cs = 0;
+        cs_bk = -1;
+        cc = 0;
+        screenupdate = -1;
+        update_screen();
+
+        if (step == -1)
         {
-            if (rpdata(0, cnt) == 0)
+            rppage(0) = 0;
+            rppage(1) = 0;
+            listmax = 0;
+            for (int cnt = 0; cnt < 1200; ++cnt)
+            {
+                if (rpdata(0, cnt) == 0)
+                {
+                    continue;
+                }
+                if (recipememory(cnt) > 0)
+                {
+                    list(0, listmax) = cnt;
+                    list(1, listmax) = cnt;
+                    ++listmax;
+                }
+            }
+            sort_list_by_column1();
+            windowshadow(1) = 1;
+            Message::instance().linebreak();
+            txt(i18n::s.get("core.blending.recipe.warning"));
+            Message::instance().linebreak();
+            txt(i18n::s.get("core.blending.recipe.which"));
+            if (const auto result = blending_menu_1())
+            {
+                return *result;
+            }
+            else
             {
                 continue;
             }
-            if (recipememory(cnt) > 0)
-            {
-                list(0, listmax) = cnt;
-                list(1, listmax) = cnt;
-                ++listmax;
-            }
         }
-        sort_list_by_column1();
-        windowshadow(1) = 1;
-        Message::instance().linebreak();
-        txt(i18n::s.get("core.blending.recipe.warning"));
-        Message::instance().linebreak();
-        txt(i18n::s.get("core.blending.recipe.which"));
-        goto label_1924_internal;
-    }
-    rppage = 1;
-    {
-        int stat = blendlist(list, step);
-        listmax = stat;
-    }
-    sort_list_by_column1();
-    goto label_1927_internal;
-label_1924_internal:
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
-    {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-    DIM2(blendchecklist, pagesize);
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
+        else
         {
-            break;
-        }
-        blendchecklist(cnt) = blendcheckmat(list(0, p));
-    }
-label_1925_internal:
-    windowshadow = windowshadow(1);
-    ui_display_window(
-        i18n::s.get("core.blending.recipe.title"),
-        strhint2,
-        (windoww - 780) / 2 + inf_screenx,
-        winposy(445),
-        380,
-        432,
-        74);
-    display_topic(i18n::s.get("core.blending.recipe.name"), wx + 28, wy + 30);
-    s = i18n::s.get("core.blending.recipe.counter", listmax);
-    font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    mes(wx + 130, wy + wh - 65 - wh % 8, s);
-    keyrange = 0;
-    gmode(2);
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        key_list(cnt) = key_select(cnt);
-        ++keyrange;
-        if (cnt % 2 == 0)
-        {
-            boxf(wx + 70, wy + 60 + cnt * 19, ww - 100, 18, {12, 14, 16, 16});
-        }
+            rppage = 1;
+            listmax = blendlist(list, step);
+            sort_list_by_column1();
 
-        draw_item_material(550, wx + 37, wy + 70 + cnt * 19); // Recipe image
-
-        if (blendchecklist(cnt) == 1)
-        {
-            draw("blend_ingredient", wx + 330, wy + 53 + cnt * 19);
-        }
-        rpid = list(0, p);
-
-        int difficulty = (4 - rpdiff(rpid, -1, -1) / 25);
-        draw_indexed(
-            "recipe_difficulty", wx + 317, wy + 60 + cnt * 19, difficulty);
-    }
-    font(14 - en * 2);
-    cs_listbk();
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        p = list(0, p);
-        rpid = p;
-        s = i18n::s.get("core.blending.recipe.of", cnven(rpname(rpid)));
-        display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
-        cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1);
-    }
-    if (cs_bk != cs)
-    {
-        rpid = list(0, pagesize * page + cs);
-        windowshadow = windowshadow(1);
-        window_recipe(list2, -1, wx + ww, wy, 400, wh);
-    }
-    if (keyrange != 0)
-    {
-        cs_bk = cs;
-    }
-    windowshadow(1) = 0;
-    draw("deco_blend_c", wx + 10, wy + wh - 100);
-    redraw();
-
-    action = get_selected_item(p(0));
-
-    if (p != -1)
-    {
-        rpid = p;
-        step = 0;
-        rppage(0) = 1;
-        rppage(1) = 1;
-        rpref(0) = rpid;
-        goto label_1923;
-    }
-    if (action == "next_page")
-    {
-        if (pagemax != 0)
-        {
-            snd("core.pop1");
-            ++page;
-            goto label_1924_internal;
+            windowshadow(1) = 1;
+            Message::instance().linebreak();
+            txt(i18n::s.get(
+                "core.blending.steps.add_ingredient", rpmatname(step)));
+            blending_menu_2();
         }
     }
-    if (action == "previous_page")
-    {
-        if (pagemax != 0)
-        {
-            snd("core.pop1");
-            --page;
-            goto label_1924_internal;
-        }
-    }
-    if (action == "cancel")
-    {
-        screenupdate = 0;
-        update_screen();
-        return TurnResult::pc_turn_user_error;
-    }
-    goto label_1925_internal;
-label_1927_internal:
-    windowshadow(1) = 1;
-    Message::instance().linebreak();
-    txt(i18n::s.get("core.blending.steps.add_ingredient", rpmatname(step)));
-label_1928_internal:
-    cs_bk = -1;
-    pagemax = (listmax - 1) / pagesize;
-    if (page < 0)
-    {
-        page = pagemax;
-    }
-    else if (page > pagemax)
-    {
-        page = 0;
-    }
-    windowshadow = windowshadow(1);
-    ui_display_window(
-        i18n::s.get(
-            "core.blending.steps.add_ingredient_prompt", rpmatname(step)),
-        strhint2,
-        (windoww - 780) / 2 + inf_screenx,
-        winposy(445),
-        380,
-        432,
-        74);
-    display_topic(
-        i18n::s.get("core.blending.steps.item_name"), wx + 28, wy + 30);
-    s = i18n::s.get("core.blending.steps.item_counter", listmax);
-    font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    mes(wx + 130, wy + wh - 65 - wh % 8, s);
-    keyrange = 0;
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        key_list(cnt) = key_select(cnt);
-        ++keyrange;
-        if (cnt % 2 == 0)
-        {
-            boxf(wx + 70, wy + 60 + cnt * 19, ww - 100, 18, {12, 14, 16, 16});
-        }
-    }
-    font(14 - en * 2);
-    cs_listbk();
-    for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
-    {
-        p = pagesize * page + cnt;
-        if (p >= listmax)
-        {
-            break;
-        }
-        p = list(0, p);
-        s = itemname(p, inv[p].number());
-        s = strmid(s, 0, 28);
-        if (p >= ELONA_ITEM_ON_GROUND_INDEX)
-        {
-            s += i18n::s.get("core.blending.steps.ground");
-        }
-        display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
-
-        draw_item_with_portrait_scale_height(
-            inv[p], wx + 37, wy + 69 + cnt * 19);
-
-        if (inv[p].body_part != 0)
-        {
-            draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
-        }
-        cs_list(
-            cs == cnt,
-            s,
-            wx + 84,
-            wy + 60 + cnt * 19 - 1,
-            0,
-            cs_list_get_item_color(inv[p]));
-    }
-    p = list(0, pagesize * page + cs);
-    if (listmax == 0)
-    {
-        p = -1;
-    }
-    if (cs_bk != cs)
-    {
-        windowshadow = windowshadow(1);
-        window_recipe(list2, p, wx + ww, wy, 400, wh);
-    }
-    if (keyrange != 0)
-    {
-        cs_bk = cs;
-    }
-    windowshadow(1) = 0;
-    draw("deco_blend_c", wx + 10, wy + wh - 100);
-    redraw();
-
-    action = get_selected_item(p(0));
-    if (action == "next_page")
-    {
-        if (pagemax != 0)
-        {
-            snd("core.pop1");
-            ++page;
-            goto label_1928_internal;
-        }
-    }
-    if (action == "previous_page")
-    {
-        if (pagemax != 0)
-        {
-            snd("core.pop1");
-            --page;
-            goto label_1928_internal;
-        }
-    }
-    if (p != -1)
-    {
-        ci = p;
-        if (inv[ci].is_marked_as_no_drop())
-        {
-            snd("core.fail1");
-            txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
-            goto label_1928_internal;
-        }
-        rpref(10 + step * 2 + 0) = ci;
-        rpref(10 + step * 2 + 1) = inv[ci].id;
-        snd("core.drink1");
-        txt(i18n::s.get("core.blending.steps.you_add", inv[ci]));
-        ++step;
-        p = rpdiff(rpid, step, step - 1);
-        goto label_1923;
-    }
-    if (action == "previous_menu")
-    {
-        snd("core.pop1");
-        --rppage;
-        cs_bk = -1;
-        if (rppage < 0)
-        {
-            rppage = rppage(1);
-        }
-    }
-    if (action == "next_menu")
-    {
-        snd("core.pop1");
-        ++rppage;
-        cs_bk = -1;
-        if (rppage > rppage(1))
-        {
-            rppage = 0;
-        }
-    }
-    if (action == "cancel")
-    {
-        --step;
-        goto label_1923;
-    }
-    goto label_1928_internal;
 }
 
 
@@ -1055,7 +1093,8 @@ std::string rpmatname(int step)
             return s_at_m177;
         }
         s_at_m177 = i18n::s.get(
-            "core.blending.ingredient.corpse", chara_refstr(p_at_m177, 2));
+            "core.blending.ingredient.corpse",
+            chara_db_get_name(int2charaid(p_at_m177)));
         return s_at_m177;
     }
     return s_at_m177;
@@ -1304,7 +1343,7 @@ int blendcheckmat(int recipe_id)
                 }
                 if (id_at_m181 < 9000)
                 {
-                    if (item.id == id_at_m181)
+                    if (item.id == int2itemid(id_at_m181))
                     {
                         f_at_m181 = 1;
                         break;
@@ -1314,7 +1353,7 @@ int blendcheckmat(int recipe_id)
                 if (id_at_m181 < 10000)
                 {
                     if (instr(
-                            the_item_db[item.id]->rffilter,
+                            the_item_db[itemid2int(item.id)]->rffilter,
                             0,
                             u8"/"s + rfnameorg(0, (id_at_m181 - 9000)) +
                                 u8"/"s) != -1 ||
@@ -1325,7 +1364,7 @@ int blendcheckmat(int recipe_id)
                     }
                     continue;
                 }
-                if (the_item_db[item.id]->category == id_at_m181)
+                if (the_item_db[itemid2int(item.id)]->category == id_at_m181)
                 {
                     f_at_m181 = 1;
                     break;
@@ -1392,7 +1431,7 @@ int blendmatnum(int matcher, int step)
             }
             if (matcher < 9000)
             {
-                if (item.id == matcher)
+                if (item.id == int2itemid(matcher))
                 {
                     m_at_m182 += item.number();
                 }
@@ -1401,7 +1440,7 @@ int blendmatnum(int matcher, int step)
             if (matcher < 10000)
             {
                 if (instr(
-                        the_item_db[item.id]->rffilter,
+                        the_item_db[itemid2int(item.id)]->rffilter,
                         0,
                         u8"/"s + rfnameorg(0, (matcher - 9000)) + u8"/"s) !=
                         -1 ||
@@ -1411,7 +1450,7 @@ int blendmatnum(int matcher, int step)
                 }
                 continue;
             }
-            if (the_item_db[item.id]->category == matcher)
+            if (the_item_db[itemid2int(item.id)]->category == matcher)
             {
                 m_at_m182 += item.number();
                 continue;
@@ -1466,7 +1505,7 @@ int blendlist(elona_vector2<int>& result_array, int step)
                     continue;
                 }
             }
-            reftype_at_m183 = the_item_db[item.id]->category;
+            reftype_at_m183 = the_item_db[itemid2int(item.id)]->category;
             if (rpdata(40 + step, rpid))
             {
                 int stat = blendcheckext(item.index, step);
@@ -1477,7 +1516,7 @@ int blendlist(elona_vector2<int>& result_array, int step)
             }
             if (id_at_m183 < 9000)
             {
-                if (item.id != id_at_m183)
+                if (item.id != int2itemid(id_at_m183))
                 {
                     continue;
                 }
@@ -1485,7 +1524,7 @@ int blendlist(elona_vector2<int>& result_array, int step)
             else if (id_at_m183 < 10000)
             {
                 if (instr(
-                        the_item_db[item.id]->rffilter,
+                        the_item_db[itemid2int(item.id)]->rffilter,
                         0,
                         u8"/"s + rfnameorg(0, (id_at_m183 - 9000)) + u8"/"s) ==
                         -1 &&
@@ -1515,7 +1554,8 @@ int blendlist(elona_vector2<int>& result_array, int step)
                 }
             }
             result_array(0, m_at_m183) = item.index;
-            result_array(1, m_at_m183) = reftype_at_m183 * 1000 + item.id;
+            result_array(1, m_at_m183) =
+                reftype_at_m183 * 1000 + itemid2int(item.id);
             ++m_at_m183;
         }
     }
@@ -1548,7 +1588,7 @@ int blending_find_required_mat()
             break;
         }
         if (inv[rpref(10 + cnt * 2)].number() <= 0 ||
-            inv[rpref(10 + cnt * 2)].id != rpref(11 + cnt * 2))
+            inv[rpref(10 + cnt * 2)].id != int2itemid(rpref(11 + cnt * 2)))
         {
             f = 0;
             break;
@@ -1581,7 +1621,7 @@ int blending_spend_materials()
                 "core.blending.you_lose", inv[rpref(10 + cnt * 2)]));
             inv[rpref(10 + cnt * 2)].modify_number(-1);
         }
-        if (chara_unequip(rpref(10 + cnt * 2)))
+        if (chara_unequip(inv[rpref(10 + cnt * 2)]))
         {
             chara_refresh(0);
         }
@@ -1612,12 +1652,8 @@ void blending_start_attempt()
         {
             flt();
             nostack = 1;
-            if (itemcreate(
-                    -1,
-                    rpdata(0, rpid),
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    0))
+            if (const auto item = itemcreate_extra_inv(
+                    rpdata(0, rpid), cdata.player().position, 0))
             {
                 for (int cnt = 0;; ++cnt)
                 {
@@ -1626,16 +1662,16 @@ void blending_start_attempt()
                         break;
                     }
                     enchantment_add(
-                        ci,
+                        *item,
                         rpdata(50 + cnt * 2, rpid),
                         rpdata(51 + cnt * 2, rpid),
                         0,
                         1);
                 }
+                txt(i18n::s.get("core.blending.succeeded", *item),
+                    Message::color{ColorIndex::green});
+                snd("core.drink1");
             }
-            txt(i18n::s.get("core.blending.succeeded", inv[ci]),
-                Message::color{ColorIndex::green});
-            snd("core.drink1");
         }
         for (int cnt = 0; cnt < 5; ++cnt)
         {
@@ -1706,7 +1742,7 @@ void blending_proc_on_success_events()
     case 10003:
         txt(i18n::s.get("core.action.dip.result.put_on", inv[ci], inv[ti]),
             Message::color{ColorIndex::green});
-        if (inv[ci].id == 567)
+        if (inv[ci].id == ItemId::fireproof_blanket)
         {
             txt(i18n::s.get("core.action.dip.result.good_idea_but"));
         }
@@ -1760,13 +1796,13 @@ void blending_proc_on_success_events()
     case 10007:
         txt(i18n::s.get(
             "core.action.dip.result.well_refill", inv[ci], inv[ti]));
-        if (inv[ti].id == 601)
+        if (inv[ti].id == ItemId::empty_bottle)
         {
             txt(i18n::s.get("core.action.dip.result.empty_bottle_shatters"));
             break;
         }
         snd("core.drink1");
-        if (inv[ci].id == 602)
+        if (inv[ci].id == ItemId::holy_well)
         {
             txt(i18n::s.get("core.action.dip.result.holy_well_polluted"));
             break;
@@ -1778,7 +1814,7 @@ void blending_proc_on_success_events()
         }
         txt(i18n::s.get("core.action.dip.result.well_refilled", inv[ci]),
             Message::color{ColorIndex::green});
-        if (inv[ti].id == 587)
+        if (inv[ti].id == ItemId::handful_of_snow)
         {
             txt(i18n::s.get("core.action.dip.result.snow_melts.blending"));
         }
@@ -1789,7 +1825,7 @@ void blending_proc_on_success_events()
         break;
     case 10008:
         if (inv[ci].param1 < -5 || inv[ci].param3 >= 20 ||
-            (inv[ci].id == 602 && game_data.holy_well_count <= 0))
+            (inv[ci].id == ItemId::holy_well && game_data.holy_well_count <= 0))
         {
             txt(i18n::s.get(
                 "core.action.dip.result.natural_potion_dry", inv[ci]));
@@ -1802,13 +1838,13 @@ void blending_proc_on_success_events()
             break;
         }
         cibk = ci;
-        if (inv[ci].id == 602)
+        if (inv[ci].id == ItemId::holy_well)
         {
             --game_data.holy_well_count;
             flt();
-            if (itemcreate(0, 516, -1, -1, 0))
+            if (const auto item = itemcreate_player_inv(516, 0))
             {
-                inv[ci].curse_state = CurseState::blessed;
+                item->curse_state = CurseState::blessed;
             }
         }
         else
@@ -1816,19 +1852,19 @@ void blending_proc_on_success_events()
             inv[ci].param1 -= 3;
             flt(20);
             flttypemajor = 52000;
-            itemcreate(0, 0, -1, -1, 0);
+            itemcreate_player_inv(0, 0);
         }
         txt(i18n::s.get("core.action.dip.result.natural_potion"));
         txt(i18n::s.get("core.action.dip.you_get", inv[ci]),
             Message::color{ColorIndex::green});
-        item_stack(0, ci, 1);
-        item_stack(0, ci);
+        item_stack(0, inv[ci], true);
+        item_stack(0, inv[ci]);
         ci = cibk;
         snd("core.drink1");
         break;
     }
 
-    item_stack(0, ci);
+    item_stack(0, inv[ci]);
     if (inv[ci].body_part != 0)
     {
         create_pcpic(cdata.player());

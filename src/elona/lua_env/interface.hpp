@@ -103,5 +103,13 @@ optional<ConfigTable> data(const char* type, const std::string& id);
  */
 optional<ConfigTable> data(const char* type, int legacy_id);
 
+fs::path resolve_path_for_mod(const std::string& path);
+
+
+// List mod directories under `base_dir`.
+std::vector<fs::path> all_mod_dirs(const fs::path& base_dir);
+std::vector<fs::path> template_mod_dirs(const fs::path& base_dir);
+std::vector<fs::path> normal_mod_dirs(const fs::path& base_dir);
+
 } // namespace lua
 } // namespace elona

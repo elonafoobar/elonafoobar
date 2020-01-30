@@ -63,7 +63,7 @@ locale {
             }
 
             download {
-                failed = "MODリストのダウンロードに失敗しました。"
+                failed = "MODリストのダウンロードに失敗しました"
             }
 
             hint {
@@ -71,6 +71,10 @@ locale {
                 info = "[MODの情報]"
                 download = "[ダウンロード]"
                 installed = "[インストール済み]"
+            }
+
+            toggle {
+                cannot_disable = "このMODは無効にできません"
             }
         }
 
@@ -81,6 +85,7 @@ locale {
             no_template = "No template found"
             invalid_id = "'${_1}' は無効です。アルファベット、数字、アンダーバーのみ使用できます"
             exist = "MOD '${_1}' はすでに存在します"
+            created = "MOD '${_1}' を作成しました。"
         }
     }
 }

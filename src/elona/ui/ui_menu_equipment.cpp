@@ -326,7 +326,7 @@ static bool _on_list_entry_select(int index)
 static void _show_item_desc(int body_)
 {
     ci = cdata[cc].body_parts[body_ - 100] % 10000 - 1;
-    item_show_description();
+    item_show_description(inv[ci]);
     nowindowanime = 1;
     returnfromidentify = 0;
     screenupdate = -1;

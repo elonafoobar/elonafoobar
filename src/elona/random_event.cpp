@@ -6,10 +6,10 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
+#include "deferred_event.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
-#include "event.hpp"
 #include "food.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -38,7 +38,7 @@ struct RandomEvent
 
     bool is_evadable(int luck) const
     {
-        return luck_threshold != 0 && rnd(luck + 1) > luck_threshold;
+        return luck_threshold != 0 && rnd_capped(luck + 1) > luck_threshold;
     }
 };
 
@@ -166,7 +166,7 @@ optional<RandomEvent> generate_random_event()
     }
     if (map_data.type != mdata_t::MapType::world_map)
     {
-        if (cdata.player().continuous_action)
+        if (cdata.player().activity)
         {
             return none;
         }
@@ -347,8 +347,10 @@ void run_random_event(RandomEvent event)
         break;
     case 19:
         flt();
-        itemcreate(0, 621, -1, -1, 0);
-        txt(i18n::s.get("core.common.you_put_in_your_backpack", inv[ci]));
+        if (const auto item = itemcreate_player_inv(621, 0))
+        {
+            txt(i18n::s.get("core.common.you_put_in_your_backpack", *item));
+        }
         listmax = 1;
         event_bg = u8"bg_re15";
         break;
@@ -359,8 +361,10 @@ void run_random_event(RandomEvent event)
         break;
     case 21:
         flt();
-        itemcreate(0, 721, -1, -1, 0);
-        txt(i18n::s.get("core.common.you_put_in_your_backpack", inv[ci]));
+        if (const auto item = itemcreate_player_inv(721, 0))
+        {
+            txt(i18n::s.get("core.common.you_put_in_your_backpack", *item));
+        }
         listmax = 1;
         event_bg = u8"bg_re15";
         net_send_news("ehekatl");
@@ -391,7 +395,7 @@ void run_random_event(RandomEvent event)
                 efp = 200;
                 magic();
             }
-            else if (event_id() == -1)
+            else if (!event_has_pending_events())
             {
                 event_add(26);
             }
@@ -400,7 +404,7 @@ void run_random_event(RandomEvent event)
         event_bg = u8"bg_re5";
         break;
     case 8:
-        p = rnd(cdata.player().gold / 8 + 1);
+        p = rnd_capped(cdata.player().gold / 8 + 1);
         if (cdata.player().is_protected_from_thieves())
         {
             p = 0;
@@ -454,7 +458,7 @@ void run_random_event(RandomEvent event)
         event_bg = u8"bg_re1";
         break;
     case 16:
-        p = rnd(cdata.player().gold / 10 + 1000) + 1;
+        p = rnd_capped(cdata.player().gold / 10 + 1000) + 1;
         earn_gold(cdata.player(), p);
         txt(i18n::s.get_enum_property(
             "core.event.popup", "you_pick_up", 16, p(0)));
@@ -501,12 +505,7 @@ void run_random_event(RandomEvent event)
             {
                 flt();
                 flttypemajor = choice(fsetremain);
-                itemcreate(
-                    -1,
-                    0,
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    0);
+                itemcreate_extra_inv(0, cdata.player().position, 0);
             }
             txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }
@@ -527,12 +526,7 @@ void run_random_event(RandomEvent event)
                 {
                     flttypemajor = choice(fsetremain);
                 }
-                itemcreate(
-                    -1,
-                    0,
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    0);
+                itemcreate_extra_inv(0, cdata.player().position, 0);
             }
             txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }
@@ -544,7 +538,7 @@ void run_random_event(RandomEvent event)
     }
 
     cc = 0;
-    load_continuous_action_animation();
+    load_activity_animation();
 }
 
 
@@ -576,7 +570,7 @@ int show_random_event_window(
 {
     assert(!choices.empty());
 
-    if (Config::instance().skip_random_event_popups && choices.size() == 1)
+    if (g_config.skip_random_event_popups() && choices.size() == 1)
     {
         // Skip this event.
         snd("core.pop4");
@@ -596,15 +590,12 @@ int show_random_event_window(
     }
 
 
-    keyhalt = 1;
+    input_halt_input(HaltInput::force);
     cs = 0;
     page = 0;
     pagemax = 0;
     pagesize = 16;
     cs_bk = -1;
-    key = "";
-    objprm(0, ""s);
-    keylog = "";
     if (listmax <= 1)
     {
         chatesc = 0;
@@ -687,7 +678,6 @@ int show_random_event_window(
         if (rtval != -1)
         {
             snd("core.click1");
-            key = "";
             return rtval;
         }
     }

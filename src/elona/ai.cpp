@@ -19,64 +19,91 @@
 #include "status_ailment.hpp"
 #include "variables.hpp"
 
-namespace elona
-{
-
 // TODO integrate chunks of npc_turn() here
 
-int blockedbychara = 0;
 
-int ai_check()
+
+namespace
 {
+
+bool _blockedbychara = false;
+
+
+
+enum class Direction
+{
+    south,
+    west,
+    east,
+    north,
+};
+
+
+
+bool _ai_check(Character& chara, Direction direction, int p)
+{
+    assert(p == 0 || p == 1);
+
+    elona_vector2<int> dirchk;
+    DIM3(dirchk, 3, 2);
+
+    dirchk(0, 0) = -1;
+    dirchk(1, 0) = 0;
+    dirchk(2, 0) = 1;
+    dirchk(0, 1) = 1;
+    dirchk(1, 1) = 0;
+    dirchk(2, 1) = -1;
+
     for (int cnt = 0; cnt < 3; ++cnt)
     {
-        if (dir == 2)
+        switch (direction)
         {
-            cdata[cc].next_position.x = cdata[cc].position.x + 1;
-            cdata[cc].next_position.y = dirchk(cnt, p) + cdata[cc].position.y;
+        case Direction::south:
+            chara.next_position.y = chara.position.y + 1;
+            chara.next_position.x = dirchk(cnt, p) + chara.position.x;
+            break;
+        case Direction::west:
+            chara.next_position.x = chara.position.x - 1;
+            chara.next_position.y = dirchk(cnt, p) + chara.position.y;
+            break;
+        case Direction::east:
+            chara.next_position.x = chara.position.x + 1;
+            chara.next_position.y = dirchk(cnt, p) + chara.position.y;
+            break;
+        case Direction::north:
+            chara.next_position.y = chara.position.y - 1;
+            chara.next_position.x = dirchk(cnt, p) + chara.position.x;
+            break;
         }
-        if (dir == 1)
-        {
-            cdata[cc].next_position.x = cdata[cc].position.x - 1;
-            cdata[cc].next_position.y = dirchk(cnt, p) + cdata[cc].position.y;
-        }
-        if (dir == 3)
-        {
-            cdata[cc].next_position.y = cdata[cc].position.y - 1;
-            cdata[cc].next_position.x = dirchk(cnt, p) + cdata[cc].position.x;
-        }
-        if (dir == 0)
-        {
-            cdata[cc].next_position.y = cdata[cc].position.y + 1;
-            cdata[cc].next_position.x = dirchk(cnt, p) + cdata[cc].position.x;
-        }
-        cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
+
+        cell_check(chara.next_position.x, chara.next_position.y);
+
         if (cellaccess == 1)
         {
             break;
         }
         if (cellchara != -1)
         {
-            if (cdata[cc].relationship == 10)
+            if (chara.relationship == 10)
             {
                 if (cdata[cellchara].relationship == -3)
                 {
-                    cdata[cc].enemy_id = cellchara;
+                    chara.enemy_id = cellchara;
                 }
                 else
                 {
-                    blockedbychara = 1;
+                    _blockedbychara = true;
                 }
             }
-            if (cdata[cc].relationship == -3)
+            if (chara.relationship == -3)
             {
                 if (cdata[cellchara].relationship == 10)
                 {
-                    cdata[cc].enemy_id = cellchara;
+                    chara.enemy_id = cellchara;
                 }
                 else
                 {
-                    blockedbychara = 1;
+                    _blockedbychara = true;
                 }
             }
         }
@@ -89,479 +116,17 @@ int ai_check()
             }
         }
     }
-    if (cellaccess == 1)
-    {
-        return 1;
-    }
-    return 0;
+
+    return cellaccess == 1;
 }
 
-TurnResult ai_proc_basic()
-{
-    if (tc == 0)
-    {
-        pcattacker = cc;
-    }
-    int act = choice(cdata[cc].normal_actions);
-    if (cdata[cc].ai_act_sub_freq != 0)
-    {
-        if (cdata[cc].ai_act_sub_freq > rnd(100))
-        {
-            if (!cdata[cc].special_actions.empty())
-            {
-                act = choice(cdata[cc].special_actions);
-            }
-            if (act >= -10000 && act < -9995)
-            {
-                if (distance < 8)
-                {
-                    if (fov_los(
-                            cdata[cc].position.x,
-                            cdata[cc].position.y,
-                            cdata[tc].position.x,
-                            cdata[tc].position.y))
-                    {
-                        tlocx = cdata[tc].position.x;
-                        tlocy = cdata[tc].position.y;
-                        bool success = false;
-                        if (act == -9999)
-                        {
-                            flt();
-                            flttypemajor = 52000;
-                            success = !!itemcreate(
-                                cc, choice(isetthrowpotionminor), -1, -1, 0);
-                        }
-                        if (act == -9998)
-                        {
-                            flt();
-                            flttypemajor = 52000;
-                            success = !!itemcreate(
-                                cc, choice(isetthrowpotionmajor), -1, -1, 0);
-                        }
-                        if (act == -9997)
-                        {
-                            flt();
-                            flttypemajor = 52000;
-                            success = !!itemcreate(
-                                cc, choice(isetthrowpotiongreater), -1, -1, 0);
-                        }
-                        if (act == -9996)
-                        {
-                            flt();
-                            success = !!itemcreate(cc, 698, -1, -1, 0);
-                        }
-                        if (success)
-                        {
-                            return do_throw_command();
-                        }
-                        return TurnResult::turn_end;
-                    }
-                }
-            }
-        }
-    }
-    if (act == -4)
-    {
-        cdata[cc].next_position.x = rnd(3) - 1 + cdata[cc].position.x;
-        cdata[cc].next_position.y = rnd(3) - 1 + cdata[cc].position.y;
-        cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
-        if (cellaccess == 1)
-        {
-            return proc_movement_event();
-        }
-        else
-        {
-            return TurnResult::turn_end;
-        }
-    }
-    if (act == -2)
-    {
-        if (distance < 6)
-        {
-            if (fov_los(
-                    cdata[cc].position.x,
-                    cdata[cc].position.y,
-                    cdata[tc].position.x,
-                    cdata[tc].position.y))
-            {
-                int stat = can_do_ranged_attack();
-                if (stat == 1)
-                {
-                    do_ranged_attack();
-                    return TurnResult::turn_end;
-                }
-            }
-        }
-    }
-    if (act >= 400)
-    {
-        if (act < 467)
-        {
-            efid = act;
-            if (cdata[cc].mp < cdata[cc].max_mp / 7)
-            {
-                if (rnd(3) || cc < 16 ||
-                    cdata[cc].quality >= Quality::miracle ||
-                    cdata[cc].cures_mp_frequently())
-                {
-                    cdata[cc].mp += cdata[cc].level / 4 + 5;
-                    return TurnResult::turn_end;
-                }
-            }
-            int stat = do_cast_magic();
-            if (stat == 1)
-            {
-                return TurnResult::turn_end;
-            }
-        }
-    }
-    if (act >= 600)
-    {
-        efid = act;
-        int stat = do_magic_attempt();
-        if (stat == 1)
-        {
-            return TurnResult::turn_end;
-        }
-    }
-    if (act == -3)
-    {
-        if (distance == 1)
-        {
-            try_to_melee_attack();
-        }
-        else if (rnd(3) == 0 || cc < 16)
-        {
-            if (distance < 6)
-            {
-                if (fov_los(
-                        cdata[cc].position.x,
-                        cdata[cc].position.y,
-                        cdata[tc].position.x,
-                        cdata[tc].position.y))
-                {
-                    int stat = can_do_ranged_attack();
-                    if (stat == 1)
-                    {
-                        do_ranged_attack();
-                        return TurnResult::turn_end;
-                    }
-                }
-            }
-        }
-        return TurnResult::turn_end;
-    }
-    if (distance == 1)
-    {
-        try_to_melee_attack();
-        return TurnResult::turn_end;
-    }
-    if (distance < 6)
-    {
-        if (fov_los(
-                cdata[cc].position.x,
-                cdata[cc].position.y,
-                cdata[tc].position.x,
-                cdata[tc].position.y))
-        {
-            int stat = can_do_ranged_attack();
-            if (stat == 1)
-            {
-                do_ranged_attack();
-                return TurnResult::turn_end;
-            }
-        }
-    }
-    if (cdata[cc].ai_dist <= distance)
-    {
-        if (rnd(3) == 0)
-        {
-            return TurnResult::turn_end;
-        }
-    }
-    if (rnd(5) == 0)
-    {
-        --cdata[cc].hate;
-    }
-    if (rnd(100) < cdata[cc].ai_move)
-    {
-        return proc_npc_movement_event();
-    }
-    else
-    {
-        return TurnResult::turn_end;
-    }
-}
 
-TurnResult proc_npc_movement_event(bool retreat)
-{
-    if (map_data.type == mdata_t::MapType::town)
-    {
-        if (cc < 16)
-        {
-            if (rnd(100) == 0)
-            {
-                sell(0) = 0;
-                sell(1) = 0;
-                for (auto&& item : inv.for_chara(cdata[cc]))
-                {
-                    if (item.number() == 0)
-                    {
-                        continue;
-                    }
-                    if (the_item_db[item.id]->category == 77000)
-                    {
-                        p = item.value * item.number();
-                        sell += item.number();
-                        sell(1) += p;
-                        item.remove();
-                        earn_gold(cdata[cc], p);
-                    }
-                }
-                if (sell != 0)
-                {
-                    txt(i18n::s.get(
-                            "core.ai.ally.sells_items",
-                            cdata[cc],
-                            sell(0),
-                            sell(1)),
-                        Message::color{ColorIndex::cyan});
-                }
-            }
-            if (rnd(100) == 0)
-            {
-                if (cdata[cc].gold >= cdata[cc].level * 500)
-                {
-                    cdata[cc].gold -= cdata[cc].level * 500;
-                    snd("core.ding3");
-                    txt(i18n::s.get("core.ai.ally.visits_trainer", cdata[cc]),
-                        Message::color{ColorIndex::cyan});
-                    for (int cnt = 0; cnt < 4; ++cnt)
-                    {
-                        while (1)
-                        {
-                            if (rnd(4) == 0)
-                            {
-                                p = rnd(8) + 10;
-                            }
-                            else
-                            {
-                                p = rnd(300) + 100;
-                            }
-                            if (sdata.get(p, cc).original_level == 0)
-                            {
-                                continue;
-                            }
-                            modify_potential(cdata[cc], p, 4);
-                            break;
-                        }
-                    }
-                    chara_refresh(cc);
-                }
-            }
-        }
-    }
-    if (tc == cc)
-    {
-        cdata[cc].enemy_id = 0;
-        return TurnResult::turn_end;
-    }
-    if (cdata[cc]._203 <= 0)
-    {
-        cdata[cc]._205 = cdata[tc].position.x;
-        cdata[cc]._206 = cdata[tc].position.y;
-        if (retreat || cdata[cc].ai_dist > distance)
-        {
-            cdata[cc]._205 = cdata[cc].position.x +
-                (cdata[cc].position.x - cdata[tc].position.x);
-            cdata[cc]._206 = cdata[cc].position.y +
-                (cdata[cc].position.y - cdata[tc].position.y);
-        }
-    }
-    else
-    {
-        --cdata[cc]._203;
-    }
-    blockedbychara = 0;
-    cdata[cc].next_position.x = (cdata[cc]._205 > cdata[cc].position.x) -
-        (cdata[cc]._205 < cdata[cc].position.x) + cdata[cc].position.x;
-    cdata[cc].next_position.y = (cdata[cc]._206 > cdata[cc].position.y) -
-        (cdata[cc]._206 < cdata[cc].position.y) + cdata[cc].position.y;
-    x = cdata[cc].next_position.x;
-    y = cdata[cc].next_position.y;
-    cell_check(x, y);
-    if (cellaccess == 1)
-    {
-        return proc_movement_event();
-    }
-    if (cellchara != -1)
-    {
-        tc = cellchara;
-        if (relationbetween(cc, tc) == -3)
-        {
-            cdata[cc].enemy_id = tc;
-            cdata[cc].hate += 4;
-            distance = dist(
-                cdata[tc].position.x,
-                cdata[tc].position.y,
-                cdata[cc].position.x,
-                cdata[cc].position.y);
-            return ai_proc_basic();
-        }
-        else if (
-            (cdata[cc].quality > Quality::great &&
-             cdata[cc].level > cdata[tc].level) ||
-            cdata[tc].is_hung_on_sand_bag())
-        {
-            if (cdata[cc].enemy_id != tc)
-            {
-                const auto did_swap = cell_swap(cc, tc);
-                if (did_swap && is_in_fov(cdata[cc]))
-                {
-                    txt(i18n::s.get(
-                        "core.ai.swap.displace", cdata[cc], cdata[tc]));
-                }
-                if (cdata[tc].continuous_action.type ==
-                    ContinuousAction::Type::eat)
-                {
-                    if (cdata[tc].continuous_action.turn > 0)
-                    {
-                        if (is_in_fov(cdata[cc]))
-                        {
-                            txt(i18n::s.get(
-                                "core.ai.swap.glare", cdata[cc], cdata[tc]));
-                        }
-                        cdata[tc].continuous_action.finish();
-                    }
-                }
-                return TurnResult::turn_end;
-            }
-        }
-    }
-    if (cc >= 16)
-    {
-        if (cdata[cc].quality > Quality::great)
-        {
-            if (cdata[cc].relationship <= -2)
-            {
-                if (x >= 0)
-                {
-                    if (x < map_data.width)
-                    {
-                        if (y >= 0)
-                        {
-                            if (y < map_data.height)
-                            {
-                                if (chip_data.for_cell(x, y).effect & 4)
-                                {
-                                    if (rnd(4) == 0)
-                                    {
-                                        cell_data.at(x, y).chip_id_actual =
-                                            tile_tunnel;
-                                        snd("core.crush1");
-                                        BreakingAnimation({x, y}).play();
-                                        spillfrag(x, y, 2);
-                                        if (is_in_fov(cdata[cc]))
-                                        {
-                                            txt(i18n::s.get(
-                                                "core.ai.crushes_wall",
-                                                cdata[cc]));
-                                        }
-                                        return TurnResult::turn_end;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    if (std::abs(cdata[cc]._205 - cdata[cc].position.x) >=
-        std::abs(cdata[cc]._206 - cdata[cc].position.y))
-    {
-        {
-            int stat = ai_dir_check_1();
-            if (stat == 1)
-            {
-                return proc_movement_event();
-            }
-        }
-        {
-            int stat = ai_dir_check_2();
-            if (stat == 1)
-            {
-                return proc_movement_event();
-            }
-        }
-    }
-    else
-    {
-        {
-            int stat = ai_dir_check_2();
-            if (stat == 1)
-            {
-                return proc_movement_event();
-            }
-        }
-        {
-            int stat = ai_dir_check_1();
-            if (stat == 1)
-            {
-                return proc_movement_event();
-            }
-        }
-    }
-    if (cdata[cc]._203 > 0)
-    {
-        cdata[cc].next_position.x = rnd(3) - 1 + cdata[cc].position.x;
-        cdata[cc].next_position.y = rnd(3) - 1 + cdata[cc].position.y;
-        cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
-        if (cellaccess == 1)
-        {
-            return proc_movement_event();
-        }
-    }
-    else
-    {
-        if (blockedbychara == 1)
-        {
-            cdata[cc]._203 = 3;
-        }
-        else
-        {
-            cdata[cc]._203 = 6;
-        }
-        dir = dir(1 + rnd(2));
-        if (dir == 1)
-        {
-            cdata[cc]._205 = cdata[cc].position.x - 6;
-            cdata[cc]._206 = cdata[tc].position.y;
-        }
-        if (dir == 2)
-        {
-            cdata[cc]._205 = cdata[cc].position.x + 6;
-            cdata[cc]._206 = cdata[tc].position.y;
-        }
-        if (dir == 3)
-        {
-            cdata[cc]._206 = cdata[cc].position.y - 6;
-            cdata[cc]._205 = cdata[tc].position.x;
-        }
-        if (dir == 0)
-        {
-            cdata[cc]._206 = cdata[cc].position.y + 6;
-            cdata[cc]._205 = cdata[tc].position.x;
-        }
-    }
-    return TurnResult::turn_end;
-}
 
-int ai_dir_check_1()
+bool _ai_dir_check_x()
 {
-    if (cdata[cc]._205 > cdata[cc].position.x)
+    if (cdata[cc].target_position.x > cdata[cc].position.x)
     {
-        if (cdata[cc]._206 > cdata[cc].position.y)
+        if (cdata[cc].target_position.y > cdata[cc].position.y)
         {
             p = 1;
         }
@@ -572,15 +137,15 @@ int ai_dir_check_1()
         dir(0) = 2;
         dir(1) = 0;
         dir(2) = 3;
-        int stat = ai_check();
-        if (stat == 1)
+        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        if (ok)
         {
-            return 1;
+            return true;
         }
     }
-    if (cdata[cc]._205 < cdata[cc].position.x)
+    if (cdata[cc].target_position.x < cdata[cc].position.x)
     {
-        if (cdata[cc]._206 < cdata[cc].position.y)
+        if (cdata[cc].target_position.y < cdata[cc].position.y)
         {
             p = 0;
         }
@@ -591,20 +156,22 @@ int ai_dir_check_1()
         dir(0) = 1;
         dir(1) = 0;
         dir(2) = 3;
-        int stat = ai_check();
-        if (stat == 1)
+        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        if (ok)
         {
-            return 1;
+            return true;
         }
     }
-    return 0;
+    return false;
 }
 
-int ai_dir_check_2()
+
+
+bool _ai_dir_check_y()
 {
-    if (cdata[cc]._206 > cdata[cc].position.y)
+    if (cdata[cc].target_position.y > cdata[cc].position.y)
     {
-        if (cdata[cc]._205 > cdata[cc].position.x)
+        if (cdata[cc].target_position.x > cdata[cc].position.x)
         {
             p = 1;
         }
@@ -615,15 +182,15 @@ int ai_dir_check_2()
         dir(0) = 0;
         dir(1) = 1;
         dir(2) = 2;
-        int stat = ai_check();
-        if (stat == 1)
+        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        if (ok)
         {
-            return 1;
+            return true;
         }
     }
-    if (cdata[cc]._206 < cdata[cc].position.y)
+    if (cdata[cc].target_position.y < cdata[cc].position.y)
     {
-        if (cdata[cc]._205 > cdata[cc].position.x)
+        if (cdata[cc].target_position.x > cdata[cc].position.x)
         {
             p = 0;
         }
@@ -634,301 +201,810 @@ int ai_dir_check_2()
         dir(0) = 3;
         dir(1) = 1;
         dir(2) = 2;
-        int stat = ai_check();
-        if (stat == 1)
+        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        if (ok)
         {
-            return 1;
+            return true;
         }
     }
-    return 0;
+    return false;
 }
 
-TurnResult ai_proc_misc_map_events()
+
+
+// TODO: move it to random.hpp
+bool _percent(int percentage)
 {
-    if (cdata[cc].ai_calm == 4)
+    return rnd(100) < percentage;
+}
+
+
+
+bool _is_special_throwing_action(int action_id)
+{
+    return -9999 <= action_id && action_id <= -9996;
+}
+
+
+
+// TODO: move it to fov.cpp
+bool fov_los_helper(const Position& a, const Position& b)
+{
+    return fov_los(a.x, a.y, b.x, b.y);
+}
+
+
+
+// TODO: move it to fov.cpp
+bool fov_los_helper(const Character& a, const Character& b)
+{
+    return fov_los_helper(a.position, b.position);
+}
+
+
+
+int dist_helper(const Position& a, const Position& b)
+{
+    return dist(a.x, a.y, b.x, b.y);
+}
+
+
+
+int dist_helper(const Character& a, const Character& b)
+{
+    return dist_helper(a.position, b.position);
+}
+
+
+
+bool _try_generate_special_throwing_item(const Character& chara, int action_id)
+{
+    switch (action_id)
+    {
+    case -9999:
+        flt();
+        flttypemajor = 52000;
+        return !!itemcreate_chara_inv(
+            chara.index, choice(isetthrowpotionminor), 0);
+    case -9998:
+        flt();
+        flttypemajor = 52000;
+        return !!itemcreate_chara_inv(
+            chara.index, choice(isetthrowpotionmajor), 0);
+    case -9997:
+        flt();
+        flttypemajor = 52000;
+        return !!itemcreate_chara_inv(
+            chara.index, choice(isetthrowpotiongreater), 0);
+    case -9996: flt(); return !!itemcreate_chara_inv(chara.index, 698, 0);
+    default: assert(0); return false;
+    }
+}
+
+
+
+// Helper function: normalize the return value of `can_do_ranged_attack()` to
+// boolean.
+bool can_do_ranged_attack_helper()
+{
+    int stat = can_do_ranged_attack();
+    return stat == 1;
+}
+
+
+
+bool _try_do_melee_attack(const Character& attacker, const Character& target)
+{
+    if (distance >= 6)
+    {
+        return false; // Too far.
+    }
+    if (!fov_los_helper(attacker, target))
+    {
+        return false; // Cannot see the target.
+    }
+    if (!can_do_ranged_attack_helper())
+    {
+        return false; // Cannot do ranged attack.
+    }
+
+    do_ranged_attack();
+    return true;
+}
+
+
+
+void _ally_sells_item(Character& chara)
+{
+    int sold_item_count = 0;
+    int earned_money = 0;
+
+    for (auto&& item : inv.for_chara(chara))
+    {
+        if (item.number() == 0)
+        {
+            continue;
+        }
+        if (the_item_db[itemid2int(item.id)]->category == 77000)
+        {
+            sold_item_count += item.number();
+            const auto total_value = item.value * item.number();
+            earned_money += total_value;
+            item.remove();
+            earn_gold(chara, total_value);
+        }
+    }
+    if (sold_item_count != 0)
+    {
+        txt(i18n::s.get(
+                "core.ai.ally.sells_items",
+                chara,
+                sold_item_count,
+                earned_money),
+            Message::color{ColorIndex::cyan});
+    }
+}
+
+
+
+int _calc_training_price(const Character& chara)
+{
+    return chara.level * 500;
+}
+
+
+
+void _ally_trains(Character& chara)
+{
+    // TODO: overflow check
+    const auto training_price = _calc_training_price(chara);
+    if (chara.gold < training_price)
+    {
+        return; // Does not have enough money.
+    }
+
+    chara.gold -= training_price;
+    snd("core.ding3");
+    txt(i18n::s.get("core.ai.ally.visits_trainer", chara),
+        Message::color{ColorIndex::cyan});
+
+    for (int _i = 0; _i < 4; ++_i)
+    {
+        while (true)
+        {
+            const auto skill_id = rnd(4) == 0 ? rnd(8) + 10 : rnd(300) + 100;
+            if (sdata.get(skill_id, chara.index).original_level == 0)
+            {
+                continue;
+            }
+            modify_potential(chara, skill_id, 4);
+            break;
+        }
+    }
+
+    chara_refresh(chara.index);
+}
+
+
+
+bool _is_valid_position(int x, int y)
+{
+    return 0 <= x && x < map_data.width && 0 <= y && y < map_data.height;
+}
+
+
+
+bool _will_crush_wall(const Character& chara, int x, int y)
+{
+    return chara.index >= 16 && chara.quality >= Quality::miracle &&
+        chara.relationship <= -2 && _is_valid_position(x, y) &&
+        (chip_data.for_cell(x, y).effect & 4);
+}
+
+
+
+const std::string& _chara_get_race(const Character& chara)
+{
+    return cdatan(2, chara.index);
+}
+
+
+
+// Handle 『恋のマイアヒ』
+void _proc_drunk_cat(Character& chara)
+{
+    if (chara.drunk < 5)
+    {
+        chara.drunk += 40;
+    }
+
+    if (const auto music =
+            i18n::s.get_optional("core.ai.dragostea_din_tei.music"))
+    {
+        if (rnd(25) < 3)
+        {
+            txt(*music, Message::color{ColorIndex::blue});
+            return;
+        }
+    }
+    txt(i18n::s.get("core.ai.dragostea_din_tei.sing"));
+}
+
+
+
+bool _is_at_night()
+{
+    return game_data.date.hour >= 22 || game_data.date.hour < 7;
+}
+
+
+
+optional<TurnResult> _proc_make_snowman(Character& chara)
+{
+    // Throws a snowball to <Ebon> if he is released.
+    if (rnd(4) == 0)
+    {
+        if (cdata[game_data.fire_giant].state() == Character::State::alive &&
+            is_in_fov(cdata[game_data.fire_giant]))
+        {
+            flt();
+            if (itemcreate_chara_inv(chara.index, 587, 0))
+            {
+                tlocx = cdata[game_data.fire_giant].position.x;
+                tlocy = cdata[game_data.fire_giant].position.y;
+                txt(i18n::s.get("core.ai.fire_giant"),
+                    Message::color{ColorIndex::cyan});
+                return do_throw_command();
+            }
+        }
+    }
+
+    // Throws a snowball to a snowman.
+    if (rnd(12) == 0)
+    {
+        optional_ref<Item> target_snowman;
+        for (const auto& snowman_ref_wrapper : itemlist(-1, 541))
+        {
+            auto&& snowman = snowman_ref_wrapper.get();
+            if (snowman.position.x >= scx &&
+                snowman.position.x < scx + inf_screenw &&
+                snowman.position.y >= scy &&
+                snowman.position.y < scy + inf_screenh)
+            {
+                target_snowman = snowman;
+                break;
+            }
+        }
+        if (target_snowman)
+        {
+            flt();
+            if (itemcreate_chara_inv(chara.index, 587, 0))
+            {
+                tlocx = target_snowman->position.x;
+                tlocy = target_snowman->position.y;
+                ti = target_snowman->index;
+                return do_throw_command();
+            }
+        }
+    }
+
+    // Makes a snowman.
+    if (rnd(10) == 0)
+    {
+        if (cell_data.at(chara.position.x, chara.position.y)
+                .item_appearances_actual == 0)
+        {
+            flt();
+            if (const auto item = itemcreate_extra_inv(541, chara.position, 0))
+            {
+                snd("core.snow");
+                txt(i18n::s.get("core.ai.makes_snowman", chara, *item));
+                return TurnResult::turn_end;
+            }
+        }
+    }
+
+    // Throws a snowball to you.
+    if (rnd(12) == 0)
+    {
+        flt();
+        if (itemcreate_chara_inv(chara.index, 587, 0))
+        {
+            tlocx = cdata.player().position.x;
+            tlocy = cdata.player().position.y;
+            txt(i18n::s.get("core.ai.snowball"),
+                Message::color{ColorIndex::cyan});
+            return do_throw_command();
+        }
+    }
+
+    return none; // Did nothing.
+}
+
+
+
+void _change_nutrition(Character& chara)
+{
+    if (chara.has_anorexia())
+    {
+        chara.nutrition -= 3000;
+    }
+    else
+    {
+        chara.nutrition += 5000;
+    }
+}
+
+
+
+void _proc_hungry(Character& chara)
+{
+    if (chara.vision_flag != msync || rnd(5))
+    {
+        _change_nutrition(chara);
+    }
+    else
+    {
+        flt(20);
+        p = rnd(4);
+        // TODO: maybe, is "!chara.has_anorexia()" intended?
+        if (p == 0 || chara.has_anorexia())
+        {
+            flttypemajor = 57000;
+        }
+        if (p == 1)
+        {
+            flttypemajor = 52000;
+        }
+        else if (p == 2 || p == 3)
+        {
+            flttypeminor = 52002;
+        }
+        if (const auto item = itemcreate_chara_inv(chara.index, 0, 0))
+        {
+            if (the_item_db[itemid2int(item->id)]->is_drinkable)
+            {
+                if (item->id == ItemId::molotov)
+                {
+                    if (rnd(5) == 0)
+                    {
+                        item->remove();
+                    }
+                }
+                else
+                {
+                    chara.item_which_will_be_used = item->index;
+                    _change_nutrition(chara);
+                }
+            }
+            else
+            {
+                item->remove();
+            }
+        }
+    }
+}
+
+} // namespace
+
+
+
+namespace elona
+{
+
+TurnResult ai_proc_basic(Character& chara)
+{
+    if (tc == 0)
+    {
+        pcattacker = chara.index;
+    }
+
+    int act = choice(chara.normal_actions);
+
+    if (_percent(chara.ai_act_sub_freq))
+    {
+        if (!chara.special_actions.empty())
+        {
+            act = choice(chara.special_actions);
+        }
+        if (_is_special_throwing_action(act) && distance < 8 &&
+            fov_los_helper(chara, cdata[tc]))
+        {
+            tlocx = cdata[tc].position.x;
+            tlocy = cdata[tc].position.y;
+            const auto ok = _try_generate_special_throwing_item(chara, act);
+            if (ok)
+            {
+                return do_throw_command();
+            }
+            return TurnResult::turn_end;
+        }
+    }
+
+    // Move around randomly.
+    if (act == -4)
+    {
+        chara.next_position.x = rnd(3) - 1 + chara.position.x;
+        chara.next_position.y = rnd(3) - 1 + chara.position.y;
+        cell_check(chara.next_position.x, chara.next_position.y);
+        if (cellaccess == 1)
+        {
+            return proc_movement_event();
+        }
+        else
+        {
+            return TurnResult::turn_end;
+        }
+    }
+
+    // Do ranged attack.
+    if (act == -2)
+    {
+        const auto ok = _try_do_melee_attack(chara, cdata[tc]);
+        if (ok)
+        {
+            return TurnResult::turn_end;
+        }
+    }
+
+    // Do any spact.
+    if (act >= 400 && act < 467)
+    {
+        efid = act;
+        if (chara.mp < chara.max_mp / 7)
+        {
+            if (rnd(3) || chara.index < 16 ||
+                chara.quality >= Quality::miracle ||
+                chara.cures_mp_frequently())
+            {
+                chara.mp += chara.level / 4 + 5;
+                return TurnResult::turn_end;
+            }
+        }
+        const auto ok = do_cast_magic();
+        if (ok)
+        {
+            return TurnResult::turn_end;
+        }
+    }
+
+    // Cast any spell.
+    if (act >= 600)
+    {
+        efid = act;
+        const auto ok = do_magic_attempt();
+        if (ok)
+        {
+            return TurnResult::turn_end;
+        }
+    }
+
+    // Do melee attack if the attacker stands next to the enemy; otherwise, try
+    // to do ranged attack if possible.
+    if (act == -3)
+    {
+        if (distance == 1)
+        {
+            try_to_melee_attack();
+        }
+        else if (rnd(3) == 0 || chara.index < 16)
+        {
+            const auto ok = _try_do_melee_attack(chara, cdata[tc]);
+            if (ok)
+            {
+                return TurnResult::turn_end;
+            }
+        }
+        return TurnResult::turn_end;
+    }
+
+    // Do melee attack if the attacker stands next to the enemy.
+    if (distance == 1)
+    {
+        try_to_melee_attack();
+        return TurnResult::turn_end;
+    }
+
+    // Try to do ranged attack if possible.
+    {
+        const auto ok = _try_do_melee_attack(chara, cdata[tc]);
+        if (ok)
+        {
+            return TurnResult::turn_end;
+        }
+    }
+
+    if (chara.ai_dist <= distance)
+    {
+        if (rnd(3) == 0)
+        {
+            return TurnResult::turn_end;
+        }
+    }
+    if (rnd(5) == 0)
+    {
+        --chara.hate;
+    }
+    if (rnd(100) < chara.ai_move)
+    {
+        return proc_npc_movement_event(chara);
+    }
+    else
+    {
+        return TurnResult::turn_end;
+    }
+}
+
+
+
+TurnResult proc_npc_movement_event(Character& chara, bool retreat)
+{
+    if (map_data.type == mdata_t::MapType::town && chara.index < 16)
+    {
+        if (rnd(100) == 0)
+        {
+            _ally_sells_item(chara);
+        }
+        if (rnd(100) == 0)
+        {
+            _ally_trains(chara);
+        }
+    }
+
+    if (tc == chara.index)
+    {
+        chara.enemy_id = 0;
+        return TurnResult::turn_end;
+    }
+
+    if (chara._203 <= 0)
+    {
+        chara.target_position = cdata[tc].position;
+        if (retreat || chara.ai_dist > distance)
+        {
+            chara.target_position.x =
+                chara.position.x + (chara.position.x - cdata[tc].position.x);
+            chara.target_position.y =
+                chara.position.y + (chara.position.y - cdata[tc].position.y);
+        }
+    }
+    else
+    {
+        --chara._203;
+    }
+
+    _blockedbychara = false;
+    chara.next_position.x = (chara.target_position.x > chara.position.x) -
+        (chara.target_position.x < chara.position.x) + chara.position.x;
+    chara.next_position.y = (chara.target_position.y > chara.position.y) -
+        (chara.target_position.y < chara.position.y) + chara.position.y;
+    x = chara.next_position.x;
+    y = chara.next_position.y;
+    cell_check(x, y);
+    if (cellaccess == 1)
+    {
+        return proc_movement_event();
+    }
+    if (cellchara != -1)
+    {
+        tc = cellchara;
+        if (relationbetween(chara.index, tc) == -3)
+        {
+            chara.enemy_id = tc;
+            chara.hate += 4;
+            distance = dist_helper(cdata[tc], chara);
+            return ai_proc_basic(chara);
+        }
+        else if (
+            (chara.quality > Quality::great && chara.level > cdata[tc].level) ||
+            cdata[tc].is_hung_on_sand_bag())
+        {
+            if (chara.enemy_id != tc)
+            {
+                const auto did_swap = cell_swap(chara.index, tc);
+                if (did_swap && is_in_fov(chara))
+                {
+                    txt(i18n::s.get("core.ai.swap.displace", chara, cdata[tc]));
+                }
+                if (cdata[tc].activity.type == Activity::Type::eat)
+                {
+                    if (cdata[tc].activity.turn > 0)
+                    {
+                        if (is_in_fov(chara))
+                        {
+                            txt(i18n::s.get(
+                                "core.ai.swap.glare", chara, cdata[tc]));
+                        }
+                        cdata[tc].activity.finish();
+                    }
+                }
+                return TurnResult::turn_end;
+            }
+        }
+    }
+
+    if (_will_crush_wall(chara, x, y))
+    {
+        if (rnd(4) == 0)
+        {
+            cell_data.at(x, y).chip_id_actual = tile_tunnel;
+            snd("core.crush1");
+            BreakingAnimation({x, y}).play();
+            spillfrag(x, y, 2);
+            if (is_in_fov(chara))
+            {
+                txt(i18n::s.get("core.ai.crushes_wall", chara));
+            }
+            return TurnResult::turn_end;
+        }
+    }
+
+    if (std::abs(chara.target_position.x - chara.position.x) >=
+        std::abs(chara.target_position.y - chara.position.y))
+    {
+        {
+            int stat = _ai_dir_check_x();
+            if (stat == 1)
+            {
+                return proc_movement_event();
+            }
+        }
+        {
+            int stat = _ai_dir_check_y();
+            if (stat == 1)
+            {
+                return proc_movement_event();
+            }
+        }
+    }
+    else
+    {
+        {
+            int stat = _ai_dir_check_y();
+            if (stat == 1)
+            {
+                return proc_movement_event();
+            }
+        }
+        {
+            int stat = _ai_dir_check_x();
+            if (stat == 1)
+            {
+                return proc_movement_event();
+            }
+        }
+    }
+
+    if (chara._203 > 0)
+    {
+        chara.next_position.x = rnd(3) - 1 + chara.position.x;
+        chara.next_position.y = rnd(3) - 1 + chara.position.y;
+        cell_check(chara.next_position.x, chara.next_position.y);
+        if (cellaccess == 1)
+        {
+            return proc_movement_event();
+        }
+    }
+    else
+    {
+        if (_blockedbychara)
+        {
+            chara._203 = 3;
+        }
+        else
+        {
+            chara._203 = 6;
+        }
+        dir = dir(1 + rnd(2));
+        if (dir == 1)
+        {
+            chara.target_position.x = chara.position.x - 6;
+            chara.target_position.y = cdata[tc].position.y;
+        }
+        if (dir == 2)
+        {
+            chara.target_position.x = chara.position.x + 6;
+            chara.target_position.y = cdata[tc].position.y;
+        }
+        if (dir == 3)
+        {
+            chara.target_position.y = chara.position.y - 6;
+            chara.target_position.x = cdata[tc].position.x;
+        }
+        if (dir == 0)
+        {
+            chara.target_position.y = chara.position.y + 6;
+            chara.target_position.x = cdata[tc].position.x;
+        }
+    }
+
+    return TurnResult::turn_end;
+}
+
+
+
+TurnResult ai_proc_misc_map_events(Character& chara)
+{
+    // Follows you, e.g., Gwen.
+    if (chara.ai_calm == 4)
     {
         tc = 0;
-        distance = dist(
-            cdata[tc].position.x,
-            cdata[tc].position.y,
-            cdata[cc].position.x,
-            cdata[cc].position.y);
-        return proc_npc_movement_event();
+        distance = dist_helper(cdata[tc], chara);
+        return proc_npc_movement_event(chara);
     }
+
     if (rnd(5) != 0)
     {
         return TurnResult::turn_end;
     }
-    if (cdata[cc].drunk != 0)
+
+    if (chara.drunk != 0 && _chara_get_race(chara) == "core.cat" &&
+        is_in_fov(chara))
     {
-        if (is_in_fov(cdata[cc]))
+        _proc_drunk_cat(chara);
+    }
+
+    // Falls into sleep.
+    if (chara.index >= 16 && map_is_town_or_guild() && _is_at_night() &&
+        !chara.activity)
+    {
+        if (rnd(100) == 0)
         {
-            if (cdatan(2, cc) == u8"core.cat"s)
+            status_ailment_damage(chara, StatusAilment::sleep, 4000);
+        }
+    }
+
+    if (chara.item_which_will_be_used == 0 && chara.relationship != 10)
+    {
+        if (game_data.current_map == mdata_t::MapId::quest &&
+            game_data.executing_immediate_quest_type == 1009)
+        {
+            if (rnd(30) == 0)
             {
-                if (cdata[cc].drunk < 5)
+                flt(20);
+                if (rnd(4) == 0)
                 {
-                    cdata[cc].drunk += 40;
-                }
-            label_2691_internal:
-                if (jp)
-                {
-                    if (rnd(3) == 0)
-                    {
-                        txt(u8"「米さ米種だろ♪」"s,
-                            u8"「飲ま飲まイェイ！！」"s,
-                            u8"「飲ま飲ま飲まイェイ！！」"s);
-                        goto label_2692_internal;
-                    }
-                    if (rnd(4) == 0)
-                    {
-                        txt(u8"「字ベロ♪指♪ラマ♪ｸﾏｰ!!して♪パンチラ♪」"s,
-                            u8"「アロー♪アーロン♪スゲェ♪ピカソ♪算段ビーフ♪」"s,
-                            u8"「キスすごい肉♪脱線してんの♪さらに肉♪」"s);
-                        goto label_2692_internal;
-                    }
-                    if (rnd(4) == 0)
-                    {
-                        txt(u8"「キープダルシム♪アゴスタディーイェイ♪並フェイスで大きい筆入れ♪」"s,
-                            u8"「ハロー♪猿ー♪すげー♪うん入る♪」"s);
-                        goto label_2692_internal;
-                    }
-                    if (rnd(4) == 0)
-                    {
-                        txt(u8" *ﾋﾟﾛﾘ〜ﾋﾟﾛﾘ〜* "s,
-                            Message::color{ColorIndex::blue});
-                        goto label_2692_internal;
-                    }
-                    txt(u8"「マイアヒー♪」"s,
-                        u8"「マイアフゥー♪」"s,
-                        u8"「マイアホー♪」"s);
-                    goto label_2692_internal;
+                    flttypemajor = 57000;
                 }
                 else
                 {
-                    if (rnd(2) == 0)
-                    {
-                        txt(u8"\"Vrei sa pleci dar♪\""s,
-                            u8"\"Numa numa yay!!\""s,
-                            u8"\"Numa numa numa yay!!\""s);
-                        goto label_2692_internal;
-                    }
-                    txt(u8"\"Mai-Ya-Hi♪\""s,
-                        u8"\"Mai-Ya-Hoo♪\""s,
-                        u8"\"Mai-Ya-Ha Ma Mi A♪\""s);
-                    goto label_2692_internal;
-                }
-                goto label_2691_internal;
-            }
-        }
-    }
-label_2692_internal:
-    if (cc >= 16)
-    {
-        if (map_is_town_or_guild())
-        {
-            if (game_data.date.hour >= 22 || game_data.date.hour < 7)
-            {
-                if (!cdata[cc].continuous_action)
-                {
-                    if (rnd(100) == 0)
-                    {
-                        status_ailment_damage(
-                            cdata[cc], StatusAilment::sleep, 4000);
-                    }
-                }
-            }
-        }
-    }
-    if (cdata[cc].item_which_will_be_used == 0)
-    {
-        if (cdata[cc].relationship != 10)
-        {
-            if (game_data.current_map == mdata_t::MapId::quest)
-            {
-                if (game_data.executing_immediate_quest_type == 1009)
-                {
-                    if (rnd(30) == 0)
-                    {
-                        flt(20);
-                        if (rnd(4) == 0)
-                        {
-                            flttypemajor = 57000;
-                        }
-                        else
-                        {
-                            flttypemajor = 52000;
-                            if (rnd(8))
-                            {
-                                flttypeminor = 52002;
-                            }
-                        }
-                        if (itemcreate(cc, 0, -1, -1, 0))
-                        {
-                            cdata[cc].item_which_will_be_used = ci;
-                        }
-                    }
-                }
-            }
-            if (map_villagers_make_snowmen())
-            {
-                if (cdata[cc].id == 35 || cdata[cc].id == 211)
-                {
-                    if (is_in_fov(cdata[cc]))
-                    {
-                        if (chip_data
-                                .for_cell(
-                                    cdata[cc].position.x, cdata[cc].position.y)
-                                .kind == 4)
-                        {
-                            if (rnd(4) == 0)
-                            {
-                                if (cdata[game_data.fire_giant].state() ==
-                                    Character::State::alive)
-                                {
-                                    if (is_in_fov(cdata[game_data.fire_giant]))
-                                    {
-                                        flt();
-                                        if (itemcreate(cc, 587, -1, -1, 0))
-                                        {
-                                            tlocx = cdata[game_data.fire_giant]
-                                                        .position.x;
-                                            tlocy = cdata[game_data.fire_giant]
-                                                        .position.y;
-                                            txt(i18n::s.get("core.ai."
-                                                            "fire_giant"),
-                                                Message::color{
-                                                    ColorIndex::cyan});
-                                            return do_throw_command();
-                                        }
-                                    }
-                                }
-                            }
-                            if (rnd(12) == 0)
-                            {
-                                bool found_snowman{};
-                                for (const auto& cnt : itemlist(-1, 541))
-                                {
-                                    ti = cnt;
-                                    if (inv[ti].position.x >= scx &&
-                                        inv[ti].position.x <
-                                            scx + inf_screenw &&
-                                        inv[ti].position.y >= scy &&
-                                        inv[ti].position.y < scy + inf_screenh)
-                                    {
-                                        found_snowman = true;
-                                        break;
-                                    }
-                                }
-                                if (found_snowman)
-                                {
-                                    flt();
-                                    if (itemcreate(cc, 587, -1, -1, 0))
-                                    {
-                                        tlocx = inv[ti].position.x;
-                                        tlocy = inv[ti].position.y;
-                                        return do_throw_command();
-                                    }
-                                }
-                            }
-                            if (rnd(10) == 0)
-                            {
-                                if (cell_data
-                                        .at(cdata[cc].position.x,
-                                            cdata[cc].position.y)
-                                        .item_appearances_actual == 0)
-                                {
-                                    flt();
-                                    if (itemcreate(
-                                            -1,
-                                            541,
-                                            cdata[cc].position.x,
-                                            cdata[cc].position.y,
-                                            0))
-                                    {
-                                        snd("core.snow");
-                                        txt(i18n::s.get(
-                                            "core.ai.makes_snowman",
-                                            cdata[cc],
-                                            inv[ci]));
-                                        return TurnResult::turn_end;
-                                    }
-                                }
-                            }
-                            if (rnd(12) == 0)
-                            {
-                                flt();
-                                if (itemcreate(cc, 587, -1, -1, 0))
-                                {
-                                    tlocx = cdata.player().position.x;
-                                    tlocy = cdata.player().position.y;
-                                    txt(i18n::s.get("core.ai.snowball"),
-                                        Message::color{ColorIndex::cyan});
-                                    return do_throw_command();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (cdata[cc].nutrition <= 6000)
-            {
-                if (cdata[cc].vision_flag != msync || rnd(5))
-                {
-                    if (cdata[cc].has_anorexia() == 0)
-                    {
-                        cdata[cc].nutrition += 5000;
-                    }
-                    else
-                    {
-                        cdata[cc].nutrition -= 3000;
-                    }
-                }
-                else
-                {
-                    flt(20);
-                    p(0) = rnd(4);
-                    if (p == 0 || cdata[cc].has_anorexia())
-                    {
-                        flttypemajor = 57000;
-                    }
-                    if (p == 1)
-                    {
-                        flttypemajor = 52000;
-                    }
-                    if (p == 2 || p == 3)
+                    flttypemajor = 52000;
+                    if (rnd(8))
                     {
                         flttypeminor = 52002;
                     }
-                    if (itemcreate(cc, 0, -1, -1, 0) &&
-                        the_item_db[inv[ci].id]->is_drinkable)
-                    {
-                        if (inv[ci].id == 577)
-                        {
-                            if (rnd(5) == 0)
-                            {
-                                inv[ci].remove();
-                            }
-                        }
-                        else
-                        {
-                            cdata[cc].item_which_will_be_used = ci;
-                            if (cdata[cc].has_anorexia() == 0)
-                            {
-                                cdata[cc].nutrition += 5000;
-                            }
-                            else
-                            {
-                                cdata[cc].nutrition -= 3000;
-                            }
-                        }
-                    }
+                }
+                if (const auto item = itemcreate_chara_inv(chara.index, 0, 0))
+                {
+                    chara.item_which_will_be_used = item->index;
                 }
             }
         }
+        if (map_villagers_make_snowmen())
+        {
+            if ((chara.id == CharaId::town_child ||
+                 chara.id == CharaId::young_lady) &&
+                is_in_fov(chara) &&
+                chip_data.for_cell(chara.position.x, chara.position.y).kind ==
+                    4)
+            {
+                const auto turn_result = _proc_make_snowman(chara);
+                if (turn_result)
+                {
+                    return *turn_result;
+                }
+            }
+        }
+        if (chara.nutrition <= 6000)
+        {
+            _proc_hungry(chara);
+        }
     }
-    if (cdata[cc].ai_calm == 5)
+
+    // Special AIs.
+    if (chara.ai_calm == 5)
     {
-        if (cdata[cc].id == 326)
+        if (chara.id == CharaId::bard)
         {
             if (rnd(5) == 0)
             {
@@ -937,26 +1013,22 @@ label_2692_internal:
                 return TurnResult::turn_end;
             }
         }
-        if (cdata[cc].id == 320 || cdata[cc].id == 280)
+        if (chara.id == CharaId::cleaner || chara.id == CharaId::balzak)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(chara))
             {
                 tc = 0;
-                distance = dist(
-                    cdata[tc].position.x,
-                    cdata[tc].position.y,
-                    cdata[cc].position.x,
-                    cdata[cc].position.y);
+                distance = dist_helper(cdata[tc], chara);
                 if (distance < 8)
                 {
-                    if (cdatan(2, 0) == u8"core.snail"s)
+                    if (_chara_get_race(cdata.player()) == "core.snail")
                     {
                         tlocx = cdata.player().position.x;
                         tlocy = cdata.player().position.y;
                         flt();
-                        if (itemcreate(cc, 698, -1, -1, 0))
+                        if (itemcreate_chara_inv(chara.index, 698, 0))
                         {
-                            if (is_in_fov(cdata[cc]))
+                            if (is_in_fov(chara))
                             {
                                 txt(i18n::s.get("core.ai.snail"),
                                     Message::color{ColorIndex::cyan});
@@ -967,7 +1039,7 @@ label_2692_internal:
                 }
             }
         }
-        if (cdata[cc].id == 335 || cdata[cc].id == 352)
+        if (chara.id == CharaId::prostitute || chara.id == CharaId::silvia)
         {
             if (rnd(10) == 0)
             {
@@ -981,96 +1053,84 @@ label_2692_internal:
                     {
                         continue;
                     }
-                    if (dist(
-                            cdata[cc].position.x,
-                            cdata[cc].position.y,
-                            cdata[cnt].position.x,
-                            cdata[cnt].position.y) < 6)
+                    if (dist_helper(chara, cdata[cnt]) < 6)
                     {
-                        if (fov_los(
-                                cdata[cc].position.x,
-                                cdata[cc].position.y,
-                                cdata[cnt].position.x,
-                                cdata[cnt].position.y))
+                        if (fov_los_helper(chara, cdata[cnt]))
                         {
-                            cdata[cc].enemy_id = cnt;
+                            chara.enemy_id = cnt;
                             tc = cnt;
                             break;
                         }
                     }
                 }
             }
-            distance = dist(
-                cdata[tc].position.x,
-                cdata[tc].position.y,
-                cdata[cc].position.x,
-                cdata[cc].position.y);
+            distance = dist_helper(cdata[tc], chara);
             if (tc != 0)
             {
                 if (distance == 1)
                 {
-                    if (!cdata[tc].continuous_action)
+                    if (!cdata[tc].activity)
                     {
-                        cdata[cc].enemy_id = 0;
-                        continuous_action_sex();
+                        chara.enemy_id = 0;
+                        activity_sex();
                         return TurnResult::turn_end;
                     }
                 }
                 if (distance < 6)
                 {
-                    return proc_npc_movement_event();
+                    return proc_npc_movement_event(chara);
                 }
             }
         }
-        cdata[cc].next_position.x = rnd(3) - 1 + cdata[cc].position.x;
-        cdata[cc].next_position.y = rnd(3) - 1 + cdata[cc].position.y;
-        cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
+
+        chara.next_position.x = rnd(3) - 1 + chara.position.x;
+        chara.next_position.y = rnd(3) - 1 + chara.position.y;
+        cell_check(chara.next_position.x, chara.next_position.y);
         if (cellaccess == 1)
         {
             return proc_movement_event();
         }
     }
-    if (cdata[cc].ai_calm == 1)
+
+    // Roams.
+    if (chara.ai_calm == 1)
     {
-        cdata[cc].next_position.x = rnd(3) - 1 + cdata[cc].position.x;
-        cdata[cc].next_position.y = rnd(3) - 1 + cdata[cc].position.y;
-        cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
+        chara.next_position.x = rnd(3) - 1 + chara.position.x;
+        chara.next_position.y = rnd(3) - 1 + chara.position.y;
+        cell_check(chara.next_position.x, chara.next_position.y);
         if (cellaccess == 1)
         {
             return proc_movement_event();
         }
     }
-    if (cdata[cc].ai_calm == 2)
+
+    // Dull.
+    if (chara.ai_calm == 2)
     {
         if (map_data.designated_spawns == 1 &&
-            dist(
-                cdata[cc].position.x,
-                cdata[cc].position.y,
-                cdata[cc].initial_position.x,
-                cdata[cc].initial_position.y) > 2)
+            dist_helper(chara.position, chara.initial_position) > 2)
         {
-            cdata[cc].next_position.x = cdata[cc].position.x +
+            chara.next_position.x = chara.position.x +
                 rnd(2) *
-                    ((cdata[cc].position.x > cdata[cc].initial_position.x) *
-                         -1 +
-                     (cdata[cc].position.x < cdata[cc].initial_position.x));
-            cdata[cc].next_position.y = cdata[cc].position.y +
+                    ((chara.position.x > chara.initial_position.x) * -1 +
+                     (chara.position.x < chara.initial_position.x));
+            chara.next_position.y = chara.position.y +
                 rnd(2) *
-                    ((cdata[cc].position.y > cdata[cc].initial_position.y) *
-                         -1 +
-                     (cdata[cc].position.y < cdata[cc].initial_position.y));
+                    ((chara.position.y > chara.initial_position.y) * -1 +
+                     (chara.position.y < chara.initial_position.y));
         }
         else
         {
-            cdata[cc].next_position.x = rnd(3) - 1 + cdata[cc].position.x;
-            cdata[cc].next_position.y = rnd(3) - 1 + cdata[cc].position.y;
+            chara.next_position.x = rnd(3) - 1 + chara.position.x;
+            chara.next_position.y = rnd(3) - 1 + chara.position.y;
         }
-        cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
+        cell_check(chara.next_position.x, chara.next_position.y);
         if (cellaccess == 1)
         {
             return proc_movement_event();
         }
     }
+
     return TurnResult::turn_end;
 }
 

@@ -7,8 +7,8 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "data/types/type_item.hpp"
+#include "deferred_event.hpp"
 #include "elona.hpp"
-#include "event.hpp"
 #include "food.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
@@ -123,7 +123,7 @@ TalkResult talk_wizard_identify(int chatval_)
             if (item.identify_state != IdentifyState::completely)
             {
                 const auto result = item_identify(item, 250);
-                item_stack(0, item.index, 1);
+                item_stack(0, item, true);
                 ++p(1);
                 if (result >= IdentifyState::completely)
                 {
@@ -294,7 +294,7 @@ TalkResult talk_arena_master(int chatval_)
             }
             break;
         }
-        arenaop(1) = cdata[rc].id;
+        arenaop(1) = charaid2int(cdata[rc].id);
         buff = i18n::s.get(
             "core.talk.npc.arena_master.enter.target",
             cdatan(0, rc),
@@ -449,7 +449,7 @@ TalkResult talk_quest_delivery()
     inv[ti].set_number(1);
     ci = ti;
     rc = tc;
-    chara_set_item_which_will_be_used(cdata[tc]);
+    chara_set_item_which_will_be_used(cdata[tc], inv[ci]);
     rq = deliver;
     inv[deliver(1)].modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", inv[deliver(1)]));
@@ -468,7 +468,7 @@ TalkResult talk_quest_supply()
     cdata[tc].was_passed_item_by_you_just_now() = true;
     ci = ti;
     rc = tc;
-    chara_set_item_which_will_be_used(cdata[tc]);
+    chara_set_item_which_will_be_used(cdata[tc], inv[ci]);
     inv[supply].modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", inv[supply]));
     quest_set_data(3);
@@ -499,13 +499,15 @@ TalkResult talk_shop_attack()
 TalkResult talk_guard_return_item()
 {
     listmax = 0;
-    p = itemfind(0, 284);
-    if (p == -1)
+    auto wallet_opt = itemfind(0, 284);
+    if (!wallet_opt)
     {
-        p = itemfind(0, 283);
+        wallet_opt = itemfind(0, 283);
     }
-    inv[p].modify_number(-1);
-    if (inv[p].param1 == 0)
+    Item& wallet = *wallet_opt;
+    p = wallet.index;
+    wallet.modify_number(-1);
+    if (wallet.param1 == 0)
     {
         buff = i18n::s.get("core.talk.npc.guard.lost.empty.dialog", cdata[tc]);
         ELONA_APPEND_RESPONSE(
@@ -721,7 +723,7 @@ TalkResult talk_slave_sell()
             }
             if (cdata[rc].is_escorted() == 1)
             {
-                event_add(15, cdata[rc].id);
+                event_add(15, charaid2int(cdata[rc].id));
             }
             chara_delete(rc);
             buff = i18n::s.get("core.talk.npc.common.thanks", cdata[tc]);
@@ -886,13 +888,13 @@ TalkResult talk_informer_investigate_ally()
         {
             ELONA_APPEND_RESPONSE(
                 1,
-                i18n::s.get("core.talk.npc.informer.investigate_ally."
-                            "choices.pay"));
+                i18n::s.get(
+                    "core.talk.npc.informer.investigate_ally.choices.pay"));
         }
         ELONA_APPEND_RESPONSE(
             0,
-            i18n::s.get("core.talk.npc.informer.investigate_ally."
-                        "choices.go_back"));
+            i18n::s.get(
+                "core.talk.npc.informer.investigate_ally.choices.go_back"));
         chatesc = 1;
         int chatval_ = talk_window_query();
         if (chatval_ == 1)
@@ -1107,7 +1109,7 @@ TalkResult talk_sex()
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.talk.npc.common.sex.response"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    continuous_action_sex();
+    activity_sex();
     return TalkResult::talk_end;
 }
 
@@ -1152,7 +1154,7 @@ TalkResult talk_prostitute_buy()
     ELONA_TALK_SCENE_CUT();
     cc = tc;
     tc = 0;
-    continuous_action_sex();
+    activity_sex();
     cc = 0;
     return TalkResult::talk_end;
 }
@@ -1167,8 +1169,8 @@ TalkResult talk_caravan_master_hire()
         {
             ELONA_APPEND_RESPONSE(
                 0,
-                i18n::s.get("core.talk.npc.caravan_master.hire.choices."
-                            "go_back"));
+                i18n::s.get(
+                    "core.talk.npc.caravan_master.hire.choices.go_back"));
             break;
         }
         ELONA_APPEND_RESPONSE(p(cnt), mapname(p(cnt)));
@@ -1578,17 +1580,18 @@ TalkResult talk_quest_giver()
             }
             for (int cnt = 0;; ++cnt)
             {
+                int chara_id;
                 if (cnt == 99)
                 {
-                    dbid = 35;
+                    chara_id = 35;
                 }
                 else
                 {
-                    dbid = 0;
+                    chara_id = 0;
                 }
                 flt(quest_data[rq].difficulty + cnt, Quality::bad);
                 fltn(u8"man"s);
-                int stat = chara_create(56, dbid, -3, 0);
+                int stat = chara_create(56, chara_id, -3, 0);
                 f = stat;
                 if (f == 1)
                 {
@@ -1616,7 +1619,7 @@ TalkResult talk_quest_giver()
             rc = 56;
             new_ally_joins();
             cdata[rc].is_escorted() = true;
-            quest_data[rq].extra_info_2 = cdata[rc].id;
+            quest_data[rq].extra_info_2 = charaid2int(cdata[rc].id);
         }
         quest_data[rq].progress = 1;
         if (quest_data[rq].deadline_days == -1)
@@ -1629,12 +1632,7 @@ TalkResult talk_quest_giver()
             ++quest_data[quest_data[rq].target_chara_index]
                   .delivery_has_package_flag;
             flt();
-            itemcreate(
-                0,
-                quest_data[rq].target_item_id,
-                cdata.player().position.x,
-                cdata.player().position.y,
-                0);
+            itemcreate_player_inv(quest_data[rq].target_item_id, 0);
             txt(i18n::s.get("core.common.you_put_in_your_backpack", inv[ci]));
             snd("core.inv");
             refresh_burden_state();
@@ -1725,7 +1723,7 @@ TalkResult talk_npc()
                     {
                         if (cdata[tc].impression < 100)
                         {
-                            if (rnd(sdata(17, 0) + 1) > 10)
+                            if (rnd_capped(sdata(17, 0) + 1) > 10)
                             {
                                 chara_modify_impression(cdata[tc], rnd(3));
                             }
@@ -1810,8 +1808,8 @@ TalkResult talk_npc()
                 {
                     ELONA_APPEND_RESPONSE(
                         38,
-                        i18n::s.get("core.talk.npc.ally.choices.ask_for_"
-                                    "marriage"));
+                        i18n::s.get(
+                            "core.talk.npc.ally.choices.ask_for_marriage"));
                 }
                 else if (game_data.continuous_active_hours >= 15)
                 {
@@ -1825,15 +1823,15 @@ TalkResult talk_npc()
                     {
                         ELONA_APPEND_RESPONSE(
                             48,
-                            i18n::s.get("core.talk.npc.ally.choices."
-                                        "silence.start"));
+                            i18n::s.get(
+                                "core.talk.npc.ally.choices.silence.start"));
                     }
                     else
                     {
                         ELONA_APPEND_RESPONSE(
                             48,
-                            i18n::s.get("core.talk.npc.ally.choices."
-                                        "silence.stop"));
+                            i18n::s.get(
+                                "core.talk.npc.ally.choices.silence.stop"));
                     }
                 }
                 ELONA_APPEND_RESPONSE(
@@ -1960,12 +1958,12 @@ TalkResult talk_npc()
                         cdata[rtval(cnt)]));
             }
         }
-        if (itemfind(0, 284) != -1)
+        if (itemfind(0, 284))
         {
             ELONA_APPEND_RESPONSE(
                 32, i18n::s.get("core.talk.npc.guard.choices.lost_wallet"));
         }
-        else if (itemfind(0, 283) != -1)
+        else if (itemfind(0, 283))
         {
             ELONA_APPEND_RESPONSE(
                 32, i18n::s.get("core.talk.npc.guard.choices.lost_suitcase"));
@@ -1990,7 +1988,7 @@ TalkResult talk_npc()
         {
             if (tc >= 16)
             {
-                if (event_id() == -1)
+                if (!event_has_pending_events())
                 {
                     ELONA_APPEND_RESPONSE(
                         56, i18n::s.get("core.talk.npc.common.choices.sex"));
@@ -1998,9 +1996,9 @@ TalkResult talk_npc()
             }
         }
     }
-    if (cdata[tc].id == 335)
+    if (cdata[tc].id == CharaId::prostitute)
     {
-        if (event_id() == -1)
+        if (!event_has_pending_events())
         {
             ELONA_APPEND_RESPONSE(
                 60, i18n::s.get("core.talk.npc.prostitute.choices.buy"));
@@ -2057,7 +2055,7 @@ TalkResult talk_npc()
                         {
                             continue;
                         }
-                        if (item.id == p)
+                        if (item.id == int2itemid(p))
                         {
                             deliver(1) = item.index;
                             break;
@@ -2088,7 +2086,7 @@ TalkResult talk_npc()
                 }
                 if (quest_data[rq].id == 1003)
                 {
-                    if (the_item_db[item.id]->category == 57000 &&
+                    if (the_item_db[itemid2int(item.id)]->category == 57000 &&
                         item.param1 / 1000 == quest_data[rq].extra_info_1 &&
                         item.param2 == quest_data[rq].extra_info_2)
                     {
@@ -2098,7 +2096,7 @@ TalkResult talk_npc()
                 }
                 if (quest_data[rq].id == 1004 || quest_data[rq].id == 1011)
                 {
-                    if (item.id == quest_data[rq].target_item_id)
+                    if (item.id == int2itemid(quest_data[rq].target_item_id))
                     {
                         supply = item.index;
                         break;
@@ -2117,8 +2115,8 @@ TalkResult talk_npc()
             {
                 ELONA_APPEND_RESPONSE(
                     24,
-                    i18n::s.get("core.talk.npc.quest_giver.choices."
-                                "about_the_work"));
+                    i18n::s.get(
+                        "core.talk.npc.quest_giver.choices.about_the_work"));
             }
         }
         else if (quest_data[rq].id != 0)
@@ -2143,7 +2141,7 @@ TalkResult talk_npc()
             {
                 if ((cdata[tc].character_role < 2000 ||
                      cdata[tc].character_role >= 3000) &&
-                    event_id() == -1)
+                    !event_has_pending_events())
                 {
                     ELONA_APPEND_RESPONSE(
                         44, i18n::s.get("core.talk.npc.servant.choices.fire"));
@@ -2162,8 +2160,8 @@ TalkResult talk_npc()
                 {
                     ELONA_APPEND_RESPONSE(
                         52,
-                        i18n::s.get("core.talk.npc.moyer.choices.sell_"
-                                    "paels_mom"));
+                        i18n::s.get(
+                            "core.talk.npc.moyer.choices.sell_paels_mom"));
                 }
             }
         }
@@ -2271,7 +2269,7 @@ TalkResult talk_npc()
         return talk_guard_where_is(chatval_);
     }
 
-    if (event_id() == 11)
+    if (event_processing_event() == 11)
     {
         levelexitby = 4;
         chatteleport = 1;

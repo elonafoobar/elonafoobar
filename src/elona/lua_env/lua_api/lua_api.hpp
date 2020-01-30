@@ -15,6 +15,7 @@
 #include "lua_api_input.hpp"
 #include "lua_api_internal.hpp"
 #include "lua_api_item.hpp"
+#include "lua_api_json5.hpp"
 #include "lua_api_magic.hpp"
 #include "lua_api_map.hpp"
 #include "lua_api_pos.hpp"

@@ -394,19 +394,14 @@ private:
                 return false;
             return lhs.patch < rhs.patch;
         }
+
+
+        friend VersionRequirement;
     };
 
 
 
 public:
-    explicit VersionRequirement(
-        const std::vector<OneVersionRequirement>& requirements)
-        : _requirements(requirements)
-    {
-    }
-
-
-
     static either::either<std::string, VersionRequirement> parse(
         const std::string& str)
     {
@@ -426,6 +421,19 @@ public:
         }
 
         return Result::right_of(VersionRequirement{requirements});
+    }
+
+
+
+    /**
+     * Create a version requirement which exactly matching @a version.
+     * The result is the same as `parse("= " + version.to_string()).right()`.
+     */
+    static VersionRequirement from_version(const Version& version)
+    {
+        OneVersionRequirement req{OneVersionRequirement::Operator::equal,
+                                  version};
+        return VersionRequirement{{req}};
     }
 
 
@@ -461,10 +469,35 @@ public:
 
 private:
     std::vector<OneVersionRequirement> _requirements;
+
+
+
+    explicit VersionRequirement(
+        const std::vector<OneVersionRequirement>& requirements)
+        : _requirements(requirements)
+    {
+    }
 };
 
 } // namespace semver
 } // namespace elona
+
+
+
+namespace std
+{
+
+template <>
+struct hash<::elona::semver::Version>
+{
+    size_t operator()(const ::elona::semver::Version& v) const noexcept
+    {
+        return std::hash<decltype(v.to_integer())>{}(v.to_integer());
+    }
+};
+
+} // namespace std
+
 
 
 #ifdef ELONA_MAJOR_AND_MINOR_MACRO_DEFINED

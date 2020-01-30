@@ -49,11 +49,6 @@ FoobarData foobar_data;
     SERIALIZE(27, next_shelter_serial_id); \
     SERIALIZE(28, seven_league_boot_effect); \
     SERIALIZE(29, protects_from_etherwind); \
-    SERIALIZE(30, player_cellaccess_check_flag); \
-    SERIALIZE(31, player_cellaccess_w); \
-    SERIALIZE(32, player_cellaccess_n); \
-    SERIALIZE(33, player_cellaccess_e); \
-    SERIALIZE(34, player_cellaccess_s); \
     SERIALIZE(35, player_next_move_direction); \
     SERIALIZE(36, played_scene); \
     SERIALIZE(37, torch); \
@@ -90,7 +85,7 @@ FoobarData foobar_data;
     SERIALIZE(88, time_when_textbook_becomes_available); \
     SERIALIZE(89, light); \
     SERIALIZE(90, continuous_active_hours); \
-    SERIALIZE(91, continuous_action_about_to_start); \
+    SERIALIZE(91, activity_about_to_start); \
     SERIALIZE(92, sleep_experience); \
     SERIALIZE(93, acquirable_feat_count); \
     SERIALIZE(94, chara_last_attacked_by_player); \

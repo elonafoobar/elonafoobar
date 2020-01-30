@@ -6,7 +6,7 @@
 #include "../snail/audio.hpp"
 #include "area.hpp"
 #include "character.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "elona.hpp"
 #include "map.hpp"
 #include "variables.hpp"
@@ -187,7 +187,7 @@ void snd_inner(
     bool loop,
     bool allow_duplicate)
 {
-    if (!Config::instance().sound)
+    if (!g_config.sound())
         return;
 
     int channel = sound.legacy_id;
@@ -381,7 +381,7 @@ std::pair<short, unsigned char> sound_calculate_position(
 
 std::pair<short, unsigned char> sound_calculate_position(const Position& p)
 {
-    if (!Config::instance().get<bool>("core.screen.stereo_sound"))
+    if (!config_get_boolean("core.screen.stereo_sound"))
     {
         return {0, 0};
     }
@@ -424,7 +424,7 @@ void sound_play_environmental()
     if (env != envwprev)
     {
         envwprev = env;
-        if (Config::instance().sound)
+        if (g_config.sound())
         {
             if (!env)
             {
@@ -598,7 +598,7 @@ void play_music(optional<SharedId> music_id)
 {
     sound_play_environmental();
 
-    if (!Config::instance().music)
+    if (!g_config.music())
         return;
 
     if (!music_id)

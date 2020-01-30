@@ -1,7 +1,8 @@
 #include "filesystem.hpp"
 #include "../util/strutil.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "defines.hpp"
+#include "semver.hpp"
 
 
 
@@ -110,9 +111,9 @@ void set_base_user_directory(const fs::path& base_user_dir)
 
 
 
-fs::path for_mod(const std::string& mod_id)
+fs::path for_mod(const std::string& id, const semver::Version& version)
 {
-    return mod() / filepathutil::u8path(mod_id);
+    return mod() / filepathutil::u8path(id + "-" + version.to_string());
 }
 
 
@@ -142,41 +143,35 @@ void set_profile_directory(const fs::path& profile_dir)
 
 
 
-fs::path path(const std::string& str)
+namespace files
 {
-    return get_executable_dir() / filepathutil::u8path(str);
+
+fs::path profile_local_config()
+{
+    return dirs::current_profile() / "config.json";
 }
 
 
 
-fs::path resolve_path_for_mod(const std::string& mod_local_path)
+fs::path keybinding_config()
 {
-    // TODO: standardize mod naming convention.
-    std::regex mod_id_regex("^<([a-zA-Z0-9_]+)>/(.*)");
-    std::smatch match;
-    std::string mod_id, rest;
+    return path("keybindings.json");
+}
 
-    if (std::regex_match(mod_local_path, match, mod_id_regex) &&
-        match.size() == 3)
-    {
-        mod_id = match.str(1);
-        rest = match.str(2);
-    }
-    else
-    {
-        throw std::runtime_error("Invalid filepath syntax: " + mod_local_path);
-    }
 
-    rest = strutil::replace(rest, "<LANGUAGE>", Config::instance().language);
 
-    if (mod_id == "_builtin_")
-    {
-        return dirs::exe() / rest;
-    }
-    else
-    {
-        return dirs::for_mod(mod_id) / rest;
-    }
+fs::path mod_list()
+{
+    return dirs::current_profile() / "mods.json";
+}
+
+} // namespace files
+
+
+
+fs::path path(const std::string& str)
+{
+    return get_executable_dir() / filepathutil::u8path(str);
 }
 
 

@@ -160,9 +160,10 @@ void LuaItem::bind(sol::state& lua)
      *
      * [R] The new-style prototype ID of the item.
      */
-    LuaItem.set("id", sol::property([](Item& i) {
-                    return the_item_db.get_id_from_legacy(i.id)->get();
-                }));
+    LuaItem.set(
+        "id", sol::property([](Item& i) {
+            return the_item_db.get_id_from_legacy(itemid2int(i.id))->get();
+        }));
     /**
      * @luadoc name field string
      *
@@ -178,7 +179,7 @@ void LuaItem::bind(sol::state& lua)
      * [R] The name of the item without article and number.
      */
     LuaItem.set("basename", sol::property([](Item& i) {
-                    return elona::ioriginalnameref(i.id);
+                    return elona::ioriginalnameref(itemid2int(i.id));
                 }));
 
     /**
@@ -215,7 +216,8 @@ void LuaItem::bind(sol::state& lua)
      * [R] The prototype data of the character.
      */
     LuaItem.set("prototype", sol::property([](Item& self) {
-                    auto id = the_item_db.get_id_from_legacy(self.id);
+                    auto id =
+                        the_item_db.get_id_from_legacy(itemid2int(self.id));
                     return *lua::lua->get_data_manager().get().raw(
                         "core.item", id->get());
                 }));

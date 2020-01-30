@@ -3,7 +3,7 @@
 #include "ability.hpp"
 #include "adventurer.hpp"
 #include "character.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "map.hpp"
@@ -232,8 +232,8 @@ void modify_karma(Character& cc, int delta)
     {
         if (cc.karma < -30 && cc.karma + delta >= -30)
         {
-            txt(i18n::s.get("core.chara_status.karma.you_are_no_longer_"
-                            "criminal"),
+            txt(i18n::s.get(
+                    "core.chara_status.karma.you_are_no_longer_criminal"),
                 Message::color{ColorIndex::green});
         }
     }

@@ -17,6 +17,7 @@ class HandleManager;
 class I18NFunctionManager;
 class ModManager;
 class Console;
+class ConfigManager;
 
 
 
@@ -82,16 +83,16 @@ public:
         return *console;
     }
 
-    /***
-     * Clears and reset the Lua state to directly after loading the
-     * core mod.
-     *
-     * Used when modifying startup scripts.
-     */
-    void reload();
+    ConfigManager& get_config_manager()
+    {
+        return *config_mgr;
+    }
 
 
-    //****************** Methods for testing use *******************//
+    void load_mods();
+
+
+    /****************** Methods for testing use *******************/
 
     /***
      * Unloads all characters and items tracked by handles.
@@ -115,6 +116,7 @@ private:
     std::unique_ptr<DataManager> data_mgr;
     std::unique_ptr<I18NFunctionManager> i18n_function_mgr;
     std::unique_ptr<Console> console;
+    std::unique_ptr<ConfigManager> config_mgr;
 };
 
 

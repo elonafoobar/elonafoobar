@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include "../util/range.hpp"
+#include "consts.hpp"
 #include "data/types/type_character.hpp"
 #include "god.hpp"
 #include "lua_env/wrapped_function.hpp"
@@ -16,8 +17,13 @@
 #define ELONA_MAX_OTHER_CHARACTERS 188
 
 
+
 namespace elona
 {
+
+struct Item;
+
+
 
 /// @putit
 struct Buff
@@ -38,7 +44,7 @@ struct Buff
 
 
 /// @putit
-struct ContinuousAction
+struct Activity
 {
     enum class Type : int
     {
@@ -58,7 +64,7 @@ struct ContinuousAction
     };
 
     /// @putit
-    Type type = ContinuousAction::Type::none;
+    Type type = Activity::Type::none;
 
     /// @putit
     int turn = 0;
@@ -69,7 +75,7 @@ struct ContinuousAction
 
     bool is_doing_nothing() const
     {
-        return type == ContinuousAction::Type::none;
+        return type == Activity::Type::none;
     }
 
 
@@ -87,13 +93,13 @@ struct ContinuousAction
 
     void finish()
     {
-        type = ContinuousAction::Type::none;
+        type = Activity::Type::none;
         turn = 0;
         item = 0;
     }
 
 
-#include "_putit/continuous_action.cpp"
+#include "_putit/activity.cpp"
 };
 
 
@@ -204,7 +210,7 @@ public:
     int turn = 0;
 
     /// @putit
-    int id = 0;
+    CharaId id = CharaId::none;
 
     /// @putit
     int vision_distance = 0;
@@ -378,10 +384,10 @@ public:
     int anorexia_count = 0;
 
     /// @putit
-    ContinuousAction continuous_action;
+    Activity activity;
 
     /// @putit
-    int stops_continuous_action_if_damaged = 0;
+    int stops_activity_if_damaged = 0;
 
     /// @putit
     int quality_of_performance = 0;
@@ -396,7 +402,7 @@ public:
     int shop_rank = 0;
 
     /// @putit
-    int continuous_action_target = 0;
+    int activity_target = 0;
 
     /// @putit
     int shop_store_id = 0;
@@ -504,10 +510,7 @@ public:
     int _203 = 0;
 
     /// @putit
-    int _205 = 0;
-
-    /// @putit
-    int _206 = 0;
+    Position target_position;
 
     void clear();
     void clear_flags();
@@ -551,7 +554,7 @@ public:
 
     SharedId new_id() const
     {
-        return *the_character_db.get_id_from_legacy(this->id);
+        return *the_character_db.get_id_from_legacy(charaid2int(this->id));
     }
 
 
@@ -719,18 +722,15 @@ int chara_find(int id);
 int chara_find_ally(int id);
 int chara_get_free_slot();
 int chara_get_free_slot_ally();
-bool chara_unequip(int);
+bool chara_unequip(Item& item);
 int chara_custom_talk(int = 0, int = 0);
-std::string chara_refstr(int = 0, int = 0);
 int chara_impression_level(int = 0);
 void chara_modify_impression(Character& cc, int delta);
-void chara_set_item_which_will_be_used(Character& cc);
+void chara_set_item_which_will_be_used(Character& chara, const Item& item);
 int chara_armor_class(const Character& cc);
 int chara_breed_power(const Character&);
 
 void chara_add_quality_parens();
-
-int access_character_info();
 
 bool belong_to_same_team(const Character& c1, const Character& c2);
 

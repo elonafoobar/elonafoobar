@@ -129,7 +129,7 @@ void item_db_get_description(Item& item, int legacy_id)
 
 
 
-void item_db_get_charge_level(Item& item, int legacy_id)
+void item_db_get_charge_level(const Item& item, int legacy_id)
 {
     (void)item;
 
@@ -147,7 +147,7 @@ void item_db_set_full_stats(Item& item, int legacy_id)
     // Common initialization
     item_db_set_basic_stats(item, legacy_id);
 
-    item.id = legacy_id;
+    item.id = int2itemid(legacy_id);
     item.set_number(1);
     item.difficulty_of_identification = 0; // Default value
     item.image = info.image;

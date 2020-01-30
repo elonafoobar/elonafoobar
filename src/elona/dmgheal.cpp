@@ -1,5 +1,4 @@
 #include "dmgheal.hpp"
-#include "../snail/android.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
@@ -8,13 +7,13 @@
 #include "buff.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "debug.hpp"
+#include "deferred_event.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "element.hpp"
 #include "elona.hpp"
-#include "event.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
@@ -133,7 +132,7 @@ Character::State dmgheal_set_death_status(Character& victim)
             victim.current_map = 0;
             if (victim.is_escorted() == 1)
             {
-                event_add(15, victim.id);
+                event_add(15, charaid2int(victim.id));
                 new_state = Character::State::empty;
             }
             if (victim.is_escorted_in_sub_quest() == 1)
@@ -248,7 +247,7 @@ int damage_hp(
     }
     if (victim.is_metal())
     {
-        dmg_at_m141 = rnd(dmg_at_m141 / 10 + 2);
+        dmg_at_m141 = rnd_capped(dmg_at_m141 / 10 + 2);
     }
     if (victim.is_contracting_with_reaper())
     {
@@ -322,7 +321,8 @@ int damage_hp(
                 heal_hp(
                     *attacker,
                     clamp(
-                        rnd(dmg_at_m141 * (150 + element_power * 2) / 1000 +
+                        rnd_capped(
+                            dmg_at_m141 * (150 + element_power * 2) / 1000 +
                             10),
                         1,
                         attacker->max_hp / 10 + rnd(5)));
@@ -331,15 +331,11 @@ int damage_hp(
     }
     if (victim.index == 0)
     {
-        game_data.player_cellaccess_check_flag = 0;
         if (victim.hp < 0)
         {
-            if (event_id() != -1)
+            if (event_has_pending_events() && event_processing_event() != 21)
             {
-                if (event_id() != 21)
-                {
-                    victim.hp = 1;
-                }
+                victim.hp = 1;
             }
             if (game_data.current_map == mdata_t::MapId::pet_arena)
             {
@@ -399,11 +395,6 @@ int damage_hp(
         {
             spillblood(victim.position.x, victim.position.y, 1 + rnd(2));
         }
-        if (game_data.proc_damage_events_flag == 1)
-        {
-            txteledmg(0, attacker_is_player ? 0 : -1, victim.index, element);
-            goto label_1369_internal;
-        }
         if (damage_level > 0)
         {
             if (victim.max_hp / 2 > victim.hp)
@@ -419,7 +410,11 @@ int damage_hp(
                 }
             }
         }
-        if (game_data.proc_damage_events_flag == 2)
+        if (game_data.proc_damage_events_flag == 1)
+        {
+            txteledmg(0, attacker_is_player ? 0 : -1, victim.index, element);
+        }
+        else if (game_data.proc_damage_events_flag == 2)
         {
             Message::instance().continue_sentence();
             if (damage_level == -1)
@@ -459,49 +454,51 @@ int damage_hp(
                         attacker_is_player),
                     Message::color{ColorIndex::red});
             }
-            rowact_check(victim.index);
-            goto label_1369_internal;
+            rowact_check(victim);
         }
-        if (damage_level == 1)
+        else
         {
-            if (is_in_fov(victim))
+            if (damage_level == 1)
             {
-                txt(i18n::s.get("core.damage.reactions.screams", victim),
-                    Message::color{ColorIndex::gold});
+                if (is_in_fov(victim))
+                {
+                    txt(i18n::s.get("core.damage.reactions.screams", victim),
+                        Message::color{ColorIndex::gold});
+                }
+            }
+            if (damage_level == 2)
+            {
+                if (is_in_fov(victim))
+                {
+                    txt(i18n::s.get(
+                            "core.damage.reactions.writhes_in_pain", victim),
+                        Message::color{ColorIndex::light_red});
+                }
+            }
+            if (damage_level >= 3)
+            {
+                if (is_in_fov(victim))
+                {
+                    txt(i18n::s.get(
+                            "core.damage.reactions.is_severely_hurt", victim),
+                        Message::color{ColorIndex::red});
+                }
+            }
+            if (dmg_at_m141 < 0)
+            {
+                if (victim.hp > victim.max_hp)
+                {
+                    victim.hp = victim.max_hp;
+                }
+                if (is_in_fov(victim))
+                {
+                    txt(i18n::s.get("core.damage.is_healed", victim),
+                        Message::color{ColorIndex::blue});
+                }
             }
         }
-        if (damage_level == 2)
-        {
-            if (is_in_fov(victim))
-            {
-                txt(i18n::s.get(
-                        "core.damage.reactions.writhes_in_pain", victim),
-                    Message::color{ColorIndex::light_red});
-            }
-        }
-        if (damage_level >= 3)
-        {
-            if (is_in_fov(victim))
-            {
-                txt(i18n::s.get(
-                        "core.damage.reactions.is_severely_hurt", victim),
-                    Message::color{ColorIndex::red});
-            }
-        }
-        if (dmg_at_m141 < 0)
-        {
-            if (victim.hp > victim.max_hp)
-            {
-                victim.hp = victim.max_hp;
-            }
-            if (is_in_fov(victim))
-            {
-                txt(i18n::s.get("core.damage.is_healed", victim),
-                    Message::color{ColorIndex::blue});
-            }
-        }
-    label_1369_internal:
-        rowact_check(victim.index);
+
+        rowact_check(victim);
         if (victim.hp < victim.max_hp / 5)
         {
             if (victim.index != 0)
@@ -532,8 +529,7 @@ int damage_hp(
                             if (is_in_fov(victim))
                             {
                                 txt(i18n::s.get(
-                                        "core.damage.runs_away_in_"
-                                        "terror",
+                                        "core.damage.runs_away_in_terror",
                                         victim),
                                     Message::color{ColorIndex::blue});
                             }
@@ -551,35 +547,35 @@ int damage_hp(
                     status_ailment_damage(
                         victim,
                         StatusAilment::blinded,
-                        rnd(element_power / 3 * 2 + 1));
+                        rnd_capped(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     status_ailment_damage(
                         victim,
                         StatusAilment::paralyzed,
-                        rnd(element_power / 3 * 2 + 1));
+                        rnd_capped(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     status_ailment_damage(
                         victim,
                         StatusAilment::confused,
-                        rnd(element_power / 3 * 2 + 1));
+                        rnd_capped(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     status_ailment_damage(
                         victim,
                         StatusAilment::poisoned,
-                        rnd(element_power / 3 * 2 + 1));
+                        rnd_capped(element_power / 3 * 2 + 1));
                 }
                 if (rnd(20) < element_power / 50 + 4)
                 {
                     status_ailment_damage(
                         victim,
                         StatusAilment::sleep,
-                        rnd(element_power / 3 * 2 + 1));
+                        rnd_capped(element_power / 3 * 2 + 1));
                 }
             }
             if (element == 52)
@@ -592,38 +588,50 @@ int damage_hp(
             if (element == 53)
             {
                 status_ailment_damage(
-                    victim, StatusAilment::blinded, rnd(element_power + 1));
+                    victim,
+                    StatusAilment::blinded,
+                    rnd_capped(element_power + 1));
             }
             if (element == 58)
             {
                 status_ailment_damage(
-                    victim, StatusAilment::paralyzed, rnd(element_power + 1));
+                    victim,
+                    StatusAilment::paralyzed,
+                    rnd_capped(element_power + 1));
             }
             if (element == 54)
             {
                 status_ailment_damage(
-                    victim, StatusAilment::confused, rnd(element_power + 1));
+                    victim,
+                    StatusAilment::confused,
+                    rnd_capped(element_power + 1));
             }
             if (element == 57)
             {
                 status_ailment_damage(
-                    victim, StatusAilment::confused, rnd(element_power + 1));
+                    victim,
+                    StatusAilment::confused,
+                    rnd_capped(element_power + 1));
             }
             if (element == 55)
             {
                 status_ailment_damage(
-                    victim, StatusAilment::poisoned, rnd(element_power + 1));
+                    victim,
+                    StatusAilment::poisoned,
+                    rnd_capped(element_power + 1));
             }
             if (element == 61)
             {
                 status_ailment_damage(
-                    victim, StatusAilment::bleeding, rnd(element_power + 1));
+                    victim,
+                    StatusAilment::bleeding,
+                    rnd_capped(element_power + 1));
             }
             if (element == 62)
             {
                 if (victim.index == 0)
                 {
-                    modify_ether_disease_stage(rnd(element_power + 1));
+                    modify_ether_disease_stage(rnd_capped(element_power + 1));
                 }
             }
             if (element == 63)
@@ -657,23 +665,17 @@ int damage_hp(
         }
         if (victim.index == 0)
         {
-            if (Config::instance().sound)
+            if (g_config.sound())
             {
-                if (Config::instance().heartbeat)
+                if (g_config.heartbeat())
                 {
-                    int threshold = Config::instance().get<int>(
-                        "core.screen.heartbeat_threshold");
+                    int threshold =
+                        config_get_integer("core.screen.heartbeat_threshold");
                     if (victim.hp < victim.max_hp * (threshold * 0.01))
                     {
                         if (!CHECKPLAY(32))
                         {
                             snd("core.Heart1");
-
-                            if (Config::instance().get<bool>(
-                                    "core.android.vibrate"))
-                            {
-                                snail::android::vibrate_pulse();
-                            }
                         }
                     }
                 }
@@ -825,16 +827,14 @@ int damage_hp(
                     {
                         Message::instance().continue_sentence();
                         txt(i18n::s.get(
-                            "core.death_by.chara.transformed_into_meat."
-                            "active",
+                            "core.death_by.chara.transformed_into_meat.active",
                             victim,
                             attacker_is_player));
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.death_by.chara.transformed_into_meat."
-                            "passive",
+                            "core.death_by.chara.transformed_into_meat.passive",
                             victim,
                             attacker_is_player));
                     }
@@ -938,7 +938,8 @@ int damage_hp(
                 {
                     heal_hp(
                         *attacker,
-                        rnd(dmg_at_m141 * (200 + element_power) / 1000 + 5));
+                        rnd_capped(
+                            dmg_at_m141 * (200 + element_power) / 1000 + 5));
                 }
             }
         }
@@ -1012,32 +1013,32 @@ int damage_hp(
             {
                 if (game_data.current_map != mdata_t::MapId::the_void)
                 {
-                    if (victim.id == 2)
+                    if (victim.id == CharaId::zeome)
                     {
                         event_add(1);
                     }
-                    if (victim.id == 141)
+                    if (victim.id == CharaId::issizzle)
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.fool"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_fool = 1;
                     }
-                    if (victim.id == 143)
+                    if (victim.id == CharaId::wynan)
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.king"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_king = 1;
                     }
-                    if (victim.id == 144)
+                    if (victim.id == CharaId::quruiza)
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.sage"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
                         game_data.quest_flags.magic_stone_of_sage = 1;
                     }
-                    if (victim.id == 242)
+                    if (victim.id == CharaId::rodlob)
                     {
                         if (game_data.quest_flags.novice_knight < 1000)
                         {
@@ -1045,7 +1046,7 @@ int damage_hp(
                             quest_update_journal_msg();
                         }
                     }
-                    if (victim.id == 257)
+                    if (victim.id == CharaId::tuwen)
                     {
                         if (game_data.quest_flags.pyramid_trial < 1000)
                         {
@@ -1055,7 +1056,7 @@ int damage_hp(
                             snd("core.complete1");
                         }
                     }
-                    if (victim.id == 300)
+                    if (victim.id == CharaId::ungaga)
                     {
                         if (game_data.quest_flags.minotaur_king < 1000)
                         {
@@ -1063,17 +1064,15 @@ int damage_hp(
                             quest_update_journal_msg();
                         }
                     }
-                    if (victim.id == 318)
+                    if (victim.id == CharaId::big_daddy)
                     {
                         event_add(27, victim.position.x, victim.position.y);
                     }
-                    if (victim.id == 319)
+                    if (victim.id == CharaId::little_sister)
                     {
                         ++game_data.quest_flags.kill_count_of_little_sister;
                         txt(i18n::s.get(
-                                "core.talk.unique.strange_scientist."
-                                "saved_"
-                                "count",
+                                "core.talk.unique.strange_scientist.saved_count",
                                 game_data.quest_flags
                                     .save_count_of_little_sister,
                                 game_data.quest_flags
@@ -1091,7 +1090,7 @@ int damage_hp(
                             event_add(5);
                         }
                     }
-                    if (victim.id == 331)
+                    if (victim.id == CharaId::ehekatl)
                     {
                         if (rnd(4) == 0)
                         {
@@ -1113,7 +1112,7 @@ int damage_hp(
         }
         if (victim.index != 0)
         {
-            ++npcmemory(0, victim.id);
+            ++npcmemory(0, charaid2int(victim.id));
             chara_custom_talk(victim.index, 102);
             if (victim.index < 16)
             {
@@ -1143,7 +1142,7 @@ int damage_hp(
         }
         if (attacker)
         {
-            if (attacker->id == 260)
+            if (attacker->id == CharaId::black_cat)
             {
                 catitem = attacker->index;
             }
@@ -1318,7 +1317,8 @@ void damage_insanity(Character& cc, int delta)
     }
     delta = std::max(delta, 0);
     cc.insanity += delta;
-    if (rnd(10) == 0 || rnd(delta + 1) > 5 || rnd(cc.insanity + 1) > 50)
+    if (rnd(10) == 0 || rnd_capped(delta + 1) > 5 ||
+        rnd_capped(cc.insanity + 1) > 50)
     {
         status_ailment_damage(cc, StatusAilment::insane, 100);
     }

@@ -74,7 +74,7 @@ void god_modify_piety(int amount);
 void set_npc_religion();
 void apply_god_blessing(int cc);
 std::string get_god_description(int);
-void god_proc_switching_penalty();
+void god_proc_switching_penalty(const GodId& new_religion);
 void switch_religion();
 TurnResult do_pray();
 TurnResult do_offer();

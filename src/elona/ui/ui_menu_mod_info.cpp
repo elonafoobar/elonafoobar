@@ -48,8 +48,8 @@ void UIMenuModInfo::_build_description()
     _readme_pages.clear();
     _desc_page = 0;
 
-    auto readme_path =
-        _find_readme(filesystem::dirs::for_mod(_desc.manifest.id));
+    auto readme_path = _find_readme(
+        filesystem::dirs::for_mod(_desc.manifest.id, _desc.manifest.version));
 
     if (!readme_path)
     {
@@ -105,7 +105,8 @@ void UIMenuModInfo::_build_description()
     listmax = _readme_pages.size();
 
     auto image_path =
-        filesystem::dirs::for_mod(_desc.manifest.id) / "image.png";
+        filesystem::dirs::for_mod(_desc.manifest.id, _desc.manifest.version) /
+        "image.png";
     if (fs::exists(image_path))
     {
         _mod_image = snail::Image{image_path};

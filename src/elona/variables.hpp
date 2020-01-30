@@ -16,17 +16,18 @@
 namespace elona
 {
 
+struct Item;
+struct Character;
+
+
 
 ELONA_EXTERN(elona_vector1<int> ap);
 ELONA_EXTERN(int nooracle);
 
 // casino.cpp / casino_card.cpp
-ELONA_EXTERN(int atxthrough);
 ELONA_EXTERN(std::string atxbg);
 ELONA_EXTERN(std::string atxbgbk);
 ELONA_EXTERN(elona_vector1<std::string> atxinfon);
-ELONA_EXTERN(elona_vector1<int> atxid);
-ELONA_EXTERN(int atxlv);
 ELONA_EXTERN(elona_vector1<int> fsetwear);
 ELONA_EXTERN(elona_vector1<int> fsetitem);
 ELONA_EXTERN(int txtadvscreenupdate);
@@ -53,13 +54,10 @@ ELONA_EXTERN(int inf_msgh);
 ELONA_EXTERN(int inf_ver);
 
 // ui.cpp/menu.cpp
-ELONA_EXTERN(std::string username);
 ELONA_EXTERN(int autoturn);
 ELONA_EXTERN(int firstautoturn);
 ELONA_EXTERN(int racount);
 ELONA_EXTERN(elona_vector1<std::string> matdesc);
-ELONA_EXTERN(int attackvar);
-ELONA_EXTERN(int dump_return);
 ELONA_EXTERN(std::string nquestdate);
 ELONA_EXTERN(int lv);
 ELONA_EXTERN(elona_vector3<int> pochart);
@@ -145,10 +143,6 @@ ELONA_EXTERN(int findlocmode);
 ELONA_EXTERN(int dirsub);
 ELONA_EXTERN(int mousex);
 ELONA_EXTERN(int mousey);
-ELONA_EXTERN(bool player_queried_for_input);
-
-// activity.cpp
-ELONA_EXTERN(elona_vector1<int> fsetperform);
 
 // initialize_map.cpp
 ELONA_EXTERN(int noaggrorefresh);
@@ -161,9 +155,6 @@ ELONA_EXTERN(elona_vector1<int> deliver);
 ELONA_EXTERN(elona_vector1<int> dir);
 ELONA_EXTERN(elona_vector1<int> drop);
 ELONA_EXTERN(elona_vector1<int> dx);
-ELONA_EXTERN(elona_vector1<int> evdata1);
-ELONA_EXTERN(elona_vector1<int> evdata2);
-ELONA_EXTERN(elona_vector1<int> evlist);
 ELONA_EXTERN(elona_vector1<int> feat);
 ELONA_EXTERN(elona_vector1<int> fishanime);
 ELONA_EXTERN(elona_vector1<int> fixeditemenc);
@@ -194,7 +185,6 @@ ELONA_EXTERN(elona_vector1<int> reph);
 ELONA_EXTERN(elona_vector1<int> repw);
 ELONA_EXTERN(elona_vector1<int> rowactre);
 ELONA_EXTERN(elona_vector1<int> rtval);
-ELONA_EXTERN(elona_vector1<int> sell);
 ELONA_EXTERN(elona_vector1<int> spact);
 ELONA_EXTERN(elona_vector1<int> spell);
 ELONA_EXTERN(elona_vector1<int> sx);
@@ -281,7 +271,6 @@ ELONA_EXTERN(elona_vector1<std::string> newsbuff);
 ELONA_EXTERN(elona_vector1<std::string> playerheader);
 ELONA_EXTERN(elona_vector1<std::string> q);
 ELONA_EXTERN(elona_vector1<std::string> qname);
-ELONA_EXTERN(elona_vector1<std::string> rtvaln);
 ELONA_EXTERN(elona_vector1<std::string> s1);
 ELONA_EXTERN(elona_vector1<std::string> s);
 ELONA_EXTERN(elona_vector1<std::string> traitrefn2);
@@ -293,7 +282,6 @@ ELONA_EXTERN(elona_vector2<int> card);
 ELONA_EXTERN(elona_vector2<int> cmapdata);
 ELONA_EXTERN(elona_vector2<int> cycle);
 ELONA_EXTERN(elona_vector2<int> dblist);
-ELONA_EXTERN(elona_vector2<int> dirchk);
 ELONA_EXTERN(elona_vector2<int> dirxy);
 ELONA_EXTERN(elona_vector2<int> encprocref);
 ELONA_EXTERN(elona_vector1<int> eqweapon1);
@@ -308,13 +296,10 @@ ELONA_EXTERN(elona_vector2<int> pcc);
 ELONA_EXTERN(elona_vector2<int> picfood);
 ELONA_EXTERN(elona_vector2<int> qdata);
 ELONA_EXTERN(elona_vector2<int> slight);
-ELONA_EXTERN(elona_vector2<int> userdata);
 ELONA_EXTERN(elona_vector2<std::string> _melee);
 ELONA_EXTERN(elona_vector2<std::string> cdatan);
 ELONA_EXTERN(elona_vector2<std::string> listn);
 ELONA_EXTERN(elona_vector2<std::string> mapnamerd);
-ELONA_EXTERN(elona_vector2<std::string> promptl);
-ELONA_EXTERN(elona_vector2<std::string> userdatan);
 ELONA_EXTERN(elona_vector3<int> bddata);
 ELONA_EXTERN(elona_vector3<int> efmap);
 ELONA_EXTERN(elona_vector3<int> map);
@@ -322,7 +307,6 @@ ELONA_EXTERN(int ammo);
 ELONA_EXTERN(int ammoproc);
 ELONA_EXTERN(int ammoprocbk);
 ELONA_EXTERN(int animode);
-ELONA_EXTERN(int aniy);
 ELONA_EXTERN(int area);
 ELONA_EXTERN(int attacknum);
 ELONA_EXTERN(int attackrange);
@@ -335,7 +319,6 @@ ELONA_EXTERN(int cc);
 ELONA_EXTERN(int ccbk);
 ELONA_EXTERN(int cellaccess);
 ELONA_EXTERN(int chatesc);
-ELONA_EXTERN(int chatflag);
 ELONA_EXTERN(int chatteleport);
 ELONA_EXTERN(int ci);
 ELONA_EXTERN(int cidip);
@@ -344,14 +327,12 @@ ELONA_EXTERN(int cm);
 ELONA_EXTERN(int cmbg);
 ELONA_EXTERN(int cmsex);
 ELONA_EXTERN(int cmshade);
-ELONA_EXTERN(int cooktool);
 ELONA_EXTERN(int creaturepack);
 ELONA_EXTERN(int critical);
 ELONA_EXTERN(int crop);
 ELONA_EXTERN(int cs);
 ELONA_EXTERN(int cs_bk2);
 ELONA_EXTERN(int cs_bk);
-ELONA_EXTERN(int csctrl);
 ELONA_EXTERN(int cspecialeq);
 ELONA_EXTERN(int cw);
 ELONA_EXTERN(int cxinit);
@@ -359,15 +340,12 @@ ELONA_EXTERN(int cyinit);
 ELONA_EXTERN(int damage);
 ELONA_EXTERN(int dbg_revealmap);
 ELONA_EXTERN(int dbid);
-ELONA_EXTERN(int dbmode);
-ELONA_EXTERN(int dbspec);
 ELONA_EXTERN(int dice1);
 ELONA_EXTERN(int dice2);
 ELONA_EXTERN(int distance);
 ELONA_EXTERN(int dmg);
 ELONA_EXTERN(int dmgfix);
 ELONA_EXTERN(double dmgmulti);
-ELONA_EXTERN(int dropval);
 ELONA_EXTERN(int dy);
 ELONA_EXTERN(int efcancel);
 ELONA_EXTERN(int efid);
@@ -381,12 +359,10 @@ ELONA_EXTERN(int en);
 ELONA_EXTERN(int encounter);
 ELONA_EXTERN(int encounterlv);
 ELONA_EXTERN(int encounterref);
-ELONA_EXTERN(int enemylv);
 ELONA_EXTERN(int enemyteam);
 ELONA_EXTERN(int eqmultiweapon);
 ELONA_EXTERN(int eqtwohand);
 ELONA_EXTERN(int equip);
-ELONA_EXTERN(int evnum);
 ELONA_EXTERN(int exp);
 ELONA_EXTERN(int f2);
 ELONA_EXTERN(int f);
@@ -402,13 +378,11 @@ ELONA_EXTERN(int fltselect);
 ELONA_EXTERN(int flttypemajor);
 ELONA_EXTERN(int flttypeminor);
 ELONA_EXTERN(int foot);
-ELONA_EXTERN(int gold);
 ELONA_EXTERN(int grown);
 ELONA_EXTERN(int hire);
 ELONA_EXTERN(int homemapmode);
 ELONA_EXTERN(int ichargelevel);
 ELONA_EXTERN(IdentifyState idtresult);
-ELONA_EXTERN(int importmode);
 ELONA_EXTERN(int in);
 ELONA_EXTERN(int inf_maxlog);
 ELONA_EXTERN(size_t inf_maxmsglen);
@@ -434,7 +408,6 @@ ELONA_EXTERN(int jp);
 ELONA_EXTERN(bool key_escape);
 ELONA_EXTERN(int keybd_attacking);
 ELONA_EXTERN(int keybd_wait);
-ELONA_EXTERN(int keyhalt);
 ELONA_EXTERN(int keyrange);
 ELONA_EXTERN(int keywait);
 ELONA_EXTERN(int lastctrl);
@@ -452,11 +425,9 @@ ELONA_EXTERN(int maxitemid);
 ELONA_EXTERN(int menucycle);
 ELONA_EXTERN(int minlevel);
 ELONA_EXTERN(int mode);
-ELONA_EXTERN(int msgalert);
 ELONA_EXTERN(int msync);
 ELONA_EXTERN(int mtilefilecur);
 ELONA_EXTERN(int musicloop);
-ELONA_EXTERN(int mutex_handle);
 ELONA_EXTERN(int nostack);
 ELONA_EXTERN(int novoidlv);
 ELONA_EXTERN(int nowindowanime);
@@ -465,7 +436,6 @@ ELONA_EXTERN(int objlv);
 ELONA_EXTERN(int obvious);
 ELONA_EXTERN(int oc);
 ELONA_EXTERN(int orgdmg);
-ELONA_EXTERN(int p2);
 ELONA_EXTERN(int page);
 ELONA_EXTERN(int page_bk);
 ELONA_EXTERN(int pagemax);
@@ -482,10 +452,6 @@ ELONA_EXTERN(int protdice2);
 ELONA_EXTERN(int quickpage);
 ELONA_EXTERN(int r2);
 ELONA_EXTERN(int r);
-ELONA_EXTERN(int raderh);
-ELONA_EXTERN(int raderw);
-ELONA_EXTERN(int raderx);
-ELONA_EXTERN(int radery);
 ELONA_EXTERN(int range_);
 ELONA_EXTERN(int rapidmagic);
 ELONA_EXTERN(int rc);
@@ -498,7 +464,6 @@ ELONA_EXTERN(int sc);
 ELONA_EXTERN(int scene_cut);
 ELONA_EXTERN(int sceneid);
 ELONA_EXTERN(int scenemode);
-ELONA_EXTERN(int screenmsgy);
 ELONA_EXTERN(int screenupdate);
 ELONA_EXTERN(int scroll);
 ELONA_EXTERN(int scrollanime);
@@ -532,7 +497,6 @@ ELONA_EXTERN(int tlocy);
 ELONA_EXTERN(int tx);
 ELONA_EXTERN(int txt3rd);
 ELONA_EXTERN(int ty);
-ELONA_EXTERN(int userrelation);
 ELONA_EXTERN(int vfix);
 ELONA_EXTERN(int voidlv);
 ELONA_EXTERN(int windowh);
@@ -546,14 +510,11 @@ ELONA_EXTERN(int x2);
 ELONA_EXTERN(int y1);
 ELONA_EXTERN(int y2);
 ELONA_EXTERN(std::string cmaka);
-ELONA_EXTERN(std::string dbidn);
 ELONA_EXTERN(std::string defload);
 ELONA_EXTERN(std::string fmapfile);
 ELONA_EXTERN(std::string geneuse);
 ELONA_EXTERN(std::string mid);
-ELONA_EXTERN(std::string note_buff);
 ELONA_EXTERN(std::string playerid);
-ELONA_EXTERN(std::string refstr);
 ELONA_EXTERN(std::string s2);
 ELONA_EXTERN(std::string strhint1);
 ELONA_EXTERN(std::string strhint2);
@@ -563,7 +524,6 @@ ELONA_EXTERN(std::string strhint4);
 ELONA_EXTERN(std::string strhint5);
 ELONA_EXTERN(std::string strhint5b);
 ELONA_EXTERN(std::string strhint7);
-ELONA_EXTERN(std::string userfile);
 
 ELONA_EXTERN(optional<int> chatval_unique_chara_id);
 
@@ -615,8 +575,7 @@ void gain_race_feat();
 //// Items
 
 // Item status querying
-int cargocheck();
-void getinheritance(int, elona_vector1<int>&, int&);
+bool cargocheck(const Item& item);
 
 // Item manipulation
 int convertartifact(int = 0, int = 0);
@@ -668,7 +627,7 @@ int prompt_magic_location();
 int prompt_really_attack();
 
 // Action calculation
-int find_enemy_target();
+int find_enemy_target(bool silent = false);
 int can_do_ranged_attack();
 
 // Main action body
@@ -677,7 +636,7 @@ int can_evade_trap();
 int try_to_disarm_trap();
 int try_to_perceive_npc(int);
 
-int read_textbook();
+bool read_textbook(Item& textbook);
 int decode_book();
 int read_normal_book();
 
@@ -695,11 +654,11 @@ int unlock_box(int);
 void do_ranged_attack();
 
 //// Command
-TurnResult step_into_gate();
+TurnResult step_into_gate(Item& moon_gate);
 optional<TurnResult> check_angband();
 TurnResult do_bash();
 TurnResult do_enter_strange_gate();
-TurnResult do_gatcha();
+TurnResult do_gatcha(Item& gatcha_machine);
 TurnResult do_use_magic();
 TurnResult do_use_stairs_command(int);
 TurnResult try_interact_with_npc();
@@ -709,7 +668,6 @@ TurnResult try_to_open_locked_door();
 void build_target_list();
 void equip_melee_weapon();
 void get_inheritance();
-void remove_card_and_figures();
 
 void try_to_melee_attack();
 void do_physical_attack();
@@ -723,7 +681,7 @@ void harvest_plant(int);
 void create_harvested_item();
 
 // Searching
-void disarm_trap();
+void disarm_trap(Character& chara, int x, int y);
 void discover_trap();
 void discover_hidden_path();
 
@@ -754,7 +712,7 @@ void make_sound(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 
 //// pass_one_turn
 void proc_pregnant();
-void proc_negative_equipments();
+void proc_negative_enchantments(Character& chara);
 void damage_by_cursed_equipments();
 
 
@@ -848,14 +806,6 @@ int transplant_body_parts();
 
 // objet of heart
 void cnvbonus(int = 0, int = 0);
-
-
-//// AI
-TurnResult proc_ai_basic();
-TurnResult proc_misc_npc_map_events();
-TurnResult proc_ally_town_training(bool = false);
-int ai_dir_check_1();
-int ai_dir_check_2();
 
 
 //// UI
@@ -954,9 +904,6 @@ void dump_player_info();
 //// dmgheal
 void character_drops_item();
 void check_kill(int = 0, int = 0);
-
-// character_drops_item
-void remain_make(int = 0, int = 0);
 
 
 //// Journal

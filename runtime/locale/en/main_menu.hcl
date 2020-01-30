@@ -72,6 +72,10 @@ locale {
                 download = "[Switch To Download]"
                 installed = "[Switch To Installed]"
             }
+
+            toggle {
+                cannot_disable = "This mod cannot be disabled."
+            }
         }
 
         mod_develop {
@@ -81,6 +85,7 @@ locale {
             no_template = "No template found"
             invalid_id = "'${_1}' is invalid. Only letters, digits, and underscore are allowed."
             exist = "Mod '${_1}' already exists."
+            created = "Mod '${_1}' was successfully created!"
         }
     }
 }

@@ -1,6 +1,8 @@
 #include "ui_menu_mods.hpp"
 
 #include "../../util/fileutil.hpp"
+#include "../../util/natural_order_comparator.hpp"
+#include "../../util/range.hpp"
 #include "../../util/strutil.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"
@@ -29,10 +31,11 @@ bool UIMenuMods::init()
 }
 
 
-class DownloadModsInitPrompt : public SimplePrompt<DummyResult>
+
+class NotificationPrompt : public SimplePrompt<DummyResult>
 {
 public:
-    DownloadModsInitPrompt(std::string message)
+    NotificationPrompt(std::string message)
         : SimplePrompt(message)
     {
     }
@@ -40,7 +43,7 @@ public:
 protected:
     optional<DummyResult> update() override
     {
-        await(Config::instance().general_wait);
+        await(g_config.general_wait());
         auto action = key_check();
 
         if (action != ""s)
@@ -51,6 +54,7 @@ protected:
         return none;
     }
 };
+
 
 
 void UIMenuMods::_load_mods()
@@ -79,7 +83,7 @@ void UIMenuMods::_load_mods()
     if (_is_download)
     {
         draw();
-        DownloadModsInitPrompt(
+        NotificationPrompt(
             i18n::s.get("core.main_menu.mod_list.download.failed"))
             .query();
         _is_download = false;
@@ -87,23 +91,24 @@ void UIMenuMods::_load_mods()
     }
     else
     {
-        for (const auto& mod : lua::lua->get_mod_manager().all_mods())
+        for (const auto& manifest :
+             lua::lua->get_mod_manager().installed_mods())
         {
-            const auto& id = mod->second->manifest.id;
-
-            if (lua::ModManager::mod_id_is_reserved(id))
+            const auto& id = manifest.id;
+            if (lua::is_reserved_mod_id(id))
                 continue;
 
-            ModDescription mod_desc{
-                mod->second->manifest,
-                static_cast<bool>(
-                    lua::lua->get_mod_manager().get_enabled_version(id))};
-
-            _mod_descriptions.emplace_back(mod_desc);
+            ModDescription desc{manifest,
+                                lua::lua->get_mod_manager().is_enabled(id)};
+            _mod_descriptions.emplace_back(desc);
             listmax++;
         }
     }
+    range::sort(_mod_descriptions, [](const auto& a, const auto& b) {
+        return lib::natural_order_comparator{}(a.manifest.id, b.manifest.id);
+    });
 }
+
 
 
 optional<ModDescription> UIMenuMods::_find_enabled_mod(const std::string& name)
@@ -136,6 +141,8 @@ void UIMenuMods::update()
 
 void UIMenuMods::_draw_key(int cnt, int index)
 {
+    (void)index;
+
     if (cnt % 2 == 0)
     {
         boxf(wx + 57, wy + 66 + cnt * 19, 640, 18, {12, 14, 16, 16});
@@ -241,6 +248,27 @@ void UIMenuMods::_draw_mod_list()
 
 
 
+void UIMenuMods::_try_to_toggle_mod(ModDescription& desc)
+{
+    if (!lua::lua->get_mod_manager().can_disable_mod(desc.manifest.id))
+    {
+        NotificationPrompt(
+            i18n::s.get("core.main_menu.mod_list.toggle.cannot_disable"))
+            .query();
+    }
+    else
+    {
+        snd("core.ok1");
+        desc.enabled = !desc.enabled;
+        lua::lua->get_mod_manager().toggle_mod(
+            desc.manifest.id, desc.manifest.version);
+        // TODO: currently, you need to re-launch foobar to reflect the
+        // configuration.
+    }
+}
+
+
+
 void UIMenuMods::draw()
 {
     if (_redraw)
@@ -262,8 +290,7 @@ optional<UIMenuMods::ResultType> UIMenuMods::on_key(const std::string& action)
         auto& desc = _mod_descriptions.at(pagesize * page + cs);
         if (cs_bk == cs)
         {
-            snd("core.ok1");
-            desc.enabled = !desc.enabled;
+            _try_to_toggle_mod(desc);
         }
         else
         {

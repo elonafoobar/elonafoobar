@@ -1,7 +1,7 @@
 #include "ui_menu_config.hpp"
 #include "../audio.hpp"
-#include "../config/config.hpp"
-#include "../config/config_menu.hpp"
+#include "../config.hpp"
+#include "../config_menu.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
@@ -50,7 +50,7 @@ bool UIMenuConfig::init()
     for (const auto& menu_item : _menu.items)
     {
         list(0, listmax) = listmax;
-        listn(0, listmax) = menu_item->name;
+        listn(0, listmax) = menu_item->name();
         ++listmax;
     }
 
@@ -184,7 +184,7 @@ void UIMenuConfig::_draw_items(ConfigMenu& menu, bool is_root_menu)
         }
         // if (submenu == 3)
         // {
-        //     if (!Config::instance().net)
+        //     if (!g_config.net())
         //     {
         //         if (cnt >= 1)
         //         {
@@ -232,7 +232,7 @@ public:
 protected:
     optional<DummyResult> update() override
     {
-        await(Config::instance().general_wait);
+        await(g_config.general_wait());
         auto action = key_check();
 
         if (action != ""s)
@@ -302,7 +302,7 @@ optional<UIMenuConfig::ResultType> UIMenuConfig::on_key(
         }
         else
         {
-            Config::instance().save();
+            config_save();
             return UIMenuConfig::Result::finish();
         }
     }

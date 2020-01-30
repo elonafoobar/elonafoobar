@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include "../util/range.hpp"
+#include "consts.hpp"
 #include "data/types/type_item.hpp"
 #include "enums.hpp"
 #include "position.hpp"
@@ -67,7 +68,7 @@ public:
     int image = 0;
 
     /// @putit
-    int id = 0;
+    ItemId id = ItemId::none;
 
     /// @putit
     Quality quality = Quality::none;
@@ -177,7 +178,7 @@ public:
 
     SharedId new_id() const
     {
-        return *the_item_db.get_id_from_legacy(this->id);
+        return *the_item_db.get_id_from_legacy(itemid2int(this->id));
     }
 
 
@@ -292,6 +293,13 @@ struct Inventory
     }
 
 
+    InventorySlice map_local()
+    {
+        return {std::begin(storage) + ELONA_OTHER_INVENTORIES_INDEX,
+                std::end(storage)};
+    }
+
+
     InventorySlice for_chara(const Character& chara);
 
     InventorySlice by_index(int index);
@@ -307,23 +315,24 @@ extern Inventory inv;
 
 
 
-IdentifyState item_identify(Item& ci, IdentifyState level);
-IdentifyState item_identify(Item& ci, int power);
+IdentifyState item_identify(Item& item, IdentifyState level);
+IdentifyState item_identify(Item& item, int power);
 
-std::vector<int> itemlist(int owner, int id);
+std::vector<std::reference_wrapper<Item>> itemlist(int owner, int id);
 void itemname_additional_info();
 
-void item_checkknown(int = 0);
+void item_checkknown(Item& item);
 int inv_compress(int);
 void item_copy(int = 0, int = 0);
 void item_acid(const Character& owner, int item_index = -1);
-void item_delete(int);
+void item_delete(Item& item);
 void item_exchange(int = 0, int = 0);
 void item_modify_num(Item&, int);
 void item_set_num(Item&, int);
-void itemturn(int = 0);
-int itemfind(int = 0, int = 0, int = 0);
-int itemusingfind(int, bool = false);
+void itemturn(Item& item);
+optional_ref<Item>
+itemfind(int inventory_id, int matcher, int matcher_type = 0);
+int itemusingfind(const Item& item, bool disallow_pc = false);
 
 enum class ItemFindLocation
 {
@@ -331,29 +340,31 @@ enum class ItemFindLocation
     ground,
     player_inventory_and_ground,
 };
-int item_find(
-    int = 0,
-    int = 0,
+optional_ref<Item> item_find(
+    int matcher,
+    int matcher_type = 0,
     ItemFindLocation = ItemFindLocation::player_inventory_and_ground);
 
 int item_separate(int);
-int item_stack(int = 0, int = 0, int = 0);
+bool item_stack(int inventory_id, Item& base_item, bool show_message = false);
 void item_dump_desc(const Item&);
 
-bool item_fire(int owner, int item_index = -1);
+bool item_fire(int owner, optional_ref<Item> burned_item = none);
 void mapitem_fire(int x, int y);
-bool item_cold(int owner, int item_index = -1);
+bool item_cold(int owner, optional_ref<Item> destroyed_item = none);
 void mapitem_cold(int x, int y);
 
 // TODO unsure how these are separate from item
 int inv_find(int = 0, int = 0);
-int get_random_inv(int owner);
+Item& get_random_inv(int owner);
 int inv_getfreeid(int = 0);
 int inv_getowner(int = 0);
 int inv_sum(int = 0);
 int inv_weight(int = 0);
 bool inv_getspace(int);
 int inv_getfreeid_force();
+
+void remain_make(Item& remain, const Character& chara);
 
 
 void item_drop(Item& item_in_inventory, int num, bool building_shelter = false);
@@ -377,7 +388,7 @@ enum class ItemDescriptionType : int
     small_font_italic = -2,
 };
 
-void item_load_desc(int item_index, int& p);
+size_t item_load_desc(const Item& item);
 
 
 int iequiploc(const Item& item);
@@ -385,10 +396,13 @@ int iequiploc(const Item& item);
 void item_db_set_basic_stats(Item& item, int legacy_id);
 bool item_db_is_offerable(Item& item, int legacy_id);
 void item_db_get_description(Item& item, int legacy_id);
-void item_db_get_charge_level(Item& item, int legacy_id);
+void item_db_get_charge_level(const Item& item, int legacy_id);
 void item_db_set_full_stats(Item& item, int legacy_id);
 void item_db_on_read(Item& item, int legacy_id);
 void item_db_on_zap(Item& item, int legacy_id);
 void item_db_on_drink(Item& item, int legacy_id);
+
+
+std::vector<int> item_get_inheritance(const Item& item);
 
 } // namespace elona

@@ -208,8 +208,8 @@ bool LuaCharacter::get_flag(Character& chara, const EnumString& flag)
  * @see core.event
  * @usage local Event = require("game.Event")
  *
- * local function make_invisible(chara)
- * chara:set_flag("IsInvisible", true) -- intrinsic, reset on refresh
+ * local function make_invisible(e)
+ * e.chara:set_flag("IsInvisible", true) -- intrinsic, reset on refresh
  * end
  *
  * -- force this flag to be overridden after this character is refreshed.
@@ -842,11 +842,12 @@ void LuaCharacter::bind(sol::state& lua)
      *
      * [R] The prototype data of the character.
      */
-    LuaCharacter.set("prototype", sol::property([](Character& self) {
-                         auto id = the_character_db.get_id_from_legacy(self.id);
-                         return *lua::lua->get_data_manager().get().raw(
-                             "core.chara", id->get());
-                     }));
+    LuaCharacter.set(
+        "prototype", sol::property([](Character& self) {
+            auto id = the_character_db.get_id_from_legacy(charaid2int(self.id));
+            return *lua::lua->get_data_manager().get().raw(
+                "core.chara", id->get());
+        }));
 
     // Methods
     LuaCharacter.set(

@@ -1,6 +1,10 @@
+#pragma once
+
 #include "../../enums.hpp"
 #include "../../lua_env/wrapped_function.hpp"
 #include "../lua_lazy_cache.hpp"
+
+
 
 namespace elona
 {

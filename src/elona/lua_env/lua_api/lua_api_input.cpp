@@ -30,7 +30,7 @@ namespace lua
  */
 sol::optional<bool> LuaApiInput::yes_no(const std::string& message)
 {
-    keyhalt = 1;
+    input_halt_input(HaltInput::force);
     txt(message + i18n::space_if_needed());
     const auto result = elona::yes_no();
     if (result == YesNo::canceled)
@@ -381,7 +381,7 @@ void LuaApiInput::start_dialog(LuaCharacterHandle speaker)
 {
     auto& speaker_ref = lua::ref<Character>(speaker);
 
-    auto data = the_character_db.ensure(speaker_ref.id);
+    auto data = the_character_db.ensure(charaid2int(speaker_ref.id));
     if (!data.dialog_id)
     {
         throw sol::error(

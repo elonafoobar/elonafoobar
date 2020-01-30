@@ -1,0 +1,16 @@
+--- Parse/stringify JSON5 format.
+--  @usage local JSON5 = require("game.JSON5")
+module "JSON5"
+
+--- Parses JSON5 text.
+--
+--  @tparam string source JSON5 text
+--  @treturn[1] any Parsed object
+--  @treturn[2] nil If failed
+--  @treturn[2] string Error message
+--  @function parse
+function parse(source, state) end
+
+--- Stringify arbitary value as JSON5.
+--  @function stringify
+function stringify(value, opts) end

@@ -1,6 +1,7 @@
 #include "equipment.hpp"
 #include "adventurer.hpp"
 #include "calc.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "class.hpp"
@@ -322,32 +323,32 @@ void supply_new_equipment()
     for (int cnt = 0; cnt < 100; ++cnt)
     {
         f = 0;
-        for (int cnt = 0; cnt < 4; ++cnt)
+        for (int _j = 0; _j < 4; ++_j)
         {
-            ci = get_random_inv(rc);
-            if (inv[ci].number() == 0)
+            auto&& item = get_random_inv(rc);
+            if (item.number() == 0)
             {
                 f = 1;
                 break;
             }
-            if (inv[ci].body_part != 0)
+            if (item.body_part != 0)
             {
                 continue;
             }
-            if (inv[ci].is_quest_target())
+            if (item.is_quest_target())
             {
                 continue;
             }
-            if (inv[ci].number() != 0)
+            if (item.number() != 0)
             {
-                inv[ci].remove();
+                item.remove();
                 f = 1;
                 break;
             }
         }
         if (f == 0)
         {
-            ci = invhead + invrange - 1;
+            break;
         }
         if (cdata[rc].character_role == 13)
         {
@@ -372,7 +373,9 @@ void supply_new_equipment()
                     if (haveweapon == 0)
                     {
                         if (the_item_db
-                                [inv[cdata[rc].body_parts[cnt] % 10000 - 1].id]
+                                [itemid2int(
+                                     inv[cdata[rc].body_parts[cnt] % 10000 - 1]
+                                         .id)]
                                     ->category == 10000)
                         {
                             haveweapon = 1;
@@ -419,16 +422,16 @@ void supply_new_equipment()
         {
             break;
         }
-        if (itemcreate(rc, 0, -1, -1, 0))
+        if (const auto item = itemcreate_chara_inv(rc, 0, 0))
         {
-            inv[ci].identify_state = IdentifyState::completely;
-            if (inv[ci].quality >= Quality::miracle)
+            item->identify_state = IdentifyState::completely;
+            if (item->quality >= Quality::miracle)
             {
-                if (the_item_db[inv[ci].id]->category < 50000)
+                if (the_item_db[itemid2int(item->id)]->category < 50000)
                 {
                     if (cdata[rc].character_role == 13)
                     {
-                        addnews(1, rc, 0, itemname(ci));
+                        addnews(1, rc, 0, itemname(item->index));
                     }
                 }
             }
@@ -767,57 +770,58 @@ void supply_initial_equipments()
     }
     if (cspecialeq)
     {
-        dbmode = 4;
-        dbid = cdata[rc].id;
-        access_character_info();
+        chara_db_get_special_equipments(cdata[rc].id);
     }
     if (eqtwohand)
     {
         eqshield = 0;
     }
-    if (cdata[rc].id == 9)
+    if (cdata[rc].id == CharaId::beggar)
     {
         if (rnd(120) == 0)
         {
             eqamulet1 = 705;
         }
     }
-    if (cdata[rc].id == 274)
+    if (cdata[rc].id == CharaId::noble)
     {
         if (rnd(100) == 0)
         {
             eqrange = 718;
         }
     }
-    if (cdata[rc].id == 163)
+    if (cdata[rc].id == CharaId::rock_thrower)
     {
         if (rnd(200) == 0)
         {
             eqrange = 716;
         }
     }
-    if (cdata[rc].id == 186 || cdata[rc].id == 187 || cdata[rc].id == 188)
+    if (cdata[rc].id == CharaId::blade ||
+        cdata[rc].id == CharaId::blade_alpha ||
+        cdata[rc].id == CharaId::blade_omega)
     {
         if (rnd(800) == 0)
         {
             eqgirdle = 728;
         }
     }
-    if (cdata[rc].id == 317)
+    if (cdata[rc].id == CharaId::silver_eyed_witch)
     {
         if (rnd(150) == 0)
         {
             eqweapon1 = 719;
         }
     }
-    if (cdata[rc].id == 309 || cdata[rc].id == 310 || cdata[rc].id == 311)
+    if (cdata[rc].id == CharaId::asura || cdata[rc].id == CharaId::mitra ||
+        cdata[rc].id == CharaId::varuna)
     {
         if (rnd(600) == 0)
         {
             eqamulet1 = 723;
         }
     }
-    if (cdata[rc].id == 304)
+    if (cdata[rc].id == CharaId::rogue_archer)
     {
         if (rnd(250) == 0)
         {
@@ -835,19 +839,20 @@ void supply_initial_equipments()
         {
             if (eqamulet1)
             {
+                int item_id;
                 if (eqamulet1 >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqamulet1(1))));
                     flttypeminor = eqamulet1;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqamulet1;
+                    item_id = eqamulet1;
                 }
-                itemcreate(rc, dbid, -1, -1, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqamulet1 = 0;
@@ -855,19 +860,20 @@ void supply_initial_equipments()
             }
             if (eqamulet2)
             {
+                int item_id;
                 if (eqamulet2 >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqamulet2(1))));
                     flttypeminor = eqamulet2;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqamulet2;
+                    item_id = eqamulet2;
                 }
-                itemcreate(rc, dbid, -1, -1, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqamulet2 = 0;
@@ -878,19 +884,20 @@ void supply_initial_equipments()
         {
             if (eqring1)
             {
+                int item_id;
                 if (eqring1 >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqring1(1))));
                     flttypeminor = eqring1;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqring1;
+                    item_id = eqring1;
                 }
-                itemcreate(rc, dbid, -1, -1, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqring1 = 0;
@@ -898,19 +905,20 @@ void supply_initial_equipments()
             }
             if (eqring2)
             {
+                int item_id;
                 if (eqring2 >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqring2(1))));
                     flttypeminor = eqring2;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqring2;
+                    item_id = eqring2;
                 }
-                itemcreate(rc, dbid, -1, -1, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqring2 = 0;
@@ -921,19 +929,20 @@ void supply_initial_equipments()
         {
             if (eqcloack)
             {
+                int item_id;
                 if (eqcloack >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqcloack(1))));
                     flttypeminor = eqcloack;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqcloack;
+                    item_id = eqcloack;
                 }
-                itemcreate(rc, dbid, -1, -1, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqcloack = 0;
@@ -945,19 +954,20 @@ void supply_initial_equipments()
         {
             if (eqgirdle)
             {
+                int item_id;
                 if (eqgirdle >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqgirdle(1))));
                     flttypeminor = eqgirdle;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqgirdle;
+                    item_id = eqgirdle;
                 }
-                itemcreate(rc, dbid, -1, -1, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqgirdle = 0;
@@ -969,19 +979,20 @@ void supply_initial_equipments()
         {
             if (eqhelm)
             {
+                int item_id;
                 if (eqhelm >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqhelm(1))));
                     flttypeminor = eqhelm;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqhelm;
+                    item_id = eqhelm;
                 }
-                itemcreate(rc, dbid, -1, -1, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqhelm = 0;
@@ -993,19 +1004,20 @@ void supply_initial_equipments()
         {
             if (eqarmor)
             {
+                int item_id;
                 if (eqarmor >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqarmor(1))));
                     flttypeminor = eqarmor;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqarmor;
+                    item_id = eqarmor;
                 }
-                itemcreate(rc, dbid, -1, -1, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqarmor = 0;
@@ -1017,19 +1029,20 @@ void supply_initial_equipments()
         {
             if (eqglove)
             {
+                int item_id;
                 if (eqglove >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqglove(1))));
                     flttypeminor = eqglove;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqglove;
+                    item_id = eqglove;
                 }
-                itemcreate(rc, dbid, -1, -1, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqglove = 0;
@@ -1041,19 +1054,20 @@ void supply_initial_equipments()
         {
             if (eqboots)
             {
+                int item_id;
                 if (eqboots >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqboots(1))));
                     flttypeminor = eqboots;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqboots;
+                    item_id = eqboots;
                 }
-                itemcreate(rc, dbid, -1, -1, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqboots = 0;
@@ -1069,7 +1083,7 @@ void supply_initial_equipments()
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(2 + fixeq)));
-                    itemcreate(rc, eqmultiweapon, -1, -1, 0);
+                    itemcreate_chara_inv(rc, eqmultiweapon, 0);
                     if (inv[ci].weight > 1500)
                     {
                         if (cnt < 14)
@@ -1095,8 +1109,7 @@ void supply_initial_equipments()
                             calcfixlv(
                                 static_cast<Quality>(fixeq + eqweapon1(1))));
                         flttypeminor = eqweapon1;
-                        dbid = -1;
-                        itemcreate(rc, dbid, -1, -1, 0);
+                        itemcreate_chara_inv(rc, -1, 0);
                         if (eqtwohand)
                         {
                             if (inv[ci].weight < 4000)
@@ -1125,8 +1138,7 @@ void supply_initial_equipments()
                 else
                 {
                     flt();
-                    dbid = eqweapon1;
-                    itemcreate(rc, dbid, -1, -1, 0);
+                    itemcreate_chara_inv(rc, eqweapon1, 0);
                 }
                 body = 100 + i;
                 equip_item(rc);
@@ -1143,8 +1155,7 @@ void supply_initial_equipments()
                             calcfixlv(
                                 static_cast<Quality>(fixeq + eqweapon2(1))));
                         flttypeminor = eqweapon2;
-                        dbid = -1;
-                        itemcreate(rc, dbid, -1, -1, 0);
+                        itemcreate_chara_inv(rc, -1, 0);
                         if (eqtwowield)
                         {
                             if (inv[ci].weight > 1500)
@@ -1162,8 +1173,7 @@ void supply_initial_equipments()
                 else
                 {
                     flt();
-                    dbid = eqweapon2;
-                    itemcreate(rc, dbid, -1, -1, 0);
+                    itemcreate_chara_inv(rc, eqweapon2, 0);
                 }
                 eqweapon2 = 0;
                 body = 100 + i;
@@ -1172,19 +1182,20 @@ void supply_initial_equipments()
             }
             if (eqshield)
             {
+                int item_id;
                 if (eqshield >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqshield(1))));
                     flttypeminor = eqshield;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqshield;
+                    item_id = eqshield;
                 }
-                itemcreate(rc, dbid, -1, -1, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqshield = 0;
@@ -1196,19 +1207,20 @@ void supply_initial_equipments()
         {
             if (eqrange)
             {
+                int item_id;
                 if (eqrange >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqrange(1))));
                     flttypeminor = eqrange;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqrange;
+                    item_id = eqrange;
                 }
-                itemcreate(rc, dbid, -1, -1, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqrange = 0;
@@ -1220,19 +1232,20 @@ void supply_initial_equipments()
         {
             if (eqammo)
             {
+                int item_id;
                 if (eqammo >= 10000)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(fixeq + eqammo(1))));
                     flttypeminor = eqammo;
-                    dbid = -1;
+                    item_id = -1;
                 }
                 else
                 {
                     flt();
-                    dbid = eqammo;
+                    item_id = eqammo;
                 }
-                itemcreate(rc, dbid, -1, -1, 0);
+                itemcreate_chara_inv(rc, item_id, 0);
                 body = 100 + i;
                 equip_item(rc);
                 eqammo = 0;
@@ -1241,33 +1254,34 @@ void supply_initial_equipments()
             continue;
         }
     }
-    if (cdata[rc].id == 326)
+    if (cdata[rc].id == CharaId::bard)
     {
         if (rnd(150) == 0)
         {
             flt();
-            itemcreate(rc, 707, -1, -1, 0);
+            itemcreate_chara_inv(rc, 707, 0);
         }
         else
         {
             flt(calcobjlv(cdata[rc].level), calcfixlv());
             flttypeminor = 60005;
-            itemcreate(rc, 0, -1, -1, 0);
+            itemcreate_chara_inv(rc, 0, 0);
         }
     }
-    if (cdata[rc].id == 351 || cdata[rc].id == 352)
+    if (cdata[rc].id == CharaId::the_leopard_warrior ||
+        cdata[rc].id == CharaId::silvia)
     {
         for (int cnt = 0; cnt < 6; ++cnt)
         {
             flt();
             nostack = 1;
-            if (itemcreate(rc, 772, -1, -1, 0))
+            if (const auto item = itemcreate_chara_inv(rc, 772, 0))
             {
-                inv[ci].modify_number(rnd(4));
+                item->modify_number(rnd(4));
                 if (rnd(2))
                 {
-                    inv[ci].param3 = -1;
-                    inv[ci].image = 336;
+                    item->param3 = -1;
+                    item->image = 336;
                 }
             }
         }

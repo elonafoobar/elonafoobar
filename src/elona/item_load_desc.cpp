@@ -8,21 +8,17 @@
 
 
 
+namespace elona
+{
+
 namespace
 {
 
 elona_vector1<int> inhlist;
 
-}
 
 
-
-namespace elona
-{
-
-static void _load_single_item_description_text(
-    const I18NKey& desc_key_prefix,
-    int& p)
+void _load_single_item_description_text(const I18NKey& desc_key_prefix, int& p)
 {
     auto desc_opt = i18n::s.get_optional(desc_key_prefix + ".text");
     if (!desc_opt)
@@ -88,220 +84,231 @@ static void _load_single_item_description_text(
 }
 
 
-static void _load_item_description_text(
+
+void _load_item_description_text(
     const I18NKey& locale_key_prefix,
-    int& p)
+    int& num_of_desc)
 {
-    for (int cnt = 0; cnt < 3; ++cnt)
+    for (int i = 0; i < 3; ++i)
     {
         _load_single_item_description_text(
-            locale_key_prefix + ".description._" + std::to_string(cnt), p);
+            locale_key_prefix + ".description._" + std::to_string(i),
+            num_of_desc);
     }
 }
 
-static void _load_item_main_description_text(
+
+
+void _load_item_main_description_text(
     const I18NKey& locale_key_prefix,
-    int& p)
+    int& num_of_desc)
 {
     if (auto text =
             i18n::s.get_optional(locale_key_prefix + ".description.main.text"))
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = *text;
-        ++p;
+        list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
+        listn(0, num_of_desc) = *text;
+        ++num_of_desc;
     }
 }
 
-static void _load_item_stat_text(int item_index, int& p)
+
+
+void _load_item_stat_text(const Item& item, int& num_of_desc)
 {
-    if (inv[item_index].material != 0)
+    if (item.material != 0)
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get(
+        list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
+        listn(0, num_of_desc) = i18n::s.get(
             "core.item.desc.it_is_made_of",
             i18n::s.get_m(
                 "item_material",
-                the_item_material_db
-                    .get_id_from_legacy(inv[item_index].material)
-                    ->get(),
+                the_item_material_db.get_id_from_legacy(item.material)->get(),
                 "name"));
-        ++p;
+        ++num_of_desc;
     }
-    if (inv[item_index].material == 8)
+    if (item.material == 8)
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.item.desc.speeds_up_ether_disease");
-        ++p;
+        list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
+        listn(0, num_of_desc) =
+            i18n::s.get("core.item.desc.speeds_up_ether_disease");
+        ++num_of_desc;
     }
-    if (inv[item_index].is_acidproof())
+    if (item.is_acidproof())
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.item.desc.bit.acidproof");
-        ++p;
+        list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
+        listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.acidproof");
+        ++num_of_desc;
     }
-    if (inv[item_index].is_fireproof())
+    if (item.is_fireproof())
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.item.desc.bit.fireproof");
-        ++p;
+        list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
+        listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.fireproof");
+        ++num_of_desc;
     }
-    if (inv[item_index].is_precious())
+    if (item.is_precious())
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.item.desc.bit.precious");
-        ++p;
+        list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
+        listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.precious");
+        ++num_of_desc;
     }
-    if (inv[item_index].is_blessed_by_ehekatl())
+    if (item.is_blessed_by_ehekatl())
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.item.desc.bit.blessed_by_ehekatl");
-        ++p;
+        list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
+        listn(0, num_of_desc) =
+            i18n::s.get("core.item.desc.bit.blessed_by_ehekatl");
+        ++num_of_desc;
     }
-    if (inv[item_index].is_stolen())
+    if (item.is_stolen())
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.item.desc.bit.stolen");
-        ++p;
+        list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
+        listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.stolen");
+        ++num_of_desc;
     }
-    if (inv[item_index].is_alive())
+    if (item.is_alive())
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.item.desc.bit.alive") + u8" [Lv:"s +
-            inv[item_index].param1 + u8" Exp:"s +
-            clamp(inv[item_index].param2 * 100 /
-                      calcexpalive(inv[item_index].param1),
-                  0,
-                  100) +
+        list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
+        listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.alive") +
+            u8" [Lv:"s + item.param1 + u8" Exp:"s +
+            clamp(item.param2 * 100 / calcexpalive(item.param1), 0, 100) +
             u8"%]"s;
-        ++p;
+        ++num_of_desc;
     }
-    if (inv[item_index].is_showroom_only())
+    if (item.is_showroom_only())
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.item.desc.bit.show_room_only");
-        ++p;
+        list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
+        listn(0, num_of_desc) =
+            i18n::s.get("core.item.desc.bit.show_room_only");
+        ++num_of_desc;
     }
-    if (inv[item_index].is_handmade())
+    if (item.is_handmade())
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::text);
-        listn(0, p) = i18n::s.get("core.item.desc.bit.handmade");
-        ++p;
+        list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
+        listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.handmade");
+        ++num_of_desc;
     }
-    if (inv[item_index].dice_x != 0)
+    if (item.dice_x != 0)
     {
-        const auto pierce = calc_rate_to_pierce(inv[item_index].id);
-        list(0, p) = static_cast<int>(ItemDescriptionType::weapon_info);
-        listn(0, p) = i18n::s.get("core.item.desc.weapon.it_can_be_wielded") +
-            u8" ("s + inv[item_index].dice_x + u8"d"s + inv[item_index].dice_y +
+        const auto pierce = calc_rate_to_pierce(itemid2int(item.id));
+        list(0, num_of_desc) =
+            static_cast<int>(ItemDescriptionType::weapon_info);
+        listn(0, num_of_desc) =
+            i18n::s.get("core.item.desc.weapon.it_can_be_wielded") + u8" ("s +
+            item.dice_x + u8"d"s + item.dice_y +
             i18n::s.get("core.item.desc.weapon.pierce") + pierce + u8"%)"s;
-        ++p;
+        ++num_of_desc;
         if (reftype == 10000)
         {
-            if (inv[item_index].weight <= 1500)
+            if (item.weight <= 1500)
             {
-                list(0, p) = static_cast<int>(ItemDescriptionType::weapon_info);
-                listn(0, p) = i18n::s.get("core.item.desc.weapon.light");
-                ++p;
+                list(0, num_of_desc) =
+                    static_cast<int>(ItemDescriptionType::weapon_info);
+                listn(0, num_of_desc) =
+                    i18n::s.get("core.item.desc.weapon.light");
+                ++num_of_desc;
             }
-            if (inv[item_index].weight >= 4000)
+            if (item.weight >= 4000)
             {
-                list(0, p) = static_cast<int>(ItemDescriptionType::weapon_info);
-                listn(0, p) = i18n::s.get("core.item.desc.weapon.heavy");
-                ++p;
+                list(0, num_of_desc) =
+                    static_cast<int>(ItemDescriptionType::weapon_info);
+                listn(0, num_of_desc) =
+                    i18n::s.get("core.item.desc.weapon.heavy");
+                ++num_of_desc;
             }
         }
     }
-    if (inv[item_index].hit_bonus != 0 || inv[item_index].damage_bonus != 0)
+    if (item.hit_bonus != 0 || item.damage_bonus != 0)
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::weapon_info);
-        listn(0, p) = i18n::s.get(
-            "core.item.desc.bonus",
-            inv[item_index].hit_bonus,
-            inv[item_index].damage_bonus);
-        ++p;
+        list(0, num_of_desc) =
+            static_cast<int>(ItemDescriptionType::weapon_info);
+        listn(0, num_of_desc) = i18n::s.get(
+            "core.item.desc.bonus", item.hit_bonus, item.damage_bonus);
+        ++num_of_desc;
     }
-    if (inv[item_index].pv != 0 || inv[item_index].dv != 0)
+    if (item.pv != 0 || item.dv != 0)
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::armor_info);
-        listn(0, p) = i18n::s.get(
-            "core.item.desc.dv_pv", inv[item_index].dv, inv[item_index].pv);
-        ++p;
+        list(0, num_of_desc) =
+            static_cast<int>(ItemDescriptionType::armor_info);
+        listn(0, num_of_desc) =
+            i18n::s.get("core.item.desc.dv_pv", item.dv, item.pv);
+        ++num_of_desc;
     }
 }
 
-static void _load_item_enchantment_desc(int item_index, int& p)
-{
-    int inhmax = 0;
-    elona_vector1<int> inhlist;
-    getinheritance(item_index, inhlist, inhmax);
 
-    for (int cnt = 0; cnt < 15; ++cnt)
+
+void _load_item_enchantment_desc(const Item& item, int& num_of_desc)
+{
+    const auto inheritance = item_get_inheritance(item);
+
+    size_t enc_index{};
+    for (const auto& enc : item.enchantments)
     {
-        if (inv[item_index].enchantments[cnt].id == 0)
-        {
+        if (enc.id == 0)
             break;
-        }
-        get_enchantment_description(
-            inv[item_index].enchantments[cnt].id,
-            inv[item_index].enchantments[cnt].power,
-            reftype);
-        listn(0, p) = i18n::s.get("core.enchantment.it") + s;
-        list(0, p) = rtval;
-        list(1, p) = rtval(1);
-        if (inhmax > 0)
+
+        get_enchantment_description(enc.id, enc.power, reftype);
+        listn(0, num_of_desc) = i18n::s.get("core.enchantment.it") + s;
+        list(0, num_of_desc) = rtval;
+        list(1, num_of_desc) = rtval(1);
+
+        const auto is_inherited =
+            range::find(inheritance, enc_index) != std::end(inheritance);
+        if (is_inherited)
         {
-            int cnt2 = cnt;
-            for (int cnt = 0, cnt_end = (inhmax); cnt < cnt_end; ++cnt)
-            {
-                if (cnt2 == inhlist(cnt))
-                {
-                    list(0, p) += 10000;
-                    break;
-                }
-            }
+            list(0, num_of_desc) += 10000;
         }
-        ++p;
+        ++num_of_desc;
+        ++enc_index;
     }
-    if (inv[item_index].is_eternal_force())
+
+    if (item.is_eternal_force())
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::enchantment);
-        listn(0, p) = i18n::s.get("core.item.desc.bit.eternal_force");
-        ++p;
+        list(0, num_of_desc) =
+            static_cast<int>(ItemDescriptionType::enchantment);
+        listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.eternal_force");
+        ++num_of_desc;
     }
 }
 
+} // namespace
 
 
-void item_load_desc(int item_index, int& p)
+
+size_t item_load_desc(const Item& item)
 {
-    const I18NKey& locale_key_prefix =
-        the_item_db[inv[item_index].id]->locale_key_prefix;
+    int num_of_desc{};
 
-    if (inv[item_index].identify_state == IdentifyState::completely)
+    const I18NKey& locale_key_prefix =
+        the_item_db[itemid2int(item.id)]->locale_key_prefix;
+
+    if (item.identify_state == IdentifyState::completely)
     {
-        _load_item_main_description_text(locale_key_prefix, p);
+        _load_item_main_description_text(locale_key_prefix, num_of_desc);
     }
-    if (inv[item_index].identify_state >= IdentifyState::almost)
+    if (item.identify_state >= IdentifyState::almost)
     {
-        _load_item_stat_text(item_index, p);
+        _load_item_stat_text(item, num_of_desc);
     }
-    if (inv[item_index].identify_state <= IdentifyState::partly)
+    if (item.identify_state <= IdentifyState::partly)
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::normal);
-        listn(0, p) = i18n::s.get("core.item.desc.have_to_identify");
-        ++p;
+        list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::normal);
+        listn(0, num_of_desc) = i18n::s.get("core.item.desc.have_to_identify");
+        ++num_of_desc;
     }
-    if (inv[item_index].identify_state == IdentifyState::completely)
+    if (item.identify_state == IdentifyState::completely)
     {
-        _load_item_enchantment_desc(item_index, p);
-        _load_item_description_text(locale_key_prefix, p);
+        _load_item_enchantment_desc(item, num_of_desc);
+        _load_item_description_text(locale_key_prefix, num_of_desc);
     }
-    if (p == 0)
+    if (num_of_desc == 0)
     {
-        list(0, p) = static_cast<int>(ItemDescriptionType::normal);
-        listn(0, p) = i18n::s.get("core.item.desc.no_information");
-        ++p;
+        list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::normal);
+        listn(0, num_of_desc) = i18n::s.get("core.item.desc.no_information");
+        ++num_of_desc;
     }
+
+    return static_cast<size_t>(num_of_desc);
 }
 
 } // namespace elona

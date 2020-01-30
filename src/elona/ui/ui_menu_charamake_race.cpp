@@ -20,7 +20,7 @@ static void _load_race_list()
         list(0, listmax) = 0;
         ++listmax;
     }
-    if (Config::instance().extra_race)
+    if (g_config.extra_race())
     {
         for (const auto& race : race_get_available(true))
         {
@@ -66,6 +66,10 @@ void UIMenuCharamakeRace::update()
     else if (page > pagemax)
     {
         page = 0;
+    }
+    if (listmax <= page * pagesize + cs)
+    {
+        cs = listmax % pagesize - 1;
     }
 }
 
@@ -124,6 +128,8 @@ void UIMenuCharamakeRace::_draw_choice(int cnt, const std::string& text)
     cs_list(cs == cnt, text, wx + 64, wy + 66 + cnt * 19 - 1);
 }
 
+
+
 void UIMenuCharamakeRace::_draw_choices()
 {
     font(14 - en * 2);
@@ -168,6 +174,8 @@ void UIMenuCharamakeRace::draw()
 
     _draw_race_info(selected_race);
 }
+
+
 
 optional<UIMenuCharamakeRace::ResultType> UIMenuCharamakeRace::on_key(
     const std::string& action)

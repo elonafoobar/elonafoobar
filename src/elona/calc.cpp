@@ -304,7 +304,7 @@ int calcfame(int cc, int base)
 int decfame(int cc, int base)
 {
     int ret = cdata[cc].fame / base + 5;
-    ret = ret + rnd(ret / 2) - rnd(ret / 2);
+    ret = ret + rnd_capped(ret / 2) - rnd_capped(ret / 2);
     cdata[cc].fame -= ret;
     if (cdata[cc].fame < 0)
     {
@@ -439,7 +439,8 @@ int calc_accuracy(bool consider_distance)
                         1,
                     0,
                     9);
-                const auto effective_range = calc_effective_range(inv[cw].id);
+                const auto effective_range =
+                    calc_effective_range(itemid2int(inv[cw].id));
                 accuracy = accuracy * effective_range[rangedist] / 100;
             }
         }
@@ -557,21 +558,21 @@ int calcattackhit()
             int evaderef = evasion * 100 / clamp(tohit, 1, tohit);
             if (evaderef > 300)
             {
-                if (rnd(sdata(187, tc) + 250) > 100)
+                if (rnd_capped(sdata(187, tc) + 250) > 100)
                 {
                     return -2;
                 }
             }
             if (evaderef > 200)
             {
-                if (rnd(sdata(187, tc) + 250) > 150)
+                if (rnd_capped(sdata(187, tc) + 250) > 150)
                 {
                     return -2;
                 }
             }
             if (evaderef > 150)
             {
-                if (rnd(sdata(187, tc) + 250) > 200)
+                if (rnd_capped(sdata(187, tc) + 250) > 200)
                 {
                     return -2;
                 }
@@ -604,7 +605,7 @@ int calcattackhit()
     {
         return 1;
     }
-    if (rnd(tohit) > rnd(evasion * 3 / 2))
+    if (rnd_capped(tohit) > rnd_capped(evasion * 3 / 2))
     {
         return 1;
     }
@@ -657,13 +658,14 @@ int calcattackdmg(AttackDamageCalculationMode mode)
                      sdata(attackskill, cc) / 5 + sdata(152, cc) * 2)) /
                     45;
         }
-        pierce = calc_rate_to_pierce(inv[cw].id);
+        pierce = calc_rate_to_pierce(itemid2int(inv[cw].id));
     }
     if (attackrange)
     {
         if (mode == AttackDamageCalculationMode::actual_damage)
         {
-            const auto effective_range = calc_effective_range(inv[cw].id);
+            const auto effective_range =
+                calc_effective_range(itemid2int(inv[cw].id));
             dmgmulti = dmgmulti * effective_range[rangedist] / 100;
         }
     }
@@ -813,49 +815,49 @@ int calcattackdmg(AttackDamageCalculationMode mode)
 
 
 
-int calcmedalvalue(int item_index)
+int calcmedalvalue(const Item& item)
 {
-    switch (inv[item_index].id)
+    switch (item.id)
     {
-    case 430: return 5;
-    case 431: return 8;
-    case 502: return 7;
-    case 480: return 20;
-    case 421: return 15;
-    case 603: return 20;
-    case 615: return 5;
-    case 559: return 10;
-    case 516: return 3;
-    case 616: return 18;
-    case 623: return 85;
-    case 624: return 25;
-    case 505: return 12;
-    case 625: return 11;
-    case 626: return 30;
-    case 627: return 55;
-    case 56: return 65;
-    case 742: return 72;
-    case 760: return 94;
+    case ItemId::diablo: return 65;
+    case ItemId::artifact_seed: return 15;
+    case ItemId::scroll_of_growth: return 5;
+    case ItemId::scroll_of_faith: return 8;
+    case ItemId::rod_of_domination: return 20;
+    case ItemId::scroll_of_superior_material: return 7;
+    case ItemId::little_sisters_diary: return 12;
+    case ItemId::bottle_of_water: return 3;
+    case ItemId::potion_of_cure_corruption: return 10;
+    case ItemId::presidents_chair: return 20;
+    case ItemId::bill: return 5;
+    case ItemId::tax_masters_tax_box: return 18;
+    case ItemId::cat_sisters_diary: return 85;
+    case ItemId::girls_diary: return 25;
+    case ItemId::shrine_gate: return 11;
+    case ItemId::bottle_of_hermes_blood: return 30;
+    case ItemId::sages_helm: return 55;
+    case ItemId::license_of_the_void_explorer: return 72;
+    case ItemId::garoks_hammer: return 94;
     default: return 1;
     }
 }
 
 
 
-int calcitemvalue(int item_index, int situation)
+int calcitemvalue(const Item& item, int calc_mode)
 {
-    int category = the_item_db[inv[item_index].id]->category;
+    int category = the_item_db[itemid2int(item.id)]->category;
     int ret = 0;
-    if (inv[item_index].identify_state == IdentifyState::unidentified)
+    if (item.identify_state == IdentifyState::unidentified)
     {
-        if (situation == 2)
+        if (calc_mode == 2)
         {
-            ret = inv[item_index].value * 4 / 10;
+            ret = item.value * 4 / 10;
         }
         else
         {
             ret = cdata.player().level / 5 *
-                    ((game_data.random_seed + item_index * 31) %
+                    ((game_data.random_seed + item.index * 31) %
                          cdata.player().level +
                      4) +
                 10;
@@ -863,21 +865,21 @@ int calcitemvalue(int item_index, int situation)
     }
     else if (category >= 50000)
     {
-        ret = inv[item_index].value;
+        ret = item.value;
     }
     else
     {
-        switch (inv[item_index].identify_state)
+        switch (item.identify_state)
         {
         case IdentifyState::unidentified: break;
-        case IdentifyState::partly: ret = inv[item_index].value * 2 / 10; break;
-        case IdentifyState::almost: ret = inv[item_index].value * 5 / 10; break;
-        case IdentifyState::completely: ret = inv[item_index].value; break;
+        case IdentifyState::partly: ret = item.value * 2 / 10; break;
+        case IdentifyState::almost: ret = item.value * 5 / 10; break;
+        case IdentifyState::completely: ret = item.value; break;
         }
     }
-    if (inv[item_index].identify_state == IdentifyState::completely)
+    if (item.identify_state == IdentifyState::completely)
     {
-        switch (inv[item_index].curse_state)
+        switch (item.curse_state)
         {
         case CurseState::doomed: ret = ret / 5; break;
         case CurseState::cursed: ret = ret / 2; break;
@@ -887,14 +889,14 @@ int calcitemvalue(int item_index, int situation)
     }
     if (category == 57000)
     {
-        if (inv[item_index].param2 > 0)
+        if (item.param2 > 0)
         {
-            ret = ret * inv[item_index].param2 * inv[item_index].param2 / 10;
+            ret = ret * item.param2 * item.param2 / 10;
         }
     }
-    if (inv[item_index].id == 333)
+    if (item.id == ItemId::cargo_travelers_food)
     {
-        if (situation == 0)
+        if (calc_mode == 0)
         {
             ret += clamp(
                 cdata.player().fame / 40 +
@@ -903,14 +905,14 @@ int calcitemvalue(int item_index, int situation)
                 800);
         }
     }
-    if (inv[item_index].weight < 0)
+    if (item.weight < 0)
     {
         if (mode == 6)
         {
             if (category == 92000)
             {
-                ret = ret * trate(inv[item_index].param1) / 100;
-                if (situation == 1)
+                ret = ret * trate(item.param1) / 100;
+                if (calc_mode == 1)
                 {
                     ret = ret * 65 / 100;
                 }
@@ -918,33 +920,30 @@ int calcitemvalue(int item_index, int situation)
             }
         }
     }
-    if (inv[item_index].has_charge())
+    if (item.has_charge())
     {
-        dbid = inv[item_index].id;
-        item_db_get_charge_level(inv[item_index], dbid);
-        if (inv[item_index].count < 0)
+        item_db_get_charge_level(item, itemid2int(item.id));
+        if (item.count < 0)
         {
             ret = ret / 10;
         }
         else if (category == 54000)
         {
-            ret =
-                ret / 5 + ret * inv[item_index].count / (ichargelevel * 2 + 1);
+            ret = ret / 5 + ret * item.count / (ichargelevel * 2 + 1);
         }
         else
         {
-            ret =
-                ret / 2 + ret * inv[item_index].count / (ichargelevel * 3 + 1);
+            ret = ret / 2 + ret * item.count / (ichargelevel * 3 + 1);
         }
     }
     if (category == 72000)
     {
-        if (inv[item_index].param1 == 0)
+        if (item.param1 == 0)
         {
             ret = ret / 100 + 1;
         }
     }
-    if (situation == 0)
+    if (calc_mode == 0)
     {
         int max = ret / 2;
         ret = ret * 100 / (100 + sdata(156, 0));
@@ -960,7 +959,7 @@ int calcitemvalue(int item_index, int situation)
             ret = max;
         }
     }
-    if (situation == 1)
+    if (calc_mode == 1)
     {
         int max = sdata(156, 0) * 250 + 5000;
         if (ret / 3 < max)
@@ -972,7 +971,7 @@ int calcitemvalue(int item_index, int situation)
         {
             ret /= 20;
         }
-        if (inv[item_index].is_stolen())
+        if (item.is_stolen())
         {
             if (game_data.guild.belongs_to_thieves_guild == 0)
             {
@@ -988,7 +987,7 @@ int calcitemvalue(int item_index, int situation)
             ret = max;
         }
     }
-    if (situation == 2)
+    if (calc_mode == 2)
     {
         ret = ret / 5;
         if (category < 50000)
@@ -999,7 +998,7 @@ int calcitemvalue(int item_index, int situation)
         {
             ret = 15000;
         }
-        if (inv[item_index].is_stolen())
+        if (item.is_stolen())
         {
             ret = 1;
         }
@@ -1070,7 +1069,7 @@ int calchirecost(int cc)
 
 void generatemoney(int cc)
 {
-    int gold = rnd(100) + rnd(cdata[cc].level * 50 + 1);
+    int gold = rnd(100) + rnd_capped(cdata[cc].level * 50 + 1);
     if ((cdata[cc].character_role >= 1000 && cdata[cc].character_role < 2000) ||
         cdata[cc].character_role == 2003)
     {
@@ -1164,7 +1163,7 @@ int calccostreload(int owner, bool do_reload)
     {
         if (item.number() == 0)
             continue;
-        if (the_item_db[item.id]->category != 25000)
+        if (the_item_db[itemid2int(item.id)]->category != 25000)
             continue;
 
         for (auto&& enc : item.enchantments)
@@ -1298,18 +1297,19 @@ int calcinitgold(int owner)
 {
     if (owner < 0)
     {
-        return rnd(game_data.current_dungeon_level * 25 *
+        return rnd_capped(
+                   game_data.current_dungeon_level * 25 *
                        (game_data.current_map != mdata_t::MapId::shelter_) +
                    10) +
             1;
     }
 
-    switch (cdata[owner].id)
+    switch (charaid2int(cdata[owner].id))
     {
     case 183: return 5000 + rnd(11000);
     case 184: return 2000 + rnd(5000);
     case 185: return 1000 + rnd(3000);
-    default: return rnd(cdata[owner].level * 25 + 10) + 1;
+    default: return rnd_capped(cdata[owner].level * 25 + 10) + 1;
     }
 }
 
@@ -1699,7 +1699,8 @@ int calc_chara_exp_from_skill_exp(
     int skill_exp,
     int divisor)
 {
-    return rnd(int(double(chara.required_experience) * skill_exp / 1000 /
+    return rnd_capped(
+               int(double(chara.required_experience) * skill_exp / 1000 /
                    (chara.level + divisor)) +
                1) +
         rnd(2);

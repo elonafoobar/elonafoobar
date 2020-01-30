@@ -3,7 +3,7 @@
 #include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "data/types/type_asset.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
@@ -19,6 +19,10 @@
 namespace
 {
 
+int raderh;
+int raderw;
+int raderx;
+int radery;
 
 int inf_barh;
 int inf_bary;
@@ -302,7 +306,7 @@ void render_weather_effect_etherwind()
 
 void render_weather_effect()
 {
-    if (!Config::instance().weather_effect)
+    if (!g_config.weather_effect())
         return;
     if (map_data.indoors_flag != 2)
         return;
@@ -576,7 +580,7 @@ void render_buffs()
 
 
 
-void render_clock()
+void render_analogue_clock()
 {
     const auto& info = get_image_info("clock_hand");
 
@@ -604,6 +608,27 @@ void render_clock()
             i18n::s.get_enum("core.ui.weather", game_data.weather),
         inf_clockw + 6,
         inf_clocky + 35);
+}
+
+
+
+void render_digital_clock()
+{
+    // 24 hour digital clock, 57 pixels wide
+    font(16 - en * 2);
+    bmes(""s + game_data.date.hour + u8":"s + game_data.date.minute + u8":"s + game_data.date.second,
+         8, 8);
+
+    // date, 64 pixel wide
+    font(15 - en * 2);
+    int datex = 8 + 57 + 18;
+    bmes(""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s + game_data.date.day,
+         datex, 8);
+
+    // time of day + weather
+    bmes(i18n::s.get_enum("core.ui.time", game_data.date.hour / 4) + u8" "s +
+            i18n::s.get_enum("core.ui.weather", game_data.weather),
+         datex + 64 + 12, 8);
 }
 
 
@@ -639,18 +664,18 @@ void render_skill_trackers()
                     .substr(1),
             66,
             inf_clocky + 107 + y * 16);
-        if (elona::Config::instance().allow_enhanced_skill)
+        if (elona::g_config.allow_enhanced_skill())
         {
             elona::snail::Color col{255, 130, 130};
 
             if (sdata.get(skill, chara).potential >
-                elona::Config::instance().enhanced_skill_upperbound)
+                elona::g_config.enhanced_skill_upperbound())
             {
                 col = {130, 255, 130};
             }
             else if (
                 sdata.get(skill, chara).potential >
-                elona::Config::instance().enhanced_skill_lowerbound)
+                elona::g_config.enhanced_skill_lowerbound())
             {
                 col = {255, 255, 130};
             }
@@ -1011,23 +1036,22 @@ void render_status_ailments()
 
 void render_autoturn_animation()
 {
-    if (racount == 0 && Config::instance().animation_wait != 0)
+    if (racount == 0 && g_config.animation_wait() != 0)
     {
-        load_continuous_action_animation();
+        load_activity_animation();
     }
 
     if (firstautoturn ||
-        (cdata.player().continuous_action.type ==
-             ContinuousAction::Type::fish &&
+        (cdata.player().activity.type == Activity::Type::fish &&
          rowactre == 0 && fishanime == 0))
     {
         ui_render_non_hud();
         render_hud();
     }
 
-    if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
+    if (cdata.player().activity.type == Activity::Type::fish)
     {
-        if (rowactre == 0 && Config::instance().animation_wait != 0)
+        if (rowactre == 0 && g_config.animation_wait() != 0)
         {
             render_fishing_animation();
         }
@@ -1044,17 +1068,12 @@ void render_autoturn_animation()
     gmode(2);
     draw_rotated("hourglass", sx + 18, sy + 12, game_data.date.minute / 4 * 24);
 
-    if (cdata.player().continuous_action.type ==
-            ContinuousAction::Type::dig_ground ||
-        cdata.player().continuous_action.type ==
-            ContinuousAction::Type::dig_wall ||
-        cdata.player().continuous_action.type ==
-            ContinuousAction::Type::search_material ||
-        (cdata.player().continuous_action.type ==
-             ContinuousAction::Type::fish &&
-         rowactre != 0))
+    if (cdata.player().activity.type == Activity::Type::dig_ground ||
+        cdata.player().activity.type == Activity::Type::dig_wall ||
+        cdata.player().activity.type == Activity::Type::search_material ||
+        (cdata.player().activity.type == Activity::Type::fish && rowactre != 0))
     {
-        if (Config::instance().animation_wait != 0)
+        if (g_config.animation_wait() != 0)
         {
             window2(sx, sy - 104, 148, 101, 0, 5);
             if (racount % 15 == 0)
@@ -1062,8 +1081,8 @@ void render_autoturn_animation()
                 for (int cnt = 0; cnt < 10; ++cnt)
                 {
                     gmode(0);
-                    if (cdata.player().continuous_action.type ==
-                        ContinuousAction::Type::dig_wall)
+                    if (cdata.player().activity.type ==
+                        Activity::Type::dig_wall)
                     {
                         if (cnt == 2)
                         {
@@ -1071,10 +1090,9 @@ void render_autoturn_animation()
                         }
                         gcopy(
                             9, cnt / 2 % 5 * 144, 0, 144, 96, sx + 2, sy - 102);
-                        await(Config::instance().animation_wait * 2);
+                        await(g_config.animation_wait() * 2);
                     }
-                    if (cdata.player().continuous_action.type ==
-                        ContinuousAction::Type::fish)
+                    if (cdata.player().activity.type == Activity::Type::fish)
                     {
                         if (racount == 0)
                         {
@@ -1085,10 +1103,10 @@ void render_autoturn_animation()
                         }
                         gcopy(
                             9, cnt / 3 % 3 * 144, 0, 144, 96, sx + 2, sy - 102);
-                        await(Config::instance().animation_wait * 2.5);
+                        await(g_config.animation_wait() * 2.5);
                     }
-                    if (cdata.player().continuous_action.type ==
-                        ContinuousAction::Type::search_material)
+                    if (cdata.player().activity.type ==
+                        Activity::Type::search_material)
                     {
                         if (cnt == 4)
                         {
@@ -1096,10 +1114,10 @@ void render_autoturn_animation()
                         }
                         gcopy(
                             9, cnt / 2 % 3 * 144, 0, 144, 96, sx + 2, sy - 102);
-                        await(Config::instance().animation_wait * 2.75);
+                        await(g_config.animation_wait() * 2.75);
                     }
-                    if (cdata.player().continuous_action.type ==
-                        ContinuousAction::Type::dig_ground)
+                    if (cdata.player().activity.type ==
+                        Activity::Type::dig_ground)
                     {
                         if (cnt == 2)
                         {
@@ -1107,7 +1125,7 @@ void render_autoturn_animation()
                         }
                         gcopy(
                             9, cnt / 2 % 4 * 144, 0, 144, 96, sx + 2, sy - 102);
-                        await(Config::instance().animation_wait * 3);
+                        await(g_config.animation_wait() * 3);
                     }
                     redraw();
                 }
@@ -1152,11 +1170,6 @@ namespace elona
 {
 
 int msgy = 0;
-int evx = 0;
-int evy = 0;
-int evtiles = 0;
-int evscrh = 0;
-int evscrw = 0;
 
 
 
@@ -1318,7 +1331,6 @@ void initialize_ui_constants()
     inf_maxmsglen = static_cast<size_t>(inf_maxmsglen_i);
     inf_maxlog = (inf_msgy - 100) / inf_msgspace + 3;
     inf_very = windowh - inf_verh;
-    screenmsgy = inf_screeny + inf_tiles * 2;
     prompty = (windowh - inf_verh - 30) / 2 - 4;
     promptx = (windoww - 10) / 2 + 3;
 }
@@ -1466,7 +1478,7 @@ void render_hud()
         {
             if (map_data.type != mdata_t::MapType::world_map)
             {
-                if (!cdata.player().continuous_action)
+                if (!cdata.player().activity)
                 {
                     gmode(2, 150);
                 }
@@ -1478,7 +1490,8 @@ void render_hud()
     render_status_ailments();
 
     // Date label
-    render_date_label();
+    if (!g_config.digital_clock())
+        render_date_label();
 
     // Buffs
     gmode(2, 180);
@@ -1486,18 +1499,17 @@ void render_hud()
     gmode(2);
 
     // Clock
-    render_clock();
+    g_config.digital_clock() ? render_digital_clock() : render_analogue_clock();
 
     // Skill trackers
     render_skill_trackers();
 
     // HP bars(pets)
-    if (Config::instance().hp_bar_position != "hide")
+    if (g_config.hp_bar_position() != "hide")
     {
         show_hp_bar(
-            Config::instance().hp_bar_position == "left"
-                ? HPBarSide::left_side
-                : HPBarSide::right_side,
+            g_config.hp_bar_position() == "left" ? HPBarSide::left_side
+                                                 : HPBarSide::right_side,
             inf_clocky);
     }
 
@@ -1510,28 +1522,25 @@ void render_hud()
 
 
 
-void load_continuous_action_animation()
+void load_activity_animation()
 {
     gsel(9);
-    if (cdata.player().continuous_action.type ==
-        ContinuousAction::Type::dig_wall)
+    if (cdata.player().activity.type == Activity::Type::dig_wall)
     {
         picload(filesystem::dirs::graphic() / u8"anime1.bmp", 0, 0, true);
     }
-    if (cdata.player().continuous_action.type == ContinuousAction::Type::fish)
+    if (cdata.player().activity.type == Activity::Type::fish)
     {
         if (rowactre)
         {
             picload(filesystem::dirs::graphic() / u8"anime2.bmp", 0, 0, true);
         }
     }
-    if (cdata.player().continuous_action.type ==
-        ContinuousAction::Type::search_material)
+    if (cdata.player().activity.type == Activity::Type::search_material)
     {
         picload(filesystem::dirs::graphic() / u8"anime3.bmp", 0, 0, true);
     }
-    if (cdata.player().continuous_action.type ==
-        ContinuousAction::Type::dig_ground)
+    if (cdata.player().activity.type == Activity::Type::dig_ground)
     {
         picload(filesystem::dirs::graphic() / u8"anime4.bmp", 0, 0, true);
     }
@@ -1611,7 +1620,7 @@ void update_scrolling_info()
         sy(0) = cdata[camera].position.y - scy;
         sy(1) = cdata[camera].position.y;
     }
-    if (Config::instance().always_center)
+    if (g_config.always_center())
     {
         scx = sx + scx - inf_screenw / 2;
         scy = sy + scy - inf_screenh / 2;
@@ -1665,7 +1674,7 @@ void update_slight()
     sy(2) = cdata.player().position.y - fov_max / 2;
     sy(3) = cdata.player().position.y + fov_max / 2;
 
-    if (Config::instance().scroll)
+    if (g_config.scroll())
     {
         repw(0) = inf_screenw + 2;
         repw(1) = scx - 1;
@@ -1689,10 +1698,10 @@ void update_slight()
     // (sx, sy): absolute position.
     // (lx, ly): relative position based on the viewport.
 
-    int ly = Config::instance().scroll ? 1 : 2;
+    int ly = g_config.scroll() ? 1 : 2;
     for (int sy = _repy; sy < _repy + _repheight; ++sy, ++ly)
     {
-        int lx = Config::instance().scroll ? 1 : 2;
+        int lx = g_config.scroll() ? 1 : 2;
         if (sy < 0 || map_data.height <= sy)
         {
             for (int sx = _repx; sx < _repx + _repwidth; ++sx, ++lx)
@@ -1807,7 +1816,7 @@ void ui_scroll_screen()
     {
         return;
     }
-    scrollp = Config::instance().walk_wait;
+    scrollp = g_config.walk_wait();
     if (map_data.type == mdata_t::MapType::world_map)
     {
         scrollp = 6;
@@ -1819,10 +1828,10 @@ void ui_scroll_screen()
             scrollp = 9;
         }
     }
-    else if (keybd_wait > Config::instance().start_run_wait)
+    else if (keybd_wait > g_config.start_run_wait())
     {
         scrollp = 3;
-        if (!Config::instance().scroll_when_run)
+        if (!g_config.scroll_when_run())
         {
             return;
         }
@@ -1959,56 +1968,6 @@ void animation_fade_in()
         redraw();
     }
     gmode(2);
-}
-
-
-
-void event_7_setup()
-{
-    boxf();
-    evx = 12;
-    evy = 14;
-    evtiles = 48;
-    evscrh = windowh / evtiles - 1;
-    evscrw = windoww / evtiles + 2;
-    event_7_modify_screen();
-    redraw();
-}
-
-
-
-void event_7_modify_screen()
-{
-    for (int cnt = 0, cnt_end = (evscrh); cnt < cnt_end; ++cnt)
-    {
-        y = cnt;
-        dy = cnt + evy;
-        if (dy >= map_data.height)
-        {
-            dy = map_data.height;
-        }
-        for (int cnt = 0, cnt_end = (evscrw); cnt < cnt_end; ++cnt)
-        {
-            x = cnt;
-            dx = cnt + evx;
-            if (dx >= map_data.width)
-            {
-                dx = map_data.width;
-            }
-            ap = cell_data.at(dx, dy).chip_id_actual;
-            gmode(0);
-            gcopy_c(
-                2,
-                ap % 33 * inf_tiles,
-                ap / 33 * inf_tiles,
-                inf_tiles,
-                inf_tiles,
-                x * evtiles,
-                y * evtiles,
-                evtiles,
-                evtiles);
-        }
-    }
 }
 
 
@@ -2747,7 +2706,7 @@ void window_animation(
         nowindowanime = 0;
         return;
     }
-    if (!Config::instance().window_animation)
+    if (!g_config.window_animation())
         return;
     if (duration == 0)
         return;
@@ -2779,7 +2738,7 @@ void window_animation(
         redraw();
         if (i != duration - 1)
         {
-            await(Config::instance().animation_wait * 0.75);
+            await(g_config.animation_wait() * 0.75);
         }
         gcopy(temporary_window_id, 0, 0, width, height, x, y);
     }
@@ -2797,7 +2756,7 @@ void window_animation_corner(
     int duration,
     int temporary_window_id)
 {
-    if (!Config::instance().window_animation)
+    if (!g_config.window_animation())
         return;
     if (duration == 0)
         return;
@@ -2825,7 +2784,7 @@ void window_animation_corner(
         redraw();
         if (i != duration - 1)
         {
-            await(Config::instance().animation_wait * 0.75);
+            await(g_config.animation_wait() * 0.75);
         }
         gcopy(temporary_window_id, 0, 0, width, height, x, y);
     }

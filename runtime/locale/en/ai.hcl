@@ -34,5 +34,16 @@ locale {
             "\"Watch out!\"",
             "\"Scut!\""
         ]
+
+        dragostea_din_tei {
+            sing = [
+                "\"Vrei sa pleci dar♪\"",
+                "\"Numa numa yay!!\"",
+                "\"Numa numa numa yay!!\"",
+                "\"Mai-Ya-Hi♪\"",
+                "\"Mai-Ya-Hoo♪\"",
+                "\"Mai-Ya-Ha Ma Mi A♪\"",
+            ]
+        }
     }
 }

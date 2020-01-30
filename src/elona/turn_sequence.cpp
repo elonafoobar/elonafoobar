@@ -9,13 +9,13 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "command.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
+#include "deferred_event.hpp"
 #include "dmgheal.hpp"
 #include "elona.hpp"
-#include "event.hpp"
 #include "food.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
@@ -43,173 +43,217 @@
 
 
 
+namespace elona
+{
+
 namespace
 {
 
 int hour_played;
 int ct = 0;
 
-} // namespace
 
 
-
-namespace elona
+optional<TurnResult> proc_return_or_escape()
 {
-
-TurnResult npc_turn()
-{
-    int searchfov = 0;
-    if (cdata[cc].is_hung_on_sand_bag())
+    --game_data.is_returning_or_escaping;
+    if (map_prevents_return())
     {
-        if (is_in_fov(cdata[cc]))
+        game_data.is_returning_or_escaping = 0;
+        txt(i18n::s.get("core.magic.return.prevented.normal"));
+        return none;
+    }
+    if (game_data.is_returning_or_escaping <= 0 && !event_has_pending_events())
+    {
+        f = 0;
+        for (const auto& chara : cdata.pets())
+        {
+            if (chara.state() != Character::State::alive)
+            {
+                continue;
+            }
+            if (chara.is_escorted_in_sub_quest())
+            {
+                f = 1;
+            }
+        }
+        if (f)
+        {
+            txt(i18n::s.get("core.magic.return.prevented.ally"));
+            return none;
+        }
+        if (1 && cdata.player().inventory_weight_type >= 4)
+        {
+            txt(i18n::s.get("core.magic.return.prevented.overweight"));
+            return none;
+        }
+        if (game_data.destination_map == game_data.destination_outer_map)
+        {
+            if (game_data.current_map == game_data.destination_outer_map)
+            {
+                txt(i18n::s.get("core.common.nothing_happens"));
+                return none;
+            }
+        }
+        int stat = quest_is_return_forbidden();
+        if (stat == 1)
+        {
+            txt(i18n::s.get("core.magic.return.you_commit_a_crime"));
+            modify_karma(cdata.player(), -10);
+        }
+        snd("core.teleport1");
+        txt(i18n::s.get("core.magic.return.door_opens"));
+        if (game_data.destination_map == 41)
+        {
+            txt(i18n::s.get("core.magic.return.destination_changed"));
+        }
+        msg_halt();
+        update_screen();
+        levelexitby = 2;
+        return TurnResult::exit_map;
+    }
+    return none;
+}
+
+
+
+optional<TurnResult> npc_turn_misc(Character& chara)
+{
+    // Hung on sandbag
+    if (chara.is_hung_on_sand_bag())
+    {
+        if (is_in_fov(chara))
         {
             if (rnd(30) == 0)
             {
-                tc = cc;
-                txt(i18n::s.get("core.action.npc.sand_bag", cdata[tc]));
+                tc = chara.index;
+                txt(i18n::s.get("core.action.npc.sand_bag", chara));
             }
         }
-        cdata[cc].hate = 0;
+        chara.hate = 0;
         return TurnResult::turn_end;
     }
-    if (is_in_fov(cdata[cc]) == 0)
+
+    // Leash
+    if (!is_in_fov(chara) && cdata.player().blind == 0 && chara.is_leashed() &&
+        map_data.type != mdata_t::MapType::world_map &&
+        game_data.current_map != mdata_t::MapId::pet_arena)
     {
-        if (cdata.player().blind == 0)
+        if (rnd(4) == 0)
         {
-            if (rnd(4) == 0)
+            if (chara.index < 16)
             {
-                if (map_data.type != mdata_t::MapType::world_map)
+                chara.hate = 0;
+                chara.enemy_id = 0;
+            }
+            else
+            {
+                if (rnd(2))
                 {
-                    if (cdata[cc].is_leashed())
-                    {
-                        if (game_data.current_map != mdata_t::MapId::pet_arena)
-                        {
-                            if (cc < 16)
-                            {
-                                cdata[cc].hate = 0;
-                                cdata[cc].enemy_id = 0;
-                            }
-                            else
-                            {
-                                if (rnd(2))
-                                {
-                                    txt(i18n::s.get(
-                                        "core.action.npc.leash.dialog"));
-                                    hostileaction(0, cc);
-                                }
-                                if (rnd(4) == 0)
-                                {
-                                    cdata[cc].is_leashed() = false;
-                                    txt(i18n::s.get(
-                                            "core.action.npc.leash."
-                                            "untangle",
-                                            cdata[cc]),
-                                        Message::color{ColorIndex::cyan});
-                                }
-                            }
-                            tc = 0;
-                            efid = 619;
-                            magic();
-                            return TurnResult::turn_end;
-                        }
-                    }
+                    txt(i18n::s.get("core.action.npc.leash.dialog"));
+                    hostileaction(0, chara.index);
+                }
+                if (rnd(4) == 0)
+                {
+                    chara.is_leashed() = false;
+                    txt(i18n::s.get("core.action.npc.leash.untangle", chara),
+                        Message::color{ColorIndex::cyan});
+                    // TODO: 振りほどいたはずがテレポートする
                 }
             }
+            tc = 0;
+            efid = 619;
+            magic();
+            return TurnResult::turn_end;
         }
     }
-    if (cdata[cc].will_explode_soon())
+
+    // Explosion
+    if (chara.will_explode_soon())
     {
-        tlocx = cdata[cc].position.x;
-        tlocy = cdata[cc].position.y;
+        tlocx = chara.position.x;
+        tlocy = chara.position.y;
         efid = 644;
         magic();
         return TurnResult::turn_end;
     }
-    if (cdata[cc].relationship >= 10)
+
+    // Enemy
+    if (chara.relationship >= 10)
     {
-        --cdata[cc].hate;
-        if (cdata[cc].enemy_id == 0 || cdata[cc].hate <= 0 ||
-            (cdata[cdata[cc].enemy_id].relationship >= -2 &&
-             cdata[cdata[cc].enemy_id].enemy_id != cc))
+        --chara.hate;
+        if (chara.enemy_id == 0 || chara.hate <= 0 ||
+            (cdata[chara.enemy_id].relationship >= -2 &&
+             cdata[chara.enemy_id].enemy_id != chara.index))
         {
-            cdata[cc].enemy_id = 0;
+            chara.enemy_id = 0;
             if (pcattacker != 0)
             {
-                if (cdata[pcattacker].relationship <= -3)
+                if (cdata[pcattacker].relationship <= -3 &&
+                    cdata[pcattacker].state() == Character::State::alive)
                 {
-                    if (cdata[pcattacker].state() == Character::State::alive)
+                    if (fov_los(
+                            chara.position.x,
+                            chara.position.y,
+                            cdata[pcattacker].position.x,
+                            cdata[pcattacker].position.y))
                     {
-                        if (fov_los(
-                                cdata[cc].position.x,
-                                cdata[cc].position.y,
-                                cdata[pcattacker].position.x,
-                                cdata[pcattacker].position.y))
-                        {
-                            cdata[cc].hate = 5;
-                            cdata[cc].enemy_id = pcattacker;
-                        }
+                        chara.hate = 5;
+                        chara.enemy_id = pcattacker;
                     }
                 }
             }
-            if (cdata[cc].enemy_id == 0)
+            if (chara.enemy_id == 0)
             {
                 if (cdata.player().enemy_id != 0 &&
-                    cdata[cdata.player().enemy_id].relationship <= -3)
-                {
-                    if (cdata[cdata.player().enemy_id].state() ==
+                    cdata[cdata.player().enemy_id].relationship <= -3 &&
+                    cdata[cdata.player().enemy_id].state() ==
                         Character::State::alive)
-                    {
-                        if (fov_los(
-                                cdata[cc].position.x,
-                                cdata[cc].position.y,
-                                cdata[cdata.player().enemy_id].position.x,
-                                cdata[cdata.player().enemy_id].position.y))
-                        {
-                            cdata[cc].hate = 5;
-                            cdata[cc].enemy_id = cdata.player().enemy_id;
-                        }
-                    }
-                }
-            }
-        }
-        if (cdata[cdata[cc].enemy_id].is_invisible() == 1)
-        {
-            if (cdata[cc].can_see_invisible() == 0)
-            {
-                if (cdata[cdata[cc].enemy_id].wet == 0)
                 {
-                    if (rnd(5))
+                    if (fov_los(
+                            chara.position.x,
+                            chara.position.y,
+                            cdata[cdata.player().enemy_id].position.x,
+                            cdata[cdata.player().enemy_id].position.y))
                     {
-                        cdata[cc].enemy_id = 0;
+                        chara.hate = 5;
+                        chara.enemy_id = cdata.player().enemy_id;
                     }
                 }
             }
         }
-    }
-    if (cdata[cc].enemy_id != 0)
-    {
-        if (cdata[cdata[cc].enemy_id].state() != Character::State::alive)
+        if (cdata[chara.enemy_id].is_invisible() &&
+            !chara.can_see_invisible() && cdata[chara.enemy_id].wet == 0)
         {
-            cdata[cc].enemy_id = 0;
-            cdata[cc].hate = 0;
+            if (rnd(5))
+            {
+                chara.enemy_id = 0;
+            }
         }
     }
+    if (chara.enemy_id != 0)
+    {
+        if (cdata[chara.enemy_id].state() != Character::State::alive)
+        {
+            chara.enemy_id = 0;
+            chara.hate = 0;
+        }
+    }
+
+    // Pet arena
     if (game_data.current_map == mdata_t::MapId::pet_arena)
     {
-        if (cdata[cc].relationship != -3)
+        if (chara.relationship != -3 && chara.relationship != 10)
         {
-            if (cdata[cc].relationship != 10)
+            if (rnd(40) == 0)
             {
-                if (rnd(40) == 0)
-                {
-                    txt(i18n::s.get("core.action.npc.arena"),
-                        Message::color{ColorIndex::blue});
-                }
-                return ai_proc_misc_map_events();
+                txt(i18n::s.get("core.action.npc.arena"),
+                    Message::color{ColorIndex::blue});
             }
+            return ai_proc_misc_map_events(chara);
         }
-        cdata[cc].hate = 100;
-        if (cdata[cc].relationship == 10)
+        chara.hate = 100;
+        if (chara.relationship == 10)
         {
             p(0) = -3;
             p(1) = enemyteam;
@@ -221,7 +265,7 @@ TurnResult npc_turn()
             p(1) = 1;
             p(2) = 16;
         }
-        i = cdata[cc].enemy_id;
+        i = chara.enemy_id;
         if (cdata[i].relationship == p &&
             cdata[i].state() == Character::State::alive && i >= p(1) &&
             i < p(1) + p(2))
@@ -229,10 +273,10 @@ TurnResult npc_turn()
             if (rnd(10) != 0)
             {
                 tc = i;
-                goto label_2689_internal;
+                return none;
             }
         }
-        cdata[cc].enemy_id = p(1);
+        chara.enemy_id = p(1);
         for (int cnt = 0; cnt < 100; ++cnt)
         {
             i = rnd(p(2)) + p(1);
@@ -240,13 +284,13 @@ TurnResult npc_turn()
             {
                 if (cdata[i].relationship == p)
                 {
-                    cdata[cc].enemy_id = i;
+                    chara.enemy_id = i;
                     break;
                 }
             }
         }
-        if (cdata[cdata[cc].enemy_id].relationship != p ||
-            cdata[cdata[cc].enemy_id].state() != Character::State::alive)
+        if (cdata[chara.enemy_id].relationship != p ||
+            cdata[chara.enemy_id].state() != Character::State::alive)
         {
             f = 0;
             for (int cnt = p(1), cnt_end = cnt + (p(2)); cnt < cnt_end; ++cnt)
@@ -255,7 +299,7 @@ TurnResult npc_turn()
                 {
                     if (cdata[cnt].relationship == p)
                     {
-                        cdata[cc].enemy_id = cnt;
+                        chara.enemy_id = cnt;
                         f = 1;
                         break;
                     }
@@ -263,7 +307,7 @@ TurnResult npc_turn()
             }
             if (f == 0)
             {
-                if (cdata[cc].relationship == 10)
+                if (chara.relationship == 10)
                 {
                     petarenawin = 1;
                 }
@@ -275,98 +319,99 @@ TurnResult npc_turn()
             }
         }
     }
+
+    // <Ebon>
     if (game_data.current_map == mdata_t::MapId::noyel)
     {
-        if (cc != game_data.fire_giant)
+        if (chara.index != game_data.fire_giant)
         {
-            if (cc >= 16)
+            if (chara.index >= 16)
             {
                 if (game_data.released_fire_giant != 0)
                 {
                     if (cdata[game_data.fire_giant].state() ==
                         Character::State::alive)
                     {
-                        cdata[cc].enemy_id = game_data.fire_giant;
-                        cdata[cc].hate = 500;
+                        chara.enemy_id = game_data.fire_giant;
+                        chara.hate = 500;
                     }
                 }
             }
         }
     }
+
+    // Mount
     if (game_data.mount != 0)
     {
-        if (cdata[cc].enemy_id == game_data.mount)
+        if (chara.enemy_id == game_data.mount)
         {
             if (rnd(3))
             {
-                cdata[cc].enemy_id = 0;
+                chara.enemy_id = 0;
             }
         }
-        if (cdata[cc].enemy_id == 0)
+        if (chara.enemy_id == 0)
         {
-            if (cdata[cc].relationship <= -2)
+            if (chara.relationship <= -2)
             {
                 if (rnd(3) == 0)
                 {
-                    cdata[cc].enemy_id = game_data.mount;
+                    chara.enemy_id = game_data.mount;
                 }
             }
         }
     }
-    tc = cdata[cc].enemy_id;
-    if (cdatan(4, cc) != ""s)
+
+    tc = chara.enemy_id;
+
+    // Talk
+    if (cdatan(4, chara.index) != ""s)
     {
-        if (cdata[cc].has_custom_talk() == 0)
+        if (chara.has_custom_talk() == 0)
         {
             if (rnd(30) == 0)
             {
-                txt(""s + cdatan(4, cc), Message::color{ColorIndex::cyan});
+                txt(""s + cdatan(4, chara.index),
+                    Message::color{ColorIndex::cyan});
             }
         }
     }
-    else if (cdata[cc].can_talk != 0 || cdata[cc].has_custom_talk())
+    else if (chara.can_talk != 0 || chara.has_custom_talk())
     {
-        if (cdata[cc].is_silent() == 0)
+        if (!chara.is_silent() &&
+            cdata.player().position.x > chara.position.x - 10 &&
+            cdata.player().position.x < chara.position.x + 10 &&
+            cdata.player().position.y > chara.position.y - 10 &&
+            cdata.player().position.y < chara.position.y + 10 &&
+            cdata.player().activity.type != Activity::Type::perform)
         {
-            if (cdata[cc].turn % 5 == 0)
+            if (chara.turn % 5 == 0)
             {
                 if (rnd(4) == 0)
                 {
-                    if (cdata.player().position.x > cdata[cc].position.x - 10 &&
-                        cdata.player().position.x < cdata[cc].position.x + 10)
+                    if (chara.hate <= 0)
                     {
-                        if (cdata.player().position.y >
-                                cdata[cc].position.y - 10 &&
-                            cdata.player().position.y <
-                                cdata[cc].position.y + 10)
-                        {
-                            if (cdata.player().continuous_action.type !=
-                                ContinuousAction::Type::perform)
-                            {
-                                if (cdata[cc].hate <= 0)
-                                {
-                                    chara_custom_talk(cc, 100);
-                                }
-                                if (cdata[cc].hate > 0)
-                                {
-                                    chara_custom_talk(cc, 101);
-                                }
-                            }
-                        }
+                        chara_custom_talk(chara.index, 100);
+                    }
+                    if (chara.hate > 0)
+                    {
+                        chara_custom_talk(chara.index, 101);
                     }
                 }
             }
         }
     }
-    if (cdata[cc].relationship >= 0)
+
+    // Choked
+    if (chara.relationship >= 0)
     {
         if (cdata.player().choked)
         {
             if (dist(
                     cdata.player().position.x,
                     cdata.player().position.y,
-                    cdata[cc].position.x,
-                    cdata[cc].position.y) == 1)
+                    chara.position.x,
+                    chara.position.y) == 1)
             {
                 x = cdata.player().position.x;
                 y = cdata.player().position.y;
@@ -374,198 +419,193 @@ TurnResult npc_turn()
             }
         }
     }
-    if (cdata[cc].ai_heal != 0)
+
+    // Heal
+    if (chara.ai_heal != 0)
     {
-        if (cdata[cc].hp < cdata[cc].max_hp / 4)
+        if (chara.hp < chara.max_hp / 4 && (chara.mp > 0 || rnd(5) == 0))
         {
-            if (cdata[cc].mp > 0 || rnd(5) == 0)
+            efid = chara.ai_heal;
+            if (efid >= 400 && efid < 467)
             {
-                efid = cdata[cc].ai_heal;
-                if (efid >= 400 && efid < 467)
+                int stat = do_cast_magic();
+                if (stat == 1)
                 {
-                    int stat = do_cast_magic();
-                    if (stat == 1)
-                    {
-                        return TurnResult::turn_end;
-                    }
+                    return TurnResult::turn_end;
                 }
-                else if (efid >= 600)
+            }
+            else if (efid >= 600)
+            {
+                int stat = do_magic_attempt();
+                if (stat == 1)
                 {
-                    int stat = do_magic_attempt();
-                    if (stat == 1)
-                    {
-                        return TurnResult::turn_end;
-                    }
+                    return TurnResult::turn_end;
                 }
             }
         }
     }
-    if (cdata[cc].item_which_will_be_used == 0)
+
+    if (chara.item_which_will_be_used == 0)
     {
-        goto label_2689_internal;
+        return none;
     }
-    ci = cdata[cc].item_which_will_be_used;
+    ci = chara.item_which_will_be_used;
     if (inv[ci].number() == 0)
     {
-        cdata[cc].item_which_will_be_used = 0;
-        goto label_2689_internal;
+        chara.item_which_will_be_used = 0;
+        return none;
     }
-    if (cdata[cc].relationship != 0)
+    if (chara.relationship != 0)
     {
-        cdata[cc].item_which_will_be_used = 0;
+        chara.item_which_will_be_used = 0;
     }
+
+    const auto category = the_item_db[itemid2int(inv[ci].id)]->category;
+    if (category == 57000)
     {
-        int category = the_item_db[inv[ci].id]->category;
-        if (category == 57000)
+        if (chara.relationship != 10 || chara.nutrition <= 6000)
         {
-            if (cdata[cc].relationship != 10 || cdata[cc].nutrition <= 6000)
-            {
-                return do_eat_command();
-            }
-        }
-        if (category == 52000)
-        {
-            return do_drink_command();
-        }
-        if (category == 53000)
-        {
-            return do_read_command();
+            return do_eat_command();
         }
     }
-    cdata[cc].item_which_will_be_used = 0;
-label_2689_internal:
-    if (cdata[cc].hate > 0 || cdata[cc].relationship == 10)
+    if (category == 52000)
+    {
+        return do_drink_command();
+    }
+    if (category == 53000)
+    {
+        return do_read_command();
+    }
+
+    chara.item_which_will_be_used = 0;
+
+    return none;
+}
+
+
+
+TurnResult npc_turn_ai_main(Character& chara)
+{
+    if (chara.hate > 0 || chara.relationship == 10)
     {
         distance = dist(
             cdata[tc].position.x,
             cdata[tc].position.y,
-            cdata[cc].position.x,
-            cdata[cc].position.y);
-        if (cdata[cc].blind != 0)
+            chara.position.x,
+            chara.position.y);
+        if (chara.blind != 0)
         {
             if (rnd(10) > 2)
             {
-                return ai_proc_misc_map_events();
+                return ai_proc_misc_map_events(chara);
             }
         }
-        if (cdata[cc].confused != 0)
+        if (chara.confused != 0)
         {
             if (rnd(10) > 3)
             {
-                return ai_proc_misc_map_events();
+                return ai_proc_misc_map_events(chara);
             }
         }
-        if (cdata[cc].relationship == 10)
+        if (chara.relationship == 10)
         {
             if (tc == 0)
             {
-                if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+                if (cell_data.at(chara.position.x, chara.position.y)
                         .item_appearances_actual != 0)
                 {
-                    const auto item_info = cell_itemoncell(cdata[cc].position);
+                    const auto item_info = cell_itemoncell(chara.position);
                     const auto number = item_info.first;
                     const auto item = item_info.second;
                     if (number == 1)
                     {
                         ci = item;
-                        p = the_item_db[inv[ci].id]->category;
-                        if (cdata[cc].nutrition <= 6000)
+                        p = the_item_db[itemid2int(inv[ci].id)]->category;
+                        if (chara.nutrition <= 6000)
                         {
                             if (p == 57000)
                             {
-                                if (inv[ci].own_state <= 0)
+                                if (inv[ci].own_state <= 0 &&
+                                    !is_cursed(inv[ci].curse_state))
                                 {
-                                    if (!is_cursed(inv[ci].curse_state))
-                                    {
-                                        return do_eat_command();
-                                    }
+                                    return do_eat_command();
                                 }
                             }
                             if (p == 60001)
                             {
-                                if (inv[ci].own_state <= 1)
+                                if (inv[ci].own_state <= 1 &&
+                                    inv[ci].param1 >= -5 &&
+                                    inv[ci].param3 < 20 &&
+                                    inv[ci].id != ItemId::holy_well)
                                 {
-                                    if (inv[ci].param1 >= -5)
-                                    {
-                                        if (inv[ci].param3 < 20)
-                                        {
-                                            if (inv[ci].id != 602)
-                                            {
-                                                return do_drink_command();
-                                            }
-                                        }
-                                    }
+                                    return do_drink_command();
                                 }
                             }
                         }
                         if (p == 68000 || p == 77000)
                         {
-                            if (inv[ci].own_state <= 0)
+                            if (inv[ci].own_state <= 0 &&
+                                !inv[ci].is_precious() &&
+                                map_data.type != mdata_t::MapType::player_owned)
                             {
-                                if (!inv[ci].is_precious())
+                                in = inv[ci].number();
+                                if (game_data.mount != chara.index)
                                 {
-                                    if (map_data.type !=
-                                        mdata_t::MapType::player_owned)
+                                    int stat = pick_up_item();
+                                    if (stat == 1)
                                     {
-                                        in = inv[ci].number();
-                                        if (game_data.mount != cc)
-                                        {
-                                            int stat = pick_up_item();
-                                            if (stat == 1)
-                                            {
-                                                return TurnResult::turn_end;
-                                            }
-                                        }
+                                        return TurnResult::turn_end;
                                     }
                                 }
                             }
                         }
                     }
                 }
-                if (cdata[cc].current_map == game_data.current_map)
+                if (chara.current_map == game_data.current_map)
                 {
-                    if (cdata[cc].is_contracting() == 0)
+                    if (chara.is_contracting() == 0)
                     {
-                        return ai_proc_misc_map_events();
+                        return ai_proc_misc_map_events(chara);
                     }
                 }
                 if (distance > 2 || rnd(3))
                 {
-                    return proc_npc_movement_event();
+                    return proc_npc_movement_event(chara);
                 }
                 else
                 {
-                    return ai_proc_misc_map_events();
+                    return ai_proc_misc_map_events(chara);
                 }
             }
         }
-        if (cdata[cc].fear != 0)
+        if (chara.fear != 0)
         {
-            return proc_npc_movement_event(true);
+            return proc_npc_movement_event(chara, true);
         }
-        if (cdata[cc].blind != 0)
+        if (chara.blind != 0)
         {
             if (rnd(3))
             {
-                return ai_proc_misc_map_events();
+                return ai_proc_misc_map_events(chara);
             }
         }
-        if (distance != cdata[cc].ai_dist)
+        if (distance != chara.ai_dist)
         {
-            if (rnd(100) < cdata[cc].ai_move)
+            if (rnd(100) < chara.ai_move)
             {
-                return proc_npc_movement_event();
+                return proc_npc_movement_event(chara);
             }
         }
-        return ai_proc_basic();
+        return ai_proc_basic(chara);
     }
-    if (cdata[cc].turn % 10 == 1)
+
+    if (chara.turn % 10 == 1)
     {
-        searchfov = 5;
+        constexpr auto searchfov = 5;
         f = 0;
         for (int cnt = 0, cnt_end = (searchfov); cnt < cnt_end; ++cnt)
         {
-            y = cdata[cc].position.y - 2 + cnt;
+            y = chara.position.y - 2 + cnt;
             if (y < 0 || y >= map_data.height)
             {
                 continue;
@@ -573,7 +613,7 @@ label_2689_internal:
             int c{};
             for (int cnt = 0, cnt_end = (searchfov); cnt < cnt_end; ++cnt)
             {
-                x = cdata[cc].position.x - 2 + cnt;
+                x = chara.position.x - 2 + cnt;
                 if (x < 0 || x >= map_data.width)
                 {
                     continue;
@@ -583,7 +623,7 @@ label_2689_internal:
                 {
                     continue;
                 }
-                if (cdata[cc].original_relationship <= -3)
+                if (chara.original_relationship <= -3)
                 {
                     if (cdata[c].relationship > -3)
                     {
@@ -608,29 +648,44 @@ label_2689_internal:
             }
             if (f)
             {
-                if (!cdata[cc].is_not_attacked_by_enemy())
+                if (!chara.is_not_attacked_by_enemy())
                 {
-                    cdata[cc].enemy_id = c;
-                    cdata[cc].hate = 30;
-                    cdata[cc].emotion_icon = 218;
+                    chara.enemy_id = c;
+                    chara.hate = 30;
+                    chara.emotion_icon = 218;
                     break;
                 }
             }
         }
     }
+
     if (tc == 0)
     {
-        r2 = cc;
+        r2 = chara.index;
         int stat = try_to_perceive_npc(tc);
         if (stat == 1)
         {
-            if (cdata[cc].relationship == -3)
+            if (chara.relationship == -3)
             {
-                cdata[cc].hate = 30;
+                chara.hate = 30;
             }
         }
     }
-    return ai_proc_misc_map_events();
+    return ai_proc_misc_map_events(chara);
+}
+
+} // namespace
+
+
+
+TurnResult npc_turn(Character& chara)
+{
+    if (const auto result = npc_turn_misc(chara))
+    {
+        return *result;
+    }
+
+    return npc_turn_ai_main(chara);
 }
 
 
@@ -652,7 +707,7 @@ bool turn_wrapper()
             result = pass_turns(false);
             break;
         case TurnResult::pc_turn: result = pc_turn(); break;
-        case TurnResult::npc_turn: result = npc_turn(); break;
+        case TurnResult::npc_turn: result = npc_turn(cdata[cc]); break;
         case TurnResult::pc_turn_user_error: result = pc_turn(false); break;
         case TurnResult::pc_died: result = pc_died(); break;
         case TurnResult::initialize_map: result = initialize_map(); break;
@@ -701,6 +756,8 @@ bool turn_wrapper()
     return finished;
 }
 
+
+
 TurnResult pass_turns(bool time)
 {
     bool finished = false;
@@ -719,6 +776,8 @@ TurnResult pass_turns(bool time)
     return TurnResult::all_turns_finished;
 }
 
+
+
 TurnResult turn_begin()
 {
     int turncost = 0;
@@ -732,7 +791,7 @@ TurnResult turn_begin()
         gspd = 10;
     }
     turncost = (map_data.turn_cost - cdata.player().turn_cost) / gspd + 1;
-    if (event_was_set())
+    if (event_has_pending_events())
     {
         return event_start_proc(); // TODO avoid evnum side effect
     }
@@ -744,7 +803,7 @@ TurnResult turn_begin()
     bool update_turn_cost = true;
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        if (cdata.player().continuous_action.turn > 2)
+        if (cdata.player().activity.turn > 2)
         {
             cdata.player().turn_cost = map_data.turn_cost;
             update_turn_cost = false;
@@ -814,9 +873,9 @@ TurnResult turn_begin()
 
 
 
-TurnResult pass_one_turn(bool label_2738_flg)
+TurnResult pass_one_turn(bool time_passing)
 {
-    if (label_2738_flg)
+    if (time_passing)
     {
         while (ct < ELONA_MAX_CHARACTERS)
         {
@@ -842,6 +901,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
             return TurnResult::all_turns_finished;
         }
     }
+
     cc = ct;
     cdata[cc].speed_percentage = cdata[cc].speed_percentage_in_next_turn;
     ++cdata[cc].turn;
@@ -850,95 +910,36 @@ TurnResult pass_one_turn(bool label_2738_flg)
     {
         Message::instance().new_turn();
         refresh_speed(cdata.player());
-        p = cdata.player().turn % 10;
-        if (p == 1)
+        switch (cdata.player().turn % 10)
         {
-            for (int cnt = 0; cnt < 16; ++cnt)
+        case 1:
+            for (auto&& chara : cdata.pc_and_pets())
             {
-                if (cdata[cnt].state() == Character::State::alive)
+                if (chara.state() == Character::State::alive)
                 {
-                    chara_gain_exp_healing_and_meditation(cdata[cnt]);
+                    chara_gain_exp_healing_and_meditation(chara);
                 }
             }
-        }
-        if (p == 2)
-        {
-            chara_gain_exp_stealth(cdata.player());
-        }
-        if (p == 3)
-        {
-            chara_gain_exp_weight_lifting(cdata.player());
-        }
-        if (p == 4)
-        {
-            if (!cdata.player().continuous_action)
+            break;
+        case 2: chara_gain_exp_stealth(cdata.player()); break;
+        case 3: chara_gain_exp_weight_lifting(cdata.player()); break;
+        case 4:
+            if (!cdata.player().activity)
             {
                 heal_sp(cdata.player(), 2);
             }
+            break;
+        default: break;
         }
+
         if (game_data.is_returning_or_escaping != 0)
         {
-            --game_data.is_returning_or_escaping;
-            if (map_prevents_return())
+            if (const auto result = proc_return_or_escape())
             {
-                game_data.is_returning_or_escaping = 0;
-                txt(i18n::s.get("core.magic.return.prevented.normal"));
-                goto label_2740_internal;
+                return *result;
             }
-            if (game_data.is_returning_or_escaping <= 0 && !event_was_set())
-            {
-                f = 0;
-                for (int cnt = 1; cnt < 16; ++cnt)
-                {
-                    if (cdata[cnt].state() != Character::State::alive)
-                    {
-                        continue;
-                    }
-                    if (cdata[cnt].is_escorted_in_sub_quest() == 1)
-                    {
-                        f = 1;
-                    }
-                }
-                if (f)
-                {
-                    txt(i18n::s.get("core.magic.return.prevented.ally"));
-                    goto label_2740_internal;
-                }
-                if (1 && cdata.player().inventory_weight_type >= 4)
-                {
-                    txt(i18n::s.get("core.magic.return.prevented.overweight"));
-                    goto label_2740_internal;
-                }
-                if (game_data.destination_map ==
-                    game_data.destination_outer_map)
-                {
-                    if (game_data.current_map ==
-                        game_data.destination_outer_map)
-                    {
-                        txt(i18n::s.get("core.common.nothing_happens"));
-                        goto label_2740_internal;
-                    }
-                }
-                int stat = quest_is_return_forbidden();
-                if (stat == 1)
-                {
-                    txt(i18n::s.get("core.magic.return.you_commit_a_crime"));
-                    modify_karma(cdata.player(), -10);
-                }
-                snd("core.teleport1");
-                txt(i18n::s.get("core.magic.return.door_opens"));
-                if (game_data.destination_map == 41)
-                {
-                    txt(i18n::s.get("core.magic.return.destination_changed"));
-                }
-                msg_halt();
-                update_screen();
-                levelexitby = 2;
-                return TurnResult::exit_map;
-            }
-            goto label_2740_internal;
         }
-    label_2740_internal:
+
         map_proc_special_events();
         if (cdata.player().state() != Character::State::alive)
         {
@@ -982,6 +983,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
             }
         }
     }
+
     tc = cc;
     if (cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
             .mef_index_plus_one != 0)
@@ -1016,80 +1018,75 @@ TurnResult pass_one_turn(bool label_2738_flg)
         {
             if (cdata[cc].choked)
             {
-                await(Config::instance().animation_wait * 6);
+                await(g_config.animation_wait() * 6);
             }
-            await(Config::instance().animation_wait * 3);
+            await(g_config.animation_wait() * 3);
             sxfix = 0;
             syfix = 0;
             update_screen();
         }
         return TurnResult::turn_end;
     }
-    if (cdata[cc].drunk != 0)
+    if (cdata[cc].drunk != 0 && cc != 0)
     {
         if (rnd(200) == 0)
         {
-            if (cc != 0)
+            for (auto&& cnt : cdata.all())
             {
-                for (auto&& cnt : cdata.all())
+                if (cnt.state() != Character::State::alive)
                 {
-                    if (cnt.state() != Character::State::alive)
-                    {
-                        continue;
-                    }
-                    if (dist(
-                            cdata[cc].position.x,
-                            cdata[cc].position.y,
-                            cnt.position.x,
-                            cnt.position.y) > 5)
-                    {
-                        continue;
-                    }
-                    if (fov_los(
-                            cdata[cc].position.x,
-                            cdata[cc].position.y,
-                            cnt.position.x,
-                            cnt.position.y) == 0)
-                    {
-                        continue;
-                    }
-                    if (cnt.index == cc || rnd(3) ||
-                        map_data.type == mdata_t::MapType::world_map)
-                    {
-                        continue;
-                    }
-                    tc = cnt.index;
-                    if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
-                    {
-                        txt(i18n::s.get(
-                                "core.action.npc.drunk.gets_the_worse",
-                                cdata[cc],
-                                cdata[tc]),
-                            Message::color{ColorIndex::cyan});
-                        txt(i18n::s.get("core.action.npc.drunk.dialog"));
-                    }
-                    if (rnd(4) == 0)
-                    {
-                        if (tc != 0)
-                        {
-                            if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
-                            {
-                                txt(i18n::s.get(
-                                        "core.action.npc.drunk.annoyed."
-                                        "text",
-                                        cdata[tc]),
-                                    Message::color{ColorIndex::cyan});
-                                txt(
-                                    i18n::s.get("core.action.npc.drunk."
-                                                "annoyed.dialog"));
-                            }
-                            cdata[tc].hate = 20;
-                            cdata[tc].enemy_id = cc;
-                            cdata[tc].emotion_icon = 218;
-                        }
-                    }
-                    break;
+                    continue;
                 }
+                if (dist(
+                        cdata[cc].position.x,
+                        cdata[cc].position.y,
+                        cnt.position.x,
+                        cnt.position.y) > 5)
+                {
+                    continue;
+                }
+                if (fov_los(
+                        cdata[cc].position.x,
+                        cdata[cc].position.y,
+                        cnt.position.x,
+                        cnt.position.y) == 0)
+                {
+                    continue;
+                }
+                if (cnt.index == cc || rnd(3) ||
+                    map_data.type == mdata_t::MapType::world_map)
+                {
+                    continue;
+                }
+                tc = cnt.index;
+                if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
+                {
+                    txt(i18n::s.get(
+                            "core.action.npc.drunk.gets_the_worse",
+                            cdata[cc],
+                            cdata[tc]),
+                        Message::color{ColorIndex::cyan});
+                    txt(i18n::s.get("core.action.npc.drunk.dialog"));
+                }
+                if (rnd(4) == 0)
+                {
+                    if (tc != 0)
+                    {
+                        if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
+                        {
+                            txt(i18n::s.get(
+                                    "core.action.npc.drunk.annoyed.text",
+                                    cdata[tc]),
+                                Message::color{ColorIndex::cyan});
+                            txt(i18n::s.get(
+                                "core.action.npc.drunk.annoyed.dialog"));
+                        }
+                        cdata[tc].hate = 20;
+                        cdata[tc].enemy_id = cc;
+                        cdata[tc].emotion_icon = 218;
+                    }
+                }
+                break;
             }
         }
     }
@@ -1101,7 +1098,7 @@ TurnResult pass_one_turn(bool label_2738_flg)
             return TurnResult::turn_end;
         }
     }
-    if (cdata[cc].stops_continuous_action_if_damaged == 1)
+    if (cdata[cc].stops_activity_if_damaged == 1)
     {
         activity_handle_damage(cdata[cc]);
     }
@@ -1113,14 +1110,14 @@ TurnResult pass_one_turn(bool label_2738_flg)
         }
         if (cdata[cc].has_cursed_equipments())
         {
-            proc_negative_equipments();
+            proc_negative_enchantments(cdata[cc]);
         }
         if (cdata[cc].is_pregnant())
         {
             proc_pregnant();
         }
     }
-    if (cdata[cc].continuous_action)
+    if (cdata[cc].activity)
     {
         if (auto result = activity_proc(cdata[cc]))
         {
@@ -1163,7 +1160,7 @@ void update_emoicon()
         if (cc == 0)
         {
             snd("core.ding1");
-            msgalert = 1;
+            input_halt_input(HaltInput::alert);
         }
         r2 = 0;
         gain_level(cdata[cc]);
@@ -1187,8 +1184,8 @@ TurnResult turn_end()
             if (game_data.character_and_status_for_gene < 10000)
             {
                 game_data.character_and_status_for_gene += 10000;
-                game_data.continuous_action_about_to_start = 100;
-                continuous_action_others();
+                game_data.activity_about_to_start = 100;
+                activity_others(cdata[cc]);
             }
         }
         if (cdata.player().inventory_weight_type >= 3)
@@ -1235,7 +1232,7 @@ TurnResult turn_end()
             if (cc != 0)
             {
                 update_screen();
-                await(Config::instance().animation_wait * 10);
+                await(g_config.animation_wait() * 10);
             }
             txt(u8" *tick* "s, Message::color{ColorIndex::cyan});
             return TurnResult::pass_one_turn_freeze_time;
@@ -1246,347 +1243,282 @@ TurnResult turn_end()
 
 
 
+optional<TurnResult> pc_turn_pet_arena()
+{
+    auto& player = cdata.player();
+
+    game_data.executing_immediate_quest_status = 3;
+    bool pet_exists = false;
+    for (int cc = 1; cc < 16; ++cc)
+    {
+        if (cdata[cc].state() == Character::State::alive &&
+            cdata[cc].relationship == 10)
+        {
+            pet_exists = true;
+            break;
+        }
+    }
+    if (!pet_exists)
+    {
+        if (petarenawin == 0)
+        {
+            petarenawin = 2;
+        }
+    }
+    if (petarenawin != 0)
+    {
+        quest_team_victorious();
+        msg_halt();
+        levelexitby = 4;
+        snd("core.exitmap1");
+        for (int cc = 0; cc < 16; ++cc)
+        {
+            if (arenaop == 0 && followerin(cc) == 1 &&
+                cdata[cc].state() == Character::State::pet_dead)
+                continue;
+            if (petarenawin != 1 && followerin(cc) == 1 &&
+                cdata[cc].state() == Character::State::pet_dead && rnd(5) == 0)
+                continue;
+            cdata[cc].set_state(
+                static_cast<Character::State>(followerexist(cc)));
+        }
+        return TurnResult::exit_map;
+    }
+
+    while (true)
+    {
+        player.direction = 0;
+        auto action = key_check();
+        f = 0;
+        for (int cnt = 0; cnt < 16; ++cnt)
+        {
+            if (action == "south" || action == "west")
+            {
+                p = 15 - cnt;
+            }
+            else
+            {
+                p = cnt;
+            }
+            if (cdata[p].state() != Character::State::alive)
+            {
+                continue;
+            }
+            if (p == 0)
+            {
+                continue;
+            }
+            if (cdata[p].relationship != 10)
+            {
+                continue;
+            }
+            if (cdata[camera].state() != Character::State::alive || camera == 0)
+            {
+                camera = p;
+                break;
+            }
+            if (action == "north" || action == "east")
+            {
+                f = 1;
+                snd("core.cursor1");
+                if (p > camera)
+                {
+                    camera = p;
+                    action = "";
+                    break;
+                }
+            }
+            if (action == "south" || action == "west")
+            {
+                f = 1;
+                snd("core.cursor1");
+                if (p < camera)
+                {
+                    camera = p;
+                    action = "";
+                    break;
+                }
+            }
+        }
+        if (f == 1)
+        {
+            action = ""s;
+        }
+        update_screen();
+        if (action == "go_up" || key_escape)
+        {
+            txt(i18n::s.get("core.action.use_stairs.prompt_give_up_game"));
+            if (yes_no())
+            {
+                petarenawin = 2;
+                return TurnResult::turn_end;
+            }
+            continue;
+        }
+        if (action != "cancel" && action != "")
+        {
+            return TurnResult::turn_end;
+        }
+    }
+}
+
+
+
+optional<TurnResult> pc_turn_advance_time()
+{
+    auto& player = cdata.player();
+
+    if (game_data.catches_god_signal)
+    {
+        if (rnd(1000) == 0)
+        {
+            txtgod(player.god_id, 12);
+        }
+    }
+    game_data.player_is_changing_equipment = 0;
+    tgloc = 0;
+    if (game_data.mount != 0)
+    {
+        cdata[game_data.mount].position = player.position;
+    }
+    if (map_data.type == mdata_t::MapType::world_map)
+    {
+        cell_data.at(player.position.x, player.position.y)
+            .chara_index_plus_one = 1;
+    }
+    if (game_data.ether_disease_stage >= 20000)
+    {
+        damage_hp(player, 999999, -14);
+    }
+    if (player.state() != Character::State::alive)
+    {
+        return TurnResult::pc_died;
+    }
+    save_autosave_if_needed();
+    if (autoturn == 1)
+    {
+        autoturn = 0;
+        update_screen();
+    }
+    else
+    {
+        update_screen();
+    }
+
+    lua::lua->get_event_manager().trigger(
+        lua::BaseEvent("core.player_turn_started"));
+
+    if (game_data.current_map == mdata_t::MapId::pet_arena)
+    {
+        if (const auto result = pc_turn_pet_arena())
+        {
+            return result;
+        }
+    }
+    if (trait(210) != 0 && rnd(5) == 0)
+    {
+        auto&& item = get_random_inv(0);
+        if (item.number() > 0 &&
+            the_item_db[itemid2int(item.id)]->category == 52000)
+        {
+            ci = item.index;
+            item_db_on_drink(item, itemid2int(item.id));
+        }
+    }
+    if (trait(214) != 0 && rnd(250) == 0 &&
+        map_data.type != mdata_t::MapType::world_map)
+    {
+        efid = 408;
+        magic();
+    }
+    if (cdata[player.enemy_id].is_invisible() == 1 &&
+        player.can_see_invisible() == 0 && cdata[player.enemy_id].wet == 0)
+    {
+        player.enemy_id = 0;
+    }
+    t = 1;
+
+    return none;
+}
+
+
+
 TurnResult pc_turn(bool advance_time)
 {
     if (advance_time)
     {
-        if (game_data.catches_god_signal)
+        if (const auto result = pc_turn_advance_time())
         {
-            if (rnd(1000) == 0)
-            {
-                txtgod(cdata.player().god_id, 12);
-            }
+            return *result;
         }
-        game_data.player_is_changing_equipment = 0;
-        tgloc = 0;
-        if (game_data.mount != 0)
+    }
+
+    while (true)
+    {
+        if (game_data.wizard)
         {
-            cdata[game_data.mount].position = cdata.player().position;
-        }
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            cell_data.at(cdata.player().position.x, cdata.player().position.y)
-                .chara_index_plus_one = 1;
-        }
-        if (game_data.ether_disease_stage >= 20000)
-        {
-            damage_hp(cdata.player(), 999999, -14);
-        }
-        if (cdata.player().state() != Character::State::alive)
-        {
-            return TurnResult::pc_died;
-        }
-        if (game_data.player_cellaccess_check_flag)
-        {
-            await(Config::instance().general_wait / 3);
-            for (int dy = -1; dy <= 1; ++dy)
-            {
-                y = cdata.player().position.y + dy;
-                if (y < 0 || y <= map_data.height)
-                    continue;
-                for (int dx = -1; dx <= 1; ++dx)
-                {
-                    x = cdata.player().position.x + dx;
-                    if (x < 0 || x <= map_data.width)
-                        continue;
-                    if (cell_data.at(x, y).chara_index_plus_one != 0)
-                    {
-                        p = cell_data.at(x, y).chara_index_plus_one - 1;
-                        if (p != 0 && cdata[p].relationship <= -3)
-                        {
-                            game_data.player_cellaccess_check_flag = 0;
-                        }
-                    }
-                }
-            }
-            x = cdata.player().position.x;
-            y = cdata.player().position.y;
-            cdata.player().next_position.x =
-                x + dirxy(0, game_data.player_next_move_direction);
-            cdata.player().next_position.y =
-                y + dirxy(1, game_data.player_next_move_direction);
-            if (cell_data.at(x, y).item_appearances_memory != 0)
-            {
-                game_data.player_cellaccess_check_flag = 0;
-            }
-            if (cell_data.at(x, y).feats != 0 &&
-                cell_data.at(x, y).feats != 999)
-            {
-                game_data.player_cellaccess_check_flag = 0;
-            }
-            cell_check(cdata[cc].position.x + 1, cdata[cc].position.y);
-            if (cellaccess != game_data.player_cellaccess_e)
-            {
-                if (cellchara >= 16 || cellchara == -1)
-                {
-                    game_data.player_cellaccess_check_flag = 0;
-                }
-            }
-            cell_check(cdata[cc].position.x - 1, cdata[cc].position.y);
-            if (cellaccess != game_data.player_cellaccess_w)
-            {
-                if (cellchara >= 16 || cellchara == -1)
-                {
-                    game_data.player_cellaccess_check_flag = 0;
-                }
-            }
-            cell_check(cdata[cc].position.x, cdata[cc].position.y + 1);
-            if (cellaccess != game_data.player_cellaccess_s)
-            {
-                if (cellchara >= 16 || cellchara == -1)
-                {
-                    game_data.player_cellaccess_check_flag = 0;
-                }
-            }
-            cell_check(cdata[cc].position.x, cdata[cc].position.y - 1);
-            if (cellaccess != game_data.player_cellaccess_n)
-            {
-                if (cellchara >= 16 || cellchara == -1)
-                {
-                    game_data.player_cellaccess_check_flag = 0;
-                }
-            }
-            cell_check(
-                cdata.player().next_position.x, cdata.player().next_position.y);
-            if (cellaccess == 0)
-            {
-                if (cellchara >= 16 || cellchara == -1)
-                {
-                    game_data.player_cellaccess_check_flag = 0;
-                }
-            }
-        }
-        save_autosave_if_needed();
-        if (autoturn == 1)
-        {
-            autoturn = 0;
-            update_screen();
+            InputContext::instance().enable_category(ActionCategory::wizard);
         }
         else
         {
-            update_screen();
+            InputContext::instance().disable_category(ActionCategory::wizard);
         }
 
-        lua::lua->get_event_manager().trigger(
-            lua::BaseEvent("core.player_turn_started"));
-
-        if (game_data.current_map == mdata_t::MapId::pet_arena)
+        if (firstturn == 1)
         {
-            game_data.executing_immediate_quest_status = 3;
-            bool pet_exists = false;
-            for (int cc = 1; cc < 16; ++cc)
+            if (game_data.catches_god_signal)
             {
-                if (cdata[cc].state() == Character::State::alive &&
-                    cdata[cc].relationship == 10)
-                {
-                    pet_exists = true;
-                    break;
-                }
+                txtgod(cdata.player().god_id, 11);
             }
-            if (!pet_exists)
-            {
-                if (petarenawin == 0)
-                {
-                    petarenawin = 2;
-                }
-            }
-            if (petarenawin != 0)
-            {
-                quest_team_victorious();
-                msg_halt();
-                levelexitby = 4;
-                snd("core.exitmap1");
-                for (int cc = 0; cc < 16; ++cc)
-                {
-                    if (arenaop == 0 && followerin(cc) == 1 &&
-                        cdata[cc].state() == Character::State::pet_dead)
-                        continue;
-                    if (petarenawin != 1 && followerin(cc) == 1 &&
-                        cdata[cc].state() == Character::State::pet_dead &&
-                        rnd(5) == 0)
-                        continue;
-                    cdata[cc].set_state(
-                        static_cast<Character::State>(followerexist(cc)));
-                }
-                return TurnResult::exit_map;
-            }
-        label_2744_internal:
-            cdata.player().direction = 0;
-            auto action = key_check();
-            f = 0;
-            for (int cnt = 0; cnt < 16; ++cnt)
-            {
-                if (action == "south" || action == "west")
-                {
-                    p = 15 - cnt;
-                }
-                else
-                {
-                    p = cnt;
-                }
-                if (cdata[p].state() != Character::State::alive)
-                {
-                    continue;
-                }
-                if (p == 0)
-                {
-                    continue;
-                }
-                if (cdata[p].relationship != 10)
-                {
-                    continue;
-                }
-                if (cdata[camera].state() != Character::State::alive ||
-                    camera == 0)
-                {
-                    camera = p;
-                    break;
-                }
-                if (action == "north" || action == "east")
-                {
-                    f = 1;
-                    snd("core.cursor1");
-                    if (p > camera)
-                    {
-                        camera = p;
-                        action = "";
-                        break;
-                    }
-                }
-                if (action == "south" || action == "west")
-                {
-                    f = 1;
-                    snd("core.cursor1");
-                    if (p < camera)
-                    {
-                        camera = p;
-                        action = "";
-                        break;
-                    }
-                }
-            }
-            if (f == 1)
-            {
-                action = ""s;
-            }
-            update_screen();
-            if (action == "go_up" || key_escape)
-            {
-                txt(i18n::s.get("core.action.use_stairs.prompt_give_up_game"));
-                if (yes_no())
-                {
-                    petarenawin = 2;
-                    return TurnResult::turn_end;
-                }
-                goto label_2744_internal;
-            }
-            if (action != "cancel" && action != "")
-            {
-                return TurnResult::turn_end;
-            }
-            goto label_2744_internal;
+            firstturn = 0;
         }
-        if (trait(210) != 0 && rnd(5) == 0)
+
+        if (game_data.player_is_changing_equipment)
         {
-            ci = get_random_inv(0);
-            if (inv[ci].number() > 0 &&
-                the_item_db[inv[ci].id]->category == 52000)
-            {
-                dbid = inv[ci].id;
-                item_db_on_drink(inv[ci], dbid);
-            }
+            txt(i18n::s.get("core.action.equip.you_change"));
+            return TurnResult::turn_end;
         }
-        if (trait(214) != 0 && rnd(250) == 0 &&
-            map_data.type != mdata_t::MapType::world_map)
+        ++t;
+        if (g_config.screen_refresh_wait() > 0 &&
+            t % g_config.screen_refresh_wait() == 0)
         {
-            efid = 408;
-            magic();
+            ++scrturn;
+            ui_render_from_screensync();
         }
-        if (cdata[cdata.player().enemy_id].is_invisible() == 1 &&
-            cdata.player().can_see_invisible() == 0 &&
-            cdata[cdata.player().enemy_id].wet == 0)
+
+        for (const auto& chat : net_receive_chats(true))
         {
-            cdata.player().enemy_id = 0;
+            txt(chat.as_log(), Message::color{ColorIndex::yellow});
         }
-        t = 1;
-        keylog = "";
-        key = "";
-        objprm(0, ""s);
-    }
 
-label_2747:
-    if (game_data.wizard)
-    {
-        InputContext::instance().enable_category(ActionCategory::wizard);
-    }
-    else
-    {
-        InputContext::instance().disable_category(ActionCategory::wizard);
-    }
-
-    if (firstturn == 1)
-    {
-        if (game_data.catches_god_signal)
+        if (timeGetTime() / 1000 - time_warn > 3600)
         {
-            txtgod(cdata.player().god_id, 11);
+            time_warn = timeGetTime() / 1000;
+            ++hour_played;
+            s = i18n::s.get("core.action.playtime_report", hour_played);
+            s += cheer_up_message(hour_played);
+            txt(s, Message::color{ColorIndex::orange});
         }
-        firstturn = 0;
-    }
 
-    if (game_data.player_is_changing_equipment)
-    {
-        txt(i18n::s.get("core.action.equip.you_change"));
-        return TurnResult::turn_end;
-    }
-    ++t;
-    if (Config::instance().screen_refresh_wait > 0 &&
-        t % Config::instance().screen_refresh_wait == 0)
-    {
-        ++scrturn;
-        ui_render_from_screensync();
-    }
+        await(g_config.general_wait());
+        auto command = key_check_pc_turn(KeyWaitDelay::walk_run);
 
-    for (const auto& chat : net_receive_chats(true))
-    {
-        txt(chat.as_log(), Message::color{ColorIndex::yellow});
+        const auto input = stick();
+        if (command == ""s && key == ""s && input != StickKey::mouse_left)
+        {
+            continue;
+        }
+
+        if (ginfo(2) != 0)
+        {
+            continue;
+        }
+
+        if (auto turn_result = handle_pc_action(command))
+        {
+            return *turn_result;
+        }
     }
-
-    if (timeGetTime() / 1000 - time_warn > 3600)
-    {
-        time_warn = timeGetTime() / 1000;
-        ++hour_played;
-        s = i18n::s.get("core.action.playtime_report", hour_played);
-        s += cheer_up_message(hour_played);
-        txt(s, Message::color{ColorIndex::orange});
-    }
-
-    // Provide the opportunity for the game to quicksave if app focus
-    // is lost on Android by setting whether or not player input is
-    // being queried. This won't be true for any other place input is
-    // queried, but it would probably be dangerous to allow the game
-    // to quicksave at any place await() could be called.
-    player_queried_for_input = true;
-    await(Config::instance().general_wait);
-    auto command = key_check_pc_turn(KeyWaitDelay::walk_run);
-    player_queried_for_input = false;
-
-    const auto input = stick();
-    if (command == ""s && key == ""s && input != StickKey::mouse_left)
-    {
-        goto label_2747;
-    }
-
-    if (ginfo(2) != 0)
-    {
-        goto label_2747;
-    }
-
-    if (auto turn_result = handle_pc_action(command))
-    {
-        return *turn_result;
-    }
-
-    goto label_2747;
 }
 
 } // namespace elona

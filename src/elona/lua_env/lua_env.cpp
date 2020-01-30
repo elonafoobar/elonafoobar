@@ -1,9 +1,10 @@
 #include "lua_env.hpp"
 
 #include "../character.hpp"
-#include "../config/config.hpp"
+#include "../config.hpp"
 #include "../item.hpp"
 #include "api_manager.hpp"
+#include "config_manager.hpp"
 #include "console.hpp"
 #include "data_manager.hpp"
 #include "event_manager.hpp"
@@ -55,6 +56,7 @@ LuaEnv::LuaEnv()
     export_mgr = std::make_unique<ExportManager>(*this);
     i18n_function_mgr = std::make_unique<I18NFunctionManager>(*this);
     console = std::make_unique<Console>(*this);
+    config_mgr = std::make_unique<ConfigManager>(*this);
 }
 
 
@@ -66,13 +68,33 @@ LuaEnv::~LuaEnv() = default;
 
 
 
+void LuaEnv::load_mods()
+{
+    const auto list = ModList::from_file(filesystem::files::mod_list());
+    const auto lock = ModLock{};
+    const auto index = ModIndex::traverse(filesystem::dirs::mod());
+
+    ModVersionResolver resolver;
+    const auto resolve_result = resolver.resolve(list, lock, index);
+    if (resolve_result)
+    {
+        mod_mgr->load_mods(resolve_result.right());
+    }
+    else
+    {
+        throw std::runtime_error{resolve_result.left()};
+    }
+}
+
+
+
 void LuaEnv::clear()
 {
-    for (int i = 0; i < ELONA_MAX_ITEMS; i++)
+    for (auto&& item : inv.all())
     {
-        if (inv[i].number() != 0)
+        if (item.number() != 0)
         {
-            handle_mgr->remove_item_handle(inv[i]);
+            handle_mgr->remove_item_handle(item);
         }
     }
 
@@ -88,13 +110,8 @@ void LuaEnv::clear()
     mod_mgr->clear_mod_stores();
     data_mgr->clear();
     handle_mgr->clear_all_handles();
+    // ConfigManager::clear() will be called elsewhere.
     lua_->collect_garbage();
-}
-
-void LuaEnv::reload()
-{
-    clear(); // Unload character/item handles while they're still available.
-    get_state()->set("_IS_TEST", Config::instance().is_test);
 }
 
 } // namespace lua

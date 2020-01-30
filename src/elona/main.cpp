@@ -1,6 +1,6 @@
 #include "main.hpp"
 #include "../util/tinyargparser.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "init.hpp"
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_event/base_event.hpp"
@@ -44,8 +44,8 @@ void _main_loop()
 
 void _start_elona()
 {
-    if (Config::instance().startup_script != ""s &&
-        !Config::instance().get<bool>("core.foobar.run_script_in_save"))
+    if (g_config.startup_script() != ""s &&
+        !config_get_boolean("core.foobar.run_script_in_save"))
     {
         mode = 6;
         initialize_game();

@@ -48,20 +48,20 @@ static void _map_events_quest_party()
         if (game_data.crowd_density <
             game_data.left_minutes_of_executing_quest / 60)
         {
-            dbid = 0;
+            int chara_id = 0;
             if (rnd(4) == 0)
             {
-                dbid = 204;
+                chara_id = 204;
             }
             if (rnd(10) == 0)
             {
-                dbid = 185;
+                chara_id = 185;
             }
-            if (dbid != 0)
+            if (chara_id != 0)
             {
                 flt();
                 objlv = 1;
-                int stat = chara_create(-1, dbid, -3, 0);
+                int stat = chara_create(-1, chara_id, -3, 0);
                 if (stat != 0)
                 {
                     cdata[rc].relationship = -1;
@@ -214,6 +214,8 @@ static void _map_events_shelter()
     }
 }
 
+
+
 static void _map_events_museum()
 {
     if (game_data.crowd_density > 0)
@@ -230,53 +232,36 @@ static void _map_events_museum()
         }
         if (rnd(15) == 0)
         {
-            if (en)
+            std::string locale_key;
+            if (game_data.ranks.at(3) > 8000)
             {
-            }
-            else if (game_data.ranks.at(3) > 8000)
-            {
-                txt(u8"「退屈ぅー」"s,
-                    u8"「あまり見るものがないな」"s,
-                    u8"「こんなので見物料とるの？」"s,
-                    u8"館内は少し寂しい…"s,
-                    Message::color{ColorIndex::cyan});
+                locale_key = "core.map.museum.rank_lowest";
             }
             else if (game_data.ranks.at(3) > 5000)
             {
-                txt(u8"「いいんじゃない〜」"s,
-                    u8"「まあ、普通の博物館だ」"s,
-                    u8"「恋人を連れてくればよかったかも」"s,
-                    u8"まあまあの客足だ。"s,
-                    Message::color{ColorIndex::cyan});
+                locale_key = "core.map.museum.rank_low";
             }
             else if (game_data.ranks.at(3) > 2500)
             {
-                txt(u8"「この雰囲気好きだなぁ」"s,
-                    u8"「もう一度来ようよ」"s,
-                    u8"「時間が経つのを忘れるね！」"s,
-                    u8"館内はなかなか賑わっている。"s,
-                    Message::color{ColorIndex::cyan});
+                locale_key = "core.map.museum.rank_middle";
             }
             else if (game_data.ranks.at(3) > 500)
             {
-                txt(u8"「来て良かった♪」"s,
-                    u8"「よくこんなに集めたなあ」"s,
-                    u8"「むぅ…興味深い」"s,
-                    u8"客足が全く絶えない盛況ぶりだ。"s,
-                    Message::color{ColorIndex::cyan});
+                locale_key = "core.map.museum.rank_high";
             }
             else
             {
-                txt(u8"「素晴らしいコレクションだ！」"s,
-                    u8"「感動した」"s,
-                    u8"「帰りたくないわ♪」"s,
-                    u8"来客は食い入るように展示物を眺めている。"s,
-                    Message::color{ColorIndex::cyan});
+                locale_key = "core.map.museum.rank_highest";
+            }
+            if (const auto msg = i18n::s.get_optional(locale_key))
+            {
+                txt(*msg, Message::color{ColorIndex::cyan});
             }
         }
-        return;
     }
 }
+
+
 
 static void _map_events_shop()
 {

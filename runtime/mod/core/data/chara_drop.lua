@@ -194,7 +194,7 @@ data:add_multi(
          id = "gold_bell",
          drops = {{
                on_create = function(args)
-                  Item.create(args.chara.position, "core.gold_piece", 2500 + Rand.rnd((Chara.player().fame + 1000)))
+                  Item.create(args.chara.position, "core.gold_piece", 2500 + Rand.rnd_capped(Chara.player().fame + 1000))
                end
          }}
       },

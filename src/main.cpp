@@ -22,8 +22,6 @@ void report_error(const char* what)
 #if defined(ELONA_OS_WINDOWS)
     OutputDebugStringA(what);
     MessageBoxA(NULL, what, "Error", MB_OK | MB_ICONSTOP);
-#elif defined(ELONA_OS_ANDROID)
-    LOGD("Error: %s", what);
 #endif
 
     ELONA_FATAL("system") << what;

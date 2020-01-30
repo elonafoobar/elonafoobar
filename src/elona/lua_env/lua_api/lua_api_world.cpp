@@ -1,5 +1,5 @@
 #include "lua_api_world.hpp"
-#include "../../event.hpp"
+#include "../../deferred_event.hpp"
 #include "../../gdata.hpp"
 
 namespace elona
@@ -15,7 +15,7 @@ namespace lua
  */
 int LuaApiWorld::deferred_event_id()
 {
-    return event_id();
+    return event_processing_event();
 }
 
 /**

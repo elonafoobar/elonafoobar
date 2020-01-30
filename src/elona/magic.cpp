@@ -1,3 +1,4 @@
+#include <stack>
 #include "../util/scope_guard.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
@@ -8,7 +9,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_asset.hpp"
 #include "data/types/type_item.hpp"
@@ -48,7 +49,7 @@ bool _magic_636()
 {
     txt(i18n::s.get("core.magic.insanity", cdata[cc], cdata[tc]),
         Message::color{ColorIndex::purple});
-    damage_insanity(cdata[tc], rnd(roll(dice1, dice2, bonus) + 1));
+    damage_insanity(cdata[tc], rnd_capped(roll(dice1, dice2, bonus) + 1));
     return true;
 }
 
@@ -574,7 +575,7 @@ bool _magic_183()
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    continuous_action_perform();
+    activity_perform(cdata[cc]);
     return true;
 }
 
@@ -587,7 +588,7 @@ bool _magic_184()
         txt(i18n::s.get("core.magic.cook.do_not_know"));
         return false;
     }
-    cooktool = ci;
+    auto&& cook_tool = inv[ci];
     invsubroutine = 1;
     invctrl = 16;
     snd("core.inv");
@@ -614,7 +615,7 @@ bool _magic_184()
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    cook();
+    cook(cook_tool, inv[ci]);
     return true;
 }
 
@@ -763,7 +764,7 @@ bool _magic_406_407()
         {
             continue;
         }
-        if (rnd(efp * 2 + 1) > rnd(cdata[tc].buffs[i].power + 1))
+        if (rnd_capped(efp * 2 + 1) > rnd_capped(cdata[tc].buffs[i].power + 1))
         {
             buff_delete(cdata[tc], i);
             ++p;
@@ -832,39 +833,37 @@ bool _magic_1117()
 
 bool _magic_628();
 
-bool _magic_632_454_1144(bool label_2182_flag = false)
+bool _magic_632_454_1144(bool is_cursed_potion_of_cure_mutation = false)
 {
-    if (label_2182_flag)
+    if (!is_cursed_potion_of_cure_mutation)
     {
-        goto label_2182;
-    }
-    if (tc != 0)
-    {
-        return _magic_628();
-    }
-    if (efid == 632)
-    {
-        txt(i18n::s.get("core.magic.mutation.spell", cdata[cc], cdata[tc]));
-        if (rnd(3))
+        if (tc != 0)
         {
+            return _magic_628();
+        }
+        if (efid == 632)
+        {
+            txt(i18n::s.get("core.magic.mutation.spell", cdata[cc], cdata[tc]));
+            if (rnd(3))
+            {
+                return true;
+            }
+        }
+        if (tc != 0)
+        {
+            txt(i18n::s.get("core.common.nothing_happens"));
             return true;
         }
-    }
-    if (tc != 0)
-    {
-        txt(i18n::s.get("core.common.nothing_happens"));
-        return true;
-    }
-    if (enchantment_find(cdata[tc], 33))
-    {
-        if (rnd(5))
+        if (enchantment_find(cdata[tc], 33))
         {
-            txt(i18n::s.get("core.magic.mutation.resist"));
-            return true;
+            if (rnd(5))
+            {
+                txt(i18n::s.get("core.magic.mutation.resist"));
+                return true;
+            }
         }
     }
 
-label_2182:
     f = 0;
     p = 1;
     if (efid == 1144)
@@ -1156,7 +1155,7 @@ bool _magic_412()
             {
                 ++p(1);
                 item.curse_state = CurseState::none;
-                item_stack(tc, ci, 1);
+                item_stack(tc, item, true);
             }
             else
             {
@@ -1491,8 +1490,7 @@ bool _magic_1119()
                 else
                 {
                     s = i18n::s.get(
-                        "core.magic.gain_skill_potential."
-                        "furthermore_the");
+                        "core.magic.gain_skill_potential.furthermore_the");
                 }
                 if (!is_cursed(efstatus))
                 {
@@ -1501,9 +1499,7 @@ bool _magic_1119()
                         snd("core.ding2");
                         txt(s +
                                 i18n::s.get(
-                                    "core.magic.gain_skill_"
-                                    "potential."
-                                    "increases",
+                                    "core.magic.gain_skill_potential.increases",
                                     cdata[tc],
                                     i18n::s.get_m(
                                         "ability",
@@ -1517,8 +1513,7 @@ bool _magic_1119()
                 {
                     snd("core.curse3");
                     txt(i18n::s.get(
-                            "core.magic.gain_skill_potential."
-                            "decreases",
+                            "core.magic.gain_skill_potential.decreases",
                             cdata[tc],
                             i18n::s.get_m(
                                 "ability",
@@ -1663,7 +1658,7 @@ bool _magic_430_429()
                     }
                     continue;
                 }
-                if (p < 7 || rnd(efp + 1) > rnd(p * 8 + 1) ||
+                if (p < 7 || rnd_capped(efp + 1) > rnd(p * 8 + 1) ||
                     efstatus == CurseState::blessed)
                 {
                     if (efid == 429)
@@ -1920,7 +1915,7 @@ bool _magic_428()
 
 bool _magic_621()
 {
-    heal_mp(cdata[tc], efp / 2 + rnd((efp / 2 + 1)));
+    heal_mp(cdata[tc], efp / 2 + rnd_capped(efp / 2 + 1));
     if (is_in_fov(cdata[tc]))
     {
         txt(i18n::s.get("core.magic.harvest_mana", cdata[tc]));
@@ -2031,7 +2026,7 @@ bool _magic_645_1114()
     {
         p += *anticurse / 2;
     }
-    if (rnd(p(0)) > efp / 2 + (is_cursed(efstatus)) * 100)
+    if (rnd_capped(p(0)) > efp / 2 + (is_cursed(efstatus)) * 100)
     {
         return true;
     }
@@ -2067,12 +2062,13 @@ bool _magic_645_1114()
     {
         for (int cnt = 0; cnt < 200; ++cnt)
         {
-            p = get_random_inv(tc);
-            if (inv[p].number() == 0)
+            const auto& item = get_random_inv(tc);
+            p = item.index;
+            if (item.number() == 0)
             {
                 continue;
             }
-            if (inv[p].curse_state == CurseState::blessed)
+            if (item.curse_state == CurseState::blessed)
             {
                 if (rnd(10))
                 {
@@ -2102,7 +2098,7 @@ bool _magic_645_1114()
         chara_refresh(tc);
         snd("core.curse3");
         animeload(14, tc);
-        item_stack(tc, i, 1);
+        item_stack(tc, inv[i], true);
     }
     else
     {
@@ -2204,7 +2200,7 @@ bool _magic_435()
             efp = efp * 3 / 2;
         }
     }
-    if (rnd(efp / 15 + 5) < cdata[tc].level)
+    if (rnd_capped(efp / 15 + 5) < cdata[tc].level)
     {
         f = 0;
     }
@@ -2237,32 +2233,32 @@ bool _magic_436_437_455_634_456()
     if (efid == 436)
     {
         p(0) = 3;
-        p(1) = 2 + rnd((efp / 50 + 1));
+        p(1) = 2 + rnd_capped(efp / 50 + 1);
         txt(i18n::s.get("core.magic.map_effect.web"));
     }
     if (efid == 437)
     {
         txt(i18n::s.get("core.magic.map_effect.fog"));
         p(0) = 3;
-        p(1) = 2 + rnd((efp / 50 + 1));
+        p(1) = 2 + rnd_capped(efp / 50 + 1);
     }
     if (efid == 455)
     {
         txt(i18n::s.get("core.magic.map_effect.acid"));
         p(0) = 2;
-        p(1) = 2 + rnd((efp / 50 + 1));
+        p(1) = 2 + rnd_capped(efp / 50 + 1);
     }
     if (efid == 456)
     {
         txt(i18n::s.get("core.magic.map_effect.fire"));
         p(0) = 2;
-        p(1) = 2 + rnd((efp / 50 + 1));
+        p(1) = 2 + rnd_capped(efp / 50 + 1);
     }
     if (efid == 634)
     {
         txt(i18n::s.get("core.magic.map_effect.ether_mist"));
         p(0) = 2;
-        p(1) = 1 + rnd((efp / 100 + 2));
+        p(1) = 1 + rnd_capped(efp / 100 + 2);
     }
     snd("core.web");
     for (int cnt = 0, cnt_end = (p(1)); cnt < cnt_end; ++cnt)
@@ -2313,7 +2309,7 @@ bool _magic_436_437_455_634_456()
         }
         if (efid == 437)
         {
-            mef_add(x, y, 2, 30, 8 + rnd((15 + efp / 25)), efp);
+            mef_add(x, y, 2, 30, 8 + rnd_capped(15 + efp / 25), efp);
         }
     }
     return true;
@@ -2399,7 +2395,7 @@ bool _magic_49(int efcibk)
     {
         randomize(inv[efcibk].param1);
         enchantment_add(
-            ci,
+            inv[ci],
             enchantment_generate(enchantment_gen_level(egolv)),
             enchantment_gen_p() + (fixlv == Quality::godly) * 100 +
                 (inv[ci].is_eternal_force()) * 100,
@@ -2466,7 +2462,7 @@ bool _magic_21_1127()
                 inv[ci]));
             inv[ci].modify_number(-1);
             flt();
-            itemcreate(0, inv[ci].id, -1, -1, 0);
+            itemcreate_player_inv(itemid2int(inv[ci].id), 0);
         }
         else
         {
@@ -2517,7 +2513,7 @@ bool _magic_1128()
         return true;
     }
     snd("core.ding2");
-    p = rnd((efp + 1)) / 100 + 1;
+    p = rnd_capped(efp + 1) / 100 + 1;
     game_data.rights_to_succeed_to += p;
     txt(i18n::s.get("core.magic.deed_of_inheritance.claim", p(0)),
         Message::color{ColorIndex::orange});
@@ -2601,11 +2597,12 @@ bool _magic_630_1129()
         MenuResult result = ctrl_inventory();
         if (result.succeeded)
         {
-            dbid = inv[ci].id;
-            item_db_get_charge_level(inv[ci], dbid);
-            if (ichargelevel < 1 || inv[ci].id == 290 || inv[ci].id == 480 ||
-                inv[ci].id == 289 || inv[ci].id == 732 ||
-                (inv[ci].id == 687 && inv[ci].param2 != 0))
+            item_db_get_charge_level(inv[ci], itemid2int(inv[ci].id));
+            if (ichargelevel < 1 || inv[ci].id == ItemId::rod_of_wishing ||
+                inv[ci].id == ItemId::rod_of_domination ||
+                inv[ci].id == ItemId::spellbook_of_wishing ||
+                inv[ci].id == ItemId::spellbook_of_harvest ||
+                (inv[ci].id == ItemId::ancient_book && inv[ci].param2 != 0))
             {
                 txt(i18n::s.get("core.magic.fill_charge.cannot_recharge"));
                 return true;
@@ -2621,11 +2618,11 @@ bool _magic_630_1129()
                     "core.magic.fill_charge.cannot_recharge_anymore", inv[ci]));
                 return true;
             }
-            if (rnd(efp / 25 + 1) == 0)
+            if (rnd_capped(efp / 25 + 1) == 0)
             {
                 f = 0;
             }
-            if (the_item_db[inv[ci].id]->category == 54000)
+            if (the_item_db[itemid2int(inv[ci].id)]->category == 54000)
             {
                 if (rnd(4) == 0)
                 {
@@ -2643,7 +2640,7 @@ bool _magic_630_1129()
                 {
                     p = ichargelevel - inv[ci].count + 1;
                 }
-                if (the_item_db[inv[ci].id]->category == 54000)
+                if (the_item_db[itemid2int(inv[ci].id)]->category == 54000)
                 {
                     p = 1;
                 }
@@ -2690,8 +2687,7 @@ bool _magic_629()
         MenuResult result = ctrl_inventory();
         if (result.succeeded)
         {
-            dbid = inv[ci].id;
-            item_db_get_charge_level(inv[ci], dbid);
+            item_db_get_charge_level(inv[ci], itemid2int(inv[ci].id));
             for (int cnt = 0; cnt < 1; ++cnt)
             {
                 if (ichargelevel == 1)
@@ -2874,8 +2870,8 @@ bool _magic_1132(int& fltbk, int& valuebk)
     {
         save_set_autosave();
         animeload(8, cc);
-        fltbk = the_item_db[inv[ci].id]->category;
-        valuebk = calcitemvalue(ci, 0);
+        fltbk = the_item_db[itemid2int(inv[ci].id)]->category;
+        valuebk = calcitemvalue(inv[ci], 0);
         inv[ci].remove();
         for (int cnt = 0;; ++cnt)
         {
@@ -2884,11 +2880,11 @@ bool _magic_1132(int& fltbk, int& valuebk)
             {
                 flttypemajor = fltbk;
             }
-            if (itemcreate(0, 0, -1, -1, 0))
+            if (const auto item = itemcreate_player_inv(0, 0))
             {
-                if (inv[ci].value > valuebk * 3 / 2 + 1000)
+                if (item->value > valuebk * 3 / 2 + 1000)
                 {
-                    inv[ci].remove();
+                    item->remove();
                     continue;
                 }
                 else
@@ -2974,7 +2970,7 @@ bool _magic_457_438()
                 return true;
             }
             txt(i18n::s.get("core.magic.create.door.apply"));
-            cell_featset(x, y, tile_doorclosed, 21, rnd(efp / 10 + 1));
+            cell_featset(x, y, tile_doorclosed, 21, rnd_capped(efp / 10 + 1));
             if (chip_data.for_cell(x, y).effect & 4)
             {
                 cell_data.at(x, y).chip_id_actual = tile_tunnel;
@@ -3248,59 +3244,15 @@ bool _magic_638_648()
         if (is_in_fov(cdata[tc]))
         {
             txt(i18n::s.get("core.magic.insult.apply", cdata[cc], cdata[tc]));
-            if (jp)
+            if (cdata[cc].sex == 0)
             {
-                if (cdata[cc].sex == 0)
-                {
-                    txt(u8"「すっこんでろ雑魚め」"s,
-                        u8"「オマエ程度が戦うだと？」"s,
-                        u8"「すぐに殺してやるよ」"s,
-                        u8"「消えろザコめ」"s,
-                        u8"「このかたつむり野郎」"s,
-                        u8"「すぐにミンチにしてやるよ」"s,
-                        Message::color{ColorIndex::cyan});
-                }
-                else if (rnd(2))
-                {
-                    txt(u8"「グシャグシャにしてやるわ」"s,
-                        u8"「地べたを這いずりなさい」"s,
-                        u8"「ウージッムシ♪ウージッムシ♪」"s,
-                        u8"「目障りよ」"s,
-                        u8"「もがけ。苦しめ！」"s,
-                        u8"「その下品な眼をくりぬくの」"s,
-                        Message::color{ColorIndex::cyan});
-                }
-                else
-                {
-                    txt(u8"「このカタツムリが」"s,
-                        u8"「どうしたの？もう終わりなの？」"s,
-                        u8"「潔く、くたばりなさい」"s,
-                        u8"「生まれてきたことを後悔するのね」"s,
-                        u8"「このブタめ」"s,
-                        u8"「すぐにミンチにしてあげる」"s,
-                        Message::color{ColorIndex::cyan});
-                }
+                txt(i18n::s.get("core.magic.insult.man"),
+                    Message::color{ColorIndex::cyan});
             }
             else
             {
-                if (rnd(2))
-                {
-                    txt(u8"\"You suck!\""s,
-                        u8"\"You will die alone.\""s,
-                        u8"\"Bow down before me.\""s,
-                        u8"\"Go jump off a bridge.\""s,
-                        u8"\"Bang your head against the wall!\""s,
-                        u8"\"Why do you sniff under your dog's tail?\""s,
-                        Message::color{ColorIndex::cyan});
-                }
-                else
-                {
-                    txt(u8"\"The world is against you because you are a unsavory decomposing virus.\""s,
-                        u8"\"You are no better than a immoral guzzling bureaucrat.\""s,
-                        u8"\"You are so lowly.\""s,
-                        u8"\"Get off me.\""s,
-                        Message::color{ColorIndex::cyan});
-                }
+                txt(i18n::s.get("core.magic.insult.woman"),
+                    Message::color{ColorIndex::cyan});
             }
         }
     }
@@ -3362,7 +3314,7 @@ bool _magic_651()
         {
             continue;
         }
-        if (item.id == 618)
+        if (item.id == ItemId::fish_a)
         {
             p = item.index;
             break;
@@ -3380,7 +3332,7 @@ bool _magic_651()
             {
                 continue;
             }
-            if (the_item_db[item.id]->category != 57000)
+            if (the_item_db[itemid2int(item.id)]->category != 57000)
             {
                 continue;
             }
@@ -3401,14 +3353,14 @@ bool _magic_651()
         }
         return true;
     }
-    rowact_item(ci);
+    rowact_item(inv[ci]);
     if (is_in_fov(cdata[tc]))
     {
         snd("core.eat1");
         txt(i18n::s.get("core.magic.scavenge.eats", cdata[cc], inv[ci]));
     }
     heal_hp(cdata[cc], cdata[cc].max_hp / 3);
-    continuous_action_eating_finish();
+    activity_eating_finish(cdata[cc], inv[ci]);
     refresh_burden_state();
     return true;
 }
@@ -3417,34 +3369,33 @@ bool _magic_651()
 
 bool _magic_464()
 {
-    bool fastest = Config::instance().animation_wait == 0;
+    bool fastest = g_config.animation_wait() == 0;
     std::string messages;
 
     animeload(10, tc);
-    for (int i = 0; i < clamp(4 + rnd(efp / 50 + 1), 1, 15); ++i)
+    for (int i = 0, n = clamp(4 + rnd_capped(efp / 50 + 1), 1, 15); i < n; ++i)
     {
         snd("core.pray1");
         flt(calcobjlv(efp / 10), calcfixlv(Quality::good));
-        dbid = 54;
-        int number = 400 + rnd(efp);
+        int item_id = 54;
+        int number = 400 + rnd_capped(efp);
         if (rnd(30) == 0)
         {
-            dbid = 55;
+            item_id = 55;
             number = 1;
         }
         if (rnd(80) == 0)
         {
-            dbid = 622;
+            item_id = 622;
             number = 1;
         }
         if (rnd(2000) == 0)
         {
-            dbid = 290;
+            item_id = 290;
             number = 1;
         }
         nostack = 1;
-        itemcreate(
-            -1, dbid, cdata[cc].position.x, cdata[cc].position.y, number);
+        itemcreate_extra_inv(item_id, cdata[cc].position, number);
         const auto message = i18n::s.get("core.magic.wizards_harvest", inv[ci]);
         if (fastest)
         {
@@ -3453,7 +3404,7 @@ bool _magic_464()
         else
         {
             txt(message);
-            await(Config::instance().animation_wait * 4);
+            await(g_config.animation_wait() * 4);
             redraw();
         }
     }
@@ -3504,10 +3455,243 @@ bool _magic_463()
 
 
 
+int _calc_ball_spell_range()
+{
+    int ret = the_ability_db[efid]->range % 1000 + 1;
+    if (debug::voldemort && cc == 0)
+    {
+        ret *= 2;
+    }
+    if (efid == 644)
+    {
+        ret = 2;
+    }
+    return ret;
+}
+
+
+
+bool _ball_spell_internal(std::stack<Character*>& bomb_chain)
+{
+    cdata[cc].will_explode_soon() = false;
+
+    range_ = _calc_ball_spell_range();
+
+    if (efid != 404 && efid != 637)
+    {
+        BallAnimation({tlocx, tlocy}, range_, BallAnimation::Type::ball, ele)
+            .play();
+    }
+
+    for (int dy_ = 0; dy_ < range_ * 2 + 1; ++dy_)
+    {
+        dy = tlocy - range_ + dy_;
+        if (dy < 0 || map_data.height <= dy)
+        {
+            continue;
+        }
+        for (int dx_ = 0; dx_ < range_ * 2 + 1; ++dx_)
+        {
+            dx = tlocx - range_ + dx_;
+            if (dx < 0 || map_data.width <= dx)
+            {
+                continue;
+            }
+            if (dist(tlocx, tlocy, dx, dy) > range_)
+            {
+                continue;
+            }
+            if (fov_los(tlocx, tlocy, dx, dy) == 0)
+            {
+                continue;
+            }
+            if (cell_data.at(dx, dy).chara_index_plus_one == 0)
+            {
+                continue;
+            }
+            tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
+            if (efid == 404)
+            {
+                f = 0;
+                if (cc == 0 || cdata[cc].relationship >= 0)
+                {
+                    if (cdata[tc].relationship >= 0)
+                    {
+                        f = 1;
+                    }
+                }
+                else if (cdata[tc].relationship <= -1)
+                {
+                    f = 1;
+                }
+                if (f)
+                {
+                    BrightAuraAnimation(
+                        cdata[tc].position,
+                        BrightAuraAnimation::Type::healing_rain)
+                        .play();
+                    if (is_in_fov(cdata[tc]))
+                    {
+                        txt(i18n::s.get("core.magic.healed.normal", cdata[tc]));
+                    }
+                    heal_both_rider_and_mount();
+                }
+                continue;
+            }
+            if (efid == 637)
+            {
+                f = 0;
+                if (cc == 0 || cdata[cc].relationship >= 0)
+                {
+                    if (cdata[tc].relationship >= 0)
+                    {
+                        f = 1;
+                    }
+                }
+                else if (cdata[tc].relationship <= -1)
+                {
+                    f = 1;
+                }
+                if (f)
+                {
+                    BrightAuraAnimation(
+                        cdata[tc].position,
+                        BrightAuraAnimation::Type::healing_rain)
+                        .play();
+                    txt(i18n::s.get("core.magic.rain_of_sanity", cdata[tc]));
+                    heal_insanity(cdata[tc], efp / 10);
+                    status_ailment_heal(cdata[tc], StatusAilment::insane, 9999);
+                }
+                continue;
+            }
+            if (dx == cdata[cc].position.x && dy == cdata[cc].position.y)
+            {
+                continue;
+            }
+            if (game_data.mount != 0)
+            {
+                if (game_data.mount == cc)
+                {
+                    if (tc == 0)
+                    {
+                        continue;
+                    }
+                }
+            }
+            if (ele == 50)
+            {
+                mapitem_fire(dx, dy);
+            }
+            if (ele == 51)
+            {
+                mapitem_cold(dx, dy);
+            }
+            if (cc == tc)
+            {
+                continue;
+            }
+            dmg = roll(dice1, dice2, bonus) * 100 /
+                (75 + dist(tlocx, tlocy, dx, dy) * 25);
+            if (calcmagiccontrol(cc, tc))
+            {
+                continue;
+            }
+            if (efid == 644)
+            {
+                if (is_in_fov(cdata[tc]))
+                {
+                    if (tc >= 16)
+                    {
+                        game_data.proc_damage_events_flag = 2;
+                        txt3rd = 1;
+                        txt(i18n::s.get(
+                            "core.magic.explosion.other", cdata[tc]));
+                    }
+                    else
+                    {
+                        txt(i18n::s.get(
+                            "core.magic.explosion.ally", cdata[tc]));
+                    }
+                }
+                if (cdata[tc].explodes())
+                {
+                    bomb_chain.push(&cdata[tc]);
+                    continue;
+                }
+            }
+            else if (is_in_fov(cdata[tc]))
+            {
+                if (tc >= 16)
+                {
+                    game_data.proc_damage_events_flag = 2;
+                    txt3rd = 1;
+                    txt(i18n::s.get("core.magic.ball.other", cdata[tc]));
+                }
+                else
+                {
+                    txt(i18n::s.get("core.magic.ball.ally", cdata[tc]));
+                }
+            }
+            damage_hp(cdata[tc], dmg, cc, ele, elep);
+        }
+    }
+
+    if (efid == 644)
+    {
+        damage_hp(cdata[cc], 99999, -16);
+    }
+
+    if (!bomb_chain.empty())
+    {
+        const auto next_cc = bomb_chain.top();
+        bomb_chain.pop();
+        cc = next_cc->index;
+        tlocx = cdata[cc].position.x;
+        tlocy = cdata[cc].position.y;
+        if (cdata[cc].state() == Character::State::alive)
+        {
+            const auto damage = calc_skill_damage(efid, cc, efp);
+            dice1 = damage->dice_x;
+            dice2 = damage->dice_y;
+            bonus = damage->damage_bonus;
+            ele = damage->element;
+            elep = damage->element_power;
+            if (is_in_fov(cdata[cc]))
+            {
+                txt(i18n::s.get("core.magic.explosion.chain", cdata[cc]));
+            }
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+
+void _ball_spell()
+{
+    std::stack<Character*> bomb_chian;
+
+    ccbk = cc;
+    if (efid == 644)
+    {
+        if (is_in_fov(cdata[cc]))
+        {
+            txt(i18n::s.get("core.magic.explosion.begins", cdata[cc]));
+        }
+    }
+
+    while (_ball_spell_internal(bomb_chian))
+        ;
+
+    cc = ccbk;
+}
+
+
+
 optional<bool> _proc_general_magic()
 {
-    int chainbomb = 0;
-    elona_vector1<int> chainbomblist;
     int efbad = 0;
     int tcprev = 0;
     int telex = 0;
@@ -3738,223 +3922,7 @@ optional<bool> _proc_general_magic()
             }
         }
         return true;
-    case 3:
-        chainbomb = 0;
-        ccbk = cc;
-        if (efid == 644)
-        {
-            if (is_in_fov(cdata[cc]))
-            {
-                txt(i18n::s.get("core.magic.explosion.begins", cdata[cc]));
-            }
-        }
-    label_2177_internal:
-        cdata[cc].will_explode_soon() = false;
-        range_ = the_ability_db[efid]->range % 1000 + 1;
-        if (debug::voldemort && cc == 0)
-        {
-            range_ *= 2;
-        }
-        if (efid == 644)
-        {
-            range_ = 2;
-        }
-        if (efid != 404 && efid != 637)
-        {
-            BallAnimation(
-                {tlocx, tlocy}, range_, BallAnimation::Type::ball, ele)
-                .play();
-        }
-        for (int cnt = 0, cnt_end = (range_ * 2 + 1); cnt < cnt_end; ++cnt)
-        {
-            dy = tlocy - range_ + cnt;
-            if (dy < 0 || dy >= map_data.height)
-            {
-                continue;
-            }
-            for (int cnt = 0, cnt_end = (range_ * 2 + 1); cnt < cnt_end; ++cnt)
-            {
-                dx = tlocx - range_ + cnt;
-                if (dx < 0 || dx >= map_data.width)
-                {
-                    continue;
-                }
-                if (dist(tlocx, tlocy, dx, dy) > range_)
-                {
-                    continue;
-                }
-                if (fov_los(tlocx, tlocy, dx, dy) == 0)
-                {
-                    continue;
-                }
-                if (cell_data.at(dx, dy).chara_index_plus_one == 0)
-                {
-                    continue;
-                }
-                tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
-                if (efid == 404)
-                {
-                    f = 0;
-                    if (cc == 0 || cdata[cc].relationship >= 0)
-                    {
-                        if (cdata[tc].relationship >= 0)
-                        {
-                            f = 1;
-                        }
-                    }
-                    else if (cdata[tc].relationship <= -1)
-                    {
-                        f = 1;
-                    }
-                    if (f == 1)
-                    {
-                        BrightAuraAnimation(
-                            cdata[tc].position,
-                            BrightAuraAnimation::Type::healing_rain)
-                            .play();
-                        if (is_in_fov(cdata[tc]))
-                        {
-                            txt(i18n::s.get(
-                                "core.magic.healed.normal", cdata[tc]));
-                        }
-                        heal_both_rider_and_mount();
-                    }
-                    continue;
-                }
-                if (efid == 637)
-                {
-                    f = 0;
-                    if (cc == 0 || cdata[cc].relationship >= 0)
-                    {
-                        if (cdata[tc].relationship >= 0)
-                        {
-                            f = 1;
-                        }
-                    }
-                    else if (cdata[tc].relationship <= -1)
-                    {
-                        f = 1;
-                    }
-                    if (f == 1)
-                    {
-                        BrightAuraAnimation(
-                            cdata[tc].position,
-                            BrightAuraAnimation::Type::healing_rain)
-                            .play();
-                        txt(i18n::s.get(
-                            "core.magic.rain_of_sanity", cdata[tc]));
-                        heal_insanity(cdata[tc], efp / 10);
-                        status_ailment_heal(
-                            cdata[tc], StatusAilment::insane, 9999);
-                    }
-                    continue;
-                }
-                if (dx == cdata[cc].position.x && dy == cdata[cc].position.y)
-                {
-                    continue;
-                }
-                if (game_data.mount != 0)
-                {
-                    if (game_data.mount == cc)
-                    {
-                        if (tc == 0)
-                        {
-                            continue;
-                        }
-                    }
-                }
-                if (ele == 50)
-                {
-                    mapitem_fire(dx, dy);
-                }
-                if (ele == 51)
-                {
-                    mapitem_cold(dx, dy);
-                }
-                if (cc != tc)
-                {
-                    dmg = roll(dice1, dice2, bonus) * 100 /
-                        (75 + dist(tlocx, tlocy, dx, dy) * 25);
-                    int stat = calcmagiccontrol(cc, tc);
-                    if (stat == 1)
-                    {
-                        continue;
-                    }
-                    if (efid == 644)
-                    {
-                        if (is_in_fov(cdata[tc]))
-                        {
-                            if (tc >= 16)
-                            {
-                                game_data.proc_damage_events_flag = 2;
-                                txt3rd = 1;
-                                txt(i18n::s.get(
-                                    "core.magic.explosion.other", cdata[tc]));
-                            }
-                            else
-                            {
-                                txt(i18n::s.get(
-                                    "core.magic.explosion.ally", cdata[tc]));
-                            }
-                        }
-                        if (cdata[tc].explodes())
-                        {
-                            chainbomblist(chainbomb) = tc;
-                            ++chainbomb;
-                            continue;
-                        }
-                    }
-                    else if (is_in_fov(cdata[tc]))
-                    {
-                        if (tc >= 16)
-                        {
-                            game_data.proc_damage_events_flag = 2;
-                            txt3rd = 1;
-                            txt(i18n::s.get(
-                                "core.magic.ball.other", cdata[tc]));
-                        }
-                        else
-                        {
-                            txt(i18n::s.get("core.magic.ball.ally", cdata[tc]));
-                        }
-                    }
-                    damage_hp(cdata[tc], dmg, cc, ele, elep);
-                }
-            }
-        }
-        if (efid == 644)
-        {
-            damage_hp(cdata[cc], 99999, -16);
-        }
-        if (chainbomb > 0)
-        {
-            while (1)
-            {
-                --chainbomb;
-                if (chainbomb < 0)
-                    break;
-                cc = chainbomblist(chainbomb);
-                tlocx = cdata[cc].position.x;
-                tlocy = cdata[cc].position.y;
-                if (cdata[cc].state() == Character::State::alive)
-                {
-                    const auto damage = calc_skill_damage(efid, cc, efp);
-                    dice1 = damage->dice_x;
-                    dice2 = damage->dice_y;
-                    bonus = damage->damage_bonus;
-                    ele = damage->element;
-                    elep = damage->element_power;
-                    if (is_in_fov(cdata[cc]))
-                    {
-                        txt(i18n::s.get(
-                            "core.magic.explosion.chain", cdata[cc]));
-                    }
-                    goto label_2177_internal;
-                }
-            }
-        }
-        cc = ccbk;
-        return true;
+    case 3: _ball_spell(); return true;
     case 2:
         RangedAttackAnimation(
             cdata[cc].position,
@@ -4185,7 +4153,7 @@ optional<bool> _proc_general_magic()
         for (int cnt = 0, cnt_end = (1 + rnd(p(0))); cnt < cnt_end; ++cnt)
         {
             flt(calcobjlv(efp), Quality::good);
-            dbid = 0;
+            int chara_id = 0;
             if (efid == 425)
             {
                 fltn(u8"wild"s);
@@ -4208,10 +4176,10 @@ optional<bool> _proc_general_magic()
             }
             if (efid == 643)
             {
-                dbid = 176;
+                chara_id = 176;
             }
             const auto success = chara_create(
-                -1, dbid, cdata[tc].position.x, cdata[tc].position.y);
+                -1, chara_id, cdata[tc].position.x, cdata[tc].position.y);
             if (success && efid != 643)
             {
                 if (cdata[rc].id == cdata[cc].id)
@@ -4291,13 +4259,12 @@ optional<bool> _proc_general_magic()
                 }
                 return true;
             }
-            p = rnd(cdata[tc].gold / 10 + 1);
-            if (rnd(sdata(13, tc)) > rnd(sdata(12, cc) * 4) ||
+            p = rnd_capped(cdata[tc].gold / 10 + 1);
+            if (rnd_capped(sdata(13, tc)) > rnd_capped(sdata(12, cc) * 4) ||
                 cdata[tc].is_protected_from_thieves() == 1)
             {
                 txt(i18n::s.get(
-                    "core.magic.teleport.suspicious_hand."
-                    "prevented",
+                    "core.magic.teleport.suspicious_hand.prevented",
                     cdata[tc]));
                 p = 0;
             }
@@ -4306,8 +4273,7 @@ optional<bool> _proc_general_magic()
                 snd("core.paygold1");
                 cdata[tc].gold -= p;
                 txt(i18n::s.get(
-                    "core.magic.teleport.suspicious_hand."
-                    "succeeded",
+                    "core.magic.teleport.suspicious_hand.succeeded",
                     cdata[cc],
                     cdata[tc],
                     p(0)));
@@ -4384,9 +4350,8 @@ optional<bool> _proc_general_magic()
                 {
                     if (efidprev == 635)
                     {
-                        txt(
-                            i18n::s.get("core.magic.teleport."
-                                        "suspicious_hand.after"));
+                        txt(i18n::s.get(
+                            "core.magic.teleport.suspicious_hand.after"));
                     }
                     else
                     {
@@ -4394,7 +4359,7 @@ optional<bool> _proc_general_magic()
                             "core.magic.teleport.disappears", cdata[tc]));
                     }
                 }
-                cdata[cc].continuous_action.finish();
+                cdata[cc].activity.finish();
                 ccprev = cc;
                 cc = tc;
                 move_character();

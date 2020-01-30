@@ -6,13 +6,12 @@
 #include <regex>
 #include <sstream>
 
-#include "../snail/android.hpp"
 #include "../snail/application.hpp"
 #include "../snail/hsp.hpp"
 #include "../snail/window.hpp"
 #include "../util/fps_counter.hpp"
 #include "../util/strutil.hpp"
-#include "config/config.hpp"
+#include "config.hpp"
 #include "defines.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
@@ -107,24 +106,6 @@ std::string operator+(elona_vector1<std::string>& lhs, const std::string& rhs)
 void await(int msec)
 {
     snail::hsp::await(msec);
-
-    // On Android, potentially quicksave if SDL detects that the app's
-    // focus was lost and the player is being queried for input in
-    // pc_turn().
-    if (defines::is_android &&
-        snail::Application::instance().was_focus_lost_just_now())
-    {
-        if (player_queried_for_input &&
-            Config::instance().get<bool>("core.android.quicksave") &&
-            !std::uncaught_exception())
-        {
-            ELONA_LOG("gui") << "Focus lost, quicksaving game.";
-            snail::android::toast(
-                i18n::s.get("core.ui.save_on_suspend"),
-                snail::android::ToastLength::long_length);
-            save_game(save_game_no_message, save_game_silent);
-        }
-    }
 }
 
 
@@ -181,46 +162,6 @@ void bload(const fs::path& filename, std::string& data, int size, int)
 
 
 
-void bload(const fs::path& filename, int& data, int size, int)
-{
-    std::ifstream in{filename.native(), std::ios::binary};
-    if (!in)
-    {
-        throw std::runtime_error(
-            u8"Error: fail to read " +
-            filepathutil::make_preferred_path_in_utf8(filename));
-    }
-    auto buf = read_binary(in, size).first;
-    data = *reinterpret_cast<int*>(buf.get());
-}
-
-
-
-void bload(const fs::path& filename, elona_vector1<int>& data, int size, int)
-{
-    if (size == 0)
-    {
-        size = data.size() * sizeof(int);
-    }
-    std::ifstream in{filename.native(), std::ios::binary};
-    if (!in)
-    {
-        throw std::runtime_error(
-            u8"Error: fail to read " +
-            filepathutil::make_preferred_path_in_utf8(filename));
-    }
-    auto buf = read_binary(in, size).first;
-    for (size_t i = 0; i < data.size(); ++i)
-    {
-        data(i) = reinterpret_cast<int*>(buf.get())[i];
-        size -= sizeof(int);
-        if (size == 0)
-            return;
-    }
-}
-
-
-
 void bsave(const fs::path& filename, const std::string& data)
 {
     std::ofstream out{filename.native(), std::ios::binary};
@@ -231,25 +172,6 @@ void bsave(const fs::path& filename, const std::string& data)
             filepathutil::make_preferred_path_in_utf8(filename));
     }
     out.write(reinterpret_cast<const char*>(data.c_str()), data.size());
-}
-
-
-
-void bsave(const fs::path& filename, int data)
-{
-    std::ofstream out{filename.native(), std::ios::binary};
-    out.write(reinterpret_cast<const char*>(&data), sizeof(data));
-}
-
-
-
-void bsave(const fs::path& filename, elona_vector1<int>& data)
-{
-    std::ofstream out{filename.native(), std::ios::binary};
-    for (size_t i = 0; i < data.size(); ++i)
-    {
-        out.write(reinterpret_cast<const char*>(&data(i)), sizeof(int));
-    }
 }
 
 
@@ -350,7 +272,7 @@ void font(int size, snail::Font::Style style)
         size,
         style,
         filesystem::path(u8"font") /
-            filepathutil::u8path(Config::instance().font_filename));
+            filepathutil::u8path(g_config.font_filename()));
 }
 
 
@@ -664,7 +586,7 @@ void mes(int x, int y, const std::string& text, const snail::Color& color)
  */
 void mesbox(std::string& buffer, bool text)
 {
-    snail::hsp::mesbox(buffer, Config::instance().key_wait, text);
+    snail::hsp::mesbox(buffer, g_config.key_wait(), text);
 }
 
 
@@ -838,12 +760,6 @@ void noteunsel()
 
 
 
-void objprm(int, const std::string&)
-{
-}
-
-
-
 void pget(int x, int y)
 {
     UNUSED(x);
@@ -921,7 +837,7 @@ static void _draw_fps()
  */
 void redraw()
 {
-    if (Config::instance().get<bool>("core.foobar.show_fps"))
+    if (config_get_boolean("core.foobar.show_fps"))
     {
         _draw_fps();
     }

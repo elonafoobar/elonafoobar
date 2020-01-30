@@ -3,13 +3,14 @@
 #include "ui_menu.hpp"
 #include "ui_menu_mods.hpp"
 
+namespace elona
+{
+
 namespace snail
 {
 class Image;
 }
 
-namespace elona
-{
 namespace ui
 {
 class UIMenuModInfo : public UIMenu<DummyResult>

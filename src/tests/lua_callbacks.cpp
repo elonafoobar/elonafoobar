@@ -17,8 +17,9 @@ TEST_CASE("Test character created callback", "[Lua: Callbacks]")
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_chara_created", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_chara_created", R"(
 local Event = require("game.Event")
 
 local function my_chara_created_handler(e)
@@ -30,12 +31,12 @@ mod.store.global.charas = {}
 Event.register("core.character_created", my_chara_created_handler)
 )"));
 
-    REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
     int idx = elona::rc;
     REQUIRE(idx != -1);
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_chara_created")
-        ->env.set("idx", idx);
+        .get_mod("test_chara_created")
+        ->env.raw_set("idx", idx);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_chara_created",
@@ -46,8 +47,9 @@ TEST_CASE("Test character hurt callback", "[Lua: Callbacks]")
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_chara_hurt", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_chara_hurt", R"(
 local Event = require("game.Event")
 
 local function my_chara_hurt_handler(e)
@@ -61,11 +63,11 @@ mod.store.global.hurt_amount = -1
 Event.register("core.character_damaged", my_chara_hurt_handler)
 )"));
 
-    REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
     int idx = elona::rc;
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_chara_hurt")
-        ->env.set("idx", idx);
+        .get_mod("test_chara_hurt")
+        ->env.raw_set("idx", idx);
 
     elona::damage_hp(cdata[idx], 4, -1);
     elona::heal_hp(cdata[idx], 45);
@@ -80,8 +82,9 @@ TEST_CASE("Test character removed callback", "[Lua: Callbacks]")
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_chara_removed", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_chara_removed", R"(
 local Event = require("game.Event")
 
 local function my_chara_removed_handler(e)
@@ -93,11 +96,11 @@ mod.store.global.removed_idx = -1
 Event.register("core.character_removed", my_chara_removed_handler)
 )"));
 
-    REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
     int idx = elona::rc;
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_chara_removed")
-        ->env.set("idx", idx);
+        .get_mod("test_chara_removed")
+        ->env.raw_set("idx", idx);
 
     testing::invalidate_chara(cdata[idx]);
 
@@ -110,8 +113,9 @@ TEST_CASE("Test character killed callback", "[Lua: Callbacks]")
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_chara_killed", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_chara_killed", R"(
 local Event = require("game.Event")
 
 local function my_chara_killed_handler(e)
@@ -123,12 +127,12 @@ mod.store.global.killed_idx = -1
 Event.register("core.character_killed", my_chara_killed_handler)
 )"));
 
-    REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
     int idx = elona::rc;
     elona::Character& chara = elona::cdata[idx];
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_chara_killed")
-        ->env.set("idx", idx);
+        .get_mod("test_chara_killed")
+        ->env.raw_set("idx", idx);
 
     elona::damage_hp(cdata[idx], chara.max_hp + 1, -11);
 
@@ -142,8 +146,9 @@ TEST_CASE(
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_townsperson_killed", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_townsperson_killed", R"(
 local Chara = require("game.Chara")
 local Event = require("game.Event")
 
@@ -186,8 +191,9 @@ TEST_CASE(
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_special_chara_killed", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_special_chara_killed", R"(
 local Event = require("game.Event")
 
 local function my_chara_removed_handler(e)
@@ -205,12 +211,12 @@ Event.register("core.character_killed", my_chara_killed_handler)
 Event.register("core.character_removed", my_chara_removed_handler)
 )"));
 
-    REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
     int idx = elona::rc;
     elona::Character& chara = elona::cdata[idx];
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_special_chara_killed")
-        ->env.set("idx", idx);
+        .get_mod("test_special_chara_killed")
+        ->env.raw_set("idx", idx);
 
     // Give this character a role besides a townsperson.
     chara.character_role = 2002;
@@ -230,8 +236,9 @@ TEST_CASE("Test character refreshed callback", "[Lua: Callbacks]")
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_chara_refreshed", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_chara_refreshed", R"(
 local Event = require("game.Event")
 
 local function my_chara_refreshed_handler(e)
@@ -241,11 +248,11 @@ end
 Event.register("core.character_refreshed", my_chara_refreshed_handler)
 )"));
 
-    REQUIRE(elona::chara_create(-1, PUTIT_PROTO_ID, 4, 8));
+    REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
     int idx = elona::rc;
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_chara_refreshed")
-        ->env.set("idx", idx);
+        .get_mod("test_chara_refreshed")
+        ->env.raw_set("idx", idx);
 
     elona::chara_refresh(idx);
 
@@ -258,8 +265,9 @@ TEST_CASE("Test item created callback", "[Lua: Callbacks]")
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_item_created", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_item_created", R"(
 local Event = require("game.Event")
 
 local function my_item_created_handler(e)
@@ -271,12 +279,13 @@ mod.store.global.items = {}
 Event.register("core.item_created", my_item_created_handler)
 )"));
 
-    REQUIRE_SOME(elona::itemcreate(-1, PUTITORO_PROTO_ID, 4, 8, 3));
+    REQUIRE_SOME(
+        elona::itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3));
     int idx = elona::ci;
     REQUIRE(idx != -1);
     elona::lua::lua->get_mod_manager()
-        .get_enabled_mod("test_item_created")
-        ->env.set("idx", idx);
+        .get_mod("test_item_created")
+        ->env.raw_set("idx", idx);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_item_created",
@@ -287,8 +296,9 @@ TEST_CASE("Test map unloading callback", "[Lua: Callbacks]")
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_map_unloading", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_map_unloading", R"(
 local Event = require("game.Event")
 
 local function my_map_unloading_handler()
@@ -313,8 +323,9 @@ TEST_CASE(
 {
     start_in_debug_map();
 
-    REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().load_mod_from_script(
-        "test_map_local_chara", R"(
+    REQUIRE_NOTHROW(
+        elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
+            "test_map_local_chara", R"(
 local Chara = require("game.Chara")
 
 mod.store.global.chara = Chara.create(24, 24, "core.putit")

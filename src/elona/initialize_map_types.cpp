@@ -4,7 +4,7 @@
 #include "character_status.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_map.hpp"
-#include "event.hpp"
+#include "deferred_event.hpp"
 #include "gdata.hpp"
 #include "i18n.hpp"
 #include "itemgen.hpp"
@@ -15,6 +15,8 @@
 #include "quest.hpp"
 #include "text.hpp"
 #include "variables.hpp"
+
+
 
 namespace elona
 {
@@ -38,6 +40,8 @@ static void _init_map_shelter()
     map_data.bgm = 68;
 }
 
+
+
 static void _init_map_nefia()
 {
     generate_random_nefia();
@@ -48,6 +52,8 @@ static void _init_map_nefia()
     }
 }
 
+
+
 static void _init_map_museum()
 {
     map_initcustom(u8"museum_1"s);
@@ -55,9 +61,13 @@ static void _init_map_museum()
     map_placeplayer();
     map_data.user_map_flag = 0;
     flt();
-    itemcreate(-1, 24, 15, 17, 0);
-    inv[ci].param1 = 4;
+    if (const auto item = itemcreate_extra_inv(24, 15, 17, 0))
+    {
+        item->param1 = 4;
+    }
 }
+
+
 
 static void _init_map_shop()
 {
@@ -67,14 +77,20 @@ static void _init_map_shop()
     map_placeplayer();
     map_data.user_map_flag = 0;
     flt();
-    itemcreate(-1, 24, 17, 14, 0);
-    inv[ci].param1 = 8;
+    if (const auto item = itemcreate_extra_inv(24, 17, 14, 0))
+    {
+        item->param1 = 8;
+    }
     flt();
-    itemcreate(-1, 561, 19, 10, 0);
-    inv[ci].count = 5;
+    if (const auto item = itemcreate_extra_inv(561, 19, 10, 0))
+    {
+        item->count = 5;
+    }
     flt();
-    itemcreate(-1, 562, 17, 11, 0);
+    itemcreate_extra_inv(562, 17, 11, 0);
 }
+
+
 
 static void _init_map_crop()
 {
@@ -84,9 +100,13 @@ static void _init_map_crop()
     map_data.max_item_count = 80;
     map_data.user_map_flag = 0;
     flt();
-    itemcreate(-1, 24, 14, 5, 0);
-    inv[ci].param1 = 9;
+    if (const auto item = itemcreate_extra_inv(24, 14, 5, 0))
+    {
+        item->param1 = 9;
+    }
 }
+
+
 
 static void _init_map_ranch()
 {
@@ -96,11 +116,15 @@ static void _init_map_ranch()
     map_data.max_item_count = 80;
     map_data.user_map_flag = 0;
     flt();
-    itemcreate(-1, 24, 23, 8, 0);
-    inv[ci].param1 = 11;
+    if (const auto item = itemcreate_extra_inv(24, 23, 8, 0))
+    {
+        item->param1 = 11;
+    }
     flt();
-    itemcreate(-1, 562, 22, 6, 0);
+    itemcreate_extra_inv(562, 22, 6, 0);
 }
+
+
 
 static void _init_map_your_dungeon()
 {
@@ -110,9 +134,13 @@ static void _init_map_your_dungeon()
     map_data.max_item_count = 350;
     map_data.user_map_flag = 0;
     flt();
-    itemcreate(-1, 24, 39, 54, 0);
-    inv[ci].param1 = 15;
+    if (const auto item = itemcreate_extra_inv(24, 39, 54, 0))
+    {
+        item->param1 = 15;
+    }
 }
+
+
 
 static void _init_map_storage_house()
 {
@@ -122,6 +150,8 @@ static void _init_map_storage_house()
     map_data.max_item_count = 200;
     map_data.user_map_flag = 0;
 }
+
+
 
 static void _init_map_test_site()
 {
@@ -156,6 +186,8 @@ static void _init_map_test_site()
     cdata[rc].is_livestock() = true;
 }
 
+
+
 static void _init_map_lumiest_graveyard()
 {
     map_initcustom(u8"grave_1"s);
@@ -170,6 +202,8 @@ static void _init_map_lumiest_graveyard()
     }
 }
 
+
+
 static void _init_map_jail()
 {
     map_initcustom(u8"jail1"s);
@@ -178,41 +212,59 @@ static void _init_map_jail()
     map_placeplayer();
 }
 
+
+
 static void _init_map_truce_ground()
 {
     map_initcustom(u8"shrine_1"s);
     map_data.max_crowd_density = 10;
     flt();
-    itemcreate(-1, 171, 10, 8, 0);
-    inv[ci].param1 = 1;
-    inv[ci].own_state = 1;
+    if (const auto item = itemcreate_extra_inv(171, 10, 8, 0))
+    {
+        item->param1 = 1;
+        item->own_state = 1;
+    }
     flt();
-    itemcreate(-1, 171, 13, 8, 0);
-    inv[ci].param1 = 2;
-    inv[ci].own_state = 1;
+    if (const auto item = itemcreate_extra_inv(171, 13, 8, 0))
+    {
+        item->param1 = 2;
+        item->own_state = 1;
+    }
     flt();
-    itemcreate(-1, 171, 10, 13, 0);
-    inv[ci].param1 = 5;
-    inv[ci].own_state = 1;
+    if (const auto item = itemcreate_extra_inv(171, 10, 13, 0))
+    {
+        item->param1 = 5;
+        item->own_state = 1;
+    }
     flt();
-    itemcreate(-1, 171, 13, 13, 0);
-    inv[ci].param1 = 4;
-    inv[ci].own_state = 1;
+    if (const auto item = itemcreate_extra_inv(171, 13, 13, 0))
+    {
+        item->param1 = 4;
+        item->own_state = 1;
+    }
     flt();
-    itemcreate(-1, 171, 20, 8, 0);
-    inv[ci].param1 = 3;
-    inv[ci].own_state = 1;
+    if (const auto item = itemcreate_extra_inv(171, 20, 8, 0))
+    {
+        item->param1 = 3;
+        item->own_state = 1;
+    }
     flt();
-    itemcreate(-1, 171, 23, 8, 0);
-    inv[ci].param1 = 7;
-    inv[ci].own_state = 1;
+    if (const auto item = itemcreate_extra_inv(171, 23, 8, 0))
+    {
+        item->param1 = 7;
+        item->own_state = 1;
+    }
     flt();
-    itemcreate(-1, 171, 20, 13, 0);
-    inv[ci].param1 = 6;
-    inv[ci].own_state = 1;
+    if (const auto item = itemcreate_extra_inv(171, 20, 13, 0))
+    {
+        item->param1 = 6;
+        item->own_state = 1;
+    }
     flt();
-    itemcreate(-1, 171, 23, 13, 0);
-    inv[ci].own_state = 1;
+    if (const auto item = itemcreate_extra_inv(171, 23, 13, 0))
+    {
+        item->own_state = 1;
+    }
     map_data.bgm = 79;
     map_placeplayer();
     for (int cnt = 0, cnt_end = (map_data.max_crowd_density / 2); cnt < cnt_end;
@@ -222,6 +274,8 @@ static void _init_map_truce_ground()
         chara_create(-1, 0, -3, 0);
     }
 }
+
+
 
 static void _init_map_embassy()
 {
@@ -261,6 +315,8 @@ static void _init_map_embassy()
     map_data.bgm = 79;
     map_placeplayer();
 }
+
+
 
 static void _init_map_test_world_north_border()
 {
@@ -319,6 +375,8 @@ static void _init_map_test_world_north_border()
     event_add(30);
 }
 
+
+
 static void _init_map_tyris_border()
 {
     map_initcustom(u8"station-nt1"s);
@@ -374,6 +432,8 @@ static void _init_map_tyris_border()
     map_data.bgm = 79;
     map_placeplayer();
 }
+
+
 
 static void _init_map_the_smoke_and_pipe()
 {
@@ -445,6 +505,8 @@ static void _init_map_the_smoke_and_pipe()
     map_placeplayer();
 }
 
+
+
 static void _init_map_miral_and_garoks_workshop()
 {
     map_initcustom(u8"smith0"s);
@@ -466,6 +528,8 @@ static void _init_map_miral_and_garoks_workshop()
     map_placeplayer();
 }
 
+
+
 static void _init_map_mansion_of_younger_sister()
 {
     map_initcustom(u8"sister"s);
@@ -474,8 +538,10 @@ static void _init_map_mansion_of_younger_sister()
     if (mapupdate == 0)
     {
         flt();
-        itemcreate(-1, 668, 12, 8, 0);
-        inv[ci].param2 = 4;
+        if (const auto item = itemcreate_extra_inv(668, 12, 8, 0))
+        {
+            item->param2 = 4;
+        }
     }
     flt();
     chara_create(-1, 249, 12, 6);
@@ -495,14 +561,18 @@ static void _init_map_mansion_of_younger_sister()
     map_placeplayer();
 }
 
+
+
 static void _init_map_cyber_dome()
 {
     map_initcustom(u8"cyberdome"s);
     map_data.max_crowd_density = 10;
     flt();
-    itemcreate(-1, 171, 19, 5, 0);
-    inv[ci].param1 = 1;
-    inv[ci].own_state = 1;
+    if (const auto item = itemcreate_extra_inv(171, 19, 5, 0))
+    {
+        item->param1 = 1;
+        item->own_state = 1;
+    }
     flt();
     chara_create(-1, 173, 9, 16);
     cdata[rc].character_role = 1011;
@@ -532,6 +602,8 @@ static void _init_map_cyber_dome()
     map_data.bgm = 79;
     map_placeplayer();
 }
+
+
 
 static void _init_map_larna()
 {
@@ -592,6 +664,8 @@ static void _init_map_larna()
     map_placeplayer();
 }
 
+
+
 static void _init_map_arena()
 {
     map_initcustom(u8"arena_1"s);
@@ -649,6 +723,8 @@ static void _init_map_arena()
         }
     }
 }
+
+
 
 static void _init_map_pet_arena()
 {
@@ -713,6 +789,8 @@ static void _init_map_pet_arena()
     }
 }
 
+
+
 static void _init_map_fort_of_chaos_beast()
 {
     map_initcustom(u8"god"s);
@@ -722,6 +800,8 @@ static void _init_map_fort_of_chaos_beast()
     chara_create(-1, 175, 12, 14);
     map_placeplayer();
 }
+
+
 
 static void _init_map_fort_of_chaos_machine()
 {
@@ -733,6 +813,8 @@ static void _init_map_fort_of_chaos_machine()
     map_placeplayer();
 }
 
+
+
 static void _init_map_fort_of_chaos_collapsed()
 {
     map_initcustom(u8"god"s);
@@ -742,6 +824,8 @@ static void _init_map_fort_of_chaos_collapsed()
     chara_create(-1, 178, 12, 14);
     map_placeplayer();
 }
+
+
 
 static void _init_map_your_home()
 {
@@ -763,17 +847,25 @@ static void _init_map_your_home()
             chara_create(-1, 34, 16, 11);
             cdata[rc].character_role = 3;
             flt();
-            itemcreate(-1, 510, 6, 10, 0);
-            inv[ci].count = 3;
+            if (const auto item = itemcreate_extra_inv(510, 6, 10, 0))
+            {
+                item->count = 3;
+            }
             flt();
-            itemcreate(-1, 547, 15, 19, 0);
-            inv[ci].count = 4;
+            if (const auto item = itemcreate_extra_inv(547, 15, 19, 0))
+            {
+                item->count = 4;
+            }
             flt();
-            itemcreate(-1, 579, 9, 8, 0);
-            inv[ci].count = 6;
+            if (const auto item = itemcreate_extra_inv(579, 9, 8, 0))
+            {
+                item->count = 6;
+            }
             flt();
-            itemcreate(-1, 24, 18, 19, 0);
-            inv[ci].param1 = 1;
+            if (const auto item = itemcreate_extra_inv(24, 18, 19, 0))
+            {
+                item->param1 = 1;
+            }
         }
         else
         {
@@ -836,11 +928,12 @@ static void _init_map_your_home()
     else
     {
         flt();
-        itemcreate(
-            -1, 219, cdata.player().position.x, cdata.player().position.y, 0);
+        itemcreate_extra_inv(219, cdata.player().position, 0);
     }
     initialize_home_mdata();
 }
+
+
 
 static void _init_map_north_tyris()
 {
@@ -849,6 +942,8 @@ static void _init_map_north_tyris()
     map_placeplayer();
 }
 
+
+
 static void _init_map_south_tyris()
 {
     map_initcustom(u8"styris"s);
@@ -856,12 +951,16 @@ static void _init_map_south_tyris()
     map_placeplayer();
 }
 
+
+
 static void _init_map_test_world()
 {
     map_initcustom(u8"test"s);
     initialize_world_map();
     map_placeplayer();
 }
+
+
 
 static void _init_map_derphy_town()
 {
@@ -944,11 +1043,12 @@ static void _init_map_derphy_town()
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        dbid = 0;
         map_set_chara_generation_filter();
         chara_create(-1, dbid, -3, 0);
     }
 }
+
+
 
 static void _init_map_derphy_thieves_guild()
 {
@@ -993,6 +1093,8 @@ static void _init_map_derphy_thieves_guild()
     }
 }
 
+
+
 static void _init_map_derphy()
 {
     if (game_data.current_dungeon_level == 1)
@@ -1004,6 +1106,8 @@ static void _init_map_derphy()
         _init_map_derphy_thieves_guild();
     }
 }
+
+
 
 static void _init_map_palmia()
 {
@@ -1156,11 +1260,12 @@ static void _init_map_palmia()
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 25; ++cnt)
     {
-        dbid = 0;
         map_set_chara_generation_filter();
         chara_create(-1, dbid, -3, 0);
     }
 }
+
+
 
 static void _init_map_lumiest_town()
 {
@@ -1273,11 +1378,12 @@ static void _init_map_lumiest_town()
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 25; ++cnt)
     {
-        dbid = 0;
         map_set_chara_generation_filter();
         chara_create(-1, dbid, -3, 0);
     }
 }
+
+
 
 static void _init_map_lumiest_mages_guild()
 {
@@ -1319,6 +1425,8 @@ static void _init_map_lumiest_mages_guild()
     }
 }
 
+
+
 static void _init_map_lumiest_sewer()
 {
     map_data.tileset = 0;
@@ -1333,6 +1441,8 @@ static void _init_map_lumiest_sewer()
     game_data.entrance_type = 1;
     map_placeplayer();
 }
+
+
 
 static void _init_map_lumiest()
 {
@@ -1349,6 +1459,8 @@ static void _init_map_lumiest()
         _init_map_lumiest_sewer();
     }
 }
+
+
 
 static void _init_map_yowyn_town()
 {
@@ -1440,11 +1552,12 @@ static void _init_map_yowyn_town()
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 15; ++cnt)
     {
-        dbid = 0;
         map_set_chara_generation_filter();
         chara_create(-1, dbid, -3, 0);
     }
 }
+
+
 
 static void _init_map_yowyn_cat_mansion()
 {
@@ -1459,6 +1572,8 @@ static void _init_map_yowyn_cat_mansion()
     quest_place_target();
     map_placeplayer();
 }
+
+
 
 static void _init_map_yowyn_battle_field()
 {
@@ -1501,6 +1616,8 @@ static void _init_map_yowyn_battle_field()
     noaggrorefresh = 1;
 }
 
+
+
 static void _init_map_yowyn()
 {
     if (game_data.current_dungeon_level == 1)
@@ -1516,6 +1633,8 @@ static void _init_map_yowyn()
         _init_map_yowyn_battle_field();
     }
 }
+
+
 
 static void _init_map_noyel()
 {
@@ -1629,11 +1748,12 @@ static void _init_map_noyel()
     }
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        dbid = 0;
         map_set_chara_generation_filter();
         chara_create(-1, dbid, rnd(55), rnd(map_data.height));
     }
 }
+
+
 
 static void _init_map_port_kapul_town()
 {
@@ -1763,6 +1883,8 @@ static void _init_map_port_kapul_town()
     }
 }
 
+
+
 static void _init_map_port_kapul_fighters_guild()
 {
     map_data.tileset = 0;
@@ -1799,6 +1921,8 @@ static void _init_map_port_kapul_fighters_guild()
     }
 }
 
+
+
 static void _init_map_port_kapul_doom_ground()
 {
     map_data.tileset = 0;
@@ -1824,6 +1948,8 @@ static void _init_map_port_kapul_doom_ground()
     noaggrorefresh = 1;
 }
 
+
+
 static void _init_map_port_kapul()
 {
     if (game_data.current_dungeon_level == 1)
@@ -1839,6 +1965,8 @@ static void _init_map_port_kapul()
         _init_map_port_kapul_doom_ground();
     }
 }
+
+
 
 static void _init_map_vernis_town()
 {
@@ -1950,11 +2078,12 @@ static void _init_map_vernis_town()
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 25; ++cnt)
     {
-        dbid = 0;
         map_set_chara_generation_filter();
         chara_create(-1, dbid, -3, 0);
     }
 }
+
+
 
 static void _init_map_vernis_the_mine()
 {
@@ -1970,6 +2099,8 @@ static void _init_map_vernis_the_mine()
     map_placeplayer();
 }
 
+
+
 static void _init_map_vernis_robbers_hideout()
 {
     map_data.tileset = 0;
@@ -1983,6 +2114,8 @@ static void _init_map_vernis_robbers_hideout()
     quest_place_target();
     map_placeplayer();
 }
+
+
 
 static void _init_map_vernis_test_site()
 {
@@ -2000,6 +2133,8 @@ static void _init_map_vernis_test_site()
     mapstarty = 27;
     map_placeplayer();
 }
+
+
 
 static void _init_map_vernis()
 {
@@ -2021,6 +2156,8 @@ static void _init_map_vernis()
     }
 }
 
+
+
 static void _init_map_fields_forest()
 {
     mdatan(0) = i18n::s.get_enum_property("core.map.unique", "forest", 2);
@@ -2032,16 +2169,22 @@ static void _init_map_fields_forest()
     {
         flt();
         flttypemajor = 80000;
-        itemcreate(-1, 0, -1, -1, 0);
-        inv[ci].own_state = 1;
-        cell_data.at(inv[ci].position.x, inv[ci].position.y).chip_id_actual = 0;
+        if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
+        {
+            item->own_state = 1;
+            cell_data.at(item->position.x, item->position.y).chip_id_actual = 0;
+        }
     }
 }
+
+
 
 static void _init_map_fields_sea()
 {
     mdatan(0) = i18n::s.get_enum_property("core.map.unique", "sea", 2);
 }
+
+
 
 static void _init_map_fields_grassland()
 {
@@ -2058,10 +2201,14 @@ static void _init_map_fields_grassland()
     {
         flt();
         flttypemajor = 80000;
-        itemcreate(-1, 0, -1, -1, 0);
-        inv[ci].own_state = 1;
+        if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
+        {
+            item->own_state = 1;
+        }
     }
 }
+
+
 
 static void _init_map_fields_desert()
 {
@@ -2074,10 +2221,14 @@ static void _init_map_fields_desert()
     for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
     {
         flt();
-        itemcreate(-1, 527, -1, -1, 0);
-        inv[ci].own_state = 1;
+        if (const auto item = itemcreate_extra_inv(527, -1, -1, 0))
+        {
+            item->own_state = 1;
+        }
     }
 }
+
+
 
 static void _init_map_fields_snow_field()
 {
@@ -2094,10 +2245,14 @@ static void _init_map_fields_snow_field()
         flt();
         flttypemajor = 80000;
         fltselect = 8;
-        itemcreate(-1, 0, -1, -1, 0);
-        inv[ci].own_state = 1;
+        if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
+        {
+            item->own_state = 1;
+        }
     }
 }
+
+
 
 static void _init_map_fields_plain_field()
 {
@@ -2112,10 +2267,14 @@ static void _init_map_fields_plain_field()
     {
         flt();
         flttypemajor = 80000;
-        itemcreate(-1, 0, -1, -1, 0);
-        inv[ci].own_state = 1;
+        if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
+        {
+            item->own_state = 1;
+        }
     }
 }
+
+
 
 static void _init_map_fields_maybe_generate_encounter()
 {
@@ -2230,6 +2389,8 @@ static void _init_map_fields_maybe_generate_encounter()
     encounter = 0;
 }
 
+
+
 static void _init_map_fields()
 {
     map_data.width = 34;
@@ -2268,12 +2429,14 @@ static void _init_map_fields()
         {
             flt();
             flttypeminor = 64000;
-            itemcreate(-1, 0, -1, -1, 0);
+            itemcreate_extra_inv(0, -1, -1, 0);
         }
     }
 
     _init_map_fields_maybe_generate_encounter();
 }
+
+
 
 static void _init_map_the_void()
 {
@@ -2292,6 +2455,8 @@ static void _init_map_the_void()
         area_data[game_data.current_map].has_been_conquered = 0;
     }
 }
+
+
 
 static void _init_map_lesimas()
 {
@@ -2316,12 +2481,12 @@ static void _init_map_lesimas()
             cell_featset(x, y, tile_upstairs, 10);
             map_data.stair_up_pos = y * 1000 + x;
             map_placeplayer();
-            if (npcmemory(0, 2) == 0)
+            if (npcmemory(0, charaid2int(CharaId::zeome)) == 0)
             {
                 flt();
                 chara_create(-1, 2, 16, 6);
             }
-            else if (npcmemory(0, 23) == 0)
+            else if (npcmemory(0, charaid2int(CharaId::orphe)) == 0)
             {
                 flt();
                 chara_create(-1, 23, 16, 6);
@@ -2347,6 +2512,8 @@ static void _init_map_lesimas()
     }
 }
 
+
+
 static void _init_map_tower_of_fire()
 {
     if (game_data.current_dungeon_level ==
@@ -2362,6 +2529,8 @@ static void _init_map_tower_of_fire()
         generate_random_nefia();
     }
 }
+
+
 
 static void _init_map_crypt_of_the_damned()
 {
@@ -2379,6 +2548,8 @@ static void _init_map_crypt_of_the_damned()
     }
 }
 
+
+
 static void _init_map_ancient_castle()
 {
     if (game_data.current_dungeon_level ==
@@ -2394,6 +2565,8 @@ static void _init_map_ancient_castle()
         generate_random_nefia();
     }
 }
+
+
 
 static void _init_map_dragons_nest()
 {
@@ -2427,6 +2600,8 @@ static void _init_map_minotaurs_nest()
     }
 }
 
+
+
 static void _init_map_yeeks_nest()
 {
     generate_random_nefia();
@@ -2457,6 +2632,8 @@ static void _init_map_yeeks_nest()
     }
 }
 
+
+
 static void _init_map_pyramid_first_floor()
 {
     map_initcustom(u8"sqPyramid"s);
@@ -2471,6 +2648,8 @@ static void _init_map_pyramid_first_floor()
     }
 }
 
+
+
 static void _init_map_pyramid_second_floor()
 {
     map_initcustom(u8"sqPyramid2"s);
@@ -2478,6 +2657,8 @@ static void _init_map_pyramid_second_floor()
     map_data.bgm = 61;
     map_placeplayer();
 }
+
+
 
 static void _init_map_pyramid()
 {
@@ -2490,6 +2671,8 @@ static void _init_map_pyramid()
         _init_map_pyramid_second_floor();
     }
 }
+
+
 
 void initialize_map_from_map_type()
 {

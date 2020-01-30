@@ -1,26 +1,23 @@
 #include "keybind_serializer.hpp"
 #include <iostream>
-#include "../hcl.hpp"
+#include "../../thirdparty/json5/json5.hpp"
 #include "keybind.hpp"
 #include "keybind_manager.hpp"
+
+
 
 namespace elona
 {
 
 void KeybindSerializer::save(std::ostream& out)
 {
-    // Create a top level "keybindings" section.
-    hcl::Value keybindings = hcl::Value(hcl::Object());
-    keybindings.set("keybindings", hcl::Object());
-    hcl::Value* parent = keybindings.find("keybindings");
-    assert(parent);
+    // Top level object.
+    json5::value::object_type keybindings;
 
-    // Create "core" section.
-    parent->set("core", hcl::Object());
-    parent = parent->find("core");
-    assert(parent);
+    // "core" section.
+    json5::value::object_type core;
 
-    // Create sections under the top-level "keybindings" section for each mod
+    // Create sections under the top-level object for each mod
     // that has keybindings (for now, only "core"), then write their individual
     // config sections.
     for (const auto& pair : _keybind_manager)
@@ -29,7 +26,7 @@ void KeybindSerializer::save(std::ostream& out)
         const auto& binding = pair.second;
 
         // Add a new section for this action.
-        hcl::Object object;
+        json5::value::object_type object;
         bool valid = false;
 
         // Set primary, alternate and joystick bindings.
@@ -51,12 +48,20 @@ void KeybindSerializer::save(std::ostream& out)
 
         if (valid)
         {
-            parent->set(action_id, object);
+            core.emplace(action_id, object);
         }
     }
 
-    out << keybindings;
+    keybindings.emplace("core", core);
+    json5::stringify_options opts;
+    opts.prettify = true;
+    opts.sort_by_key = true;
+    opts.unquote_key = true;
+    opts.insert_trailing_comma = true;
+    out << json5::stringify(keybindings, opts);
 }
+
+
 
 optional<std::string> KeybindSerializer::_serialize_keybind(
     const Keybind& keybind)
@@ -68,6 +73,8 @@ optional<std::string> KeybindSerializer::_serialize_keybind(
 
     return keybind.to_string();
 }
+
+
 
 optional<std::string> KeybindSerializer::_serialize_joystick_key(snail::Key key)
 {

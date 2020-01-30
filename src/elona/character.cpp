@@ -8,6 +8,7 @@
 #include "area.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
+#include "chara_db.hpp"
 #include "character_status.hpp"
 #include "class.hpp"
 #include "ctrl_file.hpp"
@@ -86,7 +87,7 @@ int _get_random_npc_id()
 
 
 
-int chara_create_internal()
+int chara_create_internal(int chara_id)
 {
     if (rc == -1)
     {
@@ -106,7 +107,7 @@ int chara_create_internal()
     {
         p = 4;
     }
-    if (dbid == -1)
+    if (chara_id == -1)
     {
         if (fltselect == 0 && filtermax == 0 && fltnrace(0).empty())
         {
@@ -125,24 +126,22 @@ int chara_create_internal()
                 }
             }
         }
-        dbmode = 1;
-        dbid = _get_random_npc_id();
-        if (dbid == 0)
+        chara_id = _get_random_npc_id();
+        if (chara_id == 0)
         {
             if (fltselect == 2 || fixlv == Quality::special)
             {
                 fixlv = Quality::miracle;
             }
             flt(objlv + 10, fixlv);
-            dbmode = 1;
-            dbid = _get_random_npc_id();
+            chara_id = _get_random_npc_id();
         }
     }
 
     cm = 1;
     cmshade = 0;
-    ++npcmemory(1, dbid);
-    if (dbid == 323)
+    ++npcmemory(1, chara_id);
+    if (chara_id == 323)
     {
         if (rnd(5))
         {
@@ -153,8 +152,7 @@ int chara_create_internal()
             }
             cmshade = 1;
             flt(objlv, fixlv);
-            dbmode = 1;
-            dbid = _get_random_npc_id();
+            chara_id = _get_random_npc_id();
         }
     }
     if (game_data.current_map == mdata_t::MapId::the_void)
@@ -165,14 +163,13 @@ int chara_create_internal()
         }
     }
     novoidlv = 0;
-    if (dbid == 343)
+    if (chara_id == 343)
     {
         // Vanila-copatible CNPC is not supported now.
     }
     else
     {
-        dbmode = 3;
-        access_character_info();
+        chara_db_set_stats(int2charaid(chara_id));
     }
     if (cmshade)
     {
@@ -559,7 +556,7 @@ void initialize_character()
     cdata[rc].interest = 100;
     cdata[rc].impression = 50;
     cdata[rc].vision_distance = 14;
-    if (cdata[rc].id == 205)
+    if (cdata[rc].id == CharaId::maid)
     {
         cdata[rc].image = rnd(33) * 2 + cdata[rc].sex + 1;
     }
@@ -571,8 +568,9 @@ void initialize_character()
     {
         cdata[rc].nutrition = 5000 + rnd(4000);
     }
-    cdata[rc].height = cdata[rc].height + rnd((cdata[rc].height / 5 + 1)) -
-        rnd((cdata[rc].height / 5 + 1));
+    cdata[rc].height = cdata[rc].height +
+        rnd_capped((cdata[rc].height / 5 + 1)) -
+        rnd_capped((cdata[rc].height / 5 + 1));
     cdata[rc].weight =
         cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
     update_required_experience(cdata[rc]);
@@ -622,16 +620,8 @@ int chara_create(int slot, int chara_id, int x, int y)
         cxinit = x;
         cyinit = y;
     }
-    if (chara_id == 0)
-    {
-        dbid = -1;
-    }
-    else
-    {
-        dbid = chara_id;
-    }
     rc = slot;
-    int stat = chara_create_internal();
+    int stat = chara_create_internal(chara_id == 0 ? -1 : chara_id);
     initlv = 0;
     voidlv = 0;
     if (stat == 1)
@@ -639,7 +629,7 @@ int chara_create(int slot, int chara_id, int x, int y)
         if (rc == 56)
         {
             cdata[rc].set_state(Character::State::empty);
-            --npcmemory(1, cdata[rc].id);
+            --npcmemory(1, charaid2int(cdata[rc].id));
             return 1;
         }
         if (rc != 0)
@@ -701,20 +691,16 @@ void chara_refresh(int cc)
             }
         }
     }
-    else if (cdata[cc].id == 343)
+    else if (cdata[cc].id == CharaId::user)
     {
-        for (size_t i = 0; i < 32 * 30; ++i)
-        {
-            cdata[cc]._flags[i] =
-                userdata(40 + i / (8 * sizeof(int)), cdata[cc].cnpc_id) &
-                (1 << (i % (8 * sizeof(int))));
-        }
+        // Vanilla-compatible CNPC is not supported now.
     }
     else
     {
         for (size_t i = 0; i < 32 * 30; ++i)
         {
-            cdata[cc]._flags[i] = the_character_db[cdata[cc].id]->_flags[i];
+            cdata[cc]._flags[i] =
+                the_character_db[charaid2int(cdata[cc].id)]->_flags[i];
         }
     }
     for (auto&& growth_buff : cdata[cc].growth_buffs)
@@ -1139,7 +1125,7 @@ int chara_find(int id)
                 continue;
             }
         }
-        if (i.id == id)
+        if (i.id == int2charaid(id))
         {
             return i.index;
         }
@@ -1157,7 +1143,7 @@ int chara_find_ally(int id)
         {
             continue;
         }
-        if (cdata[i].id == id)
+        if (cdata[i].id == int2charaid(id))
         {
             return i;
         }
@@ -1213,7 +1199,7 @@ int chara_custom_talk(int cc, int talk_type)
             std::back_inserter(talk_file_buffer));
         use_external_file = true;
     }
-    else if (cdata[cc].id == 343)
+    else if (cdata[cc].id == CharaId::user)
     {
         talk_file_buffer = strutil::split_lines(usertxt(cdata[cc].cnpc_id));
         use_external_file = true;
@@ -1286,23 +1272,10 @@ int chara_custom_talk(int cc, int talk_type)
 
     if (cdata[cc].can_talk != 0)
     {
-        dbid = cdata[cc].id;
-        dbmode = talk_type;
-        access_character_info();
+        chara_db_get_talk(cdata[cc].id, talk_type);
         return 1;
     }
     return 0;
-}
-
-
-
-std::string chara_refstr(int id, int info_type)
-{
-    dbmode = 16;
-    dbid = id;
-    dbspec = info_type;
-    access_character_info();
-    return refstr;
 }
 
 
@@ -1472,7 +1445,7 @@ int chara_copy(const Character& source)
     // Increase crowd density.
     modify_crowd_density(slot, 1);
     // Increase the generation counter.
-    ++npcmemory(1, destination.id);
+    ++npcmemory(1, charaid2int(destination.id));
 
     return slot;
 }
@@ -1701,12 +1674,12 @@ void chara_relocate(
 
 
 
-void chara_set_item_which_will_be_used(Character& cc)
+void chara_set_item_which_will_be_used(Character& chara, const Item& item)
 {
-    int category = the_item_db[inv[ci].id]->category;
+    const auto category = the_item_db[itemid2int(item.id)]->category;
     if (category == 57000 || category == 52000 || category == 53000)
     {
-        cc.item_which_will_be_used = ci;
+        chara.item_which_will_be_used = item.index;
     }
 }
 

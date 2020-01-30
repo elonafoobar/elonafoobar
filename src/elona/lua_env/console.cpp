@@ -10,7 +10,7 @@
 #include "../../util/strutil.hpp"
 #include "../ability.hpp"
 #include "../character.hpp"
-#include "../config/config.hpp"
+#include "../config.hpp"
 #include "../debug.hpp"
 #include "../filesystem.hpp"
 #include "../input.hpp"
@@ -399,13 +399,11 @@ void Console::grab_input()
     auto pressed = [](Key key, ModKey modifiers = ModKey::none) {
         if (modifiers == ModKey::none)
         {
-            return Input::instance().is_pressed(
-                key, Config::instance().key_wait);
+            return Input::instance().is_pressed(key, g_config.key_wait());
         }
         else
         {
-            return Input::instance().is_pressed(
-                       key, Config::instance().key_wait) &&
+            return Input::instance().is_pressed(key, g_config.key_wait()) &&
                 (Input::instance().modifiers() & modifiers) != ModKey::none;
         }
     };
@@ -413,8 +411,8 @@ void Console::grab_input()
     while (_focused)
     {
         ++frame;
-        if (Config::instance().screen_refresh_wait > 0 &&
-            frame % Config::instance().screen_refresh_wait == 0)
+        if (g_config.screen_refresh_wait() > 0 &&
+            frame % g_config.screen_refresh_wait() == 0)
         {
             ++scrturn;
             ui_render_from_screensync();
@@ -426,13 +424,7 @@ void Console::grab_input()
 
         noteget(_input, 0);
 
-        await(Config::instance().general_wait);
-        key_check(KeyWaitDelay::walk_run);
-
-        if (keyhalt)
-        {
-            continue;
-        }
+        await(g_config.general_wait());
 
         if (_last_size != _input.size())
         {
@@ -533,7 +525,7 @@ void Console::grab_input()
             _input = "";
             _pos = 0;
 
-            keyhalt = 1;
+            input_halt_input(HaltInput::force);
         }
         _last_size = _input.size();
     }
@@ -602,11 +594,7 @@ void Console::_init_builtin_lua_functions()
     };
 
     funcs["ls"] = [this]() {
-        std::vector<std::string> mods;
-        range::transform(
-            lua().get_mod_manager().calculate_loading_order(),
-            std::back_inserter(mods),
-            [](const auto& mod_id) { return mod_id; });
+        auto mods = lua().get_mod_manager().sorted_mods();
         range::sort(mods);
 
         sol::table ret = env().create();
@@ -624,7 +612,6 @@ void Console::_init_builtin_lua_functions()
         game_data.wizard = 1;
         cdatan(1, 0) = "*Debug*";
         print("Wizard mode activated.");
-        print("Please get on Ylva Express on Platform 9 ¾.");
     };
 
     funcs["voldemort"] = [this]() {
@@ -653,14 +640,6 @@ void Console::_init_builtin_lua_functions()
         game_data.wizard = 0;
         cdatan(1, 0) = random_title(RandomTitleType::character);
         print("Wizard mode inactivated.");
-        print("I am perfectly normal, thank you very much.");
-    };
-
-    funcs["httpget"] = [this](const std::string& url) {
-        spider::http::Request req{spider::http::Verb::GET, url};
-        req.send(
-            [this](const auto& res) { print(res.body); },
-            [this](const auto& err) { print(err.what()); });
     };
 
     // Map functions stored in COMMANDS._BUILTIN_ to global.
