@@ -26,4 +26,7 @@ Vorlent
     Fixed regression bug, crash, build error, and so on. Also refactored codebase.
 
 Sora
-    Fixed mojibake and crash bug.
+    Fixed mojibake and several crash bugs.
+
+EvgenijM86
+    Add digital clock/auto target options.

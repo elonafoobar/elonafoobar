@@ -1,5 +1,88 @@
 # Changelog
 
+## [0.6.0] - 2019-02-01
+
+### Added
+
+- Add digital clock option in "Ex setting (foobar)" seciton.
+  - If it is set to "Yes", the clock on the top left is replaced by a simple 24 hours digital clock. It shows hour, minute and second.
+  - Default: "No"
+- Add party auto target option in "Ex setting (foobar)" section.
+  - If it is set to "Yes", your party members (excluding you) will automatically attack enemies that are visible to you.
+  - Default: "No"
+- [mod] Implement mod list feature to enable or disable mods.
+  - Add new file `profile/<current profile>/mods.json` to list mods you want to enable.
+  - Add version number to the mod folder's name. E.g., `core-0.2.6`
+  - You can edit the file directly, or enable/disable via GUI, "Mod List" menu.
+- Show message prompt after creating a new mod from template.
+- [mod] Add `Rand.rnd_capped(n)`, a `Rand.rnd`'s variant which returns an integer in `[0, n')` where `n'` is in `min(n, 32768)`.
+- [mod] Add `JSON5` module. It has two functions, `JSON5.parse()` and `JSON5.stringify()`.
+
+
+### Changed
+
+- Migrate some of HCL files to Lua and JSON5.
+  - `keybindings.hcl` -> `keybindings.json`
+  - `config.hcl` -> `config.json`
+  - [mod] `config_def.hcl` of each mod -> `config-schema.lua`
+  - [mod] `mod.hcl` of each mod -> `mod.json`
+- Limit some of random number's range in order to emulate vanilla's behavior. For example, the amount of money you will gain/lose in a random event is capped as it is in vanilla.
+- Improve documentation for developers.
+- Improve shadow rendering of player's sight.
+- Abolish the upper limit of the number of bone file entries (80 bones, before).
+  - The previous bone file (`bone.txt`) is *not* compatible with the new one.
+- Change the default key bindings of "Toggle Console" and "Open Console".
+  - Toggle Console: `F12`
+  - Open Console: `Shift+F12`
+  - Previously, `F12` is bound to "Enable Voldemort mode" (Voldemort mode is super wizard mode). In this version, there is no shortcut key for it, but you can run `voldemort` command in the console to enable the mode.
+- Make it possible to open debug console in muggle mode (= non-wizard mode).
+- Do not set quest-related data in quest target item.
+  - With this change, quest items town villeggers have stack with other items.
+- [mod] Unify `Config.get_{type}` and `Config.set_{type}`.
+  - Use `Config.get()` instead of `Config.get_int()`, `Config.get_bool()` and `Config.get_string()`.
+  - Use `Config.set()` instead of `Config.set_int()`, `Config.set_bool()` and `Config.set_string()`.
+- Change welcome message shown on game starting.
+  - The original one: "Lafrontier presents Elona ver 1.22. Welcome traveler!"
+  - Because this variant is neither "Elona ver 1.22" nor developed by "Lafrontier", change the message to "Welcome traveler!"
+
+
+### Removed
+
+- Delete support of old save (foobar v0.4.x or older)
+  - If you have such a save, please update it in v0.5.0 and then upgrade v0.6.0.
+- Remove Android OS support. Because of,
+  - Far away from mobile-friendly UI,
+  - Too small text and too much information for mobile screen, and
+  - Performance hit caused by mod feautre.
+  - It costs too much to solve all problems above.
+  - As Elona foobar is OSS, you can fork it as long as you follow the license if you want Android version still.
+
+
+### Fixed
+
+- [vanilla] Fix that some game events might cause "time reversal".
+  - Some events such as God inside Ehekatl, marriage, reunion with pets are processed in somewhat wield way in vanilla. The most recently triggered event was processed first, but it should be last.
+- [vanilla] Fix "duplicate map exit bug".
+  - Bug: if you leave a quest map at the exact turn when time is up, you will go to the world map.
+- [vanilla] Fix shadow rendering of player's sight. Some shadows did not connect with each other.
+- Improve error handling in network connection.
+- Fix that Tuwen does not drop anything.
+- Fix crash due to DLL error on Windows.
+- Fix crash in charamaking race menu.
+- Fix that Wizard's Harvest spell is nerfed accidentally.
+- Fix map generation algorithm (in the previous version, a shape of room might have differed a bit from vanilla).
+- Fix cat sister/younger sister/maid talking different character's dialog.
+- Fix rare crash when starting a hunting quest.
+- Fix that you cannot run/attack fast.
+- Fix that water ripples disappear in very short frames.
+- [mod] Fix the manifest file of the mod which is created from a template.
+  - The manifest file of the mod created from a template was just a copy of the template mod's. Now, the file is edited after copying with the name you input.
+- Fix crash due to dylib error on macOS.
+- Fix `*` (asterisk) key (not in numpad) being unbindable in JIS layout keyboard (a keyboard layout most common in Japan).
+- Fix typo.
+
+
+
 ## [0.5.0] - 2019-08-12
 
 ### Added
