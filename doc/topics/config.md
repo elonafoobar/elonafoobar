@@ -187,7 +187,7 @@ DOC
 To access and change config options from mods, use the [Config](../modules/Config.html) API.
 
 ```lua
-local Config = require("game.Config")
+local Config = Elona.game.Config
 
 print(Config.get("core.game.extra_help"))
 print(Config.set("core.balance.restock_interval", 10))

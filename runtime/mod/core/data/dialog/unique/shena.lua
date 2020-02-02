@@ -1,9 +1,9 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
+local Chara = Elona.game.Chara
+local GUI = Elona.game.GUI
+local Internal = Elona.game.Internal
+local Item = Elona.game.Item
 
-local common = require_relative("data/dialog/common")
+local common = require("data/dialog/common")
 
 return {
    id = "shena",

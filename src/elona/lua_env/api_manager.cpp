@@ -109,9 +109,7 @@ Elona = Elona.game.ReadOnly.make_read_only(Elona)
 
 void APIManager::bind(LuaEnv& lua, sol::table table)
 {
-    table["require"] = sol::overload([&lua](const std::string& module) {
-        return lua.get_api_manager().try_find_api(module);
-    });
+    table["Elona"] = lua.get_api_manager().get_master_api_table();
 }
 
 

@@ -43,10 +43,7 @@ impl ModuleComment {
         if self.is_class {
             format!("--  @classmod {}", self.module)
         } else {
-            format!(
-                "--  @usage local {0} = require(\"game.{0}\")\nmodule \"{0}\"",
-                self.module
-            )
+            format!("--  @usage local {0} = Elona.game.{0}\nmodule \"{0}\"", self.module)
         }
     }
 }

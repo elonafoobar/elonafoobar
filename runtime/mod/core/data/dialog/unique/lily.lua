@@ -1,13 +1,13 @@
-local World = require("game.World")
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local Map = require("game.Map")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
-local table = require("game.table")
+local World = Elona.game.World
+local Chara = Elona.game.Chara
+local GUI = Elona.game.GUI
+local Map = Elona.game.Map
+local I18N = Elona.game.I18N
+local Internal = Elona.game.Internal
+local Item = Elona.game.Item
+local table = Elona.game.table
 
-local common = require_relative("data/dialog/common")
+local common = require("data/dialog/common")
 
 local function give_potion()
    local potion = Item.find("core.potion_of_cure_corruption", "PlayerInventory")

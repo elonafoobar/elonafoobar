@@ -15,7 +15,7 @@ ExportManager::ExportManager(LuaEnv& lua)
 
     safe_script(
         R"(
-scan_exports = require_relative("private/scan_exports")
+scan_exports = require("private/scan_exports")
 )");
 }
 

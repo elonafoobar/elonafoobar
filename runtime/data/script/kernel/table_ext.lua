@@ -1,4 +1,4 @@
-local table = require_relative("table")
+local table = require("table")
 
 --- Given a candidate search function, iterates over the table, calling the function
 --- for each element in the table, and returns the first element the search function returned true.

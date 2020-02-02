@@ -4,7 +4,7 @@ local json5_stringify = json5_stringify
 
 
 
-local eval_in_dsl_env = require_relative("config_dsl")
+local eval_in_dsl_env = require("config_dsl")
 
 
 

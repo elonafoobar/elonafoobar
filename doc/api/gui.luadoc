@@ -1,5 +1,5 @@
 --- Functions for manipulating the player's user interface.
---  @usage local GUI = require("game.GUI")
+--  @usage local GUI = Elona.game.GUI
 module "GUI"
 
 --- Prints some text in the HUD message window.

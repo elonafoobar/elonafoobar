@@ -1,6 +1,6 @@
-require_relative("tests/lua/support/minctest")
+require("tests/lua/support/minctest")
 
-local Config = require("game.Config")
+local Config = Elona.game.Config
 
 
 

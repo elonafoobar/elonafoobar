@@ -2,7 +2,7 @@
 --  name of the variant as a string for its value. This means that
 --  anywhere an enum value is required, you can pass a string with its
 --  name instead of using the <code>Enums</code> table.
---  @usage local Enums = require("game.Enums")
+--  @usage local Enums = Elona.game.Enums
 module "Enums"
 
 --- A source of damage to be used with <code>LuaCharacter.damage_hp</code>.

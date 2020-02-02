@@ -1,6 +1,6 @@
-local Chara = require("game.Chara")
-local Math = require("game.Math")
-local I18N = require("game.I18N")
+local Chara = Elona.game.Chara
+local Math = Elona.game.Math
+local I18N = Elona.game.I18N
 
 local function mod_skill_level(args, id, amount)
    local skill = args.chara:get_skill(id)

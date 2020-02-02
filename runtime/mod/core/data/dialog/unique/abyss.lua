@@ -1,12 +1,12 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local Math = require("game.Math")
-local I18N = require("game.I18N")
-local Item = require("game.Item")
-local World = require("game.World")
-local table = require("game.table")
+local Chara = Elona.game.Chara
+local GUI = Elona.game.GUI
+local Math = Elona.game.Math
+local I18N = Elona.game.I18N
+local Item = Elona.game.Item
+local World = Elona.game.World
+local table = Elona.game.table
 
-local common = require_relative("data/dialog/common")
+local common = require("data/dialog/common")
 
 local function start_trial()
     World.data.joining_thieves_guild = 1

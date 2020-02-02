@@ -25,7 +25,7 @@ HandleManager::HandleManager(LuaEnv& lua)
     lua_state()->set("_IS_TEST", g_config.is_test());
 
     // Load the Lua chunk for storing handles.
-    safe_script(R"(Handle = require_relative("handle"))");
+    safe_script(R"(Handle = require("handle"))");
 
     bind(lua);
 }

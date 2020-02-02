@@ -88,7 +88,7 @@ private:
      * the Rand module would have module_name "Rand".
      *
      * This is used by require in Lua to get references to API tables. So, the
-     * Rand table would be accessed from Lua by calling require("game.Rand").
+     * Rand table would be accessed from Lua by calling Elona.game.Rand.
      */
     sol::optional<sol::table> try_find_api(const std::string& name) const;
 };

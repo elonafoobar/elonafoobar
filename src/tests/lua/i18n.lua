@@ -1,10 +1,10 @@
-require_relative("tests/lua/support/minctest")
+require("tests/lua/support/minctest")
 
-local I18N = require("game.I18N")
+local I18N = Elona.game.I18N
 
-local Chara = require("game.Chara")
-local FOV = require("game.FOV")
-local Item = require("game.Item")
+local Chara = Elona.game.Chara
+local FOV = Elona.game.FOV
+local Item = Elona.game.Item
 
 lrun("test I18N.get", function()
         Testing.start_in_debug_map()

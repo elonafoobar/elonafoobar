@@ -1,5 +1,5 @@
 --- Functions for working with positions.
---  @usage local Pos = require("game.Pos")
+--  @usage local Pos = Elona.game.Pos
 module "Pos"
 
 --- Returns the distance between two points.

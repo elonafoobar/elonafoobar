@@ -1,6 +1,6 @@
 --- Functions for working with the current map.
 --  There is only ever one map loaded at a given time.
---  @usage local Map = require("game.Map")
+--  @usage local Map = Elona.game.Map
 module "Map"
 
 --- Returns the current map's width. This is only valid until the map

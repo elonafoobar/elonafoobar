@@ -1,5 +1,5 @@
 --- Functions for working with randomness.
---  @usage local Rand = require("game.Rand")
+--  @usage local Rand = Elona.game.Rand
 module "Rand"
 
 --- Returns a random number from 0 to n, exclusive.
