@@ -290,6 +290,7 @@ else() # GCC or Clang
     "g"
     "O0"
     "DDEBUG"
+    "DSOL_CHECK_ARGUMENTS"
     )
   if(ELONA_BUILD_TARGET STREQUAL "BENCH")
     list(APPEND GENERAL_OPTIONS "g1")

@@ -205,7 +205,7 @@ function eating_effect.quickling(eater)
    eat_message(eater, "quickling", Enums.Color.Green)
 
    local current = eater:get_skill("core.attribute_speed").current_level
-   local amount = Math.clamp(2500 - current * current / 10, 20, 2500)
+   local amount = Math.clamp(2500 - current * current // 10, 20, 2500)
    eater:gain_skill_exp("core.attribute_speed", amount);
 end
 

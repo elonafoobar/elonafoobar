@@ -143,7 +143,7 @@ local function load_default_values_if_unset()
          -- Almost all of options have thier own default values, but there are some exceptions:
          -- * Sections
          -- * Option "core.screen.display_mode" in headless mode
-         if schema.default then
+         if schema.default ~= nil then
             Config.set(option_key, schema.default)
          end
       end

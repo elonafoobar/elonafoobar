@@ -34,8 +34,8 @@ APIManager::APIManager(LuaEnv& lua)
 
 bool APIManager::is_loaded()
 {
-    bool loaded = env()["_LOADED"];
-    return loaded;
+    sol::optional<bool> loaded = env()["_LOADED"];
+    return loaded && *loaded;
 }
 
 
