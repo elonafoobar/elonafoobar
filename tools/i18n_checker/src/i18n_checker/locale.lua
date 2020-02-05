@@ -38,7 +38,7 @@ function locale.make_table(source)
    local state = {}
    local parsed = hclua.parse(source.text)
 
-   visit_object(state, "core", parsed, source.filename)
+   visit_object(state, "core", parsed.locale, source.filename)
 
    return state
 end

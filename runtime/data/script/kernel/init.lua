@@ -2,7 +2,6 @@
 --- Don't change anything here unless you know what you're doing!
 
 Elona.game.Debug.inspect = require_relative("inspect").inspect
-Elona.game.HCL = require_relative("hclua")
 Elona.game.Iter = require_relative("iter")
 Elona.game.ReadOnly = require_relative("readonly")
 Elona.game.string = require_relative("string")
