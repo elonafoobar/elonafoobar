@@ -309,7 +309,7 @@ impl Comment {
         }
     }
 
-    pub fn render(&self, writer: &mut Write) -> io::Result<()> {
+    pub fn render<W: Write>(&self, writer: &mut W) -> io::Result<()> {
         writer.write(to_lua_comment(&self.text).as_bytes())?;
         match &self.content {
             Content::Function(f) => writer.write(&f.signature().as_bytes()).map(|_| ())?,
@@ -410,7 +410,7 @@ fn strip_comment(text: &str) -> Option<(String, Metadata)> {
     let strip_preserve_leading_space_in_lua_code_block =
         |i| re_preserve_leading_space_in_lua_code_block.captures(i).and_then(|c| c.get(1)).unwrap().as_str();
 
-    let mut meta: Metadata;
+    let meta: Metadata;
 
     match parts.first() {
         Some(st) => {
@@ -503,7 +503,7 @@ fn get_module_comment_of_entity<'a>(entity: &Entity<'a>, is_class: bool) -> Opti
 }
 
 // Check whether the file has "@noluadoc" directive WITHOUT #include macro expansion.
-fn has_noluadoc(path: &Path) -> Result<bool, Box<std::error::Error>> {
+fn has_noluadoc(path: &Path) -> Result<bool, Box<dyn std::error::Error>> {
     let content = read_to_string(path)?;
     Ok(content.find(NOLUADOC).is_some())
 }
