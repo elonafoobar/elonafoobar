@@ -1,6 +1,6 @@
-local Data = require("game.Data")
-local Item = require("game.Item")
-local Rand = require("game.Rand")
+local Data = Elona.game.Data
+local Item = Elona.game.Item
+local Rand = Elona.game.Rand
 
 local chara_drop = {}
 

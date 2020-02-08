@@ -1,6 +1,6 @@
-local Chara = require("game.Chara")
-local I18N = require("game.I18N")
-local World = require("game.World")
+local Chara = Elona.game.Chara
+local I18N = Elona.game.I18N
+local World = Elona.game.World
 
 return {
    id = "orphe",

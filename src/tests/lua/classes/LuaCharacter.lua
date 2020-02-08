@@ -1,8 +1,8 @@
-require_relative("tests/lua/support/minctest")
+require("tests/lua/support/minctest")
 
-local Chara = require("game.Chara")
-local Enums = require("game.Enums")
-local Skill = require("game.Skill")
+local Chara = Elona.game.Chara
+local Enums = Elona.game.Enums
+local Skill = Elona.game.Skill
 
 lrun("test LuaCharacter:damage_hp", function()
         Testing.start_in_debug_map()

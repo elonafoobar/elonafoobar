@@ -1,8 +1,8 @@
-local Data = require("game.Data")
-local Item = require("game.Item")
-local Math = require("game.Math")
-local Chara = require("game.Chara")
-local Rand = require("game.Rand")
+local Data = Elona.game.Data
+local Item = Elona.game.Item
+local Math = Elona.game.Math
+local Chara = Elona.game.Chara
+local Rand = Elona.game.Rand
 
 local shop_inventory = {}
 

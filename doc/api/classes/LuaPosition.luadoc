@@ -3,7 +3,7 @@
 --  @classmod LuaPosition
 
 --- Constructs a new LuaPosition.
---  @usage local LuaPosition = require("game.LuaPosition")
+--  @usage local LuaPosition = Elona.game.LuaPosition
 --  local pos = LuaPosition.new()
 --  @function new
 function new() end

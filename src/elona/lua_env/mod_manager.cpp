@@ -541,9 +541,9 @@ void ModManager::setup_mod_globals(ModEnv& mod)
     {
         auto state = lua_state();
         auto& chunk_cache = *mod.chunk_cache;
-        mt["require_relative"] = [state, &chunk_cache](
-                                     const std::string& name,
-                                     sol::this_environment this_env) {
+        mt["require"] = [state, &chunk_cache](
+                            const std::string& name,
+                            sol::this_environment this_env) {
             sol::environment env = this_env;
             return chunk_cache.require(name, env, *state);
         };

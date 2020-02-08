@@ -1,9 +1,9 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
-local table = require("game.table")
+local Chara = Elona.game.Chara
+local GUI = Elona.game.GUI
+local I18N = Elona.game.I18N
+local Internal = Elona.game.Internal
+local Item = Elona.game.Item
+local table = Elona.game.table
 
 local function can_receive_reward()
    local count = Internal.get_quest_flag("kill_count_of_little_sister")

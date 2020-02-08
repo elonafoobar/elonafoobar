@@ -1,4 +1,4 @@
-local EventTree = require_relative("event_tree")
+local EventTree = require("event_tree")
 
 local hooks = {}
 local instanced_hooks = {}

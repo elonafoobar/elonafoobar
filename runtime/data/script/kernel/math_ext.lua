@@ -1,4 +1,4 @@
-local math = require_relative("math")
+local math = require("math")
 
 local Math = {}
 

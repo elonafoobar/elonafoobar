@@ -1,9 +1,9 @@
-local Chara = require("game.Chara")
-local Data = require("game.Data")
-local I18N = require("game.I18N")
-local Input = require("game.Input")
-local Internal = require("game.Internal")
-local table = require("game.table")
+local Chara = Elona.game.Chara
+local Data = Elona.game.Data
+local I18N = Elona.game.I18N
+local Input = Elona.game.Input
+local Internal = Elona.game.Internal
+local table = Elona.game.table
 
 local function dialog_error(talk, msg, err)
    if err ~= nil then

@@ -1,9 +1,9 @@
 local exports = {}
 
-exports.eating_effect = require_relative("exports/eating_effect")
+exports.eating_effect = require("exports/eating_effect")
 
-exports.impl = require_relative("exports/impl")
+exports.impl = require("exports/impl")
 
-require_relative("i18n/init")
+require("i18n/init")
 
 return exports

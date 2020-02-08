@@ -1,8 +1,8 @@
 --- Functions to be used inside translations, like "${itemname(_1, _2, _3)}".
-local FOV = require("game.FOV")
-local I18N = require("game.I18N")
-local Item = require("game.Item")
-local string = require("game.string")
+local FOV = Elona.game.FOV
+local I18N = Elona.game.I18N
+local Item = Elona.game.Item
+local string = Elona.game.string
 
 local i18n = {}
 

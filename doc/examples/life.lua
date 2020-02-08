@@ -1,7 +1,7 @@
-local Map = require("game.Map")
-local Enums = require("game.Enums")
-local Event = require("game.Event")
-local Rand = require("game.Rand")
+local Map = Elona.game.Map
+local Enums = Elona.game.Enums
+local Event = Elona.game.Event
+local Rand = Elona.game.Rand
 
 local function create_life_grid()
    local grid = {}

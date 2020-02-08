@@ -2,7 +2,7 @@
 --  Both skills and spells are represented through the same experience
 --  and leveling system. The only real difference is that spells have
 --  an additional spell stock value.
---  @usage local Skill = require("game.Skill")
+--  @usage local Skill = Elona.game.Skill
 module "Skill"
 
 --- Obtains a character's resistance level for an element.

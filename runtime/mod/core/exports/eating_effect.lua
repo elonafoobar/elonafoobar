@@ -1,10 +1,10 @@
-local Chara = require("game.Chara")
-local Enums = require("game.Enums")
-local FOV = require("game.FOV")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Math = require("game.Math")
-local Rand = require("game.Rand")
+local Chara = Elona.game.Chara
+local Enums = Elona.game.Enums
+local FOV = Elona.game.FOV
+local GUI = Elona.game.GUI
+local I18N = Elona.game.I18N
+local Math = Elona.game.Math
+local Rand = Elona.game.Rand
 
 local eating_effect = {}
 

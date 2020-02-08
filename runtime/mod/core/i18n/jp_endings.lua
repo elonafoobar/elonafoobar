@@ -1,5 +1,5 @@
-local I18N = require("game.I18N")
-local Rand = require("game.Rand")
+local I18N = Elona.game.I18N
+local Rand = Elona.game.Rand
 
 local marks = {"。", "？", "！", ""}
 local endings = {

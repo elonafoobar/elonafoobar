@@ -1,4 +1,4 @@
-local unique = require_relative("data/dialog/unique")
+local unique = require("data/dialog/unique")
 
 data:define_type("dialog")
 data:add_multi(

@@ -1,10 +1,10 @@
-local Calc = require("game.Calc")
-local Map = require("game.Map")
-local Math = require("game.Math")
-local Rand = require("game.Rand")
-local table = require("game.table")
+local Calc = Elona.game.Calc
+local Map = Elona.game.Map
+local Math = Elona.game.Math
+local Rand = Elona.game.Rand
+local table = Elona.game.table
 
-local map = require_relative("data/map/static")
+local map = require("data/map/static")
 
 local function chara_filter_town(callbacks)
    return function()

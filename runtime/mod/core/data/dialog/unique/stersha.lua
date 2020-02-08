@@ -1,4 +1,4 @@
-local Internal = require("game.Internal")
+local Internal = Elona.game.Internal
 
 return {
    id = "stersha",

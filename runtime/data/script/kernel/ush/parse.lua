@@ -1,5 +1,5 @@
-local lex = require_relative("ush/lex")
-local ast = require_relative("ush/ast")
+local lex = require("ush/lex")
+local ast = require("ush/ast")
 
 
 -- Parser

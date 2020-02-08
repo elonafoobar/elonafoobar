@@ -1,8 +1,8 @@
-require_relative("tests/lua/support/minctest")
+require("tests/lua/support/minctest")
 
-local Chara = require("game.Chara")
-local Item = require("game.Item")
-local World = require("game.World")
+local Chara = Elona.game.Chara
+local Item = Elona.game.Item
+local World = Elona.game.World
 
 Testing.start_in_debug_map()
 

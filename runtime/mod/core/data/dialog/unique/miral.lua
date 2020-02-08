@@ -1,10 +1,10 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
-local World = require("game.World")
-local table = require("game.table")
+local Chara = Elona.game.Chara
+local GUI = Elona.game.GUI
+local I18N = Elona.game.I18N
+local Internal = Elona.game.Internal
+local Item = Elona.game.Item
+local World = Elona.game.World
+local table = Elona.game.table
 
 local function upgrade_cart_cost()
    return (World.data.current_cart_limit - World.data.initial_cart_limit) / 10000 + 1
