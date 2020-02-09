@@ -11,7 +11,7 @@ namespace lua
 {
 
 /**
- * @luadoc
+ * @luadoc register
  *
  * Registers a new console command.
  *
