@@ -1,4 +1,5 @@
 #include "main.hpp"
+#include "../snail/filedialog.hpp"
 #include "../util/tinyargparser.hpp"
 #include "config.hpp"
 #include "init.hpp"
@@ -90,6 +91,65 @@ void _start_elona()
     }
 }
 
+
+
+bool install_if_needed()
+{
+    if (fs::exists(filesystem::dirs::graphic() / "deco_blend.bmp"))
+    {
+        return true;
+    }
+
+    snail::OpenFolderDialog ofd{filesystem::dirs::exe().parent_path()};
+    const auto result = ofd.show();
+    switch (result.type)
+    {
+    case snail::FileDialogResultType::error: return false;
+    case snail::FileDialogResultType::okay: break;
+    case snail::FileDialogResultType::cancel: return false;
+    default: assert(0); break;
+    }
+
+    const auto& vanilla_path = result.filepath;
+    if (!fs::exists(vanilla_path / "elona.exe")) // is the folder elona?
+    {
+        return false;
+    }
+
+    // This image file exists only in Elona 1.22 or variants.
+    // This condition can verify whether this elona folder is 1.22, not 1.16.
+    if (!fs::exists(vanilla_path / "graphic" / "deco_blend.bmp"))
+    {
+        return false;
+    }
+
+    for (const auto& folder_name : {"graphic", "sound"})
+    {
+        const auto source = vanilla_path / folder_name;
+        const auto destination = filesystem::dirs::exe() / folder_name;
+        if (!fs::exists(destination))
+        {
+            if (!fs::create_directories(destination))
+            {
+                throw std::runtime_error{
+                    "Failed to create directory: " +
+                    filepathutil::make_preferred_path_in_utf8(destination)};
+            }
+        }
+        for (const auto& entry : fs::directory_iterator{source})
+        {
+            const auto from = entry.path();
+            const auto to = destination / from.filename();
+            if (fs::is_regular_file(from))
+            {
+                fs::copy_file(from, to, fs::copy_option::overwrite_if_exists);
+            }
+        }
+    }
+
+    return true;
+}
+
 } // namespace
 
 
@@ -115,6 +175,11 @@ int run(int argc, const char* const* argv)
     }
     const auto profile = args.get_or("profile", profile::default_profile_id);
     profile::ProfileManager::instance().init(profile);
+
+    if (!install_if_needed())
+    {
+        return -1;
+    }
 
     init();
     _start_elona();
