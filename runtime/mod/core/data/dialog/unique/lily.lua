@@ -5,7 +5,7 @@ local Map = Elona.game.Map
 local I18N = Elona.game.I18N
 local Internal = Elona.game.Internal
 local Item = Elona.game.Item
-local table = Elona.game.table
+local table = table
 
 local common = require("data/dialog/common")
 

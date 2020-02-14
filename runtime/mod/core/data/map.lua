@@ -1,8 +1,8 @@
 local Calc = Elona.game.Calc
 local Map = Elona.game.Map
-local Math = Elona.game.Math
+local math = math
 local Rand = Elona.game.Rand
-local table = Elona.game.table
+local table = table
 
 local map = require("data/map/static")
 
@@ -538,7 +538,7 @@ data:add_multi(
          can_return_to = true,
          prevents_domination = true,
          chara_filter = function()
-            return { level = Math.modf(Map.current_dungeon_level(), 50) + 5, quality = "Bad" }
+            return { level = math.modf(Map.current_dungeon_level(), 50) + 5, quality = "Bad" }
          end
       },
       {

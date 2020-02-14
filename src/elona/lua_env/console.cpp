@@ -564,9 +564,7 @@ void Console::_init_builtin_lua_functions()
     // Table for built-in Lua functions.
     sol::table funcs = _command_table()[_namespace_builtin];
 
-    auto inspect = safe_script_file(
-        filesystem::dirs::data() / "script" / "kernel" / "inspect.lua");
-    funcs["inspect"] = inspect;
+    funcs["inspect"] = lua_state()->globals()["prelude"]["inspect"];
 
     funcs["dump"] = [this]() {
         std::stringstream ss;

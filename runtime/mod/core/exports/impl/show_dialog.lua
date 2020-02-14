@@ -3,7 +3,7 @@ local Data = Elona.game.Data
 local I18N = Elona.game.I18N
 local Input = Elona.game.Input
 local Internal = Elona.game.Internal
-local table = Elona.game.table
+local table = table
 
 local function dialog_error(talk, msg, err)
    if err ~= nil then

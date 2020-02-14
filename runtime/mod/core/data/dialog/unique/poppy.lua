@@ -2,7 +2,7 @@ local Chara = Elona.game.Chara
 local GUI = Elona.game.GUI
 local I18N = Elona.game.I18N
 local Internal = Elona.game.Internal
-local table = Elona.game.table
+local table = table
 
 return {
    id = "poppy",
