@@ -136,7 +136,7 @@ end
 
 -- Higher factor means fewer items.
 local function number_from_rarity(factor)
-   return function(args) return (args.item_def.rarity / 1000) / factor end
+   return function(args) return (args.item_def.rarity // 1000) // factor end
 end
 
 -- Map of item category/id -> function returning sold item amount.
