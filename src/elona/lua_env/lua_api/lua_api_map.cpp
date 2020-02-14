@@ -1,4 +1,5 @@
 #include "lua_api_map.hpp"
+
 #include "../../area.hpp"
 #include "../../character.hpp"
 #include "../../data/types/type_map.hpp"

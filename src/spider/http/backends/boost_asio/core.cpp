@@ -1,6 +1,8 @@
 #include "../../core.hpp"
+
 #include <iostream>
 #include <thread>
+
 #include "detail.hpp"
 
 namespace asio = boost::asio;

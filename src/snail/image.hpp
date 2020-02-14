@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+
 #include "../elona/optional.hpp"
 #include "blend_mode.hpp"
 #include "color.hpp"

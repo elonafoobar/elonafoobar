@@ -1,4 +1,5 @@
 #include "loading_screen.hpp"
+
 #include "../snail/application.hpp"
 #include "variables.hpp"
 

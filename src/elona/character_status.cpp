@@ -1,5 +1,7 @@
 #include "character_status.hpp"
+
 #include <limits>
+
 #include "ability.hpp"
 #include "adventurer.hpp"
 #include "character.hpp"

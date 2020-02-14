@@ -1,4 +1,5 @@
 #include "lua_class_area.hpp"
+
 #include "../../area.hpp"
 #include "../../map.hpp"
 

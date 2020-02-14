@@ -1,6 +1,8 @@
 #include "../../application.hpp"
+
 #include <algorithm>
 #include <map>
+
 #include "../../input.hpp"
 
 

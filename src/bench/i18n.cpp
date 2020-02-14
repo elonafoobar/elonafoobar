@@ -1,7 +1,8 @@
-#include "../thirdparty/hayai/hayai.hpp"
+#include "../elona/i18n.hpp"
 
 #include <cassert>
-#include "../elona/i18n.hpp"
+
+#include "../thirdparty/hayai/hayai.hpp"
 #include "util.hpp"
 
 using namespace elona;

@@ -1,4 +1,5 @@
 #include "class.hpp"
+
 #include "ability.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"

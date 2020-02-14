@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+
 #include "optional.hpp"
 #include "position.hpp"
 

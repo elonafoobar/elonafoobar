@@ -1,6 +1,5 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/lua_env/mod_version_resolver.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 
 using namespace elona::lua;
 using namespace elona::semver;

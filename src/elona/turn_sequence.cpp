@@ -1,4 +1,5 @@
 #include "turn_sequence.hpp"
+
 #include "ability.hpp"
 #include "activity.hpp"
 #include "ai.hpp"

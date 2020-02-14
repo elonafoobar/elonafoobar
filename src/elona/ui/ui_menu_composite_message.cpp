@@ -1,4 +1,5 @@
 #include "ui_menu_composite_message.hpp"
+
 #include "ui_menu_chat_history.hpp"
 #include "ui_menu_journal.hpp"
 #include "ui_menu_message_log.hpp"

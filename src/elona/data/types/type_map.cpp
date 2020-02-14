@@ -1,4 +1,5 @@
 #include "type_map.hpp"
+
 #include "../../lua_env/enums/enums.hpp"
 
 namespace elona

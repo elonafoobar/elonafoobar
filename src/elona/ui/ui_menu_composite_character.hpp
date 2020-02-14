@@ -1,6 +1,7 @@
 #pragma once
 #include <boost/variant.hpp>
 #include <boost/variant/get.hpp>
+
 #include "ui_menu_composite.hpp"
 
 namespace elona

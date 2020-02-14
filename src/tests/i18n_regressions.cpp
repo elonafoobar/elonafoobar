@@ -1,11 +1,10 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/i18n.hpp"
 #include "../elona/item.hpp"
 #include "../elona/itemgen.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/ui.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
 
 using namespace std::literals::string_literals;

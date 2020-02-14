@@ -1,6 +1,8 @@
 #include "gdata.hpp"
+
 #include <iomanip>
 #include <sstream>
+
 #include "variables.hpp"
 
 

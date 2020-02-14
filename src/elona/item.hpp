@@ -3,6 +3,7 @@
 #include <bitset>
 #include <memory>
 #include <vector>
+
 #include "../util/range.hpp"
 #include "consts.hpp"
 #include "data/types/type_item.hpp"

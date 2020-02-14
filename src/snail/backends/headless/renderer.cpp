@@ -1,5 +1,7 @@
 #include "../../renderer.hpp"
+
 #include <sstream>
+
 #include "../../detail/sdl.hpp"
 #include "../../surface.hpp"
 

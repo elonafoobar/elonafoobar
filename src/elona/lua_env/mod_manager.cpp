@@ -1,8 +1,10 @@
 #include "mod_manager.hpp"
+
 #include <map>
 #include <sstream>
 #include <unordered_set>
 #include <vector>
+
 #include "../../util/range.hpp"
 #include "../character.hpp"
 #include "../config.hpp"

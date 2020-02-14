@@ -1,4 +1,5 @@
 #include "lua_class_item.hpp"
+
 #include "../../data/types/type_item.hpp"
 #include "../../data/types/type_item_material.hpp"
 #include "../../item.hpp"

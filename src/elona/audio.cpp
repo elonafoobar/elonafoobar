@@ -1,7 +1,11 @@
 #include "audio.hpp"
+
 #include <cmath>
+
 #include <unordered_map>
+
 #include <boost/math/special_functions/gamma.hpp>
+
 #include "../snail/application.hpp"
 #include "../snail/audio.hpp"
 #include "area.hpp"

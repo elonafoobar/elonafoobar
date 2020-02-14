@@ -265,8 +265,7 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
     switch (chara_id)
     {
     case CharaId::younger_sister:
-    case CharaId::younger_sister_of_mansion:
-    {
+    case CharaId::younger_sister_of_mansion: {
         std::string text = i18n::s.get_enum("core.ui.onii", cdata.player().sex);
 
         if (talk_type == 100)
@@ -289,8 +288,7 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
         }
         break;
     }
-    case CharaId::maid:
-    {
+    case CharaId::maid: {
         std::string text =
             i18n::s.get_enum("core.ui.syujin", cdata.player().sex);
 
@@ -323,8 +321,7 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
         }
         break;
     }
-    case CharaId::younger_cat_sister:
-    {
+    case CharaId::younger_cat_sister: {
         std::string text = i18n::s.get_enum("core.ui.onii", cdata.player().sex);
 
         if (talk_type == 100)

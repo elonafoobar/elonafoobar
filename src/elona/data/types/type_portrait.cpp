@@ -1,5 +1,7 @@
 #include "type_portrait.hpp"
+
 #include <iostream>
+
 #include "../../lua_env/interface.hpp"
 
 

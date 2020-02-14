@@ -3,7 +3,9 @@
 #include <queue>
 #include <string>
 #include <vector>
+
 #include <boost/circular_buffer.hpp>
+
 #include "../../thirdparty/sol2/sol.hpp"
 #include "../optional.hpp"
 #include "lua_submodule.hpp"

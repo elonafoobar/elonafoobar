@@ -1,4 +1,5 @@
 #include "trait.hpp"
+
 #include "../util/range.hpp"
 #include "ability.hpp"
 #include "character.hpp"

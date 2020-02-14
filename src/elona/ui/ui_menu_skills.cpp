@@ -1,4 +1,5 @@
 #include "ui_menu_skills.hpp"
+
 #include "../ability.hpp"
 #include "../audio.hpp"
 #include "../i18n.hpp"

@@ -1,6 +1,3 @@
-#include "../thirdparty/catch2/catch.hpp"
-#include "../thirdparty/sol2/sol.hpp"
-
 #include "../elona/character.hpp"
 #include "../elona/dmgheal.hpp"
 #include "../elona/filesystem.hpp"
@@ -12,6 +9,8 @@
 #include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
+#include "../thirdparty/sol2/sol.hpp"
 #include "tests.hpp"
 
 using namespace elona::testing;

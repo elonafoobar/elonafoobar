@@ -1,4 +1,5 @@
 #include "ui_menu_composite_skills.hpp"
+
 #include "ui_menu_skills.hpp"
 #include "ui_menu_spells.hpp"
 

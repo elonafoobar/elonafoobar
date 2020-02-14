@@ -1,4 +1,5 @@
 #include "lua_class_map_data.hpp"
+
 #include "../../data/types/type_music.hpp"
 #include "../../lua_env/enums/enums.hpp"
 #include "../../map.hpp"

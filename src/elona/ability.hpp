@@ -1,7 +1,9 @@
 #pragma once
 
 #include <cassert>
+
 #include <vector>
+
 #include "data/types/type_ability.hpp"
 
 

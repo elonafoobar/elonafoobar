@@ -1,5 +1,7 @@
 #include "god.hpp"
+
 #include <iostream>
+
 #include "ability.hpp"
 #include "animation.hpp"
 #include "audio.hpp"

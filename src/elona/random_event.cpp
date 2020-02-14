@@ -1,5 +1,7 @@
 #include "random_event.hpp"
+
 #include <cassert>
+
 #include "ability.hpp"
 #include "audio.hpp"
 #include "buff.hpp"

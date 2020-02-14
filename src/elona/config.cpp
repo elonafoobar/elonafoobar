@@ -1,10 +1,13 @@
 #include "config.hpp"
+
 #include <cassert>
+
 #include <fstream>
 #include <functional>
 #include <sstream>
 #include <stdexcept>
 #include <string>
+
 #include "../snail/application.hpp"
 #include "../thirdparty/json5/json5.hpp"
 #include "../util/fps_counter.hpp"

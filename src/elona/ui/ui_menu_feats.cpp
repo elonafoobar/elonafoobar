@@ -1,4 +1,5 @@
 #include "ui_menu_feats.hpp"
+
 #include "../../snail/color.hpp"
 #include "../../util/range.hpp"
 #include "../../util/strutil.hpp"

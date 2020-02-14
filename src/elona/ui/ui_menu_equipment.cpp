@@ -1,4 +1,5 @@
 #include "ui_menu_equipment.hpp"
+
 #include "../character.hpp"
 #include "../equipment.hpp"
 #include "../globals.hpp"

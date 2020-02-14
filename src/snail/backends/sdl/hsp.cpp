@@ -1,6 +1,8 @@
 #include "../../hsp.hpp"
+
 #include <iostream>
 #include <unordered_map>
+
 #include "../../../util/strutil.hpp"
 #include "../../application.hpp"
 #include "../../color.hpp"

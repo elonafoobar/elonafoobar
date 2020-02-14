@@ -1,7 +1,7 @@
+#include <vector>
+
 #include "../../application.hpp"
 #include "../../detail/sdl.hpp"
-
-#include <vector>
 
 
 

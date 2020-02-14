@@ -1,4 +1,5 @@
 #include "interface.hpp"
+
 #include "config_table.hpp"
 #include "data_manager.hpp"
 #include "mod_manager.hpp"

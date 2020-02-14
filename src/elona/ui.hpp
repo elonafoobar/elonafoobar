@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+
 #include "../snail/application.hpp"
 
 namespace elona

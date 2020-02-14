@@ -1,9 +1,9 @@
-#include "../thirdparty/hayai/hayai.hpp"
-
 #include <memory>
 #include <sstream>
+
 #include "../elona/character.hpp"
 #include "../elona/putit.hpp"
+#include "../thirdparty/hayai/hayai.hpp"
 
 using namespace elona;
 

@@ -1,4 +1,5 @@
 #include "ui.hpp"
+
 #include "../util/strutil.hpp"
 #include "ability.hpp"
 #include "audio.hpp"
@@ -616,19 +617,27 @@ void render_digital_clock()
 {
     // 24 hour digital clock, 57 pixels wide
     font(16 - en * 2);
-    bmes(""s + game_data.date.hour + u8":"s + game_data.date.minute + u8":"s + game_data.date.second,
-         8, 8);
+    bmes(
+        ""s + game_data.date.hour + u8":"s + game_data.date.minute + u8":"s +
+            game_data.date.second,
+        8,
+        8);
 
     // date, 64 pixel wide
     font(15 - en * 2);
     int datex = 8 + 57 + 18;
-    bmes(""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s + game_data.date.day,
-         datex, 8);
+    bmes(
+        ""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s +
+            game_data.date.day,
+        datex,
+        8);
 
     // time of day + weather
-    bmes(i18n::s.get_enum("core.ui.time", game_data.date.hour / 4) + u8" "s +
+    bmes(
+        i18n::s.get_enum("core.ui.time", game_data.date.hour / 4) + u8" "s +
             i18n::s.get_enum("core.ui.weather", game_data.weather),
-         datex + 64 + 12, 8);
+        datex + 64 + 12,
+        8);
 }
 
 

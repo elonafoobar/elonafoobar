@@ -1,5 +1,3 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/config.hpp"
 #include "../elona/enums.hpp"
 #include "../elona/i18n.hpp"
@@ -9,6 +7,7 @@
 #include "../elona/lua_env/export_manager.hpp"
 #include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
 
 namespace elona

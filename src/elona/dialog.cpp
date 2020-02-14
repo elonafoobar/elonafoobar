@@ -1,4 +1,5 @@
 #include "dialog.hpp"
+
 #include "character.hpp"
 #include "lua_env/interface.hpp"
 #include "talk.hpp"

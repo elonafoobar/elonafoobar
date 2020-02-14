@@ -1,4 +1,5 @@
 #include "map.hpp"
+
 #include "area.hpp"
 #include "building.hpp"
 #include "calc.hpp"

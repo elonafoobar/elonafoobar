@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+
 #include "../util/enumutil.hpp"
 #include "../util/noncopyable.hpp"
 #include "blend_mode.hpp"

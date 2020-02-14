@@ -1,4 +1,5 @@
 #include "main.hpp"
+
 #include "../util/tinyargparser.hpp"
 #include "config.hpp"
 #include "init.hpp"

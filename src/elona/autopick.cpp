@@ -1,4 +1,5 @@
 #include "autopick.hpp"
+
 #include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
 #include "data/types/type_item.hpp"

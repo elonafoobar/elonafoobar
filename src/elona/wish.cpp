@@ -4,7 +4,6 @@
 
 #include "../util/range.hpp"
 #include "../util/strutil.hpp"
-
 #include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"

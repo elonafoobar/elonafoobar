@@ -1,5 +1,7 @@
 #include "tinted_buffers.hpp"
+
 #include <iostream>
+
 #include "../draw.hpp"
 #include "../elona.hpp"
 #include "pic_loader.hpp"

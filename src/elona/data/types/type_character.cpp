@@ -1,4 +1,5 @@
 #include "type_character.hpp"
+
 #include "../../lua_env/enums/enums.hpp"
 #include "../util.hpp"
 

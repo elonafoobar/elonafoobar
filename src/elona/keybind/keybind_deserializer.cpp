@@ -1,6 +1,8 @@
 #include "keybind_deserializer.hpp"
+
 #include <iostream>
 #include <string>
+
 #include "keybind.hpp"
 #include "keybind_manager.hpp"
 

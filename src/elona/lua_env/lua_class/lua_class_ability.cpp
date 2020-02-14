@@ -1,4 +1,5 @@
 #include "lua_class_ability.hpp"
+
 #include "../../ability.hpp"
 
 namespace elona

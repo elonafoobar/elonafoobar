@@ -1,4 +1,5 @@
 #include "lua_api_input.hpp"
+
 #include "../../dialog.hpp"
 #include "../../i18n.hpp"
 #include "../../input.hpp"

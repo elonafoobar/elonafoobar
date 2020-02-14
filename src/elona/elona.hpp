@@ -5,6 +5,7 @@
 #include <cctype>
 #include <cmath>
 #include <cstdint>
+
 #include <algorithm>
 #include <iterator>
 #include <memory>
@@ -12,6 +13,7 @@
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
+
 #include "../snail/color.hpp"
 #include "../snail/font.hpp"
 #include "../snail/input.hpp"

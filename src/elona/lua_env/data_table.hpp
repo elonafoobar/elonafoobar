@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+
 #include "../../thirdparty/sol2/sol.hpp"
 #include "../optional.hpp"
 

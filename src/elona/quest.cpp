@@ -1,4 +1,5 @@
 #include "quest.hpp"
+
 #include "ability.hpp"
 #include "activity.hpp"
 #include "area.hpp"

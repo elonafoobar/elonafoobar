@@ -1,7 +1,7 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include <iostream>
+
 #include "../elona/keybind/keybind.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 
 using namespace elona;
 using namespace elona::snail;

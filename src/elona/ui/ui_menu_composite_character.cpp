@@ -1,4 +1,5 @@
 #include "ui_menu_composite_character.hpp"
+
 #include "../menu.hpp"
 #include "ui_menu_character_sheet.hpp"
 #include "ui_menu_equipment.hpp"

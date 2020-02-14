@@ -1,4 +1,5 @@
 #include "ui_menu_keybindings.hpp"
+
 #include "../audio.hpp"
 #include "../data/types/type_asset.hpp"
 #include "../draw.hpp"
@@ -47,8 +48,7 @@ static std::string _get_localized_action_name(
     // core.keybind.chat_box
     switch (action_category)
     {
-    case ActionCategory::shortcut:
-    {
+    case ActionCategory::shortcut: {
         auto action_index_plus_1 = keybind_index_number(action_id) + 1;
         if (action_index_plus_1 == 10 || action_index_plus_1 == 20)
         {
@@ -58,8 +58,7 @@ static std::string _get_localized_action_name(
             std::to_string(action_index_plus_1);
         break;
     }
-    case ActionCategory::selection:
-    {
+    case ActionCategory::selection: {
         const auto action_index_plus_1 = keybind_index_number(action_id) + 1;
         localized_name = i18n::s.get(mod_id + ".keybind.select") +
             std::to_string(action_index_plus_1);

@@ -1,4 +1,5 @@
 #include "ui_menu_journal.hpp"
+
 #include "../audio.hpp"
 #include "../calc.hpp"
 #include "../character.hpp"

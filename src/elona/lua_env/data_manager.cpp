@@ -1,4 +1,5 @@
 #include "data_manager.hpp"
+
 #include "../../util/natural_order_comparator.hpp"
 #include "../log.hpp"
 #include "api_manager.hpp"

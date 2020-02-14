@@ -1,4 +1,5 @@
 #include "ability.hpp"
+
 #include "../util/range.hpp"
 #include "audio.hpp"
 #include "calc.hpp"

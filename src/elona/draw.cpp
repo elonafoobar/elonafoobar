@@ -1,5 +1,7 @@
 #include "draw.hpp"
+
 #include <cmath>
+
 #include "../snail/application.hpp"
 #include "character.hpp"
 #include "config.hpp"
