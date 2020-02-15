@@ -350,7 +350,7 @@ end
 
 function Config.is_enum_option(option_key)
    local s = _schemas[option_key]
-   return s.type == "string" and s.enum
+   return s.type == "string" and s.enum ~= nil
 end
 
 
@@ -362,7 +362,7 @@ end
 
 
 function Config.is_hidden(option_key)
-   return _schemas[option_key].is_hidden
+   return not not _schemas[option_key].is_hidden
 end
 
 
