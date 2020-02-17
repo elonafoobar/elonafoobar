@@ -38,9 +38,9 @@ end
 
 local function receive_reward()
    World.data.thieves_guild_quota_recurring = false
-   Item.create(Chara.player().position, {objlv = 51 - World.data.ranks[8] / 200, flttypemajor = 60000})
+   Item.create(Chara.player().position, {objlv = 51 - World.data.ranks[8] // 200, flttypemajor = 60000})
    Item.create(Chara.player().position, "core.gold_piece", 10000 - World.data.ranks[8] + 1000)
-   Item.create(Chara.player().position, "core.platinum_coin", Math.clamp(3 - World.data.ranks[8] / 3000, 1, 3))
+   Item.create(Chara.player().position, "core.platinum_coin", Math.clamp(3 - World.data.ranks[8] // 3000, 1, 3))
 
    common.quest_completed()
 

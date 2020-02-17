@@ -7,7 +7,7 @@ local Rand = Elona.game.Rand
 local shop_inventory = {}
 
 function shop_inventory.default_item_number(args)
-   return Math.min(80, 20 + args.shopkeeper.shop_rank / 2)
+   return Math.min(80, 20 + args.shopkeeper.shop_rank // 2)
 end
 
 function shop_inventory.test_rule_predicate(rule, index, shopkeeper)
@@ -181,14 +181,14 @@ end
 -- difficult to find in shops. More than one modifier can be applied
 -- if multiple value thresholds are reached.
 shop_inventory.cargo_amount_rates = {
-   { threshold = 70,  type = "lt", amount = function(n) return n * 200 / 100 end                    },
-   { threshold = 50,  type = "lt", amount = function(n) return n * 200 / 100 end                    },
-   { threshold = 80,  type = "gt", amount = function(n) return n / 2 + 1     end, remove_chance = 2 },
-   { threshold = 100, type = "gt", amount = function(n) return n / 2 + 1     end, remove_chance = 3 },
+   { threshold = 70,  type = "lt", amount = function(n) return n * 200 // 100 end                    },
+   { threshold = 50,  type = "lt", amount = function(n) return n * 200 // 100 end                    },
+   { threshold = 80,  type = "gt", amount = function(n) return n // 2 + 1     end, remove_chance = 2 },
+   { threshold = 100, type = "gt", amount = function(n) return n // 2 + 1     end, remove_chance = 3 },
 }
 
 function shop_inventory.cargo_amount_modifier(amount)
-   return amount * (100 + Chara.player():get_skill("core.negotiation").current_level * 10) / 100 + 1
+   return amount * (100 + Chara.player():get_skill("core.negotiation").current_level * 10) // 100 + 1
 end
 
 -- Calculate adjusted amount of cargo items to be sold based on the

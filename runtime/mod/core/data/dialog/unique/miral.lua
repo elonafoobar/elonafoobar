@@ -7,7 +7,7 @@ local World = Elona.game.World
 local table = Elona.game.table
 
 local function upgrade_cart_cost()
-   return (World.data.current_cart_limit - World.data.initial_cart_limit) / 10000 + 1
+   return (World.data.current_cart_limit - World.data.initial_cart_limit) // 10000 + 1
 end
 
 local function upgrade_cart_amount()
