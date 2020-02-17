@@ -1,4 +1,5 @@
 #include "lua_api_pos.hpp"
+
 #include "../../position.hpp"
 
 namespace elona

@@ -1,6 +1,9 @@
 #include "character.hpp"
+
 #include <cassert>
+
 #include <type_traits>
+
 #include "../util/fileutil.hpp"
 #include "../util/range.hpp"
 #include "../util/strutil.hpp"

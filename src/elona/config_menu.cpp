@@ -1,4 +1,5 @@
 #include "config_menu.hpp"
+
 #include "../util/natural_order_comparator.hpp"
 #include "../util/range.hpp"
 #include "lua_env/config_manager.hpp"

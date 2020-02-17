@@ -1,4 +1,5 @@
 #include "itemgen.hpp"
+
 #include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"

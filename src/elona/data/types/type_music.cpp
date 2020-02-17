@@ -1,4 +1,5 @@
 #include "type_music.hpp"
+
 #include "../../lua_env/interface.hpp"
 
 namespace elona

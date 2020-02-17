@@ -1,7 +1,10 @@
 #include "elona/main.hpp"
+
 #include <iostream>
 #include <stdexcept>
+
 #include <SDL.h>
+
 #include "elona/defines.hpp"
 #include "elona/log.hpp"
 #include "snail/application.hpp"

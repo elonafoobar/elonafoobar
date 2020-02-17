@@ -1,4 +1,5 @@
 #include "lua_class_character.hpp"
+
 #include "../../ability.hpp"
 #include "../../buff.hpp"
 #include "../../character.hpp"

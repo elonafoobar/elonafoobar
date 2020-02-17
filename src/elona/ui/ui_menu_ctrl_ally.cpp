@@ -1,4 +1,5 @@
 #include "ui_menu_ctrl_ally.hpp"
+
 #include "../ability.hpp"
 #include "../area.hpp"
 #include "../audio.hpp"

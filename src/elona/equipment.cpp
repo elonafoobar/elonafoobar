@@ -1,4 +1,5 @@
 #include "equipment.hpp"
+
 #include "adventurer.hpp"
 #include "calc.hpp"
 #include "chara_db.hpp"

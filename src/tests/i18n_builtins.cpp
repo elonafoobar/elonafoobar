@@ -1,6 +1,5 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include <sstream>
+
 #include "../elona/character.hpp"
 #include "../elona/i18n.hpp"
 #include "../elona/item.hpp"
@@ -8,6 +7,7 @@
 #include "../elona/testing.hpp"
 #include "../elona/ui.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
 
 using namespace std::literals::string_literals;

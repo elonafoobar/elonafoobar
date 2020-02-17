@@ -1,4 +1,5 @@
 #include "ui_menu_message_log.hpp"
+
 #include "../audio.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"

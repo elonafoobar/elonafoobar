@@ -1,5 +1,7 @@
 #include "lua_api_debug.hpp"
+
 #include <sstream>
+
 #include "../../character.hpp"
 #include "../../enums.hpp"
 #include "../../item.hpp"

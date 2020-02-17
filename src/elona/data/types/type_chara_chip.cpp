@@ -1,4 +1,5 @@
 #include "type_chara_chip.hpp"
+
 #include "../../lua_env/interface.hpp"
 #include "../../variables.hpp"
 

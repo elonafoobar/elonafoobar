@@ -1,4 +1,5 @@
 #include "character_making.hpp"
+
 #include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
@@ -16,13 +17,12 @@
 #include "random.hpp"
 #include "text.hpp"
 #include "ui.hpp"
-#include "variables.hpp"
-
 #include "ui/ui_menu_charamake_alias.hpp"
 #include "ui/ui_menu_charamake_attributes.hpp"
 #include "ui/ui_menu_charamake_class.hpp"
 #include "ui/ui_menu_charamake_gender.hpp"
 #include "ui/ui_menu_charamake_race.hpp"
+#include "variables.hpp"
 
 
 namespace

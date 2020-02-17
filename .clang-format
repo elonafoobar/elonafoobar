@@ -53,11 +53,15 @@ IncludeCategories:
   # 2: C++ standard libraries
   # 3: Third party libraries
   # 4: Others
+  - Regex: '^<charconv>'
+    Priority: 2
   - Regex: '^<chrono>'
     Priority: 2
-  - Regex: '^<codecvt>'
+  - Regex: '^<compare>'
     Priority: 2
   - Regex: '^<complex>'
+    Priority: 2
+  - Regex: '^<concepts>'
     Priority: 2
   - Regex: '^<condition_variable>'
     Priority: 2

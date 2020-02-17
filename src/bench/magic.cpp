@@ -1,11 +1,11 @@
-#include "../thirdparty/hayai/hayai.hpp"
-
 #include <cassert>
+
 #include "../elona/ability.hpp"
 #include "../elona/character.hpp"
 #include "../elona/debug.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/hayai/hayai.hpp"
 #include "util.hpp"
 
 using namespace elona;

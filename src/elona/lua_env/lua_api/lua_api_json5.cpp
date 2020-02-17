@@ -1,4 +1,5 @@
 #include "lua_api_json5.hpp"
+
 #include "../../../thirdparty/json5/json5.hpp"
 
 
@@ -16,8 +17,7 @@ json5::value to_json5_value(sol::object value)
     switch (value.get_type())
     {
     case sol::type::lua_nil: return nullptr;
-    case sol::type::number:
-    {
+    case sol::type::number: {
         // TODO integer / float
         int64_t i = value.as<int64_t>();
         double f = value.as<double>();
@@ -32,8 +32,7 @@ json5::value to_json5_value(sol::object value)
     }
     case sol::type::boolean: return value.as<bool>();
     case sol::type::string: return value.as<std::string>();
-    case sol::type::table:
-    {
+    case sol::type::table: {
         sol::table t = value;
         if (t.size() == 0)
         {
@@ -74,8 +73,7 @@ sol::object to_lua_value(const json5::value& value, sol::state_view lua)
         return sol::make_object(lua, value.get_integer());
     case json5::value_type::string:
         return sol::make_object(lua, value.get_string());
-    case json5::value_type::array:
-    {
+    case json5::value_type::array: {
         sol::table t{lua, sol::create};
         for (const auto& item : value.get_array())
         {
@@ -83,8 +81,7 @@ sol::object to_lua_value(const json5::value& value, sol::state_view lua)
         }
         return t;
     }
-    case json5::value_type::object:
-    {
+    case json5::value_type::object: {
         sol::table t{lua, sol::create};
         for (const auto& kvp : value.get_object())
         {

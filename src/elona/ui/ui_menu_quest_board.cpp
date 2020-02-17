@@ -1,4 +1,5 @@
 #include "ui_menu_quest_board.hpp"
+
 #include "../../snail/color.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"

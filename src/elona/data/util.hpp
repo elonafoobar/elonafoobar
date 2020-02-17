@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+
 #include "../../thirdparty/sol2/sol.hpp"
 #include "../lua_env/config_table.hpp"
 #include "../optional.hpp"

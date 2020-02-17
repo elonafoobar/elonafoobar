@@ -1,4 +1,5 @@
 #include "mapgen.hpp"
+
 #include "area.hpp"
 #include "calc.hpp"
 #include "character.hpp"

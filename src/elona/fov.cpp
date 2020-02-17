@@ -1,4 +1,5 @@
 #include "fov.hpp"
+
 #include "character.hpp"
 #include "map.hpp"
 #include "variables.hpp"

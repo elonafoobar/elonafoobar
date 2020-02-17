@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+
 #include "data/types/type_god.hpp"
 #include "enums.hpp"
 

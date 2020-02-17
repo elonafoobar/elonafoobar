@@ -3,6 +3,7 @@
 #include <type_traits>
 #include <unordered_map>
 #include <vector>
+
 #include "../../thirdparty/ordered_map/ordered_map.h"
 #include "../../thirdparty/sol2/sol.hpp"
 #include "../../util/map_key_iterator.hpp"

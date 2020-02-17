@@ -1,5 +1,7 @@
 #include "api_manager.hpp"
+
 #include <iterator>
+
 #include "../../util/strutil.hpp"
 #include "enums/enums.hpp"
 #include "lua_api/lua_api.hpp"

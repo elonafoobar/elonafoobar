@@ -1,6 +1,7 @@
 #pragma once
 #include <cassert>
 #include <climits>
+
 #include "../../snail/image.hpp"
 #include "../../thirdparty/ordered_map/ordered_map.h"
 #include "../../util/noncopyable.hpp"

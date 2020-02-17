@@ -1,5 +1,3 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/character.hpp"
 #include "../elona/enums.hpp"
 #include "../elona/filesystem.hpp"
@@ -8,6 +6,7 @@
 #include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
 
 static lua::DataTable load(elona::lua::LuaEnv& lua, const std::string& name)

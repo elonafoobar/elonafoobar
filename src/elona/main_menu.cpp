@@ -1,4 +1,5 @@
 #include "main_menu.hpp"
+
 #include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
 #include "../version.hpp"

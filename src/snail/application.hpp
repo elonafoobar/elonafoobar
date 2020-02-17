@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+
 #include "../util/noncopyable.hpp"
 #include "../util/scope_guard.hpp"
 #include "detail/sdl.hpp"

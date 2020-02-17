@@ -1,4 +1,5 @@
 #include "input.hpp"
+
 #include "../util/strutil.hpp"
 #include "audio.hpp"
 #include "blending.hpp"

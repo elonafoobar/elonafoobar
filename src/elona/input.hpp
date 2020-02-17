@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+
 #include "../snail/input.hpp"
 #include "enums.hpp"
 #include "optional.hpp"

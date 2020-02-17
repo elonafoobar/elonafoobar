@@ -1,4 +1,5 @@
 #include "ui_menu_town_chart.hpp"
+
 #include "../area.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"

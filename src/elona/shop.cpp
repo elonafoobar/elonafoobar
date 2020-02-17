@@ -1,4 +1,5 @@
 #include "shop.hpp"
+
 #include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"

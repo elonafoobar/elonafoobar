@@ -1,4 +1,5 @@
 #include "fish.hpp"
+
 #include "character.hpp"
 #include "i18n.hpp"
 #include "item.hpp"

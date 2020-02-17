@@ -1,11 +1,10 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/filesystem.hpp"
 #include "../elona/lua_env/api_manager.hpp"
 #include "../elona/lua_env/lua_env.hpp"
 #include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 #include "util.hpp"
 
 using namespace std::literals::string_literals;

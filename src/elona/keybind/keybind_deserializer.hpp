@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iosfwd>
+
 #include "../../snail/input.hpp"
 #include "../../thirdparty/json5/json5.hpp"
 #include "../optional.hpp"

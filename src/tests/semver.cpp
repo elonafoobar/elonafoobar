@@ -1,7 +1,6 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/semver.hpp"
 
+#include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
 
 using SemVer = elona::semver::Version;

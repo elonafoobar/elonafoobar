@@ -1,4 +1,5 @@
 #include "lua_api_trait.hpp"
+
 #include "../../audio.hpp"
 #include "../../character.hpp"
 #include "../../message.hpp"

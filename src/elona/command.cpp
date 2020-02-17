@@ -1,4 +1,5 @@
 #include "command.hpp"
+
 #include "../snail/application.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
@@ -1943,8 +1944,7 @@ TurnResult do_use_command()
         screenupdate = -1;
         update_screen();
         return TurnResult::show_house_board;
-    case 19:
-    {
+    case 19: {
         int chara = -1;
         // Are there any of your pets around you?
         const auto alone = !any_of_characters_around_you(
@@ -2025,8 +2025,7 @@ TurnResult do_use_command()
         }
         chara_refresh(0);
         break;
-    case 9:
-    {
+    case 9: {
         if (read_textbook(inv[ci]))
         {
             return TurnResult::turn_end;
@@ -2213,8 +2212,7 @@ TurnResult do_use_command()
             txt(i18n::s.get("core.common.it_is_impossible"));
         }
         break;
-    case 6:
-    {
+    case 6: {
         txt(i18n::s.get("core.action.use.music_disc.play", inv[ci]));
         auto music = inv[ci].param1 + 50 + 1;
         if (music > 97)

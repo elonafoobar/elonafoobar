@@ -1,5 +1,3 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/ability.hpp"
 #include "../elona/character.hpp"
 #include "../elona/enums.hpp"
@@ -10,6 +8,7 @@
 #include "../elona/itemgen.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
 
 using namespace Catch;

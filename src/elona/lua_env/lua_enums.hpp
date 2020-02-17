@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <unordered_map>
+
 #include "../../thirdparty/sol2/sol.hpp"
 #include "../log.hpp"
 #include "../optional.hpp"

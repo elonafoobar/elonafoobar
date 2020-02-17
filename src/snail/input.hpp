@@ -3,6 +3,7 @@
 #include <array>
 #include <set>
 #include <string>
+
 #include "../elona/optional.hpp"
 #include "../util/enumutil.hpp"
 #include "../util/noncopyable.hpp"

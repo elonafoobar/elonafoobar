@@ -1,10 +1,13 @@
 #include "filepathutil.hpp"
+
 #include <algorithm>
+
 #include <boost/predef.h>
 
 // For get_executable_path()
 #if BOOST_OS_WINDOWS
 #include <windows.h> // GetModuleFileName
+
 #include "unicode_utf16.hpp"
 #elif BOOST_OS_MACOS
 #include <limits.h> // PATH_MAX

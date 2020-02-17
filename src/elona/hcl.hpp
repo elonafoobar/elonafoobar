@@ -5,7 +5,6 @@
 #define MICROHCL_MAP_TYPE tsl::ordered_map
 #define MICROHCL_MAP_ACCESSOR &it.value()
 #include "../thirdparty/microhcl/hcl.hpp"
-
 #include "filesystem.hpp"
 
 using namespace std::literals::string_literals;

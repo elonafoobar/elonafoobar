@@ -1,4 +1,5 @@
 #include "ui_menu_hire.hpp"
+
 #include "../audio.hpp"
 #include "../calc.hpp"
 #include "../draw.hpp"

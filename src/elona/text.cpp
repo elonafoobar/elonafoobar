@@ -1,4 +1,5 @@
 #include "text.hpp"
+
 #include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
 #include "area.hpp"

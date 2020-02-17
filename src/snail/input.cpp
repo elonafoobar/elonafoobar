@@ -1,5 +1,7 @@
 #include "input.hpp"
+
 #include <cassert>
+
 #include <algorithm>
 #include <iostream>
 #include <tuple>

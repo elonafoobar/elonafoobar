@@ -1,5 +1,7 @@
 #include "adventurer.hpp"
+
 #include <string>
+
 #include "ability.hpp"
 #include "area.hpp"
 #include "character.hpp"

@@ -1,4 +1,5 @@
 #include "activity.hpp"
+
 #include "ability.hpp"
 #include "animation.hpp"
 #include "audio.hpp"
@@ -756,8 +757,7 @@ void activity_others_doing(Character& doer)
                 Message::color{ColorIndex::cyan});
         }
         break;
-    case 104:
-    {
+    case 104: {
         int p = 25;
         if (game_data.weather != 0 && game_data.weather != 3)
         {

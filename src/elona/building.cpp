@@ -1,4 +1,5 @@
 #include "building.hpp"
+
 #include "../util/range.hpp"
 #include "ability.hpp"
 #include "activity.hpp"

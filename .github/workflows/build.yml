@@ -92,3 +92,21 @@ jobs:
       run: |
         make clean
         make tests VERBOSE=1
+
+  clang-format:
+    name: Run clang-format
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Install Dependencies
+      run: |
+        brew update
+        brew install -f \
+          clang-format
+
+    - name: Run clang-format
+      run: |
+        clang-format --version
+        make format

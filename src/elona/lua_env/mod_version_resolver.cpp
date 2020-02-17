@@ -1,4 +1,5 @@
 #include "mod_version_resolver.hpp"
+
 #include "../../util/topological_sorter.hpp"
 #include "../json5util.hpp"
 #include "../log.hpp"

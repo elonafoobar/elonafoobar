@@ -2,7 +2,9 @@
 
 #include <regex>
 #include <sstream>
+
 #include <boost/algorithm/string/predicate.hpp>
+
 #include "../../snail/application.hpp"
 #include "../../snail/blend_mode.hpp"
 #include "../../snail/input.hpp"

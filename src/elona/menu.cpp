@@ -1,6 +1,8 @@
 #include "menu.hpp"
+
 #include <iostream>
 #include <stack>
+
 #include "ability.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
@@ -31,12 +33,13 @@
 #include "random.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
-#include "variables.hpp"
-
 #include "ui/ui_menu_adventurers.hpp"
 #include "ui/ui_menu_alias.hpp"
 #include "ui/ui_menu_book.hpp"
 #include "ui/ui_menu_character_sheet.hpp"
+#include "ui/ui_menu_composite_character.hpp"
+#include "ui/ui_menu_composite_message.hpp"
+#include "ui/ui_menu_composite_town.hpp"
 #include "ui/ui_menu_ctrl_ally.hpp"
 #include "ui/ui_menu_feats.hpp"
 #include "ui/ui_menu_game_help.hpp"
@@ -50,10 +53,7 @@
 #include "ui/ui_menu_spell_writer.hpp"
 #include "ui/ui_menu_spells.hpp"
 #include "ui/ui_menu_voting_box.hpp"
-
-#include "ui/ui_menu_composite_character.hpp"
-#include "ui/ui_menu_composite_message.hpp"
-#include "ui/ui_menu_composite_town.hpp"
+#include "variables.hpp"
 
 
 

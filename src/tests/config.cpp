@@ -1,6 +1,6 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/config.hpp"
+
+#include "../thirdparty/catch2/catch.hpp"
 
 using namespace std::literals::string_literals;
 using namespace elona;
@@ -56,11 +56,10 @@ TEST_CASE("Test loading valid config", "[Config: Loading]")
 
 // TODO don't skip these test!
 #if 0
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/config/config.hpp"
 #include "../elona/config/config_def.hpp"
 #include "../elona/testing.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
 
 using namespace std::literals::string_literals;

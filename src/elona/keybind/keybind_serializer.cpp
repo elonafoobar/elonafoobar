@@ -1,5 +1,7 @@
 #include "keybind_serializer.hpp"
+
 #include <iostream>
+
 #include "../../thirdparty/json5/json5.hpp"
 #include "keybind.hpp"
 #include "keybind_manager.hpp"

@@ -1,4 +1,5 @@
 #include "crafting.hpp"
+
 #include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
@@ -13,9 +14,8 @@
 #include "message.hpp"
 #include "random.hpp"
 #include "ui.hpp"
-#include "variables.hpp"
-
 #include "ui/ui_menu_crafting.hpp"
+#include "variables.hpp"
 
 namespace elona
 {

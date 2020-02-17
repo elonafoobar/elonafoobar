@@ -4,6 +4,7 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
+
 #include "../util/range.hpp"
 #include "consts.hpp"
 #include "data/types/type_character.hpp"

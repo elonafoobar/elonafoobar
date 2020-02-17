@@ -1,6 +1,9 @@
 #include "handle_manager.hpp"
+
 #include <cassert>
+
 #include <set>
+
 #include "../character.hpp"
 #include "../config.hpp"
 #include "../item.hpp"
