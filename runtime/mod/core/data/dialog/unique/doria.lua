@@ -45,9 +45,9 @@ end
 
 local function receive_reward()
    World.data.fighters_guild_quota_recurring = false
-   Item.create(Chara.player().position, {objlv = 51 - World.data.ranks[8] / 200, quality = "Good", flttypemajor = 10000})
+   Item.create(Chara.player().position, {objlv = 51 - World.data.ranks[8] // 200, quality = "Good", flttypemajor = 10000})
    Item.create(Chara.player().position, "core.gold_piece", 10000 - World.data.ranks[8] + 1000)
-   Item.create(Chara.player().position, "core.platinum_coin", Math.clamp(4 - World.data.ranks[8] / 2500, 1, 4))
+   Item.create(Chara.player().position, "core.platinum_coin", Math.clamp(4 - World.data.ranks[8] // 2500, 1, 4))
 
    common.quest_completed()
 

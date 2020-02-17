@@ -183,7 +183,7 @@ data:add_multi(
             }
          },
          item_base_value = function(args)
-            return args.item.value * 3 / 2
+            return args.item.value * 3 // 2
          end
       },
       {
@@ -254,7 +254,7 @@ data:add_multi(
             { one_in = 10, fixlv = "Miracle" },
          },
          item_number = function(args)
-            return 6 + args.shopkeeper.shop_rank / 10
+            return 6 + args.shopkeeper.shop_rank // 10
          end,
          item_base_value = function(args)
             if World.belongs_to_guild("thieves") then
@@ -276,12 +276,12 @@ data:add_multi(
       },
       {
          id = "visiting_merchant",
-         -- NOTE: the only shop ID for which (id / 1000) != 1.
+         -- NOTE: the only shop ID for which (id // 1000) != 1.
          legacy_id = 2003,
          rules = merchant_rules,
          item_number = merchant_item_number,
          item_base_value = function(args)
-            return args.item.value * 4 / 5
+            return args.item.value * 4 // 5
          end,
          is_temporary = true -- Uses shop ID 1.
       },
@@ -383,7 +383,7 @@ data:add_multi(
          rules = {
             { fltn = "spshop" },
          },
-         item_number = function(args) return args.item_number / 2 end,
+         item_number = function(args) return args.item_number // 2 end,
          item_base_value = function(args)
             local price = Math.clamp(args.item.value, 1, 1000000) * 50
             if args.item.id == "core.gift" then

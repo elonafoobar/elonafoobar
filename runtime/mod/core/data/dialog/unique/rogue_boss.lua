@@ -8,7 +8,7 @@ local World = Elona.game.World
 local common = require("data/dialog/common")
 
 local function surrender_cost()
-   return Chara.player().gold / 5
+   return Chara.player().gold // 5
 end
 
 local function surrender()
