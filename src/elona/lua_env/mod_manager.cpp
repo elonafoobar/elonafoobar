@@ -103,24 +103,7 @@ sol::table create_mod_table(sol::state& L)
  */
 void setup_sandbox(sol::state& state, sol::table table)
 {
-    // This list can be expanded.
-    const char* safe_functions[] = {
-        "assert",
-        "error",
-        "ipairs",
-        "next",
-        "pairs",
-        "pcall",
-        "print",
-        "tostring",
-        "type",
-        "xpcall",
-    };
-
-    for (const auto& function_name : safe_functions)
-    {
-        table[function_name] = state[function_name];
-    }
+    state["prelude"]["import"](table);
 }
 
 

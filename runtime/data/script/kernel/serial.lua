@@ -1,6 +1,5 @@
 local Handle = require("handle")
 local serpent = require("serpent")
-local inspect = require("inspect")
 
 local Serial = {}
 

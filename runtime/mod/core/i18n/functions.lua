@@ -2,7 +2,7 @@
 local FOV = Elona.game.FOV
 local I18N = Elona.game.I18N
 local Item = Elona.game.Item
-local string = Elona.game.string
+local string = string
 
 local i18n = {}
 

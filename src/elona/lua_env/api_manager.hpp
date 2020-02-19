@@ -82,6 +82,8 @@ private:
      */
     bool is_loaded();
 
+    void load_prelude();
+
     /***
      * Attempts to locate an API module under a namespace. For
      * example, all game API modules have module_namespace "game", and

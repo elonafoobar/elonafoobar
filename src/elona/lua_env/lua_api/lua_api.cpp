@@ -18,7 +18,6 @@
 #include "lua_api_json5.cpp"
 #include "lua_api_magic.cpp"
 #include "lua_api_map.cpp"
-#include "lua_api_math.cpp"
 #include "lua_api_pos.cpp"
 #include "lua_api_rand.cpp"
 #include "lua_api_skill.cpp"
@@ -57,7 +56,6 @@ void LuaApi::bind(sol::table& game)
     LUA_API_BIND(game, Item);
     LUA_API_BIND(game, Magic);
     LUA_API_BIND(game, Map);
-    LUA_API_BIND(game, Math);
     LUA_API_BIND(game, Pos);
     LUA_API_BIND(game, Rand);
     LUA_API_BIND(game, Skill);

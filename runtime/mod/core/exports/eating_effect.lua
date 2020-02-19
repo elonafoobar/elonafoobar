@@ -3,7 +3,7 @@ local Enums = Elona.game.Enums
 local FOV = Elona.game.FOV
 local GUI = Elona.game.GUI
 local I18N = Elona.game.I18N
-local Math = Elona.game.Math
+local math = math
 local Rand = Elona.game.Rand
 
 local eating_effect = {}
@@ -205,7 +205,7 @@ function eating_effect.quickling(eater)
    eat_message(eater, "quickling", Enums.Color.Green)
 
    local current = eater:get_skill("core.attribute_speed").current_level
-   local amount = Math.clamp(2500 - current * current // 10, 20, 2500)
+   local amount = math.clamp(2500 - current * current // 10, 20, 2500)
    eater:gain_skill_exp("core.attribute_speed", amount);
 end
 

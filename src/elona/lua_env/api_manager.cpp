@@ -30,6 +30,8 @@ APIManager::APIManager(LuaEnv& lua)
 
     // Bind enums to the Enums table.
     LuaEnums::bind(game);
+
+    load_prelude();
 }
 
 
@@ -38,6 +40,23 @@ bool APIManager::is_loaded()
 {
     sol::optional<bool> loaded = env()["_LOADED"];
     return loaded && *loaded;
+}
+
+
+
+void APIManager::load_prelude()
+{
+    auto result = safe_script_file(
+        filesystem::dirs::data() / "script" / "prelude" / "init.lua");
+    if (!result.valid())
+    {
+        sol::error err = result;
+        throw std::runtime_error{"Failed to load prelude library: "s +
+                                 err.what()};
+    }
+
+    sol::table prelude = result;
+    lua_state()->globals()["prelude"] = prelude;
 }
 
 

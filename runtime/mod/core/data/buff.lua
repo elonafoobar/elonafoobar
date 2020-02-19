@@ -1,5 +1,5 @@
 local Chara = Elona.game.Chara
-local Math = Elona.game.Math
+local math = math
 local I18N = Elona.game.I18N
 
 local function mod_skill_level(args, id, amount)
@@ -12,7 +12,7 @@ local function mod_skill_level_clamp(args, id, amount)
    local skill = args.chara:get_skill(id)
 
    skill.current_level =
-      Math.clamp(skill.current_level + amount,
+      math.clamp(skill.current_level + amount,
                  skill.current_level and 1 or 0, 9999)
 end
 
@@ -144,7 +144,7 @@ data:add_multi(
             mod_skill_level(args, "core.attribute_speed", self._effect(args.power))
          end,
          _effect = function(power)
-            return Math.modf(50 + Math.sqrt(power // 5))
+            return math.modf(50 + math.sqrt(power // 5))
          end,
          description = get_description
       },
@@ -160,7 +160,7 @@ data:add_multi(
                args.chara:get_skill("core.attribute_speed").current_level - self._effect(args.power)
          end,
          _effect = function(power)
-            return Math.min(20 + power // 20, 50)
+            return math.min(20 + power // 20, 50)
          end,
          description = get_description
       },
@@ -402,7 +402,7 @@ data:add_multi(
             args.chara:set_flag("IsContractingWithReaper", false)
          end,
          _effect = function(power)
-            return Math.clamp(25 + power // 17, 25, 80)
+            return math.clamp(25 + power // 17, 25, 80)
          end,
          description = get_description
       },

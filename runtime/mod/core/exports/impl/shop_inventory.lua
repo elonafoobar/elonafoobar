@@ -1,13 +1,13 @@
 local Data = Elona.game.Data
 local Item = Elona.game.Item
-local Math = Elona.game.Math
+local math = math
 local Chara = Elona.game.Chara
 local Rand = Elona.game.Rand
 
 local shop_inventory = {}
 
 function shop_inventory.default_item_number(args)
-   return Math.min(80, 20 + args.shopkeeper.shop_rank // 2)
+   return math.min(80, 20 + args.shopkeeper.shop_rank // 2)
 end
 
 function shop_inventory.test_rule_predicate(rule, index, shopkeeper)

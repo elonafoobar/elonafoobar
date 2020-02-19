@@ -4,7 +4,7 @@ local I18N = Elona.game.I18N
 local Internal = Elona.game.Internal
 local Item = Elona.game.Item
 local World = Elona.game.World
-local table = Elona.game.table
+local table = table
 
 local function upgrade_cart_cost()
    return (World.data.current_cart_limit - World.data.initial_cart_limit) // 10000 + 1

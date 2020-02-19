@@ -1,7 +1,7 @@
 local Data = Elona.game.Data
 local Rand = Elona.game.Rand
 local Item = Elona.game.Item
-local Math = Elona.game.Math
+local math = math
 local World = Elona.game.World
 
 -- Generates a list to be used with "choices" which will set the
@@ -385,7 +385,7 @@ data:add_multi(
          },
          item_number = function(args) return args.item_number // 2 end,
          item_base_value = function(args)
-            local price = Math.clamp(args.item.value, 1, 1000000) * 50
+            local price = math.clamp(args.item.value, 1, 1000000) * 50
             if args.item.id == "core.gift" then
                price = price * 10
             end
