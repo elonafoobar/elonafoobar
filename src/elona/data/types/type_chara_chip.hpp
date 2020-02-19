@@ -8,7 +8,7 @@ namespace elona
 
 struct CharaChipData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
     Extent rect;
     CharaChip chip;

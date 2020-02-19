@@ -8,12 +8,12 @@ namespace elona
 
 struct ClassData
 {
-    SharedId id;
+    data::InstanceId id;
     int ordering;
     bool is_extra;
     int item_type;
     int equipment_type;
-    std::unordered_map<SharedId, int> skills;
+    std::unordered_map<data::InstanceId, int> skills;
 };
 
 

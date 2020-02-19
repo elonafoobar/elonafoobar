@@ -9,7 +9,7 @@ namespace elona
 
 struct ItemChipData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
     Extent rect;
     ItemChip chip;

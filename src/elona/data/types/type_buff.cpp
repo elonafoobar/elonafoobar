@@ -26,7 +26,7 @@ BuffData BuffDB::convert(const lua::ConfigTable& data, const std::string& id)
     }
 
     return BuffData{
-        SharedId{id},
+        data::InstanceId{id},
         legacy_id,
         data.storage,
         buff_type,

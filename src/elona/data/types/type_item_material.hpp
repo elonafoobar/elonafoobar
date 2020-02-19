@@ -8,7 +8,7 @@ namespace elona
 
 struct ItemMaterialData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
     int weight;
     int value;

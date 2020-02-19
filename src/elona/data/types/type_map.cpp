@@ -52,17 +52,17 @@ MapDefData MapDefDB::convert(
     Position outer_map_position_{outer_map_position.get<int>("x"),
                                  outer_map_position.get<int>("y")};
 
-    optional<SharedId> deed_ = none;
+    optional<data::InstanceId> deed_ = none;
     if (deed)
     {
-        deed_ = SharedId(*deed);
+        deed_ = data::InstanceId{*deed};
     }
 
-    return MapDefData{SharedId{id},
+    return MapDefData{data::InstanceId{id},
                       legacy_id,
                       appearance,
                       map_type,
-                      SharedId(outer_map),
+                      data::InstanceId{outer_map},
                       outer_map_position_,
                       entrance_type,
                       tile_set,

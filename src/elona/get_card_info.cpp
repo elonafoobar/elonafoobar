@@ -17,7 +17,7 @@ int get_card_info(int card_id, CardInfo& card_info)
     }
     else if (const auto chara_id = the_character_db.get_id_from_legacy(card_id))
     {
-        card_name = i18n::s.get_m("chara", *chara_id, "name");
+        card_name = i18n::s.get_m("chara", chara_id->get(), "name");
     }
     else
     {

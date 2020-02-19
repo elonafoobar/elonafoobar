@@ -553,7 +553,8 @@ public:
         state_ = new_state;
     }
 
-    SharedId new_id() const
+
+    data::InstanceId new_id() const
     {
         return *the_character_db.get_id_from_legacy(charaid2int(this->id));
     }
@@ -718,7 +719,7 @@ enum class CharaFindLocation
     others
 };
 
-int chara_find(const std::string& chara_id);
+int chara_find(data::InstanceId chara_id);
 int chara_find(int id);
 int chara_find_ally(int id);
 int chara_get_free_slot();

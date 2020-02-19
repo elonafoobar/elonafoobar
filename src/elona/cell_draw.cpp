@@ -670,7 +670,7 @@ void render_shadow_high(int light, int sxfix_, int syfix_)
 
 struct Cloud
 {
-    Cloud(int x0, int y0, SharedId asset)
+    Cloud(int x0, int y0, data::InstanceId asset)
         : x0(x0)
         , y0(y0)
         , asset(asset)
@@ -679,7 +679,7 @@ struct Cloud
 
     int x0;
     int y0;
-    SharedId asset;
+    data::InstanceId asset;
 };
 
 std::vector<Cloud> clouds;
@@ -693,11 +693,11 @@ void initialize_cloud_data()
         int y0 = rnd(100) + i / 5 * 200 + 100000;
         if (rnd(2) == 0)
         {
-            clouds.emplace_back(x0, y0, SharedId{"cloud1"});
+            clouds.emplace_back(x0, y0, "cloud1");
         }
         else
         {
-            clouds.emplace_back(x0, y0, SharedId{"cloud2"});
+            clouds.emplace_back(x0, y0, "cloud2");
         }
     }
 }

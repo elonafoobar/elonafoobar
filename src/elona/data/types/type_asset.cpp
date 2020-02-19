@@ -69,7 +69,7 @@ AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string& id)
         file_path = lua::resolve_path_for_mod(*file);
     }
 
-    return AssetData{SharedId{id},
+    return AssetData{data::InstanceId{id},
                      window_id,
                      x,
                      y,

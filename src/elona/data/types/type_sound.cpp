@@ -23,7 +23,7 @@ SoundData SoundDB::convert(const lua::ConfigTable& data, const std::string& id)
             filepathutil::to_utf8_path(sound_file));
     }
 
-    return SoundData{SharedId{id}, legacy_id, sound_file};
+    return SoundData{data::InstanceId{id}, legacy_id, sound_file};
 }
 
 } // namespace elona

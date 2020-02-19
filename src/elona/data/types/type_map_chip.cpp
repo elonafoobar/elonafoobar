@@ -55,7 +55,7 @@ MapChip MapChipDB::convert(const lua::ConfigTable& data, const std::string& id)
     }
 
     return MapChip{
-        SharedId{id},
+        data::InstanceId{id},
         legacy_id,
         atlas,
         SharedId(std::string(Traits::type_id) + data_id_separator + id),

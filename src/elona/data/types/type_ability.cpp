@@ -22,7 +22,7 @@ AbilityData AbilityDB::convert(
     DATA_OPT_OR(difficulty, int, 0);
 
     return AbilityData{
-        SharedId{id},
+        data::InstanceId{id},
         legacy_id,
         related_basic_attribute,
         ability_type,

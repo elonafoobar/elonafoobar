@@ -9,11 +9,11 @@ namespace elona
 
 struct MapDefData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
     int appearance{};
     mdata_t::MapType map_type;
-    SharedId outer_map{};
+    data::InstanceId outer_map{};
     Position outer_map_position{};
     int entrance_type{};
     int tile_set{};
@@ -26,7 +26,7 @@ struct MapDefData
     int default_ai_calm{};
     int quest_town_id{};
     optional<std::string> quest_custom_map{};
-    optional<SharedId> deed{};
+    optional<data::InstanceId> deed{};
 
     bool can_return_to{};
     bool is_fixed{};

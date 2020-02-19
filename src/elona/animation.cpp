@@ -80,11 +80,11 @@ std::vector<Position> breath_pos()
 template <typename F>
 void do_animation(
     const Position& center,
-    const std::string& image_key,
+    data::InstanceId image_id,
     int duration,
     F draw)
 {
-    const auto& image_info = get_image_info(image_key);
+    const auto& image_info = get_image_info(image_id);
     const auto size = std::max(image_info.width, image_info.height) * 2;
 
     gsel(4);
@@ -98,7 +98,7 @@ void do_animation(
         gmode(0);
         gcopy(4, 0, 0, size, size, center.x - size / 2, center.y - size / 2);
         gmode(2);
-        draw(image_key, center, t);
+        draw(image_id, center, t);
         redraw();
         await(g_config.animation_wait());
     }
@@ -109,13 +109,13 @@ void do_animation(
 template <typename F, typename G>
 void do_particle_animation(
     const Position& center,
-    const std::string& image_key,
+    data::InstanceId image_id,
     int duration,
     int max_particles,
     F create_particle,
     G draw)
 {
-    const auto& image_info = get_image_info(image_key);
+    const auto& image_info = get_image_info(image_id);
     const auto size = std::max(image_info.width, image_info.height) * 2;
 
     gsel(4);
@@ -137,7 +137,7 @@ void do_particle_animation(
         gmode(2);
         for (int i = 0; i < max_particles; ++i)
         {
-            draw(image_key, center, t, particles[i], i);
+            draw(image_id, center, t, particles[i], i);
         }
         redraw();
         await(g_config.animation_wait());
@@ -163,16 +163,11 @@ namespace elona
 
 
 
-void draw_rotated(
-    const std::string& key,
-    int x,
-    int y,
-    double scale,
-    double angle)
+void draw_rotated(data::InstanceId id, int x, int y, double scale, double angle)
 {
-    const auto& image_info = get_image_info(key);
+    const auto& image_info = get_image_info(id);
     draw_rotated(
-        key, x, y, image_info.width * scale, image_info.height * scale, angle);
+        id, x, y, image_info.width * scale, image_info.height * scale, angle);
 }
 
 
@@ -400,7 +395,7 @@ void BreathAnimation::do_play()
 void BallAnimation::do_play()
 {
     int anicol{};
-    optional<SharedId> anisound{};
+    optional<data::InstanceId> anisound{};
     if (type == Type::ball)
     {
         anicol = element_color_id(element);
@@ -655,7 +650,7 @@ void RangedAttackAnimation::do_play()
         return;
 
     int anicol{};
-    optional<SharedId> anisound = none;
+    optional<data::InstanceId> anisound = none;
     if (type == Type::magic_arrow)
     {
         anicol = element_color_id(ele);

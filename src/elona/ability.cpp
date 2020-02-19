@@ -199,10 +199,7 @@ void gain_special_action()
             spact(29) = 1;
             txt(i18n::s.get(
                     "core.skill.gained",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(629)->get(),
-                        "name")),
+                    i18n::s.get_m("ability", "core.draw_charge", "name")),
                 Message::color{ColorIndex::orange});
         }
         if (spact(30) == 0)
@@ -210,10 +207,7 @@ void gain_special_action()
             spact(30) = 1;
             txt(i18n::s.get(
                     "core.skill.gained",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(630)->get(),
-                        "name")),
+                    i18n::s.get_m("ability", "core.fill_charge", "name")),
                 Message::color{ColorIndex::orange});
         }
     }
@@ -224,10 +218,7 @@ void gain_special_action()
             spact(31) = 1;
             txt(i18n::s.get(
                     "core.skill.gained",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(631)->get(),
-                        "name")),
+                    i18n::s.get_m("ability", "core.swarm", "name")),
                 Message::color{ColorIndex::orange});
         }
     }

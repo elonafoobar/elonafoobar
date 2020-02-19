@@ -54,7 +54,7 @@ void LuaApiGUI::txtnew()
  */
 void LuaApiGUI::play_sound(const std::string& sound_id)
 {
-    elona::snd(SharedId(sound_id));
+    elona::snd(data::InstanceId{sound_id});
 }
 
 /**

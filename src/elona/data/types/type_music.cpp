@@ -23,7 +23,7 @@ MusicData MusicDB::convert(const lua::ConfigTable& data, const std::string& id)
             filepathutil::to_utf8_path(music_file));
     }
 
-    return MusicData{SharedId{id}, legacy_id, music_file};
+    return MusicData{data::InstanceId{id}, legacy_id, music_file};
 }
 
 } // namespace elona

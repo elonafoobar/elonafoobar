@@ -48,7 +48,7 @@ enum class ChipEffect : int
 
 struct MapChip
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id{};
     int atlas{};
     SharedId key{};

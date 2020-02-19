@@ -11,7 +11,7 @@ namespace elona
 
 struct BuffData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
     sol::table self;
     BuffType type;

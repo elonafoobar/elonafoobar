@@ -7,7 +7,7 @@ namespace elona
 
 struct MusicData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
     fs::path file;
 };

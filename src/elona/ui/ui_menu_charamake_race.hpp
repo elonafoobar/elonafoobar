@@ -8,15 +8,10 @@ namespace ui
 
 struct UIMenuCharamakeRaceResult
 {
-    UIMenuCharamakeRaceResult(std::string race_id, std::string race_name)
-        : race_id(race_id)
-        , race_name(race_name)
-    {
-    }
-
-    std::string race_id;
-    std::string race_name;
+    data::InstanceId race_id;
 };
+
+
 
 class UIMenuCharamakeRace : public UIMenu<UIMenuCharamakeRaceResult>
 {
@@ -33,7 +28,7 @@ protected:
         const std::string& key);
 
 private:
-    void _draw_race_info(const std::string&);
+    void _draw_race_info(data::InstanceId race_id);
     void _draw_window();
     void _draw_choice(int, const std::string&);
     void _draw_choices();

@@ -8,7 +8,7 @@ namespace elona
 
 struct TraitData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
     int trait_type;
     int min;

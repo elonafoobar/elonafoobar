@@ -22,8 +22,8 @@ bool UIMenuCharamakeAttributes::init()
 void UIMenuCharamakeAttributes::_reroll_attributes()
 {
     chara_delete(0);
-    race_init_chara(cdata.player(), _race);
-    class_init_chara(cdata.player(), _klass);
+    race_init_chara(cdata.player(), _race_id);
+    class_init_chara(cdata.player(), _class_id);
     cdata.player().level = 1;
     for (int cnt = 10; cnt < 18; ++cnt)
     {

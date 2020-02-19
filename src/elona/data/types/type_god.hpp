@@ -8,7 +8,7 @@ namespace elona
 
 struct GodData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
 };
 

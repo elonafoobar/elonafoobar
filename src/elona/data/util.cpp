@@ -26,5 +26,26 @@ std::string convert_tags(const lua::ConfigTable& data, const std::string& id)
     return filter;
 }
 
+
+
+std::unordered_map<data::InstanceId, int> convert_id_number_table(
+    const lua::ConfigTable& data,
+    const std::string& id)
+{
+    std::unordered_map<data::InstanceId, int> ret;
+
+    if (auto it = data.optional<sol::table>(id))
+    {
+        for (const auto& kvp : *it)
+        {
+            data::InstanceId key{kvp.first.as<std::string>()};
+            int value = kvp.second.as<int>();
+            ret.emplace(key, value);
+        }
+    }
+
+    return ret;
+}
+
 } // namespace data
 } // namespace elona

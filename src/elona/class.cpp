@@ -10,20 +10,16 @@
 namespace elona
 {
 
-void class_init_chara(Character& chara, const std::string& class_id)
+void class_init_chara(Character& chara, data::InstanceId class_id)
 {
-    if (class_id.empty())
-    {
+    if (class_id == "")
         return;
-    }
 
     const auto data = the_class_db[class_id];
     if (!data)
-    {
         return;
-    }
 
-    cdatan(3, chara.index) = class_id;
+    cdatan(3, chara.index) = class_id.get();
     for (const auto& pair : data->skills)
     {
         if (const auto ability_data = the_ability_db[pair.first])
@@ -33,31 +29,31 @@ void class_init_chara(Character& chara, const std::string& class_id)
         else
         {
             // Skip the skill if undefined.
-            ELONA_WARN("lua.data") << "Undefined skill ID: " << pair.first
-                                   << " (class " << class_id << ")";
+            ELONA_WARN("lua.data") << "Undefined skill ID: " << pair.first.get()
+                                   << " (class " << class_id.get() << ")";
         }
     }
 }
 
 
 
-std::string class_get_name(const std::string& class_id)
+std::string class_get_name(data::InstanceId class_id)
 {
-    if (class_id.empty())
+    if (class_id == "")
     {
         return i18n::s.get("core.class.unemployed");
     }
     else
     {
-        return i18n::s.get_m("class", class_id, "name");
+        return i18n::s.get_m("class", class_id.get(), "name");
     }
 }
 
 
 
-int class_get_equipment_type(const std::string& class_id)
+int class_get_equipment_type(data::InstanceId class_id)
 {
-    if (class_id.empty())
+    if (class_id == "")
     {
         return 0;
     }
@@ -73,9 +69,9 @@ int class_get_equipment_type(const std::string& class_id)
 
 
 
-int class_get_item_type(const std::string& class_id)
+int class_get_item_type(data::InstanceId class_id)
 {
-    if (class_id.empty())
+    if (class_id == "")
     {
         return 0;
     }

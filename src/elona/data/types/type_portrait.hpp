@@ -11,7 +11,7 @@ namespace elona
 
 struct PortraitData
 {
-    SharedId id;
+    data::InstanceId id;
     SharedId key;
     Extent rect;
     optional<fs::path> filepath;

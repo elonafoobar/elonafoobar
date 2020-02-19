@@ -15,6 +15,7 @@
 #include "character_status.hpp"
 #include "class.hpp"
 #include "ctrl_file.hpp"
+#include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
 #include "elona.hpp"
 #include "equipment.hpp"
@@ -65,7 +66,7 @@ int _get_random_npc_id()
             continue;
         if (flttypemajor != 0 && flttypemajor != data.category)
             continue;
-        if (!fltnrace(0).empty() && fltnrace(0) != data.race)
+        if (!fltnrace(0).empty() && fltnrace(0) != data.race_id.get())
             continue;
         if (filtermax != 0)
         {
@@ -1070,7 +1071,8 @@ void chara_refresh(int cc)
         {
             break;
         }
-        buff_apply(cdata[cc], buff.id, buff.power);
+        buff_apply(
+            cdata[cc], *the_buff_db.get_id_from_legacy(buff.id), buff.power);
     }
     if (cdata[cc].equipment_type & 4)
     {
@@ -1111,7 +1113,7 @@ int relationbetween(int c1, int c2)
     return 0;
 }
 
-int chara_find(const std::string& chara_id)
+int chara_find(data::InstanceId chara_id)
 {
     // Note: if `chara_id` not found, `ensure()` throws an exception.
     return chara_find(the_character_db.ensure(chara_id).legacy_id);
@@ -1709,7 +1711,7 @@ int chara_armor_class(const Character& cc)
 int chara_breed_power(const Character& chara)
 {
     const auto breed_power_base =
-        the_race_db[cdatan(2, chara.index)]->breed_power;
+        the_race_db[data::InstanceId{cdatan(2, chara.index)}]->breed_power;
     return breed_power_base * 100 / (100 + chara.level * 5);
 }
 

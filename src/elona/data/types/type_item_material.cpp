@@ -28,7 +28,7 @@ ItemMaterialData ItemMaterialDB::convert(
     DATA_OPT_OR(acidproof, bool, false);
 
     return ItemMaterialData{
-        SharedId{id},
+        data::InstanceId{id},
         legacy_id,
         weight,
         value,

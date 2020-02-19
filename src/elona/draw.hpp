@@ -4,9 +4,10 @@
 #include <vector>
 
 #include "../snail/color.hpp"
+#include "data/id.hpp"
 #include "optional.hpp"
 #include "pic_loader/extent.hpp"
-#include "shared_id.hpp"
+
 
 
 namespace elona
@@ -133,43 +134,38 @@ void draw_item_with_portrait_scale_height(
 
 struct AssetData;
 
-const AssetData& asset_load(const std::string& key);
-const AssetData& asset_load(const std::string& key, int window_id);
+const AssetData& asset_load(data::InstanceId id);
+const AssetData& asset_load(data::InstanceId id, int window_id);
 void init_assets();
 
-void draw(const std::string& key, int x, int y);
-void draw(const std::string& key, int x, int y, int width, int height);
-void draw_centered(const std::string& key, int x, int y, int width, int height);
+void draw(data::InstanceId id, int x, int y);
+void draw(data::InstanceId id, int x, int y, int width, int height);
+void draw_centered(data::InstanceId id, int x, int y, int width, int height);
 void draw_rotated(
-    const std::string& key,
+    data::InstanceId id,
     int center_x,
     int center_y,
     double angle);
 void draw_rotated(
-    const std::string& key,
+    data::InstanceId id,
     int center_x,
     int center_y,
     int width,
     int height,
     double angle);
-void draw_indexed(const std::string& key, int x, int y, int index);
-void draw_indexed(
-    const std::string& key,
-    int x,
-    int y,
-    int index_x,
-    int index_y);
+void draw_indexed(data::InstanceId id, int x, int y, int index);
+void draw_indexed(data::InstanceId id, int x, int y, int index_x, int index_y);
 void draw_indexed_rotated(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int index_x,
     int index_y,
     double angle);
-void draw_region(const std::string& key, int x, int y, int width);
-void draw_region(const std::string& key, int x, int y, int width, int height);
+void draw_region(data::InstanceId id, int x, int y, int width);
+void draw_region(data::InstanceId id, int x, int y, int width, int height);
 void draw_region(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int offset_x,
@@ -177,7 +173,7 @@ void draw_region(
     int width,
     int height);
 void draw_region(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int offset_x,
@@ -187,7 +183,7 @@ void draw_region(
     int dst_width,
     int dst_height);
 void draw_region_centered(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int offset_x,
@@ -197,7 +193,7 @@ void draw_region_centered(
     int dst_width,
     int dst_height);
 void draw_region_rotated(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int offset_x,
@@ -206,36 +202,36 @@ void draw_region_rotated(
     int height,
     double angle);
 void draw_bar(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int dst_width,
     int dst_height,
     int width);
 void draw_bar_vert(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int dst_width,
     int dst_height,
     int height);
 void draw_indexed_region(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int index_x,
     int index_y,
     int count_x,
     int count_y);
-void draw_bg(const std::string& key);
-void asset_copy_from(int window_id, int x, int y, const std::string& key);
+void draw_bg(data::InstanceId id);
+void asset_copy_from(int window_id, int x, int y, data::InstanceId id);
 void asset_copy_from(
     int window_id,
     int x,
     int y,
     int width,
     int height,
-    const std::string& key);
+    data::InstanceId id);
 
 void draw_map_tile(int id, int x, int y, int anim_frame = 0);
 void draw_map_tile(
@@ -255,6 +251,6 @@ void draw_map_tile(
     int dst_height,
     int anim_frame = 0);
 
-const AssetData& get_image_info(const std::string& key);
+const AssetData& get_image_info(data::InstanceId id);
 
 } // namespace elona

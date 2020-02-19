@@ -18,7 +18,7 @@ using I18NKey = std::string;
 
 struct ItemData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
     int image;
     int value;

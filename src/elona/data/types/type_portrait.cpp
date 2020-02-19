@@ -58,7 +58,7 @@ PortraitData _PortraitDBBase::convert(
     }
 
     return PortraitData{
-        SharedId{id},
+        data::InstanceId{id},
         SharedId{std::string(Traits::type_id) + data_id_separator + id},
         Extent{x, y, width, height},
         filepath};
@@ -127,7 +127,7 @@ void PortraitDB::cache_sorted_portrait_table()
 {
     for (const auto& pair : *this)
     {
-        sorted_portrait_table.insert(pair.first);
+        sorted_portrait_table.insert(pair.first.get());
     }
 }
 

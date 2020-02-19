@@ -64,7 +64,7 @@ ItemChipData ItemChipDB::convert(
     }
 
     return ItemChipData{
-        SharedId{id},
+        data::InstanceId{id},
         legacy_id,
         Extent{x, y, width, height, frame_width},
         ItemChip{

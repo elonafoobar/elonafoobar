@@ -25,18 +25,21 @@
 #include "variables.hpp"
 
 
-namespace
-{
-elona_vector1<std::string> cmrace;
-std::string cmclass;
-elona_vector1<int> cmstats;
-elona_vector1<int> cmlock;
-} // namespace
-
-
 
 namespace elona
 {
+
+namespace
+{
+
+data::InstanceId cmrace;
+data::InstanceId cmclass;
+elona_vector1<int> cmstats;
+elona_vector1<int> cmlock;
+
+} // namespace
+
+
 
 static void _draw_background_and_caption(const I18NKey& key)
 {
@@ -73,8 +76,7 @@ MainMenuResult character_making_select_race()
     else
     {
         auto value = *result.value;
-        cmrace(0) = value.race_id;
-        cmrace(1) = value.race_name;
+        cmrace = value.race_id;
         return MainMenuResult::character_making_select_sex;
     }
 }
@@ -110,7 +112,7 @@ MainMenuResult character_making_select_class(bool advanced_to_next_menu)
         snd("core.ok1");
     }
 
-    auto result = ui::UIMenuCharamakeClass(cmrace(0), cmrace(1)).show();
+    auto result = ui::UIMenuCharamakeClass(cmrace).show();
 
     if (result.canceled)
     {
@@ -122,7 +124,7 @@ MainMenuResult character_making_select_class(bool advanced_to_next_menu)
     }
     else
     {
-        cmclass = *result.value;
+        cmclass = result.value->class_id;
         return MainMenuResult::character_making_role_attributes;
     }
 }
@@ -139,8 +141,7 @@ MainMenuResult character_making_role_attributes(bool advanced_to_next_menu)
     }
 
     const auto result =
-        ui::UIMenuCharamakeAttributes(cmrace(0), cmclass, cmstats, cmlock)
-            .show();
+        ui::UIMenuCharamakeAttributes(cmrace, cmclass, cmstats, cmlock).show();
 
     if (result.canceled)
     {

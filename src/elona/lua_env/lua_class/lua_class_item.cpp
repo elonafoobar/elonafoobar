@@ -36,7 +36,8 @@ void LuaItem::remove(Item& self)
  */
 void LuaItem::change_material(Item& self, const std::string& material_id)
 {
-    const auto& data = the_item_material_db.ensure(material_id);
+    const auto& data =
+        the_item_material_db.ensure(data::InstanceId{material_id});
     change_item_material(self, data.legacy_id);
 }
 
@@ -222,10 +223,8 @@ void LuaItem::bind(sol::state& lua)
      * [R] The prototype data of the character.
      */
     LuaItem.set("prototype", sol::property([](Item& self) {
-                    auto id =
-                        the_item_db.get_id_from_legacy(itemid2int(self.id));
                     return *lua::lua->get_data_manager().get().raw(
-                        "core.item", id->get());
+                        "core.item", self.new_id());
                 }));
 
     // Methods

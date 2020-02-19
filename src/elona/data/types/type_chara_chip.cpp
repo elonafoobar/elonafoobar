@@ -51,7 +51,7 @@ CharaChipData CharaChipDB::convert(
     }
 
     return CharaChipData{
-        SharedId{id},
+        data::InstanceId{id},
         legacy_id,
         Extent{x, y, width, height},
         CharaChip{
