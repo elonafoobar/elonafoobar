@@ -126,13 +126,6 @@ public:
 
 
 
-    void clear()
-    {
-        _storage.clear();
-    }
-
-
-
     optional<std::string> error(const IdType& id)
     {
         auto it = _errors.find(id);
@@ -267,14 +260,6 @@ public:
 
     using LegacyIdType = decltype(DataType::legacy_id);
     using LegacyMapType = std::unordered_map<LegacyIdType, IdType>;
-
-
-
-    void clear()
-    {
-        Super::clear();
-        _by_legacy_id.clear();
-    }
 
 
 
