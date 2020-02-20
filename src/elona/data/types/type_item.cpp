@@ -10,7 +10,7 @@ namespace elona
 {
 
 ItemDB the_item_db;
-const constexpr char* data::LuaLazyCacheTraits<ItemDB>::type_id;
+const constexpr char* data::DatabaseTraits<ItemDB>::type_id;
 
 
 

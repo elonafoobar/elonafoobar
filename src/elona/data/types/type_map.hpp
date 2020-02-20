@@ -2,7 +2,7 @@
 #include "../../lua_env/wrapped_function.hpp"
 #include "../../mdata.hpp"
 #include "../../position.hpp"
-#include "../lua_lazy_cache.hpp"
+#include "../base_database.hpp"
 
 namespace elona
 {

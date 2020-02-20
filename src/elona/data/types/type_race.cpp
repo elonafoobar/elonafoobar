@@ -32,7 +32,7 @@ std::unordered_map<SharedId, int> _convert_skills_or_resistances(
 
 
 RaceDB the_race_db;
-const constexpr char* data::LuaLazyCacheTraits<RaceDB>::type_id;
+const constexpr char* data::DatabaseTraits<RaceDB>::type_id;
 
 
 

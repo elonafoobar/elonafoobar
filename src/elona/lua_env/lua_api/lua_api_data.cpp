@@ -33,7 +33,6 @@ void LuaApiData::reload_assets()
 void LuaApiData::reload_charas()
 {
     the_character_db.initialize(lua::lua->get_data_manager().get());
-    the_character_db.load_all();
 }
 
 

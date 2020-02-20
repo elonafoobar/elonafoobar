@@ -6,7 +6,7 @@ namespace elona
 {
 
 AbilityDB the_ability_db;
-const constexpr char* data::LuaLazyCacheTraits<AbilityDB>::type_id;
+const constexpr char* data::DatabaseTraits<AbilityDB>::type_id;
 
 
 

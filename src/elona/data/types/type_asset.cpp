@@ -39,7 +39,7 @@ EnumMap<AssetLoadType> AssetLoadTypeTable(
 
 
 AssetDB the_asset_db;
-const constexpr char* data::LuaLazyCacheTraits<AssetDB>::type_id;
+const constexpr char* data::DatabaseTraits<AssetDB>::type_id;
 
 
 

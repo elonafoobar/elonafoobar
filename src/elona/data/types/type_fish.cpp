@@ -6,7 +6,7 @@ namespace elona
 {
 
 FishDB the_fish_db;
-const constexpr char* data::LuaLazyCacheTraits<FishDB>::type_id;
+const constexpr char* data::DatabaseTraits<FishDB>::type_id;
 
 
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "../../filesystem.hpp"
-#include "../lua_lazy_cache.hpp"
+#include "../base_database.hpp"
 
 namespace elona
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include "../../optional.hpp"
 #include "../../pic_loader/extent.hpp"
-#include "../lua_lazy_cache.hpp"
+#include "../base_database.hpp"
 
 namespace elona
 {

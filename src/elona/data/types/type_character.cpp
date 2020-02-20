@@ -7,7 +7,7 @@ namespace elona
 {
 
 CharacterDB the_character_db;
-const constexpr char* data::LuaLazyCacheTraits<CharacterDB>::type_id;
+const constexpr char* data::DatabaseTraits<CharacterDB>::type_id;
 
 
 

@@ -8,7 +8,7 @@ namespace elona
 {
 
 TraitDB the_trait_db;
-const constexpr char* data::LuaLazyCacheTraits<TraitDB>::type_id;
+const constexpr char* data::DatabaseTraits<TraitDB>::type_id;
 
 
 

@@ -23,7 +23,7 @@ PortraitDB the_portrait_db;
 
 
 
-const constexpr char* data::LuaLazyCacheTraits<_PortraitDBBase>::type_id;
+const constexpr char* data::DatabaseTraits<_PortraitDBBase>::type_id;
 
 
 PortraitData _PortraitDBBase::convert(
@@ -62,15 +62,6 @@ PortraitData _PortraitDBBase::convert(
         SharedId{std::string(Traits::type_id) + data_id_separator + id},
         Extent{x, y, width, height},
         filepath};
-}
-
-
-
-// TODO: this method assumes that any data loading is done via this method.
-void PortraitDB::load_all()
-{
-    _PortraitDBBase::load_all();
-    _cache_sorted_portrait_table();
 }
 
 
@@ -132,7 +123,7 @@ std::string PortraitDB::get_previous_portrait(const std::string& current)
 
 
 
-void PortraitDB::_cache_sorted_portrait_table()
+void PortraitDB::cache_sorted_portrait_table()
 {
     for (const auto& pair : *this)
     {

@@ -48,15 +48,15 @@ constexpr bool has_legacy_id_v = has_legacy_id<T>::value;
 
 
 template <typename>
-struct LuaLazyCacheTraits;
+struct DatabaseTraits;
 
 
 
 template <typename T>
-class LuaLazyCache : public lib::noncopyable
+class BaseDatabase : public lib::noncopyable
 {
 public:
-    using Traits = LuaLazyCacheTraits<T>;
+    using Traits = DatabaseTraits<T>;
     using DataType = typename Traits::DataType;
     using IdType = decltype(DataType::id);
     using MapType = std::unordered_map<IdType, DataType>;
@@ -66,19 +66,17 @@ public:
 
 
 
-    LuaLazyCache() = default;
+    BaseDatabase() = default;
 
 
 
     void initialize(lua::DataTable data)
     {
         _data = data;
+        load_all();
     }
 
 
-
-    // NOTE: To iterate all values, they all have to be loaded from Lua first by
-    // calling load_all().
 
     typename MapType::const_iterator begin() const
     {
@@ -104,24 +102,6 @@ public:
     ValuesIterator values() const
     {
         return ValuesIterator(_storage);
-    }
-
-
-
-    void load_all()
-    {
-        auto it = _data.get_table(Traits::type_id);
-        if (!it)
-            return;
-
-        for (const auto& pair : *it)
-        {
-            IdType id(pair.first.template as<std::string>());
-            if ((*this)[id])
-                continue;
-
-            retrieve_from_lua(id);
-        }
     }
 
 
@@ -237,16 +217,34 @@ private:
 
         return _storage[id];
     }
+
+
+
+    void load_all()
+    {
+        auto it = _data.get_table(Traits::type_id);
+        if (!it)
+            return;
+
+        for (const auto& pair : *it)
+        {
+            IdType id(pair.first.template as<std::string>());
+            if ((*this)[id])
+                continue;
+
+            retrieve_from_lua(id);
+        }
+    }
 };
 
 
 
 template <typename T>
-class LuaLazyCacheWithLegacyIdTable : public LuaLazyCache<T>
+class BaseDatabaseWithLegacyIdTable : public BaseDatabase<T>
 {
 private:
-    using Self = LuaLazyCacheWithLegacyIdTable;
-    using Super = LuaLazyCache<T>;
+    using Self = BaseDatabaseWithLegacyIdTable;
+    using Super = BaseDatabase<T>;
 
 
 public:
@@ -343,7 +341,7 @@ private:
     namespace data \
     { \
     template <> \
-    struct LuaLazyCacheTraits<ClassName> \
+    struct DatabaseTraits<ClassName> \
     { \
         using DataType = DataTypeName; \
         static const constexpr bool has_legacy_id = \
@@ -353,9 +351,9 @@ private:
     } \
     class ClassName \
         : public std::conditional_t< \
-              data::LuaLazyCacheTraits<ClassName>::has_legacy_id, \
-              data::LuaLazyCacheWithLegacyIdTable<ClassName>, \
-              data::LuaLazyCache<ClassName>> \
+              data::DatabaseTraits<ClassName>::has_legacy_id, \
+              data::BaseDatabaseWithLegacyIdTable<ClassName>, \
+              data::BaseDatabase<ClassName>> \
     { \
     public: \
         ClassName() = default; \

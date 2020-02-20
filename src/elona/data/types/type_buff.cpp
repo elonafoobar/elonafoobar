@@ -6,7 +6,7 @@ namespace elona
 {
 
 BuffDB the_buff_db;
-const constexpr char* data::LuaLazyCacheTraits<BuffDB>::type_id;
+const constexpr char* data::DatabaseTraits<BuffDB>::type_id;
 
 
 

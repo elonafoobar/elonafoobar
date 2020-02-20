@@ -8,7 +8,7 @@
 namespace elona
 {
 
-const constexpr char* data::LuaLazyCacheTraits<MapChipDB>::type_id;
+const constexpr char* data::DatabaseTraits<MapChipDB>::type_id;
 
 
 

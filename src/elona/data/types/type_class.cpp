@@ -32,7 +32,7 @@ std::unordered_map<SharedId, int> _convert_skills(
 
 
 ClassDB the_class_db;
-const constexpr char* data::LuaLazyCacheTraits<ClassDB>::type_id;
+const constexpr char* data::DatabaseTraits<ClassDB>::type_id;
 
 
 

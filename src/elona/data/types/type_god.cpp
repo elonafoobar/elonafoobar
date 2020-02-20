@@ -6,7 +6,7 @@ namespace elona
 {
 
 GodDB the_god_db;
-const constexpr char* data::LuaLazyCacheTraits<GodDB>::type_id;
+const constexpr char* data::DatabaseTraits<GodDB>::type_id;
 
 
 

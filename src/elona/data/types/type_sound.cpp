@@ -6,7 +6,7 @@ namespace elona
 {
 
 SoundDB the_sound_db;
-const constexpr char* data::LuaLazyCacheTraits<SoundDB>::type_id;
+const constexpr char* data::DatabaseTraits<SoundDB>::type_id;
 
 
 

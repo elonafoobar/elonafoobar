@@ -6,7 +6,7 @@ namespace elona
 {
 
 MapDefDB the_mapdef_db;
-const constexpr char* data::LuaLazyCacheTraits<MapDefDB>::type_id;
+const constexpr char* data::DatabaseTraits<MapDefDB>::type_id;
 
 
 
