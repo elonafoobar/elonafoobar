@@ -78,72 +78,6 @@ std::string atbuff;
 
 
 
-void select_house_board_tile()
-{
-    snd("core.pop2");
-
-    auto box_size = inf_tiles / 2;
-    while (1)
-    {
-        gmode(0);
-        p = 0;
-        // TODO
-        for (int y = 0; y < 20; ++y)
-        {
-            for (int x = 0; x < 33; ++x)
-            {
-                if (p < listmax)
-                {
-                    const auto& chip = chip_data[list(0, p)];
-                    draw_map_tile(
-                        list(0, p),
-                        x * box_size,
-                        y * box_size,
-                        inf_tiles,
-                        inf_tiles,
-                        box_size,
-                        box_size);
-                    if (chip.effect & 4)
-                    {
-                        boxl(
-                            x * box_size,
-                            y * box_size,
-                            box_size,
-                            box_size,
-                            {240, 230, 220});
-                    }
-                }
-                ++p;
-            }
-        }
-
-        gmode(2);
-        redraw();
-        await(g_config.general_wait());
-        const auto input = stick();
-        if (input == StickKey::mouse_left)
-        {
-            p = mousex / box_size + mousey / box_size * 33;
-            if (p >= listmax)
-            {
-                snd("core.fail1");
-                continue;
-            }
-            tile = list(0, p);
-            snd("core.ok1");
-            house_board_update_screen();
-            return;
-        }
-        if (input == StickKey::mouse_right)
-        {
-            house_board_update_screen();
-            return;
-        }
-    }
-}
-
-
-
 void weather_changes_by_location(bool output_immediately = true)
 {
     if (game_data.weather == 2)
@@ -5118,7 +5052,7 @@ TurnResult step_into_gate(Item& moon_gate)
 
 int target_position(bool target_chara)
 {
-    if (tlocinitx != 0 || tlocinity != 0 || homemapmode == 1)
+    if (tlocinitx != 0 || tlocinity != 0)
     {
         tlocx = tlocinitx;
         tlocy = tlocinity;
@@ -5129,37 +5063,30 @@ int target_position(bool target_chara)
         tlocy = cdata[cc].position.y;
     }
 
-    if (homemapmode)
-    {
-        scposval = 0;
-    }
-    else
-    {
-        scposval = 1;
+    scposval = 1;
 
-        if (target_chara)
+    if (target_chara)
+    {
+        if (cdata.player().enemy_id == 0)
         {
-            if (cdata.player().enemy_id == 0)
+            find_enemy_target();
+        }
+        build_target_list();
+        if (listmax == 0)
+        {
+            txt(i18n::s.get("core.misc.no_target_around"));
+        }
+        for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
+        {
+            if (list(0, cnt) == 0)
             {
-                find_enemy_target();
+                continue;
             }
-            build_target_list();
-            if (listmax == 0)
+            if (list(0, cnt) == cdata.player().enemy_id)
             {
-                txt(i18n::s.get("core.misc.no_target_around"));
-            }
-            for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
-            {
-                if (list(0, cnt) == 0)
-                {
-                    continue;
-                }
-                if (list(0, cnt) == cdata.player().enemy_id)
-                {
-                    tlocx = cdata[list(0, cnt)].position.x;
-                    tlocy = cdata[list(0, cnt)].position.y;
-                    break;
-                }
+                tlocx = cdata[list(0, cnt)].position.x;
+                tlocy = cdata[list(0, cnt)].position.y;
+                break;
             }
         }
     }
@@ -5185,82 +5112,72 @@ int target_position(bool target_chara)
                     (dy + inf_tiles > windowh - inf_verh) *
                         (dy + inf_tiles - windowh + inf_verh));
         }
-        if (homemapmode == 1)
+        rc = -1;
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
-            draw_map_tile(tile, windoww - 80, 20);
-        }
-        else
-        {
-            rc = -1;
-            for (int cnt = 0; cnt < 1; ++cnt)
+            if (cell_data.at(tlocx, tlocy).chara_index_plus_one <= 1)
             {
-                if (cell_data.at(tlocx, tlocy).chara_index_plus_one <= 1)
-                {
-                    break;
-                }
-                rc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
-                if (is_in_fov(cdata[rc]) == 0)
-                {
-                    break;
-                }
-                if (fov_los(
-                        cdata[cc].position.x,
-                        cdata[cc].position.y,
-                        cdata[rc].position.x,
-                        cdata[rc].position.y) == 0)
-                {
-                    break;
-                }
-                if ((cdata[rc].is_invisible() == 0 ||
-                     cdata.player().can_see_invisible() || cdata[rc].wet) == 0)
-                {
-                    break;
-                }
-                get_route(
+                break;
+            }
+            rc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
+            if (is_in_fov(cdata[rc]) == 0)
+            {
+                break;
+            }
+            if (fov_los(
                     cdata[cc].position.x,
                     cdata[cc].position.y,
                     cdata[rc].position.x,
-                    cdata[rc].position.y);
-                dx = (tlocx - scx) * inf_tiles + inf_screenx;
-                dy = (tlocy - scy) * inf_tiles + inf_screeny;
-                if (maxroute != 0)
+                    cdata[rc].position.y) == 0)
+            {
+                break;
+            }
+            if ((cdata[rc].is_invisible() == 0 ||
+                 cdata.player().can_see_invisible() || cdata[rc].wet) == 0)
+            {
+                break;
+            }
+            get_route(
+                cdata[cc].position.x,
+                cdata[cc].position.y,
+                cdata[rc].position.x,
+                cdata[rc].position.y);
+            dx = (tlocx - scx) * inf_tiles + inf_screenx;
+            dy = (tlocy - scy) * inf_tiles + inf_screeny;
+            if (maxroute != 0)
+            {
+                dx = cdata[cc].position.x;
+                dy = cdata[cc].position.y;
+                for (int cnt = 0; cnt < 100; ++cnt)
                 {
-                    dx = cdata[cc].position.x;
-                    dy = cdata[cc].position.y;
-                    for (int cnt = 0; cnt < 100; ++cnt)
+                    int stat = route_info(dx, dy, cnt);
+                    if (stat == 0)
                     {
-                        int stat = route_info(dx, dy, cnt);
-                        if (stat == 0)
-                        {
-                            break;
-                        }
-                        else if (stat == -1)
-                        {
-                            continue;
-                        }
-                        sx = (dx - scx) * inf_tiles + inf_screenx;
-                        sy = (dy - scy) * inf_tiles + inf_screeny;
-                        if (sy + inf_tiles <= windowh - inf_verh)
-                        {
-                            snail::Application::instance()
-                                .get_renderer()
-                                .set_blend_mode(snail::BlendMode::blend);
-                            snail::Application::instance()
-                                .get_renderer()
-                                .set_draw_color({255, 255, 255, 25});
-                            snail::Application::instance()
-                                .get_renderer()
-                                .fill_rect(
-                                    sx,
-                                    sy * (sy > 0),
-                                    inf_tiles -
-                                        (sx + inf_tiles > windoww) *
-                                            (sx + inf_tiles - windoww),
-                                    inf_tiles + (sy < 0) * inf_screeny -
-                                        (sy + inf_tiles > windowh - inf_verh) *
-                                            (sy + inf_tiles - windowh +
-                                             inf_verh));
-                        }
+                        break;
+                    }
+                    else if (stat == -1)
+                    {
+                        continue;
+                    }
+                    sx = (dx - scx) * inf_tiles + inf_screenx;
+                    sy = (dy - scy) * inf_tiles + inf_screeny;
+                    if (sy + inf_tiles <= windowh - inf_verh)
+                    {
+                        snail::Application::instance()
+                            .get_renderer()
+                            .set_blend_mode(snail::BlendMode::blend);
+                        snail::Application::instance()
+                            .get_renderer()
+                            .set_draw_color({255, 255, 255, 25});
+                        snail::Application::instance().get_renderer().fill_rect(
+                            sx,
+                            sy * (sy > 0),
+                            inf_tiles -
+                                (sx + inf_tiles > windoww) *
+                                    (sx + inf_tiles - windoww),
+                            inf_tiles + (sy < 0) * inf_screeny -
+                                (sy + inf_tiles > windowh - inf_verh) *
+                                    (sy + inf_tiles - windowh + inf_verh));
                     }
                 }
             }
@@ -5268,74 +5185,14 @@ int target_position(bool target_chara)
         txttargetnpc(tlocx, tlocy);
         redraw();
         auto action = key_check();
-        if (homemapmode == 1)
+        if (key_direction(action) == 1)
         {
-            if (action == "enter")
+            x = tlocx + kdx;
+            y = tlocy + kdy;
+            if (x >= 0 && y >= 0 && x < map_data.width && y < map_data.height)
             {
-                select_house_board_tile();
-                wait_key_released();
-                continue;
-            }
-            const auto input =
-                stick(StickKey::mouse_left | StickKey::mouse_right);
-            if (input == StickKey::mouse_left)
-            {
-                action = "enter";
-            }
-            if (input == StickKey::mouse_right)
-            {
-                if (chip_data.for_cell(tlocx, tlocy).kind == 2 ||
-                    chip_data.for_cell(tlocx, tlocy).kind == 1)
-                {
-                    snd("core.fail1");
-                    wait_key_released();
-                    continue;
-                }
-                tile = cell_data.at(tlocx, tlocy).chip_id_actual;
-                snd("core.cursor1");
-                wait_key_released();
-            }
-            tx = clamp(mousex - inf_screenx, 0, windoww) / inf_tiles;
-            ty = clamp(mousey - inf_screeny, 0, (windowh - inf_verh)) /
-                inf_tiles;
-            int stat = key_direction(action);
-            if (stat == 1)
-            {
-                cdata.player().position.x += kdx;
-                cdata.player().position.y += kdy;
-                if (cdata.player().position.x < 0)
-                {
-                    cdata.player().position.x = 0;
-                }
-                else if (cdata.player().position.x >= map_data.width)
-                {
-                    cdata.player().position.x = map_data.width - 1;
-                }
-                if (cdata.player().position.y < 0)
-                {
-                    cdata.player().position.y = 0;
-                }
-                else if (cdata.player().position.y >= map_data.height)
-                {
-                    cdata.player().position.y = map_data.height - 1;
-                }
-            }
-            tlocx = clamp(tx + scx, 0, map_data.width - 1);
-            tlocy = clamp(ty + scy, 0, map_data.height - 1);
-        }
-        else
-        {
-            int stat = key_direction(action);
-            if (stat == 1)
-            {
-                x = tlocx + kdx;
-                y = tlocy + kdy;
-                if (x >= 0 && y >= 0 && x < map_data.width &&
-                    y < map_data.height)
-                {
-                    tlocx += kdx;
-                    tlocy += kdy;
-                }
+                tlocx += kdx;
+                tlocy += kdy;
             }
         }
         if (findlocmode == 1)
@@ -5415,12 +5272,12 @@ int target_position(bool target_chara)
                     txt(i18n::s.get("core.action.look.target_ground"));
                 }
             }
-            else if (homemapmode == 0)
+            else
             {
                 snd("core.cursor1");
             }
             scposval = 0;
-            if (tlocinitx == 0 && tlocinity == 0 && homemapmode != 1)
+            if (tlocinitx == 0 && tlocinity == 0)
             {
                 update_screen();
             }

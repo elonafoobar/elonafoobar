@@ -23,6 +23,7 @@
 #include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "mapeditor/design_mode.hpp"
 #include "menu.hpp"
 #include "message.hpp"
 #include "random.hpp"
@@ -33,91 +34,6 @@
 
 namespace
 {
-
-void prepare_house_board_tiles()
-{
-    std::vector<int> unavailable_tiles{
-        15,  16,  24,  25,  26,  27,  28,  29,  30,  92,  93,  94,  95,  141,
-        169, 170, 171, 180, 182, 192, 244, 245, 246, 247, 248, 249, 250, 251,
-        252, 253, 254, 255, 256, 257, 258, 292, 293, 294, 309, 310, 311, 312,
-        313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 327, 328,
-        329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342,
-        343, 344, 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356,
-        372, 373, 374, 375, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409,
-        410, 411, 412, 413, 414, 415, 416, 417, 418, 419, 422, 431, 432, 433,
-        434, 435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447,
-        448, 449, 450, 451, 452, 453, 454, 455};
-
-    p = 0;
-    p(1) = 0;
-
-    gsel(2);
-
-    for (int cnt = 0; cnt < 2772; ++cnt)
-    {
-        bool available{};
-        if (cnt < 231)
-        {
-            available = true;
-        }
-        if (cnt >= 396 && cnt < 429)
-        {
-            available = true;
-        }
-        if (cnt >= 462 && cnt < 495)
-        {
-            available = true;
-        }
-        if (cnt >= 561 && cnt < 726)
-        {
-            available = true;
-        }
-        if (!available)
-        {
-            continue;
-        }
-        if (chip_data[cnt].kind == 2)
-        {
-            continue;
-        }
-        if (chip_data[cnt].kind == 1)
-        {
-            continue;
-        }
-        if (chip_data[cnt].kind2 == 5)
-        {
-            continue;
-        }
-        if (chip_data[cnt].kind == 3)
-        {
-            if (game_data.home_scale <= 3)
-            {
-                continue;
-            }
-            else
-            {
-                --p(1);
-            }
-        }
-        ++p(1);
-        if (range::find(unavailable_tiles, p(1)) != std::end(unavailable_tiles))
-        {
-            continue;
-        }
-        list(0, p) = cnt;
-        ++p;
-        if (chip_data[cnt].anime_frame != 0)
-        {
-            cnt = cnt + chip_data[cnt].anime_frame - 1;
-            continue;
-        }
-    }
-
-    listmax = p;
-    gsel(0);
-}
-
-
 
 int calc_heirloom_value(const Item& heirloom)
 {
@@ -515,7 +431,7 @@ TurnResult show_house_board()
     rtval = stat;
     switch (rtval)
     {
-    case 0: start_home_map_mode(); break;
+    case 0: mapeditor::start_home_map_mode(); break;
     case 2: show_home_value(); break;
     case 3: prompt_move_ally(); break;
     case 4: prompt_ally_staying(); break;
@@ -661,85 +577,6 @@ void prompt_hiring()
         }
     }
     calccosthire();
-}
-
-
-
-void fill_tile(int x, int y, int from, int to)
-{
-    // out of range
-    if (x < 0 || map_data.width <= x || y < 0 || map_data.height <= y)
-        return;
-
-    if (cell_data.at(x, y).chip_id_actual != from)
-        return;
-
-    if ((chip_data[to].effect & 4) != 0 &&
-        cell_data.at(x, y).chara_index_plus_one != 0)
-        return;
-
-    // Draw one tile.
-    cell_data.at(x, y).chip_id_actual = tile;
-    cell_data.at(x, y).chip_id_memory = tile;
-
-    // Draw tiles around.
-    fill_tile(x - 1, y, from, to);
-    fill_tile(x + 1, y, from, to);
-    fill_tile(x, y - 1, from, to);
-    fill_tile(x, y + 1, from, to);
-}
-
-
-
-void start_home_map_mode()
-{
-    const auto pc_position_prev = cdata.player().position;
-    homemapmode = 1;
-
-    prepare_house_board_tiles();
-
-    Message::instance().linebreak();
-    txt(i18n::s.get("core.building.home.design.help"));
-
-    tlocinitx = cdata.player().position.x;
-    tlocinity = cdata.player().position.y;
-    tile = 0;
-    while (1)
-    {
-        await(g_config.general_wait());
-        int stat = target_position();
-        if (stat == -1)
-        {
-            break;
-        }
-
-        if (getkey(snail::Key::ctrl))
-        {
-            if (cell_data.at(tlocx, tlocy).chip_id_actual != tile)
-            {
-                fill_tile(
-                    tlocx,
-                    tlocy,
-                    cell_data.at(tlocx, tlocy).chip_id_actual,
-                    tile);
-            }
-        }
-        else if (chip_data[tile].effect & 4)
-        {
-            efid = 438;
-            magic();
-        }
-        else
-        {
-            cell_data.at(tlocx, tlocy).chip_id_actual = tile;
-            cell_data.at(tlocx, tlocy).chip_id_memory = tile;
-        }
-        tlocinitx = tlocx;
-        tlocinity = tlocy;
-    }
-
-    homemapmode = 0;
-    cdata.player().position = pc_position_prev;
 }
 
 
