@@ -516,7 +516,7 @@ public:
         storage.clear();
     }
 
-    optional<const LocalizedText&> find_translation(const I18NKey& key)
+    optional_ref<const LocalizedText> find_translation(const I18NKey& key)
     {
         // In the unlikely event that a single locale key refers to
         // both a single string and a list, the string will be chosen.

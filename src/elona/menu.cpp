@@ -563,7 +563,7 @@ std::string make_spell_description(int skill_id)
                       "ability",
                       the_ability_db.get_id_from_legacy(skill_id)->get(),
                       "description")
-                  .get_value_or("");
+                  .value_or("");
 
     return result;
 }

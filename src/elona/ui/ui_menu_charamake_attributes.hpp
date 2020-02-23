@@ -6,7 +6,7 @@ namespace elona
 namespace ui
 {
 
-class UIMenuCharamakeAttributes : public UIMenu<elona_vector1<int>>
+class UIMenuCharamakeAttributes : public UIMenu<std::vector<int>>
 {
 public:
     UIMenuCharamakeAttributes(

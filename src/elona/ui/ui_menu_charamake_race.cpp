@@ -87,8 +87,7 @@ void UIMenuCharamakeRace::_draw_race_info(const std::string& race_id)
 
     gmode(2);
     draw_race_or_class_info(
-        i18n::s.get_m_optional("race", race_id, "description")
-            .get_value_or(""));
+        i18n::s.get_m_optional("race", race_id, "description").value_or(""));
 }
 
 

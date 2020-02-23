@@ -38,6 +38,6 @@ struct CraftingRecipe
 
 void initialize_craft_material_data();
 void crafting_menu();
-optional<const CraftingRecipe&> crafting_find_recipe(int matid);
+optional_ref<const CraftingRecipe> crafting_find_recipe(int matid);
 
 } // namespace elona

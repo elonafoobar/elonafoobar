@@ -169,7 +169,7 @@ int damage_hp(
     int gained_exp = 0;
     bool attacker_is_player = false;
 
-    optional<Character&> attacker = none;
+    optional_ref<Character> attacker = none;
     if (damage_source >= 0)
     {
         attacker = cdata[damage_source];

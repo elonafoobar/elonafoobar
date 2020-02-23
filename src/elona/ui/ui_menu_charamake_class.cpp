@@ -89,8 +89,7 @@ static void _draw_class_info(
             race);
 
     draw_race_or_class_info(
-        i18n::s.get_m_optional("class", class_id, "description")
-            .get_value_or(""));
+        i18n::s.get_m_optional("class", class_id, "description").value_or(""));
 }
 
 void UIMenuCharamakeClass::_draw_window()

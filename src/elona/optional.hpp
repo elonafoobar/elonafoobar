@@ -1,8 +1,7 @@
 #pragma once
 
 #include <memory>
-
-#include <boost/optional.hpp>
+#include <optional>
 
 
 
@@ -11,10 +10,10 @@ namespace elona
 
 
 template <typename T>
-using optional = boost::optional<T>;
+using optional = std::optional<T>;
 
-using none_t = boost::none_t;
-const none_t none = boost::none;
+using none_t = std::nullopt_t;
+const none_t none = std::nullopt;
 
 
 

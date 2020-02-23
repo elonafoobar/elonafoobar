@@ -362,7 +362,7 @@ std::unordered_map<int, CraftingRecipe> recipes = {
 };
 // clang-format on
 
-optional<const CraftingRecipe&> crafting_find_recipe(int matid_)
+optional_ref<const CraftingRecipe> crafting_find_recipe(int matid_)
 {
     auto it = recipes.find(matid_);
 

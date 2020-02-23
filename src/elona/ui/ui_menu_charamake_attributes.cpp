@@ -206,7 +206,12 @@ UIMenuCharamakeAttributes::on_key(const std::string& action)
         }
         if (*selected == 1)
         {
-            return UIMenuCharamakeAttributes::Result::finish(_attributes);
+            std::vector<int> ret;
+            for (size_t i = 0; i < _attributes.size(); ++i)
+            {
+                ret.push_back(_attributes(i));
+            }
+            return UIMenuCharamakeAttributes::Result::finish(ret);
         }
         if (_locked_attributes(*selected - 2) != 0)
         {

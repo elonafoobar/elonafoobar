@@ -12,11 +12,11 @@
 #include "../../request.hpp"
 
 #include <functional>
+#include <optional>
 #include <string>
 
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
-#include <boost/optional.hpp>
 
 #include "../../../../thirdparty/uri/include/network/uri.hpp"
 #include "../../error.hpp"
@@ -513,7 +513,7 @@ private:
 
 
 
-    boost::optional<ParsedURL> parse_url(const Url& raw_url)
+    std::optional<ParsedURL> parse_url(const Url& raw_url)
     {
         try
         {
@@ -522,7 +522,7 @@ private:
         catch (Error& err)
         {
             fail(err.what());
-            return boost::none;
+            return std::nullopt;
         }
     }
 };
