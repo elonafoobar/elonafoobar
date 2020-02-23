@@ -11,6 +11,11 @@
 namespace elona
 {
 
+
+AreaData area_data;
+
+
+
 #define ADATA_PACK(x, ident) legacy_adata(x, area_id) = ident;
 #define ADATA_UNPACK(x, ident) ident = legacy_adata(x, area_id);
 

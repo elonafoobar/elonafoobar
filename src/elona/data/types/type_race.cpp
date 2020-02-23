@@ -31,6 +31,11 @@ std::unordered_map<SharedId, int> _convert_skills_or_resistances(
 
 
 
+RaceDB the_race_db;
+const constexpr char* data::LuaLazyCacheTraits<RaceDB>::type_id;
+
+
+
 RaceData RaceDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
     DATA_OPT_OR(is_extra, bool, true);

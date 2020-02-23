@@ -121,7 +121,7 @@ private:
 
 
 
-inline std::unique_ptr<LuaEnv> lua;
+extern std::unique_ptr<LuaEnv> lua;
 
 } // namespace lua
 } // namespace elona

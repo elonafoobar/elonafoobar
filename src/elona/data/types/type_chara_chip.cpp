@@ -8,6 +8,10 @@
 namespace elona
 {
 
+const constexpr char* data::LuaLazyCacheTraits<CharaChipDB>::type_id;
+
+
+
 CharaChipData CharaChipDB::convert(
     const lua::ConfigTable& data,
     const std::string& id)

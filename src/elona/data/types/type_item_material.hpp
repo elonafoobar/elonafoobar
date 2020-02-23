@@ -29,6 +29,6 @@ ELONA_DEFINE_LUA_DB(ItemMaterialDB, ItemMaterialData, "core.item_material")
 
 
 
-inline ItemMaterialDB the_item_material_db;
+extern ItemMaterialDB the_item_material_db;
 
 } // namespace elona

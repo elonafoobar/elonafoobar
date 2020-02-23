@@ -22,6 +22,6 @@ ELONA_DEFINE_LUA_DB(ClassDB, ClassData, "core.class")
 
 
 
-inline ClassDB the_class_db;
+extern ClassDB the_class_db;
 
 } // namespace elona

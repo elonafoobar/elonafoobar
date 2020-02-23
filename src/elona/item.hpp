@@ -312,7 +312,7 @@ private:
 };
 
 
-inline Inventory inv;
+extern Inventory inv;
 
 
 

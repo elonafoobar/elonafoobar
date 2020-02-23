@@ -34,6 +34,6 @@ ELONA_DEFINE_LUA_DB(RaceDB, RaceData, "core.race")
 
 
 
-inline RaceDB the_race_db;
+extern RaceDB the_race_db;
 
 } // namespace elona

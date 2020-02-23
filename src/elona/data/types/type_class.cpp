@@ -31,6 +31,11 @@ std::unordered_map<SharedId, int> _convert_skills(
 
 
 
+ClassDB the_class_db;
+const constexpr char* data::LuaLazyCacheTraits<ClassDB>::type_id;
+
+
+
 ClassData ClassDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
     DATA_OPT_OR(ordering, int, 0);

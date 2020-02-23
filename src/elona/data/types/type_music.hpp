@@ -14,6 +14,6 @@ struct MusicData
 
 ELONA_DEFINE_LUA_DB(MusicDB, MusicData, "core.music")
 
-inline MusicDB the_music_db;
+extern MusicDB the_music_db;
 
 } // namespace elona

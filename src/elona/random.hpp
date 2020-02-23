@@ -6,7 +6,7 @@
 #include <utility>
 #include <vector>
 
-#include "../thirdparty/xoshiro256/xoshiro256.hpp"
+#include "../thirdparty/xoshiro256//xoshiro256.hpp"
 #include "optional.hpp"
 
 // DO NOT use `std::uniform_int_distribution` because its algorithm is

@@ -60,6 +60,10 @@ void set_ability(
 namespace elona
 {
 
+SkillData sdata;
+
+
+
 SkillData::SkillData()
     : storage(ELONA_MAX_CHARACTERS, std::vector<Ability>(600))
 {

@@ -60,6 +60,6 @@ ELONA_DEFINE_LUA_DB(ItemDB, ItemData, "core.item")
 
 
 
-inline ItemDB the_item_db;
+extern ItemDB the_item_db;
 
 } // namespace elona

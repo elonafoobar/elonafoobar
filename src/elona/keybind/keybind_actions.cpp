@@ -3,6 +3,12 @@
 namespace elona
 {
 
+namespace keybind
+{
+ActionMap actions;
+} // namespace keybind
+
+
 void initialize_keybind_actions(ActionMap& actions)
 {
     using namespace snail;

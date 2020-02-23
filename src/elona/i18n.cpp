@@ -19,6 +19,10 @@ namespace elona
 namespace i18n
 {
 
+i18n::Store s;
+
+
+
 void Store::init(const std::vector<Store::Location>& locations)
 {
     clear();

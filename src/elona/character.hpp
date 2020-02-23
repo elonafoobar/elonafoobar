@@ -670,7 +670,7 @@ private:
 };
 
 
-inline CData cdata;
+extern CData cdata;
 
 int chara_create(int = 0, int = 0, int = 0, int = 0);
 void initialize_character();

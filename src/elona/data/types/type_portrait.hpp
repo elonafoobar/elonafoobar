@@ -54,6 +54,6 @@ private:
 
 
 
-inline PortraitDB the_portrait_db;
+extern PortraitDB the_portrait_db;
 
 } // namespace elona

@@ -64,7 +64,7 @@ private:
 };
 
 
-inline SkillData sdata;
+extern SkillData sdata;
 
 
 struct Character;

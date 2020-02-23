@@ -43,6 +43,6 @@ ELONA_DEFINE_LUA_DB(AssetDB, AssetData, "core.asset")
 
 
 
-inline AssetDB the_asset_db;
+extern AssetDB the_asset_db;
 
 } // namespace elona

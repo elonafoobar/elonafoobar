@@ -805,7 +805,7 @@ private:
     std::unordered_map<std::string, fs::path> locale_dir_table;
 };
 
-inline i18n::Store s;
+extern i18n::Store s;
 
 } // namespace i18n
 } // namespace elona

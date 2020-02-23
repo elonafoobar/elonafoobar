@@ -93,7 +93,7 @@ typedef tsl::ordered_map<std::string, Action> ActionMap;
 
 namespace keybind
 {
-inline ActionMap actions;
+extern ActionMap actions;
 }
 
 

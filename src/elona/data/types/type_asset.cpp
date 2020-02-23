@@ -38,6 +38,11 @@ EnumMap<AssetLoadType> AssetLoadTypeTable(
 
 
 
+AssetDB the_asset_db;
+const constexpr char* data::LuaLazyCacheTraits<AssetDB>::type_id;
+
+
+
 AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
     DATA_REQ(source, std::string);

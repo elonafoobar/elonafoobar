@@ -157,6 +157,13 @@ void _map_randsite()
 namespace elona
 {
 
+
+MapData map_data;
+CellData cell_data;
+ChipData chip_data;
+
+
+
 #define MDATA_PACK(x, ident) legacy_mdata(x) = ident;
 #define MDATA_UNPACK(x, ident) ident = legacy_mdata(x);
 

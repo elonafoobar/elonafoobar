@@ -25,6 +25,6 @@ ELONA_DEFINE_LUA_DB(FishDB, FishData, "core.fish")
 
 
 
-inline FishDB the_fish_db;
+extern FishDB the_fish_db;
 
 } // namespace elona
