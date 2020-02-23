@@ -84,8 +84,7 @@ void load_save_data()
         int minor;
         int patch;
         {
-            std::ifstream in{(save_dir / "foobar_data.s1").native(),
-                             std::ios::binary};
+            std::ifstream in{save_dir / "foobar_data.s1", std::ios::binary};
             putit::BinaryIArchive ar{in};
             ar(major);
             ar(minor);

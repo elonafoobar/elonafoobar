@@ -176,9 +176,9 @@ public:
 
 
     template <typename T>
-    static void save(const boost::filesystem::path& filepath, T& data)
+    static void save(const std::filesystem::path& filepath, T& data)
     {
-        std::ofstream out{filepath.native(), std::ios::binary};
+        std::ofstream out{filepath, std::ios::binary};
         save(out, data);
     }
 

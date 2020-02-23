@@ -2,4 +2,4 @@
 
 #include "../util/filepathutil.hpp"
 
-namespace fs = boost::filesystem;
+namespace fs = std::filesystem;

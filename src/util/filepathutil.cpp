@@ -23,7 +23,7 @@
 namespace filepathutil
 {
 
-namespace fs = boost::filesystem;
+namespace fs = std::filesystem;
 
 
 
@@ -70,7 +70,7 @@ std::string to_forward_slashes(const fs::path& path)
 
 
 
-std::optional<boost::filesystem::path::string_type> get_executable_path()
+std::optional<fs::path::string_type> get_executable_path()
 {
 #if BOOST_OS_WINDOWS
     wchar_t buf[1024 + 1];
@@ -104,16 +104,28 @@ std::optional<boost::filesystem::path::string_type> get_executable_path()
 
 
 
-bool is_portable_path(const boost::filesystem::path& filename)
+bool is_portable_path(const fs::path& filename)
 {
-    // General check by Boost.Filesystem such as invalid characters.
     auto u8str = to_utf8_path(filename);
-    if (!fs::portable_name(u8str))
+    if (u8str.empty())
         return false;
+    if (u8str == ".")
+        return true;
+    if (u8str == "..")
+        return true;
+    if (u8str.front() == '.')
+        return false;
+    if (u8str.back() == '.')
+        return false;
+    for (const auto c : u8str)
+    {
+        bool valid =
+            (('0' <= c && c <= '9') || ('a' <= c && c <= 'z') ||
+             ('A' <= c && c <= 'Z') || c == '_' || c == '-' || c == '.');
+        if (!valid)
+            return false;
+    }
 
-    // boost::filesyste::portable_name() function does not check the paths
-    // reserved by Windows.
-    // https://www.boost.org/doc/libs/1_69_0/libs/filesystem/doc/portability_guide.htm
     for (const auto fname : u8path(u8str))
     {
         // https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file

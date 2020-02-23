@@ -334,9 +334,8 @@ void initialize_elona()
     notesel(buffboard);
     {
         buffboard(0).clear();
-        std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "board.txt").native(),
-            std::ios::binary};
+        std::ifstream in{i18n::s.get_locale_dir("core") / "lazy" / "board.txt",
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {

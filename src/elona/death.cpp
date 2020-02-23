@@ -36,7 +36,7 @@ struct Bone
 std::vector<Bone> parse_bone_file(const fs::path& filepath)
 {
     std::vector<Bone> result;
-    std::ifstream in{filepath.native()};
+    std::ifstream in{filepath};
     if (!in)
         return {};
 
@@ -71,7 +71,7 @@ std::vector<Bone> parse_bone_file(const fs::path& filepath)
 
 void save_bone_file(const std::vector<Bone>& bones, const fs::path& filepath)
 {
-    std::ofstream out{filepath.native()};
+    std::ofstream out{filepath};
     if (!out)
         return;
 

@@ -1,5 +1,7 @@
 #include "mod_manifest.hpp"
 
+#include <fstream>
+
 #include "../../thirdparty/json5/json5.hpp"
 
 
@@ -123,7 +125,7 @@ ModManifest::Dependencies _read_dependencies(
 ModManifest ModManifest::load(const fs::path& path)
 {
     // TODO loading error handling.
-    std::ifstream in{path.native()};
+    std::ifstream in{path};
     std::string source{std::istreambuf_iterator<char>{in},
                        std::istreambuf_iterator<char>{}};
     const auto value = json5::parse(source);
