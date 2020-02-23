@@ -8,7 +8,7 @@
 namespace elona
 {
 
-const constexpr char* data::LuaLazyCacheTraits<CharaChipDB>::type_id;
+const constexpr char* data::DatabaseTraits<CharaChipDB>::type_id;
 
 
 
@@ -51,13 +51,15 @@ CharaChipData CharaChipDB::convert(
     }
 
     return CharaChipData{
-        SharedId{id},
+        data::InstanceId{id},
         legacy_id,
         Extent{x, y, width, height},
         CharaChip{
             SharedId(std::string(Traits::type_id) + data_id_separator + id),
-            offset_y},
-        filepath};
+            offset_y,
+        },
+        filepath,
+    };
 }
 
 } // namespace elona

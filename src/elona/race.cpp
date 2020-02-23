@@ -12,15 +12,13 @@
 namespace elona
 {
 
-void race_init_chara(Character& chara, const std::string& race_id)
+void race_init_chara(Character& chara, data::InstanceId race_id)
 {
     auto data = the_race_db[race_id];
     if (!data)
-    {
         return;
-    }
 
-    cdatan(2, chara.index) = race_id;
+    cdatan(2, chara.index) = race_id.get();
 
     chara.melee_attack_type = data->melee_attack_type;
     chara.special_attack_type = data->special_attack_type;
@@ -69,8 +67,8 @@ void race_init_chara(Character& chara, const std::string& race_id)
         else
         {
             // Skip the skill if undefined.
-            ELONA_WARN("lua.data") << "Undefined skill ID: " << pair.first
-                                   << " (race " << race_id << ")";
+            ELONA_WARN("lua.data") << "Undefined skill ID: " << pair.first.get()
+                                   << " (race " << race_id.get() << ")";
         }
     }
 
@@ -83,8 +81,9 @@ void race_init_chara(Character& chara, const std::string& race_id)
         else
         {
             // Skip the resistance if undefined.
-            ELONA_WARN("lua.data") << "Undefined resistance ID: " << pair.first
-                                   << " (race " << race_id << ")";
+            ELONA_WARN("lua.data")
+                << "Undefined resistance ID: " << pair.first.get() << " (race "
+                << race_id.get() << ")";
         }
     }
 }

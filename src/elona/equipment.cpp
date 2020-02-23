@@ -522,7 +522,7 @@ void supply_initial_equipments()
         fixeq = 1;
     }
 
-    switch (class_get_equipment_type(cdatan(3, rc)))
+    switch (class_get_equipment_type(data::InstanceId{cdatan(3, rc)}))
     {
     case 0: break;
     case 1:

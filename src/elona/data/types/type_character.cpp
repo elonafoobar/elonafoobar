@@ -7,29 +7,7 @@ namespace elona
 {
 
 CharacterDB the_character_db;
-const constexpr char* data::LuaLazyCacheTraits<CharacterDB>::type_id;
-
-
-
-static std::unordered_map<SharedId, int> _convert_resistances(
-    const lua::ConfigTable& data,
-    const std::string& id)
-{
-    std::unordered_map<SharedId, int> resistances;
-
-    if (auto it = data.optional<sol::table>(id))
-    {
-        for (const auto& kvp : *it)
-        {
-            SharedId k{kvp.first.as<std::string>()};
-            int v = kvp.second.as<int>();
-            resistances.emplace(k, v);
-        }
-    }
-
-
-    return resistances;
-}
+const constexpr char* data::DatabaseTraits<CharacterDB>::type_id;
 
 
 
@@ -118,7 +96,7 @@ CharacterData CharacterDB::convert(
     DATA_VEC(normal_actions, int);
     DATA_VEC(special_actions, int);
 
-    const auto resistances = _convert_resistances(data, "resistances");
+    const auto resistances = data::convert_id_number_table(data, "resistances");
 
     if (normal_actions.empty())
     {
@@ -138,7 +116,7 @@ CharacterData CharacterDB::convert(
     std::string filter = data::convert_tags(data, "tags");
 
     return CharacterData{
-        SharedId{id},
+        data::InstanceId{id},
         legacy_id,
         normal_actions,
         special_actions,
@@ -148,7 +126,7 @@ CharacterData CharacterDB::convert(
         ai_heal,
         ai_move,
         can_talk,
-        class_,
+        data::InstanceId{class_},
         static_cast<ColorIndex>(color),
         creaturepack,
         cspecialeq,
@@ -173,7 +151,7 @@ CharacterData CharacterDB::convert(
         original_relationship,
         portrait_male,
         portrait_female,
-        race,
+        data::InstanceId{race},
         sex,
         resistances,
         fltselect,

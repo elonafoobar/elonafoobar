@@ -14,7 +14,6 @@
 #include "../lua_env/config_table.hpp"
 #include "../lua_env/data_table.hpp"
 #include "../optional.hpp"
-#include "../shared_id.hpp"
 #include "common.hpp"
 
 
@@ -48,15 +47,15 @@ constexpr bool has_legacy_id_v = has_legacy_id<T>::value;
 
 
 template <typename>
-struct LuaLazyCacheTraits;
+struct DatabaseTraits;
 
 
 
 template <typename T>
-class LuaLazyCache : public lib::noncopyable
+class BaseDatabase : public lib::noncopyable
 {
 public:
-    using Traits = LuaLazyCacheTraits<T>;
+    using Traits = DatabaseTraits<T>;
     using DataType = typename Traits::DataType;
     using IdType = decltype(DataType::id);
     using MapType = std::unordered_map<IdType, DataType>;
@@ -66,19 +65,17 @@ public:
 
 
 
-    LuaLazyCache() = default;
+    BaseDatabase() = default;
 
 
 
     void initialize(lua::DataTable data)
     {
         _data = data;
+        load_all();
     }
 
 
-
-    // NOTE: To iterate all values, they all have to be loaded from Lua first by
-    // calling load_all().
 
     typename MapType::const_iterator begin() const
     {
@@ -108,31 +105,6 @@ public:
 
 
 
-    void load_all()
-    {
-        auto it = _data.get_table(Traits::type_id);
-        if (!it)
-            return;
-
-        for (const auto& pair : *it)
-        {
-            IdType id(pair.first.template as<std::string>());
-            if ((*this)[id])
-                continue;
-
-            retrieve_from_lua(id);
-        }
-    }
-
-
-
-    void clear()
-    {
-        _storage.clear();
-    }
-
-
-
     optional<std::string> error(const IdType& id)
     {
         auto it = _errors.find(id);
@@ -155,20 +127,6 @@ public:
 
 
 
-    optional_ref<DataType> operator[](const std::string& inner_id)
-    {
-        return (*this)[IdType(inner_id)];
-    }
-
-
-
-    optional_ref<DataType> operator[](const char* inner_id)
-    {
-        return (*this)[IdType(std::string(inner_id))];
-    }
-
-
-
     const DataType& ensure(const IdType& id)
     {
         auto data = (*this)[id];
@@ -180,20 +138,6 @@ public:
         }
 
         return *data;
-    }
-
-
-
-    const DataType& ensure(const std::string& inner_id)
-    {
-        return this->ensure(IdType(inner_id));
-    }
-
-
-
-    const DataType& ensure(const char* inner_id)
-    {
-        return this->ensure(IdType(std::string(inner_id)));
     }
 
 
@@ -214,7 +158,7 @@ private:
         }
 
         // Look in root "data" table for definition.
-        optional<sol::table> instance = _data.raw(Traits::type_id, id);
+        auto instance = _data.raw(PrototypeId{Traits::type_id}, id);
         if (!instance)
         {
             return none;
@@ -223,7 +167,7 @@ private:
         // Allocate equivalent native structure from Lua data.
         try
         {
-            auto config = lua::ConfigTable(*instance, id);
+            auto config = lua::ConfigTable(*instance, id.get());
             DataType converted =
                 static_cast<T&>(*this).convert(config, id.get());
 
@@ -244,16 +188,34 @@ private:
 
         return _storage[id];
     }
+
+
+
+    void load_all()
+    {
+        auto it = _data.get_table(data::PrototypeId{Traits::type_id});
+        if (!it)
+            return;
+
+        for (const auto& pair : *it)
+        {
+            IdType id(pair.first.template as<std::string>());
+            if ((*this)[id])
+                continue;
+
+            retrieve_from_lua(id);
+        }
+    }
 };
 
 
 
 template <typename T>
-class LuaLazyCacheWithLegacyIdTable : public LuaLazyCache<T>
+class BaseDatabaseWithLegacyIdTable : public BaseDatabase<T>
 {
 private:
-    using Self = LuaLazyCacheWithLegacyIdTable;
-    using Super = LuaLazyCache<T>;
+    using Self = BaseDatabaseWithLegacyIdTable;
+    using Super = BaseDatabase<T>;
 
 
 public:
@@ -265,20 +227,11 @@ public:
     using KeysIterator = typename Super::KeysIterator;
     using ValuesIterator = typename Super::ValuesIterator;
 
-    using LegacyIdType = decltype(DataType::legacy_id);
-    using LegacyMapType = std::unordered_map<LegacyIdType, IdType>;
+    using LegacyMapType = std::unordered_map<int, IdType>;
 
 
 
-    void clear()
-    {
-        Super::clear();
-        _by_legacy_id.clear();
-    }
-
-
-
-    optional<IdType> get_id_from_legacy(const LegacyIdType& legacy_id)
+    optional<IdType> get_id_from_legacy(int legacy_id)
     {
         static_assert(Traits::has_legacy_id, "DB does not support legacy ID.");
 
@@ -293,7 +246,7 @@ public:
 
     using Super::operator[]; // Don't hide overload super class has.
 
-    optional_ref<DataType> operator[](const LegacyIdType& legacy_id)
+    optional_ref<DataType> operator[](int legacy_id)
     {
         if (const auto id = get_id_from_legacy(legacy_id))
         {
@@ -309,7 +262,7 @@ public:
 
     using Super::ensure; // Don't hide overload super class has.
 
-    const DataType& ensure(const LegacyIdType& legacy_id)
+    const DataType& ensure(int legacy_id)
     {
         const auto id = get_id_from_legacy(legacy_id);
 
@@ -331,19 +284,18 @@ protected:
 
 
 private:
-    optional<IdType> retrieve_legacy_id_from_lua(const LegacyIdType& legacy_id)
+    optional<IdType> retrieve_legacy_id_from_lua(int legacy_id)
     {
-        optional<std::string> it =
-            Super::_data.by_legacy(Traits::type_id, legacy_id);
-
-        if (it)
+        if (const auto new_id =
+                Super::_data.by_legacy(PrototypeId{Traits::type_id}, legacy_id))
         {
-            IdType id(*it);
-            _by_legacy_id.emplace(legacy_id, id);
-            return id;
+            _by_legacy_id.emplace(legacy_id, *new_id);
+            return *new_id;
         }
-
-        return none;
+        else
+        {
+            return none;
+        }
     }
 };
 
@@ -358,7 +310,7 @@ private:
     namespace data \
     { \
     template <> \
-    struct LuaLazyCacheTraits<ClassName> \
+    struct DatabaseTraits<ClassName> \
     { \
         using DataType = DataTypeName; \
         static const constexpr bool has_legacy_id = \
@@ -368,9 +320,9 @@ private:
     } \
     class ClassName \
         : public std::conditional_t< \
-              data::LuaLazyCacheTraits<ClassName>::has_legacy_id, \
-              data::LuaLazyCacheWithLegacyIdTable<ClassName>, \
-              data::LuaLazyCache<ClassName>> \
+              data::DatabaseTraits<ClassName>::has_legacy_id, \
+              data::BaseDatabaseWithLegacyIdTable<ClassName>, \
+              data::BaseDatabase<ClassName>> \
     { \
     public: \
         ClassName() = default; \

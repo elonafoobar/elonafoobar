@@ -17,7 +17,7 @@ static void _load_race_list()
     listmax = 0;
     for (const auto& race : race_get_available(false))
     {
-        listn(1, listmax) = race.get().id;
+        listn(1, listmax) = race.get().id.get();
         list(0, listmax) = 0;
         ++listmax;
     }
@@ -25,7 +25,7 @@ static void _load_race_list()
     {
         for (const auto& race : race_get_available(true))
         {
-            listn(1, listmax) = race.get().id;
+            listn(1, listmax) = race.get().id.get();
             list(0, listmax) = 1;
             ++listmax;
         }
@@ -76,18 +76,19 @@ void UIMenuCharamakeRace::update()
 
 
 
-void UIMenuCharamakeRace::_draw_race_info(const std::string& race_id)
+void UIMenuCharamakeRace::_draw_race_info(data::InstanceId race_id)
 {
-    const auto race_data = the_race_db[race_id];
+    const auto& race_data = the_race_db.ensure(race_id);
 
     // male
-    draw_chara(race_data->male_image, wx + 480, wy + 96, 2, 40);
+    draw_chara(race_data.male_image, wx + 480, wy + 96, 2, 40);
     // female
-    draw_chara(race_data->female_image, wx + 350, wy + 96, 2, 40);
+    draw_chara(race_data.female_image, wx + 350, wy + 96, 2, 40);
 
     gmode(2);
     draw_race_or_class_info(
-        i18n::s.get_m_optional("race", race_id, "description").value_or(""));
+        i18n::s.get_m_optional("race", race_id.get(), "description")
+            .value_or(""));
 }
 
 
@@ -151,10 +152,10 @@ void UIMenuCharamakeRace::_draw_choices()
 
 
 
-static void _reload_selected_race(const std::string& race)
+static void _reload_selected_race(data::InstanceId race_id)
 {
     chara_delete(0);
-    race_init_chara(cdata.player(), race);
+    race_init_chara(cdata.player(), race_id);
 }
 
 
@@ -169,7 +170,7 @@ void UIMenuCharamakeRace::draw()
     _draw_window();
     _draw_choices();
 
-    const std::string& selected_race = listn(1, page * pagesize + cs);
+    const auto selected_race = data::InstanceId{listn(1, page * pagesize + cs)};
     _reload_selected_race(selected_race);
 
     _draw_race_info(selected_race);
@@ -182,11 +183,8 @@ optional<UIMenuCharamakeRace::ResultType> UIMenuCharamakeRace::on_key(
 {
     if (auto race_index = get_selected_index())
     {
-        const std::string& race_id = listn(1, *race_index);
-        const std::string& race_name = listn(0, *race_index);
-
         return UIMenuCharamakeRace::Result::finish(
-            UIMenuCharamakeRaceResult{race_id, race_name});
+            UIMenuCharamakeRaceResult{data::InstanceId{listn(1, *race_index)}});
     }
     else if (action == "next_page")
     {

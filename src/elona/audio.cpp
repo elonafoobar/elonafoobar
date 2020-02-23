@@ -33,8 +33,8 @@ constexpr int temporary_channels_size = 6;
 
 std::vector<int> soundlist;
 
-optional<std::string> envwprev = none;
-SharedId musicprev{};
+optional<data::InstanceId> envwprev = none;
+data::InstanceId musicprev{};
 
 
 void sound_set_position(int channel, short angle, unsigned char distance)
@@ -42,9 +42,9 @@ void sound_set_position(int channel, short angle, unsigned char distance)
     snail::audio::set_position(channel, angle, distance);
 }
 
-SharedId get_default_music()
+data::InstanceId get_default_music()
 {
-    optional<std::string> music_id = none;
+    optional<data::InstanceId> music_id = none;
 
     if (area_data[game_data.current_map].type == mdata_t::MapType::field)
     {
@@ -52,24 +52,26 @@ SharedId get_default_music()
     }
     if (area_data[game_data.current_map].type == mdata_t::MapType::town)
     {
-        music_id = "core.mcTown1"s;
+        music_id = "core.mcTown1";
     }
     if (area_data[game_data.current_map].type == mdata_t::MapType::player_owned)
     {
-        music_id = "core.mcHome"s;
+        music_id = "core.mcHome";
     }
     if (map_data.bgm != 0)
     {
-        music_id = the_music_db.get_id_from_legacy(map_data.bgm)->get();
+        music_id = the_music_db.get_id_from_legacy(map_data.bgm);
     }
     if (mdata_t::is_nefia(area_data[game_data.current_map].type))
     {
-        static const std::vector<std::string> choices = {"core.mcDungeon1",
-                                                         "core.mcDungeon2",
-                                                         "core.mcDungeon3",
-                                                         "core.mcDungeon4",
-                                                         "core.mcDungeon5",
-                                                         "core.mcDungeon6"};
+        static const std::vector<data::InstanceId> choices{
+            "core.mcDungeon1",
+            "core.mcDungeon2",
+            "core.mcDungeon3",
+            "core.mcDungeon4",
+            "core.mcDungeon5",
+            "core.mcDungeon6",
+        };
         music_id = choices[game_data.date.hour % 6];
     }
     if (area_data[game_data.current_map].id == mdata_t::MapId::random_dungeon ||
@@ -80,7 +82,7 @@ SharedId get_default_music()
         {
             if (area_data[game_data.current_map].has_been_conquered != -1)
             {
-                music_id = "core.mcBoss"s;
+                music_id = "core.mcBoss";
             }
         }
     }
@@ -88,19 +90,19 @@ SharedId get_default_music()
     {
         if (game_data.executing_immediate_quest_type == 1001)
         {
-            music_id = "core.mcBattle1"s;
+            music_id = "core.mcBattle1";
         }
         if (game_data.executing_immediate_quest_type == 1006)
         {
-            music_id = "core.mcVillage1"s;
+            music_id = "core.mcVillage1";
         }
         if (game_data.executing_immediate_quest_type == 1009)
         {
-            music_id = "core.mcCasino"s;
+            music_id = "core.mcCasino";
         }
         if (game_data.executing_immediate_quest_type == 1008)
         {
-            music_id = "core.mcBoss"s;
+            music_id = "core.mcBoss";
         }
         if (game_data.executing_immediate_quest_type == 1010)
         {
@@ -109,53 +111,56 @@ SharedId get_default_music()
     }
     if (game_data.current_map == mdata_t::MapId::arena)
     {
-        music_id = "core.mcArena"s;
+        music_id = "core.mcArena";
     }
     if (game_data.current_map == mdata_t::MapId::larna)
     {
-        music_id = "core.mcVillage1"s;
+        music_id = "core.mcVillage1";
     }
     if (game_data.current_map == mdata_t::MapId::port_kapul)
     {
-        music_id = "core.mcTown2"s;
+        music_id = "core.mcTown2";
     }
     if (game_data.current_map == mdata_t::MapId::lumiest)
     {
-        music_id = "core.mcTown2"s;
+        music_id = "core.mcTown2";
     }
     if (game_data.current_map == mdata_t::MapId::yowyn)
     {
-        music_id = "core.mcVillage1"s;
+        music_id = "core.mcVillage1";
     }
     if (game_data.current_map == mdata_t::MapId::derphy)
     {
-        music_id = "core.mcTown3"s;
+        music_id = "core.mcTown3";
     }
     if (game_data.current_map == mdata_t::MapId::palmia)
     {
-        music_id = "core.mcTown4"s;
+        music_id = "core.mcTown4";
     }
     if (game_data.current_map == mdata_t::MapId::cyber_dome)
     {
-        music_id = "core.mcTown5"s;
+        music_id = "core.mcTown5";
     }
     if (game_data.current_map == mdata_t::MapId::noyel)
     {
-        music_id = "core.mcTown6"s;
+        music_id = "core.mcTown6";
     }
 
     if (!music_id ||
         area_data[game_data.current_map].type == mdata_t::MapType::world_map)
     {
-        static const std::vector<std::string> choices = {
-            "core.mcField1", "core.mcField2", "core.mcField3"};
+        static const std::vector<data::InstanceId> choices = {
+            "core.mcField1",
+            "core.mcField2",
+            "core.mcField3",
+        };
         music_id = choices[game_data.date.day % 3];
     }
 
-    return SharedId(*music_id);
+    return *music_id;
 }
 
-void play_music_inner(const SharedId& music_id, int musicloop)
+void play_music_inner(data::InstanceId music_id, int musicloop)
 {
     if (musicprev != music_id)
     {
@@ -411,7 +416,7 @@ void stop_music()
 
 void sound_play_environmental()
 {
-    optional<std::string> env = none;
+    optional<data::InstanceId> env = none;
 
     if (game_data.weather == 3)
     {
@@ -430,13 +435,13 @@ void sound_play_environmental()
         envwprev = env;
         if (g_config.sound())
         {
-            if (!env)
+            if (env)
             {
-                DSSTOP(13);
+                snd(*env, true);
             }
             else
             {
-                snd(SharedId(*env), true);
+                DSSTOP(13);
             }
         }
     }
@@ -480,47 +485,49 @@ void sound_play_environmental()
     }
 }
 
-optional<SharedId> sound_id_for_element(int element_id)
-{
-    std::string result = "";
 
+
+optional<data::InstanceId> sound_id_for_element(int element_id)
+{
     switch (element_id)
     {
-    case 50: result = "core.atk_fire"; break;
-    case 51: result = "core.atk_ice"; break;
-    case 52: result = "core.atk_elec"; break;
-    case 59: result = "core.atk_chaos"; break;
-    case 53: result = "core.atk_dark"; break;
-    case 58: result = "core.atk_nerve"; break;
-    case 57: result = "core.atk_sound"; break;
-    case 54: result = "core.atk_mind"; break;
-    case 55: result = "core.atk_poison"; break;
-    case 56: result = "core.atk_hell"; break;
-    case 63: result = "core.atk_poison"; break;
+    case 50: return data::InstanceId{"core.atk_fire"};
+    case 51: return data::InstanceId{"core.atk_ice"};
+    case 52: return data::InstanceId{"core.atk_elec"};
+    case 59: return data::InstanceId{"core.atk_chaos"};
+    case 53: return data::InstanceId{"core.atk_dark"};
+    case 58: return data::InstanceId{"core.atk_nerve"};
+    case 57: return data::InstanceId{"core.atk_sound"};
+    case 54: return data::InstanceId{"core.atk_mind"};
+    case 55: return data::InstanceId{"core.atk_poison"};
+    case 56: return data::InstanceId{"core.atk_hell"};
+    case 63: return data::InstanceId{"core.atk_poison"};
+    default: return none;
     }
-
-    if (result == "")
-    {
-        return none;
-    }
-
-    return SharedId(result);
 }
 
 
 
 void sound_kill(const Position& position)
 {
-    static const std::vector<std::string> sounds = {"core.kill1", "core.kill2"};
-    snd_at(SharedId(choice(sounds)), position, false, false);
+    static const std::vector<data::InstanceId> sounds{
+        "core.kill1",
+        "core.kill2",
+    };
+
+    snd_at(choice(sounds), position, false, false);
 }
 
 
 
 void sound_pick_up()
 {
-    static const std::vector<std::string> sounds = {"core.get1", "core.get2"};
-    snd(SharedId(choice(sounds)));
+    static const std::vector<data::InstanceId> sounds{
+        "core.get1",
+        "core.get2",
+    };
+
+    snd(choice(sounds));
 }
 
 
@@ -545,7 +552,7 @@ void sound_footstep2(int foot)
 }
 
 void snd_at(
-    SharedId sound_id,
+    data::InstanceId sound_id,
     const Position& p,
     bool loop,
     bool allow_duplicate)
@@ -558,57 +565,43 @@ void snd_at(
 
     if (!sound)
     {
-        ELONA_ERROR("audio") << "Cannot load sound " << sound_id;
+        ELONA_ERROR("audio") << "Cannot load sound " << sound_id.get();
         return;
     }
 
     snd_inner(*sound, angle, dist, loop, allow_duplicate);
 }
 
-void snd_at(
-    const char* sound_id,
-    const Position& p,
-    bool loop,
-    bool allow_duplicate)
-{
-    snd_at(SharedId(sound_id), p, loop, allow_duplicate);
-}
 
-void snd(SharedId sound_id, bool loop, bool allow_duplicate)
+
+void snd(data::InstanceId sound_id, bool loop, bool allow_duplicate)
 {
     auto sound = the_sound_db[sound_id];
 
     if (!sound)
     {
-        ELONA_ERROR("audio") << "Cannot load sound " << sound_id;
+        ELONA_ERROR("audio") << "Cannot load sound " << sound_id.get();
         return;
     }
 
     snd_inner(*sound, 0, 0, loop, allow_duplicate);
 }
 
-void snd(const char* sound_id, bool loop, bool allow_duplicate)
+
+
+void play_music()
 {
-    snd(SharedId(sound_id), loop, allow_duplicate);
+    play_music(get_default_music());
 }
 
-void play_music(const char* music_id)
-{
-    SharedId id = SharedId(std::string(music_id));
-    play_music(id);
-}
 
-void play_music(optional<SharedId> music_id)
+
+void play_music(data::InstanceId music_id)
 {
     sound_play_environmental();
 
     if (!g_config.music())
         return;
-
-    if (!music_id)
-    {
-        music_id = get_default_music();
-    }
 
     if (musicloop == 1)
     {
@@ -619,11 +612,9 @@ void play_music(optional<SharedId> music_id)
         musicloop = 65535;
     }
 
-    play_music_inner(*music_id, musicloop);
+    play_music_inner(music_id, musicloop);
 
     musicloop = 0;
 }
-
-
 
 } // namespace elona

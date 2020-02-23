@@ -13,6 +13,7 @@
 #include "command.hpp"
 #include "config.hpp"
 #include "config_menu.hpp"
+#include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_portrait.hpp"
 #include "defines.hpp"
@@ -499,10 +500,10 @@ TurnResult show_skill_list()
 static std::string _make_buff_power_string(int skill_id)
 {
     const auto buff_id = the_ability_db[skill_id]->ability_type % 1000;
-    const auto duration =
-        buff_calc_duration(buff_id, calcspellpower(skill_id, cc));
-    const auto description =
-        buff_get_description(buff_id, calcspellpower(skill_id, cc));
+    const auto duration = buff_calc_duration(
+        *the_buff_db.get_id_from_legacy(buff_id), calcspellpower(skill_id, cc));
+    const auto description = buff_get_description(
+        *the_buff_db.get_id_from_legacy(buff_id), calcspellpower(skill_id, cc));
     return std::to_string(duration) +
         i18n::s.get("core.ui.spell.turn_counter") + " " + description;
 }

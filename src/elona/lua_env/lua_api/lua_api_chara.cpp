@@ -146,7 +146,7 @@ sol::optional<LuaCharacterHandle> LuaApiChara::create_from_id(
 sol::optional<LuaCharacterHandle>
 LuaApiChara::create_from_id_xy(int x, int y, const std::string& id)
 {
-    auto data = the_character_db.ensure(id);
+    auto data = the_character_db.ensure(data::InstanceId{id});
 
     if (elona::chara_create(-1, data.legacy_id, x, y) != 0)
     {
@@ -209,7 +209,7 @@ LuaApiChara::generate_from_map_id_xy(int x, int y, const std::string& id)
  */
 int LuaApiChara::kill_count(const std::string& id)
 {
-    auto data = the_character_db[id];
+    auto data = the_character_db[data::InstanceId{id}];
     if (!data)
     {
         return 0;
@@ -232,7 +232,7 @@ sol::optional<LuaCharacterHandle> LuaApiChara::find(
     const std::string& id,
     sol::optional<EnumString> location)
 {
-    auto data = the_character_db[id];
+    auto data = the_character_db[data::InstanceId{id}];
     if (!data)
     {
         return sol::nullopt;

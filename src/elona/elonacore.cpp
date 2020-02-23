@@ -3082,7 +3082,7 @@ void character_drops_item()
         }
     }
 
-    switch (class_get_item_type(cdatan(3, rc)))
+    switch (class_get_item_type(data::InstanceId{cdatan(3, rc)}))
     {
     case 1:
         if (rnd(20) == 0)
@@ -4606,7 +4606,7 @@ void atxinit()
         mode = 9;
         atxbgbk = atxbg;
         gmode(0);
-        asset_load(atxbg);
+        asset_load(data::InstanceId{atxbg});
         draw(
             "atx_background",
             0,
@@ -8026,7 +8026,7 @@ void heal_completely()
 
 int pick_up_item(bool play_sound)
 {
-    const auto snd_ = [play_sound](const char* id) {
+    const auto snd_ = [play_sound](data::InstanceId id) {
         if (play_sound)
         {
             snd(id);
@@ -8941,7 +8941,7 @@ void proc_autopick()
             }
             in = item.number();
             elona::ci = item.index;
-            pick_up_item(op.sound == "");
+            pick_up_item(!op.sound);
             if (int(op.type) & int(Autopick::Operation::Type::no_drop))
             {
                 inv[ti].is_marked_as_no_drop() = true;
@@ -8967,7 +8967,7 @@ void proc_autopick()
                     break;
                 }
             }
-            if (op.sound == "")
+            if (!op.sound)
             {
                 snd("core.crush1");
             }
@@ -8989,12 +8989,12 @@ void proc_autopick()
                 }
             }
             elona::ci = item.index;
-            (void)do_open_command(op.sound == ""); // Result is unused.
+            (void)do_open_command(!op.sound); // Result is unused.
             break;
         }
-        if (did_something && op.sound != "")
+        if (did_something && op.sound)
         {
-            snd(op.sound);
+            snd(*op.sound);
         }
     }
 }
@@ -11025,7 +11025,7 @@ void do_play_scene()
     scene_cut = 0;
     scenemode = 1;
     SDIM4(actor, 20, 3, 10);
-    std::string file = u8"void"s;
+    data::InstanceId background_image_id{u8"void"};
     y1 = 60;
     y2 = windowh - 60;
     notesel(buff);
@@ -11113,8 +11113,8 @@ void do_play_scene()
                 }
             }
             gmode(0);
-            asset_load(file);
-            draw(file, 0, y1, windoww, y2 - y1);
+            asset_load(background_image_id);
+            draw(background_image_id, 0, y1, windoww, y2 - y1);
             gmode(2);
             boxf(0, 0, windoww, y1, {5, 5, 5});
             boxf(0, y2, windoww, windowh - y2, {5, 5, 5});
@@ -11241,19 +11241,17 @@ void do_play_scene()
         scidx = p(4) + 1;
         if (s == u8"{pic}"s)
         {
-            file = s(1);
+            background_image_id = data::InstanceId{s(1)};
             continue;
         }
         if (s == u8"{mc}"s)
         {
-            SharedId music_id(s(1));
-            play_music(music_id);
+            play_music(data::InstanceId{s(1)});
             continue;
         }
         if (s == u8"{se}"s)
         {
-            SharedId sound_id(s(1));
-            snd(sound_id);
+            snd(data::InstanceId{s(1)});
             continue;
         }
         if (strutil::contains(s(0), u8"{actor_"))

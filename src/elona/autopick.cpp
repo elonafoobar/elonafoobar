@@ -308,7 +308,7 @@ Autopick::Matcher Autopick::_parse_each_line(std::string line)
             // Adds "core" if no mod prefix.
             sound_id = "core." + sound_id;
         }
-        op.sound = SharedId(sound_id);
+        op.sound = data::InstanceId{sound_id};
         line = line.substr(0, colon);
     }
 

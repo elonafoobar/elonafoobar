@@ -33,7 +33,6 @@ void LuaApiData::reload_assets()
 void LuaApiData::reload_charas()
 {
     the_character_db.initialize(lua::lua->get_data_manager().get());
-    the_character_db.load_all();
 }
 
 
@@ -51,7 +50,8 @@ sol::optional<sol::table> LuaApiData::get(
     const std::string& prototype_id,
     const std::string& data_id)
 {
-    if (auto ret = lua->get_data_manager().get().raw(prototype_id, data_id))
+    if (auto ret = lua->get_data_manager().get().raw(
+            data::PrototypeId{prototype_id}, data::InstanceId{data_id}))
     {
         return *ret;
     }
@@ -73,7 +73,8 @@ sol::optional<sol::table> LuaApiData::get(
  */
 sol::optional<sol::table> LuaApiData::get_table(const std::string& prototype_id)
 {
-    if (auto ret = lua->get_data_manager().get().get_table(prototype_id))
+    if (auto ret = lua->get_data_manager().get().get_table(
+            data::PrototypeId{prototype_id}))
     {
         return *ret;
     }
@@ -98,10 +99,10 @@ sol::optional<std::string> LuaApiData::get_id_by_legacy(
     const std::string& prototype_id,
     int legacy_data_id)
 {
-    if (auto ret = lua->get_data_manager().get().by_legacy(
-            prototype_id, legacy_data_id))
+    if (const auto ret = lua->get_data_manager().get().by_legacy(
+            data::PrototypeId{prototype_id}, legacy_data_id))
     {
-        return *ret;
+        return ret->get();
     }
     else
     {

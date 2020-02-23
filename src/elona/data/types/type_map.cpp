@@ -6,7 +6,7 @@ namespace elona
 {
 
 MapDefDB the_mapdef_db;
-const constexpr char* data::LuaLazyCacheTraits<MapDefDB>::type_id;
+const constexpr char* data::DatabaseTraits<MapDefDB>::type_id;
 
 
 
@@ -52,46 +52,48 @@ MapDefData MapDefDB::convert(
     Position outer_map_position_{outer_map_position.get<int>("x"),
                                  outer_map_position.get<int>("y")};
 
-    optional<SharedId> deed_ = none;
+    optional<data::InstanceId> deed_ = none;
     if (deed)
     {
-        deed_ = SharedId(*deed);
+        deed_ = data::InstanceId{*deed};
     }
 
-    return MapDefData{SharedId{id},
-                      legacy_id,
-                      appearance,
-                      map_type,
-                      SharedId(outer_map),
-                      outer_map_position_,
-                      entrance_type,
-                      tile_set,
-                      tile_type,
-                      base_turn_cost,
-                      danger_level,
-                      deepest_level,
-                      is_indoor,
-                      is_generated_every_time,
-                      default_ai_calm,
-                      quest_town_id,
-                      quest_custom_map,
-                      deed_,
+    return MapDefData{
+        data::InstanceId{id},
+        legacy_id,
+        appearance,
+        map_type,
+        data::InstanceId{outer_map},
+        outer_map_position_,
+        entrance_type,
+        tile_set,
+        tile_type,
+        base_turn_cost,
+        danger_level,
+        deepest_level,
+        is_indoor,
+        is_generated_every_time,
+        default_ai_calm,
+        quest_town_id,
+        quest_custom_map,
+        deed_,
 
-                      can_return_to,
-                      is_fixed,
-                      reveals_fog,
-                      shows_floor_count_in_name,
-                      prevents_teleport,
-                      prevents_return,
-                      prevents_domination,
-                      prevents_monster_ball,
-                      prevents_building_shelter,
-                      prevents_random_events,
-                      villagers_make_snowmen,
-                      is_hidden_in_world_map,
+        can_return_to,
+        is_fixed,
+        reveals_fog,
+        shows_floor_count_in_name,
+        prevents_teleport,
+        prevents_return,
+        prevents_domination,
+        prevents_monster_ball,
+        prevents_building_shelter,
+        prevents_random_events,
+        villagers_make_snowmen,
+        is_hidden_in_world_map,
 
-                      generator,
-                      chara_filter};
+        generator,
+        chara_filter,
+    };
 }
 
 } // namespace elona

@@ -60,7 +60,7 @@ using LuaItemHandle = sol::table;
             return id->get(); \
         }, \
         [](klass& d, const std::string& s) { \
-            auto data = db[s]; \
+            auto data = db[data::InstanceId{s}]; \
             if (!data) \
             { \
                 return; \

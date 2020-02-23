@@ -425,7 +425,7 @@ void _render_hp_or_mp_bar(
     int max,
     int x,
     int y,
-    const std::string& bar_id,
+    data::InstanceId bar_id,
     bool show_digit = false)
 {
     draw("hp_bar_frame", x, y);
@@ -509,7 +509,7 @@ void _render_gold_or_platinum(
     int value,
     int x,
     int y,
-    const std::string& icon_id,
+    data::InstanceId icon_id,
     const std::string& unit)
 {
     draw(icon_id, x, y);

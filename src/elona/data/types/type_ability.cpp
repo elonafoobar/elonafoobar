@@ -6,7 +6,7 @@ namespace elona
 {
 
 AbilityDB the_ability_db;
-const constexpr char* data::LuaLazyCacheTraits<AbilityDB>::type_id;
+const constexpr char* data::DatabaseTraits<AbilityDB>::type_id;
 
 
 
@@ -22,7 +22,7 @@ AbilityData AbilityDB::convert(
     DATA_OPT_OR(difficulty, int, 0);
 
     return AbilityData{
-        SharedId{id},
+        data::InstanceId{id},
         legacy_id,
         related_basic_attribute,
         ability_type,

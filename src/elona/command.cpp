@@ -2723,7 +2723,7 @@ TurnResult do_use_command()
 
 TurnResult do_open_command(bool play_sound)
 {
-    const auto snd_ = [play_sound](const char* id) {
+    const auto snd_ = [play_sound](data::InstanceId id) {
         if (play_sound)
         {
             snd(id);

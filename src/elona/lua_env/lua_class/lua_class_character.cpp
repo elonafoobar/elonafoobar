@@ -4,6 +4,7 @@
 #include "../../buff.hpp"
 #include "../../character.hpp"
 #include "../../character_status.hpp"
+#include "../../data/types/type_buff.hpp"
 #include "../../dmgheal.hpp"
 #include "../../element.hpp"
 #include "../../enums.hpp"
@@ -126,9 +127,9 @@ void LuaCharacter::add_buff(
     int power,
     int turns)
 {
-    the_buff_db.ensure(buff_id);
+    the_buff_db.ensure(data::InstanceId{buff_id});
 
-    elona::buff_add(self, buff_id, power, turns);
+    elona::buff_add(self, data::InstanceId{buff_id}, power, turns);
 }
 
 /**
@@ -147,10 +148,10 @@ void LuaCharacter::add_buff_doer(
     int turns,
     LuaCharacterHandle doer)
 {
-    the_buff_db.ensure(buff_id);
+    the_buff_db.ensure(data::InstanceId{buff_id});
 
     auto& doer_ref = lua::ref<Character>(doer);
-    elona::buff_add(self, buff_id, power, turns, doer_ref);
+    elona::buff_add(self, data::InstanceId{buff_id}, power, turns, doer_ref);
 }
 
 /**
@@ -241,7 +242,7 @@ sol::optional<LuaAbility> LuaCharacter::get_skill(
     Character& self,
     const std::string& skill_id)
 {
-    auto data = the_ability_db[skill_id];
+    auto data = the_ability_db[data::InstanceId{skill_id}];
     if (!data)
     {
         return sol::nullopt;
@@ -277,7 +278,7 @@ void LuaCharacter::gain_skill_stock(
     int initial_level,
     int initial_stock)
 {
-    auto data = the_ability_db[skill_id];
+    auto data = the_ability_db[data::InstanceId{skill_id}];
     if (!data)
     {
         return;
@@ -299,7 +300,7 @@ void LuaCharacter::gain_skill_exp(
     const std::string& skill_id,
     int amount)
 {
-    auto data = the_ability_db[skill_id];
+    auto data = the_ability_db[data::InstanceId{skill_id}];
     if (!data)
     {
         return;
@@ -500,7 +501,7 @@ void LuaCharacter::move_to_xy(Character& self, int x, int y)
  */
 void LuaCharacter::switch_religion(Character& self, const std::string& god_id)
 {
-    the_god_db.ensure(god_id);
+    the_god_db.ensure(data::InstanceId{god_id});
 
     self.god_id = god_id;
     elona::switch_religion();
@@ -849,12 +850,10 @@ void LuaCharacter::bind(sol::state& lua)
      *
      * [R] The prototype data of the character.
      */
-    LuaCharacter.set(
-        "prototype", sol::property([](Character& self) {
-            auto id = the_character_db.get_id_from_legacy(charaid2int(self.id));
-            return *lua::lua->get_data_manager().get().raw(
-                "core.chara", id->get());
-        }));
+    LuaCharacter.set("prototype", sol::property([](Character& self) {
+                         return *lua::lua->get_data_manager().get().raw(
+                             "core.chara", self.new_id());
+                     }));
 
     // Methods
     LuaCharacter.set(

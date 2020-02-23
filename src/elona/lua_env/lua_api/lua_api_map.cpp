@@ -483,7 +483,7 @@ void LuaApiMap::travel_to(const std::string& map_id)
 
 void LuaApiMap::travel_to_with_level(const std::string& map_id, int level)
 {
-    auto map = the_mapdef_db.ensure(map_id);
+    auto map = the_mapdef_db.ensure(data::InstanceId{map_id});
 
     game_data.player_x_on_map_leave = cdata.player().position.x;
     game_data.player_y_on_map_leave = cdata.player().position.y;

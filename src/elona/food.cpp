@@ -8,6 +8,7 @@
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
 #include "deferred_event.hpp"

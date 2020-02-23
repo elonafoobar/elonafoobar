@@ -1,5 +1,5 @@
 #pragma once
-#include "../lua_lazy_cache.hpp"
+#include "../base_database.hpp"
 
 
 
@@ -8,7 +8,7 @@ namespace elona
 
 struct GodData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
 };
 

@@ -6,7 +6,7 @@ namespace elona
 {
 
 MusicDB the_music_db;
-const constexpr char* data::LuaLazyCacheTraits<MusicDB>::type_id;
+const constexpr char* data::DatabaseTraits<MusicDB>::type_id;
 
 
 
@@ -23,7 +23,11 @@ MusicData MusicDB::convert(const lua::ConfigTable& data, const std::string& id)
             filepathutil::to_utf8_path(music_file));
     }
 
-    return MusicData{SharedId{id}, legacy_id, music_file};
+    return MusicData{
+        data::InstanceId{id},
+        legacy_id,
+        music_file,
+    };
 }
 
 } // namespace elona

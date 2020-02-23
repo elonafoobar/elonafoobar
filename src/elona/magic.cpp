@@ -13,6 +13,7 @@
 #include "config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_asset.hpp"
+#include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
@@ -3738,15 +3739,13 @@ optional<bool> _proc_general_magic()
     }
     if (f)
     {
-        auto buff = the_buff_db[p];
-        auto buff_id = the_buff_db.get_id_from_legacy(p);
-        assert(buff);
+        const auto& buff_data = the_buff_db.ensure(p);
 
-        if (buff->type == BuffType::buff)
+        if (buff_data.type == BuffType::buff)
         {
             animeload(11, tc);
         }
-        else if (buff->type == BuffType::hex)
+        else if (buff_data.type == BuffType::hex)
         {
             BrightAuraAnimation(
                 cdata[tc].position, BrightAuraAnimation::Type::debuff)
@@ -3764,7 +3763,11 @@ optional<bool> _proc_general_magic()
         }
 
         buff_add(
-            cdata[tc], *buff_id, efp, buff_calc_duration(p, efp), cdata[cc]);
+            cdata[tc],
+            buff_data.id,
+            efp,
+            buff_calc_duration(buff_data.id, efp),
+            cdata[cc]);
 
         if (efid == 447)
         {

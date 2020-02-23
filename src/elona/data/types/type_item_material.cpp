@@ -6,7 +6,7 @@ namespace elona
 {
 
 ItemMaterialDB the_item_material_db;
-const constexpr char* data::LuaLazyCacheTraits<ItemMaterialDB>::type_id;
+const constexpr char* data::DatabaseTraits<ItemMaterialDB>::type_id;
 
 
 
@@ -28,7 +28,7 @@ ItemMaterialData ItemMaterialDB::convert(
     DATA_OPT_OR(acidproof, bool, false);
 
     return ItemMaterialData{
-        SharedId{id},
+        data::InstanceId{id},
         legacy_id,
         weight,
         value,

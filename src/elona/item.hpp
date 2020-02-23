@@ -177,7 +177,8 @@ public:
     void modify_number(int delta);
     void remove();
 
-    SharedId new_id() const
+
+    data::InstanceId new_id() const
     {
         return *the_item_db.get_id_from_legacy(itemid2int(this->id));
     }

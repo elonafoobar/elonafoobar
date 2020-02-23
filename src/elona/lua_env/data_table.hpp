@@ -1,8 +1,10 @@
 #pragma once
-#include <string>
 
 #include "../../thirdparty/sol2/sol.hpp"
+#include "../data/id.hpp"
 #include "../optional.hpp"
+
+
 
 namespace elona
 {
@@ -30,19 +32,23 @@ struct DataTable
     /**
      * Get a new ID by a legacy ID.
      *
-     * @param prototype_id the namespaced prototype ID.
-     * @param legacy_data_id the legacy data ID.
+     * @param prototype_id the namespaced data prototype ID.
+     * @param legacy_instance_id the legacy data instance ID.
      * @return the corresponding new ID or none if not found.
      */
-    optional<std::string> by_legacy(
-        const std::string& prototype_id,
-        int legacy_data_id)
+    optional<data::InstanceId> by_legacy(
+        data::PrototypeId prototype_id,
+        int legacy_instance_id)
     {
-        if (auto it = _storage.get<sol::optional<std::string>>(
-                std::tie("by_legacy", prototype_id, legacy_data_id)))
-            return *it;
-
-        return none;
+        if (const auto id = _storage.traverse_get<sol::optional<std::string>>(
+                "by_legacy", prototype_id.get(), legacy_instance_id))
+        {
+            return data::InstanceId{*id};
+        }
+        else
+        {
+            return none;
+        }
     }
 
 
@@ -50,19 +56,23 @@ struct DataTable
     /**
      * Get the data from the raw table.
      *
-     * @param prototype_id the namespaced prototype ID.
-     * @param data_id the namespaced data ID.
+     * @param prototype_id the namespaced data prototype ID.
+     * @param instance_id the namespaced data instance ID.
      * @return the data or none if not found.
      */
     optional<sol::table> raw(
-        const std::string& prototype_id,
-        const std::string& data_id)
+        data::PrototypeId prototype_id,
+        data::InstanceId instance_id)
     {
-        if (auto it = _storage.get<sol::optional<sol::table>>(
-                std::tie("raw", prototype_id, data_id)))
-            return *it;
-
-        return none;
+        if (const auto data = _storage.traverse_get<sol::optional<sol::table>>(
+                "raw", prototype_id.get(), instance_id.get()))
+        {
+            return *data;
+        }
+        else
+        {
+            return none;
+        }
     }
 
 
@@ -70,16 +80,20 @@ struct DataTable
     /**
      * Get data table for @a prototype_id.
      *
-     * @param prototype_id the namespaced prototype ID.
+     * @param prototype_id the namespaced data prototype ID.
      * @return the data table or none if not found.
      */
-    optional<sol::table> get_table(const std::string& prototype_id)
+    optional<sol::table> get_table(data::PrototypeId prototype_id)
     {
-        if (auto it = _storage.get<sol::optional<sol::table>>(
-                std::tie("raw", prototype_id)))
-            return *it;
-
-        return none;
+        if (const auto data = _storage.traverse_get<sol::optional<sol::table>>(
+                "raw", prototype_id.get()))
+        {
+            return *data;
+        }
+        else
+        {
+            return none;
+        }
     }
 
 
