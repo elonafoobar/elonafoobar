@@ -39,9 +39,6 @@ static std::string lang(const std::string& a, const std::string& b)
 namespace elona
 {
 
-
-Inventory inv;
-
 int ci_at_m138 = 0;
 int p_at_m138 = 0;
 int max_at_m138 = 0;

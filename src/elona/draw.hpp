@@ -30,7 +30,7 @@ struct ItemChip
 };
 
 
-extern std::vector<ItemChip> item_chips;
+inline std::vector<ItemChip> item_chips{825};
 
 
 
@@ -43,7 +43,7 @@ struct CharaChip
 };
 
 
-extern std::vector<CharaChip> chara_chips;
+inline std::vector<CharaChip> chara_chips{925};
 
 
 optional_ref<const Extent> draw_get_rect_chara(int);

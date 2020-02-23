@@ -6,11 +6,6 @@
 namespace elona
 {
 
-CharacterDB the_character_db;
-const constexpr char* data::LuaLazyCacheTraits<CharacterDB>::type_id;
-
-
-
 static std::unordered_map<SharedId, int> _convert_resistances(
     const lua::ConfigTable& data,
     const std::string& id)

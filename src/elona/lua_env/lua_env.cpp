@@ -20,8 +20,6 @@ namespace elona
 namespace lua
 {
 
-std::unique_ptr<LuaEnv> lua;
-
 LuaEnv::LuaEnv()
 {
     lua_ = std::make_shared<sol::state>();

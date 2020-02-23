@@ -15,10 +15,6 @@ constexpr int max_log_lines = 1000;
 namespace elona
 {
 
-MessageLog message_log;
-
-
-
 void MessageLogLine::append(const std::string& text, const snail::Color& color)
 {
     spans.emplace_back(text, color);

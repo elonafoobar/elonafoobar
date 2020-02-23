@@ -19,6 +19,6 @@ struct SoundData
 ELONA_DEFINE_LUA_DB(SoundDB, SoundData, "core.sound")
 
 
-extern SoundDB the_sound_db;
+inline SoundDB the_sound_db;
 
 } // namespace elona

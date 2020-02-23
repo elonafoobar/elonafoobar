@@ -52,6 +52,6 @@ ELONA_DEFINE_LUA_DB(MapDefDB, MapDefData, "core.map")
 
 
 
-extern MapDefDB the_mapdef_db;
+inline MapDefDB the_mapdef_db;
 
 } // namespace elona

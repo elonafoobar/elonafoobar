@@ -233,7 +233,7 @@ struct GameData
     void unpack_from(elona_vector1<int>&);
 };
 
-extern GameData game_data;
+inline GameData game_data;
 
 
 
@@ -248,7 +248,7 @@ struct FoobarData
 };
 
 
-extern FoobarData foobar_data;
+inline FoobarData foobar_data;
 
 
 // TODO: Make gdata class and make this function method.

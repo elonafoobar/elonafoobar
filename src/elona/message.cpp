@@ -36,15 +36,6 @@ int msgline;
 namespace elona
 {
 
-namespace detail
-{
-
-std::vector<LogObserver*> observers;
-
-} // namespace detail
-
-
-
 LogObserver::~LogObserver()
 {
     unsubscribe_log(this);

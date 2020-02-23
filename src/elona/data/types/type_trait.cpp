@@ -7,11 +7,6 @@
 namespace elona
 {
 
-TraitDB the_trait_db;
-const constexpr char* data::LuaLazyCacheTraits<TraitDB>::type_id;
-
-
-
 TraitData TraitDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
     auto legacy_id = data.required<int>("legacy_id");

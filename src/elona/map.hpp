@@ -66,7 +66,7 @@ struct MapData
     void clear();
 };
 
-extern MapData map_data;
+inline MapData map_data;
 
 
 struct Cell
@@ -222,7 +222,7 @@ private:
     Grid<Cell> cells;
 };
 
-extern CellData cell_data;
+inline CellData cell_data;
 
 
 struct ChipData
@@ -273,7 +273,7 @@ private:
     std::unordered_map<int, MapType> chips;
 };
 
-extern ChipData chip_data;
+inline ChipData chip_data;
 
 
 void map_get_trainer_skills(const Character& chara);

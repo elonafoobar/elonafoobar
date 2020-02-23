@@ -525,10 +525,6 @@ void load_options_internal(std::istream& in, const std::string& filepath)
 
 
 
-Config g_config;
-
-
-
 PreinitConfigOptions PreinitConfigOptions::from_file(const fs::path& path)
 {
     std::ifstream in{path.native()};

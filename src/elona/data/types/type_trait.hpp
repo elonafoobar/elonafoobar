@@ -21,6 +21,6 @@ ELONA_DEFINE_LUA_DB(TraitDB, TraitData, "core.trait")
 
 
 
-extern TraitDB the_trait_db;
+inline TraitDB the_trait_db;
 
 } // namespace elona

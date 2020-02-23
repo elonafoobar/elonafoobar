@@ -27,6 +27,6 @@ ELONA_DEFINE_LUA_DB(BuffDB, BuffData, "core.buff")
 
 
 
-extern BuffDB the_buff_db;
+inline BuffDB the_buff_db;
 
 } // namespace elona

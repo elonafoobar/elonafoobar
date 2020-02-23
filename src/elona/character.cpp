@@ -447,9 +447,6 @@ void failed_to_place_character(Character& cc)
 namespace elona
 {
 
-CData cdata;
-
-
 elona_vector1<std::string> usertxt;
 
 

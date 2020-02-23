@@ -171,11 +171,6 @@ void _load_pcc_part(Character& chara, int body_part, const char* body_part_str)
 namespace elona
 {
 
-
-std::vector<ItemChip> item_chips{825};
-std::vector<CharaChip> chara_chips{925};
-
-
 /**
  * Obtains the window buffer and region where the character sprite with ID @a id
  * is located, for use with @ref gcopy.

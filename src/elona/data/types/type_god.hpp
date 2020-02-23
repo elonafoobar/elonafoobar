@@ -18,6 +18,6 @@ ELONA_DEFINE_LUA_DB(GodDB, GodData, "core.god")
 
 
 
-extern GodDB the_god_db;
+inline GodDB the_god_db;
 
 } // namespace elona

@@ -28,7 +28,6 @@ set(ELONA_SOURCES
   ctrl_file.cpp
   ctrl_inventory.cpp
   death.cpp
-  debug.cpp
   deferred_event.cpp
   dialog.cpp
   dmgheal.cpp
@@ -45,7 +44,6 @@ set(ELONA_SOURCES
   fov.cpp
   gdata.cpp
   get_card_info.cpp
-  globals.cpp
   god.cpp
   i18n.cpp
   init.cpp
@@ -97,7 +95,6 @@ set(ELONA_SOURCES
   turn_sequence_pc_actions.cpp
   ui.cpp
   ui_menus.cpp
-  variables.cpp
   wish.cpp
 
   data/init.cpp
@@ -141,7 +138,6 @@ set(ELONA_SOURCES
   keybind/keybind_deserializer.cpp
   keybind/keybind_manager.cpp
   keybind/keybind_serializer.cpp
-  keybind/macro_action_queue.cpp
 
   pic_loader/pic_loader.cpp
   pic_loader/tinted_buffers.cpp

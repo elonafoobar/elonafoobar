@@ -183,7 +183,7 @@ private:
     std::vector<Quest> quests;
 };
 
-extern QuestData quest_data;
+inline QuestData quest_data;
 
 
 enum class TurnResult;

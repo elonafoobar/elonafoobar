@@ -26,8 +26,6 @@
 namespace elona
 {
 
-QuestData quest_data;
-
 #define QDATA_PACK(x, ident) legacy_qdata(x, quest_id) = ident;
 #define QDATA_UNPACK(x, ident) ident = legacy_qdata(x, quest_id);
 

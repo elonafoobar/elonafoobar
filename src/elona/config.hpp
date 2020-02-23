@@ -172,6 +172,6 @@ public:
 };
 
 
-extern Config g_config;
+inline Config g_config;
 
 } // namespace elona

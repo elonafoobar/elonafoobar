@@ -19,13 +19,6 @@ constexpr int _default_portrait_height = 112;
 namespace elona
 {
 
-PortraitDB the_portrait_db;
-
-
-
-const constexpr char* data::LuaLazyCacheTraits<_PortraitDBBase>::type_id;
-
-
 PortraitData _PortraitDBBase::convert(
     const lua::ConfigTable& data,
     const std::string& id)

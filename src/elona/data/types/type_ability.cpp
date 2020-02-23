@@ -5,11 +5,6 @@
 namespace elona
 {
 
-AbilityDB the_ability_db;
-const constexpr char* data::LuaLazyCacheTraits<AbilityDB>::type_id;
-
-
-
 AbilityData AbilityDB::convert(
     const lua::ConfigTable& data,
     const std::string& id)

@@ -145,6 +145,6 @@ ELONA_DEFINE_LUA_DB(CharacterDB, CharacterData, "core.chara")
 
 
 
-extern CharacterDB the_character_db;
+inline CharacterDB the_character_db;
 
 } // namespace elona

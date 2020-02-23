@@ -12,7 +12,7 @@ struct Character;
 
 constexpr int fov_max = 15; // in diameter
 
-extern std::array<std::array<int, 2>, fov_max + 2> fovlist;
+inline std::array<std::array<int, 2>, fov_max + 2> fovlist;
 
 // Returns wheather the PC can see  the position or the character.
 bool is_in_fov(const Position&);

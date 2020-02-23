@@ -53,7 +53,7 @@ private:
 
 namespace keybind
 {
-extern MacroActionQueue macro_action_queue;
+inline MacroActionQueue macro_action_queue;
 }
 
 } // namespace elona

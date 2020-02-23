@@ -5,11 +5,6 @@
 namespace elona
 {
 
-ItemMaterialDB the_item_material_db;
-const constexpr char* data::LuaLazyCacheTraits<ItemMaterialDB>::type_id;
-
-
-
 ItemMaterialData ItemMaterialDB::convert(
     const lua::ConfigTable& data,
     const std::string& id)

@@ -80,6 +80,6 @@ private:
 
 
 
-extern MessageLog message_log;
+inline MessageLog message_log;
 
 } // namespace elona

@@ -5,11 +5,6 @@
 namespace elona
 {
 
-FishDB the_fish_db;
-const constexpr char* data::LuaLazyCacheTraits<FishDB>::type_id;
-
-
-
 FishData FishDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
     auto legacy_id = data.required<int>("legacy_id");

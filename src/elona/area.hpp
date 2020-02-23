@@ -116,7 +116,7 @@ private:
 };
 
 
-extern AreaData area_data;
+inline AreaData area_data;
 
 
 void initialize_adata();

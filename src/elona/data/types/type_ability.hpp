@@ -24,6 +24,6 @@ ELONA_DEFINE_LUA_DB(AbilityDB, AbilityData, "core.ability")
 
 
 
-extern AbilityDB the_ability_db;
+inline AbilityDB the_ability_db;
 
 } // namespace elona

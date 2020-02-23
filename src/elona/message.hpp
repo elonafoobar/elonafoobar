@@ -28,7 +28,7 @@ void unsubscribe_log(LogObserver* observer);
 namespace detail
 {
 
-extern std::vector<LogObserver*> observers;
+inline std::vector<LogObserver*> observers;
 
 } // namespace detail
 

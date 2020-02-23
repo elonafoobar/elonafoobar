@@ -8,10 +8,6 @@
 namespace elona
 {
 
-const constexpr char* data::LuaLazyCacheTraits<MapChipDB>::type_id;
-
-
-
 MapChip MapChipDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
     auto legacy_id = data.required<int>("legacy_id");
