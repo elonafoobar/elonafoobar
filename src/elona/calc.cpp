@@ -1252,8 +1252,8 @@ int calctraincost(int skill_id, int cc, bool discount)
 
 int calclearncost(int skill_id, int cc, bool discount)
 {
-    UNUSED(skill_id);
-    UNUSED(cc);
+    (void)skill_id;
+    (void)cc;
 
     int platinum = 15 + 3 * game_data.number_of_learned_skills_by_trainer;
     return discount ? platinum * 2 / 3 : platinum;

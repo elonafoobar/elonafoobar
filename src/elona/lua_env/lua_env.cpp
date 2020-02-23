@@ -10,7 +10,7 @@
 #include "event_manager.hpp"
 #include "export_manager.hpp"
 #include "handle_manager.hpp"
-#include "i18n_function_manager.hpp"
+#include "i18n_manager.hpp"
 #include "mod_manager.hpp"
 
 
@@ -54,7 +54,7 @@ LuaEnv::LuaEnv()
     handle_mgr = std::make_unique<HandleManager>(*this);
     data_mgr = std::make_unique<DataManager>(*this);
     export_mgr = std::make_unique<ExportManager>(*this);
-    i18n_function_mgr = std::make_unique<I18NFunctionManager>(*this);
+    i18n_mgr = std::make_unique<I18NManager>(*this);
     console = std::make_unique<Console>(*this);
     config_mgr = std::make_unique<ConfigManager>(*this);
 }

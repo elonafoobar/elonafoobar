@@ -7,6 +7,9 @@
 #include "input.hpp"
 #include "keybind/keybind.hpp"
 #include "ui.hpp"
+#include "variables.hpp"
+
+
 
 namespace elona
 {

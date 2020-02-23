@@ -215,7 +215,7 @@ void buff_add(
         if (buff_data.type != BuffType::food)
         {
             txt(i18n::s.get_enum_property(
-                "core.buff", legacy_id, "apply", chara));
+                "core.buff", "apply", legacy_id, chara));
         }
 
         add_damage_popup(

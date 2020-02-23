@@ -283,14 +283,14 @@ sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
     switch (args.size())
     {
     case 0:
-        opt = i18n::s.get_enum_property_opt(key_base, key_property, index);
+        opt = i18n::s.get_enum_property_optional(key_base, key_property, index);
         break;
     case 1:
-        opt = i18n::s.get_enum_property_opt(
+        opt = i18n::s.get_enum_property_optional(
             key_base, key_property, index, args[0].get<sol::object>());
         break;
     case 2:
-        opt = i18n::s.get_enum_property_opt(
+        opt = i18n::s.get_enum_property_optional(
             key_base,
             key_property,
             index,
@@ -298,7 +298,7 @@ sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
             args[1].get<sol::object>());
         break;
     case 3:
-        opt = i18n::s.get_enum_property_opt(
+        opt = i18n::s.get_enum_property_optional(
             key_base,
             key_property,
             index,
@@ -307,7 +307,7 @@ sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
             args[2].get<sol::object>());
         break;
     case 4:
-        opt = i18n::s.get_enum_property_opt(
+        opt = i18n::s.get_enum_property_optional(
             key_base,
             key_property,
             index,
@@ -317,7 +317,7 @@ sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
             args[3].get<sol::object>());
         break;
     case 5:
-        opt = i18n::s.get_enum_property_opt(
+        opt = i18n::s.get_enum_property_optional(
             key_base,
             key_property,
             index,
@@ -329,7 +329,7 @@ sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
         break;
     case 6:
     default:
-        opt = i18n::s.get_enum_property_opt(
+        opt = i18n::s.get_enum_property_optional(
             key_base,
             key_property,
             index,
@@ -362,8 +362,7 @@ void LuaApiI18N::register_function(
     const std::string& name,
     sol::protected_function function)
 {
-    lua::lua->get_i18n_function_manager().register_function(
-        language, name, function);
+    lua::lua->get_i18n_manager().register_function(language, name, function);
 }
 
 void LuaApiI18N::bind(sol::table& api_table)

@@ -42,14 +42,11 @@ bool _is_alnum_only(const std::string& str)
 // Callback to be called in Lua for preventing write access to unknown
 // globals.
 int deny_new_fields(
-    sol::table table,
+    [[maybe_unused]] sol::table table,
     sol::object key,
-    sol::object value,
+    [[maybe_unused]] sol::object value,
     sol::this_state ts)
 {
-    UNUSED(table);
-    UNUSED(value);
-
     std::stringstream ss;
     if (key.is<std::string>())
     {

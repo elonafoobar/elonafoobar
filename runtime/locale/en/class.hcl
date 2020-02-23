@@ -1,5 +1,0 @@
-locale {
-    class {
-        unemployed = "unemployed"
-    }
-}

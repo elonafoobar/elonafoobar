@@ -147,7 +147,7 @@ void txteledmg(int type, int attacker, int target, int element)
     }
     else if (type == 1)
     {
-        auto text = i18n::s.get_enum_property_opt(
+        auto text = i18n::s.get_enum_property_optional(
             "core.death_by.element"s,
             "active",
             element,
@@ -167,7 +167,7 @@ void txteledmg(int type, int attacker, int target, int element)
     }
     else if (type == 2)
     {
-        auto text = i18n::s.get_enum_property_opt(
+        auto text = i18n::s.get_enum_property_optional(
             "core.death_by.element"s,
             "passive",
             element,

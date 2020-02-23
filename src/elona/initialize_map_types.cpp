@@ -7,6 +7,7 @@
 #include "deferred_event.hpp"
 #include "gdata.hpp"
 #include "i18n.hpp"
+#include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/lua_class/lua_class_map_generator.hpp"
 #include "map.hpp"

@@ -239,6 +239,8 @@ list(APPEND EXTRA_DEFINES
   # > the Boost.Date_Time and Boost.Regex libraries respectively.
   "BOOST_DATE_TIME_NO_LIB"
   "BOOST_REGEX_NO_LIB"
+
+  "SOL_CHECK_ARGUMENTS"
   )
 
 if(MSVC)
@@ -296,7 +298,6 @@ else() # GCC or Clang
     "g"
     "O0"
     "DDEBUG"
-    "DSOL_CHECK_ARGUMENTS"
     )
   if(ELONA_BUILD_TARGET STREQUAL "BENCH")
     list(APPEND GENERAL_OPTIONS "g1")

@@ -10,6 +10,8 @@
 #include "enchantment.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "item.hpp"
+#include "lua_env/interface.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "random.hpp"
@@ -374,7 +376,7 @@ std::string mapname(int id, bool description)
         break;
     case mdata_t::MapId::random_dungeon: name = mapname_dungeon(id); break;
     default:
-        auto name_opt = i18n::s.get_enum_property_opt(
+        auto name_opt = i18n::s.get_enum_property_optional(
             "core.map.unique", "name", area_data[id].id);
         if (name_opt)
         {
@@ -385,7 +387,7 @@ std::string mapname(int id, bool description)
             name = "";
         }
 
-        auto desc_opt = i18n::s.get_enum_property_opt(
+        auto desc_opt = i18n::s.get_enum_property_optional(
             "core.map.unique", "desc", area_data[id].id);
         if (desc_opt)
         {
@@ -442,7 +444,7 @@ std::string txtbuilding(int x, int y)
 
 std::string txtskillchange(int id, int cc, bool increase)
 {
-    if (auto text = i18n::s.get_enum_property_opt(
+    if (auto text = i18n::s.get_enum_property_optional(
             "core.skill", increase ? "increase" : "decrease", id, cdata[cc]))
     {
         return *text;
@@ -959,7 +961,8 @@ void parse_talk_file()
     {
         buff(0).clear();
         std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "talk.txt").native(),
+            lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/talk.txt")
+                .native(),
             std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -985,7 +988,8 @@ void read_talk_file(const std::string& valn)
     {
         buff(0).clear();
         std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "talk.txt").native(),
+            lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/talk.txt")
+                .native(),
             std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -1006,7 +1010,8 @@ void get_npc_talk()
     {
         buff(0).clear();
         std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "talk.txt").native(),
+            lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/talk.txt")
+                .native(),
             std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -2130,8 +2135,8 @@ void load_random_name_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line(
-            i18n::s.get_locale_dir("core") / "lazy" / "name.csv"),
+        fileutil::read_by_line(lua::resolve_path_for_mod(
+            "<core>/locale/<LANGUAGE>/lazy/name.csv")),
         std::back_inserter(lines));
 
     const auto rows = lines.size();
@@ -2167,8 +2172,8 @@ void load_random_title_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line(
-            i18n::s.get_locale_dir("core") / "lazy" / "ndata.csv"),
+        fileutil::read_by_line(lua::resolve_path_for_mod(
+            "<core>/locale/<LANGUAGE>/lazy/ndata.csv")),
         std::back_inserter(lines));
 
     for (size_t i = 0; i < lines.size(); ++i)

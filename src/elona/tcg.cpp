@@ -12,6 +12,9 @@
 #include "input_prompt.hpp"
 #include "macro.hpp"
 #include "random.hpp"
+#include "variables.hpp"
+
+
 
 namespace elona
 {

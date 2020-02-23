@@ -19,7 +19,8 @@ static void _load_scenes()
     {
         buff(0).clear();
         std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "scene.hsp").native(),
+            lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/scene.hsp")
+                .native(),
             std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))

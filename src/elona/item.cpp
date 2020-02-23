@@ -21,6 +21,7 @@
 #include "food.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "lua_env/handle_manager.hpp"
 #include "lua_env/lua_env.hpp"
 #include "map.hpp"
 #include "mef.hpp"

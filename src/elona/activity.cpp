@@ -15,6 +15,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
