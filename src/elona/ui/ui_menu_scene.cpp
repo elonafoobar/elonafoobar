@@ -19,7 +19,7 @@ static void _load_scenes()
     {
         buff(0).clear();
         std::ifstream in{
-            lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/scene.hsp")
+            lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/scene.txt")
                 .native(),
             std::ios::binary};
         std::string tmp;

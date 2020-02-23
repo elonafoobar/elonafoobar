@@ -9,8 +9,9 @@ using namespace elona::semver;
 TEST_CASE("Test loading invalid mod list", "[Lua: Mods]")
 {
     const auto check = [](const ModList& list) {
-        REQUIRE(list.mods().size() == 1);
+        REQUIRE(list.mods().size() == 2);
         REQUIRE(list.mods().at("core").is_satisfied(Version{0, 2, 6}));
+        REQUIRE(list.mods().at("elona").is_satisfied(Version{0, 2, 6}));
     };
 
     check(ModList::from_file("404.not_found"));
@@ -31,9 +32,11 @@ TEST_CASE("Test loading valid mod list", "[Lua: Mods]")
     const auto check =
         [](const ModList& list,
            const std::unordered_map<std::string, std::string>& expected) {
-            const auto size = expected.size() + 1 /* +1 is for 'core' */;
+            const auto size =
+                expected.size() + 2; // +2 is for 'core' and 'elona'
             REQUIRE(list.mods().size() == size);
             REQUIRE(list.mods().at("core").is_satisfied(Version{0, 2, 6}));
+            REQUIRE(list.mods().at("elona").is_satisfied(Version{0, 2, 6}));
             for (const auto& pair : expected)
             {
                 const auto& id = pair.first;

@@ -939,7 +939,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
         return TurnResult::turn_end;
     }
 
-    if (chara.drunk != 0 && _chara_get_race(chara) == "core.cat" &&
+    if (chara.drunk != 0 && _chara_get_race(chara) == "elona.cat" &&
         is_in_fov(chara))
     {
         _proc_drunk_cat(chara);
@@ -1022,7 +1022,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
                 distance = dist_helper(cdata[tc], chara);
                 if (distance < 8)
                 {
-                    if (_chara_get_race(cdata.player()) == "core.snail")
+                    if (_chara_get_race(cdata.player()) == "elona.snail")
                     {
                         tlocx = cdata.player().position.x;
                         tlocy = cdata.player().position.y;

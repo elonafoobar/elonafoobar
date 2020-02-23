@@ -82,7 +82,7 @@ void status_ailment_damage(
     case StatusAilment::confused:
         if (chara.is_immune_to_confusion())
             return;
-        if (buff_has(chara, "core.hero"))
+        if (buff_has(chara, "elona.hero"))
             return;
         if (chara.quality > Quality::great && rnd_capped(chara.level / 2 + 1))
             return;
@@ -188,9 +188,9 @@ void status_ailment_damage(
     case StatusAilment::fear:
         if (chara.is_immune_to_fear())
             return;
-        if (buff_has(chara, "core.holy_shield"))
+        if (buff_has(chara, "elona.holy_shield"))
             return;
-        if (buff_has(chara, "core.hero"))
+        if (buff_has(chara, "elona.hero"))
             return;
         if (chara.quality > Quality::great && rnd_capped(chara.level / 5 + 1))
             return;

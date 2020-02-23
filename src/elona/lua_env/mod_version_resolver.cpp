@@ -140,6 +140,8 @@ ModList ModList::from_stream(std::istream& in, const std::string& filepath)
     }
     mods.emplace(std::make_pair(
         "core", semver::VersionRequirement::parse("= 0.2.6").right()));
+    mods.emplace(std::make_pair(
+        "elona", semver::VersionRequirement::parse("= 0.2.6").right()));
     return ModList{mods};
 }
 

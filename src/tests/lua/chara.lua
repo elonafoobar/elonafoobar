@@ -5,7 +5,7 @@ local Chara = Elona.game.Chara
 lrun("test Chara.is_alive", function()
         Testing.start_in_debug_map()
 
-        local putit = Chara.create(0, 0, "core.putit")
+        local putit = Chara.create(0, 0, "elona.putit")
         lequal(Chara.is_alive(putit), true)
 
         putit:damage_hp(putit.max_hp + 1)
@@ -17,7 +17,7 @@ lrun("test Chara.is_player", function()
 
         lequal(Chara.is_player(Chara.player()), true)
 
-        local putit = Chara.create(0, 0, "core.putit")
+        local putit = Chara.create(0, 0, "elona.putit")
         lequal(Chara.is_player(putit), false)
 end)
 
@@ -26,7 +26,7 @@ lrun("test Chara.is_ally", function()
 
         lequal(Chara.is_ally(Chara.player()), false)
 
-        local putit = Chara.create(0, 0, "core.putit")
+        local putit = Chara.create(0, 0, "elona.putit")
         lequal(Chara.is_ally(putit), false)
 
         lequal(putit:recruit_as_ally(), true)
@@ -44,7 +44,7 @@ end)
 lrun("test Chara.create", function()
         -- Testing.start_in_debug_map()
 
-        local putit = Chara.create(4, 8, "core.putit")
+        local putit = Chara.create(4, 8, "elona.putit")
         lok(putit ~= nil, "Character was nil.")
         lequal(putit.position.x, 4)
         lequal(putit.position.y, 8)
@@ -61,13 +61,13 @@ end
 lrun("test Chara.count/iter", function()
         Testing.start_in_debug_map()
 
-        Chara.create(0, 0, "core.putit")
-        Chara.create(0, 1, "core.putit")
+        Chara.create(0, 0, "elona.putit")
+        Chara.create(0, 1, "elona.putit")
 
         lequal(Chara.count(), 2)
         local count = tally()
 
-        Chara.create(0, 2, "core.putit")
+        Chara.create(0, 2, "elona.putit")
 
         lequal(Chara.count(), 3)
         lequal(tally(), count + 1)

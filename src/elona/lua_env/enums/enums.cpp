@@ -83,7 +83,7 @@ EnumMap<ColorIndex> ColorIndexTable{
  * @luadoc
  *
  * The curse state of an item.
- * @usage local item = Item.create(10, 10, "core.putitoro", 3)
+ * @usage local item = Item.create(10, 10, "elona.putitoro", 3)
  * item.curse_state = "Blessed"
  */
 EnumMap<CurseState> CurseStateTable{"CurseState",
@@ -99,7 +99,7 @@ EnumMap<CurseState> CurseStateTable{"CurseState",
  * @luadoc
  *
  * The identify state of an item.
- * @usage local item = Item.create(10, 10, "core.putitoro", 3)
+ * @usage local item = Item.create(10, 10, "elona.putitoro", 3)
  * item.identify_state = "Completely"
  */
 EnumMap<IdentifyState> IdentifyStateTable{

@@ -321,17 +321,17 @@ void initialize_pc_character()
             item->set_number(3);
         }
     }
-    if (cdatan(3, 0) == u8"core.pianist"s)
+    if (cdatan(3, 0) == u8"elona.pianist"s)
     {
         flt();
         itemcreate_player_inv(88, 0);
     }
-    if (cdatan(3, 0) == u8"core.farmer"s)
+    if (cdatan(3, 0) == u8"elona.farmer"s)
     {
         flt();
         itemcreate_player_inv(256, 0);
     }
-    if (cdatan(3, 0) == u8"core.wizard"s || cdatan(3, 0) == u8"core.warmage"s)
+    if (cdatan(3, 0) == u8"elona.wizard"s || cdatan(3, 0) == u8"elona.warmage"s)
     {
         flt();
         itemcreate_player_inv(116, 0);
@@ -341,7 +341,7 @@ void initialize_pc_character()
             item->set_number(3);
         }
     }
-    if (cdatan(3, 0) == u8"core.priest"s)
+    if (cdatan(3, 0) == u8"elona.priest"s)
     {
         flt();
         if (const auto item = itemcreate_player_inv(249, 0))
@@ -392,50 +392,50 @@ void clear_trait_data()
 
 void gain_race_feat()
 {
-    if (cdatan(2, 0) == u8"core.dwarf"s)
+    if (cdatan(2, 0) == u8"elona.dwarf"s)
     {
         trait(152) = 2;
         trait(155) = 1;
     }
-    if (cdatan(2, 0) == u8"core.elea"s)
+    if (cdatan(2, 0) == u8"elona.elea"s)
     {
         trait(168) = 1;
         trait(156) = 1;
     }
-    if (cdatan(2, 0) == u8"core.eulderna"s)
+    if (cdatan(2, 0) == u8"elona.eulderna"s)
     {
         trait(153) = 1;
     }
-    if (cdatan(2, 0) == u8"core.lich"s)
+    if (cdatan(2, 0) == u8"elona.lich"s)
     {
         trait(151) = 1;
         trait(155) = 2;
         trait(152) = 1;
     }
-    if (cdatan(2, 0) == u8"core.golem"s)
+    if (cdatan(2, 0) == u8"elona.golem"s)
     {
         trait(157) = 1;
         trait(152) = 2;
     }
-    if (cdatan(2, 0) == u8"core.yerles"s)
+    if (cdatan(2, 0) == u8"elona.yerles"s)
     {
         trait(154) = 1;
     }
-    if (cdatan(2, 0) == u8"core.juere"s)
+    if (cdatan(2, 0) == u8"elona.juere"s)
     {
         trait(158) = 1;
         trait(159) = 1;
     }
-    if (cdatan(2, 0) == u8"core.goblin"s)
+    if (cdatan(2, 0) == u8"elona.goblin"s)
     {
         trait(155) = 1;
         trait(159) = 1;
     }
-    if (cdatan(2, 0) == u8"core.mutant"s)
+    if (cdatan(2, 0) == u8"elona.mutant"s)
     {
         trait(0) = 1;
     }
-    if (cdatan(2, 0) == u8"core.fairy"s)
+    if (cdatan(2, 0) == u8"elona.fairy"s)
     {
         trait(160) = 1;
         trait(161) = 1;
@@ -7162,7 +7162,7 @@ int do_cast_magic_attempt()
                     "core.ui.cast_style", cdata[cc].special_attack_type)));
         }
     }
-    if (buff_has(cdata[cc], "core.mist_of_silence"))
+    if (buff_has(cdata[cc], "elona.mist_of_silence"))
     {
         if (is_in_fov(cdata[cc]))
         {
@@ -11037,7 +11037,7 @@ void do_play_scene()
     {
         buff(0).clear();
         std::ifstream in{
-            lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/scene.hsp")
+            lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/scene.txt")
                 .native(),
             std::ios::binary};
         std::string tmp;
@@ -11076,7 +11076,7 @@ void do_play_scene()
             {
                 buff(0).clear();
                 std::ifstream in{lua::resolve_path_for_mod(
-                                     "<core>/locale/<LANGUAGE>/lazy/scene.hsp")
+                                     "<core>/locale/<LANGUAGE>/lazy/scene.txt")
                                      .native(),
                                  std::ios::binary};
                 std::string tmp;
@@ -11702,13 +11702,13 @@ void conquer_lesimas()
         Message::instance().clear();
         txt(u8"あなたは、台座の上に置かれている絢爛な装飾の本を、いぶかしげに眺めた。"s);
         msg_halt();
-        tc = chara_find("core.orphe");
+        tc = chara_find("elona.orphe");
         talk_to_npc();
         Message::instance().clear();
         txt(u8"青年は悪戯っぽくニヤリと笑い、壁に寄りかかった。"s);
         msg_halt();
         Message::instance().clear();
-        chara_vanquish(chara_find("core.orphe"));
+        chara_vanquish(chara_find("elona.orphe"));
         screenupdate = -1;
         update_screen();
         txt(u8"…どれくらい時間がたっただろう。氷の瞳の男は、いつの間にか姿を消していた。あなたは不安を振り払い、ゆっくりと本に手を伸ばした…"s);

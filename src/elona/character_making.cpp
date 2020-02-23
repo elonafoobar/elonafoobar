@@ -223,9 +223,10 @@ MainMenuResult character_making_customize_appearance()
 
     if (cdata.player().portrait == "")
     {
-        // TODO: if neither "core.woman1" nor "core.man1" exists, what happens?
+        // TODO: if neither "elona.woman1" nor "elona.man1" exists, what
+        // happens?
         cdata.player().portrait =
-            cdata.player().sex ? "core.woman1" : "core.man1";
+            cdata.player().sex ? "elona.woman1" : "elona.man1";
     }
 
     while (true)

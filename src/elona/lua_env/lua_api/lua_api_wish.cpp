@@ -83,7 +83,7 @@ bool LuaApiWish::match(
  * >          'Include',
  * >          'mod_name.wish.enormous_money',
  * >          {'enormous money'}) then
- * >       Item.create(Chara.player().position, 'core.gold_piece', 1000 * 1000 * 1000)
+ * >       Item.create(Chara.player().position, 'elona.gold_piece', 1000 * 1000 * 1000)
  * >       GUI.txt(I18N.get('mod_name.wish.get_money'))
  * >       return true
  * >    else

@@ -583,7 +583,7 @@ void initialize_character()
     {
         const auto index = std::to_string(1 + rnd(32));
         const auto man_or_woman = cdata[rc].sex ? "woman" : "man";
-        cdata[rc].portrait = "core."s + man_or_woman + index;
+        cdata[rc].portrait = "elona."s + man_or_woman + index;
     }
     cdata[rc].personality = rnd(4);
     cdata[rc].talk_type = rnd(7);

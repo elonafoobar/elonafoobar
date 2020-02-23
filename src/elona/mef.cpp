@@ -301,7 +301,7 @@ bool mef_proc_from_movement(int cc)
     }
     if (mef(0, i) == 1)
     {
-        if (cdatan(2, cc) != u8"core.spider"s)
+        if (cdatan(2, cc) != u8"elona.spider"s)
         {
             if (rnd_capped(mef(5, i) + 25) <
                     rnd_capped(sdata(10, cc) + sdata(12, cc) + 1) ||

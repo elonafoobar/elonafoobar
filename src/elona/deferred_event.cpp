@@ -142,7 +142,7 @@ void eh_conquer_lesimas(const DeferredEvent&)
 
 void eh_lomias_talks(const DeferredEvent&)
 {
-    tc = chara_find("core.lomias");
+    tc = chara_find("elona.lomias");
     talk_to_npc();
 }
 
@@ -150,7 +150,7 @@ void eh_lomias_talks(const DeferredEvent&)
 
 void eh_zeome_talks(const DeferredEvent&)
 {
-    tc = chara_find("core.zeome");
+    tc = chara_find("elona.zeome");
     talk_to_npc();
 }
 
@@ -286,7 +286,7 @@ void eh_quest_update_deadline(const DeferredEvent&)
 
 void eh_wandering_vendor(const DeferredEvent&)
 {
-    tc = chara_find("core.shopkeeper");
+    tc = chara_find("elona.shopkeeper");
     talk_to_npc();
 }
 
@@ -532,11 +532,11 @@ void eh_ragnarok(const DeferredEvent& event)
             flt(100, calcfixlv(Quality::good));
             if (rnd(4))
             {
-                fltnrace = u8"core.dragon"s;
+                fltnrace = u8"elona.dragon"s;
             }
             else
             {
-                fltnrace = u8"core.giant"s;
+                fltnrace = u8"elona.giant"s;
             }
             int stat = chara_create(-1, 0, x, y);
             if (stat != 0)
@@ -572,7 +572,7 @@ void eh_lily_killed(const DeferredEvent& event)
     flt();
     itemcreate_extra_inv(55, cdata[event.param1].position, 4);
     game_data.quest_flags.pael_and_her_mom = 1001;
-    tc = chara_find("core.pael");
+    tc = chara_find("elona.pael");
     if (tc != 0)
     {
         if (cdata[tc].state() == Character::State::alive)
@@ -817,7 +817,7 @@ void eh_guild_alarm(const DeferredEvent& event)
 
 void eh_rogue_party_ambush(const DeferredEvent&)
 {
-    tc = chara_find("core.rogue_boss");
+    tc = chara_find("elona.rogue_boss");
     talk_to_npc();
     game_data.rogue_boss_encountered = 23;
 }

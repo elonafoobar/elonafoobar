@@ -369,7 +369,7 @@ bool _magic_1147()
 
 bool _magic_1142()
 {
-    if (cdatan(2, tc) == u8"core.snail"s)
+    if (cdatan(2, tc) == u8"elona.snail"s)
     {
         if (is_in_fov(cdata[tc]))
         {
@@ -774,7 +774,7 @@ bool _magic_406_407()
             continue;
         }
     }
-    buff_add(cdata[tc], "core.holy_veil", efp, 5 + efp / 30, cdata[cc]);
+    buff_add(cdata[tc], "elona.holy_veil", efp, 5 + efp / 30, cdata[cc]);
     animeload(11, tc);
     return true;
 }
@@ -3192,10 +3192,10 @@ bool _magic_656()
                 Message::color{ColorIndex::blue});
         }
         buff_add(
-            cdata[tc], "core.speed", sdata(17, cc) * 5 + 50, 15, cdata[cc]);
+            cdata[tc], "elona.speed", sdata(17, cc) * 5 + 50, 15, cdata[cc]);
         buff_add(
-            cdata[tc], "core.hero", sdata(17, cc) * 5 + 100, 60, cdata[cc]);
-        buff_add(cdata[tc], "core.contingency", 1500, 30, cdata[cc]);
+            cdata[tc], "elona.hero", sdata(17, cc) * 5 + 100, 60, cdata[cc]);
+        buff_add(cdata[tc], "elona.contingency", 1500, 30, cdata[cc]);
     }
     return true;
 }

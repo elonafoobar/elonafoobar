@@ -60,7 +60,7 @@ void LuaCharacter::damage_hp_source(
  * @tparam num amount the amount to damage
  * @tparam LuaCharacter source the character acting as the source of the damage
  * @usage local chara = Chara.player()
- * local other = Chara.create(0, 0, "core.putit")
+ * local other = Chara.create(0, 0, "elona.putit")
  * chara:damage_hp(100, other)
  */
 void LuaCharacter::damage_hp_chara(

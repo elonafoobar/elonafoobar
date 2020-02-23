@@ -1021,7 +1021,7 @@ TalkResult talk_moyer_sell_paels_mom()
         snd("core.getgold1");
         earn_gold(cdata.player(), 50000);
         game_data.quest_flags.pael_and_her_mom = 1002;
-        rc = chara_find("core.lily");
+        rc = chara_find("elona.lily");
         cdata[rc].ai_calm = 3;
         cdata[rc].relationship = 0;
         cdata[rc].initial_position.x = 48;
@@ -2154,7 +2154,7 @@ TalkResult talk_npc()
     {
         if (game_data.quest_flags.pael_and_her_mom == 1000)
         {
-            rc = chara_find("core.lily");
+            rc = chara_find("elona.lily");
             if (rc != 0)
             {
                 if (cdata[rc].state() == Character::State::alive)

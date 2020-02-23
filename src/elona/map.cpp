@@ -1238,7 +1238,7 @@ static void _create_nefia(int index, int x, int y)
     ctrl_file(FileOperation::temp_dir_delete_area);
 
     auto& area = area_data[index];
-    const auto& map = the_mapdef_db.ensure("core.random_dungeon");
+    const auto& map = the_mapdef_db.ensure("elona.random_dungeon");
 
     area_generate_from_mapdef(area, map, game_data.destination_outer_map, x, y);
 

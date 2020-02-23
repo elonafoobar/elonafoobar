@@ -41,7 +41,7 @@ void LuaApiMagic::cast_self(
  * @tparam num effect_id the spell ID
  * @tparam num effect_power the power of the spell
  * @usage local caster = Chara.player()
- * local target = Chara.create(0, 0, "core.putit")
+ * local target = Chara.create(0, 0, "elona.putit")
  * Magic.cast(caster, target, 414, 100) -- Magic missile
  */
 void LuaApiMagic::cast(

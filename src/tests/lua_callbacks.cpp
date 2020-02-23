@@ -152,7 +152,7 @@ TEST_CASE(
 local Chara = Elona.game.Chara
 local Event = Elona.game.Event
 
-mod.store.global.townsperson = Chara.create(0, 0, "core.putit")
+mod.store.global.townsperson = Chara.create(0, 0, "elona.putit")
 mod.store.global.townsperson.role = 14
 mod.store.global.idx = mod.store.global.townsperson.index
 
@@ -328,9 +328,9 @@ TEST_CASE(
             "test_map_local_chara", R"(
 local Chara = Elona.game.Chara
 
-mod.store.global.chara = Chara.create(24, 24, "core.putit")
+mod.store.global.chara = Chara.create(24, 24, "elona.putit")
 mod.store.global.player = Chara.player()
-mod.store.global.ally = Chara.create(24, 24, "core.putit")
+mod.store.global.ally = Chara.create(24, 24, "elona.putit")
 mod.store.global.ally:recruit_as_ally()
 )"));
 

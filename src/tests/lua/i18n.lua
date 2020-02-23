@@ -28,13 +28,13 @@ i18n.add {
         lequal(I18N.get("test.hoge", "dood", 42), "You are nice.")
         lequal(I18N.get("test.piyo", "dood", 42), "She is nice.")
 
-        local chara = Chara.create(23, 23, "core.putit")
+        local chara = Chara.create(23, 23, "elona.putit")
         chara.basename = "putit"
         FOV.refresh();
         lequal(I18N.get("test.hello", chara), "Hello, the putit!")
         lequal(I18N.get("test.hello_base", chara), "Hello, putit!")
 
-        local item = Item.create(0, 1, "core.putitoro", 3)
+        local item = Item.create(0, 1, "elona.putitoro", 3)
         lequal(I18N.get("test.item", item), "Got 3 putitoros!")
         lequal(I18N.get("test.item_base", item), "Got putitoro!")
 end)

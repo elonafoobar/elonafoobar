@@ -18,7 +18,7 @@ data:add_multi("core.chara",
       {
          id = "loyter_portrait",
          legacy_id = 9996,
-         portrait = "core.loyter",
+         portrait = "elona.loyter",
       },
       {
          id = "male_portrait_only",

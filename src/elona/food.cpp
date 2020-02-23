@@ -343,7 +343,7 @@ void eatstatus(CurseState curse_state, int eater)
         }
         if (rnd(5) == 0)
         {
-            buff_add(cdata[eater], "core.luck", 100, 500 + rnd(500));
+            buff_add(cdata[eater], "elona.luck", 100, 500 + rnd(500));
         }
         heal_insanity(cdata[eater], 2);
     }

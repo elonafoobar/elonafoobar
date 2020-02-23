@@ -92,7 +92,7 @@ end
 -- If all of the properties of an item match that of an exclusion, the item is
 -- removed.
 shop_inventory.item_exclusions = {
-   { category = 52000, new_id = "core.bottle_of_water" },
+   { category = 52000, new_id = "elona.bottle_of_water" },
    { category = 57000, subcategory = 58500 } -- seeds
 }
 
@@ -151,7 +151,7 @@ shop_inventory.item_number_factors = {
    [64000] = number_from_rarity(80),
    [59000] = number_from_rarity(500),
 
-   ["core.small_gamble_chest"] = function() return Rand.rnd(8) end
+   ["elona.small_gamble_chest"] = function() return Rand.rnd(8) end
 }
 
 function shop_inventory.calc_max_item_number(item)
@@ -188,7 +188,7 @@ shop_inventory.cargo_amount_rates = {
 }
 
 function shop_inventory.cargo_amount_modifier(amount)
-   return amount * (100 + Chara.player():get_skill("core.negotiation").current_level * 10) // 100 + 1
+   return amount * (100 + Chara.player():get_skill("elona.negotiation").current_level * 10) // 100 + 1
 end
 
 -- Calculate adjusted amount of cargo items to be sold based on the
@@ -260,7 +260,7 @@ function shop_inventory.do_generate(shopkeeper, inv)
 
       -- Cargo traders have special behavior for calculating the sold
       -- item number.
-      if inv._id == "core.trader" then
+      if inv._id == "elona.trader" then
          local number = shop_inventory.calc_cargo_amount(item)
          if number == nil then
             item:remove()

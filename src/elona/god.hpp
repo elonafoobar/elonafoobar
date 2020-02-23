@@ -18,13 +18,13 @@ namespace core_god
 {
 
 constexpr const char* eyth = ""; // 0
-constexpr const char* mani = "core.mani"; // 1
-constexpr const char* lulwy = "core.lulwy"; // 2
-constexpr const char* itzpalt = "core.itzpalt"; // 3
-constexpr const char* ehekatl = "core.ehekatl"; // 4
-constexpr const char* opatos = "core.opatos"; // 5
-constexpr const char* jure = "core.jure"; // 6
-constexpr const char* kumiromi = "core.kumiromi"; // 7
+constexpr const char* mani = "elona.mani"; // 1
+constexpr const char* lulwy = "elona.lulwy"; // 2
+constexpr const char* itzpalt = "elona.itzpalt"; // 3
+constexpr const char* ehekatl = "elona.ehekatl"; // 4
+constexpr const char* opatos = "elona.opatos"; // 5
+constexpr const char* jure = "elona.jure"; // 6
+constexpr const char* kumiromi = "elona.kumiromi"; // 7
 
 
 inline GodId int2godid(int n)

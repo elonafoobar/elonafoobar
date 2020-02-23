@@ -63,13 +63,13 @@ TEST_CASE("test registering character", "[Lua: Data]")
     REQUIRE(data->item_type == 2);
     REQUIRE(data->filter == "/slime/ether/");
     REQUIRE(data->level == 2);
-    REQUIRE(data->portrait_male == "core.zeome");
-    REQUIRE(data->portrait_female == "core.zeome");
+    REQUIRE(data->portrait_male == "elona.zeome");
+    REQUIRE(data->portrait_female == "elona.zeome");
     REQUIRE(data->image == 430);
     REQUIRE(data->female_image == 431);
     REQUIRE(data->male_image == 432);
-    REQUIRE(data->race_id == "core.slime");
-    REQUIRE(data->class_id == "core.wizard");
+    REQUIRE(data->race_id == "elona.slime");
+    REQUIRE(data->class_id == "elona.wizard");
 
     {
         std::vector<int> expected = {417, 434, 415, 454};
@@ -81,7 +81,7 @@ TEST_CASE("test registering character", "[Lua: Data]")
     }
     {
         std::unordered_map<data::InstanceId, int> expected = {
-            {"core.mind", 500}};
+            {"elona.mind", 500}};
         REQUIRE(data->resistances == expected);
     }
 
@@ -119,8 +119,8 @@ TEST_CASE("test character's portrait", "[Lua: Data]")
     }
     {
         auto data = db["chara_portrait.loyter_portrait"];
-        REQUIRE(data->portrait_male == "core.loyter");
-        REQUIRE(data->portrait_female == "core.loyter");
+        REQUIRE(data->portrait_male == "elona.loyter");
+        REQUIRE(data->portrait_female == "elona.loyter");
     }
     {
         auto data = db["chara_portrait.male_portrait_only"];

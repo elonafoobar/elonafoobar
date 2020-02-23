@@ -182,11 +182,11 @@ void buff_add(
                 turns = turns / 5 + 1;
             }
         }
-        if (chara.quality >= Quality::miracle && id == "core.death_word")
+        if (chara.quality >= Quality::miracle && id == "elona.death_word")
         {
             resists = true;
         }
-        if (const auto& holy_veil = buff_find(chara, "core.holy_veil"))
+        if (const auto& holy_veil = buff_find(chara, "elona.holy_veil"))
         {
             if (holy_veil->power + 50 > power * 5 / 2 ||
                 rnd_capped(holy_veil->power + 50) > rnd_capped(power + 1))

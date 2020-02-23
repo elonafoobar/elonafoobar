@@ -526,7 +526,7 @@ void gain_level(Character& cc)
     }
     cc.skill_bonus += p;
     cc.total_skill_bonus += p;
-    if (cdatan(2, cc.index) == u8"core.mutant"s ||
+    if (cdatan(2, cc.index) == u8"elona.mutant"s ||
         (cc.index == 0 && trait(0) == 1))
     {
         if (cc.level < 37)

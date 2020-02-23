@@ -255,7 +255,7 @@ int damage_hp(
         if (victim.hp - dmg_at_m141 <= 0)
         {
             if (clamp(
-                    25 + buff_find(victim, "core.contingency")->power / 17,
+                    25 + buff_find(victim, "elona.contingency")->power / 17,
                     25,
                     80) >= rnd(100))
             {

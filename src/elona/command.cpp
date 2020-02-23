@@ -2360,7 +2360,7 @@ TurnResult do_use_command()
         snd("core.pray1");
         txt(i18n::s.get("core.action.use.statue.ehekatl"),
             Message::color{ColorIndex::orange});
-        buff_add(cdata[tc], "core.luck", 77, 2500);
+        buff_add(cdata[tc], "elona.luck", 77, 2500);
         break;
     case 27:
         txt(i18n::s.get("core.action.use.statue.activate", inv[ci]));
@@ -2777,7 +2777,7 @@ TurnResult do_open_command(bool play_sound)
                     if (cdata[game_data.fire_giant].state() ==
                         Character::State::alive)
                     {
-                        tc = chara_find("core.moyer");
+                        tc = chara_find("elona.moyer");
                         if (tc != 0 &&
                             cdata[tc].state() == Character::State::alive)
                         {

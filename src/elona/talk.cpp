@@ -239,8 +239,9 @@ TalkResult talk_game_begin()
         cdata.player().blind = 100;
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 0);
-        tc = tc * (chara_find("core.larnneire") == 0) +
-            (chara_find("core.larnneire") != 0) * chara_find("core.larnneire");
+        tc = tc * (chara_find("elona.larnneire") == 0) +
+            (chara_find("elona.larnneire") != 0) *
+                chara_find("elona.larnneire");
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -255,8 +256,8 @@ TalkResult talk_game_begin()
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 1);
-        tc = tc * (chara_find("core.lomias") == 0) +
-            (chara_find("core.lomias") != 0) * chara_find("core.lomias");
+        tc = tc * (chara_find("elona.lomias") == 0) +
+            (chara_find("elona.lomias") != 0) * chara_find("elona.lomias");
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -285,8 +286,9 @@ TalkResult talk_game_begin()
         await(500);
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 2);
-        tc = tc * (chara_find("core.larnneire") == 0) +
-            (chara_find("core.larnneire") != 0) * chara_find("core.larnneire");
+        tc = tc * (chara_find("elona.larnneire") == 0) +
+            (chara_find("elona.larnneire") != 0) *
+                chara_find("elona.larnneire");
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -301,8 +303,8 @@ TalkResult talk_game_begin()
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 3);
-        tc = tc * (chara_find("core.lomias") == 0) +
-            (chara_find("core.lomias") != 0) * chara_find("core.lomias");
+        tc = tc * (chara_find("elona.lomias") == 0) +
+            (chara_find("elona.lomias") != 0) * chara_find("elona.lomias");
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -317,8 +319,9 @@ TalkResult talk_game_begin()
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 4);
-        tc = tc * (chara_find("core.larnneire") == 0) +
-            (chara_find("core.larnneire") != 0) * chara_find("core.larnneire");
+        tc = tc * (chara_find("elona.larnneire") == 0) +
+            (chara_find("elona.larnneire") != 0) *
+                chara_find("elona.larnneire");
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -333,8 +336,8 @@ TalkResult talk_game_begin()
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 5);
-        tc = tc * (chara_find("core.lomias") == 0) +
-            (chara_find("core.lomias") != 0) * chara_find("core.lomias");
+        tc = tc * (chara_find("elona.lomias") == 0) +
+            (chara_find("elona.lomias") != 0) * chara_find("elona.lomias");
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -349,8 +352,9 @@ TalkResult talk_game_begin()
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 6);
-        tc = tc * (chara_find("core.larnneire") == 0) +
-            (chara_find("core.larnneire") != 0) * chara_find("core.larnneire");
+        tc = tc * (chara_find("elona.larnneire") == 0) +
+            (chara_find("elona.larnneire") != 0) *
+                chara_find("elona.larnneire");
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -377,8 +381,8 @@ TalkResult talk_game_begin()
     txt(i18n::s.get("core.talk.unique.lomias.begin.regain_consciousness"));
     listmax = 0;
     buff = i18n::s.get_enum("core.talk.unique.lomias.begin", 0);
-    tc = tc * (chara_find("core.lomias") == 0) +
-        (chara_find("core.lomias") != 0) * chara_find("core.lomias");
+    tc = tc * (chara_find("elona.lomias") == 0) +
+        (chara_find("elona.lomias") != 0) * chara_find("elona.lomias");
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -423,8 +427,8 @@ TalkResult talk_game_begin()
     }
     listmax = 0;
     buff = i18n::s.get_enum("core.talk.unique.lomias.begin", 3);
-    tc = tc * (chara_find("core.larnneire") == 0) +
-        (chara_find("core.larnneire") != 0) * chara_find("core.larnneire");
+    tc = tc * (chara_find("elona.larnneire") == 0) +
+        (chara_find("elona.larnneire") != 0) * chara_find("elona.larnneire");
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -439,8 +443,8 @@ TalkResult talk_game_begin()
     }
     listmax = 0;
     buff = i18n::s.get_enum("core.talk.unique.lomias.begin", 4, cdatan(0, 0));
-    tc = tc * (chara_find("core.lomias") == 0) +
-        (chara_find("core.lomias") != 0) * chara_find("core.lomias");
+    tc = tc * (chara_find("elona.lomias") == 0) +
+        (chara_find("elona.lomias") != 0) * chara_find("elona.lomias");
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;

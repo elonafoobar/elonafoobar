@@ -229,7 +229,7 @@ TEST_CASE("Test invalid references to handles from Lua side", "[Lua: Handles]")
         REQUIRE_NOTHROW(
             mod_mgr.load_testing_mod_from_script("test_invalid_chara", R"(
 local Chara = Elona.game.Chara
-local chara = Chara.create(0, 0, "core.putit")
+local chara = Chara.create(0, 0, "elona.putit")
 mod.store.global.idx = chara.index
 mod.store.global.charas = {[0]=chara}
 )"));
@@ -246,7 +246,7 @@ mod.store.global.charas = {[0]=chara}
         REQUIRE_NOTHROW(
             mod_mgr.load_testing_mod_from_script("test_invalid_item", R"(
 local Item = Elona.game.Item
-local item = Item.create(0, 0, "core.putitoro", 3)
+local item = Item.create(0, 0, "elona.putitoro", 3)
 mod.store.global.idx = item.index
 mod.store.global.items = {[0]=items}
 )"));
@@ -680,13 +680,13 @@ TEST_CASE("Test validity check of lua reference userdata", "[Lua: Handles]")
 
     REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script("test_lua_ref", R"(
 local Chara = Elona.game.Chara
-local chara = Chara.create(0, 0, "core.putit")
-local skill = chara:get_skill("core.attribute_strength")
+local chara = Chara.create(0, 0, "elona.putit")
+local skill = chara:get_skill("elona.attribute_strength")
 assert(skill.original_level > 0)
 
 local old_index = chara.index
 chara:damage_hp(chara.max_hp + 1)
-local chara = Chara.create(0, 0, "core.putit")
+local chara = Chara.create(0, 0, "elona.putit")
 assert(chara.index == old_index)
 
 assert(skill.original_level == 0)

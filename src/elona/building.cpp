@@ -1390,7 +1390,7 @@ void update_ranch()
             case 0:
                 // Egg
                 if (rnd(60) == 0 ||
-                    (cdatan(2, chara.index) == "core.chicken" && rnd(20) == 0))
+                    (cdatan(2, chara.index) == "elona.chicken" && rnd(20) == 0))
                 {
                     ++egg_or_milk_count;
                     if (const auto item = itemcreate_extra_inv(573, x, y, 0))
@@ -1405,7 +1405,7 @@ void update_ranch()
             case 1:
                 // Milk
                 if (rnd(60) == 0 ||
-                    (cdatan(2, chara.index) == "core.sheep" && rnd(20) == 0))
+                    (cdatan(2, chara.index) == "elona.sheep" && rnd(20) == 0))
                 {
                     ++egg_or_milk_count;
                     if (const auto item = itemcreate_extra_inv(574, x, y, 0))

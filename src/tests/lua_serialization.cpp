@@ -240,10 +240,10 @@ TEST_CASE("Test preservation of handles across reloads", "[Lua: Serialization]")
 local Chara = Elona.game.Chara
 local Item = Elona.game.Item
 
-mod.store.global.chara = Chara.create(4, 8, "core.putit")
-mod.store.global.item = Item.create(4, 8, "core.putitoro", 0)
-mod.store.map.chara = Chara.create(4, 8, "core.putit")
-mod.store.map.item = Item.create(4, 8, "core.putitoro", 0)
+mod.store.global.chara = Chara.create(4, 8, "elona.putit")
+mod.store.global.item = Item.create(4, 8, "elona.putitoro", 0)
+mod.store.map.chara = Chara.create(4, 8, "elona.putit")
+mod.store.map.item = Item.create(4, 8, "elona.putitoro", 0)
         )"));
 
     auto mod =
@@ -306,8 +306,8 @@ TEST_CASE(
         "test_serial_handle_map_change", R"(
 local Chara = Elona.game.Chara
 
-mod.store.global.chara = Chara.create(4, 8, "core.putit")
-mod.store.global.chara_local = Chara.create(4, 8, "core.putit")
+mod.store.global.chara = Chara.create(4, 8, "elona.putit")
+mod.store.global.chara_local = Chara.create(4, 8, "elona.putit")
 
 mod.store.global.chara:recruit_as_ally()
 mod.store.global.it = 0
@@ -364,8 +364,8 @@ TEST_CASE(
 local Chara = Elona.game.Chara
 local Item = Elona.game.Item
 
-mod.store.map.chara = Chara.create(4, 8, "core.putit")
-mod.store.map.item = Item.create(4, 8, "core.putitoro", 0)
+mod.store.map.chara = Chara.create(4, 8, "elona.putit")
+mod.store.map.item = Item.create(4, 8, "elona.putitoro", 0)
 )"));
 
     auto mod = elona::lua::lua->get_mod_manager().get_mod(
@@ -467,7 +467,7 @@ TEST_CASE("Test serialization of single handle", "[Lua: Serialization]")
         elona::lua::lua->get_mod_manager().run_in_mod("test_serial_handle", R"(
 local Chara = Elona.game.Chara
 
-mod.store.global.cute_creature = Chara.create(4, 8, "core.putit")
+mod.store.global.cute_creature = Chara.create(4, 8, "elona.putit")
 assert(mod.store.global.cute_creature.__handle == true)
 assert(mod.store.global.cute_creature.position.x == 4)
 )"));
