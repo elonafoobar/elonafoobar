@@ -143,6 +143,10 @@ set(ELONA_SOURCES
   keybind/keybind_serializer.cpp
   keybind/macro_action_queue.cpp
 
+  mapeditor/command.cpp
+  mapeditor/design_mode.cpp
+  mapeditor/undo_history.cpp
+
   pic_loader/pic_loader.cpp
   pic_loader/tinted_buffers.cpp
 
