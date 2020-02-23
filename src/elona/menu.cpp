@@ -472,14 +472,14 @@ static TurnResult _show_skill_spell_menu(size_t menu_index)
         return TurnResult::pc_turn_user_error;
     }
 
-    if (result.value->type() == typeid(ui::UIMenuSkillsResult))
+    if (std::holds_alternative<ui::UIMenuSkillsResult>(*result.value))
     {
-        efid = boost::get<ui::UIMenuSkillsResult>(*result.value).effect_id;
+        efid = std::get<ui::UIMenuSkillsResult>(*result.value).effect_id;
         return do_use_magic();
     }
     else
     {
-        efid = boost::get<ui::UIMenuSpellsResult>(*result.value).effect_id;
+        efid = std::get<ui::UIMenuSpellsResult>(*result.value).effect_id;
         return do_cast_command();
     }
 }
@@ -563,7 +563,7 @@ std::string make_spell_description(int skill_id)
                       "ability",
                       the_ability_db.get_id_from_legacy(skill_id)->get(),
                       "description")
-                  .get_value_or("");
+                  .value_or("");
 
     return result;
 }
@@ -635,7 +635,7 @@ optional<int> menu_character_sheet_trainer(bool is_training)
         return none;
     }
 
-    auto sheet_result = boost::get<ui::CharacterSheetResult>(*result.value);
+    auto sheet_result = std::get<ui::CharacterSheetResult>(*result.value);
     return sheet_result.trainer_skill_id;
 }
 
@@ -657,7 +657,7 @@ MenuResult menu_feats_character_making()
     }
     else if (result.value)
     {
-        auto FeatsResult = boost::get<ui::FeatsResult>(*result.value);
+        auto FeatsResult = std::get<ui::FeatsResult>(*result.value);
 
         if (FeatsResult == ui::FeatsResult::pressed_f1)
         {

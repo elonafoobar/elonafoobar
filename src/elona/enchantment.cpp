@@ -270,7 +270,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                             "ability",
                             the_ability_db.get_id_from_legacy(sid)->get(),
                             "enchantment_description")
-                        .get_value_or("");
+                        .value_or("");
                 if (s == ""s)
                 {
                     s = i18n::s.get(
@@ -302,7 +302,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                             "ability",
                             the_ability_db.get_id_from_legacy(sid)->get(),
                             "enchantment_description")
-                        .get_value_or("");
+                        .value_or("");
                 if (s == ""s)
                 {
                     s = i18n::s.get(
@@ -344,7 +344,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                         "ability",
                         the_ability_db.get_id_from_legacy(sid)->get(),
                         "enchantment_description")
-                    .get_value_or("");
+                    .value_or("");
             if (s == ""s)
             {
                 s = i18n::s.get(

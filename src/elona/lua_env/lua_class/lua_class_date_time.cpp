@@ -3,6 +3,12 @@
 #include "../../gdata.hpp"
 #include "../../map.hpp"
 
+
+
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::DateTime)
+
+
+
 namespace elona
 {
 namespace lua
@@ -10,8 +16,8 @@ namespace lua
 
 void LuaDateTime::bind(sol::state& lua)
 {
-    auto LuaDateTime = lua.create_simple_usertype<DateTime>();
-    LuaDateTime.set("new", sol::no_constructor);
+    auto LuaDateTime =
+        lua.new_usertype<DateTime>("LuaDateTime", sol::no_constructor);
 
     // Properties
 
@@ -55,9 +61,7 @@ void LuaDateTime::bind(sol::state& lua)
      */
     LuaDateTime.set("hours", &DateTime::hours);
 
-    LuaDateTime.set("__tostring", &DateTime::to_string);
-
-    lua.set_usertype("LuaDateTime", LuaDateTime);
+    LuaDateTime.set(sol::meta_function::to_string, &DateTime::to_string);
 }
 
 } // namespace lua

@@ -3,7 +3,7 @@
 #define PUTIT_PROTO_ID int2charaid(3)
 #define PUTITORO_PROTO_ID int2itemid(792)
 
-// macros for boost::optional results
+// macros for std::optional results
 #define REQUIRE_SOME(x) REQUIRE(static_cast<bool>(x) == true)
 #define REQUIRE_NONE(x) REQUIRE(static_cast<bool>(x) == false)
 #define REQUIRE_IN_MOD(mod_id, assertion) \

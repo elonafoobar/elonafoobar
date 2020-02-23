@@ -7,6 +7,12 @@
 #include "../../lua_env/enums/enums.hpp"
 #include "../data_manager.hpp"
 
+
+
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Item)
+
+
+
 namespace elona
 {
 namespace lua
@@ -45,8 +51,7 @@ std::string LuaItem::metamethod_tostring(const Item& self)
 
 void LuaItem::bind(sol::state& lua)
 {
-    auto LuaItem = lua.create_simple_usertype<Item>();
-    LuaItem.set("new", sol::no_constructor);
+    auto LuaItem = lua.new_usertype<Item>("LuaItem", sol::no_constructor);
     LuaItem.set("lua_type", &Item::lua_type);
 
     // Properties
@@ -227,10 +232,7 @@ void LuaItem::bind(sol::state& lua)
     LuaItem.set("remove", &LuaItem::remove);
     LuaItem.set("change_material", &LuaItem::change_material);
 
-    LuaItem.set("__tostring", &LuaItem::metamethod_tostring);
-
-    auto key = Item::lua_type();
-    lua.set_usertype(key, LuaItem);
+    LuaItem.set(sol::meta_function::to_string, &LuaItem::metamethod_tostring);
 }
 
 } // namespace lua

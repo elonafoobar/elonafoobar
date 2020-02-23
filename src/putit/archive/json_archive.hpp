@@ -67,7 +67,7 @@ private:
 
 
 
-        template <typename E, PUTIT_ENABLE_IF(std::is_enum<E>::value)>
+        template <typename E, PUTIT_ENABLE_IF(std::is_enum_v<E>)>
         void operator()(E& data, const char* field_name = nullptr)
         {
             _obj[field_name] = static_cast<std::underlying_type_t<E>>(data);
@@ -75,7 +75,7 @@ private:
 
 
 
-        template <typename T, PUTIT_ENABLE_IF(!std::is_enum<T>::value)>
+        template <typename T, PUTIT_ENABLE_IF(!std::is_enum_v<T>)>
         void operator()(T& data, const char* field_name = nullptr)
         {
             JsonOArchiveInternal ar_;
@@ -100,8 +100,7 @@ private:
 
         template <
             typename T,
-            PUTIT_ENABLE_IF(
-                !std::is_class<T>::value && !std::is_enum<T>::value)>
+            PUTIT_ENABLE_IF(!std::is_class<T>::value && !std::is_enum_v<T>)>
         void operator()(std::vector<T>& data, const char* field_name = nullptr)
         {
             json5::value::array_type array;
@@ -113,7 +112,7 @@ private:
         }
 
 
-        template <typename E, PUTIT_ENABLE_IF(std::is_enum<E>::value)>
+        template <typename E, PUTIT_ENABLE_IF(std::is_enum_v<E>)>
         void operator()(std::vector<E>& data, const char* field_name = nullptr)
         {
             json5::value::array_type array;
@@ -210,7 +209,7 @@ private:
 
 
 
-template <typename T, PUTIT_ENABLE_IF(!std::is_enum<T>::value)>
+template <typename T, PUTIT_ENABLE_IF(!std::is_enum_v<T>)>
 void serialize(JsonOArchive& ar, T& data)
 {
     auto ar_ = ar._get_internal_archive();

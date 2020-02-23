@@ -713,13 +713,13 @@ int render_one_status_ailment(
 {
     // Check signatures.
     static_assert(
-        std::is_same<decltype(do_render(value)), bool>::value,
+        std::is_same_v<decltype(do_render(value)), bool>,
         "F1 signature: bool do_render(int value)");
     static_assert(
-        std::is_same<decltype(get_text(value)), std::string>::value,
+        std::is_same_v<decltype(get_text(value)), std::string>,
         "F2 signature: std::string get_text(int value)");
     static_assert(
-        std::is_same<decltype(get_color(value)), snail::Color>::value,
+        std::is_same_v<decltype(get_color(value)), snail::Color>,
         "F3 signature: snail::Color get_color(int value)");
 
     if (!do_render(value))

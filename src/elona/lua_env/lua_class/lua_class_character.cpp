@@ -16,6 +16,12 @@
 #include "../data_manager.hpp"
 #include "lua_class_ability.hpp"
 
+
+
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Character)
+
+
+
 namespace elona
 {
 namespace lua
@@ -541,8 +547,8 @@ std::string LuaCharacter::metamethod_tostring(const Character& self)
 
 void LuaCharacter::bind(sol::state& lua)
 {
-    auto LuaCharacter = lua.create_simple_usertype<Character>();
-    LuaCharacter.set("new", sol::no_constructor);
+    auto LuaCharacter =
+        lua.new_usertype<Character>("LuaCharacter", sol::no_constructor);
     LuaCharacter.set("lua_type", &Character::lua_type);
 
     // Properties
@@ -890,9 +896,6 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set("get_ailment", &LuaCharacter::get_ailment);
 
     LuaCharacter.set("__tostring", &LuaCharacter::metamethod_tostring);
-
-    auto key = Character::lua_type();
-    lua.set_usertype(key, LuaCharacter);
 } // namespace lua
 
 } // namespace lua

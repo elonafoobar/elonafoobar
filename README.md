@@ -15,7 +15,7 @@
 
 * `make`
 * CMake 3.2 or later
-* C++ compiler which supports C++14
+* C++ compiler which supports C++17
 * Boost 1.69
 * Lua 5.3
 * SDL2, SDL2_image, SDL2_ttf and SDL2_mixer

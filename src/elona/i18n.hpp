@@ -516,7 +516,7 @@ public:
         storage.clear();
     }
 
-    optional<const LocalizedText&> find_translation(const I18NKey& key)
+    optional_ref<const LocalizedText> find_translation(const I18NKey& key)
     {
         // In the unlikely event that a single locale key refers to
         // both a single string and a list, the string will be chosen.
@@ -541,7 +541,7 @@ public:
     }
 
     template <typename Head, typename... Tail>
-    ELONA_NODISCARD_ATTR optional<std::string>
+    [[nodiscard]] optional<std::string>
     get_optional(const I18NKey& key, Head const& head, Tail&&... tail)
     {
         const auto& found = find_translation(key);
@@ -554,7 +554,7 @@ public:
     }
 
     template <typename... Tail>
-    ELONA_NODISCARD_ATTR optional<std::string> get_optional(
+    [[nodiscard]] optional<std::string> get_optional(
         const I18NKey& key,
         Tail&&... tail)
     {
@@ -568,7 +568,7 @@ public:
     }
 
     template <typename Head, typename... Tail>
-    ELONA_NODISCARD_ATTR std::string
+    [[nodiscard]] std::string
     get(const I18NKey& key, Head const& head, Tail&&... tail)
     {
         if (auto text = get_optional(key, head, std::forward<Tail>(tail)...))
@@ -587,7 +587,7 @@ public:
     }
 
     template <typename... Tail>
-    ELONA_NODISCARD_ATTR std::string get(const I18NKey& key, Tail&&... tail)
+    [[nodiscard]] std::string get(const I18NKey& key, Tail&&... tail)
     {
         if (auto text = get_optional(key, std::forward<Tail>(tail)...))
         {
@@ -608,7 +608,7 @@ public:
     // Convenience methods for cases like "core.element._<enum index>.name"
 
     template <typename Head, typename... Tail>
-    ELONA_NODISCARD_ATTR std::string
+    [[nodiscard]] std::string
     get_enum(const I18NKey& key, int index, Head const& head, Tail&&... tail)
     {
         return get(
@@ -618,7 +618,7 @@ public:
     }
 
     template <typename... Tail>
-    ELONA_NODISCARD_ATTR std::string
+    [[nodiscard]] std::string
     get_enum(const I18NKey& key, int index, Tail&&... tail)
     {
         return get(
@@ -626,7 +626,7 @@ public:
     }
 
     template <typename Head, typename... Tail>
-    ELONA_NODISCARD_ATTR optional<std::string> get_enum_optional(
+    [[nodiscard]] optional<std::string> get_enum_optional(
         const I18NKey& key,
         int index,
         Head const& head,
@@ -639,7 +639,7 @@ public:
     }
 
     template <typename... Tail>
-    ELONA_NODISCARD_ATTR optional<std::string>
+    [[nodiscard]] optional<std::string>
     get_enum_optional(const I18NKey& key, int index, Tail&&... tail)
     {
         return get_optional(
@@ -647,7 +647,7 @@ public:
     }
 
     template <typename Head, typename... Tail>
-    ELONA_NODISCARD_ATTR std::string get_enum_property(
+    [[nodiscard]] std::string get_enum_property(
         const std::string& key_head,
         int index,
         const std::string& key_tail,
@@ -661,7 +661,7 @@ public:
     }
 
     template <typename... Tail>
-    ELONA_NODISCARD_ATTR std::string get_enum_property(
+    [[nodiscard]] std::string get_enum_property(
         const std::string& key_head,
         const std::string& key_tail,
         int index,
@@ -673,7 +673,7 @@ public:
     }
 
     template <typename Head, typename... Tail>
-    ELONA_NODISCARD_ATTR optional<std::string> get_enum_property_opt(
+    [[nodiscard]] optional<std::string> get_enum_property_opt(
         const std::string& key_head,
         const std::string& key_tail,
         int index,
@@ -687,7 +687,7 @@ public:
     }
 
     template <typename... Tail>
-    ELONA_NODISCARD_ATTR optional<std::string> get_enum_property_opt(
+    [[nodiscard]] optional<std::string> get_enum_property_opt(
         const std::string& key_head,
         const std::string& key_tail,
         int index,
@@ -702,7 +702,7 @@ public:
     // returns 1-size list which contains the value. If `key` does not exist,
     // returns empty list.
     template <typename... Args>
-    ELONA_NODISCARD_ATTR std::vector<std::string> get_list(
+    [[nodiscard]] std::vector<std::string> get_list(
         const I18NKey& key,
         Args&&... args)
     {
@@ -738,8 +738,7 @@ public:
     // i18n::s.get_m("class", "modname.classname", "name")
     // // The above call is equivalent to:
     // i18n::s.get("modname.class.classname.name")
-    ELONA_NODISCARD_ATTR
-    std::string get_m(
+    [[nodiscard]] std::string get_m(
         const I18NKey& data_type_key,
         const I18NKey& data_key,
         const I18NKey& property_name)
@@ -756,8 +755,7 @@ public:
     // i18n::s.get_m_optional("class", "modname.classname", "name")
     // // The above call is equivalent to:
     // i18n::s.get_optional("modname.class.classname.name")
-    ELONA_NODISCARD_ATTR
-    optional<std::string> get_m_optional(
+    [[nodiscard]] optional<std::string> get_m_optional(
         const I18NKey& data_type_key,
         const I18NKey& data_key,
         const I18NKey& property_name)

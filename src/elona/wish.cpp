@@ -67,7 +67,7 @@ public:
                 return a.similarity < b.similarity;
             });
         return itr == std::end(candidates) ? none
-                                           : boost::make_optional(itr->value);
+                                           : std::make_optional(itr->value);
     }
 
     T get_force() const
@@ -662,7 +662,7 @@ bool wish_for_item(const std::string& input)
         }
         if (debug::voldemort && curse_state)
         {
-            item->curse_state = curse_state.get();
+            item->curse_state = curse_state.value();
         }
 
         item_identify(*item, IdentifyState::completely);

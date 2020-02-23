@@ -7,6 +7,12 @@
 #include "../../position.hpp"
 #include "../../quest.hpp"
 
+
+
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::lua::MapGenerator)
+
+
+
 namespace elona
 {
 namespace lua
@@ -217,7 +223,7 @@ void LuaMapGenerator::initialize_world_map()
 
 void LuaMapGenerator::bind(sol::state& lua)
 {
-    auto LuaMapGenerator = lua.create_simple_usertype<MapGenerator>();
+    auto LuaMapGenerator = lua.new_usertype<MapGenerator>("LuaMapGenerator");
 
     LuaMapGenerator.set(
         "stood_world_map_tile", &LuaMapGenerator::stood_world_map_tile);
@@ -247,8 +253,6 @@ void LuaMapGenerator::bind(sol::state& lua)
         "mark_quest_targets", &LuaMapGenerator::mark_quest_targets);
     LuaMapGenerator.set(
         "initialize_world_map", &LuaMapGenerator::initialize_world_map);
-
-    lua.set_usertype("LuaMapGenerator", LuaMapGenerator);
 }
 
 } // namespace lua

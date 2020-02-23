@@ -138,7 +138,7 @@ MainMenuResult character_making_role_attributes(bool advanced_to_next_menu)
         cmlock(8) = 2;
     }
 
-    auto result =
+    const auto result =
         ui::UIMenuCharamakeAttributes(cmrace(0), cmclass, cmstats, cmlock)
             .show();
 
@@ -158,7 +158,7 @@ MainMenuResult character_making_role_attributes(bool advanced_to_next_menu)
         // assign to one will assign to the 0th element, as in HSP.
         for (size_t i = 0; i < stats.size(); i++)
         {
-            cmstats(i) = stats(i);
+            cmstats(i) = stats.at(i);
         }
 
         return MainMenuResult::character_making_select_feats;
@@ -586,7 +586,7 @@ void draw_race_or_class_info(const std::string& description)
                            "ability",
                            the_ability_db.get_id_from_legacy(cnt)->get(),
                            "description")
-                       .get_value_or("");
+                       .value_or("");
             if (en)
             {
                 if (strlen_u(s(1)) > 45)

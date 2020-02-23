@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <sstream>
+#include <string>
 
 
 
@@ -27,6 +29,15 @@ struct Position
     }
 
 
+
+    std::string to_string() const
+    {
+        std::stringstream ss;
+        ss << '(' << x << ", " << y << ')';
+        return ss.str();
+    }
+
+
 #include "_putit/position.cpp"
 };
 
@@ -45,10 +56,8 @@ inline bool operator!=(const Position& lhs, const Position& rhs)
 
 inline std::ostream& operator<<(std::ostream& out, const Position& pos)
 {
-    out << '(' << pos.x << ", " << pos.y << ')';
+    out << pos.to_string();
     return out;
 }
-
-
 
 } // namespace elona

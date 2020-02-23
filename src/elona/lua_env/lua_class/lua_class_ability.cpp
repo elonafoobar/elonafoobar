@@ -2,6 +2,12 @@
 
 #include "../../ability.hpp"
 
+
+
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::lua::LuaAbility)
+
+
+
 namespace elona
 {
 namespace lua
@@ -35,8 +41,8 @@ namespace lua
 
 void LuaAbility::bind(sol::state& lua)
 {
-    auto LuaAbility = lua.create_simple_usertype<lua::LuaAbility>();
-    LuaAbility.set("new", sol::no_constructor);
+    auto LuaAbility =
+        lua.new_usertype<lua::LuaAbility>("LuaAbility", sol::no_constructor);
 
     /**
      * @luadoc experience field num
@@ -68,8 +74,6 @@ void LuaAbility::bind(sol::state& lua)
      * [RW] The skill's potential.
      */
     LuaAbility.set("potential", ELONA_LUA_SKILL_PROPERTY(potential));
-
-    lua.set_usertype("LuaAbility", LuaAbility);
 }
 
 #undef ELONA_LUA_SKILL_PROPERTY

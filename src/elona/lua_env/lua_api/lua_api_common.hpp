@@ -67,3 +67,12 @@ using LuaItemHandle = sol::table;
             } \
             d.field = data->legacy_id; \
         })
+
+#define LUA_API_OPTOUT_SOL_AUTOMAGIC(T) \
+    namespace sol \
+    { \
+    template <> \
+    struct is_automagical<T> : std::false_type \
+    { \
+    }; \
+    }
