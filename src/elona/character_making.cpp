@@ -1,7 +1,5 @@
 #include "character_making.hpp"
 
-#include <charconv>
-
 #include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
@@ -33,32 +31,6 @@ elona_vector1<std::string> cmrace;
 std::string cmclass;
 elona_vector1<int> cmstats;
 elona_vector1<int> cmlock;
-
-
-
-fs::path make_unique_path()
-{
-    std::random_device seed_generator;
-    std::default_random_engine rng{seed_generator()};
-    boostrandom::uniform_int_distribution<uint64_t> dist{
-        uint64_t{0}, std::numeric_limits<uint64_t>::max()};
-    const auto n = dist(rng);
-
-    // 01234567890123456789
-    // 0123-4567-89ab-cdef
-    char buffer[20];
-    std::to_chars(buffer + 0, buffer + 4, n, 16);
-    buffer[4] = '-';
-    std::to_chars(buffer + 5, buffer + 9, n, 16);
-    buffer[9] = '-';
-    std::to_chars(buffer + 10, buffer + 14, n, 16);
-    buffer[14] = '-';
-    std::to_chars(buffer + 15, buffer + 19, n, 16);
-    buffer[19] = '\0';
-
-    return fs::u8path(buffer);
-}
-
 } // namespace
 
 
@@ -410,7 +382,7 @@ MainMenuResult character_making_final_phase()
             cmname = random_name();
         }
 
-        playerid = make_unique_path().string();
+        playerid = fs::unique_path().string();
 
         if (_validate_save_path(playerid))
         {

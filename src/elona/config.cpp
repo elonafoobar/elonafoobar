@@ -583,7 +583,7 @@ void config_load_all_schema()
             const auto schema_path = *mod_manifest.path / "config-schema.lua";
             if (fs::exists(schema_path))
             {
-                std::ifstream in{schema_path};
+                std::ifstream in{schema_path.native()};
                 lua::lua->get_config_manager().load_schema(
                     in,
                     filepathutil::to_utf8_path(schema_path),
@@ -606,7 +606,7 @@ void config_load_schema(const std::string& config_schema, SharedId mod_id)
 void config_load_options()
 {
     const auto path = filesystem::files::profile_local_config();
-    std::ifstream in{path};
+    std::ifstream in{path.native()};
     load_options_internal(in, filepathutil::to_utf8_path(path));
 }
 

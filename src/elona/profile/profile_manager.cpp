@@ -52,7 +52,7 @@ void ProfileManager::create(const ProfileId& new_profile_id)
     fs::create_directory(script_dir);
 
     auto console_script = script_dir / "console.lua";
-    std::ofstream out{console_script};
+    std::ofstream out(console_script.native());
     out << "-- Code here will be executed in the console on startup.\n";
     out.close();
 }

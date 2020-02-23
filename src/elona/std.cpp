@@ -146,7 +146,7 @@ void bload(const fs::path& filename, std::string& data, int size, int)
     {
         size = data.size();
     }
-    std::ifstream in{filename, std::ios::binary};
+    std::ifstream in{filename.native(), std::ios::binary};
     if (!in)
     {
         throw std::runtime_error(
@@ -164,7 +164,7 @@ void bload(const fs::path& filename, std::string& data, int size, int)
 
 void bsave(const fs::path& filename, const std::string& data)
 {
-    std::ofstream out{filename, std::ios::binary};
+    std::ofstream out{filename.native(), std::ios::binary};
     if (!out)
     {
         throw std::runtime_error(

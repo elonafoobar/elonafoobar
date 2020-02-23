@@ -11,7 +11,7 @@
 
 
 
-namespace fs = std::filesystem;
+namespace fs = boost::filesystem;
 
 
 
@@ -23,7 +23,7 @@ struct hash<fs::path>
 {
     size_t operator()(const fs::path& key) const
     {
-        return fs::hash_value(key);
+        return hash<fs::path::string_type>()(key.native());
     }
 };
 

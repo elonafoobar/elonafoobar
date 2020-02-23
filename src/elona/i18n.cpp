@@ -38,7 +38,7 @@ void Store::load(const fs::path& path, const std::string& mod_id)
 {
     for (const auto& entry : filesystem::glob_files(path))
     {
-        std::ifstream ifs{entry.path()};
+        std::ifstream ifs(entry.path().native());
         if (!ifs)
         {
             throw std::runtime_error{

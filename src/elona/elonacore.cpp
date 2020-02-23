@@ -11174,8 +11174,9 @@ void do_play_scene()
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{i18n::s.get_locale_dir("core") / "lazy" / "scene.hsp",
-                         std::ios::binary};
+        std::ifstream in{
+            (i18n::s.get_locale_dir("core") / "lazy" / "scene.hsp").native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -11212,7 +11213,8 @@ void do_play_scene()
             {
                 buff(0).clear();
                 std::ifstream in{
-                    i18n::s.get_locale_dir("core") / "lazy" / "scene.hsp",
+                    (i18n::s.get_locale_dir("core") / "lazy" / "scene.hsp")
+                        .native(),
                     std::ios::binary};
                 std::string tmp;
                 while (std::getline(in, tmp))

@@ -1,7 +1,5 @@
 #include "keybind_manager.hpp"
 
-#include <fstream>
-
 #include "../../util/strutil.hpp"
 #include "../filesystem.hpp"
 #include "../variables.hpp"
@@ -79,7 +77,7 @@ KeybindManager::GroupedMapType KeybindManager::create_category_to_action_list()
 void KeybindManager::save()
 {
     const auto path = filesystem::files::keybinding_config();
-    std::ofstream file{path, std::ios::binary};
+    std::ofstream file{path.native(), std::ios::binary};
     if (!file)
     {
         throw std::runtime_error{
@@ -97,7 +95,7 @@ void KeybindManager::load()
     clear();
 
     const auto path = filesystem::files::keybinding_config();
-    std::ifstream file{path, std::ios::binary};
+    std::ifstream file{path.native(), std::ios::binary};
 
     if (file)
     {

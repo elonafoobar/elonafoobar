@@ -91,7 +91,7 @@ void Logger::init()
     _mkdir(root_dir);
     _rotate_log_files(root_dir);
 
-    _out.open(_get_log_filepath(root_dir));
+    _out.open(_get_log_filepath(root_dir).native());
     _out << std::fixed << std::setprecision(3);
 }
 

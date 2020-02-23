@@ -46,7 +46,7 @@ void ConfigManager::load_options(std::istream& in, const std::string& filename)
 
 void ConfigManager::save(const fs::path& config_path)
 {
-    std::ofstream out{config_path};
+    std::ofstream out{config_path.native()};
     if (!out)
     {
         throw std::runtime_error{

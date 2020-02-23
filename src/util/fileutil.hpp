@@ -95,9 +95,9 @@ struct ByLineReader
     };
 
 
-    ByLineReader(const std::filesystem::path& filepath)
+    ByLineReader(const boost::filesystem::path& filepath)
     {
-        in.open(filepath);
+        in.open(filepath.native());
         if (!in)
         {
             throw std::runtime_error(
@@ -126,7 +126,7 @@ private:
 
 
 
-inline ByLineReader read_by_line(const std::filesystem::path& filepath)
+inline ByLineReader read_by_line(const boost::filesystem::path& filepath)
 {
     return {filepath};
 }
