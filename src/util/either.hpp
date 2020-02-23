@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/variant.hpp>
+#include <variant>
 
 
 
@@ -55,18 +55,18 @@ detail::right_holder<T> right(T&& value)
  * Typically, left means failure, and right means success. It is because right
  * is *right*.
  * The template parameters, Left and Right, are wrapped by left_holder and
- * right_holder because boost::variant cannot take the same type.
+ * right_holder because std::variant cannot take the same type.
  */
 template <typename Left, typename Right>
 struct either
-    : public boost::
+    : public std::
           variant<detail::left_holder<Left>, detail::right_holder<Right>>
 {
 private:
     using left_holder = detail::left_holder<Left>;
     using right_holder = detail::right_holder<Right>;
 
-    using base_type = boost::variant<left_holder, right_holder>;
+    using base_type = std::variant<left_holder, right_holder>;
 
 
 
@@ -150,7 +150,7 @@ public:
     /// Get which type the either has.
     which_type which() const
     {
-        return base_type::which() == 0 ? which_type::left : which_type::right;
+        return base_type::index() == 0 ? which_type::left : which_type::right;
     }
 
 
@@ -180,14 +180,14 @@ public:
     /// Get the left value.
     left_type& left()
     {
-        return boost::get<left_holder>(*this).value;
+        return std::get<left_holder>(*this).value;
     }
 
 
     /// Get the left value.
     const left_type& left() const
     {
-        return boost::get<left_holder>(*this).value;
+        return std::get<left_holder>(*this).value;
     }
 
 
@@ -195,14 +195,14 @@ public:
     /// Get the right value.
     right_type& right()
     {
-        return boost::get<right_holder>(*this).value;
+        return std::get<right_holder>(*this).value;
     }
 
 
     /// Get the right value.
     const right_type& right() const
     {
-        return boost::get<right_holder>(*this).value;
+        return std::get<right_holder>(*this).value;
     }
 };
 
