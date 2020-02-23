@@ -139,12 +139,12 @@ endif()
 check_include_file(stdint.h   HAVE_STDINT_H)
 check_include_file(inttypes.h HAVE_INTTYPES_H)
 
-if(HAVE_STDINT_H)
+# if(HAVE_STDINT_H)
     add_definitions(-DHAVE_STDINT_H)
-endif()
-if(HAVE_INTTYPES_H)
+# endif()
+# if(HAVE_INTTYPES_H)
     add_definitions(-DHAVE_INTTYPES_H)
-endif()
+# endif()
 
 # Check for large file support
 check_type_size(off64_t OFF64_T)
