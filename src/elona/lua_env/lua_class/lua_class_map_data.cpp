@@ -5,6 +5,12 @@
 #include "../../map.hpp"
 #include "../../position.hpp"
 
+
+
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::MapData)
+
+
+
 namespace elona
 {
 namespace lua
@@ -12,8 +18,8 @@ namespace lua
 
 void LuaMapData::bind(sol::state& lua)
 {
-    auto LuaMapData = lua.create_simple_usertype<MapData>();
-    LuaMapData.set("new", sol::no_constructor);
+    auto LuaMapData =
+        lua.new_usertype<MapData>("LuaMapData", sol::no_constructor);
 
     /**
      * @luadoc atlas_number field num
@@ -193,8 +199,6 @@ void LuaMapData::bind(sol::state& lua)
      * [RW] The music which will play on entering the map.
      */
     LuaMapData.set("bgm", LUA_API_DATA_PROPERTY(MapData, bgm, the_music_db));
-
-    lua.set_usertype("LuaMapData", LuaMapData);
 }
 
 } // namespace lua

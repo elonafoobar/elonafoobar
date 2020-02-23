@@ -155,7 +155,7 @@ void LuaApiWorld::bind(sol::table& api_table)
      *
      * [R] Data for the current game save.
      */
-    api_table.set("data", sol::property(&game_data));
+    api_table.set("data", &game_data);
 }
 
 } // namespace lua

@@ -3,6 +3,12 @@
 #include "../../area.hpp"
 #include "../../map.hpp"
 
+
+
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Area)
+
+
+
 namespace elona
 {
 namespace lua
@@ -10,8 +16,7 @@ namespace lua
 
 void LuaArea::bind(sol::state& lua)
 {
-    auto LuaArea = lua.create_simple_usertype<Area>();
-    LuaArea.set("new", sol::no_constructor);
+    auto LuaArea = lua.new_usertype<Area>("LuaArea", sol::no_constructor);
 
     // Properties
 
@@ -142,8 +147,6 @@ void LuaArea::bind(sol::state& lua)
      * @luadoc outer_map field num
      */
     LuaArea.set("outer_map", &Area::outer_map);
-
-    lua.set_usertype("LuaArea", LuaArea);
 }
 
 } // namespace lua

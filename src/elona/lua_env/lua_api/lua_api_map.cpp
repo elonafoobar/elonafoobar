@@ -569,7 +569,7 @@ void LuaApiMap::bind(sol::table& api_table)
      * [R] The map data for the current map. This contains serialized values
      * controlling various aspects of the current map.
      */
-    api_table.set("data", sol::property(&map_data));
+    api_table.set("data", &map_data);
 
     /**
      * @luadoc area function
