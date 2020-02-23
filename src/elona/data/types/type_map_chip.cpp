@@ -68,7 +68,8 @@ MapChip MapChipDB::convert(const lua::ConfigTable& data, const std::string& id)
         anime_frame,
         offset_top,
         offset_bottom,
-        effect};
+        effect,
+    };
 }
 
 } // namespace elona

@@ -19,7 +19,13 @@ TraitData TraitDB::convert(const lua::ConfigTable& data, const std::string& id)
     DATA_REQ(min, int);
     DATA_REQ(max, int);
 
-    return TraitData{data::InstanceId{id}, legacy_id, trait_type, min, max};
+    return TraitData{
+        data::InstanceId{id},
+        legacy_id,
+        trait_type,
+        min,
+        max,
+    };
 }
 
 } // namespace elona

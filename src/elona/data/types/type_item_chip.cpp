@@ -72,8 +72,10 @@ ItemChipData ItemChipDB::convert(
             offset_y,
             stack_height,
             shadow,
-            animation},
-        filepath};
+            animation,
+        },
+        filepath,
+    };
 }
 
 } // namespace elona

@@ -56,8 +56,10 @@ CharaChipData CharaChipDB::convert(
         Extent{x, y, width, height},
         CharaChip{
             SharedId(std::string(Traits::type_id) + data_id_separator + id),
-            offset_y},
-        filepath};
+            offset_y,
+        },
+        filepath,
+    };
 }
 
 } // namespace elona

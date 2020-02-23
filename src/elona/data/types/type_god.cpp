@@ -14,7 +14,10 @@ GodData GodDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
     auto legacy_id = data.required<int>("legacy_id");
 
-    return GodData{data::InstanceId{id}, legacy_id};
+    return GodData{
+        data::InstanceId{id},
+        legacy_id,
+    };
 }
 
 } // namespace elona
