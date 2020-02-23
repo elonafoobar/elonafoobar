@@ -197,7 +197,7 @@ private:
 
 
 
-template <typename T, PUTIT_ENABLE_IF(!std::is_enum<T>::value)>
+template <typename T, PUTIT_ENABLE_IF(!std::is_enum_v<T>)>
 void serialize(BinaryIArchive& ar, T& data)
 {
     data.serialize(ar);
@@ -205,7 +205,7 @@ void serialize(BinaryIArchive& ar, T& data)
 
 
 
-template <typename T, PUTIT_ENABLE_IF(!std::is_enum<T>::value)>
+template <typename T, PUTIT_ENABLE_IF(!std::is_enum_v<T>)>
 void serialize(BinaryOArchive& ar, T& data)
 {
     data.serialize(ar);
@@ -213,7 +213,7 @@ void serialize(BinaryOArchive& ar, T& data)
 
 
 
-template <typename E, PUTIT_ENABLE_IF(std::is_enum<E>::value)>
+template <typename E, PUTIT_ENABLE_IF(std::is_enum_v<E>)>
 void serialize(BinaryIArchive& ar, E& data)
 {
     using PrimitiveType = std::underlying_type_t<E>;
@@ -225,7 +225,7 @@ void serialize(BinaryIArchive& ar, E& data)
 
 
 
-template <typename E, PUTIT_ENABLE_IF(std::is_enum<E>::value)>
+template <typename E, PUTIT_ENABLE_IF(std::is_enum_v<E>)>
 void serialize(BinaryOArchive& ar, E& data)
 {
     using PrimitiveType = std::underlying_type_t<E>;

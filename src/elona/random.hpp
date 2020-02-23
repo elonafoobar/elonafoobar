@@ -39,12 +39,11 @@ inline void randomize(int seed)
 
 
 // [0, max)
-template <
-    typename Integer,
-    std::enable_if_t<std::is_integral<Integer>::value, std::nullptr_t> =
-        nullptr>
+template <typename Integer>
 inline Integer rnd(Integer max)
 {
+    static_assert(std::is_integral_v<Integer>);
+
     using Dist = boostrandom::uniform_int_distribution<Integer>;
     return Dist{Integer{0}, std::max(Integer{0}, max - 1)}(detail::engine);
 }
@@ -54,12 +53,11 @@ inline Integer rnd(Integer max)
 // [0, M) where M is min { max, 32768 }
 // Vanilla-compatible rnd() function. HSP rnd() returns [0, 32768). The upper
 // limit comes from RAND_MAX in C lang.
-template <
-    typename Integer,
-    std::enable_if_t<std::is_integral<Integer>::value, std::nullptr_t> =
-        nullptr>
+template <typename Integer>
 inline Integer rnd_capped(Integer max)
 {
+    static_assert(std::is_integral_v<Integer>);
+
     return rnd(std::min<Integer>(max, 32768));
 }
 
