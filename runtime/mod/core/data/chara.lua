@@ -601,6 +601,7 @@ data:add_multi(
          rarity = 1000,
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.vesda",
+         drops = { "core.vesda" },
       },
       {
          id = "miches",
