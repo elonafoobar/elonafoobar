@@ -377,7 +377,7 @@ void supply_new_equipment()
                                 [itemid2int(
                                      inv[cdata[rc].body_parts[cnt] % 10000 - 1]
                                          .id)]
-                                    ->category == 10000)
+                                    ->category == ItemCategory::melee_weapon)
                         {
                             haveweapon = 1;
                         }
@@ -428,7 +428,7 @@ void supply_new_equipment()
             item->identify_state = IdentifyState::completely;
             if (item->quality >= Quality::miracle)
             {
-                if (the_item_db[itemid2int(item->id)]->category < 50000)
+                if (is_equipment(the_item_db[itemid2int(item->id)]->category))
                 {
                     if (cdata[rc].character_role == 13)
                     {

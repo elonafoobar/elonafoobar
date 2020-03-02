@@ -358,7 +358,8 @@ void map_reload(const std::string& map_filename)
         {
             if (item.own_state == 1)
             {
-                if (the_item_db[itemid2int(item.id)]->category == 57000)
+                if (the_item_db[itemid2int(item.id)]->category ==
+                    ItemCategory::food)
                 {
                     item.remove();
                     cell_refresh(item.position.x, item.position.y);

@@ -135,7 +135,7 @@ enum class ItemCategory : int
 
 inline bool is_equipment(ItemCategory c)
 {
-    return c <= (ItemCategory)50000;
+    return c <= static_cast<ItemCategory>(50000);
 }
 
 /**

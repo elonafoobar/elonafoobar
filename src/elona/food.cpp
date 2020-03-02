@@ -658,7 +658,7 @@ void apply_general_eating_effect(Character& eater, Item& food)
         }
         nutrition = 3500;
     }
-    if (the_item_db[itemid2int(food.id)]->category == 57000)
+    if (the_item_db[itemid2int(food.id)]->category == ItemCategory::food)
     {
         nutrition = nutrition * (100 + food.param2 * 15) / 100;
     }

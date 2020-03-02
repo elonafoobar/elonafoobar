@@ -847,7 +847,7 @@ int calcmedalvalue(const Item& item)
 
 int calcitemvalue(const Item& item, int calc_mode)
 {
-    int category = the_item_db[itemid2int(item.id)]->category;
+    const auto category = the_item_db[itemid2int(item.id)]->category;
     int ret = 0;
     if (item.identify_state == IdentifyState::unidentified)
     {
@@ -864,7 +864,7 @@ int calcitemvalue(const Item& item, int calc_mode)
                 10;
         }
     }
-    else if (category >= 50000)
+    else if (!is_equipment(category))
     {
         ret = item.value;
     }
@@ -888,7 +888,7 @@ int calcitemvalue(const Item& item, int calc_mode)
         case CurseState::blessed: ret = ret * 120 / 100; break;
         }
     }
-    if (category == 57000)
+    if (category == ItemCategory::food)
     {
         if (item.param2 > 0)
         {
@@ -910,7 +910,7 @@ int calcitemvalue(const Item& item, int calc_mode)
     {
         if (mode == 6)
         {
-            if (category == 92000)
+            if (category == ItemCategory::cargo)
             {
                 ret = ret * trate(item.param1) / 100;
                 if (calc_mode == 1)
@@ -928,7 +928,7 @@ int calcitemvalue(const Item& item, int calc_mode)
         {
             ret = ret / 10;
         }
-        else if (category == 54000)
+        else if (category == ItemCategory::spellbook)
         {
             ret = ret / 5 + ret * item.count / (ichargelevel * 2 + 1);
         }
@@ -937,7 +937,7 @@ int calcitemvalue(const Item& item, int calc_mode)
             ret = ret / 2 + ret * item.count / (ichargelevel * 3 + 1);
         }
     }
-    if (category == 72000)
+    if (category == ItemCategory::chest)
     {
         if (item.param1 == 0)
         {
@@ -950,7 +950,7 @@ int calcitemvalue(const Item& item, int calc_mode)
         ret = ret * 100 / (100 + sdata(156, 0));
         if (game_data.guild.belongs_to_mages_guild != 0)
         {
-            if (category == 54000)
+            if (category == ItemCategory::spellbook)
             {
                 ret = ret * 80 / 100;
             }
@@ -968,7 +968,7 @@ int calcitemvalue(const Item& item, int calc_mode)
             max = ret / 3;
         }
         ret = ret * (100 + sdata(156, 0) * 5) / 1000;
-        if (category < 50000)
+        if (is_equipment(category))
         {
             ret /= 20;
         }
@@ -991,7 +991,7 @@ int calcitemvalue(const Item& item, int calc_mode)
     if (calc_mode == 2)
     {
         ret = ret / 5;
-        if (category < 50000)
+        if (is_equipment(category))
         {
             ret /= 3;
         }
@@ -1164,7 +1164,7 @@ int calccostreload(int owner, bool do_reload)
     {
         if (item.number() == 0)
             continue;
-        if (the_item_db[itemid2int(item.id)]->category != 25000)
+        if (the_item_db[itemid2int(item.id)]->category != ItemCategory::ammo)
             continue;
 
         for (auto&& enc : item.enchantments)

@@ -1365,7 +1365,8 @@ int blendcheckmat(int recipe_id)
                     }
                     continue;
                 }
-                if (the_item_db[itemid2int(item.id)]->category == id_at_m181)
+                if (the_item_db[itemid2int(item.id)]->category ==
+                    (ItemCategory)id_at_m181)
                 {
                     f_at_m181 = 1;
                     break;
@@ -1451,7 +1452,8 @@ int blendmatnum(int matcher, int step)
                 }
                 continue;
             }
-            if (the_item_db[itemid2int(item.id)]->category == matcher)
+            if (the_item_db[itemid2int(item.id)]->category ==
+                (ItemCategory)matcher)
             {
                 m_at_m182 += item.number();
                 continue;
@@ -1506,7 +1508,7 @@ int blendlist(elona_vector2<int>& result_array, int step)
                     continue;
                 }
             }
-            reftype_at_m183 = the_item_db[itemid2int(item.id)]->category;
+            reftype_at_m183 = (int)the_item_db[itemid2int(item.id)]->category;
             if (rpdata(40 + step, rpid))
             {
                 int stat = blendcheckext(item.index, step);

@@ -2624,7 +2624,8 @@ bool _magic_630_1129()
             {
                 f = 0;
             }
-            if (the_item_db[itemid2int(inv[ci].id)]->category == 54000)
+            if (the_item_db[itemid2int(inv[ci].id)]->category ==
+                ItemCategory::spellbook)
             {
                 if (rnd(4) == 0)
                 {
@@ -2642,7 +2643,8 @@ bool _magic_630_1129()
                 {
                     p = ichargelevel - inv[ci].count + 1;
                 }
-                if (the_item_db[itemid2int(inv[ci].id)]->category == 54000)
+                if (the_item_db[itemid2int(inv[ci].id)]->category ==
+                    ItemCategory::spellbook)
                 {
                     p = 1;
                 }
@@ -2872,7 +2874,7 @@ bool _magic_1132(int& fltbk, int& valuebk)
     {
         save_set_autosave();
         animeload(8, cc);
-        fltbk = the_item_db[itemid2int(inv[ci].id)]->category;
+        fltbk = (int)the_item_db[itemid2int(inv[ci].id)]->category;
         valuebk = calcitemvalue(inv[ci], 0);
         inv[ci].remove();
         for (int cnt = 0;; ++cnt)
@@ -3334,7 +3336,8 @@ bool _magic_651()
             {
                 continue;
             }
-            if (the_item_db[itemid2int(item.id)]->category != 57000)
+            if (the_item_db[itemid2int(item.id)]->category !=
+                ItemCategory::food)
             {
                 continue;
             }
@@ -3842,7 +3845,8 @@ optional<bool> _proc_general_magic()
             .play();
         try_to_melee_attack();
         return true;
-    case 1: {
+    case 1:
+    {
         int stat =
             get_route(cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy);
         if (stat == 0)

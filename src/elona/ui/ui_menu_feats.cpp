@@ -82,7 +82,8 @@ static void _load_traits_by_enchantments()
             {
                 if (enc.id == 0)
                     break;
-                get_enchantment_description(enc.id, enc.power, 0, true);
+                get_enchantment_description(
+                    enc.id, enc.power, ItemCategory::unidentified, true);
                 if (!s(0).empty())
                 {
                     traits_by_enchantments.push_back(s);

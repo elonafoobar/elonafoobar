@@ -631,8 +631,9 @@ bool wish_for_item(const std::string& input)
                 continue;
             }
         }
-        if (the_item_db[itemid2int(item->id)]->category == 52000 ||
-            the_item_db[itemid2int(item->id)]->category == 53000)
+        if (the_item_db[itemid2int(item->id)]->category ==
+                ItemCategory::potion ||
+            the_item_db[itemid2int(item->id)]->category == ItemCategory::scroll)
         {
             item->set_number(3 + rnd(2));
             if (item->value >= 20000)

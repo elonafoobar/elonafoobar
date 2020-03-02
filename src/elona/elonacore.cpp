@@ -2469,7 +2469,7 @@ int convertartifact(int item_index, int ignore_external_container)
     int f_at_m163 = 0;
     int tc_at_m163 = 0;
     std::string n_at_m163;
-    if (the_item_db[itemid2int(inv[item_index].id)]->category >= 50000)
+    if (!is_equipment(the_item_db[itemid2int(inv[item_index].id)]->category))
     {
         return item_index;
     }
@@ -3029,7 +3029,7 @@ void character_drops_item()
             continue;
         }
         if (catitem != 0 && !item.is_blessed_by_ehekatl() &&
-            the_item_db[itemid2int(item.id)]->category < 50000 &&
+            is_equipment(the_item_db[itemid2int(item.id)]->category) &&
             item.quality >= Quality::great)
         {
             if (rnd(3))
@@ -3038,7 +3038,7 @@ void character_drops_item()
                         "core.misc.black_cat_licks", cdata[catitem], item),
                     Message::color{ColorIndex::cyan});
                 item.is_blessed_by_ehekatl() = true;
-                reftype = the_item_db[itemid2int(item.id)]->category;
+                reftype = (int)the_item_db[itemid2int(item.id)]->category;
                 enchantment_add(
                     item,
                     enchantment_generate(enchantment_gen_level(rnd(4))),
@@ -3677,7 +3677,7 @@ void auto_identify()
         {
             continue;
         }
-        if (the_item_db[itemid2int(item.id)]->category >= 50000)
+        if (!is_equipment(the_item_db[itemid2int(item.id)]->category))
         {
             continue;
         }
@@ -5965,7 +5965,7 @@ void load_gene_files()
         {
             continue;
         }
-        if (the_item_db[itemid2int(item.id)]->category == 25000)
+        if (the_item_db[itemid2int(item.id)]->category == ItemCategory::ammo)
         {
             item.count = -1;
         }
@@ -6705,7 +6705,8 @@ void map_global_proc_travel_events()
             {
                 continue;
             }
-            if (the_item_db[itemid2int(item.id)]->category == 91000)
+            if (the_item_db[itemid2int(item.id)]->category ==
+                ItemCategory::travelers_food)
             {
                 f = 1;
                 ci = item.index;
@@ -8072,7 +8073,7 @@ int pick_up_item(bool play_sound)
                 }
             }
         }
-        if (the_item_db[itemid2int(inv[ci].id)]->category == 57000)
+        if (the_item_db[itemid2int(inv[ci].id)]->category == ItemCategory::food)
         {
             if (inv[ci].own_state == 4)
             {
@@ -8130,7 +8131,8 @@ int pick_up_item(bool play_sound)
     {
         if (trait(215) != 0)
         {
-            if (the_item_db[itemid2int(inv[ci].id)]->category == 56000)
+            if (the_item_db[itemid2int(inv[ci].id)]->category ==
+                ItemCategory::rod)
             {
                 if (inv[ci].count > 0)
                 {
@@ -8154,7 +8156,8 @@ int pick_up_item(bool play_sound)
         }
         if (trait(216) != 0)
         {
-            if (the_item_db[itemid2int(inv[ci].id)]->category == 52000)
+            if (the_item_db[itemid2int(inv[ci].id)]->category ==
+                ItemCategory::potion)
             {
                 if (inv[ci].id != ItemId::poison &&
                     inv[ci].id != ItemId::potion_of_cure_corruption)
@@ -8198,7 +8201,7 @@ int pick_up_item(bool play_sound)
     inv[ci].set_number(inumbk);
     if (mode == 6)
     {
-        if (the_item_db[itemid2int(inv[ti].id)]->category == 57000)
+        if (the_item_db[itemid2int(inv[ti].id)]->category == ItemCategory::food)
         {
             if (invctrl == 11 || invctrl == 22)
             {
@@ -8234,7 +8237,8 @@ int pick_up_item(bool play_sound)
             snd_("core.paygold1");
             cdata.player().gold -= sellgold;
             earn_gold(cdata[tc], sellgold);
-            if (the_item_db[itemid2int(inv[ti].id)]->category == 92000)
+            if (the_item_db[itemid2int(inv[ti].id)]->category ==
+                ItemCategory::cargo)
             {
                 inv[ti].param2 = calcitemvalue(inv[ti], 0);
             }
@@ -10496,7 +10500,8 @@ void discover_hidden_path()
 
 void dipcursed(int item_index, int)
 {
-    if (the_item_db[itemid2int(inv[item_index].id)]->category == 57000)
+    if (the_item_db[itemid2int(inv[item_index].id)]->category ==
+        ItemCategory::food)
     {
         if (inv[item_index].material == 35)
         {
@@ -10513,7 +10518,7 @@ void dipcursed(int item_index, int)
             return;
         }
     }
-    if (the_item_db[itemid2int(inv[item_index].id)]->category < 50000)
+    if (is_equipment(the_item_db[itemid2int(inv[item_index].id)]->category))
     {
         --inv[item_index].enhancement;
         txt(i18n::s.get("core.action.dip.rusts", inv[item_index]));
