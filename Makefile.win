@@ -1,10 +1,13 @@
 # Change this variable to point to your Boost installation.
 BOOST_ROOT = E:\build\SDK\boost_1_69_0
+# Change this variable to point to your OpenSSL installation.
+OPENSSL_ROOT_DIR = E:\build\SDK\OpenSSL-v111-Win64
 
 BIN_DIR = bin
 
 CMAKE_ARGS = \
         -DBOOST_ROOT="$(BOOST_ROOT)" \
+        -DOPENSSL_ROOT_DIR="$(OPENSSL_ROOT_DIR)" \
         -G "Visual Studio 15 2017 Win64" \
         $(CMAKE_ARGS)
 
