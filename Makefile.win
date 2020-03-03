@@ -1,15 +1,10 @@
 # Change this variable to point to your Boost installation.
-BOOST_DIR = E:\build\SDK\boost_1_69_0
+BOOST_ROOT = E:\build\SDK\boost_1_69_0
 
 BIN_DIR = bin
 
-BOOST_ROOT = $(BOOST_DIR)
-BOOST_INCLUDEDIR = $(BOOST_DIR)
-BOOST_LIBRARYDIR = $(BOOST_INCLUDEDIR)\lib64-msvc-14.1
 CMAKE_ARGS = \
         -DBOOST_ROOT="$(BOOST_ROOT)" \
-        -DBOOST_INCLUDEDIR="$(BOOST_INCLUDEDIR)" \
-        -DBOOST_LIBRARYDIR="$(BOOST_LIBRARYDIR)" \
         -G "Visual Studio 15 2017 Win64" \
         $(CMAKE_ARGS)
 
