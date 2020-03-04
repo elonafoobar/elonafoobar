@@ -3845,8 +3845,7 @@ optional<bool> _proc_general_magic()
             .play();
         try_to_melee_attack();
         return true;
-    case 1:
-    {
+    case 1: {
         int stat =
             get_route(cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy);
         if (stat == 0)

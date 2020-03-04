@@ -2252,8 +2252,7 @@ TalkResult talk_npc()
     case 54: return talk_shop_reload_ammo();
     case 55: return talk_spell_writer_reserve();
     case 56: return talk_sex();
-    case 58:
-    {
+    case 58: {
         if (game_data.left_turns_of_timestop == 0)
         {
             event_add(25);
