@@ -48,6 +48,7 @@ i18n.add {
 
          -- Wilderness
          _2 = {
+            name = "Wilderness",
             forest = "Forest",
             sea = "Sea",
             grassland = "Grassland",
@@ -108,9 +109,6 @@ i18n.add {
          _42 = {
             name = "the Void",
             desc = "What is this place?",
-         },
-         _2 = {
-            name = "Wilderness",
          },
          _10 = {
             name = "the graveyard",
