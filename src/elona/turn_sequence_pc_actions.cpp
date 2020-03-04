@@ -230,7 +230,8 @@ optional<TurnResult> handle_pc_action(std::string& action)
                 continue;
             if (item.position != cdata[cc].position)
                 continue;
-            if (the_item_db[itemid2int(item.id)]->category == 72000)
+            if (the_item_db[itemid2int(item.id)]->category ==
+                ItemCategory::chest)
             {
                 p = 1;
             }
@@ -238,7 +239,8 @@ optional<TurnResult> handle_pc_action(std::string& action)
             {
                 p = 2;
             }
-            if (the_item_db[itemid2int(item.id)]->category == 60002)
+            if (the_item_db[itemid2int(item.id)]->category ==
+                ItemCategory::altar)
             {
                 p(0) = 3;
                 p(1) = item.index;

@@ -1175,7 +1175,8 @@ void show_weapon_dice(int val0)
         mes(wx + 417, wy + 281 + p(2) * 16, s(1), {20, 10, 0});
     }
     attackrange = 0;
-    if (the_item_db[itemid2int(inv[cw].id)]->category == 24000) // TODO coupling
+    if (the_item_db[itemid2int(inv[cw].id)]->category ==
+        ItemCategory::ranged_weapon) // TODO coupling
     {
         attackrange = 1;
     }

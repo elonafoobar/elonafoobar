@@ -191,7 +191,11 @@ std::string enchantment_level_string(int level)
 
 
 
-void get_enchantment_description(int val0, int power, int category, bool trait)
+void get_enchantment_description(
+    int val0,
+    int power,
+    ItemCategory category,
+    bool trait)
 {
     rtval(0) = static_cast<int>(ItemDescriptionType::enchantment);
     rtval(1) = 0;
@@ -215,7 +219,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                     "ability",
                     the_ability_db.get_id_from_legacy(sid)->get(),
                     "name");
-                if (category == 57000)
+                if (category == ItemCategory::food)
                 {
                     s = i18n::s.get(
                         "core.enchantment.with_parameters.attribute.in_food.decreases",
@@ -236,7 +240,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
                     "ability",
                     the_ability_db.get_id_from_legacy(sid)->get(),
                     "name");
-                if (category == 57000)
+                if (category == ItemCategory::food)
                 {
                     s = i18n::s.get(
                         "core.enchantment.with_parameters.attribute.in_food.increases",
@@ -318,7 +322,7 @@ void get_enchantment_description(int val0, int power, int category, bool trait)
             break;
         case 6:
             rtval = static_cast<int>(ItemDescriptionType::maintains_skill);
-            if (category == 57000)
+            if (category == ItemCategory::food)
             {
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.skill_maintenance.in_food",
@@ -653,12 +657,12 @@ bool enchantment_add(
         const auto type_ = type >= 10000 ? type / 10000 : type;
         if (encref(3, type_) != 0)
         {
-            if (!check_enchantment_filters(category, type_))
+            if (!check_enchantment_filters((int)category, type_))
             {
                 return false;
             }
         }
-        else if (category == 25000 && !not_halve)
+        else if (category == ItemCategory::ammo && !not_halve)
         {
             return false;
         }
@@ -711,13 +715,14 @@ bool enchantment_add(
         {
             if (encprocref(3, cnt) != 0)
             {
-                if (!enchantment_filter(category, encprocref(3, cnt)))
+                if (!enchantment_filter((int)category, encprocref(3, cnt)))
                 {
                     if (encprocref(4, cnt) == 0)
                     {
                         continue;
                     }
-                    else if (!enchantment_filter(category, encprocref(4, cnt)))
+                    else if (!enchantment_filter(
+                                 (int)category, encprocref(4, cnt)))
                     {
                         continue;
                     }
@@ -777,7 +782,7 @@ bool enchantment_add(
 
     if (item.enchantments[i_at_m48].id == enc)
     {
-        if (category == 25000)
+        if (category == ItemCategory::ammo)
         {
             return false;
         }

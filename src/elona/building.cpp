@@ -42,9 +42,9 @@ int calc_heirloom_value(const Item& heirloom)
     auto value = heirloom.value;
     switch (category)
     {
-    case 60000: return value / 20;
-    case 80000: return value / 10;
-    case 77000: return value / 10;
+    case ItemCategory::furniture: return value / 20;
+    case ItemCategory::tree: return value / 10;
+    case ItemCategory::ore: return value / 10;
     default: return value / 1000;
     }
 }
@@ -59,7 +59,7 @@ void add_heirloom_if_valuable_enough(
     const Item& heirloom)
 {
     const auto category = the_item_db[itemid2int(heirloom.id)]->category;
-    if (category == 60000)
+    if (category == ItemCategory::furniture)
     {
         game_data.total_deco_value += clamp(heirloom.value / 50, 50, 500);
     }
@@ -318,7 +318,8 @@ TurnResult show_house_board()
         ++p(2);
         if (item.number() != 0)
         {
-            if (the_item_db[itemid2int(item.id)]->category != 60000)
+            if (the_item_db[itemid2int(item.id)]->category !=
+                ItemCategory::furniture)
             {
                 ++p;
             }
@@ -896,13 +897,13 @@ void show_shop_log()
         {
             continue;
         }
-        int category = the_item_db[itemid2int(item.id)]->category;
-        if (category == 60000)
+        auto category = the_item_db[itemid2int(item.id)]->category;
+        if (category == ItemCategory::furniture)
         {
             continue;
         }
         dblist(0, dblistmax) = item.index;
-        dblist(1, dblistmax) = category;
+        dblist(1, dblistmax) = (int)category;
         ++dblistmax;
     }
     for (int cnt = 0, cnt_end = (customer); cnt < cnt_end; ++cnt)

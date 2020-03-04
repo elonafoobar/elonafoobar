@@ -40,7 +40,7 @@ struct ItemData
     int expiration_date;
     int level;
     int fltselect;
-    int category;
+    ItemCategory category;
     int subcategory;
     int rarity;
     int coefficient;

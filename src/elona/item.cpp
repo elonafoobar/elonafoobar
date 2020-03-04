@@ -135,7 +135,6 @@ InventorySlice Inventory::by_index(int index)
 
 elona_vector1<int> p_at_m57;
 std::string s_;
-int a_ = 0;
 int skip_ = 0;
 
 
@@ -203,7 +202,7 @@ item_find(int matcher, int matcher_type, ItemFindLocation location_type)
             switch (matcher_type)
             {
             case 0:
-                if (the_item_db[itemid2int(item.id)]->category == matcher)
+                if ((int)the_item_db[itemid2int(item.id)]->category == matcher)
                 {
                     result = item.index;
                 }
@@ -623,7 +622,7 @@ bool chara_unequip(Item& item)
 IdentifyState item_identify(Item& item, IdentifyState level)
 {
     if (level == IdentifyState::almost &&
-        the_item_db[itemid2int(item.id)]->category >= 50000)
+        !is_equipment(the_item_db[itemid2int(item.id)]->category))
     {
         level = IdentifyState::completely;
     }
@@ -727,7 +726,10 @@ void itemname_additional_info(int item_index)
                 u8" of <"s + rpname(inv[item_index].subname) + u8">"s);
         }
     }
-    if (a_ == 55000)
+
+    auto category = the_item_db[itemid2int(inv[item_index].id)]->category;
+
+    if (category == ItemCategory::book)
     {
         if (inv[item_index].id == ItemId::textbook)
         {
@@ -762,7 +764,7 @@ void itemname_additional_info(int item_index)
                 u8" titled <"s + booktitle(inv[item_index].param1) + u8">"s);
         }
     }
-    if (a_ == 60002)
+    if (category == ItemCategory::altar)
     {
         if (inv[item_index].param1 != 0)
         {
@@ -771,7 +773,7 @@ void itemname_additional_info(int item_index)
                 u8" <"s + god_name(inv[item_index].param1) + u8">"s);
         }
     }
-    if (a_ == 57000)
+    if (category == ItemCategory::food)
     {
         if (inv[item_index].param1 != 0)
         {
@@ -828,7 +830,8 @@ void itemname_additional_info(int item_index)
                 "name");
         }
         else if (
-            a_ == 57000 || a_ == 62000 ||
+            category == ItemCategory::food ||
+            category == ItemCategory::bodyparts ||
             inv[item_index].id == ItemId::figurine ||
             inv[item_index].id == ItemId::card ||
             inv[item_index].id == ItemId::shit ||
@@ -849,7 +852,7 @@ void itemname_additional_info(int item_index)
                 }
             }
         }
-        if (a_ == 60000)
+        if (category == ItemCategory::furniture)
         {
             if (jp)
             {
@@ -949,17 +952,18 @@ std::string itemname(int item_index, int number, int skip_article)
     {
         num2_ = number;
     }
-    a_ = the_item_db[itemid2int(inv[item_index].id)]->category;
+    const auto category = the_item_db[itemid2int(inv[item_index].id)]->category;
     if (jp)
     {
         if (num2_ > 1)
         {
             s2_ = u8"個の"s;
-            if (a_ == 16000)
+            if (category == ItemCategory::armor)
             {
                 s2_ = u8"着の"s;
             }
-            if (a_ == 54000 || a_ == 55000)
+            if (category == ItemCategory::spellbook ||
+                category == ItemCategory::book)
             {
                 if (inv[item_index].id == ItemId::recipe)
                 {
@@ -970,23 +974,25 @@ std::string itemname(int item_index, int number, int skip_article)
                     s2_ = u8"冊の"s;
                 }
             }
-            if (a_ == 10000)
+            if (category == ItemCategory::melee_weapon)
             {
                 s2_ = u8"本の"s;
             }
-            if (a_ == 52000)
+            if (category == ItemCategory::potion)
             {
                 s2_ = u8"服の"s;
             }
-            if (a_ == 53000)
+            if (category == ItemCategory::scroll)
             {
                 s2_ = u8"巻の"s;
             }
-            if (a_ == 22000 || a_ == 18000)
+            if (category == ItemCategory::boots ||
+                category == ItemCategory::gloves)
             {
                 s2_ = u8"対の"s;
             }
-            if (a_ == 68000 || a_ == 69000 ||
+            if (category == ItemCategory::gold_piece ||
+                category == ItemCategory::platinum_coin ||
                 inv[item_index].id == ItemId::small_medal ||
                 inv[item_index].id == ItemId::music_ticket ||
                 inv[item_index].id == ItemId::token_of_friendship)
@@ -1069,12 +1075,13 @@ std::string itemname(int item_index, int number, int skip_article)
                 {
                     s2_ = u8"cargo";
                 }
-                if (a_ == 22000 || a_ == 18000)
+                if (category == ItemCategory::boots ||
+                    category == ItemCategory::gloves)
                 {
                     s2_ = u8"pair";
                 }
             }
-            if (a_ == 57000 && inv[item_index].param1 != 0 &&
+            if (category == ItemCategory::food && inv[item_index].param1 != 0 &&
                 inv[item_index].param2 != 0)
             {
                 s2_ = u8"dish";
@@ -1124,12 +1131,12 @@ std::string itemname(int item_index, int number, int skip_article)
     }
     if (en)
     {
-        if (a_ == 57000 && inv[item_index].param1 != 0 &&
+        if (category == ItemCategory::food && inv[item_index].param1 != 0 &&
             inv[item_index].param2 != 0)
         {
             skip_ = 1;
         }
-        if (inv[item_index].subname != 0 && a_ == 60000)
+        if (inv[item_index].subname != 0 && category == ItemCategory::furniture)
         {
             if (inv[item_index].subname >= 12)
             {
@@ -1168,7 +1175,7 @@ std::string itemname(int item_index, int number, int skip_article)
     {
         itemname_additional_info(item_index);
     }
-    if (a_ == 60000 && inv[item_index].material != 0)
+    if (category == ItemCategory::furniture && inv[item_index].material != 0)
     {
         if (jp)
         {
@@ -1202,7 +1209,7 @@ std::string itemname(int item_index, int number, int skip_article)
     {
         alpha_ = 0;
         if (inv[item_index].identify_state == IdentifyState::completely &&
-            a_ < 50000)
+            is_equipment(category))
         {
             if (inv[item_index].is_eternal_force())
             {
@@ -1272,7 +1279,8 @@ std::string itemname(int item_index, int number, int skip_article)
         }
         else if (inv[item_index].identify_state != IdentifyState::completely)
         {
-            if (inv[item_index].quality < Quality::miracle || a_ >= 50000)
+            if (inv[item_index].quality < Quality::miracle ||
+                !is_equipment(category))
             {
                 s_ += ioriginalnameref(itemid2int(inv[item_index].id));
             }
@@ -1309,7 +1317,8 @@ std::string itemname(int item_index, int number, int skip_article)
             {
                 s_ += ioriginalnameref(itemid2int(inv[item_index].id));
             }
-            if (en && a_ < 50000 && inv[item_index].subname >= 10000 &&
+            if (en && is_equipment(category) &&
+                inv[item_index].subname >= 10000 &&
                 inv[item_index].subname < 20000)
             {
                 s_ += u8" "s + egoname((inv[item_index].subname - 10000));
@@ -1340,7 +1349,8 @@ std::string itemname(int item_index, int number, int skip_article)
         if (skip_article == 0)
         {
             if (inv[item_index].identify_state == IdentifyState::completely &&
-                (inv[item_index].quality >= Quality::miracle && a_ < 50000))
+                (inv[item_index].quality >= Quality::miracle &&
+                 is_equipment(category)))
             {
                 s_ = u8"the "s + s_;
             }
@@ -1508,7 +1518,8 @@ std::string itemname(int item_index, int number, int skip_article)
     {
         s_ += lang(u8" Lv"s, u8" Level "s) + inv[item_index].param2;
     }
-    if (inv[item_index].identify_state == IdentifyState::almost && a_ < 50000)
+    if (inv[item_index].identify_state == IdentifyState::almost &&
+        is_equipment(category))
     {
         s_ += u8" ("s +
             cnven(i18n::s.get_enum(
@@ -1546,7 +1557,7 @@ std::string itemname(int item_index, int number, int skip_article)
             s_ += i18n::s.get("core.item.approximate_curse_state.doomed");
         }
     }
-    if (a_ == 72000)
+    if (category == ItemCategory::chest)
     {
         if (inv[item_index].id == ItemId::shopkeepers_trunk)
         {
@@ -1560,7 +1571,7 @@ std::string itemname(int item_index, int number, int skip_article)
             }
         }
     }
-    if (a_ == 92000 && inv[item_index].param2 != 0)
+    if (category == ItemCategory::cargo && inv[item_index].param2 != 0)
     {
         s_ += lang(
             u8"(仕入れ値 "s + inv[item_index].param2 + u8"g)"s,
@@ -1631,7 +1642,7 @@ void remain_make(Item& remain, const Character& chara)
 bool item_stack(int inventory_id, Item& base_item, bool show_message)
 {
     if (base_item.quality == Quality::special &&
-        the_item_db[itemid2int(base_item.id)]->category < 50000)
+        is_equipment(the_item_db[itemid2int(base_item.id)]->category))
     {
         return 0;
     }
@@ -1681,7 +1692,7 @@ bool item_stack(int inventory_id, Item& base_item, bool show_message)
 
 void item_dump_desc(const Item& i)
 {
-    reftype = the_item_db[itemid2int(i.id)]->category;
+    reftype = (int)the_item_db[itemid2int(i.id)]->category;
 
     item_db_get_charge_level(inv[ci], itemid2int(i.id));
     item_db_get_description(inv[ci], itemid2int(i.id));
@@ -1724,7 +1735,7 @@ void item_acid(const Character& owner, int ci)
         }
     }
 
-    if (the_item_db[itemid2int(inv[ci].id)]->category >= 50000)
+    if (!is_equipment(the_item_db[itemid2int(inv[ci].id)]->category))
     {
         return;
     }
@@ -1800,8 +1811,8 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
             continue;
         }
 
-        int a_ = the_item_db[itemid2int(item.id)]->category;
-        if (a_ == 57000 && item.param2 == 0)
+        const auto category = the_item_db[itemid2int(item.id)]->category;
+        if (category == ItemCategory::food && item.param2 == 0)
         {
             if (owner == -1)
             {
@@ -1828,7 +1839,8 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
             continue;
         }
 
-        if (a_ == 72000 || a_ == 59000 || a_ == 68000 ||
+        if (category == ItemCategory::chest || category == ItemCategory::tool ||
+            category == ItemCategory::gold_piece ||
             item.quality >= Quality::miracle)
         {
             continue;
@@ -1842,8 +1854,10 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
             }
         }
 
-        if (a_ != 56000 && a_ != 80000 && a_ != 55000 && a_ != 53000 &&
-            a_ != 54000)
+        if (category != ItemCategory::rod && category != ItemCategory::tree &&
+            category != ItemCategory::book &&
+            category != ItemCategory::scroll &&
+            category != ItemCategory::spellbook)
         {
             if (rnd(4))
             {
@@ -2024,8 +2038,9 @@ bool item_cold(int owner, optional_ref<Item> destroyed_item)
             continue;
         }
 
-        int a_ = the_item_db[itemid2int(item.id)]->category;
-        if (a_ == 72000 || a_ == 59000 || a_ == 68000)
+        const auto category = the_item_db[itemid2int(item.id)]->category;
+        if (category == ItemCategory::chest || category == ItemCategory::tool ||
+            category == ItemCategory::gold_piece)
         {
             continue;
         }
@@ -2033,7 +2048,7 @@ bool item_cold(int owner, optional_ref<Item> destroyed_item)
         {
             continue;
         }
-        if (a_ != 52000)
+        if (category != ItemCategory::potion)
         {
             if (rnd(30))
             {
@@ -2425,18 +2440,18 @@ int iequiploc(const Item& item)
 {
     switch (the_item_db[itemid2int(item.id)]->category)
     {
-    case 12000: return 1;
-    case 34000: return 2;
-    case 20000: return 3;
-    case 16000: return 4;
-    case 10000: return 5;
-    case 14000: return 5;
-    case 32000: return 6;
-    case 22000: return 7;
-    case 18000: return 9;
-    case 24000: return 10;
-    case 25000: return 11;
-    case 19000: return 8;
+    case ItemCategory::helm: return 1;
+    case ItemCategory::necklace: return 2;
+    case ItemCategory::cloak: return 3;
+    case ItemCategory::armor: return 4;
+    case ItemCategory::melee_weapon: return 5;
+    case ItemCategory::shield: return 5;
+    case ItemCategory::ring: return 6;
+    case ItemCategory::gloves: return 7;
+    case ItemCategory::boots: return 9;
+    case ItemCategory::ranged_weapon: return 10;
+    case ItemCategory::ammo: return 11;
+    case ItemCategory::belt: return 8;
     default: return 0;
     }
 }

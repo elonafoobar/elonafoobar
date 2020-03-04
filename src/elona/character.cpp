@@ -1682,7 +1682,8 @@ void chara_relocate(
 void chara_set_item_which_will_be_used(Character& chara, const Item& item)
 {
     const auto category = the_item_db[itemid2int(item.id)]->category;
-    if (category == 57000 || category == 52000 || category == 53000)
+    if (category == ItemCategory::food || category == ItemCategory::potion ||
+        category == ItemCategory::scroll)
     {
         chara.item_which_will_be_used = item.index;
     }

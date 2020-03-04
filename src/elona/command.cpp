@@ -844,7 +844,7 @@ TurnResult do_throw_command()
         }
         return TurnResult::turn_end;
     }
-    if (the_item_db[itemid2int(inv[ci].id)]->category == 52000 ||
+    if (the_item_db[itemid2int(inv[ci].id)]->category == ItemCategory::potion ||
         inv[ci].id == ItemId::tomato)
     {
         if (inv[ci].id != ItemId::empty_bottle)
@@ -1457,7 +1457,8 @@ TurnResult do_dip_command()
         return TurnResult::turn_end;
     }
     snd("core.drink1");
-    if (the_item_db[itemid2int(inv[cidip].id)]->category == 52000)
+    if (the_item_db[itemid2int(inv[cidip].id)]->category ==
+        ItemCategory::potion)
     {
         if (the_item_db[itemid2int(inv[ci].id)]->subcategory == 60001)
         {
@@ -1533,7 +1534,7 @@ TurnResult do_dip_command()
     }
     if (inv[cidip].id == ItemId::poison)
     {
-        if (the_item_db[itemid2int(inv[ci].id)]->category == 57000)
+        if (the_item_db[itemid2int(inv[ci].id)]->category == ItemCategory::food)
         {
             inv[cidip].modify_number(-1);
             item_separate(ci);
@@ -1552,7 +1553,7 @@ TurnResult do_dip_command()
     }
     if (inv[cidip].id == ItemId::love_potion)
     {
-        if (the_item_db[itemid2int(inv[ci].id)]->category == 57000)
+        if (the_item_db[itemid2int(inv[ci].id)]->category == ItemCategory::food)
         {
             inv[cidip].modify_number(-1);
             item_separate(ci);
@@ -1779,7 +1780,7 @@ TurnResult do_use_command()
                 txt(i18n::s.get("core.action.use.living.weird"));
             }
             txt(i18n::s.get("core.action.use.living.it"));
-            reftype = item_data->category;
+            reftype = (int)item_data->category;
             listmax = 0;
 
             Prompt prompt;
@@ -1804,7 +1805,9 @@ TurnResult do_use_command()
                     list(0, listmax) = rtval;
                     list(1, listmax) = rtval(1);
                     get_enchantment_description(
-                        list(0, listmax), list(1, listmax), 0);
+                        list(0, listmax),
+                        list(1, listmax),
+                        ItemCategory::unidentified);
 
                     prompt.append(s);
 

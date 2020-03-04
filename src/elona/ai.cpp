@@ -326,7 +326,7 @@ void _ally_sells_item(Character& chara)
         {
             continue;
         }
-        if (the_item_db[itemid2int(item.id)]->category == 77000)
+        if (the_item_db[itemid2int(item.id)]->category == ItemCategory::ore)
         {
             sold_item_count += item.number();
             const auto total_value = item.value * item.number();

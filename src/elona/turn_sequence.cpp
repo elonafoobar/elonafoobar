@@ -462,18 +462,18 @@ optional<TurnResult> npc_turn_misc(Character& chara)
     }
 
     const auto category = the_item_db[itemid2int(inv[ci].id)]->category;
-    if (category == 57000)
+    if (category == ItemCategory::food)
     {
         if (chara.relationship != 10 || chara.nutrition <= 6000)
         {
             return do_eat_command();
         }
     }
-    if (category == 52000)
+    if (category == ItemCategory::potion)
     {
         return do_drink_command();
     }
-    if (category == 53000)
+    if (category == ItemCategory::scroll)
     {
         return do_read_command();
     }
@@ -521,10 +521,11 @@ TurnResult npc_turn_ai_main(Character& chara)
                     if (number == 1)
                     {
                         ci = item;
-                        p = the_item_db[itemid2int(inv[ci].id)]->category;
+                        const auto category =
+                            the_item_db[itemid2int(inv[ci].id)]->category;
                         if (chara.nutrition <= 6000)
                         {
-                            if (p == 57000)
+                            if (category == ItemCategory::food)
                             {
                                 if (inv[ci].own_state <= 0 &&
                                     !is_cursed(inv[ci].curse_state))
@@ -532,7 +533,7 @@ TurnResult npc_turn_ai_main(Character& chara)
                                     return do_eat_command();
                                 }
                             }
-                            if (p == 60001)
+                            if (category == ItemCategory::well)
                             {
                                 if (inv[ci].own_state <= 1 &&
                                     inv[ci].param1 >= -5 &&
@@ -543,7 +544,8 @@ TurnResult npc_turn_ai_main(Character& chara)
                                 }
                             }
                         }
-                        if (p == 68000 || p == 77000)
+                        if (category == ItemCategory::gold_piece ||
+                            category == ItemCategory::ore)
                         {
                             if (inv[ci].own_state <= 0 &&
                                 !inv[ci].is_precious() &&
@@ -1420,7 +1422,7 @@ optional<TurnResult> pc_turn_advance_time()
     {
         auto&& item = get_random_inv(0);
         if (item.number() > 0 &&
-            the_item_db[itemid2int(item.id)]->category == 52000)
+            the_item_db[itemid2int(item.id)]->category == ItemCategory::potion)
         {
             ci = item.index;
             item_db_on_drink(item, itemid2int(item.id));

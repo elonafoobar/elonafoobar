@@ -86,7 +86,7 @@ ItemData ItemDB::convert(const lua::ConfigTable& data, const std::string& id)
         expiration_date,
         level,
         fltselect,
-        category,
+        static_cast<ItemCategory>(category),
         subcategory,
         rarity,
         coefficient,

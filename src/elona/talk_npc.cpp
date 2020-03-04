@@ -2086,7 +2086,8 @@ TalkResult talk_npc()
                 }
                 if (quest_data[rq].id == 1003)
                 {
-                    if (the_item_db[itemid2int(item.id)]->category == 57000 &&
+                    if (the_item_db[itemid2int(item.id)]->category ==
+                            ItemCategory::food &&
                         item.param1 / 1000 == quest_data[rq].extra_info_1 &&
                         item.param2 == quest_data[rq].extra_info_2)
                     {
