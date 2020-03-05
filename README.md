@@ -19,6 +19,7 @@
 * Boost 1.69
 * Lua 5.3
 * SDL2, SDL2_image, SDL2_ttf and SDL2_mixer
+* OpenSSL 1.1.x
 * `clang-format`, `find` and `xargs` (Optional)
 
 ### Additional requirements for Windows
