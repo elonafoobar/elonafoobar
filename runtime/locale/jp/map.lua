@@ -47,6 +47,7 @@ i18n.add {
 
          -- Wilderness
          _2 = {
+            name = "野外",
             forest = "森",
             sea = "水上",
             grassland = "草原",
@@ -106,9 +107,6 @@ i18n.add {
          _42 = {
             name = "すくつ",
             desc = "なんだこの場所は…？",
-         },
-         _2 = {
-            name = "野外",
          },
          _10 = {
             name = "ルミエスト墓所",
