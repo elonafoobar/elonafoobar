@@ -51,7 +51,7 @@ void set_item_info()
             // The choice can't be completely random - it has to be the
             // same as all other items of this type. So, base it off the
             // random seed of the current save data.
-            int p = (data.legacy_id % game_data.random_seed) % 6;
+            int p = (data.legacy_id + game_data.random_seed) % 6;
             iknownnameref(data.legacy_id) =
                 i18n::s.get_enum(
                     "core.ui.random_item." + data.originalnameref2, p) +
