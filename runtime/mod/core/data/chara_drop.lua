@@ -14,7 +14,7 @@ end
 
 
 local function lootrich(chara, count)
-   for _=0,count do
+   for _ = 1, count do
       Item.create(chara.position, {level = chara.level, flttypeminor = 77001});
    end
    if Rand.one_in(3) then

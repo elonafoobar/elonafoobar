@@ -6899,6 +6899,7 @@ data:add_multi(
          category = 0,
          rarity = 20000,
          coefficient = 400,
+         drops = { "core.rich_person" },
       },
       {
          id = "noble_child",
@@ -6924,6 +6925,7 @@ data:add_multi(
          category = 0,
          rarity = 40000,
          coefficient = 400,
+         drops = { "core.noble_child" },
       },
       {
          id = "tourist",
@@ -6950,6 +6952,7 @@ data:add_multi(
          category = 0,
          rarity = 100000,
          coefficient = 400,
+         drops = { "core.tourist" },
       },
       {
          id = "festival_tourist",
