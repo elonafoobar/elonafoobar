@@ -365,7 +365,7 @@ for name, list in pairs(endings) do
                              end
 
                              local sex_index
-                             if chara.sex == "Male" then
+                             if chara.sex == "male" then
                                 sex_index = 1
                              else
                                 sex_index = 2

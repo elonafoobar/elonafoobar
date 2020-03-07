@@ -28,10 +28,10 @@ namespace LuaEnums
 EnumMap<AssetLoadType> AssetLoadTypeTable(
     "AssetLoadType",
     {
-        {"Startup", AssetLoadType::Startup},
-        {"Buffer", AssetLoadType::Buffer},
-        {"BufferDeferred", AssetLoadType::BufferDeferred},
-        {"None", AssetLoadType::None},
+        {"startup", AssetLoadType::Startup},
+        {"buffer", AssetLoadType::Buffer},
+        {"buffer_deferred", AssetLoadType::BufferDeferred},
+        {"none", AssetLoadType::None},
     });
 }
 } // namespace lua

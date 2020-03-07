@@ -51,7 +51,7 @@ return {
          },
       },
       quest_check = function()
-         if Chara.find("core.silver_cat", "Allies") == nil then
+         if Chara.find("core.silver_cat", "allies") == nil then
             return "quest_waiting"
          end
 
@@ -76,10 +76,10 @@ return {
 
             Internal.set_quest_flag("mias_dream", 1000)
 
-            local silver_cat = Chara.find("core.silver_cat", "Allies")
+            local silver_cat = Chara.find("core.silver_cat", "allies")
             Chara.remove_from_party(silver_cat)
-            silver_cat.relationship = "Unconcerned"
-            silver_cat.original_relationship = "Unconcerned"
+            silver_cat.relationship = "unconcerned"
+            silver_cat.original_relationship = "unconcerned"
             silver_cat.role = 3
          end
       }

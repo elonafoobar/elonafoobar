@@ -1,7 +1,6 @@
 require("tests/lua/support/minctest")
 
 local Map = Elona.game.Map
-local Enums = Elona.game.Enums
 
 lrun("test Map.width/Map.height", function()
         Testing.start_in_debug_map()
@@ -31,7 +30,7 @@ lrun("test Map.is_blocked", function()
         lequal(Map.is_blocked(pos), false)
         lequal(Map.is_blocked(pos.x, pos.y), false)
 
-        Map.set_tile(5, 5, Map.generate_tile(Enums.TileKind.Wall))
+        Map.set_tile(5, 5, Map.generate_tile("wall"))
         lequal(Map.is_blocked(pos), true)
         lequal(Map.is_blocked(pos.x, pos.y), true)
 end)

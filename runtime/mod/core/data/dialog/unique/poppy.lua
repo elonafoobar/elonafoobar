@@ -33,7 +33,7 @@ return {
       take = function(t)
          GUI.txt(I18N.get("core.talk.unique.poppy.find.you_must_return", t.speaker))
          t.speaker:recruit_as_ally()
-         t.speaker:set_flag("IsEscortedInSubQuest", true)
+         t.speaker:set_flag("is_escorted_in_sub_quest", true)
          t.speaker:refresh()
 
          return "__END__"

@@ -55,7 +55,7 @@ return {
       },
 
       check_drug = function()
-         if Item.find("core.blue_capsule_drug", "PlayerInventory") ~= nil then
+         if Item.find("core.blue_capsule_drug", "player_inventory") ~= nil then
             return "query_give_drug"
          end
 
@@ -74,7 +74,7 @@ return {
       give_drug = {
          text = {
             function()
-               local drug = Item.find("core.blue_capsule_drug", "PlayerInventory")
+               local drug = Item.find("core.blue_capsule_drug", "player_inventory")
                drug.number = drug.number - 1
                GUI.txt(I18N.get("core.talk.unique.kaneda_bike.before_drug.yes.you_hand_him"))
                GUI.play_sound("core.equip1")

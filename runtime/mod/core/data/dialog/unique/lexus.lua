@@ -22,7 +22,7 @@ local function join_guild()
     GUI.txt(I18N.get("core.quest.completed"))
     GUI.play_sound("core.complete1")
     GUI.show_journal_update_message()
-    GUI.txt(I18N.get("core.talk.unique.lexus.nonmember.joined"), "Orange")
+    GUI.txt(I18N.get("core.talk.unique.lexus.nonmember.joined"), "orange")
 end
 
 local function move_self(t)

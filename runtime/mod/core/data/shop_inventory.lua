@@ -66,8 +66,8 @@ local filter_set_wear = make_filter_list({10000, 10000, 24000, 24000,
 
 local merchant_rules = {
    { choices = filter_set_wear },
-   { fixlv = "Great" },
-   { one_in = 2, fixlv = "Miracle" },
+   { fixlv = "great" },
+   { one_in = 2, fixlv = "miracle" },
 }
 
 local function merchant_item_number()
@@ -197,8 +197,8 @@ data:add_multi(
                   {flttypemajor = 34000},
                }
             },
-            { one_in = 3, fixlv = "Great" },
-            { one_in = 10, fixlv = "Miracle" },
+            { one_in = 3, fixlv = "great" },
+            { one_in = 10, fixlv = "miracle" },
          },
          item_base_value = function(args)
             return args.item.value * 2
@@ -250,8 +250,8 @@ data:add_multi(
          legacy_id = 1007,
          rules = {
             { choices = filter_set_wear },
-            { one_in = 3, fixlv = "Great" },
-            { one_in = 10, fixlv = "Miracle" },
+            { one_in = 3, fixlv = "great" },
+            { one_in = 10, fixlv = "miracle" },
          },
          item_number = function(args)
             return 6 + args.shopkeeper.shop_rank // 10
@@ -459,7 +459,7 @@ data:add_multi(
          item_number = function() return #medal_items end,
          on_generate_item = function(args)
             args.item.number = 1
-            args.item.curse_state = "None"
+            args.item.curse_state = "none"
             if args.item.id == "core.rod_of_domination" then
                args.item.count = 4
             end

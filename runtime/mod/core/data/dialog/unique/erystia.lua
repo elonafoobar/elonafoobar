@@ -47,7 +47,7 @@ return {
          },
          on_finish = function()
             GUI.play_sound("core.write1")
-            GUI.txt(I18N.get("core.talk.unique.erystia.all_stones.you_receive"), "Green")
+            GUI.txt(I18N.get("core.talk.unique.erystia.all_stones.you_receive"), "green")
             Item.create(Chara.player().position, "core.palmia_pride", 0)
             GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
             Internal.set_quest_flag("main_quest", 125)
@@ -65,7 +65,7 @@ return {
          },
          on_finish = function()
             GUI.play_sound("core.write1")
-            GUI.txt(I18N.get("core.talk.unique.erystia.stones.you_receive"), "Green")
+            GUI.txt(I18N.get("core.talk.unique.erystia.stones.you_receive"), "green")
             Internal.set_quest_flag("main_quest", 110)
          end
       },
@@ -196,7 +196,7 @@ return {
          },
          on_finish = function()
             GUI.play_sound("core.write1")
-            GUI.txt(I18N.get("core.talk.unique.erystia.introduction.pledge_strength.you_receive"), "Green")
+            GUI.txt(I18N.get("core.talk.unique.erystia.introduction.pledge_strength.you_receive"), "green")
             Internal.set_quest_flag("main_quest", 60)
          end
       },

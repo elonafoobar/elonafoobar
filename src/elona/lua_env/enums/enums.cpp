@@ -1,5 +1,18 @@
 #include "enums.hpp"
 
+#include "../../character.hpp"
+#include "../../element.hpp"
+#include "../../enums.hpp"
+#include "../../item.hpp"
+#include "../../map_cell.hpp"
+#include "../../mdata.hpp"
+#include "../../menu.hpp"
+#include "../../status_ailment.hpp"
+#include "../../text.hpp"
+#include "../../wish.hpp"
+
+
+
 namespace elona
 {
 namespace lua
@@ -20,27 +33,27 @@ namespace LuaEnums
 EnumMap<DamageSource> DamageSourceTable{
     "DamageSource",
     {
-        {"Trap", DamageSource::trap},
-        {"Overcasting", DamageSource::overcasting},
-        {"Starvation", DamageSource::starvation},
-        {"Poisoning", DamageSource::poisoning},
-        {"Curse", DamageSource::curse},
-        {"BackpackWeight", DamageSource::backpack_weight},
-        {"FallFromStairs", DamageSource::fall_from_stairs},
-        {"Audience", DamageSource::audience},
-        {"Burn", DamageSource::burn},
-        {"Adventuring", DamageSource::adventuring},
-        {"UnseenHand", DamageSource::unseen_hand},
-        {"FoodPoisoning", DamageSource::food_poisoning},
-        {"BloodLoss", DamageSource::blood_loss},
-        {"EtherDisease", DamageSource::ether_disease},
-        {"Acid", DamageSource::acid},
-        {"Shatter", DamageSource::shatter},
-        {"AtomicBomb", DamageSource::atomic_bomb},
-        {"IronMaiden", DamageSource::iron_maiden},
-        {"Guillotine", DamageSource::guillotine},
-        {"Hanging", DamageSource::hanging},
-        {"Mochi", DamageSource::mochi},
+        {"trap", DamageSource::trap},
+        {"overcasting", DamageSource::overcasting},
+        {"starvation", DamageSource::starvation},
+        {"poisoning", DamageSource::poisoning},
+        {"curse", DamageSource::curse},
+        {"backpack_weight", DamageSource::backpack_weight},
+        {"fall_from_stairs", DamageSource::fall_from_stairs},
+        {"audience", DamageSource::audience},
+        {"burn", DamageSource::burn},
+        {"adventuring", DamageSource::adventuring},
+        {"unseen_hand", DamageSource::unseen_hand},
+        {"food_poisoning", DamageSource::food_poisoning},
+        {"blood_loss", DamageSource::blood_loss},
+        {"ether_disease", DamageSource::ether_disease},
+        {"acid", DamageSource::acid},
+        {"shatter", DamageSource::shatter},
+        {"atomic_bomb", DamageSource::atomic_bomb},
+        {"iron_maiden", DamageSource::iron_maiden},
+        {"guillotine", DamageSource::guillotine},
+        {"hanging", DamageSource::hanging},
+        {"mochi", DamageSource::mochi},
     }};
 
 
@@ -52,30 +65,30 @@ EnumMap<DamageSource> DamageSourceTable{
 EnumMap<ColorIndex> ColorIndexTable{
     "Color",
     {
-        {"None", ColorIndex::none},
-        {"White", ColorIndex::white},
-        {"Green", ColorIndex::green},
-        {"Red", ColorIndex::red},
-        {"Blue", ColorIndex::blue},
-        {"Orange", ColorIndex::orange},
-        {"Yellow", ColorIndex::yellow},
-        {"Grey", ColorIndex::grey},
-        {"Purple", ColorIndex::purple},
-        {"Cyan", ColorIndex::cyan},
-        {"LightRed", ColorIndex::light_red},
-        {"Gold", ColorIndex::gold},
-        {"White2", ColorIndex::white2},
-        {"LightBrown", ColorIndex::light_brown},
-        {"DarkGreen", ColorIndex::dark_green},
-        {"LightGrey", ColorIndex::light_grey},
-        {"PaleRed", ColorIndex::pale_red},
-        {"LightBlue", ColorIndex::light_blue},
-        {"LightPurple", ColorIndex::light_purple},
-        {"LightGreen", ColorIndex::light_green},
-        {"YellowGreen", ColorIndex::yellow_green},
-        {"RandomFurniture", ColorIndex::random_furniture},
-        {"RandomSeeded", ColorIndex::random_seeded},
-        {"RandomAny", ColorIndex::random_any},
+        {"none", ColorIndex::none},
+        {"white", ColorIndex::white},
+        {"green", ColorIndex::green},
+        {"red", ColorIndex::red},
+        {"blue", ColorIndex::blue},
+        {"orange", ColorIndex::orange},
+        {"yellow", ColorIndex::yellow},
+        {"grey", ColorIndex::grey},
+        {"purple", ColorIndex::purple},
+        {"cyan", ColorIndex::cyan},
+        {"light_red", ColorIndex::light_red},
+        {"gold", ColorIndex::gold},
+        {"white2", ColorIndex::white2},
+        {"light_brown", ColorIndex::light_brown},
+        {"dark_green", ColorIndex::dark_green},
+        {"light_grey", ColorIndex::light_grey},
+        {"pale_red", ColorIndex::pale_red},
+        {"light_blue", ColorIndex::light_blue},
+        {"light_purple", ColorIndex::light_purple},
+        {"light_green", ColorIndex::light_green},
+        {"yellow_green", ColorIndex::yellow_green},
+        {"random_furniture", ColorIndex::random_furniture},
+        {"random_seeded", ColorIndex::random_seeded},
+        {"random_any", ColorIndex::random_any},
     }};
 
 
@@ -88,10 +101,10 @@ EnumMap<ColorIndex> ColorIndexTable{
  */
 EnumMap<CurseState> CurseStateTable{"CurseState",
                                     {
-                                        {"Doomed", CurseState::doomed},
-                                        {"Cursed", CurseState::cursed},
-                                        {"None", CurseState::none},
-                                        {"Blessed", CurseState::blessed},
+                                        {"doomed", CurseState::doomed},
+                                        {"cursed", CurseState::cursed},
+                                        {"none", CurseState::none},
+                                        {"blessed", CurseState::blessed},
                                     }};
 
 
@@ -105,10 +118,10 @@ EnumMap<CurseState> CurseStateTable{"CurseState",
 EnumMap<IdentifyState> IdentifyStateTable{
     "IdentifyState",
     {
-        {"Unidentified", IdentifyState::unidentified},
-        {"Partly", IdentifyState::partly},
-        {"Almost", IdentifyState::almost},
-        {"Completely", IdentifyState::completely},
+        {"unidentified", IdentifyState::unidentified},
+        {"partly", IdentifyState::partly},
+        {"almost", IdentifyState::almost},
+        {"completely", IdentifyState::completely},
     }};
 
 
@@ -121,17 +134,17 @@ EnumMap<IdentifyState> IdentifyStateTable{
 EnumMap<StatusAilment> StatusAilmentTable{
     "StatusAilment",
     {
-        {"Blinded", StatusAilment::blinded},
-        {"Confused", StatusAilment::confused},
-        {"Paralyzed", StatusAilment::paralyzed},
-        {"Poisoned", StatusAilment::poisoned},
-        {"Sleep", StatusAilment::sleep},
-        {"Fear", StatusAilment::fear},
-        {"Dimmed", StatusAilment::dimmed},
-        {"Bleeding", StatusAilment::bleeding},
-        {"Drunk", StatusAilment::drunk},
-        {"Insane", StatusAilment::insane},
-        {"Sick", StatusAilment::sick},
+        {"blinded", StatusAilment::blinded},
+        {"confused", StatusAilment::confused},
+        {"paralyzed", StatusAilment::paralyzed},
+        {"poisoned", StatusAilment::poisoned},
+        {"sleep", StatusAilment::sleep},
+        {"fear", StatusAilment::fear},
+        {"dimmed", StatusAilment::dimmed},
+        {"bleeding", StatusAilment::bleeding},
+        {"drunk", StatusAilment::drunk},
+        {"insane", StatusAilment::insane},
+        {"sick", StatusAilment::sick},
     }};
 
 /**
@@ -141,21 +154,21 @@ EnumMap<StatusAilment> StatusAilmentTable{
  */
 EnumMap<Element> ElementTable{"Element",
                               {
-                                  {"Fire", Element::fire},
-                                  {"Cold", Element::cold},
-                                  {"Lightning", Element::lightning},
-                                  {"Darkness", Element::darkness},
-                                  {"Mind", Element::mind},
-                                  {"Poison", Element::poison},
-                                  {"Nether", Element::nether},
-                                  {"Sound", Element::sound},
-                                  {"Nerve", Element::nerve},
-                                  {"Chaos", Element::chaos},
-                                  {"Magic", Element::magic},
-                                  {"Cut", Element::cut},
-                                  {"Ether", Element::ether},
-                                  {"Acid", Element::acid},
-                                  {"Vorpal", Element::vorpal},
+                                  {"fire", Element::fire},
+                                  {"cold", Element::cold},
+                                  {"lightning", Element::lightning},
+                                  {"darkness", Element::darkness},
+                                  {"mind", Element::mind},
+                                  {"poison", Element::poison},
+                                  {"nether", Element::nether},
+                                  {"sound", Element::sound},
+                                  {"nerve", Element::nerve},
+                                  {"chaos", Element::chaos},
+                                  {"magic", Element::magic},
+                                  {"cut", Element::cut},
+                                  {"ether", Element::ether},
+                                  {"acid", Element::acid},
+                                  {"vorpal", Element::vorpal},
                               }};
 
 
@@ -167,11 +180,11 @@ EnumMap<Element> ElementTable{"Element",
  */
 EnumMap<TileKind> TileKindTable{"TileKind",
                                 {
-                                    {"Normal", TileKind::normal},
-                                    {"Wall", TileKind::wall},
-                                    {"Tunnel", TileKind::tunnel},
-                                    {"Room", TileKind::room},
-                                    {"Fog", TileKind::fog},
+                                    {"normal", TileKind::normal},
+                                    {"wall", TileKind::wall},
+                                    {"tunnel", TileKind::tunnel},
+                                    {"room", TileKind::room},
+                                    {"fog", TileKind::fog},
                                 }};
 
 /**
@@ -181,13 +194,13 @@ EnumMap<TileKind> TileKindTable{"TileKind",
  */
 EnumMap<Quality> QualityTable{"Quality",
                               {
-                                  {"None", Quality::none},
-                                  {"Bad", Quality::bad},
-                                  {"Good", Quality::good},
-                                  {"Great", Quality::great},
-                                  {"Miracle", Quality::miracle},
-                                  {"Godly", Quality::godly},
-                                  {"Special", Quality::special},
+                                  {"none", Quality::none},
+                                  {"bad", Quality::bad},
+                                  {"good", Quality::good},
+                                  {"great", Quality::great},
+                                  {"miracle", Quality::miracle},
+                                  {"godly", Quality::godly},
+                                  {"special", Quality::special},
                               }};
 
 /**
@@ -198,9 +211,9 @@ EnumMap<Quality> QualityTable{"Quality",
  */
 EnumMap<BuffType> BuffTypeTable{"Buff",
                                 {
-                                    {"Buff", BuffType::buff},
-                                    {"Hex", BuffType::hex},
-                                    {"Food", BuffType::food},
+                                    {"buff", BuffType::buff},
+                                    {"hex", BuffType::hex},
+                                    {"food", BuffType::food},
                                 }};
 
 /**
@@ -211,17 +224,17 @@ EnumMap<BuffType> BuffTypeTable{"Buff",
 EnumMap<mdata_t::MapType> MapTypeTable{
     "MapType",
     {
-        {"WorldMap", mdata_t::MapType::world_map},
-        {"Guild", mdata_t::MapType::guild},
-        {"Town", mdata_t::MapType::town},
-        {"Field", mdata_t::MapType::field},
-        {"PlayerOwned", mdata_t::MapType::player_owned},
-        {"Shelter", mdata_t::MapType::shelter},
-        {"Temporary", mdata_t::MapType::temporary},
-        {"Dungeon", mdata_t::MapType::dungeon},
-        {"DungeonTower", mdata_t::MapType::dungeon_tower},
-        {"DungeonForest", mdata_t::MapType::dungeon_forest},
-        {"DungeonCastle", mdata_t::MapType::dungeon_castle},
+        {"world_map", mdata_t::MapType::world_map},
+        {"guild", mdata_t::MapType::guild},
+        {"town", mdata_t::MapType::town},
+        {"field", mdata_t::MapType::field},
+        {"player_owned", mdata_t::MapType::player_owned},
+        {"shelter", mdata_t::MapType::shelter},
+        {"temporary", mdata_t::MapType::temporary},
+        {"dungeon", mdata_t::MapType::dungeon},
+        {"dungeon_tower", mdata_t::MapType::dungeon_tower},
+        {"dungeon_forest", mdata_t::MapType::dungeon_forest},
+        {"dungeon_castle", mdata_t::MapType::dungeon_castle},
     }};
 
 /**
@@ -232,14 +245,14 @@ EnumMap<mdata_t::MapType> MapTypeTable{
  */
 EnumMap<int> MapEntranceTypeTable{"MapEntranceType",
                                   {
-                                      {"StairUp", 1},
-                                      {"StairDown", 2},
-                                      {"Custom", 3},
-                                      {"Center", 4},
-                                      {"Random", 5},
-                                      {"WorldMapPos", 6},
-                                      {"Specified", 7},
-                                      {"South", 8},
+                                      {"stair_up", 1},
+                                      {"stair_down", 2},
+                                      {"custom", 3},
+                                      {"center", 4},
+                                      {"random", 5},
+                                      {"world_map_pos", 6},
+                                      {"specified", 7},
+                                      {"south", 8},
                                   }};
 
 /**
@@ -249,8 +262,8 @@ EnumMap<int> MapEntranceTypeTable{"MapEntranceType",
  */
 EnumMap<int> MapTilesetTable{"MapTileset",
                              {
-                                 {"Normal", 1},
-                                 {"WorldMap", 2},
+                                 {"normal", 1},
+                                 {"world_map", 2},
                              }};
 
 // TODO: convert the following to enum class.
@@ -262,9 +275,9 @@ EnumMap<int> MapTilesetTable{"MapTileset",
  */
 EnumMap<int> GenderTable{"Gender",
                          {
-                             {"Random", -1},
-                             {"Male", 0},
-                             {"Female", 1},
+                             {"random", -1},
+                             {"male", 0},
+                             {"female", 1},
                          }};
 
 /**
@@ -274,11 +287,11 @@ EnumMap<int> GenderTable{"Gender",
  */
 EnumMap<int> RelationshipTable{"Relationship",
                                {
-                                   {"Aggressive", -3},
-                                   {"Nonaggressive", -2},
-                                   {"Unconcerned", -1},
-                                   {"Neutral", 0},
-                                   {"Friend", 10},
+                                   {"aggressive", -3},
+                                   {"nonaggressive", -2},
+                                   {"unconcerned", -1},
+                                   {"neutral", 0},
+                                   {"friend", 10},
                                }};
 
 
@@ -294,68 +307,68 @@ EnumMap<int> CharaFlagTable{
     "CharaFlag",
     {
         // Intrinsic flags (reset on every character refresh)
-        {"IsFloating", 5},
-        {"IsInvisible", 6},
-        {"CanSeeInvisible", 7},
-        {"IsImmuneToConfusion", 8},
-        {"IsImmuneToBlindness", 9},
-        {"IsImmuneToFear", 10},
-        {"IsImmuneToSleep", 11},
-        {"IsImmuneToParalyzation", 12},
-        {"IsImmuneToPoison", 13},
-        {"CanDigestRottenFood", 14},
-        {"IsProtectedFromThieves", 15},
-        {"IsIncognito", 16},
-        {"DropsGold", 17},
-        {"Explodes", 18},
-        {"IsDeathMaster", 19},
-        {"CanCastRapidMagic", 20},
-        {"HasLayHand", 21},
-        {"IsSuitableForMount", 22},
-        {"Splits", 23},
-        {"HasCursedEquipments", 24},
-        {"IsUnsuitableForMount", 25},
-        {"IsImmuneToElementalDamage", 26},
-        {"Splits2", 27},
-        {"IsMetal", 28},
-        {"CuresBleedingQuickly", 29},
-        {"HasPowerBash", 30},
-        {"IsImmuneToMine", 31},
-        {"IsQuickTempered", 32},
+        {"is_floating", 5},
+        {"is_invisible", 6},
+        {"can_see_invisible", 7},
+        {"is_immune_to_confusion", 8},
+        {"is_immune_to_blindness", 9},
+        {"is_immune_to_fear", 10},
+        {"is_immune_to_sleep", 11},
+        {"is_immune_to_paralyzation", 12},
+        {"is_immune_to_poison", 13},
+        {"can_digest_rotten_food", 14},
+        {"is_protected_from_thieves", 15},
+        {"is_incognito", 16},
+        {"drops_gold", 17},
+        {"explodes", 18},
+        {"is_death_master", 19},
+        {"can_cast_rapid_magic", 20},
+        {"has_lay_hand", 21},
+        {"is_suitable_for_mount", 22},
+        {"splits", 23},
+        {"has_cursed_equipments", 24},
+        {"is_unsuitable_for_mount", 25},
+        {"is_immune_to_elemental_damage", 26},
+        {"splits2", 27},
+        {"is_metal", 28},
+        {"cures_bleeding_quickly", 29},
+        {"has_power_bash", 30},
+        {"is_immune_to_mine", 31},
+        {"is_quick_tempered", 32},
 
-        // Mutable flags
-        {"IsLivestock", 960},
-        {"IsMarried", 961},
-        {"HasMadeGene", 962},
-        {"IsEscorted", 963},
-        {"IsTemporary", 964},
-        {"IsSilent", 965},
-        {"HasBeenUsedStethoscope", 966},
-        {"HasOwnSprite", 967},
-        {"IsLeashed", 968},
-        {"IsContracting", 969},
-        {"IsQuestTarget", 970},
-        {"IsEscortedInSubQuest", 971},
-        {"WillExplodeSoon", 972},
-        {"IsSentencedDaeth", 973},
-        {"IsLayHandAvailable", 974},
-        {"IsRidden", 975},
-        {"IsLordOfDungeon", 976},
-        {"HasOwnName", 977},
-        {"IsPregnant", 978},
-        {"IsNotAttackedByEnemy", 979},
-        {"IsContractingWithReaper", 980},
-        {"NeedsRefreshingStatus", 981},
-        {"VisitedJustNow", 982},
-        {"BreaksIntoDebris", 983},
-        {"IsBestFriend", 984},
-        {"IsHungOnSandBag", 985},
-        {"HasAnorexia", 986},
-        {"WasPassedItemByYouJustNow", 987},
-        {"CuresMpFrequently", 988},
-        {"HasCustomTalk", 989},
-        {"HasLearnedWords", 990},
-        {"OnlyChristmas", 991},
+        // _mutable flags
+        {"is_livestock", 960},
+        {"is_married", 961},
+        {"has_made_gene", 962},
+        {"is_escorted", 963},
+        {"is_temporary", 964},
+        {"is_silent", 965},
+        {"has_been_used_stethoscope", 966},
+        {"has_own_sprite", 967},
+        {"is_leashed", 968},
+        {"is_contracting", 969},
+        {"is_quest_target", 970},
+        {"is_escorted_in_sub_quest", 971},
+        {"will_explode_soon", 972},
+        {"is_sentenced_daeth", 973},
+        {"is_lay_hand_available", 974},
+        {"is_ridden", 975},
+        {"is_lord_of_dungeon", 976},
+        {"has_own_name", 977},
+        {"is_pregnant", 978},
+        {"is_not_attacked_by_enemy", 979},
+        {"is_contracting_with_reaper", 980},
+        {"needs_refreshing_status", 981},
+        {"visited_just_now", 982},
+        {"breaks_into_debris", 983},
+        {"is_best_friend", 984},
+        {"is_hung_on_sand_bag", 985},
+        {"has_anorexia", 986},
+        {"was_passed_item_by_you_just_now", 987},
+        {"cures_mp_frequently", 988},
+        {"has_custom_talk", 989},
+        {"has_learned_words", 990},
+        {"only_christmas", 991},
     }};
 
 
@@ -367,10 +380,10 @@ EnumMap<int> CharaFlagTable{
  */
 EnumMap<int> TraitTypeTable{"TraitType",
                             {
-                                {"Feat", 0},
-                                {"Mutation", 1},
-                                {"Nature", 2},
-                                {"EtherDisease", 3},
+                                {"feat", 0},
+                                {"mutation", 1},
+                                {"nature", 2},
+                                {"ether_disease", 3},
                             }};
 
 /**
@@ -382,8 +395,8 @@ EnumMap<int> TraitTypeTable{"TraitType",
 EnumMap<CharaFindLocation> CharaFindLocationTable{
     "CharaFindLocation",
     {
-        {"Allies", CharaFindLocation::allies},
-        {"Others", CharaFindLocation::others},
+        {"allies", CharaFindLocation::allies},
+        {"others", CharaFindLocation::others},
     }};
 
 /**
@@ -395,9 +408,9 @@ EnumMap<CharaFindLocation> CharaFindLocationTable{
 EnumMap<ItemFindLocation> ItemFindLocationTable{
     "ItemFindLocation",
     {
-        {"PlayerInventory", ItemFindLocation::player_inventory},
-        {"Ground", ItemFindLocation::ground},
-        {"PlayerInventoryAndGround",
+        {"player_inventory", ItemFindLocation::player_inventory},
+        {"ground", ItemFindLocation::ground},
+        {"player_inventory_and_ground",
          ItemFindLocation::player_inventory_and_ground},
     }};
 
@@ -410,12 +423,12 @@ EnumMap<ItemFindLocation> ItemFindLocationTable{
 EnumMap<ControlAllyOperation> ControlAllyOperationTable{
     "ControlAllyOperation",
     {
-        {"CallBack", ControlAllyOperation::call_back},
-        {"Sell", ControlAllyOperation::sell},
-        {"PetArena", ControlAllyOperation::pet_arena},
-        {"Staying", ControlAllyOperation::staying},
-        {"Investigate", ControlAllyOperation::investigate},
-        {"GeneEngineer", ControlAllyOperation::gene_engineer},
+        {"call_back", ControlAllyOperation::call_back},
+        {"sell", ControlAllyOperation::sell},
+        {"pet_arena", ControlAllyOperation::pet_arena},
+        {"staying", ControlAllyOperation::staying},
+        {"investigate", ControlAllyOperation::investigate},
+        {"gene_engineer", ControlAllyOperation::gene_engineer},
     }};
 
 /**
@@ -427,10 +440,10 @@ EnumMap<ControlAllyOperation> ControlAllyOperationTable{
 EnumMap<RandomTitleType> RandomTitleTypeTable{
     "RandomTitleType",
     {
-        {"Character", RandomTitleType::character},
-        {"Weapon", RandomTitleType::weapon},
-        {"Party", RandomTitleType::party},
-        {"LivingWeapon", RandomTitleType::living_weapon},
+        {"character", RandomTitleType::character},
+        {"weapon", RandomTitleType::weapon},
+        {"party", RandomTitleType::party},
+        {"living_weapon", RandomTitleType::living_weapon},
     }};
 
 /**
@@ -442,10 +455,10 @@ EnumMap<RandomTitleType> RandomTitleTypeTable{
 EnumMap<WishMatchType> WishMatchTypeTable{
     "WishMatchType",
     {
-        {"Prefix", WishMatchType::prefix},
-        {"Suffix", WishMatchType::suffix},
-        {"Include", WishMatchType::include},
-        {"Perfect", WishMatchType::perfect},
+        {"prefix", WishMatchType::prefix},
+        {"suffix", WishMatchType::suffix},
+        {"include", WishMatchType::include},
+        {"perfect", WishMatchType::perfect},
     }};
 
 /**
@@ -457,44 +470,17 @@ EnumMap<WishMatchType> WishMatchTypeTable{
 EnumMap<WishHook> WishHookTable{
     "WishHook",
     {
-        {"First", WishHook::first},
-        {"BeforeVanillaSpecial", WishHook::before_vanilla_special},
-        {"AfterVanillaSpecial", WishHook::after_vanilla_special},
-        {"BeforeVanillaItem", WishHook::before_vanilla_item},
-        {"AfterVanillaItem", WishHook::after_vanilla_item},
-        {"BeforeVanillaSkill", WishHook::before_vanilla_skill},
-        {"AfterVanillaSkill", WishHook::after_vanilla_skill},
-        {"Last", WishHook::last},
+        {"first", WishHook::first},
+        {"before_vanilla_special", WishHook::before_vanilla_special},
+        {"after_vanilla_special", WishHook::after_vanilla_special},
+        {"before_vanilla_item", WishHook::before_vanilla_item},
+        {"after_vanilla_item", WishHook::after_vanilla_item},
+        {"before_vanilla_skill", WishHook::before_vanilla_skill},
+        {"after_vanilla_skill", WishHook::after_vanilla_skill},
+        {"last", WishHook::last},
     }};
 
 } // namespace LuaEnums
-
-void LuaEnums::bind(sol::table& game)
-{
-    sol::table Enums = game.create_named("Enums");
-
-    DamageSourceTable.bind(Enums);
-    ColorIndexTable.bind(Enums);
-    CurseStateTable.bind(Enums);
-    IdentifyStateTable.bind(Enums);
-    StatusAilmentTable.bind(Enums);
-    ElementTable.bind(Enums);
-    TileKindTable.bind(Enums);
-    MapTypeTable.bind(Enums);
-    MapEntranceTypeTable.bind(Enums);
-    MapTilesetTable.bind(Enums);
-    GenderTable.bind(Enums);
-    RelationshipTable.bind(Enums);
-    CharaFlagTable.bind(Enums);
-    QualityTable.bind(Enums);
-    TraitTypeTable.bind(Enums);
-    CharaFindLocationTable.bind(Enums);
-    ItemFindLocationTable.bind(Enums);
-    ControlAllyOperationTable.bind(Enums);
-    RandomTitleTypeTable.bind(Enums);
-    WishMatchTypeTable.bind(Enums);
-    WishHookTable.bind(Enums);
-}
 
 } // namespace lua
 } // namespace elona

@@ -18,7 +18,7 @@ return {
          text = {
             {"dialog._0", args = function()
                 local sex
-                if Chara.player().sex == "Female" then
+                if Chara.player().sex == "female" then
                    sex = 1
                 else
                    sex = 0

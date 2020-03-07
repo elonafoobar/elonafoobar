@@ -17,7 +17,7 @@ end
 local function upgrade_cargo_limit()
    local cost = upgrade_cart_cost()
    local amount = upgrade_cart_amount()
-   local small_medals = Item.find("core.small_medal", "PlayerInventory")
+   local small_medals = Item.find("core.small_medal", "player_inventory")
 
    GUI.txtnew()
    GUI.txt(I18N.get(
@@ -62,7 +62,7 @@ return {
          choices = function()
             local choices = {}
             local cost = upgrade_cart_cost()
-            local small_medals = Item.find("core.small_medal", "PlayerInventory")
+            local small_medals = Item.find("core.small_medal", "player_inventory")
             if small_medals ~= nil then
                if small_medals.number >= cost then
                   table.insert(choices, {"upgrade_cart_give", "upgrade_cart.choices.give"})

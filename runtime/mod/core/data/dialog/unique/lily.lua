@@ -10,7 +10,7 @@ local table = table
 local common = require("data/dialog/common")
 
 local function give_potion()
-   local potion = Item.find("core.potion_of_cure_corruption", "PlayerInventory")
+   local potion = Item.find("core.potion_of_cure_corruption", "player_inventory")
    potion.number = potion.number - 1
    GUI.txt(I18N.get("core.talk.unique.lily.progress.end_life.give.you_hand_her"))
    GUI.play_sound("core.equip1")
@@ -65,7 +65,7 @@ return {
          },
          on_finish = function(t)
             Internal.set_quest_flag("pael_and_her_mom", 1000)
-            t.speaker:set_flag("IsSilent", true)
+            t.speaker:set_flag("is_silent", true)
          end
       },
 
@@ -75,7 +75,7 @@ return {
          },
          choices = function()
             local choices = {}
-            local potion = Item.find("core.potion_of_cure_corruption", "PlayerInventory")
+            local potion = Item.find("core.potion_of_cure_corruption", "player_inventory")
             if potion ~= nil then
                table.insert(choices, {"festival_give", "progress.festival.choices.give"})
             end
@@ -104,7 +104,7 @@ return {
          },
          choices = function()
             local choices = {}
-            local potion = Item.find("core.potion_of_cure_corruption", "PlayerInventory")
+            local potion = Item.find("core.potion_of_cure_corruption", "player_inventory")
             if potion ~= nil then
                table.insert(choices, {"end_life_give", "progress.end_life.choices.give"})
             end

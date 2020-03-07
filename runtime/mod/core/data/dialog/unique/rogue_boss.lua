@@ -50,7 +50,7 @@ return {
                "ambush.dialog",
                args = function(t)
                   return {
-                     World.random_title("Party"),
+                     World.random_title("party"),
                      surrender_cost(),
                      t.speaker
                   }

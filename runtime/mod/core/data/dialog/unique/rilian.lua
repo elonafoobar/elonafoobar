@@ -51,7 +51,7 @@ return {
          },
       },
       quest_check = function()
-         if Chara.find("core.poppy", "Allies") == nil then
+         if Chara.find("core.poppy", "allies") == nil then
             return "quest_waiting"
          end
 
@@ -75,7 +75,7 @@ return {
 
             Internal.set_quest_flag("puppys_cave", 1000)
 
-            Chara.find("core.poppy", "Allies"):vanquish()
+            Chara.find("core.poppy", "allies"):vanquish()
             local poppy = Chara.create(31, 4, "core.poppy")
             poppy.role = 3
          end
