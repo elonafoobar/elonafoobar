@@ -31,14 +31,6 @@ namespace LuaApiEnv
  * Elona foobar version. E.g., "1.2.3"
  */
 
-/**
- * @luadoc MOD_API_VERSION field string
- *
- * Mod API Version.
- * ***WARNING***: it always returns "0.1" so far, and *not* incremented every
- * release until the mod API is stabilized.
- */
-
 void bind(sol::table& api_table)
 {
     LUA_API_BIND_CONSTANT(
@@ -46,10 +38,6 @@ void bind(sol::table& api_table)
     LUA_API_BIND_CONSTANT(api_table, ELONA_VERSION, "1.22");
     LUA_API_BIND_CONSTANT(
         api_table, ELONA_FOOBAR_VERSION, latest_version.short_string());
-
-    // TODO: you need to define it properly after mod API is stabilized!
-    // Currently it always returns "0.1".
-    LUA_API_BIND_CONSTANT(api_table, MOD_API_VERSION, "0.1");
 }
 
 } // namespace LuaApiEnv
