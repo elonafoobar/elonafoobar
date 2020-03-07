@@ -54,7 +54,8 @@ EnumMap<DamageSource> DamageSourceTable{
         {"guillotine", DamageSource::guillotine},
         {"hanging", DamageSource::hanging},
         {"mochi", DamageSource::mochi},
-    }};
+    },
+};
 
 
 /**
@@ -89,7 +90,8 @@ EnumMap<ColorIndex> ColorIndexTable{
         {"random_furniture", ColorIndex::random_furniture},
         {"random_seeded", ColorIndex::random_seeded},
         {"random_any", ColorIndex::random_any},
-    }};
+    },
+};
 
 
 /**
@@ -99,13 +101,15 @@ EnumMap<ColorIndex> ColorIndexTable{
  * @usage local item = Item.create(10, 10, "core.putitoro", 3)
  * item.curse_state = "Blessed"
  */
-EnumMap<CurseState> CurseStateTable{"CurseState",
-                                    {
-                                        {"doomed", CurseState::doomed},
-                                        {"cursed", CurseState::cursed},
-                                        {"none", CurseState::none},
-                                        {"blessed", CurseState::blessed},
-                                    }};
+EnumMap<CurseState> CurseStateTable{
+    "CurseState",
+    {
+        {"doomed", CurseState::doomed},
+        {"cursed", CurseState::cursed},
+        {"none", CurseState::none},
+        {"blessed", CurseState::blessed},
+    },
+};
 
 
 /**
@@ -122,7 +126,8 @@ EnumMap<IdentifyState> IdentifyStateTable{
         {"partly", IdentifyState::partly},
         {"almost", IdentifyState::almost},
         {"completely", IdentifyState::completely},
-    }};
+    },
+};
 
 
 /**
@@ -145,31 +150,34 @@ EnumMap<StatusAilment> StatusAilmentTable{
         {"drunk", StatusAilment::drunk},
         {"insane", StatusAilment::insane},
         {"sick", StatusAilment::sick},
-    }};
+    },
+};
 
 /**
  * @luadoc
  *
  * A type of elemental damage.
  */
-EnumMap<Element> ElementTable{"Element",
-                              {
-                                  {"fire", Element::fire},
-                                  {"cold", Element::cold},
-                                  {"lightning", Element::lightning},
-                                  {"darkness", Element::darkness},
-                                  {"mind", Element::mind},
-                                  {"poison", Element::poison},
-                                  {"nether", Element::nether},
-                                  {"sound", Element::sound},
-                                  {"nerve", Element::nerve},
-                                  {"chaos", Element::chaos},
-                                  {"magic", Element::magic},
-                                  {"cut", Element::cut},
-                                  {"ether", Element::ether},
-                                  {"acid", Element::acid},
-                                  {"vorpal", Element::vorpal},
-                              }};
+EnumMap<Element> ElementTable{
+    "Element",
+    {
+        {"fire", Element::fire},
+        {"cold", Element::cold},
+        {"lightning", Element::lightning},
+        {"darkness", Element::darkness},
+        {"mind", Element::mind},
+        {"poison", Element::poison},
+        {"nether", Element::nether},
+        {"sound", Element::sound},
+        {"nerve", Element::nerve},
+        {"chaos", Element::chaos},
+        {"magic", Element::magic},
+        {"cut", Element::cut},
+        {"ether", Element::ether},
+        {"acid", Element::acid},
+        {"vorpal", Element::vorpal},
+    },
+};
 
 
 /**
@@ -178,30 +186,34 @@ EnumMap<Element> ElementTable{"Element",
  * A kind of tile to be used with <code>Map.generate_tile</code>.
  * @see Map.generate_tile
  */
-EnumMap<TileKind> TileKindTable{"TileKind",
-                                {
-                                    {"normal", TileKind::normal},
-                                    {"wall", TileKind::wall},
-                                    {"tunnel", TileKind::tunnel},
-                                    {"room", TileKind::room},
-                                    {"fog", TileKind::fog},
-                                }};
+EnumMap<TileKind> TileKindTable{
+    "TileKind",
+    {
+        {"normal", TileKind::normal},
+        {"wall", TileKind::wall},
+        {"tunnel", TileKind::tunnel},
+        {"room", TileKind::room},
+        {"fog", TileKind::fog},
+    },
+};
 
 /**
  * @luadoc
  *
  * The quality of randomly generated equipment.
  */
-EnumMap<Quality> QualityTable{"Quality",
-                              {
-                                  {"none", Quality::none},
-                                  {"bad", Quality::bad},
-                                  {"good", Quality::good},
-                                  {"great", Quality::great},
-                                  {"miracle", Quality::miracle},
-                                  {"godly", Quality::godly},
-                                  {"special", Quality::special},
-                              }};
+EnumMap<Quality> QualityTable{
+    "Quality",
+    {
+        {"none", Quality::none},
+        {"bad", Quality::bad},
+        {"good", Quality::good},
+        {"great", Quality::great},
+        {"miracle", Quality::miracle},
+        {"godly", Quality::godly},
+        {"special", Quality::special},
+    },
+};
 
 /**
  * @luadoc
@@ -209,12 +221,14 @@ EnumMap<Quality> QualityTable{"Quality",
  * The type of a buff. Food buffs are lost when vomiting. Hex buffs can be
  * removed with Holy Light/Vanquish Hex, and can be resisted.
  */
-EnumMap<BuffType> BuffTypeTable{"Buff",
-                                {
-                                    {"buff", BuffType::buff},
-                                    {"hex", BuffType::hex},
-                                    {"food", BuffType::food},
-                                }};
+EnumMap<BuffType> BuffTypeTable{
+    "Buff",
+    {
+        {"buff", BuffType::buff},
+        {"hex", BuffType::hex},
+        {"food", BuffType::food},
+    },
+};
 
 /**
  * @luadoc
@@ -235,7 +249,8 @@ EnumMap<mdata_t::MapType> MapTypeTable{
         {"dungeon_tower", mdata_t::MapType::dungeon_tower},
         {"dungeon_forest", mdata_t::MapType::dungeon_forest},
         {"dungeon_castle", mdata_t::MapType::dungeon_castle},
-    }};
+    },
+};
 
 /**
  * @luadoc
@@ -243,28 +258,32 @@ EnumMap<mdata_t::MapType> MapTypeTable{
  * Determines how the player should be spawned in a map when entering it for the
  * first time.
  */
-EnumMap<int> MapEntranceTypeTable{"MapEntranceType",
-                                  {
-                                      {"stair_up", 1},
-                                      {"stair_down", 2},
-                                      {"custom", 3},
-                                      {"center", 4},
-                                      {"random", 5},
-                                      {"world_map_pos", 6},
-                                      {"specified", 7},
-                                      {"south", 8},
-                                  }};
+EnumMap<int> MapEntranceTypeTable{
+    "MapEntranceType",
+    {
+        {"stair_up", 1},
+        {"stair_down", 2},
+        {"custom", 3},
+        {"center", 4},
+        {"random", 5},
+        {"world_map_pos", 6},
+        {"specified", 7},
+        {"south", 8},
+    },
+};
 
 /**
  * @luadoc
  *
  * Indicates which map tile atlas to use for a map.
  */
-EnumMap<int> MapTilesetTable{"MapTileset",
-                             {
-                                 {"normal", 1},
-                                 {"world_map", 2},
-                             }};
+EnumMap<int> MapTilesetTable{
+    "MapTileset",
+    {
+        {"normal", 1},
+        {"world_map", 2},
+    },
+};
 
 // TODO: convert the following to enum class.
 
@@ -273,26 +292,30 @@ EnumMap<int> MapTilesetTable{"MapTileset",
  *
  * Possible genders of a character.
  */
-EnumMap<int> GenderTable{"Gender",
-                         {
-                             {"random", -1},
-                             {"male", 0},
-                             {"female", 1},
-                         }};
+EnumMap<int> GenderTable{
+    "Gender",
+    {
+        {"random", -1},
+        {"male", 0},
+        {"female", 1},
+    },
+};
 
 /**
  * @luadoc
  *
  * Relationship of a character to the player.
  */
-EnumMap<int> RelationshipTable{"Relationship",
-                               {
-                                   {"aggressive", -3},
-                                   {"nonaggressive", -2},
-                                   {"unconcerned", -1},
-                                   {"neutral", 0},
-                                   {"friend", 10},
-                               }};
+EnumMap<int> RelationshipTable{
+    "Relationship",
+    {
+        {"aggressive", -3},
+        {"nonaggressive", -2},
+        {"unconcerned", -1},
+        {"neutral", 0},
+        {"friend", 10},
+    },
+};
 
 
 /**
@@ -369,7 +392,8 @@ EnumMap<int> CharaFlagTable{
         {"has_custom_talk", 989},
         {"has_learned_words", 990},
         {"only_christmas", 991},
-    }};
+    },
+};
 
 
 
@@ -378,13 +402,15 @@ EnumMap<int> CharaFlagTable{
  *
  * The types of traits available.
  */
-EnumMap<int> TraitTypeTable{"TraitType",
-                            {
-                                {"feat", 0},
-                                {"mutation", 1},
-                                {"nature", 2},
-                                {"ether_disease", 3},
-                            }};
+EnumMap<int> TraitTypeTable{
+    "TraitType",
+    {
+        {"feat", 0},
+        {"mutation", 1},
+        {"nature", 2},
+        {"ether_disease", 3},
+    },
+};
 
 /**
  * @luadoc
@@ -397,7 +423,8 @@ EnumMap<CharaFindLocation> CharaFindLocationTable{
     {
         {"allies", CharaFindLocation::allies},
         {"others", CharaFindLocation::others},
-    }};
+    },
+};
 
 /**
  * @luadoc
@@ -412,7 +439,8 @@ EnumMap<ItemFindLocation> ItemFindLocationTable{
         {"ground", ItemFindLocation::ground},
         {"player_inventory_and_ground",
          ItemFindLocation::player_inventory_and_ground},
-    }};
+    },
+};
 
 /**
  * @luadoc
@@ -429,7 +457,8 @@ EnumMap<ControlAllyOperation> ControlAllyOperationTable{
         {"staying", ControlAllyOperation::staying},
         {"investigate", ControlAllyOperation::investigate},
         {"gene_engineer", ControlAllyOperation::gene_engineer},
-    }};
+    },
+};
 
 /**
  * @luadoc
@@ -444,7 +473,8 @@ EnumMap<RandomTitleType> RandomTitleTypeTable{
         {"weapon", RandomTitleType::weapon},
         {"party", RandomTitleType::party},
         {"living_weapon", RandomTitleType::living_weapon},
-    }};
+    },
+};
 
 /**
  * @luadoc
@@ -459,7 +489,8 @@ EnumMap<WishMatchType> WishMatchTypeTable{
         {"suffix", WishMatchType::suffix},
         {"include", WishMatchType::include},
         {"perfect", WishMatchType::perfect},
-    }};
+    },
+};
 
 /**
  * @luadoc
@@ -478,7 +509,8 @@ EnumMap<WishHook> WishHookTable{
         {"before_vanilla_skill", WishHook::before_vanilla_skill},
         {"after_vanilla_skill", WishHook::after_vanilla_skill},
         {"last", WishHook::last},
-    }};
+    },
+};
 
 } // namespace LuaEnums
 
