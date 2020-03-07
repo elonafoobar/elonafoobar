@@ -18,7 +18,7 @@
 #include "../input.hpp"
 #include "../item.hpp"
 #include "../macro.hpp"
-#include "../putit.hpp"
+#include "../serialization/serialization.hpp"
 #include "../text.hpp"
 #include "../ui.hpp"
 #include "../variables.hpp"
@@ -568,10 +568,12 @@ void Console::_init_builtin_lua_functions()
 
     funcs["dump"] = [this]() {
         std::stringstream ss;
-        putit::JsonOArchive::save(ss, cdata.player());
+        serialization::json::save(ss, cdata.player());
         ss << std::endl;
-        putit::JsonOArchive::save(ss, inv[0]);
+        serialization::json::save(ss, inv[0]);
         print(ss.str());
+
+        std::cerr << ss.str() << std::endl;
     };
 
     funcs["hello_world"] = []() { return "Hello, World!"; };

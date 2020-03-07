@@ -95,11 +95,6 @@ format: FORCE # Format all C++ source files.
 	git diff
 
 
-putit: FORCE # Generate serializers for save data.
-	python3 .\src\putit\bin\putit.py
-	git diff
-
-
 rebuild: clean build FORCE # Clean and build Elona.
 
 FORCE:

@@ -5,32 +5,42 @@
 #include <vector>
 
 #include "data/types/type_ability.hpp"
+#include "serialization/macros.hpp"
 
 
 
 namespace elona
 {
 
-/// @putit
 struct Ability
 {
     // NOTE: Don't add new fields unless you add them to serialization, which
     // will break save compatibility.
 
-    /// @putit
     int current_level = 0;
 
-    /// @putit
     int original_level = 0;
 
-    /// @putit
     int experience = 0;
 
-    /// @putit
     int potential = 0;
 
 
-#include "_putit/ability.cpp"
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Ability");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, current_level);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, original_level);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, experience);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, potential);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
+    }
 };
 
 

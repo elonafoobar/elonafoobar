@@ -1,8 +1,9 @@
+#include "../elona/serialization/serialization.hpp"
+
 #include <memory>
 #include <sstream>
 
 #include "../elona/character.hpp"
-#include "../elona/putit.hpp"
 #include "../thirdparty/hayai/hayai.hpp"
 
 using namespace elona;
@@ -27,13 +28,13 @@ public:
 
     void Write()
     {
-        putit::BinaryOArchive::save(ss, *c);
+        serialization::binary::save(ss, *c);
     }
 
 
     void Read()
     {
-        putit::BinaryIArchive::load(ss, *c);
+        serialization::binary::load(ss, *c);
     }
 
 

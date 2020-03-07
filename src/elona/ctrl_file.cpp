@@ -17,17 +17,17 @@
 #include "lua_env/mod_serializer.hpp"
 #include "map.hpp"
 #include "mef.hpp"
-#include "putit.hpp"
 #include "quest.hpp"
+#include "serialization/serialization.hpp"
 #include "variables.hpp"
 
-using namespace elona;
 
+
+namespace elona
+{
 
 namespace
 {
-
-
 
 elona_vector2<std::string> cdatan2;
 int elona_export;
@@ -216,7 +216,7 @@ void load_v1(
             u8"Could not open file at "s +
             filepathutil::to_utf8_path(filepath));
     }
-    putit::BinaryIArchive ar(in);
+    serialization::binary::IArchive ar(in);
     for (size_t i = begin; i < end; ++i)
     {
         ar(data(i));
@@ -238,7 +238,7 @@ void save_v1(
             u8"Could not open file at "s +
             filepathutil::to_utf8_path(filepath));
     }
-    putit::BinaryOArchive ar(out);
+    serialization::binary::OArchive ar(out);
     for (size_t i = begin; i < end; ++i)
     {
         ar(data(i));
@@ -262,7 +262,7 @@ void load_v2(
             u8"Could not open file at "s +
             filepathutil::to_utf8_path(filepath));
     }
-    putit::BinaryIArchive ar{in};
+    serialization::binary::IArchive ar{in};
     for (size_t j = j_begin; j < j_end; ++j)
     {
         for (size_t i = i_begin; i < i_end; ++i)
@@ -289,7 +289,7 @@ void save_v2(
             u8"Could not open file at "s +
             filepathutil::to_utf8_path(filepath));
     }
-    putit::BinaryOArchive ar{out};
+    serialization::binary::OArchive ar{out};
     for (size_t j = j_begin; j < j_end; ++j)
     {
         for (size_t i = i_begin; i < i_end; ++i)
@@ -318,7 +318,7 @@ void load_v3(
             u8"Could not open file at "s +
             filepathutil::to_utf8_path(filepath));
     }
-    putit::BinaryIArchive ar{in};
+    serialization::binary::IArchive ar{in};
     for (size_t k = k_begin; k < k_end; ++k)
     {
         for (size_t j = j_begin; j < j_end; ++j)
@@ -350,7 +350,7 @@ void save_v3(
             u8"Could not open file at "s +
             filepathutil::to_utf8_path(filepath));
     }
-    putit::BinaryOArchive ar{out};
+    serialization::binary::OArchive ar{out};
     for (size_t k = k_begin; k < k_end; ++k)
     {
         for (size_t j = j_begin; j < j_end; ++j)
@@ -374,7 +374,7 @@ void load(const fs::path& filepath, T& data, size_t begin, size_t end)
             u8"Could not open file at "s +
             filepathutil::to_utf8_path(filepath));
     }
-    putit::BinaryIArchive ar{in};
+    serialization::binary::IArchive ar{in};
     for (size_t i = begin; i < end; ++i)
     {
         ar(data[i]);
@@ -392,7 +392,7 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
             u8"Could not open file at "s +
             filepathutil::to_utf8_path(filepath));
     }
-    putit::BinaryOArchive ar{out};
+    serialization::binary::OArchive ar{out};
     for (size_t i = begin; i < end; ++i)
     {
         ar(data[i]);
@@ -439,7 +439,7 @@ void fmode_7_8(bool read, const fs::path& dir)
         else
         {
             auto v = latest_version;
-            putit::BinaryOArchive::save(filepath, v);
+            serialization::binary::save(filepath, v);
         }
     }
 
@@ -466,12 +466,12 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             if (fs::exists(filepath))
             {
-                putit::BinaryIArchive::load(filepath, foobar_data);
+                serialization::binary::load(filepath, foobar_data);
             }
         }
         else
         {
-            putit::BinaryOArchive::save(filepath, foobar_data);
+            serialization::binary::save(filepath, foobar_data);
         }
     }
 
@@ -501,7 +501,7 @@ void fmode_7_8(bool read, const fs::path& dir)
             if (fs::exists(filepath))
             {
                 std::ifstream in{filepath.native(), std::ios::binary};
-                putit::BinaryIArchive ar{in};
+                serialization::binary::IArchive ar{in};
                 for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
                 {
                     for (int i = 0; i < 600; ++i)
@@ -514,7 +514,7 @@ void fmode_7_8(bool read, const fs::path& dir)
         else
         {
             std::ofstream out{filepath.native(), std::ios::binary};
-            putit::BinaryOArchive ar{out};
+            serialization::binary::OArchive ar{out};
             for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
             {
                 for (int i = 0; i < 600; ++i)
@@ -790,7 +790,7 @@ void fmode_7_8(bool read, const fs::path& dir)
             if (fs::exists(filepath))
             {
                 std::ifstream in{filepath.native(), std::ios::binary};
-                putit::BinaryIArchive ar{in};
+                serialization::binary::IArchive ar{in};
                 mod_serializer.load_mod_store_data(
                     ar, lua::ModEnv::StoreType::global);
             }
@@ -798,7 +798,7 @@ void fmode_7_8(bool read, const fs::path& dir)
         else
         {
             std::ofstream out{filepath.native(), std::ios::binary};
-            putit::BinaryOArchive ar{out};
+            serialization::binary::OArchive ar{out};
             mod_serializer.save_mod_store_data(
                 ar, lua::ModEnv::StoreType::global);
         }
@@ -809,7 +809,7 @@ void fmode_7_8(bool read, const fs::path& dir)
         if (read)
         {
             std::ifstream in{filepath.native(), std::ios::binary};
-            putit::BinaryIArchive ar{in};
+            serialization::binary::IArchive ar{in};
             std::tie(index_start, index_end) =
                 mod_serializer.load_handles<Character>(
                     ar, lua::ModEnv::StoreType::global);
@@ -823,7 +823,7 @@ void fmode_7_8(bool read, const fs::path& dir)
         else
         {
             std::ofstream out{filepath.native(), std::ios::binary};
-            putit::BinaryOArchive ar{out};
+            serialization::binary::OArchive ar{out};
             mod_serializer.save_handles<Character>(
                 ar, lua::ModEnv::StoreType::global);
         }
@@ -834,7 +834,7 @@ void fmode_7_8(bool read, const fs::path& dir)
         if (read)
         {
             std::ifstream in{filepath.native(), std::ios::binary};
-            putit::BinaryIArchive ar{in};
+            serialization::binary::IArchive ar{in};
             std::tie(index_start, index_end) =
                 mod_serializer.load_handles<Item>(
                     ar, lua::ModEnv::StoreType::global);
@@ -848,7 +848,7 @@ void fmode_7_8(bool read, const fs::path& dir)
         else
         {
             std::ofstream out{filepath.native(), std::ios::binary};
-            putit::BinaryOArchive ar{out};
+            serialization::binary::OArchive ar{out};
             mod_serializer.save_handles<Item>(
                 ar, lua::ModEnv::StoreType::global);
         }
@@ -897,7 +897,7 @@ void fmode_14_15(bool read)
             if (fs::exists(filepath))
             {
                 std::ifstream in{filepath.native(), std::ios::binary};
-                putit::BinaryIArchive ar{in};
+                serialization::binary::IArchive ar{in};
                 for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
                 {
                     for (int i = 0; i < 600; ++i)
@@ -911,7 +911,7 @@ void fmode_14_15(bool read)
         {
             Save::instance().add(filepath.filename());
             std::ofstream out{filepath.native(), std::ios::binary};
-            putit::BinaryOArchive ar{out};
+            serialization::binary::OArchive ar{out};
             for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
             {
                 for (int i = 0; i < 600; ++i)
@@ -1106,7 +1106,7 @@ void fmode_1_2(bool read)
         {
             tmpload(u8"sdata_"s + mid + u8".s2");
             std::ifstream in{filepath.native(), std::ios::binary};
-            putit::BinaryIArchive ar{in};
+            serialization::binary::IArchive ar{in};
             for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
                  ++cc)
             {
@@ -1121,7 +1121,7 @@ void fmode_1_2(bool read)
             Save::instance().add(filepath.filename());
             writeloadedbuff(u8"sdata_"s + mid + u8".s2");
             std::ofstream out{filepath.native(), std::ios::binary};
-            putit::BinaryOArchive ar{out};
+            serialization::binary::OArchive ar{out};
             for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
                  ++cc)
             {
@@ -1180,7 +1180,7 @@ void fmode_1_2(bool read)
             tmpload(u8"mod_map_"s + mid + u8".s2");
 
             std::ifstream in{filepath.native(), std::ios::binary};
-            putit::BinaryIArchive ar{in};
+            serialization::binary::IArchive ar{in};
             mod_serializer.load_mod_store_data(ar, lua::ModEnv::StoreType::map);
         }
         else
@@ -1189,7 +1189,7 @@ void fmode_1_2(bool read)
             writeloadedbuff(u8"mod_map_"s + mid + u8".s2");
 
             std::ofstream out{filepath.native(), std::ios::binary};
-            putit::BinaryOArchive ar{out};
+            serialization::binary::OArchive ar{out};
             mod_serializer.save_mod_store_data(ar, lua::ModEnv::StoreType::map);
         }
     }
@@ -1202,7 +1202,7 @@ void fmode_1_2(bool read)
             tmpload(u8"mod_cdata_"s + mid + u8".s2");
 
             std::ifstream in{filepath.native(), std::ios::binary};
-            putit::BinaryIArchive ar{in};
+            serialization::binary::IArchive ar{in};
             std::tie(index_start, index_end) =
                 mod_serializer.load_handles<Character>(
                     ar, lua::ModEnv::StoreType::map);
@@ -1219,7 +1219,7 @@ void fmode_1_2(bool read)
             writeloadedbuff(u8"mod_cdata_"s + mid + u8".s2");
 
             std::ofstream out{filepath.native(), std::ios::binary};
-            putit::BinaryOArchive ar{out};
+            serialization::binary::OArchive ar{out};
             mod_serializer.save_handles<Character>(
                 ar, lua::ModEnv::StoreType::map);
         }
@@ -1348,7 +1348,7 @@ void fmode_3_4(bool read, const fs::path& filename)
         tmpload(mod_filename);
 
         std::ifstream in{mod_filepath.native(), std::ios::binary};
-        putit::BinaryIArchive ar{in};
+        serialization::binary::IArchive ar{in};
         std::tie(index_start, index_end) =
             mod_serializer.load_handles<Item>(ar, lua::ModEnv::StoreType::map);
 
@@ -1364,7 +1364,7 @@ void fmode_3_4(bool read, const fs::path& filename)
         tmpload(mod_filename);
 
         std::ofstream out{mod_filepath.native(), std::ios::binary};
-        putit::BinaryOArchive ar{out};
+        serialization::binary::OArchive ar{out};
         mod_serializer.save_handles<Item>(ar, lua::ModEnv::StoreType::map);
     }
 }
@@ -1409,7 +1409,7 @@ void fmode_17()
         const auto filepath = dir / (u8"sdata_"s + mid + u8".s2");
         tmpload(u8"sdata_"s + mid + u8".s2");
         std::ifstream in{filepath.native(), std::ios::binary};
-        putit::BinaryIArchive ar{in};
+        serialization::binary::IArchive ar{in};
         for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
              ++cc)
         {
@@ -1514,13 +1514,7 @@ void fmode_13()
     }
 }
 
-
-
 } // namespace
-
-
-namespace elona
-{
 
 
 
@@ -1682,7 +1676,5 @@ void writeloadedbuff_clear()
 {
     loaded_files.clear();
 }
-
-
 
 } // namespace elona
