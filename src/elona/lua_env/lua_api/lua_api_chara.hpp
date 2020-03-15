@@ -55,7 +55,7 @@ bool can_recruit_allies();
 void remove_from_party(LuaCharacterHandle);
 
 void bind(sol::table&);
-}; // namespace LuaApiChara
+} // namespace LuaApiChara
 
 } // namespace lua
 } // namespace elona

@@ -114,6 +114,9 @@ sol::optional<LuaItemHandle> LuaApiItem::create(
 sol::optional<LuaItemHandle>
 LuaApiItem::create_xy(int x, int y, sol::table args)
 {
+    // `libclang`, invoked from `tools/docgen`, fails to parse this function's
+    // body for some reason.
+#ifndef ELONA_DOCGEN
     int id = 0;
     int slot = -1;
     int number = 0;
@@ -202,6 +205,7 @@ LuaApiItem::create_xy(int x, int y, sol::table args)
     {
         return sol::nullopt;
     }
+#endif
 }
 
 /**
