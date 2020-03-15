@@ -467,7 +467,7 @@ void LuaApiMap::clear_feat_xy(int x, int y)
 
 
 /**
- * @ luadoc
+ * @luadoc
  *
  * Randomly sprays the map with the given tile type;
  */

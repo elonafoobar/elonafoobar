@@ -142,6 +142,10 @@ function set_feat(position, tile, param1, param2) end
 --  @function clear_feat
 function clear_feat(position) end
 
+--- Randomly sprays the map with the given tile type;
+--  @function spray_tile
+function spray_tile(tile, amount) end
+
 --- [R] The map data for the current map. This contains serialized values
 --  controlling various aspects of the current map.
 --  @tfield LuaMapData data
