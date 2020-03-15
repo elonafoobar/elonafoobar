@@ -4,18 +4,16 @@
 #include <sstream>
 #include <string>
 
+#include "serialization/macros.hpp"
+
 
 
 namespace elona
 {
 
-/// @putit
 struct Position
 {
-    /// @putit
     int x = 0;
-
-    /// @putit
     int y = 0;
 
     Position()
@@ -38,7 +36,19 @@ struct Position
     }
 
 
-#include "_putit/position.cpp"
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Position");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, x);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, y);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
+    }
 };
 
 

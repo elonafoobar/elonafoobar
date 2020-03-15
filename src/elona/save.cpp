@@ -9,8 +9,8 @@
 #include "i18n.hpp"
 #include "lua_env/lua_env.hpp"
 #include "message.hpp"
-#include "putit.hpp"
 #include "save_update.hpp"
+#include "serialization/serialization.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -89,7 +89,7 @@ void load_save_data()
         {
             std::ifstream in{(save_dir / "foobar_data.s1").native(),
                              std::ios::binary};
-            putit::BinaryIArchive ar{in};
+            serialization::binary::IArchive ar{in};
             ar(major);
             ar(minor);
             ar(patch);
@@ -102,7 +102,7 @@ void load_save_data()
         }
 
         Version v028 = {0, 2, 8, 0, "", "", ""};
-        putit::BinaryOArchive::save(save_dir / "version.s0", v028);
+        serialization::binary::save(save_dir / "version.s0", v028);
     }
 
     update_save_data(save_dir);

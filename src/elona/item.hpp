@@ -9,6 +9,7 @@
 #include "data/types/type_item.hpp"
 #include "enums.hpp"
 #include "position.hpp"
+#include "serialization/macros.hpp"
 #include "shared_id.hpp"
 
 
@@ -21,13 +22,9 @@ namespace elona
 {
 
 
-/// @putit
 struct Enchantment
 {
-    /// @putit
     int id = 0;
-
-    /// @putit
     int power = 0;
 
     bool operator==(const Enchantment& other) const noexcept
@@ -36,12 +33,23 @@ struct Enchantment
     }
 
 
-#include "_putit/enchantment.cpp"
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Enchantment");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, id);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, power);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
+    }
 };
 
 
 
-/// @putit
 struct Item
 {
 private:
@@ -58,103 +66,43 @@ public:
     int index = -1;
 
 private:
-    /// @putit
     int number_ = 0;
 
 public:
-    /// @putit
     int value = 0;
-
-    /// @putit
     int image = 0;
-
-    /// @putit
     ItemId id = ItemId::none;
-
-    /// @putit
     Quality quality = Quality::none;
-
-    /// @putit
     Position position;
-
-    /// @putit
     int weight = 0;
-
-    /// @putit
     IdentifyState identify_state = IdentifyState::unidentified;
-
-    /// @putit
     int count = 0;
-
-    /// @putit
     int dice_x = 0;
-
-    /// @putit
     int dice_y = 0;
-
-    /// @putit
     int damage_bonus = 0;
-
-    /// @putit
     int hit_bonus = 0;
-
-    /// @putit
     int dv = 0;
-
-    /// @putit
     int pv = 0;
-
-    /// @putit
     int skill = 0;
-
-    /// @putit
     CurseState curse_state = CurseState::none;
-
-    /// @putit
     int body_part = 0;
-
-    /// @putit
     int function = 0;
-
-    /// @putit
     int enhancement = 0;
-
-    /// @putit
     int own_state = 0;
-
-    /// @putit
     int color = 0;
-
-    /// @putit
     int subname = 0;
-
-    /// @putit
     int material = 0;
-
-    /// @putit
     int param1 = 0;
-
-    /// @putit
     int param2 = 0;
-
-    /// @putit
     int param3 = 0;
-
-    /// @putit
     int param4 = 0;
-
-    /// @putit
     int difficulty_of_identification = 0;
-
-    /// @putit
     int turn = 0;
 
 private:
-    /// @putit
     FlagSet _flags;
 
 public:
-    /// @putit
     std::vector<Enchantment> enchantments;
 
 
@@ -213,8 +161,6 @@ public:
 #undef ELONA_ITEM_DEFINE_FLAG_ACCESSOR
 
 
-#include "_putit/item.cpp"
-
 
     static void copy(const Item& from, Item& to)
     {
@@ -231,6 +177,52 @@ private:
     Item(Item&&) = default;
     Item& operator=(const Item&) = default;
     Item& operator=(Item&&) = default;
+
+
+
+public:
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Item");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "number", number_);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, value);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, image);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, id);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, quality);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, position);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, weight);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, identify_state);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, count);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dice_x);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dice_y);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, damage_bonus);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, hit_bonus);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dv);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, pv);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, skill);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, curse_state);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, body_part);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, function);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, enhancement);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, own_state);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, color);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, subname);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, material);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param1);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param2);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param3);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param4);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, difficulty_of_identification);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, turn);
+        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "flags", _flags);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, enchantments);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
+    }
 };
 
 

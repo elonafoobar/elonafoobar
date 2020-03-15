@@ -11,6 +11,7 @@
 #include "god.hpp"
 #include "lua_env/wrapped_function.hpp"
 #include "position.hpp"
+#include "serialization/macros.hpp"
 
 
 #define ELONA_MAX_CHARACTERS 245
@@ -26,25 +27,31 @@ struct Item;
 
 
 
-/// @putit
 struct Buff
 {
-    /// @putit
     int id = 0;
-
-    /// @putit
     int power = 0;
-
-    /// @putit
     int turns = 0;
 
 
-#include "_putit/buff.cpp"
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Buff");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, id);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, power);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, turns);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
+    }
 };
 
 
 
-/// @putit
 struct Activity
 {
     enum class Type : int
@@ -64,13 +71,8 @@ struct Activity
         blend,
     };
 
-    /// @putit
     Type type = Activity::Type::none;
-
-    /// @putit
     int turn = 0;
-
-    /// @putit
     int item = 0;
 
 
@@ -100,12 +102,24 @@ struct Activity
     }
 
 
-#include "_putit/activity.cpp"
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Activity");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, type);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, turn);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, item);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
+    }
 };
 
 
 
-/// @putit
 struct Character
 {
     enum class State : int
@@ -137,381 +151,135 @@ struct Character
     int index = -1;
 
 private:
-    /// @putit
     Character::State state_ = Character::State::empty;
 
 public:
-    /// @putit
     Position position;
-
-    /// @putit
     Position next_position;
-
-    /// @putit
     int time_to_revive = 0;
-
-    /// @putit
     int vision_flag = 0;
-
-    /// @putit
     int image = 0;
-
-    /// @putit
     int sex = 0;
-
-    /// @putit
     int relationship = 0;
-
-    /// @putit
     int turn_cost = 0;
-
-    /// @putit
     int current_speed = 0;
-
-    /// @putit
     int item_which_will_be_used = 0;
-
-    /// @putit
     std::string portrait;
-
-    /// @putit
     int interest = 0;
-
-    /// @putit
     int time_interest_revive = 0;
-
-    /// @putit
     int personality = 0;
-
-    /// @putit
     int impression = 0;
-
-    /// @putit
     int talk_type = 0;
-
-    /// @putit
     int height = 0;
-
-    /// @putit
     int weight = 0;
-
-    /// @putit
     int birth_year = 0;
-
-    /// @putit
     int nutrition = 0;
-
-    /// @putit
     int can_talk = 0;
-
-    /// @putit
     Quality quality = Quality::none;
-
-    /// @putit
     int turn = 0;
-
-    /// @putit
     CharaId id = CharaId::none;
-
-    /// @putit
     int vision_distance = 0;
-
-    /// @putit
     int enemy_id = 0;
-
-    /// @putit
     int gold = 0;
-
-    /// @putit
     int platinum_coin = 0;
-
-    /// @putit
     int equipment_type = 0;
-
-    /// @putit
     int melee_attack_type = 0;
-
-    /// @putit
     int fame = 0;
-
-    /// @putit
     int experience = 0;
-
-    /// @putit
     int required_experience = 0;
-
-    /// @putit
     int speed_percentage = 0;
-
-    /// @putit
     int level = 0;
-
-    /// @putit
     int speed_percentage_in_next_turn = 0;
-
-    /// @putit
     int skill_bonus = 0;
-
-    /// @putit
     int total_skill_bonus = 0;
-
-    /// @putit
     int inventory_weight = 0;
-
-    /// @putit
     int max_inventory_weight = 0;
-
-    /// @putit
     int inventory_weight_type = 0;
-
-    /// @putit
     int max_level = 0;
-
-    /// @putit
     int karma = 0;
-
-    /// @putit
     int hp = 0;
-
-    /// @putit
     int max_hp = 0;
-
-    /// @putit
     int sp = 0;
-
-    /// @putit
     int max_sp = 0;
-
-    /// @putit
     int mp = 0;
-
-    /// @putit
     int max_mp = 0;
-
-    /// @putit
     int heal_value_per_nether_attack = 0;
-
-    /// @putit
     GodId god_id;
-
-    /// @putit
     int piety_point = 0;
-
-    /// @putit
     int praying_point = 0;
-
-    /// @putit
     int sum_of_equipment_weight = 0;
-
-    /// @putit
     int special_attack_type = 0;
-
-    /// @putit
     int rate_to_pierce = 0;
-
-    /// @putit
     int rate_of_critical_hit = 0;
-
-    /// @putit
     int speed_correction_value = 0;
-
-    /// @putit
     int original_relationship = 0;
-
-    /// @putit
     int pv = 0;
-
-    /// @putit
     int dv = 0;
-
-    /// @putit
     int hit_bonus = 0;
-
-    /// @putit
     int damage_bonus = 0;
-
-    /// @putit
     int pv_correction_value = 0;
-
-    /// @putit
     int dv_correction_value = 0;
-
-    /// @putit
     int damage_reaction_info = 0;
-
-    /// @putit
     int emotion_icon = 0;
-
-    /// @putit
     int current_map = 0;
-
-    /// @putit
     int current_dungeon_level = 0;
-
-    /// @putit
     int related_quest_id = 0;
-
-    /// @putit
     int direction = 0;
-
-    /// @putit
     int period_of_contract = 0;
-
-    /// @putit
     int hire_count = 0;
-
-    /// @putit
     int insanity = 0;
-
-    /// @putit
     int curse_power = 0;
-
-    /// @putit
     int extra_attack = 0;
-
-    /// @putit
     int extra_shot = 0;
-
-    /// @putit
     int decrease_physical_damage = 0;
-
-    /// @putit
     int nullify_damage = 0;
-
-    /// @putit
     int cut_counterattack = 0;
-
-    /// @putit
     int anorexia_count = 0;
-
-    /// @putit
     Activity activity;
-
-    /// @putit
     int stops_activity_if_damaged = 0;
-
-    /// @putit
     int quality_of_performance = 0;
-
-    /// @putit
     int tip_gold = 0;
-
-    /// @putit
     int character_role = 0;
-
-    /// @putit
     int shop_rank = 0;
-
-    /// @putit
     int activity_target = 0;
-
-    /// @putit
     int shop_store_id = 0;
-
-    /// @putit
     int time_to_restore = 0;
-
-    /// @putit
     int cnpc_id = 0;
-
-    /// @putit
     Position initial_position;
-
-    /// @putit
     int hate = 0;
-
-    /// @putit
     int ai_calm = 0;
-
-    /// @putit
     int ai_move = 0;
-
-    /// @putit
     int ai_dist = 0;
-
-    /// @putit
     int ai_act_sub_freq = 0;
-
-    /// @putit
     int ai_heal = 0;
-
-    /// @putit
     int element_of_unarmed_attack = 0;
-
-    /// @putit
     int poisoned = 0;
-
-    /// @putit
     int sleep = 0;
-
-    /// @putit
     int paralyzed = 0;
-
-    /// @putit
     int blind = 0;
-
-    /// @putit
     int confused = 0;
-
-    /// @putit
     int fear = 0;
-
-    /// @putit
     int dimmed = 0;
-
-    /// @putit
     int drunk = 0;
-
-    /// @putit
     int bleeding = 0;
-
-    /// @putit
     int wet = 0;
-
-    /// @putit
     int insane = 0;
-
-    /// @putit
     int sick = 0;
-
-    /// @putit
     int gravity = 0;
-
-    /// @putit
     int choked = 0;
-
-    /// @putit
     int furious = 0;
-
-    /// @putit
     std::vector<int> growth_buffs;
-
-    /// @putit
     std::vector<int> body_parts;
-
-    /// @putit
     std::vector<int> normal_actions;
-
-    /// @putit
     std::vector<int> special_actions;
-
-    /// @putit
     std::vector<Buff> buffs;
-
-    /// @putit
     std::vector<int> attr_adjs;
-
-    /// @putit
     std::bitset<sizeof(int) * 8 * 50> _flags;
-
-    /// @putit
     int _156 = 0;
-
-    /// @putit
     int _203 = 0;
-
-    /// @putit
     Position target_position;
+
+
 
     void clear();
     void clear_flags();
@@ -572,14 +340,150 @@ public:
 
 
 
-#include "_putit/character.cpp"
-
-
 private:
     Character(const Character&) = default;
     Character(Character&&) = default;
     Character& operator=(const Character&) = default;
     Character& operator=(Character&&) = default;
+
+
+
+public:
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Character");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "state", state_);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, position);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, next_position);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, time_to_revive);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, vision_flag);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, image);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, sex);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, relationship);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, turn_cost);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, current_speed);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, item_which_will_be_used);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, portrait);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, interest);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, time_interest_revive);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, personality);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, impression);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, talk_type);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, height);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, weight);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, birth_year);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, nutrition);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, can_talk);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, quality);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, turn);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, id);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, vision_distance);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, enemy_id);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, gold);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, platinum_coin);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, equipment_type);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, melee_attack_type);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, fame);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, experience);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, required_experience);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, speed_percentage);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, level);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, speed_percentage_in_next_turn);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, skill_bonus);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, total_skill_bonus);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, inventory_weight);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, max_inventory_weight);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, inventory_weight_type);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, max_level);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, karma);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, hp);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, max_hp);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, sp);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, max_sp);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, mp);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, max_mp);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, heal_value_per_nether_attack);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, god_id);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, piety_point);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, praying_point);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, sum_of_equipment_weight);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, special_attack_type);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, rate_to_pierce);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, rate_of_critical_hit);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, speed_correction_value);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, original_relationship);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, pv);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dv);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, hit_bonus);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, damage_bonus);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, pv_correction_value);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dv_correction_value);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, damage_reaction_info);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, emotion_icon);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, current_map);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, current_dungeon_level);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, related_quest_id);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, direction);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, period_of_contract);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, hire_count);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, insanity);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, curse_power);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, extra_attack);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, extra_shot);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, decrease_physical_damage);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, nullify_damage);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, cut_counterattack);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, anorexia_count);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, activity);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, stops_activity_if_damaged);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, quality_of_performance);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, tip_gold);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, character_role);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, shop_rank);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, activity_target);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, shop_store_id);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, time_to_restore);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, cnpc_id);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, initial_position);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, hate);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, ai_calm);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, ai_move);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, ai_dist);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, ai_act_sub_freq);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, ai_heal);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, element_of_unarmed_attack);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, poisoned);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, sleep);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, paralyzed);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, blind);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, confused);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, fear);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dimmed);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, drunk);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, bleeding);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, wet);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, insane);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, sick);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, gravity);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, choked);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, furious);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, growth_buffs);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, body_parts);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, normal_actions);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, special_actions);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, buffs);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, attr_adjs);
+        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "flags", _flags);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, _156);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, _203);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, target_position);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
+    }
 };
 
 

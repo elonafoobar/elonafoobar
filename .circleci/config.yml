@@ -12,10 +12,6 @@ jobs:
           command: make format
 
       - run:
-          name: putit
-          command: make putit
-
-      - run:
           name: doc
           command: |
             source ~/.cargo/env && make docgen
