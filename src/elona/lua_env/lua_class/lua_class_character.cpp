@@ -10,11 +10,12 @@
 #include "../../enums.hpp"
 #include "../../food.hpp"
 #include "../../god.hpp"
-#include "../../lua_env/enums/enums.hpp"
-#include "../../lua_env/interface.hpp"
+#include "../../map_cell.hpp"
 #include "../../ui.hpp"
 #include "../../variables.hpp"
 #include "../data_manager.hpp"
+#include "../enums/enums.hpp"
+#include "../interface.hpp"
 #include "lua_class_ability.hpp"
 
 
@@ -30,7 +31,7 @@ namespace lua
 
 void LuaCharacter::damage_hp(Character& self, int amount)
 {
-    LuaCharacter::damage_hp_source(self, amount, "UnseenHand");
+    LuaCharacter::damage_hp_source(self, amount, "unseen_hand");
 }
 
 /**
@@ -206,10 +207,10 @@ bool LuaCharacter::get_flag(Character& chara, const EnumString& flag)
 /**
  * @luadoc
  *
- * Sets the value of a flag on this character. <b>Note</b>: Currently, all flags
- * up to <code>IsQuickTempered</code> are "intrinsic" and are always reset when
- * this character is refreshed each turn. To change these flags, you must call
- * this function inside a handler for
+ * Sets the value of a flag on this character. <b>Note</b>: Currently, all
+ * flags up to <code>is_quick_tempered</code> are "intrinsic" and are always
+ * reset when this character is refreshed each turn. To change these flags, you
+ * must call this function inside a handler for
  * <code>core.character_refreshed</code>, or the flag will be reset later.
  * @tparam Enums.CharaFlag flag the flag to set
  * @tparam bool value the flag's new value
@@ -217,7 +218,7 @@ bool LuaCharacter::get_flag(Character& chara, const EnumString& flag)
  * @usage local Event = Elona.game.Event
  *
  * local function make_invisible(e)
- * e.chara:set_flag("IsInvisible", true) -- intrinsic, reset on refresh
+ * e.chara:set_flag("is_invisible", true) -- intrinsic, reset on refresh
  * end
  *
  * -- force this flag to be overridden after this character is refreshed.

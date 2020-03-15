@@ -510,7 +510,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_identify",
       },
       {
@@ -545,7 +545,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_oracle",
       },
       {
@@ -580,7 +580,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_teleportation",
       },
       {
@@ -615,7 +615,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_incognito",
       },
       {
@@ -650,7 +650,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_identify",
       },
       {
@@ -685,7 +685,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_teleportation",
       },
       {
@@ -720,7 +720,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_teleportation",
       },
       {
@@ -755,7 +755,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_identify",
       },
       {
@@ -790,7 +790,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_uncurse",
       },
       {
@@ -961,7 +961,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_blindness",
       },
       {
@@ -996,7 +996,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_confusion",
       },
       {
@@ -1031,7 +1031,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_paralysis",
       },
       {
@@ -1066,7 +1066,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "nogive" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.sleeping_drug",
       },
       {
@@ -1135,7 +1135,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_ice_bolt",
       },
       {
@@ -1170,7 +1170,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_fire_bolt",
       },
       {
@@ -1205,7 +1205,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_lightning_bolt",
       },
       {
@@ -1240,7 +1240,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         color = "Yellow",
+         color = "yellow",
          locale_key_prefix = "core.item.earth_crystal",
       },
       {
@@ -1275,7 +1275,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.mana_crystal",
       },
       {
@@ -1310,7 +1310,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         color = "Orange",
+         color = "orange",
          locale_key_prefix = "core.item.sun_crystal",
       },
       {
@@ -1379,7 +1379,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.raw_ore_of_rubynus",
       },
       {
@@ -1448,7 +1448,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         color = "Green",
+         color = "green",
          locale_key_prefix = "core.item.raw_ore_of_emerald",
       },
       {
@@ -1483,7 +1483,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         color = "Blue",
+         color = "blue",
          locale_key_prefix = "core.item.raw_ore_of_diamond",
       },
       {
@@ -1960,7 +1960,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Grey",
+         color = "grey",
          locale_key_prefix = "core.item.diablo",
       },
       {
@@ -1995,7 +1995,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Blue",
+         color = "blue",
          locale_key_prefix = "core.item.zantetsu",
       },
       {
@@ -2200,7 +2200,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.scythe_of_void",
       },
       {
@@ -2235,7 +2235,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Blue",
+         color = "blue",
          locale_key_prefix = "core.item.mournblade",
       },
       {
@@ -2372,7 +2372,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_minor_wound",
       },
       {
@@ -2407,7 +2407,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_major_wound",
       },
       {
@@ -2442,7 +2442,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_critical_wound",
       },
       {
@@ -2477,7 +2477,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healing",
       },
       {
@@ -2512,7 +2512,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healer",
       },
       {
@@ -2547,7 +2547,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Grey",
+         color = "grey",
          locale_key_prefix = "core.item.ragnarok",
       },
       {
@@ -2582,7 +2582,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healer_odina",
       },
       {
@@ -2617,7 +2617,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healer_eris",
       },
       {
@@ -2652,7 +2652,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healer_jure",
       },
       {
@@ -2789,7 +2789,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.boring_bed",
       },
       {
@@ -2824,7 +2824,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.rag_doll",
       },
       {
@@ -2859,7 +2859,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.toy",
       },
       {
@@ -2894,7 +2894,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.modern_table",
       },
       {
@@ -2929,7 +2929,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.dining_table",
       },
       {
@@ -2964,7 +2964,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.armor",
       },
       {
@@ -2999,7 +2999,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.lot_of_goods",
       },
       {
@@ -3034,7 +3034,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.lot_of_accessories",
       },
       {
@@ -3103,7 +3103,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.bar_table_alpha",
       },
       {
@@ -3138,7 +3138,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.bar_table_beta",
       },
       {
@@ -3207,7 +3207,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.modern_chair",
       },
       {
@@ -3242,7 +3242,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.pick",
       },
       {
@@ -3277,7 +3277,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.lantern",
       },
       {
@@ -3312,7 +3312,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.decorative_armor",
       },
       {
@@ -3347,7 +3347,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.anvil",
       },
       {
@@ -3382,7 +3382,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.closed_pot",
       },
       {
@@ -3417,7 +3417,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.open_pot",
       },
       {
@@ -3452,7 +3452,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.academic_table",
       },
       {
@@ -3521,7 +3521,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.square_chair",
       },
       {
@@ -3556,7 +3556,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.cheap_chair",
       },
       {
@@ -3693,7 +3693,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.closet",
       },
       {
@@ -3830,7 +3830,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.variety_of_clothes",
       },
       {
@@ -4035,7 +4035,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_minor_teleportation",
       },
       {
@@ -4070,7 +4070,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fish" },
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.empty_basket",
       },
       {
@@ -4105,7 +4105,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_summon_monsters",
       },
       {
@@ -4140,7 +4140,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_cure_minor_wound",
       },
       {
@@ -4175,7 +4175,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_magic_missile",
       },
       {
@@ -4210,7 +4210,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_summon_monsters",
       },
       {
@@ -4245,7 +4245,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_ice_bolt",
       },
       {
@@ -4280,7 +4280,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_fire_bolt",
       },
       {
@@ -4349,7 +4349,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_heal",
       },
       {
@@ -4384,7 +4384,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.beaker",
       },
       {
@@ -4419,7 +4419,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.alchemy_kit",
       },
       {
@@ -4454,7 +4454,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.pentagram",
       },
       {
@@ -4489,7 +4489,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.small_foliage_plant",
       },
       {
@@ -4524,7 +4524,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.rose",
       },
       {
@@ -4559,7 +4559,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.large_foliage_plant",
       },
       {
@@ -4594,7 +4594,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.sage",
       },
       {
@@ -4629,7 +4629,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.gazania",
       },
       {
@@ -4664,7 +4664,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.nerine",
       },
       {
@@ -4699,7 +4699,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.anemos",
       },
       {
@@ -4734,7 +4734,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.foxtail_grass",
       },
       {
@@ -4769,7 +4769,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.carnation",
       },
       {
@@ -4872,7 +4872,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.canvas",
       },
       {
@@ -4907,7 +4907,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.map",
       },
       {
@@ -5010,7 +5010,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.bundle_of_weapons",
       },
       {
@@ -5045,7 +5045,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.decorated_cloth",
       },
       {
@@ -5080,7 +5080,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.decorated_armor",
       },
       {
@@ -5115,7 +5115,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.statue_of_armor",
       },
       {
@@ -5218,7 +5218,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.craft_rack",
       },
       {
@@ -5253,7 +5253,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.craft_book_shelf",
       },
       {
@@ -5288,7 +5288,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.lot_of_alcohols",
       },
       {
@@ -5323,7 +5323,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.kitchen",
       },
       {
@@ -5358,7 +5358,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.washstand",
       },
       {
@@ -5393,7 +5393,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.kitchen_oven",
       },
       {
@@ -5462,7 +5462,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.elegant_table",
       },
       {
@@ -5531,7 +5531,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.simple_shelf",
       },
       {
@@ -5566,7 +5566,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.sewing_kit",
       },
       {
@@ -5601,7 +5601,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.carpenters_tool",
       },
       {
@@ -5636,7 +5636,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.messy_cloth",
       },
       {
@@ -5671,7 +5671,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.silk_cloth",
       },
       {
@@ -6080,7 +6080,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_lightning_bolt",
       },
       {
@@ -6115,7 +6115,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_slow",
       },
       {
@@ -7000,7 +7000,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_magic_mapping",
       },
       {
@@ -7035,7 +7035,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_cure",
       },
       {
@@ -7138,7 +7138,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Blue",
+         color = "blue",
          locale_key_prefix = "core.item.ether_dagger",
       },
       {
@@ -7173,7 +7173,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Grey",
+         color = "grey",
          locale_key_prefix = "core.item.bow_of_vindale",
       },
       {
@@ -7242,7 +7242,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_uncurse",
       },
       {
@@ -7413,7 +7413,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.ore_piece",
       },
       {
@@ -7448,7 +7448,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.lot_of_empty_bottles",
       },
       {
@@ -7483,7 +7483,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.basket",
       },
       {
@@ -7518,7 +7518,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.empty_bowl",
       },
       {
@@ -7553,7 +7553,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.bowl",
       },
       {
@@ -7588,7 +7588,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.tight_rope",
       },
       {
@@ -8167,7 +8167,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_return",
       },
       {
@@ -8202,7 +8202,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.figurine_of_warrior",
       },
       {
@@ -8237,7 +8237,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.figurine_of_sword",
       },
       {
@@ -8272,7 +8272,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.bejeweled_chest",
       },
       {
@@ -8307,7 +8307,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.chest",
       },
       {
@@ -8342,7 +8342,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.safe",
       },
       {
@@ -8377,7 +8377,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_magical_map",
       },
       {
@@ -8412,7 +8412,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_gain_attribute",
       },
       {
@@ -8447,7 +8447,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_wonder",
       },
       {
@@ -8482,7 +8482,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_minor_teleportation",
       },
       {
@@ -8517,7 +8517,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_magic_mapping",
       },
       {
@@ -8552,7 +8552,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_oracle",
       },
       {
@@ -8587,7 +8587,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_return",
       },
       {
@@ -8622,7 +8622,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_cure_minor_wound",
       },
       {
@@ -8657,7 +8657,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_cure_critical_wound",
       },
       {
@@ -8692,7 +8692,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_cure_eris",
       },
       {
@@ -8727,7 +8727,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_cure_jure",
       },
       {
@@ -8898,7 +8898,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_magic_arrow",
       },
       {
@@ -9069,7 +9069,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "nogive" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.poison",
       },
       {
@@ -9104,7 +9104,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_nether_eye",
       },
       {
@@ -9139,7 +9139,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_chaos_eye",
       },
       {
@@ -9174,7 +9174,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_nerve_eye",
       },
       {
@@ -9243,7 +9243,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_darkness_beam",
       },
       {
@@ -9278,7 +9278,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_illusion_beam",
       },
       {
@@ -9313,7 +9313,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_ice_ball",
       },
       {
@@ -9348,7 +9348,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_fire_ball",
       },
       {
@@ -9383,7 +9383,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_sound_ball",
       },
       {
@@ -9418,7 +9418,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_chaos_ball",
       },
       {
@@ -9453,7 +9453,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.fire_wood",
       },
       {
@@ -9488,7 +9488,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.scarecrow",
       },
       {
@@ -9863,7 +9863,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_restore_body",
       },
       {
@@ -9898,7 +9898,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_restore_spirit",
       },
       {
@@ -9933,7 +9933,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "spshop" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_potential",
       },
       {
@@ -9968,7 +9968,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_curse",
       },
       {
@@ -10003,7 +10003,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_wishing",
       },
       {
@@ -10038,7 +10038,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_wishing",
       },
       {
@@ -11875,7 +11875,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Green",
+         color = "green",
          locale_key_prefix = "core.item.deed",
       },
       {
@@ -12250,7 +12250,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.gloves_of_vesda",
       },
       {
@@ -12285,7 +12285,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.blood_moon",
       },
       {
@@ -12388,7 +12388,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.rankis",
       },
       {
@@ -12491,7 +12491,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_greater_identify",
       },
       {
@@ -12526,7 +12526,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_vanish_curse",
       },
       {
@@ -12561,7 +12561,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_defender",
       },
       {
@@ -12596,7 +12596,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_holy_shield",
       },
       {
@@ -12631,7 +12631,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_silence",
       },
       {
@@ -12666,7 +12666,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_silence",
       },
       {
@@ -12701,7 +12701,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_silence",
       },
       {
@@ -12736,7 +12736,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_regeneration",
       },
       {
@@ -12771,7 +12771,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_troll_blood",
       },
       {
@@ -12806,7 +12806,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_resistance",
       },
       {
@@ -12841,7 +12841,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_resistance",
       },
       {
@@ -12876,7 +12876,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_speed",
       },
       {
@@ -12911,7 +12911,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_slow",
       },
       {
@@ -12946,7 +12946,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_speed",
       },
       {
@@ -12981,7 +12981,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_slow",
       },
       {
@@ -13016,7 +13016,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_speed",
       },
       {
@@ -13051,7 +13051,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_hero",
       },
       {
@@ -13086,7 +13086,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_hero",
       },
       {
@@ -13121,7 +13121,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_weakness",
       },
       {
@@ -13156,7 +13156,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_elemental_scar",
       },
       {
@@ -13191,7 +13191,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_weakness",
       },
       {
@@ -13226,7 +13226,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_holy_veil",
       },
       {
@@ -13261,7 +13261,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_holy_veil",
       },
       {
@@ -13296,7 +13296,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_holy_light",
       },
       {
@@ -13331,7 +13331,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_holy_light",
       },
       {
@@ -13366,7 +13366,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_holy_rain",
       },
       {
@@ -13401,7 +13401,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_holy_light",
       },
       {
@@ -13436,7 +13436,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_holy_rain",
       },
       {
@@ -13471,7 +13471,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_mana",
       },
       {
@@ -13506,7 +13506,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_mana",
       },
       {
@@ -13575,7 +13575,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.gem_cutter",
       },
       {
@@ -13644,7 +13644,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_gain_material",
       },
       {
@@ -13679,7 +13679,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_nightmare",
       },
       {
@@ -13714,7 +13714,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_knowledge",
       },
       {
@@ -13749,7 +13749,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_knowledge",
       },
       {
@@ -14158,7 +14158,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_detect_objects",
       },
       {
@@ -14193,7 +14193,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_detect_objects",
       },
       {
@@ -14228,7 +14228,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_uncurse",
       },
       {
@@ -14399,7 +14399,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Green",
+         color = "green",
          locale_key_prefix = "core.item.vegetable_seed",
       },
       {
@@ -14434,7 +14434,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Yellow",
+         color = "yellow",
          locale_key_prefix = "core.item.fruit_seed",
       },
       {
@@ -14469,7 +14469,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Blue",
+         color = "blue",
          locale_key_prefix = "core.item.herb_seed",
       },
       {
@@ -14504,7 +14504,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.unknown_seed",
       },
       {
@@ -14539,7 +14539,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "noshop", "spshop" },
          rftags = {},
-         color = "Orange",
+         color = "orange",
          locale_key_prefix = "core.item.artifact_seed",
       },
       {
@@ -14812,7 +14812,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_weaken_resistance",
       },
       {
@@ -14847,7 +14847,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_growth",
       },
       {
@@ -14882,7 +14882,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_faith",
       },
       {
@@ -14917,7 +14917,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "nogive" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_mutation",
       },
       {
@@ -14952,7 +14952,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_mutation",
       },
       {
@@ -14987,7 +14987,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_mutation",
       },
       {
@@ -16518,7 +16518,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_ally",
       },
       {
@@ -16553,7 +16553,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_domination",
       },
       {
@@ -16588,7 +16588,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_domination",
       },
       {
@@ -16691,7 +16691,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_web",
       },
       {
@@ -16726,7 +16726,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_web",
       },
       {
@@ -17237,7 +17237,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_inferior_material",
       },
       {
@@ -17272,7 +17272,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_change_material",
       },
       {
@@ -17307,7 +17307,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "spshop" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_superior_material",
       },
       {
@@ -17410,7 +17410,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.little_sisters_diary",
       },
       {
@@ -17445,7 +17445,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_enchant_weapon",
       },
       {
@@ -17480,7 +17480,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_greater_enchant_weapon",
       },
       {
@@ -17515,7 +17515,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_enchant_armor",
       },
       {
@@ -17550,7 +17550,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_greater_enchant_armor",
       },
       {
@@ -17755,7 +17755,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_recharge",
       },
       {
@@ -17824,7 +17824,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_change_creature",
       },
       {
@@ -17859,7 +17859,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_alchemy",
       },
       {
@@ -17894,7 +17894,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "nogive" },
          rftags = {},
-         color = "RandomAny",
+         color = "random_any",
          locale_key_prefix = "core.item.bottle_of_dye",
       },
       {
@@ -17963,7 +17963,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Orange",
+         color = "orange",
          locale_key_prefix = "core.item.deed_of_museum",
       },
       {
@@ -17998,7 +17998,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.deed_of_shop",
       },
       {
@@ -18679,7 +18679,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "LightBlue",
+         color = "light_blue",
          locale_key_prefix = "core.item.deed_of_farm",
       },
       {
@@ -18714,7 +18714,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "PaleRed",
+         color = "pale_red",
          locale_key_prefix = "core.item.deed_of_storage_house",
       },
       {
@@ -18749,7 +18749,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.disc",
       },
       {
@@ -18784,7 +18784,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_wall_creation",
       },
       {
@@ -18819,7 +18819,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_wall_creation",
       },
       {
@@ -18888,7 +18888,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_healing_rain",
       },
       {
@@ -18923,7 +18923,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_healing_rain",
       },
       {
@@ -18958,7 +18958,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_healing_hands",
       },
       {
@@ -18993,7 +18993,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_healing_hands",
       },
       {
@@ -19062,7 +19062,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Purple",
+         color = "purple",
          locale_key_prefix = "core.item.gem_seed",
       },
       {
@@ -19097,7 +19097,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Cyan",
+         color = "cyan",
          locale_key_prefix = "core.item.magical_seed",
       },
       {
@@ -19268,7 +19268,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_corruption",
       },
       {
@@ -19439,7 +19439,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_acid_ground",
       },
       {
@@ -19474,7 +19474,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_acid_ground",
       },
       {
@@ -19509,7 +19509,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "nogive" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.acidproof_liquid",
       },
       {
@@ -19544,7 +19544,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.fireproof_blanket",
       },
       {
@@ -19579,7 +19579,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Blue",
+         color = "blue",
          locale_key_prefix = "core.item.coldproof_blanket",
       },
       {
@@ -19614,7 +19614,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_fire_wall",
       },
       {
@@ -19649,7 +19649,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_fire_wall",
       },
       {
@@ -19718,7 +19718,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Gold",
+         color = "gold",
          locale_key_prefix = "core.item.deed_of_ranch",
       },
       {
@@ -19855,7 +19855,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.playback_disc",
       },
       {
@@ -19890,7 +19890,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "nogive" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.molotov",
       },
       {
@@ -20027,7 +20027,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_make_door",
       },
       {
@@ -20062,7 +20062,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_make_door",
       },
       {
@@ -20131,7 +20131,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.candle",
       },
       {
@@ -20336,7 +20336,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.snow_scarecrow",
       },
       {
@@ -21459,7 +21459,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.cat_sisters_diary",
       },
       {
@@ -21494,7 +21494,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.girls_diary",
       },
       {
@@ -21563,7 +21563,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "spshop" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.bottle_of_hermes_blood",
       },
       {
@@ -21598,7 +21598,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Orange",
+         color = "orange",
          locale_key_prefix = "core.item.sages_helm",
       },
       {
@@ -21633,7 +21633,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_incognito",
       },
       {
@@ -21770,7 +21770,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.flying_scroll",
       },
       {
@@ -21975,7 +21975,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_escape",
       },
       {
@@ -22010,7 +22010,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "LightBlue",
+         color = "light_blue",
          locale_key_prefix = "core.item.happy_apple",
       },
       {
@@ -22317,7 +22317,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.sofa",
       },
       {
@@ -22352,7 +22352,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.flowerbed",
       },
       {
@@ -22387,7 +22387,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.toilet",
       },
       {
@@ -22524,7 +22524,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.double_bed",
       },
       {
@@ -22559,7 +22559,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Blue",
+         color = "blue",
          locale_key_prefix = "core.item.hero_cheese",
       },
       {
@@ -22696,7 +22696,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.partition",
       },
       {
@@ -22731,7 +22731,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_darkness_arrow",
       },
       {
@@ -22766,7 +22766,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.dal_i_thalion",
       },
       {
@@ -22801,7 +22801,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.magic_fruit",
       },
       {
@@ -23176,7 +23176,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "LightBlue",
+         color = "light_blue",
          locale_key_prefix = "core.item.wind_bow",
       },
       {
@@ -23211,7 +23211,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.winchester_premium",
       },
       {
@@ -23246,7 +23246,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Green",
+         color = "green",
          locale_key_prefix = "core.item.kumiromi_scythe",
       },
       {
@@ -23281,7 +23281,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "LightGreen",
+         color = "light_green",
          locale_key_prefix = "core.item.elemental_staff",
       },
       {
@@ -23350,7 +23350,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Orange",
+         color = "orange",
          locale_key_prefix = "core.item.lucky_dagger",
       },
       {
@@ -23385,7 +23385,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Orange",
+         color = "orange",
          locale_key_prefix = "core.item.gaia_hammer",
       },
       {
@@ -23420,7 +23420,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Blue",
+         color = "blue",
          locale_key_prefix = "core.item.lulwys_gem_stone_of_god_speed",
       },
       {
@@ -23455,7 +23455,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "LightBlue",
+         color = "light_blue",
          locale_key_prefix = "core.item.jures_gem_stone_of_holy_rain",
       },
       {
@@ -23490,7 +23490,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Green",
+         color = "green",
          locale_key_prefix = "core.item.kumiromis_gem_stone_of_rejuvenation",
       },
       {
@@ -23525,7 +23525,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.gem_stone_of_mani",
       },
       {
@@ -23934,7 +23934,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.axe_of_destruction",
       },
       {
@@ -23969,7 +23969,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_magic_ball",
       },
       {
@@ -24004,7 +24004,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_magic_laser",
       },
       {
@@ -24073,7 +24073,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.little_ball",
       },
       {
@@ -24176,7 +24176,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.rabbits_tail",
       },
       {
@@ -24313,7 +24313,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_descent",
       },
       {
@@ -24382,7 +24382,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.book_of_resurrection",
       },
       {
@@ -24417,7 +24417,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_contingency",
       },
       {
@@ -24452,7 +24452,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_contingency",
       },
       {
@@ -24487,7 +24487,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_evolution",
       },
       {
@@ -24522,7 +24522,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Blue",
+         color = "blue",
          locale_key_prefix = "core.item.deed_of_dungeon",
       },
       {
@@ -24625,7 +24625,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "noshop" },
          rftags = {},
-         color = "Cyan",
+         color = "cyan",
          locale_key_prefix = "core.item.secret_experience_of_kumiromi",
       },
       {
@@ -24694,7 +24694,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Cyan",
+         color = "cyan",
          locale_key_prefix = "core.item.secret_experience_of_lomias",
       },
       {
@@ -24729,7 +24729,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.shenas_panty",
       },
       {
@@ -24798,7 +24798,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "noshop" },
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.happy_bed",
       },
       {
@@ -24867,7 +24867,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Purple",
+         color = "purple",
          locale_key_prefix = "core.item.arbalest",
       },
       {
@@ -24902,7 +24902,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Orange",
+         color = "orange",
          locale_key_prefix = "core.item.twin_edge",
       },
       {
@@ -24971,7 +24971,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Orange",
+         color = "orange",
          locale_key_prefix = "core.item.kill_kill_piano",
       },
       {
@@ -25006,7 +25006,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Yellow",
+         color = "yellow",
          locale_key_prefix = "core.item.alud",
       },
       {
@@ -25041,7 +25041,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.shield_of_thorn",
       },
       {
@@ -25076,7 +25076,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.crimson_plate",
       },
       {
@@ -25179,7 +25179,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_4_dimensional_pocket",
       },
       {
@@ -25214,7 +25214,7 @@ data:add_multi(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_harvest",
       },
       {
@@ -25351,7 +25351,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "nogive" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.fireproof_liquid",
       },
       {
@@ -25386,7 +25386,7 @@ data:add_multi(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "RandomSeeded",
+         color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_name",
       },
       {
@@ -25489,7 +25489,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Blue",
+         color = "blue",
          locale_key_prefix = "core.item.unknown_shell",
       },
       {
@@ -25524,7 +25524,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.hiryu_to",
       },
       {
@@ -25593,7 +25593,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.plank_of_carneades",
       },
       {
@@ -25628,7 +25628,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.schrodingers_cat",
       },
       {
@@ -25663,7 +25663,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.heart",
       },
       {
@@ -25698,7 +25698,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Red",
+         color = "red",
          locale_key_prefix = "core.item.tamers_whip",
       },
       {
@@ -25937,7 +25937,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.kotatsu",
       },
       {
@@ -26074,7 +26074,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "Blue",
+         color = "blue",
          locale_key_prefix = "core.item.five_horned_helm",
       },
       {
@@ -26109,7 +26109,7 @@ data:add_multi(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         color = "Grey",
+         color = "grey",
          locale_key_prefix = "core.item.mauser_c96_custom",
       },
       {
@@ -26144,7 +26144,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.lightsabre",
       },
       {
@@ -26213,7 +26213,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "White2",
+         color = "white2",
          locale_key_prefix = "core.item.goulds_piano",
       },
       {
@@ -26282,7 +26282,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.pedestal",
       },
       {
@@ -26793,7 +26793,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.luxury_sofa",
       },
       {
@@ -27168,7 +27168,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.pot_for_testing",
       },
       {
@@ -27203,7 +27203,7 @@ data:add_multi(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "RandomFurniture",
+         color = "random_furniture",
          locale_key_prefix = "core.item.frying_pan_for_testing",
       },
       {

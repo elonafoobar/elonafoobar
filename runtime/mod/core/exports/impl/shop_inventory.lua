@@ -55,7 +55,7 @@ function shop_inventory.apply_rule_properties(rule, ret, index, shopkeeper)
 end
 
 function shop_inventory.apply_rules(index, shopkeeper, inv)
-   local ret = {level = shopkeeper.shop_rank, quality = "Bad"}
+   local ret = {level = shopkeeper.shop_rank, quality = "bad"}
 
    if not inv.rules then
       return ret
@@ -109,7 +109,7 @@ local function is_excluded(item)
 end
 
 local function is_cursed(item)
-   return item.curse_state == "Cursed" or item.curse_state == "Doomed"
+   return item.curse_state == "cursed" or item.curse_state == "doomed"
 end
 
 function shop_inventory.should_remove(item, inv)
@@ -275,7 +275,7 @@ function shop_inventory.do_generate(shopkeeper, inv)
       end
 
       -- Blessed items are never generated in multiple (per cycle).
-      if item.curse_state == "Blessed" then
+      if item.curse_state == "blessed" then
          item.number = 1
       end
 

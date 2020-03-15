@@ -28,9 +28,6 @@ APIManager::APIManager(LuaEnv& lua)
     LuaApiClasses::bind(*lua_state());
     LuaApiClasses::bind_api(*lua_state(), game);
 
-    // Bind enums to the Enums table.
-    LuaEnums::bind(game);
-
     load_prelude();
 }
 

@@ -168,7 +168,7 @@ data:add_multi(
                                             {
                                                level = args.chara.level,
                                                flttypemajor = 92000,
-                                               quality = "Good",
+                                               quality = "good",
                                                nostack = true
                                             }
                      )

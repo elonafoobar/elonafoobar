@@ -54,7 +54,7 @@ return {
          return "__IGNORED__"
       end,
       give_check = function()
-         local potion = Item.find("core.potion_of_cure_corruption", "PlayerInventory")
+         local potion = Item.find("core.potion_of_cure_corruption", "player_inventory")
          if potion == nil then
             return "do_not_have_potion"
          end
@@ -72,7 +72,7 @@ return {
       give_potion = {
          text = {
             function()
-               local potion = Item.find("core.potion_of_cure_corruption", "PlayerInventory")
+               local potion = Item.find("core.potion_of_cure_corruption", "player_inventory")
                potion.number = potion.number - 1
                GUI.txt(I18N.get("core.talk.unique.pael.give.you_give"))
                GUI.play_sound("core.equip1")

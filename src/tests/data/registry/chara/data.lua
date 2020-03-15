@@ -41,10 +41,10 @@ data:add(
          eqtwohand = 7,
          eqweapon1 = 8,
 
-         color = "Blue",
-         sex = "Female",
-         original_relationship = "Aggressive",
-         flags = {"IsSuitableForMount", "Splits2"},
+         color = "blue",
+         sex = "female",
+         original_relationship = "aggressive",
+         flags = {"is_suitable_for_mount", "splits2"},
       }
    }
 )

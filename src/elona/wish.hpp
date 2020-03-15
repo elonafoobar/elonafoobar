@@ -13,7 +13,7 @@ namespace elona
 bool what_do_you_wish_for(optional<std::string> wish = none);
 
 
-enum WishMatchType
+enum class WishMatchType
 {
     prefix,
     suffix,
@@ -28,7 +28,7 @@ bool wish_match(
     const std::vector<std::string>& english_words);
 
 
-enum WishHook
+enum class WishHook
 {
     first,
     before_vanilla_special,

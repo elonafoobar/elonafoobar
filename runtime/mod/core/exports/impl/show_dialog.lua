@@ -60,7 +60,7 @@ local function query(talk, text, choices, default_choice)
       image = talk.speaker.image
    end
    local show_impress = true
-   if talk.speaker.quality == "Special" and not Chara.is_ally(talk.speaker) then
+   if talk.speaker.quality == "special" and not Chara.is_ally(talk.speaker) then
       show_impress = false
    end
 
@@ -193,9 +193,9 @@ local function step_dialog(dialog, node_data, talk, state)
 
             -- Change speaking character.
             if text.speaker ~= nil then
-               local found = Chara.find(text.speaker, "Others")
+               local found = Chara.find(text.speaker, "others")
                if found == nil then
-                  found = Chara.find(text.speaker, "Allies")
+                  found = Chara.find(text.speaker, "allies")
                end
                if found ~= nil then
                   talk.speaker = found

@@ -8,7 +8,7 @@ local table = table
 
 local function give_wife(raphael, wife)
    if not table.contains(wife.prototype.tags, "man") then
-      raphael:apply_ailment("Insane", 1000)
+      raphael:apply_ailment("insane", 1000)
       Chara.player():modify_karma(2)
       return true
    else
@@ -73,12 +73,12 @@ return {
          },
       },
       bring_wife_choose = function(t, state)
-         local wife = Input.choose_ally("Sell")
+         local wife = Input.choose_ally("sell")
          if wife == nil then
             return "no_such_wife"
          end
 
-         if not wife:get_flag("IsMarried") then
+         if not wife:get_flag("is_married") then
             return "not_married"
          end
 

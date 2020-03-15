@@ -27,7 +27,7 @@ local function join_guild()
     GUI.txt(I18N.get("core.quest.completed"))
     GUI.play_sound("core.complete1")
     GUI.show_journal_update_message()
-    GUI.txt(I18N.get("core.talk.unique.doria.nonmember.joined"), "Orange")
+    GUI.txt(I18N.get("core.talk.unique.doria.nonmember.joined"), "orange")
 end
 
 local function move_self(t)
@@ -45,7 +45,7 @@ end
 
 local function receive_reward()
    World.data.fighters_guild_quota_recurring = false
-   Item.create(Chara.player().position, {objlv = 51 - World.data.ranks[8] // 200, quality = "Good", flttypemajor = 10000})
+   Item.create(Chara.player().position, {objlv = 51 - World.data.ranks[8] // 200, quality = "good", flttypemajor = 10000})
    Item.create(Chara.player().position, "core.gold_piece", 10000 - World.data.ranks[8] + 1000)
    Item.create(Chara.player().position, "core.platinum_coin", math.clamp(4 - World.data.ranks[8] // 2500, 1, 4))
 

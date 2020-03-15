@@ -507,8 +507,8 @@ fn get_module_comment_of_entity<'a>(entity: &Entity<'a>, is_class: bool) -> Opti
     None
 }
 
-// Check whether the file has "@noluadoc" directive WITHOUT #include macro expansion.
-fn has_noluadoc(path: &Path) -> Result<bool, Box<dyn std::error::Error>> {
+// Check whether the file has "@noluadoc" directive without #include macro expansion.
+fn has_noluadoc(path: &Path) -> io::Result<bool> {
     let content = read_to_string(path)?;
     Ok(content.find(NOLUADOC).is_some())
 }

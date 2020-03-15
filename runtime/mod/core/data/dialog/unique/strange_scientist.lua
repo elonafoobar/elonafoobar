@@ -21,8 +21,8 @@ local function turn_over_little_sister()
                             Internal.get_quest_flag("save_count_of_little_sister") + 1)
     GUI.txt(I18N.get("core.talk.unique.strange_scientist.saved_count",
                      Internal.get_quest_flag("save_count_of_little_sister"),
-                     Internal.get_quest_flag("kill_count_of_little_sister")), "Green")
-    Chara.find("core.little_sister", "Allies"):vanquish()
+                     Internal.get_quest_flag("kill_count_of_little_sister")), "green")
+    Chara.find("core.little_sister", "allies"):vanquish()
     GUI.play_sound("core.complete1")
 end
 
@@ -68,7 +68,7 @@ return {
                {"replenish", "choices.replenish"}
             }
 
-            if Chara.find("core.little_sister", "Allies") ~= nil then
+            if Chara.find("core.little_sister", "allies") ~= nil then
                table.insert(choices, {"turn_over", "choices.turn_over"})
             end
             table.insert(choices, {"__END__", "__BYE__"})

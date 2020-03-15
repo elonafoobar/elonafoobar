@@ -34,7 +34,7 @@ return {
                   Chara.player().position,
                   {
                      level = Map.data.current_dungeon_level,
-                     quality = "Bad",
+                     quality = "bad",
                      flttypemajor = Internal.filter_set_dungeon()
                   }
                )

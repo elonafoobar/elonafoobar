@@ -35,7 +35,7 @@ data:add(
          has_random_name = false,
          tags = { "noshop", "nodownload" },
          rftags = { "fish" },
-         color = "White",
+         color = "white",
          locale_key_prefix = "core.item.putitoro",
       }
    }

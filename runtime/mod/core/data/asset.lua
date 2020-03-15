@@ -10,7 +10,7 @@ data:add_multi(
          width = 1440,
          height = 800,
          file = "<_builtin_>/graphic/interface.bmp",
-         load_type = "Buffer",
+         load_type = "buffer",
       },
       {
          id = "select_key",
@@ -351,7 +351,7 @@ data:add_multi(
          height = 32,
          count_x = 5,
          file = "<core>/graphic/interface_ex7.png",
-         load_type = "Startup",
+         load_type = "startup",
       },
       {
          id = "card_rank",
@@ -362,7 +362,7 @@ data:add_multi(
          height = 32,
          count_x = 13,
          file = "<core>/graphic/interface_ex8.png",
-         load_type = "Startup",
+         load_type = "startup",
       },
       {
          id = "card_pile",
@@ -434,7 +434,7 @@ data:add_multi(
          count_x = 8,
          count_y = 6,
          file = "<core>/graphic/interface_ex1.png",
-         load_type = "Startup",
+         load_type = "startup",
       },
       {
          id = "shadow_spot",
@@ -446,7 +446,7 @@ data:add_multi(
          count_x = 2,
          count_y = 6,
          file = "<core>/graphic/interface_ex2.png",
-         load_type = "Startup",
+         load_type = "startup",
       },
       {
          id = "shadow_edges",
@@ -457,7 +457,7 @@ data:add_multi(
          height = 48,
          count_x = 18,
          file = "<core>/graphic/interface_ex3.png",
-         load_type = "Startup",
+         load_type = "startup",
       },
       {
          id = "politics_law",
@@ -734,7 +734,7 @@ data:add_multi(
          width = 344,
          height = 72,
          file = "<core>/graphic/interface_ex4.png",
-         load_type = "Startup",
+         load_type = "startup",
       },
 
       {
@@ -756,7 +756,7 @@ data:add_multi(
          width = 1584,
          height = 1200,
          file = "<_builtin_>/graphic/map0.bmp",
-         load_type = "Buffer",
+         load_type = "buffer",
       },
       {
          id = "cloud1",
@@ -1085,7 +1085,7 @@ data:add_multi(
          width = 1584,
          height = 1200,
          file = "<_builtin_>/graphic/character.bmp",
-         load_type = "Buffer",
+         load_type = "buffer",
       },
       {
          id = "buff_icon",
@@ -1221,7 +1221,7 @@ local function background(name, width, height)
       width = width,
       height = height,
       file = "<_builtin_>/graphic/" .. name .. ".bmp",
-      load_type = "BufferDeferred",
+      load_type = "buffer_deferred",
    }
 end
 
@@ -1266,7 +1266,7 @@ data:add_multi(
          width = 700,
          height = 400,
          file = "<_builtin_>/graphic/ie_sheet.bmp",
-         load_type = "BufferDeferred",
+         load_type = "buffer_deferred",
       },
       {
          id = "ie_chat",
@@ -1276,7 +1276,7 @@ data:add_multi(
          width = 600,
          height = 380,
          file = "<_builtin_>/graphic/ie_chat.bmp",
-         load_type = "BufferDeferred",
+         load_type = "buffer_deferred",
       },
       {
          id = "ie_scroll",
@@ -1286,7 +1286,7 @@ data:add_multi(
          width = 600,
          height = 380,
          file = "<_builtin_>/graphic/ie_scroll.bmp",
-         load_type = "BufferDeferred",
+         load_type = "buffer_deferred",
       },
       {
          id = "interface2",
@@ -1296,7 +1296,7 @@ data:add_multi(
          width = 600,
          height = 380,
          file = "<_builtin_>/graphic/interface2.bmp",
-         load_type = "BufferDeferred",
+         load_type = "buffer_deferred",
       }
    }
 )
