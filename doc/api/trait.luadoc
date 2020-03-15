@@ -1,6 +1,6 @@
 --- Functions for working with traits.
 --  Currently only the player can have traits.
---  @usage local Trait = Elona.game.Trait
+--  @usage local Trait = ELONA.require("core.Trait")
 module "Trait"
 
 --- Obtains the player's level in a trait. It may be negative if the

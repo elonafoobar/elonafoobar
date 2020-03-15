@@ -29,9 +29,9 @@ void LuaApiClasses::bind(sol::state& lua)
     LuaPosition::bind(lua);
 }
 
-void LuaApiClasses::bind_api(sol::state& lua, sol::table& game)
+void LuaApiClasses::bind_api(sol::state& lua, sol::table& core)
 {
-    game["LuaPosition"] = lua["LuaPosition"];
+    core["LuaPosition"] = lua["LuaPosition"];
 }
 
 } // namespace lua

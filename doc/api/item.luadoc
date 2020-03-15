@@ -1,5 +1,5 @@
 --- Functions for working with items.
---  @usage local Item = Elona.game.Item
+--  @usage local Item = ELONA.require("core.Item")
 module "Item"
 
 --- Returns the number of items on the ground.

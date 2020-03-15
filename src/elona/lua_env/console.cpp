@@ -88,10 +88,10 @@ void Console::init_constants()
 
 void Console::init_environment()
 {
-    auto game = lua().get_api_manager().get_game_api_table();
+    auto core = lua().get_api_manager().get_core_api_table();
 
-    // Automatically import APIs from "game" into the environment.
-    for (const auto& kvp : game)
+    // Automatically import APIs from "core" into the environment.
+    for (const auto& kvp : core)
     {
         env().raw_set(kvp.first, kvp.second);
     }

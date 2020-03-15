@@ -67,11 +67,11 @@ public:
     sol::table get_master_api_table();
 
     /***
-     * Returns the reference to the game API table "API" in the API
+     * Returns the reference to the core API table "API" in the API
      * environment. This is so other internal C++ mechanisms can add
      * their own API methods to it.
      */
-    sol::table get_game_api_table();
+    sol::table get_core_api_table();
 
 
 
@@ -86,11 +86,12 @@ private:
 
     /***
      * Attempts to locate an API module under a namespace. For
-     * example, all game API modules have module_namespace "game", and
+     * example, all core API modules have module_namespace "core", and
      * the Rand module would have module_name "Rand".
      *
      * This is used by require in Lua to get references to API tables. So, the
-     * Rand table would be accessed from Lua by calling Elona.game.Rand.
+     * Rand table would be accessed from Lua by calling
+     * ELONA.require("core.Rand").
      */
     sol::optional<sol::table> try_find_api(const std::string& name) const;
 };

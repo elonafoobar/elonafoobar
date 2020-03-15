@@ -1,9 +1,9 @@
-local Chara = Elona.game.Chara
-local GUI = Elona.game.GUI
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
 local math = math
-local I18N = Elona.game.I18N
-local Item = Elona.game.Item
-local World = Elona.game.World
+local I18N = ELONA.require("core.I18N")
+local Item = ELONA.require("core.Item")
+local World = ELONA.require("core.World")
 local table = table
 
 local common = require("../common.lua")

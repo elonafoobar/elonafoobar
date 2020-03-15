@@ -1,4 +1,4 @@
-local Internal = Elona.game.Internal
+local Internal = ELONA.require("core.Internal")
 
 return {
    id = "stersha",

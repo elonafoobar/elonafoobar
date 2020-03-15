@@ -1,7 +1,7 @@
-local Map = Elona.game.Map
-local Enums = Elona.game.Enums
-local Event = Elona.game.Event
-local Rand = Elona.game.Rand
+local Map = ELONA.require("core.Map")
+local Enums = ELONA.require("core.Enums")
+local Event = ELONA.require("core.Event")
+local Rand = ELONA.require("core.Rand")
 
 local function create_life_grid()
    local grid = {}

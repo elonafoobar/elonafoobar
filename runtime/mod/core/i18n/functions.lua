@@ -1,7 +1,7 @@
 --- Functions to be used inside translations, like "${itemname(_1, _2, _3)}".
-local FOV = Elona.game.FOV
-local I18N = Elona.game.I18N
-local Item = Elona.game.Item
+local FOV = ELONA.require("core.FOV")
+local I18N = ELONA.require("core.I18N")
+local Item = ELONA.require("core.Item")
 local string = string
 
 local i18n = {}

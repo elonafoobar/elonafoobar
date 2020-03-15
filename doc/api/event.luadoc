@@ -1,6 +1,6 @@
 --- Allows you to register new event callbacks when initializing mods.
 -- @see core.event
--- @usage local Event = Elona.game.Event
+-- @usage local Event = ELONA.require("core.Event")
 module "Event"
 
 --- Registers a new event handler.
@@ -26,8 +26,8 @@ module "Event"
 -- @tparam string event_id the event kind to register
 -- @tparam function handler the handler for this event
 -- @tparam[opt] {priority=num,instances=table} opts Event options.
--- @usage local GUI = Elona.game.GUI
--- local Event = Elona.game.Event
+-- @usage local GUI = ELONA.require("core.GUI")
+-- local Event = ELONA.require("core.Event")
 -- local function my_chara_moved_handler(chara)
 --     GUI.txt("The character " .. chara.name .. " is about to move. ")
 -- end

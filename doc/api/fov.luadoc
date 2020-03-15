@@ -1,5 +1,5 @@
 --- Functions for testing visibility.
---  @usage local FOV = Elona.game.FOV
+--  @usage local FOV = ELONA.require("core.FOV")
 module "FOV"
 
 --- Checks if there is line of sight between two positions in the current map.

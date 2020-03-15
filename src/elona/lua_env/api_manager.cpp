@@ -17,16 +17,16 @@ namespace lua
 APIManager::APIManager(LuaEnv& lua)
     : LuaSubmodule(lua)
 {
-    // Bind the API tables at e.g. Elona["game"]["Chara"]
-    sol::table Elona = env().create_named("Elona");
-    sol::table game = Elona.create_named("game");
+    // Bind the API tables at e.g. api_table["core"]["Chara"]
+    sol::table api_table = env().create_named("api_table");
+    sol::table core = api_table.create_named("core");
 
-    LuaApi::bind(game);
+    LuaApi::bind(core);
 
     // Register usertype classes globally, and add APIs for
     // constructors.
     LuaApiClasses::bind(*lua_state());
-    LuaApiClasses::bind_api(*lua_state(), game);
+    LuaApiClasses::bind_api(*lua_state(), core);
 
     load_prelude();
 }
@@ -62,8 +62,8 @@ sol::optional<sol::table> APIManager::try_find_api(
     const std::string& name) const
 {
     const auto pair = strutil::split_on_string(name, ".");
-    return env().get<sol::optional<sol::table>>(
-        std::tie("Elona", pair.first, pair.second));
+    return env().traverse_get<sol::optional<sol::table>>(
+        "api_table", pair.first, pair.second);
 }
 
 
@@ -72,12 +72,13 @@ void APIManager::add_api(
     const std::string& module_namespace,
     sol::table& module_table)
 {
-    if (env()["Elona"][module_namespace] == sol::lua_nil)
+    if (env()["api_table"][module_namespace] == sol::lua_nil)
     {
-        env()["Elona"][module_namespace] = lua_state()->create_table();
+        env()["api_table"][module_namespace] = lua_state()->create_table();
     }
 
-    sol::table api_table = env()["Elona"][module_namespace].get<sol::table>();
+    sol::table api_table =
+        env()["api_table"][module_namespace].get<sol::table>();
     for (const auto& pair : module_table)
     {
         if (!pair.first.is<std::string>())
@@ -111,6 +112,10 @@ void APIManager::load_lua_support_libraries()
         ELONA_FATAL("lua.core") << what;
         throw std::runtime_error("Failed initializing Lua support libraries.");
     }
+
+    sol::table api = result;
+    get_core_api_table()["Iter"] = api["Iter"];
+    get_core_api_table()["ReadOnly"] = api["ReadOnly"];
 }
 
 
@@ -119,7 +124,7 @@ void APIManager::lock()
 {
     safe_script(
         R"(
-Elona = Elona.game.ReadOnly.make_read_only(Elona)
+api_table = ELONA.require("core.ReadOnly").make_read_only(api_table)
 )");
 }
 
@@ -127,7 +132,10 @@ Elona = Elona.game.ReadOnly.make_read_only(Elona)
 
 void APIManager::bind(LuaEnv& lua, sol::table table)
 {
-    table["Elona"] = lua.get_api_manager().get_master_api_table();
+    auto ELONA = table.create_named("ELONA");
+    ELONA["require"] = [&lua](const std::string& name) {
+        return lua.get_api_manager().try_find_api(name);
+    };
 }
 
 
@@ -141,14 +149,14 @@ void APIManager::set_on(LuaEnv& lua)
 
 sol::table APIManager::get_master_api_table()
 {
-    return env()["Elona"];
+    return env()["api_table"];
 }
 
 
 
-sol::table APIManager::get_game_api_table()
+sol::table APIManager::get_core_api_table()
 {
-    return env()["Elona"]["game"];
+    return env()["api_table"]["core"];
 }
 
 } // namespace lua

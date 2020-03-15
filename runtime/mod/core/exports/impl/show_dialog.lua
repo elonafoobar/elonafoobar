@@ -1,8 +1,8 @@
-local Chara = Elona.game.Chara
-local Data = Elona.game.Data
-local I18N = Elona.game.I18N
-local Input = Elona.game.Input
-local Internal = Elona.game.Internal
+local Chara = ELONA.require("core.Chara")
+local Data = ELONA.require("core.Data")
+local I18N = ELONA.require("core.I18N")
+local Input = ELONA.require("core.Input")
+local Internal = ELONA.require("core.Internal")
 local table = table
 
 local function dialog_error(talk, msg, err)

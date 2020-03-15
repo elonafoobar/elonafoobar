@@ -1,5 +1,5 @@
 --- Various calculation.
---  @usage local Calc = Elona.game.Calc
+--  @usage local Calc = ELONA.require("core.Calc")
 module "Calc"
 
 --- Calculate object generation level.
