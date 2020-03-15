@@ -17,8 +17,19 @@ namespace lua
  * @tparam LuaCharacter chara (const) a character
  * @treturn bool true if the character is alive
  */
-bool LuaApiChara::is_alive(sol::optional<LuaCharacterHandle> chara)
+bool LuaApiChara::is_alive(
+// `libclang`, invoked from `tools/docgen`, fails to parse this parameter
+//  for some reason.
+#ifndef ELONA_DOCGEN
+    sol::optional<LuaCharacterHandle> chara
+#else
+    int chara
+#endif
+)
 {
+    // `libclang`, invoked from `tools/docgen`, fails to parse this function's
+    // body for some reason.
+#ifndef ELONA_DOCGEN
     if (!chara)
     {
         return false;
@@ -31,6 +42,7 @@ bool LuaApiChara::is_alive(sol::optional<LuaCharacterHandle> chara)
     }
 
     return chara_ref->state() == Character::State::alive;
+#endif
 }
 
 /**

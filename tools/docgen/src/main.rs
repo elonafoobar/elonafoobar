@@ -13,6 +13,7 @@ const NOLUADOC: &str = "@noluadoc";
 const LUA_API: &str = "LuaApi";
 const LUA_CLASS: &str = "Lua";
 const VARARGS: &str = "sol::variadic_args";
+const EXTRA_COMPILE_OPTIONS: &[&str] = &["-DELONA_DOCGEN"];
 
 #[derive(Debug, Clone)]
 struct ModuleComment {
@@ -543,7 +544,7 @@ fn generate_doc<'a>(path: &Path, index: &Index<'a>, is_class: bool) -> Option<Do
         return None;
     }
 
-    let tu = index.parser(path).parse().unwrap();
+    let tu = index.parser(path).arguments(EXTRA_COMPILE_OPTIONS).parse().unwrap();
     let module_comment = get_module_comment(&tu, is_class);
     if !module_comment.is_some() {
         println!("{:?}: No @luadoc comment found in header, skipping.", path);
