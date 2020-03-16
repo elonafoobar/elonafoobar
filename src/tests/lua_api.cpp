@@ -10,7 +10,12 @@
 using namespace std::literals::string_literals;
 using namespace elona;
 
-void lua_testcase(const std::string& filename)
+void do_nothing()
+{
+}
+
+template <typename F = decltype(do_nothing)>
+void lua_testcase(const std::string& filename, F extra_setup = do_nothing)
 {
     std::cout << "TEST FILE: " << filename << std::endl;
     elona::testing::reset_state();
@@ -19,6 +24,7 @@ void lua_testcase(const std::string& filename)
 
     elona::lua::lua->get_state()->open_libraries(sol::lib::os);
     elona::lua::lua->get_api_manager().set_on(*elona::lua::lua);
+    extra_setup();
     REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script_file(
         "tests/lua/"s + filename));
     REQUIRE_NOTHROW(
@@ -105,7 +111,10 @@ TEST_CASE("Core API: Map", "[Lua: API]")
 
 TEST_CASE("Core API: I18N", "[Lua: API]")
 {
-    lua_testcase("i18n.lua");
+    lua_testcase("map.lua", []() {
+        auto& mod_mgr = lua::lua->get_mod_manager();
+        REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script("test", ""));
+    });
 }
 
 TEST_CASE("Core API: Trait", "[Lua: API]")

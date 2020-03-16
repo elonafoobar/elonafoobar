@@ -16,6 +16,10 @@ struct Character;
 namespace lua
 {
 
+struct ModEnv;
+
+
+
 class I18NManager : public LuaSubmodule
 {
 public:
@@ -26,10 +30,8 @@ public:
         const std::string& name,
         sol::protected_function function);
 
-    void load(
-        std::istream& in,
-        const std::string& filepath,
-        const std::string& mod_id);
+    void load(ModEnv& mod);
+    void load_string(const std::string& src, ModEnv& mod);
 
     template <typename... Args>
     sol::optional<std::string> get_optional(
