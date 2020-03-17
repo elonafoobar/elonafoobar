@@ -59,8 +59,6 @@ TEST_CASE("Test that sandboxing removes unsafe functions", "[Lua: Mods]")
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(rawget(_G, "assert"))"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(rawequal(1, 1))"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(rawlen({}))"));
-    REQUIRE_THROWS(
-        mod_mgr.run_in_mod("my_mod", R"(require("mods/core/init"))"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(collectgarbage())"));
     REQUIRE_THROWS(mod_mgr.run_in_mod("my_mod", R"(loadstring("i = 1"))"));
     REQUIRE_THROWS(
@@ -230,19 +228,6 @@ TEST_CASE("Test requiring Lua chunk multiple times", "[Lua: Mods]")
     lua.load_mods();
     lua.get_mod_manager().load_testing_mod_from_file(
         filesystem::dirs::exe() / u8"tests/data/mods/test_require_chunks");
-
-    REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test_require_chunks", R"(
-local a = require("data/script")
-local b = require("data/script")
-
-assert(a.value() == 0)
-assert(b.value() == 0)
-
-a.increment_locally()
-
-assert(a.value() == 1)
-assert(b.value() == 1)
-)"));
 }
 
 TEST_CASE(
@@ -256,7 +241,7 @@ TEST_CASE(
 
     // Attempts to load a file outside the mod's directory.
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test_require", R"(
-local a = require("../test_require_chunks/data/script")
+local a = require("../test_require_chunks/data/script.lua")
 
 assert(a == nil)
 )"));

@@ -5,7 +5,7 @@ local Internal = Elona.game.Internal
 local Item = Elona.game.Item
 local table = table
 
-local common = require("data/dialog/common")
+local common = require("../common.lua")
 
 local function buy_nuke()
    GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))

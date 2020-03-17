@@ -1,4 +1,4 @@
-local unique = require("data/dialog/unique")
+local unique = require("dialog/unique.lua")
 
 data:define_type("dialog")
 data:add_multi(

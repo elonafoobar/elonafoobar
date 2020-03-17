@@ -3,7 +3,7 @@ local GUI = Elona.game.GUI
 local Internal = Elona.game.Internal
 local Item = Elona.game.Item
 
-local common = require("data/dialog/common")
+local common = require("../common.lua")
 
 return {
    id = "gilbert",

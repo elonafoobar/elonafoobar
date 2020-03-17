@@ -1,9 +1,9 @@
 local exports = {}
 
-exports.eating_effect = require("exports/eating_effect")
+exports.eating_effect = require("exports/eating_effect.lua")
 
-exports.impl = require("exports/impl")
+exports.impl = require("exports/impl.lua")
 
-require("i18n/init")
+require("i18n/init.lua")
 
 return exports

@@ -4,7 +4,7 @@ local I18N = Elona.game.I18N
 local Internal = Elona.game.Internal
 local Item = Elona.game.Item
 
-local common = require("data/dialog/common")
+local common = require("../common.lua")
 
 local function take_books()
    local taken_books = {}

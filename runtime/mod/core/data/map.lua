@@ -4,7 +4,7 @@ local math = math
 local Rand = Elona.game.Rand
 local table = table
 
-local map = require("data/map/static")
+local map = require("map/static.lua")
 
 local function chara_filter_town(callbacks)
    return function()
