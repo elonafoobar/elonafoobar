@@ -4,6 +4,7 @@
 #include <stack>
 
 #include "ability.hpp"
+#include "attack.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
@@ -33,6 +34,7 @@
 #include "pic_loader/tinted_buffers.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "text.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
 #include "ui/ui_menu_adventurers.hpp"

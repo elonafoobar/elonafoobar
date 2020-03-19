@@ -16,6 +16,7 @@
 #include "quest.hpp"
 #include "text.hpp"
 #include "variables.hpp"
+#include "world.hpp"
 
 
 

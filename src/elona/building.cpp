@@ -4,10 +4,12 @@
 #include "ability.hpp"
 #include "activity.hpp"
 #include "area.hpp"
+#include "attack.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
+#include "character_status.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
@@ -27,10 +29,16 @@
 #include "menu.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "save.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+#include "world.hpp"
 
 
+
+namespace elona
+{
 
 namespace
 {
@@ -94,12 +102,16 @@ bool _livestock_will_breed(const Character& breeder, int livestock_count)
 
 
 
-namespace elona
-{
+elona_vector1<int> fsetincome;
+elona_vector1<int> fsetplantartifact;
+elona_vector1<int> fsetplantunknown;
+
 
 int sold = 0;
 int rankorg = 0;
 int rankcur = 0;
+
+
 
 void initialize_home_adata()
 {
@@ -1443,6 +1455,403 @@ void update_ranch()
                 // Do nothing.
                 break;
             }
+        }
+    }
+}
+
+
+
+int calcincome(int rank_id)
+{
+    int rank_amount = 100 - game_data.ranks.at(rank_id) / 100;
+    if (rank_amount == 99)
+    {
+        rank_amount = rank_amount * 70;
+    }
+    else
+    {
+        rank_amount = rank_amount * 50;
+    }
+    if (rank_id == 2)
+    {
+        rank_amount = rank_amount * 120 / 100;
+    }
+    if (rank_id == 4)
+    {
+        rank_amount = rank_amount * 60 / 100;
+    }
+    if (rank_id == 0)
+    {
+        rank_amount = rank_amount * 80 / 100;
+    }
+    if (rank_id == 1)
+    {
+        rank_amount = rank_amount * 70 / 100;
+    }
+    if (rank_id == 6)
+    {
+        rank_amount = rank_amount * 25 / 100;
+    }
+    if (rank_id == 5)
+    {
+        rank_amount = rank_amount * 20 / 100;
+    }
+    if (rank_id == 8)
+    {
+        rank_amount = rank_amount * 15 / 100;
+    }
+    return rank_amount;
+}
+
+
+
+void supply_income()
+{
+    invfile = 4;
+    ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
+    tmpload(filepathutil::u8path(u8"shop4.s2"));
+    if (fs::exists(filesystem::dirs::tmp() / u8"shop4.s2"s))
+    {
+        ctrl_file(FileOperation2::map_items_read, u8"shop4.s2"s);
+    }
+    else
+    {
+        for (auto&& item : inv.ground())
+        {
+            item.remove();
+        }
+    }
+    mode = 6;
+    income(0) = 0;
+    income(1) = 0;
+    for (int cnt = 0; cnt < 9; ++cnt)
+    {
+        if (game_data.ranks.at(cnt) >= 10000)
+        {
+            continue;
+        }
+        p = calcincome(cnt) + rnd_capped(calcincome(cnt) / 3 + 1) -
+            rnd_capped(calcincome(cnt) / 3 + 1);
+        income += p;
+        flt();
+        itemcreate_extra_inv(54, -1, -1, p);
+        if (cnt == 5 || cnt == 6)
+        {
+            continue;
+        }
+        if (cnt == 5 || cnt == 6 || cnt == 3)
+        {
+            continue;
+        }
+        p = rnd(rnd(3) + 1) + 1;
+        int rank_id = cnt;
+        for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
+        {
+            int item_id = 0;
+            flt(calcobjlv((100 - game_data.ranks.at(rank_id) / 100) / 2 + 1),
+                calcfixlv(
+                    (rnd(12) < trait(39)) ? Quality::miracle : Quality::great));
+            flttypemajor = choice(fsetincome);
+            if (rnd(5) == 0)
+            {
+                flttypemajor = choice(fsetwear);
+            }
+            if (rnd(100 + game_data.ranks.at(rank_id) / 5) < 2)
+            {
+                item_id = 559;
+            }
+            itemcreate_extra_inv(item_id, -1, -1, 0);
+            ++income(1);
+        }
+    }
+    if (cdata.player().fame > 0)
+    {
+        p = clamp(cdata.player().fame / 10, 100, 25000);
+        if (cdata.player().fame >= 25000)
+        {
+            p += (cdata.player().fame - 25000) / 100;
+        }
+        income += p;
+        flt();
+        itemcreate_extra_inv(54, -1, -1, p);
+    }
+    if (income != 0 || income(1) != 0)
+    {
+        snd("core.ding2");
+        if (income(1) == 0)
+        {
+            txt(i18n::s.get("core.misc.income.sent_to_your_house", income(0)),
+                Message::color{ColorIndex::orange});
+        }
+        else
+        {
+            txt(i18n::s.get(
+                    "core.misc.income.sent_to_your_house2",
+                    income(0),
+                    income(1)),
+                Message::color{ColorIndex::orange});
+        }
+        save_set_autosave();
+    }
+    if (game_data.date.day == 1)
+    {
+        if (cdata.player().level > 5)
+        {
+            save_set_autosave();
+            p = -1;
+            for (const auto& item : inv.ground())
+            {
+                if (item.number() == 0)
+                {
+                    p = item.index;
+                    break;
+                }
+            }
+            if (p == -1)
+            {
+                inv_compress(-1);
+            }
+            flt();
+            if (const auto item = itemcreate_extra_inv(615, -1, -1, 0))
+            {
+                item->subname =
+                    game_data.cost_to_hire + calccostbuilding() + calccosttax();
+                item->subname = item->subname * (100 + rnd(20)) / 100;
+            }
+            mode = 0;
+            ++game_data.left_bill;
+            txt(i18n::s.get("core.misc.tax.bill"));
+            if (game_data.left_bill > 1)
+            {
+                if (game_data.left_bill <= 4)
+                {
+                    if (game_data.left_bill > 3)
+                    {
+                        s(0) = i18n::s.get("core.misc.tax.warning");
+                        s(1) = i18n::s.get("core.misc.tax.have_to_go_embassy");
+                    }
+                    else
+                    {
+                        s(0) = i18n::s.get("core.misc.tax.caution");
+                        s(1) = "";
+                    }
+                    txt(s +
+                            i18n::s.get(
+                                "core.misc.tax.left_bills",
+                                game_data.left_bill - 1) +
+                            s(1),
+                        Message::color{ColorIndex::red});
+                }
+            }
+            if (game_data.left_bill > 4)
+            {
+                txt(i18n::s.get(
+                        "core.misc.tax.accused", game_data.left_bill - 1),
+                    Message::color{ColorIndex::red});
+                int stat = decfame(0, 50);
+                p = stat;
+                txt(i18n::s.get("core.misc.tax.lose_fame", p(0)),
+                    Message::color{ColorIndex::red});
+                modify_karma(cdata.player(), -30 * 2);
+            }
+        }
+        else
+        {
+            txt(i18n::s.get("core.misc.tax.no_duty"));
+        }
+    }
+    ctrl_file(FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
+    ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
+    mode = 0;
+    maybe_show_ex_help(16);
+}
+
+
+
+void grow_plant(int val0)
+{
+    --feat(3);
+    if (feat(3) % 50 == 0)
+    {
+        if (feat(3) >= 50)
+        {
+            feat = tile_plant + 3;
+        }
+        else
+        {
+            ++feat;
+            try_to_grow_plant(val0);
+        }
+    }
+}
+
+
+
+void try_to_grow_plant(int val0)
+{
+    feat(3) = 4 + rnd(5);
+    p = 10;
+    if (feat(2) == 41)
+    {
+        p = 15;
+    }
+    if (feat(2) == 42)
+    {
+        p = 25;
+    }
+    if (feat(2) == 38)
+    {
+        p = 30;
+    }
+    if (feat(2) == 39)
+    {
+        p = 25;
+    }
+    if (feat(2) == 40)
+    {
+        p = 40;
+    }
+    if (val0 == 0)
+    {
+        p = p * 3 / 2;
+    }
+    if (feat == tile_plant)
+    {
+        if (game_data.weather < 3)
+        {
+            p = p * 2;
+        }
+    }
+    if (sdata(180, 0) < rnd(p + 1) || rnd(20) == 0)
+    {
+        feat(3) += 50;
+    }
+}
+
+
+
+void harvest_plant(int val)
+{
+    p = 15;
+    if (feat(2) == 41)
+    {
+        p = 25;
+    }
+    if (feat(2) == 42)
+    {
+        p = 30;
+    }
+    if (feat(2) == 38)
+    {
+        p = 40;
+    }
+    if (feat(2) == 39)
+    {
+        p = 35;
+    }
+    if (val == 0)
+    {
+        p = p * 2;
+    }
+    if (game_data.weather < 3)
+    {
+        p = p * 4 / 3;
+    }
+    if (sdata(180, 0) < rnd(p + 1) || rnd(5) == 0 || feat(2) == 40)
+    {
+        cell_data.at(cdata.player().position.x, cdata.player().position.y)
+            .feats = 0;
+        return;
+    }
+    feat = tile_plant;
+    try_to_grow_plant();
+    cell_featset(
+        cdata[cc].position.x,
+        cdata[cc].position.y,
+        feat,
+        feat(1),
+        feat(2),
+        feat(3));
+    txt(i18n::s.get("core.action.plant.new_plant_grows"),
+        Message::color{ColorIndex::green});
+}
+
+
+
+void create_harvested_item()
+{
+    chara_gain_skill_exp(cdata.player(), 180, 75);
+    snd("core.bush1");
+    flt(sdata(180, 0) / 2 + 15, Quality::good);
+    int item_id = 0;
+    if (feat(2) == 39)
+    {
+        flttypemajor = choice(fsetplantunknown);
+        if (rnd(100) == 0)
+        {
+            item_id = 559;
+        }
+    }
+    if (feat(2) == 40 || (feat(2) == 39 && rnd(50) == 0))
+    {
+        flttypemajor = choice(fsetplantartifact);
+        fixlv = Quality::miracle;
+        save_set_autosave();
+    }
+    if (feat(2) == 36)
+    {
+        flttypeminor = 57003;
+    }
+    if (feat(2) == 37)
+    {
+        flttypeminor = 57004;
+    }
+    if (feat(2) == 38)
+    {
+        flttypeminor = 58005;
+    }
+    if (feat(2) == 41)
+    {
+        flttypeminor = 77001;
+    }
+    if (feat(2) == 42)
+    {
+        flttypemajor = 56000;
+    }
+    if (const auto item = itemcreate_player_inv(item_id, 0))
+    {
+        txt(i18n::s.get("core.action.plant.harvest", *item));
+        item_stack(0, *item, true);
+    }
+}
+
+
+
+int getworker(int map_id, int exclude_with)
+{
+    int ret = -1;
+    for (int i = 1; i < 16; ++i)
+    {
+        if (exclude_with != 0 && i != exclude_with)
+            continue;
+        if (cdata[i].current_map == map_id)
+        {
+            ret = i;
+            break;
+        }
+    }
+    return ret;
+}
+
+
+
+void removeworker(int map_id)
+{
+    for (int i = 1; i < 16; ++i)
+    {
+        if (cdata[i].current_map == map_id)
+        {
+            cdata[i].current_map = 0;
         }
     }
 }

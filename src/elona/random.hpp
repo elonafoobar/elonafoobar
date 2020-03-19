@@ -137,4 +137,8 @@ private:
 
 
 
+int roll(int, int, int);
+int roll_max(int, int, int);
+int roundmargin(int = 0, int = 0);
+
 } // namespace elona

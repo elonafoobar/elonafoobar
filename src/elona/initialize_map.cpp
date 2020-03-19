@@ -28,6 +28,7 @@
 #include "message.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "scene.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

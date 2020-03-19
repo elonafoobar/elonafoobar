@@ -5,6 +5,7 @@
 #include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../message.hpp"
+#include "../scene.hpp"
 
 
 

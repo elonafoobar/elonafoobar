@@ -131,4 +131,8 @@ private:
  */
 YesNo yes_no();
 
+
+int ask_direction();
+optional<TurnResult> check_angband();
+
 } // namespace elona

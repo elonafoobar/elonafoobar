@@ -21,4 +21,7 @@ int fov_los(int = 0, int = 0, int = 0, int = 0);
 int get_route(int = 0, int = 0, int = 0, int = 0);
 void init_fovlist();
 
+int breath_list();
+int route_info(int&, int&, int = 0);
+
 } // namespace elona

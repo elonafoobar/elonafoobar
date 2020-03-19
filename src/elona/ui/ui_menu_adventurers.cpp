@@ -4,6 +4,7 @@
 #include "../character.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
+#include "../text.hpp"
 
 namespace elona
 {

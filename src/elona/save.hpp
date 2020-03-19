@@ -19,4 +19,10 @@ void save_set_autosave();
 // Autosave if save_set_autosave() was called.
 void save_autosave_if_needed();
 
+
+void load_gene_files();
+void save_gene();
+void save_map_local_data();
+void get_inheritance();
+
 } // namespace elona

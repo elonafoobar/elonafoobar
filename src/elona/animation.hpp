@@ -378,4 +378,7 @@ private:
 
 
 
+void animeblood(int = 0, int = 0, int = 0);
+void animeload(int = 0, int = 0);
+
 } // namespace elona

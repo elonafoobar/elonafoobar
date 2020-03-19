@@ -6,6 +6,7 @@ set(ELONA_SOURCES
   ai.cpp
   animation.cpp
   area.cpp
+  attack.cpp
   audio.cpp
   autopick.cpp
   blending.cpp
@@ -36,7 +37,6 @@ set(ELONA_SOURCES
   draw_asset.cpp
   dump_player_info.cpp
   element.cpp
-  elonacore.cpp
   enchantment.cpp
   equipment.cpp
   filesystem.cpp
@@ -75,12 +75,15 @@ set(ELONA_SOURCES
   message.cpp
   message_log.cpp
   net.cpp
+  position.cpp
   quest.cpp
   race.cpp
   random.cpp
   random_event.cpp
+  randomgen.cpp
   save.cpp
   save_update.cpp
+  scene.cpp
   set_item_info.cpp
   shop.cpp
   status_ailment.cpp
@@ -99,6 +102,7 @@ set(ELONA_SOURCES
   ui_menus.cpp
   variables.cpp
   wish.cpp
+  world.cpp
 
   data/init.cpp
   data/types.cpp

@@ -1,6 +1,7 @@
 #include "ui_menu_journal.hpp"
 
 #include "../audio.hpp"
+#include "../building.hpp"
 #include "../calc.hpp"
 #include "../character.hpp"
 #include "../data/types/type_asset.hpp"

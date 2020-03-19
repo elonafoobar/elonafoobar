@@ -21,10 +21,12 @@
 #include "quest.hpp"
 #include "random_event.hpp"
 #include "save.hpp"
+#include "scene.hpp"
 #include "serialization/macros.hpp"
 #include "serialization/serialization.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+#include "world.hpp"
 
 
 

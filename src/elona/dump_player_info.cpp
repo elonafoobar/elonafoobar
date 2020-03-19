@@ -1,11 +1,13 @@
 #include <sstream>
 
 #include "ability.hpp"
+#include "building.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "class.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "text.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 

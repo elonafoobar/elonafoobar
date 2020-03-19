@@ -399,4 +399,17 @@ void item_db_on_drink(Item& item, int legacy_id);
 
 std::vector<int> item_get_inheritance(const Item& item);
 
+
+void auto_identify();
+void begintempinv();
+void exittempinv();
+bool cargocheck(const Item& item);
+int convertartifact(int = 0, int = 0);
+void damage_by_cursed_equipments();
+void dipcursed(int = 0, int = 0);
+int efstatusfix(int = 0, int = 0, int = 0, int = 0);
+void equip_melee_weapon();
+int gain_skills_by_geen_engineering();
+int transplant_body_parts();
+
 } // namespace elona

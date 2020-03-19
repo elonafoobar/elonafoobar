@@ -11,6 +11,7 @@
 #include "message.hpp"
 #include "net.hpp"
 #include "quest.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

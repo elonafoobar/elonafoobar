@@ -1,11 +1,13 @@
 #include <unordered_map>
 
 #include "character.hpp"
+#include "command.hpp"
 #include "data/types/type_item.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
 #include "menu.hpp"
 #include "random.hpp"
 #include "variables.hpp"

@@ -20,6 +20,8 @@
 namespace
 {
 
+constexpr int inf_clockw = 120;
+
 int raderh;
 int raderw;
 int raderx;
@@ -43,7 +45,9 @@ int cs_posbk_y;
 int cs_posbk_w;
 int cs_posbk_h;
 
-constexpr int inf_clockw = 120;
+int pagebk = 0;
+int csprev = 0;
+int pagesaved = 0;
 
 
 
@@ -2825,6 +2829,144 @@ void show_title(const std::string& title)
     draw("tip_icon", x, y + (mode != 1));
     font(12 + sizefix - en * 2);
     bmes(title, x + 32, y + 1 + vfix + jp, {250, 250, 250});
+}
+
+
+
+void auto_turn(int delay)
+{
+    if (cc != 0)
+        return;
+
+    autoturn = 1;
+    if (g_config.auto_turn_speed() == "normal")
+    {
+        await(delay);
+        ++scrturn;
+    }
+    if (g_config.auto_turn_speed() != "highest" || firstautoturn == 1)
+    {
+        screenupdate = -1;
+        update_screen();
+    }
+    if (g_config.auto_turn_speed() == "normal")
+    {
+        redraw();
+    }
+}
+
+
+
+void page_save()
+{
+    pagebk = page;
+    csprev = cs;
+    pagesaved = 1;
+}
+
+
+
+void page_load()
+{
+    if (pagesaved == 1)
+    {
+        page = pagebk;
+        cs = csprev;
+        pagesaved = 0;
+    }
+}
+
+
+
+void savecycle()
+{
+    if (menucycle == 1)
+    {
+        menucycle = 0;
+        if (invally == 0 && invcontainer == 0)
+        {
+            lastctrl = invctrl;
+        }
+    }
+}
+
+
+
+void sort_list_by_column1()
+{
+    if (listmax < 1)
+    {
+        return;
+    }
+    while (1)
+    {
+        p = 0;
+        for (int cnt = 0, cnt_end = (listmax - 1); cnt < cnt_end; ++cnt)
+        {
+            if (list(1, cnt) > list(1, cnt + 1))
+            {
+                p(0) = list(0, cnt);
+                p(1) = list(1, cnt);
+                list(0, cnt) = list(0, cnt + 1);
+                list(1, cnt) = list(1, cnt + 1);
+                list(0, cnt + 1) = p;
+                list(1, cnt + 1) = p(1);
+                p = 1;
+            }
+        }
+        if (p == 0)
+        {
+            break;
+        }
+    }
+}
+
+
+
+void sort_list_and_listn_by_column1()
+{
+    if (listmax < 1)
+    {
+        return;
+    }
+    while (1)
+    {
+        p = 0;
+        for (int cnt = 0, cnt_end = (listmax - 1); cnt < cnt_end; ++cnt)
+        {
+            if (list(1, cnt) > list(1, cnt + 1))
+            {
+                p(0) = list(0, cnt);
+                p(1) = list(1, cnt);
+                list(0, cnt) = list(0, cnt + 1);
+                list(1, cnt) = list(1, cnt + 1);
+                list(0, cnt + 1) = p;
+                list(1, cnt + 1) = p(1);
+                s(0) = listn(0, cnt);
+                s(1) = listn(1, cnt);
+                listn(0, cnt) = listn(0, cnt + 1);
+                listn(1, cnt) = listn(1, cnt + 1);
+                listn(0, cnt + 1) = s;
+                listn(1, cnt + 1) = s(1);
+                p = 1;
+            }
+        }
+        if (p == 0)
+        {
+            break;
+        }
+    }
+}
+
+
+
+int winposy(int y, int not_gaming)
+{
+    if (not_gaming == 0)
+    {
+        return ((inf_screenh + 1) * inf_tiles - y) / 2 + 8;
+    }
+    return (windowh - y) / 2;
 }
 
 } // namespace elona

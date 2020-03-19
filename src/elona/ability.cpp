@@ -553,4 +553,18 @@ void chara_gain_exp_disarm_trap(Character& chara)
     chara_gain_skill_exp(chara, 175, 50);
 }
 
+
+
+int randskill()
+{
+    return rnd(40) + 150;
+}
+
+
+
+int randattb()
+{
+    return rnd(8) + 10;
+}
+
 } // namespace elona

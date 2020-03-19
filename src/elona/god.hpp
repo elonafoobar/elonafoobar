@@ -82,4 +82,6 @@ TurnResult do_offer();
 std::string god_name(const GodId& id);
 std::string god_name(int legacy_god_id);
 
+void god_fail_to_take_over_penalty();
+
 } // namespace elona

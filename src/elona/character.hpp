@@ -640,6 +640,34 @@ void chara_add_quality_parens();
 
 bool belong_to_same_team(const Character& c1, const Character& c2);
 
+TurnResult proc_movement_event();
+void chara_clear_status_effects();
+void chara_clear_status_effects_b();
+void revive_character();
+void do_chara_revival();
+void chara_set_revived_status();
+void revive_player();
+int new_ally_joins();
+void refresh_burden_state();
+void go_hostile();
+void get_pregnant();
+void wet(int = 0, int = 0);
+void hostileaction(int = 0, int = 0);
+void turn_aggro(int = 0, int = 0, int = 0);
+void ride_begin(int = 0);
+void ride_end();
+void make_sound(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
+void incognitobegin();
+void incognitoend();
+void initialize_pc_character();
+void lost_body_part(int);
+void lovemiracle(int = 0);
+void monster_respawn();
+void move_character();
+void proc_negative_enchantments(Character& chara);
+void proc_pregnant();
+void wake_up();
+int try_to_perceive_npc(int);
 
 } // namespace elona
 

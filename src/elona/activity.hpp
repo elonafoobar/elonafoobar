@@ -34,4 +34,8 @@ TurnResult do_dig_after_sp_check(Character& chara);
 void matdelmain(int material_id, int amount = 1);
 void matgetmain(int material_id, int amount = 1, int spot_type = 0);
 
+
+void start_stealing();
+void sleep_start();
+
 } // namespace elona

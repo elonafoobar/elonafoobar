@@ -70,4 +70,8 @@ inline std::ostream& operator<<(std::ostream& out, const Position& pos)
     return out;
 }
 
+
+int direction(int = 0, int = 0, int = 0, int = 0);
+int dist(int = 0, int = 0, int = 0, int = 0);
+
 } // namespace elona

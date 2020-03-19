@@ -20,8 +20,10 @@
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+#include "world.hpp"
 
 
 

@@ -849,4 +849,11 @@ void set_material_specific_attributes(Item& item)
     }
 }
 
+
+
+int discsetmc()
+{
+    return rnd(47);
+}
+
 } // namespace elona

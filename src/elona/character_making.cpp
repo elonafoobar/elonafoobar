@@ -15,6 +15,7 @@
 #include "menu.hpp"
 #include "race.hpp"
 #include "random.hpp"
+#include "save.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "ui/ui_menu_charamake_alias.hpp"

@@ -4,6 +4,7 @@
 #include "../snail/surface.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
+#include "attack.hpp"
 #include "audio.hpp"
 #include "autopick.hpp"
 #include "character.hpp"
@@ -29,6 +30,7 @@
 #include "tcg.hpp"
 #include "ui.hpp"
 #include "wish.hpp"
+#include "world.hpp"
 
 
 

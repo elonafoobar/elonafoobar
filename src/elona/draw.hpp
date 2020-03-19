@@ -253,4 +253,8 @@ void draw_map_tile(
 
 const AssetData& get_image_info(data::InstanceId id);
 
+
+void draw_sleep_background_frame();
+void load_sleep_background();
+
 } // namespace elona

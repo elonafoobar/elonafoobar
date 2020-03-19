@@ -17,6 +17,7 @@
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
 #include "lua_env/lua_event/base_event.hpp"
+#include "map.hpp"
 #include "profile/profile_manager.hpp"
 #include "save.hpp"
 #include "variables.hpp"
