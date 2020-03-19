@@ -597,6 +597,7 @@ void ImmSetOpenStatus(int, int);
 int ImmGetOpenStatus(int);
 
 
+int talk_conv(std::string&, int = 0);
 
 void onkey_0();
 

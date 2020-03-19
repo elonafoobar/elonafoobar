@@ -37,6 +37,7 @@ enum class ColorIndex;
 
 void msg_halt();
 void anime_halt(int x, int y);
+void help_halt();
 
 
 

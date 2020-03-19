@@ -13,6 +13,7 @@
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "random.hpp"
+#include "text.hpp"
 #include "variables.hpp"
 
 

@@ -11,6 +11,7 @@
 #include "../../food.hpp"
 #include "../../god.hpp"
 #include "../../map_cell.hpp"
+#include "../../text.hpp"
 #include "../../ui.hpp"
 #include "../../variables.hpp"
 #include "../data_manager.hpp"

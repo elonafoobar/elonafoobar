@@ -134,5 +134,6 @@ YesNo yes_no();
 
 int ask_direction();
 optional<TurnResult> check_angband();
+int key_direction(const std::string& action);
 
 } // namespace elona

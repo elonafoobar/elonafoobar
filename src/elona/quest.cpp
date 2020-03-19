@@ -15,6 +15,7 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
+#include "mapgen.hpp"
 #include "mef.hpp"
 #include "message.hpp"
 #include "quest.hpp"

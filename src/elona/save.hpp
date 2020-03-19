@@ -24,5 +24,6 @@ void load_gene_files();
 void save_gene();
 void save_map_local_data();
 void get_inheritance();
+void dump_player_info();
 
 } // namespace elona

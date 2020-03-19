@@ -10,6 +10,7 @@
 #include "food.hpp"
 #include "gdata.hpp"
 #include "i18n.hpp"
+#include "initialize_map.hpp"
 #include "map.hpp"
 #include "menu.hpp"
 #include "message.hpp"

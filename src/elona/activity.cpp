@@ -28,6 +28,7 @@
 #include "random_event.hpp"
 #include "save.hpp"
 #include "status_ailment.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 #include "world.hpp"

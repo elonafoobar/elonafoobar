@@ -10,11 +10,13 @@
 #include "input.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "text.hpp"
 #include "variables.hpp"
 
-using namespace elona;
 
 
+namespace elona
+{
 
 namespace
 {
@@ -56,9 +58,6 @@ void set_ability(
 } // namespace
 
 
-
-namespace elona
-{
 
 SkillData sdata;
 

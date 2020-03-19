@@ -3,6 +3,7 @@
 #include "../util/strutil.hpp"
 #include "ability.hpp"
 #include "audio.hpp"
+#include "cell_draw.hpp"
 #include "character.hpp"
 #include "config.hpp"
 #include "data/types/type_asset.hpp"
@@ -14,6 +15,7 @@
 #include "lua_env/console.hpp"
 #include "map.hpp"
 #include "random.hpp"
+#include "text.hpp"
 #include "variables.hpp"
 
 

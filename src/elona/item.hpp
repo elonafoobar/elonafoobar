@@ -411,5 +411,8 @@ int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 void equip_melee_weapon();
 int gain_skills_by_geen_engineering();
 int transplant_body_parts();
+std::pair<int, int> inv_getheader(int);
+int mapitemfind(int = 0, int = 0, int = 0);
+std::string itemname(int = 0, int = 0, int = 0);
 
 } // namespace elona

@@ -668,6 +668,7 @@ void proc_negative_enchantments(Character& chara);
 void proc_pregnant();
 void wake_up();
 int try_to_perceive_npc(int);
+int relationbetween(int, int);
 
 } // namespace elona
 

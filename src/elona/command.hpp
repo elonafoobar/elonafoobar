@@ -70,4 +70,12 @@ int do_cast_magic();
 int do_cast_magic_attempt();
 void proc_autopick();
 
+int calcmagiccontrol(int = 0, int = 0);
+int prompt_magic_location();
+TurnResult do_plant();
+void do_rest();
+void open_box();
+void open_new_year_gift();
+TurnResult call_npc();
+
 } // namespace elona

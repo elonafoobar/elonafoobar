@@ -6,9 +6,12 @@
 #include "../elona/itemgen.hpp"
 #include "../elona/lua_env/export_manager.hpp"
 #include "../elona/lua_env/mod_manager.hpp"
+#include "../elona/set_item_info.hpp"
 #include "../elona/variables.hpp"
 #include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
+
+
 
 namespace elona
 {

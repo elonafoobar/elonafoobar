@@ -7,6 +7,7 @@
 #include "class.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "menu.hpp"
 #include "text.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
