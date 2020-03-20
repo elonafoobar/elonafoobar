@@ -1,4 +1,4 @@
-local Data = Elona.game.Data
+local Data = ELONA.require("core.Data")
 
 print('----- init -----')
 

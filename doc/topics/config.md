@@ -184,7 +184,7 @@ Random events will still occur. In most cases, a default option will be chosen.]
 To access and change config options from mods, use the [Config](../modules/Config.html) API.
 
 ```lua
-local Config = Elona.game.Config
+local Config = ELONA.require("core.Config")
 
 print(Config.get("core.game.extra_help"))
 print(Config.set("core.balance.restock_interval", 10))

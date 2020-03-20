@@ -1,8 +1,8 @@
 require("tests/lua/support/minctest")
 
-local Chara = Elona.game.Chara
-local Item = Elona.game.Item
-local World = Elona.game.World
+local Chara = ELONA.require("core.Chara")
+local Item = ELONA.require("core.Item")
+local World = ELONA.require("core.World")
 
 Testing.start_in_debug_map()
 

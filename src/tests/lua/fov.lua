@@ -1,9 +1,9 @@
 require("tests/lua/support/minctest")
 
-local FOV = Elona.game.FOV
+local FOV = ELONA.require("core.FOV")
 
-local Chara = Elona.game.Chara
-local Map = Elona.game.Map
+local Chara = ELONA.require("core.Chara")
+local Map = ELONA.require("core.Map")
 
 lrun("test FOV.refresh", function()
         Testing.start_in_debug_map()

@@ -67,8 +67,8 @@ void EventManager::clear()
     safe_script_file(
         filesystem::dirs::data() / "script" / "kernel" / "event.lua");
 
-    sol::table game = lua().get_api_manager().get_game_api_table();
-    game["Event"] = env()["Event"];
+    sol::table core = lua().get_api_manager().get_core_api_table();
+    core["Event"] = env()["Event"];
 }
 
 } // namespace lua

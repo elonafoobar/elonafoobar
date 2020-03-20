@@ -1,9 +1,9 @@
-local Chara = Elona.game.Chara
-local FOV = Elona.game.FOV
-local GUI = Elona.game.GUI
-local I18N = Elona.game.I18N
+local Chara = ELONA.require("core.Chara")
+local FOV = ELONA.require("core.FOV")
+local GUI = ELONA.require("core.GUI")
+local I18N = ELONA.require("core.I18N")
 local math = math
-local Rand = Elona.game.Rand
+local Rand = ELONA.require("core.Rand")
 
 local eating_effect = {}
 

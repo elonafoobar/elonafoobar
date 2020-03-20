@@ -1,6 +1,6 @@
-local Chara = Elona.game.Chara
-local Map = Elona.game.Map
-local Item = Elona.game.Item
+local Chara = ELONA.require("core.Chara")
+local Map = ELONA.require("core.Map")
+local Item = ELONA.require("core.Item")
 
 return {
    id = "part_time_worker",

@@ -45,7 +45,7 @@ impl ModuleComment {
             format!("--  @classmod {}", self.module)
         } else {
             format!(
-                "--  @usage local {0} = Elona.game.{0}\nmodule \"{0}\"",
+                "--  @usage local {0} = ELONA.require(\"core.{0}\")\nmodule \"{0}\"",
                 self.module
             )
         }

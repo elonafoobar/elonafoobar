@@ -38,7 +38,7 @@ TEST_CASE("test require", "[Lua: API]")
 
     REQUIRE_NOTHROW(
         lua.get_mod_manager().load_testing_mod_from_script("test", R"(
-local Rand = Elona.game.Rand
+local Rand = ELONA.require("core.Rand")
 assert(Rand ~= nil)
 assert(type(Rand.coinflip) == "function")
 )"));
@@ -53,7 +53,7 @@ TEST_CASE("test require from other mods", "[Lua: API]")
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_testing_mod_from_script(
         "test_require_from_mods", R"(
-local Hello = Elona.test_require.Hello
+local Hello = ELONA.require("test_require.Hello")
 assert(Hello ~= nil)
 assert(type(Hello.hello) == "function")
 assert(Hello.hello() == "Hello!")
@@ -80,7 +80,7 @@ TEST_CASE("Core API: Env", "[Lua: API]")
         "test_env",
         "local foobar_ver = '" + foobar_ver + "'\n" +
             R"(
-local Env = Elona.game.Env
+local Env = ELONA.require("core.Env")
 
 assert(Env.LUA_VERSION, "5.3") -- _VERSION is not available.
 assert(Env.ELONA_VERSION, "1.22")

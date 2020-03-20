@@ -35,7 +35,7 @@ I18NManager::I18NManager(LuaEnv& lua)
 {
     env().set_function("parse_fmt", &parse_fmt);
     env().set_function("rnd", &rnd<int>);
-    env().set("Config", lua.get_api_manager().get_game_api_table()["Config"]);
+    env().set("Config", lua.get_api_manager().get_core_api_table()["Config"]);
 
     {
         const auto result = safe_script_file(

@@ -1,5 +1,5 @@
 --- Functions related to in-game console.
---  @usage local Console = Elona.game.Console
+--  @usage local Console = ELONA.require("core.Console")
 module "Console"
 
 --- Registers a new console command.

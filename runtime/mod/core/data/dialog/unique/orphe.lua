@@ -1,6 +1,6 @@
-local Chara = Elona.game.Chara
-local I18N = Elona.game.I18N
-local World = Elona.game.World
+local Chara = ELONA.require("core.Chara")
+local I18N = ELONA.require("core.I18N")
+local World = ELONA.require("core.World")
 
 return {
    id = "orphe",

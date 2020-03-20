@@ -1,6 +1,6 @@
-local Chara = Elona.game.Chara
+local Chara = ELONA.require("core.Chara")
 local math = math
-local I18N = Elona.game.I18N
+local I18N = ELONA.require("core.I18N")
 
 local function mod_skill_level(args, id, amount)
    local skill = args.chara:get_skill(id)

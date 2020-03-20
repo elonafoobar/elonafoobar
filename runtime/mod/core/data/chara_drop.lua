@@ -1,7 +1,7 @@
-local Chara = Elona.game.Chara
-local Item = Elona.game.Item
-local Map = Elona.game.Map
-local Rand = Elona.game.Rand
+local Chara = ELONA.require("core.Chara")
+local Item = ELONA.require("core.Item")
+local Map = ELONA.require("core.Map")
+local Rand = ELONA.require("core.Rand")
 
 -- Returns 'drops' table from array of item IDs.
 local function make_drops(ids)

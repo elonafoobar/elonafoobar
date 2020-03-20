@@ -1,7 +1,7 @@
-local Calc = Elona.game.Calc
-local Map = Elona.game.Map
+local Calc = ELONA.require("core.Calc")
+local Map = ELONA.require("core.Map")
 local math = math
-local Rand = Elona.game.Rand
+local Rand = ELONA.require("core.Rand")
 local table = table
 
 local map = require("map/static.lua")

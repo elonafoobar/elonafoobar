@@ -1,5 +1,5 @@
 --- Parse/stringify JSON5 format.
---  @usage local JSON5 = Elona.game.JSON5
+--  @usage local JSON5 = ELONA.require("core.JSON5")
 module "JSON5"
 
 --- Parses JSON5 text.
