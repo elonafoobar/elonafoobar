@@ -6,7 +6,6 @@ local Item = ELONA.require("core.Item")
 local common = require("../common.lua")
 
 return {
-   id = "shena",
    root = "core.talk.unique.shena",
    nodes = {
       __start = function()

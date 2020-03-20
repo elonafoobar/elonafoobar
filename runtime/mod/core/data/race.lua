@@ -1,9 +1,8 @@
-data:define_type("race")
-data:add_multi(
+data:define_prototype("race")
+data:add(
    "core.race",
    {
-      {
-         id = "kobold",
+      kobold = {
          is_extra = true,
          ordering = 20010,
          breed_power = 250,
@@ -32,8 +31,7 @@ data:add_multi(
          },
          body_parts = {1, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "orc",
+      orc = {
          is_extra = true,
          ordering = 20020,
          breed_power = 300,
@@ -62,8 +60,7 @@ data:add_multi(
          },
          body_parts = {1, 4, 3, 5, 5, 6, 7, 8, 9},
       },
-      {
-         id = "troll",
+      troll = {
          is_extra = true,
          ordering = 20030,
          breed_power = 250,
@@ -91,8 +88,7 @@ data:add_multi(
          },
          body_parts = {1, 4, 3, 5, 5, 7, 8},
       },
-      {
-         id = "lizardman",
+      lizardman = {
          is_extra = true,
          ordering = 20040,
          breed_power = 300,
@@ -122,8 +118,7 @@ data:add_multi(
          },
          body_parts = {1, 4, 3, 5, 5, 6, 7, 8, 9},
       },
-      {
-         id = "minotaur",
+      minotaur = {
          is_extra = true,
          ordering = 20050,
          breed_power = 300,
@@ -151,8 +146,7 @@ data:add_multi(
          },
          body_parts = {1, 4, 5, 5, 6, 8, 9},
       },
-      {
-         id = "yerles",
+      yerles = {
          is_extra = false,
          ordering = 10010,
          breed_power = 220,
@@ -182,8 +176,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "norland",
+      norland = {
          is_extra = true,
          ordering = 20060,
          breed_power = 220,
@@ -213,8 +206,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "eulderna",
+      eulderna = {
          is_extra = false,
          ordering = 10020,
          breed_power = 180,
@@ -243,8 +235,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "fairy",
+      fairy = {
          is_extra = false,
          ordering = 10030,
          breed_power = 180,
@@ -283,8 +274,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "asura",
+      asura = {
          is_extra = true,
          ordering = 20070,
          breed_power = 100,
@@ -314,8 +304,7 @@ data:add_multi(
          },
          body_parts = {5, 5, 5, 5, 2},
       },
-      {
-         id = "slime",
+      slime = {
          is_extra = true,
          ordering = 20080,
          breed_power = 700,
@@ -344,8 +333,7 @@ data:add_multi(
          },
          body_parts = {1},
       },
-      {
-         id = "wolf",
+      wolf = {
          is_extra = true,
          ordering = 20090,
          breed_power = 800,
@@ -374,8 +362,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 7, 9},
       },
-      {
-         id = "dwarf",
+      dwarf = {
          is_extra = false,
          ordering = 10040,
          breed_power = 150,
@@ -404,8 +391,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "juere",
+      juere = {
          is_extra = false,
          ordering = 10050,
          breed_power = 210,
@@ -435,8 +421,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "zombie",
+      zombie = {
          is_extra = true,
          ordering = 20100,
          breed_power = 100,
@@ -470,8 +455,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 6, 7, 8},
       },
-      {
-         id = "elea",
+      elea = {
          is_extra = false,
          ordering = 10060,
          breed_power = 120,
@@ -500,8 +484,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "rabbit",
+      rabbit = {
          is_extra = true,
          ordering = 20110,
          breed_power = 800,
@@ -528,8 +511,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 7},
       },
-      {
-         id = "sheep",
+      sheep = {
          is_extra = true,
          ordering = 20120,
          breed_power = 1000,
@@ -557,8 +539,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 7, 9},
       },
-      {
-         id = "frog",
+      frog = {
          is_extra = true,
          ordering = 20130,
          breed_power = 600,
@@ -586,8 +567,7 @@ data:add_multi(
          },
          body_parts = {4},
       },
-      {
-         id = "centipede",
+      centipede = {
          is_extra = true,
          ordering = 20140,
          breed_power = 400,
@@ -614,8 +594,7 @@ data:add_multi(
          },
          body_parts = {3, 6, 6},
       },
-      {
-         id = "snail",
+      snail = {
          is_extra = false,
          ordering = 10070,
          breed_power = 500,
@@ -642,8 +621,7 @@ data:add_multi(
          },
          body_parts = {3},
       },
-      {
-         id = "mandrake",
+      mandrake = {
          is_extra = true,
          ordering = 20150,
          breed_power = 80,
@@ -672,8 +650,7 @@ data:add_multi(
          },
          body_parts = {1, 3},
       },
-      {
-         id = "beetle",
+      beetle = {
          is_extra = true,
          ordering = 20160,
          breed_power = 750,
@@ -702,8 +679,7 @@ data:add_multi(
          },
          body_parts = {2},
       },
-      {
-         id = "mushroom",
+      mushroom = {
          is_extra = true,
          ordering = 20170,
          breed_power = 440,
@@ -733,8 +709,7 @@ data:add_multi(
          },
          body_parts = {1, 2},
       },
-      {
-         id = "bat",
+      bat = {
          is_extra = true,
          ordering = 20180,
          breed_power = 350,
@@ -763,8 +738,7 @@ data:add_multi(
          },
          body_parts = {1},
       },
-      {
-         id = "ent",
+      ent = {
          is_extra = true,
          ordering = 20190,
          breed_power = 35,
@@ -792,8 +766,7 @@ data:add_multi(
          },
          body_parts = {5, 6, 6, 7, 9},
       },
-      {
-         id = "lich",
+      lich = {
          is_extra = false,
          ordering = 10080,
          breed_power = 25,
@@ -830,8 +803,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "hound",
+      hound = {
          is_extra = true,
          ordering = 20200,
          breed_power = 540,
@@ -861,8 +833,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 9},
       },
-      {
-         id = "ghost",
+      ghost = {
          is_extra = true,
          ordering = 20210,
          breed_power = 30,
@@ -898,8 +869,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6},
       },
-      {
-         id = "spirit",
+      spirit = {
          is_extra = true,
          ordering = 20220,
          breed_power = 25,
@@ -927,8 +897,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6},
       },
-      {
-         id = "eye",
+      eye = {
          is_extra = true,
          ordering = 20230,
          breed_power = 50,
@@ -957,8 +926,7 @@ data:add_multi(
          },
          body_parts = {1},
       },
-      {
-         id = "wyvern",
+      wyvern = {
          is_extra = true,
          ordering = 20240,
          breed_power = 100,
@@ -987,8 +955,7 @@ data:add_multi(
          },
          body_parts = {2, 4, 6, 6},
       },
-      {
-         id = "wasp",
+      wasp = {
          is_extra = true,
          ordering = 20250,
          breed_power = 580,
@@ -1017,8 +984,7 @@ data:add_multi(
          },
          body_parts = {1},
       },
-      {
-         id = "giant",
+      giant = {
          is_extra = true,
          ordering = 20260,
          breed_power = 60,
@@ -1047,8 +1013,7 @@ data:add_multi(
          },
          body_parts = {4, 3, 5, 5, 7, 9},
       },
-      {
-         id = "imp",
+      imp = {
          is_extra = true,
          ordering = 20270,
          breed_power = 240,
@@ -1078,8 +1043,7 @@ data:add_multi(
          },
          body_parts = {2, 4, 5, 5, 6, 6, 6},
       },
-      {
-         id = "hand",
+      hand = {
          is_extra = true,
          ordering = 20280,
          breed_power = 160,
@@ -1106,8 +1070,7 @@ data:add_multi(
          },
          body_parts = {5, 5, 6, 6, 7},
       },
-      {
-         id = "snake",
+      snake = {
          is_extra = true,
          ordering = 20290,
          breed_power = 430,
@@ -1135,8 +1098,7 @@ data:add_multi(
          },
          body_parts = {4},
       },
-      {
-         id = "drake",
+      drake = {
          is_extra = true,
          ordering = 20300,
          breed_power = 120,
@@ -1166,8 +1128,7 @@ data:add_multi(
          },
          body_parts = {2, 4, 6, 6},
       },
-      {
-         id = "goblin",
+      goblin = {
          is_extra = false,
          ordering = 10090,
          breed_power = 290,
@@ -1197,8 +1158,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "bear",
+      bear = {
          is_extra = true,
          ordering = 20310,
          breed_power = 350,
@@ -1228,8 +1188,7 @@ data:add_multi(
          },
          body_parts = {5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "armor",
+      armor = {
          is_extra = true,
          ordering = 20320,
          breed_power = 40,
@@ -1259,8 +1218,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 7, 8},
       },
-      {
-         id = "medusa",
+      medusa = {
          is_extra = true,
          ordering = 20330,
          breed_power = 180,
@@ -1289,8 +1247,7 @@ data:add_multi(
          },
          body_parts = {4, 5, 5, 6, 6, 7, 9},
       },
-      {
-         id = "cupid",
+      cupid = {
          is_extra = true,
          ordering = 20340,
          breed_power = 350,
@@ -1319,8 +1276,7 @@ data:add_multi(
          },
          body_parts = {2, 4, 5, 5, 6, 6, 7},
       },
-      {
-         id = "phantom",
+      phantom = {
          is_extra = true,
          ordering = 20350,
          breed_power = 35,
@@ -1356,8 +1312,7 @@ data:add_multi(
          },
          body_parts = {2, 4, 5, 5, 6, 6, 7},
       },
-      {
-         id = "harpy",
+      harpy = {
          is_extra = true,
          ordering = 20360,
          breed_power = 420,
@@ -1386,8 +1341,7 @@ data:add_multi(
          },
          body_parts = {2, 5, 5, 6, 6, 7, 9, 9},
       },
-      {
-         id = "dragon",
+      dragon = {
          is_extra = true,
          ordering = 20370,
          breed_power = 20,
@@ -1417,8 +1371,7 @@ data:add_multi(
          },
          body_parts = {2, 4, 6, 6},
       },
-      {
-         id = "dinosaur",
+      dinosaur = {
          is_extra = true,
          ordering = 20380,
          breed_power = 100,
@@ -1448,8 +1401,7 @@ data:add_multi(
          },
          body_parts = {2, 4, 6, 6},
       },
-      {
-         id = "cerberus",
+      cerberus = {
          is_extra = true,
          ordering = 20390,
          breed_power = 80,
@@ -1478,8 +1430,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 7, 9, 9},
       },
-      {
-         id = "spider",
+      spider = {
          is_extra = true,
          ordering = 20400,
          breed_power = 560,
@@ -1510,8 +1461,7 @@ data:add_multi(
          },
          body_parts = {6, 6},
       },
-      {
-         id = "golem",
+      golem = {
          is_extra = false,
          ordering = 10100,
          breed_power = 40,
@@ -1541,8 +1491,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "rock",
+      rock = {
          is_extra = true,
          ordering = 20410,
          breed_power = 200,
@@ -1572,8 +1521,7 @@ data:add_multi(
          },
          body_parts = {1},
       },
-      {
-         id = "crab",
+      crab = {
          is_extra = true,
          ordering = 20420,
          breed_power = 420,
@@ -1603,8 +1551,7 @@ data:add_multi(
          },
          body_parts = {3, 5, 5, 6, 6, 9},
       },
-      {
-         id = "skeleton",
+      skeleton = {
          is_extra = true,
          ordering = 20430,
          breed_power = 30,
@@ -1640,8 +1587,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "piece",
+      piece = {
          is_extra = true,
          ordering = 20440,
          breed_power = 25,
@@ -1671,8 +1617,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8},
       },
-      {
-         id = "cat",
+      cat = {
          is_extra = true,
          ordering = 20450,
          breed_power = 950,
@@ -1703,8 +1648,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 9, 9},
       },
-      {
-         id = "dog",
+      dog = {
          is_extra = true,
          ordering = 20460,
          breed_power = 920,
@@ -1734,8 +1678,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 9, 9},
       },
-      {
-         id = "roran",
+      roran = {
          is_extra = true,
          ordering = 20470,
          breed_power = 220,
@@ -1765,8 +1708,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "rat",
+      rat = {
          is_extra = true,
          ordering = 20480,
          breed_power = 1100,
@@ -1795,8 +1737,7 @@ data:add_multi(
          },
          body_parts = {3, 7, 8, 9},
       },
-      {
-         id = "shell",
+      shell = {
          is_extra = true,
          ordering = 20490,
          breed_power = 450,
@@ -1826,8 +1767,7 @@ data:add_multi(
          },
          body_parts = {9},
       },
-      {
-         id = "catgod",
+      catgod = {
          is_extra = true,
          ordering = 20500,
          breed_power = 5,
@@ -1858,8 +1798,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 5, 6, 7, 9},
       },
-      {
-         id = "machinegod",
+      machinegod = {
          is_extra = true,
          ordering = 20510,
          breed_power = 5,
@@ -1888,8 +1827,7 @@ data:add_multi(
          },
          body_parts = {1, 4, 3, 5, 5, 7, 8, 9},
       },
-      {
-         id = "undeadgod",
+      undeadgod = {
          is_extra = true,
          ordering = 20520,
          breed_power = 5,
@@ -1917,8 +1855,7 @@ data:add_multi(
          },
          body_parts = {2, 4, 3, 5, 5, 6, 6},
       },
-      {
-         id = "machine",
+      machine = {
          is_extra = true,
          ordering = 20530,
          breed_power = 15,
@@ -1949,8 +1886,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "wisp",
+      wisp = {
          is_extra = true,
          ordering = 20540,
          breed_power = 25,
@@ -1979,8 +1915,7 @@ data:add_multi(
          },
          body_parts = {1},
       },
-      {
-         id = "chicken",
+      chicken = {
          is_extra = true,
          ordering = 20550,
          breed_power = 1000,
@@ -2009,8 +1944,7 @@ data:add_multi(
          },
          body_parts = {1},
       },
-      {
-         id = "stalker",
+      stalker = {
          is_extra = true,
          ordering = 20560,
          breed_power = 25,
@@ -2046,8 +1980,7 @@ data:add_multi(
          },
          body_parts = {2, 5, 5, 6, 6, 7},
       },
-      {
-         id = "catsister",
+      catsister = {
          is_extra = true,
          ordering = 20570,
          breed_power = 5,
@@ -2076,8 +2009,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "mutant",
+      mutant = {
          is_extra = false,
          ordering = 10110,
          breed_power = 50,
@@ -2105,8 +2037,7 @@ data:add_multi(
          },
          body_parts = {4, 5},
       },
-      {
-         id = "yeek",
+      yeek = {
          is_extra = true,
          ordering = 20580,
          breed_power = 500,
@@ -2134,8 +2065,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "yith",
+      yith = {
          is_extra = true,
          ordering = 20590,
          breed_power = 25,
@@ -2166,8 +2096,7 @@ data:add_multi(
          },
          body_parts = {5, 5, 5, 5, 6, 6, 6, 6},
       },
-      {
-         id = "servant",
+      servant = {
          is_extra = true,
          ordering = 20600,
          breed_power = 5,
@@ -2200,8 +2129,7 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-      {
-         id = "horse",
+      horse = {
          is_extra = true,
          ordering = 20610,
          breed_power = 1000,
@@ -2229,8 +2157,7 @@ data:add_multi(
          },
          body_parts = {4, 9, 9},
       },
-      {
-         id = "god",
+      god = {
          is_extra = true,
          ordering = 20620,
          breed_power = 1,
@@ -2266,8 +2193,7 @@ data:add_multi(
          },
          body_parts = {5, 5},
       },
-      {
-         id = "quickling",
+      quickling = {
          is_extra = true,
          ordering = 20630,
          breed_power = 1,
@@ -2300,8 +2226,7 @@ data:add_multi(
          },
          body_parts = {1, 4, 3, 5, 5, 6, 6, 7, 9},
       },
-      {
-         id = "metal",
+      metal = {
          is_extra = true,
          ordering = 20640,
          breed_power = 1,
@@ -2335,8 +2260,7 @@ data:add_multi(
          },
          body_parts = {1, 4, 3},
       },
-      {
-         id = "bike",
+      bike = {
          is_extra = true,
          ordering = 20650,
          breed_power = 15,
@@ -2369,8 +2293,7 @@ data:add_multi(
          body_parts = {1, 4, 3, 5, 5, 8, 9, 9},
       },
       -- For debug
-      {
-         id = "slug",
+      slug = {
          ordering = 0,
          pv_multiplier = 1000,
          dv_multiplier = 1000,
@@ -2390,4 +2313,5 @@ data:add_multi(
          },
          body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
       },
-})
+   }
+)

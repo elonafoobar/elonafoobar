@@ -1,9 +1,8 @@
-data:define_type("item")
-data:add_multi(
+data:define_prototype("item")
+data:add(
    "core.item",
    {
-      {
-         id = "bug",
+      bug = {
          legacy_id = 0,
          image = 33,
          value = 1,
@@ -36,8 +35,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bug",
       },
-      {
-         id = "long_sword",
+      long_sword = {
          legacy_id = 1,
          image = 405,
          value = 500,
@@ -70,8 +68,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.long_sword",
       },
-      {
-         id = "dagger",
+      dagger = {
          legacy_id = 2,
          image = 400,
          value = 500,
@@ -104,8 +101,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.dagger",
       },
-      {
-         id = "hand_axe",
+      hand_axe = {
          legacy_id = 3,
          image = 499,
          value = 500,
@@ -138,8 +134,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.hand_axe",
       },
-      {
-         id = "club",
+      club = {
          legacy_id = 4,
          image = 427,
          value = 500,
@@ -172,8 +167,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.club",
       },
-      {
-         id = "magic_hat",
+      magic_hat = {
          legacy_id = 5,
          image = 477,
          value = 1400,
@@ -206,8 +200,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.magic_hat",
       },
-      {
-         id = "fairy_hat",
+      fairy_hat = {
          legacy_id = 6,
          image = 478,
          value = 7200,
@@ -240,8 +233,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.fairy_hat",
       },
-      {
-         id = "breastplate",
+      breastplate = {
          legacy_id = 7,
          image = 396,
          value = 600,
@@ -274,8 +266,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.breastplate",
       },
-      {
-         id = "robe",
+      robe = {
          legacy_id = 8,
          image = 408,
          value = 450,
@@ -308,8 +299,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.robe",
       },
-      {
-         id = "decorated_gloves",
+      decorated_gloves = {
          legacy_id = 9,
          image = 449,
          value = 1400,
@@ -342,8 +332,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.decorated_gloves",
       },
-      {
-         id = "thick_gauntlets",
+      thick_gauntlets = {
          legacy_id = 10,
          image = 450,
          value = 400,
@@ -376,8 +365,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.thick_gauntlets",
       },
-      {
-         id = "heavy_boots",
+      heavy_boots = {
          legacy_id = 11,
          image = 418,
          value = 480,
@@ -410,8 +398,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.heavy_boots",
       },
-      {
-         id = "composite_boots",
+      composite_boots = {
          legacy_id = 12,
          image = 460,
          value = 2200,
@@ -444,8 +431,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.composite_boots",
       },
-      {
-         id = "decorative_ring",
+      decorative_ring = {
          legacy_id = 13,
          image = 407,
          value = 450,
@@ -478,8 +464,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.decorative_ring",
       },
-      {
-         id = "scroll_of_identify",
+      scroll_of_identify = {
          legacy_id = 14,
          image = 470,
          value = 480,
@@ -513,8 +498,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_identify",
       },
-      {
-         id = "scroll_of_oracle",
+      scroll_of_oracle = {
          legacy_id = 15,
          image = 470,
          value = 12000,
@@ -548,8 +532,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_oracle",
       },
-      {
-         id = "scroll_of_teleportation",
+      scroll_of_teleportation = {
          legacy_id = 16,
          image = 470,
          value = 200,
@@ -583,8 +566,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_teleportation",
       },
-      {
-         id = "scroll_of_incognito",
+      scroll_of_incognito = {
          legacy_id = 17,
          image = 470,
          value = 3500,
@@ -618,8 +600,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_incognito",
       },
-      {
-         id = "rod_of_identify",
+      rod_of_identify = {
          legacy_id = 18,
          image = 471,
          value = 1080,
@@ -653,8 +634,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_identify",
       },
-      {
-         id = "rod_of_teleportation",
+      rod_of_teleportation = {
          legacy_id = 19,
          image = 471,
          value = 840,
@@ -688,8 +668,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_teleportation",
       },
-      {
-         id = "spellbook_of_teleportation",
+      spellbook_of_teleportation = {
          legacy_id = 20,
          image = 429,
          value = 3200,
@@ -723,8 +702,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_teleportation",
       },
-      {
-         id = "spellbook_of_identify",
+      spellbook_of_identify = {
          legacy_id = 21,
          image = 429,
          value = 5600,
@@ -758,8 +736,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_identify",
       },
-      {
-         id = "spellbook_of_uncurse",
+      spellbook_of_uncurse = {
          legacy_id = 22,
          image = 429,
          value = 6400,
@@ -793,8 +770,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_uncurse",
       },
-      {
-         id = "book_a",
+      book_a = {
          legacy_id = 23,
          image = 333,
          value = 100,
@@ -827,8 +803,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.book_a",
       },
-      {
-         id = "book_b",
+      book_b = {
          legacy_id = 24,
          image = 333,
          value = 500,
@@ -861,8 +836,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.book_b",
       },
-      {
-         id = "bugged_book",
+      bugged_book = {
          legacy_id = 25,
          image = 333,
          value = 100,
@@ -895,8 +869,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bugged_book",
       },
-      {
-         id = "bottle_of_dirty_water",
+      bottle_of_dirty_water = {
          legacy_id = 26,
          image = 354,
          value = 100,
@@ -929,8 +902,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bottle_of_dirty_water",
       },
-      {
-         id = "potion_of_blindness",
+      potion_of_blindness = {
          legacy_id = 27,
          image = 354,
          value = 20,
@@ -964,8 +936,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_blindness",
       },
-      {
-         id = "potion_of_confusion",
+      potion_of_confusion = {
          legacy_id = 28,
          image = 354,
          value = 30,
@@ -999,8 +970,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_confusion",
       },
-      {
-         id = "potion_of_paralysis",
+      potion_of_paralysis = {
          legacy_id = 29,
          image = 354,
          value = 40,
@@ -1034,8 +1004,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_paralysis",
       },
-      {
-         id = "sleeping_drug",
+      sleeping_drug = {
          legacy_id = 30,
          image = 354,
          value = 120,
@@ -1069,8 +1038,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.sleeping_drug",
       },
-      {
-         id = "crim_ale",
+      crim_ale = {
          legacy_id = 31,
          image = 354,
          value = 280,
@@ -1103,8 +1071,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.crim_ale",
       },
-      {
-         id = "spellbook_of_ice_bolt",
+      spellbook_of_ice_bolt = {
          legacy_id = 32,
          image = 429,
          value = 3800,
@@ -1138,8 +1105,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_ice_bolt",
       },
-      {
-         id = "spellbook_of_fire_bolt",
+      spellbook_of_fire_bolt = {
          legacy_id = 33,
          image = 429,
          value = 3800,
@@ -1173,8 +1139,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_fire_bolt",
       },
-      {
-         id = "spellbook_of_lightning_bolt",
+      spellbook_of_lightning_bolt = {
          legacy_id = 34,
          image = 429,
          value = 3800,
@@ -1208,8 +1173,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_lightning_bolt",
       },
-      {
-         id = "earth_crystal",
+      earth_crystal = {
          legacy_id = 35,
          image = 211,
          value = 450,
@@ -1243,8 +1207,7 @@ data:add_multi(
          color = "yellow",
          locale_key_prefix = "core.item.earth_crystal",
       },
-      {
-         id = "mana_crystal",
+      mana_crystal = {
          legacy_id = 36,
          image = 211,
          value = 470,
@@ -1278,8 +1241,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.mana_crystal",
       },
-      {
-         id = "sun_crystal",
+      sun_crystal = {
          legacy_id = 37,
          image = 211,
          value = 450,
@@ -1313,8 +1275,7 @@ data:add_multi(
          color = "orange",
          locale_key_prefix = "core.item.sun_crystal",
       },
-      {
-         id = "gold_bar",
+      gold_bar = {
          legacy_id = 38,
          image = 33,
          value = 2000,
@@ -1347,8 +1308,7 @@ data:add_multi(
          rftags = { "ore" },
          locale_key_prefix = "core.item.gold_bar",
       },
-      {
-         id = "raw_ore_of_rubynus",
+      raw_ore_of_rubynus = {
          legacy_id = 39,
          image = 212,
          value = 1400,
@@ -1382,8 +1342,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.raw_ore_of_rubynus",
       },
-      {
-         id = "raw_ore_of_mica",
+      raw_ore_of_mica = {
          legacy_id = 40,
          image = 212,
          value = 720,
@@ -1416,8 +1375,7 @@ data:add_multi(
          rftags = { "ore" },
          locale_key_prefix = "core.item.raw_ore_of_mica",
       },
-      {
-         id = "raw_ore_of_emerald",
+      raw_ore_of_emerald = {
          legacy_id = 41,
          image = 213,
          value = 2450,
@@ -1451,8 +1409,7 @@ data:add_multi(
          color = "green",
          locale_key_prefix = "core.item.raw_ore_of_emerald",
       },
-      {
-         id = "raw_ore_of_diamond",
+      raw_ore_of_diamond = {
          legacy_id = 42,
          image = 213,
          value = 4200,
@@ -1486,8 +1443,7 @@ data:add_multi(
          color = "blue",
          locale_key_prefix = "core.item.raw_ore_of_diamond",
       },
-      {
-         id = "wood_piece",
+      wood_piece = {
          legacy_id = 43,
          image = 239,
          value = 10,
@@ -1520,8 +1476,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.wood_piece",
       },
-      {
-         id = "junk_stone",
+      junk_stone = {
          legacy_id = 44,
          image = 238,
          value = 10,
@@ -1554,8 +1509,7 @@ data:add_multi(
          rftags = { "ore" },
          locale_key_prefix = "core.item.junk_stone",
       },
-      {
-         id = "garbage",
+      garbage = {
          legacy_id = 45,
          image = 240,
          value = 8,
@@ -1588,8 +1542,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.garbage",
       },
-      {
-         id = "broken_vase",
+      broken_vase = {
          legacy_id = 46,
          image = 241,
          value = 6,
@@ -1622,8 +1575,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.broken_vase",
       },
-      {
-         id = "washing",
+      washing = {
          legacy_id = 47,
          image = 204,
          value = 140,
@@ -1656,8 +1608,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.washing",
       },
-      {
-         id = "bonfire",
+      bonfire = {
          legacy_id = 48,
          image = 242,
          value = 170,
@@ -1690,8 +1641,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bonfire",
       },
-      {
-         id = "flag",
+      flag = {
          legacy_id = 49,
          image = 243,
          value = 130,
@@ -1724,8 +1674,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.flag",
       },
-      {
-         id = "broken_sword",
+      broken_sword = {
          legacy_id = 50,
          image = 244,
          value = 10,
@@ -1758,8 +1707,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.broken_sword",
       },
-      {
-         id = "bone_fragment",
+      bone_fragment = {
          legacy_id = 51,
          image = 245,
          value = 10,
@@ -1792,8 +1740,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bone_fragment",
       },
-      {
-         id = "skeleton",
+      skeleton = {
          legacy_id = 52,
          image = 246,
          value = 10,
@@ -1826,8 +1773,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.skeleton",
       },
-      {
-         id = "tombstone",
+      tombstone = {
          legacy_id = 53,
          image = 247,
          value = 10,
@@ -1860,8 +1806,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tombstone",
       },
-      {
-         id = "gold_piece",
+      gold_piece = {
          legacy_id = 54,
          image = 433,
          value = 1,
@@ -1894,8 +1839,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.gold_piece",
       },
-      {
-         id = "platinum_coin",
+      platinum_coin = {
          legacy_id = 55,
          image = 437,
          value = 1,
@@ -1928,8 +1872,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.platinum_coin",
       },
-      {
-         id = "diablo",
+      diablo = {
          legacy_id = 56,
          image = 405,
          value = 40000,
@@ -1963,8 +1906,7 @@ data:add_multi(
          color = "grey",
          locale_key_prefix = "core.item.diablo",
       },
-      {
-         id = "zantetsu",
+      zantetsu = {
          legacy_id = 57,
          image = 501,
          value = 40000,
@@ -1998,8 +1940,7 @@ data:add_multi(
          color = "blue",
          locale_key_prefix = "core.item.zantetsu",
       },
-      {
-         id = "long_bow",
+      long_bow = {
          legacy_id = 58,
          image = 404,
          value = 500,
@@ -2032,8 +1973,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.long_bow",
       },
-      {
-         id = "knight_shield",
+      knight_shield = {
          legacy_id = 59,
          image = 411,
          value = 4800,
@@ -2066,8 +2006,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.knight_shield",
       },
-      {
-         id = "pistol",
+      pistol = {
          legacy_id = 60,
          image = 419,
          value = 500,
@@ -2100,8 +2039,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.pistol",
       },
-      {
-         id = "arrow",
+      arrow = {
          legacy_id = 61,
          image = 412,
          value = 150,
@@ -2134,8 +2072,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.arrow",
       },
-      {
-         id = "bullet",
+      bullet = {
          legacy_id = 62,
          image = 420,
          value = 150,
@@ -2168,8 +2105,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bullet",
       },
-      {
-         id = "scythe_of_void",
+      scythe_of_void = {
          legacy_id = 63,
          image = 421,
          value = 50000,
@@ -2203,8 +2139,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.scythe_of_void",
       },
-      {
-         id = "mournblade",
+      mournblade = {
          legacy_id = 64,
          image = 405,
          value = 60000,
@@ -2238,8 +2173,7 @@ data:add_multi(
          color = "blue",
          locale_key_prefix = "core.item.mournblade",
       },
-      {
-         id = "light_cloak",
+      light_cloak = {
          legacy_id = 65,
          image = 422,
          value = 250,
@@ -2272,8 +2206,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.light_cloak",
       },
-      {
-         id = "girdle",
+      girdle = {
          legacy_id = 66,
          image = 423,
          value = 300,
@@ -2306,8 +2239,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.girdle",
       },
-      {
-         id = "decorative_amulet",
+      decorative_amulet = {
          legacy_id = 67,
          image = 398,
          value = 200,
@@ -2340,8 +2272,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.decorative_amulet",
       },
-      {
-         id = "potion_of_cure_minor_wound",
+      potion_of_cure_minor_wound = {
          legacy_id = 68,
          image = 354,
          value = 150,
@@ -2375,8 +2306,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_minor_wound",
       },
-      {
-         id = "potion_of_cure_major_wound",
+      potion_of_cure_major_wound = {
          legacy_id = 69,
          image = 354,
          value = 300,
@@ -2410,8 +2340,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_major_wound",
       },
-      {
-         id = "potion_of_cure_critical_wound",
+      potion_of_cure_critical_wound = {
          legacy_id = 70,
          image = 354,
          value = 1280,
@@ -2445,8 +2374,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_critical_wound",
       },
-      {
-         id = "potion_of_healing",
+      potion_of_healing = {
          legacy_id = 71,
          image = 354,
          value = 3000,
@@ -2480,8 +2408,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healing",
       },
-      {
-         id = "potion_of_healer",
+      potion_of_healer = {
          legacy_id = 72,
          image = 354,
          value = 5000,
@@ -2515,8 +2442,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healer",
       },
-      {
-         id = "ragnarok",
+      ragnarok = {
          legacy_id = 73,
          image = 405,
          value = 20000,
@@ -2550,8 +2476,7 @@ data:add_multi(
          color = "grey",
          locale_key_prefix = "core.item.ragnarok",
       },
-      {
-         id = "potion_of_healer_odina",
+      potion_of_healer_odina = {
          legacy_id = 74,
          image = 354,
          value = 7500,
@@ -2585,8 +2510,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healer_odina",
       },
-      {
-         id = "potion_of_healer_eris",
+      potion_of_healer_eris = {
          legacy_id = 75,
          image = 354,
          value = 10000,
@@ -2620,8 +2544,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healer_eris",
       },
-      {
-         id = "potion_of_healer_jure",
+      potion_of_healer_jure = {
          legacy_id = 76,
          image = 354,
          value = 15000,
@@ -2655,8 +2578,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healer_jure",
       },
-      {
-         id = "round_chair",
+      round_chair = {
          legacy_id = 77,
          image = 237,
          value = 80,
@@ -2689,8 +2611,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.round_chair",
       },
-      {
-         id = "bookshelf",
+      bookshelf = {
          legacy_id = 78,
          image = 235,
          value = 1800,
@@ -2723,8 +2644,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bookshelf",
       },
-      {
-         id = "luxury_drawer",
+      luxury_drawer = {
          legacy_id = 79,
          image = 234,
          value = 6400,
@@ -2757,8 +2677,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.luxury_drawer",
       },
-      {
-         id = "boring_bed",
+      boring_bed = {
          legacy_id = 80,
          image = 66,
          value = 1400,
@@ -2792,8 +2711,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.boring_bed",
       },
-      {
-         id = "rag_doll",
+      rag_doll = {
          legacy_id = 81,
          image = 67,
          value = 240,
@@ -2827,8 +2745,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.rag_doll",
       },
-      {
-         id = "toy",
+      toy = {
          legacy_id = 82,
          image = 68,
          value = 320,
@@ -2862,8 +2779,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.toy",
       },
-      {
-         id = "modern_table",
+      modern_table = {
          legacy_id = 83,
          image = 69,
          value = 2400,
@@ -2897,8 +2813,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.modern_table",
       },
-      {
-         id = "dining_table",
+      dining_table = {
          legacy_id = 84,
          image = 70,
          value = 3800,
@@ -2932,8 +2847,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.dining_table",
       },
-      {
-         id = "armor",
+      armor = {
          legacy_id = 85,
          image = 73,
          value = 1600,
@@ -2967,8 +2881,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.armor",
       },
-      {
-         id = "lot_of_goods",
+      lot_of_goods = {
          legacy_id = 86,
          image = 74,
          value = 450,
@@ -3002,8 +2915,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.lot_of_goods",
       },
-      {
-         id = "lot_of_accessories",
+      lot_of_accessories = {
          legacy_id = 87,
          image = 75,
          value = 720,
@@ -3037,8 +2949,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.lot_of_accessories",
       },
-      {
-         id = "grand_piano",
+      grand_piano = {
          legacy_id = 88,
          image = 76,
          value = 15000,
@@ -3071,8 +2982,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.grand_piano",
       },
-      {
-         id = "bar_table_alpha",
+      bar_table_alpha = {
          legacy_id = 89,
          image = 78,
          value = 1200,
@@ -3106,8 +3016,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.bar_table_alpha",
       },
-      {
-         id = "bar_table_beta",
+      bar_table_beta = {
          legacy_id = 90,
          image = 80,
          value = 1200,
@@ -3141,8 +3050,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.bar_table_beta",
       },
-      {
-         id = "barrel",
+      barrel = {
          legacy_id = 91,
          image = 72,
          value = 180,
@@ -3175,8 +3083,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.barrel",
       },
-      {
-         id = "modern_chair",
+      modern_chair = {
          legacy_id = 92,
          image = 84,
          value = 750,
@@ -3210,8 +3117,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.modern_chair",
       },
-      {
-         id = "pick",
+      pick = {
          legacy_id = 93,
          image = 85,
          value = 160,
@@ -3245,8 +3151,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.pick",
       },
-      {
-         id = "lantern",
+      lantern = {
          legacy_id = 94,
          image = 86,
          value = 120,
@@ -3280,8 +3185,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.lantern",
       },
-      {
-         id = "decorative_armor",
+      decorative_armor = {
          legacy_id = 95,
          image = 87,
          value = 4200,
@@ -3315,8 +3219,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.decorative_armor",
       },
-      {
-         id = "anvil",
+      anvil = {
          legacy_id = 96,
          image = 88,
          value = 3500,
@@ -3350,8 +3253,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.anvil",
       },
-      {
-         id = "closed_pot",
+      closed_pot = {
          legacy_id = 97,
          image = 89,
          value = 140,
@@ -3385,8 +3287,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.closed_pot",
       },
-      {
-         id = "open_pot",
+      open_pot = {
          legacy_id = 98,
          image = 90,
          value = 120,
@@ -3420,8 +3321,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.open_pot",
       },
-      {
-         id = "academic_table",
+      academic_table = {
          legacy_id = 99,
          image = 91,
          value = 1050,
@@ -3455,8 +3355,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.academic_table",
       },
-      {
-         id = "rack_of_potions",
+      rack_of_potions = {
          legacy_id = 100,
          image = 580,
          value = 3800,
@@ -3489,8 +3388,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.rack_of_potions",
       },
-      {
-         id = "square_chair",
+      square_chair = {
          legacy_id = 101,
          image = 93,
          value = 360,
@@ -3524,8 +3422,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.square_chair",
       },
-      {
-         id = "cheap_chair",
+      cheap_chair = {
          legacy_id = 102,
          image = 94,
          value = 120,
@@ -3559,8 +3456,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.cheap_chair",
       },
-      {
-         id = "cupboard",
+      cupboard = {
          legacy_id = 103,
          image = 95,
          value = 2400,
@@ -3593,8 +3489,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cupboard",
       },
-      {
-         id = "barn",
+      barn = {
          legacy_id = 104,
          image = 96,
          value = 750,
@@ -3627,8 +3522,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.barn",
       },
-      {
-         id = "neat_shelf",
+      neat_shelf = {
          legacy_id = 105,
          image = 97,
          value = 1800,
@@ -3661,8 +3555,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.neat_shelf",
       },
-      {
-         id = "closet",
+      closet = {
          legacy_id = 106,
          image = 98,
          value = 1500,
@@ -3696,8 +3589,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.closet",
       },
-      {
-         id = "variety_of_tools",
+      variety_of_tools = {
          legacy_id = 107,
          image = 99,
          value = 1050,
@@ -3730,8 +3622,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.variety_of_tools",
       },
-      {
-         id = "variety_of_goods",
+      variety_of_goods = {
          legacy_id = 108,
          image = 100,
          value = 1300,
@@ -3764,8 +3655,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.variety_of_goods",
       },
-      {
-         id = "well",
+      well = {
          legacy_id = 109,
          image = 101,
          value = 1800,
@@ -3798,8 +3688,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.well",
       },
-      {
-         id = "variety_of_clothes",
+      variety_of_clothes = {
          legacy_id = 110,
          image = 102,
          value = 1800,
@@ -3833,8 +3722,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.variety_of_clothes",
       },
-      {
-         id = "furnace",
+      furnace = {
          legacy_id = 111,
          image = 103,
          value = 4400,
@@ -3867,8 +3755,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.furnace",
       },
-      {
-         id = "oven",
+      oven = {
          legacy_id = 112,
          image = 104,
          value = 8500,
@@ -3901,8 +3788,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.oven",
       },
-      {
-         id = "sign",
+      sign = {
          legacy_id = 113,
          image = 105,
          value = 100,
@@ -3935,8 +3821,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.sign",
       },
-      {
-         id = "crossroad_sign",
+      crossroad_sign = {
          legacy_id = 114,
          image = 106,
          value = 120,
@@ -3969,8 +3854,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.crossroad_sign",
       },
-      {
-         id = "board",
+      board = {
          legacy_id = 115,
          image = 381,
          value = 240,
@@ -4003,8 +3887,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.board",
       },
-      {
-         id = "spellbook_of_minor_teleportation",
+      spellbook_of_minor_teleportation = {
          legacy_id = 116,
          image = 429,
          value = 2400,
@@ -4038,8 +3921,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_minor_teleportation",
       },
-      {
-         id = "empty_basket",
+      empty_basket = {
          legacy_id = 117,
          image = 109,
          value = 20,
@@ -4073,8 +3955,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.empty_basket",
       },
-      {
-         id = "spellbook_of_summon_monsters",
+      spellbook_of_summon_monsters = {
          legacy_id = 118,
          image = 429,
          value = 6000,
@@ -4108,8 +3989,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_summon_monsters",
       },
-      {
-         id = "rod_of_cure_minor_wound",
+      rod_of_cure_minor_wound = {
          legacy_id = 119,
          image = 471,
          value = 650,
@@ -4143,8 +4023,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_cure_minor_wound",
       },
-      {
-         id = "rod_of_magic_missile",
+      rod_of_magic_missile = {
          legacy_id = 120,
          image = 471,
          value = 800,
@@ -4178,8 +4057,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_magic_missile",
       },
-      {
-         id = "rod_of_summon_monsters",
+      rod_of_summon_monsters = {
          legacy_id = 121,
          image = 471,
          value = 700,
@@ -4213,8 +4091,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_summon_monsters",
       },
-      {
-         id = "rod_of_ice_bolt",
+      rod_of_ice_bolt = {
          legacy_id = 122,
          image = 471,
          value = 1460,
@@ -4248,8 +4125,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_ice_bolt",
       },
-      {
-         id = "rod_of_fire_bolt",
+      rod_of_fire_bolt = {
          legacy_id = 123,
          image = 471,
          value = 1600,
@@ -4283,8 +4159,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_fire_bolt",
       },
-      {
-         id = "show_case_of_breads",
+      show_case_of_breads = {
          legacy_id = 124,
          image = 116,
          value = 1400,
@@ -4317,8 +4192,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.show_case_of_breads",
       },
-      {
-         id = "rod_of_heal",
+      rod_of_heal = {
          legacy_id = 125,
          image = 471,
          value = 4800,
@@ -4352,8 +4226,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_heal",
       },
-      {
-         id = "beaker",
+      beaker = {
          legacy_id = 126,
          image = 118,
          value = 80,
@@ -4387,8 +4260,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.beaker",
       },
-      {
-         id = "alchemy_kit",
+      alchemy_kit = {
          legacy_id = 127,
          image = 119,
          value = 1960,
@@ -4422,8 +4294,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.alchemy_kit",
       },
-      {
-         id = "pentagram",
+      pentagram = {
          legacy_id = 128,
          image = 120,
          value = 3500,
@@ -4457,8 +4328,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.pentagram",
       },
-      {
-         id = "small_foliage_plant",
+      small_foliage_plant = {
          legacy_id = 129,
          image = 121,
          value = 850,
@@ -4492,8 +4362,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.small_foliage_plant",
       },
-      {
-         id = "rose",
+      rose = {
          legacy_id = 130,
          image = 122,
          value = 1050,
@@ -4527,8 +4396,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.rose",
       },
-      {
-         id = "large_foliage_plant",
+      large_foliage_plant = {
          legacy_id = 131,
          image = 123,
          value = 1800,
@@ -4562,8 +4430,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.large_foliage_plant",
       },
-      {
-         id = "sage",
+      sage = {
          legacy_id = 132,
          image = 124,
          value = 650,
@@ -4597,8 +4464,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.sage",
       },
-      {
-         id = "gazania",
+      gazania = {
          legacy_id = 133,
          image = 125,
          value = 750,
@@ -4632,8 +4498,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.gazania",
       },
-      {
-         id = "nerine",
+      nerine = {
          legacy_id = 134,
          image = 126,
          value = 880,
@@ -4667,8 +4532,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.nerine",
       },
-      {
-         id = "anemos",
+      anemos = {
          legacy_id = 135,
          image = 127,
          value = 920,
@@ -4702,8 +4566,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.anemos",
       },
-      {
-         id = "foxtail_grass",
+      foxtail_grass = {
          legacy_id = 136,
          image = 128,
          value = 1500,
@@ -4737,8 +4600,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.foxtail_grass",
       },
-      {
-         id = "carnation",
+      carnation = {
          legacy_id = 137,
          image = 129,
          value = 780,
@@ -4772,8 +4634,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.carnation",
       },
-      {
-         id = "pillar_ornamented_with_plants",
+      pillar_ornamented_with_plants = {
          legacy_id = 138,
          image = 525,
          value = 3400,
@@ -4806,8 +4667,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.pillar_ornamented_with_plants",
       },
-      {
-         id = "pillar_ornamented_with_flowers",
+      pillar_ornamented_with_flowers = {
          legacy_id = 139,
          image = 526,
          value = 3900,
@@ -4840,8 +4700,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.pillar_ornamented_with_flowers",
       },
-      {
-         id = "canvas",
+      canvas = {
          legacy_id = 140,
          image = 132,
          value = 830,
@@ -4875,8 +4734,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.canvas",
       },
-      {
-         id = "map",
+      map = {
          legacy_id = 141,
          image = 133,
          value = 450,
@@ -4910,8 +4768,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.map",
       },
-      {
-         id = "food_maker",
+      food_maker = {
          legacy_id = 142,
          image = 523,
          value = 7800,
@@ -4944,8 +4801,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.food_maker",
       },
-      {
-         id = "bundle_of_bows",
+      bundle_of_bows = {
          legacy_id = 143,
          image = 135,
          value = 240,
@@ -4978,8 +4834,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bundle_of_bows",
       },
-      {
-         id = "bundle_of_weapons",
+      bundle_of_weapons = {
          legacy_id = 144,
          image = 136,
          value = 940,
@@ -5013,8 +4868,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.bundle_of_weapons",
       },
-      {
-         id = "decorated_cloth",
+      decorated_cloth = {
          legacy_id = 145,
          image = 137,
          value = 1400,
@@ -5048,8 +4902,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.decorated_cloth",
       },
-      {
-         id = "decorated_armor",
+      decorated_armor = {
          legacy_id = 146,
          image = 138,
          value = 1900,
@@ -5083,8 +4936,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.decorated_armor",
       },
-      {
-         id = "statue_of_armor",
+      statue_of_armor = {
          legacy_id = 147,
          image = 139,
          value = 3600,
@@ -5118,8 +4970,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.statue_of_armor",
       },
-      {
-         id = "disorderly_book",
+      disorderly_book = {
          legacy_id = 148,
          image = 140,
          value = 240,
@@ -5152,8 +5003,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.disorderly_book",
       },
-      {
-         id = "lot_of_books",
+      lot_of_books = {
          legacy_id = 149,
          image = 141,
          value = 320,
@@ -5186,8 +5036,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.lot_of_books",
       },
-      {
-         id = "craft_rack",
+      craft_rack = {
          legacy_id = 150,
          image = 142,
          value = 4500,
@@ -5221,8 +5070,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.craft_rack",
       },
-      {
-         id = "craft_book_shelf",
+      craft_book_shelf = {
          legacy_id = 151,
          image = 143,
          value = 4400,
@@ -5256,8 +5104,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.craft_book_shelf",
       },
-      {
-         id = "lot_of_alcohols",
+      lot_of_alcohols = {
          legacy_id = 152,
          image = 144,
          value = 350,
@@ -5291,8 +5138,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.lot_of_alcohols",
       },
-      {
-         id = "kitchen",
+      kitchen = {
          legacy_id = 153,
          image = 145,
          value = 1200,
@@ -5326,8 +5172,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.kitchen",
       },
-      {
-         id = "washstand",
+      washstand = {
          legacy_id = 154,
          image = 146,
          value = 1100,
@@ -5361,8 +5206,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.washstand",
       },
-      {
-         id = "kitchen_oven",
+      kitchen_oven = {
          legacy_id = 155,
          image = 147,
          value = 1500,
@@ -5396,8 +5240,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.kitchen_oven",
       },
-      {
-         id = "narrow_dining_table",
+      narrow_dining_table = {
          legacy_id = 156,
          image = 148,
          value = 1200,
@@ -5430,8 +5273,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.narrow_dining_table",
       },
-      {
-         id = "elegant_table",
+      elegant_table = {
          legacy_id = 157,
          image = 149,
          value = 3500,
@@ -5465,8 +5307,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.elegant_table",
       },
-      {
-         id = "gorgeous_candlestick",
+      gorgeous_candlestick = {
          legacy_id = 158,
          image = 150,
          value = 800,
@@ -5499,8 +5340,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.gorgeous_candlestick",
       },
-      {
-         id = "simple_shelf",
+      simple_shelf = {
          legacy_id = 159,
          image = 151,
          value = 1200,
@@ -5534,8 +5374,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.simple_shelf",
       },
-      {
-         id = "sewing_kit",
+      sewing_kit = {
          legacy_id = 160,
          image = 152,
          value = 780,
@@ -5569,8 +5408,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.sewing_kit",
       },
-      {
-         id = "carpenters_tool",
+      carpenters_tool = {
          legacy_id = 161,
          image = 153,
          value = 1250,
@@ -5604,8 +5442,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.carpenters_tool",
       },
-      {
-         id = "messy_cloth",
+      messy_cloth = {
          legacy_id = 162,
          image = 154,
          value = 430,
@@ -5639,8 +5476,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.messy_cloth",
       },
-      {
-         id = "silk_cloth",
+      silk_cloth = {
          legacy_id = 163,
          image = 155,
          value = 1400,
@@ -5674,8 +5510,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.silk_cloth",
       },
-      {
-         id = "collapsed_grave",
+      collapsed_grave = {
          legacy_id = 164,
          image = 156,
          value = 1800,
@@ -5708,8 +5543,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.collapsed_grave",
       },
-      {
-         id = "crumbled_grave",
+      crumbled_grave = {
          legacy_id = 165,
          image = 157,
          value = 1700,
@@ -5742,8 +5576,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.crumbled_grave",
       },
-      {
-         id = "grave_ornamented_with_flowers",
+      grave_ornamented_with_flowers = {
          legacy_id = 166,
          image = 158,
          value = 3250,
@@ -5776,8 +5609,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.grave_ornamented_with_flowers",
       },
-      {
-         id = "brand_new_grave",
+      brand_new_grave = {
          legacy_id = 167,
          image = 159,
          value = 2500,
@@ -5810,8 +5642,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.brand_new_grave",
       },
-      {
-         id = "solemn_tomb",
+      solemn_tomb = {
          legacy_id = 168,
          image = 160,
          value = 4400,
@@ -5844,8 +5675,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.solemn_tomb",
       },
-      {
-         id = "ancient_tomb",
+      ancient_tomb = {
          legacy_id = 169,
          image = 161,
          value = 6500,
@@ -5878,8 +5708,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.ancient_tomb",
       },
-      {
-         id = "old_grave",
+      old_grave = {
          legacy_id = 170,
          image = 162,
          value = 2400,
@@ -5912,8 +5741,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.old_grave",
       },
-      {
-         id = "altar",
+      altar = {
          legacy_id = 171,
          image = 163,
          value = 1500,
@@ -5946,8 +5774,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.altar",
       },
-      {
-         id = "ceremony_altar",
+      ceremony_altar = {
          legacy_id = 172,
          image = 163,
          value = 1600,
@@ -5980,8 +5807,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.ceremony_altar",
       },
-      {
-         id = "fountain",
+      fountain = {
          legacy_id = 173,
          image = 355,
          value = 2400,
@@ -6014,8 +5840,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.fountain",
       },
-      {
-         id = "bunk_bed",
+      bunk_bed = {
          legacy_id = 174,
          image = 166,
          value = 2200,
@@ -6048,8 +5873,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bunk_bed",
       },
-      {
-         id = "rod_of_lightning_bolt",
+      rod_of_lightning_bolt = {
          legacy_id = 175,
          image = 471,
          value = 1900,
@@ -6083,8 +5907,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_lightning_bolt",
       },
-      {
-         id = "rod_of_slow",
+      rod_of_slow = {
          legacy_id = 176,
          image = 471,
          value = 1500,
@@ -6118,8 +5941,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_slow",
       },
-      {
-         id = "quwapana",
+      quwapana = {
          legacy_id = 177,
          image = 169,
          value = 80,
@@ -6152,8 +5974,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.quwapana",
       },
-      {
-         id = "aloe",
+      aloe = {
          legacy_id = 178,
          image = 170,
          value = 70,
@@ -6186,8 +6007,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.aloe",
       },
-      {
-         id = "edible_wild_plant",
+      edible_wild_plant = {
          legacy_id = 179,
          image = 171,
          value = 60,
@@ -6220,8 +6040,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.edible_wild_plant",
       },
-      {
-         id = "apple",
+      apple = {
          legacy_id = 180,
          image = 172,
          value = 180,
@@ -6254,8 +6073,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.apple",
       },
-      {
-         id = "grape",
+      grape = {
          legacy_id = 181,
          image = 173,
          value = 220,
@@ -6288,8 +6106,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.grape",
       },
-      {
-         id = "kiwi",
+      kiwi = {
          legacy_id = 182,
          image = 174,
          value = 190,
@@ -6322,8 +6139,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.kiwi",
       },
-      {
-         id = "cherry",
+      cherry = {
          legacy_id = 183,
          image = 175,
          value = 170,
@@ -6356,8 +6172,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cherry",
       },
-      {
-         id = "guava",
+      guava = {
          legacy_id = 184,
          image = 176,
          value = 80,
@@ -6390,8 +6205,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.guava",
       },
-      {
-         id = "carrot",
+      carrot = {
          legacy_id = 185,
          image = 177,
          value = 40,
@@ -6424,8 +6238,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.carrot",
       },
-      {
-         id = "radish",
+      radish = {
          legacy_id = 186,
          image = 178,
          value = 50,
@@ -6458,8 +6271,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.radish",
       },
-      {
-         id = "sweet_potato",
+      sweet_potato = {
          legacy_id = 187,
          image = 179,
          value = 40,
@@ -6492,8 +6304,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.sweet_potato",
       },
-      {
-         id = "lettuce",
+      lettuce = {
          legacy_id = 188,
          image = 180,
          value = 50,
@@ -6526,8 +6337,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.lettuce",
       },
-      {
-         id = "stack_of_dishes",
+      stack_of_dishes = {
          legacy_id = 189,
          image = 181,
          value = 120,
@@ -6560,8 +6370,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.stack_of_dishes",
       },
-      {
-         id = "imo",
+      imo = {
          legacy_id = 190,
          image = 182,
          value = 70,
@@ -6594,8 +6403,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.imo",
       },
-      {
-         id = "api_nut",
+      api_nut = {
          legacy_id = 191,
          image = 183,
          value = 80,
@@ -6628,8 +6436,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.api_nut",
       },
-      {
-         id = "strawberry",
+      strawberry = {
          legacy_id = 192,
          image = 184,
          value = 260,
@@ -6662,8 +6469,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.strawberry",
       },
-      {
-         id = "healthy_leaf",
+      healthy_leaf = {
          legacy_id = 193,
          image = 185,
          value = 240,
@@ -6696,8 +6502,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.healthy_leaf",
       },
-      {
-         id = "rainbow_fruit",
+      rainbow_fruit = {
          legacy_id = 194,
          image = 186,
          value = 220,
@@ -6730,8 +6535,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.rainbow_fruit",
       },
-      {
-         id = "qucche",
+      qucche = {
          legacy_id = 195,
          image = 187,
          value = 100,
@@ -6764,8 +6568,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.qucche",
       },
-      {
-         id = "tangerine",
+      tangerine = {
          legacy_id = 196,
          image = 188,
          value = 130,
@@ -6798,8 +6601,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tangerine",
       },
-      {
-         id = "lemon",
+      lemon = {
          legacy_id = 197,
          image = 189,
          value = 240,
@@ -6832,8 +6634,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.lemon",
       },
-      {
-         id = "green_pea",
+      green_pea = {
          legacy_id = 198,
          image = 164,
          value = 260,
@@ -6866,8 +6667,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.green_pea",
       },
-      {
-         id = "cbocchi",
+      cbocchi = {
          legacy_id = 199,
          image = 191,
          value = 80,
@@ -6900,8 +6700,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cbocchi",
       },
-      {
-         id = "melon",
+      melon = {
          legacy_id = 200,
          image = 192,
          value = 30,
@@ -6934,8 +6733,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.melon",
       },
-      {
-         id = "leccho",
+      leccho = {
          legacy_id = 201,
          image = 193,
          value = 70,
@@ -6968,8 +6766,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.leccho",
       },
-      {
-         id = "rod_of_magic_mapping",
+      rod_of_magic_mapping = {
          legacy_id = 202,
          image = 471,
          value = 3250,
@@ -7003,8 +6800,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_magic_mapping",
       },
-      {
-         id = "rod_of_cure",
+      rod_of_cure = {
          legacy_id = 203,
          image = 471,
          value = 2600,
@@ -7038,8 +6834,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_cure",
       },
-      {
-         id = "corpse",
+      corpse = {
          legacy_id = 204,
          image = 196,
          value = 80,
@@ -7072,8 +6867,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.corpse",
       },
-      {
-         id = "bottle_of_whisky",
+      bottle_of_whisky = {
          legacy_id = 205,
          image = 210,
          value = 180,
@@ -7106,8 +6900,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bottle_of_whisky",
       },
-      {
-         id = "ether_dagger",
+      ether_dagger = {
          legacy_id = 206,
          image = 400,
          value = 60000,
@@ -7141,8 +6934,7 @@ data:add_multi(
          color = "blue",
          locale_key_prefix = "core.item.ether_dagger",
       },
-      {
-         id = "bow_of_vindale",
+      bow_of_vindale = {
          legacy_id = 207,
          image = 404,
          value = 60000,
@@ -7176,8 +6968,7 @@ data:add_multi(
          color = "grey",
          locale_key_prefix = "core.item.bow_of_vindale",
       },
-      {
-         id = "worthless_fake_gold_bar",
+      worthless_fake_gold_bar = {
          legacy_id = 208,
          image = 33,
          value = 1,
@@ -7210,8 +7001,7 @@ data:add_multi(
          rftags = { "ore" },
          locale_key_prefix = "core.item.worthless_fake_gold_bar",
       },
-      {
-         id = "scroll_of_uncurse",
+      scroll_of_uncurse = {
          legacy_id = 209,
          image = 470,
          value = 1050,
@@ -7245,8 +7035,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_uncurse",
       },
-      {
-         id = "stone",
+      stone = {
          legacy_id = 210,
          image = 424,
          value = 180,
@@ -7279,8 +7068,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.stone",
       },
-      {
-         id = "sickle",
+      sickle = {
          legacy_id = 211,
          image = 421,
          value = 500,
@@ -7313,8 +7101,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.sickle",
       },
-      {
-         id = "staff",
+      staff = {
          legacy_id = 212,
          image = 425,
          value = 500,
@@ -7347,8 +7134,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.staff",
       },
-      {
-         id = "spear",
+      spear = {
          legacy_id = 213,
          image = 401,
          value = 500,
@@ -7381,8 +7167,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.spear",
       },
-      {
-         id = "ore_piece",
+      ore_piece = {
          legacy_id = 214,
          image = 209,
          value = 180,
@@ -7416,8 +7201,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.ore_piece",
       },
-      {
-         id = "lot_of_empty_bottles",
+      lot_of_empty_bottles = {
          legacy_id = 215,
          image = 208,
          value = 10,
@@ -7451,8 +7235,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.lot_of_empty_bottles",
       },
-      {
-         id = "basket",
+      basket = {
          legacy_id = 216,
          image = 207,
          value = 40,
@@ -7486,8 +7269,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.basket",
       },
-      {
-         id = "empty_bowl",
+      empty_bowl = {
          legacy_id = 217,
          image = 206,
          value = 25,
@@ -7521,8 +7303,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.empty_bowl",
       },
-      {
-         id = "bowl",
+      bowl = {
          legacy_id = 218,
          image = 203,
          value = 30,
@@ -7556,8 +7337,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.bowl",
       },
-      {
-         id = "tight_rope",
+      tight_rope = {
          legacy_id = 219,
          image = 202,
          value = 180,
@@ -7591,8 +7371,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.tight_rope",
       },
-      {
-         id = "dead_fish",
+      dead_fish = {
          legacy_id = 220,
          image = 201,
          value = 4,
@@ -7625,8 +7404,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.dead_fish",
       },
-      {
-         id = "straw",
+      straw = {
          legacy_id = 221,
          image = 200,
          value = 7,
@@ -7659,8 +7437,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.straw",
       },
-      {
-         id = "animal_bone",
+      animal_bone = {
          legacy_id = 222,
          image = 199,
          value = 8,
@@ -7693,8 +7470,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.animal_bone",
       },
-      {
-         id = "pot",
+      pot = {
          legacy_id = 223,
          image = 198,
          value = 150,
@@ -7727,8 +7503,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.pot",
       },
-      {
-         id = "katana",
+      katana = {
          legacy_id = 224,
          image = 431,
          value = 500,
@@ -7761,8 +7536,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.katana",
       },
-      {
-         id = "scimitar",
+      scimitar = {
          legacy_id = 225,
          image = 502,
          value = 500,
@@ -7795,8 +7569,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.scimitar",
       },
-      {
-         id = "battle_axe",
+      battle_axe = {
          legacy_id = 226,
          image = 500,
          value = 500,
@@ -7829,8 +7602,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.battle_axe",
       },
-      {
-         id = "hammer",
+      hammer = {
          legacy_id = 227,
          image = 504,
          value = 500,
@@ -7863,8 +7635,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.hammer",
       },
-      {
-         id = "trident",
+      trident = {
          legacy_id = 228,
          image = 494,
          value = 500,
@@ -7897,8 +7668,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.trident",
       },
-      {
-         id = "long_staff",
+      long_staff = {
          legacy_id = 229,
          image = 505,
          value = 500,
@@ -7931,8 +7701,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.long_staff",
       },
-      {
-         id = "short_bow",
+      short_bow = {
          legacy_id = 230,
          image = 404,
          value = 500,
@@ -7965,8 +7734,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.short_bow",
       },
-      {
-         id = "machine_gun",
+      machine_gun = {
          legacy_id = 231,
          image = 547,
          value = 500,
@@ -7999,8 +7767,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.machine_gun",
       },
-      {
-         id = "claymore",
+      claymore = {
          legacy_id = 232,
          image = 503,
          value = 500,
@@ -8033,8 +7800,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.claymore",
       },
-      {
-         id = "ration",
+      ration = {
          legacy_id = 233,
          image = 233,
          value = 280,
@@ -8067,8 +7833,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.ration",
       },
-      {
-         id = "bardiche",
+      bardiche = {
          legacy_id = 234,
          image = 399,
          value = 500,
@@ -8101,8 +7866,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bardiche",
       },
-      {
-         id = "halberd",
+      halberd = {
          legacy_id = 235,
          image = 426,
          value = 500,
@@ -8135,8 +7899,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.halberd",
       },
-      {
-         id = "scroll_of_return",
+      scroll_of_return = {
          legacy_id = 236,
          image = 470,
          value = 750,
@@ -8170,8 +7933,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_return",
       },
-      {
-         id = "figurine_of_warrior",
+      figurine_of_warrior = {
          legacy_id = 237,
          image = 222,
          value = 2000,
@@ -8205,8 +7967,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.figurine_of_warrior",
       },
-      {
-         id = "figurine_of_sword",
+      figurine_of_sword = {
          legacy_id = 238,
          image = 221,
          value = 2000,
@@ -8240,8 +8001,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.figurine_of_sword",
       },
-      {
-         id = "bejeweled_chest",
+      bejeweled_chest = {
          legacy_id = 239,
          image = 220,
          value = 3000,
@@ -8275,8 +8035,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.bejeweled_chest",
       },
-      {
-         id = "chest",
+      chest = {
          legacy_id = 240,
          image = 220,
          value = 1200,
@@ -8310,8 +8069,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.chest",
       },
-      {
-         id = "safe",
+      safe = {
          legacy_id = 241,
          image = 197,
          value = 1000,
@@ -8345,8 +8103,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.safe",
       },
-      {
-         id = "scroll_of_magical_map",
+      scroll_of_magical_map = {
          legacy_id = 242,
          image = 470,
          value = 480,
@@ -8380,8 +8137,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_magical_map",
       },
-      {
-         id = "scroll_of_gain_attribute",
+      scroll_of_gain_attribute = {
          legacy_id = 243,
          image = 470,
          value = 240000,
@@ -8415,8 +8171,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_gain_attribute",
       },
-      {
-         id = "scroll_of_wonder",
+      scroll_of_wonder = {
          legacy_id = 244,
          image = 470,
          value = 8000,
@@ -8450,8 +8205,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_wonder",
       },
-      {
-         id = "scroll_of_minor_teleportation",
+      scroll_of_minor_teleportation = {
          legacy_id = 245,
          image = 470,
          value = 200,
@@ -8485,8 +8239,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_minor_teleportation",
       },
-      {
-         id = "spellbook_of_magic_mapping",
+      spellbook_of_magic_mapping = {
          legacy_id = 246,
          image = 429,
          value = 8500,
@@ -8520,8 +8273,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_magic_mapping",
       },
-      {
-         id = "spellbook_of_oracle",
+      spellbook_of_oracle = {
          legacy_id = 247,
          image = 429,
          value = 25000,
@@ -8555,8 +8307,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_oracle",
       },
-      {
-         id = "spellbook_of_return",
+      spellbook_of_return = {
          legacy_id = 248,
          image = 429,
          value = 8900,
@@ -8590,8 +8341,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_return",
       },
-      {
-         id = "spellbook_of_cure_minor_wound",
+      spellbook_of_cure_minor_wound = {
          legacy_id = 249,
          image = 429,
          value = 4500,
@@ -8625,8 +8375,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_cure_minor_wound",
       },
-      {
-         id = "spellbook_of_cure_critical_wound",
+      spellbook_of_cure_critical_wound = {
          legacy_id = 250,
          image = 429,
          value = 9000,
@@ -8660,8 +8409,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_cure_critical_wound",
       },
-      {
-         id = "spellbook_of_cure_eris",
+      spellbook_of_cure_eris = {
          legacy_id = 251,
          image = 429,
          value = 15000,
@@ -8695,8 +8443,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_cure_eris",
       },
-      {
-         id = "spellbook_of_cure_jure",
+      spellbook_of_cure_jure = {
          legacy_id = 252,
          image = 429,
          value = 35000,
@@ -8730,8 +8477,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_cure_jure",
       },
-      {
-         id = "bottle_of_beer",
+      bottle_of_beer = {
          legacy_id = 253,
          image = 223,
          value = 280,
@@ -8764,8 +8510,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bottle_of_beer",
       },
-      {
-         id = "horn",
+      horn = {
          legacy_id = 254,
          image = 224,
          value = 2500,
@@ -8798,8 +8543,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.horn",
       },
-      {
-         id = "campfire",
+      campfire = {
          legacy_id = 255,
          image = 349,
          value = 1860,
@@ -8832,8 +8576,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.campfire",
       },
-      {
-         id = "portable_cooking_tool",
+      portable_cooking_tool = {
          legacy_id = 256,
          image = 226,
          value = 1860,
@@ -8866,8 +8609,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.portable_cooking_tool",
       },
-      {
-         id = "spellbook_of_magic_arrow",
+      spellbook_of_magic_arrow = {
          legacy_id = 257,
          image = 429,
          value = 2500,
@@ -8901,8 +8643,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_magic_arrow",
       },
-      {
-         id = "stick_bread",
+      stick_bread = {
          legacy_id = 258,
          image = 117,
          value = 280,
@@ -8935,8 +8676,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.stick_bread",
       },
-      {
-         id = "raw_noodle",
+      raw_noodle = {
          legacy_id = 259,
          image = 233,
          value = 280,
@@ -8969,8 +8709,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.raw_noodle",
       },
-      {
-         id = "sack_of_flour",
+      sack_of_flour = {
          legacy_id = 260,
          image = 233,
          value = 280,
@@ -9003,8 +8742,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.sack_of_flour",
       },
-      {
-         id = "bomb_fish",
+      bomb_fish = {
          legacy_id = 261,
          image = 201,
          value = 280,
@@ -9037,8 +8775,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bomb_fish",
       },
-      {
-         id = "poison",
+      poison = {
          legacy_id = 262,
          image = 354,
          value = 120,
@@ -9072,8 +8809,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.poison",
       },
-      {
-         id = "spellbook_of_nether_eye",
+      spellbook_of_nether_eye = {
          legacy_id = 263,
          image = 429,
          value = 7200,
@@ -9107,8 +8843,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_nether_eye",
       },
-      {
-         id = "spellbook_of_chaos_eye",
+      spellbook_of_chaos_eye = {
          legacy_id = 264,
          image = 429,
          value = 9600,
@@ -9142,8 +8877,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_chaos_eye",
       },
-      {
-         id = "spellbook_of_nerve_eye",
+      spellbook_of_nerve_eye = {
          legacy_id = 265,
          image = 429,
          value = 6400,
@@ -9177,8 +8911,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_nerve_eye",
       },
-      {
-         id = "wakizashi",
+      wakizashi = {
          legacy_id = 266,
          image = 432,
          value = 500,
@@ -9211,8 +8944,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.wakizashi",
       },
-      {
-         id = "spellbook_of_darkness_beam",
+      spellbook_of_darkness_beam = {
          legacy_id = 267,
          image = 429,
          value = 4500,
@@ -9246,8 +8978,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_darkness_beam",
       },
-      {
-         id = "spellbook_of_illusion_beam",
+      spellbook_of_illusion_beam = {
          legacy_id = 268,
          image = 429,
          value = 5500,
@@ -9281,8 +9012,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_illusion_beam",
       },
-      {
-         id = "spellbook_of_ice_ball",
+      spellbook_of_ice_ball = {
          legacy_id = 269,
          image = 429,
          value = 5400,
@@ -9316,8 +9046,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_ice_ball",
       },
-      {
-         id = "spellbook_of_fire_ball",
+      spellbook_of_fire_ball = {
          legacy_id = 270,
          image = 429,
          value = 5400,
@@ -9351,8 +9080,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_fire_ball",
       },
-      {
-         id = "spellbook_of_sound_ball",
+      spellbook_of_sound_ball = {
          legacy_id = 271,
          image = 429,
          value = 8400,
@@ -9386,8 +9114,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_sound_ball",
       },
-      {
-         id = "spellbook_of_chaos_ball",
+      spellbook_of_chaos_ball = {
          legacy_id = 272,
          image = 429,
          value = 12000,
@@ -9421,8 +9148,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_chaos_ball",
       },
-      {
-         id = "fire_wood",
+      fire_wood = {
          legacy_id = 273,
          image = 231,
          value = 10,
@@ -9456,8 +9182,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.fire_wood",
       },
-      {
-         id = "scarecrow",
+      scarecrow = {
          legacy_id = 274,
          image = 232,
          value = 10,
@@ -9491,8 +9216,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.scarecrow",
       },
-      {
-         id = "broom",
+      broom = {
          legacy_id = 275,
          image = 248,
          value = 100,
@@ -9525,8 +9249,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.broom",
       },
-      {
-         id = "long_pillar",
+      long_pillar = {
          legacy_id = 276,
          image = 524,
          value = 2600,
@@ -9559,8 +9282,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.long_pillar",
       },
-      {
-         id = "broken_pillar",
+      broken_pillar = {
          legacy_id = 277,
          image = 82,
          value = 1300,
@@ -9593,8 +9315,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.broken_pillar",
       },
-      {
-         id = "street_lamp",
+      street_lamp = {
          legacy_id = 278,
          image = 585,
          value = 1200,
@@ -9627,8 +9348,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.street_lamp",
       },
-      {
-         id = "water_tub",
+      water_tub = {
          legacy_id = 279,
          image = 249,
          value = 380,
@@ -9661,8 +9381,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.water_tub",
       },
-      {
-         id = "comfortable_table",
+      comfortable_table = {
          legacy_id = 280,
          image = 250,
          value = 1800,
@@ -9695,8 +9414,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.comfortable_table",
       },
-      {
-         id = "inner_tube",
+      inner_tube = {
          legacy_id = 281,
          image = 251,
          value = 380,
@@ -9729,8 +9447,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.inner_tube",
       },
-      {
-         id = "mysterious_map",
+      mysterious_map = {
          legacy_id = 282,
          image = 252,
          value = 380,
@@ -9763,8 +9480,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.mysterious_map",
       },
-      {
-         id = "suitcase",
+      suitcase = {
          legacy_id = 283,
          image = 253,
          value = 380,
@@ -9797,8 +9513,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.suitcase",
       },
-      {
-         id = "wallet",
+      wallet = {
          legacy_id = 284,
          image = 254,
          value = 380,
@@ -9831,8 +9546,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.wallet",
       },
-      {
-         id = "potion_of_restore_body",
+      potion_of_restore_body = {
          legacy_id = 285,
          image = 354,
          value = 280,
@@ -9866,8 +9580,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_restore_body",
       },
-      {
-         id = "potion_of_restore_spirit",
+      potion_of_restore_spirit = {
          legacy_id = 286,
          image = 354,
          value = 280,
@@ -9901,8 +9614,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_restore_spirit",
       },
-      {
-         id = "potion_of_potential",
+      potion_of_potential = {
          legacy_id = 287,
          image = 354,
          value = 50000,
@@ -9936,8 +9648,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_potential",
       },
-      {
-         id = "scroll_of_curse",
+      scroll_of_curse = {
          legacy_id = 288,
          image = 470,
          value = 150,
@@ -9971,8 +9682,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_curse",
       },
-      {
-         id = "spellbook_of_wishing",
+      spellbook_of_wishing = {
          legacy_id = 289,
          image = 429,
          value = 40000,
@@ -10006,8 +9716,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_wishing",
       },
-      {
-         id = "rod_of_wishing",
+      rod_of_wishing = {
          legacy_id = 290,
          image = 471,
          value = 300000,
@@ -10041,8 +9750,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_wishing",
       },
-      {
-         id = "well_kept_armor",
+      well_kept_armor = {
          legacy_id = 291,
          image = 255,
          value = 1500,
@@ -10075,8 +9783,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.well_kept_armor",
       },
-      {
-         id = "rack_of_goods",
+      rack_of_goods = {
          legacy_id = 292,
          image = 256,
          value = 1800,
@@ -10109,8 +9816,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.rack_of_goods",
       },
-      {
-         id = "rack_of_accessories",
+      rack_of_accessories = {
          legacy_id = 293,
          image = 257,
          value = 2000,
@@ -10143,8 +9849,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.rack_of_accessories",
       },
-      {
-         id = "towel",
+      towel = {
          legacy_id = 294,
          image = 258,
          value = 320,
@@ -10177,8 +9882,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.towel",
       },
-      {
-         id = "ragged_table",
+      ragged_table = {
          legacy_id = 295,
          image = 259,
          value = 890,
@@ -10211,8 +9915,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.ragged_table",
       },
-      {
-         id = "cabinet",
+      cabinet = {
          legacy_id = 296,
          image = 260,
          value = 2400,
@@ -10245,8 +9948,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cabinet",
       },
-      {
-         id = "luxury_bed",
+      luxury_bed = {
          legacy_id = 297,
          image = 261,
          value = 4500,
@@ -10279,8 +9981,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.luxury_bed",
       },
-      {
-         id = "vase",
+      vase = {
          legacy_id = 298,
          image = 262,
          value = 2000,
@@ -10313,8 +10014,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.vase",
       },
-      {
-         id = "high_grade_dresser",
+      high_grade_dresser = {
          legacy_id = 299,
          image = 263,
          value = 5500,
@@ -10347,8 +10047,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.high_grade_dresser",
       },
-      {
-         id = "neat_bar_table",
+      neat_bar_table = {
          legacy_id = 300,
          image = 264,
          value = 1900,
@@ -10381,8 +10080,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.neat_bar_table",
       },
-      {
-         id = "large_bouquet",
+      large_bouquet = {
          legacy_id = 301,
          image = 265,
          value = 240,
@@ -10415,8 +10113,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.large_bouquet",
       },
-      {
-         id = "chest_of_clothes",
+      chest_of_clothes = {
          legacy_id = 302,
          image = 266,
          value = 1500,
@@ -10449,8 +10146,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.chest_of_clothes",
       },
-      {
-         id = "giant_bed",
+      giant_bed = {
          legacy_id = 303,
          image = 267,
          value = 3800,
@@ -10483,8 +10179,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.giant_bed",
       },
-      {
-         id = "plain_bed",
+      plain_bed = {
          legacy_id = 304,
          image = 268,
          value = 1200,
@@ -10517,8 +10212,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.plain_bed",
       },
-      {
-         id = "coffin",
+      coffin = {
          legacy_id = 305,
          image = 269,
          value = 2400,
@@ -10551,8 +10245,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.coffin",
       },
-      {
-         id = "food_processor",
+      food_processor = {
          legacy_id = 306,
          image = 270,
          value = 5200,
@@ -10585,8 +10278,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.food_processor",
       },
-      {
-         id = "soft_bed",
+      soft_bed = {
          legacy_id = 307,
          image = 271,
          value = 2200,
@@ -10619,8 +10311,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.soft_bed",
       },
-      {
-         id = "cheap_rack",
+      cheap_rack = {
          legacy_id = 308,
          image = 272,
          value = 1200,
@@ -10653,8 +10344,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cheap_rack",
       },
-      {
-         id = "dresser",
+      dresser = {
          legacy_id = 309,
          image = 273,
          value = 2400,
@@ -10687,8 +10377,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.dresser",
       },
-      {
-         id = "clean_bed",
+      clean_bed = {
          legacy_id = 310,
          image = 274,
          value = 1500,
@@ -10721,8 +10410,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.clean_bed",
       },
-      {
-         id = "bathtub",
+      bathtub = {
          legacy_id = 311,
          image = 275,
          value = 4800,
@@ -10755,8 +10443,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bathtub",
       },
-      {
-         id = "pachisuro_machine",
+      pachisuro_machine = {
          legacy_id = 312,
          image = 276,
          value = 2800,
@@ -10789,8 +10476,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.pachisuro_machine",
       },
-      {
-         id = "casino_table",
+      casino_table = {
          legacy_id = 313,
          image = 277,
          value = 2800,
@@ -10823,8 +10509,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.casino_table",
       },
-      {
-         id = "slot_machine",
+      slot_machine = {
          legacy_id = 314,
          image = 278,
          value = 2000,
@@ -10857,8 +10542,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.slot_machine",
       },
-      {
-         id = "darts_board",
+      darts_board = {
          legacy_id = 315,
          image = 279,
          value = 1800,
@@ -10891,8 +10575,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.darts_board",
       },
-      {
-         id = "big_foliage_plant",
+      big_foliage_plant = {
          legacy_id = 316,
          image = 280,
          value = 3200,
@@ -10925,8 +10608,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.big_foliage_plant",
       },
-      {
-         id = "old_shelf",
+      old_shelf = {
          legacy_id = 317,
          image = 281,
          value = 890,
@@ -10959,8 +10641,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.old_shelf",
       },
-      {
-         id = "old_bookshelf",
+      old_bookshelf = {
          legacy_id = 318,
          image = 282,
          value = 1020,
@@ -10993,8 +10674,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.old_bookshelf",
       },
-      {
-         id = "cheap_bed",
+      cheap_bed = {
          legacy_id = 319,
          image = 283,
          value = 880,
@@ -11027,8 +10707,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cheap_bed",
       },
-      {
-         id = "cheap_table",
+      cheap_table = {
          legacy_id = 320,
          image = 284,
          value = 900,
@@ -11061,8 +10740,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cheap_table",
       },
-      {
-         id = "neat_rack",
+      neat_rack = {
          legacy_id = 321,
          image = 285,
          value = 1480,
@@ -11095,8 +10773,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.neat_rack",
       },
-      {
-         id = "simple_dresser",
+      simple_dresser = {
          legacy_id = 322,
          image = 286,
          value = 2200,
@@ -11129,8 +10806,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.simple_dresser",
       },
-      {
-         id = "big_cupboard",
+      big_cupboard = {
          legacy_id = 323,
          image = 586,
          value = 2800,
@@ -11163,8 +10839,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.big_cupboard",
       },
-      {
-         id = "sacred_altar",
+      sacred_altar = {
          legacy_id = 324,
          image = 288,
          value = 1500,
@@ -11197,8 +10872,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.sacred_altar",
       },
-      {
-         id = "comfortable_bed",
+      comfortable_bed = {
          legacy_id = 325,
          image = 289,
          value = 2800,
@@ -11231,8 +10905,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.comfortable_bed",
       },
-      {
-         id = "simple_rack",
+      simple_rack = {
          legacy_id = 326,
          image = 290,
          value = 1400,
@@ -11265,8 +10938,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.simple_rack",
       },
-      {
-         id = "wide_chair",
+      wide_chair = {
          legacy_id = 327,
          image = 291,
          value = 600,
@@ -11299,8 +10971,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.wide_chair",
       },
-      {
-         id = "upright_piano",
+      upright_piano = {
          legacy_id = 328,
          image = 292,
          value = 4600,
@@ -11333,8 +11004,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.upright_piano",
       },
-      {
-         id = "statue_of_cross",
+      statue_of_cross = {
          legacy_id = 329,
          image = 293,
          value = 1500,
@@ -11367,8 +11037,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.statue_of_cross",
       },
-      {
-         id = "stump",
+      stump = {
          legacy_id = 330,
          image = 294,
          value = 250,
@@ -11401,8 +11070,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.stump",
       },
-      {
-         id = "dress",
+      dress = {
          legacy_id = 331,
          image = 295,
          value = 1440,
@@ -11435,8 +11103,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.dress",
       },
-      {
-         id = "table",
+      table = {
          legacy_id = 332,
          image = 296,
          value = 1200,
@@ -11469,8 +11136,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.table",
       },
-      {
-         id = "cargo_travelers_food",
+      cargo_travelers_food = {
          legacy_id = 333,
          image = 297,
          value = 40,
@@ -11503,8 +11169,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_travelers_food",
       },
-      {
-         id = "throne",
+      throne = {
          legacy_id = 334,
          image = 579,
          value = 6800,
@@ -11537,8 +11202,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.throne",
       },
-      {
-         id = "golden_pedestal",
+      golden_pedestal = {
          legacy_id = 335,
          image = 299,
          value = 1200,
@@ -11571,8 +11235,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.golden_pedestal",
       },
-      {
-         id = "statue_of_money",
+      statue_of_money = {
          legacy_id = 336,
          image = 300,
          value = 3200,
@@ -11605,8 +11268,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.statue_of_money",
       },
-      {
-         id = "remains_skin",
+      remains_skin = {
          legacy_id = 337,
          image = 301,
          value = 100,
@@ -11639,8 +11301,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.remains_skin",
       },
-      {
-         id = "remains_blood",
+      remains_blood = {
          legacy_id = 338,
          image = 302,
          value = 100,
@@ -11673,8 +11334,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.remains_blood",
       },
-      {
-         id = "remains_eye",
+      remains_eye = {
          legacy_id = 339,
          image = 303,
          value = 100,
@@ -11707,8 +11367,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.remains_eye",
       },
-      {
-         id = "remains_heart",
+      remains_heart = {
          legacy_id = 340,
          image = 304,
          value = 100,
@@ -11741,8 +11400,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.remains_heart",
       },
-      {
-         id = "remains_bone",
+      remains_bone = {
          legacy_id = 341,
          image = 305,
          value = 100,
@@ -11775,8 +11433,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.remains_bone",
       },
-      {
-         id = "fishing_pole",
+      fishing_pole = {
          legacy_id = 342,
          image = 306,
          value = 1200,
@@ -11809,8 +11466,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.fishing_pole",
       },
-      {
-         id = "rune",
+      rune = {
          legacy_id = 343,
          image = 307,
          value = 780,
@@ -11843,8 +11499,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.rune",
       },
-      {
-         id = "deed",
+      deed = {
          legacy_id = 344,
          image = 308,
          value = 50000,
@@ -11878,8 +11533,7 @@ data:add_multi(
          color = "green",
          locale_key_prefix = "core.item.deed",
       },
-      {
-         id = "moonfish",
+      moonfish = {
          legacy_id = 345,
          image = 309,
          value = 900,
@@ -11912,8 +11566,7 @@ data:add_multi(
          rftags = { "fish" },
          locale_key_prefix = "core.item.moonfish",
       },
-      {
-         id = "sardine",
+      sardine = {
          legacy_id = 346,
          image = 310,
          value = 1200,
@@ -11946,8 +11599,7 @@ data:add_multi(
          rftags = { "fish" },
          locale_key_prefix = "core.item.sardine",
       },
-      {
-         id = "flatfish",
+      flatfish = {
          legacy_id = 347,
          image = 311,
          value = 700,
@@ -11980,8 +11632,7 @@ data:add_multi(
          rftags = { "fish" },
          locale_key_prefix = "core.item.flatfish",
       },
-      {
-         id = "manboo",
+      manboo = {
          legacy_id = 348,
          image = 312,
          value = 1500,
@@ -12014,8 +11665,7 @@ data:add_multi(
          rftags = { "fish" },
          locale_key_prefix = "core.item.manboo",
       },
-      {
-         id = "seabream",
+      seabream = {
          legacy_id = 349,
          image = 313,
          value = 150,
@@ -12048,8 +11698,7 @@ data:add_multi(
          rftags = { "fish" },
          locale_key_prefix = "core.item.seabream",
       },
-      {
-         id = "salmon",
+      salmon = {
          legacy_id = 350,
          image = 314,
          value = 170,
@@ -12082,8 +11731,7 @@ data:add_multi(
          rftags = { "fish" },
          locale_key_prefix = "core.item.salmon",
       },
-      {
-         id = "globefish",
+      globefish = {
          legacy_id = 351,
          image = 315,
          value = 320,
@@ -12116,8 +11764,7 @@ data:add_multi(
          rftags = { "fish" },
          locale_key_prefix = "core.item.globefish",
       },
-      {
-         id = "tuna",
+      tuna = {
          legacy_id = 352,
          image = 316,
          value = 640,
@@ -12150,8 +11797,7 @@ data:add_multi(
          rftags = { "fish" },
          locale_key_prefix = "core.item.tuna",
       },
-      {
-         id = "cutlassfish",
+      cutlassfish = {
          legacy_id = 353,
          image = 317,
          value = 620,
@@ -12184,8 +11830,7 @@ data:add_multi(
          rftags = { "fish" },
          locale_key_prefix = "core.item.cutlassfish",
       },
-      {
-         id = "sandborer",
+      sandborer = {
          legacy_id = 354,
          image = 318,
          value = 380,
@@ -12218,8 +11863,7 @@ data:add_multi(
          rftags = { "fish" },
          locale_key_prefix = "core.item.sandborer",
       },
-      {
-         id = "gloves_of_vesda",
+      gloves_of_vesda = {
          legacy_id = 355,
          image = 414,
          value = 40000,
@@ -12253,8 +11897,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.gloves_of_vesda",
       },
-      {
-         id = "blood_moon",
+      blood_moon = {
          legacy_id = 356,
          image = 427,
          value = 30000,
@@ -12288,8 +11931,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.blood_moon",
       },
-      {
-         id = "ring_of_steel_dragon",
+      ring_of_steel_dragon = {
          legacy_id = 357,
          image = 407,
          value = 30000,
@@ -12322,8 +11964,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.ring_of_steel_dragon",
       },
-      {
-         id = "staff_of_insanity",
+      staff_of_insanity = {
          legacy_id = 358,
          image = 425,
          value = 30000,
@@ -12356,8 +11997,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.staff_of_insanity",
       },
-      {
-         id = "rankis",
+      rankis = {
          legacy_id = 359,
          image = 426,
          value = 30000,
@@ -12391,8 +12031,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.rankis",
       },
-      {
-         id = "palmia_pride",
+      palmia_pride = {
          legacy_id = 360,
          image = 407,
          value = 30000,
@@ -12425,8 +12064,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.palmia_pride",
       },
-      {
-         id = "shopkeepers_trunk",
+      shopkeepers_trunk = {
          legacy_id = 361,
          image = 253,
          value = 380,
@@ -12459,8 +12097,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.shopkeepers_trunk",
       },
-      {
-         id = "scroll_of_greater_identify",
+      scroll_of_greater_identify = {
          legacy_id = 362,
          image = 470,
          value = 3500,
@@ -12494,8 +12131,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_greater_identify",
       },
-      {
-         id = "scroll_of_vanish_curse",
+      scroll_of_vanish_curse = {
          legacy_id = 363,
          image = 470,
          value = 4400,
@@ -12529,8 +12165,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_vanish_curse",
       },
-      {
-         id = "potion_of_defender",
+      potion_of_defender = {
          legacy_id = 364,
          image = 354,
          value = 150,
@@ -12564,8 +12199,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_defender",
       },
-      {
-         id = "spellbook_of_holy_shield",
+      spellbook_of_holy_shield = {
          legacy_id = 365,
          image = 429,
          value = 2800,
@@ -12599,8 +12233,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_holy_shield",
       },
-      {
-         id = "rod_of_silence",
+      rod_of_silence = {
          legacy_id = 366,
          image = 471,
          value = 1080,
@@ -12634,8 +12267,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_silence",
       },
-      {
-         id = "spellbook_of_silence",
+      spellbook_of_silence = {
          legacy_id = 367,
          image = 429,
          value = 8400,
@@ -12669,8 +12301,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_silence",
       },
-      {
-         id = "potion_of_silence",
+      potion_of_silence = {
          legacy_id = 368,
          image = 354,
          value = 40,
@@ -12704,8 +12335,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_silence",
       },
-      {
-         id = "spellbook_of_regeneration",
+      spellbook_of_regeneration = {
          legacy_id = 369,
          image = 429,
          value = 4400,
@@ -12739,8 +12369,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_regeneration",
       },
-      {
-         id = "potion_of_troll_blood",
+      potion_of_troll_blood = {
          legacy_id = 370,
          image = 354,
          value = 800,
@@ -12774,8 +12403,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_troll_blood",
       },
-      {
-         id = "spellbook_of_resistance",
+      spellbook_of_resistance = {
          legacy_id = 371,
          image = 429,
          value = 7500,
@@ -12809,8 +12437,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_resistance",
       },
-      {
-         id = "potion_of_resistance",
+      potion_of_resistance = {
          legacy_id = 372,
          image = 354,
          value = 700,
@@ -12844,8 +12471,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_resistance",
       },
-      {
-         id = "spellbook_of_speed",
+      spellbook_of_speed = {
          legacy_id = 373,
          image = 429,
          value = 12000,
@@ -12879,8 +12505,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_speed",
       },
-      {
-         id = "spellbook_of_slow",
+      spellbook_of_slow = {
          legacy_id = 374,
          image = 429,
          value = 4800,
@@ -12914,8 +12539,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_slow",
       },
-      {
-         id = "potion_of_speed",
+      potion_of_speed = {
          legacy_id = 375,
          image = 354,
          value = 850,
@@ -12949,8 +12573,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_speed",
       },
-      {
-         id = "potion_of_slow",
+      potion_of_slow = {
          legacy_id = 376,
          image = 354,
          value = 30,
@@ -12984,8 +12607,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_slow",
       },
-      {
-         id = "rod_of_speed",
+      rod_of_speed = {
          legacy_id = 377,
          image = 471,
          value = 4200,
@@ -13019,8 +12641,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_speed",
       },
-      {
-         id = "spellbook_of_hero",
+      spellbook_of_hero = {
          legacy_id = 378,
          image = 429,
          value = 2600,
@@ -13054,8 +12675,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_hero",
       },
-      {
-         id = "potion_of_hero",
+      potion_of_hero = {
          legacy_id = 379,
          image = 354,
          value = 450,
@@ -13089,8 +12709,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_hero",
       },
-      {
-         id = "spellbook_of_weakness",
+      spellbook_of_weakness = {
          legacy_id = 380,
          image = 429,
          value = 2500,
@@ -13124,8 +12743,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_weakness",
       },
-      {
-         id = "spellbook_of_elemental_scar",
+      spellbook_of_elemental_scar = {
          legacy_id = 381,
          image = 429,
          value = 6400,
@@ -13159,8 +12777,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_elemental_scar",
       },
-      {
-         id = "potion_of_weakness",
+      potion_of_weakness = {
          legacy_id = 382,
          image = 354,
          value = 30,
@@ -13194,8 +12811,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_weakness",
       },
-      {
-         id = "spellbook_of_holy_veil",
+      spellbook_of_holy_veil = {
          legacy_id = 383,
          image = 429,
          value = 11000,
@@ -13229,8 +12845,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_holy_veil",
       },
-      {
-         id = "scroll_of_holy_veil",
+      scroll_of_holy_veil = {
          legacy_id = 384,
          image = 470,
          value = 1500,
@@ -13264,8 +12879,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_holy_veil",
       },
-      {
-         id = "rod_of_holy_light",
+      rod_of_holy_light = {
          legacy_id = 385,
          image = 471,
          value = 3600,
@@ -13299,8 +12913,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_holy_light",
       },
-      {
-         id = "spellbook_of_holy_light",
+      spellbook_of_holy_light = {
          legacy_id = 386,
          image = 429,
          value = 3500,
@@ -13334,8 +12947,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_holy_light",
       },
-      {
-         id = "spellbook_of_holy_rain",
+      spellbook_of_holy_rain = {
          legacy_id = 387,
          image = 429,
          value = 9800,
@@ -13369,8 +12981,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_holy_rain",
       },
-      {
-         id = "scroll_of_holy_light",
+      scroll_of_holy_light = {
          legacy_id = 388,
          image = 470,
          value = 350,
@@ -13404,8 +13015,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_holy_light",
       },
-      {
-         id = "scroll_of_holy_rain",
+      scroll_of_holy_rain = {
          legacy_id = 389,
          image = 470,
          value = 1400,
@@ -13439,8 +13049,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_holy_rain",
       },
-      {
-         id = "scroll_of_mana",
+      scroll_of_mana = {
          legacy_id = 390,
          image = 470,
          value = 2400,
@@ -13474,8 +13083,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_mana",
       },
-      {
-         id = "rod_of_mana",
+      rod_of_mana = {
          legacy_id = 391,
          image = 471,
          value = 4100,
@@ -13509,8 +13117,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_mana",
       },
-      {
-         id = "bottle_of_sulfuric",
+      bottle_of_sulfuric = {
          legacy_id = 392,
          image = 223,
          value = 800,
@@ -13543,8 +13150,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bottle_of_sulfuric",
       },
-      {
-         id = "gem_cutter",
+      gem_cutter = {
          legacy_id = 393,
          image = 319,
          value = 2000,
@@ -13578,8 +13184,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.gem_cutter",
       },
-      {
-         id = "material_box",
+      material_box = {
          legacy_id = 394,
          image = 438,
          value = 500,
@@ -13612,8 +13217,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.material_box",
       },
-      {
-         id = "scroll_of_gain_material",
+      scroll_of_gain_material = {
          legacy_id = 395,
          image = 470,
          value = 3800,
@@ -13647,8 +13251,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_gain_material",
       },
-      {
-         id = "spellbook_of_nightmare",
+      spellbook_of_nightmare = {
          legacy_id = 396,
          image = 429,
          value = 3400,
@@ -13682,8 +13285,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_nightmare",
       },
-      {
-         id = "spellbook_of_knowledge",
+      spellbook_of_knowledge = {
          legacy_id = 397,
          image = 429,
          value = 3800,
@@ -13717,8 +13319,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_knowledge",
       },
-      {
-         id = "scroll_of_knowledge",
+      scroll_of_knowledge = {
          legacy_id = 398,
          image = 470,
          value = 1800,
@@ -13752,8 +13353,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_knowledge",
       },
-      {
-         id = "cargo_rag_doll",
+      cargo_rag_doll = {
          legacy_id = 399,
          image = 67,
          value = 700,
@@ -13786,8 +13386,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_rag_doll",
       },
-      {
-         id = "cargo_barrel",
+      cargo_barrel = {
          legacy_id = 400,
          image = 72,
          value = 420,
@@ -13820,8 +13419,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_barrel",
       },
-      {
-         id = "cargo_piano",
+      cargo_piano = {
          legacy_id = 401,
          image = 292,
          value = 4000,
@@ -13854,8 +13452,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_piano",
       },
-      {
-         id = "cargo_rope",
+      cargo_rope = {
          legacy_id = 402,
          image = 202,
          value = 550,
@@ -13888,8 +13485,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_rope",
       },
-      {
-         id = "cargo_coffin",
+      cargo_coffin = {
          legacy_id = 403,
          image = 269,
          value = 2200,
@@ -13922,8 +13518,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_coffin",
       },
-      {
-         id = "cargo_manboo",
+      cargo_manboo = {
          legacy_id = 404,
          image = 312,
          value = 800,
@@ -13956,8 +13551,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_manboo",
       },
-      {
-         id = "cargo_grave",
+      cargo_grave = {
          legacy_id = 405,
          image = 161,
          value = 2800,
@@ -13990,8 +13584,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_grave",
       },
-      {
-         id = "cargo_tuna_fish",
+      cargo_tuna_fish = {
          legacy_id = 406,
          image = 316,
          value = 350,
@@ -14024,8 +13617,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_tuna_fish",
       },
-      {
-         id = "cargo_whisky",
+      cargo_whisky = {
          legacy_id = 407,
          image = 208,
          value = 1400,
@@ -14058,8 +13650,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_whisky",
       },
-      {
-         id = "cargo_noble_toy",
+      cargo_noble_toy = {
          legacy_id = 408,
          image = 68,
          value = 1200,
@@ -14092,8 +13683,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_noble_toy",
       },
-      {
-         id = "cargo_inner_tube",
+      cargo_inner_tube = {
          legacy_id = 409,
          image = 251,
          value = 340,
@@ -14126,8 +13716,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_inner_tube",
       },
-      {
-         id = "spellbook_of_detect_objects",
+      spellbook_of_detect_objects = {
          legacy_id = 410,
          image = 429,
          value = 4000,
@@ -14161,8 +13750,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_detect_objects",
       },
-      {
-         id = "scroll_of_detect_objects",
+      scroll_of_detect_objects = {
          legacy_id = 411,
          image = 470,
          value = 350,
@@ -14196,8 +13784,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_detect_objects",
       },
-      {
-         id = "rod_of_uncurse",
+      rod_of_uncurse = {
          legacy_id = 412,
          image = 471,
          value = 3800,
@@ -14231,8 +13818,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_uncurse",
       },
-      {
-         id = "red_treasure_machine",
+      red_treasure_machine = {
          legacy_id = 413,
          image = 320,
          value = 15000,
@@ -14265,8 +13851,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.red_treasure_machine",
       },
-      {
-         id = "blue_treasure_machine",
+      blue_treasure_machine = {
          legacy_id = 414,
          image = 321,
          value = 30000,
@@ -14299,8 +13884,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.blue_treasure_machine",
       },
-      {
-         id = "treasure_ball",
+      treasure_ball = {
          legacy_id = 415,
          image = 322,
          value = 4000,
@@ -14333,8 +13917,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.treasure_ball",
       },
-      {
-         id = "rare_treasure_ball",
+      rare_treasure_ball = {
          legacy_id = 416,
          image = 322,
          value = 12000,
@@ -14367,8 +13950,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.rare_treasure_ball",
       },
-      {
-         id = "vegetable_seed",
+      vegetable_seed = {
          legacy_id = 417,
          image = 323,
          value = 240,
@@ -14402,8 +13984,7 @@ data:add_multi(
          color = "green",
          locale_key_prefix = "core.item.vegetable_seed",
       },
-      {
-         id = "fruit_seed",
+      fruit_seed = {
          legacy_id = 418,
          image = 323,
          value = 280,
@@ -14437,8 +14018,7 @@ data:add_multi(
          color = "yellow",
          locale_key_prefix = "core.item.fruit_seed",
       },
-      {
-         id = "herb_seed",
+      herb_seed = {
          legacy_id = 419,
          image = 323,
          value = 1800,
@@ -14472,8 +14052,7 @@ data:add_multi(
          color = "blue",
          locale_key_prefix = "core.item.herb_seed",
       },
-      {
-         id = "unknown_seed",
+      unknown_seed = {
          legacy_id = 420,
          image = 323,
          value = 2500,
@@ -14507,8 +14086,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.unknown_seed",
       },
-      {
-         id = "artifact_seed",
+      artifact_seed = {
          legacy_id = 421,
          image = 323,
          value = 120000,
@@ -14542,8 +14120,7 @@ data:add_multi(
          color = "orange",
          locale_key_prefix = "core.item.artifact_seed",
       },
-      {
-         id = "morgia",
+      morgia = {
          legacy_id = 422,
          image = 170,
          value = 1050,
@@ -14576,8 +14153,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.morgia",
       },
-      {
-         id = "mareilon",
+      mareilon = {
          legacy_id = 423,
          image = 170,
          value = 800,
@@ -14610,8 +14186,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.mareilon",
       },
-      {
-         id = "spenseweed",
+      spenseweed = {
          legacy_id = 424,
          image = 170,
          value = 900,
@@ -14644,8 +14219,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.spenseweed",
       },
-      {
-         id = "curaria",
+      curaria = {
          legacy_id = 425,
          image = 170,
          value = 680,
@@ -14678,8 +14252,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.curaria",
       },
-      {
-         id = "alraunia",
+      alraunia = {
          legacy_id = 426,
          image = 170,
          value = 1200,
@@ -14712,8 +14285,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.alraunia",
       },
-      {
-         id = "stomafillia",
+      stomafillia = {
          legacy_id = 427,
          image = 170,
          value = 800,
@@ -14746,8 +14318,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.stomafillia",
       },
-      {
-         id = "sleeping_bag",
+      sleeping_bag = {
          legacy_id = 428,
          image = 324,
          value = 800,
@@ -14780,8 +14351,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.sleeping_bag",
       },
-      {
-         id = "potion_of_weaken_resistance",
+      potion_of_weaken_resistance = {
          legacy_id = 429,
          image = 354,
          value = 150,
@@ -14815,8 +14385,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_weaken_resistance",
       },
-      {
-         id = "scroll_of_growth",
+      scroll_of_growth = {
          legacy_id = 430,
          image = 470,
          value = 15000,
@@ -14850,8 +14419,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_growth",
       },
-      {
-         id = "scroll_of_faith",
+      scroll_of_faith = {
          legacy_id = 431,
          image = 470,
          value = 12000,
@@ -14885,8 +14453,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_faith",
       },
-      {
-         id = "potion_of_mutation",
+      potion_of_mutation = {
          legacy_id = 432,
          image = 354,
          value = 5000,
@@ -14920,8 +14487,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_mutation",
       },
-      {
-         id = "potion_of_cure_mutation",
+      potion_of_cure_mutation = {
          legacy_id = 433,
          image = 354,
          value = 4000,
@@ -14955,8 +14521,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_mutation",
       },
-      {
-         id = "spellbook_of_mutation",
+      spellbook_of_mutation = {
          legacy_id = 434,
          image = 429,
          value = 20000,
@@ -14990,8 +14555,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_mutation",
       },
-      {
-         id = "banded_mail",
+      banded_mail = {
          legacy_id = 435,
          image = 409,
          value = 1500,
@@ -15024,8 +14588,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.banded_mail",
       },
-      {
-         id = "plate_mail",
+      plate_mail = {
          legacy_id = 436,
          image = 410,
          value = 12500,
@@ -15058,8 +14621,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.plate_mail",
       },
-      {
-         id = "ring_mail",
+      ring_mail = {
          legacy_id = 437,
          image = 440,
          value = 2400,
@@ -15092,8 +14654,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.ring_mail",
       },
-      {
-         id = "composite_mail",
+      composite_mail = {
          legacy_id = 438,
          image = 441,
          value = 4500,
@@ -15126,8 +14687,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.composite_mail",
       },
-      {
-         id = "chain_mail",
+      chain_mail = {
          legacy_id = 439,
          image = 442,
          value = 8000,
@@ -15160,8 +14720,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.chain_mail",
       },
-      {
-         id = "pope_robe",
+      pope_robe = {
          legacy_id = 440,
          image = 443,
          value = 9500,
@@ -15194,8 +14753,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.pope_robe",
       },
-      {
-         id = "light_mail",
+      light_mail = {
          legacy_id = 441,
          image = 444,
          value = 1200,
@@ -15228,8 +14786,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.light_mail",
       },
-      {
-         id = "coat",
+      coat = {
          legacy_id = 442,
          image = 445,
          value = 2000,
@@ -15262,8 +14819,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.coat",
       },
-      {
-         id = "breast_plate",
+      breast_plate = {
          legacy_id = 443,
          image = 446,
          value = 5500,
@@ -15296,8 +14852,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.breast_plate",
       },
-      {
-         id = "bulletproof_jacket",
+      bulletproof_jacket = {
          legacy_id = 444,
          image = 447,
          value = 7200,
@@ -15330,8 +14885,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bulletproof_jacket",
       },
-      {
-         id = "gloves",
+      gloves = {
          legacy_id = 445,
          image = 448,
          value = 800,
@@ -15364,8 +14918,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.gloves",
       },
-      {
-         id = "plate_gauntlets",
+      plate_gauntlets = {
          legacy_id = 446,
          image = 414,
          value = 1800,
@@ -15398,8 +14951,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.plate_gauntlets",
       },
-      {
-         id = "light_gloves",
+      light_gloves = {
          legacy_id = 447,
          image = 451,
          value = 280,
@@ -15432,8 +14984,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.light_gloves",
       },
-      {
-         id = "composite_gauntlets",
+      composite_gauntlets = {
          legacy_id = 448,
          image = 452,
          value = 950,
@@ -15466,8 +15017,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.composite_gauntlets",
       },
-      {
-         id = "small_shield",
+      small_shield = {
          legacy_id = 449,
          image = 453,
          value = 500,
@@ -15500,8 +15050,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.small_shield",
       },
-      {
-         id = "round_shield",
+      round_shield = {
          legacy_id = 450,
          image = 454,
          value = 1200,
@@ -15534,8 +15083,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.round_shield",
       },
-      {
-         id = "shield",
+      shield = {
          legacy_id = 451,
          image = 455,
          value = 2500,
@@ -15568,8 +15116,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.shield",
       },
-      {
-         id = "large_shield",
+      large_shield = {
          legacy_id = 452,
          image = 456,
          value = 7500,
@@ -15602,8 +15149,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.large_shield",
       },
-      {
-         id = "kite_shield",
+      kite_shield = {
          legacy_id = 453,
          image = 457,
          value = 10000,
@@ -15636,8 +15182,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.kite_shield",
       },
-      {
-         id = "tower_shield",
+      tower_shield = {
          legacy_id = 454,
          image = 458,
          value = 18000,
@@ -15670,8 +15215,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tower_shield",
       },
-      {
-         id = "shoes",
+      shoes = {
          legacy_id = 455,
          image = 473,
          value = 260,
@@ -15704,8 +15248,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.shoes",
       },
-      {
-         id = "boots",
+      boots = {
          legacy_id = 456,
          image = 473,
          value = 1500,
@@ -15738,8 +15281,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.boots",
       },
-      {
-         id = "tight_boots",
+      tight_boots = {
          legacy_id = 457,
          image = 459,
          value = 3500,
@@ -15772,8 +15314,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tight_boots",
       },
-      {
-         id = "armored_boots",
+      armored_boots = {
          legacy_id = 458,
          image = 461,
          value = 4800,
@@ -15806,8 +15347,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.armored_boots",
       },
-      {
-         id = "composite_girdle",
+      composite_girdle = {
          legacy_id = 459,
          image = 474,
          value = 2400,
@@ -15840,8 +15380,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.composite_girdle",
       },
-      {
-         id = "plate_girdle",
+      plate_girdle = {
          legacy_id = 460,
          image = 474,
          value = 3900,
@@ -15874,8 +15413,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.plate_girdle",
       },
-      {
-         id = "armored_cloak",
+      armored_cloak = {
          legacy_id = 461,
          image = 475,
          value = 1400,
@@ -15908,8 +15446,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.armored_cloak",
       },
-      {
-         id = "cloak",
+      cloak = {
          legacy_id = 462,
          image = 476,
          value = 3500,
@@ -15942,8 +15479,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cloak",
       },
-      {
-         id = "feather_hat",
+      feather_hat = {
          legacy_id = 463,
          image = 413,
          value = 400,
@@ -15976,8 +15512,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.feather_hat",
       },
-      {
-         id = "heavy_helm",
+      heavy_helm = {
          legacy_id = 464,
          image = 481,
          value = 4800,
@@ -16010,8 +15545,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.heavy_helm",
       },
-      {
-         id = "knight_helm",
+      knight_helm = {
          legacy_id = 465,
          image = 480,
          value = 2200,
@@ -16044,8 +15578,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.knight_helm",
       },
-      {
-         id = "helm",
+      helm = {
          legacy_id = 466,
          image = 479,
          value = 600,
@@ -16078,8 +15611,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.helm",
       },
-      {
-         id = "composite_helm",
+      composite_helm = {
          legacy_id = 467,
          image = 482,
          value = 9600,
@@ -16112,8 +15644,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.composite_helm",
       },
-      {
-         id = "peridot",
+      peridot = {
          legacy_id = 468,
          image = 488,
          value = 4400,
@@ -16146,8 +15677,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.peridot",
       },
-      {
-         id = "talisman",
+      talisman = {
          legacy_id = 469,
          image = 487,
          value = 4400,
@@ -16180,8 +15710,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.talisman",
       },
-      {
-         id = "neck_guard",
+      neck_guard = {
          legacy_id = 470,
          image = 486,
          value = 2200,
@@ -16214,8 +15743,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.neck_guard",
       },
-      {
-         id = "charm",
+      charm = {
          legacy_id = 471,
          image = 485,
          value = 2000,
@@ -16248,8 +15776,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.charm",
       },
-      {
-         id = "bejeweled_amulet",
+      bejeweled_amulet = {
          legacy_id = 472,
          image = 484,
          value = 1800,
@@ -16282,8 +15809,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bejeweled_amulet",
       },
-      {
-         id = "engagement_amulet",
+      engagement_amulet = {
          legacy_id = 473,
          image = 483,
          value = 5000,
@@ -16316,8 +15842,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.engagement_amulet",
       },
-      {
-         id = "composite_ring",
+      composite_ring = {
          legacy_id = 474,
          image = 492,
          value = 450,
@@ -16350,8 +15875,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.composite_ring",
       },
-      {
-         id = "armored_ring",
+      armored_ring = {
          legacy_id = 475,
          image = 491,
          value = 450,
@@ -16384,8 +15908,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.armored_ring",
       },
-      {
-         id = "ring",
+      ring = {
          legacy_id = 476,
          image = 490,
          value = 450,
@@ -16418,8 +15941,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.ring",
       },
-      {
-         id = "engagement_ring",
+      engagement_ring = {
          legacy_id = 477,
          image = 489,
          value = 5200,
@@ -16452,8 +15974,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.engagement_ring",
       },
-      {
-         id = "stethoscope",
+      stethoscope = {
          legacy_id = 478,
          image = 493,
          value = 1200,
@@ -16486,8 +16007,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.stethoscope",
       },
-      {
-         id = "scroll_of_ally",
+      scroll_of_ally = {
          legacy_id = 479,
          image = 470,
          value = 9000,
@@ -16521,8 +16041,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_ally",
       },
-      {
-         id = "rod_of_domination",
+      rod_of_domination = {
          legacy_id = 480,
          image = 471,
          value = 16000,
@@ -16556,8 +16075,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_domination",
       },
-      {
-         id = "spellbook_of_domination",
+      spellbook_of_domination = {
          legacy_id = 481,
          image = 429,
          value = 28000,
@@ -16591,8 +16109,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_domination",
       },
-      {
-         id = "crossbow",
+      crossbow = {
          legacy_id = 482,
          image = 498,
          value = 500,
@@ -16625,8 +16142,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.crossbow",
       },
-      {
-         id = "bolt",
+      bolt = {
          legacy_id = 483,
          image = 412,
          value = 150,
@@ -16659,8 +16175,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bolt",
       },
-      {
-         id = "spellbook_of_web",
+      spellbook_of_web = {
          legacy_id = 484,
          image = 429,
          value = 4500,
@@ -16694,8 +16209,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_web",
       },
-      {
-         id = "rod_of_web",
+      rod_of_web = {
          legacy_id = 485,
          image = 471,
          value = 3500,
@@ -16729,8 +16243,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_web",
       },
-      {
-         id = "machine",
+      machine = {
          legacy_id = 486,
          image = 507,
          value = 3600,
@@ -16763,8 +16276,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.machine",
       },
-      {
-         id = "computer",
+      computer = {
          legacy_id = 487,
          image = 508,
          value = 4400,
@@ -16797,8 +16309,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.computer",
       },
-      {
-         id = "training_machine",
+      training_machine = {
          legacy_id = 488,
          image = 506,
          value = 2400,
@@ -16831,8 +16342,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.training_machine",
       },
-      {
-         id = "camera",
+      camera = {
          legacy_id = 489,
          image = 509,
          value = 1600,
@@ -16865,8 +16375,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.camera",
       },
-      {
-         id = "microwave_oven",
+      microwave_oven = {
          legacy_id = 490,
          image = 510,
          value = 3200,
@@ -16899,8 +16408,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.microwave_oven",
       },
-      {
-         id = "server",
+      server = {
          legacy_id = 491,
          image = 511,
          value = 2400,
@@ -16933,8 +16441,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.server",
       },
-      {
-         id = "storage",
+      storage = {
          legacy_id = 492,
          image = 512,
          value = 3100,
@@ -16967,8 +16474,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.storage",
       },
-      {
-         id = "trash_can",
+      trash_can = {
          legacy_id = 493,
          image = 513,
          value = 1000,
@@ -17001,8 +16507,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.trash_can",
       },
-      {
-         id = "chip",
+      chip = {
          legacy_id = 494,
          image = 515,
          value = 1200,
@@ -17035,8 +16540,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.chip",
       },
-      {
-         id = "blank_disc",
+      blank_disc = {
          legacy_id = 495,
          image = 516,
          value = 1000,
@@ -17069,8 +16573,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.blank_disc",
       },
-      {
-         id = "shot_gun",
+      shot_gun = {
          legacy_id = 496,
          image = 514,
          value = 800,
@@ -17103,8 +16606,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.shot_gun",
       },
-      {
-         id = "pop_corn",
+      pop_corn = {
          legacy_id = 497,
          image = 517,
          value = 440,
@@ -17137,8 +16639,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.pop_corn",
       },
-      {
-         id = "fried_potato",
+      fried_potato = {
          legacy_id = 498,
          image = 518,
          value = 350,
@@ -17171,8 +16672,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.fried_potato",
       },
-      {
-         id = "cyber_snack",
+      cyber_snack = {
          legacy_id = 499,
          image = 519,
          value = 750,
@@ -17205,8 +16705,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cyber_snack",
       },
-      {
-         id = "scroll_of_inferior_material",
+      scroll_of_inferior_material = {
          legacy_id = 500,
          image = 470,
          value = 600,
@@ -17240,8 +16739,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_inferior_material",
       },
-      {
-         id = "scroll_of_change_material",
+      scroll_of_change_material = {
          legacy_id = 501,
          image = 470,
          value = 5000,
@@ -17275,8 +16773,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_change_material",
       },
-      {
-         id = "scroll_of_superior_material",
+      scroll_of_superior_material = {
          legacy_id = 502,
          image = 470,
          value = 20000,
@@ -17310,8 +16807,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_superior_material",
       },
-      {
-         id = "figurine",
+      figurine = {
          legacy_id = 503,
          image = 531,
          value = 1000,
@@ -17344,8 +16840,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.figurine",
       },
-      {
-         id = "card",
+      card = {
          legacy_id = 504,
          image = 528,
          value = 500,
@@ -17378,8 +16873,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.card",
       },
-      {
-         id = "little_sisters_diary",
+      little_sisters_diary = {
          legacy_id = 505,
          image = 429,
          value = 8000,
@@ -17413,8 +16907,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.little_sisters_diary",
       },
-      {
-         id = "scroll_of_enchant_weapon",
+      scroll_of_enchant_weapon = {
          legacy_id = 506,
          image = 470,
          value = 8000,
@@ -17448,8 +16941,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_enchant_weapon",
       },
-      {
-         id = "scroll_of_greater_enchant_weapon",
+      scroll_of_greater_enchant_weapon = {
          legacy_id = 507,
          image = 470,
          value = 14000,
@@ -17483,8 +16975,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_greater_enchant_weapon",
       },
-      {
-         id = "scroll_of_enchant_armor",
+      scroll_of_enchant_armor = {
          legacy_id = 508,
          image = 470,
          value = 8000,
@@ -17518,8 +17009,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_enchant_armor",
       },
-      {
-         id = "scroll_of_greater_enchant_armor",
+      scroll_of_greater_enchant_armor = {
          legacy_id = 509,
          image = 470,
          value = 14000,
@@ -17553,8 +17043,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_greater_enchant_armor",
       },
-      {
-         id = "heir_trunk",
+      heir_trunk = {
          legacy_id = 510,
          image = 253,
          value = 4500,
@@ -17587,8 +17076,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.heir_trunk",
       },
-      {
-         id = "deed_of_heirship",
+      deed_of_heirship = {
          legacy_id = 511,
          image = 308,
          value = 10000,
@@ -17621,8 +17109,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.deed_of_heirship",
       },
-      {
-         id = "laser_gun",
+      laser_gun = {
          legacy_id = 512,
          image = 520,
          value = 1500,
@@ -17655,8 +17142,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.laser_gun",
       },
-      {
-         id = "energy_cell",
+      energy_cell = {
          legacy_id = 513,
          image = 521,
          value = 150,
@@ -17689,8 +17175,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.energy_cell",
       },
-      {
-         id = "rail_gun",
+      rail_gun = {
          legacy_id = 514,
          image = 520,
          value = 60000,
@@ -17723,8 +17208,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.rail_gun",
       },
-      {
-         id = "scroll_of_recharge",
+      scroll_of_recharge = {
          legacy_id = 515,
          image = 470,
          value = 2500,
@@ -17758,8 +17242,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_recharge",
       },
-      {
-         id = "bottle_of_water",
+      bottle_of_water = {
          legacy_id = 516,
          image = 354,
          value = 280,
@@ -17792,8 +17275,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bottle_of_water",
       },
-      {
-         id = "rod_of_change_creature",
+      rod_of_change_creature = {
          legacy_id = 517,
          image = 471,
          value = 4500,
@@ -17827,8 +17309,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_change_creature",
       },
-      {
-         id = "rod_of_alchemy",
+      rod_of_alchemy = {
          legacy_id = 518,
          image = 471,
          value = 6000,
@@ -17862,8 +17343,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_alchemy",
       },
-      {
-         id = "bottle_of_dye",
+      bottle_of_dye = {
          legacy_id = 519,
          image = 354,
          value = 500,
@@ -17897,8 +17377,7 @@ data:add_multi(
          color = "random_any",
          locale_key_prefix = "core.item.bottle_of_dye",
       },
-      {
-         id = "wing",
+      wing = {
          legacy_id = 520,
          image = 522,
          value = 4500,
@@ -17931,8 +17410,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.wing",
       },
-      {
-         id = "deed_of_museum",
+      deed_of_museum = {
          legacy_id = 521,
          image = 308,
          value = 140000,
@@ -17966,8 +17444,7 @@ data:add_multi(
          color = "orange",
          locale_key_prefix = "core.item.deed_of_museum",
       },
-      {
-         id = "deed_of_shop",
+      deed_of_shop = {
          legacy_id = 522,
          image = 308,
          value = 200000,
@@ -18001,8 +17478,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.deed_of_shop",
       },
-      {
-         id = "tree_of_beech",
+      tree_of_beech = {
          legacy_id = 523,
          image = 527,
          value = 700,
@@ -18035,8 +17511,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tree_of_beech",
       },
-      {
-         id = "tree_of_cedar",
+      tree_of_cedar = {
          legacy_id = 524,
          image = 593,
          value = 500,
@@ -18069,8 +17544,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tree_of_cedar",
       },
-      {
-         id = "tree_of_fruitless",
+      tree_of_fruitless = {
          legacy_id = 525,
          image = 592,
          value = 500,
@@ -18103,8 +17577,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tree_of_fruitless",
       },
-      {
-         id = "tree_of_fruits",
+      tree_of_fruits = {
          legacy_id = 526,
          image = 591,
          value = 2000,
@@ -18137,8 +17610,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tree_of_fruits",
       },
-      {
-         id = "dead_tree",
+      dead_tree = {
          legacy_id = 527,
          image = 590,
          value = 500,
@@ -18171,8 +17643,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.dead_tree",
       },
-      {
-         id = "tree_of_zelkova",
+      tree_of_zelkova = {
          legacy_id = 528,
          image = 589,
          value = 800,
@@ -18205,8 +17676,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tree_of_zelkova",
       },
-      {
-         id = "tree_of_palm",
+      tree_of_palm = {
          legacy_id = 529,
          image = 588,
          value = 1000,
@@ -18239,8 +17709,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tree_of_palm",
       },
-      {
-         id = "tree_of_ash",
+      tree_of_ash = {
          legacy_id = 530,
          image = 587,
          value = 900,
@@ -18273,8 +17742,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tree_of_ash",
       },
-      {
-         id = "furnance",
+      furnance = {
          legacy_id = 531,
          image = 583,
          value = 8500,
@@ -18307,8 +17775,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.furnance",
       },
-      {
-         id = "fireplace",
+      fireplace = {
          legacy_id = 532,
          image = 584,
          value = 9400,
@@ -18341,8 +17808,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.fireplace",
       },
-      {
-         id = "stove",
+      stove = {
          legacy_id = 533,
          image = 581,
          value = 7500,
@@ -18375,8 +17841,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.stove",
       },
-      {
-         id = "giant_foliage_plant",
+      giant_foliage_plant = {
          legacy_id = 534,
          image = 582,
          value = 4500,
@@ -18409,8 +17874,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.giant_foliage_plant",
       },
-      {
-         id = "big_table",
+      big_table = {
          legacy_id = 535,
          image = 83,
          value = 2400,
@@ -18443,8 +17907,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.big_table",
       },
-      {
-         id = "painting_of_madam",
+      painting_of_madam = {
          legacy_id = 536,
          image = 81,
          value = 8500,
@@ -18477,8 +17940,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.painting_of_madam",
       },
-      {
-         id = "painting_of_landscape",
+      painting_of_landscape = {
          legacy_id = 537,
          image = 92,
          value = 8200,
@@ -18511,8 +17973,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.painting_of_landscape",
       },
-      {
-         id = "painting_of_sunflower",
+      painting_of_sunflower = {
          legacy_id = 538,
          image = 131,
          value = 12000,
@@ -18545,8 +18006,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.painting_of_sunflower",
       },
-      {
-         id = "statue_of_cat",
+      statue_of_cat = {
          legacy_id = 539,
          image = 578,
          value = 25000,
@@ -18579,8 +18039,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.statue_of_cat",
       },
-      {
-         id = "black_crystal",
+      black_crystal = {
          legacy_id = 540,
          image = 130,
          value = 7000,
@@ -18613,8 +18072,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.black_crystal",
       },
-      {
-         id = "snow_man",
+      snow_man = {
          legacy_id = 541,
          image = 134,
          value = 200,
@@ -18647,8 +18105,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.snow_man",
       },
-      {
-         id = "deed_of_farm",
+      deed_of_farm = {
          legacy_id = 542,
          image = 308,
          value = 45000,
@@ -18682,8 +18139,7 @@ data:add_multi(
          color = "light_blue",
          locale_key_prefix = "core.item.deed_of_farm",
       },
-      {
-         id = "deed_of_storage_house",
+      deed_of_storage_house = {
          legacy_id = 543,
          image = 308,
          value = 10000,
@@ -18717,8 +18173,7 @@ data:add_multi(
          color = "pale_red",
          locale_key_prefix = "core.item.deed_of_storage_house",
       },
-      {
-         id = "disc",
+      disc = {
          legacy_id = 544,
          image = 516,
          value = 1000,
@@ -18752,8 +18207,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.disc",
       },
-      {
-         id = "rod_of_wall_creation",
+      rod_of_wall_creation = {
          legacy_id = 545,
          image = 471,
          value = 4000,
@@ -18787,8 +18241,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_wall_creation",
       },
-      {
-         id = "spellbook_of_wall_creation",
+      spellbook_of_wall_creation = {
          legacy_id = 546,
          image = 429,
          value = 6800,
@@ -18822,8 +18275,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_wall_creation",
       },
-      {
-         id = "salary_chest",
+      salary_chest = {
          legacy_id = 547,
          image = 325,
          value = 6400,
@@ -18856,8 +18308,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.salary_chest",
       },
-      {
-         id = "spellbook_of_healing_rain",
+      spellbook_of_healing_rain = {
          legacy_id = 548,
          image = 429,
          value = 9500,
@@ -18891,8 +18342,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_healing_rain",
       },
-      {
-         id = "scroll_of_healing_rain",
+      scroll_of_healing_rain = {
          legacy_id = 549,
          image = 470,
          value = 3500,
@@ -18926,8 +18376,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_healing_rain",
       },
-      {
-         id = "spellbook_of_healing_hands",
+      spellbook_of_healing_hands = {
          legacy_id = 550,
          image = 429,
          value = 5800,
@@ -18961,8 +18410,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_healing_hands",
       },
-      {
-         id = "rod_of_healing_hands",
+      rod_of_healing_hands = {
          legacy_id = 551,
          image = 471,
          value = 5600,
@@ -18996,8 +18444,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_healing_hands",
       },
-      {
-         id = "feather",
+      feather = {
          legacy_id = 552,
          image = 326,
          value = 18000,
@@ -19030,8 +18477,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.feather",
       },
-      {
-         id = "gem_seed",
+      gem_seed = {
          legacy_id = 553,
          image = 323,
          value = 4500,
@@ -19065,8 +18511,7 @@ data:add_multi(
          color = "purple",
          locale_key_prefix = "core.item.gem_seed",
       },
-      {
-         id = "magical_seed",
+      magical_seed = {
          legacy_id = 554,
          image = 323,
          value = 3500,
@@ -19100,8 +18545,7 @@ data:add_multi(
          color = "cyan",
          locale_key_prefix = "core.item.magical_seed",
       },
-      {
-         id = "shelter",
+      shelter = {
          legacy_id = 555,
          image = 330,
          value = 6500,
@@ -19134,8 +18578,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.shelter",
       },
-      {
-         id = "seven_league_boots",
+      seven_league_boots = {
          legacy_id = 556,
          image = 460,
          value = 24000,
@@ -19168,8 +18611,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.seven_league_boots",
       },
-      {
-         id = "vindale_cloak",
+      vindale_cloak = {
          legacy_id = 557,
          image = 422,
          value = 18000,
@@ -19202,8 +18644,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.vindale_cloak",
       },
-      {
-         id = "aurora_ring",
+      aurora_ring = {
          legacy_id = 558,
          image = 489,
          value = 17000,
@@ -19236,8 +18677,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.aurora_ring",
       },
-      {
-         id = "potion_of_cure_corruption",
+      potion_of_cure_corruption = {
          legacy_id = 559,
          image = 354,
          value = 100000,
@@ -19271,8 +18711,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_corruption",
       },
-      {
-         id = "masters_delivery_chest",
+      masters_delivery_chest = {
          legacy_id = 560,
          image = 331,
          value = 380,
@@ -19305,8 +18744,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.masters_delivery_chest",
       },
-      {
-         id = "shop_strongbox",
+      shop_strongbox = {
          legacy_id = 561,
          image = 197,
          value = 7200,
@@ -19339,8 +18777,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.shop_strongbox",
       },
-      {
-         id = "register",
+      register = {
          legacy_id = 562,
          image = 332,
          value = 1500,
@@ -19373,8 +18810,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.register",
       },
-      {
-         id = "textbook",
+      textbook = {
          legacy_id = 563,
          image = 334,
          value = 4800,
@@ -19407,8 +18843,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.textbook",
       },
-      {
-         id = "spellbook_of_acid_ground",
+      spellbook_of_acid_ground = {
          legacy_id = 564,
          image = 429,
          value = 7500,
@@ -19442,8 +18877,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_acid_ground",
       },
-      {
-         id = "rod_of_acid_ground",
+      rod_of_acid_ground = {
          legacy_id = 565,
          image = 471,
          value = 4400,
@@ -19477,8 +18911,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_acid_ground",
       },
-      {
-         id = "acidproof_liquid",
+      acidproof_liquid = {
          legacy_id = 566,
          image = 354,
          value = 1900,
@@ -19512,8 +18945,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.acidproof_liquid",
       },
-      {
-         id = "fireproof_blanket",
+      fireproof_blanket = {
          legacy_id = 567,
          image = 335,
          value = 2400,
@@ -19547,8 +18979,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.fireproof_blanket",
       },
-      {
-         id = "coldproof_blanket",
+      coldproof_blanket = {
          legacy_id = 568,
          image = 335,
          value = 2400,
@@ -19582,8 +19013,7 @@ data:add_multi(
          color = "blue",
          locale_key_prefix = "core.item.coldproof_blanket",
       },
-      {
-         id = "spellbook_of_fire_wall",
+      spellbook_of_fire_wall = {
          legacy_id = 569,
          image = 429,
          value = 5800,
@@ -19617,8 +19047,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_fire_wall",
       },
-      {
-         id = "rod_of_fire_wall",
+      rod_of_fire_wall = {
          legacy_id = 570,
          image = 471,
          value = 3800,
@@ -19652,8 +19081,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_fire_wall",
       },
-      {
-         id = "jerky",
+      jerky = {
          legacy_id = 571,
          image = 337,
          value = 640,
@@ -19686,8 +19114,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.jerky",
       },
-      {
-         id = "deed_of_ranch",
+      deed_of_ranch = {
          legacy_id = 572,
          image = 308,
          value = 80000,
@@ -19721,8 +19148,7 @@ data:add_multi(
          color = "gold",
          locale_key_prefix = "core.item.deed_of_ranch",
       },
-      {
-         id = "egg",
+      egg = {
          legacy_id = 573,
          image = 338,
          value = 500,
@@ -19755,8 +19181,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.egg",
       },
-      {
-         id = "bottle_of_milk",
+      bottle_of_milk = {
          legacy_id = 574,
          image = 339,
          value = 1000,
@@ -19789,8 +19214,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bottle_of_milk",
       },
-      {
-         id = "shit",
+      shit = {
          legacy_id = 575,
          image = 340,
          value = 25,
@@ -19823,8 +19247,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.shit",
       },
-      {
-         id = "playback_disc",
+      playback_disc = {
          legacy_id = 576,
          image = 516,
          value = 1000,
@@ -19858,8 +19281,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.playback_disc",
       },
-      {
-         id = "molotov",
+      molotov = {
          legacy_id = 577,
          image = 223,
          value = 400,
@@ -19893,8 +19315,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.molotov",
       },
-      {
-         id = "kitty_bank",
+      kitty_bank = {
          legacy_id = 578,
          image = 348,
          value = 1400,
@@ -19927,8 +19348,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.kitty_bank",
       },
-      {
-         id = "freezer",
+      freezer = {
          legacy_id = 579,
          image = 577,
          value = 3800,
@@ -19961,8 +19381,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.freezer",
       },
-      {
-         id = "modern_rack",
+      modern_rack = {
          legacy_id = 580,
          image = 236,
          value = 1600,
@@ -19995,8 +19414,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.modern_rack",
       },
-      {
-         id = "rod_of_make_door",
+      rod_of_make_door = {
          legacy_id = 581,
          image = 471,
          value = 2000,
@@ -20030,8 +19448,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.rod_of_make_door",
       },
-      {
-         id = "spellbook_of_make_door",
+      spellbook_of_make_door = {
          legacy_id = 582,
          image = 429,
          value = 2000,
@@ -20065,8 +19482,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_make_door",
       },
-      {
-         id = "torch",
+      torch = {
          legacy_id = 583,
          image = 352,
          value = 200,
@@ -20099,8 +19515,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.torch",
       },
-      {
-         id = "candle",
+      candle = {
          legacy_id = 584,
          image = 353,
          value = 1500,
@@ -20134,8 +19549,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.candle",
       },
-      {
-         id = "fancy_lamp",
+      fancy_lamp = {
          legacy_id = 585,
          image = 364,
          value = 4500,
@@ -20168,8 +19582,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.fancy_lamp",
       },
-      {
-         id = "modern_lamp_a",
+      modern_lamp_a = {
          legacy_id = 586,
          image = 576,
          value = 7200,
@@ -20202,8 +19615,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.modern_lamp_a",
       },
-      {
-         id = "handful_of_snow",
+      handful_of_snow = {
          legacy_id = 587,
          image = 365,
          value = 10,
@@ -20236,8 +19648,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.handful_of_snow",
       },
-      {
-         id = "tree_of_naked",
+      tree_of_naked = {
          legacy_id = 588,
          image = 575,
          value = 500,
@@ -20270,8 +19681,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tree_of_naked",
       },
-      {
-         id = "tree_of_fir",
+      tree_of_fir = {
          legacy_id = 589,
          image = 574,
          value = 1800,
@@ -20304,8 +19714,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tree_of_fir",
       },
-      {
-         id = "snow_scarecrow",
+      snow_scarecrow = {
          legacy_id = 590,
          image = 367,
          value = 10,
@@ -20339,8 +19748,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.snow_scarecrow",
       },
-      {
-         id = "mini_snow_man",
+      mini_snow_man = {
          legacy_id = 591,
          image = 366,
          value = 400,
@@ -20373,8 +19781,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.mini_snow_man",
       },
-      {
-         id = "snow_barrel",
+      snow_barrel = {
          legacy_id = 592,
          image = 368,
          value = 180,
@@ -20407,8 +19814,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.snow_barrel",
       },
-      {
-         id = "modern_lamp_b",
+      modern_lamp_b = {
          legacy_id = 593,
          image = 573,
          value = 7200,
@@ -20441,8 +19847,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.modern_lamp_b",
       },
-      {
-         id = "statue_of_holy_cross",
+      statue_of_holy_cross = {
          legacy_id = 594,
          image = 572,
          value = 18000,
@@ -20475,8 +19880,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.statue_of_holy_cross",
       },
-      {
-         id = "pillar",
+      pillar = {
          legacy_id = 595,
          image = 571,
          value = 2500,
@@ -20509,8 +19913,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.pillar",
       },
-      {
-         id = "stained_glass_window",
+      stained_glass_window = {
          legacy_id = 596,
          image = 369,
          value = 1800,
@@ -20543,8 +19946,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.stained_glass_window",
       },
-      {
-         id = "cargo_christmas_tree",
+      cargo_christmas_tree = {
          legacy_id = 597,
          image = 570,
          value = 3500,
@@ -20577,8 +19979,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_christmas_tree",
       },
-      {
-         id = "cargo_snow_man",
+      cargo_snow_man = {
          legacy_id = 598,
          image = 134,
          value = 1200,
@@ -20611,8 +20012,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_snow_man",
       },
-      {
-         id = "christmas_tree",
+      christmas_tree = {
          legacy_id = 599,
          image = 570,
          value = 4800,
@@ -20645,8 +20045,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.christmas_tree",
       },
-      {
-         id = "giants_shackle",
+      giants_shackle = {
          legacy_id = 600,
          image = 370,
          value = 1800,
@@ -20679,8 +20078,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.giants_shackle",
       },
-      {
-         id = "empty_bottle",
+      empty_bottle = {
          legacy_id = 601,
          image = 371,
          value = 100,
@@ -20713,8 +20111,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.empty_bottle",
       },
-      {
-         id = "holy_well",
+      holy_well = {
          legacy_id = 602,
          image = 372,
          value = 185000,
@@ -20747,8 +20144,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.holy_well",
       },
-      {
-         id = "presidents_chair",
+      presidents_chair = {
          legacy_id = 603,
          image = 373,
          value = 12000,
@@ -20781,8 +20177,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.presidents_chair",
       },
-      {
-         id = "green_plant",
+      green_plant = {
          legacy_id = 604,
          image = 374,
          value = 400,
@@ -20815,8 +20210,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.green_plant",
       },
-      {
-         id = "money_tree",
+      money_tree = {
          legacy_id = 605,
          image = 375,
          value = 2200,
@@ -20849,8 +20243,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.money_tree",
       },
-      {
-         id = "barbecue_set",
+      barbecue_set = {
          legacy_id = 606,
          image = 376,
          value = 9500,
@@ -20883,8 +20276,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.barbecue_set",
       },
-      {
-         id = "giant_cactus",
+      giant_cactus = {
          legacy_id = 607,
          image = 377,
          value = 2600,
@@ -20917,8 +20309,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.giant_cactus",
       },
-      {
-         id = "square_window",
+      square_window = {
          legacy_id = 608,
          image = 378,
          value = 500,
@@ -20951,8 +20342,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.square_window",
       },
-      {
-         id = "window",
+      window = {
          legacy_id = 609,
          image = 379,
          value = 700,
@@ -20985,8 +20375,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.window",
       },
-      {
-         id = "triangle_plant",
+      triangle_plant = {
          legacy_id = 610,
          image = 380,
          value = 1500,
@@ -21019,8 +20408,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.triangle_plant",
       },
-      {
-         id = "house_board",
+      house_board = {
          legacy_id = 611,
          image = 107,
          value = 3500,
@@ -21053,8 +20441,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.house_board",
       },
-      {
-         id = "nice_window",
+      nice_window = {
          legacy_id = 612,
          image = 382,
          value = 1000,
@@ -21087,8 +20474,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.nice_window",
       },
-      {
-         id = "kings_bed",
+      kings_bed = {
          legacy_id = 613,
          image = 569,
          value = 35000,
@@ -21121,8 +20507,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.kings_bed",
       },
-      {
-         id = "flower_arch",
+      flower_arch = {
          legacy_id = 614,
          image = 568,
          value = 2000,
@@ -21155,8 +20540,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.flower_arch",
       },
-      {
-         id = "bill",
+      bill = {
          legacy_id = 615,
          image = 383,
          value = 100,
@@ -21189,8 +20573,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bill",
       },
-      {
-         id = "tax_masters_tax_box",
+      tax_masters_tax_box = {
          legacy_id = 616,
          image = 384,
          value = 14500,
@@ -21223,8 +20606,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tax_masters_tax_box",
       },
-      {
-         id = "bait",
+      bait = {
          legacy_id = 617,
          image = 569,
          value = 1000,
@@ -21257,8 +20639,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bait",
       },
-      {
-         id = "fish_a",
+      fish_a = {
          legacy_id = 618,
          image = 310,
          value = 1200,
@@ -21291,8 +20672,7 @@ data:add_multi(
          rftags = { "fish" },
          locale_key_prefix = "core.item.fish_a",
       },
-      {
-         id = "fish_b",
+      fish_b = {
          legacy_id = 619,
          image = 310,
          value = 1200,
@@ -21325,8 +20705,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.fish_b",
       },
-      {
-         id = "love_potion",
+      love_potion = {
          legacy_id = 620,
          image = 354,
          value = 4500,
@@ -21359,8 +20738,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.love_potion",
       },
-      {
-         id = "treasure_map",
+      treasure_map = {
          legacy_id = 621,
          image = 252,
          value = 10000,
@@ -21393,8 +20771,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.treasure_map",
       },
-      {
-         id = "small_medal",
+      small_medal = {
          legacy_id = 622,
          image = 165,
          value = 1,
@@ -21427,8 +20804,7 @@ data:add_multi(
          rftags = { "ore" },
          locale_key_prefix = "core.item.small_medal",
       },
-      {
-         id = "cat_sisters_diary",
+      cat_sisters_diary = {
          legacy_id = 623,
          image = 429,
          value = 15000,
@@ -21462,8 +20838,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.cat_sisters_diary",
       },
-      {
-         id = "girls_diary",
+      girls_diary = {
          legacy_id = 624,
          image = 429,
          value = 10000,
@@ -21497,8 +20872,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.girls_diary",
       },
-      {
-         id = "shrine_gate",
+      shrine_gate = {
          legacy_id = 625,
          image = 627,
          value = 7500,
@@ -21531,8 +20905,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.shrine_gate",
       },
-      {
-         id = "bottle_of_hermes_blood",
+      bottle_of_hermes_blood = {
          legacy_id = 626,
          image = 354,
          value = 50000,
@@ -21566,8 +20939,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.bottle_of_hermes_blood",
       },
-      {
-         id = "sages_helm",
+      sages_helm = {
          legacy_id = 627,
          image = 480,
          value = 40000,
@@ -21601,8 +20973,7 @@ data:add_multi(
          color = "orange",
          locale_key_prefix = "core.item.sages_helm",
       },
-      {
-         id = "spellbook_of_incognito",
+      spellbook_of_incognito = {
          legacy_id = 628,
          image = 429,
          value = 7000,
@@ -21636,8 +21007,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_incognito",
       },
-      {
-         id = "disguise_set",
+      disguise_set = {
          legacy_id = 629,
          image = 628,
          value = 7200,
@@ -21670,8 +21040,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.disguise_set",
       },
-      {
-         id = "material_kit",
+      material_kit = {
          legacy_id = 630,
          image = 629,
          value = 2500,
@@ -21704,8 +21073,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.material_kit",
       },
-      {
-         id = "moon_gate",
+      moon_gate = {
          legacy_id = 631,
          image = 566,
          value = 50,
@@ -21738,8 +21106,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.moon_gate",
       },
-      {
-         id = "flying_scroll",
+      flying_scroll = {
          legacy_id = 632,
          image = 470,
          value = 40000,
@@ -21773,8 +21140,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.flying_scroll",
       },
-      {
-         id = "panty",
+      panty = {
          legacy_id = 633,
          image = 630,
          value = 25000,
@@ -21807,8 +21173,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.panty",
       },
-      {
-         id = "leash",
+      leash = {
          legacy_id = 634,
          image = 631,
          value = 1200,
@@ -21841,8 +21206,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.leash",
       },
-      {
-         id = "mine",
+      mine = {
          legacy_id = 635,
          image = 632,
          value = 7500,
@@ -21875,8 +21239,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.mine",
       },
-      {
-         id = "lockpick",
+      lockpick = {
          legacy_id = 636,
          image = 634,
          value = 800,
@@ -21909,8 +21272,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.lockpick",
       },
-      {
-         id = "skeleton_key",
+      skeleton_key = {
          legacy_id = 637,
          image = 633,
          value = 150000,
@@ -21943,8 +21305,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.skeleton_key",
       },
-      {
-         id = "scroll_of_escape",
+      scroll_of_escape = {
          legacy_id = 638,
          image = 470,
          value = 450,
@@ -21978,8 +21339,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_escape",
       },
-      {
-         id = "happy_apple",
+      happy_apple = {
          legacy_id = 639,
          image = 172,
          value = 100000,
@@ -22013,8 +21373,7 @@ data:add_multi(
          color = "light_blue",
          locale_key_prefix = "core.item.happy_apple",
       },
-      {
-         id = "unicorn_horn",
+      unicorn_horn = {
          legacy_id = 640,
          image = 635,
          value = 8000,
@@ -22047,8 +21406,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.unicorn_horn",
       },
-      {
-         id = "cooler_box",
+      cooler_box = {
          legacy_id = 641,
          image = 636,
          value = 7500,
@@ -22081,8 +21439,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cooler_box",
       },
-      {
-         id = "rice_barrel",
+      rice_barrel = {
          legacy_id = 642,
          image = 637,
          value = 500,
@@ -22115,8 +21472,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.rice_barrel",
       },
-      {
-         id = "eastern_bed",
+      eastern_bed = {
          legacy_id = 643,
          image = 638,
          value = 2500,
@@ -22149,8 +21505,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.eastern_bed",
       },
-      {
-         id = "decorated_window",
+      decorated_window = {
          legacy_id = 644,
          image = 639,
          value = 2400,
@@ -22183,8 +21538,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.decorated_window",
       },
-      {
-         id = "king_drawer",
+      king_drawer = {
          legacy_id = 645,
          image = 640,
          value = 9500,
@@ -22217,8 +21571,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.king_drawer",
       },
-      {
-         id = "menu_board",
+      menu_board = {
          legacy_id = 646,
          image = 641,
          value = 1800,
@@ -22251,8 +21604,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.menu_board",
       },
-      {
-         id = "black_board",
+      black_board = {
          legacy_id = 647,
          image = 642,
          value = 5000,
@@ -22285,8 +21637,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.black_board",
       },
-      {
-         id = "sofa",
+      sofa = {
          legacy_id = 648,
          image = 643,
          value = 2500,
@@ -22320,8 +21671,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.sofa",
       },
-      {
-         id = "flowerbed",
+      flowerbed = {
          legacy_id = 649,
          image = 644,
          value = 1500,
@@ -22355,8 +21705,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.flowerbed",
       },
-      {
-         id = "toilet",
+      toilet = {
          legacy_id = 650,
          image = 645,
          value = 1000,
@@ -22390,8 +21739,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.toilet",
       },
-      {
-         id = "craft_cupboard",
+      craft_cupboard = {
          legacy_id = 651,
          image = 646,
          value = 4800,
@@ -22424,8 +21772,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.craft_cupboard",
       },
-      {
-         id = "sink",
+      sink = {
          legacy_id = 652,
          image = 647,
          value = 3500,
@@ -22458,8 +21805,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.sink",
       },
-      {
-         id = "junk",
+      junk = {
          legacy_id = 653,
          image = 648,
          value = 600,
@@ -22492,8 +21838,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.junk",
       },
-      {
-         id = "double_bed",
+      double_bed = {
          legacy_id = 654,
          image = 261,
          value = 7500,
@@ -22527,8 +21872,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.double_bed",
       },
-      {
-         id = "hero_cheese",
+      hero_cheese = {
          legacy_id = 655,
          image = 168,
          value = 100000,
@@ -22562,8 +21906,7 @@ data:add_multi(
          color = "blue",
          locale_key_prefix = "core.item.hero_cheese",
       },
-      {
-         id = "eastern_lamp",
+      eastern_lamp = {
          legacy_id = 656,
          image = 650,
          value = 3000,
@@ -22596,8 +21939,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.eastern_lamp",
       },
-      {
-         id = "eastern_window",
+      eastern_window = {
          legacy_id = 657,
          image = 651,
          value = 3500,
@@ -22630,8 +21972,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.eastern_window",
       },
-      {
-         id = "chochin",
+      chochin = {
          legacy_id = 658,
          image = 652,
          value = 2500,
@@ -22664,8 +22005,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.chochin",
       },
-      {
-         id = "partition",
+      partition = {
          legacy_id = 659,
          image = 653,
          value = 1000,
@@ -22699,8 +22039,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.partition",
       },
-      {
-         id = "spellbook_of_darkness_arrow",
+      spellbook_of_darkness_arrow = {
          legacy_id = 660,
          image = 429,
          value = 3500,
@@ -22734,8 +22073,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_darkness_arrow",
       },
-      {
-         id = "dal_i_thalion",
+      dal_i_thalion = {
          legacy_id = 661,
          image = 459,
          value = 25000,
@@ -22769,8 +22107,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.dal_i_thalion",
       },
-      {
-         id = "magic_fruit",
+      magic_fruit = {
          legacy_id = 662,
          image = 189,
          value = 100000,
@@ -22804,8 +22141,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.magic_fruit",
       },
-      {
-         id = "monster_heart",
+      monster_heart = {
          legacy_id = 663,
          image = 654,
          value = 25000,
@@ -22838,8 +22174,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.monster_heart",
       },
-      {
-         id = "speed_ring",
+      speed_ring = {
          legacy_id = 664,
          image = 489,
          value = 50000,
@@ -22872,8 +22207,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.speed_ring",
       },
-      {
-         id = "statue_of_opatos",
+      statue_of_opatos = {
          legacy_id = 665,
          image = 680,
          value = 100000,
@@ -22906,8 +22240,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.statue_of_opatos",
       },
-      {
-         id = "statue_of_lulwy",
+      statue_of_lulwy = {
          legacy_id = 666,
          image = 692,
          value = 100000,
@@ -22940,8 +22273,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.statue_of_lulwy",
       },
-      {
-         id = "sisters_love_fueled_lunch",
+      sisters_love_fueled_lunch = {
          legacy_id = 667,
          image = 391,
          value = 900,
@@ -22974,8 +22306,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.sisters_love_fueled_lunch",
       },
-      {
-         id = "book_of_rachel",
+      book_of_rachel = {
          legacy_id = 668,
          image = 333,
          value = 4000,
@@ -23008,8 +22339,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.book_of_rachel",
       },
-      {
-         id = "cargo_art",
+      cargo_art = {
          legacy_id = 669,
          image = 92,
          value = 3800,
@@ -23042,8 +22372,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_art",
       },
-      {
-         id = "cargo_canvas",
+      cargo_canvas = {
          legacy_id = 670,
          image = 132,
          value = 750,
@@ -23076,8 +22405,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.cargo_canvas",
       },
-      {
-         id = "nuclear_bomb",
+      nuclear_bomb = {
          legacy_id = 671,
          image = 632,
          value = 10000,
@@ -23110,8 +22438,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.nuclear_bomb",
       },
-      {
-         id = "secret_treasure",
+      secret_treasure = {
          legacy_id = 672,
          image = 656,
          value = 5000,
@@ -23144,8 +22471,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.secret_treasure",
       },
-      {
-         id = "wind_bow",
+      wind_bow = {
          legacy_id = 673,
          image = 404,
          value = 35000,
@@ -23179,8 +22505,7 @@ data:add_multi(
          color = "light_blue",
          locale_key_prefix = "core.item.wind_bow",
       },
-      {
-         id = "winchester_premium",
+      winchester_premium = {
          legacy_id = 674,
          image = 514,
          value = 35000,
@@ -23214,8 +22539,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.winchester_premium",
       },
-      {
-         id = "kumiromi_scythe",
+      kumiromi_scythe = {
          legacy_id = 675,
          image = 421,
          value = 35000,
@@ -23249,8 +22573,7 @@ data:add_multi(
          color = "green",
          locale_key_prefix = "core.item.kumiromi_scythe",
       },
-      {
-         id = "elemental_staff",
+      elemental_staff = {
          legacy_id = 676,
          image = 425,
          value = 35000,
@@ -23284,8 +22607,7 @@ data:add_multi(
          color = "light_green",
          locale_key_prefix = "core.item.elemental_staff",
       },
-      {
-         id = "holy_lance",
+      holy_lance = {
          legacy_id = 677,
          image = 415,
          value = 35000,
@@ -23318,8 +22640,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.holy_lance",
       },
-      {
-         id = "lucky_dagger",
+      lucky_dagger = {
          legacy_id = 678,
          image = 400,
          value = 35000,
@@ -23353,8 +22674,7 @@ data:add_multi(
          color = "orange",
          locale_key_prefix = "core.item.lucky_dagger",
       },
-      {
-         id = "gaia_hammer",
+      gaia_hammer = {
          legacy_id = 679,
          image = 504,
          value = 35000,
@@ -23388,8 +22708,7 @@ data:add_multi(
          color = "orange",
          locale_key_prefix = "core.item.gaia_hammer",
       },
-      {
-         id = "lulwys_gem_stone_of_god_speed",
+      lulwys_gem_stone_of_god_speed = {
          legacy_id = 680,
          image = 657,
          value = 50000,
@@ -23423,8 +22742,7 @@ data:add_multi(
          color = "blue",
          locale_key_prefix = "core.item.lulwys_gem_stone_of_god_speed",
       },
-      {
-         id = "jures_gem_stone_of_holy_rain",
+      jures_gem_stone_of_holy_rain = {
          legacy_id = 681,
          image = 657,
          value = 50000,
@@ -23458,8 +22776,7 @@ data:add_multi(
          color = "light_blue",
          locale_key_prefix = "core.item.jures_gem_stone_of_holy_rain",
       },
-      {
-         id = "kumiromis_gem_stone_of_rejuvenation",
+      kumiromis_gem_stone_of_rejuvenation = {
          legacy_id = 682,
          image = 657,
          value = 50000,
@@ -23493,8 +22810,7 @@ data:add_multi(
          color = "green",
          locale_key_prefix = "core.item.kumiromis_gem_stone_of_rejuvenation",
       },
-      {
-         id = "gem_stone_of_mani",
+      gem_stone_of_mani = {
          legacy_id = 683,
          image = 657,
          value = 50000,
@@ -23528,8 +22844,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.gem_stone_of_mani",
       },
-      {
-         id = "gene_machine",
+      gene_machine = {
          legacy_id = 684,
          image = 691,
          value = 20000,
@@ -23562,8 +22877,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.gene_machine",
       },
-      {
-         id = "monster_ball",
+      monster_ball = {
          legacy_id = 685,
          image = 658,
          value = 4500,
@@ -23596,8 +22910,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.monster_ball",
       },
-      {
-         id = "statue_of_jure",
+      statue_of_jure = {
          legacy_id = 686,
          image = 690,
          value = 100000,
@@ -23630,8 +22943,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.statue_of_jure",
       },
-      {
-         id = "ancient_book",
+      ancient_book = {
          legacy_id = 687,
          image = 429,
          value = 2000,
@@ -23664,8 +22976,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.ancient_book",
       },
-      {
-         id = "iron_maiden",
+      iron_maiden = {
          legacy_id = 688,
          image = 689,
          value = 7500,
@@ -23698,8 +23009,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.iron_maiden",
       },
-      {
-         id = "guillotine",
+      guillotine = {
          legacy_id = 689,
          image = 688,
          value = 5000,
@@ -23732,8 +23042,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.guillotine",
       },
-      {
-         id = "pan_flute",
+      pan_flute = {
          legacy_id = 690,
          image = 392,
          value = 4500,
@@ -23766,8 +23075,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.pan_flute",
       },
-      {
-         id = "lute",
+      lute = {
          legacy_id = 691,
          image = 393,
          value = 3800,
@@ -23800,8 +23108,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.lute",
       },
-      {
-         id = "harmonica",
+      harmonica = {
          legacy_id = 692,
          image = 394,
          value = 1500,
@@ -23834,8 +23141,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.harmonica",
       },
-      {
-         id = "harp",
+      harp = {
          legacy_id = 693,
          image = 395,
          value = 7500,
@@ -23868,8 +23174,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.harp",
       },
-      {
-         id = "eastern_partition",
+      eastern_partition = {
          legacy_id = 694,
          image = 659,
          value = 2000,
@@ -23902,8 +23207,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.eastern_partition",
       },
-      {
-         id = "axe_of_destruction",
+      axe_of_destruction = {
          legacy_id = 695,
          image = 399,
          value = 50000,
@@ -23937,8 +23241,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.axe_of_destruction",
       },
-      {
-         id = "spellbook_of_magic_ball",
+      spellbook_of_magic_ball = {
          legacy_id = 696,
          image = 429,
          value = 14200,
@@ -23972,8 +23275,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_magic_ball",
       },
-      {
-         id = "spellbook_of_magic_laser",
+      spellbook_of_magic_laser = {
          legacy_id = 697,
          image = 429,
          value = 12500,
@@ -24007,8 +23309,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_magic_laser",
       },
-      {
-         id = "potion_of_salt_solution",
+      potion_of_salt_solution = {
          legacy_id = 698,
          image = 365,
          value = 10,
@@ -24041,8 +23342,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.potion_of_salt_solution",
       },
-      {
-         id = "little_ball",
+      little_ball = {
          legacy_id = 699,
          image = 658,
          value = 10,
@@ -24076,8 +23376,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.little_ball",
       },
-      {
-         id = "town_book",
+      town_book = {
          legacy_id = 700,
          image = 532,
          value = 750,
@@ -24110,8 +23409,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.town_book",
       },
-      {
-         id = "deck",
+      deck = {
          legacy_id = 701,
          image = 533,
          value = 2200,
@@ -24144,8 +23442,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.deck",
       },
-      {
-         id = "rabbits_tail",
+      rabbits_tail = {
          legacy_id = 702,
          image = 301,
          value = 10000,
@@ -24179,8 +23476,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.rabbits_tail",
       },
-      {
-         id = "whistle",
+      whistle = {
          legacy_id = 703,
          image = 534,
          value = 1400,
@@ -24213,8 +23509,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.whistle",
       },
-      {
-         id = "vomit",
+      vomit = {
          legacy_id = 704,
          image = 535,
          value = 400,
@@ -24247,8 +23542,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.vomit",
       },
-      {
-         id = "beggars_pendant",
+      beggars_pendant = {
          legacy_id = 705,
          image = 486,
          value = 50,
@@ -24281,8 +23575,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.beggars_pendant",
       },
-      {
-         id = "potion_of_descent",
+      potion_of_descent = {
          legacy_id = 706,
          image = 354,
          value = 4500,
@@ -24316,8 +23609,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_descent",
       },
-      {
-         id = "stradivarius",
+      stradivarius = {
          legacy_id = 707,
          image = 699,
          value = 35000,
@@ -24350,8 +23642,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.stradivarius",
       },
-      {
-         id = "book_of_resurrection",
+      book_of_resurrection = {
          legacy_id = 708,
          image = 429,
          value = 6000,
@@ -24385,8 +23676,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.book_of_resurrection",
       },
-      {
-         id = "scroll_of_contingency",
+      scroll_of_contingency = {
          legacy_id = 709,
          image = 470,
          value = 3500,
@@ -24420,8 +23710,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_contingency",
       },
-      {
-         id = "spellbook_of_contingency",
+      spellbook_of_contingency = {
          legacy_id = 710,
          image = 429,
          value = 8500,
@@ -24455,8 +23744,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_contingency",
       },
-      {
-         id = "potion_of_evolution",
+      potion_of_evolution = {
          legacy_id = 711,
          image = 354,
          value = 12000,
@@ -24490,8 +23778,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.potion_of_evolution",
       },
-      {
-         id = "deed_of_dungeon",
+      deed_of_dungeon = {
          legacy_id = 712,
          image = 308,
          value = 500000,
@@ -24525,8 +23812,7 @@ data:add_multi(
          color = "blue",
          locale_key_prefix = "core.item.deed_of_dungeon",
       },
-      {
-         id = "shuriken",
+      shuriken = {
          legacy_id = 713,
          image = 536,
          value = 750,
@@ -24559,8 +23845,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.shuriken",
       },
-      {
-         id = "grenade",
+      grenade = {
          legacy_id = 714,
          image = 537,
          value = 550,
@@ -24593,8 +23878,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.grenade",
       },
-      {
-         id = "secret_experience_of_kumiromi",
+      secret_experience_of_kumiromi = {
          legacy_id = 715,
          image = 657,
          value = 6800,
@@ -24628,8 +23912,7 @@ data:add_multi(
          color = "cyan",
          locale_key_prefix = "core.item.secret_experience_of_kumiromi",
       },
-      {
-         id = "vanilla_rock",
+      vanilla_rock = {
          legacy_id = 716,
          image = 424,
          value = 9500,
@@ -24662,8 +23945,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.vanilla_rock",
       },
-      {
-         id = "secret_experience_of_lomias",
+      secret_experience_of_lomias = {
          legacy_id = 717,
          image = 657,
          value = 6800,
@@ -24697,8 +23979,7 @@ data:add_multi(
          color = "cyan",
          locale_key_prefix = "core.item.secret_experience_of_lomias",
       },
-      {
-         id = "shenas_panty",
+      shenas_panty = {
          legacy_id = 718,
          image = 630,
          value = 94000,
@@ -24732,8 +24013,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.shenas_panty",
       },
-      {
-         id = "claymore_unique",
+      claymore_unique = {
          legacy_id = 719,
          image = 698,
          value = 45000,
@@ -24766,8 +24046,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.claymore_unique",
       },
-      {
-         id = "happy_bed",
+      happy_bed = {
          legacy_id = 720,
          image = 261,
          value = 25000,
@@ -24801,8 +24080,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.happy_bed",
       },
-      {
-         id = "statue_of_ehekatl",
+      statue_of_ehekatl = {
          legacy_id = 721,
          image = 687,
          value = 100000,
@@ -24835,8 +24113,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.statue_of_ehekatl",
       },
-      {
-         id = "arbalest",
+      arbalest = {
          legacy_id = 722,
          image = 486,
          value = 9500,
@@ -24870,8 +24147,7 @@ data:add_multi(
          color = "purple",
          locale_key_prefix = "core.item.arbalest",
       },
-      {
-         id = "twin_edge",
+      twin_edge = {
          legacy_id = 723,
          image = 486,
          value = 9500,
@@ -24905,8 +24181,7 @@ data:add_multi(
          color = "orange",
          locale_key_prefix = "core.item.twin_edge",
       },
-      {
-         id = "music_ticket",
+      music_ticket = {
          legacy_id = 724,
          image = 538,
          value = 1,
@@ -24939,8 +24214,7 @@ data:add_multi(
          rftags = { "ore" },
          locale_key_prefix = "core.item.music_ticket",
       },
-      {
-         id = "kill_kill_piano",
+      kill_kill_piano = {
          legacy_id = 725,
          image = 76,
          value = 25000,
@@ -24974,8 +24248,7 @@ data:add_multi(
          color = "orange",
          locale_key_prefix = "core.item.kill_kill_piano",
       },
-      {
-         id = "alud",
+      alud = {
          legacy_id = 726,
          image = 393,
          value = 7500,
@@ -25009,8 +24282,7 @@ data:add_multi(
          color = "yellow",
          locale_key_prefix = "core.item.alud",
       },
-      {
-         id = "shield_of_thorn",
+      shield_of_thorn = {
          legacy_id = 727,
          image = 453,
          value = 17500,
@@ -25044,8 +24316,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.shield_of_thorn",
       },
-      {
-         id = "crimson_plate",
+      crimson_plate = {
          legacy_id = 728,
          image = 474,
          value = 15000,
@@ -25079,8 +24350,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.crimson_plate",
       },
-      {
-         id = "gift",
+      gift = {
          legacy_id = 729,
          image = 391,
          value = 2500,
@@ -25113,8 +24383,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.gift",
       },
-      {
-         id = "token_of_friendship",
+      token_of_friendship = {
          legacy_id = 730,
          image = 538,
          value = 1,
@@ -25147,8 +24416,7 @@ data:add_multi(
          rftags = { "ore" },
          locale_key_prefix = "core.item.token_of_friendship",
       },
-      {
-         id = "spellbook_of_4_dimensional_pocket",
+      spellbook_of_4_dimensional_pocket = {
          legacy_id = 731,
          image = 429,
          value = 8500,
@@ -25182,8 +24450,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_4_dimensional_pocket",
       },
-      {
-         id = "spellbook_of_harvest",
+      spellbook_of_harvest = {
          legacy_id = 732,
          image = 429,
          value = 4000,
@@ -25217,8 +24484,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_harvest",
       },
-      {
-         id = "sand_bag",
+      sand_bag = {
          legacy_id = 733,
          image = 563,
          value = 4800,
@@ -25251,8 +24517,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.sand_bag",
       },
-      {
-         id = "small_gamble_chest",
+      small_gamble_chest = {
          legacy_id = 734,
          image = 220,
          value = 1200,
@@ -25285,8 +24550,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.small_gamble_chest",
       },
-      {
-         id = "scythe",
+      scythe = {
          legacy_id = 735,
          image = 421,
          value = 500,
@@ -25319,8 +24583,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.scythe",
       },
-      {
-         id = "fireproof_liquid",
+      fireproof_liquid = {
          legacy_id = 736,
          image = 354,
          value = 1500,
@@ -25354,8 +24617,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.fireproof_liquid",
       },
-      {
-         id = "scroll_of_name",
+      scroll_of_name = {
          legacy_id = 737,
          image = 470,
          value = 7500,
@@ -25389,8 +24651,7 @@ data:add_multi(
          color = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_name",
       },
-      {
-         id = "fortune_cookie",
+      fortune_cookie = {
          legacy_id = 738,
          image = 539,
          value = 250,
@@ -25423,8 +24684,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.fortune_cookie",
       },
-      {
-         id = "frisias_tail",
+      frisias_tail = {
          legacy_id = 739,
          image = 425,
          value = 30000,
@@ -25457,8 +24717,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.frisias_tail",
       },
-      {
-         id = "unknown_shell",
+      unknown_shell = {
          legacy_id = 740,
          image = 488,
          value = 1200,
@@ -25492,8 +24751,7 @@ data:add_multi(
          color = "blue",
          locale_key_prefix = "core.item.unknown_shell",
       },
-      {
-         id = "hiryu_to",
+      hiryu_to = {
          legacy_id = 741,
          image = 501,
          value = 40000,
@@ -25527,8 +24785,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.hiryu_to",
       },
-      {
-         id = "license_of_the_void_explorer",
+      license_of_the_void_explorer = {
          legacy_id = 742,
          image = 308,
          value = 15000,
@@ -25561,8 +24818,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.license_of_the_void_explorer",
       },
-      {
-         id = "plank_of_carneades",
+      plank_of_carneades = {
          legacy_id = 743,
          image = 657,
          value = 50000,
@@ -25596,8 +24852,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.plank_of_carneades",
       },
-      {
-         id = "schrodingers_cat",
+      schrodingers_cat = {
          legacy_id = 744,
          image = 657,
          value = 50000,
@@ -25631,8 +24886,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.schrodingers_cat",
       },
-      {
-         id = "heart",
+      heart = {
          legacy_id = 745,
          image = 657,
          value = 50000,
@@ -25666,8 +24920,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.heart",
       },
-      {
-         id = "tamers_whip",
+      tamers_whip = {
          legacy_id = 746,
          image = 657,
          value = 50000,
@@ -25701,8 +24954,7 @@ data:add_multi(
          color = "red",
          locale_key_prefix = "core.item.tamers_whip",
       },
-      {
-         id = "book_of_bokonon",
+      book_of_bokonon = {
          legacy_id = 747,
          image = 333,
          value = 4000,
@@ -25735,8 +24987,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.book_of_bokonon",
       },
-      {
-         id = "summoning_crystal",
+      summoning_crystal = {
          legacy_id = 748,
          image = 662,
          value = 4500,
@@ -25769,8 +25020,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.summoning_crystal",
       },
-      {
-         id = "statue_of_creator",
+      statue_of_creator = {
          legacy_id = 749,
          image = 686,
          value = 50,
@@ -25803,8 +25053,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.statue_of_creator",
       },
-      {
-         id = "upstairs",
+      upstairs = {
          legacy_id = 750,
          image = 665,
          value = 150000,
@@ -25837,8 +25086,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.upstairs",
       },
-      {
-         id = "downstairs",
+      downstairs = {
          legacy_id = 751,
          image = 664,
          value = 150000,
@@ -25871,8 +25119,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.downstairs",
       },
-      {
-         id = "new_years_gift",
+      new_years_gift = {
          legacy_id = 752,
          image = 666,
          value = 1650,
@@ -25905,8 +25152,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.new_years_gift",
       },
-      {
-         id = "kotatsu",
+      kotatsu = {
          legacy_id = 753,
          image = 667,
          value = 7800,
@@ -25940,8 +25186,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.kotatsu",
       },
-      {
-         id = "daruma",
+      daruma = {
          legacy_id = 754,
          image = 668,
          value = 3200,
@@ -25974,8 +25219,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.daruma",
       },
-      {
-         id = "kagami_mochi",
+      kagami_mochi = {
          legacy_id = 755,
          image = 669,
          value = 2500,
@@ -26008,8 +25252,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.kagami_mochi",
       },
-      {
-         id = "mochi",
+      mochi = {
          legacy_id = 756,
          image = 670,
          value = 800,
@@ -26042,8 +25285,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.mochi",
       },
-      {
-         id = "five_horned_helm",
+      five_horned_helm = {
          legacy_id = 757,
          image = 480,
          value = 15000,
@@ -26077,8 +25319,7 @@ data:add_multi(
          color = "blue",
          locale_key_prefix = "core.item.five_horned_helm",
       },
-      {
-         id = "mauser_c96_custom",
+      mauser_c96_custom = {
          legacy_id = 758,
          image = 419,
          value = 25000,
@@ -26112,8 +25353,7 @@ data:add_multi(
          color = "grey",
          locale_key_prefix = "core.item.mauser_c96_custom",
       },
-      {
-         id = "lightsabre",
+      lightsabre = {
          legacy_id = 759,
          image = 671,
          value = 4800,
@@ -26147,8 +25387,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.lightsabre",
       },
-      {
-         id = "garoks_hammer",
+      garoks_hammer = {
          legacy_id = 760,
          image = 629,
          value = 75000,
@@ -26181,8 +25420,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.garoks_hammer",
       },
-      {
-         id = "goulds_piano",
+      goulds_piano = {
          legacy_id = 761,
          image = 76,
          value = 35000,
@@ -26216,8 +25454,7 @@ data:add_multi(
          color = "white2",
          locale_key_prefix = "core.item.goulds_piano",
       },
-      {
-         id = "festival_wreath",
+      festival_wreath = {
          legacy_id = 762,
          image = 672,
          value = 760,
@@ -26250,8 +25487,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.festival_wreath",
       },
-      {
-         id = "pedestal",
+      pedestal = {
          legacy_id = 763,
          image = 673,
          value = 3600,
@@ -26285,8 +25521,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.pedestal",
       },
-      {
-         id = "counter",
+      counter = {
          legacy_id = 764,
          image = 674,
          value = 1200,
@@ -26319,8 +25554,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.counter",
       },
-      {
-         id = "red_stall",
+      red_stall = {
          legacy_id = 765,
          image = 685,
          value = 3800,
@@ -26353,8 +25587,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.red_stall",
       },
-      {
-         id = "blue_stall",
+      blue_stall = {
          legacy_id = 766,
          image = 684,
          value = 3800,
@@ -26387,8 +25620,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.blue_stall",
       },
-      {
-         id = "jures_body_pillow",
+      jures_body_pillow = {
          legacy_id = 767,
          image = 675,
          value = 250,
@@ -26421,8 +25653,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.jures_body_pillow",
       },
-      {
-         id = "new_years_decoration",
+      new_years_decoration = {
          legacy_id = 768,
          image = 676,
          value = 400,
@@ -26455,8 +25686,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.new_years_decoration",
       },
-      {
-         id = "miniature_tree",
+      miniature_tree = {
          legacy_id = 769,
          image = 677,
          value = 1650,
@@ -26489,8 +25719,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.miniature_tree",
       },
-      {
-         id = "bottle_of_soda",
+      bottle_of_soda = {
          legacy_id = 770,
          image = 678,
          value = 500,
@@ -26523,8 +25752,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.bottle_of_soda",
       },
-      {
-         id = "blue_capsule_drug",
+      blue_capsule_drug = {
          legacy_id = 771,
          image = 679,
          value = 7500,
@@ -26557,8 +25785,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.blue_capsule_drug",
       },
-      {
-         id = "tomato",
+      tomato = {
          legacy_id = 772,
          image = 540,
          value = 90,
@@ -26591,8 +25818,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.tomato",
       },
-      {
-         id = "large_bookshelf",
+      large_bookshelf = {
          legacy_id = 773,
          image = 541,
          value = 2400,
@@ -26625,8 +25851,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.large_bookshelf",
       },
-      {
-         id = "luxury_cabinet",
+      luxury_cabinet = {
          legacy_id = 774,
          image = 683,
          value = 7200,
@@ -26659,8 +25884,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.luxury_cabinet",
       },
-      {
-         id = "special_steamed_meat_bun",
+      special_steamed_meat_bun = {
          legacy_id = 775,
          image = 542,
          value = 160,
@@ -26693,8 +25917,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.special_steamed_meat_bun",
       },
-      {
-         id = "statue_of_kumiromi",
+      statue_of_kumiromi = {
          legacy_id = 776,
          image = 681,
          value = 100000,
@@ -26727,8 +25950,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.statue_of_kumiromi",
       },
-      {
-         id = "statue_of_mani",
+      statue_of_mani = {
          legacy_id = 777,
          image = 682,
          value = 100000,
@@ -26761,8 +25983,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.statue_of_mani",
       },
-      {
-         id = "luxury_sofa",
+      luxury_sofa = {
          legacy_id = 778,
          image = 543,
          value = 4900,
@@ -26796,8 +26017,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.luxury_sofa",
       },
-      {
-         id = "deer_head",
+      deer_head = {
          legacy_id = 779,
          image = 544,
          value = 16000,
@@ -26830,8 +26050,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.deer_head",
       },
-      {
-         id = "fur_carpet",
+      fur_carpet = {
          legacy_id = 780,
          image = 545,
          value = 23000,
@@ -26864,8 +26083,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.fur_carpet",
       },
-      {
-         id = "kitchen_knife",
+      kitchen_knife = {
          legacy_id = 781,
          image = 546,
          value = 2400,
@@ -26898,8 +26116,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.kitchen_knife",
       },
-      {
-         id = "dish",
+      dish = {
          legacy_id = 782,
          image = 360,
          value = 100,
@@ -26932,8 +26149,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.dish",
       },
-      {
-         id = "recipe",
+      recipe = {
          legacy_id = 783,
          image = 550,
          value = 1000,
@@ -26966,8 +26182,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.recipe",
       },
-      {
-         id = "recipe_holder",
+      recipe_holder = {
          legacy_id = 784,
          image = 549,
          value = 2500,
@@ -27000,8 +26215,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.recipe_holder",
       },
-      {
-         id = "bottle_of_salt",
+      bottle_of_salt = {
          legacy_id = 785,
          image = 553,
          value = 80,
@@ -27034,8 +26248,7 @@ data:add_multi(
          rftags = { "flavor" },
          locale_key_prefix = "core.item.bottle_of_salt",
       },
-      {
-         id = "sack_of_sugar",
+      sack_of_sugar = {
          legacy_id = 786,
          image = 551,
          value = 50,
@@ -27068,8 +26281,7 @@ data:add_multi(
          rftags = { "flavor" },
          locale_key_prefix = "core.item.sack_of_sugar",
       },
-      {
-         id = "puff_puff_bread",
+      puff_puff_bread = {
          legacy_id = 787,
          image = 552,
          value = 350,
@@ -27102,8 +26314,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.puff_puff_bread",
       },
-      {
-         id = "skull_bow",
+      skull_bow = {
          legacy_id = 788,
          image = 402,
          value = 2000,
@@ -27136,8 +26347,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.skull_bow",
       },
-      {
-         id = "pot_for_testing",
+      pot_for_testing = {
          legacy_id = 789,
          image = 554,
          value = 1000,
@@ -27171,8 +26381,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.pot_for_testing",
       },
-      {
-         id = "frying_pan_for_testing",
+      frying_pan_for_testing = {
          legacy_id = 790,
          image = 555,
          value = 1000,
@@ -27206,8 +26415,7 @@ data:add_multi(
          color = "random_furniture",
          locale_key_prefix = "core.item.frying_pan_for_testing",
       },
-      {
-         id = "dragon_slayer",
+      dragon_slayer = {
          legacy_id = 791,
          image = 697,
          value = 72000,
@@ -27240,8 +26448,7 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.dragon_slayer",
       },
-      {
-         id = "putitoro",
+      putitoro = {
          legacy_id = 792,
          image = 695,
          value = 2000,
@@ -27274,4 +26481,5 @@ data:add_multi(
          rftags = {},
          locale_key_prefix = "core.item.putitoro",
       },
-})
+   }
+)

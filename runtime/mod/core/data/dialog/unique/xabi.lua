@@ -7,7 +7,6 @@ local Item = ELONA.require("core.Item")
 local common = require("../common.lua")
 
 return {
-   id = "xabi",
    root = "core.talk.unique.xabi",
    nodes = {
       __start = function()

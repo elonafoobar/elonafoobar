@@ -48,7 +48,6 @@ local function receive_reward()
 end
 
 return {
-   id = "abyss",
    root = "core.talk.unique.abyss",
    nodes = {
       __start = function()

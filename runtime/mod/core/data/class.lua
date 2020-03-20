@@ -1,9 +1,8 @@
-data:define_type("class")
-data:add_multi(
+data:define_prototype("class")
+data:add(
    "core.class",
    {
-      {
-         id = "warrior",
+      warrior = {
          ordering = 10010,
          item_type = 1,
          is_extra = false,
@@ -33,8 +32,7 @@ data:add_multi(
             ["core.shield"] = 5,
          },
       },
-      {
-         id = "thief",
+      thief = {
          ordering = 10020,
          item_type = 7,
          is_extra = false,
@@ -61,8 +59,7 @@ data:add_multi(
             ["core.medium_armor"] = 4,
          },
       },
-      {
-         id = "wizard",
+      wizard = {
          ordering = 10030,
          item_type = 2,
          is_extra = false,
@@ -88,8 +85,7 @@ data:add_multi(
             ["core.casting"] = 5,
          },
       },
-      {
-         id = "farmer",
+      farmer = {
          ordering = 10040,
          item_type = 1,
          is_extra = false,
@@ -115,8 +111,7 @@ data:add_multi(
             ["core.tailoring"] = 5,
          },
       },
-      {
-         id = "predator",
+      predator = {
          ordering = 20010,
          item_type = 0,
          is_extra = true,
@@ -134,8 +129,7 @@ data:add_multi(
             ["core.tactics"] = 4,
          },
       },
-      {
-         id = "archer",
+      archer = {
          ordering = 10050,
          item_type = 3,
          is_extra = false,
@@ -162,8 +156,7 @@ data:add_multi(
             ["core.marksman"] = 3,
          },
       },
-      {
-         id = "warmage",
+      warmage = {
          ordering = 10060,
          item_type = 5,
          is_extra = false,
@@ -189,8 +182,7 @@ data:add_multi(
             ["core.casting"] = 4,
          },
       },
-      {
-         id = "tourist",
+      tourist = {
          ordering = 10070,
          item_type = 0,
          is_extra = false,
@@ -209,8 +201,7 @@ data:add_multi(
             ["core.traveling"] = 3,
          },
       },
-      {
-         id = "pianist",
+      pianist = {
          ordering = 10080,
          item_type = 3,
          is_extra = false,
@@ -235,8 +226,7 @@ data:add_multi(
             ["core.riding"] = 3,
          },
       },
-      {
-         id = "gunner",
+      gunner = {
          ordering = 20020,
          item_type = 4,
          is_extra = true,
@@ -258,8 +248,7 @@ data:add_multi(
             ["core.marksman"] = 3,
          },
       },
-      {
-         id = "priest",
+      priest = {
          ordering = 10090,
          item_type = 6,
          is_extra = false,
@@ -285,8 +274,7 @@ data:add_multi(
             ["core.casting"] = 5,
          },
       },
-      {
-         id = "claymore",
+      claymore = {
          ordering = 10100,
          item_type = 8,
          is_extra = false,
@@ -312,8 +300,7 @@ data:add_multi(
          },
       },
       -- For debug
-      {
-         id = "debugger",
+      debugger = {
          ordering = 0,
          item_type = 1,
          is_extra = true,
@@ -371,4 +358,5 @@ data:add_multi(
             ["core.lock_picking"] = 50,
          },
       },
-})
+   }
+)

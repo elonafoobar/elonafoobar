@@ -8,7 +8,6 @@ local table = table
 local common = require("../common.lua")
 
 return {
-   id = "marks",
    root = "core.talk.unique.marks",
    nodes = {
       __start = function()

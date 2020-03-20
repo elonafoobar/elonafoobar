@@ -1,9 +1,8 @@
-data:define_type("portrait")
-data:add_multi(
+data:define_prototype("portrait")
+data:add(
    "core.portrait",
    {
-      {
-         id = "man1",
+      man1 = {
          source = {
             x = 0,
             y = 0,
@@ -11,8 +10,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man2",
+      man2 = {
          source = {
             x = 48,
             y = 0,
@@ -20,8 +18,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man3",
+      man3 = {
          source = {
             x = 96,
             y = 0,
@@ -29,8 +26,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man4",
+      man4 = {
          source = {
             x = 144,
             y = 0,
@@ -38,8 +34,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man5",
+      man5 = {
          source = {
             x = 192,
             y = 0,
@@ -47,8 +42,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man6",
+      man6 = {
          source = {
             x = 240,
             y = 0,
@@ -56,8 +50,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man7",
+      man7 = {
          source = {
             x = 288,
             y = 0,
@@ -65,8 +58,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man8",
+      man8 = {
          source = {
             x = 336,
             y = 0,
@@ -74,8 +66,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man9",
+      man9 = {
          source = {
             x = 384,
             y = 0,
@@ -83,8 +74,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man10",
+      man10 = {
          source = {
             x = 432,
             y = 0,
@@ -92,8 +82,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man11",
+      man11 = {
          source = {
             x = 480,
             y = 0,
@@ -101,8 +90,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man12",
+      man12 = {
          source = {
             x = 528,
             y = 0,
@@ -110,8 +98,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man13",
+      man13 = {
          source = {
             x = 576,
             y = 0,
@@ -119,8 +106,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man14",
+      man14 = {
          source = {
             x = 624,
             y = 0,
@@ -128,8 +114,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man15",
+      man15 = {
          source = {
             x = 672,
             y = 0,
@@ -137,8 +122,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man16",
+      man16 = {
          source = {
             x = 720,
             y = 0,
@@ -146,8 +130,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man17",
+      man17 = {
          source = {
             x = 0,
             y = 72,
@@ -155,8 +138,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man18",
+      man18 = {
          source = {
             x = 48,
             y = 72,
@@ -164,8 +146,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man19",
+      man19 = {
          source = {
             x = 96,
             y = 72,
@@ -173,8 +154,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man20",
+      man20 = {
          source = {
             x = 144,
             y = 72,
@@ -182,8 +162,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man21",
+      man21 = {
          source = {
             x = 192,
             y = 72,
@@ -191,8 +170,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man22",
+      man22 = {
          source = {
             x = 240,
             y = 72,
@@ -200,8 +178,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man23",
+      man23 = {
          source = {
             x = 288,
             y = 72,
@@ -209,8 +186,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man24",
+      man24 = {
          source = {
             x = 336,
             y = 72,
@@ -218,8 +194,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man25",
+      man25 = {
          source = {
             x = 384,
             y = 72,
@@ -227,8 +202,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man26",
+      man26 = {
          source = {
             x = 432,
             y = 72,
@@ -236,8 +210,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man27",
+      man27 = {
          source = {
             x = 480,
             y = 72,
@@ -245,8 +218,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man28",
+      man28 = {
          source = {
             x = 528,
             y = 72,
@@ -254,8 +226,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man29",
+      man29 = {
          source = {
             x = 576,
             y = 72,
@@ -263,8 +234,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man30",
+      man30 = {
          source = {
             x = 624,
             y = 72,
@@ -272,8 +242,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man31",
+      man31 = {
          source = {
             x = 672,
             y = 72,
@@ -281,8 +250,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man32",
+      man32 = {
          source = {
             x = 720,
             y = 72,
@@ -290,8 +258,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man33",
+      man33 = {
          source = {
             x = 0,
             y = 144,
@@ -299,8 +266,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "gilbert",
+      gilbert = {
          source = {
             x = 48,
             y = 144,
@@ -308,8 +274,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man34",
+      man34 = {
          source = {
             x = 96,
             y = 144,
@@ -317,8 +282,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man35",
+      man35 = {
          source = {
             x = 144,
             y = 144,
@@ -326,8 +290,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "arnord",
+      arnord = {
          source = {
             x = 192,
             y = 144,
@@ -335,8 +298,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man36",
+      man36 = {
          source = {
             x = 240,
             y = 144,
@@ -344,8 +306,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "balzak",
+      balzak = {
          source = {
             x = 288,
             y = 144,
@@ -353,8 +314,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "conery",
+      conery = {
          source = {
             x = 336,
             y = 144,
@@ -362,8 +322,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man39",
+      man39 = {
          source = {
             x = 384,
             y = 144,
@@ -371,8 +330,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man40",
+      man40 = {
          source = {
             x = 432,
             y = 144,
@@ -380,8 +338,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man41",
+      man41 = {
          source = {
             x = 480,
             y = 144,
@@ -389,8 +346,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man42",
+      man42 = {
          source = {
             x = 528,
             y = 144,
@@ -398,8 +354,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man43",
+      man43 = {
          source = {
             x = 576,
             y = 144,
@@ -407,8 +362,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man44",
+      man44 = {
          source = {
             x = 624,
             y = 144,
@@ -416,8 +370,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "barius",
+      barius = {
          source = {
             x = 0,
             y = 216,
@@ -425,8 +378,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "loyter",
+      loyter = {
          source = {
             x = 48,
             y = 216,
@@ -434,8 +386,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "bethel",
+      bethel = {
          source = {
             x = 96,
             y = 216,
@@ -443,8 +394,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "orphe",
+      orphe = {
          source = {
             x = 144,
             y = 216,
@@ -452,8 +402,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "norne",
+      norne = {
          source = {
             x = 192,
             y = 216,
@@ -461,8 +410,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "zeome",
+      zeome = {
          source = {
             x = 240,
             y = 216,
@@ -470,8 +418,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "saimore",
+      saimore = {
          source = {
             x = 288,
             y = 216,
@@ -479,8 +426,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "xabi",
+      xabi = {
          source = {
             x = 336,
             y = 216,
@@ -488,8 +434,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "karam",
+      karam = {
          source = {
             x = 384,
             y = 216,
@@ -497,8 +442,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "lomias",
+      lomias = {
          source = {
             x = 432,
             y = 216,
@@ -506,8 +450,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man45",
+      man45 = {
          source = {
             x = 480,
             y = 216,
@@ -515,8 +458,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "sevilis",
+      sevilis = {
          source = {
             x = 528,
             y = 216,
@@ -524,8 +466,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man46",
+      man46 = {
          source = {
             x = 576,
             y = 216,
@@ -533,8 +474,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man47",
+      man47 = {
          source = {
             x = 624,
             y = 216,
@@ -542,8 +482,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "man48",
+      man48 = {
          source = {
             x = 672,
             y = 216,
@@ -551,8 +490,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman1",
+      woman1 = {
          source = {
             x = 0,
             y = 288,
@@ -560,8 +498,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman2",
+      woman2 = {
          source = {
             x = 48,
             y = 288,
@@ -569,8 +506,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman3",
+      woman3 = {
          source = {
             x = 96,
             y = 288,
@@ -578,8 +514,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman4",
+      woman4 = {
          source = {
             x = 144,
             y = 288,
@@ -587,8 +522,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman5",
+      woman5 = {
          source = {
             x = 192,
             y = 288,
@@ -596,8 +530,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman6",
+      woman6 = {
          source = {
             x = 240,
             y = 288,
@@ -605,8 +538,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman7",
+      woman7 = {
          source = {
             x = 288,
             y = 288,
@@ -614,8 +546,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman8",
+      woman8 = {
          source = {
             x = 336,
             y = 288,
@@ -623,8 +554,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman9",
+      woman9 = {
          source = {
             x = 384,
             y = 288,
@@ -632,8 +562,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman10",
+      woman10 = {
          source = {
             x = 432,
             y = 288,
@@ -641,8 +570,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman11",
+      woman11 = {
          source = {
             x = 480,
             y = 288,
@@ -650,8 +578,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman12",
+      woman12 = {
          source = {
             x = 528,
             y = 288,
@@ -659,8 +586,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman13",
+      woman13 = {
          source = {
             x = 576,
             y = 288,
@@ -668,8 +594,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman14",
+      woman14 = {
          source = {
             x = 624,
             y = 288,
@@ -677,8 +602,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman15",
+      woman15 = {
          source = {
             x = 672,
             y = 288,
@@ -686,8 +610,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman16",
+      woman16 = {
          source = {
             x = 720,
             y = 288,
@@ -695,8 +618,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman17",
+      woman17 = {
          source = {
             x = 0,
             y = 360,
@@ -704,8 +626,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman18",
+      woman18 = {
          source = {
             x = 48,
             y = 360,
@@ -713,8 +634,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman19",
+      woman19 = {
          source = {
             x = 96,
             y = 360,
@@ -722,8 +642,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman20",
+      woman20 = {
          source = {
             x = 144,
             y = 360,
@@ -731,8 +650,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman21",
+      woman21 = {
          source = {
             x = 192,
             y = 360,
@@ -740,8 +658,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman22",
+      woman22 = {
          source = {
             x = 240,
             y = 360,
@@ -749,8 +666,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman23",
+      woman23 = {
          source = {
             x = 288,
             y = 360,
@@ -758,8 +674,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman24",
+      woman24 = {
          source = {
             x = 336,
             y = 360,
@@ -767,8 +682,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman25",
+      woman25 = {
          source = {
             x = 384,
             y = 360,
@@ -776,8 +690,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman26",
+      woman26 = {
          source = {
             x = 432,
             y = 360,
@@ -785,8 +698,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman27",
+      woman27 = {
          source = {
             x = 480,
             y = 360,
@@ -794,8 +706,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman28",
+      woman28 = {
          source = {
             x = 528,
             y = 360,
@@ -803,8 +714,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman29",
+      woman29 = {
          source = {
             x = 576,
             y = 360,
@@ -812,8 +722,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman30",
+      woman30 = {
          source = {
             x = 624,
             y = 360,
@@ -821,8 +730,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman31",
+      woman31 = {
          source = {
             x = 672,
             y = 360,
@@ -830,8 +738,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman32",
+      woman32 = {
          source = {
             x = 720,
             y = 360,
@@ -839,8 +746,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman34",
+      woman34 = {
          source = {
             x = 0,
             y = 432,
@@ -848,8 +754,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman35",
+      woman35 = {
          source = {
             x = 48,
             y = 432,
@@ -857,8 +762,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "mia",
+      mia = {
          source = {
             x = 96,
             y = 432,
@@ -866,8 +770,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman36",
+      woman36 = {
          source = {
             x = 144,
             y = 432,
@@ -875,8 +778,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman37",
+      woman37 = {
          source = {
             x = 192,
             y = 432,
@@ -884,8 +786,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman38",
+      woman38 = {
          source = {
             x = 240,
             y = 432,
@@ -893,8 +794,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman39",
+      woman39 = {
          source = {
             x = 288,
             y = 432,
@@ -902,8 +802,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman40",
+      woman40 = {
          source = {
             x = 336,
             y = 432,
@@ -911,8 +810,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman41",
+      woman41 = {
          source = {
             x = 384,
             y = 432,
@@ -920,8 +818,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman42",
+      woman42 = {
          source = {
             x = 432,
             y = 432,
@@ -929,8 +826,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman43",
+      woman43 = {
          source = {
             x = 480,
             y = 432,
@@ -938,8 +834,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman44",
+      woman44 = {
          source = {
             x = 528,
             y = 432,
@@ -947,8 +842,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman45",
+      woman45 = {
          source = {
             x = 576,
             y = 432,
@@ -956,8 +850,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman46",
+      woman46 = {
          source = {
             x = 624,
             y = 432,
@@ -965,8 +858,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "larnneire",
+      larnneire = {
          source = {
             x = 0,
             y = 504,
@@ -974,8 +866,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "shena",
+      shena = {
          source = {
             x = 48,
             y = 504,
@@ -983,8 +874,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "miches",
+      miches = {
          source = {
             x = 96,
             y = 504,
@@ -992,8 +882,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "isca",
+      isca = {
          source = {
             x = 144,
             y = 504,
@@ -1001,8 +890,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman47",
+      woman47 = {
          source = {
             x = 192,
             y = 504,
@@ -1010,8 +898,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman48",
+      woman48 = {
          source = {
             x = 240,
             y = 504,
@@ -1019,8 +906,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "stersha",
+      stersha = {
          source = {
             x = 288,
             y = 504,
@@ -1028,8 +914,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "erystia",
+      erystia = {
          source = {
             x = 336,
             y = 504,
@@ -1037,8 +922,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "liana",
+      liana = {
          source = {
             x = 384,
             y = 504,
@@ -1046,8 +930,7 @@ data:add_multi(
             height = 72,
          }
       },
-      {
-         id = "woman49",
+      woman49 = {
          source = {
             x = 432,
             y = 504,
@@ -1055,4 +938,5 @@ data:add_multi(
             height = 72,
          }
       },
-})
+   }
+)

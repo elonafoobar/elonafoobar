@@ -1,9 +1,8 @@
-data:define_type("ability")
-data:add_multi(
+data:define_prototype("ability")
+data:add(
    "core.ability",
    {
-      {
-         id = "attribute_life",
+      attribute_life = {
          legacy_id = 2,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -11,8 +10,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "attribute_mana",
+      attribute_mana = {
          legacy_id = 3,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -20,8 +18,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "attribute_strength",
+      attribute_strength = {
          legacy_id = 10,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -29,8 +26,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "attribute_constitution",
+      attribute_constitution = {
          legacy_id = 11,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -38,8 +34,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "attribute_dexterity",
+      attribute_dexterity = {
          legacy_id = 12,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -47,8 +42,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "attribute_perception",
+      attribute_perception = {
          legacy_id = 13,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -56,8 +50,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "attribute_learning",
+      attribute_learning = {
          legacy_id = 14,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -65,8 +58,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "attribute_will",
+      attribute_will = {
          legacy_id = 15,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -74,8 +66,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "attribute_magic",
+      attribute_magic = {
          legacy_id = 16,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -83,8 +74,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "attribute_charisma",
+      attribute_charisma = {
          legacy_id = 17,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -92,8 +82,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "attribute_speed",
+      attribute_speed = {
          legacy_id = 18,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -101,8 +90,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "attribute_luck",
+      attribute_luck = {
          legacy_id = 19,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -110,8 +98,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "long_sword",
+      long_sword = {
          legacy_id = 100,
          related_basic_attribute = 10,
          ability_type = 0,
@@ -119,8 +106,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "short_sword",
+      short_sword = {
          legacy_id = 101,
          related_basic_attribute = 12,
          ability_type = 0,
@@ -128,8 +114,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "axe",
+      axe = {
          legacy_id = 102,
          related_basic_attribute = 10,
          ability_type = 0,
@@ -137,8 +122,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "blunt",
+      blunt = {
          legacy_id = 103,
          related_basic_attribute = 11,
          ability_type = 0,
@@ -146,8 +130,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "polearm",
+      polearm = {
          legacy_id = 104,
          related_basic_attribute = 11,
          ability_type = 0,
@@ -155,8 +138,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "stave",
+      stave = {
          legacy_id = 105,
          related_basic_attribute = 11,
          ability_type = 0,
@@ -164,8 +146,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "scythe",
+      scythe = {
          legacy_id = 107,
          related_basic_attribute = 10,
          ability_type = 0,
@@ -173,8 +154,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "bow",
+      bow = {
          legacy_id = 108,
          related_basic_attribute = 12,
          ability_type = 0,
@@ -182,8 +162,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "crossbow",
+      crossbow = {
          legacy_id = 109,
          related_basic_attribute = 12,
          ability_type = 0,
@@ -191,8 +170,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "firearm",
+      firearm = {
          legacy_id = 110,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -200,8 +178,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "throwing",
+      throwing = {
          legacy_id = 111,
          related_basic_attribute = 12,
          ability_type = 0,
@@ -209,8 +186,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "martial_arts",
+      martial_arts = {
          legacy_id = 106,
          related_basic_attribute = 10,
          ability_type = 0,
@@ -218,8 +194,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "shield",
+      shield = {
          legacy_id = 168,
          related_basic_attribute = 11,
          ability_type = 0,
@@ -227,8 +202,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "evasion",
+      evasion = {
          legacy_id = 173,
          related_basic_attribute = 12,
          ability_type = 0,
@@ -236,8 +210,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "dual_wield",
+      dual_wield = {
          legacy_id = 166,
          related_basic_attribute = 12,
          ability_type = 0,
@@ -245,8 +218,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "two_hand",
+      two_hand = {
          legacy_id = 167,
          related_basic_attribute = 10,
          ability_type = 0,
@@ -254,8 +226,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "element_fire",
+      element_fire = {
          legacy_id = 50,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -263,8 +234,7 @@ data:add_multi(
          range = 1,
          difficulty = 0,
       },
-      {
-         id = "element_cold",
+      element_cold = {
          legacy_id = 51,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -272,8 +242,7 @@ data:add_multi(
          range = 1,
          difficulty = 0,
       },
-      {
-         id = "element_lightning",
+      element_lightning = {
          legacy_id = 52,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -281,8 +250,7 @@ data:add_multi(
          range = 1,
          difficulty = 0,
       },
-      {
-         id = "element_darkness",
+      element_darkness = {
          legacy_id = 53,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -290,8 +258,7 @@ data:add_multi(
          range = 2,
          difficulty = 0,
       },
-      {
-         id = "element_mind",
+      element_mind = {
          legacy_id = 54,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -299,8 +266,7 @@ data:add_multi(
          range = 2,
          difficulty = 0,
       },
-      {
-         id = "element_nether",
+      element_nether = {
          legacy_id = 56,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -308,8 +274,7 @@ data:add_multi(
          range = 4,
          difficulty = 0,
       },
-      {
-         id = "element_poison",
+      element_poison = {
          legacy_id = 55,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -317,8 +282,7 @@ data:add_multi(
          range = 3,
          difficulty = 0,
       },
-      {
-         id = "element_sound",
+      element_sound = {
          legacy_id = 57,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -326,8 +290,7 @@ data:add_multi(
          range = 3,
          difficulty = 0,
       },
-      {
-         id = "element_chaos",
+      element_chaos = {
          legacy_id = 59,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -335,8 +298,7 @@ data:add_multi(
          range = 4,
          difficulty = 0,
       },
-      {
-         id = "element_nerve",
+      element_nerve = {
          legacy_id = 58,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -344,8 +306,7 @@ data:add_multi(
          range = 3,
          difficulty = 0,
       },
-      {
-         id = "element_magic",
+      element_magic = {
          legacy_id = 60,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -353,8 +314,7 @@ data:add_multi(
          range = 5,
          difficulty = 0,
       },
-      {
-         id = "element_cut",
+      element_cut = {
          legacy_id = 61,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -362,8 +322,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "weight_lifting",
+      weight_lifting = {
          legacy_id = 153,
          related_basic_attribute = 10,
          ability_type = 0,
@@ -371,8 +330,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "tactics",
+      tactics = {
          legacy_id = 152,
          related_basic_attribute = 10,
          ability_type = 0,
@@ -380,8 +338,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "marksman",
+      marksman = {
          legacy_id = 189,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -389,8 +346,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "healing",
+      healing = {
          legacy_id = 154,
          related_basic_attribute = 11,
          ability_type = 0,
@@ -398,8 +354,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "mining",
+      mining = {
          legacy_id = 163,
          related_basic_attribute = 11,
          ability_type = 0,
@@ -407,8 +362,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "carpentry",
+      carpentry = {
          legacy_id = 176,
          related_basic_attribute = 11,
          ability_type = 0,
@@ -416,8 +370,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "heavy_armor",
+      heavy_armor = {
          legacy_id = 169,
          related_basic_attribute = 11,
          ability_type = 0,
@@ -425,8 +378,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "medium_armor",
+      medium_armor = {
          legacy_id = 170,
          related_basic_attribute = 11,
          ability_type = 0,
@@ -434,8 +386,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "light_armor",
+      light_armor = {
          legacy_id = 171,
          related_basic_attribute = 12,
          ability_type = 0,
@@ -443,8 +394,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "lock_picking",
+      lock_picking = {
          legacy_id = 158,
          related_basic_attribute = 12,
          ability_type = 0,
@@ -452,8 +402,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "disarm_trap",
+      disarm_trap = {
          legacy_id = 175,
          related_basic_attribute = 12,
          ability_type = 0,
@@ -461,8 +410,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "tailoring",
+      tailoring = {
          legacy_id = 177,
          related_basic_attribute = 12,
          ability_type = 0,
@@ -470,8 +418,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "jeweler",
+      jeweler = {
          legacy_id = 179,
          related_basic_attribute = 12,
          ability_type = 0,
@@ -479,8 +426,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "pickpocket",
+      pickpocket = {
          legacy_id = 300,
          related_basic_attribute = 12,
          ability_type = 0,
@@ -488,8 +434,7 @@ data:add_multi(
          range = 8000,
          difficulty = 0,
       },
-      {
-         id = "stealth",
+      stealth = {
          legacy_id = 157,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -497,8 +442,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "detection",
+      detection = {
          legacy_id = 159,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -506,8 +450,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "sense_quality",
+      sense_quality = {
          legacy_id = 162,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -515,8 +458,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "eye_of_mind",
+      eye_of_mind = {
          legacy_id = 186,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -524,8 +466,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "fishing",
+      fishing = {
          legacy_id = 185,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -533,8 +474,7 @@ data:add_multi(
          range = 10000,
          difficulty = 0,
       },
-      {
-         id = "greater_evasion",
+      greater_evasion = {
          legacy_id = 187,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -542,8 +482,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "anatomy",
+      anatomy = {
          legacy_id = 161,
          related_basic_attribute = 14,
          ability_type = 0,
@@ -551,8 +490,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "literacy",
+      literacy = {
          legacy_id = 150,
          related_basic_attribute = 14,
          ability_type = 0,
@@ -560,8 +498,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "memorization",
+      memorization = {
          legacy_id = 165,
          related_basic_attribute = 14,
          ability_type = 0,
@@ -569,8 +506,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "alchemy",
+      alchemy = {
          legacy_id = 178,
          related_basic_attribute = 14,
          ability_type = 0,
@@ -578,8 +514,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "gardening",
+      gardening = {
          legacy_id = 180,
          related_basic_attribute = 14,
          ability_type = 0,
@@ -587,8 +522,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "gene_engineer",
+      gene_engineer = {
          legacy_id = 151,
          related_basic_attribute = 14,
          ability_type = 0,
@@ -596,8 +530,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "cooking",
+      cooking = {
          legacy_id = 184,
          related_basic_attribute = 14,
          ability_type = 0,
@@ -605,8 +538,7 @@ data:add_multi(
          range = 10000,
          difficulty = 0,
       },
-      {
-         id = "meditation",
+      meditation = {
          legacy_id = 155,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -614,8 +546,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "magic_device",
+      magic_device = {
          legacy_id = 174,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -623,8 +554,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "casting",
+      casting = {
          legacy_id = 172,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -632,8 +562,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "control_magic",
+      control_magic = {
          legacy_id = 188,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -641,8 +570,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "magic_capacity",
+      magic_capacity = {
          legacy_id = 164,
          related_basic_attribute = 15,
          ability_type = 0,
@@ -650,8 +578,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "faith",
+      faith = {
          legacy_id = 181,
          related_basic_attribute = 15,
          ability_type = 0,
@@ -659,8 +586,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "traveling",
+      traveling = {
          legacy_id = 182,
          related_basic_attribute = 15,
          ability_type = 0,
@@ -668,8 +594,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "riding",
+      riding = {
          legacy_id = 301,
          related_basic_attribute = 15,
          ability_type = 0,
@@ -677,8 +602,7 @@ data:add_multi(
          range = 8000,
          difficulty = 0,
       },
-      {
-         id = "negotiation",
+      negotiation = {
          legacy_id = 156,
          related_basic_attribute = 17,
          ability_type = 0,
@@ -686,8 +610,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "investing",
+      investing = {
          legacy_id = 160,
          related_basic_attribute = 17,
          ability_type = 0,
@@ -695,8 +618,7 @@ data:add_multi(
          range = 0,
          difficulty = 0,
       },
-      {
-         id = "performer",
+      performer = {
          legacy_id = 183,
          related_basic_attribute = 17,
          ability_type = 0,
@@ -704,8 +626,7 @@ data:add_multi(
          range = 10000,
          difficulty = 0,
       },
-      {
-         id = "heal_light",
+      heal_light = {
          legacy_id = 400,
          related_basic_attribute = 15,
          ability_type = 4,
@@ -713,8 +634,7 @@ data:add_multi(
          range = 3000,
          difficulty = 80,
       },
-      {
-         id = "heal_critical",
+      heal_critical = {
          legacy_id = 401,
          related_basic_attribute = 15,
          ability_type = 4,
@@ -722,8 +642,7 @@ data:add_multi(
          range = 3000,
          difficulty = 350,
       },
-      {
-         id = "cure_of_eris",
+      cure_of_eris = {
          legacy_id = 402,
          related_basic_attribute = 15,
          ability_type = 4,
@@ -731,8 +650,7 @@ data:add_multi(
          range = 3000,
          difficulty = 800,
       },
-      {
-         id = "cure_of_jure",
+      cure_of_jure = {
          legacy_id = 403,
          related_basic_attribute = 15,
          ability_type = 4,
@@ -740,8 +658,7 @@ data:add_multi(
          range = 3000,
          difficulty = 1300,
       },
-      {
-         id = "healing_touch",
+      healing_touch = {
          legacy_id = 405,
          related_basic_attribute = 15,
          ability_type = 4,
@@ -749,8 +666,7 @@ data:add_multi(
          range = 8000,
          difficulty = 400,
       },
-      {
-         id = "holy_light",
+      holy_light = {
          legacy_id = 406,
          related_basic_attribute = 15,
          ability_type = 0,
@@ -758,8 +674,7 @@ data:add_multi(
          range = 3000,
          difficulty = 400,
       },
-      {
-         id = "vanquish_hex",
+      vanquish_hex = {
          legacy_id = 407,
          related_basic_attribute = 15,
          ability_type = 0,
@@ -767,8 +682,7 @@ data:add_multi(
          range = 3000,
          difficulty = 850,
       },
-      {
-         id = "teleport_other",
+      teleport_other = {
          legacy_id = 409,
          related_basic_attribute = 16,
          ability_type = 5,
@@ -776,8 +690,7 @@ data:add_multi(
          range = 5000,
          difficulty = 200,
       },
-      {
-         id = "teleport",
+      teleport = {
          legacy_id = 408,
          related_basic_attribute = 16,
          ability_type = 5,
@@ -785,8 +698,7 @@ data:add_multi(
          range = 10000,
          difficulty = 400,
       },
-      {
-         id = "short_teleport",
+      short_teleport = {
          legacy_id = 410,
          related_basic_attribute = 16,
          ability_type = 5,
@@ -794,8 +706,7 @@ data:add_multi(
          range = 10000,
          difficulty = 120,
       },
-      {
-         id = "identify",
+      identify = {
          legacy_id = 411,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -803,8 +714,7 @@ data:add_multi(
          range = 10000,
          difficulty = 800,
       },
-      {
-         id = "uncurse",
+      uncurse = {
          legacy_id = 412,
          related_basic_attribute = 15,
          ability_type = 0,
@@ -812,8 +722,7 @@ data:add_multi(
          range = 3000,
          difficulty = 700,
       },
-      {
-         id = "oracle",
+      oracle = {
          legacy_id = 413,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -821,8 +730,7 @@ data:add_multi(
          range = 3000,
          difficulty = 1500,
       },
-      {
-         id = "magic_dart",
+      magic_dart = {
          legacy_id = 414,
          related_basic_attribute = 16,
          ability_type = 2,
@@ -830,8 +738,7 @@ data:add_multi(
          range = 2006,
          difficulty = 110,
       },
-      {
-         id = "nether_arrow",
+      nether_arrow = {
          legacy_id = 415,
          related_basic_attribute = 16,
          ability_type = 2,
@@ -839,8 +746,7 @@ data:add_multi(
          range = 2006,
          difficulty = 400,
       },
-      {
-         id = "chaos_eye",
+      chaos_eye = {
          legacy_id = 417,
          related_basic_attribute = 16,
          ability_type = 2,
@@ -848,8 +754,7 @@ data:add_multi(
          range = 2006,
          difficulty = 650,
       },
-      {
-         id = "nerve_arrow",
+      nerve_arrow = {
          legacy_id = 416,
          related_basic_attribute = 16,
          ability_type = 2,
@@ -857,8 +762,7 @@ data:add_multi(
          range = 2006,
          difficulty = 400,
       },
-      {
-         id = "dark_eye",
+      dark_eye = {
          legacy_id = 418,
          related_basic_attribute = 16,
          ability_type = 2,
@@ -866,8 +770,7 @@ data:add_multi(
          range = 2006,
          difficulty = 200,
       },
-      {
-         id = "crystal_spear",
+      crystal_spear = {
          legacy_id = 459,
          related_basic_attribute = 16,
          ability_type = 2,
@@ -875,8 +778,7 @@ data:add_multi(
          range = 2006,
          difficulty = 950,
       },
-      {
-         id = "ice_bolt",
+      ice_bolt = {
          legacy_id = 419,
          related_basic_attribute = 16,
          ability_type = 1,
@@ -884,8 +786,7 @@ data:add_multi(
          range = 9006,
          difficulty = 220,
       },
-      {
-         id = "fire_bolt",
+      fire_bolt = {
          legacy_id = 420,
          related_basic_attribute = 16,
          ability_type = 1,
@@ -893,8 +794,7 @@ data:add_multi(
          range = 9006,
          difficulty = 220,
       },
-      {
-         id = "lightning_bolt",
+      lightning_bolt = {
          legacy_id = 421,
          related_basic_attribute = 16,
          ability_type = 1,
@@ -902,8 +802,7 @@ data:add_multi(
          range = 9006,
          difficulty = 220,
       },
-      {
-         id = "darkness_bolt",
+      darkness_bolt = {
          legacy_id = 422,
          related_basic_attribute = 16,
          ability_type = 1,
@@ -911,8 +810,7 @@ data:add_multi(
          range = 9006,
          difficulty = 350,
       },
-      {
-         id = "mind_bolt",
+      mind_bolt = {
          legacy_id = 423,
          related_basic_attribute = 16,
          ability_type = 1,
@@ -920,8 +818,7 @@ data:add_multi(
          range = 9006,
          difficulty = 350,
       },
-      {
-         id = "suicide_attack",
+      suicide_attack = {
          legacy_id = 644,
          related_basic_attribute = 11,
          ability_type = 3,
@@ -929,8 +826,7 @@ data:add_multi(
          range = 8000,
          difficulty = 450,
       },
-      {
-         id = "ice_ball",
+      ice_ball = {
          legacy_id = 431,
          related_basic_attribute = 16,
          ability_type = 3,
@@ -938,8 +834,7 @@ data:add_multi(
          range = 3002,
          difficulty = 450,
       },
-      {
-         id = "fire_ball",
+      fire_ball = {
          legacy_id = 432,
          related_basic_attribute = 16,
          ability_type = 3,
@@ -947,8 +842,7 @@ data:add_multi(
          range = 3002,
          difficulty = 450,
       },
-      {
-         id = "chaos_ball",
+      chaos_ball = {
          legacy_id = 433,
          related_basic_attribute = 16,
          ability_type = 3,
@@ -956,8 +850,7 @@ data:add_multi(
          range = 3002,
          difficulty = 1000,
       },
-      {
-         id = "raging_roar",
+      raging_roar = {
          legacy_id = 434,
          related_basic_attribute = 16,
          ability_type = 3,
@@ -965,8 +858,7 @@ data:add_multi(
          range = 3002,
          difficulty = 700,
       },
-      {
-         id = "magic_storm",
+      magic_storm = {
          legacy_id = 460,
          related_basic_attribute = 16,
          ability_type = 3,
@@ -974,8 +866,7 @@ data:add_multi(
          range = 3002,
          difficulty = 1400,
       },
-      {
-         id = "healing_rain",
+      healing_rain = {
          legacy_id = 404,
          related_basic_attribute = 15,
          ability_type = 3,
@@ -983,8 +874,7 @@ data:add_multi(
          range = 3002,
          difficulty = 500,
       },
-      {
-         id = "rain_of_sanity",
+      rain_of_sanity = {
          legacy_id = 637,
          related_basic_attribute = 15,
          ability_type = 3,
@@ -992,8 +882,7 @@ data:add_multi(
          range = 3002,
          difficulty = 500,
       },
-      {
-         id = "gravity",
+      gravity = {
          legacy_id = 466,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1001,8 +890,7 @@ data:add_multi(
          range = 3002,
          difficulty = 750,
       },
-      {
-         id = "summon_monsters",
+      summon_monsters = {
          legacy_id = 424,
          related_basic_attribute = 16,
          ability_type = 7,
@@ -1010,8 +898,7 @@ data:add_multi(
          range = 2006,
          difficulty = 200,
       },
-      {
-         id = "summon_wild",
+      summon_wild = {
          legacy_id = 425,
          related_basic_attribute = 16,
          ability_type = 7,
@@ -1019,8 +906,7 @@ data:add_multi(
          range = 2006,
          difficulty = 200,
       },
-      {
-         id = "summon_fire",
+      summon_fire = {
          legacy_id = 642,
          related_basic_attribute = 16,
          ability_type = 7,
@@ -1028,8 +914,7 @@ data:add_multi(
          range = 2006,
          difficulty = 200,
       },
-      {
-         id = "summon_pawn",
+      summon_pawn = {
          legacy_id = 641,
          related_basic_attribute = 16,
          ability_type = 7,
@@ -1037,8 +922,7 @@ data:add_multi(
          range = 2006,
          difficulty = 200,
       },
-      {
-         id = "summon_cats",
+      summon_cats = {
          legacy_id = 639,
          related_basic_attribute = 16,
          ability_type = 7,
@@ -1046,8 +930,7 @@ data:add_multi(
          range = 2006,
          difficulty = 200,
       },
-      {
-         id = "summon_yeek",
+      summon_yeek = {
          legacy_id = 640,
          related_basic_attribute = 16,
          ability_type = 7,
@@ -1055,8 +938,7 @@ data:add_multi(
          range = 2006,
          difficulty = 200,
       },
-      {
-         id = "summon_sister",
+      summon_sister = {
          legacy_id = 643,
          related_basic_attribute = 16,
          ability_type = 7,
@@ -1064,8 +946,7 @@ data:add_multi(
          range = 2006,
          difficulty = 200,
       },
-      {
-         id = "dominate",
+      dominate = {
          legacy_id = 435,
          related_basic_attribute = 17,
          ability_type = 0,
@@ -1073,8 +954,7 @@ data:add_multi(
          range = 2006,
          difficulty = 2000,
       },
-      {
-         id = "web",
+      web = {
          legacy_id = 436,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1082,8 +962,7 @@ data:add_multi(
          range = 7000,
          difficulty = 150,
       },
-      {
-         id = "mist_of_darkness",
+      mist_of_darkness = {
          legacy_id = 437,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1091,8 +970,7 @@ data:add_multi(
          range = 7000,
          difficulty = 320,
       },
-      {
-         id = "wall_creation",
+      wall_creation = {
          legacy_id = 438,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1100,8 +978,7 @@ data:add_multi(
          range = 7000,
          difficulty = 250,
       },
-      {
-         id = "door_creation",
+      door_creation = {
          legacy_id = 457,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1109,8 +986,7 @@ data:add_multi(
          range = 7000,
          difficulty = 200,
       },
-      {
-         id = "acid_ground",
+      acid_ground = {
          legacy_id = 455,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1118,8 +994,7 @@ data:add_multi(
          range = 7000,
          difficulty = 480,
       },
-      {
-         id = "ether_ground",
+      ether_ground = {
          legacy_id = 634,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1127,8 +1002,7 @@ data:add_multi(
          range = 7000,
          difficulty = 480,
       },
-      {
-         id = "fire_wall",
+      fire_wall = {
          legacy_id = 456,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1136,8 +1010,7 @@ data:add_multi(
          range = 7000,
          difficulty = 640,
       },
-      {
-         id = "curse",
+      curse = {
          legacy_id = 645,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1145,8 +1018,7 @@ data:add_multi(
          range = 2004,
          difficulty = 100,
       },
-      {
-         id = "return",
+      ["return"] = {
          legacy_id = 428,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -1154,8 +1026,7 @@ data:add_multi(
          range = 10000,
          difficulty = 550,
       },
-      {
-         id = "four_dimensional_pocket",
+      four_dimensional_pocket = {
          legacy_id = 463,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -1163,8 +1034,7 @@ data:add_multi(
          range = 10000,
          difficulty = 750,
       },
-      {
-         id = "magic_map",
+      magic_map = {
          legacy_id = 429,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -1172,8 +1042,7 @@ data:add_multi(
          range = 10000,
          difficulty = 450,
       },
-      {
-         id = "wizards_harvest",
+      wizards_harvest = {
          legacy_id = 464,
          related_basic_attribute = 17,
          ability_type = 0,
@@ -1181,8 +1050,7 @@ data:add_multi(
          range = 10000,
          difficulty = 350,
       },
-      {
-         id = "sense_object",
+      sense_object = {
          legacy_id = 430,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -1190,8 +1058,7 @@ data:add_multi(
          range = 10000,
          difficulty = 250,
       },
-      {
-         id = "restore_body",
+      restore_body = {
          legacy_id = 439,
          related_basic_attribute = 15,
          ability_type = 0,
@@ -1199,8 +1066,7 @@ data:add_multi(
          range = 3000,
          difficulty = 250,
       },
-      {
-         id = "restore_spirit",
+      restore_spirit = {
          legacy_id = 440,
          related_basic_attribute = 15,
          ability_type = 0,
@@ -1208,8 +1074,7 @@ data:add_multi(
          range = 3000,
          difficulty = 250,
       },
-      {
-         id = "resurrection",
+      resurrection = {
          legacy_id = 461,
          related_basic_attribute = 15,
          ability_type = 0,
@@ -1217,8 +1082,7 @@ data:add_multi(
          range = 10000,
          difficulty = 1650,
       },
-      {
-         id = "wish",
+      wish = {
          legacy_id = 441,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1226,8 +1090,7 @@ data:add_multi(
          range = 10000,
          difficulty = 5250,
       },
-      {
-         id = "meteor",
+      meteor = {
          legacy_id = 465,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1235,8 +1098,7 @@ data:add_multi(
          range = 10000,
          difficulty = 1450,
       },
-      {
-         id = "mutation",
+      mutation = {
          legacy_id = 454,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -1244,8 +1106,7 @@ data:add_multi(
          range = 3000,
          difficulty = 2250,
       },
-      {
-         id = "holy_shield",
+      holy_shield = {
          legacy_id = 442,
          related_basic_attribute = 15,
          ability_type = 1001,
@@ -1253,8 +1114,7 @@ data:add_multi(
          range = 3000,
          difficulty = 150,
       },
-      {
-         id = "mist_of_silence",
+      mist_of_silence = {
          legacy_id = 443,
          related_basic_attribute = 13,
          ability_type = 1002,
@@ -1262,8 +1122,7 @@ data:add_multi(
          range = 2006,
          difficulty = 620,
       },
-      {
-         id = "regeneration",
+      regeneration = {
          legacy_id = 444,
          related_basic_attribute = 15,
          ability_type = 1003,
@@ -1271,8 +1130,7 @@ data:add_multi(
          range = 3000,
          difficulty = 400,
       },
-      {
-         id = "elemental_shield",
+      elemental_shield = {
          legacy_id = 445,
          related_basic_attribute = 15,
          ability_type = 1004,
@@ -1280,8 +1138,7 @@ data:add_multi(
          range = 3000,
          difficulty = 350,
       },
-      {
-         id = "speed",
+      speed = {
          legacy_id = 446,
          related_basic_attribute = 15,
          ability_type = 1005,
@@ -1289,8 +1146,7 @@ data:add_multi(
          range = 3000,
          difficulty = 1050,
       },
-      {
-         id = "slow",
+      slow = {
          legacy_id = 447,
          related_basic_attribute = 16,
          ability_type = 1006,
@@ -1298,8 +1154,7 @@ data:add_multi(
          range = 2006,
          difficulty = 450,
       },
-      {
-         id = "hero",
+      hero = {
          legacy_id = 448,
          related_basic_attribute = 15,
          ability_type = 1007,
@@ -1307,8 +1162,7 @@ data:add_multi(
          range = 3000,
          difficulty = 80,
       },
-      {
-         id = "mist_of_frailness",
+      mist_of_frailness = {
          legacy_id = 449,
          related_basic_attribute = 16,
          ability_type = 1008,
@@ -1316,8 +1170,7 @@ data:add_multi(
          range = 2006,
          difficulty = 300,
       },
-      {
-         id = "element_scar",
+      element_scar = {
          legacy_id = 450,
          related_basic_attribute = 16,
          ability_type = 1009,
@@ -1325,8 +1178,7 @@ data:add_multi(
          range = 2006,
          difficulty = 600,
       },
-      {
-         id = "holy_veil",
+      holy_veil = {
          legacy_id = 451,
          related_basic_attribute = 15,
          ability_type = 1010,
@@ -1334,8 +1186,7 @@ data:add_multi(
          range = 3000,
          difficulty = 900,
       },
-      {
-         id = "nightmare",
+      nightmare = {
          legacy_id = 452,
          related_basic_attribute = 13,
          ability_type = 1011,
@@ -1343,8 +1194,7 @@ data:add_multi(
          range = 2006,
          difficulty = 500,
       },
-      {
-         id = "divine_wisdom",
+      divine_wisdom = {
          legacy_id = 453,
          related_basic_attribute = 14,
          ability_type = 1012,
@@ -1352,8 +1202,7 @@ data:add_multi(
          range = 10000,
          difficulty = 350,
       },
-      {
-         id = "incognito",
+      incognito = {
          legacy_id = 458,
          related_basic_attribute = 13,
          ability_type = 1015,
@@ -1361,8 +1210,7 @@ data:add_multi(
          range = 10000,
          difficulty = 250,
       },
-      {
-         id = "contingency",
+      contingency = {
          legacy_id = 462,
          related_basic_attribute = 15,
          ability_type = 1018,
@@ -1370,8 +1218,7 @@ data:add_multi(
          range = 3000,
          difficulty = 1250,
       },
-      {
-         id = "boost",
+      boost = {
          legacy_id = 647,
          related_basic_attribute = 15,
          ability_type = 1017,
@@ -1379,8 +1226,7 @@ data:add_multi(
          range = 10000,
          difficulty = 500,
       },
-      {
-         id = "death_word",
+      death_word = {
          legacy_id = 646,
          related_basic_attribute = 15,
          ability_type = 1016,
@@ -1388,8 +1234,7 @@ data:add_multi(
          range = 2006,
          difficulty = 500,
       },
-      {
-         id = "punishment",
+      punishment = {
          legacy_id = 622,
          related_basic_attribute = 15,
          ability_type = 1013,
@@ -1397,8 +1242,7 @@ data:add_multi(
          range = 2006,
          difficulty = 500,
       },
-      {
-         id = "lulwys_trick",
+      lulwys_trick = {
          legacy_id = 625,
          related_basic_attribute = 12,
          ability_type = 1014,
@@ -1406,8 +1250,7 @@ data:add_multi(
          range = 10000,
          difficulty = 500,
       },
-      {
-         id = "harvest_mana",
+      harvest_mana = {
          legacy_id = 621,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1415,8 +1258,7 @@ data:add_multi(
          range = 3000,
          difficulty = 700,
       },
-      {
-         id = "drain_blood",
+      drain_blood = {
          legacy_id = 601,
          related_basic_attribute = 12,
          ability_type = 6,
@@ -1424,8 +1266,7 @@ data:add_multi(
          range = 2000,
          difficulty = 0,
       },
-      {
-         id = "power_breath",
+      power_breath = {
          legacy_id = 612,
          related_basic_attribute = 11,
          ability_type = 8,
@@ -1433,8 +1274,7 @@ data:add_multi(
          range = 9005,
          difficulty = 0,
       },
-      {
-         id = "fire_breath",
+      fire_breath = {
          legacy_id = 602,
          related_basic_attribute = 11,
          ability_type = 8,
@@ -1442,8 +1282,7 @@ data:add_multi(
          range = 9005,
          difficulty = 0,
       },
-      {
-         id = "cold_breath",
+      cold_breath = {
          legacy_id = 603,
          related_basic_attribute = 11,
          ability_type = 8,
@@ -1451,8 +1290,7 @@ data:add_multi(
          range = 9005,
          difficulty = 0,
       },
-      {
-         id = "lightning_breath",
+      lightning_breath = {
          legacy_id = 604,
          related_basic_attribute = 11,
          ability_type = 8,
@@ -1460,8 +1298,7 @@ data:add_multi(
          range = 9005,
          difficulty = 0,
       },
-      {
-         id = "chaos_breath",
+      chaos_breath = {
          legacy_id = 606,
          related_basic_attribute = 11,
          ability_type = 8,
@@ -1469,8 +1306,7 @@ data:add_multi(
          range = 9005,
          difficulty = 0,
       },
-      {
-         id = "poison_breath",
+      poison_breath = {
          legacy_id = 610,
          related_basic_attribute = 11,
          ability_type = 8,
@@ -1478,8 +1314,7 @@ data:add_multi(
          range = 9005,
          difficulty = 0,
       },
-      {
-         id = "nether_breath",
+      nether_breath = {
          legacy_id = 608,
          related_basic_attribute = 11,
          ability_type = 8,
@@ -1487,8 +1322,7 @@ data:add_multi(
          range = 9005,
          difficulty = 0,
       },
-      {
-         id = "sound_breath",
+      sound_breath = {
          legacy_id = 607,
          related_basic_attribute = 11,
          ability_type = 8,
@@ -1496,8 +1330,7 @@ data:add_multi(
          range = 9005,
          difficulty = 0,
       },
-      {
-         id = "darkness_breath",
+      darkness_breath = {
          legacy_id = 605,
          related_basic_attribute = 11,
          ability_type = 8,
@@ -1505,8 +1338,7 @@ data:add_multi(
          range = 9005,
          difficulty = 0,
       },
-      {
-         id = "mind_breath",
+      mind_breath = {
          legacy_id = 611,
          related_basic_attribute = 11,
          ability_type = 8,
@@ -1514,8 +1346,7 @@ data:add_multi(
          range = 9005,
          difficulty = 0,
       },
-      {
-         id = "nerve_breath",
+      nerve_breath = {
          legacy_id = 609,
          related_basic_attribute = 11,
          ability_type = 8,
@@ -1523,8 +1354,7 @@ data:add_multi(
          range = 9005,
          difficulty = 0,
       },
-      {
-         id = "shadow_step",
+      shadow_step = {
          legacy_id = 619,
          related_basic_attribute = 15,
          ability_type = 5,
@@ -1532,8 +1362,7 @@ data:add_multi(
          range = 6005,
          difficulty = 0,
       },
-      {
-         id = "dimensional_move",
+      dimensional_move = {
          legacy_id = 627,
          related_basic_attribute = 15,
          ability_type = 5,
@@ -1541,8 +1370,7 @@ data:add_multi(
          range = 10000,
          difficulty = 0,
       },
-      {
-         id = "draw_shadow",
+      draw_shadow = {
          legacy_id = 620,
          related_basic_attribute = 15,
          ability_type = 5,
@@ -1550,8 +1378,7 @@ data:add_multi(
          range = 6005,
          difficulty = 0,
       },
-      {
-         id = "prayer_of_jure",
+      prayer_of_jure = {
          legacy_id = 623,
          related_basic_attribute = 15,
          ability_type = 4,
@@ -1559,8 +1386,7 @@ data:add_multi(
          range = 3000,
          difficulty = 0,
       },
-      {
-         id = "absorb_magic",
+      absorb_magic = {
          legacy_id = 624,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1568,8 +1394,7 @@ data:add_multi(
          range = 10000,
          difficulty = 0,
       },
-      {
-         id = "pregnant",
+      pregnant = {
          legacy_id = 654,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -1577,8 +1402,7 @@ data:add_multi(
          range = 2001,
          difficulty = 0,
       },
-      {
-         id = "touch_of_weakness",
+      touch_of_weakness = {
          legacy_id = 613,
          related_basic_attribute = 16,
          ability_type = 6,
@@ -1586,8 +1410,7 @@ data:add_multi(
          range = 8000,
          difficulty = 0,
       },
-      {
-         id = "touch_of_hunger",
+      touch_of_hunger = {
          legacy_id = 614,
          related_basic_attribute = 16,
          ability_type = 6,
@@ -1595,8 +1418,7 @@ data:add_multi(
          range = 8000,
          difficulty = 0,
       },
-      {
-         id = "touch_of_poison",
+      touch_of_poison = {
          legacy_id = 615,
          related_basic_attribute = 12,
          ability_type = 6,
@@ -1604,8 +1426,7 @@ data:add_multi(
          range = 8000,
          difficulty = 0,
       },
-      {
-         id = "touch_of_nerve",
+      touch_of_nerve = {
          legacy_id = 616,
          related_basic_attribute = 12,
          ability_type = 6,
@@ -1613,8 +1434,7 @@ data:add_multi(
          range = 8000,
          difficulty = 0,
       },
-      {
-         id = "touch_of_fear",
+      touch_of_fear = {
          legacy_id = 617,
          related_basic_attribute = 15,
          ability_type = 6,
@@ -1622,8 +1442,7 @@ data:add_multi(
          range = 8000,
          difficulty = 0,
       },
-      {
-         id = "touch_of_sleep",
+      touch_of_sleep = {
          legacy_id = 618,
          related_basic_attribute = 15,
          ability_type = 6,
@@ -1631,8 +1450,7 @@ data:add_multi(
          range = 8000,
          difficulty = 0,
       },
-      {
-         id = "suspicious_hand",
+      suspicious_hand = {
          legacy_id = 635,
          related_basic_attribute = 12,
          ability_type = 5,
@@ -1640,8 +1458,7 @@ data:add_multi(
          range = 8000,
          difficulty = 0,
       },
-      {
-         id = "scavenge",
+      scavenge = {
          legacy_id = 651,
          related_basic_attribute = 12,
          ability_type = 0,
@@ -1649,8 +1466,7 @@ data:add_multi(
          range = 8000,
          difficulty = 0,
       },
-      {
-         id = "decapitation",
+      decapitation = {
          legacy_id = 658,
          related_basic_attribute = 12,
          ability_type = 0,
@@ -1658,8 +1474,7 @@ data:add_multi(
          range = 2001,
          difficulty = 0,
       },
-      {
-         id = "manis_disassembly",
+      manis_disassembly = {
          legacy_id = 660,
          related_basic_attribute = 15,
          ability_type = 6,
@@ -1667,8 +1482,7 @@ data:add_multi(
          range = 8000,
          difficulty = 0,
       },
-      {
-         id = "eye_of_mutation",
+      eye_of_mutation = {
          legacy_id = 632,
          related_basic_attribute = 15,
          ability_type = 0,
@@ -1676,8 +1490,7 @@ data:add_multi(
          range = 2002,
          difficulty = 0,
       },
-      {
-         id = "eye_of_ether",
+      eye_of_ether = {
          legacy_id = 633,
          related_basic_attribute = 15,
          ability_type = 0,
@@ -1685,8 +1498,7 @@ data:add_multi(
          range = 2002,
          difficulty = 0,
       },
-      {
-         id = "eye_of_insanity",
+      eye_of_insanity = {
          legacy_id = 636,
          related_basic_attribute = 17,
          ability_type = 0,
@@ -1694,8 +1506,7 @@ data:add_multi(
          range = 2002,
          difficulty = 0,
       },
-      {
-         id = "eye_of_dimness",
+      eye_of_dimness = {
          legacy_id = 638,
          related_basic_attribute = 17,
          ability_type = 0,
@@ -1703,8 +1514,7 @@ data:add_multi(
          range = 2002,
          difficulty = 0,
       },
-      {
-         id = "eye_of_mana",
+      eye_of_mana = {
          legacy_id = 652,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1712,8 +1522,7 @@ data:add_multi(
          range = 2002,
          difficulty = 0,
       },
-      {
-         id = "insult",
+      insult = {
          legacy_id = 648,
          related_basic_attribute = 17,
          ability_type = 0,
@@ -1721,8 +1530,7 @@ data:add_multi(
          range = 2004,
          difficulty = 0,
       },
-      {
-         id = "vanish",
+      vanish = {
          legacy_id = 653,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -1730,8 +1538,7 @@ data:add_multi(
          range = 10000,
          difficulty = 0,
       },
-      {
-         id = "distant_attack",
+      distant_attack = {
          legacy_id = 649,
          related_basic_attribute = 10,
          ability_type = 10,
@@ -1739,8 +1546,7 @@ data:add_multi(
          range = 2004,
          difficulty = 0,
       },
-      {
-         id = "distant_attack_2",
+      distant_attack_2 = {
          legacy_id = 650,
          related_basic_attribute = 10,
          ability_type = 10,
@@ -1748,8 +1554,7 @@ data:add_multi(
          range = 2007,
          difficulty = 0,
       },
-      {
-         id = "change",
+      change = {
          legacy_id = 628,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -1757,8 +1562,7 @@ data:add_multi(
          range = 2006,
          difficulty = 0,
       },
-      {
-         id = "draw_charge",
+      draw_charge = {
          legacy_id = 629,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1766,8 +1570,7 @@ data:add_multi(
          range = 10000,
          difficulty = 0,
       },
-      {
-         id = "fill_charge",
+      fill_charge = {
          legacy_id = 630,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1775,8 +1578,7 @@ data:add_multi(
          range = 10000,
          difficulty = 0,
       },
-      {
-         id = "swarm",
+      swarm = {
          legacy_id = 631,
          related_basic_attribute = 10,
          ability_type = 0,
@@ -1784,8 +1586,7 @@ data:add_multi(
          range = 10000,
          difficulty = 220,
       },
-      {
-         id = "cheer",
+      cheer = {
          legacy_id = 656,
          related_basic_attribute = 17,
          ability_type = 0,
@@ -1793,8 +1594,7 @@ data:add_multi(
          range = 3006,
          difficulty = 500,
       },
-      {
-         id = "mewmewmew",
+      mewmewmew = {
          legacy_id = 657,
          related_basic_attribute = 19,
          ability_type = 0,
@@ -1802,8 +1602,7 @@ data:add_multi(
          range = 3000,
          difficulty = 500,
       },
-      {
-         id = "mirror",
+      mirror = {
          legacy_id = 626,
          related_basic_attribute = 13,
          ability_type = 0,
@@ -1811,8 +1610,7 @@ data:add_multi(
          range = 10000,
          difficulty = 500,
       },
-      {
-         id = "grenade",
+      grenade = {
          legacy_id = 655,
          related_basic_attribute = 16,
          ability_type = 3,
@@ -1820,8 +1618,7 @@ data:add_multi(
          range = 3000,
          difficulty = 700,
       },
-      {
-         id = "drop_mine",
+      drop_mine = {
          legacy_id = 659,
          related_basic_attribute = 16,
          ability_type = 0,
@@ -1829,4 +1626,5 @@ data:add_multi(
          range = 3000,
          difficulty = 0,
       },
-})
+   }
+)

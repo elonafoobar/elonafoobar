@@ -1,14 +1,12 @@
-data:define_type("putit")
-data:add_multi(
+data:define_prototype("putit")
+data:add(
    "putit.putit",
    {
-      {
-         id = "normal",
+      normal = {
          legacy_id = 3,
          display_name = "putit"
       },
-      {
-         id = "red",
+      red = {
          legacy_id = 4,
          display_name = "red putit"
       }

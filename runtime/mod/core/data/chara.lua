@@ -1,9 +1,8 @@
-data:define_type("chara")
-data:add_multi(
+data:define_prototype("chara")
+data:add(
    "core.chara",
    {
-      {
-         id = "bug",
+      bug = {
          legacy_id = 0,
          item_type = 3,
          tags = {},
@@ -23,8 +22,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "user",
+      user = {
          legacy_id = 343,
          item_type = 6,
          tags = {},
@@ -47,8 +45,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "shopkeeper",
+      shopkeeper = {
          legacy_id = 1,
          item_type = 3,
          tags = { "man" },
@@ -73,8 +70,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "caravan_master",
+      caravan_master = {
          legacy_id = 353,
          item_type = 3,
          tags = { "man" },
@@ -97,8 +93,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "bartender",
+      bartender = {
          legacy_id = 70,
          item_type = 3,
          tags = { "man" },
@@ -123,8 +118,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "informer",
+      informer = {
          legacy_id = 69,
          item_type = 3,
          tags = { "man" },
@@ -149,8 +143,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "arena_master",
+      arena_master = {
          legacy_id = 73,
          item_type = 3,
          tags = { "man" },
@@ -175,8 +168,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "healer",
+      healer = {
          legacy_id = 74,
          item_type = 3,
          tags = { "man" },
@@ -202,8 +194,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.holy_one",
       },
-      {
-         id = "nun",
+      nun = {
          legacy_id = 206,
          item_type = 3,
          tags = { "man" },
@@ -229,8 +220,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.holy_one",
       },
-      {
-         id = "elder",
+      elder = {
          legacy_id = 38,
          item_type = 3,
          tags = { "man" },
@@ -255,8 +245,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "trainer",
+      trainer = {
          legacy_id = 40,
          item_type = 3,
          tags = { "man" },
@@ -281,8 +270,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "guild_trainer",
+      guild_trainer = {
          legacy_id = 333,
          item_type = 3,
          tags = { "man" },
@@ -307,8 +295,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "guard_port_kapul",
+      guard_port_kapul = {
          legacy_id = 76,
          item_type = 3,
          tags = { "man" },
@@ -333,8 +320,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.guard",
       },
-      {
-         id = "guard",
+      guard = {
          legacy_id = 77,
          item_type = 3,
          tags = { "man" },
@@ -359,8 +345,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.guard",
       },
-      {
-         id = "palmian_elite_soldier",
+      palmian_elite_soldier = {
          legacy_id = 204,
          item_type = 3,
          tags = { "man" },
@@ -385,8 +370,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "zeome",
+      zeome = {
          legacy_id = 2,
          item_type = 3,
          tags = { "man" },
@@ -415,8 +399,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.zeome",
       },
-      {
-         id = "at",
+      at = {
          legacy_id = 37,
          item_type = 3,
          tags = { "man" },
@@ -441,8 +424,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.at",
       },
-      {
-         id = "orphe",
+      orphe = {
          legacy_id = 23,
          item_type = 3,
          tags = { "man", "god" },
@@ -469,8 +451,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.orphe",
       },
-      {
-         id = "mad_scientist",
+      mad_scientist = {
          legacy_id = 26,
          item_type = 3,
          tags = { "man" },
@@ -494,8 +475,7 @@ data:add_multi(
          rarity = 1000,
          coefficient = 400,
       },
-      {
-         id = "isca",
+      isca = {
          legacy_id = 27,
          item_type = 3,
          tags = { "man", "god" },
@@ -519,8 +499,7 @@ data:add_multi(
          rarity = 1000,
          coefficient = 400,
       },
-      {
-         id = "whom_dwell_in_the_vanity",
+      whom_dwell_in_the_vanity = {
          legacy_id = 28,
          item_type = 3,
          tags = { "man" },
@@ -547,8 +526,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.whom_dwell_in_the_vanity"
       },
-      {
-         id = "loyter",
+      loyter = {
          legacy_id = 29,
          item_type = 3,
          tags = { "man" },
@@ -574,8 +552,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.loyter",
       },
-      {
-         id = "vesda",
+      vesda = {
          legacy_id = 140,
          item_type = 5,
          tags = { "dragon" },
@@ -603,8 +580,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.vesda",
          drops = { "core.vesda" },
       },
-      {
-         id = "miches",
+      miches = {
          legacy_id = 30,
          item_type = 3,
          tags = { "man" },
@@ -630,8 +606,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.miches",
       },
-      {
-         id = "shena",
+      shena = {
          legacy_id = 31,
          item_type = 3,
          tags = { "man" },
@@ -657,8 +632,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.shena",
       },
-      {
-         id = "the_leopard_warrior",
+      the_leopard_warrior = {
          legacy_id = 351,
          item_type = 3,
          tags = { "man" },
@@ -687,8 +661,7 @@ data:add_multi(
          flags = { "is_quick_tempered" },
          drops = { "core.the_leopard_warrior" },
       },
-      {
-         id = "silvia",
+      silvia = {
          legacy_id = 352,
          item_type = 3,
          tags = { "man" },
@@ -713,8 +686,7 @@ data:add_multi(
          coefficient = 400,
          drops = { "core.the_leopard_warrior" },
       },
-      {
-         id = "dungeon_cleaner",
+      dungeon_cleaner = {
          legacy_id = 32,
          item_type = 3,
          tags = {},
@@ -738,8 +710,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "larnneire",
+      larnneire = {
          legacy_id = 33,
          item_type = 3,
          tags = { "man" },
@@ -767,8 +738,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.larnneire",
       },
-      {
-         id = "lomias",
+      lomias = {
          legacy_id = 34,
          item_type = 3,
          tags = { "man" },
@@ -800,8 +770,7 @@ data:add_multi(
          drops = { "core.lomias" },
          dialog_id = "core.lomias",
       },
-      {
-         id = "slan",
+      slan = {
          legacy_id = 139,
          item_type = 3,
          tags = { "man" },
@@ -827,8 +796,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.slan",
       },
-      {
-         id = "karam",
+      karam = {
          legacy_id = 146,
          item_type = 3,
          tags = { "man" },
@@ -854,8 +822,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.karam",
       },
-      {
-         id = "erystia",
+      erystia = {
          legacy_id = 142,
          item_type = 3,
          tags = { "man" },
@@ -881,8 +848,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.erystia",
       },
-      {
-         id = "issizzle",
+      issizzle = {
          legacy_id = 141,
          item_type = 6,
          tags = { "undead", "god" },
@@ -907,8 +873,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.insanity",
       },
-      {
-         id = "wynan",
+      wynan = {
          legacy_id = 143,
          item_type = 3,
          tags = {},
@@ -932,8 +897,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "quruiza",
+      quruiza = {
          legacy_id = 144,
          item_type = 6,
          tags = {},
@@ -960,8 +924,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "corgon",
+      corgon = {
          legacy_id = 145,
          item_type = 5,
          tags = {},
@@ -986,8 +949,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "lulwy",
+      lulwy = {
          legacy_id = 306,
          item_type = 6,
          tags = { "god" },
@@ -1011,8 +973,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "ehekatl",
+      ehekatl = {
          legacy_id = 331,
          item_type = 6,
          tags = { "god" },
@@ -1036,8 +997,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "god_inside_ehekatl",
+      god_inside_ehekatl = {
          legacy_id = 336,
          item_type = 6,
          tags = { "god" },
@@ -1063,8 +1023,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "opatos",
+      opatos = {
          legacy_id = 338,
          item_type = 6,
          tags = { "god" },
@@ -1090,8 +1049,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "kumiromi",
+      kumiromi = {
          legacy_id = 339,
          item_type = 6,
          tags = { "god" },
@@ -1117,8 +1075,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "mani",
+      mani = {
          legacy_id = 342,
          item_type = 6,
          tags = { "god" },
@@ -1144,8 +1101,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "_test",
+      _test = {
          legacy_id = 340,
          item_type = 6,
          tags = {},
@@ -1171,8 +1127,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "putit",
+      putit = {
          legacy_id = 3,
          item_type = 1,
          tags = { "slime" },
@@ -1199,8 +1154,7 @@ data:add_multi(
          flags = { "is_suitable_for_mount" },
          corpse_eating_callback = "core.eating_effect.putit",
       },
-      {
-         id = "red_putit",
+      red_putit = {
          legacy_id = 4,
          item_type = 1,
          tags = { "fire", "slime" },
@@ -1227,8 +1181,7 @@ data:add_multi(
          flags = { "is_suitable_for_mount" },
          corpse_eating_callback = "core.eating_effect.putit",
       },
-      {
-         id = "slime",
+      slime = {
          legacy_id = 169,
          item_type = 1,
          tags = { "slime" },
@@ -1256,8 +1209,7 @@ data:add_multi(
          rarity = 70000,
          coefficient = 400,
       },
-      {
-         id = "acid_slime",
+      acid_slime = {
          legacy_id = 194,
          item_type = 1,
          tags = { "slime" },
@@ -1287,8 +1239,7 @@ data:add_multi(
          rarity = 70000,
          coefficient = 400,
       },
-      {
-         id = "bubble",
+      bubble = {
          legacy_id = 286,
          item_type = 1,
          tags = { "slime" },
@@ -1314,8 +1265,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "splits" },
       },
-      {
-         id = "blue_bubble",
+      blue_bubble = {
          legacy_id = 285,
          item_type = 1,
          tags = { "slime" },
@@ -1342,8 +1292,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "splits" },
       },
-      {
-         id = "mass_monster",
+      mass_monster = {
          legacy_id = 287,
          item_type = 1,
          tags = {},
@@ -1365,8 +1314,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "splits" },
       },
-      {
-         id = "cube",
+      cube = {
          legacy_id = 327,
          item_type = 1,
          tags = {},
@@ -1388,8 +1336,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "splits2", "is_immune_to_elemental_damage" },
       },
-      {
-         id = "rabbit",
+      rabbit = {
          legacy_id = 5,
          item_type = 1,
          tags = { "wild" },
@@ -1410,8 +1357,7 @@ data:add_multi(
          coefficient = 400,
          drops = { "core.rabbit" },
       },
-      {
-         id = "snail",
+      snail = {
          legacy_id = 6,
          item_type = 1,
          tags = { "wild" },
@@ -1432,8 +1378,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "fallen_soldier",
+      fallen_soldier = {
          legacy_id = 7,
          item_type = 0,
          tags = { "man" },
@@ -1456,8 +1401,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "mercenary",
+      mercenary = {
          legacy_id = 8,
          item_type = 0,
          tags = { "man" },
@@ -1481,8 +1425,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "beggar",
+      beggar = {
          legacy_id = 9,
          item_type = 0,
          tags = { "man" },
@@ -1508,8 +1451,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "drops_gold" },
       },
-      {
-         id = "farmer",
+      farmer = {
          legacy_id = 269,
          item_type = 0,
          tags = { "man" },
@@ -1534,8 +1476,7 @@ data:add_multi(
          rarity = 2000,
          coefficient = 400,
       },
-      {
-         id = "cleaner",
+      cleaner = {
          legacy_id = 320,
          item_type = 0,
          tags = { "man" },
@@ -1561,8 +1502,7 @@ data:add_multi(
          rarity = 10000,
          coefficient = 100,
       },
-      {
-         id = "miner",
+      miner = {
          legacy_id = 273,
          item_type = 0,
          tags = { "man" },
@@ -1587,8 +1527,7 @@ data:add_multi(
          rarity = 2000,
          coefficient = 400,
       },
-      {
-         id = "bard",
+      bard = {
          legacy_id = 326,
          item_type = 0,
          tags = { "man" },
@@ -1612,8 +1551,7 @@ data:add_multi(
          rarity = 2000,
          coefficient = 400,
       },
-      {
-         id = "sister",
+      sister = {
          legacy_id = 270,
          item_type = 0,
          tags = { "man" },
@@ -1638,8 +1576,7 @@ data:add_multi(
          rarity = 2000,
          coefficient = 400,
       },
-      {
-         id = "holy_beast",
+      holy_beast = {
          legacy_id = 349,
          item_type = 0,
          tags = { "man", "god" },
@@ -1662,8 +1599,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_quick_tempered" },
       },
-      {
-         id = "part_time_worker",
+      part_time_worker = {
          legacy_id = 348,
          item_type = 0,
          tags = { "man" },
@@ -1688,8 +1624,7 @@ data:add_multi(
          flags = { "is_quick_tempered" },
          dialog_id = "core.part_time_worker",
       },
-      {
-         id = "fanatic",
+      fanatic = {
          legacy_id = 347,
          item_type = 0,
          tags = { "man" },
@@ -1716,8 +1651,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_quick_tempered" },
       },
-      {
-         id = "rogue",
+      rogue = {
          legacy_id = 271,
          item_type = 0,
          tags = { "man" },
@@ -1743,8 +1677,7 @@ data:add_multi(
          rarity = 2000,
          coefficient = 400,
       },
-      {
-         id = "prostitute",
+      prostitute = {
          legacy_id = 335,
          item_type = 0,
          tags = { "man" },
@@ -1769,8 +1702,7 @@ data:add_multi(
          rarity = 2000,
          coefficient = 400,
       },
-      {
-         id = "prisoner",
+      prisoner = {
          legacy_id = 337,
          item_type = 0,
          tags = { "man" },
@@ -1795,8 +1727,7 @@ data:add_multi(
          rarity = 2000,
          coefficient = 400,
       },
-      {
-         id = "artist",
+      artist = {
          legacy_id = 272,
          item_type = 0,
          tags = { "man" },
@@ -1821,8 +1752,7 @@ data:add_multi(
          rarity = 2000,
          coefficient = 400,
       },
-      {
-         id = "noble",
+      noble = {
          legacy_id = 274,
          item_type = 0,
          tags = { "man" },
@@ -1847,8 +1777,7 @@ data:add_multi(
          rarity = 2000,
          coefficient = 400,
       },
-      {
-         id = "mage_guild_member",
+      mage_guild_member = {
          legacy_id = 289,
          item_type = 3,
          tags = { "man" },
@@ -1873,8 +1802,7 @@ data:add_multi(
          rarity = 2000,
          coefficient = 400,
       },
-      {
-         id = "thief_guild_member",
+      thief_guild_member = {
          legacy_id = 293,
          item_type = 3,
          tags = { "man" },
@@ -1899,8 +1827,7 @@ data:add_multi(
          rarity = 2000,
          coefficient = 400,
       },
-      {
-         id = "fighter_guild_member",
+      fighter_guild_member = {
          legacy_id = 295,
          item_type = 3,
          tags = { "man" },
@@ -1925,8 +1852,7 @@ data:add_multi(
          rarity = 2000,
          coefficient = 400,
       },
-      {
-         id = "town_child",
+      town_child = {
          legacy_id = 35,
          item_type = 0,
          tags = { "man" },
@@ -1951,8 +1877,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "old_person",
+      old_person = {
          legacy_id = 36,
          item_type = 0,
          tags = { "man" },
@@ -1977,8 +1902,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "punk",
+      punk = {
          legacy_id = 174,
          item_type = 0,
          tags = { "man", "sf" },
@@ -2002,8 +1926,7 @@ data:add_multi(
          rarity = 60000,
          coefficient = 400,
       },
-      {
-         id = "wild_sheep",
+      wild_sheep = {
          legacy_id = 10,
          item_type = 1,
          tags = { "wild" },
@@ -2023,8 +1946,7 @@ data:add_multi(
          rarity = 30000,
          coefficient = 400,
       },
-      {
-         id = "flying_frog",
+      flying_frog = {
          legacy_id = 11,
          item_type = 1,
          tags = { "wild" },
@@ -2045,8 +1967,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating" },
       },
-      {
-         id = "gangster",
+      gangster = {
          legacy_id = 12,
          item_type = 3,
          tags = { "man" },
@@ -2070,8 +1991,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "kobold",
+      kobold = {
          legacy_id = 13,
          item_type = 3,
          tags = {},
@@ -2092,8 +2012,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.poisonous",
       },
-      {
-         id = "yeek",
+      yeek = {
          legacy_id = 236,
          item_type = 3,
          tags = { "yeek" },
@@ -2112,8 +2031,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "yeek_warrior",
+      yeek_warrior = {
          legacy_id = 238,
          item_type = 3,
          tags = { "yeek" },
@@ -2133,8 +2051,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "yeek_archer",
+      yeek_archer = {
          legacy_id = 241,
          item_type = 3,
          tags = { "yeek" },
@@ -2155,8 +2072,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "master_yeek",
+      master_yeek = {
          legacy_id = 240,
          item_type = 3,
          tags = { "yeek" },
@@ -2177,8 +2093,7 @@ data:add_multi(
          rarity = 50000,
          coefficient = 400,
       },
-      {
-         id = "kamikaze_yeek",
+      kamikaze_yeek = {
          legacy_id = 237,
          item_type = 3,
          tags = { "yeek" },
@@ -2199,8 +2114,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "explodes" },
       },
-      {
-         id = "kamikaze_samurai",
+      kamikaze_samurai = {
          legacy_id = 244,
          item_type = 3,
          tags = {},
@@ -2223,8 +2137,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "explodes" },
       },
-      {
-         id = "bomb_rock",
+      bomb_rock = {
          legacy_id = 245,
          item_type = 1,
          tags = {},
@@ -2247,8 +2160,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "explodes" },
       },
-      {
-         id = "hard_gay",
+      hard_gay = {
          legacy_id = 321,
          item_type = 3,
          tags = {},
@@ -2272,8 +2184,7 @@ data:add_multi(
          coefficient = 200,
          flags = { "explodes" },
       },
-      {
-         id = "rodlob",
+      rodlob = {
          legacy_id = 242,
          item_type = 3,
          tags = { "yeek" },
@@ -2298,8 +2209,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "hot_spring_maniac",
+      hot_spring_maniac = {
          legacy_id = 239,
          item_type = 3,
          tags = { "man" },
@@ -2323,8 +2233,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "centipede",
+      centipede = {
          legacy_id = 14,
          item_type = 2,
          tags = {},
@@ -2344,8 +2253,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.poisonous",
       },
-      {
-         id = "mushroom",
+      mushroom = {
          legacy_id = 15,
          item_type = 2,
          tags = {},
@@ -2364,8 +2272,7 @@ data:add_multi(
          rarity = 50000,
          coefficient = 400,
       },
-      {
-         id = "spore_mushroom",
+      spore_mushroom = {
          legacy_id = 283,
          item_type = 2,
          tags = {},
@@ -2387,8 +2294,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.poisonous",
       },
-      {
-         id = "chaos_mushroom",
+      chaos_mushroom = {
          legacy_id = 284,
          item_type = 2,
          tags = {},
@@ -2410,8 +2316,7 @@ data:add_multi(
          rarity = 50000,
          coefficient = 400,
       },
-      {
-         id = "citizen",
+      citizen = {
          legacy_id = 16,
          item_type = 3,
          tags = { "man" },
@@ -2436,8 +2341,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "citizen2",
+      citizen2 = {
          legacy_id = 39,
          item_type = 3,
          tags = { "man" },
@@ -2462,8 +2366,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "citizen_of_cyber_dome",
+      citizen_of_cyber_dome = {
          legacy_id = 171,
          item_type = 3,
          tags = { "man" },
@@ -2488,8 +2391,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "citizen_of_cyber_dome2",
+      citizen_of_cyber_dome2 = {
          legacy_id = 172,
          item_type = 3,
          tags = { "man" },
@@ -2514,8 +2416,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "sales_person",
+      sales_person = {
          legacy_id = 173,
          item_type = 3,
          tags = { "man" },
@@ -2540,8 +2441,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "sailor",
+      sailor = {
          legacy_id = 71,
          item_type = 3,
          tags = { "man" },
@@ -2566,8 +2466,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "captain",
+      captain = {
          legacy_id = 72,
          item_type = 3,
          tags = { "man" },
@@ -2592,8 +2491,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "stersha",
+      stersha = {
          legacy_id = 79,
          item_type = 3,
          tags = { "man" },
@@ -2619,8 +2517,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.stersha",
       },
-      {
-         id = "xabi",
+      xabi = {
          legacy_id = 80,
          item_type = 3,
          tags = { "man" },
@@ -2646,8 +2543,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.xabi",
       },
-      {
-         id = "orc",
+      orc = {
          legacy_id = 17,
          item_type = 3,
          tags = {},
@@ -2667,8 +2563,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "lizard_man",
+      lizard_man = {
          legacy_id = 281,
          item_type = 3,
          tags = { "dragon" },
@@ -2689,8 +2584,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_quick_tempered" },
       },
-      {
-         id = "minotaur",
+      minotaur = {
          legacy_id = 282,
          item_type = 3,
          tags = { "mino" },
@@ -2710,8 +2604,7 @@ data:add_multi(
          rarity = 70000,
          coefficient = 400,
       },
-      {
-         id = "minotaur_magician",
+      minotaur_magician = {
          legacy_id = 296,
          item_type = 3,
          tags = { "mino" },
@@ -2733,8 +2626,7 @@ data:add_multi(
          rarity = 70000,
          coefficient = 400,
       },
-      {
-         id = "minotaur_boxer",
+      minotaur_boxer = {
          legacy_id = 298,
          item_type = 3,
          tags = { "mino" },
@@ -2756,8 +2648,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_quick_tempered" },
       },
-      {
-         id = "minotaur_king",
+      minotaur_king = {
          legacy_id = 299,
          item_type = 3,
          tags = { "mino" },
@@ -2779,8 +2670,7 @@ data:add_multi(
          rarity = 40000,
          coefficient = 400,
       },
-      {
-         id = "ungaga",
+      ungaga = {
          legacy_id = 300,
          item_type = 3,
          tags = { "mino" },
@@ -2805,8 +2695,7 @@ data:add_multi(
          rarity = 40000,
          coefficient = 400,
       },
-      {
-         id = "troll",
+      troll = {
          legacy_id = 251,
          item_type = 3,
          tags = {},
@@ -2829,8 +2718,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.troll",
       },
-      {
-         id = "warrior_of_elea",
+      warrior_of_elea = {
          legacy_id = 18,
          item_type = 3,
          tags = { "man" },
@@ -2852,8 +2740,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "wizard_of_elea",
+      wizard_of_elea = {
          legacy_id = 24,
          item_type = 3,
          tags = { "man" },
@@ -2877,8 +2764,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "asura",
+      asura = {
          legacy_id = 309,
          item_type = 3,
          tags = { "god" },
@@ -2899,8 +2785,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "mitra",
+      mitra = {
          legacy_id = 310,
          item_type = 3,
          tags = { "god" },
@@ -2922,8 +2807,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "varuna",
+      varuna = {
          legacy_id = 311,
          item_type = 3,
          tags = { "god" },
@@ -2945,8 +2829,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "wizard",
+      wizard = {
          legacy_id = 41,
          item_type = 3,
          tags = { "man" },
@@ -2971,8 +2854,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "warrior",
+      warrior = {
          legacy_id = 75,
          item_type = 3,
          tags = { "man" },
@@ -2996,8 +2878,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "mandrake",
+      mandrake = {
          legacy_id = 19,
          item_type = 2,
          tags = {},
@@ -3017,8 +2898,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.mandrake",
       },
-      {
-         id = "beetle",
+      beetle = {
          legacy_id = 22,
          item_type = 2,
          tags = {},
@@ -3039,8 +2919,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.beetle",
       },
-      {
-         id = "orc_warrior",
+      orc_warrior = {
          legacy_id = 20,
          item_type = 3,
          tags = {},
@@ -3060,8 +2939,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "goda",
+      goda = {
          legacy_id = 25,
          item_type = 3,
          tags = {},
@@ -3084,8 +2962,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_quick_tempered" },
       },
-      {
-         id = "zombie",
+      zombie = {
          legacy_id = 21,
          item_type = 3,
          tags = { "undead" },
@@ -3107,8 +2984,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.rotten_one",
          drops = { "core.zombie" },
       },
-      {
-         id = "bat",
+      bat = {
          legacy_id = 42,
          item_type = 1,
          tags = { "wild" },
@@ -3128,8 +3004,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating" },
       },
-      {
-         id = "vampire_bat",
+      vampire_bat = {
          legacy_id = 43,
          item_type = 1,
          tags = { "wild" },
@@ -3154,8 +3029,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating" },
       },
-      {
-         id = "dragon_bat",
+      dragon_bat = {
          legacy_id = 44,
          item_type = 1,
          tags = { "wild", "fire", "dragon" },
@@ -3177,8 +3051,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating" },
       },
-      {
-         id = "fire_ent",
+      fire_ent = {
          legacy_id = 45,
          item_type = 1,
          tags = { "fire" },
@@ -3205,8 +3078,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.fire_ent",
       },
-      {
-         id = "ice_ent",
+      ice_ent = {
          legacy_id = 46,
          item_type = 1,
          tags = {},
@@ -3233,8 +3105,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.ice_ent",
       },
-      {
-         id = "lich",
+      lich = {
          legacy_id = 47,
          item_type = 6,
          tags = { "undead" },
@@ -3256,8 +3127,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.rotten_one",
       },
-      {
-         id = "master_lich",
+      master_lich = {
          legacy_id = 48,
          item_type = 6,
          tags = { "undead" },
@@ -3280,8 +3150,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.rotten_one",
       },
-      {
-         id = "demi_lich",
+      demi_lich = {
          legacy_id = 49,
          item_type = 6,
          tags = { "undead" },
@@ -3304,8 +3173,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.rotten_one",
       },
-      {
-         id = "executioner",
+      executioner = {
          legacy_id = 307,
          item_type = 6,
          tags = { "undead" },
@@ -3331,8 +3199,7 @@ data:add_multi(
          flags = { "is_death_master" },
          drops = { "core.executioner" },
       },
-      {
-         id = "messenger_of_death",
+      messenger_of_death = {
          legacy_id = 308,
          item_type = 6,
          tags = { "undead" },
@@ -3358,8 +3225,7 @@ data:add_multi(
          flags = { "is_death_master" },
          drops = { "core.executioner" },
       },
-      {
-         id = "hound",
+      hound = {
          legacy_id = 50,
          item_type = 1,
          tags = { "wild" },
@@ -3382,8 +3248,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "fire_hound",
+      fire_hound = {
          legacy_id = 51,
          item_type = 1,
          tags = { "wild", "fire" },
@@ -3410,8 +3275,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "ice_hound",
+      ice_hound = {
          legacy_id = 52,
          item_type = 1,
          tags = { "wild" },
@@ -3438,8 +3302,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "lightning_hound",
+      lightning_hound = {
          legacy_id = 53,
          item_type = 1,
          tags = { "wild" },
@@ -3465,8 +3328,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "dark_hound",
+      dark_hound = {
          legacy_id = 54,
          item_type = 1,
          tags = { "wild" },
@@ -3492,8 +3354,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "illusion_hound",
+      illusion_hound = {
          legacy_id = 55,
          item_type = 1,
          tags = { "wild" },
@@ -3519,8 +3380,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "nerve_hound",
+      nerve_hound = {
          legacy_id = 56,
          item_type = 1,
          tags = { "wild" },
@@ -3546,8 +3406,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "poison_hound",
+      poison_hound = {
          legacy_id = 57,
          item_type = 1,
          tags = { "wild" },
@@ -3573,8 +3432,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "sound_hound",
+      sound_hound = {
          legacy_id = 58,
          item_type = 1,
          tags = { "wild" },
@@ -3600,8 +3458,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "nether_hound",
+      nether_hound = {
          legacy_id = 59,
          item_type = 1,
          tags = { "wild" },
@@ -3627,8 +3484,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "chaos_hound",
+      chaos_hound = {
          legacy_id = 60,
          item_type = 1,
          tags = { "wild" },
@@ -3654,8 +3510,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "giant_squirrel",
+      giant_squirrel = {
          legacy_id = 61,
          item_type = 1,
          tags = { "wild" },
@@ -3678,8 +3533,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.calm",
       },
-      {
-         id = "killer_squirrel",
+      killer_squirrel = {
          legacy_id = 62,
          item_type = 1,
          tags = { "wild" },
@@ -3702,8 +3556,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.calm",
       },
-      {
-         id = "grudge",
+      grudge = {
          legacy_id = 63,
          item_type = 3,
          tags = { "undead" },
@@ -3725,8 +3578,7 @@ data:add_multi(
          flags = { "is_floating" },
          corpse_eating_callback = "core.eating_effect.grudge",
       },
-      {
-         id = "hungry_demon",
+      hungry_demon = {
          legacy_id = 64,
          item_type = 3,
          tags = { "undead" },
@@ -3748,8 +3600,7 @@ data:add_multi(
          flags = { "is_floating" },
          corpse_eating_callback = "core.eating_effect.grudge",
       },
-      {
-         id = "hungry_sea_lion",
+      hungry_sea_lion = {
          legacy_id = 312,
          item_type = 3,
          tags = {},
@@ -3772,8 +3623,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating" },
       },
-      {
-         id = "super_hungry_sea_lion",
+      super_hungry_sea_lion = {
          legacy_id = 313,
          item_type = 3,
          tags = {},
@@ -3797,8 +3647,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating" },
       },
-      {
-         id = "electric_cloud",
+      electric_cloud = {
          legacy_id = 65,
          item_type = 1,
          tags = {},
@@ -3823,8 +3672,7 @@ data:add_multi(
          flags = { "is_floating", "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.electric_cloud",
       },
-      {
-         id = "chaos_cloud",
+      chaos_cloud = {
          legacy_id = 66,
          item_type = 1,
          tags = {},
@@ -3850,8 +3698,7 @@ data:add_multi(
          flags = { "is_floating", "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.chaos_cloud",
       },
-      {
-         id = "floating_eye",
+      floating_eye = {
          legacy_id = 67,
          item_type = 1,
          tags = {},
@@ -3877,8 +3724,7 @@ data:add_multi(
          flags = { "is_floating", "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.floating_eye",
       },
-      {
-         id = "chaos_eye",
+      chaos_eye = {
          legacy_id = 315,
          item_type = 1,
          tags = {},
@@ -3907,8 +3753,7 @@ data:add_multi(
          flags = { "is_floating", "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.chaos_eye",
       },
-      {
-         id = "mad_gaze",
+      mad_gaze = {
          legacy_id = 316,
          item_type = 1,
          tags = {},
@@ -3937,8 +3782,7 @@ data:add_multi(
          flags = { "is_floating", "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.mad_gaze",
       },
-      {
-         id = "death_gaze",
+      death_gaze = {
          legacy_id = 314,
          item_type = 1,
          tags = {},
@@ -3968,8 +3812,7 @@ data:add_multi(
          flags = { "is_floating", "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.floating_eye",
       },
-      {
-         id = "wyvern",
+      wyvern = {
          legacy_id = 68,
          item_type = 4,
          tags = { "dragon" },
@@ -3994,8 +3837,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating" },
       },
-      {
-         id = "puppet",
+      puppet = {
          legacy_id = 78,
          item_type = 3,
          tags = {},
@@ -4017,8 +3859,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "wasp",
+      wasp = {
          legacy_id = 81,
          item_type = 2,
          tags = {},
@@ -4039,8 +3880,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating" },
       },
-      {
-         id = "red_wasp",
+      red_wasp = {
          legacy_id = 82,
          item_type = 2,
          tags = { "fire" },
@@ -4062,8 +3902,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating" },
       },
-      {
-         id = "cyclops",
+      cyclops = {
          legacy_id = 83,
          item_type = 3,
          tags = {},
@@ -4085,8 +3924,7 @@ data:add_multi(
          flags = { "is_quick_tempered" },
          corpse_eating_callback = "core.eating_effect.cyclops",
       },
-      {
-         id = "titan",
+      titan = {
          legacy_id = 84,
          item_type = 3,
          tags = {},
@@ -4110,8 +3948,7 @@ data:add_multi(
          flags = { "is_quick_tempered" },
          corpse_eating_callback = "core.eating_effect.titan",
       },
-      {
-         id = "imp",
+      imp = {
          legacy_id = 85,
          item_type = 3,
          tags = { "fire" },
@@ -4135,8 +3972,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.imp",
          drops = { "core.imp" },
       },
-      {
-         id = "nether_imp",
+      nether_imp = {
          legacy_id = 86,
          item_type = 3,
          tags = { "god" },
@@ -4160,8 +3996,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.imp",
          drops = { "core.imp" },
       },
-      {
-         id = "chaos_imp",
+      chaos_imp = {
          legacy_id = 87,
          item_type = 3,
          tags = {},
@@ -4185,8 +4020,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.imp",
          drops = { "core.imp" },
       },
-      {
-         id = "hand_of_the_dead",
+      hand_of_the_dead = {
          legacy_id = 88,
          item_type = 3,
          tags = { "undead" },
@@ -4208,8 +4042,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.hand",
       },
-      {
-         id = "hand_of_the_chaos",
+      hand_of_the_chaos = {
          legacy_id = 89,
          item_type = 3,
          tags = { "undead" },
@@ -4232,8 +4065,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.hand",
       },
-      {
-         id = "hand_of_the_murderer",
+      hand_of_the_murderer = {
          legacy_id = 90,
          item_type = 3,
          tags = { "undead" },
@@ -4257,8 +4089,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.hand",
       },
-      {
-         id = "ghost",
+      ghost = {
          legacy_id = 91,
          item_type = 3,
          tags = { "undead" },
@@ -4281,8 +4112,7 @@ data:add_multi(
          flags = { "is_floating" },
          corpse_eating_callback = "core.eating_effect.ghost",
       },
-      {
-         id = "nymph",
+      nymph = {
          legacy_id = 92,
          item_type = 3,
          tags = { "undead" },
@@ -4309,8 +4139,7 @@ data:add_multi(
          flags = { "is_floating" },
          corpse_eating_callback = "core.eating_effect.nymph",
       },
-      {
-         id = "man_eater_flower",
+      man_eater_flower = {
          legacy_id = 93,
          item_type = 2,
          tags = {},
@@ -4331,8 +4160,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "chaos_flower",
+      chaos_flower = {
          legacy_id = 94,
          item_type = 2,
          tags = {},
@@ -4354,8 +4182,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "cobra",
+      cobra = {
          legacy_id = 95,
          item_type = 1,
          tags = { "wild" },
@@ -4377,8 +4204,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.cobra",
       },
-      {
-         id = "king_cobra",
+      king_cobra = {
          legacy_id = 96,
          item_type = 1,
          tags = { "wild" },
@@ -4400,8 +4226,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.cobra",
       },
-      {
-         id = "fire_drake",
+      fire_drake = {
          legacy_id = 97,
          item_type = 4,
          tags = { "fire", "dragon" },
@@ -4425,8 +4250,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "ice_drake",
+      ice_drake = {
          legacy_id = 98,
          item_type = 4,
          tags = { "dragon" },
@@ -4449,8 +4273,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "lesser_mummy",
+      lesser_mummy = {
          legacy_id = 99,
          item_type = 3,
          tags = { "undead" },
@@ -4473,8 +4296,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.rotten_one",
          drops = { "core.mummy" },
       },
-      {
-         id = "mummy",
+      mummy = {
          legacy_id = 100,
          item_type = 3,
          tags = { "undead" },
@@ -4498,8 +4320,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.rotten_one",
       },
-      {
-         id = "greater_mummy",
+      greater_mummy = {
          legacy_id = 101,
          item_type = 3,
          tags = { "undead" },
@@ -4523,8 +4344,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.rotten_one",
       },
-      {
-         id = "tuwen",
+      tuwen = {
          legacy_id = 257,
          item_type = 3,
          tags = { "undead" },
@@ -4551,8 +4371,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.rotten_one",
          drops = { "core.tuwen" }
       },
-      {
-         id = "ancient_coffin",
+      ancient_coffin = {
          legacy_id = 254,
          item_type = 3,
          tags = { "undead" },
@@ -4574,8 +4393,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.rotten_one",
       },
-      {
-         id = "goblin",
+      goblin = {
          legacy_id = 102,
          item_type = 3,
          tags = {},
@@ -4595,8 +4413,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "goblin_warrior",
+      goblin_warrior = {
          legacy_id = 103,
          item_type = 3,
          tags = {},
@@ -4617,8 +4434,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "goblin_shaman",
+      goblin_shaman = {
          legacy_id = 104,
          item_type = 3,
          tags = {},
@@ -4641,8 +4457,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "goblin_wizard",
+      goblin_wizard = {
          legacy_id = 105,
          item_type = 3,
          tags = {},
@@ -4663,8 +4478,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "red_baptist",
+      red_baptist = {
          legacy_id = 106,
          item_type = 3,
          tags = { "undead", "fire" },
@@ -4691,8 +4505,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_immune_to_fear" },
       },
-      {
-         id = "blue_baptist",
+      blue_baptist = {
          legacy_id = 107,
          item_type = 3,
          tags = { "undead" },
@@ -4719,8 +4532,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_immune_to_fear" },
       },
-      {
-         id = "brown_bear",
+      brown_bear = {
          legacy_id = 108,
          item_type = 1,
          tags = { "wild" },
@@ -4741,8 +4553,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "grizzly",
+      grizzly = {
          legacy_id = 109,
          item_type = 1,
          tags = { "wild" },
@@ -4763,8 +4574,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_quick_tempered" },
       },
-      {
-         id = "mammoth",
+      mammoth = {
          legacy_id = 344,
          item_type = 1,
          tags = { "wild" },
@@ -4785,8 +4595,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.mammoth",
       },
-      {
-         id = "living_armor",
+      living_armor = {
          legacy_id = 110,
          item_type = 3,
          tags = { "undead" },
@@ -4808,8 +4617,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "steel_mass",
+      steel_mass = {
          legacy_id = 111,
          item_type = 3,
          tags = { "undead" },
@@ -4832,8 +4640,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "golden_armor",
+      golden_armor = {
          legacy_id = 112,
          item_type = 3,
          tags = { "undead" },
@@ -4856,8 +4663,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "death_armor",
+      death_armor = {
          legacy_id = 113,
          item_type = 3,
          tags = {},
@@ -4881,8 +4687,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "medusa",
+      medusa = {
          legacy_id = 114,
          item_type = 3,
          tags = { "god" },
@@ -4902,8 +4707,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "euryale",
+      euryale = {
          legacy_id = 115,
          item_type = 3,
          tags = { "god" },
@@ -4924,8 +4728,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "stheno",
+      stheno = {
          legacy_id = 116,
          item_type = 3,
          tags = { "god" },
@@ -4946,8 +4749,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "cupid_of_love",
+      cupid_of_love = {
          legacy_id = 117,
          item_type = 3,
          tags = { "god" },
@@ -4971,8 +4773,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.cupid_of_love",
          drops = { "core.cupid_of_love" },
       },
-      {
-         id = "lesser_phantom",
+      lesser_phantom = {
          legacy_id = 118,
          item_type = 3,
          tags = { "undead" },
@@ -4994,8 +4795,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating", "is_immune_to_fear" },
       },
-      {
-         id = "tyrannosaurus",
+      tyrannosaurus = {
          legacy_id = 248,
          item_type = 1,
          tags = { "dragon" },
@@ -5015,8 +4815,7 @@ data:add_multi(
          rarity = 50000,
          coefficient = 400,
       },
-      {
-         id = "harpy",
+      harpy = {
          legacy_id = 119,
          item_type = 3,
          tags = {},
@@ -5035,8 +4834,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "green_dragon",
+      green_dragon = {
          legacy_id = 120,
          item_type = 5,
          tags = { "dragon" },
@@ -5058,8 +4856,7 @@ data:add_multi(
          rarity = 30000,
          coefficient = 400,
       },
-      {
-         id = "red_dragon",
+      red_dragon = {
          legacy_id = 121,
          item_type = 5,
          tags = { "fire", "dragon" },
@@ -5084,8 +4881,7 @@ data:add_multi(
          rarity = 20000,
          coefficient = 400,
       },
-      {
-         id = "white_dragon",
+      white_dragon = {
          legacy_id = 122,
          item_type = 5,
          tags = { "dragon" },
@@ -5109,8 +4905,7 @@ data:add_multi(
          rarity = 20000,
          coefficient = 400,
       },
-      {
-         id = "elec_dragon",
+      elec_dragon = {
          legacy_id = 123,
          item_type = 5,
          tags = { "dragon" },
@@ -5135,8 +4930,7 @@ data:add_multi(
          rarity = 20000,
          coefficient = 400,
       },
-      {
-         id = "nether_dragon",
+      nether_dragon = {
          legacy_id = 124,
          item_type = 5,
          tags = { "undead", "dragon" },
@@ -5161,8 +4955,7 @@ data:add_multi(
          rarity = 10000,
          coefficient = 400,
       },
-      {
-         id = "chaos_dragon",
+      chaos_dragon = {
          legacy_id = 125,
          item_type = 5,
          tags = { "dragon" },
@@ -5187,8 +4980,7 @@ data:add_multi(
          rarity = 10000,
          coefficient = 400,
       },
-      {
-         id = "cerberus",
+      cerberus = {
          legacy_id = 126,
          item_type = 4,
          tags = { "fire" },
@@ -5212,8 +5004,7 @@ data:add_multi(
          rarity = 40000,
          coefficient = 400,
       },
-      {
-         id = "scorpion",
+      scorpion = {
          legacy_id = 255,
          item_type = 2,
          tags = { "wild" },
@@ -5238,8 +5029,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.cobra",
       },
-      {
-         id = "king_scorpion",
+      king_scorpion = {
          legacy_id = 256,
          item_type = 2,
          tags = { "wild" },
@@ -5265,8 +5055,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.cobra",
       },
-      {
-         id = "spider",
+      spider = {
          legacy_id = 127,
          item_type = 2,
          tags = { "wild" },
@@ -5290,8 +5079,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "black_widow",
+      black_widow = {
          legacy_id = 128,
          item_type = 2,
          tags = { "wild" },
@@ -5318,8 +5106,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.cobra",
       },
-      {
-         id = "paralyzer",
+      paralyzer = {
          legacy_id = 129,
          item_type = 2,
          tags = { "wild" },
@@ -5346,8 +5133,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.cobra",
       },
-      {
-         id = "tarantula",
+      tarantula = {
          legacy_id = 130,
          item_type = 2,
          tags = { "wild" },
@@ -5374,8 +5160,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.cobra",
       },
-      {
-         id = "blood_spider",
+      blood_spider = {
          legacy_id = 131,
          item_type = 2,
          tags = { "undead" },
@@ -5401,8 +5186,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "wooden_golem",
+      wooden_golem = {
          legacy_id = 132,
          item_type = 3,
          tags = {},
@@ -5425,8 +5209,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "stone_golem",
+      stone_golem = {
          legacy_id = 133,
          item_type = 3,
          tags = { "fire" },
@@ -5448,8 +5231,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "steel_golem",
+      steel_golem = {
          legacy_id = 134,
          item_type = 3,
          tags = { "fire" },
@@ -5473,8 +5255,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "golden_golem",
+      golden_golem = {
          legacy_id = 135,
          item_type = 3,
          tags = {},
@@ -5498,8 +5279,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "mithril_golem",
+      mithril_golem = {
          legacy_id = 136,
          item_type = 3,
          tags = {},
@@ -5523,8 +5303,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "sky_golem",
+      sky_golem = {
          legacy_id = 137,
          item_type = 3,
          tags = {},
@@ -5548,8 +5327,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "adamantium_golem",
+      adamantium_golem = {
          legacy_id = 138,
          item_type = 3,
          tags = {},
@@ -5573,8 +5351,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "fire_crab",
+      fire_crab = {
          legacy_id = 147,
          item_type = 2,
          tags = { "fire" },
@@ -5598,8 +5375,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.fire_crab",
       },
-      {
-         id = "fire_centipede",
+      fire_centipede = {
          legacy_id = 148,
          item_type = 2,
          tags = { "fire" },
@@ -5624,8 +5400,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.fire_centipede",
       },
-      {
-         id = "cultist_of_fire",
+      cultist_of_fire = {
          legacy_id = 149,
          item_type = 3,
          tags = { "fire" },
@@ -5651,8 +5426,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "skeleton_warrior",
+      skeleton_warrior = {
          legacy_id = 150,
          item_type = 3,
          tags = { "undead" },
@@ -5673,8 +5447,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_immune_to_fear" },
       },
-      {
-         id = "skeleton_berserker",
+      skeleton_berserker = {
          legacy_id = 151,
          item_type = 3,
          tags = { "undead" },
@@ -5697,8 +5470,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_immune_to_fear" },
       },
-      {
-         id = "missionary_of_darkness",
+      missionary_of_darkness = {
          legacy_id = 152,
          item_type = 3,
          tags = { "man" },
@@ -5721,8 +5493,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_immune_to_fear" },
       },
-      {
-         id = "pawn",
+      pawn = {
          legacy_id = 153,
          item_type = 3,
          tags = { "pawn" },
@@ -5743,8 +5514,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "rook",
+      rook = {
          legacy_id = 154,
          item_type = 3,
          tags = { "pawn" },
@@ -5766,8 +5536,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "bishop",
+      bishop = {
          legacy_id = 155,
          item_type = 3,
          tags = { "pawn" },
@@ -5790,8 +5559,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "knight",
+      knight = {
          legacy_id = 156,
          item_type = 3,
          tags = { "pawn" },
@@ -5814,8 +5582,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "queen",
+      queen = {
          legacy_id = 157,
          item_type = 3,
          tags = {},
@@ -5838,8 +5605,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "king",
+      king = {
          legacy_id = 158,
          item_type = 3,
          tags = {},
@@ -5862,8 +5628,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "mercenary_warrior",
+      mercenary_warrior = {
          legacy_id = 159,
          item_type = 3,
          tags = { "man", "shopguard" },
@@ -5886,8 +5651,7 @@ data:add_multi(
          rarity = 25000,
          coefficient = 400,
       },
-      {
-         id = "mercenary_archer",
+      mercenary_archer = {
          legacy_id = 160,
          item_type = 3,
          tags = { "man", "shopguard" },
@@ -5910,8 +5674,7 @@ data:add_multi(
          rarity = 25000,
          coefficient = 400,
       },
-      {
-         id = "mercenary_wizard",
+      mercenary_wizard = {
          legacy_id = 161,
          item_type = 3,
          tags = { "man", "shopguard" },
@@ -5934,8 +5697,7 @@ data:add_multi(
          rarity = 25000,
          coefficient = 400,
       },
-      {
-         id = "rogue_boss",
+      rogue_boss = {
          legacy_id = 302,
          item_type = 3,
          tags = { "man", "rogue" },
@@ -5965,8 +5727,7 @@ data:add_multi(
          drops = { "core.rogue", "core.rogue_boss" },
          dialog_id = "core.rogue_boss",
       },
-      {
-         id = "rogue_warrior",
+      rogue_warrior = {
          legacy_id = 303,
          item_type = 3,
          tags = { "man", "rogue" },
@@ -5991,8 +5752,7 @@ data:add_multi(
          coefficient = 400,
          drops = { "core.rogue" },
       },
-      {
-         id = "rogue_archer",
+      rogue_archer = {
          legacy_id = 304,
          item_type = 3,
          tags = { "man", "rogue" },
@@ -6016,8 +5776,7 @@ data:add_multi(
          coefficient = 400,
          drops = { "core.rogue" },
       },
-      {
-         id = "rogue_wizard",
+      rogue_wizard = {
          legacy_id = 305,
          item_type = 3,
          tags = { "man", "rogue" },
@@ -6042,8 +5801,7 @@ data:add_multi(
          coefficient = 400,
          drops = { "core.rogue" },
       },
-      {
-         id = "yerles_machine_infantry",
+      yerles_machine_infantry = {
          legacy_id = 162,
          item_type = 3,
          tags = { "man" },
@@ -6065,8 +5823,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "yerles_elite_machine_infantry",
+      yerles_elite_machine_infantry = {
          legacy_id = 234,
          item_type = 3,
          tags = { "man" },
@@ -6089,8 +5846,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "gilbert",
+      gilbert = {
          legacy_id = 231,
          item_type = 3,
          tags = { "man" },
@@ -6116,8 +5872,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.gilbert",
       },
-      {
-         id = "yerles_self_propelled_gun",
+      yerles_self_propelled_gun = {
          legacy_id = 232,
          item_type = 3,
          tags = {},
@@ -6138,8 +5893,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "juere_infantry",
+      juere_infantry = {
          legacy_id = 233,
          item_type = 3,
          tags = { "man" },
@@ -6161,8 +5915,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "juere_swordman",
+      juere_swordman = {
          legacy_id = 235,
          item_type = 3,
          tags = { "man" },
@@ -6185,8 +5938,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "rock_thrower",
+      rock_thrower = {
          legacy_id = 163,
          item_type = 3,
          tags = { "man" },
@@ -6208,8 +5960,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "cat",
+      cat = {
          legacy_id = 164,
          item_type = 1,
          tags = { "wild", "cat" },
@@ -6232,8 +5983,7 @@ data:add_multi(
          flags = { "is_suitable_for_mount" },
          corpse_eating_callback = "core.eating_effect.cat",
       },
-      {
-         id = "silver_cat",
+      silver_cat = {
          legacy_id = 246,
          item_type = 1,
          tags = { "wild", "cat" },
@@ -6256,8 +6006,7 @@ data:add_multi(
          coefficient = 0,
          corpse_eating_callback = "core.eating_effect.cat",
       },
-      {
-         id = "stray_cat",
+      stray_cat = {
          legacy_id = 332,
          item_type = 1,
          tags = { "wild", "cat" },
@@ -6281,8 +6030,7 @@ data:add_multi(
          coefficient = 0,
          corpse_eating_callback = "core.eating_effect.cat",
       },
-      {
-         id = "lion",
+      lion = {
          legacy_id = 229,
          item_type = 1,
          tags = { "wild", "cat" },
@@ -6305,8 +6053,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "cacy",
+      cacy = {
          legacy_id = 230,
          item_type = 1,
          tags = { "wild", "cat" },
@@ -6330,8 +6077,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "carbuncle",
+      carbuncle = {
          legacy_id = 228,
          item_type = 1,
          tags = { "wild", "cat" },
@@ -6354,8 +6100,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "dog",
+      dog = {
          legacy_id = 165,
          item_type = 1,
          tags = { "wild" },
@@ -6377,8 +6122,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "poppy",
+      poppy = {
          legacy_id = 225,
          item_type = 1,
          tags = { "wild" },
@@ -6402,8 +6146,7 @@ data:add_multi(
          flags = { "is_suitable_for_mount" },
          dialog_id = "core.poppy",
       },
-      {
-         id = "rilian",
+      rilian = {
          legacy_id = 226,
          item_type = 3,
          tags = { "man" },
@@ -6427,8 +6170,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.rilian",
       },
-      {
-         id = "tam",
+      tam = {
          legacy_id = 227,
          item_type = 3,
          tags = { "man" },
@@ -6453,8 +6195,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.tam",
       },
-      {
-         id = "little_girl",
+      little_girl = {
          legacy_id = 166,
          item_type = 3,
          tags = { "man" },
@@ -6478,8 +6219,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "rat",
+      rat = {
          legacy_id = 167,
          item_type = 1,
          tags = { "wild" },
@@ -6500,8 +6240,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "hermit_crab",
+      hermit_crab = {
          legacy_id = 168,
          item_type = 1,
          tags = { "wild" },
@@ -6523,8 +6262,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.calm",
          drops = { "core.hermit_crab" },
       },
-      {
-         id = "public_performer",
+      public_performer = {
          legacy_id = 170,
          item_type = 3,
          tags = { "man" },
@@ -6547,8 +6285,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "frisia",
+      frisia = {
          legacy_id = 175,
          item_type = 3,
          tags = { "god" },
@@ -6571,8 +6308,7 @@ data:add_multi(
          coefficient = 400,
          drops = { "core.god_boss" },
       },
-      {
-         id = "younger_sister",
+      younger_sister = {
          legacy_id = 176,
          item_type = 3,
          tags = { "man" },
@@ -6596,8 +6332,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "younger_sister_of_mansion",
+      younger_sister_of_mansion = {
          legacy_id = 249,
          item_type = 3,
          tags = { "man" },
@@ -6622,8 +6357,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "younger_cat_sister",
+      younger_cat_sister = {
          legacy_id = 210,
          item_type = 3,
          tags = { "man" },
@@ -6645,8 +6379,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "young_lady",
+      young_lady = {
          legacy_id = 211,
          item_type = 3,
          tags = { "man" },
@@ -6672,8 +6405,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "utima",
+      utima = {
          legacy_id = 177,
          item_type = 3,
          tags = { "god" },
@@ -6702,8 +6434,7 @@ data:add_multi(
          coefficient = 400,
          drops = { "core.god_boss" },
       },
-      {
-         id = "azzrssil",
+      azzrssil = {
          legacy_id = 178,
          item_type = 6,
          tags = { "undead", "god" },
@@ -6731,8 +6462,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.insanity",
          drops = { "core.god_boss" },
       },
-      {
-         id = "master_of_pet_arena",
+      master_of_pet_arena = {
          legacy_id = 179,
          item_type = 3,
          tags = { "man" },
@@ -6753,8 +6483,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "garok",
+      garok = {
          legacy_id = 208,
          item_type = 3,
          tags = { "man" },
@@ -6779,8 +6508,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.garok",
       },
-      {
-         id = "miral",
+      miral = {
          legacy_id = 209,
          item_type = 3,
          tags = { "man" },
@@ -6805,8 +6533,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.miral",
       },
-      {
-         id = "twintail",
+      twintail = {
          legacy_id = 180,
          item_type = 1,
          tags = {},
@@ -6828,8 +6555,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "silver_wolf",
+      silver_wolf = {
          legacy_id = 181,
          item_type = 1,
          tags = { "god" },
@@ -6850,8 +6576,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "nurse",
+      nurse = {
          legacy_id = 182,
          item_type = 3,
          tags = { "man" },
@@ -6875,8 +6600,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
       },
-      {
-         id = "rich_person",
+      rich_person = {
          legacy_id = 183,
          item_type = 3,
          tags = { "man" },
@@ -6901,8 +6625,7 @@ data:add_multi(
          coefficient = 400,
          drops = { "core.rich_person" },
       },
-      {
-         id = "noble_child",
+      noble_child = {
          legacy_id = 184,
          item_type = 3,
          tags = { "man" },
@@ -6927,8 +6650,7 @@ data:add_multi(
          coefficient = 400,
          drops = { "core.noble_child" },
       },
-      {
-         id = "tourist",
+      tourist = {
          legacy_id = 185,
          item_type = 3,
          tags = { "man" },
@@ -6954,8 +6676,7 @@ data:add_multi(
          coefficient = 400,
          drops = { "core.tourist" },
       },
-      {
-         id = "festival_tourist",
+      festival_tourist = {
          legacy_id = 350,
          item_type = 3,
          tags = { "man" },
@@ -6981,8 +6702,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "blade",
+      blade = {
          legacy_id = 186,
          item_type = 3,
          tags = {},
@@ -7004,8 +6724,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "blade_alpha",
+      blade_alpha = {
          legacy_id = 187,
          item_type = 3,
          tags = {},
@@ -7029,8 +6748,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "blade_omega",
+      blade_omega = {
          legacy_id = 188,
          item_type = 3,
          tags = {},
@@ -7054,8 +6772,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "kaneda_bike",
+      kaneda_bike = {
          legacy_id = 345,
          item_type = 3,
          tags = {},
@@ -7081,8 +6798,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.iron",
          dialog_id = "core.kaneda_bike",
       },
-      {
-         id = "cub",
+      cub = {
          legacy_id = 346,
          item_type = 3,
          tags = {},
@@ -7106,8 +6822,7 @@ data:add_multi(
          flags = { "is_immune_to_fear", "is_suitable_for_mount" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "mine_dog",
+      mine_dog = {
          legacy_id = 341,
          item_type = 3,
          tags = {},
@@ -7131,8 +6846,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.iron",
          drops = { "core.mine_dog" },
       },
-      {
-         id = "iron_maiden",
+      iron_maiden = {
          legacy_id = 258,
          item_type = 3,
          tags = {},
@@ -7156,8 +6870,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "deformed_eye",
+      deformed_eye = {
          legacy_id = 189,
          item_type = 3,
          tags = { "undead" },
@@ -7181,8 +6894,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.deformed_eye",
          drops = { "core.deformed_eye" },
       },
-      {
-         id = "impure_eye",
+      impure_eye = {
          legacy_id = 190,
          item_type = 3,
          tags = { "undead" },
@@ -7207,8 +6919,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.deformed_eye",
          drops = { "core.deformed_eye" },
       },
-      {
-         id = "wisp",
+      wisp = {
          legacy_id = 191,
          item_type = 3,
          tags = { "undead", "ether" },
@@ -7233,8 +6944,7 @@ data:add_multi(
          flags = { "is_floating", "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.ether",
       },
-      {
-         id = "hedgehog",
+      hedgehog = {
          legacy_id = 192,
          item_type = 1,
          tags = { "wild" },
@@ -7255,8 +6965,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "shining_hedgehog",
+      shining_hedgehog = {
          legacy_id = 193,
          item_type = 1,
          tags = { "wild", "ether" },
@@ -7279,8 +6988,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.ether",
       },
-      {
-         id = "chicken",
+      chicken = {
          legacy_id = 195,
          item_type = 1,
          tags = { "wild" },
@@ -7300,8 +7008,7 @@ data:add_multi(
          rarity = 30000,
          coefficient = 400,
       },
-      {
-         id = "pumpkin",
+      pumpkin = {
          legacy_id = 196,
          item_type = 2,
          tags = { "undead" },
@@ -7324,8 +7031,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.pumpkin",
       },
-      {
-         id = "puppy",
+      puppy = {
          legacy_id = 201,
          item_type = 2,
          tags = { "undead" },
@@ -7350,8 +7056,7 @@ data:add_multi(
          flags = { "is_invisible" },
          corpse_eating_callback = "core.eating_effect.pumpkin",
       },
-      {
-         id = "greater_pumpkin",
+      greater_pumpkin = {
          legacy_id = 197,
          item_type = 2,
          tags = { "undead" },
@@ -7376,8 +7081,7 @@ data:add_multi(
          flags = { "is_invisible" },
          corpse_eating_callback = "core.eating_effect.greater_pumpkin",
       },
-      {
-         id = "halloween_nightmare",
+      halloween_nightmare = {
          legacy_id = 198,
          item_type = 2,
          tags = { "undead" },
@@ -7402,8 +7106,7 @@ data:add_multi(
          flags = { "is_invisible" },
          corpse_eating_callback = "core.eating_effect.halloween_nightmare",
       },
-      {
-         id = "stalker",
+      stalker = {
          legacy_id = 199,
          item_type = 3,
          tags = { "undead" },
@@ -7426,8 +7129,7 @@ data:add_multi(
          flags = { "is_invisible", "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.stalker",
       },
-      {
-         id = "shadow_stalker",
+      shadow_stalker = {
          legacy_id = 200,
          item_type = 3,
          tags = { "undead" },
@@ -7451,8 +7153,7 @@ data:add_multi(
          flags = { "is_invisible", "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.stalker",
       },
-      {
-         id = "ebon",
+      ebon = {
          legacy_id = 202,
          item_type = 3,
          tags = {},
@@ -7479,8 +7180,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "moyer",
+      moyer = {
          legacy_id = 203,
          item_type = 3,
          tags = { "man" },
@@ -7504,8 +7204,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "maid",
+      maid = {
          legacy_id = 205,
          item_type = 3,
          tags = { "man" },
@@ -7529,8 +7228,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "ebon2",
+      ebon2 = {
          legacy_id = 207,
          item_type = 3,
          tags = { "god" },
@@ -7558,8 +7256,7 @@ data:add_multi(
          coefficient = 400,
       },
       -- "Has" the same name as "Stersha" in "EN", but is named "実験台" in "JP".
-      {
-         id = "test_subject",
+      test_subject = {
          legacy_id = 212,
          item_type = 3,
          tags = {},
@@ -7584,8 +7281,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "gwen",
+      gwen = {
          legacy_id = 213,
          item_type = 3,
          tags = { "man" },
@@ -7610,8 +7306,7 @@ data:add_multi(
          coefficient = 400,
          drops = { "core.gwen" },
       },
-      {
-         id = "pael",
+      pael = {
          legacy_id = 221,
          item_type = 3,
          tags = { "man" },
@@ -7637,8 +7332,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.pael",
       },
-      {
-         id = "lily",
+      lily = {
          legacy_id = 222,
          item_type = 3,
          tags = { "man" },
@@ -7664,8 +7358,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.lily",
       },
-      {
-         id = "raphael",
+      raphael = {
          legacy_id = 223,
          item_type = 3,
          tags = { "man" },
@@ -7691,8 +7384,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.raphael",
       },
-      {
-         id = "ainc",
+      ainc = {
          legacy_id = 224,
          item_type = 3,
          tags = { "man" },
@@ -7718,8 +7410,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.ainc",
       },
-      {
-         id = "arnord",
+      arnord = {
          legacy_id = 243,
          item_type = 3,
          tags = { "man" },
@@ -7745,8 +7436,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.arnord",
       },
-      {
-         id = "mia",
+      mia = {
          legacy_id = 247,
          item_type = 3,
          tags = { "man" },
@@ -7771,8 +7461,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.mia",
       },
-      {
-         id = "renton",
+      renton = {
          legacy_id = 252,
          item_type = 3,
          tags = { "man" },
@@ -7798,8 +7487,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.renton",
       },
-      {
-         id = "marks",
+      marks = {
          legacy_id = 253,
          item_type = 3,
          tags = { "man" },
@@ -7826,8 +7514,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.marks",
       },
-      {
-         id = "noel",
+      noel = {
          legacy_id = 259,
          item_type = 3,
          tags = { "man" },
@@ -7854,8 +7541,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.noel",
       },
-      {
-         id = "conery",
+      conery = {
          legacy_id = 301,
          item_type = 3,
          tags = { "man" },
@@ -7883,8 +7569,7 @@ data:add_multi(
          flags = { "is_quick_tempered" },
          dialog_id = "core.conery",
       },
-      {
-         id = "thief",
+      thief = {
          legacy_id = 214,
          item_type = 3,
          tags = { "man" },
@@ -7907,8 +7592,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "drops_gold" },
       },
-      {
-         id = "robber",
+      robber = {
          legacy_id = 215,
          item_type = 3,
          tags = { "man" },
@@ -7933,8 +7617,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "drops_gold" },
       },
-      {
-         id = "master_thief",
+      master_thief = {
          legacy_id = 217,
          item_type = 3,
          tags = { "man" },
@@ -7959,8 +7642,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "drops_gold" },
       },
-      {
-         id = "great_race_of_yith",
+      great_race_of_yith = {
          legacy_id = 216,
          item_type = 1,
          tags = {},
@@ -7985,8 +7667,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.yith",
       },
-      {
-         id = "shub_niggurath",
+      shub_niggurath = {
          legacy_id = 218,
          item_type = 1,
          tags = {},
@@ -8013,8 +7694,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.yith",
       },
-      {
-         id = "gagu",
+      gagu = {
          legacy_id = 219,
          item_type = 3,
          tags = {},
@@ -8037,8 +7717,7 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.yith",
       },
-      {
-         id = "spiral_king",
+      spiral_king = {
          legacy_id = 220,
          item_type = 3,
          tags = { "god" },
@@ -8065,8 +7744,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.yith",
       },
-      {
-         id = "fairy",
+      fairy = {
          legacy_id = 250,
          item_type = 3,
          tags = {},
@@ -8088,8 +7766,7 @@ data:add_multi(
          flags = { "is_floating", "drops_gold" },
          drops = { "core.fairy" },
       },
-      {
-         id = "black_cat",
+      black_cat = {
          legacy_id = 260,
          item_type = 3,
          tags = { "god" },
@@ -8115,8 +7792,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating" },
       },
-      {
-         id = "cute_fairy",
+      cute_fairy = {
          legacy_id = 261,
          item_type = 3,
          tags = { "god" },
@@ -8142,8 +7818,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating" },
       },
-      {
-         id = "android",
+      android = {
          legacy_id = 262,
          item_type = 3,
          tags = { "god" },
@@ -8168,8 +7843,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating" },
       },
-      {
-         id = "black_angel",
+      black_angel = {
          legacy_id = 263,
          item_type = 3,
          tags = { "god" },
@@ -8196,8 +7870,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating", "is_suitable_for_mount" },
       },
-      {
-         id = "exile",
+      exile = {
          legacy_id = 264,
          item_type = 3,
          tags = { "god" },
@@ -8221,8 +7894,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating", "can_cast_rapid_magic" },
       },
-      {
-         id = "golden_knight",
+      golden_knight = {
          legacy_id = 265,
          item_type = 3,
          tags = { "god" },
@@ -8249,8 +7921,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating" },
       },
-      {
-         id = "defender",
+      defender = {
          legacy_id = 266,
          item_type = 3,
          tags = { "god" },
@@ -8277,8 +7948,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating", "has_lay_hand" },
       },
-      {
-         id = "lame_horse",
+      lame_horse = {
          legacy_id = 267,
          item_type = 1,
          tags = { "wild", "horse" },
@@ -8302,8 +7972,7 @@ data:add_multi(
          flags = { "is_suitable_for_mount" },
          corpse_eating_callback = "core.eating_effect.horse",
       },
-      {
-         id = "wild_horse",
+      wild_horse = {
          legacy_id = 276,
          item_type = 1,
          tags = { "wild", "horse" },
@@ -8328,8 +7997,7 @@ data:add_multi(
          flags = { "is_suitable_for_mount" },
          corpse_eating_callback = "core.eating_effect.horse",
       },
-      {
-         id = "noyel_horse",
+      noyel_horse = {
          legacy_id = 275,
          item_type = 1,
          tags = { "wild", "horse" },
@@ -8354,8 +8022,7 @@ data:add_multi(
          flags = { "is_suitable_for_mount" },
          corpse_eating_callback = "core.eating_effect.horse",
       },
-      {
-         id = "yowyn_horse",
+      yowyn_horse = {
          legacy_id = 268,
          item_type = 1,
          tags = { "wild", "horse" },
@@ -8380,8 +8047,7 @@ data:add_multi(
          flags = { "is_suitable_for_mount" },
          corpse_eating_callback = "core.eating_effect.horse",
       },
-      {
-         id = "wild_horse2",
+      wild_horse2 = {
          legacy_id = 277,
          item_type = 1,
          tags = { "wild", "horse" },
@@ -8406,8 +8072,7 @@ data:add_multi(
          flags = { "is_suitable_for_mount" },
          corpse_eating_callback = "core.eating_effect.horse",
       },
-      {
-         id = "mutant",
+      mutant = {
          legacy_id = 278,
          item_type = 3,
          tags = {},
@@ -8429,8 +8094,7 @@ data:add_multi(
          rarity = 70000,
          coefficient = 400,
       },
-      {
-         id = "icolle",
+      icolle = {
          legacy_id = 279,
          item_type = 3,
          tags = { "man" },
@@ -8456,8 +8120,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.icolle",
       },
-      {
-         id = "balzak",
+      balzak = {
          legacy_id = 280,
          item_type = 3,
          tags = { "man" },
@@ -8482,8 +8145,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.balzak",
       },
-      {
-         id = "revlus",
+      revlus = {
          legacy_id = 288,
          item_type = 3,
          tags = { "man" },
@@ -8509,8 +8171,7 @@ data:add_multi(
          coefficient = 400,
          flags = { "is_floating", "can_cast_rapid_magic" },
       },
-      {
-         id = "lexus",
+      lexus = {
          legacy_id = 290,
          item_type = 3,
          tags = { "man" },
@@ -8537,8 +8198,7 @@ data:add_multi(
          flags = { "is_floating", "can_cast_rapid_magic" },
          dialog_id = "core.lexus",
       },
-      {
-         id = "sin",
+      sin = {
          legacy_id = 292,
          item_type = 3,
          tags = { "man" },
@@ -8562,8 +8222,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "abyss",
+      abyss = {
          legacy_id = 294,
          item_type = 3,
          tags = { "man" },
@@ -8589,8 +8248,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.abyss",
       },
-      {
-         id = "fray",
+      fray = {
          legacy_id = 291,
          item_type = 3,
          tags = { "man" },
@@ -8614,8 +8272,7 @@ data:add_multi(
          rarity = 100000,
          coefficient = 400,
       },
-      {
-         id = "doria",
+      doria = {
          legacy_id = 297,
          item_type = 3,
          tags = { "man" },
@@ -8641,8 +8298,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.doria",
       },
-      {
-         id = "silver_eyed_witch",
+      silver_eyed_witch = {
          legacy_id = 317,
          item_type = 3,
          tags = {},
@@ -8669,8 +8325,7 @@ data:add_multi(
          rarity = 50000,
          coefficient = 400,
       },
-      {
-         id = "big_daddy",
+      big_daddy = {
          legacy_id = 318,
          item_type = 3,
          tags = {},
@@ -8700,8 +8355,7 @@ data:add_multi(
          flags = { "is_immune_to_fear" },
          corpse_eating_callback = "core.eating_effect.iron",
       },
-      {
-         id = "little_sister",
+      little_sister = {
          legacy_id = 319,
          item_type = 3,
          tags = {},
@@ -8725,8 +8379,7 @@ data:add_multi(
          rarity = 50000,
          coefficient = 400,
       },
-      {
-         id = "strange_scientist",
+      strange_scientist = {
          legacy_id = 322,
          item_type = 3,
          tags = { "man" },
@@ -8751,8 +8404,7 @@ data:add_multi(
          coefficient = 400,
          dialog_id = "core.strange_scientist",
       },
-      {
-         id = "mysterious_producer",
+      mysterious_producer = {
          legacy_id = 334,
          item_type = 3,
          tags = { "man" },
@@ -8776,8 +8428,7 @@ data:add_multi(
          rarity = 50000,
          coefficient = 400,
       },
-      {
-         id = "shade",
+      shade = {
          legacy_id = 323,
          item_type = 3,
          tags = { "undead" },
@@ -8800,8 +8451,7 @@ data:add_multi(
          flags = { "is_floating" },
          corpse_eating_callback = "core.eating_effect.ghost",
       },
-      {
-         id = "quickling",
+      quickling = {
          legacy_id = 324,
          item_type = 3,
          tags = {},
@@ -8823,8 +8473,7 @@ data:add_multi(
          flags = { "is_unsuitable_for_mount", "is_immune_to_elemental_damage" },
          corpse_eating_callback = "core.eating_effect.quickling",
       },
-      {
-         id = "quickling_archer",
+      quickling_archer = {
          legacy_id = 325,
          item_type = 3,
          tags = {},
@@ -8848,8 +8497,7 @@ data:add_multi(
          flags = { "is_unsuitable_for_mount", "is_immune_to_elemental_damage" },
          corpse_eating_callback = "core.eating_effect.quickling",
       },
-      {
-         id = "silver_bell",
+      silver_bell = {
          legacy_id = 328,
          item_type = 1,
          tags = {},
@@ -8873,8 +8521,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.iron",
          drops = { "core.silver_bell" },
       },
-      {
-         id = "gold_bell",
+      gold_bell = {
          legacy_id = 329,
          item_type = 1,
          tags = {},
@@ -8899,8 +8546,7 @@ data:add_multi(
          corpse_eating_callback = "core.eating_effect.iron",
          drops = { "core.gold_bell" },
       },
-      {
-         id = "alien",
+      alien = {
          legacy_id = 330,
          item_type = 1,
          tags = { "dragon" },
@@ -8925,51 +8571,5 @@ data:add_multi(
          coefficient = 400,
          corpse_eating_callback = "core.eating_effect.alien",
       },
-      -- For debug
-      -- chara spiral_putit {
-      --     id = 500,
-      --     item_type = 1,
-      --     tags = { "slime" },
-      --     level = 1,
-      --     ai_calm = 1,
-      --     ai_move = 50,
-      --     ai_dist = 2,
-      --     ai_act_sub_freq = 0,
-      --     creaturepack = 3,
-      --     normal_actions = { 417, 434, 415, 454 },
-      --     special_actions = { 636 },
-      --     original_relationship = "aggressive",
-      --     race = "core.slime",
-      --     class_ = "core.wizard",
-      --     resistances = {
-      --        ["core.element_mind"] = 500,
-      --     },
-      --     image = 430,
-      --     cspecialeq = 0,
-      --     fltselect = 0,
-      --     category = 3,
-      --     rarity = 0,
-      --     coefficient = 0,
-      -- },
-      --
-      -- For debug
-      -- chara dragon_putit {
-      --     id = 501,
-      --     item_type = 5,
-      --     tags = { "dragon" },
-      --     level = 1,
-      --     ai_calm = 1,
-      --     ai_move = 100,
-      --     ai_dist = 1,
-      --     creaturepack = 0,
-      --     normal_actions = { 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612 },
-      --     original_relationship = "aggressive",
-      --     race = "core.dragon",
-      --     class_ = "core.predator",
-      --     cspecialeq = 0,
-      --     fltselect = 0,
-      --     category = 0,
-      --     rarity = 0,
-      --     coefficient = 0,
-      -- },
-})
+   }
+)

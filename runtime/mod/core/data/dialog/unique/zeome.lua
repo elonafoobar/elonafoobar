@@ -1,7 +1,6 @@
 local Internal = ELONA.require("core.Internal")
 
 return {
-   id = "zeome",
    root = "core.talk.unique.zeome",
 
    nodes = {

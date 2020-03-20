@@ -1,9 +1,8 @@
 -- Contains all possible character parameters for testing.
 data:add(
+   "core.chara",
    {
-      {
-         type = "core.chara",
-         id = "spiral_putit",
+      spiral_putit = {
          legacy_id = 9999,
          item_type = 2,
          tags = {"slime", "ether"},

@@ -1,9 +1,8 @@
-data:define_type("fish")
-data:add_multi(
+data:define_prototype("fish")
+data:add(
    "core.fish",
    {
-      {
-         id = "bug",
+      bug = {
          legacy_id = 0,
          no_generate = true,
          rank = 0,
@@ -13,8 +12,7 @@ data:add_multi(
          value = 100,
          item_id = 618,
       },
-      {
-         id = "goldfish",
+      goldfish = {
          legacy_id = 1,
          rank = 0,
          rarity = 1000,
@@ -23,8 +21,7 @@ data:add_multi(
          value = 180,
          item_id = 618,
       },
-      {
-         id = "turtle",
+      turtle = {
          legacy_id = 2,
          rank = 0,
          rarity = 250,
@@ -33,8 +30,7 @@ data:add_multi(
          value = 450,
          item_id = 618,
       },
-      {
-         id = "bitterling",
+      bitterling = {
          legacy_id = 3,
          rank = 0,
          rarity = 50,
@@ -43,8 +39,7 @@ data:add_multi(
          value = 2200,
          item_id = 618,
       },
-      {
-         id = "tadpole",
+      tadpole = {
          legacy_id = 4,
          rank = 0,
          rarity = 1000,
@@ -53,8 +48,7 @@ data:add_multi(
          value = 80,
          item_id = 618,
       },
-      {
-         id = "swimming_trunks",
+      swimming_trunks = {
          legacy_id = 5,
          rank = 0,
          rarity = 400,
@@ -63,8 +57,7 @@ data:add_multi(
          value = 40,
          item_id = 619,
       },
-      {
-         id = "dirty_long_boots",
+      dirty_long_boots = {
          legacy_id = 6,
          rank = 0,
          rarity = 100,
@@ -73,8 +66,7 @@ data:add_multi(
          value = 25,
          item_id = 619,
       },
-      {
-         id = "carp",
+      carp = {
          legacy_id = 7,
          rank = 1,
          rarity = 1000,
@@ -83,8 +75,7 @@ data:add_multi(
          value = 400,
          item_id = 618,
       },
-      {
-         id = "eel",
+      eel = {
          legacy_id = 8,
          rank = 1,
          rarity = 800,
@@ -93,8 +84,7 @@ data:add_multi(
          value = 750,
          item_id = 618,
       },
-      {
-         id = "goby",
+      goby = {
          legacy_id = 9,
          rank = 1,
          rarity = 250,
@@ -103,8 +93,7 @@ data:add_multi(
          value = 1250,
          item_id = 618,
       },
-      {
-         id = "sea_bream",
+      sea_bream = {
          legacy_id = 10,
          rank = 1,
          rarity = 50,
@@ -113,8 +102,7 @@ data:add_multi(
          value = 3500,
          item_id = 618,
       },
-      {
-         id = "empty_can",
+      empty_can = {
          legacy_id = 11,
          rank = 1,
          rarity = 400,
@@ -123,8 +111,7 @@ data:add_multi(
          value = 40,
          item_id = 619,
       },
-      {
-         id = "broken_machine",
+      broken_machine = {
          legacy_id = 12,
          rank = 1,
          rarity = 400,
@@ -133,8 +120,7 @@ data:add_multi(
          value = 25,
          item_id = 619,
       },
-      {
-         id = "sculpin",
+      sculpin = {
          legacy_id = 13,
          rank = 2,
          rarity = 1000,
@@ -143,8 +129,7 @@ data:add_multi(
          value = 800,
          item_id = 618,
       },
-      {
-         id = "sea_bass",
+      sea_bass = {
          legacy_id = 14,
          rank = 2,
          rarity = 800,
@@ -153,8 +138,7 @@ data:add_multi(
          value = 1200,
          item_id = 618,
       },
-      {
-         id = "sea_urchin",
+      sea_urchin = {
          legacy_id = 15,
          rank = 2,
          rarity = 250,
@@ -163,8 +147,7 @@ data:add_multi(
          value = 1800,
          item_id = 618,
       },
-      {
-         id = "red_sea_bream",
+      red_sea_bream = {
          legacy_id = 16,
          rank = 2,
          rarity = 50,
@@ -173,8 +156,7 @@ data:add_multi(
          value = 4500,
          item_id = 618,
       },
-      {
-         id = "empty_bottle",
+      empty_bottle = {
          legacy_id = 17,
          rank = 2,
          rarity = 400,
@@ -183,8 +165,7 @@ data:add_multi(
          value = 40,
          item_id = 619,
       },
-      {
-         id = "dirty_ring",
+      dirty_ring = {
          legacy_id = 18,
          rank = 2,
          rarity = 400,
@@ -193,8 +174,7 @@ data:add_multi(
          value = 325,
          item_id = 619,
       },
-      {
-         id = "sword_fish",
+      sword_fish = {
          legacy_id = 19,
          rank = 3,
          rarity = 1000,
@@ -203,8 +183,7 @@ data:add_multi(
          value = 1500,
          item_id = 618,
       },
-      {
-         id = "moonfish",
+      moonfish = {
          legacy_id = 20,
          rank = 3,
          rarity = 800,
@@ -213,8 +192,7 @@ data:add_multi(
          value = 1900,
          item_id = 618,
       },
-      {
-         id = "tuna_fish",
+      tuna_fish = {
          legacy_id = 21,
          rank = 3,
          rarity = 250,
@@ -223,8 +201,7 @@ data:add_multi(
          value = 2400,
          item_id = 618,
       },
-      {
-         id = "ancient_fish",
+      ancient_fish = {
          legacy_id = 22,
          rank = 3,
          rarity = 50,
@@ -233,8 +210,7 @@ data:add_multi(
          value = 7200,
          item_id = 618,
       },
-      {
-         id = "broken_umbrella",
+      broken_umbrella = {
          legacy_id = 23,
          rank = 3,
          rarity = 1000,
@@ -243,8 +219,7 @@ data:add_multi(
          value = 40,
          item_id = 619,
       },
-      {
-         id = "hairpiece",
+      hairpiece = {
          legacy_id = 24,
          rank = 3,
          rarity = 1000,
@@ -253,8 +228,7 @@ data:add_multi(
          value = 425,
          item_id = 619,
       },
-      {
-         id = "bonito",
+      bonito = {
          legacy_id = 25,
          rank = 4,
          rarity = 1000,
@@ -263,8 +237,7 @@ data:add_multi(
          value = 2200,
          item_id = 618,
       },
-      {
-         id = "sweetfish",
+      sweetfish = {
          legacy_id = 26,
          rank = 4,
          rarity = 800,
@@ -273,8 +246,7 @@ data:add_multi(
          value = 2600,
          item_id = 618,
       },
-      {
-         id = "yellow_jack",
+      yellow_jack = {
          legacy_id = 27,
          rank = 4,
          rarity = 250,
@@ -283,8 +255,7 @@ data:add_multi(
          value = 4500,
          item_id = 618,
       },
-      {
-         id = "black_bass",
+      black_bass = {
          legacy_id = 28,
          rank = 4,
          rarity = 50,
@@ -293,8 +264,7 @@ data:add_multi(
          value = 11200,
          item_id = 618,
       },
-      {
-         id = "ashore_from_north",
+      ashore_from_north = {
          legacy_id = 29,
          rank = 4,
          rarity = 400,
@@ -303,8 +273,7 @@ data:add_multi(
          value = 240,
          item_id = 619,
       },
-      {
-         id = "pornographic_book",
+      pornographic_book = {
          legacy_id = 30,
          rank = 4,
          rarity = 400,
@@ -313,8 +282,7 @@ data:add_multi(
          value = 525,
          item_id = 619,
       },
-      {
-         id = "mackerel",
+      mackerel = {
          legacy_id = 31,
          rank = 5,
          rarity = 1000,
@@ -323,8 +291,7 @@ data:add_multi(
          value = 3500,
          item_id = 618,
       },
-      {
-         id = "big_tuna_fish",
+      big_tuna_fish = {
          legacy_id = 32,
          rank = 5,
          rarity = 800,
@@ -333,8 +300,7 @@ data:add_multi(
          value = 4400,
          item_id = 618,
       },
-      {
-         id = "remora",
+      remora = {
          legacy_id = 33,
          rank = 5,
          rarity = 250,
@@ -343,8 +309,7 @@ data:add_multi(
          value = 9550,
          item_id = 618,
       },
-      {
-         id = "whale",
+      whale = {
          legacy_id = 34,
          rank = 5,
          rarity = 50,
@@ -353,8 +318,7 @@ data:add_multi(
          value = 25000,
          item_id = 618,
       },
-      {
-         id = "empty_box",
+      empty_box = {
          legacy_id = 35,
          rank = 5,
          rarity = 400,
@@ -363,8 +327,7 @@ data:add_multi(
          value = 40,
          item_id = 619,
       },
-      {
-         id = "broken_cell_phone",
+      broken_cell_phone = {
          legacy_id = 36,
          rank = 5,
          rarity = 400,
@@ -373,4 +336,5 @@ data:add_multi(
          value = 25,
          item_id = 619,
       },
-})
+   }
+)
