@@ -7,6 +7,6 @@ local ReadOnly = require("readonly")
 _LOADED = true
 
 return {
-   Iter,
-   ReadOnly,
+   Iter = Iter,
+   ReadOnly = ReadOnly,
 }

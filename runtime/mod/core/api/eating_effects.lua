@@ -5,7 +5,7 @@ local I18N = ELONA.require("core.I18N")
 local math = math
 local Rand = ELONA.require("core.Rand")
 
-local eating_effect = {}
+local EatingEffects = {}
 
 local function eat_message(eater, locale_id, color)
    local locale_key = "core.food.effect.corpse." .. locale_id
@@ -21,33 +21,33 @@ local function mod_resist_chance(eater, elem, chance)
 end
 
 
-function eating_effect.iron(eater)
+function EatingEffects.iron(eater)
    eat_message(eater, "iron", "purple")
    eater:apply_ailment("dimmed", 200)
 end
 
-function eating_effect.deformed_eye(eater)
+function EatingEffects.deformed_eye(eater)
    eat_message(eater, "deformed_eye", "purple")
    eater:modify_sanity(-25)
    eater:apply_ailment("insane", 500)
 end
 
-function eating_effect.horse(eater)
+function EatingEffects.horse(eater)
    eat_message(eater, "horse", "green")
    eater:gain_skill_exp("core.attribute_constitution", 100)
 end
 
-function eating_effect.holy_one(eater)
+function EatingEffects.holy_one(eater)
    eat_message(eater, "holy_one", "green")
    eater:modify_sanity(-50)
    mod_resist_chance(eater, "mind", 5)
 end
 
-function eating_effect.at(eater)
+function EatingEffects.at(eater)
    eat_message(eater, "at", "none")
 end
 
-function eating_effect.guard(eater)
+function EatingEffects.guard(eater)
    if not Chara.is_player(eater) then
       return
    end
@@ -55,7 +55,7 @@ function eating_effect.guard(eater)
    eater:modify_karma(-15)
 end
 
-function eating_effect.vesda(eater)
+function EatingEffects.vesda(eater)
    if not Chara.is_player(eater) then
       return
    end
@@ -63,19 +63,19 @@ function eating_effect.vesda(eater)
    eater:modify_resistance("fire", 100)
 end
 
-function eating_effect.insanity(eater)
+function EatingEffects.insanity(eater)
    eat_message(eater, "insanity", "purple")
    eater:modify_resistance("mind", 50)
    eater:modify_sanity(-500)
    eater:apply_ailment("insane", 1000)
 end
 
-function eating_effect.putit(eater)
+function EatingEffects.putit(eater)
    eat_message(eater, "putit", "green")
    eater:gain_skill_exp("core.attribute_charisma", 150)
 end
 
-function eating_effect.cupid_of_love(eater)
+function EatingEffects.cupid_of_love(eater)
    eat_message(eater, "cupid_of_love", "green")
    eater:gain_skill_exp("core.attribute_charisma", 400)
 end
@@ -91,61 +91,61 @@ local function eating_effect_poisonous(gain_resist)
    end
 end
 
-eating_effect.cobra = eating_effect_poisonous(true)
-eating_effect.poisonous = eating_effect_poisonous(false)
+EatingEffects.cobra = eating_effect_poisonous(true)
+EatingEffects.poisonous = eating_effect_poisonous(false)
 
 
-function eating_effect.troll(eater)
+function EatingEffects.troll(eater)
    eat_message(eater, "troll", "green")
    eater:gain_skill_exp("core.healing", 200)
 end
 
-function eating_effect.rotten_one(eater)
+function EatingEffects.rotten_one(eater)
    eat_message(eater, "rotten_one", "purple")
    eater:eat_rotten_food()
 end
 
-function eating_effect.beetle(eater)
+function EatingEffects.beetle(eater)
    eat_message(eater, "beetle", "green")
    eater:gain_skill_exp("core.attribute_strength", 250)
 end
 
-function eating_effect.mandrake(eater)
+function EatingEffects.mandrake(eater)
    eat_message(eater, "mandrake", "green")
    eater:gain_skill_exp("core.meditation", 500)
 end
 
-function eating_effect.grudge(eater)
+function EatingEffects.grudge(eater)
    eat_message(eater, "grudge", "purple")
    eater:apply_ailment("confused", 200)
 end
 
-function eating_effect.calm(eater)
+function EatingEffects.calm(eater)
    eat_message(eater, "calm", "green")
    eater:modify_sanity(20)
 end
 
-function eating_effect.fire_crab(eater)
-   eating_effect.calm(eater)
+function EatingEffects.fire_crab(eater)
+   EatingEffects.calm(eater)
    mod_resist_chance(eater, "fire", 5)
 end
 
-function eating_effect.fire_centipede(eater)
+function EatingEffects.fire_centipede(eater)
    mod_resist_chance(eater, "fire", 5)
 end
 
-function eating_effect.yith(eater)
+function EatingEffects.yith(eater)
    eat_message(eater, "insanity", "purple")
    eater:modify_sanity(-50)
    mod_resist_chance(eater, "mind", 5)
 end
 
-function eating_effect.lightning(eater)
+function EatingEffects.lightning(eater)
    eat_message(eater, "lightning", "purple")
    eater:apply_ailment("paralyzed", 300)
 end
 
-function eating_effect.cat(eater)
+function EatingEffects.cat(eater)
    if not Chara.is_player(eater) then
       return
    end
@@ -153,7 +153,7 @@ function eating_effect.cat(eater)
    eater:modify_karma(-5)
 end
 
-function eating_effect.ether(eater)
+function EatingEffects.ether(eater)
    if not Chara.is_player(eater) then
       return
    end
@@ -169,21 +169,21 @@ local function eating_effect_giant(amount)
    end
 end
 
-eating_effect.cyclops = eating_effect_giant(500)
-eating_effect.titan = eating_effect_giant(800)
+EatingEffects.cyclops = eating_effect_giant(500)
+EatingEffects.titan = eating_effect_giant(800)
 
 
-function eating_effect.imp(eater)
+function EatingEffects.imp(eater)
    eat_message(eater, "imp", "green")
    eater:gain_skill_exp("core.attribute_magic", 500)
 end
 
-function eating_effect.hand(eater)
+function EatingEffects.hand(eater)
    eat_message(eater, "strength", "green")
    eater:gain_skill_exp("core.attribute_strength", 400)
 end
 
-function eating_effect.mammoth(eater)
+function EatingEffects.mammoth(eater)
    eat_message(eater, "strength", "green")
    -- NOTE: doesn't apply anything?
 end
@@ -196,11 +196,11 @@ local function eating_effect_ghost(amount)
    end
 end
 
-eating_effect.ghost = eating_effect_ghost(250)
-eating_effect.nymph = eating_effect_ghost(400)
+EatingEffects.ghost = eating_effect_ghost(250)
+EatingEffects.nymph = eating_effect_ghost(400)
 
 
-function eating_effect.quickling(eater)
+function EatingEffects.quickling(eater)
    eat_message(eater, "quickling", "green")
 
    local current = eater:get_skill("core.attribute_speed").current_level
@@ -208,41 +208,41 @@ function eating_effect.quickling(eater)
    eater:gain_skill_exp("core.attribute_speed", amount);
 end
 
-function eating_effect.alien(eater)
+function EatingEffects.alien(eater)
    eat_message(eater, "alien", "none")
    eater:make_pregnant()
 end
 
-function eating_effect.fire_ent(eater)
+function EatingEffects.fire_ent(eater)
    mod_resist_chance(eater, "fire", 3)
 end
 
-function eating_effect.ice_ent(eater)
+function EatingEffects.ice_ent(eater)
    mod_resist_chance(eater, "cold", 3)
 end
 
-function eating_effect.electric_cloud(eater)
+function EatingEffects.electric_cloud(eater)
    mod_resist_chance(eater, "lightning", 4)
 end
 
-function eating_effect.chaos_cloud(eater)
+function EatingEffects.chaos_cloud(eater)
    eat_message(eater, "chaos_cloud", "purple")
    eater:apply_ailment("confused", 300)
    mod_resist_chance(eater, "chaos", 5)
 end
 
-function eating_effect.floating_eye(eater)
-   eating_effect.lightning(eater)
+function EatingEffects.floating_eye(eater)
+   EatingEffects.lightning(eater)
    mod_resist_chance(eater, "nerve", 3)
 end
 
-function eating_effect.chaos_eye(eater)
-   eating_effect.lightning(eater)
+function EatingEffects.chaos_eye(eater)
+   EatingEffects.lightning(eater)
    mod_resist_chance(eater, "chaos", 3)
 end
 
-function eating_effect.mad_gaze(eater)
-   eating_effect.lightning(eater)
+function EatingEffects.mad_gaze(eater)
+   EatingEffects.lightning(eater)
    mod_resist_chance(eater, "mind", 3)
 end
 
@@ -253,14 +253,16 @@ local function eating_effect_pumpkin(resist_gain_chance)
    end
 end
 
-eating_effect.pumpkin = eating_effect_pumpkin(10)
-eating_effect.greater_pumpkin = eating_effect_pumpkin(8)
-eating_effect.halloween_nightmare = eating_effect_pumpkin(6)
+EatingEffects.pumpkin = eating_effect_pumpkin(10)
+EatingEffects.greater_pumpkin = eating_effect_pumpkin(8)
+EatingEffects.halloween_nightmare = eating_effect_pumpkin(6)
 
 
-function eating_effect.stalker(eater)
+function EatingEffects.stalker(eater)
    mod_resist_chance(eater, "darkness", 4)
 end
 
 
-return eating_effect
+api:add {
+   EatingEffects = EatingEffects
+}

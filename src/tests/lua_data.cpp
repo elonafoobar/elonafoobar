@@ -1,4 +1,5 @@
 #include "../elona/filesystem.hpp"
+#include "../elona/lua_env/api_manager.hpp"
 #include "../elona/lua_env/data_manager.hpp"
 #include "../elona/lua_env/export_manager.hpp"
 #include "../elona/lua_env/lua_env.hpp"
@@ -7,6 +8,8 @@
 #include "../elona/variables.hpp"
 #include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
+
+
 
 TEST_CASE("test reading invalid HCL file", "[Lua: Data]")
 {
@@ -18,6 +21,8 @@ TEST_CASE("test reading invalid HCL file", "[Lua: Data]")
 
     REQUIRE_THROWS(lua.get_data_manager().init_from_mods());
 }
+
+
 
 TEST_CASE("test declaring and loading datatype", "[Lua: Data]")
 {
@@ -42,6 +47,8 @@ TEST_CASE("test declaring and loading datatype", "[Lua: Data]")
     REQUIRE((*red)["legacy_id"].get<int>() == 4);
 }
 
+
+
 TEST_CASE("test loading datatype originating from other mod", "[Lua: Data]")
 {
     const auto base_path = testing::get_test_data_path() / "registry";
@@ -61,15 +68,20 @@ TEST_CASE("test loading datatype originating from other mod", "[Lua: Data]")
     REQUIRE((*green)["legacy_id"].get<int>() == 5);
 }
 
+
+
 TEST_CASE(
     "test verification that Exports table only have string keys",
     "[Lua: Data]")
 {
     elona::lua::LuaEnv lua;
     lua.load_mods();
-    REQUIRE_THROWS(lua.get_mod_manager().load_testing_mod_from_file(
+    REQUIRE_NOTHROW(lua.get_mod_manager().load_testing_mod_from_file(
         testing::get_test_data_path() / "mods" / "test_export_keys"));
+    REQUIRE_THROWS(lua.get_api_manager().init_from_mods());
 }
+
+
 
 TEST_CASE("test order of script execution", "[Lua: Data]")
 {

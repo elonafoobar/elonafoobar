@@ -192,7 +192,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.holy_one",
+         corpse_eating_callback = "core.EatingEffects.holy_one",
       },
       nun = {
          legacy_id = 206,
@@ -218,7 +218,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.holy_one",
+         corpse_eating_callback = "core.EatingEffects.holy_one",
       },
       elder = {
          legacy_id = 38,
@@ -318,7 +318,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.guard",
+         corpse_eating_callback = "core.EatingEffects.guard",
       },
       guard = {
          legacy_id = 77,
@@ -343,7 +343,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.guard",
+         corpse_eating_callback = "core.EatingEffects.guard",
       },
       palmian_elite_soldier = {
          legacy_id = 204,
@@ -422,7 +422,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.at",
+         corpse_eating_callback = "core.EatingEffects.at",
       },
       orphe = {
          legacy_id = 23,
@@ -577,7 +577,7 @@ data:add(
          category = 0,
          rarity = 1000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.vesda",
+         corpse_eating_callback = "core.EatingEffects.vesda",
          drops = { "core.vesda" },
       },
       miches = {
@@ -871,7 +871,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.insanity",
+         corpse_eating_callback = "core.EatingEffects.insanity",
       },
       wynan = {
          legacy_id = 143,
@@ -1152,7 +1152,7 @@ data:add(
          rarity = 80000,
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
-         corpse_eating_callback = "core.eating_effect.putit",
+         corpse_eating_callback = "core.EatingEffects.putit",
       },
       red_putit = {
          legacy_id = 4,
@@ -1179,7 +1179,7 @@ data:add(
          rarity = 70000,
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
-         corpse_eating_callback = "core.eating_effect.putit",
+         corpse_eating_callback = "core.EatingEffects.putit",
       },
       slime = {
          legacy_id = 169,
@@ -2010,7 +2010,7 @@ data:add(
          category = 5,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.poisonous",
+         corpse_eating_callback = "core.EatingEffects.poisonous",
       },
       yeek = {
          legacy_id = 236,
@@ -2251,7 +2251,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.poisonous",
+         corpse_eating_callback = "core.EatingEffects.poisonous",
       },
       mushroom = {
          legacy_id = 15,
@@ -2292,7 +2292,7 @@ data:add(
          category = 0,
          rarity = 50000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.poisonous",
+         corpse_eating_callback = "core.EatingEffects.poisonous",
       },
       chaos_mushroom = {
          legacy_id = 284,
@@ -2716,7 +2716,7 @@ data:add(
          category = 2,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.troll",
+         corpse_eating_callback = "core.EatingEffects.troll",
       },
       warrior_of_elea = {
          legacy_id = 18,
@@ -2896,7 +2896,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.mandrake",
+         corpse_eating_callback = "core.EatingEffects.mandrake",
       },
       beetle = {
          legacy_id = 22,
@@ -2917,7 +2917,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.beetle",
+         corpse_eating_callback = "core.EatingEffects.beetle",
       },
       orc_warrior = {
          legacy_id = 20,
@@ -2981,7 +2981,7 @@ data:add(
          category = 9,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.EatingEffects.rotten_one",
          drops = { "core.zombie" },
       },
       bat = {
@@ -3076,7 +3076,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.fire_ent",
+         corpse_eating_callback = "core.EatingEffects.fire_ent",
       },
       ice_ent = {
          legacy_id = 46,
@@ -3103,7 +3103,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.ice_ent",
+         corpse_eating_callback = "core.EatingEffects.ice_ent",
       },
       lich = {
          legacy_id = 47,
@@ -3125,7 +3125,7 @@ data:add(
          category = 0,
          rarity = 60000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.EatingEffects.rotten_one",
       },
       master_lich = {
          legacy_id = 48,
@@ -3148,7 +3148,7 @@ data:add(
          category = 0,
          rarity = 50000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.EatingEffects.rotten_one",
       },
       demi_lich = {
          legacy_id = 49,
@@ -3171,7 +3171,7 @@ data:add(
          category = 0,
          rarity = 40000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.EatingEffects.rotten_one",
       },
       executioner = {
          legacy_id = 307,
@@ -3531,7 +3531,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.calm",
+         corpse_eating_callback = "core.EatingEffects.calm",
       },
       killer_squirrel = {
          legacy_id = 62,
@@ -3554,7 +3554,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.calm",
+         corpse_eating_callback = "core.EatingEffects.calm",
       },
       grudge = {
          legacy_id = 63,
@@ -3576,7 +3576,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_floating" },
-         corpse_eating_callback = "core.eating_effect.grudge",
+         corpse_eating_callback = "core.EatingEffects.grudge",
       },
       hungry_demon = {
          legacy_id = 64,
@@ -3598,7 +3598,7 @@ data:add(
          rarity = 70000,
          coefficient = 400,
          flags = { "is_floating" },
-         corpse_eating_callback = "core.eating_effect.grudge",
+         corpse_eating_callback = "core.EatingEffects.grudge",
       },
       hungry_sea_lion = {
          legacy_id = 312,
@@ -3670,7 +3670,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_floating", "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.electric_cloud",
+         corpse_eating_callback = "core.EatingEffects.electric_cloud",
       },
       chaos_cloud = {
          legacy_id = 66,
@@ -3696,7 +3696,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_floating", "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.chaos_cloud",
+         corpse_eating_callback = "core.EatingEffects.chaos_cloud",
       },
       floating_eye = {
          legacy_id = 67,
@@ -3722,7 +3722,7 @@ data:add(
          rarity = 80000,
          coefficient = 400,
          flags = { "is_floating", "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.floating_eye",
+         corpse_eating_callback = "core.EatingEffects.floating_eye",
       },
       chaos_eye = {
          legacy_id = 315,
@@ -3751,7 +3751,7 @@ data:add(
          rarity = 60000,
          coefficient = 400,
          flags = { "is_floating", "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.chaos_eye",
+         corpse_eating_callback = "core.EatingEffects.chaos_eye",
       },
       mad_gaze = {
          legacy_id = 316,
@@ -3780,7 +3780,7 @@ data:add(
          rarity = 60000,
          coefficient = 400,
          flags = { "is_floating", "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.mad_gaze",
+         corpse_eating_callback = "core.EatingEffects.mad_gaze",
       },
       death_gaze = {
          legacy_id = 314,
@@ -3810,7 +3810,7 @@ data:add(
          rarity = 60000,
          coefficient = 400,
          flags = { "is_floating", "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.floating_eye",
+         corpse_eating_callback = "core.EatingEffects.floating_eye",
       },
       wyvern = {
          legacy_id = 68,
@@ -3922,7 +3922,7 @@ data:add(
          rarity = 60000,
          coefficient = 400,
          flags = { "is_quick_tempered" },
-         corpse_eating_callback = "core.eating_effect.cyclops",
+         corpse_eating_callback = "core.EatingEffects.cyclops",
       },
       titan = {
          legacy_id = 84,
@@ -3946,7 +3946,7 @@ data:add(
          rarity = 50000,
          coefficient = 400,
          flags = { "is_quick_tempered" },
-         corpse_eating_callback = "core.eating_effect.titan",
+         corpse_eating_callback = "core.EatingEffects.titan",
       },
       imp = {
          legacy_id = 85,
@@ -3969,7 +3969,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_floating" },
-         corpse_eating_callback = "core.eating_effect.imp",
+         corpse_eating_callback = "core.EatingEffects.imp",
          drops = { "core.imp" },
       },
       nether_imp = {
@@ -3993,7 +3993,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_floating" },
-         corpse_eating_callback = "core.eating_effect.imp",
+         corpse_eating_callback = "core.EatingEffects.imp",
          drops = { "core.imp" },
       },
       chaos_imp = {
@@ -4017,7 +4017,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_floating" },
-         corpse_eating_callback = "core.eating_effect.imp",
+         corpse_eating_callback = "core.EatingEffects.imp",
          drops = { "core.imp" },
       },
       hand_of_the_dead = {
@@ -4040,7 +4040,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.hand",
+         corpse_eating_callback = "core.EatingEffects.hand",
       },
       hand_of_the_chaos = {
          legacy_id = 89,
@@ -4063,7 +4063,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.hand",
+         corpse_eating_callback = "core.EatingEffects.hand",
       },
       hand_of_the_murderer = {
          legacy_id = 90,
@@ -4087,7 +4087,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.hand",
+         corpse_eating_callback = "core.EatingEffects.hand",
       },
       ghost = {
          legacy_id = 91,
@@ -4110,7 +4110,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_floating" },
-         corpse_eating_callback = "core.eating_effect.ghost",
+         corpse_eating_callback = "core.EatingEffects.ghost",
       },
       nymph = {
          legacy_id = 92,
@@ -4137,7 +4137,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_floating" },
-         corpse_eating_callback = "core.eating_effect.nymph",
+         corpse_eating_callback = "core.EatingEffects.nymph",
       },
       man_eater_flower = {
          legacy_id = 93,
@@ -4202,7 +4202,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.cobra",
+         corpse_eating_callback = "core.EatingEffects.cobra",
       },
       king_cobra = {
          legacy_id = 96,
@@ -4224,7 +4224,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.cobra",
+         corpse_eating_callback = "core.EatingEffects.cobra",
       },
       fire_drake = {
          legacy_id = 97,
@@ -4293,7 +4293,7 @@ data:add(
          category = 13,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.EatingEffects.rotten_one",
          drops = { "core.mummy" },
       },
       mummy = {
@@ -4318,7 +4318,7 @@ data:add(
          category = 13,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.EatingEffects.rotten_one",
       },
       greater_mummy = {
          legacy_id = 101,
@@ -4342,7 +4342,7 @@ data:add(
          category = 13,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.EatingEffects.rotten_one",
       },
       tuwen = {
          legacy_id = 257,
@@ -4368,7 +4368,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_death_master" },
-         corpse_eating_callback = "core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.EatingEffects.rotten_one",
          drops = { "core.tuwen" }
       },
       ancient_coffin = {
@@ -4391,7 +4391,7 @@ data:add(
          category = 13,
          rarity = 50000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.rotten_one",
+         corpse_eating_callback = "core.EatingEffects.rotten_one",
       },
       goblin = {
          legacy_id = 102,
@@ -4593,7 +4593,7 @@ data:add(
          category = 11,
          rarity = 50000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.mammoth",
+         corpse_eating_callback = "core.EatingEffects.mammoth",
       },
       living_armor = {
          legacy_id = 110,
@@ -4615,7 +4615,7 @@ data:add(
          rarity = 40000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       steel_mass = {
          legacy_id = 111,
@@ -4638,7 +4638,7 @@ data:add(
          rarity = 30000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       golden_armor = {
          legacy_id = 112,
@@ -4661,7 +4661,7 @@ data:add(
          rarity = 30000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       death_armor = {
          legacy_id = 113,
@@ -4685,7 +4685,7 @@ data:add(
          rarity = 30000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       medusa = {
          legacy_id = 114,
@@ -4770,7 +4770,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_floating" },
-         corpse_eating_callback = "core.eating_effect.cupid_of_love",
+         corpse_eating_callback = "core.EatingEffects.cupid_of_love",
          drops = { "core.cupid_of_love" },
       },
       lesser_phantom = {
@@ -5027,7 +5027,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.cobra",
+         corpse_eating_callback = "core.EatingEffects.cobra",
       },
       king_scorpion = {
          legacy_id = 256,
@@ -5053,7 +5053,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.cobra",
+         corpse_eating_callback = "core.EatingEffects.cobra",
       },
       spider = {
          legacy_id = 127,
@@ -5104,7 +5104,7 @@ data:add(
          category = 6,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.cobra",
+         corpse_eating_callback = "core.EatingEffects.cobra",
       },
       paralyzer = {
          legacy_id = 129,
@@ -5131,7 +5131,7 @@ data:add(
          category = 6,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.cobra",
+         corpse_eating_callback = "core.EatingEffects.cobra",
       },
       tarantula = {
          legacy_id = 130,
@@ -5158,7 +5158,7 @@ data:add(
          category = 6,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.cobra",
+         corpse_eating_callback = "core.EatingEffects.cobra",
       },
       blood_spider = {
          legacy_id = 131,
@@ -5207,7 +5207,7 @@ data:add(
          rarity = 40000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       stone_golem = {
          legacy_id = 133,
@@ -5229,7 +5229,7 @@ data:add(
          rarity = 40000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       steel_golem = {
          legacy_id = 134,
@@ -5253,7 +5253,7 @@ data:add(
          rarity = 40000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       golden_golem = {
          legacy_id = 135,
@@ -5277,7 +5277,7 @@ data:add(
          rarity = 30000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       mithril_golem = {
          legacy_id = 136,
@@ -5301,7 +5301,7 @@ data:add(
          rarity = 20000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       sky_golem = {
          legacy_id = 137,
@@ -5325,7 +5325,7 @@ data:add(
          rarity = 15000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       adamantium_golem = {
          legacy_id = 138,
@@ -5349,7 +5349,7 @@ data:add(
          rarity = 15000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       fire_crab = {
          legacy_id = 147,
@@ -5373,7 +5373,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.fire_crab",
+         corpse_eating_callback = "core.EatingEffects.fire_crab",
       },
       fire_centipede = {
          legacy_id = 148,
@@ -5398,7 +5398,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.fire_centipede",
+         corpse_eating_callback = "core.EatingEffects.fire_centipede",
       },
       cultist_of_fire = {
          legacy_id = 149,
@@ -5512,7 +5512,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       rook = {
          legacy_id = 154,
@@ -5534,7 +5534,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       bishop = {
          legacy_id = 155,
@@ -5557,7 +5557,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       knight = {
          legacy_id = 156,
@@ -5580,7 +5580,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       queen = {
          legacy_id = 157,
@@ -5603,7 +5603,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       king = {
          legacy_id = 158,
@@ -5626,7 +5626,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       mercenary_warrior = {
          legacy_id = 159,
@@ -5981,7 +5981,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
-         corpse_eating_callback = "core.eating_effect.cat",
+         corpse_eating_callback = "core.EatingEffects.cat",
       },
       silver_cat = {
          legacy_id = 246,
@@ -6004,7 +6004,7 @@ data:add(
          category = 0,
          rarity = 1000,
          coefficient = 0,
-         corpse_eating_callback = "core.eating_effect.cat",
+         corpse_eating_callback = "core.EatingEffects.cat",
       },
       stray_cat = {
          legacy_id = 332,
@@ -6028,7 +6028,7 @@ data:add(
          category = 0,
          rarity = 10000,
          coefficient = 0,
-         corpse_eating_callback = "core.eating_effect.cat",
+         corpse_eating_callback = "core.EatingEffects.cat",
       },
       lion = {
          legacy_id = 229,
@@ -6259,7 +6259,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.calm",
+         corpse_eating_callback = "core.EatingEffects.calm",
          drops = { "core.hermit_crab" },
       },
       public_performer = {
@@ -6459,7 +6459,7 @@ data:add(
          category = 0,
          rarity = 100000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.insanity",
+         corpse_eating_callback = "core.EatingEffects.insanity",
          drops = { "core.god_boss" },
       },
       master_of_pet_arena = {
@@ -6722,7 +6722,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       blade_alpha = {
          legacy_id = 187,
@@ -6746,7 +6746,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       blade_omega = {
          legacy_id = 188,
@@ -6770,7 +6770,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       kaneda_bike = {
          legacy_id = 345,
@@ -6795,7 +6795,7 @@ data:add(
          rarity = 100000,
          coefficient = 400,
          flags = { "is_immune_to_fear", "is_suitable_for_mount" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
          dialog_id = "core.kaneda_bike",
       },
       cub = {
@@ -6820,7 +6820,7 @@ data:add(
          rarity = 5000,
          coefficient = 400,
          flags = { "is_immune_to_fear", "is_suitable_for_mount" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       mine_dog = {
          legacy_id = 341,
@@ -6843,7 +6843,7 @@ data:add(
          rarity = 25000,
          coefficient = 400,
          flags = { "is_immune_to_fear", "is_immune_to_mine", "cures_mp_frequently" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
          drops = { "core.mine_dog" },
       },
       iron_maiden = {
@@ -6868,7 +6868,7 @@ data:add(
          rarity = 50000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       deformed_eye = {
          legacy_id = 189,
@@ -6891,7 +6891,7 @@ data:add(
          rarity = 60000,
          coefficient = 400,
          flags = { "is_floating", "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.deformed_eye",
+         corpse_eating_callback = "core.EatingEffects.deformed_eye",
          drops = { "core.deformed_eye" },
       },
       impure_eye = {
@@ -6916,7 +6916,7 @@ data:add(
          rarity = 60000,
          coefficient = 400,
          flags = { "is_floating", "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.deformed_eye",
+         corpse_eating_callback = "core.EatingEffects.deformed_eye",
          drops = { "core.deformed_eye" },
       },
       wisp = {
@@ -6942,7 +6942,7 @@ data:add(
          rarity = 50000,
          coefficient = 400,
          flags = { "is_floating", "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.ether",
+         corpse_eating_callback = "core.EatingEffects.ether",
       },
       hedgehog = {
          legacy_id = 192,
@@ -6986,7 +6986,7 @@ data:add(
          category = 0,
          rarity = 70000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.ether",
+         corpse_eating_callback = "core.EatingEffects.ether",
       },
       chicken = {
          legacy_id = 195,
@@ -7029,7 +7029,7 @@ data:add(
          category = 0,
          rarity = 60000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.pumpkin",
+         corpse_eating_callback = "core.EatingEffects.pumpkin",
       },
       puppy = {
          legacy_id = 201,
@@ -7054,7 +7054,7 @@ data:add(
          rarity = 20000,
          coefficient = 400,
          flags = { "is_invisible" },
-         corpse_eating_callback = "core.eating_effect.pumpkin",
+         corpse_eating_callback = "core.EatingEffects.pumpkin",
       },
       greater_pumpkin = {
          legacy_id = 197,
@@ -7079,7 +7079,7 @@ data:add(
          rarity = 60000,
          coefficient = 400,
          flags = { "is_invisible" },
-         corpse_eating_callback = "core.eating_effect.greater_pumpkin",
+         corpse_eating_callback = "core.EatingEffects.greater_pumpkin",
       },
       halloween_nightmare = {
          legacy_id = 198,
@@ -7104,7 +7104,7 @@ data:add(
          rarity = 60000,
          coefficient = 400,
          flags = { "is_invisible" },
-         corpse_eating_callback = "core.eating_effect.halloween_nightmare",
+         corpse_eating_callback = "core.EatingEffects.halloween_nightmare",
       },
       stalker = {
          legacy_id = 199,
@@ -7127,7 +7127,7 @@ data:add(
          rarity = 30000,
          coefficient = 400,
          flags = { "is_invisible", "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.stalker",
+         corpse_eating_callback = "core.EatingEffects.stalker",
       },
       shadow_stalker = {
          legacy_id = 200,
@@ -7151,7 +7151,7 @@ data:add(
          rarity = 30000,
          coefficient = 400,
          flags = { "is_invisible", "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.stalker",
+         corpse_eating_callback = "core.EatingEffects.stalker",
       },
       ebon = {
          legacy_id = 202,
@@ -7665,7 +7665,7 @@ data:add(
          rarity = 20000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.yith",
+         corpse_eating_callback = "core.EatingEffects.yith",
       },
       shub_niggurath = {
          legacy_id = 218,
@@ -7692,7 +7692,7 @@ data:add(
          rarity = 40000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.yith",
+         corpse_eating_callback = "core.EatingEffects.yith",
       },
       gagu = {
          legacy_id = 219,
@@ -7715,7 +7715,7 @@ data:add(
          category = 0,
          rarity = 80000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.yith",
+         corpse_eating_callback = "core.EatingEffects.yith",
       },
       spiral_king = {
          legacy_id = 220,
@@ -7742,7 +7742,7 @@ data:add(
          rarity = 30000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.yith",
+         corpse_eating_callback = "core.EatingEffects.yith",
       },
       fairy = {
          legacy_id = 250,
@@ -7970,7 +7970,7 @@ data:add(
          rarity = 10000,
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
-         corpse_eating_callback = "core.eating_effect.horse",
+         corpse_eating_callback = "core.EatingEffects.horse",
       },
       wild_horse = {
          legacy_id = 276,
@@ -7995,7 +7995,7 @@ data:add(
          rarity = 10000,
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
-         corpse_eating_callback = "core.eating_effect.horse",
+         corpse_eating_callback = "core.EatingEffects.horse",
       },
       noyel_horse = {
          legacy_id = 275,
@@ -8020,7 +8020,7 @@ data:add(
          rarity = 10000,
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
-         corpse_eating_callback = "core.eating_effect.horse",
+         corpse_eating_callback = "core.EatingEffects.horse",
       },
       yowyn_horse = {
          legacy_id = 268,
@@ -8045,7 +8045,7 @@ data:add(
          rarity = 10000,
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
-         corpse_eating_callback = "core.eating_effect.horse",
+         corpse_eating_callback = "core.EatingEffects.horse",
       },
       wild_horse2 = {
          legacy_id = 277,
@@ -8070,7 +8070,7 @@ data:add(
          rarity = 10000,
          coefficient = 400,
          flags = { "is_suitable_for_mount" },
-         corpse_eating_callback = "core.eating_effect.horse",
+         corpse_eating_callback = "core.EatingEffects.horse",
       },
       mutant = {
          legacy_id = 278,
@@ -8353,7 +8353,7 @@ data:add(
          rarity = 50000,
          coefficient = 400,
          flags = { "is_immune_to_fear" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
       },
       little_sister = {
          legacy_id = 319,
@@ -8449,7 +8449,7 @@ data:add(
          rarity = 10000,
          coefficient = 0,
          flags = { "is_floating" },
-         corpse_eating_callback = "core.eating_effect.ghost",
+         corpse_eating_callback = "core.EatingEffects.ghost",
       },
       quickling = {
          legacy_id = 324,
@@ -8471,7 +8471,7 @@ data:add(
          rarity = 15000,
          coefficient = 400,
          flags = { "is_unsuitable_for_mount", "is_immune_to_elemental_damage" },
-         corpse_eating_callback = "core.eating_effect.quickling",
+         corpse_eating_callback = "core.EatingEffects.quickling",
       },
       quickling_archer = {
          legacy_id = 325,
@@ -8495,7 +8495,7 @@ data:add(
          rarity = 15000,
          coefficient = 400,
          flags = { "is_unsuitable_for_mount", "is_immune_to_elemental_damage" },
-         corpse_eating_callback = "core.eating_effect.quickling",
+         corpse_eating_callback = "core.EatingEffects.quickling",
       },
       silver_bell = {
          legacy_id = 328,
@@ -8518,7 +8518,7 @@ data:add(
          rarity = 2000,
          coefficient = 0,
          flags = { "is_unsuitable_for_mount", "is_metal", "is_immune_to_elemental_damage", "is_floating" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
          drops = { "core.silver_bell" },
       },
       gold_bell = {
@@ -8543,7 +8543,7 @@ data:add(
          rarity = 5000,
          coefficient = 0,
          flags = { "is_unsuitable_for_mount", "is_metal", "is_immune_to_elemental_damage", "is_floating" },
-         corpse_eating_callback = "core.eating_effect.iron",
+         corpse_eating_callback = "core.EatingEffects.iron",
          drops = { "core.gold_bell" },
       },
       alien = {
@@ -8569,7 +8569,7 @@ data:add(
          category = 0,
          rarity = 40000,
          coefficient = 400,
-         corpse_eating_callback = "core.eating_effect.alien",
+         corpse_eating_callback = "core.EatingEffects.alien",
       },
    }
 )
