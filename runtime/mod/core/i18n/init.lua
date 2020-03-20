@@ -1,2 +1,2 @@
-require("i18n/functions")
-require("i18n/jp_endings")
+require("functions.lua")
+require("jp_endings.lua")

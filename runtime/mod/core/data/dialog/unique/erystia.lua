@@ -5,7 +5,7 @@ local Internal = Elona.game.Internal
 local Item = Elona.game.Item
 local table = table
 
-local common = require("data/dialog/common")
+local common = require("../common.lua")
 
 return {
    id = "erystia",

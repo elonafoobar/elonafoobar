@@ -7,7 +7,7 @@ local Internal = Elona.game.Internal
 local Item = Elona.game.Item
 local table = table
 
-local common = require("data/dialog/common")
+local common = require("../common.lua")
 
 local function give_potion()
    local potion = Item.find("core.potion_of_cure_corruption", "player_inventory")

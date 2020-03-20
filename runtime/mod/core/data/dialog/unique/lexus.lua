@@ -6,7 +6,7 @@ local Item = Elona.game.Item
 local World = Elona.game.World
 local table = table
 
-local common = require("data/dialog/common")
+local common = require("../common.lua")
 
 local function start_trial()
     World.data.joining_mages_guild = 1

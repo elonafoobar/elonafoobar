@@ -10,7 +10,7 @@ local World = Elona.game.World
 local table = table
 local string = string
 
-local common = require("data/dialog/common")
+local common = require("../common.lua")
 
 local function start_trial()
     World.data.joining_fighters_guild = 1

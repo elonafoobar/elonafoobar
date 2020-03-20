@@ -5,7 +5,7 @@ local Internal = Elona.game.Internal
 local Item = Elona.game.Item
 local World = Elona.game.World
 
-local common = require("data/dialog/common")
+local common = require("../common.lua")
 
 local function surrender_cost()
    return Chara.player().gold // 5
