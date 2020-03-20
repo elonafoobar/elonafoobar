@@ -8,6 +8,7 @@
 #include "fmt.hpp"
 #include "handle_manager.hpp"
 #include "lua_env.hpp"
+#include "mod_env.hpp"
 
 
 
@@ -63,16 +64,36 @@ format = I18N.format
 
 
 
-void I18NManager::load(
-    std::istream& in,
-    const std::string& filepath,
-    const std::string& mod_id)
+void I18NManager::load(ModEnv& mod)
 {
-    env()["_MOD_ID"] = mod_id;
-    std::string s{std::istreambuf_iterator<char>{in},
-                  std::istreambuf_iterator<char>{}};
+    if (!mod.manifest.path)
+        return;
 
-    const auto result = safe_script(s);
+    const auto script_filepath =
+        *mod.manifest.path / "locale" / g_config.language() / "i18n.lua";
+    if (!fs::exists(script_filepath))
+        return;
+
+    env()["_MOD_ID"] = mod.manifest.id;
+    mod.env.raw_set("i18n", env()["i18n"]);
+    const auto result =
+        safe_script_file(script_filepath, mod.env, sol::script_pass_on_error);
+    env()["_MOD_ID"] = sol::lua_nil;
+    if (!result.valid())
+    {
+        sol::error e = result;
+        throw std::runtime_error{e.what()};
+    }
+}
+
+
+
+void I18NManager::load_string(const std::string& src, ModEnv& mod)
+{
+    env()["_MOD_ID"] = mod.manifest.id;
+    mod.env.raw_set("i18n", env()["i18n"]);
+    const auto result = safe_script(src, mod.env, sol::script_pass_on_error);
+    env()["_MOD_ID"] = sol::lua_nil;
     if (!result.valid())
     {
         sol::error e = result;

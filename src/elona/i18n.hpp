@@ -37,20 +37,7 @@ public:
 
 
 
-    struct Location
-    {
-        Location(const fs::path& locale_dir, const std::string& mod_id)
-            : locale_dir(locale_dir)
-            , mod_id(mod_id)
-        {
-        }
-
-        fs::path locale_dir;
-        std::string mod_id;
-    };
-
-
-    void init(const std::vector<Store::Location>& locations);
+    void init();
 
     // For testing use.
     void load_from_string(const std::string& src, const std::string& mod_id);
@@ -198,11 +185,6 @@ public:
 
 
 private:
-    /**
-     * Load all files under @a locale_dir.
-     */
-    void load_all_files(const fs::path& locale_dir, const std::string& mod_id);
-
     void load_from_stream(
         std::istream& in,
         const std::string& filepath,

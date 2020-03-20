@@ -7,6 +7,7 @@
 #include "defines.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "lua_env/mod_manager.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
@@ -17,31 +18,12 @@ namespace elona
 namespace i18n
 {
 
-void Store::init(const std::vector<Store::Location>& locations)
+void Store::init()
 {
-    for (const auto& loc : locations)
+    for (const auto& mod_id : lua::lua->get_mod_manager().sorted_mods())
     {
-        load_all_files(loc.locale_dir, loc.mod_id);
-    }
-}
-
-
-
-void Store::load_all_files(
-    const fs::path& locale_dir,
-    const std::string& mod_id)
-{
-    for (const auto& entry : filesystem::glob_files(locale_dir))
-    {
-        std::ifstream ifs{entry.path().native()};
-        if (!ifs)
-        {
-            throw std::runtime_error{
-                "Failed to open " +
-                filepathutil::make_preferred_path_in_utf8(entry.path())};
-        }
-
-        load_from_stream(ifs, filepathutil::to_utf8_path(entry.path()), mod_id);
+        lua::lua->get_i18n_manager().load(
+            *lua::lua->get_mod_manager().get_mod(mod_id));
     }
 }
 
@@ -49,18 +31,8 @@ void Store::load_all_files(
 
 void Store::load_from_string(const std::string& src, const std::string& mod_id)
 {
-    std::istringstream ss{src};
-    load_from_stream(ss, "[string]", mod_id);
-}
-
-
-
-void Store::load_from_stream(
-    std::istream& in,
-    const std::string& filepath,
-    const std::string& mod_id)
-{
-    lua::lua->get_i18n_manager().load(in, filepath, mod_id);
+    lua::lua->get_i18n_manager().load_string(
+        src, *lua::lua->get_mod_manager().get_mod(mod_id));
 }
 
 

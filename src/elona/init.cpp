@@ -166,27 +166,7 @@ void initialize_lua()
 
 void initialize_i18n()
 {
-    const std::string language = jp ? "jp" : "en";
-
-    // Load built-in translations in data/locale/(jp|en).
-    std::vector<i18n::Store::Location> locations{
-        {filesystem::dirs::locale() / language, "core"}};
-
-    // Load translations for each mod.
-    for (const auto& pair : lua::lua->get_mod_manager().mods())
-    {
-        const auto& mod_manifest = pair.second.manifest;
-        if (mod_manifest.path)
-        {
-            const auto locale_path = *mod_manifest.path / "locale" / language;
-            if (fs::exists(locale_path))
-            {
-                locations.emplace_back(locale_path, mod_manifest.id);
-            }
-        }
-    }
-
-    i18n::s.init(locations);
+    i18n::s.init();
 }
 
 

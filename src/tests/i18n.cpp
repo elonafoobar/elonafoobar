@@ -5,6 +5,7 @@
 #include "../elona/character.hpp"
 #include "../elona/item.hpp"
 #include "../elona/itemgen.hpp"
+#include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/ui.hpp"
 #include "../elona/variables.hpp"
@@ -23,6 +24,11 @@ i18n::Store load(const std::string& str)
 {
     i18n::Store store;
 
+    auto& mod_mgr = lua::lua->get_mod_manager();
+    if (!mod_mgr.get_mod("test"))
+    {
+        REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script("test", ""));
+    }
     REQUIRE_NOTHROW(store.load_from_string(str, "test"));
     return store;
 }
@@ -256,17 +262,12 @@ i18n.add {
 TEST_CASE("test loading i18n data from multiple sources", "[I18N: Store]")
 {
     i18n::Store store;
-    store.init({
-        {
-            testing::get_mods_path() / "test_i18n_a" / "locale" / "jp",
-            "test_i18n_a",
-        },
-        {
-            testing::get_mods_path() / "test_i18n_b" / "locale" / "jp",
-            "test_i18n_b",
-        },
-    });
-
+    auto& mod_mgr = lua::lua->get_mod_manager();
+    mod_mgr.load_testing_mod_from_file(
+        testing::get_mods_path() / "test_i18n_a");
+    mod_mgr.load_testing_mod_from_file(
+        testing::get_mods_path() / "test_i18n_b");
+    store.init();
 
     REQUIRE(store.get(u8"test_i18n_a.test") == u8"こんばんは"s);
     REQUIRE(store.get(u8"test_i18n_b.test") == u8"こんにちは"s);
