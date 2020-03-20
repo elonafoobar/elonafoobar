@@ -1,7 +1,6 @@
-data:add(
-   {
-      type = "core.chara",
-      id = "spiral_putit",
+ELONA.data:add(
+   "core.chara",
+   spiral_putit = {
       fltselect = 1,
       -- missing 'legacy_id'
    }

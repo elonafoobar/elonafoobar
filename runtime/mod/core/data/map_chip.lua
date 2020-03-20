@@ -4,7 +4,6 @@ local function make_atlas(atlas_index)
       for x=0,33 do
          local chip_index = x + y * 33
          atlas[chip_index] = {
-            id = tostring(atlas_index) .. "_" .. tostring(chip_index),
             legacy_id = chip_index,
             atlas = atlas_index,
             source = {
@@ -22,7 +21,19 @@ local function make_atlas(atlas_index)
 
    return atlas
 end
-data:define_type("map_chip")
+
+local function convert_atlas(base, atlas_index)
+   local atlas = {}
+   for i, v in ipairs(base) do
+      if i == #base then
+         i = 0
+      end
+      atlas[tostring(atlas_index).."_"..tostring(i)] = v
+   end
+   return atlas
+end
+
+ELONA.data:define_prototype("map_chip")
 
 --
 -- Atlas 0
@@ -87,7 +98,7 @@ do
       atlas_0[i].is_feat = true
    end
 
-   data:add_multi("core.map_chip", atlas_0)
+   ELONA.data:add("core.map_chip", convert_atlas(atlas_0, 0))
 end
 
 --
@@ -144,7 +155,7 @@ do
       atlas_1[i].is_feat = true
    end
 
-   data:add_multi("core.map_chip", atlas_1)
+   ELONA.data:add("core.map_chip", convert_atlas(atlas_1, 1))
 end
 
 --
@@ -189,5 +200,5 @@ do
    atlas_2[476].wall_kind = 0
    atlas_2[509].wall_kind = 0
 
-   data:add_multi("core.map_chip", atlas_2)
+   ELONA.data:add("core.map_chip", convert_atlas(atlas_2, 2))
 end

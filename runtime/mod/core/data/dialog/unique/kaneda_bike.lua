@@ -5,7 +5,6 @@ local Internal = ELONA.require("core.Internal")
 local Item = ELONA.require("core.Item")
 
 return {
-   id = "kaneda_bike",
    root = "core.talk.unique.kaneda_bike",
    nodes = {
       __start = function()

@@ -2021,8 +2021,8 @@ void character_drops_item()
         }
     }
 
-    // ../runtime/profile/_/mod/core/exports/impl/chara_drop.lua
-    lua::call("core.impl.chara_drop.drop_from_chara", lua::handle(cdata[rc]));
+    // ../../runtime/mod/core/api/impl/chara_drop.lua
+    lua::call("core.Impl.chara_drop.drop_from_chara", lua::handle(cdata[rc]));
 
     cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
     if (cdata[rc].character_role == 13)

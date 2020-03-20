@@ -113,7 +113,7 @@ local function is_cursed(item)
 end
 
 function shop_inventory.should_remove(item, inv)
-   local tags = data.raw["core.item"][item.id].tags
+   local tags = Data.get("core.item", item.id).tags
 
    if has_tag("neg", tags) then
       return true

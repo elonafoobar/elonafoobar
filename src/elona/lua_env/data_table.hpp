@@ -41,7 +41,10 @@ struct DataTable
         int legacy_instance_id)
     {
         if (const auto id = _storage.traverse_get<sol::optional<std::string>>(
-                "by_legacy", prototype_id.get(), legacy_instance_id))
+                "_by_legacy_id_tables",
+                prototype_id.get(),
+                legacy_instance_id,
+                "id"))
         {
             return data::InstanceId{*id};
         }
@@ -65,7 +68,7 @@ struct DataTable
         data::InstanceId instance_id)
     {
         if (const auto data = _storage.traverse_get<sol::optional<sol::table>>(
-                "raw", prototype_id.get(), instance_id.get()))
+                "_instance_storages", prototype_id.get(), instance_id.get()))
         {
             return *data;
         }
@@ -86,7 +89,7 @@ struct DataTable
     optional<sol::table> get_table(data::PrototypeId prototype_id)
     {
         if (const auto data = _storage.traverse_get<sol::optional<sol::table>>(
-                "raw", prototype_id.get()))
+                "_instance_storages", prototype_id.get()))
         {
             return *data;
         }

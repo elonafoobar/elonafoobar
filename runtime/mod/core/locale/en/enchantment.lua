@@ -1,4 +1,4 @@
-i18n.add {
+ELONA.i18n:add {
    enchantment = {
       level = "#",
       it = "It ",

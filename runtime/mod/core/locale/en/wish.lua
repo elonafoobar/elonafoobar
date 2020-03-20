@@ -1,4 +1,4 @@
-i18n.add {
+ELONA.i18n:add {
    wish = {
       what_do_you_wish_for = "What do you wish for? ",
       your_wish = "\"{$1}!!\"",

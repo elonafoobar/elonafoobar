@@ -75,7 +75,7 @@ void I18NManager::load(ModEnv& mod)
         return;
 
     env()["_MOD_ID"] = mod.manifest.id;
-    mod.env.raw_set("i18n", env()["i18n"]);
+    mod.env["ELONA"]["i18n"] = env()["i18n"];
     const auto result =
         safe_script_file(script_filepath, mod.env, sol::script_pass_on_error);
     env()["_MOD_ID"] = sol::lua_nil;
@@ -91,7 +91,7 @@ void I18NManager::load(ModEnv& mod)
 void I18NManager::load_string(const std::string& src, ModEnv& mod)
 {
     env()["_MOD_ID"] = mod.manifest.id;
-    mod.env.raw_set("i18n", env()["i18n"]);
+    mod.env["ELONA"]["i18n"] = env()["i18n"];
     const auto result = safe_script(src, mod.env, sol::script_pass_on_error);
     env()["_MOD_ID"] = sol::lua_nil;
     if (!result.valid())

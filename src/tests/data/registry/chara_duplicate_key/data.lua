@@ -1,18 +1,18 @@
-data:add(
+ELONA.data:add(
+   "core.chara",
    {
-      {
-         type = "core.chara",
-         id = "dragon",
+      dragon = {
          legacy_id = 10000,
       },
-      {
-         type = "core.chara",
-         id = "nothing",
+      nothing = {
          legacy_id = 10001,
       },
-      {
-         type = "core.chara",
-         id = "nothing",
+   }
+)
+ELONA.data:add(
+   "core.chara",
+   {
+      nothing = {
          legacy_id = 10002,
       }
    }

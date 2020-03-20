@@ -1,8 +1,7 @@
-data:add(
+ELONA.data:add(
+   "core.chara",
    {
-      {
-         type = "core.chara",
-         id = "putit",
+      putit = {
          legacy_id = 9999,
          color = "Whatever",
       }

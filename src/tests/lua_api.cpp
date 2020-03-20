@@ -50,6 +50,7 @@ TEST_CASE("test require from other mods", "[Lua: API]")
     lua.load_mods();
     lua.get_mod_manager().load_testing_mod_from_file(
         filesystem::dirs::exe() / u8"tests/data/mods/test_require");
+    lua.get_api_manager().init_from_mods();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_testing_mod_from_script(
         "test_require_from_mods", R"(
@@ -134,5 +135,6 @@ TEST_CASE("Core API: tostring()", "[Lua: API]")
 
 TEST_CASE("Exports: eating_effect", "[Lua: Exports]")
 {
+    lua::lua->get_api_manager().init_from_mods();
     lua_testcase("exports/eating_effect.lua");
 }

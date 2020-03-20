@@ -1,4 +1,4 @@
-i18n.add {
+ELONA.i18n:add {
    activity = {
       cancel = {
          prompt = "Do you want to cancel {$1}? ",

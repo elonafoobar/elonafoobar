@@ -1,4 +1,4 @@
-i18n.add {
+ELONA.i18n:add {
    main_menu = {
       title_menu = {
          continue = "冒険を再開する",

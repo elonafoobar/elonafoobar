@@ -1,4 +1,4 @@
-i18n.add {
+ELONA.i18n:add {
    chara_status = {
       gain_new_body_part = "{name($1)} grow{s($1)} a new {$2}!",
 

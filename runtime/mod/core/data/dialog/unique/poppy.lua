@@ -5,7 +5,6 @@ local Internal = ELONA.require("core.Internal")
 local table = table
 
 return {
-   id = "poppy",
    root = "core.talk.unique.poppy",
    nodes = {
       __start = function()

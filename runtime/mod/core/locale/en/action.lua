@@ -1,4 +1,4 @@
-i18n.add {
+ELONA.i18n:add {
    action = {
       cannot_do_in_global = "You can't do that while you're in a global area.",
       hit_key_for_help = "Hit ? key to display help.",

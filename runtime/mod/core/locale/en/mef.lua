@@ -1,4 +1,4 @@
-i18n.add {
+ELONA.i18n:add {
    mef = {
       bomb_counter = "*{$1}*",
 

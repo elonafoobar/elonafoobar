@@ -19,7 +19,6 @@ local function take_books()
 end
 
 return {
-   id = "renton",
    root = "core.talk.unique.renton",
    nodes = {
       __start = function()

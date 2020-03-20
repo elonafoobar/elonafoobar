@@ -1,4 +1,4 @@
-i18n.add {
+ELONA.i18n:add {
    talk = {
       will_not_listen = "{name($1)}は耳を貸さない。",
       is_sleeping = "{name($1)}はぐっすり眠っている…",

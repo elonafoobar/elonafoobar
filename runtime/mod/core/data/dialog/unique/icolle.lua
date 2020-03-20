@@ -32,7 +32,6 @@ local function give_monster_balls()
 end
 
 return {
-   id = "icolle",
    root = "core.talk.unique.icolle",
    nodes = {
       __start = function()

@@ -1,4 +1,4 @@
-i18n.add {
+ELONA.i18n:add {
    item = {
       chip = {
          dryrock = "a dryrock",
@@ -147,7 +147,7 @@ i18n.add {
 
 
 
-i18n.add {
+ELONA.i18n:add {
    item = {
       bug = {
          name = "gold bar",

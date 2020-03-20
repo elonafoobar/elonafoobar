@@ -1,6 +1,5 @@
 #include "data_manager.hpp"
 
-#include "../../util/natural_order_comparator.hpp"
 #include "../log.hpp"
 #include "api_manager.hpp"
 #include "mod_manager.hpp"
@@ -25,16 +24,16 @@ void DataManager::clear()
 {
     sol::table data = safe_script_file_in_global_env(
         filesystem::dirs::data() / "script" / "kernel" / "data.lua");
-    _data.storage() = data;
+    std::pair<sol::table, sol::table> result = data["new_registry"]();
+    _public_interface = result.first;
+    _data.storage() = result.second;
 }
 
 
 
 void DataManager::_init_from_mod(ModEnv& mod)
 {
-    // Bypass the metatable on the mod's environment preventing creation of
-    // new global variables.
-    mod.env.raw_set("data", _data.storage());
+    mod.env["ELONA"]["data"] = _public_interface;
 
     if (!mod.manifest.path)
     {

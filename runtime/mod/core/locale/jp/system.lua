@@ -1,4 +1,4 @@
-i18n.add {
+ELONA.i18n:add {
    system = {
       lafrontier_homepage = "http://ylvania.org/jp",
 

@@ -63,14 +63,13 @@ in the description.
 ]]
 
 -- TODO: buff icons
-data:define_type("buff")
-data:add_multi(
+ELONA.data:define_prototype("buff")
+ELONA.data:add(
    "core.buff",
    {
-      {
+      holy_shield = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Attempts to apply fear will be ignored.
-         id = "holy_shield",
          legacy_id = 1,
          buff_type = "buff",
          duration = function(power)
@@ -85,10 +84,9 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
+      mist_of_silence = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Silence behavior.
-         id = "mist_of_silence",
          legacy_id = 2,
          buff_type = "hex",
          duration = function(power)
@@ -101,8 +99,7 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "regeneration",
+      regeneration = {
          legacy_id = 3,
          buff_type = "buff",
          duration = function(power)
@@ -116,8 +113,7 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "elemental_shield",
+      elemental_shield = {
          legacy_id = 4,
          buff_type = "buff",
          duration = function(power)
@@ -133,8 +129,7 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "speed",
+      speed = {
          legacy_id = 5,
          buff_type = "buff",
          duration = function(power)
@@ -148,8 +143,7 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "slow",
+      slow = {
          legacy_id = 6,
          buff_type = "hex",
          duration = function(power)
@@ -164,10 +158,9 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
+      hero = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Attempts to apply confusion or fear will be ignored.
-         id = "hero",
          legacy_id = 7,
          buff_type = "buff",
          duration = function(power)
@@ -184,8 +177,7 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "mist_of_frailness",
+      mist_of_frailness = {
          legacy_id = 8,
          buff_type = "hex",
          duration = function(power)
@@ -200,8 +192,7 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "element_scar",
+      element_scar = {
          legacy_id = 9,
          buff_type = "hex",
          duration = function(power)
@@ -217,11 +208,10 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
+      holy_veil = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Additional chance to resist if a hex is applied to this
          --    character.
-         id = "holy_veil",
          legacy_id = 10,
          buff_type = "buff",
          duration = function(power)
@@ -234,8 +224,7 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "nightmare",
+      nightmare = {
          legacy_id = 11,
          buff_type = "hex",
          duration = function(power)
@@ -250,8 +239,7 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "divine_wisdom",
+      divine_wisdom = {
          legacy_id = 12,
          buff_type = "buff",
          duration = function(power)
@@ -268,11 +256,10 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
+      punishment = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Ignored when removing status effects on a character.
          --  + Ignored when casting Holy Light/Vanquish Hex.
-         id = "punishment",
          legacy_id = 13,
          buff_type = "hex",
          duration = function(power)
@@ -289,8 +276,7 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "lulwys_trick",
+      lulwys_trick = {
          legacy_id = 14,
          buff_type = "buff",
          duration = function(_power)
@@ -304,11 +290,10 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
+      incognito = {
          -- NOTE: The initial incognito effect is applied by the
          -- incognito spell when it is cast, but the effect when the
          -- buff expires is handled by the buff itself.
-         id = "incognito",
          legacy_id = 15,
          buff_type = "buff",
          duration = function(power)
@@ -336,7 +321,7 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
+      death_word = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Inflicts 9999 damage when it expires, but outside of
          --    buff_delete().
@@ -344,7 +329,6 @@ data:add_multi(
          --    of "miracle" or "godly" quality.
          --  + Removed when a character with the "is_death_master" flag
          --    is killed.
-         id = "death_word",
          legacy_id = 16,
          buff_type = "hex",
          duration = function(_power)
@@ -361,8 +345,7 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "boost",
+      boost = {
          legacy_id = 17,
          buff_type = "buff",
          duration = function(_power)
@@ -384,12 +367,11 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
+      contingency = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Check for lethal damage and chance to heal. If the
          --    "is_contracting_with_reaper" flag is set then the buff is
          --    expected to be be active on the same character.
-         id = "contingency",
          legacy_id = 18,
          buff_type = "buff",
          duration = function(_power)
@@ -406,8 +388,7 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "luck",
+      luck = {
          legacy_id = 19,
          buff_type = "buff",
          duration = function(_power)
@@ -425,24 +406,25 @@ data:add_multi(
 )
 
 local function register_growth_buff(attribute_index, attribute_name)
-   data:add({
+   ELONA.data:add(
+      "core.buff",
       {
-         type = "core.buff",
-         id = "grow_" .. attribute_name,
-         legacy_id = attribute_index + 20,
-         buff_type = "food",
-         duration = function(power)
-            return 10 + power // 10
-         end,
-         on_refresh = function(self, args)
-            args.chara:set_growth_buff(attribute_index, self._effect(args.power))
-         end,
-         _effect = function(power)
-            return power
-         end,
-         description = get_description
+         ["grow_" .. attribute_name] = {
+            legacy_id = attribute_index + 20,
+            buff_type = "food",
+            duration = function(power)
+               return 10 + power // 10
+            end,
+            on_refresh = function(self, args)
+               args.chara:set_growth_buff(attribute_index, self._effect(args.power))
+            end,
+            _effect = function(power)
+               return power
+            end,
+            description = get_description
+         }
       }
-   })
+   )
 end
 
 

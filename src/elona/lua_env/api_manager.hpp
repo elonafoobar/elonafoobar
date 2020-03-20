@@ -49,16 +49,16 @@ public:
      */
     void load_lua_support_libraries();
 
+    void clear();
+    void init_from_mods();
+
+    // for testing
+    void load_script(const std::string& mod_id, const std::string& script);
+
     /***
      * Makes all API tables read-only.
      */
     void lock();
-
-    /***
-     * Adds a new API from the return value of a mod's init.lua file.
-     * It would then be accessable by calling require("mod_id.api_table").
-     */
-    void add_api(const std::string& module_namespace, sol::table& module_table);
 
     /***
      * Returns the reference to the API table containing the APIs of
@@ -94,6 +94,8 @@ private:
      * ELONA.require("core.Rand").
      */
     sol::optional<sol::table> try_find_api(const std::string& name) const;
+
+    void init_from_mod(ModEnv& mod);
 };
 
 } // namespace lua

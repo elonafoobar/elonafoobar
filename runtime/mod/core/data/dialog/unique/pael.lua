@@ -19,7 +19,6 @@ local function prompt_give_potion(prompt)
 end
 
 return {
-   id = "pael",
    root = "core.talk.unique.pael",
    nodes = {
       __start = function()

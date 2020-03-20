@@ -1,5 +1,4 @@
 return {
-   id = "larnneire",
    root = "core.talk.unique.larnneire",
    nodes = {
       __start = {

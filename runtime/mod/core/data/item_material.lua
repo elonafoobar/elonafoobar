@@ -1,37 +1,29 @@
-data:define_type("item_material")
-data:add_multi(
+ELONA.data:define_prototype("item_material")
+ELONA.data:add(
    "core.item_material",
    {
-      {
-         id = "vegetable_seed",
+      vegetable_seed = {
          legacy_id = 36,
       },
-      {
-         id = "fruit_seed",
+      fruit_seed = {
          legacy_id = 37,
       },
-      {
-         id = "herb_seed",
+      herb_seed = {
          legacy_id = 38,
       },
-      {
-         id = "unknown_plant_seed",
+      unknown_plant_seed = {
          legacy_id = 39,
       },
-      {
-         id = "artifact_seed",
+      artifact_seed = {
          legacy_id = 40,
       },
-      {
-         id = "gem_seed",
+      gem_seed = {
          legacy_id = 41,
       },
-      {
-         id = "magical_plant_seed",
+      magical_plant_seed = {
          legacy_id = 42,
       },
-      {
-         id = "sand",
+      sand = {
          legacy_id = 0,
          weight = 10,
          value = 80,
@@ -41,8 +33,7 @@ data:add_multi(
          pv = -5,
          dice_y = 100,
       },
-      {
-         id = "raw",
+      raw = {
          legacy_id = 35,
          weight = 100,
          value = 50,
@@ -53,8 +44,7 @@ data:add_multi(
          dice_y = 100,
          color = 0,
       },
-      {
-         id = "wood",
+      wood = {
          legacy_id = 43,
          weight = 150,
          value = 50,
@@ -65,8 +55,7 @@ data:add_multi(
          dice_y = 100,
          color = 0,
       },
-      {
-         id = "lead",
+      lead = {
          legacy_id = 34,
          weight = 300,
          value = 50,
@@ -78,8 +67,7 @@ data:add_multi(
          color = 0,
          fireproof = true,
       },
-      {
-         id = "bronze",
+      bronze = {
          legacy_id = 12,
          weight = 200,
          value = 70,
@@ -93,8 +81,7 @@ data:add_multi(
             [20052] = 50,
          },
       },
-      {
-         id = "mica",
+      mica = {
          legacy_id = 21,
          weight = 40,
          value = 150,
@@ -108,8 +95,7 @@ data:add_multi(
             [10019] = 100,
          },
       },
-      {
-         id = "coral",
+      coral = {
          legacy_id = 33,
          weight = 180,
          value = 240,
@@ -123,8 +109,7 @@ data:add_multi(
             [20052] = 100,
          },
       },
-      {
-         id = "iron",
+      iron = {
          legacy_id = 10,
          weight = 280,
          value = 190,
@@ -139,8 +124,7 @@ data:add_multi(
          },
          acidproof = true,
       },
-      {
-         id = "silver",
+      silver = {
          legacy_id = 25,
          weight = 230,
          value = 250,
@@ -155,8 +139,7 @@ data:add_multi(
          },
          acidproof = true,
       },
-      {
-         id = "glass",
+      glass = {
          legacy_id = 5,
          weight = 180,
          value = 150,
@@ -171,8 +154,7 @@ data:add_multi(
          },
          acidproof = true,
       },
-      {
-         id = "obsidian",
+      obsidian = {
          legacy_id = 20,
          weight = 160,
          value = 350,
@@ -186,8 +168,7 @@ data:add_multi(
             [20059] = 100,
          },
       },
-      {
-         id = "steel",
+      steel = {
          legacy_id = 9,
          weight = 270,
          value = 280,
@@ -199,8 +180,7 @@ data:add_multi(
          color = 0,
          acidproof = true,
       },
-      {
-         id = "platinum",
+      platinum = {
          legacy_id = 26,
          weight = 260,
          value = 350,
@@ -215,8 +195,7 @@ data:add_multi(
          },
          acidproof = true,
       },
-      {
-         id = "pearl",
+      pearl = {
          legacy_id = 22,
          weight = 240,
          value = 400,
@@ -230,8 +209,7 @@ data:add_multi(
             [10013] = 100,
          },
       },
-      {
-         id = "mithril",
+      mithril = {
          legacy_id = 7,
          weight = 240,
          value = 750,
@@ -247,8 +225,7 @@ data:add_multi(
          fireproof = true,
          acidproof = true,
       },
-      {
-         id = "chrome",
+      chrome = {
          legacy_id = 30,
          weight = 320,
          value = 500,
@@ -259,8 +236,7 @@ data:add_multi(
          dice_y = 150,
          color = 0,
       },
-      {
-         id = "crystal",
+      crystal = {
          legacy_id = 11,
          weight = 200,
          value = 800,
@@ -274,8 +250,7 @@ data:add_multi(
             [10016] = 100,
          },
       },
-      {
-         id = "emerald",
+      emerald = {
          legacy_id = 23,
          weight = 240,
          value = 1050,
@@ -289,8 +264,7 @@ data:add_multi(
             [20058] = 100,
          },
       },
-      {
-         id = "adamantium",
+      adamantium = {
          legacy_id = 31,
          weight = 360,
          value = 1150,
@@ -306,8 +280,7 @@ data:add_multi(
          fireproof = true,
          acidproof = true,
       },
-      {
-         id = "titanium",
+      titanium = {
          legacy_id = 29,
          weight = 200,
          value = 750,
@@ -322,8 +295,7 @@ data:add_multi(
          },
          acidproof = true,
       },
-      {
-         id = "diamond",
+      diamond = {
          legacy_id = 13,
          weight = 330,
          value = 1100,
@@ -337,8 +309,7 @@ data:add_multi(
             [20052] = 100,
          },
       },
-      {
-         id = "rubynus",
+      rubynus = {
          legacy_id = 15,
          weight = 250,
          value = 1000,
@@ -354,8 +325,7 @@ data:add_multi(
          fireproof = true,
          acidproof = true,
       },
-      {
-         id = "ether",
+      ether = {
          legacy_id = 8,
          weight = 80,
          value = 1200,
@@ -371,8 +341,7 @@ data:add_multi(
          fireproof = true,
          acidproof = true,
       },
-      {
-         id = "cloth",
+      cloth = {
          legacy_id = 3,
          weight = 20,
          value = 30,
@@ -383,8 +352,7 @@ data:add_multi(
          dice_y = 100,
          color = 10,
       },
-      {
-         id = "silk",
+      silk = {
          legacy_id = 2,
          weight = 40,
          value = 190,
@@ -398,8 +366,7 @@ data:add_multi(
             [20054] = 50,
          },
       },
-      {
-         id = "paper",
+      paper = {
          legacy_id = 16,
          weight = 10,
          value = 20,
@@ -413,8 +380,7 @@ data:add_multi(
             [30173] = 100,
          },
       },
-      {
-         id = "bone",
+      bone = {
          legacy_id = 18,
          weight = 120,
          value = 300,
@@ -429,8 +395,7 @@ data:add_multi(
          },
          acidproof = true,
       },
-      {
-         id = "leather",
+      leather = {
          legacy_id = 1,
          weight = 100,
          value = 150,
@@ -441,8 +406,7 @@ data:add_multi(
          dice_y = 100,
          color = 6,
       },
-      {
-         id = "scale",
+      scale = {
          legacy_id = 4,
          weight = 180,
          value = 250,
@@ -456,8 +420,7 @@ data:add_multi(
             [20050] = 50,
          },
       },
-      {
-         id = "chain",
+      chain = {
          legacy_id = 19,
          weight = 200,
          value = 300,
@@ -472,8 +435,7 @@ data:add_multi(
          },
          acidproof = true,
       },
-      {
-         id = "zylon",
+      zylon = {
          legacy_id = 27,
          weight = 50,
          value = 500,
@@ -487,8 +449,7 @@ data:add_multi(
             [20056] = 50,
          },
       },
-      {
-         id = "gold",
+      gold = {
          legacy_id = 32,
          weight = 300,
          value = 800,
@@ -503,8 +464,7 @@ data:add_multi(
          },
          acidproof = true,
       },
-      {
-         id = "spirit_cloth",
+      spirit_cloth = {
          legacy_id = 14,
          weight = 40,
          value = 750,
@@ -519,8 +479,7 @@ data:add_multi(
          },
          fireproof = true,
       },
-      {
-         id = "dragon_scale",
+      dragon_scale = {
          legacy_id = 24,
          weight = 220,
          value = 800,
@@ -537,8 +496,7 @@ data:add_multi(
          fireproof = true,
          acidproof = true,
       },
-      {
-         id = "dawn_cloth",
+      dawn_cloth = {
          legacy_id = 17,
          weight = 45,
          value = 850,
@@ -552,8 +510,7 @@ data:add_multi(
             [10003] = 200,
          },
       },
-      {
-         id = "griffon_scale",
+      griffon_scale = {
          legacy_id = 28,
          weight = 70,
          value = 1000,
@@ -567,4 +524,5 @@ data:add_multi(
             [30173] = 100,
          },
       },
-})
+   }
+)

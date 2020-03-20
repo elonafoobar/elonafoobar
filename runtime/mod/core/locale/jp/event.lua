@@ -1,4 +1,4 @@
-i18n.add {
+ELONA.i18n:add {
    event = {
       little_sister_slips = "ビッグダディの肩から、リトルシスターが滑り落ちた。「Mr Bubbles！！」",
 

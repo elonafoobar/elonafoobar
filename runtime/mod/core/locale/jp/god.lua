@@ -1,4 +1,4 @@
-i18n.add {
+ELONA.i18n:add {
    god = {
       indifferent = "あなたの信仰は既に限界まで高まっている。",
       enraged = "{$1}は激怒した。", -- TODO duplicate?
@@ -111,7 +111,7 @@ i18n.add {
 
 
 
-i18n.add {
+ELONA.i18n:add {
    god = {
       eyth = {
          name = "無のエイス",

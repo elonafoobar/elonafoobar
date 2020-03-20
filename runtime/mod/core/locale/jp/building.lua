@@ -1,4 +1,4 @@
-i18n.add {
+ELONA.i18n:add {
    building = {
       can_only_use_in_world_map = "それはワールドマップでしか使えない。",
       cannot_build_it_here = "その場所には建てられない。",

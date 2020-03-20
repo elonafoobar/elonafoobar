@@ -54,28 +54,23 @@ Each item of "drops" can have these properties.
     chara: character that was killed.
 --]]
 
-data:define_type("chara_drop")
-data:add_multi(
+ELONA.data:define_prototype("chara_drop")
+ELONA.data:add(
    "core.chara_drop",
    {
-      {
-         id = "rich_person",
+      rich_person = {
          drops = { make_lootrich(8) }
       },
-      {
-         id = "noble_child",
+      noble_child = {
          drops = { make_lootrich(4) }
       },
-      {
-         id = "tourist",
+      tourist = {
          drops = { make_lootrich(2) }
       },
-      {
-         id = "vesda",
+      vesda = {
          drops = {{ id = "core.gloves_of_vesda" }}
       },
-      {
-         id = "god_boss",
+      god_boss = {
          on_generate = function(args)
             -- Kill count is 1 by now on first kill.
             if Chara.kill_count(args.chara.id) == 1 then
@@ -85,8 +80,7 @@ data:add_multi(
             end
          end
       },
-      {
-         id = "tuwen",
+      tuwen = {
          on_generate = function()
             if Map.id() == "core.pyramid" then
                return make_drops({ "core.statue_of_opatos",
@@ -99,44 +93,34 @@ data:add_multi(
             return {}
          end
       },
-      {
-         id = "rabbit",
+      rabbit = {
          drops = {{ one_in = 200, id = "core.rabbits_tail" }}
       },
-      {
-         id = "zombie",
+      zombie = {
          drops = {{ one_in = 100, id = "core.potion_of_descent" }}
       },
-      {
-         id = "lomias",
+      lomias = {
          drops = {{ one_in = 4,   id = "core.secret_experience_of_lomias" }}
       },
-      {
-         id = "mummy",
+      mummy = {
          drops = {{ one_in = 300, id = "core.book_of_resurrection" }}
       },
-      {
-         id = "cupid_of_love",
+      cupid_of_love = {
          drops = {{ one_in = 140, id = "core.happy_bed" }}
       },
-      {
-         id = "hermit_crab",
+      hermit_crab = {
          drops = {{ one_in = 100, id = "core.solemn_tomb" }}
       },
-      {
-         id = "rogue",
+      rogue = {
          drops = {{ one_in = 90, id = "core.blue_capsule_drug" }}
       },
-      {
-         id = "executioner",
+      executioner = {
          drops = {{ one_in = 200, id = "core.rabbits_tail" }}
       },
-      {
-         id = "deformed_eye",
+      deformed_eye = {
          drops = {{ one_in = 150, id = "core.potion_of_evolution" }}
       },
-      {
-         id = "gwen",
+      gwen = {
          drops = {{
                one_in = 50,
                on_create = function(args)
@@ -147,20 +131,16 @@ data:add_multi(
                end
          }}
       },
-      {
-         id = "fairy",
+      fairy = {
          drops = {{ one_in = 200, id = "core.secret_experience_of_kumiromi" }}
       },
-      {
-         id = "mine_dog",
+      mine_dog = {
          drops = {{ one_in = 3, id = "core.mine" }}
       },
-      {
-         id = "imp",
+      imp = {
          drops = {{ one_in = 600, id = "core.scroll_of_name" }}
       },
-      {
-         id = "rogue_boss",
+      rogue_boss = {
          drops = {{
                on_create = function(args)
                   for _=0, 2 + Rand.rnd(4) do
@@ -179,8 +159,7 @@ data:add_multi(
                end
          }}
       },
-      {
-         id = "silver_bell",
+      silver_bell = {
          drops = {{
                on_create = function(args)
                   Item.create(args.chara.position, "core.platinum_coin", 1 + Rand.rnd(3))
@@ -190,16 +169,14 @@ data:add_multi(
                end
          }}
       },
-      {
-         id = "gold_bell",
+      gold_bell = {
          drops = {{
                on_create = function(args)
                   Item.create(args.chara.position, "core.gold_piece", 2500 + Rand.rnd_capped(Chara.player().fame + 1000))
                end
          }}
       },
-      {
-         id = "the_leopard_warrior",
+      the_leopard_warrior = {
          drops = {{
                on_create = function(args)
                   for _=0,12 do
@@ -218,4 +195,5 @@ data:add_multi(
                end
          }}
       }
-})
+   }
+)

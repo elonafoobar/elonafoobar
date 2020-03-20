@@ -1,4 +1,4 @@
-i18n.add {
+ELONA.i18n:add {
    class = {
       unemployed = "なし",
    },
@@ -6,7 +6,7 @@ i18n.add {
 
 
 
-i18n.add {
+ELONA.i18n:add {
    class = {
       warrior = {
          name = "戦士",

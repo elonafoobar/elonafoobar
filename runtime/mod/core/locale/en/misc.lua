@@ -1,7 +1,7 @@
 -- TODO
 -- These text are unclassed. They should be moved to appropriate files.
 
-i18n.add {
+ELONA.i18n:add {
    misc = {
       ranking = {
          changed = "Ranking Change ({$1} {$2} -> {$3}) <{$4}>",
