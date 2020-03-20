@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    casino = {
       talk_to_dealer = "ディーラーに話しかけた。",
       can_acquire = "幾つかの戦利品がある。",

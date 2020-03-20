@@ -1,5 +1,5 @@
-data:define_prototype("item_chip")
-data:add(
+ELONA.data:define_prototype("item_chip")
+ELONA.data:add(
    "core.item_chip",
    {
       empty = {

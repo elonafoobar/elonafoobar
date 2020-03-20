@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    net = {
       failed_to_send = "Failed to send a message.",
       failed_to_receive = "Failed to receive messages.",

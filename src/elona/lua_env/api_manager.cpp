@@ -101,9 +101,7 @@ void APIManager::init_from_mods()
 
 void APIManager::init_from_mod(ModEnv& mod)
 {
-    // Bypass the metatable on the mod's environment preventing creation of
-    // new global variables.
-    mod.env.raw_set("api", env()["api"]);
+    mod.env["ELONA"]["api"] = env()["api"];
 
     if (!mod.manifest.path)
     {
@@ -133,7 +131,7 @@ void APIManager::load_script(
     const std::string& script)
 {
     auto& mod = *lua().get_mod_manager().get_mod(mod_id);
-    mod.env.raw_set("api", env()["api"]);
+    mod.env["ELONA"]["api"] = env()["api"];
 
     lua_state()->set("_MOD_ID", mod.manifest.id);
 

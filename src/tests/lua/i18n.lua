@@ -10,7 +10,7 @@ lrun("test I18N.get", function()
         Testing.start_in_debug_map()
 
         Testing.reinit_core_and_load_translations([[
-i18n:add {
+ELONA.i18n:add {
    foo = "bar",
    baz = "You passed in {$1} and {$2}.",
    hoge = "You {is(true)} nice.",
@@ -43,7 +43,7 @@ lrun("test I18N.get_optional", function()
         Testing.start_in_debug_map()
 
         Testing.load_translations([[
-i18n:add {
+ELONA.i18n:add {
    foo = "bar",
    baz = "You passed in {$1} and {$2}.",
    hoge = "You {is(true)} nice.",
@@ -67,7 +67,7 @@ end)
 
 lrun("test I18N.get_enum", function()
         Testing.load_translations([[
-i18n:add {
+ELONA.i18n:add {
   foo = {
     _0 = "bar",
     _1 = "baz",
@@ -84,7 +84,7 @@ end)
 
 lrun("test I18N.get_enum_property", function()
         Testing.load_translations([[
-i18n:add {
+ELONA.i18n:add {
    foo1 = {
       _0 = {
          name = "foo",
@@ -113,7 +113,7 @@ end)
 
 lrun("test I18N.get_enum_property_optional", function()
         Testing.load_translations([[
-i18n:add {
+ELONA.i18n:add {
    foo2 = {
       _0 = {
          name = "foo",

@@ -33,9 +33,7 @@ void DataManager::clear()
 
 void DataManager::_init_from_mod(ModEnv& mod)
 {
-    // Bypass the metatable on the mod's environment preventing creation of
-    // new global variables.
-    mod.env.raw_set("data", _public_interface);
+    mod.env["ELONA"]["data"] = _public_interface;
 
     if (!mod.manifest.path)
     {

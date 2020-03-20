@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    action = {
       cannot_do_in_global = "その行為は、ワールドマップにいる間はできない。",
       hit_key_for_help = "?キーを押すと、コマンドの一覧が見られる。",

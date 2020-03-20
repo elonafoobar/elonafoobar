@@ -1,4 +1,4 @@
-data:add(
+ELONA.data:add(
    "core.ability",
    {
       expecto_patronum = {

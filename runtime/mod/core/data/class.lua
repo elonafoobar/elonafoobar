@@ -1,5 +1,5 @@
-data:define_prototype("class")
-data:add(
+ELONA.data:define_prototype("class")
+ELONA.data:add(
    "core.class",
    {
       warrior = {

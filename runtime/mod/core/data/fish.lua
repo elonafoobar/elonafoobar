@@ -1,5 +1,5 @@
-data:define_prototype("fish")
-data:add(
+ELONA.data:define_prototype("fish")
+ELONA.data:add(
    "core.fish",
    {
       bug = {

@@ -35,7 +35,7 @@ end
 mod.store.global.called_times_a = 0
 mod.store.global.called_times_b = 0
 
-api:add(exports)
+ELONA.api:add(exports)
 )"));
 
     lua.get_export_manager().register_all_exports();
@@ -101,7 +101,7 @@ end
 
 mod.store.global.found_index = -1
 
-api:add(exports)
+ELONA.api:add(exports)
 )"));
 
     elona::testing::start_in_debug_map();

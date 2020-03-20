@@ -1,5 +1,5 @@
-data:define_prototype("asset")
-data:add(
+ELONA.data:define_prototype("asset")
+ELONA.data:add(
    "core.asset",
    {
       interface = {
@@ -1012,7 +1012,7 @@ local function background_card(name)
    }
 end
 
-data:add(
+ELONA.data:add(
    "core.asset",
    {
       atx_background = {
@@ -1092,7 +1092,7 @@ local function background(name, width, height)
    }
 end
 
-data:add(
+ELONA.data:add(
    "core.asset",
    {
       background = {
@@ -1121,7 +1121,7 @@ data:add(
    }
 )
 
-data:add(
+ELONA.data:add(
    "core.asset",
    {
       ie_sheet = {

@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    event = {
       little_sister_slips = "The little sister slips from Big daddy's shoulder, \"Mr.Bubbles!\"",
 

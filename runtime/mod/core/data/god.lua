@@ -1,5 +1,5 @@
-data:define_prototype("god")
-data:add(
+ELONA.data:define_prototype("god")
+ELONA.data:add(
    "core.god",
    {
       mani = {

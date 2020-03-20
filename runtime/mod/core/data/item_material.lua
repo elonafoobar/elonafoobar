@@ -1,5 +1,5 @@
-data:define_prototype("item_material")
-data:add(
+ELONA.data:define_prototype("item_material")
+ELONA.data:add(
    "core.item_material",
    {
       vegetable_seed = {

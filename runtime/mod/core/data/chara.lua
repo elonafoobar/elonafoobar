@@ -1,5 +1,5 @@
-data:define_prototype("chara")
-data:add(
+ELONA.data:define_prototype("chara")
+ELONA.data:add(
    "core.chara",
    {
       bug = {

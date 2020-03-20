@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    scenario = {
       obtain_stone = {
          fool = "愚者の魔石を手に入れた！",

@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    card_info = {
       _500 = "海",
       _501 = "島",

@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    talk = {
       visitor = {
          wanted_to_say_hi = "I just wanted to say hi.",

@@ -1,5 +1,5 @@
-data:define_prototype("putit")
-data:add(
+ELONA.data:define_prototype("putit")
+ELONA.data:add(
    "putit.putit",
    {
       normal = {

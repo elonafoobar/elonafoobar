@@ -1,5 +1,5 @@
-data:define_prototype("trait")
-data:add(
+ELONA.data:define_prototype("trait")
+ELONA.data:add(
    "core.trait",
    {
       stamina_feat = {

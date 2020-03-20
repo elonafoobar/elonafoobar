@@ -1,5 +1,5 @@
 -- Contains all possible character parameters for testing.
-data:add(
+ELONA.data:add(
    "core.chara",
    {
       spiral_putit = {

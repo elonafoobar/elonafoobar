@@ -2,6 +2,6 @@ local function hello()
    return "Hello!"
 end
 
-api:add {
+ELONA.api:add {
    Hello = {hello = hello}
 }

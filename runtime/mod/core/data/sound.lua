@@ -1,5 +1,5 @@
-data:define_prototype("sound")
-data:add(
+ELONA.data:define_prototype("sound")
+ELONA.data:add(
    "core.sound",
    {
       pop1 = {

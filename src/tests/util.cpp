@@ -128,7 +128,7 @@ function exports." +
             callback_signature + "\n" + callback_body + R"(
 end
 
-api:add(exports)
+ELONA.api:add(exports)
 )"));
 
     lua.get_export_manager().register_all_exports();

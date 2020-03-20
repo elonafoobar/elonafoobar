@@ -1,4 +1,4 @@
-data:add(
+ELONA.data:add(
    "core.chara",
    {
       dragon = {
@@ -9,7 +9,7 @@ data:add(
       },
    }
 )
-data:add(
+ELONA.data:add(
    "core.chara",
    {
       nothing = {

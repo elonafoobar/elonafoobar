@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    skill = {
       gained = "You have learned new ability, {$1}.",
 

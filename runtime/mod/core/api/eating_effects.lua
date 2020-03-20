@@ -263,6 +263,6 @@ function EatingEffects.stalker(eater)
 end
 
 
-api:add {
+ELONA.api:add {
    EatingEffects = EatingEffects
 }

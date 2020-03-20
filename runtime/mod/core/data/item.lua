@@ -1,5 +1,5 @@
-data:define_prototype("item")
-data:add(
+ELONA.data:define_prototype("item")
+ELONA.data:add(
    "core.item",
    {
       bug = {

@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    food = {
       -- Names for cooked food.
       -- These are organized by type, then quality.

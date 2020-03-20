@@ -54,8 +54,8 @@ Each item of "drops" can have these properties.
     chara: character that was killed.
 --]]
 
-data:define_prototype("chara_drop")
-data:add(
+ELONA.data:define_prototype("chara_drop")
+ELONA.data:add(
    "core.chara_drop",
    {
       rich_person = {

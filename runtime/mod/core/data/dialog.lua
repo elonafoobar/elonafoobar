@@ -1,7 +1,7 @@
 local unique = require("dialog/unique.lua")
 
-data:define_prototype("dialog")
-data:add(
+ELONA.data:define_prototype("dialog")
+ELONA.data:add(
    "core.dialog",
    {
       ignored = {
@@ -16,4 +16,4 @@ data:add(
       },
    }
 )
-data:add("core.dialog", unique)
+ELONA.data:add("core.dialog", unique)

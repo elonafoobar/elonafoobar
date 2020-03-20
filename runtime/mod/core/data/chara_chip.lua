@@ -1,5 +1,5 @@
-data:define_prototype("chara_chip")
-data:add(
+ELONA.data:define_prototype("chara_chip")
+ELONA.data:add(
    "core.chara_chip",
    {
       _0 = {

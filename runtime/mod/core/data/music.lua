@@ -1,5 +1,5 @@
-data:define_prototype("music")
-data:add(
+ELONA.data:define_prototype("music")
+ELONA.data:add(
    "core.music",
    {
       mcReset = {

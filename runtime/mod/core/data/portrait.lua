@@ -1,5 +1,5 @@
-data:define_prototype("portrait")
-data:add(
+ELONA.data:define_prototype("portrait")
+ELONA.data:add(
    "core.portrait",
    {
       man1 = {

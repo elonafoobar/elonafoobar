@@ -1,5 +1,5 @@
-data:define_prototype("race")
-data:add(
+ELONA.data:define_prototype("race")
+ELONA.data:add(
    "core.race",
    {
       kobold = {

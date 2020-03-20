@@ -33,7 +33,7 @@ local function convert_atlas(base, atlas_index)
    return atlas
 end
 
-data:define_prototype("map_chip")
+ELONA.data:define_prototype("map_chip")
 
 --
 -- Atlas 0
@@ -98,7 +98,7 @@ do
       atlas_0[i].is_feat = true
    end
 
-   data:add("core.map_chip", convert_atlas(atlas_0, 0))
+   ELONA.data:add("core.map_chip", convert_atlas(atlas_0, 0))
 end
 
 --
@@ -155,7 +155,7 @@ do
       atlas_1[i].is_feat = true
    end
 
-   data:add("core.map_chip", convert_atlas(atlas_1, 1))
+   ELONA.data:add("core.map_chip", convert_atlas(atlas_1, 1))
 end
 
 --
@@ -200,5 +200,5 @@ do
    atlas_2[476].wall_kind = 0
    atlas_2[509].wall_kind = 0
 
-   data:add("core.map_chip", convert_atlas(atlas_2, 2))
+   ELONA.data:add("core.map_chip", convert_atlas(atlas_2, 2))
 end

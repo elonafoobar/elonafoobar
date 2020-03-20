@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    death_by = {
       chara = {
          -- _1 is victim, _2 is attacker.

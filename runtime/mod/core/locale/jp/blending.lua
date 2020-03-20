@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    blending = {
       rate_panel = {
          success_rate = "成功率: {$1}",

@@ -45,8 +45,8 @@ end
     generates the map. See the mapgen/ folder for examples.
 
 ]]
-data:define_prototype("map")
-data:add(
+ELONA.data:define_prototype("map")
+ELONA.data:add(
    "core.map",
    {
       test_world = {
@@ -1013,7 +1013,7 @@ local function chara_filter_museum_shop()
 end
 
 -- These maps are player-created.
-data:add(
+ELONA.data:add(
    "core.map",
    {
       museum = player_owned {

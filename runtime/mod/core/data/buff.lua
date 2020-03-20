@@ -63,8 +63,8 @@ in the description.
 ]]
 
 -- TODO: buff icons
-data:define_prototype("buff")
-data:add(
+ELONA.data:define_prototype("buff")
+ELONA.data:add(
    "core.buff",
    {
       holy_shield = {
@@ -406,7 +406,7 @@ data:add(
 )
 
 local function register_growth_buff(attribute_index, attribute_name)
-   data:add(
+   ELONA.data:add(
       "core.buff",
       {
          ["grow_" .. attribute_name] = {

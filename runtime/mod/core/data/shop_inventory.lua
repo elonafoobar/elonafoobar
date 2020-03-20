@@ -126,8 +126,8 @@ Available properties:
 
 -- NOTE: "id" must be the same as a character role, and between
 -- [1000,1999]. (2003 is special-cased.)
-data:define_prototype("shop_inventory")
-data:add(
+ELONA.data:define_prototype("shop_inventory")
+ELONA.data:add(
    "core.shop_inventory",
    {
       magic_vendor = {

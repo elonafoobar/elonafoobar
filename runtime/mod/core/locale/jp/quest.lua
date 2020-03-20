@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    quest = {
       journal_updated = "ジャーナルが更新された。",
       minutes_left = "クエスト[残り{$1}分]",

@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    action = {
       use = {
          useable_again_at = "そのアイテムが次に使用できるのは{$1}だ。",

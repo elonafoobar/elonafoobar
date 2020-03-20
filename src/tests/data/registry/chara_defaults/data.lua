@@ -1,5 +1,5 @@
 -- Contains only id, to test handling of defaults.
-data:add(
+ELONA.data:add(
    "core.chara",
    {
       nothing = {

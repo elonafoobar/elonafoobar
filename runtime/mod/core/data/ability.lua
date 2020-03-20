@@ -1,5 +1,5 @@
-data:define_prototype("ability")
-data:add(
+ELONA.data:define_prototype("ability")
+ELONA.data:add(
    "core.ability",
    {
       attribute_life = {

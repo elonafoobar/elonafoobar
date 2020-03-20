@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    chara = {
       you = "あなた",
       something = "何か",
@@ -117,7 +117,7 @@ i18n:add {
 
 
 
-i18n:add {
+ELONA.i18n:add {
    chara = {
       bug = {
          name = "バグ",

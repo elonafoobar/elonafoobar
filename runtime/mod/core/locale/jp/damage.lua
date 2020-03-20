@@ -1,4 +1,4 @@
-i18n:add {
+ELONA.i18n:add {
    damage = {
       miss = {
          ally = "{kare_wa($2)}{name($1)}の攻撃を避けた。",

@@ -1,6 +1,6 @@
 -- NOTE: Will change drastically with the introduction of custom gods.
 
-i18n:add {
+ELONA.i18n:add {
    god = {
       indifferent = " Your God becomes indifferent to your gift.",
       enraged = "{$1} is enraged.", -- TODO duplicate?
@@ -113,7 +113,7 @@ i18n:add {
 
 
 
-i18n:add {
+ELONA.i18n:add {
    god = {
       eyth = {
          name = "Eyth of Infidel",
