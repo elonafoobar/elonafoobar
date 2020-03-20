@@ -1,4 +1,5 @@
 #include "../elona/character.hpp"
+#include "../elona/command.hpp"
 #include "../elona/item.hpp"
 #include "../elona/itemgen.hpp"
 #include "../elona/lua_env/handle_manager.hpp"

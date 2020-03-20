@@ -17,8 +17,11 @@
 #include "shop.hpp"
 #include "status_ailment.hpp"
 #include "talk.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+
+
 
 namespace elona
 {

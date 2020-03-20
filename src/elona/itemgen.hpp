@@ -1,6 +1,7 @@
 #pragma once
 
 #include "optional.hpp"
+#include "randomgen.hpp"
 
 
 
@@ -36,5 +37,7 @@ void determine_item_material(Item&);
 void change_item_material(Item&, int);
 void apply_item_material(Item&);
 void set_material_specific_attributes(Item&);
+
+int discsetmc();
 
 } // namespace elona

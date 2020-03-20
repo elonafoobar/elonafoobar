@@ -1,5 +1,6 @@
 #include "init.hpp"
 
+#include "../util/fileutil.hpp"
 #include "adventurer.hpp"
 #include "area.hpp"
 #include "audio.hpp"
@@ -16,6 +17,7 @@
 #include "draw.hpp"
 #include "enchantment.hpp"
 #include "i18n.hpp"
+#include "initialize_map.hpp"
 #include "item.hpp"
 #include "keybind/keybind.hpp"
 #include "loading_screen.hpp"
@@ -27,17 +29,24 @@
 #include "lua_env/lua_event/base_event.hpp"
 #include "lua_env/mod_manager.hpp"
 #include "map.hpp"
+#include "mapgen.hpp"
 #include "mef.hpp"
 #include "menu.hpp"
 #include "quest.hpp"
+#include "randomgen.hpp"
 #include "save.hpp"
+#include "scene.hpp"
+#include "set_item_info.hpp"
 #include "text.hpp"
+#include "trait.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+#include "world.hpp"
 
-using namespace elona;
 
 
+namespace elona
+{
 
 namespace
 {
@@ -115,8 +124,21 @@ void initialize_testbed()
 
 
 
-namespace elona
-{
+// see building.cpp
+extern elona_vector1<int> fsetincome;
+extern elona_vector1<int> fsetplantartifact;
+extern elona_vector1<int> fsetplantunknown;
+
+// see command.cpp
+extern elona_vector1<int> fsetbarrel;
+extern elona_vector1<int> isetgiftminor;
+extern elona_vector1<int> isetgiftmajor;
+extern elona_vector1<int> isetgiftgrand;
+
+// see randomgen.cpp
+extern elona_vector1<int> fsetrare;
+
+
 
 void initialize_lua()
 {
@@ -675,6 +697,364 @@ void init()
 
     // TODO: Show each time mods are reloaded.
     show_loading_screen();
+}
+
+
+
+void initialize_post_data()
+{
+    DIM4(pochart, 10, 10, 10);
+    pochart(0, 0, 0) = 2;
+    pochart(0, 1, 0) = 3;
+    pochart(1, 1, 0) = 4;
+    pochart(0, 2, 0) = 5;
+    pochart(1, 2, 0) = 6;
+    DIM3(podata, 300, 20);
+}
+
+
+
+void initialize_picfood()
+{
+    DIM3(picfood, 10, 9);
+    picfood(0, 8) = 230;
+    picfood(1, 8) = 230;
+    picfood(2, 8) = 230;
+    picfood(3, 8) = 190;
+    picfood(4, 8) = 229;
+    picfood(5, 8) = 190;
+    picfood(6, 8) = 342;
+    picfood(7, 8) = 168;
+    picfood(8, 8) = 347;
+    picfood(9, 8) = 194;
+    picfood(0, 1) = 230;
+    picfood(1, 1) = 230;
+    picfood(2, 1) = 230;
+    picfood(3, 1) = 195;
+    picfood(4, 1) = 227;
+    picfood(5, 1) = 167;
+    picfood(6, 1) = 167;
+    picfood(7, 1) = 194;
+    picfood(8, 1) = 229;
+    picfood(9, 1) = 227;
+    picfood(0, 2) = 230;
+    picfood(1, 2) = 230;
+    picfood(2, 2) = 230;
+    picfood(3, 2) = 229;
+    picfood(4, 2) = 342;
+    picfood(5, 2) = 194;
+    picfood(6, 2) = 229;
+    picfood(7, 2) = 342;
+    picfood(8, 2) = 229;
+    picfood(9, 2) = 194;
+    picfood(0, 3) = 230;
+    picfood(1, 3) = 230;
+    picfood(2, 3) = 230;
+    picfood(3, 3) = 229;
+    picfood(4, 3) = 346;
+    picfood(5, 3) = 346;
+    picfood(6, 3) = 345;
+    picfood(7, 3) = 345;
+    picfood(8, 3) = 347;
+    picfood(9, 3) = 346;
+    picfood(0, 4) = 230;
+    picfood(1, 4) = 230;
+    picfood(2, 4) = 230;
+    picfood(3, 4) = 108;
+    picfood(4, 4) = 346;
+    picfood(5, 4) = 110;
+    picfood(6, 4) = 346;
+    picfood(7, 4) = 347;
+    picfood(8, 4) = 347;
+    picfood(9, 4) = 347;
+    picfood(0, 5) = 230;
+    picfood(1, 5) = 230;
+    picfood(2, 5) = 229;
+    picfood(3, 5) = 343;
+    picfood(4, 5) = 344;
+    picfood(5, 5) = 344;
+    picfood(6, 5) = 343;
+    picfood(7, 5) = 343;
+    picfood(8, 5) = 344;
+    picfood(9, 5) = 343;
+    picfood(0, 6) = 230;
+    picfood(1, 6) = 230;
+    picfood(2, 6) = 230;
+    picfood(3, 6) = 228;
+    picfood(4, 6) = 342;
+    picfood(5, 6) = 342;
+    picfood(6, 6) = 228;
+    picfood(7, 6) = 341;
+    picfood(8, 6) = 228;
+    picfood(9, 6) = 228;
+    picfood(0, 7) = 230;
+    picfood(1, 7) = 230;
+    picfood(2, 7) = 110;
+    picfood(3, 7) = 108;
+    picfood(4, 7) = 110;
+    picfood(5, 7) = 112;
+    picfood(6, 7) = 114;
+    picfood(7, 7) = 113;
+    picfood(8, 7) = 115;
+    picfood(9, 7) = 111;
+}
+
+
+
+void initialize_set_of_random_generation()
+{
+    fsetincome(0) = 52000;
+    fsetincome(1) = 52000;
+    fsetincome(2) = 52000;
+    fsetincome(3) = 53000;
+    fsetincome(4) = 53000;
+    fsetincome(5) = 56000;
+    fsetincome(6) = 54000;
+    fsetincome(7) = 77000;
+    fsetincome(8) = 57000;
+    fsetincome(9) = 57000;
+    fsetchest(0) = 10000;
+    fsetchest(1) = 24000;
+    fsetchest(2) = 12000;
+    fsetchest(3) = 16000;
+    fsetchest(4) = 20000;
+    fsetchest(5) = 19000;
+    fsetchest(6) = 18000;
+    fsetchest(7) = 22000;
+    fsetchest(8) = 14000;
+    fsetchest(9) = 32000;
+    fsetchest(10) = 34000;
+    fsetchest(11) = 54000;
+    fsetchest(12) = 59000;
+    fsetwear(0) = 10000;
+    fsetwear(1) = 10000;
+    fsetwear(2) = 24000;
+    fsetwear(3) = 24000;
+    fsetwear(4) = 25000;
+    fsetwear(5) = 12000;
+    fsetwear(6) = 16000;
+    fsetwear(7) = 20000;
+    fsetwear(8) = 19000;
+    fsetwear(9) = 18000;
+    fsetwear(10) = 22000;
+    fsetwear(11) = 14000;
+    fsetwear(12) = 32000;
+    fsetwear(13) = 34000;
+    fsetitem(0) = 52000;
+    fsetitem(1) = 52000;
+    fsetitem(2) = 53000;
+    fsetitem(3) = 53000;
+    fsetitem(4) = 56000;
+    fsetitem(5) = 68000;
+    fsetitem(6) = 54000;
+    fsetitem(7) = 64000;
+    fsetitem(8) = 59000;
+    fsetitem(9) = 55000;
+    fsetrewardsupply(0) = 52000;
+    fsetrewardsupply(1) = 53000;
+    fsetrewardsupply(2) = 56000;
+    fsetrewardsupply(3) = 54000;
+    fsetrewardsupply(4) = 57000;
+    fsetrare(0) = 60000;
+    fsetrare(1) = 72000;
+    fsetrare(2) = 77000;
+    fsetrare(3) = 55000;
+    fsetrare(4) = 57000;
+    fsetdeliver(0) = 60000;
+    fsetdeliver(1) = 77000;
+    fsetdeliver(2) = 54000;
+    fsetdeliver(3) = 64000;
+    fsetsupply(0) = 60000;
+    fsetsupply(1) = 77000;
+    fsetsupply(2) = 56000;
+    fsetsupply(3) = 54000;
+    fsetsupply(4) = 64000;
+    fsetmagic(0) = 53000;
+    fsetmagic(1) = 56000;
+    fsetmagic(2) = 54000;
+    fsetarmor(0) = 12000;
+    fsetarmor(1) = 16000;
+    fsetarmor(2) = 20000;
+    fsetarmor(3) = 19000;
+    fsetarmor(4) = 18000;
+    fsetarmor(5) = 22000;
+    fsetarmor(6) = 14000;
+    fsetweapon(0) = 10000;
+    fsetweapon(1) = 24000;
+    fsetweapon(2) = 25000;
+    fsetplantartifact(0) = 32000;
+    fsetplantartifact(1) = 34000;
+    fsetplantunknown(0) = 57000;
+    fsetplantunknown(1) = 57000;
+    fsetplantunknown(2) = 54000;
+    fsetplantunknown(3) = 64000;
+    fsetplantunknown(4) = 77000;
+    fsetbarrel(0) = 25000;
+    fsetbarrel(1) = 57000;
+    fsetbarrel(2) = 53000;
+    fsetbarrel(3) = 52000;
+    fsetbarrel(4) = 77000;
+    fsetbarrel(5) = 64000;
+    fsetcollect(0) = 64000;
+    fsetcollect(1) = 60000;
+    fsetcollect(2) = 57000;
+    fsetcollect(3) = 77000;
+    isetfruit(0) = 180;
+    isetfruit(1) = 181;
+    isetfruit(2) = 196;
+    isetfruit(3) = 197;
+    isetfruit(4) = 192;
+    isetfruit(5) = 183;
+    isetthrowpotionminor(0) = 27;
+    isetthrowpotionminor(1) = 28;
+    isetthrowpotionminor(2) = 376;
+    isetthrowpotionminor(3) = 30;
+    isetthrowpotionminor(4) = 262;
+    isetthrowpotionminor(5) = 253;
+    isetthrowpotionminor(6) = 379;
+    isetthrowpotionminor(7) = 392;
+    isetthrowpotionmajor(0) = 28;
+    isetthrowpotionmajor(1) = 376;
+    isetthrowpotionmajor(2) = 205;
+    isetthrowpotionmajor(3) = 368;
+    isetthrowpotionmajor(4) = 433;
+    isetthrowpotionmajor(5) = 382;
+    isetthrowpotionmajor(6) = 577;
+    isetthrowpotionmajor(7) = 577;
+    isetthrowpotiongreater(0) = 28;
+    isetthrowpotiongreater(1) = 205;
+    isetthrowpotiongreater(2) = 368;
+    isetthrowpotiongreater(3) = 432;
+    isetthrowpotiongreater(4) = 429;
+    isetthrowpotiongreater(5) = 29;
+    isetthrowpotiongreater(6) = 577;
+    isethire(0) = 205;
+    isethire(1) = 70;
+    isethire(2) = 74;
+    isethire(3) = 41;
+    isethire(4) = 69;
+    isethire(5) = 76;
+    isethire(6) = 1;
+    isethire(7) = 1;
+    isethire(8) = 1;
+    isetgiftminor(0) = 753;
+    isetgiftminor(1) = 754;
+    isetgiftminor(2) = 754;
+    isetgiftminor(3) = 756;
+    isetgiftminor(4) = 756;
+    isetgiftminor(5) = 540;
+    isetgiftminor(6) = 541;
+    isetgiftminor(7) = 537;
+    isetgiftminor(8) = 538;
+    isetgiftminor(9) = 526;
+    isetgiftminor(10) = 415;
+    isetgiftminor(11) = 511;
+    isetgiftminor(12) = 343;
+    isetgiftminor(13) = 340;
+    isetgiftminor(14) = 338;
+    isetgiftminor(15) = 328;
+    isetgiftminor(16) = 220;
+    isetgiftminor(17) = 575;
+    isetgiftminor(18) = 622;
+    isetgiftminor(19) = 167;
+    isetgiftmajor(0) = 755;
+    isetgiftmajor(1) = 755;
+    isetgiftmajor(2) = 633;
+    isetgiftmajor(3) = 626;
+    isetgiftmajor(4) = 502;
+    isetgiftmajor(5) = 632;
+    isetgiftmajor(6) = 667;
+    isetgiftmajor(7) = 555;
+    isetgiftmajor(8) = 748;
+    isetgiftmajor(9) = 640;
+    isetgiftgrand(0) = 757;
+    isetgiftgrand(1) = 558;
+    isetgiftgrand(2) = 664;
+    isetgiftgrand(3) = 758;
+    isetgiftgrand(4) = 759;
+    isetgiftgrand(5) = 761;
+    isethirerole(0) = 18;
+    isethirerole(1) = 9;
+    isethirerole(2) = 12;
+    isethirerole(3) = 5;
+    isethirerole(4) = 8;
+    isethirerole(5) = 14;
+    isethirerole(6) = 1008;
+    isethirerole(7) = 1008;
+    isethirerole(8) = 1008;
+    isetcrop(0) = 180;
+    isetcrop(1) = 181;
+    isetcrop(2) = 197;
+    isetcrop(3) = 192;
+    isetcrop(4) = 183;
+    isetcrop(5) = 188;
+    isetcrop(6) = 200;
+    isetgod(0) = 0;
+    isetgod(1) = 1;
+    isetgod(2) = 2;
+    isetgod(3) = 3;
+    isetgod(4) = 4;
+    isetgod(5) = 5;
+    isetgod(6) = 6;
+    isetgod(7) = 7;
+    asettown(0) = 5;
+    asettown(1) = 11;
+    asettown(2) = 14;
+    asettown(3) = 15;
+    asettown(4) = 12;
+    moneybox(0) = 500;
+    moneybox(1) = 2000;
+    moneybox(2) = 10000;
+    moneybox(3) = 50000;
+    moneybox(4) = 500000;
+    moneybox(5) = 5000000;
+    moneybox(6) = 100000000;
+    giftvalue(0) = 10;
+    giftvalue(1) = 20;
+    giftvalue(2) = 30;
+    giftvalue(3) = 50;
+    giftvalue(4) = 75;
+    giftvalue(5) = 100;
+
+    bool in_booktitle_definition = false;
+    int isetbook_index = 0;
+    for (const auto& line : fileutil::read_by_line(lua::resolve_path_for_mod(
+             "<core>/locale/<LANGUAGE>/lazy/book.txt")))
+    {
+        if (line == u8"%DEFINE")
+        {
+            in_booktitle_definition = true;
+        }
+        else if (line == u8"%END")
+        {
+            break;
+        }
+        else if (in_booktitle_definition)
+        {
+            // E.g., 7,Book Title,T
+            const auto columns = strutil::split(line, ',');
+            const auto id = elona::stoi(columns.at(0));
+            const auto& title = columns.at(1);
+            const auto is_generated = columns.at(2) == "T";
+
+            booktitle(id) = title;
+            if (is_generated)
+            {
+                isetbook(isetbook_index) = id;
+                ++isetbook_index;
+            }
+        }
+    }
+}
+
+
+
+void finish_elona()
+{
+    if (g_config.autodisable_numlock())
+    {
+        snail::Input::instance().restore_numlock();
+    }
 }
 
 } // namespace elona

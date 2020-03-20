@@ -5,6 +5,7 @@
 #include "data/types/type_item.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
+#include "text.hpp"
 #include "variables.hpp"
 
 

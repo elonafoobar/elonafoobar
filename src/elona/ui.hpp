@@ -122,5 +122,12 @@ void window_animation_corner(
 void show_title(const std::string& title);
 
 
+void auto_turn(int delay);
+void page_load();
+void page_save();
+void savecycle();
+void sort_list_by_column1();
+void sort_list_and_listn_by_column1();
+int winposy(int = 0, int = 0);
 
 } // namespace elona

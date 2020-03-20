@@ -44,4 +44,22 @@ enum class FieldMapType
 
 FieldMapType map_get_field_type();
 
+
+
+int map_barrel(int = 0, int = 0);
+int map_connectroom();
+int map_createroom(int = 0);
+int map_digcheck(int = 0, int = 0);
+int map_placedownstairs(int = 0, int = 0);
+int map_placeupstairs(int = 0, int = 0);
+int map_trap(int = 0, int = 0, int = 0, int = 0);
+int map_web(int = 0, int = 0, int = 0);
+void initialize_cell_object_data();
+void initialize_random_nefia_rdtype6();
+void initialize_quest_map_town();
+void initialize_random_nefia_rdtype8();
+void initialize_random_nefia_rdtype9();
+void mapgen_dig_maze();
+void initialize_random_nefia_rdtype10();
+
 } // namespace elona

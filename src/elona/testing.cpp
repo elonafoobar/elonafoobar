@@ -13,12 +13,15 @@
 #include "gdata.hpp"
 #include "i18n.hpp"
 #include "init.hpp"
+#include "initialize_map.hpp"
 #include "log.hpp"
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
 #include "lua_env/lua_event/base_event.hpp"
+#include "map.hpp"
 #include "profile/profile_manager.hpp"
 #include "save.hpp"
+#include "set_item_info.hpp"
 #include "variables.hpp"
 
 

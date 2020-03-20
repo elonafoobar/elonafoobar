@@ -23,6 +23,8 @@ struct elona_vector3;
 
 struct Character;
 
+enum class TurnResult;
+
 
 
 struct MapData
@@ -305,5 +307,19 @@ void map_prepare_for_travel(int id, int level = 1);
 void map_prepare_for_travel_with_prev(int id, int level = 1);
 
 int map_global_place_random_nefias();
+
+
+void addefmap(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
+TurnResult exit_map();
+void map_global_proc_diastrophism();
+void map_global_prepare();
+void map_global_place_entrances();
+void map_clear_material_spots_and_light();
+void map_global_proc_travel_events();
+void sense_map_feats_on_move();
+void prepare_charas_for_map_unload();
+void spillblood(int = 0, int = 0, int = 0);
+void spillfrag(int = 0, int = 0, int = 0);
+void try_to_return();
 
 } // namespace elona

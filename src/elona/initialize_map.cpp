@@ -15,6 +15,7 @@
 #include "elona.hpp"
 #include "food.hpp"
 #include "i18n.hpp"
+#include "initialize_map_types.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/event_manager.hpp"
@@ -28,6 +29,8 @@
 #include "message.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "scene.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

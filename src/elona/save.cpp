@@ -1,5 +1,6 @@
 #include "save.hpp"
 
+#include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
@@ -7,10 +8,13 @@
 #include "ctrl_file.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
+#include "item.hpp"
 #include "lua_env/lua_env.hpp"
+#include "map.hpp"
 #include "message.hpp"
 #include "save_update.hpp"
 #include "serialization/serialization.hpp"
+#include "set_item_info.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -164,6 +168,138 @@ void save_autosave_if_needed()
         {
             save_game();
         }
+    }
+}
+
+
+
+void load_gene_files()
+{
+    ctrl_file(FileOperation::gene_read);
+    DIM2(spell, 200);
+    DIM2(spact, 500);
+    for (auto&& cnt : cdata.all())
+    {
+        cnt.set_state(Character::State::empty);
+    }
+    sdata.copy(56, 0);
+    sdata.clear(0);
+    Character::copy(cdata.player(), cdata.tmp());
+    cdata.player().clear();
+    for (auto&& item : inv.ground())
+    {
+        item.remove();
+    }
+    for (auto&& item : inv.pc())
+    {
+        if (item.number() == 0)
+        {
+            continue;
+        }
+        if (item.id == ItemId::secret_experience_of_lomias)
+        {
+            lomiaseaster = 1;
+        }
+        if (item.id == ItemId::deed_of_heirship ||
+            the_item_db[itemid2int(item.id)]->subcategory == 53100)
+        {
+            continue;
+        }
+        if (item.id == ItemId::kitty_bank)
+        {
+            continue;
+        }
+        if (item.quality == Quality::special)
+        {
+            continue;
+        }
+        if (item.is_precious())
+        {
+            continue;
+        }
+        if (the_item_db[itemid2int(item.id)]->category == ItemCategory::ammo)
+        {
+            item.count = -1;
+        }
+        item.body_part = 0;
+        item_copy(item.index, inv_getfreeid(-1));
+    }
+    for (auto&& cnt : cdata.all())
+    {
+        chara_delete(cnt.index);
+    }
+    game_data.play_time = genetemp(805);
+}
+
+
+
+void save_gene()
+{
+    ctrl_file(FileOperation::gene_write);
+}
+
+
+
+void save_map_local_data()
+{
+    prepare_charas_for_map_unload();
+    for (int y = 0; y < map_data.height; ++y)
+    {
+        for (int x = 0; x < map_data.width; ++x)
+        {
+            cell_data.at(x, y).blood_and_fragments = 0;
+        }
+    }
+
+    // write map data and characters/skill data local to this map
+    ctrl_file(FileOperation::map_write);
+
+    // write data for items/character inventories local to this map
+    ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
+}
+
+
+
+void get_inheritance()
+{
+    ctrl_file(FileOperation2::map_items_write, u8"shop3.s2");
+    p = 0;
+    i = 0;
+    for (int cnt = 0; cnt < 600; ++cnt)
+    {
+        if (cnt >= 10 && cnt < 20)
+        {
+            p += sdata.get(cnt, 56).original_level;
+        }
+        if (cnt >= 100 && cnt < 400)
+        {
+            i += sdata.get(cnt, 56).original_level;
+        }
+    }
+    p = (p - 250) / 7;
+    if (p < 5)
+    {
+        p = 5;
+    }
+    else if (p > 50)
+    {
+        p = 50;
+    }
+    i = (p - 250) / 8;
+    if (i < 5)
+    {
+        i = 5;
+    }
+    else if (i > 40)
+    {
+        i = 40;
+    }
+    earn_gold(cdata.player(), clamp(cdata.tmp().gold / 100, 1000, 100000));
+    earn_platinum(cdata.player(), p);
+    cdata.player().skill_bonus += i;
+    for (int cnt = 0; cnt < 400; ++cnt)
+    {
+        mat(cnt) = mat(cnt) / 3;
     }
 }
 

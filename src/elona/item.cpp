@@ -12,17 +12,22 @@
 #include "building.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
+#include "config.hpp"
 #include "crafting.hpp"
+#include "ctrl_file.hpp"
 #include "data/types/type_fish.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_material.hpp"
+#include "dmgheal.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
 #include "food.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "itemgen.hpp"
 #include "lua_env/handle_manager.hpp"
 #include "lua_env/lua_env.hpp"
+#include "magic.hpp"
 #include "map.hpp"
 #include "mef.hpp"
 #include "message.hpp"
@@ -2484,6 +2489,485 @@ std::vector<int> item_get_inheritance(const Item& item)
     randomize();
 
     return result;
+}
+
+
+
+void auto_identify()
+{
+    if (cdata.player().confused != 0 || cdata.player().sleep != 0 ||
+        cdata.player().paralyzed != 0 || cdata.player().choked != 0)
+    {
+        return;
+    }
+
+    for (auto&& item : inv.pc())
+    {
+        if (item.number() == 0 ||
+            item.identify_state == IdentifyState::completely)
+        {
+            continue;
+        }
+        if (!is_equipment(the_item_db[itemid2int(item.id)]->category))
+        {
+            continue;
+        }
+
+        const auto skill = sdata(13, 0) + sdata(162, 0) * 5;
+        const auto difficulty = 1500 + item.difficulty_of_identification * 5;
+        if (skill > rnd(difficulty * 5))
+        {
+            const auto prev_name = itemname(item.index);
+            item_identify(item, IdentifyState::completely);
+            itemmemory(0, itemid2int(item.id)) = 1;
+            if (!g_config.hide_autoidentify())
+            {
+                txt(i18n::s.get(
+                    "core.misc.identify.fully_identified", prev_name, item));
+            }
+            chara_gain_skill_exp(cdata.player(), 162, 50);
+        }
+        if (item.identify_state <= IdentifyState::partly)
+        {
+            if (skill > rnd(difficulty))
+            {
+                if (!g_config.hide_autoidentify())
+                {
+                    txt(i18n::s.get(
+                        "core.misc.identify.almost_identified",
+                        item,
+                        i18n::s.get_enum(
+                            u8"core.ui.quality",
+                            static_cast<int>(item.quality))));
+                }
+                item_identify(item, IdentifyState::almost);
+                chara_gain_skill_exp(cdata.player(), 162, 50);
+            }
+        }
+    }
+}
+
+
+
+void begintempinv()
+{
+    ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
+    for (auto&& item : inv.ground())
+    {
+        item.remove();
+    }
+}
+
+
+
+void exittempinv()
+{
+    ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
+}
+
+
+
+bool cargocheck(const Item& item)
+{
+    if (!the_item_db[itemid2int(item.id)]->is_cargo)
+        return true;
+
+    if (map_data.type != mdata_t::MapType::world_map &&
+        map_data.type != mdata_t::MapType::player_owned &&
+        map_data.type != mdata_t::MapType::town &&
+        map_data.type != mdata_t::MapType::field &&
+        map_data.type != mdata_t::MapType::shelter &&
+        map_data.type != mdata_t::MapType::guild)
+    {
+        txt(i18n::s.get("core.ui.inv.cannot_use_cargo_items"),
+            Message::only_once{true});
+        snd("core.fail1");
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+
+
+int convertartifact(int item_index, int ignore_external_container)
+{
+    int f_at_m163 = 0;
+    int tc_at_m163 = 0;
+    std::string n_at_m163;
+    if (!is_equipment(the_item_db[itemid2int(inv[item_index].id)]->category))
+    {
+        return item_index;
+    }
+    if (inv[item_index].quality != Quality::special)
+    {
+        return item_index;
+    }
+    if (inv[item_index].body_part != 0)
+    {
+        return item_index;
+    }
+    f_at_m163 = 0;
+    for (int cnt = 0; cnt < ELONA_MAX_ITEMS; ++cnt)
+    {
+        if (ignore_external_container)
+        {
+            if (cnt >= ELONA_ITEM_ON_GROUND_INDEX)
+            {
+                break;
+            }
+        }
+        if (cnt >= 520 && cnt < 5060)
+        {
+            continue;
+        }
+        tc_at_m163 = inv_getowner(cnt);
+        if (tc_at_m163 != -1)
+        {
+            if (cdata[tc_at_m163].state() == Character::State::empty ||
+                cdata[tc_at_m163].character_role == 13)
+            {
+                continue;
+            }
+        }
+        if (inv[cnt].number() > 0)
+        {
+            if (inv[cnt].id == inv[item_index].id)
+            {
+                if (cnt != item_index)
+                {
+                    f_at_m163 = 1;
+                    break;
+                }
+            }
+        }
+    }
+    if (f_at_m163 == 0)
+    {
+        return item_index;
+    }
+    n_at_m163 = ""s + itemname(item_index);
+
+    while (true)
+    {
+        flt(the_item_db[itemid2int(inv[item_index].id)]->level,
+            Quality::miracle);
+        flttypeminor = the_item_db[itemid2int(inv[item_index].id)]->subcategory;
+        inv[item_index].remove();
+
+        itemcreate(inv_getowner(item_index), 0, inv[item_index].position, 0);
+        if (inv[item_index].quality != Quality::special)
+        {
+            break;
+        }
+    }
+
+    txt(i18n::s.get("core.misc.artifact_regeneration", n_at_m163, inv[ci]));
+    return item_index;
+}
+
+
+
+void damage_by_cursed_equipments()
+{
+    if (rnd(4) == 0)
+    {
+        damage_hp(
+            cdata[cc],
+            cdata[cc].hp * (5 + cdata[cc].curse_power / 5) / 100,
+            -5);
+        return;
+    }
+    if (map_data.type != mdata_t::MapType::world_map)
+    {
+        if (rnd(10 - clamp(cdata[cc].curse_power / 10, 0, 9)) == 0)
+        {
+            efid = 408;
+            tc = cc;
+            magic();
+            return;
+        }
+    }
+    if (rnd(10) == 0)
+    {
+        if (cdata[cc].gold > 0)
+        {
+            p = rnd_capped(cdata[cc].gold) / 100 + rnd(10) + 1;
+            if (p > cdata[cc].gold)
+            {
+                p = cdata[cc].gold;
+            }
+            cdata[cc].gold -= p;
+            if (is_in_fov(cdata[cc]))
+            {
+                txt(i18n::s.get("core.misc.curse.gold_stolen", cdata[cc]),
+                    Message::color{ColorIndex::purple});
+            }
+            return;
+        }
+    }
+}
+
+
+
+void dipcursed(int item_index, int)
+{
+    if (the_item_db[itemid2int(inv[item_index].id)]->category ==
+        ItemCategory::food)
+    {
+        if (inv[item_index].material == 35)
+        {
+            txt(i18n::s.get("core.action.dip.rots", inv[item_index]));
+            inv[item_index].param3 = -1;
+            inv[item_index].image = 336;
+            cell_refresh(
+                inv[item_index].position.x, inv[item_index].position.y);
+            return;
+        }
+        else
+        {
+            txt(i18n::s.get("core.action.dip.unchanged", inv[item_index]));
+            return;
+        }
+    }
+    if (is_equipment(the_item_db[itemid2int(inv[item_index].id)]->category))
+    {
+        --inv[item_index].enhancement;
+        txt(i18n::s.get("core.action.dip.rusts", inv[item_index]));
+        if (inv_getowner(item_index) != -1)
+        {
+            chara_refresh(inv_getowner(item_index));
+        }
+        return;
+    }
+    txt(i18n::s.get("core.common.nothing_happens"));
+}
+
+
+
+int efstatusfix(int doomed, int cursed, int none, int blessed)
+{
+    switch (efstatus)
+    {
+    case CurseState::doomed: return doomed;
+    case CurseState::cursed: return cursed;
+    case CurseState::none: return none;
+    case CurseState::blessed: return blessed;
+    default: assert(0); return none;
+    }
+}
+
+
+
+void equip_melee_weapon()
+{
+    attacknum = 0;
+    for (int cnt = 0; cnt < 30; ++cnt)
+    {
+        body = 100 + cnt;
+        if (cdata[cc].body_parts[cnt] / 10000 != 5)
+        {
+            continue;
+        }
+        if (cdata[cc].body_parts[cnt] % 10000 == 0)
+        {
+            continue;
+        }
+        cw = cdata[cc].body_parts[cnt] % 10000 - 1;
+        if (inv[cw].dice_x == 0)
+        {
+            continue;
+        }
+        ++attacknum;
+        if (cdata[cc].equipment_type & 2)
+        {
+            if (inv[cw].weight >= 4000)
+            {
+                txt(i18n::s.get(
+                    "core.action.equip.two_handed.fits_well", inv[cw]));
+            }
+            else
+            {
+                txt(i18n::s.get(
+                    "core.action.equip.two_handed.too_light", inv[cw]));
+            }
+        }
+        if (cdata[cc].equipment_type & 4)
+        {
+            if (attacknum == 1)
+            {
+                if (inv[cw].weight >= 4000)
+                {
+                    txt(i18n::s.get(
+                        "core.action.equip.two_handed.too_heavy", inv[cw]));
+                }
+            }
+            else if (inv[cw].weight > 1500)
+            {
+                txt(i18n::s.get(
+                    "core.action.equip.two_handed.too_heavy_other_hand",
+                    inv[cw]));
+            }
+        }
+        if (cc == 0)
+        {
+            if (game_data.mount != 0)
+            {
+                if (inv[cw].weight >= 4000)
+                {
+                    txt(i18n::s.get(
+                        "core.action.equip.two_handed.too_heavy_when_riding",
+                        inv[cw]));
+                }
+            }
+        }
+    }
+}
+
+
+
+int gain_skills_by_geen_engineering()
+{
+    if (cdata[tc].splits() || cdata[tc].splits2())
+    {
+        return 0;
+    }
+    randomize(charaid2int(cdata[tc].id));
+    int dbmax = 0;
+    for (int cnt = 0; cnt < 100; ++cnt)
+    {
+        rtval = rnd(40) + 150;
+        if (sdata(rtval, rc) == 0)
+        {
+            if (sdata(rtval, tc) > 0)
+            {
+                dblist(0, dbmax) = rtval;
+                ++dbmax;
+            }
+        }
+    }
+    rtval(0) = dblist(0, 0);
+    rtval(1) = -1;
+    if (dbmax >= 2)
+    {
+        if (rnd(3) == 0)
+        {
+            for (int cnt = 1, cnt_end = cnt + (dbmax - 1); cnt < cnt_end; ++cnt)
+            {
+                if (dblist(0, cnt) != rtval)
+                {
+                    rtval(1) = dblist(0, cnt);
+                    break;
+                }
+            }
+        }
+    }
+    randomize();
+    return dbmax;
+}
+
+
+
+int transplant_body_parts()
+{
+    int dbmax = 0;
+    s(1) = chara_db_get_filter(cdata[tc].id);
+    if (strutil::contains(s(1), u8"/man/"))
+    {
+        return -1;
+    }
+    if (cdata[tc].splits() || cdata[tc].splits2())
+    {
+        return -1;
+    }
+    rtval(1) = -1;
+    for (int i = 0; i < 30; ++i)
+    {
+        if (cdata[rc].body_parts[i] == 0)
+        {
+            rtval(1) = i + 100;
+        }
+    }
+    if (rtval(1) == -1)
+    {
+        return -1;
+    }
+    for (int cnt = 0; cnt < 30; ++cnt)
+    {
+        f = cdata[tc].body_parts[cnt] / 10000;
+        if (f == 11 || f == 10 || f == 4)
+        {
+            continue;
+        }
+        if (f != 0)
+        {
+            dblist(0, dbmax) = f;
+            ++dbmax;
+        }
+    }
+    if (dbmax == 0)
+    {
+        return -1;
+    }
+    randomize(charaid2int(cdata[tc].id));
+    for (int cnt = 0; cnt < 3; ++cnt)
+    {
+        rtval = dblist(0, rnd(dbmax));
+        f = 0;
+        for (int i = 0; i < 30; ++i)
+        {
+            if (cdata[rc].body_parts[i] == 0)
+            {
+                continue;
+            }
+            if (cdata[rc].body_parts[i] / 10000 == rtval)
+            {
+                f = 1;
+            }
+        }
+        if (f)
+        {
+            break;
+        }
+    }
+    if (f == 0)
+    {
+        randomize();
+        return rtval(1);
+    }
+    DIM3(dblist, 2, 800);
+    for (int i = 0; i < 30; ++i)
+    {
+        ++dblist(0, cdata[tc].body_parts[i] / 10000);
+    }
+    for (int cnt = 0; cnt < 25; ++cnt)
+    {
+        rtval = rnd(15) + 1;
+        f = 0;
+        for (int i = 0; i < 30; ++i)
+        {
+            if (cdata[rc].body_parts[i] / 10000 == rtval)
+            {
+                ++f;
+            }
+        }
+        if (f < dblist(0, rtval))
+        {
+            f = -1;
+            break;
+        }
+    }
+    randomize();
+    if (f == -1)
+    {
+        return rtval(1);
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 } // namespace elona

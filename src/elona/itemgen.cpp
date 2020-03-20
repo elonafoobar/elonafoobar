@@ -13,6 +13,7 @@
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "random.hpp"
+#include "text.hpp"
 #include "variables.hpp"
 
 
@@ -847,6 +848,13 @@ void set_material_specific_attributes(Item& item)
             item.is_fireproof() = true;
         }
     }
+}
+
+
+
+int discsetmc()
+{
+    return rnd(47);
 }
 
 } // namespace elona

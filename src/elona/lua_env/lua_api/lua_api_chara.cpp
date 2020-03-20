@@ -1,9 +1,10 @@
 #include "lua_api_chara.hpp"
 
 #include "../../character.hpp"
-#include "../../lua_env/enums/enums.hpp"
-#include "../../lua_env/interface.hpp"
 #include "../../map.hpp"
+#include "../../randomgen.hpp"
+#include "../enums/enums.hpp"
+#include "../interface.hpp"
 
 namespace elona
 {

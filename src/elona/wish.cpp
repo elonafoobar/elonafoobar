@@ -26,6 +26,8 @@
 #include "optional.hpp"
 #include "random.hpp"
 #include "save.hpp"
+#include "text.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 

@@ -18,8 +18,13 @@
 #include "quest.hpp"
 #include "random.hpp"
 #include "shop.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+
+
+namespace elona
+{
 
 namespace
 {
@@ -28,8 +33,7 @@ bool chatval_show_impress;
 
 }
 
-namespace elona
-{
+
 
 void talk_start()
 {

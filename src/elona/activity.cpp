@@ -2,13 +2,17 @@
 
 #include "ability.hpp"
 #include "animation.hpp"
+#include "area.hpp"
 #include "audio.hpp"
+#include "building.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "command.hpp"
 #include "config.hpp"
+#include "crafting.hpp"
 #include "dmgheal.hpp"
+#include "draw.hpp"
 #include "enchantment.hpp"
 #include "fish.hpp"
 #include "food.hpp"
@@ -21,10 +25,13 @@
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "optional.hpp"
+#include "random_event.hpp"
 #include "save.hpp"
 #include "status_ailment.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+#include "world.hpp"
 
 
 
@@ -2016,6 +2023,189 @@ void matdelmain(int material_id, int amount)
         "core.activity.material.lose", matname(material_id), amount));
     txt(i18n::s.get("core.activity.material.lose_total", mat(material_id)),
         Message::color{ColorIndex::blue});
+}
+
+
+
+void sleep_start()
+{
+    int timeslept = 0;
+    if (game_data.current_map == mdata_t::MapId::quest)
+    {
+        txt(i18n::s.get("core.activity.sleep.but_you_cannot"));
+        game_data.character_and_status_for_gene = 0;
+        return;
+    }
+    if (game_data.catches_god_signal)
+    {
+        txtgod(cdata.player().god_id, 10);
+    }
+    load_sleep_background();
+    musicloop = 1;
+    play_music("core.mcCoda");
+    msg_halt();
+    for (int cnt = 0; cnt < 20; ++cnt)
+    {
+        gmode(2, cnt * 10);
+        draw_sleep_background_frame();
+        await(g_config.animation_wait() * 10);
+    }
+    gmode(2);
+    cc = 0;
+    for (int cnt = 0; cnt < ELONA_MAX_PARTY_CHARACTERS; ++cnt)
+    {
+        tc = cnt;
+        cdata[tc].wet = 0;
+        cdata[tc].poisoned = 0;
+        cdata[tc].sleep = 0;
+        cdata[tc].confused = 0;
+        cdata[tc].blind = 0;
+        cdata[tc].paralyzed = 0;
+        cdata[tc].dimmed = 0;
+        cdata[tc].drunk = 0;
+        cdata[tc].bleeding = 0;
+        game_data.continuous_active_hours = 0;
+        cdata[tc].hp = cdata[tc].max_hp;
+        cdata[tc].mp = cdata[tc].max_mp;
+        cdata[tc].sp = cdata[tc].max_sp;
+        status_ailment_heal(cdata[tc], StatusAilment::sick, 7 + rnd(7));
+        if (cdata[tc].has_anorexia())
+        {
+            cdata[tc].anorexia_count -= rnd(6);
+        }
+        else
+        {
+            cdata[tc].anorexia_count -= rnd(3);
+        }
+        if (cdata[tc].anorexia_count < 0)
+        {
+            cure_anorexia(cdata[tc]);
+            cdata[tc].anorexia_count = 0;
+        }
+        heal_insanity(cdata[tc], 10);
+        if (cdata[tc].has_lay_hand())
+        {
+            cdata[tc].is_lay_hand_available() = true;
+        }
+    }
+    mode = 9;
+    timeslept = 7 + rnd(5);
+    for (int cnt = 0, cnt_end = (timeslept); cnt < cnt_end; ++cnt)
+    {
+        ++game_data.date.hour;
+        weather_changes();
+        if (mode != 9)
+        {
+            load_sleep_background();
+            mode = 9;
+        }
+        game_data.continuous_active_hours = 0;
+        game_data.date.minute = 0;
+        cc = 0;
+        draw_sleep_background_frame();
+        await(g_config.animation_wait() * 25);
+    }
+    if (game_data.character_and_status_for_gene != 0)
+    {
+        tc = -1;
+        for (int cnt = 1; cnt < 16; ++cnt)
+        {
+            if (cdata[cnt].has_made_gene() == 1)
+            {
+                if (cdata[cnt].state() == Character::State::alive)
+                {
+                    tc = cnt;
+                    break;
+                }
+            }
+        }
+        if (tc != -1)
+        {
+            cdata[tc].has_made_gene() = false;
+            show_random_event_window(
+                i18n::s.get("core.activity.sleep.new_gene.title"),
+                i18n::s.get("core.activity.sleep.new_gene.text", cdata[tc]),
+                {i18n::s.get_enum("core.activity.sleep.new_gene.choices", 0)},
+                u8"bg_re14");
+            save_gene();
+        }
+    }
+    draw_sleep_background_frame();
+    game_data.character_and_status_for_gene = 0;
+    mode = 0;
+    wake_up();
+    cdata[cc].nutrition -= 1500 / (trait(158) + 1);
+    txt(i18n::s.get("core.activity.sleep.slept_for", timeslept),
+        Message::color{ColorIndex::green});
+    f = 0;
+    if (cdata.player().activity.item == -1)
+    {
+        f = 1;
+    }
+    else
+    {
+        ci = cdata.player().activity.item;
+        if (inv[ci].param1 == 0 || inv[ci].number() == 0 ||
+            the_item_db[itemid2int(inv[ci].id)]->subcategory != 60004)
+        {
+            f = 1;
+        }
+    }
+    if (f)
+    {
+        txt(i18n::s.get("core.activity.sleep.wake_up.so_so"));
+    }
+    else
+    {
+        i = 0;
+        for (int cnt = 10; cnt < 18; ++cnt)
+        {
+            i += sdata.get(cnt, 0).original_level;
+        }
+        i = clamp(i / 6, 10, 1000);
+        exp = i * i * i / 10;
+        game_data.sleep_experience =
+            game_data.sleep_experience * inv[ci].param1 / 100;
+        grown = 0;
+        for (int cnt = 0;; ++cnt)
+        {
+            if (game_data.sleep_experience >= exp)
+            {
+                game_data.sleep_experience -= exp;
+            }
+            else if (cnt != 0)
+            {
+                break;
+            }
+            modify_potential(cdata.player(), 10 + rnd(8), 1);
+            ++grown;
+            if (cnt > 6)
+            {
+                if (rnd(5) == 0)
+                {
+                    game_data.sleep_experience = 0;
+                    break;
+                }
+            }
+        }
+        txt(i18n::s.get("core.activity.sleep.wake_up.good", grown),
+            Message::color{ColorIndex::green});
+    }
+    msg_halt();
+    play_music();
+    save_set_autosave();
+    if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
+    {
+        update_shop();
+    }
+}
+
+
+
+void start_stealing()
+{
+    game_data.activity_about_to_start = 105;
+    activity_others(cdata[cc]);
 }
 
 } // namespace elona

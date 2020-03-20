@@ -7,6 +7,7 @@
 #include "../../item.hpp"
 #include "../../itemgen.hpp"
 #include "../../lua_env/enums/enums.hpp"
+#include "../../text.hpp"
 #include "../interface.hpp"
 
 

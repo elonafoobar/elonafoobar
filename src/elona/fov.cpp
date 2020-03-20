@@ -1,8 +1,12 @@
 #include "fov.hpp"
 
+#include "ability.hpp"
 #include "character.hpp"
 #include "map.hpp"
+#include "map_cell.hpp"
 #include "variables.hpp"
+
+
 
 namespace elona
 {
@@ -698,5 +702,143 @@ void init_fovlist()
 }
 
 
+
+int route_info(int& x, int& y, int n)
+{
+    if (maxroute == 0)
+    {
+        return -1;
+    }
+    if (route(0, n % maxroute) == 1)
+    {
+        x += route(1, n % maxroute);
+    }
+    else
+    {
+        y += route(1, n % maxroute);
+    }
+    if (n % maxroute % 2 == 0)
+    {
+        if (route(0, (n + 1) % maxroute) != route(0, n % maxroute))
+        {
+            return -1;
+        }
+    }
+    if (n >= maxroute)
+    {
+        if (x < scx || y < scy || x >= scx + inf_screenw ||
+            y >= scy + inf_screenh)
+        {
+            return 0;
+        }
+        if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
+        {
+            return 0;
+        }
+        if (chip_data.for_cell(x, y).effect & 1)
+        {
+            return 0;
+        }
+        if (cell_data.at(x, y).feats != 0)
+        {
+            cell_featread(x, y);
+            if (chip_data[feat].effect & 1)
+            {
+                return 0;
+            }
+        }
+    }
+    if (route(1, n % maxroute) == 0)
+    {
+        return -1;
+    }
+    return 1;
+}
+
+
+
+int breath_list()
+{
+    int breathw = 0;
+    DIM3(breathlist, 2, 100);
+    maxbreath = 0;
+    breathw = 1;
+    dx = cdata[cc].position.x;
+    dy = cdata[cc].position.y;
+    for (int cnt = 0, cnt_end = cnt + (the_ability_db[efid]->range % 1000 + 1);
+         cnt < cnt_end;
+         ++cnt)
+    {
+        if (route(0, cnt % maxroute) == 1)
+        {
+            dx += route(1, cnt % maxroute);
+        }
+        else
+        {
+            dy += route(1, cnt % maxroute);
+        }
+        if (cnt < 6)
+        {
+            if (cnt % 3 == 1)
+            {
+                breathw += 2;
+            }
+        }
+        else
+        {
+            breathw -= 2;
+            if (breathw < 3)
+            {
+                breathw = 3;
+            }
+        }
+        for (int cnt = 0, cnt_end = (breathw); cnt < cnt_end; ++cnt)
+        {
+            ty = cnt - breathw / 2 + dy;
+            for (int cnt = 0, cnt_end = (breathw); cnt < cnt_end; ++cnt)
+            {
+                tx = cnt - breathw / 2 + dx;
+                if (tx < scx || ty < scy || tx >= scx + inf_screenw ||
+                    ty >= scy + inf_screenh)
+                {
+                    continue;
+                }
+                if (tx < 0 || ty < 0 || tx >= map_data.width ||
+                    ty >= map_data.height)
+                {
+                    continue;
+                }
+                if (chip_data.for_cell(tx, ty).effect & 1)
+                {
+                    continue;
+                }
+                if (maxbreath >= 100)
+                {
+                    break;
+                }
+                p = 0;
+                for (int cnt = 0, cnt_end = (maxbreath); cnt < cnt_end; ++cnt)
+                {
+                    if (breathlist(0, cnt) == tx)
+                    {
+                        if (breathlist(1, cnt) == ty)
+                        {
+                            p = 1;
+                            break;
+                        }
+                    }
+                }
+                if (p == 1)
+                {
+                    continue;
+                }
+                breathlist(0, maxbreath) = tx;
+                breathlist(1, maxbreath) = ty;
+                ++maxbreath;
+            }
+        }
+    }
+    return 1;
+}
 
 } // namespace elona

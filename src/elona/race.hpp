@@ -19,4 +19,6 @@ void race_init_chara(Character& chara, data::InstanceId race_id);
 std::vector<std::reference_wrapper<const RaceData>> race_get_available(
     bool is_extra_race);
 
+void gain_race_feat();
+
 } // namespace elona

@@ -6,7 +6,10 @@
 #include "lua_env/enums/enums.hpp"
 #include "map.hpp"
 #include "quest.hpp"
+#include "randomgen.hpp"
 #include "variables.hpp"
+
+
 
 namespace elona
 {

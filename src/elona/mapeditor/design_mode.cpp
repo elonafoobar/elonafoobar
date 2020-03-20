@@ -7,6 +7,7 @@
 #include "../i18n.hpp"
 #include "../input.hpp"
 #include "../map.hpp"
+#include "../menu.hpp"
 #include "../text.hpp"
 #include "../ui.hpp"
 #include "../variables.hpp"

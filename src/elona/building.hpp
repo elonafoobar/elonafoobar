@@ -25,4 +25,16 @@ void calc_hairloom_value(int);
 void calc_home_rank();
 void update_ranch();
 
+int calcincome(int = 0);
+void supply_income();
+
+void create_harvested_item();
+
+int getworker(int = 0, int = 0);
+void removeworker(int = 0);
+
+void grow_plant(int);
+void harvest_plant(int);
+void try_to_grow_plant(int = 0);
+
 } // namespace elona

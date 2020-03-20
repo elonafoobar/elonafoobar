@@ -7,6 +7,7 @@
 #include "../../item.hpp"
 #include "../../log.hpp"
 #include "../../message.hpp"
+#include "../../text.hpp"
 
 
 

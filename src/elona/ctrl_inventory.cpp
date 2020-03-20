@@ -1,5 +1,7 @@
 #include "../util/strutil.hpp"
 #include "ability.hpp"
+#include "activity.hpp"
+#include "attack.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -23,6 +25,7 @@
 #include "message.hpp"
 #include "quest.hpp"
 #include "shop.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

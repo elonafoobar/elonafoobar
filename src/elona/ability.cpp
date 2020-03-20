@@ -10,11 +10,13 @@
 #include "input.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "text.hpp"
 #include "variables.hpp"
 
-using namespace elona;
 
 
+namespace elona
+{
 
 namespace
 {
@@ -56,9 +58,6 @@ void set_ability(
 } // namespace
 
 
-
-namespace elona
-{
 
 SkillData sdata;
 
@@ -551,6 +550,20 @@ void chara_gain_exp_crafting(Character& chara, int skill, int material_amount)
 void chara_gain_exp_disarm_trap(Character& chara)
 {
     chara_gain_skill_exp(chara, 175, 50);
+}
+
+
+
+int randskill()
+{
+    return rnd(40) + 150;
+}
+
+
+
+int randattb()
+{
+    return rnd(8) + 10;
 }
 
 } // namespace elona

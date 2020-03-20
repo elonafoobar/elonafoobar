@@ -3,6 +3,7 @@
 #include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
+#include "attack.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "character_status.hpp"

@@ -24,4 +24,7 @@ void wear_most_valuable_equipment();
 void supply_new_equipment();
 void supply_initial_equipments();
 
+int equip_item(int);
+void unequip_item(int);
+
 } // namespace elona

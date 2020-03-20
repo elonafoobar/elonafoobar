@@ -1,6 +1,7 @@
 #include "element.hpp"
 
 #include "ability.hpp"
+#include "animation.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "elona.hpp"

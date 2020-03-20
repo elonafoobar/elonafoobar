@@ -24,6 +24,7 @@
 #include "ui.hpp"
 
 
+
 namespace elona
 {
 
@@ -31,6 +32,9 @@ elona_vector1<int> atxpic;
 int atxap;
 int txtadvmsgfix;
 elona_vector1<int> mattile;
+std::string atbuff;
+
+
 
 void casino_dealer()
 {
@@ -762,6 +766,63 @@ bool casino_blackjack()
         winrow = 0;
     }
     return true;
+}
+
+
+
+void atxinit()
+{
+    atbuff = "";
+    notesel(atbuff);
+    listmax = 0;
+    cs = 0;
+    page = 0;
+    cc = 0;
+    cs_bk = -1;
+    pagesize = 16;
+    chatesc = -1;
+    if (atxbg != atxbgbk)
+    {
+        mode = 0;
+        screenupdate = -1;
+        update_screen();
+        mode = 9;
+        atxbgbk = atxbg;
+        gmode(0);
+        asset_load(data::InstanceId{atxbg});
+        draw(
+            "atx_background",
+            0,
+            inf_msgh,
+            windoww,
+            windowh - inf_verh - inf_msgh);
+        gmode(2);
+        p = windoww / 192;
+        for (int cnt = 0, cnt_end = (p + 1); cnt < cnt_end; ++cnt)
+        {
+            if (cnt == p)
+            {
+                sx = windoww % 192;
+            }
+            else
+            {
+                sx = 192;
+            }
+            draw_region("message_window", cnt * 192, 0, sx, inf_msgh);
+        }
+        window2(windoww - 208, 0, 208, 98, 0, 0);
+        gcopy(
+            0,
+            120,
+            88,
+            windoww - 120,
+            windowh - inf_verh - 112,
+            windoww - 204,
+            4,
+            200,
+            90);
+        gsel(0);
+    }
 }
 
 } // namespace elona

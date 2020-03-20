@@ -1,5 +1,6 @@
 #include "lua_api_input.hpp"
 
+#include "../../attack.hpp"
 #include "../../dialog.hpp"
 #include "../../i18n.hpp"
 #include "../../input.hpp"

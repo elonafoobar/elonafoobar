@@ -24,6 +24,7 @@
 #include "message.hpp"
 #include "random.hpp"
 #include "status_ailment.hpp"
+#include "text.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 

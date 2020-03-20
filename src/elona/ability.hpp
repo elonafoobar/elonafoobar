@@ -114,4 +114,9 @@ void chara_gain_exp_memorization(Character& chara, int spell_id);
 void chara_gain_exp_crafting(Character& chara, int skill, int material_amount);
 void chara_gain_exp_disarm_trap(Character& chara);
 
+
+
+int randattb();
+int randskill();
+
 } // namespace elona

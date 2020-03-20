@@ -719,4 +719,29 @@ std::string god_name(int legacy_god_id)
     return god_name(core_god::int2godid(legacy_god_id));
 }
 
+
+
+void god_fail_to_take_over_penalty()
+{
+    efid = 1114;
+    efp = 500;
+    tc = 0;
+    magic();
+    if (rnd(2))
+    {
+        efid = 622;
+        efp = 250;
+        tc = 0;
+        magic();
+        snd("core.punish1");
+    }
+    if (rnd(2))
+    {
+        efid = 1106;
+        efp = 100;
+        tc = 0;
+        magic();
+    }
+}
+
 } // namespace elona
