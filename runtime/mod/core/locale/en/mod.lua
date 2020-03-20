@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    mod = {
       loaded_script = "Loaded script {$1}. ",
    },

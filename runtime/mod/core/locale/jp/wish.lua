@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    wish = {
       what_do_you_wish_for = "何を望む？",
       your_wish = "「{$1}！！」",

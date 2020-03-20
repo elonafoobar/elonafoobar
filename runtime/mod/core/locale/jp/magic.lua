@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    magic = {
       common = {
          too_exhausted = "疲労し過ぎて失敗した！",

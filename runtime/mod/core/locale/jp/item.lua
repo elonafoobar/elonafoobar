@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    item = {
       chip = {
          dryrock = "日干し岩",
@@ -147,7 +147,7 @@ i18n.add {
 
 
 
-i18n.add {
+i18n:add {
    item = {
       bug = {
          name = "黄金",

@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    talk = {
       will_not_listen = "{name($1)} won't listen.",
       is_sleeping = "{name($1)} is sleeping.",

@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    system = {
       lafrontier_homepage = "http://ylvania.org/en",
 

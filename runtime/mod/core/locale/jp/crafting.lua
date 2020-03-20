@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    crafting = {
       menu = {
          title = "生産品の選択",

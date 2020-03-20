@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    quest = {
       journal_updated = "Your journal has been updated.",
       minutes_left = "{$1} min left for the quest.",

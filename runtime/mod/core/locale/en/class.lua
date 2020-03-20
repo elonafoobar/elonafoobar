@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    class = {
       unemployed = "unemployed",
    },
@@ -6,7 +6,7 @@ i18n.add {
 
 
 
-i18n.add {
+i18n:add {
    class = {
       warrior = {
          name = "Warrior",

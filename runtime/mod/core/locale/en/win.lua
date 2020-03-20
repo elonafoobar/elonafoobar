@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    win = {
       conquer_lesimas = "Unbelievable! You conquered Lesimas!",
       you_acquired_codex = "Blessing to {$2}, {$1}! You've finally acquired the codex!",

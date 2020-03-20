@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    rank = {
       -- Arena
       _0 = {

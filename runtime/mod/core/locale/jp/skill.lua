@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    skill = {
       gained = "あなたは「{$1}」の能力を得た。",
 

@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    autopick = {
       modifier = {
          all = "すべての",

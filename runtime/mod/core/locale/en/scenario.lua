@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    scenario = {
       obtain_stone = {
          fool = "You obtain the fool's magic stone!",

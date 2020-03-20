@@ -1,7 +1,7 @@
 -- TODO
 -- These text are unclassed. They should be moved to appropriate files.
 
-i18n.add {
+i18n:add {
    misc = {
       ranking = {
          changed = "ランク変動({$1} {$2}位 → {$3}位) 《{$4}》",

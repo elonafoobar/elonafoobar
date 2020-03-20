@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    ui = {
       yes = "ああ",
       no = "いや…",

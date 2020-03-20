@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    trait = {
       window = {
          title = "特徴と体質",

@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    element = {
       name = {
          starving = "飢えた",

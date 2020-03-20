@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    main_menu = {
       title_menu = {
          continue = "Restore an Adventurer",

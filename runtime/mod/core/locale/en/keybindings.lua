@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    keybind = {
       menu = {
          hint = "Enter [Bind Key] ",

@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    card_info = {
       _500 = "sea",
       _501 = "island",

@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    win = {
       conquer_lesimas = "信じられない！あなたはネフィアの迷宮「レシマス」を制覇した！",
       you_acquired_codex = "{$1}{$2}に祝福あれ！あなたは遂にレシマスの秘宝を手にいれた！",

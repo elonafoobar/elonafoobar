@@ -202,6 +202,6 @@ I18N.interface = {}
 
 
 
-function I18N.interface.add(data)
+function I18N.interface:add(data)
    collect_i18n_resources(data, _MOD_ID, storage)
 end

@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    death_by = {
       chara = {
          transformed_into_meat = {

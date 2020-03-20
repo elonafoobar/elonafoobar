@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    chara_status = {
       gain_new_body_part = "{name($1)}の身体から新たな{$2}が生えてきた！",
 

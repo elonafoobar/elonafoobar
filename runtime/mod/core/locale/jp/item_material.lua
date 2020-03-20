@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    item_material = {
       vegetable_seed = {
          name = "野菜",

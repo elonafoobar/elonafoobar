@@ -27,7 +27,7 @@ config {
 Then, add a corresponding translation file to `locale/en` or `locale/jp`.
 
 ```lua
-i18n.add {
+i18n:add {
    config = {
       menu = {
          -- Mod name
@@ -101,7 +101,7 @@ The following is a translation file which corresponds to the `config-schema.lua`
 
 
 ```lua
-i18n.add {
+i18n:add {
    config = {
       menu = {
          name = "Example Config",

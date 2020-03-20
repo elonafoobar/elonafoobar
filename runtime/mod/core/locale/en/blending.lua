@@ -1,4 +1,4 @@
-i18n.add {
+i18n:add {
    blending = {
       rate_panel = {
          success_rate = "Success Rate: {$1}",
