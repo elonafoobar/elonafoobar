@@ -1,8 +1,5 @@
 BIN_DIR := bin
 
-APK := $(BIN_DIR)/Elona_foobar-debug.apk
-APK_RELEASE := $(BIN_DIR)/Elona_foobar-release.apk
-
 # Utilities
 FORMAT := clang-format
 FIND := find
@@ -128,6 +125,6 @@ i18n-check-err: FORCE # Run i18n-checker with --no-warnings.
 rebuild: clean build FORCE # Clean and build Elona.
 
 
-help: FORCE # Show help.
+help: FORCE # Show this help.
 	@$(GREP) '^[a-zA-Z_-]*:.* # .*' $(MAKEFILE_LIST) \
 		| $(AWK) 'BEGIN {FS = ":.* # "}; {printf "%-25s%s\n", $$1, $$2}'
