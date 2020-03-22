@@ -1,13 +1,13 @@
 #pragma once
 #include "../../filesystem.hpp"
-#include "../lua_lazy_cache.hpp"
+#include "../base_database.hpp"
 
 namespace elona
 {
 
 struct MusicData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
     fs::path file;
 };

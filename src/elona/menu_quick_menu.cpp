@@ -4,6 +4,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "ui.hpp"
+#include "variables.hpp"
 
 
 

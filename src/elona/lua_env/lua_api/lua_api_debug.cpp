@@ -1,10 +1,13 @@
 #include "lua_api_debug.hpp"
+
 #include <sstream>
+
 #include "../../character.hpp"
 #include "../../enums.hpp"
 #include "../../item.hpp"
 #include "../../log.hpp"
 #include "../../message.hpp"
+#include "../../text.hpp"
 
 
 

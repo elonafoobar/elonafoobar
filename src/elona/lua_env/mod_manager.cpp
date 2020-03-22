@@ -1,8 +1,10 @@
 #include "mod_manager.hpp"
+
 #include <map>
 #include <sstream>
 #include <unordered_set>
 #include <vector>
+
 #include "../../util/range.hpp"
 #include "../character.hpp"
 #include "../config.hpp"
@@ -40,14 +42,11 @@ bool _is_alnum_only(const std::string& str)
 // Callback to be called in Lua for preventing write access to unknown
 // globals.
 int deny_new_fields(
-    sol::table table,
+    [[maybe_unused]] sol::table table,
     sol::object key,
-    sol::object value,
+    [[maybe_unused]] sol::object value,
     sol::this_state ts)
 {
-    UNUSED(table);
-    UNUSED(value);
-
     std::stringstream ss;
     if (key.is<std::string>())
     {
@@ -101,24 +100,7 @@ sol::table create_mod_table(sol::state& L)
  */
 void setup_sandbox(sol::state& state, sol::table table)
 {
-    // This list can be expanded.
-    const char* safe_functions[] = {
-        "assert",
-        "error",
-        "ipairs",
-        "next",
-        "pairs",
-        "pcall",
-        "print",
-        "tostring",
-        "type",
-        "xpcall",
-    };
-
-    for (const auto& function_name : safe_functions)
-    {
-        table[function_name] = state[function_name];
-    }
+    state["prelude"]["import"](table);
 }
 
 
@@ -132,21 +114,10 @@ void report_error(sol::error err)
 
 
 template <typename F>
-void internal_init_mod(ModEnv& mod, APIManager& api_manager, F run_script)
+void internal_init_mod(ModEnv& mod, F run_script)
 {
     auto result = run_script(mod.env);
-
-    // Add the API table returned by the mod's init.lua, if one was returned.
-    if (result.valid())
-    {
-        sol::optional<sol::object> object = result.template get<sol::object>();
-        if (object && object->is<sol::table>())
-        {
-            sol::table api_table = object->as<sol::table>();
-            api_manager.add_api(mod.manifest.id, api_table);
-        }
-    }
-    else
+    if (!result.valid())
     {
         sol::error err = result;
         report_error(err);
@@ -243,8 +214,6 @@ void ModManager::load_mods(const ResolvedModList& resolved_mod_list)
     _mod_versions = resolved_mod_list.mod_versions();
     _sorted_mods = resolved_mod_list.sorted_mods();
 
-    lua().get_api_manager().load_lua_support_libraries();
-
     create_all_mod_env(resolved_mod_list.mod_versions());
 
     // Ensure that mods are loaded in order, such that all mods that are
@@ -256,8 +225,6 @@ void ModManager::load_mods(const ResolvedModList& resolved_mod_list)
         ELONA_LOG("lua.mod") << "Loaded mod " << mod.manifest.id;
     }
 
-    lua().get_export_manager().register_all_exports();
-
     lua().get_event_manager().trigger(BaseEvent("core.all_mods_loaded"));
 }
 
@@ -268,9 +235,7 @@ void ModManager::init_mod(ModEnv& mod)
     if (mod.manifest.path)
     {
         internal_init_mod(
-            mod,
-            lua().get_api_manager(),
-            [this, path = (*mod.manifest.path / "init.lua")](auto env) {
+            mod, [this, path = (*mod.manifest.path / "init.lua")](auto env) {
                 return safe_script_file(path, env);
             });
     }
@@ -333,9 +298,8 @@ void ModManager::load_testing_mod_from_script(
 {
     auto& mod = create_mod_env_from_script(id);
 
-    internal_init_mod(mod, lua().get_api_manager(), [this, &script](auto env) {
-        return safe_script(script, env);
-    });
+    internal_init_mod(
+        mod, [this, &script](auto env) { return safe_script(script, env); });
 
     _mod_versions.emplace(mod.manifest.id, mod.manifest.version);
     // Testing mods are always at the end.
@@ -541,9 +505,9 @@ void ModManager::setup_mod_globals(ModEnv& mod)
     {
         auto state = lua_state();
         auto& chunk_cache = *mod.chunk_cache;
-        mt["require_relative"] = [state, &chunk_cache](
-                                     const std::string& name,
-                                     sol::this_environment this_env) {
+        mt["require"] = [state, &chunk_cache](
+                            const std::string& name,
+                            sol::this_environment this_env) {
             sol::environment env = this_env;
             return chunk_cache.require(name, env, *state);
         };

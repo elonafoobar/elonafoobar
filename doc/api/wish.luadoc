@@ -1,5 +1,5 @@
 --- Functions to invoke wish and add custom wishing.
---  @usage local Wish = require("game.Wish")
+--  @usage local Wish = ELONA.require("core.Wish")
 module "Wish"
 
 --- Wish something you want.

@@ -1,6 +1,6 @@
-local Chara = require("game.Chara")
-local Math = require("game.Math")
-local I18N = require("game.I18N")
+local Chara = ELONA.require("core.Chara")
+local math = math
+local I18N = ELONA.require("core.I18N")
 
 local function mod_skill_level(args, id, amount)
    local skill = args.chara:get_skill(id)
@@ -12,7 +12,7 @@ local function mod_skill_level_clamp(args, id, amount)
    local skill = args.chara:get_skill(id)
 
    skill.current_level =
-      Math.clamp(skill.current_level + amount,
+      math.clamp(skill.current_level + amount,
                  skill.current_level and 1 or 0, 9999)
 end
 
@@ -25,13 +25,13 @@ List of fields:
 
 buff_type:
    indicates if the buff has a positive or negative
-   effect. If the buff is of type "Hex" and is obtained from an item,
+   effect. If the buff is of type "hex" and is obtained from an item,
    the buff will gain more power if the item is cursed (power = power
    * 150 / 100), and less if it is blessed (power = 50). Vice-versa
    for the other buff types.
-      - If buff_type is "Buff", the buff animation is played on gain.
-      - If the buff type is "Food", it will be lost if the bearer vomits.
-      - If buff_type is "Hex":
+      - If buff_type is "buff", the buff animation is played on gain.
+      - If the buff type is "food", it will be lost if the bearer vomits.
+      - If buff_type is "hex":
          + The debuff animation is played on gain.
          + Any instance of it will be considered a target for removal in
            Holy Light/Vanquish Hex.
@@ -63,34 +63,32 @@ in the description.
 ]]
 
 -- TODO: buff icons
-data:define_type("buff")
-data:add_multi(
+ELONA.data:define_prototype("buff")
+ELONA.data:add(
    "core.buff",
    {
-      {
+      holy_shield = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Attempts to apply fear will be ignored.
-         id = "holy_shield",
          legacy_id = 1,
-         buff_type = "Buff",
+         buff_type = "buff",
          duration = function(power)
             return 10 + power // 10
          end,
          on_refresh = function(self, args)
             args.chara.pv = args.chara.pv + self._effect(args.power)
-            args.chara:heal_ailment("Fear", 0)
+            args.chara:heal_ailment("fear", 0)
          end,
          _effect = function(power)
             return 25 + power // 15
          end,
          description = get_description
       },
-      {
+      mist_of_silence = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Silence behavior.
-         id = "mist_of_silence",
          legacy_id = 2,
-         buff_type = "Hex",
+         buff_type = "hex",
          duration = function(power)
             return 5 + power // 40
          end,
@@ -101,10 +99,9 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "regeneration",
+      regeneration = {
          legacy_id = 3,
-         buff_type = "Buff",
+         buff_type = "buff",
          duration = function(power)
             return 12 + power // 20
          end,
@@ -116,10 +113,9 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "elemental_shield",
+      elemental_shield = {
          legacy_id = 4,
-         buff_type = "Buff",
+         buff_type = "buff",
          duration = function(power)
             return 4 + power // 6
          end,
@@ -133,10 +129,9 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "speed",
+      speed = {
          legacy_id = 5,
-         buff_type = "Buff",
+         buff_type = "buff",
          duration = function(power)
             return 8 + power // 30
          end,
@@ -144,14 +139,13 @@ data:add_multi(
             mod_skill_level(args, "core.attribute_speed", self._effect(args.power))
          end,
          _effect = function(power)
-            return Math.modf(50 + Math.sqrt(power // 5))
+            return math.modf(50 + math.sqrt(power // 5))
          end,
          description = get_description
       },
-      {
-         id = "slow",
+      slow = {
          legacy_id = 6,
-         buff_type = "Hex",
+         buff_type = "hex",
          duration = function(power)
             return 8 + power // 30
          end,
@@ -160,34 +154,32 @@ data:add_multi(
                args.chara:get_skill("core.attribute_speed").current_level - self._effect(args.power)
          end,
          _effect = function(power)
-            return Math.min(20 + power // 20, 50)
+            return math.min(20 + power // 20, 50)
          end,
          description = get_description
       },
-      {
+      hero = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Attempts to apply confusion or fear will be ignored.
-         id = "hero",
          legacy_id = 7,
-         buff_type = "Buff",
+         buff_type = "buff",
          duration = function(power)
             return 10 + power // 4
          end,
          on_refresh = function(self, args)
             mod_skill_level(args, "core.attribute_strength", self._effect(args.power))
             mod_skill_level(args, "core.attribute_dexterity", self._effect(args.power))
-            args.chara:heal_ailment("Fear", 0)
-            args.chara:heal_ailment("Confused", 0)
+            args.chara:heal_ailment("fear", 0)
+            args.chara:heal_ailment("confused", 0)
          end,
          _effect = function(power)
             return 5 + power // 30
          end,
          description = get_description
       },
-      {
-         id = "mist_of_frailness",
+      mist_of_frailness = {
          legacy_id = 8,
-         buff_type = "Hex",
+         buff_type = "hex",
          duration = function(power)
             return 6 + power // 10
          end,
@@ -200,10 +192,9 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "element_scar",
+      element_scar = {
          legacy_id = 9,
-         buff_type = "Hex",
+         buff_type = "hex",
          duration = function(power)
             return 4 + power // 15
          end,
@@ -217,13 +208,12 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
+      holy_veil = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Additional chance to resist if a hex is applied to this
          --    character.
-         id = "holy_veil",
          legacy_id = 10,
-         buff_type = "Buff",
+         buff_type = "buff",
          duration = function(power)
             return 15 + power // 5
          end,
@@ -234,10 +224,9 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "nightmare",
+      nightmare = {
          legacy_id = 11,
-         buff_type = "Hex",
+         buff_type = "hex",
          duration = function(power)
             return 4 + power // 15
          end,
@@ -250,10 +239,9 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "divine_wisdom",
+      divine_wisdom = {
          legacy_id = 12,
-         buff_type = "Buff",
+         buff_type = "buff",
          duration = function(power)
             return 10 + power // 4
          end,
@@ -268,13 +256,12 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
+      punishment = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Ignored when removing status effects on a character.
          --  + Ignored when casting Holy Light/Vanquish Hex.
-         id = "punishment",
          legacy_id = 13,
-         buff_type = "Hex",
+         buff_type = "hex",
          duration = function(power)
             return power
          end,
@@ -289,10 +276,9 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
-         id = "lulwys_trick",
+      lulwys_trick = {
          legacy_id = 14,
-         buff_type = "Buff",
+         buff_type = "buff",
          duration = function(_power)
             return 7
          end,
@@ -304,18 +290,17 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
+      incognito = {
          -- NOTE: The initial incognito effect is applied by the
          -- incognito spell when it is cast, but the effect when the
          -- buff expires is handled by the buff itself.
-         id = "incognito",
          legacy_id = 15,
-         buff_type = "Buff",
+         buff_type = "buff",
          duration = function(power)
             return 4 + power // 40
          end,
          on_refresh = function(_self, args)
-            args.chara:set_flag("IsIncognito", true)
+            args.chara:set_flag("is_incognito", true)
          end,
          on_removal = function(_self, args)
             if not Chara.is_player(args.chara) then
@@ -324,7 +309,7 @@ data:add_multi(
             for _, chara in Chara.iter(16, 245) do
                if Chara.is_alive(chara) then
                   if chara.role == 14 and Chara.player().karma < -30 then
-                     chara.relationship = "Aggressive"
+                     chara.relationship = "aggressive"
                      chara.hate = 80
                      chara.emotion_icon = 218
                   end
@@ -336,35 +321,33 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
+      death_word = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Inflicts 9999 damage when it expires, but outside of
          --    buff_delete().
          --  + On application, will always be resisted if character is
-         --    of "Miracle" or "Godly" quality.
-         --  + Removed when a character with the "IsDeathMaster" flag
+         --    of "miracle" or "godly" quality.
+         --  + Removed when a character with the "is_death_master" flag
          --    is killed.
-         id = "death_word",
          legacy_id = 16,
-         buff_type = "Hex",
+         buff_type = "hex",
          duration = function(_power)
             return 20
          end,
          on_refresh = function(_self, args)
-            args.chara:set_flag("IsSentencedDaeth", true)
+            args.chara:set_flag("is_sentenced_daeth", true)
          end,
          on_removal = function(_self, args)
-            args.chara:set_flag("IsSentencedDaeth", false)
+            args.chara:set_flag("is_sentenced_daeth", false)
          end,
          _effect = function(_power)
             return 0
          end,
          description = get_description
       },
-      {
-         id = "boost",
+      boost = {
          legacy_id = 17,
-         buff_type = "Buff",
+         buff_type = "buff",
          duration = function(_power)
             return 5
          end,
@@ -384,32 +367,30 @@ data:add_multi(
          end,
          description = get_description
       },
-      {
+      contingency = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Check for lethal damage and chance to heal. If the
-         --    "IsContractingWithReaper" flag is set then the buff is
+         --    "is_contracting_with_reaper" flag is set then the buff is
          --    expected to be be active on the same character.
-         id = "contingency",
          legacy_id = 18,
-         buff_type = "Buff",
+         buff_type = "buff",
          duration = function(_power)
             return 66
          end,
          on_refresh = function(_self, args)
-            args.chara:set_flag("IsContractingWithReaper", true)
+            args.chara:set_flag("is_contracting_with_reaper", true)
          end,
          on_removal = function(_self, args)
-            args.chara:set_flag("IsContractingWithReaper", false)
+            args.chara:set_flag("is_contracting_with_reaper", false)
          end,
          _effect = function(power)
-            return Math.clamp(25 + power // 17, 25, 80)
+            return math.clamp(25 + power // 17, 25, 80)
          end,
          description = get_description
       },
-      {
-         id = "luck",
+      luck = {
          legacy_id = 19,
-         buff_type = "Buff",
+         buff_type = "buff",
          duration = function(_power)
             return 777
          end,
@@ -425,24 +406,25 @@ data:add_multi(
 )
 
 local function register_growth_buff(attribute_index, attribute_name)
-   data:add({
+   ELONA.data:add(
+      "core.buff",
       {
-         type = "core.buff",
-         id = "grow_" .. attribute_name,
-         legacy_id = attribute_index + 20,
-         buff_type = "Food",
-         duration = function(power)
-            return 10 + power // 10
-         end,
-         on_refresh = function(self, args)
-            args.chara:set_growth_buff(attribute_index, self._effect(args.power))
-         end,
-         _effect = function(power)
-            return power
-         end,
-         description = get_description
+         ["grow_" .. attribute_name] = {
+            legacy_id = attribute_index + 20,
+            buff_type = "food",
+            duration = function(power)
+               return 10 + power // 10
+            end,
+            on_refresh = function(self, args)
+               args.chara:set_growth_buff(attribute_index, self._effect(args.power))
+            end,
+            _effect = function(power)
+               return power
+            end,
+            description = get_description
+         }
       }
-   })
+   )
 end
 
 

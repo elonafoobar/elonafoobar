@@ -29,14 +29,14 @@ public:
     sol::table make_event_options() const override
     {
         auto opts = lua::create_table();
-        opts["instances"] = lua::create_table(1, _chara, 2, _chara_id);
+        opts["instances"] = lua::create_table(1, _chara, 2, _chara_id.get());
 
         return opts;
     }
 
 protected:
     LuaCharacterHandle _chara;
-    std::string _chara_id;
+    data::InstanceId _chara_id;
 };
 
 } // namespace lua

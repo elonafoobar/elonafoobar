@@ -2,7 +2,7 @@
 
 #include "../../enums.hpp"
 #include "../../lua_env/wrapped_function.hpp"
-#include "../lua_lazy_cache.hpp"
+#include "../base_database.hpp"
 
 
 
@@ -11,7 +11,7 @@ namespace elona
 
 struct BuffData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
     sol::table self;
     BuffType type;

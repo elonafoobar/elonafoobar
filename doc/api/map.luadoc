@@ -1,6 +1,6 @@
 --- Functions for working with the current map.
 --  There is only ever one map loaded at a given time.
---  @usage local Map = require("game.Map")
+--  @usage local Map = ELONA.require("core.Map")
 module "Map"
 
 --- Returns the current map's width. This is only valid until the map
@@ -141,6 +141,10 @@ function set_feat(position, tile, param1, param2) end
 --  @tparam LuaPosition position (const) the map position
 --  @function clear_feat
 function clear_feat(position) end
+
+--- Randomly sprays the map with the given tile type;
+--  @function spray_tile
+function spray_tile(tile, amount) end
 
 --- [R] The map data for the current map. This contains serialized values
 --  controlling various aspects of the current map.

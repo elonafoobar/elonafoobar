@@ -2,8 +2,8 @@
 
 #include <functional>
 #include <regex>
-#include "../util/filepathutil.hpp"
 
+#include "../util/filepathutil.hpp"
 #include "defines.hpp"
 #ifdef ELONA_OS_LINUX
 #include <dirent.h>

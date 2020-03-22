@@ -1,4 +1,5 @@
 #include "ability.hpp"
+
 #include "../util/range.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
@@ -9,11 +10,13 @@
 #include "input.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "text.hpp"
 #include "variables.hpp"
 
-using namespace elona;
 
 
+namespace elona
+{
 
 namespace
 {
@@ -55,9 +58,6 @@ void set_ability(
 } // namespace
 
 
-
-namespace elona
-{
 
 SkillData sdata;
 
@@ -198,10 +198,7 @@ void gain_special_action()
             spact(29) = 1;
             txt(i18n::s.get(
                     "core.skill.gained",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(629)->get(),
-                        "name")),
+                    i18n::s.get_m("ability", "core.draw_charge", "name")),
                 Message::color{ColorIndex::orange});
         }
         if (spact(30) == 0)
@@ -209,10 +206,7 @@ void gain_special_action()
             spact(30) = 1;
             txt(i18n::s.get(
                     "core.skill.gained",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(630)->get(),
-                        "name")),
+                    i18n::s.get_m("ability", "core.fill_charge", "name")),
                 Message::color{ColorIndex::orange});
         }
     }
@@ -223,10 +217,7 @@ void gain_special_action()
             spact(31) = 1;
             txt(i18n::s.get(
                     "core.skill.gained",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(631)->get(),
-                        "name")),
+                    i18n::s.get_m("ability", "core.swarm", "name")),
                 Message::color{ColorIndex::orange});
         }
     }
@@ -559,6 +550,20 @@ void chara_gain_exp_crafting(Character& chara, int skill, int material_amount)
 void chara_gain_exp_disarm_trap(Character& chara)
 {
     chara_gain_skill_exp(chara, 175, 50);
+}
+
+
+
+int randskill()
+{
+    return rnd(40) + 150;
+}
+
+
+
+int randattb()
+{
+    return rnd(8) + 10;
 }
 
 } // namespace elona

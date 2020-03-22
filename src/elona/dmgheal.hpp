@@ -24,5 +24,9 @@ void damage_insanity(Character& cc, int delta);
 void heal_insanity(Character& cc, int delta);
 
 
+void character_drops_item();
+void check_kill(int = 0, int = 0);
+void heal_both_rider_and_mount();
+void heal_completely();
 
 } // namespace elona

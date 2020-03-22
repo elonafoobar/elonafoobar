@@ -1,10 +1,13 @@
 #include "filepathutil.hpp"
+
 #include <algorithm>
+
 #include <boost/predef.h>
 
 // For get_executable_path()
 #if BOOST_OS_WINDOWS
 #include <windows.h> // GetModuleFileName
+
 #include "unicode_utf16.hpp"
 #elif BOOST_OS_MACOS
 #include <limits.h> // PATH_MAX
@@ -67,21 +70,21 @@ std::string to_forward_slashes(const fs::path& path)
 
 
 
-boost::optional<boost::filesystem::path::string_type> get_executable_path()
+std::optional<boost::filesystem::path::string_type> get_executable_path()
 {
 #if BOOST_OS_WINDOWS
     wchar_t buf[1024 + 1];
     size_t buf_size = sizeof(buf);
     if (GetModuleFileName(nullptr, buf, buf_size) == 0)
     {
-        return boost::none;
+        return std::nullopt;
     }
 #elif BOOST_OS_MACOS
     char buf[PATH_MAX + 1];
     uint32_t buf_size = sizeof(buf);
     if (_NSGetExecutablePath(buf, &buf_size) != 0)
     {
-        return boost::none;
+        return std::nullopt;
     }
 #elif BOOST_OS_LINUX
     char buf[PATH_MAX + 1];
@@ -89,7 +92,7 @@ boost::optional<boost::filesystem::path::string_type> get_executable_path()
     ssize_t result = readlink("/proc/self/exe", buf, buf_size);
     if (result == -1)
     {
-        return boost::none;
+        return std::nullopt;
     }
     buf[result] = '\0';
 #else

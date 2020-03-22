@@ -1,4 +1,5 @@
 #include "equipment.hpp"
+
 #include "adventurer.hpp"
 #include "calc.hpp"
 #include "chara_db.hpp"
@@ -376,7 +377,7 @@ void supply_new_equipment()
                                 [itemid2int(
                                      inv[cdata[rc].body_parts[cnt] % 10000 - 1]
                                          .id)]
-                                    ->category == 10000)
+                                    ->category == ItemCategory::melee_weapon)
                         {
                             haveweapon = 1;
                         }
@@ -427,7 +428,7 @@ void supply_new_equipment()
             item->identify_state = IdentifyState::completely;
             if (item->quality >= Quality::miracle)
             {
-                if (the_item_db[itemid2int(item->id)]->category < 50000)
+                if (is_equipment(the_item_db[itemid2int(item->id)]->category))
                 {
                     if (cdata[rc].character_role == 13)
                     {
@@ -521,7 +522,7 @@ void supply_initial_equipments()
         fixeq = 1;
     }
 
-    switch (class_get_equipment_type(cdatan(3, rc)))
+    switch (class_get_equipment_type(data::InstanceId{cdatan(3, rc)}))
     {
     case 0: break;
     case 1:
@@ -1289,6 +1290,50 @@ void supply_initial_equipments()
     eqtwohand = 0;
     eqtwowield = 0;
     eqmultiweapon = 0;
+}
+
+
+
+int equip_item(int cc)
+{
+    if (ci == -1)
+    {
+        return 0;
+    }
+    if (cdata[cc].body_parts[body - 100] % 10000 != 0)
+    {
+        return 0;
+    }
+    if (inv[ci].body_part != 0)
+    {
+        return 0;
+    }
+    item_separate(ci);
+    if (cc == 0)
+    {
+        item_identify(inv[ci], IdentifyState::almost);
+    }
+    inv[ci].body_part = body;
+    cdata[cc].body_parts[body - 100] =
+        cdata[cc].body_parts[body - 100] / 10000 * 10000 + ci + 1;
+    return 1;
+}
+
+
+
+void unequip_item(int cc)
+{
+    p = cdata[cc].body_parts[body - 100] % 10000;
+    if (p == 0)
+    {
+        rtval = -2;
+        return;
+    }
+    ci = p - 1;
+    cdata[cc].body_parts[body - 100] =
+        cdata[cc].body_parts[body - 100] / 10000 * 10000;
+    inv[ci].body_part = 0;
+    item_stack(cc, inv[ci]);
 }
 
 } // namespace elona

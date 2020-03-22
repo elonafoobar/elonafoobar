@@ -1,57 +1,23 @@
-data:define_type("event")
-data:add_multi(
+ELONA.data:define_prototype("event")
+ELONA.data:add(
    "core.event",
    {
-      {
-         id = "game_initialized"
-      },
-      {
-         id = "character_created"
-      },
-      {
-         id = "item_created"
-      },
-      {
-         id = "character_removed"
-      },
-      {
-         id = "item_removed"
-      },
-      {
-         id = "character_refreshed"
-      },
-      {
-         id = "calc_character_damage"
-      },
-      {
-         id = "character_damaged"
-      },
-      {
-         id = "character_killed"
-      },
-      {
-         id = "character_moved"
-      },
-      {
-         id = "player_turn_started"
-      },
-      {
-         id = "all_turns_finished"
-      },
-      {
-         id = "map_initialized"
-      },
-      {
-         id = "before_map_unload"
-      },
-      {
-         id = "all_mods_loaded"
-      },
-      {
-         id = "script_loaded"
-      },
-      {
-         id = "nefia_created"
-      },
+      game_initialized = {},
+      character_created = {},
+      item_created = {},
+      character_removed = {},
+      item_removed = {},
+      character_refreshed = {},
+      calc_character_damage = {},
+      character_damaged = {},
+      character_killed = {},
+      character_moved = {},
+      player_turn_started = {},
+      all_turns_finished = {},
+      map_initialized = {},
+      before_map_unload = {},
+      all_mods_loaded = {},
+      script_loaded = {},
+      nefia_created = {},
    }
 )

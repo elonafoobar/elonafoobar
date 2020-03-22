@@ -1,9 +1,8 @@
-local Chara = require("game.Chara")
-local Map = require("game.Map")
-local Item = require("game.Item")
+local Chara = ELONA.require("core.Chara")
+local Map = ELONA.require("core.Map")
+local Item = ELONA.require("core.Item")
 
 return {
-   id = "part_time_worker",
    root = "core.talk.unique.part_time_worker",
    nodes = {
       __start = function()

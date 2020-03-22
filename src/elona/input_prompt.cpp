@@ -1,4 +1,5 @@
 #include "input_prompt.hpp"
+
 #include "audio.hpp"
 #include "blending.hpp"
 #include "draw.hpp"
@@ -6,6 +7,9 @@
 #include "input.hpp"
 #include "keybind/keybind.hpp"
 #include "ui.hpp"
+#include "variables.hpp"
+
+
 
 namespace elona
 {

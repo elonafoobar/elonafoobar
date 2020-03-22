@@ -1,4 +1,5 @@
 #include "ui_menu_charamake_gender.hpp"
+
 #include "../audio.hpp"
 #include "../character_making.hpp"
 #include "../draw.hpp"

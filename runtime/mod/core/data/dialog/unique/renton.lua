@@ -1,10 +1,10 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local I18N = ELONA.require("core.I18N")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
 
-local common = require_relative("data/dialog/common")
+local common = require("../common.lua")
 
 local function take_books()
    local taken_books = {}
@@ -19,7 +19,6 @@ local function take_books()
 end
 
 return {
-   id = "renton",
    root = "core.talk.unique.renton",
    nodes = {
       __start = function()
@@ -88,7 +87,7 @@ return {
             {"quest.brought_all.dialog._3"},
             {"quest.brought_all.dialog._4"},
             function(t)
-               GUI.txt(I18N.get(t.dialog.root .. ".quest.brought_all.ehekatl"), "Orange")
+               GUI.txt(I18N.get(t.dialog.root .. ".quest.brought_all.ehekatl"), "orange")
             end,
             {"quest.brought_all.dialog._5"},
          },

@@ -1,4 +1,4 @@
-#include "../thirdparty/catch2/catch.hpp"
+#include <sstream>
 
 #include "../elona/i18n.hpp"
 #include "../elona/item.hpp"
@@ -6,6 +6,7 @@
 #include "../elona/testing.hpp"
 #include "../elona/ui.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
 
 using namespace std::literals::string_literals;
@@ -21,9 +22,9 @@ TEST_CASE("test foodname", "[I18N: Regressions]")
         update_slight();
 
         item.param2 = 1;
-        REQUIRE(i18n::fmt_hil("${itemname(_1)}", item) == u8"恐怖のパン");
+        REQUIRE(i18n::s.format("{itemname($1)}", item) == u8"恐怖のパン");
         item.param2 = 8;
-        REQUIRE(i18n::fmt_hil("${itemname(_1)}", item) == u8"カレーパン");
+        REQUIRE(i18n::s.format("{itemname($1)}", item) == u8"カレーパン");
     }
     {
         Item& item = testing::create_item(573);
@@ -31,13 +32,13 @@ TEST_CASE("test foodname", "[I18N: Regressions]")
 
         item.param2 = 1;
         REQUIRE(
-            i18n::fmt_hil("${itemname(_1)}", item) == u8"グロテスクな鳥の卵");
+            i18n::s.format("{itemname($1)}", item) == u8"グロテスクな鳥の卵");
         item.param2 = 8;
         REQUIRE(
-            i18n::fmt_hil("${itemname(_1)}", item) == u8"鳥のレアチーズケーキ");
+            i18n::s.format("{itemname($1)}", item) == u8"鳥のレアチーズケーキ");
         item.subname = 3;
         REQUIRE(
-            i18n::fmt_hil("${itemname(_1)}", item) ==
+            i18n::s.format("{itemname($1)}", item) ==
             u8"プチのレアチーズケーキ");
     }
 }

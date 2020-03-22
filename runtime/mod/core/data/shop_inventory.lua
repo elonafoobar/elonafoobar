@@ -1,8 +1,8 @@
-local Data = require("game.Data")
-local Rand = require("game.Rand")
-local Item = require("game.Item")
-local Math = require("game.Math")
-local World = require("game.World")
+local Data = ELONA.require("core.Data")
+local Rand = ELONA.require("core.Rand")
+local Item = ELONA.require("core.Item")
+local math = math
+local World = ELONA.require("core.World")
 
 -- Generates a list to be used with "choices" which will set the
 -- provided field to one of the choices in "list".
@@ -66,8 +66,8 @@ local filter_set_wear = make_filter_list({10000, 10000, 24000, 24000,
 
 local merchant_rules = {
    { choices = filter_set_wear },
-   { fixlv = "Great" },
-   { one_in = 2, fixlv = "Miracle" },
+   { fixlv = "great" },
+   { one_in = 2, fixlv = "miracle" },
 }
 
 local function merchant_item_number()
@@ -126,12 +126,11 @@ Available properties:
 
 -- NOTE: "id" must be the same as a character role, and between
 -- [1000,1999]. (2003 is special-cased.)
-data:define_type("shop_inventory")
-data:add_multi(
+ELONA.data:define_prototype("shop_inventory")
+ELONA.data:add(
    "core.shop_inventory",
    {
-      {
-         id = "magic_vendor",
+      magic_vendor = {
          legacy_id = 1004,
          rules = {
             {
@@ -146,15 +145,13 @@ data:add_multi(
             { one_in = 20, id = "core.recipe" },
          }
       },
-      {
-         id = "younger_sister_of_mansion",
+      younger_sister_of_mansion = {
          legacy_id = 1019,
          rules = {
             { id = "core.sisters_love_fueled_lunch" }
          }
       },
-      {
-         id = "spell_writer",
+      spell_writer = {
          legacy_id = 1020,
          rules = {
             {
@@ -183,11 +180,10 @@ data:add_multi(
             }
          },
          item_base_value = function(args)
-            return args.item.value * 3 / 2
+            return args.item.value * 3 // 2
          end
       },
-      {
-         id = "moyer",
+      moyer = {
          legacy_id = 1015,
          rules = {
             {
@@ -197,15 +193,14 @@ data:add_multi(
                   {flttypemajor = 34000},
                }
             },
-            { one_in = 3, fixlv = "Great" },
-            { one_in = 10, fixlv = "Miracle" },
+            { one_in = 3, fixlv = "great" },
+            { one_in = 10, fixlv = "miracle" },
          },
          item_base_value = function(args)
             return args.item.value * 2
          end
       },
-      {
-         id = "general_vendor",
+      general_vendor = {
          legacy_id = 1006,
          rules = {
             {
@@ -222,8 +217,7 @@ data:add_multi(
             { one_in = 10, choices = deed_items },
          }
       },
-      {
-         id = "bakery",
+      bakery = {
          legacy_id = 1003,
          rules = {
             { all_but_one_in = 3, id = "Skip" },
@@ -236,8 +230,7 @@ data:add_multi(
             },
          }
       },
-      {
-         id = "food_vendor",
+      food_vendor = {
          legacy_id = 1002,
          rules = {
             { all_but_one_in = 3, id = "Skip" },
@@ -245,16 +238,15 @@ data:add_multi(
             { one_in = 5, flttypemajor = 91000 },
          }
       },
-      {
-         id = "blackmarket",
+      blackmarket = {
          legacy_id = 1007,
          rules = {
             { choices = filter_set_wear },
-            { one_in = 3, fixlv = "Great" },
-            { one_in = 10, fixlv = "Miracle" },
+            { one_in = 3, fixlv = "great" },
+            { one_in = 10, fixlv = "miracle" },
          },
          item_number = function(args)
-            return 6 + args.shopkeeper.shop_rank / 10
+            return 6 + args.shopkeeper.shop_rank // 10
          end,
          item_base_value = function(args)
             if World.belongs_to_guild("thieves") then
@@ -264,8 +256,7 @@ data:add_multi(
             end
          end
       },
-      {
-         id = "wandering_merchant",
+      wandering_merchant = {
          legacy_id = 1010,
          rules = merchant_rules,
          item_number = merchant_item_number,
@@ -274,19 +265,17 @@ data:add_multi(
          end,
          is_temporary = true -- Uses shop ID 1.
       },
-      {
-         id = "visiting_merchant",
-         -- NOTE: the only shop ID for which (id / 1000) != 1.
+      visiting_merchant = {
+         -- NOTE: the only shop ID for which (id // 1000) != 1.
          legacy_id = 2003,
          rules = merchant_rules,
          item_number = merchant_item_number,
          item_base_value = function(args)
-            return args.item.value * 4 / 5
+            return args.item.value * 4 // 5
          end,
          is_temporary = true -- Uses shop ID 1.
       },
-      {
-         id = "innkeeper",
+      innkeeper = {
          legacy_id = 1005,
          rules = {
             { flttypemajor = 91000 },
@@ -294,8 +283,7 @@ data:add_multi(
             { one_in = 20, id = "core.small_gamble_chest" },
          }
       },
-      {
-         id = "general_store",
+      general_store = {
          legacy_id = 1008,
          rules = {
             { flttypemajor = 56000 },
@@ -309,8 +297,7 @@ data:add_multi(
             { one_in = 15, id = "core.deed_of_heirship" },
          }
       },
-      {
-         id = "blacksmith",
+      blacksmith = {
          legacy_id = 1001,
          rules = {
             {
@@ -333,7 +320,7 @@ data:add_multi(
             }
          }
       },
-      {
+      trader = {
          -- NOTE: Has these special-case behaviors.
          --  + Extra filtering for cargo items when buying/selling
          --    through the "shoptrade" flag.
@@ -341,14 +328,12 @@ data:add_multi(
          --    much money the trader has on hand.
          --  + On shop refresh, updates the buying rates of each cargo
          --    type based on the current map.
-         id = "trader",
          legacy_id = 1009,
          rules = {
             { flttypemajor = 92000 },
          }
       },
-      {
-         id = "the_fence",
+      the_fence = {
          legacy_id = 1021,
          rules = {
             { flttypemajor = 59000 },
@@ -356,8 +341,7 @@ data:add_multi(
             { one_in = 2, id = "core.disguise_set" },
          }
       },
-      {
-         id = "sales_person_a",
+      sales_person_a = {
          legacy_id = 1011,
          rules = {
             { one_in = 4, flttypemajor = 24000 },
@@ -366,8 +350,7 @@ data:add_multi(
             { fltn = "sf" },
          }
       },
-      {
-         id = "sales_person_c",
+      sales_person_c = {
          legacy_id = 1013,
          rules = {
             { all_but_one_in = 3, id = "Skip" },
@@ -376,24 +359,22 @@ data:add_multi(
             { one_in = 5, id = "core.deed_of_heirship" },
          }
       },
-      {
-         id = "souvenir_vendor",
+      souvenir_vendor = {
          legacy_id = 1018,
          ignores_noshop = true,
          rules = {
             { fltn = "spshop" },
          },
-         item_number = function(args) return args.item_number / 2 end,
+         item_number = function(args) return args.item_number // 2 end,
          item_base_value = function(args)
-            local price = Math.clamp(args.item.value, 1, 1000000) * 50
+            local price = math.clamp(args.item.value, 1, 1000000) * 50
             if args.item.id == "core.gift" then
                price = price * 10
             end
             return price
          end
       },
-      {
-         id = "street_vendor",
+      street_vendor = {
          legacy_id = 1022,
          rules = {
             { fltn = "fest" },
@@ -405,15 +386,13 @@ data:add_multi(
             { one_in = 12, id = "core.miniature_tree" },
          }
       },
-      {
-         id = "dye_vendor",
+      dye_vendor = {
          legacy_id = 1017,
          rules = {
             { id = "core.bottle_of_dye" },
          }
       },
-      {
-         id = "sales_person_b",
+      sales_person_b = {
          legacy_id = 1012,
          rules = {
             { flttypemajor = 60000 },
@@ -430,14 +409,13 @@ data:add_multi(
             { index = 21, id = "core.tax_masters_tax_box" },
          },
       },
-      {
-         id = "fisher",
+      fisher = {
          legacy_id = 1014,
          rules = {
             { id = "core.bait" }
          }
       },
-      {
+      miral = {
          -- NOTE: Has these special-case behaviors.
          --  + Normal generation behavior of sold item number/curse
          --    state is replaced with on_generate_item below. (the
@@ -453,16 +431,16 @@ data:add_multi(
          --    triggered through Miral's dialog. In normal shops,
          --    items with those properties are not displayed even if
          --    they are generated successfully.
-         id = "miral",
          legacy_id = 1016,
          rules = medal_items,
          item_number = function() return #medal_items end,
          on_generate_item = function(args)
             args.item.number = 1
-            args.item.curse_state = "None"
+            args.item.curse_state = "none"
             if args.item.id == "core.rod_of_domination" then
                args.item.count = 4
             end
          end
       }
-})
+   }
+)

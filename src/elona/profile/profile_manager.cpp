@@ -1,4 +1,5 @@
 #include "profile_manager.hpp"
+
 #include "../filesystem.hpp"
 #include "../log.hpp"
 

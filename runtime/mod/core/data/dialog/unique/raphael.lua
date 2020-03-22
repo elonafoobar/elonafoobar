@@ -1,14 +1,14 @@
-local Chara = require("game.Chara")
-local Input = require("game.Input")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
-local table = require("game.table")
+local Chara = ELONA.require("core.Chara")
+local Input = ELONA.require("core.Input")
+local GUI = ELONA.require("core.GUI")
+local I18N = ELONA.require("core.I18N")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
+local table = table
 
 local function give_wife(raphael, wife)
    if not table.contains(wife.prototype.tags, "man") then
-      raphael:apply_ailment("Insane", 1000)
+      raphael:apply_ailment("insane", 1000)
       Chara.player():modify_karma(2)
       return true
    else
@@ -18,7 +18,6 @@ local function give_wife(raphael, wife)
 end
 
 return {
-   id = "raphael",
    root = "core.talk.unique.raphael",
    nodes = {
       __start = function()
@@ -73,12 +72,12 @@ return {
          },
       },
       bring_wife_choose = function(t, state)
-         local wife = Input.choose_ally("Sell")
+         local wife = Input.choose_ally("sell")
          if wife == nil then
             return "no_such_wife"
          end
 
-         if not wife:get_flag("IsMarried") then
+         if not wife:get_flag("is_married") then
             return "not_married"
          end
 

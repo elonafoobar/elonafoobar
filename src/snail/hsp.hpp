@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+
 #include "blend_mode.hpp"
 #include "color.hpp"
 #include "filesystem.hpp"

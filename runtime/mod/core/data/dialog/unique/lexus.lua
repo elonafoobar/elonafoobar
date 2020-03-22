@@ -1,12 +1,12 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local Math = require("game.Math")
-local I18N = require("game.I18N")
-local Item = require("game.Item")
-local World = require("game.World")
-local table = require("game.table")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local math = math
+local I18N = ELONA.require("core.I18N")
+local Item = ELONA.require("core.Item")
+local World = ELONA.require("core.World")
+local table = table
 
-local common = require_relative("data/dialog/common")
+local common = require("../common.lua")
 
 local function start_trial()
     World.data.joining_mages_guild = 1
@@ -22,7 +22,7 @@ local function join_guild()
     GUI.txt(I18N.get("core.quest.completed"))
     GUI.play_sound("core.complete1")
     GUI.show_journal_update_message()
-    GUI.txt(I18N.get("core.talk.unique.lexus.nonmember.joined"), "Orange")
+    GUI.txt(I18N.get("core.talk.unique.lexus.nonmember.joined"), "orange")
 end
 
 local function move_self(t)
@@ -33,15 +33,15 @@ end
 
 local function update_quota()
    World.data.mages_guild_quota_recurring = true
-   World.data.mages_guild_quota = 75 - World.data.ranks[8] / 200
+   World.data.mages_guild_quota = 75 - World.data.ranks[8] // 200
    GUI.show_journal_update_message()
 end
 
 local function receive_reward()
    World.data.mages_guild_quota_recurring = false
-   Item.create(Chara.player().position, {objlv = 51 - World.data.ranks[8] / 200, flttypemajor = 54000})
+   Item.create(Chara.player().position, {objlv = 51 - World.data.ranks[8] // 200, flttypemajor = 54000})
    Item.create(Chara.player().position, "core.gold_piece", 10000 - World.data.ranks[8] + 1000)
-   Item.create(Chara.player().position, "core.platinum_coin", Math.clamp(4 - World.data.ranks[8] / 2500, 1, 4))
+   Item.create(Chara.player().position, "core.platinum_coin", math.clamp(4 - World.data.ranks[8] // 2500, 1, 4))
 
    common.quest_completed()
 
@@ -49,7 +49,6 @@ local function receive_reward()
 end
 
 return {
-   id = "lexus",
    root = "core.talk.unique.lexus",
    nodes = {
       __start = function()

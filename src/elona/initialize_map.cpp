@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "ability.hpp"
 #include "area.hpp"
 #include "audio.hpp"
@@ -14,6 +15,7 @@
 #include "elona.hpp"
 #include "food.hpp"
 #include "i18n.hpp"
+#include "initialize_map_types.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/event_manager.hpp"
@@ -27,6 +29,8 @@
 #include "message.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "scene.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -1424,9 +1428,8 @@ TurnResult initialize_map()
     }
 
     auto legacy_id = area_data[game_data.current_map].id;
-    auto map_id = the_mapdef_db.get_id_from_legacy(legacy_id)
-                      .value_or(SharedId{""})
-                      .get();
+    auto map_id =
+        the_mapdef_db.get_id_from_legacy(legacy_id).value_or("").get();
     auto event =
         lua::MapInitializedEvent(was_generated, map_id, game_data.current_map);
 

@@ -1,5 +1,5 @@
-local I18N = require("game.I18N")
-local Rand = require("game.Rand")
+local I18N = ELONA.require("core.I18N")
+local Rand = ELONA.require("core.Rand")
 
 local marks = {"。", "？", "！", ""}
 local endings = {
@@ -365,7 +365,7 @@ for name, list in pairs(endings) do
                              end
 
                              local sex_index
-                             if chara.sex == "Male" then
+                             if chara.sex == "male" then
                                 sex_index = 1
                              else
                                 sex_index = 2

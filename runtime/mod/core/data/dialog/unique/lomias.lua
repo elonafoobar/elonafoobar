@@ -1,13 +1,12 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local I18N = ELONA.require("core.I18N")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
 
-local common = require_relative("data/dialog/common")
+local common = require("../common.lua")
 
 return {
-   id = "lomias",
    root = "core.talk.unique.lomias",
    nodes = {
       __start = function()
@@ -75,7 +74,7 @@ return {
             function()
                GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
                local scroll = Item.create(Chara.player().position, "core.scroll_of_identify", 0)
-               scroll.identify_state = "Completely"
+               scroll.identify_state = "completely"
             end,
             {"tutorial.after_dig.dialog"},
          },
@@ -107,7 +106,7 @@ return {
          }
       },
       tutorial_6 = function()
-         local putit = Chara.find("core.putit", "Others")
+         local putit = Chara.find("core.putit", "others")
          if putit ~= nil then
             return "tutorial_6_not_finished"
          end
@@ -191,15 +190,15 @@ return {
          on_finish = function()
             local corpse = Item.create(Chara.player().position, "core.corpse", 0)
             corpse.subname = 9
-            corpse.identify_state = "Completely"
+            corpse.identify_state = "completely"
             GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
             Internal.set_quest_flag("tutorial", 1)
          end
       },
       get_out = function(t)
-         local larnneire = Chara.find("core.larnneire", "Others")
+         local larnneire = Chara.find("core.larnneire", "others")
          if not Chara.is_alive(larnneire) then
-            local lomias = Chara.find("core.lomias", "Others")
+            local lomias = Chara.find("core.lomias", "others")
             Chara.player():act_hostile_against(lomias)
             t:say("after.get_out.larnneire_died", "__BYE__")
             return "__END__"
@@ -213,8 +212,8 @@ return {
             {"after.get_out.dialog._2", args = common.args_title},
          },
          on_finish = function()
-            Chara.find("core.larnneire", "Others"):vanquish()
-            Chara.find("core.lomias", "Others"):vanquish()
+            Chara.find("core.larnneire", "others"):vanquish()
+            Chara.find("core.lomias", "others"):vanquish()
 
             GUI.txt(I18N.get("core.quest.completed"))
             GUI.play_sound("core.complete1")
@@ -247,12 +246,12 @@ return {
          },
          on_finish = function()
             local item = Item.create(Chara.player().position, "core.long_bow", 0)
-            item.curse_state = "Cursed"
+            item.curse_state = "cursed"
             item = Item.create(Chara.player().position, "core.arrow", 0)
-            item.curse_state = "None"
+            item.curse_state = "none"
             item = Item.create(Chara.player().position, "core.scroll_of_vanish_curse", 0)
-            item.identify_state = "Completely"
-            item.curse_state = "Blessed"
+            item.identify_state = "completely"
+            item.curse_state = "blessed"
             GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
             Internal.set_quest_flag("tutorial", 5)
          end
@@ -267,13 +266,13 @@ return {
             {"__END__", "__MORE__"}
          },
          on_finish = function()
-            GUI.txt(I18N.get("core.talk.unique.lomias.tutorial.equip.done.lomias_releases"), "Cyan")
+            GUI.txt(I18N.get("core.talk.unique.lomias.tutorial.equip.done.lomias_releases"), "cyan")
             for i=0,2 do
                local putit = Chara.create(Chara.player().position, "core.putit")
-               putit:set_flag("IsNotAttackedByEnemy", true)
+               putit:set_flag("is_not_attacked_by_enemy", true)
             end
             local item = Item.create(Chara.player().position, "core.potion_of_cure_minor_wound", 0)
-            item.identify_state = "Completely"
+            item.identify_state = "completely"
             Internal.set_quest_flag("tutorial", 6)
          end
       }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cctype>
+
 #include <algorithm>
 #include <iterator>
 #include <sstream>

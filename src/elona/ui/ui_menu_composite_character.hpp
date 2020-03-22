@@ -1,7 +1,9 @@
 #pragma once
-#include <boost/variant.hpp>
-#include <boost/variant/get.hpp>
+#include <variant>
+
 #include "ui_menu_composite.hpp"
+
+
 
 namespace elona
 {
@@ -25,14 +27,20 @@ struct CharacterSheetResult
     optional<int> trainer_skill_id;
 };
 
+
+
 enum class FeatsResult
 {
     confirmed,
     pressed_f1,
 };
 
+
+
 using UIMenuCompositeCharacterResult =
-    boost::variant<CharacterSheetResult, FeatsResult>;
+    std::variant<CharacterSheetResult, FeatsResult>;
+
+
 
 class UIMenuCompositeCharacter
     : public UIMenuComposite<UIMenuCompositeCharacterResult>

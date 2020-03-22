@@ -1,4 +1,5 @@
---luacheck: ignore
+-- luacheck: ignore
+
 project = "Lua API"
 title = "Lua API"
 description = "Elona foobar Mod API"
@@ -16,19 +17,15 @@ format = "discount"
 template_escape = ">"
 dir = "./doc"
 examples = {"./doc/examples"}
-topics = {"./doc/topics/README.md",
-          "./doc/topics/i18n.md",
-          "./doc/topics/i18n_functions.md",
-          "./doc/topics/console.md",
-          "./doc/topics/config.md"}
+topics = {"./doc/topics"}
 
 new_type("event", "Events", false, "Event Parameters")
 new_type("enum", "Enums", false, "Enum Values")
 
 custom_see_handler("^(http[s]?%:%/%/.-) (.+)$",
-    function(url, name)
-        return name, url
-    end
+   function(url, name)
+      return name, url
+   end
 )
 
 local lua_url = "https://www.lua.org/pil/%s.html%s"
@@ -41,3 +38,4 @@ custom_see_handler("^userdata$", function() return "userdata", lua_url:format("2
 custom_see_handler("^array$", function() return "array", lua_url:format("11.1", "") end)
 custom_see_handler("^iterator$", function() return "iterator", lua_url:format("7.3", "") end)
 
+-- vim: ft=lua

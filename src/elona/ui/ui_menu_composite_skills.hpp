@@ -1,5 +1,10 @@
 #pragma once
+
+#include <variant>
+
 #include "ui_menu_composite.hpp"
+
+
 
 namespace elona
 {
@@ -11,13 +16,19 @@ struct UIMenuSkillsResult
     int effect_id;
 };
 
+
+
 struct UIMenuSpellsResult
 {
     int effect_id;
 };
 
+
+
 using UIMenuCompositeSkillsResult =
-    boost::variant<UIMenuSkillsResult, UIMenuSpellsResult>;
+    std::variant<UIMenuSkillsResult, UIMenuSpellsResult>;
+
+
 
 class UIMenuCompositeSkills
     : public UIMenuComposite<UIMenuCompositeSkillsResult>

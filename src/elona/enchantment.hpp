@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+
+#include "enums.hpp"
 #include "optional.hpp"
 
 
@@ -69,7 +71,7 @@ int enchantment_gen_p(int multiplier = 100);
 
 
 std::string enchantment_print_level(int level);
-void get_enchantment_description(int, int, int, bool = false);
+void get_enchantment_description(int, int, ItemCategory, bool = false);
 void add_enchantments(Item& item);
 
 void initialize_ego_data();

@@ -1,4 +1,5 @@
 #include "ui_menu_spells.hpp"
+
 #include "../ability.hpp"
 #include "../audio.hpp"
 #include "../calc.hpp"

@@ -1,4 +1,5 @@
 #include "type_map_chip.hpp"
+
 #include "../../lua_env/interface.hpp"
 #include "../../variables.hpp"
 
@@ -7,7 +8,7 @@
 namespace elona
 {
 
-const constexpr char* data::LuaLazyCacheTraits<MapChipDB>::type_id;
+const constexpr char* data::DatabaseTraits<MapChipDB>::type_id;
 
 
 
@@ -54,7 +55,7 @@ MapChip MapChipDB::convert(const lua::ConfigTable& data, const std::string& id)
     }
 
     return MapChip{
-        SharedId{id},
+        data::InstanceId{id},
         legacy_id,
         atlas,
         SharedId(std::string(Traits::type_id) + data_id_separator + id),
@@ -67,7 +68,8 @@ MapChip MapChipDB::convert(const lua::ConfigTable& data, const std::string& id)
         anime_frame,
         offset_top,
         offset_bottom,
-        effect};
+        effect,
+    };
 }
 
 } // namespace elona

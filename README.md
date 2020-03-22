@@ -15,10 +15,11 @@
 
 * `make`
 * CMake 3.2 or later
-* C++ compiler which supports C++14
+* C++ compiler which supports C++17
 * Boost 1.69
 * Lua 5.3
 * SDL2, SDL2_image, SDL2_ttf and SDL2_mixer
+* OpenSSL 1.1.x
 * `clang-format`, `find` and `xargs` (Optional)
 
 ### Additional requirements for Windows
@@ -100,8 +101,6 @@ For files under [runtime/graphic](runtime/graphic/) folder of the repository, se
 
 ## Thirdparty libraries
 
-* microhcl: see [src/thirdparty/microhcl/LICENSE](src/thirdparty/microhcl/LICENSE).
-* microhil: see [src/thirdparty/microhil/LICENSE](src/thirdparty/microhil/LICENSE).
 * Catch2: see [src/thirdparty/catch2/LICENSE](src/thirdparty/catch2/LICENSE).
 * hayai: see [src/thirdparty/hayai/LICENSE](src/thirdparty/hayai/LICENSE).
 * sol2: see [src/thirdparty/sol2/LICENSE.txt](src/thirdparty/sol2/LICENSE.txt).

@@ -1,4 +1,5 @@
 #include "race.hpp"
+
 #include "ability.hpp"
 #include "character.hpp"
 #include "elona.hpp"
@@ -11,15 +12,13 @@
 namespace elona
 {
 
-void race_init_chara(Character& chara, const std::string& race_id)
+void race_init_chara(Character& chara, data::InstanceId race_id)
 {
     auto data = the_race_db[race_id];
     if (!data)
-    {
         return;
-    }
 
-    cdatan(2, chara.index) = race_id;
+    cdatan(2, chara.index) = race_id.get();
 
     chara.melee_attack_type = data->melee_attack_type;
     chara.special_attack_type = data->special_attack_type;
@@ -68,8 +67,8 @@ void race_init_chara(Character& chara, const std::string& race_id)
         else
         {
             // Skip the skill if undefined.
-            ELONA_WARN("lua.data") << "Undefined skill ID: " << pair.first
-                                   << " (race " << race_id << ")";
+            ELONA_WARN("lua.data") << "Undefined skill ID: " << pair.first.get()
+                                   << " (race " << race_id.get() << ")";
         }
     }
 
@@ -82,8 +81,9 @@ void race_init_chara(Character& chara, const std::string& race_id)
         else
         {
             // Skip the resistance if undefined.
-            ELONA_WARN("lua.data") << "Undefined resistance ID: " << pair.first
-                                   << " (race " << race_id << ")";
+            ELONA_WARN("lua.data")
+                << "Undefined resistance ID: " << pair.first.get() << " (race "
+                << race_id.get() << ")";
         }
     }
 }
@@ -105,6 +105,60 @@ std::vector<std::reference_wrapper<const RaceData>> race_get_available(
         return a.get().ordering < b.get().ordering;
     });
     return ret;
+}
+
+
+
+void gain_race_feat()
+{
+    if (cdatan(2, 0) == u8"core.dwarf"s)
+    {
+        trait(152) = 2;
+        trait(155) = 1;
+    }
+    if (cdatan(2, 0) == u8"core.elea"s)
+    {
+        trait(168) = 1;
+        trait(156) = 1;
+    }
+    if (cdatan(2, 0) == u8"core.eulderna"s)
+    {
+        trait(153) = 1;
+    }
+    if (cdatan(2, 0) == u8"core.lich"s)
+    {
+        trait(151) = 1;
+        trait(155) = 2;
+        trait(152) = 1;
+    }
+    if (cdatan(2, 0) == u8"core.golem"s)
+    {
+        trait(157) = 1;
+        trait(152) = 2;
+    }
+    if (cdatan(2, 0) == u8"core.yerles"s)
+    {
+        trait(154) = 1;
+    }
+    if (cdatan(2, 0) == u8"core.juere"s)
+    {
+        trait(158) = 1;
+        trait(159) = 1;
+    }
+    if (cdatan(2, 0) == u8"core.goblin"s)
+    {
+        trait(155) = 1;
+        trait(159) = 1;
+    }
+    if (cdatan(2, 0) == u8"core.mutant"s)
+    {
+        trait(0) = 1;
+    }
+    if (cdatan(2, 0) == u8"core.fairy"s)
+    {
+        trait(160) = 1;
+        trait(161) = 1;
+    }
 }
 
 } // namespace elona

@@ -18,7 +18,6 @@
 #include "lua_api_json5.cpp"
 #include "lua_api_magic.cpp"
 #include "lua_api_map.cpp"
-#include "lua_api_math.cpp"
 #include "lua_api_pos.cpp"
 #include "lua_api_rand.cpp"
 #include "lua_api_skill.cpp"
@@ -39,34 +38,31 @@ namespace lua
         LuaApi##name::bind(table); \
     }
 
-void LuaApi::bind(sol::table& game)
+void LuaApi::bind(sol::table& core)
 {
-    LUA_API_BIND(game, Animation);
-    LUA_API_BIND(game, Calc);
-    LUA_API_BIND(game, Chara);
-    LUA_API_BIND(game, Config);
-    LUA_API_BIND(game, Console);
-    LUA_API_BIND(game, Data);
-    LUA_API_BIND(game, Debug);
-    LUA_API_BIND(game, Env);
-    LUA_API_BIND(game, FOV);
-    LUA_API_BIND(game, GUI);
-    LUA_API_BIND(game, I18N);
-    LUA_API_BIND(game, Input);
-    LUA_API_BIND(game, Internal);
-    LUA_API_BIND(game, Item);
-    LUA_API_BIND(game, Magic);
-    LUA_API_BIND(game, Map);
-    LUA_API_BIND(game, Math);
-    LUA_API_BIND(game, Pos);
-    LUA_API_BIND(game, Rand);
-    LUA_API_BIND(game, Skill);
-    LUA_API_BIND(game, Trait);
-    LUA_API_BIND(game, Wish);
-    LUA_API_BIND(game, World);
-
-    // TODO: move it to lib module.
-    LUA_API_BIND(game, JSON5);
+    LUA_API_BIND(core, Animation);
+    LUA_API_BIND(core, Calc);
+    LUA_API_BIND(core, Chara);
+    LUA_API_BIND(core, Config);
+    LUA_API_BIND(core, Console);
+    LUA_API_BIND(core, Data);
+    LUA_API_BIND(core, Debug);
+    LUA_API_BIND(core, Env);
+    LUA_API_BIND(core, FOV);
+    LUA_API_BIND(core, GUI);
+    LUA_API_BIND(core, I18N);
+    LUA_API_BIND(core, Input);
+    LUA_API_BIND(core, Internal);
+    LUA_API_BIND(core, Item);
+    LUA_API_BIND(core, JSON5);
+    LUA_API_BIND(core, Magic);
+    LUA_API_BIND(core, Map);
+    LUA_API_BIND(core, Pos);
+    LUA_API_BIND(core, Rand);
+    LUA_API_BIND(core, Skill);
+    LUA_API_BIND(core, Trait);
+    LUA_API_BIND(core, Wish);
+    LUA_API_BIND(core, World);
 }
 
 #undef LUA_API_BIND

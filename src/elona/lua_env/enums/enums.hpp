@@ -1,21 +1,34 @@
 #pragma once
 
-#include "../../character.hpp"
-#include "../../element.hpp"
-#include "../../enums.hpp"
-#include "../../item.hpp"
-#include "../../map_cell.hpp"
-#include "../../mdata.hpp"
-#include "../../menu.hpp"
-#include "../../status_ailment.hpp"
-#include "../../text.hpp"
-#include "../../wish.hpp"
 #include "../lua_enums.hpp"
 
 
 
 namespace elona
 {
+
+enum class DamageSource;
+enum class ColorIndex;
+enum class CurseState;
+enum class IdentifyState;
+enum class StatusAilment;
+enum class Element;
+enum class TileKind;
+enum class Quality;
+enum class BuffType;
+namespace mdata_t
+{
+enum class MapType;
+}
+enum class CharaFindLocation;
+enum class ItemFindLocation;
+enum class ControlAllyOperation;
+enum class RandomTitleType;
+enum class WishMatchType;
+enum class WishHook;
+
+
+
 namespace lua
 {
 
@@ -25,7 +38,7 @@ namespace lua
  * Enumerations for various data types. All enum variants take the
  * name of the variant as a string for its value. This means that
  * anywhere an enum value is required, you can pass a string with its
- * name instead of using the <code>Enums</code> table.
+ * name.
  */
 namespace LuaEnums
 {
@@ -52,9 +65,6 @@ extern EnumMap<ControlAllyOperation> ControlAllyOperationTable;
 extern EnumMap<RandomTitleType> RandomTitleTypeTable;
 extern EnumMap<WishMatchType> WishMatchTypeTable;
 extern EnumMap<WishHook> WishHookTable;
-
-
-void bind(sol::table&);
 
 } // namespace LuaEnums
 

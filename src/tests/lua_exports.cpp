@@ -1,4 +1,5 @@
 #include "../elona/filesystem.hpp"
+#include "../elona/lua_env/api_manager.hpp"
 #include "../elona/lua_env/export_manager.hpp"
 #include "../elona/lua_env/handle_manager.hpp"
 #include "../elona/lua_env/lua_env.hpp"
@@ -9,13 +10,17 @@
 #include "tests.hpp"
 #include "util.hpp"
 
+
+
 TEST_CASE("test registering Lua functions", "[Lua: Exports]")
 {
     elona::lua::LuaEnv lua;
     lua.load_mods();
 
     REQUIRE_NOTHROW(
-        lua.get_mod_manager().load_testing_mod_from_script("test", R"(
+        lua.get_mod_manager().load_testing_mod_from_script("test", ""));
+
+    REQUIRE_NOTHROW(lua.get_api_manager().load_script("test", R"(
 local exports = {}
 exports.nesting = {}
 
@@ -30,7 +35,7 @@ end
 mod.store.global.called_times_a = 0
 mod.store.global.called_times_b = 0
 
-return exports
+ELONA.api:add(exports)
 )"));
 
     lua.get_export_manager().register_all_exports();
@@ -58,6 +63,8 @@ return exports
         "test", R"(assert(mod.store.global.called_times_b == 3))"));
 }
 
+
+
 TEST_CASE("test registering Lua functions with arguments", "[Lua: Exports]")
 {
     elona::lua::LuaEnv lua;
@@ -74,13 +81,18 @@ TEST_CASE("test registering Lua functions with arguments", "[Lua: Exports]")
         "test", R"(assert(mod.store.global.value == 42))"));
 }
 
+
+
 TEST_CASE(
     "test registering Lua functions with userdata arguments",
     "[Lua: Exports]")
 {
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
-            "test_registry_chara_callback", R"(
+            "test_registry_chara_callback", ""));
+
+    REQUIRE_NOTHROW(elona::lua::lua->get_api_manager().load_script(
+        "test_registry_chara_callback", R"(
 local exports = {}
 
 function exports.my_callback(chara)
@@ -89,7 +101,7 @@ end
 
 mod.store.global.found_index = -1
 
-return exports
+ELONA.api:add(exports)
 )"));
 
     elona::testing::start_in_debug_map();
@@ -112,6 +124,8 @@ return exports
         R"(assert(mod.store.global.found_index == index))"));
 }
 
+
+
 TEST_CASE("test calling unknown exported function for result", "[Lua: Exports]")
 {
     elona::lua::LuaEnv lua;
@@ -122,6 +136,8 @@ TEST_CASE("test calling unknown exported function for result", "[Lua: Exports]")
     bool result = lua.get_export_manager().call_with_result("dood", false);
     REQUIRE(result == false);
 }
+
+
 
 TEST_CASE("test calling exported function with return type", "[Lua: Exports]")
 {
@@ -146,6 +162,8 @@ TEST_CASE("test calling exported function with return type", "[Lua: Exports]")
     }
 }
 
+
+
 TEST_CASE("test calling exported function with nil result", "[Lua: Exports]")
 {
     elona::lua::LuaEnv lua;
@@ -157,6 +175,8 @@ TEST_CASE("test calling exported function with nil result", "[Lua: Exports]")
 
     REQUIRE(result == -1);
 }
+
+
 
 TEST_CASE("test calling exported function with error", "[Lua: Exports]")
 {
@@ -170,6 +190,8 @@ TEST_CASE("test calling exported function with error", "[Lua: Exports]")
 
     REQUIRE(result == -1);
 }
+
+
 
 TEST_CASE("test calling exported function with table result", "[Lua: Exports]")
 {

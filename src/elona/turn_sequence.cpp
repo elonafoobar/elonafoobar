@@ -1,4 +1,5 @@
 #include "turn_sequence.hpp"
+
 #include "ability.hpp"
 #include "activity.hpp"
 #include "ai.hpp"
@@ -12,13 +13,17 @@
 #include "config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
+#include "death.hpp"
 #include "debug.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
 #include "elona.hpp"
+#include "enchantment.hpp"
 #include "food.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "init.hpp"
+#include "initialize_map.hpp"
 #include "input.hpp"
 #include "item.hpp"
 #include "keybind/input_context.hpp"
@@ -36,10 +41,13 @@
 #include "quest.hpp"
 #include "random.hpp"
 #include "save.hpp"
+#include "status_ailment.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "ui/ui_menu_keybindings.hpp"
 #include "variables.hpp"
 #include "wish.hpp"
+#include "world.hpp"
 
 
 
@@ -461,18 +469,18 @@ optional<TurnResult> npc_turn_misc(Character& chara)
     }
 
     const auto category = the_item_db[itemid2int(inv[ci].id)]->category;
-    if (category == 57000)
+    if (category == ItemCategory::food)
     {
         if (chara.relationship != 10 || chara.nutrition <= 6000)
         {
             return do_eat_command();
         }
     }
-    if (category == 52000)
+    if (category == ItemCategory::potion)
     {
         return do_drink_command();
     }
-    if (category == 53000)
+    if (category == ItemCategory::scroll)
     {
         return do_read_command();
     }
@@ -520,10 +528,11 @@ TurnResult npc_turn_ai_main(Character& chara)
                     if (number == 1)
                     {
                         ci = item;
-                        p = the_item_db[itemid2int(inv[ci].id)]->category;
+                        const auto category =
+                            the_item_db[itemid2int(inv[ci].id)]->category;
                         if (chara.nutrition <= 6000)
                         {
-                            if (p == 57000)
+                            if (category == ItemCategory::food)
                             {
                                 if (inv[ci].own_state <= 0 &&
                                     !is_cursed(inv[ci].curse_state))
@@ -531,7 +540,7 @@ TurnResult npc_turn_ai_main(Character& chara)
                                     return do_eat_command();
                                 }
                             }
-                            if (p == 60001)
+                            if (category == ItemCategory::well)
                             {
                                 if (inv[ci].own_state <= 1 &&
                                     inv[ci].param1 >= -5 &&
@@ -542,7 +551,8 @@ TurnResult npc_turn_ai_main(Character& chara)
                                 }
                             }
                         }
-                        if (p == 68000 || p == 77000)
+                        if (category == ItemCategory::gold_piece ||
+                            category == ItemCategory::ore)
                         {
                             if (inv[ci].own_state <= 0 &&
                                 !inv[ci].is_precious() &&
@@ -1419,7 +1429,7 @@ optional<TurnResult> pc_turn_advance_time()
     {
         auto&& item = get_random_inv(0);
         if (item.number() > 0 &&
-            the_item_db[itemid2int(item.id)]->category == 52000)
+            the_item_db[itemid2int(item.id)]->category == ItemCategory::potion)
         {
             ci = item.index;
             item_db_on_drink(item, itemid2int(item.id));
@@ -1517,6 +1527,284 @@ TurnResult pc_turn(bool advance_time)
         if (auto turn_result = handle_pc_action(command))
         {
             return *turn_result;
+        }
+    }
+}
+
+
+
+void proc_turn_end(int cc)
+{
+    int regen = 0;
+    regen = 1;
+    if (cdata[cc].sleep > 0)
+    {
+        status_ailment_heal(cdata[cc], StatusAilment::sleep, 1);
+        if (cdata[cc].sleep > 0)
+        {
+            cdata[cc].emotion_icon = 114;
+        }
+        heal_hp(cdata[cc], 1);
+        heal_mp(cdata[cc], 1);
+    }
+    if (cdata[cc].poisoned > 0)
+    {
+        damage_hp(cdata[cc], rnd_capped(2 + sdata(11, cc) / 10), -4);
+        status_ailment_heal(cdata[cc], StatusAilment::poisoned, 1);
+        if (cdata[cc].poisoned > 0)
+        {
+            cdata[cc].emotion_icon = 108;
+        }
+        regen = 0;
+    }
+    if (cdata[cc].choked > 0)
+    {
+        if (cdata[cc].choked % 3 == 0)
+        {
+            if (is_in_fov(cdata[cc]))
+            {
+                txt(i18n::s.get("core.misc.status_ailment.choked"));
+            }
+        }
+        ++cdata[cc].choked;
+        if (cdata[cc].choked > 15)
+        {
+            damage_hp(cdata[cc], 500, -21);
+        }
+        regen = 0;
+    }
+    if (cdata[cc].gravity > 0)
+    {
+        --cdata[cc].gravity;
+        if (cdata[cc].gravity == 0)
+        {
+            if (is_in_fov(cdata[cc]))
+            {
+                txt(i18n::s.get(
+                    "core.misc.status_ailment.breaks_away_from_gravity",
+                    cdata[cc]));
+            }
+        }
+    }
+    if (cdata[cc].furious > 0)
+    {
+        --cdata[cc].furious;
+        if (cdata[cc].furious == 0)
+        {
+            if (is_in_fov(cdata[cc]))
+            {
+                txt(i18n::s.get(
+                    "core.misc.status_ailment.calms_down", cdata[cc]));
+            }
+        }
+    }
+    if (cdata[cc].sick > 0)
+    {
+        if (rnd(80) == 0)
+        {
+            p = rnd(10);
+            if (!enchantment_find(cdata[cc], 60010 + p))
+            {
+                cdata[cc].attr_adjs[p] -=
+                    sdata.get(10 + p, cc).original_level / 25 + 1;
+                chara_refresh(cc);
+            }
+        }
+        if (rnd(5))
+        {
+            regen = 0;
+        }
+        if (cc >= 16)
+        {
+            if (cdata[cc].quality >= Quality::miracle)
+            {
+                if (rnd(200) == 0)
+                {
+                    status_ailment_heal(cdata[cc], StatusAilment::sick);
+                }
+            }
+        }
+    }
+    if (cdata[cc].blind > 0)
+    {
+        status_ailment_heal(cdata[cc], StatusAilment::blinded, 1);
+        if (cdata[cc].blind > 0)
+        {
+            cdata[cc].emotion_icon = 110;
+        }
+    }
+    if (cdata[cc].paralyzed > 0)
+    {
+        regen = 0;
+        status_ailment_heal(cdata[cc], StatusAilment::paralyzed, 1);
+        if (cdata[cc].paralyzed > 0)
+        {
+            cdata[cc].emotion_icon = 115;
+        }
+    }
+    if (cdata[cc].confused > 0)
+    {
+        status_ailment_heal(cdata[cc], StatusAilment::confused, 1);
+        if (cdata[cc].confused > 0)
+        {
+            cdata[cc].emotion_icon = 111;
+        }
+    }
+    if (cdata[cc].fear > 0)
+    {
+        status_ailment_heal(cdata[cc], StatusAilment::fear, 1);
+        if (cdata[cc].fear > 0)
+        {
+            cdata[cc].emotion_icon = 113;
+        }
+    }
+    if (cdata[cc].dimmed > 0)
+    {
+        status_ailment_heal(cdata[cc], StatusAilment::dimmed, 1);
+        if (cdata[cc].dimmed > 0)
+        {
+            cdata[cc].emotion_icon = 112;
+        }
+    }
+    if (cdata[cc].drunk > 0)
+    {
+        status_ailment_heal(cdata[cc], StatusAilment::drunk, 1);
+        if (cdata[cc].drunk > 0)
+        {
+            cdata[cc].emotion_icon = 106;
+        }
+    }
+    if (cdata[cc].bleeding > 0)
+    {
+        damage_hp(
+            cdata[cc],
+            rnd_capped(cdata[cc].hp * (1 + cdata[cc].bleeding / 4) / 100 + 3) +
+                1,
+            -13);
+        status_ailment_heal(
+            cdata[cc],
+            StatusAilment::bleeding,
+            1 + cdata[cc].cures_bleeding_quickly() * 3);
+        if (cdata[cc].bleeding > 0)
+        {
+            cdata[cc].emotion_icon = 109;
+        }
+        regen = 0;
+        spillblood(cdata[cc].position.x, cdata[cc].position.y);
+    }
+    if (cdata[cc].wet > 0)
+    {
+        --cdata[cc].wet;
+    }
+    if (cdata[cc].insane > 0)
+    {
+        if (is_in_fov(cdata[cc]))
+        {
+            if (rnd(3) == 0)
+            {
+                txt(i18n::s.get("core.misc.status_ailment.insane", cdata[cc]),
+                    Message::color{ColorIndex::cyan});
+            }
+        }
+        if (rnd(5) == 0)
+        {
+            cdata[cc].confused += rnd(10);
+        }
+        if (rnd(5) == 0)
+        {
+            cdata[cc].dimmed += rnd(10);
+        }
+        if (rnd(5) == 0)
+        {
+            cdata[cc].sleep += rnd(5);
+        }
+        if (rnd(5) == 0)
+        {
+            cdata[cc].fear += rnd(10);
+        }
+        status_ailment_heal(cdata[cc], StatusAilment::insane, 1);
+        if (cdata[cc].insane > 0)
+        {
+            cdata[cc].emotion_icon = 124;
+        }
+    }
+    if (cc == 0)
+    {
+        if (cdata[cc].nutrition < 2000)
+        {
+            if (cdata[cc].nutrition < 1000)
+            {
+                if (cdata[cc].activity.type != Activity::Type::eat)
+                {
+                    damage_hp(
+                        cdata[cc], rnd(2) + cdata.player().max_hp / 50, -3);
+                    if (game_data.play_turns % 10 == 0)
+                    {
+                        rowact_check(cdata[cc]);
+                        if (rnd(50) == 0)
+                        {
+                            modify_weight(cdata[cc], -1);
+                        }
+                    }
+                }
+            }
+            regen = 0;
+        }
+        if (game_data.continuous_active_hours >= 30)
+        {
+            if (debug::voldemort)
+            {
+                game_data.continuous_active_hours = 0;
+            }
+            if (game_data.play_turns % 100 == 0)
+            {
+                txt(i18n::s.get("core.misc.status_ailment.sleepy"));
+            }
+            if (rnd(2))
+            {
+                regen = 0;
+            }
+            if (game_data.continuous_active_hours >= 50)
+            {
+                regen = 0;
+                damage_sp(cdata[cc], 1);
+            }
+        }
+    }
+    else if (cdata[cc].related_quest_id != 0)
+    {
+        p = cdata[cc].related_quest_id - 1;
+        if (quest_data[p].delivery_has_package_flag > 0)
+        {
+            cdata[cc].emotion_icon = 122;
+        }
+        if (quest_data[p].progress != 0)
+        {
+            if (cdata[cc].turn % 2 == 1)
+            {
+                cdata[cc].emotion_icon = 123;
+            }
+        }
+    }
+    if (game_data.executing_immediate_quest_type == 1009)
+    {
+        if (cc >= 57)
+        {
+            if (cdata[cc].impression >= 53)
+            {
+                cdata[cc].emotion_icon = 225;
+            }
+        }
+    }
+    if (regen == 1)
+    {
+        if (rnd(6) == 0)
+        {
+            heal_hp(cdata[cc], rnd_capped(sdata(154, cc) / 3 + 1) + 1);
+        }
+        if (rnd(5) == 0)
+        {
+            heal_mp(cdata[cc], rnd_capped(sdata(155, cc) / 2 + 1) + 1);
         }
     }
 }

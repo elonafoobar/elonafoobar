@@ -5,6 +5,7 @@
 #include <cctype>
 #include <cmath>
 #include <cstdint>
+
 #include <algorithm>
 #include <iterator>
 #include <memory>
@@ -12,6 +13,7 @@
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
+
 #include "../snail/color.hpp"
 #include "../snail/font.hpp"
 #include "../snail/input.hpp"
@@ -32,6 +34,18 @@ void allocate_and_clear_vector(std::vector<T>& v, size_t size)
 {
     v.resize(size);
     std::fill(std::begin(v), std::end(v), T{});
+}
+
+
+
+// Workaround for a bug in MSVC 2017
+// See also:
+// https://stackoverflow.com/questions/46104002/why-cant-this-enable-if-function-template-be-specialized-in-vs2017
+namespace internal
+{
+template <typename Lhs, typename Rhs>
+constexpr bool elona_vector_concat_as_string_v =
+    std::is_same_v<Lhs, std::string>&& std::is_same_v<Rhs, int>;
 }
 
 
@@ -77,7 +91,7 @@ struct elona_vector1
     template <
         typename U,
         std::enable_if_t<
-            std::is_same<T, std::string>::value && std::is_same<U, int>::value,
+            internal::elona_vector_concat_as_string_v<T, U>,
             std::nullptr_t> = nullptr>
     T& operator+=(const U& x)
     {
@@ -88,8 +102,7 @@ struct elona_vector1
     template <
         typename U,
         std::enable_if_t<
-            !std::is_same<T, std::string>::value ||
-                !std::is_same<U, int>::value,
+            !internal::elona_vector_concat_as_string_v<T, U>,
             std::nullptr_t> = nullptr>
     T& operator+=(const U& x)
     {
@@ -584,6 +597,7 @@ void ImmSetOpenStatus(int, int);
 int ImmGetOpenStatus(int);
 
 
+int talk_conv(std::string&, int = 0);
 
 void onkey_0();
 

@@ -1,4 +1,5 @@
 #include "crafting.hpp"
+
 #include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
@@ -13,9 +14,8 @@
 #include "message.hpp"
 #include "random.hpp"
 #include "ui.hpp"
-#include "variables.hpp"
-
 #include "ui/ui_menu_crafting.hpp"
+#include "variables.hpp"
 
 namespace elona
 {
@@ -362,7 +362,7 @@ std::unordered_map<int, CraftingRecipe> recipes = {
 };
 // clang-format on
 
-optional<const CraftingRecipe&> crafting_find_recipe(int matid_)
+optional_ref<const CraftingRecipe> crafting_find_recipe(int matid_)
 {
     auto it = recipes.find(matid_);
 
@@ -445,5 +445,65 @@ void crafting_menu()
 }
 
 
+
+int random_material(int level, int rarity)
+{
+    int f_at_m174 = 0;
+    int lv_at_m174 = 0;
+    int rare_at_m174 = 0;
+    int loc_at_m174 = 0;
+    int p_at_m174 = 0;
+    int f2_at_m174 = 0;
+    int p2_at_m174 = 0;
+    f_at_m174 = 0;
+    lv_at_m174 = level;
+    rare_at_m174 = rarity;
+    loc_at_m174 = atxspot;
+    for (int cnt = 0; cnt < 500; ++cnt)
+    {
+        p_at_m174 = rnd(55);
+        if (p_at_m174 == 0)
+        {
+            continue;
+        }
+        if (cnt % 10 == 0)
+        {
+            ++lv_at_m174;
+            ++rare_at_m174;
+        }
+        if (matref(0, p_at_m174) > lv_at_m174)
+        {
+            continue;
+        }
+        if (matref(1, p_at_m174) > rare_at_m174)
+        {
+            continue;
+        }
+        f2_at_m174 = 0;
+        for (int cnt = 0; cnt < 5; ++cnt)
+        {
+            p2_at_m174 = matspot(cnt, p_at_m174);
+            if (p2_at_m174 == 0)
+            {
+                break;
+            }
+            if (p2_at_m174 == loc_at_m174 || p2_at_m174 == 18)
+            {
+                f2_at_m174 = 1;
+                break;
+            }
+        }
+        if (f2_at_m174 == 0)
+        {
+            continue;
+        }
+        if (rnd(matref(1, p_at_m174)) == 0)
+        {
+            f_at_m174 = p_at_m174;
+            break;
+        }
+    }
+    return f_at_m174;
+}
 
 } // namespace elona

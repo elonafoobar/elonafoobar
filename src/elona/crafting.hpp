@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+
 #include "optional.hpp"
 
 namespace elona
@@ -37,6 +38,7 @@ struct CraftingRecipe
 
 void initialize_craft_material_data();
 void crafting_menu();
-optional<const CraftingRecipe&> crafting_find_recipe(int matid);
+optional_ref<const CraftingRecipe> crafting_find_recipe(int matid);
+int random_material(int = 0, int = 0);
 
 } // namespace elona

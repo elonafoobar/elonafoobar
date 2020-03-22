@@ -1,4 +1,5 @@
 #include "lua_api_item.hpp"
+
 #include "../../calc.hpp"
 #include "../../character.hpp"
 #include "../../data/types/type_item.hpp"
@@ -6,6 +7,7 @@
 #include "../../item.hpp"
 #include "../../itemgen.hpp"
 #include "../../lua_env/enums/enums.hpp"
+#include "../../text.hpp"
 #include "../interface.hpp"
 
 
@@ -113,6 +115,9 @@ sol::optional<LuaItemHandle> LuaApiItem::create(
 sol::optional<LuaItemHandle>
 LuaApiItem::create_xy(int x, int y, sol::table args)
 {
+    // `libclang`, invoked from `tools/docgen`, fails to parse this function's
+    // body for some reason.
+#ifndef ELONA_DOCGEN
     int id = 0;
     int slot = -1;
     int number = 0;
@@ -188,7 +193,7 @@ LuaApiItem::create_xy(int x, int y, sol::table args)
 
     if (auto it = args.get<sol::optional<std::string>>("id"))
     {
-        auto data = the_item_db.ensure(*it);
+        auto data = the_item_db.ensure(data::InstanceId{*it});
         id = data.legacy_id;
     }
 
@@ -201,6 +206,7 @@ LuaApiItem::create_xy(int x, int y, sol::table args)
     {
         return sol::nullopt;
     }
+#endif
 }
 
 /**
@@ -217,7 +223,7 @@ int LuaApiItem::memory(int type, const std::string& id)
         return 0;
     }
 
-    auto data = the_item_db[id];
+    auto data = the_item_db[data::InstanceId{id}];
     if (!data)
     {
         return 0;
@@ -272,7 +278,7 @@ int LuaApiItem::trade_rate(LuaItemHandle handle)
     auto& item_ref = lua::ref<Item>(handle);
 
     // Item must be in the cargo category.
-    if (the_item_db[itemid2int(item_ref.id)]->category != 92000)
+    if (the_item_db[itemid2int(item_ref.id)]->category != ItemCategory::cargo)
     {
         return 0;
     }
@@ -291,7 +297,7 @@ sol::optional<LuaItemHandle> LuaApiItem::find(
     const std::string& item_id,
     const EnumString& location)
 {
-    auto data = the_item_db.ensure(item_id);
+    auto data = the_item_db.ensure(data::InstanceId{item_id});
 
     auto location_value =
         LuaEnums::ItemFindLocationTable.ensure_from_string(location);

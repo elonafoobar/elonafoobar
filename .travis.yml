@@ -3,8 +3,11 @@ language: cpp
 matrix:
   include:
     - os: linux
-      env: BUILD_TYPE=linux
-      compiler: gcc-7
+      env:
+        - BUILD_TYPE=linux
+        - CC=gcc-8
+        - CXX=g++-8
+      compiler: gcc-8
       addons:
         apt:
           config:
@@ -13,13 +16,14 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-7
+            - g++-8
             - cmake
             - zlib1g-dev
             - gtk+-3.0
             - openssl
             # Boost, Lua and SDL2 library versions provided are too old, they must be compiled manually.
     - os: osx
+      osx_image: xcode11.3
       env:
         - BUILD_TYPE=osx
         - OPENSSL_ROOT_DIR=/usr/local/opt/openssl/
@@ -43,8 +47,6 @@ before_install:
       brew install sdl2 sdl2_ttf sdl2_image sdl2_mixer lua openssl;
     fi
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
-      export CC="gcc-7";
-      export CXX="g++-7";
       gcc -v && g++ -v;
       sudo ln -s /usr/lib/x86_64-linux-gnu/mesa/libGL.so.1 /usr/lib/libGL.so;
     fi
@@ -52,8 +54,6 @@ before_install:
 
 install:
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
-      export CC="gcc-7";
-      export CXX="g++-7";
       gcc -v && g++ -v;
     fi
   - if [[ "$BUILD_TYPE" == "linux" ]]; then . "$TRAVIS_BUILD_DIR/.travis/install.sh"; fi
@@ -63,8 +63,6 @@ before_script:
 script:
   - cd "$TRAVIS_BUILD_DIR";
   - if [[ "$BUILD_TYPE" == "linux" ]]; then
-      export CC="gcc-7";
-      export CXX="g++-7";
       export LD_LIBRARY_PATH="/usr/lib:$LD_LIBRARY_PATH";
       export LD_RUN_PATH="/usr/lib:$LD_RUN_PATH";
       export CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_INSTALL_RPATH_USE_LINK_PATH:BOOL=TRUE";

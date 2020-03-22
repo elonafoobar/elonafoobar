@@ -1,10 +1,12 @@
 #pragma once
 
 #include <string>
+
 #include "../util/noncopyable.hpp"
+#include "data/id.hpp"
 #include "filesystem.hpp"
 #include "item.hpp"
-#include "shared_id.hpp"
+
 
 
 namespace elona
@@ -34,7 +36,7 @@ public:
 
         Type type = Type::do_nothing;
         bool show_prompt = false;
-        SharedId sound;
+        optional<data::InstanceId> sound;
     };
 
     static Autopick& instance();

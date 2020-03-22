@@ -6,7 +6,7 @@ namespace elona
 {
 
 GodDB the_god_db;
-const constexpr char* data::LuaLazyCacheTraits<GodDB>::type_id;
+const constexpr char* data::DatabaseTraits<GodDB>::type_id;
 
 
 
@@ -14,7 +14,10 @@ GodData GodDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
     auto legacy_id = data.required<int>("legacy_id");
 
-    return GodData{SharedId{id}, legacy_id};
+    return GodData{
+        data::InstanceId{id},
+        legacy_id,
+    };
 }
 
 } // namespace elona

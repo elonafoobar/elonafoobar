@@ -1,14 +1,14 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
-local World = require("game.World")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local I18N = ELONA.require("core.I18N")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
+local World = ELONA.require("core.World")
 
-local common = require_relative("data/dialog/common")
+local common = require("../common.lua")
 
 local function surrender_cost()
-   return Chara.player().gold / 5
+   return Chara.player().gold // 5
 end
 
 local function surrender()
@@ -26,7 +26,6 @@ local function surrender()
 end
 
 return {
-   id = "rogue_boss",
    root = "core.talk.unique.rogue_boss",
    nodes = {
       __start = function()
@@ -50,7 +49,7 @@ return {
                "ambush.dialog",
                args = function(t)
                   return {
-                     World.random_title("Party"),
+                     World.random_title("party"),
                      surrender_cost(),
                      t.speaker
                   }

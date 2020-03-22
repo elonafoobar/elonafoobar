@@ -1,7 +1,10 @@
 #pragma once
 
+#include <cassert>
+
 #include <fstream>
 #include <iterator>
+
 #include "filepathutil.hpp"
 
 

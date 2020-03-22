@@ -1,8 +1,7 @@
-data:add(
+ELONA.data:add(
+   "core.ability",
    {
-      {
-         type = 'core.ability',
-         id = 'expecto_patronum',
+      expecto_patronum = {
          legacy_id = 9999,
          related_basic_attribute = 17,
          ability_type = 0,

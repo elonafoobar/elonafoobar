@@ -1,11 +1,10 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local table = require("game.table")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local I18N = ELONA.require("core.I18N")
+local Internal = ELONA.require("core.Internal")
+local table = table
 
 return {
-   id = "poppy",
    root = "core.talk.unique.poppy",
    nodes = {
       __start = function()
@@ -33,7 +32,7 @@ return {
       take = function(t)
          GUI.txt(I18N.get("core.talk.unique.poppy.find.you_must_return", t.speaker))
          t.speaker:recruit_as_ally()
-         t.speaker:set_flag("IsEscortedInSubQuest", true)
+         t.speaker:set_flag("is_escorted_in_sub_quest", true)
          t.speaker:refresh()
 
          return "__END__"

@@ -1,7 +1,10 @@
 #include "menu.hpp"
+
 #include <iostream>
 #include <stack>
+
 #include "ability.hpp"
+#include "attack.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
@@ -11,6 +14,7 @@
 #include "command.hpp"
 #include "config.hpp"
 #include "config_menu.hpp"
+#include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_portrait.hpp"
 #include "defines.hpp"
@@ -20,6 +24,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
+#include "lua_env/interface.hpp"
 #include "macro.hpp"
 #include "magic.hpp"
 #include "menu.hpp"
@@ -29,14 +34,16 @@
 #include "pic_loader/tinted_buffers.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "text.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
-#include "variables.hpp"
-
 #include "ui/ui_menu_adventurers.hpp"
 #include "ui/ui_menu_alias.hpp"
 #include "ui/ui_menu_book.hpp"
 #include "ui/ui_menu_character_sheet.hpp"
+#include "ui/ui_menu_composite_character.hpp"
+#include "ui/ui_menu_composite_message.hpp"
+#include "ui/ui_menu_composite_town.hpp"
 #include "ui/ui_menu_ctrl_ally.hpp"
 #include "ui/ui_menu_feats.hpp"
 #include "ui/ui_menu_game_help.hpp"
@@ -50,10 +57,7 @@
 #include "ui/ui_menu_spell_writer.hpp"
 #include "ui/ui_menu_spells.hpp"
 #include "ui/ui_menu_voting_box.hpp"
-
-#include "ui/ui_menu_composite_character.hpp"
-#include "ui/ui_menu_composite_message.hpp"
-#include "ui/ui_menu_composite_town.hpp"
+#include "variables.hpp"
 
 
 
@@ -345,9 +349,10 @@ void show_ex_help(int id)
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "exhelp.txt").native(),
-            std::ios::binary};
+        std::ifstream in{lua::resolve_path_for_mod(
+                             "<core>/locale/<LANGUAGE>/lazy/exhelp.txt")
+                             .native(),
+                         std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -472,14 +477,14 @@ static TurnResult _show_skill_spell_menu(size_t menu_index)
         return TurnResult::pc_turn_user_error;
     }
 
-    if (result.value->type() == typeid(ui::UIMenuSkillsResult))
+    if (std::holds_alternative<ui::UIMenuSkillsResult>(*result.value))
     {
-        efid = boost::get<ui::UIMenuSkillsResult>(*result.value).effect_id;
+        efid = std::get<ui::UIMenuSkillsResult>(*result.value).effect_id;
         return do_use_magic();
     }
     else
     {
-        efid = boost::get<ui::UIMenuSpellsResult>(*result.value).effect_id;
+        efid = std::get<ui::UIMenuSpellsResult>(*result.value).effect_id;
         return do_cast_command();
     }
 }
@@ -499,10 +504,10 @@ TurnResult show_skill_list()
 static std::string _make_buff_power_string(int skill_id)
 {
     const auto buff_id = the_ability_db[skill_id]->ability_type % 1000;
-    const auto duration =
-        buff_calc_duration(buff_id, calcspellpower(skill_id, cc));
-    const auto description =
-        buff_get_description(buff_id, calcspellpower(skill_id, cc));
+    const auto duration = buff_calc_duration(
+        *the_buff_db.get_id_from_legacy(buff_id), calcspellpower(skill_id, cc));
+    const auto description = buff_get_description(
+        *the_buff_db.get_id_from_legacy(buff_id), calcspellpower(skill_id, cc));
     return std::to_string(duration) +
         i18n::s.get("core.ui.spell.turn_counter") + " " + description;
 }
@@ -563,7 +568,7 @@ std::string make_spell_description(int skill_id)
                       "ability",
                       the_ability_db.get_id_from_legacy(skill_id)->get(),
                       "description")
-                  .get_value_or("");
+                  .value_or("");
 
     return result;
 }
@@ -635,7 +640,7 @@ optional<int> menu_character_sheet_trainer(bool is_training)
         return none;
     }
 
-    auto sheet_result = boost::get<ui::CharacterSheetResult>(*result.value);
+    auto sheet_result = std::get<ui::CharacterSheetResult>(*result.value);
     return sheet_result.trainer_skill_id;
 }
 
@@ -657,7 +662,7 @@ MenuResult menu_feats_character_making()
     }
     else if (result.value)
     {
-        auto FeatsResult = boost::get<ui::FeatsResult>(*result.value);
+        auto FeatsResult = std::get<ui::FeatsResult>(*result.value);
 
         if (FeatsResult == ui::FeatsResult::pressed_f1)
         {
@@ -1172,7 +1177,8 @@ void show_weapon_dice(int val0)
         mes(wx + 417, wy + 281 + p(2) * 16, s(1), {20, 10, 0});
     }
     attackrange = 0;
-    if (the_item_db[itemid2int(inv[cw].id)]->category == 24000) // TODO coupling
+    if (the_item_db[itemid2int(inv[cw].id)]->category ==
+        ItemCategory::ranged_weapon) // TODO coupling
     {
         attackrange = 1;
     }

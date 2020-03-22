@@ -1,5 +1,7 @@
 #include "draw.hpp"
+
 #include <cmath>
+
 #include "../snail/application.hpp"
 #include "character.hpp"
 #include "config.hpp"
@@ -11,7 +13,6 @@
 #include "data/types/type_portrait.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
-#include "hcl.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "map.hpp"
@@ -21,6 +22,7 @@
 #include "pic_loader/pic_loader.hpp"
 #include "pic_loader/tinted_buffers.hpp"
 #include "random.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 
@@ -1255,5 +1257,28 @@ void draw_map_tile(
         dst_height);
 }
 
+
+
+void draw_sleep_background_frame()
+{
+    gcopy(4, 0, 0, windoww, windowh - inf_verh, 0, 0);
+    gmode(2);
+    render_hud();
+    if (screenupdate == 0)
+    {
+        redraw();
+    }
+    screenupdate = 0;
+}
+
+
+
+void load_sleep_background()
+{
+    gmode(0);
+    asset_load("bg_night");
+    draw("bg_night", 0, 0, windoww, windowh - inf_verh);
+    gsel(0);
+}
 
 } // namespace elona

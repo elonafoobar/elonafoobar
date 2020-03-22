@@ -1,9 +1,11 @@
 #include "ui_menu_crafting.hpp"
+
 #include "../ability.hpp"
 #include "../audio.hpp"
 #include "../crafting.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
+#include "../item.hpp"
 #include "../message.hpp"
 
 namespace elona

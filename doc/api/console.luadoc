@@ -1,5 +1,5 @@
 --- Functions related to in-game console.
---  @usage local Console = require("game.Console")
+--  @usage local Console = ELONA.require("core.Console")
 module "Console"
 
 --- Registers a new console command.
@@ -7,8 +7,8 @@ module "Console"
 --  @tparam string mod_id the mod's id where the command is defined.
 --  @tparam string name the command name.
 --  @tparam function callback the command itself.
---  @function register_
-function register_(mod_id, name, callback) end
+--  @function register
+function register(mod_id, name, callback) end
 
 --- Runs registered command.
 --

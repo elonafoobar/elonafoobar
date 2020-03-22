@@ -1,20 +1,27 @@
 #include "text.hpp"
+
 #include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
 #include "area.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "data/types/type_ability.hpp"
+#include "draw.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "item.hpp"
+#include "lua_env/interface.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
 
+
+namespace elona
+{
 
 namespace
 {
@@ -26,6 +33,7 @@ RandomNameTable _random_name_table;
 
 
 elona_vector2<std::string> _rnlist;
+elona_vector1<std::string> txtbuff;
 
 
 
@@ -84,13 +92,16 @@ optional<std::string> _random_name_internal()
 } // namespace
 
 
-
-namespace elona
-{
-
-
 int p_at_m34 = 0;
 int talkref = 0;
+
+
+
+// see attack.cpp
+extern int cansee;
+
+// see world.cpp
+extern elona_vector1<int> ranknorma;
 
 
 
@@ -373,7 +384,7 @@ std::string mapname(int id, bool description)
         break;
     case mdata_t::MapId::random_dungeon: name = mapname_dungeon(id); break;
     default:
-        auto name_opt = i18n::s.get_enum_property_opt(
+        auto name_opt = i18n::s.get_enum_property_optional(
             "core.map.unique", "name", area_data[id].id);
         if (name_opt)
         {
@@ -384,7 +395,7 @@ std::string mapname(int id, bool description)
             name = "";
         }
 
-        auto desc_opt = i18n::s.get_enum_property_opt(
+        auto desc_opt = i18n::s.get_enum_property_optional(
             "core.map.unique", "desc", area_data[id].id);
         if (desc_opt)
         {
@@ -441,7 +452,7 @@ std::string txtbuilding(int x, int y)
 
 std::string txtskillchange(int id, int cc, bool increase)
 {
-    if (auto text = i18n::s.get_enum_property_opt(
+    if (auto text = i18n::s.get_enum_property_optional(
             "core.skill", increase ? "increase" : "decrease", id, cdata[cc]))
     {
         return *text;
@@ -958,7 +969,8 @@ void parse_talk_file()
     {
         buff(0).clear();
         std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "talk.txt").native(),
+            lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/talk.txt")
+                .native(),
             std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -984,7 +996,8 @@ void read_talk_file(const std::string& valn)
     {
         buff(0).clear();
         std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "talk.txt").native(),
+            lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/talk.txt")
+                .native(),
             std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -1005,7 +1018,8 @@ void get_npc_talk()
     {
         buff(0).clear();
         std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "talk.txt").native(),
+            lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/talk.txt")
+                .native(),
             std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
@@ -2129,8 +2143,8 @@ void load_random_name_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line(
-            i18n::s.get_locale_dir("core") / "lazy" / "name.csv"),
+        fileutil::read_by_line(lua::resolve_path_for_mod(
+            "<core>/locale/<LANGUAGE>/lazy/name.csv")),
         std::back_inserter(lines));
 
     const auto rows = lines.size();
@@ -2166,8 +2180,8 @@ void load_random_title_table()
 {
     std::vector<std::string> lines;
     range::copy(
-        fileutil::read_by_line(
-            i18n::s.get_locale_dir("core") / "lazy" / "ndata.csv"),
+        fileutil::read_by_line(lua::resolve_path_for_mod(
+            "<core>/locale/<LANGUAGE>/lazy/ndata.csv")),
         std::back_inserter(lines));
 
     for (size_t i = 0; i < lines.size(); ++i)
@@ -2652,6 +2666,377 @@ std::string txtitemoncell(int x, int y)
         return i18n::s.get(
             "core.action.move.item_on_cell.more_than_three", number);
     }
+}
+
+
+
+void cnvbonus(int ability_id, int bonus)
+{
+    // TODO: i18n
+    if (ability_id >= 50 && ability_id < 61)
+    {
+        if (bonus > 0)
+        {
+            buff += u8"　　"s +
+                i18n::s.get_m(
+                    "ability",
+                    the_ability_db.get_id_from_legacy(ability_id)->get(),
+                    "name") +
+                u8"耐性に <green>クラス"s + bonus / 50 + u8"<col>("s + bonus +
+                u8") のボーナス\n"s;
+        }
+        if (bonus < 0)
+        {
+            buff += u8"　　"s +
+                i18n::s.get_m(
+                    "ability",
+                    the_ability_db.get_id_from_legacy(ability_id)->get(),
+                    "name") +
+                u8"耐性に <red>クラス"s + bonus / 50 + u8"<col>("s + bonus +
+                u8") のマイナス修正\n"s;
+        }
+    }
+    else
+    {
+        if (bonus > 0)
+        {
+            buff += u8"　　"s +
+                i18n::s.get_m(
+                    "ability",
+                    the_ability_db.get_id_from_legacy(ability_id)->get(),
+                    "name") +
+                u8"に <green>+"s + bonus + u8"<col> のボーナス\n"s;
+        }
+        if (bonus < 0)
+        {
+            buff += u8"　　"s +
+                i18n::s.get_m(
+                    "ability",
+                    the_ability_db.get_id_from_legacy(ability_id)->get(),
+                    "name") +
+                u8"に <red>"s + bonus + u8"<col> のマイナス修正\n"s;
+        }
+    }
+}
+
+
+
+std::string cnveqweight(int cc)
+{
+    int id = chara_armor_class(cdata[cc]);
+    if (id == 169)
+    {
+        return i18n::s.get("core.item.armor_class.heavy");
+    }
+    else if (id == 170)
+    {
+        return i18n::s.get("core.item.armor_class.medium");
+    }
+    else
+    {
+        return i18n::s.get("core.item.armor_class.light");
+    }
+}
+
+
+
+void csvsort(
+    elona_vector1<std::string>& result,
+    std::string line,
+    int separator)
+{
+    elona_vector1<int> p_at_m40;
+    p_at_m40(0) = 0;
+    for (int cnt = 0; cnt < 40; ++cnt)
+    {
+        result(cnt) = "";
+        getstr(result(cnt), line, p_at_m40(0), separator);
+        if (strsize == 0)
+        {
+            break;
+        }
+        p_at_m40(0) += strsize;
+    }
+}
+
+
+
+void cutname(std::string& utf8_string, int max_length_charwise)
+{
+    utf8_string = utf8_string.substr(
+        0, strutil::utf8_cut_index(utf8_string, max_length_charwise));
+}
+
+
+
+void lenfix(std::string& str, int length)
+{
+    int p_at_m89 = 0;
+    p_at_m89 = length - strlen_u(str);
+    if (p_at_m89 < 1)
+    {
+        p_at_m89 = 1;
+    }
+    for (int cnt = 0, cnt_end = (p_at_m89); cnt < cnt_end; ++cnt)
+    {
+        str += u8" "s;
+    }
+}
+
+
+
+std::string fixtxt(const std::string& str, int length)
+{
+    std::string m_at_m104;
+    m_at_m104 = ""s + str;
+    if (strlen_u(str) < size_t(length))
+    {
+        while (1)
+        {
+            if (strlen_u(m_at_m104) >= size_t(length))
+            {
+                break;
+            }
+            m_at_m104 += u8" "s;
+        }
+    }
+    else
+    {
+        m_at_m104 = ""s + strmid(str, 0, length);
+    }
+    return ""s + m_at_m104;
+}
+
+
+
+std::string getnpctxt(const std::string& tag, const std::string& default_text)
+{
+    int p_at_m189 = 0;
+    p_at_m189 = instr(txtbuff, 0, tag);
+    if (p_at_m189 == -1)
+    {
+        return default_text;
+    }
+    p_at_m189 += instr(txtbuff, p_at_m189, u8"\""s);
+    if (p_at_m189 == -1)
+    {
+        return default_text;
+    }
+    return strmid(
+        txtbuff,
+        p_at_m189 + 1,
+        clamp(instr(txtbuff, p_at_m189 + 1, u8"\""s), 0, 70));
+}
+
+
+
+std::string guildname()
+{
+    if (game_data.guild.belongs_to_mages_guild)
+    {
+        return i18n::s.get("core.guild.mages.name");
+    }
+    else if (game_data.guild.belongs_to_fighters_guild)
+    {
+        return i18n::s.get("core.guild.fighters.name");
+    }
+    else if (game_data.guild.belongs_to_thieves_guild)
+    {
+        return i18n::s.get("core.guild.thieves.name");
+    }
+    else
+    {
+        return i18n::s.get("core.guild.none.name");
+    }
+}
+
+
+
+void initialize_rankn()
+{
+    SDIM4(rankn, 30, 11, 9);
+
+    for (int category = 0; category < 9; category++)
+    {
+        if (category == 7)
+        {
+            // Skips the 7th row because there are no defined locale resources.
+            continue;
+        }
+        for (int rank = 0; rank < 11; rank++)
+        {
+            rankn(rank, category) =
+                i18n::s.get_enum("core.rank._"s + category, rank);
+        }
+    }
+
+    DIM2(ranknorma, 9);
+    ranknorma(0) = 20;
+    ranknorma(1) = 60;
+    ranknorma(2) = 45;
+    ranknorma(6) = 30;
+}
+
+
+
+std::string ranktitle(int rank_id)
+{
+    int rank_value = game_data.ranks.at(rank_id) / 100;
+    if (rank_value == 1)
+    {
+        return rankn(0, rank_id);
+    }
+    if (rank_value <= 5)
+    {
+        return rankn(1, rank_id);
+    }
+    if (rank_value <= 10)
+    {
+        return rankn(2, rank_id);
+    }
+    if (rank_value <= 80)
+    {
+        return rankn(rank_value / 15 + 3, rank_id);
+    }
+    return rankn(9, rank_id);
+}
+
+
+
+std::string txttargetlevel(int cc, int tc)
+{
+    int x = cdata[cc].level;
+    int y = cdata[tc].level;
+    int danger;
+    if (x * 20 < y)
+    {
+        danger = 10;
+    }
+    else if (x * 10 < y)
+    {
+        danger = 9;
+    }
+    else if (x * 5 < y)
+    {
+        danger = 8;
+    }
+    else if (x * 3 < y)
+    {
+        danger = 7;
+    }
+    else if (x * 2 < y)
+    {
+        danger = 6;
+    }
+    else if (x * 3 / 2 < y)
+    {
+        danger = 5;
+    }
+    else if (x < y)
+    {
+        danger = 4;
+    }
+    else if (x / 3 * 2 < y)
+    {
+        danger = 3;
+    }
+    else if (x / 2 < y)
+    {
+        danger = 2;
+    }
+    else if (x / 3 < y)
+    {
+        danger = 1;
+    }
+    else
+    {
+        danger = 0;
+    }
+
+    return i18n::s.get_enum("core.action.target.level", danger, cdata[tc]);
+}
+
+
+
+void txttargetnpc(int x, int y)
+{
+    int dy_at_m186 = 0;
+    int i_at_m186 = 0;
+    int p_at_m186 = 0;
+    dy_at_m186 = 0;
+    font(14 - en * 2);
+    if (fov_los(cdata.player().position.x, cdata.player().position.y, x, y) ==
+            0 ||
+        dist(cdata.player().position.x, cdata.player().position.y, x, y) >
+            cdata.player().vision_distance / 2)
+    {
+        bmes(
+            i18n::s.get("core.action.target.out_of_sight"),
+            100,
+            windowh - inf_verh - 45 - dy_at_m186 * 20);
+        ++dy_at_m186;
+        cansee = 0;
+        return;
+    }
+    if (cell_data.at(x, y).chara_index_plus_one != 0)
+    {
+        i_at_m186 = cell_data.at(x, y).chara_index_plus_one - 1;
+        if (cdata[i_at_m186].is_invisible() == 0 ||
+            cdata.player().can_see_invisible() || cdata[i_at_m186].wet)
+        {
+            tc = i_at_m186;
+            s = txttargetlevel(cc, tc);
+            bmes(s, 100, windowh - inf_verh - 45 - dy_at_m186 * 20);
+            ++dy_at_m186;
+            bmes(
+                i18n::s.get(
+                    "core.action.target.you_are_targeting",
+                    cdata[i_at_m186],
+                    dist(
+                        cdata.player().position.x,
+                        cdata.player().position.y,
+                        cdata[i_at_m186].position.x,
+                        cdata[i_at_m186].position.y)),
+                100,
+                windowh - inf_verh - 45 - dy_at_m186 * 20);
+            ++dy_at_m186;
+        }
+    }
+    if (cell_data.at(x, y).item_appearances_memory != 0)
+    {
+        bmes(
+            txtitemoncell(x, y),
+            100,
+            windowh - inf_verh - 45 - dy_at_m186 * 20);
+        ++dy_at_m186;
+    }
+    if (cell_data.at(x, y).feats != 0)
+    {
+        if (map_data.type == mdata_t::MapType::world_map)
+        {
+            if (cell_data.at(x, y).feats / 1000 % 100 == 15)
+            {
+                p_at_m186 = cell_data.at(x, y).feats / 100000 % 100 +
+                    cell_data.at(x, y).feats / 10000000 * 100;
+                bmes(
+                    mapname(p_at_m186, true),
+                    100,
+                    windowh - inf_verh - 45 - dy_at_m186 * 20);
+                ++dy_at_m186;
+            }
+            if (cell_data.at(x, y).feats / 1000 % 100 == 34)
+            {
+                bmes(
+                    txtbuilding(
+                        cell_data.at(x, y).feats / 100000 % 100,
+                        cell_data.at(x, y).feats / 10000000),
+                    100,
+                    windowh - inf_verh - 45 - dy_at_m186 * 20);
+                ++dy_at_m186;
+            }
+        }
+    }
+    cansee = 1;
 }
 
 } // namespace elona

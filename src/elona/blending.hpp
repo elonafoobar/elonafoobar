@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+
 #include "elona.hpp"
 #include "enums.hpp"
 
@@ -19,5 +20,9 @@ int blendcheckmat(int = 0);
 int blendmatnum(int = 0, int = 0);
 void window_recipe2(int = 0);
 int blendlist(elona_vector2<int>&, int);
+int blending_find_required_mat();
+int blending_spend_materials();
+void blending_start_attempt();
+void blending_proc_on_success_events();
 
 } // namespace elona

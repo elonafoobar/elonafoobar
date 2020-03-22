@@ -1,10 +1,17 @@
 #include "lua_class_item.hpp"
+
 #include "../../data/types/type_item.hpp"
 #include "../../data/types/type_item_material.hpp"
 #include "../../item.hpp"
 #include "../../itemgen.hpp"
 #include "../../lua_env/enums/enums.hpp"
 #include "../data_manager.hpp"
+
+
+
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Item)
+
+
 
 namespace elona
 {
@@ -29,7 +36,8 @@ void LuaItem::remove(Item& self)
  */
 void LuaItem::change_material(Item& self, const std::string& material_id)
 {
-    const auto& data = the_item_material_db.ensure(material_id);
+    const auto& data =
+        the_item_material_db.ensure(data::InstanceId{material_id});
     change_item_material(self, data.legacy_id);
 }
 
@@ -44,8 +52,7 @@ std::string LuaItem::metamethod_tostring(const Item& self)
 
 void LuaItem::bind(sol::state& lua)
 {
-    auto LuaItem = lua.create_simple_usertype<Item>();
-    LuaItem.set("new", sol::no_constructor);
+    auto LuaItem = lua.new_usertype<Item>("LuaItem", sol::no_constructor);
     LuaItem.set("lua_type", &Item::lua_type);
 
     // Properties
@@ -216,20 +223,15 @@ void LuaItem::bind(sol::state& lua)
      * [R] The prototype data of the character.
      */
     LuaItem.set("prototype", sol::property([](Item& self) {
-                    auto id =
-                        the_item_db.get_id_from_legacy(itemid2int(self.id));
                     return *lua::lua->get_data_manager().get().raw(
-                        "core.item", id->get());
+                        "core.item", self.new_id());
                 }));
 
     // Methods
     LuaItem.set("remove", &LuaItem::remove);
     LuaItem.set("change_material", &LuaItem::change_material);
 
-    LuaItem.set("__tostring", &LuaItem::metamethod_tostring);
-
-    auto key = Item::lua_type();
-    lua.set_usertype(key, LuaItem);
+    LuaItem.set(sol::meta_function::to_string, &LuaItem::metamethod_tostring);
 }
 
 } // namespace lua

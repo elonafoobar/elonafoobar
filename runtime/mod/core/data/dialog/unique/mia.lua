@@ -1,12 +1,11 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
 
-local common = require_relative("data/dialog/common")
+local common = require("../common.lua")
 
 return {
-   id = "mia",
    root = "core.talk.unique.mia",
    nodes = {
       __start = function()
@@ -51,7 +50,7 @@ return {
          },
       },
       quest_check = function()
-         if Chara.find("core.silver_cat", "Allies") == nil then
+         if Chara.find("core.silver_cat", "allies") == nil then
             return "quest_waiting"
          end
 
@@ -76,10 +75,10 @@ return {
 
             Internal.set_quest_flag("mias_dream", 1000)
 
-            local silver_cat = Chara.find("core.silver_cat", "Allies")
+            local silver_cat = Chara.find("core.silver_cat", "allies")
             Chara.remove_from_party(silver_cat)
-            silver_cat.relationship = "Unconcerned"
-            silver_cat.original_relationship = "Unconcerned"
+            silver_cat.relationship = "unconcerned"
+            silver_cat.original_relationship = "unconcerned"
             silver_cat.role = 3
          end
       }

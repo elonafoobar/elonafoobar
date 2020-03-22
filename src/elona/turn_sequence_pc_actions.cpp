@@ -1,10 +1,13 @@
 #include <chrono>
+
 #include "../snail/application.hpp"
 #include "../snail/surface.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
+#include "attack.hpp"
 #include "audio.hpp"
 #include "autopick.hpp"
+#include "character.hpp"
 #include "command.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
@@ -27,6 +30,7 @@
 #include "tcg.hpp"
 #include "ui.hpp"
 #include "wish.hpp"
+#include "world.hpp"
 
 
 
@@ -228,7 +232,8 @@ optional<TurnResult> handle_pc_action(std::string& action)
                 continue;
             if (item.position != cdata[cc].position)
                 continue;
-            if (the_item_db[itemid2int(item.id)]->category == 72000)
+            if (the_item_db[itemid2int(item.id)]->category ==
+                ItemCategory::chest)
             {
                 p = 1;
             }
@@ -236,7 +241,8 @@ optional<TurnResult> handle_pc_action(std::string& action)
             {
                 p = 2;
             }
-            if (the_item_db[itemid2int(item.id)]->category == 60002)
+            if (the_item_db[itemid2int(item.id)]->category ==
+                ItemCategory::altar)
             {
                 p(0) = 3;
                 p(1) = item.index;

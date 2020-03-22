@@ -1,6 +1,6 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/filesystem.hpp"
+
+#include "../thirdparty/catch2/catch.hpp"
 
 using namespace elona;
 

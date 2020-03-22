@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+
 #include "../util/enumutil.hpp"
 #include "../util/noncopyable.hpp"
 #include "detail/sdl.hpp"

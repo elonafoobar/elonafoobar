@@ -1,15 +1,18 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/config.hpp"
 #include "../elona/enums.hpp"
 #include "../elona/i18n.hpp"
 #include "../elona/init.hpp"
 #include "../elona/item.hpp"
 #include "../elona/itemgen.hpp"
+#include "../elona/lua_env/api_manager.hpp"
 #include "../elona/lua_env/export_manager.hpp"
 #include "../elona/lua_env/mod_manager.hpp"
+#include "../elona/set_item_info.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
+
+
 
 namespace elona
 {
@@ -114,7 +117,9 @@ void register_lua_function(
 {
     lua.load_mods();
 
-    REQUIRE_NOTHROW(lua.get_mod_manager().load_testing_mod_from_script(
+    REQUIRE_NOTHROW(
+        lua.get_mod_manager().load_testing_mod_from_script(mod_id, ""));
+    REQUIRE_NOTHROW(lua.get_api_manager().load_script(
         mod_id,
         "\
 local exports = {}\
@@ -123,8 +128,9 @@ function exports." +
             callback_signature + "\n" + callback_body + R"(
 end
 
-return exports
+ELONA.api:add(exports)
 )"));
+
     lua.get_export_manager().register_all_exports();
 }
 

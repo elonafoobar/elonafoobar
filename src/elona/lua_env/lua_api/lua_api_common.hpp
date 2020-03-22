@@ -60,10 +60,19 @@ using LuaItemHandle = sol::table;
             return id->get(); \
         }, \
         [](klass& d, const std::string& s) { \
-            auto data = db[s]; \
+            auto data = db[data::InstanceId{s}]; \
             if (!data) \
             { \
                 return; \
             } \
             d.field = data->legacy_id; \
         })
+
+#define LUA_API_OPTOUT_SOL_AUTOMAGIC(T) \
+    namespace sol \
+    { \
+    template <> \
+    struct is_automagical<T> : std::false_type \
+    { \
+    }; \
+    }

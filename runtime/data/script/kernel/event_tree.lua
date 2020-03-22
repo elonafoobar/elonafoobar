@@ -1,5 +1,3 @@
-local inspect = require_relative("inspect")
-
 local function insert(node, k, v)
    if node.key == k then
       node.value[#node.value + 1] = v
@@ -116,28 +114,6 @@ local function remove_value(node, value)
    return false
 end
 
-local function print_tree(node, prefix, tail)
-   if tail then
-      print(prefix .. "└── " .. node.key .. " " .. inspect(node.value))
-   else
-      print(prefix .. "├── " .. node.key .. " " .. inspect(node.value))
-   end
-
-   local bit = "│   "
-   if tail then
-      bit = "    "
-   end
-
-   if node.left and node.right then
-      print_tree(node.left, prefix .. bit, false)
-      print_tree(node.right, prefix .. bit, true)
-   elseif node.left then
-      print_tree(node.left, prefix .. bit, true)
-   elseif node.right then
-      print_tree(node.right, prefix .. bit, true)
-   end
-end
-
 local EventTree = {}
 EventTree.__index = EventTree
 
@@ -197,12 +173,6 @@ function EventTree:remove_value(value)
             return true
          end
       end
-   end
-end
-
-function EventTree:print()
-   if self.tree ~= nil then
-      print_tree(self.tree, "", true)
    end
 end
 

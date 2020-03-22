@@ -1,4 +1,5 @@
 #include "lua_api_internal.hpp"
+
 #include "../../audio.hpp"
 #include "../../calc.hpp"
 #include "../../character.hpp"
@@ -101,7 +102,7 @@ void LuaApiInternal::go_to_quest_map(
     const std::string& map_name,
     int dungeon_level)
 {
-    auto id = the_mapdef_db[map_name]->legacy_id;
+    auto id = the_mapdef_db[data::InstanceId{map_name}]->legacy_id;
     map_data.stair_down_pos =
         cdata.player().position.y * 1000 + cdata.player().position.x;
     game_data.destination_map = id;

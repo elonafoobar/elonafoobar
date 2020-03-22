@@ -1,16 +1,16 @@
-local World = require("game.World")
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local Map = require("game.Map")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
-local table = require("game.table")
+local World = ELONA.require("core.World")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local Map = ELONA.require("core.Map")
+local I18N = ELONA.require("core.I18N")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
+local table = table
 
-local common = require_relative("data/dialog/common")
+local common = require("../common.lua")
 
 local function give_potion()
-   local potion = Item.find("core.potion_of_cure_corruption", "PlayerInventory")
+   local potion = Item.find("core.potion_of_cure_corruption", "player_inventory")
    potion.number = potion.number - 1
    GUI.txt(I18N.get("core.talk.unique.lily.progress.end_life.give.you_hand_her"))
    GUI.play_sound("core.equip1")
@@ -18,7 +18,6 @@ local function give_potion()
 end
 
 return {
-   id = "lily",
    root = "core.talk.unique.lily",
    nodes = {
       __start = function()
@@ -65,7 +64,7 @@ return {
          },
          on_finish = function(t)
             Internal.set_quest_flag("pael_and_her_mom", 1000)
-            t.speaker:set_flag("IsSilent", true)
+            t.speaker:set_flag("is_silent", true)
          end
       },
 
@@ -75,7 +74,7 @@ return {
          },
          choices = function()
             local choices = {}
-            local potion = Item.find("core.potion_of_cure_corruption", "PlayerInventory")
+            local potion = Item.find("core.potion_of_cure_corruption", "player_inventory")
             if potion ~= nil then
                table.insert(choices, {"festival_give", "progress.festival.choices.give"})
             end
@@ -104,7 +103,7 @@ return {
          },
          choices = function()
             local choices = {}
-            local potion = Item.find("core.potion_of_cure_corruption", "PlayerInventory")
+            local potion = Item.find("core.potion_of_cure_corruption", "player_inventory")
             if potion ~= nil then
                table.insert(choices, {"end_life_give", "progress.end_life.choices.give"})
             end

@@ -1,7 +1,9 @@
 #pragma once
 
 #include <array>
+
 #include "../version.hpp"
+#include "serialization/macros.hpp"
 
 
 
@@ -236,14 +238,23 @@ extern GameData game_data;
 
 
 
-/// @putit
 struct FoobarData
 {
-    /// @putit
     bool is_autodig_enabled{};
 
 
-#include "_putit/foobar_data.cpp"
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "FoobarData");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, is_autodig_enabled);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
+    }
 };
 
 

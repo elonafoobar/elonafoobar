@@ -1,9 +1,11 @@
 #include "autopick.hpp"
+
 #include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
 #include "data/types/type_item.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
+#include "text.hpp"
 #include "variables.hpp"
 
 
@@ -51,7 +53,8 @@ std::vector<ModifierMatcher> _modifier_matchers = {
     {"rotten", [](const Item& item) { return item.param3 < 0; }},
     {"empty",
      [](const Item& item) {
-         return the_item_db[itemid2int(item.id)]->category == 72000 &&
+         return the_item_db[itemid2int(item.id)]->category ==
+             ItemCategory::chest &&
              item.param1 == 0;
      }},
     {"bad",
@@ -169,40 +172,40 @@ bool _check_category(const std::string& text, const Item& item)
             word_separator + i18n::s.get("core.autopick.category.equipment") +
                 word_separator))
     {
-        return category < 50000;
+        return is_equipment(category);
     }
 
-    ELONA_AUTOPICK_CATEGORY(melee_weapon, 10000)
-    ELONA_AUTOPICK_CATEGORY(helm, 12000)
-    ELONA_AUTOPICK_CATEGORY(shield, 14000)
-    ELONA_AUTOPICK_CATEGORY(armor, 16000)
-    ELONA_AUTOPICK_CATEGORY(boots, 18000)
-    ELONA_AUTOPICK_CATEGORY(belt, 19000)
-    ELONA_AUTOPICK_CATEGORY(cloak, 20000)
-    ELONA_AUTOPICK_CATEGORY(gloves, 22000)
-    ELONA_AUTOPICK_CATEGORY(ranged_weapon, 24000)
-    ELONA_AUTOPICK_CATEGORY(ammo, 25000)
-    ELONA_AUTOPICK_CATEGORY(ring, 32000)
-    ELONA_AUTOPICK_CATEGORY(necklace, 34000)
-    ELONA_AUTOPICK_CATEGORY(potion, 52000)
-    ELONA_AUTOPICK_CATEGORY(scroll, 53000)
-    ELONA_AUTOPICK_CATEGORY(spellbook, 54000)
-    ELONA_AUTOPICK_CATEGORY(book, 55000)
-    ELONA_AUTOPICK_CATEGORY(rod, 56000)
-    ELONA_AUTOPICK_CATEGORY(foods, 57000)
-    ELONA_AUTOPICK_CATEGORY(tool, 59000)
-    ELONA_AUTOPICK_CATEGORY(furniture, 60000)
-    ELONA_AUTOPICK_CATEGORY(well, 60001)
-    ELONA_AUTOPICK_CATEGORY(altar, 60002)
-    ELONA_AUTOPICK_CATEGORY(bodyparts, 62000)
-    ELONA_AUTOPICK_CATEGORY(junk, 64000)
-    ELONA_AUTOPICK_CATEGORY(gold_piece, 68000)
-    ELONA_AUTOPICK_CATEGORY(platinum_coin, 69000)
-    ELONA_AUTOPICK_CATEGORY(chest, 72000)
-    ELONA_AUTOPICK_CATEGORY(ore, 77000)
-    ELONA_AUTOPICK_CATEGORY(tree, 80000)
-    ELONA_AUTOPICK_CATEGORY(travelers_food, 91000)
-    ELONA_AUTOPICK_CATEGORY(cargo, 92000)
+    ELONA_AUTOPICK_CATEGORY(melee_weapon, ItemCategory::melee_weapon)
+    ELONA_AUTOPICK_CATEGORY(helm, ItemCategory::helm)
+    ELONA_AUTOPICK_CATEGORY(shield, ItemCategory::shield)
+    ELONA_AUTOPICK_CATEGORY(armor, ItemCategory::armor)
+    ELONA_AUTOPICK_CATEGORY(boots, ItemCategory::boots)
+    ELONA_AUTOPICK_CATEGORY(belt, ItemCategory::belt)
+    ELONA_AUTOPICK_CATEGORY(cloak, ItemCategory::cloak)
+    ELONA_AUTOPICK_CATEGORY(gloves, ItemCategory::gloves)
+    ELONA_AUTOPICK_CATEGORY(ranged_weapon, ItemCategory::ranged_weapon)
+    ELONA_AUTOPICK_CATEGORY(ammo, ItemCategory::ammo)
+    ELONA_AUTOPICK_CATEGORY(ring, ItemCategory::ring)
+    ELONA_AUTOPICK_CATEGORY(necklace, ItemCategory::necklace)
+    ELONA_AUTOPICK_CATEGORY(potion, ItemCategory::potion)
+    ELONA_AUTOPICK_CATEGORY(scroll, ItemCategory::scroll)
+    ELONA_AUTOPICK_CATEGORY(spellbook, ItemCategory::spellbook)
+    ELONA_AUTOPICK_CATEGORY(book, ItemCategory::book)
+    ELONA_AUTOPICK_CATEGORY(rod, ItemCategory::rod)
+    ELONA_AUTOPICK_CATEGORY(food, ItemCategory::food)
+    ELONA_AUTOPICK_CATEGORY(tool, ItemCategory::tool)
+    ELONA_AUTOPICK_CATEGORY(furniture, ItemCategory::furniture)
+    ELONA_AUTOPICK_CATEGORY(well, ItemCategory::well)
+    ELONA_AUTOPICK_CATEGORY(altar, ItemCategory::altar)
+    ELONA_AUTOPICK_CATEGORY(bodyparts, ItemCategory::bodyparts)
+    ELONA_AUTOPICK_CATEGORY(junk, ItemCategory::junk)
+    ELONA_AUTOPICK_CATEGORY(gold_piece, ItemCategory::gold_piece)
+    ELONA_AUTOPICK_CATEGORY(platinum_coin, ItemCategory::platinum_coin)
+    ELONA_AUTOPICK_CATEGORY(chest, ItemCategory::chest)
+    ELONA_AUTOPICK_CATEGORY(ore, ItemCategory::ore)
+    ELONA_AUTOPICK_CATEGORY(tree, ItemCategory::tree)
+    ELONA_AUTOPICK_CATEGORY(travelers_food, ItemCategory::travelers_food)
+    ELONA_AUTOPICK_CATEGORY(cargo, ItemCategory::cargo)
 
 #undef ELONA_AUTOPICK_CATEGORY
     return false;
@@ -307,7 +310,7 @@ Autopick::Matcher Autopick::_parse_each_line(std::string line)
             // Adds "core" if no mod prefix.
             sound_id = "core." + sound_id;
         }
-        op.sound = SharedId(sound_id);
+        op.sound = data::InstanceId{sound_id};
         line = line.substr(0, colon);
     }
 

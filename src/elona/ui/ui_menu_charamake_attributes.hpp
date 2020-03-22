@@ -6,16 +6,16 @@ namespace elona
 namespace ui
 {
 
-class UIMenuCharamakeAttributes : public UIMenu<elona_vector1<int>>
+class UIMenuCharamakeAttributes : public UIMenu<std::vector<int>>
 {
 public:
     UIMenuCharamakeAttributes(
-        const std::string& race,
-        const std::string& klass,
+        data::InstanceId race_id,
+        data::InstanceId class_id,
         elona_vector1<int> attributes,
         elona_vector1<int>& locked_attributes)
-        : _race(race)
-        , _klass(klass)
+        : _race_id(race_id)
+        , _class_id(class_id)
         , _attributes(attributes)
         , _locked_attributes(locked_attributes)
     {
@@ -39,8 +39,8 @@ private:
 
     void _reroll_attributes();
 
-    std::string _race;
-    std::string _klass;
+    data::InstanceId _race_id;
+    data::InstanceId _class_id;
     elona_vector1<int> _attributes;
     elona_vector1<int>& _locked_attributes;
 

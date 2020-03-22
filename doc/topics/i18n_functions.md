@@ -6,40 +6,40 @@ Returns: `you` if `chara` is the player, `something` if the `chara` is out of si
 
 Examples:
 
-- As player: `"${name(_1)}"` -> `"you"`
-- As non-player: `"${name(_1)}"` -> `"putit"`
-- As non-player who is out of sight: `"${name(_1)}"` -> `"something"`
+- As player: `"{name($1)}"` -> `"you"`
+- As non-player: `"{name($1)}"` -> `"putit"`
+- As non-player who is out of sight: `"{name($1)}"` -> `"something"`
 
 ## basename(chara (LuaCharacter))
 Returns: the unqualified name of the character regardless of player/non-player or in-sight/out-of-sight.
 
 Examples:
 
-- `"${basename(_1)}"` -> `"putit"`
+- `"{basename($1)}"` -> `"putit"`
 
 ## itemname(item (LuaItem), number (num = 0), needs_article (bool = true))
 Returns: `something` if the `chara` is out of sight of the player, else the fully descriptive item name with amount/details included.
 
 Examples:
 
-- `"${itemname(_1)}"` -> `"a putitoro"`
-- `"${itemname(_1, 2)}"` -> `"2 putitoros"`
-- `"${itemname(_1, 1, false)}"` -> `"putitoro"`
-- `"${itemname(_1, 1, true)}"` -> `"a putitoro"`
+- `"{itemname($1)}"` -> `"a putitoro"`
+- `"{itemname($1, 2)}"` -> `"2 putitoros"`
+- `"{itemname($1, 1, false)}"` -> `"putitoro"`
+- `"{itemname($1, 1, true)}"` -> `"a putitoro"`
 
 ## itembasename(item (LuaItem))
 Returns: the unqualified name of the item regardless of its status/number.
 
 Examples:
 
-- `"${itembasename(_1)}"` -> `"putitoro"`
+- `"{itembasename($1)}"` -> `"putitoro"`
 
 ## you()
 Returns: name of the current player.
 
 Examples:
 
-- `"${you()} fall down the stairs." -> "You fall down the stairs."`
+- `"{you()} fall down the stairs." -> "You fall down the stairs."`
 
 ## s(is\_player (bool), needs\_e (bool = false))
 Returns: blank if `is_player` is true, else `s` if `needs_e` is false or `es` if `needs_e` is true.
@@ -66,16 +66,16 @@ Returns: `are` if `is_player` is `true`, else `is`.
 
 Examples:
 
-- `"You ${is(true)} hurt." -> "You are hurt."`
-- `"She ${is(false)} happy." -> "She is happy."`
+- `"You {is(true)} hurt." -> "You are hurt."`
+- `"She {is(false)} happy." -> "She is happy."`
 
 ## is(chara (LuaCharacter))
 Returns: `are` if `chara` is the player, else `is`.
 
 Examples:
 
-- `"You ${is(_1)} hurt." -> "You are hurt."`
-- `"She ${is(_1)} happy." -> "She is happy."`
+- `"You {is($1)} hurt." -> "You are hurt."`
+- `"She {is($1)} happy." -> "She is happy."`
 
 ## have(chara (LuaCharacter))
 Returns: `have` if `chara` is the player, else `has`.
@@ -102,7 +102,7 @@ Returns: `name` with everything after the first space trimmed and an extra space
 
 Examples:
 
-- Using the string `"Putit the mochi vendor"`, `"${trim_job${_1}}"` -> `"Putit "`
+- Using the string `"Putit the mochi vendor"`, `"{trim_job{$1}}"` -> `"Putit "`
 
 ## kare_wa(chara (LuaCharacter))
 Returns: blank if `chara` is the player, "{name}は" if the character is in sight, else "それは". For Japanese only.

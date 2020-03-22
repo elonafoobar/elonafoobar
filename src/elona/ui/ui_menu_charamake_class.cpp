@@ -1,4 +1,5 @@
 #include "ui_menu_charamake_class.hpp"
+
 #include "../audio.hpp"
 #include "../character_making.hpp"
 #include "../class.hpp"
@@ -17,20 +18,20 @@ static void _load_class_list()
     listmax = 0;
     for (const auto& class_ : class_get_available(false))
     {
-        listn(1, listmax) = class_.get().id;
+        listn(1, listmax) = class_.get().id.get();
         ++listmax;
     }
     if (g_config.extra_class())
     {
         for (const auto& class_ : class_get_available(true))
         {
-            listn(1, listmax) = class_.get().id;
+            listn(1, listmax) = class_.get().id.get();
             ++listmax;
         }
     }
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
-        listn(0, cnt) = class_get_name(listn(1, cnt));
+        listn(0, cnt) = class_get_name(data::InstanceId{listn(1, cnt)});
     }
 }
 
@@ -88,8 +89,7 @@ static void _draw_class_info(
             race);
 
     draw_race_or_class_info(
-        i18n::s.get_m_optional("class", class_id, "description")
-            .get_value_or(""));
+        i18n::s.get_m_optional("class", class_id, "description").value_or(""));
 }
 
 void UIMenuCharamakeClass::_draw_window()
@@ -143,10 +143,10 @@ void UIMenuCharamakeClass::_draw_choices()
     cs_bk = cs;
 }
 
-static void _reload_selected_class(const std::string& klass)
+static void _reload_selected_class(data::InstanceId class_id)
 {
     chara_delete(0);
-    class_init_chara(cdata.player(), klass);
+    class_init_chara(cdata.player(), class_id);
 }
 
 void UIMenuCharamakeClass::draw()
@@ -160,14 +160,14 @@ void UIMenuCharamakeClass::draw()
     _draw_choices();
 
     const std::string& selected_class = listn(1, cs);
-    _reload_selected_class(selected_class);
+    _reload_selected_class(data::InstanceId{selected_class});
 
-    const auto race_data = the_race_db[_race_id];
+    const auto& race_data = the_race_db.ensure(_race_id);
     _draw_class_info(
         selected_class,
-        race_data->male_image,
-        race_data->female_image,
-        _race_name);
+        race_data.male_image,
+        race_data.female_image,
+        i18n::s.get_m("race", _race_id.get(), "name"));
 }
 
 optional<UIMenuCharamakeClass::ResultType> UIMenuCharamakeClass::on_key(
@@ -175,8 +175,8 @@ optional<UIMenuCharamakeClass::ResultType> UIMenuCharamakeClass::on_key(
 {
     if (auto class_id = get_selected_index())
     {
-        std::string klass = listn(1, *class_id);
-        return UIMenuCharamakeClass::Result::finish(klass);
+        return UIMenuCharamakeClass::Result::finish(
+            UIMenuCharamakeClassResult{data::InstanceId{listn(1, *class_id)}});
     }
     if (action == "cancel")
     {

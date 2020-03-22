@@ -1,4 +1,5 @@
 #include "deferred_event.hpp"
+
 #include "ability.hpp"
 #include "animation.hpp"
 #include "area.hpp"
@@ -17,12 +18,16 @@
 #include "map_cell.hpp"
 #include "mef.hpp"
 #include "net.hpp"
-#include "putit.hpp"
 #include "quest.hpp"
 #include "random_event.hpp"
 #include "save.hpp"
+#include "scene.hpp"
+#include "serialization/macros.hpp"
+#include "serialization/serialization.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+#include "world.hpp"
 
 
 
@@ -60,9 +65,15 @@ struct DeferredEvent
     template <typename Archive>
     void serialize(Archive& ar)
     {
-        ar(id);
-        ar(param1);
-        ar(param2);
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "DeferredEvent");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, id);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param1);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param2);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
     }
 };
 
@@ -112,7 +123,13 @@ public:
     template <typename Archive>
     void serialize(Archive& ar)
     {
-        ar(_queue);
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "DeferredEventQueue");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "queue", _queue);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
     }
 
 
@@ -1208,14 +1225,14 @@ TurnResult event_start_proc()
 
 void event_load(const fs::path& path)
 {
-    putit::BinaryIArchive::load(path, g_event_queue);
+    serialization::binary::load(path, g_event_queue);
 }
 
 
 
 void event_save(const fs::path& path)
 {
-    putit::BinaryOArchive::save(path, g_event_queue);
+    serialization::binary::save(path, g_event_queue);
 }
 
 } // namespace elona

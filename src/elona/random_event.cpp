@@ -1,5 +1,7 @@
 #include "random_event.hpp"
+
 #include <cassert>
+
 #include "ability.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
@@ -258,7 +260,7 @@ void run_random_event(RandomEvent event)
         event.id = 1;
     }
 
-    std::string event_bg;
+    data::InstanceId event_bg;
 
     switch (event.id)
     {
@@ -566,7 +568,7 @@ int show_random_event_window(
     const std::string& title,
     const std::string& text,
     const std::vector<std::string> choices,
-    const std::string& background_filename)
+    data::InstanceId background_image_id)
 {
     assert(!choices.empty());
 
@@ -605,7 +607,7 @@ int show_random_event_window(
         chatesc = -1;
     }
     gmode(0);
-    asset_load(background_filename);
+    asset_load(background_image_id);
     tx = ginfo(12);
     ty = ginfo(13);
     gsel(0);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+
 #include "../enums.hpp"
 #include "../filesystem.hpp"
 #include "../message.hpp"

@@ -1,10 +1,16 @@
 #include "lua_api_input.hpp"
+
+#include "../../attack.hpp"
 #include "../../dialog.hpp"
 #include "../../i18n.hpp"
 #include "../../input.hpp"
 #include "../../input_prompt.hpp"
 #include "../../keybind/macro_action_queue.hpp"
+#include "../../macro.hpp"
+#include "../../menu.hpp"
 #include "../../message.hpp"
+
+
 
 namespace elona
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include "../lua_lazy_cache.hpp"
+#include "../base_database.hpp"
 
 
 
@@ -25,7 +25,7 @@ enum class AssetLoadType
 
 struct AssetData
 {
-    SharedId id;
+    data::InstanceId id;
     int window_id;
     int x;
     int y;

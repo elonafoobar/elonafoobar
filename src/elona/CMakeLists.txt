@@ -6,6 +6,7 @@ set(ELONA_SOURCES
   ai.cpp
   animation.cpp
   area.cpp
+  attack.cpp
   audio.cpp
   autopick.cpp
   blending.cpp
@@ -36,7 +37,6 @@ set(ELONA_SOURCES
   draw_asset.cpp
   dump_player_info.cpp
   element.cpp
-  elonacore.cpp
   enchantment.cpp
   equipment.cpp
   filesystem.cpp
@@ -75,12 +75,15 @@ set(ELONA_SOURCES
   message.cpp
   message_log.cpp
   net.cpp
+  position.cpp
   quest.cpp
   race.cpp
   random.cpp
   random_event.cpp
+  randomgen.cpp
   save.cpp
   save_update.cpp
+  scene.cpp
   set_item_info.cpp
   shop.cpp
   status_ailment.cpp
@@ -99,6 +102,7 @@ set(ELONA_SOURCES
   ui_menus.cpp
   variables.cpp
   wish.cpp
+  world.cpp
 
   data/init.cpp
   data/types.cpp
@@ -111,7 +115,7 @@ set(ELONA_SOURCES
   lua_env/event_manager.cpp
   lua_env/export_manager.cpp
   lua_env/handle_manager.cpp
-  lua_env/i18n_function_manager.cpp
+  lua_env/i18n_manager.cpp
   lua_env/interface.cpp
   lua_env/lua_env.cpp
   lua_env/mod_manager.cpp
@@ -142,6 +146,10 @@ set(ELONA_SOURCES
   keybind/keybind_manager.cpp
   keybind/keybind_serializer.cpp
   keybind/macro_action_queue.cpp
+
+  mapeditor/command.cpp
+  mapeditor/design_mode.cpp
+  mapeditor/undo_history.cpp
 
   pic_loader/pic_loader.cpp
   pic_loader/tinted_buffers.cpp

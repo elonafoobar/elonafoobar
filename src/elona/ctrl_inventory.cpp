@@ -1,5 +1,7 @@
 #include "../util/strutil.hpp"
 #include "ability.hpp"
+#include "activity.hpp"
+#include "attack.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -23,6 +25,7 @@
 #include "message.hpp"
 #include "quest.hpp"
 #include "shop.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -328,7 +331,7 @@ void make_item_list(int& mainweapon, int citrade)
             item_checkknown(item);
 
             // reftype使ってるとこ案外減ってる
-            reftype = the_item_db[itemid2int(item.id)]->category;
+            reftype = (int)the_item_db[itemid2int(item.id)]->category;
 
             if (item.own_state == 5)
             {
@@ -1309,7 +1312,8 @@ OnEnterResult on_enter(int& citrade, bool dropcontinue)
         {
             if (inv_sum(-1) >= map_data.max_item_count)
             {
-                if (the_item_db[itemid2int(inv[ci].id)]->category != 60000)
+                if (the_item_db[itemid2int(inv[ci].id)]->category !=
+                    ItemCategory::furniture)
                 {
                     txt(i18n::s.get("core.ui.inv.drop.cannot_anymore"));
                     snd("core.fail1");
@@ -1660,7 +1664,7 @@ OnEnterResult on_enter(int& citrade, bool dropcontinue)
             snd("core.fail1");
             return OnEnterResult{2};
         }
-        reftype = the_item_db[itemid2int(inv[ci].id)]->category;
+        reftype = (int)the_item_db[itemid2int(inv[ci].id)]->category;
         if (inv[ci].id == ItemId::gift)
         {
             txt(i18n::s.get(
@@ -2062,7 +2066,7 @@ OnEnterResult on_enter(int& citrade, bool dropcontinue)
             txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
             return OnEnterResult{2};
         }
-        if (the_item_db[itemid2int(inv[ci].id)]->category == 77000)
+        if (the_item_db[itemid2int(inv[ci].id)]->category == ItemCategory::ore)
         {
             snd("core.fail1");
             txt(i18n::s.get("core.ui.inv.take_ally.refuse_dialog", cdata[tc]),

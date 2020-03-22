@@ -1,6 +1,6 @@
-require_relative("tests/lua/support/minctest")
+require("tests/lua/support/minctest")
 
 lrun("test API tables are readonly", function()
-        local Rand = require("game.Rand")
+        local Rand = ELONA.require("core.Rand")
         lok(not pcall(function() Rand.rnd = nil end), "API table wasn't read only")
 end)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+
 #include "config_table.hpp"
 #include "lua_submodule.hpp"
 

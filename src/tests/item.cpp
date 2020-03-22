@@ -1,9 +1,9 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/item.hpp"
+
 #include "../elona/itemgen.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
 
 TEST_CASE("Test that index of copied item is set", "[C++: Item]")

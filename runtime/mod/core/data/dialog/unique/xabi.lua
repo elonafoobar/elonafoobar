@@ -1,13 +1,12 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local I18N = ELONA.require("core.I18N")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
 
-local common = require_relative("data/dialog/common")
+local common = require("../common.lua")
 
 return {
-   id = "xabi",
    root = "core.talk.unique.xabi",
    nodes = {
       __start = function()

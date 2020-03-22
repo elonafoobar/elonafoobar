@@ -1,4 +1,4 @@
-local jarowinkler = require_relative("ush/jarowinkler")
+local jarowinkler = require("ush/jarowinkler")
 
 
 

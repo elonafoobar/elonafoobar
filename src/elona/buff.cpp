@@ -1,7 +1,9 @@
 #include "buff.hpp"
+
 #include "../util/range.hpp"
 #include "ability.hpp"
 #include "character.hpp"
+#include "data/types/type_buff.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
@@ -45,6 +47,8 @@ int buff_find_slot(const Character& cc, int id, int turns)
     return rnd(static_cast<int>(cc.buffs.size()));
 }
 
+
+
 void buff_on_removal(Character& chara, int id)
 {
     auto buff = the_buff_db[id];
@@ -63,64 +67,59 @@ void buff_on_removal(Character& chara, int id)
 
 
 
-int buff_calc_duration(int id, int power)
+int buff_calc_duration(data::InstanceId id, int power)
 {
-    auto buff = the_buff_db[id];
-    assert(buff);
+    const auto& buff_data = the_buff_db.ensure(id);
 
-    auto& duration = buff->duration;
+    auto& duration = buff_data.duration;
     return duration.call_with_result(0, power);
 }
 
 
 
-std::string buff_get_description(int id, int power)
+std::string buff_get_description(data::InstanceId id, int power)
 {
-    auto buff = the_buff_db[id];
-    assert(buff);
+    const auto& buff_data = the_buff_db.ensure(id);
 
-    auto& self = buff->self;
-    auto& description = buff->description;
+    auto& self = buff_data.self;
+    auto& description = buff_data.description;
     return description.call_with_result("<error>", self, power);
 }
 
 
 
-void buff_apply(Character& chara, int id, int power)
+void buff_apply(Character& chara, data::InstanceId id, int power)
 {
-    auto buff = the_buff_db[id];
-    assert(buff);
+    const auto& buff_data = the_buff_db.ensure(id);
 
-    auto& self = buff->self;
-    auto& on_refresh = buff->on_refresh;
+    auto& self = buff_data.self;
+    auto& on_refresh = buff_data.on_refresh;
     auto args = lua::create_table("power", power, "chara", lua::handle(chara));
     on_refresh.call(self, args);
 }
 
 
 
-bool buff_has(const Character& chara, const std::string& id)
+bool buff_has(const Character& chara, data::InstanceId id)
 {
-    auto buff_def = the_buff_db[id];
-    assert(buff_def);
+    const auto& buff_data = the_buff_db.ensure(id);
 
-    int legacy_id = buff_def->legacy_id;
     return range::any_of(
-        chara.buffs, [&](const auto& buff) { return buff.id == legacy_id; });
+        chara.buffs, [legacy_id = buff_data.legacy_id](const auto& buff) {
+            return buff.id == legacy_id;
+        });
 }
 
 
 
-optional_ref<const Buff> buff_find(
-    const Character& chara,
-    const std::string& id)
+optional_ref<const Buff> buff_find(const Character& chara, data::InstanceId id)
 {
-    auto buff_def = the_buff_db[id];
-    assert(buff_def);
+    const auto& buff_data = the_buff_db.ensure(id);
 
-    int legacy_id = buff_def->legacy_id;
     const auto itr = range::find_if(
-        chara.buffs, [&](const auto& buff) { return buff.id == legacy_id; });
+        chara.buffs, [legacy_id = buff_data.legacy_id](const auto& buff) {
+            return buff.id == legacy_id;
+        });
     if (itr == std::end(chara.buffs))
     {
         return none;
@@ -135,18 +134,17 @@ optional_ref<const Buff> buff_find(
 
 void buff_add(
     Character& chara,
-    const std::string& id,
+    data::InstanceId id,
     int power,
     int turns,
     optional_ref<const Character> doer)
 {
-    auto buff = the_buff_db[id];
-    assert(buff);
-
-    int legacy_id = buff->legacy_id;
-
     if (turns <= 0)
         return;
+
+    const auto& buff_data = the_buff_db.ensure(id);
+
+    const auto legacy_id = buff_data.legacy_id;
 
     const auto slot = buff_find_slot(chara, legacy_id, turns);
     if (slot == buff_find_slot_no_effect)
@@ -158,7 +156,7 @@ void buff_add(
         }
     }
 
-    if (buff->type == BuffType::hex)
+    if (buff_data.type == BuffType::hex)
     {
         bool resists{};
         if (sdata(60, chara.index) / 2 > rnd_capped(power * 2 + 100))
@@ -214,10 +212,10 @@ void buff_add(
     if (is_in_fov(chara))
     {
         // Messages of fodd buff are shown elsewhere.
-        if (buff->type != BuffType::food)
+        if (buff_data.type != BuffType::food)
         {
             txt(i18n::s.get_enum_property(
-                "core.buff", legacy_id, "apply", chara));
+                "core.buff", "apply", legacy_id, chara));
         }
 
         add_damage_popup(

@@ -1,7 +1,10 @@
 #include "message.hpp"
+
 #include <ctype.h>
+
 #include <iomanip>
 #include <sstream>
+
 #include "../util/range.hpp"
 #include "../util/strutil.hpp"
 #include "audio.hpp"

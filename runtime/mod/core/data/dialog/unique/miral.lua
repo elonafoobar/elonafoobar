@@ -1,13 +1,13 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
-local World = require("game.World")
-local table = require("game.table")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local I18N = ELONA.require("core.I18N")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
+local World = ELONA.require("core.World")
+local table = table
 
 local function upgrade_cart_cost()
-   return (World.data.current_cart_limit - World.data.initial_cart_limit) / 10000 + 1
+   return (World.data.current_cart_limit - World.data.initial_cart_limit) // 10000 + 1
 end
 
 local function upgrade_cart_amount()
@@ -17,7 +17,7 @@ end
 local function upgrade_cargo_limit()
    local cost = upgrade_cart_cost()
    local amount = upgrade_cart_amount()
-   local small_medals = Item.find("core.small_medal", "PlayerInventory")
+   local small_medals = Item.find("core.small_medal", "player_inventory")
 
    GUI.txtnew()
    GUI.txt(I18N.get(
@@ -31,7 +31,6 @@ local function upgrade_cargo_limit()
 end
 
 return {
-   id = "miral",
    root = "core.talk.unique.miral",
    nodes = {
       __start = {
@@ -62,7 +61,7 @@ return {
          choices = function()
             local choices = {}
             local cost = upgrade_cart_cost()
-            local small_medals = Item.find("core.small_medal", "PlayerInventory")
+            local small_medals = Item.find("core.small_medal", "player_inventory")
             if small_medals ~= nil then
                if small_medals.number >= cost then
                   table.insert(choices, {"upgrade_cart_give", "upgrade_cart.choices.give"})

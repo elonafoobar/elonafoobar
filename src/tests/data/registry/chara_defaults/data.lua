@@ -1,9 +1,8 @@
 -- Contains only id, to test handling of defaults.
-data:add(
+ELONA.data:add(
+   "core.chara",
    {
-      {
-         type = "core.chara",
-         id = "nothing",
+      nothing = {
          legacy_id = 9999
       }
    }

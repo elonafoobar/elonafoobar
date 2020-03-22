@@ -7,16 +7,16 @@ namespace elona
 {
 
 /**
- * Loads the asset in @a key to its configured window and position. The asset
+ * Loads the asset in @a id to its configured window and position. The asset
  * should have a configured file path with the image file of the asset. If it
  * has no image, this function does nothing.
  *
  * If the file is valid, the current window is changed to the window configured
  * in the asset.
  */
-const AssetData& asset_load(const std::string& key)
+const AssetData& asset_load(data::InstanceId id)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     if (info.load_type == AssetLoadType::Buffer)
     {
@@ -65,9 +65,9 @@ void init_assets()
 /**
  * Draws an asset.
  */
-void draw(const std::string& key, int x, int y)
+void draw(data::InstanceId id, int x, int y)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gcopy(info.window_id, info.x, info.y, info.width, info.height, x, y);
 }
@@ -77,9 +77,9 @@ void draw(const std::string& key, int x, int y)
 /**
  * Draws an asset with stretching.
  */
-void draw(const std::string& key, int x, int y, int width, int height)
+void draw(data::InstanceId id, int x, int y, int width, int height)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gcopy(
         info.window_id,
@@ -98,9 +98,9 @@ void draw(const std::string& key, int x, int y, int width, int height)
 /**
  * Draws an asset, centered, with stretching.
  */
-void draw_centered(const std::string& key, int x, int y, int width, int height)
+void draw_centered(data::InstanceId id, int x, int y, int width, int height)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gcopy_c(
         info.window_id,
@@ -120,9 +120,9 @@ void draw_centered(const std::string& key, int x, int y, int width, int height)
  * Draws an asset with variant @a index out of multiple parts aligned
  * horizontally.
  */
-void draw_indexed(const std::string& key, int x, int y, int index_x)
+void draw_indexed(data::InstanceId id, int x, int y, int index_x)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gcopy(
         info.window_id,
@@ -140,14 +140,9 @@ void draw_indexed(const std::string& key, int x, int y, int index_x)
  * Draws an asset with variant @a index out of multiple parts aligned
  * horizontally and vertically.
  */
-void draw_indexed(
-    const std::string& key,
-    int x,
-    int y,
-    int index_x,
-    int index_y)
+void draw_indexed(data::InstanceId id, int x, int y, int index_x, int index_y)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gcopy(
         info.window_id,
@@ -166,14 +161,14 @@ void draw_indexed(
  * horizontally and vertically with rotation.
  */
 void draw_indexed_rotated(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int index_x,
     int index_y,
     double angle)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     grotate(
         info.window_id,
@@ -191,9 +186,9 @@ void draw_indexed_rotated(
 /**
  * Draws a region of an asset.
  */
-void draw_region(const std::string& key, int x, int y, int width)
+void draw_region(data::InstanceId id, int x, int y, int width)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gcopy(info.window_id, info.x, info.y, width, info.height, x, y);
 }
@@ -203,9 +198,9 @@ void draw_region(const std::string& key, int x, int y, int width)
 /**
  * Draws a region of an asset.
  */
-void draw_region(const std::string& key, int x, int y, int width, int height)
+void draw_region(data::InstanceId id, int x, int y, int width, int height)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gcopy(info.window_id, info.x, info.y, width, height, x, y);
 }
@@ -216,7 +211,7 @@ void draw_region(const std::string& key, int x, int y, int width, int height)
  * Draws a region of an asset.
  */
 void draw_region(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int offset_x,
@@ -224,7 +219,7 @@ void draw_region(
     int width,
     int height)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gcopy(
         info.window_id,
@@ -242,7 +237,7 @@ void draw_region(
  * Draws a region of an asset with stretching.
  */
 void draw_region(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int offset_x,
@@ -252,7 +247,7 @@ void draw_region(
     int dst_width,
     int dst_height)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gcopy(
         info.window_id,
@@ -272,7 +267,7 @@ void draw_region(
  * Draws a region of an asset, centered, with stretching.
  */
 void draw_region_centered(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int offset_x,
@@ -282,7 +277,7 @@ void draw_region_centered(
     int dst_width,
     int dst_height)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gcopy_c(
         info.window_id,
@@ -302,7 +297,7 @@ void draw_region_centered(
  * Draws a region of an asset rotated.
  */
 void draw_region_rotated(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int offset_x,
@@ -311,7 +306,7 @@ void draw_region_rotated(
     int height,
     double angle)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     grotate(
         info.window_id,
@@ -330,14 +325,14 @@ void draw_region_rotated(
  * Draws an asset with variable width starting from the right.
  */
 void draw_bar(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int dst_width,
     int dst_height,
     int width)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gcopy(
         info.window_id,
@@ -357,14 +352,14 @@ void draw_bar(
  * Draws an asset with variable width starting from the top.
  */
 void draw_bar_vert(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int dst_width,
     int dst_height,
     int height)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gcopy(
         info.window_id,
@@ -384,7 +379,7 @@ void draw_bar_vert(
  * Draws an indexed region of an asset in units of tile width/height.
  */
 void draw_indexed_region(
-    const std::string& key,
+    data::InstanceId id,
     int x,
     int y,
     int index_x,
@@ -392,7 +387,7 @@ void draw_indexed_region(
     int count_x,
     int count_y)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gcopy(
         info.window_id,
@@ -409,13 +404,9 @@ void draw_indexed_region(
 /**
  * Draws an asset with rotation.
  */
-void draw_rotated(
-    const std::string& key,
-    int center_x,
-    int center_y,
-    double angle)
+void draw_rotated(data::InstanceId id, int center_x, int center_y, double angle)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     grotate(
         info.window_id,
@@ -434,14 +425,14 @@ void draw_rotated(
  * Draws an asset with stretching and rotation.
  */
 void draw_rotated(
-    const std::string& key,
+    data::InstanceId id,
     int center_x,
     int center_y,
     int width,
     int height,
     double angle)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     grotate(
         info.window_id,
@@ -460,11 +451,11 @@ void draw_rotated(
 
 /**
  * Fills the background of the currently selected window with the asset in @a
- * key.
+ * id.
  */
-void draw_bg(const std::string& key)
+void draw_bg(data::InstanceId id)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     fillbg(info.window_id, info.x, info.y, info.width, info.height);
 }
@@ -473,13 +464,13 @@ void draw_bg(const std::string& key)
 
 /**
  * Copies the image at @a window_id, [@a x, @a y] into the region defined by the
- * asset at @a key.
+ * asset at @a id.
  *
  * Typically used when editing scratch regions of a window.
  */
-void asset_copy_from(int window_id, int x, int y, const std::string& key)
+void asset_copy_from(int window_id, int x, int y, data::InstanceId id)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gsel(info.window_id);
     gcopy(window_id, x, y, info.width, info.height, info.x, info.y);
@@ -489,7 +480,7 @@ void asset_copy_from(int window_id, int x, int y, const std::string& key)
 
 /**
  * Copies the image at @a window_id, [@a x, @a y] into the region defined by the
- * asset at @a key.
+ * asset at @a id.
  *
  * Typically used when editing scratch regions of a window.
  */
@@ -499,9 +490,9 @@ void asset_copy_from(
     int y,
     int width,
     int height,
-    const std::string& key)
+    data::InstanceId id)
 {
-    const auto& info = get_image_info(key);
+    const auto& info = get_image_info(id);
 
     gsel(info.window_id);
     gcopy(window_id, x, y, width, height, info.x, info.y);
@@ -510,18 +501,18 @@ void asset_copy_from(
 
 
 /**
- * Obtains the window and region data for the asset in @a key. Throws if the
- * asset does not exist. If a mod prefix is not provided in the @a key, it is
+ * Obtains the window and region data for the asset in @a id. Throws if the
+ * asset does not exist. If a mod prefix is not provided in the @a id, it is
  * assumed to be "core".
  */
-const AssetData& get_image_info(const std::string& key)
+const AssetData& get_image_info(data::InstanceId id)
 {
     // TODO: Instead of throwing, log once and return a default.
-    auto data = the_asset_db[key];
+    auto data = the_asset_db[id];
     if (!data)
-        data = the_asset_db["core." + key];
+        data = the_asset_db[data::InstanceId{"core." + id.get()}];
     if (!data)
-        throw std::runtime_error{u8"Unknown asset ID: "s + key};
+        throw std::runtime_error{u8"Unknown asset ID: "s + id.get()};
     return *data;
 }
 

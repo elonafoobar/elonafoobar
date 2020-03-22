@@ -1,33 +1,27 @@
-data:define_type("god")
-data:add_multi(
+ELONA.data:define_prototype("god")
+ELONA.data:add(
    "core.god",
    {
-      {
-         id = "mani",
+      mani = {
          legacy_id = 1,
       },
-      {
-         id = "lulwy",
+      lulwy = {
          legacy_id = 2,
       },
-      {
-         id = "itzpalt",
+      itzpalt = {
          legacy_id = 3,
       },
-      {
-         id = "ehekatl",
+      ehekatl = {
          legacy_id = 4,
       },
-      {
-         id = "opatos",
+      opatos = {
          legacy_id = 5,
       },
-      {
-         id = "jure",
+      jure = {
          legacy_id = 6,
       },
-      {
-         id = "kumiromi",
+      kumiromi = {
          legacy_id = 7,
       },
-})
+   }
+)

@@ -1,4 +1,5 @@
 #include "type_item.hpp"
+
 #include "../../lua_env/enums/enums.hpp"
 #include "../../lua_env/lua_env.hpp"
 #include "../util.hpp"
@@ -9,7 +10,7 @@ namespace elona
 {
 
 ItemDB the_item_db;
-const constexpr char* data::LuaLazyCacheTraits<ItemDB>::type_id;
+const constexpr char* data::DatabaseTraits<ItemDB>::type_id;
 
 
 
@@ -61,7 +62,7 @@ ItemData ItemDB::convert(const lua::ConfigTable& data, const std::string& id)
     }
 
     return ItemData{
-        SharedId{id},
+        data::InstanceId{id},
         legacy_id,
         image,
         value,
@@ -85,7 +86,7 @@ ItemData ItemDB::convert(const lua::ConfigTable& data, const std::string& id)
         expiration_date,
         level,
         fltselect,
-        category,
+        static_cast<ItemCategory>(category),
         subcategory,
         rarity,
         coefficient,

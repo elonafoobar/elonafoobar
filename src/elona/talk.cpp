@@ -1,4 +1,5 @@
 #include "talk.hpp"
+
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -10,14 +11,20 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "macro.hpp"
 #include "map.hpp"
 #include "menu.hpp"
 #include "message.hpp"
 #include "quest.hpp"
 #include "random.hpp"
 #include "shop.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
+
+
+namespace elona
+{
 
 namespace
 {
@@ -26,8 +33,7 @@ bool chatval_show_impress;
 
 }
 
-namespace elona
-{
+
 
 void talk_start()
 {
@@ -542,7 +548,7 @@ int talk_window_query(const Character &chara)
 }
 
 int talk_window_query(
-    optional<const std::string &> portrait_id,
+    optional_ref<const std::string> portrait_id,
     optional<int> chara_image,
     const std::string &speaker_name,
     std::string &text,
@@ -633,7 +639,7 @@ void talk_window_init(std::string &text)
 }
 
 void talk_window_show(
-    optional<const std::string &> portrait_id,
+    optional_ref<const std::string> portrait_id,
     optional<int> chara_image,
     const std::string &speaker_name,
     std::string &text,

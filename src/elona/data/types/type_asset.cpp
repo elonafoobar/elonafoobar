@@ -1,4 +1,5 @@
 #include "type_asset.hpp"
+
 #include "../../lua_env/interface.hpp"
 
 
@@ -27,10 +28,10 @@ namespace LuaEnums
 EnumMap<AssetLoadType> AssetLoadTypeTable(
     "AssetLoadType",
     {
-        {"Startup", AssetLoadType::Startup},
-        {"Buffer", AssetLoadType::Buffer},
-        {"BufferDeferred", AssetLoadType::BufferDeferred},
-        {"None", AssetLoadType::None},
+        {"startup", AssetLoadType::Startup},
+        {"buffer", AssetLoadType::Buffer},
+        {"buffer_deferred", AssetLoadType::BufferDeferred},
+        {"none", AssetLoadType::None},
     });
 }
 } // namespace lua
@@ -38,7 +39,7 @@ EnumMap<AssetLoadType> AssetLoadTypeTable(
 
 
 AssetDB the_asset_db;
-const constexpr char* data::LuaLazyCacheTraits<AssetDB>::type_id;
+const constexpr char* data::DatabaseTraits<AssetDB>::type_id;
 
 
 
@@ -68,16 +69,18 @@ AssetData AssetDB::convert(const lua::ConfigTable& data, const std::string& id)
         file_path = lua::resolve_path_for_mod(*file);
     }
 
-    return AssetData{SharedId{id},
-                     window_id,
-                     x,
-                     y,
-                     width,
-                     height,
-                     count_x,
-                     count_y,
-                     file_path,
-                     load_type};
+    return AssetData{
+        data::InstanceId{id},
+        window_id,
+        x,
+        y,
+        width,
+        height,
+        count_x,
+        count_y,
+        file_path,
+        load_type,
+    };
 }
 
 } // namespace elona

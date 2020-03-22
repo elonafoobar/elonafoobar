@@ -96,7 +96,47 @@ enum class IdentifyState : int
     completely = 3,
 };
 
+enum class ItemCategory : int
+{
+    unidentified = 0,
+    melee_weapon = 10000,
+    helm = 12000,
+    shield = 14000,
+    armor = 16000,
+    boots = 18000,
+    belt = 19000,
+    cloak = 20000,
+    gloves = 22000,
+    ranged_weapon = 24000,
+    ammo = 25000,
+    ring = 32000,
+    necklace = 34000,
+    potion = 52000,
+    scroll = 53000,
+    spellbook = 54000,
+    book = 55000,
+    rod = 56000,
+    food = 57000,
+    tool = 59000,
+    furniture = 60000,
+    well = 60001,
+    altar = 60002,
+    bodyparts = 62000,
+    junk = 64000,
+    gold_piece = 68000,
+    platinum_coin = 69000,
+    chest = 72000,
+    ore = 77000,
+    tree = 80000,
+    travelers_food = 91000,
+    cargo = 92000,
+    bug = 99999999,
+};
 
+inline bool is_equipment(ItemCategory c)
+{
+    return c <= static_cast<ItemCategory>(50000);
+}
 
 /**
  * Quality of items or characters. They are mainly used for identification.

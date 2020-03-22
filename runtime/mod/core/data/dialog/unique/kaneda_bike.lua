@@ -1,11 +1,10 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local I18N = ELONA.require("core.I18N")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
 
 return {
-   id = "kaneda_bike",
    root = "core.talk.unique.kaneda_bike",
    nodes = {
       __start = function()
@@ -55,7 +54,7 @@ return {
       },
 
       check_drug = function()
-         if Item.find("core.blue_capsule_drug", "PlayerInventory") ~= nil then
+         if Item.find("core.blue_capsule_drug", "player_inventory") ~= nil then
             return "query_give_drug"
          end
 
@@ -74,7 +73,7 @@ return {
       give_drug = {
          text = {
             function()
-               local drug = Item.find("core.blue_capsule_drug", "PlayerInventory")
+               local drug = Item.find("core.blue_capsule_drug", "player_inventory")
                drug.number = drug.number - 1
                GUI.txt(I18N.get("core.talk.unique.kaneda_bike.before_drug.yes.you_hand_him"))
                GUI.play_sound("core.equip1")

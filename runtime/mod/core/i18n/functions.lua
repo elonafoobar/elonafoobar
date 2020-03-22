@@ -1,8 +1,8 @@
 --- Functions to be used inside translations, like "${itemname(_1, _2, _3)}".
-local FOV = require("game.FOV")
-local I18N = require("game.I18N")
-local Item = require("game.Item")
-local string = require("game.string")
+local FOV = ELONA.require("core.FOV")
+local I18N = ELONA.require("core.I18N")
+local Item = ELONA.require("core.Item")
+local string = string
 
 local i18n = {}
 
@@ -46,7 +46,7 @@ function i18n.en.he(chara, ignore_sight)
    end
 
    if ignore_sight then
-      if chara.sex == "Male" then
+      if chara.sex == "male" then
          return "he"
       else
          return "she"
@@ -59,7 +59,7 @@ function i18n.en.he(chara, ignore_sight)
       return "it"
    elseif chara.index == 0 then
       return "you"
-   elseif chara.sex == "Male" then
+   elseif chara.sex == "male" then
       return "he"
    else
       return "she"
@@ -74,7 +74,7 @@ function i18n.en.his(chara, ignore_sight)
    if ignore_sight then
       if chara.index == 0 then
          return "your"
-      elseif chara.sex == "Male" then
+      elseif chara.sex == "male" then
          return "his"
       else
          return "her"
@@ -87,7 +87,7 @@ function i18n.en.his(chara, ignore_sight)
       return "its"
    elseif chara.index == 0 then
       return "your"
-   elseif chara.sex == "Male" then
+   elseif chara.sex == "male" then
       return "his"
    else
       return "her"
@@ -100,7 +100,7 @@ function i18n.en.him(chara, ignore_sight)
    end
 
    if ignore_sight then
-      if chara.sex == "Male" then
+      if chara.sex == "male" then
          return "him"
       else
          return "her"
@@ -113,7 +113,7 @@ function i18n.en.him(chara, ignore_sight)
       return "it"
    elseif chara.index == 0 then
       return "yourself"
-   elseif chara.sex == "Male" then
+   elseif chara.sex == "male" then
       return "him"
    else
       return "her"
@@ -229,7 +229,7 @@ function i18n.en.himself(chara)
       return "itself"
    elseif chara.index == 0 then
       return "yourself"
-   elseif chara.sex == "Male" then
+   elseif chara.sex == "male" then
       return "himself"
    else
       return "herself"
@@ -268,7 +268,7 @@ function i18n.jp.he(chara)
       return "彼"
    end
 
-   if chara.sex == "Male" then
+   if chara.sex == "male" then
       return "彼"
    else
       return "彼女"
@@ -282,7 +282,7 @@ function i18n.jp.his(chara)
 
    if chara.index == 0 then
       return "あなたの"
-   elseif chara.sex == "Male" then
+   elseif chara.sex == "male" then
       return "彼の"
    else
       return "彼女の"
@@ -294,7 +294,7 @@ function i18n.jp.him(chara)
       return "彼"
    end
 
-   if chara.sex == "Male" then
+   if chara.sex == "male" then
       return "彼"
    else
       return "彼女"

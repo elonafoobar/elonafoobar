@@ -1,9 +1,8 @@
-local Chara = require("game.Chara")
-local I18N = require("game.I18N")
-local World = require("game.World")
+local Chara = ELONA.require("core.Chara")
+local I18N = ELONA.require("core.I18N")
+local World = ELONA.require("core.World")
 
 return {
-   id = "orphe",
    root = "core.talk.unique.orphe",
 
    nodes = {
@@ -18,7 +17,7 @@ return {
          text = {
             {"dialog._0", args = function()
                 local sex
-                if Chara.player().sex == "Female" then
+                if Chara.player().sex == "female" then
                    sex = 1
                 else
                    sex = 0

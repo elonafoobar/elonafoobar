@@ -1,12 +1,11 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
 
-local common = require_relative("data/dialog/common")
+local common = require("../common.lua")
 
 return {
-   id = "miches",
    root = "core.talk.unique.miches",
    nodes = {
       __start = function()
@@ -60,8 +59,8 @@ return {
       quest_finish = {
          text = {
             function()
-               Item.create(Chara.player().position, {id = "core.small_shield", level = 10, quality = "Good"})
-               Item.create(Chara.player().position, {id = "core.girdle", level = 10, quality = "Good"})
+               Item.create(Chara.player().position, {id = "core.small_shield", level = 10, quality = "good"})
+               Item.create(Chara.player().position, {id = "core.girdle", level = 10, quality = "good"})
                Item.create(Chara.player().position, "core.gold_piece", 3000)
                Item.create(Chara.player().position, "core.platinum_coin", 2)
 

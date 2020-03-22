@@ -1,8 +1,7 @@
-require_relative("tests/lua/support/minctest")
+require("tests/lua/support/minctest")
 
-local Chara = require("game.Chara")
-local Enums = require("game.Enums")
-local Skill = require("game.Skill")
+local Chara = ELONA.require("core.Chara")
+local Skill = ELONA.require("core.Skill")
 
 lrun("test LuaCharacter:damage_hp", function()
         Testing.start_in_debug_map()
@@ -33,21 +32,21 @@ lrun("test LuaCharacter:get_flag", function()
         Testing.start_in_debug_map()
 
         local putit = Chara.create(0, 0, "core.putit")
-        lequal(putit:get_flag("Explodes"), false)
+        lequal(putit:get_flag("explodes"), false)
 
         local kamikaze_yeek = Chara.create(0, 1, "core.kamikaze_yeek")
-        lequal(kamikaze_yeek:get_flag("Explodes"), true)
+        lequal(kamikaze_yeek:get_flag("explodes"), true)
 end)
 
 lrun("test LuaCharacter:set_flag", function()
         Testing.start_in_debug_map()
 
         local player = Chara.player()
-        lequal(player:get_flag("IsFloating"), false)
+        lequal(player:get_flag("is_floating"), false)
 
-        player:set_flag("IsFloating", true)
+        player:set_flag("is_floating", true)
 
-        lequal(player:get_flag("IsFloating"), true)
+        lequal(player:get_flag("is_floating"), true)
 end)
 
 lrun("test LuaCharacter:gain_skill_exp", function()
@@ -65,14 +64,14 @@ lrun("test LuaCharacter:modify_resistance", function()
         Testing.start_in_debug_map()
 
         local putit = Chara.create(0, 0, "core.putit")
-        lequal(Skill.resistance(Enums.Element.Fire, putit), 100)
-        lequal(Skill.resistance(Enums.Element.Cold, putit), 100)
+        lequal(Skill.resistance("fire", putit), 100)
+        lequal(Skill.resistance("cold", putit), 100)
 
-        putit:modify_resistance(Enums.Element.Fire, 50)
-        putit:modify_resistance(Enums.Element.Cold, -50)
+        putit:modify_resistance("fire", 50)
+        putit:modify_resistance("cold", -50)
 
-        lequal(Skill.resistance(Enums.Element.Fire, putit), 150)
-        lequal(Skill.resistance(Enums.Element.Cold, putit), 50)
+        lequal(Skill.resistance("fire", putit), 150)
+        lequal(Skill.resistance("cold", putit), 50)
 end)
 
 assert(lresults())

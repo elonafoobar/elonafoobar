@@ -1,11 +1,10 @@
-local unique = require_relative("data/dialog/unique")
+local unique = require("dialog/unique.lua")
 
-data:define_type("dialog")
-data:add_multi(
+ELONA.data:define_prototype("dialog")
+ELONA.data:add(
    "core.dialog",
    {
-      {
-         id = "ignored",
+      ignored = {
          root = "core.talk",
          nodes = {
             __start = {
@@ -14,7 +13,7 @@ data:add_multi(
                }
             },
          }
-      }
+      },
    }
 )
-data:add_multi("core.dialog", unique)
+ELONA.data:add("core.dialog", unique)

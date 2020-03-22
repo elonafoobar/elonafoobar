@@ -1,10 +1,12 @@
 #include "trait.hpp"
+
 #include "../util/range.hpp"
 #include "ability.hpp"
 #include "character.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "optional.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 
@@ -155,7 +157,7 @@ void trait_format_other_parameterless(
 bool trait_is_obtainable(const I18NKey& i18n_prefix, int tid)
 {
     return trait(tid) >= 0 &&
-        i18n::s.get_enum_property_opt(i18n_prefix + ".levels", "name", 0);
+        i18n::s.get_enum_property_optional(i18n_prefix + ".levels", "name", 0);
 }
 
 
@@ -928,6 +930,15 @@ void trait_load_desc()
             ++listmax;
         }
     }
+}
+
+
+
+void clear_trait_data()
+{
+    DIM2(traitref, 10);
+    SDIM3(traitrefn, 80, 9);
+    SDIM3(traitrefn2, 20, 6);
 }
 
 } // namespace elona

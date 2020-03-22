@@ -1,12 +1,11 @@
-local Chara = require("game.Chara")
-local Map = require("game.Map")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
+local Chara = ELONA.require("core.Chara")
+local Map = ELONA.require("core.Map")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
 
-local common = require_relative("data/dialog/common")
+local common = require("../common.lua")
 
 return {
-   id = "tam",
    root = "core.talk.unique.tam",
    nodes = {
       __start = function()

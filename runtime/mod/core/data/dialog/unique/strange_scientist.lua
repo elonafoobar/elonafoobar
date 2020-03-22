@@ -1,9 +1,9 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
-local table = require("game.table")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local I18N = ELONA.require("core.I18N")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
+local table = table
 
 local function can_receive_reward()
    local count = Internal.get_quest_flag("kill_count_of_little_sister")
@@ -21,13 +21,12 @@ local function turn_over_little_sister()
                             Internal.get_quest_flag("save_count_of_little_sister") + 1)
     GUI.txt(I18N.get("core.talk.unique.strange_scientist.saved_count",
                      Internal.get_quest_flag("save_count_of_little_sister"),
-                     Internal.get_quest_flag("kill_count_of_little_sister")), "Green")
-    Chara.find("core.little_sister", "Allies"):vanquish()
+                     Internal.get_quest_flag("kill_count_of_little_sister")), "green")
+    Chara.find("core.little_sister", "allies"):vanquish()
     GUI.play_sound("core.complete1")
 end
 
 return {
-   id = "strange_scientist",
    root = "core.talk.unique.strange_scientist",
    nodes = {
       __start = function()
@@ -68,7 +67,7 @@ return {
                {"replenish", "choices.replenish"}
             }
 
-            if Chara.find("core.little_sister", "Allies") ~= nil then
+            if Chara.find("core.little_sister", "allies") ~= nil then
                table.insert(choices, {"turn_over", "choices.turn_over"})
             end
             table.insert(choices, {"__END__", "__BYE__"})

@@ -1,5 +1,11 @@
 #include "lua_class_game_data.hpp"
 
+
+
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::GameData)
+
+
+
 namespace elona
 {
 namespace lua
@@ -18,8 +24,8 @@ namespace lua
 
 void LuaGameData::bind(sol::state& lua)
 {
-    auto LuaGameData = lua.create_simple_usertype<GameData>();
-    LuaGameData.set("new", sol::no_constructor);
+    auto LuaGameData =
+        lua.new_usertype<GameData>("LuaGameData", sol::no_constructor);
 
     /**
      * @luadoc home_scale field num
@@ -148,9 +154,6 @@ void LuaGameData::bind(sol::state& lua)
     LuaGameData.set(
         "thieves_guild_quota_recurring",
         ELONA_LUA_GUILD_FLAG(thieves_guild_quota_recurring));
-
-
-    lua.set_usertype("LuaGameData", LuaGameData);
 }
 
 } // namespace lua

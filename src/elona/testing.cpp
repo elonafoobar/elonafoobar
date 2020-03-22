@@ -3,6 +3,7 @@
 #include <sstream>
 
 #include "../version.hpp"
+#include "character.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
@@ -12,12 +13,15 @@
 #include "gdata.hpp"
 #include "i18n.hpp"
 #include "init.hpp"
+#include "initialize_map.hpp"
 #include "log.hpp"
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
 #include "lua_env/lua_event/base_event.hpp"
+#include "map.hpp"
 #include "profile/profile_manager.hpp"
 #include "save.hpp"
+#include "set_item_info.hpp"
 #include "variables.hpp"
 
 
@@ -82,21 +86,17 @@ void load()
     initialize_map();
 }
 
-void load_translations(const std::string& hcl)
+void load_translations(const std::string& locale_file_content)
 {
-    i18n::s.clear();
-
-    std::stringstream ss(hcl);
-    i18n::s.load(ss, "test.hcl", "test");
+    i18n::s.load_from_string(locale_file_content, "test");
 }
 
 // Similar to load_translations, but does not reset all i18n resources.
-void reinit_core_and_load_translations(const std::string& hcl)
+void reinit_core_and_load_translations(const std::string& locale_file_content)
 {
     initialize_i18n();
 
-    std::stringstream ss(hcl);
-    i18n::s.load(ss, "test.hcl", "test");
+    i18n::s.load_from_string(locale_file_content, "test");
 }
 
 void configure_lua()

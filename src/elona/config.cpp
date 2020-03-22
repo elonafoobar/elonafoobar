@@ -1,10 +1,13 @@
 #include "config.hpp"
+
 #include <cassert>
+
 #include <fstream>
 #include <functional>
 #include <sstream>
 #include <stdexcept>
 #include <string>
+
 #include "../snail/application.hpp"
 #include "../thirdparty/json5/json5.hpp"
 #include "../util/fps_counter.hpp"
@@ -262,21 +265,11 @@ void inject_languages()
     bool has_jp = false;
     bool has_en = false;
 
-    for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::locale()))
-    {
-        const auto identifier =
-            filepathutil::to_utf8_path(entry.path().filename());
-        locales.push_back(identifier);
-
-        if (identifier == "en")
-        {
-            has_en = true;
-        }
-        if (identifier == "jp")
-        {
-            has_jp = true;
-        }
-    }
+    // TODO
+    locales.push_back("en");
+    locales.push_back("jp");
+    has_en = true;
+    has_jp = true;
 
     // Not having English or Japanese loaded will cause weird things
     // to happen, since many parts of the code depend on one or the
@@ -373,7 +366,7 @@ void bind_setters()
     CONFIG_OPTION("language.language", std::string, language);
     CONFIG_OPTION("message.add_timestamps", bool, message_add_timestamps);
     CONFIG_OPTION("message.transparency", int, message_transparency);
-    // CONFIG_OPTION("net.is_enabled", bool, net);
+    CONFIG_OPTION("net.is_enabled", bool, net);
     CONFIG_OPTION("screen.display_mode", std::string, display_mode);
     CONFIG_OPTION("screen.heartbeat", bool, heartbeat);
     CONFIG_OPTION("screen.high_quality_shadows", bool, high_quality_shadow);
@@ -391,14 +384,6 @@ void bind_setters()
     conf.bind_setter("core.game.default_save", &setters::game_default_save);
     conf.bind_setter("core.foobar.show_fps", &setters::foobar_show_fps);
     conf.bind_setter("core.screen.fullscreen", &setters::screen_fullscreen);
-
-
-    // Always disable network feature.
-    conf.bind_setter(
-        "core.net.is_enabled", +[](const bool& value) {
-            (void)value;
-            g_config.set_net(false);
-        });
 
 #undef CONFIG_OPTION
 } // namespace

@@ -1,7 +1,7 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/testing.hpp"
+#include "../elona/text.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
 
 using namespace Catch;

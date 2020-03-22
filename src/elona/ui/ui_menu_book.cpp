@@ -1,8 +1,10 @@
 #include "ui_menu_book.hpp"
+
 #include "../audio.hpp"
 #include "../data/types/type_asset.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
+#include "../lua_env/interface.hpp"
 
 namespace elona
 {
@@ -18,7 +20,8 @@ bool UIMenuBook::init()
     {
         buff(0).clear();
         std::ifstream in{
-            (i18n::s.get_locale_dir("core") / "lazy" / "book.txt").native(),
+            lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/book.txt")
+                .native(),
             std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))

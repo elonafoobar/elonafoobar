@@ -1,7 +1,10 @@
 #include "character_status.hpp"
+
 #include <limits>
+
 #include "ability.hpp"
 #include "adventurer.hpp"
+#include "animation.hpp"
 #include "character.hpp"
 #include "config.hpp"
 #include "fov.hpp"

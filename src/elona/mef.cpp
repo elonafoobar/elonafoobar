@@ -1,4 +1,5 @@
 #include "mef.hpp"
+
 #include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
@@ -122,7 +123,7 @@ void mef_add(
 
 void mef_update()
 {
-    optional<std::string> sound = none;
+    optional<data::InstanceId> sound = none;
     for (int cnt = 0; cnt < MEF_MAX; ++cnt)
     {
         if (mef(0, cnt) == 0)
@@ -194,7 +195,7 @@ void mef_update()
     }
     if (sound)
     {
-        snd(SharedId(*sound));
+        snd(*sound);
     }
 }
 

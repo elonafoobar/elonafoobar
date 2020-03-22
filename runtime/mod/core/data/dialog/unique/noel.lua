@@ -1,11 +1,11 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
-local table = require("game.table")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local I18N = ELONA.require("core.I18N")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
+local table = table
 
-local common = require_relative("data/dialog/common")
+local common = require("../common.lua")
 
 local function buy_nuke()
    GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
@@ -15,7 +15,6 @@ local function buy_nuke()
 end
 
 return {
-   id = "noel",
    root = "core.talk.unique.noel",
    nodes = {
       __start = function()

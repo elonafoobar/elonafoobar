@@ -26,23 +26,23 @@ config {
 
 Then, add a corresponding translation file to `locale/en` or `locale/jp`.
 
-```hcl
-locale {
-    config {
-        menu {
-            # Mod name
-            name = "My Mod"
+```lua
+ELONA.i18n:add {
+   config = {
+      menu = {
+         -- Mod name
+         name = "My Mod",
 
-            section_name {
-                name = "Config Section"
+         section_name = {
+            name = "Config Section",
 
-                option_name {
-                    name = "Config Option"
-                    doc = "Documentation for this option"
-                }
+            option_name = {
+               name = "Config Option",
+               doc = "Documentation for this option",
             }
-        }
-    }
+         }
+      }
+   }
 }
 ```
 
@@ -100,85 +100,82 @@ config {
 The following is a translation file which corresponds to the `config-schema.lua` in the previous section.
 
 
-```hcl
-locale {
-    config {
-        menu {
-            name = "Example Config"
+```lua
+ELONA.i18n:add {
+   config = {
+      menu = {
+         name = "Example Config",
 
-            section {
-                name = "Section"
+         section = {
+            name = "Section",
 
-                section_option {
-                    name = "Section Option"
+            section_option = {
+               name = "Section Option",
 
-                    # Documentation is optional for all config options.
-                    doc = "An option nested in a section."
-                }
-            }
-            option_types {
-                name = "Option Types"
+               -- Documentation is optional for all config options.
+               doc = "An option nested in a section.",
+            },
+         },
+         option_types = {
+            name = "Option Types",
 
-                skip_random_events {
-                    name = "Skip Random Events"
+            skip_random_events = {
+               name = "Skip Random Events",
 
-                    # Strings in HCL can use "Heredoc" format, which allows writing multiline
-                    # strings.
-                    doc = <<DOC
-Skip displaying random event popup windows.
-Random events will still occur. In most cases, a default option will be chosen.
-DOC
-                }
+               -- Strings in Lua can use "Heredoc" format, which allows writing multiline
+               -- strings.
+               doc = [[Skip displaying random event popup windows.
+Random events will still occur. In most cases, a default option will be chosen.]],
+            },
 
-                story {
-                    name = "Enable Cutscenes"
-                }
+            story = {
+               name = "Enable Cutscenes",
+            },
 
-                music {
-                    name = "Music"
-                }
+            music = {
+               name = "Music",
+            },
 
-                heartbeat_threshold {
-                    name = "Heartbeat Threshold"
-                }
+            heartbeat_threshold = {
+               name = "Heartbeat Threshold",
+            },
 
-                fullscreen {
-                    name = "Screen Mode*"
+            fullscreen = {
+               name = "Screen Mode*",
 
-                    enum {
-                        windowed = "Window mode"
-                        fullscreen = "Full screen"
-                        desktop_fullscreen = "Desktop fullscr"
-                    }
-                }
+               enum = {
+                  windowed = "Window mode",
+                  fullscreen = "Full screen",
+                  desktop_fullscreen = "Desktop fullscr",
+               }
+            },
 
-                window_modes {
-                    name = "Screen Resolution*"
-                }
+            window_modes = {
+               name = "Screen Resolution*",
+            },
 
-                display_mode {
-                    name = "Screen Orientation"
-                    enum {
-                        landscape = "Landscape"
-                        portrait = "Portrait"
-                    }
-                }
+            display_mode = {
+               name = "Screen Orientation",
+               enum = {
+                  landscape = "Landscape",
+                  portrait = "Portrait",
+               }
+            },
 
-                scroll {
-                    name = "Smooth Scroll"
+            scroll = {
+               name = "Smooth Scroll",
 
-                    # You can change which translation is used for "yes/no" options. It should have
-                    # this format:
-                    #
-                    # on_off {
-                    #     yes = "On"
-                    #     no = "Off"
-                    # }
-                    yes_no = core.config.common.yes_no.on_off
-                }
-            }
-        }
-    }
+               -- You can change which translation is used for "yes/no" options. It should have
+               -- this format:
+               on_off {
+                  yes = "On",
+                  no = "Off",
+               },
+               yes_no = "core.config.common.yes_no.on_off",
+            },
+         }
+      }
+   }
 }
 ```
 
@@ -187,11 +184,9 @@ DOC
 To access and change config options from mods, use the [Config](../modules/Config.html) API.
 
 ```lua
-local Config = require("game.Config")
+local Config = ELONA.require("core.Config")
 
 print(Config.get("core.game.extra_help"))
 print(Config.set("core.balance.restock_interval", 10))
 Config.save()
 ```
-
-Note that the `Config` API will raise an error if the config option doesn't exist or the type differs.

@@ -1,6 +1,12 @@
 #include "lua_class_position.hpp"
+
 #include <sstream>
+
 #include "../../position.hpp"
+
+
+
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Position)
 
 
 
@@ -9,29 +15,17 @@ namespace elona
 namespace lua
 {
 
-
-
-std::string position_tostring(const Position& pos)
-{
-    std::stringstream ss;
-    ss << "(" << pos.x << ", " << pos.y << ")";
-    return ss.str();
-}
-
-
-
 void LuaPosition::bind(sol::state& lua)
 {
-    auto LuaPosition = lua.create_simple_usertype<Position>();
-
     /**
      * @luadoc new function
      *
      * Constructs a new LuaPosition.
-     * @usage local LuaPosition = require("game.LuaPosition")
+     * @usage local LuaPosition = ELONA.require("core.LuaPosition")
      * local pos = LuaPosition.new()
      */
-    LuaPosition.set("new", sol::constructors<Position(), Position(int, int)>());
+    auto LuaPosition = lua.new_usertype<Position>(
+        "LuaPosition", sol::constructors<Position(), Position(int, int)>());
 
     /**
      * @luadoc x field num
@@ -47,9 +41,7 @@ void LuaPosition::bind(sol::state& lua)
      */
     LuaPosition.set("y", &Position::y);
 
-    LuaPosition.set("__tostring", &position_tostring);
-
-    lua.set_usertype("LuaPosition", LuaPosition);
+    LuaPosition.set(sol::meta_function::to_string, &Position::to_string);
 }
 
 } // namespace lua

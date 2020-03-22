@@ -4,7 +4,7 @@ local json5_stringify = json5_stringify
 
 
 
-local eval_in_dsl_env = require_relative("config_dsl")
+local eval_in_dsl_env = require("config_dsl")
 
 
 
@@ -143,7 +143,7 @@ local function load_default_values_if_unset()
          -- Almost all of options have thier own default values, but there are some exceptions:
          -- * Sections
          -- * Option "core.screen.display_mode" in headless mode
-         if schema.default then
+         if schema.default ~= nil then
             Config.set(option_key, schema.default)
          end
       end
@@ -350,7 +350,7 @@ end
 
 function Config.is_enum_option(option_key)
    local s = _schemas[option_key]
-   return s.type == "string" and s.enum
+   return s.type == "string" and s.enum ~= nil
 end
 
 
@@ -362,7 +362,7 @@ end
 
 
 function Config.is_hidden(option_key)
-   return _schemas[option_key].is_hidden
+   return not not _schemas[option_key].is_hidden
 end
 
 

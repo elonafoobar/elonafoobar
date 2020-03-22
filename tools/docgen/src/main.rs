@@ -4,7 +4,7 @@ use clang::*;
 use clap::{crate_name, crate_version, App, Arg};
 use regex::Regex;
 
-use std::fs::{self, File, read_to_string};
+use std::fs::{self, read_to_string, File};
 use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 
@@ -13,6 +13,7 @@ const NOLUADOC: &str = "@noluadoc";
 const LUA_API: &str = "LuaApi";
 const LUA_CLASS: &str = "Lua";
 const VARARGS: &str = "sol::variadic_args";
+const EXTRA_COMPILE_OPTIONS: &[&str] = &["-DELONA_DOCGEN"];
 
 #[derive(Debug, Clone)]
 struct ModuleComment {
@@ -44,7 +45,7 @@ impl ModuleComment {
             format!("--  @classmod {}", self.module)
         } else {
             format!(
-                "--  @usage local {0} = require(\"game.{0}\")\nmodule \"{0}\"",
+                "--  @usage local {0} = ELONA.require(\"core.{0}\")\nmodule \"{0}\"",
                 self.module
             )
         }
@@ -309,7 +310,7 @@ impl Comment {
         }
     }
 
-    pub fn render(&self, writer: &mut Write) -> io::Result<()> {
+    pub fn render<W: Write>(&self, writer: &mut W) -> io::Result<()> {
         writer.write(to_lua_comment(&self.text).as_bytes())?;
         match &self.content {
             Content::Function(f) => writer.write(&f.signature().as_bytes()).map(|_| ())?,
@@ -405,12 +406,16 @@ fn strip_comment(text: &str) -> Option<(String, Metadata)> {
     // " >   foo" => "  foo"
     // " *>  foo" => "  foo"
     // "   > foo" => "foo"
-    let re_preserve_leading_space_in_lua_code_block =
-        Regex::new(r"^[ *]*(?:> )?(.*)").unwrap();
-    let strip_preserve_leading_space_in_lua_code_block =
-        |i| re_preserve_leading_space_in_lua_code_block.captures(i).and_then(|c| c.get(1)).unwrap().as_str();
+    let re_preserve_leading_space_in_lua_code_block = Regex::new(r"^[ *]*(?:> )?(.*)").unwrap();
+    let strip_preserve_leading_space_in_lua_code_block = |i| {
+        re_preserve_leading_space_in_lua_code_block
+            .captures(i)
+            .and_then(|c| c.get(1))
+            .unwrap()
+            .as_str()
+    };
 
-    let mut meta: Metadata;
+    let meta: Metadata;
 
     match parts.first() {
         Some(st) => {
@@ -502,8 +507,8 @@ fn get_module_comment_of_entity<'a>(entity: &Entity<'a>, is_class: bool) -> Opti
     None
 }
 
-// Check whether the file has "@noluadoc" directive WITHOUT #include macro expansion.
-fn has_noluadoc(path: &Path) -> Result<bool, Box<std::error::Error>> {
+// Check whether the file has "@noluadoc" directive without #include macro expansion.
+fn has_noluadoc(path: &Path) -> io::Result<bool> {
     let content = read_to_string(path)?;
     Ok(content.find(NOLUADOC).is_some())
 }
@@ -546,7 +551,11 @@ fn generate_doc<'a>(path: &Path, index: &Index<'a>, is_class: bool) -> Option<Do
         return None;
     }
 
-    let tu = index.parser(path).parse().unwrap();
+    let tu = index
+        .parser(path)
+        .arguments(EXTRA_COMPILE_OPTIONS)
+        .parse()
+        .unwrap();
     let module_comment = get_module_comment(&tu, is_class);
     if !module_comment.is_some() {
         println!("{:?}: No @luadoc comment found in header, skipping.", path);

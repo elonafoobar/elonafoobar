@@ -1,4 +1,5 @@
 #include "animation.hpp"
+
 #include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
@@ -23,6 +24,9 @@ namespace
 {
 
 int am;
+double r_at_m133;
+int dx_at_m133 = 0;
+elona_vector1<int> dy_at_m133;
 
 
 
@@ -79,11 +83,11 @@ std::vector<Position> breath_pos()
 template <typename F>
 void do_animation(
     const Position& center,
-    const std::string& image_key,
+    data::InstanceId image_id,
     int duration,
     F draw)
 {
-    const auto& image_info = get_image_info(image_key);
+    const auto& image_info = get_image_info(image_id);
     const auto size = std::max(image_info.width, image_info.height) * 2;
 
     gsel(4);
@@ -97,7 +101,7 @@ void do_animation(
         gmode(0);
         gcopy(4, 0, 0, size, size, center.x - size / 2, center.y - size / 2);
         gmode(2);
-        draw(image_key, center, t);
+        draw(image_id, center, t);
         redraw();
         await(g_config.animation_wait());
     }
@@ -108,13 +112,13 @@ void do_animation(
 template <typename F, typename G>
 void do_particle_animation(
     const Position& center,
-    const std::string& image_key,
+    data::InstanceId image_id,
     int duration,
     int max_particles,
     F create_particle,
     G draw)
 {
-    const auto& image_info = get_image_info(image_key);
+    const auto& image_info = get_image_info(image_id);
     const auto size = std::max(image_info.width, image_info.height) * 2;
 
     gsel(4);
@@ -136,7 +140,7 @@ void do_particle_animation(
         gmode(2);
         for (int i = 0; i < max_particles; ++i)
         {
-            draw(image_key, center, t, particles[i], i);
+            draw(image_id, center, t, particles[i], i);
         }
         redraw();
         await(g_config.animation_wait());
@@ -162,16 +166,11 @@ namespace elona
 
 
 
-void draw_rotated(
-    const std::string& key,
-    int x,
-    int y,
-    double scale,
-    double angle)
+void draw_rotated(data::InstanceId id, int x, int y, double scale, double angle)
 {
-    const auto& image_info = get_image_info(key);
+    const auto& image_info = get_image_info(id);
     draw_rotated(
-        key, x, y, image_info.width * scale, image_info.height * scale, angle);
+        id, x, y, image_info.width * scale, image_info.height * scale, angle);
 }
 
 
@@ -399,7 +398,7 @@ void BreathAnimation::do_play()
 void BallAnimation::do_play()
 {
     int anicol{};
-    optional<SharedId> anisound{};
+    optional<data::InstanceId> anisound{};
     if (type == Type::ball)
     {
         anicol = element_color_id(element);
@@ -654,7 +653,7 @@ void RangedAttackAnimation::do_play()
         return;
 
     int anicol{};
-    optional<SharedId> anisound = none;
+    optional<data::InstanceId> anisound = none;
     if (type == Type::magic_arrow)
     {
         anicol = element_color_id(ele);
@@ -1238,5 +1237,213 @@ void BreakingAnimation::do_play()
 }
 
 
+
+void animeload(int animation_type, int chara_index)
+{
+    elona_vector1<int> i_at_m133;
+    if (mode != 0)
+    {
+        return;
+    }
+    if (is_in_fov(cdata[chara_index]) == 0)
+    {
+        return;
+    }
+    if (g_config.animation_wait() == 0)
+    {
+        return;
+    }
+    screenupdate = -1;
+    update_screen();
+    dx_at_m133 =
+        (cdata[chara_index].position.x - scx) * inf_tiles + inf_screenx;
+    dy_at_m133 =
+        (cdata[chara_index].position.y - scy) * inf_tiles + inf_screeny;
+    gsel(7);
+    picload(
+        filesystem::dirs::graphic() / (u8"anime"s + animation_type + u8".bmp"),
+        0,
+        0,
+        true);
+    gsel(4);
+    gmode(0);
+    gcopy(0, dx_at_m133 - 24, dy_at_m133 - 40, 96, 96, 0, 0);
+    gsel(0);
+    gmode(2);
+    i_at_m133(0) = 5;
+    i_at_m133(1) = g_config.animation_wait() * 3.5;
+    r_at_m133 = 0;
+    if (animation_type == 8)
+    {
+        snd("core.offer1");
+    }
+    if (animation_type == 10)
+    {
+        i_at_m133(0) = 8;
+        i_at_m133(1) = g_config.animation_wait() * 2.5;
+        r_at_m133 = 0.2;
+        snd("core.enc2");
+    }
+    if (animation_type == 11)
+    {
+        i_at_m133(0) = 5;
+        i_at_m133(1) = g_config.animation_wait() * 3.5;
+        r_at_m133 = 0;
+        snd("core.enc");
+    }
+    if (animation_type == 14)
+    {
+        i_at_m133(0) = 6;
+        i_at_m133(1) = g_config.animation_wait() * 3.5;
+    }
+    for (int cnt = 0, cnt_end = (i_at_m133); cnt < cnt_end; ++cnt)
+    {
+        gmode(2);
+        grotate(
+            7,
+            cnt * 96,
+            0,
+            96,
+            96,
+            dx_at_m133 + 24,
+            dy_at_m133 + 8,
+            r_at_m133 * cnt);
+        gmode(0);
+        redraw();
+        gcopy(4, 0, 0, 96, 96, dx_at_m133 - 24, dy_at_m133 - 40);
+        await(i_at_m133(1));
+    }
+    gmode(2);
+}
+
+
+
+void animeblood(int cc, int animation_type, int element)
+{
+    if (is_in_fov(cdata[cc]) == 0)
+        return;
+    if (g_config.animation_wait() == 0)
+        return;
+
+    int cnt2_at_m133 = 0;
+
+    screenupdate = -1;
+    update_screen();
+
+    if (animation_type == 0)
+    {
+        prepare_item_image(16, 0);
+    }
+    if (animation_type == 1)
+    {
+        prepare_item_image(18, 0);
+    }
+    dx_at_m133 = (cdata[cc].position.x - scx) * inf_tiles + inf_screenx;
+    dy_at_m133(0) = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny;
+    dy_at_m133(1) = 0;
+    gsel(4);
+    gmode(0);
+    gcopy(0, dx_at_m133 - 48, dy_at_m133 - 56, 144, 160, 0, 0);
+
+    int ele2_at_m133 = 1;
+    gsel(7);
+    switch (element)
+    {
+    case 52:
+        picload(filesystem::dirs::graphic() / u8"anime18.bmp", 0, 0, true);
+        dy_at_m133(1) = -16;
+        break;
+    case 51:
+        picload(filesystem::dirs::graphic() / u8"anime19.bmp", 0, 0, true);
+        dy_at_m133(1) = -16;
+        break;
+    case 50:
+        picload(filesystem::dirs::graphic() / u8"anime20.bmp", 0, 0, true);
+        dy_at_m133(1) = -20;
+        break;
+    case 56:
+        picload(filesystem::dirs::graphic() / u8"anime22.bmp", 0, 0, true);
+        dy_at_m133(1) = -24;
+        break;
+    case 53:
+        picload(filesystem::dirs::graphic() / u8"anime21.bmp", 0, 0, true);
+        dy_at_m133(1) = -16;
+        break;
+    case 54:
+        picload(filesystem::dirs::graphic() / u8"anime23.bmp", 0, 0, true);
+        dy_at_m133(1) = -16;
+        break;
+    case 57:
+        picload(filesystem::dirs::graphic() / u8"anime24.bmp", 0, 0, true);
+        dy_at_m133(1) = -16;
+        break;
+    case 59:
+        picload(filesystem::dirs::graphic() / u8"anime25.bmp", 0, 0, true);
+        dy_at_m133(1) = -16;
+        break;
+    case 58:
+        picload(filesystem::dirs::graphic() / u8"anime26.bmp", 0, 0, true);
+        dy_at_m133(1) = -16;
+        break;
+    case 55:
+    case 63:
+        picload(filesystem::dirs::graphic() / u8"anime27.bmp", 0, 0, true);
+        dy_at_m133(1) = -16;
+        break;
+    default: ele2_at_m133 = 0; break;
+    }
+
+    gmode(2);
+    gsel(0);
+
+    elona_vector1<int> x_at_m133;
+    elona_vector1<int> y_at_m133;
+    for (int cnt = 0; cnt < 20; ++cnt)
+    {
+        x_at_m133(cnt) = rnd(48) - 24;
+        y_at_m133(cnt) = rnd(16);
+    }
+
+    for (int cnt = 0; cnt < 6; ++cnt)
+    {
+        cnt2_at_m133 = cnt * 2;
+        gmode(2);
+        if (ele2_at_m133)
+        {
+            gcopy(
+                7,
+                cnt * 96,
+                0,
+                96,
+                96,
+                dx_at_m133 - 24,
+                dy_at_m133 - 32 + dy_at_m133(1));
+        }
+        for (int cnt = 0; cnt < 20; ++cnt)
+        {
+            grotate(
+                1,
+                0,
+                960,
+                inf_tiles,
+                inf_tiles,
+                dx_at_m133 + 24 + x_at_m133(cnt) +
+                    (x_at_m133(cnt) < 3) * ((1 + (cnt % 2 == 0)) * -1) *
+                        cnt2_at_m133 +
+                    (x_at_m133(cnt) > -4) * (1 + (cnt % 2 == 0)) * cnt2_at_m133,
+                dy_at_m133 + y_at_m133(cnt) + cnt2_at_m133 * cnt2_at_m133 / 2 -
+                    12 + cnt,
+                24 - cnt2_at_m133 * 2,
+                24 - cnt2_at_m133 * 2,
+                0.2 * cnt);
+        }
+        gmode(0);
+        redraw();
+        gcopy(4, 0, 0, 144, 160, dx_at_m133 - 48, dy_at_m133 - 56);
+        await(g_config.animation_wait() * (ele2_at_m133 == 0 ? 1.75 : 2.75));
+    }
+
+    gmode(2);
+}
 
 } // namespace elona

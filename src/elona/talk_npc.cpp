@@ -2086,7 +2086,8 @@ TalkResult talk_npc()
                 }
                 if (quest_data[rq].id == 1003)
                 {
-                    if (the_item_db[itemid2int(item.id)]->category == 57000 &&
+                    if (the_item_db[itemid2int(item.id)]->category ==
+                            ItemCategory::food &&
                         item.param1 / 1000 == quest_data[rq].extra_info_1 &&
                         item.param2 == quest_data[rq].extra_info_2)
                     {
@@ -2251,8 +2252,7 @@ TalkResult talk_npc()
     case 54: return talk_shop_reload_ammo();
     case 55: return talk_spell_writer_reserve();
     case 56: return talk_sex();
-    case 58:
-    {
+    case 58: {
         if (game_data.left_turns_of_timestop == 0)
         {
             event_add(25);

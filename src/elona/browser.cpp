@@ -1,6 +1,9 @@
 #include "browser.hpp"
+
 #include <cstdlib>
+
 #include <string>
+
 #include "../util/range.hpp"
 #include "config.hpp"
 

@@ -1,9 +1,8 @@
 -- Contains all possible character parameters for testing.
-data:add(
+ELONA.data:add(
+   "core.chara",
    {
-      {
-         type = "core.chara",
-         id = "spiral_putit",
+      spiral_putit = {
          legacy_id = 9999,
          item_type = 2,
          tags = {"slime", "ether"},
@@ -17,8 +16,8 @@ data:add(
          creaturepack = 3,
          normal_actions = {417, 434, 415, 454},
          special_actions = {636},
-         race = "slime",
-         class_ = "wizard",
+         race = "core.slime",
+         class_ = "core.wizard",
          resistances = {["core.mind"] = 500},
          image = 430,
          female_image = 431,
@@ -41,10 +40,10 @@ data:add(
          eqtwohand = 7,
          eqweapon1 = 8,
 
-         color = "Blue",
-         sex = "Female",
-         original_relationship = "Aggressive",
-         flags = {"IsSuitableForMount", "Splits2"},
+         color = "blue",
+         sex = "female",
+         original_relationship = "aggressive",
+         flags = {"is_suitable_for_mount", "splits2"},
       }
    }
 )

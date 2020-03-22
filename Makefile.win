@@ -1,15 +1,13 @@
 # Change this variable to point to your Boost installation.
-BOOST_DIR = E:\build\SDK\boost_1_69_0
+BOOST_ROOT = E:\build\SDK\boost_1_69_0
+# Change this variable to point to your OpenSSL installation.
+OPENSSL_ROOT_DIR = E:\build\SDK\OpenSSL-v111-Win64
 
 BIN_DIR = bin
 
-BOOST_ROOT = $(BOOST_DIR)
-BOOST_INCLUDEDIR = $(BOOST_DIR)
-BOOST_LIBRARYDIR = $(BOOST_INCLUDEDIR)\lib64-msvc-14.1
 CMAKE_ARGS = \
         -DBOOST_ROOT="$(BOOST_ROOT)" \
-        -DBOOST_INCLUDEDIR="$(BOOST_INCLUDEDIR)" \
-        -DBOOST_LIBRARYDIR="$(BOOST_LIBRARYDIR)" \
+        -DOPENSSL_ROOT_DIR="$(OPENSSL_ROOT_DIR)" \
         -G "Visual Studio 15 2017 Win64" \
         $(CMAKE_ARGS)
 
@@ -92,11 +90,6 @@ clean: FORCE # Clean up built products.
 # Format src/*.{hpp,cpp} except under src/thirdparty.
 format: FORCE # Format all C++ source files.
 	powershell -Command "Get-ChildItem src -Include *.cpp,*.hpp -Recurs | Where {$$_.FullName -notlike '*\src\thirdparty\*'} | Foreach {clang-format -i $$_.FullName; Write-Host $$_.Name}"
-	git diff
-
-
-putit: FORCE # Generate serializers for save data.
-	python3 .\src\putit\bin\putit.py
 	git diff
 
 

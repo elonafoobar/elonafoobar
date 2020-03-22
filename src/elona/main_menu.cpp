@@ -1,4 +1,5 @@
 #include "main_menu.hpp"
+
 #include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
 #include "../version.hpp"
@@ -9,6 +10,7 @@
 #include "ctrl_file.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
+#include "init.hpp"
 #include "input.hpp"
 #include "keybind/keybind.hpp"
 #include "lua_env/mod_manager.hpp"
@@ -16,6 +18,7 @@
 #include "main_menu.hpp"
 #include "menu.hpp"
 #include "random.hpp"
+#include "save.hpp"
 #include "ui.hpp"
 #include "ui/menu_cursor_history.hpp"
 #include "ui/simple_prompt.hpp"

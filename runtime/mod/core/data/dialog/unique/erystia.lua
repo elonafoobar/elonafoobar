@@ -1,14 +1,13 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
-local table = require("game.table")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local I18N = ELONA.require("core.I18N")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
+local table = table
 
-local common = require_relative("data/dialog/common")
+local common = require("../common.lua")
 
 return {
-   id = "erystia",
    root = "core.talk.unique.erystia",
    nodes = {
       __start = function()
@@ -47,7 +46,7 @@ return {
          },
          on_finish = function()
             GUI.play_sound("core.write1")
-            GUI.txt(I18N.get("core.talk.unique.erystia.all_stones.you_receive"), "Green")
+            GUI.txt(I18N.get("core.talk.unique.erystia.all_stones.you_receive"), "green")
             Item.create(Chara.player().position, "core.palmia_pride", 0)
             GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
             Internal.set_quest_flag("main_quest", 125)
@@ -65,7 +64,7 @@ return {
          },
          on_finish = function()
             GUI.play_sound("core.write1")
-            GUI.txt(I18N.get("core.talk.unique.erystia.stones.you_receive"), "Green")
+            GUI.txt(I18N.get("core.talk.unique.erystia.stones.you_receive"), "green")
             Internal.set_quest_flag("main_quest", 110)
          end
       },
@@ -196,7 +195,7 @@ return {
          },
          on_finish = function()
             GUI.play_sound("core.write1")
-            GUI.txt(I18N.get("core.talk.unique.erystia.introduction.pledge_strength.you_receive"), "Green")
+            GUI.txt(I18N.get("core.talk.unique.erystia.introduction.pledge_strength.you_receive"), "green")
             Internal.set_quest_flag("main_quest", 60)
          end
       },

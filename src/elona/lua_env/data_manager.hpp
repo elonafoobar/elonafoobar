@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+
 #include "../filesystem.hpp"
 #include "data_table.hpp"
 #include "lua_submodule.hpp"
@@ -46,6 +47,7 @@ public:
 private:
     void _init_from_mod(ModEnv& mod);
 
+    sol::table _public_interface;
     DataTable _data;
 };
 

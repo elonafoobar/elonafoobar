@@ -1,4 +1,5 @@
 #include "ui_menu_character_sheet.hpp"
+
 #include "../ability.hpp"
 #include "../audio.hpp"
 #include "../buff.hpp"
@@ -7,6 +8,7 @@
 #include "../character_status.hpp"
 #include "../class.hpp"
 #include "../data/types/type_asset.hpp"
+#include "../data/types/type_buff.hpp"
 #include "../draw.hpp"
 #include "../enchantment.hpp"
 #include "../keybind/keybind.hpp"
@@ -467,7 +469,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_name()
     s(0) = cdatan(0, cc);
     s(1) = cdatan(1, cc);
     s(2) = cnven(i18n::s.get_m("race", cdatan(2, cc), "name"));
-    s(4) = cnven(class_get_name(cdatan(3, cc)));
+    s(4) = cnven(class_get_name(data::InstanceId{cdatan(3, cc)}));
     if (cdata[cc].sex == 0)
     {
         s(3) = cnven(i18n::s.get("core.ui.sex3.male"));
@@ -671,9 +673,11 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
     if (_cs_buffmax != 0)
     {
         const auto duration = buff_calc_duration(
-            cdata[cc].buffs[_cs_buff].id, cdata[cc].buffs[_cs_buff].power);
+            *the_buff_db.get_id_from_legacy(cdata[cc].buffs[_cs_buff].id),
+            cdata[cc].buffs[_cs_buff].power);
         const auto description = buff_get_description(
-            cdata[cc].buffs[_cs_buff].id, cdata[cc].buffs[_cs_buff].power);
+            *the_buff_db.get_id_from_legacy(cdata[cc].buffs[_cs_buff].id),
+            cdata[cc].buffs[_cs_buff].power);
         buff_desc = ""s +
             i18n::s.get_enum_property(
                 "core.buff", "name", cdata[cc].buffs[_cs_buff].id) +
@@ -879,7 +883,7 @@ void UIMenuCharacterSheet::_draw_skill_desc(int cnt, int skill_id)
                 "ability",
                 the_ability_db.get_id_from_legacy(skill_id)->get(),
                 "description")
-            .get_value_or(""));
+            .value_or(""));
 }
 
 void UIMenuCharacterSheet::_draw_skill_train_cost(

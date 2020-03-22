@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+
 #include "../snail/window.hpp"
 #include "filesystem.hpp"
 #include "shared_id.hpp"

@@ -1,4 +1,5 @@
 #include "ui_menu_npc_tone.hpp"
+
 #include "../audio.hpp"
 #include "../i18n.hpp"
 

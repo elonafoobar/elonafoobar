@@ -1,5 +1,7 @@
 #include "adventurer.hpp"
+
 #include <string>
+
 #include "ability.hpp"
 #include "area.hpp"
 #include "character.hpp"
@@ -363,7 +365,7 @@ int adventurer_discover_equipment()
         item->identify_state = IdentifyState::completely;
         if (item->quality >= Quality::miracle)
         {
-            if (the_item_db[itemid2int(item->id)]->category < 50000)
+            if (is_equipment(the_item_db[itemid2int(item->id)]->category))
             {
                 addnews(1, rc, 0, itemname(item->index));
             }

@@ -23,6 +23,7 @@ jobs:
         sudo add-apt-repository ppa:mhier/libboost-latest
         sudo apt update
         sudo apt install -y \
+          g++-8 \
           gtk+-3.0 \
           libboost1.70-dev \
           liblua5.3-dev \
@@ -52,6 +53,9 @@ jobs:
       run: |
         make clean
         make tests VERBOSE=1
+      env:
+        CC: gcc-8
+        CXX: g++-8
 
 
   build-macos:
@@ -92,3 +96,21 @@ jobs:
       run: |
         make clean
         make tests VERBOSE=1
+
+  clang-format:
+    name: Run clang-format
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Install Dependencies
+      run: |
+        brew update
+        brew install -f \
+          clang-format
+
+    - name: Run clang-format
+      run: |
+        clang-format --version
+        make format

@@ -1,10 +1,8 @@
 -- Contains all possible item parameters for testing.
-data:add(
+ELONA.data:add(
+   "core.item",
    {
-      {
-         type = "core.item",
-         id = "putitoro",
-
+      putitoro = {
          legacy_id = 9999,
          image = 695,
          value = 2000,
@@ -35,7 +33,7 @@ data:add(
          has_random_name = false,
          tags = { "noshop", "nodownload" },
          rftags = { "fish" },
-         color = "White",
+         color = "white",
          locale_key_prefix = "core.item.putitoro",
       }
    }

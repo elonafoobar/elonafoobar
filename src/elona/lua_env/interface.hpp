@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../data/id.hpp"
 #include "export_manager.hpp"
 #include "handle_manager.hpp"
 #include "lua_env.hpp"
@@ -96,12 +97,16 @@ sol::table create_table(Args&&... args)
 /**
  * Obtains a Lua table reference to a data member in the global data table.
  */
-optional<ConfigTable> data(const char* type, const std::string& id);
+optional<ConfigTable> get_data(
+    data::PrototypeId prototype_id,
+    data::InstanceId instance_id);
 
 /**
  * Obtains a Lua table reference to a data member in the global data table.
  */
-optional<ConfigTable> data(const char* type, int legacy_id);
+optional<ConfigTable> get_data(
+    data::PrototypeId prototype_id,
+    int legacy_instance_id);
 
 fs::path resolve_path_for_mod(const std::string& path);
 

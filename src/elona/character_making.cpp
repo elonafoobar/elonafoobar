@@ -1,4 +1,5 @@
 #include "character_making.hpp"
+
 #include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
@@ -14,29 +15,32 @@
 #include "menu.hpp"
 #include "race.hpp"
 #include "random.hpp"
+#include "save.hpp"
 #include "text.hpp"
 #include "ui.hpp"
-#include "variables.hpp"
-
 #include "ui/ui_menu_charamake_alias.hpp"
 #include "ui/ui_menu_charamake_attributes.hpp"
 #include "ui/ui_menu_charamake_class.hpp"
 #include "ui/ui_menu_charamake_gender.hpp"
 #include "ui/ui_menu_charamake_race.hpp"
-
-
-namespace
-{
-elona_vector1<std::string> cmrace;
-std::string cmclass;
-elona_vector1<int> cmstats;
-elona_vector1<int> cmlock;
-} // namespace
+#include "variables.hpp"
 
 
 
 namespace elona
 {
+
+namespace
+{
+
+data::InstanceId cmrace;
+data::InstanceId cmclass;
+elona_vector1<int> cmstats;
+elona_vector1<int> cmlock;
+
+} // namespace
+
+
 
 static void _draw_background_and_caption(const I18NKey& key)
 {
@@ -73,8 +77,7 @@ MainMenuResult character_making_select_race()
     else
     {
         auto value = *result.value;
-        cmrace(0) = value.race_id;
-        cmrace(1) = value.race_name;
+        cmrace = value.race_id;
         return MainMenuResult::character_making_select_sex;
     }
 }
@@ -110,7 +113,7 @@ MainMenuResult character_making_select_class(bool advanced_to_next_menu)
         snd("core.ok1");
     }
 
-    auto result = ui::UIMenuCharamakeClass(cmrace(0), cmrace(1)).show();
+    auto result = ui::UIMenuCharamakeClass(cmrace).show();
 
     if (result.canceled)
     {
@@ -122,7 +125,7 @@ MainMenuResult character_making_select_class(bool advanced_to_next_menu)
     }
     else
     {
-        cmclass = *result.value;
+        cmclass = result.value->class_id;
         return MainMenuResult::character_making_role_attributes;
     }
 }
@@ -138,9 +141,8 @@ MainMenuResult character_making_role_attributes(bool advanced_to_next_menu)
         cmlock(8) = 2;
     }
 
-    auto result =
-        ui::UIMenuCharamakeAttributes(cmrace(0), cmclass, cmstats, cmlock)
-            .show();
+    const auto result =
+        ui::UIMenuCharamakeAttributes(cmrace, cmclass, cmstats, cmlock).show();
 
     if (result.canceled)
     {
@@ -158,7 +160,7 @@ MainMenuResult character_making_role_attributes(bool advanced_to_next_menu)
         // assign to one will assign to the 0th element, as in HSP.
         for (size_t i = 0; i < stats.size(); i++)
         {
-            cmstats(i) = stats(i);
+            cmstats(i) = stats.at(i);
         }
 
         return MainMenuResult::character_making_select_feats;
@@ -586,7 +588,7 @@ void draw_race_or_class_info(const std::string& description)
                            "ability",
                            the_ability_db.get_id_from_legacy(cnt)->get(),
                            "description")
-                       .get_value_or("");
+                       .value_or("");
             if (en)
             {
                 if (strlen_u(s(1)) > 45)

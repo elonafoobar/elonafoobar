@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "enums.hpp"
 #include "optional.hpp"
 
@@ -23,5 +25,6 @@ TurnResult pc_turn(bool advance_time = true);
 
 optional<TurnResult> handle_pc_action(std::string& action);
 
+void proc_turn_end(int);
 
 } // namespace elona

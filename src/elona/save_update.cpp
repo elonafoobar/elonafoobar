@@ -1,4 +1,5 @@
 #include "save_update.hpp"
+
 #include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
 #include "character.hpp"
@@ -6,7 +7,7 @@
 #include "lua_env/handle_manager.hpp"
 #include "lua_env/lua_env.hpp"
 #include "lua_env/mod_serializer.hpp"
-#include "putit.hpp"
+#include "serialization/serialization.hpp"
 
 
 
@@ -54,7 +55,7 @@ void update_save_data(const fs::path& save_dir)
     const auto version_filepath = save_dir / "version.s0";
 
     Version version;
-    putit::BinaryIArchive::load(version_filepath, version);
+    serialization::binary::load(version_filepath, version);
 
     if (version.serial_id > latest_version.serial_id)
     {
@@ -74,7 +75,7 @@ void update_save_data(const fs::path& save_dir)
         _update_save_data(save_dir, serial_id);
     }
     version = latest_version;
-    putit::BinaryOArchive::save(version_filepath, version);
+    serialization::binary::save(version_filepath, version);
 }
 
 } // namespace elona

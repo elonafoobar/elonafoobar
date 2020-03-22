@@ -4,7 +4,6 @@
 
 #include "../util/range.hpp"
 #include "../util/strutil.hpp"
-
 #include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
@@ -27,6 +26,8 @@
 #include "optional.hpp"
 #include "random.hpp"
 #include "save.hpp"
+#include "text.hpp"
+#include "ui.hpp"
 #include "variables.hpp"
 
 
@@ -68,7 +69,7 @@ public:
                 return a.similarity < b.similarity;
             });
         return itr == std::end(candidates) ? none
-                                           : boost::make_optional(itr->value);
+                                           : std::make_optional(itr->value);
     }
 
     T get_force() const
@@ -632,8 +633,9 @@ bool wish_for_item(const std::string& input)
                 continue;
             }
         }
-        if (the_item_db[itemid2int(item->id)]->category == 52000 ||
-            the_item_db[itemid2int(item->id)]->category == 53000)
+        if (the_item_db[itemid2int(item->id)]->category ==
+                ItemCategory::potion ||
+            the_item_db[itemid2int(item->id)]->category == ItemCategory::scroll)
         {
             item->set_number(3 + rnd(2));
             if (item->value >= 20000)
@@ -663,7 +665,7 @@ bool wish_for_item(const std::string& input)
         }
         if (debug::voldemort && curse_state)
         {
-            item->curse_state = curse_state.get();
+            item->curse_state = curse_state.value();
         }
 
         item_identify(*item, IdentifyState::completely);

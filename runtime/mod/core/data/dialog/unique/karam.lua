@@ -1,13 +1,12 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local I18N = require("game.I18N")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
-local Map = require("game.Map")
-local Rand = require("game.Rand")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local I18N = ELONA.require("core.I18N")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
+local Map = ELONA.require("core.Map")
+local Rand = ELONA.require("core.Rand")
 
 return {
-   id = "karam",
    root = "core.talk.unique.karam",
    nodes = {
       __start = function()
@@ -34,7 +33,7 @@ return {
                   Chara.player().position,
                   {
                      level = Map.data.current_dungeon_level,
-                     quality = "Bad",
+                     quality = "bad",
                      flttypemajor = Internal.filter_set_dungeon()
                   }
                )

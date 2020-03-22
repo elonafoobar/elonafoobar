@@ -1,4 +1,5 @@
 #include "lua_api_gui.hpp"
+
 #include "../../audio.hpp"
 #include "../../lua_env/enums/enums.hpp"
 #include "../../message.hpp"
@@ -53,7 +54,7 @@ void LuaApiGUI::txtnew()
  */
 void LuaApiGUI::play_sound(const std::string& sound_id)
 {
-    elona::snd(SharedId(sound_id));
+    elona::snd(data::InstanceId{sound_id});
 }
 
 /**

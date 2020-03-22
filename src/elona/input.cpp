@@ -1,7 +1,9 @@
 #include "input.hpp"
+
 #include "../util/strutil.hpp"
 #include "audio.hpp"
 #include "blending.hpp"
+#include "character.hpp"
 #include "config.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -10,6 +12,9 @@
 #include "input_prompt.hpp"
 #include "keybind/input_context.hpp"
 #include "keybind/keybind.hpp"
+#include "map.hpp"
+#include "randomgen.hpp"
+#include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -26,6 +31,11 @@ namespace
 bool msgalert = false;
 
 } // namespace
+
+
+
+int kdx = 0;
+int kdy = 0;
 
 
 
@@ -483,6 +493,244 @@ void input_halt_input(HaltInput mode)
     case HaltInput::alert: msgalert = true; break;
     default: assert(0); break;
     }
+}
+
+
+
+int ask_direction()
+{
+    keywait = 1;
+    snail::Input::instance().clear_pressed_keys();
+    snd("core.pop2");
+    gsel(4);
+    x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx - 48;
+    y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny - 48;
+    gmode(0);
+    gcopy(0, x, y, 144, 144, 0, 0);
+    gsel(0);
+    t = 0;
+
+    while (true)
+    {
+        ++t;
+        gmode(2, 200 - t / 2 % 20 * (t / 2 % 20));
+        x = (cdata.player().position.x - scx) * inf_tiles + inf_screenx + 24;
+        y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny + 24;
+        if (!getkey(snail::Key::alt))
+        {
+            draw_rotated("direction_arrow", x, y - 48, 0);
+            draw_rotated("direction_arrow", x, y + 48, 180);
+            draw_rotated("direction_arrow", x + 48, y, 90);
+            draw_rotated("direction_arrow", x - 48, y, 270);
+        }
+        draw_rotated("direction_arrow", x - 48, y - 48, 315);
+        draw_rotated("direction_arrow", x + 48, y + 48, 135);
+        draw_rotated("direction_arrow", x + 48, y - 48, 45);
+        draw_rotated("direction_arrow", x - 48, y + 48, 225);
+        redraw();
+        gmode(0);
+        gcopy(4, 0, 0, 144, 144, x - 48 - 24, y - 48 - 24);
+        gmode(2);
+        auto action = key_check(KeyWaitDelay::walk_run);
+        x = cdata.player().position.x;
+        y = cdata.player().position.y;
+        if (action == "wait" || action == "enter")
+        {
+            tlocx = x;
+            tlocy = y;
+            input_halt_input(HaltInput::force);
+            return 1;
+        }
+        if (action == "north")
+        {
+            if (getkey(snail::Key::alt))
+            {
+                continue;
+            }
+            else
+            {
+                y -= 1;
+            }
+        }
+        if (action == "south")
+        {
+            if (getkey(snail::Key::alt))
+            {
+                continue;
+            }
+            else
+            {
+                y += 1;
+            }
+        }
+        if (action == "west")
+        {
+            if (getkey(snail::Key::alt))
+            {
+                continue;
+            }
+            else
+            {
+                x -= 1;
+            }
+        }
+        if (action == "east")
+        {
+            if (getkey(snail::Key::alt))
+            {
+                continue;
+            }
+            else
+            {
+                x += 1;
+            }
+        }
+        if (action == "northwest")
+        {
+            x -= 1;
+            y -= 1;
+        }
+        if (action == "northeast")
+        {
+            x += 1;
+            y -= 1;
+        }
+        if (action == "southwest")
+        {
+            x -= 1;
+            y += 1;
+        }
+        if (action == "southeast")
+        {
+            x += 1;
+            y += 1;
+        }
+        if (action != ""s)
+        {
+            if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
+            {
+                x = cdata.player().position.x;
+                y = cdata.player().position.y;
+                input_halt_input(HaltInput::force);
+                return 0;
+            }
+            if (x == cdata.player().position.x &&
+                y == cdata.player().position.y)
+            {
+                return 0;
+            }
+            tlocx = x;
+            tlocy = y;
+            input_halt_input(HaltInput::force);
+            return 1;
+        }
+    }
+}
+
+
+
+optional<TurnResult> check_angband()
+{
+    if (game_data.angband_flag == -1 ||
+        map_data.type == mdata_t::MapType::world_map)
+        return none;
+
+    switch (game_data.angband_flag)
+    {
+    case 0:
+        if (key == u8"Q"s)
+        {
+            txt(i18n::s.get("core.action.angband.q"));
+            ++game_data.angband_flag;
+            update_screen();
+            return TurnResult::pc_turn_user_error;
+        }
+        break;
+    case 1:
+        if (key == u8"y"s)
+        {
+            txt(i18n::s.get("core.action.angband.y"));
+            ++game_data.angband_flag;
+            update_screen();
+            return TurnResult::pc_turn_user_error;
+        }
+        break;
+    case 2:
+        if (key == u8"@"s)
+        {
+            txt(i18n::s.get("core.action.angband.at"));
+            for (int i = 0; i < 10; ++i)
+            {
+                flt();
+                chara_create(
+                    -1,
+                    37,
+                    cdata.player().position.x,
+                    cdata.player().position.y);
+            }
+            game_data.angband_flag = -1;
+            update_screen();
+            return TurnResult::turn_end;
+        }
+        break;
+    default: break;
+    }
+
+    game_data.angband_flag = 0;
+    return none;
+}
+
+
+
+int key_direction(const std::string& action)
+{
+    kdx = 0;
+    kdy = 0;
+    if (action == "north")
+    {
+        --kdy;
+        return 1;
+    }
+    if (action == "south")
+    {
+        ++kdy;
+        return 1;
+    }
+    if (action == "west")
+    {
+        --kdx;
+        return 1;
+    }
+    if (action == "east")
+    {
+        ++kdx;
+        return 1;
+    }
+    if (action == "northwest")
+    {
+        --kdx;
+        --kdy;
+        return 1;
+    }
+    if (action == "northeast")
+    {
+        ++kdx;
+        --kdy;
+        return 1;
+    }
+    if (action == "southwest")
+    {
+        --kdx;
+        ++kdy;
+        return 1;
+    }
+    if (action == "southeast")
+    {
+        ++kdx;
+        ++kdy;
+        return 1;
+    }
+    return 0;
 }
 
 } // namespace elona

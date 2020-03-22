@@ -1,8 +1,10 @@
 #include "lua_api_chara.hpp"
+
 #include "../../character.hpp"
-#include "../../lua_env/enums/enums.hpp"
-#include "../../lua_env/interface.hpp"
 #include "../../map.hpp"
+#include "../../randomgen.hpp"
+#include "../enums/enums.hpp"
+#include "../interface.hpp"
 
 namespace elona
 {
@@ -16,8 +18,19 @@ namespace lua
  * @tparam LuaCharacter chara (const) a character
  * @treturn bool true if the character is alive
  */
-bool LuaApiChara::is_alive(sol::optional<LuaCharacterHandle> chara)
+bool LuaApiChara::is_alive(
+// `libclang`, invoked from `tools/docgen`, fails to parse this parameter
+//  for some reason.
+#ifndef ELONA_DOCGEN
+    sol::optional<LuaCharacterHandle> chara
+#else
+    int chara
+#endif
+)
 {
+    // `libclang`, invoked from `tools/docgen`, fails to parse this function's
+    // body for some reason.
+#ifndef ELONA_DOCGEN
     if (!chara)
     {
         return false;
@@ -30,6 +43,7 @@ bool LuaApiChara::is_alive(sol::optional<LuaCharacterHandle> chara)
     }
 
     return chara_ref->state() == Character::State::alive;
+#endif
 }
 
 /**
@@ -145,7 +159,7 @@ sol::optional<LuaCharacterHandle> LuaApiChara::create_from_id(
 sol::optional<LuaCharacterHandle>
 LuaApiChara::create_from_id_xy(int x, int y, const std::string& id)
 {
-    auto data = the_character_db.ensure(id);
+    auto data = the_character_db.ensure(data::InstanceId{id});
 
     if (elona::chara_create(-1, data.legacy_id, x, y) != 0)
     {
@@ -208,7 +222,7 @@ LuaApiChara::generate_from_map_id_xy(int x, int y, const std::string& id)
  */
 int LuaApiChara::kill_count(const std::string& id)
 {
-    auto data = the_character_db[id];
+    auto data = the_character_db[data::InstanceId{id}];
     if (!data)
     {
         return 0;
@@ -231,7 +245,7 @@ sol::optional<LuaCharacterHandle> LuaApiChara::find(
     const std::string& id,
     sol::optional<EnumString> location)
 {
-    auto data = the_character_db[id];
+    auto data = the_character_db[data::InstanceId{id}];
     if (!data)
     {
         return sol::nullopt;

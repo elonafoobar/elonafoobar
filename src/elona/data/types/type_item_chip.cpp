@@ -1,4 +1,5 @@
 #include "type_item_chip.hpp"
+
 #include "../../lua_env/interface.hpp"
 #include "../../variables.hpp"
 
@@ -7,7 +8,7 @@
 namespace elona
 {
 
-const constexpr char* data::LuaLazyCacheTraits<ItemChipDB>::type_id;
+const constexpr char* data::DatabaseTraits<ItemChipDB>::type_id;
 
 
 
@@ -63,7 +64,7 @@ ItemChipData ItemChipDB::convert(
     }
 
     return ItemChipData{
-        SharedId{id},
+        data::InstanceId{id},
         legacy_id,
         Extent{x, y, width, height, frame_width},
         ItemChip{
@@ -71,8 +72,10 @@ ItemChipData ItemChipDB::convert(
             offset_y,
             stack_height,
             shadow,
-            animation},
-        filepath};
+            animation,
+        },
+        filepath,
+    };
 }
 
 } // namespace elona

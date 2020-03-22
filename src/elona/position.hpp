@@ -1,19 +1,19 @@
 #pragma once
 
 #include <iostream>
+#include <sstream>
+#include <string>
+
+#include "serialization/macros.hpp"
 
 
 
 namespace elona
 {
 
-/// @putit
 struct Position
 {
-    /// @putit
     int x = 0;
-
-    /// @putit
     int y = 0;
 
     Position()
@@ -27,7 +27,28 @@ struct Position
     }
 
 
-#include "_putit/position.cpp"
+
+    std::string to_string() const
+    {
+        std::stringstream ss;
+        ss << '(' << x << ", " << y << ')';
+        return ss.str();
+    }
+
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Position");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, x);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, y);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
+    }
 };
 
 
@@ -45,10 +66,12 @@ inline bool operator!=(const Position& lhs, const Position& rhs)
 
 inline std::ostream& operator<<(std::ostream& out, const Position& pos)
 {
-    out << '(' << pos.x << ", " << pos.y << ')';
+    out << pos.to_string();
     return out;
 }
 
 
+int direction(int = 0, int = 0, int = 0, int = 0);
+int dist(int = 0, int = 0, int = 0, int = 0);
 
 } // namespace elona

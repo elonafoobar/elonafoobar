@@ -5,6 +5,7 @@
 #include "enchantment.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "variables.hpp"
 
 
 
@@ -247,7 +248,8 @@ void _load_item_enchantment_desc(const Item& item, int& num_of_desc)
         if (enc.id == 0)
             break;
 
-        get_enchantment_description(enc.id, enc.power, reftype);
+        get_enchantment_description(
+            enc.id, enc.power, the_item_db[itemid2int(item.id)]->category);
         listn(0, num_of_desc) = i18n::s.get("core.enchantment.it") + s;
         list(0, num_of_desc) = rtval;
         list(1, num_of_desc) = rtval(1);

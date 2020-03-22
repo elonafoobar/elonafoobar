@@ -1,4 +1,5 @@
 #include "tcg.hpp"
+
 #include "audio.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
@@ -11,6 +12,9 @@
 #include "input_prompt.hpp"
 #include "macro.hpp"
 #include "random.hpp"
+#include "variables.hpp"
+
+
 
 namespace elona
 {

@@ -2,9 +2,10 @@
 
 #include <unordered_map>
 #include <vector>
+
 #include "../../enums.hpp"
 #include "../../optional.hpp"
-#include "../lua_lazy_cache.hpp"
+#include "../base_database.hpp"
 
 
 
@@ -88,7 +89,7 @@ namespace elona
 
 struct CharacterData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
     std::vector<int> normal_actions;
     std::vector<int> special_actions;
@@ -98,7 +99,7 @@ struct CharacterData
     int ai_heal;
     int ai_move;
     int can_talk;
-    std::string class_;
+    data::InstanceId class_id;
     ColorIndex color;
     int creaturepack;
     int cspecialeq;
@@ -123,9 +124,9 @@ struct CharacterData
     int original_relationship;
     std::string portrait_male;
     std::string portrait_female;
-    std::string race;
+    data::InstanceId race_id;
     int sex;
-    std::unordered_map<SharedId, int> resistances;
+    std::unordered_map<data::InstanceId, int> resistances;
     int fltselect;
     int category;
     int rarity;

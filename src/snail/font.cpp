@@ -1,6 +1,8 @@
 #include "font.hpp"
+
 #include <tuple>
 #include <unordered_map>
+
 #include "../elona/filesystem.hpp"
 
 

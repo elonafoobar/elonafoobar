@@ -1,4 +1,5 @@
 #include "interface.hpp"
+
 #include "config_table.hpp"
 #include "data_manager.hpp"
 #include "mod_manager.hpp"
@@ -36,9 +37,12 @@ std::vector<fs::path> mod_dirs_internal(const fs::path& base_dir, F predicate)
 
 
 
-optional<ConfigTable> data(const char* type, const std::string& id)
+optional<ConfigTable> get_data(
+    data::PrototypeId prototype_id,
+    data::InstanceId instance_id)
 {
-    if (auto table = lua->get_data_manager().get().raw(type, id))
+    if (auto table =
+            lua->get_data_manager().get().raw(prototype_id, instance_id))
     {
         return ConfigTable(*table);
     }
@@ -47,11 +51,14 @@ optional<ConfigTable> data(const char* type, const std::string& id)
 
 
 
-optional<ConfigTable> data(const char* type, int legacy_id)
+optional<ConfigTable> get_data(
+    data::PrototypeId prototype_id,
+    int legacy_instance_id)
 {
-    if (auto id = lua->get_data_manager().get().by_legacy(type, legacy_id))
+    if (auto id = lua->get_data_manager().get().by_legacy(
+            prototype_id, legacy_instance_id))
     {
-        return data(type, *id);
+        return get_data(prototype_id, *id);
     }
 
     return none;

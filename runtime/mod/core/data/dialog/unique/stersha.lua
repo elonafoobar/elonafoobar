@@ -1,7 +1,6 @@
-local Internal = require("game.Internal")
+local Internal = ELONA.require("core.Internal")
 
 return {
-   id = "stersha",
    root = "core.talk.unique.stersha",
    nodes = {
       __start = function()

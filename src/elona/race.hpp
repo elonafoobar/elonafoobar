@@ -3,6 +3,7 @@
 #include <functional>
 #include <string>
 #include <vector>
+
 #include "data/types/type_race.hpp"
 
 
@@ -14,8 +15,10 @@ struct Character;
 
 
 
-void race_init_chara(Character& chara, const std::string& race_id);
+void race_init_chara(Character& chara, data::InstanceId race_id);
 std::vector<std::reference_wrapper<const RaceData>> race_get_available(
     bool is_extra_race);
+
+void gain_race_feat();
 
 } // namespace elona

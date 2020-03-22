@@ -1,19 +1,29 @@
 #include "lua_class_character.hpp"
+
 #include "../../ability.hpp"
 #include "../../buff.hpp"
 #include "../../character.hpp"
 #include "../../character_status.hpp"
+#include "../../data/types/type_buff.hpp"
 #include "../../dmgheal.hpp"
 #include "../../element.hpp"
 #include "../../enums.hpp"
 #include "../../food.hpp"
 #include "../../god.hpp"
-#include "../../lua_env/enums/enums.hpp"
-#include "../../lua_env/interface.hpp"
+#include "../../map_cell.hpp"
+#include "../../text.hpp"
 #include "../../ui.hpp"
 #include "../../variables.hpp"
 #include "../data_manager.hpp"
+#include "../enums/enums.hpp"
+#include "../interface.hpp"
 #include "lua_class_ability.hpp"
+
+
+
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Character)
+
+
 
 namespace elona
 {
@@ -22,7 +32,7 @@ namespace lua
 
 void LuaCharacter::damage_hp(Character& self, int amount)
 {
-    LuaCharacter::damage_hp_source(self, amount, "UnseenHand");
+    LuaCharacter::damage_hp_source(self, amount, "unseen_hand");
 }
 
 /**
@@ -119,9 +129,9 @@ void LuaCharacter::add_buff(
     int power,
     int turns)
 {
-    the_buff_db.ensure(buff_id);
+    the_buff_db.ensure(data::InstanceId{buff_id});
 
-    elona::buff_add(self, buff_id, power, turns);
+    elona::buff_add(self, data::InstanceId{buff_id}, power, turns);
 }
 
 /**
@@ -140,10 +150,10 @@ void LuaCharacter::add_buff_doer(
     int turns,
     LuaCharacterHandle doer)
 {
-    the_buff_db.ensure(buff_id);
+    the_buff_db.ensure(data::InstanceId{buff_id});
 
     auto& doer_ref = lua::ref<Character>(doer);
-    elona::buff_add(self, buff_id, power, turns, doer_ref);
+    elona::buff_add(self, data::InstanceId{buff_id}, power, turns, doer_ref);
 }
 
 /**
@@ -198,18 +208,18 @@ bool LuaCharacter::get_flag(Character& chara, const EnumString& flag)
 /**
  * @luadoc
  *
- * Sets the value of a flag on this character. <b>Note</b>: Currently, all flags
- * up to <code>IsQuickTempered</code> are "intrinsic" and are always reset when
- * this character is refreshed each turn. To change these flags, you must call
- * this function inside a handler for
+ * Sets the value of a flag on this character. <b>Note</b>: Currently, all
+ * flags up to <code>is_quick_tempered</code> are "intrinsic" and are always
+ * reset when this character is refreshed each turn. To change these flags, you
+ * must call this function inside a handler for
  * <code>core.character_refreshed</code>, or the flag will be reset later.
  * @tparam Enums.CharaFlag flag the flag to set
  * @tparam bool value the flag's new value
  * @see core.event
- * @usage local Event = require("game.Event")
+ * @usage local Event = ELONA.require("core.Event")
  *
  * local function make_invisible(e)
- * e.chara:set_flag("IsInvisible", true) -- intrinsic, reset on refresh
+ * e.chara:set_flag("is_invisible", true) -- intrinsic, reset on refresh
  * end
  *
  * -- force this flag to be overridden after this character is refreshed.
@@ -234,7 +244,7 @@ sol::optional<LuaAbility> LuaCharacter::get_skill(
     Character& self,
     const std::string& skill_id)
 {
-    auto data = the_ability_db[skill_id];
+    auto data = the_ability_db[data::InstanceId{skill_id}];
     if (!data)
     {
         return sol::nullopt;
@@ -270,7 +280,7 @@ void LuaCharacter::gain_skill_stock(
     int initial_level,
     int initial_stock)
 {
-    auto data = the_ability_db[skill_id];
+    auto data = the_ability_db[data::InstanceId{skill_id}];
     if (!data)
     {
         return;
@@ -292,7 +302,7 @@ void LuaCharacter::gain_skill_exp(
     const std::string& skill_id,
     int amount)
 {
-    auto data = the_ability_db[skill_id];
+    auto data = the_ability_db[data::InstanceId{skill_id}];
     if (!data)
     {
         return;
@@ -493,7 +503,7 @@ void LuaCharacter::move_to_xy(Character& self, int x, int y)
  */
 void LuaCharacter::switch_religion(Character& self, const std::string& god_id)
 {
-    the_god_db.ensure(god_id);
+    the_god_db.ensure(data::InstanceId{god_id});
 
     self.god_id = god_id;
     elona::switch_religion();
@@ -540,8 +550,8 @@ std::string LuaCharacter::metamethod_tostring(const Character& self)
 
 void LuaCharacter::bind(sol::state& lua)
 {
-    auto LuaCharacter = lua.create_simple_usertype<Character>();
-    LuaCharacter.set("new", sol::no_constructor);
+    auto LuaCharacter =
+        lua.new_usertype<Character>("LuaCharacter", sol::no_constructor);
     LuaCharacter.set("lua_type", &Character::lua_type);
 
     // Properties
@@ -842,12 +852,10 @@ void LuaCharacter::bind(sol::state& lua)
      *
      * [R] The prototype data of the character.
      */
-    LuaCharacter.set(
-        "prototype", sol::property([](Character& self) {
-            auto id = the_character_db.get_id_from_legacy(charaid2int(self.id));
-            return *lua::lua->get_data_manager().get().raw(
-                "core.chara", id->get());
-        }));
+    LuaCharacter.set("prototype", sol::property([](Character& self) {
+                         return *lua::lua->get_data_manager().get().raw(
+                             "core.chara", self.new_id());
+                     }));
 
     // Methods
     LuaCharacter.set(
@@ -889,9 +897,6 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set("get_ailment", &LuaCharacter::get_ailment);
 
     LuaCharacter.set("__tostring", &LuaCharacter::metamethod_tostring);
-
-    auto key = Character::lua_type();
-    lua.set_usertype(key, LuaCharacter);
 } // namespace lua
 
 } // namespace lua

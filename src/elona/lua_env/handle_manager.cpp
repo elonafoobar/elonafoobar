@@ -1,6 +1,9 @@
 #include "handle_manager.hpp"
+
 #include <cassert>
+
 #include <set>
+
 #include "../character.hpp"
 #include "../config.hpp"
 #include "../item.hpp"
@@ -25,7 +28,7 @@ HandleManager::HandleManager(LuaEnv& lua)
     lua_state()->set("_IS_TEST", g_config.is_test());
 
     // Load the Lua chunk for storing handles.
-    safe_script(R"(Handle = require_relative("handle"))");
+    safe_script(R"(Handle = require("handle"))");
 
     bind(lua);
 }
@@ -34,9 +37,9 @@ HandleManager::HandleManager(LuaEnv& lua)
 
 void HandleManager::bind(LuaEnv& lua)
 {
-    sol::table game = lua.get_api_manager().get_game_api_table();
-    sol::table Chara = game["Chara"];
-    sol::table Item = game["Item"];
+    sol::table core = lua.get_api_manager().get_core_api_table();
+    sol::table Chara = core["Chara"];
+    sol::table Item = core["Item"];
 
     // Add iterating methods implemented in Lua.
     // TODO: See if this can be migrated to Sol's iteration scheme

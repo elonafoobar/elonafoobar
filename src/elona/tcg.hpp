@@ -93,4 +93,7 @@ int getspotsum(int = 0);
 void cpisenemy();
 void cpisme();
 
+int calcstartcard(int = 0);
+std::string cnvrare(int = 0);
+
 } // namespace elona

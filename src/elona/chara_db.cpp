@@ -42,7 +42,7 @@ void chara_db_set_stats(CharaId chara_id)
     cdata[rc].special_actions = data->special_actions;
     creaturepack = data->creaturepack;
     cdata[rc].can_talk = data->can_talk;
-    cdatan(0, rc) = i18n::s.get_m("chara", data->id, "name");
+    cdatan(0, rc) = i18n::s.get_m("chara", data->id.get(), "name");
     if (data->has_random_name)
     {
         cdatan(0, rc) = i18n::s.get(
@@ -51,13 +51,13 @@ void chara_db_set_stats(CharaId chara_id)
     }
     cdata[rc].original_relationship = cdata[rc].relationship =
         data->original_relationship;
-    if (!data->race.empty())
+    if (data->race_id != "")
     {
-        race_init_chara(cdata[rc], data->race);
+        race_init_chara(cdata[rc], data->race_id);
     }
-    if (!data->class_.empty())
+    if (data->class_id != "")
     {
-        class_init_chara(cdata[rc], data->class_);
+        class_init_chara(cdata[rc], data->class_id);
     }
     cdata[rc].element_of_unarmed_attack = data->element_of_unarmed_attack;
 
@@ -70,8 +70,9 @@ void chara_db_set_stats(CharaId chara_id)
         else
         {
             // Skip the resistance if undefined.
-            ELONA_WARN("lua.data") << "Undefined resistance ID: " << pair.first
-                                   << " (character " << data->id << ")";
+            ELONA_WARN("lua.data")
+                << "Undefined resistance ID: " << pair.first.get()
+                << " (character " << data->id.get() << ")";
         }
     }
 
@@ -153,7 +154,7 @@ std::string chara_db_get_name(CharaId chara_id)
 {
     if (const auto data = the_character_db[charaid2int(chara_id)])
     {
-        return i18n::s.get_m("chara", data->id, "name");
+        return i18n::s.get_m("chara", data->id.get(), "name");
     }
     else
     {
@@ -265,8 +266,7 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
     switch (chara_id)
     {
     case CharaId::younger_sister:
-    case CharaId::younger_sister_of_mansion:
-    {
+    case CharaId::younger_sister_of_mansion: {
         std::string text = i18n::s.get_enum("core.ui.onii", cdata.player().sex);
 
         if (talk_type == 100)
@@ -289,8 +289,7 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
         }
         break;
     }
-    case CharaId::maid:
-    {
+    case CharaId::maid: {
         std::string text =
             i18n::s.get_enum("core.ui.syujin", cdata.player().sex);
 
@@ -323,8 +322,7 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
         }
         break;
     }
-    case CharaId::younger_cat_sister:
-    {
+    case CharaId::younger_cat_sister: {
         std::string text = i18n::s.get_enum("core.ui.onii", cdata.player().sex);
 
         if (talk_type == 100)

@@ -1,4 +1,5 @@
 #include "fish.hpp"
+
 #include "character.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
@@ -45,7 +46,7 @@ int fish_select_at_random(int bait)
         sampler.add(fish.legacy_id, fish.rarity);
     }
 
-    return sampler.get().get_value_or(1);
+    return sampler.get().value_or(1);
 }
 
 } // namespace elona

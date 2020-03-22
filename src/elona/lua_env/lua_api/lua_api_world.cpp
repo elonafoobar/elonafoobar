@@ -1,6 +1,11 @@
 #include "lua_api_world.hpp"
+
 #include "../../deferred_event.hpp"
 #include "../../gdata.hpp"
+#include "../../text.hpp"
+#include "../../world.hpp"
+
+
 
 namespace elona
 {
@@ -154,7 +159,7 @@ void LuaApiWorld::bind(sol::table& api_table)
      *
      * [R] Data for the current game save.
      */
-    api_table.set("data", sol::property(&game_data));
+    api_table.set("data", &game_data);
 }
 
 } // namespace lua

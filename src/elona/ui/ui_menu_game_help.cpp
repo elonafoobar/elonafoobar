@@ -1,4 +1,5 @@
 #include "ui_menu_game_help.hpp"
+
 #include "../../util/fileutil.hpp"
 #include "../../util/strutil.hpp"
 #include "../audio.hpp"
@@ -39,7 +40,8 @@ bool UIMenuGameHelp::init()
     listn(0, 0) = i18n::s.get("core.ui.manual.keys.list");
     ++listmax;
 
-    _help.load(i18n::s.get_locale_dir("core") / "lazy" / "manual.txt");
+    _help.load(
+        lua::resolve_path_for_mod("<core>/locale/<LANGUAGE>/lazy/manual.txt"));
 
     for (const auto& section : _help.section_headings())
     {

@@ -1,12 +1,16 @@
 #include "lua_api_map.hpp"
+
 #include "../../area.hpp"
 #include "../../character.hpp"
 #include "../../data/types/type_map.hpp"
+#include "../../initialize_map.hpp"
 #include "../../lua_env/enums/enums.hpp"
 #include "../../map.hpp"
 #include "../../map_cell.hpp"
 #include "../../mapgen.hpp"
 #include "../interface.hpp"
+
+
 
 namespace elona
 {
@@ -466,7 +470,7 @@ void LuaApiMap::clear_feat_xy(int x, int y)
 
 
 /**
- * @ luadoc
+ * @luadoc
  *
  * Randomly sprays the map with the given tile type;
  */
@@ -482,7 +486,7 @@ void LuaApiMap::travel_to(const std::string& map_id)
 
 void LuaApiMap::travel_to_with_level(const std::string& map_id, int level)
 {
-    auto map = the_mapdef_db.ensure(map_id);
+    auto map = the_mapdef_db.ensure(data::InstanceId{map_id});
 
     game_data.player_x_on_map_leave = cdata.player().position.x;
     game_data.player_y_on_map_leave = cdata.player().position.y;
@@ -568,7 +572,7 @@ void LuaApiMap::bind(sol::table& api_table)
      * [R] The map data for the current map. This contains serialized values
      * controlling various aspects of the current map.
      */
-    api_table.set("data", sol::property(&map_data));
+    api_table.set("data", &map_data);
 
     /**
      * @luadoc area function

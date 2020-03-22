@@ -1,4 +1,5 @@
 #include "quest.hpp"
+
 #include "ability.hpp"
 #include "activity.hpp"
 #include "area.hpp"
@@ -14,11 +15,15 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
+#include "mapgen.hpp"
 #include "mef.hpp"
 #include "message.hpp"
+#include "quest.hpp"
 #include "random.hpp"
 #include "save.hpp"
+#include "text.hpp"
 #include "variables.hpp"
+#include "world.hpp"
 
 
 
@@ -1476,6 +1481,17 @@ void quest_complete()
     quest_data[rq].id = 0;
     quest_data[rq].progress = 0;
     save_set_autosave();
+}
+
+
+
+void clear_existing_quest_list()
+{
+    ++game_data.map_regenerate_count;
+    DIM3(qdata, 20, 500);
+    SDIM3(qname, 40, 500);
+    game_data.number_of_existing_quests = 0;
+    initialize_adata();
 }
 
 } // namespace elona

@@ -1,5 +1,7 @@
 #include "god.hpp"
+
 #include <iostream>
+
 #include "ability.hpp"
 #include "animation.hpp"
 #include "audio.hpp"
@@ -33,45 +35,44 @@ void txtgod(const GodId& id, int type)
     switch (type)
     {
     case 12:
-        message = i18n::s.get_m_optional("god", id, "random").get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "random").value_or("");
         break;
     case 9:
-        message = i18n::s.get_m_optional("god", id, "kill").get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "kill").value_or("");
         break;
     case 10:
-        message = i18n::s.get_m_optional("god", id, "night").get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "night").value_or("");
         break;
     case 11:
-        message = i18n::s.get_m_optional("god", id, "welcome").get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "welcome").value_or("");
         break;
     case 5:
-        message = i18n::s.get_m_optional("god", id, "believe").get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "believe").value_or("");
         break;
     case 1:
-        message = i18n::s.get_m_optional("god", id, "betray").get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "betray").value_or("");
         break;
     case 2:
-        message =
-            i18n::s.get_m_optional("god", id, "take_over").get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "take_over").value_or("");
         break;
     case 3:
-        message = i18n::s.get_m_optional("god", id, "fail_to_take_over")
-                      .get_value_or("");
+        message =
+            i18n::s.get_m_optional("god", id, "fail_to_take_over").value_or("");
         break;
     case 4:
-        message = i18n::s.get_m_optional("god", id, "offer").get_value_or("");
+        message = i18n::s.get_m_optional("god", id, "offer").value_or("");
         break;
     case 6:
         message =
-            i18n::s.get_m_optional("god", id, "receive_gift").get_value_or("");
+            i18n::s.get_m_optional("god", id, "receive_gift").value_or("");
         break;
     case 7:
         message = i18n::s.get_m_optional("god", id, "ready_to_receive_gift")
-                      .get_value_or("");
+                      .value_or("");
         break;
     case 8:
         message = i18n::s.get_m_optional("god", id, "ready_to_receive_gift2")
-                      .get_value_or("");
+                      .value_or("");
         break;
     default: assert(0);
     }
@@ -716,6 +717,31 @@ std::string god_name(const GodId& id)
 std::string god_name(int legacy_god_id)
 {
     return god_name(core_god::int2godid(legacy_god_id));
+}
+
+
+
+void god_fail_to_take_over_penalty()
+{
+    efid = 1114;
+    efp = 500;
+    tc = 0;
+    magic();
+    if (rnd(2))
+    {
+        efid = 622;
+        efp = 250;
+        tc = 0;
+        magic();
+        snd("core.punish1");
+    }
+    if (rnd(2))
+    {
+        efid = 1106;
+        efp = 100;
+        tc = 0;
+        magic();
+    }
 }
 
 } // namespace elona

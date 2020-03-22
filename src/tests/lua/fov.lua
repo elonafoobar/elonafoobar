@@ -1,10 +1,9 @@
-require_relative("tests/lua/support/minctest")
+require("tests/lua/support/minctest")
 
-local FOV = require("game.FOV")
+local FOV = ELONA.require("core.FOV")
 
-local Chara = require("game.Chara")
-local Enums = require("game.Enums")
-local Map = require("game.Map")
+local Chara = ELONA.require("core.Chara")
+local Map = ELONA.require("core.Map")
 
 lrun("test FOV.refresh", function()
         Testing.start_in_debug_map()
@@ -13,7 +12,7 @@ lrun("test FOV.refresh", function()
         local other = LuaPosition.new(pos.x, pos.y + 5)
         lequal(FOV.you_see(other), true)
 
-        Map.set_tile(pos.x, pos.y + 2, Map.generate_tile(Enums.TileKind.Wall))
+        Map.set_tile(pos.x, pos.y + 2, Map.generate_tile("wall"))
         lequal(FOV.you_see(other), true)
 
         FOV.refresh()
@@ -28,7 +27,7 @@ lrun("test FOV.los", function()
         lequal(FOV.los(first, second), true)
         lequal(FOV.los(first.x, first.y, second.x, second.y), true)
 
-        Map.set_tile(5, 7, Map.generate_tile(Enums.TileKind.Wall))
+        Map.set_tile(5, 7, Map.generate_tile("wall"))
         FOV.refresh()
         lequal(FOV.los(first, second), false)
         lequal(FOV.los(first.x, first.y, second.x, second.y), false)
@@ -44,7 +43,7 @@ lrun("test FOV.you_see", function()
         lequal(FOV.you_see(chara.position), true)
         lequal(FOV.you_see(chara.position.x, chara.position.y), true)
 
-        Map.set_tile(pos.x, pos.y + 2, Map.generate_tile(Enums.TileKind.Wall))
+        Map.set_tile(pos.x, pos.y + 2, Map.generate_tile("wall"))
         FOV.refresh()
         lequal(FOV.you_see(chara), false)
         lequal(FOV.you_see(chara.position), false)

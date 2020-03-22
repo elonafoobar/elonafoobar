@@ -1,4 +1,5 @@
 #include "ui_menu_charamake_attributes.hpp"
+
 #include "../ability.hpp"
 #include "../audio.hpp"
 #include "../character_making.hpp"
@@ -21,8 +22,8 @@ bool UIMenuCharamakeAttributes::init()
 void UIMenuCharamakeAttributes::_reroll_attributes()
 {
     chara_delete(0);
-    race_init_chara(cdata.player(), _race);
-    class_init_chara(cdata.player(), _klass);
+    race_init_chara(cdata.player(), _race_id);
+    class_init_chara(cdata.player(), _class_id);
     cdata.player().level = 1;
     for (int cnt = 10; cnt < 18; ++cnt)
     {
@@ -205,7 +206,12 @@ UIMenuCharamakeAttributes::on_key(const std::string& action)
         }
         if (*selected == 1)
         {
-            return UIMenuCharamakeAttributes::Result::finish(_attributes);
+            std::vector<int> ret;
+            for (size_t i = 0; i < _attributes.size(); ++i)
+            {
+                ret.push_back(_attributes(i));
+            }
+            return UIMenuCharamakeAttributes::Result::finish(ret);
         }
         if (_locked_attributes(*selected - 2) != 0)
         {

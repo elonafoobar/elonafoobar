@@ -1,4 +1,5 @@
 #include "ui_menu_composite_town.hpp"
+
 #include "ui_menu_town_chart.hpp"
 #include "ui_menu_town_economy.hpp"
 #include "ui_menu_town_politics.hpp"

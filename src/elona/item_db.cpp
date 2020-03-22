@@ -1,10 +1,13 @@
 #include <unordered_map>
+
 #include "character.hpp"
+#include "command.hpp"
 #include "data/types/type_item.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "itemgen.hpp"
 #include "menu.hpp"
 #include "random.hpp"
 #include "variables.hpp"
@@ -135,7 +138,7 @@ void item_db_get_charge_level(const Item& item, int legacy_id)
 
     const auto& info = the_item_db.ensure(legacy_id);
     ichargelevel = info.chargelevel;
-    reftype = info.category;
+    reftype = (int)info.category;
 }
 
 
@@ -152,7 +155,7 @@ void item_db_set_full_stats(Item& item, int legacy_id)
     item.difficulty_of_identification = 0; // Default value
     item.image = info.image;
     fixeditemenc(0) = 0; // Default value
-    reftype = info.category;
+    reftype = (int)info.category;
     reftypeminor = info.subcategory;
 
     switch (legacy_id)

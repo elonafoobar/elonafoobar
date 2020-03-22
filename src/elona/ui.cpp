@@ -1,7 +1,9 @@
 #include "ui.hpp"
+
 #include "../util/strutil.hpp"
 #include "ability.hpp"
 #include "audio.hpp"
+#include "cell_draw.hpp"
 #include "character.hpp"
 #include "config.hpp"
 #include "data/types/type_asset.hpp"
@@ -13,11 +15,14 @@
 #include "lua_env/console.hpp"
 #include "map.hpp"
 #include "random.hpp"
+#include "text.hpp"
 #include "variables.hpp"
 
 
 namespace
 {
+
+constexpr int inf_clockw = 120;
 
 int raderh;
 int raderw;
@@ -42,7 +47,9 @@ int cs_posbk_y;
 int cs_posbk_w;
 int cs_posbk_h;
 
-constexpr int inf_clockw = 120;
+int pagebk = 0;
+int csprev = 0;
+int pagesaved = 0;
 
 
 
@@ -424,7 +431,7 @@ void _render_hp_or_mp_bar(
     int max,
     int x,
     int y,
-    const std::string& bar_id,
+    data::InstanceId bar_id,
     bool show_digit = false)
 {
     draw("hp_bar_frame", x, y);
@@ -508,7 +515,7 @@ void _render_gold_or_platinum(
     int value,
     int x,
     int y,
-    const std::string& icon_id,
+    data::InstanceId icon_id,
     const std::string& unit)
 {
     draw(icon_id, x, y);
@@ -616,19 +623,27 @@ void render_digital_clock()
 {
     // 24 hour digital clock, 57 pixels wide
     font(16 - en * 2);
-    bmes(""s + game_data.date.hour + u8":"s + game_data.date.minute + u8":"s + game_data.date.second,
-         8, 8);
+    bmes(
+        ""s + game_data.date.hour + u8":"s + game_data.date.minute + u8":"s +
+            game_data.date.second,
+        8,
+        8);
 
     // date, 64 pixel wide
     font(15 - en * 2);
     int datex = 8 + 57 + 18;
-    bmes(""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s + game_data.date.day,
-         datex, 8);
+    bmes(
+        ""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s +
+            game_data.date.day,
+        datex,
+        8);
 
     // time of day + weather
-    bmes(i18n::s.get_enum("core.ui.time", game_data.date.hour / 4) + u8" "s +
+    bmes(
+        i18n::s.get_enum("core.ui.time", game_data.date.hour / 4) + u8" "s +
             i18n::s.get_enum("core.ui.weather", game_data.weather),
-         datex + 64 + 12, 8);
+        datex + 64 + 12,
+        8);
 }
 
 
@@ -704,13 +719,13 @@ int render_one_status_ailment(
 {
     // Check signatures.
     static_assert(
-        std::is_same<decltype(do_render(value)), bool>::value,
+        std::is_same_v<decltype(do_render(value)), bool>,
         "F1 signature: bool do_render(int value)");
     static_assert(
-        std::is_same<decltype(get_text(value)), std::string>::value,
+        std::is_same_v<decltype(get_text(value)), std::string>,
         "F2 signature: std::string get_text(int value)");
     static_assert(
-        std::is_same<decltype(get_color(value)), snail::Color>::value,
+        std::is_same_v<decltype(get_color(value)), snail::Color>,
         "F3 signature: snail::Color get_color(int value)");
 
     if (!do_render(value))
@@ -2816,6 +2831,144 @@ void show_title(const std::string& title)
     draw("tip_icon", x, y + (mode != 1));
     font(12 + sizefix - en * 2);
     bmes(title, x + 32, y + 1 + vfix + jp, {250, 250, 250});
+}
+
+
+
+void auto_turn(int delay)
+{
+    if (cc != 0)
+        return;
+
+    autoturn = 1;
+    if (g_config.auto_turn_speed() == "normal")
+    {
+        await(delay);
+        ++scrturn;
+    }
+    if (g_config.auto_turn_speed() != "highest" || firstautoturn == 1)
+    {
+        screenupdate = -1;
+        update_screen();
+    }
+    if (g_config.auto_turn_speed() == "normal")
+    {
+        redraw();
+    }
+}
+
+
+
+void page_save()
+{
+    pagebk = page;
+    csprev = cs;
+    pagesaved = 1;
+}
+
+
+
+void page_load()
+{
+    if (pagesaved == 1)
+    {
+        page = pagebk;
+        cs = csprev;
+        pagesaved = 0;
+    }
+}
+
+
+
+void savecycle()
+{
+    if (menucycle == 1)
+    {
+        menucycle = 0;
+        if (invally == 0 && invcontainer == 0)
+        {
+            lastctrl = invctrl;
+        }
+    }
+}
+
+
+
+void sort_list_by_column1()
+{
+    if (listmax < 1)
+    {
+        return;
+    }
+    while (1)
+    {
+        p = 0;
+        for (int cnt = 0, cnt_end = (listmax - 1); cnt < cnt_end; ++cnt)
+        {
+            if (list(1, cnt) > list(1, cnt + 1))
+            {
+                p(0) = list(0, cnt);
+                p(1) = list(1, cnt);
+                list(0, cnt) = list(0, cnt + 1);
+                list(1, cnt) = list(1, cnt + 1);
+                list(0, cnt + 1) = p;
+                list(1, cnt + 1) = p(1);
+                p = 1;
+            }
+        }
+        if (p == 0)
+        {
+            break;
+        }
+    }
+}
+
+
+
+void sort_list_and_listn_by_column1()
+{
+    if (listmax < 1)
+    {
+        return;
+    }
+    while (1)
+    {
+        p = 0;
+        for (int cnt = 0, cnt_end = (listmax - 1); cnt < cnt_end; ++cnt)
+        {
+            if (list(1, cnt) > list(1, cnt + 1))
+            {
+                p(0) = list(0, cnt);
+                p(1) = list(1, cnt);
+                list(0, cnt) = list(0, cnt + 1);
+                list(1, cnt) = list(1, cnt + 1);
+                list(0, cnt + 1) = p;
+                list(1, cnt + 1) = p(1);
+                s(0) = listn(0, cnt);
+                s(1) = listn(1, cnt);
+                listn(0, cnt) = listn(0, cnt + 1);
+                listn(1, cnt) = listn(1, cnt + 1);
+                listn(0, cnt + 1) = s;
+                listn(1, cnt + 1) = s(1);
+                p = 1;
+            }
+        }
+        if (p == 0)
+        {
+            break;
+        }
+    }
+}
+
+
+
+int winposy(int y, int not_gaming)
+{
+    if (not_gaming == 0)
+    {
+        return ((inf_screenh + 1) * inf_tiles - y) / 2 + 8;
+    }
+    return (windowh - y) / 2;
 }
 
 } // namespace elona

@@ -2,7 +2,9 @@
 
 #include <regex>
 #include <sstream>
+
 #include <boost/algorithm/string/predicate.hpp>
+
 #include "../../snail/application.hpp"
 #include "../../snail/blend_mode.hpp"
 #include "../../snail/input.hpp"
@@ -16,7 +18,7 @@
 #include "../input.hpp"
 #include "../item.hpp"
 #include "../macro.hpp"
-#include "../putit.hpp"
+#include "../serialization/serialization.hpp"
 #include "../text.hpp"
 #include "../ui.hpp"
 #include "../variables.hpp"
@@ -86,10 +88,10 @@ void Console::init_constants()
 
 void Console::init_environment()
 {
-    auto game = lua().get_api_manager().get_game_api_table();
+    auto core = lua().get_api_manager().get_core_api_table();
 
-    // Automatically import APIs from "game" into the environment.
-    for (const auto& kvp : game)
+    // Automatically import APIs from "core" into the environment.
+    for (const auto& kvp : core)
     {
         env().raw_set(kvp.first, kvp.second);
     }
@@ -562,16 +564,16 @@ void Console::_init_builtin_lua_functions()
     // Table for built-in Lua functions.
     sol::table funcs = _command_table()[_namespace_builtin];
 
-    auto inspect = safe_script_file(
-        filesystem::dirs::data() / "script" / "kernel" / "inspect.lua");
-    funcs["inspect"] = inspect;
+    funcs["inspect"] = lua_state()->globals()["prelude"]["inspect"];
 
     funcs["dump"] = [this]() {
         std::stringstream ss;
-        putit::JsonOArchive::save(ss, cdata.player());
+        serialization::json::save(ss, cdata.player());
         ss << std::endl;
-        putit::JsonOArchive::save(ss, inv[0]);
+        serialization::json::save(ss, inv[0]);
         print(ss.str());
+
+        std::cerr << ss.str() << std::endl;
     };
 
     funcs["hello_world"] = []() { return "Hello, World!"; };

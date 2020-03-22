@@ -2,9 +2,10 @@
 
 #include <array>
 #include <unordered_map>
+
 #include "../../enums.hpp"
 #include "../../optional.hpp"
-#include "../lua_lazy_cache.hpp"
+#include "../base_database.hpp"
 
 
 
@@ -17,7 +18,7 @@ using I18NKey = std::string;
 
 struct ItemData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
     int image;
     int value;
@@ -39,7 +40,7 @@ struct ItemData
     int expiration_date;
     int level;
     int fltselect;
-    int category;
+    ItemCategory category;
     int subcategory;
     int rarity;
     int coefficient;

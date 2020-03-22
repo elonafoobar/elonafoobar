@@ -1,12 +1,11 @@
-local Chara = require("game.Chara")
-local GUI = require("game.GUI")
-local Internal = require("game.Internal")
-local Item = require("game.Item")
+local Chara = ELONA.require("core.Chara")
+local GUI = ELONA.require("core.GUI")
+local Internal = ELONA.require("core.Internal")
+local Item = ELONA.require("core.Item")
 
-local common = require_relative("data/dialog/common")
+local common = require("../common.lua")
 
 return {
-   id = "rilian",
    root = "core.talk.unique.rilian",
    nodes = {
       __start = function()
@@ -51,7 +50,7 @@ return {
          },
       },
       quest_check = function()
-         if Chara.find("core.poppy", "Allies") == nil then
+         if Chara.find("core.poppy", "allies") == nil then
             return "quest_waiting"
          end
 
@@ -75,7 +74,7 @@ return {
 
             Internal.set_quest_flag("puppys_cave", 1000)
 
-            Chara.find("core.poppy", "Allies"):vanquish()
+            Chara.find("core.poppy", "allies"):vanquish()
             local poppy = Chara.create(31, 4, "core.poppy")
             poppy.role = 3
          end

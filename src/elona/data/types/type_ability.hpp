@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../lua_lazy_cache.hpp"
+#include "../base_database.hpp"
 
 
 
@@ -9,7 +9,7 @@ namespace elona
 
 struct AbilityData
 {
-    SharedId id;
+    data::InstanceId id;
     int legacy_id;
     int related_basic_attribute;
     int ability_type;

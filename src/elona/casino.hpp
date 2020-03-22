@@ -1,5 +1,7 @@
 #pragma once
 
+
+
 namespace elona
 {
 
@@ -12,5 +14,7 @@ void casino_acquire_items();
 void casino_wrapper();
 bool casino_start();
 bool casino_blackjack();
+
+void atxinit();
 
 } // namespace elona

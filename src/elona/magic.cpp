@@ -1,17 +1,22 @@
 #include <stack>
+
 #include "../util/scope_guard.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
 #include "area.hpp"
+#include "attack.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "command.hpp"
 #include "config.hpp"
+#include "crafting.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_asset.hpp"
+#include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
@@ -35,6 +40,7 @@
 #include "random.hpp"
 #include "save.hpp"
 #include "status_ailment.hpp"
+#include "text.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -2622,7 +2628,8 @@ bool _magic_630_1129()
             {
                 f = 0;
             }
-            if (the_item_db[itemid2int(inv[ci].id)]->category == 54000)
+            if (the_item_db[itemid2int(inv[ci].id)]->category ==
+                ItemCategory::spellbook)
             {
                 if (rnd(4) == 0)
                 {
@@ -2640,7 +2647,8 @@ bool _magic_630_1129()
                 {
                     p = ichargelevel - inv[ci].count + 1;
                 }
-                if (the_item_db[itemid2int(inv[ci].id)]->category == 54000)
+                if (the_item_db[itemid2int(inv[ci].id)]->category ==
+                    ItemCategory::spellbook)
                 {
                     p = 1;
                 }
@@ -2870,7 +2878,7 @@ bool _magic_1132(int& fltbk, int& valuebk)
     {
         save_set_autosave();
         animeload(8, cc);
-        fltbk = the_item_db[itemid2int(inv[ci].id)]->category;
+        fltbk = (int)the_item_db[itemid2int(inv[ci].id)]->category;
         valuebk = calcitemvalue(inv[ci], 0);
         inv[ci].remove();
         for (int cnt = 0;; ++cnt)
@@ -3332,7 +3340,8 @@ bool _magic_651()
             {
                 continue;
             }
-            if (the_item_db[itemid2int(item.id)]->category != 57000)
+            if (the_item_db[itemid2int(item.id)]->category !=
+                ItemCategory::food)
             {
                 continue;
             }
@@ -3737,15 +3746,13 @@ optional<bool> _proc_general_magic()
     }
     if (f)
     {
-        auto buff = the_buff_db[p];
-        auto buff_id = the_buff_db.get_id_from_legacy(p);
-        assert(buff);
+        const auto& buff_data = the_buff_db.ensure(p);
 
-        if (buff->type == BuffType::buff)
+        if (buff_data.type == BuffType::buff)
         {
             animeload(11, tc);
         }
-        else if (buff->type == BuffType::hex)
+        else if (buff_data.type == BuffType::hex)
         {
             BrightAuraAnimation(
                 cdata[tc].position, BrightAuraAnimation::Type::debuff)
@@ -3763,7 +3770,11 @@ optional<bool> _proc_general_magic()
         }
 
         buff_add(
-            cdata[tc], *buff_id, efp, buff_calc_duration(p, efp), cdata[cc]);
+            cdata[tc],
+            buff_data.id,
+            efp,
+            buff_calc_duration(buff_data.id, efp),
+            cdata[cc]);
 
         if (efid == 447)
         {
@@ -3838,8 +3849,7 @@ optional<bool> _proc_general_magic()
             .play();
         try_to_melee_attack();
         return true;
-    case 1:
-    {
+    case 1: {
         int stat =
             get_route(cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy);
         if (stat == 0)

@@ -1,6 +1,8 @@
 #include "../../renderer.hpp"
+
 #include <iostream>
 #include <sstream>
+
 #include "../../detail/sdl.hpp"
 #include "../../surface.hpp"
 

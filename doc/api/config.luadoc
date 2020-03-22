@@ -1,6 +1,6 @@
 --- Functions for getting and setting config values. See the topic on creating
 --  config menus for more details.
---  @usage local Config = require("game.Config")
+--  @usage local Config = ELONA.require("core.Config")
 module "Config"
 
 --- Sets config item's value.

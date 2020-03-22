@@ -1,4 +1,5 @@
 #include "shop.hpp"
+
 #include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"
@@ -31,7 +32,8 @@ void shop_refresh_on_talk()
 
     bool is_temporary = false;
 
-    auto shop_inv = lua::data("core.shop_inventory", cdata[tc].character_role);
+    auto shop_inv =
+        lua::get_data("core.shop_inventory", cdata[tc].character_role);
     if (shop_inv)
     {
         is_temporary = shop_inv->optional_or<bool>("is_temporary", false);
@@ -77,7 +79,7 @@ void shop_refresh()
         item.remove();
     }
 
-    lua::call("core.impl.shop_inventory.generate", lua::handle(cdata[tc]));
+    lua::call("core.Impl.shop_inventory.generate", lua::handle(cdata[tc]));
 
     if (g_config.restock_interval())
     {

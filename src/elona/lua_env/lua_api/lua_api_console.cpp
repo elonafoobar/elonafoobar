@@ -1,4 +1,5 @@
 #include "lua_api_console.hpp"
+
 #include "../console.hpp"
 #include "../lua_env.hpp"
 
@@ -10,7 +11,7 @@ namespace lua
 {
 
 /**
- * @luadoc
+ * @luadoc register
  *
  * Registers a new console command.
  *

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.2)
 
 
 # Project
-project(Elona_foobar VERSION 0.6.0)
+project(Elona_foobar VERSION 0.7.0)
 
 
 
@@ -40,9 +40,9 @@ configure_file("${PROJECT_SOURCE_DIR}/src/version.cpp.in" "${PROJECT_SOURCE_DIR}
 
 
 
-# C++14 or later
+# C++17 or later
 enable_language(CXX)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
@@ -123,9 +123,15 @@ elseif(ELONA_BUILD_TARGET STREQUAL "BENCH")
   add_executable(${PROJECT_NAME} src/version.cpp ${BENCH_SOURCES})
   target_link_libraries(${PROJECT_NAME} hayai_main ${LIB_TIMING})
 elseif(ELONA_BUILD_TARGET STREQUAL "GAME")
-  add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE src/main.cpp src/version.cpp)
+  if(WIN32)
+    set(RESOURCES "${PROJECT_SOURCE_DIR}/resources/icon_windows.rc")
+  endif()
+  add_executable(${PROJECT_NAME} WIN32 src/main.cpp src/version.cpp ${RESOURCES})
 elseif(ELONA_BUILD_TARGET STREQUAL "LAUNCHER")
-  add_executable(${PROJECT_NAME} WIN32 src/launcher_main.cpp src/version.cpp)
+  if(WIN32)
+    set(RESOURCES "${PROJECT_SOURCE_DIR}/resources/icon_windows.rc")
+  endif()
+  add_executable(${PROJECT_NAME} WIN32 src/launcher_main.cpp src/version.cpp ${RESOURCES})
   set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "Elona foobar Launcher")
 else()
   message(FATAL_ERROR "Unknown build mode: ${ELONA_BUILD_TARGET}")
@@ -233,6 +239,8 @@ list(APPEND EXTRA_DEFINES
   # > the Boost.Date_Time and Boost.Regex libraries respectively.
   "BOOST_DATE_TIME_NO_LIB"
   "BOOST_REGEX_NO_LIB"
+
+  "SOL_CHECK_ARGUMENTS"
   )
 
 if(MSVC)
@@ -452,7 +460,6 @@ set(RUNTIME_DIR "${ASSET_DIR}")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/data/ "${RUNTIME_DIR}/data/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/font/ "${RUNTIME_DIR}/font/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/graphic/ "${RUNTIME_DIR}/graphic/")
-copy_dir(${CMAKE_SOURCE_DIR}/runtime/locale/ "${RUNTIME_DIR}/locale/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/map/ "${RUNTIME_DIR}/map/")
 copy_mod_dirs(${CMAKE_SOURCE_DIR}/runtime/mod/ "${RUNTIME_DIR}/mod/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/profile/ "${RUNTIME_DIR}/profile/")

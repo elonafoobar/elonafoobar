@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+
 #include "../snail/input.hpp"
 #include "enums.hpp"
 #include "optional.hpp"
@@ -129,5 +130,10 @@ private:
  * Shows a simple prompt to query "yes" or "no".
  */
 YesNo yes_no();
+
+
+int ask_direction();
+optional<TurnResult> check_angband();
+int key_direction(const std::string& action);
 
 } // namespace elona

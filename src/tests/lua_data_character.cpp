@@ -1,5 +1,3 @@
-#include "../thirdparty/catch2/catch.hpp"
-
 #include "../elona/character.hpp"
 #include "../elona/enums.hpp"
 #include "../elona/filesystem.hpp"
@@ -8,6 +6,7 @@
 #include "../elona/lua_env/mod_manager.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
+#include "../thirdparty/catch2/catch.hpp"
 #include "tests.hpp"
 
 static lua::DataTable load(elona::lua::LuaEnv& lua, const std::string& name)
@@ -33,7 +32,7 @@ TEST_CASE("test reading invalid enum", "[Lua: Data]")
     auto data = db["chara_invalid_enum.putit"];
     REQUIRE_NONE(data);
     REQUIRE(
-        *db.error(SharedId("chara_invalid_enum.putit")) ==
+        *db.error("chara_invalid_enum.putit") ==
         "Enum value Whatever for Color not found.");
 }
 
@@ -69,8 +68,8 @@ TEST_CASE("test registering character", "[Lua: Data]")
     REQUIRE(data->image == 430);
     REQUIRE(data->female_image == 431);
     REQUIRE(data->male_image == 432);
-    REQUIRE(data->race == "slime");
-    REQUIRE(data->class_ == "wizard");
+    REQUIRE(data->race_id == "core.slime");
+    REQUIRE(data->class_id == "core.wizard");
 
     {
         std::vector<int> expected = {417, 434, 415, 454};
@@ -81,8 +80,8 @@ TEST_CASE("test registering character", "[Lua: Data]")
         REQUIRE(data->special_actions == expected);
     }
     {
-        std::unordered_map<SharedId, int> expected = {
-            {SharedId{"core.mind"}, 500}};
+        std::unordered_map<data::InstanceId, int> expected = {
+            {"core.mind", 500}};
         REQUIRE(data->resistances == expected);
     }
 
@@ -158,8 +157,8 @@ TEST_CASE("test registering character with all defaults", "[Lua: Data]")
     REQUIRE(data->portrait_male == "");
     REQUIRE(data->portrait_female == "");
     REQUIRE(data->image == 0);
-    REQUIRE(data->race == "");
-    REQUIRE(data->class_ == "");
+    REQUIRE(data->race_id == "");
+    REQUIRE(data->class_id == "");
 
     {
         std::vector<int> expected = {-1};
@@ -170,7 +169,7 @@ TEST_CASE("test registering character with all defaults", "[Lua: Data]")
         REQUIRE(data->special_actions == expected);
     }
     {
-        std::unordered_map<SharedId, int> expected = {};
+        std::unordered_map<data::InstanceId, int> expected = {};
         REQUIRE(data->resistances == expected);
     }
 

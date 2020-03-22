@@ -1,5 +1,5 @@
 --- Functions for working with characters.
---  @usage local Chara = require("game.Chara")
+--  @usage local Chara = ELONA.require("core.Chara")
 module "Chara"
 
 --- Checks if a character is alive.

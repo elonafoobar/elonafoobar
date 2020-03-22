@@ -1,4 +1,5 @@
 #include "config_manager.hpp"
+
 #include "../filesystem.hpp"
 #include "lua_api/lua_api_json5.hpp"
 

@@ -1,10 +1,14 @@
 #include <sstream>
+
 #include "ability.hpp"
+#include "building.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "class.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "menu.hpp"
+#include "text.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 
@@ -59,7 +63,10 @@ void dump_player_info()
               30)
        << fixtxt(u8"信仰      : " + god_name(cdata.player().god_id), 32)
        << std::endl;
-    ss << fixtxt(u8"職業       : " + class_get_name(cdatan(3, 0)), 30)
+    ss << fixtxt(
+              u8"職業       : " +
+                  class_get_name(data::InstanceId{cdatan(3, 0)}),
+              30)
        << fixtxt(u8"所属      : " + guildname(), 32) << std::endl;
     ss << fixtxt(u8"レベル     : " + std::to_string(cdata.player().level), 30)
        << fixtxt(u8"経過日数  : " + std::to_string(game_data.play_days), 32)
@@ -230,7 +237,7 @@ void dump_player_info()
 
         ss << cdatan(0, idx) << u8" "
            << i18n::s.get_m("race", cdatan(2, idx), "name") << u8"の"
-           << class_get_name(cdatan(3, idx)) << u8" "
+           << class_get_name(data::InstanceId{cdatan(3, idx)}) << u8" "
            << i18n::s.get_enum("core.ui.sex", chara.sex) << u8" "
            << calcage(idx) << u8"歳" << u8"  " << chara.height << u8"cm"
            << u8" " << chara.weight << u8"kg" << std::endl;

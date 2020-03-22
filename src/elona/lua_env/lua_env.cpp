@@ -10,7 +10,7 @@
 #include "event_manager.hpp"
 #include "export_manager.hpp"
 #include "handle_manager.hpp"
-#include "i18n_function_manager.hpp"
+#include "i18n_manager.hpp"
 #include "mod_manager.hpp"
 
 
@@ -28,22 +28,22 @@ LuaEnv::LuaEnv()
     lua_->open_libraries(
         sol::lib::base,
         sol::lib::package,
-        sol::lib::table,
+        sol::lib::coroutine,
         sol::lib::debug,
-        sol::lib::string,
-        sol::lib::math,
         sol::lib::io,
+        sol::lib::math,
         sol::lib::os,
-        sol::lib::coroutine);
+        sol::lib::string,
+        sol::lib::table,
+        sol::lib::utf8);
 
     // Add executable directory to package.path
-    fs::path exe_path = filesystem::dirs::data() / "script" / "kernel";
-    std::string normalized = filepathutil::to_forward_slashes(exe_path);
+    fs::path kernel_path = filesystem::dirs::data() / "script" / "kernel";
+    fs::path prelude_path = filesystem::dirs::data() / "script" / "prelude";
     lua_->safe_script(
-        u8"package.path = \""s + normalized + u8"/?.lua;\"..package.path"s);
-
-    (*lua_)["require_relative"] = (*lua_)["require"];
-    (*lua_)["require"] = sol::lua_nil;
+        u8"package.path = [[" + filepathutil::to_utf8_path(kernel_path) +
+        "/?.lua;" + filepathutil::to_utf8_path(prelude_path) +
+        "/?.lua;]]..package.path"s);
 
     // Make sure the API environment is initialized first so any
     // dependent managers can add new internal C++ methods to it (like
@@ -54,7 +54,7 @@ LuaEnv::LuaEnv()
     handle_mgr = std::make_unique<HandleManager>(*this);
     data_mgr = std::make_unique<DataManager>(*this);
     export_mgr = std::make_unique<ExportManager>(*this);
-    i18n_function_mgr = std::make_unique<I18NFunctionManager>(*this);
+    i18n_mgr = std::make_unique<I18NManager>(*this);
     console = std::make_unique<Console>(*this);
     config_mgr = std::make_unique<ConfigManager>(*this);
 }
