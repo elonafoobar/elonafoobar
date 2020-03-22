@@ -20,13 +20,13 @@ Morganeon
     Enhanced skill tracker, fixed docs, and refactored the codebase.
 
 nanbansenji
-    Fixed glitch in Credits/License view.
+    Fixed glitch in Credits/License view and item drop issue.
 
 Vorlent
     Fixed regression bug, crash, build error, and so on. Also refactored codebase.
 
 Sora
-    Fixed mojibake and several crash bugs.
+    Fixed mojibake and several crash bugs. Also clean up some of magic numbers.
 
 EvgenijM86
     Add digital clock/auto target options.
