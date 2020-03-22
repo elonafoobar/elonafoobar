@@ -1,5 +1,60 @@
 # Changelog
 
+## [0.7.0] - 2020-03-22
+
+The core system of modding has been changed much!
+
+
+### Fixed
+
+- Fix some sound effects not played.
+- Fix drop items from some monsters.
+  - Vesda did not drop the gloves.
+  - Rich person, noble child and tourist did not drop wallets. Also they dropped more gems than vanilla.
+- Re-enable the network feature temporarily disabled in v0.6.1.
+- Fix main story text in Japanese.
+- Fix mismatch between random item name and its color.
+
+
+### Added
+
+- Add application icon, atcat (Windows only so far).
+- Partially support undo/redo in house design mode.
+  - It is an experimental feature. The key bindings may be changed in a future version.
+- [mod] Add global Lua functions/libraries available in mods.
+
+
+### Changed
+
+- [mod] Change the syntax of translation resources.
+- [mod] Change the naming convention of Lua enums.
+- [mod] Rename `require_relative()` to `require()`.
+- [mod] Change the path finding rule of `require()` (old name: `require_relative()`). In v0.6.1, the function takes relative paths from the root directory of the mod. Since the release, it takes relative paths from the file where the caller function is defined.
+  - If you want the previous behavior, you can pass paths starting with `/`.
+  - Also, the function does not append `.lua` now. You have to specify extensions explicitly.
+- [mod] Add entrypoint of translation loading, `i18n.lua` in each locale folder. Files under `locale/<current locale>/` are not automatically loaded.
+- [mod] Change `require()` to `ELONA.require()`.
+- [mod] Move `game` module to `core` mod.
+  - Thus, you need call `ELONA.require("core.Chara")` instead of `require("game.Chara")`.
+- [mod] Change the interface of `data`.
+  - Rename `data:define_type()` to `data:define_prototype()`.
+  - Unify `data:add()` and `data:add_mult()`.
+  - Change the signature of `data:add()`. Instead of passing a array of table with `id` property, pass a table indexed by data id.
+- [mod] Introduce "api" to define API like Data System.
+
+
+
+## [0.6.1] - 2020-02-11
+
+Windows only release
+
+
+### Fixed
+
+- Temporarily disable network feature on Windows to avoid crash.
+
+
+
 ## [0.6.0] - 2019-02-01
 
 ### Added
