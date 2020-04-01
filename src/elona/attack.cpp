@@ -419,11 +419,11 @@ bool do_physical_attack_internal()
             if (attackrange == 0)
             {
                 chara_gain_skill_exp(cdata[cc], 152, 20 / expmodifer, 0, 4);
-                if (cdata[cc].equipment_type & 2)
+                if (cdata[cc].combat_style.two_hand())
                 {
                     chara_gain_skill_exp(cdata[cc], 167, 20 / expmodifer, 0, 4);
                 }
-                if (cdata[cc].equipment_type & 4)
+                if (cdata[cc].combat_style.dual_wield())
                 {
                     chara_gain_skill_exp(cdata[cc], 166, 20 / expmodifer, 0, 4);
                 }
@@ -453,7 +453,7 @@ bool do_physical_attack_internal()
                         expmodifer,
                     0,
                     5);
-                if (cdata[tc].equipment_type & 1)
+                if (cdata[tc].combat_style.shield())
                 {
                     chara_gain_skill_exp(cdata[tc], 168, 40 / expmodifer, 0, 4);
                 }
@@ -819,7 +819,7 @@ void try_to_melee_attack()
     attackskill = 106;
     ammo = -1;
     ele = 0;
-    if (cdata[cc].equipment_type & 1)
+    if (cdata[cc].combat_style.shield())
     {
         if (clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5) +
                 cdata[cc].has_power_bash() * 5 >

@@ -120,6 +120,79 @@ struct Activity
 
 
 
+struct CombatStyle
+{
+public:
+    bool unarmed() const noexcept
+    {
+        return _inner == 0;
+    }
+
+
+    bool shield() const noexcept
+    {
+        return _inner & 1;
+    }
+
+
+    bool two_hand() const noexcept
+    {
+        return _inner & 2;
+    }
+
+
+    bool dual_wield() const noexcept
+    {
+        return _inner & 4;
+    }
+
+
+
+    void reset() noexcept
+    {
+        _inner = 0;
+    }
+
+
+    void set_unarmed() noexcept
+    {
+        reset();
+    }
+
+
+    void set_shield() noexcept
+    {
+        _inner |= 1;
+    }
+
+
+    void set_two_hand() noexcept
+    {
+        _inner |= 2;
+    }
+
+
+    void set_dual_wield() noexcept
+    {
+        _inner |= 4;
+    }
+
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        ar(_inner);
+    }
+
+
+
+private:
+    int _inner{};
+};
+
+
+
 struct Character
 {
     enum class State : int
@@ -182,7 +255,7 @@ public:
     int enemy_id = 0;
     int gold = 0;
     int platinum_coin = 0;
-    int equipment_type = 0;
+    CombatStyle combat_style;
     int melee_attack_type = 0;
     int fame = 0;
     int experience = 0;
@@ -384,7 +457,7 @@ public:
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, enemy_id);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, gold);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, platinum_coin);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, equipment_type);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, combat_style);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, melee_attack_type);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, fame);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, experience);

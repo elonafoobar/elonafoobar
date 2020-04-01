@@ -407,7 +407,7 @@ int calc_accuracy(bool consider_distance)
     {
         accuracy =
             sdata(12, cc) / 5 + sdata(10, cc) / 2 + sdata(attackskill, cc) + 50;
-        if (cdata[cc].equipment_type & 1)
+        if (cdata[cc].combat_style.shield())
         {
             accuracy = accuracy * 100 / 130;
         }
@@ -447,7 +447,7 @@ int calc_accuracy(bool consider_distance)
         }
         else
         {
-            if (cdata[cc].equipment_type & 2)
+            if (cdata[cc].combat_style.two_hand())
             {
                 accuracy += 25;
                 if (inv[cw].weight >= 4000)
@@ -455,7 +455,7 @@ int calc_accuracy(bool consider_distance)
                     accuracy += sdata(167, cc);
                 }
             }
-            else if (cdata[cc].equipment_type & 4)
+            else if (cdata[cc].combat_style.dual_wield())
             {
                 if (attacknum == 1)
                 {
@@ -670,7 +670,7 @@ int calcattackdmg(AttackDamageCalculationMode mode)
             dmgmulti = dmgmulti * effective_range[rangedist] / 100;
         }
     }
-    else if (cdata[cc].equipment_type & 2)
+    else if (cdata[cc].combat_style.two_hand())
     {
         if (inv[cw].weight >= 4000)
         {
@@ -1407,11 +1407,11 @@ int calcspellfail(int id, int cc)
     {
         percentage = 100;
     }
-    if (cdata[cc].equipment_type & 4)
+    if (cdata[cc].combat_style.dual_wield())
     {
         percentage -= 6;
     }
-    if (cdata[cc].equipment_type & 1)
+    if (cdata[cc].combat_style.shield())
     {
         percentage -= 12;
     }

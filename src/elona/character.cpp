@@ -738,7 +738,7 @@ void chara_refresh(int cc)
     cdata[cc].pv = 0;
     cdata[cc].hit_bonus = 0;
     cdata[cc].damage_bonus = 0;
-    cdata[cc].equipment_type = 0;
+    cdata[cc].combat_style.reset();
     attacknum = 0;
     cdata[cc].rate_to_pierce = 0;
     cdata[cc].rate_of_critical_hit = 0;
@@ -759,10 +759,7 @@ void chara_refresh(int cc)
         cdata[cc].sum_of_equipment_weight += inv[rp].weight;
         if (inv[rp].skill == 168)
         {
-            if (!(cdata[cc].equipment_type & 1))
-            {
-                cdata[cc].equipment_type += 1;
-            }
+            cdata[cc].combat_style.set_shield();
         }
         cdata[cc].dv += inv[rp].dv;
         cdata[cc].pv += inv[rp].pv;
@@ -1023,7 +1020,7 @@ void chara_refresh(int cc)
             }
         }
     }
-    if (cdata[cc].equipment_type & 1)
+    if (cdata[cc].combat_style.shield())
     {
         if (cdata[cc].pv > 0)
         {
@@ -1033,11 +1030,11 @@ void chara_refresh(int cc)
     }
     else if (attacknum == 1)
     {
-        cdata[cc].equipment_type += 2;
+        cdata[cc].combat_style.set_two_hand();
     }
     else if (attacknum != 0)
     {
-        cdata[cc].equipment_type += 4;
+        cdata[cc].combat_style.set_dual_wield();
     }
     cdata[cc].max_mp =
         clamp(
@@ -1097,7 +1094,7 @@ void chara_refresh(int cc)
         buff_apply(
             cdata[cc], *the_buff_db.get_id_from_legacy(buff.id), buff.power);
     }
-    if (cdata[cc].equipment_type & 4)
+    if (cdata[cc].combat_style.dual_wield())
     {
         cdata[cc].extra_attack += int(std::sqrt(sdata(166, cc))) * 3 / 2 + 4;
     }
