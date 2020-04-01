@@ -1,7 +1,6 @@
 ---
 name: 要望 Featrue Request
 about: Suggest an idea for this project
-labels: enhancement
 
 ---
 
