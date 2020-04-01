@@ -1,0 +1,107 @@
+/*
+ * For development use
+ *
+ * The default config file in runtime/profile/default is for end-user, and inconvenient for developers.
+ * On debug build, this file is copied to bin/ folder instead of runtime/profile/default/config.json.
+ */
+{
+  core: {
+    anime: {
+      alert_wait: 0,
+      always_center: true,
+      anime_wait: 0,
+      attack_anime: true,
+      auto_turn_speed: "highest",
+      general_wait: 30,
+      screen_refresh: 2,
+      scroll: true,
+      scroll_when_run: true,
+      title_effect: true,
+      weather_effect: true,
+      window_anime: false,
+    },
+    balance: {
+      extra_class: true,
+      extra_race: true,
+      restock_interval: 0,
+    },
+    debug: {
+      wizard: false,
+    },
+    font: {
+      file: "",
+      quality: "high",
+      size_adjustment: 1,
+      vertical_offset: -1,
+    },
+    foobar: {
+      allow_enhanced_skill_tracking: false,
+      auto_target: true,
+      autopick: true,
+      autosave: false,
+      damage_popup: false,
+      digital_clock: true,
+      enhanced_skill_tracking_lowerbound: 50,
+      enhanced_skill_tracking_upperbound: 100,
+      hp_bar_position: "hide",
+      leash_icon: false,
+      max_damage_popup: 100,
+      pcc_graphic_scale: "shrinked",
+      show_fps: true,
+      skip_confirm_at_shop: true,
+      skip_overcasting_warning: true,
+    },
+    game: {
+      attack_neutral_npcs: false,
+      default_save: "",
+      extra_help: false,
+      hide_autoidentify: false,
+      hide_shop_updates: false,
+      story: false,
+    },
+    input: {
+      attack_wait: 4,
+      autodisable_numlock: true,
+      initial_key_repeat_wait: 5,
+      joypad: false,
+      key_repeat_wait: 1,
+      key_wait: 5,
+      run_wait: 2,
+      select_fast_start_wait: 2,
+      select_fast_wait: 2,
+      select_wait: 10,
+      start_run_wait: 2,
+      walk_wait: 5,
+    },
+    language: {
+      language: "jp",
+    },
+    message: {
+      add_timestamps: true,
+      transparency: 4,
+    },
+    net: {
+      chat: "disabled",
+      chat_receive_interval: 5,
+      death: "disabled",
+      hide_your_alias: false,
+      hide_your_name: false,
+      is_alias_vote_enabled: false,
+      is_enabled: false,
+      news: "disabled",
+      wish: "disabled",
+    },
+    screen: {
+      display_mode: "800x600@60Hz",
+      fullscreen: "windowed",
+      heartbeat: true,
+      heartbeat_threshold: 25,
+      high_quality_shadows: true,
+      music: false,
+      object_shadows: true,
+      skip_random_event_popups: false,
+      sound: false,
+      stereo_sound: true,
+    },
+  },
+}

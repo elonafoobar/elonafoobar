@@ -456,13 +456,17 @@ endfunction()
 set(ASSET_DIR "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
 set(RUNTIME_DIR "${ASSET_DIR}")
 
-# Copy and overwrite runtime folders/files (except config.json)
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/data/ "${RUNTIME_DIR}/data/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/font/ "${RUNTIME_DIR}/font/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/graphic/ "${RUNTIME_DIR}/graphic/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/map/ "${RUNTIME_DIR}/map/")
 copy_mod_dirs(${CMAKE_SOURCE_DIR}/runtime/mod/ "${RUNTIME_DIR}/mod/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/profile/ "${RUNTIME_DIR}/profile/")
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  # Overwrite the default config.json with tools/config.json.
+  copy_file("${CMAKE_SOURCE_DIR}/tools/config.json" "${RUNTIME_DIR}/profile/default/config.json")
+endif()
 
 # Copy assets from Elona 1.22 if they are present.
 if(EXISTS "${CMAKE_PREFIX_PATH}/elona")
