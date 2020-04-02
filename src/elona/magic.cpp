@@ -51,6 +51,7 @@
 namespace
 {
 
+// Eye of Insanity
 bool _magic_636()
 {
     txt(i18n::s.get("core.magic.insanity", cdata[cc], cdata[tc]),
@@ -61,6 +62,7 @@ bool _magic_636()
 
 
 
+// Item: treasure map
 bool _magic_1136()
 {
     if (map_data.type != mdata_t::MapType::world_map)
@@ -166,6 +168,7 @@ bool _magic_1136()
 
 
 
+// Item: love potion
 bool _magic_1135()
 {
     if (is_cursed(efstatus))
@@ -207,6 +210,7 @@ bool _magic_1135()
 
 
 
+// Pregnant
 bool _magic_654()
 {
     if (is_in_fov(cdata[tc]))
@@ -219,6 +223,7 @@ bool _magic_654()
 
 
 
+// Mirror
 bool _magic_626()
 {
     txt(i18n::s.get("core.magic.mirror"));
@@ -229,6 +234,7 @@ bool _magic_626()
 
 
 
+// Item: milk
 bool _magic_1101()
 {
     if (is_in_fov(cdata[tc]))
@@ -276,6 +282,7 @@ bool _magic_1101()
 
 
 
+// Item: alcohol
 bool _magic_1102()
 {
     if (is_in_fov(cdata[tc]))
@@ -298,6 +305,7 @@ bool _magic_1102()
 
 
 
+// Item: acid
 bool _magic_1116()
 {
     if (is_in_fov(cdata[tc]))
@@ -324,6 +332,7 @@ bool _magic_1116()
 
 
 
+// Item: water
 bool _magic_1103()
 {
     if (is_in_fov(cdata[tc]))
@@ -343,6 +352,7 @@ bool _magic_1103()
 
 
 
+// Item: soda
 bool _magic_1146()
 {
     if (is_in_fov(cdata[tc]))
@@ -357,6 +367,7 @@ bool _magic_1146()
 
 
 
+// Item: blue capsule drug
 bool _magic_1147()
 {
     if (is_in_fov(cdata[tc]))
@@ -371,6 +382,7 @@ bool _magic_1147()
 
 
 
+// Item: salt solution
 bool _magic_1142()
 {
     if (cdatan(2, tc) == u8"core.snail"s)
@@ -399,6 +411,7 @@ bool _magic_1142()
 
 
 
+// Item: dirty water
 bool _magic_1130()
 {
     if (is_in_fov(cdata[tc]))
@@ -418,6 +431,7 @@ bool _magic_1130()
 
 
 
+// Pickpocket
 bool _magic_300()
 {
     if (game_data.executing_immediate_quest_type == 1008 ||
@@ -452,6 +466,7 @@ bool _magic_300()
 
 
 
+// Riding
 bool _magic_301()
 {
     if (cc == 0)
@@ -534,6 +549,7 @@ bool _magic_301()
 
 
 
+// Performance
 bool _magic_183()
 {
     if (cc != 0)
@@ -587,6 +603,7 @@ bool _magic_183()
 
 
 
+// Cooking
 bool _magic_184()
 {
     if (sdata(184, 0) == 0)
@@ -627,6 +644,7 @@ bool _magic_184()
 
 
 
+// Fishing
 bool _magic_185()
 {
     if (sdata(185, 0) == 0)
@@ -737,6 +755,7 @@ bool _magic_185()
 
 bool _magic_645_1114();
 
+// Holy Light / Vanquish Hex
 bool _magic_406_407()
 {
     if (is_cursed(efstatus))
@@ -785,6 +804,7 @@ bool _magic_406_407()
 
 
 
+// Prayer
 bool _magic_1120()
 {
     txt(i18n::s.get("core.magic.prayer", cdata[tc]),
@@ -797,6 +817,7 @@ bool _magic_1120()
 
 
 
+// Random craft material
 bool _magic_1117()
 {
     if (tc >= 16)
@@ -839,6 +860,7 @@ bool _magic_1117()
 
 bool _magic_628();
 
+// Eye of Mutation / Mutation
 bool _magic_632_454_1144(bool is_cursed_potion_of_cure_mutation = false)
 {
     if (!is_cursed_potion_of_cure_mutation)
@@ -949,6 +971,7 @@ bool _magic_632_454_1144(bool is_cursed_potion_of_cure_mutation = false)
 
 
 
+// Item: potion of cure mutation
 bool _magic_1121()
 {
     if (tc != 0)
@@ -1017,6 +1040,7 @@ bool _magic_1121()
 
 
 
+// Identify
 bool _magic_411()
 {
     if (cc != 0)
@@ -1034,6 +1058,7 @@ bool _magic_411()
 
 
 
+// Resurrection
 bool _magic_461()
 {
     if (map_data.type == mdata_t::MapType::world_map)
@@ -1101,6 +1126,7 @@ bool _magic_461()
 
 bool _magic_645_1114();
 
+// Uncurse
 bool _magic_412()
 {
     if (efstatus == CurseState::none)
@@ -1208,6 +1234,7 @@ bool _magic_412()
 
 
 
+// Oracle
 bool _magic_413()
 {
     if (tc >= 16)
@@ -1236,6 +1263,7 @@ bool _magic_413()
 
 
 
+// Gain spell stock
 bool _magic_1104()
 {
     if (tc != 0)
@@ -1322,6 +1350,7 @@ bool _magic_1104()
 
 
 
+// Item: potion of descent
 bool _magic_1143()
 {
     if (efstatus == CurseState::blessed)
@@ -1372,6 +1401,7 @@ bool _magic_1143()
 
 
 
+// Item: scroll of gain attribute
 bool _magic_1105()
 {
     for (int cnt = 0;; ++cnt)
@@ -1426,6 +1456,7 @@ bool _magic_1105()
 
 
 
+// Item: scroll of faith
 bool _magic_1107()
 {
     if (tc != 0)
@@ -1471,6 +1502,7 @@ bool _magic_1107()
 
 
 
+// Item: scroll of growth
 bool _magic_1119()
 {
     for (int cnt = 0, cnt_end = (1 + (efstatus == CurseState::blessed));
@@ -1538,6 +1570,7 @@ bool _magic_1119()
 
 
 
+// Lose stats' experience
 bool _magic_1106()
 {
     i = rnd(10) + 10;
@@ -1550,6 +1583,7 @@ bool _magic_1106()
 
 
 
+// Item: troll blood
 bool _magic_1139()
 {
     txt(i18n::s.get("core.magic.troll_blood.apply", cdata[tc]));
@@ -1566,6 +1600,7 @@ bool _magic_1139()
 
 
 
+// Gain stats' potential
 bool _magic_1113()
 {
     if (efstatus == CurseState::blessed)
@@ -1613,6 +1648,7 @@ bool _magic_1113()
 
 
 
+// Vanish
 bool _magic_653()
 {
     if (tc < 57)
@@ -1630,6 +1666,7 @@ bool _magic_653()
 
 
 
+// Sense Object / Magic Map
 bool _magic_430_429()
 {
     if (tc >= 16)
@@ -1708,6 +1745,7 @@ bool _magic_430_429()
 
 
 
+// Decapitation
 bool _magic_658()
 {
     if (cdata[tc].hp > cdata[tc].max_hp / 8)
@@ -1736,6 +1774,7 @@ bool _magic_658()
 
 
 
+// Restore Spirit / Restore Body
 bool _magic_440_439()
 {
     if (efid == 439)
@@ -1824,6 +1863,7 @@ bool _magic_440_439()
 
 
 
+// Wish
 bool _magic_441()
 {
     what_do_you_wish_for();
@@ -1835,6 +1875,7 @@ bool _magic_441()
 
 
 
+// Item: scroll of escape
 bool _magic_1141()
 {
     if (tc != 0)
@@ -1889,6 +1930,7 @@ bool _magic_1141()
 
 
 
+// Return
 bool _magic_428()
 {
     if (tc != 0)
@@ -1919,6 +1961,7 @@ bool _magic_428()
 
 
 
+// Harvest Mana
 bool _magic_621()
 {
     heal_mp(cdata[tc], efp / 2 + rnd_capped(efp / 2 + 1));
@@ -1934,6 +1977,7 @@ bool _magic_621()
 
 
 
+// Absorb Magic
 bool _magic_624()
 {
     heal_mp(cdata[tc], roll(dice1, dice2, bonus));
@@ -1949,6 +1993,7 @@ bool _magic_624()
 
 
 
+// Item: poison
 bool _magic_1108()
 {
     if (is_in_fov(cdata[tc]))
@@ -1970,6 +2015,7 @@ bool _magic_1108()
 
 
 
+// Item: potion of blindness
 bool _magic_1111()
 {
     if (is_in_fov(cdata[tc]))
@@ -1982,6 +2028,7 @@ bool _magic_1111()
 
 
 
+// Item: potion of confusion
 bool _magic_1109()
 {
     if (is_in_fov(cdata[tc]))
@@ -1994,6 +2041,7 @@ bool _magic_1109()
 
 
 
+// Item: potion of paralysis
 bool _magic_1110()
 {
     if (is_in_fov(cdata[tc]))
@@ -2006,6 +2054,7 @@ bool _magic_1110()
 
 
 
+// Item: sleeping drug
 bool _magic_1112()
 {
     if (is_in_fov(cdata[tc]))
@@ -2018,6 +2067,7 @@ bool _magic_1112()
 
 
 
+// Curse / Item: scroll of curse
 bool _magic_645_1114()
 {
     if (efid == 645)
@@ -2116,6 +2166,7 @@ bool _magic_645_1114()
 
 
 
+// Weaken resistance
 bool _magic_1118()
 {
     f = 0;
@@ -2147,6 +2198,8 @@ bool _magic_1118()
 
 
 
+// Item: diary of cat sister / diary of younger sister / scroll of ally / diary
+// of young lady
 bool _magic_1138_1123_1122_1137()
 {
     if (cc != 0 && cc < 16)
@@ -2184,6 +2237,7 @@ bool _magic_1138_1123_1122_1137()
 
 
 
+// Dominate
 bool _magic_435()
 {
     if (cc != 0 || tc == 0 || cdata[tc].relationship == 10)
@@ -2234,6 +2288,7 @@ bool _magic_435()
 
 
 
+// Web / Mist of Darkness / Acid Ground / Ether Ground / Fire Wall
 bool _magic_436_437_455_634_456()
 {
     if (efid == 436)
@@ -2323,6 +2378,7 @@ bool _magic_436_437_455_634_456()
 
 
 
+// Item: scroll of name
 bool _magic_1145()
 {
     if (cc != 0)
@@ -2362,6 +2418,7 @@ bool _magic_1145()
 
 
 
+// Item: Garok's hammer
 bool _magic_49(int efcibk)
 {
     if (cc != 0)
@@ -2427,6 +2484,7 @@ bool _magic_49(int efcibk)
 
 
 
+// Item: scroll of change material
 bool _magic_21_1127()
 {
     if (cc != 0)
@@ -2510,6 +2568,7 @@ bool _magic_21_1127()
 
 
 
+// Item: deed of inheritance
 bool _magic_1128()
 {
     if (cc != 0)
@@ -2531,6 +2590,7 @@ bool _magic_1128()
 
 
 
+// Item: scroll of enchant weapon / armor
 bool _magic_1124_1125()
 {
     if (cc != 0)
@@ -2576,6 +2636,7 @@ bool _magic_1124_1125()
 
 
 
+// Fill Charge / Item: scroll of charge
 bool _magic_630_1129()
 {
     if (cc != 0)
@@ -2679,6 +2740,7 @@ bool _magic_630_1129()
 
 
 
+// Draw Charge
 bool _magic_629()
 {
     if (cc != 0)
@@ -2737,6 +2799,7 @@ bool _magic_629()
 
 
 
+// Change
 bool _magic_628()
 {
     if (tc == 0)
@@ -2784,6 +2847,7 @@ bool _magic_628()
 
 
 
+// Item: scroll of flying
 bool _magic_1140()
 {
     if (cc != 0)
@@ -2851,6 +2915,7 @@ bool _magic_1140()
 
 
 
+// Item: rod of alchemy
 bool _magic_1132(int& fltbk, int& valuebk)
 {
     if (cc != 0)
@@ -2918,6 +2983,7 @@ bool _magic_1132(int& fltbk, int& valuebk)
 
 
 
+// Door Creation / Wall Creation
 bool _magic_457_438()
 {
     x = tlocx;
@@ -2998,6 +3064,7 @@ bool _magic_457_438()
 
 
 
+// Swarm
 bool _magic_631()
 {
     txt(i18n::s.get("core.magic.swarm"), Message::color{ColorIndex::blue});
@@ -3039,6 +3106,7 @@ bool _magic_631()
 
 
 
+// Drop Mine
 bool _magic_659()
 {
     if (map_data.type == mdata_t::MapType::world_map)
@@ -3059,6 +3127,7 @@ bool _magic_659()
 
 
 
+// Gravity
 bool _magic_466()
 {
     for (auto&& cnt : cdata.all())
@@ -3093,6 +3162,7 @@ bool _magic_466()
 
 
 
+// Mewmewmew!
 bool _magic_657()
 {
     txt(i18n::s.get("core.magic.mewmewmew"), Message::color{ColorIndex::blue});
@@ -3120,6 +3190,7 @@ bool _magic_657()
 
 
 
+// Meteor
 bool _magic_465()
 {
     txt(i18n::s.get("core.magic.meteor"), Message::color{ColorIndex::blue});
@@ -3151,6 +3222,7 @@ bool _magic_465()
 
 
 
+// Cheer
 bool _magic_656()
 {
     if (is_in_fov(cdata[cc]))
@@ -3206,6 +3278,7 @@ bool _magic_656()
 
 
 
+// Item: potion of cure corruption
 bool _magic_1131()
 {
     if (tc != 0)
@@ -3231,6 +3304,7 @@ bool _magic_1131()
 
 
 
+// Eye of Ether
 bool _magic_633()
 {
     if (tc != 0)
@@ -3245,6 +3319,7 @@ bool _magic_633()
 
 
 
+// Eye of Dimness
 bool _magic_638_648()
 {
     if (efid == 648)
@@ -3277,6 +3352,7 @@ bool _magic_638_648()
 
 
 
+// Insult
 bool _magic_652()
 {
     if (is_in_fov(cdata[tc]))
@@ -3289,6 +3365,7 @@ bool _magic_652()
 
 
 
+// Item: molotov
 bool _magic_1133()
 {
     if (is_in_fov(cdata[tc]))
@@ -3309,6 +3386,7 @@ bool _magic_1133()
 
 
 
+// Scavenge
 bool _magic_651()
 {
     if (is_in_fov(cdata[tc]))
@@ -3376,6 +3454,7 @@ bool _magic_651()
 
 
 
+// Wizard's Harvest
 bool _magic_464()
 {
     bool fastest = g_config.animation_wait() == 0;
@@ -3427,6 +3506,7 @@ bool _magic_464()
 
 
 
+// 4-Dimentional Pocket
 bool _magic_463()
 {
     snd("core.teleport1");
