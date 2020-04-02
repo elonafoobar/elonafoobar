@@ -432,7 +432,7 @@ void supply_new_equipment()
                 {
                     if (cdata[rc].character_role == 13)
                     {
-                        addnews(1, rc, 0, itemname(item->index));
+                        addnews(1, rc, 0, itemname(*item));
                     }
                 }
             }

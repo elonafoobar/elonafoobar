@@ -74,11 +74,11 @@ void LuaApiDebug::dump_characters()
 void LuaApiDebug::dump_items()
 {
     ELONA_LOG("lua.debug") << "===== Items  =====";
-    for (const auto& item : inv.ground())
+    for (auto&& item : inv.ground())
     {
         if (item.number() != 0)
             ELONA_LOG("lua.debug")
-                << item.index << ") Name: " << elona::itemname(item.index)
+                << item.index << ") Name: " << elona::itemname(item)
                 << ", Pos: " << item.position
                 << ", Curse: " << static_cast<int>(item.curse_state)
                 << ", Ident: " << static_cast<int>(item.identify_state)

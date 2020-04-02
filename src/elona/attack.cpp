@@ -350,7 +350,7 @@ bool do_physical_attack_internal()
                 if (attackskill == 111)
                 {
                     // Special case for thrown weapons.
-                    weapon_name = itemname(cw, 1, 1);
+                    weapon_name = itemname(inv[cw], 1, false);
                 }
                 else
                 {

@@ -313,7 +313,6 @@ IdentifyState item_identify(Item& item, IdentifyState level);
 IdentifyState item_identify(Item& item, int power);
 
 std::vector<std::reference_wrapper<Item>> itemlist(int owner, int id);
-void itemname_additional_info();
 
 void item_checkknown(Item& item);
 int inv_compress(int);
@@ -413,6 +412,6 @@ int gain_skills_by_geen_engineering();
 int transplant_body_parts();
 std::pair<int, int> inv_getheader(int);
 int mapitemfind(int = 0, int = 0, int = 0);
-std::string itemname(int = 0, int = 0, int = 0);
+std::string itemname(Item& item, int number = 0, bool with_article = true);
 
 } // namespace elona

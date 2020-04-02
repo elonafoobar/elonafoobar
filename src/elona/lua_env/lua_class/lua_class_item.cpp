@@ -176,9 +176,8 @@ void LuaItem::bind(sol::state& lua)
      *
      * [R] The name of the item with article and number.
      */
-    LuaItem.set("name", sol::property([](Item& i) {
-                    return elona::itemname(i.index);
-                }));
+    LuaItem.set(
+        "name", sol::property([](Item& i) { return elona::itemname(i); }));
 
     /**
      * @luadoc basename field string

@@ -367,7 +367,7 @@ int adventurer_discover_equipment()
         {
             if (is_equipment(the_item_db[itemid2int(item->id)]->category))
             {
-                addnews(1, rc, 0, itemname(item->index));
+                addnews(1, rc, 0, itemname(*item));
             }
         }
         wear_most_valuable_equipment();

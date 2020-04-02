@@ -4622,13 +4622,13 @@ int drink_well()
     if (inv[ci].param1 < -5 || inv[ci].param3 >= 20 ||
         (inv[ci].id == ItemId::holy_well && game_data.holy_well_count <= 0))
     {
-        const auto valn = itemname(ci);
+        const auto valn = itemname(inv[ci]);
         txt(i18n::s.get("core.action.drink.well.is_dry", valn));
         return 1;
     }
     item_separate(ci);
     snd_at("core.drink1", cdata[cc].position);
-    const auto valn = itemname(ci);
+    const auto valn = itemname(inv[ci]);
     txt(i18n::s.get("core.action.drink.well.draw", cdata[cc], valn));
     tc = cc;
     const auto cibk = ci;
@@ -5320,7 +5320,9 @@ int pick_up_item(bool play_sound)
             in = inv[ci].number();
             inv[ci].remove();
             txt(i18n::s.get(
-                "core.action.pick_up.execute", cdata[cc], itemname(ti, in)));
+                "core.action.pick_up.execute",
+                cdata[cc],
+                itemname(inv[ti], in)));
             cell_refresh(inv[ci].position.x, inv[ci].position.y);
             if (inv[ci].id == ItemId::gold_piece)
             {
@@ -5507,7 +5509,8 @@ int pick_up_item(bool play_sound)
         }
         if (invctrl == 11)
         {
-            txt(i18n::s.get("core.action.pick_up.you_buy", itemname(ti, in)));
+            txt(i18n::s.get(
+                "core.action.pick_up.you_buy", itemname(inv[ti], in)));
             sellgold = calcitemvalue(inv[ti], 0) * in;
             snd_("core.paygold1");
             cdata.player().gold -= sellgold;
@@ -5524,13 +5527,14 @@ int pick_up_item(bool play_sound)
             if (!inv[ti].is_stolen())
             {
                 txt(i18n::s.get(
-                    "core.action.pick_up.you_sell", itemname(ti, in)));
+                    "core.action.pick_up.you_sell", itemname(inv[ti], in)));
             }
             else
             {
                 inv[ti].is_stolen() = false;
                 txt(i18n::s.get(
-                    "core.action.pick_up.you_sell_stolen", itemname(ti, in)));
+                    "core.action.pick_up.you_sell_stolen",
+                    itemname(inv[ti], in)));
                 if (game_data.guild.thieves_guild_quota > 0)
                 {
                     game_data.guild.thieves_guild_quota -= sellgold;
@@ -5560,12 +5564,13 @@ int pick_up_item(bool play_sound)
                 txt(i18n::s.get(
                     "core.action.pick_up.execute",
                     cdata[cc],
-                    itemname(ti, in)));
+                    itemname(inv[ti], in)));
             }
             else
             {
                 txt(i18n::s.get(
-                    "core.action.pick_up.put_in_container", itemname(ti, in)));
+                    "core.action.pick_up.put_in_container",
+                    itemname(inv[ti], in)));
             }
         }
         else
@@ -5582,7 +5587,7 @@ int pick_up_item(bool play_sound)
                 .item_appearances_actual;
         sound_pick_up();
         txt(i18n::s.get(
-            "core.action.pick_up.execute", cdata[cc], itemname(ti, in)));
+            "core.action.pick_up.execute", cdata[cc], itemname(inv[ti], in)));
     }
     if (cc == 0)
     {

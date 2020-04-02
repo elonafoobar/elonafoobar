@@ -60,7 +60,7 @@ std::string test_itemname(int id, int number, bool prefix)
     REQUIRE_SOME(itemcreate_extra_inv(id, 0, 0, number));
     int index = elona::ci;
     normalize_item(elona::inv[index]);
-    std::string name = itemname(index, number, prefix ? 0 : 1);
+    std::string name = itemname(inv[index], number, prefix);
     item_delete(inv[index]);
     return name;
 }

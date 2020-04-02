@@ -411,7 +411,7 @@ void cook(Item& cook_tool, Item& food)
     snd("core.cook1");
     item_separate(food.index);
 
-    const auto item_name_prev = itemname(food.index);
+    const auto item_name_prev = itemname(food);
 
     int dish_rank =
         rnd_capped(sdata(184, cc) + 6) + rnd(cook_tool.param1 / 50 + 1);

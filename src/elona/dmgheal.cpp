@@ -95,7 +95,7 @@ void dmgheal_death_by_backpack(Character& chara)
     }
     else
     {
-        heaviest_item_name = itemname(heaviest_item_index);
+        heaviest_item_name = itemname(inv[heaviest_item_index]);
     }
     txt(i18n::s.get_enum_property(
         "core.death_by.other", "text", 6, chara, heaviest_item_name));

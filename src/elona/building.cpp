@@ -676,7 +676,7 @@ void show_home_value()
         mes(wx + 68,
             cnt * 16 + wy + 138,
             i18n::s.get("core.building.home.rank.place", cnvrank(cnt + 1)));
-        mes(wx + 110, cnt * 16 + wy + 138, itemname(p));
+        mes(wx + 110, cnt * 16 + wy + 138, itemname(inv[p]));
     }
 
     while (1)
