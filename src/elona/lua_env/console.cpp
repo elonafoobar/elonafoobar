@@ -22,6 +22,7 @@
 #include "../text.hpp"
 #include "../ui.hpp"
 #include "../variables.hpp"
+#include "../wish.hpp"
 #include "api_manager.hpp"
 #include "mod_manager.hpp"
 
@@ -642,6 +643,26 @@ void Console::_init_builtin_lua_functions()
         game_data.wizard = 0;
         cdatan(1, 0) = random_title(RandomTitleType::character);
         print("Wizard mode inactivated.");
+    };
+
+    funcs["wish"] = [this](
+                        sol::optional<std::string> wish,
+                        sol::optional<std::string> n) {
+        if (!game_data.wizard)
+        {
+            print("Activate wizard mode to run the command.");
+            return;
+        }
+        int num = elona::stoi(n.value_or("1"));
+        if (num < 1)
+        {
+            num = 1;
+        }
+        for (int _i = 0; _i < num; ++_i)
+        {
+            what_do_you_wish_for(
+                wish ? optional<std::string>{*wish} : optional<std::string>{});
+        }
     };
 
     // Map functions stored in COMMANDS._BUILTIN_ to global.
