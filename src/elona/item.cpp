@@ -2781,7 +2781,7 @@ void equip_melee_weapon()
             continue;
         }
         ++attacknum;
-        if (cdata[cc].equipment_type & 2)
+        if (cdata[cc].combat_style.two_hand())
         {
             if (inv[cw].weight >= 4000)
             {
@@ -2794,7 +2794,7 @@ void equip_melee_weapon()
                     "core.action.equip.two_handed.too_light", inv[cw]));
             }
         }
-        if (cdata[cc].equipment_type & 4)
+        if (cdata[cc].combat_style.dual_wield())
         {
             if (attacknum == 1)
             {
