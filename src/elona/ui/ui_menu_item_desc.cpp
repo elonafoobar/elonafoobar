@@ -134,7 +134,7 @@ void UIMenuItemDesc::draw()
         winposy(408),
         600,
         408);
-    display_topic(itemname(ci), wx + 28, wy + 34);
+    display_topic(itemname(inv[ci]), wx + 28, wy + 34);
 
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {

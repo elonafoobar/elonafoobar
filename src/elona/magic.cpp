@@ -2088,7 +2088,7 @@ bool _magic_645_1114()
     if (i > 0)
     {
         i = p(rnd(i(0)));
-        const auto valn = itemname(i, 1, 1);
+        const auto valn = itemname(inv[i], 1, false);
         if (inv[i].curse_state == CurseState::cursed)
         {
             inv[i].curse_state = CurseState::doomed;
@@ -2482,7 +2482,7 @@ bool _magic_21_1127()
                     material = 35;
                 }
             }
-            s = itemname(ci, 1, 1);
+            s = itemname(inv[ci], 1, false);
             objlv = efp / 10;
             objfix = efp / 100;
             randomize();

@@ -2637,13 +2637,13 @@ std::string txtitemoncell(int x, int y)
                 {
                     items_text += i18n::s.get("core.misc.and");
                 }
-                items_text += itemname(item_index);
+                items_text += itemname(inv[item_index]);
                 ++counter;
             }
         }
         else
         {
-            items_text = itemname(item);
+            items_text = itemname(inv[item]);
         }
         if (inv[item].own_state <= 0)
         {

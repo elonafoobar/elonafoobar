@@ -673,184 +673,168 @@ void item_checkknown(Item& item)
 
 
 
-void itemname_additional_info(int item_index)
+void itemname_additional_info(Item& item)
 {
-    if (inv[item_index].id == ItemId::kitty_bank)
+    if (item.id == ItemId::kitty_bank)
     {
-        s_ += i18n::s.get_enum(
-            "core.item.kitty_bank_rank", inv[item_index].param2);
+        s_ += i18n::s.get_enum("core.item.kitty_bank_rank", item.param2);
     }
-    if (inv[item_index].id == ItemId::bait)
+    if (item.id == ItemId::bait)
     {
         s_ += lang(
-            ""s +
-                i18n::s.get_enum("core.item.bait_rank", inv[item_index].param1),
-            u8" <"s +
-                i18n::s.get_enum(
-                    "core.item.bait_rank", inv[item_index].param1) +
+            ""s + i18n::s.get_enum("core.item.bait_rank", item.param1),
+            u8" <"s + i18n::s.get_enum("core.item.bait_rank", item.param1) +
                 u8">"s);
     }
-    if (inv[item_index].id == ItemId::ancient_book)
+    if (item.id == ItemId::ancient_book)
     {
         if (jp)
         {
-            if (inv[item_index].param2 != 0)
+            if (item.param2 != 0)
             {
                 s_ += u8"解読済みの"s;
             }
         }
-        if (inv[item_index].identify_state == IdentifyState::completely)
+        if (item.identify_state == IdentifyState::completely)
         {
             s_ += lang(
                 u8"《"s +
                     i18n::s.get_enum(
-                        "core.item.ancient_book_title",
-                        inv[item_index].param1) +
+                        "core.item.ancient_book_title", item.param1) +
                     u8"》という題名の"s,
                 u8" titled <"s +
                     i18n::s.get_enum(
-                        "core.item.ancient_book_title",
-                        inv[item_index].param1) +
+                        "core.item.ancient_book_title", item.param1) +
                     u8">"s);
         }
     }
-    if (inv[item_index].id == ItemId::recipe)
+    if (item.id == ItemId::recipe)
     {
-        if (inv[item_index].param1 == 0)
+        if (item.param1 == 0)
         {
             s_ += lang(u8"もう使えない"s, u8" which cannot be used anymore"s);
         }
-        else if (inv[item_index].subname == 0)
+        else if (item.subname == 0)
         {
             s_ += lang(u8"カスタム"s, ""s);
         }
         else
         {
             s_ += lang(
-                u8"《"s + rpname(inv[item_index].subname) + u8"》の"s,
-                u8" of <"s + rpname(inv[item_index].subname) + u8">"s);
+                u8"《"s + rpname(item.subname) + u8"》の"s,
+                u8" of <"s + rpname(item.subname) + u8">"s);
         }
     }
 
-    auto category = the_item_db[itemid2int(inv[item_index].id)]->category;
+    auto category = the_item_db[itemid2int(item.id)]->category;
 
     if (category == ItemCategory::book)
     {
-        if (inv[item_index].id == ItemId::textbook)
+        if (item.id == ItemId::textbook)
         {
             s_ += lang(
                 u8"《"s +
                     i18n::s.get_m(
                         "ability",
-                        the_ability_db
-                            .get_id_from_legacy(inv[item_index].param1)
-                            ->get(),
+                        the_ability_db.get_id_from_legacy(item.param1)->get(),
                         "name") +
                     u8"》という題名の"s,
                 u8" titled <Art of "s +
                     i18n::s.get_m(
                         "ability",
-                        the_ability_db
-                            .get_id_from_legacy(inv[item_index].param1)
-                            ->get(),
+                        the_ability_db.get_id_from_legacy(item.param1)->get(),
                         "name") +
                     u8">"s);
         }
-        else if (inv[item_index].id == ItemId::book_of_rachel)
+        else if (item.id == ItemId::book_of_rachel)
         {
-            s_ += lang(u8"第"s, u8" of Rachel No."s) + inv[item_index].param2 +
+            s_ += lang(u8"第"s, u8" of Rachel No."s) + item.param2 +
                 lang(u8"巻目の"s, ""s);
         }
-        else if (inv[item_index].id == ItemId::book_b)
+        else if (item.id == ItemId::book_b)
         {
             s_ += lang(
-                u8"《"s + booktitle(inv[item_index].param1) +
-                    u8"》という題名の"s,
-                u8" titled <"s + booktitle(inv[item_index].param1) + u8">"s);
+                u8"《"s + booktitle(item.param1) + u8"》という題名の"s,
+                u8" titled <"s + booktitle(item.param1) + u8">"s);
         }
     }
     if (category == ItemCategory::altar)
     {
-        if (inv[item_index].param1 != 0)
+        if (item.param1 != 0)
         {
             s_ += lang(
-                god_name(inv[item_index].param1) + u8"の"s,
-                u8" <"s + god_name(inv[item_index].param1) + u8">"s);
+                god_name(item.param1) + u8"の"s,
+                u8" <"s + god_name(item.param1) + u8">"s);
         }
     }
     if (category == ItemCategory::food)
     {
-        if (inv[item_index].param1 != 0)
+        if (item.param1 != 0)
         {
-            if (inv[item_index].param2 != 0)
+            if (item.param2 != 0)
             {
                 skip_ = 1;
-                if (inv[item_index].id == ItemId::fish_a)
+                if (item.id == ItemId::fish_a)
                 {
-                    s_ =
-                        s_ +
+                    s_ = s_ +
                         foodname(
-                            inv[item_index].param1 / 1000,
-                            i18n::s.get_m(
-                                "fish",
-                                the_fish_db
-                                    .get_id_from_legacy(inv[item_index].subname)
-                                    ->get(),
-                                "name"),
-                            inv[item_index].param2,
-                            inv[item_index].subname);
+                             item.param1 / 1000,
+                             i18n::s.get_m(
+                                 "fish",
+                                 the_fish_db.get_id_from_legacy(item.subname)
+                                     ->get(),
+                                 "name"),
+                             item.param2,
+                             item.subname);
                 }
                 else
                 {
                     s_ = s_ +
                         foodname(
-                             inv[item_index].param1 / 1000,
-                             ioriginalnameref(itemid2int(inv[item_index].id)),
-                             inv[item_index].param2,
-                             inv[item_index].subname);
+                             item.param1 / 1000,
+                             ioriginalnameref(itemid2int(item.id)),
+                             item.param2,
+                             item.subname);
                 }
                 return;
             }
         }
-        if (inv[item_index].own_state == 4)
+        if (item.own_state == 4)
         {
             s_ += lang(""s, u8" grown "s) +
-                i18n::s.get_enum("core.ui.weight", inv[item_index].subname) +
+                i18n::s.get_enum("core.ui.weight", item.subname) +
                 lang(u8"育った"s, ""s);
         }
     }
-    if (inv[item_index].subname != 0)
+    if (item.subname != 0)
     {
-        if (inv[item_index].id == ItemId::fish_a ||
-            inv[item_index].id == ItemId::fish_b)
+        if (item.id == ItemId::fish_a || item.id == ItemId::fish_b)
         {
-            if (inv[item_index].subname < 0 || inv[item_index].subname >= 100)
+            if (item.subname < 0 || item.subname >= 100)
             {
                 s_ += u8"/bugged/"s;
                 return;
             }
             s_ += i18n::s.get_m(
                 "fish",
-                the_fish_db.get_id_from_legacy(inv[item_index].subname)->get(),
+                the_fish_db.get_id_from_legacy(item.subname)->get(),
                 "name");
         }
         else if (
             category == ItemCategory::food ||
             category == ItemCategory::bodyparts ||
-            inv[item_index].id == ItemId::figurine ||
-            inv[item_index].id == ItemId::card ||
-            inv[item_index].id == ItemId::shit ||
-            inv[item_index].id == ItemId::bottle_of_milk)
+            item.id == ItemId::figurine || item.id == ItemId::card ||
+            item.id == ItemId::shit || item.id == ItemId::bottle_of_milk)
         {
-            if (inv[item_index].subname < 0 || inv[item_index].subname >= 800)
+            if (item.subname < 0 || item.subname >= 800)
             {
                 s_ += u8"/bugged/"s;
                 return;
             }
-            if (inv[item_index].own_state != 4)
+            if (item.own_state != 4)
             {
                 s_ += lang(""s, u8" of "s) +
-                    chara_db_get_name(int2charaid(inv[item_index].subname));
+                    chara_db_get_name(int2charaid(item.subname));
                 if (jp)
                 {
                     s_ += u8"の"s;
@@ -861,66 +845,63 @@ void itemname_additional_info(int item_index)
         {
             if (jp)
             {
-                if (inv[item_index].subname >= 12)
+                if (item.subname >= 12)
                 {
-                    inv[item_index].subname = 0;
+                    item.subname = 0;
                 }
                 else
                 {
-                    s_ += i18n::s.get_enum(
-                        "core.ui.furniture", inv[item_index].subname);
+                    s_ += i18n::s.get_enum("core.ui.furniture", item.subname);
                 }
             }
         }
-        if (inv[item_index].id == ItemId::deed)
+        if (item.id == ItemId::deed)
         {
             s_ += lang(""s, u8" of "s) +
-                i18n::s.get_enum("core.ui.home", inv[item_index].param1) +
+                i18n::s.get_enum("core.ui.home", item.param1) +
                 lang(u8"の"s, ""s);
         }
-        if (inv[item_index].id == ItemId::bill)
+        if (item.id == ItemId::bill)
         {
             s_ += lang(
-                ""s + inv[item_index].subname + u8"goldの"s,
-                u8" <"s + inv[item_index].subname + u8" gp>"s);
+                ""s + item.subname + u8"goldの"s,
+                u8" <"s + item.subname + u8" gp>"s);
         }
-        if (inv[item_index].id == ItemId::vomit)
+        if (item.id == ItemId::vomit)
         {
-            if (inv[item_index].subname < 0 || inv[item_index].subname >= 800)
+            if (item.subname < 0 || item.subname >= 800)
             {
                 s_ += u8"/bugged/"s;
                 return;
             }
             s_ += lang(
-                ""s + chara_db_get_name(int2charaid(inv[item_index].subname)) +
-                    u8"の"s,
-                u8" of "s +
-                    chara_db_get_name(int2charaid(inv[item_index].subname)));
+                ""s + chara_db_get_name(int2charaid(item.subname)) + u8"の"s,
+                u8" of "s + chara_db_get_name(int2charaid(item.subname)));
         }
     }
-    if (inv[item_index].id == ItemId::secret_treasure)
+    if (item.id == ItemId::secret_treasure)
     {
-        if (inv[item_index].param1 == 169)
+        if (item.param1 == 169)
         {
             s_ += lang(u8"善人の"s, u8" of saint"s);
         }
-        if (inv[item_index].param1 == 162)
+        if (item.param1 == 162)
         {
             s_ += lang(u8"悪人の"s, u8" of wicked"s);
         }
-        if (inv[item_index].param1 == 163)
+        if (item.param1 == 163)
         {
             s_ += lang(u8"エヘカトルの"s, u8" of Ehekatl"s);
         }
-        if (inv[item_index].param1 == 164)
+        if (item.param1 == 164)
         {
             s_ += lang(u8"オパートスの"s, u8" of Opatos"s);
         }
-        if (inv[item_index].param1 == 165)
+        if (item.param1 == 165)
         {
             s_ += lang(u8"イツパロトルの"s, u8" of Itzpalt"s);
         }
-        if (inv[item_index].param1 == 166)
+        if (item.param1 == 166)
         {
             s_ += lang(u8"ジュアの"s, u8" of Jure"s);
         }
@@ -929,7 +910,7 @@ void itemname_additional_info(int item_index)
 
 
 
-std::string itemname(int item_index, int number, int skip_article)
+std::string itemname(Item& item, int number, bool with_article)
 {
     elona_vector1<int> iqiality_;
     int num2_ = 0;
@@ -938,26 +919,25 @@ std::string itemname(int item_index, int number, int skip_article)
     int alpha_ = 0;
     std::string s4_;
     elona_vector1<std::string> buf_;
-    if (itemid2int(inv[item_index].id) >= maxitemid - 2 ||
-        static_cast<size_t>(itemid2int(inv[item_index].id)) >
-            ioriginalnameref.size())
+    if (itemid2int(item.id) >= maxitemid - 2 ||
+        static_cast<size_t>(itemid2int(item.id)) > ioriginalnameref.size())
     {
         return i18n::s.get("core.item.unknown_item");
     }
-    if (inv[item_index].quality >= Quality::godly)
+    if (item.quality >= Quality::godly)
     {
-        iqiality_(item_index) = 5;
+        iqiality_(item.index) = 5;
     }
-    item_checkknown(inv[item_index]);
+    item_checkknown(item);
     if (number == 0)
     {
-        num2_ = inv[item_index].number();
+        num2_ = item.number();
     }
     else
     {
         num2_ = number;
     }
-    const auto category = the_item_db[itemid2int(inv[item_index].id)]->category;
+    const auto category = the_item_db[itemid2int(item.id)]->category;
     if (jp)
     {
         if (num2_ > 1)
@@ -970,7 +950,7 @@ std::string itemname(int item_index, int number, int skip_article)
             if (category == ItemCategory::spellbook ||
                 category == ItemCategory::book)
             {
-                if (inv[item_index].id == ItemId::recipe)
+                if (item.id == ItemId::recipe)
                 {
                     s2_ = u8"枚の"s;
                 }
@@ -998,13 +978,13 @@ std::string itemname(int item_index, int number, int skip_article)
             }
             if (category == ItemCategory::gold_piece ||
                 category == ItemCategory::platinum_coin ||
-                inv[item_index].id == ItemId::small_medal ||
-                inv[item_index].id == ItemId::music_ticket ||
-                inv[item_index].id == ItemId::token_of_friendship)
+                item.id == ItemId::small_medal ||
+                item.id == ItemId::music_ticket ||
+                item.id == ItemId::token_of_friendship)
             {
                 s2_ = u8"枚の"s;
             }
-            if (inv[item_index].id == ItemId::fish_a)
+            if (item.id == ItemId::fish_a)
             {
                 s2_ = u8"匹の"s;
             }
@@ -1014,9 +994,9 @@ std::string itemname(int item_index, int number, int skip_article)
         {
             s_ = "";
         }
-        if (inv[item_index].identify_state == IdentifyState::completely)
+        if (item.identify_state == IdentifyState::completely)
         {
-            switch (inv[item_index].curse_state)
+            switch (item.curse_state)
             {
             case CurseState::doomed:
                 s_ += i18n::s.get("core.ui.curse_state.doomed");
@@ -1034,9 +1014,9 @@ std::string itemname(int item_index, int number, int skip_article)
     else
     {
         s_ = "";
-        if (inv[item_index].identify_state == IdentifyState::completely)
+        if (item.identify_state == IdentifyState::completely)
         {
-            switch (inv[item_index].curse_state)
+            switch (item.curse_state)
             {
             case CurseState::doomed:
                 s_ = i18n::s.get("core.ui.curse_state.doomed") + u8" "s;
@@ -1050,21 +1030,21 @@ std::string itemname(int item_index, int number, int skip_article)
                 break;
             }
         }
-        if (irandomname(itemid2int(inv[item_index].id)) == 1 &&
-            inv[item_index].identify_state == IdentifyState::unidentified)
+        if (irandomname(itemid2int(item.id)) == 1 &&
+            item.identify_state == IdentifyState::unidentified)
         {
             s2_ = "";
         }
         else
         {
-            s2_ = ""s + ioriginalnameref2(itemid2int(inv[item_index].id));
+            s2_ = ""s + ioriginalnameref2(itemid2int(item.id));
             if (strutil::contains(
-                    ioriginalnameref(itemid2int(inv[item_index].id)), u8"with"))
+                    ioriginalnameref(itemid2int(item.id)), u8"with"))
             {
                 s3_ = "";
             }
             else if (strutil::contains(
-                         ioriginalnameref(itemid2int(inv[item_index].id)),
+                         ioriginalnameref(itemid2int(item.id)),
                          u8"for testing"))
             {
                 s3_ = "";
@@ -1073,10 +1053,9 @@ std::string itemname(int item_index, int number, int skip_article)
             {
                 s3_ = u8"of";
             }
-            if (inv[item_index].identify_state != IdentifyState::unidentified &&
-                s2_ == "")
+            if (item.identify_state != IdentifyState::unidentified && s2_ == "")
             {
-                if (inv[item_index].weight < 0)
+                if (item.weight < 0)
                 {
                     s2_ = u8"cargo";
                 }
@@ -1086,8 +1065,8 @@ std::string itemname(int item_index, int number, int skip_article)
                     s2_ = u8"pair";
                 }
             }
-            if (category == ItemCategory::food && inv[item_index].param1 != 0 &&
-                inv[item_index].param2 != 0)
+            if (category == ItemCategory::food && item.param1 != 0 &&
+                item.param2 != 0)
             {
                 s2_ = u8"dish";
             }
@@ -1123,7 +1102,7 @@ std::string itemname(int item_index, int number, int skip_article)
             s_ = ""s + num2_ + u8" " + s_;
         }
     }
-    if (inv[item_index].material == 35 && inv[item_index].param3 < 0)
+    if (item.material == 35 && item.param3 < 0)
     {
         if (jp)
         {
@@ -1136,59 +1115,53 @@ std::string itemname(int item_index, int number, int skip_article)
     }
     if (en)
     {
-        if (category == ItemCategory::food && inv[item_index].param1 != 0 &&
-            inv[item_index].param2 != 0)
+        if (category == ItemCategory::food && item.param1 != 0 &&
+            item.param2 != 0)
         {
             skip_ = 1;
         }
-        if (inv[item_index].subname != 0 && category == ItemCategory::furniture)
+        if (item.subname != 0 && category == ItemCategory::furniture)
         {
-            if (inv[item_index].subname >= 12)
+            if (item.subname >= 12)
             {
-                inv[item_index].subname = 0;
+                item.subname = 0;
             }
             else
             {
-                s_ += i18n::s.get_enum(
-                          "core.ui.furniture", inv[item_index].subname) +
+                s_ += i18n::s.get_enum("core.ui.furniture", item.subname) +
                     u8" "s;
             }
         }
-        if (inv[item_index].id == ItemId::ancient_book &&
-            inv[item_index].param2 != 0)
+        if (item.id == ItemId::ancient_book && item.param2 != 0)
         {
             s_ += u8"undecoded "s;
         }
-        if (inv[item_index].id == ItemId::recipe &&
-            inv[item_index].subname == 0)
+        if (item.id == ItemId::recipe && item.subname == 0)
         {
             s_ += u8"custom "s;
         }
     }
-    if (inv[item_index].id == ItemId::material_kit)
+    if (item.id == ItemId::material_kit)
     {
         s_ += ""s +
             i18n::s.get_m(
                 "item_material",
-                the_item_material_db
-                    .get_id_from_legacy(inv[item_index].material)
-                    ->get(),
+                the_item_material_db.get_id_from_legacy(item.material)->get(),
                 "name") +
             lang(u8"製の"s, u8" "s);
     }
     if (jp)
     {
-        itemname_additional_info(item_index);
+        itemname_additional_info(item);
     }
-    if (category == ItemCategory::furniture && inv[item_index].material != 0)
+    if (category == ItemCategory::furniture && item.material != 0)
     {
         if (jp)
         {
             s_ += ""s +
                 i18n::s.get_m(
                     "item_material",
-                    the_item_material_db
-                        .get_id_from_legacy(inv[item_index].material)
+                    the_item_material_db.get_id_from_legacy(item.material)
                         ->get(),
                     "name") +
                 u8"細工の"s;
@@ -1198,25 +1171,24 @@ std::string itemname(int item_index, int number, int skip_article)
             s_ += ""s +
                 i18n::s.get_m(
                     "item_material",
-                    the_item_material_db
-                        .get_id_from_legacy(inv[item_index].material)
+                    the_item_material_db.get_id_from_legacy(item.material)
                         ->get(),
                     "name") +
                 u8"work "s;
         }
     }
-    if (inv[item_index].id == ItemId::gift)
+    if (item.id == ItemId::gift)
     {
-        s_ += i18n::s.get_enum("core.item.gift_rank", inv[item_index].param4) +
+        s_ += i18n::s.get_enum("core.item.gift_rank", item.param4) +
             i18n::space_if_needed();
     }
     if (skip_ != 1)
     {
         alpha_ = 0;
-        if (inv[item_index].identify_state == IdentifyState::completely &&
+        if (item.identify_state == IdentifyState::completely &&
             is_equipment(category))
         {
-            if (inv[item_index].is_eternal_force())
+            if (item.is_eternal_force())
             {
                 alpha_ = 1;
                 s_ += lang(u8"エターナルフォース"s, u8"eternal force"s) +
@@ -1224,31 +1196,30 @@ std::string itemname(int item_index, int number, int skip_article)
             }
             else
             {
-                if (inv[item_index].subname >= 10000)
+                if (item.subname >= 10000)
                 {
-                    if (inv[item_index].subname < 20000)
+                    if (item.subname < 20000)
                     {
                         if (jp)
                         {
-                            s_ += egoname(inv[item_index].subname - 10000) +
+                            s_ += egoname(item.subname - 10000) +
                                 i18n::space_if_needed();
                         }
                     }
-                    else if (inv[item_index].subname < 40000)
+                    else if (item.subname < 40000)
                     {
-                        s_ += egominorn(inv[item_index].subname - 20000) +
+                        s_ += egominorn(item.subname - 20000) +
                             i18n::space_if_needed();
                     }
                 }
-                if (inv[item_index].quality != Quality::special)
+                if (item.quality != Quality::special)
                 {
-                    if (inv[item_index].quality >= Quality::miracle)
+                    if (item.quality >= Quality::miracle)
                     {
                         s_ += i18n::s.get_m(
                                   "item_material",
                                   the_item_material_db
-                                      .get_id_from_legacy(
-                                          inv[item_index].material)
+                                      .get_id_from_legacy(item.material)
                                       ->get(),
                                   "alias") +
                             i18n::space_if_needed();
@@ -1258,8 +1229,7 @@ std::string itemname(int item_index, int number, int skip_article)
                         s_ += i18n::s.get_m(
                                   "item_material",
                                   the_item_material_db
-                                      .get_id_from_legacy(
-                                          inv[item_index].material)
+                                      .get_id_from_legacy(item.material)
                                       ->get(),
                                   "name") +
                             i18n::space_if_needed();
@@ -1278,60 +1248,55 @@ std::string itemname(int item_index, int number, int skip_article)
                 }
             }
         }
-        if (inv[item_index].identify_state == IdentifyState::unidentified)
+        if (item.identify_state == IdentifyState::unidentified)
         {
-            s_ += iknownnameref(itemid2int(inv[item_index].id));
+            s_ += iknownnameref(itemid2int(item.id));
         }
-        else if (inv[item_index].identify_state != IdentifyState::completely)
+        else if (item.identify_state != IdentifyState::completely)
         {
-            if (inv[item_index].quality < Quality::miracle ||
-                !is_equipment(category))
+            if (item.quality < Quality::miracle || !is_equipment(category))
             {
-                s_ += ioriginalnameref(itemid2int(inv[item_index].id));
+                s_ += ioriginalnameref(itemid2int(item.id));
             }
             else
             {
-                s_ += iknownnameref(itemid2int(inv[item_index].id));
+                s_ += iknownnameref(itemid2int(item.id));
             }
         }
-        else if (
-            inv[item_index].quality == Quality::special ||
-            inv[item_index].is_precious())
+        else if (item.quality == Quality::special || item.is_precious())
         {
             if (jp)
             {
-                s_ = u8"★"s + s_ +
-                    ioriginalnameref(itemid2int(inv[item_index].id));
+                s_ = u8"★"s + s_ + ioriginalnameref(itemid2int(item.id));
             }
             else
             {
-                s_ += ioriginalnameref(itemid2int(inv[item_index].id));
+                s_ += ioriginalnameref(itemid2int(item.id));
             }
         }
         else
         {
-            if (inv[item_index].quality >= Quality::miracle && jp)
+            if (item.quality >= Quality::miracle && jp)
             {
                 s_ = u8"☆"s + s_;
             }
             if (alpha_ == 1 && jp)
             {
-                s_ += ialphanameref(itemid2int(inv[item_index].id));
+                s_ += ialphanameref(itemid2int(item.id));
             }
             else
             {
-                s_ += ioriginalnameref(itemid2int(inv[item_index].id));
+                s_ += ioriginalnameref(itemid2int(item.id));
             }
-            if (en && is_equipment(category) &&
-                inv[item_index].subname >= 10000 &&
-                inv[item_index].subname < 20000)
+            if (en && is_equipment(category) && item.subname >= 10000 &&
+                item.subname < 20000)
             {
-                s_ += u8" "s + egoname((inv[item_index].subname - 10000));
+                s_ += u8" "s + egoname((item.subname - 10000));
             }
-            if (inv[item_index].subname >= 40000)
+            if (item.subname >= 40000)
             {
-                randomize(inv[item_index].subname - 40000);
-                if (inv[item_index].quality == Quality::miracle)
+                randomize(item.subname - 40000);
+                if (item.quality == Quality::miracle)
                 {
                     s_ += i18n::space_if_needed() +
                         i18n::s.get(
@@ -1351,11 +1316,10 @@ std::string itemname(int item_index, int number, int skip_article)
     }
     if (en)
     {
-        if (skip_article == 0)
+        if (with_article)
         {
-            if (inv[item_index].identify_state == IdentifyState::completely &&
-                (inv[item_index].quality >= Quality::miracle &&
-                 is_equipment(category)))
+            if (item.identify_state == IdentifyState::completely &&
+                (item.quality >= Quality::miracle && is_equipment(category)))
             {
                 s_ = u8"the "s + s_;
             }
@@ -1373,7 +1337,7 @@ std::string itemname(int item_index, int number, int skip_article)
                 }
             }
         }
-        if (s2_ == "" && inv[item_index].id != ItemId::fish_a && num2_ > 1)
+        if (s2_ == "" && item.id != ItemId::fish_a && num2_ > 1)
         {
             switch (s_.back())
             {
@@ -1437,107 +1401,93 @@ std::string itemname(int item_index, int number, int skip_article)
             default: s_ += "s"; break;
             }
         }
-        itemname_additional_info(item_index);
+        itemname_additional_info(item);
     }
-    if (inv[item_index].identify_state == IdentifyState::completely)
+    if (item.identify_state == IdentifyState::completely)
     {
-        if (inv[item_index].enhancement != 0)
+        if (item.enhancement != 0)
         {
-            s_ += ""s + cnvfix(inv[item_index].enhancement) + u8" "s;
+            s_ += ""s + cnvfix(item.enhancement) + u8" "s;
         }
-        if (inv[item_index].has_charge())
+        if (item.has_charge())
         {
-            s_ += i18n::s.get("core.item.charges", inv[item_index].count);
+            s_ += i18n::s.get("core.item.charges", item.count);
         }
-        if (inv[item_index].dice_x != 0 || inv[item_index].hit_bonus != 0 ||
-            inv[item_index].damage_bonus != 0)
+        if (item.dice_x != 0 || item.hit_bonus != 0 || item.damage_bonus != 0)
         {
             s_ += u8" ("s;
-            if (inv[item_index].dice_x != 0)
+            if (item.dice_x != 0)
             {
-                s_ += ""s + inv[item_index].dice_x + u8"d"s +
-                    inv[item_index].dice_y;
-                if (inv[item_index].damage_bonus != 0)
+                s_ += ""s + item.dice_x + u8"d"s + item.dice_y;
+                if (item.damage_bonus != 0)
                 {
-                    if (inv[item_index].damage_bonus > 0)
+                    if (item.damage_bonus > 0)
                     {
-                        s_ += u8"+"s + inv[item_index].damage_bonus;
+                        s_ += u8"+"s + item.damage_bonus;
                     }
                     else
                     {
-                        s_ += ""s + inv[item_index].damage_bonus;
+                        s_ += ""s + item.damage_bonus;
                     }
                 }
                 s_ += u8")"s;
-                if (inv[item_index].hit_bonus != 0)
+                if (item.hit_bonus != 0)
                 {
-                    s_ += u8"("s + inv[item_index].hit_bonus + u8")"s;
+                    s_ += u8"("s + item.hit_bonus + u8")"s;
                 }
             }
             else
             {
-                s_ += ""s + inv[item_index].hit_bonus + u8","s +
-                    inv[item_index].damage_bonus + u8")"s;
+                s_ +=
+                    ""s + item.hit_bonus + u8","s + item.damage_bonus + u8")"s;
             }
         }
-        if (inv[item_index].dv != 0 || inv[item_index].pv != 0)
+        if (item.dv != 0 || item.pv != 0)
         {
-            s_ += u8" ["s + inv[item_index].dv + u8","s + inv[item_index].pv +
-                u8"]"s;
+            s_ += u8" ["s + item.dv + u8","s + item.pv + u8"]"s;
         }
     }
-    if (en &&
-        (inv[item_index].id == ItemId::wallet ||
-         inv[item_index].id == ItemId::suitcase))
+    if (en && (item.id == ItemId::wallet || item.id == ItemId::suitcase))
     {
         s_ += u8"(Lost property)"s;
     }
-    if (inv[item_index].id == ItemId::fishing_pole &&
-        inv[item_index].count != 0)
+    if (item.id == ItemId::fishing_pole && item.count != 0)
     {
         s_ += lang(
-            u8"("s +
-                i18n::s.get_enum(
-                    "core.item.bait_rank", inv[item_index].param4) +
-                u8"残り"s + inv[item_index].count + u8"匹)"s,
-            u8"("s + inv[item_index].count + u8" "s +
-                i18n::s.get_enum(
-                    "core.item.bait_rank", inv[item_index].param4) +
-                u8")"s);
+            u8"("s + i18n::s.get_enum("core.item.bait_rank", item.param4) +
+                u8"残り"s + item.count + u8"匹)"s,
+            u8"("s + item.count + u8" "s +
+                i18n::s.get_enum("core.item.bait_rank", item.param4) + u8")"s);
     }
-    if (inv[item_index].id == ItemId::monster_ball)
+    if (item.id == ItemId::monster_ball)
     {
-        if (inv[item_index].subname == 0)
+        if (item.subname == 0)
         {
-            s_ += lang(u8" Lv"s, u8" Level "s) + inv[item_index].param2 +
+            s_ += lang(u8" Lv"s, u8" Level "s) + item.param2 +
                 lang(u8" (空)"s, u8"(Empty)"s);
         }
         else
         {
-            s_ += u8" ("s +
-                chara_db_get_name(int2charaid(inv[item_index].subname)) +
-                u8")"s;
+            s_ +=
+                u8" ("s + chara_db_get_name(int2charaid(item.subname)) + u8")"s;
         }
     }
-    if (inv[item_index].id == ItemId::small_gamble_chest)
+    if (item.id == ItemId::small_gamble_chest)
     {
-        s_ += lang(u8" Lv"s, u8" Level "s) + inv[item_index].param2;
+        s_ += lang(u8" Lv"s, u8" Level "s) + item.param2;
     }
-    if (inv[item_index].identify_state == IdentifyState::almost &&
-        is_equipment(category))
+    if (item.identify_state == IdentifyState::almost && is_equipment(category))
     {
         s_ += u8" ("s +
             cnven(i18n::s.get_enum(
-                u8"core.ui.quality",
-                static_cast<int>(inv[item_index].quality))) +
+                u8"core.ui.quality", static_cast<int>(item.quality))) +
             u8")"s;
         if (jp)
         {
             s_ += u8"["s +
                 i18n::s.get_m(
                     "item_material",
-                    the_item_material_db
-                        .get_id_from_legacy(inv[item_index].material)
+                    the_item_material_db.get_id_from_legacy(item.material)
                         ->get(),
                     "name") +
                 u8"製]"s;
@@ -1547,65 +1497,61 @@ std::string itemname(int item_index, int number, int skip_article)
             s_ += u8"["s +
                 cnven(i18n::s.get_m(
                     "item_material",
-                    the_item_material_db
-                        .get_id_from_legacy(inv[item_index].material)
+                    the_item_material_db.get_id_from_legacy(item.material)
                         ->get(),
                     "name")) +
                 u8"]"s;
         }
-        if (inv[item_index].curse_state == CurseState::cursed)
+        if (item.curse_state == CurseState::cursed)
         {
             s_ += i18n::s.get("core.item.approximate_curse_state.cursed");
         }
-        if (inv[item_index].curse_state == CurseState::doomed)
+        if (item.curse_state == CurseState::doomed)
         {
             s_ += i18n::s.get("core.item.approximate_curse_state.doomed");
         }
     }
     if (category == ItemCategory::chest)
     {
-        if (inv[item_index].id == ItemId::shopkeepers_trunk)
+        if (item.id == ItemId::shopkeepers_trunk)
         {
             s_ += lang(u8"(移動時消滅)"s, u8"(Temporal)"s);
         }
-        else if (inv[item_index].count == 0)
+        else if (item.count == 0)
         {
-            if (inv[item_index].param1 == 0)
+            if (item.param1 == 0)
             {
                 s_ += lang(u8"(空っぽ)"s, u8"(Empty)"s);
             }
         }
     }
-    if (category == ItemCategory::cargo && inv[item_index].param2 != 0)
+    if (category == ItemCategory::cargo && item.param2 != 0)
     {
         s_ += lang(
-            u8"(仕入れ値 "s + inv[item_index].param2 + u8"g)"s,
-            u8"(Buying price: "s + inv[item_index].param2 + u8")"s);
+            u8"(仕入れ値 "s + item.param2 + u8"g)"s,
+            u8"(Buying price: "s + item.param2 + u8")"s);
     }
-    if (inv[item_index].is_aphrodisiac())
+    if (item.is_aphrodisiac())
     {
         s_ += lang(u8"(媚薬混入)"s, u8"(Aphrodisiac)"s);
     }
-    if (inv[item_index].is_poisoned())
+    if (item.is_poisoned())
     {
         s_ += lang(u8"(毒物混入)"s, u8"(Poisoned)"s);
     }
-    if (inv[item_index].has_cooldown_time() &&
-        game_data.date.hours() < inv[item_index].count)
+    if (item.has_cooldown_time() && game_data.date.hours() < item.count)
     {
         s_ += lang(
-            u8"("s + (inv[item_index].count - game_data.date.hours()) +
-                u8"時間)"s,
-            u8"(Next: "s + (inv[item_index].count - game_data.date.hours()) +
-                u8"h.)"s);
+            u8"("s + (item.count - game_data.date.hours()) + u8"時間)"s,
+            u8"(Next: "s + (item.count - game_data.date.hours()) + u8"h.)"s);
     }
-    if (inv[item_index].id == ItemId::shelter && inv[item_index].count != 0)
+    if (item.id == ItemId::shelter && item.count != 0)
     {
-        s_ += lang(u8" シリアルNo."s, u8" serial no."s) + inv[item_index].count;
+        s_ += lang(u8" シリアルNo."s, u8" serial no."s) + item.count;
     }
-    if (inv[item_index].id == ItemId::disc)
+    if (item.id == ItemId::disc)
     {
-        s_ += u8" <BGM"s + inv[item_index].param1 + u8">"s;
+        s_ += u8" <BGM"s + item.param1 + u8">"s;
     }
     if (strlen_u(s_) > 66)
     {
@@ -1913,7 +1859,7 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
                 {
                     txt(i18n::s.get(
                             "core.item.item_someone_equips_turns_to_dust",
-                            itemname(item.index, p_),
+                            itemname(item, p_),
                             p_,
                             cdata[owner]),
                         Message::color{ColorIndex::purple});
@@ -1928,7 +1874,7 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
             {
                 txt(i18n::s.get(
                         "core.item.someones_item_turns_to_dust",
-                        itemname(item.index, p_, 1),
+                        itemname(item, p_, false),
                         p_,
                         cdata[owner]),
                     Message::color{ColorIndex::purple});
@@ -1938,7 +1884,7 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
         {
             txt(i18n::s.get(
                     "core.item.item_on_the_ground_turns_to_dust",
-                    itemname(item.index, p_),
+                    itemname(item, p_),
                     p_),
                 Message::color{ColorIndex::purple});
         }
@@ -2094,7 +2040,7 @@ bool item_cold(int owner, optional_ref<Item> destroyed_item)
             {
                 txt(i18n::s.get(
                         "core.item.someones_item_breaks_to_pieces",
-                        itemname(item.index, p_, 1),
+                        itemname(item, p_, false),
                         p_,
                         cdata[owner]),
                     Message::color{ColorIndex::purple});
@@ -2104,7 +2050,7 @@ bool item_cold(int owner, optional_ref<Item> destroyed_item)
         {
             txt(i18n::s.get(
                     "core.item.item_on_the_ground_breaks_to_pieces",
-                    itemname(item.index, p_),
+                    itemname(item, p_),
                     p_),
                 Message::color{ColorIndex::purple});
         }
@@ -2382,7 +2328,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
     else
     {
         snd("core.drop1");
-        txt(i18n::s.get("core.action.drop.execute", itemname(ti, num)));
+        txt(i18n::s.get("core.action.drop.execute", itemname(inv[ti], num)));
     }
 
     if (inv[ti].id == ItemId::bottle_of_water) // Water
@@ -2517,7 +2463,7 @@ void auto_identify()
         const auto difficulty = 1500 + item.difficulty_of_identification * 5;
         if (skill > rnd(difficulty * 5))
         {
-            const auto prev_name = itemname(item.index);
+            const auto prev_name = itemname(item);
             item_identify(item, IdentifyState::completely);
             itemmemory(0, itemid2int(item.id)) = 1;
             if (!g_config.hide_autoidentify())
@@ -2648,7 +2594,7 @@ int convertartifact(int item_index, int ignore_external_container)
     {
         return item_index;
     }
-    n_at_m163 = ""s + itemname(item_index);
+    n_at_m163 = ""s + itemname(inv[item_index]);
 
     while (true)
     {

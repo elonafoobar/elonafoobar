@@ -218,7 +218,7 @@ _draw_single_list_entry(int cnt, int list_item, bool show_additional_info)
     if (equipped_item % 10000 != 0)
     {
         equipped_item = equipped_item % 10000 - 1;
-        item_name = itemname(equipped_item);
+        item_name = itemname(inv[equipped_item]);
         item_weight = cnvweight(inv[equipped_item].weight);
 
         draw_item_with_portrait(

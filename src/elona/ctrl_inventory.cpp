@@ -808,11 +808,11 @@ void show_message(int citrade)
         std::string valn;
         if (invctrl == 18)
         {
-            valn = itemname(cidip, 1);
+            valn = itemname(inv[cidip], 1);
         }
         else if (invctrl == 21)
         {
-            valn = itemname(citrade);
+            valn = itemname(inv[citrade]);
         }
 
         for (int cnt = 0; cnt < 30; cnt++)
@@ -1163,7 +1163,7 @@ void draw_item_list(int mainweapon)
             break;
         }
         p = list(0, p);
-        s(0) = itemname(p, inv[p].number());
+        s(0) = itemname(inv[p]);
         s(1) = cnvweight(inv[p].weight * inv[p].number());
         if (invctrl == 11)
         {
@@ -1480,14 +1480,14 @@ OnEnterResult on_enter(int& citrade, bool dropcontinue)
                 {
                     txt(i18n::s.get(
                         "core.ui.inv.buy.prompt",
-                        itemname(ci, in),
+                        itemname(inv[ci], in),
                         (in * calcitemvalue(inv[ci], 0))));
                 }
                 if (invctrl == 12)
                 {
                     txt(i18n::s.get(
                         "core.ui.inv.sell.prompt",
-                        itemname(ci, in),
+                        itemname(inv[ci], in),
                         (in * calcitemvalue(inv[ci], 1))));
                 }
                 if (!yes_no())
@@ -2107,7 +2107,8 @@ OnEnterResult on_enter(int& citrade, bool dropcontinue)
         {
             in = 1;
         }
-        txt(i18n::s.get("core.ui.inv.take_ally.you_take", itemname(ci, in)));
+        txt(i18n::s.get(
+            "core.ui.inv.take_ally.you_take", itemname(inv[ci], in)));
         if (inv[ci].id == ItemId::gold_piece)
         {
             earn_gold(cdata.player(), in);

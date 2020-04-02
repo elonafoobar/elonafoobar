@@ -209,7 +209,7 @@ void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
         return;
 
     font(12 - en * 2, snail::Font::Style::bold);
-    mes(dx_ - 10, dy_, itemname(item->index));
+    mes(dx_ - 10, dy_, itemname(*item));
     dy_ += 20;
     font(13 - en * 2);
     if (item->identify_state <= IdentifyState::partly)
@@ -486,7 +486,7 @@ void blending_menu_2()
                 break;
             }
             p = list(0, p);
-            s = itemname(p, inv[p].number());
+            s = itemname(inv[p], inv[p].number());
             s = strmid(s, 0, 28);
             if (p >= ELONA_ITEM_ON_GROUND_INDEX)
             {
