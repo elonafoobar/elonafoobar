@@ -443,11 +443,10 @@ TalkResult talk_arena_master_score()
 
 TalkResult talk_quest_delivery()
 {
-    int stat = inv_getfreeid_force();
-    ti = stat;
-    item_copy(deliver(1), ti);
-    inv[ti].set_number(1);
-    ci = ti;
+    const auto slot = inv_getfreeid_force();
+    item_copy(deliver(1), slot);
+    inv[slot].set_number(1);
+    ci = slot;
     rc = tc;
     chara_set_item_which_will_be_used(cdata[tc], inv[ci]);
     rq = deliver;
@@ -461,12 +460,11 @@ TalkResult talk_quest_delivery()
 
 TalkResult talk_quest_supply()
 {
-    int stat = inv_getfreeid_force();
-    ti = stat;
-    item_copy(supply, ti);
-    inv[ti].set_number(1);
+    const auto slot = inv_getfreeid_force();
+    item_copy(supply, slot);
+    inv[slot].set_number(1);
     cdata[tc].was_passed_item_by_you_just_now() = true;
-    ci = ti;
+    ci = slot;
     rc = tc;
     chara_set_item_which_will_be_used(cdata[tc], inv[ci]);
     inv[supply].modify_number(-1);
