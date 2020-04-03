@@ -1173,14 +1173,14 @@ TurnResult do_offer_command()
     BrightAuraAnimation(cdata[tc].position, BrightAuraAnimation::Type::offering)
         .play();
     tc = tcbk;
-    if (const auto altar = item_find(60002))
-    {
-        ti = altar->index;
-    }
-    else
+
+    const auto altar_opt = item_find(60002);
+    if (!altar_opt)
     {
         return TurnResult::turn_end;
     }
+    auto& altar = *altar_opt;
+
     if (inv[ci].id == ItemId::corpse)
     {
         i = clamp(inv[ci].weight / 200, 1, 50);
@@ -1193,10 +1193,11 @@ TurnResult do_offer_command()
     {
         i = 25;
     }
-    if (core_god::int2godid(inv[ti].param1) != cdata.player().god_id)
+
+    if (core_god::int2godid(altar.param1) != cdata.player().god_id)
     {
         f = 0;
-        if (inv[ti].param1 == 0)
+        if (altar.param1 == 0)
         {
             f = 1;
             txt(i18n::s.get(
@@ -1207,7 +1208,7 @@ TurnResult do_offer_command()
             txt(i18n::s.get(
                 "core.action.offer.take_over.attempt",
                 god_name(cdata.player().god_id),
-                god_name(inv[ti].param1)));
+                god_name(altar.param1)));
             if (rnd(17) <= i)
             {
                 f = 1;
@@ -1224,23 +1225,23 @@ TurnResult do_offer_command()
             animode = 100;
             MiracleAnimation().play();
             snd("core.pray2");
-            if (inv[ti].param1 != 0)
+            if (altar.param1 != 0)
             {
                 txt(i18n::s.get("core.action.offer.take_over.shadow"));
             }
             txt(i18n::s.get(
                     "core.action.offer.take_over.succeed",
                     god_name(cdata.player().god_id),
-                    inv[ti]),
+                    altar),
                 Message::color{ColorIndex::orange});
             txtgod(cdata.player().god_id, 2);
-            inv[ti].param1 = core_god::godid2int(cdata.player().god_id);
+            altar.param1 = core_god::godid2int(cdata.player().god_id);
         }
         else
         {
             txt(i18n::s.get(
-                "core.action.offer.take_over.fail", god_name(inv[ti].param1)));
-            txtgod(core_god::int2godid(inv[ti].param1), 3);
+                "core.action.offer.take_over.fail", god_name(altar.param1)));
+            txtgod(core_god::int2godid(altar.param1), 3);
             god_fail_to_take_over_penalty();
         }
     }
