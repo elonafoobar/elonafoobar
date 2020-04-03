@@ -5942,15 +5942,13 @@ void proc_autopick()
 
 int unlock_box(int difficulty)
 {
-    if (const auto lockpick = item_find(636, 3))
-    {
-        ti = lockpick->index;
-    }
-    else
+    const auto lockpick_opt = item_find(636, 3);
+    if (!lockpick_opt)
     {
         txt(i18n::s.get("core.action.unlock.do_not_have_lockpicks"));
         return 0;
     }
+    auto& lockpick = *lockpick_opt;
 
     txt(i18n::s.get("core.action.unlock.use_lockpick"));
     snd("core.locked1");
@@ -5991,7 +5989,7 @@ int unlock_box(int difficulty)
     {
         if (rnd(3) == 0)
         {
-            inv[ti].modify_number(-1);
+            lockpick.modify_number(-1);
             txt(i18n::s.get("core.action.unlock.lockpick_breaks"));
         }
         Message::instance().linebreak();
