@@ -2928,17 +2928,16 @@ TurnResult do_open_command(bool play_sound)
     }
     else
     {
+        const auto box_ci = ci;
         if (inv[ci].id == ItemId::new_years_gift)
         {
-            ri = ci;
-            open_new_year_gift(inv[ri]);
+            open_new_year_gift(inv[ci]);
         }
         else
         {
-            ri = ci;
-            open_box(inv[ri]);
+            open_box(inv[ci]);
         }
-        item_stack(cc, inv[ri]);
+        item_stack(cc, inv[box_ci]);
     }
     screenupdate = -1;
     update_screen();
