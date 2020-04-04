@@ -285,16 +285,6 @@ bool _try_generate_special_throwing_item(const Character& chara, int action_id)
 
 
 
-// Helper function: normalize the return value of `can_do_ranged_attack()` to
-// boolean.
-bool can_do_ranged_attack_helper()
-{
-    int stat = can_do_ranged_attack();
-    return stat == 1;
-}
-
-
-
 bool _try_do_melee_attack(const Character& attacker, const Character& target)
 {
     if (distance >= 6)
@@ -305,12 +295,14 @@ bool _try_do_melee_attack(const Character& attacker, const Character& target)
     {
         return false; // Cannot see the target.
     }
-    if (!can_do_ranged_attack_helper())
+
+    const auto result = can_do_ranged_attack();
+    if (result.type != 1)
     {
         return false; // Cannot do ranged attack.
     }
 
-    do_ranged_attack();
+    do_ranged_attack(result.weapon, result.ammo);
     return true;
 }
 

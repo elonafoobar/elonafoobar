@@ -3417,31 +3417,29 @@ TurnResult do_fire_command()
             return TurnResult::pc_turn_user_error;
         }
     }
+    const auto result = can_do_ranged_attack();
+    if (result.type == -1)
     {
-        int stat = can_do_ranged_attack();
-        if (stat == -1)
-        {
-            txt(i18n::s.get("core.action.ranged.equip.need_weapon"),
-                Message::only_once{true});
-            update_screen();
-            return TurnResult::pc_turn_user_error;
-        }
-        if (stat == -2)
-        {
-            txt(i18n::s.get("core.action.ranged.equip.need_ammo"),
-                Message::only_once{true});
-            update_screen();
-            return TurnResult::pc_turn_user_error;
-        }
-        if (stat == -3)
-        {
-            txt(i18n::s.get("core.action.ranged.equip.wrong_ammo"),
-                Message::only_once{true});
-            update_screen();
-            return TurnResult::pc_turn_user_error;
-        }
+        txt(i18n::s.get("core.action.ranged.equip.need_weapon"),
+            Message::only_once{true});
+        update_screen();
+        return TurnResult::pc_turn_user_error;
     }
-    do_ranged_attack();
+    if (result.type == -2)
+    {
+        txt(i18n::s.get("core.action.ranged.equip.need_ammo"),
+            Message::only_once{true});
+        update_screen();
+        return TurnResult::pc_turn_user_error;
+    }
+    if (result.type == -3)
+    {
+        txt(i18n::s.get("core.action.ranged.equip.wrong_ammo"),
+            Message::only_once{true});
+        update_screen();
+        return TurnResult::pc_turn_user_error;
+    }
+    do_ranged_attack(result.weapon, result.ammo);
     return TurnResult::turn_end;
 }
 

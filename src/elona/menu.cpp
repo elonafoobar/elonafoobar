@@ -1121,7 +1121,6 @@ void append_accuracy_info(int val0)
     p(1) = 0;
     p(2) = 0;
     attackskill = 106;
-    ammo = -1;
     attacknum = 0;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
@@ -1138,33 +1137,36 @@ void append_accuracy_info(int val0)
         {
             continue;
         }
-        cw = cdata[cc].body_parts[cnt] % 10000 - 1;
-        if (inv[cw].dice_x > 0)
+        auto& weapon = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
+        if (weapon.dice_x > 0)
         {
-            attackskill = inv[cw].skill;
+            attackskill = weapon.skill;
             ++p(1);
             s(1) = i18n::s.get("core.ui.chara_sheet.damage.melee") + p(1);
             ++attacknum;
-            show_weapon_dice(val0);
+            show_weapon_dice(weapon, none, val0);
         }
     }
     if (attackskill == 106)
     {
         s(1) = i18n::s.get("core.ui.chara_sheet.damage.unarmed");
-        show_weapon_dice(val0);
+        show_weapon_dice(none, none, val0);
     }
     attacknum = 0;
-    int stat = can_do_ranged_attack();
-    if (stat == 1)
+    const auto result = can_do_ranged_attack();
+    if (result.type == 1)
     {
         s(1) = i18n::s.get("core.ui.chara_sheet.damage.dist");
-        show_weapon_dice(val0);
+        show_weapon_dice(result.weapon, result.ammo, val0);
     }
 }
 
 
 
-void show_weapon_dice(int val0)
+void show_weapon_dice(
+    optional_ref<Item> weapon,
+    optional_ref<Item> ammo,
+    int val0)
 {
     tc = cc;
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
@@ -1177,13 +1179,16 @@ void show_weapon_dice(int val0)
         mes(wx + 417, wy + 281 + p(2) * 16, s(1), {20, 10, 0});
     }
     attackrange = 0;
-    if (the_item_db[itemid2int(inv[cw].id)]->category ==
-        ItemCategory::ranged_weapon) // TODO coupling
+    if (weapon)
     {
-        attackrange = 1;
+        if (the_item_db[itemid2int(weapon->id)]->category ==
+            ItemCategory::ranged_weapon) // TODO coupling
+        {
+            attackrange = 1;
+        }
     }
-    int tohit = calc_accuracy(false);
-    dmg = calcattackdmg(AttackDamageCalculationMode::raw_damage);
+    int tohit = calc_accuracy(weapon, ammo, false);
+    dmg = calcattackdmg(weapon, ammo, AttackDamageCalculationMode::raw_damage);
     font(14 - en * 2);
     s(2) = ""s + dmgmulti;
     s = ""s + tohit + u8"%"s;
