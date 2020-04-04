@@ -1504,7 +1504,7 @@ OnEnterResult on_enter_external_inventory(MenuResult& result, bool dropcontinue)
             }
         }
     }
-    int stat = pick_up_item();
+    int stat = pick_up_item().type;
     if (stat == 0)
     {
         return OnEnterResult{1};

@@ -375,8 +375,12 @@ TEST_CASE(
     elona::in = inv[elona::ci].number();
 
     REQUIRE(handle_mgr.get_handle(inv[elona::ci]) != sol::lua_nil);
-    REQUIRE(pick_up_item() == 1);
-    REQUIRE(handle_mgr.get_handle(inv[elona::ti]) != sol::lua_nil);
+    const auto pick_up_item_result = pick_up_item();
+    REQUIRE(pick_up_item_result.type == 1);
+    REQUIRE_SOME(pick_up_item_result.picked_up_item);
+    REQUIRE(
+        handle_mgr.get_handle(*pick_up_item_result.picked_up_item) !=
+        sol::lua_nil);
 
     // Removal of handle is deferred.
     REQUIRE(handle_mgr.get_handle(inv[elona::ci]) != sol::lua_nil);
