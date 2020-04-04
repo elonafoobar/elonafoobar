@@ -2721,51 +2721,51 @@ void equip_melee_weapon()
         {
             continue;
         }
-        const int cw = cdata[cc].body_parts[cnt] % 10000 - 1;
-        if (inv[cw].dice_x == 0)
+        const auto& weapon = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
+        if (weapon.dice_x == 0)
         {
             continue;
         }
         ++attacknum;
         if (cdata[cc].combat_style.two_hand())
         {
-            if (inv[cw].weight >= 4000)
+            if (weapon.weight >= 4000)
             {
                 txt(i18n::s.get(
-                    "core.action.equip.two_handed.fits_well", inv[cw]));
+                    "core.action.equip.two_handed.fits_well", weapon));
             }
             else
             {
                 txt(i18n::s.get(
-                    "core.action.equip.two_handed.too_light", inv[cw]));
+                    "core.action.equip.two_handed.too_light", weapon));
             }
         }
         if (cdata[cc].combat_style.dual_wield())
         {
             if (attacknum == 1)
             {
-                if (inv[cw].weight >= 4000)
+                if (weapon.weight >= 4000)
                 {
                     txt(i18n::s.get(
-                        "core.action.equip.two_handed.too_heavy", inv[cw]));
+                        "core.action.equip.two_handed.too_heavy", weapon));
                 }
             }
-            else if (inv[cw].weight > 1500)
+            else if (weapon.weight > 1500)
             {
                 txt(i18n::s.get(
                     "core.action.equip.two_handed.too_heavy_other_hand",
-                    inv[cw]));
+                    weapon));
             }
         }
         if (cc == 0)
         {
             if (game_data.mount != 0)
             {
-                if (inv[cw].weight >= 4000)
+                if (weapon.weight >= 4000)
                 {
                     txt(i18n::s.get(
                         "core.action.equip.two_handed.too_heavy_when_riding",
-                        inv[cw]));
+                        weapon));
                 }
             }
         }

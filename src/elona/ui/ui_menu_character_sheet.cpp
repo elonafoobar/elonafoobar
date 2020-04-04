@@ -558,7 +558,7 @@ void UIMenuCharacterSheet::_draw_first_page_weapon_info()
         {20, 10, 0});
     attackskill = 106;
     int evade = calc_evasion(tc);
-    prot = calcattackdmg(-1, none, AttackDamageCalculationMode::defense);
+    prot = calcattackdmg(none, none, AttackDamageCalculationMode::defense);
     font(14 - en * 2);
     mes(wx + 460 + en * 8,
         wy + 279 + p(2) * 16,

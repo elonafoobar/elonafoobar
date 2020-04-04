@@ -1137,10 +1137,10 @@ void append_accuracy_info(int val0)
         {
             continue;
         }
-        const auto cw = cdata[cc].body_parts[cnt] % 10000 - 1;
-        if (inv[cw].dice_x > 0)
+        auto& cw = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
+        if (cw.dice_x > 0)
         {
-            attackskill = inv[cw].skill;
+            attackskill = cw.skill;
             ++p(1);
             s(1) = i18n::s.get("core.ui.chara_sheet.damage.melee") + p(1);
             ++attacknum;
@@ -1150,7 +1150,7 @@ void append_accuracy_info(int val0)
     if (attackskill == 106)
     {
         s(1) = i18n::s.get("core.ui.chara_sheet.damage.unarmed");
-        show_weapon_dice(-1, none, val0);
+        show_weapon_dice(none, none, val0);
     }
     attacknum = 0;
     const auto result = can_do_ranged_attack();
@@ -1163,7 +1163,7 @@ void append_accuracy_info(int val0)
 
 
 
-void show_weapon_dice(int cw, optional_ref<Item> ammo, int val0)
+void show_weapon_dice(optional_ref<Item> cw, optional_ref<Item> ammo, int val0)
 {
     tc = cc;
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
@@ -1176,9 +1176,9 @@ void show_weapon_dice(int cw, optional_ref<Item> ammo, int val0)
         mes(wx + 417, wy + 281 + p(2) * 16, s(1), {20, 10, 0});
     }
     attackrange = 0;
-    if (cw != -1)
+    if (cw)
     {
-        if (the_item_db[itemid2int(inv[cw].id)]->category ==
+        if (the_item_db[itemid2int(cw->id)]->category ==
             ItemCategory::ranged_weapon) // TODO coupling
         {
             attackrange = 1;

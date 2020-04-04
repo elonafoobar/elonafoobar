@@ -399,7 +399,10 @@ int calc_evasion(int cc)
 
 
 
-int calc_accuracy(int cw, optional_ref<Item> ammo, bool consider_distance)
+int calc_accuracy(
+    optional_ref<Item> cw,
+    optional_ref<Item> ammo,
+    bool consider_distance)
 {
     critical = 0;
     int accuracy;
@@ -417,9 +420,9 @@ int calc_accuracy(int cw, optional_ref<Item> ammo, bool consider_distance)
     }
     else
     {
-        accuracy = sdata(12, cc) / 4 + sdata(inv[cw].skill, cc) / 3 +
+        accuracy = sdata(12, cc) / 4 + sdata(cw->skill, cc) / 3 +
             sdata(attackskill, cc) + 50;
-        accuracy += cdata[cc].hit_bonus + inv[cw].hit_bonus;
+        accuracy += cdata[cc].hit_bonus + cw->hit_bonus;
         if (ammo)
         {
             accuracy += ammo->hit_bonus;
@@ -442,7 +445,7 @@ int calc_accuracy(int cw, optional_ref<Item> ammo, bool consider_distance)
                     0,
                     9);
                 const auto effective_range =
-                    calc_effective_range(itemid2int(inv[cw].id));
+                    calc_effective_range(itemid2int(cw->id));
                 accuracy = accuracy * effective_range[rangedist] / 100;
             }
         }
@@ -451,7 +454,7 @@ int calc_accuracy(int cw, optional_ref<Item> ammo, bool consider_distance)
             if (cdata[cc].combat_style.two_hand())
             {
                 accuracy += 25;
-                if (inv[cw].weight >= 4000)
+                if (cw->weight >= 4000)
                 {
                     accuracy += sdata(167, cc);
                 }
@@ -460,16 +463,16 @@ int calc_accuracy(int cw, optional_ref<Item> ammo, bool consider_distance)
             {
                 if (attacknum == 1)
                 {
-                    if (inv[cw].weight >= 4000)
+                    if (cw->weight >= 4000)
                     {
-                        accuracy -= (inv[cw].weight - 4000 + 400) /
+                        accuracy -= (cw->weight - 4000 + 400) /
                             (10 + sdata(166, cc) / 5);
                     }
                 }
-                else if (inv[cw].weight > 1500)
+                else if (cw->weight > 1500)
                 {
-                    accuracy -= (inv[cw].weight - 1500 + 100) /
-                        (10 + sdata(166, cc) / 5);
+                    accuracy -=
+                        (cw->weight - 1500 + 100) / (10 + sdata(166, cc) / 5);
                 }
             }
         }
@@ -481,22 +484,20 @@ int calc_accuracy(int cw, optional_ref<Item> ammo, bool consider_distance)
         {
             accuracy =
                 accuracy * 100 / clamp((150 - sdata(301, cc) / 2), 115, 150);
-            if (attackskill != 106 && attackrange == 0 &&
-                inv[cw].weight >= 4000)
+            if (attackskill != 106 && attackrange == 0 && cw->weight >= 4000)
             {
                 accuracy -=
-                    (inv[cw].weight - 4000 + 400) / (10 + sdata(301, cc) / 5);
+                    (cw->weight - 4000 + 400) / (10 + sdata(301, cc) / 5);
             }
         }
         if (cc == game_data.mount)
         {
             accuracy =
                 accuracy * 100 / clamp((150 - sdata(10, cc) / 2), 115, 150);
-            if (attackskill != 106 && attackrange == 0 &&
-                inv[cw].weight >= 4000)
+            if (attackskill != 106 && attackrange == 0 && cw->weight >= 4000)
             {
                 accuracy -=
-                    (inv[cw].weight - 4000 + 400) / (10 + sdata(10, cc) / 10);
+                    (cw->weight - 4000 + 400) / (10 + sdata(10, cc) / 10);
             }
         }
     }
@@ -516,7 +517,7 @@ int calc_accuracy(int cw, optional_ref<Item> ammo, bool consider_distance)
 
 
 
-int calcattackhit(int cw, optional_ref<Item> ammo)
+int calcattackhit(optional_ref<Item> cw, optional_ref<Item> ammo)
 {
     int tohit = calc_accuracy(cw, ammo, true);
     int evasion = calc_evasion(tc);
@@ -617,7 +618,7 @@ int calcattackhit(int cw, optional_ref<Item> ammo)
 
 
 int calcattackdmg(
-    int cw,
+    optional_ref<Item> cw,
     optional_ref<Item> ammo,
     AttackDamageCalculationMode mode)
 {
@@ -641,16 +642,16 @@ int calcattackdmg(
     }
     else
     {
-        dmgfix = cdata[cc].damage_bonus + inv[cw].damage_bonus +
-            inv[cw].enhancement + (inv[cw].curse_state == CurseState::blessed);
-        dice1 = inv[cw].dice_x;
-        dice2 = inv[cw].dice_y;
+        dmgfix = cdata[cc].damage_bonus + cw->damage_bonus + cw->enhancement +
+            (cw->curse_state == CurseState::blessed);
+        dice1 = cw->dice_x;
+        dice2 = cw->dice_y;
         if (ammo)
         {
             dmgfix += ammo->damage_bonus + ammo->dice_x * ammo->dice_y / 2;
             dmgmulti = 0.5 +
                 double(
-                    (sdata(13, cc) + sdata(inv[cw].skill, cc) / 5 +
+                    (sdata(13, cc) + sdata(cw->skill, cc) / 5 +
                      sdata(attackskill, cc) / 5 + sdata(189, cc) * 3 / 2)) /
                     40;
         }
@@ -658,24 +659,24 @@ int calcattackdmg(
         {
             dmgmulti = 0.6 +
                 double(
-                    (sdata(10, cc) + sdata(inv[cw].skill, cc) / 5 +
+                    (sdata(10, cc) + sdata(cw->skill, cc) / 5 +
                      sdata(attackskill, cc) / 5 + sdata(152, cc) * 2)) /
                     45;
         }
-        pierce = calc_rate_to_pierce(itemid2int(inv[cw].id));
+        pierce = calc_rate_to_pierce(itemid2int(cw->id));
     }
     if (attackrange)
     {
         if (mode == AttackDamageCalculationMode::actual_damage)
         {
             const auto effective_range =
-                calc_effective_range(itemid2int(inv[cw].id));
+                calc_effective_range(itemid2int(cw->id));
             dmgmulti = dmgmulti * effective_range[rangedist] / 100;
         }
     }
     else if (cdata[cc].combat_style.two_hand())
     {
-        if (inv[cw].weight >= 4000)
+        if (cw->weight >= 4000)
         {
             dmgmulti *= 1.5;
         }
@@ -741,8 +742,7 @@ int calcattackdmg(
         }
         else
         {
-            dmgmulti =
-                dmgmulti * clamp((inv[cw].weight / 200 + 100), 100, 150) / 100;
+            dmgmulti = dmgmulti * clamp(cw->weight / 200 + 100, 100, 150) / 100;
         }
     }
     damage = damage * dmgmulti / 100;
