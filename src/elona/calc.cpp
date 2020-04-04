@@ -399,7 +399,7 @@ int calc_evasion(int cc)
 
 
 
-int calc_accuracy(int cw, int ammo, bool consider_distance)
+int calc_accuracy(int cw, optional_ref<Item> ammo, bool consider_distance)
 {
     critical = 0;
     int accuracy;
@@ -420,9 +420,9 @@ int calc_accuracy(int cw, int ammo, bool consider_distance)
         accuracy = sdata(12, cc) / 4 + sdata(inv[cw].skill, cc) / 3 +
             sdata(attackskill, cc) + 50;
         accuracy += cdata[cc].hit_bonus + inv[cw].hit_bonus;
-        if (ammo != -1)
+        if (ammo)
         {
-            accuracy += inv[ammo].hit_bonus;
+            accuracy += ammo->hit_bonus;
         }
     }
 
@@ -516,7 +516,7 @@ int calc_accuracy(int cw, int ammo, bool consider_distance)
 
 
 
-int calcattackhit(int cw, int ammo)
+int calcattackhit(int cw, optional_ref<Item> ammo)
 {
     int tohit = calc_accuracy(cw, ammo, true);
     int evasion = calc_evasion(tc);
@@ -616,7 +616,10 @@ int calcattackhit(int cw, int ammo)
 
 
 
-int calcattackdmg(int cw, int ammo, AttackDamageCalculationMode mode)
+int calcattackdmg(
+    int cw,
+    optional_ref<Item> ammo,
+    AttackDamageCalculationMode mode)
 {
     int prot2 = 0;
     int protfix = 0;
@@ -642,10 +645,9 @@ int calcattackdmg(int cw, int ammo, AttackDamageCalculationMode mode)
             inv[cw].enhancement + (inv[cw].curse_state == CurseState::blessed);
         dice1 = inv[cw].dice_x;
         dice2 = inv[cw].dice_y;
-        if (ammo != -1)
+        if (ammo)
         {
-            dmgfix += inv[ammo].damage_bonus +
-                inv[ammo].dice_x * inv[ammo].dice_y / 2;
+            dmgfix += ammo->damage_bonus + ammo->dice_x * ammo->dice_y / 2;
             dmgmulti = 0.5 +
                 double(
                     (sdata(13, cc) + sdata(inv[cw].skill, cc) / 5 +
@@ -732,10 +734,10 @@ int calcattackdmg(int cw, int ammo, AttackDamageCalculationMode mode)
         {
             dmgmulti *= 1.25;
         }
-        else if (ammo != -1)
+        else if (ammo)
         {
-            dmgmulti = dmgmulti *
-                clamp((inv[ammo].weight / 100 + 100), 100, 150) / 100;
+            dmgmulti =
+                dmgmulti * clamp(ammo->weight / 100 + 100, 100, 150) / 100;
         }
         else
         {

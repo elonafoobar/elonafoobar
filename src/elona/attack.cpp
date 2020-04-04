@@ -156,7 +156,7 @@ void build_target_list()
 CanDoRangedAttackResult can_do_ranged_attack()
 {
     int cw = -1;
-    int ammo = -1;
+    optional_ref<Item> ammo;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
@@ -170,27 +170,27 @@ CanDoRangedAttackResult can_do_ranged_attack()
         }
         if (cdata[cc].body_parts[cnt] / 10000 == 11)
         {
-            ammo = cdata[cc].body_parts[cnt] % 10000 - 1;
+            ammo = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
         }
     }
     if (cw == -1)
     {
         cw = 0;
-        return {-1, cw, ammo};
+        return {-1, cw, none};
     }
-    if (ammo == -1)
+    if (!ammo)
     {
         if (inv[cw].skill != 111)
         {
             cw = 0;
-            return {-2, cw, ammo};
+            return {-2, cw, none};
         }
     }
-    if (ammo != -1)
+    if (ammo)
     {
-        if (inv[cw].skill != inv[ammo].skill)
+        if (inv[cw].skill != ammo->skill)
         {
-            return {-3, cw, ammo};
+            return {-3, cw, none};
         }
     }
     attackskill = inv[cw].skill;
@@ -199,7 +199,7 @@ CanDoRangedAttackResult can_do_ranged_attack()
 
 
 
-bool do_physical_attack_internal(int cw, int ammo)
+bool do_physical_attack_internal(int cw, optional_ref<Item> ammo)
 {
     int attackdmg;
 
@@ -657,7 +657,7 @@ bool do_physical_attack_internal(int cw, int ammo)
 
 
 
-void do_physical_attack(int cw, int ammo)
+void do_physical_attack(int cw, optional_ref<Item> ammo)
 {
     while (do_physical_attack_internal(cw, ammo))
         ;
@@ -665,7 +665,7 @@ void do_physical_attack(int cw, int ammo)
 
 
 
-void do_ranged_attack(int cw, int ammo)
+void do_ranged_attack(int cw, optional_ref<Item> ammo)
 {
     int ammox = 0;
     int ammoy = 0;
@@ -677,18 +677,18 @@ void do_ranged_attack(int cw, int ammo)
     ammox = cdata[tc].position.x;
     ammoy = cdata[tc].position.y;
     attackitem = cw;
-    if (ammo != -1)
+    if (ammo)
     {
-        if (inv[ammo].count != -1)
+        if (ammo->count != -1)
         {
-            if (inv[ammo].enchantments[inv[ammo].count].power % 1000 <= 0)
+            if (ammo->enchantments[ammo->count].power % 1000 <= 0)
             {
                 txt(i18n::s.get("core.action.ranged.load_normal_ammo"));
-                inv[ammo].count = -1;
+                ammo->count = -1;
             }
             else
             {
-                ammoproc = inv[ammo].enchantments[inv[ammo].count].id % 10000;
+                ammoproc = ammo->enchantments[ammo->count].id % 10000;
                 if (cc == 0)
                 {
                     if (cdata.player().sp < 50)
@@ -705,7 +705,7 @@ void do_ranged_attack(int cw, int ammo)
                     }
                     damage_sp(cdata.player(), rnd(encammoref(2, ammoproc) + 1));
                 }
-                --inv[ammo].enchantments[inv[ammo].count].power;
+                --ammo->enchantments[ammo->count].power;
             }
         }
     }
@@ -864,13 +864,13 @@ void try_to_melee_attack()
             attackskill = inv[cw].skill;
             ++attacknum;
             extraattack = 0;
-            do_physical_attack(cw, -1);
+            do_physical_attack(cw, none);
         }
     }
     if (attackskill == 106)
     {
         extraattack = 0;
-        do_physical_attack(-1, -1);
+        do_physical_attack(-1, none);
     }
 }
 
