@@ -1478,13 +1478,13 @@ void character_drops_item()
             item.position.y = cdata[rc].position.y;
             if (!item_stack(-1, inv[ci]).stacked)
             {
-                ti = inv_getfreeid(-1);
-                if (ti == -1)
+                const auto slot = inv_getfreeid(-1);
+                if (slot == -1)
                 {
                     break;
                 }
-                item_copy(ci, ti);
-                inv[ti].own_state = -2;
+                item_copy(ci, slot);
+                inv[slot].own_state = -2;
             }
             inv[ci].remove();
         }
@@ -1610,12 +1610,12 @@ void character_drops_item()
         itemturn(inv[ci]);
         if (!item_stack(-1, inv[ci]).stacked)
         {
-            ti = inv_getfreeid(-1);
-            if (ti == -1)
+            const auto slot = inv_getfreeid(-1);
+            if (slot == -1)
             {
                 break;
             }
-            item_copy(ci, ti);
+            item_copy(ci, slot);
         }
         inv[ci].remove();
     }
