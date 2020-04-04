@@ -2928,15 +2928,16 @@ TurnResult do_open_command(bool play_sound)
     }
     else
     {
+        const auto box_ci = ci;
         if (inv[ci].id == ItemId::new_years_gift)
         {
-            open_new_year_gift();
+            open_new_year_gift(inv[ci]);
         }
         else
         {
-            open_box();
+            open_box(inv[ci]);
         }
-        item_stack(cc, inv[ri]);
+        item_stack(cc, inv[box_ci]);
     }
     screenupdate = -1;
     update_screen();
@@ -6010,29 +6011,28 @@ int unlock_box(int difficulty)
 
 
 
-void open_box()
+void open_box(Item& box)
 {
     snd("core.chest1");
-    txt(i18n::s.get("core.action.open.text", inv[ci]));
+    txt(i18n::s.get("core.action.open.text", box));
     msg_halt();
-    ri = ci;
-    if (inv[ri].id == ItemId::material_box)
+    if (box.id == ItemId::material_box)
     {
         tc = cc;
         efid = 1117;
-        efp = 100 + inv[ri].param1 * 10;
-        inv[ri].param1 = 0;
+        efp = 100 + box.param1 * 10;
+        box.param1 = 0;
         magic();
         return;
     }
     p = 3 + rnd(5);
-    if (inv[ri].id == ItemId::treasure_ball ||
-        inv[ri].id == ItemId::rare_treasure_ball ||
-        inv[ri].id == ItemId::small_gamble_chest)
+    if (box.id == ItemId::treasure_ball ||
+        box.id == ItemId::rare_treasure_ball ||
+        box.id == ItemId::small_gamble_chest)
     {
         p = 1;
     }
-    randomize(inv[ri].param3);
+    randomize(box.param3);
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
         int item_id = 0;
@@ -6045,7 +6045,7 @@ void open_box()
         {
             base_quality = Quality::good;
         }
-        if (inv[ri].id == ItemId::bejeweled_chest)
+        if (box.id == ItemId::bejeweled_chest)
         {
             if (cnt == 0 && rnd(3) == 0)
             {
@@ -6060,7 +6060,7 @@ void open_box()
                 item_id = 559;
             }
         }
-        flt(calcobjlv(inv[ri].param1), calcfixlv(base_quality));
+        flt(calcobjlv(box.param1), calcfixlv(base_quality));
         flttypemajor = choice(fsetchest);
         if (cnt > 0)
         {
@@ -6078,7 +6078,7 @@ void open_box()
                 }
             }
         }
-        if (inv[ri].id == ItemId::safe)
+        if (box.id == ItemId::safe)
         {
             if (rnd(3) != 0)
             {
@@ -6091,13 +6091,13 @@ void open_box()
                 flttypeminor = 77001;
             }
         }
-        if (inv[ri].id == ItemId::treasure_ball ||
-            inv[ri].id == ItemId::rare_treasure_ball)
+        if (box.id == ItemId::treasure_ball ||
+            box.id == ItemId::rare_treasure_ball)
         {
             flttypeminor = 0;
             flttypemajor = choice(fsetwear);
             fixlv = Quality::great;
-            if (inv[ri].id == ItemId::rare_treasure_ball)
+            if (box.id == ItemId::rare_treasure_ball)
             {
                 fixlv = Quality::miracle;
             }
@@ -6107,7 +6107,7 @@ void open_box()
             }
         }
         in = 0;
-        if (inv[ri].id == ItemId::small_gamble_chest)
+        if (box.id == ItemId::small_gamble_chest)
         {
             item_id = 54;
             randomize();
@@ -6120,7 +6120,7 @@ void open_box()
                 in = rnd_capped(inv[ci].value / 10 + 1) + 1;
             }
         }
-        if (inv[ri].id == ItemId::wallet)
+        if (box.id == ItemId::wallet)
         {
             item_id = 54;
             in = rnd(1000) + 1;
@@ -6141,14 +6141,14 @@ void open_box()
     }
     randomize();
     f = 0;
-    if (inv[ri].id != ItemId::small_gamble_chest)
+    if (box.id != ItemId::small_gamble_chest)
     {
         if (rnd(10) == 0)
         {
             f = 1;
         }
     }
-    if (inv[ri].id == ItemId::bejeweled_chest || inv[ri].id == ItemId::chest)
+    if (box.id == ItemId::bejeweled_chest || box.id == ItemId::chest)
     {
         if (rnd(5) == 0)
         {
@@ -6161,14 +6161,14 @@ void open_box()
         itemcreate_extra_inv(622, cdata.player().position, 1);
     }
     snd("core.ding2");
-    txt(i18n::s.get("core.action.open.goods", inv[ri]));
+    txt(i18n::s.get("core.action.open.goods", box));
     save_set_autosave();
-    inv[ri].param1 = 0;
-    if (inv[ri].id == ItemId::wallet)
+    box.param1 = 0;
+    if (box.id == ItemId::wallet)
     {
         modify_karma(cdata.player(), -4);
     }
-    if (inv[ri].id == ItemId::suitcase)
+    if (box.id == ItemId::suitcase)
     {
         modify_karma(cdata.player(), -8);
     }
@@ -6176,17 +6176,16 @@ void open_box()
 
 
 
-void open_new_year_gift()
+void open_new_year_gift(Item& box)
 {
     snd("core.chest1");
-    txt(i18n::s.get("core.action.open.text", inv[ci]));
+    txt(i18n::s.get("core.action.open.text", box));
     msg_halt();
     snd("core.ding2");
     randomize();
-    ri = ci;
     cc = 0;
-    inv[ri].param1 = 0;
-    if (inv[ri].param3 < 100)
+    box.param1 = 0;
+    if (box.param3 < 100)
     {
         if (rnd(3) == 0)
         {
@@ -6233,7 +6232,7 @@ void open_new_year_gift()
         magic();
         return;
     }
-    if (inv[ri].param3 < 200)
+    if (box.param3 < 200)
     {
         if (rnd(4) == 0)
         {

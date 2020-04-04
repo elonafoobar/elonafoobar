@@ -128,7 +128,6 @@ ELONA_EXTERN(int refx);
 ELONA_EXTERN(int refy);
 ELONA_EXTERN(int movx);
 ELONA_EXTERN(int movy);
-ELONA_EXTERN(int ri);
 
 // dmgheal.cpp
 ELONA_EXTERN(std::string ndeathcause);
