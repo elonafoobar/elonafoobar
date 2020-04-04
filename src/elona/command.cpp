@@ -786,20 +786,29 @@ TurnResult do_throw_command()
     ThrowingObjectAnimation(
         {tlocx, tlocy}, cdata[cc].position, inv[ci].image, inv[ci].color)
         .play();
-    ti = inv_getfreeid(-1);
-    if (inv[ci].id == ItemId::monster_ball && ti != -1)
+
+    if (inv[ci].id == ItemId::monster_ball)
     {
-        item_copy(ci, ti);
-        inv[ti].position.x = tlocx;
-        inv[ti].position.y = tlocy;
-        inv[ti].set_number(1);
-        inv[ci].modify_number(-1);
-        ci = ti;
+        const auto slot = inv_getfreeid(-1);
+        if (slot == -1)
+        {
+            inv[ci].modify_number(-1);
+        }
+        else
+        {
+            item_copy(ci, slot);
+            inv[slot].position.x = tlocx;
+            inv[slot].position.y = tlocy;
+            inv[slot].set_number(1);
+            inv[ci].modify_number(-1);
+            ci = slot;
+        }
     }
     else
     {
         inv[ci].modify_number(-1);
     }
+
     if (cc == 0)
     {
         refresh_burden_state();
