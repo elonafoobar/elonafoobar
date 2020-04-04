@@ -186,8 +186,7 @@ void dump_player_info()
             const auto item_index = body_part % 10000 - 1;
             item_name = itemname(inv[item_index]);
             item_desc = cnvweight(inv[item_index].weight);
-            ci = item_index;
-            item_dump_desc(inv[ci]);
+            item_dump_desc(inv[item_index]);
         }
         else
         {

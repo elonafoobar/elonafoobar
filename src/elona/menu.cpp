@@ -1502,7 +1502,7 @@ void show_book_window(const Item& book)
 
 
 
-void item_show_description(const Item& item)
+void item_show_description(Item& item)
 {
     ui::UIMenuItemDesc(item).show();
 

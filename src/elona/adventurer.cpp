@@ -370,7 +370,7 @@ int adventurer_discover_equipment()
                 addnews(1, rc, 0, itemname(*item));
             }
         }
-        wear_most_valuable_equipment();
+        wear_most_valuable_equipment(*item);
     }
     return 0;
 }

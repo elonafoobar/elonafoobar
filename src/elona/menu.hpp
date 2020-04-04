@@ -99,9 +99,17 @@ void screen_analyze_self();
 int ctrl_ally(ControlAllyOperation);
 void show_book_window(const Item& book);
 int change_npc_tone();
-void item_show_description(const Item& item);
+void item_show_description(Item& item);
 
-MenuResult ctrl_inventory();
+
+struct CtrlInventoryResult
+{
+    MenuResult menu_result;
+    optional_ref<Item> selected_item;
+};
+
+CtrlInventoryResult ctrl_inventory();
+
 
 void menu_chat_dialog();
 void menu_voting_box();

@@ -457,8 +457,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
     {
         return none;
     }
-    ci = chara.item_which_will_be_used;
-    if (inv[ci].number() == 0)
+    if (inv[chara.item_which_will_be_used].number() == 0)
     {
         chara.item_which_will_be_used = 0;
         return none;
@@ -468,21 +467,23 @@ optional<TurnResult> npc_turn_misc(Character& chara)
         chara.item_which_will_be_used = 0;
     }
 
-    const auto category = the_item_db[itemid2int(inv[ci].id)]->category;
+    const auto category =
+        the_item_db[itemid2int(inv[chara.item_which_will_be_used].id)]
+            ->category;
     if (category == ItemCategory::food)
     {
         if (chara.relationship != 10 || chara.nutrition <= 6000)
         {
-            return do_eat_command();
+            return do_eat_command(inv[chara.item_which_will_be_used]);
         }
     }
     if (category == ItemCategory::potion)
     {
-        return do_drink_command();
+        return do_drink_command(inv[chara.item_which_will_be_used]);
     }
     if (category == ItemCategory::scroll)
     {
-        return do_read_command();
+        return do_read_command(inv[chara.item_which_will_be_used]);
     }
 
     chara.item_which_will_be_used = 0;
@@ -527,41 +528,40 @@ TurnResult npc_turn_ai_main(Character& chara)
                     const auto item = item_info.second;
                     if (number == 1)
                     {
-                        ci = item;
                         const auto category =
-                            the_item_db[itemid2int(inv[ci].id)]->category;
+                            the_item_db[itemid2int(inv[item].id)]->category;
                         if (chara.nutrition <= 6000)
                         {
                             if (category == ItemCategory::food)
                             {
-                                if (inv[ci].own_state <= 0 &&
-                                    !is_cursed(inv[ci].curse_state))
+                                if (inv[item].own_state <= 0 &&
+                                    !is_cursed(inv[item].curse_state))
                                 {
-                                    return do_eat_command();
+                                    return do_eat_command(inv[item]);
                                 }
                             }
                             if (category == ItemCategory::well)
                             {
-                                if (inv[ci].own_state <= 1 &&
-                                    inv[ci].param1 >= -5 &&
-                                    inv[ci].param3 < 20 &&
-                                    inv[ci].id != ItemId::holy_well)
+                                if (inv[item].own_state <= 1 &&
+                                    inv[item].param1 >= -5 &&
+                                    inv[item].param3 < 20 &&
+                                    inv[item].id != ItemId::holy_well)
                                 {
-                                    return do_drink_command();
+                                    return do_drink_command(inv[item]);
                                 }
                             }
                         }
                         if (category == ItemCategory::gold_piece ||
                             category == ItemCategory::ore)
                         {
-                            if (inv[ci].own_state <= 0 &&
-                                !inv[ci].is_precious() &&
+                            if (inv[item].own_state <= 0 &&
+                                !inv[item].is_precious() &&
                                 map_data.type != mdata_t::MapType::player_owned)
                             {
-                                in = inv[ci].number();
+                                in = inv[item].number();
                                 if (game_data.mount != chara.index)
                                 {
-                                    int stat = pick_up_item().type;
+                                    int stat = pick_up_item(inv[item]).type;
                                     if (stat == 1)
                                     {
                                         return TurnResult::turn_end;
@@ -753,7 +753,7 @@ bool turn_wrapper()
             break;
         case TurnResult::menu_feats: result = menu_feats().turn_result; break;
         case TurnResult::ctrl_inventory:
-            result = ctrl_inventory().turn_result;
+            result = ctrl_inventory().menu_result.turn_result;
             break;
 
         case TurnResult::all_turns_finished:
@@ -1195,7 +1195,7 @@ TurnResult turn_end()
             {
                 game_data.character_and_status_for_gene += 10000;
                 game_data.activity_about_to_start = 100;
-                activity_others(cdata[cc]);
+                activity_others(cdata[cc], none);
             }
         }
         if (cdata.player().inventory_weight_type >= 3)
@@ -1431,7 +1431,6 @@ optional<TurnResult> pc_turn_advance_time()
         if (item.number() > 0 &&
             the_item_db[itemid2int(item.id)]->category == ItemCategory::potion)
         {
-            ci = item.index;
             item_db_on_drink(item, itemid2int(item.id));
         }
     }

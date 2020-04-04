@@ -259,27 +259,29 @@ int dist_helper(const Character& a, const Character& b)
 
 
 
-bool _try_generate_special_throwing_item(const Character& chara, int action_id)
+optional_ref<Item> _try_generate_special_throwing_item(
+    const Character& chara,
+    int action_id)
 {
     switch (action_id)
     {
     case -9999:
         flt();
         flttypemajor = 52000;
-        return !!itemcreate_chara_inv(
+        return itemcreate_chara_inv(
             chara.index, choice(isetthrowpotionminor), 0);
     case -9998:
         flt();
         flttypemajor = 52000;
-        return !!itemcreate_chara_inv(
+        return itemcreate_chara_inv(
             chara.index, choice(isetthrowpotionmajor), 0);
     case -9997:
         flt();
         flttypemajor = 52000;
-        return !!itemcreate_chara_inv(
+        return itemcreate_chara_inv(
             chara.index, choice(isetthrowpotiongreater), 0);
-    case -9996: flt(); return !!itemcreate_chara_inv(chara.index, 698, 0);
-    default: assert(0); return false;
+    case -9996: flt(); return itemcreate_chara_inv(chara.index, 698, 0);
+    default: assert(0); return none;
     }
 }
 
@@ -442,13 +444,13 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
             is_in_fov(cdata[game_data.fire_giant]))
         {
             flt();
-            if (itemcreate_chara_inv(chara.index, 587, 0))
+            if (const auto snowball = itemcreate_chara_inv(chara.index, 587, 0))
             {
                 tlocx = cdata[game_data.fire_giant].position.x;
                 tlocy = cdata[game_data.fire_giant].position.y;
                 txt(i18n::s.get("core.ai.fire_giant"),
                     Message::color{ColorIndex::cyan});
-                return do_throw_command();
+                return do_throw_command(*snowball);
             }
         }
     }
@@ -472,11 +474,11 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
         if (target_snowman)
         {
             flt();
-            if (itemcreate_chara_inv(chara.index, 587, 0))
+            if (const auto snowball = itemcreate_chara_inv(chara.index, 587, 0))
             {
                 tlocx = target_snowman->position.x;
                 tlocy = target_snowman->position.y;
-                return do_throw_command();
+                return do_throw_command(*snowball);
             }
         }
     }
@@ -501,13 +503,13 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
     if (rnd(12) == 0)
     {
         flt();
-        if (itemcreate_chara_inv(chara.index, 587, 0))
+        if (const auto snowball = itemcreate_chara_inv(chara.index, 587, 0))
         {
             tlocx = cdata.player().position.x;
             tlocy = cdata.player().position.y;
             txt(i18n::s.get("core.ai.snowball"),
                 Message::color{ColorIndex::cyan});
-            return do_throw_command();
+            return do_throw_command(*snowball);
         }
     }
 
@@ -605,10 +607,10 @@ TurnResult ai_proc_basic(Character& chara)
         {
             tlocx = cdata[tc].position.x;
             tlocy = cdata[tc].position.y;
-            const auto ok = _try_generate_special_throwing_item(chara, act);
-            if (ok)
+            if (const auto throw_item =
+                    _try_generate_special_throwing_item(chara, act))
             {
-                return do_throw_command();
+                return do_throw_command(*throw_item);
             }
             return TurnResult::turn_end;
         }
@@ -1019,14 +1021,15 @@ TurnResult ai_proc_misc_map_events(Character& chara)
                         tlocx = cdata.player().position.x;
                         tlocy = cdata.player().position.y;
                         flt();
-                        if (itemcreate_chara_inv(chara.index, 698, 0))
+                        if (const auto salt_solution =
+                                itemcreate_chara_inv(chara.index, 698, 0))
                         {
                             if (is_in_fov(chara))
                             {
                                 txt(i18n::s.get("core.ai.snail"),
                                     Message::color{ColorIndex::cyan});
                             }
-                            return do_throw_command();
+                            return do_throw_command(*salt_solution);
                         }
                     }
                 }

@@ -57,11 +57,11 @@ void normalize_item(Item& i)
 
 std::string test_itemname(int id, int number, bool prefix)
 {
-    REQUIRE_SOME(itemcreate_extra_inv(id, 0, 0, number));
-    int index = elona::ci;
-    normalize_item(elona::inv[index]);
-    std::string name = itemname(inv[index], number, prefix);
-    item_delete(inv[index]);
+    const auto item = itemcreate_extra_inv(id, 0, 0, number);
+    REQUIRE_SOME(item);
+    normalize_item(*item);
+    std::string name = itemname(*item, number, prefix);
+    item_delete(*item);
     return name;
 }
 
@@ -74,9 +74,10 @@ Character& create_chara(int id, int x, int y)
 
 Item& create_item(int id, int number)
 {
-    REQUIRE_SOME(itemcreate_extra_inv(id, 0, 0, number));
-    normalize_item(elona::inv[elona::ci]);
-    return elona::inv[elona::ci];
+    const auto item = itemcreate_extra_inv(id, 0, 0, number);
+    REQUIRE_SOME(item);
+    normalize_item(*item);
+    return *item;
 }
 
 void invalidate_item(Item& item)
@@ -88,10 +89,15 @@ void invalidate_item(Item& item)
 
     // Delete the item and create new ones until the index is taken again.
     item_delete(inv[old_index]);
-    do
+    while (true)
     {
-        REQUIRE_SOME(itemcreate_extra_inv(old_id, old_x, old_y, 3));
-    } while (elona::ci != old_index);
+        const auto new_item = itemcreate_extra_inv(old_id, old_x, old_y, 3);
+        REQUIRE_SOME(new_item);
+        if (new_item->index != old_index)
+        {
+            break;
+        }
+    }
 }
 
 void invalidate_chara(Character& chara)

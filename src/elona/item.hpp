@@ -349,7 +349,7 @@ struct ItemStackResult
 ItemStackResult
 item_stack(int inventory_id, Item& base_item, bool show_message = false);
 
-void item_dump_desc(const Item&);
+void item_dump_desc(Item&);
 
 bool item_fire(int owner, optional_ref<Item> burned_item = none);
 void mapitem_fire(int x, int y);
@@ -402,7 +402,7 @@ void item_db_get_charge_level(const Item& item, int legacy_id);
 void item_db_set_full_stats(Item& item, int legacy_id);
 void item_db_on_read(Item& item, int legacy_id);
 void item_db_on_zap(Item& item, int legacy_id);
-void item_db_on_drink(Item& item, int legacy_id);
+void item_db_on_drink(optional_ref<Item> item, int legacy_id);
 
 
 std::vector<int> item_get_inheritance(const Item& item);

@@ -20,11 +20,11 @@ int eqweaponheavy();
 int eqweaponlight();
 void eqrandweaponmage();
 void wear_most_valuable_equipment_for_all_body_parts();
-void wear_most_valuable_equipment();
+void wear_most_valuable_equipment(Item& equipment);
 void supply_new_equipment();
 void supply_initial_equipments();
 
-int equip_item(int);
+int equip_item(int cc, Item& equipment);
 void unequip_item(int);
 
 } // namespace elona
