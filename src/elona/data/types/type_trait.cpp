@@ -14,7 +14,7 @@ const constexpr char* data::DatabaseTraits<TraitDB>::type_id;
 
 TraitData TraitDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
-    auto legacy_id = data.required<int>("legacy_id");
+    DATA_LEGACY_ID();
     DATA_ENUM(trait_type, int, TraitTypeTable, 0 /* feat */);
     DATA_REQ(min, int);
     DATA_REQ(max, int);

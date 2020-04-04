@@ -16,7 +16,7 @@ CharaChipData CharaChipDB::convert(
     const lua::ConfigTable& data,
     const std::string& id)
 {
-    auto legacy_id = data.required<int>("legacy_id");
+    DATA_LEGACY_ID();
     DATA_OPT_OR(tall, bool, false);
     DATA_OPT_OR(offset_y, int, 16);
 

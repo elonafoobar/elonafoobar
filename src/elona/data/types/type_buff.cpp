@@ -12,7 +12,7 @@ const constexpr char* data::DatabaseTraits<BuffDB>::type_id;
 
 BuffData BuffDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
-    auto legacy_id = data.required<int>("legacy_id");
+    DATA_LEGACY_ID();
     DATA_ENUM(buff_type, BuffType, BuffTypeTable, BuffType::buff);
     DATA_REQ(duration, sol::protected_function);
     DATA_REQ(on_refresh, sol::protected_function);
