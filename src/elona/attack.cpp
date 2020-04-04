@@ -32,7 +32,6 @@ namespace elona
 namespace
 {
 
-int attackitem = 0;
 int extraattack = 0;
 
 } // namespace
@@ -460,7 +459,7 @@ bool do_physical_attack_internal(optional_ref<Item> cw, optional_ref<Item> ammo)
         }
         if (attackskill != 106)
         {
-            proc_weapon_enchantments();
+            proc_weapon_enchantments(*cw);
         }
         if (cdata[tc].cut_counterattack > 0)
         {
@@ -613,17 +612,16 @@ bool do_physical_attack_internal(optional_ref<Item> cw, optional_ref<Item> ammo)
     {
         if (cdata[tc].state() != Character::State::alive)
         {
-            auto& cw = inv[attackitem];
-            if (cw.is_alive())
+            if (cw->is_alive())
             {
-                if (cw.param2 < calcexpalive(cw.param1))
+                if (cw->param2 < calcexpalive(cw->param1))
                 {
-                    cw.param2 += rnd_capped(cdata[tc].level / cw.param1 + 1);
-                    if (cw.param2 >= calcexpalive(cw.param1))
+                    cw->param2 += rnd_capped(cdata[tc].level / cw->param1 + 1);
+                    if (cw->param2 >= calcexpalive(cw->param1))
                     {
                         snd("core.ding3");
                         txt(i18n::s.get(
-                                "core.misc.living_weapon_taste_blood", cw),
+                                "core.misc.living_weapon_taste_blood", *cw),
                             Message::color{ColorIndex::green});
                     }
                 }
@@ -673,7 +671,6 @@ void do_ranged_attack(optional_ref<Item> cw, optional_ref<Item> ammo)
     ammoprocbk = -1;
     ammox = cdata[tc].position.x;
     ammoy = cdata[tc].position.y;
-    attackitem = cw ? cw->index : -1;
     if (ammo)
     {
         if (ammo->count != -1)
@@ -855,7 +852,6 @@ void try_to_melee_attack()
             continue;
         }
         auto& cw = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
-        attackitem = cw.index;
         if (cw.dice_x > 0)
         {
             attackskill = cw.skill;
@@ -873,11 +869,10 @@ void try_to_melee_attack()
 
 
 
-void proc_weapon_enchantments()
+void proc_weapon_enchantments(const Item& cw)
 {
     for (int cnt = 0; cnt < 15; ++cnt)
     {
-        auto& cw = inv[attackitem];
         if (cw.enchantments[cnt].id == 0)
         {
             break;

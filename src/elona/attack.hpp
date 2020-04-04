@@ -27,6 +27,6 @@ void do_ranged_attack(optional_ref<Item> cw, optional_ref<Item> ammo);
 int prompt_really_attack();
 void try_to_melee_attack();
 int target_position(bool target_chara = true);
-void proc_weapon_enchantments();
+void proc_weapon_enchantments(const Item& cw);
 
 } // namespace elona
