@@ -1271,6 +1271,975 @@ std::string get_action()
 
 
 
+OnEnterResult on_enter_examine()
+{
+    item_show_description(inv[ci]);
+    return OnEnterResult{1};
+}
+
+
+
+OnEnterResult on_enter_drop(MenuResult& result, bool dropcontinue)
+{
+    if (inv[ci].is_marked_as_no_drop())
+    {
+        snd("core.fail1");
+        txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
+        return OnEnterResult{2};
+    }
+    if (!inv_getspace(-1))
+    {
+        txt(i18n::s.get("core.ui.inv.drop.cannot_anymore"));
+        snd("core.fail1");
+        return OnEnterResult{2};
+    }
+    if (map_data.max_item_count != 0)
+    {
+        if (inv_sum(-1) >= map_data.max_item_count)
+        {
+            if (the_item_db[itemid2int(inv[ci].id)]->category !=
+                ItemCategory::furniture)
+            {
+                txt(i18n::s.get("core.ui.inv.drop.cannot_anymore"));
+                snd("core.fail1");
+                return OnEnterResult{2};
+            }
+        }
+    }
+    if (inv[ci].number() > 1)
+    {
+        txt(i18n::s.get(
+            "core.ui.inv.drop.how_many", inv[ci].number(), inv[ci]));
+        input_number_dialog(
+            (windoww - 200) / 2 + inf_screenx, winposy(60), inv[ci].number());
+        in = elona::stoi(inputlog(0));
+        if (in > inv[ci].number())
+        {
+            in = inv[ci].number();
+        }
+        if (in == 0 || rtval == -1)
+        {
+            return OnEnterResult{2};
+        }
+    }
+    else
+    {
+        in = 1;
+    }
+    savecycle();
+    item_drop(inv[ci], in);
+    if (dropcontinue)
+    {
+        menucycle = true;
+        return OnEnterResult{1};
+    }
+    result.turn_result = TurnResult::turn_end;
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_external_inventory(MenuResult& result, bool dropcontinue)
+{
+    if (invctrl != 3 && invctrl != 22)
+    {
+        if (inv[ci].is_marked_as_no_drop())
+        {
+            snd("core.fail1");
+            txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
+            return OnEnterResult{2};
+        }
+    }
+    if (invctrl == 24)
+    {
+        if (invctrl(1) == 3 || invctrl(1) == 5)
+        {
+            if (inv_sum(-1) >= invcontainer)
+            {
+                snd("core.fail1");
+                txt(i18n::s.get("core.ui.inv.put.container.full"));
+                return OnEnterResult{2};
+            }
+        }
+        if (invctrl(1) == 5)
+        {
+            if (inv[ci].weight >= efp * 100)
+            {
+                snd("core.fail1");
+                txt(i18n::s.get(
+                    "core.ui.inv.put.container.too_heavy",
+                    cnvweight(efp * 100)));
+                return OnEnterResult{2};
+            }
+            if (inv[ci].weight <= 0)
+            {
+                snd("core.fail1");
+                txt(i18n::s.get("core.ui.inv.put.container.cannot_hold_cargo"));
+                return OnEnterResult{2};
+            }
+        }
+        if (invctrl(1) == 5)
+        {
+            if (!action_sp(cdata.player(), 10))
+            {
+                txt(i18n::s.get("core.magic.common.too_exhausted"));
+                return OnEnterResult{*on_cancel(dropcontinue)};
+            }
+        }
+    }
+    if (invctrl == 22)
+    {
+        if (invctrl(1) == 1)
+        {
+            if (game_data.rights_to_succeed_to < 1)
+            {
+                txt(i18n::s.get("core.ui.inv.take.no_claim"));
+                return OnEnterResult{2};
+            }
+        }
+        if (invctrl(1) == 5)
+        {
+            if (!action_sp(cdata.player(), 10))
+            {
+                txt(i18n::s.get("core.magic.common.too_exhausted"));
+                return OnEnterResult{*on_cancel(dropcontinue)};
+            }
+        }
+    }
+    if (inv[ci].own_state > 0 && inv[ci].own_state < 3)
+    {
+        snd("core.fail1");
+        if (inv[ci].own_state == 2)
+        {
+            txt(i18n::s.get("core.action.get.cannot_carry"),
+                Message::only_once{true});
+        }
+        if (inv[ci].own_state == 1)
+        {
+            txt(i18n::s.get("core.action.get.not_owned"),
+                Message::only_once{true});
+        }
+        update_screen();
+        result.turn_result = TurnResult::pc_turn_user_error;
+        return OnEnterResult{result};
+    }
+    page_save();
+    if (mode == 6 && inv[ci].number() > 1 && invctrl != 22)
+    {
+        if (invctrl == 11)
+        {
+            txt(i18n::s.get(
+                "core.ui.inv.buy.how_many", inv[ci].number(), inv[ci]));
+        }
+        if (invctrl == 12)
+        {
+            txt(i18n::s.get(
+                "core.ui.inv.sell.how_many", inv[ci].number(), inv[ci]));
+        }
+        input_number_dialog(
+            (windoww - 200) / 2 + inf_screenx, winposy(60), inv[ci].number());
+        in = elona::stoi(inputlog(0));
+        if (in > inv[ci].number())
+        {
+            in = inv[ci].number();
+        }
+        if (in == 0 || rtval == -1)
+        {
+            screenupdate = -1;
+            update_screen();
+            return OnEnterResult{2};
+        }
+    }
+    else
+    {
+        in = inv[ci].number();
+    }
+    if (mode == 6 && invctrl != 22 && invctrl != 24)
+    {
+        if (!g_config.skip_confirm_at_shop())
+        {
+            if (invctrl == 11)
+            {
+                txt(i18n::s.get(
+                    "core.ui.inv.buy.prompt",
+                    itemname(inv[ci], in),
+                    (in * calcitemvalue(inv[ci], 0))));
+            }
+            if (invctrl == 12)
+            {
+                txt(i18n::s.get(
+                    "core.ui.inv.sell.prompt",
+                    itemname(inv[ci], in),
+                    (in * calcitemvalue(inv[ci], 1))));
+            }
+            if (!yes_no())
+            {
+                screenupdate = -1;
+                update_screen();
+                return OnEnterResult{1};
+            }
+        }
+        if (invctrl == 11)
+        {
+            if (calcitemvalue(inv[ci], 0) * in > cdata.player().gold)
+            {
+                screenupdate = -1;
+                update_screen();
+                txt(i18n::s.get("core.ui.inv.buy.not_enough_money"));
+                return OnEnterResult{1};
+            }
+        }
+        if (invctrl == 12)
+        {
+            if (cdata[tc].character_role != 1009)
+            {
+                if (calcitemvalue(inv[ci], 1) * in > cdata[tc].gold)
+                {
+                    screenupdate = -1;
+                    update_screen();
+                    txt(i18n::s.get(
+                        "core.ui.inv.sell.not_enough_money", cdata[tc]));
+                    return OnEnterResult{1};
+                }
+            }
+        }
+    }
+    int stat = pick_up_item();
+    if (stat == 0)
+    {
+        return OnEnterResult{1};
+    }
+    if (stat == -1)
+    {
+        result.turn_result = TurnResult::turn_end;
+        return OnEnterResult{result};
+    }
+    if (invctrl == 22)
+    {
+        if (invctrl(1) == 1)
+        {
+            --game_data.rights_to_succeed_to;
+            if (invctrl(1) == 1)
+            {
+                txt(i18n::s.get(
+                    "core.ui.inv.take.can_claim_more",
+                    game_data.rights_to_succeed_to));
+            }
+        }
+        if (invctrl(1) == 4)
+        {
+            ++game_data.quest_flags.gift_count_of_little_sister;
+            invsubroutine = 0;
+            result.succeeded = true;
+            return OnEnterResult{result};
+        }
+    }
+    screenupdate = -1;
+    update_screen();
+    return OnEnterResult{1};
+}
+
+
+
+OnEnterResult on_enter_eat(MenuResult& result)
+{
+    if (inv[ci].is_marked_as_no_drop())
+    {
+        snd("core.fail1");
+        txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
+        return OnEnterResult{2};
+    }
+    screenupdate = -1;
+    update_screen();
+    savecycle();
+    if (cdata.player().nutrition > 10000)
+    {
+        txt(i18n::s.get("core.ui.inv.eat.too_bloated"));
+        update_screen();
+        result.turn_result = TurnResult::pc_turn_user_error;
+        return OnEnterResult{result};
+    }
+    result.turn_result = do_eat_command();
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_equip(MenuResult& result)
+{
+    if (cc == 0)
+    {
+        if (trait(161) != 0)
+        {
+            if (inv[ci].weight >= 1000)
+            {
+                txt(i18n::s.get("core.ui.inv.equip.too_heavy"));
+                return OnEnterResult{2};
+            }
+        }
+    }
+    equip_item(cc);
+    chara_refresh(cc);
+    screenupdate = -1;
+    update_screen();
+    snd("core.equip1");
+    Message::instance().linebreak();
+    txt(i18n::s.get("core.ui.inv.equip.you_equip", inv[ci]));
+    game_data.player_is_changing_equipment = 1;
+    switch (inv[ci].curse_state)
+    {
+    case CurseState::doomed:
+        txt(i18n::s.get("core.ui.inv.equip.doomed", cdata[cc]));
+        break;
+    case CurseState::cursed:
+        txt(i18n::s.get("core.ui.inv.equip.cursed", cdata[cc]));
+        break;
+    case CurseState::none: break;
+    case CurseState::blessed:
+        txt(i18n::s.get("core.ui.inv.equip.blessed", cdata[cc]));
+        break;
+    }
+    if (cdata[cc].body_parts[body - 100] / 10000 == 5)
+    {
+        equip_melee_weapon();
+    }
+    menucycle = true;
+    result.turn_result = TurnResult::menu_equipment;
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_read(MenuResult& result)
+{
+    screenupdate = -1;
+    update_screen();
+    savecycle();
+    result.turn_result = do_read_command();
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_drink(MenuResult& result)
+{
+    screenupdate = -1;
+    update_screen();
+    savecycle();
+    result.turn_result = do_drink_command();
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_zap(MenuResult& result)
+{
+    screenupdate = -1;
+    update_screen();
+    savecycle();
+    result.turn_result = do_zap_command();
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_give(MenuResult& result)
+{
+    if (inv[ci].is_marked_as_no_drop())
+    {
+        snd("core.fail1");
+        txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
+        return OnEnterResult{2};
+    }
+    const auto slot = inv_getfreeid(tc);
+    if (cdata[tc].sleep)
+    {
+        txt(i18n::s.get("core.ui.inv.give.is_sleeping", cdata[tc]));
+        snd("core.fail1");
+        return OnEnterResult{2};
+    }
+    if (slot == -1)
+    {
+        txt(i18n::s.get("core.ui.inv.give.inventory_is_full", cdata[tc]));
+        snd("core.fail1");
+        return OnEnterResult{2};
+    }
+    reftype = (int)the_item_db[itemid2int(inv[ci].id)]->category;
+    if (inv[ci].id == ItemId::gift)
+    {
+        txt(i18n::s.get("core.ui.inv.give.present.text", cdata[tc], inv[ci]));
+        inv[ci].modify_number(-1);
+        txt(i18n::s.get("core.ui.inv.give.present.dialog", cdata[tc]));
+        chara_modify_impression(cdata[tc], giftvalue(inv[ci].param4));
+        cdata[tc].emotion_icon = 317;
+        refresh_burden_state();
+        if (invally == 1)
+        {
+            return OnEnterResult{1};
+        }
+        update_screen();
+        result.turn_result = TurnResult::turn_end;
+        return OnEnterResult{result};
+    }
+    f = 0;
+    p = sdata(10, tc) * 500 + sdata(11, tc) * 500 + sdata(153, tc) * 2500 +
+        25000;
+    if (cdata[tc].id == CharaId::golden_knight)
+    {
+        p *= 5;
+    }
+    if (inv_weight(tc) + inv[ci].weight > p)
+    {
+        f = 1;
+    }
+    if (cdata[tc].id != CharaId::golden_knight)
+    {
+        if (reftype == 60000)
+        {
+            f = 2;
+        }
+        if (reftype == 64000)
+        {
+            f = 3;
+        }
+    }
+    if (inv[ci].weight < 0)
+    {
+        f = 4;
+    }
+    if (f)
+    {
+        snd("core.fail1");
+        txt(i18n::s.get_enum(
+            "core.ui.inv.give.refuse_dialog", f - 1, cdata[tc]));
+        return OnEnterResult{2};
+    }
+    f = 0;
+    if (cdata[tc].relationship == 10)
+    {
+        f = 1;
+    }
+    else
+    {
+        if (inv[ci].identify_state <= IdentifyState::partly)
+        {
+            snd("core.fail1");
+            txt(i18n::s.get("core.ui.inv.give.too_creepy", cdata[tc]));
+            return OnEnterResult{2};
+        }
+        if (is_cursed(inv[ci].curse_state))
+        {
+            snd("core.fail1");
+            txt(i18n::s.get("core.ui.inv.give.cursed", cdata[tc]));
+            return OnEnterResult{2};
+        }
+        if (reftype == 53000)
+        {
+            f = 1;
+            if (strutil::contains(
+                    the_item_db[itemid2int(inv[ci].id)]->filter, u8"/neg/"))
+            {
+                f = 0;
+            }
+            // scroll of teleport/treasure map/deeds
+            switch (itemid2int(inv[ci].id))
+            {
+            case 16:
+            case 245:
+            case 621:
+            case 344:
+            case 521:
+            case 522:
+            case 542:
+            case 543:
+            case 572:
+            case 712: f = 0; break;
+            default: break;
+            }
+        }
+        if (reftype == 52000)
+        {
+            f = 1;
+            if (the_item_db[itemid2int(inv[ci].id)]->subcategory == 52002)
+            {
+                if (cdata[tc].drunk)
+                {
+                    snd("core.fail1");
+                    txt(i18n::s.get(
+                        "core.ui.inv.give.no_more_drink", cdata[tc]));
+                    return OnEnterResult{2};
+                }
+            }
+            if (strutil::contains(
+                    the_item_db[itemid2int(inv[ci].id)]->filter, u8"/neg/"))
+            {
+                f = 0;
+            }
+            if (strutil::contains(
+                    the_item_db[itemid2int(inv[ci].id)]->filter, u8"/nogive/"))
+            {
+                f = 0;
+            }
+            if (cdata[tc].is_pregnant())
+            {
+                if (inv[ci].id == ItemId::poison ||
+                    inv[ci].id == ItemId::bottle_of_dye ||
+                    inv[ci].id == ItemId::bottle_of_sulfuric)
+                {
+                    f = 1;
+                    txt(i18n::s.get("core.ui.inv.give.abortion"));
+                }
+            }
+        }
+    }
+    if (f)
+    {
+        snd("core.equip1");
+        txt(i18n::s.get("core.ui.inv.give.you_hand", inv[ci], cdata[tc]));
+        if (inv[ci].id == ItemId::engagement_ring ||
+            inv[ci].id == ItemId::engagement_amulet)
+        {
+            txt(i18n::s.get("core.ui.inv.give.engagement", cdata[tc]),
+                Message::color{ColorIndex::green});
+            chara_modify_impression(cdata[tc], 15);
+            cdata[tc].emotion_icon = 317;
+        }
+        if (inv[ci].id == ItemId::love_potion)
+        {
+            txt(i18n::s.get(
+                    "core.ui.inv.give.love_potion.text", cdata[tc], inv[ci]),
+                Message::color{ColorIndex::purple});
+            snd("core.crush2");
+            txt(i18n::s.get("core.ui.inv.give.love_potion.dialog", cdata[tc]),
+                Message::color{ColorIndex::cyan});
+            chara_modify_impression(cdata[tc], -20);
+            cdata[tc].emotion_icon = 318;
+            inv[ci].modify_number(-1);
+            return OnEnterResult{1};
+        }
+        item_copy(ci, slot);
+        inv[ci].modify_number(-1);
+        inv[slot].set_number(1);
+        ti = slot;
+        item_stack(tc, inv[slot], true);
+        ci = ti;
+        rc = tc;
+        chara_set_item_which_will_be_used(cdata[tc], inv[ci]);
+        wear_most_valuable_equipment_for_all_body_parts();
+        if (tc < 16)
+        {
+            create_pcpic(cdata[tc]);
+        }
+        chara_refresh(tc);
+        refresh_burden_state();
+        if (invally == 1)
+        {
+            return OnEnterResult{1};
+        }
+        update_screen();
+        result.turn_result = TurnResult::turn_end;
+        return OnEnterResult{result};
+    }
+    snd("core.fail1");
+    txt(i18n::s.get("core.ui.inv.give.refuses", cdata[tc], inv[ci]));
+    return OnEnterResult{2};
+}
+
+
+
+OnEnterResult on_enter_identify(MenuResult& result)
+{
+    screenupdate = -1;
+    update_screen();
+    const auto identify_result = item_identify(inv[ci], efp);
+    if (identify_result == IdentifyState::unidentified)
+    {
+        txt(i18n::s.get("core.ui.inv.identify.need_more_power"));
+    }
+    else if (identify_result != IdentifyState::completely)
+    {
+        txt(i18n::s.get("core.ui.inv.identify.partially", inv[ci]));
+    }
+    else
+    {
+        txt(i18n::s.get("core.ui.inv.identify.fully", inv[ci]));
+    }
+    item_stack(0, inv[ci], true);
+    refresh_burden_state();
+    invsubroutine = 0;
+    result.succeeded = true;
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_use(MenuResult& result)
+{
+    savecycle();
+    result.turn_result = do_use_command();
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_cook(MenuResult& result)
+{
+    screenupdate = -1;
+    update_screen();
+    invsubroutine = 0;
+    result.succeeded = true;
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_open(MenuResult& result)
+{
+    screenupdate = -1;
+    update_screen();
+    savecycle();
+    result.turn_result = do_open_command();
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_mix()
+{
+    cidip = ci;
+    savecycle();
+    invctrl = 18;
+    Message::instance().linebreak();
+    snd("core.pop2");
+    return OnEnterResult{1};
+}
+
+
+
+OnEnterResult on_enter_mix_target(MenuResult& result)
+{
+    screenupdate = -1;
+    update_screen();
+    result.turn_result = do_dip_command();
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_offer(MenuResult& result)
+{
+    if (inv[ci].is_marked_as_no_drop())
+    {
+        snd("core.fail1");
+        txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
+        return OnEnterResult{2};
+    }
+    screenupdate = -1;
+    update_screen();
+    savecycle();
+    result.turn_result = do_offer_command();
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_trade(int& citrade)
+{
+    citrade = ci;
+    invctrl = 21;
+    snd("core.pop2");
+    return OnEnterResult{1};
+}
+
+
+
+OnEnterResult on_enter_trade_target(MenuResult& result, int& citrade)
+{
+    if (inv[ci].is_marked_as_no_drop())
+    {
+        snd("core.fail1");
+        txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
+        return OnEnterResult{2};
+    }
+    if (cdata[tc].activity)
+    {
+        cdata[tc].activity.type = Activity::Type::none;
+        cdata[tc].activity.turn = 0;
+        cdata[tc].activity.item = 0;
+    }
+    snd("core.equip1");
+    inv[citrade].is_quest_target() = false;
+    txt(i18n::s.get("core.ui.inv.trade.you_receive", inv[ci], inv[citrade]));
+    if (inv[citrade].body_part != 0)
+    {
+        p = inv[citrade].body_part;
+        cdata[tc].body_parts[p - 100] =
+            cdata[tc].body_parts[p - 100] / 10000 * 10000;
+        inv[citrade].body_part = 0;
+    }
+    item_exchange(ci, citrade);
+    convertartifact(ci);
+    rc = tc;
+    ci = citrade;
+    if (cdata[rc].item_which_will_be_used == ci)
+    {
+        cdata[rc].item_which_will_be_used = 0;
+    }
+    wear_most_valuable_equipment_for_all_body_parts();
+    if (tc >= 16)
+    {
+        supply_new_equipment();
+    }
+    inv_getfreeid_force();
+    chara_refresh(tc);
+    refresh_burden_state();
+    invsubroutine = 0;
+    result.succeeded = true;
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_target(MenuResult& result)
+{
+    if (invctrl(1) == 4)
+    {
+        if (inv[ci].is_marked_as_no_drop())
+        {
+            snd("core.fail1");
+            txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
+            return OnEnterResult{2};
+        }
+    }
+    item_separate(ci);
+    invsubroutine = 0;
+    result.succeeded = true;
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_put_into()
+{
+    if (invctrl(1) == 0)
+    {
+        snd("core.inv");
+        if (game_data.current_map == mdata_t::MapId::lumiest)
+        {
+            game_data.guild.mages_guild_quota -=
+                (inv[ci].param1 + 1) * inv[ci].number();
+            if (game_data.guild.mages_guild_quota <= 0)
+            {
+                game_data.guild.mages_guild_quota = 0;
+            }
+            txt(i18n::s.get("core.ui.inv.put.guild.you_deliver", inv[ci]) +
+                    u8"("s + (inv[ci].param1 + 1) * inv[ci].number() +
+                    u8" Guild Point)"s,
+                Message::color{ColorIndex::green});
+            if (game_data.guild.mages_guild_quota == 0)
+            {
+                snd("core.complete1");
+                txt(i18n::s.get("core.ui.inv.put.guild.you_fulfill"),
+                    Message::color{ColorIndex::green});
+            }
+        }
+        else
+        {
+            quest_data.immediate().extra_info_2 +=
+                inv[ci].weight * inv[ci].number();
+            txt(i18n::s.get(
+                    "core.ui.inv.put.harvest",
+                    inv[ci],
+                    cnvweight(inv[ci].weight * inv[ci].number()),
+                    cnvweight(quest_data.immediate().extra_info_2),
+                    cnvweight(quest_data.immediate().extra_info_1)),
+                Message::color{ColorIndex::green});
+        }
+        inv[ci].remove();
+        refresh_burden_state();
+        return OnEnterResult{1};
+    }
+    if (invctrl(1) == 2)
+    {
+        if (cdata.player().gold < inv[ci].subname)
+        {
+            snd("core.fail1");
+            txt(i18n::s.get("core.ui.inv.put.tax.not_enough_money"));
+            return OnEnterResult{2};
+        }
+        if (game_data.left_bill <= 0)
+        {
+            snd("core.fail1");
+            txt(i18n::s.get("core.ui.inv.put.tax.do_not_have_to"));
+            return OnEnterResult{1};
+        }
+        cdata.player().gold -= inv[ci].subname;
+        snd("core.paygold1");
+        txt(i18n::s.get("core.ui.inv.put.tax.you_pay", inv[ci]),
+            Message::color{ColorIndex::green});
+        inv[ci].modify_number(-1);
+        --game_data.left_bill;
+        screenupdate = -1;
+        update_screen();
+        return OnEnterResult{1};
+    }
+    throw "unreachable";
+}
+
+
+
+OnEnterResult on_enter_receive()
+{
+    const auto slot = inv_getfreeid(0);
+    if (slot == -1)
+    {
+        txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
+        return OnEnterResult{2};
+    }
+    if (the_item_db[itemid2int(inv[ci].id)]->category == ItemCategory::ore)
+    {
+        snd("core.fail1");
+        txt(i18n::s.get("core.ui.inv.take_ally.refuse_dialog", cdata[tc]),
+            Message::color{ColorIndex::blue});
+        return OnEnterResult{2};
+    }
+    if (inv[ci].body_part != 0)
+    {
+        if (is_cursed(inv[ci].curse_state))
+        {
+            txt(i18n::s.get("core.ui.inv.take_ally.cursed", inv[ci]));
+            return OnEnterResult{1};
+        }
+        p = inv[ci].body_part;
+        cdata[tc].body_parts[p - 100] =
+            cdata[tc].body_parts[p - 100] / 10000 * 10000;
+        inv[ci].body_part = 0;
+    }
+    if (inv[ci].id == ItemId::engagement_ring ||
+        inv[ci].id == ItemId::engagement_amulet)
+    {
+        txt(i18n::s.get(
+                "core.ui.inv.take_ally.swallows_ring", cdata[tc], inv[ci]),
+            Message::color{ColorIndex::purple});
+        snd("core.offer1");
+        chara_modify_impression(cdata[tc], -20);
+        cdata[tc].emotion_icon = 318;
+        inv[ci].modify_number(-1);
+        return OnEnterResult{1};
+    }
+    snd("core.equip1");
+    inv[ci].is_quest_target() = false;
+    if (inv[ci].id == ItemId::gold_piece)
+    {
+        in = inv[ci].number();
+    }
+    else
+    {
+        in = 1;
+    }
+    txt(i18n::s.get("core.ui.inv.take_ally.you_take", itemname(inv[ci], in)));
+    if (inv[ci].id == ItemId::gold_piece)
+    {
+        earn_gold(cdata.player(), in);
+        inv[ci].remove();
+    }
+    else
+    {
+        item_copy(ci, slot);
+        inv[ci].modify_number((-in));
+        inv[slot].set_number(in);
+        ti = slot;
+        item_stack(0, inv[slot], true);
+        convertartifact(ti);
+    }
+    rc = tc;
+    wear_most_valuable_equipment_for_all_body_parts();
+    if (tc < 16)
+    {
+        create_pcpic(cdata[tc]);
+    }
+    chara_refresh(tc);
+    refresh_burden_state();
+    return OnEnterResult{1};
+}
+
+
+
+OnEnterResult on_enter_throw(MenuResult& result)
+{
+    savecycle();
+    int stat = target_position();
+    if (stat != 1)
+    {
+        if (stat == 0)
+        {
+            txt(i18n::s.get("core.ui.inv.throw.cannot_see"));
+            update_screen();
+        }
+        result.turn_result = TurnResult::pc_turn_user_error;
+        return OnEnterResult{result};
+    }
+    if (chip_data.for_cell(tlocx, tlocy).effect & 4)
+    {
+        txt(i18n::s.get("core.ui.inv.throw.location_is_blocked"));
+        update_screen();
+        result.turn_result = TurnResult::pc_turn_user_error;
+        return OnEnterResult{result};
+    }
+    result.turn_result = do_throw_command();
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_steal(MenuResult& result)
+{
+    start_stealing();
+    invsubroutine = 0;
+    result.succeeded = true;
+    return OnEnterResult{result};
+}
+
+
+
+OnEnterResult on_enter_small_medal()
+{
+    Message::instance().linebreak();
+    const auto slot = inv_getfreeid(0);
+    if (slot == -1)
+    {
+        txt(i18n::s.get("core.ui.inv.trade_medals.inventory_full"));
+        snd("core.fail1");
+        return OnEnterResult{1};
+    }
+    if (const auto small_medals =
+            item_find(622, 3, ItemFindLocation::player_inventory))
+    {
+        i = small_medals->index;
+        p = small_medals->number();
+    }
+    else
+    {
+        p = 0;
+    }
+    if (p < calcmedalvalue(inv[ci]))
+    {
+        txt(i18n::s.get("core.ui.inv.trade_medals.not_enough_medals"));
+        snd("core.fail1");
+        return OnEnterResult{1};
+    }
+    inv[i].modify_number(-calcmedalvalue(inv[ci]));
+    snd("core.paygold1");
+    item_copy(ci, slot);
+    txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", inv[slot]));
+    ti = slot;
+    item_stack(0, inv[slot], true);
+    convertartifact(ti, 1);
+    return OnEnterResult{1};
+}
+
+
+
 OnEnterResult on_enter(int& citrade, bool dropcontinue)
 {
     MenuResult result = {false, false, TurnResult::none};
@@ -1289,913 +2258,103 @@ OnEnterResult on_enter(int& citrade, bool dropcontinue)
     {
         return OnEnterResult{3};
     }
+
     if (invctrl == 1)
     {
-        item_show_description(inv[ci]);
-        return OnEnterResult{1};
+        return on_enter_examine();
     }
     if (invctrl == 2)
     {
-        if (inv[ci].is_marked_as_no_drop())
-        {
-            snd("core.fail1");
-            txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
-            return OnEnterResult{2};
-        }
-        if (!inv_getspace(-1))
-        {
-            txt(i18n::s.get("core.ui.inv.drop.cannot_anymore"));
-            snd("core.fail1");
-            return OnEnterResult{2};
-        }
-        if (map_data.max_item_count != 0)
-        {
-            if (inv_sum(-1) >= map_data.max_item_count)
-            {
-                if (the_item_db[itemid2int(inv[ci].id)]->category !=
-                    ItemCategory::furniture)
-                {
-                    txt(i18n::s.get("core.ui.inv.drop.cannot_anymore"));
-                    snd("core.fail1");
-                    return OnEnterResult{2};
-                }
-            }
-        }
-        if (inv[ci].number() > 1)
-        {
-            txt(i18n::s.get(
-                "core.ui.inv.drop.how_many", inv[ci].number(), inv[ci]));
-            input_number_dialog(
-                (windoww - 200) / 2 + inf_screenx,
-                winposy(60),
-                inv[ci].number());
-            in = elona::stoi(inputlog(0));
-            if (in > inv[ci].number())
-            {
-                in = inv[ci].number();
-            }
-            if (in == 0 || rtval == -1)
-            {
-                return OnEnterResult{2};
-            }
-        }
-        else
-        {
-            in = 1;
-        }
-        savecycle();
-        item_drop(inv[ci], in);
-        if (dropcontinue)
-        {
-            menucycle = true;
-            return OnEnterResult{1};
-        }
-        result.turn_result = TurnResult::turn_end;
-        return OnEnterResult{result};
+        return on_enter_drop(result, dropcontinue);
     }
     if (invctrl == 3 || invctrl == 11 || invctrl == 12 || invctrl == 22 ||
         (invctrl == 24 && (invctrl(1) == 3 || invctrl(1) == 5)))
     {
-        if (invctrl != 3 && invctrl != 22)
-        {
-            if (inv[ci].is_marked_as_no_drop())
-            {
-                snd("core.fail1");
-                txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
-                return OnEnterResult{2};
-            }
-        }
-        if (invctrl == 24)
-        {
-            if (invctrl(1) == 3 || invctrl(1) == 5)
-            {
-                if (inv_sum(-1) >= invcontainer)
-                {
-                    snd("core.fail1");
-                    txt(i18n::s.get("core.ui.inv.put.container.full"));
-                    return OnEnterResult{2};
-                }
-            }
-            if (invctrl(1) == 5)
-            {
-                if (inv[ci].weight >= efp * 100)
-                {
-                    snd("core.fail1");
-                    txt(i18n::s.get(
-                        "core.ui.inv.put.container.too_heavy",
-                        cnvweight(efp * 100)));
-                    return OnEnterResult{2};
-                }
-                if (inv[ci].weight <= 0)
-                {
-                    snd("core.fail1");
-                    txt(i18n::s.get(
-                        "core.ui.inv.put.container.cannot_hold_cargo"));
-                    return OnEnterResult{2};
-                }
-            }
-            if (invctrl(1) == 5)
-            {
-                if (!action_sp(cdata.player(), 10))
-                {
-                    txt(i18n::s.get("core.magic.common.too_exhausted"));
-                    return OnEnterResult{*on_cancel(dropcontinue)};
-                }
-            }
-        }
-        if (invctrl == 22)
-        {
-            if (invctrl(1) == 1)
-            {
-                if (game_data.rights_to_succeed_to < 1)
-                {
-                    txt(i18n::s.get("core.ui.inv.take.no_claim"));
-                    return OnEnterResult{2};
-                }
-            }
-            if (invctrl(1) == 5)
-            {
-                if (!action_sp(cdata.player(), 10))
-                {
-                    txt(i18n::s.get("core.magic.common.too_exhausted"));
-                    return OnEnterResult{*on_cancel(dropcontinue)};
-                }
-            }
-        }
-        if (inv[ci].own_state > 0 && inv[ci].own_state < 3)
-        {
-            snd("core.fail1");
-            if (inv[ci].own_state == 2)
-            {
-                txt(i18n::s.get("core.action.get.cannot_carry"),
-                    Message::only_once{true});
-            }
-            if (inv[ci].own_state == 1)
-            {
-                txt(i18n::s.get("core.action.get.not_owned"),
-                    Message::only_once{true});
-            }
-            update_screen();
-            result.turn_result = TurnResult::pc_turn_user_error;
-            return OnEnterResult{result};
-        }
-        page_save();
-        if (mode == 6 && inv[ci].number() > 1 && invctrl != 22)
-        {
-            if (invctrl == 11)
-            {
-                txt(i18n::s.get(
-                    "core.ui.inv.buy.how_many", inv[ci].number(), inv[ci]));
-            }
-            if (invctrl == 12)
-            {
-                txt(i18n::s.get(
-                    "core.ui.inv.sell.how_many", inv[ci].number(), inv[ci]));
-            }
-            input_number_dialog(
-                (windoww - 200) / 2 + inf_screenx,
-                winposy(60),
-                inv[ci].number());
-            in = elona::stoi(inputlog(0));
-            if (in > inv[ci].number())
-            {
-                in = inv[ci].number();
-            }
-            if (in == 0 || rtval == -1)
-            {
-                screenupdate = -1;
-                update_screen();
-                return OnEnterResult{2};
-            }
-        }
-        else
-        {
-            in = inv[ci].number();
-        }
-        if (mode == 6 && invctrl != 22 && invctrl != 24)
-        {
-            if (!g_config.skip_confirm_at_shop())
-            {
-                if (invctrl == 11)
-                {
-                    txt(i18n::s.get(
-                        "core.ui.inv.buy.prompt",
-                        itemname(inv[ci], in),
-                        (in * calcitemvalue(inv[ci], 0))));
-                }
-                if (invctrl == 12)
-                {
-                    txt(i18n::s.get(
-                        "core.ui.inv.sell.prompt",
-                        itemname(inv[ci], in),
-                        (in * calcitemvalue(inv[ci], 1))));
-                }
-                if (!yes_no())
-                {
-                    screenupdate = -1;
-                    update_screen();
-                    return OnEnterResult{1};
-                }
-            }
-            if (invctrl == 11)
-            {
-                if (calcitemvalue(inv[ci], 0) * in > cdata.player().gold)
-                {
-                    screenupdate = -1;
-                    update_screen();
-                    txt(i18n::s.get("core.ui.inv.buy.not_enough_money"));
-                    return OnEnterResult{1};
-                }
-            }
-            if (invctrl == 12)
-            {
-                if (cdata[tc].character_role != 1009)
-                {
-                    if (calcitemvalue(inv[ci], 1) * in > cdata[tc].gold)
-                    {
-                        screenupdate = -1;
-                        update_screen();
-                        txt(i18n::s.get(
-                            "core.ui.inv.sell.not_enough_money", cdata[tc]));
-                        return OnEnterResult{1};
-                    }
-                }
-            }
-        }
-        int stat = pick_up_item();
-        if (stat == 0)
-        {
-            return OnEnterResult{1};
-        }
-        if (stat == -1)
-        {
-            result.turn_result = TurnResult::turn_end;
-            return OnEnterResult{result};
-        }
-        if (invctrl == 22)
-        {
-            if (invctrl(1) == 1)
-            {
-                --game_data.rights_to_succeed_to;
-                if (invctrl(1) == 1)
-                {
-                    txt(i18n::s.get(
-                        "core.ui.inv.take.can_claim_more",
-                        game_data.rights_to_succeed_to));
-                }
-            }
-            if (invctrl(1) == 4)
-            {
-                ++game_data.quest_flags.gift_count_of_little_sister;
-                invsubroutine = 0;
-                result.succeeded = true;
-                return OnEnterResult{result};
-            }
-        }
-        screenupdate = -1;
-        update_screen();
-        return OnEnterResult{1};
+        return on_enter_external_inventory(result, dropcontinue);
     }
     if (invctrl == 5)
     {
-        if (inv[ci].is_marked_as_no_drop())
-        {
-            snd("core.fail1");
-            txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
-            return OnEnterResult{2};
-        }
-        screenupdate = -1;
-        update_screen();
-        savecycle();
-        if (cdata.player().nutrition > 10000)
-        {
-            txt(i18n::s.get("core.ui.inv.eat.too_bloated"));
-            update_screen();
-            result.turn_result = TurnResult::pc_turn_user_error;
-            return OnEnterResult{result};
-        }
-        result.turn_result = do_eat_command();
-        return OnEnterResult{result};
+        return on_enter_eat(result);
     }
     if (invctrl == 6)
     {
-        if (cc == 0)
-        {
-            if (trait(161) != 0)
-            {
-                if (inv[ci].weight >= 1000)
-                {
-                    txt(i18n::s.get("core.ui.inv.equip.too_heavy"));
-                    return OnEnterResult{2};
-                }
-            }
-        }
-        equip_item(cc);
-        chara_refresh(cc);
-        screenupdate = -1;
-        update_screen();
-        snd("core.equip1");
-        Message::instance().linebreak();
-        txt(i18n::s.get("core.ui.inv.equip.you_equip", inv[ci]));
-        game_data.player_is_changing_equipment = 1;
-        switch (inv[ci].curse_state)
-        {
-        case CurseState::doomed:
-            txt(i18n::s.get("core.ui.inv.equip.doomed", cdata[cc]));
-            break;
-        case CurseState::cursed:
-            txt(i18n::s.get("core.ui.inv.equip.cursed", cdata[cc]));
-            break;
-        case CurseState::none: break;
-        case CurseState::blessed:
-            txt(i18n::s.get("core.ui.inv.equip.blessed", cdata[cc]));
-            break;
-        }
-        if (cdata[cc].body_parts[body - 100] / 10000 == 5)
-        {
-            equip_melee_weapon();
-        }
-        menucycle = true;
-        result.turn_result = TurnResult::menu_equipment;
-        return OnEnterResult{result};
+        return on_enter_equip(result);
     }
     if (invctrl == 7)
     {
-        screenupdate = -1;
-        update_screen();
-        savecycle();
-        result.turn_result = do_read_command();
-        return OnEnterResult{result};
+        return on_enter_read(result);
     }
     if (invctrl == 8)
     {
-        screenupdate = -1;
-        update_screen();
-        savecycle();
-        result.turn_result = do_drink_command();
-        return OnEnterResult{result};
+        return on_enter_drink(result);
     }
     if (invctrl == 9)
     {
-        screenupdate = -1;
-        update_screen();
-        savecycle();
-        result.turn_result = do_zap_command();
-        return OnEnterResult{result};
+        return on_enter_zap(result);
     }
     if (invctrl == 10)
     {
-        if (inv[ci].is_marked_as_no_drop())
-        {
-            snd("core.fail1");
-            txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
-            return OnEnterResult{2};
-        }
-        ti = inv_getfreeid(tc);
-        if (cdata[tc].sleep)
-        {
-            txt(i18n::s.get("core.ui.inv.give.is_sleeping", cdata[tc]));
-            snd("core.fail1");
-            return OnEnterResult{2};
-        }
-        if (ti == -1)
-        {
-            txt(i18n::s.get("core.ui.inv.give.inventory_is_full", cdata[tc]));
-            snd("core.fail1");
-            return OnEnterResult{2};
-        }
-        reftype = (int)the_item_db[itemid2int(inv[ci].id)]->category;
-        if (inv[ci].id == ItemId::gift)
-        {
-            txt(i18n::s.get(
-                "core.ui.inv.give.present.text", cdata[tc], inv[ci]));
-            inv[ci].modify_number(-1);
-            txt(i18n::s.get("core.ui.inv.give.present.dialog", cdata[tc]));
-            chara_modify_impression(cdata[tc], giftvalue(inv[ci].param4));
-            cdata[tc].emotion_icon = 317;
-            refresh_burden_state();
-            if (invally == 1)
-            {
-                return OnEnterResult{1};
-            }
-            update_screen();
-            result.turn_result = TurnResult::turn_end;
-            return OnEnterResult{result};
-        }
-        f = 0;
-        p = sdata(10, tc) * 500 + sdata(11, tc) * 500 + sdata(153, tc) * 2500 +
-            25000;
-        if (cdata[tc].id == CharaId::golden_knight)
-        {
-            p *= 5;
-        }
-        if (inv_weight(tc) + inv[ci].weight > p)
-        {
-            f = 1;
-        }
-        if (cdata[tc].id != CharaId::golden_knight)
-        {
-            if (reftype == 60000)
-            {
-                f = 2;
-            }
-            if (reftype == 64000)
-            {
-                f = 3;
-            }
-        }
-        if (inv[ci].weight < 0)
-        {
-            f = 4;
-        }
-        if (f)
-        {
-            snd("core.fail1");
-            txt(i18n::s.get_enum(
-                "core.ui.inv.give.refuse_dialog", f - 1, cdata[tc]));
-            return OnEnterResult{2};
-        }
-        f = 0;
-        if (cdata[tc].relationship == 10)
-        {
-            f = 1;
-        }
-        else
-        {
-            if (inv[ci].identify_state <= IdentifyState::partly)
-            {
-                snd("core.fail1");
-                txt(i18n::s.get("core.ui.inv.give.too_creepy", cdata[tc]));
-                return OnEnterResult{2};
-            }
-            if (is_cursed(inv[ci].curse_state))
-            {
-                snd("core.fail1");
-                txt(i18n::s.get("core.ui.inv.give.cursed", cdata[tc]));
-                return OnEnterResult{2};
-            }
-            if (reftype == 53000)
-            {
-                f = 1;
-                if (strutil::contains(
-                        the_item_db[itemid2int(inv[ci].id)]->filter, u8"/neg/"))
-                {
-                    f = 0;
-                }
-                // scroll of teleport/treasure map/deeds
-                switch (itemid2int(inv[ci].id))
-                {
-                case 16:
-                case 245:
-                case 621:
-                case 344:
-                case 521:
-                case 522:
-                case 542:
-                case 543:
-                case 572:
-                case 712: f = 0; break;
-                default: break;
-                }
-            }
-            if (reftype == 52000)
-            {
-                f = 1;
-                if (the_item_db[itemid2int(inv[ci].id)]->subcategory == 52002)
-                {
-                    if (cdata[tc].drunk)
-                    {
-                        snd("core.fail1");
-                        txt(i18n::s.get(
-                            "core.ui.inv.give.no_more_drink", cdata[tc]));
-                        return OnEnterResult{2};
-                    }
-                }
-                if (strutil::contains(
-                        the_item_db[itemid2int(inv[ci].id)]->filter, u8"/neg/"))
-                {
-                    f = 0;
-                }
-                if (strutil::contains(
-                        the_item_db[itemid2int(inv[ci].id)]->filter,
-                        u8"/nogive/"))
-                {
-                    f = 0;
-                }
-                if (cdata[tc].is_pregnant())
-                {
-                    if (inv[ci].id == ItemId::poison ||
-                        inv[ci].id == ItemId::bottle_of_dye ||
-                        inv[ci].id == ItemId::bottle_of_sulfuric)
-                    {
-                        f = 1;
-                        txt(i18n::s.get("core.ui.inv.give.abortion"));
-                    }
-                }
-            }
-        }
-        if (f)
-        {
-            snd("core.equip1");
-            txt(i18n::s.get("core.ui.inv.give.you_hand", inv[ci], cdata[tc]));
-            if (inv[ci].id == ItemId::engagement_ring ||
-                inv[ci].id == ItemId::engagement_amulet)
-            {
-                txt(i18n::s.get("core.ui.inv.give.engagement", cdata[tc]),
-                    Message::color{ColorIndex::green});
-                chara_modify_impression(cdata[tc], 15);
-                cdata[tc].emotion_icon = 317;
-            }
-            if (inv[ci].id == ItemId::love_potion)
-            {
-                txt(i18n::s.get(
-                        "core.ui.inv.give.love_potion.text",
-                        cdata[tc],
-                        inv[ci]),
-                    Message::color{ColorIndex::purple});
-                snd("core.crush2");
-                txt(i18n::s.get(
-                        "core.ui.inv.give.love_potion.dialog", cdata[tc]),
-                    Message::color{ColorIndex::cyan});
-                chara_modify_impression(cdata[tc], -20);
-                cdata[tc].emotion_icon = 318;
-                inv[ci].modify_number(-1);
-                return OnEnterResult{1};
-            }
-            item_copy(ci, ti);
-            inv[ci].modify_number(-1);
-            inv[ti].set_number(1);
-            item_stack(tc, inv[ti], true);
-            ci = ti;
-            rc = tc;
-            chara_set_item_which_will_be_used(cdata[tc], inv[ci]);
-            wear_most_valuable_equipment_for_all_body_parts();
-            if (tc < 16)
-            {
-                create_pcpic(cdata[tc]);
-            }
-            chara_refresh(tc);
-            refresh_burden_state();
-            if (invally == 1)
-            {
-                return OnEnterResult{1};
-            }
-            update_screen();
-            result.turn_result = TurnResult::turn_end;
-            return OnEnterResult{result};
-        }
-        snd("core.fail1");
-        txt(i18n::s.get("core.ui.inv.give.refuses", cdata[tc], inv[ci]));
-        return OnEnterResult{2};
+        return on_enter_give(result);
     }
     if (invctrl == 13)
     {
-        screenupdate = -1;
-        update_screen();
-        const auto identify_result = item_identify(inv[ci], efp);
-        if (identify_result == IdentifyState::unidentified)
-        {
-            txt(i18n::s.get("core.ui.inv.identify.need_more_power"));
-        }
-        else if (identify_result != IdentifyState::completely)
-        {
-            txt(i18n::s.get("core.ui.inv.identify.partially", inv[ci]));
-        }
-        else
-        {
-            txt(i18n::s.get("core.ui.inv.identify.fully", inv[ci]));
-        }
-        item_stack(0, inv[ci], true);
-        refresh_burden_state();
-        invsubroutine = 0;
-        result.succeeded = true;
-        return OnEnterResult{result};
+        return on_enter_identify(result);
     }
     if (invctrl == 14)
     {
-        savecycle();
-        result.turn_result = do_use_command();
-        return OnEnterResult{result};
+        return on_enter_use(result);
     }
     if (invctrl == 16)
     {
-        screenupdate = -1;
-        update_screen();
-        invsubroutine = 0;
-        result.succeeded = true;
-        return OnEnterResult{result};
+        return on_enter_cook(result);
     }
     if (invctrl == 15)
     {
-        screenupdate = -1;
-        update_screen();
-        savecycle();
-        result.turn_result = do_open_command();
-        return OnEnterResult{result};
+        return on_enter_open(result);
     }
     if (invctrl == 17)
     {
-        cidip = ci;
-        savecycle();
-        invctrl = 18;
-        Message::instance().linebreak();
-        snd("core.pop2");
-        return OnEnterResult{1};
+        return on_enter_mix();
     }
     if (invctrl == 18)
     {
-        screenupdate = -1;
-        update_screen();
-        result.turn_result = do_dip_command();
-        return OnEnterResult{result};
+        return on_enter_mix_target(result);
     }
     if (invctrl == 19)
     {
-        if (inv[ci].is_marked_as_no_drop())
-        {
-            snd("core.fail1");
-            txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
-            return OnEnterResult{2};
-        }
-        screenupdate = -1;
-        update_screen();
-        savecycle();
-        result.turn_result = do_offer_command();
-        return OnEnterResult{result};
+        return on_enter_offer(result);
     }
     if (invctrl == 20)
     {
-        citrade = ci;
-        invctrl = 21;
-        snd("core.pop2");
-        return OnEnterResult{1};
+        return on_enter_trade(citrade);
     }
     if (invctrl == 21)
     {
-        if (inv[ci].is_marked_as_no_drop())
-        {
-            snd("core.fail1");
-            txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
-            return OnEnterResult{2};
-        }
-        if (cdata[tc].activity)
-        {
-            cdata[tc].activity.type = Activity::Type::none;
-            cdata[tc].activity.turn = 0;
-            cdata[tc].activity.item = 0;
-        }
-        snd("core.equip1");
-        inv[citrade].is_quest_target() = false;
-        txt(i18n::s.get(
-            "core.ui.inv.trade.you_receive", inv[ci], inv[citrade]));
-        if (inv[citrade].body_part != 0)
-        {
-            p = inv[citrade].body_part;
-            cdata[tc].body_parts[p - 100] =
-                cdata[tc].body_parts[p - 100] / 10000 * 10000;
-            inv[citrade].body_part = 0;
-        }
-        ti = citrade;
-        item_exchange(ci, ti);
-        convertartifact(ci);
-        rc = tc;
-        ci = citrade;
-        if (cdata[rc].item_which_will_be_used == ci)
-        {
-            cdata[rc].item_which_will_be_used = 0;
-        }
-        wear_most_valuable_equipment_for_all_body_parts();
-        if (tc >= 16)
-        {
-            supply_new_equipment();
-        }
-        inv_getfreeid_force();
-        chara_refresh(tc);
-        refresh_burden_state();
-        invsubroutine = 0;
-        result.succeeded = true;
-        return OnEnterResult{result};
+        return on_enter_trade_target(result, citrade);
     }
     if (invctrl == 23)
     {
-        if (invctrl(1) == 4)
-        {
-            if (inv[ci].is_marked_as_no_drop())
-            {
-                snd("core.fail1");
-                txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
-                return OnEnterResult{2};
-            }
-        }
-        item_separate(ci);
-        invsubroutine = 0;
-        result.succeeded = true;
-        return OnEnterResult{result};
+        return on_enter_target(result);
     }
     if (invctrl == 24)
     {
-        if (invctrl(1) == 0)
-        {
-            snd("core.inv");
-            if (game_data.current_map == mdata_t::MapId::lumiest)
-            {
-                game_data.guild.mages_guild_quota -=
-                    (inv[ci].param1 + 1) * inv[ci].number();
-                if (game_data.guild.mages_guild_quota <= 0)
-                {
-                    game_data.guild.mages_guild_quota = 0;
-                }
-                txt(i18n::s.get("core.ui.inv.put.guild.you_deliver", inv[ci]) +
-                        u8"("s + (inv[ci].param1 + 1) * inv[ci].number() +
-                        u8" Guild Point)"s,
-                    Message::color{ColorIndex::green});
-                if (game_data.guild.mages_guild_quota == 0)
-                {
-                    snd("core.complete1");
-                    txt(i18n::s.get("core.ui.inv.put.guild.you_fulfill"),
-                        Message::color{ColorIndex::green});
-                }
-            }
-            else
-            {
-                quest_data.immediate().extra_info_2 +=
-                    inv[ci].weight * inv[ci].number();
-                txt(i18n::s.get(
-                        "core.ui.inv.put.harvest",
-                        inv[ci],
-                        cnvweight(inv[ci].weight * inv[ci].number()),
-                        cnvweight(quest_data.immediate().extra_info_2),
-                        cnvweight(quest_data.immediate().extra_info_1)),
-                    Message::color{ColorIndex::green});
-            }
-            inv[ci].remove();
-            refresh_burden_state();
-            return OnEnterResult{1};
-        }
-        if (invctrl(1) == 2)
-        {
-            if (cdata.player().gold < inv[ci].subname)
-            {
-                snd("core.fail1");
-                txt(i18n::s.get("core.ui.inv.put.tax.not_enough_money"));
-                return OnEnterResult{2};
-            }
-            if (game_data.left_bill <= 0)
-            {
-                snd("core.fail1");
-                txt(i18n::s.get("core.ui.inv.put.tax.do_not_have_to"));
-                return OnEnterResult{1};
-            }
-            cdata.player().gold -= inv[ci].subname;
-            snd("core.paygold1");
-            txt(i18n::s.get("core.ui.inv.put.tax.you_pay", inv[ci]),
-                Message::color{ColorIndex::green});
-            inv[ci].modify_number(-1);
-            --game_data.left_bill;
-            screenupdate = -1;
-            update_screen();
-            return OnEnterResult{1};
-        }
-        throw "unreachable";
+        return on_enter_put_into();
     }
     if (invctrl == 25)
     {
-        ti = inv_getfreeid(0);
-        if (ti == -1)
-        {
-            txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
-            return OnEnterResult{2};
-        }
-        if (the_item_db[itemid2int(inv[ci].id)]->category == ItemCategory::ore)
-        {
-            snd("core.fail1");
-            txt(i18n::s.get("core.ui.inv.take_ally.refuse_dialog", cdata[tc]),
-                Message::color{ColorIndex::blue});
-            return OnEnterResult{2};
-        }
-        if (inv[ci].body_part != 0)
-        {
-            if (is_cursed(inv[ci].curse_state))
-            {
-                txt(i18n::s.get("core.ui.inv.take_ally.cursed", inv[ci]));
-                return OnEnterResult{1};
-            }
-            p = inv[ci].body_part;
-            cdata[tc].body_parts[p - 100] =
-                cdata[tc].body_parts[p - 100] / 10000 * 10000;
-            inv[ci].body_part = 0;
-        }
-        if (inv[ci].id == ItemId::engagement_ring ||
-            inv[ci].id == ItemId::engagement_amulet)
-        {
-            txt(i18n::s.get(
-                    "core.ui.inv.take_ally.swallows_ring", cdata[tc], inv[ci]),
-                Message::color{ColorIndex::purple});
-            snd("core.offer1");
-            chara_modify_impression(cdata[tc], -20);
-            cdata[tc].emotion_icon = 318;
-            inv[ci].modify_number(-1);
-            return OnEnterResult{1};
-        }
-        snd("core.equip1");
-        inv[ci].is_quest_target() = false;
-        if (inv[ci].id == ItemId::gold_piece)
-        {
-            in = inv[ci].number();
-        }
-        else
-        {
-            in = 1;
-        }
-        txt(i18n::s.get(
-            "core.ui.inv.take_ally.you_take", itemname(inv[ci], in)));
-        if (inv[ci].id == ItemId::gold_piece)
-        {
-            earn_gold(cdata.player(), in);
-            inv[ci].remove();
-        }
-        else
-        {
-            item_copy(ci, ti);
-            inv[ci].modify_number((-in));
-            inv[ti].set_number(in);
-            item_stack(0, inv[ti], true);
-            convertartifact(ti);
-        }
-        rc = tc;
-        wear_most_valuable_equipment_for_all_body_parts();
-        if (tc < 16)
-        {
-            create_pcpic(cdata[tc]);
-        }
-        chara_refresh(tc);
-        refresh_burden_state();
-        return OnEnterResult{1};
+        return on_enter_receive();
     }
     if (invctrl == 26)
     {
-        savecycle();
-        int stat = target_position();
-        if (stat != 1)
-        {
-            if (stat == 0)
-            {
-                txt(i18n::s.get("core.ui.inv.throw.cannot_see"));
-                update_screen();
-            }
-            result.turn_result = TurnResult::pc_turn_user_error;
-            return OnEnterResult{result};
-        }
-        if (chip_data.for_cell(tlocx, tlocy).effect & 4)
-        {
-            txt(i18n::s.get("core.ui.inv.throw.location_is_blocked"));
-            update_screen();
-            result.turn_result = TurnResult::pc_turn_user_error;
-            return OnEnterResult{result};
-        }
-        result.turn_result = do_throw_command();
-        return OnEnterResult{result};
+        return on_enter_throw(result);
     }
     if (invctrl == 27)
     {
-        start_stealing();
-        invsubroutine = 0;
-        result.succeeded = true;
-        return OnEnterResult{result};
+        return on_enter_steal(result);
     }
     if (invctrl == 28)
     {
-        Message::instance().linebreak();
-        ti = inv_getfreeid(0);
-        if (ti == -1)
-        {
-            txt(i18n::s.get("core.ui.inv.trade_medals.inventory_full"));
-            snd("core.fail1");
-            return OnEnterResult{1};
-        }
-        if (const auto small_medals =
-                item_find(622, 3, ItemFindLocation::player_inventory))
-        {
-            i = small_medals->index;
-            p = small_medals->number();
-        }
-        else
-        {
-            p = 0;
-        }
-        if (p < calcmedalvalue(inv[ci]))
-        {
-            txt(i18n::s.get("core.ui.inv.trade_medals.not_enough_medals"));
-            snd("core.fail1");
-            return OnEnterResult{1};
-        }
-        inv[i].modify_number(-calcmedalvalue(inv[ci]));
-        snd("core.paygold1");
-        item_copy(ci, ti);
-        txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", inv[ti]));
-        item_stack(0, inv[ti], true);
-        convertartifact(ti, 1);
-        return OnEnterResult{1};
+        return on_enter_small_medal();
     }
 
     throw "unreachable";
