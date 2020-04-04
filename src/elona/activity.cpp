@@ -991,120 +991,149 @@ void activity_others_doing(Character& doer)
 
 
 
+void activity_others_end_steal()
+{
+    tg = inv_getowner(ci);
+    if ((tg != -1 && cdata[tg].state() != Character::State::alive) ||
+        inv[ci].number() <= 0)
+    {
+        txt(i18n::s.get("core.activity.steal.abort"));
+        return;
+    }
+    in = 1;
+    if (inv[ci].id == ItemId::gold_piece)
+    {
+        in = inv[ci].number();
+    }
+    const auto slot = inv_getfreeid(0);
+    if (slot == -1)
+    {
+        txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
+        return;
+    }
+    inv[ci].is_quest_target() = false;
+    if (inv[ci].body_part != 0)
+    {
+        tc = inv_getowner(ci);
+        if (tc != -1)
+        {
+            p = inv[ci].body_part;
+            cdata[tc].body_parts[p - 100] =
+                cdata[tc].body_parts[p - 100] / 10000 * 10000;
+        }
+        inv[ci].body_part = 0;
+        chara_refresh(tc);
+    }
+    auto& stolen_item = inv[slot];
+    item_copy(ci, stolen_item.index);
+    stolen_item.set_number(in);
+    stolen_item.is_stolen() = true;
+    stolen_item.own_state = 0;
+    inv[ci].modify_number((-in));
+    if (inv[ci].number() <= 0)
+    {
+        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+    }
+    txt(i18n::s.get("core.activity.steal.succeed", stolen_item));
+    const auto item_weight = stolen_item.weight;
+    if (inv[ci].id == ItemId::gold_piece)
+    {
+        snd("core.getgold1");
+        earn_gold(cdata.player(), in);
+        stolen_item.remove();
+    }
+    else
+    {
+        item_stack(0, stolen_item, true);
+        sound_pick_up();
+    }
+    refresh_burden_state();
+    chara_gain_skill_exp(
+        cdata.player(), 300, clamp(item_weight / 25, 0, 450) + 50);
+    if (cdata.player().karma >= -30)
+    {
+        if (rnd(3) == 0)
+        {
+            txt(i18n::s.get("core.activity.steal.guilt"));
+            modify_karma(cdata.player(), -1);
+        }
+    }
+}
+
+
+
+void activity_others_end_sleep()
+{
+    txt(i18n::s.get("core.activity.sleep.finish"));
+    sleep_start();
+}
+
+
+
+void activity_others_end_build_shelter()
+{
+    snd("core.build1");
+    txt(i18n::s.get("core.activity.construct.finish", inv[ci]));
+    item_build_shelter(inv[ci]);
+}
+
+
+
+void activity_others_end_enter_shelter()
+{
+    txt(i18n::s.get("core.activity.pull_hatch.finish", inv[ci]));
+    chatteleport = 1;
+    game_data.previous_map2 = game_data.current_map;
+    game_data.previous_dungeon_level = game_data.current_dungeon_level;
+    game_data.previous_x = cdata.player().position.x;
+    game_data.previous_y = cdata.player().position.y;
+    game_data.destination_map = static_cast<int>(mdata_t::MapId::shelter_);
+    game_data.destination_dungeon_level = inv[ci].count;
+    levelexitby = 2;
+    snd("core.exitmap1");
+}
+
+
+
+void activity_others_end_harvest()
+{
+    txt(i18n::s.get(
+        "core.activity.harvest.finish", inv[ci], cnvweight(inv[ci].weight)));
+    in = inv[ci].number();
+    pick_up_item();
+}
+
+
+
+void activity_others_end_study()
+{
+    if (inv[ci].id == ItemId::textbook)
+    {
+        txt(i18n::s.get(
+            "core.activity.study.finish.studying",
+            i18n::s.get_m(
+                "ability",
+                the_ability_db.get_id_from_legacy(inv[ci].param1)->get(),
+                "name")));
+    }
+    else
+    {
+        txt(i18n::s.get("core.activity.study.finish.training"));
+    }
+}
+
+
+
 void activity_others_end(Character& doer)
 {
     switch (game_data.activity_about_to_start)
     {
-    case 105:
-        tg = inv_getowner(ci);
-        if ((tg != -1 && cdata[tg].state() != Character::State::alive) ||
-            inv[ci].number() <= 0)
-        {
-            txt(i18n::s.get("core.activity.steal.abort"));
-            doer.activity.finish();
-            return;
-        }
-        in = 1;
-        if (inv[ci].id == ItemId::gold_piece)
-        {
-            in = inv[ci].number();
-        }
-        ti = inv_getfreeid(0);
-        if (ti == -1)
-        {
-            txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
-            return;
-        }
-        inv[ci].is_quest_target() = false;
-        if (inv[ci].body_part != 0)
-        {
-            tc = inv_getowner(ci);
-            if (tc != -1)
-            {
-                p = inv[ci].body_part;
-                cdata[tc].body_parts[p - 100] =
-                    cdata[tc].body_parts[p - 100] / 10000 * 10000;
-            }
-            inv[ci].body_part = 0;
-            chara_refresh(tc);
-        }
-        item_copy(ci, ti);
-        inv[ti].set_number(in);
-        inv[ti].is_stolen() = true;
-        inv[ti].own_state = 0;
-        inv[ci].modify_number((-in));
-        if (inv[ci].number() <= 0)
-        {
-            cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        }
-        txt(i18n::s.get("core.activity.steal.succeed", inv[ti]));
-        if (inv[ci].id == ItemId::gold_piece)
-        {
-            snd("core.getgold1");
-            earn_gold(cdata.player(), in);
-            inv[ti].remove();
-        }
-        else
-        {
-            item_stack(0, inv[ti], true);
-            sound_pick_up();
-        }
-        refresh_burden_state();
-        chara_gain_skill_exp(
-            cdata.player(), 300, clamp(inv[ti].weight / 25, 0, 450) + 50);
-        if (cdata.player().karma >= -30)
-        {
-            if (rnd(3) == 0)
-            {
-                txt(i18n::s.get("core.activity.steal.guilt"));
-                modify_karma(cdata.player(), -1);
-            }
-        }
-        break;
-    case 100:
-        txt(i18n::s.get("core.activity.sleep.finish"));
-        sleep_start();
-        break;
-    case 101:
-        snd("core.build1");
-        txt(i18n::s.get("core.activity.construct.finish", inv[ci]));
-        item_build_shelter(inv[ci]);
-        break;
-    case 102:
-        txt(i18n::s.get("core.activity.pull_hatch.finish", inv[ci]));
-        chatteleport = 1;
-        game_data.previous_map2 = game_data.current_map;
-        game_data.previous_dungeon_level = game_data.current_dungeon_level;
-        game_data.previous_x = cdata.player().position.x;
-        game_data.previous_y = cdata.player().position.y;
-        game_data.destination_map = static_cast<int>(mdata_t::MapId::shelter_);
-        game_data.destination_dungeon_level = inv[ci].count;
-        levelexitby = 2;
-        snd("core.exitmap1");
-        break;
-    case 103:
-        txt(i18n::s.get(
-            "core.activity.harvest.finish",
-            inv[ci],
-            cnvweight(inv[ci].weight)));
-        in = inv[ci].number();
-        pick_up_item();
-        break;
-    case 104:
-        if (inv[ci].id == ItemId::textbook)
-        {
-            txt(i18n::s.get(
-                "core.activity.study.finish.studying",
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(inv[ci].param1)->get(),
-                    "name")));
-        }
-        else
-        {
-            txt(i18n::s.get("core.activity.study.finish.training"));
-        }
-        break;
+    case 105: activity_others_end_steal(); break;
+    case 100: activity_others_end_sleep(); break;
+    case 101: activity_others_end_build_shelter(); break;
+    case 102: activity_others_end_enter_shelter(); break;
+    case 103: activity_others_end_harvest(); break;
+    case 104: activity_others_end_study(); break;
     default: break;
     }
     doer.activity.finish();

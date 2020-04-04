@@ -561,7 +561,7 @@ TurnResult npc_turn_ai_main(Character& chara)
                                 in = inv[ci].number();
                                 if (game_data.mount != chara.index)
                                 {
-                                    int stat = pick_up_item();
+                                    int stat = pick_up_item().type;
                                     if (stat == 1)
                                     {
                                         return TurnResult::turn_end;

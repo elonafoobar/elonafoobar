@@ -1590,15 +1590,13 @@ void remain_make(Item& remain, const Character& chara)
 
 
 
-bool item_stack(int inventory_id, Item& base_item, bool show_message)
+ItemStackResult item_stack(int inventory_id, Item& base_item, bool show_message)
 {
     if (base_item.quality == Quality::special &&
         is_equipment(the_item_db[itemid2int(base_item.id)]->category))
     {
-        return 0;
+        return {false, base_item};
     }
-
-    bool did_stack = false;
 
     for (auto&& item : inv.by_index(inventory_id))
     {
@@ -1608,35 +1606,34 @@ bool item_stack(int inventory_id, Item& base_item, bool show_message)
 
         bool stackable;
         if (item.id == ItemId::small_medal)
+        {
             stackable = inventory_id != -1 || mode == 6 ||
                 item.position == base_item.position;
+        }
         else
+        {
             stackable =
                 item.almost_equals(base_item, inventory_id != -1 || mode == 6);
+        }
 
         if (stackable)
         {
             item.modify_number(base_item.number());
             base_item.remove();
-            ti = item.index;
-            did_stack = true;
-            break;
+
+            if (mode != 6 && inv_getowner(base_item.index) == -1)
+            {
+                cell_refresh(base_item.position.x, base_item.position.y);
+            }
+            if (show_message)
+            {
+                txt(i18n::s.get("core.item.stacked", item, item.number()));
+            }
+            return {true, item};
         }
     }
 
-    if (did_stack)
-    {
-        if (mode != 6 && inv_getowner(base_item.index) == -1)
-        {
-            cell_refresh(base_item.position.x, base_item.position.y);
-        }
-        if (show_message)
-        {
-            txt(i18n::s.get("core.item.stacked", inv[ti], inv[ti].number()));
-        }
-    }
-
-    return did_stack;
+    return {false, base_item};
 }
 
 
@@ -2306,42 +2303,44 @@ int inv_getfreeid_force()
 
 void item_drop(Item& item_in_inventory, int num, bool building_shelter)
 {
-    ti = inv_getfreeid(-1);
-    if (ti == -1)
+    const auto slot = inv_getfreeid(-1);
+    if (slot == -1)
     {
         txt(i18n::s.get("core.action.drop.too_many_items"));
         update_screen();
         return;
     }
 
-    item_copy(item_in_inventory.index, ti);
-    inv[ti].position = cdata[cc].position;
-    inv[ti].set_number(num);
-    itemturn(inv[ti]);
+    auto& dropped_item = inv[slot];
+    item_copy(item_in_inventory.index, dropped_item.index);
+    dropped_item.position = cdata[cc].position;
+    dropped_item.set_number(num);
+    itemturn(dropped_item);
 
     if (building_shelter)
     {
-        inv[ti].own_state = 3;
-        inv[ti].count = game_data.next_shelter_serial_id + 100;
+        dropped_item.own_state = 3;
+        dropped_item.count = game_data.next_shelter_serial_id + 100;
         ++game_data.next_shelter_serial_id;
     }
     else
     {
         snd("core.drop1");
-        txt(i18n::s.get("core.action.drop.execute", itemname(inv[ti], num)));
+        txt(i18n::s.get(
+            "core.action.drop.execute", itemname(dropped_item, num)));
     }
 
-    if (inv[ti].id == ItemId::bottle_of_water) // Water
+    if (dropped_item.id == ItemId::bottle_of_water) // Water
     {
         if (const auto altar = item_find(60002, 0))
         {
             // The altar is your god's.
             if (core_god::int2godid(altar->param1) == cdata[cc].god_id)
             {
-                if (inv[ti].curse_state != CurseState::blessed)
+                if (dropped_item.curse_state != CurseState::blessed)
                 {
                     snd("core.pray1");
-                    inv[ti].curse_state = CurseState::blessed;
+                    dropped_item.curse_state = CurseState::blessed;
                     txt(i18n::s.get("core.action.drop.water_is_blessed"),
                         Message::color{ColorIndex::green});
                 }
@@ -2349,11 +2348,11 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
         }
     }
 
-    item_stack(-1, inv[ti]);
+    auto& stacked_item = item_stack(-1, dropped_item).stacked_item;
     item_in_inventory.modify_number(-num);
 
     refresh_burden_state();
-    cell_refresh(inv[ti].position.x, inv[ti].position.y);
+    cell_refresh(stacked_item.position.x, stacked_item.position.y);
     screenupdate = -1;
     update_screen();
 
@@ -2371,7 +2370,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
             calc_home_rank();
         }
     }
-    if (inv[ti].id == ItemId::campfire)
+    if (stacked_item.id == ItemId::campfire)
     {
         map_data.play_campfire_sound = 1;
         play_music();

@@ -484,7 +484,6 @@ ELONA_EXTERN(int t);
 ELONA_EXTERN(int tail);
 ELONA_EXTERN(int tcbk);
 ELONA_EXTERN(int tg);
-ELONA_EXTERN(int ti);
 ELONA_EXTERN(int tile_doorclosed);
 ELONA_EXTERN(int tile_downstairs);
 ELONA_EXTERN(int tile_hidden);

@@ -484,7 +484,6 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
             {
                 tlocx = target_snowman->position.x;
                 tlocy = target_snowman->position.y;
-                ti = target_snowman->index;
                 return do_throw_command();
             }
         }

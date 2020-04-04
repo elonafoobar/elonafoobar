@@ -528,10 +528,11 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
     }
     else
     {
-        if (item_stack(slot, item))
+        const auto item_stack_result = item_stack(slot, item);
+        if (item_stack_result.stacked)
         {
-            ci = ti;
-            return inv[ti];
+            ci = item_stack_result.stacked_item.index;
+            return item_stack_result.stacked_item;
         }
     }
 

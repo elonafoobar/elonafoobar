@@ -339,7 +339,16 @@ optional_ref<Item> item_find(
     ItemFindLocation = ItemFindLocation::player_inventory_and_ground);
 
 int item_separate(int);
-bool item_stack(int inventory_id, Item& base_item, bool show_message = false);
+
+struct ItemStackResult
+{
+    // If `stacked` is false, `stacked_item` is set to `base_item`.
+    bool stacked;
+    Item& stacked_item;
+};
+ItemStackResult
+item_stack(int inventory_id, Item& base_item, bool show_message = false);
+
 void item_dump_desc(const Item&);
 
 bool item_fire(int owner, optional_ref<Item> burned_item = none);

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "optional.hpp"
+
 
 
 namespace elona
@@ -53,7 +55,14 @@ int drink_potion();
 int drink_well();
 int do_zap();
 int do_magic_attempt();
-int pick_up_item(bool play_sound = true);
+
+struct PickUpItemResult
+{
+    int type;
+    optional_ref<Item> picked_up_item;
+};
+PickUpItemResult pick_up_item(bool play_sound = true);
+
 int unlock_box(int);
 int try_to_cast_spell();
 int read_scroll();

@@ -786,20 +786,29 @@ TurnResult do_throw_command()
     ThrowingObjectAnimation(
         {tlocx, tlocy}, cdata[cc].position, inv[ci].image, inv[ci].color)
         .play();
-    ti = inv_getfreeid(-1);
-    if (inv[ci].id == ItemId::monster_ball && ti != -1)
+
+    if (inv[ci].id == ItemId::monster_ball)
     {
-        item_copy(ci, ti);
-        inv[ti].position.x = tlocx;
-        inv[ti].position.y = tlocy;
-        inv[ti].set_number(1);
-        inv[ci].modify_number(-1);
-        ci = ti;
+        const auto slot = inv_getfreeid(-1);
+        if (slot == -1)
+        {
+            inv[ci].modify_number(-1);
+        }
+        else
+        {
+            item_copy(ci, slot);
+            inv[slot].position.x = tlocx;
+            inv[slot].position.y = tlocy;
+            inv[slot].set_number(1);
+            inv[ci].modify_number(-1);
+            ci = slot;
+        }
     }
     else
     {
         inv[ci].modify_number(-1);
     }
+
     if (cc == 0)
     {
         refresh_burden_state();
@@ -1173,14 +1182,14 @@ TurnResult do_offer_command()
     BrightAuraAnimation(cdata[tc].position, BrightAuraAnimation::Type::offering)
         .play();
     tc = tcbk;
-    if (const auto altar = item_find(60002))
-    {
-        ti = altar->index;
-    }
-    else
+
+    const auto altar_opt = item_find(60002);
+    if (!altar_opt)
     {
         return TurnResult::turn_end;
     }
+    auto& altar = *altar_opt;
+
     if (inv[ci].id == ItemId::corpse)
     {
         i = clamp(inv[ci].weight / 200, 1, 50);
@@ -1193,10 +1202,11 @@ TurnResult do_offer_command()
     {
         i = 25;
     }
-    if (core_god::int2godid(inv[ti].param1) != cdata.player().god_id)
+
+    if (core_god::int2godid(altar.param1) != cdata.player().god_id)
     {
         f = 0;
-        if (inv[ti].param1 == 0)
+        if (altar.param1 == 0)
         {
             f = 1;
             txt(i18n::s.get(
@@ -1207,7 +1217,7 @@ TurnResult do_offer_command()
             txt(i18n::s.get(
                 "core.action.offer.take_over.attempt",
                 god_name(cdata.player().god_id),
-                god_name(inv[ti].param1)));
+                god_name(altar.param1)));
             if (rnd(17) <= i)
             {
                 f = 1;
@@ -1224,23 +1234,23 @@ TurnResult do_offer_command()
             animode = 100;
             MiracleAnimation().play();
             snd("core.pray2");
-            if (inv[ti].param1 != 0)
+            if (altar.param1 != 0)
             {
                 txt(i18n::s.get("core.action.offer.take_over.shadow"));
             }
             txt(i18n::s.get(
                     "core.action.offer.take_over.succeed",
                     god_name(cdata.player().god_id),
-                    inv[ti]),
+                    altar),
                 Message::color{ColorIndex::orange});
             txtgod(cdata.player().god_id, 2);
-            inv[ti].param1 = core_god::godid2int(cdata.player().god_id);
+            altar.param1 = core_god::godid2int(cdata.player().god_id);
         }
         else
         {
             txt(i18n::s.get(
-                "core.action.offer.take_over.fail", god_name(inv[ti].param1)));
-            txtgod(core_god::int2godid(inv[ti].param1), 3);
+                "core.action.offer.take_over.fail", god_name(altar.param1)));
+            txtgod(core_god::int2godid(altar.param1), 3);
             god_fail_to_take_over_penalty();
         }
     }
@@ -3568,7 +3578,7 @@ TurnResult do_get_command()
     }
     in = inv[ci].number();
 
-    int stat = pick_up_item();
+    int stat = pick_up_item().type;
     if (stat == 1 || stat == -1)
     {
         return TurnResult::turn_end;
@@ -5301,7 +5311,7 @@ int prompt_magic_location()
 
 
 
-int pick_up_item(bool play_sound)
+PickUpItemResult pick_up_item(bool play_sound)
 {
     const auto snd_ = [play_sound](data::InstanceId id) {
         if (play_sound)
@@ -5317,23 +5327,20 @@ int pick_up_item(bool play_sound)
             inv[ci].id == ItemId::platinum_coin)
         {
             snd_("core.getgold1");
-            ti = ci;
-            in = inv[ci].number();
-            inv[ci].remove();
             txt(i18n::s.get(
-                "core.action.pick_up.execute",
-                cdata[cc],
-                itemname(inv[ti], in)));
-            cell_refresh(inv[ci].position.x, inv[ci].position.y);
+                "core.action.pick_up.execute", cdata[cc], itemname(inv[ci])));
             if (inv[ci].id == ItemId::gold_piece)
             {
-                earn_gold(cdata[cc], in);
+                earn_gold(cdata[cc], inv[ci].number());
             }
             else
             {
-                earn_platinum(cdata[cc], in);
+                earn_platinum(cdata[cc], inv[ci].number());
             }
-            return 1;
+            in = inv[ci].number();
+            inv[ci].remove();
+            cell_refresh(inv[ci].position.x, inv[ci].position.y);
+            return {1, none};
         }
     }
     if (cc == 0)
@@ -5347,7 +5354,7 @@ int pick_up_item(bool play_sound)
                     txt(i18n::s.get(
                         "core.action.pick_up.used_by_mount",
                         cdata[game_data.mount]));
-                    return 1;
+                    return {1, none};
                 }
             }
         }
@@ -5361,11 +5368,11 @@ int pick_up_item(bool play_sound)
                     {
                         txt(i18n::s.get(
                             "core.ui.inv.common.inventory_is_full"));
-                        return 0;
+                        return {0, none};
                     }
                     game_data.activity_about_to_start = 103;
                     activity_others(cdata[cc]);
-                    return -1;
+                    return {-1, none};
                 }
             }
         }
@@ -5394,13 +5401,13 @@ int pick_up_item(bool play_sound)
             }
             else
             {
-                return 0;
+                return {0, none};
             }
         }
         if (inv_getfreeid(cc) == -1)
         {
             txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
-            return 0;
+            return {0, none};
         }
     }
     inumbk = inv[ci].number() - in;
@@ -5455,11 +5462,17 @@ int pick_up_item(bool play_sound)
     }
     inv[ci].is_quest_target() = false;
     item_checkknown(inv[ci]);
-    const auto stacked = item_stack(cc, inv[ci]);
-    if (!stacked)
+
+    int picked_up_item_index;
+    const auto item_stack_result = item_stack(cc, inv[ci]);
+    if (item_stack_result.stacked)
     {
-        ti = inv_getfreeid(cc);
-        if (ti == -1)
+        picked_up_item_index = item_stack_result.stacked_item.index;
+    }
+    else
+    {
+        picked_up_item_index = inv_getfreeid(cc);
+        if (picked_up_item_index == -1)
         {
             inv[ci].set_number(inumbk + in);
             if (invctrl == 12)
@@ -5471,71 +5484,78 @@ int pick_up_item(bool play_sound)
             {
                 txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
             }
-            return 0;
+            return {0, none};
         }
-        item_copy(ci, ti);
-        inv[ti].set_number(in);
+        item_copy(ci, picked_up_item_index);
+        inv[picked_up_item_index].set_number(in);
     }
+    auto& picked_up_item = inv[picked_up_item_index];
+
     inv[ci].set_number(inumbk);
     if (mode == 6)
     {
-        if (the_item_db[itemid2int(inv[ti].id)]->category == ItemCategory::food)
+        if (the_item_db[itemid2int(picked_up_item.id)]->category ==
+            ItemCategory::food)
         {
             if (invctrl == 11 || invctrl == 22)
             {
                 if (invctrl == 22 && invctrl(1) == 3)
                 {
-                    if (inv[ti].param3 > 0)
+                    if (picked_up_item.param3 > 0)
                     {
-                        inv[ti].param3 += game_data.date.hours();
+                        picked_up_item.param3 += game_data.date.hours();
                     }
                 }
-                else if (inv[ti].param3 != 0 && inv[ti].material == 35)
+                else if (
+                    picked_up_item.param3 != 0 && picked_up_item.material == 35)
                 {
-                    inv[ti].param3 = game_data.date.hours() +
-                        the_item_db[itemid2int(inv[ti].id)]->expiration_date;
-                    if (inv[ti].param2 != 0)
+                    picked_up_item.param3 = game_data.date.hours() +
+                        the_item_db[itemid2int(picked_up_item.id)]
+                            ->expiration_date;
+                    if (picked_up_item.param2 != 0)
                     {
-                        inv[ti].param3 += 72;
+                        picked_up_item.param3 += 72;
                     }
                 }
             }
             if (invctrl == 24 && invctrl(1) == 3)
             {
-                if (inv[ti].param3 > 0)
+                if (picked_up_item.param3 > 0)
                 {
-                    inv[ti].param3 = inv[ti].param3 - game_data.date.hours();
+                    picked_up_item.param3 =
+                        picked_up_item.param3 - game_data.date.hours();
                 }
             }
         }
         if (invctrl == 11)
         {
             txt(i18n::s.get(
-                "core.action.pick_up.you_buy", itemname(inv[ti], in)));
-            sellgold = calcitemvalue(inv[ti], 0) * in;
+                "core.action.pick_up.you_buy", itemname(picked_up_item, in)));
+            sellgold = calcitemvalue(picked_up_item, 0) * in;
             snd_("core.paygold1");
             cdata.player().gold -= sellgold;
             earn_gold(cdata[tc], sellgold);
-            if (the_item_db[itemid2int(inv[ti].id)]->category ==
+            if (the_item_db[itemid2int(picked_up_item.id)]->category ==
                 ItemCategory::cargo)
             {
-                inv[ti].param2 = calcitemvalue(inv[ti], 0);
+                picked_up_item.param2 = calcitemvalue(picked_up_item, 0);
             }
         }
         if (invctrl == 12)
         {
             sellgold = calcitemvalue(inv[ci], 1) * in;
-            if (!inv[ti].is_stolen())
+            if (!picked_up_item.is_stolen())
             {
                 txt(i18n::s.get(
-                    "core.action.pick_up.you_sell", itemname(inv[ti], in)));
+                    "core.action.pick_up.you_sell",
+                    itemname(picked_up_item, in)));
             }
             else
             {
-                inv[ti].is_stolen() = false;
+                picked_up_item.is_stolen() = false;
                 txt(i18n::s.get(
                     "core.action.pick_up.you_sell_stolen",
-                    itemname(inv[ti], in)));
+                    itemname(picked_up_item, in)));
                 if (game_data.guild.thieves_guild_quota > 0)
                 {
                     game_data.guild.thieves_guild_quota -= sellgold;
@@ -5555,7 +5575,7 @@ int pick_up_item(bool play_sound)
             {
                 cdata[tc].gold = 0;
             }
-            inv[ti].identify_state = IdentifyState::completely;
+            picked_up_item.identify_state = IdentifyState::completely;
         }
         if (invctrl == 22 || invctrl == 24)
         {
@@ -5565,13 +5585,13 @@ int pick_up_item(bool play_sound)
                 txt(i18n::s.get(
                     "core.action.pick_up.execute",
                     cdata[cc],
-                    itemname(inv[ti], in)));
+                    itemname(picked_up_item, in)));
             }
             else
             {
                 txt(i18n::s.get(
                     "core.action.pick_up.put_in_container",
-                    itemname(inv[ti], in)));
+                    itemname(picked_up_item, in)));
             }
         }
         else
@@ -5588,11 +5608,13 @@ int pick_up_item(bool play_sound)
                 .item_appearances_actual;
         sound_pick_up();
         txt(i18n::s.get(
-            "core.action.pick_up.execute", cdata[cc], itemname(inv[ti], in)));
+            "core.action.pick_up.execute",
+            cdata[cc],
+            itemname(picked_up_item, in)));
     }
     if (cc == 0)
     {
-        if (inv[ti].id == ItemId::campfire)
+        if (picked_up_item.id == ItemId::campfire)
         {
             if (map_data.play_campfire_sound == 1)
             {
@@ -5616,8 +5638,7 @@ int pick_up_item(bool play_sound)
                 }
             }
         }
-        int stat = convertartifact(ti);
-        ti = stat;
+        picked_up_item_index = convertartifact(picked_up_item_index);
         if (area_data[game_data.current_map].id == mdata_t::MapId::museum)
         {
             if (mode == 0)
@@ -5639,7 +5660,7 @@ int pick_up_item(bool play_sound)
         refresh_burden_state();
     }
 
-    return 1;
+    return {1, inv[picked_up_item_index]};
 }
 
 
@@ -5879,19 +5900,31 @@ void proc_autopick()
                     break;
                 }
             }
-            in = item.number();
-            elona::ci = item.index;
-            pick_up_item(!op.sound);
-            if (int(op.type) & int(Autopick::Operation::Type::no_drop))
             {
-                inv[ti].is_marked_as_no_drop() = true;
-                txt(i18n::s.get("core.ui.inv.examine.no_drop.set", inv[ti]));
-            }
-            if (int(op.type) & int(Autopick::Operation::Type::save))
-            {
-                if (!game_data.wizard)
+                in = item.number();
+                elona::ci = item.index;
+                const auto pick_up_item_result = pick_up_item(!op.sound);
+                if (pick_up_item_result.type != 1)
                 {
-                    save_game();
+                    break;
+                }
+                if (int(op.type) & int(Autopick::Operation::Type::no_drop))
+                {
+                    if (const auto picked_up_item =
+                            pick_up_item_result.picked_up_item)
+                    {
+                        picked_up_item->is_marked_as_no_drop() = true;
+                        txt(i18n::s.get(
+                            "core.ui.inv.examine.no_drop.set",
+                            *picked_up_item));
+                    }
+                }
+                if (int(op.type) & int(Autopick::Operation::Type::save))
+                {
+                    if (!game_data.wizard)
+                    {
+                        save_game();
+                    }
                 }
             }
             break;
@@ -5943,15 +5976,13 @@ void proc_autopick()
 
 int unlock_box(int difficulty)
 {
-    if (const auto lockpick = item_find(636, 3))
-    {
-        ti = lockpick->index;
-    }
-    else
+    const auto lockpick_opt = item_find(636, 3);
+    if (!lockpick_opt)
     {
         txt(i18n::s.get("core.action.unlock.do_not_have_lockpicks"));
         return 0;
     }
+    auto& lockpick = *lockpick_opt;
 
     txt(i18n::s.get("core.action.unlock.use_lockpick"));
     snd("core.locked1");
@@ -5992,7 +6023,7 @@ int unlock_box(int difficulty)
     {
         if (rnd(3) == 0)
         {
-            inv[ti].modify_number(-1);
+            lockpick.modify_number(-1);
             txt(i18n::s.get("core.action.unlock.lockpick_breaks"));
         }
         Message::instance().linebreak();
