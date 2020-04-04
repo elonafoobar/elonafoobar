@@ -1084,7 +1084,7 @@ void activity_blending_end()
         cdata.player().activity.turns = rpref(2) / 10000;
         for (int cnt = 0;; ++cnt)
         {
-            mode = 12;
+            g_mode = 12;
             game_advance_clock(1_hour, GameAdvanceClockEvents::on_hour_changed);
             render_hud();
             if (cnt % 5 == 0)
@@ -1123,7 +1123,7 @@ void activity_blending_end()
             }
         }
         cdata.player().activity.finish();
-        mode = 0;
+        g_mode = 0;
         return;
     }
 

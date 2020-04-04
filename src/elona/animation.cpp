@@ -165,7 +165,7 @@ void draw_rotated(data::InstanceId id, int x, int y, double scale, double angle)
 
 void AbstractAnimation::play()
 {
-    if (mode == 9)
+    if (g_mode == 9)
         return;
     if (g_config.animation_wait() == 0)
         return;
@@ -1207,7 +1207,7 @@ void BreakingAnimation::do_play()
 void animeload(int animation_type, const Character& chara)
 {
     elona_vector1<int> i_at_m133;
-    if (mode != 0)
+    if (g_mode != 0)
     {
         return;
     }

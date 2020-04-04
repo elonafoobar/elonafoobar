@@ -239,7 +239,7 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
 
     if (item_id == -1)
     {
-        if (fltselect == 0 && mode != 6)
+        if (fltselect == 0 && g_mode != 6)
         {
             if (fixlv == Quality::great)
             {
@@ -302,7 +302,7 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
     game()->item_memories.increment_generate_count(item->id);
 
     item->quality = static_cast<Quality>(fixlv);
-    if (fixlv == Quality::special && mode != 6 && nooracle == 0)
+    if (fixlv == Quality::special && g_mode != 6 && nooracle == 0)
     {
         const auto date = game_date();
         const auto owner = item_get_owner(item).as_character();
@@ -343,7 +343,7 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
     if (item->id == "core.deed")
     {
         item->param1 = rnd(5) + 1;
-        if (mode != 6)
+        if (g_mode != 6)
         {
             item->param1 = 2;
         }
@@ -470,7 +470,7 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
 
     if (category == ItemCategory::food && item->param1 != 0)
     {
-        if (mode == 6)
+        if (g_mode == 6)
         {
             if (rnd(2) == 0)
             {
@@ -507,7 +507,7 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
         }
     }
 
-    if (mode == 6)
+    if (g_mode == 6)
     {
         item->identify_state = IdentifyState::completely;
     }
@@ -531,7 +531,7 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
     {
         item->curse_state = CurseState::none;
     }
-    if (mode != 6)
+    if (g_mode != 6)
     {
         if (reftype < 50000)
         {
@@ -597,7 +597,7 @@ void init_item_quality_curse_state_material_and_equipments(const ItemRef& item)
             }
         }
     }
-    if (cm || mode == 1 || item->quality == Quality::special)
+    if (cm || g_mode == 1 || item->quality == Quality::special)
     {
         item->curse_state = CurseState::none;
     }
@@ -709,7 +709,7 @@ void determine_item_material(const ItemRef& item)
         }
         p = 0;
     }
-    if (mode == 1)
+    if (g_mode == 1)
     {
         mtlv = 0;
         p = 0;

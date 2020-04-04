@@ -43,7 +43,7 @@ void casino_dealer()
     inv_open_tmp_inv_no_physical_file();
     atxpic = 0;
     snd("core.pop3");
-    mode = 9;
+    g_mode = 9;
     atxbg = "core.bg13"s;
     atxbgbk = "";
     SDIM3(atxinfon, 80, 5);
@@ -373,7 +373,7 @@ void casino_acquire_items()
             ctrl_inventory();
         }
     }
-    mode = 0;
+    g_mode = 0;
     inv_close_tmp_inv_no_physical_file();
     await(100);
     snd("core.pop3");
@@ -806,10 +806,10 @@ void atxinit()
     chatesc = -1;
     if (atxbg != atxbgbk)
     {
-        mode = 0;
+        g_mode = 0;
         screenupdate = -1;
         update_screen();
-        mode = 9;
+        g_mode = 9;
         atxbgbk = atxbg;
         gmode(0);
         asset_load(data::InstanceId{atxbg});

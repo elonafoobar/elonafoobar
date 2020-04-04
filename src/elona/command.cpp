@@ -2890,7 +2890,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
             menucycle = 1;
             invctrl(1) = 3;
         }
-        mode = 6;
+        g_mode = 6;
         snd_("core.inv");
         ctrl_inventory();
         invcontainer = 0;
@@ -2905,7 +2905,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
             refresh_burden_state();
         }
         update_screen();
-        mode = 0;
+        g_mode = 0;
         return TurnResult::turn_end;
     }
     item_separate(box);
@@ -5272,7 +5272,7 @@ PickUpItemResult pick_up_item(
     optional_ref<Character> shopkeeper,
     bool play_sound)
 {
-    if (mode == 6 && (invctrl == 11 || invctrl == 12))
+    if (g_mode == 6 && (invctrl == 11 || invctrl == 12))
     {
         assert(shopkeeper);
     }
@@ -5451,7 +5451,7 @@ PickUpItemResult pick_up_item(
     }
     assert(picked_up_item);
 
-    if (mode == 6)
+    if (g_mode == 6)
     {
         if (the_item_db[picked_up_item->id]->category == ItemCategory::food &&
             picked_up_item->material == "core.raw")
@@ -5603,14 +5603,14 @@ PickUpItemResult pick_up_item(
         picked_up_item = item_convert_artifact(picked_up_item.unwrap());
         if (area_data[game()->current_map].id == mdata_t::MapId::museum)
         {
-            if (mode == 0)
+            if (g_mode == 0)
             {
                 update_museum();
             }
         }
         if (game()->current_map == mdata_t::MapId::your_home)
         {
-            if (mode == 0)
+            if (g_mode == 0)
             {
                 building_update_home_rank();
             }

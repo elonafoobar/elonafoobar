@@ -1301,7 +1301,7 @@ std::string get_action()
 {
     auto action = get_selected_item(p(0));
     invmark(invctrl) = page * 1000 + cs;
-    if (mode == 9)
+    if (g_mode == 9)
     {
         if (listmax == 0)
         {
@@ -1479,7 +1479,7 @@ OnEnterResult on_enter_external_inventory(
         return OnEnterResult{result};
     }
     page_save();
-    if (mode == 6 && selected_item->number() > 1 && invctrl != 22)
+    if (g_mode == 6 && selected_item->number() > 1 && invctrl != 22)
     {
         if (invctrl == 11)
         {
@@ -1515,7 +1515,7 @@ OnEnterResult on_enter_external_inventory(
     {
         in = selected_item->number();
     }
-    if (mode == 6 && invctrl != 22 && invctrl != 24)
+    if (g_mode == 6 && invctrl != 22 && invctrl != 24)
     {
         if (!g_config.skip_confirm_at_shop())
         {

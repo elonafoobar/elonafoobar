@@ -146,7 +146,7 @@ void god_proc_switching_penalty(data::InstanceId new_religion)
         redraw();
         if (cdata.player().religion != "")
         {
-            mode = 9;
+            g_mode = 9;
             txt(i18n::s.get(
                     "core.god.enraged", god_get_name(cdata.player().religion)),
                 Message::color{ColorIndex::purple});
@@ -156,7 +156,7 @@ void god_proc_switching_penalty(data::InstanceId new_religion)
             efp = 10000;
             magic(cdata.player(), cdata.player());
             snd("core.punish1");
-            mode = 0;
+            g_mode = 0;
             await(g_config.animation_wait() * 20);
         }
         lua::call(

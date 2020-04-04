@@ -998,7 +998,7 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
     }
     if (item->weight < 0)
     {
-        if (mode == 6)
+        if (g_mode == 6)
         {
             if (category == ItemCategory::cargo)
             {

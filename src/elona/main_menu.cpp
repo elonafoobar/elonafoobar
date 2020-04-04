@@ -173,7 +173,7 @@ optional<InitializeGameMode> main_menu_loop()
 
 MainMenuResult main_title_menu()
 {
-    mode = 10;
+    g_mode = 10;
     lomiaseaster = 0;
 
     play_music("core.mcOpening");
@@ -499,7 +499,7 @@ MainMenuResult main_menu_new_game()
     {
         save_load_gene();
     }
-    mode = 1;
+    g_mode = 1;
     cm = 1;
     asset_load("core.void");
     draw("core.void", 0, 0, windoww, windowh);

@@ -472,7 +472,7 @@ OptionalItemRef mapitemfind(const Position& pos, data::InstanceId id)
 
 void cell_refresh(int x, int y)
 {
-    if (mode == 6 || mode == 9)
+    if (g_mode == 6 || g_mode == 9)
         return;
     if (x < 0 || map_data.width <= x || y < 0 || map_data.height <= y)
         return;
@@ -2159,14 +2159,14 @@ void item_drop(
 
     if (area_data[game()->current_map].id == mdata_t::MapId::museum)
     {
-        if (mode == 0)
+        if (g_mode == 0)
         {
             update_museum();
         }
     }
     if (game()->current_map == mdata_t::MapId::your_home)
     {
-        if (mode == 0)
+        if (g_mode == 0)
         {
             building_update_home_rank();
         }

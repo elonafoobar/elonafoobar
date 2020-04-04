@@ -27,7 +27,7 @@ void shop_refresh_on_talk(Character& shopkeeper)
     {
         map_calc_trade_goods_price();
     }
-    mode = 6;
+    g_mode = 6;
 
     bool is_temporary = false;
 
@@ -68,7 +68,7 @@ void shop_refresh_on_talk(Character& shopkeeper)
 void shop_load_shoptmp()
 {
     inv_close_tmp_inv(fs::u8path("shop"s + invfile + ".s2"));
-    mode = 0;
+    g_mode = 0;
 }
 
 
@@ -87,7 +87,7 @@ void shop_refresh(Character& shopkeeper)
 
 void shop_sell_item(optional_ref<Character> shopkeeper)
 {
-    mode = 6;
+    g_mode = 6;
     inv_open_tmp_inv(fs::u8path("shop"s + invfile + ".s2"));
     shoptrade = 0;
     if (shopkeeper)

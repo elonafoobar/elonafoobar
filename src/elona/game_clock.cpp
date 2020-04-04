@@ -120,7 +120,7 @@ void on_hour_changed(
         }
         if (rnd(15) == 0)
         {
-            if (mode == 0)
+            if (g_mode == 0)
             {
                 txt(i18n::s.get("core.action.move.global.nap"));
                 cdata.player().sleepiness -= 3;
@@ -218,7 +218,7 @@ void on_hour_changed(
         }
     }
 
-    if (mode == 0)
+    if (g_mode == 0)
     {
         if (map_data.type == mdata_t::MapType::world_map)
         {

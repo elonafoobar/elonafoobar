@@ -334,7 +334,7 @@ ELONA_EXTERN(int marry);
 ELONA_EXTERN(int maxitemid);
 ELONA_EXTERN(int menucycle);
 ELONA_EXTERN(int minlevel);
-ELONA_EXTERN(int mode);
+ELONA_EXTERN(int g_mode);
 ELONA_EXTERN(int msync);
 ELONA_EXTERN(int mtilefilecur);
 ELONA_EXTERN(int nostack);
