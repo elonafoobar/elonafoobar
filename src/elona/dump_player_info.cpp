@@ -150,7 +150,7 @@ void dump_player_info()
     tc = 0;
     attackskill = 106;
     int evade = calc_evasion(tc);
-    prot = calcattackdmg(AttackDamageCalculationMode::defense);
+    prot = calcattackdmg(-1, AttackDamageCalculationMode::defense);
 
     ss << u8"回避    : " << evade << u8"%" << std::endl;
     ss << u8"軽減    : " << (100 - 10000 / (prot + 100)) << u8"% + "

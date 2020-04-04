@@ -1121,7 +1121,6 @@ void append_accuracy_info(int val0)
     p(1) = 0;
     p(2) = 0;
     attackskill = 106;
-    ammo = -1;
     attacknum = 0;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
@@ -1145,26 +1144,26 @@ void append_accuracy_info(int val0)
             ++p(1);
             s(1) = i18n::s.get("core.ui.chara_sheet.damage.melee") + p(1);
             ++attacknum;
-            show_weapon_dice(val0);
+            show_weapon_dice(-1, val0);
         }
     }
     if (attackskill == 106)
     {
         s(1) = i18n::s.get("core.ui.chara_sheet.damage.unarmed");
-        show_weapon_dice(val0);
+        show_weapon_dice(-1, val0);
     }
     attacknum = 0;
-    int stat = can_do_ranged_attack();
-    if (stat == 1)
+    const auto result = can_do_ranged_attack();
+    if (result.type == 1)
     {
         s(1) = i18n::s.get("core.ui.chara_sheet.damage.dist");
-        show_weapon_dice(val0);
+        show_weapon_dice(result.ammo, val0);
     }
 }
 
 
 
-void show_weapon_dice(int val0)
+void show_weapon_dice(int ammo, int val0)
 {
     tc = cc;
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
@@ -1182,8 +1181,8 @@ void show_weapon_dice(int val0)
     {
         attackrange = 1;
     }
-    int tohit = calc_accuracy(false);
-    dmg = calcattackdmg(AttackDamageCalculationMode::raw_damage);
+    int tohit = calc_accuracy(ammo, false);
+    dmg = calcattackdmg(ammo, AttackDamageCalculationMode::raw_damage);
     font(14 - en * 2);
     s(2) = ""s + dmgmulti;
     s = ""s + tohit + u8"%"s;

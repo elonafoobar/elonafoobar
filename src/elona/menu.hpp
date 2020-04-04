@@ -107,7 +107,7 @@ void menu_chat_dialog();
 void menu_voting_box();
 
 void append_accuracy_info(int);
-void show_weapon_dice(int);
+void show_weapon_dice(int ammo, int val0);
 void house_board_update_screen();
 
 } // namespace elona

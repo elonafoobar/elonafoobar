@@ -153,10 +153,10 @@ void build_target_list()
 
 
 
-int can_do_ranged_attack()
+CanDoRangedAttackResult can_do_ranged_attack()
 {
     cw = -1;
-    ammo = -1;
+    int ammo = -1;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
@@ -176,30 +176,30 @@ int can_do_ranged_attack()
     if (cw == -1)
     {
         cw = 0;
-        return -1;
+        return {-1, ammo};
     }
     if (ammo == -1)
     {
         if (inv[cw].skill != 111)
         {
             cw = 0;
-            return -2;
+            return {-2, ammo};
         }
     }
     if (ammo != -1)
     {
         if (inv[cw].skill != inv[ammo].skill)
         {
-            return -3;
+            return {-3, ammo};
         }
     }
     attackskill = inv[cw].skill;
-    return 1;
+    return {1, ammo};
 }
 
 
 
-bool do_physical_attack_internal()
+bool do_physical_attack_internal(int ammo)
 {
     int attackdmg;
 
@@ -241,7 +241,7 @@ bool do_physical_attack_internal()
     const auto expmodifer = 1 + cdata[tc].is_hung_on_sand_bag() * 15 +
         cdata[tc].splits() + cdata[tc].splits2() +
         (game_data.current_map == mdata_t::MapId::show_house);
-    int hit = calcattackhit();
+    int hit = calcattackhit(ammo);
     i = 0;
     if (hit == 1)
     {
@@ -253,7 +253,7 @@ bool do_physical_attack_internal()
                     Message::color{ColorIndex::red});
             }
         }
-        dmg = calcattackdmg(AttackDamageCalculationMode::actual_damage);
+        dmg = calcattackdmg(ammo, AttackDamageCalculationMode::actual_damage);
         attackdmg = dmg;
         if (cc == 0)
         {
@@ -656,15 +656,15 @@ bool do_physical_attack_internal()
 
 
 
-void do_physical_attack()
+void do_physical_attack(int ammo)
 {
-    while (do_physical_attack_internal())
+    while (do_physical_attack_internal(ammo))
         ;
 }
 
 
 
-void do_ranged_attack()
+void do_ranged_attack(int ammo)
 {
     int ammox = 0;
     int ammoy = 0;
@@ -713,10 +713,10 @@ void do_ranged_attack()
         ammoprocbk = ammoproc;
         for (int cnt = 0; cnt < 3; ++cnt)
         {
-            can_do_ranged_attack();
+            ammo = can_do_ranged_attack().ammo;
             ele = 0;
             extraattack = 0;
-            do_physical_attack();
+            do_physical_attack(ammo);
             if (cdata[tc].state() != Character::State::alive)
             {
                 int stat = find_enemy_target();
@@ -736,7 +736,7 @@ void do_ranged_attack()
         ammoprocbk = ammoproc;
         for (int cnt = 0; cnt < 10; ++cnt)
         {
-            can_do_ranged_attack();
+            ammo = can_do_ranged_attack().ammo;
             ele = 0;
             build_target_list();
             if (listmax == 0)
@@ -761,13 +761,13 @@ void do_ranged_attack()
                 continue;
             }
             extraattack = 0;
-            do_physical_attack();
+            do_physical_attack(ammo);
         }
     }
     else
     {
         extraattack = 0;
-        do_physical_attack();
+        do_physical_attack(ammo);
     }
     if (ammoproc == 1)
     {
@@ -797,10 +797,10 @@ void try_to_melee_attack()
                         cdata[tc].position.x,
                         cdata[tc].position.y))
                 {
-                    int stat = can_do_ranged_attack();
-                    if (stat == 1)
+                    const auto result = can_do_ranged_attack();
+                    if (result.type == 1)
                     {
-                        do_ranged_attack();
+                        do_ranged_attack(result.ammo);
                     }
                 }
             }
@@ -817,7 +817,6 @@ void try_to_melee_attack()
     attacknum = 0;
     attackrange = 0;
     attackskill = 106;
-    ammo = -1;
     ele = 0;
     if (cdata[cc].combat_style.shield())
     {
@@ -860,13 +859,13 @@ void try_to_melee_attack()
             attackskill = inv[cw].skill;
             ++attacknum;
             extraattack = 0;
-            do_physical_attack();
+            do_physical_attack(-1);
         }
     }
     if (attackskill == 106)
     {
         extraattack = 0;
-        do_physical_attack();
+        do_physical_attack(-1);
     }
 }
 

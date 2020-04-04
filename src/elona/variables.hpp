@@ -303,7 +303,6 @@ ELONA_EXTERN(elona_vector2<std::string> mapnamerd);
 ELONA_EXTERN(elona_vector3<int> bddata);
 ELONA_EXTERN(elona_vector3<int> efmap);
 ELONA_EXTERN(elona_vector3<int> map);
-ELONA_EXTERN(int ammo);
 ELONA_EXTERN(int ammoproc);
 ELONA_EXTERN(int ammoprocbk);
 ELONA_EXTERN(int animode);

@@ -33,8 +33,8 @@ int calc_rate_to_pierce(int);
 std::string calcage(int);
 int calcexpalive(int = 0);
 int calc_evasion(int cc);
-int calc_accuracy(bool consider_distance);
-int calcattackhit();
+int calc_accuracy(int ammo, bool consider_distance);
+int calcattackhit(int ammo);
 
 
 enum class AttackDamageCalculationMode
@@ -43,7 +43,7 @@ enum class AttackDamageCalculationMode
     raw_damage,
     defense,
 };
-int calcattackdmg(AttackDamageCalculationMode);
+int calcattackdmg(int ammo, AttackDamageCalculationMode);
 
 int calcmedalvalue(const Item& item);
 int calcitemvalue(const Item& item, int calc_mode);
