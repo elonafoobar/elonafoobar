@@ -1137,14 +1137,14 @@ void append_accuracy_info(int val0)
         {
             continue;
         }
-        auto& cw = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
-        if (cw.dice_x > 0)
+        auto& weapon = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
+        if (weapon.dice_x > 0)
         {
-            attackskill = cw.skill;
+            attackskill = weapon.skill;
             ++p(1);
             s(1) = i18n::s.get("core.ui.chara_sheet.damage.melee") + p(1);
             ++attacknum;
-            show_weapon_dice(cw, none, val0);
+            show_weapon_dice(weapon, none, val0);
         }
     }
     if (attackskill == 106)
@@ -1157,13 +1157,16 @@ void append_accuracy_info(int val0)
     if (result.type == 1)
     {
         s(1) = i18n::s.get("core.ui.chara_sheet.damage.dist");
-        show_weapon_dice(result.cw, result.ammo, val0);
+        show_weapon_dice(result.weapon, result.ammo, val0);
     }
 }
 
 
 
-void show_weapon_dice(optional_ref<Item> cw, optional_ref<Item> ammo, int val0)
+void show_weapon_dice(
+    optional_ref<Item> weapon,
+    optional_ref<Item> ammo,
+    int val0)
 {
     tc = cc;
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
@@ -1176,16 +1179,16 @@ void show_weapon_dice(optional_ref<Item> cw, optional_ref<Item> ammo, int val0)
         mes(wx + 417, wy + 281 + p(2) * 16, s(1), {20, 10, 0});
     }
     attackrange = 0;
-    if (cw)
+    if (weapon)
     {
-        if (the_item_db[itemid2int(cw->id)]->category ==
+        if (the_item_db[itemid2int(weapon->id)]->category ==
             ItemCategory::ranged_weapon) // TODO coupling
         {
             attackrange = 1;
         }
     }
-    int tohit = calc_accuracy(cw, ammo, false);
-    dmg = calcattackdmg(cw, ammo, AttackDamageCalculationMode::raw_damage);
+    int tohit = calc_accuracy(weapon, ammo, false);
+    dmg = calcattackdmg(weapon, ammo, AttackDamageCalculationMode::raw_damage);
     font(14 - en * 2);
     s(2) = ""s + dmgmulti;
     s = ""s + tohit + u8"%"s;

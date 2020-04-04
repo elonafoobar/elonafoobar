@@ -3428,7 +3428,7 @@ TurnResult do_fire_command()
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    do_ranged_attack(result.cw, result.ammo);
+    do_ranged_attack(result.weapon, result.ammo);
     return TurnResult::turn_end;
 }
 

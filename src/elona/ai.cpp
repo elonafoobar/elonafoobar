@@ -302,7 +302,7 @@ bool _try_do_melee_attack(const Character& attacker, const Character& target)
         return false; // Cannot do ranged attack.
     }
 
-    do_ranged_attack(result.cw, result.ammo);
+    do_ranged_attack(result.weapon, result.ammo);
     return true;
 }
 

@@ -34,10 +34,10 @@ std::string calcage(int);
 int calcexpalive(int = 0);
 int calc_evasion(int cc);
 int calc_accuracy(
-    optional_ref<Item> cw,
+    optional_ref<Item> weapon,
     optional_ref<Item> ammo,
     bool consider_distance);
-int calcattackhit(optional_ref<Item> cw, optional_ref<Item> ammo);
+int calcattackhit(optional_ref<Item> weapon, optional_ref<Item> ammo);
 
 
 enum class AttackDamageCalculationMode
@@ -47,7 +47,7 @@ enum class AttackDamageCalculationMode
     defense,
 };
 int calcattackdmg(
-    optional_ref<Item> cw,
+    optional_ref<Item> weapon,
     optional_ref<Item> ammo,
     AttackDamageCalculationMode);
 
