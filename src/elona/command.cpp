@@ -2930,7 +2930,8 @@ TurnResult do_open_command(bool play_sound)
     {
         if (inv[ci].id == ItemId::new_years_gift)
         {
-            open_new_year_gift();
+            ri = ci;
+            open_new_year_gift(inv[ri]);
         }
         else
         {
@@ -6176,17 +6177,16 @@ void open_box(Item& box)
 
 
 
-void open_new_year_gift()
+void open_new_year_gift(Item& box)
 {
     snd("core.chest1");
-    txt(i18n::s.get("core.action.open.text", inv[ci]));
+    txt(i18n::s.get("core.action.open.text", box));
     msg_halt();
     snd("core.ding2");
     randomize();
-    ri = ci;
     cc = 0;
-    inv[ri].param1 = 0;
-    if (inv[ri].param3 < 100)
+    box.param1 = 0;
+    if (box.param3 < 100)
     {
         if (rnd(3) == 0)
         {
@@ -6233,7 +6233,7 @@ void open_new_year_gift()
         magic();
         return;
     }
-    if (inv[ri].param3 < 200)
+    if (box.param3 < 200)
     {
         if (rnd(4) == 0)
         {

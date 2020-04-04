@@ -75,7 +75,7 @@ int prompt_magic_location();
 TurnResult do_plant();
 void do_rest();
 void open_box(Item& box);
-void open_new_year_gift();
+void open_new_year_gift(Item& box);
 TurnResult call_npc();
 
 } // namespace elona
