@@ -253,10 +253,7 @@ sol::optional<LuaItemHandle> LuaApiItem::stack(
 
     auto& item_ref = lua::ref<Item>(handle);
 
-    int tibk = ti;
-    item_stack(inventory_id, item_ref);
-    auto& item = inv[ti];
-    ti = tibk;
+    auto& item = item_stack(inventory_id, item_ref).stacked_item;
 
     if (item.number() == 0)
     {

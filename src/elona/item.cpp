@@ -1590,15 +1590,13 @@ void remain_make(Item& remain, const Character& chara)
 
 
 
-bool item_stack(int inventory_id, Item& base_item, bool show_message)
+ItemStackResult item_stack(int inventory_id, Item& base_item, bool show_message)
 {
     if (base_item.quality == Quality::special &&
         is_equipment(the_item_db[itemid2int(base_item.id)]->category))
     {
-        return 0;
+        return {false, base_item};
     }
-
-    bool did_stack = false;
 
     for (auto&& item : inv.by_index(inventory_id))
     {
@@ -1608,35 +1606,34 @@ bool item_stack(int inventory_id, Item& base_item, bool show_message)
 
         bool stackable;
         if (item.id == ItemId::small_medal)
+        {
             stackable = inventory_id != -1 || mode == 6 ||
                 item.position == base_item.position;
+        }
         else
+        {
             stackable =
                 item.almost_equals(base_item, inventory_id != -1 || mode == 6);
+        }
 
         if (stackable)
         {
             item.modify_number(base_item.number());
             base_item.remove();
-            ti = item.index;
-            did_stack = true;
-            break;
+
+            if (mode != 6 && inv_getowner(base_item.index) == -1)
+            {
+                cell_refresh(base_item.position.x, base_item.position.y);
+            }
+            if (show_message)
+            {
+                txt(i18n::s.get("core.item.stacked", item, item.number()));
+            }
+            return {true, item};
         }
     }
 
-    if (did_stack)
-    {
-        if (mode != 6 && inv_getowner(base_item.index) == -1)
-        {
-            cell_refresh(base_item.position.x, base_item.position.y);
-        }
-        if (show_message)
-        {
-            txt(i18n::s.get("core.item.stacked", inv[ti], inv[ti].number()));
-        }
-    }
-
-    return did_stack;
+    return {false, base_item};
 }
 
 
@@ -2349,7 +2346,8 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
         }
     }
 
-    item_stack(-1, inv[ti]);
+    const auto stacked_item_index = item_stack(-1, inv[ti]).stacked_item.index;
+    ti = stacked_item_index;
     item_in_inventory.modify_number(-num);
 
     refresh_burden_state();

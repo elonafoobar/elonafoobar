@@ -1820,9 +1820,9 @@ OnEnterResult on_enter_give(MenuResult& result)
         item_copy(ci, slot);
         inv[ci].modify_number(-1);
         inv[slot].set_number(1);
-        ti = slot;
-        item_stack(tc, inv[slot], true);
-        ci = ti;
+        const auto stacked_item_index =
+            item_stack(tc, inv[slot], true).stacked_item.index;
+        ci = stacked_item_index;
         rc = tc;
         chara_set_item_which_will_be_used(cdata[tc], inv[ci]);
         wear_most_valuable_equipment_for_all_body_parts();
@@ -2148,9 +2148,9 @@ OnEnterResult on_enter_receive()
         item_copy(ci, slot);
         inv[ci].modify_number((-in));
         inv[slot].set_number(in);
-        ti = slot;
-        item_stack(0, inv[slot], true);
-        convertartifact(ti);
+        const auto stacked_item_index =
+            item_stack(0, inv[slot], true).stacked_item.index;
+        convertartifact(stacked_item_index);
     }
     rc = tc;
     wear_most_valuable_equipment_for_all_body_parts();
@@ -2232,9 +2232,9 @@ OnEnterResult on_enter_small_medal()
     snd("core.paygold1");
     item_copy(ci, slot);
     txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", inv[slot]));
-    ti = slot;
-    item_stack(0, inv[slot], true);
-    convertartifact(ti, 1);
+    const auto stacked_item_index =
+        item_stack(0, inv[slot], true).stacked_item.index;
+    convertartifact(stacked_item_index, 1);
     return OnEnterResult{1};
 }
 

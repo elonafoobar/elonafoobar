@@ -5455,8 +5455,12 @@ int pick_up_item(bool play_sound)
     }
     inv[ci].is_quest_target() = false;
     item_checkknown(inv[ci]);
-    const auto stacked = item_stack(cc, inv[ci]);
-    if (!stacked)
+    const auto item_stack_result = item_stack(cc, inv[ci]);
+    if (item_stack_result.stacked)
+    {
+        ti = item_stack_result.stacked_item.index;
+    }
+    else
     {
         ti = inv_getfreeid(cc);
         if (ti == -1)

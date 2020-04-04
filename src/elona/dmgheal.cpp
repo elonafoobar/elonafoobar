@@ -1476,8 +1476,7 @@ void character_drops_item()
             }
             item.position.x = cdata[rc].position.x;
             item.position.y = cdata[rc].position.y;
-            const auto stacked = item_stack(-1, inv[ci]);
-            if (!stacked)
+            if (!item_stack(-1, inv[ci]).stacked)
             {
                 ti = inv_getfreeid(-1);
                 if (ti == -1)
@@ -1609,8 +1608,7 @@ void character_drops_item()
         inv[ci].position.x = cdata[rc].position.x;
         inv[ci].position.y = cdata[rc].position.y;
         itemturn(inv[ci]);
-        const auto stacked = item_stack(-1, inv[ci]);
-        if (!stacked)
+        if (!item_stack(-1, inv[ci]).stacked)
         {
             ti = inv_getfreeid(-1);
             if (ti == -1)
