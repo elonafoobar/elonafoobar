@@ -2303,42 +2303,44 @@ int inv_getfreeid_force()
 
 void item_drop(Item& item_in_inventory, int num, bool building_shelter)
 {
-    ti = inv_getfreeid(-1);
-    if (ti == -1)
+    const auto slot = inv_getfreeid(-1);
+    if (slot == -1)
     {
         txt(i18n::s.get("core.action.drop.too_many_items"));
         update_screen();
         return;
     }
 
-    item_copy(item_in_inventory.index, ti);
-    inv[ti].position = cdata[cc].position;
-    inv[ti].set_number(num);
-    itemturn(inv[ti]);
+    auto& dropped_item = inv[slot];
+    item_copy(item_in_inventory.index, dropped_item.index);
+    dropped_item.position = cdata[cc].position;
+    dropped_item.set_number(num);
+    itemturn(dropped_item);
 
     if (building_shelter)
     {
-        inv[ti].own_state = 3;
-        inv[ti].count = game_data.next_shelter_serial_id + 100;
+        dropped_item.own_state = 3;
+        dropped_item.count = game_data.next_shelter_serial_id + 100;
         ++game_data.next_shelter_serial_id;
     }
     else
     {
         snd("core.drop1");
-        txt(i18n::s.get("core.action.drop.execute", itemname(inv[ti], num)));
+        txt(i18n::s.get(
+            "core.action.drop.execute", itemname(dropped_item, num)));
     }
 
-    if (inv[ti].id == ItemId::bottle_of_water) // Water
+    if (dropped_item.id == ItemId::bottle_of_water) // Water
     {
         if (const auto altar = item_find(60002, 0))
         {
             // The altar is your god's.
             if (core_god::int2godid(altar->param1) == cdata[cc].god_id)
             {
-                if (inv[ti].curse_state != CurseState::blessed)
+                if (dropped_item.curse_state != CurseState::blessed)
                 {
                     snd("core.pray1");
-                    inv[ti].curse_state = CurseState::blessed;
+                    dropped_item.curse_state = CurseState::blessed;
                     txt(i18n::s.get("core.action.drop.water_is_blessed"),
                         Message::color{ColorIndex::green});
                 }
@@ -2346,12 +2348,11 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
         }
     }
 
-    const auto stacked_item_index = item_stack(-1, inv[ti]).stacked_item.index;
-    ti = stacked_item_index;
+    auto& stacked_item = item_stack(-1, dropped_item).stacked_item;
     item_in_inventory.modify_number(-num);
 
     refresh_burden_state();
-    cell_refresh(inv[ti].position.x, inv[ti].position.y);
+    cell_refresh(stacked_item.position.x, stacked_item.position.y);
     screenupdate = -1;
     update_screen();
 
@@ -2369,7 +2370,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
             calc_home_rank();
         }
     }
-    if (inv[ti].id == ItemId::campfire)
+    if (stacked_item.id == ItemId::campfire)
     {
         map_data.play_campfire_sound = 1;
         play_music();
