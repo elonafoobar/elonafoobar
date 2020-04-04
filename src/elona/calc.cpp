@@ -399,7 +399,7 @@ int calc_evasion(int cc)
 
 
 
-int calc_accuracy(int ammo, bool consider_distance)
+int calc_accuracy(int cw, int ammo, bool consider_distance)
 {
     critical = 0;
     int accuracy;
@@ -516,9 +516,9 @@ int calc_accuracy(int ammo, bool consider_distance)
 
 
 
-int calcattackhit(int ammo)
+int calcattackhit(int cw, int ammo)
 {
-    int tohit = calc_accuracy(ammo, true);
+    int tohit = calc_accuracy(cw, ammo, true);
     int evasion = calc_evasion(tc);
 
     if (cdata[tc].dimmed != 0)
@@ -616,7 +616,7 @@ int calcattackhit(int ammo)
 
 
 
-int calcattackdmg(int ammo, AttackDamageCalculationMode mode)
+int calcattackdmg(int cw, int ammo, AttackDamageCalculationMode mode)
 {
     int prot2 = 0;
     int protfix = 0;

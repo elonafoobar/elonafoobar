@@ -333,7 +333,6 @@ ELONA_EXTERN(int cs);
 ELONA_EXTERN(int cs_bk2);
 ELONA_EXTERN(int cs_bk);
 ELONA_EXTERN(int cspecialeq);
-ELONA_EXTERN(int cw);
 ELONA_EXTERN(int cxinit);
 ELONA_EXTERN(int cyinit);
 ELONA_EXTERN(int damage);

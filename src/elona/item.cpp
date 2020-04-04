@@ -2721,7 +2721,7 @@ void equip_melee_weapon()
         {
             continue;
         }
-        cw = cdata[cc].body_parts[cnt] % 10000 - 1;
+        const int cw = cdata[cc].body_parts[cnt] % 10000 - 1;
         if (inv[cw].dice_x == 0)
         {
             continue;
