@@ -1,12 +1,17 @@
 #pragma once
 
+
+
 namespace elona
 {
 
 enum class TurnResult;
+struct Item;
+
+
 
 void initialize_home_adata();
-TurnResult build_new_building();
+TurnResult build_new_building(Item& deed);
 TurnResult show_house_board();
 void addbuilding(int related_town_quest_id, int building_type, int x, int y);
 void show_home_value();

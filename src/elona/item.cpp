@@ -1638,14 +1638,14 @@ ItemStackResult item_stack(int inventory_id, Item& base_item, bool show_message)
 
 
 
-void item_dump_desc(const Item& i)
+void item_dump_desc(Item& item)
 {
-    reftype = (int)the_item_db[itemid2int(i.id)]->category;
+    reftype = (int)the_item_db[itemid2int(item.id)]->category;
 
-    item_db_get_charge_level(inv[ci], itemid2int(i.id));
-    item_db_get_description(inv[ci], itemid2int(i.id));
+    item_db_get_charge_level(item, itemid2int(item.id));
+    item_db_get_description(item, itemid2int(item.id));
 
-    p = item_load_desc(inv[ci]);
+    p = item_load_desc(item);
 
     listmax = p;
     pagemax = (listmax - 1) / pagesize;
@@ -1653,9 +1653,9 @@ void item_dump_desc(const Item& i)
 
 
 
-void item_acid(const Character& owner, int ci)
+void item_acid(const Character& owner, int item_index)
 {
-    if (ci == -1)
+    if (item_index == -1)
     {
         for (const auto& body_part : owner.body_parts)
         {
@@ -1672,31 +1672,31 @@ void item_acid(const Character& owner, int ci)
             {
                 if (rnd(30) == 0)
                 {
-                    ci = p;
+                    item_index = p;
                     break;
                 }
             }
         }
-        if (ci == -1)
+        if (item_index == -1)
         {
             return;
         }
     }
 
-    if (!is_equipment(the_item_db[itemid2int(inv[ci].id)]->category))
+    if (!is_equipment(the_item_db[itemid2int(inv[item_index].id)]->category))
     {
         return;
     }
 
-    if (inv[ci].is_acidproof())
+    if (inv[item_index].is_acidproof())
     {
-        txt(i18n::s.get("core.item.acid.immune", owner, inv[ci]));
+        txt(i18n::s.get("core.item.acid.immune", owner, inv[item_index]));
     }
     else
     {
-        txt(i18n::s.get("core.item.acid.damaged", owner, inv[ci]),
+        txt(i18n::s.get("core.item.acid.damaged", owner, inv[item_index]),
             Message::color{ColorIndex::purple});
-        --inv[ci].enhancement;
+        --inv[item_index].enhancement;
     }
 }
 
@@ -2602,15 +2602,19 @@ int convertartifact(int item_index, int ignore_external_container)
         flttypeminor = the_item_db[itemid2int(inv[item_index].id)]->subcategory;
         inv[item_index].remove();
 
-        itemcreate(inv_getowner(item_index), 0, inv[item_index].position, 0);
-        if (inv[item_index].quality != Quality::special)
+        if (const auto converted_item = itemcreate(
+                inv_getowner(item_index), 0, inv[item_index].position, 0))
         {
-            break;
+            if (inv[item_index].quality != Quality::special)
+            {
+                txt(i18n::s.get(
+                    "core.misc.artifact_regeneration",
+                    n_at_m163,
+                    *converted_item));
+                return item_index;
+            }
         }
     }
-
-    txt(i18n::s.get("core.misc.artifact_regeneration", n_at_m163, inv[ci]));
-    return item_index;
 }
 
 

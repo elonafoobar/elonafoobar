@@ -553,17 +553,17 @@ void blending_menu_2()
         }
         if (p != -1)
         {
-            ci = p;
-            if (inv[ci].is_marked_as_no_drop())
+            const auto item_index = p(0);
+            if (inv[item_index].is_marked_as_no_drop())
             {
                 snd("core.fail1");
                 txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
                 continue;
             }
-            rpref(10 + step * 2 + 0) = ci;
-            rpref(10 + step * 2 + 1) = itemid2int(inv[ci].id);
+            rpref(10 + step * 2 + 0) = item_index;
+            rpref(10 + step * 2 + 1) = itemid2int(inv[item_index].id);
             snd("core.drink1");
-            txt(i18n::s.get("core.blending.steps.you_add", inv[ci]));
+            txt(i18n::s.get("core.blending.steps.you_add", inv[item_index]));
             ++step;
             p = rpdiff(rpid, step, step - 1);
             return;
@@ -1886,18 +1886,17 @@ void blending_proc_on_success_events()
 {
     const auto item1_index = rpref(10);
     const auto item2_index = rpref(12);
-    ci = item1_index;
     if (rpdata(2, rpid) == 2)
     {
-        item_separate(ci);
+        item_separate(item1_index);
     }
-    else if (inv[ci].number() <= 1)
+    else if (inv[item1_index].number() <= 1)
     {
         rpref(10) = -2;
     }
     else
     {
-        int stat = item_separate(ci);
+        int stat = item_separate(item1_index);
         if (rpref(10) == stat)
         {
             rpref(10) = -2;
@@ -1907,8 +1906,6 @@ void blending_proc_on_success_events()
             rpref(10) = stat;
         }
     }
-
-    const auto cibk = ci;
 
     // See each function for parameter usage.
     auto& item1 = inv[item1_index];
@@ -1935,16 +1932,14 @@ void blending_proc_on_success_events()
     default: break;
     }
 
-    ci = cibk;
-
-    item_stack(0, inv[ci]);
-    if (inv[ci].body_part != 0)
+    item_stack(0, item1);
+    if (item1.body_part != 0)
     {
         create_pcpic(cdata.player());
     }
-    if (inv_getowner(ci) == -1)
+    if (inv_getowner(item1.index) == -1)
     {
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        cell_refresh(item1.position.x, item1.position.y);
     }
     chara_refresh(0);
 }

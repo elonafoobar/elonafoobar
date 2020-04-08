@@ -1810,39 +1810,39 @@ void item_db_on_read(Item& item, int legacy_id)
 {
     switch (legacy_id)
     {
-    case 783: decode_book(); break;
-    case 747: read_normal_book(); break;
-    case 742: read_normal_book(); break;
+    case 783: decode_book(item); break;
+    case 747: read_normal_book(item); break;
+    case 742: read_normal_book(item); break;
     case 737:
         efid = 1145;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 732:
         efid = 464;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 731:
         efid = 463;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 712: efid = 1115; break;
     case 710:
         efid = 462;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 709:
         efid = 462;
         efp = 1500;
-        read_scroll();
+        read_scroll(item);
         break;
     case 708:
         efid = 461;
         efp = 2500;
-        read_scroll();
+        read_scroll(item);
         break;
     case 700:
         menucycle = 1;
@@ -1851,86 +1851,86 @@ void item_db_on_read(Item& item, int legacy_id)
     case 697:
         efid = 459;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 696:
         efid = 460;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
-    case 687: decode_book(); break;
-    case 668: read_normal_book(); break;
+    case 687: decode_book(item); break;
+    case 668: read_normal_book(item); break;
     case 660:
         efid = 418;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 638:
         efid = 1141;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 632:
         efid = 1140;
         efp = 150;
-        read_scroll();
+        read_scroll(item);
         break;
     case 628:
         efid = 458;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 624:
         efid = 1137;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 623:
         efid = 1138;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 621:
         efid = 1136;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 582:
         efid = 457;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 572: efid = 1115; break;
     case 569:
         efid = 456;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 564:
         efid = 455;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
-    case 563: read_normal_book(); break;
+    case 563: read_normal_book(item); break;
     case 550:
         efid = 405;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 549:
         efid = 404;
         efp = 400;
-        read_scroll();
+        read_scroll(item);
         break;
     case 548:
         efid = 404;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 546:
         efid = 438;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 543: efid = 1115; break;
     case 542: efid = 1115; break;
@@ -1939,397 +1939,397 @@ void item_db_on_read(Item& item, int legacy_id)
     case 515:
         efid = 1129;
         efp = 300;
-        read_scroll();
+        read_scroll(item);
         break;
     case 511:
         efid = 1128;
         efp = item.param1;
-        read_scroll();
+        read_scroll(item);
         break;
     case 509:
         efid = 1125;
         efp = 400;
-        read_scroll();
+        read_scroll(item);
         break;
     case 508:
         efid = 1125;
         efp = 200;
-        read_scroll();
+        read_scroll(item);
         break;
     case 507:
         efid = 1124;
         efp = 400;
-        read_scroll();
+        read_scroll(item);
         break;
     case 506:
         efid = 1124;
         efp = 200;
-        read_scroll();
+        read_scroll(item);
         break;
     case 505:
         efid = 1123;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 502:
         efid = 1127;
         efp = 350;
-        read_scroll();
+        read_scroll(item);
         break;
     case 501:
         efid = 1127;
         efp = 180;
-        read_scroll();
+        read_scroll(item);
         break;
     case 500:
         efid = 1127;
         efp = 10;
-        read_scroll();
+        read_scroll(item);
         break;
     case 484:
         efid = 436;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 481:
         efid = 435;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 479:
         efid = 1122;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 434:
         efid = 454;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 431:
         efid = 1107;
         efp = 300;
-        read_scroll();
+        read_scroll(item);
         break;
     case 430:
         efid = 1119;
         efp = 500;
-        read_scroll();
+        read_scroll(item);
         break;
     case 411:
         efid = 430;
         efp = 500;
-        read_scroll();
+        read_scroll(item);
         break;
     case 410:
         efid = 430;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 398:
         efid = 453;
         efp = 250;
-        read_scroll();
+        read_scroll(item);
         break;
     case 397:
         efid = 453;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 396:
         efid = 452;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 395:
         efid = 1117;
         efp = 250;
-        read_scroll();
+        read_scroll(item);
         break;
     case 390:
         efid = 621;
         efp = 250;
-        read_scroll();
+        read_scroll(item);
         break;
     case 389:
         efid = 407;
         efp = 300;
-        read_scroll();
+        read_scroll(item);
         break;
     case 388:
         efid = 406;
         efp = 300;
-        read_scroll();
+        read_scroll(item);
         break;
     case 387:
         efid = 407;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 386:
         efid = 406;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 384:
         efid = 451;
         efp = 250;
-        read_scroll();
+        read_scroll(item);
         break;
     case 383:
         efid = 451;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 381:
         efid = 450;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 380:
         efid = 449;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 378:
         efid = 448;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 374:
         efid = 447;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 373:
         efid = 446;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 371:
         efid = 445;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 369:
         efid = 444;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 367:
         efid = 443;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 365:
         efid = 442;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 363:
         efid = 412;
         efp = 2500;
-        read_scroll();
+        read_scroll(item);
         break;
     case 362:
         efid = 411;
         efp = 2000;
-        read_scroll();
+        read_scroll(item);
         break;
     case 344: efid = 1115; break;
     case 289:
         efid = 441;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 288:
         efid = 1114;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 272:
         efid = 433;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 271:
         efid = 434;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 270:
         efid = 432;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 269:
         efid = 431;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 268:
         efid = 423;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 267:
         efid = 422;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 265:
         efid = 416;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 264:
         efid = 417;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 263:
         efid = 415;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 257:
         efid = 414;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 252:
         efid = 403;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 251:
         efid = 402;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 250:
         efid = 401;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 249:
         efid = 400;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 248:
         efid = 428;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 247:
         efid = 413;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 246:
         efid = 429;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 245:
         efid = 408;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 244:
         efid = 1104;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 243:
         efid = 1105;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 242:
         efid = 429;
         efp = 500;
-        read_scroll();
+        read_scroll(item);
         break;
     case 236:
         efid = 428;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 209:
         efid = 412;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 118:
         efid = 424;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 116:
         efid = 410;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 34:
         efid = 421;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 33:
         efid = 420;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 32:
         efid = 419;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 25:
         item.param1 = 2;
-        read_normal_book();
+        read_normal_book(item);
         break;
-    case 24: read_normal_book(); break;
+    case 24: read_normal_book(item); break;
     case 23:
         item.param1 = 1;
-        read_normal_book();
+        read_normal_book(item);
         break;
     case 22:
         efid = 412;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 21:
         efid = 411;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 20:
         efid = 408;
         efp = 100;
-        decode_book();
+        decode_book(item);
         break;
     case 17:
         efid = 458;
         efp = 300;
-        read_scroll();
+        read_scroll(item);
         break;
     case 16:
         efid = 408;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 15:
         efid = 413;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     case 14:
         efid = 411;
         efp = 100;
-        read_scroll();
+        read_scroll(item);
         break;
     default: break;
     }
@@ -2457,254 +2457,266 @@ void item_db_on_zap(Item& item, int legacy_id)
 
 
 
-void item_db_on_drink(Item& item, int legacy_id)
+void item_db_on_drink(optional_ref<Item> item, int legacy_id)
 {
-    (void)item;
+    assert(potionspill || item);
 
     switch (legacy_id)
     {
     case 771:
         efid = 1147;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 770:
         efid = 1146;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 736:
         efid = 1116;
         efp = 250;
-        drink_potion();
+        drink_potion(item);
         break;
     case 711:
         efid = 1144;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 706:
         efid = 1143;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 704:
         efid = 1130;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 698:
         efid = 1142;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
-    case 650: drink_well(); break;
+    case 650:
+        assert(item);
+        drink_well(*item);
+        break;
     case 626:
         efid = 1139;
         efp = 500;
-        drink_potion();
+        drink_potion(item);
         break;
     case 620:
         efid = 1135;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
-    case 602: drink_well(); break;
+    case 602:
+        assert(item);
+        drink_well(*item);
+        break;
     case 587:
         efid = 1103;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 577:
         efid = 1133;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 574:
         efid = 1101;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 566:
         efid = 1116;
         efp = 250;
-        drink_potion();
+        drink_potion(item);
         break;
     case 559:
         efid = 1131;
         efp = 200;
-        drink_potion();
+        drink_potion(item);
         break;
     case 519:
         efid = 1108;
         efp = 150;
-        drink_potion();
+        drink_potion(item);
         break;
     case 516:
         efid = 1103;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 433:
         efid = 1121;
         efp = 200;
-        drink_potion();
+        drink_potion(item);
         break;
     case 432:
         efid = 454;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 429:
         efid = 1118;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 392:
         efid = 1116;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 382:
         efid = 449;
         efp = 250;
-        drink_potion();
+        drink_potion(item);
         break;
     case 379:
         efid = 448;
         efp = 250;
-        drink_potion();
+        drink_potion(item);
         break;
     case 376:
         efid = 447;
         efp = 400;
-        drink_potion();
+        drink_potion(item);
         break;
     case 375:
         efid = 446;
         efp = 250;
-        drink_potion();
+        drink_potion(item);
         break;
     case 372:
         efid = 445;
         efp = 250;
-        drink_potion();
+        drink_potion(item);
         break;
     case 370:
         efid = 444;
         efp = 300;
-        drink_potion();
+        drink_potion(item);
         break;
     case 368:
         efid = 443;
         efp = 400;
-        drink_potion();
+        drink_potion(item);
         break;
     case 364:
         efid = 442;
         efp = 200;
-        drink_potion();
+        drink_potion(item);
         break;
     case 287:
         efid = 1113;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 286:
         efid = 440;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 285:
         efid = 439;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 262:
         efid = 1108;
         efp = 200;
-        drink_potion();
+        drink_potion(item);
         break;
     case 253:
         efid = 1102;
         efp = 200;
-        drink_potion();
+        drink_potion(item);
         break;
     case 205:
         efid = 1102;
         efp = 500;
-        drink_potion();
+        drink_potion(item);
         break;
-    case 173: drink_well(); break;
-    case 109: drink_well(); break;
+    case 173:
+        assert(item);
+        drink_well(*item);
+        break;
+    case 109:
+        assert(item);
+        drink_well(*item);
+        break;
     case 76:
         efid = 403;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 75:
         efid = 402;
         efp = 300;
-        drink_potion();
+        drink_potion(item);
         break;
     case 74:
         efid = 402;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 72:
         efid = 401;
         efp = 400;
-        drink_potion();
+        drink_potion(item);
         break;
     case 71:
         efid = 401;
         efp = 300;
-        drink_potion();
+        drink_potion(item);
         break;
     case 70:
         efid = 401;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 69:
         efid = 400;
         efp = 300;
-        drink_potion();
+        drink_potion(item);
         break;
     case 68:
         efid = 400;
         efp = 100;
-        drink_potion();
+        drink_potion(item);
         break;
     case 31:
         efid = 1102;
         efp = 300;
-        drink_potion();
+        drink_potion(item);
         break;
     case 30:
         efid = 1112;
         efp = 200;
-        drink_potion();
+        drink_potion(item);
         break;
     case 29:
         efid = 1110;
         efp = 200;
-        drink_potion();
+        drink_potion(item);
         break;
     case 28:
         efid = 1109;
         efp = 150;
-        drink_potion();
+        drink_potion(item);
         break;
     case 27:
         efid = 1111;
         efp = 200;
-        drink_potion();
+        drink_potion(item);
         break;
     case 26:
         efid = 1130;
-        drink_potion();
+        drink_potion(item);
         break;
     default: break;
     }

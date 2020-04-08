@@ -350,11 +350,11 @@ bool Autopick::_try_load(const fs::path& filepath)
 
 
 
-Autopick::Operation Autopick::get_operation(const Item& ci)
+Autopick::Operation Autopick::get_operation(const Item& item)
 {
     for (const auto& m : matchers)
     {
-        if (m.matches(ci))
+        if (m.matches(item))
         {
             return m.op;
         }
@@ -365,20 +365,20 @@ Autopick::Operation Autopick::get_operation(const Item& ci)
 
 
 
-bool Autopick::Matcher::matches(const Item& ci) const
+bool Autopick::Matcher::matches(const Item& item) const
 {
     /* Check modifiers. */
-    const auto modifier_match_result = _check_modifiers(text, ci);
+    const auto modifier_match_result = _check_modifiers(text, item);
     if (!modifier_match_result.matched)
     {
         return false;
     }
 
     /* Check item's name. */
-    const auto item_name = cnvitemname(itemid2int(ci.id));
+    const auto item_name = cnvitemname(itemid2int(item.id));
     // You have to know that the item is known as the name to match by the name.
     const auto you_know_the_name =
-        ci.identify_state != IdentifyState::unidentified;
+        item.identify_state != IdentifyState::unidentified;
     const auto item_name_matched_with_text = you_know_the_name &&
         strutil::contains(item_name,
                           modifier_match_result.text_without_modifier);
@@ -394,7 +394,7 @@ bool Autopick::Matcher::matches(const Item& ci) const
         return false;
     }
 
-    return _check_category(modifier_match_result.text_without_modifier, ci);
+    return _check_category(modifier_match_result.text_without_modifier, item);
 }
 
 } // namespace elona

@@ -1354,7 +1354,6 @@ void character_drops_item()
         }
         for (auto&& item : inv.for_chara(cdata[rc]))
         {
-            ci = item.index;
             if (item.number() == 0)
             {
                 continue;
@@ -1476,17 +1475,17 @@ void character_drops_item()
             }
             item.position.x = cdata[rc].position.x;
             item.position.y = cdata[rc].position.y;
-            if (!item_stack(-1, inv[ci]).stacked)
+            if (!item_stack(-1, item).stacked)
             {
                 const auto slot = inv_getfreeid(-1);
                 if (slot == -1)
                 {
                     break;
                 }
-                item_copy(ci, slot);
+                item_copy(item.index, slot);
                 inv[slot].own_state = -2;
             }
-            inv[ci].remove();
+            item.remove();
         }
         cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
         create_pcpic(cdata.player());
@@ -1534,7 +1533,6 @@ void character_drops_item()
         {
             continue;
         }
-        ci = item.index;
         f = 0;
         if (cdata[rc].character_role == 20)
         {
@@ -1599,25 +1597,25 @@ void character_drops_item()
                 animeload(8, rc);
             }
         }
-        if (inv[ci].body_part != 0)
+        if (item.body_part != 0)
         {
-            cdata[rc].body_parts[inv[ci].body_part - 100] =
-                cdata[rc].body_parts[inv[ci].body_part - 100] / 10000 * 10000;
-            inv[ci].body_part = 0;
+            cdata[rc].body_parts[item.body_part - 100] =
+                cdata[rc].body_parts[item.body_part - 100] / 10000 * 10000;
+            item.body_part = 0;
         }
-        inv[ci].position.x = cdata[rc].position.x;
-        inv[ci].position.y = cdata[rc].position.y;
-        itemturn(inv[ci]);
-        if (!item_stack(-1, inv[ci]).stacked)
+        item.position.x = cdata[rc].position.x;
+        item.position.y = cdata[rc].position.y;
+        itemturn(item);
+        if (!item_stack(-1, item).stacked)
         {
             const auto slot = inv_getfreeid(-1);
             if (slot == -1)
             {
                 break;
             }
-            item_copy(ci, slot);
+            item_copy(item.index, slot);
         }
-        inv[ci].remove();
+        item.remove();
     }
     if (cdata[rc].quality >= Quality::miracle || rnd(20) == 0 ||
         cdata[rc].drops_gold() == 1 || rc < 16)

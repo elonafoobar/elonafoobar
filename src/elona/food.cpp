@@ -1220,7 +1220,6 @@ void apply_general_eating_effect(Character& eater, Item& food)
     {
         if (nutrition >= 2000)
         {
-            const auto ci_save = ci;
             flt(calcobjlv(eater.level));
             flttypeminor = 58500;
             if (const auto item = itemcreate_extra_inv(0, eater.position, 0))
@@ -1228,7 +1227,6 @@ void apply_general_eating_effect(Character& eater, Item& food)
                 txt(i18n::s.get("core.food.effect.bomb_fish", eater, *item),
                     Message::color{ColorIndex::cyan});
             }
-            ci = ci_save;
         }
     }
     if (food.id == ItemId::corpse)

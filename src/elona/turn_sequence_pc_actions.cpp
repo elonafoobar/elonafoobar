@@ -379,7 +379,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         invctrl = lastctrl;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory().menu_result;
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -396,7 +396,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             invctrl = 26;
             snd("core.inv");
-            MenuResult mr = ctrl_inventory();
+            MenuResult mr = ctrl_inventory().menu_result;
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
@@ -405,7 +405,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         invctrl = 1;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory().menu_result;
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -422,7 +422,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             invctrl = 2;
             snd("core.inv");
-            MenuResult mr = ctrl_inventory();
+            MenuResult mr = ctrl_inventory().menu_result;
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
@@ -431,7 +431,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         invctrl = 5;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory().menu_result;
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -439,7 +439,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         invctrl = 7;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory().menu_result;
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -447,7 +447,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         invctrl = 8;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory().menu_result;
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -464,7 +464,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             invctrl = 9;
             snd("core.inv");
-            MenuResult mr = ctrl_inventory();
+            MenuResult mr = ctrl_inventory().menu_result;
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
@@ -473,7 +473,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         invctrl = 14;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory();
+        MenuResult mr = ctrl_inventory().menu_result;
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -490,7 +490,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             invctrl = 15;
             snd("core.inv");
-            MenuResult mr = ctrl_inventory();
+            MenuResult mr = ctrl_inventory().menu_result;
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }
@@ -577,7 +577,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             invctrl = 19;
             snd("core.inv");
-            MenuResult mr = ctrl_inventory();
+            MenuResult mr = ctrl_inventory().menu_result;
             assert(mr.turn_result != TurnResult::none);
             return mr.turn_result;
         }

@@ -1569,21 +1569,14 @@ void chara_relocate(
     int p = invhead;
     for (auto&& item : inv.for_chara(cdata[slot]))
     {
-        if (item.index == invrange)
-        {
-            break;
-        }
-        if (cc == source.index)
-        {
-            if (ci == p)
-            {
-                ci = item.index;
-            }
-        }
         Item::copy(inv[p], item);
         inv[p].clear();
         item.body_part = 0;
         ++p;
+        if (p >= invhead + invrange)
+        {
+            break;
+        }
     }
 
     // Clear some fields which should not be copied.
@@ -2425,8 +2418,8 @@ void proc_negative_enchantments(Character& chara)
         {
             continue;
         }
-        ci = body_part % 10000 - 1;
-        proc_one_equipment_with_negative_enchantments(chara, inv[ci]);
+        proc_one_equipment_with_negative_enchantments(
+            chara, inv[body_part % 10000 - 1]);
     }
 }
 
@@ -2438,7 +2431,6 @@ void lovemiracle(int chara_index)
     {
         return;
     }
-    const auto cibk = ci;
     txt(i18n::s.get("core.misc.love_miracle.uh"),
         Message::color{ColorIndex::cyan});
     flt();
@@ -2463,7 +2455,6 @@ void lovemiracle(int chara_index)
             item->subname = charaid2int(cdata[chara_index].id);
         }
     }
-    ci = cibk;
     snd("core.atk_elec");
     animeload(15, chara_index);
 }

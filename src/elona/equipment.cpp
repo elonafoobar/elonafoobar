@@ -239,24 +239,23 @@ void eqrandweaponmage()
 
 void wear_most_valuable_equipment_for_all_body_parts()
 {
-    for (const auto& item : inv.for_chara(cdata[rc]))
+    for (auto&& item : inv.for_chara(cdata[rc]))
     {
-        ci = item.index;
         if (item.number() == 0 || item.body_part != 0)
         {
             continue;
         }
-        wear_most_valuable_equipment();
+        wear_most_valuable_equipment(item);
     }
 }
 
 
 
-void wear_most_valuable_equipment()
+void wear_most_valuable_equipment(Item& equipment)
 {
     int eqdup = 0;
     elona_vector1<int> bodylist;
-    i = iequiploc(inv[ci]);
+    i = iequiploc(equipment);
     if (i != 0)
     {
         eqdup = 0;
@@ -278,12 +277,12 @@ void wear_most_valuable_equipment()
             i = cdata[rc].body_parts[body - 100] % 10000;
             if (i == 0)
             {
-                equip_item(rc);
+                equip_item(rc, equipment);
                 break;
             }
             --i;
             f = 0;
-            if (inv[ci].value >= inv[i].value)
+            if (equipment.value >= inv[i].value)
             {
                 f = 1;
             }
@@ -304,10 +303,8 @@ void wear_most_valuable_equipment()
             }
             if (f == 1)
             {
-                int cibk = ci;
                 unequip_item(rc);
-                ci = cibk;
-                equip_item(rc);
+                equip_item(rc, equipment);
                 break;
             }
         }
@@ -436,7 +433,7 @@ void supply_new_equipment()
                     }
                 }
             }
-            wear_most_valuable_equipment();
+            wear_most_valuable_equipment(*item);
             if (cdata[rc].character_role != 13)
             {
                 if (rnd(3))
@@ -853,9 +850,11 @@ void supply_initial_equipments()
                     flt();
                     item_id = eqamulet1;
                 }
-                itemcreate_chara_inv(rc, item_id, 0);
-                body = 100 + i;
-                equip_item(rc);
+                if (const auto equipment = itemcreate_chara_inv(rc, item_id, 0))
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqamulet1 = 0;
                 continue;
             }
@@ -874,9 +873,11 @@ void supply_initial_equipments()
                     flt();
                     item_id = eqamulet2;
                 }
-                itemcreate_chara_inv(rc, item_id, 0);
-                body = 100 + i;
-                equip_item(rc);
+                if (const auto equipment = itemcreate_chara_inv(rc, item_id, 0))
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqamulet2 = 0;
                 continue;
             }
@@ -898,9 +899,11 @@ void supply_initial_equipments()
                     flt();
                     item_id = eqring1;
                 }
-                itemcreate_chara_inv(rc, item_id, 0);
-                body = 100 + i;
-                equip_item(rc);
+                if (const auto equipment = itemcreate_chara_inv(rc, item_id, 0))
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqring1 = 0;
                 continue;
             }
@@ -919,9 +922,11 @@ void supply_initial_equipments()
                     flt();
                     item_id = eqring2;
                 }
-                itemcreate_chara_inv(rc, item_id, 0);
-                body = 100 + i;
-                equip_item(rc);
+                if (const auto equipment = itemcreate_chara_inv(rc, item_id, 0))
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqring2 = 0;
                 continue;
             }
@@ -943,9 +948,11 @@ void supply_initial_equipments()
                     flt();
                     item_id = eqcloack;
                 }
-                itemcreate_chara_inv(rc, item_id, 0);
-                body = 100 + i;
-                equip_item(rc);
+                if (const auto equipment = itemcreate_chara_inv(rc, item_id, 0))
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqcloack = 0;
                 continue;
             }
@@ -968,9 +975,11 @@ void supply_initial_equipments()
                     flt();
                     item_id = eqgirdle;
                 }
-                itemcreate_chara_inv(rc, item_id, 0);
-                body = 100 + i;
-                equip_item(rc);
+                if (const auto equipment = itemcreate_chara_inv(rc, item_id, 0))
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqgirdle = 0;
                 continue;
             }
@@ -993,9 +1002,11 @@ void supply_initial_equipments()
                     flt();
                     item_id = eqhelm;
                 }
-                itemcreate_chara_inv(rc, item_id, 0);
-                body = 100 + i;
-                equip_item(rc);
+                if (const auto equipment = itemcreate_chara_inv(rc, item_id, 0))
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqhelm = 0;
                 continue;
             }
@@ -1018,9 +1029,11 @@ void supply_initial_equipments()
                     flt();
                     item_id = eqarmor;
                 }
-                itemcreate_chara_inv(rc, item_id, 0);
-                body = 100 + i;
-                equip_item(rc);
+                if (const auto equipment = itemcreate_chara_inv(rc, item_id, 0))
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqarmor = 0;
                 continue;
             }
@@ -1043,9 +1056,11 @@ void supply_initial_equipments()
                     flt();
                     item_id = eqglove;
                 }
-                itemcreate_chara_inv(rc, item_id, 0);
-                body = 100 + i;
-                equip_item(rc);
+                if (const auto equipment = itemcreate_chara_inv(rc, item_id, 0))
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqglove = 0;
                 continue;
             }
@@ -1068,9 +1083,11 @@ void supply_initial_equipments()
                     flt();
                     item_id = eqboots;
                 }
-                itemcreate_chara_inv(rc, item_id, 0);
-                body = 100 + i;
-                equip_item(rc);
+                if (const auto equipment = itemcreate_chara_inv(rc, item_id, 0))
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqboots = 0;
                 continue;
             }
@@ -1080,28 +1097,34 @@ void supply_initial_equipments()
         {
             if (eqmultiweapon)
             {
+                optional_ref<Item> equipment;
                 for (int cnt = 0; cnt < 15; ++cnt)
                 {
                     flt(calcobjlv(cdata[rc].level),
                         calcfixlv(static_cast<Quality>(2 + fixeq)));
-                    itemcreate_chara_inv(rc, eqmultiweapon, 0);
-                    if (inv[ci].weight > 1500)
+                    equipment = itemcreate_chara_inv(rc, eqmultiweapon, 0);
+                    assert(equipment);
+                    if (equipment->weight > 1500)
                     {
                         if (cnt < 14)
                         {
-                            inv[ci].remove();
+                            equipment->remove();
                             continue;
                         }
                     }
                     break;
                 }
-                body = 100 + i;
-                equip_item(rc);
+                if (equipment)
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqweapon1 = 0;
                 continue;
             }
             if (eqweapon1)
             {
+                optional_ref<Item> equipment;
                 if (eqweapon1 >= 10000)
                 {
                     for (int cnt = 0; cnt < 15; ++cnt)
@@ -1110,25 +1133,26 @@ void supply_initial_equipments()
                             calcfixlv(
                                 static_cast<Quality>(fixeq + eqweapon1(1))));
                         flttypeminor = eqweapon1;
-                        itemcreate_chara_inv(rc, -1, 0);
+                        equipment = itemcreate_chara_inv(rc, -1, 0);
+                        assert(equipment);
                         if (eqtwohand)
                         {
-                            if (inv[ci].weight < 4000)
+                            if (equipment->weight < 4000)
                             {
                                 if (cnt < 14)
                                 {
-                                    inv[ci].remove();
+                                    equipment->remove();
                                     continue;
                                 }
                             }
                         }
                         if (eqtwowield)
                         {
-                            if (inv[ci].weight > 1500)
+                            if (equipment->weight > 1500)
                             {
                                 if (cnt < 14)
                                 {
-                                    inv[ci].remove();
+                                    equipment->remove();
                                     continue;
                                 }
                             }
@@ -1139,15 +1163,19 @@ void supply_initial_equipments()
                 else
                 {
                     flt();
-                    itemcreate_chara_inv(rc, eqweapon1, 0);
+                    equipment = itemcreate_chara_inv(rc, eqweapon1, 0);
                 }
-                body = 100 + i;
-                equip_item(rc);
+                if (equipment)
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqweapon1 = 0;
                 continue;
             }
             if (eqweapon2)
             {
+                optional_ref<Item> equipment;
                 if (eqweapon2 >= 10000)
                 {
                     for (int cnt = 0; cnt < 15; ++cnt)
@@ -1156,14 +1184,15 @@ void supply_initial_equipments()
                             calcfixlv(
                                 static_cast<Quality>(fixeq + eqweapon2(1))));
                         flttypeminor = eqweapon2;
-                        itemcreate_chara_inv(rc, -1, 0);
+                        equipment = itemcreate_chara_inv(rc, -1, 0);
+                        assert(equipment);
                         if (eqtwowield)
                         {
-                            if (inv[ci].weight > 1500)
+                            if (equipment->weight > 1500)
                             {
                                 if (cnt < 14)
                                 {
-                                    inv[ci].remove();
+                                    equipment->remove();
                                     continue;
                                 }
                             }
@@ -1174,11 +1203,14 @@ void supply_initial_equipments()
                 else
                 {
                     flt();
-                    itemcreate_chara_inv(rc, eqweapon2, 0);
+                    equipment = itemcreate_chara_inv(rc, eqweapon2, 0);
+                }
+                if (equipment)
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
                 }
                 eqweapon2 = 0;
-                body = 100 + i;
-                equip_item(rc);
                 continue;
             }
             if (eqshield)
@@ -1196,9 +1228,11 @@ void supply_initial_equipments()
                     flt();
                     item_id = eqshield;
                 }
-                itemcreate_chara_inv(rc, item_id, 0);
-                body = 100 + i;
-                equip_item(rc);
+                if (const auto equipment = itemcreate_chara_inv(rc, item_id, 0))
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqshield = 0;
                 continue;
             }
@@ -1221,9 +1255,11 @@ void supply_initial_equipments()
                     flt();
                     item_id = eqrange;
                 }
-                itemcreate_chara_inv(rc, item_id, 0);
-                body = 100 + i;
-                equip_item(rc);
+                if (const auto equipment = itemcreate_chara_inv(rc, item_id, 0))
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqrange = 0;
                 continue;
             }
@@ -1246,9 +1282,11 @@ void supply_initial_equipments()
                     flt();
                     item_id = eqammo;
                 }
-                itemcreate_chara_inv(rc, item_id, 0);
-                body = 100 + i;
-                equip_item(rc);
+                if (const auto equipment = itemcreate_chara_inv(rc, item_id, 0))
+                {
+                    body = 100 + i;
+                    equip_item(rc, *equipment);
+                }
                 eqammo = 0;
                 continue;
             }
@@ -1294,28 +1332,24 @@ void supply_initial_equipments()
 
 
 
-int equip_item(int cc)
+int equip_item(int cc, Item& equipment)
 {
-    if (ci == -1)
-    {
-        return 0;
-    }
     if (cdata[cc].body_parts[body - 100] % 10000 != 0)
     {
         return 0;
     }
-    if (inv[ci].body_part != 0)
+    if (equipment.body_part != 0)
     {
         return 0;
     }
-    item_separate(ci);
+    item_separate(equipment.index);
     if (cc == 0)
     {
-        item_identify(inv[ci], IdentifyState::almost);
+        item_identify(equipment, IdentifyState::almost);
     }
-    inv[ci].body_part = body;
+    equipment.body_part = body;
     cdata[cc].body_parts[body - 100] =
-        cdata[cc].body_parts[body - 100] / 10000 * 10000 + ci + 1;
+        cdata[cc].body_parts[body - 100] / 10000 * 10000 + equipment.index + 1;
     return 1;
 }
 
@@ -1329,11 +1363,10 @@ void unequip_item(int cc)
         rtval = -2;
         return;
     }
-    ci = p - 1;
     cdata[cc].body_parts[body - 100] =
         cdata[cc].body_parts[body - 100] / 10000 * 10000;
-    inv[ci].body_part = 0;
-    item_stack(cc, inv[ci]);
+    inv[p - 1].body_part = 0;
+    item_stack(cc, inv[p - 1]);
 }
 
 } // namespace elona

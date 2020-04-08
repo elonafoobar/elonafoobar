@@ -11,13 +11,14 @@ TEST_CASE("Test that index of copied item is set", "[C++: Item]")
     testing::start_in_debug_map();
     int amount = 1;
 
-    REQUIRE_SOME(
-        itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount));
-    Item& i = elona::inv[elona::ci];
+    const auto i_opt =
+        itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount);
+    REQUIRE_SOME(i_opt);
+    Item& i = *i_opt;
 
     int ti = elona::inv_getfreeid(-1);
     elona::Item::copy(i, elona::inv[ti]);
 
-    REQUIRE(elona::inv[elona::ci].index == elona::ci);
+    REQUIRE(elona::inv[i.index].index == i.index);
     REQUIRE(elona::inv[ti].index == ti);
 }

@@ -77,8 +77,8 @@ static void _load_traits_by_enchantments()
     {
         if (cdata[tc].body_parts[i] % 10000 != 0)
         {
-            ci = cdata[tc].body_parts[i] % 10000 - 1;
-            for (const auto& enc : inv[ci].enchantments)
+            const auto item_index = cdata[tc].body_parts[i] % 10000 - 1;
+            for (const auto& enc : inv[item_index].enchantments)
             {
                 if (enc.id == 0)
                     break;

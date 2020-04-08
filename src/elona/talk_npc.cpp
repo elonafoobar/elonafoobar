@@ -216,7 +216,7 @@ TalkResult talk_trade()
     }
     invctrl(0) = 20;
     invctrl(1) = 0;
-    MenuResult result = ctrl_inventory();
+    MenuResult result = ctrl_inventory().menu_result;
     if (!result.succeeded)
     {
         buff = i18n::s.get("core.talk.npc.common.you_kidding", cdata[tc]);
@@ -446,9 +446,8 @@ TalkResult talk_quest_delivery()
     const auto slot = inv_getfreeid_force();
     item_copy(deliver(1), slot);
     inv[slot].set_number(1);
-    ci = slot;
     rc = tc;
-    chara_set_item_which_will_be_used(cdata[tc], inv[ci]);
+    chara_set_item_which_will_be_used(cdata[tc], inv[slot]);
     rq = deliver;
     inv[deliver(1)].modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", inv[deliver(1)]));
@@ -464,9 +463,8 @@ TalkResult talk_quest_supply()
     item_copy(supply, slot);
     inv[slot].set_number(1);
     cdata[tc].was_passed_item_by_you_just_now() = true;
-    ci = slot;
     rc = tc;
-    chara_set_item_which_will_be_used(cdata[tc], inv[ci]);
+    chara_set_item_which_will_be_used(cdata[tc], inv[slot]);
     inv[supply].modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", inv[supply]));
     quest_set_data(3);
@@ -1630,12 +1628,16 @@ TalkResult talk_quest_giver()
             ++quest_data[quest_data[rq].target_chara_index]
                   .delivery_has_package_flag;
             flt();
-            itemcreate_player_inv(quest_data[rq].target_item_id, 0);
-            txt(i18n::s.get("core.common.you_put_in_your_backpack", inv[ci]));
-            snd("core.inv");
-            refresh_burden_state();
-            buff = i18n::s.get(
-                "core.talk.npc.quest_giver.about.here_is_package", cdata[tc]);
+            if (const auto item =
+                    itemcreate_player_inv(quest_data[rq].target_item_id, 0))
+            {
+                txt(i18n::s.get("core.common.you_put_in_your_backpack", *item));
+                snd("core.inv");
+                refresh_burden_state();
+                buff = i18n::s.get(
+                    "core.talk.npc.quest_giver.about.here_is_package",
+                    cdata[tc]);
+            }
         }
     }
     else

@@ -2254,8 +2254,7 @@ void map_global_proc_travel_events()
     }
     if (cdata.player().nutrition <= 5000)
     {
-        f = 0;
-        for (const auto& item : inv.for_chara(cdata[cc]))
+        for (auto&& item : inv.for_chara(cdata[cc]))
         {
             if (item.number() == 0)
             {
@@ -2264,19 +2263,14 @@ void map_global_proc_travel_events()
             if (the_item_db[itemid2int(item.id)]->category ==
                 ItemCategory::travelers_food)
             {
-                f = 1;
-                ci = item.index;
+                if (is_in_fov(cdata[cc]))
+                {
+                    txt(i18n::s.get(
+                        "core.misc.finished_eating", cdata[cc], item));
+                }
+                activity_eating_finish(cdata[cc], item);
                 break;
             }
-        }
-        if (f == 1)
-        {
-            if (is_in_fov(cdata[cc]))
-            {
-                txt(i18n::s.get(
-                    "core.misc.finished_eating", cdata[cc], inv[ci]));
-            }
-            activity_eating_finish(cdata[cc], inv[ci]);
         }
     }
     if (game_data.weather == 2 ||

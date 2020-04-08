@@ -24,16 +24,16 @@ int initnum;
 
 
 
-int calculate_original_value(const Item& ci)
+int calculate_original_value(const Item& item)
 {
-    if (the_item_db[itemid2int(ci.id)]->category == ItemCategory::furniture)
+    if (the_item_db[itemid2int(item.id)]->category == ItemCategory::furniture)
     {
-        return ci.value * 100 / (80 + std::max(1, ci.subname) * 20) -
-            the_item_material_db[ci.material]->value * 2;
+        return item.value * 100 / (80 + std::max(1, item.subname) * 20) -
+            the_item_material_db[item.material]->value * 2;
     }
     else
     {
-        return ci.value * 100 / the_item_material_db[ci.material]->value;
+        return item.value * 100 / the_item_material_db[item.material]->value;
     }
 }
 
@@ -147,14 +147,14 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
         }
     }
 
-    ci = inv_getfreeid(slot);
-    if (ci == -1)
+    const auto empty_slot = inv_getfreeid(slot);
+    if (empty_slot == -1)
         return none;
 
-    auto&& item = inv[ci];
+    auto&& item = inv[empty_slot];
 
     item_delete(item);
-    item.index = ci; // needed?
+    item.index = empty_slot; // needed?
 
     if (slot == -1 && mode != 6 && mode != 9)
     {
@@ -531,7 +531,6 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
         const auto item_stack_result = item_stack(slot, item);
         if (item_stack_result.stacked)
         {
-            ci = item_stack_result.stacked_item.index;
             return item_stack_result.stacked_item;
         }
     }

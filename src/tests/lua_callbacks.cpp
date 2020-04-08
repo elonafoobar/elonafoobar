@@ -279,9 +279,10 @@ mod.store.global.items = {}
 Event.register("core.item_created", my_item_created_handler)
 )"));
 
-    REQUIRE_SOME(
-        elona::itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3));
-    int idx = elona::ci;
+    const auto item =
+        elona::itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3);
+    REQUIRE_SOME(item);
+    int idx = item->index;
     REQUIRE(idx != -1);
     elona::lua::lua->get_mod_manager()
         .get_mod("test_item_created")
