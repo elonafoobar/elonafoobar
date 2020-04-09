@@ -316,7 +316,14 @@ std::vector<std::reference_wrapper<Item>> itemlist(int owner, int id);
 
 void item_checkknown(Item& item);
 int inv_compress(int);
-void item_copy(int = 0, int = 0);
+
+/**
+ * Copy @a src to @a dst.
+ * @param src the source
+ * @param dst the destination
+ */
+void item_copy(Item& src, Item& dst);
+
 void item_acid(const Character& owner, int item_index = -1);
 void item_delete(Item& item);
 void item_exchange(int = 0, int = 0);

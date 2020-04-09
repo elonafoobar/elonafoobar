@@ -616,8 +616,8 @@ TEST_CASE("Test copying of item handles", "[Lua: Handles]")
     int ti = elona::inv_getfreeid(-1);
     REQUIRE(handle_mgr.get_handle(elona::inv[ti]) == sol::lua_nil);
 
-    elona::item_copy(i.index, ti);
-    Item& copy = elona::inv[ti];
+    elona::item_copy(i, slot);
+    Item& copy = slot;
     sol::table handle_copy = handle_mgr.get_handle(copy);
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
@@ -631,7 +631,7 @@ TEST_CASE("Test copying of item handles", "[Lua: Handles]")
 
     // Assert that copying to an existing item will not try to
     // overwrite the existing handle.
-    REQUIRE_NOTHROW(elona::item_copy(i.index, ti));
+    REQUIRE_NOTHROW(elona::item_copy(i, slot));
 }
 
 TEST_CASE("Test copying of item handles after removal", "[Lua: Handles]")
@@ -655,7 +655,7 @@ TEST_CASE("Test copying of item handles after removal", "[Lua: Handles]")
     b.set_number(0);
 
     // item_copy should clean up the handle in b's slot.
-    REQUIRE_NOTHROW(elona::item_copy(a.index, b.index));
+    REQUIRE_NOTHROW(elona::item_copy(a, b));
 }
 
 TEST_CASE("Test swapping of item handles", "[Lua: Handles]")

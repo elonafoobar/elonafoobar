@@ -444,7 +444,7 @@ TalkResult talk_arena_master_score()
 TalkResult talk_quest_delivery()
 {
     const auto slot = inv_getfreeid_force();
-    item_copy(deliver(1), slot);
+    item_copy(inv[deliver(1)], inv[slot]);
     inv[slot].set_number(1);
     rc = tc;
     chara_set_item_which_will_be_used(cdata[tc], inv[slot]);
@@ -460,7 +460,7 @@ TalkResult talk_quest_delivery()
 TalkResult talk_quest_supply()
 {
     const auto slot = inv_getfreeid_force();
-    item_copy(supply, slot);
+    item_copy(inv[supply], inv[slot]);
     inv[slot].set_number(1);
     cdata[tc].was_passed_item_by_you_just_now() = true;
     rc = tc;

@@ -222,7 +222,7 @@ void load_gene_files()
             item.count = -1;
         }
         item.body_part = 0;
-        item_copy(item.index, inv_getfreeid(-1));
+        item_copy(item, inv[inv_getfreeid(-1)]);
     }
     for (auto&& cnt : cdata.all())
     {

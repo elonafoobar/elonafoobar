@@ -1482,7 +1482,7 @@ void character_drops_item()
                 {
                     break;
                 }
-                item_copy(item.index, slot);
+                item_copy(item, inv[slot]);
                 inv[slot].own_state = -2;
             }
             item.remove();
@@ -1613,7 +1613,7 @@ void character_drops_item()
             {
                 break;
             }
-            item_copy(item.index, slot);
+            item_copy(item, inv[slot]);
         }
         item.remove();
     }

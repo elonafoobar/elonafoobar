@@ -1029,7 +1029,7 @@ TurnResult do_throw_command(Item& throw_item)
         }
         else
         {
-            item_copy(throw_item.index, slot);
+            item_copy(throw_item, inv[slot]);
             inv[slot].position.x = tlocx;
             inv[slot].position.y = tlocy;
             inv[slot].set_number(1);
@@ -5494,7 +5494,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
             }
             return {0, none};
         }
-        item_copy(item.index, picked_up_item_index);
+        item_copy(item, inv[picked_up_item_index]);
         inv[picked_up_item_index].set_number(in);
     }
     auto& picked_up_item = inv[picked_up_item_index];

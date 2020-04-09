@@ -1033,7 +1033,7 @@ void activity_others_end_steal(Item& steal_target)
         chara_refresh(tc);
     }
     auto& stolen_item = inv[slot];
-    item_copy(steal_target.index, stolen_item.index);
+    item_copy(steal_target, stolen_item);
     stolen_item.set_number(in);
     stolen_item.is_stolen() = true;
     stolen_item.own_state = 0;

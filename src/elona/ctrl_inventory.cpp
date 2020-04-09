@@ -1839,7 +1839,7 @@ OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
             selected_item.modify_number(-1);
             return OnEnterResult{1};
         }
-        item_copy(selected_item.index, slot);
+        item_copy(selected_item, inv[slot]);
         selected_item.modify_number(-1);
         inv[slot].set_number(1);
         auto& stacked_item = item_stack(tc, inv[slot], true).stacked_item;
@@ -2172,7 +2172,7 @@ OnEnterResult on_enter_receive(Item& selected_item)
     }
     else
     {
-        item_copy(selected_item.index, slot);
+        item_copy(selected_item, inv[slot]);
         selected_item.modify_number((-in));
         inv[slot].set_number(in);
         const auto stacked_item_index =
@@ -2257,7 +2257,7 @@ OnEnterResult on_enter_small_medal(Item& selected_item)
     }
     inv[i].modify_number(-calcmedalvalue(selected_item));
     snd("core.paygold1");
-    item_copy(selected_item.index, slot);
+    item_copy(selected_item, inv[slot]);
     txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", inv[slot]));
     const auto stacked_item_index =
         item_stack(0, inv[slot], true).stacked_item.index;

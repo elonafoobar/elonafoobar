@@ -456,29 +456,26 @@ void itemturn(Item& item)
 
 
 
-void item_copy(int a, int b)
+void item_copy(Item& src, Item& dst)
 {
-    if (a < 0 || b < 0)
-        return;
+    const auto was_empty = dst.number() == 0;
 
-    bool was_empty = inv[b].number() == 0;
-
-    if (was_empty && inv[a].number() > 0)
+    if (was_empty && src.number() > 0)
     {
         // Clean up any stale handles that may have been left over from an item
         // in the same index being removed.
-        lua::lua->get_handle_manager().remove_item_handle_run_callbacks(inv[b]);
+        lua::lua->get_handle_manager().remove_item_handle_run_callbacks(dst);
     }
 
-    Item::copy(inv[a], inv[b]);
+    Item::copy(src, dst);
 
-    if (was_empty && inv[b].number() != 0)
+    if (was_empty && dst.number() != 0)
     {
-        lua::lua->get_handle_manager().create_item_handle_run_callbacks(inv[b]);
+        lua::lua->get_handle_manager().create_item_handle_run_callbacks(dst);
     }
-    else if (!was_empty && inv[b].number() == 0)
+    else if (!was_empty && dst.number() == 0)
     {
-        inv[b].remove();
+        dst.remove();
     }
 }
 
@@ -581,7 +578,7 @@ int item_separate(int src)
         }
     }
 
-    item_copy(src, dst);
+    item_copy(inv[src], inv[dst]);
     inv[dst].set_number(inv[src].number() - 1);
     inv[src].set_number(1);
 
@@ -2312,7 +2309,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
     }
 
     auto& dropped_item = inv[slot];
-    item_copy(item_in_inventory.index, dropped_item.index);
+    item_copy(item_in_inventory, dropped_item);
     dropped_item.position = cdata[cc].position;
     dropped_item.set_number(num);
     itemturn(dropped_item);
