@@ -315,7 +315,7 @@ IdentifyState item_identify(Item& item, int power);
 std::vector<std::reference_wrapper<Item>> itemlist(int owner, int id);
 
 void item_checkknown(Item& item);
-int inv_compress(int);
+Item& inv_compress(int owner);
 
 /**
  * Copy @a src to @a dst.

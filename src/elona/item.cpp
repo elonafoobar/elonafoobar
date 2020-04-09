@@ -2161,7 +2161,9 @@ int inv_sum(int owner)
     return n;
 }
 
-int inv_compress(int owner)
+
+
+Item& inv_compress(int owner)
 {
     int number_of_deleted_items{};
     for (int i = 0; i < 100; ++i)
@@ -2195,33 +2197,27 @@ int inv_compress(int owner)
         }
     }
 
-    int slot = -1;
-    for (const auto& item : inv.by_index(owner))
+    for (auto&& item : inv.by_index(owner))
     {
         if (item.number() == 0)
         {
-            slot = item.index;
-            break;
+            return item;
         }
     }
 
-    if (slot == -1)
+    // Destroy 1 existing item forcely.
+    auto&& item = get_random_inv(owner);
+    item.remove();
+    if (mode != 6)
     {
-        // Destroy 1 existing item forcely.
-        auto&& item = get_random_inv(owner);
-        slot = item.index;
-        item.remove();
-        if (mode != 6)
+        if (item.position.x >= 0 && item.position.x < map_data.width &&
+            item.position.y >= 0 && item.position.y < map_data.height)
         {
-            if (item.position.x >= 0 && item.position.x < map_data.width &&
-                item.position.y >= 0 && item.position.y < map_data.height)
-            {
-                cell_refresh(item.position.x, item.position.y);
-            }
+            cell_refresh(item.position.x, item.position.y);
         }
     }
 
-    return slot;
+    return item;
 }
 
 
@@ -2238,7 +2234,7 @@ optional_ref<Item> inv_get_free_slot(int inventory_id)
     if (inventory_id == -1 && mode != 6)
     {
         txt(i18n::s.get("core.item.items_are_destroyed"));
-        return inv[inv_compress(inventory_id)];
+        return inv_compress(inventory_id);
     }
     return none;
 }
