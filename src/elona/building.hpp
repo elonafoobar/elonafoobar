@@ -1,5 +1,8 @@
 #pragma once
 
+#include <functional>
+#include <vector>
+
 
 
 namespace elona
@@ -27,7 +30,14 @@ void update_shop();
 void calc_collection_value(bool);
 void update_museum();
 void calc_hairloom_value(int);
-void calc_home_rank();
+
+struct HomeRankHeirloom
+{
+    std::reference_wrapper<Item> item;
+    int value;
+};
+std::vector<HomeRankHeirloom> building_update_home_rank();
+
 void update_ranch();
 
 int calcincome(int = 0);

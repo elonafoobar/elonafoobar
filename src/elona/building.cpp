@@ -60,11 +60,12 @@ int calc_heirloom_value(const Item& heirloom)
 
 
 constexpr size_t heirloom_list_size = 10;
-using ItemAndValue = std::pair<int, int>;
 
+// @a heirlooms are sorted by value in descending order. The first item is the
+// most valuable one.
 void add_heirloom_if_valuable_enough(
-    std::vector<ItemAndValue>& heirlooms,
-    const Item& heirloom)
+    std::vector<HomeRankHeirloom>& heirlooms,
+    Item& heirloom)
 {
     const auto category = the_item_db[itemid2int(heirloom.id)]->category;
     if (category == ItemCategory::furniture)
@@ -73,13 +74,18 @@ void add_heirloom_if_valuable_enough(
     }
 
     const auto value = calc_heirloom_value(heirloom);
-    if (heirlooms.back().second < value)
+    if (heirlooms.size() < heirloom_list_size)
     {
-        heirlooms.back() = {heirloom.index, value};
-        // Sort by value in descending order. The first item is the most
-        // valuable one.
+        heirlooms.push_back({std::ref(heirloom), value});
         range::sort(heirlooms, [](const auto& a, const auto& b) {
-            return a.second > b.second;
+            return a.value > b.value;
+        });
+    }
+    else if (heirlooms.back().value < value)
+    {
+        heirlooms.back() = {std::ref(heirloom), value};
+        range::sort(heirlooms, [](const auto& a, const auto& b) {
+            return a.value > b.value;
         });
     }
 }
@@ -753,7 +759,8 @@ void show_home_value()
         x,
         y);
     gmode(2);
-    calc_home_rank();
+
+    const auto heirlooms = building_update_home_rank();
     s(0) = i18n::s.get("core.building.home.rank.type.base");
     s(1) = i18n::s.get("core.building.home.rank.type.deco");
     s(2) = i18n::s.get("core.building.home.rank.type.heir");
@@ -781,23 +788,17 @@ void show_home_value()
         }
     }
     font(12 + sizefix - en * 2);
-    listmax = 10;
-    sort_list_by_column1();
-    for (int cnt = 0; cnt < 10; ++cnt)
+
+    int i = 0;
+    for (const auto& [heirloom, _value] : heirlooms)
     {
-        p = list(0, 10 - cnt - 1);
-        if (p == 0)
-        {
-            continue;
-        }
-
         draw_item_with_portrait_scale_height(
-            inv[p], wx + 37, cnt * 16 + wy + 138);
-
+            heirloom.get(), wx + 37, i * 16 + wy + 138);
         mes(wx + 68,
-            cnt * 16 + wy + 138,
-            i18n::s.get("core.building.home.rank.place", cnvrank(cnt + 1)));
-        mes(wx + 110, cnt * 16 + wy + 138, itemname(inv[p]));
+            i * 16 + wy + 138,
+            i18n::s.get("core.building.home.rank.place", cnvrank(i + 1)));
+        mes(wx + 110, i * 16 + wy + 138, itemname(heirloom.get()));
+        ++i;
     }
 
     while (1)
@@ -1288,19 +1289,19 @@ void update_museum()
 
 
 
-void calc_home_rank()
+std::vector<HomeRankHeirloom> building_update_home_rank()
 {
     if (game_data.current_dungeon_level != 1)
     {
-        return;
+        return {};
     }
     rankorg = game_data.ranks.at(4);
     rankcur = 0;
     game_data.total_deco_value = 0;
     game_data.total_heirloom_value = 0;
 
-    std::vector<ItemAndValue> heirlooms{heirloom_list_size};
-    for (const auto& item : inv.ground())
+    std::vector<HomeRankHeirloom> heirlooms;
+    for (auto&& item : inv.ground())
     {
         if (item.number() == 0)
         {
@@ -1316,20 +1317,10 @@ void calc_home_rank()
 
         add_heirloom_if_valuable_enough(heirlooms, item);
     }
-    size_t i{};
-    for (const auto& heirloom : heirlooms)
-    {
-        list(0, static_cast<int>(i)) = heirloom.first;
-        list(1, static_cast<int>(i)) = heirloom.second;
-        ++i;
-    }
 
-    for (int cnt = 0; cnt < 10; ++cnt)
+    for (const auto& [_, value] : heirlooms)
     {
-        if (list(0, cnt) != 0)
-        {
-            game_data.total_heirloom_value += clamp(list(1, cnt), 100, 2000);
-        }
+        game_data.total_heirloom_value += clamp(value, 100, 2000);
     }
     if (game_data.total_deco_value > 10000)
     {
@@ -1368,6 +1359,8 @@ void calc_home_rank()
             ranktitle(4),
             rankn(10, 4)));
     }
+
+    return heirlooms;
 }
 
 

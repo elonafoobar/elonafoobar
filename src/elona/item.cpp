@@ -2359,7 +2359,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
     {
         if (mode == 0)
         {
-            calc_home_rank();
+            building_update_home_rank();
         }
     }
     if (stacked_item.id == ItemId::campfire)

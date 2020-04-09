@@ -5646,7 +5646,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
         {
             if (mode == 0)
             {
-                calc_home_rank();
+                building_update_home_rank();
             }
         }
         refresh_burden_state();

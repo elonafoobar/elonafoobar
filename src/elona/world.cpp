@@ -83,7 +83,7 @@ void weather_changes()
     }
     if (game_data.current_map == mdata_t::MapId::your_home)
     {
-        calc_home_rank();
+        building_update_home_rank();
     }
     if (map_data.type == mdata_t::MapType::world_map)
     {
