@@ -2075,12 +2075,12 @@ bool _magic_645_1114()
             txt(i18n::s.get("core.magic.curse.spell", cdata[cc], cdata[tc]));
         }
     }
-    p = 75 + sdata(19, tc);
+    int p = 75 + sdata(19, tc);
     if (const auto anticurse = enchantment_find(cdata[tc], 43))
     {
         p += *anticurse / 2;
     }
-    if (rnd_capped(p(0)) > efp / 2 + (is_cursed(efstatus)) * 100)
+    if (rnd_capped(p) > efp / 2 + (is_cursed(efstatus)) * 100)
     {
         return true;
     }
@@ -2095,29 +2095,28 @@ bool _magic_645_1114()
             }
         }
     }
-    i = 0;
+    std::vector<std::reference_wrapper<Item>> candidates;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         if (cdata[tc].body_parts[cnt] % 10000 == 0)
         {
             continue;
         }
-        p(i) = cdata[tc].body_parts[cnt] % 10000 - 1;
-        if (inv[p(i)].curse_state == CurseState::blessed)
+        const auto item_index = cdata[tc].body_parts[cnt] % 10000 - 1;
+        if (inv[item_index].curse_state == CurseState::blessed)
         {
             if (rnd(10))
             {
                 continue;
             }
         }
-        ++i;
+        candidates.emplace_back(std::ref(inv[item_index]));
     }
-    if (i == 0)
+    if (candidates.empty())
     {
-        for (int cnt = 0; cnt < 200; ++cnt)
+        for (int _i = 0; _i < 200; ++_i)
         {
-            const auto& item = get_random_inv(tc);
-            p = item.index;
+            auto& item = get_random_inv(tc);
             if (item.number() == 0)
             {
                 continue;
@@ -2129,30 +2128,32 @@ bool _magic_645_1114()
                     continue;
                 }
             }
-            i = 1;
+            candidates.emplace_back(std::ref(item));
             break;
         }
     }
-    if (i > 0)
+    if (!candidates.empty())
     {
-        i = p(rnd(i(0)));
-        const auto valn = itemname(inv[i], 1, false);
-        if (inv[i].curse_state == CurseState::cursed)
+        const auto& cursed_item_wr = choice(candidates);
+        auto& cursed_item = cursed_item_wr.get();
+        const auto original_item_name = itemname(cursed_item, 1, false);
+        if (cursed_item.curse_state == CurseState::cursed)
         {
-            inv[i].curse_state = CurseState::doomed;
+            cursed_item.curse_state = CurseState::doomed;
         }
         else
         {
-            inv[i].curse_state = CurseState::cursed;
+            cursed_item.curse_state = CurseState::cursed;
         }
         if (is_in_fov(cdata[tc]))
         {
-            txt(i18n::s.get("core.magic.curse.apply", cdata[tc], valn));
+            txt(i18n::s.get(
+                "core.magic.curse.apply", cdata[tc], original_item_name));
         }
         chara_refresh(tc);
         snd("core.curse3");
         animeload(14, tc);
-        item_stack(tc, inv[i], true);
+        item_stack(tc, cursed_item, true);
     }
     else
     {
