@@ -324,7 +324,7 @@ int inv_compress(int);
  */
 void item_copy(Item& src, Item& dst);
 
-void item_acid(const Character& owner, int item_index = -1);
+void item_acid(const Character& owner, optional_ref<Item> item = none);
 void item_delete(Item& item);
 
 /**

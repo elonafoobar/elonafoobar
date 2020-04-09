@@ -1642,9 +1642,9 @@ void item_dump_desc(Item& item)
 
 
 
-void item_acid(const Character& owner, int item_index)
+void item_acid(const Character& owner, optional_ref<Item> item)
 {
-    if (item_index == -1)
+    if (!item)
     {
         for (const auto& body_part : owner.body_parts)
         {
@@ -1661,31 +1661,31 @@ void item_acid(const Character& owner, int item_index)
             {
                 if (rnd(30) == 0)
                 {
-                    item_index = p;
+                    item = inv[i];
                     break;
                 }
             }
         }
-        if (item_index == -1)
+        if (!item)
         {
             return;
         }
     }
 
-    if (!is_equipment(the_item_db[itemid2int(inv[item_index].id)]->category))
+    if (!is_equipment(the_item_db[itemid2int(item->id)]->category))
     {
         return;
     }
 
-    if (inv[item_index].is_acidproof())
+    if (item->is_acidproof())
     {
-        txt(i18n::s.get("core.item.acid.immune", owner, inv[item_index]));
+        txt(i18n::s.get("core.item.acid.immune", owner, *item));
     }
     else
     {
-        txt(i18n::s.get("core.item.acid.damaged", owner, inv[item_index]),
+        txt(i18n::s.get("core.item.acid.damaged", owner, *item),
             Message::color{ColorIndex::purple});
-        --inv[item_index].enhancement;
+        --item->enhancement;
     }
 }
 

@@ -523,7 +523,7 @@ bool do_physical_attack_internal(
                         {
                             if (rnd(5) == 0)
                             {
-                                item_acid(cdata[cc], weapon->index);
+                                item_acid(cdata[cc], *weapon);
                             }
                         }
                     }
