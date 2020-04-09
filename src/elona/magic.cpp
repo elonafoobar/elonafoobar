@@ -3416,8 +3416,8 @@ bool _magic_651()
     {
         txt(i18n::s.get("core.magic.scavenge.apply", cdata[cc], cdata[tc]));
     }
-    int eat_item_index = -1;
-    for (const auto& item : inv.for_chara(cdata[tc]))
+    optional_ref<Item> eat_item_opt;
+    for (auto&& item : inv.for_chara(cdata[tc]))
     {
         if (item.number() == 0)
         {
@@ -3425,13 +3425,13 @@ bool _magic_651()
         }
         if (item.id == ItemId::fish_a)
         {
-            eat_item_index = item.index;
+            eat_item_opt = item;
             break;
         }
     }
-    if (eat_item_index == -1)
+    if (!eat_item_opt)
     {
-        for (const auto& item : inv.for_chara(cdata[tc]))
+        for (auto&& item : inv.for_chara(cdata[tc]))
         {
             if (item.number() == 0)
             {
@@ -3446,15 +3446,15 @@ bool _magic_651()
             {
                 continue;
             }
-            eat_item_index = item.index;
+            eat_item_opt = item;
             break;
         }
     }
-    if (eat_item_index == -1)
+    if (!eat_item_opt)
     {
         return true;
     }
-    auto& eat_item = inv[eat_item_index];
+    auto& eat_item = *eat_item_opt;
     if (eat_item.is_aphrodisiac())
     {
         if (is_in_fov(cdata[tc]))
