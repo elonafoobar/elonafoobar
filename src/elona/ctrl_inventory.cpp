@@ -2012,7 +2012,7 @@ on_enter_trade_target(Item& selected_item, MenuResult& result, int& citrade)
     {
         supply_new_equipment();
     }
-    inv_getfreeid_force();
+    (void)inv_get_free_slot_force(tc);
     chara_refresh(tc);
     refresh_burden_state();
     invsubroutine = 0;

@@ -443,11 +443,11 @@ TalkResult talk_arena_master_score()
 
 TalkResult talk_quest_delivery()
 {
-    const auto slot = inv_getfreeid_force();
-    item_copy(inv[deliver(1)], inv[slot]);
-    inv[slot].set_number(1);
+    auto& slot = inv_get_free_slot_force(tc);
+    item_copy(inv[deliver(1)], slot);
+    slot.set_number(1);
     rc = tc;
-    chara_set_item_which_will_be_used(cdata[tc], inv[slot]);
+    chara_set_item_which_will_be_used(cdata[tc], slot);
     rq = deliver;
     inv[deliver(1)].modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", inv[deliver(1)]));
@@ -459,12 +459,12 @@ TalkResult talk_quest_delivery()
 
 TalkResult talk_quest_supply()
 {
-    const auto slot = inv_getfreeid_force();
-    item_copy(inv[supply], inv[slot]);
-    inv[slot].set_number(1);
+    auto& slot = inv_get_free_slot_force(tc);
+    item_copy(inv[supply], slot);
+    slot.set_number(1);
     cdata[tc].was_passed_item_by_you_just_now() = true;
     rc = tc;
-    chara_set_item_which_will_be_used(cdata[tc], inv[slot]);
+    chara_set_item_which_will_be_used(cdata[tc], slot);
     inv[supply].modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", inv[supply]));
     quest_set_data(3);

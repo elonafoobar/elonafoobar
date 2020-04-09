@@ -383,7 +383,8 @@ int inv_getowner(int = 0);
 int inv_sum(int = 0);
 int inv_weight(int = 0);
 bool inv_getspace(int);
-int inv_getfreeid_force();
+
+Item& inv_get_free_slot_force(int inventory_id);
 
 void remain_make(Item& remain, const Character& chara);
 

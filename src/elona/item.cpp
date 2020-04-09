@@ -2286,26 +2286,29 @@ int inv_weight(int owner)
     return weight;
 }
 
-int inv_getfreeid_force()
+
+
+Item& inv_get_free_slot_force(int inventory_id)
 {
-    if (const auto slot = inv_get_free_slot(tc))
+    assert(inventory_id != -1);
+
+    if (const auto slot = inv_get_free_slot(inventory_id))
     {
-        return slot->index;
+        return *slot;
     }
-    for (int cnt = 0; cnt < 100; ++cnt)
+    while (true)
     {
-        p = rnd(invrange) + invhead;
-        if (inv[p].body_part == 0)
+        auto& item = get_random_inv(inventory_id);
+        if (item.body_part == 0)
         {
-            inv[p].remove();
-            if (cdata[tc].item_which_will_be_used == p)
+            item.remove();
+            if (cdata[inventory_id].item_which_will_be_used == item.index)
             {
-                cdata[tc].item_which_will_be_used = 0;
+                cdata[inventory_id].item_which_will_be_used = 0;
             }
-            break;
+            return item;
         }
     }
-    return p;
 }
 
 
