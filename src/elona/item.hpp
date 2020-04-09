@@ -326,7 +326,15 @@ void item_copy(Item& src, Item& dst);
 
 void item_acid(const Character& owner, int item_index = -1);
 void item_delete(Item& item);
-void item_exchange(int = 0, int = 0);
+
+/**
+ * Swap the content of @a a and @a b. If they points to the same object, does
+ * nothing.
+ * @param a one item
+ * @param b another item
+ */
+void item_exchange(Item& a, Item& b);
+
 void itemturn(Item& item);
 optional_ref<Item>
 itemfind(int inventory_id, int matcher, int matcher_type = 0);

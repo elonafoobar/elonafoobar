@@ -1999,7 +1999,7 @@ on_enter_trade_target(Item& selected_item, MenuResult& result, int& citrade)
             cdata[tc].body_parts[p - 100] / 10000 * 10000;
         inv[citrade].body_part = 0;
     }
-    item_exchange(selected_item.index, citrade);
+    item_exchange(selected_item, inv[citrade]);
     convertartifact(selected_item.index);
     rc = tc;
     if (cdata[rc].item_which_will_be_used == citrade)

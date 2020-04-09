@@ -679,7 +679,7 @@ TEST_CASE("Test swapping of item handles", "[Lua: Handles]")
     std::string uuid_a = handle_a["__uuid"];
     std::string uuid_b = handle_b["__uuid"];
 
-    elona::item_exchange(item_a.index, item_b.index);
+    elona::item_exchange(item_a, item_b);
 
     // Disabled temporarily.
     // TODO: rethink how should swapping behave.

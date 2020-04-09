@@ -481,14 +481,19 @@ void item_copy(Item& src, Item& dst)
 
 
 
-void item_exchange(int a, int b)
+void item_exchange(Item& a, Item& b)
 {
-    Item tmp;
-    Item::copy(inv[a], tmp);
-    Item::copy(inv[b], inv[a]);
-    Item::copy(tmp, inv[b]);
+    if (a.index == b.index)
+    {
+        return;
+    }
 
-    lua::lua->get_handle_manager().swap_handles<Item>(inv[b], inv[a]);
+    Item tmp;
+    Item::copy(a, tmp);
+    Item::copy(b, a);
+    Item::copy(tmp, b);
+
+    lua::lua->get_handle_manager().swap_handles(b, a);
 }
 
 
