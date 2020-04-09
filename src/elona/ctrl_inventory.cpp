@@ -1667,19 +1667,20 @@ OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
         txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
         return OnEnterResult{2};
     }
-    const auto slot = inv_getfreeid(tc);
     if (cdata[tc].sleep)
     {
         txt(i18n::s.get("core.ui.inv.give.is_sleeping", cdata[tc]));
         snd("core.fail1");
         return OnEnterResult{2};
     }
-    if (slot == -1)
+    const auto slot_opt = inv_get_free_slot(tc);
+    if (!slot_opt)
     {
         txt(i18n::s.get("core.ui.inv.give.inventory_is_full", cdata[tc]));
         snd("core.fail1");
         return OnEnterResult{2};
     }
+    auto& slot = *slot_opt;
     reftype = (int)the_item_db[itemid2int(selected_item.id)]->category;
     if (selected_item.id == ItemId::gift)
     {
@@ -1839,10 +1840,10 @@ OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
             selected_item.modify_number(-1);
             return OnEnterResult{1};
         }
-        item_copy(selected_item, inv[slot]);
+        item_copy(selected_item, slot);
         selected_item.modify_number(-1);
-        inv[slot].set_number(1);
-        auto& stacked_item = item_stack(tc, inv[slot], true).stacked_item;
+        slot.set_number(1);
+        auto& stacked_item = item_stack(tc, slot, true).stacked_item;
         rc = tc;
         chara_set_item_which_will_be_used(cdata[tc], stacked_item);
         wear_most_valuable_equipment_for_all_body_parts();
@@ -2113,12 +2114,13 @@ OnEnterResult on_enter_put_into(Item& selected_item)
 
 OnEnterResult on_enter_receive(Item& selected_item)
 {
-    const auto slot = inv_getfreeid(0);
-    if (slot == -1)
+    const auto slot_opt = inv_get_free_slot(0);
+    if (!slot_opt)
     {
         txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
         return OnEnterResult{2};
     }
+    auto& slot = *slot_opt;
     if (the_item_db[itemid2int(selected_item.id)]->category ==
         ItemCategory::ore)
     {
@@ -2172,11 +2174,11 @@ OnEnterResult on_enter_receive(Item& selected_item)
     }
     else
     {
-        item_copy(selected_item, inv[slot]);
+        item_copy(selected_item, slot);
         selected_item.modify_number((-in));
-        inv[slot].set_number(in);
+        slot.set_number(in);
         const auto stacked_item_index =
-            item_stack(0, inv[slot], true).stacked_item.index;
+            item_stack(0, slot, true).stacked_item.index;
         convertartifact(stacked_item_index);
     }
     rc = tc;
@@ -2232,13 +2234,14 @@ OnEnterResult on_enter_steal(Item& selected_item, MenuResult& result)
 OnEnterResult on_enter_small_medal(Item& selected_item)
 {
     Message::instance().linebreak();
-    const auto slot = inv_getfreeid(0);
-    if (slot == -1)
+    const auto slot_opt = inv_get_free_slot(0);
+    if (!slot_opt)
     {
         txt(i18n::s.get("core.ui.inv.trade_medals.inventory_full"));
         snd("core.fail1");
         return OnEnterResult{1};
     }
+    auto& slot = *slot_opt;
     if (const auto small_medals =
             item_find(622, 3, ItemFindLocation::player_inventory))
     {
@@ -2257,10 +2260,10 @@ OnEnterResult on_enter_small_medal(Item& selected_item)
     }
     inv[i].modify_number(-calcmedalvalue(selected_item));
     snd("core.paygold1");
-    item_copy(selected_item, inv[slot]);
-    txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", inv[slot]));
+    item_copy(selected_item, slot);
+    txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", slot));
     const auto stacked_item_index =
-        item_stack(0, inv[slot], true).stacked_item.index;
+        item_stack(0, slot, true).stacked_item.index;
     convertartifact(stacked_item_index, 1);
     return OnEnterResult{1};
 }

@@ -1558,7 +1558,7 @@ TalkResult talk_quest_giver()
         }
         if (quest_data[rq].id == 1002)
         {
-            if (inv_getfreeid(0) == -1)
+            if (!inv_get_free_slot(0))
             {
                 buff = i18n::s.get(
                     "core.talk.npc.quest_giver.about.backpack_full", cdata[tc]);

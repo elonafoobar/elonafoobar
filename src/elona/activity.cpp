@@ -1013,8 +1013,8 @@ void activity_others_end_steal(Item& steal_target)
     {
         in = steal_target.number();
     }
-    const auto slot = inv_getfreeid(0);
-    if (slot == -1)
+    const auto slot = inv_get_free_slot(0);
+    if (!slot)
     {
         txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
         return;
@@ -1032,7 +1032,7 @@ void activity_others_end_steal(Item& steal_target)
         steal_target.body_part = 0;
         chara_refresh(tc);
     }
-    auto& stolen_item = inv[slot];
+    auto& stolen_item = *slot;
     item_copy(steal_target, stolen_item);
     stolen_item.set_number(in);
     stolen_item.is_stolen() = true;

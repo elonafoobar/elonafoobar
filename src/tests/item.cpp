@@ -16,9 +16,11 @@ TEST_CASE("Test that index of copied item is set", "[C++: Item]")
     REQUIRE_SOME(i_opt);
     Item& i = *i_opt;
 
-    int ti = elona::inv_getfreeid(-1);
-    elona::Item::copy(i, elona::inv[ti]);
+    const auto slot_opt = elona::inv_get_free_slot(-1);
+    REQUIRE_SOME(slot_opt);
+    auto& slot = *slot_opt;
+    elona::Item::copy(i, slot);
 
     REQUIRE(elona::inv[i.index].index == i.index);
-    REQUIRE(elona::inv[ti].index == ti);
+    REQUIRE(elona::inv[slot.index].index == slot.index);
 }

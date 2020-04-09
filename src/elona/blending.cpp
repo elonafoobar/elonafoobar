@@ -1846,7 +1846,7 @@ void blending_proc_on_success_events_natural_potion(Item& well, Item&)
         txt(i18n::s.get("core.action.dip.result.natural_potion_drop"));
         return;
     }
-    if (inv_getfreeid(0) == -1)
+    if (!inv_get_free_slot(0))
     {
         txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
         return;

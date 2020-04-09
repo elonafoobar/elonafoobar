@@ -613,8 +613,10 @@ TEST_CASE("Test copying of item handles", "[Lua: Handles]")
     Item& i = *i_opt;
     sol::table handle = handle_mgr.get_handle(i);
 
-    int ti = elona::inv_getfreeid(-1);
-    REQUIRE(handle_mgr.get_handle(elona::inv[ti]) == sol::lua_nil);
+    const auto slot_opt = elona::inv_get_free_slot(-1);
+    REQUIRE_SOME(slot_opt);
+    auto& slot = *slot_opt;
+    REQUIRE(handle_mgr.get_handle(slot) == sol::lua_nil);
 
     elona::item_copy(i, slot);
     Item& copy = slot;

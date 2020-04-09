@@ -573,32 +573,33 @@ Item& item_separate(Item& stacked_item)
         return stacked_item;
     }
 
-    int dst = inv_getfreeid(inv_getowner(stacked_item.index));
-    if (dst == -1)
+    auto slot = inv_get_free_slot(inv_getowner(stacked_item.index));
+    if (!slot)
     {
-        dst = inv_getfreeid(-1);
-        if (dst == -1)
+        slot = inv_get_free_slot(-1);
+        if (!slot)
         {
             stacked_item.set_number(1);
             txt(i18n::s.get("core.item.something_falls_and_disappears"));
             return stacked_item;
         }
     }
+    auto& dst = *slot;
 
-    item_copy(stacked_item, inv[dst]);
-    inv[dst].set_number(stacked_item.number() - 1);
+    item_copy(stacked_item, dst);
+    dst.set_number(stacked_item.number() - 1);
     stacked_item.set_number(1);
 
-    if (inv_getowner(dst) == -1 && mode != 6)
+    if (inv_getowner(dst.index) == -1 && mode != 6)
     {
         if (inv_getowner(stacked_item.index) != -1)
         {
             stacked_item.position =
                 cdata[inv_getowner(stacked_item.index)].position;
         }
-        inv[dst].position = stacked_item.position;
-        itemturn(inv[dst]);
-        cell_refresh(inv[dst].position.x, inv[dst].position.y);
+        dst.position = stacked_item.position;
+        itemturn(dst);
+        cell_refresh(dst.position.x, dst.position.y);
         if (inv_getowner(stacked_item.index) != -1)
         {
             txt(i18n::s.get("core.item.something_falls_from_backpack"));
@@ -606,7 +607,7 @@ Item& item_separate(Item& stacked_item)
         refresh_burden_state();
     }
 
-    return inv[dst];
+    return dst;
 }
 
 
@@ -2240,22 +2241,26 @@ int inv_compress(int owner)
     return slot;
 }
 
-int inv_getfreeid(int owner)
+
+
+optional_ref<Item> inv_get_free_slot(int inventory_id)
 {
-    for (const auto& item : inv.by_index(owner))
+    for (auto&& item : inv.by_index(inventory_id))
     {
         if (item.number() == 0)
         {
-            return item.index;
+            return item;
         }
     }
-    if (owner == -1 && mode != 6)
+    if (inventory_id == -1 && mode != 6)
     {
         txt(i18n::s.get("core.item.items_are_destroyed"));
-        return inv_compress(owner);
+        return inv[inv_compress(inventory_id)];
     }
-    return -1;
+    return none;
 }
+
+
 
 int inv_weight(int owner)
 {
@@ -2283,10 +2288,9 @@ int inv_weight(int owner)
 
 int inv_getfreeid_force()
 {
-    p = inv_getfreeid(tc);
-    if (p != -1)
+    if (const auto slot = inv_get_free_slot(tc))
     {
-        return p;
+        return slot->index;
     }
     for (int cnt = 0; cnt < 100; ++cnt)
     {
@@ -2308,15 +2312,15 @@ int inv_getfreeid_force()
 
 void item_drop(Item& item_in_inventory, int num, bool building_shelter)
 {
-    const auto slot = inv_getfreeid(-1);
-    if (slot == -1)
+    const auto slot = inv_get_free_slot(-1);
+    if (!slot)
     {
         txt(i18n::s.get("core.action.drop.too_many_items"));
         update_screen();
         return;
     }
 
-    auto& dropped_item = inv[slot];
+    auto& dropped_item = *slot;
     item_copy(item_in_inventory, dropped_item);
     dropped_item.position = cdata[cc].position;
     dropped_item.set_number(num);

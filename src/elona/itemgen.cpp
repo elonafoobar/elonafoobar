@@ -147,14 +147,13 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
         }
     }
 
-    const auto empty_slot = inv_getfreeid(slot);
-    if (empty_slot == -1)
+    const auto empty_slot = inv_get_free_slot(slot);
+    if (!empty_slot)
         return none;
 
-    auto&& item = inv[empty_slot];
+    auto&& item = *empty_slot;
 
     item_delete(item);
-    item.index = empty_slot; // needed?
 
     if (slot == -1 && mode != 6 && mode != 9)
     {

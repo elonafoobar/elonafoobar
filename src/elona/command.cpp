@@ -1021,20 +1021,19 @@ TurnResult do_throw_command(Item& throw_item)
 
     if (throw_item.id == ItemId::monster_ball)
     {
-        const auto slot = inv_getfreeid(-1);
-        if (slot == -1)
+        if (const auto slot = inv_get_free_slot(-1))
         {
+            item_copy(throw_item, *slot);
+            slot->position.x = tlocx;
+            slot->position.y = tlocy;
+            slot->set_number(1);
             throw_item.modify_number(-1);
-            return do_throw_command_internal(throw_item);
+            return do_throw_command_internal(*slot);
         }
         else
         {
-            item_copy(throw_item, inv[slot]);
-            inv[slot].position.x = tlocx;
-            inv[slot].position.y = tlocy;
-            inv[slot].set_number(1);
             throw_item.modify_number(-1);
-            return do_throw_command_internal(inv[slot]);
+            return do_throw_command_internal(throw_item);
         }
     }
     else
@@ -1549,7 +1548,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
                         "core.action.dip.result.natural_potion_drop"));
                     return TurnResult::turn_end;
                 }
-                if (inv_getfreeid(0) == -1)
+                if (!inv_get_free_slot(0))
                 {
                     txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                     return TurnResult::turn_end;
@@ -5416,7 +5415,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
                 return {0, none};
             }
         }
-        if (inv_getfreeid(cc) == -1)
+        if (!inv_get_free_slot(cc))
         {
             txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
             return {0, none};
@@ -5479,8 +5478,8 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
     }
     else
     {
-        picked_up_item_index = inv_getfreeid(cc);
-        if (picked_up_item_index == -1)
+        const auto slot = inv_get_free_slot(cc);
+        if (!slot)
         {
             item.set_number(inumbk + in);
             if (invctrl == 12)
@@ -5494,8 +5493,9 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
             }
             return {0, none};
         }
-        item_copy(item, inv[picked_up_item_index]);
-        inv[picked_up_item_index].set_number(in);
+        item_copy(item, *slot);
+        slot->set_number(in);
+        picked_up_item_index = slot->index;
     }
     auto& picked_up_item = inv[picked_up_item_index];
 

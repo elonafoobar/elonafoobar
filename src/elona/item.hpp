@@ -376,7 +376,9 @@ void mapitem_cold(int x, int y);
 // TODO unsure how these are separate from item
 int inv_find(int = 0, int = 0);
 Item& get_random_inv(int owner);
-int inv_getfreeid(int = 0);
+
+optional_ref<Item> inv_get_free_slot(int inventory_id);
+
 int inv_getowner(int = 0);
 int inv_sum(int = 0);
 int inv_weight(int = 0);
