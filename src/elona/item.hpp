@@ -432,7 +432,9 @@ void auto_identify();
 void begintempinv();
 void exittempinv();
 bool cargocheck(const Item& item);
-int convertartifact(int = 0, int = 0);
+Item& item_convert_artifact(
+    Item& artifact,
+    bool ignore_external_container = false);
 void damage_by_cursed_equipments();
 void dipcursed(Item& item);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);

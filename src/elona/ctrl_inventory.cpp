@@ -2001,7 +2001,7 @@ on_enter_trade_target(Item& selected_item, MenuResult& result, int& citrade)
         inv[citrade].body_part = 0;
     }
     item_exchange(selected_item, inv[citrade]);
-    convertartifact(selected_item.index);
+    item_convert_artifact(selected_item);
     rc = tc;
     if (cdata[rc].item_which_will_be_used == citrade)
     {
@@ -2177,9 +2177,8 @@ OnEnterResult on_enter_receive(Item& selected_item)
         item_copy(selected_item, slot);
         selected_item.modify_number((-in));
         slot.set_number(in);
-        const auto stacked_item_index =
-            item_stack(0, slot, true).stacked_item.index;
-        convertartifact(stacked_item_index);
+        auto& stacked_item = item_stack(0, slot, true).stacked_item;
+        item_convert_artifact(stacked_item);
     }
     rc = tc;
     wear_most_valuable_equipment_for_all_body_parts();
@@ -2262,9 +2261,8 @@ OnEnterResult on_enter_small_medal(Item& selected_item)
     snd("core.paygold1");
     item_copy(selected_item, slot);
     txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", slot));
-    const auto stacked_item_index =
-        item_stack(0, slot, true).stacked_item.index;
-    convertartifact(stacked_item_index, 1);
+    auto& stacked_item = item_stack(0, slot, true).stacked_item;
+    item_convert_artifact(stacked_item, true);
     return OnEnterResult{1};
 }
 

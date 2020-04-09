@@ -5645,7 +5645,8 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
                 }
             }
         }
-        picked_up_item_index = convertartifact(picked_up_item_index);
+        picked_up_item_index =
+            item_convert_artifact(inv[picked_up_item_index]).index;
         if (area_data[game_data.current_map].id == mdata_t::MapId::museum)
         {
             if (mode == 0)

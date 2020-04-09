@@ -2528,81 +2528,79 @@ bool cargocheck(const Item& item)
 
 
 
-int convertartifact(int item_index, int ignore_external_container)
+Item& item_convert_artifact(Item& artifact, bool ignore_external_container)
 {
-    int f_at_m163 = 0;
-    int tc_at_m163 = 0;
-    std::string n_at_m163;
-    if (!is_equipment(the_item_db[itemid2int(inv[item_index].id)]->category))
+    if (!is_equipment(the_item_db[itemid2int(artifact.id)]->category))
     {
-        return item_index;
+        return artifact; // is not an equipment.
     }
-    if (inv[item_index].quality != Quality::special)
+    if (artifact.quality != Quality::special)
     {
-        return item_index;
+        return artifact; // is not a unique artifact.
     }
-    if (inv[item_index].body_part != 0)
+    if (artifact.body_part != 0)
     {
-        return item_index;
+        return artifact; // is equipped.
     }
-    f_at_m163 = 0;
-    for (int cnt = 0; cnt < ELONA_MAX_ITEMS; ++cnt)
+
+    bool found = false;
+    for (const auto& chara : cdata.pc_and_pets())
     {
-        if (ignore_external_container)
-        {
-            if (cnt >= ELONA_ITEM_ON_GROUND_INDEX)
-            {
-                break;
-            }
-        }
-        if (cnt >= 520 && cnt < 5060)
+        if (chara.state() == Character::State::empty)
         {
             continue;
         }
-        tc_at_m163 = inv_getowner(cnt);
-        if (tc_at_m163 != -1)
+        for (const auto& item : inv.for_chara(chara))
         {
-            if (cdata[tc_at_m163].state() == Character::State::empty ||
-                cdata[tc_at_m163].character_role == 13)
+            if (item.number() > 0 && item.id == artifact.id &&
+                item.index != artifact.index)
             {
-                continue;
+                found = true;
+                break;
             }
         }
-        if (inv[cnt].number() > 0)
+        if (found)
         {
-            if (inv[cnt].id == inv[item_index].id)
-            {
-                if (cnt != item_index)
-                {
-                    f_at_m163 = 1;
-                    break;
-                }
-            }
+            break;
         }
     }
-    if (f_at_m163 == 0)
+    if (!found && !ignore_external_container)
     {
-        return item_index;
+        for (const auto& item : inv.ground())
+        {
+            if (item.number() > 0 && item.id == artifact.id &&
+                item.index != artifact.index)
+            {
+                found = true;
+                break;
+            }
+        }
     }
-    n_at_m163 = ""s + itemname(inv[item_index]);
+    if (!found)
+    {
+        return artifact; // is unique.
+    }
 
+    const auto original_item_name = itemname(artifact);
+    artifact.remove();
     while (true)
     {
-        flt(the_item_db[itemid2int(inv[item_index].id)]->level,
-            Quality::miracle);
-        flttypeminor = the_item_db[itemid2int(inv[item_index].id)]->subcategory;
-        inv[item_index].remove();
-
-        if (const auto converted_item = itemcreate(
-                inv_getowner(item_index), 0, inv[item_index].position, 0))
+        flt(the_item_db[itemid2int(artifact.id)]->level, Quality::miracle);
+        flttypeminor = the_item_db[itemid2int(artifact.id)]->subcategory;
+        if (const auto converted_item =
+                itemcreate(inv_getowner(artifact), 0, artifact.position, 0))
         {
-            if (inv[item_index].quality != Quality::special)
+            if (converted_item->quality != Quality::special)
             {
                 txt(i18n::s.get(
                     "core.misc.artifact_regeneration",
-                    n_at_m163,
+                    original_item_name,
                     *converted_item));
-                return item_index;
+                return *converted_item;
+            }
+            else
+            {
+                converted_item->remove();
             }
         }
     }
