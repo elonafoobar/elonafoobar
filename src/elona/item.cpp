@@ -311,20 +311,20 @@ optional_ref<Item> itemfind(int inventory_id, int matcher, int matcher_type)
 
 
 
-int mapitemfind(int x, int y, int id)
+optional_ref<Item> mapitemfind(const Position& pos, ItemId id)
 {
-    for (const auto& item : inv.ground())
+    for (auto&& item : inv.ground())
     {
         if (item.number() == 0)
         {
             continue;
         }
-        if (item.id == int2itemid(id) && item.position == Position{x, y})
+        if (item.id == id && item.position == pos)
         {
-            return item.index;
+            return item;
         }
     }
-    return -1; // Not found
+    return none; // Not found
 }
 
 

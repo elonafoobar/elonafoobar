@@ -895,26 +895,16 @@ TurnResult do_throw_command_internal(Item& throw_item)
             {
                 if (cell_data.at(tlocx, tlocy).item_appearances_actual != 0)
                 {
-                    cell_itemlist(tlocx, tlocy);
-                    f = 0;
-                    for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
+                    if (const auto snowman =
+                            mapitemfind({tlocx, tlocy}, ItemId::snow_man))
                     {
-                        p = list(0, cnt);
-                        if (inv[p].id == ItemId::snow_man)
+                        if (is_in_fov({tlocx, tlocy}))
                         {
-                            if (is_in_fov({tlocx, tlocy}))
-                            {
-                                txt(i18n::s.get(
-                                    "core.action.throw.snow.hits_snowman",
-                                    inv[p(0)]));
-                            }
-                            inv[p].modify_number(-1);
-                            f = 1;
-                            break;
+                            txt(i18n::s.get(
+                                "core.action.throw.snow.hits_snowman",
+                                *snowman));
                         }
-                    }
-                    if (f == 1)
-                    {
+                        snowman->modify_number(-1);
                         cell_refresh(tlocx, tlocy);
                         return TurnResult::turn_end;
                     }
@@ -2997,7 +2987,7 @@ TurnResult do_use_stairs_command(int val0)
     movelevelbystairs = 0;
     if (val0 == 1)
     {
-        if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 753) != -1)
+        if (mapitemfind(cdata[cc].position, ItemId::kotatsu))
         {
             txt(i18n::s.get("core.action.use_stairs.kotatsu.prompt"));
             if (!yes_no())
@@ -3014,8 +3004,7 @@ TurnResult do_use_stairs_command(int val0)
     {
         if (val0 == 1)
         {
-            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 751) !=
-                -1)
+            if (mapitemfind(cdata[cc].position, ItemId::downstairs))
             {
                 if (game_data.current_dungeon_level >=
                     area_data[game_data.current_map].deepest_level)
@@ -3031,8 +3020,7 @@ TurnResult do_use_stairs_command(int val0)
         }
         if (val0 == 2)
         {
-            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 750) !=
-                -1)
+            if (mapitemfind(cdata[cc].position, ItemId::upstairs))
             {
                 if (game_data.current_dungeon_level <=
                     area_data[game_data.current_map].danger_level)
@@ -5677,10 +5665,9 @@ TurnResult do_bash()
 {
     if (cell_data.at(x, y).item_appearances_memory != 0)
     {
-        if (mapitemfind(x, y, 526) != -1)
+        if (const auto tree_opt = mapitemfind({x, y}, ItemId::tree_of_fruits))
         {
-            const auto tree_index = mapitemfind(x, y, 526);
-            auto& tree = inv[tree_index];
+            auto& tree = *tree_opt;
             item_separate(tree);
             snd("core.bash1");
             txt(i18n::s.get("core.action.bash.tree.execute", tree));
