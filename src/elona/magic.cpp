@@ -2516,7 +2516,6 @@ bool _magic_21_1127()
     {
         assert(target_item_opt);
         auto& target_item = *target_item_opt;
-        int target_item_index = target_item.index;
         equip = target_item.body_part;
         if (target_item.quality == Quality::special)
         {
@@ -2536,7 +2535,13 @@ bool _magic_21_1127()
             const auto reconstructed_artifact =
                 itemcreate_player_inv(itemid2int(target_item.id), 0);
             assert(reconstructed_artifact);
-            target_item_index = reconstructed_artifact->index;
+            if (equip != 0)
+            {
+                cdata[cc].body_parts[equip - 100] =
+                    cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
+                    reconstructed_artifact->index + 1;
+                reconstructed_artifact->body_part = equip;
+            }
         }
         else
         {
@@ -2560,13 +2565,13 @@ bool _magic_21_1127()
                 cdata[cc],
                 s(0),
                 target_item));
-        }
-        if (equip != 0)
-        {
-            cdata[cc].body_parts[equip - 100] =
-                cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
-                target_item_index + 1;
-            inv[target_item_index].body_part = equip;
+            if (equip != 0)
+            {
+                cdata[cc].body_parts[equip - 100] =
+                    cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
+                    target_item.index + 1;
+                target_item.body_part = equip;
+            }
         }
     }
     else
