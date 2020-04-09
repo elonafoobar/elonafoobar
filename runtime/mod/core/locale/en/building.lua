@@ -96,15 +96,14 @@ ELONA.i18n:add {
       },
 
       shop = {
-         info = "Shop",
          extend = "You extend your shop! You can display max of {$1} items now!",
          current_shopkeeper = "Current shopkeeper is {basename($1)}.",
          no_assigned_shopkeeper = "You haven't assigned a shopkeeper yet.",
 
          log = {
-            no_shopkeeper = "Your shop doesn't have a shopkeeper.",
-            could_not_sell = "{$1} customers visited your shop but {basename($2)} couldn't sell any item.",
-            sold_items = "{$1} customers visited your shop and {basename($2)} sold {$3} items. {basename($2)} put {$4} in the shop strong box.",
+            no_shopkeeper = "[Shop] Your shop doesn't have a shopkeeper.",
+            could_not_sell = "[Shop] {$1} customers visited your shop but {basename($2)} couldn't sell any item.",
+            sold_items = "[Shop] {$1} customers visited your shop and {basename($2)} sold {$3} items. {basename($2)} put {$4} in the shop strong box.",
             gold = "{$1} gold pieces",
             and_items = " and {$1} items",
          },
