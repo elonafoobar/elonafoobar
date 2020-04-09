@@ -320,8 +320,6 @@ void item_copy(int = 0, int = 0);
 void item_acid(const Character& owner, int item_index = -1);
 void item_delete(Item& item);
 void item_exchange(int = 0, int = 0);
-void item_modify_num(Item&, int);
-void item_set_num(Item&, int);
 void itemturn(Item& item);
 optional_ref<Item>
 itemfind(int inventory_id, int matcher, int matcher_type = 0);
