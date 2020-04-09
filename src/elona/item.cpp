@@ -162,22 +162,17 @@ int skip_ = 0;
 optional_ref<Item>
 item_find(int matcher, int matcher_type, ItemFindLocation location_type)
 {
-    int result = -1;
+    optional_ref<Item> result;
     int max_param1 = -1;
 
-    for (int location = 0; location < 2; ++location)
+    for (const auto& inventory_id : {-1, 0})
     {
-        int invhead;
-        int invrange;
-        if (location == 0)
+        if (inventory_id == -1)
         {
             if (location_type == ItemFindLocation::player_inventory)
             {
                 continue;
             }
-            const auto pair = inv_getheader(-1);
-            invhead = pair.first;
-            invrange = pair.second;
         }
         else
         {
@@ -185,19 +180,14 @@ item_find(int matcher, int matcher_type, ItemFindLocation location_type)
             {
                 continue;
             }
-            const auto pair = inv_getheader(0);
-            invhead = pair.first;
-            invrange = pair.second;
         }
-        for (int item_index = invhead; item_index < invhead + invrange;
-             ++item_index)
+        for (auto&& item : inv.by_index(inventory_id))
         {
-            const auto& item = inv[item_index];
             if (item.number() == 0)
             {
                 continue;
             }
-            if (location == 0)
+            if (inventory_id == -1)
             {
                 if (item.position != cdata.player().position)
                 {
@@ -209,7 +199,7 @@ item_find(int matcher, int matcher_type, ItemFindLocation location_type)
             case 0:
                 if ((int)the_item_db[itemid2int(item.id)]->category == matcher)
                 {
-                    result = item.index;
+                    result = item;
                 }
                 break;
             case 1:
@@ -217,7 +207,7 @@ item_find(int matcher, int matcher_type, ItemFindLocation location_type)
                 {
                     if (max_param1 < item.param1)
                     {
-                        result = item.index;
+                        result = item;
                         max_param1 = item.param1;
                     }
                 }
@@ -225,13 +215,13 @@ item_find(int matcher, int matcher_type, ItemFindLocation location_type)
             case 2:
                 if (the_item_db[itemid2int(item.id)]->subcategory == matcher)
                 {
-                    result = item.index;
+                    result = item;
                 }
                 break;
             case 3:
                 if (item.id == int2itemid(matcher))
                 {
-                    result = item.index;
+                    result = item;
                 }
                 break;
             default: assert(0); break;
@@ -239,14 +229,7 @@ item_find(int matcher, int matcher_type, ItemFindLocation location_type)
         }
     }
 
-    if (result == -1)
-    {
-        return none;
-    }
-    else
-    {
-        return inv[result];
-    }
+    return result;
 }
 
 
