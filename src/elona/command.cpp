@@ -5458,11 +5458,11 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
     item.is_quest_target() = false;
     item_checkknown(item);
 
-    int picked_up_item_index;
+    optional_ref<Item> picked_up_item;
     const auto item_stack_result = item_stack(cc, item);
     if (item_stack_result.stacked)
     {
-        picked_up_item_index = item_stack_result.stacked_item.index;
+        picked_up_item = item_stack_result.stacked_item;
     }
     else
     {
@@ -5483,75 +5483,76 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
         }
         item_copy(item, *slot);
         slot->set_number(in);
-        picked_up_item_index = slot->index;
+        picked_up_item = *slot;
     }
-    auto& picked_up_item = inv[picked_up_item_index];
+    assert(picked_up_item);
 
     item.set_number(inumbk);
     if (mode == 6)
     {
-        if (the_item_db[itemid2int(picked_up_item.id)]->category ==
+        if (the_item_db[itemid2int(picked_up_item->id)]->category ==
             ItemCategory::food)
         {
             if (invctrl == 11 || invctrl == 22)
             {
                 if (invctrl == 22 && invctrl(1) == 3)
                 {
-                    if (picked_up_item.param3 > 0)
+                    if (picked_up_item->param3 > 0)
                     {
-                        picked_up_item.param3 += game_data.date.hours();
+                        picked_up_item->param3 += game_data.date.hours();
                     }
                 }
                 else if (
-                    picked_up_item.param3 != 0 && picked_up_item.material == 35)
+                    picked_up_item->param3 != 0 &&
+                    picked_up_item->material == 35)
                 {
-                    picked_up_item.param3 = game_data.date.hours() +
-                        the_item_db[itemid2int(picked_up_item.id)]
+                    picked_up_item->param3 = game_data.date.hours() +
+                        the_item_db[itemid2int(picked_up_item->id)]
                             ->expiration_date;
-                    if (picked_up_item.param2 != 0)
+                    if (picked_up_item->param2 != 0)
                     {
-                        picked_up_item.param3 += 72;
+                        picked_up_item->param3 += 72;
                     }
                 }
             }
             if (invctrl == 24 && invctrl(1) == 3)
             {
-                if (picked_up_item.param3 > 0)
+                if (picked_up_item->param3 > 0)
                 {
-                    picked_up_item.param3 =
-                        picked_up_item.param3 - game_data.date.hours();
+                    picked_up_item->param3 =
+                        picked_up_item->param3 - game_data.date.hours();
                 }
             }
         }
         if (invctrl == 11)
         {
             txt(i18n::s.get(
-                "core.action.pick_up.you_buy", itemname(picked_up_item, in)));
-            sellgold = calcitemvalue(picked_up_item, 0) * in;
+                "core.action.pick_up.you_buy", itemname(*picked_up_item, in)));
+            sellgold = calcitemvalue(*picked_up_item, 0) * in;
             snd_("core.paygold1");
             cdata.player().gold -= sellgold;
             earn_gold(cdata[tc], sellgold);
-            if (the_item_db[itemid2int(picked_up_item.id)]->category ==
+            if (the_item_db[itemid2int(picked_up_item->id)]->category ==
                 ItemCategory::cargo)
             {
-                picked_up_item.param2 = calcitemvalue(picked_up_item, 0);
+                picked_up_item->param2 = calcitemvalue(*picked_up_item, 0);
             }
         }
         if (invctrl == 12)
         {
             sellgold = calcitemvalue(item, 1) * in;
-            if (!picked_up_item.is_stolen())
+            if (!picked_up_item->is_stolen())
             {
                 txt(i18n::s.get(
                     "core.action.pick_up.you_sell",
-                    itemname(picked_up_item, in)));
+                    itemname(*picked_up_item, in)));
             }
             else
             {
-                picked_up_item.is_stolen() = false;
+                picked_up_item->is_stolen() = false;
                 txt(i18n::s.get(
                     "core.action.pick_up.you_sell_stolen",
-                    itemname(picked_up_item, in)));
+                    itemname(*picked_up_item, in)));
                 if (game_data.guild.thieves_guild_quota > 0)
                 {
                     game_data.guild.thieves_guild_quota -= sellgold;
@@ -5571,7 +5572,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
             {
                 cdata[tc].gold = 0;
             }
-            picked_up_item.identify_state = IdentifyState::completely;
+            picked_up_item->identify_state = IdentifyState::completely;
         }
         if (invctrl == 22 || invctrl == 24)
         {
@@ -5581,13 +5582,13 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
                 txt(i18n::s.get(
                     "core.action.pick_up.execute",
                     cdata[cc],
-                    itemname(picked_up_item, in)));
+                    itemname(*picked_up_item, in)));
             }
             else
             {
                 txt(i18n::s.get(
                     "core.action.pick_up.put_in_container",
-                    itemname(picked_up_item, in)));
+                    itemname(*picked_up_item, in)));
             }
         }
         else
@@ -5605,11 +5606,11 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
         txt(i18n::s.get(
             "core.action.pick_up.execute",
             cdata[cc],
-            itemname(picked_up_item, in)));
+            itemname(*picked_up_item, in)));
     }
     if (cc == 0)
     {
-        if (picked_up_item.id == ItemId::campfire)
+        if (picked_up_item->id == ItemId::campfire)
         {
             if (map_data.play_campfire_sound == 1)
             {
@@ -5633,8 +5634,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
                 }
             }
         }
-        picked_up_item_index =
-            item_convert_artifact(inv[picked_up_item_index]).index;
+        picked_up_item = item_convert_artifact(*picked_up_item);
         if (area_data[game_data.current_map].id == mdata_t::MapId::museum)
         {
             if (mode == 0)
@@ -5656,7 +5656,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
         refresh_burden_state();
     }
 
-    return {1, inv[picked_up_item_index]};
+    return {1, picked_up_item};
 }
 
 
