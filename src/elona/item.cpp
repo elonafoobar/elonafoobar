@@ -2119,7 +2119,7 @@ int inv_getowner(const Item& item)
 
 
 
-int inv_find(int id, int owner)
+bool inv_find(ItemId id, int owner)
 {
     for (const auto& item : inv.for_chara(cdata[owner]))
     {
@@ -2127,13 +2127,15 @@ int inv_find(int id, int owner)
         {
             continue;
         }
-        if (item.id == int2itemid(id))
+        if (item.id == id)
         {
-            return item.index;
+            return true;
         }
     }
-    return -1; // Not found
+    return false; // Not found
 }
+
+
 
 bool inv_getspace(int owner)
 {

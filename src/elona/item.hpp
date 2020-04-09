@@ -374,7 +374,7 @@ bool item_cold(int owner, optional_ref<Item> destroyed_item = none);
 void mapitem_cold(int x, int y);
 
 // TODO unsure how these are separate from item
-int inv_find(int = 0, int = 0);
+bool inv_find(ItemId id, int owner);
 Item& get_random_inv(int owner);
 
 optional_ref<Item> inv_get_free_slot(int inventory_id);

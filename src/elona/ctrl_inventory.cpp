@@ -902,15 +902,14 @@ optional<OnEnterResult> on_shortcut(int& citrade, bool dropcontinue)
         cc = 0;
         if (f == 0)
         {
-            int stat = inv_find(invsc, 0);
-            if (stat == -1)
-            {
-                txt(i18n::s.get("core.ui.inv.common.does_not_exist"));
-            }
-            else
+            if (inv_find(int2itemid(invsc), 0))
             {
                 Message::instance().linebreak();
                 txt(i18n::s.get("core.action.cannot_do_in_global"));
+            }
+            else
+            {
+                txt(i18n::s.get("core.ui.inv.common.does_not_exist"));
             }
             invsc = 0;
             update_screen();

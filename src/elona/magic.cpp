@@ -2253,8 +2253,7 @@ bool _magic_435()
     }
     f = 1;
     {
-        int stat = inv_find(663, cc);
-        if (stat != -1)
+        if (inv_find(ItemId::monster_heart, cc))
         {
             efp = efp * 3 / 2;
         }

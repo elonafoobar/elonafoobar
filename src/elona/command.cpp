@@ -2752,7 +2752,7 @@ TurnResult do_use_command(Item& use_item)
         txt(i18n::s.get("core.action.use.deck.put_away"));
         break;
     case 38:
-        if (inv_find(701, 0) == -1)
+        if (!inv_find(ItemId::deck, 0))
         {
             txt(i18n::s.get("core.action.use.deck.no_deck"));
             update_screen();
