@@ -2652,37 +2652,35 @@ void damage_by_cursed_equipments()
 
 
 
-void dipcursed(int item_index, int)
+void dipcursed(Item& item)
 {
-    if (the_item_db[itemid2int(inv[item_index].id)]->category ==
-        ItemCategory::food)
+    if (the_item_db[itemid2int(item.id)]->category == ItemCategory::food)
     {
-        if (inv[item_index].material == 35)
+        if (item.material == 35)
         {
-            txt(i18n::s.get("core.action.dip.rots", inv[item_index]));
-            inv[item_index].param3 = -1;
-            inv[item_index].image = 336;
-            cell_refresh(
-                inv[item_index].position.x, inv[item_index].position.y);
-            return;
+            txt(i18n::s.get("core.action.dip.rots", item));
+            item.param3 = -1;
+            item.image = 336;
+            cell_refresh(item.position.x, item.position.y);
         }
         else
         {
-            txt(i18n::s.get("core.action.dip.unchanged", inv[item_index]));
-            return;
+            txt(i18n::s.get("core.action.dip.unchanged", item));
         }
     }
-    if (is_equipment(the_item_db[itemid2int(inv[item_index].id)]->category))
+    else if (is_equipment(the_item_db[itemid2int(item.id)]->category))
     {
-        --inv[item_index].enhancement;
-        txt(i18n::s.get("core.action.dip.rusts", inv[item_index]));
-        if (inv_getowner(item_index) != -1)
+        --item.enhancement;
+        txt(i18n::s.get("core.action.dip.rusts", item));
+        if (inv_getowner(item.index) != -1)
         {
-            chara_refresh(inv_getowner(item_index));
+            chara_refresh(inv_getowner(item.index));
         }
-        return;
     }
-    txt(i18n::s.get("core.common.nothing_happens"));
+    else
+    {
+        txt(i18n::s.get("core.common.nothing_happens"));
+    }
 }
 
 

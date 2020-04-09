@@ -1595,7 +1595,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
                 i18n::s.get("core.action.dip.result.love_food.grin"));
             if (is_cursed(mix_item.curse_state))
             {
-                dipcursed(mix_target.index);
+                dipcursed(mix_target);
             }
             mix_target.is_poisoned() = true;
             return TurnResult::turn_end;
@@ -1615,7 +1615,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
                 i18n::s.get("core.action.dip.result.love_food.guilty"));
             if (is_cursed(mix_item.curse_state))
             {
-                dipcursed(mix_target.index);
+                dipcursed(mix_target);
             }
             mix_target.is_aphrodisiac() = true;
             return TurnResult::turn_end;
@@ -1659,7 +1659,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
         txt(i18n::s.get("core.action.dip.result.put_on", mix_target, mix_item));
         if (is_cursed(mix_item.curse_state))
         {
-            dipcursed(mix_target.index);
+            dipcursed(mix_target);
         }
         else
         {
@@ -1684,7 +1684,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
         txt(i18n::s.get("core.action.dip.result.put_on", mix_target, mix_item));
         if (is_cursed(mix_item.curse_state))
         {
-            dipcursed(mix_target.index);
+            dipcursed(mix_target);
         }
         else if (mix_target.id == ItemId::fireproof_blanket)
         {

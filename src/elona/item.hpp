@@ -434,7 +434,7 @@ void exittempinv();
 bool cargocheck(const Item& item);
 int convertartifact(int = 0, int = 0);
 void damage_by_cursed_equipments();
-void dipcursed(int = 0, int = 0);
+void dipcursed(Item& item);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 void equip_melee_weapon();
 int gain_skills_by_geen_engineering();
