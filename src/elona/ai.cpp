@@ -568,7 +568,7 @@ void _proc_hungry(Character& chara)
                 }
                 else
                 {
-                    chara.item_which_will_be_used = item->index;
+                    chara.ai_item = item->index;
                     _change_nutrition(chara);
                 }
             }
@@ -949,7 +949,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
         }
     }
 
-    if (chara.item_which_will_be_used == 0 && chara.relationship != 10)
+    if (chara.ai_item == 0 && chara.relationship != 10)
     {
         if (game_data.current_map == mdata_t::MapId::quest &&
             game_data.executing_immediate_quest_type == 1009)
@@ -971,7 +971,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
                 }
                 if (const auto item = itemcreate_chara_inv(chara.index, 0, 0))
                 {
-                    chara.item_which_will_be_used = item->index;
+                    chara.ai_item = item->index;
                 }
             }
         }

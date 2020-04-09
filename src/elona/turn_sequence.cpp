@@ -453,40 +453,39 @@ optional<TurnResult> npc_turn_misc(Character& chara)
         }
     }
 
-    if (chara.item_which_will_be_used == 0)
+    if (chara.ai_item == 0)
     {
         return none;
     }
-    if (inv[chara.item_which_will_be_used].number() == 0)
+    if (inv[chara.ai_item].number() == 0)
     {
-        chara.item_which_will_be_used = 0;
+        chara.ai_item = 0;
         return none;
     }
     if (chara.relationship != 0)
     {
-        chara.item_which_will_be_used = 0;
+        chara.ai_item = 0;
     }
 
     const auto category =
-        the_item_db[itemid2int(inv[chara.item_which_will_be_used].id)]
-            ->category;
+        the_item_db[itemid2int(inv[chara.ai_item].id)]->category;
     if (category == ItemCategory::food)
     {
         if (chara.relationship != 10 || chara.nutrition <= 6000)
         {
-            return do_eat_command(inv[chara.item_which_will_be_used]);
+            return do_eat_command(inv[chara.ai_item]);
         }
     }
     if (category == ItemCategory::potion)
     {
-        return do_drink_command(inv[chara.item_which_will_be_used]);
+        return do_drink_command(inv[chara.ai_item]);
     }
     if (category == ItemCategory::scroll)
     {
-        return do_read_command(inv[chara.item_which_will_be_used]);
+        return do_read_command(inv[chara.ai_item]);
     }
 
-    chara.item_which_will_be_used = 0;
+    chara.ai_item = 0;
 
     return none;
 }

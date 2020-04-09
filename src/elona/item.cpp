@@ -2282,9 +2282,9 @@ Item& inv_get_free_slot_force(int inventory_id)
         if (item.body_part == 0)
         {
             item.remove();
-            if (cdata[inventory_id].item_which_will_be_used == item.index)
+            if (cdata[inventory_id].ai_item == item.index)
             {
-                cdata[inventory_id].item_which_will_be_used = 0;
+                cdata[inventory_id].ai_item = 0;
             }
             return item;
         }

@@ -449,7 +449,7 @@ TalkResult talk_quest_delivery(Item& item_to_deliver)
     item_copy(item_to_deliver, slot);
     slot.set_number(1);
     rc = tc;
-    chara_set_item_which_will_be_used(cdata[tc], slot);
+    chara_set_ai_item(cdata[tc], slot);
     rq = deliver;
     item_to_deliver.modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_deliver));
@@ -468,7 +468,7 @@ TalkResult talk_quest_supply(Item& item_to_supply)
     slot.set_number(1);
     cdata[tc].was_passed_item_by_you_just_now() = true;
     rc = tc;
-    chara_set_item_which_will_be_used(cdata[tc], slot);
+    chara_set_ai_item(cdata[tc], slot);
     item_to_supply.modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_supply));
     quest_set_data(3);

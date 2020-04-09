@@ -1844,7 +1844,7 @@ OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
         slot.set_number(1);
         auto& stacked_item = item_stack(tc, slot, true).stacked_item;
         rc = tc;
-        chara_set_item_which_will_be_used(cdata[tc], stacked_item);
+        chara_set_ai_item(cdata[tc], stacked_item);
         wear_most_valuable_equipment_for_all_body_parts();
         if (tc < 16)
         {
@@ -2002,9 +2002,9 @@ on_enter_trade_target(Item& selected_item, MenuResult& result, int& citrade)
     item_exchange(selected_item, inv[citrade]);
     item_convert_artifact(selected_item);
     rc = tc;
-    if (cdata[rc].item_which_will_be_used == citrade)
+    if (cdata[rc].ai_item == citrade)
     {
-        cdata[rc].item_which_will_be_used = 0;
+        cdata[rc].ai_item = 0;
     }
     wear_most_valuable_equipment_for_all_body_parts();
     if (tc >= 16)

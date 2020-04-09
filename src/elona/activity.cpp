@@ -1559,9 +1559,9 @@ void activity_eating_finish(Character& eater, Item& food)
     }
     else
     {
-        if (food.index == eater.item_which_will_be_used)
+        if (food.index == eater.ai_item)
         {
-            eater.item_which_will_be_used = 0;
+            eater.ai_item = 0;
         }
         if (eater.was_passed_item_by_you_just_now())
         {

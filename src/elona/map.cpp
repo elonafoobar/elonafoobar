@@ -1916,7 +1916,7 @@ void prepare_charas_for_map_unload()
     for (int cnt = 0; cnt < 57; ++cnt)
     {
         cdata[cnt].activity.finish();
-        cdata[cnt].item_which_will_be_used = 0;
+        cdata[cnt].ai_item = 0;
     }
 
     // remove living adventurers from the map and set their states
