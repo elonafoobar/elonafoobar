@@ -277,7 +277,7 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
     item.quality = static_cast<Quality>(fixlv);
     if (fixlv == Quality::special && mode != 6 && nooracle == 0)
     {
-        int owner = inv_getowner(item.index);
+        int owner = inv_getowner(item);
         if (owner != -1)
         {
             if (cdata[owner].character_role == 13)

@@ -379,7 +379,7 @@ Item& get_random_inv(int owner);
 
 optional_ref<Item> inv_get_free_slot(int inventory_id);
 
-int inv_getowner(int = 0);
+int inv_getowner(const Item& item);
 int inv_sum(int = 0);
 int inv_weight(int = 0);
 bool inv_getspace(int);

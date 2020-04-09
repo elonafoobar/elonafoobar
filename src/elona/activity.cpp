@@ -823,7 +823,7 @@ void activity_others_doing(Character& doer, optional_ref<Item> activity_item)
         }
         f = 0;
         f2 = 0;
-        tg = inv_getowner(activity_item->index);
+        tg = inv_getowner(*activity_item);
         if (tg != -1)
         {
             if (cdata[tg].original_relationship == -3)
@@ -913,7 +913,7 @@ void activity_others_doing(Character& doer, optional_ref<Item> activity_item)
         {
             txt(i18n::s.get("core.activity.steal.notice.you_are_found"));
             modify_karma(cdata.player(), -5);
-            p = inv_getowner(activity_item->index);
+            p = inv_getowner(*activity_item);
             if (tg != -1)
             {
                 if (cdata[p].id != CharaId::ebon)
@@ -1001,7 +1001,7 @@ void activity_others_doing(Character& doer, optional_ref<Item> activity_item)
 
 void activity_others_end_steal(Item& steal_target)
 {
-    tg = inv_getowner(steal_target.index);
+    tg = inv_getowner(steal_target);
     if ((tg != -1 && cdata[tg].state() != Character::State::alive) ||
         steal_target.number() <= 0)
     {
@@ -1022,7 +1022,7 @@ void activity_others_end_steal(Item& steal_target)
     steal_target.is_quest_target() = false;
     if (steal_target.body_part != 0)
     {
-        tc = inv_getowner(steal_target.index);
+        tc = inv_getowner(steal_target);
         if (tc != -1)
         {
             p = steal_target.body_part;

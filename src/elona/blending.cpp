@@ -1937,7 +1937,7 @@ void blending_proc_on_success_events()
     {
         create_pcpic(cdata.player());
     }
-    if (inv_getowner(item1.index) == -1)
+    if (inv_getowner(item1) == -1)
     {
         cell_refresh(item1.position.x, item1.position.y);
     }

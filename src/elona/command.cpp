@@ -1625,7 +1625,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
         mix_item.modify_number(-1);
         mix_target.color = mix_item.color;
         txt(i18n::s.get("core.action.dip.result.dyeing", mix_target));
-        if (inv_getowner(mix_target.index) == -1)
+        if (inv_getowner(mix_target) == -1)
         {
             cell_refresh(mix_target.position.x, mix_target.position.y);
         }
@@ -1929,7 +1929,7 @@ TurnResult do_use_command(Item& use_item)
         snd("core.build1");
         break;
     case 44:
-        if (inv_getowner(use_item.index) != -1)
+        if (inv_getowner(use_item) != -1)
         {
             txt(i18n::s.get("core.action.use.chair.needs_place_on_ground"));
             update_screen();

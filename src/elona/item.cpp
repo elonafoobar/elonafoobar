@@ -556,7 +556,7 @@ Item& item_separate(Item& stacked_item)
         return stacked_item;
     }
 
-    auto slot = inv_get_free_slot(inv_getowner(stacked_item.index));
+    auto slot = inv_get_free_slot(inv_getowner(stacked_item));
     if (!slot)
     {
         slot = inv_get_free_slot(-1);
@@ -573,17 +573,16 @@ Item& item_separate(Item& stacked_item)
     dst.set_number(stacked_item.number() - 1);
     stacked_item.set_number(1);
 
-    if (inv_getowner(dst.index) == -1 && mode != 6)
+    if (inv_getowner(dst) == -1 && mode != 6)
     {
-        if (inv_getowner(stacked_item.index) != -1)
+        if (inv_getowner(stacked_item) != -1)
         {
-            stacked_item.position =
-                cdata[inv_getowner(stacked_item.index)].position;
+            stacked_item.position = cdata[inv_getowner(stacked_item)].position;
         }
         dst.position = stacked_item.position;
         itemturn(dst);
         cell_refresh(dst.position.x, dst.position.y);
-        if (inv_getowner(stacked_item.index) != -1)
+        if (inv_getowner(stacked_item) != -1)
         {
             txt(i18n::s.get("core.item.something_falls_from_backpack"));
         }
@@ -601,7 +600,7 @@ bool chara_unequip(Item& item)
         return false;
 
     int body_part = item.body_part;
-    int owner = inv_getowner(item.index);
+    int owner = inv_getowner(item);
     if (owner == -1)
         return false;
 
@@ -1610,7 +1609,7 @@ ItemStackResult item_stack(int inventory_id, Item& base_item, bool show_message)
             item.modify_number(base_item.number());
             base_item.remove();
 
-            if (mode != 6 && inv_getowner(base_item.index) == -1)
+            if (mode != 6 && inv_getowner(base_item) == -1)
             {
                 cell_refresh(base_item.position.x, base_item.position.y);
             }
@@ -2105,17 +2104,17 @@ std::pair<int, int> inv_getheader(int owner)
 
 
 
-int inv_getowner(int inv_id)
+int inv_getowner(const Item& item)
 {
-    if (inv_id < 200)
+    if (item.index < 200)
     {
         return 0;
     }
-    if (inv_id >= ELONA_ITEM_ON_GROUND_INDEX)
+    if (item.index >= ELONA_ITEM_ON_GROUND_INDEX)
     {
         return -1;
     }
-    return (inv_id - 200) / 20 + 1;
+    return (item.index - 200) / 20 + 1;
 }
 
 
@@ -2670,9 +2669,9 @@ void dipcursed(Item& item)
     {
         --item.enhancement;
         txt(i18n::s.get("core.action.dip.rusts", item));
-        if (inv_getowner(item.index) != -1)
+        if (inv_getowner(item) != -1)
         {
-            chara_refresh(inv_getowner(item.index));
+            chara_refresh(inv_getowner(item));
         }
     }
     else
