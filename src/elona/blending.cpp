@@ -1888,7 +1888,7 @@ void blending_proc_on_success_events()
     const auto item2_index = rpref(12);
     if (rpdata(2, rpid) == 2)
     {
-        item_separate(item1_index);
+        item_separate(inv[item1_index]);
     }
     else if (inv[item1_index].number() <= 1)
     {
@@ -1896,7 +1896,7 @@ void blending_proc_on_success_events()
     }
     else
     {
-        int stat = item_separate(item1_index);
+        int stat = item_separate(inv[item1_index]).index;
         if (rpref(10) == stat)
         {
             rpref(10) = -2;

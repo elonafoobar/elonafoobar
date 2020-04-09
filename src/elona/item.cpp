@@ -566,44 +566,47 @@ void Item::set_number(int number_)
 
 
 
-int item_separate(int src)
+Item& item_separate(Item& stacked_item)
 {
-    if (inv[src].number() <= 1)
-        return src;
+    if (stacked_item.number() <= 1)
+    {
+        return stacked_item;
+    }
 
-    int dst = inv_getfreeid(inv_getowner(src));
+    int dst = inv_getfreeid(inv_getowner(stacked_item.index));
     if (dst == -1)
     {
         dst = inv_getfreeid(-1);
         if (dst == -1)
         {
-            inv[src].set_number(1);
+            stacked_item.set_number(1);
             txt(i18n::s.get("core.item.something_falls_and_disappears"));
-            return src;
+            return stacked_item;
         }
     }
 
-    item_copy(inv[src], inv[dst]);
-    inv[dst].set_number(inv[src].number() - 1);
-    inv[src].set_number(1);
+    item_copy(stacked_item, inv[dst]);
+    inv[dst].set_number(stacked_item.number() - 1);
+    stacked_item.set_number(1);
 
     if (inv_getowner(dst) == -1 && mode != 6)
     {
-        if (inv_getowner(src) != -1)
+        if (inv_getowner(stacked_item.index) != -1)
         {
-            inv[src].position = cdata[inv_getowner(src)].position;
+            stacked_item.position =
+                cdata[inv_getowner(stacked_item.index)].position;
         }
-        inv[dst].position = inv[src].position;
+        inv[dst].position = stacked_item.position;
         itemturn(inv[dst]);
         cell_refresh(inv[dst].position.x, inv[dst].position.y);
-        if (inv_getowner(src) != -1)
+        if (inv_getowner(stacked_item.index) != -1)
         {
             txt(i18n::s.get("core.item.something_falls_from_backpack"));
         }
         refresh_burden_state();
     }
 
-    return dst;
+    return inv[dst];
 }
 
 
@@ -1824,7 +1827,7 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
 
         if (blanket)
         {
-            item_separate(blanket->index);
+            item_separate(*blanket);
             if (is_in_fov(cdata[owner]))
             {
                 txt(i18n::s.get(
@@ -2007,7 +2010,7 @@ bool item_cold(int owner, optional_ref<Item> destroyed_item)
         }
         if (blanket)
         {
-            item_separate(blanket->index);
+            item_separate(*blanket);
             if (is_in_fov(cdata[owner]))
             {
                 txt(i18n::s.get(

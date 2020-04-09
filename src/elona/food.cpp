@@ -409,7 +409,7 @@ void get_hungry(Character& cc)
 void cook(Item& cook_tool, Item& food)
 {
     snd("core.cook1");
-    item_separate(food.index);
+    item_separate(food);
 
     const auto item_name_prev = itemname(food);
 

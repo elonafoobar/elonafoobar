@@ -2032,7 +2032,7 @@ OnEnterResult on_enter_target(Item& selected_item, MenuResult& result)
             return OnEnterResult{2};
         }
     }
-    item_separate(selected_item.index);
+    item_separate(selected_item);
     invsubroutine = 0;
     result.succeeded = true;
     return OnEnterResult{result, selected_item};

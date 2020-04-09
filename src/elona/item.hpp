@@ -351,7 +351,11 @@ optional_ref<Item> item_find(
     int matcher_type = 0,
     ItemFindLocation = ItemFindLocation::player_inventory_and_ground);
 
-int item_separate(int);
+/**
+ * Separate @a item's stack.
+ * @param item the item to separate
+ */
+Item& item_separate(Item& stacked_item);
 
 struct ItemStackResult
 {

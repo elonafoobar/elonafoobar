@@ -81,7 +81,7 @@ bool _magic_1136(Item& treasure_map)
     }
     if (treasure_map.param1 == 0)
     {
-        item_separate(treasure_map.index);
+        item_separate(treasure_map);
         for (int cnt = 0; cnt < 1000; ++cnt)
         {
             dx = 4 + rnd(map_data.width - 8);
@@ -743,7 +743,7 @@ bool _magic_185(Item& rod)
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    item_separate(rod.index);
+    item_separate(rod);
     --rod.count;
     rowactre = 0;
     spot_fishing(rod);

@@ -588,14 +588,14 @@ TEST_CASE("Test separation of item handles", "[Lua: Handles]")
     Item& i = *i_opt;
     sol::table handle = handle_mgr.get_handle(i);
 
-    elona::item_separate(i.index);
+    elona::item_separate(i);
     Item& item_sep = i;
     sol::table handle_sep = handle_mgr.get_handle(item_sep);
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
     REQUIRE(handle_mgr.handle_is_valid(handle_sep) == true);
 
-    elona::item_separate(i.index);
+    elona::item_separate(i);
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
     REQUIRE(handle_mgr.handle_is_valid(handle_sep) == true);
 }

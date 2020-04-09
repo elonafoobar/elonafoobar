@@ -1182,7 +1182,7 @@ TurnResult do_offer_command(Item& offering)
         return TurnResult::turn_end;
     }
     rowact_item(offering);
-    item_separate(offering.index);
+    item_separate(offering);
     txt(i18n::s.get(
         "core.action.offer.execute",
         offering,
@@ -1485,7 +1485,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
 {
     if (mix_item.id == ItemId::bait)
     {
-        item_separate(mix_target.index);
+        item_separate(mix_target);
         mix_item.modify_number(-1);
         snd("core.equip1");
         txt(i18n::s.get(
@@ -1506,7 +1506,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
     {
         if (the_item_db[itemid2int(mix_target.id)]->subcategory == 60001)
         {
-            item_separate(mix_target.index);
+            item_separate(mix_target);
             mix_item.modify_number(-1);
             if (mix_item.id != ItemId::empty_bottle)
             {
@@ -1588,7 +1588,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
             ItemCategory::food)
         {
             mix_item.modify_number(-1);
-            item_separate(mix_target.index);
+            item_separate(mix_target);
             txt(i18n::s.get(
                     "core.action.dip.result.love_food.made",
                     mix_target,
@@ -1608,7 +1608,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
             ItemCategory::food)
         {
             mix_item.modify_number(-1);
-            item_separate(mix_target.index);
+            item_separate(mix_target);
             txt(i18n::s.get(
                     "core.action.dip.result.love_food.made",
                     mix_target,
@@ -1631,7 +1631,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
         else
         {
             in = 1;
-            item_separate(mix_target.index);
+            item_separate(mix_target);
         }
         mix_item.modify_number(-1);
         mix_target.color = mix_item.color;
@@ -1655,7 +1655,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
         else
         {
             in = 1;
-            item_separate(mix_target.index);
+            item_separate(mix_target);
         }
         txt(i18n::s.get("core.action.dip.result.put_on", mix_target, mix_item));
         if (is_cursed(mix_item.curse_state))
@@ -1680,7 +1680,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
         else
         {
             in = 1;
-            item_separate(mix_target.index);
+            item_separate(mix_target);
         }
         txt(i18n::s.get("core.action.dip.result.put_on", mix_target, mix_item));
         if (is_cursed(mix_item.curse_state))
@@ -1765,7 +1765,7 @@ TurnResult do_use_command(Item& use_item)
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        item_separate(use_item.index);
+        item_separate(use_item);
         use_item.count = game_data.date.hours() + use_item.param3;
     }
     if (use_item.has_charge())
@@ -1776,7 +1776,7 @@ TurnResult do_use_command(Item& use_item)
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        item_separate(use_item.index);
+        item_separate(use_item);
         --use_item.count;
     }
     if (item_data->subcategory == 58500)
@@ -2351,7 +2351,7 @@ TurnResult do_use_command(Item& use_item)
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        item_separate(use_item.index);
+        item_separate(use_item);
         snd("core.paygold1");
         cdata.player().gold -= moneybox(use_item.param2);
         use_item.param1 += moneybox(use_item.param2);
@@ -2942,7 +2942,7 @@ TurnResult do_open_command(Item& box, bool play_sound)
         mode = 0;
         return TurnResult::turn_end;
     }
-    item_separate(box.index);
+    item_separate(box);
     if (box.param1 != 0)
     {
         if (box.param2 != 0)
@@ -4206,7 +4206,7 @@ int decode_book(Item& book)
         {
             txt(i18n::s.get("core.activity.read.start", cdata[cc], book));
         }
-        item_separate(book.index);
+        item_separate(book);
         return 0;
     }
     if (cdata[cc].activity.turn > 0)
@@ -4653,7 +4653,7 @@ int drink_well(Item& well)
         txt(i18n::s.get("core.action.drink.well.is_dry", valn));
         return 1;
     }
-    item_separate(well.index);
+    item_separate(well);
     snd_at("core.drink1", cdata[cc].position);
     const auto valn = itemname(well);
     txt(i18n::s.get("core.action.drink.well.draw", cdata[cc], valn));
@@ -5011,7 +5011,7 @@ int do_zap(Item& rod)
             return 1;
         }
     }
-    item_separate(rod.index);
+    item_separate(rod);
     --rod.count;
     return 1;
 }
@@ -5680,7 +5680,7 @@ TurnResult do_bash()
         {
             const auto tree_index = mapitemfind(x, y, 526);
             auto& tree = inv[tree_index];
-            item_separate(tree.index);
+            item_separate(tree);
             snd("core.bash1");
             txt(i18n::s.get("core.action.bash.tree.execute", tree));
             if (tree.own_state == 5 || tree.param1 <= 0)
