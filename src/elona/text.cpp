@@ -2761,14 +2761,6 @@ void csvsort(
 
 
 
-void cutname(std::string& utf8_string, int max_length_charwise)
-{
-    utf8_string = utf8_string.substr(
-        0, strutil::utf8_cut_index(utf8_string, max_length_charwise));
-}
-
-
-
 void lenfix(std::string& str, int length)
 {
     int p_at_m89 = 0;

@@ -513,12 +513,11 @@ void draw_race_or_class_info(const std::string& description)
                 ty + 7);
             mes(cnt * 150 + tx + 32,
                 ty,
-                strmid(
+                strutil::take_by_width(
                     i18n::s.get_m(
                         "ability",
                         the_ability_db.get_id_from_legacy(r)->get(),
                         "name"),
-                    0,
                     jp ? 6 : 3) +
                     u8": "s + s(p),
                 text_color);
@@ -593,7 +592,7 @@ void draw_race_or_class_info(const std::string& description)
             {
                 if (strlen_u(s(1)) > 45)
                 {
-                    s(1) = strmid(s(1), 0, 42) + u8"..."s;
+                    s(1) = strutil::take_by_width(s(1), 42) + u8"..."s;
                 }
             }
             mes(tx + 32, ty, s + s(1));
