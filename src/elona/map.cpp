@@ -2380,11 +2380,11 @@ void sense_map_feats_on_move()
             std::string tname = ""s;
             if (p == 1)
             {
-                tname = i18n::s.get("core.item.chip.dryrock");
+                tname = i18n::s.get("core.map.chip.dryrock");
             }
             if (p == 2)
             {
-                tname = i18n::s.get("core.item.chip.field");
+                tname = i18n::s.get("core.map.chip.field");
             }
 
             if (tname != ""s)

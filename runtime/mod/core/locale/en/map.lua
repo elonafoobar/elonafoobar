@@ -58,10 +58,6 @@ ELONA.i18n:add {
          },
 
          -- Lesimas
-         _3 = {
-            the_depth = "The Depth",
-         },
-
          _4 = {
             name = "North Tyris",
          },
@@ -105,6 +101,7 @@ ELONA.i18n:add {
          _3 = {
             name = "Lesimas",
             desc = "You see the dungeon of Lesimas. The wheel of fortune starts to turn.",
+            the_depth = "The Depth",
          },
          _42 = {
             name = "the Void",
@@ -282,12 +279,17 @@ ELONA.i18n:add {
       you_see_an_entrance = "You see an entrance leading to {$1}.(Approximate danger level: {$2}) ",
 
       -- TODO: translate
-      -- museum {
-         -- rank_lowest = ...
-         -- rank_low = ...
-         -- rank_middle = ...
-         -- rank_high = ...
-         -- rank_highest = ...
-         -- }
+      -- museum = {
+      --    rank_lowest = ...
+      --    rank_low = ...
+      --    rank_middle = ...
+      --    rank_high = ...
+      --    rank_highest = ...
+      -- },
+
+      chip = {
+         dryrock = "a dryrock",
+         field = "a field",
       },
    }
+}
