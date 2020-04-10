@@ -624,8 +624,6 @@ int calcattackdmg(
     optional_ref<Item> ammo,
     AttackDamageCalculationMode mode)
 {
-    int prot2 = 0;
-    int protfix = 0;
     int damagepierce = 0;
     int damagenormal = 0;
     int pierce;
@@ -699,31 +697,7 @@ int calcattackdmg(
     {
         return damage;
     }
-    prot = cdata[tc].pv + sdata(chara_armor_class(cdata[tc]), tc) +
-        sdata(12, tc) / 10;
-    if (prot > 0)
-    {
-        prot2 = prot / 4;
-        protdice1 = prot2 / 10 + 1;
-        if (protdice1 < 0)
-        {
-            protdice1 = 1;
-        }
-        protdice2 = prot2 / protdice1 + 2;
-        protfix = 0;
-    }
-    else
-    {
-        prot2 = 0;
-        protdice1 = 1;
-        protdice2 = 1;
-        protfix = 0;
-        prot = 0;
-    }
-    if (mode == AttackDamageCalculationMode::defense)
-    {
-        return prot;
-    }
+    const auto prot = calc_attack_protection(cdata[tc]);
     if (dmgfix < -100)
     {
         dmgfix = -100;
@@ -750,9 +724,9 @@ int calcattackdmg(
     }
     damage = damage * dmgmulti / 100;
     orgdmg = damage;
-    if (prot > 0)
+    if (prot.rate > 0)
     {
-        damage = damage * 100 / (100 + prot);
+        damage = damage * 100 / (100 + prot.rate);
     }
     if (attackrange == 0)
     {
@@ -792,9 +766,9 @@ int calcattackdmg(
     }
     damagepierce = damage * pierce / 100;
     damagenormal = damage - damagepierce;
-    if (prot > 0)
+    if (prot.rate > 0)
     {
-        damagenormal -= roll(protdice1, protdice2, protfix);
+        damagenormal -= roll(prot.dice_x, prot.dice_y, 0);
         if (damagenormal < 0)
         {
             damagenormal = 0;
@@ -818,6 +792,27 @@ int calcattackdmg(
         damage = 0;
     }
     return damage;
+}
+
+
+
+CalcAttackProtectionResult calc_attack_protection(const Character& chara)
+{
+    const auto rate = chara.pv + sdata(chara_armor_class(chara), chara.index) +
+        sdata(12, chara.index) / 10;
+    if (rate <= 0)
+    {
+        return {0, 1, 1};
+    }
+
+    const auto rate2 = rate / 4;
+    auto dice_x = rate2 / 10 + 1;
+    if (dice_x < 0)
+    {
+        dice_x = 1;
+    }
+    const auto dice_y = rate2 / dice_x + 2;
+    return {rate, dice_x, dice_y};
 }
 
 

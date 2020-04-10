@@ -149,12 +149,14 @@ void dump_player_info()
 
     tc = 0;
     attackskill = 106;
-    int evade = calc_evasion(tc);
-    prot = calcattackdmg(none, none, AttackDamageCalculationMode::defense);
+    {
+        const auto evade = calc_evasion(tc);
+        const auto prot = calc_attack_protection(cdata.player());
 
-    ss << u8"回避    : " << evade << u8"%" << std::endl;
-    ss << u8"軽減    : " << (100 - 10000 / (prot + 100)) << u8"% + "
-       << protdice1 << u8"d" << protdice2 << std::endl;
+        ss << u8"回避    : " << evade << u8"%" << std::endl;
+        ss << u8"軽減    : " << (100 - 10000 / (prot.rate + 100)) << u8"% + "
+           << prot.dice_x << u8"d" << prot.dice_y << std::endl;
+    }
 
     ss << std::endl;
 
