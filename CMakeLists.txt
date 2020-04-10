@@ -91,7 +91,6 @@ if(ELONA_BUILD_TARGET STREQUAL "TESTS")
     src/tests/lua_data_character.cpp
     src/tests/lua_data_item.cpp
     src/tests/lua_serialization.cpp
-    src/tests/elonacore.cpp
     src/tests/item.cpp
     src/tests/i18n.cpp
     src/tests/i18n_builtins.cpp

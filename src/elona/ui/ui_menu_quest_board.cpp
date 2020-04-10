@@ -182,8 +182,7 @@ void UIMenuQuestBoard::_draw_list_entry_date(const std::string& date_text)
 
 void UIMenuQuestBoard::_draw_list_entry_giver_name(int chara_index)
 {
-    std::string name = cdatan(0, chara_index);
-    cutname(name, 20);
+    const auto name = strutil::take_by_width(cdatan(0, chara_index), 20);
     mes(wx + 392, y + 2, name);
 }
 
