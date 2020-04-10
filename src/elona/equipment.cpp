@@ -348,7 +348,7 @@ void supply_new_equipment()
         {
             break;
         }
-        if (cdata[rc].character_role == 13)
+        if (cdata[rc].role == Role::adventurer)
         {
             flt(cdata[rc].level, Quality::great);
         }
@@ -427,14 +427,14 @@ void supply_new_equipment()
             {
                 if (is_equipment(the_item_db[itemid2int(item->id)]->category))
                 {
-                    if (cdata[rc].character_role == 13)
+                    if (cdata[rc].role == Role::adventurer)
                     {
                         addnews(1, rc, 0, itemname(*item));
                     }
                 }
             }
             wear_most_valuable_equipment(*item);
-            if (cdata[rc].character_role != 13)
+            if (cdata[rc].role != Role::adventurer)
             {
                 if (rnd(3))
                 {

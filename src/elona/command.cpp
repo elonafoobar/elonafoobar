@@ -767,7 +767,7 @@ TurnResult do_throw_command_internal(Item& throw_item)
             if (throw_item.id == ItemId::monster_ball)
             {
                 if (tc < ELONA_MAX_PARTY_CHARACTERS ||
-                    cdata[tc].character_role != 0 ||
+                    cdata[tc].role != Role::none ||
                     cdata[tc].quality == Quality::special ||
                     cdata[tc].is_lord_of_dungeon() == 1)
                 {

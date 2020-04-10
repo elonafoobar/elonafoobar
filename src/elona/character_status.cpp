@@ -487,7 +487,7 @@ void gain_level(Character& cc)
         cc.experience = 0;
     }
     ++cc.level;
-    if (cc.character_role != 13)
+    if (cc.role != Role::adventurer)
     {
         if (r2 == 0)
         {

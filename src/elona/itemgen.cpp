@@ -280,7 +280,7 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
         int owner = inv_getowner(item);
         if (owner != -1)
         {
-            if (cdata[owner].character_role == 13)
+            if (cdata[owner].role == Role::adventurer)
             {
                 artifactlocation.push_back(i18n::s.get(
                     "core.magic.oracle.was_held_by",

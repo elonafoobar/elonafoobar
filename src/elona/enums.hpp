@@ -240,4 +240,79 @@ ENUMUTIL_DEFINE_NEXT_PREV_FUNCTIONS_LOOPED_EXCLUSIVE_RANGE(
     none,
     _size)
 
+
+
+enum class Role : int
+{
+    none = 0,
+    other = 3,
+    citizen = 4,
+    appraiser = 5,
+    mayer = 6,
+    trainer = 7,
+    informer = 8,
+    bartender = 9,
+    arena_master = 10,
+    pet_arena_master = 11,
+    healer = 12,
+    adventurer = 13,
+    guard = 14,
+    king = 15,
+    shop_guard = 16,
+    slave_master = 17,
+    maid = 18,
+    sister = 19,
+    user = 20,
+    returner = 21,
+    horse_master = 22,
+    caravan_master = 23,
+
+    // Shopkeepers
+    blacksmith = 1001,
+    food_vendor = 1002,
+    bakery = 1003,
+    magic_vendor = 1004,
+    innkeeper = 1005,
+    general_vendor = 1006,
+    blackmarket_vendor = 1007,
+    general_store = 1008,
+    trader = 1009,
+    wandering_vendor = 1010,
+    firearm_vendor = 1011,
+    furniture_vendor = 1012,
+    deed_vendor = 1013,
+    fisher = 1014,
+    moyer = 1015,
+    miral = 1016,
+    dye_vendor = 1017,
+    souvenir_vendor = 1018,
+    lunch_vendor = 1019,
+    spell_writer = 1020,
+    fence = 1021,
+    street_vendor = 1022,
+
+    // Guests
+    guest_beggar = 2000,
+    guest_punk = 2001,
+    guest_citizen = 2002,
+    guest_wandering_vendor = 2003,
+    guest_trainer = 2005,
+    guest_producer = 2006,
+};
+
+
+
+inline bool is_shopkeeper(Role role)
+{
+    return (1000 <= static_cast<int>(role) && static_cast<int>(role) < 2000) ||
+        role == Role::guest_wandering_vendor;
+}
+
+
+
+inline bool is_guest(Role role)
+{
+    return 2000 <= static_cast<int>(role);
+}
+
 } // namespace elona

@@ -22,7 +22,7 @@ void shop_refresh_on_talk()
 {
     if (tc > 0)
     {
-        if (cdata[tc].character_role == 1009)
+        if (cdata[tc].role == Role::trader)
         {
             map_calc_trade_goods_price();
         }
@@ -33,7 +33,7 @@ void shop_refresh_on_talk()
     bool is_temporary = false;
 
     auto shop_inv =
-        lua::get_data("core.shop_inventory", cdata[tc].character_role);
+        lua::get_data("core.shop_inventory", static_cast<int>(cdata[tc].role));
     if (shop_inv)
     {
         is_temporary = shop_inv->optional_or<bool>("is_temporary", false);
@@ -100,7 +100,7 @@ void shop_sell_item()
     shoptrade = 0;
     if (tc > 0)
     {
-        if (cdata[tc].character_role == 1009)
+        if (cdata[tc].role == Role::trader)
         {
             shoptrade = 1;
         }

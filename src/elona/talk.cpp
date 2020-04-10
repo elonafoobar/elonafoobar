@@ -44,14 +44,14 @@ void talk_start()
 bool talk_setup_variables(Character &chara)
 {
     input_halt_input(HaltInput::force);
-    if (chara.character_role == 1005)
+    if (chara.role == Role::innkeeper)
     {
         if (g_config.extra_help())
         {
             maybe_show_ex_help(7, true);
         }
     }
-    if (chara.character_role == 7)
+    if (chara.role == Role::trainer)
     {
         maybe_show_ex_help(8, true);
     }
@@ -77,8 +77,7 @@ bool talk_setup_variables(Character &chara)
     {
         chara.interest = 100;
     }
-    if ((chara.character_role >= 1000 && chara.character_role < 2000) ||
-        chara.character_role == 2003)
+    if (is_shopkeeper(chara.role))
     {
         invfile = chara.shop_store_id;
         shop_refresh_on_talk();
@@ -505,8 +504,7 @@ std::string talk_get_speaker_name(const Character &chara)
     {
         speaker_name += " " + i18n::s.get("core.talk.window.fame", chara.fame);
     }
-    if ((chara.character_role >= 1000 && chara.character_role < 2000) ||
-        chara.character_role == 2003)
+    if (is_shopkeeper(chara.role))
     {
         speaker_name +=
             " " + i18n::s.get("core.talk.window.shop_rank", chara.shop_rank);

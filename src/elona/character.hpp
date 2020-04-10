@@ -312,7 +312,7 @@ public:
     int stops_activity_if_damaged = 0;
     int quality_of_performance = 0;
     int tip_gold = 0;
-    int character_role = 0;
+    Role role = Role::none;
     int shop_rank = 0;
     int activity_target = 0;
     int shop_store_id = 0;
@@ -514,7 +514,7 @@ public:
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, stops_activity_if_damaged);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, quality_of_performance);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, tip_gold);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, character_role);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, role);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, shop_rank);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, activity_target);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, shop_store_id);

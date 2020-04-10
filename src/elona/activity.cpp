@@ -206,10 +206,6 @@ int calc_performance_tips(const Character& performer, const Character& audience)
 
     const auto max = sdata(183, performer.index) * 100;
 
-    const auto audience_is_shopkeeper =
-        (1000 <= audience.character_role && audience.character_role < 2000) ||
-        audience.character_role == 2003;
-
     const auto m = Q * Q * (100 + I / 5) / 100 / 1000 + rnd(10);
     auto ret = clamp(audience.gold * clamp(m, 1, 100) / 125, 0, max);
 
@@ -217,7 +213,7 @@ int calc_performance_tips(const Character& performer, const Character& audience)
     {
         ret = rnd(clamp(ret, 1, 100)) + 1;
     }
-    if (audience_is_shopkeeper)
+    if (is_shopkeeper(audience.role))
     {
         ret /= 5;
     }
@@ -895,7 +891,7 @@ void activity_others_doing(Character& doer, optional_ref<Item> activity_item)
                     txt(i18n::s.get(
                         "core.activity.steal.notice.out_of_fov", cdata[cnt]));
                 }
-                if (cdata[cnt].character_role == 14)
+                if (cdata[cnt].role == Role::guard)
                 {
                     txt(i18n::s.get("core.activity.steal.notice.dialog.guard"));
                     chara_modify_impression(cdata[cnt], -5);
@@ -938,7 +934,7 @@ void activity_others_doing(Character& doer, optional_ref<Item> activity_item)
                     f = 1;
                 }
             }
-            if (cdata[tg].character_role == 20)
+            if (cdata[tg].role == Role::user)
             {
                 if (f != 1)
                 {

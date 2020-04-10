@@ -43,6 +43,20 @@ namespace elona
 namespace
 {
 
+const std::vector<std::pair<int, Role>> isethire = {
+    {205, Role::maid},
+    {70, Role::bartender},
+    {74, Role::healer},
+    {41, Role::appraiser},
+    {69, Role::informer},
+    {76, Role::guard},
+    {1, Role::general_store},
+    {1, Role::general_store},
+    {1, Role::general_store},
+};
+
+
+
 int calc_heirloom_value(const Item& heirloom)
 {
     const auto category = the_item_db[itemid2int(heirloom.id)]->category;
@@ -512,7 +526,7 @@ TurnResult show_house_board()
             if (cnt.state() == Character::State::alive ||
                 cnt.state() == Character::State::villager_dead)
             {
-                if (cnt.character_role != 0)
+                if (cnt.role != Role::none)
                 {
                     ++p;
                 }
@@ -594,7 +608,7 @@ void prompt_hiring()
         if (cnt.state() == Character::State::alive ||
             cnt.state() == Character::State::villager_dead)
         {
-            if (cnt.character_role != 0)
+            if (cnt.role != Role::none)
             {
                 ++p;
             }
@@ -620,7 +634,7 @@ void prompt_hiring()
         {
             hire = rnd(isethire.size());
         }
-        const auto chara_id = isethire(hire);
+        const auto chara_id = isethire.at(hire).first;
         randomize(game_data.date.day + cnt);
         flt(20);
         int stat = chara_create(-1, chara_id, -3, 0);
@@ -629,43 +643,43 @@ void prompt_hiring()
             continue;
         }
         cdata[rc].set_state(Character::State::servant_being_selected);
-        cdata[rc].character_role = isethirerole(hire);
+        cdata[rc].role = isethire.at(hire).second;
         if (cdata[rc].id == CharaId::shopkeeper)
         {
             p = rnd(6);
             if (p == 0)
             {
-                cdata[rc].character_role = 1001;
+                cdata[rc].role = Role::blacksmith;
                 cdatan(0, rc) =
                     i18n::s.get("core.building.guests.armory", cdata[rc]);
             }
             if (p == 1)
             {
-                cdata[rc].character_role = 1006;
+                cdata[rc].role = Role::general_vendor;
                 cdatan(0, rc) = i18n::s.get(
                     "core.building.guests.general_store", cdata[rc]);
             }
             if (p == 2)
             {
-                cdata[rc].character_role = 1004;
+                cdata[rc].role = Role::magic_vendor;
                 cdatan(0, rc) =
                     i18n::s.get("core.building.guests.magic_store", cdata[rc]);
             }
             if (p == 3)
             {
-                cdata[rc].character_role = 1008;
+                cdata[rc].role = Role::general_store;
                 cdatan(0, rc) =
                     i18n::s.get("core.building.guests.goods_store", cdata[rc]);
             }
             if (p == 4)
             {
-                cdata[rc].character_role = 1001;
+                cdata[rc].role = Role::blacksmith;
                 cdatan(0, rc) =
                     i18n::s.get("core.building.guests.armory", cdata[rc]);
             }
             if (p == 5)
             {
-                cdata[rc].character_role = 1007;
+                cdata[rc].role = Role::blackmarket_vendor;
                 cdatan(0, rc) =
                     i18n::s.get("core.building.guests.blackmarket", cdata[rc]);
             }

@@ -1506,7 +1506,7 @@ OnEnterResult on_enter_external_inventory(
         }
         if (invctrl == 12)
         {
-            if (cdata[tc].character_role != 1009)
+            if (cdata[tc].role != Role::trader)
             {
                 if (calcitemvalue(selected_item, 1) * in > cdata[tc].gold)
                 {

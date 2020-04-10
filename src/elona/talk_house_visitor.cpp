@@ -1032,7 +1032,7 @@ TalkResult _talk_hv_merchant()
             return TalkResult::talk_end;
         }
     }
-    cdata[tc].character_role = 2002;
+    cdata[tc].role = Role::guest_citizen;
     return TalkResult::talk_end;
 }
 
@@ -1042,17 +1042,17 @@ TalkResult talk_house_visitor()
 {
     listmax = 0;
     cc = 0;
-    switch (cdata[tc].character_role)
+    switch (cdata[tc].role)
     {
-    case 13: return _talk_hv_adventurer();
-    case 2005: return _talk_hv_trainer();
-    case 2002: return _talk_hv_visitor();
-    case 2000: return _talk_hv_beggar();
-    case 2001: return _talk_hv_punk();
-    case 2006: return _talk_hv_mysterious_producer();
-    case 2003: return _talk_hv_merchant();
+    case Role::adventurer: return _talk_hv_adventurer();
+    case Role::guest_trainer: return _talk_hv_trainer();
+    case Role::guest_citizen: return _talk_hv_visitor();
+    case Role::guest_beggar: return _talk_hv_beggar();
+    case Role::guest_punk: return _talk_hv_punk();
+    case Role::guest_producer: return _talk_hv_mysterious_producer();
+    case Role::guest_wandering_vendor: return _talk_hv_merchant();
+    default: return TalkResult::talk_end;
     }
-    return TalkResult::talk_end;
 }
 
 } // namespace elona

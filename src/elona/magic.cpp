@@ -2262,8 +2262,8 @@ bool _magic_435()
     {
         f = 0;
     }
-    if (cdata[tc].quality >= Quality::miracle ||
-        cdata[tc].character_role != 0 || cdata[tc].is_lord_of_dungeon() == 1)
+    if (cdata[tc].quality >= Quality::miracle || cdata[tc].role != Role::none ||
+        cdata[tc].is_lord_of_dungeon() == 1)
     {
         f = -1;
     }
@@ -2835,9 +2835,8 @@ bool _magic_628()
     {
         f = 0;
     }
-    if (cdata[tc].quality >= Quality::miracle ||
-        cdata[tc].character_role != 0 || cdata[tc].is_escorted() == 1 ||
-        cdata[tc].is_lord_of_dungeon() == 1)
+    if (cdata[tc].quality >= Quality::miracle || cdata[tc].role != Role::none ||
+        cdata[tc].is_escorted() == 1 || cdata[tc].is_lord_of_dungeon() == 1)
     {
         f = -1;
     }
