@@ -22,6 +22,7 @@ namespace
 constexpr int max_volume = MIX_MAX_VOLUME;
 
 
+
 // Channels:
 // 0-6: reserved for SEs used very frequently
 // 7: temporary(default)
@@ -184,6 +185,8 @@ void play_music_inner(data::InstanceId music_id, int musicloop)
         // Since we're using SDL mixer, this should load any file
         // format that mixer was compiled to support.
         DMLOADFNAME(music->file, 0);
+        snail::audio::music::set_volume(
+            music->volume * g_config.music_volume() / 8);
         DMPLAY(musicloop, 0);
     }
 }
@@ -260,6 +263,7 @@ void snd_inner(
         sound_set_position(channel, 0, 0);
     }
 
+    DSSETVOLUME(channel, sound.volume);
     DSPLAY(channel, loop);
 }
 
@@ -309,7 +313,7 @@ void DSSTOP(int channel)
 
 void DSSETVOLUME(int channel, int volume)
 {
-    snail::audio::DSSETVOLUME(channel, volume);
+    snail::audio::DSSETVOLUME(channel, volume * g_config.sound_volume() / 8);
 }
 
 

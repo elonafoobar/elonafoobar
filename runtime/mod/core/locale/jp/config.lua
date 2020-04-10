@@ -116,10 +116,18 @@ Elonaを起動した際にデフォルトで読み込まれるセーブデータ
                yes_no = "core.config.common.yes_no.ari_nashi",
                doc = "SEを再生します。",
             },
+            sound_volume = {
+               name = "サウンドの音量*",
+               doc = "SEの音量を調整します。この設定は全てのSEに影響します。",
+            },
             music = {
                name = "BGMの再生*",
                yes_no = "core.config.common.yes_no.ari_nashi",
                doc = "BGMを再生します。",
+            },
+            music_volume = {
+               name = "BGMの音量*",
+               doc = "BGMの音量を調整します。この設定は全てのBGMに影響します。",
             },
             stereo_sound = {
                name = "ステレオサウンド",

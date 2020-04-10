@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include <vector>
 
 #include "../../application.hpp"
@@ -134,6 +136,25 @@ void DMSTOP()
         played_music = nullptr;
     }
 }
+
+
+
+namespace music
+{
+
+int get_volume()
+{
+    return ::Mix_VolumeMusic(-1);
+}
+
+
+
+void set_volume(int volume)
+{
+    ::Mix_VolumeMusic(volume);
+}
+
+} // namespace music
 
 } // namespace audio
 } // namespace snail

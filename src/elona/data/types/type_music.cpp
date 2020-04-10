@@ -14,6 +14,7 @@ MusicData MusicDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
     DATA_LEGACY_ID();
     DATA_REQ(file, std::string);
+    DATA_OPT_OR(volume, int, 128);
 
     const fs::path music_file = lua::resolve_path_for_mod(file);
     if (!fs::exists(music_file))
@@ -27,6 +28,7 @@ MusicData MusicDB::convert(const lua::ConfigTable& data, const std::string& id)
         data::InstanceId{id},
         legacy_id,
         music_file,
+        volume,
     };
 }
 

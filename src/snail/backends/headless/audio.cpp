@@ -76,6 +76,24 @@ void DMSTOP()
 {
 }
 
+
+
+namespace music
+{
+
+int get_volume()
+{
+    return 0;
+}
+
+
+
+void set_volume(int)
+{
+}
+
+} // namespace music
+
 } // namespace audio
 } // namespace snail
 } // namespace elona

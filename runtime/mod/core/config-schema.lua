@@ -14,7 +14,19 @@ config {
    section "screen", {
       option "sound", true,
 
+      option "sound_volume", {
+         default = 8,
+         min = 0,
+         max = 8,
+      },
+
       option "music", true,
+
+      option "music_volume", {
+         default = 8,
+         min = 0,
+         max = 8,
+      },
 
       option "stereo_sound", true,
 

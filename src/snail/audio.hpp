@@ -23,6 +23,17 @@ void DMLOADFNAME(const std::string& filepath, int);
 void DMPLAY(int, int);
 void DMSTOP();
 
+
+
+namespace music
+{
+
+// volume: 0 - 128
+int get_volume();
+void set_volume(int volume);
+
+} // namespace music
+
 } // namespace audio
 } // namespace snail
 } // namespace elona
