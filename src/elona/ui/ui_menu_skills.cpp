@@ -162,8 +162,9 @@ void UIMenuSkills::_draw_spell_cost(int cnt, int skill_id)
 
 void UIMenuSkills::_draw_spell_desc_and_power(int cnt, int skill_id)
 {
-    std::string spell_power_raw = make_spell_description(skill_id);
-    mes(wx + 325, wy + 66 + cnt * 19 + 2, strmid(spell_power_raw, 0, 34));
+    const auto spell_power =
+        strutil::take_by_width(make_spell_description(skill_id), 34);
+    mes(wx + 325, wy + 66 + cnt * 19 + 2, spell_power);
 }
 
 void UIMenuSkills::_draw_single_list_entry(int cnt, int skill_id)

@@ -146,7 +146,7 @@ void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
         {
             s_ = i18n::s.get(
                 "core.blending.window.selected", inv[rpref(10 + cnt * 2)]);
-            s_ = strmid(s_, 0, 44);
+            s_ = strutil::take_by_width(s_, 44);
         }
         mes(dx_, dy_, ""s + i_ + u8"."s + s_);
         dy_ += 17;
@@ -487,7 +487,7 @@ void blending_menu_2()
             }
             p = list(0, p);
             s = itemname(inv[p], inv[p].number());
-            s = strmid(s, 0, 28);
+            s = strutil::take_by_width(s, 28);
             if (p >= ELONA_ITEM_ON_GROUND_INDEX)
             {
                 s += i18n::s.get("core.blending.steps.ground");
