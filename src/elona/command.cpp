@@ -91,7 +91,7 @@ bool any_of_characters_around_you(F predicate, bool ignore_pc = true)
 
 void _search_for_crystal()
 {
-    p = 9999;
+    optional<int> d;
     for (const auto& item : inv.ground())
     {
         if (item.number() == 0)
@@ -106,39 +106,33 @@ void _search_for_crystal()
         {
             continue;
         }
-        if (p > dist(
-                    item.position.x,
-                    item.position.y,
-                    cdata.player().position.x,
-                    cdata.player().position.y))
+        const auto d_ = dist(
+            item.position.x,
+            item.position.y,
+            cdata.player().position.x,
+            cdata.player().position.y);
+        if (!d || d_ < *d)
         {
-            p = dist(
-                item.position.x,
-                item.position.y,
-                cdata.player().position.x,
-                cdata.player().position.y);
+            d = d_;
         }
     }
-    if (p != 9999)
+    if (d)
     {
-        while (1)
+        if (*d <= 3)
         {
-            if (p <= 3)
-            {
-                txt(i18n::s.get("core.action.search.crystal.close"));
-            }
-            if (p <= 9)
-            {
-                txt(i18n::s.get("core.action.search.crystal.normal"));
-                break;
-            }
-            if (p <= 16)
-            {
-                txt(i18n::s.get("core.action.search.crystal.far"));
-                break;
-            }
+            txt(i18n::s.get("core.action.search.crystal.close"));
+        }
+        else if (*d <= 9)
+        {
+            txt(i18n::s.get("core.action.search.crystal.normal"));
+        }
+        else if (*d <= 16)
+        {
+            txt(i18n::s.get("core.action.search.crystal.far"));
+        }
+        else
+        {
             txt(i18n::s.get("core.action.search.crystal.sense"));
-            break;
         }
     }
 }
