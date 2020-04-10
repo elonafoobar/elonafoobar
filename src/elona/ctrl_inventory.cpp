@@ -1125,7 +1125,7 @@ void draw_window(bool dropcontinue)
                 ? snail::Color{50, 50, 200}
                 : snail::Color{100, 100, 100};
             mes(x, y, body_part_desc, text_color);
-            x += (body_part_desc.size() + 1) * 6;
+            x += (strlen_u(body_part_desc) + 1) * 6;
         }
     }
 }
