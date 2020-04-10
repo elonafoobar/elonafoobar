@@ -480,7 +480,8 @@ TalkResult _talk_hv_adventurer_materials()
 
 TalkResult _talk_hv_adventurer_favorite_skill()
 {
-    int skill_id = advfavoriteskill(tc);
+    int stat = advfavoriteskill(tc);
+    int skill_id = rtval(rnd(stat));
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.favorite_skill.dialog",
