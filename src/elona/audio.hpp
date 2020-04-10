@@ -48,7 +48,7 @@ void sound_footstep2(int foot);
 void sound_play_environmental();
 void stop_music();
 
-void play_music();
-void play_music(data::InstanceId music_id);
+void play_music(bool loop = true);
+void play_music(data::InstanceId music_id, bool loop = true);
 
 } // namespace elona

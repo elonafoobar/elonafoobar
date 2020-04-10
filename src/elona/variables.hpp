@@ -423,7 +423,6 @@ ELONA_EXTERN(int minlevel);
 ELONA_EXTERN(int mode);
 ELONA_EXTERN(int msync);
 ELONA_EXTERN(int mtilefilecur);
-ELONA_EXTERN(int musicloop);
 ELONA_EXTERN(int nostack);
 ELONA_EXTERN(int novoidlv);
 ELONA_EXTERN(int nowindowanime);

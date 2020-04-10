@@ -2095,8 +2095,7 @@ void sleep_start(optional_ref<Item> bed)
         txtgod(cdata.player().god_id, 10);
     }
     load_sleep_background();
-    musicloop = 1;
-    play_music("core.mcCoda");
+    play_music("core.mcCoda", false);
     msg_halt();
     for (int cnt = 0; cnt < 20; ++cnt)
     {

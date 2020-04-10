@@ -161,7 +161,7 @@ data::InstanceId get_default_music()
     return *music_id;
 }
 
-void play_music_inner(data::InstanceId music_id, int musicloop)
+void play_music_inner(data::InstanceId music_id, bool loop)
 {
     if (musicprev != music_id)
     {
@@ -187,7 +187,7 @@ void play_music_inner(data::InstanceId music_id, int musicloop)
         DMLOADFNAME(music->file, 0);
         snail::audio::music::set_volume(
             music->volume * g_config.music_volume() / 8);
-        DMPLAY(musicloop, 0);
+        DMPLAY(loop, 0);
     }
 }
 
@@ -592,32 +592,21 @@ void snd(data::InstanceId sound_id, bool loop, bool allow_duplicate)
 
 
 
-void play_music()
+void play_music(bool loop)
 {
-    play_music(get_default_music());
+    play_music(get_default_music(), loop);
 }
 
 
 
-void play_music(data::InstanceId music_id)
+void play_music(data::InstanceId music_id, bool loop)
 {
     sound_play_environmental();
 
     if (!g_config.music())
         return;
 
-    if (musicloop == 1)
-    {
-        musicloop = 0;
-    }
-    else
-    {
-        musicloop = 65535;
-    }
-
-    play_music_inner(music_id, musicloop);
-
-    musicloop = 0;
+    play_music_inner(music_id, loop);
 }
 
 } // namespace elona
