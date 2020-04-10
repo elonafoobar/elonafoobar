@@ -41,7 +41,6 @@ elona_vector1<int> rpref;
 int rpid = 0;
 int rpmode = 0;
 elona_vector1<int> rppage;
-int rpresult = 0;
 
 
 
@@ -1602,9 +1601,10 @@ int blending_find_required_mat()
     return f;
 }
 
-int blending_spend_materials()
+
+
+void blending_spend_materials(bool success)
 {
-    p = 0;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (rpref(10 + cnt * 2) == -1)
@@ -1619,7 +1619,7 @@ int blending_spend_materials()
         {
             continue;
         }
-        if (rpresult)
+        if (success)
         {
             inv[rpref(10 + cnt * 2)].modify_number(-1);
         }
@@ -1639,19 +1639,14 @@ int blending_spend_materials()
             inv[rpref(10 + cnt * 2)].position.y);
     }
     refresh_burden_state();
-    return 1;
 }
+
+
 
 void blending_start_attempt()
 {
-    rpresult = 1;
-    if (rpdiff(rpid, -1, -1) < rnd(100))
-    {
-        rpresult = 0;
-        txt(i18n::s.get("core.blending.failed"),
-            Message::color{ColorIndex::red});
-    }
-    else
+    const auto success = rpdiff(rpid, -1, -1) >= rnd(100);
+    if (success)
     {
         if (rpdata(0, rpid) >= 10000)
         {
@@ -1696,8 +1691,13 @@ void blending_start_attempt()
                 50);
         }
     }
+    else
+    {
+        txt(i18n::s.get("core.blending.failed"),
+            Message::color{ColorIndex::red});
+    }
     --rpref(1);
-    blending_spend_materials();
+    blending_spend_materials(success);
 }
 
 
