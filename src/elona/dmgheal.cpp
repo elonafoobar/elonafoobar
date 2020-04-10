@@ -680,10 +680,7 @@ int damage_hp(
                         config_get_integer("core.screen.heartbeat_threshold");
                     if (victim.hp < victim.max_hp * (threshold * 0.01))
                     {
-                        if (!CHECKPLAY(32))
-                        {
-                            snd("core.Heart1");
-                        }
+                        snd("core.Heart1");
                     }
                 }
             }

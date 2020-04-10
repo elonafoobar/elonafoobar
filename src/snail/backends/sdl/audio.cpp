@@ -1,4 +1,4 @@
-#include <cmath>
+#include "../../audio.hpp"
 
 #include <vector>
 
@@ -6,6 +6,9 @@
 #include "../../detail/sdl.hpp"
 
 
+
+namespace elona::snail::audio
+{
 
 namespace
 {
@@ -19,20 +22,96 @@ namespace
 constexpr int max_channels = 17;
 
 
-std::vector<Mix_Chunk*> chunks;
+std::vector<::Mix_Chunk*> chunks;
 
-Mix_Music* played_music = nullptr;
+::Mix_Music* played_music = nullptr;
 
 } // namespace
 
 
 
-namespace elona
+namespace sound
 {
-namespace snail
+
+bool init()
 {
-namespace audio
+    ::Mix_AllocateChannels(max_channels);
+    chunks.resize(max_channels);
+    Application::instance().register_finalizer([&]() {
+        for (const auto& chunk : chunks)
+        {
+            if (chunk)
+            {
+                ::Mix_FreeChunk(chunk);
+            }
+        }
+    });
+    return true;
+}
+
+
+
+void load(int channel, const fs::path& path)
 {
+    if (auto chunk = chunks[channel])
+    {
+        ::Mix_FreeChunk(chunk);
+    }
+
+    auto chunk = snail::detail::enforce_mixer(
+        ::Mix_LoadWAV(filepathutil::to_utf8_path(path).c_str()));
+    chunks[channel] = chunk;
+}
+
+
+
+void play(int channel, int loops)
+{
+    if (loops == 0)
+    {
+        return;
+    }
+    else if (loops == loop_forever)
+    {
+        ::Mix_PlayChannel(channel, chunks[channel], loops);
+    }
+    else
+    {
+        ::Mix_PlayChannel(channel, chunks[channel], loops - 1);
+    }
+}
+
+
+
+void stop(int channel)
+{
+    ::Mix_HaltChannel(channel);
+}
+
+
+
+int get_volume(int channel)
+{
+    if (const auto chunk = chunks[channel])
+    {
+        return ::Mix_VolumeChunk(chunk, -1);
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+
+
+void set_volume(int channel, int volume)
+{
+    if (const auto chunk = chunks[channel])
+    {
+        ::Mix_VolumeChunk(chunk, volume);
+    }
+}
+
 
 
 void set_position(int channel, short angle, unsigned char distance)
@@ -41,93 +120,53 @@ void set_position(int channel, short angle, unsigned char distance)
 }
 
 
-int DSINIT()
+
+bool is_playing(int channel)
 {
-    Mix_AllocateChannels(max_channels);
-    chunks.resize(max_channels);
-    Application::instance().register_finalizer([&]() {
-        for (const auto& chunk : chunks)
-        {
-            if (chunk)
-                ::Mix_FreeChunk(chunk);
-        }
-    });
-    return 1;
+    return ::Mix_Playing(channel);
 }
 
+} // namespace sound
 
 
-void DSLOADFNAME(const std::string& filepath, int channel)
+
+namespace music
 {
-    if (auto chunk = chunks[channel])
-        Mix_FreeChunk(chunk);
 
-    auto chunk = snail::detail::enforce_mixer(Mix_LoadWAV(filepath.c_str()));
-    chunks[channel] = chunk;
-}
-
-
-
-void DSPLAY(int channel, bool loop)
-{
-    Mix_PlayChannel(channel, chunks[channel], loop ? -1 : 0);
-}
-
-
-
-void DSSTOP(int channel)
-{
-    Mix_HaltChannel(channel);
-}
-
-
-
-void DSSETVOLUME(int channel, int volume)
-{
-    if (const auto chunk = chunks[channel])
-    {
-        Mix_VolumeChunk(chunk, volume);
-    }
-}
-
-
-
-bool CHECKPLAY(int channel)
-{
-    return Mix_Playing(channel);
-}
-
-
-
-int DMINIT()
+bool init()
 {
     Application::instance().register_finalizer([&]() {
         if (played_music)
+        {
             ::Mix_FreeMusic(played_music);
+        }
     });
-    return 1;
+    return true;
 }
 
 
 
-void DMLOADFNAME(const std::string& filepath, int)
+void load(const fs::path& path)
 {
     if (played_music)
+    {
         ::Mix_FreeMusic(played_music);
+    }
 
-    played_music = snail::detail::enforce_mixer(Mix_LoadMUS(filepath.c_str()));
+    played_music = snail::detail::enforce_mixer(
+        ::Mix_LoadMUS(filepathutil::to_utf8_path(path).c_str()));
 }
 
 
 
-void DMPLAY(int loop, int)
+void play(int loops)
 {
-    detail::enforce_mixer(Mix_PlayMusic(played_music, loop ? -1 : 1));
+    detail::enforce_mixer(::Mix_PlayMusic(played_music, loops));
 }
 
 
 
-void DMSTOP()
+void stop()
 {
     ::Mix_HaltMusic();
     if (played_music)
@@ -138,9 +177,6 @@ void DMSTOP()
 }
 
 
-
-namespace music
-{
 
 int get_volume()
 {
@@ -156,6 +192,4 @@ void set_volume(int volume)
 
 } // namespace music
 
-} // namespace audio
-} // namespace snail
-} // namespace elona
+} // namespace elona::snail::audio

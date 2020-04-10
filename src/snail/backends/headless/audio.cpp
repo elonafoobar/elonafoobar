@@ -2,12 +2,48 @@
 
 
 
-namespace elona
+namespace elona::snail::audio
 {
-namespace snail
+
+namespace sound
 {
-namespace audio
+
+bool init()
 {
+    return true;
+}
+
+
+
+void load(int, const fs::path&)
+{
+}
+
+
+
+void play(int, int)
+{
+}
+
+
+
+void stop(int)
+{
+}
+
+
+
+int get_volume(int)
+{
+    return 0;
+}
+
+
+
+void set_volume(int, int)
+{
+}
+
 
 
 void set_position(int, short, unsigned char)
@@ -15,71 +51,43 @@ void set_position(int, short, unsigned char)
 }
 
 
-int DSINIT()
-{
-    return 1;
-}
 
-
-
-void DSLOADFNAME(const std::string&, int)
-{
-}
-
-
-
-void DSPLAY(int, bool)
-{
-}
-
-
-
-void DSSTOP(int)
-{
-}
-
-
-
-void DSSETVOLUME(int, int)
-{
-}
-
-
-
-bool CHECKPLAY(int)
+bool is_playing(int)
 {
     return false;
 }
 
-
-
-int DMINIT()
-{
-    return 1;
-}
-
-
-
-void DMLOADFNAME(const std::string&, int)
-{
-}
-
-
-
-void DMPLAY(int, int)
-{
-}
-
-
-
-void DMSTOP()
-{
-}
+} // namespace sound
 
 
 
 namespace music
 {
+
+bool init()
+{
+    return true;
+}
+
+
+
+void load(const fs::path&)
+{
+}
+
+
+
+void play(int)
+{
+}
+
+
+
+void stop()
+{
+}
+
+
 
 int get_volume()
 {
@@ -94,6 +102,4 @@ void set_volume(int)
 
 } // namespace music
 
-} // namespace audio
-} // namespace snail
-} // namespace elona
+} // namespace elona::snail::audio
