@@ -315,13 +315,26 @@ IdentifyState item_identify(Item& item, int power);
 std::vector<std::reference_wrapper<Item>> itemlist(int owner, int id);
 
 void item_checkknown(Item& item);
-int inv_compress(int);
-void item_copy(int = 0, int = 0);
-void item_acid(const Character& owner, int item_index = -1);
+Item& inv_compress(int owner);
+
+/**
+ * Copy @a src to @a dst.
+ * @param src the source
+ * @param dst the destination
+ */
+void item_copy(Item& src, Item& dst);
+
+void item_acid(const Character& owner, optional_ref<Item> item = none);
 void item_delete(Item& item);
-void item_exchange(int = 0, int = 0);
-void item_modify_num(Item&, int);
-void item_set_num(Item&, int);
+
+/**
+ * Swap the content of @a a and @a b. If they points to the same object, does
+ * nothing.
+ * @param a one item
+ * @param b another item
+ */
+void item_exchange(Item& a, Item& b);
+
 void itemturn(Item& item);
 optional_ref<Item>
 itemfind(int inventory_id, int matcher, int matcher_type = 0);
@@ -338,7 +351,11 @@ optional_ref<Item> item_find(
     int matcher_type = 0,
     ItemFindLocation = ItemFindLocation::player_inventory_and_ground);
 
-int item_separate(int);
+/**
+ * Separate @a item's stack.
+ * @param item the item to separate
+ */
+Item& item_separate(Item& stacked_item);
 
 struct ItemStackResult
 {
@@ -357,14 +374,17 @@ bool item_cold(int owner, optional_ref<Item> destroyed_item = none);
 void mapitem_cold(int x, int y);
 
 // TODO unsure how these are separate from item
-int inv_find(int = 0, int = 0);
+bool inv_find(ItemId id, int owner);
 Item& get_random_inv(int owner);
-int inv_getfreeid(int = 0);
-int inv_getowner(int = 0);
+
+optional_ref<Item> inv_get_free_slot(int inventory_id);
+
+int inv_getowner(const Item& item);
 int inv_sum(int = 0);
 int inv_weight(int = 0);
 bool inv_getspace(int);
-int inv_getfreeid_force();
+
+Item& inv_get_free_slot_force(int inventory_id);
 
 void remain_make(Item& remain, const Character& chara);
 
@@ -412,15 +432,17 @@ void auto_identify();
 void begintempinv();
 void exittempinv();
 bool cargocheck(const Item& item);
-int convertartifact(int = 0, int = 0);
+Item& item_convert_artifact(
+    Item& artifact,
+    bool ignore_external_container = false);
 void damage_by_cursed_equipments();
-void dipcursed(int = 0, int = 0);
+void dipcursed(Item& item);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 void equip_melee_weapon();
 int gain_skills_by_geen_engineering();
 int transplant_body_parts();
 std::pair<int, int> inv_getheader(int);
-int mapitemfind(int = 0, int = 0, int = 0);
+optional_ref<Item> mapitemfind(const Position& pos, ItemId id);
 std::string itemname(Item& item, int number = 0, bool with_article = true);
 
 } // namespace elona

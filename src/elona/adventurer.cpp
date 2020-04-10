@@ -338,9 +338,9 @@ int adventurer_discover_equipment()
         }
         if (item.number() != 0)
         {
-            if (cdata[rc].item_which_will_be_used == item.index)
+            if (cdata[rc].ai_item == item.index)
             {
-                cdata[rc].item_which_will_be_used = 0;
+                cdata[rc].ai_item = 0;
             }
             item.remove();
             f = 1;

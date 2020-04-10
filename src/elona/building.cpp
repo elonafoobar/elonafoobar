@@ -60,11 +60,12 @@ int calc_heirloom_value(const Item& heirloom)
 
 
 constexpr size_t heirloom_list_size = 10;
-using ItemAndValue = std::pair<int, int>;
 
+// @a heirlooms are sorted by value in descending order. The first item is the
+// most valuable one.
 void add_heirloom_if_valuable_enough(
-    std::vector<ItemAndValue>& heirlooms,
-    const Item& heirloom)
+    std::vector<HomeRankHeirloom>& heirlooms,
+    Item& heirloom)
 {
     const auto category = the_item_db[itemid2int(heirloom.id)]->category;
     if (category == ItemCategory::furniture)
@@ -73,13 +74,18 @@ void add_heirloom_if_valuable_enough(
     }
 
     const auto value = calc_heirloom_value(heirloom);
-    if (heirlooms.back().second < value)
+    if (heirlooms.size() < heirloom_list_size)
     {
-        heirlooms.back() = {heirloom.index, value};
-        // Sort by value in descending order. The first item is the most
-        // valuable one.
+        heirlooms.push_back({std::ref(heirloom), value});
         range::sort(heirlooms, [](const auto& a, const auto& b) {
-            return a.second > b.second;
+            return a.value > b.value;
+        });
+    }
+    else if (heirlooms.back().value < value)
+    {
+        heirlooms.back() = {std::ref(heirloom), value};
+        range::sort(heirlooms, [](const auto& a, const auto& b) {
+            return a.value > b.value;
         });
     }
 }
@@ -98,6 +104,128 @@ bool _livestock_will_breed(const Character& breeder, int livestock_count)
         (L == 0 && rnd(30) == 0);
 }
 
+
+
+int calc_num_of_shop_customers(int shop_level, const Character& shopkeeper)
+{
+    int ret = 0;
+    for (int _i = 0; _i < 3; ++_i)
+    {
+        ret += rnd(shop_level / 3 + 5);
+    }
+    ret = ret * (80 + sdata(17, shopkeeper.index) * 3 / 2) / 100;
+    if (ret < 1)
+    {
+        ret = 1;
+    }
+    return ret;
+}
+
+
+
+struct ItemForSale
+{
+    Item& item;
+    ItemCategory category;
+
+
+    ItemForSale(Item& item, ItemCategory category)
+        : item(item)
+        , category(category)
+    {
+    }
+};
+
+
+
+std::vector<ItemForSale> list_items_for_sale()
+{
+    std::vector<ItemForSale> ret;
+
+    for (auto&& item : inv.ground())
+    {
+        if (item.number() <= 0)
+        {
+            continue;
+        }
+        if (item.id == ItemId::shop_strongbox)
+        {
+            continue;
+        }
+        if (item.id == ItemId::register_)
+        {
+            continue;
+        }
+        if (item.id == ItemId::book_b)
+        {
+            continue;
+        }
+        if (item.id == ItemId::gold_piece)
+        {
+            continue;
+        }
+        if (item.id == ItemId::shelter)
+        {
+            continue;
+        }
+        if (item.id == ItemId::deed)
+        {
+            continue;
+        }
+        if (item.weight < 0)
+        {
+            continue;
+        }
+        if (item.quality >= Quality::special)
+        {
+            continue;
+        }
+        if (item.value < 50)
+        {
+            continue;
+        }
+
+        const auto category = the_item_db[itemid2int(item.id)]->category;
+        if (category == ItemCategory::furniture)
+        {
+            continue;
+        }
+
+        ret.emplace_back(item, category);
+    }
+
+    return ret;
+}
+
+
+
+int calc_item_price_per_one(Item& item, const Character& shopkeeper)
+{
+    const auto V = calcitemvalue(item, 2);
+    const auto I = sdata(156, shopkeeper.index);
+
+    return V * static_cast<int>(10 + std::sqrt(I * 200)) / 100;
+}
+
+
+
+struct SoldItem
+{
+    int level;
+    Quality quality;
+    ItemCategory category;
+    int total_price;
+
+
+    SoldItem(int level, Quality quality, ItemCategory category, int total_price)
+        : level(level)
+        , quality(quality)
+        , category(category)
+        , total_price(total_price)
+    {
+    }
+};
+
 } // namespace
 
 
@@ -107,7 +235,6 @@ elona_vector1<int> fsetplantartifact;
 elona_vector1<int> fsetplantunknown;
 
 
-int sold = 0;
 int rankorg = 0;
 int rankcur = 0;
 
@@ -632,7 +759,8 @@ void show_home_value()
         x,
         y);
     gmode(2);
-    calc_home_rank();
+
+    const auto heirlooms = building_update_home_rank();
     s(0) = i18n::s.get("core.building.home.rank.type.base");
     s(1) = i18n::s.get("core.building.home.rank.type.deco");
     s(2) = i18n::s.get("core.building.home.rank.type.heir");
@@ -660,23 +788,17 @@ void show_home_value()
         }
     }
     font(12 + sizefix - en * 2);
-    listmax = 10;
-    sort_list_by_column1();
-    for (int cnt = 0; cnt < 10; ++cnt)
+
+    int i = 0;
+    for (const auto& [heirloom, _value] : heirlooms)
     {
-        p = list(0, 10 - cnt - 1);
-        if (p == 0)
-        {
-            continue;
-        }
-
         draw_item_with_portrait_scale_height(
-            inv[p], wx + 37, cnt * 16 + wy + 138);
-
+            heirloom.get(), wx + 37, i * 16 + wy + 138);
         mes(wx + 68,
-            cnt * 16 + wy + 138,
-            i18n::s.get("core.building.home.rank.place", cnvrank(cnt + 1)));
-        mes(wx + 110, cnt * 16 + wy + 138, itemname(inv[p]));
+            i * 16 + wy + 138,
+            i18n::s.get("core.building.home.rank.place", cnvrank(i + 1)));
+        mes(wx + 110, i * 16 + wy + 138, itemname(heirloom.get()));
+        ++i;
     }
 
     while (1)
@@ -832,155 +954,101 @@ void update_shop_and_report()
     }
 }
 
+
+
 void show_shop_log()
 {
-    int shoplv = 0;
-    int customer = 0;
-    int dblistmax = 0;
     const auto worker = getworker(area);
-    std::string shop_mark =
-        u8"["s + i18n::s.get("core.building.shop.info") + u8"]"s;
     if (worker == -1)
     {
-        txt(shop_mark + i18n::s.get("core.building.shop.log.no_shopkeeper"));
+        txt(i18n::s.get("core.building.shop.log.no_shopkeeper"));
         return;
     }
-    sold = 0;
-    income(0) = 0;
-    income(1) = 0;
-    listmax = 0;
-    shoplv = 100 - game_data.ranks.at(5) / 100;
-    customer = 0;
-    for (int cnt = 0; cnt < 3; ++cnt)
-    {
-        customer += rnd(shoplv / 3 + 5);
-    }
-    customer = customer * (80 + sdata(17, worker) * 3 / 2) / 100;
-    if (customer < 1)
-    {
-        customer = 1;
-    }
+
     if (game_data.current_map != area)
     {
         ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
         ctrl_file(FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
     }
     mode = 6;
-    dblistmax = 0;
-    for (const auto& item : inv.ground())
+
+    const auto shop_level = 100 - game_data.ranks.at(5) / 100;
+    const auto num_of_customers =
+        calc_num_of_shop_customers(shop_level, cdata[worker]);
+
+    const auto items_for_sale = list_items_for_sale();
+
+    int total_profit = 0;
+    int total_sold_items = 0;
+
+    std::vector<SoldItem> sold_items;
+
+    for (int _i = 0; _i < num_of_customers; ++_i)
     {
-        if (item.number() <= 0)
-        {
-            continue;
-        }
-        if (item.id == ItemId::shop_strongbox)
-        {
-            continue;
-        }
-        if (item.id == ItemId::register_)
-        {
-            continue;
-        }
-        if (item.id == ItemId::book_b)
-        {
-            continue;
-        }
-        if (item.id == ItemId::gold_piece)
-        {
-            continue;
-        }
-        if (item.id == ItemId::shelter)
-        {
-            continue;
-        }
-        if (item.id == ItemId::deed)
-        {
-            continue;
-        }
-        if (item.weight < 0)
-        {
-            continue;
-        }
-        if (item.quality >= Quality::special)
-        {
-            continue;
-        }
-        if (item.value < 50)
-        {
-            continue;
-        }
-        auto category = the_item_db[itemid2int(item.id)]->category;
-        if (category == ItemCategory::furniture)
-        {
-            continue;
-        }
-        dblist(0, dblistmax) = item.index;
-        dblist(1, dblistmax) = (int)category;
-        ++dblistmax;
-    }
-    for (int cnt = 0, cnt_end = (customer); cnt < cnt_end; ++cnt)
-    {
-        if (dblistmax == 0)
+        if (items_for_sale.empty())
         {
             break;
         }
-        p = rnd(dblistmax);
-        const auto item_index = dblist(0, p);
-        int category = dblist(1, p);
-        int val0 = calcitemvalue(inv[item_index], 2);
-        val0 = val0 * int((10 + std::sqrt(sdata(156, worker) * 200))) / 100;
-        if (val0 <= 1)
+
+        const auto& item_for_sale = choice(items_for_sale);
+
+        const auto price_per_one =
+            calc_item_price_per_one(item_for_sale.item, cdata[worker]);
+        if (price_per_one <= 1)
         {
-            continue;
+            continue; // too cheep
         }
-        if (rnd_capped(val0) > shoplv * 100 + 500)
+        if (rnd_capped(price_per_one) > shop_level * 100 + 500)
         {
-            continue;
+            continue; // too expensive
         }
-        if (inv[item_index].number() <= 0)
+        if (item_for_sale.item.number() <= 0)
         {
-            continue;
+            continue; // sold out
         }
         if (rnd(8))
         {
             continue;
         }
-        in = rnd_capped(inv[item_index].number()) + 1;
-        inv[item_index].modify_number((-in));
-        sold += in;
-        val0 = val0 * in;
+
+        const auto num = rnd_capped(item_for_sale.item.number()) + 1;
+        item_for_sale.item.modify_number(-num);
+        total_sold_items += num;
+        const auto total_price = price_per_one * num;
+
         if (rnd(4) == 0)
         {
-            list(0, listmax) =
-                the_item_db[itemid2int(inv[item_index].id)]->level;
-            list(1, listmax) = static_cast<int>(inv[item_index].quality);
-            listn(0, listmax) = std::to_string(category);
-            listn(1, listmax) = std::to_string(val0);
-            ++listmax;
+            sold_items.emplace_back(
+                the_item_db[itemid2int(item_for_sale.item.id)]->level,
+                item_for_sale.item.quality,
+                item_for_sale.category,
+                total_price);
         }
         else
         {
-            income += val0;
+            total_profit += total_price;
         }
+
         if (area == game_data.current_map)
         {
-            for (auto&& cnt : cdata.all())
+            for (auto&& chara : cdata.all())
             {
-                if (cnt.state() != Character::State::alive)
+                if (chara.state() != Character::State::alive)
                 {
                     continue;
                 }
-                if (!cnt.activity || cnt.activity.turn == 0)
+                if (!chara.activity || chara.activity.turn == 0)
                 {
                     continue;
                 }
-                if (cnt.activity.item == item_index)
+                if (chara.activity.item == item_for_sale.item.index)
                 {
-                    cdata[cnt.index].activity.finish();
+                    chara.activity.finish();
                 }
             }
         }
     }
+
     mode = 0;
     if (game_data.current_map != area)
     {
@@ -990,6 +1058,7 @@ void show_shop_log()
     {
         ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
     }
+
     tmpload(filepathutil::u8path(u8"shop5.s2"));
     if (fs::exists(filesystem::dirs::tmp() / u8"shop5.s2"))
     {
@@ -1003,98 +1072,98 @@ void show_shop_log()
         }
     }
     mode = 6;
-    if (income != 0)
+
+    if (total_profit != 0)
     {
         flt();
-        itemcreate_extra_inv(54, -1, -1, income);
+        itemcreate_extra_inv(54, -1, -1, total_profit);
     }
-    for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
+
+    int num_of_exchanged_items = 0;
+
+    for (const auto& sold_item : sold_items)
     {
-        int cnt2 = cnt;
-        for (int cnt = 0; cnt < 4; ++cnt)
+        bool generated = false;
+        for (int i = 0; i < 4; ++i)
         {
-            flt(list(0, cnt2), static_cast<Quality>(list(1, cnt2)));
-            flttypemajor = elona::stoi(listn(0, cnt2));
+            flt(sold_item.level, sold_item.quality);
+            flttypemajor = static_cast<int>(sold_item.category);
             nostack = 1;
             if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
             {
-                if (item->value > elona::stoi(listn(1, cnt2)) * 2)
+                if (item->value > sold_item.total_price * 2)
                 {
                     item_stack(-1, *item);
-                    f = 1;
+                    generated = true;
                     break;
                 }
                 else
                 {
                     item->remove();
-                    if (cnt == 3)
-                    {
-                        f = 0;
-                        break;
-                    }
-                    else
-                    {
-                        continue;
-                    }
                 }
             }
             else
             {
-                f = 0;
                 break;
             }
         }
-        if (f == 0)
+        if (generated)
         {
-            itemcreate_extra_inv(54, -1, -1, elona::stoi(listn(1, cnt)));
-            income += elona::stoi(listn(1, cnt));
+            ++num_of_exchanged_items;
         }
         else
         {
-            ++income(1);
+            itemcreate_extra_inv(54, -1, -1, sold_item.total_price);
+            total_profit += sold_item.total_price;
         }
     }
-    if (sold == 0)
+
+    if (total_sold_items == 0)
     {
         if (!g_config.hide_shop_updates())
         {
-            txt(shop_mark +
-                i18n::s.get(
-                    "core.building.shop.log.could_not_sell",
-                    customer,
-                    cdata[worker]));
+            txt(i18n::s.get(
+                "core.building.shop.log.could_not_sell",
+                num_of_customers,
+                cdata[worker]));
         }
     }
     else
     {
         if (!g_config.hide_shop_updates())
         {
-            s = i18n::s.get("core.building.shop.log.gold", income(0));
-            if (income(1) != 0)
+            auto s = i18n::s.get("core.building.shop.log.gold", total_profit);
+            if (num_of_exchanged_items != 0)
             {
-                s += i18n::s.get("core.building.shop.log.and_items", income(1));
+                s += i18n::s.get(
+                    "core.building.shop.log.and_items", num_of_exchanged_items);
             }
             snd("core.ding2");
-            txt(shop_mark +
-                    i18n::s.get(
-                        "core.building.shop.log.sold_items",
-                        customer,
-                        cdata[worker],
-                        sold,
-                        s(0)),
+            txt(i18n::s.get(
+                    "core.building.shop.log.sold_items",
+                    num_of_customers,
+                    cdata[worker],
+                    total_sold_items,
+                    s),
                 Message::color{ColorIndex::orange});
         }
         chara_gain_skill_exp(
-            cdata[worker], 156, clamp(int(std::sqrt(income(0))) * 6, 25, 1000));
+            cdata[worker],
+            156,
+            clamp(int(std::sqrt(total_profit)) * 6, 25, 1000));
     }
-    if (sold > (110 - game_data.ranks.at(5) / 100) / 10)
+
+    if (total_sold_items > (110 - game_data.ranks.at(5) / 100) / 10)
     {
         modrank(5, 30, 2);
     }
+
     mode = 0;
     ctrl_file(FileOperation2::map_items_write, u8"shop5.s2");
     ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
 }
+
+
 
 void update_shop()
 {
@@ -1220,19 +1289,19 @@ void update_museum()
 
 
 
-void calc_home_rank()
+std::vector<HomeRankHeirloom> building_update_home_rank()
 {
     if (game_data.current_dungeon_level != 1)
     {
-        return;
+        return {};
     }
     rankorg = game_data.ranks.at(4);
     rankcur = 0;
     game_data.total_deco_value = 0;
     game_data.total_heirloom_value = 0;
 
-    std::vector<ItemAndValue> heirlooms{heirloom_list_size};
-    for (const auto& item : inv.ground())
+    std::vector<HomeRankHeirloom> heirlooms;
+    for (auto&& item : inv.ground())
     {
         if (item.number() == 0)
         {
@@ -1248,20 +1317,10 @@ void calc_home_rank()
 
         add_heirloom_if_valuable_enough(heirlooms, item);
     }
-    size_t i{};
-    for (const auto& heirloom : heirlooms)
-    {
-        list(0, static_cast<int>(i)) = heirloom.first;
-        list(1, static_cast<int>(i)) = heirloom.second;
-        ++i;
-    }
 
-    for (int cnt = 0; cnt < 10; ++cnt)
+    for (const auto& [_, value] : heirlooms)
     {
-        if (list(0, cnt) != 0)
-        {
-            game_data.total_heirloom_value += clamp(list(1, cnt), 100, 2000);
-        }
+        game_data.total_heirloom_value += clamp(value, 100, 2000);
     }
     if (game_data.total_deco_value > 10000)
     {
@@ -1300,6 +1359,8 @@ void calc_home_rank()
             ranktitle(4),
             rankn(10, 4)));
     }
+
+    return heirlooms;
 }
 
 

@@ -1179,7 +1179,7 @@ void _proc_map_hooks_2()
     }
     if (game_data.current_map == mdata_t::MapId::your_home)
     {
-        calc_home_rank();
+        building_update_home_rank();
     }
     if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
     {

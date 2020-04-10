@@ -1543,14 +1543,12 @@ TurnResult exit_map()
         cell_featread(cdata.player().position.x, cdata.player().position.y);
         if (game_data.current_map == mdata_t::MapId::your_home)
         {
-            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 751) !=
-                -1)
+            if (mapitemfind(cdata[cc].position, ItemId::downstairs))
             {
                 feat(1) = 11;
                 feat(2) = 0;
             }
-            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 750) !=
-                -1)
+            if (mapitemfind(cdata[cc].position, ItemId::upstairs))
             {
                 feat(1) = 10;
                 feat(2) = 0;
@@ -1918,7 +1916,7 @@ void prepare_charas_for_map_unload()
     for (int cnt = 0; cnt < 57; ++cnt)
     {
         cdata[cnt].activity.finish();
-        cdata[cnt].item_which_will_be_used = 0;
+        cdata[cnt].ai_item = 0;
     }
 
     // remove living adventurers from the map and set their states

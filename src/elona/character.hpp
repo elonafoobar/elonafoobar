@@ -236,7 +236,7 @@ public:
     int relationship = 0;
     int turn_cost = 0;
     int current_speed = 0;
-    int item_which_will_be_used = 0;
+    int ai_item = 0;
     std::string portrait;
     int interest = 0;
     int time_interest_revive = 0;
@@ -438,7 +438,7 @@ public:
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, relationship);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, turn_cost);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, current_speed);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, item_which_will_be_used);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, ai_item);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, portrait);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, interest);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, time_interest_revive);
@@ -705,7 +705,7 @@ bool chara_unequip(Item& item);
 int chara_custom_talk(int = 0, int = 0);
 int chara_impression_level(int = 0);
 void chara_modify_impression(Character& cc, int delta);
-void chara_set_item_which_will_be_used(Character& chara, const Item& item);
+void chara_set_ai_item(Character& chara, const Item& item);
 int chara_armor_class(const Character& cc);
 int chara_breed_power(const Character&);
 

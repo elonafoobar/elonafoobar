@@ -890,26 +890,16 @@ TurnResult do_throw_command_internal(Item& throw_item)
             {
                 if (cell_data.at(tlocx, tlocy).item_appearances_actual != 0)
                 {
-                    cell_itemlist(tlocx, tlocy);
-                    f = 0;
-                    for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
+                    if (const auto snowman =
+                            mapitemfind({tlocx, tlocy}, ItemId::snow_man))
                     {
-                        p = list(0, cnt);
-                        if (inv[p].id == ItemId::snow_man)
+                        if (is_in_fov({tlocx, tlocy}))
                         {
-                            if (is_in_fov({tlocx, tlocy}))
-                            {
-                                txt(i18n::s.get(
-                                    "core.action.throw.snow.hits_snowman",
-                                    inv[p(0)]));
-                            }
-                            inv[p].modify_number(-1);
-                            f = 1;
-                            break;
+                            txt(i18n::s.get(
+                                "core.action.throw.snow.hits_snowman",
+                                *snowman));
                         }
-                    }
-                    if (f == 1)
-                    {
+                        snowman->modify_number(-1);
                         cell_refresh(tlocx, tlocy);
                         return TurnResult::turn_end;
                     }
@@ -1016,20 +1006,19 @@ TurnResult do_throw_command(Item& throw_item)
 
     if (throw_item.id == ItemId::monster_ball)
     {
-        const auto slot = inv_getfreeid(-1);
-        if (slot == -1)
+        if (const auto slot = inv_get_free_slot(-1))
         {
+            item_copy(throw_item, *slot);
+            slot->position.x = tlocx;
+            slot->position.y = tlocy;
+            slot->set_number(1);
             throw_item.modify_number(-1);
-            return do_throw_command_internal(throw_item);
+            return do_throw_command_internal(*slot);
         }
         else
         {
-            item_copy(throw_item.index, slot);
-            inv[slot].position.x = tlocx;
-            inv[slot].position.y = tlocy;
-            inv[slot].set_number(1);
             throw_item.modify_number(-1);
-            return do_throw_command_internal(inv[slot]);
+            return do_throw_command_internal(throw_item);
         }
     }
     else
@@ -1177,7 +1166,7 @@ TurnResult do_offer_command(Item& offering)
         return TurnResult::turn_end;
     }
     rowact_item(offering);
-    item_separate(offering.index);
+    item_separate(offering);
     txt(i18n::s.get(
         "core.action.offer.execute",
         offering,
@@ -1480,7 +1469,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
 {
     if (mix_item.id == ItemId::bait)
     {
-        item_separate(mix_target.index);
+        item_separate(mix_target);
         mix_item.modify_number(-1);
         snd("core.equip1");
         txt(i18n::s.get(
@@ -1501,7 +1490,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
     {
         if (the_item_db[itemid2int(mix_target.id)]->subcategory == 60001)
         {
-            item_separate(mix_target.index);
+            item_separate(mix_target);
             mix_item.modify_number(-1);
             if (mix_item.id != ItemId::empty_bottle)
             {
@@ -1544,7 +1533,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
                         "core.action.dip.result.natural_potion_drop"));
                     return TurnResult::turn_end;
                 }
-                if (inv_getfreeid(0) == -1)
+                if (!inv_get_free_slot(0))
                 {
                     txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                     return TurnResult::turn_end;
@@ -1583,7 +1572,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
             ItemCategory::food)
         {
             mix_item.modify_number(-1);
-            item_separate(mix_target.index);
+            item_separate(mix_target);
             txt(i18n::s.get(
                     "core.action.dip.result.love_food.made",
                     mix_target,
@@ -1591,7 +1580,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
                 i18n::s.get("core.action.dip.result.love_food.grin"));
             if (is_cursed(mix_item.curse_state))
             {
-                dipcursed(mix_target.index);
+                dipcursed(mix_target);
             }
             mix_target.is_poisoned() = true;
             return TurnResult::turn_end;
@@ -1603,7 +1592,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
             ItemCategory::food)
         {
             mix_item.modify_number(-1);
-            item_separate(mix_target.index);
+            item_separate(mix_target);
             txt(i18n::s.get(
                     "core.action.dip.result.love_food.made",
                     mix_target,
@@ -1611,7 +1600,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
                 i18n::s.get("core.action.dip.result.love_food.guilty"));
             if (is_cursed(mix_item.curse_state))
             {
-                dipcursed(mix_target.index);
+                dipcursed(mix_target);
             }
             mix_target.is_aphrodisiac() = true;
             return TurnResult::turn_end;
@@ -1626,12 +1615,12 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
         else
         {
             in = 1;
-            item_separate(mix_target.index);
+            item_separate(mix_target);
         }
         mix_item.modify_number(-1);
         mix_target.color = mix_item.color;
         txt(i18n::s.get("core.action.dip.result.dyeing", mix_target));
-        if (inv_getowner(mix_target.index) == -1)
+        if (inv_getowner(mix_target) == -1)
         {
             cell_refresh(mix_target.position.x, mix_target.position.y);
         }
@@ -1650,12 +1639,12 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
         else
         {
             in = 1;
-            item_separate(mix_target.index);
+            item_separate(mix_target);
         }
         txt(i18n::s.get("core.action.dip.result.put_on", mix_target, mix_item));
         if (is_cursed(mix_item.curse_state))
         {
-            dipcursed(mix_target.index);
+            dipcursed(mix_target);
         }
         else
         {
@@ -1675,12 +1664,12 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
         else
         {
             in = 1;
-            item_separate(mix_target.index);
+            item_separate(mix_target);
         }
         txt(i18n::s.get("core.action.dip.result.put_on", mix_target, mix_item));
         if (is_cursed(mix_item.curse_state))
         {
-            dipcursed(mix_target.index);
+            dipcursed(mix_target);
         }
         else if (mix_target.id == ItemId::fireproof_blanket)
         {
@@ -1760,7 +1749,7 @@ TurnResult do_use_command(Item& use_item)
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        item_separate(use_item.index);
+        item_separate(use_item);
         use_item.count = game_data.date.hours() + use_item.param3;
     }
     if (use_item.has_charge())
@@ -1771,7 +1760,7 @@ TurnResult do_use_command(Item& use_item)
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        item_separate(use_item.index);
+        item_separate(use_item);
         --use_item.count;
     }
     if (item_data->subcategory == 58500)
@@ -1935,7 +1924,7 @@ TurnResult do_use_command(Item& use_item)
         snd("core.build1");
         break;
     case 44:
-        if (inv_getowner(use_item.index) != -1)
+        if (inv_getowner(use_item) != -1)
         {
             txt(i18n::s.get("core.action.use.chair.needs_place_on_ground"));
             update_screen();
@@ -2346,7 +2335,7 @@ TurnResult do_use_command(Item& use_item)
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        item_separate(use_item.index);
+        item_separate(use_item);
         snd("core.paygold1");
         cdata.player().gold -= moneybox(use_item.param2);
         use_item.param1 += moneybox(use_item.param2);
@@ -2758,7 +2747,7 @@ TurnResult do_use_command(Item& use_item)
         txt(i18n::s.get("core.action.use.deck.put_away"));
         break;
     case 38:
-        if (inv_find(701, 0) == -1)
+        if (!inv_find(ItemId::deck, 0))
         {
             txt(i18n::s.get("core.action.use.deck.no_deck"));
             update_screen();
@@ -2937,7 +2926,7 @@ TurnResult do_open_command(Item& box, bool play_sound)
         mode = 0;
         return TurnResult::turn_end;
     }
-    item_separate(box.index);
+    item_separate(box);
     if (box.param1 != 0)
     {
         if (box.param2 != 0)
@@ -2993,7 +2982,7 @@ TurnResult do_use_stairs_command(int val0)
     movelevelbystairs = 0;
     if (val0 == 1)
     {
-        if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 753) != -1)
+        if (mapitemfind(cdata[cc].position, ItemId::kotatsu))
         {
             txt(i18n::s.get("core.action.use_stairs.kotatsu.prompt"));
             if (!yes_no())
@@ -3010,8 +2999,7 @@ TurnResult do_use_stairs_command(int val0)
     {
         if (val0 == 1)
         {
-            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 751) !=
-                -1)
+            if (mapitemfind(cdata[cc].position, ItemId::downstairs))
             {
                 if (game_data.current_dungeon_level >=
                     area_data[game_data.current_map].deepest_level)
@@ -3027,8 +3015,7 @@ TurnResult do_use_stairs_command(int val0)
         }
         if (val0 == 2)
         {
-            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 750) !=
-                -1)
+            if (mapitemfind(cdata[cc].position, ItemId::upstairs))
             {
                 if (game_data.current_dungeon_level <=
                     area_data[game_data.current_map].danger_level)
@@ -4201,7 +4188,7 @@ int decode_book(Item& book)
         {
             txt(i18n::s.get("core.activity.read.start", cdata[cc], book));
         }
-        item_separate(book.index);
+        item_separate(book);
         return 0;
     }
     if (cdata[cc].activity.turn > 0)
@@ -4648,7 +4635,7 @@ int drink_well(Item& well)
         txt(i18n::s.get("core.action.drink.well.is_dry", valn));
         return 1;
     }
-    item_separate(well.index);
+    item_separate(well);
     snd_at("core.drink1", cdata[cc].position);
     const auto valn = itemname(well);
     txt(i18n::s.get("core.action.drink.well.draw", cdata[cc], valn));
@@ -5006,7 +4993,7 @@ int do_zap(Item& rod)
             return 1;
         }
     }
-    item_separate(rod.index);
+    item_separate(rod);
     --rod.count;
     return 1;
 }
@@ -5411,7 +5398,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
                 return {0, none};
             }
         }
-        if (inv_getfreeid(cc) == -1)
+        if (!inv_get_free_slot(cc))
         {
             txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
             return {0, none};
@@ -5466,16 +5453,16 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
     item.is_quest_target() = false;
     item_checkknown(item);
 
-    int picked_up_item_index;
+    optional_ref<Item> picked_up_item;
     const auto item_stack_result = item_stack(cc, item);
     if (item_stack_result.stacked)
     {
-        picked_up_item_index = item_stack_result.stacked_item.index;
+        picked_up_item = item_stack_result.stacked_item;
     }
     else
     {
-        picked_up_item_index = inv_getfreeid(cc);
-        if (picked_up_item_index == -1)
+        const auto slot = inv_get_free_slot(cc);
+        if (!slot)
         {
             item.set_number(inumbk + in);
             if (invctrl == 12)
@@ -5489,76 +5476,78 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
             }
             return {0, none};
         }
-        item_copy(item.index, picked_up_item_index);
-        inv[picked_up_item_index].set_number(in);
+        item_copy(item, *slot);
+        slot->set_number(in);
+        picked_up_item = *slot;
     }
-    auto& picked_up_item = inv[picked_up_item_index];
+    assert(picked_up_item);
 
     item.set_number(inumbk);
     if (mode == 6)
     {
-        if (the_item_db[itemid2int(picked_up_item.id)]->category ==
+        if (the_item_db[itemid2int(picked_up_item->id)]->category ==
             ItemCategory::food)
         {
             if (invctrl == 11 || invctrl == 22)
             {
                 if (invctrl == 22 && invctrl(1) == 3)
                 {
-                    if (picked_up_item.param3 > 0)
+                    if (picked_up_item->param3 > 0)
                     {
-                        picked_up_item.param3 += game_data.date.hours();
+                        picked_up_item->param3 += game_data.date.hours();
                     }
                 }
                 else if (
-                    picked_up_item.param3 != 0 && picked_up_item.material == 35)
+                    picked_up_item->param3 != 0 &&
+                    picked_up_item->material == 35)
                 {
-                    picked_up_item.param3 = game_data.date.hours() +
-                        the_item_db[itemid2int(picked_up_item.id)]
+                    picked_up_item->param3 = game_data.date.hours() +
+                        the_item_db[itemid2int(picked_up_item->id)]
                             ->expiration_date;
-                    if (picked_up_item.param2 != 0)
+                    if (picked_up_item->param2 != 0)
                     {
-                        picked_up_item.param3 += 72;
+                        picked_up_item->param3 += 72;
                     }
                 }
             }
             if (invctrl == 24 && invctrl(1) == 3)
             {
-                if (picked_up_item.param3 > 0)
+                if (picked_up_item->param3 > 0)
                 {
-                    picked_up_item.param3 =
-                        picked_up_item.param3 - game_data.date.hours();
+                    picked_up_item->param3 =
+                        picked_up_item->param3 - game_data.date.hours();
                 }
             }
         }
         if (invctrl == 11)
         {
             txt(i18n::s.get(
-                "core.action.pick_up.you_buy", itemname(picked_up_item, in)));
-            sellgold = calcitemvalue(picked_up_item, 0) * in;
+                "core.action.pick_up.you_buy", itemname(*picked_up_item, in)));
+            sellgold = calcitemvalue(*picked_up_item, 0) * in;
             snd_("core.paygold1");
             cdata.player().gold -= sellgold;
             earn_gold(cdata[tc], sellgold);
-            if (the_item_db[itemid2int(picked_up_item.id)]->category ==
+            if (the_item_db[itemid2int(picked_up_item->id)]->category ==
                 ItemCategory::cargo)
             {
-                picked_up_item.param2 = calcitemvalue(picked_up_item, 0);
+                picked_up_item->param2 = calcitemvalue(*picked_up_item, 0);
             }
         }
         if (invctrl == 12)
         {
             sellgold = calcitemvalue(item, 1) * in;
-            if (!picked_up_item.is_stolen())
+            if (!picked_up_item->is_stolen())
             {
                 txt(i18n::s.get(
                     "core.action.pick_up.you_sell",
-                    itemname(picked_up_item, in)));
+                    itemname(*picked_up_item, in)));
             }
             else
             {
-                picked_up_item.is_stolen() = false;
+                picked_up_item->is_stolen() = false;
                 txt(i18n::s.get(
                     "core.action.pick_up.you_sell_stolen",
-                    itemname(picked_up_item, in)));
+                    itemname(*picked_up_item, in)));
                 if (game_data.guild.thieves_guild_quota > 0)
                 {
                     game_data.guild.thieves_guild_quota -= sellgold;
@@ -5578,7 +5567,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
             {
                 cdata[tc].gold = 0;
             }
-            picked_up_item.identify_state = IdentifyState::completely;
+            picked_up_item->identify_state = IdentifyState::completely;
         }
         if (invctrl == 22 || invctrl == 24)
         {
@@ -5588,13 +5577,13 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
                 txt(i18n::s.get(
                     "core.action.pick_up.execute",
                     cdata[cc],
-                    itemname(picked_up_item, in)));
+                    itemname(*picked_up_item, in)));
             }
             else
             {
                 txt(i18n::s.get(
                     "core.action.pick_up.put_in_container",
-                    itemname(picked_up_item, in)));
+                    itemname(*picked_up_item, in)));
             }
         }
         else
@@ -5612,11 +5601,11 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
         txt(i18n::s.get(
             "core.action.pick_up.execute",
             cdata[cc],
-            itemname(picked_up_item, in)));
+            itemname(*picked_up_item, in)));
     }
     if (cc == 0)
     {
-        if (picked_up_item.id == ItemId::campfire)
+        if (picked_up_item->id == ItemId::campfire)
         {
             if (map_data.play_campfire_sound == 1)
             {
@@ -5640,7 +5629,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
                 }
             }
         }
-        picked_up_item_index = convertartifact(picked_up_item_index);
+        picked_up_item = item_convert_artifact(*picked_up_item);
         if (area_data[game_data.current_map].id == mdata_t::MapId::museum)
         {
             if (mode == 0)
@@ -5652,7 +5641,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
         {
             if (mode == 0)
             {
-                calc_home_rank();
+                building_update_home_rank();
             }
         }
         refresh_burden_state();
@@ -5662,7 +5651,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
         refresh_burden_state();
     }
 
-    return {1, inv[picked_up_item_index]};
+    return {1, picked_up_item};
 }
 
 
@@ -5671,11 +5660,10 @@ TurnResult do_bash()
 {
     if (cell_data.at(x, y).item_appearances_memory != 0)
     {
-        if (mapitemfind(x, y, 526) != -1)
+        if (const auto tree_opt = mapitemfind({x, y}, ItemId::tree_of_fruits))
         {
-            const auto tree_index = mapitemfind(x, y, 526);
-            auto& tree = inv[tree_index];
-            item_separate(tree.index);
+            auto& tree = *tree_opt;
+            item_separate(tree);
             snd("core.bash1");
             txt(i18n::s.get("core.action.bash.tree.execute", tree));
             if (tree.own_state == 5 || tree.param1 <= 0)

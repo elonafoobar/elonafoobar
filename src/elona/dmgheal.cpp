@@ -72,11 +72,10 @@ void end_dmghp(const Character& victim)
 
 void dmgheal_death_by_backpack(Character& chara)
 {
-    int heaviest_item_index = -1;
+    optional_ref<Item> heaviest_item;
     int heaviest_weight = 0;
-    std::string heaviest_item_name;
 
-    for (const auto& item : inv.for_chara(chara))
+    for (auto&& item : inv.for_chara(chara))
     {
         if (item.number() == 0)
         {
@@ -84,19 +83,22 @@ void dmgheal_death_by_backpack(Character& chara)
         }
         if (item.weight > heaviest_weight)
         {
-            heaviest_item_index = item.index;
+            heaviest_item = item;
             heaviest_weight = item.weight;
         }
     }
-    if (heaviest_item_index == -1)
+
+    std::string heaviest_item_name;
+    if (heaviest_item)
+    {
+        heaviest_item_name = itemname(*heaviest_item);
+    }
+    else
     {
         heaviest_item_name =
             i18n::s.get_enum_property("core.death_by.other", "backpack", 6);
     }
-    else
-    {
-        heaviest_item_name = itemname(inv[heaviest_item_index]);
-    }
+
     txt(i18n::s.get_enum_property(
         "core.death_by.other", "text", 6, chara, heaviest_item_name));
     if (chara.index == 0)
@@ -1474,13 +1476,15 @@ void character_drops_item()
             item.position.y = cdata[rc].position.y;
             if (!item_stack(-1, item).stacked)
             {
-                const auto slot = inv_getfreeid(-1);
-                if (slot == -1)
+                if (const auto slot = inv_get_free_slot(-1))
+                {
+                    item_copy(item, *slot);
+                    slot->own_state = -2;
+                }
+                else
                 {
                     break;
                 }
-                item_copy(item.index, slot);
-                inv[slot].own_state = -2;
             }
             item.remove();
         }
@@ -1605,12 +1609,14 @@ void character_drops_item()
         itemturn(item);
         if (!item_stack(-1, item).stacked)
         {
-            const auto slot = inv_getfreeid(-1);
-            if (slot == -1)
+            if (const auto slot = inv_get_free_slot(-1))
+            {
+                item_copy(item, *slot);
+            }
+            else
             {
                 break;
             }
-            item_copy(item.index, slot);
         }
         item.remove();
     }

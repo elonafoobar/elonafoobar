@@ -81,7 +81,7 @@ bool _magic_1136(Item& treasure_map)
     }
     if (treasure_map.param1 == 0)
     {
-        item_separate(treasure_map.index);
+        item_separate(treasure_map);
         for (int cnt = 0; cnt < 1000; ++cnt)
         {
             dx = 4 + rnd(map_data.width - 8);
@@ -743,7 +743,7 @@ bool _magic_185(Item& rod)
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    item_separate(rod.index);
+    item_separate(rod);
     --rod.count;
     rowactre = 0;
     spot_fishing(rod);
@@ -2075,12 +2075,12 @@ bool _magic_645_1114()
             txt(i18n::s.get("core.magic.curse.spell", cdata[cc], cdata[tc]));
         }
     }
-    p = 75 + sdata(19, tc);
+    int p = 75 + sdata(19, tc);
     if (const auto anticurse = enchantment_find(cdata[tc], 43))
     {
         p += *anticurse / 2;
     }
-    if (rnd_capped(p(0)) > efp / 2 + (is_cursed(efstatus)) * 100)
+    if (rnd_capped(p) > efp / 2 + (is_cursed(efstatus)) * 100)
     {
         return true;
     }
@@ -2095,29 +2095,28 @@ bool _magic_645_1114()
             }
         }
     }
-    i = 0;
+    std::vector<std::reference_wrapper<Item>> candidates;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         if (cdata[tc].body_parts[cnt] % 10000 == 0)
         {
             continue;
         }
-        p(i) = cdata[tc].body_parts[cnt] % 10000 - 1;
-        if (inv[p(i)].curse_state == CurseState::blessed)
+        const auto item_index = cdata[tc].body_parts[cnt] % 10000 - 1;
+        if (inv[item_index].curse_state == CurseState::blessed)
         {
             if (rnd(10))
             {
                 continue;
             }
         }
-        ++i;
+        candidates.emplace_back(std::ref(inv[item_index]));
     }
-    if (i == 0)
+    if (candidates.empty())
     {
-        for (int cnt = 0; cnt < 200; ++cnt)
+        for (int _i = 0; _i < 200; ++_i)
         {
-            const auto& item = get_random_inv(tc);
-            p = item.index;
+            auto& item = get_random_inv(tc);
             if (item.number() == 0)
             {
                 continue;
@@ -2129,30 +2128,32 @@ bool _magic_645_1114()
                     continue;
                 }
             }
-            i = 1;
+            candidates.emplace_back(std::ref(item));
             break;
         }
     }
-    if (i > 0)
+    if (!candidates.empty())
     {
-        i = p(rnd(i(0)));
-        const auto valn = itemname(inv[i], 1, false);
-        if (inv[i].curse_state == CurseState::cursed)
+        const auto& cursed_item_wr = choice(candidates);
+        auto& cursed_item = cursed_item_wr.get();
+        const auto original_item_name = itemname(cursed_item, 1, false);
+        if (cursed_item.curse_state == CurseState::cursed)
         {
-            inv[i].curse_state = CurseState::doomed;
+            cursed_item.curse_state = CurseState::doomed;
         }
         else
         {
-            inv[i].curse_state = CurseState::cursed;
+            cursed_item.curse_state = CurseState::cursed;
         }
         if (is_in_fov(cdata[tc]))
         {
-            txt(i18n::s.get("core.magic.curse.apply", cdata[tc], valn));
+            txt(i18n::s.get(
+                "core.magic.curse.apply", cdata[tc], original_item_name));
         }
         chara_refresh(tc);
         snd("core.curse3");
         animeload(14, tc);
-        item_stack(tc, inv[i], true);
+        item_stack(tc, cursed_item, true);
     }
     else
     {
@@ -2252,8 +2253,7 @@ bool _magic_435()
     }
     f = 1;
     {
-        int stat = inv_find(663, cc);
-        if (stat != -1)
+        if (inv_find(ItemId::monster_heart, cc))
         {
             efp = efp * 3 / 2;
         }
@@ -2515,7 +2515,6 @@ bool _magic_21_1127()
     {
         assert(target_item_opt);
         auto& target_item = *target_item_opt;
-        int target_item_index = target_item.index;
         equip = target_item.body_part;
         if (target_item.quality == Quality::special)
         {
@@ -2535,7 +2534,13 @@ bool _magic_21_1127()
             const auto reconstructed_artifact =
                 itemcreate_player_inv(itemid2int(target_item.id), 0);
             assert(reconstructed_artifact);
-            target_item_index = reconstructed_artifact->index;
+            if (equip != 0)
+            {
+                cdata[cc].body_parts[equip - 100] =
+                    cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
+                    reconstructed_artifact->index + 1;
+                reconstructed_artifact->body_part = equip;
+            }
         }
         else
         {
@@ -2559,13 +2564,13 @@ bool _magic_21_1127()
                 cdata[cc],
                 s(0),
                 target_item));
-        }
-        if (equip != 0)
-        {
-            cdata[cc].body_parts[equip - 100] =
-                cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
-                target_item_index + 1;
-            inv[target_item_index].body_part = equip;
+            if (equip != 0)
+            {
+                cdata[cc].body_parts[equip - 100] =
+                    cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
+                    target_item.index + 1;
+                target_item.body_part = equip;
+            }
         }
     }
     else
@@ -3416,8 +3421,8 @@ bool _magic_651()
     {
         txt(i18n::s.get("core.magic.scavenge.apply", cdata[cc], cdata[tc]));
     }
-    int eat_item_index = -1;
-    for (const auto& item : inv.for_chara(cdata[tc]))
+    optional_ref<Item> eat_item_opt;
+    for (auto&& item : inv.for_chara(cdata[tc]))
     {
         if (item.number() == 0)
         {
@@ -3425,13 +3430,13 @@ bool _magic_651()
         }
         if (item.id == ItemId::fish_a)
         {
-            eat_item_index = item.index;
+            eat_item_opt = item;
             break;
         }
     }
-    if (eat_item_index == -1)
+    if (!eat_item_opt)
     {
-        for (const auto& item : inv.for_chara(cdata[tc]))
+        for (auto&& item : inv.for_chara(cdata[tc]))
         {
             if (item.number() == 0)
             {
@@ -3446,15 +3451,15 @@ bool _magic_651()
             {
                 continue;
             }
-            eat_item_index = item.index;
+            eat_item_opt = item;
             break;
         }
     }
-    if (eat_item_index == -1)
+    if (!eat_item_opt)
     {
         return true;
     }
-    auto& eat_item = inv[eat_item_index];
+    auto& eat_item = *eat_item_opt;
     if (eat_item.is_aphrodisiac())
     {
         if (is_in_fov(cdata[tc]))

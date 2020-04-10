@@ -823,7 +823,7 @@ void activity_others_doing(Character& doer, optional_ref<Item> activity_item)
         }
         f = 0;
         f2 = 0;
-        tg = inv_getowner(activity_item->index);
+        tg = inv_getowner(*activity_item);
         if (tg != -1)
         {
             if (cdata[tg].original_relationship == -3)
@@ -913,7 +913,7 @@ void activity_others_doing(Character& doer, optional_ref<Item> activity_item)
         {
             txt(i18n::s.get("core.activity.steal.notice.you_are_found"));
             modify_karma(cdata.player(), -5);
-            p = inv_getowner(activity_item->index);
+            p = inv_getowner(*activity_item);
             if (tg != -1)
             {
                 if (cdata[p].id != CharaId::ebon)
@@ -1001,7 +1001,7 @@ void activity_others_doing(Character& doer, optional_ref<Item> activity_item)
 
 void activity_others_end_steal(Item& steal_target)
 {
-    tg = inv_getowner(steal_target.index);
+    tg = inv_getowner(steal_target);
     if ((tg != -1 && cdata[tg].state() != Character::State::alive) ||
         steal_target.number() <= 0)
     {
@@ -1013,8 +1013,8 @@ void activity_others_end_steal(Item& steal_target)
     {
         in = steal_target.number();
     }
-    const auto slot = inv_getfreeid(0);
-    if (slot == -1)
+    const auto slot = inv_get_free_slot(0);
+    if (!slot)
     {
         txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
         return;
@@ -1022,7 +1022,7 @@ void activity_others_end_steal(Item& steal_target)
     steal_target.is_quest_target() = false;
     if (steal_target.body_part != 0)
     {
-        tc = inv_getowner(steal_target.index);
+        tc = inv_getowner(steal_target);
         if (tc != -1)
         {
             p = steal_target.body_part;
@@ -1032,8 +1032,8 @@ void activity_others_end_steal(Item& steal_target)
         steal_target.body_part = 0;
         chara_refresh(tc);
     }
-    auto& stolen_item = inv[slot];
-    item_copy(steal_target.index, stolen_item.index);
+    auto& stolen_item = *slot;
+    item_copy(steal_target, stolen_item);
     stolen_item.set_number(in);
     stolen_item.is_stolen() = true;
     stolen_item.own_state = 0;
@@ -1559,9 +1559,9 @@ void activity_eating_finish(Character& eater, Item& food)
     }
     else
     {
-        if (food.index == eater.item_which_will_be_used)
+        if (food.index == eater.ai_item)
         {
-            eater.item_which_will_be_used = 0;
+            eater.ai_item = 0;
         }
         if (eater.was_passed_item_by_you_just_now())
         {

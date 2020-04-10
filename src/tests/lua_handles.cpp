@@ -588,14 +588,14 @@ TEST_CASE("Test separation of item handles", "[Lua: Handles]")
     Item& i = *i_opt;
     sol::table handle = handle_mgr.get_handle(i);
 
-    elona::item_separate(i.index);
+    elona::item_separate(i);
     Item& item_sep = i;
     sol::table handle_sep = handle_mgr.get_handle(item_sep);
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
     REQUIRE(handle_mgr.handle_is_valid(handle_sep) == true);
 
-    elona::item_separate(i.index);
+    elona::item_separate(i);
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
     REQUIRE(handle_mgr.handle_is_valid(handle_sep) == true);
 }
@@ -613,11 +613,13 @@ TEST_CASE("Test copying of item handles", "[Lua: Handles]")
     Item& i = *i_opt;
     sol::table handle = handle_mgr.get_handle(i);
 
-    int ti = elona::inv_getfreeid(-1);
-    REQUIRE(handle_mgr.get_handle(elona::inv[ti]) == sol::lua_nil);
+    const auto slot_opt = elona::inv_get_free_slot(-1);
+    REQUIRE_SOME(slot_opt);
+    auto& slot = *slot_opt;
+    REQUIRE(handle_mgr.get_handle(slot) == sol::lua_nil);
 
-    elona::item_copy(i.index, ti);
-    Item& copy = elona::inv[ti];
+    elona::item_copy(i, slot);
+    Item& copy = slot;
     sol::table handle_copy = handle_mgr.get_handle(copy);
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
@@ -631,7 +633,7 @@ TEST_CASE("Test copying of item handles", "[Lua: Handles]")
 
     // Assert that copying to an existing item will not try to
     // overwrite the existing handle.
-    REQUIRE_NOTHROW(elona::item_copy(i.index, ti));
+    REQUIRE_NOTHROW(elona::item_copy(i, slot));
 }
 
 TEST_CASE("Test copying of item handles after removal", "[Lua: Handles]")
@@ -655,7 +657,7 @@ TEST_CASE("Test copying of item handles after removal", "[Lua: Handles]")
     b.set_number(0);
 
     // item_copy should clean up the handle in b's slot.
-    REQUIRE_NOTHROW(elona::item_copy(a.index, b.index));
+    REQUIRE_NOTHROW(elona::item_copy(a, b));
 }
 
 TEST_CASE("Test swapping of item handles", "[Lua: Handles]")
@@ -679,7 +681,7 @@ TEST_CASE("Test swapping of item handles", "[Lua: Handles]")
     std::string uuid_a = handle_a["__uuid"];
     std::string uuid_b = handle_b["__uuid"];
 
-    elona::item_exchange(item_a.index, item_b.index);
+    elona::item_exchange(item_a, item_b);
 
     // Disabled temporarily.
     // TODO: rethink how should swapping behave.

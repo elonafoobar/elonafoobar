@@ -348,7 +348,7 @@ TalkResult _talk_hv_adventurer_train()
 
 void _adventurer_receive_coin()
 {
-    if (inv_getfreeid(-1) == -1)
+    if (!inv_get_free_slot(-1))
     {
         txt(i18n::s.get(
             "core.talk.visitor.adventurer.friendship.no_empty_spot"));
@@ -401,7 +401,7 @@ TalkResult _talk_hv_adventurer_friendship()
 
 void _adventurer_receive_souvenir()
 {
-    if (inv_getfreeid(0) == -1)
+    if (!inv_get_free_slot(0))
     {
         txt(i18n::s.get(
             "core.talk.visitor.adventurer.souvenir.inventory_is_full"));
@@ -611,7 +611,7 @@ TalkResult _talk_hv_adventurer()
         return _talk_hv_adventurer_hate();
     }
     if (cdata[tc].impression >= 100 && !cdata[tc].is_best_friend() &&
-        inv_getfreeid(-1) != -1)
+        inv_get_free_slot(-1))
     {
         // NOTE: this dialog falls through.
         _talk_hv_adventurer_best_friend();

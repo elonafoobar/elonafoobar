@@ -179,25 +179,6 @@ void cell_movechara(int cc, int x, int y)
 
 
 
-int cell_itemlist(int x, int y)
-{
-    listmax = 0;
-    for (const auto& item : inv.ground())
-    {
-        if (item.number() > 0)
-        {
-            if (item.position.x == x && item.position.y == y)
-            {
-                list(0, listmax) = item.index;
-                ++listmax;
-            }
-        }
-    }
-    return rtval;
-}
-
-
-
 // Returns pair of number of items and the last item on the cell.
 std::pair<int, int> cell_itemoncell(const Position& pos)
 {

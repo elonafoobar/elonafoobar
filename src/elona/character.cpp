@@ -1580,7 +1580,7 @@ void chara_relocate(
     }
 
     // Clear some fields which should not be copied.
-    source.item_which_will_be_used = 0;
+    source.ai_item = 0;
     source.is_livestock() = false;
 
     // Copy from `source` to `destination` and clear `source`
@@ -1692,13 +1692,13 @@ void chara_relocate(
 
 
 
-void chara_set_item_which_will_be_used(Character& chara, const Item& item)
+void chara_set_ai_item(Character& chara, const Item& item)
 {
     const auto category = the_item_db[itemid2int(item.id)]->category;
     if (category == ItemCategory::food || category == ItemCategory::potion ||
         category == ItemCategory::scroll)
     {
-        chara.item_which_will_be_used = item.index;
+        chara.ai_item = item.index;
     }
 }
 
@@ -2219,7 +2219,7 @@ void chara_clear_status_effects()
     cdata[rc].drunk = 0;
     cdata[rc].bleeding = 0;
     cdata[rc].gravity = 0;
-    cdata[rc].item_which_will_be_used = 0;
+    cdata[rc].ai_item = 0;
     cdata[rc].hate = 0;
     cdata[rc].enemy_id = 0;
     cdata[rc].sick = 0;

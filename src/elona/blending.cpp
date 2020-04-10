@@ -1850,7 +1850,7 @@ void blending_proc_on_success_events_natural_potion(Item& well, Item&)
         txt(i18n::s.get("core.action.dip.result.natural_potion_drop"));
         return;
     }
-    if (inv_getfreeid(0) == -1)
+    if (!inv_get_free_slot(0))
     {
         txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
         return;
@@ -1892,7 +1892,7 @@ void blending_proc_on_success_events()
     const auto item2_index = rpref(12);
     if (rpdata(2, rpid) == 2)
     {
-        item_separate(item1_index);
+        item_separate(inv[item1_index]);
     }
     else if (inv[item1_index].number() <= 1)
     {
@@ -1900,7 +1900,7 @@ void blending_proc_on_success_events()
     }
     else
     {
-        int stat = item_separate(item1_index);
+        int stat = item_separate(inv[item1_index]).index;
         if (rpref(10) == stat)
         {
             rpref(10) = -2;
@@ -1941,7 +1941,7 @@ void blending_proc_on_success_events()
     {
         create_pcpic(cdata.player());
     }
-    if (inv_getowner(item1.index) == -1)
+    if (inv_getowner(item1) == -1)
     {
         cell_refresh(item1.position.x, item1.position.y);
     }

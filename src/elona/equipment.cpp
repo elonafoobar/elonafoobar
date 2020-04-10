@@ -1342,7 +1342,7 @@ int equip_item(int cc, Item& equipment)
     {
         return 0;
     }
-    item_separate(equipment.index);
+    item_separate(equipment);
     if (cc == 0)
     {
         item_identify(equipment, IdentifyState::almost);
