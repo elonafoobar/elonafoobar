@@ -557,13 +557,13 @@ void UIMenuCharacterSheet::_draw_first_page_weapon_info()
         i18n::s.get("core.ui.chara_sheet.damage.evade"),
         {20, 10, 0});
     attackskill = 106;
-    int evade = calc_evasion(tc);
-    prot = calcattackdmg(none, none, AttackDamageCalculationMode::defense);
+    const auto evade = calc_evasion(tc);
+    const auto prot = calc_attack_protection(cdata[tc]);
     font(14 - en * 2);
     mes(wx + 460 + en * 8,
         wy + 279 + p(2) * 16,
-        ""s + (100 - 10000 / (prot + 100)) + u8"% + "s + protdice1 + u8"d"s +
-            protdice2);
+        ""s + (100 - 10000 / (prot.rate + 100)) + u8"% + "s + prot.dice_x +
+            u8"d"s + prot.dice_y);
     mes(wx + 625 - en * 8, wy + 279 + p(2) * 16, ""s + evade + u8"%"s);
     ++p(2);
 }
