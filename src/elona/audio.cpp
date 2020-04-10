@@ -411,7 +411,6 @@ std::pair<short, unsigned char> sound_calculate_position(const Position& p)
 
 void stop_music()
 {
-    mmstop();
     DMSTOP();
     DMLOADFNAME(filesystem::dirs::sound() / u8"gm_on.mid", 0);
     DMPLAY(1, 0);
