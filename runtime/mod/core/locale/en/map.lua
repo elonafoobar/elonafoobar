@@ -58,10 +58,6 @@ ELONA.i18n:add {
          },
 
          -- Lesimas
-         _3 = {
-            the_depth = "The Depth",
-         },
-
          _4 = {
             name = "North Tyris",
          },
@@ -105,6 +101,7 @@ ELONA.i18n:add {
          _3 = {
             name = "Lesimas",
             desc = "You see the dungeon of Lesimas. The wheel of fortune starts to turn.",
+            the_depth = "The Depth",
          },
          _42 = {
             name = "the Void",
@@ -289,5 +286,10 @@ ELONA.i18n:add {
          -- rank_high = ...
          -- rank_highest = ...
          -- }
+
+      chip = {
+         dryrock = "a dryrock",
+         field = "a field",
       },
    }
+}
