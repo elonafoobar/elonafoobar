@@ -1615,7 +1615,11 @@ int blending_spend_materials()
         {
             continue;
         }
-        if ((rpdata(2, rpid) <= 0 || cnt != 0) && rpresult)
+        if (rpdata(2, rpid) > 0 && cnt == 0)
+        {
+            continue;
+        }
+        if (rpresult)
         {
             inv[rpref(10 + cnt * 2)].modify_number(-1);
         }
