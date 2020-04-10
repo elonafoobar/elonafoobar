@@ -1190,7 +1190,7 @@ void show_weapon_dice(
     int tohit = calc_accuracy(weapon, ammo, false);
     dmg = calcattackdmg(weapon, ammo, AttackDamageCalculationMode::raw_damage);
     font(14 - en * 2);
-    s(2) = ""s + dmgmulti;
+    s(2) = std::to_string(dmgmulti);
     s = ""s + tohit + u8"%"s;
     if (val0 == 0)
     {
