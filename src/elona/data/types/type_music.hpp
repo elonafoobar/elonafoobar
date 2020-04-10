@@ -10,6 +10,7 @@ struct MusicData
     data::InstanceId id;
     int legacy_id;
     fs::path file;
+    int volume;
 };
 
 ELONA_DEFINE_LUA_DB(MusicDB, MusicData, "core.music")

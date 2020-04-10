@@ -516,12 +516,6 @@ void mes(
 
 void mesbox(std::string& buffer, bool text = false);
 
-void mmload(const fs::path& filepath, int id, int mode = 0);
-
-void mmplay(int id);
-
-void mmstop();
-
 void noteadd(const std::string& text, int index = -1, int = 0);
 
 void notedel(size_t index);

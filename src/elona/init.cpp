@@ -379,15 +379,22 @@ void initialize_elona()
     initialize_nefia_names();
     initialize_home_adata();
     initialize_damage_popups();
+    // if (g_config.sound())
+    {
+        bool ok = audio_init_sound();
+        if (!ok)
+        {
+            throw std::runtime_error{"failed to init sound"};
+        }
+    }
     if (g_config.music())
     {
-        bool err = DMINIT() == 0;
-        if (err)
+        bool ok = audio_init_music();
+        if (!ok)
         {
             throw std::runtime_error{"failed to init music"};
         }
     }
-    DSINIT();
     if (g_config.joypad())
     {
         DIINIT();
@@ -396,7 +403,6 @@ void initialize_elona()
             throw std::runtime_error{"failed to init joypad"};
         }
     }
-    initialize_sound_file();
     mainskill(0) = 173;
     mainskill(1) = 106;
     mainskill(2) = 108;

@@ -12,6 +12,7 @@ struct SoundData
     data::InstanceId id;
     int legacy_id;
     fs::path file;
+    int volume;
 };
 
 
