@@ -41,7 +41,7 @@ ELONA.i18n:add {
          spellbook = "魔法書",
          book = "本",
          rod = "魔法の杖",
-         foods = "食べ物",
+         food = "食べ物",
          tool = "道具",
          furniture = "家具",
          well = "井戸",
