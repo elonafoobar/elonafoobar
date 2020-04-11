@@ -650,7 +650,7 @@ private:
 
 extern CData cdata;
 
-int chara_create(int = 0, int = 0, int = 0, int = 0);
+optional_ref<Character> chara_create(int slot, int chara_id, int x, int y);
 void initialize_character();
 bool chara_place();
 

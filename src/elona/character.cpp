@@ -633,7 +633,7 @@ void initialize_character()
 
 
 
-int chara_create(int slot, int chara_id, int x, int y)
+optional_ref<Character> chara_create(int slot, int chara_id, int x, int y)
 {
     bool success = false;
 
@@ -657,7 +657,7 @@ int chara_create(int slot, int chara_id, int x, int y)
         {
             cdata[rc].set_state(Character::State::empty);
             --npcmemory(1, charaid2int(cdata[rc].id));
-            return 1;
+            return cdata.tmp();
         }
         if (rc != 0)
         {
@@ -670,10 +670,17 @@ int chara_create(int slot, int chara_id, int x, int y)
     else
     {
         rc = 56;
-        return 0;
+        return none;
     }
 
-    return success ? 1 : 0;
+    if (success)
+    {
+        return cdata[rc];
+    }
+    else
+    {
+        return none;
+    }
 }
 
 
@@ -2303,9 +2310,8 @@ void proc_pregnant()
             flt();
             initlv = cdata[cc].level / 2 + 1;
             novoidlv = 1;
-            int stat = chara_create(
-                -1, 330, cdata[cc].position.x, cdata[cc].position.y);
-            if (stat != 0)
+            if (const auto chara = chara_create(
+                    -1, 330, cdata[cc].position.x, cdata[cc].position.y))
             {
                 if (strlen_u(cdatan(0, cc)) > 10 ||
                     instr(

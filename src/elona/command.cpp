@@ -3854,9 +3854,8 @@ int try_to_cast_spell()
         {
             flt(calcobjlv(cdata.player().level * 3 / 2 + 3),
                 calcfixlv(Quality::bad));
-            int stat =
-                chara_create(-1, 0, cdata[cc].position.x, cdata[cc].position.y);
-            if (stat != 0)
+            if (const auto chara = chara_create(
+                    -1, 0, cdata[cc].position.x, cdata[cc].position.y))
             {
                 if (cdata[cc].relationship <= -3)
                 {
@@ -6264,9 +6263,11 @@ void open_new_year_gift(Item& box)
                     Message::color{ColorIndex::orange});
             }
             flt();
-            int stat = chara_create(
-                -1, 328 + rnd(2), cdata[cc].position.x, cdata[cc].position.y);
-            if (stat != 0)
+            if (const auto chara = chara_create(
+                    -1,
+                    328 + rnd(2),
+                    cdata[cc].position.x,
+                    cdata[cc].position.y))
             {
                 if (cdata[cc].relationship <= -3)
                 {
@@ -6284,9 +6285,8 @@ void open_new_year_gift(Item& box)
                     "core.action.open.new_year_gift.younger_sister"));
             }
             flt();
-            int stat = chara_create(
-                -1, 176, cdata[cc].position.x, cdata[cc].position.y);
-            if (stat != 0)
+            if (const auto chara = chara_create(
+                    -1, 176, cdata[cc].position.x, cdata[cc].position.y))
             {
                 cdata[rc].gold = 5000;
             }
@@ -6310,9 +6310,11 @@ void open_new_year_gift(Item& box)
         for (int cnt = 0, cnt_end = (2 + rnd(3)); cnt < cnt_end; ++cnt)
         {
             flt();
-            int stat = chara_create(
-                -1, 328 + rnd(2), cdata[cc].position.x, cdata[cc].position.y);
-            if (stat != 0)
+            if (const auto chara = chara_create(
+                    -1,
+                    328 + rnd(2),
+                    cdata[cc].position.x,
+                    cdata[cc].position.y))
             {
                 if (cdata[cc].relationship <= -3)
                 {
