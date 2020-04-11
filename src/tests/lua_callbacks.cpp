@@ -219,7 +219,7 @@ Event.register("core.character_removed", my_chara_removed_handler)
         ->env.raw_set("idx", idx);
 
     // Give this character a role besides a townsperson.
-    chara.character_role = 2002;
+    chara.role = Role::guest_citizen;
 
     elona::damage_hp(cdata[idx], chara.max_hp + 1, -11);
 

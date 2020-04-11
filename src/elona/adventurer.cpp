@@ -53,7 +53,7 @@ void create_adventurer()
     cdata[rc].image = rnd(33) * 2 + 1 + cdata[rc].sex;
     cdatan(0, rc) = random_name();
     cdatan(1, rc) = random_title(RandomTitleType::character);
-    cdata[rc].character_role = 13;
+    cdata[rc].role = Role::adventurer;
     p = rnd(450);
     if (area_data[p].id == mdata_t::MapId::none ||
         area_data[p].id == mdata_t::MapId::your_home ||

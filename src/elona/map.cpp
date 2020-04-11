@@ -1016,7 +1016,7 @@ void map_reload_noyel()
             int stat = chara_create(-1, 345, 48, 19);
             if (stat != 0)
             {
-                cdata[rc].character_role = 3;
+                cdata[rc].role = Role::other;
                 cdata[rc].only_christmas() = true;
             }
         }
@@ -1025,7 +1025,7 @@ void map_reload_noyel()
             int stat = chara_create(-1, 348, 30, 17);
             if (stat != 0)
             {
-                cdata[rc].character_role = 3;
+                cdata[rc].role = Role::other;
                 cdata[rc].only_christmas() = true;
             }
         }
@@ -1086,7 +1086,7 @@ void map_reload_noyel()
             {
                 cdata[rc].ai_calm = 3;
                 cdata[rc].only_christmas() = true;
-                cdata[rc].character_role = 1002;
+                cdata[rc].role = Role::food_vendor;
                 cdata[rc].shop_rank = 10;
                 cdatan(0, rc) = snfood(cdatan(0, rc));
             }
@@ -1100,7 +1100,7 @@ void map_reload_noyel()
                 cdata[rc].relationship = 0;
                 cdata[rc].original_relationship = 0;
                 cdata[rc].only_christmas() = true;
-                cdata[rc].character_role = 1018;
+                cdata[rc].role = Role::souvenir_vendor;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = random_name();
                 cdatan(0, rc) = i18n::s.get(
@@ -1116,7 +1116,7 @@ void map_reload_noyel()
                 cdata[rc].relationship = 0;
                 cdata[rc].original_relationship = 0;
                 cdata[rc].only_christmas() = true;
-                cdata[rc].character_role = 1018;
+                cdata[rc].role = Role::souvenir_vendor;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = random_name();
                 cdatan(0, rc) = i18n::s.get(
@@ -1129,7 +1129,7 @@ void map_reload_noyel()
             if (stat != 0)
             {
                 cdata[rc].ai_calm = 3;
-                cdata[rc].character_role = 1007;
+                cdata[rc].role = Role::blackmarket_vendor;
                 cdata[rc].shop_rank = 10;
                 cdatan(0, rc) = snblack(cdatan(0, rc));
                 cdata[rc].only_christmas() = true;
@@ -1144,7 +1144,7 @@ void map_reload_noyel()
                 cdata[rc].relationship = 0;
                 cdata[rc].original_relationship = 0;
                 cdata[rc].only_christmas() = true;
-                cdata[rc].character_role = 1022;
+                cdata[rc].role = Role::street_vendor;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = random_name();
                 cdatan(0, rc) =
@@ -1160,7 +1160,7 @@ void map_reload_noyel()
                 cdata[rc].relationship = 0;
                 cdata[rc].original_relationship = 0;
                 cdata[rc].only_christmas() = true;
-                cdata[rc].character_role = 1022;
+                cdata[rc].role = Role::street_vendor;
                 cdata[rc].shop_rank = 30;
                 cdatan(0, rc) = random_name();
                 cdatan(0, rc) =

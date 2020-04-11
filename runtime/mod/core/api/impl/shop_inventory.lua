@@ -292,7 +292,7 @@ end
 
 function shop_inventory.generate(shopkeeper)
    -- Obtain shop inventory data by using the shopkeeper's
-   -- character_role as its legacy ID index. If it does not exist, a
+   -- role as its legacy ID index. If it does not exist, a
    -- default set of items will be generated as a fallback.
    local id = Data.get_id_by_legacy("core.shop_inventory", shopkeeper.role)
    local inv = {}

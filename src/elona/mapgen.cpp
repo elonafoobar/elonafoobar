@@ -2829,7 +2829,7 @@ int initialize_quest_map_party()
             initlv = roomdiff * 7 + rnd(5);
             chara_create(
                 -1, list(rnd(3), roomdiff), rnd(rw) + rx, rnd(rh) + ry);
-            cdata[rc].character_role = 3;
+            cdata[rc].role = Role::other;
             cdata[rc].relationship = -1;
             cdata[rc].original_relationship = -1;
             cdata[rc].gold = cdata[rc].level * (20 + rnd(20));
@@ -2863,29 +2863,29 @@ int initialize_quest_map_party()
     }
     flt();
     chara_create(-1, 29, -3, 0);
-    cdata[rc].character_role = 3;
+    cdata[rc].role = Role::other;
     cdata[rc].relationship = -1;
     cdata[rc].original_relationship = -1;
     flt();
     chara_create(-1, 231, -3, 0);
-    cdata[rc].character_role = 3;
+    cdata[rc].role = Role::other;
     cdata[rc].relationship = -1;
     cdata[rc].original_relationship = -1;
     flt();
     chara_create(-1, 31, -3, 0);
-    cdata[rc].character_role = 3;
+    cdata[rc].role = Role::other;
     cdata[rc].relationship = -1;
     cdata[rc].original_relationship = -1;
     flt();
     chara_create(-1, 247, -3, 0);
-    cdata[rc].character_role = 3;
+    cdata[rc].role = Role::other;
     cdata[rc].relationship = -1;
     cdata[rc].original_relationship = -1;
     if (rnd(10) == 0)
     {
         flt();
         chara_create(-1, 34, -3, 0);
-        cdata[rc].character_role = 3;
+        cdata[rc].role = Role::other;
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
     }
@@ -2893,7 +2893,7 @@ int initialize_quest_map_party()
     {
         flt();
         chara_create(-1, 28, -3, 0);
-        cdata[rc].character_role = 3;
+        cdata[rc].role = Role::other;
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
     }
@@ -2901,7 +2901,7 @@ int initialize_quest_map_party()
     {
         flt();
         chara_create(-1, 223, -3, 0);
-        cdata[rc].character_role = 3;
+        cdata[rc].role = Role::other;
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
     }
@@ -2909,7 +2909,7 @@ int initialize_quest_map_party()
     {
         flt();
         chara_create(-1, 252, -3, 0);
-        cdata[rc].character_role = 3;
+        cdata[rc].role = Role::other;
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
     }
@@ -2917,7 +2917,7 @@ int initialize_quest_map_party()
     {
         flt();
         chara_create(-1, 322, -3, 0);
-        cdata[rc].character_role = 3;
+        cdata[rc].role = Role::other;
         cdata[rc].relationship = -1;
         cdata[rc].original_relationship = -1;
     }

@@ -117,11 +117,11 @@ Character::State dmgheal_set_death_status(Character& victim)
 {
     Character::State new_state = victim.state();
 
-    if (victim.character_role == 0)
+    if (victim.role == Role::none)
     {
         new_state = Character::State::empty;
     }
-    else if (victim.character_role == 13)
+    else if (victim.role == Role::adventurer)
     {
         new_state = Character::State::adventurer_dead;
         victim.time_to_revive = game_data.date.hours() + 24 + rnd(12);
@@ -1535,7 +1535,7 @@ void character_drops_item()
             continue;
         }
         f = 0;
-        if (cdata[rc].character_role == 20)
+        if (cdata[rc].role == Role::user)
         {
             break;
         }
@@ -1554,7 +1554,7 @@ void character_drops_item()
                 f = 1;
             }
         }
-        if (cdata[rc].character_role == 13)
+        if (cdata[rc].role == Role::adventurer)
         {
             if (rnd(5))
             {
@@ -1964,7 +1964,7 @@ void character_drops_item()
         return;
     }
     if (game_data.current_map != mdata_t::MapId::arena &&
-        cdata[rc].character_role != 20)
+        cdata[rc].role != Role::user)
     {
         if (rnd(175) == 0 || cdata[rc].quality == Quality::special || 0 ||
             (cdata[rc].quality == Quality::miracle && rnd(2) == 0) ||
@@ -1993,7 +1993,7 @@ void character_drops_item()
             }
         }
     }
-    if (cdata[rc].character_role == 1010)
+    if (cdata[rc].role == Role::wandering_vendor)
     {
         flt();
         if (const auto item = itemcreate_extra_inv(361, cdata[rc].position, 0))
@@ -2024,7 +2024,7 @@ void character_drops_item()
     lua::call("core.Impl.chara_drop.drop_from_chara", lua::handle(cdata[rc]));
 
     cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
-    if (cdata[rc].character_role == 13)
+    if (cdata[rc].role == Role::adventurer)
     {
         supply_new_equipment();
     }
@@ -2074,13 +2074,11 @@ void check_kill(int killer_chara_index, int victim_chara_index)
                 {
                     p_at_m137 = -5;
                 }
-                if ((cdata[victim_chara_index].character_role >= 1000 &&
-                     cdata[victim_chara_index].character_role < 2000) ||
-                    cdata[victim_chara_index].character_role == 2003)
+                if (is_shopkeeper(cdata[victim_chara_index].role))
                 {
                     p_at_m137 = -10;
                 }
-                if (cdata[victim_chara_index].character_role == 13)
+                if (cdata[victim_chara_index].role == Role::adventurer)
                 {
                     chara_modify_impression(cdata[victim_chara_index], -25);
                 }

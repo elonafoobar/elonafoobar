@@ -473,9 +473,9 @@ void eh_okaeri(const DeferredEvent&)
     {
         if (cdata[cc].state() != Character::State::alive)
             continue;
-        if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
+        if (cdata[cc].role != Role::adventurer && cdata[cc].role != Role::other)
         {
-            if (cdata[cc].character_role != 0 || cdata[cc].relationship == 0 ||
+            if (cdata[cc].role != Role::none || cdata[cc].relationship == 0 ||
                 cdata[cc].current_map == game_data.current_map)
             {
                 cdata[cc].emotion_icon = 2006;
@@ -498,7 +498,7 @@ void eh_okaeri(const DeferredEvent&)
         {
             if (cc.state() != Character::State::alive)
                 continue;
-            if (cc.character_role == 18)
+            if (cc.role == Role::maid)
             {
                 tc = cc.index;
                 break;
@@ -583,7 +583,7 @@ void eh_lily_killed(const DeferredEvent& event)
     // param1: Lily's character index.
 
     damage_hp(cdata[event.param1], 9999, -11);
-    cdata[event.param1].character_role = 0;
+    cdata[event.param1].role = Role::none;
     cdata[event.param1].set_state(Character::State::empty);
     flt();
     itemcreate_extra_inv(55, cdata[event.param1].position, 4);
@@ -866,33 +866,33 @@ void eh_guest_visit(const DeferredEvent&)
             rnd(3))
         {
             chara_create(-1, 333, -3, 0);
-            cdata[rc].character_role = 2005;
+            cdata[rc].role = Role::guest_trainer;
         }
         else if (rnd(10) == 0)
         {
             chara_create(-1, 334, -3, 0);
-            cdata[rc].character_role = 2006;
+            cdata[rc].role = Role::guest_producer;
         }
         else if (rnd(10) == 0)
         {
             chara_create(-1, 1, -3, 0);
-            cdata[rc].character_role = 2003;
+            cdata[rc].role = Role::guest_wandering_vendor;
             cdata[rc].shop_rank = clamp(cdata.player().fame / 100, 20, 100);
         }
         else if (rnd(4) == 0)
         {
             chara_create(-1, 9, -3, 0);
-            cdata[rc].character_role = 2000;
+            cdata[rc].role = Role::guest_beggar;
         }
         else if (rnd(4) == 0)
         {
             chara_create(-1, 174, -3, 0);
-            cdata[rc].character_role = 2001;
+            cdata[rc].role = Role::guest_punk;
         }
         else
         {
             chara_create(-1, 16, -3, 0);
-            cdata[rc].character_role = 2002;
+            cdata[rc].role = Role::guest_citizen;
         }
         cdata[rc].relationship = 0;
         cdata[rc].original_relationship = 0;
@@ -1124,7 +1124,7 @@ void eh_snow_blindness(const DeferredEvent&)
     {
         if (cdata[cc].state() != Character::State::alive)
             continue;
-        if (cdata[cc].character_role != 13 && cdata[cc].character_role != 3)
+        if (cdata[cc].role != Role::adventurer && cdata[cc].role != Role::other)
         {
             cdata[cc].emotion_icon = 2010;
             txt(i18n::s.get("core.event.my_eyes", cdata[cc]));

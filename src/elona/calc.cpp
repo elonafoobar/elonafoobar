@@ -1044,19 +1044,19 @@ int calchireadv(int adventurer)
 
 int calchirecost(int cc)
 {
-    switch (cdata[cc].character_role)
+    switch (cdata[cc].role)
     {
-    case 18: return 450;
-    case 7: return 250;
-    case 9: return 350;
-    case 12: return 500;
-    case 5: return 750;
-    case 8: return 250;
-    case 14: return 50;
-    case 1007: return 4000;
-    case 2003: return 0;
+    case Role::maid: return 450;
+    case Role::trainer: return 250;
+    case Role::bartender: return 350;
+    case Role::healer: return 500;
+    case Role::appraiser: return 750;
+    case Role::informer: return 250;
+    case Role::guard: return 50;
+    case Role::blackmarket_vendor: return 4000;
+    case Role::guest_wandering_vendor: return 0;
     default:
-        if (cdata[cc].character_role >= 1000 && cdata[cc].character_role < 2000)
+        if (is_shopkeeper(cdata[cc].role))
         {
             return 1000;
         }
@@ -1072,8 +1072,7 @@ int calchirecost(int cc)
 void generatemoney(int cc)
 {
     int gold = rnd(100) + rnd_capped(cdata[cc].level * 50 + 1);
-    if ((cdata[cc].character_role >= 1000 && cdata[cc].character_role < 2000) ||
-        cdata[cc].character_role == 2003)
+    if (is_shopkeeper(cdata[cc].role))
     {
         gold += 2500 + cdata[cc].shop_rank * 250;
     }
@@ -1090,7 +1089,7 @@ void calccosthire()
     int cost{};
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.character_role == 0)
+        if (cnt.role == Role::none)
             continue;
         if (cnt.state() != Character::State::alive)
             continue;

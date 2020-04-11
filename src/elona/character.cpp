@@ -269,7 +269,7 @@ int chara_get_free_slot_force()
     std::vector<int> slots;
     for (auto&& cc : cdata.others())
     {
-        if (cc.state() == Character::State::alive && cc.character_role == 0)
+        if (cc.state() == Character::State::alive && cc.role == Role::none)
         {
             slots.push_back(cc.index);
         }
@@ -447,11 +447,11 @@ void failed_to_place_character(Character& cc)
         // if they are dead.
         modify_crowd_density(cc.index, -1);
     }
-    if (cc.character_role != 0)
+    if (cc.role != Role::none)
     {
         cc.set_state(Character::State::villager_dead);
     }
-    if (cc.character_role == 13)
+    if (cc.role == Role::adventurer)
     {
         cc.set_state(Character::State::adventurer_dead);
         cc.time_to_revive = game_data.date.hours() + 24 + rnd(12);
@@ -1385,7 +1385,7 @@ void chara_vanquish(int cc)
             .chara_index_plus_one = 0;
     }
     cdata[cc].set_state(Character::State::empty);
-    cdata[cc].character_role = 0;
+    cdata[cc].role = Role::none;
     if (cdata[cc].shop_store_id != 0)
     {
         const auto storage_filename = filepathutil::u8path(
@@ -1836,8 +1836,8 @@ void go_hostile()
 {
     for (auto&& cc : cdata.others())
     {
-        if (cc.character_role == 14 || cc.character_role == 16 ||
-            cc.character_role == 1010)
+        if (cc.role == Role::guard || cc.role == Role::shop_guard ||
+            cc.role == Role::wandering_vendor)
         {
             cc.relationship = -3;
             cc.hate = 80;
@@ -2058,11 +2058,11 @@ void incognitobegin()
         {
             continue;
         }
-        if (cdata[cnt].character_role == 1010)
+        if (cdata[cnt].role == Role::wandering_vendor)
         {
             continue;
         }
-        if (cdata[cnt].character_role == 16)
+        if (cdata[cnt].role == Role::shop_guard)
         {
             continue;
         }
@@ -2088,7 +2088,7 @@ void incognitoend()
         {
             continue;
         }
-        if (cdata[cnt].character_role == 14)
+        if (cdata[cnt].role == Role::guard)
         {
             if (cdata.player().karma < -30)
             {
@@ -2262,11 +2262,7 @@ void revive_player()
             event_add(6);
         }
     }
-    if (cdata[rc].character_role == 1)
-    {
-        cdata[rc].relationship = 0;
-    }
-    if (cdata[rc].character_role == 14)
+    if (cdata[rc].role == Role::guard)
     {
         p = rnd(5) + 1;
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
@@ -3072,7 +3068,7 @@ int new_ally_joins()
     chara_relocate(cdata[rc], f);
     cdata[rc].relationship = 10;
     cdata[rc].original_relationship = 10;
-    cdata[rc].character_role = 0;
+    cdata[rc].role = Role::none;
     cdata[rc].is_quest_target() = false;
     cdata[rc].is_not_attacked_by_enemy() = false;
     cdata[rc].is_hung_on_sand_bag() = false;

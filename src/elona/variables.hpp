@@ -41,8 +41,6 @@ ELONA_EXTERN(int maxroute);
 // building.cpp
 ELONA_EXTERN(int tlocinitx);
 ELONA_EXTERN(int tlocinity);
-ELONA_EXTERN(elona_vector1<int> isethirerole);
-ELONA_EXTERN(elona_vector1<int> isethire);
 ELONA_EXTERN(elona_vector1<int> income);
 ELONA_EXTERN(elona_vector2<std::string> rankn);
 ELONA_EXTERN(int renewmulti);
