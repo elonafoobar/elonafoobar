@@ -623,8 +623,11 @@ void render_digital_clock()
     // 24 hour digital clock, 57 pixels wide
     font(16 - en * 2);
     bmes(
-        ""s + game_data.date.hour + u8":"s + game_data.date.minute + u8":"s +
-            game_data.date.second,
+        i18n::s.get(
+            "core.ui.digital_clock.time",
+            game_data.date.hour,
+            game_data.date.minute,
+            game_data.date.second),
         8,
         8);
 
@@ -632,8 +635,11 @@ void render_digital_clock()
     font(15 - en * 2);
     int datex = 8 + 57 + 18;
     bmes(
-        ""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s +
-            game_data.date.day,
+        i18n::s.get(
+            "core.ui.digital_clock.date",
+            game_data.date.year,
+            game_data.date.month,
+            game_data.date.day),
         datex,
         8);
 
