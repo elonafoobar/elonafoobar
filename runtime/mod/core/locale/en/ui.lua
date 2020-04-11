@@ -886,8 +886,8 @@ ELONA.i18n:add {
       },
 
       digital_clock = {
-         time = "{$1}:{$2}:{$3}",
-         date = "{$1}/{$2}/{$3}",
+         time = "{zfill($1, 2)}:{zfill($2, 2)}:{zfill($3, 2)}",
+         date = "{zfill($1, 2)}/{zfill($2, 2)}/{zfill($3, 2)}",
       },
    },
 }
