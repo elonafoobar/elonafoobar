@@ -5,120 +5,181 @@ Elona foobar has in-game console re-implemented by using Lua.
 
 ## Quickstart
 
-Enter wizard mode by pressing `F12`, and type `~` to open console window. TODO: the default keybinding will be changed soon.
+Open the console by pressing `Shift+F12` (this keybinding can be configured).
 
 Then, type your first console command. Following the tradition, the first one is "Hello, world!"
 
 ```
-> echo "Hello, World!"
+>>> :echo "Hello, World!"
 Hello, World!
 ```
 
-To show all of the available commands, do `help` command or use `?` instead.
+To show all of the available commands, type `:?` or `:help`.
 
 
 
-## Details
+## Modes
 
-### Mode
-
-The console has two kinds of mode, shell mode and Lua mode. When you are in shell mode, you will see the prompt `>`. In Lua mode, the prompt changes to `lua>`. In command mode, the first string is regarded as a command name, and the rest is passed to the command, like Unix shells. Lua mode provides a simple REPL environment (read-eval-print loop). For both modes, all execution of commands and functions are performed in an isolated environment (pseudo mode `_CONSOLE_`), so that no side-effect happens to the game.
+The console has two kinds of mode, shell mode and Lua mode. The command line starting with `:` is executed in shell mode. Any other inputs are processed in Lua mode. In Lua mode, your input code is executed in an isolated environment from the game. Any variables or functions you defined in the environment will not affect the game, including mods.
 
 
-### Command namespace
+## Command namespace
 
-All console commands have own "namespace", usually the mod name where the command is defined. There are two pre-defined namespaces, `_BULITIN_` and `_CONSOLE_`. `_BULITIN_` is a namespace for built-in commands defined from C++ code or kernel Lua module. `_CONSOLE_` is one for user-defined commands which are defined via the console. (TODO: but currently, there is no way to define new commands from console.) Registered commands are stored in `COMMANDS` table. You can access any commands in Lua mode like this:
+All console commands have own "namespace", usually the mod name where the command is defined. There are two pre-defined namespaces, `_bulitin_` and `_console_`. `_bulitin_` is a namespace for built-in commands defined in C++ or kernel Lua module. `_console_` is one for user-defined commands which are defined via the console. Registered commands are stored in `COMMANDS` table. You can access any commands in Lua mode like this:
 
 ```
-lua> COMMANDS[namespace][command_name]()
+>>> COMMANDS[namespace][command_name]()
 ```
 
 
-### Pipeline
+## Commands
 
-In contrast to Unix shell, `ush` flushes *object* to pipeline (it is similar to PowerShell).
+### `:?`
 
-
-
-### Command line syntax
-
-In this section, I will explain syntax of command line input in shell mode.
+Alias for `:help`.
 
 
-**Sequential execution**
+### `:help`
 
 ```
-> xxx a b c; yyy d e f
+>>> :help
+```
+
+Show all commands.
+
+
+### `:echo`
+
+```
+>>> :echo foo
+```
+
+Print the argument to the console.
+
+
+### `:history`
+
+```
+>>> :history
+```
+
+Print most recently executed command lines up to 10.
+
+
+### `:ls`
+
+```
+>>> :ls
+```
+
+Show all enabled mods with their versions.
+
+
+### `:wizard`
+
+```
+>>> :wizard
+```
+
+Activate wizard mode.
+
+
+### `:voldemort`
+
+```
+>>> :voldemort
+```
+
+Activate Voldemort mode.
+
+
+### `:muggle`
+
+```
+>>> :muggle
+```
+
+Inactivate wizard mode.
+
+
+### `:wish`
+
+```
+>>> :wish [WISH] [NUM]
+```
+
+Wish `WISH` `NUM` times.
+
+
+### `:gain_spell`
+
+```
+>>> :gain_spell
+```
+
+Learn all spells with much spellstocks.
+
+
+### `:gain_spact`
+
+```
+>>> :gain_spact
+```
+
+Learn all spacts (special actions).
+
+
+### `:gain_exp`
+
+```
+>>> :gain_exp [EXP]
+```
+
+Gain `EXP` experience (1 billion by default).
+
+
+### `:gain_fame`
+
+```
+>>> :gain_fame [FAME]
+```
+
+Gain `FAME` fame (1 million by default).
+
+
+
+## Variables
+
+There are some variables available in Lua mode.
+
+
+### `COMMANDS`
+
+The variable holds all console commands.
+
+```
+>>> COMMANDS._builtin_.echo("Hello, World!")
 ```
 
 
-**Consitional execution**
+### `PROMPT` / `PROMPT2`
+
+They are the prompt text shown in the console. `PROMPT2` is shown when your input Lua snippet is incomplete.
 
 ```
-> xxx a b c && yyy d e f
-> xxx a b c || yyy d e f
-```
-
-
-**Pipeline**
-
-```
-> xxx a b c | yyy d e f
-```
-
-Lua supports multiple result, but the shell does not. Only the first result is passed to the next.
-
-
-**Redirect**
-
-```
-> xxx a b c > file
-```
-
-Input redirect is not supported.
-
-
-**Command grouping**
-
-```
-> { xxx a b c; yyy a b c }
-> ( xxx a b c; yyy a b c )
-```
-
-Commands enclosed by `{` and `}` are executed in the current shell. In contrast, commands enclosed by `(` and `)` are executed in a subshell.
-
-
-**Variables**
-
-```
-> echo $VARIABLE
-> echo ${VARIABLE}
+>>> PROMPT = "$ "
+$ PROMPT2 = "$    "
+$ if x < 10 then
+$    print("foo")
+$    end
 ```
 
 
-**Command substitution**
+### `RESULT`
+
+It is the result of the command most recently executed.
 
 ```
-> echo $(xxx a b c)
+>>> Chara.player()
+>>> p(RESULT.position)
 ```
-
-
-**Embedded Lua expression**
-
-```
-> echo (( 1 + 2 ))
-> echo [[ 1 + 2 ]]
-```
-
-The latter notation returns only boolean, i.e., the result of the expression is cast to boolean.
-
-
-**String quoting and escaping**
-
-```
-> echo "\"1 2 3\""
-> echo '"1 2 3"'
-> echo \"1\ 2\ 3\"
-```
-
-The three commands will output the same result. Double quotation allows you to write escape sequence, command substitution, and variable reference in the quoted strings, but single quote does not.

@@ -47,7 +47,7 @@
       leash_icon: false,
       max_damage_popup: 100,
       pcc_graphic_scale: "shrinked",
-      show_fps: true,
+      show_fps: false,
       skip_confirm_at_shop: true,
       skip_overcasting_warning: true,
     },
