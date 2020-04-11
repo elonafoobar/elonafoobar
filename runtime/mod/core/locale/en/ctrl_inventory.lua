@@ -6,9 +6,9 @@ ELONA.i18n:add {
             _1 = "Examine what? ",
             _2 = "Drop what? ",
             _3 = "Which item do you want to pick up? ",
-            _4 = "Equip what?",
+            -- _4
             _5 = "Eat what? ",
-            -- _6
+            _6 = "Equip what?",
             _7 = "Read what? ",
             _8 = "Drink what? ",
             _9 = "Zap what? ",

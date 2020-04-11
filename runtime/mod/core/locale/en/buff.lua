@@ -48,7 +48,7 @@ ELONA.i18n:add {
       _10 = {
          name = "Holy Veil",
          apply = "{name($1)} receive{s($1)} holy protection.",
-         description = "grants hex protection(power:{$1})",
+         description = "Grants hex protection(power:{$1})",
       },
       _11 = {
          name = "Nightmare",
@@ -93,7 +93,7 @@ ELONA.i18n:add {
       _19 = {
          name = "Luck",
          apply = "{name($1)} feel{s($1)} very lucky today!",
-         description = "Increase luck by {$1}.",
+         description = "Increases luck by {$1}.",
       },
       _20 = {
          name = "Grow Strength",
