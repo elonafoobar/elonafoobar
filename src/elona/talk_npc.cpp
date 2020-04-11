@@ -1593,8 +1593,8 @@ TalkResult talk_quest_giver()
                 }
                 flt(quest_data[rq].difficulty + cnt, Quality::bad);
                 fltn(u8"man"s);
-                int stat = chara_create(56, chara_id, -3, 0);
-                f = stat;
+                const auto chara = chara_create(56, chara_id, -3, 0);
+                f = !!chara;
                 if (f == 1)
                 {
                     for (int cnt = 0; cnt < 16; ++cnt)

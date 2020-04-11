@@ -637,8 +637,8 @@ void prompt_hiring()
         const auto chara_id = isethire.at(hire).first;
         randomize(game_data.date.day + cnt);
         flt(20);
-        int stat = chara_create(-1, chara_id, -3, 0);
-        if (stat == 0)
+        const auto chara = chara_create(-1, chara_id, -3, 0);
+        if (!chara)
         {
             continue;
         }
@@ -1415,8 +1415,8 @@ void update_ranch()
                 // Little sister -> younger sister
                 chara_id = 176;
             }
-            int stat = chara_create(-1, chara_id, 4 + rnd(11), 4 + rnd(8));
-            if (stat != 0)
+            if (const auto chara =
+                    chara_create(-1, chara_id, 4 + rnd(11), 4 + rnd(8)))
             {
                 cdata[rc].is_livestock() = true;
                 ++livestock_count;

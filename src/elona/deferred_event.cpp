@@ -179,12 +179,7 @@ void eh_lord_of_normal_nefia(const DeferredEvent&)
         map_set_chara_generation_filter();
         fixlv = Quality::miracle;
         initlv = game_data.current_dungeon_level + rnd(5);
-        int stat = chara_create(-1, 0, -3, 0);
-        if (stat == 0)
-        {
-            continue;
-        }
-        else
+        if (const auto chara = chara_create(-1, 0, -3, 0))
         {
             cdata[rc].is_lord_of_dungeon() = true;
             break;
@@ -554,8 +549,7 @@ void eh_ragnarok(const DeferredEvent& event)
             {
                 fltnrace = u8"core.giant"s;
             }
-            int stat = chara_create(-1, 0, x, y);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 0, x, y))
             {
                 cdata[rc].is_temporary() = true;
             }

@@ -1959,8 +1959,8 @@ void generate_random_nefia()
                 itemcreate_extra_inv(0, rnd(rw) + rx, rnd(rh) + ry, 0);
             }
             map_set_chara_generation_filter();
-            int stat = chara_create(-1, 0, rnd(rw) + rx, rnd(rh) + ry);
-            if (stat == 1)
+            if (const auto chara =
+                    chara_create(-1, 0, rnd(rw) + rx, rnd(rh) + ry))
             {
                 if (game_data.current_dungeon_level > 3)
                 {
@@ -2144,8 +2144,7 @@ void initialize_random_nefia_rdtype6()
     for (int cnt = 0, cnt_end = (10 + rnd(6)); cnt < cnt_end; ++cnt)
     {
         map_set_chara_generation_filter();
-        int stat = chara_create(-1, 0, -3, 0);
-        if (stat != 0)
+        if (const auto chara = chara_create(-1, 0, -3, 0))
         {
             cdata[rc].relationship = -3;
             cdata[rc].original_relationship = -3;

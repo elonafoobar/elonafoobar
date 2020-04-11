@@ -129,7 +129,7 @@ sol::optional<LuaCharacterHandle> LuaApiChara::create_random(
 sol::optional<LuaCharacterHandle> LuaApiChara::create_random_xy(int x, int y)
 {
     elona::flt();
-    if (elona::chara_create(-1, 0, x, y) != 0)
+    if (const auto chara = elona::chara_create(-1, 0, x, y))
     {
         return lua::handle(elona::cdata[elona::rc]);
     }
@@ -161,7 +161,7 @@ LuaApiChara::create_from_id_xy(int x, int y, const std::string& id)
 {
     auto data = the_character_db.ensure(data::InstanceId{id});
 
-    if (elona::chara_create(-1, data.legacy_id, x, y) != 0)
+    if (const auto chara = elona::chara_create(-1, data.legacy_id, x, y))
     {
         return lua::handle(elona::cdata[elona::rc]);
     }
@@ -188,7 +188,7 @@ sol::optional<LuaCharacterHandle> LuaApiChara::generate_from_map_xy(
     int y)
 {
     map_set_chara_generation_filter();
-    if (elona::chara_create(-1, dbid, x, y) != 0)
+    if (const auto chara = elona::chara_create(-1, dbid, x, y))
     {
         return lua::handle(elona::cdata[elona::rc]);
     }

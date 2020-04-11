@@ -61,8 +61,7 @@ static void _map_events_quest_party()
             {
                 flt();
                 objlv = 1;
-                int stat = chara_create(-1, chara_id, -3, 0);
-                if (stat != 0)
+                if (const auto chara = chara_create(-1, chara_id, -3, 0))
                 {
                     cdata[rc].relationship = -1;
                     cdata[rc].original_relationship = -1;

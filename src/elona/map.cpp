@@ -1013,8 +1013,7 @@ void map_reload_noyel()
         }
         {
             flt();
-            int stat = chara_create(-1, 345, 48, 19);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 345, 48, 19))
             {
                 cdata[rc].role = Role::other;
                 cdata[rc].only_christmas() = true;
@@ -1022,8 +1021,7 @@ void map_reload_noyel()
         }
         {
             flt();
-            int stat = chara_create(-1, 348, 30, 17);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 348, 30, 17))
             {
                 cdata[rc].role = Role::other;
                 cdata[rc].only_christmas() = true;
@@ -1031,8 +1029,7 @@ void map_reload_noyel()
         }
         {
             flt();
-            int stat = chara_create(-1, 174, 38, 19);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 174, 38, 19))
             {
                 cdata[rc].only_christmas() = true;
                 cdata[rc].is_hung_on_sand_bag() = true;
@@ -1041,48 +1038,42 @@ void map_reload_noyel()
         }
         {
             flt();
-            int stat = chara_create(-1, 347, 35, 19);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 347, 35, 19))
             {
                 cdata[rc].only_christmas() = true;
             }
         }
         {
             flt();
-            int stat = chara_create(-1, 347, 37, 18);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 347, 37, 18))
             {
                 cdata[rc].only_christmas() = true;
             }
         }
         {
             flt();
-            int stat = chara_create(-1, 347, 37, 21);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 347, 37, 21))
             {
                 cdata[rc].only_christmas() = true;
             }
         }
         {
             flt();
-            int stat = chara_create(-1, 347, 39, 20);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 347, 39, 20))
             {
                 cdata[rc].only_christmas() = true;
             }
         }
         {
             flt();
-            int stat = chara_create(-1, 347, 38, 21);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 347, 38, 21))
             {
                 cdata[rc].only_christmas() = true;
             }
         }
         {
             flt();
-            int stat = chara_create(-1, 70, 17, 8);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 70, 17, 8))
             {
                 cdata[rc].ai_calm = 3;
                 cdata[rc].only_christmas() = true;
@@ -1093,8 +1084,7 @@ void map_reload_noyel()
         }
         {
             flt();
-            int stat = chara_create(-1, 239, 25, 8);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 239, 25, 8))
             {
                 cdata[rc].ai_calm = 3;
                 cdata[rc].relationship = 0;
@@ -1109,8 +1099,7 @@ void map_reload_noyel()
         }
         {
             flt();
-            int stat = chara_create(-1, 271, 24, 22);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 271, 24, 22))
             {
                 cdata[rc].ai_calm = 3;
                 cdata[rc].relationship = 0;
@@ -1125,8 +1114,7 @@ void map_reload_noyel()
         }
         {
             flt();
-            int stat = chara_create(-1, 1, 38, 12);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 1, 38, 12))
             {
                 cdata[rc].ai_calm = 3;
                 cdata[rc].role = Role::blackmarket_vendor;
@@ -1137,8 +1125,7 @@ void map_reload_noyel()
         }
         {
             flt();
-            int stat = chara_create(-1, 271, 28, 9);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 271, 28, 9))
             {
                 cdata[rc].ai_calm = 3;
                 cdata[rc].relationship = 0;
@@ -1153,8 +1140,7 @@ void map_reload_noyel()
         }
         {
             flt();
-            int stat = chara_create(-1, 271, 29, 24);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 271, 29, 24))
             {
                 cdata[rc].ai_calm = 3;
                 cdata[rc].relationship = 0;
@@ -1170,15 +1156,13 @@ void map_reload_noyel()
         for (int cnt = 0; cnt < 20; ++cnt)
         {
             flt();
-            int stat = chara_create(-1, 349, -3, 0);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 349, -3, 0))
             {
                 cdata[rc].only_christmas() = true;
             }
             flt();
             {
-                int stat = chara_create(-1, 350, -3, 0);
-                if (stat != 0)
+                if (const auto chara = chara_create(-1, 350, -3, 0))
                 {
                     cdata[rc].only_christmas() = true;
                 }
@@ -1187,8 +1171,7 @@ void map_reload_noyel()
         for (int cnt = 0; cnt < 15; ++cnt)
         {
             flt();
-            int stat = chara_create(-1, 326, -3, 0);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 326, -3, 0))
             {
                 cdata[rc].only_christmas() = true;
             }
@@ -1196,31 +1179,27 @@ void map_reload_noyel()
         for (int cnt = 0; cnt < 7; ++cnt)
         {
             flt();
-            int stat = chara_create(-1, 335, -3, 0);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 335, -3, 0))
             {
                 cdata[rc].only_christmas() = true;
             }
             {
                 flt();
-                int stat = chara_create(-1, 185, -3, 0);
-                if (stat != 0)
+                if (const auto chara = chara_create(-1, 185, -3, 0))
                 {
                     cdata[rc].only_christmas() = true;
                 }
             }
             {
                 flt();
-                int stat = chara_create(-1, 274, -3, 0);
-                if (stat != 0)
+                if (const auto chara = chara_create(-1, 274, -3, 0))
                 {
                     cdata[rc].only_christmas() = true;
                 }
             }
             {
                 flt();
-                int stat = chara_create(-1, 174, -3, 0);
-                if (stat != 0)
+                if (const auto chara = chara_create(-1, 174, -3, 0))
                 {
                     cdata[rc].only_christmas() = true;
                 }
@@ -1229,15 +1208,13 @@ void map_reload_noyel()
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             flt();
-            int stat = chara_create(-1, 332, -3, 0);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 332, -3, 0))
             {
                 cdata[rc].only_christmas() = true;
             }
             {
                 flt();
-                int stat = chara_create(-1, 185, -3, 0);
-                if (stat != 0)
+                if (const auto chara = chara_create(-1, 185, -3, 0))
                 {
                     cdata[rc].only_christmas() = true;
                 }
