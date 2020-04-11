@@ -540,7 +540,7 @@ bool _magic_301()
     else
     {
         ride_begin(tc);
-        txt(name(game_data.mount) +
+        txt(name(game_data.mount) + i18n::space_if_needed() +
                 i18n::s.get("core.magic.mount.mount.dialog"),
             Message::color{ColorIndex::cyan});
     }

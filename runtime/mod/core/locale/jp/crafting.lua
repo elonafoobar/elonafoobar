@@ -20,7 +20,7 @@ ELONA.i18n:add {
          make = "アイテム[{$1}]",
       },
 
-      you_do_not_meet_requirements = "生産の条件を満たしてない。",
+      you_do_not_meet_requirements = "生産の条件を満たしていない。",
       you_crafted = "{itemname($1, 1)}を製造した。",
    },
 }

@@ -2,8 +2,8 @@ ELONA.i18n:add {
    blending = {
       rate_panel = {
          success_rate = "Success Rate: {$1}",
-         turns = "{$1} turns",
-         and_hours = "and {$1} hours",
+         turns = "{$1} turn{s($1)}",
+         and_hours = " and {$1} hour{s($1)}",
          required_time = "Time: {$1}",
       },
 
