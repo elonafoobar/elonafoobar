@@ -1,5 +1,34 @@
 # Changelog
 
+## [0.7.1] - 2020-04-12
+
+### Fixed
+
+* Fix adventurer's favorite skill.
+* Fix translation errors in blending recipe and more.
+* Fix not being able to auto-pick foods.
+* Fix that you may lose blending materials even on success.
+* Fix text rendering in the log window.
+* Fix some of Japanese text being cut in the middle.
+* Improve digital clock's look on the top left.
+* Fix typos.
+
+
+### Added
+
+* Add new options to configure sound/music volume (0-8). By default, 8 (maximum).
+* Add new console commands.
+  * `:wish`
+  * `:gain_spell`
+  * `:gain_exp`
+  * `:gain_fame`
+
+
+### Changed
+
+* Re-design in-game console feature.
+
+
 ## [0.7.0] - 2020-03-22
 
 The core system of modding has been changed much!
