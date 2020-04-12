@@ -206,10 +206,6 @@ int calc_performance_tips(const Character& performer, const Character& audience)
 
     const auto max = sdata(183, performer.index) * 100;
 
-    const auto audience_is_shopkeeper =
-        (1000 <= audience.character_role && audience.character_role < 2000) ||
-        audience.character_role == 2003;
-
     const auto m = Q * Q * (100 + I / 5) / 100 / 1000 + rnd(10);
     auto ret = clamp(audience.gold * clamp(m, 1, 100) / 125, 0, max);
 
@@ -217,7 +213,7 @@ int calc_performance_tips(const Character& performer, const Character& audience)
     {
         ret = rnd(clamp(ret, 1, 100)) + 1;
     }
-    if (audience_is_shopkeeper)
+    if (is_shopkeeper(audience.role))
     {
         ret /= 5;
     }
@@ -493,15 +489,15 @@ std::pair<bool, int> activity_perform_proc_audience(
 
 
 
-void activity_perform_start(Character& performer)
+void activity_perform_start(Character& performer, const Item& instrument)
 {
     if (is_in_fov(performer))
     {
-        txt(i18n::s.get("core.activity.perform.start", performer, inv[ci]));
+        txt(i18n::s.get("core.activity.perform.start", performer, instrument));
     }
     performer.activity.type = Activity::Type::perform;
     performer.activity.turn = 61;
-    performer.activity.item = ci;
+    performer.activity.item = instrument.index;
     performer.quality_of_performance = 40;
     performer.tip_gold = 0;
     if (performer.index == 0)
@@ -514,7 +510,6 @@ void activity_perform_start(Character& performer)
 
 void activity_perform_doing(Character& performer)
 {
-    ci = performer.activity.item;
     if (performer.activity.turn % 10 == 0)
     {
         if (is_in_fov(performer))
@@ -645,17 +640,18 @@ void activity_eating_start(Character& eater, Item& food)
 
 
 
-void activity_others_start(Character& doer)
+void activity_others_start(Character& doer, optional_ref<Item> activity_item)
 {
     doer.activity.type = Activity::Type::others;
-    doer.activity.item = ci;
+    doer.activity.item = activity_item ? activity_item->index : -1;
     doer.activity_target = tc;
 
     switch (game_data.activity_about_to_start)
     {
     case 105:
-        txt(i18n::s.get("core.activity.steal.start", inv[ci]));
-        doer.activity.turn = 2 + clamp(inv[ci].weight / 500, 0, 50);
+        assert(activity_item);
+        txt(i18n::s.get("core.activity.steal.start", *activity_item));
+        doer.activity.turn = 2 + clamp(activity_item->weight / 500, 0, 50);
         break;
     case 100:
         if (map_data.type == mdata_t::MapType::player_owned ||
@@ -671,21 +667,26 @@ void activity_others_start(Character& doer)
         }
         break;
     case 101:
-        txt(i18n::s.get("core.activity.construct.start", inv[ci]));
+        assert(activity_item);
+        txt(i18n::s.get("core.activity.construct.start", *activity_item));
         doer.activity.turn = 25;
         break;
     case 102:
-        txt(i18n::s.get("core.activity.pull_hatch.start", inv[ci]));
+        assert(activity_item);
+        txt(i18n::s.get("core.activity.pull_hatch.start", *activity_item));
         doer.activity.turn = 10;
         break;
     case 103:
-        txt(i18n::s.get("core.activity.dig", inv[ci]));
+        assert(activity_item);
+        txt(i18n::s.get("core.activity.dig", *activity_item));
         doer.activity.turn = 10 +
-            clamp(inv[ci].weight / (1 + sdata(10, 0) * 10 + sdata(180, 0) * 40),
+            clamp(activity_item->weight /
+                      (1 + sdata(10, 0) * 10 + sdata(180, 0) * 40),
                   1,
                   100);
         break;
     case 104:
+        assert(activity_item);
         if (game_data.weather == 0 || game_data.weather == 3)
         {
             if (game_data.time_when_textbook_becomes_available >
@@ -698,13 +699,14 @@ void activity_others_start(Character& doer)
         }
         game_data.time_when_textbook_becomes_available =
             game_data.date.hours() + 48;
-        if (inv[ci].id == ItemId::textbook)
+        if (activity_item->id == ItemId::textbook)
         {
             txt(i18n::s.get(
                 "core.activity.study.start.studying",
                 i18n::s.get_m(
                     "ability",
-                    the_ability_db.get_id_from_legacy(inv[ci].param1)->get(),
+                    the_ability_db.get_id_from_legacy(activity_item->param1)
+                        ->get(),
                     "name")));
         }
         else
@@ -729,7 +731,7 @@ void activity_others_start(Character& doer)
 
 
 
-void activity_others_doing(Character& doer)
+void activity_others_doing(Character& doer, optional_ref<Item> activity_item)
 {
     switch (game_data.activity_about_to_start)
     {
@@ -766,6 +768,7 @@ void activity_others_doing(Character& doer)
         }
         break;
     case 104: {
+        assert(activity_item);
         int p = 25;
         if (game_data.weather != 0 && game_data.weather != 3)
         {
@@ -779,11 +782,11 @@ void activity_others_doing(Character& doer)
                 game_data.date.minute += 30;
             }
         }
-        if (inv[ci].id == ItemId::textbook)
+        if (activity_item->id == ItemId::textbook)
         {
             if (rnd(p) == 0)
             {
-                chara_gain_skill_exp(doer, inv[ci].param1, 25);
+                chara_gain_skill_exp(doer, activity_item->param1, 25);
             }
         }
         else if (rnd(p) == 0)
@@ -793,7 +796,8 @@ void activity_others_doing(Character& doer)
         break;
     }
     case 105:
-        if (inv[ci].id == ItemId::iron_maiden)
+        assert(activity_item);
+        if (activity_item->id == ItemId::iron_maiden)
         {
             if (rnd(15) == 0)
             {
@@ -803,7 +807,7 @@ void activity_others_doing(Character& doer)
                 return;
             }
         }
-        if (inv[ci].id == ItemId::guillotine)
+        if (activity_item->id == ItemId::guillotine)
         {
             if (rnd(15) == 0)
             {
@@ -815,7 +819,7 @@ void activity_others_doing(Character& doer)
         }
         f = 0;
         f2 = 0;
-        tg = inv_getowner(ci);
+        tg = inv_getowner(*activity_item);
         if (tg != -1)
         {
             if (cdata[tg].original_relationship == -3)
@@ -828,11 +832,11 @@ void activity_others_doing(Character& doer)
         {
             i = i * 15 / 10;
         }
-        if (inv[ci].quality == Quality::great)
+        if (activity_item->quality == Quality::great)
         {
             i = i * 8 / 10;
         }
-        if (inv[ci].quality >= Quality::miracle)
+        if (activity_item->quality >= Quality::miracle)
         {
             i = i * 5 / 10;
         }
@@ -887,7 +891,7 @@ void activity_others_doing(Character& doer)
                     txt(i18n::s.get(
                         "core.activity.steal.notice.out_of_fov", cdata[cnt]));
                 }
-                if (cdata[cnt].character_role == 14)
+                if (cdata[cnt].role == Role::guard)
                 {
                     txt(i18n::s.get("core.activity.steal.notice.dialog.guard"));
                     chara_modify_impression(cdata[cnt], -5);
@@ -905,7 +909,7 @@ void activity_others_doing(Character& doer)
         {
             txt(i18n::s.get("core.activity.steal.notice.you_are_found"));
             modify_karma(cdata.player(), -5);
-            p = inv_getowner(ci);
+            p = inv_getowner(*activity_item);
             if (tg != -1)
             {
                 if (cdata[p].id != CharaId::ebon)
@@ -930,7 +934,7 @@ void activity_others_doing(Character& doer)
                     f = 1;
                 }
             }
-            if (cdata[tg].character_role == 20)
+            if (cdata[tg].role == Role::user)
             {
                 if (f != 1)
                 {
@@ -951,11 +955,11 @@ void activity_others_doing(Character& doer)
                 }
             }
         }
-        if (inv[ci].number() <= 0)
+        if (activity_item->number() <= 0)
         {
             f = 1;
         }
-        if (inv[ci].is_precious())
+        if (activity_item->is_precious())
         {
             if (f != 1)
             {
@@ -963,7 +967,7 @@ void activity_others_doing(Character& doer)
                 f = 1;
             }
         }
-        if (inv[ci].weight >= sdata(10, 0) * 500)
+        if (activity_item->weight >= sdata(10, 0) * 500)
         {
             if (f != 1)
             {
@@ -971,7 +975,7 @@ void activity_others_doing(Character& doer)
                 f = 1;
             }
         }
-        if (itemusingfind(inv[ci], true) != -1)
+        if (itemusingfind(*activity_item, true) != -1)
         {
             if (f != 1)
             {
@@ -991,119 +995,163 @@ void activity_others_doing(Character& doer)
 
 
 
-void activity_others_end(Character& doer)
+void activity_others_end_steal(Item& steal_target)
+{
+    tg = inv_getowner(steal_target);
+    if ((tg != -1 && cdata[tg].state() != Character::State::alive) ||
+        steal_target.number() <= 0)
+    {
+        txt(i18n::s.get("core.activity.steal.abort"));
+        return;
+    }
+    in = 1;
+    if (steal_target.id == ItemId::gold_piece)
+    {
+        in = steal_target.number();
+    }
+    const auto slot = inv_get_free_slot(0);
+    if (!slot)
+    {
+        txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
+        return;
+    }
+    steal_target.is_quest_target() = false;
+    if (steal_target.body_part != 0)
+    {
+        tc = inv_getowner(steal_target);
+        if (tc != -1)
+        {
+            p = steal_target.body_part;
+            cdata[tc].body_parts[p - 100] =
+                cdata[tc].body_parts[p - 100] / 10000 * 10000;
+        }
+        steal_target.body_part = 0;
+        chara_refresh(tc);
+    }
+    auto& stolen_item = *slot;
+    item_copy(steal_target, stolen_item);
+    stolen_item.set_number(in);
+    stolen_item.is_stolen() = true;
+    stolen_item.own_state = 0;
+    steal_target.modify_number(-in);
+    if (steal_target.number() <= 0)
+    {
+        cell_refresh(steal_target.position.x, steal_target.position.y);
+    }
+    txt(i18n::s.get("core.activity.steal.succeed", stolen_item));
+    const auto item_weight = stolen_item.weight;
+    if (stolen_item.id == ItemId::gold_piece)
+    {
+        snd("core.getgold1");
+        earn_gold(cdata.player(), in);
+        stolen_item.remove();
+    }
+    else
+    {
+        item_stack(0, stolen_item, true);
+        sound_pick_up();
+    }
+    refresh_burden_state();
+    chara_gain_skill_exp(
+        cdata.player(), 300, clamp(item_weight / 25, 0, 450) + 50);
+    if (cdata.player().karma >= -30)
+    {
+        if (rnd(3) == 0)
+        {
+            txt(i18n::s.get("core.activity.steal.guilt"));
+            modify_karma(cdata.player(), -1);
+        }
+    }
+}
+
+
+
+void activity_others_end_sleep(optional_ref<Item> bed)
+{
+    txt(i18n::s.get("core.activity.sleep.finish"));
+    sleep_start(bed);
+}
+
+
+
+void activity_others_end_build_shelter(Item& shelter)
+{
+    snd("core.build1");
+    txt(i18n::s.get("core.activity.construct.finish", shelter));
+    item_build_shelter(shelter);
+}
+
+
+
+void activity_others_end_enter_shelter(const Item& shelter)
+{
+    txt(i18n::s.get("core.activity.pull_hatch.finish", shelter));
+    chatteleport = 1;
+    game_data.previous_map2 = game_data.current_map;
+    game_data.previous_dungeon_level = game_data.current_dungeon_level;
+    game_data.previous_x = cdata.player().position.x;
+    game_data.previous_y = cdata.player().position.y;
+    game_data.destination_map = static_cast<int>(mdata_t::MapId::shelter_);
+    game_data.destination_dungeon_level = shelter.count;
+    levelexitby = 2;
+    snd("core.exitmap1");
+}
+
+
+
+void activity_others_end_harvest(Item& crop)
+{
+    txt(i18n::s.get(
+        "core.activity.harvest.finish", crop, cnvweight(crop.weight)));
+    in = crop.number();
+    pick_up_item(crop);
+}
+
+
+
+void activity_others_end_study(const Item& item)
+{
+    if (item.id == ItemId::textbook)
+    {
+        txt(i18n::s.get(
+            "core.activity.study.finish.studying",
+            i18n::s.get_m(
+                "ability",
+                the_ability_db.get_id_from_legacy(item.param1)->get(),
+                "name")));
+    }
+    else
+    {
+        txt(i18n::s.get("core.activity.study.finish.training"));
+    }
+}
+
+
+
+void activity_others_end(Character& doer, optional_ref<Item> activity_item)
 {
     switch (game_data.activity_about_to_start)
     {
     case 105:
-        tg = inv_getowner(ci);
-        if ((tg != -1 && cdata[tg].state() != Character::State::alive) ||
-            inv[ci].number() <= 0)
-        {
-            txt(i18n::s.get("core.activity.steal.abort"));
-            doer.activity.finish();
-            return;
-        }
-        in = 1;
-        if (inv[ci].id == ItemId::gold_piece)
-        {
-            in = inv[ci].number();
-        }
-        ti = inv_getfreeid(0);
-        if (ti == -1)
-        {
-            txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
-            return;
-        }
-        inv[ci].is_quest_target() = false;
-        if (inv[ci].body_part != 0)
-        {
-            tc = inv_getowner(ci);
-            if (tc != -1)
-            {
-                p = inv[ci].body_part;
-                cdata[tc].body_parts[p - 100] =
-                    cdata[tc].body_parts[p - 100] / 10000 * 10000;
-            }
-            inv[ci].body_part = 0;
-            chara_refresh(tc);
-        }
-        item_copy(ci, ti);
-        inv[ti].set_number(in);
-        inv[ti].is_stolen() = true;
-        inv[ti].own_state = 0;
-        inv[ci].modify_number((-in));
-        if (inv[ci].number() <= 0)
-        {
-            cell_refresh(inv[ci].position.x, inv[ci].position.y);
-        }
-        txt(i18n::s.get("core.activity.steal.succeed", inv[ti]));
-        if (inv[ci].id == ItemId::gold_piece)
-        {
-            snd("core.getgold1");
-            earn_gold(cdata.player(), in);
-            inv[ti].remove();
-        }
-        else
-        {
-            item_stack(0, inv[ti], true);
-            sound_pick_up();
-        }
-        refresh_burden_state();
-        chara_gain_skill_exp(
-            cdata.player(), 300, clamp(inv[ti].weight / 25, 0, 450) + 50);
-        if (cdata.player().karma >= -30)
-        {
-            if (rnd(3) == 0)
-            {
-                txt(i18n::s.get("core.activity.steal.guilt"));
-                modify_karma(cdata.player(), -1);
-            }
-        }
+        assert(activity_item);
+        activity_others_end_steal(*activity_item);
         break;
-    case 100:
-        txt(i18n::s.get("core.activity.sleep.finish"));
-        sleep_start();
-        break;
+    case 100: activity_others_end_sleep(activity_item); break;
     case 101:
-        snd("core.build1");
-        txt(i18n::s.get("core.activity.construct.finish", inv[ci]));
-        item_build_shelter(inv[ci]);
+        assert(activity_item);
+        activity_others_end_build_shelter(*activity_item);
         break;
     case 102:
-        txt(i18n::s.get("core.activity.pull_hatch.finish", inv[ci]));
-        chatteleport = 1;
-        game_data.previous_map2 = game_data.current_map;
-        game_data.previous_dungeon_level = game_data.current_dungeon_level;
-        game_data.previous_x = cdata.player().position.x;
-        game_data.previous_y = cdata.player().position.y;
-        game_data.destination_map = static_cast<int>(mdata_t::MapId::shelter_);
-        game_data.destination_dungeon_level = inv[ci].count;
-        levelexitby = 2;
-        snd("core.exitmap1");
+        assert(activity_item);
+        activity_others_end_enter_shelter(*activity_item);
         break;
     case 103:
-        txt(i18n::s.get(
-            "core.activity.harvest.finish",
-            inv[ci],
-            cnvweight(inv[ci].weight)));
-        in = inv[ci].number();
-        pick_up_item();
+        assert(activity_item);
+        activity_others_end_harvest(*activity_item);
         break;
     case 104:
-        if (inv[ci].id == ItemId::textbook)
-        {
-            txt(i18n::s.get(
-                "core.activity.study.finish.studying",
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(inv[ci].param1)->get(),
-                    "name")));
-        }
-        else
-        {
-            txt(i18n::s.get("core.activity.study.finish.training"));
-        }
+        assert(activity_item);
+        activity_others_end_study(*activity_item);
         break;
     default: break;
     }
@@ -1190,14 +1238,16 @@ void activity_handle_damage(Character& chara)
 
 optional<TurnResult> activity_proc(Character& chara)
 {
-    ci = chara.activity.item;
+    const auto activity_item_index = chara.activity.item;
     --chara.activity.turn;
 
     switch (chara.activity.type)
     {
     case Activity::Type::fish:
         auto_turn(g_config.animation_wait() * 2);
-        spot_fishing();
+        spot_fishing(
+            rowactre(0) == 0 ? optional_ref<Item>{inv[activity_item_index]}
+                             : optional_ref<Item>{});
         break;
     case Activity::Type::dig_wall:
         auto_turn(g_config.animation_wait() * 0.75);
@@ -1217,10 +1267,10 @@ optional<TurnResult> activity_proc(Character& chara)
         break;
     case Activity::Type::eat:
         auto_turn(g_config.animation_wait() * 5);
-        return do_eat_command();
+        return do_eat_command(inv[activity_item_index]);
     case Activity::Type::read:
         auto_turn(g_config.animation_wait() * 1.25);
-        return do_read_command();
+        return do_read_command(inv[activity_item_index]);
     case Activity::Type::sex:
         auto_turn(g_config.animation_wait() * 2.5);
         activity_sex();
@@ -1233,7 +1283,11 @@ optional<TurnResult> activity_proc(Character& chara)
         case 105: auto_turn(g_config.animation_wait() * 2.5); break;
         default: auto_turn(g_config.animation_wait()); break;
         }
-        activity_others(chara);
+        activity_others(
+            chara,
+            activity_item_index != -1
+                ? optional_ref<Item>{inv[activity_item_index]}
+                : optional_ref<Item>{});
         break;
     case Activity::Type::blend:
         auto_turn(g_config.animation_wait());
@@ -1241,7 +1295,7 @@ optional<TurnResult> activity_proc(Character& chara)
         break;
     case Activity::Type::perform:
         auto_turn(g_config.animation_wait() * 2);
-        activity_perform(chara);
+        activity_perform(chara, inv[activity_item_index]);
         break;
     case Activity::Type::travel:
         map_global_proc_travel_events();
@@ -1268,11 +1322,11 @@ optional<TurnResult> activity_proc(Character& chara)
 
 
 
-void activity_perform(Character& performer)
+void activity_perform(Character& performer, const Item& instrument)
 {
     if (!performer.activity)
     {
-        activity_perform_start(performer);
+        activity_perform_start(performer, instrument);
     }
     else if (performer.activity.turn > 0)
     {
@@ -1482,11 +1536,7 @@ void activity_eating(Character& eater, Item& food)
 
 void activity_eating_finish(Character& eater, Item& food)
 {
-    // `ci` may be overwritten in apply_general_eating_effect() call. E.g.,
-    // vomit is created.
-    const auto ci_save = food.index;
     apply_general_eating_effect(eater, food);
-    ci = ci_save;
 
     if (eater.index == 0)
     {
@@ -1505,9 +1555,9 @@ void activity_eating_finish(Character& eater, Item& food)
     }
     else
     {
-        if (food.index == eater.item_which_will_be_used)
+        if (food.index == eater.ai_item)
         {
-            eater.item_which_will_be_used = 0;
+            eater.ai_item = 0;
         }
         if (eater.was_passed_item_by_you_just_now())
         {
@@ -1550,7 +1600,7 @@ void activity_eating_finish(Character& eater, Item& food)
 
 
 
-void activity_others(Character& doer)
+void activity_others(Character& doer, optional_ref<Item> activity_item)
 {
     if (doer.index != 0)
     {
@@ -1560,7 +1610,7 @@ void activity_others(Character& doer)
 
     if (!doer.activity)
     {
-        activity_others_start(doer);
+        activity_others_start(doer, activity_item);
         return;
     }
     else
@@ -1568,18 +1618,18 @@ void activity_others(Character& doer)
         tc = doer.activity_target;
         if (doer.activity.turn > 0)
         {
-            activity_others_doing(doer);
+            activity_others_doing(doer, activity_item);
         }
         else
         {
-            activity_others_end(doer);
+            activity_others_end(doer, activity_item);
         }
     }
 }
 
 
 
-void spot_fishing()
+void spot_fishing(optional_ref<Item> rod)
 {
     static int fishstat;
 
@@ -1589,7 +1639,7 @@ void spot_fishing()
         snd("core.fish_cast");
         if (rowactre == 0)
         {
-            cdata[cc].activity.item = ci;
+            cdata[cc].activity.item = rod->index;
         }
         cdata[cc].activity.type = Activity::Type::fish;
         cdata[cc].activity.turn = 100;
@@ -2027,7 +2077,7 @@ void matdelmain(int material_id, int amount)
 
 
 
-void sleep_start()
+void sleep_start(optional_ref<Item> bed)
 {
     int timeslept = 0;
     if (game_data.current_map == mdata_t::MapId::quest)
@@ -2041,8 +2091,7 @@ void sleep_start()
         txtgod(cdata.player().god_id, 10);
     }
     load_sleep_background();
-    musicloop = 1;
-    play_music("core.mcCoda");
+    play_music("core.mcCoda", false);
     msg_halt();
     for (int cnt = 0; cnt < 20; ++cnt)
     {
@@ -2137,21 +2186,15 @@ void sleep_start()
     cdata[cc].nutrition -= 1500 / (trait(158) + 1);
     txt(i18n::s.get("core.activity.sleep.slept_for", timeslept),
         Message::color{ColorIndex::green});
-    f = 0;
-    if (cdata.player().activity.item == -1)
+
+    optional<int> bed_quality;
+    if (bed && bed->param1 != 0 && bed->number() != 0 &&
+        the_item_db[itemid2int(bed->id)]->subcategory == 60004)
     {
-        f = 1;
+        bed_quality = bed->param1;
     }
-    else
-    {
-        ci = cdata.player().activity.item;
-        if (inv[ci].param1 == 0 || inv[ci].number() == 0 ||
-            the_item_db[itemid2int(inv[ci].id)]->subcategory != 60004)
-        {
-            f = 1;
-        }
-    }
-    if (f)
+
+    if (!bed_quality)
     {
         txt(i18n::s.get("core.activity.sleep.wake_up.so_so"));
     }
@@ -2165,7 +2208,7 @@ void sleep_start()
         i = clamp(i / 6, 10, 1000);
         exp = i * i * i / 10;
         game_data.sleep_experience =
-            game_data.sleep_experience * inv[ci].param1 / 100;
+            game_data.sleep_experience * (*bed_quality) / 100;
         grown = 0;
         for (int cnt = 0;; ++cnt)
         {
@@ -2191,6 +2234,7 @@ void sleep_start()
         txt(i18n::s.get("core.activity.sleep.wake_up.good", grown),
             Message::color{ColorIndex::green});
     }
+
     msg_halt();
     play_music();
     save_set_autosave();
@@ -2202,10 +2246,10 @@ void sleep_start()
 
 
 
-void start_stealing()
+void start_stealing(Item& steal_target)
 {
     game_data.activity_about_to_start = 105;
-    activity_others(cdata[cc]);
+    activity_others(cdata[cc], steal_target);
 }
 
 } // namespace elona

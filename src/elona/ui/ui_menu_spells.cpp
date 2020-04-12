@@ -157,8 +157,8 @@ void UIMenuSpells::_draw_spell_cost(int cnt, int spell_id)
 
 void UIMenuSpells::_draw_spell_power(int cnt, int spell_id)
 {
-    std::string spell_power_raw = make_spell_description(spell_id);
-    std::string spell_power = strmid(spell_power_raw, 0, 40);
+    const auto spell_power =
+        strutil::take_by_width(make_spell_description(spell_id), 40);
     mes(wx + 340,
         wy + 66 + cnt * 19 + 2,
         ""s + sdata(spell_id, cc) + u8"/"s + calcspellfail(spell_id, cc) +

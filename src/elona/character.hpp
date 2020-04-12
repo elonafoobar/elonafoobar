@@ -120,6 +120,79 @@ struct Activity
 
 
 
+struct CombatStyle
+{
+public:
+    bool unarmed() const noexcept
+    {
+        return _inner == 0;
+    }
+
+
+    bool shield() const noexcept
+    {
+        return _inner & 1;
+    }
+
+
+    bool two_hand() const noexcept
+    {
+        return _inner & 2;
+    }
+
+
+    bool dual_wield() const noexcept
+    {
+        return _inner & 4;
+    }
+
+
+
+    void reset() noexcept
+    {
+        _inner = 0;
+    }
+
+
+    void set_unarmed() noexcept
+    {
+        reset();
+    }
+
+
+    void set_shield() noexcept
+    {
+        _inner |= 1;
+    }
+
+
+    void set_two_hand() noexcept
+    {
+        _inner |= 2;
+    }
+
+
+    void set_dual_wield() noexcept
+    {
+        _inner |= 4;
+    }
+
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        ar(_inner);
+    }
+
+
+
+private:
+    int _inner{};
+};
+
+
+
 struct Character
 {
     enum class State : int
@@ -163,7 +236,7 @@ public:
     int relationship = 0;
     int turn_cost = 0;
     int current_speed = 0;
-    int item_which_will_be_used = 0;
+    int ai_item = 0;
     std::string portrait;
     int interest = 0;
     int time_interest_revive = 0;
@@ -182,7 +255,7 @@ public:
     int enemy_id = 0;
     int gold = 0;
     int platinum_coin = 0;
-    int equipment_type = 0;
+    CombatStyle combat_style;
     int melee_attack_type = 0;
     int fame = 0;
     int experience = 0;
@@ -239,7 +312,7 @@ public:
     int stops_activity_if_damaged = 0;
     int quality_of_performance = 0;
     int tip_gold = 0;
-    int character_role = 0;
+    Role role = Role::none;
     int shop_rank = 0;
     int activity_target = 0;
     int shop_store_id = 0;
@@ -365,7 +438,7 @@ public:
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, relationship);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, turn_cost);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, current_speed);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, item_which_will_be_used);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, ai_item);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, portrait);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, interest);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, time_interest_revive);
@@ -384,7 +457,7 @@ public:
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, enemy_id);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, gold);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, platinum_coin);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, equipment_type);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, combat_style);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, melee_attack_type);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, fame);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, experience);
@@ -441,7 +514,7 @@ public:
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, stops_activity_if_damaged);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, quality_of_performance);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, tip_gold);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, character_role);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, role);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, shop_rank);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, activity_target);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, shop_store_id);
@@ -577,7 +650,7 @@ private:
 
 extern CData cdata;
 
-int chara_create(int = 0, int = 0, int = 0, int = 0);
+optional_ref<Character> chara_create(int slot, int chara_id, int x, int y);
 void initialize_character();
 bool chara_place();
 
@@ -632,7 +705,7 @@ bool chara_unequip(Item& item);
 int chara_custom_talk(int = 0, int = 0);
 int chara_impression_level(int = 0);
 void chara_modify_impression(Character& cc, int delta);
-void chara_set_item_which_will_be_used(Character& chara, const Item& item);
+void chara_set_ai_item(Character& chara, const Item& item);
 int chara_armor_class(const Character& cc);
 int chara_breed_power(const Character&);
 

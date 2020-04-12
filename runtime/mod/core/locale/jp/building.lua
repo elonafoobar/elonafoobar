@@ -96,15 +96,14 @@ ELONA.i18n:add {
       },
 
       shop = {
-         info = "店",
          extend = "店を拡張した！これからは{$1}個のアイテムを陳列できる。",
          current_shopkeeper = "現在の店主は{basename($1)}だ。",
          no_assigned_shopkeeper = "現在店主はいない。",
 
          log = {
-            no_shopkeeper = "店には店番がいない。",
-            could_not_sell = "{$1}人が来客したが、{basename($2)}はアイテムを一つも売れなかった。",
-            sold_items = "{$1}人の来客があり、{basename($2)}は{$3}個のアイテムを売却した。{$4}が売り上げとして金庫に保管された。",
+            no_shopkeeper = "[店] 店には店番がいない。",
+            could_not_sell = "[店] {$1}人が来客したが、{basename($2)}はアイテムを一つも売れなかった。",
+            sold_items = "[店] {$1}人の来客があり、{basename($2)}は{$3}個のアイテムを売却した。{$4}が売り上げとして金庫に保管された。",
             gold = "{$1}gold",
             and_items = "と{$1}個のアイテム",
          },

@@ -41,7 +41,7 @@ ELONA.i18n:add {
          spellbook = "spellbook",
          book = "book",
          rod = "rod",
-         foods = "foods",
+         food = "foods",
          tool = "tool",
          furniture = "furniture",
          well = "well",

@@ -1030,7 +1030,7 @@ void get_npc_talk()
     p = -1;
     for (int cnt = 0; cnt < 1; ++cnt)
     {
-        if (cdata[tc].character_role == 18)
+        if (cdata[tc].role == Role::maid)
         {
             if (game_data.number_of_waiting_guests > 0)
             {
@@ -1055,20 +1055,18 @@ void get_npc_talk()
             p = instr(buff, 0, u8"%BITCH,"s + i18n::s.get("core.meta.tag"));
             break;
         }
-        if (cdata[tc].character_role == 1015)
+        if (cdata[tc].role == Role::moyer)
         {
             p = instr(buff, 0, u8"%MOYER,"s + i18n::s.get("core.meta.tag"));
             break;
         }
-        if (cdata[tc].character_role == 17)
+        if (cdata[tc].role == Role::slave_master)
         {
             p = instr(
                 buff, 0, u8"%SLAVEKEEPER,"s + i18n::s.get("core.meta.tag"));
             break;
         }
-        if ((cdata[tc].character_role >= 1000 &&
-             cdata[tc].character_role < 2000) ||
-            cdata[tc].character_role == 2003)
+        if (is_shopkeeper(cdata[tc].role))
         {
             if (rnd(3))
             {
@@ -2637,13 +2635,13 @@ std::string txtitemoncell(int x, int y)
                 {
                     items_text += i18n::s.get("core.misc.and");
                 }
-                items_text += itemname(item_index);
+                items_text += itemname(inv[item_index]);
                 ++counter;
             }
         }
         else
         {
-            items_text = itemname(item);
+            items_text = itemname(inv[item]);
         }
         if (inv[item].own_state <= 0)
         {
@@ -2757,14 +2755,6 @@ void csvsort(
         }
         p_at_m40(0) += strsize;
     }
-}
-
-
-
-void cutname(std::string& utf8_string, int max_length_charwise)
-{
-    utf8_string = utf8_string.substr(
-        0, strutil::utf8_cut_index(utf8_string, max_length_charwise));
 }
 
 

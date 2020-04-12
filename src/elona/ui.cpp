@@ -90,16 +90,15 @@ void update_screen_hud()
             cnt);
     }
     font(12 + sizefix - en * 2);
-    if (strlen_u(mdatan(0)) > size_t(16 - (maplevel() != ""s) * 4))
+
+    auto map_name = mdatan(0);
+    if (strlen_u(map_name) > size_t(16 - (maplevel() != ""s) * 4))
     {
-        mes(inf_radarw + 24,
-            inf_bary + 3 + vfix - en,
-            cnven(strmid(mdatan(0), 0, 16 - (maplevel() != ""s) * 4)));
+        map_name =
+            strutil::take_by_width(map_name, 16 - (maplevel() != ""s) * 4);
     }
-    else
-    {
-        mes(inf_radarw + 24, inf_bary + 3 + vfix - en, cnven(mdatan(0)));
-    }
+    mes(inf_radarw + 24, inf_bary + 3 + vfix - en, cnven(map_name));
+
     mes(inf_radarw + 114, inf_bary + 3 + vfix - en, maplevel());
 }
 
@@ -624,8 +623,11 @@ void render_digital_clock()
     // 24 hour digital clock, 57 pixels wide
     font(16 - en * 2);
     bmes(
-        ""s + game_data.date.hour + u8":"s + game_data.date.minute + u8":"s +
-            game_data.date.second,
+        i18n::s.get(
+            "core.ui.digital_clock.time",
+            game_data.date.hour,
+            game_data.date.minute,
+            game_data.date.second),
         8,
         8);
 
@@ -633,8 +635,11 @@ void render_digital_clock()
     font(15 - en * 2);
     int datex = 8 + 57 + 18;
     bmes(
-        ""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s +
-            game_data.date.day,
+        i18n::s.get(
+            "core.ui.digital_clock.date",
+            game_data.date.year,
+            game_data.date.month,
+            game_data.date.day),
         datex,
         8);
 

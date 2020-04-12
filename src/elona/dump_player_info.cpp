@@ -149,12 +149,14 @@ void dump_player_info()
 
     tc = 0;
     attackskill = 106;
-    int evade = calc_evasion(tc);
-    prot = calcattackdmg(AttackDamageCalculationMode::defense);
+    {
+        const auto evade = calc_evasion(tc);
+        const auto prot = calc_attack_protection(cdata.player());
 
-    ss << u8"回避    : " << evade << u8"%" << std::endl;
-    ss << u8"軽減    : " << (100 - 10000 / (prot + 100)) << u8"% + "
-       << protdice1 << u8"d" << protdice2 << std::endl;
+        ss << u8"回避    : " << evade << u8"%" << std::endl;
+        ss << u8"軽減    : " << (100 - 10000 / (prot.rate + 100)) << u8"% + "
+           << prot.dice_x << u8"d" << prot.dice_y << std::endl;
+    }
 
     ss << std::endl;
 
@@ -184,10 +186,9 @@ void dump_player_info()
         if (body_part % 10000 != 0)
         {
             const auto item_index = body_part % 10000 - 1;
-            item_name = itemname(item_index);
+            item_name = itemname(inv[item_index]);
             item_desc = cnvweight(inv[item_index].weight);
-            ci = item_index;
-            item_dump_desc(inv[ci]);
+            item_dump_desc(inv[item_index]);
         }
         else
         {

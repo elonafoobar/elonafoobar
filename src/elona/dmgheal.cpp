@@ -72,11 +72,10 @@ void end_dmghp(const Character& victim)
 
 void dmgheal_death_by_backpack(Character& chara)
 {
-    int heaviest_item_index = -1;
+    optional_ref<Item> heaviest_item;
     int heaviest_weight = 0;
-    std::string heaviest_item_name;
 
-    for (const auto& item : inv.for_chara(chara))
+    for (auto&& item : inv.for_chara(chara))
     {
         if (item.number() == 0)
         {
@@ -84,19 +83,22 @@ void dmgheal_death_by_backpack(Character& chara)
         }
         if (item.weight > heaviest_weight)
         {
-            heaviest_item_index = item.index;
+            heaviest_item = item;
             heaviest_weight = item.weight;
         }
     }
-    if (heaviest_item_index == -1)
+
+    std::string heaviest_item_name;
+    if (heaviest_item)
+    {
+        heaviest_item_name = itemname(*heaviest_item);
+    }
+    else
     {
         heaviest_item_name =
             i18n::s.get_enum_property("core.death_by.other", "backpack", 6);
     }
-    else
-    {
-        heaviest_item_name = itemname(heaviest_item_index);
-    }
+
     txt(i18n::s.get_enum_property(
         "core.death_by.other", "text", 6, chara, heaviest_item_name));
     if (chara.index == 0)
@@ -115,11 +117,11 @@ Character::State dmgheal_set_death_status(Character& victim)
 {
     Character::State new_state = victim.state();
 
-    if (victim.character_role == 0)
+    if (victim.role == Role::none)
     {
         new_state = Character::State::empty;
     }
-    else if (victim.character_role == 13)
+    else if (victim.role == Role::adventurer)
     {
         new_state = Character::State::adventurer_dead;
         victim.time_to_revive = game_data.date.hours() + 24 + rnd(12);
@@ -680,10 +682,7 @@ int damage_hp(
                         config_get_integer("core.screen.heartbeat_threshold");
                     if (victim.hp < victim.max_hp * (threshold * 0.01))
                     {
-                        if (!CHECKPLAY(32))
-                        {
-                            snd("core.Heart1");
-                        }
+                        snd("core.Heart1");
                     }
                 }
             }
@@ -1354,7 +1353,6 @@ void character_drops_item()
         }
         for (auto&& item : inv.for_chara(cdata[rc]))
         {
-            ci = item.index;
             if (item.number() == 0)
             {
                 continue;
@@ -1476,18 +1474,19 @@ void character_drops_item()
             }
             item.position.x = cdata[rc].position.x;
             item.position.y = cdata[rc].position.y;
-            const auto stacked = item_stack(-1, inv[ci]);
-            if (!stacked)
+            if (!item_stack(-1, item).stacked)
             {
-                ti = inv_getfreeid(-1);
-                if (ti == -1)
+                if (const auto slot = inv_get_free_slot(-1))
+                {
+                    item_copy(item, *slot);
+                    slot->own_state = -2;
+                }
+                else
                 {
                     break;
                 }
-                item_copy(ci, ti);
-                inv[ti].own_state = -2;
             }
-            inv[ci].remove();
+            item.remove();
         }
         cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
         create_pcpic(cdata.player());
@@ -1535,9 +1534,8 @@ void character_drops_item()
         {
             continue;
         }
-        ci = item.index;
         f = 0;
-        if (cdata[rc].character_role == 20)
+        if (cdata[rc].role == Role::user)
         {
             break;
         }
@@ -1556,7 +1554,7 @@ void character_drops_item()
                 f = 1;
             }
         }
-        if (cdata[rc].character_role == 13)
+        if (cdata[rc].role == Role::adventurer)
         {
             if (rnd(5))
             {
@@ -1600,26 +1598,27 @@ void character_drops_item()
                 animeload(8, rc);
             }
         }
-        if (inv[ci].body_part != 0)
+        if (item.body_part != 0)
         {
-            cdata[rc].body_parts[inv[ci].body_part - 100] =
-                cdata[rc].body_parts[inv[ci].body_part - 100] / 10000 * 10000;
-            inv[ci].body_part = 0;
+            cdata[rc].body_parts[item.body_part - 100] =
+                cdata[rc].body_parts[item.body_part - 100] / 10000 * 10000;
+            item.body_part = 0;
         }
-        inv[ci].position.x = cdata[rc].position.x;
-        inv[ci].position.y = cdata[rc].position.y;
-        itemturn(inv[ci]);
-        const auto stacked = item_stack(-1, inv[ci]);
-        if (!stacked)
+        item.position.x = cdata[rc].position.x;
+        item.position.y = cdata[rc].position.y;
+        itemturn(item);
+        if (!item_stack(-1, item).stacked)
         {
-            ti = inv_getfreeid(-1);
-            if (ti == -1)
+            if (const auto slot = inv_get_free_slot(-1))
+            {
+                item_copy(item, *slot);
+            }
+            else
             {
                 break;
             }
-            item_copy(ci, ti);
         }
-        inv[ci].remove();
+        item.remove();
     }
     if (cdata[rc].quality >= Quality::miracle || rnd(20) == 0 ||
         cdata[rc].drops_gold() == 1 || rc < 16)
@@ -1965,7 +1964,7 @@ void character_drops_item()
         return;
     }
     if (game_data.current_map != mdata_t::MapId::arena &&
-        cdata[rc].character_role != 20)
+        cdata[rc].role != Role::user)
     {
         if (rnd(175) == 0 || cdata[rc].quality == Quality::special || 0 ||
             (cdata[rc].quality == Quality::miracle && rnd(2) == 0) ||
@@ -1994,7 +1993,7 @@ void character_drops_item()
             }
         }
     }
-    if (cdata[rc].character_role == 1010)
+    if (cdata[rc].role == Role::wandering_vendor)
     {
         flt();
         if (const auto item = itemcreate_extra_inv(361, cdata[rc].position, 0))
@@ -2025,7 +2024,7 @@ void character_drops_item()
     lua::call("core.Impl.chara_drop.drop_from_chara", lua::handle(cdata[rc]));
 
     cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
-    if (cdata[rc].character_role == 13)
+    if (cdata[rc].role == Role::adventurer)
     {
         supply_new_equipment();
     }
@@ -2075,13 +2074,11 @@ void check_kill(int killer_chara_index, int victim_chara_index)
                 {
                     p_at_m137 = -5;
                 }
-                if ((cdata[victim_chara_index].character_role >= 1000 &&
-                     cdata[victim_chara_index].character_role < 2000) ||
-                    cdata[victim_chara_index].character_role == 2003)
+                if (is_shopkeeper(cdata[victim_chara_index].role))
                 {
                     p_at_m137 = -10;
                 }
-                if (cdata[victim_chara_index].character_role == 13)
+                if (cdata[victim_chara_index].role == Role::adventurer)
                 {
                     chara_modify_impression(cdata[victim_chara_index], -25);
                 }

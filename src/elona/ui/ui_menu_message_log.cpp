@@ -53,17 +53,17 @@ void _draw_single_message(size_t cnt, int message_offset)
     {
         return;
     }
-    if (static_cast<int>(n) + message_offset < static_cast<int>(cnt) + 4)
+    if (static_cast<int>(n) + message_offset < static_cast<int>(cnt) + 5)
     {
         return;
     }
 
     int message_width = 0;
     font(14 - en * 2);
-    for (const auto& span : message_log.at(n - cnt - 4 + message_offset))
+    for (const auto& span : message_log.at(n - cnt - 5 + message_offset))
     {
         mes(message_width * 7 + inf_msgx + 6,
-            inf_msgy - cnt * inf_msgspace + vfix,
+            inf_msgy - (cnt + 1) * inf_msgspace + vfix - 3,
             span.text,
             span.color);
 
@@ -75,16 +75,10 @@ void _draw_single_message(size_t cnt, int message_offset)
 
 void _draw_messages(int message_offset)
 {
-    gsel(4);
-    gmode(0);
-    boxf();
-    for (int cnt = 0; cnt < inf_maxlog - 3; ++cnt)
+    for (int cnt = 0; cnt < inf_maxlog - 4; ++cnt)
     {
         _draw_single_message(cnt, message_offset);
     }
-    gsel(0);
-    gmode(2);
-    gcopy(4, 0, 0, windoww, inf_msgy, 0, -3);
 }
 
 } // namespace

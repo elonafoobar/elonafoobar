@@ -348,7 +348,7 @@ TalkResult _talk_hv_adventurer_train()
 
 void _adventurer_receive_coin()
 {
-    if (inv_getfreeid(-1) == -1)
+    if (!inv_get_free_slot(-1))
     {
         txt(i18n::s.get(
             "core.talk.visitor.adventurer.friendship.no_empty_spot"));
@@ -401,7 +401,7 @@ TalkResult _talk_hv_adventurer_friendship()
 
 void _adventurer_receive_souvenir()
 {
-    if (inv_getfreeid(0) == -1)
+    if (!inv_get_free_slot(0))
     {
         txt(i18n::s.get(
             "core.talk.visitor.adventurer.souvenir.inventory_is_full"));
@@ -480,7 +480,8 @@ TalkResult _talk_hv_adventurer_materials()
 
 TalkResult _talk_hv_adventurer_favorite_skill()
 {
-    int skill_id = advfavoriteskill(tc);
+    int stat = advfavoriteskill(tc);
+    int skill_id = rtval(rnd(stat));
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.favorite_skill.dialog",
@@ -610,7 +611,7 @@ TalkResult _talk_hv_adventurer()
         return _talk_hv_adventurer_hate();
     }
     if (cdata[tc].impression >= 100 && !cdata[tc].is_best_friend() &&
-        inv_getfreeid(-1) != -1)
+        inv_get_free_slot(-1))
     {
         // NOTE: this dialog falls through.
         _talk_hv_adventurer_best_friend();
@@ -1031,7 +1032,7 @@ TalkResult _talk_hv_merchant()
             return TalkResult::talk_end;
         }
     }
-    cdata[tc].character_role = 2002;
+    cdata[tc].role = Role::guest_citizen;
     return TalkResult::talk_end;
 }
 
@@ -1041,17 +1042,17 @@ TalkResult talk_house_visitor()
 {
     listmax = 0;
     cc = 0;
-    switch (cdata[tc].character_role)
+    switch (cdata[tc].role)
     {
-    case 13: return _talk_hv_adventurer();
-    case 2005: return _talk_hv_trainer();
-    case 2002: return _talk_hv_visitor();
-    case 2000: return _talk_hv_beggar();
-    case 2001: return _talk_hv_punk();
-    case 2006: return _talk_hv_mysterious_producer();
-    case 2003: return _talk_hv_merchant();
+    case Role::adventurer: return _talk_hv_adventurer();
+    case Role::guest_trainer: return _talk_hv_trainer();
+    case Role::guest_citizen: return _talk_hv_visitor();
+    case Role::guest_beggar: return _talk_hv_beggar();
+    case Role::guest_punk: return _talk_hv_punk();
+    case Role::guest_producer: return _talk_hv_mysterious_producer();
+    case Role::guest_wandering_vendor: return _talk_hv_merchant();
+    default: return TalkResult::talk_end;
     }
-    return TalkResult::talk_end;
 }
 
 } // namespace elona

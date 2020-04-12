@@ -232,14 +232,14 @@ bool input_text_dialog(
         {
             if (inputlog(0).back() != '\n')
             {
-                cutname(inputlog, 20);
+                inputlog = strutil::take_by_width(inputlog, 20);
             }
-            cutname(s, 20);
+            s = strutil::take_by_width(s, 20);
         }
         else if (!limit_length && p(4) > 18)
         {
             p(4) = 18;
-            cutname(s, 18);
+            s = strutil::take_by_width(s, 18);
             if (jp)
             {
                 s += u8"…";

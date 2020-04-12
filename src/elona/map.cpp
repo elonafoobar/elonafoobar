@@ -1011,236 +1011,175 @@ void map_reload_noyel()
         {
             item->own_state = 5;
         }
+        flt();
+        if (const auto chara = chara_create(-1, 345, 48, 19))
         {
-            flt();
-            int stat = chara_create(-1, 345, 48, 19);
-            if (stat != 0)
-            {
-                cdata[rc].character_role = 3;
-                cdata[rc].only_christmas() = true;
-            }
+            chara->role = Role::other;
+            chara->only_christmas() = true;
         }
+        flt();
+        if (const auto chara = chara_create(-1, 348, 30, 17))
         {
-            flt();
-            int stat = chara_create(-1, 348, 30, 17);
-            if (stat != 0)
-            {
-                cdata[rc].character_role = 3;
-                cdata[rc].only_christmas() = true;
-            }
+            chara->role = Role::other;
+            chara->only_christmas() = true;
         }
+        flt();
+        if (const auto chara = chara_create(-1, 174, 38, 19))
         {
-            flt();
-            int stat = chara_create(-1, 174, 38, 19);
-            if (stat != 0)
-            {
-                cdata[rc].only_christmas() = true;
-                cdata[rc].is_hung_on_sand_bag() = true;
-                cdatan(0, rc) = i18n::s.get("core.chara.job.fanatic");
-            }
+            chara->only_christmas() = true;
+            chara->is_hung_on_sand_bag() = true;
+            cdatan(0, chara->index) = i18n::s.get("core.chara.job.fanatic");
         }
+        flt();
+        if (const auto chara = chara_create(-1, 347, 35, 19))
         {
-            flt();
-            int stat = chara_create(-1, 347, 35, 19);
-            if (stat != 0)
-            {
-                cdata[rc].only_christmas() = true;
-            }
+            chara->only_christmas() = true;
         }
+        flt();
+        if (const auto chara = chara_create(-1, 347, 37, 18))
         {
-            flt();
-            int stat = chara_create(-1, 347, 37, 18);
-            if (stat != 0)
-            {
-                cdata[rc].only_christmas() = true;
-            }
+            chara->only_christmas() = true;
         }
+        flt();
+        if (const auto chara = chara_create(-1, 347, 37, 21))
         {
-            flt();
-            int stat = chara_create(-1, 347, 37, 21);
-            if (stat != 0)
-            {
-                cdata[rc].only_christmas() = true;
-            }
+            chara->only_christmas() = true;
         }
+        flt();
+        if (const auto chara = chara_create(-1, 347, 39, 20))
         {
-            flt();
-            int stat = chara_create(-1, 347, 39, 20);
-            if (stat != 0)
-            {
-                cdata[rc].only_christmas() = true;
-            }
+            chara->only_christmas() = true;
         }
+        flt();
+        if (const auto chara = chara_create(-1, 347, 38, 21))
         {
-            flt();
-            int stat = chara_create(-1, 347, 38, 21);
-            if (stat != 0)
-            {
-                cdata[rc].only_christmas() = true;
-            }
+            chara->only_christmas() = true;
         }
+        flt();
+        if (const auto chara = chara_create(-1, 70, 17, 8))
         {
-            flt();
-            int stat = chara_create(-1, 70, 17, 8);
-            if (stat != 0)
-            {
-                cdata[rc].ai_calm = 3;
-                cdata[rc].only_christmas() = true;
-                cdata[rc].character_role = 1002;
-                cdata[rc].shop_rank = 10;
-                cdatan(0, rc) = snfood(cdatan(0, rc));
-            }
+            chara->ai_calm = 3;
+            chara->only_christmas() = true;
+            chara->role = Role::food_vendor;
+            chara->shop_rank = 10;
+            cdatan(0, chara->index) = snfood(cdatan(0, chara->index));
         }
+        flt();
+        if (const auto chara = chara_create(-1, 239, 25, 8))
         {
-            flt();
-            int stat = chara_create(-1, 239, 25, 8);
-            if (stat != 0)
-            {
-                cdata[rc].ai_calm = 3;
-                cdata[rc].relationship = 0;
-                cdata[rc].original_relationship = 0;
-                cdata[rc].only_christmas() = true;
-                cdata[rc].character_role = 1018;
-                cdata[rc].shop_rank = 30;
-                cdatan(0, rc) = random_name();
-                cdatan(0, rc) = i18n::s.get(
-                    "core.chara.job.souvenir_vendor", cdatan(0, rc));
-            }
+            chara->ai_calm = 3;
+            chara->relationship = 0;
+            chara->original_relationship = 0;
+            chara->only_christmas() = true;
+            chara->role = Role::souvenir_vendor;
+            chara->shop_rank = 30;
+            cdatan(0, chara->index) = random_name();
+            cdatan(0, chara->index) = i18n::s.get(
+                "core.chara.job.souvenir_vendor", cdatan(0, chara->index));
         }
+        flt();
+        if (const auto chara = chara_create(-1, 271, 24, 22))
         {
-            flt();
-            int stat = chara_create(-1, 271, 24, 22);
-            if (stat != 0)
-            {
-                cdata[rc].ai_calm = 3;
-                cdata[rc].relationship = 0;
-                cdata[rc].original_relationship = 0;
-                cdata[rc].only_christmas() = true;
-                cdata[rc].character_role = 1018;
-                cdata[rc].shop_rank = 30;
-                cdatan(0, rc) = random_name();
-                cdatan(0, rc) = i18n::s.get(
-                    "core.chara.job.souvenir_vendor", cdatan(0, rc));
-            }
+            chara->ai_calm = 3;
+            chara->relationship = 0;
+            chara->original_relationship = 0;
+            chara->only_christmas() = true;
+            chara->role = Role::souvenir_vendor;
+            chara->shop_rank = 30;
+            cdatan(0, chara->index) = random_name();
+            cdatan(0, chara->index) = i18n::s.get(
+                "core.chara.job.souvenir_vendor", cdatan(0, chara->index));
         }
+        flt();
+        if (const auto chara = chara_create(-1, 1, 38, 12))
         {
-            flt();
-            int stat = chara_create(-1, 1, 38, 12);
-            if (stat != 0)
-            {
-                cdata[rc].ai_calm = 3;
-                cdata[rc].character_role = 1007;
-                cdata[rc].shop_rank = 10;
-                cdatan(0, rc) = snblack(cdatan(0, rc));
-                cdata[rc].only_christmas() = true;
-            }
+            chara->ai_calm = 3;
+            chara->role = Role::blackmarket_vendor;
+            chara->shop_rank = 10;
+            cdatan(0, chara->index) = snblack(cdatan(0, chara->index));
+            chara->only_christmas() = true;
         }
+        flt();
+        if (const auto chara = chara_create(-1, 271, 28, 9))
         {
-            flt();
-            int stat = chara_create(-1, 271, 28, 9);
-            if (stat != 0)
-            {
-                cdata[rc].ai_calm = 3;
-                cdata[rc].relationship = 0;
-                cdata[rc].original_relationship = 0;
-                cdata[rc].only_christmas() = true;
-                cdata[rc].character_role = 1022;
-                cdata[rc].shop_rank = 30;
-                cdatan(0, rc) = random_name();
-                cdatan(0, rc) =
-                    i18n::s.get("core.chara.job.street_vendor", cdatan(0, rc));
-            }
+            chara->ai_calm = 3;
+            chara->relationship = 0;
+            chara->original_relationship = 0;
+            chara->only_christmas() = true;
+            chara->role = Role::street_vendor;
+            chara->shop_rank = 30;
+            cdatan(0, chara->index) = random_name();
+            cdatan(0, chara->index) = i18n::s.get(
+                "core.chara.job.street_vendor", cdatan(0, chara->index));
         }
+        flt();
+        if (const auto chara = chara_create(-1, 271, 29, 24))
         {
-            flt();
-            int stat = chara_create(-1, 271, 29, 24);
-            if (stat != 0)
-            {
-                cdata[rc].ai_calm = 3;
-                cdata[rc].relationship = 0;
-                cdata[rc].original_relationship = 0;
-                cdata[rc].only_christmas() = true;
-                cdata[rc].character_role = 1022;
-                cdata[rc].shop_rank = 30;
-                cdatan(0, rc) = random_name();
-                cdatan(0, rc) =
-                    i18n::s.get("core.chara.job.street_vendor2", cdatan(0, rc));
-            }
+            chara->ai_calm = 3;
+            chara->relationship = 0;
+            chara->original_relationship = 0;
+            chara->only_christmas() = true;
+            chara->role = Role::street_vendor;
+            chara->shop_rank = 30;
+            cdatan(0, chara->index) = random_name();
+            cdatan(0, chara->index) = i18n::s.get(
+                "core.chara.job.street_vendor2", cdatan(0, chara->index));
         }
         for (int cnt = 0; cnt < 20; ++cnt)
         {
             flt();
-            int stat = chara_create(-1, 349, -3, 0);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 349, -3, 0))
             {
-                cdata[rc].only_christmas() = true;
+                chara->only_christmas() = true;
             }
             flt();
+            if (const auto chara = chara_create(-1, 350, -3, 0))
             {
-                int stat = chara_create(-1, 350, -3, 0);
-                if (stat != 0)
-                {
-                    cdata[rc].only_christmas() = true;
-                }
+                chara->only_christmas() = true;
             }
         }
         for (int cnt = 0; cnt < 15; ++cnt)
         {
             flt();
-            int stat = chara_create(-1, 326, -3, 0);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 326, -3, 0))
             {
-                cdata[rc].only_christmas() = true;
+                chara->only_christmas() = true;
             }
         }
         for (int cnt = 0; cnt < 7; ++cnt)
         {
             flt();
-            int stat = chara_create(-1, 335, -3, 0);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 335, -3, 0))
             {
-                cdata[rc].only_christmas() = true;
+                chara->only_christmas() = true;
             }
+            flt();
+            if (const auto chara = chara_create(-1, 185, -3, 0))
             {
-                flt();
-                int stat = chara_create(-1, 185, -3, 0);
-                if (stat != 0)
-                {
-                    cdata[rc].only_christmas() = true;
-                }
+                chara->only_christmas() = true;
             }
+            flt();
+            if (const auto chara = chara_create(-1, 274, -3, 0))
             {
-                flt();
-                int stat = chara_create(-1, 274, -3, 0);
-                if (stat != 0)
-                {
-                    cdata[rc].only_christmas() = true;
-                }
+                chara->only_christmas() = true;
             }
+            flt();
+            if (const auto chara = chara_create(-1, 174, -3, 0))
             {
-                flt();
-                int stat = chara_create(-1, 174, -3, 0);
-                if (stat != 0)
-                {
-                    cdata[rc].only_christmas() = true;
-                }
+                chara->only_christmas() = true;
             }
         }
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             flt();
-            int stat = chara_create(-1, 332, -3, 0);
-            if (stat != 0)
+            if (const auto chara = chara_create(-1, 332, -3, 0))
             {
-                cdata[rc].only_christmas() = true;
+                chara->only_christmas() = true;
             }
+            flt();
+            if (const auto chara = chara_create(-1, 185, -3, 0))
             {
-                flt();
-                int stat = chara_create(-1, 185, -3, 0);
-                if (stat != 0)
-                {
-                    cdata[rc].only_christmas() = true;
-                }
+                chara->only_christmas() = true;
             }
         }
     }
@@ -1543,14 +1482,12 @@ TurnResult exit_map()
         cell_featread(cdata.player().position.x, cdata.player().position.y);
         if (game_data.current_map == mdata_t::MapId::your_home)
         {
-            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 751) !=
-                -1)
+            if (mapitemfind(cdata[cc].position, ItemId::downstairs))
             {
                 feat(1) = 11;
                 feat(2) = 0;
             }
-            if (mapitemfind(cdata[cc].position.x, cdata[cc].position.y, 750) !=
-                -1)
+            if (mapitemfind(cdata[cc].position, ItemId::upstairs))
             {
                 feat(1) = 10;
                 feat(2) = 0;
@@ -1918,7 +1855,7 @@ void prepare_charas_for_map_unload()
     for (int cnt = 0; cnt < 57; ++cnt)
     {
         cdata[cnt].activity.finish();
-        cdata[cnt].item_which_will_be_used = 0;
+        cdata[cnt].ai_item = 0;
     }
 
     // remove living adventurers from the map and set their states
@@ -2254,8 +2191,7 @@ void map_global_proc_travel_events()
     }
     if (cdata.player().nutrition <= 5000)
     {
-        f = 0;
-        for (const auto& item : inv.for_chara(cdata[cc]))
+        for (auto&& item : inv.for_chara(cdata[cc]))
         {
             if (item.number() == 0)
             {
@@ -2264,19 +2200,14 @@ void map_global_proc_travel_events()
             if (the_item_db[itemid2int(item.id)]->category ==
                 ItemCategory::travelers_food)
             {
-                f = 1;
-                ci = item.index;
+                if (is_in_fov(cdata[cc]))
+                {
+                    txt(i18n::s.get(
+                        "core.misc.finished_eating", cdata[cc], item));
+                }
+                activity_eating_finish(cdata[cc], item);
                 break;
             }
-        }
-        if (f == 1)
-        {
-            if (is_in_fov(cdata[cc]))
-            {
-                txt(i18n::s.get(
-                    "core.misc.finished_eating", cdata[cc], inv[ci]));
-            }
-            activity_eating_finish(cdata[cc], inv[ci]);
         }
     }
     if (game_data.weather == 2 ||
@@ -2386,11 +2317,11 @@ void sense_map_feats_on_move()
             std::string tname = ""s;
             if (p == 1)
             {
-                tname = i18n::s.get("core.item.chip.dryrock");
+                tname = i18n::s.get("core.map.chip.dryrock");
             }
             if (p == 2)
             {
-                tname = i18n::s.get("core.item.chip.field");
+                tname = i18n::s.get("core.map.chip.field");
             }
 
             if (tname != ""s)

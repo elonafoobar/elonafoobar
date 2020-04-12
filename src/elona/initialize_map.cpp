@@ -280,10 +280,9 @@ void _prepare_mapupdate()
         {
             continue;
         }
-        if ((cnt.character_role >= 1000 && cnt.character_role < 2000) ||
-            cnt.character_role == 2003)
+        if (is_shopkeeper(cnt.role))
         {
-            rolebk(0, maxnpcbk) = cnt.character_role;
+            rolebk(0, maxnpcbk) = static_cast<int>(cnt.role);
             rolebk(1, maxnpcbk) = cnt.shop_rank;
             ++maxnpcbk;
         }
@@ -324,13 +323,12 @@ void _do_mapupdate()
         {
             continue;
         }
-        if ((cnt.character_role >= 1000 && cnt.character_role < 2000) ||
-            cnt.character_role == 2003)
+        if (is_shopkeeper(cnt.role))
         {
             int cnt2 = cnt.index;
             for (int cnt = 0, cnt_end = (maxnpcbk); cnt < cnt_end; ++cnt)
             {
-                if (cdata[cnt2].character_role == rolebk(0, cnt))
+                if (cdata[cnt2].role == static_cast<Role>(rolebk(0, cnt)))
                 {
                     cdata[cnt2].shop_rank = rolebk(1, cnt);
                     rolebk(0, cnt) = 0;
@@ -558,7 +556,7 @@ void _refresh_map_character_other(Character& chara)
         chara.hate = 0;
         chara.relationship = chara.original_relationship;
     }
-    if (chara.character_role == 14)
+    if (chara.role == Role::guard)
     {
         if (cdata.player().karma < -30)
         {
@@ -586,7 +584,7 @@ void _refresh_map_character_other(Character& chara)
 
 void _level_up_if_guard(Character& chara)
 {
-    if (chara.character_role == 14)
+    if (chara.role == Role::guard)
     {
         if (cdata.player().karma < -30)
         {
@@ -1179,7 +1177,7 @@ void _proc_map_hooks_2()
     }
     if (game_data.current_map == mdata_t::MapId::your_home)
     {
-        calc_home_rank();
+        building_update_home_rank();
     }
     if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
     {

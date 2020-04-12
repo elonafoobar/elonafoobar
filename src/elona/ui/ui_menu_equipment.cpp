@@ -218,7 +218,7 @@ _draw_single_list_entry(int cnt, int list_item, bool show_additional_info)
     if (equipped_item % 10000 != 0)
     {
         equipped_item = equipped_item % 10000 - 1;
-        item_name = itemname(equipped_item);
+        item_name = itemname(inv[equipped_item]);
         item_weight = cnvweight(inv[equipped_item].weight);
 
         draw_item_with_portrait(
@@ -281,17 +281,17 @@ void UIMenuEquipment::draw()
 static void _unequip_item()
 {
     game_data.player_is_changing_equipment = 1;
-    ci = cdata[cc].body_parts[body - 100] % 10000 - 1;
-    if (is_cursed(inv[ci].curse_state))
+    const auto item_index = cdata[cc].body_parts[body - 100] % 10000 - 1;
+    if (is_cursed(inv[item_index].curse_state))
     {
-        txt(i18n::s.get("core.ui.equip.cannot_be_taken_off", inv[ci]));
+        txt(i18n::s.get("core.ui.equip.cannot_be_taken_off", inv[item_index]));
         return;
     }
     unequip_item(cc);
     chara_refresh(cc);
     snd("core.equip1");
     Message::instance().linebreak();
-    txt(i18n::s.get("core.ui.equip.you_unequip", inv[ci]));
+    txt(i18n::s.get("core.ui.equip.you_unequip", inv[item_index]));
     if (cdata[cc].body_parts[body - 100] / 10000 == 5)
     {
         equip_melee_weapon();
@@ -326,8 +326,7 @@ static bool _on_list_entry_select(int index)
 
 static void _show_item_desc(int body_)
 {
-    ci = cdata[cc].body_parts[body_ - 100] % 10000 - 1;
-    item_show_description(inv[ci]);
+    item_show_description(inv[cdata[cc].body_parts[body_ - 100] % 10000 - 1]);
     nowindowanime = 1;
     returnfromidentify = 0;
     screenupdate = -1;

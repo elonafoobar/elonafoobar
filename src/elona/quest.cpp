@@ -536,7 +536,7 @@ void quest_on_map_initialize()
         {
             continue;
         }
-        if (cnt.character_role == 0)
+        if (cnt.role == Role::none)
         {
             continue;
         }
@@ -544,7 +544,7 @@ void quest_on_map_initialize()
         {
             continue;
         }
-        if (cnt.character_role == 3)
+        if (cnt.role == Role::other)
         {
             continue;
         }
@@ -644,7 +644,8 @@ int quest_generate()
                 continue;
             }
             if (cdata[n].relationship != 0 ||
-                (cdata[n].character_role != 4 && cdata[n].character_role != 14))
+                (cdata[n].role != Role::citizen &&
+                 cdata[n].role != Role::guard))
             {
                 continue;
             }
@@ -1311,8 +1312,7 @@ void quest_team_victorious()
 
 void quest_all_targets_killed()
 {
-    musicloop = 1;
-    play_music("core.mcFanfare");
+    play_music("core.mcFanfare", false);
     game_data.executing_immediate_quest_status = 3;
     if (game_data.executing_immediate_quest_type == 1)
     {

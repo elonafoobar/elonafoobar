@@ -361,6 +361,10 @@ function i18n.all.itembasename(item)
    return item.basename
 end
 
+function i18n.all.zfill(n, width)
+   return string.format("%0"..tostring(width).."d", n)
+end
+
 
 --
 -- Function registration.

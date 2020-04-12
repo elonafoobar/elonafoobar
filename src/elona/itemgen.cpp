@@ -24,16 +24,16 @@ int initnum;
 
 
 
-int calculate_original_value(const Item& ci)
+int calculate_original_value(const Item& item)
 {
-    if (the_item_db[itemid2int(ci.id)]->category == ItemCategory::furniture)
+    if (the_item_db[itemid2int(item.id)]->category == ItemCategory::furniture)
     {
-        return ci.value * 100 / (80 + std::max(1, ci.subname) * 20) -
-            the_item_material_db[ci.material]->value * 2;
+        return item.value * 100 / (80 + std::max(1, item.subname) * 20) -
+            the_item_material_db[item.material]->value * 2;
     }
     else
     {
-        return ci.value * 100 / the_item_material_db[ci.material]->value;
+        return item.value * 100 / the_item_material_db[item.material]->value;
     }
 }
 
@@ -147,14 +147,13 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
         }
     }
 
-    ci = inv_getfreeid(slot);
-    if (ci == -1)
+    const auto empty_slot = inv_get_free_slot(slot);
+    if (!empty_slot)
         return none;
 
-    auto&& item = inv[ci];
+    auto&& item = *empty_slot;
 
     item_delete(item);
-    item.index = ci; // needed?
 
     if (slot == -1 && mode != 6 && mode != 9)
     {
@@ -278,10 +277,10 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
     item.quality = static_cast<Quality>(fixlv);
     if (fixlv == Quality::special && mode != 6 && nooracle == 0)
     {
-        int owner = inv_getowner(item.index);
+        int owner = inv_getowner(item);
         if (owner != -1)
         {
-            if (cdata[owner].character_role == 13)
+            if (cdata[owner].role == Role::adventurer)
             {
                 artifactlocation.push_back(i18n::s.get(
                     "core.magic.oracle.was_held_by",
@@ -528,10 +527,10 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
     }
     else
     {
-        if (item_stack(slot, item))
+        const auto item_stack_result = item_stack(slot, item);
+        if (item_stack_result.stacked)
         {
-            ci = ti;
-            return inv[ti];
+            return item_stack_result.stacked_item;
         }
     }
 

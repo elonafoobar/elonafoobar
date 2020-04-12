@@ -1,14 +1,13 @@
 ---
 name: バグ報告 Bug Report
 about: Create a report to help us improve
-labels: bug
 
 ---
 
 # 環境 Environment
 
 * OS version:
-* Elona foobar verision:
+* Elona foobar version:
 
 
 # 詳細 Details

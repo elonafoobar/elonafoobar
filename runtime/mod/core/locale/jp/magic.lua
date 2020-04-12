@@ -62,7 +62,7 @@ ELONA.i18n:add {
       disassembly = "「余分な機能は削除してしまえ」",
 
       touch = {
-         ally = "{name($1)}は{name($2)}に{$3}{$4}で{$5}",
+         ally = "{name($2)}は{name($1)}に{$3}{$4}で{$5}",
          other = "{kare_wa($1)}{name($2)}を{$3}{$4}で{$5}",
       },
 

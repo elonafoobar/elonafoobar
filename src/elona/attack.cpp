@@ -32,7 +32,6 @@ namespace elona
 namespace
 {
 
-int attackitem = 0;
 int extraattack = 0;
 
 } // namespace
@@ -153,10 +152,10 @@ void build_target_list()
 
 
 
-int can_do_ranged_attack()
+CanDoRangedAttackResult can_do_ranged_attack()
 {
-    cw = -1;
-    ammo = -1;
+    optional_ref<Item> weapon;
+    optional_ref<Item> ammo;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
@@ -166,40 +165,40 @@ int can_do_ranged_attack()
         }
         if (cdata[cc].body_parts[cnt] / 10000 == 10)
         {
-            cw = cdata[cc].body_parts[cnt] % 10000 - 1;
+            weapon = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
         }
         if (cdata[cc].body_parts[cnt] / 10000 == 11)
         {
-            ammo = cdata[cc].body_parts[cnt] % 10000 - 1;
+            ammo = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
         }
     }
-    if (cw == -1)
+    if (!weapon)
     {
-        cw = 0;
-        return -1;
+        return {-1, none, none};
     }
-    if (ammo == -1)
+    if (!ammo)
     {
-        if (inv[cw].skill != 111)
+        if (weapon->skill != 111)
         {
-            cw = 0;
-            return -2;
+            return {-2, none, none};
         }
     }
-    if (ammo != -1)
+    if (ammo)
     {
-        if (inv[cw].skill != inv[ammo].skill)
+        if (weapon->skill != ammo->skill)
         {
-            return -3;
+            return {-3, none, none};
         }
     }
-    attackskill = inv[cw].skill;
-    return 1;
+    attackskill = weapon->skill;
+    return {1, weapon, ammo};
 }
 
 
 
-bool do_physical_attack_internal()
+bool do_physical_attack_internal(
+    optional_ref<Item> weapon,
+    optional_ref<Item> ammo)
 {
     int attackdmg;
 
@@ -232,16 +231,16 @@ bool do_physical_attack_internal()
             cdata[cc].position,
             cdata[tc].position,
             static_cast<RangedAttackAnimation::Type>(attackskill),
-            the_item_db[itemid2int(inv[cw].id)]->subcategory,
-            inv[cw].image % 1000,
-            inv[cw].image / 1000)
+            the_item_db[itemid2int(weapon->id)]->subcategory,
+            weapon->image % 1000,
+            weapon->image / 1000)
             .play();
     }
 
     const auto expmodifer = 1 + cdata[tc].is_hung_on_sand_bag() * 15 +
         cdata[tc].splits() + cdata[tc].splits2() +
         (game_data.current_map == mdata_t::MapId::show_house);
-    int hit = calcattackhit();
+    int hit = calcattackhit(weapon, ammo);
     i = 0;
     if (hit == 1)
     {
@@ -253,7 +252,8 @@ bool do_physical_attack_internal()
                     Message::color{ColorIndex::red});
             }
         }
-        dmg = calcattackdmg(AttackDamageCalculationMode::actual_damage);
+        dmg = calcattackdmg(
+            weapon, ammo, AttackDamageCalculationMode::actual_damage);
         attackdmg = dmg;
         if (cc == 0)
         {
@@ -271,25 +271,25 @@ bool do_physical_attack_internal()
         }
         if (attackskill != 106)
         {
-            if (inv[cw].quality >= Quality::miracle)
+            if (weapon->quality >= Quality::miracle)
             {
-                if (inv[cw].quality == Quality::special)
+                if (weapon->quality == Quality::special)
                 {
                     s(1) = i18n::s.get("core.misc.wields_proudly.the") +
-                        iknownnameref(itemid2int(inv[cw].id));
+                        iknownnameref(itemid2int(weapon->id));
                 }
-                else if (inv[cw].subname >= 40000)
+                else if (weapon->subname >= 40000)
                 {
-                    randomize(inv[cw].subname - 40000);
+                    randomize(weapon->subname - 40000);
                     s(1) = random_title(RandomTitleType::weapon);
                     randomize();
                 }
                 else
                 {
                     s(1) = i18n::s.get("core.misc.wields_proudly.the") +
-                        iknownnameref(itemid2int(inv[cw].id));
+                        iknownnameref(itemid2int(weapon->id));
                 }
-                if (inv[cw].quality == Quality::godly)
+                if (weapon->quality == Quality::godly)
                 {
                     s(1) = i18n::s.get("core.item.godly_paren", s(1));
                 }
@@ -350,7 +350,7 @@ bool do_physical_attack_internal()
                 if (attackskill == 111)
                 {
                     // Special case for thrown weapons.
-                    weapon_name = itemname(cw, 1, 1);
+                    weapon_name = itemname(*weapon, 1, false);
                 }
                 else
                 {
@@ -419,11 +419,11 @@ bool do_physical_attack_internal()
             if (attackrange == 0)
             {
                 chara_gain_skill_exp(cdata[cc], 152, 20 / expmodifer, 0, 4);
-                if (cdata[cc].equipment_type & 2)
+                if (cdata[cc].combat_style.two_hand())
                 {
                     chara_gain_skill_exp(cdata[cc], 167, 20 / expmodifer, 0, 4);
                 }
-                if (cdata[cc].equipment_type & 4)
+                if (cdata[cc].combat_style.dual_wield())
                 {
                     chara_gain_skill_exp(cdata[cc], 166, 20 / expmodifer, 0, 4);
                 }
@@ -453,7 +453,7 @@ bool do_physical_attack_internal()
                         expmodifer,
                     0,
                     5);
-                if (cdata[tc].equipment_type & 1)
+                if (cdata[tc].combat_style.shield())
                 {
                     chara_gain_skill_exp(cdata[tc], 168, 40 / expmodifer, 0, 4);
                 }
@@ -461,7 +461,7 @@ bool do_physical_attack_internal()
         }
         if (attackskill != 106)
         {
-            proc_weapon_enchantments();
+            proc_weapon_enchantments(*weapon);
         }
         if (cdata[tc].cut_counterattack > 0)
         {
@@ -523,7 +523,7 @@ bool do_physical_attack_internal()
                         {
                             if (rnd(5) == 0)
                             {
-                                item_acid(cdata[cc], cw);
+                                item_acid(cdata[cc], *weapon);
                             }
                         }
                     }
@@ -614,18 +614,17 @@ bool do_physical_attack_internal()
     {
         if (cdata[tc].state() != Character::State::alive)
         {
-            cw = attackitem;
-            if (inv[cw].is_alive())
+            if (weapon->is_alive())
             {
-                if (inv[cw].param2 < calcexpalive(inv[cw].param1))
+                if (weapon->param2 < calcexpalive(weapon->param1))
                 {
-                    inv[cw].param2 +=
-                        rnd_capped(cdata[tc].level / inv[cw].param1 + 1);
-                    if (inv[cw].param2 >= calcexpalive(inv[cw].param1))
+                    weapon->param2 +=
+                        rnd_capped(cdata[tc].level / weapon->param1 + 1);
+                    if (weapon->param2 >= calcexpalive(weapon->param1))
                     {
                         snd("core.ding3");
                         txt(i18n::s.get(
-                                "core.misc.living_weapon_taste_blood", inv[cw]),
+                                "core.misc.living_weapon_taste_blood", *weapon),
                             Message::color{ColorIndex::green});
                     }
                 }
@@ -656,15 +655,15 @@ bool do_physical_attack_internal()
 
 
 
-void do_physical_attack()
+void do_physical_attack(optional_ref<Item> weapon, optional_ref<Item> ammo)
 {
-    while (do_physical_attack_internal())
+    while (do_physical_attack_internal(weapon, ammo))
         ;
 }
 
 
 
-void do_ranged_attack()
+void do_ranged_attack(optional_ref<Item> weapon, optional_ref<Item> ammo)
 {
     int ammox = 0;
     int ammoy = 0;
@@ -675,19 +674,18 @@ void do_ranged_attack()
     ammoprocbk = -1;
     ammox = cdata[tc].position.x;
     ammoy = cdata[tc].position.y;
-    attackitem = cw;
-    if (ammo != -1)
+    if (ammo)
     {
-        if (inv[ammo].count != -1)
+        if (ammo->count != -1)
         {
-            if (inv[ammo].enchantments[inv[ammo].count].power % 1000 <= 0)
+            if (ammo->enchantments[ammo->count].power % 1000 <= 0)
             {
                 txt(i18n::s.get("core.action.ranged.load_normal_ammo"));
-                inv[ammo].count = -1;
+                ammo->count = -1;
             }
             else
             {
-                ammoproc = inv[ammo].enchantments[inv[ammo].count].id % 10000;
+                ammoproc = ammo->enchantments[ammo->count].id % 10000;
                 if (cc == 0)
                 {
                     if (cdata.player().sp < 50)
@@ -704,7 +702,7 @@ void do_ranged_attack()
                     }
                     damage_sp(cdata.player(), rnd(encammoref(2, ammoproc) + 1));
                 }
-                --inv[ammo].enchantments[inv[ammo].count].power;
+                --ammo->enchantments[ammo->count].power;
             }
         }
     }
@@ -713,10 +711,12 @@ void do_ranged_attack()
         ammoprocbk = ammoproc;
         for (int cnt = 0; cnt < 3; ++cnt)
         {
-            can_do_ranged_attack();
+            const auto result = can_do_ranged_attack();
+            weapon = result.weapon;
+            ammo = result.ammo;
             ele = 0;
             extraattack = 0;
-            do_physical_attack();
+            do_physical_attack(weapon, ammo);
             if (cdata[tc].state() != Character::State::alive)
             {
                 int stat = find_enemy_target();
@@ -736,7 +736,9 @@ void do_ranged_attack()
         ammoprocbk = ammoproc;
         for (int cnt = 0; cnt < 10; ++cnt)
         {
-            can_do_ranged_attack();
+            const auto result = can_do_ranged_attack();
+            weapon = result.weapon;
+            ammo = result.ammo;
             ele = 0;
             build_target_list();
             if (listmax == 0)
@@ -761,13 +763,13 @@ void do_ranged_attack()
                 continue;
             }
             extraattack = 0;
-            do_physical_attack();
+            do_physical_attack(weapon, ammo);
         }
     }
     else
     {
         extraattack = 0;
-        do_physical_attack();
+        do_physical_attack(weapon, ammo);
     }
     if (ammoproc == 1)
     {
@@ -797,10 +799,10 @@ void try_to_melee_attack()
                         cdata[tc].position.x,
                         cdata[tc].position.y))
                 {
-                    int stat = can_do_ranged_attack();
-                    if (stat == 1)
+                    const auto result = can_do_ranged_attack();
+                    if (result.type == 1)
                     {
-                        do_ranged_attack();
+                        do_ranged_attack(result.weapon, result.ammo);
                     }
                 }
             }
@@ -817,9 +819,8 @@ void try_to_melee_attack()
     attacknum = 0;
     attackrange = 0;
     attackskill = 106;
-    ammo = -1;
     ele = 0;
-    if (cdata[cc].equipment_type & 1)
+    if (cdata[cc].combat_style.shield())
     {
         if (clamp(int(std::sqrt(sdata(168, cc)) - 3), 1, 5) +
                 cdata[cc].has_power_bash() * 5 >
@@ -853,45 +854,43 @@ void try_to_melee_attack()
         {
             continue;
         }
-        cw = cdata[cc].body_parts[cnt] % 10000 - 1;
-        attackitem = cw;
-        if (inv[cw].dice_x > 0)
+        auto& weapon = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
+        if (weapon.dice_x > 0)
         {
-            attackskill = inv[cw].skill;
+            attackskill = weapon.skill;
             ++attacknum;
             extraattack = 0;
-            do_physical_attack();
+            do_physical_attack(weapon, none);
         }
     }
     if (attackskill == 106)
     {
         extraattack = 0;
-        do_physical_attack();
+        do_physical_attack(none, none);
     }
 }
 
 
 
-void proc_weapon_enchantments()
+void proc_weapon_enchantments(const Item& weapon)
 {
     for (int cnt = 0; cnt < 15; ++cnt)
     {
-        cw = attackitem;
-        if (inv[cw].enchantments[cnt].id == 0)
+        if (weapon.enchantments[cnt].id == 0)
         {
             break;
         }
-        enc = inv[cw].enchantments[cnt].id;
+        enc = weapon.enchantments[cnt].id;
         if (enc == 36)
         {
-            p = rnd_capped(inv[cw].enchantments[cnt].power / 50 + 1) + 1;
+            p = rnd_capped(weapon.enchantments[cnt].power / 50 + 1) + 1;
             heal_sp(cdata[cc], p);
             damage_sp(cdata[tc], p / 2);
             continue;
         }
         if (enc == 38)
         {
-            p = rnd_capped(inv[cw].enchantments[cnt].power / 25 + 1) + 1;
+            p = rnd_capped(weapon.enchantments[cnt].power / 25 + 1) + 1;
             heal_mp(cdata[cc], p / 5);
             if (cdata[tc].state() != Character::State::alive)
             {
@@ -917,7 +916,7 @@ void proc_weapon_enchantments()
                     txt(i18n::s.get("core.action.time_stop.begins", cdata[cc]),
                         Message::color{ColorIndex::cyan});
                     game_data.left_turns_of_timestop =
-                        inv[cw].enchantments[cnt].power / 100 + 1 + 1;
+                        weapon.enchantments[cnt].power / 100 + 1 + 1;
                 }
                 continue;
             }
@@ -971,13 +970,12 @@ void proc_weapon_enchantments()
                 damage_hp(
                     cdata[tc],
                     rnd_capped(
-                        orgdmg * (100 + inv[cw].enchantments[cnt].power) /
-                            1000 +
+                        orgdmg * (100 + weapon.enchantments[cnt].power) / 1000 +
                         1) +
                         5,
                     cc,
                     ele,
-                    inv[cw].enchantments[cnt].power / 2 + 100);
+                    weapon.enchantments[cnt].power / 2 + 100);
                 continue;
             }
             if (i == 8)
@@ -1003,7 +1001,7 @@ void proc_weapon_enchantments()
                 if (rnd(100) < p)
                 {
                     efid = enc;
-                    efp = inv[cw].enchantments[cnt].power +
+                    efp = weapon.enchantments[cnt].power +
                         sdata(attackskill, cc) * 10;
                     magic();
                 }

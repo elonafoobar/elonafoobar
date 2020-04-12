@@ -12,7 +12,7 @@ const constexpr char* data::DatabaseTraits<FishDB>::type_id;
 
 FishData FishDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
-    auto legacy_id = data.required<int>("legacy_id");
+    DATA_LEGACY_ID();
     DATA_OPT_OR(no_generate, bool, false);
     DATA_OPT_OR(rank, int, 0);
     DATA_OPT_OR(rarity, int, 0);

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.2)
 
 
 # Project
-project(Elona_foobar VERSION 0.7.0)
+project(Elona_foobar VERSION 0.7.1)
 
 
 
@@ -91,7 +91,6 @@ if(ELONA_BUILD_TARGET STREQUAL "TESTS")
     src/tests/lua_data_character.cpp
     src/tests/lua_data_item.cpp
     src/tests/lua_serialization.cpp
-    src/tests/elonacore.cpp
     src/tests/item.cpp
     src/tests/i18n.cpp
     src/tests/i18n_builtins.cpp
@@ -456,13 +455,17 @@ endfunction()
 set(ASSET_DIR "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
 set(RUNTIME_DIR "${ASSET_DIR}")
 
-# Copy and overwrite runtime folders/files (except config.json)
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/data/ "${RUNTIME_DIR}/data/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/font/ "${RUNTIME_DIR}/font/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/graphic/ "${RUNTIME_DIR}/graphic/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/map/ "${RUNTIME_DIR}/map/")
 copy_mod_dirs(${CMAKE_SOURCE_DIR}/runtime/mod/ "${RUNTIME_DIR}/mod/")
 copy_dir(${CMAKE_SOURCE_DIR}/runtime/profile/ "${RUNTIME_DIR}/profile/")
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  # Overwrite the default config.json with tools/config.json.
+  copy_file("${CMAKE_SOURCE_DIR}/tools/config.json" "${RUNTIME_DIR}/profile/default/config.json")
+endif()
 
 # Copy assets from Elona 1.22 if they are present.
 if(EXISTS "${CMAKE_PREFIX_PATH}/elona")

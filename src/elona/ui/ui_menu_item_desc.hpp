@@ -11,7 +11,7 @@ namespace ui
 class UIMenuItemDesc : public UIMenu<DummyResult>
 {
 public:
-    UIMenuItemDesc(const Item& the_item)
+    UIMenuItemDesc(Item& the_item)
         : _the_item(the_item)
     {
     }
@@ -27,7 +27,7 @@ private:
     void _draw_marks(int, int);
     void _draw_message(int, int, const std::string&);
 
-    const Item& _the_item;
+    Item& _the_item;
 };
 
 } // namespace ui

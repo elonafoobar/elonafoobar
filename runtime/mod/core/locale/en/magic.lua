@@ -111,7 +111,7 @@ ELONA.i18n:add {
       },
 
       love_potion = {
-         cursed = "This love potion is cursed. {name($1)} look{s($1)} at {you()} with a contemptuous glance.",
+         cursed = "This love potion is cursed. {capitalize(name($1))} look{s($1)} at {you()} with a contemptuous glance.",
          spill = "{name($1)} sense{s($1)} a sign of love,",
          self = "You are excited!",
          other = "{name($1)} give{s($1)} {you()} the eye.",

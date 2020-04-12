@@ -269,7 +269,7 @@ int chara_get_free_slot_force()
     std::vector<int> slots;
     for (auto&& cc : cdata.others())
     {
-        if (cc.state() == Character::State::alive && cc.character_role == 0)
+        if (cc.state() == Character::State::alive && cc.role == Role::none)
         {
             slots.push_back(cc.index);
         }
@@ -447,11 +447,11 @@ void failed_to_place_character(Character& cc)
         // if they are dead.
         modify_crowd_density(cc.index, -1);
     }
-    if (cc.character_role != 0)
+    if (cc.role != Role::none)
     {
         cc.set_state(Character::State::villager_dead);
     }
-    if (cc.character_role == 13)
+    if (cc.role == Role::adventurer)
     {
         cc.set_state(Character::State::adventurer_dead);
         cc.time_to_revive = game_data.date.hours() + 24 + rnd(12);
@@ -633,7 +633,7 @@ void initialize_character()
 
 
 
-int chara_create(int slot, int chara_id, int x, int y)
+optional_ref<Character> chara_create(int slot, int chara_id, int x, int y)
 {
     bool success = false;
 
@@ -657,7 +657,7 @@ int chara_create(int slot, int chara_id, int x, int y)
         {
             cdata[rc].set_state(Character::State::empty);
             --npcmemory(1, charaid2int(cdata[rc].id));
-            return 1;
+            return cdata.tmp();
         }
         if (rc != 0)
         {
@@ -670,10 +670,17 @@ int chara_create(int slot, int chara_id, int x, int y)
     else
     {
         rc = 56;
-        return 0;
+        return none;
     }
 
-    return success ? 1 : 0;
+    if (success)
+    {
+        return cdata[rc];
+    }
+    else
+    {
+        return none;
+    }
 }
 
 
@@ -738,7 +745,7 @@ void chara_refresh(int cc)
     cdata[cc].pv = 0;
     cdata[cc].hit_bonus = 0;
     cdata[cc].damage_bonus = 0;
-    cdata[cc].equipment_type = 0;
+    cdata[cc].combat_style.reset();
     attacknum = 0;
     cdata[cc].rate_to_pierce = 0;
     cdata[cc].rate_of_critical_hit = 0;
@@ -759,10 +766,7 @@ void chara_refresh(int cc)
         cdata[cc].sum_of_equipment_weight += inv[rp].weight;
         if (inv[rp].skill == 168)
         {
-            if (!(cdata[cc].equipment_type & 1))
-            {
-                cdata[cc].equipment_type += 1;
-            }
+            cdata[cc].combat_style.set_shield();
         }
         cdata[cc].dv += inv[rp].dv;
         cdata[cc].pv += inv[rp].pv;
@@ -1023,7 +1027,7 @@ void chara_refresh(int cc)
             }
         }
     }
-    if (cdata[cc].equipment_type & 1)
+    if (cdata[cc].combat_style.shield())
     {
         if (cdata[cc].pv > 0)
         {
@@ -1033,11 +1037,11 @@ void chara_refresh(int cc)
     }
     else if (attacknum == 1)
     {
-        cdata[cc].equipment_type += 2;
+        cdata[cc].combat_style.set_two_hand();
     }
     else if (attacknum != 0)
     {
-        cdata[cc].equipment_type += 4;
+        cdata[cc].combat_style.set_dual_wield();
     }
     cdata[cc].max_mp =
         clamp(
@@ -1097,7 +1101,7 @@ void chara_refresh(int cc)
         buff_apply(
             cdata[cc], *the_buff_db.get_id_from_legacy(buff.id), buff.power);
     }
-    if (cdata[cc].equipment_type & 4)
+    if (cdata[cc].combat_style.dual_wield())
     {
         cdata[cc].extra_attack += int(std::sqrt(sdata(166, cc))) * 3 / 2 + 4;
     }
@@ -1388,7 +1392,7 @@ void chara_vanquish(int cc)
             .chara_index_plus_one = 0;
     }
     cdata[cc].set_state(Character::State::empty);
-    cdata[cc].character_role = 0;
+    cdata[cc].role = Role::none;
     if (cdata[cc].shop_store_id != 0)
     {
         const auto storage_filename = filepathutil::u8path(
@@ -1572,25 +1576,18 @@ void chara_relocate(
     int p = invhead;
     for (auto&& item : inv.for_chara(cdata[slot]))
     {
-        if (item.index == invrange)
-        {
-            break;
-        }
-        if (cc == source.index)
-        {
-            if (ci == p)
-            {
-                ci = item.index;
-            }
-        }
         Item::copy(inv[p], item);
         inv[p].clear();
         item.body_part = 0;
         ++p;
+        if (p >= invhead + invrange)
+        {
+            break;
+        }
     }
 
     // Clear some fields which should not be copied.
-    source.item_which_will_be_used = 0;
+    source.ai_item = 0;
     source.is_livestock() = false;
 
     // Copy from `source` to `destination` and clear `source`
@@ -1702,13 +1699,13 @@ void chara_relocate(
 
 
 
-void chara_set_item_which_will_be_used(Character& chara, const Item& item)
+void chara_set_ai_item(Character& chara, const Item& item)
 {
     const auto category = the_item_db[itemid2int(item.id)]->category;
     if (category == ItemCategory::food || category == ItemCategory::potion ||
         category == ItemCategory::scroll)
     {
-        chara.item_which_will_be_used = item.index;
+        chara.ai_item = item.index;
     }
 }
 
@@ -1846,8 +1843,8 @@ void go_hostile()
 {
     for (auto&& cc : cdata.others())
     {
-        if (cc.character_role == 14 || cc.character_role == 16 ||
-            cc.character_role == 1010)
+        if (cc.role == Role::guard || cc.role == Role::shop_guard ||
+            cc.role == Role::wandering_vendor)
         {
             cc.relationship = -3;
             cc.hate = 80;
@@ -2068,11 +2065,11 @@ void incognitobegin()
         {
             continue;
         }
-        if (cdata[cnt].character_role == 1010)
+        if (cdata[cnt].role == Role::wandering_vendor)
         {
             continue;
         }
-        if (cdata[cnt].character_role == 16)
+        if (cdata[cnt].role == Role::shop_guard)
         {
             continue;
         }
@@ -2098,7 +2095,7 @@ void incognitoend()
         {
             continue;
         }
-        if (cdata[cnt].character_role == 14)
+        if (cdata[cnt].role == Role::guard)
         {
             if (cdata.player().karma < -30)
             {
@@ -2229,7 +2226,7 @@ void chara_clear_status_effects()
     cdata[rc].drunk = 0;
     cdata[rc].bleeding = 0;
     cdata[rc].gravity = 0;
-    cdata[rc].item_which_will_be_used = 0;
+    cdata[rc].ai_item = 0;
     cdata[rc].hate = 0;
     cdata[rc].enemy_id = 0;
     cdata[rc].sick = 0;
@@ -2272,11 +2269,7 @@ void revive_player()
             event_add(6);
         }
     }
-    if (cdata[rc].character_role == 1)
-    {
-        cdata[rc].relationship = 0;
-    }
-    if (cdata[rc].character_role == 14)
+    if (cdata[rc].role == Role::guard)
     {
         p = rnd(5) + 1;
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
@@ -2317,9 +2310,8 @@ void proc_pregnant()
             flt();
             initlv = cdata[cc].level / 2 + 1;
             novoidlv = 1;
-            int stat = chara_create(
-                -1, 330, cdata[cc].position.x, cdata[cc].position.y);
-            if (stat != 0)
+            if (const auto chara = chara_create(
+                    -1, 330, cdata[cc].position.x, cdata[cc].position.y))
             {
                 if (strlen_u(cdatan(0, cc)) > 10 ||
                     instr(
@@ -2428,8 +2420,8 @@ void proc_negative_enchantments(Character& chara)
         {
             continue;
         }
-        ci = body_part % 10000 - 1;
-        proc_one_equipment_with_negative_enchantments(chara, inv[ci]);
+        proc_one_equipment_with_negative_enchantments(
+            chara, inv[body_part % 10000 - 1]);
     }
 }
 
@@ -2441,7 +2433,6 @@ void lovemiracle(int chara_index)
     {
         return;
     }
-    const auto cibk = ci;
     txt(i18n::s.get("core.misc.love_miracle.uh"),
         Message::color{ColorIndex::cyan});
     flt();
@@ -2466,7 +2457,6 @@ void lovemiracle(int chara_index)
             item->subname = charaid2int(cdata[chara_index].id);
         }
     }
-    ci = cibk;
     snd("core.atk_elec");
     animeload(15, chara_index);
 }
@@ -3084,7 +3074,7 @@ int new_ally_joins()
     chara_relocate(cdata[rc], f);
     cdata[rc].relationship = 10;
     cdata[rc].original_relationship = 10;
-    cdata[rc].character_role = 0;
+    cdata[rc].role = Role::none;
     cdata[rc].is_quest_target() = false;
     cdata[rc].is_not_attacked_by_enemy() = false;
     cdata[rc].is_hung_on_sand_bag() = false;

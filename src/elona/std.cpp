@@ -591,28 +591,6 @@ void mesbox(std::string& buffer, bool text)
 
 
 
-void mmload(const fs::path& filepath, int id, int mode)
-{
-    UNUSED(filepath);
-    UNUSED(id);
-    UNUSED(mode);
-}
-
-
-
-void mmplay(int id)
-{
-    UNUSED(id);
-}
-
-
-
-void mmstop()
-{
-}
-
-
-
 namespace notemanip
 {
 std::string* buffer = nullptr;

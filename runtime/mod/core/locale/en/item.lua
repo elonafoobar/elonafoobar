@@ -1,10 +1,5 @@
 ELONA.i18n:add {
    item = {
-      chip = {
-         dryrock = "a dryrock",
-         field = "a field",
-      },
-
       desc = {
          have_to_identify = "You have to identify the item to gain knowledge.",
          no_information = "There is no information about this object.",

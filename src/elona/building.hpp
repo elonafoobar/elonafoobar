@@ -1,12 +1,20 @@
 #pragma once
 
+#include <functional>
+#include <vector>
+
+
+
 namespace elona
 {
 
 enum class TurnResult;
+struct Item;
+
+
 
 void initialize_home_adata();
-TurnResult build_new_building();
+TurnResult build_new_building(Item& deed);
 TurnResult show_house_board();
 void addbuilding(int related_town_quest_id, int building_type, int x, int y);
 void show_home_value();
@@ -22,7 +30,14 @@ void update_shop();
 void calc_collection_value(bool);
 void update_museum();
 void calc_hairloom_value(int);
-void calc_home_rank();
+
+struct HomeRankHeirloom
+{
+    std::reference_wrapper<Item> item;
+    int value;
+};
+std::vector<HomeRankHeirloom> building_update_home_rank();
+
 void update_ranch();
 
 int calcincome(int = 0);

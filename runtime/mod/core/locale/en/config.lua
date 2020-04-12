@@ -106,10 +106,18 @@ If one is missing, restart the game to have it appear.
                   yes_no = "core.config.common.yes_no.on_off",
                   doc = "Enable or disable sound.",
                },
+               sound_volume = {
+                  name = "Sound Volume*",
+                  doc = "Set sound volume. It affects all sounds.",
+               },
                music = {
                   name = "Music*",
                   yes_no = "core.config.common.yes_no.on_off",
                   doc = "Enable or disable music.",
+               },
+               music_volume = {
+                  name = "Music Volume*",
+                  doc = "Set music volume. It affects all musics.",
                },
                stereo_sound = {
                   name = "Stereo Sound",

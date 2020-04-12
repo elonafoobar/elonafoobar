@@ -56,7 +56,7 @@ std::string
 LuaApiItem::itemname(LuaItemHandle item, int number, bool use_article)
 {
     auto& item_ref = lua::ref<Item>(item);
-    return elona::itemname(item_ref.index, number, use_article ? 0 : 1);
+    return elona::itemname(item_ref, number, use_article);
 }
 
 sol::optional<LuaItemHandle> LuaApiItem::create_with_id(
@@ -253,10 +253,7 @@ sol::optional<LuaItemHandle> LuaApiItem::stack(
 
     auto& item_ref = lua::ref<Item>(handle);
 
-    int tibk = ti;
-    item_stack(inventory_id, item_ref);
-    auto& item = inv[ti];
-    ti = tibk;
+    auto& item = item_stack(inventory_id, item_ref).stacked_item;
 
     if (item.number() == 0)
     {

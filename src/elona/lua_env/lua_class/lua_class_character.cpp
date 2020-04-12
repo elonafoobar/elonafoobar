@@ -645,7 +645,7 @@ void LuaCharacter::bind(sol::state& lua)
      *
      * [RW] The role this character takes on.
      */
-    LuaCharacter.set("role", &Character::character_role);
+    LuaCharacter.set("role", &Character::role);
 
     /**
      * @luadoc gold field num

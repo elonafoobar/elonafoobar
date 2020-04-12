@@ -51,6 +51,7 @@
 namespace
 {
 
+// Eye of Insanity
 bool _magic_636()
 {
     txt(i18n::s.get("core.magic.insanity", cdata[cc], cdata[tc]),
@@ -61,7 +62,8 @@ bool _magic_636()
 
 
 
-bool _magic_1136()
+// Item: treasure map
+bool _magic_1136(Item& treasure_map)
 {
     if (map_data.type != mdata_t::MapType::world_map)
     {
@@ -73,17 +75,17 @@ bool _magic_1136()
         if (rnd(5) == 0)
         {
             txt(i18n::s.get("core.magic.map.cursed"));
-            inv[ci].modify_number(-1);
+            treasure_map.modify_number(-1);
             return true;
         }
     }
-    if (inv[ci].param1 == 0)
+    if (treasure_map.param1 == 0)
     {
-        item_separate(ci);
+        item_separate(treasure_map);
         for (int cnt = 0; cnt < 1000; ++cnt)
         {
-            dx = 4 + rnd((map_data.width - 8));
-            dy = 3 + rnd((map_data.height - 6));
+            dx = 4 + rnd(map_data.width - 8);
+            dy = 3 + rnd(map_data.height - 6);
             if (dx >= 50 && dy >= 39 && dx <= 73 && dy <= 54)
             {
                 continue;
@@ -120,8 +122,8 @@ bool _magic_1136()
                 break;
             }
         }
-        inv[ci].param1 = dx;
-        inv[ci].param2 = dy;
+        treasure_map.param1 = dx;
+        treasure_map.param2 = dy;
     }
     txt(i18n::s.get("core.magic.map.apply"));
     snd("core.book1");
@@ -136,16 +138,16 @@ bool _magic_1136()
     gmode(0);
     for (int cnt = 0; cnt < 5; ++cnt)
     {
-        y = cnt + inv[ci].param2 - 2;
+        y = cnt + treasure_map.param2 - 2;
         sy = cnt * inf_tiles + wy + 26;
         for (int cnt = 0; cnt < 7; ++cnt)
         {
-            x = cnt + inv[ci].param1 - 3;
+            x = cnt + treasure_map.param1 - 3;
             sx = cnt * inf_tiles + wx + 46;
             draw_map_tile(cell_data.at(x, y).chip_id_actual, sx + 1, sy + 1);
-            if (x == inv[ci].param1)
+            if (x == treasure_map.param1)
             {
-                if (y == inv[ci].param2)
+                if (y == treasure_map.param2)
                 {
                     font(40 - en * 2, snail::Font::Style::italic);
                     mes(sx,
@@ -166,6 +168,7 @@ bool _magic_1136()
 
 
 
+// Item: love potion
 bool _magic_1135()
 {
     if (is_cursed(efstatus))
@@ -207,6 +210,7 @@ bool _magic_1135()
 
 
 
+// Pregnant
 bool _magic_654()
 {
     if (is_in_fov(cdata[tc]))
@@ -219,6 +223,7 @@ bool _magic_654()
 
 
 
+// Mirror
 bool _magic_626()
 {
     txt(i18n::s.get("core.magic.mirror"));
@@ -229,6 +234,7 @@ bool _magic_626()
 
 
 
+// Item: milk
 bool _magic_1101()
 {
     if (is_in_fov(cdata[tc]))
@@ -276,6 +282,7 @@ bool _magic_1101()
 
 
 
+// Item: alcohol
 bool _magic_1102()
 {
     if (is_in_fov(cdata[tc]))
@@ -298,6 +305,7 @@ bool _magic_1102()
 
 
 
+// Item: acid
 bool _magic_1116()
 {
     if (is_in_fov(cdata[tc]))
@@ -324,6 +332,7 @@ bool _magic_1116()
 
 
 
+// Item: water
 bool _magic_1103()
 {
     if (is_in_fov(cdata[tc]))
@@ -343,6 +352,7 @@ bool _magic_1103()
 
 
 
+// Item: soda
 bool _magic_1146()
 {
     if (is_in_fov(cdata[tc]))
@@ -357,6 +367,7 @@ bool _magic_1146()
 
 
 
+// Item: blue capsule drug
 bool _magic_1147()
 {
     if (is_in_fov(cdata[tc]))
@@ -371,6 +382,7 @@ bool _magic_1147()
 
 
 
+// Item: salt solution
 bool _magic_1142()
 {
     if (cdatan(2, tc) == u8"core.snail"s)
@@ -399,6 +411,7 @@ bool _magic_1142()
 
 
 
+// Item: dirty water
 bool _magic_1130()
 {
     if (is_in_fov(cdata[tc]))
@@ -418,6 +431,7 @@ bool _magic_1130()
 
 
 
+// Pickpocket
 bool _magic_300()
 {
     if (game_data.executing_immediate_quest_type == 1008 ||
@@ -452,6 +466,7 @@ bool _magic_300()
 
 
 
+// Riding
 bool _magic_301()
 {
     if (cc == 0)
@@ -525,7 +540,7 @@ bool _magic_301()
     else
     {
         ride_begin(tc);
-        txt(name(game_data.mount) +
+        txt(name(game_data.mount) + i18n::space_if_needed() +
                 i18n::s.get("core.magic.mount.mount.dialog"),
             Message::color{ColorIndex::cyan});
     }
@@ -534,12 +549,14 @@ bool _magic_301()
 
 
 
-bool _magic_183()
+// Performance
+bool _magic_183(optional_ref<Item> instrument)
 {
+    assert(cc != 0 || instrument);
+
     if (cc != 0)
     {
-        f = 0;
-        for (const auto& item : inv.for_chara(cdata[cc]))
+        for (auto&& item : inv.for_chara(cdata[cc]))
         {
             if (item.number() == 0)
             {
@@ -547,12 +564,11 @@ bool _magic_183()
             }
             if (item.skill == 183)
             {
-                ci = item.index;
-                f = 1;
+                instrument = item;
                 break;
             }
         }
-        if (f == 0)
+        if (!instrument)
         {
             return false;
         }
@@ -581,30 +597,30 @@ bool _magic_183()
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    activity_perform(cdata[cc]);
+    activity_perform(cdata[cc], *instrument);
     return true;
 }
 
 
 
-bool _magic_184()
+// Cooking
+bool _magic_184(Item& cook_tool)
 {
     if (sdata(184, 0) == 0)
     {
         txt(i18n::s.get("core.magic.cook.do_not_know"));
         return false;
     }
-    auto&& cook_tool = inv[ci];
     invsubroutine = 1;
     invctrl = 16;
     snd("core.inv");
+    const auto& [menu_result, food_opt] = ctrl_inventory();
+    if (!menu_result.succeeded)
     {
-        MenuResult result = ctrl_inventory();
-        if (!result.succeeded)
-        {
-            return false;
-        }
+        return false;
     }
+    assert(food_opt);
+    auto& food = *food_opt;
     if (cc == 0)
     {
         if (cdata.player().sp < 50)
@@ -621,13 +637,14 @@ bool _magic_184()
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    cook(cook_tool, inv[ci]);
+    cook(cook_tool, food);
     return true;
 }
 
 
 
-bool _magic_185()
+// Fishing
+bool _magic_185(Item& rod)
 {
     if (sdata(185, 0) == 0)
     {
@@ -639,7 +656,7 @@ bool _magic_185()
         txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
         return false;
     }
-    if (inv[ci].count == 0)
+    if (rod.count == 0)
     {
         txt(i18n::s.get("core.magic.fish.need_bait"));
         return false;
@@ -726,10 +743,10 @@ bool _magic_185()
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    item_separate(ci);
-    --inv[ci].count;
+    item_separate(rod);
+    --rod.count;
     rowactre = 0;
-    spot_fishing();
+    spot_fishing(rod);
     return true;
 }
 
@@ -737,6 +754,7 @@ bool _magic_185()
 
 bool _magic_645_1114();
 
+// Holy Light / Vanquish Hex
 bool _magic_406_407()
 {
     if (is_cursed(efstatus))
@@ -785,6 +803,7 @@ bool _magic_406_407()
 
 
 
+// Prayer
 bool _magic_1120()
 {
     txt(i18n::s.get("core.magic.prayer", cdata[tc]),
@@ -797,6 +816,7 @@ bool _magic_1120()
 
 
 
+// Random craft material
 bool _magic_1117()
 {
     if (tc >= 16)
@@ -839,6 +859,7 @@ bool _magic_1117()
 
 bool _magic_628();
 
+// Eye of Mutation / Mutation
 bool _magic_632_454_1144(bool is_cursed_potion_of_cure_mutation = false)
 {
     if (!is_cursed_potion_of_cure_mutation)
@@ -949,6 +970,7 @@ bool _magic_632_454_1144(bool is_cursed_potion_of_cure_mutation = false)
 
 
 
+// Item: potion of cure mutation
 bool _magic_1121()
 {
     if (tc != 0)
@@ -1017,6 +1039,7 @@ bool _magic_1121()
 
 
 
+// Identify
 bool _magic_411()
 {
     if (cc != 0)
@@ -1034,6 +1057,7 @@ bool _magic_411()
 
 
 
+// Resurrection
 bool _magic_461()
 {
     if (map_data.type == mdata_t::MapType::world_map)
@@ -1101,6 +1125,7 @@ bool _magic_461()
 
 bool _magic_645_1114();
 
+// Uncurse
 bool _magic_412()
 {
     if (efstatus == CurseState::none)
@@ -1137,7 +1162,6 @@ bool _magic_412()
         {
             continue;
         }
-        ci = item.index;
         p = 0;
         if (item.curse_state == CurseState::cursed)
         {
@@ -1208,6 +1232,7 @@ bool _magic_412()
 
 
 
+// Oracle
 bool _magic_413()
 {
     if (tc >= 16)
@@ -1236,6 +1261,7 @@ bool _magic_413()
 
 
 
+// Gain spell stock
 bool _magic_1104()
 {
     if (tc != 0)
@@ -1322,6 +1348,7 @@ bool _magic_1104()
 
 
 
+// Item: potion of descent
 bool _magic_1143()
 {
     if (efstatus == CurseState::blessed)
@@ -1372,6 +1399,7 @@ bool _magic_1143()
 
 
 
+// Item: scroll of gain attribute
 bool _magic_1105()
 {
     for (int cnt = 0;; ++cnt)
@@ -1426,6 +1454,7 @@ bool _magic_1105()
 
 
 
+// Item: scroll of faith
 bool _magic_1107()
 {
     if (tc != 0)
@@ -1471,6 +1500,7 @@ bool _magic_1107()
 
 
 
+// Item: scroll of growth
 bool _magic_1119()
 {
     for (int cnt = 0, cnt_end = (1 + (efstatus == CurseState::blessed));
@@ -1538,6 +1568,7 @@ bool _magic_1119()
 
 
 
+// Lose stats' experience
 bool _magic_1106()
 {
     i = rnd(10) + 10;
@@ -1550,6 +1581,7 @@ bool _magic_1106()
 
 
 
+// Item: troll blood
 bool _magic_1139()
 {
     txt(i18n::s.get("core.magic.troll_blood.apply", cdata[tc]));
@@ -1566,6 +1598,7 @@ bool _magic_1139()
 
 
 
+// Gain stats' potential
 bool _magic_1113()
 {
     if (efstatus == CurseState::blessed)
@@ -1613,6 +1646,7 @@ bool _magic_1113()
 
 
 
+// Vanish
 bool _magic_653()
 {
     if (tc < 57)
@@ -1630,6 +1664,7 @@ bool _magic_653()
 
 
 
+// Sense Object / Magic Map
 bool _magic_430_429()
 {
     if (tc >= 16)
@@ -1708,6 +1743,7 @@ bool _magic_430_429()
 
 
 
+// Decapitation
 bool _magic_658()
 {
     if (cdata[tc].hp > cdata[tc].max_hp / 8)
@@ -1736,6 +1772,7 @@ bool _magic_658()
 
 
 
+// Restore Spirit / Restore Body
 bool _magic_440_439()
 {
     if (efid == 439)
@@ -1824,6 +1861,7 @@ bool _magic_440_439()
 
 
 
+// Wish
 bool _magic_441()
 {
     what_do_you_wish_for();
@@ -1835,6 +1873,7 @@ bool _magic_441()
 
 
 
+// Item: scroll of escape
 bool _magic_1141()
 {
     if (tc != 0)
@@ -1889,6 +1928,7 @@ bool _magic_1141()
 
 
 
+// Return
 bool _magic_428()
 {
     if (tc != 0)
@@ -1919,6 +1959,7 @@ bool _magic_428()
 
 
 
+// Harvest Mana
 bool _magic_621()
 {
     heal_mp(cdata[tc], efp / 2 + rnd_capped(efp / 2 + 1));
@@ -1934,6 +1975,7 @@ bool _magic_621()
 
 
 
+// Absorb Magic
 bool _magic_624()
 {
     heal_mp(cdata[tc], roll(dice1, dice2, bonus));
@@ -1949,6 +1991,7 @@ bool _magic_624()
 
 
 
+// Item: poison
 bool _magic_1108()
 {
     if (is_in_fov(cdata[tc]))
@@ -1970,6 +2013,7 @@ bool _magic_1108()
 
 
 
+// Item: potion of blindness
 bool _magic_1111()
 {
     if (is_in_fov(cdata[tc]))
@@ -1982,6 +2026,7 @@ bool _magic_1111()
 
 
 
+// Item: potion of confusion
 bool _magic_1109()
 {
     if (is_in_fov(cdata[tc]))
@@ -1994,6 +2039,7 @@ bool _magic_1109()
 
 
 
+// Item: potion of paralysis
 bool _magic_1110()
 {
     if (is_in_fov(cdata[tc]))
@@ -2006,6 +2052,7 @@ bool _magic_1110()
 
 
 
+// Item: sleeping drug
 bool _magic_1112()
 {
     if (is_in_fov(cdata[tc]))
@@ -2018,6 +2065,7 @@ bool _magic_1112()
 
 
 
+// Curse / Item: scroll of curse
 bool _magic_645_1114()
 {
     if (efid == 645)
@@ -2027,12 +2075,12 @@ bool _magic_645_1114()
             txt(i18n::s.get("core.magic.curse.spell", cdata[cc], cdata[tc]));
         }
     }
-    p = 75 + sdata(19, tc);
+    int p = 75 + sdata(19, tc);
     if (const auto anticurse = enchantment_find(cdata[tc], 43))
     {
         p += *anticurse / 2;
     }
-    if (rnd_capped(p(0)) > efp / 2 + (is_cursed(efstatus)) * 100)
+    if (rnd_capped(p) > efp / 2 + (is_cursed(efstatus)) * 100)
     {
         return true;
     }
@@ -2047,29 +2095,28 @@ bool _magic_645_1114()
             }
         }
     }
-    i = 0;
+    std::vector<std::reference_wrapper<Item>> candidates;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         if (cdata[tc].body_parts[cnt] % 10000 == 0)
         {
             continue;
         }
-        p(i) = cdata[tc].body_parts[cnt] % 10000 - 1;
-        if (inv[p(i)].curse_state == CurseState::blessed)
+        const auto item_index = cdata[tc].body_parts[cnt] % 10000 - 1;
+        if (inv[item_index].curse_state == CurseState::blessed)
         {
             if (rnd(10))
             {
                 continue;
             }
         }
-        ++i;
+        candidates.emplace_back(std::ref(inv[item_index]));
     }
-    if (i == 0)
+    if (candidates.empty())
     {
-        for (int cnt = 0; cnt < 200; ++cnt)
+        for (int _i = 0; _i < 200; ++_i)
         {
-            const auto& item = get_random_inv(tc);
-            p = item.index;
+            auto& item = get_random_inv(tc);
             if (item.number() == 0)
             {
                 continue;
@@ -2081,30 +2128,32 @@ bool _magic_645_1114()
                     continue;
                 }
             }
-            i = 1;
+            candidates.emplace_back(std::ref(item));
             break;
         }
     }
-    if (i > 0)
+    if (!candidates.empty())
     {
-        i = p(rnd(i(0)));
-        const auto valn = itemname(i, 1, 1);
-        if (inv[i].curse_state == CurseState::cursed)
+        const auto& cursed_item_wr = choice(candidates);
+        auto& cursed_item = cursed_item_wr.get();
+        const auto original_item_name = itemname(cursed_item, 1, false);
+        if (cursed_item.curse_state == CurseState::cursed)
         {
-            inv[i].curse_state = CurseState::doomed;
+            cursed_item.curse_state = CurseState::doomed;
         }
         else
         {
-            inv[i].curse_state = CurseState::cursed;
+            cursed_item.curse_state = CurseState::cursed;
         }
         if (is_in_fov(cdata[tc]))
         {
-            txt(i18n::s.get("core.magic.curse.apply", cdata[tc], valn));
+            txt(i18n::s.get(
+                "core.magic.curse.apply", cdata[tc], original_item_name));
         }
         chara_refresh(tc);
         snd("core.curse3");
         animeload(14, tc);
-        item_stack(tc, inv[i], true);
+        item_stack(tc, cursed_item, true);
     }
     else
     {
@@ -2116,6 +2165,7 @@ bool _magic_645_1114()
 
 
 
+// Weaken resistance
 bool _magic_1118()
 {
     f = 0;
@@ -2147,6 +2197,8 @@ bool _magic_1118()
 
 
 
+// Item: diary of cat sister / diary of younger sister / scroll of ally / diary
+// of young lady
 bool _magic_1138_1123_1122_1137()
 {
     if (cc != 0 && cc < 16)
@@ -2184,6 +2236,7 @@ bool _magic_1138_1123_1122_1137()
 
 
 
+// Dominate
 bool _magic_435()
 {
     if (cc != 0 || tc == 0 || cdata[tc].relationship == 10)
@@ -2200,8 +2253,7 @@ bool _magic_435()
     }
     f = 1;
     {
-        int stat = inv_find(663, cc);
-        if (stat != -1)
+        if (inv_find(ItemId::monster_heart, cc))
         {
             efp = efp * 3 / 2;
         }
@@ -2210,8 +2262,8 @@ bool _magic_435()
     {
         f = 0;
     }
-    if (cdata[tc].quality >= Quality::miracle ||
-        cdata[tc].character_role != 0 || cdata[tc].is_lord_of_dungeon() == 1)
+    if (cdata[tc].quality >= Quality::miracle || cdata[tc].role != Role::none ||
+        cdata[tc].is_lord_of_dungeon() == 1)
     {
         f = -1;
     }
@@ -2234,6 +2286,7 @@ bool _magic_435()
 
 
 
+// Web / Mist of Darkness / Acid Ground / Ether Ground / Fire Wall
 bool _magic_436_437_455_634_456()
 {
     if (efid == 436)
@@ -2323,6 +2376,7 @@ bool _magic_436_437_455_634_456()
 
 
 
+// Item: scroll of name
 bool _magic_1145()
 {
     if (cc != 0)
@@ -2335,14 +2389,16 @@ bool _magic_1145()
     invctrl(0) = 23;
     invctrl(1) = 0;
     snd("core.inv");
-    ctrl_inventory();
-    if (inv[ci].quality < Quality::miracle ||
-        inv[ci].quality == Quality::special)
+    const auto& [menu_result, target_item_opt] = ctrl_inventory();
+    if (!menu_result.succeeded || target_item_opt->quality < Quality::miracle ||
+        target_item_opt->quality == Quality::special)
     {
         txt(i18n::s.get("core.common.it_is_impossible"));
         obvious = 0;
         return true;
     }
+    assert(target_item_opt);
+    auto& target_item = *target_item_opt;
     txt(i18n::s.get("core.magic.name.prompt"));
     {
         int stat = select_alias(3);
@@ -2354,7 +2410,7 @@ bool _magic_1145()
         }
         p = stat;
     }
-    inv[ci].subname = list(1, p) + 40000;
+    target_item.subname = list(1, p) + 40000;
     randomize();
     txt(i18n::s.get("core.magic.name.apply", listn(0, p)));
     return true;
@@ -2362,7 +2418,8 @@ bool _magic_1145()
 
 
 
-bool _magic_49(int efcibk)
+// Item: Garok's hammer
+bool _magic_49(Item& hammer)
 {
     if (cc != 0)
     {
@@ -2374,59 +2431,60 @@ bool _magic_49(int efcibk)
     invctrl(0) = 23;
     invctrl(1) = 7;
     snd("core.inv");
+    const auto& [menu_result, target_item_opt] = ctrl_inventory();
+    if (!menu_result.succeeded)
     {
-        MenuResult result = ctrl_inventory();
-        if (!result.succeeded)
-        {
-            return true;
-        }
+        return true;
     }
-    if (inv[ci].quality >= Quality::miracle || inv[ci].is_alive())
+    assert(target_item_opt);
+    auto& target_item = *target_item_opt;
+    if (target_item.quality >= Quality::miracle || target_item.is_alive())
     {
         txt(i18n::s.get("core.magic.garoks_hammer.no_effect"));
         fixmaterial = 0;
         objfix = 0;
         return true;
     }
-    randomize(inv[efcibk].param1);
-    equip = inv[ci].body_part;
+    randomize(hammer.param1);
+    equip = target_item.body_part;
     animeload(8, cc);
-    inv[ci].quality = Quality::miracle;
-    change_item_material(inv[ci], inv[ci].material);
-    randomize(inv[efcibk].param1);
-    inv[ci].subname = 40000 + rnd(30000);
+    target_item.quality = Quality::miracle;
+    change_item_material(target_item, target_item.material);
+    randomize(hammer.param1);
+    target_item.subname = 40000 + rnd(30000);
     p = rnd(rnd(rnd(10) + 1) + 3) + 3;
     egolv = rnd(clamp(rnd(6), 0, 4) + 1);
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
-        randomize(inv[efcibk].param1);
+        randomize(hammer.param1);
         enchantment_add(
-            inv[ci],
+            target_item,
             enchantment_generate(enchantment_gen_level(egolv)),
             enchantment_gen_p() + (fixlv == Quality::godly) * 100 +
-                (inv[ci].is_eternal_force()) * 100,
+                (target_item.is_eternal_force()) * 100,
             20 - (fixlv == Quality::godly) * 10 -
-                (inv[ci].is_eternal_force()) * 20);
+                (target_item.is_eternal_force()) * 20);
     }
     randomize();
-    txt(i18n::s.get("core.magic.garoks_hammer.apply", inv[ci]));
+    txt(i18n::s.get("core.magic.garoks_hammer.apply", target_item));
     if (equip != 0)
     {
         cdata[cc].body_parts[equip - 100] =
-            cdata[cc].body_parts[equip - 100] / 10000 * 10000 + ci + 1;
-        inv[ci].body_part = equip;
+            cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
+            target_item.index + 1;
+        target_item.body_part = equip;
     }
     chara_refresh(cc);
     fixmaterial = 0;
     objfix = 0;
-    ci = efcibk;
-    inv[ci].modify_number(-1);
+    hammer.modify_number(-1);
     save_set_autosave();
     return true;
 }
 
 
 
+// Item: scroll of change material
 bool _magic_21_1127()
 {
     if (cc != 0)
@@ -2439,21 +2497,26 @@ bool _magic_21_1127()
     invctrl(0) = 23;
     invctrl(1) = 0;
     snd("core.inv");
+
+    const auto& [menu_result, target_item_opt] = ctrl_inventory();
+    f = menu_result.succeeded ? 1 : 0;
+    if (f)
     {
-        MenuResult result = ctrl_inventory();
-        f = result.succeeded ? 1 : 0;
-    }
-    if (inv[ci].quality == Quality::godly || inv[ci].is_alive())
-    {
-        if (efid == 1127)
+        if (target_item_opt->quality == Quality::godly ||
+            target_item_opt->is_alive())
         {
-            f = 0;
+            if (efid == 1127)
+            {
+                f = 0;
+            }
         }
     }
-    equip = inv[ci].body_part;
     if (f == 1)
     {
-        if (inv[ci].quality == Quality::special)
+        assert(target_item_opt);
+        auto& target_item = *target_item_opt;
+        equip = target_item.body_part;
+        if (target_item.quality == Quality::special)
         {
             if (efp < 350)
             {
@@ -2465,10 +2528,19 @@ bool _magic_21_1127()
             txt(i18n::s.get(
                 "core.magic.change_material.artifact_reconstructed",
                 cdata[cc],
-                inv[ci]));
-            inv[ci].modify_number(-1);
+                target_item));
+            target_item.modify_number(-1);
             flt();
-            itemcreate_player_inv(itemid2int(inv[ci].id), 0);
+            const auto reconstructed_artifact =
+                itemcreate_player_inv(itemid2int(target_item.id), 0);
+            assert(reconstructed_artifact);
+            if (equip != 0)
+            {
+                cdata[cc].body_parts[equip - 100] =
+                    cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
+                    reconstructed_artifact->index + 1;
+                reconstructed_artifact->body_part = equip;
+            }
         }
         else
         {
@@ -2482,25 +2554,29 @@ bool _magic_21_1127()
                     material = 35;
                 }
             }
-            s = itemname(ci, 1, 1);
+            s = itemname(target_item, 1, false);
             objlv = efp / 10;
             objfix = efp / 100;
             randomize();
-            change_item_material(inv[ci], material);
+            change_item_material(target_item, material);
             txt(i18n::s.get(
-                "core.magic.change_material.apply", cdata[cc], s(0), inv[ci]));
+                "core.magic.change_material.apply",
+                cdata[cc],
+                s(0),
+                target_item));
+            if (equip != 0)
+            {
+                cdata[cc].body_parts[equip - 100] =
+                    cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
+                    target_item.index + 1;
+                target_item.body_part = equip;
+            }
         }
     }
     else
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
-    }
-    if (equip != 0)
-    {
-        cdata[cc].body_parts[equip - 100] =
-            cdata[cc].body_parts[equip - 100] / 10000 * 10000 + ci + 1;
-        inv[ci].body_part = equip;
     }
     chara_refresh(cc);
     fixmaterial = 0;
@@ -2510,6 +2586,7 @@ bool _magic_21_1127()
 
 
 
+// Item: deed of inheritance
 bool _magic_1128()
 {
     if (cc != 0)
@@ -2531,6 +2608,7 @@ bool _magic_1128()
 
 
 
+// Item: scroll of enchant weapon / armor
 bool _magic_1124_1125()
 {
     if (cc != 0)
@@ -2550,32 +2628,33 @@ bool _magic_1124_1125()
         invctrl(1) = 2;
     }
     snd("core.inv");
+    const auto& [menu_result, target_item_opt] = ctrl_inventory();
+    if (menu_result.succeeded)
     {
-        MenuResult result = ctrl_inventory();
-        if (result.succeeded)
+        assert(target_item_opt);
+        auto& target_item = *target_item_opt;
+        if (target_item.enhancement < efp / 100)
         {
-            if (inv[ci].enhancement < efp / 100)
-            {
-                snd("core.ding2");
-                txt(i18n::s.get("core.magic.enchant.apply", inv[ci]));
-                ++inv[ci].enhancement;
-            }
-            else
-            {
-                txt(i18n::s.get("core.magic.enchant.resist", inv[ci]));
-            }
-            chara_refresh(cc);
+            snd("core.ding2");
+            txt(i18n::s.get("core.magic.enchant.apply", target_item));
+            ++target_item.enhancement;
         }
         else
         {
-            obvious = 0;
+            txt(i18n::s.get("core.magic.enchant.resist", target_item));
         }
+        chara_refresh(cc);
+    }
+    else
+    {
+        obvious = 0;
     }
     return true;
 }
 
 
 
+// Fill Charge / Item: scroll of charge
 bool _magic_630_1129()
 {
     if (cc != 0)
@@ -2599,86 +2678,89 @@ bool _magic_630_1129()
     invctrl(0) = 23;
     invctrl(1) = 3;
     snd("core.inv");
+
+    const auto& [menu_result, target_item_opt] = ctrl_inventory();
+    if (menu_result.succeeded)
     {
-        MenuResult result = ctrl_inventory();
-        if (result.succeeded)
+        assert(target_item_opt);
+        auto& target_item = *target_item_opt;
+        item_db_get_charge_level(target_item, itemid2int(target_item.id));
+        if (ichargelevel < 1 || target_item.id == ItemId::rod_of_wishing ||
+            target_item.id == ItemId::rod_of_domination ||
+            target_item.id == ItemId::spellbook_of_wishing ||
+            target_item.id == ItemId::spellbook_of_harvest ||
+            (target_item.id == ItemId::ancient_book && target_item.param2 != 0))
         {
-            item_db_get_charge_level(inv[ci], itemid2int(inv[ci].id));
-            if (ichargelevel < 1 || inv[ci].id == ItemId::rod_of_wishing ||
-                inv[ci].id == ItemId::rod_of_domination ||
-                inv[ci].id == ItemId::spellbook_of_wishing ||
-                inv[ci].id == ItemId::spellbook_of_harvest ||
-                (inv[ci].id == ItemId::ancient_book && inv[ci].param2 != 0))
-            {
-                txt(i18n::s.get("core.magic.fill_charge.cannot_recharge"));
-                return true;
-            }
-            f = 1;
-            if (inv[ci].count > ichargelevel)
-            {
-                f = -1;
-            }
-            if (f == -1)
-            {
-                txt(i18n::s.get(
-                    "core.magic.fill_charge.cannot_recharge_anymore", inv[ci]));
-                return true;
-            }
-            if (rnd_capped(efp / 25 + 1) == 0)
+            txt(i18n::s.get("core.magic.fill_charge.cannot_recharge"));
+            return true;
+        }
+        f = 1;
+        if (target_item.count > ichargelevel)
+        {
+            f = -1;
+        }
+        if (f == -1)
+        {
+            txt(i18n::s.get(
+                "core.magic.fill_charge.cannot_recharge_anymore", target_item));
+            return true;
+        }
+        if (rnd_capped(efp / 25 + 1) == 0)
+        {
+            f = 0;
+        }
+        if (the_item_db[itemid2int(target_item.id)]->category ==
+            ItemCategory::spellbook)
+        {
+            if (rnd(4) == 0)
             {
                 f = 0;
             }
-            if (the_item_db[itemid2int(inv[ci].id)]->category ==
+        }
+        if (rnd(ichargelevel * ichargelevel + 1) == 0)
+        {
+            f = 0;
+        }
+        if (f == 1)
+        {
+            p = 1 + rnd((ichargelevel / 2 + 1));
+            if (p + target_item.count > ichargelevel)
+            {
+                p = ichargelevel - target_item.count + 1;
+            }
+            if (the_item_db[itemid2int(target_item.id)]->category ==
                 ItemCategory::spellbook)
             {
-                if (rnd(4) == 0)
-                {
-                    f = 0;
-                }
+                p = 1;
             }
-            if (rnd(ichargelevel * ichargelevel + 1) == 0)
-            {
-                f = 0;
-            }
-            if (f == 1)
-            {
-                p = 1 + rnd((ichargelevel / 2 + 1));
-                if (p + inv[ci].count > ichargelevel)
-                {
-                    p = ichargelevel - inv[ci].count + 1;
-                }
-                if (the_item_db[itemid2int(inv[ci].id)]->category ==
-                    ItemCategory::spellbook)
-                {
-                    p = 1;
-                }
-                txt(i18n::s.get("core.magic.fill_charge.apply", inv[ci], p(0)));
-                inv[ci].count += p;
-                animeload(8, cc);
-            }
-            else
-            {
-                if (rnd(4) == 0)
-                {
-                    txt(i18n::s.get(
-                        "core.magic.fill_charge.explodes", inv[ci]));
-                    inv[ci].modify_number(-1);
-                    refresh_burden_state();
-                    return true;
-                }
-                txt(i18n::s.get("core.magic.fill_charge.fail", inv[ci]));
-            }
+            txt(i18n::s.get("core.magic.fill_charge.apply", target_item, p(0)));
+            target_item.count += p;
+            animeload(8, cc);
         }
         else
         {
-            obvious = 0;
+            if (rnd(4) == 0)
+            {
+                txt(i18n::s.get(
+                    "core.magic.fill_charge.explodes", target_item));
+                target_item.modify_number(-1);
+                refresh_burden_state();
+                return true;
+            }
+            txt(i18n::s.get("core.magic.fill_charge.fail", target_item));
         }
     }
+    else
+    {
+        obvious = 0;
+    }
+
     return true;
 }
 
 
 
+// Draw Charge
 bool _magic_629()
 {
     if (cc != 0)
@@ -2691,52 +2773,55 @@ bool _magic_629()
     invctrl(0) = 23;
     invctrl(1) = 5;
     snd("core.inv");
+
+    const auto& [menu_result, target_item_opt] = ctrl_inventory();
+    if (menu_result.succeeded)
     {
-        MenuResult result = ctrl_inventory();
-        if (result.succeeded)
+        assert(target_item_opt);
+        auto& target_item = *target_item_opt;
+        item_db_get_charge_level(target_item, itemid2int(target_item.id));
+        for (int cnt = 0; cnt < 1; ++cnt)
         {
-            item_db_get_charge_level(inv[ci], itemid2int(inv[ci].id));
-            for (int cnt = 0; cnt < 1; ++cnt)
+            if (ichargelevel == 1)
             {
-                if (ichargelevel == 1)
-                {
-                    p = 100;
-                    break;
-                }
-                if (ichargelevel == 2)
-                {
-                    p = 25;
-                    break;
-                }
-                if (ichargelevel <= 4)
-                {
-                    p = 5;
-                    break;
-                }
-                if (ichargelevel <= 6)
-                {
-                    p = 3;
-                    break;
-                }
-                p = 1;
+                p = 100;
+                break;
             }
-            animeload(8, cc);
-            p = p * inv[ci].count;
-            game_data.charge_power += p;
-            txt(i18n::s.get(
-                "core.magic.draw_charge",
-                inv[ci],
-                p(0),
-                game_data.charge_power));
-            inv[ci].remove();
-            refresh_burden_state();
+            if (ichargelevel == 2)
+            {
+                p = 25;
+                break;
+            }
+            if (ichargelevel <= 4)
+            {
+                p = 5;
+                break;
+            }
+            if (ichargelevel <= 6)
+            {
+                p = 3;
+                break;
+            }
+            p = 1;
         }
+        animeload(8, cc);
+        p = p * target_item.count;
+        game_data.charge_power += p;
+        txt(i18n::s.get(
+            "core.magic.draw_charge",
+            target_item,
+            p(0),
+            game_data.charge_power));
+        target_item.remove();
+        refresh_burden_state();
     }
+
     return true;
 }
 
 
 
+// Change
 bool _magic_628()
 {
     if (tc == 0)
@@ -2750,9 +2835,8 @@ bool _magic_628()
     {
         f = 0;
     }
-    if (cdata[tc].quality >= Quality::miracle ||
-        cdata[tc].character_role != 0 || cdata[tc].is_escorted() == 1 ||
-        cdata[tc].is_lord_of_dungeon() == 1)
+    if (cdata[tc].quality >= Quality::miracle || cdata[tc].role != Role::none ||
+        cdata[tc].is_escorted() == 1 || cdata[tc].is_lord_of_dungeon() == 1)
     {
         f = -1;
     }
@@ -2784,6 +2868,7 @@ bool _magic_628()
 
 
 
+// Item: scroll of flying
 bool _magic_1140()
 {
     if (cc != 0)
@@ -2796,61 +2881,64 @@ bool _magic_1140()
     invctrl(0) = 23;
     invctrl(1) = 6;
     snd("core.inv");
+
+    const auto& [menu_result, target_item_opt] = ctrl_inventory();
+    if (menu_result.succeeded)
     {
-        MenuResult result = ctrl_inventory();
-        if (result.succeeded)
+        assert(target_item_opt);
+        auto& target_item = *target_item_opt;
+        save_set_autosave();
+        animeload(8, cc);
+        if (!is_cursed(efstatus))
         {
-            save_set_autosave();
-            animeload(8, cc);
-            if (!is_cursed(efstatus))
+            if (target_item.weight > 0)
             {
-                if (inv[ci].weight > 0)
+                target_item.weight = clamp(
+                    target_item.weight * (100 - efp / 10) / 100,
+                    1,
+                    target_item.weight);
+                if (target_item.pv > 0)
                 {
-                    inv[ci].weight = clamp(
-                        inv[ci].weight * (100 - efp / 10) / 100,
-                        1,
-                        inv[ci].weight);
-                    if (inv[ci].pv > 0)
-                    {
-                        inv[ci].pv -= inv[ci].pv / 10 + 1 +
-                            (efstatus != CurseState::blessed);
-                    }
-                    if (inv[ci].damage_bonus > 0)
-                    {
-                        inv[ci].damage_bonus -= inv[ci].damage_bonus / 10 + 1 +
-                            (efstatus != CurseState::blessed);
-                    }
+                    target_item.pv -= target_item.pv / 10 + 1 +
+                        (efstatus != CurseState::blessed);
                 }
-                txt(i18n::s.get("core.magic.flying.apply", inv[ci]));
+                if (target_item.damage_bonus > 0)
+                {
+                    target_item.damage_bonus -= target_item.damage_bonus / 10 +
+                        1 + (efstatus != CurseState::blessed);
+                }
             }
-            else
-            {
-                inv[ci].weight = inv[ci].weight * 150 / 100 + 1000;
-                if (inv[ci].pv > 0)
-                {
-                    inv[ci].pv += clamp(inv[ci].pv / 10, 1, 5);
-                }
-                if (inv[ci].damage_bonus > 0)
-                {
-                    inv[ci].damage_bonus +=
-                        clamp(inv[ci].damage_bonus / 10, 1, 5);
-                }
-                txt(i18n::s.get("core.magic.flying.cursed", inv[ci]));
-            }
-            refresh_burden_state();
+            txt(i18n::s.get("core.magic.flying.apply", target_item));
         }
         else
         {
-            txt(i18n::s.get("core.common.nothing_happens"));
-            obvious = 0;
+            target_item.weight = target_item.weight * 150 / 100 + 1000;
+            if (target_item.pv > 0)
+            {
+                target_item.pv += clamp(target_item.pv / 10, 1, 5);
+            }
+            if (target_item.damage_bonus > 0)
+            {
+                target_item.damage_bonus +=
+                    clamp(target_item.damage_bonus / 10, 1, 5);
+            }
+            txt(i18n::s.get("core.magic.flying.cursed", target_item));
         }
+        refresh_burden_state();
     }
+    else
+    {
+        txt(i18n::s.get("core.common.nothing_happens"));
+        obvious = 0;
+    }
+
     chara_refresh(cc);
     return true;
 }
 
 
 
+// Item: rod of alchemy
 bool _magic_1132(int& fltbk, int& valuebk)
 {
     if (cc != 0)
@@ -2863,24 +2951,28 @@ bool _magic_1132(int& fltbk, int& valuebk)
     invctrl(0) = 23;
     invctrl(1) = 4;
     snd("core.inv");
-    {
-        MenuResult result = ctrl_inventory();
-        f = result.succeeded ? 1 : 0;
-    }
+
+    const auto& [menu_result, target_item_opt] = ctrl_inventory();
+    f = menu_result.succeeded ? 1 : 0;
+
     if (f)
     {
-        if (inv[ci].quality > Quality::miracle || inv[ci].is_precious())
+        assert(target_item_opt);
+        if (target_item_opt->quality > Quality::miracle ||
+            target_item_opt->is_precious())
         {
             f = 0;
         }
     }
     if (f == 1)
     {
+        assert(target_item_opt);
+        auto& target_item = *target_item_opt;
         save_set_autosave();
         animeload(8, cc);
-        fltbk = (int)the_item_db[itemid2int(inv[ci].id)]->category;
-        valuebk = calcitemvalue(inv[ci], 0);
-        inv[ci].remove();
+        fltbk = (int)the_item_db[itemid2int(target_item.id)]->category;
+        valuebk = calcitemvalue(target_item, 0);
+        target_item.remove();
         for (int cnt = 0;; ++cnt)
         {
             flt(calcobjlv(efp / 10) + 5, calcfixlv(Quality::good));
@@ -2897,6 +2989,7 @@ bool _magic_1132(int& fltbk, int& valuebk)
                 }
                 else
                 {
+                    txt(i18n::s.get("core.magic.alchemy", *item));
                     break;
                 }
             }
@@ -2905,7 +2998,6 @@ bool _magic_1132(int& fltbk, int& valuebk)
                 continue;
             }
         }
-        txt(i18n::s.get("core.magic.alchemy", inv[ci]));
         refresh_burden_state();
     }
     else
@@ -2918,6 +3010,7 @@ bool _magic_1132(int& fltbk, int& valuebk)
 
 
 
+// Door Creation / Wall Creation
 bool _magic_457_438()
 {
     x = tlocx;
@@ -2998,6 +3091,7 @@ bool _magic_457_438()
 
 
 
+// Swarm
 bool _magic_631()
 {
     txt(i18n::s.get("core.magic.swarm"), Message::color{ColorIndex::blue});
@@ -3039,6 +3133,7 @@ bool _magic_631()
 
 
 
+// Drop Mine
 bool _magic_659()
 {
     if (map_data.type == mdata_t::MapType::world_map)
@@ -3059,6 +3154,7 @@ bool _magic_659()
 
 
 
+// Gravity
 bool _magic_466()
 {
     for (auto&& cnt : cdata.all())
@@ -3093,6 +3189,7 @@ bool _magic_466()
 
 
 
+// Mewmewmew!
 bool _magic_657()
 {
     txt(i18n::s.get("core.magic.mewmewmew"), Message::color{ColorIndex::blue});
@@ -3120,6 +3217,7 @@ bool _magic_657()
 
 
 
+// Meteor
 bool _magic_465()
 {
     txt(i18n::s.get("core.magic.meteor"), Message::color{ColorIndex::blue});
@@ -3151,6 +3249,7 @@ bool _magic_465()
 
 
 
+// Cheer
 bool _magic_656()
 {
     if (is_in_fov(cdata[cc]))
@@ -3206,6 +3305,7 @@ bool _magic_656()
 
 
 
+// Item: potion of cure corruption
 bool _magic_1131()
 {
     if (tc != 0)
@@ -3231,6 +3331,7 @@ bool _magic_1131()
 
 
 
+// Eye of Ether
 bool _magic_633()
 {
     if (tc != 0)
@@ -3245,6 +3346,7 @@ bool _magic_633()
 
 
 
+// Eye of Dimness
 bool _magic_638_648()
 {
     if (efid == 648)
@@ -3277,6 +3379,7 @@ bool _magic_638_648()
 
 
 
+// Insult
 bool _magic_652()
 {
     if (is_in_fov(cdata[tc]))
@@ -3289,6 +3392,7 @@ bool _magic_652()
 
 
 
+// Item: molotov
 bool _magic_1133()
 {
     if (is_in_fov(cdata[tc]))
@@ -3309,14 +3413,15 @@ bool _magic_1133()
 
 
 
+// Scavenge
 bool _magic_651()
 {
     if (is_in_fov(cdata[tc]))
     {
         txt(i18n::s.get("core.magic.scavenge.apply", cdata[cc], cdata[tc]));
     }
-    p = -1;
-    for (const auto& item : inv.for_chara(cdata[tc]))
+    optional_ref<Item> eat_item_opt;
+    for (auto&& item : inv.for_chara(cdata[tc]))
     {
         if (item.number() == 0)
         {
@@ -3324,13 +3429,13 @@ bool _magic_651()
         }
         if (item.id == ItemId::fish_a)
         {
-            p = item.index;
+            eat_item_opt = item;
             break;
         }
     }
-    if (p == -1)
+    if (!eat_item_opt)
     {
-        for (const auto& item : inv.for_chara(cdata[tc]))
+        for (auto&& item : inv.for_chara(cdata[tc]))
         {
             if (item.number() == 0)
             {
@@ -3345,37 +3450,38 @@ bool _magic_651()
             {
                 continue;
             }
-            p = item.index;
+            eat_item_opt = item;
             break;
         }
     }
-    if (p == -1)
+    if (!eat_item_opt)
     {
         return true;
     }
-    ci = p;
-    if (inv[ci].is_aphrodisiac())
+    auto& eat_item = *eat_item_opt;
+    if (eat_item.is_aphrodisiac())
     {
         if (is_in_fov(cdata[tc]))
         {
-            txt(i18n::s.get("core.magic.scavenge.rotten", cdata[cc], inv[ci]));
+            txt(i18n::s.get("core.magic.scavenge.rotten", cdata[cc], eat_item));
         }
         return true;
     }
-    rowact_item(inv[ci]);
+    rowact_item(eat_item);
     if (is_in_fov(cdata[tc]))
     {
         snd("core.eat1");
-        txt(i18n::s.get("core.magic.scavenge.eats", cdata[cc], inv[ci]));
+        txt(i18n::s.get("core.magic.scavenge.eats", cdata[cc], eat_item));
     }
     heal_hp(cdata[cc], cdata[cc].max_hp / 3);
-    activity_eating_finish(cdata[cc], inv[ci]);
+    activity_eating_finish(cdata[cc], eat_item);
     refresh_burden_state();
     return true;
 }
 
 
 
+// Wizard's Harvest
 bool _magic_464()
 {
     bool fastest = g_config.animation_wait() == 0;
@@ -3404,17 +3510,21 @@ bool _magic_464()
             number = 1;
         }
         nostack = 1;
-        itemcreate_extra_inv(item_id, cdata[cc].position, number);
-        const auto message = i18n::s.get("core.magic.wizards_harvest", inv[ci]);
-        if (fastest)
+        if (const auto item =
+                itemcreate_extra_inv(item_id, cdata[cc].position, number))
         {
-            messages += message;
-        }
-        else
-        {
-            txt(message);
-            await(g_config.animation_wait() * 4);
-            redraw();
+            const auto message =
+                i18n::s.get("core.magic.wizards_harvest", *item);
+            if (fastest)
+            {
+                messages += message;
+            }
+            else
+            {
+                txt(message);
+                await(g_config.animation_wait() * 4);
+                redraw();
+            }
         }
     }
     if (fastest)
@@ -3427,6 +3537,7 @@ bool _magic_464()
 
 
 
+// 4-Dimentional Pocket
 bool _magic_463()
 {
     snd("core.teleport1");
@@ -4474,12 +4585,12 @@ optional<bool> _proc_general_magic()
 
 
 
-bool _proc_magic(int efid, int efcibk, int& fltbk, int& valuebk)
+bool _proc_magic(optional_ref<Item> efitem, int efid, int& fltbk, int& valuebk)
 {
     switch (efid)
     {
     case 636: return _magic_636();
-    case 1136: return _magic_1136();
+    case 1136: assert(efitem); return _magic_1136(*efitem);
     case 1135: return _magic_1135();
     case 654: return _magic_654();
     case 626: return _magic_626();
@@ -4493,9 +4604,9 @@ bool _proc_magic(int efid, int efcibk, int& fltbk, int& valuebk)
     case 1130: return _magic_1130();
     case 300: return _magic_300();
     case 301: return _magic_301();
-    case 183: return _magic_183();
-    case 184: return _magic_184();
-    case 185: return _magic_185();
+    case 183: return _magic_183(efitem);
+    case 184: assert(efitem); return _magic_184(*efitem);
+    case 185: assert(efitem); return _magic_185(*efitem);
     case 406:
     case 407: return _magic_406_407();
     case 1120: return _magic_1120();
@@ -4546,7 +4657,7 @@ bool _proc_magic(int efid, int efcibk, int& fltbk, int& valuebk)
     case 634:
     case 456: return _magic_436_437_455_634_456();
     case 1145: return _magic_1145();
-    case 49: return _magic_49(efcibk);
+    case 49: assert(efitem); return _magic_49(*efitem);
     case 21:
     case 1127: return _magic_21_1127();
     case 1128: return _magic_1128();
@@ -4586,9 +4697,8 @@ bool _proc_magic(int efid, int efcibk, int& fltbk, int& valuebk)
 namespace elona
 {
 
-bool magic()
+bool magic(optional_ref<Item> efitem)
 {
-    int efcibk = ci;
     int fltbk = 0;
     int valuebk = 0;
     efcancel = 0;
@@ -4600,7 +4710,6 @@ bool magic()
     efsource = 0;
 
     lib::scope_guard restore([&]() {
-        ci = efcibk;
         efstatus = CurseState::none;
         efsource = 0;
     });
@@ -4627,7 +4736,7 @@ bool magic()
         }
     }
 
-    return _proc_magic(efid, efcibk, fltbk, valuebk);
+    return _proc_magic(efitem, efid, fltbk, valuebk);
 }
 
 } // namespace elona

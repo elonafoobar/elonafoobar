@@ -163,9 +163,6 @@ void initialize_lua()
 
     // Remove unknown event types from the event tables.
     lua::lua->get_event_manager().remove_unknown_events();
-
-    // Run user/console.lua.
-    lua::lua->get_console().run_userscript();
 }
 
 
@@ -379,15 +376,22 @@ void initialize_elona()
     initialize_nefia_names();
     initialize_home_adata();
     initialize_damage_popups();
+    // if (g_config.sound())
+    {
+        bool ok = audio_init_sound();
+        if (!ok)
+        {
+            throw std::runtime_error{"failed to init sound"};
+        }
+    }
     if (g_config.music())
     {
-        bool err = DMINIT() == 0;
-        if (err)
+        bool ok = audio_init_music();
+        if (!ok)
         {
             throw std::runtime_error{"failed to init music"};
         }
     }
-    DSINIT();
     if (g_config.joypad())
     {
         DIINIT();
@@ -396,7 +400,6 @@ void initialize_elona()
             throw std::runtime_error{"failed to init joypad"};
         }
     }
-    initialize_sound_file();
     mainskill(0) = 173;
     mainskill(1) = 106;
     mainskill(2) = 108;
@@ -914,15 +917,6 @@ void initialize_set_of_random_generation()
     isetthrowpotiongreater(4) = 429;
     isetthrowpotiongreater(5) = 29;
     isetthrowpotiongreater(6) = 577;
-    isethire(0) = 205;
-    isethire(1) = 70;
-    isethire(2) = 74;
-    isethire(3) = 41;
-    isethire(4) = 69;
-    isethire(5) = 76;
-    isethire(6) = 1;
-    isethire(7) = 1;
-    isethire(8) = 1;
     isetgiftminor(0) = 753;
     isetgiftminor(1) = 754;
     isetgiftminor(2) = 754;
@@ -959,15 +953,6 @@ void initialize_set_of_random_generation()
     isetgiftgrand(3) = 758;
     isetgiftgrand(4) = 759;
     isetgiftgrand(5) = 761;
-    isethirerole(0) = 18;
-    isethirerole(1) = 9;
-    isethirerole(2) = 12;
-    isethirerole(3) = 5;
-    isethirerole(4) = 8;
-    isethirerole(5) = 14;
-    isethirerole(6) = 1008;
-    isethirerole(7) = 1008;
-    isethirerole(8) = 1008;
     isetcrop(0) = 180;
     isetcrop(1) = 181;
     isetcrop(2) = 197;

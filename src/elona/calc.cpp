@@ -398,7 +398,11 @@ int calc_evasion(int cc)
 }
 
 
-int calc_accuracy(bool consider_distance)
+
+int calc_accuracy(
+    optional_ref<Item> weapon,
+    optional_ref<Item> ammo,
+    bool consider_distance)
 {
     critical = 0;
     int accuracy;
@@ -407,7 +411,7 @@ int calc_accuracy(bool consider_distance)
     {
         accuracy =
             sdata(12, cc) / 5 + sdata(10, cc) / 2 + sdata(attackskill, cc) + 50;
-        if (cdata[cc].equipment_type & 1)
+        if (cdata[cc].combat_style.shield())
         {
             accuracy = accuracy * 100 / 130;
         }
@@ -416,12 +420,12 @@ int calc_accuracy(bool consider_distance)
     }
     else
     {
-        accuracy = sdata(12, cc) / 4 + sdata(inv[cw].skill, cc) / 3 +
+        accuracy = sdata(12, cc) / 4 + sdata(weapon->skill, cc) / 3 +
             sdata(attackskill, cc) + 50;
-        accuracy += cdata[cc].hit_bonus + inv[cw].hit_bonus;
-        if (ammo != -1)
+        accuracy += cdata[cc].hit_bonus + weapon->hit_bonus;
+        if (ammo)
         {
-            accuracy += inv[ammo].hit_bonus;
+            accuracy += ammo->hit_bonus;
         }
     }
 
@@ -441,33 +445,33 @@ int calc_accuracy(bool consider_distance)
                     0,
                     9);
                 const auto effective_range =
-                    calc_effective_range(itemid2int(inv[cw].id));
+                    calc_effective_range(itemid2int(weapon->id));
                 accuracy = accuracy * effective_range[rangedist] / 100;
             }
         }
         else
         {
-            if (cdata[cc].equipment_type & 2)
+            if (cdata[cc].combat_style.two_hand())
             {
                 accuracy += 25;
-                if (inv[cw].weight >= 4000)
+                if (weapon->weight >= 4000)
                 {
                     accuracy += sdata(167, cc);
                 }
             }
-            else if (cdata[cc].equipment_type & 4)
+            else if (cdata[cc].combat_style.dual_wield())
             {
                 if (attacknum == 1)
                 {
-                    if (inv[cw].weight >= 4000)
+                    if (weapon->weight >= 4000)
                     {
-                        accuracy -= (inv[cw].weight - 4000 + 400) /
+                        accuracy -= (weapon->weight - 4000 + 400) /
                             (10 + sdata(166, cc) / 5);
                     }
                 }
-                else if (inv[cw].weight > 1500)
+                else if (weapon->weight > 1500)
                 {
-                    accuracy -= (inv[cw].weight - 1500 + 100) /
+                    accuracy -= (weapon->weight - 1500 + 100) /
                         (10 + sdata(166, cc) / 5);
                 }
             }
@@ -481,10 +485,10 @@ int calc_accuracy(bool consider_distance)
             accuracy =
                 accuracy * 100 / clamp((150 - sdata(301, cc) / 2), 115, 150);
             if (attackskill != 106 && attackrange == 0 &&
-                inv[cw].weight >= 4000)
+                weapon->weight >= 4000)
             {
                 accuracy -=
-                    (inv[cw].weight - 4000 + 400) / (10 + sdata(301, cc) / 5);
+                    (weapon->weight - 4000 + 400) / (10 + sdata(301, cc) / 5);
             }
         }
         if (cc == game_data.mount)
@@ -492,10 +496,10 @@ int calc_accuracy(bool consider_distance)
             accuracy =
                 accuracy * 100 / clamp((150 - sdata(10, cc) / 2), 115, 150);
             if (attackskill != 106 && attackrange == 0 &&
-                inv[cw].weight >= 4000)
+                weapon->weight >= 4000)
             {
                 accuracy -=
-                    (inv[cw].weight - 4000 + 400) / (10 + sdata(10, cc) / 10);
+                    (weapon->weight - 4000 + 400) / (10 + sdata(10, cc) / 10);
             }
         }
     }
@@ -515,9 +519,9 @@ int calc_accuracy(bool consider_distance)
 
 
 
-int calcattackhit()
+int calcattackhit(optional_ref<Item> weapon, optional_ref<Item> ammo)
 {
-    int tohit = calc_accuracy(true);
+    int tohit = calc_accuracy(weapon, ammo, true);
     int evasion = calc_evasion(tc);
 
     if (cdata[tc].dimmed != 0)
@@ -615,10 +619,11 @@ int calcattackhit()
 
 
 
-int calcattackdmg(AttackDamageCalculationMode mode)
+int calcattackdmg(
+    optional_ref<Item> weapon,
+    optional_ref<Item> ammo,
+    AttackDamageCalculationMode mode)
 {
-    int prot2 = 0;
-    int protfix = 0;
     int damagepierce = 0;
     int damagenormal = 0;
     int pierce;
@@ -637,17 +642,16 @@ int calcattackdmg(AttackDamageCalculationMode mode)
     }
     else
     {
-        dmgfix = cdata[cc].damage_bonus + inv[cw].damage_bonus +
-            inv[cw].enhancement + (inv[cw].curse_state == CurseState::blessed);
-        dice1 = inv[cw].dice_x;
-        dice2 = inv[cw].dice_y;
-        if (ammo != -1)
+        dmgfix = cdata[cc].damage_bonus + weapon->damage_bonus +
+            weapon->enhancement + (weapon->curse_state == CurseState::blessed);
+        dice1 = weapon->dice_x;
+        dice2 = weapon->dice_y;
+        if (ammo)
         {
-            dmgfix += inv[ammo].damage_bonus +
-                inv[ammo].dice_x * inv[ammo].dice_y / 2;
+            dmgfix += ammo->damage_bonus + ammo->dice_x * ammo->dice_y / 2;
             dmgmulti = 0.5 +
                 double(
-                    (sdata(13, cc) + sdata(inv[cw].skill, cc) / 5 +
+                    (sdata(13, cc) + sdata(weapon->skill, cc) / 5 +
                      sdata(attackskill, cc) / 5 + sdata(189, cc) * 3 / 2)) /
                     40;
         }
@@ -655,24 +659,24 @@ int calcattackdmg(AttackDamageCalculationMode mode)
         {
             dmgmulti = 0.6 +
                 double(
-                    (sdata(10, cc) + sdata(inv[cw].skill, cc) / 5 +
+                    (sdata(10, cc) + sdata(weapon->skill, cc) / 5 +
                      sdata(attackskill, cc) / 5 + sdata(152, cc) * 2)) /
                     45;
         }
-        pierce = calc_rate_to_pierce(itemid2int(inv[cw].id));
+        pierce = calc_rate_to_pierce(itemid2int(weapon->id));
     }
     if (attackrange)
     {
         if (mode == AttackDamageCalculationMode::actual_damage)
         {
             const auto effective_range =
-                calc_effective_range(itemid2int(inv[cw].id));
+                calc_effective_range(itemid2int(weapon->id));
             dmgmulti = dmgmulti * effective_range[rangedist] / 100;
         }
     }
-    else if (cdata[cc].equipment_type & 2)
+    else if (cdata[cc].combat_style.two_hand())
     {
-        if (inv[cw].weight >= 4000)
+        if (weapon->weight >= 4000)
         {
             dmgmulti *= 1.5;
         }
@@ -693,31 +697,7 @@ int calcattackdmg(AttackDamageCalculationMode mode)
     {
         return damage;
     }
-    prot = cdata[tc].pv + sdata(chara_armor_class(cdata[tc]), tc) +
-        sdata(12, tc) / 10;
-    if (prot > 0)
-    {
-        prot2 = prot / 4;
-        protdice1 = prot2 / 10 + 1;
-        if (protdice1 < 0)
-        {
-            protdice1 = 1;
-        }
-        protdice2 = prot2 / protdice1 + 2;
-        protfix = 0;
-    }
-    else
-    {
-        prot2 = 0;
-        protdice1 = 1;
-        protdice2 = 1;
-        protfix = 0;
-        prot = 0;
-    }
-    if (mode == AttackDamageCalculationMode::defense)
-    {
-        return prot;
-    }
+    const auto prot = calc_attack_protection(cdata[tc]);
     if (dmgfix < -100)
     {
         dmgfix = -100;
@@ -731,22 +711,22 @@ int calcattackdmg(AttackDamageCalculationMode mode)
         {
             dmgmulti *= 1.25;
         }
-        else if (ammo != -1)
+        else if (ammo)
         {
-            dmgmulti = dmgmulti *
-                clamp((inv[ammo].weight / 100 + 100), 100, 150) / 100;
+            dmgmulti =
+                dmgmulti * clamp(ammo->weight / 100 + 100, 100, 150) / 100;
         }
         else
         {
             dmgmulti =
-                dmgmulti * clamp((inv[cw].weight / 200 + 100), 100, 150) / 100;
+                dmgmulti * clamp(weapon->weight / 200 + 100, 100, 150) / 100;
         }
     }
     damage = damage * dmgmulti / 100;
     orgdmg = damage;
-    if (prot > 0)
+    if (prot.rate > 0)
     {
-        damage = damage * 100 / (100 + prot);
+        damage = damage * 100 / (100 + prot.rate);
     }
     if (attackrange == 0)
     {
@@ -786,9 +766,9 @@ int calcattackdmg(AttackDamageCalculationMode mode)
     }
     damagepierce = damage * pierce / 100;
     damagenormal = damage - damagepierce;
-    if (prot > 0)
+    if (prot.rate > 0)
     {
-        damagenormal -= roll(protdice1, protdice2, protfix);
+        damagenormal -= roll(prot.dice_x, prot.dice_y, 0);
         if (damagenormal < 0)
         {
             damagenormal = 0;
@@ -812,6 +792,27 @@ int calcattackdmg(AttackDamageCalculationMode mode)
         damage = 0;
     }
     return damage;
+}
+
+
+
+CalcAttackProtectionResult calc_attack_protection(const Character& chara)
+{
+    const auto rate = chara.pv + sdata(chara_armor_class(chara), chara.index) +
+        sdata(12, chara.index) / 10;
+    if (rate <= 0)
+    {
+        return {0, 1, 1};
+    }
+
+    const auto rate2 = rate / 4;
+    auto dice_x = rate2 / 10 + 1;
+    if (dice_x < 0)
+    {
+        dice_x = 1;
+    }
+    const auto dice_y = rate2 / dice_x + 2;
+    return {rate, dice_x, dice_y};
 }
 
 
@@ -1043,19 +1044,19 @@ int calchireadv(int adventurer)
 
 int calchirecost(int cc)
 {
-    switch (cdata[cc].character_role)
+    switch (cdata[cc].role)
     {
-    case 18: return 450;
-    case 7: return 250;
-    case 9: return 350;
-    case 12: return 500;
-    case 5: return 750;
-    case 8: return 250;
-    case 14: return 50;
-    case 1007: return 4000;
-    case 2003: return 0;
+    case Role::maid: return 450;
+    case Role::trainer: return 250;
+    case Role::bartender: return 350;
+    case Role::healer: return 500;
+    case Role::appraiser: return 750;
+    case Role::informer: return 250;
+    case Role::guard: return 50;
+    case Role::blackmarket_vendor: return 4000;
+    case Role::guest_wandering_vendor: return 0;
     default:
-        if (cdata[cc].character_role >= 1000 && cdata[cc].character_role < 2000)
+        if (is_shopkeeper(cdata[cc].role))
         {
             return 1000;
         }
@@ -1071,8 +1072,7 @@ int calchirecost(int cc)
 void generatemoney(int cc)
 {
     int gold = rnd(100) + rnd_capped(cdata[cc].level * 50 + 1);
-    if ((cdata[cc].character_role >= 1000 && cdata[cc].character_role < 2000) ||
-        cdata[cc].character_role == 2003)
+    if (is_shopkeeper(cdata[cc].role))
     {
         gold += 2500 + cdata[cc].shop_rank * 250;
     }
@@ -1089,7 +1089,7 @@ void calccosthire()
     int cost{};
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.character_role == 0)
+        if (cnt.role == Role::none)
             continue;
         if (cnt.state() != Character::State::alive)
             continue;
@@ -1407,11 +1407,11 @@ int calcspellfail(int id, int cc)
     {
         percentage = 100;
     }
-    if (cdata[cc].equipment_type & 4)
+    if (cdata[cc].combat_style.dual_wield())
     {
         percentage -= 6;
     }
-    if (cdata[cc].equipment_type & 1)
+    if (cdata[cc].combat_style.shield())
     {
         percentage -= 12;
     }

@@ -409,9 +409,9 @@ void get_hungry(Character& cc)
 void cook(Item& cook_tool, Item& food)
 {
     snd("core.cook1");
-    item_separate(food.index);
+    item_separate(food);
 
-    const auto item_name_prev = itemname(food.index);
+    const auto item_name_prev = itemname(food);
 
     int dish_rank =
         rnd_capped(sdata(184, cc) + 6) + rnd(cook_tool.param1 / 50 + 1);
@@ -1220,7 +1220,6 @@ void apply_general_eating_effect(Character& eater, Item& food)
     {
         if (nutrition >= 2000)
         {
-            const auto ci_save = ci;
             flt(calcobjlv(eater.level));
             flttypeminor = 58500;
             if (const auto item = itemcreate_extra_inv(0, eater.position, 0))
@@ -1228,7 +1227,6 @@ void apply_general_eating_effect(Character& eater, Item& food)
                 txt(i18n::s.get("core.food.effect.bomb_fish", eater, *item),
                     Message::color{ColorIndex::cyan});
             }
-            ci = ci_save;
         }
     }
     if (food.id == ItemId::corpse)

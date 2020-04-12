@@ -1,11 +1,15 @@
 #pragma once
 
-#include <unordered_map>
+#include <utility>
+
+
 
 namespace elona
 {
 
 struct Position;
+
+
 
 // Maps from an enumeration to an ID in the current tileset.
 enum class TileKind : int
@@ -20,7 +24,6 @@ enum class TileKind : int
 std::pair<int, int> cell_itemoncell(const Position& pos);
 void cell_featread(int x, int y);
 int cell_findspace(int = 0, int = 0, int = 0);
-int cell_itemlist(int = 0, int = 0);
 void cell_check(int = 0, int = 0);
 void cell_featclear(int = 0, int = 0);
 void cell_featset(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);

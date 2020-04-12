@@ -183,9 +183,12 @@ static void _init_map_test_site()
         y = rnd(map_data.height);
     }
     flt();
-    chara_create(-1, 41, cdata.player().position.x, cdata.player().position.y);
-    cdata[rc].character_role = 22;
-    cdata[rc].is_livestock() = true;
+    if (const auto chara = chara_create(
+            -1, 41, cdata.player().position.x, cdata.player().position.y))
+    {
+        chara->role = Role::horse_master;
+        chara->is_livestock() = true;
+    }
 }
 
 
@@ -284,35 +287,49 @@ static void _init_map_embassy()
     map_initcustom(u8"office_1"s);
     map_data.max_crowd_density = 0;
     flt();
-    chara_create(-1, 173, 9, 2);
-    cdata[rc].character_role = 1012;
-    cdata[rc].shop_rank = 10;
+    if (const auto chara = chara_create(-1, 173, 9, 2))
+    {
+        chara->role = Role::furniture_vendor;
+        chara->shop_rank = 10;
+    }
     flt();
-    chara_create(-1, 173, 15, 2);
-    cdata[rc].character_role = 1012;
-    cdata[rc].shop_rank = 10;
+    if (const auto chara = chara_create(-1, 173, 15, 2))
+    {
+        chara->role = Role::furniture_vendor;
+        chara->shop_rank = 10;
+    }
     flt();
-    chara_create(-1, 173, 21, 2);
-    cdata[rc].character_role = 1013;
-    cdata[rc].shop_rank = 10;
+    if (const auto chara = chara_create(-1, 173, 21, 2))
+    {
+        chara->role = Role::deed_vendor;
+        chara->shop_rank = 10;
+    }
     flt();
-    chara_create(-1, 173, 3, 2);
-    cdata[rc].character_role = 1013;
-    cdata[rc].shop_rank = 10;
+    if (const auto chara = chara_create(-1, 173, 3, 2))
+    {
+        chara->role = Role::deed_vendor;
+        chara->shop_rank = 10;
+    }
     for (int cnt = 0; cnt < 3; ++cnt)
     {
         flt();
-        chara_create(-1, 16, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 16, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
         flt();
-        chara_create(-1, 39, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 39, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
     }
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         flt();
-        chara_create(-1, 77, 3 + cnt * 6, 9);
-        cdata[rc].character_role = 14;
+        if (const auto chara = chara_create(-1, 77, 3 + cnt * 6, 9))
+        {
+            chara->role = Role::guard;
+        }
     }
     map_data.bgm = 79;
     map_placeplayer();
@@ -325,53 +342,73 @@ static void _init_map_test_world_north_border()
     map_initcustom(u8"test2"s);
     map_data.max_crowd_density = 0;
     flt();
-    chara_create(-1, 1, 7, 23);
-    cdata[rc].character_role = 1006;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = sngeneral(cdatan(0, rc));
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 1, 7, 23))
+    {
+        chara->role = Role::general_vendor;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 1, 5, 17);
-    cdata[rc].character_role = 1009;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = sntrade(cdatan(0, rc));
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 1, 5, 17))
+    {
+        chara->role = Role::trader;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 1, 16, 19);
-    cdata[rc].character_role = 1005;
-    cdata[rc].shop_rank = 8;
-    cdatan(0, rc) = sninn(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 16, 19))
+    {
+        chara->role = Role::innkeeper;
+        chara->shop_rank = 8;
+        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 70, 17, 13);
-    cdata[rc].character_role = 9;
+    if (const auto chara = chara_create(-1, 70, 17, 13))
+    {
+        chara->role = Role::bartender;
+    }
     flt();
-    chara_create(-1, 353, 7, 3);
-    cdata[rc].character_role = 23;
+    if (const auto chara = chara_create(-1, 353, 7, 3))
+    {
+        chara->role = Role::caravan_master;
+    }
     for (int cnt = 0; cnt < 2; ++cnt)
     {
         flt();
         chara_create(-1, 9, -3, 0);
         flt();
-        chara_create(-1, 159, -3, 0);
-        cdata[rc].relationship = -1;
-        cdata[rc].original_relationship = -1;
+        if (const auto chara = chara_create(-1, 159, -3, 0))
+        {
+            chara->relationship = -1;
+            chara->original_relationship = -1;
+        }
         flt();
-        chara_create(-1, 160, -3, 0);
-        cdata[rc].relationship = -1;
-        cdata[rc].original_relationship = -1;
+        if (const auto chara = chara_create(-1, 160, -3, 0))
+        {
+            chara->relationship = -1;
+            chara->original_relationship = -1;
+        }
         flt();
-        chara_create(-1, 161, -3, 0);
-        cdata[rc].relationship = -1;
-        cdata[rc].original_relationship = -1;
+        if (const auto chara = chara_create(-1, 161, -3, 0))
+        {
+            chara->relationship = -1;
+            chara->original_relationship = -1;
+        }
     }
     flt();
-    chara_create(-1, 77, 5, 7);
-    cdata[rc].character_role = 14;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 77, 5, 7))
+    {
+        chara->role = Role::guard;
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 77, 8, 7);
-    cdata[rc].character_role = 14;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 77, 8, 7))
+    {
+        chara->role = Role::guard;
+        chara->ai_calm = 3;
+    }
     map_data.bgm = 79;
     map_placeplayer();
     event_add(30);
@@ -384,53 +421,73 @@ static void _init_map_tyris_border()
     map_initcustom(u8"station-nt1"s);
     map_data.max_crowd_density = 0;
     flt();
-    chara_create(-1, 1, 7, 23);
-    cdata[rc].character_role = 1006;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = sngeneral(cdatan(0, rc));
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 1, 7, 23))
+    {
+        chara->role = Role::general_vendor;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 1, 5, 17);
-    cdata[rc].character_role = 1009;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = sntrade(cdatan(0, rc));
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 1, 5, 17))
+    {
+        chara->role = Role::trader;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 1, 16, 19);
-    cdata[rc].character_role = 1005;
-    cdata[rc].shop_rank = 8;
-    cdatan(0, rc) = sninn(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 16, 19))
+    {
+        chara->role = Role::innkeeper;
+        chara->shop_rank = 8;
+        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 70, 17, 13);
-    cdata[rc].character_role = 9;
+    if (const auto chara = chara_create(-1, 70, 17, 13))
+    {
+        chara->role = Role::bartender;
+    }
     flt();
-    chara_create(-1, 353, 7, 3);
-    cdata[rc].character_role = 23;
+    if (const auto chara = chara_create(-1, 353, 7, 3))
+    {
+        chara->role = Role::caravan_master;
+    }
     for (int cnt = 0; cnt < 2; ++cnt)
     {
         flt();
         chara_create(-1, 9, -3, 0);
         flt();
-        chara_create(-1, 159, -3, 0);
-        cdata[rc].relationship = -1;
-        cdata[rc].original_relationship = -1;
+        if (const auto chara = chara_create(-1, 159, -3, 0))
+        {
+            chara->relationship = -1;
+            chara->original_relationship = -1;
+        }
         flt();
-        chara_create(-1, 160, -3, 0);
-        cdata[rc].relationship = -1;
-        cdata[rc].original_relationship = -1;
+        if (const auto chara = chara_create(-1, 160, -3, 0))
+        {
+            chara->relationship = -1;
+            chara->original_relationship = -1;
+        }
         flt();
-        chara_create(-1, 161, -3, 0);
-        cdata[rc].relationship = -1;
-        cdata[rc].original_relationship = -1;
+        if (const auto chara = chara_create(-1, 161, -3, 0))
+        {
+            chara->relationship = -1;
+            chara->original_relationship = -1;
+        }
     }
     flt();
-    chara_create(-1, 77, 5, 7);
-    cdata[rc].character_role = 14;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 77, 5, 7))
+    {
+        chara->role = Role::guard;
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 77, 8, 7);
-    cdata[rc].character_role = 14;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 77, 8, 7))
+    {
+        chara->role = Role::guard;
+        chara->ai_calm = 3;
+    }
     map_data.bgm = 79;
     map_placeplayer();
 }
@@ -442,32 +499,48 @@ static void _init_map_the_smoke_and_pipe()
     map_initcustom(u8"inn1"s);
     map_data.max_crowd_density = 0;
     flt();
-    chara_create(-1, 1, 19, 10);
-    cdata[rc].character_role = 1005;
-    cdata[rc].shop_rank = 8;
-    cdatan(0, rc) = sninn(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 19, 10))
+    {
+        chara->role = Role::innkeeper;
+        chara->shop_rank = 8;
+        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 351, 26, 16);
-    cdata[rc].character_role = 3;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 351, 26, 16))
+    {
+        chara->role = Role::other;
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 35, 25, 15);
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 35, 25, 15))
+    {
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 35, 25, 17);
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 35, 25, 17))
+    {
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 35, 27, 18);
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 35, 27, 18))
+    {
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 35, 27, 16);
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 35, 27, 16))
+    {
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 35, 26, 17);
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 35, 26, 17))
+    {
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 352, 4, 3);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 352, 4, 3))
+    {
+        chara->role = Role::other;
+    }
     flt();
     chara_create(-1, 271, 4, 2);
     flt();
@@ -491,13 +564,17 @@ static void _init_map_the_smoke_and_pipe()
         flt();
         chara_create(-1, 9, -3, 0);
         flt();
-        chara_create(-1, 159, -3, 0);
-        cdata[rc].relationship = -1;
-        cdata[rc].original_relationship = -1;
+        if (const auto chara = chara_create(-1, 159, -3, 0))
+        {
+            chara->relationship = -1;
+            chara->original_relationship = -1;
+        }
         flt();
-        chara_create(-1, 36, -3, 0);
-        cdata[rc].relationship = -1;
-        cdata[rc].original_relationship = -1;
+        if (const auto chara = chara_create(-1, 36, -3, 0))
+        {
+            chara->relationship = -1;
+            chara->original_relationship = -1;
+        }
         flt();
         chara_create(-1, 8, -3, 0);
         flt();
@@ -514,17 +591,23 @@ static void _init_map_miral_and_garoks_workshop()
     map_initcustom(u8"smith0"s);
     map_data.max_crowd_density = 0;
     flt();
-    chara_create(-1, 208, 17, 11);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 208, 17, 11))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 209, 8, 16);
-    cdata[rc].character_role = 1016;
-    cdata[rc].shop_rank = 100;
+    if (const auto chara = chara_create(-1, 209, 8, 16))
+    {
+        chara->role = Role::miral;
+        chara->shop_rank = 100;
+    }
     for (int cnt = 0; cnt < 5; ++cnt)
     {
         flt();
-        chara_create(-1, 164, -3, 0);
-        cdata[rc].character_role = 3;
+        if (const auto chara = chara_create(-1, 164, -3, 0))
+        {
+            chara->role = Role::other;
+        }
     }
     map_data.bgm = 79;
     map_placeplayer();
@@ -546,19 +629,25 @@ static void _init_map_mansion_of_younger_sister()
         }
     }
     flt();
-    chara_create(-1, 249, 12, 6);
-    cdata[rc].character_role = 1019;
+    if (const auto chara = chara_create(-1, 249, 12, 6))
+    {
+        chara->role = Role::lunch_vendor;
+    }
     for (int cnt = 0; cnt < 6; ++cnt)
     {
         flt();
-        chara_create(-1, 211, -3, 0);
-        cdata[rc].character_role = 3;
+        if (const auto chara = chara_create(-1, 211, -3, 0))
+        {
+            chara->role = Role::other;
+        }
     }
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         flt();
-        chara_create(-1, 246, -3, 0);
-        cdata[rc].character_role = 3;
+        if (const auto chara = chara_create(-1, 246, -3, 0))
+        {
+            chara->role = Role::other;
+        }
     }
     map_placeplayer();
 }
@@ -576,24 +665,34 @@ static void _init_map_cyber_dome()
         item->own_state = 1;
     }
     flt();
-    chara_create(-1, 173, 9, 16);
-    cdata[rc].character_role = 1011;
-    cdata[rc].shop_rank = 10;
+    if (const auto chara = chara_create(-1, 173, 9, 16))
+    {
+        chara->role = Role::firearm_vendor;
+        chara->shop_rank = 10;
+    }
     flt();
-    chara_create(-1, 173, 9, 8);
-    cdata[rc].character_role = 1011;
-    cdata[rc].shop_rank = 10;
+    if (const auto chara = chara_create(-1, 173, 9, 8))
+    {
+        chara->role = Role::firearm_vendor;
+        chara->shop_rank = 10;
+    }
     flt();
-    chara_create(-1, 322, 28, 7);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 322, 28, 7))
+    {
+        chara->role = Role::other;
+    }
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         flt();
-        chara_create(-1, 171, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 171, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
         flt();
-        chara_create(-1, 172, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 172, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
     }
     for (int cnt = 0, cnt_end = (map_data.max_crowd_density / 2); cnt < cnt_end;
          ++cnt)
@@ -612,22 +711,31 @@ static void _init_map_larna()
     map_initcustom(u8"highmountain"s);
     map_data.max_crowd_density = 20;
     flt();
-    chara_create(-1, 41, 21, 23);
-    cdata[rc].character_role = 21;
+    if (const auto chara = chara_create(-1, 41, 21, 23))
+    {
+        chara->role = Role::returner;
+    }
     flt();
-    chara_create(-1, 1, 9, 44);
-    cdata[rc].character_role = 1017;
-    cdata[rc].shop_rank = 5;
-    cdatan(0, rc) = i18n::s.get("core.chara.job.dye_vendor", cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 9, 44))
+    {
+        chara->role = Role::dye_vendor;
+        chara->shop_rank = 5;
+        cdatan(0, chara->index) =
+            i18n::s.get("core.chara.job.dye_vendor", cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 13, 37);
-    cdata[rc].character_role = 1018;
-    cdata[rc].shop_rank = 30;
-    cdatan(0, rc) =
-        i18n::s.get("core.chara.job.souvenir_vendor", cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 13, 37))
+    {
+        chara->role = Role::souvenir_vendor;
+        chara->shop_rank = 30;
+        cdatan(0, chara->index) = i18n::s.get(
+            "core.chara.job.souvenir_vendor", cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 70, 24, 48);
-    cdata[rc].character_role = 9;
+    if (const auto chara = chara_create(-1, 70, 24, 48))
+    {
+        chara->role = Role::bartender;
+    }
     flt();
     chara_create(-1, 239, 7, 36);
     flt();
@@ -643,11 +751,15 @@ static void _init_map_larna()
     for (int cnt = 0; cnt < 7; ++cnt)
     {
         flt();
-        chara_create(-1, 16, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 16, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
         flt();
-        chara_create(-1, 39, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 39, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
         flt();
         chara_create(-1, 239, -3, 0);
     }
@@ -690,35 +802,44 @@ static void _init_map_arena()
     if (arenaop == 0)
     {
         fixlv = static_cast<Quality>(arenaop(2));
-        chara_create(
-            -1,
-            arenaop(1),
-            cdata.player().position.x - 1,
-            cdata.player().position.y - 4);
-        cdata[rc].hate = 30;
-        cdata[rc].relationship = -3;
-        cdata[rc].relationship = -3;
-        cdata[rc].original_relationship = -3;
-        cdata[rc].is_lord_of_dungeon() = true;
+        if (const auto chara = chara_create(
+                -1,
+                arenaop(1),
+                cdata.player().position.x - 1,
+                cdata.player().position.y - 4))
+        {
+            chara->hate = 30;
+            chara->relationship = -3;
+            chara->relationship = -3;
+            chara->original_relationship = -3;
+            chara->is_lord_of_dungeon() = true;
+        }
     }
     if (arenaop == 1)
     {
         for (int cnt = 0, cnt_end = (3 + rnd(4)); cnt < cnt_end; ++cnt)
         {
             flt(arenaop(1), Quality::good);
-            chara_create(
-                -1,
-                0,
-                cdata.player().position.x - 1,
-                cdata.player().position.y - 5);
-            cdata[rc].relationship = -3;
-            cdata[rc].original_relationship = -3;
-            cdata[rc].hate = 30;
-            cdata[rc].relationship = -3;
-            cdata[rc].is_lord_of_dungeon() = true;
-            if (cdata[rc].level > arenaop(1) || cdata[rc].relationship != -3)
+            if (const auto chara = chara_create(
+                    -1,
+                    0,
+                    cdata.player().position.x - 1,
+                    cdata.player().position.y - 5))
             {
-                chara_vanquish(rc);
+                chara->relationship = -3;
+                chara->original_relationship = -3;
+                chara->hate = 30;
+                chara->relationship = -3;
+                chara->is_lord_of_dungeon() = true;
+                if (chara->level > arenaop(1) || chara->relationship != -3)
+                {
+                    chara_vanquish(chara->index);
+                    --cnt;
+                    continue;
+                }
+            }
+            else
+            {
                 --cnt;
                 continue;
             }
@@ -755,31 +876,38 @@ static void _init_map_pet_arena()
     for (int cnt = 0, cnt_end = (arenaop(1)); cnt < cnt_end; ++cnt)
     {
         flt(arenaop(2), calcfixlv(Quality::good));
-        chara_create(-1, 0, -3, 0);
-        cell_data.at(cdata[rc].position.x, cdata[rc].position.y)
-            .chara_index_plus_one = 0;
-        f = 1;
-        if (arenaop == 0)
+        if (const auto chara = chara_create(-1, 0, -3, 0))
         {
-            if (cdata[rc].level < arenaop(2) / 2)
+            cell_data.at(chara->position.x, chara->position.y)
+                .chara_index_plus_one = 0;
+            f = 1;
+            if (arenaop == 0)
+            {
+                if (chara->level < arenaop(2) / 2)
+                {
+                    f = 0;
+                }
+            }
+            if (chara->relationship != -3)
             {
                 f = 0;
             }
+            if (f == 0)
+            {
+                chara_vanquish(chara->index);
+                --cnt;
+                continue;
+            }
+            map_placearena(chara->index, true);
+            if (cnt == 0)
+            {
+                enemyteam = chara->index;
+            }
         }
-        if (cdata[rc].relationship != -3)
+        else
         {
-            f = 0;
-        }
-        if (f == 0)
-        {
-            chara_vanquish(rc);
             --cnt;
             continue;
-        }
-        map_placearena(rc, true);
-        if (cnt == 0)
-        {
-            enemyteam = rc;
         }
     }
     for (auto&& cnt : cdata.others())
@@ -843,11 +971,15 @@ static void _init_map_your_home()
         {
             map_data.play_campfire_sound = 1;
             flt();
-            chara_create(-1, 33, 18, 10);
-            cdata[rc].character_role = 3;
+            if (const auto chara = chara_create(-1, 33, 18, 10))
+            {
+                chara->role = Role::other;
+            }
             flt();
-            chara_create(-1, 34, 16, 11);
-            cdata[rc].character_role = 3;
+            if (const auto chara = chara_create(-1, 34, 16, 11))
+            {
+                chara->role = Role::other;
+            }
             flt();
             if (const auto item = itemcreate_extra_inv(510, 6, 10, 0))
             {
@@ -897,34 +1029,48 @@ static void _init_map_your_home()
         if (game_data.home_scale == 5)
         {
             flt();
-            chara_create(-1, 1, 31, 20);
-            cdata[rc].character_role = 1006;
-            cdata[rc].shop_rank = 10;
-            cdatan(0, rc) = sngeneral(cdatan(0, rc));
+            if (const auto chara = chara_create(-1, 1, 31, 20))
+            {
+                chara->role = Role::general_vendor;
+                chara->shop_rank = 10;
+                cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+            }
             flt();
-            chara_create(-1, 1, 9, 20);
-            cdata[rc].character_role = 1001;
-            cdata[rc].shop_rank = 12;
-            cdatan(0, rc) = snarmor(cdatan(0, rc));
+            if (const auto chara = chara_create(-1, 1, 9, 20))
+            {
+                chara->role = Role::blacksmith;
+                chara->shop_rank = 12;
+                cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+            }
             flt();
-            chara_create(-1, 1, 4, 20);
-            cdata[rc].character_role = 1008;
-            cdata[rc].shop_rank = 10;
-            cdatan(0, rc) = sngoods(cdatan(0, rc));
+            if (const auto chara = chara_create(-1, 1, 4, 20))
+            {
+                chara->role = Role::general_store;
+                chara->shop_rank = 10;
+                cdatan(0, chara->index) = sngoods(cdatan(0, chara->index));
+            }
             flt();
-            chara_create(-1, 41, 4, 11);
-            cdata[rc].character_role = 5;
+            if (const auto chara = chara_create(-1, 41, 4, 11))
+            {
+                chara->role = Role::appraiser;
+            }
             flt();
-            chara_create(-1, 70, 30, 11);
-            cdata[rc].character_role = 9;
+            if (const auto chara = chara_create(-1, 70, 30, 11))
+            {
+                chara->role = Role::bartender;
+            }
             flt();
-            chara_create(-1, 74, 30, 4);
-            cdata[rc].character_role = 12;
+            if (const auto chara = chara_create(-1, 74, 30, 4))
+            {
+                chara->role = Role::healer;
+            }
             flt();
-            chara_create(-1, 41, 4, 4);
-            cdata[rc].character_role = 1004;
-            cdata[rc].shop_rank = 11;
-            cdatan(0, rc) = snmagic(cdatan(0, rc));
+            if (const auto chara = chara_create(-1, 41, 4, 4))
+            {
+                chara->role = Role::magic_vendor;
+                chara->shop_rank = 11;
+                cdatan(0, chara->index) = snmagic(cdatan(0, chara->index));
+            }
         }
     }
     else
@@ -971,76 +1117,113 @@ static void _init_map_derphy_town()
     map_placeplayer();
     map_data.user_map_flag = 0;
     flt();
-    chara_create(-1, 253, 23, 14);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 253, 23, 14))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 259, 13, 18);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 259, 13, 18))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 294, 16, 17);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 294, 16, 17))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 1, 10, 17);
-    cdata[rc].character_role = 1009;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = sntrade(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 10, 17))
+    {
+        chara->role = Role::trader;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 70, 15, 15);
-    cdata[rc].character_role = 9;
+    if (const auto chara = chara_create(-1, 70, 15, 15))
+    {
+        chara->role = Role::bartender;
+    }
     flt();
-    chara_create(-1, 1, 13, 3);
-    cdata[rc].character_role = 1006;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = sngeneral(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 13, 3))
+    {
+        chara->role = Role::general_vendor;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 29, 23);
-    cdata[rc].character_role = 1005;
-    cdata[rc].shop_rank = 8;
-    cdatan(0, rc) = sninn(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 29, 23))
+    {
+        chara->role = Role::innkeeper;
+        chara->shop_rank = 8;
+        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 26, 7);
-    cdata[rc].character_role = 1008;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = sngoods(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 26, 7))
+    {
+        chara->role = Role::general_store;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = sngoods(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 30, 4);
-    cdata[rc].character_role = 1007;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = snblack(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 30, 4))
+    {
+        chara->role = Role::blackmarket_vendor;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = snblack(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 29, 4);
-    cdata[rc].character_role = 17;
-    cdatan(0, rc) = i18n::s.get("core.chara.job.slave_master");
+    if (const auto chara = chara_create(-1, 1, 29, 4))
+    {
+        chara->role = Role::slave_master;
+        cdatan(0, chara->index) = i18n::s.get("core.chara.job.slave_master");
+    }
     flt();
-    chara_create(-1, 1, 10, 6);
-    cdata[rc].character_role = 1001;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = snarmor(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 10, 6))
+    {
+        chara->role = Role::blacksmith;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 73, 7, 15);
-    cdata[rc].character_role = 10;
+    if (const auto chara = chara_create(-1, 73, 7, 15))
+    {
+        chara->role = Role::arena_master;
+    }
     flt();
-    chara_create(-1, 38, 9, 18);
-    cdata[rc].character_role = 6;
-    cdatan(0, rc) = i18n::s.get("core.chara.job.of_derphy", cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 38, 9, 18))
+    {
+        chara->role = Role::mayer;
+        cdatan(0, chara->index) =
+            i18n::s.get("core.chara.job.of_derphy", cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 40, 13, 18);
-    cdata[rc].character_role = 7;
-    cdatan(0, rc) = sntrainer(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 40, 13, 18))
+    {
+        chara->role = Role::trainer;
+        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 41, 5, 26);
-    cdata[rc].character_role = 5;
+    if (const auto chara = chara_create(-1, 41, 5, 26))
+    {
+        chara->role = Role::appraiser;
+    }
     flt();
-    chara_create(-1, 69, 3, 28);
-    cdata[rc].character_role = 8;
+    if (const auto chara = chara_create(-1, 69, 3, 28))
+    {
+        chara->role = Role::informer;
+    }
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         flt();
-        chara_create(-1, 16, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 16, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
         flt();
-        chara_create(-1, 39, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 39, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
     }
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 20; ++cnt)
@@ -1064,30 +1247,43 @@ static void _init_map_derphy_thieves_guild()
     mdatan(0) = i18n::s.get("core.map.unique.thieves_guild.name");
     map_placeplayer();
     flt();
-    chara_create(-1, 292, 21, 9);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 292, 21, 9))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 40, 3, 6);
-    cdata[rc].character_role = 7;
-    cdatan(0, rc) = sntrainer(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 40, 3, 6))
+    {
+        chara->role = Role::trainer;
+        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 41, 3, 12);
-    cdata[rc].character_role = 5;
+    if (const auto chara = chara_create(-1, 41, 3, 12))
+    {
+        chara->role = Role::appraiser;
+    }
     flt();
-    chara_create(-1, 1, 5, 18);
-    cdata[rc].character_role = 1007;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = snblack(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 5, 18))
+    {
+        chara->role = Role::blackmarket_vendor;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = snblack(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 27, 13);
-    cdata[rc].character_role = 1007;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = snblack(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 27, 13))
+    {
+        chara->role = Role::blackmarket_vendor;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = snblack(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 21, 19);
-    cdata[rc].character_role = 1021;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = i18n::s.get("core.chara.job.fence", cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 21, 19))
+    {
+        chara->role = Role::fence;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) =
+            i18n::s.get("core.chara.job.fence", cdatan(0, chara->index));
+    }
     for (int cnt = 0; cnt < 16; ++cnt)
     {
         flt();
@@ -1118,146 +1314,217 @@ static void _init_map_palmia()
     map_placeplayer();
     map_data.user_map_flag = 0;
     flt();
-    chara_create(-1, 70, 42, 27);
-    cdata[rc].character_role = 9;
+    if (const auto chara = chara_create(-1, 70, 42, 27))
+    {
+        chara->role = Role::bartender;
+    }
     flt();
-    chara_create(-1, 74, 34, 3);
-    cdata[rc].character_role = 12;
+    if (const auto chara = chara_create(-1, 74, 34, 3))
+    {
+        chara->role = Role::healer;
+    }
     flt();
-    chara_create(-1, 73, 22, 31);
-    cdata[rc].character_role = 10;
+    if (const auto chara = chara_create(-1, 73, 22, 31))
+    {
+        chara->role = Role::arena_master;
+    }
     flt();
-    chara_create(-1, 142, 5, 15);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 142, 5, 15))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 247, 41, 11);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 247, 41, 11))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 301, 5, 6);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 301, 5, 6))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 320, 24, 6);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 320, 24, 6))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 320, 15, 22);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 320, 15, 22))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 326, 15, 22);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 326, 15, 22))
+    {
+        chara->role = Role::other;
+    }
     if (game_data.quest_flags.mias_dream == 1000)
     {
         flt();
-        chara_create(-1, 246, 42, 11);
-        cdata[rc].character_role = 3;
+        if (const auto chara = chara_create(-1, 246, 42, 11))
+        {
+            chara->role = Role::other;
+        }
     }
     flt();
-    chara_create(-1, 1, 48, 18);
-    cdata[rc].character_role = 1006;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = sngeneral(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 48, 18))
+    {
+        chara->role = Role::general_vendor;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 30, 17);
-    cdata[rc].character_role = 1005;
-    cdata[rc].shop_rank = 8;
-    cdatan(0, rc) = sninn(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 30, 17))
+    {
+        chara->role = Role::innkeeper;
+        chara->shop_rank = 8;
+        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 48, 3);
-    cdata[rc].character_role = 1008;
-    cdata[rc].shop_rank = 8;
-    cdatan(0, rc) = sngoods(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 48, 3))
+    {
+        chara->role = Role::general_store;
+        chara->shop_rank = 8;
+        cdatan(0, chara->index) = sngoods(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 42, 17);
-    cdata[rc].character_role = 1001;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = snarmor(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 42, 17))
+    {
+        chara->role = Role::blacksmith;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 11, 14);
-    cdata[rc].character_role = 1003;
-    cdata[rc].shop_rank = 9;
-    cdatan(0, rc) = snbakery(cdatan(0, rc));
-    cdata[rc].image = 138;
+    if (const auto chara = chara_create(-1, 1, 11, 14))
+    {
+        chara->role = Role::bakery;
+        chara->shop_rank = 9;
+        cdatan(0, chara->index) = snbakery(cdatan(0, chara->index));
+        chara->image = 138;
+    }
     flt();
-    chara_create(-1, 41, 41, 3);
-    cdata[rc].character_role = 1004;
-    cdata[rc].shop_rank = 11;
-    cdatan(0, rc) = snmagic(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 41, 41, 3))
+    {
+        chara->role = Role::magic_vendor;
+        chara->shop_rank = 11;
+        cdatan(0, chara->index) = snmagic(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 41, 28);
-    cdata[rc].character_role = 1009;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = sntrade(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 41, 28))
+    {
+        chara->role = Role::trader;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 79, 7, 2);
-    cdata[rc].character_role = 15;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 79, 7, 2))
+    {
+        chara->role = Role::king;
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 80, 6, 2);
-    cdata[rc].character_role = 15;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 80, 6, 2))
+    {
+        chara->role = Role::king;
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 38, 49, 11);
-    cdata[rc].character_role = 6;
-    cdatan(0, rc) = i18n::s.get("core.chara.job.of_palmia", cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 38, 49, 11))
+    {
+        chara->role = Role::mayer;
+        cdatan(0, chara->index) =
+            i18n::s.get("core.chara.job.of_palmia", cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 40, 30, 27);
-    cdata[rc].character_role = 7;
-    cdatan(0, rc) = sntrainer(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 40, 30, 27))
+    {
+        chara->role = Role::trainer;
+        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 41, 32, 27);
-    cdata[rc].character_role = 5;
+    if (const auto chara = chara_create(-1, 41, 32, 27))
+    {
+        chara->role = Role::appraiser;
+    }
     flt();
-    chara_create(-1, 69, 29, 28);
-    cdata[rc].character_role = 8;
+    if (const auto chara = chara_create(-1, 69, 29, 28))
+    {
+        chara->role = Role::informer;
+    }
     flt();
-    chara_create(-1, 77, 16, 5);
-    cdata[rc].character_role = 14;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 77, 16, 5))
+    {
+        chara->role = Role::guard;
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 77, 16, 9);
-    cdata[rc].character_role = 14;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 77, 16, 9))
+    {
+        chara->role = Role::guard;
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 77, 5, 3);
-    cdata[rc].character_role = 14;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 77, 5, 3))
+    {
+        chara->role = Role::guard;
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 77, 8, 3);
-    cdata[rc].character_role = 14;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 77, 8, 3))
+    {
+        chara->role = Role::guard;
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 77, 35, 14);
-    cdata[rc].character_role = 14;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 77, 35, 14))
+    {
+        chara->role = Role::guard;
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 77, 38, 14);
-    cdata[rc].character_role = 14;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 77, 38, 14))
+    {
+        chara->role = Role::guard;
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 77, 29, 2);
-    cdata[rc].character_role = 14;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 77, 29, 2))
+    {
+        chara->role = Role::guard;
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 77, 19, 18);
-    cdata[rc].character_role = 14;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 77, 19, 18))
+    {
+        chara->role = Role::guard;
+        chara->ai_calm = 3;
+    }
     flt();
-    chara_create(-1, 77, 22, 18);
-    cdata[rc].character_role = 14;
-    cdata[rc].ai_calm = 3;
+    if (const auto chara = chara_create(-1, 77, 22, 18))
+    {
+        chara->role = Role::guard;
+        chara->ai_calm = 3;
+    }
     for (int cnt = 0; cnt < 5; ++cnt)
     {
         flt();
-        chara_create(-1, 16, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 16, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
         flt();
-        chara_create(-1, 39, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 39, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
     }
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         flt();
-        chara_create(-1, 77, -3, 0);
-        cdata[rc].character_role = 14;
+        if (const auto chara = chara_create(-1, 77, -3, 0))
+        {
+            chara->role = Role::guard;
+        }
     }
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 25; ++cnt)
@@ -1280,102 +1547,153 @@ static void _init_map_lumiest_town()
         cell_featset(18, 45, tile_downstairs, 11, 20);
     }
     flt();
-    chara_create(-1, 252, 12, 24);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 252, 12, 24))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 280, 21, 3);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 280, 21, 3))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 290, 5, 20);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 290, 5, 20))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 320, 28, 29);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 320, 28, 29))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 326, 41, 19);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 326, 41, 19))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 326, 32, 43);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 326, 32, 43))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 326, 29, 28);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 326, 29, 28))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 326, 16, 45);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 326, 16, 45))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 326, 13, 24);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 326, 13, 24))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 70, 41, 42);
-    cdata[rc].character_role = 9;
+    if (const auto chara = chara_create(-1, 70, 41, 42))
+    {
+        chara->role = Role::bartender;
+    }
     flt();
-    chara_create(-1, 74, 10, 16);
-    cdata[rc].character_role = 12;
+    if (const auto chara = chara_create(-1, 74, 10, 16))
+    {
+        chara->role = Role::healer;
+    }
     flt();
-    chara_create(-1, 1, 47, 30);
-    cdata[rc].character_role = 1006;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = sngeneral(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 47, 30))
+    {
+        chara->role = Role::general_vendor;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 24, 47);
-    cdata[rc].character_role = 1005;
-    cdata[rc].shop_rank = 8;
-    cdatan(0, rc) = sninn(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 24, 47))
+    {
+        chara->role = Role::innkeeper;
+        chara->shop_rank = 8;
+        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 37, 30);
-    cdata[rc].character_role = 1001;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = snarmor(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 37, 30))
+    {
+        chara->role = Role::blacksmith;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 37, 12);
-    cdata[rc].character_role = 1003;
-    cdata[rc].shop_rank = 9;
-    cdatan(0, rc) = snbakery(cdatan(0, rc));
-    cdata[rc].image = 138;
+    if (const auto chara = chara_create(-1, 1, 37, 12))
+    {
+        chara->role = Role::bakery;
+        chara->shop_rank = 9;
+        cdatan(0, chara->index) = snbakery(cdatan(0, chara->index));
+        chara->image = 138;
+    }
     flt();
-    chara_create(-1, 41, 6, 15);
-    cdata[rc].character_role = 1004;
-    cdata[rc].shop_rank = 11;
-    cdatan(0, rc) = snmagic(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 41, 6, 15))
+    {
+        chara->role = Role::magic_vendor;
+        chara->shop_rank = 11;
+        cdatan(0, chara->index) = snmagic(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 33, 43);
-    cdata[rc].character_role = 1009;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = sntrade(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 33, 43))
+    {
+        chara->role = Role::trader;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 47, 12);
-    cdata[rc].character_role = 1014;
-    cdata[rc].shop_rank = 5;
-    cdatan(0, rc) = snfish(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 47, 12))
+    {
+        chara->role = Role::fisher;
+        chara->shop_rank = 5;
+        cdatan(0, chara->index) = snfish(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 38, 3, 38);
-    cdata[rc].character_role = 6;
-    cdatan(0, rc) = i18n::s.get("core.chara.job.of_lumiest", cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 38, 3, 38))
+    {
+        chara->role = Role::mayer;
+        cdatan(0, chara->index) =
+            i18n::s.get("core.chara.job.of_lumiest", cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 40, 21, 28);
-    cdata[rc].character_role = 7;
-    cdatan(0, rc) = sntrainer(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 40, 21, 28))
+    {
+        chara->role = Role::trainer;
+        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 41, 21, 30);
-    cdata[rc].character_role = 5;
+    if (const auto chara = chara_create(-1, 41, 21, 30))
+    {
+        chara->role = Role::appraiser;
+    }
     flt();
-    chara_create(-1, 69, 23, 38);
-    cdata[rc].character_role = 8;
+    if (const auto chara = chara_create(-1, 69, 23, 38))
+    {
+        chara->role = Role::informer;
+    }
     for (int cnt = 0; cnt < 6; ++cnt)
     {
         flt();
-        chara_create(-1, 16, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 16, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
         flt();
-        chara_create(-1, 39, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 39, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
     }
     for (int cnt = 0; cnt < 7; ++cnt)
     {
         flt();
-        chara_create(-1, 77, -3, 0);
-        cdata[rc].character_role = 14;
+        if (const auto chara = chara_create(-1, 77, -3, 0))
+        {
+            chara->role = Role::guard;
+        }
     }
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 25; ++cnt)
@@ -1399,27 +1717,40 @@ static void _init_map_lumiest_mages_guild()
     mdatan(0) = i18n::s.get("core.map.unique.mages_guild.name");
     map_placeplayer();
     flt();
-    chara_create(-1, 288, 24, 3);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 288, 24, 3))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 41, 27, 8);
-    cdata[rc].character_role = 1020;
-    cdatan(0, rc) = i18n::s.get("core.chara.job.spell_writer", cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 41, 27, 8))
+    {
+        chara->role = Role::spell_writer;
+        cdatan(0, chara->index) =
+            i18n::s.get("core.chara.job.spell_writer", cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 41, 22, 8);
-    cdata[rc].character_role = 1004;
-    cdata[rc].shop_rank = 11;
-    cdatan(0, rc) = snmagic(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 41, 22, 8))
+    {
+        chara->role = Role::magic_vendor;
+        chara->shop_rank = 11;
+        cdatan(0, chara->index) = snmagic(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 74, 3, 9);
-    cdata[rc].character_role = 12;
+    if (const auto chara = chara_create(-1, 74, 3, 9))
+    {
+        chara->role = Role::healer;
+    }
     flt();
-    chara_create(-1, 40, 12, 6);
-    cdata[rc].character_role = 7;
-    cdatan(0, rc) = sntrainer(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 40, 12, 6))
+    {
+        chara->role = Role::trainer;
+        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 41, 3, 3);
-    cdata[rc].character_role = 5;
+    if (const auto chara = chara_create(-1, 41, 3, 3))
+    {
+        chara->role = Role::appraiser;
+    }
     for (int cnt = 0; cnt < 16; ++cnt)
     {
         flt();
@@ -1475,81 +1806,123 @@ static void _init_map_yowyn_town()
         cell_featset(23, 22, tile_downstairs, 11, 3);
     }
     flt();
-    chara_create(-1, 224, 3, 17);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 224, 3, 17))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 227, 26, 11);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 227, 26, 11))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 231, 14, 20);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 231, 14, 20))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 1, 11, 5);
-    cdata[rc].character_role = 1006;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = sngeneral(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 11, 5))
+    {
+        chara->role = Role::general_vendor;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 25, 8);
-    cdata[rc].character_role = 1005;
-    cdata[rc].shop_rank = 8;
-    cdatan(0, rc) = sninn(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 25, 8))
+    {
+        chara->role = Role::innkeeper;
+        chara->shop_rank = 8;
+        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 7, 8);
-    cdata[rc].character_role = 1008;
-    cdata[rc].shop_rank = 8;
-    cdatan(0, rc) = sngoods(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 7, 8))
+    {
+        chara->role = Role::general_store;
+        chara->shop_rank = 8;
+        cdatan(0, chara->index) = sngoods(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 14, 14);
-    cdata[rc].character_role = 1009;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = sntrade(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 14, 14))
+    {
+        chara->role = Role::trader;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 35, 18);
-    cdata[rc].character_role = 22;
-    cdatan(0, rc) = i18n::s.get("core.chara.job.horse_master", cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 35, 18))
+    {
+        chara->role = Role::horse_master;
+        cdatan(0, chara->index) =
+            i18n::s.get("core.chara.job.horse_master", cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 267, 33, 16);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 267, 33, 16))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 267, 37, 19);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 267, 37, 19))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 268, 34, 19);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 268, 34, 19))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 268, 38, 16);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 268, 38, 16))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 38, 3, 4);
-    cdata[rc].character_role = 6;
-    cdatan(0, rc) = i18n::s.get("core.chara.job.of_yowyn", cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 38, 3, 4))
+    {
+        chara->role = Role::mayer;
+        cdatan(0, chara->index) =
+            i18n::s.get("core.chara.job.of_yowyn", cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 40, 20, 14);
-    cdata[rc].character_role = 7;
-    cdatan(0, rc) = sntrainer(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 40, 20, 14))
+    {
+        chara->role = Role::trainer;
+        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 41, 24, 16);
-    cdata[rc].character_role = 5;
+    if (const auto chara = chara_create(-1, 41, 24, 16))
+    {
+        chara->role = Role::appraiser;
+    }
     flt();
-    chara_create(-1, 69, 26, 16);
-    cdata[rc].character_role = 8;
+    if (const auto chara = chara_create(-1, 69, 26, 16))
+    {
+        chara->role = Role::informer;
+    }
     flt();
-    chara_create(-1, 213, 14, 12);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 213, 14, 12))
+    {
+        chara->role = Role::other;
+    }
     for (int cnt = 0; cnt < 2; ++cnt)
     {
         flt();
-        chara_create(-1, 16, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 16, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
         flt();
-        chara_create(-1, 39, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 39, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
     }
     for (int cnt = 0; cnt < 3; ++cnt)
     {
         flt();
-        chara_create(-1, 77, -3, 0);
-        cdata[rc].character_role = 14;
+        if (const auto chara = chara_create(-1, 77, -3, 0))
+        {
+            chara->role = Role::guard;
+        }
     }
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 15; ++cnt)
@@ -1606,14 +1979,16 @@ static void _init_map_yowyn_battle_field()
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         flt();
-        chara_create(-1, 233 + 2 * (cnt > 22), 11, 16);
-        cdata[rc].relationship = 10;
-        cdata[rc].original_relationship = 10;
-        cdata[rc].hate = 100;
-        p = list(0, rnd(listmax));
-        cdata[rc].enemy_id = p;
-        cdata[p].hate = 100;
-        cdata[p].enemy_id = rc;
+        if (const auto chara = chara_create(-1, 233 + 2 * (cnt > 22), 11, 16))
+        {
+            chara->relationship = 10;
+            chara->original_relationship = 10;
+            chara->hate = 100;
+            p = list(0, rnd(listmax));
+            chara->enemy_id = p;
+            cdata[p].hate = 100;
+            cdata[p].enemy_id = chara->index;
+        }
     }
     noaggrorefresh = 1;
 }
@@ -1645,108 +2020,162 @@ static void _init_map_noyel()
     map_placeplayer();
     map_data.user_map_flag = 0;
     flt();
-    chara_create(-1, 202, 46, 18);
-    game_data.fire_giant = rc;
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 202, 46, 18))
+    {
+        game_data.fire_giant = chara->index;
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 203, 47, 18);
-    cdata[rc].character_role = 1015;
+    if (const auto chara = chara_create(-1, 203, 47, 18))
+    {
+        chara->role = Role::moyer;
+    }
     flt();
-    chara_create(-1, 35, 47, 20);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 35, 47, 20))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 35, 45, 19);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 35, 45, 19))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 35, 49, 20);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 35, 49, 20))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 326, 28, 22);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 326, 28, 22))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 221, 19, 3);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 221, 19, 3))
+    {
+        chara->role = Role::other;
+    }
     if (game_data.quest_flags.pael_and_her_mom != 1001)
     {
         flt();
-        chara_create(-1, 222, 19, 2);
-        cdata[rc].character_role = 3;
+        if (const auto chara = chara_create(-1, 222, 19, 2))
+        {
+            chara->role = Role::other;
+        }
     }
     flt();
-    chara_create(-1, 70, 40, 33);
-    cdata[rc].character_role = 9;
+    if (const auto chara = chara_create(-1, 70, 40, 33))
+    {
+        chara->role = Role::bartender;
+    }
     flt();
-    chara_create(-1, 74, 44, 6);
-    cdata[rc].character_role = 12;
+    if (const auto chara = chara_create(-1, 74, 44, 6))
+    {
+        chara->role = Role::healer;
+    }
     flt();
-    chara_create(-1, 206, 44, 3);
-    cdata[rc].character_role = 19;
+    if (const auto chara = chara_create(-1, 206, 44, 3))
+    {
+        chara->role = Role::sister;
+    }
     flt();
-    chara_create(-1, 1, 19, 31);
-    cdata[rc].character_role = 1001;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = snarmor(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 19, 31))
+    {
+        chara->role = Role::blacksmith;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 11, 31);
-    cdata[rc].character_role = 1006;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = sngeneral(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 11, 31))
+    {
+        chara->role = Role::general_vendor;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 38, 34);
-    cdata[rc].character_role = 1005;
-    cdata[rc].shop_rank = 8;
-    cdatan(0, rc) = sninn(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 38, 34))
+    {
+        chara->role = Role::innkeeper;
+        chara->shop_rank = 8;
+        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 5, 27);
-    cdata[rc].character_role = 1003;
-    cdata[rc].shop_rank = 9;
-    cdatan(0, rc) = snbakery(cdatan(0, rc));
-    cdata[rc].image = 138;
+    if (const auto chara = chara_create(-1, 1, 5, 27))
+    {
+        chara->role = Role::bakery;
+        chara->shop_rank = 9;
+        cdatan(0, chara->index) = snbakery(cdatan(0, chara->index));
+        chara->image = 138;
+    }
     flt();
-    chara_create(-1, 41, 56, 5);
-    cdata[rc].character_role = 1004;
-    cdata[rc].shop_rank = 11;
-    cdatan(0, rc) = snmagic(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 41, 56, 5))
+    {
+        chara->role = Role::magic_vendor;
+        chara->shop_rank = 11;
+        cdatan(0, chara->index) = snmagic(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 39, 35);
-    cdata[rc].character_role = 1009;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = sntrade(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 39, 35))
+    {
+        chara->role = Role::trader;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 38, 5, 18);
-    cdata[rc].character_role = 6;
-    cdatan(0, rc) = i18n::s.get("core.chara.job.of_noyel", cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 38, 5, 18))
+    {
+        chara->role = Role::mayer;
+        cdatan(0, chara->index) =
+            i18n::s.get("core.chara.job.of_noyel", cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 40, 18, 20);
-    cdata[rc].character_role = 7;
-    cdatan(0, rc) = sntrainer(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 40, 18, 20))
+    {
+        chara->role = Role::trainer;
+        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 41, 4, 33);
-    cdata[rc].character_role = 5;
+    if (const auto chara = chara_create(-1, 41, 4, 33))
+    {
+        chara->role = Role::appraiser;
+    }
     flt();
-    chara_create(-1, 69, 6, 33);
-    cdata[rc].character_role = 8;
+    if (const auto chara = chara_create(-1, 69, 6, 33))
+    {
+        chara->role = Role::informer;
+    }
     for (int cnt = 0; cnt < 3; ++cnt)
     {
         flt();
-        chara_create(-1, 16, rnd(32), rnd(map_data.height));
-        cdata[rc].character_role = 4;
+        if (const auto chara =
+                chara_create(-1, 16, rnd(32), rnd(map_data.height)))
+        {
+            chara->role = Role::citizen;
+        }
         flt();
-        chara_create(-1, 39, rnd(32), rnd(map_data.height));
-        cdata[rc].character_role = 4;
+        if (const auto chara =
+                chara_create(-1, 39, rnd(32), rnd(map_data.height)))
+        {
+            chara->role = Role::citizen;
+        }
     }
     for (int cnt = 0; cnt < 3; ++cnt)
     {
         flt();
-        chara_create(-1, 77, rnd(32), rnd(map_data.height));
-        cdata[rc].character_role = 14;
+        if (const auto chara =
+                chara_create(-1, 77, rnd(32), rnd(map_data.height)))
+        {
+            chara->role = Role::guard;
+        }
     }
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         map_set_chara_generation_filter();
-        chara_create(-1, 35, rnd(11) + 25, rnd(5) + 15);
-        cdata[rc].character_role = 3;
+        if (const auto chara = chara_create(-1, 35, rnd(11) + 25, rnd(5) + 15))
+        {
+            chara->role = Role::other;
+        }
     }
     for (int cnt = 0; cnt < 20; ++cnt)
     {
@@ -1764,119 +2193,178 @@ static void _init_map_port_kapul_town()
     map_placeplayer();
     map_data.user_map_flag = 0;
     flt();
-    chara_create(-1, 223, 15, 18);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 223, 15, 18))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 243, 36, 27);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 243, 36, 27))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 279, 5, 26);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 279, 5, 26))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 297, 29, 3);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 297, 29, 3))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 320, 24, 21);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 320, 24, 21))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 320, 12, 26);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 320, 12, 26))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 320, 8, 11);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 320, 8, 11))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 326, 8, 14);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 326, 8, 14))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 1, 16, 17);
-    cdata[rc].character_role = 1009;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = sntrade(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 16, 17))
+    {
+        chara->role = Role::trader;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 23, 7);
-    cdata[rc].character_role = 1001;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = snarmor(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 23, 7))
+    {
+        chara->role = Role::blacksmith;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 32, 14);
-    cdata[rc].character_role = 1006;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = sngeneral(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 32, 14))
+    {
+        chara->role = Role::general_vendor;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 22, 14);
-    cdata[rc].character_role = 1008;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = sngoods(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 22, 14))
+    {
+        chara->role = Role::general_store;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = sngoods(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 16, 25);
-    cdata[rc].character_role = 1007;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = snblack(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 16, 25))
+    {
+        chara->role = Role::blackmarket_vendor;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = snblack(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 17, 28);
-    cdata[rc].character_role = 1002;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = snfood(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 17, 28))
+    {
+        chara->role = Role::food_vendor;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = snfood(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 41, 22, 22);
-    cdata[rc].character_role = 1004;
-    cdata[rc].shop_rank = 11;
-    cdatan(0, rc) = snmagic(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 41, 22, 22))
+    {
+        chara->role = Role::magic_vendor;
+        chara->shop_rank = 11;
+        cdatan(0, chara->index) = snmagic(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 35, 3);
-    cdata[rc].character_role = 1005;
-    cdata[rc].shop_rank = 8;
-    cdatan(0, rc) = sninn(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 35, 3))
+    {
+        chara->role = Role::innkeeper;
+        chara->shop_rank = 8;
+        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 70, 15, 15);
-    cdata[rc].character_role = 9;
+    if (const auto chara = chara_create(-1, 70, 15, 15))
+    {
+        chara->role = Role::bartender;
+    }
     flt();
-    chara_create(-1, 73, 26, 3);
-    cdata[rc].character_role = 10;
+    if (const auto chara = chara_create(-1, 73, 26, 3))
+    {
+        chara->role = Role::arena_master;
+    }
     flt();
-    chara_create(-1, 179, 25, 4);
-    cdata[rc].character_role = 11;
+    if (const auto chara = chara_create(-1, 179, 25, 4))
+    {
+        chara->role = Role::pet_arena_master;
+    }
     flt();
-    chara_create(-1, 38, 8, 12);
-    cdata[rc].character_role = 6;
-    cdatan(0, rc) = i18n::s.get("core.chara.job.of_port_kapul", cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 38, 8, 12))
+    {
+        chara->role = Role::mayer;
+        cdatan(0, chara->index) = i18n::s.get(
+            "core.chara.job.of_port_kapul", cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 40, 16, 4);
-    cdata[rc].character_role = 7;
-    cdatan(0, rc) = sntrainer(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 40, 16, 4))
+    {
+        chara->role = Role::trainer;
+        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 41, 14, 4);
-    cdata[rc].character_role = 5;
+    if (const auto chara = chara_create(-1, 41, 14, 4))
+    {
+        chara->role = Role::appraiser;
+    }
     flt();
-    chara_create(-1, 69, 17, 5);
-    cdata[rc].character_role = 8;
+    if (const auto chara = chara_create(-1, 69, 17, 5))
+    {
+        chara->role = Role::informer;
+    }
     flt();
-    chara_create(-1, 74, 27, 11);
-    cdata[rc].character_role = 12;
+    if (const auto chara = chara_create(-1, 74, 27, 11))
+    {
+        chara->role = Role::healer;
+    }
     for (int cnt = 0; cnt < 2; ++cnt)
     {
         flt();
-        chara_create(-1, 16, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 16, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
         flt();
-        chara_create(-1, 39, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 39, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
     }
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         flt();
-        chara_create(-1, 71, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 71, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
     }
     for (int cnt = 0; cnt < 5; ++cnt)
     {
         flt();
-        chara_create(-1, 76, -3, 0);
-        cdata[rc].character_role = 14;
+        if (const auto chara = chara_create(-1, 76, -3, 0))
+        {
+            chara->role = Role::guard;
+        }
     }
     flt();
-    chara_create(-1, 72, 7, 6);
-    cdata[rc].character_role = 4;
+    if (const auto chara = chara_create(-1, 72, 7, 6))
+    {
+        chara->role = Role::citizen;
+    }
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 20; ++cnt)
     {
@@ -1899,23 +2387,33 @@ static void _init_map_port_kapul_fighters_guild()
     mdatan(0) = i18n::s.get("core.map.unique.fighters_guild.name");
     map_placeplayer();
     flt();
-    chara_create(-1, 291, 27, 4);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 291, 27, 4))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 74, 28, 10);
-    cdata[rc].character_role = 12;
+    if (const auto chara = chara_create(-1, 74, 28, 10))
+    {
+        chara->role = Role::healer;
+    }
     flt();
-    chara_create(-1, 40, 15, 10);
-    cdata[rc].character_role = 7;
-    cdatan(0, rc) = sntrainer(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 40, 15, 10))
+    {
+        chara->role = Role::trainer;
+        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 41, 14, 18);
-    cdata[rc].character_role = 5;
+    if (const auto chara = chara_create(-1, 41, 14, 18))
+    {
+        chara->role = Role::appraiser;
+    }
     flt();
-    chara_create(-1, 1, 29, 15);
-    cdata[rc].character_role = 1001;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = snarmor(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 29, 15))
+    {
+        chara->role = Role::blacksmith;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+    }
     for (int cnt = 0; cnt < 16; ++cnt)
     {
         flt();
@@ -1942,10 +2440,12 @@ static void _init_map_port_kapul_doom_ground()
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         flt();
-        chara_create(
-            -1, 204, cdata.player().position.x, cdata.player().position.y);
-        cdata[rc].relationship = 10;
-        cdata[rc].original_relationship = 10;
+        if (const auto chara = chara_create(
+                -1, 204, cdata.player().position.x, cdata.player().position.y))
+        {
+            chara->relationship = 10;
+            chara->original_relationship = 10;
+        }
     }
     noaggrorefresh = 1;
 }
@@ -1983,99 +2483,146 @@ static void _init_map_vernis_town()
     flt();
     chara_create(-1, 28, 39, 3);
     flt();
-    chara_create(-1, 29, 42, 23);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 29, 42, 23))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 30, 24, 5);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 30, 24, 5))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 31, 40, 24);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 31, 40, 24))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 32, 40, 25);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 32, 40, 25))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 226, 30, 5);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 226, 30, 5))
+    {
+        chara->role = Role::other;
+    }
     flt();
-    chara_create(-1, 326, 42, 24);
-    cdata[rc].character_role = 3;
+    if (const auto chara = chara_create(-1, 326, 42, 24))
+    {
+        chara->role = Role::other;
+    }
     if (game_data.quest_flags.puppys_cave == 1000)
     {
         flt();
-        chara_create(-1, 225, 31, 4);
-        cdata[rc].character_role = 3;
+        if (const auto chara = chara_create(-1, 225, 31, 4))
+        {
+            chara->role = Role::other;
+        }
     }
     flt();
-    chara_create(-1, 1, 47, 9);
-    cdata[rc].character_role = 1014;
-    cdata[rc].shop_rank = 5;
-    cdatan(0, rc) = snfish(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 47, 9))
+    {
+        chara->role = Role::fisher;
+        chara->shop_rank = 5;
+        cdatan(0, chara->index) = snfish(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 14, 12);
-    cdata[rc].character_role = 1001;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = snarmor(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 14, 12))
+    {
+        chara->role = Role::blacksmith;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 39, 27);
-    cdata[rc].character_role = 1009;
-    cdata[rc].shop_rank = 12;
-    cdatan(0, rc) = sntrade(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 39, 27))
+    {
+        chara->role = Role::trader;
+        chara->shop_rank = 12;
+        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 10, 15);
-    cdata[rc].character_role = 1006;
-    cdata[rc].shop_rank = 10;
-    cdatan(0, rc) = sngeneral(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 10, 15))
+    {
+        chara->role = Role::general_vendor;
+        chara->shop_rank = 10;
+        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 41, 7, 26);
-    cdata[rc].character_role = 1004;
-    cdata[rc].shop_rank = 11;
-    cdatan(0, rc) = snmagic(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 41, 7, 26))
+    {
+        chara->role = Role::magic_vendor;
+        chara->shop_rank = 11;
+        cdatan(0, chara->index) = snmagic(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 14, 25);
-    cdata[rc].character_role = 1005;
-    cdata[rc].shop_rank = 8;
-    cdatan(0, rc) = sninn(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 1, 14, 25))
+    {
+        chara->role = Role::innkeeper;
+        chara->shop_rank = 8;
+        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 1, 22, 26);
-    cdata[rc].character_role = 1003;
-    cdata[rc].shop_rank = 9;
-    cdatan(0, rc) = snbakery(cdatan(0, rc));
-    cdata[rc].image = 138;
+    if (const auto chara = chara_create(-1, 1, 22, 26))
+    {
+        chara->role = Role::bakery;
+        chara->shop_rank = 9;
+        cdatan(0, chara->index) = snbakery(cdatan(0, chara->index));
+        chara->image = 138;
+    }
     flt();
-    chara_create(-1, 41, 28, 16);
-    cdata[rc].character_role = 5;
+    if (const auto chara = chara_create(-1, 41, 28, 16))
+    {
+        chara->role = Role::appraiser;
+    }
     flt();
-    chara_create(-1, 70, 38, 27);
-    cdata[rc].character_role = 9;
+    if (const auto chara = chara_create(-1, 70, 38, 27))
+    {
+        chara->role = Role::bartender;
+    }
     flt();
-    chara_create(-1, 74, 6, 25);
-    cdata[rc].character_role = 12;
+    if (const auto chara = chara_create(-1, 74, 6, 25))
+    {
+        chara->role = Role::healer;
+    }
     flt();
-    chara_create(-1, 38, 10, 7);
-    cdata[rc].character_role = 6;
-    cdatan(0, rc) = i18n::s.get("core.chara.job.of_vernis", cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 38, 10, 7))
+    {
+        chara->role = Role::mayer;
+        cdatan(0, chara->index) =
+            i18n::s.get("core.chara.job.of_vernis", cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 40, 27, 16);
-    cdata[rc].character_role = 7;
-    cdatan(0, rc) = sntrainer(cdatan(0, rc));
+    if (const auto chara = chara_create(-1, 40, 27, 16))
+    {
+        chara->role = Role::trainer;
+        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+    }
     flt();
-    chara_create(-1, 69, 25, 16);
-    cdata[rc].character_role = 8;
+    if (const auto chara = chara_create(-1, 69, 25, 16))
+    {
+        chara->role = Role::informer;
+    }
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         flt();
-        chara_create(-1, 16, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 16, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
         flt();
-        chara_create(-1, 39, -3, 0);
-        cdata[rc].character_role = 4;
+        if (const auto chara = chara_create(-1, 39, -3, 0))
+        {
+            chara->role = Role::citizen;
+        }
     }
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         flt();
-        chara_create(-1, 77, -3, 0);
-        cdata[rc].character_role = 14;
+        if (const auto chara = chara_create(-1, 77, -3, 0))
+        {
+            chara->role = Role::guard;
+        }
     }
     quest_on_map_initialize();
     for (int cnt = 0; cnt < 25; ++cnt)
@@ -2302,8 +2849,10 @@ static void _init_map_fields_maybe_generate_encounter()
         {
             flt();
             initlv = encounterlv + rnd(10);
-            chara_create(-1, 303 + rnd(3), 14, 11);
-            cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
+            if (const auto chara = chara_create(-1, 303 + rnd(3), 14, 11))
+            {
+                cdatan(0, chara->index) += u8" Lv"s + chara->level;
+            }
         }
         event_add(23);
     }
@@ -2320,38 +2869,45 @@ static void _init_map_fields_maybe_generate_encounter()
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             flt(quest_data[rq].difficulty, Quality::great);
-            int stat = chara_create(
-                -1, 0, cdata.player().position.x, cdata.player().position.y);
-            if (stat != 0)
+            if (const auto chara = chara_create(
+                    -1,
+                    0,
+                    cdata.player().position.x,
+                    cdata.player().position.y))
             {
-                cdata[rc].hate = 30;
-                cdata[rc].relationship = -3;
-                cdata[rc].original_relationship = -3;
+                chara->hate = 30;
+                chara->relationship = -3;
+                chara->original_relationship = -3;
             }
         }
     }
     if (encounter == 2)
     {
         flt();
-        chara_create(-1, 1, 10, 11);
-        cdata[rc].character_role = 1010;
-        cdata[rc].shop_rank = encounterlv;
-        cdatan(0, rc) =
-            i18n::s.get("core.chara.job.wandering_vendor", cdatan(0, rc));
-        generatemoney(rc);
-        for (int cnt = 0, cnt_end = (encounterlv / 2 + 1); cnt < cnt_end; ++cnt)
+        if (const auto chara = chara_create(-1, 1, 10, 11))
         {
-            r2 = 1;
-            gain_level(cdata[rc]);
+            chara->role = Role::wandering_vendor;
+            chara->shop_rank = encounterlv;
+            cdatan(0, chara->index) = i18n::s.get(
+                "core.chara.job.wandering_vendor", cdatan(0, chara->index));
+            generatemoney(chara->index);
+            for (int cnt = 0, cnt_end = (encounterlv / 2 + 1); cnt < cnt_end;
+                 ++cnt)
+            {
+                r2 = 1;
+                gain_level(*chara);
+            }
         }
         event_add(11);
         for (int cnt = 0, cnt_end = (6 + rnd(6)); cnt < cnt_end; ++cnt)
         {
             flt();
             initlv = encounterlv + rnd(10);
-            chara_create(-1, 159 + rnd(3), 14, 11);
-            cdata[rc].character_role = 16;
-            cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
+            if (const auto chara = chara_create(-1, 159 + rnd(3), 14, 11))
+            {
+                chara->role = Role::shop_guard;
+                cdatan(0, chara->index) += u8" Lv"s + chara->level;
+            }
         }
     }
     if (encounter == 1)
@@ -2375,17 +2931,22 @@ static void _init_map_fields_maybe_generate_encounter()
             }
             if (cnt < 4)
             {
-                chara_create(
-                    -1,
-                    0,
-                    cdata.player().position.x,
-                    cdata.player().position.y);
+                if (const auto chara = chara_create(
+                        -1,
+                        0,
+                        cdata.player().position.x,
+                        cdata.player().position.y))
+                {
+                    chara->hate = 30;
+                }
             }
             else
             {
-                chara_create(-1, 0, -3, 0);
+                if (const auto chara = chara_create(-1, 0, -3, 0))
+                {
+                    chara->hate = 30;
+                }
             }
-            cdata[rc].hate = 30;
         }
     }
     encounter = 0;
@@ -2500,17 +3061,21 @@ static void _init_map_lesimas()
     }
     if (game_data.current_dungeon_level == 3)
     {
-        chara_create(
-            -1, 139, cdata.player().position.x, cdata.player().position.y);
-        cdata[rc].character_role = 3;
-        cdata[rc].ai_calm = 3;
+        if (const auto chara = chara_create(
+                -1, 139, cdata.player().position.x, cdata.player().position.y))
+        {
+            chara->role = Role::other;
+            chara->ai_calm = 3;
+        }
     }
     if (game_data.current_dungeon_level == 17)
     {
-        chara_create(
-            -1, 146, cdata.player().position.x, cdata.player().position.y);
-        cdata[rc].character_role = 3;
-        cdata[rc].ai_calm = 3;
+        if (const auto chara = chara_create(
+                -1, 146, cdata.player().position.x, cdata.player().position.y))
+        {
+            chara->role = Role::other;
+            chara->ai_calm = 3;
+        }
     }
 }
 
@@ -2613,22 +3178,24 @@ static void _init_map_yeeks_nest()
         if (game_data.quest_flags.novice_knight < 2)
         {
             flt();
-            chara_create(-1, 242, -3, 0);
-            tc = rc;
-            for (int cnt = 0; cnt < 5; ++cnt)
+            if (const auto chara = chara_create(-1, 242, -3, 0))
             {
-                flt();
-                chara_create(
-                    -1, 240, cdata[tc].position.x, cdata[tc].position.y);
-            }
-            for (int cnt = 0; cnt < 10; ++cnt)
-            {
-                flt();
-                chara_create(
-                    -1, 238, cdata[tc].position.x, cdata[tc].position.y);
-                flt();
-                chara_create(
-                    -1, 237, cdata[tc].position.x, cdata[tc].position.y);
+                tc = chara->index;
+                for (int cnt = 0; cnt < 5; ++cnt)
+                {
+                    flt();
+                    chara_create(
+                        -1, 240, cdata[tc].position.x, cdata[tc].position.y);
+                }
+                for (int cnt = 0; cnt < 10; ++cnt)
+                {
+                    flt();
+                    chara_create(
+                        -1, 238, cdata[tc].position.x, cdata[tc].position.y);
+                    flt();
+                    chara_create(
+                        -1, 237, cdata[tc].position.x, cdata[tc].position.y);
+                }
             }
         }
     }

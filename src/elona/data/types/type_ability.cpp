@@ -14,7 +14,7 @@ AbilityData AbilityDB::convert(
     const lua::ConfigTable& data,
     const std::string& id)
 {
-    auto legacy_id = data.required<int>("legacy_id");
+    DATA_LEGACY_ID();
     DATA_OPT_OR(related_basic_attribute, int, 0);
     DATA_OPT_OR(ability_type, int, 0);
     DATA_OPT_OR(cost, int, 0);

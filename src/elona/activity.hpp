@@ -19,14 +19,14 @@ void rowact_item(const Item& item);
 void activity_handle_damage(Character& chara);
 optional<TurnResult> activity_proc(Character& chara);
 
-void activity_perform(Character& performer);
+void activity_perform(Character& performer, const Item& instrument);
 void activity_sex();
 void activity_blending();
 void activity_eating(Character& eater, Item& food);
 void activity_eating_finish(Character& eater, Item& food);
-void activity_others(Character& doer);
+void activity_others(Character& doer, optional_ref<Item> activity_item);
 
-void spot_fishing();
+void spot_fishing(optional_ref<Item> rod);
 void spot_material();
 void spot_digging();
 void spot_mining_or_wall();
@@ -35,7 +35,7 @@ void matdelmain(int material_id, int amount = 1);
 void matgetmain(int material_id, int amount = 1, int spot_type = 0);
 
 
-void start_stealing();
-void sleep_start();
+void start_stealing(Item& steal_target);
+void sleep_start(optional_ref<Item> bed);
 
 } // namespace elona

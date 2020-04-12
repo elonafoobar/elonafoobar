@@ -329,6 +329,8 @@ private:
         DataTypeName convert(const lua::ConfigTable&, const std::string&); \
     };
 
+#define DATA_LEGACY_ID() \
+    const auto legacy_id = data.optional_or<int>("legacy_id", -1);
 #define DATA_REQ(name, type) type name = data.required<type>(#name);
 #define DATA_REQ_FUNC(name) \
     sol::protected_function name##_ = \

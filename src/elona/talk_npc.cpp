@@ -216,7 +216,7 @@ TalkResult talk_trade()
     }
     invctrl(0) = 20;
     invctrl(1) = 0;
-    MenuResult result = ctrl_inventory();
+    MenuResult result = ctrl_inventory().menu_result;
     if (!result.succeeded)
     {
         buff = i18n::s.get("core.talk.npc.common.you_kidding", cdata[tc]);
@@ -441,41 +441,43 @@ TalkResult talk_arena_master_score()
     return TalkResult::talk_npc;
 }
 
-TalkResult talk_quest_delivery()
+
+
+TalkResult talk_quest_delivery(Item& item_to_deliver)
 {
-    int stat = inv_getfreeid_force();
-    ti = stat;
-    item_copy(deliver(1), ti);
-    inv[ti].set_number(1);
-    ci = ti;
+    auto& slot = inv_get_free_slot_force(tc);
+    item_copy(item_to_deliver, slot);
+    slot.set_number(1);
     rc = tc;
-    chara_set_item_which_will_be_used(cdata[tc], inv[ci]);
+    chara_set_ai_item(cdata[tc], slot);
     rq = deliver;
-    inv[deliver(1)].modify_number(-1);
-    txt(i18n::s.get("core.talk.npc.common.hand_over", inv[deliver(1)]));
+    item_to_deliver.modify_number(-1);
+    txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_deliver));
     quest_set_data(3);
     quest_complete();
     refresh_burden_state();
     return TalkResult::talk_npc;
 }
 
-TalkResult talk_quest_supply()
+
+
+TalkResult talk_quest_supply(Item& item_to_supply)
 {
-    int stat = inv_getfreeid_force();
-    ti = stat;
-    item_copy(supply, ti);
-    inv[ti].set_number(1);
+    auto& slot = inv_get_free_slot_force(tc);
+    item_copy(item_to_supply, slot);
+    slot.set_number(1);
     cdata[tc].was_passed_item_by_you_just_now() = true;
-    ci = ti;
     rc = tc;
-    chara_set_item_which_will_be_used(cdata[tc], inv[ci]);
-    inv[supply].modify_number(-1);
-    txt(i18n::s.get("core.talk.npc.common.hand_over", inv[supply]));
+    chara_set_ai_item(cdata[tc], slot);
+    item_to_supply.modify_number(-1);
+    txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_supply));
     quest_set_data(3);
     quest_complete();
     refresh_burden_state();
     return TalkResult::talk_npc;
 }
+
+
 
 TalkResult talk_shop_attack()
 {
@@ -993,7 +995,7 @@ TalkResult talk_adventurer_join()
         }
         rc = tc;
         new_ally_joins();
-        cdata[rc].character_role = 0;
+        cdata[rc].role = Role::none;
         cdata[rc].current_map = 0;
         cdata[tc].impression = 100;
         rc = oc;
@@ -1562,7 +1564,7 @@ TalkResult talk_quest_giver()
         }
         if (quest_data[rq].id == 1002)
         {
-            if (inv_getfreeid(0) == -1)
+            if (!inv_get_free_slot(0))
             {
                 buff = i18n::s.get(
                     "core.talk.npc.quest_giver.about.backpack_full", cdata[tc]);
@@ -1591,8 +1593,8 @@ TalkResult talk_quest_giver()
                 }
                 flt(quest_data[rq].difficulty + cnt, Quality::bad);
                 fltn(u8"man"s);
-                int stat = chara_create(56, chara_id, -3, 0);
-                f = stat;
+                const auto chara = chara_create(56, chara_id, -3, 0);
+                f = !!chara;
                 if (f == 1)
                 {
                     for (int cnt = 0; cnt < 16; ++cnt)
@@ -1632,12 +1634,16 @@ TalkResult talk_quest_giver()
             ++quest_data[quest_data[rq].target_chara_index]
                   .delivery_has_package_flag;
             flt();
-            itemcreate_player_inv(quest_data[rq].target_item_id, 0);
-            txt(i18n::s.get("core.common.you_put_in_your_backpack", inv[ci]));
-            snd("core.inv");
-            refresh_burden_state();
-            buff = i18n::s.get(
-                "core.talk.npc.quest_giver.about.here_is_package", cdata[tc]);
+            if (const auto item =
+                    itemcreate_player_inv(quest_data[rq].target_item_id, 0))
+            {
+                txt(i18n::s.get("core.common.you_put_in_your_backpack", *item));
+                snd("core.inv");
+                refresh_burden_state();
+                buff = i18n::s.get(
+                    "core.talk.npc.quest_giver.about.here_is_package",
+                    cdata[tc]);
+            }
         }
     }
     else
@@ -1704,6 +1710,9 @@ void talk_wrapper(TalkResult initial)
 
 TalkResult talk_npc()
 {
+    optional_ref<Item> item_to_deliver;
+    optional_ref<Item> item_to_supply;
+
     listmax = 0;
     if (buff == ""s)
     {
@@ -1739,7 +1748,7 @@ TalkResult talk_npc()
             }
         }
     }
-    if (cdata[tc].character_role == 18)
+    if (cdata[tc].role == Role::maid)
     {
         if (game_data.number_of_waiting_guests > 0)
         {
@@ -1754,31 +1763,30 @@ TalkResult talk_npc()
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.talk.npc.common.choices.talk"));
     }
-    if ((cdata[tc].character_role >= 1000 && cdata[tc].character_role < 2000) ||
-        cdata[tc].character_role == 2003)
+    if (is_shopkeeper(cdata[tc].role))
     {
         ELONA_APPEND_RESPONSE(
             10, i18n::s.get("core.talk.npc.shop.choices.buy"));
         ELONA_APPEND_RESPONSE(
             11, i18n::s.get("core.talk.npc.shop.choices.sell"));
-        if (cdata[tc].character_role == 1010)
+        if (cdata[tc].role == Role::wandering_vendor)
         {
             ELONA_APPEND_RESPONSE(
                 31, i18n::s.get("core.talk.npc.shop.choices.attack"));
         }
-        if (cdata[tc].character_role != 1010 &&
-            cdata[tc].character_role != 1009)
+        if (cdata[tc].role != Role::wandering_vendor &&
+            cdata[tc].role != Role::trader)
         {
             ELONA_APPEND_RESPONSE(
                 12, i18n::s.get("core.talk.npc.shop.choices.invest"));
         }
     }
-    if (cdata[tc].character_role == 9)
+    if (cdata[tc].role == Role::bartender)
     {
         ELONA_APPEND_RESPONSE(
             33, i18n::s.get("core.talk.npc.bartender.choices.call_ally"));
     }
-    if (cdata[tc].character_role == 17)
+    if (cdata[tc].role == Role::slave_master)
     {
         if (chara_get_free_slot_ally() != 0)
         {
@@ -1788,7 +1796,7 @@ TalkResult talk_npc()
         ELONA_APPEND_RESPONSE(
             37, i18n::s.get("core.talk.npc.slave_trader.choices.sell"));
     }
-    if (cdata[tc].character_role == 22)
+    if (cdata[tc].role == Role::horse_master)
     {
         if (chara_get_free_slot_ally() != 0)
         {
@@ -1839,12 +1847,12 @@ TalkResult talk_npc()
             }
         }
     }
-    if (cdata[tc].character_role == 1000 || cdata[tc].character_role == 1001)
+    if (cdata[tc].role == Role::blacksmith)
     {
         ELONA_APPEND_RESPONSE(
             54, i18n::s.get("core.talk.npc.shop.choices.ammo"));
     }
-    if (cdata[tc].character_role == 1005)
+    if (cdata[tc].role == Role::innkeeper)
     {
         ELONA_APPEND_RESPONSE(
             13,
@@ -1858,7 +1866,7 @@ TalkResult talk_npc()
                 i18n::s.get("core.talk.npc.innkeeper.choices.go_to_shelter"));
         }
     }
-    if (cdata[tc].character_role == 5)
+    if (cdata[tc].role == Role::appraiser)
     {
         ELONA_APPEND_RESPONSE(
             14,
@@ -1873,21 +1881,21 @@ TalkResult talk_npc()
             i18n::s.get("core.talk.npc.wizard.choices.investigate") + u8" ("s +
                 calcidentifyvalue(2) + i18n::s.get("core.ui.gold") + u8")"s);
     }
-    if (cdata[tc].character_role == 7)
+    if (cdata[tc].role == Role::trainer)
     {
         ELONA_APPEND_RESPONSE(
             17, i18n::s.get("core.talk.npc.trainer.choices.train.ask"));
         ELONA_APPEND_RESPONSE(
             30, i18n::s.get("core.talk.npc.trainer.choices.learn.ask"));
     }
-    if (cdata[tc].character_role == 8)
+    if (cdata[tc].role == Role::informer)
     {
         ELONA_APPEND_RESPONSE(
             18, i18n::s.get("core.talk.npc.informer.choices.show_adventurers"));
         ELONA_APPEND_RESPONSE(
             47, i18n::s.get("core.talk.npc.informer.choices.investigate_ally"));
     }
-    if (cdata[tc].character_role == 12)
+    if (cdata[tc].role == Role::healer)
     {
         ELONA_APPEND_RESPONSE(
             19,
@@ -1895,7 +1903,7 @@ TalkResult talk_npc()
                 u8"("s + calcrestorecost() + i18n::s.get("core.ui.gold") +
                 u8")"s);
     }
-    if (cdata[tc].character_role == 13)
+    if (cdata[tc].role == Role::adventurer)
     {
         ELONA_APPEND_RESPONSE(
             20, i18n::s.get("core.talk.npc.common.choices.trade"));
@@ -1907,7 +1915,7 @@ TalkResult talk_npc()
                 51, i18n::s.get("core.talk.npc.adventurer.choices.join"));
         }
     }
-    if (cdata[tc].character_role == 10)
+    if (cdata[tc].role == Role::arena_master)
     {
         ELONA_APPEND_RESPONSE(
             21, i18n::s.get("core.talk.npc.arena_master.choices.enter_duel"));
@@ -1916,7 +1924,7 @@ TalkResult talk_npc()
         ELONA_APPEND_RESPONSE(
             23, i18n::s.get("core.talk.npc.arena_master.choices.score"));
     }
-    if (cdata[tc].character_role == 11)
+    if (cdata[tc].role == Role::pet_arena_master)
     {
         ELONA_APPEND_RESPONSE(
             40,
@@ -1929,12 +1937,12 @@ TalkResult talk_npc()
         ELONA_APPEND_RESPONSE(
             42, i18n::s.get("core.talk.npc.arena_master.choices.score"));
     }
-    if (cdata[tc].character_role == 18)
+    if (cdata[tc].role == Role::maid)
     {
         ELONA_APPEND_RESPONSE(
             45, i18n::s.get("core.talk.npc.maid.choices.think_of_house_name"));
     }
-    if (cdata[tc].character_role == 19)
+    if (cdata[tc].role == Role::sister)
     {
         ELONA_APPEND_RESPONSE(
             46, i18n::s.get("core.talk.npc.sister.choices.buy_indulgence"));
@@ -1944,7 +1952,7 @@ TalkResult talk_npc()
         ELONA_APPEND_RESPONSE(
             20, i18n::s.get("core.talk.npc.common.choices.trade"));
     }
-    if (cdata[tc].character_role == 14)
+    if (cdata[tc].role == Role::guard)
     {
         int stat = talk_guide_quest_client();
         if (stat != 0)
@@ -1969,12 +1977,12 @@ TalkResult talk_npc()
                 32, i18n::s.get("core.talk.npc.guard.choices.lost_suitcase"));
         }
     }
-    if (cdata[tc].character_role == 21)
+    if (cdata[tc].role == Role::returner)
     {
         ELONA_APPEND_RESPONSE(
             53, i18n::s.get("core.talk.npc.wizard.choices.return"));
     }
-    if (cdata[tc].character_role == 1020)
+    if (cdata[tc].role == Role::spell_writer)
     {
         if (game_data.guild.belongs_to_mages_guild != 0)
         {
@@ -2004,14 +2012,13 @@ TalkResult talk_npc()
                 60, i18n::s.get("core.talk.npc.prostitute.choices.buy"));
         }
     }
-    if (cdata[tc].character_role == 23)
+    if (cdata[tc].role == Role::caravan_master)
     {
         ELONA_APPEND_RESPONSE(
             61, i18n::s.get("core.talk.npc.caravan_master.choices.hire"));
     }
     f = 0;
-    deliver(0) = -1;
-    deliver(1) = -1;
+    deliver = -1;
     if (game_data.current_dungeon_level == 1)
     {
         for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
@@ -2049,7 +2056,7 @@ TalkResult talk_npc()
                 {
                     p = quest_data[cnt].target_item_id;
                     deliver = cnt;
-                    for (const auto& item : inv.pc())
+                    for (auto&& item : inv.pc())
                     {
                         if (item.number() == 0)
                         {
@@ -2057,7 +2064,7 @@ TalkResult talk_npc()
                         }
                         if (item.id == int2itemid(p))
                         {
-                            deliver(1) = item.index;
+                            item_to_deliver = item;
                             break;
                         }
                     }
@@ -2073,8 +2080,7 @@ TalkResult talk_npc()
             quest_data[rq].client_chara_type == 3 &&
             quest_data[rq].progress == 1)
         {
-            supply = -1;
-            for (const auto& item : inv.pc())
+            for (auto&& item : inv.pc())
             {
                 if (item.number() == 0)
                 {
@@ -2091,7 +2097,7 @@ TalkResult talk_npc()
                         item.param1 / 1000 == quest_data[rq].extra_info_1 &&
                         item.param2 == quest_data[rq].extra_info_2)
                     {
-                        supply = item.index;
+                        item_to_supply = item;
                         break;
                     }
                 }
@@ -2099,18 +2105,18 @@ TalkResult talk_npc()
                 {
                     if (item.id == int2itemid(quest_data[rq].target_item_id))
                     {
-                        supply = item.index;
+                        item_to_supply = item;
                         break;
                     }
                 }
             }
-            if (supply != -1)
+            if (item_to_supply)
             {
                 ELONA_APPEND_RESPONSE(
                     26,
                     i18n::s.get(
                         "core.talk.npc.quest_giver.choices.here_is_item",
-                        inv[supply]));
+                        *item_to_supply));
             }
             else
             {
@@ -2128,7 +2134,7 @@ TalkResult talk_npc()
                     "core.talk.npc.quest_giver.choices.about_the_work"));
         }
     }
-    if (deliver != -1 && deliver(1) != -1)
+    if (deliver != -1 && item_to_deliver)
     {
         ELONA_APPEND_RESPONSE(
             25,
@@ -2138,11 +2144,9 @@ TalkResult talk_npc()
     {
         if (tc >= 57)
         {
-            if (cdata[tc].character_role != 0)
+            if (cdata[tc].role != Role::none)
             {
-                if ((cdata[tc].character_role < 2000 ||
-                     cdata[tc].character_role >= 3000) &&
-                    !event_has_pending_events())
+                if (!is_guest(cdata[tc].role) && !event_has_pending_events())
                 {
                     ELONA_APPEND_RESPONSE(
                         44, i18n::s.get("core.talk.npc.servant.choices.fire"));
@@ -2150,7 +2154,7 @@ TalkResult talk_npc()
             }
         }
     }
-    if (cdata[tc].character_role == 1015)
+    if (cdata[tc].role == Role::moyer)
     {
         if (game_data.quest_flags.pael_and_her_mom == 1000)
         {
@@ -2174,9 +2178,7 @@ TalkResult talk_npc()
 
     if (chatval_ == 10 || chatval_ == 11)
     {
-        if ((cdata[tc].character_role >= 1000 &&
-             cdata[tc].character_role < 2000) ||
-            cdata[tc].character_role == 2003)
+        if (is_shopkeeper(cdata[tc].role))
         {
             if (cdata.player().karma < -30 &&
                 cdata.player().is_incognito() == 0)
@@ -2226,8 +2228,10 @@ TalkResult talk_npc()
     case 42: return talk_pet_arena_master_score();
     case 23: return talk_arena_master_score();
     case 24: return TalkResult::talk_quest_giver;
-    case 25: return talk_quest_delivery();
-    case 26: return talk_quest_supply();
+    case 25:
+        assert(item_to_deliver);
+        return talk_quest_delivery(*item_to_deliver);
+    case 26: assert(item_to_supply); return talk_quest_supply(*item_to_supply);
     case 30: return talk_trainer_learn_skill();
     case 31: return talk_shop_attack();
     case 32: return talk_guard_return_item();

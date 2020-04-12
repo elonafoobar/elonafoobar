@@ -41,7 +41,6 @@ elona_vector1<int> rpref;
 int rpid = 0;
 int rpmode = 0;
 elona_vector1<int> rppage;
-int rpresult = 0;
 
 
 
@@ -146,7 +145,7 @@ void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
         {
             s_ = i18n::s.get(
                 "core.blending.window.selected", inv[rpref(10 + cnt * 2)]);
-            s_ = strmid(s_, 0, 44);
+            s_ = strutil::take_by_width(s_, 44);
         }
         mes(dx_, dy_, ""s + i_ + u8"."s + s_);
         dy_ += 17;
@@ -209,7 +208,7 @@ void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
         return;
 
     font(12 - en * 2, snail::Font::Style::bold);
-    mes(dx_ - 10, dy_, itemname(item->index));
+    mes(dx_ - 10, dy_, itemname(*item));
     dy_ += 20;
     font(13 - en * 2);
     if (item->identify_state <= IdentifyState::partly)
@@ -486,8 +485,8 @@ void blending_menu_2()
                 break;
             }
             p = list(0, p);
-            s = itemname(p, inv[p].number());
-            s = strmid(s, 0, 28);
+            s = itemname(inv[p], inv[p].number());
+            s = strutil::take_by_width(s, 28);
             if (p >= ELONA_ITEM_ON_GROUND_INDEX)
             {
                 s += i18n::s.get("core.blending.steps.ground");
@@ -553,17 +552,17 @@ void blending_menu_2()
         }
         if (p != -1)
         {
-            ci = p;
-            if (inv[ci].is_marked_as_no_drop())
+            const auto item_index = p(0);
+            if (inv[item_index].is_marked_as_no_drop())
             {
                 snd("core.fail1");
                 txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
                 continue;
             }
-            rpref(10 + step * 2 + 0) = ci;
-            rpref(10 + step * 2 + 1) = itemid2int(inv[ci].id);
+            rpref(10 + step * 2 + 0) = item_index;
+            rpref(10 + step * 2 + 1) = itemid2int(inv[item_index].id);
             snd("core.drink1");
-            txt(i18n::s.get("core.blending.steps.you_add", inv[ci]));
+            txt(i18n::s.get("core.blending.steps.you_add", inv[item_index]));
             ++step;
             p = rpdiff(rpid, step, step - 1);
             return;
@@ -1602,9 +1601,10 @@ int blending_find_required_mat()
     return f;
 }
 
-int blending_spend_materials()
+
+
+void blending_spend_materials(bool success)
 {
-    p = 0;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         if (rpref(10 + cnt * 2) == -1)
@@ -1615,7 +1615,11 @@ int blending_spend_materials()
         {
             continue;
         }
-        if ((rpdata(2, rpid) <= 0 || cnt != 0) && rpresult)
+        if (rpdata(2, rpid) > 0 && cnt == 0)
+        {
+            continue;
+        }
+        if (success)
         {
             inv[rpref(10 + cnt * 2)].modify_number(-1);
         }
@@ -1635,19 +1639,14 @@ int blending_spend_materials()
             inv[rpref(10 + cnt * 2)].position.y);
     }
     refresh_burden_state();
-    return 1;
 }
+
+
 
 void blending_start_attempt()
 {
-    rpresult = 1;
-    if (rpdiff(rpid, -1, -1) < rnd(100))
-    {
-        rpresult = 0;
-        txt(i18n::s.get("core.blending.failed"),
-            Message::color{ColorIndex::red});
-    }
-    else
+    const auto success = rpdiff(rpid, -1, -1) >= rnd(100);
+    if (success)
     {
         if (rpdata(0, rpid) >= 10000)
         {
@@ -1692,27 +1691,216 @@ void blending_start_attempt()
                 50);
         }
     }
+    else
+    {
+        txt(i18n::s.get("core.blending.failed"),
+            Message::color{ColorIndex::red});
+    }
     --rpref(1);
-    blending_spend_materials();
+    blending_spend_materials(success);
 }
+
+
+
+void blending_proc_on_success_events_love_food(Item& food, Item&)
+{
+    food.is_aphrodisiac() = true;
+    txt(i18n::s.get("core.blending.succeeded", food),
+        Message::color{ColorIndex::green});
+    txt(i18n::s.get("core.action.dip.result.love_food.guilty"));
+    snd("core.offer1");
+}
+
+
+
+void blending_proc_on_success_events_dyeing(Item& target, Item& dye)
+{
+    target.color = dye.color;
+    txt(i18n::s.get("core.action.dip.result.dyeing", target),
+        Message::color{ColorIndex::green});
+    snd("core.drink1");
+}
+
+
+
+void blending_proc_on_success_events_poisoned_food(Item& food, Item&)
+{
+    food.is_poisoned() = true;
+    txt(i18n::s.get("core.blending.succeeded", food),
+        Message::color{ColorIndex::green});
+    txt(i18n::s.get("core.action.dip.result.poisoned_food"));
+    snd("core.offer1");
+}
+
+
+
+void blending_proc_on_success_events_fireproof(
+    Item& target,
+    Item& potion_of_fireproof)
+{
+    txt(i18n::s.get(
+            "core.action.dip.result.put_on", target, potion_of_fireproof),
+        Message::color{ColorIndex::green});
+    if (target.id == ItemId::fireproof_blanket)
+    {
+        txt(i18n::s.get("core.action.dip.result.good_idea_but"));
+    }
+    else
+    {
+        target.is_fireproof() = true;
+        txt(i18n::s.get("core.action.dip.result.gains_fireproof", target));
+    }
+    snd("core.drink1");
+}
+
+
+
+void blending_proc_on_success_events_acidproof(
+    Item& target,
+    Item& potion_of_acidproof)
+{
+    txt(i18n::s.get(
+            "core.action.dip.result.put_on", target, potion_of_acidproof),
+        Message::color{ColorIndex::green});
+    target.is_acidproof() = true;
+    txt(i18n::s.get("core.action.dip.result.gains_acidproof", target));
+    snd("core.drink1");
+}
+
+
+
+void blending_proc_on_success_events_bait_attachment(Item& rod, Item& bait)
+{
+    txt(i18n::s.get("core.action.dip.result.bait_attachment", rod, bait),
+        Message::color{ColorIndex::green});
+    if (rod.param4 == bait.param1)
+    {
+        rod.count += rnd(10) + 15;
+    }
+    else
+    {
+        rod.count = rnd(10) + 15;
+        rod.param4 = bait.param1;
+    }
+    snd("core.equip1");
+}
+
+
+
+void blending_proc_on_success_events_blessing(Item& target, Item& water)
+{
+    txt(i18n::s.get("core.action.dip.result.blessed_item", target, water),
+        Message::color{ColorIndex::green});
+    if (water.curse_state == CurseState::blessed)
+    {
+        txt(i18n::s.get("core.action.dip.result.becomes_blessed", target),
+            Message::color{ColorIndex::orange});
+        target.curse_state = CurseState::blessed;
+    }
+    if (is_cursed(water.curse_state))
+    {
+        txt(i18n::s.get("core.action.dip.result.becomes_cursed", target),
+            Message::color{ColorIndex::purple});
+        target.curse_state = CurseState::cursed;
+    }
+    snd("core.drink1");
+}
+
+
+
+void blending_proc_on_success_events_well_refill(Item& well, Item& potion)
+{
+    txt(i18n::s.get("core.action.dip.result.well_refill", well, potion));
+    if (potion.id == ItemId::empty_bottle)
+    {
+        txt(i18n::s.get("core.action.dip.result.empty_bottle_shatters"));
+        return;
+    }
+    snd("core.drink1");
+    if (well.id == ItemId::holy_well)
+    {
+        txt(i18n::s.get("core.action.dip.result.holy_well_polluted"));
+        return;
+    }
+    if (well.param3 >= 20)
+    {
+        txt(i18n::s.get("core.action.dip.result.well_dry", well));
+        return;
+    }
+    txt(i18n::s.get("core.action.dip.result.well_refilled", well),
+        Message::color{ColorIndex::green});
+    if (potion.id == ItemId::handful_of_snow)
+    {
+        txt(i18n::s.get("core.action.dip.result.snow_melts.blending"));
+    }
+    else
+    {
+        well.param1 += rnd(3);
+    }
+}
+
+
+
+void blending_proc_on_success_events_natural_potion(Item& well, Item&)
+{
+    if (well.param1 < -5 || well.param3 >= 20 ||
+        (well.id == ItemId::holy_well && game_data.holy_well_count <= 0))
+    {
+        txt(i18n::s.get("core.action.dip.result.natural_potion_dry", well));
+        txt(i18n::s.get("core.action.dip.result.natural_potion_drop"));
+        return;
+    }
+    if (!inv_get_free_slot(0))
+    {
+        txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
+        return;
+    }
+    optional_ref<Item> natural_potion;
+    if (well.id == ItemId::holy_well)
+    {
+        --game_data.holy_well_count;
+        flt();
+        if ((natural_potion = itemcreate_player_inv(516, 0)))
+        {
+            natural_potion->curse_state = CurseState::blessed;
+        }
+    }
+    else
+    {
+        well.param1 -= 3;
+        flt(20);
+        flttypemajor = 52000;
+        natural_potion = itemcreate_player_inv(0, 0);
+    }
+    if (natural_potion)
+    {
+        txt(i18n::s.get("core.action.dip.result.natural_potion"));
+        txt(i18n::s.get("core.action.dip.you_get", *natural_potion),
+            Message::color{ColorIndex::green});
+        item_stack(0, *natural_potion, true);
+        item_stack(0, *natural_potion);
+        snd("core.drink1");
+    }
+}
+
+
 
 // TODO: Much duplication with do_dip_command()
 void blending_proc_on_success_events()
 {
-    int cibk = ci;
-    ci = rpref(10);
-    ti = rpref(12);
+    const auto item1_index = rpref(10);
+    const auto item2_index = rpref(12);
     if (rpdata(2, rpid) == 2)
     {
-        item_separate(ci);
+        item_separate(inv[item1_index]);
     }
-    else if (inv[ci].number() <= 1)
+    else if (inv[item1_index].number() <= 1)
     {
         rpref(10) = -2;
     }
     else
     {
-        int stat = item_separate(ci);
+        int stat = item_separate(inv[item1_index]).index;
         if (rpref(10) == stat)
         {
             rpref(10) = -2;
@@ -1722,161 +1910,40 @@ void blending_proc_on_success_events()
             rpref(10) = stat;
         }
     }
+
+    // See each function for parameter usage.
+    auto& item1 = inv[item1_index];
+    auto& item2 = inv[item2_index];
     switch (rpdata(0, rpid))
     {
-    case 10000:
-        inv[ci].is_aphrodisiac() = true;
-        txt(i18n::s.get("core.blending.succeeded", inv[ci]),
-            Message::color{ColorIndex::green});
-        txt(i18n::s.get("core.action.dip.result.love_food.guilty"));
-        snd("core.offer1");
-        break;
-    case 10001:
-        inv[ci].color = inv[ti].color;
-        txt(i18n::s.get("core.action.dip.result.dyeing", inv[ci]),
-            Message::color{ColorIndex::green});
-        snd("core.drink1");
-        break;
+    case 10000: blending_proc_on_success_events_love_food(item1, item2); break;
+    case 10001: blending_proc_on_success_events_dyeing(item1, item2); break;
     case 10002:
-        inv[ci].is_poisoned() = true;
-        txt(i18n::s.get("core.blending.succeeded", inv[ci]),
-            Message::color{ColorIndex::green});
-        txt(i18n::s.get("core.action.dip.result.poisoned_food"));
-        snd("core.offer1");
+        blending_proc_on_success_events_poisoned_food(item1, item2);
         break;
-    case 10003:
-        txt(i18n::s.get("core.action.dip.result.put_on", inv[ci], inv[ti]),
-            Message::color{ColorIndex::green});
-        if (inv[ci].id == ItemId::fireproof_blanket)
-        {
-            txt(i18n::s.get("core.action.dip.result.good_idea_but"));
-        }
-        else
-        {
-            inv[ci].is_fireproof() = true;
-            txt(i18n::s.get("core.action.dip.result.gains_fireproof", inv[ci]));
-        }
-        snd("core.drink1");
-        break;
-    case 10004:
-        txt(i18n::s.get("core.action.dip.result.put_on", inv[ci], inv[ti]),
-            Message::color{ColorIndex::green});
-        inv[ci].is_acidproof() = true;
-        txt(i18n::s.get("core.action.dip.result.gains_acidproof", inv[ci]));
-        snd("core.drink1");
-        break;
+    case 10003: blending_proc_on_success_events_fireproof(item1, item2); break;
+    case 10004: blending_proc_on_success_events_acidproof(item1, item2); break;
     case 10005:
-        txt(i18n::s.get(
-                "core.action.dip.result.bait_attachment", inv[ci], inv[ti]),
-            Message::color{ColorIndex::green});
-        if (inv[ci].param4 == inv[ti].param1)
-        {
-            inv[ci].count += rnd(10) + 15;
-        }
-        else
-        {
-            inv[ci].count = rnd(10) + 15;
-            inv[ci].param4 = inv[ti].param1;
-        }
-        snd("core.equip1");
+        blending_proc_on_success_events_bait_attachment(item1, item2);
         break;
-    case 10006:
-        txt(i18n::s.get(
-                "core.action.dip.result.blessed_item", inv[ci], inv[ti]),
-            Message::color{ColorIndex::green});
-        if (inv[ti].curse_state == CurseState::blessed)
-        {
-            txt(i18n::s.get("core.action.dip.result.becomes_blessed", inv[ci]),
-                Message::color{ColorIndex::orange});
-            inv[ci].curse_state = CurseState::blessed;
-        }
-        if (is_cursed(inv[ti].curse_state))
-        {
-            txt(i18n::s.get("core.action.dip.result.becomes_cursed", inv[ci]),
-                Message::color{ColorIndex::purple});
-            inv[ci].curse_state = CurseState::cursed;
-        }
-        snd("core.drink1");
-        break;
+    case 10006: blending_proc_on_success_events_blessing(item1, item2); break;
     case 10007:
-        txt(i18n::s.get(
-            "core.action.dip.result.well_refill", inv[ci], inv[ti]));
-        if (inv[ti].id == ItemId::empty_bottle)
-        {
-            txt(i18n::s.get("core.action.dip.result.empty_bottle_shatters"));
-            break;
-        }
-        snd("core.drink1");
-        if (inv[ci].id == ItemId::holy_well)
-        {
-            txt(i18n::s.get("core.action.dip.result.holy_well_polluted"));
-            break;
-        }
-        if (inv[ci].param3 >= 20)
-        {
-            txt(i18n::s.get("core.action.dip.result.well_dry", inv[ci]));
-            break;
-        }
-        txt(i18n::s.get("core.action.dip.result.well_refilled", inv[ci]),
-            Message::color{ColorIndex::green});
-        if (inv[ti].id == ItemId::handful_of_snow)
-        {
-            txt(i18n::s.get("core.action.dip.result.snow_melts.blending"));
-        }
-        else
-        {
-            inv[ci].param1 += rnd(3);
-        }
+        blending_proc_on_success_events_well_refill(item1, item2);
         break;
     case 10008:
-        if (inv[ci].param1 < -5 || inv[ci].param3 >= 20 ||
-            (inv[ci].id == ItemId::holy_well && game_data.holy_well_count <= 0))
-        {
-            txt(i18n::s.get(
-                "core.action.dip.result.natural_potion_dry", inv[ci]));
-            txt(i18n::s.get("core.action.dip.result.natural_potion_drop"));
-            break;
-        }
-        if (inv_getfreeid(0) == -1)
-        {
-            txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
-            break;
-        }
-        cibk = ci;
-        if (inv[ci].id == ItemId::holy_well)
-        {
-            --game_data.holy_well_count;
-            flt();
-            if (const auto item = itemcreate_player_inv(516, 0))
-            {
-                item->curse_state = CurseState::blessed;
-            }
-        }
-        else
-        {
-            inv[ci].param1 -= 3;
-            flt(20);
-            flttypemajor = 52000;
-            itemcreate_player_inv(0, 0);
-        }
-        txt(i18n::s.get("core.action.dip.result.natural_potion"));
-        txt(i18n::s.get("core.action.dip.you_get", inv[ci]),
-            Message::color{ColorIndex::green});
-        item_stack(0, inv[ci], true);
-        item_stack(0, inv[ci]);
-        ci = cibk;
-        snd("core.drink1");
+        blending_proc_on_success_events_natural_potion(item1, item2);
         break;
+    default: break;
     }
 
-    item_stack(0, inv[ci]);
-    if (inv[ci].body_part != 0)
+    item_stack(0, item1);
+    if (item1.body_part != 0)
     {
         create_pcpic(cdata.player());
     }
-    if (inv_getowner(ci) == -1)
+    if (inv_getowner(item1) == -1)
     {
-        cell_refresh(inv[ci].position.x, inv[ci].position.y);
+        cell_refresh(item1.position.x, item1.position.y);
     }
     chara_refresh(0);
 }

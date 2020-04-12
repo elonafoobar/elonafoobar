@@ -371,9 +371,11 @@ void bind_setters()
     CONFIG_OPTION("screen.heartbeat", bool, heartbeat);
     CONFIG_OPTION("screen.high_quality_shadows", bool, high_quality_shadow);
     CONFIG_OPTION("screen.music", bool, music);
+    CONFIG_OPTION("screen.music_volume", int, music_volume);
     CONFIG_OPTION("screen.object_shadows", bool, object_shadow);
     CONFIG_OPTION("screen.skip_random_event_popups", bool, skip_random_event_popups);
     CONFIG_OPTION("screen.sound", bool, sound);
+    CONFIG_OPTION("screen.sound_volume", int, sound_volume);
     // clang-format on
 
     conf.bind_setter("core.font.quality", &setters::font_quality);

@@ -53,7 +53,7 @@ void create_adventurer()
     cdata[rc].image = rnd(33) * 2 + 1 + cdata[rc].sex;
     cdatan(0, rc) = random_name();
     cdatan(1, rc) = random_title(RandomTitleType::character);
-    cdata[rc].character_role = 13;
+    cdata[rc].role = Role::adventurer;
     p = rnd(450);
     if (area_data[p].id == mdata_t::MapId::none ||
         area_data[p].id == mdata_t::MapId::your_home ||
@@ -338,9 +338,9 @@ int adventurer_discover_equipment()
         }
         if (item.number() != 0)
         {
-            if (cdata[rc].item_which_will_be_used == item.index)
+            if (cdata[rc].ai_item == item.index)
             {
-                cdata[rc].item_which_will_be_used = 0;
+                cdata[rc].ai_item = 0;
             }
             item.remove();
             f = 1;
@@ -367,10 +367,10 @@ int adventurer_discover_equipment()
         {
             if (is_equipment(the_item_db[itemid2int(item->id)]->category))
             {
-                addnews(1, rc, 0, itemname(item->index));
+                addnews(1, rc, 0, itemname(*item));
             }
         }
-        wear_most_valuable_equipment();
+        wear_most_valuable_equipment(*item);
     }
     return 0;
 }
