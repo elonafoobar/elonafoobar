@@ -348,7 +348,7 @@ void Console::register_builtin_commands()
             _term.println("Activate wizard mode to run the command.");
             return;
         }
-        for (int i = 0; i < 61; ++i)
+        for (int i = 2; i < 61; ++i)
         {
             spact(i) = 1;
         }

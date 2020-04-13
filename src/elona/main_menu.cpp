@@ -511,7 +511,6 @@ MainMenuResult main_menu_new_game()
     {
         load_gene_files();
     }
-    rc = 0;
     mode = 1;
     cm = 1;
     asset_load("void");

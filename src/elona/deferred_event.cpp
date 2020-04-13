@@ -174,20 +174,19 @@ void eh_zeome_talks(const DeferredEvent&)
 
 void eh_lord_of_normal_nefia(const DeferredEvent&)
 {
-    while (true)
+    optional_ref<Character> lord;
+    do
     {
         map_set_chara_generation_filter();
         fixlv = Quality::miracle;
         initlv = game_data.current_dungeon_level + rnd(5);
-        if (const auto chara = chara_create(-1, 0, -3, 0))
-        {
-            cdata[rc].is_lord_of_dungeon() = true;
-            break;
-        }
-    }
-    tc = rc;
+        lord = chara_create(-1, 0, -3, 0);
+    } while (!lord);
+
+    lord->is_lord_of_dungeon() = true;
+    tc = lord->index;
     area_data[game_data.current_map].has_been_conquered = tc;
-    cdatan(0, rc) += u8" Lv"s + cdata[rc].level;
+    cdatan(0, lord->index) += u8" Lv"s + lord->level;
     txt(i18n::s.get("core.event.reached_deepest_level"));
     txt(i18n::s.get(
             "core.event.guarded_by_lord",
@@ -337,8 +336,11 @@ void eh_reunoin_with_pets(const DeferredEvent&)
     flt();
     initlv = cdata.player().level * 2 / 3 + 1;
     novoidlv = 1;
-    chara_create(-1, p, cdata[cc].position.x, cdata[cc].position.y);
-    new_ally_joins();
+    if (const auto chara =
+            chara_create(-1, p, cdata[cc].position.x, cdata[cc].position.y))
+    {
+        new_ally_joins(*chara);
+    }
 }
 
 
@@ -551,7 +553,7 @@ void eh_ragnarok(const DeferredEvent& event)
             }
             if (const auto chara = chara_create(-1, 0, x, y))
             {
-                cdata[rc].is_temporary() = true;
+                chara->is_temporary() = true;
             }
         }
         if (i % 7 == 0)
@@ -853,45 +855,62 @@ void eh_guest_visit(const DeferredEvent&)
 
     if (rnd(3) == 0)
     {
+        optional_ref<Character> guest;
         flt(0, Quality::good);
         if ((game_data.last_month_when_trainer_visited !=
                  game_data.date.month ||
              rnd(5) == 0) &&
             rnd(3))
         {
-            chara_create(-1, 333, -3, 0);
-            cdata[rc].role = Role::guest_trainer;
+            if ((guest = chara_create(-1, 333, -3, 0)))
+            {
+                guest->role = Role::guest_trainer;
+            }
         }
         else if (rnd(10) == 0)
         {
-            chara_create(-1, 334, -3, 0);
-            cdata[rc].role = Role::guest_producer;
+            if ((guest = chara_create(-1, 334, -3, 0)))
+            {
+                guest->role = Role::guest_producer;
+            }
         }
         else if (rnd(10) == 0)
         {
-            chara_create(-1, 1, -3, 0);
-            cdata[rc].role = Role::guest_wandering_vendor;
-            cdata[rc].shop_rank = clamp(cdata.player().fame / 100, 20, 100);
+            if ((guest = chara_create(-1, 1, -3, 0)))
+            {
+                guest->role = Role::guest_wandering_vendor;
+                guest->shop_rank = clamp(cdata.player().fame / 100, 20, 100);
+            }
         }
         else if (rnd(4) == 0)
         {
-            chara_create(-1, 9, -3, 0);
-            cdata[rc].role = Role::guest_beggar;
+            if ((guest = chara_create(-1, 9, -3, 0)))
+            {
+                guest->role = Role::guest_beggar;
+            }
         }
         else if (rnd(4) == 0)
         {
-            chara_create(-1, 174, -3, 0);
-            cdata[rc].role = Role::guest_punk;
+            if ((guest = chara_create(-1, 174, -3, 0)))
+            {
+                guest->role = Role::guest_punk;
+            }
         }
         else
         {
-            chara_create(-1, 16, -3, 0);
-            cdata[rc].role = Role::guest_citizen;
+            if ((guest = chara_create(-1, 16, -3, 0)))
+            {
+                guest->role = Role::guest_citizen;
+            }
         }
-        cdata[rc].relationship = 0;
-        cdata[rc].original_relationship = 0;
-        cdata[rc].is_temporary() = true;
-        tc = rc;
+
+        if (guest)
+        {
+            guest->relationship = 0;
+            guest->original_relationship = 0;
+            guest->is_temporary() = true;
+            tc = guest->index;
+        }
     }
     else
     {
@@ -944,10 +963,9 @@ void eh_guest_visit(const DeferredEvent&)
             return;
         }
         cdata[tc].set_state(Character::State::alive);
-        rc = tc;
         cxinit = cdata.player().position.x;
         cyinit = cdata.player().position.y;
-        chara_place();
+        chara_place(cdata[tc]);
     }
 
     cdata[tc].visited_just_now() = true;
@@ -1092,20 +1110,22 @@ void eh_lord_of_void(const DeferredEvent&)
     flt();
     fixlv = Quality::miracle;
     initlv = clamp(game_data.current_dungeon_level / 4, 50, 250);
-    chara_create(-1, c, -3, 0);
-    cdata[rc].is_lord_of_dungeon() = true;
-    cdata[rc].relationship = -3;
-    cdata[rc].original_relationship = -3;
-    tc = rc;
-    area_data[game_data.current_map].has_been_conquered = tc;
-    txt(i18n::s.get(
-            "core.event.guarded_by_lord",
-            mapname(game_data.current_map),
-            cdata[tc]),
-        Message::color{ColorIndex::red});
-    if (game_data.current_dungeon_level % 50 == 0)
+    if (const auto lord = chara_create(-1, c, -3, 0))
     {
-        net_send_news("void", cnvrank(game_data.current_dungeon_level));
+        lord->is_lord_of_dungeon() = true;
+        lord->relationship = -3;
+        lord->original_relationship = -3;
+        tc = lord->index;
+        area_data[game_data.current_map].has_been_conquered = tc;
+        txt(i18n::s.get(
+                "core.event.guarded_by_lord",
+                mapname(game_data.current_map),
+                cdata[tc]),
+            Message::color{ColorIndex::red});
+        if (game_data.current_dungeon_level % 50 == 0)
+        {
+            net_send_news("void", cnvrank(game_data.current_dungeon_level));
+        }
     }
 }
 

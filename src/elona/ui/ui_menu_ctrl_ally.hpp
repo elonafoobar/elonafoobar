@@ -1,15 +1,26 @@
 #pragma once
+
+#include "../optional.hpp"
 #include "ui_menu.hpp"
+
+
 
 namespace elona
 {
+
 struct Character;
 enum class ControlAllyOperation;
 
+
+
 namespace snail
 {
+
 struct Color;
+
 }
+
+
 
 namespace ui
 {
@@ -17,8 +28,12 @@ namespace ui
 class UIMenuCtrlAlly : public UIMenu<int>
 {
 public:
-    UIMenuCtrlAlly(ControlAllyOperation operation)
+    UIMenuCtrlAlly(
+        ControlAllyOperation operation,
+        optional_ref<Character> gene_engineering_original_character)
         : _operation(operation)
+        , _gene_engineering_original_character(
+              gene_engineering_original_character)
     {
     }
 
@@ -51,9 +66,12 @@ private:
 
     optional<UIMenuCtrlAlly::Result> _select_gene_engineer(int);
     optional<UIMenuCtrlAlly::Result> _select_pet_arena(int);
+    void _update_investigate_and_gene_engineer(bool);
 
     ControlAllyOperation _operation;
+    optional_ref<Character> _gene_engineering_original_character;
 };
 
 } // namespace ui
+
 } // namespace elona

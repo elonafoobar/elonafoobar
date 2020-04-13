@@ -1333,9 +1333,13 @@ void house_board_update_screen()
 
 
 
-int ctrl_ally(ControlAllyOperation operation)
+int ctrl_ally(
+    ControlAllyOperation operation,
+    optional_ref<Character> gene_engineering_original_character)
 {
-    auto result = ui::UIMenuCtrlAlly(operation).show();
+    auto result =
+        ui::UIMenuCtrlAlly(operation, gene_engineering_original_character)
+            .show();
 
     if (!result.canceled && result.value)
     {
@@ -1352,14 +1356,6 @@ int ctrl_ally(ControlAllyOperation operation)
 void screen_analyze_self()
 {
     // TODO: untranslated
-    if (rc < 0)
-    {
-        rc = tc;
-        if (rc < 0)
-        {
-            rc = 0;
-        }
-    }
     listmax = 0;
     page = 0;
     pagesize = 14;
@@ -1374,7 +1370,7 @@ void screen_analyze_self()
     cdata.tmp().god_id = cdata.player().god_id;
     for (int cnt = 0; cnt < 600; ++cnt)
     {
-        sdata(cnt, rc) = 1;
+        sdata(cnt, 0) = 1;
     }
     apply_god_blessing(56);
     if (cdata.player().god_id != core_god::eyth)
@@ -1383,7 +1379,7 @@ void screen_analyze_self()
             u8"による能力の恩恵<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
-            p = sdata(cnt, rc) - 1;
+            p = sdata(cnt, 0) - 1;
             cnvbonus(cnt, p);
         }
     }

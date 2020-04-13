@@ -108,19 +108,18 @@ int _get_random_npc_id()
 
 
 
-int chara_create_internal(int chara_id)
+optional<int> chara_create_internal(int slot, int chara_id)
 {
-    if (rc == -1)
+    if (slot == -1)
     {
-        rc = chara_get_free_slot();
-        if (rc == -1)
+        slot = chara_get_free_slot();
+        if (slot == -1)
         {
-            rc = 56;
-            return 0;
+            return none;
         }
     }
-    chara_delete(rc);
-    if (rc == 0)
+    chara_delete(slot);
+    if (slot == 0)
     {
         p = 10;
     }
@@ -159,7 +158,7 @@ int chara_create_internal(int chara_id)
         }
     }
 
-    cm = 1;
+    cm = slot + 1;
     cmshade = 0;
     ++npcmemory(1, chara_id);
     if (chara_id == 323)
@@ -190,19 +189,19 @@ int chara_create_internal(int chara_id)
     }
     else
     {
-        chara_db_set_stats(int2charaid(chara_id));
+        chara_db_set_stats(cdata[slot], int2charaid(chara_id));
     }
     if (cmshade)
     {
-        cdatan(0, rc) = i18n::s.get("core.chara.job.shade");
-        cdata[rc].image = 280;
+        cdatan(0, slot) = i18n::s.get("core.chara.job.shade");
+        cdata[slot].image = 280;
     }
-    cdata[rc].quality = static_cast<Quality>(fixlv);
-    cdata[rc].index = rc;
-    initialize_character();
+    cdata[slot].quality = static_cast<Quality>(fixlv);
+    cdata[slot].index = slot;
+    initialize_character(cdata[slot]);
 
-    rtval = rc;
-    return 1;
+    rtval = slot;
+    return slot;
 }
 
 
@@ -543,30 +542,27 @@ CData::CData()
 
 
 
-bool chara_place()
+bool chara_place(Character& chara)
 {
-    if (rc == -1)
-        return false;
-
-    if (rc == 56)
+    if (chara.index == cdata.tmp().index)
     {
-        cdata[rc].set_state(Character::State::empty);
+        chara.set_state(Character::State::empty);
         return false;
     }
 
-    if (game_data.mount != 0 && game_data.mount == rc)
+    if (game_data.mount != 0 && game_data.mount == chara.index)
     {
-        cdata[rc].position = cdata.player().position;
+        chara.position = cdata.player().position;
         return true;
     }
 
     const auto success = chara_place_internal(
-        cdata[rc],
+        chara,
         cxinit >= 0 ? optional<Position>({cxinit, cyinit}) : none,
         cxinit == -2);
     if (!success)
     {
-        failed_to_place_character(cdata[rc]);
+        failed_to_place_character(chara);
     }
 
     return success;
@@ -574,59 +570,57 @@ bool chara_place()
 
 
 
-void initialize_character()
+void initialize_character(Character& chara)
 {
     if (mode != 1)
     {
-        chara_add_quality_parens();
+        chara_add_quality_parens(chara);
     }
-    cdata[rc].interest = 100;
-    cdata[rc].impression = 50;
-    cdata[rc].vision_distance = 14;
-    if (cdata[rc].id == CharaId::maid)
+    chara.interest = 100;
+    chara.impression = 50;
+    chara.vision_distance = 14;
+    if (chara.id == CharaId::maid)
     {
-        cdata[rc].image = rnd(33) * 2 + cdata[rc].sex + 1;
+        chara.image = rnd(33) * 2 + chara.sex + 1;
     }
-    if (rc == 0)
+    if (chara.index == 0)
     {
-        cdata[rc].nutrition = 9000;
+        chara.nutrition = 9000;
     }
     else
     {
-        cdata[rc].nutrition = 5000 + rnd(4000);
+        chara.nutrition = 5000 + rnd(4000);
     }
-    cdata[rc].height = cdata[rc].height +
-        rnd_capped((cdata[rc].height / 5 + 1)) -
-        rnd_capped((cdata[rc].height / 5 + 1));
-    cdata[rc].weight =
-        cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
-    update_required_experience(cdata[rc]);
-    chara_init_common_skills(cdata[rc]);
-    if (cdata[rc].portrait == "__random__")
+    chara.height = chara.height + rnd_capped((chara.height / 5 + 1)) -
+        rnd_capped((chara.height / 5 + 1));
+    chara.weight = chara.height * chara.height * (rnd(6) + 18) / 10000;
+    update_required_experience(chara);
+    chara_init_common_skills(chara);
+    if (chara.portrait == "__random__")
     {
         const auto index = std::to_string(1 + rnd(32));
-        const auto man_or_woman = cdata[rc].sex ? "woman" : "man";
-        cdata[rc].portrait = "core."s + man_or_woman + index;
+        const auto man_or_woman = chara.sex ? "woman" : "man";
+        chara.portrait = "core."s + man_or_woman + index;
     }
-    cdata[rc].personality = rnd(4);
-    cdata[rc].talk_type = rnd(7);
-    supply_initial_equipments();
-    chara_refresh(rc);
-    modify_crowd_density(rc, 1);
-    cdata[rc].hp = cdata[rc].max_hp;
-    cdata[rc].mp = cdata[rc].max_mp;
-    cdata[rc].sp = cdata[rc].max_sp;
-    if (rc == 0)
+    chara.personality = rnd(4);
+    chara.talk_type = rnd(7);
+    supply_initial_equipments(chara);
+    chara_refresh(chara.index);
+    modify_crowd_density(chara.index, 1);
+    chara.hp = chara.max_hp;
+    chara.mp = chara.max_mp;
+    chara.sp = chara.max_sp;
+    if (chara.index == 0)
     {
         game_data.initial_cart_limit = 80000;
         game_data.current_cart_limit = game_data.initial_cart_limit;
     }
-    if (cdata[rc].has_lay_hand())
+    if (chara.has_lay_hand())
     {
-        cdata[rc].is_lay_hand_available() = true;
+        chara.is_lay_hand_available() = true;
     }
 
-    cdata[rc].set_state(Character::State::alive);
+    chara.set_state(Character::State::alive);
 
     cm = 0;
 }
@@ -647,35 +641,34 @@ optional_ref<Character> chara_create(int slot, int chara_id, int x, int y)
         cxinit = x;
         cyinit = y;
     }
-    rc = slot;
-    int stat = chara_create_internal(chara_id == 0 ? -1 : chara_id);
+    const auto result =
+        chara_create_internal(slot, chara_id == 0 ? -1 : chara_id);
     initlv = 0;
     voidlv = 0;
-    if (stat == 1)
+    if (result)
     {
-        if (rc == 56)
+        if (*result == 56)
         {
-            cdata[rc].set_state(Character::State::empty);
-            --npcmemory(1, charaid2int(cdata[rc].id));
+            cdata[*result].set_state(Character::State::empty);
+            --npcmemory(1, charaid2int(cdata[*result].id));
             return cdata.tmp();
         }
-        if (rc != 0)
+        if (*result != 0)
         {
             if (x != -1)
             {
-                success = chara_place();
+                success = chara_place(cdata[*result]);
             }
         }
     }
     else
     {
-        rc = 56;
         return none;
     }
 
     if (success)
     {
-        return cdata[rc];
+        return cdata[*result];
     }
     else
     {
@@ -1537,7 +1530,7 @@ void chara_delete(int cc)
 
 void chara_relocate(
     Character& source,
-    optional<int> destination_slot,
+    optional_ref<Character> destination_slot,
     CharaRelocationMode mode)
 {
     if (source.index == game_data.mount)
@@ -1546,9 +1539,8 @@ void chara_relocate(
         source.position = cdata.player().position;
     }
 
-    const auto slot =
-        destination_slot ? *destination_slot : chara_get_free_slot_force();
-    auto& destination = cdata[slot];
+    auto& destination = destination_slot ? *destination_slot
+                                         : cdata[chara_get_free_slot_force()];
 
     // Backups for changing
     Position position;
@@ -1574,7 +1566,7 @@ void chara_relocate(
     const auto invhead = tmp.first;
     const auto invrange = tmp.second;
     int p = invhead;
-    for (auto&& item : inv.for_chara(cdata[slot]))
+    for (auto&& item : inv.for_chara(destination))
     {
         Item::copy(inv[p], item);
         inv[p].clear();
@@ -1591,7 +1583,7 @@ void chara_relocate(
     source.is_livestock() = false;
 
     // Copy from `source` to `destination` and clear `source`
-    sdata.copy(slot, source.index);
+    sdata.copy(destination.index, source.index);
     sdata.clear(source.index);
 
     Character::copy(source, destination);
@@ -1604,7 +1596,7 @@ void chara_relocate(
         // source's state will be empty. If the source's state is empty, the
         // destination slot will instead be set to empty as well.
         lua::lua->get_handle_manager().relocate_handle<Character>(
-            source, destination, slot);
+            source, destination, destination.index);
     }
     else
     {
@@ -1616,7 +1608,7 @@ void chara_relocate(
 
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        cdatan(cnt, slot) = cdatan(cnt, source.index);
+        cdatan(cnt, destination.index) = cdatan(cnt, source.index);
         cdatan(cnt, source.index) = "";
     }
 
@@ -1641,59 +1633,58 @@ void chara_relocate(
         destination.enemy_id = enemy_id;
         destination.hp = hp;
         cell_data.at(destination.position.x, destination.position.y)
-            .chara_index_plus_one = slot + 1;
+            .chara_index_plus_one = destination.index + 1;
     }
     else
     {
         if (source.index != 56)
         {
             cell_data.at(destination.position.x, destination.position.y)
-                .chara_index_plus_one = slot + 1;
+                .chara_index_plus_one = destination.index + 1;
         }
         else
         {
-            rc = slot;
             destination.set_state_raw(Character::State::alive);
             cxinit = cdata.player().position.x;
             cyinit = cdata.player().position.y;
-            chara_place();
+            chara_place(destination);
         }
         destination.enemy_id = 0;
         destination.hate = 0;
     }
 
     // Lose resistance.
-    if (slot < 16)
+    if (destination.index < 16)
     {
         for (int element = 50; element < 61; ++element)
         {
             auto resistance = 100;
-            if (sdata.get(element, slot).original_level >= 500 ||
-                sdata.get(element, slot).original_level <= 100)
+            if (sdata.get(element, destination.index).original_level >= 500 ||
+                sdata.get(element, destination.index).original_level <= 100)
             {
-                resistance = sdata.get(element, slot).original_level;
+                resistance =
+                    sdata.get(element, destination.index).original_level;
             }
             if (resistance > 500)
             {
                 resistance = 500;
             }
-            sdata.get(element, slot).original_level = resistance;
-            sdata.get(element, slot).experience = 0;
-            sdata.get(element, slot).potential = 0;
+            sdata.get(element, destination.index).original_level = resistance;
+            sdata.get(element, destination.index).experience = 0;
+            sdata.get(element, destination.index).potential = 0;
         }
     }
 
-    rc = slot;
-    wear_most_valuable_equipment_for_all_body_parts();
-    chara_refresh(slot);
+    wear_most_valuable_equipment_for_all_body_parts(destination);
+    chara_refresh(destination.index);
 
-    if (slot < 57)
+    if (destination.index < 57)
     {
         modify_crowd_density(source.index, -1);
     }
     if (source.index < 57)
     {
-        modify_crowd_density(slot, 1);
+        modify_crowd_density(destination.index, 1);
     }
 }
 
@@ -1747,18 +1738,19 @@ bool belong_to_same_team(const Character& c1, const Character& c2)
 
 
 
-void chara_add_quality_parens()
+void chara_add_quality_parens(Character& chara)
 {
     if (fixlv == Quality::miracle)
     {
-        cdatan(0, rc) =
-            i18n::s.get("core.chara.quality.miracle", cdatan(0, rc));
-        cdata[rc].level = cdata[rc].level * 10 / 8;
+        cdatan(0, chara.index) =
+            i18n::s.get("core.chara.quality.miracle", cdatan(0, chara.index));
+        chara.level = chara.level * 10 / 8;
     }
     else if (fixlv == Quality::godly)
     {
-        cdatan(0, rc) = i18n::s.get("core.chara.quality.godly", cdatan(0, rc));
-        cdata[rc].level = cdata[rc].level * 10 / 6;
+        cdatan(0, chara.index) =
+            i18n::s.get("core.chara.quality.godly", cdatan(0, chara.index));
+        chara.level = chara.level * 10 / 6;
     }
 }
 
@@ -2163,104 +2155,104 @@ void refresh_burden_state()
 
 
 
-void revive_character()
+void revive_character(Character& chara)
 {
-    do_chara_revival();
+    do_chara_revival(chara);
     cxinit = cdata.player().position.x;
     cyinit = cdata.player().position.y;
-    chara_place();
-    cdata[rc].current_map = 0;
+    chara_place(chara);
+    chara.current_map = 0;
     snd("core.pray1");
-    txt(i18n::s.get("core.misc.resurrect", cdatan(0, rc), cdata[rc]),
+    txt(i18n::s.get("core.misc.resurrect", cdatan(0, chara.index), chara),
         Message::color{ColorIndex::orange});
 }
 
 
 
-void do_chara_revival()
+void do_chara_revival(Character& chara)
 {
-    chara_set_revived_status();
-    chara_clear_status_effects();
+    chara_set_revived_status(chara);
+    chara_clear_status_effects(chara);
 }
 
 
 
-void chara_clear_status_effects_b()
+void chara_clear_status_effects_b(Character& chara)
 {
-    chara_clear_status_effects();
+    chara_clear_status_effects(chara);
 }
 
 
 
-void chara_set_revived_status()
+void chara_set_revived_status(Character& chara)
 {
-    cdata[rc].will_explode_soon() = false;
-    cdata[rc].is_sentenced_daeth() = false;
-    cdata[rc].is_pregnant() = false;
-    cdata[rc].is_contracting_with_reaper() = false;
-    cdata[rc].has_anorexia() = false;
-    cdata[rc].hp = cdata[rc].max_hp / 3;
-    cdata[rc].mp = cdata[rc].max_mp / 3;
-    cdata[rc].sp = cdata[rc].max_sp / 3;
-    cdata[rc].insanity = 0;
-    cdata[rc].current_map = 0;
-    cdata[rc].relationship = cdata[rc].original_relationship;
-    cdata[rc].nutrition = 8000;
-    cdata[rc].set_state(Character::State::alive);
+    chara.will_explode_soon() = false;
+    chara.is_sentenced_daeth() = false;
+    chara.is_pregnant() = false;
+    chara.is_contracting_with_reaper() = false;
+    chara.has_anorexia() = false;
+    chara.hp = chara.max_hp / 3;
+    chara.mp = chara.max_mp / 3;
+    chara.sp = chara.max_sp / 3;
+    chara.insanity = 0;
+    chara.current_map = 0;
+    chara.relationship = chara.original_relationship;
+    chara.nutrition = 8000;
+    chara.set_state(Character::State::alive);
 }
 
 
 
-void chara_clear_status_effects()
+void chara_clear_status_effects(Character& chara)
 {
-    cdata[rc].is_contracting_with_reaper() = false;
-    cdata[rc].activity.finish();
-    cdata[rc].poisoned = 0;
-    cdata[rc].sleep = 0;
-    cdata[rc].confused = 0;
-    cdata[rc].blind = 0;
-    cdata[rc].paralyzed = 0;
-    cdata[rc].choked = 0;
-    cdata[rc].furious = 0;
-    cdata[rc].dimmed = 0;
-    cdata[rc].drunk = 0;
-    cdata[rc].bleeding = 0;
-    cdata[rc].gravity = 0;
-    cdata[rc].ai_item = 0;
-    cdata[rc].hate = 0;
-    cdata[rc].enemy_id = 0;
-    cdata[rc].sick = 0;
-    cdata[rc].emotion_icon = 0;
+    chara.is_contracting_with_reaper() = false;
+    chara.activity.finish();
+    chara.poisoned = 0;
+    chara.sleep = 0;
+    chara.confused = 0;
+    chara.blind = 0;
+    chara.paralyzed = 0;
+    chara.choked = 0;
+    chara.furious = 0;
+    chara.dimmed = 0;
+    chara.drunk = 0;
+    chara.bleeding = 0;
+    chara.gravity = 0;
+    chara.ai_item = 0;
+    chara.hate = 0;
+    chara.enemy_id = 0;
+    chara.sick = 0;
+    chara.emotion_icon = 0;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        cdata[rc].attr_adjs[cnt] = 0;
+        chara.attr_adjs[cnt] = 0;
     }
-    if (cdata[rc].buffs[0].id != 0)
+    if (chara.buffs[0].id != 0)
     {
         for (int cnt = 0; cnt < 16; ++cnt)
         {
-            if (cdata[rc].buffs[cnt].id == 0)
+            if (chara.buffs[cnt].id == 0)
             {
                 break;
             }
-            if (cdata[rc].buffs[cnt].id == 13)
+            if (chara.buffs[cnt].id == 13)
             {
                 continue;
             }
-            buff_delete(cdata[rc], cnt);
+            buff_delete(chara, cnt);
             --cnt;
             continue;
         }
     }
-    chara_refresh(rc);
+    chara_refresh(chara.index);
 }
 
 
 
-void revive_player()
+void revive_player(Character& chara)
 {
-    do_chara_revival();
-    if (rc == 0)
+    do_chara_revival(chara);
+    if (chara.index == 0)
     {
         game_data.is_returning_or_escaping = 0;
         traveldone = 0;
@@ -2269,20 +2261,20 @@ void revive_player()
             event_add(6);
         }
     }
-    if (cdata[rc].role == Role::guard)
+    if (chara.role == Role::guard)
     {
         p = rnd(5) + 1;
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             r2 = 1;
-            gain_level(cdata[rc]);
+            gain_level(chara);
         }
     }
-    if (cdata[rc].id == CharaId::bard)
+    if (chara.id == CharaId::bard)
     {
-        chara_gain_fixed_skill_exp(cdata[rc], 183, 1000);
+        chara_gain_fixed_skill_exp(chara, 183, 1000);
     }
-    chara_refresh(rc);
+    chara_refresh(chara.index);
 }
 
 
@@ -2310,7 +2302,7 @@ void proc_pregnant()
             flt();
             initlv = cdata[cc].level / 2 + 1;
             novoidlv = 1;
-            if (const auto chara = chara_create(
+            if (const auto alien = chara_create(
                     -1, 330, cdata[cc].position.x, cdata[cc].position.y))
             {
                 if (strlen_u(cdatan(0, cc)) > 10 ||
@@ -2319,12 +2311,12 @@ void proc_pregnant()
                         0,
                         i18n::s.get("core.chara.job.alien.child")) != -1)
                 {
-                    cdatan(0, rc) =
+                    cdatan(0, alien->index) =
                         i18n::s.get("core.chara.job.alien.alien_kid");
                 }
                 else
                 {
-                    cdatan(0, rc) = i18n::s.get(
+                    cdatan(0, alien->index) = i18n::s.get(
                         "core.chara.job.alien.child_of", cdatan(0, cc));
                 }
             }
@@ -3062,28 +3054,29 @@ TurnResult proc_movement_event()
 
 
 
-int new_ally_joins()
+optional_ref<Character> new_ally_joins(Character& new_ally)
 {
-    f = chara_get_free_slot_ally();
-    if (f == 0)
+    const auto slot_index = chara_get_free_slot_ally();
+    if (slot_index == 0)
     {
         txt(i18n::s.get("core.action.ally_joins.party_full"));
-        return -1;
+        return none;
     }
-    oc = rc;
-    chara_relocate(cdata[rc], f);
-    cdata[rc].relationship = 10;
-    cdata[rc].original_relationship = 10;
-    cdata[rc].role = Role::none;
-    cdata[rc].is_quest_target() = false;
-    cdata[rc].is_not_attacked_by_enemy() = false;
-    cdata[rc].is_hung_on_sand_bag() = false;
-    cdata[rc].is_temporary() = false;
-    cdata[rc].only_christmas() = false;
+    auto& slot = cdata[slot_index];
+
+    chara_relocate(new_ally, slot);
+    slot.relationship = 10;
+    slot.original_relationship = 10;
+    slot.role = Role::none;
+    slot.is_quest_target() = false;
+    slot.is_not_attacked_by_enemy() = false;
+    slot.is_hung_on_sand_bag() = false;
+    slot.is_temporary() = false;
+    slot.only_christmas() = false;
     snd("core.pray1");
-    txt(i18n::s.get("core.action.ally_joins.success", cdata[rc]),
+    txt(i18n::s.get("core.action.ally_joins.success", slot),
         Message::color{ColorIndex::orange});
-    return 1;
+    return slot;
 }
 
 } // namespace elona

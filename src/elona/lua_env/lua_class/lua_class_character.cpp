@@ -188,8 +188,7 @@ bool LuaCharacter::recruit_as_ally(Character& self)
     {
         return false;
     }
-    elona::rc = self.index;
-    return new_ally_joins() == 1;
+    return !!new_ally_joins(self);
 }
 
 /**

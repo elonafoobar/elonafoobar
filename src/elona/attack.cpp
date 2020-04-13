@@ -1118,7 +1118,7 @@ int prompt_really_attack()
 
 
 
-int target_position(bool target_chara)
+int target_position(bool target_cell)
 {
     if (tlocinitx != 0 || tlocinity != 0)
     {
@@ -1133,7 +1133,7 @@ int target_position(bool target_chara)
 
     scposval = 1;
 
-    if (target_chara)
+    if (!target_cell)
     {
         if (cdata.player().enemy_id == 0)
         {
@@ -1180,36 +1180,38 @@ int target_position(bool target_chara)
                     (dy + inf_tiles > windowh - inf_verh) *
                         (dy + inf_tiles - windowh + inf_verh));
         }
-        rc = -1;
+
+        optional_ref<Character> target_chara;
         for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (cell_data.at(tlocx, tlocy).chara_index_plus_one <= 1)
             {
                 break;
             }
-            rc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
-            if (is_in_fov(cdata[rc]) == 0)
+            target_chara =
+                cdata[cell_data.at(tlocx, tlocy).chara_index_plus_one - 1];
+            if (is_in_fov(*target_chara) == 0)
             {
                 break;
             }
             if (fov_los(
                     cdata[cc].position.x,
                     cdata[cc].position.y,
-                    cdata[rc].position.x,
-                    cdata[rc].position.y) == 0)
+                    target_chara->position.x,
+                    target_chara->position.y) == 0)
             {
                 break;
             }
-            if ((cdata[rc].is_invisible() == 0 ||
-                 cdata.player().can_see_invisible() || cdata[rc].wet) == 0)
+            if ((target_chara->is_invisible() == 0 ||
+                 cdata.player().can_see_invisible() || target_chara->wet) == 0)
             {
                 break;
             }
             get_route(
                 cdata[cc].position.x,
                 cdata[cc].position.y,
-                cdata[rc].position.x,
-                cdata[rc].position.y);
+                target_chara->position.x,
+                target_chara->position.y);
             dx = (tlocx - scx) * inf_tiles + inf_screenx;
             dy = (tlocy - scy) * inf_tiles + inf_screeny;
             if (maxroute != 0)
@@ -1265,13 +1267,13 @@ int target_position(bool target_chara)
         }
         if (findlocmode == 1)
         {
-            if (rc == -1)
+            if (target_chara)
             {
-                i = 0;
+                i = target_chara->index;
             }
             else
             {
-                i = rc;
+                i = 0;
             }
             f = 0;
             p = 0;
@@ -1327,10 +1329,10 @@ int target_position(bool target_chara)
                     continue;
                 }
                 snd("core.ok1");
-                if (rc > 0)
+                if (target_chara)
                 {
-                    cdata.player().enemy_id = rc;
-                    txt(i18n::s.get("core.action.look.target", cdata[rc]));
+                    cdata.player().enemy_id = target_chara->index;
+                    txt(i18n::s.get("core.action.look.target", *target_chara));
                 }
                 else
                 {

@@ -99,6 +99,7 @@ ELONA_EXTERN(int enc);
 
 // talk.cpp
 ELONA_EXTERN(elona_vector2<std::string> actor);
+ELONA_EXTERN(int current_actor_index);
 
 // mef.cpp
 ELONA_EXTERN(elona_vector2<int> mef);
@@ -427,7 +428,6 @@ ELONA_EXTERN(int nowindowanime);
 ELONA_EXTERN(int objfix);
 ELONA_EXTERN(int objlv);
 ELONA_EXTERN(int obvious);
-ELONA_EXTERN(int oc);
 ELONA_EXTERN(int orgdmg);
 ELONA_EXTERN(int page);
 ELONA_EXTERN(int page_bk);
@@ -444,7 +444,6 @@ ELONA_EXTERN(int r2);
 ELONA_EXTERN(int r);
 ELONA_EXTERN(int range_);
 ELONA_EXTERN(int rapidmagic);
-ELONA_EXTERN(int rc);
 ELONA_EXTERN(int reftype);
 ELONA_EXTERN(int reftypeminor);
 ELONA_EXTERN(int returnfromidentify);

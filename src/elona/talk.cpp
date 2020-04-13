@@ -478,7 +478,7 @@ std::string talk_get_speaker_name(const Character &chara)
 
     if (scenemode)
     {
-        return actor(0, rc);
+        return actor(0, current_actor_index);
     }
     if (cdatan(1, chara.index) == ""s)
     {
@@ -534,7 +534,8 @@ int talk_window_query(const Character &chara)
 
     if (chara.portrait != "" || scenemode)
     {
-        const auto portrait_id = scenemode ? actor(1, rc) : chara.portrait;
+        const auto portrait_id =
+            scenemode ? actor(1, current_actor_index) : chara.portrait;
         return talk_window_query(
             portrait_id, none, speaker_name, buff, impress_interest);
     }

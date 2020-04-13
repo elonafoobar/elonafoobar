@@ -68,8 +68,9 @@ std::string test_itemname(int id, int number, bool prefix)
 Character& create_chara(int id, int x, int y)
 {
     elona::fixlv = Quality::none;
-    REQUIRE(chara_create(-1, id, x, y));
-    return elona::cdata[elona::rc];
+    const auto chara = chara_create(-1, id, x, y);
+    REQUIRE_SOME(chara);
+    return *chara;
 }
 
 Item& create_item(int id, int number)
@@ -109,10 +110,15 @@ void invalidate_chara(Character& chara)
 
     // Delete the character and create new ones until the index is taken again.
     chara_delete(chara.index);
-    do
+    while (true)
     {
-        REQUIRE(chara_create(-1, old_id, old_x, old_y));
-    } while (elona::rc != old_index);
+        const auto new_chara = chara_create(-1, old_id, old_x, old_y);
+        REQUIRE_SOME(new_chara);
+        if (new_chara->index != old_index)
+        {
+            break;
+        }
+    }
 }
 
 void register_lua_function(

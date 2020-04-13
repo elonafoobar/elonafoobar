@@ -591,8 +591,7 @@ TurnResult do_pray()
             }
             novoidlv = 1;
             chara_create(56, chara_id, -3, 0);
-            rc = 56;
-            new_ally_joins();
+            new_ally_joins(cdata.tmp());
         }
         if (game_data.god_rank == 3)
         {

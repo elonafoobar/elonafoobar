@@ -279,26 +279,26 @@ TalkResult talk_arena_master(int chatval_)
             minlevel = arenaop(1) / 3 * 2;
             flt(arenaop(1));
             fixlv = static_cast<Quality>(arenaop(2));
-            chara_create(56, 0, -3, 0);
+            const auto chara = chara_create(56, 0, -3, 0);
             if (cmshade)
             {
                 continue;
             }
-            if (cdata[rc].level < minlevel)
+            if (chara->level < minlevel)
             {
                 continue;
             }
-            if (cdata[rc].original_relationship != -3)
+            if (chara->original_relationship != -3)
             {
                 continue;
             }
+            arenaop(1) = charaid2int(chara->id);
+            buff = i18n::s.get(
+                "core.talk.npc.arena_master.enter.target",
+                cdatan(0, chara->index),
+                cdata[tc]);
             break;
         }
-        arenaop(1) = charaid2int(cdata[rc].id);
-        buff = i18n::s.get(
-            "core.talk.npc.arena_master.enter.target",
-            cdatan(0, rc),
-            cdata[tc]);
     }
     else
     {
@@ -448,7 +448,6 @@ TalkResult talk_quest_delivery(Item& item_to_deliver)
     auto& slot = inv_get_free_slot_force(tc);
     item_copy(item_to_deliver, slot);
     slot.set_number(1);
-    rc = tc;
     chara_set_ai_item(cdata[tc], slot);
     rq = deliver;
     item_to_deliver.modify_number(-1);
@@ -467,7 +466,6 @@ TalkResult talk_quest_supply(Item& item_to_supply)
     item_copy(item_to_supply, slot);
     slot.set_number(1);
     cdata[tc].was_passed_item_by_you_just_now() = true;
-    rc = tc;
     chara_set_ai_item(cdata[tc], slot);
     item_to_supply.modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_supply));
@@ -556,8 +554,7 @@ TalkResult talk_bartender_call_ally()
     int stat = ctrl_ally(ControlAllyOperation::call_back);
     if (stat != -1)
     {
-        rc = stat;
-        if (cdata[rc].state() == Character::State::alive)
+        if (cdata[stat].state() == Character::State::alive)
         {
             buff = i18n::s.get(
                 "core.talk.npc.bartender.call_ally.no_need", cdata[tc]);
@@ -566,9 +563,9 @@ TalkResult talk_bartender_call_ally()
         listmax = 0;
         buff = i18n::s.get(
             "core.talk.npc.bartender.call_ally.cost",
-            calcresurrectvalue(rc),
+            calcresurrectvalue(stat),
             cdata[tc]);
-        if (cdata.player().gold >= calcresurrectvalue(rc))
+        if (cdata.player().gold >= calcresurrectvalue(stat))
         {
             ELONA_APPEND_RESPONSE(
                 1,
@@ -582,12 +579,12 @@ TalkResult talk_bartender_call_ally()
         if (chatval_ == 1)
         {
             snd("core.paygold1");
-            cdata.player().gold -= calcresurrectvalue(rc);
+            cdata.player().gold -= calcresurrectvalue(stat);
             buff = i18n::s.get(
                 "core.talk.npc.bartender.call_ally.brings_back",
                 cdata[tc],
-                cdata[rc]);
-            revive_character();
+                cdata[stat]);
+            revive_character(cdata[stat]);
         }
         else
         {
@@ -683,8 +680,7 @@ TalkResult talk_slave_buy(int chatval_)
             "core.talk.npc.slave_trader.buy.you_buy", cnven(cdatan(0, 56))));
         snd("core.paygold1");
         cdata.player().gold -= calcslavevalue(56);
-        rc = 56;
-        new_ally_joins();
+        new_ally_joins(cdata.tmp());
         buff = i18n::s.get("core.talk.npc.common.thanks", cdata[tc]);
     }
     else
@@ -699,11 +695,10 @@ TalkResult talk_slave_sell()
     int stat = ctrl_ally(ControlAllyOperation::sell);
     if (stat != -1)
     {
-        rc = stat;
         listmax = 0;
         buff = i18n::s.get(
             "core.talk.npc.slave_trader.sell.price",
-            (calcslavevalue(rc) * 2 / 3),
+            (calcslavevalue(stat) * 2 / 3),
             cdata[tc]);
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.talk.npc.slave_trader.sell.choices.deal"));
@@ -715,19 +710,19 @@ TalkResult talk_slave_sell()
         {
             txt(i18n::s.get(
                 "core.talk.npc.slave_trader.sell.you_sell_off",
-                cnven(cdatan(0, rc))));
+                cnven(cdatan(0, stat))));
             snd("core.getgold1");
-            earn_gold(cdata.player(), calcslavevalue(rc) * 2 / 3);
-            if (cdata[rc].state() == Character::State::alive)
+            earn_gold(cdata.player(), calcslavevalue(stat) * 2 / 3);
+            if (cdata[stat].state() == Character::State::alive)
             {
-                cell_data.at(cdata[rc].position.x, cdata[rc].position.y)
+                cell_data.at(cdata[stat].position.x, cdata[stat].position.y)
                     .chara_index_plus_one = 0;
             }
-            if (cdata[rc].is_escorted() == 1)
+            if (cdata[stat].is_escorted() == 1)
             {
-                event_add(15, charaid2int(cdata[rc].id));
+                event_add(15, charaid2int(cdata[stat].id));
             }
-            chara_delete(rc);
+            chara_delete(stat);
             buff = i18n::s.get("core.talk.npc.common.thanks", cdata[tc]);
         }
         else
@@ -882,7 +877,6 @@ TalkResult talk_informer_investigate_ally()
     int stat = ctrl_ally(ControlAllyOperation::investigate);
     if (stat != -1)
     {
-        rc = stat;
         listmax = 0;
         buff = i18n::s.get(
             "core.talk.npc.informer.investigate_ally.cost", cdata[tc]);
@@ -903,7 +897,7 @@ TalkResult talk_informer_investigate_ally()
         {
             snd("core.paygold1");
             cdata.player().gold -= 10000;
-            cc = rc;
+            cc = stat;
             snd("core.pop2");
             menu_character_sheet_investigate();
             cc = 0;
@@ -993,13 +987,11 @@ TalkResult talk_adventurer_join()
                 "core.talk.npc.adventurer.join.party_full", cdata[tc]);
             return TalkResult::talk_npc;
         }
-        rc = tc;
-        new_ally_joins();
-        cdata[rc].role = Role::none;
-        cdata[rc].current_map = 0;
+        const auto ally = new_ally_joins(cdata[tc]);
+        ally->role = Role::none;
+        ally->current_map = 0;
         cdata[tc].impression = 100;
-        rc = oc;
-        create_adventurer();
+        create_adventurer(cdata[tc]);
         return TalkResult::talk_end;
     }
     buff = i18n::s.get("core.talk.npc.adventurer.join.not_known", cdata[tc]);
@@ -1023,12 +1015,12 @@ TalkResult talk_moyer_sell_paels_mom()
         snd("core.getgold1");
         earn_gold(cdata.player(), 50000);
         game_data.quest_flags.pael_and_her_mom = 1002;
-        rc = chara_find("core.lily");
-        cdata[rc].ai_calm = 3;
-        cdata[rc].relationship = 0;
-        cdata[rc].initial_position.x = 48;
-        cdata[rc].initial_position.y = 18;
-        cell_movechara(rc, 48, 18);
+        const auto lily = chara_find("core.lily");
+        cdata[lily].ai_calm = 3;
+        cdata[lily].relationship = 0;
+        cdata[lily].initial_position.x = 48;
+        cdata[lily].initial_position.y = 18;
+        cell_movechara(lily, 48, 18);
         buff = i18n::s.get("core.talk.npc.common.thanks", cdata[tc]);
     }
     else
@@ -1199,12 +1191,12 @@ TalkResult talk_caravan_master_hire()
 TalkResult talk_guard_where_is(int chatval_)
 {
     talk_guide_quest_client();
-    rc = rtval(chatval_ - 10000);
+    const auto& chara_you_ask = cdata[rtval(chatval_ - 10000)];
     p = direction(
         cdata.player().position.x,
         cdata.player().position.y,
-        cdata[rc].position.x,
-        cdata[rc].position.y);
+        chara_you_ask.position.x,
+        chara_you_ask.position.y);
     if (p == 1)
     {
         s = i18n::s.get("core.talk.npc.guard.where_is.direction.west");
@@ -1224,59 +1216,53 @@ TalkResult talk_guard_where_is(int chatval_)
     p = dist(
         cdata.player().position.x,
         cdata.player().position.y,
-        cdata[rc].position.x,
-        cdata[rc].position.y);
-    for (int cnt = 0; cnt < 1; ++cnt)
+        chara_you_ask.position.x,
+        chara_you_ask.position.y);
+
+    if (chara_you_ask.index == tc)
     {
-        if (rc == tc)
-        {
-            s = i18n::s.get("core.talk.npc.common.you_kidding", cdata[tc]);
-            break;
-        }
-        if (cdata[rc].state() != Character::State::alive)
-        {
-            s = i18n::s.get("core.talk.npc.guard.where_is.dead", cdata[tc]);
-            break;
-        }
-        if (p < 6)
-        {
-            s = i18n::s.get(
-                "core.talk.npc.guard.where_is.very_close",
-                s(0),
-                cdata[rc],
-                cdata[tc]);
-            break;
-        }
-        if (p < 12)
-        {
-            s = i18n::s.get(
-                "core.talk.npc.guard.where_is.close",
-                s(0),
-                cdata[rc],
-                cdata[tc]);
-            break;
-        }
-        if (p < 20)
-        {
-            s = i18n::s.get(
-                "core.talk.npc.guard.where_is.moderate",
-                s(0),
-                cdata[rc],
-                cdata[tc]);
-            break;
-        }
-        if (p < 35)
-        {
-            s = i18n::s.get(
-                "core.talk.npc.guard.where_is.far", s(0), cdata[rc], cdata[tc]);
-            break;
-        }
+        s = i18n::s.get("core.talk.npc.common.you_kidding", cdata[tc]);
+    }
+    else if (chara_you_ask.state() != Character::State::alive)
+    {
+        s = i18n::s.get("core.talk.npc.guard.where_is.dead", cdata[tc]);
+    }
+    else if (p < 6)
+    {
+        s = i18n::s.get(
+            "core.talk.npc.guard.where_is.very_close",
+            s(0),
+            chara_you_ask,
+            cdata[tc]);
+    }
+    else if (p < 12)
+    {
+        s = i18n::s.get(
+            "core.talk.npc.guard.where_is.close",
+            s(0),
+            chara_you_ask,
+            cdata[tc]);
+    }
+    else if (p < 20)
+    {
+        s = i18n::s.get(
+            "core.talk.npc.guard.where_is.moderate",
+            s(0),
+            chara_you_ask,
+            cdata[tc]);
+    }
+    else if (p < 35)
+    {
+        s = i18n::s.get(
+            "core.talk.npc.guard.where_is.far", s(0), chara_you_ask, cdata[tc]);
+    }
+    else
+    {
         s = i18n::s.get(
             "core.talk.npc.guard.where_is.very_far",
             s(0),
-            cdata[rc],
+            chara_you_ask,
             cdata[tc]);
-        break;
     }
     buff = s;
     return TalkResult::talk_npc;
@@ -1603,7 +1589,7 @@ TalkResult talk_quest_giver()
                         {
                             continue;
                         }
-                        if (cdata[cnt].id == cdata[rc].id)
+                        if (cdata[cnt].id == chara->id)
                         {
                             if (cdata[cnt].is_escorted() == 1)
                             {
@@ -1618,10 +1604,9 @@ TalkResult talk_quest_giver()
                     break;
                 }
             }
-            rc = 56;
-            new_ally_joins();
-            cdata[rc].is_escorted() = true;
-            quest_data[rq].extra_info_2 = charaid2int(cdata[rc].id);
+            const auto ally = new_ally_joins(cdata.tmp());
+            ally->is_escorted() = true;
+            quest_data[rq].extra_info_2 = charaid2int(ally->id);
         }
         quest_data[rq].progress = 1;
         if (quest_data[rq].deadline_days == -1)
@@ -2158,10 +2143,10 @@ TalkResult talk_npc()
     {
         if (game_data.quest_flags.pael_and_her_mom == 1000)
         {
-            rc = chara_find("core.lily");
-            if (rc != 0)
+            const auto lily = chara_find("core.lily");
+            if (lily != 0)
             {
-                if (cdata[rc].state() == Character::State::alive)
+                if (cdata[lily].state() == Character::State::alive)
                 {
                     ELONA_APPEND_RESPONSE(
                         52,

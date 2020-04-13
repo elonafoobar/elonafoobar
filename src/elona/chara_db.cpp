@@ -19,7 +19,7 @@
 namespace elona
 {
 
-void chara_db_set_stats(CharaId chara_id)
+void chara_db_set_stats(Character& chara, CharaId chara_id)
 {
     const auto data = the_character_db[charaid2int(chara_id)];
     if (!data)
@@ -27,45 +27,45 @@ void chara_db_set_stats(CharaId chara_id)
         return;
     }
 
-    cdata[rc].id = chara_id;
-    cdata[rc].level = initlv != 0 ? initlv : data->level;
+    chara.id = chara_id;
+    chara.level = initlv != 0 ? initlv : data->level;
     if (voidlv != 0)
     {
-        cdata[rc].level = voidlv * (100 + data->level * 2) / 100;
+        chara.level = voidlv * (100 + data->level * 2) / 100;
     }
-    cdata[rc].ai_calm = data->ai_calm;
-    cdata[rc].ai_heal = data->ai_heal;
-    cdata[rc].ai_move = data->ai_move;
-    cdata[rc].ai_dist = data->ai_dist;
-    cdata[rc].ai_act_sub_freq = data->ai_act_sub_freq;
-    cdata[rc].normal_actions = data->normal_actions;
-    cdata[rc].special_actions = data->special_actions;
+    chara.ai_calm = data->ai_calm;
+    chara.ai_heal = data->ai_heal;
+    chara.ai_move = data->ai_move;
+    chara.ai_dist = data->ai_dist;
+    chara.ai_act_sub_freq = data->ai_act_sub_freq;
+    chara.normal_actions = data->normal_actions;
+    chara.special_actions = data->special_actions;
     creaturepack = data->creaturepack;
-    cdata[rc].can_talk = data->can_talk;
-    cdatan(0, rc) = i18n::s.get_m("chara", data->id.get(), "name");
+    chara.can_talk = data->can_talk;
+    cdatan(0, chara.index) = i18n::s.get_m("chara", data->id.get(), "name");
     if (data->has_random_name)
     {
-        cdatan(0, rc) = i18n::s.get(
-            "core.chara.job.own_name", cdatan(0, rc), random_name());
-        cdata[rc].has_own_name() = true;
+        cdatan(0, chara.index) = i18n::s.get(
+            "core.chara.job.own_name", cdatan(0, chara.index), random_name());
+        chara.has_own_name() = true;
     }
-    cdata[rc].original_relationship = cdata[rc].relationship =
+    chara.original_relationship = chara.relationship =
         data->original_relationship;
     if (data->race_id != "")
     {
-        race_init_chara(cdata[rc], data->race_id);
+        race_init_chara(chara, data->race_id);
     }
     if (data->class_id != "")
     {
-        class_init_chara(cdata[rc], data->class_id);
+        class_init_chara(chara, data->class_id);
     }
-    cdata[rc].element_of_unarmed_attack = data->element_of_unarmed_attack;
+    chara.element_of_unarmed_attack = data->element_of_unarmed_attack;
 
     for (const auto& pair : data->resistances)
     {
         if (const auto ability_data = the_ability_db[pair.first])
         {
-            sdata(ability_data->legacy_id, rc) = pair.second;
+            sdata(ability_data->legacy_id, chara.index) = pair.second;
         }
         else
         {
@@ -78,31 +78,31 @@ void chara_db_set_stats(CharaId chara_id)
 
     if (data->sex != -1)
     {
-        cdata[rc].sex = data->sex;
+        chara.sex = data->sex;
     }
     if (data->image != 0)
     {
-        cdata[rc].image = data->image;
+        chara.image = data->image;
     }
-    if (cdata[rc].sex == 0 && data->male_image != 0)
+    if (chara.sex == 0 && data->male_image != 0)
     {
-        cdata[rc].image = data->male_image;
+        chara.image = data->male_image;
     }
-    if (cdata[rc].sex == 1 && data->female_image != 0)
+    if (chara.sex == 1 && data->female_image != 0)
     {
-        cdata[rc].image = data->female_image;
+        chara.image = data->female_image;
     }
-    if (cdata[rc].sex == 0)
+    if (chara.sex == 0)
     {
-        cdata[rc].portrait = data->portrait_male;
+        chara.portrait = data->portrait_male;
     }
     else
     {
-        cdata[rc].portrait = data->portrait_female;
+        chara.portrait = data->portrait_female;
     }
     {
-        int color = generate_color(data->color, charaid2int(cdata[rc].id));
-        cdata[rc].image += color * 1000;
+        int color = generate_color(data->color, charaid2int(chara.id));
+        chara.image += color * 1000;
     }
     eqammo(0) = data->eqammo_0;
     eqammo(1) = data->eqammo_1;
@@ -117,7 +117,7 @@ void chara_db_set_stats(CharaId chara_id)
         fixlv = Quality::special;
     }
     cspecialeq = data->cspecialeq;
-    cdata[rc].damage_reaction_info = data->damage_reaction_info;
+    chara.damage_reaction_info = data->damage_reaction_info;
 }
 
 

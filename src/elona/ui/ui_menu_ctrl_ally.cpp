@@ -10,6 +10,8 @@
 #include "../menu.hpp"
 #include "../message.hpp"
 
+
+
 namespace elona
 {
 namespace ui
@@ -38,9 +40,12 @@ bool UIMenuCtrlAlly::_should_display_ally(const Character& chara)
     }
     if (_operation == ControlAllyOperation::gene_engineer)
     {
-        if (chara.index == rc)
+        if (_gene_engineering_original_character)
         {
-            return false;
+            if (chara.index == _gene_engineering_original_character->index)
+            {
+                return false;
+            }
         }
     }
     if (chara.current_map != 0)
@@ -205,7 +210,8 @@ static void _update_staying()
     x = 20;
 }
 
-static void _update_investigate_and_gene_engineer(bool is_gene_engineer)
+void UIMenuCtrlAlly::_update_investigate_and_gene_engineer(
+    bool is_gene_engineer)
 {
     txt(i18n::s.get("core.ui.ally_list.gene_engineer.prompt"));
     s(10) = i18n::s.get("core.ui.ally_list.gene_engineer.title");
@@ -214,7 +220,7 @@ static void _update_investigate_and_gene_engineer(bool is_gene_engineer)
     s(13) = i18n::s.get("core.ui.ally_list.status");
     if (is_gene_engineer)
     {
-        if (rc != 0)
+        if (_gene_engineering_original_character)
         {
             s(13) = i18n::s.get("core.ui.ally_list.gene_engineer.body_skill");
         }
@@ -375,11 +381,12 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
 {
     std::string ally_info = ally_info_;
 
-    if (rc != 0)
+    if (_gene_engineering_original_character)
     {
         tc = chara.index;
         {
-            int stat = transplant_body_parts();
+            int stat = transplant_body_parts(
+                *_gene_engineering_original_character, cdata[tc]);
             if (stat == -1)
             {
                 ally_info = i18n::s.get("core.ui.ally_list.gene_engineer.none");
@@ -391,7 +398,8 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
         }
         ally_info += u8"/"s;
         {
-            int stat = gain_skills_by_geen_engineering();
+            int stat = gain_skills_by_geen_engineering(
+                *_gene_engineering_original_character, cdata[tc]);
             if (stat == 0)
             {
                 ally_info +=

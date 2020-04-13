@@ -637,65 +637,66 @@ void prompt_hiring()
         const auto chara_id = isethire.at(hire).first;
         randomize(game_data.date.day + cnt);
         flt(20);
-        const auto chara = chara_create(-1, chara_id, -3, 0);
-        if (!chara)
+        const auto servant = chara_create(-1, chara_id, -3, 0);
+        if (!servant)
         {
             continue;
         }
-        cdata[rc].set_state(Character::State::servant_being_selected);
-        cdata[rc].role = isethire.at(hire).second;
-        if (cdata[rc].id == CharaId::shopkeeper)
+        servant->set_state(Character::State::servant_being_selected);
+        servant->role = isethire.at(hire).second;
+        if (servant->id == CharaId::shopkeeper)
         {
             p = rnd(6);
             if (p == 0)
             {
-                cdata[rc].role = Role::blacksmith;
-                cdatan(0, rc) =
-                    i18n::s.get("core.building.guests.armory", cdata[rc]);
+                servant->role = Role::blacksmith;
+                cdatan(0, servant->index) =
+                    i18n::s.get("core.building.guests.armory", *servant);
             }
             if (p == 1)
             {
-                cdata[rc].role = Role::general_vendor;
-                cdatan(0, rc) = i18n::s.get(
-                    "core.building.guests.general_store", cdata[rc]);
+                servant->role = Role::general_vendor;
+                cdatan(0, servant->index) =
+                    i18n::s.get("core.building.guests.general_store", *servant);
             }
             if (p == 2)
             {
-                cdata[rc].role = Role::magic_vendor;
-                cdatan(0, rc) =
-                    i18n::s.get("core.building.guests.magic_store", cdata[rc]);
+                servant->role = Role::magic_vendor;
+                cdatan(0, servant->index) =
+                    i18n::s.get("core.building.guests.magic_store", *servant);
             }
             if (p == 3)
             {
-                cdata[rc].role = Role::general_store;
-                cdatan(0, rc) =
-                    i18n::s.get("core.building.guests.goods_store", cdata[rc]);
+                servant->role = Role::general_store;
+                cdatan(0, servant->index) =
+                    i18n::s.get("core.building.guests.goods_store", *servant);
             }
             if (p == 4)
             {
-                cdata[rc].role = Role::blacksmith;
-                cdatan(0, rc) =
-                    i18n::s.get("core.building.guests.armory", cdata[rc]);
+                servant->role = Role::blacksmith;
+                cdatan(0, servant->index) =
+                    i18n::s.get("core.building.guests.armory", *servant);
             }
             if (p == 5)
             {
-                cdata[rc].role = Role::blackmarket_vendor;
-                cdatan(0, rc) =
-                    i18n::s.get("core.building.guests.blackmarket", cdata[rc]);
+                servant->role = Role::blackmarket_vendor;
+                cdatan(0, servant->index) =
+                    i18n::s.get("core.building.guests.blackmarket", *servant);
             }
             randomize();
-            cdata[rc].shop_rank = rnd(15) + 1;
+            servant->shop_rank = rnd(15) + 1;
         }
-        for (auto&& cnt : cdata.others())
+        for (const auto& chara : cdata.others())
         {
-            if (cnt.index == rc)
+            if (chara.index == servant->index)
             {
                 continue;
             }
-            if (cnt.state() != Character::State::empty &&
-                cdatan(0, cnt.index) == cdatan(0, rc))
+            if (chara.state() != Character::State::empty &&
+                cdatan(0, chara.index) == cdatan(0, servant->index))
             {
-                chara_vanquish(rc);
+                chara_vanquish(servant->index);
+                break;
             }
         }
     }
@@ -886,45 +887,43 @@ void prompt_move_ally()
 
 void prompt_ally_staying()
 {
+    int stat = ctrl_ally(ControlAllyOperation::staying);
+    if (stat != -1)
     {
-        int stat = ctrl_ally(ControlAllyOperation::staying);
-        if (stat != -1)
+        int c = stat;
+        snd("core.ok1");
+        Message::instance().linebreak();
+        if (getworker(game_data.current_map, c) == c)
         {
-            int c = stat;
-            snd("core.ok1");
-            Message::instance().linebreak();
-            if (getworker(game_data.current_map, c) == c)
+            if (game_data.current_map == mdata_t::MapId::your_home)
             {
-                if (game_data.current_map == mdata_t::MapId::your_home)
-                {
-                    cdata[c].current_map = 0;
-                    txt(i18n::s.get(
-                        "core.building.home.staying.remove.ally", cdata[c]));
-                }
-                else
-                {
-                    removeworker(game_data.current_map);
-                    txt(i18n::s.get(
-                        "core.building.home.staying.remove.worker", cdata[c]));
-                }
+                cdata[c].current_map = 0;
+                txt(i18n::s.get(
+                    "core.building.home.staying.remove.ally", cdata[c]));
             }
             else
             {
-                if (game_data.current_map == mdata_t::MapId::your_home)
-                {
-                    cdata[c].initial_position.x = cdata[c].position.x;
-                    cdata[c].initial_position.y = cdata[c].position.y;
-                    txt(i18n::s.get(
-                        "core.building.home.staying.add.ally", cdata[c]));
-                }
-                else
-                {
-                    removeworker(game_data.current_map);
-                    txt(i18n::s.get(
-                        "core.building.home.staying.add.worker", cdata[c]));
-                }
-                cdata[c].current_map = game_data.current_map;
+                removeworker(game_data.current_map);
+                txt(i18n::s.get(
+                    "core.building.home.staying.remove.worker", cdata[c]));
             }
+        }
+        else
+        {
+            if (game_data.current_map == mdata_t::MapId::your_home)
+            {
+                cdata[c].initial_position.x = cdata[c].position.x;
+                cdata[c].initial_position.y = cdata[c].position.y;
+                txt(i18n::s.get(
+                    "core.building.home.staying.add.ally", cdata[c]));
+            }
+            else
+            {
+                removeworker(game_data.current_map);
+                txt(i18n::s.get(
+                    "core.building.home.staying.add.worker", cdata[c]));
+            }
+            cdata[c].current_map = game_data.current_map;
         }
     }
 }
@@ -1211,9 +1210,8 @@ void update_shop()
 
 void calc_collection_value(int chara_id, bool val0)
 {
-    rc = 56;
     fixlv = Quality::good;
-    chara_db_set_stats(int2charaid(chara_id));
+    chara_db_set_stats(cdata.tmp(), int2charaid(chara_id));
     ++dblist(val0 ? 1 : 0, charaid2int(cdata.tmp().id));
     if (fixlv == Quality::special)
     {
@@ -1418,7 +1416,7 @@ void update_ranch()
             if (const auto chara =
                     chara_create(-1, chara_id, 4 + rnd(11), 4 + rnd(8)))
             {
-                cdata[rc].is_livestock() = true;
+                chara->is_livestock() = true;
                 ++livestock_count;
             }
         }
