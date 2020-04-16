@@ -165,7 +165,6 @@ void talk_to_npc(Character &chara)
 TalkResult talk_more()
 {
     listmax = 0;
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -186,7 +185,6 @@ TalkResult talk_sleeping()
 {
     listmax = 0;
     buff = u8"("s + i18n::s.get("core.talk.is_sleeping", cdata[tc]) + u8")"s;
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.bye");
     ++listmax;
@@ -206,7 +204,6 @@ TalkResult talk_busy()
 {
     listmax = 0;
     buff = u8"("s + i18n::s.get("core.talk.is_busy", cdata[tc]) + u8")"s;
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.bye");
     ++listmax;
@@ -226,7 +223,6 @@ TalkResult talk_ignored()
 {
     listmax = 0;
     buff = i18n::s.get("core.talk.ignores_you", cdata[tc]);
-    tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.bye"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
@@ -396,7 +392,6 @@ TalkResult talk_game_begin()
     }
     listmax = 0;
     buff = i18n::s.get_enum("core.talk.unique.lomias.begin", 1);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -411,7 +406,6 @@ TalkResult talk_game_begin()
     }
     listmax = 0;
     buff = i18n::s.get_enum("core.talk.unique.lomias.begin", 2);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;

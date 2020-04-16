@@ -532,7 +532,6 @@ TalkResult talk_guard_return_item()
             listmax = 0;
             buff = i18n::s.get_enum(
                 "core.talk.npc.guard.lost.found_often.dialog", 0, cdata[tc]);
-            tc = tc * 1 + 0;
             ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.more"));
             chatesc = 1;
             ELONA_TALK_SCENE_CUT();
@@ -605,7 +604,6 @@ TalkResult talk_ally_order_wait()
 {
     listmax = 0;
     buff = i18n::s.get("core.talk.npc.ally.wait_at_town", cdata[tc]);
-    tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
@@ -752,7 +750,6 @@ TalkResult talk_ally_marriage()
     cdata[tc].is_married() = true;
     listmax = 0;
     buff = i18n::s.get("core.talk.npc.ally.marriage.accepts");
-    tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
@@ -767,7 +764,6 @@ TalkResult talk_ally_gene()
     {
         listmax = 0;
         buff = i18n::s.get("core.talk.npc.ally.make_gene.refuses");
-        tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
@@ -775,7 +771,6 @@ TalkResult talk_ally_gene()
     }
     listmax = 0;
     buff = i18n::s.get("core.talk.npc.ally.make_gene.accepts");
-    tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
@@ -791,7 +786,6 @@ TalkResult talk_innkeeper_shelter()
 {
     listmax = 0;
     buff = i18n::s.get("core.talk.npc.innkeeper.go_to_shelter", cdata[tc]);
-    tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
@@ -982,7 +976,6 @@ TalkResult talk_adventurer_join()
     {
         listmax = 0;
         buff = i18n::s.get("core.talk.npc.adventurer.join.accept", cdata[tc]);
-        tc = tc * 1 + 0;
         ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.more"));
         chatesc = 1;
         ELONA_TALK_SCENE_CUT();
@@ -1042,7 +1035,6 @@ TalkResult talk_wizard_return()
 {
     listmax = 0;
     buff = i18n::s.get("core.talk.npc.wizard.return", cdata[tc]);
-    tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
@@ -1107,7 +1099,6 @@ TalkResult talk_sex()
     }
     listmax = 0;
     buff = i18n::s.get("core.talk.npc.common.sex.start", cdata[tc]);
-    tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.talk.npc.common.sex.response"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
@@ -1120,7 +1111,6 @@ TalkResult talk_result_maid_chase_out()
     --game_data.number_of_waiting_guests;
     listmax = 0;
     buff = i18n::s.get("core.talk.npc.maid.do_not_meet", cdata[tc]);
-    tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.more"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
@@ -1150,7 +1140,6 @@ TalkResult talk_prostitute_buy()
     earn_gold(cdata[tc], sexvalue);
     listmax = 0;
     buff = i18n::s.get("core.talk.npc.common.sex.start", cdata[tc]);
-    tc = tc * 1 + 0;
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.talk.npc.common.sex.response"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
@@ -1288,7 +1277,6 @@ TalkResult talk_accepted_quest()
     {
         listmax = 0;
         buff = i18n::s.get("core.talk.npc.quest_giver.accept.hunt", cdata[tc]);
-        tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -1307,7 +1295,6 @@ TalkResult talk_accepted_quest()
         listmax = 0;
         buff =
             i18n::s.get("core.talk.npc.quest_giver.accept.harvest", cdata[tc]);
-        tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -1325,7 +1312,6 @@ TalkResult talk_accepted_quest()
     {
         listmax = 0;
         buff = i18n::s.get("core.talk.npc.quest_giver.accept.party", cdata[tc]);
-        tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -1485,7 +1471,6 @@ TalkResult talk_finish_escort()
 {
     listmax = 0;
     buff = i18n::s.get("core.talk.npc.quest_giver.finish.escort", cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -2197,7 +2182,6 @@ TalkResult talk_npc()
                         buff = i18n::s.get(
                             "core.talk.npc.shop.criminal.sell", cdata[tc]);
                     }
-                    tc = tc * 1 + 0;
                     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.more"));
                     chatesc = 1;
                     ELONA_TALK_SCENE_CUT();
