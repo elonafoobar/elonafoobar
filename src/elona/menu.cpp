@@ -480,7 +480,7 @@ static TurnResult _show_skill_spell_menu(size_t menu_index)
     if (std::holds_alternative<ui::UIMenuSkillsResult>(*result.value))
     {
         efid = std::get<ui::UIMenuSkillsResult>(*result.value).effect_id;
-        return do_use_magic();
+        return do_use_magic(cdata.player());
     }
     else
     {
@@ -505,9 +505,11 @@ static std::string _make_buff_power_string(int skill_id)
 {
     const auto buff_id = the_ability_db[skill_id]->ability_type % 1000;
     const auto duration = buff_calc_duration(
-        *the_buff_db.get_id_from_legacy(buff_id), calcspellpower(skill_id, cc));
+        *the_buff_db.get_id_from_legacy(buff_id),
+        calcspellpower(skill_id, cdata.player().index));
     const auto description = buff_get_description(
-        *the_buff_db.get_id_from_legacy(buff_id), calcspellpower(skill_id, cc));
+        *the_buff_db.get_id_from_legacy(buff_id),
+        calcspellpower(skill_id, cdata.player().index));
     return std::to_string(duration) +
         i18n::s.get("core.ui.spell.turn_counter") + " " + description;
 }
@@ -519,8 +521,10 @@ std::string make_spell_description(int skill_id)
     {
         return _make_buff_power_string(skill_id);
     }
-    const auto damage =
-        calc_skill_damage(skill_id, cc, calcspellpower(skill_id, cc));
+    const auto damage = calc_skill_damage(
+        skill_id,
+        cdata.player().index,
+        calcspellpower(skill_id, cdata.player().index));
     if (damage)
     {
         dice1 = damage->dice_x;
@@ -528,14 +532,11 @@ std::string make_spell_description(int skill_id)
         bonus = damage->damage_bonus;
         ele = damage->element;
         elep = damage->element_power;
-        if (cc == 0)
+        if (trait(165) != 0)
         {
-            if (trait(165) != 0)
+            if (ele == 50 || ele == 51 || ele == 52)
             {
-                if (ele == 50 || ele == 51 || ele == 52)
-                {
-                    dice2 = dice2 * 125 / 100;
-                }
+                dice2 = dice2 * 125 / 100;
             }
         }
         if (dice1 != 0)
@@ -608,9 +609,9 @@ MenuResult menu_materials()
 // Returns false if canceled, true if confirmed
 bool menu_character_sheet_character_making()
 {
-    auto result =
-        ui::UIMenuCharacterSheet(CharacterSheetOperation::character_making)
-            .show();
+    auto result = ui::UIMenuCharacterSheet(
+                      cdata.player(), CharacterSheetOperation::character_making)
+                      .show();
 
     if (result.canceled)
     {
@@ -633,7 +634,7 @@ optional<int> menu_character_sheet_trainer(bool is_training)
         op = CharacterSheetOperation::learn_skill;
     }
 
-    auto result = ui::UIMenuCharacterSheet(op).show();
+    auto result = ui::UIMenuCharacterSheet(cdata.player(), op).show();
 
     if (result.canceled || !result.value)
     {
@@ -644,9 +645,10 @@ optional<int> menu_character_sheet_trainer(bool is_training)
     return sheet_result.trainer_skill_id;
 }
 
-void menu_character_sheet_investigate()
+void menu_character_sheet_investigate(Character& ally)
 {
-    ui::UIMenuCharacterSheet(CharacterSheetOperation::investigate_ally).show();
+    ui::UIMenuCharacterSheet(ally, CharacterSheetOperation::investigate_ally)
+        .show();
 }
 
 MenuResult menu_feats_character_making()
@@ -1116,7 +1118,7 @@ void change_appearance_equipment(Character& chara)
 
 
 
-void append_accuracy_info(int val0)
+void append_accuracy_info(const Character& chara, int val0)
 {
     p(1) = 0;
     p(2) = 0;
@@ -1125,50 +1127,51 @@ void append_accuracy_info(int val0)
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (cdata[cc].body_parts[cnt] % 10000 == 0)
+        if (chara.body_parts[cnt] % 10000 == 0)
         {
             continue;
         }
-        if (cdata[cc].body_parts[cnt] / 10000 == 10)
+        if (chara.body_parts[cnt] / 10000 == 10)
         {
             continue;
         }
-        if (cdata[cc].body_parts[cnt] / 10000 == 11)
+        if (chara.body_parts[cnt] / 10000 == 11)
         {
             continue;
         }
-        auto& weapon = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
+        auto& weapon = inv[chara.body_parts[cnt] % 10000 - 1];
         if (weapon.dice_x > 0)
         {
             attackskill = weapon.skill;
             ++p(1);
             s(1) = i18n::s.get("core.ui.chara_sheet.damage.melee") + p(1);
             ++attacknum;
-            show_weapon_dice(weapon, none, val0);
+            show_weapon_dice(chara, weapon, none, val0);
         }
     }
     if (attackskill == 106)
     {
         s(1) = i18n::s.get("core.ui.chara_sheet.damage.unarmed");
-        show_weapon_dice(none, none, val0);
+        show_weapon_dice(chara, none, none, val0);
     }
     attacknum = 0;
-    const auto result = can_do_ranged_attack();
+    const auto result = can_do_ranged_attack(chara);
     if (result.type == 1)
     {
         s(1) = i18n::s.get("core.ui.chara_sheet.damage.dist");
-        show_weapon_dice(result.weapon, result.ammo, val0);
+        show_weapon_dice(chara, result.weapon, result.ammo, val0);
     }
 }
 
 
 
 void show_weapon_dice(
+    const Character& chara,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo,
     int val0)
 {
-    tc = cc;
+    tc = chara.index;
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     if (val0 == 0)
     {
@@ -1187,8 +1190,9 @@ void show_weapon_dice(
             attackrange = 1;
         }
     }
-    int tohit = calc_accuracy(weapon, ammo, false);
-    dmg = calcattackdmg(weapon, ammo, AttackDamageCalculationMode::raw_damage);
+    int tohit = calc_accuracy(chara, weapon, ammo, false);
+    dmg = calcattackdmg(
+        chara, weapon, ammo, AttackDamageCalculationMode::raw_damage);
     font(14 - en * 2);
     s(2) = std::to_string(dmgmulti);
     s = ""s + tohit + u8"%"s;
@@ -1225,7 +1229,7 @@ static TurnResult _visit_quest_giver(int quest_index)
     rq = quest_index;
     client = tc;
     efid = 619;
-    magic();
+    magic(cdata.player());
     tc = client;
     if (cdata.player().state() == Character::State::alive)
     {
@@ -1360,7 +1364,6 @@ void screen_analyze_self()
     page = 0;
     pagesize = 14;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
     snd("core.pop2");
     buff = "";

@@ -394,11 +394,10 @@ TEST_CASE(
     const auto item =
         itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 1);
     REQUIRE_SOME(item);
-    elona::cc = 0;
     elona::in = item->number();
 
     REQUIRE(handle_mgr.get_handle(*item) != sol::lua_nil);
-    const auto pick_up_item_result = pick_up_item(*item);
+    const auto pick_up_item_result = pick_up_item(0, *item);
     REQUIRE(pick_up_item_result.type == 1);
     REQUIRE_SOME(pick_up_item_result.picked_up_item);
     REQUIRE(

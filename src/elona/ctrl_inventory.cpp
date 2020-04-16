@@ -35,9 +35,9 @@
 _1 = "どのアイテムを調べる？ "
 _2 = "どのアイテムを置く？ "
 _3 = "どのアイテムを拾う？ "
-_4 = "何を装備する？"
-_5 = "何を食べよう？ "
 
+_5 = "何を食べよう？ "
+_6 = "何を装備する？"
 _7 = "どれを読む？ "
 _8 = "どれを飲む？ "
 _9 = "どれを振る？ "
@@ -60,7 +60,6 @@ _25 = "何をもらう？ "
 _26 = "何を投げる？ "
 _27 = "何を盗む？ "
 _28 = "何と交換する？ "
-_29 = "何を予約する？"
 #endif
 
 
@@ -229,7 +228,6 @@ void restore_cursor()
     cs = invmark(invctrl) % 1000;
     page = invmark(invctrl) / 1000;
     cs_bk = -1;
-    cc = 0;
     page_load();
 }
 
@@ -251,7 +249,7 @@ void make_item_list(int& mainweapon, int citrade)
         }
         if (cnt == 1)
         {
-            p = cc;
+            p = 0;
             if (invctrl == 20 || invctrl == 25)
             {
                 p = tc;
@@ -322,8 +320,8 @@ void make_item_list(int& mainweapon, int citrade)
                 }
                 else if (invctrl != 11 && invctrl != 22 && invctrl != 28)
                 {
-                    if (item.position.x != cdata[cc].position.x ||
-                        item.position.y != cdata[cc].position.y)
+                    if (item.position.x != cdata.player().position.x ||
+                        item.position.y != cdata.player().position.y)
                     {
                         // キャラと同じ座標にあるものしか対象に取れない
                         continue;
@@ -381,7 +379,8 @@ void make_item_list(int& mainweapon, int citrade)
             }
             if (invctrl == 6)
             {
-                if (iequiploc(item) != cdata[cc].body_parts[body - 100] / 10000)
+                if (iequiploc(item) !=
+                    cdata.player().body_parts[body - 100] / 10000)
                 {
                     continue;
                 }
@@ -899,7 +898,6 @@ optional<OnEnterResult> on_shortcut(int& citrade, bool dropcontinue)
                 break;
             }
         }
-        cc = 0;
         if (f == 0)
         {
             if (inv_find(int2itemid(invsc), 0))
@@ -1519,7 +1517,16 @@ OnEnterResult on_enter_external_inventory(
             }
         }
     }
-    int stat = pick_up_item(selected_item).type;
+    int inventory_id;
+    if (invctrl == 12 || (invctrl == 24 && invctrl(1) != 0))
+    {
+        inventory_id = -1;
+    }
+    else
+    {
+        inventory_id = 0;
+    }
+    int stat = pick_up_item(inventory_id, selected_item).type;
     if (stat == 0)
     {
         return OnEnterResult{1};
@@ -1574,7 +1581,7 @@ OnEnterResult on_enter_eat(Item& selected_item, MenuResult& result)
         result.turn_result = TurnResult::pc_turn_user_error;
         return OnEnterResult{result};
     }
-    result.turn_result = do_eat_command(selected_item);
+    result.turn_result = do_eat_command(cdata.player(), selected_item);
     return OnEnterResult{result};
 }
 
@@ -1582,19 +1589,16 @@ OnEnterResult on_enter_eat(Item& selected_item, MenuResult& result)
 
 OnEnterResult on_enter_equip(Item& selected_item, MenuResult& result)
 {
-    if (cc == 0)
+    if (trait(161) != 0)
     {
-        if (trait(161) != 0)
+        if (selected_item.weight >= 1000)
         {
-            if (selected_item.weight >= 1000)
-            {
-                txt(i18n::s.get("core.ui.inv.equip.too_heavy"));
-                return OnEnterResult{2};
-            }
+            txt(i18n::s.get("core.ui.inv.equip.too_heavy"));
+            return OnEnterResult{2};
         }
     }
-    equip_item(cc, selected_item);
-    chara_refresh(cc);
+    equip_item(cdata.player().index, selected_item);
+    chara_refresh(cdata.player().index);
     screenupdate = -1;
     update_screen();
     snd("core.equip1");
@@ -1604,19 +1608,19 @@ OnEnterResult on_enter_equip(Item& selected_item, MenuResult& result)
     switch (selected_item.curse_state)
     {
     case CurseState::doomed:
-        txt(i18n::s.get("core.ui.inv.equip.doomed", cdata[cc]));
+        txt(i18n::s.get("core.ui.inv.equip.doomed", cdata.player()));
         break;
     case CurseState::cursed:
-        txt(i18n::s.get("core.ui.inv.equip.cursed", cdata[cc]));
+        txt(i18n::s.get("core.ui.inv.equip.cursed", cdata.player()));
         break;
     case CurseState::none: break;
     case CurseState::blessed:
-        txt(i18n::s.get("core.ui.inv.equip.blessed", cdata[cc]));
+        txt(i18n::s.get("core.ui.inv.equip.blessed", cdata.player()));
         break;
     }
-    if (cdata[cc].body_parts[body - 100] / 10000 == 5)
+    if (cdata.player().body_parts[body - 100] / 10000 == 5)
     {
-        equip_melee_weapon();
+        equip_melee_weapon(cdata.player());
     }
     menucycle = true;
     result.turn_result = TurnResult::menu_equipment;
@@ -1630,7 +1634,7 @@ OnEnterResult on_enter_read(Item& selected_item, MenuResult& result)
     screenupdate = -1;
     update_screen();
     savecycle();
-    result.turn_result = do_read_command(selected_item);
+    result.turn_result = do_read_command(cdata.player(), selected_item);
     return OnEnterResult{result};
 }
 
@@ -1641,7 +1645,7 @@ OnEnterResult on_enter_drink(Item& selected_item, MenuResult& result)
     screenupdate = -1;
     update_screen();
     savecycle();
-    result.turn_result = do_drink_command(selected_item);
+    result.turn_result = do_drink_command(cdata.player(), selected_item);
     return OnEnterResult{result};
 }
 
@@ -2210,7 +2214,7 @@ OnEnterResult on_enter_throw(Item& selected_item, MenuResult& result)
         result.turn_result = TurnResult::pc_turn_user_error;
         return OnEnterResult{result};
     }
-    result.turn_result = do_throw_command(selected_item);
+    result.turn_result = do_throw_command(cdata.player(), selected_item);
     return OnEnterResult{result};
 }
 
@@ -2218,7 +2222,7 @@ OnEnterResult on_enter_throw(Item& selected_item, MenuResult& result)
 
 OnEnterResult on_enter_steal(Item& selected_item, MenuResult& result)
 {
-    start_stealing(selected_item);
+    start_stealing(cdata.player(), selected_item);
     invsubroutine = 0;
     result.succeeded = true;
     return OnEnterResult{result};
@@ -2269,15 +2273,6 @@ OnEnterResult on_enter(int selected_item_index, int& citrade, bool dropcontinue)
     MenuResult result = {false, false, TurnResult::none};
 
     auto& selected_item = inv[selected_item_index];
-
-    if (invctrl == 12 || (invctrl == 24 && invctrl(1) != 0))
-    {
-        cc = -1;
-    }
-    else
-    {
-        cc = 0;
-    }
 
     if (!cargocheck(selected_item))
     {
@@ -2530,7 +2525,6 @@ optional<MenuResult> on_cancel(bool dropcontinue)
         }
     }
 
-    cc = 0;
     efcancel = 1;
     if (invsubroutine == 1)
     {

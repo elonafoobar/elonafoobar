@@ -402,12 +402,7 @@ void LuaCharacter::make_pregnant(Character& self)
  */
 void LuaCharacter::eat_rotten_food(Character& self)
 {
-    int cc_bk = self.index;
-    elona::cc = self.index;
-
-    elona::eat_rotten_food();
-
-    elona::cc = cc_bk;
+    elona::eat_rotten_food(self);
 }
 
 /**

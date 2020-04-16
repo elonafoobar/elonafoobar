@@ -387,8 +387,8 @@ int damage_hp(
                     Message::color{ColorIndex::cyan});
                 txt(i18n::s.get("core.damage.is_healed", victim));
                 victim.hp = victim.max_hp / 2;
-                animode = 100 + victim.index;
-                MiracleAnimation().play();
+                MiracleAnimation(MiracleAnimation::Mode::target_one, victim)
+                    .play();
                 snd("core.pray2");
                 break;
             }

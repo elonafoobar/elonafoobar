@@ -70,7 +70,6 @@ static int _load_equipment_list(const Character& chara)
 
 bool UIMenuEquipment::init()
 {
-    cc = 0;
     page = 0;
     pagesize = 14;
     listmax = 0;
@@ -98,7 +97,7 @@ bool UIMenuEquipment::init()
     gsel(0);
     windowshadow = 1;
 
-    _mainhand = _load_equipment_list(cdata[cc]);
+    _mainhand = _load_equipment_list(cdata.player());
 
     return true;
 }
@@ -150,11 +149,13 @@ void UIMenuEquipment::_draw_window_headers()
 {
     display_note(
         i18n::s.get("core.ui.equip.equip_weight") + ": " +
-        cnvweight(cdata[cc].sum_of_equipment_weight) + cnveqweight(cc) + " " +
-        i18n::s.get("core.ui.equip.hit_bonus") + ":" + cdata[cc].hit_bonus +
-        " " + i18n::s.get("core.ui.equip.damage_bonus") + ":" +
-        cdata[cc].damage_bonus + u8"  DV/PV:"s + cdata[cc].dv + u8"/"s +
-        cdata[cc].pv);
+        cnvweight(cdata.player().sum_of_equipment_weight) +
+        cnveqweight(cdata.player().index) + " " +
+        i18n::s.get("core.ui.equip.hit_bonus") + ":" +
+        cdata.player().hit_bonus + " " +
+        i18n::s.get("core.ui.equip.damage_bonus") + ":" +
+        cdata.player().damage_bonus + u8"  DV/PV:"s + cdata.player().dv +
+        u8"/"s + cdata.player().pv);
 }
 
 void UIMenuEquipment::_draw_window(bool show_additional_info)
@@ -211,7 +212,7 @@ _draw_single_list_entry(int cnt, int list_item, bool show_additional_info)
 {
     display_key(wx + 88, wy + 60 + cnt * 19 - 2, cnt);
 
-    int equipped_item = cdata[cc].body_parts[list_item - 100];
+    int equipped_item = cdata.player().body_parts[list_item - 100];
     std::string item_name = u8"-    "s;
     std::string item_weight = u8"-"s;
 
@@ -281,20 +282,20 @@ void UIMenuEquipment::draw()
 static void _unequip_item()
 {
     game_data.player_is_changing_equipment = 1;
-    const auto item_index = cdata[cc].body_parts[body - 100] % 10000 - 1;
+    const auto item_index = cdata.player().body_parts[body - 100] % 10000 - 1;
     if (is_cursed(inv[item_index].curse_state))
     {
         txt(i18n::s.get("core.ui.equip.cannot_be_taken_off", inv[item_index]));
         return;
     }
-    unequip_item(cc);
-    chara_refresh(cc);
+    unequip_item(cdata.player().index);
+    chara_refresh(cdata.player().index);
     snd("core.equip1");
     Message::instance().linebreak();
     txt(i18n::s.get("core.ui.equip.you_unequip", inv[item_index]));
-    if (cdata[cc].body_parts[body - 100] / 10000 == 5)
+    if (cdata.player().body_parts[body - 100] / 10000 == 5)
     {
-        equip_melee_weapon();
+        equip_melee_weapon(cdata.player());
     }
 }
 
@@ -313,7 +314,7 @@ static bool _on_list_entry_select(int index)
 {
     body = index;
 
-    if (cdata[cc].body_parts[body - 100] % 10000 != 0)
+    if (cdata.player().body_parts[body - 100] % 10000 != 0)
     {
         _unequip_item();
         render_hud();
@@ -326,7 +327,8 @@ static bool _on_list_entry_select(int index)
 
 static void _show_item_desc(int body_)
 {
-    item_show_description(inv[cdata[cc].body_parts[body_ - 100] % 10000 - 1]);
+    item_show_description(
+        inv[cdata.player().body_parts[body_ - 100] % 10000 - 1]);
     nowindowanime = 1;
     returnfromidentify = 0;
     screenupdate = -1;
@@ -356,7 +358,7 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     else if (action == "identify")
     {
         int body_ = list(0, pagesize * page + cs);
-        if (cdata[cc].body_parts[body_ - 100] % 10000 != 0)
+        if (cdata.player().body_parts[body_ - 100] % 10000 != 0)
         {
             _cs_prev = cs;
             _show_item_desc(body_);
@@ -394,14 +396,14 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     else if (action == "cancel")
     {
         menucycle = 0;
-        create_pcpic(cdata[cc]);
+        create_pcpic(cdata.player());
         update_screen();
         // result.turn_result = TurnResult::pc_turn_user_error
         return UIMenuEquipment::Result::cancel();
     }
 
     return none;
-} // namespace ui
+}
 
 } // namespace ui
 } // namespace elona

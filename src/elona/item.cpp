@@ -1884,7 +1884,7 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
 
 
 
-void mapitem_fire(int x, int y)
+void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
 {
     if (cell_data.at(x, y).item_appearances_actual == 0)
     {
@@ -1911,7 +1911,14 @@ void mapitem_fire(int x, int y)
         {
             if (cell_data.at(x, y).mef_index_plus_one == 0)
             {
-                mef_add(x, y, 5, 24, rnd(10) + 5, 100, cc);
+                mef_add(
+                    x,
+                    y,
+                    5,
+                    24,
+                    rnd(10) + 5,
+                    100,
+                    arsonist ? arsonist->index : -1);
             }
         }
         cell_refresh(x, y);
@@ -2305,7 +2312,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
 
     auto& dropped_item = *slot;
     item_copy(item_in_inventory, dropped_item);
-    dropped_item.position = cdata[cc].position;
+    dropped_item.position = cdata.player().position;
     dropped_item.set_number(num);
     itemturn(dropped_item);
 
@@ -2327,7 +2334,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
         if (const auto altar = item_find(60002, 0))
         {
             // The altar is your god's.
-            if (core_god::int2godid(altar->param1) == cdata[cc].god_id)
+            if (core_god::int2godid(altar->param1) == cdata.player().god_id)
             {
                 if (dropped_item.curse_state != CurseState::blessed)
                 {
@@ -2609,39 +2616,36 @@ Item& item_convert_artifact(Item& artifact, bool ignore_external_container)
 
 
 
-void damage_by_cursed_equipments()
+void damage_by_cursed_equipments(Character& chara)
 {
     if (rnd(4) == 0)
     {
-        damage_hp(
-            cdata[cc],
-            cdata[cc].hp * (5 + cdata[cc].curse_power / 5) / 100,
-            -5);
+        damage_hp(chara, chara.hp * (5 + chara.curse_power / 5) / 100, -5);
         return;
     }
     if (map_data.type != mdata_t::MapType::world_map)
     {
-        if (rnd(10 - clamp(cdata[cc].curse_power / 10, 0, 9)) == 0)
+        if (rnd(10 - clamp(chara.curse_power / 10, 0, 9)) == 0)
         {
             efid = 408;
-            tc = cc;
-            magic();
+            tc = chara.index;
+            magic(chara);
             return;
         }
     }
     if (rnd(10) == 0)
     {
-        if (cdata[cc].gold > 0)
+        if (chara.gold > 0)
         {
-            p = rnd_capped(cdata[cc].gold) / 100 + rnd(10) + 1;
-            if (p > cdata[cc].gold)
+            p = rnd_capped(chara.gold) / 100 + rnd(10) + 1;
+            if (p > chara.gold)
             {
-                p = cdata[cc].gold;
+                p = chara.gold;
             }
-            cdata[cc].gold -= p;
-            if (is_in_fov(cdata[cc]))
+            chara.gold -= p;
+            if (is_in_fov(chara))
             {
-                txt(i18n::s.get("core.misc.curse.gold_stolen", cdata[cc]),
+                txt(i18n::s.get("core.misc.curse.gold_stolen", chara),
                     Message::color{ColorIndex::purple});
             }
             return;
@@ -2698,27 +2702,27 @@ int efstatusfix(int doomed, int cursed, int none, int blessed)
 
 
 
-void equip_melee_weapon()
+void equip_melee_weapon(Character& chara)
 {
     attacknum = 0;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (cdata[cc].body_parts[cnt] / 10000 != 5)
+        if (chara.body_parts[cnt] / 10000 != 5)
         {
             continue;
         }
-        if (cdata[cc].body_parts[cnt] % 10000 == 0)
+        if (chara.body_parts[cnt] % 10000 == 0)
         {
             continue;
         }
-        const auto& weapon = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
+        const auto& weapon = inv[chara.body_parts[cnt] % 10000 - 1];
         if (weapon.dice_x == 0)
         {
             continue;
         }
         ++attacknum;
-        if (cdata[cc].combat_style.two_hand())
+        if (chara.combat_style.two_hand())
         {
             if (weapon.weight >= 4000)
             {
@@ -2731,7 +2735,7 @@ void equip_melee_weapon()
                     "core.action.equip.two_handed.too_light", weapon));
             }
         }
-        if (cdata[cc].combat_style.dual_wield())
+        if (chara.combat_style.dual_wield())
         {
             if (attacknum == 1)
             {
@@ -2748,7 +2752,7 @@ void equip_melee_weapon()
                     weapon));
             }
         }
-        if (cc == 0)
+        if (chara.index == 0)
         {
             if (game_data.mount != 0)
             {

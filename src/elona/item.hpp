@@ -369,7 +369,7 @@ item_stack(int inventory_id, Item& base_item, bool show_message = false);
 void item_dump_desc(Item&);
 
 bool item_fire(int owner, optional_ref<Item> burned_item = none);
-void mapitem_fire(int x, int y);
+void mapitem_fire(optional_ref<Character> arsonist, int x, int y);
 bool item_cold(int owner, optional_ref<Item> destroyed_item = none);
 void mapitem_cold(int x, int y);
 
@@ -420,9 +420,9 @@ bool item_db_is_offerable(Item& item, int legacy_id);
 void item_db_get_description(Item& item, int legacy_id);
 void item_db_get_charge_level(const Item& item, int legacy_id);
 void item_db_set_full_stats(Item& item, int legacy_id);
-void item_db_on_read(Item& item, int legacy_id);
+void item_db_on_read(Character& reader, Item& item, int legacy_id);
 void item_db_on_zap(Item& item, int legacy_id);
-void item_db_on_drink(optional_ref<Item> item, int legacy_id);
+void item_db_on_drink(Character& chara, optional_ref<Item> item, int legacy_id);
 
 
 std::vector<int> item_get_inheritance(const Item& item);
@@ -435,10 +435,10 @@ bool cargocheck(const Item& item);
 Item& item_convert_artifact(
     Item& artifact,
     bool ignore_external_container = false);
-void damage_by_cursed_equipments();
+void damage_by_cursed_equipments(Character& chara);
 void dipcursed(Item& item);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
-void equip_melee_weapon();
+void equip_melee_weapon(Character& chara);
 std::pair<int, int> inv_getheader(int);
 optional_ref<Item> mapitemfind(const Position& pos, ItemId id);
 std::string itemname(Item& item, int number = 0, bool with_article = true);

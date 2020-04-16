@@ -81,7 +81,7 @@ MenuResult menu_materials();
 MenuResult menu_character_sheet_normal();
 bool menu_character_sheet_character_making();
 optional<int> menu_character_sheet_trainer(bool is_training);
-void menu_character_sheet_investigate();
+void menu_character_sheet_investigate(Character& ally);
 
 int select_alias(int);
 MenuResult menu_feats();
@@ -118,8 +118,9 @@ CtrlInventoryResult ctrl_inventory();
 void menu_chat_dialog();
 void menu_voting_box();
 
-void append_accuracy_info(int);
+void append_accuracy_info(const Character& chara, int);
 void show_weapon_dice(
+    const Character& chara,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo,
     int val0);

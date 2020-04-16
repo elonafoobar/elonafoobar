@@ -21,7 +21,6 @@ void UIMenuTownChart::update()
     page = 0;
     pagesize = 16;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
     snd("core.chat");
     asset_load("deco_politics");

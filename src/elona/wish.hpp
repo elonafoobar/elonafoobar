@@ -10,7 +10,7 @@
 namespace elona
 {
 
-bool what_do_you_wish_for(optional<std::string> wish = none);
+bool what_do_you_wish_for(Character& chara, optional<std::string> wish = none);
 
 
 enum class WishMatchType

@@ -1840,8 +1840,8 @@ void harvest_plant(int val)
     feat = tile_plant;
     try_to_grow_plant();
     cell_featset(
-        cdata[cc].position.x,
-        cdata[cc].position.y,
+        cdata.player().position.x,
+        cdata.player().position.y,
         feat,
         feat(1),
         feat(2),

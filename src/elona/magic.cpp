@@ -52,9 +52,9 @@ namespace
 {
 
 // Eye of Insanity
-bool _magic_636()
+bool _magic_636(Character& subject)
 {
-    txt(i18n::s.get("core.magic.insanity", cdata[cc], cdata[tc]),
+    txt(i18n::s.get("core.magic.insanity", subject, cdata[tc]),
         Message::color{ColorIndex::purple});
     damage_insanity(cdata[tc], rnd_capped(roll(dice1, dice2, bonus) + 1));
     return true;
@@ -211,11 +211,11 @@ bool _magic_1135()
 
 
 // Pregnant
-bool _magic_654()
+bool _magic_654(Character& subject)
 {
     if (is_in_fov(cdata[tc]))
     {
-        txt(i18n::s.get("core.magic.pregnant", cdata[cc], cdata[tc]));
+        txt(i18n::s.get("core.magic.pregnant", subject, cdata[tc]));
     }
     get_pregnant();
     return true;
@@ -235,7 +235,7 @@ bool _magic_626()
 
 
 // Item: milk
-bool _magic_1101()
+bool _magic_1101(Character& subject)
 {
     if (is_in_fov(cdata[tc]))
     {
@@ -273,7 +273,7 @@ bool _magic_1101()
     cdata[tc].nutrition += 1000 * (efp / 100);
     if (tc == 0)
     {
-        show_eating_message();
+        show_eating_message(subject);
     }
     eatstatus(efstatus, tc);
     animeload(15, tc);
@@ -432,7 +432,7 @@ bool _magic_1130()
 
 
 // Pickpocket
-bool _magic_300()
+bool _magic_300(Character& subject)
 {
     if (game_data.executing_immediate_quest_type == 1008 ||
         game_data.executing_immediate_quest_type == 1010)
@@ -440,7 +440,7 @@ bool _magic_300()
         txt(i18n::s.get("core.magic.steal.in_quest"));
         return false;
     }
-    if (cc == 0)
+    if (subject.index == 0)
     {
         if (cdata.player().sp < 50)
         {
@@ -467,9 +467,9 @@ bool _magic_300()
 
 
 // Riding
-bool _magic_301()
+bool _magic_301(Character& subject)
 {
-    if (cc == 0)
+    if (subject.index == 0)
     {
         if (cdata.player().sp < 50)
         {
@@ -487,7 +487,7 @@ bool _magic_301()
     }
     if (game_data.mount != 0)
     {
-        if (tc == cc)
+        if (tc == subject.index)
         {
             int stat = cell_findspace(
                 cdata.player().position.x, cdata.player().position.y, 1);
@@ -517,11 +517,11 @@ bool _magic_301()
         txt(i18n::s.get("core.magic.mount.not_client"));
         return true;
     }
-    if (tc == cc)
+    if (tc == subject.index)
     {
         if (game_data.mount == 0)
         {
-            txt(i18n::s.get("core.magic.mount.ride_self", cdata[cc]));
+            txt(i18n::s.get("core.magic.mount.ride_self", subject));
         }
         return true;
     }
@@ -534,7 +534,7 @@ bool _magic_301()
     {
         txt(i18n::s.get(
             "core.magic.mount.currently_riding",
-            cdata[cc],
+            subject,
             cdata[game_data.mount]));
     }
     else
@@ -550,13 +550,13 @@ bool _magic_301()
 
 
 // Performance
-bool _magic_183(optional_ref<Item> instrument)
+bool _magic_183(Character& subject, optional_ref<Item> instrument)
 {
-    assert(cc != 0 || instrument);
+    assert(subject.index != 0 || instrument);
 
-    if (cc != 0)
+    if (subject.index != 0)
     {
-        for (auto&& item : inv.for_chara(cdata[cc]))
+        for (auto&& item : inv.for_chara(subject))
         {
             if (item.number() == 0)
             {
@@ -573,15 +573,15 @@ bool _magic_183(optional_ref<Item> instrument)
             return false;
         }
     }
-    if (sdata(183, cc) == 0)
+    if (sdata(183, subject.index) == 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(subject))
         {
-            txt(i18n::s.get("core.magic.perform.do_not_know", cdata[cc]));
+            txt(i18n::s.get("core.magic.perform.do_not_know", subject));
             return false;
         }
     }
-    if (cc == 0)
+    if (subject.index == 0)
     {
         if (cdata.player().sp < 50)
         {
@@ -597,14 +597,14 @@ bool _magic_183(optional_ref<Item> instrument)
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    activity_perform(cdata[cc], *instrument);
+    activity_perform(subject, *instrument);
     return true;
 }
 
 
 
 // Cooking
-bool _magic_184(Item& cook_tool)
+bool _magic_184(Character& subject, Item& cook_tool)
 {
     if (sdata(184, 0) == 0)
     {
@@ -621,7 +621,7 @@ bool _magic_184(Item& cook_tool)
     }
     assert(food_opt);
     auto& food = *food_opt;
-    if (cc == 0)
+    if (subject.index == 0)
     {
         if (cdata.player().sp < 50)
         {
@@ -637,14 +637,14 @@ bool _magic_184(Item& cook_tool)
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    cook(cook_tool, food);
+    food_cook(subject, cook_tool, food);
     return true;
 }
 
 
 
 // Fishing
-bool _magic_185(Item& rod)
+bool _magic_185(Character& subject, Item& rod)
 {
     if (sdata(185, 0) == 0)
     {
@@ -664,8 +664,8 @@ bool _magic_185(Item& rod)
     f = 0;
     for (int cnt = 0; cnt < 3; ++cnt)
     {
-        y = cdata[cc].position.y + cnt - 1;
-        x = cdata[cc].position.x;
+        y = subject.position.y + cnt - 1;
+        x = subject.position.x;
         if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
         {
             continue;
@@ -680,8 +680,8 @@ bool _magic_185(Item& rod)
     {
         for (int cnt = 0; cnt < 3; ++cnt)
         {
-            y = cdata[cc].position.y;
-            x = cdata[cc].position.x + cnt - 1;
+            y = subject.position.y;
+            x = subject.position.x + cnt - 1;
             if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
             {
                 continue;
@@ -727,7 +727,7 @@ bool _magic_185(Item& rod)
     fishx = x;
     fishy = y;
     addefmap(fishx, fishy, 1, 3);
-    if (cc == 0)
+    if (subject.index == 0)
     {
         if (cdata.player().sp < 50)
         {
@@ -746,16 +746,16 @@ bool _magic_185(Item& rod)
     item_separate(rod);
     --rod.count;
     rowactre = 0;
-    spot_fishing(rod);
+    spot_fishing(subject, rod);
     return true;
 }
 
 
 
-bool _magic_645_1114();
+bool _magic_645_1114(Character&);
 
 // Holy Light / Vanquish Hex
-bool _magic_406_407()
+bool _magic_406_407(Character& subject)
 {
     if (is_cursed(efstatus))
     {
@@ -763,7 +763,7 @@ bool _magic_406_407()
         {
             txt(i18n::s.get("core.magic.common.cursed", cdata[tc]));
         }
-        return _magic_645_1114();
+        return _magic_645_1114(subject);
     }
     p = 0;
     for (int cnt = 0; cnt < 16; ++cnt)
@@ -796,7 +796,7 @@ bool _magic_406_407()
             continue;
         }
     }
-    buff_add(cdata[tc], "core.holy_veil", efp, 5 + efp / 30, cdata[cc]);
+    buff_add(cdata[tc], "core.holy_veil", efp, 5 + efp / 30, subject);
     animeload(11, tc);
     return true;
 }
@@ -857,20 +857,22 @@ bool _magic_1117()
 
 
 
-bool _magic_628();
+bool _magic_628(Character& subject);
 
 // Eye of Mutation / Mutation
-bool _magic_632_454_1144(bool is_cursed_potion_of_cure_mutation = false)
+bool _magic_632_454_1144(
+    Character& subject,
+    bool is_cursed_potion_of_cure_mutation = false)
 {
     if (!is_cursed_potion_of_cure_mutation)
     {
         if (tc != 0)
         {
-            return _magic_628();
+            return _magic_628(subject);
         }
         if (efid == 632)
         {
-            txt(i18n::s.get("core.magic.mutation.spell", cdata[cc], cdata[tc]));
+            txt(i18n::s.get("core.magic.mutation.spell", subject, cdata[tc]));
             if (rnd(3))
             {
                 return true;
@@ -971,7 +973,7 @@ bool _magic_632_454_1144(bool is_cursed_potion_of_cure_mutation = false)
 
 
 // Item: potion of cure mutation
-bool _magic_1121()
+bool _magic_1121(Character& subject)
 {
     if (tc != 0)
     {
@@ -984,7 +986,7 @@ bool _magic_1121()
         {
             txt(i18n::s.get("core.magic.common.it_is_cursed"));
         }
-        return _magic_632_454_1144(true);
+        return _magic_632_454_1144(subject, true);
     }
     f = 0;
     for (int cnt = 0,
@@ -1040,9 +1042,9 @@ bool _magic_1121()
 
 
 // Identify
-bool _magic_411()
+bool _magic_411(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -1058,7 +1060,7 @@ bool _magic_411()
 
 
 // Resurrection
-bool _magic_461()
+bool _magic_461(Character& subject)
 {
     if (map_data.type == mdata_t::MapType::world_map)
     {
@@ -1088,15 +1090,15 @@ bool _magic_461()
     }
     if (bonus < rnd(100))
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(subject))
         {
-            txt(i18n::s.get("core.magic.resurrection.fail", cdata[cc]));
+            txt(i18n::s.get("core.magic.resurrection.fail", subject));
         }
         return true;
     }
     do_chara_revival(cdata[stat]);
-    cxinit = cdata[cc].position.x;
-    cyinit = cdata[cc].position.y;
+    cxinit = subject.position.x;
+    cyinit = subject.position.y;
     chara_place(cdata[stat]);
     cdata[stat].current_map = 0;
     txt(i18n::s.get(
@@ -1105,11 +1107,10 @@ bool _magic_461()
             cdata[stat]),
         Message::color{ColorIndex::orange});
     txt(i18n::s.get("core.magic.resurrection.dialog"));
-    animode = 100 + stat;
-    MiracleAnimation().play();
+    MiracleAnimation(MiracleAnimation::Mode::target_one, cdata[stat]).play();
     snd("core.pray2");
     cdata[stat].emotion_icon = 317;
-    if (cc == 0)
+    if (subject.index == 0)
     {
         chara_modify_impression(cdata[stat], 15);
         if (stat >= 16)
@@ -1122,10 +1123,10 @@ bool _magic_461()
 
 
 
-bool _magic_645_1114();
+bool _magic_645_1114(Character&);
 
 // Uncurse
-bool _magic_412()
+bool _magic_412(Character& subject)
 {
     if (efstatus == CurseState::none)
     {
@@ -1147,7 +1148,7 @@ bool _magic_412()
         {
             txt(i18n::s.get("core.magic.common.cursed", cdata[tc]));
         }
-        return _magic_645_1114();
+        return _magic_645_1114(subject);
     }
     p(1) = 0;
     p(2) = 0;
@@ -1482,8 +1483,7 @@ bool _magic_1107()
     {
         txt(i18n::s.get("core.magic.faith.blessed"));
     }
-    animode = 100 + tc;
-    MiracleAnimation().play();
+    MiracleAnimation(MiracleAnimation::Mode::target_one, cdata[tc]).play();
     snd("core.pray2");
     cdata.player().praying_point += 500;
     god_modify_piety(75);
@@ -1608,8 +1608,7 @@ bool _magic_1113()
                 cdata[tc], cnt, rnd(sdata.get(cnt, tc).potential / 20 + 3) + 1);
         }
         txt(i18n::s.get("core.magic.gain_potential.blessed", cdata[tc]));
-        animode = 100 + tc;
-        MiracleAnimation().play();
+        MiracleAnimation(MiracleAnimation::Mode::target_one, cdata[tc]).play();
         snd("core.ding3");
     }
     else
@@ -1743,7 +1742,7 @@ bool _magic_430_429()
 
 
 // Decapitation
-bool _magic_658()
+bool _magic_658(Character& subject)
 {
     if (cdata[tc].hp > cdata[tc].max_hp / 8)
     {
@@ -1758,14 +1757,14 @@ bool _magic_658()
         {
             game_data.proc_damage_events_flag = 2;
             txt3rd = 1;
-            txt(i18n::s.get("core.magic.vorpal.other", cdata[cc], cdata[tc]));
+            txt(i18n::s.get("core.magic.vorpal.other", subject, cdata[tc]));
         }
         else
         {
-            txt(i18n::s.get("core.magic.vorpal.ally", cdata[cc], cdata[tc]));
+            txt(i18n::s.get("core.magic.vorpal.ally", subject, cdata[tc]));
         }
     }
-    damage_hp(cdata[tc], cdata[tc].max_hp, cc, 658);
+    damage_hp(cdata[tc], cdata[tc].max_hp, subject.index, 658);
     return true;
 }
 
@@ -1861,9 +1860,9 @@ bool _magic_440_439()
 
 
 // Wish
-bool _magic_441()
+bool _magic_441(Character& subject)
 {
-    what_do_you_wish_for();
+    what_do_you_wish_for(subject);
     screenupdate = -1;
     gmode(2);
     update_screen();
@@ -2065,13 +2064,13 @@ bool _magic_1112()
 
 
 // Curse / Item: scroll of curse
-bool _magic_645_1114()
+bool _magic_645_1114(Character& subject)
 {
     if (efid == 645)
     {
         if (is_in_fov(cdata[tc]))
         {
-            txt(i18n::s.get("core.magic.curse.spell", cdata[cc], cdata[tc]));
+            txt(i18n::s.get("core.magic.curse.spell", subject, cdata[tc]));
         }
     }
     int p = 75 + sdata(19, tc);
@@ -2198,9 +2197,9 @@ bool _magic_1118()
 
 // Item: diary of cat sister / diary of younger sister / scroll of ally / diary
 // of young lady
-bool _magic_1138_1123_1122_1137()
+bool _magic_1138_1123_1122_1137(Character& subject)
 {
-    if (cc != 0 && cc < 16)
+    if (subject.index != 0 && subject.index < 16)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         return true;
@@ -2235,9 +2234,9 @@ bool _magic_1138_1123_1122_1137()
 
 
 // Dominate
-bool _magic_435()
+bool _magic_435(Character& subject)
 {
-    if (cc != 0 || tc == 0 || cdata[tc].relationship == 10)
+    if (subject.index != 0 || tc == 0 || cdata[tc].relationship == 10)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2251,7 +2250,7 @@ bool _magic_435()
     }
     f = 1;
     {
-        if (inv_find(ItemId::monster_heart, cc))
+        if (inv_find(ItemId::monster_heart, subject.index))
         {
             efp = efp * 3 / 2;
         }
@@ -2284,7 +2283,7 @@ bool _magic_435()
 
 
 // Web / Mist of Darkness / Acid Ground / Ether Ground / Fire Wall
-bool _magic_436_437_455_634_456()
+bool _magic_436_437_455_634_456(Character& subject)
 {
     if (efid == 436)
     {
@@ -2348,16 +2347,16 @@ bool _magic_436_437_455_634_456()
         }
         if (efid == 634)
         {
-            mef_add(x, y, 4, 20, rnd(4) + 2, efp, cc);
+            mef_add(x, y, 4, 20, rnd(4) + 2, efp, subject.index);
         }
         if (efid == 455)
         {
-            mef_add(x, y, 3, 19, rnd(10) + 5, efp, cc);
+            mef_add(x, y, 3, 19, rnd(10) + 5, efp, subject.index);
         }
         if (efid == 456)
         {
-            mef_add(x, y, 5, 24, rnd(10) + 5, efp, cc);
-            mapitem_fire(x, y);
+            mef_add(x, y, 5, 24, rnd(10) + 5, efp, subject.index);
+            mapitem_fire(subject, x, y);
         }
         if (efid == 436)
         {
@@ -2374,9 +2373,9 @@ bool _magic_436_437_455_634_456()
 
 
 // Item: scroll of name
-bool _magic_1145()
+bool _magic_1145(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2416,9 +2415,9 @@ bool _magic_1145()
 
 
 // Item: Garok's hammer
-bool _magic_49(Item& hammer)
+bool _magic_49(Character& subject, Item& hammer)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2444,7 +2443,7 @@ bool _magic_49(Item& hammer)
     }
     randomize(hammer.param1);
     equip = target_item.body_part;
-    animeload(8, cc);
+    animeload(8, subject.index);
     target_item.quality = Quality::miracle;
     change_item_material(target_item, target_item.material);
     randomize(hammer.param1);
@@ -2466,12 +2465,12 @@ bool _magic_49(Item& hammer)
     txt(i18n::s.get("core.magic.garoks_hammer.apply", target_item));
     if (equip != 0)
     {
-        cdata[cc].body_parts[equip - 100] =
-            cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
+        subject.body_parts[equip - 100] =
+            subject.body_parts[equip - 100] / 10000 * 10000 +
             target_item.index + 1;
         target_item.body_part = equip;
     }
-    chara_refresh(cc);
+    chara_refresh(subject.index);
     fixmaterial = 0;
     objfix = 0;
     hammer.modify_number(-1);
@@ -2482,9 +2481,9 @@ bool _magic_49(Item& hammer)
 
 
 // Item: scroll of change material
-bool _magic_21_1127()
+bool _magic_21_1127(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2521,10 +2520,10 @@ bool _magic_21_1127()
                     "core.magic.change_material.more_power_needed"));
                 return true;
             }
-            animeload(8, cc);
+            animeload(8, subject.index);
             txt(i18n::s.get(
                 "core.magic.change_material.artifact_reconstructed",
-                cdata[cc],
+                subject,
                 target_item));
             target_item.modify_number(-1);
             flt();
@@ -2533,8 +2532,8 @@ bool _magic_21_1127()
             assert(reconstructed_artifact);
             if (equip != 0)
             {
-                cdata[cc].body_parts[equip - 100] =
-                    cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
+                subject.body_parts[equip - 100] =
+                    subject.body_parts[equip - 100] / 10000 * 10000 +
                     reconstructed_artifact->index + 1;
                 reconstructed_artifact->body_part = equip;
             }
@@ -2543,7 +2542,7 @@ bool _magic_21_1127()
         {
             int material = fixmaterial;
 
-            animeload(8, cc);
+            animeload(8, subject.index);
             if (efp <= 50)
             {
                 if (rnd(3) == 0)
@@ -2558,13 +2557,13 @@ bool _magic_21_1127()
             change_item_material(target_item, material);
             txt(i18n::s.get(
                 "core.magic.change_material.apply",
-                cdata[cc],
+                subject,
                 s(0),
                 target_item));
             if (equip != 0)
             {
-                cdata[cc].body_parts[equip - 100] =
-                    cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
+                subject.body_parts[equip - 100] =
+                    subject.body_parts[equip - 100] / 10000 * 10000 +
                     target_item.index + 1;
                 target_item.body_part = equip;
             }
@@ -2575,7 +2574,7 @@ bool _magic_21_1127()
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
     }
-    chara_refresh(cc);
+    chara_refresh(subject.index);
     fixmaterial = 0;
     objfix = 0;
     return true;
@@ -2584,9 +2583,9 @@ bool _magic_21_1127()
 
 
 // Item: deed of inheritance
-bool _magic_1128()
+bool _magic_1128(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2606,9 +2605,9 @@ bool _magic_1128()
 
 
 // Item: scroll of enchant weapon / armor
-bool _magic_1124_1125()
+bool _magic_1124_1125(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         return true;
@@ -2640,7 +2639,7 @@ bool _magic_1124_1125()
         {
             txt(i18n::s.get("core.magic.enchant.resist", target_item));
         }
-        chara_refresh(cc);
+        chara_refresh(subject.index);
     }
     else
     {
@@ -2652,9 +2651,9 @@ bool _magic_1124_1125()
 
 
 // Fill Charge / Item: scroll of charge
-bool _magic_630_1129()
+bool _magic_630_1129(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2732,7 +2731,7 @@ bool _magic_630_1129()
             }
             txt(i18n::s.get("core.magic.fill_charge.apply", target_item, p(0)));
             target_item.count += p;
-            animeload(8, cc);
+            animeload(8, subject.index);
         }
         else
         {
@@ -2758,9 +2757,9 @@ bool _magic_630_1129()
 
 
 // Draw Charge
-bool _magic_629()
+bool _magic_629(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2801,7 +2800,7 @@ bool _magic_629()
             }
             p = 1;
         }
-        animeload(8, cc);
+        animeload(8, subject.index);
         p = p * target_item.count;
         game_data.charge_power += p;
         txt(i18n::s.get(
@@ -2819,7 +2818,7 @@ bool _magic_629()
 
 
 // Change
-bool _magic_628()
+bool _magic_628(Character& subject)
 {
     if (tc == 0)
     {
@@ -2848,7 +2847,7 @@ bool _magic_628()
         flt(calcobjlv(cdata[tc].level + 3), Quality::good);
         chara_create(56, 0, -3, 0);
         chara_relocate(cdata.tmp(), cdata[tc], CharaRelocationMode::change);
-        cdata[tc].enemy_id = cc;
+        cdata[tc].enemy_id = subject.index;
         cdata[tc].is_quest_target() = false;
         quest_check();
     }
@@ -2866,9 +2865,9 @@ bool _magic_628()
 
 
 // Item: scroll of flying
-bool _magic_1140()
+bool _magic_1140(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2885,7 +2884,7 @@ bool _magic_1140()
         assert(target_item_opt);
         auto& target_item = *target_item_opt;
         save_set_autosave();
-        animeload(8, cc);
+        animeload(8, subject.index);
         if (!is_cursed(efstatus))
         {
             if (target_item.weight > 0)
@@ -2929,16 +2928,16 @@ bool _magic_1140()
         obvious = 0;
     }
 
-    chara_refresh(cc);
+    chara_refresh(subject.index);
     return true;
 }
 
 
 
 // Item: rod of alchemy
-bool _magic_1132(int& fltbk, int& valuebk)
+bool _magic_1132(Character& subject, int& fltbk, int& valuebk)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2966,7 +2965,7 @@ bool _magic_1132(int& fltbk, int& valuebk)
         assert(target_item_opt);
         auto& target_item = *target_item_opt;
         save_set_autosave();
-        animeload(8, cc);
+        animeload(8, subject.index);
         fltbk = (int)the_item_db[itemid2int(target_item.id)]->category;
         valuebk = calcitemvalue(target_item, 0);
         target_item.remove();
@@ -3089,12 +3088,12 @@ bool _magic_457_438()
 
 
 // Swarm
-bool _magic_631()
+bool _magic_631(Character& subject)
 {
     txt(i18n::s.get("core.magic.swarm"), Message::color{ColorIndex::blue});
     for (auto&& cnt : cdata.all())
     {
-        if (cdata[cc].state() != Character::State::alive)
+        if (subject.state() != Character::State::alive)
         {
             continue;
         }
@@ -3102,28 +3101,28 @@ bool _magic_631()
         {
             continue;
         }
-        if (cc == cnt.index)
+        if (subject.index == cnt.index)
         {
             continue;
         }
-        if (belong_to_same_team(cdata[cc], cnt))
+        if (belong_to_same_team(subject, cnt))
         {
             continue;
         }
         tc = cnt.index;
         dx = cdata[tc].position.x;
         dy = cdata[tc].position.y;
-        if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy) >
+        if (dist(subject.position.x, subject.position.y, dx, dy) >
             the_ability_db[631]->range % 1000 + 1)
         {
             continue;
         }
-        if (fov_los(cdata[cc].position.x, cdata[cc].position.y, dx, dy) == 0)
+        if (fov_los(subject.position.x, subject.position.y, dx, dy) == 0)
         {
             continue;
         }
         SwarmAnimation(cdata[tc].position).play();
-        try_to_melee_attack();
+        try_to_melee_attack(subject);
     }
     return true;
 }
@@ -3131,20 +3130,21 @@ bool _magic_631()
 
 
 // Drop Mine
-bool _magic_659()
+bool _magic_659(Character& subject)
 {
     if (map_data.type == mdata_t::MapType::world_map)
     {
         return true;
     }
-    if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y).feats != 0)
+    if (cell_data.at(subject.position.x, subject.position.y).feats != 0)
     {
         return true;
     }
-    cell_featset(cdata[cc].position.x, cdata[cc].position.y, 0, 14, 7, cc);
-    if (is_in_fov(cdata[cc]))
+    cell_featset(
+        subject.position.x, subject.position.y, 0, 14, 7, subject.index);
+    if (is_in_fov(subject))
     {
-        txt(i18n::s.get("core.magic.drop_mine", cdata[cc]));
+        txt(i18n::s.get("core.magic.drop_mine", subject));
     }
     return true;
 }
@@ -3152,7 +3152,7 @@ bool _magic_659()
 
 
 // Gravity
-bool _magic_466()
+bool _magic_466(Character& subject)
 {
     for (auto&& cnt : cdata.all())
     {
@@ -3160,7 +3160,7 @@ bool _magic_466()
         {
             continue;
         }
-        if (cc == cnt.index)
+        if (subject.index == cnt.index)
         {
             continue;
         }
@@ -3171,7 +3171,7 @@ bool _magic_466()
         tc = cnt.index;
         dx = cdata[tc].position.x;
         dy = cdata[tc].position.y;
-        if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy) > 4)
+        if (dist(subject.position.x, subject.position.y, dx, dy) > 4)
         {
             continue;
         }
@@ -3187,14 +3187,13 @@ bool _magic_466()
 
 
 // Mewmewmew!
-bool _magic_657()
+bool _magic_657(Character& subject)
 {
     txt(i18n::s.get("core.magic.mewmewmew"), Message::color{ColorIndex::blue});
-    animode = 0;
-    MiracleAnimation().play();
+    MiracleAnimation(MiracleAnimation::Mode::target_all, subject).play();
     for (auto&& cnt : cdata.all())
     {
-        if (cdata[cc].state() != Character::State::alive)
+        if (subject.state() != Character::State::alive)
         {
             continue;
         }
@@ -3202,12 +3201,12 @@ bool _magic_657()
         {
             continue;
         }
-        if (cc == cnt.index)
+        if (subject.index == cnt.index)
         {
             continue;
         }
         tc = cnt.index;
-        damage_hp(cdata[tc], 9999999, cc);
+        damage_hp(cdata[tc], 9999999, subject.index);
     }
     return true;
 }
@@ -3215,7 +3214,7 @@ bool _magic_657()
 
 
 // Meteor
-bool _magic_465()
+bool _magic_465(Character& subject)
 {
     txt(i18n::s.get("core.magic.meteor"), Message::color{ColorIndex::blue});
     MeteorAnimation().play();
@@ -3236,8 +3235,8 @@ bool _magic_465()
             if (cell_data.at(dx, dy).chara_index_plus_one != 0)
             {
                 tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
-                dmg = sdata(16, cc) * efp / 10;
-                damage_hp(cdata[tc], dmg, cc, 50, 1000);
+                dmg = sdata(16, subject.index) * efp / 10;
+                damage_hp(cdata[tc], dmg, subject.index, 50, 1000);
             }
         }
     }
@@ -3247,11 +3246,11 @@ bool _magic_465()
 
 
 // Cheer
-bool _magic_656()
+bool _magic_656(Character& subject)
 {
-    if (is_in_fov(cdata[cc]))
+    if (is_in_fov(subject))
     {
-        txt(i18n::s.get("core.magic.cheer.apply", cdata[cc]));
+        txt(i18n::s.get("core.magic.cheer.apply", subject));
     }
     for (auto&& cnt : cdata.all())
     {
@@ -3259,17 +3258,17 @@ bool _magic_656()
         {
             continue;
         }
-        if (cc == cnt.index)
+        if (subject.index == cnt.index)
         {
             continue;
         }
-        if (cc < 16)
+        if (subject.index < 16)
         {
             if (cnt.index >= 16)
             {
                 continue;
             }
-            else if (cdata[cc].relationship != cdata[tc].relationship)
+            else if (subject.relationship != cdata[tc].relationship)
             {
                 continue;
             }
@@ -3277,12 +3276,12 @@ bool _magic_656()
         tc = cnt.index;
         dx = cdata[tc].position.x;
         dy = cdata[tc].position.y;
-        if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy) >
+        if (dist(subject.position.x, subject.position.y, dx, dy) >
             the_ability_db[656]->range % 1000 + 1)
         {
             continue;
         }
-        if (fov_los(cdata[cc].position.x, cdata[cc].position.y, dx, dy) == 0)
+        if (fov_los(subject.position.x, subject.position.y, dx, dy) == 0)
         {
             continue;
         }
@@ -3292,10 +3291,18 @@ bool _magic_656()
                 Message::color{ColorIndex::blue});
         }
         buff_add(
-            cdata[tc], "core.speed", sdata(17, cc) * 5 + 50, 15, cdata[cc]);
+            cdata[tc],
+            "core.speed",
+            sdata(17, subject.index) * 5 + 50,
+            15,
+            subject);
         buff_add(
-            cdata[tc], "core.hero", sdata(17, cc) * 5 + 100, 60, cdata[cc]);
-        buff_add(cdata[tc], "core.contingency", 1500, 30, cdata[cc]);
+            cdata[tc],
+            "core.hero",
+            sdata(17, subject.index) * 5 + 100,
+            60,
+            subject);
+        buff_add(cdata[tc], "core.contingency", 1500, 30, subject);
     }
     return true;
 }
@@ -3329,13 +3336,13 @@ bool _magic_1131()
 
 
 // Eye of Ether
-bool _magic_633()
+bool _magic_633(Character& subject)
 {
     if (tc != 0)
     {
         return true;
     }
-    txt(i18n::s.get("core.magic.eye_of_ether", cdata[cc]),
+    txt(i18n::s.get("core.magic.eye_of_ether", subject),
         Message::color{ColorIndex::purple});
     modify_ether_disease_stage(100);
     return true;
@@ -3344,14 +3351,14 @@ bool _magic_633()
 
 
 // Eye of Dimness
-bool _magic_638_648()
+bool _magic_638_648(Character& subject)
 {
     if (efid == 648)
     {
         if (is_in_fov(cdata[tc]))
         {
-            txt(i18n::s.get("core.magic.insult.apply", cdata[cc], cdata[tc]));
-            if (cdata[cc].sex == 0)
+            txt(i18n::s.get("core.magic.insult.apply", subject, cdata[tc]));
+            if (subject.sex == 0)
             {
                 txt(i18n::s.get("core.magic.insult.man"),
                     Message::color{ColorIndex::cyan});
@@ -3367,7 +3374,7 @@ bool _magic_638_648()
     {
         if (is_in_fov(cdata[tc]))
         {
-            txt(i18n::s.get("core.magic.gaze", cdata[cc], cdata[tc]));
+            txt(i18n::s.get("core.magic.gaze", subject, cdata[tc]));
         }
     }
     status_ailment_damage(cdata[tc], StatusAilment::dimmed, 200);
@@ -3377,11 +3384,11 @@ bool _magic_638_648()
 
 
 // Insult
-bool _magic_652()
+bool _magic_652(Character& subject)
 {
     if (is_in_fov(cdata[tc]))
     {
-        txt(i18n::s.get("core.magic.gaze", cdata[cc], cdata[tc]));
+        txt(i18n::s.get("core.magic.gaze", subject, cdata[tc]));
     }
     damage_mp(cdata[tc], rnd(20) + 1);
     return true;
@@ -3390,7 +3397,7 @@ bool _magic_652()
 
 
 // Item: molotov
-bool _magic_1133()
+bool _magic_1133(Character& subject)
 {
     if (is_in_fov(cdata[tc]))
     {
@@ -3403,19 +3410,19 @@ bool _magic_1133()
         24,
         rnd(15) + 25,
         efp,
-        cc);
-    mapitem_fire(cdata[tc].position.x, cdata[tc].position.y);
+        subject.index);
+    mapitem_fire(subject, cdata[tc].position.x, cdata[tc].position.y);
     return true;
 }
 
 
 
 // Scavenge
-bool _magic_651()
+bool _magic_651(Character& subject)
 {
     if (is_in_fov(cdata[tc]))
     {
-        txt(i18n::s.get("core.magic.scavenge.apply", cdata[cc], cdata[tc]));
+        txt(i18n::s.get("core.magic.scavenge.apply", subject, cdata[tc]));
     }
     optional_ref<Item> eat_item_opt;
     for (auto&& item : inv.for_chara(cdata[tc]))
@@ -3460,7 +3467,7 @@ bool _magic_651()
     {
         if (is_in_fov(cdata[tc]))
         {
-            txt(i18n::s.get("core.magic.scavenge.rotten", cdata[cc], eat_item));
+            txt(i18n::s.get("core.magic.scavenge.rotten", subject, eat_item));
         }
         return true;
     }
@@ -3468,10 +3475,10 @@ bool _magic_651()
     if (is_in_fov(cdata[tc]))
     {
         snd("core.eat1");
-        txt(i18n::s.get("core.magic.scavenge.eats", cdata[cc], eat_item));
+        txt(i18n::s.get("core.magic.scavenge.eats", subject, eat_item));
     }
-    heal_hp(cdata[cc], cdata[cc].max_hp / 3);
-    activity_eating_finish(cdata[cc], eat_item);
+    heal_hp(subject, subject.max_hp / 3);
+    activity_eating_finish(subject, eat_item);
     refresh_burden_state();
     return true;
 }
@@ -3479,7 +3486,7 @@ bool _magic_651()
 
 
 // Wizard's Harvest
-bool _magic_464()
+bool _magic_464(Character& subject)
 {
     bool fastest = g_config.animation_wait() == 0;
     std::string messages;
@@ -3508,7 +3515,7 @@ bool _magic_464()
         }
         nostack = 1;
         if (const auto item =
-                itemcreate_extra_inv(item_id, cdata[cc].position, number))
+                itemcreate_extra_inv(item_id, subject.position, number))
         {
             const auto message =
                 i18n::s.get("core.magic.wizards_harvest", *item);
@@ -3572,10 +3579,10 @@ bool _magic_463()
 
 
 
-int _calc_ball_spell_range()
+int _calc_ball_spell_range(Character& subject)
 {
     int ret = the_ability_db[efid]->range % 1000 + 1;
-    if (debug::voldemort && cc == 0)
+    if (debug::voldemort && subject.index == 0)
     {
         ret *= 2;
     }
@@ -3588,11 +3595,13 @@ int _calc_ball_spell_range()
 
 
 
-bool _ball_spell_internal(std::stack<Character*>& bomb_chain)
+optional_ref<Character> _ball_spell_internal(
+    Character& subject,
+    std::stack<Character*>& bomb_chain)
 {
-    cdata[cc].will_explode_soon() = false;
+    subject.will_explode_soon() = false;
 
-    range_ = _calc_ball_spell_range();
+    range_ = _calc_ball_spell_range(subject);
 
     if (efid != 404 && efid != 637)
     {
@@ -3630,7 +3639,7 @@ bool _ball_spell_internal(std::stack<Character*>& bomb_chain)
             if (efid == 404)
             {
                 f = 0;
-                if (cc == 0 || cdata[cc].relationship >= 0)
+                if (subject.index == 0 || subject.relationship >= 0)
                 {
                     if (cdata[tc].relationship >= 0)
                     {
@@ -3658,7 +3667,7 @@ bool _ball_spell_internal(std::stack<Character*>& bomb_chain)
             if (efid == 637)
             {
                 f = 0;
-                if (cc == 0 || cdata[cc].relationship >= 0)
+                if (subject.index == 0 || subject.relationship >= 0)
                 {
                     if (cdata[tc].relationship >= 0)
                     {
@@ -3681,13 +3690,13 @@ bool _ball_spell_internal(std::stack<Character*>& bomb_chain)
                 }
                 continue;
             }
-            if (dx == cdata[cc].position.x && dy == cdata[cc].position.y)
+            if (dx == subject.position.x && dy == subject.position.y)
             {
                 continue;
             }
             if (game_data.mount != 0)
             {
-                if (game_data.mount == cc)
+                if (game_data.mount == subject.index)
                 {
                     if (tc == 0)
                     {
@@ -3697,19 +3706,19 @@ bool _ball_spell_internal(std::stack<Character*>& bomb_chain)
             }
             if (ele == 50)
             {
-                mapitem_fire(dx, dy);
+                mapitem_fire(subject, dx, dy);
             }
             if (ele == 51)
             {
                 mapitem_cold(dx, dy);
             }
-            if (cc == tc)
+            if (subject.index == tc)
             {
                 continue;
             }
             dmg = roll(dice1, dice2, bonus) * 100 /
                 (75 + dist(tlocx, tlocy, dx, dy) * 25);
-            if (calcmagiccontrol(cc, tc))
+            if (calcmagiccontrol(subject.index, tc))
             {
                 continue;
             }
@@ -3749,72 +3758,71 @@ bool _ball_spell_internal(std::stack<Character*>& bomb_chain)
                     txt(i18n::s.get("core.magic.ball.ally", cdata[tc]));
                 }
             }
-            damage_hp(cdata[tc], dmg, cc, ele, elep);
+            damage_hp(cdata[tc], dmg, subject.index, ele, elep);
         }
     }
 
     if (efid == 644)
     {
-        damage_hp(cdata[cc], 99999, -16);
+        damage_hp(subject, 99999, -16);
     }
 
     if (!bomb_chain.empty())
     {
-        const auto next_cc = bomb_chain.top();
+        auto& next_subject = *bomb_chain.top();
         bomb_chain.pop();
-        cc = next_cc->index;
-        tlocx = cdata[cc].position.x;
-        tlocy = cdata[cc].position.y;
-        if (cdata[cc].state() == Character::State::alive)
+        tlocx = next_subject.position.x;
+        tlocy = next_subject.position.y;
+        if (next_subject.state() == Character::State::alive)
         {
-            const auto damage = calc_skill_damage(efid, cc, efp);
+            const auto damage =
+                calc_skill_damage(efid, next_subject.index, efp);
             dice1 = damage->dice_x;
             dice2 = damage->dice_y;
             bonus = damage->damage_bonus;
             ele = damage->element;
             elep = damage->element_power;
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(next_subject))
             {
-                txt(i18n::s.get("core.magic.explosion.chain", cdata[cc]));
+                txt(i18n::s.get("core.magic.explosion.chain", next_subject));
             }
-            return true;
+            return next_subject;
         }
     }
 
-    return false;
+    return none;
 }
 
 
 
-void _ball_spell()
+void _ball_spell(Character& subject)
 {
-    std::stack<Character*> bomb_chian;
+    std::stack<Character*> bomb_chain;
 
-    ccbk = cc;
     if (efid == 644)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(subject))
         {
-            txt(i18n::s.get("core.magic.explosion.begins", cdata[cc]));
+            txt(i18n::s.get("core.magic.explosion.begins", subject));
         }
     }
 
-    while (_ball_spell_internal(bomb_chian))
-        ;
-
-    cc = ccbk;
+    optional_ref<Character> subject_ = subject;
+    while (subject_)
+    {
+        subject_ = _ball_spell_internal(*subject_, bomb_chain);
+    }
 }
 
 
 
-optional<bool> _proc_general_magic()
+optional<bool> _proc_general_magic(Character& subject)
 {
     int efbad = 0;
     int tcprev = 0;
     int telex = 0;
     int teley = 0;
     int efidprev = 0;
-    int ccprev = 0;
 
     f = 0;
     if (the_ability_db[efid]->ability_type / 1000 == 1)
@@ -3868,7 +3876,8 @@ optional<bool> _proc_general_magic()
         }
         if (efid == 625 || efid == 446)
         {
-            if ((tc == 0 && cc == 0) || cc == game_data.mount)
+            if ((tc == 0 && subject.index == 0) ||
+                subject.index == game_data.mount)
             {
                 if (game_data.mount != 0)
                 {
@@ -3882,7 +3891,7 @@ optional<bool> _proc_general_magic()
             buff_data.id,
             efp,
             buff_calc_duration(buff_data.id, efp),
-            cdata[cc]);
+            subject);
 
         if (efid == 447)
         {
@@ -3921,7 +3930,7 @@ optional<bool> _proc_general_magic()
         }
         return true;
     }
-    if (const auto damage = calc_skill_damage(efid, cc, efp))
+    if (const auto damage = calc_skill_damage(efid, subject.index, efp))
     {
         dice1 = damage->dice_x;
         dice2 = damage->dice_y;
@@ -3929,7 +3938,7 @@ optional<bool> _proc_general_magic()
         ele = damage->element;
         elep = damage->element_power;
     }
-    if (cc == 0)
+    if (subject.index == 0)
     {
         if (trait(165))
         {
@@ -3951,15 +3960,15 @@ optional<bool> _proc_general_magic()
     default: return none;
     case 10:
         RangedAttackAnimation(
-            cdata[cc].position,
+            subject.position,
             cdata[tc].position,
             RangedAttackAnimation::Type::distant_attack)
             .play();
-        try_to_melee_attack();
+        try_to_melee_attack(subject);
         return true;
     case 1: {
         int stat =
-            get_route(cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy);
+            get_route(subject.position.x, subject.position.y, tlocx, tlocy);
         if (stat == 0)
         {
             return true;
@@ -3967,11 +3976,11 @@ optional<bool> _proc_general_magic()
     }
         {
             int distance = the_ability_db[efid]->range % 1000 + 1;
-            BoltAnimation(cdata[cc].position, {tlocx, tlocy}, ele, distance)
+            BoltAnimation(subject.position, {tlocx, tlocy}, ele, distance)
                 .play();
         }
-        dx = cdata[cc].position.x;
-        dy = cdata[cc].position.y;
+        dx = subject.position.x;
+        dy = subject.position.y;
         for (int cnt = 0; cnt < 20; ++cnt)
         {
             int stat = route_info(dx, dy, cnt);
@@ -3983,18 +3992,18 @@ optional<bool> _proc_general_magic()
             {
                 continue;
             }
-            if (dist(dx, dy, cdata[cc].position.x, cdata[cc].position.y) >
+            if (dist(dx, dy, subject.position.x, subject.position.y) >
                 the_ability_db[efid]->range % 1000 + 1)
             {
                 break;
             }
-            if (dx == cdata[cc].position.x && dy == cdata[cc].position.y)
+            if (dx == subject.position.x && dy == subject.position.y)
             {
                 continue;
             }
             if (ele == 50)
             {
-                mapitem_fire(dx, dy);
+                mapitem_fire(subject, dx, dy);
             }
             if (ele == 51)
             {
@@ -4003,11 +4012,11 @@ optional<bool> _proc_general_magic()
             if (cell_data.at(dx, dy).chara_index_plus_one != 0)
             {
                 tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
-                if (cc != tc)
+                if (subject.index != tc)
                 {
                     if (game_data.mount != 0)
                     {
-                        if (game_data.mount == cc)
+                        if (game_data.mount == subject.index)
                         {
                             if (tc == 0)
                             {
@@ -4016,7 +4025,7 @@ optional<bool> _proc_general_magic()
                         }
                     }
                     dmg = roll(dice1, dice2, bonus);
-                    int stat = calcmagiccontrol(cc, tc);
+                    int stat = calcmagiccontrol(subject.index, tc);
                     if (stat == 1)
                     {
                         continue;
@@ -4035,15 +4044,15 @@ optional<bool> _proc_general_magic()
                             txt(i18n::s.get("core.magic.bolt.ally", cdata[tc]));
                         }
                     }
-                    damage_hp(cdata[tc], dmg, cc, ele, elep);
+                    damage_hp(cdata[tc], dmg, subject.index, ele, elep);
                 }
             }
         }
         return true;
-    case 3: _ball_spell(); return true;
+    case 3: _ball_spell(subject); return true;
     case 2:
         RangedAttackAnimation(
-            cdata[cc].position,
+            subject.position,
             cdata[tc].position,
             RangedAttackAnimation::Type::magic_arrow)
             .play();
@@ -4061,7 +4070,7 @@ optional<bool> _proc_general_magic()
                 txt(i18n::s.get("core.magic.arrow.ally", cdata[tc]));
             }
         }
-        damage_hp(cdata[tc], dmg, cc, ele, elep);
+        damage_hp(cdata[tc], dmg, subject.index, ele, elep);
         return true;
     case 4:
         if (efid == 400)
@@ -4106,80 +4115,80 @@ optional<bool> _proc_general_magic()
             .play();
         return true;
     case 6:
-        if (cdata[cc].special_attack_type != 0)
+        if (subject.special_attack_type != 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(subject))
             {
-                if (cc == 0)
+                if (subject.index == 0)
                 {
                     txt(i18n::s.get(
                         "core.magic.special_attack.self",
-                        cdata[cc],
+                        subject,
                         i18n::s.get_m(
                             "ability",
                             the_ability_db.get_id_from_legacy(efid)->get(),
                             "name"),
                         i18n::s.get_enum(
                             "core.ui.cast_style",
-                            cdata[cc].special_attack_type)));
+                            subject.special_attack_type)));
                 }
                 else
                 {
                     txt(i18n::s.get(
                         "core.magic.special_attack.other",
-                        cdata[cc],
+                        subject,
                         i18n::s.get_enum(
                             "core.ui.cast_style",
-                            cdata[cc].special_attack_type)));
+                            subject.special_attack_type)));
                 }
             }
         }
         else if (efid == 601)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(subject))
             {
                 if (tc >= 16)
                 {
                     game_data.proc_damage_events_flag = 2;
                     txt(i18n::s.get(
-                        "core.magic.sucks_blood.other", cdata[cc], cdata[tc]));
+                        "core.magic.sucks_blood.other", subject, cdata[tc]));
                 }
                 else
                 {
                     txt(i18n::s.get(
-                        "core.magic.sucks_blood.ally", cdata[cc], cdata[tc]));
+                        "core.magic.sucks_blood.ally", subject, cdata[tc]));
                 }
             }
         }
         else if (efid == 660)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(subject))
             {
                 txt(i18n::s.get("core.magic.disassembly"));
             }
         }
-        else if (is_in_fov(cdata[cc]))
+        else if (is_in_fov(subject))
         {
             if (tc >= 16)
             {
                 game_data.proc_damage_events_flag = 2;
                 txt(i18n::s.get(
                     "core.magic.touch.other",
-                    cdata[cc],
+                    subject,
                     cdata[tc],
                     elename(ele),
-                    _melee(2, cdata[cc].melee_attack_type),
-                    _melee(0, cdata[cc].melee_attack_type)));
+                    _melee(2, subject.melee_attack_type),
+                    _melee(0, subject.melee_attack_type)));
             }
             else
             {
                 txt(i18n::s.get(
                     "core.magic.touch.ally",
-                    cdata[cc],
+                    subject,
                     cdata[tc],
                     elename(ele),
-                    _melee(2, cdata[cc].melee_attack_type),
-                    _melee(1, cdata[cc].melee_attack_type)));
+                    _melee(2, subject.melee_attack_type),
+                    _melee(1, subject.melee_attack_type)));
             }
         }
         if (efid == 660)
@@ -4187,7 +4196,8 @@ optional<bool> _proc_general_magic()
             cdata[tc].hp = cdata[tc].max_hp / 12 + 1;
             return true;
         }
-        damage_hp(cdata[tc], roll(dice1, dice2, bonus), cc, ele, elep);
+        damage_hp(
+            cdata[tc], roll(dice1, dice2, bonus), subject.index, ele, elep);
         if (efid == 617)
         {
             status_ailment_damage(cdata[tc], StatusAilment::fear, elep);
@@ -4233,7 +4243,7 @@ optional<bool> _proc_general_magic()
         }
         return true;
     case 7:
-        if (cc == 0)
+        if (subject.index == 0)
         {
             if (game_data.crowd_density + 100 >= ELONA_MAX_OTHER_CHARACTERS)
             {
@@ -4243,7 +4253,7 @@ optional<bool> _proc_general_magic()
             }
         }
         p = 3;
-        efp = (efp / 25 + efp * efp / 10000 + cdata[cc].level) / 2;
+        efp = (efp / 25 + efp * efp / 10000 + subject.level) / 2;
         if (efp < 1)
         {
             efp = 1;
@@ -4301,7 +4311,7 @@ optional<bool> _proc_general_magic()
             {
                 if (efid != 643)
                 {
-                    if (chara->id == cdata[cc].id)
+                    if (chara->id == subject.id)
                     {
                         chara_vanquish(chara->index);
                         --cnt;
@@ -4310,7 +4320,7 @@ optional<bool> _proc_general_magic()
                 }
             }
         }
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(subject))
         {
             txt(i18n::s.get("core.magic.summon"));
         }
@@ -4326,13 +4336,13 @@ optional<bool> _proc_general_magic()
         }
         if (efid == 408)
         {
-            tc = cc;
+            tc = subject.index;
         }
         if (efid == 619)
         {
             telex = cdata[tc].position.x;
             teley = cdata[tc].position.y;
-            tc = cc;
+            tc = subject.index;
             if (game_data.mount != 0 && game_data.mount == tc)
             {
                 return true;
@@ -4340,8 +4350,8 @@ optional<bool> _proc_general_magic()
         }
         if (efid == 620)
         {
-            telex = cdata[cc].position.x;
-            teley = cdata[cc].position.y;
+            telex = subject.position.x;
+            teley = subject.position.y;
         }
         if (efid == 409 || efid == 635)
         {
@@ -4371,7 +4381,7 @@ optional<bool> _proc_general_magic()
         }
         if (efid == 635)
         {
-            if (enchantment_find(cdata[cc], 22))
+            if (enchantment_find(subject, 22))
             {
                 if (is_in_fov(cdata[tc]))
                 {
@@ -4380,7 +4390,8 @@ optional<bool> _proc_general_magic()
                 return true;
             }
             p = rnd_capped(cdata[tc].gold / 10 + 1);
-            if (rnd_capped(sdata(13, tc)) > rnd_capped(sdata(12, cc) * 4) ||
+            if (rnd_capped(sdata(13, tc)) >
+                    rnd_capped(sdata(12, subject.index) * 4) ||
                 cdata[tc].is_protected_from_thieves() == 1)
             {
                 txt(i18n::s.get(
@@ -4394,12 +4405,12 @@ optional<bool> _proc_general_magic()
                 cdata[tc].gold -= p;
                 txt(i18n::s.get(
                     "core.magic.teleport.suspicious_hand.succeeded",
-                    cdata[cc],
+                    subject,
                     cdata[tc],
                     p(0)));
-                earn_gold(cdata[cc], p);
+                earn_gold(subject, p);
             }
-            tc = cc;
+            tc = subject.index;
             if (game_data.mount != 0)
             {
                 if (game_data.mount == tc)
@@ -4450,23 +4461,23 @@ optional<bool> _proc_general_magic()
             {
                 if (efidprev == 619)
                 {
-                    if (is_in_fov(cdata[cc]))
+                    if (is_in_fov(subject))
                     {
                         txt(i18n::s.get(
                             "core.magic.teleport.shadow_step",
-                            cdata[cc],
+                            subject,
                             cdata[tcprev]));
                     }
                 }
                 else if (efidprev == 620)
                 {
-                    if (is_in_fov(cdata[cc]))
+                    if (is_in_fov(subject))
                     {
                         txt(i18n::s.get(
                             "core.magic.teleport.draw_shadow", cdata[tc]));
                     }
                 }
-                else if (is_in_fov(cdata[cc]))
+                else if (is_in_fov(subject))
                 {
                     if (efidprev == 635)
                     {
@@ -4479,11 +4490,8 @@ optional<bool> _proc_general_magic()
                             "core.magic.teleport.disappears", cdata[tc]));
                     }
                 }
-                cdata[cc].activity.finish();
-                ccprev = cc;
-                cc = tc;
-                move_character();
-                cc = ccprev;
+                subject.activity.finish();
+                move_character(cdata[tc]);
                 if (tc == 0)
                 {
                     update_screen();
@@ -4495,7 +4503,7 @@ optional<bool> _proc_general_magic()
         return true;
     case 8:
         int stat =
-            get_route(cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy);
+            get_route(subject.position.x, subject.position.y, tlocx, tlocy);
         if (stat == 0)
         {
             return true;
@@ -4514,30 +4522,27 @@ optional<bool> _proc_general_magic()
         {
             valn = i18n::s.get("core.magic.breath.no_element");
         }
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(subject))
         {
-            txt(i18n::s.get("core.magic.breath.bellows", cdata[cc], valn));
+            txt(i18n::s.get("core.magic.breath.bellows", subject, valn));
         }
-        dx = cdata[cc].position.x;
-        dy = cdata[cc].position.y;
-        breath_list();
-        BreathAnimation(cdata[cc].position, {tlocx, tlocy}, ele).play();
+        breath_list(subject.position);
+        BreathAnimation(subject.position, {tlocx, tlocy}, ele).play();
         for (int cnt = 0, cnt_end = (maxbreath); cnt < cnt_end; ++cnt)
         {
             dx = breathlist(0, cnt);
             dy = breathlist(1, cnt);
-            if (fov_los(cdata[cc].position.x, cdata[cc].position.y, dx, dy) ==
-                0)
+            if (fov_los(subject.position.x, subject.position.y, dx, dy) == 0)
             {
                 continue;
             }
-            if (dx == cdata[cc].position.x && dy == cdata[cc].position.y)
+            if (dx == subject.position.x && dy == subject.position.y)
             {
                 continue;
             }
             if (game_data.mount != 0)
             {
-                if (game_data.mount == cc)
+                if (game_data.mount == subject.index)
                 {
                     if (tc == 0)
                     {
@@ -4547,7 +4552,7 @@ optional<bool> _proc_general_magic()
             }
             if (ele == 50)
             {
-                mapitem_fire(dx, dy);
+                mapitem_fire(subject, dx, dy);
             }
             if (ele == 51)
             {
@@ -4556,7 +4561,7 @@ optional<bool> _proc_general_magic()
             if (cell_data.at(dx, dy).chara_index_plus_one != 0)
             {
                 tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
-                if (cc != tc)
+                if (subject.index != tc)
                 {
                     dmg = roll(dice1, dice2, bonus);
                     if (is_in_fov(cdata[tc]))
@@ -4574,7 +4579,7 @@ optional<bool> _proc_general_magic()
                                 "core.magic.breath.ally", cdata[tc]));
                         }
                     }
-                    damage_hp(cdata[tc], dmg, cc, ele, elep);
+                    damage_hp(cdata[tc], dmg, subject.index, ele, elep);
                 }
             }
         }
@@ -4584,16 +4589,21 @@ optional<bool> _proc_general_magic()
 
 
 
-bool _proc_magic(optional_ref<Item> efitem, int efid, int& fltbk, int& valuebk)
+bool _proc_magic(
+    Character& subject,
+    optional_ref<Item> efitem,
+    int efid,
+    int& fltbk,
+    int& valuebk)
 {
     switch (efid)
     {
-    case 636: return _magic_636();
+    case 636: return _magic_636(subject);
     case 1136: assert(efitem); return _magic_1136(*efitem);
     case 1135: return _magic_1135();
-    case 654: return _magic_654();
+    case 654: return _magic_654(subject);
     case 626: return _magic_626();
-    case 1101: return _magic_1101();
+    case 1101: return _magic_1101(subject);
     case 1102: return _magic_1102();
     case 1116: return _magic_1116();
     case 1103: return _magic_1103();
@@ -4601,22 +4611,22 @@ bool _proc_magic(optional_ref<Item> efitem, int efid, int& fltbk, int& valuebk)
     case 1147: return _magic_1147();
     case 1142: return _magic_1142();
     case 1130: return _magic_1130();
-    case 300: return _magic_300();
-    case 301: return _magic_301();
-    case 183: return _magic_183(efitem);
-    case 184: assert(efitem); return _magic_184(*efitem);
-    case 185: assert(efitem); return _magic_185(*efitem);
+    case 300: return _magic_300(subject);
+    case 301: return _magic_301(subject);
+    case 183: return _magic_183(subject, efitem);
+    case 184: assert(efitem); return _magic_184(subject, *efitem);
+    case 185: assert(efitem); return _magic_185(subject, *efitem);
     case 406:
-    case 407: return _magic_406_407();
+    case 407: return _magic_406_407(subject);
     case 1120: return _magic_1120();
     case 1117: return _magic_1117();
     case 632:
     case 454:
-    case 1144: return _magic_632_454_1144();
-    case 1121: return _magic_1121();
-    case 411: return _magic_411();
-    case 461: return _magic_461();
-    case 412: return _magic_412();
+    case 1144: return _magic_632_454_1144(subject);
+    case 1121: return _magic_1121(subject);
+    case 411: return _magic_411(subject);
+    case 461: return _magic_461(subject);
+    case 412: return _magic_412(subject);
     case 413: return _magic_413();
     case 1104: return _magic_1104();
     case 1143: return _magic_1143();
@@ -4629,10 +4639,10 @@ bool _proc_magic(optional_ref<Item> efitem, int efid, int& fltbk, int& valuebk)
     case 653: return _magic_653();
     case 430:
     case 429: return _magic_430_429();
-    case 658: return _magic_658();
+    case 658: return _magic_658(subject);
     case 440:
     case 439: return _magic_440_439();
-    case 441: return _magic_441();
+    case 441: return _magic_441(subject);
     case 1141: return _magic_1141();
     case 428: return _magic_428();
     case 621: return _magic_621();
@@ -4643,47 +4653,47 @@ bool _proc_magic(optional_ref<Item> efitem, int efid, int& fltbk, int& valuebk)
     case 1110: return _magic_1110();
     case 1112: return _magic_1112();
     case 645:
-    case 1114: return _magic_645_1114();
+    case 1114: return _magic_645_1114(subject);
     case 1118: return _magic_1118();
     case 1138:
     case 1123:
     case 1122:
-    case 1137: return _magic_1138_1123_1122_1137();
-    case 435: return _magic_435();
+    case 1137: return _magic_1138_1123_1122_1137(subject);
+    case 435: return _magic_435(subject);
     case 436:
     case 437:
     case 455:
     case 634:
-    case 456: return _magic_436_437_455_634_456();
-    case 1145: return _magic_1145();
-    case 49: assert(efitem); return _magic_49(*efitem);
+    case 456: return _magic_436_437_455_634_456(subject);
+    case 1145: return _magic_1145(subject);
+    case 49: assert(efitem); return _magic_49(subject, *efitem);
     case 21:
-    case 1127: return _magic_21_1127();
-    case 1128: return _magic_1128();
+    case 1127: return _magic_21_1127(subject);
+    case 1128: return _magic_1128(subject);
     case 1124:
-    case 1125: return _magic_1124_1125();
+    case 1125: return _magic_1124_1125(subject);
     case 630:
-    case 1129: return _magic_630_1129();
-    case 629: return _magic_629();
-    case 628: return _magic_628();
-    case 1140: return _magic_1140();
-    case 1132: return _magic_1132(fltbk, valuebk);
+    case 1129: return _magic_630_1129(subject);
+    case 629: return _magic_629(subject);
+    case 628: return _magic_628(subject);
+    case 1140: return _magic_1140(subject);
+    case 1132: return _magic_1132(subject, fltbk, valuebk);
     case 457:
     case 438: return _magic_457_438();
-    case 631: return _magic_631();
-    case 659: return _magic_659();
-    case 466: return _magic_466();
-    case 657: return _magic_657();
-    case 465: return _magic_465();
-    case 656: return _magic_656();
+    case 631: return _magic_631(subject);
+    case 659: return _magic_659(subject);
+    case 466: return _magic_466(subject);
+    case 657: return _magic_657(subject);
+    case 465: return _magic_465(subject);
+    case 656: return _magic_656(subject);
     case 1131: return _magic_1131();
-    case 633: return _magic_633();
+    case 633: return _magic_633(subject);
     case 638:
-    case 648: return _magic_638_648();
-    case 652: return _magic_652();
-    case 1133: return _magic_1133();
-    case 651: return _magic_651();
-    case 464: return _magic_464();
+    case 648: return _magic_638_648(subject);
+    case 652: return _magic_652(subject);
+    case 1133: return _magic_1133(subject);
+    case 651: return _magic_651(subject);
+    case 464: return _magic_464(subject);
     case 463: return _magic_463();
     default: return true;
     }
@@ -4696,7 +4706,7 @@ bool _proc_magic(optional_ref<Item> efitem, int efid, int& fltbk, int& valuebk)
 namespace elona
 {
 
-bool magic(optional_ref<Item> efitem)
+bool magic(Character& subject, optional_ref<Item> efitem)
 {
     int fltbk = 0;
     int valuebk = 0;
@@ -4717,7 +4727,7 @@ bool magic(optional_ref<Item> efitem)
     {
         if (efid < 661)
         {
-            if (const auto ret = _proc_general_magic())
+            if (const auto ret = _proc_general_magic(subject))
             {
                 return *ret;
             }
@@ -4735,7 +4745,7 @@ bool magic(optional_ref<Item> efitem)
         }
     }
 
-    return _proc_magic(efitem, efid, fltbk, valuebk);
+    return _proc_magic(subject, efitem, efid, fltbk, valuebk);
 }
 
 } // namespace elona

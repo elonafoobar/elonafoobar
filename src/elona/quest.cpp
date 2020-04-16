@@ -1229,6 +1229,7 @@ void quest_failed(int val0)
                                         efp,
                                         0);
                                     mapitem_fire(
+                                        cdata.player(),
                                         cdata[tc].position.x,
                                         cdata[tc].position.y);
                                     p = -9;

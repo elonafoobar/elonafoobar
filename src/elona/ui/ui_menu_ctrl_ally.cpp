@@ -112,7 +112,6 @@ bool UIMenuCtrlAlly::init()
     page = 0;
     pagesize = 16;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
     if (_operation == ControlAllyOperation::pet_arena)
     {

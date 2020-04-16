@@ -16,7 +16,7 @@ static void _populate_skill_list()
 {
     for (int cnt = 300; cnt < 400; ++cnt)
     {
-        if (sdata(cnt, cc) > 0)
+        if (sdata(cnt, cdata.player().index) > 0)
         {
             list(0, listmax) = cnt;
             list(1, listmax) =
@@ -43,7 +43,6 @@ bool UIMenuSkills::init()
     page = 0;
     pagesize = 16;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
     cs = commark(0) % 1000;
     page = commark(0) / 1000;

@@ -140,9 +140,9 @@ void _search_for_crystal()
 
 
 
-void _try_to_reveal_small_coin()
+void _try_to_reveal_small_coin(Character& chara)
 {
-    if (cdata[cc].position.x == x && cdata[cc].position.y == y)
+    if (chara.position.x == x && chara.position.y == y)
     {
         snd("core.ding2");
         txt(i18n::s.get("core.action.search.small_coin.find"));
@@ -152,7 +152,7 @@ void _try_to_reveal_small_coin()
     }
     else
     {
-        if (dist(cdata[cc].position.x, cdata[cc].position.y, x, y) > 2)
+        if (dist(chara.position.x, chara.position.y, x, y) > 2)
         {
             txt(i18n::s.get("core.action.search.small_coin.far"));
         }
@@ -165,19 +165,19 @@ void _try_to_reveal_small_coin()
 
 
 
-void _search_for_map_feats()
+void _search_for_map_feats(Character& chara)
 {
     cell_featread(x, y);
     refx = x;
     refy = y;
-    if (std::abs(cdata[cc].position.y - y) <= 1 &&
-        std::abs(cdata[cc].position.x - x) <= 1)
+    if (std::abs(chara.position.y - y) <= 1 &&
+        std::abs(chara.position.x - x) <= 1)
     {
         if (feat(1) == 14)
         {
             if (feat(0) == 0)
             {
-                int stat = try_to_reveal();
+                int stat = try_to_reveal(chara);
                 if (stat == 1)
                 {
                     discover_trap();
@@ -187,7 +187,7 @@ void _search_for_map_feats()
         }
         if (feat(1) == 22)
         {
-            int stat = try_to_reveal();
+            int stat = try_to_reveal(chara);
             if (stat == 1 || 0)
             {
                 discover_hidden_path();
@@ -199,32 +199,32 @@ void _search_for_map_feats()
     {
         if (game_data.current_map != mdata_t::MapId::show_house)
         {
-            _try_to_reveal_small_coin();
+            _try_to_reveal_small_coin(chara);
         }
     }
 }
 
 
 
-void _search_surroundings()
+void _search_surroundings(Character& chara)
 {
     for (int cnt = 0; cnt < 11; ++cnt)
     {
-        y = cdata[cc].position.y + cnt - 5;
+        y = chara.position.y + cnt - 5;
         if (y < 0 || y >= map_data.height)
         {
             continue;
         }
         for (int cnt = 0; cnt < 11; ++cnt)
         {
-            x = cdata[cc].position.x + cnt - 5;
+            x = chara.position.x + cnt - 5;
             if (x < 0 || x >= map_data.width)
             {
                 continue;
             }
             if (cell_data.at(x, y).feats != 0)
             {
-                _search_for_map_feats();
+                _search_for_map_feats(chara);
             }
         }
     }
@@ -243,54 +243,53 @@ void _proc_manis_disassembly(Character& chara)
 
 
 
-void _dig_material_spot()
+void _dig_material_spot(Character& chara)
 {
     rowactre(0) = 1;
-    rowactre(1) = cdata[cc].position.x;
-    rowactre(2) = cdata[cc].position.y;
+    rowactre(1) = chara.position.x;
+    rowactre(2) = chara.position.y;
     if (feat(1) == 24)
     {
-        spot_digging();
+        spot_digging(chara);
     }
     if (feat(1) == 27)
     {
-        spot_digging();
+        spot_digging(chara);
     }
     if (feat(1) == 26)
     {
-        spot_fishing(none);
+        spot_fishing(chara, none);
     }
     if (feat(1) == 25)
     {
-        spot_mining_or_wall();
+        spot_mining_or_wall(chara);
     }
     if (feat(1) == 28)
     {
-        spot_material();
+        spot_material(chara);
     }
 }
 
 
 
-TurnResult _pre_proc_movement_event()
+TurnResult _pre_proc_movement_event(Character& chara)
 {
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        if (264 <= cell_data
-                       .at(cdata[cc].next_position.x, cdata[cc].next_position.y)
+        if (264 <= cell_data.at(chara.next_position.x, chara.next_position.y)
                        .chip_id_actual &&
-            cell_data.at(cdata[cc].next_position.x, cdata[cc].next_position.y)
+            cell_data.at(chara.next_position.x, chara.next_position.y)
                     .chip_id_actual < 363)
         {
             return TurnResult::pc_turn_user_error;
         }
     }
-    return proc_movement_event();
+    return proc_movement_event(chara);
 }
 
 
 
-TurnResult _bump_into_character()
+TurnResult _bump_into_character(Character& chara)
 {
     tc = cellchara;
     if (cdata[tc].relationship >= 10 ||
@@ -303,7 +302,7 @@ TurnResult _bump_into_character()
         {
             if (map_data.type == mdata_t::MapType::world_map)
             {
-                return _pre_proc_movement_event();
+                return _pre_proc_movement_event(chara);
             }
             if (g_config.scroll())
             {
@@ -311,7 +310,7 @@ TurnResult _bump_into_character()
                 cdata.player().next_position.y = cdata[tc].position.y;
                 ui_scroll_screen();
             }
-            cell_swap(cc, tc);
+            cell_swap(chara.index, tc);
             txt(i18n::s.get("core.action.move.displace.text", cdata[tc]));
             if (cdata[tc].id == CharaId::rogue)
             {
@@ -319,15 +318,15 @@ TurnResult _bump_into_character()
                 {
                     if (cdata[tc].sleep == 0)
                     {
-                        p = rnd(clamp(cdata[cc].gold, 0, 20) + 1);
-                        if (cdata[cc].is_protected_from_thieves())
+                        p = rnd(clamp(chara.gold, 0, 20) + 1);
+                        if (chara.is_protected_from_thieves())
                         {
                             p = 0;
                         }
                         if (p != 0)
                         {
                             snd("core.getgold1");
-                            cdata[cc].gold -= p;
+                            chara.gold -= p;
                             earn_gold(cdata[tc], p);
                             txt(i18n::s.get(
                                 "core.action.move.displace.dialog"));
@@ -344,7 +343,7 @@ TurnResult _bump_into_character()
                     cdata[tc].activity.turn = 0;
                 }
             }
-            sense_map_feats_on_move();
+            sense_map_feats_on_move(chara);
             return TurnResult::turn_end;
         }
     }
@@ -373,7 +372,7 @@ TurnResult _bump_into_character()
             keybd_wait = 1;
             keybd_attacking = 1;
         }
-        try_to_melee_attack();
+        try_to_melee_attack(chara);
         return TurnResult::turn_end;
     }
     talk_to_npc();
@@ -531,9 +530,7 @@ optional<TurnResult> use_gene_machine()
     screenupdate = -1;
     update_screen();
     snd("core.pop2");
-    cc = original_character;
-    menu_character_sheet_investigate();
-    cc = 0;
+    menu_character_sheet_investigate(cdata[original_character]);
 
     return none;
 }
@@ -706,7 +703,7 @@ TurnResult do_interact_command()
     if (p == 1)
     {
         update_screen();
-        try_to_melee_attack();
+        try_to_melee_attack(cdata.player());
         return TurnResult::turn_end;
     }
     if (p == 2)
@@ -736,9 +733,7 @@ TurnResult do_interact_command()
     if (p == 6)
     {
         snd("core.pop2");
-        cc = tc;
-        menu_character_sheet_investigate();
-        cc = 0;
+        menu_character_sheet_investigate(cdata[tc]);
         return TurnResult::pc_turn_user_error;
     }
     if (p == 7)
@@ -816,7 +811,7 @@ TurnResult do_bash_command()
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    return do_bash();
+    return do_bash(cdata.player());
 }
 
 
@@ -840,7 +835,7 @@ TurnResult do_dig_command()
         if (tlocy == cdata.player().position.y)
         {
             rowactre = 0;
-            spot_digging();
+            spot_digging(cdata.player());
             return TurnResult::turn_end;
         }
     }
@@ -867,15 +862,15 @@ TurnResult do_search_command()
         _search_for_crystal();
     }
 
-    _search_surroundings();
+    _search_surroundings(cdata.player());
 
-    cell_featread(cdata[cc].position.x, cdata[cc].position.y);
+    cell_featread(cdata.player().position.x, cdata.player().position.y);
 
-    _proc_manis_disassembly(cdata[cc]);
+    _proc_manis_disassembly(cdata.player());
 
     if (feat(1) >= 24 && feat(1) <= 28)
     {
-        _dig_material_spot();
+        _dig_material_spot(cdata.player());
     }
     return TurnResult::turn_end;
 }
@@ -898,9 +893,9 @@ TurnResult do_pray_command()
 
 
 
-TurnResult do_throw_command_internal(Item& throw_item)
+TurnResult do_throw_command_internal(Character& thrower, Item& throw_item)
 {
-    if (cc == 0)
+    if (thrower.index == 0)
     {
         refresh_burden_state();
     }
@@ -1028,13 +1023,11 @@ TurnResult do_throw_command_internal(Item& throw_item)
                 }
                 if (tc >= 16)
                 {
-                    hostileaction(cc, tc);
+                    hostileaction(thrower.index, tc);
                 }
-                const auto ccbk = cc;
                 potionthrow = 100;
-                cc = tc;
-                item_db_on_drink(throw_item, itemid2int(throw_item.id));
-                cc = ccbk;
+                item_db_on_drink(
+                    cdata[tc], throw_item, itemid2int(throw_item.id));
                 return TurnResult::turn_end;
             }
             if (throw_item.id == ItemId::handful_of_snow)
@@ -1080,16 +1073,16 @@ TurnResult do_throw_command_internal(Item& throw_item)
                 }
                 return TurnResult::turn_end;
             }
-            efp = 50 + sdata(111, cc) * 10;
+            efp = 50 + sdata(111, thrower.index) * 10;
             if (throw_item.id == ItemId::bottle_of_sulfuric)
             {
-                mef_add(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, cc);
+                mef_add(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, thrower.index);
                 return TurnResult::turn_end;
             }
             if (throw_item.id == ItemId::molotov)
             {
-                mef_add(tlocx, tlocy, 5, 24, rnd(15) + 25, efp, cc);
-                mapitem_fire(tlocx, tlocy);
+                mef_add(tlocx, tlocy, 5, 24, rnd(15) + 25, efp, thrower.index);
+                mapitem_fire(thrower, tlocx, tlocy);
                 return TurnResult::turn_end;
             }
             mef_add(
@@ -1099,7 +1092,7 @@ TurnResult do_throw_command_internal(Item& throw_item)
                 27,
                 -1,
                 efp,
-                cc,
+                thrower.index,
                 itemid2int(throw_item.id),
                 static_cast<int>(throw_item.curse_state), // TODO
                 throw_item.color);
@@ -1121,14 +1114,15 @@ TurnResult do_throw_command_internal(Item& throw_item)
 
 
 
-TurnResult do_throw_command(Item& throw_item)
+TurnResult do_throw_command(Character& thrower, Item& throw_item)
 {
-    if (is_in_fov(cdata[cc]))
+    if (is_in_fov(thrower))
     {
-        txt(i18n::s.get("core.action.throw.execute", cdata[cc], throw_item));
+        txt(i18n::s.get("core.action.throw.execute", thrower, throw_item));
     }
-    if (dist(cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy) * 4 >
-            rnd_capped(sdata(111, cc) + 10) + sdata(111, cc) / 4 ||
+    if (dist(thrower.position.x, thrower.position.y, tlocx, tlocy) * 4 >
+            rnd_capped(sdata(111, thrower.index) + 10) +
+                sdata(111, thrower.index) / 4 ||
         rnd(10) == 0)
     {
         x = tlocx + rnd(2) - rnd(2);
@@ -1152,7 +1146,7 @@ TurnResult do_throw_command(Item& throw_item)
         }
     }
     ThrowingObjectAnimation(
-        {tlocx, tlocy}, cdata[cc].position, throw_item.image, throw_item.color)
+        {tlocx, tlocy}, thrower.position, throw_item.image, throw_item.color)
         .play();
 
     if (throw_item.id == ItemId::monster_ball)
@@ -1164,18 +1158,18 @@ TurnResult do_throw_command(Item& throw_item)
             slot->position.y = tlocy;
             slot->set_number(1);
             throw_item.modify_number(-1);
-            return do_throw_command_internal(*slot);
+            return do_throw_command_internal(thrower, *slot);
         }
         else
         {
             throw_item.modify_number(-1);
-            return do_throw_command_internal(throw_item);
+            return do_throw_command_internal(thrower, throw_item);
         }
     }
     else
     {
         throw_item.modify_number(-1);
-        return do_throw_command_internal(throw_item);
+        return do_throw_command_internal(thrower, throw_item);
     }
 }
 
@@ -1204,7 +1198,7 @@ TurnResult do_close_command()
         return TurnResult::pc_turn_user_error;
     }
     cell_featset(x, y, tile_doorclosed, 21, -1, -1);
-    txt(i18n::s.get("core.action.close.execute", cdata[cc]));
+    txt(i18n::s.get("core.action.close.execute", cdata.player()));
     return TurnResult::turn_end;
 }
 
@@ -1216,13 +1210,13 @@ TurnResult do_change_ammo_command()
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (cdata[cc].body_parts[cnt] % 10000 == 0)
+        if (cdata.player().body_parts[cnt] % 10000 == 0)
         {
             continue;
         }
-        if (cdata[cc].body_parts[cnt] / 10000 == 11)
+        if (cdata.player().body_parts[cnt] / 10000 == 11)
         {
-            ammo_opt = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
+            ammo_opt = inv[cdata.player().body_parts[cnt] % 10000 - 1];
             break;
         }
     }
@@ -1377,8 +1371,8 @@ TurnResult do_offer_command(Item& offering)
         {
             god_modify_piety(i * 5);
             cdata.player().praying_point += i * 30;
-            animode = 100;
-            MiracleAnimation().play();
+            MiracleAnimation(MiracleAnimation::Mode::target_one, cdata.player())
+                .play();
             snd("core.pray2");
             if (altar.param1 != 0)
             {
@@ -1438,7 +1432,7 @@ TurnResult do_look_command()
     page = 0;
     pagesize = 16;
     cs_bk = -1;
-    build_target_list();
+    build_target_list(cdata.player());
     if (listmax == 0)
     {
         txt(i18n::s.get("core.action.look.find_nothing"),
@@ -1495,16 +1489,16 @@ TurnResult do_look_command()
                 {
                     i = p;
                     get_route(
-                        cdata[cc].position.x,
-                        cdata[cc].position.y,
+                        cdata.player().position.x,
+                        cdata.player().position.y,
                         cdata[list(0, p)].position.x,
                         cdata[list(0, p)].position.y);
                     dx = (tlocx - scx) * inf_tiles + inf_screenx;
                     dy = (tlocy - scy) * inf_tiles + inf_screeny;
                     if (maxroute != 0)
                     {
-                        dx = cdata[cc].position.x;
-                        dy = cdata[cc].position.y;
+                        dx = cdata.player().position.x;
+                        dy = cdata.player().position.y;
                         for (int cnt = 0; cnt < 100; ++cnt)
                         {
                             int stat = route_info(dx, dy, cnt);
@@ -1777,7 +1771,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
         }
         if (mix_target.body_part != 0)
         {
-            create_pcpic(cdata[cc]);
+            create_pcpic(cdata.player());
         }
         return TurnResult::turn_end;
     }
@@ -1844,7 +1838,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
                     "core.action.dip.result.becomes_blessed", mix_target),
                 Message::color{ColorIndex::green});
             mix_target.curse_state = CurseState::blessed;
-            chara_refresh(cc);
+            chara_refresh(cdata.player().index);
             return TurnResult::turn_end;
         }
         if (is_cursed(mix_item.curse_state))
@@ -1853,7 +1847,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
                     "core.action.dip.result.becomes_cursed", mix_target),
                 Message::color{ColorIndex::purple});
             mix_target.curse_state = CurseState::cursed;
-            chara_refresh(cc);
+            chara_refresh(cdata.player().index);
             return TurnResult::turn_end;
         }
     }
@@ -1867,9 +1861,9 @@ TurnResult do_use_command(Item& use_item)
 {
     screenupdate = -1;
     update_screen();
-    tc = cc;
-    tlocx = cdata[cc].position.x;
-    tlocy = cdata[cc].position.y;
+    tc = cdata.player().index;
+    tlocx = cdata.player().position.x;
+    tlocy = cdata.player().position.y;
     auto item_data = the_item_db[itemid2int(use_item.id)];
 
     if (item_data->on_use_callback)
@@ -1878,7 +1872,7 @@ TurnResult do_use_command(Item& use_item)
             *item_data->on_use_callback,
             false,
             lua::handle(use_item),
-            lua::handle(cdata[cc]));
+            lua::handle(cdata.player()));
 
         if (success)
         {
@@ -1931,7 +1925,7 @@ TurnResult do_use_command(Item& use_item)
             return TurnResult::pc_turn_user_error;
         }
         game_data.activity_about_to_start = 100;
-        activity_others(cdata[cc], use_item);
+        activity_others(cdata.player(), use_item);
         return TurnResult::turn_end;
     }
     if (use_item.id == ItemId::red_treasure_machine ||
@@ -2048,7 +2042,7 @@ TurnResult do_use_command(Item& use_item)
             }
             randomize();
         }
-        chara_refresh(cc);
+        chara_refresh(cdata.player().index);
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -2056,8 +2050,8 @@ TurnResult do_use_command(Item& use_item)
     switch (use_item.function)
     {
     case 24:
-        x = cdata[cc].position.x;
-        y = cdata[cc].position.y;
+        x = cdata.player().position.x;
+        y = cdata.player().position.y;
         if (map_data.type == mdata_t::MapType::world_map)
         {
             txt(i18n::s.get("core.action.use.mine.cannot_use_here"));
@@ -2070,7 +2064,7 @@ TurnResult do_use_command(Item& use_item)
             return TurnResult::pc_turn_user_error;
         }
         use_item.modify_number(-1);
-        cell_featset(x, y, 0, 14, 7, cc);
+        cell_featset(x, y, 0, 14, 7, cdata.player().index);
         txt(i18n::s.get("core.action.use.mine.you_set_up"));
         snd("core.build1");
         break;
@@ -2180,18 +2174,18 @@ TurnResult do_use_command(Item& use_item)
     }
     case 15:
         efid = 184;
-        magic(use_item);
+        magic(cdata.player(), use_item);
         break;
     case 16:
         efid = 185;
-        magic(use_item);
+        magic(cdata.player(), use_item);
         break;
     case 17:
         efid = 183;
-        magic(use_item);
+        magic(cdata.player(), use_item);
         break;
     case 14:
-        if (cc == 0)
+        if (cdata.player().index == 0)
         {
             if (use_item.number() < 5)
             {
@@ -2203,10 +2197,11 @@ TurnResult do_use_command(Item& use_item)
         }
         flt();
         itemcreate_extra_inv(541, cdata.player().position, 0);
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(cdata.player()))
         {
             snd("core.snow");
-            txt(i18n::s.get("core.action.use.snow.make_snowman", cdata[cc]));
+            txt(i18n::s.get(
+                "core.action.use.snow.make_snowman", cdata.player()));
         }
         break;
     case 13:
@@ -2224,7 +2219,7 @@ TurnResult do_use_command(Item& use_item)
         chara_refresh(0);
         break;
     case 9: {
-        if (read_textbook(use_item))
+        if (read_textbook(cdata.player(), use_item))
         {
             return TurnResult::turn_end;
         }
@@ -2451,7 +2446,7 @@ TurnResult do_use_command(Item& use_item)
                 return TurnResult::pc_turn_user_error;
             }
             game_data.activity_about_to_start = 101;
-            activity_others(cdata[cc], use_item);
+            activity_others(cdata.player(), use_item);
             return TurnResult::turn_end;
         }
         if (area_data[game_data.current_map].id ==
@@ -2472,7 +2467,7 @@ TurnResult do_use_command(Item& use_item)
             }
         }
         game_data.activity_about_to_start = 102;
-        activity_others(cdata[cc], use_item);
+        activity_others(cdata.player(), use_item);
         break;
     case 11:
         if (moneybox(use_item.param2) > cdata.player().gold)
@@ -2496,7 +2491,7 @@ TurnResult do_use_command(Item& use_item)
     case 20:
         efid = 458;
         efp = 400;
-        magic();
+        magic(cdata.player());
         break;
     case 47: txt(i18n::s.get("core.action.use.summoning_crystal.use")); break;
     case 22:
@@ -2517,7 +2512,7 @@ TurnResult do_use_command(Item& use_item)
         snd("core.build1");
         efid = 49;
         efp = 100;
-        magic(use_item);
+        magic(cdata.player(), use_item);
         break;
     case 21:
         txt(i18n::s.get("core.action.use.hammer.use", use_item));
@@ -2526,14 +2521,14 @@ TurnResult do_use_command(Item& use_item)
         fixmaterial = use_item.material;
         efid = 21;
         efp = 500;
-        magic();
+        magic(cdata.player());
         break;
     case 25:
         txt(i18n::s.get("core.action.use.unicorn_horn.use", use_item));
         use_item.modify_number(-1);
         efid = 637;
         efp = 500;
-        magic();
+        magic(cdata.player());
         break;
     case 26:
         txt(i18n::s.get("core.action.use.statue.activate", use_item));
@@ -2548,7 +2543,7 @@ TurnResult do_use_command(Item& use_item)
             Message::color{ColorIndex::orange});
         efid = 637;
         efp = 5000;
-        magic();
+        magic(cdata.player());
         break;
     case 43:
         txt(i18n::s.get("core.action.use.statue.activate", use_item));
@@ -2619,7 +2614,13 @@ TurnResult do_use_command(Item& use_item)
         txt(i18n::s.get("core.action.use.nuke.set_up"));
         snd("core.build1");
         mef_add(
-            cdata[cc].position.x, cdata[cc].position.y, 7, 632, 10, 100, cc);
+            cdata.player().position.x,
+            cdata.player().position.y,
+            7,
+            632,
+            10,
+            100,
+            cdata.player().index);
         break;
     case 48:
         if (game_data.current_map != mdata_t::MapId::show_house ||
@@ -2643,15 +2644,15 @@ TurnResult do_use_command(Item& use_item)
         use_item.modify_number(-1);
         txt(i18n::s.get("core.action.use.secret_treasure.use"));
         animeload(10, 0);
-        chara_refresh(cc);
+        chara_refresh(cdata.player().index);
         break;
     case 30:
         txt(i18n::s.get("core.action.use.statue.activate", use_item));
         efid = use_item.param1;
         efp = use_item.param2;
-        tc = cc;
+        tc = cdata.player().index;
         efstatus = CurseState::none;
-        magic();
+        magic(cdata.player());
         break;
     case 41:
         if (game_data
@@ -2706,8 +2707,8 @@ TurnResult do_use_command(Item& use_item)
         new_ally_joins(cdata.tmp());
         break;
     case 31:
-        x = cdata[cc].position.x;
-        y = cdata[cc].position.y;
+        x = cdata.player().position.x;
+        y = cdata.player().position.y;
         cell_featread(x, y);
         if (feat(1) != 29)
         {
@@ -2763,7 +2764,13 @@ TurnResult do_use_command(Item& use_item)
     case 39:
         txt(i18n::s.get("core.action.use.whistle.use"),
             Message::color{ColorIndex::cyan});
-        make_sound(cdata[cc].position.x, cdata[cc].position.y, 10, 1, 1, cc);
+        make_sound(
+            cdata.player().position.x,
+            cdata.player().position.y,
+            10,
+            1,
+            1,
+            cdata.player().index);
         break;
     case 37:
         tcgdeck();
@@ -2980,7 +2987,7 @@ TurnResult do_open_command(Item& box, bool play_sound)
         {
             open_box(box);
         }
-        item_stack(cc, box);
+        item_stack(cdata.player().index, box);
     }
     screenupdate = -1;
     update_screen();
@@ -3004,11 +3011,11 @@ TurnResult do_use_stairs_command(int val0)
             return step_into_gate(*moon_gate);
         }
     }
-    cell_featread(cdata[cc].position.x, cdata[cc].position.y);
+    cell_featread(cdata.player().position.x, cdata.player().position.y);
     movelevelbystairs = 0;
     if (val0 == 1)
     {
-        if (mapitemfind(cdata[cc].position, ItemId::kotatsu))
+        if (mapitemfind(cdata.player().position, ItemId::kotatsu))
         {
             txt(i18n::s.get("core.action.use_stairs.kotatsu.prompt"));
             if (!yes_no())
@@ -3025,7 +3032,7 @@ TurnResult do_use_stairs_command(int val0)
     {
         if (val0 == 1)
         {
-            if (mapitemfind(cdata[cc].position, ItemId::downstairs))
+            if (mapitemfind(cdata.player().position, ItemId::downstairs))
             {
                 if (game_data.current_dungeon_level >=
                     area_data[game_data.current_map].deepest_level)
@@ -3041,7 +3048,7 @@ TurnResult do_use_stairs_command(int val0)
         }
         if (val0 == 2)
         {
-            if (mapitemfind(cdata[cc].position, ItemId::upstairs))
+            if (mapitemfind(cdata.player().position, ItemId::upstairs))
             {
                 if (game_data.current_dungeon_level <=
                     area_data[game_data.current_map].danger_level)
@@ -3139,8 +3146,8 @@ TurnResult do_use_stairs_command(int val0)
             }
             snd("core.chest1");
             cell_featset(
-                cdata[cc].position.x,
-                cdata[cc].position.y,
+                cdata.player().position.x,
+                cdata.player().position.y,
                 tile_downstairs,
                 11);
             return TurnResult::turn_end;
@@ -3174,8 +3181,8 @@ TurnResult do_use_stairs_command(int val0)
             {
                 txt(i18n::s.get("core.action.use_stairs.lost_balance"));
                 damage_hp(
-                    cdata[cc],
-                    cdata[cc].max_hp *
+                    cdata.player(),
+                    cdata.player().max_hp *
                             (cdata.player().inventory_weight * 10 /
                                  cdata.player().max_inventory_weight +
                              10) /
@@ -3208,14 +3215,14 @@ TurnResult do_use_stairs_command(int val0)
 TurnResult do_movement_command()
 {
     f = 0;
-    if (cdata[cc].dimmed != 0)
+    if (cdata.player().dimmed != 0)
     {
-        if (cdata[cc].dimmed + 10 > rnd(60))
+        if (cdata.player().dimmed + 10 > rnd(60))
         {
             f = 1;
         }
     }
-    if (cdata[cc].drunk != 0)
+    if (cdata.player().drunk != 0)
     {
         if (rnd(5) == 0)
         {
@@ -3224,10 +3231,10 @@ TurnResult do_movement_command()
             f = 1;
         }
     }
-    if (cdata[cc].confused != 0 || f == 1)
+    if (cdata.player().confused != 0 || f == 1)
     {
-        cdata[cc].next_position.x = cdata[cc].position.x + rnd(3) - 1;
-        cdata[cc].next_position.y = cdata[cc].position.y + rnd(3) - 1;
+        cdata.player().next_position.x = cdata.player().position.x + rnd(3) - 1;
+        cdata.player().next_position.y = cdata.player().position.y + rnd(3) - 1;
     }
     if (game_data.mount != 0)
     {
@@ -3242,7 +3249,7 @@ TurnResult do_movement_command()
             }
         }
     }
-    cell_check(cdata[cc].next_position.x, cdata[cc].next_position.y);
+    cell_check(cdata.player().next_position.x, cdata.player().next_position.y);
     if (cdata.player().inventory_weight_type >= 4)
     {
         txt(i18n::s.get("core.action.move.carry_too_much"),
@@ -3252,7 +3259,7 @@ TurnResult do_movement_command()
     }
     if (cellchara != -1 && cellchara != 0)
     {
-        return _bump_into_character();
+        return _bump_into_character(cdata.player());
     }
     else
     {
@@ -3275,17 +3282,17 @@ TurnResult do_movement_command()
     }
     if (cellaccess == 1)
     {
-        return _pre_proc_movement_event();
+        return _pre_proc_movement_event(cdata.player());
     }
     if (map_data.type == mdata_t::MapType::shelter ||
         (game_data.current_dungeon_level == 1 &&
          map_data.type != mdata_t::MapType::world_map &&
          !mdata_t::is_nefia(map_data.type)))
     {
-        if (cdata[cc].next_position.x < 0 ||
-            cdata[cc].next_position.x > map_data.width - 1 ||
-            cdata[cc].next_position.y < 0 ||
-            cdata[cc].next_position.y > map_data.height - 1)
+        if (cdata.player().next_position.x < 0 ||
+            cdata.player().next_position.x > map_data.width - 1 ||
+            cdata.player().next_position.y < 0 ||
+            cdata.player().next_position.y > map_data.height - 1)
         {
             txt(i18n::s.get("core.action.move.leave.prompt", mdatan(0)));
             if (map_data.type == mdata_t::MapType::temporary)
@@ -3313,7 +3320,7 @@ TurnResult do_movement_command()
     {
         if (cellfeat == 21)
         {
-            return proc_movement_event();
+            return proc_movement_event(cdata.player());
         }
         input_halt_input(HaltInput::force);
         if (cellfeat == 23)
@@ -3344,7 +3351,7 @@ TurnResult do_movement_command()
 
 
 
-TurnResult do_read_command(Item& item)
+TurnResult do_read_command(Character& reader, Item& item)
 {
     if (item.id == ItemId::recipe)
     {
@@ -3355,7 +3362,7 @@ TurnResult do_read_command(Item& item)
         }
     }
     efid = 0;
-    item_db_on_read(item, itemid2int(item.id));
+    item_db_on_read(reader, item, itemid2int(item.id));
     if (efid == 1115)
     {
         return build_new_building(item);
@@ -3365,9 +3372,9 @@ TurnResult do_read_command(Item& item)
 
 
 
-TurnResult do_eat_command(Item& food)
+TurnResult do_eat_command(Character& eater, Item& food)
 {
-    if (cc == 0)
+    if (eater.index == 0)
     {
         if (!cargocheck(food))
         {
@@ -3383,26 +3390,25 @@ TurnResult do_eat_command(Item& food)
     else if (itemusingfind(food) != -1)
     {
         tc = itemusingfind(food);
-        if (tc != cc)
+        if (tc != eater.index)
         {
             cdata[tc].activity.finish();
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(eater))
             {
-                txt(i18n::s.get(
-                    "core.action.eat.snatches", cdata[cc], cdata[tc]));
+                txt(i18n::s.get("core.action.eat.snatches", eater, cdata[tc]));
             }
         }
     }
-    cdata[cc].emotion_icon = 116;
-    activity_eating(cdata[cc], food);
+    eater.emotion_icon = 116;
+    activity_eating(eater, food);
     return TurnResult::turn_end;
 }
 
 
 
-TurnResult do_drink_command(Item& potion)
+TurnResult do_drink_command(Character& chara, Item& potion)
 {
-    item_db_on_drink(potion, itemid2int(potion.id));
+    item_db_on_drink(chara, potion, itemid2int(potion.id));
     return TurnResult::turn_end;
 }
 
@@ -3411,7 +3417,7 @@ TurnResult do_drink_command(Item& potion)
 TurnResult do_zap_command(Item& rod)
 {
     item_db_on_zap(rod, itemid2int(rod.id));
-    int stat = do_zap(rod);
+    int stat = do_zap(cdata.player(), rod);
     if (stat == 0)
     {
         update_screen();
@@ -3424,7 +3430,7 @@ TurnResult do_zap_command(Item& rod)
 
 TurnResult do_rest_command()
 {
-    do_rest();
+    do_rest(cdata.player());
     return TurnResult::turn_end;
 }
 
@@ -3432,8 +3438,7 @@ TurnResult do_rest_command()
 
 TurnResult do_fire_command()
 {
-    cc = 0;
-    int stat = find_enemy_target();
+    int stat = find_enemy_target(cdata.player());
     if (stat == 0)
     {
         return TurnResult::pc_turn_user_error;
@@ -3447,7 +3452,7 @@ TurnResult do_fire_command()
             return TurnResult::pc_turn_user_error;
         }
     }
-    const auto result = can_do_ranged_attack();
+    const auto result = can_do_ranged_attack(cdata.player());
     if (result.type == -1)
     {
         txt(i18n::s.get("core.action.ranged.equip.need_weapon"),
@@ -3469,7 +3474,7 @@ TurnResult do_fire_command()
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    do_ranged_attack(result.weapon, result.ammo);
+    do_ranged_attack(cdata.player(), result.weapon, result.ammo);
     return TurnResult::turn_end;
 }
 
@@ -3606,7 +3611,7 @@ TurnResult do_get_command()
     }
 
     in = inv[item_index].number();
-    int stat = pick_up_item(inv[item_index]).type;
+    int stat = pick_up_item(cdata.player().index, inv[item_index]).type;
     if (stat == 1 || stat == -1)
     {
         return TurnResult::turn_end;
@@ -3622,8 +3627,8 @@ TurnResult do_get_command()
 
 TurnResult do_cast_command()
 {
-    tc = cc;
-    int stat = do_cast_magic();
+    tc = cdata.player().index;
+    int stat = do_cast_magic(cdata.player());
     if (stat == 0)
     {
         return TurnResult::pc_turn_user_error;
@@ -3655,7 +3660,7 @@ TurnResult do_short_cut_command(int sc_)
     efid = game_data.skill_shortcuts.at(sc_);
     if (efid >= 300 && efid < 400)
     {
-        return do_use_magic();
+        return do_use_magic(cdata.player());
     }
     if (efid >= 600)
     {
@@ -3675,7 +3680,7 @@ TurnResult do_short_cut_command(int sc_)
                 return TurnResult::pc_turn_user_error;
             }
         }
-        return do_use_magic();
+        return do_use_magic(cdata.player());
     }
     if (efid >= 400)
     {
@@ -3725,7 +3730,8 @@ TurnResult do_exit_command()
         {
             save_game(save_game_no_message);
             txt(i18n::s.get("core.action.exit.saved"));
-            txt(i18n::s.get("core.action.exit.you_close_your_eyes", cdata[cc]));
+            txt(i18n::s.get(
+                "core.action.exit.you_close_your_eyes", cdata.player()));
             msg_halt();
             update_screen();
         }
@@ -3777,16 +3783,16 @@ int ask_direction_to_close()
 
 
 
-int try_to_cast_spell()
+int try_to_cast_spell(Character& caster)
 {
     int r4 = 0;
     f = 1;
-    tc = cc;
-    if (cdata[cc].blind != 0)
+    tc = caster.index;
+    if (caster.blind != 0)
     {
         f = 0;
     }
-    if (cdata[cc].confused != 0 || cdata[cc].dimmed != 0)
+    if (caster.confused != 0 || caster.dimmed != 0)
     {
         if (rnd(4) != 0)
         {
@@ -3797,13 +3803,15 @@ int try_to_cast_spell()
     {
         if (r3 == 0)
         {
-            r4 = sdata(16, cc);
+            r4 = sdata(16, caster.index);
         }
         else
         {
-            r4 = sdata(the_ability_db[r3]->related_basic_attribute, cc);
+            r4 = sdata(
+                the_ability_db[r3]->related_basic_attribute, caster.index);
         }
-        if (rnd_capped(sdata(150, cc) * r4 * 4 + 250) < rnd_capped(r2 + 1))
+        if (rnd_capped(sdata(150, caster.index) * r4 * 4 + 250) <
+            rnd_capped(r2 + 1))
         {
             if (rnd(7) == 0)
             {
@@ -3838,41 +3846,40 @@ int try_to_cast_spell()
     }
     if (rnd(4) == 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(caster))
         {
-            txt(i18n::s.get(
-                "core.misc.fail_to_cast.mana_is_absorbed", cdata[cc]));
+            txt(i18n::s.get("core.misc.fail_to_cast.mana_is_absorbed", caster));
         }
-        if (cc == 0)
+        if (caster.index == 0)
         {
-            damage_mp(cdata[cc], cdata[cc].max_mp);
+            damage_mp(caster, caster.max_mp);
         }
         else
         {
-            damage_mp(cdata[cc], cdata[cc].max_mp / 3);
+            damage_mp(caster, caster.max_mp / 3);
         }
         return 0;
     }
     if (rnd(4) == 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(caster))
         {
-            if (cdata[cc].confused != 0)
+            if (caster.confused != 0)
             {
                 txt(i18n::s.get(
-                    "core.misc.fail_to_cast.is_confused_more", cdata[cc]));
+                    "core.misc.fail_to_cast.is_confused_more", caster));
             }
             else
             {
                 txt(i18n::s.get("core.misc.fail_to_cast.too_difficult"));
             }
         }
-        status_ailment_damage(cdata[cc], StatusAilment::confused, 100);
+        status_ailment_damage(caster, StatusAilment::confused, 100);
         return 0;
     }
     if (rnd(4) == 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(caster))
         {
             txt(i18n::s.get("core.misc.fail_to_cast.creatures_are_summoned"));
         }
@@ -3880,10 +3887,10 @@ int try_to_cast_spell()
         {
             flt(calcobjlv(cdata.player().level * 3 / 2 + 3),
                 calcfixlv(Quality::bad));
-            if (const auto chara = chara_create(
-                    -1, 0, cdata[cc].position.x, cdata[cc].position.y))
+            if (const auto chara =
+                    chara_create(-1, 0, caster.position.x, caster.position.y))
             {
-                if (cdata[cc].relationship <= -3)
+                if (caster.relationship <= -3)
                 {
                     chara->relationship = -1;
                     chara->original_relationship = -1;
@@ -3892,25 +3899,24 @@ int try_to_cast_spell()
         }
         return 0;
     }
-    if (is_in_fov(cdata[cc]))
+    if (is_in_fov(caster))
     {
-        txt(i18n::s.get(
-            "core.misc.fail_to_cast.dimension_door_opens", cdata[cc]));
+        txt(i18n::s.get("core.misc.fail_to_cast.dimension_door_opens", caster));
     }
-    tc = cc;
+    tc = caster.index;
     efid = 408;
-    magic();
+    magic(caster);
     return 0;
 }
 
 
 
-int try_to_reveal()
+int try_to_reveal(Character& chara)
 {
-    if (rnd_capped(sdata(159, cc) * 15 + 20 + sdata(13, cc)) >
+    if (rnd_capped(sdata(159, chara.index) * 15 + 20 + sdata(13, chara.index)) >
         rnd_capped(game_data.current_dungeon_level * 8 + 60))
     {
-        chara_gain_exp_detection(cdata[cc]);
+        chara_gain_exp_detection(chara);
         return 1;
     }
     return 0;
@@ -3918,15 +3924,16 @@ int try_to_reveal()
 
 
 
-int can_evade_trap()
+int can_evade_trap(Character& chara)
 {
     if (feat(2) == 7)
     {
         return 0;
     }
-    if (cc < 16)
+    if (chara.index < 16)
     {
-        if (rnd_capped(refdiff + 1) < sdata(13, cc) + sdata(159, cc) * 4)
+        if (rnd_capped(refdiff + 1) <
+            sdata(13, chara.index) + sdata(159, chara.index) * 4)
         {
             return 1;
         }
@@ -3940,12 +3947,12 @@ int can_evade_trap()
 
 
 
-int try_to_disarm_trap()
+int try_to_disarm_trap(Character& chara)
 {
-    if (rnd_capped(sdata(175, cc) * 15 + 20 + sdata(12, cc)) >
+    if (rnd_capped(sdata(175, chara.index) * 15 + 20 + sdata(12, chara.index)) >
         rnd_capped(game_data.current_dungeon_level * 12 + 100))
     {
-        chara_gain_exp_disarm_trap(cdata[cc]);
+        chara_gain_exp_disarm_trap(chara);
         return 1;
     }
     return 0;
@@ -4005,9 +4012,9 @@ TurnResult step_into_gate(Item& moon_gate)
 
 
 
-TurnResult do_use_magic()
+TurnResult do_use_magic(Character& caster)
 {
-    int stat = do_magic_attempt();
+    int stat = do_magic_attempt(caster);
     if (stat == 0)
     {
         update_screen();
@@ -4053,8 +4060,8 @@ TurnResult do_gatcha(Item& gatcha_machine)
             const auto gatcha_ball_id =
                 gatcha_machine.id == ItemId::red_treasure_machine ? 415 : 416;
             flt();
-            if (const auto item =
-                    itemcreate_extra_inv(gatcha_ball_id, cdata[cc].position, 0))
+            if (const auto item = itemcreate_extra_inv(
+                    gatcha_ball_id, cdata.player().position, 0))
             {
                 item->param2 = 0;
             }
@@ -4071,7 +4078,7 @@ TurnResult do_gatcha(Item& gatcha_machine)
 
 
 
-bool read_textbook(Item& textbook)
+bool read_textbook(Character& doer, Item& textbook)
 {
     if (textbook.id == ItemId::textbook)
     {
@@ -4085,7 +4092,7 @@ bool read_textbook(Item& textbook)
         }
     }
     game_data.activity_about_to_start = 104;
-    activity_others(cdata[cc], textbook);
+    activity_others(doer, textbook);
     return true;
 }
 
@@ -4125,26 +4132,26 @@ void disarm_trap(Character& chara, int x, int y)
 
 
 
-void do_rest()
+void do_rest(Character& chara)
 {
-    if (!cdata[cc].activity)
+    if (!chara.activity)
     {
-        cdata[cc].activity.type = Activity::Type::sleep;
-        cdata[cc].activity.turn = 50;
+        chara.activity.type = Activity::Type::sleep;
+        chara.activity.turn = 50;
         txt(i18n::s.get("core.activity.rest.start"));
         update_screen();
         return;
     }
-    if (cdata[cc].activity.turn > 0)
+    if (chara.activity.turn > 0)
     {
-        if (cdata[cc].activity.turn % 2 == 0)
+        if (chara.activity.turn % 2 == 0)
         {
-            heal_sp(cdata[cc], 1);
+            heal_sp(chara, 1);
         }
-        if (cdata[cc].activity.turn % 3 == 0)
+        if (chara.activity.turn % 3 == 0)
         {
-            heal_hp(cdata[cc], 1);
-            heal_mp(cdata[cc], 1);
+            heal_hp(chara, 1);
+            heal_mp(chara, 1);
         }
         return;
     }
@@ -4162,21 +4169,21 @@ void do_rest()
         if (f == 1)
         {
             txt(i18n::s.get("core.activity.rest.drop_off_to_sleep"));
-            cdata[cc].activity.item = -1;
+            chara.activity.item = -1;
             sleep_start(none);
-            cdata[cc].activity.finish();
+            chara.activity.finish();
             return;
         }
     }
     txt(i18n::s.get("core.activity.rest.finish"));
-    cdata[cc].activity.finish();
+    chara.activity.finish();
 }
 
 
 
-int decode_book(Item& book)
+int decode_book(Character& reader, Item& book)
 {
-    if (!cdata[cc].activity)
+    if (!reader.activity)
     {
         if (book.id == ItemId::ancient_book)
         {
@@ -4186,15 +4193,15 @@ int decode_book(Item& book)
                 return 0;
             }
         }
-        if (cdata[cc].blind != 0)
+        if (reader.blind != 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(reader))
             {
-                txt(i18n::s.get("core.action.read.cannot_see", cdata[cc]));
+                txt(i18n::s.get("core.action.read.cannot_see", reader));
             }
             return 0;
         }
-        cdata[cc].activity.type = Activity::Type::read;
+        reader.activity.type = Activity::Type::read;
         if (book.id == ItemId::recipe)
         {
             p = 50;
@@ -4207,16 +4214,16 @@ int decode_book(Item& book)
         {
             p = the_ability_db[efid]->difficulty;
         }
-        cdata[cc].activity.turn = p / (2 + sdata(150, 0)) + 1;
-        cdata[cc].activity.item = book.index;
-        if (is_in_fov(cdata[cc]))
+        reader.activity.turn = p / (2 + sdata(150, 0)) + 1;
+        reader.activity.item = book.index;
+        if (is_in_fov(reader))
         {
-            txt(i18n::s.get("core.activity.read.start", cdata[cc], book));
+            txt(i18n::s.get("core.activity.read.start", reader, book));
         }
         item_separate(book);
         return 0;
     }
-    if (cdata[cc].activity.turn > 0)
+    if (reader.activity.turn > 0)
     {
         chara_gain_exp_literacy(cdata.player());
         if (book.id == ItemId::recipe)
@@ -4241,10 +4248,10 @@ int decode_book(Item& book)
         {
             r2 = r2 * 150 / 100;
         }
-        int stat = try_to_cast_spell();
+        int stat = try_to_cast_spell(reader);
         if (stat == 0)
         {
-            cdata[cc].activity.finish();
+            reader.activity.finish();
             --book.count;
             if (book.count < 0)
             {
@@ -4253,7 +4260,7 @@ int decode_book(Item& book)
             if (book.count == 0)
             {
                 book.modify_number(-1);
-                if (is_in_fov(cdata[cc]))
+                if (is_in_fov(reader))
                 {
                     txt(i18n::s.get("core.action.read.book.falls_apart", book));
                 }
@@ -4261,26 +4268,26 @@ int decode_book(Item& book)
         }
         return 0;
     }
-    if (is_in_fov(cdata[cc]))
+    if (is_in_fov(reader))
     {
-        txt(i18n::s.get("core.activity.read.finish", cdata[cc], book));
+        txt(i18n::s.get("core.activity.read.finish", reader, book));
     }
     if (book.id == ItemId::recipe)
     {
         if (book.param1 == 0)
         {
-            cdata[cc].activity.finish();
+            reader.activity.finish();
             return 1;
         }
         txt(i18n::s.get("core.action.read.recipe.learned", book));
         ++recipememory(book.subname);
         item_identify(book, IdentifyState::partly);
         book.modify_number(-1);
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(reader))
         {
             txt(i18n::s.get("core.action.read.book.falls_apart", book));
         }
-        cdata[cc].activity.finish();
+        reader.activity.finish();
         return 1;
     }
     if (book.id == ItemId::ancient_book)
@@ -4295,10 +4302,12 @@ int decode_book(Item& book)
     else
     {
         chara_gain_skill(
-            cdata[cc],
+            reader,
             efid,
             1,
-            (rnd(51) + 50) * (90 + sdata(165, cc) + (sdata(165, cc) > 0) * 20) /
+            (rnd(51) + 50) *
+                    (90 + sdata(165, reader.index) +
+                     (sdata(165, reader.index) > 0) * 20) /
                     clamp((100 + spell((efid - 400)) / 2), 50, 1000) +
                 1);
         chara_gain_exp_memorization(cdata.player(), efid);
@@ -4318,25 +4327,25 @@ int decode_book(Item& book)
         if (book.count == 0)
         {
             book.modify_number(-1);
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(reader))
             {
                 txt(i18n::s.get("core.action.read.book.falls_apart", book));
             }
         }
     }
-    cdata[cc].activity.finish();
+    reader.activity.finish();
     return 1;
 }
 
 
 
-int read_normal_book(Item& book)
+int read_normal_book(Character& reader, Item& book)
 {
-    if (cdata[cc].blind != 0)
+    if (reader.blind != 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(reader))
         {
-            txt(i18n::s.get("core.action.read.cannot_see", cdata[cc]));
+            txt(i18n::s.get("core.action.read.cannot_see", reader));
         }
         return 0;
     }
@@ -4348,7 +4357,7 @@ int read_normal_book(Item& book)
     }
     if (book.id == ItemId::textbook)
     {
-        return read_textbook(book);
+        return read_textbook(reader, book);
     }
     if (book.id == ItemId::book_of_rachel)
     {
@@ -4356,7 +4365,7 @@ int read_normal_book(Item& book)
         txt(i18n::s.get("core.action.read.book.book_of_rachel"));
         return 1;
     }
-    tc = cc;
+    tc = reader.index;
     item_identify(book, IdentifyState::partly);
     show_book_window(book);
     return 1;
@@ -4400,16 +4409,14 @@ int calcmagiccontrol(int caster_chara_index, int target_chara_index)
 
 
 
-int do_cast_magic()
+int do_cast_magic(Character& caster)
 {
     int spellbk = 0;
     spellbk = efid;
-    ccbk = cc;
-    int stat = do_cast_magic_attempt();
+    int stat = do_cast_magic_attempt(caster);
     if (stat == 1)
     {
-        cc = ccbk;
-        chara_gain_exp_casting(cdata[cc], spellbk);
+        chara_gain_exp_casting(caster, spellbk);
         return 1;
     }
     return 0;
@@ -4417,15 +4424,15 @@ int do_cast_magic()
 
 
 
-int do_cast_magic_attempt()
+int do_cast_magic_attempt(Character& caster)
 {
     int mp = 0;
     efsource = 3;
     efstatus = CurseState::none;
-    efp = calcspellpower(efid, cc);
-    if (cc == 0)
+    efp = calcspellpower(efid, caster.index);
+    if (caster.index == 0)
     {
-        if (calcspellcostmp(efid, cc) > cdata[cc].mp)
+        if (calcspellcostmp(efid, caster.index) > caster.mp)
         {
             if (!g_config.skip_overcasting_warning())
             {
@@ -4441,17 +4448,17 @@ int do_cast_magic_attempt()
         screenupdate = -1;
         update_screen();
     }
-    int stat = prompt_magic_location();
+    int stat = prompt_magic_location(caster);
     if (stat == 0)
     {
         efsource = 0;
         return 0;
     }
-    if (cc != 0)
+    if (caster.index != 0)
     {
         if (the_ability_db[efid]->ability_type == 7)
         {
-            if (cdata[cc].relationship == 10 ||
+            if (caster.relationship == 10 ||
                 game_data.current_map == mdata_t::MapId::pet_arena)
             {
                 efsource = 0;
@@ -4465,37 +4472,37 @@ int do_cast_magic_attempt()
         }
     }
 
-    if (cc == 0)
+    if (caster.index == 0)
     {
-        spell(efid - 400) -= calcspellcoststock(efid, cc);
+        spell(efid - 400) -= calcspellcoststock(efid, caster.index);
         if (spell(efid - 400) < 0)
         {
             spell(efid - 400) = 0;
         }
     }
-    mp = calcspellcostmp(efid, cc);
-    if (cc == 0)
+    mp = calcspellcostmp(efid, caster.index);
+    if (caster.index == 0)
     {
         if (cdata.player().god_id == core_god::ehekatl)
         {
             mp = rnd(mp * 140 / 100 + 1) + 1;
         }
     }
-    damage_mp(cdata[cc], mp);
-    if (cdata[cc].state() != Character::State::alive)
+    damage_mp(caster, mp);
+    if (caster.state() != Character::State::alive)
     {
         efsource = 0;
         return 1;
     }
 
-    if (cdata[cc].confused != 0 || cdata[cc].dimmed != 0)
+    if (caster.confused != 0 || caster.dimmed != 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(caster))
         {
-            txt(i18n::s.get("core.action.cast.confused", cdata[cc]));
+            txt(i18n::s.get("core.action.cast.confused", caster));
         }
         const auto tcbk = tc(0);
-        int stat = try_to_cast_spell();
+        int stat = try_to_cast_spell(caster);
         tc = tcbk;
         if (stat == 0)
         {
@@ -4503,44 +4510,44 @@ int do_cast_magic_attempt()
             return 1;
         }
     }
-    else if (is_in_fov(cdata[cc]))
+    else if (is_in_fov(caster))
     {
-        if (cc == 0)
+        if (caster.index == 0)
         {
             txt(i18n::s.get(
                 "core.action.cast.self",
-                cdata[cc],
+                caster,
                 i18n::s.get_m(
                     "ability",
                     the_ability_db.get_id_from_legacy(efid)->get(),
                     "name"),
                 i18n::s.get_enum(
-                    "core.ui.cast_style", cdata[cc].special_attack_type)));
+                    "core.ui.cast_style", caster.special_attack_type)));
         }
         else
         {
             txt(i18n::s.get(
                 "core.action.cast.other",
-                cdata[cc],
+                caster,
                 i18n::s.get_enum(
-                    "core.ui.cast_style", cdata[cc].special_attack_type)));
+                    "core.ui.cast_style", caster.special_attack_type)));
         }
     }
-    if (buff_has(cdata[cc], "core.mist_of_silence"))
+    if (buff_has(caster, "core.mist_of_silence"))
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(caster))
         {
             txt(i18n::s.get("core.action.cast.silenced"));
         }
         efsource = 0;
         return 1;
     }
-    if (rnd(100) >= calcspellfail(efid, cc))
+    if (rnd(100) >= calcspellfail(efid, caster.index))
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(caster))
         {
-            txt(i18n::s.get("core.action.cast.fail", cdata[cc]));
-            FailureToCastAnimation(cdata[cc].position).play();
+            txt(i18n::s.get("core.action.cast.fail", caster));
+            FailureToCastAnimation(caster.position).play();
         }
         efsource = 0;
         return 1;
@@ -4551,13 +4558,13 @@ int do_cast_magic_attempt()
         efsource = 0;
         return 1;
     }
-    efp = calcspellpower(efid, cc);
-    if (const auto spell_enhancement = enchantment_find(cdata[cc], 34))
+    efp = calcspellpower(efid, caster.index);
+    if (const auto spell_enhancement = enchantment_find(caster, 34))
     {
         efp = efp * (100 + *spell_enhancement / 10) / 100;
     }
     rapidmagic = 0;
-    if (cdata[cc].can_cast_rapid_magic() &&
+    if (caster.can_cast_rapid_magic() &&
         the_ability_db[efid]->ability_type == 2)
     {
         rapidmagic = 1 + (rnd(3) != 0) + (rnd(2) != 0);
@@ -4566,18 +4573,18 @@ int do_cast_magic_attempt()
     {
         for (int cnt = 0, cnt_end = (rapidmagic); cnt < cnt_end; ++cnt)
         {
-            magic();
+            magic(caster);
             if (cdata[tc].state() != Character::State::alive)
             {
-                int stat = find_enemy_target();
+                int stat = find_enemy_target(caster);
                 if (stat == 0)
                 {
                     break;
                 }
                 else
                 {
-                    tc = cdata[cc].enemy_id;
-                    if (relationbetween(cc, tc) != -3)
+                    tc = caster.enemy_id;
+                    if (relationbetween(caster.index, tc) != -3)
                     {
                         break;
                     }
@@ -4588,18 +4595,18 @@ int do_cast_magic_attempt()
     }
     else
     {
-        magic();
+        magic(caster);
     }
     return 1;
 }
 
 
 
-int drink_potion(optional_ref<Item> potion)
+int drink_potion(Character& chara, optional_ref<Item> potion)
 {
     assert(potionspill || potion);
 
-    tc = cc;
+    tc = chara.index;
     efsource = 4;
     if (potionspill || potionthrow)
     {
@@ -4618,7 +4625,7 @@ int drink_potion(optional_ref<Item> potion)
             txt(i18n::s.get("core.action.drink.potion", cdata[tc], *potion));
         }
     }
-    magic();
+    magic(chara);
     if (potionspill || potionthrow)
     {
         potionspill = 0;
@@ -4651,7 +4658,7 @@ int drink_potion(optional_ref<Item> potion)
 
 
 
-int drink_well(Item& well)
+int drink_well(Character& chara, Item& well)
 {
     if (well.param1 < -5 || well.param3 >= 20 ||
         (well.id == ItemId::holy_well && game_data.holy_well_count <= 0))
@@ -4661,32 +4668,30 @@ int drink_well(Item& well)
         return 1;
     }
     item_separate(well);
-    snd_at("core.drink1", cdata[cc].position);
+    snd_at("core.drink1", chara.position);
     const auto valn = itemname(well);
-    txt(i18n::s.get("core.action.drink.well.draw", cdata[cc], valn));
-    tc = cc;
+    txt(i18n::s.get("core.action.drink.well.draw", chara, valn));
+    tc = chara.index;
     p = rnd(100);
     for (int cnt = 0; cnt < 1; ++cnt)
     {
-        if (cc != 0)
+        if (chara.index != 0)
         {
             if (rnd(15) == 0)
             {
                 txt(i18n::s.get(
-                    "core.action.drink.well.effect.falls.text", cdata[cc]));
+                    "core.action.drink.well.effect.falls.text", chara));
                 txt(i18n::s.get(
-                        "core.action.drink.well.effect.falls.dialog",
-                        cdata[cc]),
+                        "core.action.drink.well.effect.falls.dialog", chara),
                     Message::color{ColorIndex::cyan});
-                if (cdata[cc].is_floating() == 1 && cdata[cc].gravity == 0)
+                if (chara.is_floating() == 1 && chara.gravity == 0)
                 {
                     txt(i18n::s.get(
-                        "core.action.drink.well.effect.falls.floats",
-                        cdata[cc]));
+                        "core.action.drink.well.effect.falls.floats", chara));
                 }
                 else
                 {
-                    damage_hp(cdata[cc], 9999, -1);
+                    damage_hp(chara, 9999, -1);
                 }
                 break;
             }
@@ -4696,7 +4701,7 @@ int drink_well(Item& well)
             if (rnd(2) == 0)
             {
                 efid = 1113;
-                magic();
+                magic(chara);
                 break;
             }
         }
@@ -4707,35 +4712,35 @@ int drink_well(Item& well)
             {
                 efid = 1112;
                 efp = 100;
-                magic();
+                magic(chara);
                 break;
             }
             if (p == 1)
             {
                 efid = 1110;
                 efp = 100;
-                magic();
+                magic(chara);
                 break;
             }
             if (p == 2)
             {
                 efid = 1111;
                 efp = 100;
-                magic();
+                magic(chara);
                 break;
             }
             if (p == 3)
             {
                 efid = 1109;
                 efp = 100;
-                magic();
+                magic(chara);
                 break;
             }
             if (p == 4)
             {
                 efid = 1108;
                 efp = 100;
-                magic();
+                magic(chara);
                 break;
             }
         }
@@ -4744,10 +4749,9 @@ int drink_well(Item& well)
             flt();
             itemcreate_extra_inv(
                 54,
-                cdata[cc].position,
-                rnd_capped(sdata(159, cc) / 2 * 50 + 100) + 1);
-            txt(i18n::s.get(
-                "core.action.drink.well.effect.finds_gold", cdata[cc]));
+                chara.position,
+                rnd_capped(sdata(159, chara.index) / 2 * 50 + 100) + 1);
+            txt(i18n::s.get("core.action.drink.well.effect.finds_gold", chara));
             break;
         }
         if (p > 45)
@@ -4755,26 +4759,26 @@ int drink_well(Item& well)
             p = rnd(8) + 10;
             if (rnd(5) > 2)
             {
-                chara_gain_fixed_skill_exp(cdata[cc], p, 1000);
+                chara_gain_fixed_skill_exp(chara, p, 1000);
             }
             else
             {
-                chara_gain_fixed_skill_exp(cdata[cc], p, -1000);
+                chara_gain_fixed_skill_exp(chara, p, -1000);
             }
             break;
         }
         if (p > 40)
         {
-            if (cdata[cc].level < 5)
+            if (chara.level < 5)
             {
                 break;
             }
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                    "core.action.drink.well.effect.pregnancy", cdata[cc]));
+                    "core.action.drink.well.effect.pregnancy", chara));
             }
-            tc = cc;
+            tc = chara.index;
             get_pregnant();
             break;
         }
@@ -4783,22 +4787,22 @@ int drink_well(Item& well)
             txt(i18n::s.get("core.action.drink.well.effect.monster"));
             for (int cnt = 0, cnt_end = (1 + rnd(3)); cnt < cnt_end; ++cnt)
             {
-                flt(calcobjlv(cdata[cc].level * 3 / 2 + 3),
+                flt(calcobjlv(chara.level * 3 / 2 + 3),
                     calcfixlv(Quality::bad));
-                chara_create(-1, 0, cdata[cc].position.x, cdata[cc].position.y);
+                chara_create(-1, 0, chara.position.x, chara.position.y);
             }
             break;
         }
         if (p > 33)
         {
             efid = 1113;
-            magic();
+            magic(chara);
             break;
         }
         if (p > 20)
         {
             efid = 454;
-            magic();
+            magic(chara);
             break;
         }
         if (p == 0)
@@ -4812,21 +4816,21 @@ int drink_well(Item& well)
             }
             ++game_data.wish_count;
             efid = 441;
-            magic();
+            magic(chara);
             break;
         }
-        if (cc == 0)
+        if (chara.index == 0)
         {
             txt(i18n::s.get("core.action.drink.well.effect.default"));
         }
     }
-    if (cc != 0)
+    if (chara.index != 0)
     {
-        cdata[cc].nutrition += 4000;
+        chara.nutrition += 4000;
     }
     else
     {
-        cdata[cc].nutrition += 500;
+        chara.nutrition += 500;
     }
     if (well.id == ItemId::holy_well)
     {
@@ -4852,46 +4856,46 @@ int drink_well(Item& well)
 
 
 
-int read_scroll(Item& scroll)
+int read_scroll(Character& reader, Item& scroll)
 {
-    tc = cc;
-    tlocx = cdata[cc].position.x;
-    tlocy = cdata[cc].position.y;
+    tc = reader.index;
+    tlocx = reader.position.x;
+    tlocy = reader.position.y;
     efstatus = scroll.curse_state;
     efsource = 2;
-    if (cdata[cc].blind != 0)
+    if (reader.blind != 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(reader))
         {
-            txt(i18n::s.get("core.action.read.cannot_see", cdata[cc]));
+            txt(i18n::s.get("core.action.read.cannot_see", reader));
         }
         efsource = 0;
         return 0;
     }
-    if (cdata[cc].dimmed != 0 || cdata[cc].confused != 0)
+    if (reader.dimmed != 0 || reader.confused != 0)
     {
         if (rnd(4) != 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(reader))
             {
                 txt(i18n::s.get(
-                    "core.action.read.scroll.dimmed_or_confused", cdata[cc]));
+                    "core.action.read.scroll.dimmed_or_confused", reader));
             }
             efsource = 0;
             return 0;
         }
     }
-    if (is_in_fov(cdata[cc]))
+    if (is_in_fov(reader))
     {
-        txt(i18n::s.get("core.action.read.scroll.execute", cdata[cc], scroll));
+        txt(i18n::s.get("core.action.read.scroll.execute", reader, scroll));
     }
     if (scroll.id != ItemId::treasure_map)
     {
         scroll.modify_number(-1);
-        chara_gain_skill_exp(cdata[cc], 150, 25, 2);
+        chara_gain_skill_exp(reader, 150, 25, 2);
     }
-    magic(scroll);
-    if (cc == 0)
+    magic(reader, scroll);
+    if (reader.index == 0)
     {
         if (obvious == 1)
         {
@@ -4922,7 +4926,7 @@ bool do_zap_internal(Character& doer, Item& rod)
     }
     efsource = 1;
 
-    int stat = prompt_magic_location();
+    int stat = prompt_magic_location(doer);
     if (stat == 0)
     {
         efsource = 0;
@@ -4983,7 +4987,7 @@ bool do_zap_internal(Character& doer, Item& rod)
 
     if (f == 1 || rod.id == ItemId::rod_of_wishing || doer.index != 0)
     {
-        magic();
+        magic(doer);
         if (doer.index == 0)
         {
             if (obvious == 1)
@@ -5003,9 +5007,9 @@ bool do_zap_internal(Character& doer, Item& rod)
 
 
 
-int do_zap(Item& rod)
+int do_zap(Character& doer, Item& rod)
 {
-    const auto zapped = do_zap_internal(cdata[cc], rod);
+    const auto zapped = do_zap_internal(doer, rod);
     if (!zapped)
         return 0;
 
@@ -5025,13 +5029,13 @@ int do_zap(Item& rod)
 
 
 
-int do_magic_attempt()
+int do_magic_attempt(Character& caster)
 {
     if (efid == 646)
     {
         if (cdata[tc].is_sentenced_daeth() == 1)
         {
-            if (cdata[cc].relationship == -3)
+            if (caster.relationship == -3)
             {
                 for (int cnt = 0; cnt < ELONA_MAX_PARTY_CHARACTERS; ++cnt)
                 {
@@ -5039,7 +5043,7 @@ int do_magic_attempt()
                     {
                         if (cdata[cnt].relationship == 10)
                         {
-                            cdata[cc].enemy_id = cnt;
+                            caster.enemy_id = cnt;
                             break;
                         }
                     }
@@ -5049,7 +5053,7 @@ int do_magic_attempt()
         }
     }
     {
-        int stat = prompt_magic_location();
+        int stat = prompt_magic_location(caster);
         if (stat == 0)
         {
             return 0;
@@ -5058,13 +5062,13 @@ int do_magic_attempt()
     if (the_ability_db[efid]->range / 1000 * 1000 != 3000 &&
         the_ability_db[efid]->range / 1000 * 1000 != 10000)
     {
-        if (cdata[cc].confused != 0 || cdata[cc].blind != 0)
+        if (caster.confused != 0 || caster.blind != 0)
         {
             if (rnd(5) == 0)
             {
-                if (is_in_fov(cdata[cc]))
+                if (is_in_fov(caster))
                 {
-                    txt(i18n::s.get("core.misc.shakes_head", cdata[cc]));
+                    txt(i18n::s.get("core.misc.shakes_head", caster));
                 }
                 return 1;
             }
@@ -5072,7 +5076,7 @@ int do_magic_attempt()
     }
     if (efid >= 600)
     {
-        if (cc == 0)
+        if (caster.index == 0)
         {
             if (cdata.player().sp < 50)
             {
@@ -5089,10 +5093,10 @@ int do_magic_attempt()
                 rnd(the_ability_db[efid]->cost / 2 + 1) +
                     the_ability_db[efid]->cost / 2 + 1);
             chara_gain_skill_exp(
-                cdata[cc], the_ability_db[efid]->related_basic_attribute, 25);
+                caster, the_ability_db[efid]->related_basic_attribute, 25);
         }
     }
-    efp = calcspellpower(efid, cc);
+    efp = calcspellpower(efid, caster.index);
     if (noeffect == 1)
     {
         if (efid != 300)
@@ -5102,7 +5106,7 @@ int do_magic_attempt()
         }
     }
     {
-        int stat = magic();
+        int stat = magic(caster);
         if (stat == 0)
         {
             return 0;
@@ -5113,12 +5117,12 @@ int do_magic_attempt()
 
 
 
-int prompt_magic_location()
+int prompt_magic_location(Character& caster)
 {
     noeffect = 0;
     if (efid > 661)
     {
-        tc = cc;
+        tc = caster.index;
         return 1;
     }
     tg = the_ability_db[efid]->range / 1000 * 1000;
@@ -5131,7 +5135,7 @@ int prompt_magic_location()
     }
     if (the_ability_db[efid]->ability_type == 7)
     {
-        if (cc == 0)
+        if (caster.index == 0)
         {
             tc = 0;
             return 1;
@@ -5139,7 +5143,7 @@ int prompt_magic_location()
     }
     if (tg == 8000)
     {
-        if (cc == 0)
+        if (caster.index == 0)
         {
             tc = 0;
             txt(i18n::s.get("core.action.which_direction.ask"));
@@ -5162,9 +5166,8 @@ int prompt_magic_location()
             if (dist(
                     cdata[tc].position.x,
                     cdata[tc].position.y,
-                    cdata[cc].position.x,
-                    cdata[cc].position.y) >
-                the_ability_db[efid]->range % 1000 + 1)
+                    caster.position.x,
+                    caster.position.y) > the_ability_db[efid]->range % 1000 + 1)
             {
                 return 0;
             }
@@ -5173,15 +5176,15 @@ int prompt_magic_location()
         }
         return 1;
     }
-    if (tg == 7000 || (tg == 9000 && tgloc == 1 && cc == 0))
+    if (tg == 7000 || (tg == 9000 && tgloc == 1 && caster.index == 0))
     {
-        if (cc == 0)
+        if (caster.index == 0)
         {
             if (tg == 9000)
             {
                 if (int stat = fov_los(
-                                   cdata[cc].position.x,
-                                   cdata[cc].position.y,
+                                   caster.position.x,
+                                   caster.position.y,
                                    tglocx,
                                    tglocy) == 0)
                 {
@@ -5218,8 +5221,8 @@ int prompt_magic_location()
             if (fov_los(
                     cdata[tc].position.x,
                     cdata[tc].position.y,
-                    cdata[cc].position.x,
-                    cdata[cc].position.y) == 0)
+                    caster.position.x,
+                    caster.position.y) == 0)
             {
                 return 0;
             }
@@ -5230,22 +5233,22 @@ int prompt_magic_location()
     }
     if (tg == 3000 || tg == 10000)
     {
-        if (cc != 0)
+        if (caster.index != 0)
         {
             if (the_ability_db[efid]->ability_type == 3)
             {
                 if (dist(
                         cdata[tc].position.x,
                         cdata[tc].position.y,
-                        cdata[cc].position.x,
-                        cdata[cc].position.y) >
+                        caster.position.x,
+                        caster.position.y) >
                     the_ability_db[efid]->range % 1000 + 1)
                 {
                     return 0;
                 }
                 if (fov_los(
-                        cdata[cc].position.x,
-                        cdata[cc].position.y,
+                        caster.position.x,
+                        caster.position.y,
                         cdata[tc].position.x,
                         cdata[tc].position.y) == 0)
                 {
@@ -5253,16 +5256,16 @@ int prompt_magic_location()
                 }
             }
         }
-        tc = cc;
-        tlocx = cdata[cc].position.x;
-        tlocy = cdata[cc].position.y;
+        tc = caster.index;
+        tlocx = caster.position.x;
+        tlocy = caster.position.y;
         return 1;
     }
     if (tg == 2000 || tg == 6000 || tg == 9000)
     {
-        if (cc == 0)
+        if (caster.index == 0)
         {
-            int stat = find_enemy_target();
+            int stat = find_enemy_target(caster);
             if (stat == 0)
             {
                 obvious = 0;
@@ -5282,10 +5285,10 @@ int prompt_magic_location()
         if (dist(
                 cdata[tc].position.x,
                 cdata[tc].position.y,
-                cdata[cc].position.x,
-                cdata[cc].position.y) > the_ability_db[efid]->range % 1000 + 1)
+                caster.position.x,
+                caster.position.y) > the_ability_db[efid]->range % 1000 + 1)
         {
-            if (cc == 0)
+            if (caster.index == 0)
             {
                 txt(i18n::s.get("core.action.which_direction.out_of_range"),
                     Message::only_once{true});
@@ -5294,8 +5297,8 @@ int prompt_magic_location()
             return 0;
         }
         if (fov_los(
-                cdata[cc].position.x,
-                cdata[cc].position.y,
+                caster.position.x,
+                caster.position.y,
                 cdata[tc].position.x,
                 cdata[tc].position.y) == 0)
         {
@@ -5307,7 +5310,7 @@ int prompt_magic_location()
     }
     if (tg == 5000)
     {
-        if (cc == 0)
+        if (caster.index == 0)
         {
             if (efsource == 3)
             {
@@ -5332,7 +5335,7 @@ int prompt_magic_location()
 
 
 
-PickUpItemResult pick_up_item(Item& item, bool play_sound)
+PickUpItemResult pick_up_item(int inventory_id, Item& item, bool play_sound)
 {
     const auto snd_ = [play_sound](data::InstanceId id) {
         if (play_sound)
@@ -5342,20 +5345,22 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
     };
 
     int sellgold = 0;
-    if (cc != -1)
+    if (inventory_id != -1)
     {
         if (item.id == ItemId::gold_piece || item.id == ItemId::platinum_coin)
         {
             snd_("core.getgold1");
             txt(i18n::s.get(
-                "core.action.pick_up.execute", cdata[cc], itemname(item)));
+                "core.action.pick_up.execute",
+                cdata[inventory_id],
+                itemname(item)));
             if (item.id == ItemId::gold_piece)
             {
-                earn_gold(cdata[cc], item.number());
+                earn_gold(cdata[inventory_id], item.number());
             }
             else
             {
-                earn_platinum(cdata[cc], item.number());
+                earn_platinum(cdata[inventory_id], item.number());
             }
             in = item.number();
             item.remove();
@@ -5363,7 +5368,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
             return {1, none};
         }
     }
-    if (cc == 0)
+    if (inventory_id == 0)
     {
         if (game_data.mount != 0)
         {
@@ -5391,7 +5396,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
                         return {0, none};
                     }
                     game_data.activity_about_to_start = 103;
-                    activity_others(cdata[cc], item);
+                    activity_others(cdata[inventory_id], item);
                     return {-1, none};
                 }
             }
@@ -5423,7 +5428,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
                 return {0, none};
             }
         }
-        if (!inv_get_free_slot(cc))
+        if (!inv_get_free_slot(inventory_id))
         {
             txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
             return {0, none};
@@ -5431,7 +5436,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
     }
     inumbk = item.number() - in;
     item.set_number(in);
-    if (cc == 0)
+    if (inventory_id == 0)
     {
         if (trait(215) != 0)
         {
@@ -5479,14 +5484,14 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
     item_checkknown(item);
 
     optional_ref<Item> picked_up_item;
-    const auto item_stack_result = item_stack(cc, item);
+    const auto item_stack_result = item_stack(inventory_id, item);
     if (item_stack_result.stacked)
     {
         picked_up_item = item_stack_result.stacked_item;
     }
     else
     {
-        const auto slot = inv_get_free_slot(cc);
+        const auto slot = inv_get_free_slot(inventory_id);
         if (!slot)
         {
             item.set_number(inumbk + in);
@@ -5601,7 +5606,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
             {
                 txt(i18n::s.get(
                     "core.action.pick_up.execute",
-                    cdata[cc],
+                    cdata[inventory_id],
                     itemname(*picked_up_item, in)));
             }
             else
@@ -5625,10 +5630,10 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
         sound_pick_up();
         txt(i18n::s.get(
             "core.action.pick_up.execute",
-            cdata[cc],
+            cdata[inventory_id],
             itemname(*picked_up_item, in)));
     }
-    if (cc == 0)
+    if (inventory_id == 0)
     {
         if (picked_up_item->id == ItemId::campfire)
         {
@@ -5671,7 +5676,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
         }
         refresh_burden_state();
     }
-    if (cc == -1)
+    if (inventory_id == -1)
     {
         refresh_burden_state();
     }
@@ -5681,7 +5686,7 @@ PickUpItemResult pick_up_item(Item& item, bool play_sound)
 
 
 
-TurnResult do_bash()
+TurnResult do_bash(Character& chara)
 {
     if (cell_data.at(x, y).item_appearances_memory != 0)
     {
@@ -5723,7 +5728,7 @@ TurnResult do_bash()
         tc = cell_data.at(x, y).chara_index_plus_one - 1;
         if (cdata[tc].sleep == 0)
         {
-            if (cc == 0)
+            if (chara.index == 0)
             {
                 if (cdata[tc].relationship >= 0)
                 {
@@ -5738,8 +5743,8 @@ TurnResult do_bash()
             {
                 snd("core.bash1");
                 txt(i18n::s.get(
-                    "core.action.bash.choked.execute", cdata[cc], cdata[tc]));
-                damage_hp(cdata[tc], sdata(10, cc) * 5, cc);
+                    "core.action.bash.choked.execute", chara, cdata[tc]));
+                damage_hp(cdata[tc], sdata(10, chara.index) * 5, chara.index);
                 if (cdata[tc].state() == Character::State::alive)
                 {
                     txt(i18n::s.get(
@@ -5752,18 +5757,17 @@ TurnResult do_bash()
             else
             {
                 snd("core.bash1");
-                txt(i18n::s.get(
-                    "core.action.bash.execute", cdata[cc], cdata[tc]));
-                hostileaction(cc, tc);
+                txt(i18n::s.get("core.action.bash.execute", chara, cdata[tc]));
+                hostileaction(chara.index, tc);
             }
         }
         else
         {
             snd("core.bash1");
-            txt(i18n::s.get("core.action.bash.execute", cdata[cc], cdata[tc]));
+            txt(i18n::s.get("core.action.bash.execute", chara, cdata[tc]));
             txt(i18n::s.get(
-                "core.action.bash.disturbs_sleep", cdata[cc], cdata[tc]));
-            modify_karma(cdata[cc], -1);
+                "core.action.bash.disturbs_sleep", chara, cdata[tc]));
+            modify_karma(chara, -1);
             cdata[tc].emotion_icon = 418;
         }
         cdata[tc].sleep = 0;
@@ -5782,10 +5786,10 @@ TurnResult do_bash()
                 calcfixlv(Quality::bad));
             flttypemajor = choice(fsetbarrel);
             itemcreate_extra_inv(0, x, y, 0);
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(chara))
             {
                 snd("core.bash1");
-                txt(i18n::s.get("core.action.bash.shatters_pot", cdata[cc]));
+                txt(i18n::s.get("core.action.bash.shatters_pot", chara));
                 snd("core.crush1");
                 BreakingAnimation({x, y}).play();
             }
@@ -5799,13 +5803,13 @@ TurnResult do_bash()
             {
                 p *= 20;
             }
-            if (rnd_capped(p(0)) < sdata(10, cc) && rnd(2))
+            if (rnd_capped(p(0)) < sdata(10, chara.index) && rnd(2))
             {
                 txt(i18n::s.get("core.action.bash.door.destroyed"));
-                if (feat(2) > sdata(10, cc))
+                if (feat(2) > sdata(10, chara.index))
                 {
                     chara_gain_skill_exp(
-                        cdata[cc], 10, (feat(2) - sdata(10, cc)) * 15);
+                        chara, 10, (feat(2) - sdata(10, chara.index)) * 15);
                 }
                 cell_featset(x, y, 0, 0, 0, 0);
                 return TurnResult::turn_end;
@@ -5819,29 +5823,29 @@ TurnResult do_bash()
                 }
                 if (rnd(4) == 0)
                 {
-                    tc = cc;
+                    tc = chara.index;
                     efid = 1109;
                     efp = 200;
-                    magic();
+                    magic(chara);
                 }
                 if (rnd(3) == 0)
                 {
-                    tc = cc;
+                    tc = chara.index;
                     efid = 1110;
                     efp = 200;
-                    magic();
+                    magic(chara);
                 }
                 if (rnd(3) == 0)
                 {
-                    if (cdata[cc].quality < Quality::miracle &&
-                        !enchantment_find(cdata[cc], 60010))
+                    if (chara.quality < Quality::miracle &&
+                        !enchantment_find(chara, 60010))
                     {
-                        --cdata[cc].attr_adjs[0];
-                        chara_refresh(cc);
-                        if (is_in_fov(cdata[cc]))
+                        --chara.attr_adjs[0];
+                        chara_refresh(chara.index);
+                        if (is_in_fov(chara))
                         {
                             txt(i18n::s.get(
-                                    "core.action.bash.door.hurt", cdata[cc]),
+                                    "core.action.bash.door.hurt", chara),
                                 Message::color{ColorIndex::purple});
                         }
                     }
@@ -5852,7 +5856,7 @@ TurnResult do_bash()
                     {
                         --feat(2);
                         cell_featset(x, y, feat(0), feat(1), feat(2), feat(3));
-                        if (is_in_fov(cdata[cc]))
+                        if (is_in_fov(chara))
                         {
                             txt(i18n::s.get("core.action.bash.door.cracked"));
                         }
@@ -5862,7 +5866,7 @@ TurnResult do_bash()
             }
         }
     }
-    txt(i18n::s.get("core.action.bash.air", cdata[cc]));
+    txt(i18n::s.get("core.action.bash.air", chara));
     snd("core.miss");
     return TurnResult::turn_end;
 }
@@ -5920,7 +5924,8 @@ void proc_autopick()
             }
             {
                 in = item.number();
-                const auto pick_up_item_result = pick_up_item(item, !op.sound);
+                const auto pick_up_item_result =
+                    pick_up_item(cdata.player().index, item, !op.sound);
                 if (pick_up_item_result.type != 1)
                 {
                     break;
@@ -6052,7 +6057,7 @@ int unlock_box(int difficulty)
         return 0;
     }
     txt(i18n::s.get("core.action.unlock.succeed"));
-    chara_gain_exp_lock_picking(cdata[cc]);
+    chara_gain_exp_lock_picking(cdata.player());
     return 1;
 }
 
@@ -6065,11 +6070,11 @@ void open_box(Item& box)
     msg_halt();
     if (box.id == ItemId::material_box)
     {
-        tc = cc;
+        tc = cdata.player().index;
         efid = 1117;
         efp = 100 + box.param1 * 10;
         box.param1 = 0;
-        magic();
+        magic(cdata.player());
         return;
     }
     p = 3 + rnd(5);
@@ -6230,13 +6235,12 @@ void open_new_year_gift(Item& box)
     msg_halt();
     snd("core.ding2");
     randomize();
-    cc = 0;
     box.param1 = 0;
     if (box.param3 < 100)
     {
         if (rnd(3) == 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(cdata.player()))
             {
                 txt(i18n::s.get(
                     "core.action.open.new_year_gift.something_jumps_out"));
@@ -6245,13 +6249,17 @@ void open_new_year_gift(Item& box)
             {
                 flt(calcobjlv(cdata.player().level * 3 / 2 + 3),
                     calcfixlv(Quality::bad));
-                chara_create(-1, 0, cdata[cc].position.x, cdata[cc].position.y);
+                chara_create(
+                    -1,
+                    0,
+                    cdata.player().position.x,
+                    cdata.player().position.y);
             }
             return;
         }
         if (rnd(3) == 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(cdata.player()))
             {
                 txt(i18n::s.get("core.action.open.new_year_gift.trap"));
             }
@@ -6265,25 +6273,25 @@ void open_new_year_gift(Item& box)
                     continue;
                 }
                 mef_add(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, 0);
-                mapitem_fire(tlocx, tlocy);
+                mapitem_fire(cdata.player(), tlocx, tlocy);
             }
             return;
         }
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(cdata.player()))
         {
             txt(i18n::s.get("core.action.open.new_year_gift.cursed_letter"));
         }
         efid = 1114;
         efp = 1000;
         tc = 0;
-        magic();
+        magic(cdata.player());
         return;
     }
     if (box.param3 < 200)
     {
         if (rnd(4) == 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(cdata.player()))
             {
                 txt(i18n::s.get("core.action.open.new_year_gift.ring"),
                     Message::color{ColorIndex::orange});
@@ -6292,10 +6300,10 @@ void open_new_year_gift(Item& box)
             if (const auto chara = chara_create(
                     -1,
                     328 + rnd(2),
-                    cdata[cc].position.x,
-                    cdata[cc].position.y))
+                    cdata.player().position.x,
+                    cdata.player().position.y))
             {
-                if (cdata[cc].relationship <= -3)
+                if (cdata.player().relationship <= -3)
                 {
                     chara->relationship = -1;
                     chara->original_relationship = -1;
@@ -6305,20 +6313,23 @@ void open_new_year_gift(Item& box)
         }
         if (rnd(5) == 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(cdata.player()))
             {
                 txt(i18n::s.get(
                     "core.action.open.new_year_gift.younger_sister"));
             }
             flt();
             if (const auto chara = chara_create(
-                    -1, 176, cdata[cc].position.x, cdata[cc].position.y))
+                    -1,
+                    176,
+                    cdata.player().position.x,
+                    cdata.player().position.y))
             {
                 chara->gold = 5000;
             }
             return;
         }
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(cdata.player()))
         {
             txt(i18n::s.get("core.action.open.new_year_gift.something_inside"));
         }
@@ -6328,7 +6339,7 @@ void open_new_year_gift(Item& box)
     }
     if (rnd(3) == 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(cdata.player()))
         {
             txt(i18n::s.get("core.action.open.new_year_gift.ring"),
                 Message::color{ColorIndex::orange});
@@ -6339,10 +6350,10 @@ void open_new_year_gift(Item& box)
             if (const auto chara = chara_create(
                     -1,
                     328 + rnd(2),
-                    cdata[cc].position.x,
-                    cdata[cc].position.y))
+                    cdata.player().position.x,
+                    cdata.player().position.y))
             {
-                if (cdata[cc].relationship <= -3)
+                if (cdata.player().relationship <= -3)
                 {
                     chara->relationship = -1;
                     chara->original_relationship = -1;
@@ -6353,7 +6364,7 @@ void open_new_year_gift(Item& box)
     }
     if (rnd(50) == 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(cdata.player()))
         {
             txt(i18n::s.get("core.action.open.new_year_gift.wonderful"));
         }
@@ -6361,7 +6372,7 @@ void open_new_year_gift(Item& box)
         itemcreate_extra_inv(choice(isetgiftgrand), cdata.player().position, 1);
         return;
     }
-    if (is_in_fov(cdata[cc]))
+    if (is_in_fov(cdata.player()))
     {
         txt(i18n::s.get("core.action.open.new_year_gift.something_inside"));
     }
@@ -6371,12 +6382,12 @@ void open_new_year_gift(Item& box)
 
 
 
-TurnResult try_to_open_locked_door()
+TurnResult try_to_open_locked_door(Character& chara)
 {
     cell_featread(dx, dy);
     if (feat == tile_doorclosed4 && feat(2) > 0)
     {
-        if (cc == 0)
+        if (chara.index == 0)
         {
             int stat = unlock_box(feat(2));
             if (stat == 0)
@@ -6396,7 +6407,7 @@ TurnResult try_to_open_locked_door()
     if (feat(2) > 0)
     {
         f = 0;
-        if (rnd(feat(2) * 20 + 150) < sdata(158, cc) * 20 + 20)
+        if (rnd(feat(2) * 20 + 150) < sdata(158, chara.index) * 20 + 20)
         {
             f = 1;
         }
@@ -6413,12 +6424,12 @@ TurnResult try_to_open_locked_door()
     {
         if (feat(2) > 0)
         {
-            chara_gain_exp_lock_picking(cdata[cc]);
+            chara_gain_exp_lock_picking(chara);
         }
         cell_featset(dx, dy, tile_dooropen, 20, 0, -1);
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(chara))
         {
-            txt(i18n::s.get("core.action.open.door.succeed", cdata[cc]));
+            txt(i18n::s.get("core.action.open.door.suchara.indexeed", chara));
             if (map_data.tileset == 8)
             {
                 snd("core.door2");
@@ -6435,14 +6446,14 @@ TurnResult try_to_open_locked_door()
     }
     else
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(chara))
         {
             snd("core.locked1");
-            txt(i18n::s.get("core.action.open.door.fail", cdata[cc]),
+            txt(i18n::s.get("core.action.open.door.fail", chara),
                 Message::only_once{true});
         }
     }
-    if (cc == 0)
+    if (chara.index == 0)
     {
         await(g_config.animation_wait() * 5);
     }
@@ -6476,7 +6487,8 @@ TurnResult do_plant(Item& seed)
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y).feats != 0)
+    if (cell_data.at(cdata.player().position.x, cdata.player().position.y)
+            .feats != 0)
     {
         txt(i18n::s.get("core.action.plant.cannot_plant_it_here"));
         update_screen();
@@ -6508,8 +6520,8 @@ TurnResult do_plant(Item& seed)
     snd("core.bush1");
     seed.modify_number(-1);
     cell_featset(
-        cdata[cc].position.x,
-        cdata[cc].position.y,
+        cdata.player().position.x,
+        cdata.player().position.y,
         tile_plant,
         29,
         seed.material,

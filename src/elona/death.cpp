@@ -183,7 +183,6 @@ void show_game_score_ranking(
 
 TurnResult pc_died()
 {
-    cc = 0;
     snd("core.dead1");
     screenupdate = -1;
     update_screen();
