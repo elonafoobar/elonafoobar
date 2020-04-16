@@ -735,13 +735,14 @@ void render_cloud()
 
 
 
-void draw_hp_bar(int cc, int x, int y)
+void draw_hp_bar(int chara_index, int x, int y)
 {
-    const int ratio = std::min(cdata[cc].hp * 30 / cdata[cc].max_hp, 30);
+    const int ratio =
+        std::min(cdata[chara_index].hp * 30 / cdata[chara_index].max_hp, 30);
     if (ratio <= 0)
         return;
 
-    if (cc < 16)
+    if (chara_index < 16)
     {
         if (map_data.type != mdata_t::MapType::world_map)
         {

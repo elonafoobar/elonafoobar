@@ -77,7 +77,7 @@ void show_damage_popups();
 void draw_emo(int = 0, int = 0, int = 0);
 
 struct Character;
-optional_ref<const Extent> chara_preparepic(const Character& cc);
+optional_ref<const Extent> chara_preparepic(const Character& chara);
 optional_ref<const Extent> chara_preparepic(int image_id);
 
 void create_pcpic(Character& chara, bool with_equipments = true);

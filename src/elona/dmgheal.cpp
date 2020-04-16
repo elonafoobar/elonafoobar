@@ -1215,29 +1215,29 @@ int damage_hp(
 
 
 
-void heal_hp(Character& cc, int delta)
+void heal_hp(Character& chara, int delta)
 {
-    cc.hp += delta;
-    if (cc.hp > cc.max_hp)
+    chara.hp += delta;
+    if (chara.hp > chara.max_hp)
     {
-        cc.hp = cc.max_hp;
+        chara.hp = chara.max_hp;
     }
 }
 
 
 
-void damage_mp(Character& cc, int delta)
+void damage_mp(Character& chara, int delta)
 {
-    cc.mp -= delta;
-    if (cc.mp < -999999)
+    chara.mp -= delta;
+    if (chara.mp < -999999)
     {
-        cc.mp = -999999;
+        chara.mp = -999999;
     }
-    if (cc.mp < 0)
+    if (chara.mp < 0)
     {
-        chara_gain_exp_mana_capacity(cc);
-        auto damage = -cc.mp * 400 / (100 + sdata(164, cc.index) * 10);
-        if (cc.index == 0)
+        chara_gain_exp_mana_capacity(chara);
+        auto damage = -chara.mp * 400 / (100 + sdata(164, chara.index) * 10);
+        if (chara.index == 0)
         {
             if (trait(156) == 1)
             {
@@ -1250,70 +1250,70 @@ void damage_mp(Character& cc, int delta)
             if (damage < 10)
                 return;
         }
-        txt(i18n::s.get("core.damage.magic_reaction_hurts", cc));
-        damage_hp(cc, damage, -2);
+        txt(i18n::s.get("core.damage.magic_reaction_hurts", chara));
+        damage_hp(chara, damage, -2);
     }
 }
 
 
 
-void heal_mp(Character& cc, int delta)
+void heal_mp(Character& chara, int delta)
 {
-    cc.mp += delta;
-    if (cc.mp > cc.max_mp)
+    chara.mp += delta;
+    if (chara.mp > chara.max_mp)
     {
-        cc.mp = cc.max_mp;
+        chara.mp = chara.max_mp;
     }
 }
 
 
 
-bool action_sp(Character& cc, int sp)
+bool action_sp(Character& chara, int sp)
 {
-    if (cc.index != 0 || debug::voldemort)
+    if (chara.index != 0 || debug::voldemort)
         return true;
 
-    damage_sp(cc, sp);
-    return cc.sp >= 50 || cc.sp >= rnd(75);
+    damage_sp(chara, sp);
+    return chara.sp >= 50 || chara.sp >= rnd(75);
 }
 
 
 
-void damage_sp(Character& cc, int delta)
+void damage_sp(Character& chara, int delta)
 {
-    if (cc.index != 0 || debug::voldemort)
+    if (chara.index != 0 || debug::voldemort)
         return;
 
-    if (cc.sp >= -100)
+    if (chara.sp >= -100)
     {
-        cc.sp -= delta;
+        chara.sp -= delta;
     }
 }
 
 
 
-void heal_sp(Character& cc, int delta)
+void heal_sp(Character& chara, int delta)
 {
-    cc.sp += delta;
-    if (cc.sp > cc.max_sp)
+    chara.sp += delta;
+    if (chara.sp > chara.max_sp)
     {
-        cc.sp = cc.max_sp;
+        chara.sp = chara.max_sp;
     }
 }
 
 
 
-void damage_insanity(Character& cc, int delta)
+void damage_insanity(Character& chara, int delta)
 {
-    if (cc.quality >= Quality::miracle)
+    if (chara.quality >= Quality::miracle)
         return;
 
-    int resistance = std::max(sdata(54, cc.index) / 50, 1);
+    int resistance = std::max(sdata(54, chara.index) / 50, 1);
     if (resistance > 10)
         return;
 
     delta /= resistance;
-    if (cc.index < 16)
+    if (chara.index < 16)
     {
         if (trait(166))
         {
@@ -1321,22 +1321,22 @@ void damage_insanity(Character& cc, int delta)
         }
     }
     delta = std::max(delta, 0);
-    cc.insanity += delta;
+    chara.insanity += delta;
     if (rnd(10) == 0 || rnd_capped(delta + 1) > 5 ||
-        rnd_capped(cc.insanity + 1) > 50)
+        rnd_capped(chara.insanity + 1) > 50)
     {
-        status_ailment_damage(cc, StatusAilment::insane, 100);
+        status_ailment_damage(chara, StatusAilment::insane, 100);
     }
 }
 
 
 
-void heal_insanity(Character& cc, int delta)
+void heal_insanity(Character& chara, int delta)
 {
-    cc.insanity -= delta;
-    if (cc.insanity < 0)
+    chara.insanity -= delta;
+    if (chara.insanity < 0)
     {
-        cc.insanity = 0;
+        chara.insanity = 0;
     }
 }
 

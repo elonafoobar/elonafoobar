@@ -23,13 +23,13 @@ namespace
 
 constexpr int buff_find_slot_no_effect = -1;
 
-int buff_find_slot(const Character& cc, int id, int turns)
+int buff_find_slot(const Character& chara, int id, int turns)
 {
-    for (size_t i = 0; i < cc.buffs.size(); ++i)
+    for (size_t i = 0; i < chara.buffs.size(); ++i)
     {
-        if (cc.buffs[i].id == id)
+        if (chara.buffs[i].id == id)
         {
-            if (cc.buffs[i].turns < turns)
+            if (chara.buffs[i].turns < turns)
             {
                 return static_cast<int>(i);
             }
@@ -38,13 +38,13 @@ int buff_find_slot(const Character& cc, int id, int turns)
                 return buff_find_slot_no_effect;
             }
         }
-        if (cc.buffs[i].id == 0)
+        if (chara.buffs[i].id == 0)
         {
             return i;
         }
     }
 
-    return rnd(static_cast<int>(cc.buffs.size()));
+    return rnd(static_cast<int>(chara.buffs.size()));
 }
 
 

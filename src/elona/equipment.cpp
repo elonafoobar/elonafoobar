@@ -1344,9 +1344,9 @@ void supply_initial_equipments(Character& chara)
 
 
 
-int equip_item(int cc, Item& equipment)
+int equip_item(int chara_index, Item& equipment)
 {
-    if (cdata[cc].body_parts[body - 100] % 10000 != 0)
+    if (cdata[chara_index].body_parts[body - 100] % 10000 != 0)
     {
         return 0;
     }
@@ -1355,30 +1355,31 @@ int equip_item(int cc, Item& equipment)
         return 0;
     }
     item_separate(equipment);
-    if (cc == 0)
+    if (chara_index == 0)
     {
         item_identify(equipment, IdentifyState::almost);
     }
     equipment.body_part = body;
-    cdata[cc].body_parts[body - 100] =
-        cdata[cc].body_parts[body - 100] / 10000 * 10000 + equipment.index + 1;
+    cdata[chara_index].body_parts[body - 100] =
+        cdata[chara_index].body_parts[body - 100] / 10000 * 10000 +
+        equipment.index + 1;
     return 1;
 }
 
 
 
-void unequip_item(int cc)
+void unequip_item(int chara_index)
 {
-    p = cdata[cc].body_parts[body - 100] % 10000;
+    p = cdata[chara_index].body_parts[body - 100] % 10000;
     if (p == 0)
     {
         rtval = -2;
         return;
     }
-    cdata[cc].body_parts[body - 100] =
-        cdata[cc].body_parts[body - 100] / 10000 * 10000;
+    cdata[chara_index].body_parts[body - 100] =
+        cdata[chara_index].body_parts[body - 100] / 10000 * 10000;
     inv[p - 1].body_part = 0;
-    item_stack(cc, inv[p - 1]);
+    item_stack(chara_index, inv[p - 1]);
 }
 
 } // namespace elona

@@ -704,9 +704,9 @@ int chara_get_free_slot_ally();
 bool chara_unequip(Item& item);
 int chara_custom_talk(int = 0, int = 0);
 int chara_impression_level(int = 0);
-void chara_modify_impression(Character& cc, int delta);
+void chara_modify_impression(Character& chara, int delta);
 void chara_set_ai_item(Character& chara, const Item& item);
-int chara_armor_class(const Character& cc);
+int chara_armor_class(const Character& chara);
 int chara_breed_power(const Character&);
 
 void chara_add_quality_parens(Character& chara);

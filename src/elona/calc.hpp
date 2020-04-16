@@ -32,7 +32,7 @@ int calcshopreform();
 int calc_rate_to_pierce(int);
 std::string calcage(int);
 int calcexpalive(int = 0);
-int calc_evasion(int cc);
+int calc_evasion(int chara_index);
 int calc_accuracy(
     optional_ref<Item> weapon,
     optional_ref<Item> ammo,

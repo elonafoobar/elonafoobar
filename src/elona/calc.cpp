@@ -83,9 +83,9 @@ int rangedist = 0;
 
 
 
-optional<SkillDamage> calc_skill_damage(int skill, int cc, int power)
+optional<SkillDamage> calc_skill_damage(int skill, int chara_index, int power)
 {
-    int x = sdata(the_ability_db[skill]->related_basic_attribute, cc);
+    int x = sdata(the_ability_db[skill]->related_basic_attribute, chara_index);
 
     switch (skill)
     {
@@ -108,10 +108,10 @@ optional<SkillDamage> calc_skill_damage(int skill, int cc, int power)
     case 407: return SkillDamage{0, 1, x * 5 + power * 3 / 2, 0, 0};
     case 623:
         return SkillDamage{
-            1 + x / 10, cdata[cc].piety_point / 70 + 1 + 1, 0, 0, 0};
+            1 + x / 10, cdata[chara_index].piety_point / 70 + 1 + 1, 0, 0, 0};
     case 624:
         return SkillDamage{
-            1 + x / 20, cdata[cc].piety_point / 140 + 1 + 1, 0, 0, 0};
+            1 + x / 20, cdata[chara_index].piety_point / 140 + 1 + 1, 0, 0, 0};
     case 414:
         return SkillDamage{power / 125 + 2 + x / 50,
                            power / 60 + 9 + 1,
@@ -289,10 +289,12 @@ Quality calcfixlv(Quality base_quality)
 
 
 
-int calcfame(int cc, int base)
+int calcfame(int chara_index, int base)
 {
     int ret = base * 100 /
-        (100 + cdata[cc].fame / 100 * (cdata[cc].fame / 100) / 2500);
+        (100 +
+         cdata[chara_index].fame / 100 * (cdata[chara_index].fame / 100) /
+             2500);
     if (ret < 5)
     {
         ret = rnd(5) + 1;
@@ -302,14 +304,14 @@ int calcfame(int cc, int base)
 
 
 
-int decfame(int cc, int base)
+int decfame(int chara_index, int base)
 {
-    int ret = cdata[cc].fame / base + 5;
+    int ret = cdata[chara_index].fame / base + 5;
     ret = ret + rnd_capped(ret / 2) - rnd_capped(ret / 2);
-    cdata[cc].fame -= ret;
-    if (cdata[cc].fame < 0)
+    cdata[chara_index].fame -= ret;
+    if (cdata[chara_index].fame < 0)
     {
-        cdata[cc].fame = 0;
+        cdata[chara_index].fame = 0;
     }
     return ret;
 }
@@ -377,9 +379,9 @@ int calc_rate_to_pierce(int id)
 
 
 
-std::string calcage(int cc)
+std::string calcage(int chara_index)
 {
-    int n = game_data.date.year - cdata[cc].birth_year;
+    int n = game_data.date.year - cdata[chara_index].birth_year;
     return n >= 0 ? std::to_string(n) : i18n::s.get("core.chara.age_unknown");
 }
 
@@ -392,9 +394,10 @@ int calcexpalive(int level)
 
 
 
-int calc_evasion(int cc)
+int calc_evasion(int chara_index)
 {
-    return sdata(13, cc) / 3 + sdata(173, cc) + cdata[cc].dv + 25;
+    return sdata(13, chara_index) / 3 + sdata(173, chara_index) +
+        cdata[chara_index].dv + 25;
 }
 
 
@@ -1042,9 +1045,9 @@ int calchireadv(int adventurer)
 
 
 
-int calchirecost(int cc)
+int calchirecost(int chara_index)
 {
-    switch (cdata[cc].role)
+    switch (cdata[chara_index].role)
     {
     case Role::maid: return 450;
     case Role::trainer: return 250;
@@ -1056,7 +1059,7 @@ int calchirecost(int cc)
     case Role::blackmarket_vendor: return 4000;
     case Role::guest_wandering_vendor: return 0;
     default:
-        if (is_shopkeeper(cdata[cc].role))
+        if (is_shopkeeper(cdata[chara_index].role))
         {
             return 1000;
         }
@@ -1069,16 +1072,16 @@ int calchirecost(int cc)
 
 
 
-void generatemoney(int cc)
+void generatemoney(int chara_index)
 {
-    int gold = rnd(100) + rnd_capped(cdata[cc].level * 50 + 1);
-    if (is_shopkeeper(cdata[cc].role))
+    int gold = rnd(100) + rnd_capped(cdata[chara_index].level * 50 + 1);
+    if (is_shopkeeper(cdata[chara_index].role))
     {
-        gold += 2500 + cdata[cc].shop_rank * 250;
+        gold += 2500 + cdata[chara_index].shop_rank * 250;
     }
-    if (cdata[cc].gold < gold / 2)
+    if (cdata[chara_index].gold < gold / 2)
     {
-        cdata[cc].gold = gold;
+        cdata[chara_index].gold = gold;
     }
 }
 
@@ -1242,18 +1245,18 @@ int calcidentifyvalue(int type)
 
 
 
-int calctraincost(int skill_id, int cc, bool discount)
+int calctraincost(int skill_id, int chara_index, bool discount)
 {
-    int platinum = sdata.get(skill_id, cc).original_level / 5 + 2;
+    int platinum = sdata.get(skill_id, chara_index).original_level / 5 + 2;
     return discount ? platinum / 2 : platinum;
 }
 
 
 
-int calclearncost(int skill_id, int cc, bool discount)
+int calclearncost(int skill_id, int chara_index, bool discount)
 {
     (void)skill_id;
-    (void)cc;
+    (void)chara_index;
 
     int platinum = 15 + 3 * game_data.number_of_learned_skills_by_trainer;
     return discount ? platinum * 2 / 3 : platinum;
@@ -1316,40 +1319,43 @@ int calcinitgold(int owner)
 
 
 
-int calcspellpower(int id, int cc)
+int calcspellpower(int id, int chara_index)
 {
     if (id >= 600)
     {
         if (the_ability_db[id]->related_basic_attribute != 0)
         {
-            return sdata(the_ability_db[id]->related_basic_attribute, cc) * 6 +
+            return sdata(
+                       the_ability_db[id]->related_basic_attribute,
+                       chara_index) *
+                6 +
                 10;
         }
         return 100;
     }
-    if (cc == 0)
+    if (chara_index == 0)
     {
-        return sdata(id, cc) * 10 + 50;
+        return sdata(id, chara_index) * 10 + 50;
     }
-    if (sdata(172, cc) == 0 && cc >= 16)
+    if (sdata(172, chara_index) == 0 && chara_index >= 16)
     {
-        return cdata[cc].level * 6 + 10;
+        return cdata[chara_index].level * 6 + 10;
     }
-    return sdata(172, cc) * 6 + 10;
+    return sdata(172, chara_index) * 6 + 10;
 }
 
 
 
-int calcspellfail(int id, int cc)
+int calcspellfail(int id, int chara_index)
 {
     if (debug::voldemort)
     {
         return 100;
     }
 
-    if (cc != 0)
+    if (chara_index != 0)
     {
-        if (game_data.mount == cc)
+        if (game_data.mount == chara_index)
         {
             return 95 - clamp(30 - sdata(301, 0) / 2, 0, 30);
         }
@@ -1361,14 +1367,14 @@ int calcspellfail(int id, int cc)
 
     int penalty = 4;
 
-    int armor_skill = chara_armor_class(cdata[cc]);
+    int armor_skill = chara_armor_class(cdata[chara_index]);
     if (armor_skill == 169)
     {
-        penalty = 17 - sdata(169, cc) / 5;
+        penalty = 17 - sdata(169, chara_index) / 5;
     }
     else if (armor_skill == 170)
     {
-        penalty = 12 - sdata(170, cc) / 5;
+        penalty = 12 - sdata(170, chara_index) / 5;
     }
     if (penalty < 4)
     {
@@ -1380,15 +1386,16 @@ int calcspellfail(int id, int cc)
     }
     if (id == 441) // Wish
     {
-        penalty += sdata(id, cc);
+        penalty += sdata(id, chara_index);
     }
     if (id == 464) // Harvest
     {
-        penalty += sdata(id, cc) / 3;
+        penalty += sdata(id, chara_index) / 3;
     }
 
-    int percentage = 90 + sdata(id, cc) -
-        the_ability_db[id]->difficulty * penalty / (5 + sdata(172, cc) * 4);
+    int percentage = 90 + sdata(id, chara_index) -
+        the_ability_db[id]->difficulty * penalty /
+            (5 + sdata(172, chara_index) * 4);
     if (armor_skill == 169)
     {
         if (percentage > 80)
@@ -1407,11 +1414,11 @@ int calcspellfail(int id, int cc)
     {
         percentage = 100;
     }
-    if (cdata[cc].combat_style.dual_wield())
+    if (cdata[chara_index].combat_style.dual_wield())
     {
         percentage -= 6;
     }
-    if (cdata[cc].combat_style.shield())
+    if (cdata[chara_index].combat_style.shield())
     {
         percentage -= 12;
     }
@@ -1424,12 +1431,12 @@ int calcspellfail(int id, int cc)
 
 
 
-int calcspellcostmp(int id, int cc)
+int calcspellcostmp(int id, int chara_index)
 {
     if (debug::voldemort)
         return 1;
 
-    if (cc == 0)
+    if (chara_index == 0)
     {
         if (id == 413 || id == 461 || id == 457 || id == 438 || id == 409 ||
             id == 408 || id == 410 || id == 466)
@@ -1438,24 +1445,27 @@ int calcspellcostmp(int id, int cc)
         }
         else
         {
-            return the_ability_db[id]->cost * (100 + sdata(id, cc) * 3) / 100 +
-                sdata(id, cc) / 8;
+            return the_ability_db[id]->cost *
+                (100 + sdata(id, chara_index) * 3) / 100 +
+                sdata(id, chara_index) / 8;
         }
     }
     else
     {
-        return the_ability_db[id]->cost * (50 + cdata[cc].level * 3) / 100;
+        return the_ability_db[id]->cost * (50 + cdata[chara_index].level * 3) /
+            100;
     }
 }
 
 
 
-int calcspellcoststock(int id, int cc)
+int calcspellcoststock(int id, int chara_index)
 {
     if (debug::voldemort)
         return 1;
 
-    int cost = the_ability_db[id]->cost * 200 / (sdata(id, cc) * 3 + 100);
+    int cost =
+        the_ability_db[id]->cost * 200 / (sdata(id, chara_index) * 3 + 100);
     if (cost < the_ability_db[id]->cost / 5)
     {
         cost = the_ability_db[id]->cost / 5;

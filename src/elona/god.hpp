@@ -73,7 +73,7 @@ inline int godid2int(const GodId& id)
 void txtgod(const GodId& id, int type);
 void god_modify_piety(int amount);
 void set_npc_religion();
-void apply_god_blessing(int cc);
+void apply_god_blessing(int chara_index);
 std::string get_god_description(int);
 void god_proc_switching_penalty(const GodId& new_religion);
 void switch_religion();

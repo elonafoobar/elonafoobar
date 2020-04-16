@@ -9,18 +9,18 @@ struct Character;
 
 
 
-int damage_hp(Character& cc, int, int = 0, int = 0, int = 0);
-void heal_hp(Character& cc, int delta);
+int damage_hp(Character& chara, int, int = 0, int = 0, int = 0);
+void heal_hp(Character& chara, int delta);
 
-void damage_mp(Character& cc, int delta);
-void heal_mp(Character& cc, int delta);
+void damage_mp(Character& chara, int delta);
+void heal_mp(Character& chara, int delta);
 
-bool action_sp(Character& cc, int sp);
-void damage_sp(Character& cc, int delta);
-void heal_sp(Character& cc, int delta);
+bool action_sp(Character& chara, int sp);
+void damage_sp(Character& chara, int delta);
+void heal_sp(Character& chara, int delta);
 
-void damage_insanity(Character& cc, int delta);
-void heal_insanity(Character& cc, int delta);
+void damage_insanity(Character& chara, int delta);
+void heal_insanity(Character& chara, int delta);
 
 
 void character_drops_item(Character& victim);

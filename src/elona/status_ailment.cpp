@@ -21,9 +21,12 @@ namespace elona
 namespace
 {
 
-int calc_power_decreased_by_resistance(int cc, int power, Element element)
+int calc_power_decreased_by_resistance(
+    int chara_index,
+    int power,
+    Element element)
 {
-    const auto resistance_level = sdata(int(element), cc) / 50;
+    const auto resistance_level = sdata(int(element), chara_index) / 50;
     power = (rnd_capped(power / 2 + 1) + power / 2) * 100 /
         (50 + resistance_level * 50);
 

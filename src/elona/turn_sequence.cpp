@@ -1258,10 +1258,10 @@ optional<TurnResult> pc_turn_pet_arena()
 
     game_data.executing_immediate_quest_status = 3;
     bool pet_exists = false;
-    for (int cc = 1; cc < 16; ++cc)
+    for (int chara_index = 1; chara_index < 16; ++chara_index)
     {
-        if (cdata[cc].state() == Character::State::alive &&
-            cdata[cc].relationship == 10)
+        if (cdata[chara_index].state() == Character::State::alive &&
+            cdata[chara_index].relationship == 10)
         {
             pet_exists = true;
             break;
@@ -1280,16 +1280,17 @@ optional<TurnResult> pc_turn_pet_arena()
         msg_halt();
         levelexitby = 4;
         snd("core.exitmap1");
-        for (int cc = 0; cc < 16; ++cc)
+        for (int chara_index = 0; chara_index < 16; ++chara_index)
         {
-            if (arenaop == 0 && followerin(cc) == 1 &&
-                cdata[cc].state() == Character::State::pet_dead)
+            if (arenaop == 0 && followerin(chara_index) == 1 &&
+                cdata[chara_index].state() == Character::State::pet_dead)
                 continue;
-            if (petarenawin != 1 && followerin(cc) == 1 &&
-                cdata[cc].state() == Character::State::pet_dead && rnd(5) == 0)
+            if (petarenawin != 1 && followerin(chara_index) == 1 &&
+                cdata[chara_index].state() == Character::State::pet_dead &&
+                rnd(5) == 0)
                 continue;
-            cdata[cc].set_state(
-                static_cast<Character::State>(followerexist(cc)));
+            cdata[chara_index].set_state(
+                static_cast<Character::State>(followerexist(chara_index)));
         }
         return TurnResult::exit_map;
     }
@@ -1531,217 +1532,228 @@ TurnResult pc_turn(bool advance_time)
 
 
 
-void proc_turn_end(int cc)
+void proc_turn_end(int chara_index)
 {
     int regen = 0;
     regen = 1;
-    if (cdata[cc].sleep > 0)
+    if (cdata[chara_index].sleep > 0)
     {
-        status_ailment_heal(cdata[cc], StatusAilment::sleep, 1);
-        if (cdata[cc].sleep > 0)
+        status_ailment_heal(cdata[chara_index], StatusAilment::sleep, 1);
+        if (cdata[chara_index].sleep > 0)
         {
-            cdata[cc].emotion_icon = 114;
+            cdata[chara_index].emotion_icon = 114;
         }
-        heal_hp(cdata[cc], 1);
-        heal_mp(cdata[cc], 1);
+        heal_hp(cdata[chara_index], 1);
+        heal_mp(cdata[chara_index], 1);
     }
-    if (cdata[cc].poisoned > 0)
+    if (cdata[chara_index].poisoned > 0)
     {
-        damage_hp(cdata[cc], rnd_capped(2 + sdata(11, cc) / 10), -4);
-        status_ailment_heal(cdata[cc], StatusAilment::poisoned, 1);
-        if (cdata[cc].poisoned > 0)
+        damage_hp(
+            cdata[chara_index],
+            rnd_capped(2 + sdata(11, chara_index) / 10),
+            -4);
+        status_ailment_heal(cdata[chara_index], StatusAilment::poisoned, 1);
+        if (cdata[chara_index].poisoned > 0)
         {
-            cdata[cc].emotion_icon = 108;
+            cdata[chara_index].emotion_icon = 108;
         }
         regen = 0;
     }
-    if (cdata[cc].choked > 0)
+    if (cdata[chara_index].choked > 0)
     {
-        if (cdata[cc].choked % 3 == 0)
+        if (cdata[chara_index].choked % 3 == 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(cdata[chara_index]))
             {
                 txt(i18n::s.get("core.misc.status_ailment.choked"));
             }
         }
-        ++cdata[cc].choked;
-        if (cdata[cc].choked > 15)
+        ++cdata[chara_index].choked;
+        if (cdata[chara_index].choked > 15)
         {
-            damage_hp(cdata[cc], 500, -21);
+            damage_hp(cdata[chara_index], 500, -21);
         }
         regen = 0;
     }
-    if (cdata[cc].gravity > 0)
+    if (cdata[chara_index].gravity > 0)
     {
-        --cdata[cc].gravity;
-        if (cdata[cc].gravity == 0)
+        --cdata[chara_index].gravity;
+        if (cdata[chara_index].gravity == 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(cdata[chara_index]))
             {
                 txt(i18n::s.get(
                     "core.misc.status_ailment.breaks_away_from_gravity",
-                    cdata[cc]));
+                    cdata[chara_index]));
             }
         }
     }
-    if (cdata[cc].furious > 0)
+    if (cdata[chara_index].furious > 0)
     {
-        --cdata[cc].furious;
-        if (cdata[cc].furious == 0)
+        --cdata[chara_index].furious;
+        if (cdata[chara_index].furious == 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(cdata[chara_index]))
             {
                 txt(i18n::s.get(
-                    "core.misc.status_ailment.calms_down", cdata[cc]));
+                    "core.misc.status_ailment.calms_down", cdata[chara_index]));
             }
         }
     }
-    if (cdata[cc].sick > 0)
+    if (cdata[chara_index].sick > 0)
     {
         if (rnd(80) == 0)
         {
             p = rnd(10);
-            if (!enchantment_find(cdata[cc], 60010 + p))
+            if (!enchantment_find(cdata[chara_index], 60010 + p))
             {
-                cdata[cc].attr_adjs[p] -=
-                    sdata.get(10 + p, cc).original_level / 25 + 1;
-                chara_refresh(cc);
+                cdata[chara_index].attr_adjs[p] -=
+                    sdata.get(10 + p, chara_index).original_level / 25 + 1;
+                chara_refresh(chara_index);
             }
         }
         if (rnd(5))
         {
             regen = 0;
         }
-        if (cc >= 16)
+        if (chara_index >= 16)
         {
-            if (cdata[cc].quality >= Quality::miracle)
+            if (cdata[chara_index].quality >= Quality::miracle)
             {
                 if (rnd(200) == 0)
                 {
-                    status_ailment_heal(cdata[cc], StatusAilment::sick);
+                    status_ailment_heal(
+                        cdata[chara_index], StatusAilment::sick);
                 }
             }
         }
     }
-    if (cdata[cc].blind > 0)
+    if (cdata[chara_index].blind > 0)
     {
-        status_ailment_heal(cdata[cc], StatusAilment::blinded, 1);
-        if (cdata[cc].blind > 0)
+        status_ailment_heal(cdata[chara_index], StatusAilment::blinded, 1);
+        if (cdata[chara_index].blind > 0)
         {
-            cdata[cc].emotion_icon = 110;
+            cdata[chara_index].emotion_icon = 110;
         }
     }
-    if (cdata[cc].paralyzed > 0)
+    if (cdata[chara_index].paralyzed > 0)
     {
         regen = 0;
-        status_ailment_heal(cdata[cc], StatusAilment::paralyzed, 1);
-        if (cdata[cc].paralyzed > 0)
+        status_ailment_heal(cdata[chara_index], StatusAilment::paralyzed, 1);
+        if (cdata[chara_index].paralyzed > 0)
         {
-            cdata[cc].emotion_icon = 115;
+            cdata[chara_index].emotion_icon = 115;
         }
     }
-    if (cdata[cc].confused > 0)
+    if (cdata[chara_index].confused > 0)
     {
-        status_ailment_heal(cdata[cc], StatusAilment::confused, 1);
-        if (cdata[cc].confused > 0)
+        status_ailment_heal(cdata[chara_index], StatusAilment::confused, 1);
+        if (cdata[chara_index].confused > 0)
         {
-            cdata[cc].emotion_icon = 111;
+            cdata[chara_index].emotion_icon = 111;
         }
     }
-    if (cdata[cc].fear > 0)
+    if (cdata[chara_index].fear > 0)
     {
-        status_ailment_heal(cdata[cc], StatusAilment::fear, 1);
-        if (cdata[cc].fear > 0)
+        status_ailment_heal(cdata[chara_index], StatusAilment::fear, 1);
+        if (cdata[chara_index].fear > 0)
         {
-            cdata[cc].emotion_icon = 113;
+            cdata[chara_index].emotion_icon = 113;
         }
     }
-    if (cdata[cc].dimmed > 0)
+    if (cdata[chara_index].dimmed > 0)
     {
-        status_ailment_heal(cdata[cc], StatusAilment::dimmed, 1);
-        if (cdata[cc].dimmed > 0)
+        status_ailment_heal(cdata[chara_index], StatusAilment::dimmed, 1);
+        if (cdata[chara_index].dimmed > 0)
         {
-            cdata[cc].emotion_icon = 112;
+            cdata[chara_index].emotion_icon = 112;
         }
     }
-    if (cdata[cc].drunk > 0)
+    if (cdata[chara_index].drunk > 0)
     {
-        status_ailment_heal(cdata[cc], StatusAilment::drunk, 1);
-        if (cdata[cc].drunk > 0)
+        status_ailment_heal(cdata[chara_index], StatusAilment::drunk, 1);
+        if (cdata[chara_index].drunk > 0)
         {
-            cdata[cc].emotion_icon = 106;
+            cdata[chara_index].emotion_icon = 106;
         }
     }
-    if (cdata[cc].bleeding > 0)
+    if (cdata[chara_index].bleeding > 0)
     {
         damage_hp(
-            cdata[cc],
-            rnd_capped(cdata[cc].hp * (1 + cdata[cc].bleeding / 4) / 100 + 3) +
+            cdata[chara_index],
+            rnd_capped(
+                cdata[chara_index].hp * (1 + cdata[chara_index].bleeding / 4) /
+                    100 +
+                3) +
                 1,
             -13);
         status_ailment_heal(
-            cdata[cc],
+            cdata[chara_index],
             StatusAilment::bleeding,
-            1 + cdata[cc].cures_bleeding_quickly() * 3);
-        if (cdata[cc].bleeding > 0)
+            1 + cdata[chara_index].cures_bleeding_quickly() * 3);
+        if (cdata[chara_index].bleeding > 0)
         {
-            cdata[cc].emotion_icon = 109;
+            cdata[chara_index].emotion_icon = 109;
         }
         regen = 0;
-        spillblood(cdata[cc].position.x, cdata[cc].position.y);
+        spillblood(
+            cdata[chara_index].position.x, cdata[chara_index].position.y);
     }
-    if (cdata[cc].wet > 0)
+    if (cdata[chara_index].wet > 0)
     {
-        --cdata[cc].wet;
+        --cdata[chara_index].wet;
     }
-    if (cdata[cc].insane > 0)
+    if (cdata[chara_index].insane > 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(cdata[chara_index]))
         {
             if (rnd(3) == 0)
             {
-                txt(i18n::s.get("core.misc.status_ailment.insane", cdata[cc]),
+                txt(i18n::s.get(
+                        "core.misc.status_ailment.insane", cdata[chara_index]),
                     Message::color{ColorIndex::cyan});
             }
         }
         if (rnd(5) == 0)
         {
-            cdata[cc].confused += rnd(10);
+            cdata[chara_index].confused += rnd(10);
         }
         if (rnd(5) == 0)
         {
-            cdata[cc].dimmed += rnd(10);
+            cdata[chara_index].dimmed += rnd(10);
         }
         if (rnd(5) == 0)
         {
-            cdata[cc].sleep += rnd(5);
+            cdata[chara_index].sleep += rnd(5);
         }
         if (rnd(5) == 0)
         {
-            cdata[cc].fear += rnd(10);
+            cdata[chara_index].fear += rnd(10);
         }
-        status_ailment_heal(cdata[cc], StatusAilment::insane, 1);
-        if (cdata[cc].insane > 0)
+        status_ailment_heal(cdata[chara_index], StatusAilment::insane, 1);
+        if (cdata[chara_index].insane > 0)
         {
-            cdata[cc].emotion_icon = 124;
+            cdata[chara_index].emotion_icon = 124;
         }
     }
-    if (cc == 0)
+    if (chara_index == 0)
     {
-        if (cdata[cc].nutrition < 2000)
+        if (cdata[chara_index].nutrition < 2000)
         {
-            if (cdata[cc].nutrition < 1000)
+            if (cdata[chara_index].nutrition < 1000)
             {
-                if (cdata[cc].activity.type != Activity::Type::eat)
+                if (cdata[chara_index].activity.type != Activity::Type::eat)
                 {
                     damage_hp(
-                        cdata[cc], rnd(2) + cdata.player().max_hp / 50, -3);
+                        cdata[chara_index],
+                        rnd(2) + cdata.player().max_hp / 50,
+                        -3);
                     if (game_data.play_turns % 10 == 0)
                     {
-                        rowact_check(cdata[cc]);
+                        rowact_check(cdata[chara_index]);
                         if (rnd(50) == 0)
                         {
-                            modify_weight(cdata[cc], -1);
+                            modify_weight(cdata[chara_index], -1);
                         }
                     }
                 }
@@ -1765,32 +1777,32 @@ void proc_turn_end(int cc)
             if (game_data.continuous_active_hours >= 50)
             {
                 regen = 0;
-                damage_sp(cdata[cc], 1);
+                damage_sp(cdata[chara_index], 1);
             }
         }
     }
-    else if (cdata[cc].related_quest_id != 0)
+    else if (cdata[chara_index].related_quest_id != 0)
     {
-        p = cdata[cc].related_quest_id - 1;
+        p = cdata[chara_index].related_quest_id - 1;
         if (quest_data[p].delivery_has_package_flag > 0)
         {
-            cdata[cc].emotion_icon = 122;
+            cdata[chara_index].emotion_icon = 122;
         }
         if (quest_data[p].progress != 0)
         {
-            if (cdata[cc].turn % 2 == 1)
+            if (cdata[chara_index].turn % 2 == 1)
             {
-                cdata[cc].emotion_icon = 123;
+                cdata[chara_index].emotion_icon = 123;
             }
         }
     }
     if (game_data.executing_immediate_quest_type == 1009)
     {
-        if (cc >= 57)
+        if (chara_index >= 57)
         {
-            if (cdata[cc].impression >= 53)
+            if (cdata[chara_index].impression >= 53)
             {
-                cdata[cc].emotion_icon = 225;
+                cdata[chara_index].emotion_icon = 225;
             }
         }
     }
@@ -1798,11 +1810,15 @@ void proc_turn_end(int cc)
     {
         if (rnd(6) == 0)
         {
-            heal_hp(cdata[cc], rnd_capped(sdata(154, cc) / 3 + 1) + 1);
+            heal_hp(
+                cdata[chara_index],
+                rnd_capped(sdata(154, chara_index) / 3 + 1) + 1);
         }
         if (rnd(5) == 0)
         {
-            heal_mp(cdata[cc], rnd_capped(sdata(155, cc) / 2 + 1) + 1);
+            heal_mp(
+                cdata[chara_index],
+                rnd_capped(sdata(155, chara_index) / 2 + 1) + 1);
         }
     }
 }

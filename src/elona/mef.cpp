@@ -290,10 +290,12 @@ void mef_proc(int tc)
 }
 
 // returns true if turn ended
-bool mef_proc_from_movement(int cc)
+bool mef_proc_from_movement(int chara_index)
 {
-    int i = cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                .mef_index_plus_one -
+    int i =
+        cell_data
+            .at(cdata[chara_index].position.x, cdata[chara_index].position.y)
+            .mef_index_plus_one -
         1;
     if (mef(0, i) == 0)
     {
@@ -301,24 +303,27 @@ bool mef_proc_from_movement(int cc)
     }
     if (mef(0, i) == 1)
     {
-        if (cdatan(2, cc) != u8"core.spider"s)
+        if (cdatan(2, chara_index) != u8"core.spider"s)
         {
             if (rnd_capped(mef(5, i) + 25) <
-                    rnd_capped(sdata(10, cc) + sdata(12, cc) + 1) ||
-                cdata[cc].weight > 100)
+                    rnd_capped(
+                        sdata(10, chara_index) + sdata(12, chara_index) + 1) ||
+                cdata[chara_index].weight > 100)
             {
-                if (is_in_fov(cdata[cc]))
+                if (is_in_fov(cdata[chara_index]))
                 {
-                    txt(i18n::s.get("core.mef.destroys_cobweb", cdata[cc]));
+                    txt(i18n::s.get(
+                        "core.mef.destroys_cobweb", cdata[chara_index]));
                 }
                 mef_delete(i);
             }
             else
             {
                 mef(5, i) = mef(5, i) * 3 / 4;
-                if (is_in_fov(cdata[cc]))
+                if (is_in_fov(cdata[chara_index]))
                 {
-                    txt(i18n::s.get("core.mef.is_caught_in_cobweb", cdata[cc]));
+                    txt(i18n::s.get(
+                        "core.mef.is_caught_in_cobweb", cdata[chara_index]));
                 }
                 return true;
             }

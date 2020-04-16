@@ -350,18 +350,18 @@ void draw_minimap_pixel(int x, int y)
 
 void highlight_characters_in_pet_arena()
 {
-    for (auto&& cc : cdata.all())
+    for (auto&& chara : cdata.all())
     {
-        if (cc.state() != Character::State::alive)
+        if (chara.state() != Character::State::alive)
             continue;
-        if (cc.index == 0)
+        if (chara.index == 0)
             continue;
         snail::Color color{0};
-        if (cc.relationship == 10)
+        if (chara.relationship == 10)
         {
             color = {127, 127, 255, 32};
         }
-        else if (cc.relationship == -3)
+        else if (chara.relationship == -3)
         {
             color = {255, 127, 127, 32};
         }
@@ -369,8 +369,8 @@ void highlight_characters_in_pet_arena()
         {
             continue;
         }
-        const int x = (cc.position.x - scx) * inf_tiles + inf_screenx;
-        const int y = (cc.position.y - scy) * inf_tiles + inf_screeny;
+        const int x = (chara.position.x - scx) * inf_tiles + inf_screenx;
+        const int y = (chara.position.y - scy) * inf_tiles + inf_screeny;
         if (0 <= x && x - inf_screenx < (inf_screenw - 1) * inf_tiles &&
             0 <= y && y < (inf_screenh - 1) * inf_tiles)
         {
@@ -380,7 +380,7 @@ void highlight_characters_in_pet_arena()
                 inf_tiles,
                 inf_tiles + (y < 0) * inf_screeny,
                 color);
-            if (cc.index == camera)
+            if (chara.index == camera)
             {
                 gmode(2, 120);
                 draw("camera", x + 36, y + 32);
@@ -449,16 +449,26 @@ void _render_hp_or_mp_bar(
 
 
 
-void render_hp_bar(const Character& cc, int x, int y, bool show_digit = false)
+void render_hp_bar(
+    const Character& chara,
+    int x,
+    int y,
+    bool show_digit = false)
 {
-    _render_hp_or_mp_bar(cc.hp, cc.max_hp, x, y, "hud_hp_bar", show_digit);
+    _render_hp_or_mp_bar(
+        chara.hp, chara.max_hp, x, y, "hud_hp_bar", show_digit);
 }
 
 
 
-void render_mp_bar(const Character& cc, int x, int y, bool show_digit = false)
+void render_mp_bar(
+    const Character& chara,
+    int x,
+    int y,
+    bool show_digit = false)
 {
-    _render_hp_or_mp_bar(cc.mp, cc.max_mp, x, y, "hud_mp_bar", show_digit);
+    _render_hp_or_mp_bar(
+        chara.mp, chara.max_mp, x, y, "hud_mp_bar", show_digit);
 }
 
 
