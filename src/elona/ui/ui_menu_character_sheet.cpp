@@ -552,7 +552,6 @@ void UIMenuCharacterSheet::_draw_first_page_attributes()
 void UIMenuCharacterSheet::_draw_first_page_weapon_info()
 {
     append_accuracy_info(_chara, 0);
-    tc = _chara.index;
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     mes(wx + 417,
         wy + 281 + p(2) * 16,
@@ -563,8 +562,8 @@ void UIMenuCharacterSheet::_draw_first_page_weapon_info()
         i18n::s.get("core.ui.chara_sheet.damage.evade"),
         {20, 10, 0});
     attackskill = 106;
-    const auto evade = calc_evasion(tc);
-    const auto prot = calc_attack_protection(cdata[tc]);
+    const auto evade = calc_evasion(_chara.index);
+    const auto prot = calc_attack_protection(_chara);
     font(14 - en * 2);
     mes(wx + 460 + en * 8,
         wy + 279 + p(2) * 16,
@@ -1150,7 +1149,6 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
             {
                 screenupdate = -1;
                 update_screen();
-                tc = tcbk;
                 return UIMenuCharacterSheet::Result::finish(
                     UIMenuCompositeCharacterResult{skill_id});
             }
@@ -1196,7 +1194,6 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
         {
             screenupdate = -1;
             update_screen();
-            tc = tcbk;
         }
         return UIMenuCharacterSheet::Result::cancel();
     }

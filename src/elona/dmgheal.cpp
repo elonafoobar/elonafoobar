@@ -1639,7 +1639,7 @@ void character_drops_item(Character& victim)
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1649,7 +1649,7 @@ void character_drops_item(Character& victim)
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1659,7 +1659,7 @@ void character_drops_item(Character& victim)
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1669,7 +1669,7 @@ void character_drops_item(Character& victim)
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1677,7 +1677,7 @@ void character_drops_item(Character& victim)
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1687,7 +1687,7 @@ void character_drops_item(Character& victim)
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1697,7 +1697,7 @@ void character_drops_item(Character& victim)
         if (rnd(50) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1711,7 +1711,7 @@ void character_drops_item(Character& victim)
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1719,7 +1719,7 @@ void character_drops_item(Character& victim)
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1727,7 +1727,7 @@ void character_drops_item(Character& victim)
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1735,7 +1735,7 @@ void character_drops_item(Character& victim)
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1743,7 +1743,7 @@ void character_drops_item(Character& victim)
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1753,7 +1753,7 @@ void character_drops_item(Character& victim)
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 62000;
             flttypeminor = 0;
             if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
@@ -1766,7 +1766,7 @@ void character_drops_item(Character& victim)
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 62000;
             flttypeminor = 0;
             if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
@@ -1779,7 +1779,7 @@ void character_drops_item(Character& victim)
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 32000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1787,7 +1787,7 @@ void character_drops_item(Character& victim)
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 34000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1795,7 +1795,7 @@ void character_drops_item(Character& victim)
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1803,7 +1803,7 @@ void character_drops_item(Character& victim)
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1811,7 +1811,7 @@ void character_drops_item(Character& victim)
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1819,7 +1819,7 @@ void character_drops_item(Character& victim)
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1827,7 +1827,7 @@ void character_drops_item(Character& victim)
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1835,7 +1835,7 @@ void character_drops_item(Character& victim)
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 77000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1845,7 +1845,7 @@ void character_drops_item(Character& victim)
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1853,7 +1853,7 @@ void character_drops_item(Character& victim)
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1861,7 +1861,7 @@ void character_drops_item(Character& victim)
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1869,7 +1869,7 @@ void character_drops_item(Character& victim)
         if (rnd(4) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1879,7 +1879,7 @@ void character_drops_item(Character& victim)
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1887,7 +1887,7 @@ void character_drops_item(Character& victim)
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1895,7 +1895,7 @@ void character_drops_item(Character& victim)
         if (rnd(15) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1903,7 +1903,7 @@ void character_drops_item(Character& victim)
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1911,7 +1911,7 @@ void character_drops_item(Character& victim)
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1919,7 +1919,7 @@ void character_drops_item(Character& victim)
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1927,7 +1927,7 @@ void character_drops_item(Character& victim)
         if (rnd(4) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1935,7 +1935,7 @@ void character_drops_item(Character& victim)
         if (rnd(4) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 77000;
             flttypeminor = 0;
             itemcreate_extra_inv(0, victim.position, 0);
@@ -1946,7 +1946,7 @@ void character_drops_item(Character& victim)
     if (rnd(40) == 0)
     {
         p = 0;
-        flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+        flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
         flttypemajor = 62000;
         flttypeminor = 0;
         if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
@@ -2106,59 +2106,61 @@ void check_kill(int killer_chara_index, int victim_chara_index)
 
 
 
-void heal_both_rider_and_mount()
+void heal_both_rider_and_mount(Character& target)
 {
-    int subloop = 0;
-    subloop = 1;
+    std::vector<std::reference_wrapper<Character>> targets;
+    targets.push_back(std::ref(target));
     if (game_data.mount != 0)
     {
-        if (tc == game_data.mount || tc == 0)
+        if (target.index == game_data.mount || target.index == 0)
         {
-            subloop = 2;
-            if (tc == game_data.mount)
+            if (target.index == game_data.mount)
             {
-                tc(1) = 0;
+                targets.push_back(std::ref(cdata.player()));
             }
             else
             {
-                tc(1) = game_data.mount;
+                targets.push_back(std::ref(cdata[game_data.mount]));
             }
         }
     }
-    for (int cnt = 0, cnt_end = (subloop); cnt < cnt_end; ++cnt)
+
+    for (auto&& target_rw : targets)
     {
+        auto&& target = target_rw.get();
         const auto amount = roll(dice1, dice2, bonus);
-        heal_hp(cdata[tc(cnt)], amount);
-        status_ailment_heal(cdata[tc(cnt)], StatusAilment::fear);
-        status_ailment_heal(cdata[tc(cnt)], StatusAilment::poisoned, 50);
-        status_ailment_heal(cdata[tc(cnt)], StatusAilment::confused, 50);
-        status_ailment_heal(cdata[tc(cnt)], StatusAilment::dimmed, 30);
-        status_ailment_heal(cdata[tc(cnt)], StatusAilment::bleeding, 20);
-        heal_insanity(cdata[tc(cnt)], 1);
-        if (is_in_fov(cdata[tc(cnt)]))
+        heal_hp(target, amount);
+        status_ailment_heal(target, StatusAilment::fear);
+        status_ailment_heal(target, StatusAilment::poisoned, 50);
+        status_ailment_heal(target, StatusAilment::confused, 50);
+        status_ailment_heal(target, StatusAilment::dimmed, 30);
+        status_ailment_heal(target, StatusAilment::bleeding, 20);
+        heal_insanity(target, 1);
+        if (is_in_fov(target))
         {
-            add_damage_popup(std::to_string(amount), tc(cnt), {127, 255, 127});
+            add_damage_popup(
+                std::to_string(amount), target.index, {127, 255, 127});
         }
     }
 }
 
 
 
-void heal_completely()
+void heal_completely(Character& target)
 {
-    cdata[tc].poisoned = 0;
-    cdata[tc].sleep = 0;
-    cdata[tc].confused = 0;
-    cdata[tc].blind = 0;
-    cdata[tc].paralyzed = 0;
-    cdata[tc].choked = 0;
-    cdata[tc].dimmed = 0;
-    cdata[tc].drunk = 0;
-    cdata[tc].bleeding = 0;
+    target.poisoned = 0;
+    target.sleep = 0;
+    target.confused = 0;
+    target.blind = 0;
+    target.paralyzed = 0;
+    target.choked = 0;
+    target.dimmed = 0;
+    target.drunk = 0;
+    target.bleeding = 0;
     game_data.continuous_active_hours = 0;
-    cdata[tc].hp = cdata[tc].max_hp;
-    cdata[tc].mp = cdata[tc].max_mp;
-    cdata[tc].sp = cdata[tc].max_sp;
+    target.hp = target.max_hp;
+    target.mp = target.max_mp;
+    target.sp = target.max_sp;
 }
 
 } // namespace elona

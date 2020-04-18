@@ -10,7 +10,6 @@
 #include "input.hpp"
 #include "input_prompt.hpp"
 #include "lua_env/lua_env.hpp"
-#include "macro.hpp"
 #include "main_menu.hpp"
 #include "menu.hpp"
 #include "race.hpp"

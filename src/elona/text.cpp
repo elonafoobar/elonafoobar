@@ -487,98 +487,7 @@ std::string txtskillchange(int id, int chara_index, bool increase)
 
 
 
-std::string _yoro(int mark)
-{
-    std::vector<std::string> candidates[][2] = {
-        {{u8"よろしくお願いします", u8"どうぞ、よろしくです"},
-         {u8"よろしくお願いしますわ", u8"よろしくです"}},
-        {{u8"よろしく頼むぜ", u8"よろしくな"},
-         {u8"よろしくね", u8"よろしくな"}},
-        {{u8"よろしくね", u8"よろしくお願いするよ"},
-         {u8"よろしくねっ", u8"よろしく〜"}},
-        {{u8"よろしく…", u8"今後とも、よろしく…"},
-         {u8"よろしくね…", u8"よろ…"}},
-        {{u8"よろしく頼もう", u8"よろしく頼むぞよ"},
-         {u8"よろしく頼むぞよ", u8"よろしく頼むぞな"}},
-        {{u8"よしなに", u8"よろしく頼むでござる"},
-         {u8"よろしくでござりまする", u8"どうぞよしなに"}},
-        {{u8"よろしくッス"}, {u8"よろしくにゃの"}},
-    };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::s.get_enum("core.ui.mark", mark);
-}
-
-
-
-std::string _dozo(int mark)
-{
-    std::vector<std::string> candidates[][2] = {
-        {{u8"はい、どうぞ", u8"お待ちどうさまです"},
-         {u8"はい、どうぞ", u8"注文の品ですわ"}},
-        {{u8"ほらよ", u8"ほれ"}, {u8"ほら", u8"待たせたね"}},
-        {{u8"はい、お待ち", u8"さあ、どうぞ"},
-         {u8"さあ、どうぞ", u8"お待ちどうさま"}},
-        {{u8"ほら…", u8"待たせたな…"}, {u8"はい…", u8"どうぞ…"}},
-        {{u8"ほうれ", u8"ほれ、受け取りたまえ"},
-         {u8"ほれ、受け取るが良い", u8"ほれ、待たせたのう"}},
-        {{u8"お待たせ申した", u8"待たせたでござる"},
-         {u8"お待たせ致しました", u8"ささ、どうぞ"}},
-        {{u8"お待たせッス"}, {u8"お待たせにゃん"}},
-    };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::s.get_enum("core.ui.mark", mark);
-}
-
-
-
-std::string _thanks(int mark)
-{
-    std::vector<std::string> candidates[][2] = {
-        {{u8"感謝します", u8"ありがとうございます"},
-         {u8"感謝します", u8"ありがとうございます"}},
-        {{u8"ありがとよ", u8"ありがたい"}, {u8"礼を言うよ", u8"ありがたいね"}},
-        {{u8"ありがとう", u8"感謝するよ"}, {u8"ありがとう〜", u8"感謝するわ"}},
-        {{u8"礼を言う…", u8"感謝する…"}, {u8"ありがと…", u8"礼を言うわ…"}},
-        {{u8"礼を申すぞ", u8"感謝してつかわす"},
-         {u8"くるしゅうない", u8"礼をいってつかわす"}},
-        {{u8"かたじけない", u8"恩に着る"},
-         {u8"ありがたや", u8"お礼申し上げます"}},
-        {{u8"アザーッス"}, {u8"にゃりーん"}},
-    };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::s.get_enum("core.ui.mark", mark);
-}
-
-
-
-std::string _rob(int mark)
-{
-    std::vector<std::string> candidates[][2] = {
-        {{u8"悪いことは言わない。おやめなさい",
-          u8"止めてください。きっと後悔しますよ"},
-         {u8"止めてくださいませ",
-          u8"こういう時のために、傭兵に金をかけているのです"}},
-        {{u8"なんだ、貴様賊だったのか",
-          u8"馬鹿な奴だ。後になって謝っても遅いぞ"},
-         {u8"ふん、返り討ちにしてくれるよ", u8"ごろつき風情に何ができる"}},
-        {{u8"おい、傭兵さんたち、このごろつきを追い払ってくれ",
-          u8"馬鹿な真似をするな。こっちには屈強の傭兵がいるんだぞ"},
-         {u8"やめて", u8"傭兵さんたち〜出番ですよ"}},
-        {{u8"甘く見られたものだ…", u8"この護衛の数が見えないのか…"},
-         {u8"おやめ…", u8"愚かな試みよ…"}},
-        {{u8"なんたる無礼者か", u8"ほほほ、こやつめ"},
-         {u8"下賤の者どもの分際で", u8"ほほほ、殺してあげなさい"}},
-        {{u8"何をするでござるか"},
-         {u8"ご無体な", u8"まあ、お戯れが過ぎますわ"}},
-        {{u8"見損なったッス"}, {u8"にゃりーん"}},
-    };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
-        i18n::s.get_enum("core.ui.mark", mark);
-}
-
-
-
-std::string _ka(int mark)
+std::string _ka(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"ですか"}, {u8"ですか"}},
@@ -589,13 +498,13 @@ std::string _ka(int mark)
         {{u8"でござるか"}, {u8"でござりまするか"}},
         {{u8"ッスか"}, {u8"かにゃ", u8"かニャン"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _da(int mark)
+std::string _da(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"です", u8"ですね"}, {u8"ですわ", u8"です"}},
@@ -606,13 +515,13 @@ std::string _da(int mark)
         {{u8"でござる", u8"でござるよ"}, {u8"でござりまする"}},
         {{u8"ッス"}, {u8"みゃん", u8"ミャ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _nda(int mark)
+std::string _nda(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"のです", u8"んです"}, {u8"のですわ", u8"のです"}},
@@ -623,13 +532,13 @@ std::string _nda(int mark)
         {{u8"のでござる"}, {u8"のでございます"}},
         {{u8"んだッス"}, {u8"のニャ", u8"のにゃん"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _noka(int mark)
+std::string _noka(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"のですか", u8"んですか"}, {u8"のですか", u8"んですか"}},
@@ -640,13 +549,13 @@ std::string _noka(int mark)
         {{u8"のでござるか"}, {u8"のでございます"}},
         {{u8"のッスか"}, {u8"にゃんか", u8"ニャン"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _kana(int mark)
+std::string _kana(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"でしょうか", u8"ですか"}, {u8"かしら", u8"でしょう"}},
@@ -657,13 +566,13 @@ std::string _kana(int mark)
         {{u8"でござるか"}, {u8"でございますか"}},
         {{u8"ッスか"}, {u8"かにゃん", u8"かニャ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _kimi(int mark)
+std::string _kimi(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"貴方"}, {u8"貴方"}},
@@ -674,13 +583,13 @@ std::string _kimi(int mark)
         {{u8"そこもと"}, {u8"そなた様"}},
         {{u8"アンタ"}, {u8"あにゃた"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _ru(int mark)
+std::string _ru(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"ます", u8"ますよ"}, {u8"ますわ", u8"ますの"}},
@@ -691,13 +600,13 @@ std::string _ru(int mark)
         {{u8"るでござる", u8"るでござるよ"}, {u8"るのでございます"}},
         {{u8"るッス"}, {u8"るのニャ", u8"るにゃん"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _tanomu(int mark)
+std::string _tanomu(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"お願いします", u8"頼みます"},
@@ -709,13 +618,13 @@ std::string _tanomu(int mark)
         {{u8"頼み申す", u8"頼むでござる"}, {u8"お頼み申し上げます"}},
         {{u8"頼むッス"}, {u8"おねがいにゃ", u8"おねがいニャン"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _ore(int mark)
+std::string _ore(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"私"}, {u8"私"}},
@@ -726,13 +635,13 @@ std::string _ore(int mark)
         {{u8"拙者"}, {u8"手前"}},
         {{u8"あっし"}, {u8"みゅー"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _ga(int mark)
+std::string _ga(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"ですが", u8"ですけど"}, {u8"ですが", u8"ですけど"}},
@@ -743,13 +652,13 @@ std::string _ga(int mark)
         {{u8"でござるが"}, {u8"でございますが"}},
         {{u8"ッスけど", u8"ッスが"}, {u8"ニャけど", u8"にゃが"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _dana(int mark)
+std::string _dana(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"ですね"}, {u8"ですわね", u8"ですね"}},
@@ -760,13 +669,13 @@ std::string _dana(int mark)
         {{u8"でござるな"}, {u8"でございますね"}},
         {{u8"ッスね"}, {u8"にゃ", u8"みゃ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _kure(int mark)
+std::string _kure(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"ください", u8"くださいよ"}, {u8"くださいな", u8"ください"}},
@@ -777,13 +686,13 @@ std::string _kure(int mark)
         {{u8"頂きたいでござる"}, {u8"くださいませ"}},
         {{u8"くれッス"}, {u8"にゃ", u8"みゃ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _daro(int mark)
+std::string _daro(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"でしょう"}, {u8"でしょう"}},
@@ -794,13 +703,13 @@ std::string _daro(int mark)
         {{u8"でござろうな"}, {u8"でございましょう"}},
         {{u8"ッスね"}, {u8"にゃ", u8"みゃ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _yo(int mark)
+std::string _yo(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"ですよ", u8"です"}, {u8"ですよ", u8"です"}},
@@ -811,13 +720,13 @@ std::string _yo(int mark)
         {{u8"でござろう"}, {u8"でございますわ"}},
         {{u8"ッスよ", u8"ッス"}, {u8"にゃぁ", u8"みゃぁ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _aru(int mark)
+std::string _aru(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"あります", u8"ありますね"}, {u8"あります", u8"ありますわ"}},
@@ -828,13 +737,13 @@ std::string _aru(int mark)
         {{u8"あるでござる", u8"あるでござるな"}, {u8"ござます"}},
         {{u8"あるッスよ", u8"あるッス"}, {u8"あにゅ", u8"あみぅ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _u(int mark)
+std::string _u(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"います", u8"いますよ"}, {u8"いますわ", u8"います"}},
@@ -845,13 +754,13 @@ std::string _u(int mark)
         {{u8"うでござる", u8"うでござるよ"}, {u8"うでございます"}},
         {{u8"うッスよ", u8"うッス"}, {u8"うにぁ", u8"うみぁ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _na(int mark)
+std::string _na(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"ですね", u8"です"}, {u8"ですわ", u8"ですね"}},
@@ -862,13 +771,13 @@ std::string _na(int mark)
         {{u8"でござるな"}, {u8"でございますわ"}},
         {{u8"ッスね", u8"ッス"}, {u8"ニァ", u8"ミァ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string _ta(int mark)
+std::string _ta(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
         {{u8"ました", u8"ましたね"}, {u8"ました", u8"ましたわ"}},
@@ -879,13 +788,15 @@ std::string _ta(int mark)
         {{u8"たでござる"}, {u8"ましてございます"}},
         {{u8"たッスよ", u8"たッス"}, {u8"たにゃぁ", u8"たみゃぁ"}},
     };
-    return choice(candidates[cdata[tc].talk_type][cdata[tc].sex]) +
+    return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
 }
 
 
 
-std::string replace_tag(const std::string source)
+std::string replace_tag(
+    const std::string source,
+    optional_ref<const Character> client)
 {
     if (source == u8"ref"s && talkref == 1)
     {
@@ -894,7 +805,8 @@ std::string replace_tag(const std::string source)
     }
     if (source == u8"you"s)
     {
-        return _kimi(3);
+        assert(client);
+        return _kimi(*client, 3);
     }
     if (source == u8"sex"s)
     {
@@ -910,62 +822,75 @@ std::string replace_tag(const std::string source)
     }
     if (source == u8"npc"s)
     {
-        return cdatan(0, tc);
+        assert(client);
+        return cdatan(0, client->index);
     }
     if (source == u8"ある"s)
     {
-        return _aru(3);
+        assert(client);
+        return _aru(*client, 3);
     }
     if (source == u8"が"s)
     {
-        return _ga(3);
+        assert(client);
+        return _ga(*client, 3);
     }
     if (source == u8"か"s)
     {
-        return _ka(3);
+        assert(client);
+        return _ka(*client, 3);
     }
     if (source == u8"かな"s)
     {
-        return _kana(3);
+        assert(client);
+        return _kana(*client, 3);
     }
     if (source == u8"だ"s)
     {
-        return _da(3);
+        assert(client);
+        return _da(*client, 3);
     }
     if (source == u8"よ"s)
     {
-        return _yo(3);
+        assert(client);
+        return _yo(*client, 3);
     }
     if (source == u8"だな"s)
     {
-        return _dana(3);
+        assert(client);
+        return _dana(*client, 3);
     }
     if (source == u8"だろ"s)
     {
-        return _daro(3);
+        assert(client);
+        return _daro(*client, 3);
     }
     if (source == u8"る"s)
     {
-        return _ru(3);
+        assert(client);
+        return _ru(*client, 3);
     }
     if (source == u8"のだ"s)
     {
-        return _nda(3);
+        assert(client);
+        return _nda(*client, 3);
     }
     if (source == u8"な"s)
     {
-        return _na(3);
+        assert(client);
+        return _na(*client, 3);
     }
     if (source == u8"くれ"s)
     {
-        return _kure(3);
+        assert(client);
+        return _kure(*client, 3);
     }
     return u8"Unknown Code"s;
 }
 
 
 
-void parse_talk_file()
+void parse_talk_file(optional_ref<const Character> speaker)
 {
     buff = strmid(buff, p, instr(buff, p, u8"%END"s));
     if (noteinfo() <= 1)
@@ -987,7 +912,7 @@ void parse_talk_file()
     p = rnd(noteinfo());
     noteget(s, p);
     buff = s;
-    text_replace_tags_in_quest_board();
+    text_replace_tags_in_quest_board(speaker);
 }
 
 
@@ -1009,12 +934,12 @@ void read_talk_file(const std::string& valn)
         }
     }
     p = instr(buff, 0, valn + u8","s + i18n::s.get("core.meta.tag"));
-    parse_talk_file();
+    parse_talk_file(none);
 }
 
 
 
-void get_npc_talk()
+void get_npc_talk(Character& chara)
 {
     buff = "";
     notesel(buff);
@@ -1033,7 +958,7 @@ void get_npc_talk()
     p = -1;
     for (int cnt = 0; cnt < 1; ++cnt)
     {
-        if (cdata[tc].role == Role::maid)
+        if (chara.role == Role::maid)
         {
             if (game_data.number_of_waiting_guests > 0)
             {
@@ -1042,34 +967,34 @@ void get_npc_talk()
                 break;
             }
         }
-        if (cdata[tc].interest <= 0)
+        if (chara.interest <= 0)
         {
             p = instr(buff, 0, u8"%BORED,"s + i18n::s.get("core.meta.tag"));
             break;
         }
-        if (tc < 16)
+        if (chara.index < 16)
         {
             p = instr(
                 buff, 0, u8"%ALLY_DEFAULT,"s + i18n::s.get("core.meta.tag"));
             break;
         }
-        if (cdata[tc].id == CharaId::prostitute)
+        if (chara.id == CharaId::prostitute)
         {
             p = instr(buff, 0, u8"%BITCH,"s + i18n::s.get("core.meta.tag"));
             break;
         }
-        if (cdata[tc].role == Role::moyer)
+        if (chara.role == Role::moyer)
         {
             p = instr(buff, 0, u8"%MOYER,"s + i18n::s.get("core.meta.tag"));
             break;
         }
-        if (cdata[tc].role == Role::slave_master)
+        if (chara.role == Role::slave_master)
         {
             p = instr(
                 buff, 0, u8"%SLAVEKEEPER,"s + i18n::s.get("core.meta.tag"));
             break;
         }
-        if (is_shopkeeper(cdata[tc].role))
+        if (is_shopkeeper(chara.role))
         {
             if (rnd(3))
             {
@@ -1078,7 +1003,7 @@ void get_npc_talk()
                 break;
             }
         }
-        if (cdata[tc].impression >= 100)
+        if (chara.impression >= 100)
         {
             if (rnd(3) == 0)
             {
@@ -1107,7 +1032,7 @@ void get_npc_talk()
             p = instr(
                 buff,
                 0,
-                u8"%PERSONALITY,"s + cdata[tc].personality + u8","s +
+                u8"%PERSONALITY,"s + chara.personality + u8","s +
                     i18n::s.get("core.meta.tag"));
             break;
         }
@@ -1125,7 +1050,7 @@ void get_npc_talk()
     {
         p = instr(buff, 0, u8"%DEFAULT,"s + i18n::s.get("core.meta.tag"));
     }
-    parse_talk_file();
+    parse_talk_file(chara);
 }
 
 
@@ -2406,7 +2331,9 @@ std::string cheer_up_message(int hours)
     return "";
 }
 
-void text_replace_tags_in_quest_board()
+
+
+void text_replace_tags_in_quest_board(optional_ref<const Character> client)
 {
     while (1)
     {
@@ -2420,11 +2347,13 @@ void text_replace_tags_in_quest_board()
         const auto tag = strmid(buff, p0 + 1, p1 - 1);
         const auto head = strmid(buff, 0, p0);
         const auto tail = strmid(buff, p0 + p1 + 1, p2 - p1 - p0);
-        buff = head + replace_tag(tag) + tail;
+        buff = head + replace_tag(tag, client) + tail;
     }
 }
 
-void text_replace_tags_in_quest_text()
+
+
+void text_replace_tags_in_quest_text(optional_ref<const Character> client)
 {
     for (int cnt = 0; cnt < 20; ++cnt)
     {
@@ -2457,12 +2386,14 @@ void text_replace_tags_in_quest_text()
             }
             if (s == u8"you"s)
             {
-                s = _kimi(3);
+                assert(client);
+                s = _kimi(*client, 3);
                 break;
             }
             if (s == u8"me"s)
             {
-                s = _ore(3);
+                assert(client);
+                s = _ore(*client, 3);
                 break;
             }
             if (s == u8"reward"s)
@@ -2492,82 +2423,98 @@ void text_replace_tags_in_quest_text()
             }
             if (s == u8"npc"s)
             {
-                s = cdatan(0, tc);
+                assert(client);
+                s = cdatan(0, client->index);
                 break;
             }
             if (s == u8"ある"s)
             {
-                s = _aru(3);
+                assert(client);
+                s = _aru(*client, 3);
                 break;
             }
             if (s == u8"う"s)
             {
-                s = _u(3);
+                assert(client);
+                s = _u(*client, 3);
                 break;
             }
             if (s == u8"か"s)
             {
-                s = _ka(3);
+                assert(client);
+                s = _ka(*client, 3);
                 break;
             }
             if (s == u8"が"s)
             {
-                s = _ga(3);
+                assert(client);
+                s = _ga(*client, 3);
                 break;
             }
             if (s == u8"かな"s)
             {
-                s = _kana(3);
+                assert(client);
+                s = _kana(*client, 3);
                 break;
             }
             if (s == u8"だ"s)
             {
-                s = _da(3);
+                assert(client);
+                s = _da(*client, 3);
                 break;
             }
             if (s == u8"よ"s)
             {
-                s = _yo(3);
+                assert(client);
+                s = _yo(*client, 3);
                 break;
             }
             if (s == u8"た"s)
             {
-                s = _ta(3);
+                assert(client);
+                s = _ta(*client, 3);
                 break;
             }
             if (s == u8"だな"s)
             {
-                s = _dana(3);
+                assert(client);
+                s = _dana(*client, 3);
                 break;
             }
             if (s == u8"だろ"s)
             {
-                s = _daro(3);
+                assert(client);
+                s = _daro(*client, 3);
                 break;
             }
             if (s == u8"たのむ"s)
             {
-                s = _tanomu(3);
+                assert(client);
+                s = _tanomu(*client, 3);
                 break;
             }
             if (s == u8"る"s)
             {
-                s = _ru(3);
+                assert(client);
+                s = _ru(*client, 3);
                 break;
             }
             if (s == u8"のだ"s)
             {
-                s = _nda(3);
+                assert(client);
+                s = _nda(*client, 3);
                 break;
             }
             if (s == u8"な"s)
             {
-                s = _na(3);
+                assert(client);
+                s = _na(*client, 3);
                 break;
             }
             if (s == u8"くれ"s)
             {
-                s = _kure(3);
+                assert(client);
+                s = _kure(*client, 3);
                 break;
             }
             s = u8"Unknown Code"s;
@@ -2897,10 +2844,10 @@ std::string ranktitle(int rank_id)
 
 
 
-std::string txttargetlevel(int chara_index, int tc)
+std::string txttargetlevel(int chara_index, int target_chara_index)
 {
     int x = cdata[chara_index].level;
-    int y = cdata[tc].level;
+    int y = cdata[target_chara_index].level;
     int danger;
     if (x * 20 < y)
     {
@@ -2947,17 +2894,18 @@ std::string txttargetlevel(int chara_index, int tc)
         danger = 0;
     }
 
-    return i18n::s.get_enum("core.action.target.level", danger, cdata[tc]);
+    return i18n::s.get_enum(
+        "core.action.target.level", danger, cdata[target_chara_index]);
 }
 
 
 
 void txttargetnpc(int x, int y)
 {
-    int dy_at_m186 = 0;
-    int i_at_m186 = 0;
-    int p_at_m186 = 0;
-    dy_at_m186 = 0;
+    int dy_ = 0;
+    int i_ = 0;
+    int p_ = 0;
+    dy_ = 0;
     font(14 - en * 2);
     if (fov_los(cdata.player().position.x, cdata.player().position.y, x, y) ==
             0 ||
@@ -2967,42 +2915,38 @@ void txttargetnpc(int x, int y)
         bmes(
             i18n::s.get("core.action.target.out_of_sight"),
             100,
-            windowh - inf_verh - 45 - dy_at_m186 * 20);
-        ++dy_at_m186;
+            windowh - inf_verh - 45 - dy_ * 20);
+        ++dy_;
         cansee = 0;
         return;
     }
     if (cell_data.at(x, y).chara_index_plus_one != 0)
     {
-        i_at_m186 = cell_data.at(x, y).chara_index_plus_one - 1;
-        if (cdata[i_at_m186].is_invisible() == 0 ||
-            cdata.player().can_see_invisible() || cdata[i_at_m186].wet)
+        i_ = cell_data.at(x, y).chara_index_plus_one - 1;
+        if (cdata[i_].is_invisible() == 0 ||
+            cdata.player().can_see_invisible() || cdata[i_].wet)
         {
-            tc = i_at_m186;
-            s = txttargetlevel(cdata.player().index, tc);
-            bmes(s, 100, windowh - inf_verh - 45 - dy_at_m186 * 20);
-            ++dy_at_m186;
+            s = txttargetlevel(cdata.player().index, i_);
+            bmes(s, 100, windowh - inf_verh - 45 - dy_ * 20);
+            ++dy_;
             bmes(
                 i18n::s.get(
                     "core.action.target.you_are_targeting",
-                    cdata[i_at_m186],
+                    cdata[i_],
                     dist(
                         cdata.player().position.x,
                         cdata.player().position.y,
-                        cdata[i_at_m186].position.x,
-                        cdata[i_at_m186].position.y)),
+                        cdata[i_].position.x,
+                        cdata[i_].position.y)),
                 100,
-                windowh - inf_verh - 45 - dy_at_m186 * 20);
-            ++dy_at_m186;
+                windowh - inf_verh - 45 - dy_ * 20);
+            ++dy_;
         }
     }
     if (cell_data.at(x, y).item_appearances_memory != 0)
     {
-        bmes(
-            txtitemoncell(x, y),
-            100,
-            windowh - inf_verh - 45 - dy_at_m186 * 20);
-        ++dy_at_m186;
+        bmes(txtitemoncell(x, y), 100, windowh - inf_verh - 45 - dy_ * 20);
+        ++dy_;
     }
     if (cell_data.at(x, y).feats != 0)
     {
@@ -3010,13 +2954,11 @@ void txttargetnpc(int x, int y)
         {
             if (cell_data.at(x, y).feats / 1000 % 100 == 15)
             {
-                p_at_m186 = cell_data.at(x, y).feats / 100000 % 100 +
+                p_ = cell_data.at(x, y).feats / 100000 % 100 +
                     cell_data.at(x, y).feats / 10000000 * 100;
                 bmes(
-                    mapname(p_at_m186, true),
-                    100,
-                    windowh - inf_verh - 45 - dy_at_m186 * 20);
-                ++dy_at_m186;
+                    mapname(p_, true), 100, windowh - inf_verh - 45 - dy_ * 20);
+                ++dy_;
             }
             if (cell_data.at(x, y).feats / 1000 % 100 == 34)
             {
@@ -3025,8 +2967,8 @@ void txttargetnpc(int x, int y)
                         cell_data.at(x, y).feats / 100000 % 100,
                         cell_data.at(x, y).feats / 10000000),
                     100,
-                    windowh - inf_verh - 45 - dy_at_m186 * 20);
-                ++dy_at_m186;
+                    windowh - inf_verh - 45 - dy_ * 20);
+                ++dy_;
             }
         }
     }

@@ -365,7 +365,6 @@ std::pair<bool, int> activity_perform_proc_audience(
     {
         return std::make_pair(false, 0); // TODO: unreachable?
     }
-    tc = audience.index;
     if (audience.index == performer.index)
     {
         return std::make_pair(false, 0);
@@ -644,7 +643,6 @@ void activity_others_start(Character& doer, optional_ref<Item> activity_item)
 {
     doer.activity.type = Activity::Type::others;
     doer.activity.item = activity_item ? activity_item->index : -1;
-    doer.activity_target = tc;
 
     switch (game_data.activity_about_to_start)
     {
@@ -1018,15 +1016,15 @@ void activity_others_end_steal(Item& steal_target)
     steal_target.is_quest_target() = false;
     if (steal_target.body_part != 0)
     {
-        tc = inv_getowner(steal_target);
-        if (tc != -1)
+        const auto item_owner = inv_getowner(steal_target);
+        if (item_owner != -1)
         {
             p = steal_target.body_part;
-            cdata[tc].body_parts[p - 100] =
-                cdata[tc].body_parts[p - 100] / 10000 * 10000;
+            cdata[item_owner].body_parts[p - 100] =
+                cdata[item_owner].body_parts[p - 100] / 10000 * 10000;
         }
         steal_target.body_part = 0;
-        chara_refresh(tc);
+        chara_refresh(item_owner);
     }
     auto& stolen_item = *slot;
     item_copy(steal_target, stolen_item);
@@ -1104,7 +1102,7 @@ void activity_others_end_harvest(Item& crop)
     txt(i18n::s.get(
         "core.activity.harvest.finish", crop, cnvweight(crop.weight)));
     in = crop.number();
-    pick_up_item(cdata.player().index, crop);
+    pick_up_item(cdata.player().index, crop, none);
 }
 
 
@@ -1281,7 +1279,7 @@ optional<TurnResult> activity_proc(Character& chara)
         return do_read_command(chara, inv[activity_item_index]);
     case Activity::Type::sex:
         auto_turn(g_config.animation_wait() * 2.5);
-        activity_sex(chara);
+        activity_sex(chara, none);
         break;
     case Activity::Type::others:
         switch (game_data.activity_about_to_start)
@@ -1348,42 +1346,44 @@ void activity_perform(Character& performer, const Item& instrument)
 
 
 
-void activity_sex(Character& chara_a)
+void activity_sex(Character& chara_a, optional_ref<Character> chara_b)
 {
     int sexhost = 0;
     if (!chara_a.activity)
     {
+        assert(chara_b);
         chara_a.activity.type = Activity::Type::sex;
         chara_a.activity.turn = 25 + rnd(10);
-        chara_a.activity_target = tc;
-        cdata[tc].activity.type = Activity::Type::sex;
-        cdata[tc].activity.turn = chara_a.activity.turn * 2;
-        cdata[tc].activity_target = chara_a.index + 10000;
+        chara_a.activity_target = chara_b->index;
+        chara_b->activity.type = Activity::Type::sex;
+        chara_b->activity.turn = chara_a.activity.turn * 2;
+        chara_b->activity_target = chara_a.index + 10000;
         if (is_in_fov(chara_a))
         {
             txt(i18n::s.get("core.activity.sex.take_clothes_off", chara_a));
         }
         return;
     }
+
     sexhost = 1;
-    tc = chara_a.activity_target;
-    if (tc >= 10000)
+    auto target_index = chara_a.activity_target;
+    if (target_index >= 10000)
     {
-        tc -= 10000;
+        target_index -= 10000;
         sexhost = 0;
     }
-    if (cdata[tc].state() != Character::State::alive ||
-        cdata[tc].activity.type != Activity::Type::sex)
+    if (cdata[target_index].state() != Character::State::alive ||
+        cdata[target_index].activity.type != Activity::Type::sex)
     {
         if (is_in_fov(chara_a))
         {
             txt(i18n::s.get(
                 "core.activity.sex.spare_life",
-                i18n::s.get_enum("core.ui.sex2", cdata[tc].sex),
-                cdata[tc]));
+                i18n::s.get_enum("core.ui.sex2", cdata[target_index].sex),
+                cdata[target_index]));
         }
         chara_a.activity.finish();
-        cdata[tc].activity.finish();
+        cdata[target_index].activity.finish();
         return;
     }
     if (chara_a.index == 0)
@@ -1392,7 +1392,7 @@ void activity_sex(Character& chara_a)
         {
             txt(i18n::s.get("core.magic.common.too_exhausted"));
             chara_a.activity.finish();
-            cdata[tc].activity.finish();
+            cdata[target_index].activity.finish();
             return;
         }
     }
@@ -1426,7 +1426,7 @@ void activity_sex(Character& chara_a)
         }
         else
         {
-            c = tc;
+            c = target_index;
         }
         chara_a.drunk = 0;
         if (cnt == 1)
@@ -1458,45 +1458,47 @@ void activity_sex(Character& chara_a)
 
     if (is_in_fov(chara_a))
     {
-        dialog_head = i18n::s.get("core.activity.sex.after_dialog", cdata[tc]);
+        dialog_head =
+            i18n::s.get("core.activity.sex.after_dialog", cdata[target_index]);
         Message::instance().txtef(ColorIndex::yellow_green);
     }
-    if (tc != 0)
+    if (target_index != 0)
     {
-        if (cdata[tc].gold >= sexvalue)
+        if (cdata[target_index].gold >= sexvalue)
         {
             if (is_in_fov(chara_a))
             {
-                dialog_tail = i18n::s.get("core.activity.sex.take", cdata[tc]);
+                dialog_tail =
+                    i18n::s.get("core.activity.sex.take", cdata[target_index]);
             }
         }
         else
         {
             if (is_in_fov(chara_a))
             {
-                dialog_tail =
-                    i18n::s.get("core.activity.sex.take_all_i_have", cdata[tc]);
+                dialog_tail = i18n::s.get(
+                    "core.activity.sex.take_all_i_have", cdata[target_index]);
                 if (rnd(3) == 0)
                 {
                     if (chara_a.index != 0)
                     {
                         dialog_after = i18n::s.get(
                             "core.activity.sex.gets_furious", chara_a);
-                        chara_a.enemy_id = tc;
+                        chara_a.enemy_id = target_index;
                         chara_a.hate = 20;
                     }
                 }
             }
-            if (cdata[tc].gold <= 0)
+            if (cdata[target_index].gold <= 0)
             {
-                cdata[tc].gold = 1;
+                cdata[target_index].gold = 1;
             }
-            sexvalue = cdata[tc].gold;
+            sexvalue = cdata[target_index].gold;
         }
-        cdata[tc].gold -= sexvalue;
+        cdata[target_index].gold -= sexvalue;
         if (chara_a.index == 0)
         {
-            chara_modify_impression(cdata[tc], 5);
+            chara_modify_impression(cdata[target_index], 5);
             flt();
             itemcreate_extra_inv(54, chara_a.position, sexvalue);
             dialog_after +=
@@ -1514,7 +1516,7 @@ void activity_sex(Character& chara_a)
             dialog_after);
     }
     chara_a.activity.finish();
-    cdata[tc].activity.finish();
+    cdata[target_index].activity.finish();
 }
 
 
@@ -1585,7 +1587,7 @@ void activity_eating_finish(Character& eater, Item& food)
                         modify_karma(cdata.player(), -1);
                     }
                 }
-                chara_modify_impression(cdata[tc], -25);
+                chara_modify_impression(eater, -25);
                 return;
             }
         }
@@ -1623,7 +1625,6 @@ void activity_others(Character& doer, optional_ref<Item> activity_item)
     }
     else
     {
-        tc = doer.activity_target;
         if (doer.activity.turn > 0)
         {
             activity_others_doing(doer, activity_item);
@@ -2112,38 +2113,37 @@ void sleep_start(optional_ref<Item> bed)
     gmode(2);
     for (int cnt = 0; cnt < ELONA_MAX_PARTY_CHARACTERS; ++cnt)
     {
-        tc = cnt;
-        cdata[tc].wet = 0;
-        cdata[tc].poisoned = 0;
-        cdata[tc].sleep = 0;
-        cdata[tc].confused = 0;
-        cdata[tc].blind = 0;
-        cdata[tc].paralyzed = 0;
-        cdata[tc].dimmed = 0;
-        cdata[tc].drunk = 0;
-        cdata[tc].bleeding = 0;
+        cdata[cnt].wet = 0;
+        cdata[cnt].poisoned = 0;
+        cdata[cnt].sleep = 0;
+        cdata[cnt].confused = 0;
+        cdata[cnt].blind = 0;
+        cdata[cnt].paralyzed = 0;
+        cdata[cnt].dimmed = 0;
+        cdata[cnt].drunk = 0;
+        cdata[cnt].bleeding = 0;
         game_data.continuous_active_hours = 0;
-        cdata[tc].hp = cdata[tc].max_hp;
-        cdata[tc].mp = cdata[tc].max_mp;
-        cdata[tc].sp = cdata[tc].max_sp;
-        status_ailment_heal(cdata[tc], StatusAilment::sick, 7 + rnd(7));
-        if (cdata[tc].has_anorexia())
+        cdata[cnt].hp = cdata[cnt].max_hp;
+        cdata[cnt].mp = cdata[cnt].max_mp;
+        cdata[cnt].sp = cdata[cnt].max_sp;
+        status_ailment_heal(cdata[cnt], StatusAilment::sick, 7 + rnd(7));
+        if (cdata[cnt].has_anorexia())
         {
-            cdata[tc].anorexia_count -= rnd(6);
+            cdata[cnt].anorexia_count -= rnd(6);
         }
         else
         {
-            cdata[tc].anorexia_count -= rnd(3);
+            cdata[cnt].anorexia_count -= rnd(3);
         }
-        if (cdata[tc].anorexia_count < 0)
+        if (cdata[cnt].anorexia_count < 0)
         {
-            cure_anorexia(cdata[tc]);
-            cdata[tc].anorexia_count = 0;
+            cure_anorexia(cdata[cnt]);
+            cdata[cnt].anorexia_count = 0;
         }
-        heal_insanity(cdata[tc], 10);
-        if (cdata[tc].has_lay_hand())
+        heal_insanity(cdata[cnt], 10);
+        if (cdata[cnt].has_lay_hand())
         {
-            cdata[tc].is_lay_hand_available() = true;
+            cdata[cnt].is_lay_hand_available() = true;
         }
     }
     mode = 9;
@@ -2164,24 +2164,26 @@ void sleep_start(optional_ref<Item> bed)
     }
     if (game_data.character_and_status_for_gene != 0)
     {
-        tc = -1;
+        auto gene_chara_index = -1;
         for (int cnt = 1; cnt < 16; ++cnt)
         {
             if (cdata[cnt].has_made_gene() == 1)
             {
                 if (cdata[cnt].state() == Character::State::alive)
                 {
-                    tc = cnt;
+                    gene_chara_index = cnt;
                     break;
                 }
             }
         }
-        if (tc != -1)
+        if (gene_chara_index != -1)
         {
-            cdata[tc].has_made_gene() = false;
+            cdata[gene_chara_index].has_made_gene() = false;
             show_random_event_window(
                 i18n::s.get("core.activity.sleep.new_gene.title"),
-                i18n::s.get("core.activity.sleep.new_gene.text", cdata[tc]),
+                i18n::s.get(
+                    "core.activity.sleep.new_gene.text",
+                    cdata[gene_chara_index]),
                 {i18n::s.get_enum("core.activity.sleep.new_gene.choices", 0)},
                 u8"bg_re14");
             save_gene();

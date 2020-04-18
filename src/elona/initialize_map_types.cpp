@@ -3178,23 +3178,22 @@ static void _init_map_yeeks_nest()
         if (game_data.quest_flags.novice_knight < 2)
         {
             flt();
-            if (const auto chara = chara_create(-1, 242, -3, 0))
+            if (const auto rodlob = chara_create(-1, 242, -3, 0))
             {
-                tc = chara->index;
                 for (int cnt = 0; cnt < 5; ++cnt)
                 {
                     flt();
                     chara_create(
-                        -1, 240, cdata[tc].position.x, cdata[tc].position.y);
+                        -1, 240, rodlob->position.x, rodlob->position.y);
                 }
                 for (int cnt = 0; cnt < 10; ++cnt)
                 {
                     flt();
                     chara_create(
-                        -1, 238, cdata[tc].position.x, cdata[tc].position.y);
+                        -1, 238, rodlob->position.x, rodlob->position.y);
                     flt();
                     chara_create(
-                        -1, 237, cdata[tc].position.x, cdata[tc].position.y);
+                        -1, 237, rodlob->position.x, rodlob->position.y);
                 }
             }
         }

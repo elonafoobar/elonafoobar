@@ -198,6 +198,7 @@ CanDoRangedAttackResult can_do_ranged_attack(const Character& chara)
 
 bool do_physical_attack_internal(
     Character& attacker,
+    Character& target,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo)
 {
@@ -207,7 +208,7 @@ bool do_physical_attack_internal(
     {
         return false;
     }
-    if (cdata[tc].state() != Character::State::alive)
+    if (target.state() != Character::State::alive)
     {
         return false;
     }
@@ -217,10 +218,10 @@ bool do_physical_attack_internal(
             Message::only_once{true});
         return false;
     }
-    if (cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
-            .mef_index_plus_one != 0)
+    if (cell_data.at(target.position.x, target.position.y).mef_index_plus_one !=
+        0)
     {
-        bool return_now = mef_proc_from_physical_attack(attacker, tc);
+        bool return_now = mef_proc_from_physical_attack(attacker, target.index);
         if (return_now)
         {
             return false;
@@ -230,7 +231,7 @@ bool do_physical_attack_internal(
     {
         RangedAttackAnimation(
             attacker.position,
-            cdata[tc].position,
+            target.position,
             static_cast<RangedAttackAnimation::Type>(attackskill),
             the_item_db[itemid2int(weapon->id)]->subcategory,
             weapon->image % 1000,
@@ -238,10 +239,10 @@ bool do_physical_attack_internal(
             .play();
     }
 
-    const auto expmodifer = 1 + cdata[tc].is_hung_on_sand_bag() * 15 +
-        cdata[tc].splits() + cdata[tc].splits2() +
+    const auto expmodifer = 1 + target.is_hung_on_sand_bag() * 15 +
+        target.splits() + target.splits2() +
         (game_data.current_map == mdata_t::MapId::show_house);
-    int hit = calcattackhit(attacker, weapon, ammo);
+    int hit = calcattackhit(attacker, target, weapon, ammo);
     i = 0;
     if (hit == 1)
     {
@@ -254,16 +255,20 @@ bool do_physical_attack_internal(
             }
         }
         dmg = calcattackdmg(
-            attacker, weapon, ammo, AttackDamageCalculationMode::actual_damage);
+            attacker,
+            target,
+            weapon,
+            ammo,
+            AttackDamageCalculationMode::actual_damage);
         attackdmg = dmg;
         if (attacker.index == 0)
         {
             if (g_config.attack_animation())
             {
-                int damage_percent = dmg * 100 / cdata[tc].max_hp;
+                int damage_percent = dmg * 100 / target.max_hp;
                 MeleeAttackAnimation(
-                    cdata[tc].position,
-                    cdata[tc].breaks_into_debris(),
+                    target.position,
+                    target.breaks_into_debris(),
                     attackskill,
                     damage_percent,
                     critical)
@@ -318,7 +323,7 @@ bool do_physical_attack_internal(
                 elep = attacker.element_of_unarmed_attack % 100000;
             }
         }
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
             if (extraattack)
             {
@@ -327,14 +332,14 @@ bool do_physical_attack_internal(
             }
             if (attackskill == 106)
             {
-                if (tc >= 16)
+                if (target.index >= 16)
                 {
                     game_data.proc_damage_events_flag = 2;
                     txt(i18n::s.get(
                         "core.damage.weapon.attacks_unarmed_and",
                         attacker,
                         _melee(0, attacker.melee_attack_type),
-                        cdata[tc]));
+                        target));
                 }
                 else
                 {
@@ -342,7 +347,7 @@ bool do_physical_attack_internal(
                         "core.damage.weapon.attacks_unarmed",
                         attacker,
                         _melee(1, attacker.melee_attack_type),
-                        cdata[tc]));
+                        target));
                 }
             }
             else
@@ -360,7 +365,7 @@ bool do_physical_attack_internal(
                 }
                 if (weapon_name)
                 {
-                    if (tc >= 16)
+                    if (target.index >= 16)
                     {
                         game_data.proc_damage_events_flag = 2;
                         if (attackskill == 111)
@@ -372,7 +377,7 @@ bool do_physical_attack_internal(
                                     "core.damage.weapon",
                                     "verb_and",
                                     attackskill),
-                                cdata[tc],
+                                target,
                                 *weapon_name));
                         }
                         else
@@ -384,7 +389,7 @@ bool do_physical_attack_internal(
                                     "core.damage.weapon",
                                     "verb_and",
                                     attackskill),
-                                cdata[tc]));
+                                target));
                         }
                     }
                     else
@@ -394,27 +399,27 @@ bool do_physical_attack_internal(
                             attacker,
                             i18n::s.get_enum_property(
                                 "core.damage.weapon", "verb", attackskill),
-                            cdata[tc],
+                            target,
                             *weapon_name));
                     }
                 }
             }
         }
-        damage_hp(cdata[tc], dmg, attacker.index, ele, elep);
+        damage_hp(target, dmg, attacker.index, ele, elep);
         if (critical)
         {
             chara_gain_skill_exp(attacker, 186, 60 / expmodifer, 2);
             critical = 0;
         }
-        if (rtdmg > cdata[tc].max_hp / 20 || rtdmg > sdata(154, tc) ||
+        if (rtdmg > target.max_hp / 20 || rtdmg > sdata(154, target.index) ||
             rnd(5) == 0)
         {
             chara_gain_skill_exp(
                 attacker,
                 attackskill,
                 clamp(
-                    (sdata(173, tc) * 2 - sdata(attackskill, attacker.index) +
-                     1),
+                    (sdata(173, target.index) * 2 -
+                     sdata(attackskill, attacker.index) + 1),
                     5,
                     50) /
                     expmodifer,
@@ -448,40 +453,40 @@ bool do_physical_attack_internal(
                         cdata.player(), 301, 30 / expmodifer, 0, 5);
                 }
             }
-            if (cdata[tc].state() == Character::State::alive)
+            if (target.state() == Character::State::alive)
             {
                 chara_gain_skill_exp(
-                    cdata[tc],
-                    chara_armor_class(cdata[tc]),
-                    clamp((250 * rtdmg / cdata[tc].max_hp + 1), 3, 100) /
+                    target,
+                    chara_armor_class(target),
+                    clamp((250 * rtdmg / target.max_hp + 1), 3, 100) /
                         expmodifer,
                     0,
                     5);
-                if (cdata[tc].combat_style.shield())
+                if (target.combat_style.shield())
                 {
-                    chara_gain_skill_exp(cdata[tc], 168, 40 / expmodifer, 0, 4);
+                    chara_gain_skill_exp(target, 168, 40 / expmodifer, 0, 4);
                 }
             }
         }
         if (attackskill != 106)
         {
-            proc_weapon_enchantments(attacker, *weapon);
+            proc_weapon_enchantments(attacker, target, *weapon);
         }
-        if (cdata[tc].cut_counterattack > 0)
+        if (target.cut_counterattack > 0)
         {
             if (attackrange == 0)
             {
                 damage_hp(
                     attacker,
-                    attackdmg * cdata[tc].cut_counterattack / 100 + 1,
-                    tc,
+                    attackdmg * target.cut_counterattack / 100 + 1,
+                    target.index,
                     61,
                     100);
             }
         }
-        if (cdata[tc].damage_reaction_info != 0)
+        if (target.damage_reaction_info != 0)
         {
-            p = cdata[tc].damage_reaction_info % 1000;
+            p = target.damage_reaction_info % 1000;
             for (int cnt = 0; cnt < 1; ++cnt)
             {
                 if (attackrange == 0)
@@ -497,10 +502,10 @@ bool do_physical_attack_internal(
                         }
                         damage_hp(
                             attacker,
-                            clamp(attackdmg / 10, 1, cdata[tc].max_hp / 10),
-                            tc,
+                            clamp(attackdmg / 10, 1, target.max_hp / 10),
+                            target.index,
                             p,
-                            cdata[tc].damage_reaction_info / 1000);
+                            target.damage_reaction_info / 1000);
                         break;
                     }
                     if (p == 62)
@@ -514,10 +519,10 @@ bool do_physical_attack_internal(
                         }
                         damage_hp(
                             attacker,
-                            clamp(attackdmg / 10, 1, cdata[tc].max_hp / 10),
-                            tc,
+                            clamp(attackdmg / 10, 1, target.max_hp / 10),
+                            target.index,
                             p,
-                            cdata[tc].damage_reaction_info / 1000);
+                            target.damage_reaction_info / 1000);
                         break;
                     }
                     if (p == 63)
@@ -531,21 +536,21 @@ bool do_physical_attack_internal(
                         }
                     }
                 }
-                if (attackdmg > cdata[tc].max_hp / 10)
+                if (attackdmg > target.max_hp / 10)
                 {
-                    tlocx = cdata[tc].position.x;
-                    tlocy = cdata[tc].position.y;
+                    tlocx = target.position.x;
+                    tlocy = target.position.y;
                     if (p == 63)
                     {
-                        if (is_in_fov(cdata[tc]))
+                        if (is_in_fov(target))
                         {
                             txt(i18n::s.get(
                                     "core.damage.reactive_attack.acids"),
                                 Message::color{ColorIndex::purple});
                         }
                         efid = 455;
-                        efp = cdata[tc].damage_reaction_info / 1000;
-                        magic(cdata[tc]);
+                        efp = target.damage_reaction_info / 1000;
+                        magic(target, target);
                         break;
                     }
                 }
@@ -558,16 +563,17 @@ bool do_physical_attack_internal(
         {
             snd("core.miss");
         }
-        if (sdata(attackskill, attacker.index) > sdata(173, tc) || rnd(5) == 0)
+        if (sdata(attackskill, attacker.index) > sdata(173, target.index) ||
+            rnd(5) == 0)
         {
             p = clamp(
-                    (sdata(attackskill, attacker.index) - sdata(173, tc) / 2 +
-                     1),
+                    (sdata(attackskill, attacker.index) -
+                     sdata(173, target.index) / 2 + 1),
                     1,
                     20) /
                 expmodifer;
-            chara_gain_skill_exp(cdata[tc], 173, p, 0, 4);
-            chara_gain_skill_exp(cdata[tc], 187, p, 0, 4);
+            chara_gain_skill_exp(target, 173, p, 0, 4);
+            chara_gain_skill_exp(target, 187, p, 0, 4);
         }
     }
     if (hit == -1)
@@ -579,15 +585,15 @@ bool do_physical_attack_internal(
                 txt(i18n::s.get("core.damage.furthermore"));
                 Message::instance().continue_sentence();
             }
-            if (tc < 16)
+            if (target.index < 16)
             {
-                txt(i18n::s.get("core.damage.miss.ally", attacker, cdata[tc]));
+                txt(i18n::s.get("core.damage.miss.ally", attacker, target));
             }
             else
             {
-                txt(i18n::s.get("core.damage.miss.other", attacker, cdata[tc]));
+                txt(i18n::s.get("core.damage.miss.other", attacker, target));
             }
-            add_damage_popup(u8"miss", tc, {191, 191, 191});
+            add_damage_popup(u8"miss", target.index, {191, 191, 191});
         }
     }
     if (hit == -2)
@@ -599,29 +605,28 @@ bool do_physical_attack_internal(
                 txt(i18n::s.get("core.damage.furthermore"));
                 Message::instance().continue_sentence();
             }
-            if (tc < 16)
+            if (target.index < 16)
             {
-                txt(i18n::s.get("core.damage.evade.ally", attacker, cdata[tc]));
+                txt(i18n::s.get("core.damage.evade.ally", attacker, target));
             }
             else
             {
-                txt(i18n::s.get(
-                    "core.damage.evade.other", attacker, cdata[tc]));
+                txt(i18n::s.get("core.damage.evade.other", attacker, target));
             }
-            add_damage_popup(u8"evade!!", tc, {191, 191, 191});
+            add_damage_popup(u8"evade!!", target.index, {191, 191, 191});
         }
     }
-    rowact_check(cdata[tc]);
+    rowact_check(target);
     if (attackskill != 106)
     {
-        if (cdata[tc].state() != Character::State::alive)
+        if (target.state() != Character::State::alive)
         {
             if (weapon->is_alive())
             {
                 if (weapon->param2 < calcexpalive(weapon->param1))
                 {
                     weapon->param2 +=
-                        rnd_capped(cdata[tc].level / weapon->param1 + 1);
+                        rnd_capped(target.level / weapon->param1 + 1);
                     if (weapon->param2 >= calcexpalive(weapon->param1))
                     {
                         snd("core.ding3");
@@ -659,10 +664,11 @@ bool do_physical_attack_internal(
 
 void do_physical_attack(
     Character& attacker,
+    Character& target,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo)
 {
-    while (do_physical_attack_internal(attacker, weapon, ammo))
+    while (do_physical_attack_internal(attacker, target, weapon, ammo))
         ;
 }
 
@@ -670,6 +676,7 @@ void do_physical_attack(
 
 void do_ranged_attack(
     Character& attacker,
+    Character& target,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo)
 {
@@ -680,8 +687,8 @@ void do_ranged_attack(
     ele = 0;
     ammoproc = -1;
     ammoprocbk = -1;
-    ammox = cdata[tc].position.x;
-    ammoy = cdata[tc].position.y;
+    ammox = target.position.x;
+    ammoy = target.position.y;
     if (ammo)
     {
         if (ammo->count != -1)
@@ -717,6 +724,7 @@ void do_ranged_attack(
     if (ammoproc == 0)
     {
         ammoprocbk = ammoproc;
+        auto rapidshot_target = std::ref(target);
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             const auto result = can_do_ranged_attack(attacker);
@@ -724,8 +732,8 @@ void do_ranged_attack(
             ammo = result.ammo;
             ele = 0;
             extraattack = 0;
-            do_physical_attack(attacker, weapon, ammo);
-            if (cdata[tc].state() != Character::State::alive)
+            do_physical_attack(attacker, rapidshot_target.get(), weapon, ammo);
+            if (rapidshot_target.get().state() != Character::State::alive)
             {
                 int stat = find_enemy_target(attacker);
                 if (stat == 0)
@@ -734,7 +742,7 @@ void do_ranged_attack(
                 }
                 else
                 {
-                    tc = attacker.enemy_id;
+                    rapidshot_target = std::ref(cdata[attacker.enemy_id]);
                 }
             }
         }
@@ -753,10 +761,10 @@ void do_ranged_attack(
             {
                 break;
             }
-            tc = list(0, rnd(listmax));
+            const auto shot_target = list(0, rnd(listmax));
             if (attacker.index == 0 || attacker.relationship >= 0)
             {
-                if (cdata[tc].relationship >= 0)
+                if (cdata[shot_target].relationship >= 0)
                 {
                     if (cnt != 0)
                     {
@@ -765,19 +773,19 @@ void do_ranged_attack(
                     }
                 }
             }
-            else if (cdata[tc].relationship == -3)
+            else if (cdata[shot_target].relationship == -3)
             {
                 cnt = cnt + (rnd(5) == 0) - 1;
                 continue;
             }
             extraattack = 0;
-            do_physical_attack(attacker, weapon, ammo);
+            do_physical_attack(attacker, cdata[shot_target], weapon, ammo);
         }
     }
     else
     {
         extraattack = 0;
-        do_physical_attack(attacker, weapon, ammo);
+        do_physical_attack(attacker, target, weapon, ammo);
     }
     if (ammoproc == 1)
     {
@@ -785,7 +793,7 @@ void do_ranged_attack(
         tlocy = ammoy;
         efid = 460;
         efp = sdata(attackskill, attacker.index) * 8 + 10;
-        magic(cdata.player());
+        magic(cdata.player(), target);
     }
     ammoproc = -1;
     ammoprocbk = -1;
@@ -793,28 +801,29 @@ void do_ranged_attack(
 
 
 
-void try_to_melee_attack(Character& attacker)
+void try_to_melee_attack(Character& attacker, Character& target)
 {
     if (attacker.index != 0)
     {
-        if (cdata[tc].damage_reaction_info)
+        if (target.damage_reaction_info)
         {
             if (distance < 6)
             {
                 if (fov_los(
                         attacker.position.x,
                         attacker.position.y,
-                        cdata[tc].position.x,
-                        cdata[tc].position.y))
+                        target.position.x,
+                        target.position.y))
                 {
                     const auto result = can_do_ranged_attack(attacker);
                     if (result.type == 1)
                     {
-                        do_ranged_attack(attacker, result.weapon, result.ammo);
+                        do_ranged_attack(
+                            attacker, target, result.weapon, result.ammo);
                     }
                 }
             }
-            p = cdata[tc].damage_reaction_info % 1000;
+            p = target.damage_reaction_info % 1000;
             if (p == 61)
             {
                 if (attacker.hp < attacker.max_hp / 2)
@@ -837,17 +846,17 @@ void try_to_melee_attack(Character& attacker)
             if (is_in_fov(attacker))
             {
                 txt(i18n::s.get(
-                    "core.action.melee.shield_bash", attacker, cdata[tc]));
+                    "core.action.melee.shield_bash", attacker, target));
             }
             damage_hp(
-                cdata[tc],
+                target,
                 rnd_capped(sdata(168, attacker.index)) + 1,
                 attacker.index);
             status_ailment_damage(
-                cdata[tc],
+                target,
                 StatusAilment::dimmed,
                 50 + int(std::sqrt(sdata(168, attacker.index))) * 15);
-            cdata[tc].paralyzed += rnd(3);
+            target.paralyzed += rnd(3);
         }
     }
     for (int cnt = 0; cnt < 30; ++cnt)
@@ -871,19 +880,22 @@ void try_to_melee_attack(Character& attacker)
             attackskill = weapon.skill;
             ++attacknum;
             extraattack = 0;
-            do_physical_attack(attacker, weapon, none);
+            do_physical_attack(attacker, target, weapon, none);
         }
     }
     if (attackskill == 106)
     {
         extraattack = 0;
-        do_physical_attack(attacker, none, none);
+        do_physical_attack(attacker, target, none, none);
     }
 }
 
 
 
-void proc_weapon_enchantments(Character& attacker, const Item& weapon)
+void proc_weapon_enchantments(
+    Character& attacker,
+    Character& target,
+    const Item& weapon)
 {
     for (int cnt = 0; cnt < 15; ++cnt)
     {
@@ -896,18 +908,18 @@ void proc_weapon_enchantments(Character& attacker, const Item& weapon)
         {
             p = rnd_capped(weapon.enchantments[cnt].power / 50 + 1) + 1;
             heal_sp(attacker, p);
-            damage_sp(cdata[tc], p / 2);
+            damage_sp(target, p / 2);
             continue;
         }
         if (enc == 38)
         {
             p = rnd_capped(weapon.enchantments[cnt].power / 25 + 1) + 1;
             heal_mp(attacker, p / 5);
-            if (cdata[tc].state() != Character::State::alive)
+            if (target.state() != Character::State::alive)
             {
                 continue;
             }
-            damage_mp(cdata[tc], p);
+            damage_mp(target, p);
             continue;
         }
         if (enc == 37)
@@ -934,31 +946,31 @@ void proc_weapon_enchantments(Character& attacker, const Item& weapon)
         }
         if (enc == 57)
         {
-            s = chara_db_get_filter(cdata[tc].id);
+            s = chara_db_get_filter(target.id);
             if (strutil::contains(s(0), u8"/dragon/"))
             {
                 game_data.proc_damage_events_flag = 1;
-                damage_hp(cdata[tc], orgdmg / 2, attacker.index);
+                damage_hp(target, orgdmg / 2, attacker.index);
             }
             continue;
         }
         if (enc == 61)
         {
-            s = chara_db_get_filter(cdata[tc].id);
+            s = chara_db_get_filter(target.id);
             if (strutil::contains(s(0), u8"/god/"))
             {
                 game_data.proc_damage_events_flag = 1;
-                damage_hp(cdata[tc], orgdmg / 2, attacker.index);
+                damage_hp(target, orgdmg / 2, attacker.index);
             }
             continue;
         }
         if (enc == 58)
         {
-            s = chara_db_get_filter(cdata[tc].id);
+            s = chara_db_get_filter(target.id);
             if (strutil::contains(s(0), u8"/undead/"))
             {
                 game_data.proc_damage_events_flag = 1;
-                damage_hp(cdata[tc], orgdmg / 2, attacker.index);
+                damage_hp(target, orgdmg / 2, attacker.index);
             }
             continue;
         }
@@ -973,13 +985,13 @@ void proc_weapon_enchantments(Character& attacker, const Item& weapon)
                     continue;
                 }
                 ele = enc;
-                if (cdata[tc].state() != Character::State::alive)
+                if (target.state() != Character::State::alive)
                 {
                     continue;
                 }
                 game_data.proc_damage_events_flag = 1;
                 damage_hp(
-                    cdata[tc],
+                    target,
                     rnd_capped(
                         orgdmg * (100 + weapon.enchantments[cnt].power) / 1000 +
                         1) +
@@ -991,7 +1003,7 @@ void proc_weapon_enchantments(Character& attacker, const Item& weapon)
             }
             if (i == 8)
             {
-                if (cdata[tc].state() != Character::State::alive)
+                if (target.state() != Character::State::alive)
                 {
                     continue;
                 }
@@ -999,24 +1011,23 @@ void proc_weapon_enchantments(Character& attacker, const Item& weapon)
                 {
                     continue;
                 }
-                tcbk = tc;
                 p = encprocref(1, enc);
+                auto invoke_target = target.index;
                 if (p == 3000 || p == 10000)
                 {
-                    tc = attacker.index;
+                    invoke_target = attacker.index;
                 }
                 p = encprocref(5, enc);
                 enc = encprocref(0, enc);
-                tlocx = cdata[tc].position.x;
-                tlocy = cdata[tc].position.y;
+                tlocx = cdata[invoke_target].position.x;
+                tlocy = cdata[invoke_target].position.y;
                 if (rnd(100) < p)
                 {
                     efid = enc;
                     efp = weapon.enchantments[cnt].power +
                         sdata(attackskill, attacker.index) * 10;
-                    magic(attacker);
+                    magic(attacker, cdata[invoke_target]);
                 }
-                tc = tcbk;
                 continue;
             }
             continue;
@@ -1030,11 +1041,11 @@ void proc_weapon_enchantments(Character& attacker, const Item& weapon)
     }
     if (ammoproc == 3)
     {
-        if (cdata[tc].state() == Character::State::alive)
+        if (target.state() == Character::State::alive)
         {
             game_data.proc_damage_events_flag = 1;
             damage_hp(
-                cdata[tc],
+                target,
                 orgdmg * 2 / 3,
                 attacker.index,
                 rnd(11) + 50,
@@ -1110,11 +1121,11 @@ int find_enemy_target(Character& chara, bool silent)
 
 
 
-int prompt_really_attack()
+int prompt_really_attack(const Character& target)
 {
-    s = txttargetlevel(cdata.player().index, tc);
+    s = txttargetlevel(cdata.player().index, target.index);
     txt(s);
-    txt(i18n::s.get("core.action.really_attack", cdata[tc]));
+    txt(i18n::s.get("core.action.really_attack", target));
     if (yes_no())
     {
         update_screen();

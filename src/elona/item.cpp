@@ -2628,8 +2628,7 @@ void damage_by_cursed_equipments(Character& chara)
         if (rnd(10 - clamp(chara.curse_power / 10, 0, 9)) == 0)
         {
             efid = 408;
-            tc = chara.index;
-            magic(chara);
+            magic(chara, chara);
             return;
         }
     }

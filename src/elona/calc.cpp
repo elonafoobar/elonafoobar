@@ -404,6 +404,7 @@ int calc_evasion(int chara_index)
 
 int calc_accuracy(
     const Character& attacker,
+    const Character& target,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo,
     bool consider_distance)
@@ -445,8 +446,8 @@ int calc_accuracy(
                     dist(
                         attacker.position.x,
                         attacker.position.y,
-                        cdata[tc].position.x,
-                        cdata[tc].position.y) -
+                        target.position.x,
+                        target.position.y) -
                         1,
                     0,
                     9);
@@ -527,13 +528,14 @@ int calc_accuracy(
 
 int calcattackhit(
     const Character& attacker,
+    const Character& target,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo)
 {
-    int tohit = calc_accuracy(attacker, weapon, ammo, true);
-    int evasion = calc_evasion(tc);
+    int tohit = calc_accuracy(attacker, target, weapon, ammo, true);
+    int evasion = calc_evasion(target.index);
 
-    if (cdata[tc].dimmed != 0)
+    if (target.dimmed != 0)
     {
         if (rnd(4) == 0)
         {
@@ -546,11 +548,11 @@ int calcattackhit(
     {
         tohit /= 2;
     }
-    if (cdata[tc].blind != 0)
+    if (target.blind != 0)
     {
         evasion /= 2;
     }
-    if (cdata[tc].sleep != 0)
+    if (target.sleep != 0)
     {
         return 1;
     }
@@ -565,28 +567,28 @@ int calcattackhit(
             tohit = tohit / 3 * 2;
         }
     }
-    if (sdata(187, tc) != 0)
+    if (sdata(187, target.index) != 0)
     {
-        if (tohit < sdata(187, tc) * 10 && tohit > 0)
+        if (tohit < sdata(187, target.index) * 10 && tohit > 0)
         {
             int evaderef = evasion * 100 / clamp(tohit, 1, tohit);
             if (evaderef > 300)
             {
-                if (rnd_capped(sdata(187, tc) + 250) > 100)
+                if (rnd_capped(sdata(187, target.index) + 250) > 100)
                 {
                     return -2;
                 }
             }
             if (evaderef > 200)
             {
-                if (rnd_capped(sdata(187, tc) + 250) > 150)
+                if (rnd_capped(sdata(187, target.index) + 250) > 150)
                 {
                     return -2;
                 }
             }
             if (evaderef > 150)
             {
-                if (rnd_capped(sdata(187, tc) + 250) > 200)
+                if (rnd_capped(sdata(187, target.index) + 250) > 200)
                 {
                     return -2;
                 }
@@ -630,6 +632,7 @@ int calcattackhit(
 
 int calcattackdmg(
     const Character& attacker,
+    const Character& target,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo,
     AttackDamageCalculationMode mode)
@@ -712,7 +715,7 @@ int calcattackdmg(
     {
         return damage;
     }
-    const auto prot = calc_attack_protection(cdata[tc]);
+    const auto prot = calc_attack_protection(target);
     if (dmgfix < -100)
     {
         dmgfix = -100;
@@ -790,17 +793,17 @@ int calcattackdmg(
         }
     }
     damage = damagenormal + damagepierce;
-    if (tc == 0)
+    if (attacker.index == 0)
     {
         if (trait(164) != 0)
         {
             --damage;
         }
     }
-    if (cdata[tc].decrease_physical_damage != 0)
+    if (attacker.decrease_physical_damage != 0)
     {
         damage = damage * 100 /
-            clamp((100 + cdata[tc].decrease_physical_damage), 25, 1000);
+            clamp((100 + attacker.decrease_physical_damage), 25, 1000);
     }
     if (damage < 0)
     {
@@ -1029,9 +1032,9 @@ int calcitemvalue(const Item& item, int calc_mode)
 
 
 
-int calcinvestvalue()
+int calcinvestvalue(const Character& shopkeeper)
 {
-    int rank = clamp(cdata[tc].shop_rank, 1, 200);
+    int rank = clamp(shopkeeper.shop_rank, 1, 200);
     int ret = rank * rank * 15 + 200;
     if (ret > 500'000)
     {

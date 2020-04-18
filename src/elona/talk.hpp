@@ -1,12 +1,17 @@
 #pragma once
+
 #include <string>
 
 #include "optional.hpp"
+
+
 
 namespace elona
 {
 
 struct Character;
+
+
 
 enum class TalkResult
 {
@@ -24,7 +29,6 @@ enum class TalkResult
 };
 
 void talk_start();
-void talk_to_npc();
 void talk_to_npc(Character& chara);
 void talk_end();
 bool talk_setup_variables(Character& chara);
@@ -39,7 +43,6 @@ void talk_window_show(
     std::string& text,
     optional<std::pair<int, int>> impress_interest);
 
-int talk_window_query();
 int talk_window_query(const Character& chara);
 int talk_window_query(
     optional_ref<const std::string> portrait_id,
@@ -50,15 +53,15 @@ int talk_window_query(
 
 int talk_guide_quest_client();
 
-TalkResult talk_more();
-TalkResult talk_sleeping();
-TalkResult talk_busy();
-TalkResult talk_ignored();
-TalkResult talk_house_visitor();
-TalkResult talk_game_begin();
+TalkResult talk_more(Character& speaker);
+TalkResult talk_sleeping(Character& speaker);
+TalkResult talk_busy(Character& speaker);
+TalkResult talk_ignored(Character& speaker);
+TalkResult talk_house_visitor(Character& speaker);
+TalkResult talk_game_begin(Character& initial_speaker);
 
-void talk_wrapper(TalkResult);
-TalkResult talk_npc();
-TalkResult talk_unique();
+void talk_wrapper(Character& speaker, TalkResult initial);
+TalkResult talk_npc(Character& speaker);
+TalkResult talk_unique(Character& speaker);
 
 } // namespace elona

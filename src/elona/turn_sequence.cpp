@@ -30,7 +30,6 @@
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
 #include "lua_env/lua_event/base_event.hpp"
-#include "macro.hpp"
 #include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -125,7 +124,7 @@ optional<TurnResult> proc_return_or_escape()
 
 
 
-optional<TurnResult> npc_turn_misc(Character& chara)
+optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
 {
     // Hung on sandbag
     if (chara.is_hung_on_sand_bag())
@@ -134,7 +133,6 @@ optional<TurnResult> npc_turn_misc(Character& chara)
         {
             if (rnd(30) == 0)
             {
-                tc = chara.index;
                 txt(i18n::s.get("core.action.npc.sand_bag", chara));
             }
         }
@@ -169,9 +167,8 @@ optional<TurnResult> npc_turn_misc(Character& chara)
                     // TODO: 振りほどいたはずがテレポートする
                 }
             }
-            tc = 0;
             efid = 619;
-            magic(chara);
+            magic(chara, cdata.player());
             return TurnResult::turn_end;
         }
     }
@@ -182,7 +179,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
         tlocx = chara.position.x;
         tlocy = chara.position.y;
         efid = 644;
-        magic(chara);
+        magic(chara, chara);
         return TurnResult::turn_end;
     }
 
@@ -258,7 +255,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
                 txt(i18n::s.get("core.action.npc.arena"),
                     Message::color{ColorIndex::blue});
             }
-            return ai_proc_misc_map_events(chara);
+            return ai_proc_misc_map_events(chara, enemy_index);
         }
         chara.hate = 100;
         if (chara.relationship == 10)
@@ -280,7 +277,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
         {
             if (rnd(10) != 0)
             {
-                tc = i;
+                enemy_index = chara.enemy_id;
                 return none;
             }
         }
@@ -370,7 +367,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
         }
     }
 
-    tc = chara.enemy_id;
+    enemy_index = chara.enemy_id;
 
     // Talk
     if (cdatan(4, chara.index) != ""s)
@@ -436,7 +433,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
             efid = chara.ai_heal;
             if (efid >= 400 && efid < 467)
             {
-                int stat = do_cast_magic(chara);
+                int stat = do_cast_magic(chara, enemy_index);
                 if (stat == 1)
                 {
                     return TurnResult::turn_end;
@@ -444,7 +441,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
             }
             else if (efid >= 600)
             {
-                int stat = do_magic_attempt(chara);
+                int stat = do_spact(chara, enemy_index);
                 if (stat == 1)
                 {
                     return TurnResult::turn_end;
@@ -492,32 +489,32 @@ optional<TurnResult> npc_turn_misc(Character& chara)
 
 
 
-TurnResult npc_turn_ai_main(Character& chara)
+TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
 {
     if (chara.hate > 0 || chara.relationship == 10)
     {
         distance = dist(
-            cdata[tc].position.x,
-            cdata[tc].position.y,
+            cdata[enemy_index].position.x,
+            cdata[enemy_index].position.y,
             chara.position.x,
             chara.position.y);
         if (chara.blind != 0)
         {
             if (rnd(10) > 2)
             {
-                return ai_proc_misc_map_events(chara);
+                return ai_proc_misc_map_events(chara, enemy_index);
             }
         }
         if (chara.confused != 0)
         {
             if (rnd(10) > 3)
             {
-                return ai_proc_misc_map_events(chara);
+                return ai_proc_misc_map_events(chara, enemy_index);
             }
         }
         if (chara.relationship == 10)
         {
-            if (tc == 0)
+            if (enemy_index == 0)
             {
                 if (cell_data.at(chara.position.x, chara.position.y)
                         .item_appearances_actual != 0)
@@ -560,9 +557,9 @@ TurnResult npc_turn_ai_main(Character& chara)
                                 in = inv[item].number();
                                 if (game_data.mount != chara.index)
                                 {
-                                    int stat =
-                                        pick_up_item(chara.index, inv[item])
-                                            .type;
+                                    int stat = pick_up_item(
+                                                   chara.index, inv[item], none)
+                                                   .type;
                                     if (stat == 1)
                                     {
                                         return TurnResult::turn_end;
@@ -576,38 +573,38 @@ TurnResult npc_turn_ai_main(Character& chara)
                 {
                     if (chara.is_contracting() == 0)
                     {
-                        return ai_proc_misc_map_events(chara);
+                        return ai_proc_misc_map_events(chara, enemy_index);
                     }
                 }
                 if (distance > 2 || rnd(3))
                 {
-                    return proc_npc_movement_event(chara);
+                    return proc_npc_movement_event(chara, enemy_index);
                 }
                 else
                 {
-                    return ai_proc_misc_map_events(chara);
+                    return ai_proc_misc_map_events(chara, enemy_index);
                 }
             }
         }
         if (chara.fear != 0)
         {
-            return proc_npc_movement_event(chara, true);
+            return proc_npc_movement_event(chara, enemy_index, true);
         }
         if (chara.blind != 0)
         {
             if (rnd(3))
             {
-                return ai_proc_misc_map_events(chara);
+                return ai_proc_misc_map_events(chara, enemy_index);
             }
         }
         if (distance != chara.ai_dist)
         {
             if (rnd(100) < chara.ai_move)
             {
-                return proc_npc_movement_event(chara);
+                return proc_npc_movement_event(chara, enemy_index);
             }
         }
-        return ai_proc_basic(chara);
+        return ai_proc_basic(chara, enemy_index);
     }
 
     if (chara.turn % 10 == 1)
@@ -670,10 +667,10 @@ TurnResult npc_turn_ai_main(Character& chara)
         }
     }
 
-    if (tc == 0)
+    if (enemy_index == 0)
     {
         r2 = chara.index;
-        int stat = try_to_perceive_npc(tc);
+        int stat = try_to_perceive_npc(enemy_index);
         if (stat == 1)
         {
             if (chara.relationship == -3)
@@ -682,7 +679,7 @@ TurnResult npc_turn_ai_main(Character& chara)
             }
         }
     }
-    return ai_proc_misc_map_events(chara);
+    return ai_proc_misc_map_events(chara, enemy_index);
 }
 
 } // namespace
@@ -691,12 +688,13 @@ TurnResult npc_turn_ai_main(Character& chara)
 
 TurnResult npc_turn(Character& chara)
 {
-    if (const auto result = npc_turn_misc(chara))
+    int enemy_index{};
+    if (const auto result = npc_turn_misc(chara, enemy_index))
     {
         return *result;
     }
 
-    return npc_turn_ai_main(chara);
+    return npc_turn_ai_main(chara, enemy_index);
 }
 
 
@@ -976,8 +974,7 @@ TurnResult pass_one_turn(bool time_passing)
                     {
                         efid = 454;
                         efp = 100;
-                        tc = ct;
-                        magic(cdata[ct]);
+                        magic(cdata[ct], cdata[ct]);
                     }
                 }
             }
@@ -993,11 +990,10 @@ TurnResult pass_one_turn(bool time_passing)
         }
     }
 
-    tc = ct;
-    if (cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
+    if (cell_data.at(cdata[ct].position.x, cdata[ct].position.y)
             .mef_index_plus_one != 0)
     {
-        mef_proc(tc);
+        mef_proc(ct);
     }
     if (cdata[ct].buffs[0].id != 0)
     {
@@ -1036,6 +1032,7 @@ TurnResult pass_one_turn(bool time_passing)
         }
         return TurnResult::turn_end;
     }
+
     if (cdata[ct].drunk != 0 && ct != 0)
     {
         if (rnd(200) == 0)
@@ -1067,32 +1064,30 @@ TurnResult pass_one_turn(bool time_passing)
                 {
                     continue;
                 }
-                tc = cnt.index;
-                if (is_in_fov(cdata[ct]) || is_in_fov(cdata[tc]))
+                if (is_in_fov(cdata[ct]) || is_in_fov(cnt))
                 {
                     txt(i18n::s.get(
                             "core.action.npc.drunk.gets_the_worse",
                             cdata[ct],
-                            cdata[tc]),
+                            cnt),
                         Message::color{ColorIndex::cyan});
                     txt(i18n::s.get("core.action.npc.drunk.dialog"));
                 }
                 if (rnd(4) == 0)
                 {
-                    if (tc != 0)
+                    if (cnt.index != 0)
                     {
-                        if (is_in_fov(cdata[ct]) || is_in_fov(cdata[tc]))
+                        if (is_in_fov(cdata[ct]) || is_in_fov(cnt))
                         {
                             txt(i18n::s.get(
-                                    "core.action.npc.drunk.annoyed.text",
-                                    cdata[tc]),
+                                    "core.action.npc.drunk.annoyed.text", cnt),
                                 Message::color{ColorIndex::cyan});
                             txt(i18n::s.get(
                                 "core.action.npc.drunk.annoyed.dialog"));
                         }
-                        cdata[tc].hate = 20;
-                        cdata[tc].enemy_id = ct;
-                        cdata[tc].emotion_icon = 218;
+                        cnt.hate = 20;
+                        cnt.enemy_id = ct;
+                        cnt.emotion_icon = 218;
                     }
                 }
                 break;
@@ -1437,7 +1432,7 @@ optional<TurnResult> pc_turn_advance_time()
         map_data.type != mdata_t::MapType::world_map)
     {
         efid = 408;
-        magic(cdata.player());
+        magic(cdata.player(), cdata.player());
     }
     if (cdata[player.enemy_id].is_invisible() == 1 &&
         player.can_see_invisible() == 0 && cdata[player.enemy_id].wet == 0)

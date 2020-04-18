@@ -8,6 +8,8 @@
 #include "../message.hpp"
 #include "../trait.hpp"
 
+
+
 namespace elona
 {
 namespace ui
@@ -15,13 +17,16 @@ namespace ui
 
 const constexpr int trait_desc_value = 99999;
 
+
+
 bool UIMenuFeats::init()
 {
+    _chara_index = 0;
+
     listmax = 0;
     page = 0;
     pagesize = 15;
     cs = 0;
-    tc = 0;
     cs_bk = -1;
 
     snd("core.feat");
@@ -37,47 +42,61 @@ bool UIMenuFeats::init()
     return true;
 }
 
-static void _change_tense_of_trait_desc(int cnt, int tc_)
+
+
+void UIMenuFeats::_change_tense_of_trait_desc(int cnt)
 {
     if (jp)
     {
         listn(0, cnt) = strutil::replace(
-            listn(0, cnt), u8"あなた", cdata[tc_].sex == 0 ? u8"彼" : u8"彼女");
+            listn(0, cnt),
+            u8"あなた",
+            cdata[_chara_index].sex == 0 ? u8"彼" : u8"彼女");
     }
     else
     {
         listn(0, cnt) = strutil::replace(
             listn(0, cnt),
             u8" your",
-            cdata[tc_].sex == 0 ? u8" his" : u8" her");
+            cdata[_chara_index].sex == 0 ? u8" his" : u8" her");
         listn(0, cnt) = strutil::replace(
-            listn(0, cnt), u8" you", cdata[tc_].sex == 0 ? u8" him" : u8" her");
+            listn(0, cnt),
+            u8" you",
+            cdata[_chara_index].sex == 0 ? u8" him" : u8" her");
     }
 }
 
-static void _add_trait_desc(int tc_, const std::string& trait_desc)
+
+
+void UIMenuFeats::_add_trait_desc(const std::string& trait_desc)
 {
     list(0, listmax) = 1;
     list(1, listmax) = trait_desc_value;
     listn(0, listmax) = i18n::s.get(
         "core.trait.window.his_equipment",
         cnven(
-            (jp) ? ((tc_ == 0) ? u8"あなたの"
-                               : (cdata[tc_].sex == 0 ? u8"彼の" : u8"彼女の"))
-                 : ((tc_ == 0) ? "your"
-                               : (cdata[tc_].sex == 0 ? u8"his" : u8"her"))),
+            (jp)
+                ? ((_chara_index == 0)
+                       ? u8"あなたの"
+                       : (cdata[_chara_index].sex == 0 ? u8"彼の" : u8"彼女の"))
+                : ((_chara_index == 0)
+                       ? "your"
+                       : (cdata[_chara_index].sex == 0 ? u8"his" : u8"her"))),
         trait_desc);
     ++listmax;
 }
 
-static void _load_traits_by_enchantments()
+
+
+void UIMenuFeats::_load_traits_by_enchantments()
 {
     std::vector<std::string> traits_by_enchantments;
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata[tc].body_parts[i] % 10000 != 0)
+        if (cdata[_chara_index].body_parts[i] % 10000 != 0)
         {
-            const auto item_index = cdata[tc].body_parts[i] % 10000 - 1;
+            const auto item_index =
+                cdata[_chara_index].body_parts[i] % 10000 - 1;
             for (const auto& enc : inv[item_index].enchantments)
             {
                 if (enc.id == 0)
@@ -99,21 +118,23 @@ static void _load_traits_by_enchantments()
         std::end(traits_by_enchantments));
     for (const auto& trait : traits_by_enchantments)
     {
-        _add_trait_desc(tc, trait);
+        _add_trait_desc(trait);
     }
 
-    if (tc != 0)
+    if (_chara_index != 0)
     {
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
-            _change_tense_of_trait_desc(cnt, tc);
+            _change_tense_of_trait_desc(cnt);
         }
     }
 }
 
+
+
 void UIMenuFeats::update()
 {
-    trait_load_desc();
+    trait_load_desc(cdata[_chara_index]);
     _load_traits_by_enchantments();
 
     cs_bk = -1;
@@ -147,6 +168,8 @@ void UIMenuFeats::update()
     }
 }
 
+
+
 void UIMenuFeats::_draw_window_background(bool is_chara_making)
 {
     int y_adjust;
@@ -173,6 +196,8 @@ void UIMenuFeats::_draw_window_background(bool is_chara_making)
         40);
 }
 
+
+
 void UIMenuFeats::_draw_window_deco()
 {
     s(0) = i18n::s.get("core.trait.window.name");
@@ -187,11 +212,15 @@ void UIMenuFeats::_draw_window_deco()
     elona::draw("deco_feat_d", wx, wy + wh - 70);
 }
 
+
+
 void UIMenuFeats::_draw_window(bool is_chara_making)
 {
     _draw_window_background(is_chara_making);
     _draw_window_deco();
 }
+
+
 
 void UIMenuFeats::_draw_key(int cnt, int p_)
 {
@@ -214,6 +243,8 @@ void UIMenuFeats::_draw_key(int cnt, int p_)
     display_key(wx + 58, wy + 66 + cnt * 19 - 2, cnt);
 }
 
+
+
 void UIMenuFeats::_draw_keys()
 {
     keyrange = 0;
@@ -230,6 +261,8 @@ void UIMenuFeats::_draw_keys()
     }
 }
 
+
+
 void UIMenuFeats::_draw_acquirable_trait_number(int tc_)
 {
     std::string note;
@@ -241,11 +274,13 @@ void UIMenuFeats::_draw_acquirable_trait_number(int tc_)
     }
     else
     {
-        note =
-            i18n::s.get("core.trait.window.your_trait", cnven(cdatan(0, tc)));
+        note = i18n::s.get(
+            "core.trait.window.your_trait", cnven(cdatan(0, _chara_index)));
     }
     display_note(note, 50);
 }
+
+
 
 void UIMenuFeats::_draw_single_list_entry_name(
     int cnt,
@@ -253,6 +288,8 @@ void UIMenuFeats::_draw_single_list_entry_name(
 {
     mes(wx + 270, wy + 66 + cnt * 19 + 2, traitrefn(2), text_color);
 }
+
+
 
 void UIMenuFeats::_draw_single_list_entry_text(
     int cnt,
@@ -297,6 +334,8 @@ static snail::Color _get_trait_color(int trait_value)
     }
 }
 
+
+
 void UIMenuFeats::_draw_single_list_entry(
     int cnt,
     int list_item,
@@ -325,6 +364,8 @@ void UIMenuFeats::_draw_single_list_entry(
     _draw_single_list_entry_text(cnt, draw_name, text_color, text);
 }
 
+
+
 void UIMenuFeats::_draw_list_entries()
 {
     font(14 - en * 2);
@@ -348,15 +389,19 @@ void UIMenuFeats::_draw_list_entries()
     }
 }
 
+
+
 void UIMenuFeats::draw()
 {
     _draw_window(_operation == Operation::character_making);
     _draw_keys();
-    _draw_acquirable_trait_number(tc);
+    _draw_acquirable_trait_number(_chara_index);
     _draw_list_entries();
 }
 
-static bool _gain_trait(int p_, bool show_text)
+
+
+bool UIMenuFeats::_gain_trait(int p_, bool show_text)
 {
     int tid = list(0, p_);
     trait_get_info(0, tid);
@@ -374,20 +419,24 @@ static bool _gain_trait(int p_, bool show_text)
     cs = -10000 + tid;
     snd("core.ding3");
     ++trait(tid);
-    chara_refresh(tc);
+    chara_refresh(_chara_index);
 
     return true;
 }
 
-static bool _can_select_trait(int p_, int tc_)
+
+
+bool UIMenuFeats::_can_select_trait(int p_)
 {
     return game_data.acquirable_feat_count > 0 && list(1, p_) < 10000 &&
-        tc_ == 0;
+        _chara_index == 0;
 }
 
-static void _switch_target(bool is_forwards)
+
+
+void UIMenuFeats::_switch_target(bool is_forwards)
 {
-    int new_index = tc;
+    int new_index = _chara_index;
     for (int cnt = 0; cnt < 16; ++cnt)
     {
         if (is_forwards)
@@ -411,16 +460,18 @@ static void _switch_target(bool is_forwards)
             break;
         }
     }
-    tc = new_index;
+    _chara_index = new_index;
     snd("core.pop1");
     page = 0;
     cs = 0;
 }
 
+
+
 optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& action)
 {
     auto index = get_selected_index();
-    if (index && *index > 0 && _can_select_trait(*index, tc))
+    if (index && *index > 0 && _can_select_trait(*index))
     {
         bool show_text = _operation == Operation::normal;
         if (_gain_trait(*index, show_text))

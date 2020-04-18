@@ -116,7 +116,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (action == "wizard_mewmewmew")
         {
             efid = 657;
-            magic(cdata.player());
+            magic(cdata.player(), cdata.player());
             return TurnResult::turn_end;
         }
         if (action == "wizard_wish")

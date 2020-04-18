@@ -332,7 +332,6 @@ void initialize_elona()
     gmode(2);
     text_set();
     ctrl_file(FileOperation::temp_dir_delete);
-    tc = 0;
     invctrl(0) = 0;
     invctrl(1) = 0;
     SDIM1(buffboard);

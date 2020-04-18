@@ -3,19 +3,21 @@
 #include "talk.hpp"
 #include "variables.hpp"
 
+
+
 namespace elona
 {
 
-TalkResult talk_unique()
+TalkResult talk_unique(Character& speaker)
 {
     listmax = 0;
 
-    auto& chara = cdata[tc];
-    const auto& dialog_id = the_character_db[charaid2int(chara.id)]->dialog_id;
+    const auto& dialog_id =
+        the_character_db[charaid2int(speaker.id)]->dialog_id;
 
     if (dialog_id)
     {
-        dialog_start(chara, *dialog_id);
+        dialog_start(speaker, *dialog_id);
         return TalkResult::talk_end;
     }
 

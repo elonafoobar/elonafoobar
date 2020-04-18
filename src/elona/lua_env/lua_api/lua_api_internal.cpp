@@ -137,7 +137,7 @@ void LuaApiInternal::trade_small_medals(LuaCharacterHandle chara)
     auto& chara_ref = lua::ref<Character>(chara);
     invctrl = 28;
     invfile = chara_ref.shop_store_id;
-    shop_sell_item();
+    shop_sell_item(chara_ref);
     screenupdate = -1;
     update_screen();
     cs = 0;

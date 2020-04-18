@@ -624,8 +624,8 @@ void earn_platinum(Character& chara, int delta)
 
 
 int gain_skills_by_geen_engineering(
-    Character& original_ally,
-    Character& gene_ally)
+    const Character& original_ally,
+    const Character& gene_ally)
 {
     if (gene_ally.splits() || gene_ally.splits2())
     {
@@ -667,7 +667,9 @@ int gain_skills_by_geen_engineering(
 
 
 
-int transplant_body_parts(Character& original_ally, Character& gene_ally)
+int transplant_body_parts(
+    const Character& original_ally,
+    const Character& gene_ally)
 {
     int dbmax = 0;
     s(1) = chara_db_get_filter(gene_ally.id);

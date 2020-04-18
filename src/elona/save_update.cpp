@@ -16,6 +16,7 @@ namespace
 
 void _update_save_data(const fs::path& save_dir, int serial_id)
 {
+    (void)save_dir;
 #define ELONA_CASE(n) \
     case n: _update_save_data_##n(save_dir); break;
 

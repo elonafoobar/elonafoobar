@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "optional.hpp"
+
 
 
 namespace elona
@@ -9,6 +11,8 @@ namespace elona
 
 template <typename T>
 struct elona_vector1;
+
+struct Character;
 
 
 
@@ -46,11 +50,11 @@ void csvsort(
 
 void initialize_nefia_names();
 void parse_quest_board_text(int);
-void parse_talk_file();
+void parse_talk_file(optional_ref<const Character> speaker);
 void read_talk_file(const std::string&);
-void get_npc_talk();
-void text_replace_tags_in_quest_board();
-void text_replace_tags_in_quest_text();
+void get_npc_talk(Character& chara);
+void text_replace_tags_in_quest_board(optional_ref<const Character> client);
+void text_replace_tags_in_quest_text(optional_ref<const Character> client);
 std::string zentohan(const std::string&);
 std::string cnven(const std::string&);
 std::string sncnv(const std::string&);

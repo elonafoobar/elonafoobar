@@ -102,7 +102,7 @@ int ctrl_ally(
     ControlAllyOperation,
     optional_ref<Character> gene_engineering_original_character = none);
 void show_book_window(const Item& book);
-int change_npc_tone();
+int change_npc_tone(Character& chara);
 void item_show_description(Item& item);
 
 
@@ -112,7 +112,8 @@ struct CtrlInventoryResult
     optional_ref<Item> selected_item;
 };
 
-CtrlInventoryResult ctrl_inventory();
+CtrlInventoryResult ctrl_inventory(
+    optional_ref<Character> inventory_owner = none);
 
 
 void menu_chat_dialog();

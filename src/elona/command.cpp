@@ -31,7 +31,6 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/interface.hpp"
-#include "macro.hpp"
 #include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -44,6 +43,7 @@
 #include "save.hpp"
 #include "shop.hpp"
 #include "status_ailment.hpp"
+#include "talk.hpp"
 #include "tcg.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -291,77 +291,76 @@ TurnResult _pre_proc_movement_event(Character& chara)
 
 TurnResult _bump_into_character(Character& chara)
 {
-    tc = cellchara;
-    if (cdata[tc].relationship >= 10 ||
-        (cdata[tc].relationship == -1 && !g_config.attack_neutral_npcs()) ||
-        (cdata[tc].relationship == 0 &&
+    if (chara.relationship >= 10 ||
+        (chara.relationship == -1 && !g_config.attack_neutral_npcs()) ||
+        (chara.relationship == 0 &&
          (area_data[game_data.current_map].is_museum_or_shop() ||
           is_modifier_pressed(snail::ModKey::shift))))
     {
-        if (cdata[tc].is_hung_on_sand_bag() == 0)
+        if (chara.is_hung_on_sand_bag() == 0)
         {
             if (map_data.type == mdata_t::MapType::world_map)
             {
-                return _pre_proc_movement_event(chara);
+                return _pre_proc_movement_event(cdata.player());
             }
             if (g_config.scroll())
             {
-                cdata.player().next_position.x = cdata[tc].position.x;
-                cdata.player().next_position.y = cdata[tc].position.y;
+                cdata.player().next_position.x = chara.position.x;
+                cdata.player().next_position.y = chara.position.y;
                 ui_scroll_screen();
             }
-            cell_swap(chara.index, tc);
-            txt(i18n::s.get("core.action.move.displace.text", cdata[tc]));
-            if (cdata[tc].id == CharaId::rogue)
+            cell_swap(cdata.player().index, chara.index);
+            txt(i18n::s.get("core.action.move.displace.text", chara));
+            if (chara.id == CharaId::rogue)
             {
                 if (rnd(5) == 0)
                 {
-                    if (cdata[tc].sleep == 0)
+                    if (chara.sleep == 0)
                     {
-                        p = rnd(clamp(chara.gold, 0, 20) + 1);
-                        if (chara.is_protected_from_thieves())
+                        p = rnd(clamp(cdata.player().gold, 0, 20) + 1);
+                        if (cdata.player().is_protected_from_thieves())
                         {
                             p = 0;
                         }
                         if (p != 0)
                         {
                             snd("core.getgold1");
-                            chara.gold -= p;
-                            earn_gold(cdata[tc], p);
+                            cdata.player().gold -= p;
+                            earn_gold(chara, p);
                             txt(i18n::s.get(
                                 "core.action.move.displace.dialog"));
                         }
                     }
                 }
             }
-            if (cdata[tc].activity.type == Activity::Type::eat)
+            if (chara.activity.type == Activity::Type::eat)
             {
-                if (cdata[tc].activity.turn > 0)
+                if (chara.activity.turn > 0)
                 {
-                    txt(i18n::s.get("core.action.move.interrupt", cdata[tc]));
-                    cdata[tc].activity.type = Activity::Type::none;
-                    cdata[tc].activity.turn = 0;
+                    txt(i18n::s.get("core.action.move.interrupt", chara));
+                    chara.activity.type = Activity::Type::none;
+                    chara.activity.turn = 0;
                 }
             }
-            sense_map_feats_on_move(chara);
+            sense_map_feats_on_move(cdata.player());
             return TurnResult::turn_end;
         }
     }
     if (running)
     {
-        if (cdata[tc].relationship >= -2 || keybd_wait >= 40)
+        if (chara.relationship >= -2 || keybd_wait >= 40)
         {
             return TurnResult::pc_turn_user_error;
         }
     }
-    if (cdata[tc].relationship <= -1)
+    if (chara.relationship <= -1)
     {
-        cdata.player().enemy_id = tc;
-        if (cdata[tc].is_invisible() == 1)
+        cdata.player().enemy_id = chara.index;
+        if (chara.is_invisible() == 1)
         {
             if (cdata.player().can_see_invisible() == 0)
             {
-                if (cdata[tc].wet == 0)
+                if (chara.wet == 0)
                 {
                     cdata.player().enemy_id = 0;
                 }
@@ -372,10 +371,10 @@ TurnResult _bump_into_character(Character& chara)
             keybd_wait = 1;
             keybd_attacking = 1;
         }
-        try_to_melee_attack(chara);
+        try_to_melee_attack(cdata.player(), chara);
         return TurnResult::turn_end;
     }
-    talk_to_npc();
+    talk_to_npc(chara);
     if (chatteleport == 1)
     {
         chatteleport = 0;
@@ -401,30 +400,27 @@ optional<TurnResult> use_gene_machine()
     Message::instance().linebreak();
     txt(i18n::s.get("core.action.use.gene_machine.choose_subject"));
 
+    int gene_chara_index{};
+    while (true)
     {
-        int chara;
-        while (true)
+        gene_chara_index = ctrl_ally(
+            ControlAllyOperation::gene_engineer, cdata[original_character]);
+        if (gene_chara_index == -1)
         {
-            chara = ctrl_ally(
-                ControlAllyOperation::gene_engineer, cdata[original_character]);
-            if (chara == -1)
-            {
-                break;
-            }
-            if (cdata[chara].has_been_used_stethoscope())
-            {
-                txt(i18n::s.get(
-                    "core.action.use.gene_machine.precious_ally",
-                    cdata[chara]));
-                continue;
-            }
             break;
         }
-        if (chara == -1)
+        if (cdata[gene_chara_index].has_been_used_stethoscope())
         {
-            return TurnResult::turn_end;
+            txt(i18n::s.get(
+                "core.action.use.gene_machine.precious_ally",
+                cdata[gene_chara_index]));
+            continue;
         }
-        tc = chara;
+        break;
+    }
+    if (gene_chara_index == -1)
+    {
+        return TurnResult::turn_end;
     }
 
     update_screen();
@@ -432,7 +428,7 @@ optional<TurnResult> use_gene_machine()
     Message::instance().linebreak();
     txt(i18n::s.get(
         "core.action.use.gene_machine.prompt",
-        cdata[tc],
+        cdata[gene_chara_index],
         cdata[original_character]));
     if (!yes_no())
     {
@@ -443,13 +439,14 @@ optional<TurnResult> use_gene_machine()
     txt(i18n::s.get(
             "core.action.use.gene_machine.has_inherited",
             cdata[original_character],
-            cdata[tc]),
+            cdata[gene_chara_index]),
         Message::color{ColorIndex::orange});
 
     GeneEngineeringAnimation(cdata[original_character].position).play();
 
     {
-        int stat = transplant_body_parts(cdata[original_character], cdata[tc]);
+        int stat = transplant_body_parts(
+            cdata[original_character], cdata[gene_chara_index]);
         if (stat != -1)
         {
             cdata[original_character].body_parts[stat - 100] = rtval * 10000;
@@ -464,7 +461,7 @@ optional<TurnResult> use_gene_machine()
 
     {
         int stat = gain_skills_by_geen_engineering(
-            cdata[original_character], cdata[tc]);
+            cdata[original_character], cdata[gene_chara_index]);
         if (stat != 0)
         {
             for (int cnt = 0; cnt < 2; ++cnt)
@@ -487,9 +484,11 @@ optional<TurnResult> use_gene_machine()
         }
     }
 
-    if (cdata[tc].level > cdata[original_character].level)
+    if (cdata[gene_chara_index].level > cdata[original_character].level)
     {
-        lv = (cdata[tc].level - cdata[original_character].level) / 2 + 1;
+        lv = (cdata[gene_chara_index].level - cdata[original_character].level) /
+                2 +
+            1;
         for (int cnt = 0, cnt_end = (lv); cnt < cnt_end; ++cnt)
         {
             r2 = 1;
@@ -504,7 +503,7 @@ optional<TurnResult> use_gene_machine()
         for (int cnt = 10; cnt < 18; ++cnt)
         {
             list(0, listmax) = cnt;
-            list(1, listmax) = sdata.get(cnt, tc).original_level;
+            list(1, listmax) = sdata.get(cnt, gene_chara_index).original_level;
             ++listmax;
         }
         sort_list_by_column1();
@@ -523,7 +522,7 @@ optional<TurnResult> use_gene_machine()
         }
     }
 
-    chara_vanquish(tc);
+    chara_vanquish(gene_chara_index);
     save_set_autosave();
     chara_gain_skill_exp(cdata.player(), 151, 1200);
     randomize();
@@ -570,35 +569,34 @@ TurnResult do_give_command()
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    tc = cell_data.at(x, y).chara_index_plus_one;
-    if (tc == 0)
+    auto target_chara_index = cell_data.at(x, y).chara_index_plus_one - 1;
+    if (target_chara_index == -1)
     {
         txt(i18n::s.get("core.ui.invalid_target"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    tc -= 1;
-    if (tc == 0)
+    if (target_chara_index == 0)
     {
         if (game_data.mount != 0)
         {
-            tc = game_data.mount;
+            target_chara_index = game_data.mount;
         }
     }
-    if (tc != 0)
+    if (target_chara_index != 0)
     {
-        if (tc < 16)
+        if (target_chara_index < 16)
         {
-            if (!cdata[tc].is_escorted() &&
-                !cdata[tc].is_escorted_in_sub_quest())
+            if (!cdata[target_chara_index].is_escorted() &&
+                !cdata[target_chara_index].is_escorted_in_sub_quest())
             {
-                return try_interact_with_npc();
+                return try_interact_with_npc(cdata[target_chara_index]);
             }
         }
         update_screen();
         invctrl = 10;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory().menu_result;
+        MenuResult mr = ctrl_inventory(cdata[target_chara_index]).menu_result;
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -619,30 +617,29 @@ TurnResult do_interact_command()
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    tc = cell_data.at(x, y).chara_index_plus_one;
-    if (tc == 0)
+    const auto target_index = cell_data.at(x, y).chara_index_plus_one - 1;
+    if (target_index == -1)
     {
         txt(i18n::s.get("core.ui.invalid_target"));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    tc -= 1;
-    txt(i18n::s.get("core.action.interact.prompt", cdata[tc]));
+    txt(i18n::s.get("core.action.interact.prompt", cdata[target_index]));
     p = 0;
 
     Prompt prompt("core.action.interact.choices");
-    if (tc != 0)
+    if (target_index != 0)
     {
         if (cdata.player().confused == 0)
         {
             prompt.append("talk", 0);
             prompt.append("attack", 1);
         }
-        if (cdata[tc].is_escorted() == 0)
+        if (cdata[target_index].is_escorted() == 0)
         {
-            if (cdata[tc].is_escorted_in_sub_quest() == 0)
+            if (cdata[target_index].is_escorted_in_sub_quest() == 0)
             {
-                if (tc < 16)
+                if (target_index < 16)
                 {
                     prompt.append("inventory", 4);
                 }
@@ -650,11 +647,11 @@ TurnResult do_interact_command()
                 {
                     prompt.append("give", 2);
                 }
-                if (cdata[tc].is_livestock() == 1)
+                if (cdata[target_index].is_livestock() == 1)
                 {
                     prompt.append("bring_out", 5);
                 }
-                if (tc < 16)
+                if (target_index < 16)
                 {
                     prompt.append("appearance", 8);
                 }
@@ -664,7 +661,7 @@ TurnResult do_interact_command()
         prompt.append("change_tone", 10);
         if (game_data.current_map != mdata_t::MapId::show_house)
         {
-            if (cdata[tc].is_hung_on_sand_bag())
+            if (cdata[target_index].is_hung_on_sand_bag())
             {
                 prompt.append("release", 9);
             }
@@ -689,7 +686,7 @@ TurnResult do_interact_command()
     if (p == 0)
     {
         update_screen();
-        talk_to_npc();
+        talk_to_npc(cdata[target_index]);
         if (chatteleport == 1)
         {
             chatteleport = 0;
@@ -703,7 +700,7 @@ TurnResult do_interact_command()
     if (p == 1)
     {
         update_screen();
-        try_to_melee_attack(cdata.player());
+        try_to_melee_attack(cdata.player(), cdata[target_index]);
         return TurnResult::turn_end;
     }
     if (p == 2)
@@ -711,45 +708,47 @@ TurnResult do_interact_command()
         update_screen();
         invctrl = 10;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory().menu_result;
+        MenuResult mr = ctrl_inventory(cdata[target_index]).menu_result;
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
     if (p == 3)
     {
         update_screen();
-        return call_npc();
+        return call_npc(cdata[target_index]);
     }
     if (p == 4)
     {
-        return try_interact_with_npc();
+        return try_interact_with_npc(cdata[target_index]);
     }
     if (p == 5)
     {
-        new_ally_joins(cdata[tc]);
+        new_ally_joins(cdata[target_index]);
         update_screen();
         return TurnResult::turn_end;
     }
     if (p == 6)
     {
         snd("core.pop2");
-        menu_character_sheet_investigate(cdata[tc]);
+        menu_character_sheet_investigate(cdata[target_index]);
         return TurnResult::pc_turn_user_error;
     }
     if (p == 7)
     {
-        txt(i18n::s.get("core.action.interact.change_tone.prompt", cdata[tc]));
+        txt(i18n::s.get(
+            "core.action.interact.change_tone.prompt", cdata[target_index]));
         inputlog = "";
         input_text_dialog((windoww - 360) / 2 + inf_screenx, winposy(90), 20);
-        cdata[tc].has_custom_talk() = false;
+        cdata[target_index].has_custom_talk() = false;
         if (inputlog == ""s)
         {
-            cdatan(4, tc) = "";
+            cdatan(4, target_index) = "";
         }
         else
         {
-            cdatan(4, tc) = inputlog;
-            txt(""s + cdatan(4, tc), Message::color{ColorIndex::cyan});
+            cdatan(4, target_index) = inputlog;
+            txt(""s + cdatan(4, target_index),
+                Message::color{ColorIndex::cyan});
         }
         update_screen();
         return TurnResult::pc_turn_user_error;
@@ -757,21 +756,21 @@ TurnResult do_interact_command()
     if (p == 8)
     {
         gsel(0);
-        menu_change_appearance(cdata[tc]);
+        menu_change_appearance(cdata[target_index]);
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
     if (p == 9)
     {
         snd("core.build1");
-        cdata[tc].is_hung_on_sand_bag() = false;
-        txt(i18n::s.get("core.action.interact.release", cdata[tc]));
+        cdata[target_index].is_hung_on_sand_bag() = false;
+        txt(i18n::s.get("core.action.interact.release", cdata[target_index]));
         flt();
-        itemcreate_extra_inv(733, cdata[tc].position, 0);
+        itemcreate_extra_inv(733, cdata[target_index].position, 0);
     }
     if (p == 10)
     {
-        change_npc_tone();
+        change_npc_tone(cdata[target_index]);
     }
     update_screen();
     return TurnResult::pc_turn_user_error;
@@ -779,9 +778,9 @@ TurnResult do_interact_command()
 
 
 
-TurnResult call_npc()
+TurnResult call_npc(Character& chara)
 {
-    txt(i18n::s.get("core.action.interact.name.prompt", cdata[tc]));
+    txt(i18n::s.get("core.action.interact.name.prompt", chara));
     inputlog = "";
     input_text_dialog((windoww - 220) / 2 + inf_screenx, winposy(90), 12);
     if (inputlog == ""s)
@@ -790,9 +789,9 @@ TurnResult call_npc()
     }
     else
     {
-        cdatan(0, tc) = ""s + inputlog;
-        cdata[tc].has_own_name() = true;
-        txt(i18n::s.get("core.action.interact.name.you_named", cdata[tc]));
+        cdatan(0, chara.index) = ""s + inputlog;
+        chara.has_own_name() = true;
+        txt(i18n::s.get("core.action.interact.name.you_named", chara));
     }
     gmode(2);
     update_screen();
@@ -909,43 +908,47 @@ TurnResult do_throw_command_internal(Character& thrower, Item& throw_item)
         cell_refresh(throw_item.position.x, throw_item.position.y);
         if (cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
         {
-            tc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
-            txt(i18n::s.get("core.action.throw.hits", cdata[tc]));
+            const auto target_index =
+                cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
+            txt(i18n::s.get("core.action.throw.hits", cdata[target_index]));
             if (throw_item.id == ItemId::monster_ball)
             {
-                if (tc < ELONA_MAX_PARTY_CHARACTERS ||
-                    cdata[tc].role != Role::none ||
-                    cdata[tc].quality == Quality::special ||
-                    cdata[tc].is_lord_of_dungeon() == 1)
+                if (target_index < ELONA_MAX_PARTY_CHARACTERS ||
+                    cdata[target_index].role != Role::none ||
+                    cdata[target_index].quality == Quality::special ||
+                    cdata[target_index].is_lord_of_dungeon() == 1)
                 {
                     txt(i18n::s.get(
                         "core.action.throw.monster_ball.cannot_be_captured"));
                     return TurnResult::turn_end;
                 }
-                if (cdata[tc].level > throw_item.param2)
+                if (cdata[target_index].level > throw_item.param2)
                 {
                     txt(i18n::s.get(
                         "core.action.throw.monster_ball.not_enough_power"));
                     return TurnResult::turn_end;
                 }
-                if (cdata[tc].hp > cdata[tc].max_hp / 10)
+                if (cdata[target_index].hp > cdata[target_index].max_hp / 10)
                 {
                     txt(i18n::s.get(
                         "core.action.throw.monster_ball.not_weak_enough"));
                     return TurnResult::turn_end;
                 }
                 txt(i18n::s.get(
-                        "core.action.throw.monster_ball.capture", cdata[tc]),
+                        "core.action.throw.monster_ball.capture",
+                        cdata[target_index]),
                     Message::color{ColorIndex::green});
-                animeload(8, tc);
-                throw_item.subname = charaid2int(cdata[tc].id);
-                throw_item.param3 = cdata[tc].level;
-                throw_item.weight = clamp(cdata[tc].weight, 10000, 100000);
+                animeload(8, target_index);
+                throw_item.subname = charaid2int(cdata[target_index].id);
+                throw_item.param3 = cdata[target_index].level;
+                throw_item.weight =
+                    clamp(cdata[target_index].weight, 10000, 100000);
                 throw_item.value = 1000;
             }
             else
             {
-                if (cdata[tc].id != CharaId::little_sister || tc < 16)
+                if (cdata[target_index].id != CharaId::little_sister ||
+                    target_index < 16)
                 {
                     txt(i18n::s.get("core.common.nothing_happens"));
                     return TurnResult::turn_end;
@@ -956,9 +959,9 @@ TurnResult do_throw_command_internal(Character& thrower, Item& throw_item)
                         "core.action.throw.monster_ball.does_not_work"));
                     return TurnResult::turn_end;
                 }
-                new_ally_joins(cdata[tc]);
+                new_ally_joins(cdata[target_index]);
             }
-            chara_vanquish(tc);
+            chara_vanquish(target_index);
             quest_check();
         }
         return TurnResult::turn_end;
@@ -982,18 +985,20 @@ TurnResult do_throw_command_internal(Character& thrower, Item& throw_item)
             }
             if (cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
             {
-                tc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
-                if (is_in_fov(cdata[tc]))
+                const auto target_index =
+                    cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
+                if (is_in_fov(cdata[target_index]))
                 {
-                    txt(i18n::s.get("core.action.throw.hits", cdata[tc]));
-                    wet(tc, 25);
+                    txt(i18n::s.get(
+                        "core.action.throw.hits", cdata[target_index]));
+                    wet(target_index, 25);
                 }
-                rowact_check(cdata[tc]);
+                rowact_check(cdata[target_index]);
                 if (throw_item.id == ItemId::handful_of_snow)
                 {
-                    if (is_in_fov(cdata[tc]))
+                    if (is_in_fov(cdata[target_index]))
                     {
-                        if (tc != 0)
+                        if (target_index != 0)
                         {
                             txt(i18n::s.get("core.action.throw.snow.dialog"),
                                 Message::color{ColorIndex::cyan});
@@ -1003,31 +1008,31 @@ TurnResult do_throw_command_internal(Character& thrower, Item& throw_item)
                 }
                 if (throw_item.id == ItemId::tomato)
                 {
-                    if (is_in_fov(cdata[tc]))
+                    if (is_in_fov(cdata[target_index]))
                     {
                         txt(i18n::s.get("core.action.throw.tomato"),
                             Message::color{ColorIndex::blue});
                     }
                     if (throw_item.param3 == -1)
                     {
-                        if (is_in_fov(cdata[tc]))
+                        if (is_in_fov(cdata[target_index]))
                         {
                             txt(i18n::s.get(
                                     "core.damage.is_engulfed_in_fury",
-                                    cdata[tc]),
+                                    cdata[target_index]),
                                 Message::color{ColorIndex::blue});
                         }
-                        cdata[tc].furious += rnd(10) + 5;
+                        cdata[target_index].furious += rnd(10) + 5;
                     }
                     return TurnResult::turn_end;
                 }
-                if (tc >= 16)
+                if (target_index >= 16)
                 {
-                    hostileaction(thrower.index, tc);
+                    hostileaction(thrower.index, target_index);
                 }
                 potionthrow = 100;
                 item_db_on_drink(
-                    cdata[tc], throw_item, itemid2int(throw_item.id));
+                    cdata[target_index], throw_item, itemid2int(throw_item.id));
                 return TurnResult::turn_end;
             }
             if (throw_item.id == ItemId::handful_of_snow)
@@ -1317,11 +1322,9 @@ TurnResult do_offer_command(Item& offering)
         offering,
         god_name(cdata.player().god_id)));
     snd("core.offer2");
-    const auto tcbk = tc(0);
-    tc = 0;
-    BrightAuraAnimation(cdata[tc].position, BrightAuraAnimation::Type::offering)
+    BrightAuraAnimation(
+        cdata.player().position, BrightAuraAnimation::Type::offering)
         .play();
-    tc = tcbk;
 
     const auto altar_opt = item_find(60002);
     if (!altar_opt)
@@ -1861,7 +1864,6 @@ TurnResult do_use_command(Item& use_item)
 {
     screenupdate = -1;
     update_screen();
-    tc = cdata.player().index;
     tlocx = cdata.player().position.x;
     tlocy = cdata.player().position.y;
     auto item_data = the_item_db[itemid2int(use_item.id)];
@@ -2160,10 +2162,9 @@ TurnResult do_use_command(Item& use_item)
         }
         if (chara != -1)
         {
-            tc = chara;
             screenupdate = -1;
             update_screen();
-            change_appearance_equipment(cdata[tc]);
+            change_appearance_equipment(cdata[chara]);
         }
         else
         {
@@ -2174,15 +2175,15 @@ TurnResult do_use_command(Item& use_item)
     }
     case 15:
         efid = 184;
-        magic(cdata.player(), use_item);
+        magic(cdata.player(), cdata.player(), use_item);
         break;
     case 16:
         efid = 185;
-        magic(cdata.player(), use_item);
+        magic(cdata.player(), cdata.player(), use_item);
         break;
     case 17:
         efid = 183;
-        magic(cdata.player(), use_item);
+        magic(cdata.player(), cdata.player(), use_item);
         break;
     case 14:
         if (cdata.player().index == 0)
@@ -2230,7 +2231,7 @@ TurnResult do_use_command(Item& use_item)
         }
     }
     break;
-    case 5:
+    case 5: {
         txt(i18n::s.get("core.action.use.stethoscope.prompt"));
         update_screen();
         {
@@ -2242,99 +2243,102 @@ TurnResult do_use_command(Item& use_item)
                 return TurnResult::pc_turn_user_error;
             }
         }
-        tc = cell_data.at(x, y).chara_index_plus_one - 1;
-        if (tc == 0)
+        const auto target_chara_index =
+            cell_data.at(x, y).chara_index_plus_one - 1;
+        if (target_chara_index == 0)
         {
             txt(i18n::s.get("core.action.use.stethoscope.self"));
             game_data.chara_last_attacked_by_player = 0;
             return TurnResult::turn_end;
         }
-        if (tc > 0 && tc < 16)
+        if (target_chara_index > 0 && target_chara_index < 16)
         {
-            if (cdata[tc].state() == Character::State::alive)
+            if (cdata[target_chara_index].state() == Character::State::alive)
             {
                 game_data.chara_last_attacked_by_player = 0;
-                if (cdata[tc].has_been_used_stethoscope() == 1)
+                if (cdata[target_chara_index].has_been_used_stethoscope() == 1)
                 {
-                    cdata[tc].has_been_used_stethoscope() = false;
+                    cdata[target_chara_index].has_been_used_stethoscope() =
+                        false;
                     txt(i18n::s.get(
-                        "core.action.use.stethoscope.other.stop", cdata[tc]));
+                        "core.action.use.stethoscope.other.stop",
+                        cdata[target_chara_index]));
                     return TurnResult::turn_end;
                 }
                 txt(i18n::s.get(
-                    "core.action.use.stethoscope.other.start.text", cdata[tc]));
-                if (cdata[tc].sex == 1)
+                    "core.action.use.stethoscope.other.start.text",
+                    cdata[target_chara_index]));
+                if (cdata[target_chara_index].sex == 1)
                 {
                     txt(i18n::s.get(
                         "core.action.use.stethoscope.other.start.female.text",
-                        cdata[tc]));
+                        cdata[target_chara_index]));
                     txt(i18n::s.get(
                             "core.action.use.stethoscope.other.start.female.dialog",
-                            cdata[tc]),
+                            cdata[target_chara_index]),
                         Message::color{ColorIndex::blue});
                 }
-                cdata[tc].has_been_used_stethoscope() = true;
+                cdata[target_chara_index].has_been_used_stethoscope() = true;
                 return TurnResult::turn_end;
             }
         }
         txt(i18n::s.get("core.common.it_is_impossible"));
         update_screen();
         return TurnResult::pc_turn_user_error;
-        break;
-    case 23:
+    }
+    case 23: {
         txt(i18n::s.get("core.action.use.leash.prompt"));
         update_screen();
+        int stat = ask_direction();
+        f = 0;
+        if (stat != 0)
         {
-            int stat = ask_direction();
-            f = 0;
-            if (stat != 0)
+            if (cell_data.at(x, y).chara_index_plus_one > 0)
             {
-                if (cell_data.at(x, y).chara_index_plus_one > 0)
+                const auto target_chara_index =
+                    cell_data.at(x, y).chara_index_plus_one - 1;
+                if (target_chara_index == 0)
                 {
-                    tc = cell_data.at(x, y).chara_index_plus_one - 1;
-                    if (tc == 0)
-                    {
-                        txt(i18n::s.get("core.action.use.leash.self"));
-                    }
-                    else if (cdata[tc].is_leashed() == 0)
-                    {
-                        if (tc >= 16)
-                        {
-                            if (rnd(5) == 0)
-                            {
-                                txt(i18n::s.get(
-                                    "core.action.use.leash.other.start.resists",
-                                    cdata[tc]));
-                                use_item.modify_number(-1);
-                                cell_refresh(
-                                    use_item.position.x, use_item.position.y);
-                                refresh_burden_state();
-                                break;
-                            }
-                        }
-                        cdata[tc].is_leashed() = true;
-                        txt(i18n::s.get(
-                            "core.action.use.leash.other.start.text",
-                            cdata[tc]));
-                        txt(i18n::s.get(
-                                "core.action.use.leash.other.start.dialog",
-                                cdata[tc]),
-                            Message::color{ColorIndex::cyan});
-                    }
-                    else
-                    {
-                        cdata[tc].is_leashed() = false;
-                        txt(i18n::s.get(
-                            "core.action.use.leash.other.stop.text",
-                            cdata[tc]));
-                        txt(i18n::s.get(
-                                "core.action.use.leash.other.stop.dialog",
-                                cdata[tc]),
-                            Message::color{ColorIndex::cyan});
-                    }
-                    animeload(8, tc);
-                    f = 1;
+                    txt(i18n::s.get("core.action.use.leash.self"));
                 }
+                else if (cdata[target_chara_index].is_leashed() == 0)
+                {
+                    if (target_chara_index >= 16)
+                    {
+                        if (rnd(5) == 0)
+                        {
+                            txt(i18n::s.get(
+                                "core.action.use.leash.other.start.resists",
+                                cdata[target_chara_index]));
+                            use_item.modify_number(-1);
+                            cell_refresh(
+                                use_item.position.x, use_item.position.y);
+                            refresh_burden_state();
+                            break;
+                        }
+                    }
+                    cdata[target_chara_index].is_leashed() = true;
+                    txt(i18n::s.get(
+                        "core.action.use.leash.other.start.text",
+                        cdata[target_chara_index]));
+                    txt(i18n::s.get(
+                            "core.action.use.leash.other.start.dialog",
+                            cdata[target_chara_index]),
+                        Message::color{ColorIndex::cyan});
+                }
+                else
+                {
+                    cdata[target_chara_index].is_leashed() = false;
+                    txt(i18n::s.get(
+                        "core.action.use.leash.other.stop.text",
+                        cdata[target_chara_index]));
+                    txt(i18n::s.get(
+                            "core.action.use.leash.other.stop.dialog",
+                            cdata[target_chara_index]),
+                        Message::color{ColorIndex::cyan});
+                }
+                animeload(8, target_chara_index);
+                f = 1;
             }
         }
         if (f == 0)
@@ -2342,7 +2346,8 @@ TurnResult do_use_command(Item& use_item)
             txt(i18n::s.get("core.common.it_is_impossible"));
         }
         break;
-    case 45:
+    }
+    case 45: {
         if (game_data.current_map == mdata_t::MapId::show_house)
         {
             txt(i18n::s.get("core.action.use.sandbag.cannot_use_here"));
@@ -2351,53 +2356,53 @@ TurnResult do_use_command(Item& use_item)
         }
         txt(i18n::s.get("core.action.use.sandbag.prompt"));
         update_screen();
+        int stat = ask_direction();
+        f = 0;
+        if (stat != 0)
         {
-            int stat = ask_direction();
-            f = 0;
-            if (stat != 0)
+            if (cell_data.at(x, y).chara_index_plus_one > 0)
             {
-                if (cell_data.at(x, y).chara_index_plus_one > 0)
+                const auto target_chara_index =
+                    cell_data.at(x, y).chara_index_plus_one - 1;
+                if (cdata[target_chara_index].hp >=
+                    cdata[target_chara_index].max_hp / 5)
                 {
-                    tc = cell_data.at(x, y).chara_index_plus_one - 1;
-                    if (cdata[tc].hp >= cdata[tc].max_hp / 5)
-                    {
-                        txt(i18n::s.get(
-                            "core.action.use.sandbag.not_weak_enough"));
-                        return TurnResult::pc_turn_user_error;
-                    }
-                    if (tc != 0)
-                    {
-                        if (tc < 16)
-                        {
-                            txt(i18n::s.get("core.action.use.sandbag.ally"));
-                            return TurnResult::pc_turn_user_error;
-                        }
-                    }
-                    if (cdata[tc].is_hung_on_sand_bag())
-                    {
-                        txt(i18n::s.get("core.action.use.sandbag.already"));
-                        return TurnResult::pc_turn_user_error;
-                    }
-                    if (tc == 0)
-                    {
-                        txt(i18n::s.get("core.action.use.sandbag.self"));
-                    }
-                    else
-                    {
-                        snd("core.build1");
-                        cdata[tc].is_hung_on_sand_bag() = true;
-                        txt(i18n::s.get(
-                            "core.action.use.sandbag.start", cdata[tc]));
-                        txt(i18n::s.get(
-                            "core.action.use.leash.other.start.dialog",
-                            cdata[tc]));
-                        animeload(8, tc);
-                        use_item.modify_number(-1);
-                        cell_refresh(use_item.position.x, use_item.position.y);
-                        refresh_burden_state();
-                    }
-                    f = 1;
+                    txt(i18n::s.get("core.action.use.sandbag.not_weak_enough"));
+                    return TurnResult::pc_turn_user_error;
                 }
+                if (target_chara_index != 0)
+                {
+                    if (target_chara_index < 16)
+                    {
+                        txt(i18n::s.get("core.action.use.sandbag.ally"));
+                        return TurnResult::pc_turn_user_error;
+                    }
+                }
+                if (cdata[target_chara_index].is_hung_on_sand_bag())
+                {
+                    txt(i18n::s.get("core.action.use.sandbag.already"));
+                    return TurnResult::pc_turn_user_error;
+                }
+                if (target_chara_index == 0)
+                {
+                    txt(i18n::s.get("core.action.use.sandbag.self"));
+                }
+                else
+                {
+                    snd("core.build1");
+                    cdata[target_chara_index].is_hung_on_sand_bag() = true;
+                    txt(i18n::s.get(
+                        "core.action.use.sandbag.start",
+                        cdata[target_chara_index]));
+                    txt(i18n::s.get(
+                        "core.action.use.leash.other.start.dialog",
+                        cdata[target_chara_index]));
+                    animeload(8, target_chara_index);
+                    use_item.modify_number(-1);
+                    cell_refresh(use_item.position.x, use_item.position.y);
+                    refresh_burden_state();
+                }
+                f = 1;
             }
         }
         if (f == 0)
@@ -2405,6 +2410,7 @@ TurnResult do_use_command(Item& use_item)
             txt(i18n::s.get("core.common.it_is_impossible"));
         }
         break;
+    }
     case 6: {
         txt(i18n::s.get("core.action.use.music_disc.play", use_item));
         auto music = use_item.param1 + 50 + 1;
@@ -2491,7 +2497,7 @@ TurnResult do_use_command(Item& use_item)
     case 20:
         efid = 458;
         efp = 400;
-        magic(cdata.player());
+        magic(cdata.player(), cdata.player());
         break;
     case 47: txt(i18n::s.get("core.action.use.summoning_crystal.use")); break;
     case 22:
@@ -2512,7 +2518,7 @@ TurnResult do_use_command(Item& use_item)
         snd("core.build1");
         efid = 49;
         efp = 100;
-        magic(cdata.player(), use_item);
+        magic(cdata.player(), cdata.player(), use_item);
         break;
     case 21:
         txt(i18n::s.get("core.action.use.hammer.use", use_item));
@@ -2521,14 +2527,14 @@ TurnResult do_use_command(Item& use_item)
         fixmaterial = use_item.material;
         efid = 21;
         efp = 500;
-        magic(cdata.player());
+        magic(cdata.player(), cdata.player());
         break;
     case 25:
         txt(i18n::s.get("core.action.use.unicorn_horn.use", use_item));
         use_item.modify_number(-1);
         efid = 637;
         efp = 500;
-        magic(cdata.player());
+        magic(cdata.player(), cdata.player());
         break;
     case 26:
         txt(i18n::s.get("core.action.use.statue.activate", use_item));
@@ -2543,14 +2549,14 @@ TurnResult do_use_command(Item& use_item)
             Message::color{ColorIndex::orange});
         efid = 637;
         efp = 5000;
-        magic(cdata.player());
+        magic(cdata.player(), cdata.player());
         break;
     case 43:
         txt(i18n::s.get("core.action.use.statue.activate", use_item));
         snd("core.pray1");
         txt(i18n::s.get("core.action.use.statue.ehekatl"),
             Message::color{ColorIndex::orange});
-        buff_add(cdata[tc], "core.luck", 77, 2500);
+        buff_add(cdata.player(), "core.luck", 77, 2500);
         break;
     case 27:
         txt(i18n::s.get("core.action.use.statue.activate", use_item));
@@ -2650,9 +2656,8 @@ TurnResult do_use_command(Item& use_item)
         txt(i18n::s.get("core.action.use.statue.activate", use_item));
         efid = use_item.param1;
         efp = use_item.param2;
-        tc = cdata.player().index;
         efstatus = CurseState::none;
-        magic(cdata.player());
+        magic(cdata.player(), cdata.player());
         break;
     case 41:
         if (game_data
@@ -2817,7 +2822,7 @@ TurnResult do_open_command(Item& box, bool play_sound)
         invctrl(1) = 0;
         invfile = box.param1;
         snd_("core.chest1");
-        shop_sell_item();
+        shop_sell_item(none);
         screenupdate = -1;
         update_screen();
         return TurnResult::turn_end;
@@ -2844,28 +2849,23 @@ TurnResult do_open_command(Item& box, bool play_sound)
     {
         snd_("core.locked1");
         txt(i18n::s.get("core.action.open.shackle.text"));
-        if (game_data.current_map == mdata_t::MapId::noyel)
+        if (game_data.current_map == mdata_t::MapId::noyel &&
+            game_data.current_dungeon_level == 1 &&
+            game_data.released_fire_giant == 0)
         {
-            if (game_data.current_dungeon_level == 1)
+            if (cdata[game_data.fire_giant].state() == Character::State::alive)
             {
-                if (game_data.released_fire_giant == 0)
+                const auto moyer_index = chara_find("core.moyer");
+                if (moyer_index != 0 &&
+                    cdata[moyer_index].state() == Character::State::alive)
                 {
-                    if (cdata[game_data.fire_giant].state() ==
-                        Character::State::alive)
-                    {
-                        tc = chara_find("core.moyer");
-                        if (tc != 0 &&
-                            cdata[tc].state() == Character::State::alive)
-                        {
-                            txt(i18n::s.get("core.action.open.shackle.dialog"),
-                                Message::color{ColorIndex::cyan});
-                            cdata[game_data.fire_giant].enemy_id = tc;
-                            cdata[game_data.fire_giant].hate = 1000;
-                        }
-                        game_data.released_fire_giant = 1;
-                        net_send_news("fire");
-                    }
+                    txt(i18n::s.get("core.action.open.shackle.dialog"),
+                        Message::color{ColorIndex::cyan});
+                    cdata[game_data.fire_giant].enemy_id = moyer_index;
+                    cdata[game_data.fire_giant].hate = 1000;
                 }
+                game_data.released_fire_giant = 1;
+                net_send_news("fire");
             }
         }
         return TurnResult::turn_end;
@@ -3259,7 +3259,7 @@ TurnResult do_movement_command()
     }
     if (cellchara != -1 && cellchara != 0)
     {
-        return _bump_into_character(cdata.player());
+        return _bump_into_character(cdata[cellchara]);
     }
     else
     {
@@ -3389,13 +3389,16 @@ TurnResult do_eat_command(Character& eater, Item& food)
     }
     else if (itemusingfind(food) != -1)
     {
-        tc = itemusingfind(food);
-        if (tc != eater.index)
+        const auto eating_chara_index = itemusingfind(food);
+        if (eating_chara_index != eater.index)
         {
-            cdata[tc].activity.finish();
+            cdata[eating_chara_index].activity.finish();
             if (is_in_fov(eater))
             {
-                txt(i18n::s.get("core.action.eat.snatches", eater, cdata[tc]));
+                txt(i18n::s.get(
+                    "core.action.eat.snatches",
+                    eater,
+                    cdata[eating_chara_index]));
             }
         }
     }
@@ -3443,10 +3446,10 @@ TurnResult do_fire_command()
     {
         return TurnResult::pc_turn_user_error;
     }
-    tc = cdata.player().enemy_id;
-    if (cdata[tc].relationship >= 0)
+    const auto target_chara_index = cdata.player().enemy_id;
+    if (cdata[target_chara_index].relationship >= 0)
     {
-        int stat = prompt_really_attack();
+        int stat = prompt_really_attack(cdata[target_chara_index]);
         if (stat == 0)
         {
             return TurnResult::pc_turn_user_error;
@@ -3474,7 +3477,8 @@ TurnResult do_fire_command()
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    do_ranged_attack(cdata.player(), result.weapon, result.ammo);
+    do_ranged_attack(
+        cdata.player(), cdata[target_chara_index], result.weapon, result.ammo);
     return TurnResult::turn_end;
 }
 
@@ -3611,7 +3615,7 @@ TurnResult do_get_command()
     }
 
     in = inv[item_index].number();
-    int stat = pick_up_item(cdata.player().index, inv[item_index]).type;
+    int stat = pick_up_item(cdata.player().index, inv[item_index], none).type;
     if (stat == 1 || stat == -1)
     {
         return TurnResult::turn_end;
@@ -3627,8 +3631,8 @@ TurnResult do_get_command()
 
 TurnResult do_cast_command()
 {
-    tc = cdata.player().index;
-    int stat = do_cast_magic(cdata.player());
+    int enemy_index = cdata.player().index;
+    int stat = do_cast_magic(cdata.player(), enemy_index);
     if (stat == 0)
     {
         return TurnResult::pc_turn_user_error;
@@ -3660,7 +3664,7 @@ TurnResult do_short_cut_command(int sc_)
     efid = game_data.skill_shortcuts.at(sc_);
     if (efid >= 300 && efid < 400)
     {
-        return do_use_magic(cdata.player());
+        return do_spact_command();
     }
     if (efid >= 600)
     {
@@ -3680,7 +3684,7 @@ TurnResult do_short_cut_command(int sc_)
                 return TurnResult::pc_turn_user_error;
             }
         }
-        return do_use_magic(cdata.player());
+        return do_spact_command();
     }
     if (efid >= 400)
     {
@@ -3783,11 +3787,15 @@ int ask_direction_to_close()
 
 
 
-int try_to_cast_spell(Character& caster)
+// TODO:
+// This function must not modify @a enemy_id.
+// See also:
+// https://elonafoobar.github.io/bugfixes/#x-%E4%BA%8B%E5%89%8D%E3%81%AB%E5%AF%BE%E8%B1%A1%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B%E3%82%BF%E3%82%A4%E3%83%97%E3%81%AE%E9%AD%94%E6%B3%95%E3%82%92%E6%B7%B7%E4%B9%B1%E6%99%82%E3%81%AB%E4%BD%BF%E3%81%A3%E3%81%9F%E3%81%A8%E3%81%8D%E5%AF%BE%E8%B1%A1%E3%81%8C%E4%BD%BF%E7%94%A8%E8%80%85%E8%87%AA%E8%BA%AB%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E3%81%97%E3%81%BE%E3%81%86%E5%95%8F%E9%A1%8C
+int try_to_cast_spell(Character& caster, int& enemy_index)
 {
     int r4 = 0;
     f = 1;
-    tc = caster.index;
+    enemy_index = caster.index;
     if (caster.blind != 0)
     {
         f = 0;
@@ -3903,9 +3911,9 @@ int try_to_cast_spell(Character& caster)
     {
         txt(i18n::s.get("core.misc.fail_to_cast.dimension_door_opens", caster));
     }
-    tc = caster.index;
+    enemy_index = caster.index;
     efid = 408;
-    magic(caster);
+    magic(caster, caster);
     return 0;
 }
 
@@ -4012,9 +4020,10 @@ TurnResult step_into_gate(Item& moon_gate)
 
 
 
-TurnResult do_use_magic(Character& caster)
+TurnResult do_spact_command()
 {
-    int stat = do_magic_attempt(caster);
+    int enemy_index = cdata.player().index;
+    int stat = do_spact(cdata.player(), enemy_index);
     if (stat == 0)
     {
         update_screen();
@@ -4025,11 +4034,11 @@ TurnResult do_use_magic(Character& caster)
 
 
 
-TurnResult try_interact_with_npc()
+TurnResult try_interact_with_npc(Character& chara)
 {
-    if (cdata[tc].activity.turn != 0)
+    if (chara.activity.turn != 0)
     {
-        txt(i18n::s.get("core.action.npc.is_busy_now", cdata[tc]));
+        txt(i18n::s.get("core.action.npc.is_busy_now", chara));
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -4037,7 +4046,7 @@ TurnResult try_interact_with_npc()
     invally = 1;
     invctrl = 10;
     snd("core.inv");
-    MenuResult mr = ctrl_inventory().menu_result;
+    MenuResult mr = ctrl_inventory(chara).menu_result;
     assert(mr.turn_result != TurnResult::none);
     return mr.turn_result;
 }
@@ -4248,7 +4257,8 @@ int decode_book(Character& reader, Item& book)
         {
             r2 = r2 * 150 / 100;
         }
-        int stat = try_to_cast_spell(reader);
+        int _dummy{};
+        int stat = try_to_cast_spell(reader, _dummy);
         if (stat == 0)
         {
             reader.activity.finish();
@@ -4365,7 +4375,6 @@ int read_normal_book(Character& reader, Item& book)
         txt(i18n::s.get("core.action.read.book.book_of_rachel"));
         return 1;
     }
-    tc = reader.index;
     item_identify(book, IdentifyState::partly);
     show_book_window(book);
     return 1;
@@ -4409,11 +4418,11 @@ int calcmagiccontrol(int caster_chara_index, int target_chara_index)
 
 
 
-int do_cast_magic(Character& caster)
+int do_cast_magic(Character& caster, int& enemy_index)
 {
     int spellbk = 0;
     spellbk = efid;
-    int stat = do_cast_magic_attempt(caster);
+    int stat = do_cast_magic_attempt(caster, enemy_index);
     if (stat == 1)
     {
         chara_gain_exp_casting(caster, spellbk);
@@ -4424,7 +4433,7 @@ int do_cast_magic(Character& caster)
 
 
 
-int do_cast_magic_attempt(Character& caster)
+int do_cast_magic_attempt(Character& caster, int& enemy_index)
 {
     int mp = 0;
     efsource = 3;
@@ -4448,8 +4457,7 @@ int do_cast_magic_attempt(Character& caster)
         screenupdate = -1;
         update_screen();
     }
-    int stat = prompt_magic_location(caster);
-    if (stat == 0)
+    if (!prompt_magic_location(caster, enemy_index))
     {
         efsource = 0;
         return 0;
@@ -4501,9 +4509,7 @@ int do_cast_magic_attempt(Character& caster)
         {
             txt(i18n::s.get("core.action.cast.confused", caster));
         }
-        const auto tcbk = tc(0);
-        int stat = try_to_cast_spell(caster);
-        tc = tcbk;
+        int stat = try_to_cast_spell(caster, enemy_index);
         if (stat == 0)
         {
             efsource = 0;
@@ -4573,8 +4579,8 @@ int do_cast_magic_attempt(Character& caster)
     {
         for (int cnt = 0, cnt_end = (rapidmagic); cnt < cnt_end; ++cnt)
         {
-            magic(caster);
-            if (cdata[tc].state() != Character::State::alive)
+            magic(caster, cdata[enemy_index]);
+            if (cdata[enemy_index].state() != Character::State::alive)
             {
                 int stat = find_enemy_target(caster);
                 if (stat == 0)
@@ -4583,8 +4589,8 @@ int do_cast_magic_attempt(Character& caster)
                 }
                 else
                 {
-                    tc = caster.enemy_id;
-                    if (relationbetween(caster.index, tc) != -3)
+                    enemy_index = caster.enemy_id;
+                    if (relationbetween(caster.index, enemy_index) != -3)
                     {
                         break;
                     }
@@ -4595,7 +4601,7 @@ int do_cast_magic_attempt(Character& caster)
     }
     else
     {
-        magic(caster);
+        magic(caster, cdata[enemy_index]);
     }
     return 1;
 }
@@ -4606,7 +4612,6 @@ int drink_potion(Character& chara, optional_ref<Item> potion)
 {
     assert(potionspill || potion);
 
-    tc = chara.index;
     efsource = 4;
     if (potionspill || potionthrow)
     {
@@ -4619,13 +4624,13 @@ int drink_potion(Character& chara, optional_ref<Item> potion)
     else
     {
         efstatus = potion->curse_state;
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(chara))
         {
-            snd_at("core.drink1", cdata[tc].position);
-            txt(i18n::s.get("core.action.drink.potion", cdata[tc], *potion));
+            snd_at("core.drink1", chara.position);
+            txt(i18n::s.get("core.action.drink.potion", chara, *potion));
         }
     }
-    magic(chara);
+    magic(chara, chara);
     if (potionspill || potionthrow)
     {
         potionspill = 0;
@@ -4635,21 +4640,21 @@ int drink_potion(Character& chara, optional_ref<Item> potion)
     {
         if (obvious == 1)
         {
-            if (tc == 0)
+            if (chara.index == 0)
             {
                 item_identify(*potion, IdentifyState::partly);
             }
         }
         potion->modify_number(-1);
     }
-    cdata[tc].nutrition += 150;
-    if (tc < 16)
+    chara.nutrition += 150;
+    if (chara.index < 16)
     {
-        if (cdata[tc].nutrition > 12000)
+        if (chara.nutrition > 12000)
         {
             if (rnd(5) == 0)
             {
-                chara_vomit(cdata[tc]);
+                chara_vomit(chara);
             }
         }
     }
@@ -4671,7 +4676,6 @@ int drink_well(Character& chara, Item& well)
     snd_at("core.drink1", chara.position);
     const auto valn = itemname(well);
     txt(i18n::s.get("core.action.drink.well.draw", chara, valn));
-    tc = chara.index;
     p = rnd(100);
     for (int cnt = 0; cnt < 1; ++cnt)
     {
@@ -4701,7 +4705,7 @@ int drink_well(Character& chara, Item& well)
             if (rnd(2) == 0)
             {
                 efid = 1113;
-                magic(chara);
+                magic(chara, chara);
                 break;
             }
         }
@@ -4712,35 +4716,35 @@ int drink_well(Character& chara, Item& well)
             {
                 efid = 1112;
                 efp = 100;
-                magic(chara);
+                magic(chara, chara);
                 break;
             }
             if (p == 1)
             {
                 efid = 1110;
                 efp = 100;
-                magic(chara);
+                magic(chara, chara);
                 break;
             }
             if (p == 2)
             {
                 efid = 1111;
                 efp = 100;
-                magic(chara);
+                magic(chara, chara);
                 break;
             }
             if (p == 3)
             {
                 efid = 1109;
                 efp = 100;
-                magic(chara);
+                magic(chara, chara);
                 break;
             }
             if (p == 4)
             {
                 efid = 1108;
                 efp = 100;
-                magic(chara);
+                magic(chara, chara);
                 break;
             }
         }
@@ -4778,8 +4782,7 @@ int drink_well(Character& chara, Item& well)
                 txt(i18n::s.get(
                     "core.action.drink.well.effect.pregnancy", chara));
             }
-            tc = chara.index;
-            get_pregnant();
+            get_pregnant(chara);
             break;
         }
         if (p > 35)
@@ -4796,13 +4799,13 @@ int drink_well(Character& chara, Item& well)
         if (p > 33)
         {
             efid = 1113;
-            magic(chara);
+            magic(chara, chara);
             break;
         }
         if (p > 20)
         {
             efid = 454;
-            magic(chara);
+            magic(chara, chara);
             break;
         }
         if (p == 0)
@@ -4816,7 +4819,7 @@ int drink_well(Character& chara, Item& well)
             }
             ++game_data.wish_count;
             efid = 441;
-            magic(chara);
+            magic(chara, chara);
             break;
         }
         if (chara.index == 0)
@@ -4858,7 +4861,6 @@ int drink_well(Character& chara, Item& well)
 
 int read_scroll(Character& reader, Item& scroll)
 {
-    tc = reader.index;
     tlocx = reader.position.x;
     tlocy = reader.position.y;
     efstatus = scroll.curse_state;
@@ -4894,7 +4896,7 @@ int read_scroll(Character& reader, Item& scroll)
         scroll.modify_number(-1);
         chara_gain_skill_exp(reader, 150, 25, 2);
     }
-    magic(reader, scroll);
+    magic(reader, reader, scroll);
     if (reader.index == 0)
     {
         if (obvious == 1)
@@ -4926,8 +4928,8 @@ bool do_zap_internal(Character& doer, Item& rod)
     }
     efsource = 1;
 
-    int stat = prompt_magic_location(doer);
-    if (stat == 0)
+    int enemy_index = doer.index;
+    if (!prompt_magic_location(doer, enemy_index))
     {
         efsource = 0;
         return false;
@@ -4987,7 +4989,7 @@ bool do_zap_internal(Character& doer, Item& rod)
 
     if (f == 1 || rod.id == ItemId::rod_of_wishing || doer.index != 0)
     {
-        magic(doer);
+        magic(doer, cdata[enemy_index]);
         if (doer.index == 0)
         {
             if (obvious == 1)
@@ -5029,13 +5031,13 @@ int do_zap(Character& doer, Item& rod)
 
 
 
-int do_magic_attempt(Character& caster)
+int do_spact(Character& doer, int& enemy_index)
 {
     if (efid == 646)
     {
-        if (cdata[tc].is_sentenced_daeth() == 1)
+        if (cdata[enemy_index].is_sentenced_daeth() == 1)
         {
-            if (caster.relationship == -3)
+            if (doer.relationship == -3)
             {
                 for (int cnt = 0; cnt < ELONA_MAX_PARTY_CHARACTERS; ++cnt)
                 {
@@ -5043,7 +5045,7 @@ int do_magic_attempt(Character& caster)
                     {
                         if (cdata[cnt].relationship == 10)
                         {
-                            caster.enemy_id = cnt;
+                            doer.enemy_id = cnt;
                             break;
                         }
                     }
@@ -5052,23 +5054,20 @@ int do_magic_attempt(Character& caster)
             return 0;
         }
     }
+    if (!prompt_magic_location(doer, enemy_index))
     {
-        int stat = prompt_magic_location(caster);
-        if (stat == 0)
-        {
-            return 0;
-        }
+        return 0;
     }
     if (the_ability_db[efid]->range / 1000 * 1000 != 3000 &&
         the_ability_db[efid]->range / 1000 * 1000 != 10000)
     {
-        if (caster.confused != 0 || caster.blind != 0)
+        if (doer.confused != 0 || doer.blind != 0)
         {
             if (rnd(5) == 0)
             {
-                if (is_in_fov(caster))
+                if (is_in_fov(doer))
                 {
-                    txt(i18n::s.get("core.misc.shakes_head", caster));
+                    txt(i18n::s.get("core.misc.shakes_head", doer));
                 }
                 return 1;
             }
@@ -5076,7 +5075,7 @@ int do_magic_attempt(Character& caster)
     }
     if (efid >= 600)
     {
-        if (caster.index == 0)
+        if (doer.index == 0)
         {
             if (cdata.player().sp < 50)
             {
@@ -5093,10 +5092,10 @@ int do_magic_attempt(Character& caster)
                 rnd(the_ability_db[efid]->cost / 2 + 1) +
                     the_ability_db[efid]->cost / 2 + 1);
             chara_gain_skill_exp(
-                caster, the_ability_db[efid]->related_basic_attribute, 25);
+                doer, the_ability_db[efid]->related_basic_attribute, 25);
         }
     }
-    efp = calcspellpower(efid, caster.index);
+    efp = calcspellpower(efid, doer.index);
     if (noeffect == 1)
     {
         if (efid != 300)
@@ -5106,7 +5105,7 @@ int do_magic_attempt(Character& caster)
         }
     }
     {
-        int stat = magic(caster);
+        int stat = magic(doer, cdata[enemy_index]);
         if (stat == 0)
         {
             return 0;
@@ -5117,12 +5116,12 @@ int do_magic_attempt(Character& caster)
 
 
 
-int prompt_magic_location(Character& caster)
+bool prompt_magic_location(Character& caster, int& enemy_index)
 {
     noeffect = 0;
     if (efid > 661)
     {
-        tc = caster.index;
+        enemy_index = caster.index;
         return 1;
     }
     tg = the_ability_db[efid]->range / 1000 * 1000;
@@ -5137,7 +5136,7 @@ int prompt_magic_location(Character& caster)
     {
         if (caster.index == 0)
         {
-            tc = 0;
+            enemy_index = 0;
             return 1;
         }
     }
@@ -5145,7 +5144,7 @@ int prompt_magic_location(Character& caster)
     {
         if (caster.index == 0)
         {
-            tc = 0;
+            enemy_index = 0;
             txt(i18n::s.get("core.action.which_direction.ask"));
             update_screen();
             int stat = ask_direction();
@@ -5159,20 +5158,20 @@ int prompt_magic_location(Character& caster)
                 obvious = 0;
                 return 1;
             }
-            tc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
+            enemy_index = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
         }
         else
         {
             if (dist(
-                    cdata[tc].position.x,
-                    cdata[tc].position.y,
+                    cdata[enemy_index].position.x,
+                    cdata[enemy_index].position.y,
                     caster.position.x,
                     caster.position.y) > the_ability_db[efid]->range % 1000 + 1)
             {
                 return 0;
             }
-            tlocx = cdata[tc].position.x;
-            tlocy = cdata[tc].position.y;
+            tlocx = cdata[enemy_index].position.x;
+            tlocy = cdata[enemy_index].position.y;
         }
         return 1;
     }
@@ -5219,15 +5218,15 @@ int prompt_magic_location(Character& caster)
         else
         {
             if (fov_los(
-                    cdata[tc].position.x,
-                    cdata[tc].position.y,
+                    cdata[enemy_index].position.x,
+                    cdata[enemy_index].position.y,
                     caster.position.x,
                     caster.position.y) == 0)
             {
                 return 0;
             }
-            tlocx = cdata[tc].position.x;
-            tlocy = cdata[tc].position.y;
+            tlocx = cdata[enemy_index].position.x;
+            tlocy = cdata[enemy_index].position.y;
         }
         return 1;
     }
@@ -5238,8 +5237,8 @@ int prompt_magic_location(Character& caster)
             if (the_ability_db[efid]->ability_type == 3)
             {
                 if (dist(
-                        cdata[tc].position.x,
-                        cdata[tc].position.y,
+                        cdata[enemy_index].position.x,
+                        cdata[enemy_index].position.y,
                         caster.position.x,
                         caster.position.y) >
                     the_ability_db[efid]->range % 1000 + 1)
@@ -5249,14 +5248,14 @@ int prompt_magic_location(Character& caster)
                 if (fov_los(
                         caster.position.x,
                         caster.position.y,
-                        cdata[tc].position.x,
-                        cdata[tc].position.y) == 0)
+                        cdata[enemy_index].position.x,
+                        cdata[enemy_index].position.y) == 0)
                 {
                     return 0;
                 }
             }
         }
-        tc = caster.index;
+        enemy_index = caster.index;
         tlocx = caster.position.x;
         tlocy = caster.position.y;
         return 1;
@@ -5271,10 +5270,10 @@ int prompt_magic_location(Character& caster)
                 obvious = 0;
                 return 0;
             }
-            tc = cdata.player().enemy_id;
-            if (cdata[tc].relationship >= 0)
+            enemy_index = cdata.player().enemy_id;
+            if (cdata[enemy_index].relationship >= 0)
             {
-                int stat = prompt_really_attack();
+                int stat = prompt_really_attack(cdata[enemy_index]);
                 if (stat == 0)
                 {
                     obvious = 0;
@@ -5283,8 +5282,8 @@ int prompt_magic_location(Character& caster)
             }
         }
         if (dist(
-                cdata[tc].position.x,
-                cdata[tc].position.y,
+                cdata[enemy_index].position.x,
+                cdata[enemy_index].position.y,
                 caster.position.x,
                 caster.position.y) > the_ability_db[efid]->range % 1000 + 1)
         {
@@ -5299,13 +5298,13 @@ int prompt_magic_location(Character& caster)
         if (fov_los(
                 caster.position.x,
                 caster.position.y,
-                cdata[tc].position.x,
-                cdata[tc].position.y) == 0)
+                cdata[enemy_index].position.x,
+                cdata[enemy_index].position.y) == 0)
         {
             return 0;
         }
-        tlocx = cdata[tc].position.x;
-        tlocy = cdata[tc].position.y;
+        tlocx = cdata[enemy_index].position.x;
+        tlocy = cdata[enemy_index].position.y;
         return 1;
     }
     if (tg == 5000)
@@ -5335,8 +5334,17 @@ int prompt_magic_location(Character& caster)
 
 
 
-PickUpItemResult pick_up_item(int inventory_id, Item& item, bool play_sound)
+PickUpItemResult pick_up_item(
+    int inventory_id,
+    Item& item,
+    optional_ref<Character> shopkeeper,
+    bool play_sound)
 {
+    if (invctrl == 11 || invctrl == 12)
+    {
+        assert(shopkeeper);
+    }
+
     const auto snd_ = [play_sound](data::InstanceId id) {
         if (play_sound)
         {
@@ -5556,7 +5564,7 @@ PickUpItemResult pick_up_item(int inventory_id, Item& item, bool play_sound)
             sellgold = calcitemvalue(*picked_up_item, 0) * in;
             snd_("core.paygold1");
             cdata.player().gold -= sellgold;
-            earn_gold(cdata[tc], sellgold);
+            earn_gold(*shopkeeper, sellgold);
             if (the_item_db[itemid2int(picked_up_item->id)]->category ==
                 ItemCategory::cargo)
             {
@@ -5592,10 +5600,10 @@ PickUpItemResult pick_up_item(int inventory_id, Item& item, bool play_sound)
             }
             snd_("core.getgold1");
             earn_gold(cdata.player(), sellgold);
-            cdata[tc].gold -= sellgold;
-            if (cdata[tc].gold < 0)
+            shopkeeper->gold -= sellgold;
+            if (shopkeeper->gold < 0)
             {
-                cdata[tc].gold = 0;
+                shopkeeper->gold = 0;
             }
             picked_up_item->identify_state = IdentifyState::completely;
         }
@@ -5725,52 +5733,65 @@ TurnResult do_bash(Character& chara)
     }
     if (cell_data.at(x, y).chara_index_plus_one != 0)
     {
-        tc = cell_data.at(x, y).chara_index_plus_one - 1;
-        if (cdata[tc].sleep == 0)
+        const auto bash_target_index =
+            cell_data.at(x, y).chara_index_plus_one - 1;
+        if (cdata[bash_target_index].sleep == 0)
         {
             if (chara.index == 0)
             {
-                if (cdata[tc].relationship >= 0)
+                if (cdata[bash_target_index].relationship >= 0)
                 {
-                    int stat = prompt_really_attack();
+                    int stat = prompt_really_attack(cdata[bash_target_index]);
                     if (stat == 0)
                     {
                         return TurnResult::pc_turn_user_error;
                     }
                 }
             }
-            if (cdata[tc].choked)
+            if (cdata[bash_target_index].choked)
             {
                 snd("core.bash1");
                 txt(i18n::s.get(
-                    "core.action.bash.choked.execute", chara, cdata[tc]));
-                damage_hp(cdata[tc], sdata(10, chara.index) * 5, chara.index);
-                if (cdata[tc].state() == Character::State::alive)
+                    "core.action.bash.choked.execute",
+                    chara,
+                    cdata[bash_target_index]));
+                damage_hp(
+                    cdata[bash_target_index],
+                    sdata(10, chara.index) * 5,
+                    chara.index);
+                if (cdata[bash_target_index].state() == Character::State::alive)
                 {
                     txt(i18n::s.get(
-                        "core.action.bash.choked.spits", cdata[tc]));
+                        "core.action.bash.choked.spits",
+                        cdata[bash_target_index]));
                     txt(i18n::s.get("core.action.bash.choked.dialog"));
-                    cdata[tc].choked = 0;
-                    chara_modify_impression(cdata[tc], 10);
+                    cdata[bash_target_index].choked = 0;
+                    chara_modify_impression(cdata[bash_target_index], 10);
                 }
             }
             else
             {
                 snd("core.bash1");
-                txt(i18n::s.get("core.action.bash.execute", chara, cdata[tc]));
-                hostileaction(chara.index, tc);
+                txt(i18n::s.get(
+                    "core.action.bash.execute",
+                    chara,
+                    cdata[bash_target_index]));
+                hostileaction(chara.index, bash_target_index);
             }
         }
         else
         {
             snd("core.bash1");
-            txt(i18n::s.get("core.action.bash.execute", chara, cdata[tc]));
             txt(i18n::s.get(
-                "core.action.bash.disturbs_sleep", chara, cdata[tc]));
+                "core.action.bash.execute", chara, cdata[bash_target_index]));
+            txt(i18n::s.get(
+                "core.action.bash.disturbs_sleep",
+                chara,
+                cdata[bash_target_index]));
             modify_karma(chara, -1);
-            cdata[tc].emotion_icon = 418;
+            cdata[bash_target_index].emotion_icon = 418;
         }
-        cdata[tc].sleep = 0;
+        cdata[bash_target_index].sleep = 0;
         return TurnResult::turn_end;
     }
     if (cell_data.at(x, y).feats != 0)
@@ -5823,17 +5844,15 @@ TurnResult do_bash(Character& chara)
                 }
                 if (rnd(4) == 0)
                 {
-                    tc = chara.index;
                     efid = 1109;
                     efp = 200;
-                    magic(chara);
+                    magic(chara, chara);
                 }
                 if (rnd(3) == 0)
                 {
-                    tc = chara.index;
                     efid = 1110;
                     efp = 200;
-                    magic(chara);
+                    magic(chara, chara);
                 }
                 if (rnd(3) == 0)
                 {
@@ -5925,7 +5944,7 @@ void proc_autopick()
             {
                 in = item.number();
                 const auto pick_up_item_result =
-                    pick_up_item(cdata.player().index, item, !op.sound);
+                    pick_up_item(cdata.player().index, item, none, !op.sound);
                 if (pick_up_item_result.type != 1)
                 {
                     break;
@@ -6070,11 +6089,10 @@ void open_box(Item& box)
     msg_halt();
     if (box.id == ItemId::material_box)
     {
-        tc = cdata.player().index;
         efid = 1117;
         efp = 100 + box.param1 * 10;
         box.param1 = 0;
-        magic(cdata.player());
+        magic(cdata.player(), cdata.player());
         return;
     }
     p = 3 + rnd(5);
@@ -6283,8 +6301,7 @@ void open_new_year_gift(Item& box)
         }
         efid = 1114;
         efp = 1000;
-        tc = 0;
-        magic(cdata.player());
+        magic(cdata.player(), cdata.player());
         return;
     }
     if (box.param3 < 200)

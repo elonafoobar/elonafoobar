@@ -7,7 +7,6 @@
 #include "elona.hpp"
 #include "fov.hpp"
 #include "item.hpp"
-#include "macro.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "pic_loader/pic_loader.hpp"
@@ -707,7 +706,7 @@ void initialize_cloud_data()
 void render_cloud()
 {
     static int dummy = ((void)initialize_cloud_data(), 0);
-    UNUSED(dummy);
+    (void)dummy;
 
     for (size_t i = 0; i < clouds.size(); ++i)
     {

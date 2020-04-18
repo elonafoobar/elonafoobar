@@ -295,7 +295,8 @@ void quest_check()
 }
 
 
-void quest_set_data(int val0)
+
+void quest_set_data(optional_ref<const Character> client, int val0)
 {
     randomize(quest_data[rq].client_chara_index + 1);
     s(6) = "";
@@ -445,20 +446,20 @@ void quest_set_data(int val0)
         s(4) = i18n::s.get("core.quest.info.collect.text", s(10), s(12));
         s(6) = s(4);
     }
-    text_replace_tags_in_quest_text();
+    text_replace_tags_in_quest_text(client);
     if (val0 == 1)
     {
-        buff =
-            i18n::s.get("core.quest.giver.have_something_to_ask", cdata[tc]) +
+        assert(client);
+        buff = i18n::s.get("core.quest.giver.have_something_to_ask", *client) +
             buff;
         if (quest_data[rq].deadline_days != -1)
         {
             buff += i18n::s.get(
                 "core.quest.giver.days_to_perform",
                 quest_data[rq].deadline_days,
-                cdata[tc]);
+                *client);
         }
-        buff += i18n::s.get("core.quest.giver.how_about_it", cdata[tc]);
+        buff += i18n::s.get("core.quest.giver.how_about_it", *client);
     }
     if (val0 == 2)
     {
@@ -498,11 +499,12 @@ void quest_set_data(int val0)
     }
     if (val0 == 3)
     {
-        buff = i18n::s.get("core.quest.giver.complete.done_well", cdata[tc]);
+        assert(client);
+        buff = i18n::s.get("core.quest.giver.complete.done_well", *client);
         if (elona::stoi(s(5)) != 0)
         {
             txt(i18n::s.get(
-                "core.quest.giver.complete.take_reward", s(5), cdata[tc]));
+                "core.quest.giver.complete.take_reward", s(5), *client));
         }
         if (quest_data[rq].id == 1006)
         {
@@ -510,7 +512,7 @@ void quest_set_data(int val0)
                 quest_data[rq].extra_info_2)
             {
                 buff += i18n::s.get(
-                    "core.quest.giver.complete.extra_coins", cdata[tc]);
+                    "core.quest.giver.complete.extra_coins", *client);
             }
         }
         if (quest_data[rq].id == 1009)
@@ -519,7 +521,7 @@ void quest_set_data(int val0)
                 quest_data[rq].extra_info_2)
             {
                 buff += i18n::s.get(
-                    "core.quest.giver.complete.music_tickets", cdata[tc]);
+                    "core.quest.giver.complete.music_tickets", *client);
             }
         }
     }
@@ -1190,57 +1192,49 @@ void quest_failed(int val0)
         {
             txt(i18n::s.get("core.quest.escort.you_failed_to_protect"),
                 Message::color{ColorIndex::purple});
-            for (int cnt = 0; cnt < 16; ++cnt)
+            for (int cnt = 1; cnt < 16; ++cnt)
             {
-                if (cnt != 0)
+                if (cdata[cnt].is_escorted() &&
+                    quest_data[rq].extra_info_2 == charaid2int(cdata[cnt].id))
                 {
-                    if (cdata[cnt].is_escorted() == 1)
+                    cdata[cnt].is_escorted() = false;
+                    if (cdata[cnt].state() == Character::State::alive)
                     {
-                        if (quest_data[rq].extra_info_2 ==
-                            charaid2int(cdata[cnt].id))
+                        if (quest_data[rq].escort_difficulty == 0)
                         {
-                            tc = cnt;
-                            cdata[cnt].is_escorted() = false;
-                            if (cdata[tc].state() == Character::State::alive)
-                            {
-                                if (quest_data[rq].escort_difficulty == 0)
-                                {
-                                    s = i18n::s.get(
-                                        "core.quest.escort.failed.assassin");
-                                    p = -11;
-                                }
-                                if (quest_data[rq].escort_difficulty == 1)
-                                {
-                                    s = i18n::s.get(
-                                        "core.quest.escort.failed.poison");
-                                    p = -4;
-                                }
-                                if (quest_data[rq].escort_difficulty == 2)
-                                {
-                                    s = i18n::s.get(
-                                        "core.quest.escort.failed.deadline",
-                                        cdata[tc]);
-                                    mef_add(
-                                        cdata.player().position.x,
-                                        cdata.player().position.y,
-                                        5,
-                                        24,
-                                        rnd(15) + 25,
-                                        efp,
-                                        0);
-                                    mapitem_fire(
-                                        cdata.player(),
-                                        cdata[tc].position.x,
-                                        cdata[tc].position.y);
-                                    p = -9;
-                                }
-                                txt(s, Message::color{ColorIndex::cyan});
-                                damage_hp(cdata[tc], 999999, p);
-                            }
-                            cdata[tc].set_state(Character::State::empty);
-                            break;
+                            s = i18n::s.get(
+                                "core.quest.escort.failed.assassin");
+                            p = -11;
                         }
+                        if (quest_data[rq].escort_difficulty == 1)
+                        {
+                            s = i18n::s.get("core.quest.escort.failed.poison");
+                            p = -4;
+                        }
+                        if (quest_data[rq].escort_difficulty == 2)
+                        {
+                            s = i18n::s.get(
+                                "core.quest.escort.failed.deadline",
+                                cdata[cnt]);
+                            mef_add(
+                                cdata.player().position.x,
+                                cdata.player().position.y,
+                                5,
+                                24,
+                                rnd(15) + 25,
+                                efp,
+                                0);
+                            mapitem_fire(
+                                cdata.player(),
+                                cdata[cnt].position.x,
+                                cdata[cnt].position.y);
+                            p = -9;
+                        }
+                        txt(s, Message::color{ColorIndex::cyan});
+                        damage_hp(cdata[cnt], 999999, p);
                     }
+                    cdata[cnt].set_state(Character::State::empty);
+                    break;
                 }
             }
             modify_karma(cdata.player(), -10);

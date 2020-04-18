@@ -287,7 +287,7 @@ optional_ref<Item> _try_generate_special_throwing_item(
 
 
 
-bool _try_do_melee_attack(Character& attacker, const Character& target)
+bool _try_do_melee_attack(Character& attacker, Character& target)
 {
     if (distance >= 6)
     {
@@ -304,7 +304,7 @@ bool _try_do_melee_attack(Character& attacker, const Character& target)
         return false; // Cannot do ranged attack.
     }
 
-    do_ranged_attack(attacker, result.weapon, result.ammo);
+    do_ranged_attack(attacker, target, result.weapon, result.ammo);
     return true;
 }
 
@@ -587,9 +587,9 @@ void _proc_hungry(Character& chara)
 namespace elona
 {
 
-TurnResult ai_proc_basic(Character& chara)
+TurnResult ai_proc_basic(Character& chara, int& enemy_index)
 {
-    if (tc == 0)
+    if (enemy_index == 0)
     {
         pcattacker = chara.index;
     }
@@ -603,10 +603,10 @@ TurnResult ai_proc_basic(Character& chara)
             act = choice(chara.special_actions);
         }
         if (_is_special_throwing_action(act) && distance < 8 &&
-            fov_los_helper(chara, cdata[tc]))
+            fov_los_helper(chara, cdata[enemy_index]))
         {
-            tlocx = cdata[tc].position.x;
-            tlocy = cdata[tc].position.y;
+            tlocx = cdata[enemy_index].position.x;
+            tlocy = cdata[enemy_index].position.y;
             if (const auto throw_item =
                     _try_generate_special_throwing_item(chara, act))
             {
@@ -635,14 +635,14 @@ TurnResult ai_proc_basic(Character& chara)
     // Do ranged attack.
     if (act == -2)
     {
-        const auto ok = _try_do_melee_attack(chara, cdata[tc]);
+        const auto ok = _try_do_melee_attack(chara, cdata[enemy_index]);
         if (ok)
         {
             return TurnResult::turn_end;
         }
     }
 
-    // Do any spact.
+    // Cast some spell.
     if (act >= 400 && act < 467)
     {
         efid = act;
@@ -656,18 +656,18 @@ TurnResult ai_proc_basic(Character& chara)
                 return TurnResult::turn_end;
             }
         }
-        const auto ok = do_cast_magic(chara);
+        const auto ok = do_cast_magic(chara, enemy_index);
         if (ok)
         {
             return TurnResult::turn_end;
         }
     }
 
-    // Cast any spell.
+    // Do some spact.
     if (act >= 600)
     {
         efid = act;
-        const auto ok = do_magic_attempt(chara);
+        const auto ok = do_spact(chara, enemy_index);
         if (ok)
         {
             return TurnResult::turn_end;
@@ -680,11 +680,11 @@ TurnResult ai_proc_basic(Character& chara)
     {
         if (distance == 1)
         {
-            try_to_melee_attack(chara);
+            try_to_melee_attack(chara, cdata[enemy_index]);
         }
         else if (rnd(3) == 0 || chara.index < 16)
         {
-            const auto ok = _try_do_melee_attack(chara, cdata[tc]);
+            const auto ok = _try_do_melee_attack(chara, cdata[enemy_index]);
             if (ok)
             {
                 return TurnResult::turn_end;
@@ -696,13 +696,13 @@ TurnResult ai_proc_basic(Character& chara)
     // Do melee attack if the attacker stands next to the enemy.
     if (distance == 1)
     {
-        try_to_melee_attack(chara);
+        try_to_melee_attack(chara, cdata[enemy_index]);
         return TurnResult::turn_end;
     }
 
     // Try to do ranged attack if possible.
     {
-        const auto ok = _try_do_melee_attack(chara, cdata[tc]);
+        const auto ok = _try_do_melee_attack(chara, cdata[enemy_index]);
         if (ok)
         {
             return TurnResult::turn_end;
@@ -722,7 +722,7 @@ TurnResult ai_proc_basic(Character& chara)
     }
     if (rnd(100) < chara.ai_move)
     {
-        return proc_npc_movement_event(chara);
+        return proc_npc_movement_event(chara, enemy_index);
     }
     else
     {
@@ -732,7 +732,8 @@ TurnResult ai_proc_basic(Character& chara)
 
 
 
-TurnResult proc_npc_movement_event(Character& chara, bool retreat)
+TurnResult
+proc_npc_movement_event(Character& chara, int& enemy_index, bool retreat)
 {
     if (map_data.type == mdata_t::MapType::town && chara.index < 16)
     {
@@ -746,7 +747,7 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
         }
     }
 
-    if (tc == chara.index)
+    if (enemy_index == chara.index)
     {
         chara.enemy_id = 0;
         return TurnResult::turn_end;
@@ -754,13 +755,13 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
 
     if (chara._203 <= 0)
     {
-        chara.target_position = cdata[tc].position;
+        chara.target_position = cdata[enemy_index].position;
         if (retreat || chara.ai_dist > distance)
         {
-            chara.target_position.x =
-                chara.position.x + (chara.position.x - cdata[tc].position.x);
-            chara.target_position.y =
-                chara.position.y + (chara.position.y - cdata[tc].position.y);
+            chara.target_position.x = chara.position.x +
+                (chara.position.x - cdata[enemy_index].position.x);
+            chara.target_position.y = chara.position.y +
+                (chara.position.y - cdata[enemy_index].position.y);
         }
     }
     else
@@ -782,35 +783,39 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
     }
     if (cellchara != -1)
     {
-        tc = cellchara;
-        if (relationbetween(chara.index, tc) == -3)
+        enemy_index = cellchara;
+        if (relationbetween(chara.index, enemy_index) == -3)
         {
-            chara.enemy_id = tc;
+            chara.enemy_id = enemy_index;
             chara.hate += 4;
-            distance = dist_helper(cdata[tc], chara);
-            return ai_proc_basic(chara);
+            distance = dist_helper(cdata[enemy_index], chara);
+            return ai_proc_basic(chara, enemy_index);
         }
         else if (
-            (chara.quality > Quality::great && chara.level > cdata[tc].level) ||
-            cdata[tc].is_hung_on_sand_bag())
+            (chara.quality > Quality::great &&
+             chara.level > cdata[enemy_index].level) ||
+            cdata[enemy_index].is_hung_on_sand_bag())
         {
-            if (chara.enemy_id != tc)
+            if (chara.enemy_id != enemy_index)
             {
-                const auto did_swap = cell_swap(chara.index, tc);
+                const auto did_swap = cell_swap(chara.index, enemy_index);
                 if (did_swap && is_in_fov(chara))
                 {
-                    txt(i18n::s.get("core.ai.swap.displace", chara, cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.ai.swap.displace", chara, cdata[enemy_index]));
                 }
-                if (cdata[tc].activity.type == Activity::Type::eat)
+                if (cdata[enemy_index].activity.type == Activity::Type::eat)
                 {
-                    if (cdata[tc].activity.turn > 0)
+                    if (cdata[enemy_index].activity.turn > 0)
                     {
                         if (is_in_fov(chara))
                         {
                             txt(i18n::s.get(
-                                "core.ai.swap.glare", chara, cdata[tc]));
+                                "core.ai.swap.glare",
+                                chara,
+                                cdata[enemy_index]));
                         }
-                        cdata[tc].activity.finish();
+                        cdata[enemy_index].activity.finish();
                     }
                 }
                 return TurnResult::turn_end;
@@ -894,22 +899,22 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
         if (dir == 1)
         {
             chara.target_position.x = chara.position.x - 6;
-            chara.target_position.y = cdata[tc].position.y;
+            chara.target_position.y = cdata[enemy_index].position.y;
         }
         if (dir == 2)
         {
             chara.target_position.x = chara.position.x + 6;
-            chara.target_position.y = cdata[tc].position.y;
+            chara.target_position.y = cdata[enemy_index].position.y;
         }
         if (dir == 3)
         {
             chara.target_position.y = chara.position.y - 6;
-            chara.target_position.x = cdata[tc].position.x;
+            chara.target_position.x = cdata[enemy_index].position.x;
         }
         if (dir == 0)
         {
             chara.target_position.y = chara.position.y + 6;
-            chara.target_position.x = cdata[tc].position.x;
+            chara.target_position.x = cdata[enemy_index].position.x;
         }
     }
 
@@ -918,14 +923,14 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
 
 
 
-TurnResult ai_proc_misc_map_events(Character& chara)
+TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
 {
     // Follows you, e.g., Gwen.
     if (chara.ai_calm == 4)
     {
-        tc = 0;
-        distance = dist_helper(cdata[tc], chara);
-        return proc_npc_movement_event(chara);
+        enemy_index = 0;
+        distance = dist_helper(cdata[enemy_index], chara);
+        return proc_npc_movement_event(chara, enemy_index);
     }
 
     if (rnd(5) != 0)
@@ -1004,7 +1009,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
             if (rnd(5) == 0)
             {
                 efid = 183;
-                magic(chara);
+                magic(chara, chara);
                 return TurnResult::turn_end;
             }
         }
@@ -1012,8 +1017,8 @@ TurnResult ai_proc_misc_map_events(Character& chara)
         {
             if (is_in_fov(chara))
             {
-                tc = 0;
-                distance = dist_helper(cdata[tc], chara);
+                enemy_index = 0;
+                distance = dist_helper(cdata[enemy_index], chara);
                 if (distance < 8)
                 {
                     if (_chara_get_race(cdata.player()) == "core.snail")
@@ -1054,27 +1059,27 @@ TurnResult ai_proc_misc_map_events(Character& chara)
                         if (fov_los_helper(chara, cdata[cnt]))
                         {
                             chara.enemy_id = cnt;
-                            tc = cnt;
+                            enemy_index = cnt;
                             break;
                         }
                     }
                 }
             }
-            distance = dist_helper(cdata[tc], chara);
-            if (tc != 0)
+            distance = dist_helper(cdata[enemy_index], chara);
+            if (enemy_index != 0)
             {
                 if (distance == 1)
                 {
-                    if (!cdata[tc].activity)
+                    if (!cdata[enemy_index].activity)
                     {
                         chara.enemy_id = 0;
-                        activity_sex(chara);
+                        activity_sex(chara, cdata[enemy_index]);
                         return TurnResult::turn_end;
                     }
                 }
                 if (distance < 6)
                 {
-                    return proc_npc_movement_event(chara);
+                    return proc_npc_movement_event(chara, enemy_index);
                 }
             }
         }

@@ -864,13 +864,13 @@ void _update_quest_flags_lesimas()
 
 void _update_paels_mom()
 {
-    tc = chara_find("core.lily");
-    if (tc != 0)
+    const auto lily_index = chara_find("core.lily");
+    if (lily_index != 0)
     {
         if (game_data.quest_flags.pael_and_her_mom >= 10)
         {
-            cdata[tc].image = 360;
-            cdata[tc].portrait = "";
+            cdata[lily_index].image = 360;
+            cdata[lily_index].portrait = "";
         }
     }
 }

@@ -2,11 +2,20 @@
 
 #include <vector>
 
+#include "optional.hpp"
+
+
+
 namespace elona
 {
 
 template <typename T>
 struct elona_vector2;
+
+enum class TurnResult;
+struct Character;
+
+
 
 struct Quest
 {
@@ -149,6 +158,8 @@ struct Quest
     void unpack_from(elona_vector2<int>& legacy_qdata, int quest_id);
 };
 
+
+
 struct QuestData
 {
     static constexpr size_t quest_size = 500;
@@ -183,15 +194,16 @@ private:
     std::vector<Quest> quests;
 };
 
+
+
 extern QuestData quest_data;
 
 
-enum class TurnResult;
 
 void quest_on_map_initialize();
 void quest_place_target();
 int quest_targets_remaining();
-void quest_set_data(int);
+void quest_set_data(optional_ref<const Character> client, int);
 void quest_refresh_list();
 void quest_update_journal_msg();
 

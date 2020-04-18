@@ -21,7 +21,6 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/lua_env.hpp"
-#include "macro.hpp"
 #include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -706,19 +705,18 @@ void prompt_hiring()
     int stat = show_hire_menu(HireOperation::hire);
     if (stat != -1)
     {
-        tc = stat;
         Message::instance().linebreak();
-        if (cdata.player().gold < calchirecost(tc) * 20)
+        if (cdata.player().gold < calchirecost(stat) * 20)
         {
             txt(i18n::s.get("core.building.not_enough_money"));
         }
         else
         {
             snd("core.paygold1");
-            cdata.player().gold -= calchirecost(tc) * 20;
+            cdata.player().gold -= calchirecost(stat) * 20;
             await(g_config.animation_wait() * 10);
-            cdata[tc].set_state(Character::State::alive);
-            txt(i18n::s.get("core.building.home.hire.you_hire", cdata[tc]),
+            cdata[stat].set_state(Character::State::alive);
+            txt(i18n::s.get("core.building.home.hire.you_hire", cdata[stat]),
                 Message::color{ColorIndex::green});
             snd("core.pray1");
         }
@@ -849,7 +847,6 @@ void prompt_move_ally()
             break;
         }
         const auto tchome = stat;
-        tc = stat;
         snd("core.ok1");
         while (true)
         {
@@ -870,15 +867,14 @@ void prompt_move_ally()
                 break;
             }
         }
-        tc = tchome;
-        cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
+        cell_data.at(cdata[tchome].position.x, cdata[tchome].position.y)
             .chara_index_plus_one = 0;
-        cell_data.at(tlocx, tlocy).chara_index_plus_one = tc + 1;
-        cdata[tc].position = cdata[tc].initial_position =
+        cell_data.at(tlocx, tlocy).chara_index_plus_one = tchome + 1;
+        cdata[tchome].position = cdata[tchome].initial_position =
             Position{tlocx, tlocy};
-        cdata[tc].activity.finish();
+        cdata[tchome].activity.finish();
         Message::instance().linebreak();
-        txt(i18n::s.get("core.building.home.move.is_moved", cdata[tc]));
+        txt(i18n::s.get("core.building.home.move.is_moved", cdata[tchome]));
         snd("core.foot");
     }
 }

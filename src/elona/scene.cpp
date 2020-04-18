@@ -11,6 +11,7 @@
 #include "lua_env/interface.hpp"
 #include "message.hpp"
 #include "randomgen.hpp"
+#include "talk.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -138,8 +139,7 @@ void do_play_scene()
                 gmode(0);
                 gcopy(4, 0, 0, windoww, windowh, 0, 0);
                 gmode(2);
-                tc = 0;
-                talk_to_npc();
+                talk_to_npc(cdata.player());
                 init = true;
                 continue;
             }
@@ -356,8 +356,9 @@ void conquer_lesimas()
         Message::instance().clear();
         txt(u8"あなたは、台座の上に置かれている絢爛な装飾の本を、いぶかしげに眺めた。"s);
         msg_halt();
-        tc = chara_find("core.orphe");
-        talk_to_npc();
+        const auto orphe_index = chara_find("core.orphe");
+        assert(orphe_index != 0);
+        talk_to_npc(cdata[orphe_index]);
         Message::instance().clear();
         txt(u8"青年は悪戯っぽくニヤリと笑い、壁に寄りかかった。"s);
         msg_halt();

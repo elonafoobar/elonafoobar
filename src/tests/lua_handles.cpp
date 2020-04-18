@@ -397,7 +397,7 @@ TEST_CASE(
     elona::in = item->number();
 
     REQUIRE(handle_mgr.get_handle(*item) != sol::lua_nil);
-    const auto pick_up_item_result = pick_up_item(0, *item);
+    const auto pick_up_item_result = pick_up_item(0, *item, none);
     REQUIRE(pick_up_item_result.type == 1);
     REQUIRE_SOME(pick_up_item_result.picked_up_item);
     REQUIRE(

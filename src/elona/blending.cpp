@@ -16,7 +16,6 @@
 #include "input_prompt.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
-#include "macro.hpp"
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "random.hpp"

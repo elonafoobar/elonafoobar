@@ -387,12 +387,7 @@ void LuaCharacter::modify_corruption(Character& self, int delta)
  */
 void LuaCharacter::make_pregnant(Character& self)
 {
-    int tc_bk = self.index;
-    elona::tc = self.index;
-
-    elona::get_pregnant();
-
-    elona::tc = tc_bk;
+    elona::get_pregnant(self);
 }
 
 /**
@@ -480,7 +475,7 @@ void LuaCharacter::move_to_xy(Character& self, int x, int y)
 {
     // NOTE: setting self.next_position may be safer if the position is changed
     // in the middle of the current turn.
-    cell_movechara(tc, x, y);
+    cell_movechara(self.index, x, y);
 
     if (self.index == 0)
     {
