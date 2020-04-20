@@ -111,7 +111,7 @@ void Prompt::_draw_keys_and_background(int x, int y, int width)
 void Prompt::_draw_main_frame(int width)
 {
     window2(sx + 8, sy + 8, width - 16, _promptmax * 20 + 42 - 16, 0, 0);
-    draw("radar_deco", sx - 16, sy);
+    draw("core.radar_deco", sx - 16, sy);
     font(14 - en * 2);
 }
 
@@ -175,9 +175,9 @@ void PromptWithNumber::_draw_box()
 void PromptWithNumber::_draw_window()
 {
     window2(dx(1) + sx + 20, dy, dx - 40, 36, 0, 2);
-    draw("label_input", dx(1) + sx + dx / 2 - 56, dy - 32);
-    draw("arrow_left", dx(1) + sx + 28, dy + 4);
-    draw("arrow_right", dx(1) + sx + dx - 51, dy + 4);
+    draw("core.label_input", dx(1) + sx + dx / 2 - 56, dy - 32);
+    draw("core.arrow_left", dx(1) + sx + 28, dy + 4);
+    draw("core.arrow_right", dx(1) + sx + dx - 51, dy + 4);
     const auto inputlog2 =
         ""s + elona::stoi(inputlog(0)) + u8"("s + _max + u8")"s;
     mes(dx(1) + sx + dx - 70 - strlen_u(inputlog2) * 8 + 8,

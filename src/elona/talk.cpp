@@ -38,7 +38,7 @@ bool chatval_show_impress;
 
 void talk_start()
 {
-    asset_load("ie_chat");
+    asset_load("core.ie_chat");
     gsel(0);
 }
 
@@ -666,7 +666,7 @@ void talk_window_init(std::string& text)
     ww = 600;
     wh = 380;
     gmode(2, 80);
-    draw("ie_chat", wx + 4, wy - 16);
+    draw("core.ie_chat", wx + 4, wy - 16);
 }
 
 
@@ -679,7 +679,7 @@ void talk_window_show(
     optional<std::pair<int, int>> impress_interest)
 {
     gmode(2);
-    draw("ie_chat", wx, wy - 20);
+    draw("core.ie_chat", wx, wy - 20);
     if (portrait_id)
     {
         if (const auto rect = draw_get_rect_portrait(*portrait_id))
@@ -742,7 +742,7 @@ void talk_window_show(
             for (int cnt = 0, cnt_end = (interest / 5 + 1); cnt < cnt_end;
                  ++cnt)
             {
-                draw("interest_icon", wx + 26 + cnt * 4, wy + 245);
+                draw("core.interest_icon", wx + 26 + cnt * 4, wy + 245);
             }
         }
     }

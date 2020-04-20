@@ -421,7 +421,7 @@ void render_shadow_low(int light)
         if (slight(x + 2, y + 2) >= 1000)
         {
             draw_indexed(
-                "shadow_edges",
+                "core.shadow_edges",
                 x * inf_tiles + inf_screenx,
                 y * inf_tiles + inf_screeny,
                 0);
@@ -469,84 +469,91 @@ void render_shadow(int l, int dx, int dy)
                 switch (deco2)
                 {
                 case 1:
-                    draw_indexed_region("shadow", dx, dy, 7, 1, 1, 1);
+                    draw_indexed_region("core.shadow", dx, dy, 7, 1, 1, 1);
                     break;
                 case 2:
-                    draw_indexed_region("shadow", dx + 24, dy + 24, 6, 0, 1, 1);
+                    draw_indexed_region(
+                        "core.shadow", dx + 24, dy + 24, 6, 0, 1, 1);
                     break;
                 case 3:
-                    draw_indexed_region("shadow", dx, dy + 24, 7, 0, 1, 1);
+                    draw_indexed_region("core.shadow", dx, dy + 24, 7, 0, 1, 1);
                     break;
                 case 4:
-                    draw_indexed_region("shadow", dx + 24, dy, 6, 1, 1, 1);
+                    draw_indexed_region("core.shadow", dx + 24, dy, 6, 1, 1, 1);
                     break;
                 case 5:
-                    draw_indexed_region("shadow", dx + 24, dy + 24, 6, 0, 1, 1);
-                    draw_indexed_region("shadow", dx, dy, 7, 1, 1, 1);
+                    draw_indexed_region(
+                        "core.shadow", dx + 24, dy + 24, 6, 0, 1, 1);
+                    draw_indexed_region("core.shadow", dx, dy, 7, 1, 1, 1);
                     break;
                 case 6:
-                    draw_indexed_region("shadow", dx, dy + 24, 7, 0, 1, 1);
-                    draw_indexed_region("shadow", dx + 24, dy, 6, 1, 1, 1);
+                    draw_indexed_region("core.shadow", dx, dy + 24, 7, 0, 1, 1);
+                    draw_indexed_region("core.shadow", dx + 24, dy, 6, 1, 1, 1);
                     break;
                 case 7:
-                    draw_indexed_region("shadow", dx, dy + 24, 7, 0, 1, 1);
-                    draw_indexed_region("shadow", dx + 24, dy + 24, 6, 0, 1, 1);
+                    draw_indexed_region("core.shadow", dx, dy + 24, 7, 0, 1, 1);
+                    draw_indexed_region(
+                        "core.shadow", dx + 24, dy + 24, 6, 0, 1, 1);
                     break;
                 case 8:
-                    draw_indexed_region("shadow", dx, dy, 7, 1, 1, 1);
-                    draw_indexed_region("shadow", dx + 24, dy, 6, 1, 1, 1);
+                    draw_indexed_region("core.shadow", dx, dy, 7, 1, 1, 1);
+                    draw_indexed_region("core.shadow", dx + 24, dy, 6, 1, 1, 1);
                     break;
                 case 9:
-                    draw_indexed_region("shadow", dx, dy, 7, 1, 1, 1);
-                    draw_indexed_region("shadow", dx, dy + 24, 7, 0, 1, 1);
+                    draw_indexed_region("core.shadow", dx, dy, 7, 1, 1, 1);
+                    draw_indexed_region("core.shadow", dx, dy + 24, 7, 0, 1, 1);
                     break;
                 case 10:
-                    draw_indexed_region("shadow", dx + 24, dy, 6, 1, 1, 1);
-                    draw_indexed_region("shadow", dx + 24, dy + 24, 6, 0, 1, 1);
+                    draw_indexed_region("core.shadow", dx + 24, dy, 6, 1, 1, 1);
+                    draw_indexed_region(
+                        "core.shadow", dx + 24, dy + 24, 6, 0, 1, 1);
                     break;
                 case 20:
-                    draw_indexed_region("shadow", dx, dy, 0, 2, 1, 2);
-                    draw_indexed_region("shadow", dx + 24, dy, 5, 2, 1, 2);
+                    draw_indexed_region("core.shadow", dx, dy, 0, 2, 1, 2);
+                    draw_indexed_region("core.shadow", dx + 24, dy, 5, 2, 1, 2);
                     break;
                 case 21:
-                    draw_indexed_region("shadow", dx, dy, 2, 0, 2, 1);
-                    draw_indexed_region("shadow", dx, dy + 24, 2, 5, 2, 1);
+                    draw_indexed_region("core.shadow", dx, dy, 2, 0, 2, 1);
+                    draw_indexed_region("core.shadow", dx, dy + 24, 2, 5, 2, 1);
                     break;
                 case 30:
-                    draw_indexed_region("shadow", dx, dy, 0, 0, 2, 1);
-                    draw_indexed_region("shadow", dx, dy + 24, 0, 5, 2, 1);
+                    draw_indexed_region("core.shadow", dx, dy, 0, 0, 2, 1);
+                    draw_indexed_region("core.shadow", dx, dy + 24, 0, 5, 2, 1);
                     break;
                 case 31:
-                    draw_indexed_region("shadow", dx, dy, 4, 0, 2, 1);
-                    draw_indexed_region("shadow", dx, dy + 24, 4, 5, 2, 1);
+                    draw_indexed_region("core.shadow", dx, dy, 4, 0, 2, 1);
+                    draw_indexed_region("core.shadow", dx, dy + 24, 4, 5, 2, 1);
                     break;
                 case 32:
-                    draw_indexed_region("shadow", dx, dy, 0, 0, 1, 2);
-                    draw_indexed_region("shadow", dx + 24, dy, 5, 0, 1, 2);
+                    draw_indexed_region("core.shadow", dx, dy, 0, 0, 1, 2);
+                    draw_indexed_region("core.shadow", dx + 24, dy, 5, 0, 1, 2);
                     break;
                 case 33:
-                    draw_indexed_region("shadow", dx, dy, 0, 4, 1, 2);
-                    draw_indexed_region("shadow", dx + 24, dy, 5, 4, 1, 2);
+                    draw_indexed_region("core.shadow", dx, dy, 0, 4, 1, 2);
+                    draw_indexed_region("core.shadow", dx + 24, dy, 5, 4, 1, 2);
                     break;
                 case 34:
-                    draw_indexed_region("shadow", dx + 24, dy, 6, 1, 1, 1);
-                    draw_indexed_region("shadow", dx, dy + 24, 7, 0, 1, 1);
-                    draw_indexed_region("shadow", dx + 24, dy + 24, 6, 0, 1, 1);
+                    draw_indexed_region("core.shadow", dx + 24, dy, 6, 1, 1, 1);
+                    draw_indexed_region("core.shadow", dx, dy + 24, 7, 0, 1, 1);
+                    draw_indexed_region(
+                        "core.shadow", dx + 24, dy + 24, 6, 0, 1, 1);
                     break;
                 case 35:
-                    draw_indexed_region("shadow", dx, dy, 7, 1, 1, 1);
-                    draw_indexed_region("shadow", dx + 24, dy, 6, 1, 1, 1);
-                    draw_indexed_region("shadow", dx, dy + 24, 7, 0, 1, 1);
+                    draw_indexed_region("core.shadow", dx, dy, 7, 1, 1, 1);
+                    draw_indexed_region("core.shadow", dx + 24, dy, 6, 1, 1, 1);
+                    draw_indexed_region("core.shadow", dx, dy + 24, 7, 0, 1, 1);
                     break;
                 case 36:
-                    draw_indexed_region("shadow", dx, dy, 7, 1, 1, 1);
-                    draw_indexed_region("shadow", dx + 24, dy, 6, 1, 1, 1);
-                    draw_indexed_region("shadow", dx + 24, dy + 24, 6, 0, 1, 1);
+                    draw_indexed_region("core.shadow", dx, dy, 7, 1, 1, 1);
+                    draw_indexed_region("core.shadow", dx + 24, dy, 6, 1, 1, 1);
+                    draw_indexed_region(
+                        "core.shadow", dx + 24, dy + 24, 6, 0, 1, 1);
                     break;
                 case 37:
-                    draw_indexed_region("shadow", dx, dy, 7, 1, 1, 1);
-                    draw_indexed_region("shadow", dx, dy + 24, 7, 0, 1, 1);
-                    draw_indexed_region("shadow", dx + 24, dy + 24, 6, 0, 1, 1);
+                    draw_indexed_region("core.shadow", dx, dy, 7, 1, 1, 1);
+                    draw_indexed_region("core.shadow", dx, dy + 24, 7, 0, 1, 1);
+                    draw_indexed_region(
+                        "core.shadow", dx + 24, dy + 24, 6, 0, 1, 1);
                     break;
                 default: break;
                 }
@@ -554,7 +561,7 @@ void render_shadow(int l, int dx, int dy)
             else
             {
                 draw_indexed(
-                    "shadow_deco",
+                    "core.shadow_deco",
                     dx,
                     dy,
                     shadow_deco[l]._0,
@@ -621,7 +628,7 @@ void render_shadow(int l, int dx, int dy)
             };
             i = shadow_map[l2];
         }
-        draw_indexed("shadow_edges", dx, dy, i);
+        draw_indexed("core.shadow_edges", dx, dy, i);
     }
 }
 
@@ -692,11 +699,11 @@ void initialize_cloud_data()
         int y0 = rnd(100) + i / 5 * 200 + 100000;
         if (rnd(2) == 0)
         {
-            clouds.emplace_back(x0, y0, "cloud1");
+            clouds.emplace_back(x0, y0, "core.cloud1");
         }
         else
         {
-            clouds.emplace_back(x0, y0, "cloud2");
+            clouds.emplace_back(x0, y0, "core.cloud2");
         }
     }
 }
@@ -744,12 +751,12 @@ void draw_hp_bar(const Character& chara, int x, int y)
     {
         if (map_data.type != mdata_t::MapType::world_map)
         {
-            draw_bar("hp_bar_ally", x + 9, y + 32, ratio, 3, ratio);
+            draw_bar("core.hp_bar_ally", x + 9, y + 32, ratio, 3, ratio);
         }
     }
     else
     {
-        draw_bar("hp_bar_other", x + 9, y + 32, ratio, 3, ratio);
+        draw_bar("core.hp_bar_other", x + 9, y + 32, ratio, 3, ratio);
     }
 }
 
@@ -767,7 +774,7 @@ void draw_character_sprite_in_world_map(
 
     // Shadow
     gmode(2, 85);
-    draw_centered("character_shadow", x + 24, y + 27, 20, 10);
+    draw_centered("core.character_shadow", x + 24, y + 27, 20, 10);
 
     // Character sprite
     gmode(2);
@@ -828,7 +835,7 @@ void draw_character_sprite(
 
     // Shadow
     gmode(2, 110);
-    draw("character_shadow", x + 8, y + 20);
+    draw("core.character_shadow", x + 8, y + 20);
 
     // Character sprite
     gmode(2);
@@ -864,7 +871,7 @@ void draw_chara_chip_sprite_in_world_map(
     int offset_y)
 {
     gmode(2, 85);
-    draw_centered("character_shadow", x + 24, y + 32, 20, 10);
+    draw_centered("core.character_shadow", x + 24, y + 32, 20, 10);
     gmode(2);
     set_color_mod(tint.r, tint.g, tint.b, ext.buffer);
     gcopy_c(
@@ -921,7 +928,7 @@ void draw_chara_chip_sprite(
     int offset_y)
 {
     gmode(2, 110);
-    draw("character_shadow", x + 8, y + 20);
+    draw("core.character_shadow", x + 8, y + 20);
     gmode(2);
     set_color_mod(tint.r, tint.g, tint.b, ext.buffer);
     gcopy(ext.buffer, ext.x, ext.y, ext.width, ext.height, x, y - offset_y);
@@ -953,7 +960,7 @@ void draw_npc_own_sprite(
     gmode(2);
     if (chara.furious != 0)
     {
-        draw("furious_icon", dx + 12, dy - 28);
+        draw("core.furious_icon", dx + 12, dy - 28);
     }
     if (chara.emotion_icon != 0)
     {
@@ -1008,7 +1015,7 @@ void draw_npc_chara_chip(const Character& chara, int dx, int dy, int ground_)
 
         if (chara.furious != 0)
         {
-            draw("furious_icon", dx + 12, dy - offset_y - 12);
+            draw("core.furious_icon", dx + 12, dy - offset_y - 12);
         }
         if (chara.emotion_icon != 0)
         {
@@ -1093,7 +1100,7 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
         {
             gmode(2, efmap(1, x, y) * 12 + 30);
             draw_indexed_rotated(
-                "mef_subref",
+                "core.mef_subref",
                 dx + 24,
                 dy + 24,
                 mefsubref(0, p_) + efmap(3, x, y),
@@ -1104,7 +1111,7 @@ void draw_efmap(int x, int y, int dx, int dy, bool update_frame)
         {
             gmode(2, 150);
             draw_indexed(
-                "mef_subref",
+                "core.mef_subref",
                 dx + 8,
                 dy + 8,
                 mefsubref(0, p_) + efmap(1, x, y));
@@ -1140,11 +1147,11 @@ void draw_nefia_icons(int x, int y, int dx, int dy)
                 if (area_data[q_].visited_deepest_level ==
                     area_data[q_].deepest_level)
                 {
-                    draw("conquered_nefia_icon", dx + 16, dy - 16);
+                    draw("core.conquered_nefia_icon", dx + 16, dy - 16);
                 }
                 else if (area_data[q_].visited_deepest_level != 0)
                 {
-                    draw("invaded_nefia_icon", dx + 16, dy - 16);
+                    draw("core.invaded_nefia_icon", dx + 16, dy - 16);
                 }
             }
         }
@@ -1505,7 +1512,7 @@ void cell_draw()
                     py_ -= syfix;
                 }
                 gmode(5, 50 + flick_);
-                draw_region("spot_light", px_, py_, 0, 96, 144, 48);
+                draw_region("core.spot_light", px_, py_, 0, 96, 144, 48);
             }
 
             if (reph(2) == y && x_ == repw(2) &&
@@ -1530,7 +1537,8 @@ void cell_draw()
 
                 // Spot light for PC (top 2 thirds)
                 gmode(5, 50 + flick_);
-                draw_region("spot_light", px_ - 48, py_ - 48, 0, 0, 144, 96);
+                draw_region(
+                    "core.spot_light", px_ - 48, py_ - 48, 0, 0, 144, 96);
 
                 if (py_ < windowh - inf_verh - 24)
                 {
@@ -1575,7 +1583,7 @@ void cell_draw()
                 }
                 if (cdata.player().furious != 0)
                 {
-                    draw("furious_icon", px_, py_ - 24);
+                    draw("core.furious_icon", px_, py_ - 24);
                 }
                 if (cdata.player().emotion_icon != 0)
                 {
@@ -1642,7 +1650,7 @@ void cell_draw()
                         light.brightness;
                     gmode(5, light.alpha_base + rnd(light.alpha_random + 1));
                     draw_indexed(
-                        "light",
+                        "core.light",
                         dx_,
                         dy_ - light.dy,
                         light.x + rnd(light.frame + 1));

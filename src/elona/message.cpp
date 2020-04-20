@@ -78,13 +78,13 @@ void anime_halt(int x_at_txtfunc, int y_at_txtfunc)
 {
     gmode(0);
     gsel(3);
-    asset_copy_from(0, x_at_txtfunc, y_at_txtfunc, "label_more_scratch");
+    asset_copy_from(0, x_at_txtfunc, y_at_txtfunc, "core.label_more_scratch");
     gsel(0);
     for (int cnt = 0; cnt < 12; ++cnt)
     {
         await(g_config.general_wait() / 3);
         draw(
-            "label_more",
+            "core.label_more",
             x_at_txtfunc,
             y_at_txtfunc + 12 - cnt,
             120,
@@ -96,11 +96,11 @@ void anime_halt(int x_at_txtfunc, int y_at_txtfunc)
     for (int cnt = 0; cnt < 7; ++cnt)
     {
         await(g_config.general_wait() / 3);
-        draw("label_more_scratch", x_at_txtfunc, y_at_txtfunc);
+        draw("core.label_more_scratch", x_at_txtfunc, y_at_txtfunc);
         if (cnt != 6)
         {
             draw(
-                "label_more",
+                "core.label_more",
                 x_at_txtfunc,
                 y_at_txtfunc + cnt * 2,
                 120,
@@ -196,7 +196,7 @@ void Message::_msg_write(std::string& message)
 
         gmode(2);
         draw_indexed(
-            "message_symbol",
+            "core.message_symbol",
             (message_width + widthwise_pos) * 7 + inf_msgx + 7 + en * 3,
             (inf_msgline - 1) * inf_msgspace + inf_msgy + 5,
             symbol_type * 2);
@@ -249,7 +249,7 @@ void Message::_msg_newline()
             x_at_txtfunc = 192;
         }
         draw_region(
-            "message_window_contents",
+            "core.message_window_contents",
             cnt * 192 + inf_msgx,
             inf_msgy + 5 + inf_msgspace * 3 + en * 2,
             0,
@@ -299,7 +299,7 @@ void Message::_txt_conv()
                     x_at_txtfunc = 192;
                 }
                 draw_region(
-                    "message_window_contents",
+                    "core.message_window_contents",
                     i * 192 + inf_msgx,
                     inf_msgy + 5,
                     x_at_txtfunc,

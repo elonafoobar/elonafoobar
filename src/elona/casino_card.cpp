@@ -78,11 +78,11 @@ void showcard2(int card_index, bool show_rank = true)
     gmode(2);
     if (is_closed)
     {
-        draw("card_back", x, y);
+        draw("core.card_back", x, y);
     }
     else
     {
-        draw("card_front", x, y);
+        draw("core.card_front", x, y);
 
         if (show_rank)
         {
@@ -99,8 +99,9 @@ void showcard2(int card_index, bool show_rank = true)
                 x + 32 - rect.width / 2,
                 y + 88 - rect.height);
 
-            draw_indexed("card_suit", x + 8, y + 16, static_cast<int>(suit));
-            draw_indexed("card_rank", x + 32, y + 16, rank - 1);
+            draw_indexed(
+                "core.card_suit", x + 8, y + 16, static_cast<int>(suit));
+            draw_indexed("core.card_rank", x + 32, y + 16, rank - 1);
         }
         else
         {
@@ -175,7 +176,7 @@ void initcard(int x, int y, int)
 void showcardpile()
 {
     int pilestack_at_cardcontrol = 0;
-    draw("card_pile", pilex_at_cardcontrol - 8, piley_at_cardcontrol - 8);
+    draw("core.card_pile", pilex_at_cardcontrol - 8, piley_at_cardcontrol - 8);
     pilestack_at_cardcontrol = 0;
     for (int cnt = 0, cnt_end = (cardmax_at_cardcontrol); cnt < cnt_end; ++cnt)
     {
@@ -256,7 +257,7 @@ int servecard(int player_id)
         if (cnt != 0)
         {
             draw(
-                "card_scratch",
+                "core.card_scratch",
                 card_at_cardcontrol(3, cardid_at_cardcontrol),
                 card_at_cardcontrol(4, cardid_at_cardcontrol));
         }
@@ -280,7 +281,7 @@ int servecard(int player_id)
             0,
             card_at_cardcontrol(3, cardid_at_cardcontrol),
             card_at_cardcontrol(4, cardid_at_cardcontrol),
-            "card_scratch");
+            "core.card_scratch");
 
         gsel(0);
         gmode(2);
@@ -307,7 +308,8 @@ void showcardholder()
             dx_at_cardcontrol =
                 cardplayer_at_cardcontrol(1, p_at_cardcontrol) + cnt * 88;
             dy_at_cardcontrol = cardplayer_at_cardcontrol(2, p_at_cardcontrol);
-            draw("card_pile", dx_at_cardcontrol - 8, dy_at_cardcontrol - 8);
+            draw(
+                "core.card_pile", dx_at_cardcontrol - 8, dy_at_cardcontrol - 8);
         }
     }
 }
@@ -329,7 +331,7 @@ int opencard2(int card_index, int player_id)
         if (player_id == 0)
         {
             draw(
-                "card_pile",
+                "core.card_pile",
                 card_at_cardcontrol(3, card_index) - 8,
                 card_at_cardcontrol(4, card_index) - 8);
         }
@@ -346,7 +348,7 @@ int opencard2(int card_index, int player_id)
         }
         gmode(2);
         draw_centered(
-            "card_back",
+            "core.card_back",
             card_at_cardcontrol(3, card_index) + 32,
             card_at_cardcontrol(4, card_index) + 48,
             64 - cnt * 14,
@@ -368,7 +370,7 @@ int trashcard(int card_index)
     for (int cnt = 0; cnt < 21; ++cnt)
     {
         draw(
-            "card_pile",
+            "core.card_pile",
             card_at_cardcontrol(3, card_index) - 8,
             card_at_cardcontrol(4, card_index) - 8);
         if (cnt == 20)
@@ -377,7 +379,7 @@ int trashcard(int card_index)
             break;
         }
         draw_rotated(
-            "card_back",
+            "core.card_back",
             card_at_cardcontrol(3, card_index) + 32,
             card_at_cardcontrol(4, card_index) + 48,
             64 - cnt * 3,

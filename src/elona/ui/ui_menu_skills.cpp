@@ -55,7 +55,7 @@ bool UIMenuSkills::init()
     }
 
     snd("core.skill");
-    asset_load("deco_skill");
+    asset_load("core.deco_skill");
     gsel(0);
     windowshadow = 1;
 
@@ -93,9 +93,9 @@ void UIMenuSkills::_draw_window()
     display_topic(i18n::s.get("core.ui.skill.cost"), wx + 220, wy + 36);
     display_topic(i18n::s.get("core.ui.skill.detail"), wx + 320, wy + 36);
 
-    draw_indexed("inventory_icon", wx + 46, wy - 16, 14);
-    elona::draw("deco_skill_a", wx + ww - 78, wy + wh - 165);
-    elona::draw("deco_skill_b", wx + ww - 168, wy);
+    draw_indexed("core.inventory_icon", wx + 46, wy - 16, 14);
+    elona::draw("core.deco_skill_a", wx + ww - 78, wy + wh - 165);
+    elona::draw("core.deco_skill_b", wx + ww - 168, wy);
 }
 
 void UIMenuSkills::_draw_key(int cnt)

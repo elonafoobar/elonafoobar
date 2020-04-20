@@ -281,49 +281,49 @@ void run_random_event(RandomEvent event)
             }
         }
         listmax = 1;
-        event_bg = u8"bg_re9";
+        event_bg = "core.bg_re9";
         break;
     case 14:
         listmax = 2;
-        event_bg = u8"bg_re10";
+        event_bg = "core.bg_re10";
         break;
     case 13:
         cdata.player().nutrition -= 5000;
         listmax = 1;
-        event_bg = u8"bg_re10";
+        event_bg = "core.bg_re10";
         break;
     case 1:
         listmax = 1;
-        event_bg = u8"bg_re8";
+        event_bg = "core.bg_re8";
         break;
     case 24:
         efid = 1113;
         magic(cdata.player(), cdata.player());
         listmax = 1;
-        event_bg = u8"bg_re4";
+        event_bg = "core.bg_re4";
         break;
     case 18:
         chara_gain_skill_exp(cdata.player(), 181, 1000, 6, 1000);
         listmax = 1;
-        event_bg = u8"bg_re12";
+        event_bg = "core.bg_re12";
         break;
     case 12:
         efid = 1117;
         efp = 100;
         magic(cdata.player(), cdata.player());
         listmax = 1;
-        event_bg = u8"bg_re3";
+        event_bg = "core.bg_re3";
         break;
     case 23:
         efid = 1117;
         efp = 200;
         magic(cdata.player(), cdata.player());
         listmax = 1;
-        event_bg = u8"bg_re3";
+        event_bg = "core.bg_re3";
         break;
     case 10:
         listmax = 2;
-        event_bg = u8"bg_re3";
+        event_bg = "core.bg_re3";
         break;
     case 4:
         snd("core.curse2");
@@ -331,7 +331,7 @@ void run_random_event(RandomEvent event)
         efp = 100;
         magic(cdata.player(), cdata.player());
         listmax = 1;
-        event_bg = u8"bg_re5";
+        event_bg = "core.bg_re5";
         break;
     case 22:
         snd("core.curse2");
@@ -339,7 +339,7 @@ void run_random_event(RandomEvent event)
         efp = 100;
         magic(cdata.player(), cdata.player());
         listmax = 1;
-        event_bg = u8"bg_re2";
+        event_bg = "core.bg_re2";
         break;
     case 19:
         flt();
@@ -349,12 +349,12 @@ void run_random_event(RandomEvent event)
                 "core.common.you_put_in_your_backpack", item.unwrap()));
         }
         listmax = 1;
-        event_bg = u8"bg_re15";
+        event_bg = "core.bg_re15";
         break;
     case 20:
         buff_add(cdata.player(), "core.luck", 777, 1500);
         listmax = 1;
-        event_bg = u8"bg_re12";
+        event_bg = "core.bg_re12";
         break;
     case 21:
         flt();
@@ -364,7 +364,7 @@ void run_random_event(RandomEvent event)
                 "core.common.you_put_in_your_backpack", item.unwrap()));
         }
         listmax = 1;
-        event_bg = u8"bg_re15";
+        event_bg = "core.bg_re15";
         net_send_news("ehekatl");
         break;
     case 5:
@@ -398,7 +398,7 @@ void run_random_event(RandomEvent event)
             }
         }
         listmax = 1;
-        event_bg = u8"bg_re5";
+        event_bg = "core.bg_re5";
         break;
     case 8:
         p = rnd_capped(cdata.player().gold / 8 + 1);
@@ -417,40 +417,40 @@ void run_random_event(RandomEvent event)
             txt(i18n::s.get_enum_property("core.event.popup", "no_effect", 8));
         }
         listmax = 1;
-        event_bg = u8"bg_re9";
+        event_bg = "core.bg_re9";
         break;
     case 11:
         listmax = 2;
-        event_bg = u8"bg_re7";
+        event_bg = "core.bg_re7";
         break;
     case 2:
         efid = 1104;
         efp = 100;
         magic(cdata.player(), cdata.player());
         listmax = 1;
-        event_bg = u8"bg_re6";
+        event_bg = "core.bg_re6";
         break;
     case 3:
         efid = 1119;
         efp = 100;
         magic(cdata.player(), cdata.player());
         listmax = 1;
-        event_bg = u8"bg_re4";
+        event_bg = "core.bg_re4";
         break;
     case 6:
         chara_gain_skill_exp(cdata.player(), 154, 1000);
         listmax = 1;
-        event_bg = u8"bg_re4";
+        event_bg = "core.bg_re4";
         break;
     case 7:
         chara_gain_skill_exp(cdata.player(), 155, 1000);
         listmax = 1;
-        event_bg = u8"bg_re4";
+        event_bg = "core.bg_re4";
         break;
     case 9:
         earn_platinum(cdata.player(), 1);
         listmax = 1;
-        event_bg = u8"bg_re1";
+        event_bg = "core.bg_re1";
         break;
     case 16:
         p = rnd_capped(cdata.player().gold / 10 + 1000) + 1;
@@ -458,14 +458,14 @@ void run_random_event(RandomEvent event)
         txt(i18n::s.get_enum_property(
             "core.event.popup", "you_pick_up", 16, p(0)));
         listmax = 1;
-        event_bg = u8"bg_re1";
+        event_bg = "core.bg_re1";
         break;
     case 17:
         efid = 451;
         efp = 800;
         magic(cdata.player(), cdata.player());
         listmax = 1;
-        event_bg = u8"bg_re11";
+        event_bg = "core.bg_re11";
         break;
     }
 

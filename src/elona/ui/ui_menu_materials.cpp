@@ -28,7 +28,7 @@ bool UIMenuMaterials::init()
     cs = 0;
     cs_bk = -1;
 
-    const auto& info = asset_load("ie_scroll");
+    const auto& info = asset_load("core.ie_scroll");
     gsel(0);
     snd("core.scroll");
     wx = (windoww - info.width) / 2 + inf_screenx;

@@ -49,8 +49,8 @@ static void _load_scenes()
 bool UIMenuScene::init()
 {
     snd("core.book1");
-    asset_load("book");
-    asset_load("g1");
+    asset_load("core.book");
+    asset_load("core.g1");
     gsel(0);
     listmax = 0;
     page = 0;
@@ -76,7 +76,7 @@ void UIMenuScene::update()
     {
         page = 0;
     }
-    const auto& info = get_image_info("book");
+    const auto& info = get_image_info("core.book");
     wx = (windoww - info.width + 16) / 2 + inf_screenx;
     wy = winposy(info.height + 20);
 }
@@ -84,9 +84,9 @@ void UIMenuScene::update()
 void UIMenuScene::_draw_window()
 {
     gmode(2);
-    elona::draw("book", wx, wy);
+    elona::draw("core.book", wx, wy);
     gmode(2, 100);
-    draw_centered("g1", wx + 190, wy + 220, 240, 320);
+    draw_centered("core.g1", wx + 190, wy + 220, 240, 320);
     gmode(2);
 }
 

@@ -23,9 +23,9 @@ void UIMenuTownChart::update()
     cs = 0;
     cs_bk = -1;
     snd("core.chat");
-    asset_load("deco_politics");
+    asset_load("core.deco_politics");
     gsel(0);
-    draw_bg("deco_politics_a");
+    draw_bg("core.deco_politics_a");
     render_hud();
     windowshadow = 1;
 
@@ -86,7 +86,7 @@ void UIMenuTownChart::draw()
                     wx + (ww - 70) / (row.size() + 1) * (column_count + 1);
                 const auto y = wy + 70 + row_count * 55;
 
-                elona::draw("deco_politics_b", x - 26, y - 3);
+                elona::draw("core.deco_politics_b", x - 26, y - 3);
 
                 key_list(post_count) = key_select(post_count);
                 ++keyrange;

@@ -49,11 +49,11 @@ bool UIMenuTownPolitics::init()
     bool is_town = map_data.type == mdata_t::MapType::town;
     _load_politics_list(is_town);
 
-    asset_load("deco_politics");
+    asset_load("core.deco_politics");
     gsel(0);
-    draw_bg("deco_politics_a");
+    draw_bg("core.deco_politics_a");
     render_hud();
-    asset_load("ie_scroll");
+    asset_load("core.ie_scroll");
     gsel(0);
     windowshadow = 1;
     snd("core.scroll");
@@ -97,9 +97,9 @@ void UIMenuTownPolitics::_draw_window()
     }
 
     gmode(2);
-    draw_indexed("politics_law", wx + 155, wy + 46, 1);
+    draw_indexed("core.politics_law", wx + 155, wy + 46, 1);
     gmode(2);
-    draw_indexed("politics_law", wx + 255, wy + 46, 0);
+    draw_indexed("core.politics_law", wx + 255, wy + 46, 0);
 }
 
 void UIMenuTownPolitics::_draw_key(int cnt)
@@ -134,7 +134,8 @@ _draw_single_list_entry(int cnt, int list_item, const std::string& text)
 {
     cs_list(cs == cnt, text, wx + 100, wy + 76 + cnt * 19 - 1);
     gmode(2);
-    draw_indexed("politics_law", wx + 42, wy + 68 + cnt * 19 + 2, list_item);
+    draw_indexed(
+        "core.politics_law", wx + 42, wy + 68 + cnt * 19 + 2, list_item);
 }
 
 void UIMenuTownPolitics::_draw_list_entries()

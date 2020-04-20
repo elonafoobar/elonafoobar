@@ -42,7 +42,7 @@ void casino_dealer()
     atxpic = 0;
     snd("core.pop3");
     mode = 9;
-    atxbg = u8"bg13"s;
+    atxbg = u8"core.bg13"s;
     atxbgbk = "";
     SDIM3(atxinfon, 80, 5);
     txt(i18n::s.get("core.casino.talk_to_dealer"));
@@ -392,7 +392,7 @@ void casino_wrapper()
 bool casino_start()
 {
     bool finished = false;
-    atxbg = u8"bg14"s;
+    atxbg = u8"core.bg14"s;
     mattile = -1;
     atxinfon(0) = i18n::s.get("core.casino.window.title");
     atxinit();
@@ -794,7 +794,7 @@ void atxinit()
         gmode(0);
         asset_load(data::InstanceId{atxbg});
         draw(
-            "atx_background",
+            "core.atx_background",
             0,
             inf_msgh,
             windoww,
@@ -811,7 +811,7 @@ void atxinit()
             {
                 sx = 192;
             }
-            draw_region("message_window", cnt * 192, 0, sx, inf_msgh);
+            draw_region("core.message_window", cnt * 192, 0, sx, inf_msgh);
         }
         window2(windoww - 208, 0, 208, 98, 0, 0);
         gcopy(

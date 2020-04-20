@@ -148,7 +148,7 @@ bool UIMenuJournal::init()
     append_subquest_journal(1);
     listmax = noteinfo();
     show_title(strhint2 + strhint3);
-    const auto& info = get_image_info("book");
+    const auto& info = get_image_info("core.book");
     wx = (windoww - info.width) / 2 + inf_screenx;
     wy = winposy(info.height);
     snd("core.book1");
@@ -169,9 +169,9 @@ void UIMenuJournal::update()
     {
         page = 0;
     }
-    asset_load("book");
+    asset_load("core.book");
     gsel(0);
-    elona::draw("book", wx, wy);
+    elona::draw("core.book", wx, wy);
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
         p = pagesize * page + cnt;

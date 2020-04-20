@@ -67,9 +67,9 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
     while (true)
     {
         window2(x + 20, y, dx - 40, 36, 0, 2);
-        draw("label_input", x + dx / 2 - 56, y - 32);
-        draw("arrow_left", x + 28, y + 4);
-        draw("arrow_right", x + dx - 51, y + 4);
+        draw("core.label_input", x + dx / 2 - 56, y - 32);
+        draw("core.arrow_left", x + 28, y + 4);
+        draw("core.arrow_right", x + dx - 51, y + 4);
         const std::string inputlog2 = inputlog + u8"(" + max_number + u8")";
         mes(x + dx - 70 - strlen_u(inputlog2) * 8 + 8,
             y + vfix + 11,
@@ -190,13 +190,13 @@ bool input_text_dialog(int x, int y, int val2, bool is_cancelable)
         }
         await(g_config.general_wait());
         window2(x, y, dx, 36, 0, 2);
-        draw("label_input", x + dx / 2 - 60, y - 32);
+        draw("core.label_input", x + dx / 2 - 60, y - 32);
 
-        draw("ime_status_english", x + 8, y + 4);
+        draw("core.ime_status_english", x + 8, y + 4);
         apledit(p(2), 2, 0);
         if (p(2) > val2 * (1 + en) - 2)
         {
-            draw("ime_status_none", x + 8, y + 4);
+            draw("core.ime_status_none", x + 8, y + 4);
         }
         if (cnt % 20 < 10)
         {
@@ -256,7 +256,7 @@ bool input_text_dialog(int x, int y, int val2, bool is_cancelable)
         }
 
         gmode(2, p(1) / 2 + 50);
-        draw("input_caret", x + 34 + p(4) * 8, y + 5);
+        draw("core.input_caret", x + 34 + p(4) * 8, y + 5);
         gmode(2);
         mes(x + 36, y + vfix + 9, s, {255, 255, 255});
 
@@ -499,15 +499,15 @@ int ask_direction()
         y = (cdata.player().position.y - scy) * inf_tiles + inf_screeny + 24;
         if (!getkey(snail::Key::alt))
         {
-            draw_rotated("direction_arrow", x, y - 48, 0);
-            draw_rotated("direction_arrow", x, y + 48, 180);
-            draw_rotated("direction_arrow", x + 48, y, 90);
-            draw_rotated("direction_arrow", x - 48, y, 270);
+            draw_rotated("core.direction_arrow", x, y - 48, 0);
+            draw_rotated("core.direction_arrow", x, y + 48, 180);
+            draw_rotated("core.direction_arrow", x + 48, y, 90);
+            draw_rotated("core.direction_arrow", x - 48, y, 270);
         }
-        draw_rotated("direction_arrow", x - 48, y - 48, 315);
-        draw_rotated("direction_arrow", x + 48, y + 48, 135);
-        draw_rotated("direction_arrow", x + 48, y - 48, 45);
-        draw_rotated("direction_arrow", x - 48, y + 48, 225);
+        draw_rotated("core.direction_arrow", x - 48, y - 48, 315);
+        draw_rotated("core.direction_arrow", x + 48, y + 48, 135);
+        draw_rotated("core.direction_arrow", x + 48, y - 48, 45);
+        draw_rotated("core.direction_arrow", x - 48, y + 48, 225);
         redraw();
         gmode(0);
         gcopy(4, 0, 0, 144, 144, x - 48 - 24, y - 48 - 24);

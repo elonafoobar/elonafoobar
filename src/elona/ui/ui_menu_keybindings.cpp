@@ -139,8 +139,8 @@ void UIMenuKeybindings::_draw_background()
     if (mode == 10)
     {
         gmode(0);
-        asset_load("title");
-        elona::draw("title", 0, 0, windoww, windowh);
+        asset_load("core.title");
+        elona::draw("core.title", 0, 0, windoww, windowh);
         gsel(0);
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh, 0, 0);
@@ -157,7 +157,7 @@ bool UIMenuKeybindings::init()
 
     _draw_background();
 
-    const auto& info = asset_load("ie_sheet");
+    const auto& info = asset_load("core.ie_sheet");
     gsel(0);
 
     wx = (windoww - info.width) / 2 + inf_screenx;

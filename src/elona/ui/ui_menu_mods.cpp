@@ -60,8 +60,8 @@ protected:
 void UIMenuMods::_load_mods()
 {
     // Redraw background as topic size can change, leaving marks
-    asset_load("void");
-    ::draw("void", 0, 0, windoww, windowh);
+    asset_load("core.void");
+    ::draw("core.void", 0, 0, windoww, windowh);
     gsel(0);
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh, 0, 0);

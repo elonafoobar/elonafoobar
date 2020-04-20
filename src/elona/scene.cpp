@@ -40,7 +40,7 @@ void do_play_scene()
     scene_cut = 0;
     scenemode = 1;
     SDIM4(actor, 20, 3, 10);
-    data::InstanceId background_image_id{u8"void"};
+    data::InstanceId background_image_id{u8"core.void"};
     y1 = 60;
     y2 = windowh - 60;
     notesel(buff);
@@ -169,7 +169,7 @@ void do_play_scene()
                     dx = 0;
                 }
                 gmode(2, 95);
-                draw_centered("scene_title", windoww / 2, y + 4, dx, 72);
+                draw_centered("core.scene_title", windoww / 2, y + 4, dx, 72);
             }
             x = 40;
             for (int cnt = 0, cnt_end = (noteinfo()); cnt < cnt_end; ++cnt)
@@ -257,7 +257,7 @@ void do_play_scene()
         scidx = p(4) + 1;
         if (s == u8"{pic}"s)
         {
-            background_image_id = data::InstanceId{s(1)};
+            background_image_id = data::InstanceId{"core." + s(1)};
             continue;
         }
         if (s == u8"{mc}"s)
@@ -375,12 +375,12 @@ void conquer_lesimas()
     mode = 0;
     play_music("core.mcMarch2");
     ui_win_screen_fade();
-    asset_load("void");
-    draw_region("void", 0, 0, 0, 0, 640, 480, windoww, windowh);
+    asset_load("core.void");
+    draw_region("core.void", 0, 0, 0, 0, 640, 480, windoww, windowh);
     gsel(0);
     animation_fade_in();
-    draw_region("void", 0, 0, 0, 0, windoww, windowh);
-    asset_load("g1");
+    draw_region("core.void", 0, 0, 0, 0, windoww, windowh);
+    asset_load("core.g1");
     gsel(0);
     ui_draw_caption(i18n::s.get(
         "core.win.you_acquired_codex",
@@ -398,7 +398,7 @@ void conquer_lesimas()
         ww,
         wh);
     gmode(2, 250);
-    draw_centered("g1", wx + ww - 120, wy + wh / 2, ww / 3 - 20, wh - 140);
+    draw_centered("core.g1", wx + ww - 120, wy + wh / 2, ww / 3 - 20, wh - 140);
     gmode(2);
     display_topic(i18n::s.get("core.win.window.caption"), wx + 28, wy + 40);
     font(14 - en * 2);

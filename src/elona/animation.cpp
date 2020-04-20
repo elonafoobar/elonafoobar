@@ -201,7 +201,7 @@ void FailureToCastAnimation::do_play()
 
     do_animation(
         rendering_base_position_center(caster_pos),
-        "failure_to_cast_effect",
+        "core.failure_to_cast_effect",
         12,
         [](const auto& key, const auto& center, auto t) {
             draw_rotated(
@@ -725,7 +725,7 @@ void SwarmAnimation::do_play()
 
     do_animation(
         rendering_base_position_center(target_pos),
-        "swarm_effect",
+        "core.swarm_effect",
         4,
         [](const auto& key, const auto& center, auto t) {
             draw_rotated(
@@ -830,11 +830,11 @@ void MeleeAttackAnimation::do_play()
         }
         if (ap == 1)
         {
-            draw_indexed("anim_slash", anidx, anidy, cnt);
+            draw_indexed("core.anim_slash", anidx, anidy, cnt);
         }
         if (ap == 2)
         {
-            draw_indexed("anim_bash", anidx, anidy, cnt);
+            draw_indexed("core.anim_bash", anidx, anidy, cnt);
         }
         redraw();
         gmode(0);
@@ -1196,7 +1196,7 @@ void BreakingAnimation::do_play()
 
     do_particle_animation(
         rendering_base_position_center(position),
-        "breaking_effect",
+        "core.breaking_effect",
         5,
         4,
         [](auto) {

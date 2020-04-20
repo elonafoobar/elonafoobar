@@ -35,7 +35,7 @@ bool UIMenuFeats::init()
     wx = (windoww - ww) / 2 + inf_screenx;
     wy = winposy(wh);
     window_animation(wx, wy, ww, wh, 9, 4);
-    asset_load("deco_feat");
+    asset_load("core.deco_feat");
     gsel(0);
     windowshadow = 1;
 
@@ -204,11 +204,11 @@ void UIMenuFeats::_draw_window_deco()
     s(2) = i18n::s.get("core.trait.window.detail");
     display_topic(s, wx + 46, wy + 36);
     display_topic(s(2), wx + 255, wy + 36);
-    draw_indexed("inventory_icon", wx + 46, wy - 16, 11);
-    elona::draw("deco_feat_a", wx + ww - 56, wy + wh - 198);
-    elona::draw("deco_feat_b", wx, wy);
-    elona::draw("deco_feat_c", wx + ww - 108, wy);
-    elona::draw("deco_feat_d", wx, wy + wh - 70);
+    draw_indexed("core.inventory_icon", wx + 46, wy - 16, 11);
+    elona::draw("core.deco_feat_a", wx + ww - 56, wy + wh - 198);
+    elona::draw("core.deco_feat_b", wx, wy);
+    elona::draw("core.deco_feat_c", wx + ww - 108, wy);
+    elona::draw("core.deco_feat_d", wx, wy + wh - 70);
 }
 
 
@@ -305,7 +305,10 @@ void UIMenuFeats::_draw_single_list_entry_text(
         x = 70;
     }
     draw_indexed(
-        "trait_icon", wx + (draw_name ? 30 : 45), wy + 61 + cnt * 19, traitref);
+        "core.trait_icon",
+        wx + (draw_name ? 30 : 45),
+        wy + 61 + cnt * 19,
+        traitref);
 
     cs_list(cs == cnt, text, wx + x, wy + 66 + cnt * 19 - 1, 0, text_color);
 

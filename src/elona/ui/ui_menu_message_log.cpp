@@ -26,7 +26,7 @@ void _draw_window()
             const auto x =
                 dx == p ? log_window_width % chunk_width : chunk_width;
             draw_region(
-                "message_window_contents",
+                "core.message_window_contents",
                 dx * chunk_width + inf_msgx,
                 inf_msgy - (dy + 1) * inf_msgspace,
                 0,
@@ -40,7 +40,10 @@ void _draw_window()
     {
         const auto x = dx == p ? log_window_width % chunk_width : chunk_width;
         draw_region(
-            "message_window_border", dx * chunk_width + inf_msgx, inf_msgy, x);
+            "core.message_window_border",
+            dx * chunk_width + inf_msgx,
+            inf_msgy,
+            x);
     }
 }
 

@@ -166,7 +166,7 @@ bool UIMenuCharacterSheet::init()
 
     _load_list(_chara, _operation);
 
-    const auto& data = asset_load("ie_sheet");
+    const auto& data = asset_load("core.ie_sheet");
     gsel(0);
     wx = (windoww - data.width) / 2 + inf_screenx;
     wy = winposy(data.height) - 10;
@@ -191,7 +191,7 @@ bool UIMenuCharacterSheet::init()
     if (!_returned_from_portrait)
     {
         gmode(2, 80);
-        elona::draw("ie_sheet", wx + 4, wy + 4);
+        elona::draw("core.ie_sheet", wx + 4, wy + 4);
         gmode(2);
     }
     if (_operation == CharacterSheetOperation::train_skill)
@@ -662,12 +662,12 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
         if (_chara.buffs[cnt].id == 0)
         {
             gmode(2, 120);
-            elona::draw("buff_icon_none", x, y);
+            elona::draw("core.buff_icon_none", x, y);
             gmode(2);
             continue;
         }
         ++_cs_buffmax;
-        draw_indexed("buff_icon", x, y, _chara.buffs[cnt].id);
+        draw_indexed("core.buff_icon", x, y, _chara.buffs[cnt].id);
         if (_cs_buff == cnt)
         {
             boxf(x, y, 32, 32, {200, 200, 255, 63});

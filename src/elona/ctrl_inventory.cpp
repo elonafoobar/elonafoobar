@@ -886,7 +886,7 @@ void show_message(const OptionalItemRef& citrade, const OptionalItemRef& cidip)
         }
     }
 
-    asset_load("deco_inv");
+    asset_load("core.deco_inv");
     gsel(0);
     if (returnfromidentify == 0)
     {
@@ -988,7 +988,7 @@ void draw_menu(bool dropcontinue)
     y = 34;
     x = windoww - 650 + 156;
     window2(x, y, 475, 22, 5, 5);
-    draw("radar_deco", x - 28, y - 8);
+    draw("core.radar_deco", x - 28, y - 8);
     if (dropcontinue)
     {
         i = 4;
@@ -1016,12 +1016,13 @@ void draw_menu(bool dropcontinue)
             break;
         }
         p = cycle(cnt, i);
-        draw_indexed("inventory_icon", x + cnt * 44 + 20, y - 24, invicon(p));
+        draw_indexed(
+            "core.inventory_icon", x + cnt * 44 + 20, y - 24, invicon(p));
         if (invctrl == p)
         {
             gmode(5, 70);
             draw_indexed(
-                "inventory_icon", x + cnt * 44 + 20, y - 24, invicon(p));
+                "core.inventory_icon", x + cnt * 44 + 20, y - 24, invicon(p));
             gmode(2);
         }
         std::string inv_command_txt =
@@ -1084,7 +1085,7 @@ void draw_window(optional_ref<Character> inventory_owner, bool dropcontinue)
 
     if (invicon(invctrl) != -1)
     {
-        draw_indexed("inventory_icon", wx + 46, wy - 14, invicon(invctrl));
+        draw_indexed("core.inventory_icon", wx + 46, wy - 14, invicon(invctrl));
     }
     s = i18n::s.get("core.ui.inv.window.weight");
     if (invctrl == 11 || invctrl == 12)
@@ -1100,13 +1101,13 @@ void draw_window(optional_ref<Character> inventory_owner, bool dropcontinue)
 
     draw_additional_item_info_label(wx + 300, wy + 40);
 
-    draw("deco_inv_a", wx + ww - 136, wy - 6);
+    draw("core.deco_inv_a", wx + ww - 136, wy - 6);
     if (g_show_additional_item_info == AdditionalItemInfo::none)
     {
-        draw("deco_inv_b", wx + ww - 186, wy - 6);
+        draw("core.deco_inv_b", wx + ww - 186, wy - 6);
     }
-    draw("deco_inv_c", wx + ww - 246, wy - 6);
-    draw("deco_inv_d", wx - 6, wy - 6);
+    draw("core.deco_inv_c", wx + ww - 246, wy - 6);
+    draw("core.deco_inv_d", wx - 6, wy - 6);
     s = ""s + listmax + u8" items"s;
     s += "  ("s +
         i18n::s.get(
@@ -1238,7 +1239,7 @@ void draw_item_list(const OptionalItemRef& mainweapon)
 
         if (g_inv[p]->body_part != 0)
         {
-            draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
+            draw("core.equipped", wx + 46, wy + 72 + cnt * 18 - 3);
             if (g_inv[p] == mainweapon)
             {
                 s += i18n::space_if_needed() + "(" +
@@ -1280,7 +1281,7 @@ void show_money(optional_ref<Character> inventory_owner)
         {
             font(13 - en * 2);
             gmode(2);
-            draw("gold_coin", wx + 340, wy + 32);
+            draw("core.gold_coin", wx + 340, wy + 32);
             mes(wx + 368,
                 wy + 37 - en * 2,
                 ""s + inventory_owner->gold + u8" gp"s);

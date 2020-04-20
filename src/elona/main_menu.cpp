@@ -194,8 +194,8 @@ MainMenuResult main_title_menu()
     load_background_variants(2);
 
     gmode(0);
-    asset_load("title");
-    draw("title", 0, 0, windoww, windowh);
+    asset_load("core.title");
+    draw("core.title", 0, 0, windoww, windowh);
     gmode(2);
 
     font(13 - en * 2);
@@ -268,7 +268,7 @@ MainMenuResult main_title_menu()
 
     keyrange = items.size();
 
-    asset_load("deco_blend");
+    asset_load("core.deco_blend");
     gsel(0);
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh, 0, 0);
@@ -511,10 +511,10 @@ MainMenuResult main_menu_new_game()
     }
     mode = 1;
     cm = 1;
-    asset_load("void");
-    draw("void", 0, 0, windoww, windowh);
+    asset_load("core.void");
+    draw("core.void", 0, 0, windoww, windowh);
     load_background_variants(2);
-    asset_load("deco_cm");
+    asset_load("core.deco_cm");
     gsel(0);
     return MainMenuResult::character_making_select_race;
 }
@@ -692,8 +692,8 @@ MainMenuResult main_menu_incarnate()
 {
     cs = 0;
     cs_bk = -1;
-    asset_load("void");
-    draw("void", 0, 0, windoww, windowh);
+    asset_load("core.void");
+    draw("core.void", 0, 0, windoww, windowh);
     gsel(0);
     gmode(0);
     gcopy(4, 0, 0, windoww, windowh, 0, 0);
@@ -796,8 +796,8 @@ MainMenuResult main_menu_about()
     listmax = 5;
 
     gmode(0);
-    asset_load("void");
-    draw("void", 0, 0, windoww, windowh);
+    asset_load("core.void");
+    draw("core.void", 0, 0, windoww, windowh);
     gmode(2);
 
     ui_draw_caption("Elona foobar " + latest_version.short_string());
@@ -930,8 +930,8 @@ void main_menu_about_one_changelog(const Release& release)
     page = 0;
 
     gmode(0);
-    asset_load("void");
-    draw("void", 0, 0, windoww, windowh);
+    asset_load("core.void");
+    draw("core.void", 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
 
@@ -1016,8 +1016,8 @@ MainMenuResult main_menu_about_changelogs()
     keyrange = 0;
 
     gmode(0);
-    asset_load("void");
-    draw("void", 0, 0, windoww, windowh);
+    asset_load("core.void");
+    draw("core.void", 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
 
@@ -1200,8 +1200,8 @@ MainMenuResult main_menu_about_license()
     page = 0;
 
     gmode(0);
-    asset_load("void");
-    draw("void", 0, 0, windoww, windowh);
+    asset_load("core.void");
+    draw("core.void", 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
 
@@ -1327,8 +1327,8 @@ MainMenuResult main_menu_about_credits()
     page = 0;
 
     gmode(0);
-    asset_load("void");
-    draw("void", 0, 0, windoww, windowh);
+    asset_load("core.void");
+    draw("core.void", 0, 0, windoww, windowh);
     gmode(2);
     gsel(0);
 
@@ -1411,8 +1411,8 @@ MainMenuResult main_menu_mods()
     listmax = 2;
 
     gmode(0);
-    asset_load("void");
-    draw("void", 0, 0, windoww, windowh);
+    asset_load("core.void");
+    draw("core.void", 0, 0, windoww, windowh);
     gmode(2);
 
     windowshadow = 1;
