@@ -269,7 +269,7 @@ static void _reroll_character()
         sdata.get(cnt, 0).experience = cmstats(cnt - 10) % 1'000'000 / 1'000;
         sdata.get(cnt, 0).potential = cmstats(cnt - 10) % 1'000;
     }
-    initialize_character();
+    initialize_character(cdata.player());
     initialize_pc_character();
     cdata.player().portrait = portrait_save;
     create_pcpic(cdata.player());
@@ -401,7 +401,7 @@ MainMenuResult character_making_final_phase()
     }
 
     snd("core.skill");
-    cdatan(0, rc) = cmname;
+    cdatan(0, 0) = cmname;
     cdata.player().gold = 400 + rnd(200);
 
     if (geneuse != ""s)

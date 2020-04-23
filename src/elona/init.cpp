@@ -527,7 +527,6 @@ void initialize_debug_globals()
     mapstartx = 10;
     mapstarty = 23;
     initlv = 50;
-    rc = 0;
     flt(100);
     chara_create(0, 84, -3, 0);
     initialize_pc_character();

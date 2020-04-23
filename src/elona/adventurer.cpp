@@ -30,14 +30,13 @@ void create_all_adventurers()
 {
     for (int cnt = 16; cnt < 55; ++cnt)
     {
-        rc = cnt;
-        create_adventurer();
+        create_adventurer(cdata[cnt]);
     }
 }
 
 
 
-void create_adventurer()
+void create_adventurer(Character& adv)
 {
     flt(0, Quality::miracle);
     initlv = rnd_capped(60 + cdata.player().level) + 1;
@@ -45,15 +44,15 @@ void create_adventurer()
     p(1) = 41;
     p(2) = 160;
     novoidlv = 1;
-    chara_create(rc, p(rnd(3)), -1, -1);
-    cdata[rc].relationship = 0;
-    cdata[rc].original_relationship = 0;
-    cdata[rc]._156 = 100;
-    cdata[rc].set_state(Character::State::adventurer_in_other_map);
-    cdata[rc].image = rnd(33) * 2 + 1 + cdata[rc].sex;
-    cdatan(0, rc) = random_name();
-    cdatan(1, rc) = random_title(RandomTitleType::character);
-    cdata[rc].role = Role::adventurer;
+    chara_create(adv.index, p(rnd(3)), -1, -1);
+    adv.relationship = 0;
+    adv.original_relationship = 0;
+    adv._156 = 100;
+    adv.set_state(Character::State::adventurer_in_other_map);
+    adv.image = rnd(33) * 2 + 1 + adv.sex;
+    cdatan(0, adv.index) = random_name();
+    cdatan(1, adv.index) = random_title(RandomTitleType::character);
+    adv.role = Role::adventurer;
     p = rnd(450);
     if (area_data[p].id == mdata_t::MapId::none ||
         area_data[p].id == mdata_t::MapId::your_home ||
@@ -73,10 +72,10 @@ void create_adventurer()
     {
         p = 12;
     }
-    cdata[rc].current_map = p;
-    cdata[rc].current_dungeon_level = 1;
-    cdata[rc].fame = cdata[rc].level * cdata[rc].level * 30 +
-        rnd_capped(cdata[rc].level * 200 + 100) + rnd(500);
+    adv.current_map = p;
+    adv.current_dungeon_level = 1;
+    adv.fame = adv.level * adv.level * 30 + rnd_capped(adv.level * 200 + 100) +
+        rnd(500);
 }
 
 
@@ -202,46 +201,46 @@ void adventurer_update()
 {
     for (int cnt = 16; cnt < 55; ++cnt)
     {
-        rc = cnt;
-        cc = rc;
-        if (cdata[rc].period_of_contract != 0)
+        auto& adv = cdata[cnt];
+        cc = adv.index;
+        if (adv.period_of_contract != 0)
         {
-            if (cdata[rc].period_of_contract < game_data.date.hours())
+            if (adv.period_of_contract < game_data.date.hours())
             {
-                cdata[rc].period_of_contract = 0;
-                cdata[rc].is_contracting() = false;
-                cdata[rc].relationship = 0;
-                txt(i18n::s.get("core.chara.contract_expired", cdata[rc]));
+                adv.period_of_contract = 0;
+                adv.is_contracting() = false;
+                adv.relationship = 0;
+                txt(i18n::s.get("core.chara.contract_expired", adv));
             }
         }
-        if (cdata[rc].current_map != game_data.current_map)
+        if (adv.current_map != game_data.current_map)
         {
-            if (cdata[rc].state() == Character::State::adventurer_empty)
+            if (adv.state() == Character::State::adventurer_empty)
             {
-                create_adventurer();
+                create_adventurer(adv);
                 continue;
             }
-            if (cdata[rc].state() == Character::State::adventurer_dead)
+            if (adv.state() == Character::State::adventurer_dead)
             {
-                if (game_data.date.hours() >= cdata[rc].time_to_revive)
+                if (game_data.date.hours() >= adv.time_to_revive)
                 {
                     if (rnd(3) == 0)
                     {
-                        addnews(5, rc);
-                        cdata[rc].set_state(Character::State::empty);
-                        create_adventurer();
+                        addnews(5, adv.index);
+                        adv.set_state(Character::State::empty);
+                        create_adventurer(adv);
                     }
                     else
                     {
-                        addnews(3, rc);
-                        cdata[rc].set_state(
+                        addnews(3, adv.index);
+                        adv.set_state(
                             Character::State::adventurer_in_other_map);
                     }
                     continue;
                 }
             }
         }
-        if ((cdata[rc].current_map != game_data.current_map ||
+        if ((adv.current_map != game_data.current_map ||
              map_data.type == mdata_t::MapType::world_map) &&
             rnd(60) == 0)
         {
@@ -269,44 +268,42 @@ void adventurer_update()
                 }
                 break;
             }
-            cdata[rc].current_map = p;
-            cdata[rc].current_dungeon_level = 1;
+            adv.current_map = p;
+            adv.current_dungeon_level = 1;
         }
-        if (cdata[rc].current_map == game_data.current_map)
+        if (adv.current_map == game_data.current_map)
         {
             continue;
         }
         if (rnd(200) == 0)
         {
-            if (area_data[cdata[rc].current_map].type != mdata_t::MapType::town)
+            if (area_data[adv.current_map].type != mdata_t::MapType::town)
             {
-                adventurer_discover_equipment();
+                adventurer_discover_equipment(adv);
             }
         }
         if (rnd(10) == 0)
         {
-            cdata[rc].experience += cdata[rc].level * cdata[rc].level * 2;
+            adv.experience += adv.level * adv.level * 2;
         }
         if (rnd(20) == 0)
         {
-            cdata[rc].fame +=
-                rnd_capped(cdata[rc].level * cdata[rc].level / 40 + 5) -
-                rnd_capped(cdata[rc].level * cdata[rc].level / 50 + 5);
+            adv.fame += rnd_capped(adv.level * adv.level / 40 + 5) -
+                rnd_capped(adv.level * adv.level / 50 + 5);
         }
         if (rnd(2000) == 0)
         {
-            cdata[rc].experience += clamp(cdata[rc].level, 1, 1000) *
-                clamp(cdata[rc].level, 1, 1000) * 100;
-            int fame =
-                rnd_capped(cdata[rc].level * cdata[rc].level / 20 + 10) + 10;
-            cdata[rc].fame += fame;
-            addnews(4, rc, fame);
-            adventurer_discover_equipment();
+            adv.experience +=
+                clamp(adv.level, 1, 1000) * clamp(adv.level, 1, 1000) * 100;
+            int fame = rnd_capped(adv.level * adv.level / 20 + 10) + 10;
+            adv.fame += fame;
+            addnews(4, adv.index, fame);
+            adventurer_discover_equipment(adv);
         }
-        if (cdata[rc].experience >= cdata[rc].required_experience)
+        if (adv.experience >= adv.required_experience)
         {
             r2 = 0;
-            gain_level(cdata[rc]);
+            gain_level(adv);
         }
     }
     notesel(newsbuff);
@@ -321,12 +318,12 @@ void adventurer_update()
 
 
 
-int adventurer_discover_equipment()
+void adventurer_discover_equipment(Character& adv)
 {
     f = 0;
     for (int _i = 0; _i < 10; ++_i)
     {
-        auto&& item = get_random_inv(rc);
+        auto&& item = get_random_inv(adv.index);
         if (item.number() == 0)
         {
             f = 1;
@@ -338,9 +335,9 @@ int adventurer_discover_equipment()
         }
         if (item.number() != 0)
         {
-            if (cdata[rc].ai_item == item.index)
+            if (cdata[adv.index].ai_item == item.index)
             {
-                cdata[rc].ai_item = 0;
+                cdata[adv.index].ai_item = 0;
             }
             item.remove();
             f = 1;
@@ -349,9 +346,9 @@ int adventurer_discover_equipment()
     }
     if (f == 0)
     {
-        return 0;
+        return;
     }
-    flt(cdata[rc].level, Quality::miracle);
+    flt(cdata[adv.index].level, Quality::miracle);
     if (rnd(3) == 0)
     {
         flttypemajor = choice(fsetwear);
@@ -360,19 +357,18 @@ int adventurer_discover_equipment()
     {
         flttypemajor = choice(fsetitem);
     }
-    if (const auto item = itemcreate_chara_inv(rc, 0, 0))
+    if (const auto item = itemcreate_chara_inv(adv.index, 0, 0))
     {
         item->identify_state = IdentifyState::completely;
         if (item->quality >= Quality::miracle)
         {
             if (is_equipment(the_item_db[itemid2int(item->id)]->category))
             {
-                addnews(1, rc, 0, itemname(*item));
+                addnews(1, adv.index, 0, itemname(*item));
             }
         }
-        wear_most_valuable_equipment(*item);
+        wear_most_valuable_equipment(adv, *item);
     }
-    return 0;
 }
 
 } // namespace elona

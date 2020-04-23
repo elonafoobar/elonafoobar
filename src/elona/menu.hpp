@@ -4,6 +4,8 @@
 
 #include "optional.hpp"
 
+
+
 namespace elona
 {
 
@@ -96,7 +98,9 @@ void showeconomy(int, int, const std::string&, int = 0, int = 0);
 void show_city_chart();
 void begin_to_believe_god(int);
 void screen_analyze_self();
-int ctrl_ally(ControlAllyOperation);
+int ctrl_ally(
+    ControlAllyOperation,
+    optional_ref<Character> gene_engineering_original_character = none);
 void show_book_window(const Item& book);
 int change_npc_tone();
 void item_show_description(Item& item);

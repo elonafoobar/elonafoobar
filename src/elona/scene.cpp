@@ -212,7 +212,7 @@ void do_play_scene()
         }
         if (strutil::contains(s(0), u8"{chat_"))
         {
-            rc = elona::stoi(strmid(s, 6, 1));
+            current_actor_index = elona::stoi(strmid(s, 6, 1));
             scidxtop = scidx;
             val0 = 1;
             continue;
@@ -270,10 +270,10 @@ void do_play_scene()
         }
         if (strutil::contains(s(0), u8"{actor_"))
         {
-            rc = elona::stoi(strmid(s, 7, 1));
+            const auto actor_index = elona::stoi(strmid(s, 7, 1));
             csvsort(s, s(1), 44);
-            actor(0, rc) = s;
-            actor(1, rc) = s(1);
+            actor(0, actor_index) = s;
+            actor(1, actor_index) = s(1);
         }
     }
 }

@@ -1079,41 +1079,40 @@ bool _magic_461()
         obvious = 0;
         return true;
     }
+    int stat = show_hire_menu(HireOperation::revive);
+    if (stat == -1)
     {
-        int stat = show_hire_menu(HireOperation::revive);
-        if (stat == -1)
-        {
-            txt(i18n::s.get("core.common.nothing_happens"));
-            obvious = 0;
-            return true;
-        }
-        if (bonus < rnd(100))
-        {
-            if (is_in_fov(cdata[cc]))
-            {
-                txt(i18n::s.get("core.magic.resurrection.fail", cdata[cc]));
-            }
-            return true;
-        }
-        rc = stat;
+        txt(i18n::s.get("core.common.nothing_happens"));
+        obvious = 0;
+        return true;
     }
-    do_chara_revival();
+    if (bonus < rnd(100))
+    {
+        if (is_in_fov(cdata[cc]))
+        {
+            txt(i18n::s.get("core.magic.resurrection.fail", cdata[cc]));
+        }
+        return true;
+    }
+    do_chara_revival(cdata[stat]);
     cxinit = cdata[cc].position.x;
     cyinit = cdata[cc].position.y;
-    chara_place();
-    cdata[rc].current_map = 0;
+    chara_place(cdata[stat]);
+    cdata[stat].current_map = 0;
     txt(i18n::s.get(
-            "core.magic.resurrection.apply", cnven(cdatan(0, rc)), cdata[rc]),
+            "core.magic.resurrection.apply",
+            cnven(cdatan(0, stat)),
+            cdata[stat]),
         Message::color{ColorIndex::orange});
     txt(i18n::s.get("core.magic.resurrection.dialog"));
-    animode = 100 + rc;
+    animode = 100 + stat;
     MiracleAnimation().play();
     snd("core.pray2");
-    cdata[rc].emotion_icon = 317;
+    cdata[stat].emotion_icon = 317;
     if (cc == 0)
     {
-        chara_modify_impression(cdata[rc], 15);
-        if (rc >= 16)
+        chara_modify_impression(cdata[stat], 15);
+        if (stat >= 16)
         {
             modify_karma(cdata.player(), 2);
         }
@@ -2229,8 +2228,7 @@ bool _magic_1138_1123_1122_1137()
     }
     novoidlv = 1;
     chara_create(56, p, -3, 0);
-    rc = 56;
-    new_ally_joins();
+    new_ally_joins(cdata.tmp());
     return true;
 }
 
@@ -2269,8 +2267,7 @@ bool _magic_435()
     }
     if (f == 1)
     {
-        rc = tc;
-        new_ally_joins();
+        new_ally_joins(cdata[tc]);
         quest_check();
     }
     else if (f == 0)
@@ -2850,7 +2847,7 @@ bool _magic_628()
         txt(i18n::s.get("core.magic.change.apply", cdata[tc]));
         flt(calcobjlv(cdata[tc].level + 3), Quality::good);
         chara_create(56, 0, -3, 0);
-        chara_relocate(cdata.tmp(), tc(0), CharaRelocationMode::change);
+        chara_relocate(cdata.tmp(), cdata[tc], CharaRelocationMode::change);
         cdata[tc].enemy_id = cc;
         cdata[tc].is_quest_target() = false;
         quest_check();
@@ -4299,15 +4296,17 @@ optional<bool> _proc_general_magic()
             {
                 chara_id = 176;
             }
-            const auto success = chara_create(
-                -1, chara_id, cdata[tc].position.x, cdata[tc].position.y);
-            if (success && efid != 643)
+            if (const auto chara = chara_create(
+                    -1, chara_id, cdata[tc].position.x, cdata[tc].position.y))
             {
-                if (cdata[rc].id == cdata[cc].id)
+                if (efid != 643)
                 {
-                    chara_vanquish(rc);
-                    --cnt;
-                    continue;
+                    if (chara->id == cdata[cc].id)
+                    {
+                        chara_vanquish(chara->index);
+                        --cnt;
+                        continue;
+                    }
                 }
             }
         }

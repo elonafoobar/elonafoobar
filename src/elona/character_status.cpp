@@ -5,6 +5,7 @@
 #include "ability.hpp"
 #include "adventurer.hpp"
 #include "animation.hpp"
+#include "chara_db.hpp"
 #include "character.hpp"
 #include "config.hpp"
 #include "fov.hpp"
@@ -18,10 +19,11 @@
 
 
 
-namespace
+namespace elona
 {
 
-
+namespace
+{
 
 int get_random_body_part()
 {
@@ -56,14 +58,7 @@ int get_random_body_part()
     return 1;
 }
 
-
-
 } // namespace
-
-
-
-namespace elona
-{
 
 
 
@@ -622,5 +617,149 @@ void earn_platinum(Character& cc, int delta)
 }
 
 
+
+int gain_skills_by_geen_engineering(
+    Character& original_ally,
+    Character& gene_ally)
+{
+    if (gene_ally.splits() || gene_ally.splits2())
+    {
+        return 0;
+    }
+    randomize(charaid2int(gene_ally.id));
+    int dbmax = 0;
+    for (int cnt = 0; cnt < 100; ++cnt)
+    {
+        rtval = rnd(40) + 150;
+        if (sdata(rtval, original_ally.index) == 0)
+        {
+            if (sdata(rtval, gene_ally.index) > 0)
+            {
+                dblist(0, dbmax) = rtval;
+                ++dbmax;
+            }
+        }
+    }
+    rtval(0) = dblist(0, 0);
+    rtval(1) = -1;
+    if (dbmax >= 2)
+    {
+        if (rnd(3) == 0)
+        {
+            for (int cnt = 1, cnt_end = cnt + (dbmax - 1); cnt < cnt_end; ++cnt)
+            {
+                if (dblist(0, cnt) != rtval)
+                {
+                    rtval(1) = dblist(0, cnt);
+                    break;
+                }
+            }
+        }
+    }
+    randomize();
+    return dbmax;
+}
+
+
+
+int transplant_body_parts(Character& original_ally, Character& gene_ally)
+{
+    int dbmax = 0;
+    s(1) = chara_db_get_filter(gene_ally.id);
+    if (strutil::contains(s(1), u8"/man/"))
+    {
+        return -1;
+    }
+    if (gene_ally.splits() || gene_ally.splits2())
+    {
+        return -1;
+    }
+    rtval(1) = -1;
+    for (int i = 0; i < 30; ++i)
+    {
+        if (original_ally.body_parts[i] == 0)
+        {
+            rtval(1) = i + 100;
+        }
+    }
+    if (rtval(1) == -1)
+    {
+        return -1;
+    }
+    for (int cnt = 0; cnt < 30; ++cnt)
+    {
+        f = gene_ally.body_parts[cnt] / 10000;
+        if (f == 11 || f == 10 || f == 4)
+        {
+            continue;
+        }
+        if (f != 0)
+        {
+            dblist(0, dbmax) = f;
+            ++dbmax;
+        }
+    }
+    if (dbmax == 0)
+    {
+        return -1;
+    }
+    randomize(charaid2int(gene_ally.id));
+    for (int cnt = 0; cnt < 3; ++cnt)
+    {
+        rtval = dblist(0, rnd(dbmax));
+        f = 0;
+        for (int i = 0; i < 30; ++i)
+        {
+            if (original_ally.body_parts[i] == 0)
+            {
+                continue;
+            }
+            if (original_ally.body_parts[i] / 10000 == rtval)
+            {
+                f = 1;
+            }
+        }
+        if (f)
+        {
+            break;
+        }
+    }
+    if (f == 0)
+    {
+        randomize();
+        return rtval(1);
+    }
+    DIM3(dblist, 2, 800);
+    for (int i = 0; i < 30; ++i)
+    {
+        ++dblist(0, gene_ally.body_parts[i] / 10000);
+    }
+    for (int cnt = 0; cnt < 25; ++cnt)
+    {
+        rtval = rnd(15) + 1;
+        f = 0;
+        for (int i = 0; i < 30; ++i)
+        {
+            if (original_ally.body_parts[i] / 10000 == rtval)
+            {
+                ++f;
+            }
+        }
+        if (f < dblist(0, rtval))
+        {
+            f = -1;
+            break;
+        }
+    }
+    randomize();
+    if (f == -1)
+    {
+        return rtval(1);
+    }
+    else
+    {
+        return -1;
+    }
+}
 
 } // namespace elona

@@ -1158,8 +1158,7 @@ int damage_hp(
             }
             chara_gain_skill_exp(*attacker, 161, 10 + rollanatomy * 4);
         }
-        rc = victim.index;
-        character_drops_item();
+        character_drops_item(victim);
         if (game_data.current_map == mdata_t::MapId::pet_arena)
         {
             if (rnd(5) == 0)
@@ -1343,15 +1342,15 @@ void heal_insanity(Character& cc, int delta)
 
 
 
-void character_drops_item()
+void character_drops_item(Character& victim)
 {
-    if (rc == 0)
+    if (victim.index == 0)
     {
         if (game_data.executing_immediate_quest_type != 0)
         {
             return;
         }
-        for (auto&& item : inv.for_chara(cdata[rc]))
+        for (auto&& item : inv.for_chara(victim))
         {
             if (item.number() == 0)
             {
@@ -1434,8 +1433,8 @@ void character_drops_item()
             }
             if (item.body_part != 0)
             {
-                cdata[rc].body_parts[item.body_part - 100] =
-                    cdata[rc].body_parts[item.body_part - 100] / 10000 * 10000;
+                victim.body_parts[item.body_part - 100] =
+                    victim.body_parts[item.body_part - 100] / 10000 * 10000;
                 item.body_part = 0;
             }
             f = 0;
@@ -1472,8 +1471,8 @@ void character_drops_item()
                 item.remove();
                 continue;
             }
-            item.position.x = cdata[rc].position.x;
-            item.position.y = cdata[rc].position.y;
+            item.position.x = victim.position.x;
+            item.position.y = victim.position.y;
             if (!item_stack(-1, item).stacked)
             {
                 if (const auto slot = inv_get_free_slot(-1))
@@ -1488,54 +1487,54 @@ void character_drops_item()
             }
             item.remove();
         }
-        cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
+        cell_refresh(victim.position.x, victim.position.y);
         create_pcpic(cdata.player());
         return;
     }
     else
     {
-        if (rc < 16)
+        if (victim.index < 16)
         {
-            if (cdata[rc].has_own_sprite() == 1)
+            if (victim.has_own_sprite() == 1)
             {
-                create_pcpic(cdata[rc]);
+                create_pcpic(victim);
             }
         }
-        if (cdata[rc].relationship == 10)
+        if (victim.relationship == 10)
         {
             return;
         }
     }
     if (game_data.current_map == mdata_t::MapId::noyel)
     {
-        if (cdata[rc].id == CharaId::tourist)
+        if (victim.id == CharaId::tourist)
         {
             return;
         }
-        if (cdata[rc].id == CharaId::palmian_elite_soldier)
+        if (victim.id == CharaId::palmian_elite_soldier)
         {
             return;
         }
     }
-    if (cdata[rc].is_contracting())
+    if (victim.is_contracting())
     {
         return;
     }
-    if (cdata[rc].splits() || cdata[rc].splits2())
+    if (victim.splits() || victim.splits2())
     {
         if (rnd(6))
         {
             return;
         }
     }
-    for (auto&& item : inv.for_chara(cdata[rc]))
+    for (auto&& item : inv.for_chara(victim))
     {
         if (item.number() == 0)
         {
             continue;
         }
         f = 0;
-        if (cdata[rc].role == Role::user)
+        if (victim.role == Role::user)
         {
             break;
         }
@@ -1547,14 +1546,14 @@ void character_drops_item()
         {
             f = 1;
         }
-        if (cdata[rc].quality >= Quality::miracle)
+        if (victim.quality >= Quality::miracle)
         {
             if (rnd(2) == 0)
             {
                 f = 1;
             }
         }
-        if (cdata[rc].role == Role::adventurer)
+        if (victim.role == Role::adventurer)
         {
             if (rnd(5))
             {
@@ -1595,17 +1594,17 @@ void character_drops_item()
                     item,
                     enchantment_generate(enchantment_gen_level(rnd(4))),
                     enchantment_gen_p());
-                animeload(8, rc);
+                animeload(8, victim.index);
             }
         }
         if (item.body_part != 0)
         {
-            cdata[rc].body_parts[item.body_part - 100] =
-                cdata[rc].body_parts[item.body_part - 100] / 10000 * 10000;
+            victim.body_parts[item.body_part - 100] =
+                victim.body_parts[item.body_part - 100] / 10000 * 10000;
             item.body_part = 0;
         }
-        item.position.x = cdata[rc].position.x;
-        item.position.y = cdata[rc].position.y;
+        item.position.x = victim.position.x;
+        item.position.y = victim.position.y;
         itemturn(item);
         if (!item_stack(-1, item).stacked)
         {
@@ -1620,22 +1619,21 @@ void character_drops_item()
         }
         item.remove();
     }
-    if (cdata[rc].quality >= Quality::miracle || rnd(20) == 0 ||
-        cdata[rc].drops_gold() == 1 || rc < 16)
+    if (victim.quality >= Quality::miracle || rnd(20) == 0 ||
+        victim.drops_gold() == 1 || victim.index < 16)
     {
-        if (cdata[rc].gold > 0)
+        if (victim.gold > 0)
         {
             flt();
             itemcreate_extra_inv(
                 54,
-                cdata[rc].position,
-                cdata[rc].gold / (1 + 3 * (cdata[rc].drops_gold() == 0)));
-            cdata[rc].gold -=
-                cdata[rc].gold / (1 + 3 * (cdata[rc].drops_gold() == 0));
+                victim.position,
+                victim.gold / (1 + 3 * (victim.drops_gold() == 0)));
+            victim.gold -= victim.gold / (1 + 3 * (victim.drops_gold() == 0));
         }
     }
 
-    switch (class_get_item_type(data::InstanceId{cdatan(3, rc)}))
+    switch (class_get_item_type(data::InstanceId{cdatan(3, victim.index)}))
     {
     case 1:
         if (rnd(20) == 0)
@@ -1644,7 +1642,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 7:
@@ -1654,7 +1652,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 3:
@@ -1664,7 +1662,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 2:
@@ -1674,7 +1672,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -1682,7 +1680,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 4:
@@ -1692,7 +1690,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 5:
@@ -1702,12 +1700,12 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     }
 
-    switch (chara_db_get_item_type(cdata[rc].id))
+    switch (chara_db_get_item_type(victim.id))
     {
     case 3:
         if (rnd(40) == 0)
@@ -1716,7 +1714,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -1724,7 +1722,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -1732,7 +1730,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -1740,7 +1738,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -1748,7 +1746,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 1:
@@ -1758,10 +1756,9 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 62000;
             flttypeminor = 0;
-            if (const auto item =
-                    itemcreate_extra_inv(0, cdata[rc].position, 0))
+            if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
             {
-                remain_make(*item, cdata[rc]);
+                remain_make(*item, victim);
             }
         }
         break;
@@ -1772,10 +1769,9 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 62000;
             flttypeminor = 0;
-            if (const auto item =
-                    itemcreate_extra_inv(0, cdata[rc].position, 0))
+            if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
             {
-                remain_make(*item, cdata[rc]);
+                remain_make(*item, victim);
             }
         }
         break;
@@ -1786,7 +1782,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 32000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1794,7 +1790,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 34000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -1802,7 +1798,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1810,7 +1806,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1818,7 +1814,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -1826,7 +1822,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1834,7 +1830,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1842,7 +1838,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 77000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 4:
@@ -1852,7 +1848,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -1860,7 +1856,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -1868,7 +1864,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(4) == 0)
         {
@@ -1876,7 +1872,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 5:
@@ -1886,7 +1882,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -1894,7 +1890,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(15) == 0)
         {
@@ -1902,7 +1898,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -1910,7 +1906,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -1918,7 +1914,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1926,7 +1922,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(4) == 0)
         {
@@ -1934,7 +1930,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(4) == 0)
         {
@@ -1942,7 +1938,7 @@ void character_drops_item()
             flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
             flttypemajor = 77000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     }
@@ -1953,80 +1949,78 @@ void character_drops_item()
         flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
         flttypemajor = 62000;
         flttypeminor = 0;
-        if (const auto item = itemcreate_extra_inv(0, cdata[rc].position, 0))
+        if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
         {
-            remain_make(*item, cdata[rc]);
+            remain_make(*item, victim);
         }
     }
     if (game_data.current_map == mdata_t::MapId::show_house)
     {
-        cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
+        cell_refresh(victim.position.x, victim.position.y);
         return;
     }
     if (game_data.current_map != mdata_t::MapId::arena &&
-        cdata[rc].role != Role::user)
+        victim.role != Role::user)
     {
-        if (rnd(175) == 0 || cdata[rc].quality == Quality::special || 0 ||
-            (cdata[rc].quality == Quality::miracle && rnd(2) == 0) ||
-            (cdata[rc].quality == Quality::godly && rnd(3) == 0))
+        if (rnd(175) == 0 || victim.quality == Quality::special || 0 ||
+            (victim.quality == Quality::miracle && rnd(2) == 0) ||
+            (victim.quality == Quality::godly && rnd(3) == 0))
         {
             flt();
-            if (const auto item =
-                    itemcreate_extra_inv(504, cdata[rc].position, 0))
+            if (const auto item = itemcreate_extra_inv(504, victim.position, 0))
             {
-                item->param1 = cdata[rc].image;
-                item->subname = charaid2int(cdata[rc].id);
+                item->param1 = victim.image;
+                item->subname = charaid2int(victim.id);
                 cell_refresh(item->position.x, item->position.y);
             }
         }
-        if (rnd(175) == 0 || cdata[rc].quality == Quality::special || 0 ||
-            (cdata[rc].quality == Quality::miracle && rnd(2) == 0) ||
-            (cdata[rc].quality == Quality::godly && rnd(3) == 0))
+        if (rnd(175) == 0 || victim.quality == Quality::special || 0 ||
+            (victim.quality == Quality::miracle && rnd(2) == 0) ||
+            (victim.quality == Quality::godly && rnd(3) == 0))
         {
             flt();
-            if (const auto item =
-                    itemcreate_extra_inv(503, cdata[rc].position, 0))
+            if (const auto item = itemcreate_extra_inv(503, victim.position, 0))
             {
-                item->param1 = cdata[rc].image;
-                item->subname = charaid2int(cdata[rc].id);
+                item->param1 = victim.image;
+                item->subname = charaid2int(victim.id);
                 cell_refresh(item->position.x, item->position.y);
             }
         }
     }
-    if (cdata[rc].role == Role::wandering_vendor)
+    if (victim.role == Role::wandering_vendor)
     {
         flt();
-        if (const auto item = itemcreate_extra_inv(361, cdata[rc].position, 0))
+        if (const auto item = itemcreate_extra_inv(361, victim.position, 0))
         {
-            item->param1 = cdata[rc].shop_store_id;
+            item->param1 = victim.shop_store_id;
             item->own_state = 2;
         }
     }
-    if (rollanatomy == 1 || cdata[rc].quality >= Quality::miracle || 0 ||
-        cdata[rc].is_livestock() == 1 || 0)
+    if (rollanatomy == 1 || victim.quality >= Quality::miracle || 0 ||
+        victim.is_livestock() == 1 || 0)
     {
         flt();
-        if (const auto item = itemcreate_extra_inv(204, cdata[rc].position, 0))
+        if (const auto item = itemcreate_extra_inv(204, victim.position, 0))
         {
-            remain_make(*item, cdata[rc]);
-            if (cdata[rc].is_livestock() == 1)
+            remain_make(*item, victim);
+            if (victim.is_livestock() == 1)
             {
                 if (sdata(161, 0) != 0)
                 {
                     item->modify_number(
-                        rnd(1 + (sdata(161, 0) > cdata[rc].level)));
+                        rnd(1 + (sdata(161, 0) > victim.level)));
                 }
             }
         }
     }
 
     // ../../runtime/mod/core/api/impl/chara_drop.lua
-    lua::call("core.Impl.chara_drop.drop_from_chara", lua::handle(cdata[rc]));
+    lua::call("core.Impl.chara_drop.drop_from_chara", lua::handle(victim));
 
-    cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
-    if (cdata[rc].role == Role::adventurer)
+    cell_refresh(victim.position.x, victim.position.y);
+    if (victim.role == Role::adventurer)
     {
-        supply_new_equipment();
+        supply_new_equipment(victim);
     }
 }
 

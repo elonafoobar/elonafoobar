@@ -396,20 +396,19 @@ void _update_adventurer(int cnt)
     {
         return;
     }
-    rc = cnt;
-    cdata[rc].set_state(Character::State::alive);
+    cdata[cnt].set_state(Character::State::alive);
     if (cdata[cnt].is_contracting() == 1)
     {
         cxinit = cdata.player().position.x;
         cyinit = cdata.player().position.y;
-        chara_place();
+        chara_place(cdata[cnt]);
     }
     else
     {
         cxinit = -1;
-        chara_place();
-        cdata[rc].hp = cdata[rc].max_hp;
-        cdata[rc].mp = cdata[rc].max_mp;
+        chara_place(cdata[cnt]);
+        cdata[cnt].hp = cdata[cnt].max_hp;
+        cdata[cnt].mp = cdata[cnt].max_mp;
     }
     chara_refresh(cnt);
 }
@@ -601,49 +600,48 @@ void _level_up_if_guard(Character& chara)
 
 void _refresh_map_character(Character& cnt)
 {
-    rc = cnt.index;
-    cdata[rc].was_passed_item_by_you_just_now() = false;
+    cnt.was_passed_item_by_you_just_now() = false;
 
-    if (rc < 57)
+    if (cnt.index < 57)
     {
         if (mode == 11)
         {
             return;
         }
     }
-    if (cdata[rc].state() == Character::State::villager_dead)
+    if (cnt.state() == Character::State::villager_dead)
     {
-        if (game_data.date.hours() >= cdata[rc].time_to_revive)
+        if (game_data.date.hours() >= cnt.time_to_revive)
         {
-            revive_player();
+            revive_player(cnt);
         }
         else
         {
             return;
         }
     }
-    if (cdata[rc].state() != Character::State::alive)
+    if (cnt.state() != Character::State::alive)
     {
         return;
     }
 
-    _level_up_if_guard(cdata[rc]);
+    _level_up_if_guard(cnt);
 
-    if (rc >= 57)
+    if (cnt.index >= 57)
     {
-        _refresh_map_character_other(cdata[rc]);
+        _refresh_map_character_other(cnt);
     }
-    if (rc == 0 || game_data.mount != rc)
+    if (cnt.index == 0 || game_data.mount != cnt.index)
     {
-        if (_position_blocked(cdata[rc]))
+        if (_position_blocked(cnt))
         {
-            _relocate_character(cdata[rc]);
+            _relocate_character(cnt);
         }
     }
-    if (cdata[rc].is_ridden() == 0)
+    if (cnt.is_ridden() == 0)
     {
-        cell_data.at(cdata[rc].position.x, cdata[rc].position.y)
-            .chara_index_plus_one = rc + 1;
+        cell_data.at(cnt.position.x, cnt.position.y).chara_index_plus_one =
+            cnt.index + 1;
     }
 }
 

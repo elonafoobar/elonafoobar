@@ -107,8 +107,10 @@ ELONA.api:add(exports)
     elona::testing::start_in_debug_map();
     elona::lua::lua->get_export_manager().register_all_exports();
 
-    REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    Character& chara = elona::cdata[elona::rc];
+    const auto chara_opt =
+        elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(chara_opt);
+    Character& chara = *chara_opt;
     auto handle = elona::lua::lua->get_handle_manager().get_handle(chara);
 
     auto function = elona::lua::lua->get_export_manager().get_exported_function(
@@ -118,7 +120,7 @@ ELONA.api:add(exports)
 
     elona::lua::lua->get_mod_manager()
         .get_mod("test_registry_chara_callback")
-        ->env.raw_set("index", elona::rc);
+        ->env.raw_set("index", chara.index);
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_registry_chara_callback",
         R"(assert(mod.store.global.found_index == index))"));

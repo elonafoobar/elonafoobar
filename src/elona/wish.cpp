@@ -259,13 +259,14 @@ void wish_for_character()
 {
     inputlog = strutil::remove_str(inputlog, u8"summon");
     flt();
-    chara_create(
-        -1,
-        select_wished_character(inputlog),
-        cdata.player().position.x,
-        cdata.player().position.y);
-    cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
-    txt(cdatan(0, rc) + " is summoned.");
+    if (const auto chara = chara_create(
+            -1,
+            select_wished_character(inputlog),
+            cdata.player().position.x,
+            cdata.player().position.y))
+    {
+        txt(cdatan(0, chara->index) + " is summoned.");
+    }
 }
 
 

@@ -1,13 +1,20 @@
 #pragma once
+
 #include <string>
+
+
 
 namespace elona
 {
 
+struct Character;
+
+
+
 void create_all_adventurers();
-void create_adventurer();
+void create_adventurer(Character& adv);
 void adventurer_update();
-int adventurer_discover_equipment();
+void adventurer_discover_equipment(Character& adv);
 int advfavoriteskill(int = 0);
 int advfavoritestat(int = 0);
 

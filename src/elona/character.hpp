@@ -651,8 +651,8 @@ private:
 extern CData cdata;
 
 optional_ref<Character> chara_create(int slot, int chara_id, int x, int y);
-void initialize_character();
-bool chara_place();
+void initialize_character(Character& chara);
+bool chara_place(Character& chara);
 
 
 enum class CharaRelocationMode
@@ -671,7 +671,7 @@ enum class CharaRelocationMode
  */
 void chara_relocate(
     Character& source,
-    optional<int> destination_slot,
+    optional_ref<Character> destination_slot,
     CharaRelocationMode mode = CharaRelocationMode::normal);
 
 void chara_refresh(int);
@@ -709,18 +709,18 @@ void chara_set_ai_item(Character& chara, const Item& item);
 int chara_armor_class(const Character& cc);
 int chara_breed_power(const Character&);
 
-void chara_add_quality_parens();
+void chara_add_quality_parens(Character& chara);
 
 bool belong_to_same_team(const Character& c1, const Character& c2);
 
 TurnResult proc_movement_event();
-void chara_clear_status_effects();
-void chara_clear_status_effects_b();
-void revive_character();
-void do_chara_revival();
-void chara_set_revived_status();
-void revive_player();
-int new_ally_joins();
+void chara_clear_status_effects(Character& chara);
+void chara_clear_status_effects_b(Character& chara);
+void revive_character(Character& chara);
+void do_chara_revival(Character& chara);
+void chara_set_revived_status(Character& chara);
+void revive_player(Character& chara);
+optional_ref<Character> new_ally_joins(Character& new_ally);
 void refresh_burden_state();
 void go_hostile();
 void get_pregnant();

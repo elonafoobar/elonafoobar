@@ -17,17 +17,17 @@ using namespace elona::testing;
 TEST_CASE("Test character saving and reloading", "[C++: Serialization]")
 {
     start_in_debug_map();
-    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    int index = elona::rc;
-    cdata[index].is_floating() = true;
+    const auto chara = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(chara);
+    chara->is_floating() = true;
 
     save_and_reload();
 
-    REQUIRE(elona::cdata[index].state() != Character::State::empty);
-    REQUIRE(elona::cdata[index].position.x == 4);
-    REQUIRE(elona::cdata[index].position.y == 8);
-    REQUIRE(elona::cdata[index].id == PUTIT_PROTO_ID);
-    REQUIRE(elona::cdata[index].is_floating() == true);
+    REQUIRE(chara->state() != Character::State::empty);
+    REQUIRE(chara->position.x == 4);
+    REQUIRE(chara->position.y == 8);
+    REQUIRE(chara->id == PUTIT_PROTO_ID);
+    REQUIRE(chara->is_floating() == true);
 }
 
 TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
@@ -57,9 +57,11 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
 TEST_CASE("Test party character index preservation", "[C++: Serialization]")
 {
     start_in_debug_map();
-    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 0, 0));
-    REQUIRE(new_ally_joins());
-    int index = elona::rc;
+    const auto chara = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 0, 0);
+    REQUIRE_SOME(chara);
+    const auto ally = new_ally_joins(*chara);
+    REQUIRE_SOME(ally);
+    int index = ally->index;
 
     save_and_reload();
 
@@ -69,8 +71,9 @@ TEST_CASE("Test party character index preservation", "[C++: Serialization]")
 TEST_CASE("Test other character index preservation", "[C++: Serialization]")
 {
     start_in_debug_map();
-    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 0, 0));
-    int index = elona::rc;
+    const auto chara = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 0, 0);
+    REQUIRE_SOME(chara);
+    int index = chara->index;
 
     save_and_reload();
 

@@ -63,10 +63,10 @@ static void _map_events_quest_party()
                 objlv = 1;
                 if (const auto chara = chara_create(-1, chara_id, -3, 0))
                 {
-                    cdata[rc].relationship = -1;
-                    cdata[rc].original_relationship = -1;
-                    cdata[rc].hate = 100;
-                    cdata[rc].enemy_id = quest_data.immediate().extra_info_2;
+                    chara->relationship = -1;
+                    chara->original_relationship = -1;
+                    chara->hate = 100;
+                    chara->enemy_id = quest_data.immediate().extra_info_2;
                 }
             }
         }
@@ -142,9 +142,11 @@ static void _map_events_port_kapul()
             cell_featset(18, 9, tile_downstairs, 11, 1);
         }
         flt();
-        chara_create(-1, p, x, y);
-        cdata[rc].hate = 1000;
-        cdata[rc].enemy_id = 0;
+        if (const auto chara = chara_create(-1, p, x, y))
+        {
+            chara->hate = 1000;
+            chara->enemy_id = 0;
+        }
         return;
     }
 }

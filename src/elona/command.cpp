@@ -385,6 +385,159 @@ TurnResult _bump_into_character()
     return TurnResult::turn_end;
 }
 
+
+
+optional<TurnResult> use_gene_machine()
+{
+    Message::instance().linebreak();
+    txt(i18n::s.get("core.action.use.gene_machine.choose_original"));
+
+    const auto original_character =
+        ctrl_ally(ControlAllyOperation::gene_engineer);
+    if (original_character == -1)
+    {
+        return TurnResult::turn_end;
+    }
+
+    Message::instance().linebreak();
+    txt(i18n::s.get("core.action.use.gene_machine.choose_subject"));
+
+    {
+        int chara;
+        while (true)
+        {
+            chara = ctrl_ally(
+                ControlAllyOperation::gene_engineer, cdata[original_character]);
+            if (chara == -1)
+            {
+                break;
+            }
+            if (cdata[chara].has_been_used_stethoscope())
+            {
+                txt(i18n::s.get(
+                    "core.action.use.gene_machine.precious_ally",
+                    cdata[chara]));
+                continue;
+            }
+            break;
+        }
+        if (chara == -1)
+        {
+            return TurnResult::turn_end;
+        }
+        tc = chara;
+    }
+
+    update_screen();
+
+    Message::instance().linebreak();
+    txt(i18n::s.get(
+        "core.action.use.gene_machine.prompt",
+        cdata[tc],
+        cdata[original_character]));
+    if (!yes_no())
+    {
+        return TurnResult::turn_end;
+    }
+
+    Message::instance().linebreak();
+    txt(i18n::s.get(
+            "core.action.use.gene_machine.has_inherited",
+            cdata[original_character],
+            cdata[tc]),
+        Message::color{ColorIndex::orange});
+
+    GeneEngineeringAnimation(cdata[original_character].position).play();
+
+    {
+        int stat = transplant_body_parts(cdata[original_character], cdata[tc]);
+        if (stat != -1)
+        {
+            cdata[original_character].body_parts[stat - 100] = rtval * 10000;
+            txt(i18n::s.get(
+                    "core.action.use.gene_machine.gains.body_part",
+                    cdata[original_character],
+                    i18n::s.get_enum("core.ui.body_part", rtval)),
+                Message::color{ColorIndex::green});
+            refresh_speed_correction_value(cdata[original_character]);
+        }
+    }
+
+    {
+        int stat = gain_skills_by_geen_engineering(
+            cdata[original_character], cdata[tc]);
+        if (stat != 0)
+        {
+            for (int cnt = 0; cnt < 2; ++cnt)
+            {
+                if (rtval(cnt) == -1)
+                {
+                    break;
+                }
+                chara_gain_skill(cdata[original_character], rtval(cnt), 1);
+                txt(i18n::s.get(
+                        "core.action.use.gene_machine.gains.ability",
+                        cdata[original_character],
+                        i18n::s.get_m(
+                            "ability",
+                            the_ability_db.get_id_from_legacy(rtval(cnt))
+                                ->get(),
+                            "name")),
+                    Message::color{ColorIndex::green});
+            }
+        }
+    }
+
+    if (cdata[tc].level > cdata[original_character].level)
+    {
+        lv = (cdata[tc].level - cdata[original_character].level) / 2 + 1;
+        for (int cnt = 0, cnt_end = (lv); cnt < cnt_end; ++cnt)
+        {
+            r2 = 1;
+            gain_level(cdata[original_character]);
+        }
+        txt(i18n::s.get(
+                "core.action.use.gene_machine.gains.level",
+                cdata[original_character],
+                cdata[original_character].level),
+            Message::color{ColorIndex::green});
+        listmax = 0;
+        for (int cnt = 10; cnt < 18; ++cnt)
+        {
+            list(0, listmax) = cnt;
+            list(1, listmax) = sdata.get(cnt, tc).original_level;
+            ++listmax;
+        }
+        sort_list_by_column1();
+        for (int cnt = 0; cnt < 3; ++cnt)
+        {
+            p = listmax - cnt - 1;
+            i = list(0, p);
+            if (list(1, p) > sdata.get(i, original_character).original_level)
+            {
+                p = (list(1, p) -
+                     sdata.get(i, original_character).original_level) *
+                    500;
+                p = clamp(p * 10 / clamp(lv, 2, 10), 1000, 10000);
+                chara_gain_fixed_skill_exp(cdata[original_character], i, p);
+            }
+        }
+    }
+
+    chara_vanquish(tc);
+    save_set_autosave();
+    chara_gain_skill_exp(cdata.player(), 151, 1200);
+    randomize();
+    screenupdate = -1;
+    update_screen();
+    snd("core.pop2");
+    cc = original_character;
+    menu_character_sheet_investigate();
+    cc = 0;
+
+    return none;
+}
+
 } // namespace
 
 
@@ -576,8 +729,7 @@ TurnResult do_interact_command()
     }
     if (p == 5)
     {
-        rc = tc;
-        new_ally_joins();
+        new_ally_joins(cdata[tc]);
         update_screen();
         return TurnResult::turn_end;
     }
@@ -809,8 +961,7 @@ TurnResult do_throw_command_internal(Item& throw_item)
                         "core.action.throw.monster_ball.does_not_work"));
                     return TurnResult::turn_end;
                 }
-                rc = tc;
-                new_ally_joins();
+                new_ally_joins(cdata[tc]);
             }
             chara_vanquish(tc);
             quest_check();
@@ -2551,8 +2702,7 @@ TurnResult do_use_command(Item& use_item)
         flt();
         novoidlv = 1;
         chara_create(56, use_item.subname, -3, 0);
-        rc = 56;
-        new_ally_joins();
+        new_ally_joins(cdata.tmp());
         break;
     case 31:
         x = cdata[cc].position.x;
@@ -2583,139 +2733,14 @@ TurnResult do_use_command(Item& use_item)
         cell_featset(x, y, feat, feat(1), feat(2), feat(3));
         animeload(8, 0);
         break;
-    case 32:
-        Message::instance().linebreak();
-        txt(i18n::s.get("core.action.use.gene_machine.choose_original"));
-        rc = 0;
+    case 32: {
+        const auto turn_result = use_gene_machine();
+        if (turn_result)
         {
-            int stat = ctrl_ally(ControlAllyOperation::gene_engineer);
-            if (stat == -1)
-            {
-                return TurnResult::turn_end;
-            }
-            rc = stat;
+            return *turn_result;
         }
-        Message::instance().linebreak();
-        txt(i18n::s.get("core.action.use.gene_machine.choose_subject"));
-        {
-            int chara;
-            while (true)
-            {
-                chara = ctrl_ally(ControlAllyOperation::gene_engineer);
-                if (chara == -1)
-                {
-                    break;
-                }
-                if (cdata[chara].has_been_used_stethoscope())
-                {
-                    txt(i18n::s.get(
-                        "core.action.use.gene_machine.precious_ally",
-                        cdata[chara]));
-                    continue;
-                }
-                break;
-            }
-            if (chara == -1)
-            {
-                return TurnResult::turn_end;
-            }
-            tc = chara;
-        }
-        update_screen();
-        Message::instance().linebreak();
-        txt(i18n::s.get(
-            "core.action.use.gene_machine.prompt", cdata[tc], cdata[rc]));
-        if (!yes_no())
-        {
-            return TurnResult::turn_end;
-        }
-        Message::instance().linebreak();
-        txt(i18n::s.get(
-                "core.action.use.gene_machine.has_inherited",
-                cdata[rc],
-                cdata[tc]),
-            Message::color{ColorIndex::orange});
-        GeneEngineeringAnimation(cdata[rc].position).play();
-        {
-            int stat = transplant_body_parts();
-            if (stat != -1)
-            {
-                cdata[rc].body_parts[stat - 100] = rtval * 10000;
-                txt(i18n::s.get(
-                        "core.action.use.gene_machine.gains.body_part",
-                        cdata[rc],
-                        i18n::s.get_enum("core.ui.body_part", rtval)),
-                    Message::color{ColorIndex::green});
-                refresh_speed_correction_value(cdata[rc]);
-            }
-        }
-        {
-            int stat = gain_skills_by_geen_engineering();
-            if (stat != 0)
-            {
-                for (int cnt = 0; cnt < 2; ++cnt)
-                {
-                    if (rtval(cnt) == -1)
-                    {
-                        break;
-                    }
-                    chara_gain_skill(cdata[rc], rtval(cnt), 1);
-                    txt(i18n::s.get(
-                            "core.action.use.gene_machine.gains.ability",
-                            cdata[rc],
-                            i18n::s.get_m(
-                                "ability",
-                                the_ability_db.get_id_from_legacy(rtval(cnt))
-                                    ->get(),
-                                "name")),
-                        Message::color{ColorIndex::green});
-                }
-            }
-        }
-        if (cdata[tc].level > cdata[rc].level)
-        {
-            lv = (cdata[tc].level - cdata[rc].level) / 2 + 1;
-            for (int cnt = 0, cnt_end = (lv); cnt < cnt_end; ++cnt)
-            {
-                r2 = 1;
-                gain_level(cdata[rc]);
-            }
-            txt(i18n::s.get(
-                    "core.action.use.gene_machine.gains.level",
-                    cdata[rc],
-                    cdata[rc].level),
-                Message::color{ColorIndex::green});
-            listmax = 0;
-            for (int cnt = 10; cnt < 18; ++cnt)
-            {
-                list(0, listmax) = cnt;
-                list(1, listmax) = sdata.get(cnt, tc).original_level;
-                ++listmax;
-            }
-            sort_list_by_column1();
-            for (int cnt = 0; cnt < 3; ++cnt)
-            {
-                p = listmax - cnt - 1;
-                i = list(0, p);
-                if (list(1, p) > sdata.get(i, rc).original_level)
-                {
-                    p = (list(1, p) - sdata.get(i, rc).original_level) * 500;
-                    p = clamp(p * 10 / clamp(lv, 2, 10), 1000, 10000);
-                    chara_gain_fixed_skill_exp(cdata[rc], i, p);
-                }
-            }
-        }
-        chara_vanquish(tc);
-        save_set_autosave();
-        chara_gain_skill_exp(cdata.player(), 151, 1200);
-        randomize();
-        screenupdate = -1;
-        update_screen();
-        cc = rc;
-        snd("core.pop2");
-        menu_character_sheet_investigate();
-        cc = 0;
         break;
+    }
     case 35:
         txt(i18n::s.get("core.action.use.iron_maiden.use"));
         txt(i18n::s.get("core.action.use.iron_maiden.interesting"),
@@ -3859,8 +3884,8 @@ int try_to_cast_spell()
             {
                 if (cdata[cc].relationship <= -3)
                 {
-                    cdata[rc].relationship = -1;
-                    cdata[rc].original_relationship = -1;
+                    chara->relationship = -1;
+                    chara->original_relationship = -1;
                 }
             }
         }
@@ -6271,8 +6296,8 @@ void open_new_year_gift(Item& box)
             {
                 if (cdata[cc].relationship <= -3)
                 {
-                    cdata[rc].relationship = -1;
-                    cdata[rc].original_relationship = -1;
+                    chara->relationship = -1;
+                    chara->original_relationship = -1;
                 }
             }
             return;
@@ -6288,7 +6313,7 @@ void open_new_year_gift(Item& box)
             if (const auto chara = chara_create(
                     -1, 176, cdata[cc].position.x, cdata[cc].position.y))
             {
-                cdata[rc].gold = 5000;
+                chara->gold = 5000;
             }
             return;
         }
@@ -6318,8 +6343,8 @@ void open_new_year_gift(Item& box)
             {
                 if (cdata[cc].relationship <= -3)
                 {
-                    cdata[rc].relationship = -1;
-                    cdata[rc].original_relationship = -1;
+                    chara->relationship = -1;
+                    chara->original_relationship = -1;
                 }
             }
         }

@@ -439,8 +439,6 @@ void damage_by_cursed_equipments();
 void dipcursed(Item& item);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 void equip_melee_weapon();
-int gain_skills_by_geen_engineering();
-int transplant_body_parts();
 std::pair<int, int> inv_getheader(int);
 optional_ref<Item> mapitemfind(const Position& pos, ItemId id);
 std::string itemname(Item& item, int number = 0, bool with_article = true);

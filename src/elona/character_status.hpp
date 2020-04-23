@@ -19,4 +19,9 @@ void update_required_experience(Character& cc);
 void earn_gold(Character& cc, int delta);
 void earn_platinum(Character& cc, int delta);
 
+int gain_skills_by_geen_engineering(
+    Character& original_ally,
+    Character& gene_ally);
+int transplant_body_parts(Character& original_ally, Character& gene_ally);
+
 } // namespace elona

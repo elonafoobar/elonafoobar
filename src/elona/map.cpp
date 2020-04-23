@@ -769,8 +769,7 @@ static void _modify_characters_on_regenerate()
 {
     for (auto&& cnt : cdata.others())
     {
-        rc = cnt.index;
-        chara_clear_status_effects_b();
+        chara_clear_status_effects_b(cnt);
         if (cnt.state() != Character::State::alive)
         {
             continue;
@@ -867,10 +866,10 @@ static void _proc_generate_bard_items(Character& chara)
 }
 
 
-static void _generate_bad_quality_item()
+static void _generate_bad_quality_item(Character& chara)
 {
-    flt(calcobjlv(cdata[rc].level), calcfixlv(Quality::bad));
-    if (const auto item = itemcreate_chara_inv(rc, 0, 0))
+    flt(calcobjlv(chara.level), calcfixlv(Quality::bad));
+    if (const auto item = itemcreate_chara_inv(chara.index, 0, 0))
     {
         if (item->weight <= 0 || item->weight >= 4000)
         {
@@ -893,14 +892,13 @@ static void _restock_character_inventories()
         {
             _proc_generate_bard_items(cnt);
         }
-        rc = cnt.index;
         if (rnd(5) == 0)
         {
-            supply_new_equipment();
+            supply_new_equipment(cnt);
         }
-        if (rnd(2) == 0 && inv_sum(rc) < 8)
+        if (rnd(2) == 0 && inv_sum(cnt.index) < 8)
         {
-            _generate_bad_quality_item();
+            _generate_bad_quality_item(cnt);
         }
     }
 }
@@ -1659,8 +1657,7 @@ TurnResult exit_map()
     }
     if (cdata.player().state() == Character::State::empty)
     {
-        rc = 0;
-        revive_player();
+        revive_player(cdata.player());
         game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
         game_data.destination_outer_map =
             area_data[static_cast<int>(mdata_t::MapId::your_home)].outer_map;

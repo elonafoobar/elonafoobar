@@ -1843,9 +1843,8 @@ OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
         selected_item.modify_number(-1);
         slot.set_number(1);
         auto& stacked_item = item_stack(tc, slot, true).stacked_item;
-        rc = tc;
         chara_set_ai_item(cdata[tc], stacked_item);
-        wear_most_valuable_equipment_for_all_body_parts();
+        wear_most_valuable_equipment_for_all_body_parts(cdata[tc]);
         if (tc < 16)
         {
             create_pcpic(cdata[tc]);
@@ -2001,15 +2000,14 @@ on_enter_trade_target(Item& selected_item, MenuResult& result, int& citrade)
     }
     item_exchange(selected_item, inv[citrade]);
     item_convert_artifact(selected_item);
-    rc = tc;
-    if (cdata[rc].ai_item == citrade)
+    if (cdata[tc].ai_item == citrade)
     {
-        cdata[rc].ai_item = 0;
+        cdata[tc].ai_item = 0;
     }
-    wear_most_valuable_equipment_for_all_body_parts();
+    wear_most_valuable_equipment_for_all_body_parts(cdata[tc]);
     if (tc >= 16)
     {
-        supply_new_equipment();
+        supply_new_equipment(cdata[tc]);
     }
     (void)inv_get_free_slot_force(tc);
     chara_refresh(tc);
@@ -2179,8 +2177,7 @@ OnEnterResult on_enter_receive(Item& selected_item)
         auto& stacked_item = item_stack(0, slot, true).stacked_item;
         item_convert_artifact(stacked_item);
     }
-    rc = tc;
-    wear_most_valuable_equipment_for_all_body_parts();
+    wear_most_valuable_equipment_for_all_body_parts(cdata[tc]);
     if (tc < 16)
     {
         create_pcpic(cdata[tc]);

@@ -26,8 +26,8 @@ static bool _should_display_quest(int cnt)
     {
         return false;
     }
-    rc = quest_data[cnt].client_chara_index;
-    if (cdata[rc].state() != Character::State::alive)
+    if (cdata[quest_data[cnt].client_chara_index].state() !=
+        Character::State::alive)
     {
         return false;
     }

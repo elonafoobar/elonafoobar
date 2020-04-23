@@ -597,7 +597,6 @@ void quest_refresh_list()
         {
             continue;
         }
-        rc = quest_data[cnt].client_chara_index;
         if (quest_data[cnt].progress == 0)
         {
             if (quest_data[cnt].deadline_hours < game_data.date.hours())
@@ -616,6 +615,8 @@ void quest_update_journal_msg()
     txt(i18n::s.get("core.quest.journal_updated"),
         Message::color{ColorIndex::green});
 }
+
+
 
 int quest_generate()
 {
@@ -691,12 +692,12 @@ int quest_generate()
             for (int cnt = 0; cnt < 50; ++cnt)
             {
                 flt(quest_data[rq].difficulty, Quality::good);
-                chara_create(56, 0, -3, 0);
+                const auto chara = chara_create(56, 0, -3, 0);
                 if (cmshade)
                 {
                     continue;
                 }
-                if (cdata[rc].level < minlevel)
+                if (chara->level < minlevel)
                 {
                     continue;
                 }
@@ -727,12 +728,12 @@ int quest_generate()
             for (int cnt = 0; cnt < 50; ++cnt)
             {
                 flt(quest_data[rq].difficulty, Quality::good);
-                chara_create(56, 0, -3, 0);
+                const auto chara = chara_create(56, 0, -3, 0);
                 if (cmshade)
                 {
                     continue;
                 }
-                if (cdata[rc].level < minlevel)
+                if (chara->level < minlevel)
                 {
                     continue;
                 }
@@ -1012,6 +1013,8 @@ int quest_generate()
     return 1;
 }
 
+
+
 void quest_gen_scale_by_level()
 {
     quest_data[rq].reward_gold =
@@ -1154,8 +1157,7 @@ void quest_exit_map()
 
 TurnResult quest_pc_died_during_immediate_quest()
 {
-    rc = 0;
-    revive_player();
+    revive_player(cdata.player());
     chara_gain_skill_exp(cdata.player(), 17, -500);
     chara_gain_skill_exp(cdata.player(), 15, -500);
     levelexitby = 4;
