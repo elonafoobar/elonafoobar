@@ -35,11 +35,13 @@ int calcexpalive(int = 0);
 int calc_evasion(int chara_index);
 int calc_accuracy(
     const Character& attacker,
+    const Character& target,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo,
     bool consider_distance);
 int calcattackhit(
     const Character& attacker,
+    const Character& target,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo);
 
@@ -51,6 +53,7 @@ enum class AttackDamageCalculationMode
 };
 int calcattackdmg(
     const Character& attacker,
+    const Character& target,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo,
     AttackDamageCalculationMode);
@@ -66,7 +69,7 @@ CalcAttackProtectionResult calc_attack_protection(const Character& chara);
 
 int calcmedalvalue(const Item& item);
 int calcitemvalue(const Item& item, int calc_mode);
-int calcinvestvalue();
+int calcinvestvalue(const Character& shopkeeper);
 int calcguiltvalue();
 int calchireadv(int = 0);
 int calchirecost(int = 0);

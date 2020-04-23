@@ -12,7 +12,6 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
-#include "macro.hpp"
 #include "magic.hpp"
 #include "message.hpp"
 #include "random.hpp"
@@ -127,19 +126,19 @@ void god_modify_piety(int amount)
 
 
 
-void set_npc_religion()
+void set_npc_religion(Character& chara)
 {
-    if (cdata[tc].god_id != core_god::eyth || cdata[tc].has_learned_words() ||
-        tc == 0)
+    if (chara.god_id != core_god::eyth || chara.has_learned_words() ||
+        chara.index == 0)
     {
         return;
     }
     randomize(game_data.random_seed + game_data.current_map);
-    cdata[tc].god_id = core_god::int2godid(rnd(8));
+    chara.god_id = core_god::int2godid(rnd(8));
     randomize();
-    if (cdata[tc].god_id == core_god::eyth || rnd(4) == 0)
+    if (chara.god_id == core_god::eyth || rnd(4) == 0)
     {
-        cdata[tc].has_learned_words() = true;
+        chara.has_learned_words() = true;
     }
 }
 
@@ -506,8 +505,7 @@ void god_proc_switching_penalty(const GodId& new_religion)
             redraw();
             efid = 622;
             efp = 10000;
-            tc = 0;
-            magic(cdata.player());
+            magic(cdata.player(), cdata.player());
             snd("core.punish1");
             mode = 0;
             await(g_config.animation_wait() * 20);
@@ -586,12 +584,10 @@ TurnResult do_pray()
     snd("core.pray2");
     efid = 1120;
     efp = 100;
-    tc = 0;
-    magic(cdata.player());
+    magic(cdata.player(), cdata.player());
     efid = 451;
     efp = 200;
-    tc = 0;
-    magic(cdata.player());
+    magic(cdata.player(), cdata.player());
     cdata.player().praying_point = 0;
     cdata.player().piety_point = cdata.player().piety_point * 85 / 100;
     if (game_data.god_rank % 2 == 1)
@@ -813,22 +809,19 @@ void god_fail_to_take_over_penalty()
 {
     efid = 1114;
     efp = 500;
-    tc = 0;
-    magic(cdata.player());
+    magic(cdata.player(), cdata.player());
     if (rnd(2))
     {
         efid = 622;
         efp = 250;
-        tc = 0;
-        magic(cdata.player());
+        magic(cdata.player(), cdata.player());
         snd("core.punish1");
     }
     if (rnd(2))
     {
         efid = 1106;
         efp = 100;
-        tc = 0;
-        magic(cdata.player());
+        magic(cdata.player(), cdata.player());
     }
 }
 

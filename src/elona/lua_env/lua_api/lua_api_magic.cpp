@@ -50,26 +50,11 @@ void LuaApiMagic::cast(
     int effect_id,
     int effect_power)
 {
-    int tcbk = elona::tc;
-
-    try
-    {
-        auto& caster_ref = lua::ref<Character>(caster);
-        auto& target_ref = lua::ref<Character>(target);
-        elona::tc = target_ref.index;
-        elona::efid = effect_id;
-        elona::efp = effect_power;
-        elona::magic(caster_ref);
-        elona::tc = tcbk;
-    }
-    catch (std::exception& e)
-    {
-        // Always reset the values of tc if a handle is invalid.
-        elona::tc = tcbk;
-
-        // Throw the exception so the calling script receives it.
-        throw e;
-    }
+    auto& caster_ref = lua::ref<Character>(caster);
+    auto& target_ref = lua::ref<Character>(target);
+    elona::efid = effect_id;
+    elona::efp = effect_power;
+    elona::magic(caster_ref, target_ref);
 }
 
 void LuaApiMagic::bind(sol::table& api_table)

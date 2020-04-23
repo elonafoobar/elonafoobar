@@ -14,7 +14,6 @@
 #include "input.hpp"
 #include "keybind/keybind.hpp"
 #include "lua_env/mod_manager.hpp"
-#include "macro.hpp"
 #include "main_menu.hpp"
 #include "menu.hpp"
 #include "random.hpp"

@@ -169,8 +169,9 @@ struct GameData
     int wish_count;
     int version;
     int rights_to_succeed_to;
-    int character_and_status_for_gene; // tc + (0 if activity not
-                                       // started, 10000 if so)
+    int character_and_status_for_gene; // the ally who is about to make gene
+                                       // with you + (0 if activity not started,
+                                       // 10000 if so)
     int next_voting_time;
     ArrayType<20> ranks;
     ArrayType<9> rank_deadlines;

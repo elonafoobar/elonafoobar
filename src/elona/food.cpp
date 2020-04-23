@@ -475,7 +475,6 @@ void make_dish(Item& food, int dish_rank)
 
 void apply_general_eating_effect(Character& eater, Item& food)
 {
-    tc = eater.index;
     DIM3(fdlist, 2, 10);
     for (int cnt = 0, cnt_end = (fdmax); cnt < cnt_end; ++cnt)
     {

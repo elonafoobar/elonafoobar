@@ -8,7 +8,6 @@
 #include "../config.hpp"
 #include "../item.hpp"
 #include "../log.hpp"
-#include "../macro.hpp"
 #include "api_manager.hpp"
 #include "event_manager.hpp"
 #include "lua_env.hpp"
@@ -96,7 +95,7 @@ void HandleManager::create_chara_handle_run_callbacks(const Character& chara)
     create_chara_handle(chara);
 
     auto handle = get_handle(chara);
-    UNUSED(handle);
+    (void)handle;
     assert(handle != sol::lua_nil);
     lua().get_event_manager().trigger(
         lua::CharacterInstanceEvent("core.character_created", chara));
@@ -110,7 +109,7 @@ void HandleManager::create_item_handle_run_callbacks(const Item& item)
     create_item_handle(item);
 
     auto handle = get_handle(item);
-    UNUSED(handle);
+    (void)handle;
     assert(handle != sol::lua_nil);
     lua().get_event_manager().trigger(
         lua::ItemInstanceEvent("core.item_created", item));
@@ -132,7 +131,7 @@ void HandleManager::remove_chara_handle_run_callbacks(const Character& chara)
     // Otherwise the handle would be mistakenly invalidated when the thing it
     // points to is still valid.
     int index = handle["__index"];
-    UNUSED(index);
+    (void)index;
     assert(cdata[index].state() != Character::State::alive);
 
     lua().get_event_manager().trigger(
@@ -154,7 +153,7 @@ void HandleManager::remove_item_handle_run_callbacks(const Item& item)
     // Otherwise the handle would be mistakenly invalidated when the thing it
     // points to is still valid.
     int index = handle["__index"];
-    UNUSED(index);
+    (void)index;
     assert(inv[index].number() == 0);
 
     lua().get_event_manager().trigger(

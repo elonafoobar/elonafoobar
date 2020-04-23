@@ -20,8 +20,10 @@ void earn_gold(Character& chara, int delta);
 void earn_platinum(Character& chara, int delta);
 
 int gain_skills_by_geen_engineering(
-    Character& original_ally,
-    Character& gene_ally);
-int transplant_body_parts(Character& original_ally, Character& gene_ally);
+    const Character& original_ally,
+    const Character& gene_ally);
+int transplant_body_parts(
+    const Character& original_ally,
+    const Character& gene_ally);
 
 } // namespace elona

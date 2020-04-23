@@ -723,7 +723,7 @@ void revive_player(Character& chara);
 optional_ref<Character> new_ally_joins(Character& new_ally);
 void refresh_burden_state();
 void go_hostile();
-void get_pregnant();
+void get_pregnant(Character& chara);
 void wet(int = 0, int = 0);
 void hostileaction(int = 0, int = 0);
 void turn_aggro(int = 0, int = 0, int = 0);

@@ -24,6 +24,7 @@
 #include "scene.hpp"
 #include "serialization/macros.hpp"
 #include "serialization/serialization.hpp"
+#include "talk.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -158,16 +159,18 @@ void eh_conquer_lesimas(const DeferredEvent&)
 
 void eh_lomias_talks(const DeferredEvent&)
 {
-    tc = chara_find("core.lomias");
-    talk_to_npc();
+    const auto lomias_index = chara_find("core.lomias");
+    assert(lomias_index != 0);
+    talk_to_npc(cdata[lomias_index]);
 }
 
 
 
 void eh_zeome_talks(const DeferredEvent&)
 {
-    tc = chara_find("core.zeome");
-    talk_to_npc();
+    const auto zeome_index = chara_find("core.zeome");
+    assert(zeome_index != 0);
+    talk_to_npc(cdata[zeome_index]);
 }
 
 
@@ -182,16 +185,16 @@ void eh_lord_of_normal_nefia(const DeferredEvent&)
         initlv = game_data.current_dungeon_level + rnd(5);
         lord = chara_create(-1, 0, -3, 0);
     } while (!lord);
+    assert(lord);
 
     lord->is_lord_of_dungeon() = true;
-    tc = lord->index;
-    area_data[game_data.current_map].has_been_conquered = tc;
+    area_data[game_data.current_map].has_been_conquered = lord->index;
     cdatan(0, lord->index) += u8" Lv"s + lord->level;
     txt(i18n::s.get("core.event.reached_deepest_level"));
     txt(i18n::s.get(
             "core.event.guarded_by_lord",
             mapname(game_data.current_map),
-            cdata[tc]),
+            *lord),
         Message::color{ColorIndex::red});
 }
 
@@ -296,8 +299,9 @@ void eh_quest_update_deadline(const DeferredEvent&)
 
 void eh_wandering_vendor(const DeferredEvent&)
 {
-    tc = chara_find("core.shopkeeper");
-    talk_to_npc();
+    const auto shopkeeper_index = chara_find("core.shopkeeper");
+    assert(shopkeeper_index != 0);
+    talk_to_npc(cdata[shopkeeper_index]);
 }
 
 
@@ -454,8 +458,7 @@ void eh_quest_escort_complete(const DeferredEvent& event)
     // param2: The character index of the man who you escort.
 
     txt(i18n::s.get("core.quest.escort.complete"));
-    tc = event.param2;
-    talk_to_npc();
+    talk_to_npc(cdata[event.param2]);
     rq = event.param1;
     quest_complete();
     chara_vanquish(event.param2);
@@ -492,20 +495,20 @@ void eh_okaeri(const DeferredEvent&)
     }
     if (game_data.number_of_waiting_guests != 0)
     {
-        tc = 0;
+        optional_ref<Character> maid;
         for (auto&& chara : cdata.all())
         {
             if (chara.state() != Character::State::alive)
                 continue;
             if (chara.role == Role::maid)
             {
-                tc = chara.index;
+                maid = chara;
                 break;
             }
         }
-        if (tc != 0)
+        if (maid)
         {
-            talk_to_npc();
+            talk_to_npc(*maid);
         }
     }
 }
@@ -586,16 +589,16 @@ void eh_lily_killed(const DeferredEvent& event)
     flt();
     itemcreate_extra_inv(55, cdata[event.param1].position, 4);
     game_data.quest_flags.pael_and_her_mom = 1001;
-    tc = chara_find("core.pael");
-    if (tc != 0)
+    const auto pael_index = chara_find("core.pael");
+    if (pael_index != 0)
     {
-        if (cdata[tc].state() == Character::State::alive)
+        if (cdata[pael_index].state() == Character::State::alive)
         {
             txt(i18n::s.get("core.event.pael"),
                 Message::color{ColorIndex::blue});
-            cdata[tc].relationship = -3;
-            cdata[tc].hate = 1000;
-            cdata[tc].enemy_id = 0;
+            cdata[pael_index].relationship = -3;
+            cdata[pael_index].hate = 1000;
+            cdata[pael_index].enemy_id = 0;
         }
     }
 }
@@ -780,9 +783,11 @@ void eh_nuclear_bomb(const DeferredEvent& event)
                 }
                 if (cell_data.at(dx, dy).chara_index_plus_one != 0)
                 {
-                    tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
                     dmg = 1000;
-                    damage_hp(cdata[tc], dmg, -17);
+                    damage_hp(
+                        cdata[cell_data.at(dx, dy).chara_index_plus_one - 1],
+                        dmg,
+                        -17);
                 }
                 mapitem_fire(cdata.player(), dx, dy);
             }
@@ -831,8 +836,9 @@ void eh_guild_alarm(const DeferredEvent& event)
 
 void eh_rogue_party_ambush(const DeferredEvent&)
 {
-    tc = chara_find("core.rogue_boss");
-    talk_to_npc();
+    const auto rogue_boss_index = chara_find("core.rogue_boss");
+    assert(rogue_boss_index != 0);
+    talk_to_npc(cdata[rogue_boss_index]);
     game_data.rogue_boss_encountered = 23;
 }
 
@@ -855,9 +861,9 @@ void eh_guest_visit(const DeferredEvent&)
         return;
     }
 
+    optional_ref<Character> guest;
     if (rnd(3) == 0)
     {
-        optional_ref<Character> guest;
         flt(0, Quality::good);
         if ((game_data.last_month_when_trainer_visited !=
                  game_data.date.month ||
@@ -906,22 +912,18 @@ void eh_guest_visit(const DeferredEvent&)
             }
         }
 
-        if (guest)
-        {
-            guest->relationship = 0;
-            guest->original_relationship = 0;
-            guest->is_temporary() = true;
-            tc = guest->index;
-        }
+        assert(guest);
+        guest->relationship = 0;
+        guest->original_relationship = 0;
+        guest->is_temporary() = true;
     }
     else
     {
         int p = 0;
-        tc = 0;
         for (int _i = 0; _i < 100; ++_i)
         {
             const auto adventurer_index = rnd(39) + 16;
-            const auto& adventurer = cdata[adventurer_index];
+            auto& adventurer = cdata[adventurer_index];
             if (adventurer.state() ==
                     Character::State::adventurer_in_other_map &&
                 !adventurer.is_contracting() &&
@@ -932,9 +934,9 @@ void eh_guest_visit(const DeferredEvent&)
                 {
                     break;
                 }
-                if (tc == 0)
+                if (!guest)
                 {
-                    tc = adventurer_index;
+                    guest = adventurer;
                     ++p;
                     if (adventurer.impression < 25)
                     {
@@ -952,29 +954,29 @@ void eh_guest_visit(const DeferredEvent&)
                     }
                     continue;
                 }
-                if (cdata[tc].impression < adventurer.impression)
+                if (guest->impression < adventurer.impression)
                 {
-                    tc = adventurer_index;
+                    guest = adventurer;
                     ++p;
                 }
             }
         }
-        if (tc == 0)
+        if (!guest)
         {
             txt(i18n::s.get("core.event.guest_already_left"));
             return;
         }
-        cdata[tc].set_state(Character::State::alive);
+        guest->set_state(Character::State::alive);
         cxinit = cdata.player().position.x;
         cyinit = cdata.player().position.y;
-        chara_place(cdata[tc]);
+        chara_place(*guest);
     }
 
-    cdata[tc].visited_just_now() = true;
+    guest->visited_just_now() = true;
     optional_ref<const Item> chair_for_guest;
     for (int cnt = 0; cnt < 17; ++cnt)
     {
-        const auto chara_index = cnt == 0 ? tc : cnt - 1;
+        const auto chara_index = cnt == 0 ? guest->index : cnt - 1;
         auto&& chara = cdata[chara_index];
         if (chara.state() != Character::State::alive)
         {
@@ -992,7 +994,7 @@ void eh_guest_visit(const DeferredEvent&)
                 continue;
             if (item.function != 44)
                 continue;
-            if (chara.index == tc)
+            if (chara.index == guest->index)
             {
                 if (item.param1 == 2)
                 {
@@ -1024,7 +1026,7 @@ void eh_guest_visit(const DeferredEvent&)
             {
                 if (cell_data.at(item.position.x, item.position.y)
                             .chara_index_plus_one == 0 ||
-                    chara.index == 0 || chara.index == tc)
+                    chara.index == 0 || chara.index == guest->index)
                 {
                     chair = item;
                     distance_to_guest_chair = d;
@@ -1043,15 +1045,15 @@ void eh_guest_visit(const DeferredEvent&)
         chara.direction = direction(
             chara.position.x,
             chara.position.y,
-            cdata[tc].position.x,
-            cdata[tc].position.y);
+            guest->position.x,
+            guest->position.y);
         if (chara.index == 0)
         {
             game_data.player_next_move_direction = chara.direction;
         }
     }
 
-    talk_to_npc();
+    talk_to_npc(*guest);
 }
 
 
@@ -1117,12 +1119,11 @@ void eh_lord_of_void(const DeferredEvent&)
         lord->is_lord_of_dungeon() = true;
         lord->relationship = -3;
         lord->original_relationship = -3;
-        tc = lord->index;
-        area_data[game_data.current_map].has_been_conquered = tc;
+        area_data[game_data.current_map].has_been_conquered = lord->index;
         txt(i18n::s.get(
                 "core.event.guarded_by_lord",
                 mapname(game_data.current_map),
-                cdata[tc]),
+                *lord),
             Message::color{ColorIndex::red});
         if (game_data.current_dungeon_level % 50 == 0)
         {

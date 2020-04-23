@@ -25,7 +25,6 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "lua_env/interface.hpp"
-#include "macro.hpp"
 #include "magic.hpp"
 #include "menu.hpp"
 #include "message.hpp"
@@ -34,6 +33,7 @@
 #include "pic_loader/tinted_buffers.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "talk.hpp"
 #include "text.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
@@ -480,7 +480,7 @@ static TurnResult _show_skill_spell_menu(size_t menu_index)
     if (std::holds_alternative<ui::UIMenuSkillsResult>(*result.value))
     {
         efid = std::get<ui::UIMenuSkillsResult>(*result.value).effect_id;
-        return do_use_magic(cdata.player());
+        return do_spact_command();
     }
     else
     {
@@ -1171,7 +1171,6 @@ void show_weapon_dice(
     optional_ref<Item> ammo,
     int val0)
 {
-    tc = chara.index;
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     if (val0 == 0)
     {
@@ -1190,9 +1189,9 @@ void show_weapon_dice(
             attackrange = 1;
         }
     }
-    int tohit = calc_accuracy(chara, weapon, ammo, false);
+    int tohit = calc_accuracy(chara, chara, weapon, ammo, false);
     dmg = calcattackdmg(
-        chara, weapon, ammo, AttackDamageCalculationMode::raw_damage);
+        chara, chara, weapon, ammo, AttackDamageCalculationMode::raw_damage);
     font(14 - en * 2);
     s(2) = std::to_string(dmgmulti);
     s = ""s + tohit + u8"%"s;
@@ -1225,16 +1224,14 @@ void show_weapon_dice(
 static TurnResult _visit_quest_giver(int quest_index)
 {
     // TODO move the below somewhere else to decouple quest_teleport
-    tc = quest_data[quest_index].client_chara_index;
     rq = quest_index;
-    client = tc;
+    client = quest_data[quest_index].client_chara_index;
     efid = 619;
-    magic(cdata.player());
-    tc = client;
+    magic(cdata.player(), cdata[client]);
     if (cdata.player().state() == Character::State::alive)
     {
         quest_teleport = true;
-        talk_to_npc();
+        talk_to_npc(cdata[client]);
     }
     if (chatteleport == 1)
     {
@@ -1243,6 +1240,8 @@ static TurnResult _visit_quest_giver(int quest_index)
     }
     return TurnResult::turn_end;
 }
+
+
 
 TurnResult show_quest_board()
 {
@@ -1465,7 +1464,7 @@ void screen_analyze_self()
 
 
 
-int change_npc_tone()
+int change_npc_tone(Character& chara)
 {
     auto result = ui::UIMenuNPCTone().show();
 
@@ -1476,17 +1475,17 @@ int change_npc_tone()
 
     snd("core.ok1");
     txt(i18n::s.get(
-        "core.action.interact.change_tone.is_somewhat_different", cdata[tc]));
+        "core.action.interact.change_tone.is_somewhat_different", chara));
 
     if (result.value)
     {
-        cdata[tc].has_custom_talk() = true;
-        cdatan(4, tc) = *result.value;
+        chara.has_custom_talk() = true;
+        cdatan(4, chara.index) = *result.value;
     }
     else
     {
-        cdata[tc].has_custom_talk() = false;
-        cdatan(4, tc) = "";
+        chara.has_custom_talk() = false;
+        cdatan(4, chara.index) = "";
     }
 
     return 1;

@@ -47,25 +47,28 @@ TurnResult step_into_gate(Item& moon_gate);
 TurnResult do_bash(Character& chara);
 TurnResult do_enter_strange_gate();
 TurnResult do_gatcha(Item& gatcha_machine);
-TurnResult do_use_magic(Character& caster);
+TurnResult do_spact_command();
 TurnResult do_use_stairs_command(int);
-TurnResult try_interact_with_npc();
+TurnResult try_interact_with_npc(Character& chara);
 TurnResult try_to_open_locked_door(Character& chara);
 int drink_potion(Character& chara, optional_ref<Item> potion);
 int drink_well(Character& chara, Item& well);
 int do_zap(Character& doer, Item& rod);
-int do_magic_attempt(Character& caster);
+int do_spact(Character& doer, int& enemy_index);
 
 struct PickUpItemResult
 {
     int type;
     optional_ref<Item> picked_up_item;
 };
-PickUpItemResult
-pick_up_item(int inventory_id, Item& item, bool play_sound = true);
+PickUpItemResult pick_up_item(
+    int inventory_id,
+    Item& item,
+    optional_ref<Character> shopkeeper,
+    bool play_sound = true);
 
 int unlock_box(int);
-int try_to_cast_spell(Character& caster);
+int try_to_cast_spell(Character& caster, int& enemy_index);
 int read_scroll(Character& reader, Item& scroll);
 bool read_textbook(Character& doer, Item& textbook);
 int try_to_reveal(Character& chara);
@@ -76,16 +79,16 @@ void discover_trap();
 void discover_hidden_path();
 int decode_book(Character& reader, Item& book);
 int read_normal_book(Character& reader, Item& book);
-int do_cast_magic(Character& caster);
-int do_cast_magic_attempt(Character& caster);
+int do_cast_magic(Character& caster, int& enemy_index);
+int do_cast_magic_attempt(Character& caster, int& enemy_index);
 void proc_autopick();
 
 int calcmagiccontrol(int = 0, int = 0);
-int prompt_magic_location(Character& caster);
+bool prompt_magic_location(Character& caster, int& enemy_index);
 TurnResult do_plant(Item& seed);
 void do_rest(Character& chara);
 void open_box(Item& box);
 void open_new_year_gift(Item& box);
-TurnResult call_npc();
+TurnResult call_npc(Character& chara);
 
 } // namespace elona

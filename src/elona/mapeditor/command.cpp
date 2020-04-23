@@ -34,7 +34,7 @@ void CreateWallCommand::redo()
     tlocy = _y;
     tile = _tile_to;
     efid = 438;
-    magic(cdata.player());
+    magic(cdata.player(), cdata.player());
 }
 
 

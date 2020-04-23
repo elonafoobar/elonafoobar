@@ -19,6 +19,7 @@ public:
 public:
     UIMenuFeats(Operation operation)
         : _operation(operation)
+        , _chara_index(0)
     {
     }
 
@@ -44,7 +45,15 @@ private:
     void _draw_single_list_entry(int, int, int, const std::string&);
     void _draw_list_entries();
 
+    void _change_tense_of_trait_desc(int cnt);
+    void _add_trait_desc(const std::string& trait_desc);
+    void _load_traits_by_enchantments();
+    bool _can_select_trait(int p_);
+    void _switch_target(bool is_forwards);
+    bool _gain_trait(int p_, bool show_text);
+
     Operation _operation;
+    int _chara_index;
 };
 
 } // namespace ui

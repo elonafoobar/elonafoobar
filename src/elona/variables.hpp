@@ -4,7 +4,6 @@
 #include "optional.hpp"
 #include "position.hpp"
 #include "random.hpp"
-#include "talk.hpp"
 
 
 #ifdef ELONA_DEFINE_GLOBAL_INSTANCE
@@ -187,7 +186,6 @@ ELONA_EXTERN(elona_vector1<int> spact);
 ELONA_EXTERN(elona_vector1<int> spell);
 ELONA_EXTERN(elona_vector1<int> sx);
 ELONA_EXTERN(elona_vector1<int> sy);
-ELONA_EXTERN(elona_vector1<int> tc);
 ELONA_EXTERN(elona_vector1<int> tile);
 ELONA_EXTERN(elona_vector1<int> tile_default);
 ELONA_EXTERN(elona_vector1<int> tile_fog);

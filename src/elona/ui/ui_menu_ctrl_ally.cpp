@@ -382,10 +382,9 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
 
     if (_gene_engineering_original_character)
     {
-        tc = chara.index;
         {
             int stat = transplant_body_parts(
-                *_gene_engineering_original_character, cdata[tc]);
+                *_gene_engineering_original_character, chara);
             if (stat == -1)
             {
                 ally_info = i18n::s.get("core.ui.ally_list.gene_engineer.none");
@@ -398,7 +397,7 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
         ally_info += u8"/"s;
         {
             int stat = gain_skills_by_geen_engineering(
-                *_gene_engineering_original_character, cdata[tc]);
+                *_gene_engineering_original_character, chara);
             if (stat == 0)
             {
                 ally_info +=

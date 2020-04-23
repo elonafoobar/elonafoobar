@@ -1899,15 +1899,15 @@ void ride_end()
 
 
 
-void turn_aggro(int chara_index, int tc, int hate)
+void turn_aggro(int chara_index, int target_index, int hate)
 {
-    if (tc < 16)
+    if (target_index < 16)
     {
         cdata[chara_index].relationship = -3;
     }
     cdata[chara_index].hate = hate;
     cdata[chara_index].emotion_icon = 218;
-    cdata[chara_index].enemy_id = tc;
+    cdata[chara_index].enemy_id = target_index;
 }
 
 
@@ -2358,8 +2358,7 @@ void proc_one_equipment_with_negative_enchantments(
                 if (rnd(25) < clamp(std::abs(enc.power) / 50, 1, 25))
                 {
                     efid = 408;
-                    tc = chara.index;
-                    magic(chara);
+                    magic(chara, chara);
                 }
             }
             break;
@@ -2470,22 +2469,22 @@ void lovemiracle(int chara_index)
 
 
 
-void get_pregnant()
+void get_pregnant(Character& chara)
 {
-    if (enchantment_find(cdata[tc], 48))
+    if (enchantment_find(chara, 48))
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(chara))
         {
-            txt(i18n::s.get("core.misc.pregnant.pukes_out", cdata[tc]));
+            txt(i18n::s.get("core.misc.pregnant.pukes_out", chara));
         }
         return;
     }
-    if (cdata[tc].is_pregnant() == 0)
+    if (chara.is_pregnant() == 0)
     {
-        txt(i18n::s.get("core.misc.pregnant.gets_pregnant", cdata[tc]),
+        txt(i18n::s.get("core.misc.pregnant.gets_pregnant", chara),
             Message::color{ColorIndex::orange});
-        animeload(8, tc);
-        cdata[tc].is_pregnant() = true;
+        animeload(8, chara.index);
+        chara.is_pregnant() = true;
     }
 }
 

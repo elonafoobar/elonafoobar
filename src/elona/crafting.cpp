@@ -10,7 +10,6 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
-#include "macro.hpp"
 #include "message.hpp"
 #include "random.hpp"
 #include "ui.hpp"

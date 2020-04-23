@@ -145,10 +145,9 @@ void dump_player_info()
 
     append_accuracy_info(cdata.player(), 1);
 
-    tc = 0;
     attackskill = 106;
     {
-        const auto evade = calc_evasion(tc);
+        const auto evade = calc_evasion(cdata.player().index);
         const auto prot = calc_attack_protection(cdata.player());
 
         ss << u8"回避    : " << evade << u8"%" << std::endl;
@@ -206,8 +205,7 @@ void dump_player_info()
     ss << u8"------------------------------ 特徴" << std::endl;
     ss << std::endl;
 
-    tc = 0;
-    trait_load_desc();
+    trait_load_desc(cdata.player());
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
         if (list(0, cnt) < 0)
