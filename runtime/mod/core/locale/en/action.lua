@@ -91,6 +91,7 @@ ELONA.i18n:add {
             release = "Release",
             name = "Name",
             info = "Info",
+            hang = "Hang",
          },
 
          change_tone = {

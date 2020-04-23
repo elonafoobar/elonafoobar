@@ -668,9 +668,13 @@ TurnResult do_interact_command()
         }
     }
     prompt.append("name", 3);
-    if (0 || game_data.wizard)
+    if (game_data.wizard)
     {
         prompt.append("info", 6);
+        if (target_index != 0 && !cdata[target_index].is_hung_on_sand_bag())
+        {
+            prompt.append("hang", 11);
+        }
     }
     {
         int stat = prompt.query(promptx, prompty, 200);
@@ -771,6 +775,15 @@ TurnResult do_interact_command()
     if (p == 10)
     {
         change_npc_tone(cdata[target_index]);
+    }
+    if (p == 11)
+    {
+        snd("core.build1");
+        cdata[target_index].is_hung_on_sand_bag() = true;
+        txt(i18n::s.get("core.action.use.sandbag.start", cdata[target_index]));
+        txt(i18n::s.get(
+            "core.action.use.leash.other.start.dialog", cdata[target_index]));
+        animeload(8, target_index);
     }
     update_screen();
     return TurnResult::pc_turn_user_error;
