@@ -262,6 +262,6 @@ extern FoobarData foobar_data;
 
 
 // TODO: Make gdata class and make this function method.
-void modify_crowd_density(int cc, int delta);
+void modify_crowd_density(int chara_index, int delta);
 
 } // namespace elona

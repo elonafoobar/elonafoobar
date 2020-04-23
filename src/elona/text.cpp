@@ -450,10 +450,13 @@ std::string txtbuilding(int x, int y)
 
 
 
-std::string txtskillchange(int id, int cc, bool increase)
+std::string txtskillchange(int id, int chara_index, bool increase)
 {
     if (auto text = i18n::s.get_enum_property_optional(
-            "core.skill", increase ? "increase" : "decrease", id, cdata[cc]))
+            "core.skill",
+            increase ? "increase" : "decrease",
+            id,
+            cdata[chara_index]))
     {
         return *text;
     }
@@ -463,7 +466,7 @@ std::string txtskillchange(int id, int cc, bool increase)
         {
             return i18n::s.get(
                 "core.skill.default.increase",
-                cdata[cc],
+                cdata[chara_index],
                 i18n::s.get_m(
                     "ability",
                     the_ability_db.get_id_from_legacy(id)->get(),
@@ -473,7 +476,7 @@ std::string txtskillchange(int id, int cc, bool increase)
         {
             return i18n::s.get(
                 "core.skill.default.decrease",
-                cdata[cc],
+                cdata[chara_index],
                 i18n::s.get_m(
                     "ability",
                     the_ability_db.get_id_from_legacy(id)->get(),
@@ -2575,35 +2578,36 @@ void text_replace_tags_in_quest_text()
 
 
 
-std::string name(int cc)
+std::string name(int chara_index)
 {
-    if (cc == 0)
+    if (chara_index == 0)
     {
         return i18n::s.get("core.chara.you");
     }
-    if (is_in_fov(cdata[cc]) == 0)
+    if (is_in_fov(cdata[chara_index]) == 0)
     {
         return i18n::s.get("core.chara.something");
     }
     if (cdata.player().blind != 0 ||
-        (cdata[cc].is_invisible() == 1 &&
-         cdata.player().can_see_invisible() == 0 && cdata[cc].wet == 0))
+        (cdata[chara_index].is_invisible() == 1 &&
+         cdata.player().can_see_invisible() == 0 &&
+         cdata[chara_index].wet == 0))
     {
         return i18n::s.get("core.chara.something");
     }
     if (en)
     {
-        const char first = cdatan(0, cc)[0];
+        const char first = cdatan(0, chara_index)[0];
         if (first == '\"' || first == '<')
         {
-            return cdatan(0, cc);
+            return cdatan(0, chara_index);
         }
-        if (cdata[cc].has_own_name() == 0)
+        if (cdata[chara_index].has_own_name() == 0)
         {
-            return u8"the "s + cdatan(0, cc);
+            return u8"the "s + cdatan(0, chara_index);
         }
     }
-    return cdatan(0, cc);
+    return cdatan(0, chara_index);
 }
 
 
@@ -2719,9 +2723,9 @@ void cnvbonus(int ability_id, int bonus)
 
 
 
-std::string cnveqweight(int cc)
+std::string cnveqweight(int chara_index)
 {
-    int id = chara_armor_class(cdata[cc]);
+    int id = chara_armor_class(cdata[chara_index]);
     if (id == 169)
     {
         return i18n::s.get("core.item.armor_class.heavy");
@@ -2893,9 +2897,9 @@ std::string ranktitle(int rank_id)
 
 
 
-std::string txttargetlevel(int cc, int tc)
+std::string txttargetlevel(int chara_index, int tc)
 {
-    int x = cdata[cc].level;
+    int x = cdata[chara_index].level;
     int y = cdata[tc].level;
     int danger;
     if (x * 20 < y)

@@ -466,17 +466,19 @@ void eh_quest_escort_complete(const DeferredEvent& event)
 void eh_okaeri(const DeferredEvent&)
 {
     i = 0;
-    for (int cc = 1; cc < ELONA_MAX_CHARACTERS; ++cc)
+    for (int chara_index = 1; chara_index < ELONA_MAX_CHARACTERS; ++chara_index)
     {
-        if (cdata[cc].state() != Character::State::alive)
+        if (cdata[chara_index].state() != Character::State::alive)
             continue;
-        if (cdata[cc].role != Role::adventurer && cdata[cc].role != Role::other)
+        if (cdata[chara_index].role != Role::adventurer &&
+            cdata[chara_index].role != Role::other)
         {
-            if (cdata[cc].role != Role::none || cdata[cc].relationship == 0 ||
-                cdata[cc].current_map == game_data.current_map)
+            if (cdata[chara_index].role != Role::none ||
+                cdata[chara_index].relationship == 0 ||
+                cdata[chara_index].current_map == game_data.current_map)
             {
-                cdata[cc].emotion_icon = 2006;
-                int stat = chara_custom_talk(cc, 104);
+                cdata[chara_index].emotion_icon = 2006;
+                int stat = chara_custom_talk(chara_index, 104);
                 if (stat == 0)
                 {
                     ++i;
@@ -491,13 +493,13 @@ void eh_okaeri(const DeferredEvent&)
     if (game_data.number_of_waiting_guests != 0)
     {
         tc = 0;
-        for (auto&& cc : cdata.all())
+        for (auto&& chara : cdata.all())
         {
-            if (cc.state() != Character::State::alive)
+            if (chara.state() != Character::State::alive)
                 continue;
-            if (cc.role == Role::maid)
+            if (chara.role == Role::maid)
             {
-                tc = cc.index;
+                tc = chara.index;
                 break;
             }
         }
@@ -814,13 +816,13 @@ void eh_guild_alarm(const DeferredEvent& event)
         return;
 
     txt(i18n::s.get("core.event.alarm"), Message::color{ColorIndex::red});
-    for (auto&& cc : cdata.others())
+    for (auto&& chara : cdata.others())
     {
-        if (cc.state() == Character::State::alive)
+        if (chara.state() == Character::State::alive)
         {
-            cc.relationship = -3;
-            cc.enemy_id = 0;
-            cc.hate = 250;
+            chara.relationship = -3;
+            chara.enemy_id = 0;
+            chara.hate = 250;
         }
     }
 }
@@ -1134,14 +1136,15 @@ void eh_lord_of_void(const DeferredEvent&)
 void eh_snow_blindness(const DeferredEvent&)
 {
     i = 0;
-    for (int cc = 0; cc < 16; ++cc)
+    for (int chara_index = 0; chara_index < 16; ++chara_index)
     {
-        if (cdata[cc].state() != Character::State::alive)
+        if (cdata[chara_index].state() != Character::State::alive)
             continue;
-        if (cdata[cc].role != Role::adventurer && cdata[cc].role != Role::other)
+        if (cdata[chara_index].role != Role::adventurer &&
+            cdata[chara_index].role != Role::other)
         {
-            cdata[cc].emotion_icon = 2010;
-            txt(i18n::s.get("core.event.my_eyes", cdata[cc]));
+            cdata[chara_index].emotion_icon = 2010;
+            txt(i18n::s.get("core.event.my_eyes", cdata[chara_index]));
         }
     }
 }

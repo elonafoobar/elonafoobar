@@ -906,9 +906,10 @@ void UIMenuCharacterSheet::_draw_skill_train_cost(
         train_cost);
 }
 
-static bool _has_enchantment(int cc, int skill_id)
+static bool _has_enchantment(int chara_index, int skill_id)
 {
-    return sdata.get(skill_id, cc).original_level != sdata(skill_id, cc);
+    return sdata.get(skill_id, chara_index).original_level !=
+        sdata(skill_id, chara_index);
 }
 
 void UIMenuCharacterSheet::_draw_skill_enchantment_power(int cnt, int skill_id)

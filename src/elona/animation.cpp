@@ -1318,9 +1318,9 @@ void animeload(int animation_type, int chara_index)
 
 
 
-void animeblood(int cc, int animation_type, int element)
+void animeblood(int chara_index, int animation_type, int element)
 {
-    if (is_in_fov(cdata[cc]) == 0)
+    if (is_in_fov(cdata[chara_index]) == 0)
         return;
     if (g_config.animation_wait() == 0)
         return;
@@ -1338,8 +1338,10 @@ void animeblood(int cc, int animation_type, int element)
     {
         prepare_item_image(18, 0);
     }
-    dx_at_m133 = (cdata[cc].position.x - scx) * inf_tiles + inf_screenx;
-    dy_at_m133(0) = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny;
+    dx_at_m133 =
+        (cdata[chara_index].position.x - scx) * inf_tiles + inf_screenx;
+    dy_at_m133(0) =
+        (cdata[chara_index].position.y - scy) * inf_tiles + inf_screeny;
     dy_at_m133(1) = 0;
     gsel(4);
     gmode(0);

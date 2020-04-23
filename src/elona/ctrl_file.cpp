@@ -502,11 +502,13 @@ void fmode_7_8(bool read, const fs::path& dir)
             {
                 std::ifstream in{filepath.native(), std::ios::binary};
                 serialization::binary::IArchive ar{in};
-                for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
+                for (int chara_index = 0;
+                     chara_index < ELONA_MAX_PARTY_CHARACTERS;
+                     ++chara_index)
                 {
                     for (int i = 0; i < 600; ++i)
                     {
-                        ar(sdata.get(i, cc));
+                        ar(sdata.get(i, chara_index));
                     }
                 }
             }
@@ -515,11 +517,12 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             std::ofstream out{filepath.native(), std::ios::binary};
             serialization::binary::OArchive ar{out};
-            for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
+            for (int chara_index = 0; chara_index < ELONA_MAX_PARTY_CHARACTERS;
+                 ++chara_index)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar(sdata.get(i, cc));
+                    ar(sdata.get(i, chara_index));
                 }
             }
         }
@@ -898,11 +901,13 @@ void fmode_14_15(bool read)
             {
                 std::ifstream in{filepath.native(), std::ios::binary};
                 serialization::binary::IArchive ar{in};
-                for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
+                for (int chara_index = 0;
+                     chara_index < ELONA_MAX_PARTY_CHARACTERS;
+                     ++chara_index)
                 {
                     for (int i = 0; i < 600; ++i)
                     {
-                        ar(sdata.get(i, cc));
+                        ar(sdata.get(i, chara_index));
                     }
                 }
             }
@@ -912,11 +917,12 @@ void fmode_14_15(bool read)
             Save::instance().add(filepath.filename());
             std::ofstream out{filepath.native(), std::ios::binary};
             serialization::binary::OArchive ar{out};
-            for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
+            for (int chara_index = 0; chara_index < ELONA_MAX_PARTY_CHARACTERS;
+                 ++chara_index)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar(sdata.get(i, cc));
+                    ar(sdata.get(i, chara_index));
                 }
             }
         }
@@ -1107,12 +1113,13 @@ void fmode_1_2(bool read)
             tmpload(u8"sdata_"s + mid + u8".s2");
             std::ifstream in{filepath.native(), std::ios::binary};
             serialization::binary::IArchive ar{in};
-            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
-                 ++cc)
+            for (int chara_index = ELONA_MAX_PARTY_CHARACTERS;
+                 chara_index < ELONA_MAX_CHARACTERS;
+                 ++chara_index)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar(sdata.get(i, cc));
+                    ar(sdata.get(i, chara_index));
                 }
             }
         }
@@ -1122,12 +1129,13 @@ void fmode_1_2(bool read)
             writeloadedbuff(u8"sdata_"s + mid + u8".s2");
             std::ofstream out{filepath.native(), std::ios::binary};
             serialization::binary::OArchive ar{out};
-            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
-                 ++cc)
+            for (int chara_index = ELONA_MAX_PARTY_CHARACTERS;
+                 chara_index < ELONA_MAX_CHARACTERS;
+                 ++chara_index)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar(sdata.get(i, cc));
+                    ar(sdata.get(i, chara_index));
                 }
             }
         }
@@ -1410,12 +1418,13 @@ void fmode_17()
         tmpload(u8"sdata_"s + mid + u8".s2");
         std::ifstream in{filepath.native(), std::ios::binary};
         serialization::binary::IArchive ar{in};
-        for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
-             ++cc)
+        for (int chara_index = ELONA_MAX_PARTY_CHARACTERS;
+             chara_index < ELONA_MAX_CHARACTERS;
+             ++chara_index)
         {
             for (int i = 0; i < 600; ++i)
             {
-                ar(sdata.get(i, cc));
+                ar(sdata.get(i, chara_index));
             }
         }
     }

@@ -13,16 +13,16 @@ struct Item;
 
 
 
-void chara_anorexia(Character& cc);
-void cure_anorexia(Character& cc);
+void chara_anorexia(Character& chara);
+void cure_anorexia(Character& chara);
 
-void chara_vomit(Character& cc);
+void chara_vomit(Character& chara);
 
 void eatstatus(CurseState, int);
 
 void get_sick_if_cursed(CurseState state, Character& drinker);
 
-void get_hungry(Character& cc);
+void get_hungry(Character& chara);
 
 void show_eating_message();
 void eat_rotten_food();

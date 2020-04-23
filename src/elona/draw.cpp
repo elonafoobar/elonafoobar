@@ -373,9 +373,9 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
     int cnt{};
     for (int i = 1; i < 16; ++i)
     {
-        auto& cc = cdata[i];
-        if ((cc.state() == Character::State::alive ||
-             cc.state() == Character::State::pet_dead) &&
+        auto& ally = cdata[i];
+        if ((ally.state() == Character::State::alive ||
+             ally.state() == Character::State::pet_dead) &&
             cdata[i].has_been_used_stethoscope())
         {
             const auto name = cdatan(0, i);
@@ -399,12 +399,12 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
                 name,
                 x,
                 y,
-                cc.state() == Character::State::alive
+                ally.state() == Character::State::alive
                     ? snail::Color{255, 255, 255}
                     : snail::Color{255, 35, 35});
-            if (cc.state() == Character::State::alive)
+            if (ally.state() == Character::State::alive)
             {
-                const int width = clamp(cc.hp * 30 / cc.max_hp, 1, 30);
+                const int width = clamp(ally.hp * 30 / ally.max_hp, 1, 30);
                 const int x_ = 16 + (windoww - 108) * right;
                 const int y_ = y + 17;
                 draw_bar("ally_health_bar", x_, y_, width * 3, 9, width);
@@ -521,10 +521,10 @@ void show_damage_popups()
             continue;
         }
 
-        const auto& cc = cdata[damage_popup.character];
+        const auto& chara = cdata[damage_popup.character];
         if (game_data.current_map != mdata_t::MapId::pet_arena)
         {
-            if (!is_in_fov(cc.position))
+            if (!is_in_fov(chara.position))
             {
                 ++damage_popup.frame;
                 continue;
@@ -532,8 +532,8 @@ void show_damage_popups()
             if (dist(
                     cdata.player().position.x,
                     cdata.player().position.y,
-                    cc.position.x,
-                    cc.position.y) > cdata.player().vision_distance / 2)
+                    chara.position.x,
+                    chara.position.y) > cdata.player().vision_distance / 2)
             {
                 ++damage_popup.frame;
                 continue;
@@ -547,7 +547,7 @@ void show_damage_popups()
 
             if (damage_popup.frame >= damage_popup2.frame)
             {
-                if (cc.position == cdata[damage_popup2.character].position)
+                if (chara.position == cdata[damage_popup2.character].position)
                 {
                     ++mondmgpos;
                 }
@@ -556,10 +556,10 @@ void show_damage_popups()
 
         int cfg_dmgfont = easing(damage_popup.frame / 10.0) * 20 + 12;
 
-        int x = (cc.position.x - scx) * inf_tiles + inf_screenx -
+        int x = (chara.position.x - scx) * inf_tiles + inf_screenx -
             strlen_u(damage_popup.text) * (2 + cfg_dmgfont + 1) / 2 / 2 +
             inf_tiles / 2;
-        int y = (cc.position.y - scy) * inf_tiles + inf_screeny -
+        int y = (chara.position.y - scy) * inf_tiles + inf_screeny -
             mondmgpos * (2 + cfg_dmgfont + 3) - 2 * damage_popup.frame;
         x += sxfix * (scx != scxbk) * (scrollp >= 3);
         y += syfix * (scy != scybk) * (scrollp >= 3);
@@ -585,17 +585,17 @@ void show_damage_popups()
     }
 }
 
-void draw_emo(int cc, int x, int y)
+void draw_emo(int chara_index, int x, int y)
 {
     gmode(2);
-    draw_indexed("emotion_icons", x + 16, y, cdata[cc].emotion_icon);
+    draw_indexed("emotion_icons", x + 16, y, cdata[chara_index].emotion_icon);
 }
 
 
 
-optional_ref<const Extent> chara_preparepic(const Character& cc)
+optional_ref<const Extent> chara_preparepic(const Character& chara)
 {
-    return chara_preparepic(cc.image);
+    return chara_preparepic(chara.image);
 }
 
 

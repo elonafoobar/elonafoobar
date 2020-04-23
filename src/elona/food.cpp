@@ -210,50 +210,50 @@ void eat_rotten_food()
 
 
 
-void cure_anorexia(Character& cc)
+void cure_anorexia(Character& chara)
 {
-    if (!cc.has_anorexia())
+    if (!chara.has_anorexia())
         return;
 
-    cc.has_anorexia() = false;
-    if (is_in_fov(cc) || cc.index < 16)
+    chara.has_anorexia() = false;
+    if (is_in_fov(chara) || chara.index < 16)
     {
-        txt(i18n::s.get("core.food.anorexia.recovers_from", cc));
+        txt(i18n::s.get("core.food.anorexia.recovers_from", chara));
         snd("core.offer1");
     }
 }
 
 
 
-void chara_vomit(Character& cc)
+void chara_vomit(Character& chara)
 {
-    ++cc.anorexia_count;
+    ++chara.anorexia_count;
 
-    if (is_in_fov(cc))
+    if (is_in_fov(chara))
     {
         snd("core.vomit");
-        txt(i18n::s.get("core.food.vomits", cc));
+        txt(i18n::s.get("core.food.vomits", chara));
     }
 
-    if (cc.is_pregnant())
+    if (chara.is_pregnant())
     {
-        cc.is_pregnant() = false;
-        if (is_in_fov(cc))
+        chara.is_pregnant() = false;
+        if (is_in_fov(chara))
         {
-            txt(i18n::s.get("core.food.spits_alien_children", cc));
+            txt(i18n::s.get("core.food.spits_alien_children", chara));
         }
     }
 
     // Lose food buff.
-    for (size_t i = 0; i < cc.buffs.size();)
+    for (size_t i = 0; i < chara.buffs.size();)
     {
-        if (cc.buffs[i].id == 0)
+        if (chara.buffs[i].id == 0)
         {
             break;
         }
-        if (the_buff_db[cc.buffs[i].id]->type == BuffType::food)
+        if (the_buff_db[chara.buffs[i].id]->type == BuffType::food)
         {
-            buff_delete(cc, i);
+            buff_delete(chara, i);
         }
         else
         {
@@ -275,49 +275,49 @@ void chara_vomit(Character& cc)
                 }
             }
         }
-        if (rnd_capped(p * p * p) == 0 || cc.index == 0)
+        if (rnd_capped(p * p * p) == 0 || chara.index == 0)
         {
             flt();
-            if (const auto item = itemcreate_extra_inv(704, cc.position, 0))
+            if (const auto item = itemcreate_extra_inv(704, chara.position, 0))
             {
-                if (cc.index != 0)
+                if (chara.index != 0)
                 {
-                    item->subname = charaid2int(cc.id);
+                    item->subname = charaid2int(chara.id);
                 }
             }
         }
     }
 
-    if (cc.has_anorexia())
+    if (chara.has_anorexia())
     {
-        chara_gain_fixed_skill_exp(cc, 10, -50);
-        chara_gain_fixed_skill_exp(cc, 11, -75);
-        chara_gain_fixed_skill_exp(cc, 17, -100);
+        chara_gain_fixed_skill_exp(chara, 10, -50);
+        chara_gain_fixed_skill_exp(chara, 11, -75);
+        chara_gain_fixed_skill_exp(chara, 17, -100);
     }
     else
     {
-        if ((cc.index < 16 && cc.anorexia_count > 10) ||
-            (cc.index >= 16 && rnd(4) == 0))
+        if ((chara.index < 16 && chara.anorexia_count > 10) ||
+            (chara.index >= 16 && rnd(4) == 0))
         {
             if (rnd(5) == 0)
             {
-                cc.has_anorexia() = true;
-                if (is_in_fov(cc))
+                chara.has_anorexia() = true;
+                if (is_in_fov(chara))
                 {
-                    txt(i18n::s.get("core.food.anorexia.develops", cc));
+                    txt(i18n::s.get("core.food.anorexia.develops", chara));
                     snd("core.offer1");
                 }
             }
         }
     }
 
-    status_ailment_damage(cc, StatusAilment::dimmed, 100);
-    modify_weight(cc, -(1 + rnd(5)));
-    if (cc.nutrition <= 0)
+    status_ailment_damage(chara, StatusAilment::dimmed, 100);
+    modify_weight(chara, -(1 + rnd(5)));
+    if (chara.nutrition <= 0)
     {
-        damage_hp(cc, 9999, -3);
+        damage_hp(chara, 9999, -3);
     }
-    cc.nutrition -= 3000;
+    chara.nutrition -= 3000;
 }
 
 
@@ -352,11 +352,11 @@ void eatstatus(CurseState curse_state, int eater)
 
 
 
-void chara_anorexia(Character& cc)
+void chara_anorexia(Character& chara)
 {
-    if (cc.has_anorexia())
+    if (chara.has_anorexia())
     {
-        chara_vomit(cc);
+        chara_vomit(chara);
     }
 }
 
@@ -376,14 +376,14 @@ void get_sick_if_cursed(CurseState curse_state, Character& drinker)
 
 
 
-void get_hungry(Character& cc)
+void get_hungry(Character& chara)
 {
     if ((trait(158) && rnd(3) == 0) || debug::voldemort)
         return;
 
-    int p = cc.nutrition / 1000;
-    cc.nutrition -= 8;
-    if (cc.nutrition / 1000 != p)
+    int p = chara.nutrition / 1000;
+    chara.nutrition -= 8;
+    if (chara.nutrition / 1000 != p)
     {
         if (p == 1)
         {
@@ -400,7 +400,7 @@ void get_hungry(Character& cc)
             input_halt_input(HaltInput::alert);
             txt(i18n::s.get("core.food.hunger_status.hungry"));
         }
-        refresh_speed(cc);
+        refresh_speed(chara);
     }
 }
 

@@ -2156,10 +2156,11 @@ TurnResult do_use_command(Item& use_item)
             int stat = ask_direction();
             if (stat != 0)
             {
-                const auto cc = cell_data.at(x, y).chara_index_plus_one - 1;
-                if (cc != -1 && cc < 16)
+                const auto chara_index =
+                    cell_data.at(x, y).chara_index_plus_one - 1;
+                if (chara_index != -1 && chara_index < 16)
                 {
-                    chara = cc;
+                    chara = chara_index;
                 }
             }
         }
@@ -3952,27 +3953,27 @@ int try_to_disarm_trap()
 
 
 
-int try_to_perceive_npc(int cc)
+int try_to_perceive_npc(int chara_index)
 {
     int cv = 0;
     cv = 8;
-    if (cdata[cc].position.x > cdata[r2].position.x - cv &&
-        cdata[cc].position.x < cdata[r2].position.x + cv)
+    if (cdata[chara_index].position.x > cdata[r2].position.x - cv &&
+        cdata[chara_index].position.x < cdata[r2].position.x + cv)
     {
-        if (cdata[cc].position.y > cdata[r2].position.y - cv &&
-            cdata[cc].position.y < cdata[r2].position.y + cv)
+        if (cdata[chara_index].position.y > cdata[r2].position.y - cv &&
+            cdata[chara_index].position.y < cdata[r2].position.y + cv)
         {
             if (cdata[r2].hate > 0)
             {
                 return 1;
             }
             p = dist(
-                    cdata[cc].position.x,
-                    cdata[cc].position.y,
+                    cdata[chara_index].position.x,
+                    cdata[chara_index].position.y,
                     cdata[r2].position.x,
                     cdata[r2].position.y) *
                     150 +
-                (sdata(157, cc) * 100 + 150) + 1;
+                (sdata(157, chara_index) * 100 + 150) + 1;
             if (rnd_capped(p(0)) < rnd_capped(sdata(13, r2) * 60 + 150))
             {
                 return 1;

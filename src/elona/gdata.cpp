@@ -199,9 +199,9 @@ void GameData::unpack_from(elona_vector1<int>& gdata)
 #undef SERIALIZE
 
 
-void modify_crowd_density(int cc, int delta)
+void modify_crowd_density(int chara_index, int delta)
 {
-    if (cc >= 57)
+    if (chara_index >= 57)
     {
         game_data.crowd_density += delta;
         if (game_data.crowd_density < 0)

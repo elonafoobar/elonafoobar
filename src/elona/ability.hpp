@@ -51,22 +51,22 @@ public:
     SkillData();
 
 
-    int& operator()(int id, int cc)
+    int& operator()(int id, int chara_index)
     {
-        return get(id, cc).current_level;
+        return get(id, chara_index).current_level;
     }
 
 
-    Ability& get(int id, int cc)
+    Ability& get(int id, int chara_index)
     {
         assert(id < 600);
-        return storage[cc][id];
+        return storage[chara_index][id];
     }
 
 
-    void clear(int cc);
+    void clear(int chara_index);
 
-    void copy(int tc, int cc);
+    void copy(int destination_chara_index, int source_chara_index);
 
 
 private:
@@ -79,19 +79,19 @@ extern SkillData sdata;
 
 struct Character;
 
-void chara_init_skill(Character& cc, int id, int initial_level);
-void chara_init_common_skills(Character& cc);
+void chara_init_skill(Character& chara, int id, int initial_level);
+void chara_init_common_skills(Character& chara);
 
 void chara_gain_skill(
-    Character& cc,
+    Character& chara,
     int id,
     int initial_level = 0,
     int stock = 0);
 void gain_special_action();
 
-void chara_gain_fixed_skill_exp(Character& cc, int id, int experience);
+void chara_gain_fixed_skill_exp(Character& chara, int id, int experience);
 void chara_gain_skill_exp(
-    Character& cc,
+    Character& chara,
     int id,
     int experience,
     int experience_divisor_of_related_basic_attribute = 0,

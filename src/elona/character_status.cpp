@@ -196,15 +196,15 @@ void modify_ether_disease_stage(int delta)
 
 
 
-void modify_potential(Character& cc, int id, int delta)
+void modify_potential(Character& chara, int id, int delta)
 {
-    sdata.get(id, cc.index).potential =
-        clamp(sdata.get(id, cc.index).potential + delta, 2, 400);
+    sdata.get(id, chara.index).potential =
+        clamp(sdata.get(id, chara.index).potential + delta, 2, 400);
 }
 
 
 
-void modify_karma(Character& cc, int delta)
+void modify_karma(Character& chara, int delta)
 {
     if (trait(162) && delta < 0)
     {
@@ -228,7 +228,7 @@ void modify_karma(Character& cc, int delta)
     txt(i18n::s.get("core.chara_status.karma.changed", delta));
     if (delta > 0)
     {
-        if (cc.karma < -30 && cc.karma + delta >= -30)
+        if (chara.karma < -30 && chara.karma + delta >= -30)
         {
             txt(i18n::s.get(
                     "core.chara_status.karma.you_are_no_longer_criminal"),
@@ -237,7 +237,7 @@ void modify_karma(Character& cc, int delta)
     }
     else if (delta < 0)
     {
-        if (cc.karma >= -30 && cc.karma + delta < -30)
+        if (chara.karma >= -30 && chara.karma + delta < -30)
         {
             txt(i18n::s.get("core.chara_status.karma.you_are_criminal_now"),
                 Message::color{ColorIndex::purple});
@@ -245,7 +245,7 @@ void modify_karma(Character& cc, int delta)
         }
     }
 
-    cc.karma += delta;
+    chara.karma += delta;
 
     int max = 20;
     if (trait(162))
@@ -256,83 +256,85 @@ void modify_karma(Character& cc, int delta)
     {
         max += 20;
     }
-    cc.karma = clamp(cc.karma, -100, max);
+    chara.karma = clamp(chara.karma, -100, max);
 }
 
 
 
-void modify_weight(Character& cc, int delta, bool force)
+void modify_weight(Character& chara, int delta, bool force)
 {
-    int min = cc.height * cc.height * 18 / 25000;
-    int max = cc.height * cc.height * 24 / 10000;
+    int min = chara.height * chara.height * 18 / 25000;
+    int max = chara.height * chara.height * 24 / 10000;
 
-    if (cc.weight < min)
+    if (chara.weight < min)
     {
-        cc.weight = min;
+        chara.weight = min;
         return;
     }
     if (!force && delta > 0)
     {
-        if (cc.weight > max)
+        if (chara.weight > max)
         {
             return;
         }
     }
 
-    cc.weight = cc.weight * (100 + delta) / 100 + (delta > 0) - (delta < 0);
+    chara.weight =
+        chara.weight * (100 + delta) / 100 + (delta > 0) - (delta < 0);
 
-    if (cc.weight < 1)
+    if (chara.weight < 1)
     {
-        cc.weight = 1;
+        chara.weight = 1;
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(chara))
     {
         if (delta >= 3)
         {
-            txt(i18n::s.get("core.chara.weight.gain", cc));
+            txt(i18n::s.get("core.chara.weight.gain", chara));
         }
         if (delta <= -3)
         {
-            txt(i18n::s.get("core.chara.weight.lose", cc));
+            txt(i18n::s.get("core.chara.weight.lose", chara));
         }
     }
 }
 
 
 
-void modify_height(Character& cc, int delta)
+void modify_height(Character& chara, int delta)
 {
-    cc.height = cc.height * (100 + delta) / 100 + (delta > 0) - (delta < 0);
-    if (cc.height < 1)
+    chara.height =
+        chara.height * (100 + delta) / 100 + (delta > 0) - (delta < 0);
+    if (chara.height < 1)
     {
-        cc.height = 1;
+        chara.height = 1;
     }
-    if (is_in_fov(cc))
+    if (is_in_fov(chara))
     {
         if (delta > 0)
         {
-            txt(i18n::s.get("core.chara.height.gain", cc));
+            txt(i18n::s.get("core.chara.height.gain", chara));
         }
         if (delta < 0)
         {
-            txt(i18n::s.get("core.chara.height.lose", cc));
+            txt(i18n::s.get("core.chara.height.lose", chara));
         }
     }
 }
 
 
 
-void refresh_speed(Character& cc)
+void refresh_speed(Character& chara)
 {
-    cc.current_speed = sdata(18, cc.index) *
-        clamp((100 - cc.speed_correction_value), 0, 100) / 100;
-    if (cc.current_speed < 10)
+    chara.current_speed = sdata(18, chara.index) *
+        clamp((100 - chara.speed_correction_value), 0, 100) / 100;
+    if (chara.current_speed < 10)
     {
-        cc.current_speed = 10;
+        chara.current_speed = 10;
     }
-    cc.speed_percentage_in_next_turn = 0;
+    chara.speed_percentage_in_next_turn = 0;
 
-    if (cc.index != 0 && game_data.mount != cc.index)
+    if (chara.index != 0 && game_data.mount != chara.index)
         return;
 
     if (game_data.mount != 0)
@@ -352,10 +354,10 @@ void refresh_speed(Character& cc)
         {
             cdata.player().current_speed /= 10;
         }
-        if (game_data.mount == cc.index)
+        if (game_data.mount == chara.index)
         {
-            cc.current_speed =
-                clamp(sdata(10, cc.index) + sdata(301, 0), 10, mount_speed);
+            chara.current_speed =
+                clamp(sdata(10, chara.index) + sdata(301, 0), 10, mount_speed);
             return;
         }
     }
@@ -419,10 +421,10 @@ void refresh_speed(Character& cc)
 
 
 
-void refresh_speed_correction_value(Character& cc)
+void refresh_speed_correction_value(Character& chara)
 {
     int number_of_body_parts{};
-    for (const auto& body_part : cc.body_parts)
+    for (const auto& body_part : chara.body_parts)
     {
         if (body_part)
         {
@@ -431,22 +433,22 @@ void refresh_speed_correction_value(Character& cc)
     }
     if (number_of_body_parts > 13)
     {
-        cc.speed_correction_value = (number_of_body_parts - 13) * 5;
+        chara.speed_correction_value = (number_of_body_parts - 13) * 5;
     }
     else
     {
-        cc.speed_correction_value = 0;
+        chara.speed_correction_value = 0;
     }
 }
 
 
 
-void gain_new_body_part(Character& cc)
+void gain_new_body_part(Character& chara)
 {
     int slot = -1;
-    for (size_t i = 0; i < cc.body_parts.size(); ++i)
+    for (size_t i = 0; i < chara.body_parts.size(); ++i)
     {
-        if (cc.body_parts[i] == 0)
+        if (chara.body_parts[i] == 0)
         {
             slot = static_cast<int>(i);
             break;
@@ -455,63 +457,64 @@ void gain_new_body_part(Character& cc)
 
     if (slot == -1)
     {
-        refresh_speed_correction_value(cc);
+        refresh_speed_correction_value(chara);
         return;
     }
 
     const auto body_part = get_random_body_part();
-    cc.body_parts[slot] = body_part * 10000;
+    chara.body_parts[slot] = body_part * 10000;
     if (!cm)
     {
         txt(i18n::s.get(
             "core.chara_status.gain_new_body_part",
-            cc,
+            chara,
             i18n::s.get_enum("core.ui.body_part", body_part)));
     }
 
-    refresh_speed_correction_value(cc);
+    refresh_speed_correction_value(chara);
 }
 
 
 
-void gain_level(Character& cc)
+void gain_level(Character& chara)
 {
-    cc.experience -= cc.required_experience;
-    if (cc.experience < 0)
+    chara.experience -= chara.required_experience;
+    if (chara.experience < 0)
     {
-        cc.experience = 0;
+        chara.experience = 0;
     }
-    ++cc.level;
-    if (cc.role != Role::adventurer)
+    ++chara.level;
+    if (chara.role != Role::adventurer)
     {
         if (r2 == 0)
         {
-            if (cc.index == 0)
+            if (chara.index == 0)
             {
-                txt(i18n::s.get("core.chara.gain_level.self", cc, cc.level),
+                txt(i18n::s.get(
+                        "core.chara.gain_level.self", chara, chara.level),
                     Message::color{ColorIndex::green});
             }
             else
             {
-                txt(i18n::s.get("core.chara.gain_level.other", cc),
+                txt(i18n::s.get("core.chara.gain_level.other", chara),
                     Message::color{ColorIndex::green});
             }
         }
     }
     else
     {
-        addnews(2, cc.index);
+        addnews(2, chara.index);
     }
-    p = 5 * (100 + sdata.get(14, cc.index).original_level * 10) /
-            (300 + cc.level * 15) +
+    p = 5 * (100 + sdata.get(14, chara.index).original_level * 10) /
+            (300 + chara.level * 15) +
         1;
-    if (cc.index == 0)
+    if (chara.index == 0)
     {
-        if (cc.level % 5 == 0)
+        if (chara.level % 5 == 0)
         {
-            if (cc.max_level < cc.level)
+            if (chara.max_level < chara.level)
             {
-                if (cc.level <= 50)
+                if (chara.level <= 50)
                 {
                     ++game_data.acquirable_feat_count;
                 }
@@ -520,99 +523,101 @@ void gain_level(Character& cc)
         gain_special_action();
         p += trait(154);
     }
-    cc.skill_bonus += p;
-    cc.total_skill_bonus += p;
-    if (cdatan(2, cc.index) == u8"core.mutant"s ||
-        (cc.index == 0 && trait(0) == 1))
+    chara.skill_bonus += p;
+    chara.total_skill_bonus += p;
+    if (cdatan(2, chara.index) == u8"core.mutant"s ||
+        (chara.index == 0 && trait(0) == 1))
     {
-        if (cc.level < 37)
+        if (chara.level < 37)
         {
-            if (cc.level % 3 == 0)
+            if (chara.level % 3 == 0)
             {
-                if (cc.max_level < cc.level)
+                if (chara.max_level < chara.level)
                 {
-                    gain_new_body_part(cc);
+                    gain_new_body_part(chara);
                 }
             }
         }
     }
-    if (cc.max_level < cc.level)
+    if (chara.max_level < chara.level)
     {
-        cc.max_level = cc.level;
+        chara.max_level = chara.level;
     }
-    if (cc.index >= 16)
+    if (chara.index >= 16)
     {
-        grow_primary_skills(cc);
+        grow_primary_skills(chara);
     }
-    update_required_experience(cc);
-    chara_refresh(cc.index);
+    update_required_experience(chara);
+    chara_refresh(chara.index);
 }
 
 
 
-void grow_primary_skills(Character& cc)
+void grow_primary_skills(Character& chara)
 {
     for (int i = 10; i < 20; ++i)
     {
-        sdata.get(i, cc.index).original_level += rnd(3);
-        if (sdata.get(i, cc.index).original_level > 2000)
+        sdata.get(i, chara.index).original_level += rnd(3);
+        if (sdata.get(i, chara.index).original_level > 2000)
         {
-            sdata.get(i, cc.index).original_level = 2000;
+            sdata.get(i, chara.index).original_level = 2000;
         }
     }
     for (const auto& skill : mainskill)
     {
-        sdata.get(skill, cc.index).original_level += rnd(3);
-        if (sdata.get(skill, cc.index).original_level > 2000)
+        sdata.get(skill, chara.index).original_level += rnd(3);
+        if (sdata.get(skill, chara.index).original_level > 2000)
         {
-            sdata.get(skill, cc.index).original_level = 2000;
+            sdata.get(skill, chara.index).original_level = 2000;
         }
     }
 }
 
 
 
-void update_required_experience(Character& cc)
+void update_required_experience(Character& chara)
 {
-    cc.required_experience = clamp(cc.level, 1, 200) *
-            (clamp(cc.level, 1, 200) + 1) * (clamp(cc.level, 1, 200) + 2) *
-            (clamp(cc.level, 1, 200) + 3) +
+    chara.required_experience = clamp(chara.level, 1, 200) *
+            (clamp(chara.level, 1, 200) + 1) *
+            (clamp(chara.level, 1, 200) + 2) *
+            (clamp(chara.level, 1, 200) + 3) +
         3000;
-    if (cc.required_experience > 100000000 || cc.required_experience < 0)
+    if (chara.required_experience > 100000000 || chara.required_experience < 0)
     {
-        cc.required_experience = 100000000;
+        chara.required_experience = 100000000;
     }
 }
 
 
 
-void earn_gold(Character& cc, int delta)
+void earn_gold(Character& chara, int delta)
 {
-    constexpr auto max = std::numeric_limits<decltype(cc.gold)>::max();
+    constexpr auto max = std::numeric_limits<decltype(chara.gold)>::max();
 
-    if (cc.gold > max - delta)
+    if (chara.gold > max - delta)
     {
-        cc.gold = max;
+        chara.gold = max;
     }
     else
     {
-        cc.gold += delta;
+        chara.gold += delta;
     }
 }
 
 
 
-void earn_platinum(Character& cc, int delta)
+void earn_platinum(Character& chara, int delta)
 {
-    constexpr auto max = std::numeric_limits<decltype(cc.platinum_coin)>::max();
+    constexpr auto max =
+        std::numeric_limits<decltype(chara.platinum_coin)>::max();
 
-    if (cc.platinum_coin > max - delta)
+    if (chara.platinum_coin > max - delta)
     {
-        cc.platinum_coin = max;
+        chara.platinum_coin = max;
     }
     else
     {
-        cc.platinum_coin += delta;
+        chara.platinum_coin += delta;
     }
 }
 
