@@ -131,7 +131,11 @@ void resistmod(int chara_index, int element, int delta)
 
 
 
-void txteledmg(int type, int attacker, int target, int element)
+void txteledmg(
+    int type,
+    optional_ref<const Character> attacker,
+    int target,
+    int element)
 {
     if (type == 0 && is_in_fov(cdata[target]))
     {
@@ -148,12 +152,13 @@ void txteledmg(int type, int attacker, int target, int element)
     }
     else if (type == 1)
     {
+        assert(attacker);
         auto text = i18n::s.get_enum_property_optional(
             "core.death_by.element"s,
             "active",
             element,
             cdata[target],
-            cdata[attacker]);
+            *attacker);
         if (text)
         {
             txt(*text);
@@ -163,17 +168,13 @@ void txteledmg(int type, int attacker, int target, int element)
             txt(i18n::s.get(
                 "core.death_by.element.default.active",
                 cdata[target],
-                cdata[attacker]));
+                *attacker));
         }
     }
     else if (type == 2)
     {
         auto text = i18n::s.get_enum_property_optional(
-            "core.death_by.element"s,
-            "passive",
-            element,
-            cdata[target],
-            cdata[attacker]);
+            "core.death_by.element"s, "passive", element, cdata[target]);
         if (text)
         {
             txt(*text);
@@ -181,9 +182,7 @@ void txteledmg(int type, int attacker, int target, int element)
         else
         {
             txt(i18n::s.get(
-                "core.death_by.element.default.passive",
-                cdata[target],
-                cdata[attacker]));
+                "core.death_by.element.default.passive", cdata[target]));
         }
     }
 }

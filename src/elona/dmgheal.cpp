@@ -421,46 +421,39 @@ int damage_hp(
         }
         if (game_data.proc_damage_events_flag == 1)
         {
-            txteledmg(0, attacker_is_player ? 0 : -1, victim.index, element);
+            txteledmg(0, none, victim.index, element);
         }
         else if (game_data.proc_damage_events_flag == 2)
         {
             Message::instance().continue_sentence();
+            assert(attacker);
             if (damage_level == -1)
             {
                 txt(i18n::s.get(
-                    "core.damage.levels.scratch", victim, attacker_is_player));
+                    "core.damage.levels.scratch", victim, *attacker));
             }
             if (damage_level == 0)
             {
                 txt(i18n::s.get(
-                        "core.damage.levels.slightly",
-                        victim,
-                        attacker_is_player),
+                        "core.damage.levels.slightly", victim, *attacker),
                     Message::color{ColorIndex::orange});
             }
             if (damage_level == 1)
             {
                 txt(i18n::s.get(
-                        "core.damage.levels.moderately",
-                        victim,
-                        attacker_is_player),
+                        "core.damage.levels.moderately", victim, *attacker),
                     Message::color{ColorIndex::gold});
             }
             if (damage_level == 2)
             {
                 txt(i18n::s.get(
-                        "core.damage.levels.severely",
-                        victim,
-                        attacker_is_player),
+                        "core.damage.levels.severely", victim, *attacker),
                     Message::color{ColorIndex::light_red});
             }
             if (damage_level >= 3)
             {
                 txt(i18n::s.get(
-                        "core.damage.levels.critically",
-                        victim,
-                        attacker_is_player),
+                        "core.damage.levels.critically", victim, *attacker),
                     Message::color{ColorIndex::red});
             }
             rowact_check(victim);
@@ -816,11 +809,11 @@ int damage_hp(
                     game_data.proc_damage_events_flag == 2)
                 {
                     Message::instance().continue_sentence();
-                    txteledmg(1, attacker_is_player, victim.index, element);
+                    txteledmg(1, *attacker, victim.index, element);
                 }
                 else
                 {
-                    txteledmg(2, attacker_is_player, victim.index, element);
+                    txteledmg(2, none, victim.index, element);
                 }
             }
             else
@@ -835,14 +828,13 @@ int damage_hp(
                         txt(i18n::s.get(
                             "core.death_by.chara.transformed_into_meat.active",
                             victim,
-                            attacker_is_player));
+                            *attacker));
                     }
                     else
                     {
                         txt(i18n::s.get(
                             "core.death_by.chara.transformed_into_meat.passive",
-                            victim,
-                            attacker_is_player));
+                            victim));
                     }
                 }
                 if (death_type == 1)
@@ -854,14 +846,12 @@ int damage_hp(
                         txt(i18n::s.get(
                             "core.death_by.chara.destroyed.active",
                             victim,
-                            attacker_is_player));
+                            *attacker));
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.death_by.chara.destroyed.passive",
-                            victim,
-                            attacker_is_player));
+                            "core.death_by.chara.destroyed.passive", victim));
                     }
                 }
                 if (death_type == 2)
@@ -873,14 +863,12 @@ int damage_hp(
                         txt(i18n::s.get(
                             "core.death_by.chara.minced.active",
                             victim,
-                            attacker_is_player));
+                            *attacker));
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.death_by.chara.minced.passive",
-                            victim,
-                            attacker_is_player));
+                            "core.death_by.chara.minced.passive", victim));
                     }
                 }
                 if (death_type == 3)
@@ -892,14 +880,12 @@ int damage_hp(
                         txt(i18n::s.get(
                             "core.death_by.chara.killed.active",
                             victim,
-                            attacker_is_player));
+                            *attacker));
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.death_by.chara.killed.passive",
-                            victim,
-                            attacker_is_player));
+                            "core.death_by.chara.killed.passive", victim));
                     }
                 }
             }
