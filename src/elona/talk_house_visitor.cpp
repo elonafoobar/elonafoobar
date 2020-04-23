@@ -33,7 +33,6 @@ TalkResult _talk_hv_visitor()
 {
     listmax = 0;
     buff = i18n::s.get("core.talk.visitor.wanted_to_say_hi", cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -66,7 +65,6 @@ TalkResult _talk_hv_adventurer_new_year()
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.new_year.happy_new_year", cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -81,7 +79,6 @@ TalkResult _talk_hv_adventurer_new_year()
     }
     listmax = 0;
     buff = i18n::s.get("core.talk.visitor.adventurer.new_year.gift", cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -151,7 +148,6 @@ TalkResult _talk_hv_adventurer_hate()
 {
     listmax = 0;
     buff = i18n::s.get("core.talk.visitor.adventurer.hate.dialog", cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -185,7 +181,6 @@ void _talk_hv_adventurer_best_friend()
 {
     listmax = 0;
     buff = i18n::s.get("core.talk.visitor.adventurer.like.dialog", cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -285,7 +280,6 @@ TalkResult _talk_hv_adventurer_train()
         listmax = 0;
         buff =
             i18n::s.get("core.talk.visitor.adventurer.train.pass", cdata[tc]);
-        tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -308,7 +302,6 @@ TalkResult _talk_hv_adventurer_train()
         listmax = 0;
         buff = i18n::s.get(
             "core.talk.visitor.adventurer.train.learn.after", cdata[tc]);
-        tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -329,7 +322,6 @@ TalkResult _talk_hv_adventurer_train()
         listmax = 0;
         buff = i18n::s.get(
             "core.talk.visitor.adventurer.train.train.after", cdata[tc]);
-        tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -378,7 +370,6 @@ TalkResult _talk_hv_adventurer_friendship()
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.friendship.dialog", cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -425,7 +416,6 @@ TalkResult _talk_hv_adventurer_souvenir()
     listmax = 0;
     buff =
         i18n::s.get("core.talk.visitor.adventurer.souvenir.dialog", cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -459,7 +449,6 @@ TalkResult _talk_hv_adventurer_materials()
     listmax = 0;
     buff =
         i18n::s.get("core.talk.visitor.adventurer.materials.dialog", cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -490,7 +479,6 @@ TalkResult _talk_hv_adventurer_favorite_skill()
             the_ability_db.get_id_from_legacy(skill_id)->get(),
             "name"),
         cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -517,7 +505,6 @@ TalkResult _talk_hv_adventurer_favorite_stat()
             the_ability_db.get_id_from_legacy(skill_id)->get(),
             "name"),
         cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -547,7 +534,6 @@ TalkResult _talk_hv_adventurer_conversation()
         "core.talk.visitor.adventurer.conversation.dialog",
         cdata.player(),
         cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -581,7 +567,6 @@ TalkResult _talk_hv_adventurer_drink()
 {
     listmax = 0;
     buff = i18n::s.get("core.talk.visitor.adventurer.drink.dialog", cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -723,7 +708,6 @@ TalkResult _talk_hv_trainer()
         listmax = 0;
         buff = i18n::s.get(
             "core.talk.visitor.trainer.no_more_this_month", cdata[tc]);
-        tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -769,7 +753,6 @@ TalkResult _talk_hv_trainer()
     {
         listmax = 0;
         buff = i18n::s.get("core.talk.visitor.trainer.regret", cdata[tc]);
-        tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -789,7 +772,6 @@ TalkResult _talk_hv_trainer()
 
     listmax = 0;
     buff = i18n::s.get("core.talk.visitor.trainer.after", cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -834,7 +816,6 @@ TalkResult _talk_hv_beggar()
 
         listmax = 0;
         buff = i18n::s.get("core.talk.visitor.beggar.after", cdata[tc]);
-        tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
@@ -851,7 +832,6 @@ TalkResult _talk_hv_beggar()
     }
     listmax = 0;
     buff = i18n::s.get("core.talk.visitor.beggar.cheap");
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -881,7 +861,6 @@ TalkResult _talk_hv_punk()
     {
         listmax = 0;
         buff = i18n::s.get("core.talk.npc.common.sex.start", cdata[tc]);
-        tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.talk.npc.common.sex.response");
         ++listmax;
@@ -901,7 +880,6 @@ TalkResult _talk_hv_punk()
     }
     listmax = 0;
     buff = i18n::s.get("core.talk.visitor.punk.hump");
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -934,7 +912,6 @@ TalkResult _talk_hv_mysterious_producer()
         listmax = 0;
         buff = i18n::s.get(
             "core.talk.visitor.mysterious_producer.no_turning_back", cdata[tc]);
-        tc = tc * 1 + 0;
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.talk.npc.common.sex.response");
         ++listmax;
@@ -954,7 +931,6 @@ TalkResult _talk_hv_mysterious_producer()
     }
     listmax = 0;
     buff = i18n::s.get("core.talk.visitor.punk.hump");
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
@@ -1019,7 +995,6 @@ TalkResult _talk_hv_merchant()
     }
     listmax = 0;
     buff = i18n::s.get("core.talk.visitor.merchant.regret", cdata[tc]);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
