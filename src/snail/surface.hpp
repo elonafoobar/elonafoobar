@@ -104,11 +104,11 @@ public:
 
 
     /**
-     * Save the surface to @filepath. As this functions determines file format
-     * through @filepath's extension, @filepath must have known extension.
+     * Save the surface to @a filepath. As this functions determines file format
+     * through @a filepath's extension, @a filepath must have known extension.
      *
      * @param filepath Filepath to write
-     * @throws std::runtime_error if @filepath has no extension or unknown
+     * @throws std::runtime_error if @a filepath has no extension or unknown
      * extension.
      * @throws SDLError if SDL_iamge fails to save the surface for some reason.
      */
