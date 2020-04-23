@@ -41,8 +41,6 @@ void dump_player_info()
 
     std::stringstream ss;
 
-    cc = 0;
-
     ss << u8"Elona 1.22" << std::endl;
     ss << u8"Elona foobar " << latest_version.long_string() << std::endl;
 
@@ -145,7 +143,7 @@ void dump_player_info()
 
     ss << std::endl;
 
-    append_accuracy_info(1);
+    append_accuracy_info(cdata.player(), 1);
 
     tc = 0;
     attackskill = 106;
@@ -161,8 +159,8 @@ void dump_player_info()
     ss << std::endl;
 
     ss << u8"------------------------------ 装備品 合計重量"
-       << cnvweight(cdata[cc].sum_of_equipment_weight) << u8" "
-       << cnveqweight(cc) << std::endl;
+       << cnvweight(cdata.player().sum_of_equipment_weight) << u8" "
+       << cnveqweight(cdata.player().index) << std::endl;
     ss << std::endl;
 
     for (const auto& body_part : cdata.player().body_parts)

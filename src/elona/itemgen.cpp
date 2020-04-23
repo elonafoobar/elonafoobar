@@ -754,7 +754,7 @@ void change_item_material(Item& item, int material_id)
     }
     apply_item_material(item);
     calc_furniture_value(item);
-    chara_refresh(cc);
+    chara_refresh(cdata.player().index);
 }
 
 

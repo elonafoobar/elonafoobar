@@ -2852,9 +2852,6 @@ void show_title(const std::string& title)
 
 void auto_turn(int delay)
 {
-    if (cc != 0)
-        return;
-
     autoturn = 1;
     if (g_config.auto_turn_speed() == "normal")
     {

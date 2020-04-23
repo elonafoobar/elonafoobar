@@ -116,7 +116,6 @@ bool UIMenuCrafting::init()
     page = 0;
     pagesize = 10;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
     page_load();
     windowshadow = 1;

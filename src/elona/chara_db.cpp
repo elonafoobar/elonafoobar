@@ -164,12 +164,12 @@ std::string chara_db_get_name(CharaId chara_id)
 
 
 
-void chara_db_invoke_eating_effect(CharaId chara_id)
+void chara_db_invoke_eating_effect(Character& eater, CharaId chara_id)
 {
     const auto data = the_character_db[charaid2int(chara_id)];
     if (data && data->corpse_eating_callback)
     {
-        lua::call(*data->corpse_eating_callback, lua::handle(cdata[cc]));
+        lua::call(*data->corpse_eating_callback, lua::handle(eater));
     }
 }
 

@@ -174,7 +174,11 @@ void mef_update()
                             continue;
                         }
                         mef_add(x, y, 5, 24, rnd(15) + 20, 50, i);
-                        mapitem_fire(x, y);
+                        mapitem_fire(
+                            i == -1 ? optional_ref<Character>{}
+                                    : optional_ref<Character>{cdata[i]},
+                            x,
+                            y);
                     }
                 }
             }
@@ -279,7 +283,7 @@ void mef_proc(int tc)
             }
             potionspill = 1;
             efstatus = static_cast<CurseState>(mef(8, ef)); // TODO
-            item_db_on_drink(none, mef(7, ef));
+            item_db_on_drink(cdata[tc], none, mef(7, ef));
             if (cdata[tc].state() == Character::State::empty)
             {
                 check_kill(mef(6, ef), tc);
@@ -333,7 +337,7 @@ bool mef_proc_from_movement(int chara_index)
 }
 
 // returns true if caller needs to return directly after
-bool mef_proc_from_physical_attack(int tc)
+bool mef_proc_from_physical_attack(const Character& attacker, int tc)
 {
     int i = cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
                 .mef_index_plus_one -
@@ -346,10 +350,9 @@ bool mef_proc_from_physical_attack(int tc)
     {
         if (rnd(2) == 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(attacker))
             {
-                txt(i18n::s.get(
-                    "core.mef.attacks_illusion_in_mist", cdata[cc]));
+                txt(i18n::s.get("core.mef.attacks_illusion_in_mist", attacker));
                 add_damage_popup(u8"miss", tc, {191, 191, 191});
             }
             return true;

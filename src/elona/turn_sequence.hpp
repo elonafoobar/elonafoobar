@@ -19,7 +19,7 @@ bool turn_wrapper();
 TurnResult pass_turns(bool time);
 TurnResult turn_begin();
 TurnResult pass_one_turn(bool time_passing = true);
-void update_emoicon();
+void update_emoicon(Character& chara);
 TurnResult turn_end();
 TurnResult pc_turn(bool advance_time = true);
 

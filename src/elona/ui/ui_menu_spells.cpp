@@ -34,7 +34,6 @@ bool UIMenuSpells::init()
     page = 0;
     pagesize = 16;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
     cs = commark(1) % 1000;
     page = commark(1) / 1000;
@@ -148,7 +147,8 @@ void UIMenuSpells::_draw_spell_name(int cnt, int spell_id)
 
 void UIMenuSpells::_draw_spell_cost(int cnt, int spell_id)
 {
-    std::string spell_cost = ""s + calcspellcostmp(spell_id, cc) + u8" ("s +
+    std::string spell_cost = ""s +
+        calcspellcostmp(spell_id, cdata.player().index) + u8" ("s +
         spell((spell_id - 400)) + u8")"s;
     mes(wx + 328 - strlen_u(spell_cost) * 7,
         wy + 66 + cnt * 19 + 2,
@@ -161,8 +161,8 @@ void UIMenuSpells::_draw_spell_power(int cnt, int spell_id)
         strutil::take_by_width(make_spell_description(spell_id), 40);
     mes(wx + 340,
         wy + 66 + cnt * 19 + 2,
-        ""s + sdata(spell_id, cc) + u8"/"s + calcspellfail(spell_id, cc) +
-            u8"%"s);
+        ""s + sdata(spell_id, cdata.player().index) + u8"/"s +
+            calcspellfail(spell_id, cdata.player().index) + u8"%"s);
     mes(wx + 420, wy + 66 + cnt * 19 + 2, spell_power);
 }
 

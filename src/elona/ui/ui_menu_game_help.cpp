@@ -21,7 +21,6 @@ bool UIMenuGameHelp::init()
     page = 0;
     pagesize = 18;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
     page_bk = 0;
     cs_bk2 = 0;

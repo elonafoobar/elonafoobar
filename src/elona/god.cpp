@@ -507,7 +507,7 @@ void god_proc_switching_penalty(const GodId& new_religion)
             efid = 622;
             efp = 10000;
             tc = 0;
-            magic();
+            magic(cdata.player());
             snd("core.punish1");
             mode = 0;
             await(g_config.animation_wait() * 20);
@@ -536,8 +536,8 @@ void switch_religion()
     }
     else
     {
-        animode = 100;
-        MiracleAnimation().play();
+        MiracleAnimation(MiracleAnimation::Mode::target_one, cdata.player())
+            .play();
         snd("core.complete1");
         txt(i18n::s.get(
                 "core.god.switch.follower", god_name(cdata.player().god_id)),
@@ -582,17 +582,16 @@ TurnResult do_pray()
             "core.god.pray.indifferent", god_name(cdata.player().god_id)));
         return TurnResult::turn_end;
     }
-    animode = 100;
-    MiracleAnimation().play();
+    MiracleAnimation(MiracleAnimation::Mode::target_one, cdata.player()).play();
     snd("core.pray2");
     efid = 1120;
     efp = 100;
     tc = 0;
-    magic();
+    magic(cdata.player());
     efid = 451;
     efp = 200;
     tc = 0;
-    magic();
+    magic(cdata.player());
     cdata.player().praying_point = 0;
     cdata.player().piety_point = cdata.player().piety_point * 85 / 100;
     if (game_data.god_rank % 2 == 1)
@@ -815,13 +814,13 @@ void god_fail_to_take_over_penalty()
     efid = 1114;
     efp = 500;
     tc = 0;
-    magic();
+    magic(cdata.player());
     if (rnd(2))
     {
         efid = 622;
         efp = 250;
         tc = 0;
-        magic();
+        magic(cdata.player());
         snd("core.punish1");
     }
     if (rnd(2))
@@ -829,7 +828,7 @@ void god_fail_to_take_over_penalty()
         efid = 1106;
         efp = 100;
         tc = 0;
-        magic();
+        magic(cdata.player());
     }
 }
 

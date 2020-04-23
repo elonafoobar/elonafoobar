@@ -1,5 +1,6 @@
 #include "command.hpp"
 
+#include "../character.hpp"
 #include "../magic.hpp"
 #include "../map.hpp"
 #include "../variables.hpp"
@@ -33,7 +34,7 @@ void CreateWallCommand::redo()
     tlocy = _y;
     tile = _tile_to;
     efid = 438;
-    magic();
+    magic(cdata.player());
 }
 
 

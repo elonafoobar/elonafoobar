@@ -336,8 +336,8 @@ void eh_reunoin_with_pets(const DeferredEvent&)
     flt();
     initlv = cdata.player().level * 2 / 3 + 1;
     novoidlv = 1;
-    if (const auto chara =
-            chara_create(-1, p, cdata[cc].position.x, cdata[cc].position.y))
+    if (const auto chara = chara_create(
+            -1, p, cdata.player().position.x, cdata.player().position.y))
     {
         new_ally_joins(*chara);
     }
@@ -541,7 +541,7 @@ void eh_ragnarok(const DeferredEvent& event)
             y = rnd(map_data.height);
         }
         mef_add(x, y, 5, 24, rnd(15) + 20, 50, event.param1);
-        mapitem_fire(x, y);
+        mapitem_fire(cdata[event.param1], x, y);
         if (i % 4 == 0)
         {
             flt(100, calcfixlv(Quality::good));
@@ -784,7 +784,7 @@ void eh_nuclear_bomb(const DeferredEvent& event)
                     dmg = 1000;
                     damage_hp(cdata[tc], dmg, -17);
                 }
-                mapitem_fire(dx, dy);
+                mapitem_fire(cdata.player(), dx, dy);
             }
         }
     }

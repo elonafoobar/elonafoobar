@@ -83,7 +83,7 @@ static void _map_events_tower_of_fire()
             dmg = (6 - r) * (6 - r) * 2;
             txt(i18n::s.get("core.action.exit_map.it_is_hot"),
                 Message::color{ColorIndex::red});
-            damage_hp(cdata[cc], dmg, -9);
+            damage_hp(cdata.player(), dmg, -9);
         }
     }
 }
@@ -194,8 +194,8 @@ static void _map_events_shelter()
             {
                 snd("core.eat1");
                 txt(i18n::s.get("core.misc.map.shelter.eat_stored_food"));
-                cdata[cc].nutrition += 5000;
-                show_eating_message();
+                cdata.player().nutrition += 5000;
+                show_eating_message(cdata.player());
             }
         }
         if (game_data.continuous_active_hours >= 15)

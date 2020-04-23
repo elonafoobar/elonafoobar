@@ -499,7 +499,7 @@ bool grant_special_wishing(const std::string& wish)
 
 
 
-bool wish_for_item(const std::string& input)
+bool wish_for_item(Character& chara, const std::string& input)
 {
     using namespace strutil;
 
@@ -589,7 +589,7 @@ bool wish_for_item(const std::string& input)
 
         nostack = 1;
         nooracle = 1;
-        auto item = itemcreate_extra_inv(id, cdata[cc].position, 0);
+        auto item = itemcreate_extra_inv(id, chara.position, 0);
         nooracle = 0;
 
         if (!item)
@@ -622,8 +622,7 @@ bool wish_for_item(const std::string& input)
         {
             item->remove();
             flt();
-            if (const auto well =
-                    itemcreate_extra_inv(516, cdata[cc].position, 3))
+            if (const auto well = itemcreate_extra_inv(516, chara.position, 3))
             {
                 well->curse_state = CurseState::blessed;
                 txt(i18n::s.get("core.wish.it_is_sold_out"));
@@ -762,7 +761,7 @@ bool wish_for_skill(const std::string& input)
 
 
 
-bool process_wish(optional<std::string> wish)
+bool process_wish(Character& chara, optional<std::string> wish)
 {
     using namespace strutil;
 
@@ -858,7 +857,7 @@ bool process_wish(optional<std::string> wish)
         return true;
     }
 
-    if (!skip_item && wish_for_item(inputlog))
+    if (!skip_item && wish_for_item(chara, inputlog))
     {
         return true;
     }
@@ -898,9 +897,9 @@ bool process_wish(optional<std::string> wish)
 namespace elona
 {
 
-bool what_do_you_wish_for(optional<std::string> wish)
+bool what_do_you_wish_for(Character& chara, optional<std::string> wish)
 {
-    const auto did_wish_something = process_wish(wish);
+    const auto did_wish_something = process_wish(chara, wish);
     if (did_wish_something)
     {
         wish_end();

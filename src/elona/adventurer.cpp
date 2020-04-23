@@ -202,7 +202,6 @@ void adventurer_update()
     for (int cnt = 16; cnt < 55; ++cnt)
     {
         auto& adv = cdata[cnt];
-        cc = adv.index;
         if (adv.period_of_contract != 0)
         {
             if (adv.period_of_contract < game_data.date.hours())

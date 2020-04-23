@@ -18,7 +18,7 @@ namespace lua
  */
 bool LuaApiWish::wish()
 {
-    return what_do_you_wish_for();
+    return what_do_you_wish_for(cdata.player());
 }
 
 
@@ -32,7 +32,7 @@ bool LuaApiWish::wish()
  */
 bool LuaApiWish::wish_with_str(const std::string& wish)
 {
-    return what_do_you_wish_for(wish);
+    return what_do_you_wish_for(cdata.player(), wish);
 }
 
 

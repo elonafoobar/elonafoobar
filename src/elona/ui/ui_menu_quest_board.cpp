@@ -82,7 +82,6 @@ bool UIMenuQuestBoard::init()
     page = 0;
     pagesize = 4;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
 
     _populate_quest_list();

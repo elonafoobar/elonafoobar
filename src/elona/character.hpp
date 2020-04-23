@@ -713,7 +713,7 @@ void chara_add_quality_parens(Character& chara);
 
 bool belong_to_same_team(const Character& c1, const Character& c2);
 
-TurnResult proc_movement_event();
+TurnResult proc_movement_event(Character& chara);
 void chara_clear_status_effects(Character& chara);
 void chara_clear_status_effects_b(Character& chara);
 void revive_character(Character& chara);
@@ -736,9 +736,9 @@ void initialize_pc_character();
 void lost_body_part(int);
 void lovemiracle(int = 0);
 void monster_respawn();
-void move_character();
+void move_character(Character& chara);
 void proc_negative_enchantments(Character& chara);
-void proc_pregnant();
+void proc_pregnant(Character& chara);
 void wake_up();
 int try_to_perceive_npc(int);
 int relationbetween(int, int);

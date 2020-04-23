@@ -72,7 +72,6 @@ void UIMenuMods::_load_mods()
     listmax = 0;
     page = 0;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
     page_bk = -1;
     cs_bk2 = 0;

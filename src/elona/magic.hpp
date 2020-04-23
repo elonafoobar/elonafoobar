@@ -7,10 +7,11 @@
 namespace elona
 {
 
+struct Character;
 struct Item;
 
 
 
-bool magic(optional_ref<Item> item = none);
+bool magic(Character& subject, optional_ref<Item> item = none);
 
 } // namespace elona

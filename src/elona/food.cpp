@@ -111,29 +111,29 @@ elona_vector2<int> fdlist;
 
 
 
-void show_eating_message()
+void show_eating_message(const Character& eater)
 {
-    if (cdata[cc].nutrition >= 12000)
+    if (eater.nutrition >= 12000)
     {
         txt(i18n::s.get("core.food.eating_message.bloated"),
             Message::color{ColorIndex::green});
     }
-    else if (cdata[cc].nutrition >= 10000)
+    else if (eater.nutrition >= 10000)
     {
         txt(i18n::s.get("core.food.eating_message.satisfied"),
             Message::color{ColorIndex::green});
     }
-    else if (cdata[cc].nutrition >= 5000)
+    else if (eater.nutrition >= 5000)
     {
         txt(i18n::s.get("core.food.eating_message.normal"),
             Message::color{ColorIndex::green});
     }
-    else if (cdata[cc].nutrition >= 2000)
+    else if (eater.nutrition >= 2000)
     {
         txt(i18n::s.get("core.food.eating_message.hungry"),
             Message::color{ColorIndex::green});
     }
-    else if (cdata[cc].nutrition >= 1000)
+    else if (eater.nutrition >= 1000)
     {
         txt(i18n::s.get("core.food.eating_message.very_hungry"),
             Message::color{ColorIndex::green});
@@ -147,11 +147,11 @@ void show_eating_message()
 
 
 
-void eat_rotten_food()
+void eat_rotten_food(Character& eater)
 {
-    if (cdata[cc].can_digest_rotten_food() == 1)
+    if (eater.can_digest_rotten_food() == 1)
     {
-        txt(i18n::s.get("core.food.not_affected_by_rotten", cdata[cc]));
+        txt(i18n::s.get("core.food.not_affected_by_rotten", eater));
         return;
     }
     fdmax = 0;
@@ -204,8 +204,8 @@ void eat_rotten_food()
         ++fdmax;
     }
     nutrition = 1000;
-    status_ailment_damage(cdata[cc], StatusAilment::paralyzed, 100);
-    status_ailment_damage(cdata[cc], StatusAilment::confused, 200);
+    status_ailment_damage(eater, StatusAilment::paralyzed, 100);
+    status_ailment_damage(eater, StatusAilment::confused, 200);
 }
 
 
@@ -406,7 +406,7 @@ void get_hungry(Character& chara)
 
 
 
-void cook(Item& cook_tool, Item& food)
+void food_cook(Character& cook, Item& cook_tool, Item& food)
 {
     snd("core.cook1");
     item_separate(food);
@@ -414,17 +414,17 @@ void cook(Item& cook_tool, Item& food)
     const auto item_name_prev = itemname(food);
 
     int dish_rank =
-        rnd_capped(sdata(184, cc) + 6) + rnd(cook_tool.param1 / 50 + 1);
-    if (dish_rank > sdata(184, cc) / 5 + 7)
+        rnd_capped(sdata(184, cook.index) + 6) + rnd(cook_tool.param1 / 50 + 1);
+    if (dish_rank > sdata(184, cook.index) / 5 + 7)
     {
-        dish_rank = sdata(184, cc) / 5 + 7;
+        dish_rank = sdata(184, cook.index) / 5 + 7;
     }
     dish_rank = rnd(dish_rank + 1);
     if (dish_rank > 3)
     {
         dish_rank = rnd(dish_rank);
     }
-    if (sdata(184, cc) >= 5)
+    if (sdata(184, cook.index) >= 5)
     {
         if (dish_rank < 3)
         {
@@ -434,7 +434,7 @@ void cook(Item& cook_tool, Item& food)
             }
         }
     }
-    if (sdata(184, cc) >= 10)
+    if (sdata(184, cook.index) >= 10)
     {
         if (dish_rank < 3)
         {
@@ -453,7 +453,7 @@ void cook(Item& cook_tool, Item& food)
     const auto rank = food.param2;
     if (rank > 2)
     {
-        chara_gain_skill_exp(cdata[cc], 184, 30 + rank * 5);
+        chara_gain_skill_exp(cook, 184, 30 + rank * 5);
     }
     refresh_burden_state();
 }
@@ -1126,7 +1126,7 @@ void apply_general_eating_effect(Character& eater, Item& food)
         {
             if (food.param3 < 0)
             {
-                eat_rotten_food();
+                eat_rotten_food(eater);
             }
         }
     }
@@ -1169,7 +1169,7 @@ void apply_general_eating_effect(Character& eater, Item& food)
     if (food.id == ItemId::corpse ||
         ((food.id == ItemId::jerky || food.id == ItemId::egg) && rnd(3) == 0))
     {
-        chara_db_invoke_eating_effect(int2charaid(food.subname));
+        chara_db_invoke_eating_effect(eater, int2charaid(food.subname));
     }
     for (int cnt = 0, cnt_end = (fdmax); cnt < cnt_end; ++cnt)
     {

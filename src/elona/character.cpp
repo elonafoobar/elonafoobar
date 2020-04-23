@@ -2293,13 +2293,13 @@ void revive_player(Character& chara)
 
 
 
-void proc_pregnant()
+void proc_pregnant(Character& chara)
 {
     if (rnd(15) == 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(chara))
         {
-            txt(i18n::s.get("core.misc.pregnant.pats_stomach", cdata[cc]));
+            txt(i18n::s.get("core.misc.pregnant.pats_stomach", chara));
             txt(i18n::s.get("core.misc.pregnant.something_is_wrong"));
         }
     }
@@ -2307,21 +2307,21 @@ void proc_pregnant()
     {
         if (rnd(30) == 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                    "core.misc.pregnant.something_breaks_out", cdata[cc]));
+                    "core.misc.pregnant.something_breaks_out", chara));
             }
-            cdata[cc].bleeding += 15;
+            chara.bleeding += 15;
             flt();
-            initlv = cdata[cc].level / 2 + 1;
+            initlv = chara.level / 2 + 1;
             novoidlv = 1;
-            if (const auto alien = chara_create(
-                    -1, 330, cdata[cc].position.x, cdata[cc].position.y))
+            if (const auto alien =
+                    chara_create(-1, 330, chara.position.x, chara.position.y))
             {
-                if (strlen_u(cdatan(0, cc)) > 10 ||
+                if (strlen_u(cdatan(0, chara.index)) > 10 ||
                     instr(
-                        cdatan(0, cc),
+                        cdatan(0, chara.index),
                         0,
                         i18n::s.get("core.chara.job.alien.child")) != -1)
                 {
@@ -2331,7 +2331,8 @@ void proc_pregnant()
                 else
                 {
                     cdatan(0, alien->index) = i18n::s.get(
-                        "core.chara.job.alien.child_of", cdatan(0, cc));
+                        "core.chara.job.alien.child_of",
+                        cdatan(0, chara.index));
                 }
             }
         }
@@ -2358,7 +2359,7 @@ void proc_one_equipment_with_negative_enchantments(
                 {
                     efid = 408;
                     tc = chara.index;
-                    magic();
+                    magic(chara);
                 }
             }
             break;
@@ -2575,7 +2576,7 @@ bool move_character_internal(Character& chara)
     }
     if (feat(0) != tile_trap && chara.index == 0)
     {
-        if (try_to_reveal())
+        if (try_to_reveal(chara))
         {
             refx = movx;
             refy = movy;
@@ -2591,7 +2592,7 @@ bool move_character_internal(Character& chara)
         {
             if (sdata(175, chara.index) != 0)
             {
-                if (try_to_disarm_trap())
+                if (try_to_disarm_trap(chara))
                 {
                     disarm_trap(chara, movx, movy);
                     return false;
@@ -2604,7 +2605,7 @@ bool move_character_internal(Character& chara)
         }
     }
 
-    if (can_evade_trap())
+    if (can_evade_trap(chara))
     {
         if (is_in_fov(chara))
         {
@@ -2758,9 +2759,9 @@ bool move_character_internal(Character& chara)
 
 
 
-void move_character()
+void move_character(Character& chara)
 {
-    while (move_character_internal(cdata[cc]))
+    while (move_character_internal(chara))
         ;
 }
 
@@ -2787,45 +2788,45 @@ void lost_body_part(int chara_index)
 
 
 
-TurnResult proc_movement_event()
+TurnResult proc_movement_event(Character& chara)
 {
     auto result = lua::lua->get_event_manager().trigger(
-        lua::CharacterInstanceEvent("core.character_moved", cdata[cc]));
+        lua::CharacterInstanceEvent("core.character_moved", chara));
     if (result.blocked())
     {
         return TurnResult::turn_end;
     }
 
-    if (cdata[cc].is_ridden())
+    if (chara.is_ridden())
     {
         return TurnResult::turn_end;
     }
-    dx = cdata[cc].next_position.x;
-    dy = cdata[cc].next_position.y;
-    if (cc < 16)
+    dx = chara.next_position.x;
+    dy = chara.next_position.y;
+    if (chara.index < 16)
     {
-        if (cc != 0)
+        if (chara.index != 0)
         {
-            if (dx != cdata[cc].position.x)
+            if (dx != chara.position.x)
             {
-                if (cdata[cc].position.x > dx)
+                if (chara.position.x > dx)
                 {
-                    cdata[cc].direction = 1;
+                    chara.direction = 1;
                 }
                 else
                 {
-                    cdata[cc].direction = 2;
+                    chara.direction = 2;
                 }
             }
-            if (dy != cdata[cc].position.y)
+            if (dy != chara.position.y)
             {
-                if (cdata[cc].position.y > dy)
+                if (chara.position.y > dy)
                 {
-                    cdata[cc].direction = 3;
+                    chara.direction = 3;
                 }
                 else
                 {
-                    cdata[cc].direction = 0;
+                    chara.direction = 0;
                 }
             }
         }
@@ -2835,19 +2836,19 @@ TurnResult proc_movement_event()
         cell_featread(dx, dy);
         if (feat(1) == 21)
         {
-            return try_to_open_locked_door();
+            return try_to_open_locked_door(chara);
         }
         if (feat(1) == 30)
         {
             x = dx;
             y = dy;
-            return do_bash();
+            return do_bash(chara);
         }
     }
-    if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-            .mef_index_plus_one != 0)
+    if (cell_data.at(chara.position.x, chara.position.y).mef_index_plus_one !=
+        0)
     {
-        bool turn_ended = mef_proc_from_movement(cc);
+        bool turn_ended = mef_proc_from_movement(chara.index);
         if (turn_ended)
         {
             return TurnResult::turn_end;
@@ -2855,11 +2856,11 @@ TurnResult proc_movement_event()
     }
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        if (cc == 0)
+        if (chara.index == 0)
         {
             if (traveldone == 0)
             {
-                map_global_proc_travel_events();
+                map_global_proc_travel_events(chara);
                 keybd_wait = 1;
                 return TurnResult::turn_end;
             }
@@ -2869,33 +2870,31 @@ TurnResult proc_movement_event()
             }
         }
     }
-    move_character();
-    p = cell_data.at(cdata[cc].position.x, cdata[cc].position.y).chip_id_actual;
+    move_character(chara);
+    p = cell_data.at(chara.position.x, chara.position.y).chip_id_actual;
     if (chip_data[p].kind == 3)
     {
         if (chip_data[p].kind2 == 5)
         {
-            heal_insanity(cdata[cc], 1);
+            heal_insanity(chara, 1);
         }
-        addefmap(cdata[cc].position.x, cdata[cc].position.y, 1, 3);
-        if (cdata[cc].wet == 0)
+        addefmap(chara.position.x, chara.position.y, 1, 3);
+        if (chara.wet == 0)
         {
-            wet(cc, 20);
+            wet(chara.index, 20);
         }
     }
-    sense_map_feats_on_move();
+    sense_map_feats_on_move(chara);
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        if (cc == 0)
+        if (chara.index == 0)
         {
             encounter = 0;
             game_data.stood_world_map_tile =
-                cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                    .chip_id_actual;
-            if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                    .feats == 0)
+                cell_data.at(chara.position.x, chara.position.y).chip_id_actual;
+            if (cell_data.at(chara.position.x, chara.position.y).feats == 0)
             {
-                p = cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+                p = cell_data.at(chara.position.x, chara.position.y)
                         .chip_id_actual;
                 if (rnd(30) == 0)
                 {
@@ -2996,10 +2995,9 @@ TurnResult proc_movement_event()
                 {
                     encounterlv /= 2;
                 }
-                if (33 <=
-                        cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                            .chip_id_actual &&
-                    cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+                if (33 <= cell_data.at(chara.position.x, chara.position.y)
+                              .chip_id_actual &&
+                    cell_data.at(chara.position.x, chara.position.y)
                             .chip_id_actual < 66)
                 {
                     encounterlv /= 2;

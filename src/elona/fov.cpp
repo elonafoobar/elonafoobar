@@ -757,14 +757,14 @@ int route_info(int& x, int& y, int n)
 
 
 
-int breath_list()
+int breath_list(const Position& source_pos)
 {
     int breathw = 0;
     DIM3(breathlist, 2, 100);
     maxbreath = 0;
     breathw = 1;
-    dx = cdata[cc].position.x;
-    dy = cdata[cc].position.y;
+    dx = source_pos.x;
+    dy = source_pos.y;
     for (int cnt = 0, cnt_end = cnt + (the_ability_db[efid]->range % 1000 + 1);
          cnt < cnt_end;
          ++cnt)

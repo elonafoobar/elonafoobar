@@ -121,13 +121,10 @@ void _adventurer_hate_action()
             txt(i18n::s.get(
                 "core.talk.visitor.adventurer.hate.throws", cdata[tc]));
             snd("core.throw2");
-            ccbk = cc;
-            cc = tc;
-            ThrowingObjectAnimation({tlocx, tlocy}, cdata[cc].position, 223, 0)
+            ThrowingObjectAnimation({tlocx, tlocy}, cdata[tc].position, 223, 0)
                 .play();
-            cc = ccbk;
             mef_add(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, tc);
-            mapitem_fire(tlocx, tlocy);
+            mapitem_fire(cdata[tc], tlocx, tlocy);
         }
     }
     else
@@ -211,7 +208,7 @@ int _adventurer_get_trained_skill()
 void _adventurer_learn_skill(int skill_id)
 {
     cdata.player().platinum_coin -= calclearncost(skill_id, 0, true);
-    chara_gain_skill(cdata[cc], skill_id);
+    chara_gain_skill(cdata.player(), skill_id);
     ++game_data.number_of_learned_skills_by_trainer;
 }
 
@@ -219,10 +216,10 @@ void _adventurer_train_skill(int skill_id)
 {
     cdata.player().platinum_coin -= calctraincost(skill_id, 0, true);
     modify_potential(
-        cdata[cc],
+        cdata.player(),
         skill_id,
         clamp(
-            15 - sdata.get(skill_id, cc).potential / 15,
+            15 - sdata.get(skill_id, cdata.player().index).potential / 15,
             2,
             15 - (skill_id < 18) * 10));
 }
@@ -243,10 +240,12 @@ TalkResult _talk_hv_adventurer_train()
                 "ability",
                 the_ability_db.get_id_from_legacy(skill_id)->get(),
                 "name"),
-            std::to_string(calclearncost(skill_id, cc, true)) +
+            std::to_string(
+                calclearncost(skill_id, cdata.player().index, true)) +
                 i18n::s.get("core.ui.platinum"),
             cdata[tc]);
-        if (cdata.player().platinum_coin >= calclearncost(skill_id, cc, true))
+        if (cdata.player().platinum_coin >=
+            calclearncost(skill_id, cdata.player().index, true))
         {
             list(0, listmax) = 1;
             listn(0, listmax) =
@@ -262,10 +261,12 @@ TalkResult _talk_hv_adventurer_train()
                 "ability",
                 the_ability_db.get_id_from_legacy(skill_id)->get(),
                 "name"),
-            std::to_string(calclearncost(skill_id, cc, true)) +
+            std::to_string(
+                calclearncost(skill_id, cdata.player().index, true)) +
                 i18n::s.get("core.ui.platinum"),
             cdata[tc]);
-        if (cdata.player().platinum_coin >= calctraincost(skill_id, cc, true))
+        if (cdata.player().platinum_coin >=
+            calctraincost(skill_id, cdata.player().index, true))
         {
             list(0, listmax) = 2;
             listn(0, listmax) =
@@ -441,7 +442,7 @@ void _adventurer_receive_materials()
     efid = 1117;
     efp = 100;
     tc = 0;
-    magic();
+    magic(cdata.player());
 }
 
 TalkResult _talk_hv_adventurer_materials()
@@ -559,7 +560,7 @@ void _adventurer_drink()
     txt(i18n::s.get("core.magic.alcohol.normal"),
         Message::color{ColorIndex::cyan});
     status_ailment_damage(cdata[tc], StatusAilment::drunk, 1000);
-    status_ailment_damage(cdata[cc], StatusAilment::drunk, 1000);
+    status_ailment_damage(cdata.player(), StatusAilment::drunk, 1000);
     chara_modify_impression(cdata[tc], 15);
 }
 
@@ -874,7 +875,7 @@ TalkResult _talk_hv_punk()
             }
         }
 
-        activity_sex();
+        activity_sex(cdata.player());
 
         return TalkResult::talk_end;
     }
@@ -925,7 +926,7 @@ TalkResult _talk_hv_mysterious_producer()
             }
         }
 
-        activity_sex();
+        activity_sex(cdata.player());
 
         return TalkResult::talk_end;
     }
@@ -962,7 +963,6 @@ void _merchant_sell()
     invctrl = 12;
     invfile = cdata[tc].shop_store_id;
     shop_sell_item();
-    cc = 0;
     screenupdate = -1;
     update_screen();
     cs = 0;
@@ -1016,7 +1016,6 @@ TalkResult _talk_hv_merchant()
 TalkResult talk_house_visitor()
 {
     listmax = 0;
-    cc = 0;
     switch (cdata[tc].role)
     {
     case Role::adventurer: return _talk_hv_adventurer();

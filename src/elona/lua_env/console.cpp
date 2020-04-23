@@ -322,6 +322,7 @@ void Console::register_builtin_commands()
             for (int _i = 0; _i < num; ++_i)
             {
                 what_do_you_wish_for(
+                    cdata.player(),
                     wish ? optional<std::string>{*wish}
                          : optional<std::string>{});
             }

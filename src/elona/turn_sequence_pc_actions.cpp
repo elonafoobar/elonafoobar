@@ -107,19 +107,21 @@ bool _proc_autodig()
 optional<TurnResult> handle_pc_action(std::string& action)
 {
     if (g_config.auto_target())
-        find_enemy_target(true);
+    {
+        find_enemy_target(cdata.player(), true);
+    }
 
     if (game_data.wizard)
     {
         if (action == "wizard_mewmewmew")
         {
             efid = 657;
-            magic();
+            magic(cdata.player());
             return TurnResult::turn_end;
         }
         if (action == "wizard_wish")
         {
-            what_do_you_wish_for();
+            what_do_you_wish_for(cdata.player());
             return TurnResult::turn_end;
         }
         if (action == "wizard_advance_time")
@@ -212,7 +214,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     if (action == "enter")
     {
         action = "search";
-        cell_featread(cdata[cc].position.x, cdata[cc].position.y);
+        cell_featread(cdata.player().position.x, cdata.player().position.y);
         if (feat(1) == 11 || map_data.type == mdata_t::MapType::world_map)
         {
             action = "go_down";
@@ -230,7 +232,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             if (item.number() == 0)
                 continue;
-            if (item.position != cdata[cc].position)
+            if (item.position != cdata.player().position)
                 continue;
             if (the_item_db[itemid2int(item.id)]->category ==
                 ItemCategory::chest)

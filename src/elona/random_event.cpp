@@ -250,7 +250,6 @@ void run_random_event(RandomEvent event)
 {
     assert(event.id != 0);
 
-    cc = 0;
     tc = 0;
     listmax = 0;
 
@@ -300,7 +299,7 @@ void run_random_event(RandomEvent event)
     case 24:
         efid = 1113;
         tc = 0;
-        magic();
+        magic(cdata.player());
         listmax = 1;
         event_bg = u8"bg_re4";
         break;
@@ -313,7 +312,7 @@ void run_random_event(RandomEvent event)
         efid = 1117;
         efp = 100;
         tc = 0;
-        magic();
+        magic(cdata.player());
         listmax = 1;
         event_bg = u8"bg_re3";
         break;
@@ -321,7 +320,7 @@ void run_random_event(RandomEvent event)
         efid = 1117;
         efp = 200;
         tc = 0;
-        magic();
+        magic(cdata.player());
         listmax = 1;
         event_bg = u8"bg_re3";
         break;
@@ -334,7 +333,7 @@ void run_random_event(RandomEvent event)
         efid = 1118;
         efp = 100;
         tc = 0;
-        magic();
+        magic(cdata.player());
         listmax = 1;
         event_bg = u8"bg_re5";
         break;
@@ -343,7 +342,7 @@ void run_random_event(RandomEvent event)
         efid = 454;
         efp = 100;
         tc = 0;
-        magic();
+        magic(cdata.player());
         listmax = 1;
         event_bg = u8"bg_re2";
         break;
@@ -395,7 +394,7 @@ void run_random_event(RandomEvent event)
             {
                 efid = 1114;
                 efp = 200;
-                magic();
+                magic(cdata.player());
             }
             else if (!event_has_pending_events())
             {
@@ -432,7 +431,7 @@ void run_random_event(RandomEvent event)
         efid = 1104;
         efp = 100;
         tc = 0;
-        magic();
+        magic(cdata.player());
         listmax = 1;
         event_bg = u8"bg_re6";
         break;
@@ -440,7 +439,7 @@ void run_random_event(RandomEvent event)
         efid = 1119;
         efp = 100;
         tc = 0;
-        magic();
+        magic(cdata.player());
         listmax = 1;
         event_bg = u8"bg_re4";
         break;
@@ -471,7 +470,7 @@ void run_random_event(RandomEvent event)
         efid = 451;
         efp = 800;
         tc = 0;
-        magic();
+        magic(cdata.player());
         listmax = 1;
         event_bg = u8"bg_re11";
         break;
@@ -496,7 +495,7 @@ void run_random_event(RandomEvent event)
         {
             cdata.player().nutrition = 15000;
             txt(i18n::s.get("core.talk.npc.innkeeper.eat.results"));
-            show_eating_message();
+            show_eating_message(cdata.player());
             chara_anorexia(cdata.player());
         }
         break;
@@ -539,7 +538,6 @@ void run_random_event(RandomEvent event)
         }
     }
 
-    cc = 0;
     load_activity_animation();
 }
 

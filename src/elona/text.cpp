@@ -2979,7 +2979,7 @@ void txttargetnpc(int x, int y)
             cdata.player().can_see_invisible() || cdata[i_at_m186].wet)
         {
             tc = i_at_m186;
-            s = txttargetlevel(cc, tc);
+            s = txttargetlevel(cdata.player().index, tc);
             bmes(s, 100, windowh - inf_verh - 45 - dy_at_m186 * 20);
             ++dy_at_m186;
             bmes(

@@ -52,7 +52,6 @@ TalkResult talk_shop_sell()
     invctrl = 12;
     invfile = cdata[tc].shop_store_id;
     shop_sell_item();
-    cc = 0;
     screenupdate = -1;
     update_screen();
     cs = 0;
@@ -78,7 +77,7 @@ TalkResult talk_inn_eat()
     cdata.player().nutrition = 15000;
     buff = i18n::s.get("core.talk.npc.innkeeper.eat.here_you_are", cdata[tc]);
     txt(i18n::s.get("core.talk.npc.innkeeper.eat.results"));
-    show_eating_message();
+    show_eating_message(cdata.player());
     chara_anorexia(cdata.player());
     return TalkResult::talk_npc;
 }
@@ -145,7 +144,7 @@ TalkResult talk_wizard_identify(int chatval_)
             efp = 1000;
         }
         efid = 411;
-        magic();
+        magic(cdata.player());
         if (efcancel == 1)
         {
             buff = i18n::s.get("core.talk.npc.common.you_kidding", cdata[tc]);
@@ -193,10 +192,10 @@ TalkResult talk_healer_restore_attributes()
         tc = cnt;
         efid = 439;
         efp = 100;
-        magic();
+        magic(cdata.player());
         efid = 440;
         efp = 100;
-        magic();
+        magic(cdata.player());
     }
     tc = tcbk;
     talk_start();
@@ -891,10 +890,8 @@ TalkResult talk_informer_investigate_ally()
         {
             snd("core.paygold1");
             cdata.player().gold -= 10000;
-            cc = stat;
             snd("core.pop2");
-            menu_character_sheet_investigate();
-            cc = 0;
+            menu_character_sheet_investigate(cdata[stat]);
             talk_start();
             buff = "";
         }
@@ -1094,7 +1091,7 @@ TalkResult talk_sex()
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.talk.npc.common.sex.response"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    activity_sex();
+    activity_sex(cdata.player());
     return TalkResult::talk_end;
 }
 
@@ -1128,17 +1125,15 @@ TalkResult talk_prostitute_buy()
         return TalkResult::talk_npc;
     }
     snd("core.paygold1");
-    cdata[cc].gold -= sexvalue;
+    cdata.player().gold -= sexvalue;
     earn_gold(cdata[tc], sexvalue);
     listmax = 0;
     buff = i18n::s.get("core.talk.npc.common.sex.start", cdata[tc]);
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.talk.npc.common.sex.response"));
     chatesc = 1;
     ELONA_TALK_SCENE_CUT();
-    cc = tc;
     tc = 0;
-    activity_sex();
-    cc = 0;
+    activity_sex(cdata[tc]);
     return TalkResult::talk_end;
 }
 
@@ -1343,9 +1338,10 @@ TalkResult talk_trainer(bool is_training)
                 "ability",
                 the_ability_db.get_id_from_legacy(selected_skill)->get(),
                 "name"),
-            calctraincost(selected_skill, cc),
+            calctraincost(selected_skill, cdata.player().index),
             cdata[tc]);
-        if (cdata.player().platinum_coin >= calctraincost(selected_skill, cc))
+        if (cdata.player().platinum_coin >=
+            calctraincost(selected_skill, cdata.player().index))
         {
             list(0, listmax) = 1;
             listn(0, listmax) =
@@ -1361,9 +1357,10 @@ TalkResult talk_trainer(bool is_training)
                 "ability",
                 the_ability_db.get_id_from_legacy(selected_skill)->get(),
                 "name"),
-            calclearncost(selected_skill, cc),
+            calclearncost(selected_skill, cdata.player().index),
             cdata[tc]);
-        if (cdata.player().platinum_coin >= calclearncost(selected_skill, cc))
+        if (cdata.player().platinum_coin >=
+            calclearncost(selected_skill, cdata.player().index))
         {
             list(0, listmax) = 1;
             listn(0, listmax) =
@@ -1381,19 +1378,26 @@ TalkResult talk_trainer(bool is_training)
         snd("core.paygold1");
         if (is_training)
         {
-            cdata.player().platinum_coin -= calctraincost(selected_skill, cc);
+            cdata.player().platinum_coin -=
+                calctraincost(selected_skill, cdata.player().index);
             modify_potential(
-                cdata[cc],
+                cdata.player(),
                 selected_skill,
                 clamp(
-                    15 - sdata.get(selected_skill, cc).potential / 15, 2, 15));
+                    15 -
+                        sdata.get(selected_skill, cdata.player().index)
+                                .potential /
+                            15,
+                    2,
+                    15));
             buff =
                 i18n::s.get("core.talk.npc.trainer.finish.training", cdata[tc]);
         }
         else
         {
-            cdata.player().platinum_coin -= calclearncost(selected_skill, cc);
-            chara_gain_skill(cdata[cc], selected_skill);
+            cdata.player().platinum_coin -=
+                calclearncost(selected_skill, cdata.player().index);
+            chara_gain_skill(cdata.player(), selected_skill);
             ++game_data.number_of_learned_skills_by_trainer;
             buff =
                 i18n::s.get("core.talk.npc.trainer.finish.learning", cdata[tc]);

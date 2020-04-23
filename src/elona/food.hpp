@@ -24,10 +24,10 @@ void get_sick_if_cursed(CurseState state, Character& drinker);
 
 void get_hungry(Character& chara);
 
-void show_eating_message();
-void eat_rotten_food();
+void show_eating_message(const Character& eater);
+void eat_rotten_food(Character& eater);
 
-void cook(Item& cook_tool, Item& food);
+void food_cook(Character& cook, Item& cook_tool, Item& food);
 
 void make_dish(Item& food, int dish_rank);
 

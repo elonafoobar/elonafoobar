@@ -16,11 +16,9 @@ namespace ui
 
 bool UIMenuJournal::init()
 {
-
     page = 99;
     pagesize = 40;
     cs = 0;
-    cc = 0;
     keyrange = 0;
     key_list(0) = key_enter;
     buff = newsbuff;

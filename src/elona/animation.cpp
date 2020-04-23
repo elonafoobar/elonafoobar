@@ -919,16 +919,16 @@ void MiracleAnimation::do_play()
         {
             continue;
         }
-        if (animode == 0)
+        if (_mode == Mode::target_one)
         {
-            if (cnt.index == cc)
+            if (cnt.index != _chara.index)
             {
                 continue;
             }
         }
-        if (animode >= 100)
+        else
         {
-            if (cnt.index != animode - 100)
+            if (cnt.index == _chara.index)
             {
                 continue;
             }
@@ -1019,13 +1019,13 @@ void MiracleAnimation::do_play()
             {
                 if (cnt / 3 < am)
                 {
-                    if (animode == 0)
-                    {
-                        snd("core.bolt1");
-                    }
-                    if (animode >= 100)
+                    if (_mode == Mode::target_one)
                     {
                         snd("core.heal1");
+                    }
+                    else
+                    {
+                        snd("core.bolt1");
                     }
                 }
             }
