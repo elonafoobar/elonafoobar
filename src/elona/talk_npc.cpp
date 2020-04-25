@@ -697,9 +697,9 @@ TalkResult talk_slave_buy(Character& speaker, int chatval_)
     buff = i18n::s.get(
         "core.talk.npc.slave_trader.buy.cost",
         cnven(cdatan(0, 56)),
-        calcslavevalue(56),
+        calc_slave_value(cdata.tmp()),
         speaker);
-    if (cdata.player().gold >= calcslavevalue(56))
+    if (cdata.player().gold >= calc_slave_value(cdata.tmp()))
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.talk.npc.slave_trader.buy.choices.pay"));
@@ -715,7 +715,7 @@ TalkResult talk_slave_buy(Character& speaker, int chatval_)
         txt(i18n::s.get(
             "core.talk.npc.slave_trader.buy.you_buy", cnven(cdatan(0, 56))));
         snd("core.paygold1");
-        cdata.player().gold -= calcslavevalue(56);
+        cdata.player().gold -= calc_slave_value(cdata.tmp());
         new_ally_joins(cdata.tmp());
         buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
     }
@@ -736,7 +736,7 @@ TalkResult talk_slave_sell(Character& speaker)
         listmax = 0;
         buff = i18n::s.get(
             "core.talk.npc.slave_trader.sell.price",
-            (calcslavevalue(stat) * 2 / 3),
+            (calc_slave_value(cdata[stat]) * 2 / 3),
             speaker);
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.talk.npc.slave_trader.sell.choices.deal"));
@@ -750,7 +750,7 @@ TalkResult talk_slave_sell(Character& speaker)
                 "core.talk.npc.slave_trader.sell.you_sell_off",
                 cnven(cdatan(0, stat))));
             snd("core.getgold1");
-            earn_gold(cdata.player(), calcslavevalue(stat) * 2 / 3);
+            earn_gold(cdata.player(), calc_slave_value(cdata[stat]) * 2 / 3);
             if (cdata[stat].state() == Character::State::alive)
             {
                 cell_data.at(cdata[stat].position.x, cdata[stat].position.y)

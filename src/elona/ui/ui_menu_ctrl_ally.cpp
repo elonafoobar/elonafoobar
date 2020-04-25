@@ -430,7 +430,7 @@ void UIMenuCtrlAlly::_draw_ally_list_entry_sell(int cnt, const Character& chara)
     cs_list(cs == cnt, ally_name, wx + 84, wy + 66 + cnt * 19 - 1);
 
     std::string ally_info =
-        ""s + calcslavevalue(chara.index) * 2 / 3 + i18n::s.get("core.ui.gold");
+        ""s + calc_slave_value(chara) * 2 / 3 + i18n::s.get("core.ui.gold");
 
     mes(wx + 390, wy + 66 + cnt * 19 + 2, ally_info);
 }

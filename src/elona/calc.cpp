@@ -1284,15 +1284,15 @@ int calc_resurrection_value(const Character& chara)
 
 
 
-int calcslavevalue(int pet)
+int calc_slave_value(const Character& chara)
 {
-    int value = sdata(10, pet) * sdata(11, pet) +
-        cdata[pet].level * cdata[pet].level + 1000;
+    int value = sdata(10, chara.index) * sdata(11, chara.index) +
+        chara.level * chara.level + 1000;
     if (value > 50'000)
     {
         value = 50'000;
     }
-    if (cdata[pet].splits() || cdata[pet].splits2())
+    if (chara.splits() || chara.splits2())
     {
         value = 10;
     }
