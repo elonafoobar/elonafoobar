@@ -1238,14 +1238,14 @@ void BreakingAnimation::do_play()
 
 
 
-void animeload(int animation_type, int chara_index)
+void animeload(int animation_type, const Character& chara)
 {
     elona_vector1<int> i_at_m133;
     if (mode != 0)
     {
         return;
     }
-    if (is_in_fov(cdata[chara_index]) == 0)
+    if (is_in_fov(chara) == 0)
     {
         return;
     }
@@ -1255,10 +1255,8 @@ void animeload(int animation_type, int chara_index)
     }
     screenupdate = -1;
     update_screen();
-    dx_at_m133 =
-        (cdata[chara_index].position.x - scx) * inf_tiles + inf_screenx;
-    dy_at_m133 =
-        (cdata[chara_index].position.y - scy) * inf_tiles + inf_screeny;
+    dx_at_m133 = (chara.position.x - scx) * inf_tiles + inf_screenx;
+    dy_at_m133 = (chara.position.y - scy) * inf_tiles + inf_screeny;
     gsel(7);
     picload(
         filesystem::dirs::graphic() / (u8"anime"s + animation_type + u8".bmp"),

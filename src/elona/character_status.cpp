@@ -140,7 +140,7 @@ void modify_ether_disease_stage(int delta)
                 break;
             }
         }
-        animeload(8, 0);
+        animeload(8, cdata.player());
         chara_refresh(0);
         return;
     }
@@ -188,7 +188,7 @@ void modify_ether_disease_stage(int delta)
                 break;
             }
         }
-        animeload(10, 0);
+        animeload(10, cdata.player());
         chara_refresh(0);
         return;
     }

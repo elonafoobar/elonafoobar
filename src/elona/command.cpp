@@ -783,7 +783,7 @@ TurnResult do_interact_command()
         txt(i18n::s.get("core.action.use.sandbag.start", cdata[target_index]));
         txt(i18n::s.get(
             "core.action.use.leash.other.start.dialog", cdata[target_index]));
-        animeload(8, target_index);
+        animeload(8, cdata[target_index]);
     }
     update_screen();
     return TurnResult::pc_turn_user_error;
@@ -951,7 +951,7 @@ TurnResult do_throw_command_internal(Character& thrower, Item& throw_item)
                         "core.action.throw.monster_ball.capture",
                         cdata[target_index]),
                     Message::color{ColorIndex::green});
-                animeload(8, target_index);
+                animeload(8, cdata[target_index]);
                 throw_item.subname = charaid2int(cdata[target_index].id);
                 throw_item.param3 = cdata[target_index].level;
                 throw_item.weight =
@@ -2350,7 +2350,7 @@ TurnResult do_use_command(Item& use_item)
                             cdata[target_chara_index]),
                         Message::color{ColorIndex::cyan});
                 }
-                animeload(8, target_chara_index);
+                animeload(8, cdata[target_chara_index]);
                 f = 1;
             }
         }
@@ -2410,7 +2410,7 @@ TurnResult do_use_command(Item& use_item)
                     txt(i18n::s.get(
                         "core.action.use.leash.other.start.dialog",
                         cdata[target_chara_index]));
-                    animeload(8, target_chara_index);
+                    animeload(8, cdata[target_chara_index]);
                     use_item.modify_number(-1);
                     cell_refresh(use_item.position.x, use_item.position.y);
                     refresh_burden_state();
@@ -2662,7 +2662,7 @@ TurnResult do_use_command(Item& use_item)
         }
         use_item.modify_number(-1);
         txt(i18n::s.get("core.action.use.secret_treasure.use"));
-        animeload(10, 0);
+        animeload(10, cdata.player());
         chara_refresh(cdata.player().index);
         break;
     case 30:
@@ -2751,7 +2751,7 @@ TurnResult do_use_command(Item& use_item)
             txt(i18n::s.get("core.action.use.gem_stone.kumiromi.grows"));
         }
         cell_featset(x, y, feat, feat(1), feat(2), feat(3));
-        animeload(8, 0);
+        animeload(8, cdata.player());
         break;
     case 32: {
         const auto turn_result = use_gene_machine();

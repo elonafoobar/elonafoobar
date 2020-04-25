@@ -1580,7 +1580,7 @@ void character_drops_item(Character& victim)
                     item,
                     enchantment_generate(enchantment_gen_level(rnd(4))),
                     enchantment_gen_p());
-                animeload(8, victim.index);
+                animeload(8, victim);
             }
         }
         if (item.body_part != 0)

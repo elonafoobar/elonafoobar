@@ -124,7 +124,7 @@ void resistmod(int chara_index, int element, int delta)
     sdata.get(element, chara_index).original_level =
         clamp(sdata.get(element, chara_index).original_level + delta, 50, 200);
     snd("core.atk_elec");
-    animeload(15, chara_index);
+    animeload(15, cdata[chara_index]);
 
     chara_refresh(chara_index);
 }

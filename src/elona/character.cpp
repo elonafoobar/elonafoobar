@@ -2463,7 +2463,7 @@ void lovemiracle(int chara_index)
         }
     }
     snd("core.atk_elec");
-    animeload(15, chara_index);
+    animeload(15, cdata[chara_index]);
 }
 
 
@@ -2482,7 +2482,7 @@ void get_pregnant(Character& chara)
     {
         txt(i18n::s.get("core.misc.pregnant.gets_pregnant", chara),
             Message::color{ColorIndex::orange});
-        animeload(8, chara.index);
+        animeload(8, chara);
         chara.is_pregnant() = true;
     }
 }

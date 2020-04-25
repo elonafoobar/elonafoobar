@@ -394,6 +394,6 @@ private:
 
 
 void animeblood(const Character& chara, int animation_type, int element);
-void animeload(int = 0, int = 0);
+void animeload(int animation_type, const Character& chara);
 
 } // namespace elona
