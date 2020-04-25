@@ -147,7 +147,7 @@ void dump_player_info()
 
     attackskill = 106;
     {
-        const auto evade = calc_evasion(cdata.player().index);
+        const auto evade = calc_evasion(cdata.player());
         const auto prot = calc_attack_protection(cdata.player());
 
         ss << u8"回避    : " << evade << u8"%" << std::endl;

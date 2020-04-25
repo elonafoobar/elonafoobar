@@ -36,7 +36,7 @@ int calcshopreform();
 int calc_rate_to_pierce(int);
 std::string calc_age(const Character& chara);
 int calcexpalive(int = 0);
-int calc_evasion(int chara_index);
+int calc_evasion(const Character& chara);
 int calc_accuracy(
     const Character& attacker,
     const Character& target,

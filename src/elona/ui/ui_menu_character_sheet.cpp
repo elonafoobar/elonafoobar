@@ -562,7 +562,7 @@ void UIMenuCharacterSheet::_draw_first_page_weapon_info()
         i18n::s.get("core.ui.chara_sheet.damage.evade"),
         {20, 10, 0});
     attackskill = 106;
-    const auto evade = calc_evasion(_chara.index);
+    const auto evade = calc_evasion(_chara);
     const auto prot = calc_attack_protection(_chara);
     font(14 - en * 2);
     mes(wx + 460 + en * 8,

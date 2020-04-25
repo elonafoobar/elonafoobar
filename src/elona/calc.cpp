@@ -391,10 +391,9 @@ int calcexpalive(int level)
 
 
 
-int calc_evasion(int chara_index)
+int calc_evasion(const Character& chara)
 {
-    return sdata(13, chara_index) / 3 + sdata(173, chara_index) +
-        cdata[chara_index].dv + 25;
+    return sdata(13, chara.index) / 3 + sdata(173, chara.index) + chara.dv + 25;
 }
 
 
@@ -530,7 +529,7 @@ int calcattackhit(
     optional_ref<Item> ammo)
 {
     int tohit = calc_accuracy(attacker, target, weapon, ammo, true);
-    int evasion = calc_evasion(target.index);
+    int evasion = calc_evasion(target);
 
     if (target.dimmed != 0)
     {
