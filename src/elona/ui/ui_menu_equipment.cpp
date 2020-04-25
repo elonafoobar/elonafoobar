@@ -288,7 +288,7 @@ static void _unequip_item()
         txt(i18n::s.get("core.ui.equip.cannot_be_taken_off", inv[item_index]));
         return;
     }
-    unequip_item(cdata.player().index);
+    unequip_item(cdata.player());
     chara_refresh(cdata.player().index);
     snd("core.equip1");
     Message::instance().linebreak();

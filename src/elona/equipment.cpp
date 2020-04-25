@@ -304,7 +304,7 @@ void wear_most_valuable_equipment(Character& chara, Item& equipment)
             }
             if (f == 1)
             {
-                unequip_item(chara.index);
+                unequip_item(chara);
                 equip_item(chara.index, equipment);
                 break;
             }
@@ -1368,18 +1368,17 @@ int equip_item(int chara_index, Item& equipment)
 
 
 
-void unequip_item(int chara_index)
+void unequip_item(Character& chara)
 {
-    p = cdata[chara_index].body_parts[body - 100] % 10000;
+    p = chara.body_parts[body - 100] % 10000;
     if (p == 0)
     {
         rtval = -2;
         return;
     }
-    cdata[chara_index].body_parts[body - 100] =
-        cdata[chara_index].body_parts[body - 100] / 10000 * 10000;
+    chara.body_parts[body - 100] = chara.body_parts[body - 100] / 10000 * 10000;
     inv[p - 1].body_part = 0;
-    item_stack(chara_index, inv[p - 1]);
+    item_stack(chara.index, inv[p - 1]);
 }
 
 } // namespace elona

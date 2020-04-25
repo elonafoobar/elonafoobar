@@ -26,6 +26,6 @@ void supply_new_equipment(Character& chara);
 void supply_initial_equipments(Character& chara);
 
 int equip_item(int chara_index, Item& equipment);
-void unequip_item(int);
+void unequip_item(Character& chara);
 
 } // namespace elona
