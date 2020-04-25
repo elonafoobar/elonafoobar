@@ -91,6 +91,7 @@ ELONA.i18n:add {
             release = "縄を解く",
             name = "名前をつける",
             info = "情報",
+            hang = "吊る",
          },
 
          change_tone = {
