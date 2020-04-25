@@ -252,8 +252,8 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
         txt(i18n::s.get("core.magic.mount.dismount", cdata[game_data.mount]));
         ride_end();
     }
-    game_data.executing_immediate_quest_fame_gained = calcfame(
-        0,
+    game_data.executing_immediate_quest_fame_gained = calc_gained_fame(
+        cdata.player(),
         (220 - game_data.ranks.at(0) / 50) *
                 (100 +
                  clamp(
@@ -363,8 +363,8 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
 
 TalkResult talk_pet_arena_master(Character& speaker, int chatval_)
 {
-    game_data.executing_immediate_quest_fame_gained = calcfame(
-        0,
+    game_data.executing_immediate_quest_fame_gained = calc_gained_fame(
+        cdata.player(),
         (220 - game_data.ranks.at(1) / 50) *
                 (50 +
                  clamp(

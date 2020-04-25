@@ -289,12 +289,9 @@ Quality calcfixlv(Quality base_quality)
 
 
 
-int calcfame(int chara_index, int base)
+int calc_gained_fame(const Character& chara, int base)
 {
-    int ret = base * 100 /
-        (100 +
-         cdata[chara_index].fame / 100 * (cdata[chara_index].fame / 100) /
-             2500);
+    int ret = base * 100 / (100 + chara.fame / 100 * (chara.fame / 100) / 2500);
     if (ret < 5)
     {
         ret = rnd(5) + 1;

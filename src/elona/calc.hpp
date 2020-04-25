@@ -30,7 +30,7 @@ calc_skill_damage(const Character& chara, int skill, int power);
 
 int calcobjlv(int = 0);
 Quality calcfixlv(Quality base_quality = Quality::none);
-int calcfame(int = 0, int = 0);
+int calc_gained_fame(const Character& chara, int base);
 int decfame(int = 0, int = 0);
 int calcshopreform();
 int calc_rate_to_pierce(int);

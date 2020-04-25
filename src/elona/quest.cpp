@@ -1461,7 +1461,7 @@ void quest_complete()
     }
     modify_karma(cdata.player(), 1);
     game_data.executing_immediate_quest_fame_gained =
-        calcfame(0, quest_data[rq].difficulty * 3 + 10);
+        calc_gained_fame(cdata.player(), quest_data[rq].difficulty * 3 + 10);
     txt(i18n::s.get("core.quest.completed_taken_from", qname(rq)),
         Message::color{ColorIndex::green});
     txt(i18n::s.get(

@@ -229,8 +229,8 @@ void eh_conquer_nefia(const DeferredEvent&)
     snd("core.complete1");
     txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
     modrank(2, 300, 8);
-    game_data.executing_immediate_quest_fame_gained =
-        calcfame(0, game_data.current_dungeon_level * 30 + 200);
+    game_data.executing_immediate_quest_fame_gained = calc_gained_fame(
+        cdata.player(), game_data.current_dungeon_level * 30 + 200);
     txt(i18n::s.get(
             "core.quest.gain_fame",
             game_data.executing_immediate_quest_fame_gained),
