@@ -73,7 +73,7 @@ optional<TurnResult> proc_return_or_escape()
     if (game_data.is_returning_or_escaping <= 0 && !event_has_pending_events())
     {
         f = 0;
-        for (const auto& chara : cdata.pets())
+        for (const auto& chara : cdata.allies())
         {
             if (chara.state() != Character::State::alive)
             {
@@ -920,7 +920,7 @@ TurnResult pass_one_turn(bool time_passing)
         switch (cdata.player().turn % 10)
         {
         case 1:
-            for (auto&& chara : cdata.pc_and_pets())
+            for (auto&& chara : cdata.player_and_allies())
             {
                 if (chara.state() == Character::State::alive)
                 {

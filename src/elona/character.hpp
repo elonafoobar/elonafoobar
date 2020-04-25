@@ -618,13 +618,13 @@ struct CData
     }
 
 
-    CDataSlice pets()
+    CDataSlice allies()
     {
         return {std::begin(storage) + 1, std::begin(storage) + 16};
     }
 
 
-    CDataSlice pc_and_pets()
+    CDataSlice player_and_allies()
     {
         return {std::begin(storage), std::begin(storage) + 16};
     }

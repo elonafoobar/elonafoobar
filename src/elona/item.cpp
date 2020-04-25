@@ -2552,7 +2552,7 @@ Item& item_convert_artifact(Item& artifact, bool ignore_external_container)
     }
 
     bool found = false;
-    for (const auto& chara : cdata.pc_and_pets())
+    for (const auto& chara : cdata.player_and_allies())
     {
         if (chara.state() == Character::State::empty)
         {
