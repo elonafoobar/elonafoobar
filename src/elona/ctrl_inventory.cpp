@@ -1615,7 +1615,7 @@ OnEnterResult on_enter_equip(Item& selected_item, MenuResult& result)
             return OnEnterResult{2};
         }
     }
-    equip_item(cdata.player().index, selected_item);
+    equip_item(cdata.player(), selected_item);
     chara_refresh(cdata.player().index);
     screenupdate = -1;
     update_screen();
