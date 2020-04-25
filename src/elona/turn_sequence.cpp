@@ -1252,10 +1252,9 @@ optional<TurnResult> pc_turn_pet_arena()
 
     game_data.executing_immediate_quest_status = 3;
     bool pet_exists = false;
-    for (int chara_index = 1; chara_index < 16; ++chara_index)
+    for (const auto& ally : cdata.allies())
     {
-        if (cdata[chara_index].state() == Character::State::alive &&
-            cdata[chara_index].relationship == 10)
+        if (ally.state() == Character::State::alive && ally.relationship == 10)
         {
             pet_exists = true;
             break;
@@ -1274,17 +1273,16 @@ optional<TurnResult> pc_turn_pet_arena()
         msg_halt();
         levelexitby = 4;
         snd("core.exitmap1");
-        for (int chara_index = 0; chara_index < 16; ++chara_index)
+        for (auto&& chara : cdata.player_and_allies())
         {
-            if (arenaop == 0 && followerin(chara_index) == 1 &&
-                cdata[chara_index].state() == Character::State::pet_dead)
+            if (arenaop == 0 && followerin(chara.index) == 1 &&
+                chara.state() == Character::State::pet_dead)
                 continue;
-            if (petarenawin != 1 && followerin(chara_index) == 1 &&
-                cdata[chara_index].state() == Character::State::pet_dead &&
-                rnd(5) == 0)
+            if (petarenawin != 1 && followerin(chara.index) == 1 &&
+                chara.state() == Character::State::pet_dead && rnd(5) == 0)
                 continue;
-            cdata[chara_index].set_state(
-                static_cast<Character::State>(followerexist(chara_index)));
+            chara.set_state(
+                static_cast<Character::State>(followerexist(chara.index)));
         }
         return TurnResult::exit_map;
     }
@@ -1294,15 +1292,15 @@ optional<TurnResult> pc_turn_pet_arena()
         player.direction = 0;
         auto action = key_check();
         f = 0;
-        for (int cnt = 0; cnt < 16; ++cnt)
+        for (const auto& chara : cdata.player_and_allies())
         {
             if (action == "south" || action == "west")
             {
-                p = 15 - cnt;
+                p = 15 - chara.index;
             }
             else
             {
-                p = cnt;
+                p = chara.index;
             }
             if (cdata[p].state() != Character::State::alive)
             {

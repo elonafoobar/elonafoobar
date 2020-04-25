@@ -193,18 +193,18 @@ TalkResult talk_healer_restore_attributes(Character& speaker)
     snd("core.paygold1");
     cdata.player().gold -= calcrestorecost();
     tcbk = speaker.index;
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& chara : cdata.player_and_allies())
     {
-        if (cdata[cnt].state() != Character::State::alive)
+        if (chara.state() != Character::State::alive)
         {
             continue;
         }
         efid = 439;
         efp = 100;
-        magic(cdata.player(), cdata[cnt]);
+        magic(cdata.player(), chara);
         efid = 440;
         efp = 100;
-        magic(cdata.player(), cdata[cnt]);
+        magic(cdata.player(), chara);
     }
     talk_start();
     buff = i18n::s.get("core.talk.npc.healer.restore_attributes", speaker);
@@ -413,9 +413,9 @@ TalkResult talk_pet_arena_master(Character& speaker, int chatval_)
         return TalkResult::talk_npc;
     }
     DIM2(followerexist, 16);
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (const auto& chara : cdata.player_and_allies())
     {
-        followerexist(cnt) = static_cast<int>(cdata[cnt].state());
+        followerexist(chara.index) = static_cast<int>(chara.state());
     }
     int stat = ctrl_ally(ControlAllyOperation::pet_arena);
     if (stat == -1)
@@ -1720,19 +1720,16 @@ TalkResult talk_quest_giver(Character& speaker)
                 f = !!chara;
                 if (f == 1)
                 {
-                    for (int cnt = 0; cnt < 16; ++cnt)
+                    for (const auto& ally : cdata.player_and_allies())
                     {
-                        if (cdata[cnt].state() == Character::State::empty)
+                        if (ally.state() == Character::State::empty)
                         {
                             continue;
                         }
-                        if (cdata[cnt].id == chara->id)
+                        if (ally.id == chara->id && ally.is_escorted())
                         {
-                            if (cdata[cnt].is_escorted() == 1)
-                            {
-                                f = 0;
-                                break;
-                            }
+                            f = 0;
+                            break;
                         }
                     }
                 }

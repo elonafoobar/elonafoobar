@@ -371,14 +371,13 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
     const bool right = side == HPBarSide::right_side;
 
     int cnt{};
-    for (int i = 1; i < 16; ++i)
+    for (const auto& ally : cdata.allies())
     {
-        auto& ally = cdata[i];
         if ((ally.state() == Character::State::alive ||
              ally.state() == Character::State::pet_dead) &&
-            cdata[i].has_been_used_stethoscope())
+            ally.has_been_used_stethoscope())
         {
-            const auto name = cdatan(0, i);
+            const auto name = cdatan(0, ally.index);
             const int x = 16 + (windoww - strlen_u(name) * 7 - 16) * right;
             int y = inf_clocky + (right ? 20 : 136) + cnt * 32;
 
@@ -410,7 +409,7 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
                 draw_bar("ally_health_bar", x_, y_, width * 3, 9, width);
 
                 // Show leash icon.
-                if (g_config.leash_icon() && cdata[i].is_leashed())
+                if (g_config.leash_icon() && ally.is_leashed())
                 {
                     constexpr int leash = 631;
                     auto rect = prepare_item_image(leash, 2);

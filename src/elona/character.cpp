@@ -1174,15 +1174,15 @@ int chara_find(int id)
 
 int chara_find_ally(int id)
 {
-    for (int i = 0; i < 16; ++i)
+    for (auto&& ally : cdata.allies())
     {
-        if (cdata[i].state() != Character::State::alive)
+        if (ally.state() != Character::State::alive)
         {
             continue;
         }
-        if (cdata[i].id == int2charaid(id))
+        if (ally.id == int2charaid(id))
         {
-            return i;
+            return ally.index;
         }
     }
     return -1;

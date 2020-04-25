@@ -1137,15 +1137,14 @@ void eh_lord_of_void(const DeferredEvent&)
 void eh_snow_blindness(const DeferredEvent&)
 {
     i = 0;
-    for (int chara_index = 0; chara_index < 16; ++chara_index)
+    for (auto&& chara : cdata.player_and_allies())
     {
-        if (cdata[chara_index].state() != Character::State::alive)
+        if (chara.state() != Character::State::alive)
             continue;
-        if (cdata[chara_index].role != Role::adventurer &&
-            cdata[chara_index].role != Role::other)
+        if (chara.role != Role::adventurer && chara.role != Role::other)
         {
-            cdata[chara_index].emotion_icon = 2010;
-            txt(i18n::s.get("core.event.my_eyes", cdata[chara_index]));
+            chara.emotion_icon = 2010;
+            txt(i18n::s.get("core.event.my_eyes", chara));
         }
     }
 }

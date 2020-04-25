@@ -1192,13 +1192,13 @@ void quest_failed(int val0)
         {
             txt(i18n::s.get("core.quest.escort.you_failed_to_protect"),
                 Message::color{ColorIndex::purple});
-            for (int cnt = 1; cnt < 16; ++cnt)
+            for (auto&& ally : cdata.allies())
             {
-                if (cdata[cnt].is_escorted() &&
-                    quest_data[rq].extra_info_2 == charaid2int(cdata[cnt].id))
+                if (ally.is_escorted() &&
+                    quest_data[rq].extra_info_2 == charaid2int(ally.id))
                 {
-                    cdata[cnt].is_escorted() = false;
-                    if (cdata[cnt].state() == Character::State::alive)
+                    ally.is_escorted() = false;
+                    if (ally.state() == Character::State::alive)
                     {
                         if (quest_data[rq].escort_difficulty == 0)
                         {
@@ -1214,8 +1214,7 @@ void quest_failed(int val0)
                         if (quest_data[rq].escort_difficulty == 2)
                         {
                             s = i18n::s.get(
-                                "core.quest.escort.failed.deadline",
-                                cdata[cnt]);
+                                "core.quest.escort.failed.deadline", ally);
                             mef_add(
                                 cdata.player().position.x,
                                 cdata.player().position.y,
@@ -1226,14 +1225,14 @@ void quest_failed(int val0)
                                 0);
                             mapitem_fire(
                                 cdata.player(),
-                                cdata[cnt].position.x,
-                                cdata[cnt].position.y);
+                                ally.position.x,
+                                ally.position.y);
                             p = -9;
                         }
                         txt(s, Message::color{ColorIndex::cyan});
-                        damage_hp(cdata[cnt], 999999, p);
+                        damage_hp(ally, 999999, p);
                     }
-                    cdata[cnt].set_state(Character::State::empty);
+                    ally.set_state(Character::State::empty);
                     break;
                 }
             }
@@ -1252,15 +1251,15 @@ void quest_failed(int val0)
 
 void quest_team_victorious()
 {
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& ally : cdata.player_and_allies())
     {
-        if (followerin(cnt) == 0)
+        if (followerin(ally.index) == 0)
         {
             continue;
         }
-        if (cdata[cnt].hp < cdata[cnt].max_hp / 2)
+        if (ally.hp < ally.max_hp / 2)
         {
-            cdata[cnt].hp = cdata[cnt].max_hp / 2;
+            ally.hp = ally.max_hp / 2;
         }
     }
     snd("core.cheer");

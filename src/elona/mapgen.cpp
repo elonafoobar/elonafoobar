@@ -442,15 +442,15 @@ void map_placeplayer()
         return;
     }
     camera = 0;
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& chara : cdata.player_and_allies())
     {
-        if (cdata[cnt].state() != Character::State::alive)
+        if (chara.state() != Character::State::alive)
         {
             continue;
         }
-        if (cnt != 0)
+        if (chara.index != 0)
         {
-            if (game_data.mount == cnt)
+            if (game_data.mount == chara.index)
             {
                 cdata[game_data.mount].position.x = cdata.player().position.x;
                 cdata[game_data.mount].position.y = cdata.player().position.y;
@@ -459,27 +459,27 @@ void map_placeplayer()
         }
         if (game_data.current_map == mdata_t::MapId::pet_arena)
         {
-            if (followerin(cnt) == 1)
+            if (followerin(chara.index) == 1)
             {
                 if (camera == 0)
                 {
-                    camera = cnt;
+                    camera = chara.index;
                 }
-                map_placearena(cnt, false);
+                map_placearena(chara.index, false);
                 continue;
             }
         }
-        if (cdata[cnt].current_map == game_data.current_map)
+        if (chara.current_map == game_data.current_map)
         {
-            if (cnt != 0)
+            if (chara.index != 0)
             {
-                cxinit = cdata[cnt].initial_position.x;
-                cyinit = cdata[cnt].initial_position.y;
-                chara_place(cdata[cnt]);
+                cxinit = chara.initial_position.x;
+                cyinit = chara.initial_position.y;
+                chara_place(chara);
                 continue;
             }
         }
-        map_placecharaonentrance(cnt, game_data.entrance_type);
+        map_placecharaonentrance(chara.index, game_data.entrance_type);
     }
 }
 

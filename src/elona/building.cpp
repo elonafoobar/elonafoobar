@@ -1906,13 +1906,13 @@ void create_harvested_item()
 int getworker(int map_id, int exclude_with)
 {
     int ret = -1;
-    for (int i = 1; i < 16; ++i)
+    for (auto&& ally : cdata.allies())
     {
-        if (exclude_with != 0 && i != exclude_with)
+        if (exclude_with != 0 && ally.index != exclude_with)
             continue;
-        if (cdata[i].current_map == map_id)
+        if (ally.current_map == map_id)
         {
-            ret = i;
+            ret = ally.index;
             break;
         }
     }
@@ -1923,11 +1923,11 @@ int getworker(int map_id, int exclude_with)
 
 void removeworker(int map_id)
 {
-    for (int i = 1; i < 16; ++i)
+    for (auto&& ally : cdata.allies())
     {
-        if (cdata[i].current_map == map_id)
+        if (ally.current_map == map_id)
         {
-            cdata[i].current_map = 0;
+            ally.current_map = 0;
         }
     }
 }

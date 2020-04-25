@@ -2165,13 +2165,13 @@ void sleep_start(optional_ref<Item> bed)
     if (game_data.character_and_status_for_gene != 0)
     {
         auto gene_chara_index = -1;
-        for (int cnt = 1; cnt < 16; ++cnt)
+        for (const auto& ally : cdata.allies())
         {
-            if (cdata[cnt].has_made_gene() == 1)
+            if (ally.has_made_gene())
             {
-                if (cdata[cnt].state() == Character::State::alive)
+                if (ally.state() == Character::State::alive)
                 {
-                    gene_chara_index = cnt;
+                    gene_chara_index = ally.index;
                     break;
                 }
             }

@@ -364,26 +364,26 @@ int damage_hp(
     {
         if (victim.index < 16)
         {
-            for (int cnt = 0; cnt < 16; ++cnt)
+            for (auto&& chara : cdata.player_and_allies())
             {
-                if (victim.index == cnt)
+                if (victim.index == chara.index)
                 {
                     continue;
                 }
-                if (cdata[cnt].state() != Character::State::alive)
+                if (chara.state() != Character::State::alive)
                 {
                     continue;
                 }
-                if (cdata[cnt].has_lay_hand() == 0)
+                if (chara.has_lay_hand() == 0)
                 {
                     continue;
                 }
-                if (cdata[cnt].is_lay_hand_available() == 0)
+                if (chara.is_lay_hand_available() == 0)
                 {
                     continue;
                 }
-                cdata[cnt].is_lay_hand_available() = false;
-                txt(i18n::s.get("core.damage.lay_hand", cdata[cnt]),
+                chara.is_lay_hand_available() = false;
+                txt(i18n::s.get("core.damage.lay_hand", chara),
                     Message::color{ColorIndex::cyan});
                 txt(i18n::s.get("core.damage.is_healed", victim));
                 victim.hp = victim.max_hp / 2;

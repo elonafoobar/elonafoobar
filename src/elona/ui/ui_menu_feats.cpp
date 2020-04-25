@@ -437,7 +437,7 @@ bool UIMenuFeats::_can_select_trait(int p_)
 void UIMenuFeats::_switch_target(bool is_forwards)
 {
     int new_index = _chara_index;
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (int _i = 0; _i < 16; ++_i)
     {
         if (is_forwards)
         {

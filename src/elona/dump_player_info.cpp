@@ -224,22 +224,21 @@ void dump_player_info()
     ss << u8"------------------------------ 仲間" << std::endl;
     ss << std::endl;
 
-    for (int idx = 1; idx < 16; ++idx)
+    for (const auto& ally : cdata.allies())
     {
-        const auto& chara = cdata[idx];
-        if (chara.state() == Character::State::empty)
+        if (ally.state() == Character::State::empty)
         {
             continue;
         }
 
-        ss << cdatan(0, idx) << u8" "
-           << i18n::s.get_m("race", cdatan(2, idx), "name") << u8"の"
-           << class_get_name(data::InstanceId{cdatan(3, idx)}) << u8" "
-           << i18n::s.get_enum("core.ui.sex", chara.sex) << u8" "
-           << calcage(idx) << u8"歳" << u8"  " << chara.height << u8"cm"
-           << u8" " << chara.weight << u8"kg" << std::endl;
-        ss << u8"レベル " << chara.level;
-        if (chara.is_married())
+        ss << cdatan(0, ally.index) << u8" "
+           << i18n::s.get_m("race", cdatan(2, ally.index), "name") << u8"の"
+           << class_get_name(data::InstanceId{cdatan(3, ally.index)}) << u8" "
+           << i18n::s.get_enum("core.ui.sex", ally.sex) << u8" "
+           << calcage(ally.index) << u8"歳" << u8"  " << ally.height << u8"cm"
+           << u8" " << ally.weight << u8"kg" << std::endl;
+        ss << u8"レベル " << ally.level;
+        if (ally.is_married())
         {
             ss << u8" 婚約済み";
         }

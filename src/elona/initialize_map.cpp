@@ -82,20 +82,13 @@ void _update_dungeon_level()
 
 void _update_pets_moving_status()
 {
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& ally : cdata.allies())
     {
-        if (cnt == 0)
+        if (ally.current_map != 0 && ally.current_map == game_data.current_map)
         {
-            continue;
-        }
-        if (cdata[cnt].current_map != 0)
-        {
-            if (cdata[cnt].current_map == game_data.current_map)
+            if (ally.state() == Character::State::pet_moving_to_map)
             {
-                if (cdata[cnt].state() == Character::State::pet_moving_to_map)
-                {
-                    cdata[cnt].set_state(Character::State::alive);
-                }
+                ally.set_state(Character::State::alive);
             }
         }
     }
@@ -1013,18 +1006,18 @@ void _notify_distance_traveled()
     exp = cdata.player().level * game_data.distance_between_town *
             sdata(182, 0) / 100 +
         1;
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& chara : cdata.player_and_allies())
     {
-        if (cdata[cnt].state() != Character::State::alive)
+        if (chara.state() != Character::State::alive)
         {
             continue;
         }
-        if (cnt != 0 && cdata[cnt].current_map)
+        if (chara.index != 0 && chara.current_map)
         {
             continue;
         }
         ++p;
-        cdata[cnt].experience += exp;
+        chara.experience += exp;
     }
     if (p == 1)
     {
@@ -1075,21 +1068,17 @@ void _remove_xabi()
 
 void _update_quest_escort(int cnt2)
 {
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& ally : cdata.allies())
     {
-        if (cdata[cnt].is_escorted() == 1)
+        if (ally.state() == Character::State::alive)
         {
-            if (cdata[cnt].state() == Character::State::alive)
+            if (ally.is_escorted() &&
+                ally.id == int2charaid(quest_data[cnt2].extra_info_2) &&
+                quest_data[cnt2].extra_info_1 == game_data.current_map)
             {
-                if (cdata[cnt].id == int2charaid(quest_data[cnt2].extra_info_2))
-                {
-                    if (quest_data[cnt2].extra_info_1 == game_data.current_map)
-                    {
-                        event_add(16, cnt2, cnt);
-                        cdata[cnt].is_escorted() = false;
-                        break;
-                    }
-                }
+                event_add(16, cnt2, ally.index);
+                ally.is_escorted() = false;
+                break;
             }
         }
     }

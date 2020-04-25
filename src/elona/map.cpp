@@ -1769,26 +1769,26 @@ TurnResult exit_map()
                 i18n::s.get("core.action.exit_map.larna"));
         }
     }
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& chara : cdata.player_and_allies())
     {
-        cdata[cnt].hate = 0;
-        cdata[cnt].enemy_id = 0;
-        cdata[cnt].activity.finish();
-        if (cdata[cnt].state() != Character::State::alive)
+        chara.hate = 0;
+        chara.enemy_id = 0;
+        chara.activity.finish();
+        if (chara.state() != Character::State::alive)
         {
-            if (cdata[cnt].state() == Character::State::pet_in_other_map)
+            if (chara.state() == Character::State::pet_in_other_map)
             {
-                cdata[cnt].set_state(Character::State::alive);
+                chara.set_state(Character::State::alive);
             }
             continue;
         }
-        cell_data.at(cdata[cnt].position.x, cdata[cnt].position.y)
-            .chara_index_plus_one = 0;
-        if (cnt != 0)
+        cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one =
+            0;
+        if (chara.index != 0)
         {
-            if (cdata[cnt].current_map != 0)
+            if (chara.current_map != 0)
             {
-                cdata[cnt].set_state(Character::State::pet_moving_to_map);
+                chara.set_state(Character::State::pet_moving_to_map);
             }
         }
     }

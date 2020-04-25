@@ -597,11 +597,11 @@ TurnResult do_pray()
         {
             f = 0;
             p = 0;
-            for (int cnt = 1; cnt < 16; ++cnt)
+            for (const auto& ally : cdata.allies())
             {
-                if (cdata[cnt].state() != Character::State::empty)
+                if (ally.state() != Character::State::empty)
                 {
-                    if (cdatan(2, cnt) == u8"core.servant"s)
+                    if (cdatan(2, ally.index) == u8"core.servant"s)
                     {
                         ++p;
                         if (p >= 2)
