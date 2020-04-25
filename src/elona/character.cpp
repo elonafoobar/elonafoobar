@@ -1015,7 +1015,7 @@ void chara_refresh(int chara_index)
     }
     if (chara_index == 0)
     {
-        apply_god_blessing(chara_index);
+        god_apply_blessing(cdata[chara_index]);
         for (int cnt = 0; cnt < 217; ++cnt)
         {
             if (trait(cnt) != 0)

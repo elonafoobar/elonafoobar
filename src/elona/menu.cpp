@@ -1374,7 +1374,7 @@ void screen_analyze_self()
     {
         sdata(cnt, 0) = 1;
     }
-    apply_god_blessing(56);
+    god_apply_blessing(cdata.tmp());
     if (cdata.player().god_id != core_god::eyth)
     {
         buff += u8"<title1>◆ "s + god_name(cdata.player().god_id) +
