@@ -740,7 +740,7 @@ void proc_negative_enchantments(Character& chara);
 void proc_pregnant(Character& chara);
 void wake_up();
 bool try_to_perceive_npc(const Character& chara, const Character& enemy);
-int relationbetween(int, int);
+int relation_between(const Character& a, const Character& b);
 
 } // namespace elona
 

@@ -1118,16 +1118,16 @@ void chara_refresh(Character& chara)
 
 
 
-int relationbetween(int c1, int c2)
+int relation_between(const Character& a, const Character& b)
 {
-    if (cdata[c1].relationship >= -2)
+    if (a.relationship >= -2)
     {
-        if (cdata[c2].relationship <= -3)
+        if (b.relationship <= -3)
         {
             return -3;
         }
     }
-    else if (cdata[c2].relationship >= -2)
+    else if (b.relationship >= -2)
     {
         return -3;
     }

@@ -4599,7 +4599,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
                 else
                 {
                     enemy_index = caster.enemy_id;
-                    if (relationbetween(caster.index, enemy_index) != -3)
+                    if (relation_between(caster, cdata[enemy_index]) != -3)
                     {
                         break;
                     }

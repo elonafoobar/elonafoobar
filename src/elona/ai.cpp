@@ -784,7 +784,7 @@ proc_npc_movement_event(Character& chara, int& enemy_index, bool retreat)
     if (cellchara != -1)
     {
         enemy_index = cellchara;
-        if (relationbetween(chara.index, enemy_index) == -3)
+        if (relation_between(chara, cdata[enemy_index]) == -3)
         {
             chara.enemy_id = enemy_index;
             chara.hate += 4;
