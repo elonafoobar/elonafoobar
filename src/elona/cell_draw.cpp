@@ -14,14 +14,13 @@
 #include "random.hpp"
 #include "variables.hpp"
 
-using namespace elona;
 
 
+namespace elona
+{
 
 namespace
 {
-
-
 
 int pcc_size(int shrinked, int fullscale)
 {
@@ -102,6 +101,7 @@ private:
     T width;
     T height;
 };
+
 
 
 template <typename T>
@@ -734,14 +734,13 @@ void render_cloud()
 
 
 
-void draw_hp_bar(int chara_index, int x, int y)
+void draw_hp_bar(const Character& chara, int x, int y)
 {
-    const int ratio =
-        std::min(cdata[chara_index].hp * 30 / cdata[chara_index].max_hp, 30);
+    const int ratio = std::min(chara.hp * 30 / chara.max_hp, 30);
     if (ratio <= 0)
         return;
 
-    if (chara_index < 16)
+    if (chara.index < 16)
     {
         if (map_data.type != mdata_t::MapType::world_map)
         {
@@ -847,12 +846,13 @@ void draw_character_sprite(
 
 
 
-optional_ref<const Extent> prepare_chara_chip(int c_, int dx, int dy)
+optional_ref<const Extent>
+prepare_chara_chip(const Character& chara, int dx, int dy)
 {
-    const int col_ = cdata[c_].image / 1000;
-    const int p_ = cdata[c_].image % 1000;
+    const int col_ = chara.image / 1000;
+    const int p_ = chara.image % 1000;
     auto rect = draw_get_rect_chara(p_);
-    if (cdata[c_].is_hung_on_sand_bag())
+    if (chara.is_hung_on_sand_bag())
     {
         gmode(2, 80);
         func_2(1, 96, 816, -80, 48, 96);
@@ -870,6 +870,7 @@ optional_ref<const Extent> prepare_chara_chip(int c_, int dx, int dy)
 
     return rect;
 }
+
 
 
 void draw_chara_chip_sprite_in_world_map(
@@ -894,6 +895,7 @@ void draw_chara_chip_sprite_in_world_map(
         24,
         height / 2);
 }
+
 
 
 void draw_chara_chip_sprite_in_water(
@@ -926,6 +928,8 @@ void draw_chara_chip_sprite_in_water(
         y - chara_chips[chip_id].offset_y - dy);
 }
 
+
+
 void draw_chara_chip_sprite(
     int texture_id,
     int chip_id,
@@ -949,45 +953,55 @@ void draw_chara_chip_sprite(
         y - chara_chips[chip_id].offset_y - dy);
 }
 
-void draw_npc_own_sprite(int c_, int dx, int dy, int ani_, int ground_)
+
+
+void draw_npc_own_sprite(
+    const Character& chara,
+    int dx,
+    int dy,
+    int ani_,
+    int ground_)
 {
     if (map_data.type == mdata_t::MapType::world_map)
     {
         draw_character_sprite_in_world_map(
-            c_, dx, dy, ani_, cdata[c_].direction);
+            chara.index, dx, dy, ani_, chara.direction);
     }
     else if (chip_data[ground_].kind == 3)
     {
-        draw_character_sprite_in_water(c_, dx, dy, ani_, cdata[c_].direction);
+        draw_character_sprite_in_water(
+            chara.index, dx, dy, ani_, chara.direction);
     }
     else
     {
-        draw_character_sprite(c_, dx, dy, ani_, cdata[c_].direction);
+        draw_character_sprite(chara.index, dx, dy, ani_, chara.direction);
     }
     gmode(2);
-    if (cdata[c_].furious != 0)
+    if (chara.furious != 0)
     {
         draw("furious_icon", dx + 12, dy - 28);
     }
-    if (cdata[c_].emotion_icon != 0)
+    if (chara.emotion_icon != 0)
     {
-        draw_emo(cdata[c_], dx + 4, dy - 32);
+        draw_emo(chara, dx + 4, dy - 32);
     }
 }
 
-void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
+
+
+void draw_npc_chara_chip(const Character& chara, int dx, int dy, int ground_)
 {
-    int p_ = cdata[c_].image % 1000;
-    auto rect = prepare_chara_chip(c_, dx, dy);
+    int p_ = chara.image % 1000;
+    auto rect = prepare_chara_chip(chara, dx, dy);
 
     if (map_data.type == mdata_t::MapType::world_map)
     {
         draw_chara_chip_sprite_in_world_map(
             rect->buffer, p_, dx, dy, rect->width, rect->height);
 
-        if (cdata[c_].emotion_icon != 0)
+        if (chara.emotion_icon != 0)
         {
-            draw_emo(cdata[c_], x + 4, y - chara_chips[p_].offset_y / 4 - 16);
+            draw_emo(chara, x + 4, y - chara_chips[p_].offset_y / 4 - 16);
         }
     }
     else
@@ -1003,21 +1017,22 @@ void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
                 rect->buffer, p_, dx, dy, rect->width, rect->height, ground_);
         }
 
-        if (cdata[c_].furious != 0)
+        if (chara.furious != 0)
         {
             draw("furious_icon", dx + 12, dy - chara_chips[p_].offset_y - 12);
         }
-        if (cdata[c_].emotion_icon != 0)
+        if (chara.emotion_icon != 0)
         {
-            draw_emo(cdata[c_], dx + 4, dy - chara_chips[p_].offset_y - 16);
+            draw_emo(chara, dx + 4, dy - chara_chips[p_].offset_y - 16);
         }
     }
-    if (cdata[c_].is_hung_on_sand_bag())
+    if (chara.is_hung_on_sand_bag())
     {
         gcopy(1, 96, 768, 48, 48, dx, dy - 26);
         chara_chips[p_].offset_y -= 24;
     }
 }
+
 
 
 bool you_can_see(const Character& chara)
@@ -1027,12 +1042,16 @@ bool you_can_see(const Character& chara)
          chara.wet != 0);
 }
 
+
+
 bool hp_bar_visible(const Character& chara)
 {
     return chara.has_been_used_stethoscope() ||
         game_data.chara_last_attacked_by_player == chara.index ||
         debug::voldemort;
 }
+
+
 
 bool is_night()
 {
@@ -1239,6 +1258,7 @@ void draw_item_chip_shadow(int x, int y, const Extent& rect, int p_, int alpha)
 }
 
 
+
 void draw_item_chip_on_ground(
     int x,
     int y,
@@ -1368,34 +1388,28 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
 {
     if (cell_data.at(x, y).chara_index_plus_one != 0)
     {
-        const int c_ = cell_data.at(x, y).chara_index_plus_one - 1;
-        if (c_ != 0 && you_can_see(cdata[c_]))
+        const int chara_index = cell_data.at(x, y).chara_index_plus_one - 1;
+        if (chara_index != 0 && you_can_see(cdata[chara_index]))
         {
-            if (cdata[c_].has_own_sprite())
+            if (cdata[chara_index].has_own_sprite())
             {
-                draw_npc_own_sprite(c_, dx, dy, ani_, ground_);
+                draw_npc_own_sprite(cdata[chara_index], dx, dy, ani_, ground_);
             }
             else
             {
-                draw_npc_chara_chip(c_, dx, dy, ground_);
+                draw_npc_chara_chip(cdata[chara_index], dx, dy, ground_);
             }
 
-            if (hp_bar_visible(cdata[c_]))
+            if (hp_bar_visible(cdata[chara_index]))
             {
-                draw_hp_bar(c_, dx, dy);
+                draw_hp_bar(cdata[chara_index], dx, dy);
             }
         }
     }
 }
 
-
-
 } // namespace
 
-
-
-namespace elona
-{
 
 
 void cell_draw()
@@ -1723,7 +1737,5 @@ void cell_draw()
     gmode(2);
     randomize();
 }
-
-
 
 } // namespace elona
