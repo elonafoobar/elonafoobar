@@ -203,103 +203,98 @@ void mef_update()
     }
 }
 
-void mef_proc(int chara_index)
+
+
+void mef_proc(Character& chara)
 {
     int ef =
-        cell_data
-            .at(cdata[chara_index].position.x, cdata[chara_index].position.y)
-            .mef_index_plus_one -
-        1;
+        cell_data.at(chara.position.x, chara.position.y).mef_index_plus_one - 1;
     if (mef(0, ef) == 0)
     {
         return;
     }
     if (mef(0, ef) == 3)
     {
-        if (cdata[chara_index].is_floating() == 0 ||
-            cdata[chara_index].gravity > 0)
+        if (chara.is_floating() == 0 || chara.gravity > 0)
         {
-            if (sdata(63, chara_index) / 50 < 7)
+            if (sdata(63, chara.index) / 50 < 7)
             {
-                if (is_in_fov(cdata[chara_index]))
+                if (is_in_fov(chara))
                 {
                     snd("core.water2");
-                    txt(i18n::s.get("core.mef.melts", cdata[chara_index]));
+                    txt(i18n::s.get("core.mef.melts", chara));
                 }
                 if (mef(6, ef) == 0)
                 {
-                    if (chara_index != 0)
+                    if (chara.index != 0)
                     {
-                        hostileaction(0, chara_index);
+                        hostileaction(0, chara.index);
                     }
                 }
                 int stat = damage_hp(
-                    cdata[chara_index],
+                    chara,
                     rnd_capped(mef(5, ef) / 25 + 5) + 1,
                     -15,
                     63,
                     mef(5, ef));
                 if (stat == 0)
                 {
-                    check_kill(mef(6, ef), chara_index);
+                    check_kill(mef(6, ef), chara.index);
                 }
             }
         }
     }
     if (mef(0, ef) == 5)
     {
-        if (is_in_fov(cdata[chara_index]))
+        if (is_in_fov(chara))
         {
             snd("core.fire1");
-            txt(i18n::s.get("core.mef.is_burnt", cdata[chara_index]));
+            txt(i18n::s.get("core.mef.is_burnt", chara));
         }
         if (mef(6, ef) == 0)
         {
-            if (chara_index != 0)
+            if (chara.index != 0)
             {
-                hostileaction(0, chara_index);
+                hostileaction(0, chara.index);
             }
         }
         int stat = damage_hp(
-            cdata[chara_index],
-            rnd_capped(mef(5, ef) / 15 + 5) + 1,
-            -9,
-            50,
-            mef(5, ef));
+            chara, rnd_capped(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
         if (stat == 0)
         {
-            check_kill(mef(6, ef), chara_index);
+            check_kill(mef(6, ef), chara.index);
         }
     }
     if (mef(0, ef) == 6)
     {
-        if (cdata[chara_index].is_floating() == 0 ||
-            cdata[chara_index].gravity > 0)
+        if (chara.is_floating() == 0 || chara.gravity > 0)
         {
-            if (is_in_fov(cdata[chara_index]))
+            if (is_in_fov(chara))
             {
                 snd("core.water2");
-                txt(i18n::s.get("core.mef.steps_in_pool", cdata[chara_index]));
+                txt(i18n::s.get("core.mef.steps_in_pool", chara));
             }
-            wet(chara_index, 25);
+            wet(chara.index, 25);
             if (mef(6, ef) == 0)
             {
-                if (chara_index != 0)
+                if (chara.index != 0)
                 {
-                    hostileaction(0, chara_index);
+                    hostileaction(0, chara.index);
                 }
             }
             potionspill = 1;
-            efstatus = static_cast<CurseState>(mef(8, ef)); // TODO
-            item_db_on_drink(cdata[chara_index], none, mef(7, ef));
-            if (cdata[chara_index].state() == Character::State::empty)
+            efstatus = static_cast<CurseState>(mef(8, ef));
+            item_db_on_drink(chara, none, mef(7, ef));
+            if (chara.state() == Character::State::empty)
             {
-                check_kill(mef(6, ef), chara_index);
+                check_kill(mef(6, ef), chara.index);
             }
             mef_delete(ef);
         }
     }
 }
+
+
 
 // returns true if turn ended
 bool mef_proc_from_movement(int chara_index)

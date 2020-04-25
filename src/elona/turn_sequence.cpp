@@ -993,7 +993,7 @@ TurnResult pass_one_turn(bool time_passing)
     if (cell_data.at(cdata[ct].position.x, cdata[ct].position.y)
             .mef_index_plus_one != 0)
     {
-        mef_proc(ct);
+        mef_proc(cdata[ct]);
     }
     if (cdata[ct].buffs[0].id != 0)
     {
