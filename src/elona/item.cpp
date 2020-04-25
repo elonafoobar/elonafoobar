@@ -1853,7 +1853,7 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
                     cdata[owner].body_parts[item.body_part - 100] / 10000 *
                     10000;
                 item.body_part = 0;
-                chara_refresh(owner);
+                chara_refresh(cdata[owner]);
             }
             else if (is_in_fov(cdata[owner]))
             {
@@ -2676,7 +2676,7 @@ void dipcursed(Item& item)
         txt(i18n::s.get("core.action.dip.rusts", item));
         if (inv_getowner(item) != -1)
         {
-            chara_refresh(inv_getowner(item));
+            chara_refresh(cdata[inv_getowner(item)]);
         }
     }
     else

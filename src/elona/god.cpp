@@ -382,7 +382,7 @@ void god_proc_switching_penalty(const GodId& new_religion)
         switch_religion();
         msg_halt();
     }
-    chara_refresh(0);
+    chara_refresh(cdata.player());
 }
 
 

@@ -1386,7 +1386,7 @@ void screen_analyze_self()
         }
     }
     refreshmode = 1;
-    chara_refresh(0);
+    chara_refresh(cdata.player());
     refreshmode = 0;
     buff += u8"\n"s;
     buff += u8"<title1>◆ 特徴と特殊状態による能力の恩恵<def>\n"s;

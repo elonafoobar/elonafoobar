@@ -1130,7 +1130,7 @@ TurnResult pass_one_turn(bool time_passing)
     }
     if (cdata[ct].needs_refreshing_status())
     {
-        chara_refresh(ct);
+        chara_refresh(cdata[ct]);
     }
     if (cdata[ct].state() == Character::State::alive)
     {
@@ -1601,7 +1601,7 @@ void proc_turn_end(int chara_index)
             {
                 cdata[chara_index].attr_adjs[p] -=
                     sdata.get(10 + p, chara_index).original_level / 25 + 1;
-                chara_refresh(chara_index);
+                chara_refresh(cdata[chara_index]);
             }
         }
         if (rnd(5))

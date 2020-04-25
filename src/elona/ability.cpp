@@ -186,7 +186,7 @@ void chara_gain_skill(Character& chara, int id, int initial_level, int stock)
     sdata.get(id, chara.index).original_level = clamp(
         sdata.get(id, chara.index).original_level + initial_level, 1, 2000);
 
-    chara_refresh(chara.index);
+    chara_refresh(chara);
 }
 
 
@@ -252,7 +252,7 @@ void chara_gain_fixed_skill_exp(Character& chara, int id, int experience)
             }
             txt(txtskillchange(id, chara.index, true));
         }
-        chara_refresh(chara.index);
+        chara_refresh(chara);
         return;
     }
     if (exp < 0)
@@ -284,7 +284,7 @@ void chara_gain_fixed_skill_exp(Character& chara, int id, int experience)
                 }
             }
         }
-        chara_refresh(chara.index);
+        chara_refresh(chara);
         return;
     }
     set_ability(chara, id, lv, exp, potential);
@@ -383,7 +383,7 @@ void chara_gain_skill_exp(
             }
             txt(txtskillchange(id, chara.index, true));
         }
-        chara_refresh(chara.index);
+        chara_refresh(chara);
         return;
     }
     if (new_exp_level < 0)
@@ -416,7 +416,7 @@ void chara_gain_skill_exp(
                 }
             }
         }
-        chara_refresh(chara.index);
+        chara_refresh(chara);
         return;
     }
 

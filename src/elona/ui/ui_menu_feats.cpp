@@ -419,7 +419,7 @@ bool UIMenuFeats::_gain_trait(int p_, bool show_text)
     cs = -10000 + tid;
     snd("core.ding3");
     ++trait(tid);
-    chara_refresh(_chara_index);
+    chara_refresh(cdata[_chara_index]);
 
     return true;
 }

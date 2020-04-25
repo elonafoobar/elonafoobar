@@ -606,7 +606,7 @@ void initialize_character(Character& chara)
     chara.personality = rnd(4);
     chara.talk_type = rnd(7);
     supply_initial_equipments(chara);
-    chara_refresh(chara.index);
+    chara_refresh(chara);
     modify_crowd_density(chara.index, 1);
     chara.hp = chara.max_hp;
     chara.mp = chara.max_mp;
@@ -679,12 +679,12 @@ optional_ref<Character> chara_create(int slot, int chara_id, int x, int y)
 
 
 
-void chara_refresh(int chara_index)
+void chara_refresh(Character& chara)
 {
     int rp = 0;
     int rp2 = 0;
     int rp3 = 0;
-    if (chara_index == 0)
+    if (chara.index == 0)
     {
         game_data.seven_league_boot_effect = 0;
         game_data.ether_disease_speed = 0;
@@ -696,30 +696,29 @@ void chara_refresh(int chara_index)
     }
     for (int cnt = 0; cnt < 600; ++cnt)
     {
-        sdata(cnt, chara_index) = sdata.get(cnt, chara_index).original_level;
+        sdata(cnt, chara.index) = sdata.get(cnt, chara.index).original_level;
     }
-    if (chara_index == 0)
+    if (chara.index == 0)
     {
-        cdata[chara_index].clear_flags();
+        chara.clear_flags();
         if (trait(161) != 0)
         {
             for (int i = 0; i < 30; ++i)
             {
-                if (cdata[chara_index].body_parts[i] % 10000 == 0)
+                if (chara.body_parts[i] % 10000 == 0)
                 {
                     continue;
                 }
-                rp = cdata[chara_index].body_parts[i] % 10000 - 1;
+                rp = chara.body_parts[i] % 10000 - 1;
                 if (inv[rp].weight >= 1000)
                 {
-                    cdata[chara_index].body_parts[i] =
-                        cdata[chara_index].body_parts[i] / 10000 * 10000;
+                    chara.body_parts[i] = chara.body_parts[i] / 10000 * 10000;
                     inv[rp].body_part = 0;
                 }
             }
         }
     }
-    else if (cdata[chara_index].id == CharaId::user)
+    else if (chara.id == CharaId::user)
     {
         // Vanilla-compatible CNPC is not supported now.
     }
@@ -727,65 +726,65 @@ void chara_refresh(int chara_index)
     {
         for (size_t i = 0; i < 32 * 30; ++i)
         {
-            cdata[chara_index]._flags[i] =
-                the_character_db[charaid2int(cdata[chara_index].id)]->_flags[i];
+            chara._flags[i] =
+                the_character_db[charaid2int(chara.id)]->_flags[i];
         }
     }
-    for (auto&& growth_buff : cdata[chara_index].growth_buffs)
+    for (auto&& growth_buff : chara.growth_buffs)
     {
         growth_buff = 0;
     }
-    cdata[chara_index].dv = 0;
-    cdata[chara_index].pv = 0;
-    cdata[chara_index].hit_bonus = 0;
-    cdata[chara_index].damage_bonus = 0;
-    cdata[chara_index].combat_style.reset();
+    chara.dv = 0;
+    chara.pv = 0;
+    chara.hit_bonus = 0;
+    chara.damage_bonus = 0;
+    chara.combat_style.reset();
     attacknum = 0;
-    cdata[chara_index].rate_to_pierce = 0;
-    cdata[chara_index].rate_of_critical_hit = 0;
-    cdata[chara_index].curse_power = 0;
-    cdata[chara_index].extra_attack = 0;
-    cdata[chara_index].extra_shot = 0;
-    cdata[chara_index].sum_of_equipment_weight = 0;
-    cdata[chara_index].decrease_physical_damage = 0;
-    cdata[chara_index].nullify_damage = 0;
-    cdata[chara_index].cut_counterattack = 0;
+    chara.rate_to_pierce = 0;
+    chara.rate_of_critical_hit = 0;
+    chara.curse_power = 0;
+    chara.extra_attack = 0;
+    chara.extra_shot = 0;
+    chara.sum_of_equipment_weight = 0;
+    chara.decrease_physical_damage = 0;
+    chara.nullify_damage = 0;
+    chara.cut_counterattack = 0;
     for (int i = 0; i < 30; ++i)
     {
-        if (cdata[chara_index].body_parts[i] % 10000 == 0)
+        if (chara.body_parts[i] % 10000 == 0)
         {
             continue;
         }
-        rp = cdata[chara_index].body_parts[i] % 10000 - 1;
-        cdata[chara_index].sum_of_equipment_weight += inv[rp].weight;
+        rp = chara.body_parts[i] % 10000 - 1;
+        chara.sum_of_equipment_weight += inv[rp].weight;
         if (inv[rp].skill == 168)
         {
-            cdata[chara_index].combat_style.set_shield();
+            chara.combat_style.set_shield();
         }
-        cdata[chara_index].dv += inv[rp].dv;
-        cdata[chara_index].pv += inv[rp].pv;
+        chara.dv += inv[rp].dv;
+        chara.pv += inv[rp].pv;
         if (inv[rp].dice_x == 0)
         {
-            cdata[chara_index].hit_bonus += inv[rp].hit_bonus;
-            cdata[chara_index].damage_bonus += inv[rp].damage_bonus;
-            cdata[chara_index].pv += inv[rp].enhancement * 2 +
+            chara.hit_bonus += inv[rp].hit_bonus;
+            chara.damage_bonus += inv[rp].damage_bonus;
+            chara.pv += inv[rp].enhancement * 2 +
                 (inv[rp].curse_state == CurseState::blessed) * 2;
         }
-        else if (cdata[chara_index].body_parts[i] / 10000 == 5)
+        else if (chara.body_parts[i] / 10000 == 5)
         {
             ++attacknum;
         }
         if (inv[rp].curse_state == CurseState::cursed)
         {
-            cdata[chara_index].curse_power += 20;
+            chara.curse_power += 20;
         }
         if (inv[rp].curse_state == CurseState::doomed)
         {
-            cdata[chara_index].curse_power += 100;
+            chara.curse_power += 100;
         }
         if (inv[rp].material == 8)
         {
-            if (chara_index == 0)
+            if (chara.index == 0)
             {
                 game_data.ether_disease_speed += 5;
             }
@@ -803,29 +802,29 @@ void chara_refresh(int chara_index)
                 rp2 = rp2 / 10000;
                 if (rp2 == 1)
                 {
-                    sdata(rp3, chara_index) +=
+                    sdata(rp3, chara.index) +=
                         inv[rp].enchantments[cnt].power / 50 + 1;
                     continue;
                 }
                 if (rp2 == 2)
                 {
-                    sdata(rp3, chara_index) +=
+                    sdata(rp3, chara.index) +=
                         inv[rp].enchantments[cnt].power / 2;
-                    if (sdata(rp3, chara_index) < 0)
+                    if (sdata(rp3, chara.index) < 0)
                     {
-                        sdata(rp3, chara_index) = 1;
+                        sdata(rp3, chara.index) = 1;
                     }
                     continue;
                 }
                 if (rp2 == 3)
                 {
-                    if (sdata.get(rp3, chara_index).original_level != 0)
+                    if (sdata.get(rp3, chara.index).original_level != 0)
                     {
-                        sdata(rp3, chara_index) +=
+                        sdata(rp3, chara.index) +=
                             inv[rp].enchantments[cnt].power / 50 + 1;
-                        if (sdata(rp3, chara_index) < 1)
+                        if (sdata(rp3, chara.index) < 1)
                         {
-                            sdata(rp3, chara_index) = 1;
+                            sdata(rp3, chara.index) = 1;
                         }
                     }
                     continue;
@@ -835,7 +834,7 @@ void chara_refresh(int chara_index)
             {
                 if (rp2 == 56)
                 {
-                    if (chara_index == 0)
+                    if (chara.index == 0)
                     {
                         game_data.catches_god_signal = 1;
                         continue;
@@ -843,7 +842,7 @@ void chara_refresh(int chara_index)
                 }
                 if (rp2 == 59)
                 {
-                    if (chara_index == 0)
+                    if (chara.index == 0)
                     {
                         game_data.reveals_religion = 1;
                         continue;
@@ -851,9 +850,9 @@ void chara_refresh(int chara_index)
                 }
                 if (rp2 == 29)
                 {
-                    sdata(18, chara_index) +=
+                    sdata(18, chara.index) +=
                         inv[rp].enchantments[cnt].power / 50 + 1;
-                    if (chara_index == 0)
+                    if (chara.index == 0)
                     {
                         game_data.seven_league_boot_effect +=
                             inv[rp].enchantments[cnt].power / 8;
@@ -862,108 +861,106 @@ void chara_refresh(int chara_index)
                 }
                 if (rp2 == 32)
                 {
-                    cdata[chara_index].is_floating() = true;
+                    chara.is_floating() = true;
                     continue;
                 }
                 if (rp2 == 35)
                 {
-                    cdata[chara_index].can_see_invisible() = true;
+                    chara.can_see_invisible() = true;
                     continue;
                 }
                 if (rp2 == 23)
                 {
-                    cdata[chara_index].is_immune_to_blindness() = true;
+                    chara.is_immune_to_blindness() = true;
                     continue;
                 }
                 if (rp2 == 24)
                 {
-                    cdata[chara_index].is_immune_to_paralyzation() = true;
+                    chara.is_immune_to_paralyzation() = true;
                     continue;
                 }
                 if (rp2 == 25)
                 {
-                    cdata[chara_index].is_immune_to_confusion() = true;
+                    chara.is_immune_to_confusion() = true;
                     continue;
                 }
                 if (rp2 == 26)
                 {
-                    cdata[chara_index].is_immune_to_fear() = true;
+                    chara.is_immune_to_fear() = true;
                     continue;
                 }
                 if (rp2 == 27)
                 {
-                    cdata[chara_index].is_immune_to_sleep() = true;
+                    chara.is_immune_to_sleep() = true;
                     continue;
                 }
                 if (rp2 == 28)
                 {
-                    cdata[chara_index].is_immune_to_poison() = true;
+                    chara.is_immune_to_poison() = true;
                     continue;
                 }
                 if (rp2 == 42)
                 {
-                    cdata[chara_index].can_digest_rotten_food() = true;
+                    chara.can_digest_rotten_food() = true;
                     continue;
                 }
                 if (rp2 == 41)
                 {
-                    cdata[chara_index].is_protected_from_thieves() = true;
+                    chara.is_protected_from_thieves() = true;
                     continue;
                 }
                 if (rp2 == 55)
                 {
-                    cdata[chara_index].cures_bleeding_quickly() = true;
+                    chara.cures_bleeding_quickly() = true;
                     continue;
                 }
                 if (rp2 == 52)
                 {
-                    cdata[chara_index].decrease_physical_damage +=
+                    chara.decrease_physical_damage +=
                         inv[rp].enchantments[cnt].power / 40 + 5;
                     continue;
                 }
                 if (rp2 == 53)
                 {
-                    cdata[chara_index].nullify_damage +=
+                    chara.nullify_damage +=
                         inv[rp].enchantments[cnt].power / 60 + 3;
                     continue;
                 }
                 if (rp2 == 54)
                 {
-                    cdata[chara_index].cut_counterattack +=
+                    chara.cut_counterattack +=
                         inv[rp].enchantments[cnt].power / 5;
                     continue;
                 }
                 if (rp2 == 44)
                 {
-                    cdata[chara_index].rate_of_critical_hit +=
+                    chara.rate_of_critical_hit +=
                         inv[rp].enchantments[cnt].power / 50;
                     continue;
                 }
                 if (rp2 == 39)
                 {
-                    cdata[chara_index].rate_to_pierce +=
+                    chara.rate_to_pierce +=
                         inv[rp].enchantments[cnt].power / 50;
                     continue;
                 }
                 if (rp2 == 50)
                 {
-                    cdata[chara_index].extra_attack +=
-                        inv[rp].enchantments[cnt].power / 15;
+                    chara.extra_attack += inv[rp].enchantments[cnt].power / 15;
                     continue;
                 }
                 if (rp2 == 51)
                 {
-                    cdata[chara_index].extra_shot +=
-                        inv[rp].enchantments[cnt].power / 15;
-                    cdata[chara_index].extra_shot = 100;
+                    chara.extra_shot += inv[rp].enchantments[cnt].power / 15;
+                    chara.extra_shot = 100;
                     continue;
                 }
                 if (rp2 == 21 || rp2 == 45 || rp2 == 46 || rp2 == 47)
                 {
-                    cdata[chara_index].has_cursed_equipments() = true;
+                    chara.has_cursed_equipments() = true;
                     continue;
                 }
-                if (chara_index == 0)
+                if (chara.index == 0)
                 {
                     if (rp2 == 30)
                     {
@@ -985,37 +982,37 @@ void chara_refresh(int chara_index)
         buff += u8"<title1>◆ 装備による能力の修正<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
-            sdata(cnt, 56) = sdata.get(cnt, chara_index).original_level;
-            if (sdata(cnt, 56) != sdata(cnt, chara_index))
+            sdata(cnt, 56) = sdata.get(cnt, chara.index).original_level;
+            if (sdata(cnt, 56) != sdata(cnt, chara.index))
             {
-                rp = sdata(cnt, chara_index) - sdata(cnt, 56);
+                rp = sdata(cnt, chara.index) - sdata(cnt, 56);
                 cnvbonus(cnt, rp);
             }
         }
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        if (cdata[chara_index].attr_adjs[cnt] != 0)
+        if (chara.attr_adjs[cnt] != 0)
         {
-            if (cdata[chara_index].quality >= Quality::miracle)
+            if (chara.quality >= Quality::miracle)
             {
-                if (cdata[chara_index].attr_adjs[cnt] <
-                    sdata.get(10 + cnt, chara_index).original_level / 5)
+                if (chara.attr_adjs[cnt] <
+                    sdata.get(10 + cnt, chara.index).original_level / 5)
                 {
-                    cdata[chara_index].attr_adjs[cnt] =
-                        sdata.get(10 + cnt, chara_index).original_level / 5;
+                    chara.attr_adjs[cnt] =
+                        sdata.get(10 + cnt, chara.index).original_level / 5;
                 }
             }
-            sdata(10 + cnt, chara_index) += cdata[chara_index].attr_adjs[cnt];
+            sdata(10 + cnt, chara.index) += chara.attr_adjs[cnt];
         }
-        if (sdata(10 + cnt, chara_index) < 1)
+        if (sdata(10 + cnt, chara.index) < 1)
         {
-            sdata(10 + cnt, chara_index) = 1;
+            sdata(10 + cnt, chara.index) = 1;
         }
     }
-    if (chara_index == 0)
+    if (chara.index == 0)
     {
-        god_apply_blessing(cdata[chara_index]);
+        god_apply_blessing(chara);
         for (int cnt = 0; cnt < 217; ++cnt)
         {
             if (trait(cnt) != 0)
@@ -1024,107 +1021,99 @@ void chara_refresh(int chara_index)
             }
         }
     }
-    if (cdata[chara_index].combat_style.shield())
+    if (chara.combat_style.shield())
     {
-        if (cdata[chara_index].pv > 0)
+        if (chara.pv > 0)
         {
-            cdata[chara_index].pv = cdata[chara_index].pv *
-                (120 + int(std::sqrt(sdata(168, chara_index))) * 2) / 100;
+            chara.pv = chara.pv *
+                (120 + int(std::sqrt(sdata(168, chara.index))) * 2) / 100;
         }
     }
     else if (attacknum == 1)
     {
-        cdata[chara_index].combat_style.set_two_hand();
+        chara.combat_style.set_two_hand();
     }
     else if (attacknum != 0)
     {
-        cdata[chara_index].combat_style.set_dual_wield();
+        chara.combat_style.set_dual_wield();
     }
-    cdata[chara_index].max_mp =
-        clamp(
-            ((sdata(16, chara_index) * 2 + sdata(15, chara_index) +
-              sdata(14, chara_index) / 3) *
-                 cdata[chara_index].level / 25 +
-             sdata(16, chara_index)),
-            1,
-            1000000) *
-        sdata(3, chara_index) / 100;
-    cdata[chara_index].max_hp =
-        clamp(
-            ((sdata(11, chara_index) * 2 + sdata(10, chara_index) +
-              sdata(15, chara_index) / 3) *
-                 cdata[chara_index].level / 25 +
-             sdata(11, chara_index)),
-            1,
-            1000000) *
-            sdata(2, chara_index) / 100 +
+    chara.max_mp = clamp(
+                       ((sdata(16, chara.index) * 2 + sdata(15, chara.index) +
+                         sdata(14, chara.index) / 3) *
+                            chara.level / 25 +
+                        sdata(16, chara.index)),
+                       1,
+                       1000000) *
+        sdata(3, chara.index) / 100;
+    chara.max_hp = clamp(
+                       ((sdata(11, chara.index) * 2 + sdata(10, chara.index) +
+                         sdata(15, chara.index) / 3) *
+                            chara.level / 25 +
+                        sdata(11, chara.index)),
+                       1,
+                       1000000) *
+            sdata(2, chara.index) / 100 +
         5;
-    cdata[chara_index].max_sp = 100 +
-        (sdata(15, chara_index) + sdata(11, chara_index)) / 5 + trait(24) * 8;
-    if (cdata[chara_index].max_mp < 1)
+    chara.max_sp = 100 + (sdata(15, chara.index) + sdata(11, chara.index)) / 5 +
+        trait(24) * 8;
+    if (chara.max_mp < 1)
     {
-        cdata[chara_index].max_mp = 1;
+        chara.max_mp = 1;
     }
-    if (cdata[chara_index].max_hp < 1)
+    if (chara.max_hp < 1)
     {
-        cdata[chara_index].max_hp = 1;
+        chara.max_hp = 1;
     }
-    if (chara_index >= ELONA_MAX_PARTY_CHARACTERS || false)
+    if (chara.index >= ELONA_MAX_PARTY_CHARACTERS || false)
     {
-        cdata[chara_index].dv = cdata[chara_index].level / 2 +
-            cdata[chara_index].dv * cdata[chara_index].dv_correction_value /
-                100 +
-            cdata[chara_index].dv_correction_value - 100;
-        cdata[chara_index].pv = cdata[chara_index].level +
-            (cdata[chara_index].pv + cdata[chara_index].level / 2 +
-             cdata[chara_index].pv_correction_value / 25) *
-                cdata[chara_index].pv_correction_value / 100;
-        if (cdata[chara_index].quality == Quality::great)
+        chara.dv = chara.level / 2 +
+            chara.dv * chara.dv_correction_value / 100 +
+            chara.dv_correction_value - 100;
+        chara.pv = chara.level +
+            (chara.pv + chara.level / 2 + chara.pv_correction_value / 25) *
+                chara.pv_correction_value / 100;
+        if (chara.quality == Quality::great)
         {
-            cdata[chara_index].max_hp = cdata[chara_index].max_hp * 3 / 2;
+            chara.max_hp = chara.max_hp * 3 / 2;
         }
-        if (cdata[chara_index].quality >= Quality::miracle)
+        if (chara.quality >= Quality::miracle)
         {
-            cdata[chara_index].max_hp = cdata[chara_index].max_hp * 5;
+            chara.max_hp = chara.max_hp * 5;
         }
     }
     else
     {
-        cdata[chara_index].max_hp += 10;
+        chara.max_hp += 10;
     }
-    for (auto&& buff : cdata[chara_index].buffs)
+    for (auto&& buff : chara.buffs)
     {
         if (buff.id == 0)
         {
             break;
         }
-        buff_apply(
-            cdata[chara_index],
-            *the_buff_db.get_id_from_legacy(buff.id),
-            buff.power);
+        buff_apply(chara, *the_buff_db.get_id_from_legacy(buff.id), buff.power);
     }
-    if (cdata[chara_index].combat_style.dual_wield())
+    if (chara.combat_style.dual_wield())
     {
-        cdata[chara_index].extra_attack +=
-            int(std::sqrt(sdata(166, chara_index))) * 3 / 2 + 4;
+        chara.extra_attack +=
+            int(std::sqrt(sdata(166, chara.index))) * 3 / 2 + 4;
     }
-    if (sdata(186, chara_index))
+    if (sdata(186, chara.index))
     {
-        cdata[chara_index].rate_of_critical_hit +=
-            int(std::sqrt(sdata(186, chara_index))) + 2;
+        chara.rate_of_critical_hit +=
+            int(std::sqrt(sdata(186, chara.index))) + 2;
     }
-    if (cdata[chara_index].rate_of_critical_hit > 30)
+    if (chara.rate_of_critical_hit > 30)
     {
-        cdata[chara_index].hit_bonus +=
-            (cdata[chara_index].rate_of_critical_hit - 30) * 2;
-        cdata[chara_index].rate_of_critical_hit = 30;
+        chara.hit_bonus += (chara.rate_of_critical_hit - 30) * 2;
+        chara.rate_of_critical_hit = 30;
     }
     refresh_burden_state();
-    refresh_speed(cdata[chara_index]);
-    cdata[chara_index].needs_refreshing_status() = false;
+    refresh_speed(chara);
+    chara.needs_refreshing_status() = false;
 
-    lua::lua->get_event_manager().trigger(lua::CharacterInstanceEvent(
-        "core.character_refreshed", cdata[chara_index]));
+    lua::lua->get_event_manager().trigger(
+        lua::CharacterInstanceEvent("core.character_refreshed", chara));
 }
 
 
@@ -1689,7 +1678,7 @@ void chara_relocate(
     }
 
     wear_most_valuable_equipment_for_all_body_parts(destination);
-    chara_refresh(destination.index);
+    chara_refresh(destination);
 
     if (destination.index < 57)
     {
@@ -1839,7 +1828,7 @@ void initialize_pc_character()
         }
         item.identify_state = IdentifyState::completely;
     }
-    chara_refresh(0);
+    chara_refresh(cdata.player());
 }
 
 
@@ -2257,7 +2246,7 @@ void chara_clear_status_effects(Character& chara)
             continue;
         }
     }
-    chara_refresh(chara.index);
+    chara_refresh(chara);
 }
 
 
@@ -2287,7 +2276,7 @@ void revive_player(Character& chara)
     {
         chara_gain_fixed_skill_exp(chara, 183, 1000);
     }
-    chara_refresh(chara.index);
+    chara_refresh(chara);
 }
 
 

@@ -964,7 +964,7 @@ bool _magic_632_454_1144(
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
     }
-    chara_refresh(0);
+    chara_refresh(cdata.player());
     return true;
 }
 
@@ -1033,7 +1033,7 @@ bool _magic_1121(Character& subject, Character& target)
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
     }
-    chara_refresh(0);
+    chara_refresh(cdata.player());
     return true;
 }
 
@@ -1224,7 +1224,7 @@ bool _magic_412(Character& subject, Character& target)
     {
         animeload(10, target);
     }
-    chara_refresh(target.index);
+    chara_refresh(target);
     return true;
 }
 
@@ -1391,7 +1391,7 @@ bool _magic_1143(Character& target)
         }
         animeload(8, target);
     }
-    chara_refresh(target.index);
+    chara_refresh(target);
     return true;
 }
 
@@ -1445,7 +1445,7 @@ bool _magic_1105(Character& target)
             }
         }
     }
-    chara_refresh(target.index);
+    chara_refresh(target);
     save_set_autosave();
     return true;
 }
@@ -1491,7 +1491,7 @@ bool _magic_1107(Character& target)
         1000 + (efstatus == CurseState::blessed) * 750,
         6,
         1000);
-    chara_refresh(target.index);
+    chara_refresh(target);
     return true;
 }
 
@@ -1558,7 +1558,7 @@ bool _magic_1119(Character& target)
             }
         }
     }
-    chara_refresh(target.index);
+    chara_refresh(target);
     save_set_autosave();
     return true;
 }
@@ -1572,7 +1572,7 @@ bool _magic_1106(Character& target)
     chara_gain_skill_exp(target, i, efstatusfix(-2000, -2000, -1000, -250));
     BrightAuraAnimation(target.position, BrightAuraAnimation::Type::debuff)
         .play();
-    chara_refresh(target.index);
+    chara_refresh(target);
     return true;
 }
 
@@ -1589,7 +1589,7 @@ bool _magic_1139(Character& target)
         txt(i18n::s.get("core.magic.troll_blood.blessed"),
             Message::color{ColorIndex::green});
     }
-    chara_refresh(target.index);
+    chara_refresh(target);
     return true;
 }
 
@@ -1856,7 +1856,7 @@ bool _magic_440_439(Character& target)
                 sdata.get(p(cnt), target.index).original_level / 10 + 5;
         }
     }
-    chara_refresh(target.index);
+    chara_refresh(target);
     return true;
 }
 
@@ -2148,7 +2148,7 @@ bool _magic_645_1114(Character& subject, Character& target)
             txt(i18n::s.get(
                 "core.magic.curse.apply", target, original_item_name));
         }
-        chara_refresh(target.index);
+        chara_refresh(target);
         snd("core.curse3");
         animeload(14, target);
         item_stack(target.index, cursed_item, true);
@@ -2189,7 +2189,7 @@ bool _magic_1118(Character& target)
     {
         snd("core.curse1");
     }
-    chara_refresh(target.index);
+    chara_refresh(target);
     return true;
 }
 
@@ -2470,7 +2470,7 @@ bool _magic_49(Character& subject, Item& hammer)
             target_item.index + 1;
         target_item.body_part = equip;
     }
-    chara_refresh(subject.index);
+    chara_refresh(subject);
     fixmaterial = 0;
     objfix = 0;
     hammer.modify_number(-1);
@@ -2574,7 +2574,7 @@ bool _magic_21_1127(Character& subject)
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
     }
-    chara_refresh(subject.index);
+    chara_refresh(subject);
     fixmaterial = 0;
     objfix = 0;
     return true;
@@ -2639,7 +2639,7 @@ bool _magic_1124_1125(Character& subject)
         {
             txt(i18n::s.get("core.magic.enchant.resist", target_item));
         }
-        chara_refresh(subject.index);
+        chara_refresh(subject);
     }
     else
     {
@@ -2928,7 +2928,7 @@ bool _magic_1140(Character& subject)
         obvious = 0;
     }
 
-    chara_refresh(subject.index);
+    chara_refresh(subject);
     return true;
 }
 
@@ -4235,7 +4235,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                     txt(i18n::s.get("core.magic.weaken", target),
                         Message::color{ColorIndex::purple});
                 }
-                chara_refresh(target.index);
+                chara_refresh(target);
             }
         }
         return true;

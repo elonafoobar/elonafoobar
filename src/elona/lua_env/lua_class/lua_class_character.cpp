@@ -432,7 +432,7 @@ void LuaCharacter::act_hostile_against(
  */
 void LuaCharacter::refresh(Character& self)
 {
-    chara_refresh(self.index);
+    chara_refresh(self);
 }
 
 /**

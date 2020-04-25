@@ -674,7 +674,7 @@ void chara_relocate(
     optional_ref<Character> destination_slot,
     CharaRelocationMode mode = CharaRelocationMode::normal);
 
-void chara_refresh(int);
+void chara_refresh(Character& chara);
 
 
 /**

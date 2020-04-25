@@ -277,7 +277,7 @@ void eh_player_died(const DeferredEvent&)
     txt(i18n::s.get("core.event.you_lost_some_money"));
     cdata.player().gold -= cdata.player().gold / 3;
     decrease_fame(cdata.player(), 10);
-    chara_refresh(0);
+    chara_refresh(cdata.player());
     save_set_autosave();
 }
 

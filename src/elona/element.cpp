@@ -112,7 +112,7 @@ void chara_gain_registance(Character& chara, int element, int delta)
     snd("core.atk_elec");
     animeload(15, chara);
 
-    chara_refresh(chara.index);
+    chara_refresh(chara);
 }
 
 

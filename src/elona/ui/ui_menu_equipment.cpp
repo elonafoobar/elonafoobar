@@ -289,7 +289,7 @@ static void _unequip_item()
         return;
     }
     unequip_item(cdata.player());
-    chara_refresh(cdata.player().index);
+    chara_refresh(cdata.player());
     snd("core.equip1");
     Message::instance().linebreak();
     txt(i18n::s.get("core.ui.equip.you_unequip", inv[item_index]));

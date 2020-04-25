@@ -1854,7 +1854,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
                     "core.action.dip.result.becomes_blessed", mix_target),
                 Message::color{ColorIndex::green});
             mix_target.curse_state = CurseState::blessed;
-            chara_refresh(cdata.player().index);
+            chara_refresh(cdata.player());
             return TurnResult::turn_end;
         }
         if (is_cursed(mix_item.curse_state))
@@ -1863,7 +1863,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
                     "core.action.dip.result.becomes_cursed", mix_target),
                 Message::color{ColorIndex::purple});
             mix_target.curse_state = CurseState::cursed;
-            chara_refresh(cdata.player().index);
+            chara_refresh(cdata.player());
             return TurnResult::turn_end;
         }
     }
@@ -2057,7 +2057,7 @@ TurnResult do_use_command(Item& use_item)
             }
             randomize();
         }
-        chara_refresh(cdata.player().index);
+        chara_refresh(cdata.player());
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
@@ -2230,7 +2230,7 @@ TurnResult do_use_command(Item& use_item)
             game_data.torch = 0;
             txt(i18n::s.get("core.action.use.torch.put_out"));
         }
-        chara_refresh(0);
+        chara_refresh(cdata.player());
         break;
     case 9: {
         if (read_textbook(cdata.player(), use_item))
@@ -2663,7 +2663,7 @@ TurnResult do_use_command(Item& use_item)
         use_item.modify_number(-1);
         txt(i18n::s.get("core.action.use.secret_treasure.use"));
         animeload(10, cdata.player());
-        chara_refresh(cdata.player().index);
+        chara_refresh(cdata.player());
         break;
     case 30:
         txt(i18n::s.get("core.action.use.statue.activate", use_item));
@@ -5874,7 +5874,7 @@ TurnResult do_bash(Character& chara)
                         !enchantment_find(chara, 60010))
                     {
                         --chara.attr_adjs[0];
-                        chara_refresh(chara.index);
+                        chara_refresh(chara);
                         if (is_in_fov(chara))
                         {
                             txt(i18n::s.get(

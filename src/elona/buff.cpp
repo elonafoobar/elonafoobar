@@ -226,7 +226,7 @@ void buff_add(
 
     chara.buffs[slot] = {legacy_id, power, turns};
 
-    chara_refresh(chara.index);
+    chara_refresh(chara);
 }
 
 
@@ -268,7 +268,7 @@ void buff_delete(Character& chara, int slot)
         }
     }
 
-    chara_refresh(chara.index);
+    chara_refresh(chara);
 }
 
 } // namespace elona

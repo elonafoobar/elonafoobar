@@ -1616,7 +1616,7 @@ OnEnterResult on_enter_equip(Item& selected_item, MenuResult& result)
         }
     }
     equip_item(cdata.player(), selected_item);
-    chara_refresh(cdata.player().index);
+    chara_refresh(cdata.player());
     screenupdate = -1;
     update_screen();
     snd("core.equip1");
@@ -1879,7 +1879,7 @@ OnEnterResult on_enter_give(
         {
             create_pcpic(inventory_owner);
         }
-        chara_refresh(inventory_owner.index);
+        chara_refresh(inventory_owner);
         refresh_burden_state();
         if (invally == 1)
         {
@@ -2044,7 +2044,7 @@ OnEnterResult on_enter_trade_target(
         supply_new_equipment(inventory_owner);
     }
     (void)inv_get_free_slot_force(inventory_owner.index);
-    chara_refresh(inventory_owner.index);
+    chara_refresh(inventory_owner);
     refresh_burden_state();
     invsubroutine = 0;
     result.succeeded = true;
@@ -2216,7 +2216,7 @@ OnEnterResult on_enter_receive(Item& selected_item, Character& inventory_owner)
     {
         create_pcpic(inventory_owner);
     }
-    chara_refresh(inventory_owner.index);
+    chara_refresh(inventory_owner);
     refresh_burden_state();
     return OnEnterResult{1};
 }

@@ -403,7 +403,7 @@ void _update_adventurer(Character& adv)
         adv.hp = adv.max_hp;
         adv.mp = adv.max_mp;
     }
-    chara_refresh(adv.index);
+    chara_refresh(adv);
 }
 
 

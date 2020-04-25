@@ -1024,7 +1024,7 @@ void activity_others_end_steal(Item& steal_target)
                 cdata[item_owner].body_parts[p - 100] / 10000 * 10000;
         }
         steal_target.body_part = 0;
-        chara_refresh(item_owner);
+        chara_refresh(cdata[item_owner]);
     }
     auto& stolen_item = *slot;
     item_copy(steal_target, stolen_item);
@@ -1554,7 +1554,7 @@ void activity_eating_finish(Character& eater, Item& food)
     }
     if (chara_unequip(food))
     {
-        chara_refresh(eater.index);
+        chara_refresh(eater);
     }
 
     food.modify_number(-1);

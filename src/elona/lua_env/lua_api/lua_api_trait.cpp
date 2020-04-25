@@ -92,7 +92,7 @@ void LuaApiTrait::set(int trait_id, int level)
     }
     elona::trait(trait_id) =
         clamp(level, elona::traitref(1), elona::traitref(2));
-    chara_refresh(0);
+    chara_refresh(cdata.player());
 }
 
 /**
@@ -123,7 +123,7 @@ void LuaApiTrait::modify(int trait_id, int delta)
     }
     elona::trait(trait_id) = clamp(
         elona::trait(trait_id) + delta, elona::traitref(1), elona::traitref(2));
-    chara_refresh(0);
+    chara_refresh(cdata.player());
 }
 
 void LuaApiTrait::bind(sol::table& api_table)

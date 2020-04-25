@@ -378,7 +378,7 @@ void _ally_trains(Character& chara)
         }
     }
 
-    chara_refresh(chara.index);
+    chara_refresh(chara);
 }
 
 
