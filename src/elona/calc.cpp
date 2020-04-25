@@ -1469,13 +1469,13 @@ int calc_spell_cost_mp(const Character& caster, int id)
 
 
 
-int calcspellcoststock(int id, int chara_index)
+int calc_spell_cost_stock(const Character& caster, int id)
 {
     if (debug::voldemort)
         return 1;
 
     int cost =
-        the_ability_db[id]->cost * 200 / (sdata(id, chara_index) * 3 + 100);
+        the_ability_db[id]->cost * 200 / (sdata(id, caster.index) * 3 + 100);
     if (cost < the_ability_db[id]->cost / 5)
     {
         cost = the_ability_db[id]->cost / 5;

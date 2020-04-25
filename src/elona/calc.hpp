@@ -95,7 +95,7 @@ int calcinitgold(int);
 int calc_spell_power(const Character& caster, int id);
 int calc_spell_success_rate(const Character& caster, int id);
 int calc_spell_cost_mp(const Character& caster, int id);
-int calcspellcoststock(int = 0, int = 0);
+int calc_spell_cost_stock(const Character& caster, int id);
 int calcscore();
 void calcpartyscore();
 void calcpartyscore2();

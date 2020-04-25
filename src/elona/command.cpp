@@ -4496,7 +4496,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
 
     if (caster.index == 0)
     {
-        spell(efid - 400) -= calcspellcoststock(efid, caster.index);
+        spell(efid - 400) -= calc_spell_cost_stock(caster, efid);
         if (spell(efid - 400) < 0)
         {
             spell(efid - 400) = 0;
