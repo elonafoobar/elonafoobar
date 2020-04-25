@@ -670,8 +670,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
     if (enemy_index == 0)
     {
         r2 = chara.index;
-        int stat = try_to_perceive_npc(enemy_index);
-        if (stat == 1)
+        if (try_to_perceive_npc(chara, cdata[enemy_index]))
         {
             if (chara.relationship == -3)
             {

@@ -3982,34 +3982,33 @@ int try_to_disarm_trap(Character& chara)
 
 
 
-int try_to_perceive_npc(int chara_index)
+bool try_to_perceive_npc(const Character& chara, const Character& enemy)
 {
-    int cv = 0;
-    cv = 8;
-    if (cdata[chara_index].position.x > cdata[r2].position.x - cv &&
-        cdata[chara_index].position.x < cdata[r2].position.x + cv)
+    constexpr int view_range = 8;
+
+    if (enemy.position.x > chara.position.x - view_range &&
+        enemy.position.x < chara.position.x + view_range)
     {
-        if (cdata[chara_index].position.y > cdata[r2].position.y - cv &&
-            cdata[chara_index].position.y < cdata[r2].position.y + cv)
+        if (enemy.position.y > chara.position.y - view_range &&
+            enemy.position.y < chara.position.y + view_range)
         {
-            if (cdata[r2].hate > 0)
+            if (chara.hate > 0)
             {
-                return 1;
+                return true;
             }
-            p = dist(
-                    cdata[chara_index].position.x,
-                    cdata[chara_index].position.y,
-                    cdata[r2].position.x,
-                    cdata[r2].position.y) *
-                    150 +
-                (sdata(157, chara_index) * 100 + 150) + 1;
-            if (rnd_capped(p(0)) < rnd_capped(sdata(13, r2) * 60 + 150))
+            const auto d = dist(
+                enemy.position.x,
+                enemy.position.y,
+                chara.position.x,
+                chara.position.y);
+            const auto p = d * 150 + (sdata(157, enemy.index) * 100 + 150) + 1;
+            if (rnd_capped(p) < rnd_capped(sdata(13, chara.index) * 60 + 150))
             {
-                return 1;
+                return true;
             }
         }
     }
-    return 0;
+    return false;
 }
 
 
