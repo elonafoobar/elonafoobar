@@ -848,6 +848,7 @@ void prompt_move_ally()
         }
         const auto tchome = stat;
         snd("core.ok1");
+        bool canceled = false;
         while (true)
         {
             Message::instance().linebreak();
@@ -855,7 +856,8 @@ void prompt_move_ally()
             int stat = target_position();
             if (stat == -1)
             {
-                continue;
+                canceled = true;
+                break;
             }
             if (chip_data.for_cell(tlocx, tlocy).effect & 4 ||
                 cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
@@ -866,6 +868,10 @@ void prompt_move_ally()
             {
                 break;
             }
+        }
+        if (canceled)
+        {
+            continue;
         }
         cell_data.at(cdata[tchome].position.x, cdata[tchome].position.y)
             .chara_index_plus_one = 0;
