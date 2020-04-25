@@ -277,121 +277,121 @@ int dist_town()
 
 
 
-void map_placecharaonentrance(int chara_index, int entrance_type)
+void map_place_chara_on_entrance(Character& chara, int entrance_type)
 {
-    int x_at_m167 = 0;
-    int y_at_m167 = 0;
+    int x = 0;
+    int y = 0;
     if (entrance_type == 1)
     {
-        x_at_m167 = map_data.stair_up_pos % 1000;
-        y_at_m167 = map_data.stair_up_pos / 1000;
+        x = map_data.stair_up_pos % 1000;
+        y = map_data.stair_up_pos / 1000;
     }
     if (entrance_type == 2)
     {
-        x_at_m167 = map_data.stair_down_pos % 1000;
-        y_at_m167 = map_data.stair_down_pos / 1000;
+        x = map_data.stair_down_pos % 1000;
+        y = map_data.stair_down_pos / 1000;
     }
     if (entrance_type == 3)
     {
         if (game_data.player_next_move_direction == 1)
         {
-            x_at_m167 = map_data.width - 2;
-            y_at_m167 = map_data.height / 2;
+            x = map_data.width - 2;
+            y = map_data.height / 2;
             if (game_data.current_map == mdata_t::MapId::palmia)
             {
-                y_at_m167 = 22;
+                y = 22;
             }
             if (game_data.current_map == mdata_t::MapId::lumiest)
             {
-                x_at_m167 = 58;
-                y_at_m167 = 21;
+                x = 58;
+                y = 21;
             }
         }
         if (game_data.player_next_move_direction == 2)
         {
-            x_at_m167 = 1;
-            y_at_m167 = map_data.height / 2;
+            x = 1;
+            y = map_data.height / 2;
             if (game_data.current_map == mdata_t::MapId::noyel)
             {
-                y_at_m167 = 3;
+                y = 3;
             }
             if (game_data.current_map == mdata_t::MapId::lumiest)
             {
-                x_at_m167 = 25;
-                y_at_m167 = 1;
+                x = 25;
+                y = 1;
             }
         }
         if (game_data.player_next_move_direction == 3)
         {
-            x_at_m167 = map_data.width / 2;
-            y_at_m167 = map_data.height - 2;
+            x = map_data.width / 2;
+            y = map_data.height - 2;
             if (game_data.current_map == mdata_t::MapId::palmia)
             {
-                x_at_m167 = 30;
+                x = 30;
             }
             if (game_data.current_map == mdata_t::MapId::noyel)
             {
-                x_at_m167 = 28;
+                x = 28;
             }
             if (game_data.current_map == mdata_t::MapId::lumiest)
             {
-                x_at_m167 = 58;
-                y_at_m167 = 21;
+                x = 58;
+                y = 21;
             }
         }
         if (game_data.player_next_move_direction == 0)
         {
-            x_at_m167 = map_data.width / 2;
-            y_at_m167 = 1;
+            x = map_data.width / 2;
+            y = 1;
             if (game_data.current_map == mdata_t::MapId::noyel)
             {
-                x_at_m167 = 5;
+                x = 5;
             }
             if (game_data.current_map == mdata_t::MapId::lumiest)
             {
-                x_at_m167 = 25;
-                y_at_m167 = 1;
+                x = 25;
+                y = 1;
             }
         }
         if (game_data.current_map == mdata_t::MapId::larna)
         {
-            x_at_m167 = 1;
-            y_at_m167 = 14;
+            x = 1;
+            y = 14;
         }
         if (game_data.player_x_on_map_leave != -1)
         {
-            x_at_m167 = game_data.player_x_on_map_leave;
-            y_at_m167 = game_data.player_y_on_map_leave;
+            x = game_data.player_x_on_map_leave;
+            y = game_data.player_y_on_map_leave;
         }
     }
     if (entrance_type == 4)
     {
-        x_at_m167 = map_data.width / 2;
-        y_at_m167 = map_data.height / 2;
+        x = map_data.width / 2;
+        y = map_data.height / 2;
     }
     if (entrance_type == 8)
     {
-        x_at_m167 = map_data.width / 2;
-        y_at_m167 = map_data.height - 2;
+        x = map_data.width / 2;
+        y = map_data.height - 2;
     }
     if (entrance_type == 5)
     {
-        x_at_m167 = rnd(map_data.width - 5) + 2;
-        y_at_m167 = rnd(map_data.height - 5) + 2;
+        x = rnd(map_data.width - 5) + 2;
+        y = rnd(map_data.height - 5) + 2;
     }
     if (entrance_type == 6)
     {
-        x_at_m167 = game_data.pc_x_in_world_map + rnd(chara_index / 5 + 1);
-        y_at_m167 = game_data.pc_y_in_world_map + rnd(chara_index / 5 + 1);
+        x = game_data.pc_x_in_world_map + rnd(chara.index / 5 + 1);
+        y = game_data.pc_y_in_world_map + rnd(chara.index / 5 + 1);
     }
     if (entrance_type == 7)
     {
-        x_at_m167 = mapstartx;
-        y_at_m167 = mapstarty;
+        x = mapstartx;
+        y = mapstarty;
     }
-    cxinit = x_at_m167;
-    cyinit = y_at_m167;
-    chara_place(cdata[chara_index]);
+    cxinit = x;
+    cyinit = y;
+    chara_place(chara);
 }
 
 
@@ -479,7 +479,7 @@ void map_placeplayer()
                 continue;
             }
         }
-        map_placecharaonentrance(chara.index, game_data.entrance_type);
+        map_place_chara_on_entrance(chara, game_data.entrance_type);
     }
 }
 

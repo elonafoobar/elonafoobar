@@ -1,8 +1,15 @@
 #pragma once
+
 #include <string>
+
+
 
 namespace elona
 {
+
+struct Character;
+
+
 
 void map_initialize();
 void map_initcustom(const std::string&);
@@ -13,7 +20,7 @@ void map_makedoor();
 void map_nextdir1(int = 0, int = 0);
 void map_nextdir2(int = 0, int = 0);
 void map_placearena(int chara_index, bool is_enemy);
-void map_placecharaonentrance(int chara_index, int entrance_type);
+void map_place_chara_on_entrance(Character& chara, int entrance_type);
 int dist_town();
 void map_placeplayer();
 void map_randomtile(int = 0, int = 0);
