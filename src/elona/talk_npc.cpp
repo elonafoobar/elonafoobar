@@ -1010,9 +1010,9 @@ TalkResult talk_adventurer_hire(Character& speaker)
 {
     buff = i18n::s.get(
         "core.talk.npc.adventurer.hire.cost",
-        calchireadv(speaker.index),
+        calc_adventurer_hire_cost(speaker),
         speaker);
-    if (cdata.player().gold >= calchireadv(speaker.index))
+    if (cdata.player().gold >= calc_adventurer_hire_cost(speaker))
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.talk.npc.adventurer.hire.choices.pay"));
@@ -1024,7 +1024,7 @@ TalkResult talk_adventurer_hire(Character& speaker)
     if (chatval_ == 1)
     {
         snd("core.paygold1");
-        cdata.player().gold -= calchireadv(speaker.index);
+        cdata.player().gold -= calc_adventurer_hire_cost(speaker);
         speaker.relationship = 10;
         speaker.is_contracting() = true;
         speaker.period_of_contract = game_data.date.hours() + 168;

@@ -706,14 +706,14 @@ void prompt_hiring()
     if (stat != -1)
     {
         Message::instance().linebreak();
-        if (cdata.player().gold < calchirecost(stat) * 20)
+        if (cdata.player().gold < calc_servant_hire_cost(cdata[stat]) * 20)
         {
             txt(i18n::s.get("core.building.not_enough_money"));
         }
         else
         {
             snd("core.paygold1");
-            cdata.player().gold -= calchirecost(stat) * 20;
+            cdata.player().gold -= calc_servant_hire_cost(cdata[stat]) * 20;
             await(g_config.animation_wait() * 10);
             cdata[stat].set_state(Character::State::alive);
             txt(i18n::s.get("core.building.home.hire.you_hire", cdata[stat]),

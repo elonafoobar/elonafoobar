@@ -1049,16 +1049,16 @@ int calcguiltvalue()
 
 
 
-int calchireadv(int adventurer)
+int calc_adventurer_hire_cost(const Character& adv)
 {
-    return 250 + cdata[adventurer].level * cdata[adventurer].level * 30;
+    return 250 + adv.level * adv.level * 30;
 }
 
 
 
-int calchirecost(int chara_index)
+int calc_servant_hire_cost(const Character& servant)
 {
-    switch (cdata[chara_index].role)
+    switch (servant.role)
     {
     case Role::maid: return 450;
     case Role::trainer: return 250;
@@ -1070,7 +1070,7 @@ int calchirecost(int chara_index)
     case Role::blackmarket_vendor: return 4000;
     case Role::guest_wandering_vendor: return 0;
     default:
-        if (is_shopkeeper(cdata[chara_index].role))
+        if (is_shopkeeper(servant.role))
         {
             return 1000;
         }
@@ -1107,7 +1107,7 @@ void calccosthire()
             continue;
         if (cnt.state() != Character::State::alive)
             continue;
-        cost += calchirecost(cnt.index);
+        cost += calc_servant_hire_cost(cnt);
     }
     cost = cost *
         clamp(100 - clamp(cdata.player().karma / 2, 0, 50) - 7 * trait(38) -

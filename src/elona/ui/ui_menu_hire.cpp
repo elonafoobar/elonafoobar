@@ -186,7 +186,7 @@ void UIMenuHire::_draw_list_entry_cost(int cnt, const Character& chara)
     if (_operation != HireOperation::revive)
     {
         std::string text;
-        int cost = calchirecost(chara.index);
+        int cost = calc_servant_hire_cost(chara);
 
         if (_operation == HireOperation::hire)
         {
