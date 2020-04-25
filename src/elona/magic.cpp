@@ -174,7 +174,7 @@ bool _magic_1135(Character& target)
     {
         if (target.index == 0)
         {
-            eatstatus(efstatus, target.index);
+            food_apply_curse_state(target, efstatus);
         }
         else
         {
@@ -274,7 +274,7 @@ bool _magic_1101(Character& subject, Character& target)
     {
         show_eating_message(subject);
     }
-    eatstatus(efstatus, target.index);
+    food_apply_curse_state(target, efstatus);
     animeload(15, target);
     return true;
 }
@@ -298,7 +298,7 @@ bool _magic_1102(Character& target)
         }
     }
     status_ailment_damage(target, StatusAilment::drunk, efp);
-    eatstatus(efstatus, target.index);
+    food_apply_curse_state(target, efstatus);
     return true;
 }
 
