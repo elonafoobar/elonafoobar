@@ -2846,7 +2846,7 @@ TurnResult proc_movement_event(Character& chara)
     if (cell_data.at(chara.position.x, chara.position.y).mef_index_plus_one !=
         0)
     {
-        bool turn_ended = mef_proc_from_movement(chara.index);
+        bool turn_ended = mef_proc_from_movement(chara);
         if (turn_ended)
         {
             return TurnResult::turn_end;
