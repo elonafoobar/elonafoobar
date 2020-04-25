@@ -894,7 +894,7 @@ static void _init_map_pet_arena()
                 --cnt;
                 continue;
             }
-            map_placearena(chara->index, true);
+            map_place_chara_on_pet_arena(*chara, true);
             if (cnt == 0)
             {
                 enemyteam = chara->index;

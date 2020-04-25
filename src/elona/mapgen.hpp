@@ -19,7 +19,7 @@ void map_createroomdoor();
 void map_makedoor();
 void map_nextdir1(int = 0, int = 0);
 void map_nextdir2(int = 0, int = 0);
-void map_placearena(int chara_index, bool is_enemy);
+void map_place_chara_on_pet_arena(Character& chara, bool is_enemy);
 void map_place_chara_on_entrance(Character& chara, int entrance_type);
 int dist_town();
 void map_placeplayer();

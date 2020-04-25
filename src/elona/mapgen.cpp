@@ -396,9 +396,9 @@ void map_place_chara_on_entrance(Character& chara, int entrance_type)
 
 
 
-void map_placearena(int chara_index, bool is_enemy)
+void map_place_chara_on_pet_arena(Character& chara, bool is_enemy)
 {
-    while (1)
+    while (true)
     {
         x = rnd(7) + 5;
         y = rnd(6) + 6;
@@ -408,28 +408,23 @@ void map_placearena(int chara_index, bool is_enemy)
         }
         cxinit = x;
         cyinit = y;
-        chara_place(cdata[chara_index]);
+        chara_place(chara);
         if (!is_enemy)
         {
-            if (cdata[chara_index].position.x >= 13 &&
-                cdata[chara_index].position.y >= 6 &&
-                cdata[chara_index].position.x < 20 &&
-                cdata[chara_index].position.y < 12)
+            if (chara.position.x >= 13 && chara.position.y >= 6 &&
+                chara.position.x < 20 && chara.position.y < 12)
             {
                 break;
             }
         }
         else if (
-            cdata[chara_index].position.x >= 5 &&
-            cdata[chara_index].position.y >= 6 &&
-            cdata[chara_index].position.x < 12 &&
-            cdata[chara_index].position.y < 12)
+            chara.position.x >= 5 && chara.position.y >= 6 &&
+            chara.position.x < 12 && chara.position.y < 12)
         {
             break;
         }
-        cell_data
-            .at(cdata[chara_index].position.x, cdata[chara_index].position.y)
-            .chara_index_plus_one = 0;
+        cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one =
+            0;
     }
 }
 
@@ -465,7 +460,7 @@ void map_placeplayer()
                 {
                     camera = chara.index;
                 }
-                map_placearena(chara.index, false);
+                map_place_chara_on_pet_arena(chara, false);
                 continue;
             }
         }
