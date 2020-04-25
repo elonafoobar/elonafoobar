@@ -27,7 +27,9 @@ void mef_delete(int = 0);
 void mef_update();
 void mef_proc(Character& chara);
 bool mef_proc_from_movement(Character& chara);
-bool mef_proc_from_physical_attack(const Character& attacker, int);
+bool mef_proc_from_physical_attack(
+    const Character& attacker,
+    const Character& target);
 void mef_clear_all();
 
 } // namespace elona

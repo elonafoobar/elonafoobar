@@ -337,12 +337,12 @@ bool mef_proc_from_movement(Character& chara)
 
 
 // returns true if caller needs to return directly after
-bool mef_proc_from_physical_attack(const Character& attacker, int chara_index)
+bool mef_proc_from_physical_attack(
+    const Character& attacker,
+    const Character& target)
 {
     int i =
-        cell_data
-            .at(cdata[chara_index].position.x, cdata[chara_index].position.y)
-            .mef_index_plus_one -
+        cell_data.at(target.position.x, target.position.y).mef_index_plus_one -
         1;
     if (mef(0, i) == 0)
     {
@@ -355,13 +355,15 @@ bool mef_proc_from_physical_attack(const Character& attacker, int chara_index)
             if (is_in_fov(attacker))
             {
                 txt(i18n::s.get("core.mef.attacks_illusion_in_mist", attacker));
-                add_damage_popup(u8"miss", chara_index, {191, 191, 191});
+                add_damage_popup(u8"miss", target.index, {191, 191, 191});
             }
             return true;
         }
     }
     return false;
 }
+
+
 
 void mef_clear_all()
 {

@@ -221,7 +221,7 @@ bool do_physical_attack_internal(
     if (cell_data.at(target.position.x, target.position.y).mef_index_plus_one !=
         0)
     {
-        bool return_now = mef_proc_from_physical_attack(attacker, target.index);
+        bool return_now = mef_proc_from_physical_attack(attacker, target);
         if (return_now)
         {
             return false;
