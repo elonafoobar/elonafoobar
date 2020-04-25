@@ -1856,13 +1856,13 @@ void prepare_charas_for_map_unload()
     }
 
     // remove living adventurers from the map and set their states
-    for (int cnt = 16; cnt < 55; ++cnt)
+    for (auto&& adv : cdata.adventurers())
     {
-        if (cdata[cnt].state() == Character::State::alive)
+        if (adv.state() == Character::State::alive)
         {
-            cell_data.at(cdata[cnt].position.x, cdata[cnt].position.y)
-                .chara_index_plus_one = 0;
-            cdata[cnt].set_state(Character::State::adventurer_in_other_map);
+            cell_data.at(adv.position.x, adv.position.y).chara_index_plus_one =
+                0;
+            adv.set_state(Character::State::adventurer_in_other_map);
         }
     }
 }

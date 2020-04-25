@@ -28,9 +28,9 @@ int i_at_m145 = 0;
 
 void create_all_adventurers()
 {
-    for (int cnt = 16; cnt < 55; ++cnt)
+    for (auto&& adv : cdata.adventurers())
     {
-        create_adventurer(cdata[cnt]);
+        create_adventurer(adv);
     }
 }
 
@@ -199,9 +199,8 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
 
 void adventurer_update()
 {
-    for (int cnt = 16; cnt < 55; ++cnt)
+    for (auto&& adv : cdata.adventurers())
     {
-        auto& adv = cdata[cnt];
         if (adv.period_of_contract != 0)
         {
             if (adv.period_of_contract < game_data.date.hours())

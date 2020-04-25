@@ -357,20 +357,20 @@ void _proc_three_years_later()
 
 
 
-void _update_adventurer(int cnt)
+void _update_adventurer(Character& adv)
 {
-    if (cdata[cnt].state() != Character::State::adventurer_in_other_map)
+    if (adv.state() != Character::State::adventurer_in_other_map)
     {
         return;
     }
-    if (cdata[cnt].is_contracting())
+    if (adv.is_contracting())
     {
-        cdata[cnt].relationship = 10;
-        cdata[cnt].current_map = game_data.current_map;
+        adv.relationship = 10;
+        adv.current_map = game_data.current_map;
     }
     else
     {
-        if (cdata[cnt].current_map != game_data.current_map)
+        if (adv.current_map != game_data.current_map)
         {
             return;
         }
@@ -389,30 +389,30 @@ void _update_adventurer(int cnt)
     {
         return;
     }
-    cdata[cnt].set_state(Character::State::alive);
-    if (cdata[cnt].is_contracting() == 1)
+    adv.set_state(Character::State::alive);
+    if (adv.is_contracting() == 1)
     {
         cxinit = cdata.player().position.x;
         cyinit = cdata.player().position.y;
-        chara_place(cdata[cnt]);
+        chara_place(adv);
     }
     else
     {
         cxinit = -1;
-        chara_place(cdata[cnt]);
-        cdata[cnt].hp = cdata[cnt].max_hp;
-        cdata[cnt].mp = cdata[cnt].max_mp;
+        chara_place(adv);
+        adv.hp = adv.max_hp;
+        adv.mp = adv.max_mp;
     }
-    chara_refresh(cnt);
+    chara_refresh(adv.index);
 }
 
 
 
 void _update_adventurers()
 {
-    for (int cnt = 16; cnt < 55; ++cnt)
+    for (auto&& adv : cdata.adventurers())
     {
-        _update_adventurer(cnt);
+        _update_adventurer(adv);
     }
 }
 
