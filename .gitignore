@@ -3,6 +3,8 @@
 *.log
 bak/
 
+/doxygen/
+
 *.o
 *.a
 bin/
