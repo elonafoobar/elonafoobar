@@ -159,18 +159,18 @@ void eh_conquer_lesimas(const DeferredEvent&)
 
 void eh_lomias_talks(const DeferredEvent&)
 {
-    const auto lomias_index = chara_find("core.lomias");
-    assert(lomias_index != 0);
-    talk_to_npc(cdata[lomias_index]);
+    const auto lomias = chara_find("core.lomias");
+    assert(lomias);
+    talk_to_npc(*lomias);
 }
 
 
 
 void eh_zeome_talks(const DeferredEvent&)
 {
-    const auto zeome_index = chara_find("core.zeome");
-    assert(zeome_index != 0);
-    talk_to_npc(cdata[zeome_index]);
+    const auto zeome = chara_find("core.zeome");
+    assert(zeome);
+    talk_to_npc(*zeome);
 }
 
 
@@ -299,9 +299,9 @@ void eh_quest_update_deadline(const DeferredEvent&)
 
 void eh_wandering_vendor(const DeferredEvent&)
 {
-    const auto shopkeeper_index = chara_find("core.shopkeeper");
-    assert(shopkeeper_index != 0);
-    talk_to_npc(cdata[shopkeeper_index]);
+    const auto shopkeeper = chara_find("core.shopkeeper");
+    assert(shopkeeper);
+    talk_to_npc(*shopkeeper);
 }
 
 
@@ -589,16 +589,15 @@ void eh_lily_killed(const DeferredEvent& event)
     flt();
     itemcreate_extra_inv(55, cdata[event.param1].position, 4);
     game_data.quest_flags.pael_and_her_mom = 1001;
-    const auto pael_index = chara_find("core.pael");
-    if (pael_index != 0)
+    if (const auto pael = chara_find("core.pael"))
     {
-        if (cdata[pael_index].state() == Character::State::alive)
+        if (pael->state() == Character::State::alive)
         {
             txt(i18n::s.get("core.event.pael"),
                 Message::color{ColorIndex::blue});
-            cdata[pael_index].relationship = -3;
-            cdata[pael_index].hate = 1000;
-            cdata[pael_index].enemy_id = 0;
+            pael->relationship = -3;
+            pael->hate = 1000;
+            pael->enemy_id = 0;
         }
     }
 }
@@ -836,9 +835,9 @@ void eh_guild_alarm(const DeferredEvent& event)
 
 void eh_rogue_party_ambush(const DeferredEvent&)
 {
-    const auto rogue_boss_index = chara_find("core.rogue_boss");
-    assert(rogue_boss_index != 0);
-    talk_to_npc(cdata[rogue_boss_index]);
+    const auto rogue_boss = chara_find("core.rogue_boss");
+    assert(rogue_boss);
+    talk_to_npc(*rogue_boss);
     game_data.rogue_boss_encountered = 23;
 }
 

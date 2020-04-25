@@ -1145,29 +1145,28 @@ int relationbetween(int c1, int c2)
     return 0;
 }
 
-int chara_find(data::InstanceId chara_id)
+
+
+optional_ref<Character> chara_find(data::InstanceId chara_id)
 {
     // Note: if `chara_id` not found, `ensure()` throws an exception.
-    return chara_find(the_character_db.ensure(chara_id).legacy_id);
-}
+    int legacy_id = the_character_db.ensure(chara_id).legacy_id;
 
-int chara_find(int id)
-{
-    for (auto&& i : cdata.others())
+    for (auto&& chara : cdata.others())
     {
-        if (i.state() != Character::State::villager_dead)
+        if (chara.state() != Character::State::villager_dead)
         {
-            if (i.state() != Character::State::alive)
+            if (chara.state() != Character::State::alive)
             {
                 continue;
             }
         }
-        if (i.id == int2charaid(id))
+        if (chara.id == int2charaid(legacy_id))
         {
-            return i.index;
+            return chara;
         }
     }
-    return 0;
+    return none;
 }
 
 

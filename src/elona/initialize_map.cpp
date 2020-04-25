@@ -857,13 +857,12 @@ void _update_quest_flags_lesimas()
 
 void _update_paels_mom()
 {
-    const auto lily_index = chara_find("core.lily");
-    if (lily_index != 0)
+    if (const auto lily = chara_find("core.lily"))
     {
         if (game_data.quest_flags.pael_and_her_mom >= 10)
         {
-            cdata[lily_index].image = 360;
-            cdata[lily_index].portrait = "";
+            lily->image = 360;
+            lily->portrait = "";
         }
     }
 }
@@ -1044,13 +1043,13 @@ void _notify_distance_traveled()
 
 void _remove_lomias_and_larnneire()
 {
-    if (chara_find("core.larnneire") != 0)
+    if (const auto larnneire = chara_find("core.larnneire"))
     {
-        chara_vanquish(chara_find("core.larnneire"));
+        chara_vanquish(larnneire->index);
     }
-    if (chara_find("core.lomias") != 0)
+    if (const auto lomias = chara_find("core.lomias"))
     {
-        chara_vanquish(chara_find("core.lomias"));
+        chara_vanquish(lomias->index);
     }
 }
 
@@ -1058,9 +1057,9 @@ void _remove_lomias_and_larnneire()
 
 void _remove_xabi()
 {
-    if (chara_find("core.xabi") != 0)
+    if (const auto xabi = chara_find("core.xabi"))
     {
-        chara_vanquish(chara_find("core.xabi"));
+        chara_vanquish(xabi->index);
     }
 }
 

@@ -696,8 +696,7 @@ enum class CharaFindLocation
     others
 };
 
-int chara_find(data::InstanceId chara_id);
-int chara_find(int id);
+optional_ref<Character> chara_find(data::InstanceId chara_id);
 int chara_find_ally(int id);
 int chara_get_free_slot();
 int chara_get_free_slot_ally();

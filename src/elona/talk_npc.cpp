@@ -1102,11 +1102,12 @@ TalkResult talk_moyer_sell_paels_mom(Character& speaker)
         earn_gold(cdata.player(), 50000);
         game_data.quest_flags.pael_and_her_mom = 1002;
         const auto lily = chara_find("core.lily");
-        cdata[lily].ai_calm = 3;
-        cdata[lily].relationship = 0;
-        cdata[lily].initial_position.x = 48;
-        cdata[lily].initial_position.y = 18;
-        cell_movechara(lily, 48, 18);
+        assert(lily);
+        lily->ai_calm = 3;
+        lily->relationship = 0;
+        lily->initial_position.x = 48;
+        lily->initial_position.y = 18;
+        cell_movechara(lily->index, 48, 18);
         buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
     }
     else
@@ -2283,10 +2284,9 @@ TalkResult talk_npc(Character& speaker)
     {
         if (game_data.quest_flags.pael_and_her_mom == 1000)
         {
-            const auto lily = chara_find("core.lily");
-            if (lily != 0)
+            if (const auto lily = chara_find("core.lily"))
             {
-                if (cdata[lily].state() == Character::State::alive)
+                if (lily->state() == Character::State::alive)
                 {
                     ELONA_APPEND_RESPONSE(
                         52,

@@ -356,14 +356,15 @@ void conquer_lesimas()
         Message::instance().clear();
         txt(u8"あなたは、台座の上に置かれている絢爛な装飾の本を、いぶかしげに眺めた。"s);
         msg_halt();
-        const auto orphe_index = chara_find("core.orphe");
-        assert(orphe_index != 0);
-        talk_to_npc(cdata[orphe_index]);
+        // BUG: creation of Orphe can fail in a certain condition.
+        const auto orphe = chara_find("core.orphe");
+        assert(orphe);
+        talk_to_npc(*orphe);
         Message::instance().clear();
         txt(u8"青年は悪戯っぽくニヤリと笑い、壁に寄りかかった。"s);
         msg_halt();
         Message::instance().clear();
-        chara_vanquish(chara_find("core.orphe"));
+        chara_vanquish(orphe->index);
         screenupdate = -1;
         update_screen();
         txt(u8"…どれくらい時間がたっただろう。氷の瞳の男は、いつの間にか姿を消していた。あなたは不安を振り払い、ゆっくりと本に手を伸ばした…"s);

@@ -2868,14 +2868,15 @@ TurnResult do_open_command(Item& box, bool play_sound)
         {
             if (cdata[game_data.fire_giant].state() == Character::State::alive)
             {
-                const auto moyer_index = chara_find("core.moyer");
-                if (moyer_index != 0 &&
-                    cdata[moyer_index].state() == Character::State::alive)
+                if (const auto moyer = chara_find("core.moyer"))
                 {
-                    txt(i18n::s.get("core.action.open.shackle.dialog"),
-                        Message::color{ColorIndex::cyan});
-                    cdata[game_data.fire_giant].enemy_id = moyer_index;
-                    cdata[game_data.fire_giant].hate = 1000;
+                    if (moyer->state() == Character::State::alive)
+                    {
+                        txt(i18n::s.get("core.action.open.shackle.dialog"),
+                            Message::color{ColorIndex::cyan});
+                        cdata[game_data.fire_giant].enemy_id = moyer->index;
+                        cdata[game_data.fire_giant].hate = 1000;
+                    }
                 }
                 game_data.released_fire_giant = 1;
                 net_send_news("fire");

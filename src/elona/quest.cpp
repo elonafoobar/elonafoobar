@@ -286,7 +286,8 @@ void quest_check()
         }
         if (game_data.executing_immediate_quest_type == 1008)
         {
-            if (chara_find(quest_data.immediate().extra_info_1) == 0)
+            if (!chara_find(
+                    the_character_db[quest_data.immediate().extra_info_1]->id))
             {
                 event_add(8);
             }
