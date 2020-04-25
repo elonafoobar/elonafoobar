@@ -1117,7 +1117,7 @@ void draw_window(optional_ref<Character> inventory_owner, bool dropcontinue)
             y + 35,
             i18n::s.get("core.ui.inv.take_ally.window.equip_weight") + ":" +
                 cnvweight(inventory_owner->sum_of_equipment_weight) + ""s +
-                cnveqweight(inventory_owner->index));
+                get_armor_class_name(*inventory_owner));
         x = wx + 40;
         y = wy + wh - 65 - wh % 8;
         mes(x, y, i18n::s.get("core.ui.inv.take_ally.window.equip"));

@@ -31,7 +31,7 @@ std::string random_title(RandomTitleType type);
 
 
 void cnvbonus(int = 0, int = 0);
-std::string cnveqweight(int = 0);
+std::string get_armor_class_name(const Character& chara);
 std::string fixtxt(const std::string&, int = 0);
 std::string getnpctxt(const std::string&, const std::string&);
 std::string guildname();

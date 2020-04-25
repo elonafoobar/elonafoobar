@@ -639,7 +639,7 @@ void UIMenuCharacterSheet::_draw_first_page_stats_weight()
     s(0) = ""s + cnvweight(game_data.cargo_weight);
     s(1) = cnvweight(game_data.current_cart_limit);
     s(2) = cnvweight(_chara.sum_of_equipment_weight) + u8" "s +
-        cnveqweight(_chara.index);
+        get_armor_class_name(_chara);
     s(3) = i18n::s.get(
         "core.ui.chara_sheet.weight.level_counter",
         cnvrank(game_data.deepest_dungeon_level));

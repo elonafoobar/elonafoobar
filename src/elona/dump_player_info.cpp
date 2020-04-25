@@ -159,7 +159,7 @@ void dump_player_info()
 
     ss << u8"------------------------------ 装備品 合計重量"
        << cnvweight(cdata.player().sum_of_equipment_weight) << u8" "
-       << cnveqweight(cdata.player().index) << std::endl;
+       << get_armor_class_name(cdata.player()) << std::endl;
     ss << std::endl;
 
     for (const auto& body_part : cdata.player().body_parts)

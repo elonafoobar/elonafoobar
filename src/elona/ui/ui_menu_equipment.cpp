@@ -150,7 +150,7 @@ void UIMenuEquipment::_draw_window_headers()
     display_note(
         i18n::s.get("core.ui.equip.equip_weight") + ": " +
         cnvweight(cdata.player().sum_of_equipment_weight) +
-        cnveqweight(cdata.player().index) + " " +
+        get_armor_class_name(cdata.player()) + " " +
         i18n::s.get("core.ui.equip.hit_bonus") + ":" +
         cdata.player().hit_bonus + " " +
         i18n::s.get("core.ui.equip.damage_bonus") + ":" +

@@ -2667,9 +2667,9 @@ void cnvbonus(int ability_id, int bonus)
 
 
 
-std::string cnveqweight(int chara_index)
+std::string get_armor_class_name(const Character& chara)
 {
-    int id = chara_armor_class(cdata[chara_index]);
+    int id = chara_armor_class(chara);
     if (id == 169)
     {
         return i18n::s.get("core.item.armor_class.heavy");
