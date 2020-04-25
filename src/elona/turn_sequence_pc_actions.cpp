@@ -610,6 +610,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     }
     if (action == "target")
     {
+        cdata.player().enemy_id = 0;
         findlocmode = 1;
         target_position();
         findlocmode = 0;
@@ -649,6 +650,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     }
     if (action == "look")
     {
+        cdata.player().enemy_id = 0;
         if (map_data.type != mdata_t::MapType::world_map)
         {
             return do_look_command();
