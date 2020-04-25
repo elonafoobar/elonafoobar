@@ -376,9 +376,9 @@ int calc_rate_to_pierce(int id)
 
 
 
-std::string calcage(int chara_index)
+std::string calc_age(const Character& chara)
 {
-    int n = game_data.date.year - cdata[chara_index].birth_year;
+    int n = game_data.date.year - chara.birth_year;
     return n >= 0 ? std::to_string(n) : i18n::s.get("core.chara.age_unknown");
 }
 

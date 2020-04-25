@@ -176,7 +176,7 @@ void UIMenuHire::_draw_list_entry_info(int cnt, const Character& chara)
         level += cnven(i18n::s.get("core.ui.sex3.female"));
     }
 
-    level += i18n::s.get("core.ui.npc_list.age_counter", calcage(chara.index));
+    level += i18n::s.get("core.ui.npc_list.age_counter", calc_age(chara));
 
     mes(wx + 372, wy + 66 + cnt * 19 + 2, level);
 }

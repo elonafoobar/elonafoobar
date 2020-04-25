@@ -34,7 +34,7 @@ int calc_gained_fame(const Character& chara, int base);
 int decrease_fame(Character& chara, int base);
 int calcshopreform();
 int calc_rate_to_pierce(int);
-std::string calcage(int);
+std::string calc_age(const Character& chara);
 int calcexpalive(int = 0);
 int calc_evasion(int chara_index);
 int calc_accuracy(

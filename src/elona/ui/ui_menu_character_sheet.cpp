@@ -481,7 +481,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_name()
     {
         s(3) = cnven(i18n::s.get("core.ui.sex3.female"));
     }
-    s(5) = ""s + calcage(_chara.index) + u8" "s +
+    s(5) = ""s + calc_age(_chara) + u8" "s +
         i18n::s.get("core.ui.chara_sheet.personal.age_counter");
     s(6) = ""s + _chara.height + u8" cm"s;
     s(7) = ""s + _chara.weight + u8" kg"s;
