@@ -1155,22 +1155,21 @@ int damage_hp(
         if (victim.is_death_master() == 1)
         {
             txt(i18n::s.get("core.damage.death_word_breaks"));
-            for (int chara_index = 0; chara_index < ELONA_MAX_CHARACTERS;
-                 ++chara_index)
+            for (auto&& chara : cdata.all())
             {
-                if (cdata[chara_index].state() != Character::State::alive)
+                if (chara.state() != Character::State::alive)
                 {
                     continue;
                 }
                 for (int buff_index = 0; buff_index < 16; ++buff_index)
                 {
-                    if (cdata[chara_index].buffs[buff_index].id == 0)
+                    if (chara.buffs[buff_index].id == 0)
                     {
                         break;
                     }
-                    if (cdata[chara_index].buffs[buff_index].id == 16)
+                    if (chara.buffs[buff_index].id == 16)
                     {
-                        buff_delete(cdata[chara_index], buff_index);
+                        buff_delete(chara, buff_index);
                         --buff_index;
                         continue;
                     }
