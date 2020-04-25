@@ -632,7 +632,7 @@ struct CData
 
     CDataSlice adventurers()
     {
-        return {std::begin(storage) + 16, std::begin(storage) + 56};
+        return {std::begin(storage) + 16, std::begin(storage) + 55};
     }
 
 
