@@ -584,10 +584,12 @@ void show_damage_popups()
     }
 }
 
-void draw_emo(int chara_index, int x, int y)
+
+
+void draw_emo(const Character& chara, int x, int y)
 {
     gmode(2);
-    draw_indexed("emotion_icons", x + 16, y, cdata[chara_index].emotion_icon);
+    draw_indexed("emotion_icons", x + 16, y, chara.emotion_icon);
 }
 
 

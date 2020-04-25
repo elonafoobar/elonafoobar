@@ -971,7 +971,7 @@ void draw_npc_own_sprite(int c_, int dx, int dy, int ani_, int ground_)
     }
     if (cdata[c_].emotion_icon != 0)
     {
-        draw_emo(c_, dx + 4, dy - 32);
+        draw_emo(cdata[c_], dx + 4, dy - 32);
     }
 }
 
@@ -987,7 +987,7 @@ void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
 
         if (cdata[c_].emotion_icon != 0)
         {
-            draw_emo(c_, x + 4, y - chara_chips[p_].offset_y / 4 - 16);
+            draw_emo(cdata[c_], x + 4, y - chara_chips[p_].offset_y / 4 - 16);
         }
     }
     else
@@ -1009,7 +1009,7 @@ void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
         }
         if (cdata[c_].emotion_icon != 0)
         {
-            draw_emo(c_, dx + 4, dy - chara_chips[p_].offset_y - 16);
+            draw_emo(cdata[c_], dx + 4, dy - chara_chips[p_].offset_y - 16);
         }
     }
     if (cdata[c_].is_hung_on_sand_bag())
@@ -1572,7 +1572,7 @@ void cell_draw()
                 }
                 if (cdata.player().emotion_icon != 0)
                 {
-                    draw_emo(0, px_ + 4, py_ - 32);
+                    draw_emo(cdata.player(), px_ + 4, py_ - 32);
                 }
             }
 
