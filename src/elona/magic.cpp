@@ -3714,7 +3714,7 @@ optional_ref<Character> _ball_spell_internal(
             }
             dmg = roll(dice1, dice2, bonus) * 100 /
                 (75 + dist(tlocx, tlocy, dx, dy) * 25);
-            if (calcmagiccontrol(subject.index, target_index))
+            if (calc_magic_control(subject, cdata[target_index]))
             {
                 continue;
             }
@@ -4022,8 +4022,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                         }
                     }
                     dmg = roll(dice1, dice2, bonus);
-                    int stat = calcmagiccontrol(subject.index, target_index);
-                    if (stat == 1)
+                    if (calc_magic_control(subject, cdata[target_index]))
                     {
                         continue;
                     }

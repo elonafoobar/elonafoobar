@@ -4395,38 +4395,34 @@ int read_normal_book(Character& reader, Item& book)
 
 
 
-int calcmagiccontrol(int caster_chara_index, int target_chara_index)
+bool calc_magic_control(Character& caster, const Character& target)
 {
-    if (sdata(188, caster_chara_index) != 0)
+    if (sdata(188, caster.index) != 0)
     {
-        if (belong_to_same_team(
-                cdata[caster_chara_index], cdata[target_chara_index]))
+        if (belong_to_same_team(caster, target))
         {
-            if (sdata(188, caster_chara_index) * 5 > rnd_capped(dmg + 1))
+            if (sdata(188, caster.index) * 5 > rnd_capped(dmg + 1))
             {
                 dmg = 0;
             }
             else
             {
                 dmg = rnd_capped(
-                    dmg * 100 / (100 + sdata(188, caster_chara_index) * 10) +
-                    1);
+                    dmg * 100 / (100 + sdata(188, caster.index) * 10) + 1);
             }
             if (dmg < 1)
             {
-                if (is_in_fov(cdata[target_chara_index]))
+                if (is_in_fov(target))
                 {
-                    txt(i18n::s.get(
-                        "core.misc.spell_passes_through",
-                        cdata[target_chara_index]));
+                    txt(i18n::s.get("core.misc.spell_passes_through", target));
                 }
-                chara_gain_skill_exp(cdata[caster_chara_index], 188, 8, 4);
-                return 1;
+                chara_gain_skill_exp(caster, 188, 8, 4);
+                return true;
             }
-            chara_gain_skill_exp(cdata[caster_chara_index], 188, 30, 2);
+            chara_gain_skill_exp(caster, 188, 30, 2);
         }
     }
-    return 0;
+    return false;
 }
 
 

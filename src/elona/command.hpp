@@ -83,7 +83,7 @@ int do_cast_magic(Character& caster, int& enemy_index);
 int do_cast_magic_attempt(Character& caster, int& enemy_index);
 void proc_autopick();
 
-int calcmagiccontrol(int = 0, int = 0);
+bool calc_magic_control(Character& caster, const Character& target);
 bool prompt_magic_location(Character& caster, int& enemy_index);
 TurnResult do_plant(Item& seed);
 void do_rest(Character& chara);
