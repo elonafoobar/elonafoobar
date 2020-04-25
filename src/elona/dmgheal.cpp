@@ -950,14 +950,14 @@ int damage_hp(
                 x = victim.position.x;
                 y = victim.position.y;
                 snd_at("core.crush1", victim.position, false, false);
-                animeblood(victim.index, 1, element);
+                animeblood(victim, 1, element);
             }
             spillfrag(victim.position.x, victim.position.y, 3);
         }
         else
         {
             sound_kill(victim.position);
-            animeblood(victim.index, 0, element);
+            animeblood(victim, 0, element);
             spillblood(victim.position.x, victim.position.y, 4);
         }
         if (victim.index == 0)

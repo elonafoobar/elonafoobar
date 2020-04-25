@@ -333,9 +333,9 @@ void adventurer_discover_equipment(Character& adv)
         }
         if (item.number() != 0)
         {
-            if (cdata[adv.index].ai_item == item.index)
+            if (adv.ai_item == item.index)
             {
-                cdata[adv.index].ai_item = 0;
+                adv.ai_item = 0;
             }
             item.remove();
             f = 1;
@@ -346,7 +346,7 @@ void adventurer_discover_equipment(Character& adv)
     {
         return;
     }
-    flt(cdata[adv.index].level, Quality::miracle);
+    flt(adv.level, Quality::miracle);
     if (rnd(3) == 0)
     {
         flttypemajor = choice(fsetwear);
