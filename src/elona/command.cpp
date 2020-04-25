@@ -522,7 +522,7 @@ optional<TurnResult> use_gene_machine()
         }
     }
 
-    chara_vanquish(gene_chara_index);
+    chara_vanquish(cdata[gene_chara_index]);
     save_set_autosave();
     chara_gain_skill_exp(cdata.player(), 151, 1200);
     randomize();
@@ -974,7 +974,7 @@ TurnResult do_throw_command_internal(Character& thrower, Item& throw_item)
                 }
                 new_ally_joins(cdata[target_index]);
             }
-            chara_vanquish(target_index);
+            chara_vanquish(cdata[target_index]);
             quest_check();
         }
         return TurnResult::turn_end;

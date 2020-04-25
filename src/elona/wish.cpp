@@ -280,7 +280,7 @@ void wish_for_card()
     {
         item->subname = charaid2int(cdata.tmp().id);
         item->param1 = cdata.tmp().image;
-        chara_vanquish(56);
+        chara_vanquish(cdata.tmp());
         cell_refresh(cdata.player().position.x, cdata.player().position.y);
         txt(i18n::s.get("core.wish.something_appears_from_nowhere", *item));
     }
@@ -297,7 +297,7 @@ void wish_for_figure()
     {
         item->subname = charaid2int(cdata.tmp().id);
         item->param1 = cdata.tmp().image;
-        chara_vanquish(56);
+        chara_vanquish(cdata.tmp());
         cell_refresh(cdata.player().position.x, cdata.player().position.y);
         txt(i18n::s.get("core.wish.something_appears_from_nowhere", *item));
     }

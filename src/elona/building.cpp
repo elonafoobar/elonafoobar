@@ -694,7 +694,7 @@ void prompt_hiring()
             if (chara.state() != Character::State::empty &&
                 cdatan(0, chara.index) == cdatan(0, servant->index))
             {
-                chara_vanquish(servant->index);
+                chara_vanquish(*servant);
                 break;
             }
         }
@@ -725,7 +725,7 @@ void prompt_hiring()
     {
         if (cnt.state() == Character::State::servant_being_selected)
         {
-            chara_vanquish(cnt.index);
+            chara_vanquish(cnt);
         }
     }
     calccosthire();

@@ -461,7 +461,7 @@ void eh_quest_escort_complete(const DeferredEvent& event)
     talk_to_npc(cdata[event.param2]);
     rq = event.param1;
     quest_complete();
-    chara_vanquish(event.param2);
+    chara_vanquish(cdata[event.param2]);
 }
 
 

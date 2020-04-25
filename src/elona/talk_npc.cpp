@@ -688,7 +688,7 @@ TalkResult talk_slave_buy(Character& speaker, int chatval_)
         chara_create(56, 0, -3, 0);
         if (cdata.tmp().level == 0)
         {
-            chara_vanquish(56);
+            chara_vanquish(cdata.tmp());
             continue;
         }
         break;
@@ -880,7 +880,7 @@ TalkResult talk_servant_fire(Character& speaker)
     if (chatval_ == 1)
     {
         txt(i18n::s.get("core.talk.npc.servant.fire.you_dismiss", speaker));
-        chara_vanquish(speaker.index);
+        chara_vanquish(speaker);
         calccosthire();
         return TalkResult::talk_end;
     }

@@ -283,7 +283,7 @@ int chara_get_free_slot_force()
 
     ret = choice(slots);
     // Force to destroy the character in `ret`.
-    chara_vanquish(ret);
+    chara_vanquish(cdata[ret]);
     return ret;
 }
 
@@ -1369,29 +1369,28 @@ void chara_modify_impression(Character& chara, int delta)
 
 
 
-void chara_vanquish(int chara_index)
+void chara_vanquish(Character& chara)
 {
-    if (chara_index == 0)
+    if (chara.index == 0)
         return;
 
-    if (chara_index == game_data.mount)
+    if (chara.index == game_data.mount)
     {
         ride_end();
     }
     else if (
-        cdata[chara_index].state() == Character::State::alive ||
-        cdata[chara_index].state() == Character::State::servant_being_selected)
+        chara.state() == Character::State::alive ||
+        chara.state() == Character::State::servant_being_selected)
     {
-        cell_data
-            .at(cdata[chara_index].position.x, cdata[chara_index].position.y)
-            .chara_index_plus_one = 0;
+        cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one =
+            0;
     }
-    cdata[chara_index].set_state(Character::State::empty);
-    cdata[chara_index].role = Role::none;
-    if (cdata[chara_index].shop_store_id != 0)
+    chara.set_state(Character::State::empty);
+    chara.role = Role::none;
+    if (chara.shop_store_id != 0)
     {
         const auto storage_filename = filepathutil::u8path(
-            "shop"s + std::to_string(cdata[chara_index].shop_store_id) + ".s2");
+            "shop"s + std::to_string(chara.shop_store_id) + ".s2");
         const auto storage_filepath =
             filesystem::dirs::tmp() / storage_filename;
         tmpload(storage_filename);
@@ -1400,10 +1399,10 @@ void chara_vanquish(int chara_index)
             fs::remove(storage_filepath);
             Save::instance().remove(storage_filepath.filename());
         }
-        cdata[chara_index].shop_store_id = 0;
+        chara.shop_store_id = 0;
     }
     quest_check();
-    modify_crowd_density(chara_index, 1);
+    modify_crowd_density(chara.index, 1);
 }
 
 

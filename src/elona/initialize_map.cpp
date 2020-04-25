@@ -1045,11 +1045,11 @@ void _remove_lomias_and_larnneire()
 {
     if (const auto larnneire = chara_find("core.larnneire"))
     {
-        chara_vanquish(larnneire->index);
+        chara_vanquish(*larnneire);
     }
     if (const auto lomias = chara_find("core.lomias"))
     {
-        chara_vanquish(lomias->index);
+        chara_vanquish(*lomias);
     }
 }
 
@@ -1059,7 +1059,7 @@ void _remove_xabi()
 {
     if (const auto xabi = chara_find("core.xabi"))
     {
-        chara_vanquish(xabi->index);
+        chara_vanquish(*xabi);
     }
 }
 

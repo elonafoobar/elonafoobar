@@ -1658,7 +1658,7 @@ bool _magic_653(Character& target)
         return true;
     }
     txt(i18n::s.get("core.magic.vanish", target));
-    chara_vanquish(target.index);
+    chara_vanquish(target);
     return true;
 }
 
@@ -4309,7 +4309,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                 {
                     if (chara->id == subject.id)
                     {
-                        chara_vanquish(chara->index);
+                        chara_vanquish(*chara);
                         --cnt;
                         continue;
                     }

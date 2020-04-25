@@ -1187,7 +1187,7 @@ void map_reload_noyel()
         {
             if (cnt.only_christmas())
             {
-                chara_vanquish(cnt.index);
+                chara_vanquish(cnt);
             }
         }
     }
@@ -1459,7 +1459,7 @@ TurnResult exit_map()
             if (area_data[game_data.current_map].has_been_conquered > 0)
             {
                 chara_vanquish(
-                    area_data[game_data.current_map].has_been_conquered);
+                    cdata[area_data[game_data.current_map].has_been_conquered]);
                 area_data[game_data.current_map].has_been_conquered = -1;
             }
         }

@@ -165,7 +165,7 @@ int LuaApiInternal::generate_fighters_guild_target(int level)
     }
 
     auto id = charaid2int(cdata.tmp().id);
-    chara_vanquish(56);
+    chara_vanquish(cdata.tmp());
 
     return id;
 }

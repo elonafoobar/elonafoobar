@@ -408,7 +408,7 @@ void LuaCharacter::eat_rotten_food(Character& self)
  */
 void LuaCharacter::vanquish(Character& self)
 {
-    chara_vanquish(self.index);
+    chara_vanquish(self);
 }
 
 /**

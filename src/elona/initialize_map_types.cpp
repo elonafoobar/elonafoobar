@@ -833,7 +833,7 @@ static void _init_map_arena()
                 chara->is_lord_of_dungeon() = true;
                 if (chara->level > arenaop(1) || chara->relationship != -3)
                 {
-                    chara_vanquish(chara->index);
+                    chara_vanquish(*chara);
                     --cnt;
                     continue;
                 }
@@ -890,7 +890,7 @@ static void _init_map_pet_arena()
             }
             if (f == 0)
             {
-                chara_vanquish(chara->index);
+                chara_vanquish(*chara);
                 --cnt;
                 continue;
             }
