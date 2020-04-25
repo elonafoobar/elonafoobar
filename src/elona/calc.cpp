@@ -301,14 +301,14 @@ int calc_gained_fame(const Character& chara, int base)
 
 
 
-int decfame(int chara_index, int base)
+int decrease_fame(Character& chara, int base)
 {
-    int ret = cdata[chara_index].fame / base + 5;
+    int ret = chara.fame / base + 5;
     ret = ret + rnd_capped(ret / 2) - rnd_capped(ret / 2);
-    cdata[chara_index].fame -= ret;
-    if (cdata[chara_index].fame < 0)
+    chara.fame -= ret;
+    if (chara.fame < 0)
     {
-        cdata[chara_index].fame = 0;
+        chara.fame = 0;
     }
     return ret;
 }

@@ -1724,7 +1724,7 @@ void supply_income()
                 txt(i18n::s.get(
                         "core.misc.tax.accused", game_data.left_bill - 1),
                     Message::color{ColorIndex::red});
-                int stat = decfame(0, 50);
+                int stat = decrease_fame(cdata.player(), 50);
                 p = stat;
                 txt(i18n::s.get("core.misc.tax.lose_fame", p(0)),
                     Message::color{ColorIndex::red});

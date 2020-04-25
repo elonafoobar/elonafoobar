@@ -1242,7 +1242,7 @@ void quest_failed(int val0)
         quest_data[rq].id = 0;
         quest_data[rq].progress = 0;
     }
-    int stat = decfame(0, 40);
+    int stat = decrease_fame(cdata.player(), 40);
     p = stat;
     txt(i18n::s.get("core.quest.lose_fame", p(0)),
         Message::color{ColorIndex::red});
@@ -1295,7 +1295,7 @@ void quest_team_victorious()
             Message::color{ColorIndex::purple});
         area_data[game_data.previous_map2].winning_streak_in_pet_arena = 0;
         modrank(1, -100);
-        int stat = decfame(0, 60);
+        int stat = decrease_fame(cdata.player(), 60);
         p = stat;
         if (arenaop == 0)
         {
