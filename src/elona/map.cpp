@@ -887,7 +887,7 @@ static void _restock_character_inventories()
         {
             continue;
         }
-        generatemoney(cnt.index);
+        generatemoney(cnt);
         if (cnt.id == CharaId::bard)
         {
             _proc_generate_bard_items(cnt);

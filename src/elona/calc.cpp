@@ -1083,16 +1083,16 @@ int calc_servant_hire_cost(const Character& servant)
 
 
 
-void generatemoney(int chara_index)
+void generatemoney(Character& chara)
 {
-    int gold = rnd(100) + rnd_capped(cdata[chara_index].level * 50 + 1);
-    if (is_shopkeeper(cdata[chara_index].role))
+    int gold = rnd(100) + rnd_capped(chara.level * 50 + 1);
+    if (is_shopkeeper(chara.role))
     {
-        gold += 2500 + cdata[chara_index].shop_rank * 250;
+        gold += 2500 + chara.shop_rank * 250;
     }
-    if (cdata[chara_index].gold < gold / 2)
+    if (chara.gold < gold / 2)
     {
-        cdata[chara_index].gold = gold;
+        chara.gold = gold;
     }
 }
 

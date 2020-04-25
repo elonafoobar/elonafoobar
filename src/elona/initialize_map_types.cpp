@@ -2886,7 +2886,7 @@ static void _init_map_fields_maybe_generate_encounter()
             chara->shop_rank = encounterlv;
             cdatan(0, chara->index) = i18n::s.get(
                 "core.chara.job.wandering_vendor", cdatan(0, chara->index));
-            generatemoney(chara->index);
+            generatemoney(*chara);
             for (int cnt = 0, cnt_end = (encounterlv / 2 + 1); cnt < cnt_end;
                  ++cnt)
             {

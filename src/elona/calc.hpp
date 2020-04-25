@@ -77,7 +77,7 @@ int calcinvestvalue(const Character& shopkeeper);
 int calcguiltvalue();
 int calc_adventurer_hire_cost(const Character& adv);
 int calc_servant_hire_cost(const Character& servant);
-void generatemoney(int = 0);
+void generatemoney(Character& chara);
 void calccosthire();
 int calccostbuilding();
 int calccosttax();
