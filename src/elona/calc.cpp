@@ -1357,16 +1357,16 @@ int calc_spell_power(const Character& caster, int id)
 
 
 
-int calcspellfail(int id, int chara_index)
+int calc_spell_success_rate(const Character& caster, int id)
 {
     if (debug::voldemort)
     {
         return 100;
     }
 
-    if (chara_index != 0)
+    if (caster.index != 0)
     {
-        if (game_data.mount == chara_index)
+        if (game_data.mount == caster.index)
         {
             return 95 - clamp(30 - sdata(301, 0) / 2, 0, 30);
         }
@@ -1378,14 +1378,14 @@ int calcspellfail(int id, int chara_index)
 
     int penalty = 4;
 
-    int armor_skill = chara_armor_class(cdata[chara_index]);
+    int armor_skill = chara_armor_class(caster);
     if (armor_skill == 169)
     {
-        penalty = 17 - sdata(169, chara_index) / 5;
+        penalty = 17 - sdata(169, caster.index) / 5;
     }
     else if (armor_skill == 170)
     {
-        penalty = 12 - sdata(170, chara_index) / 5;
+        penalty = 12 - sdata(170, caster.index) / 5;
     }
     if (penalty < 4)
     {
@@ -1397,16 +1397,16 @@ int calcspellfail(int id, int chara_index)
     }
     if (id == 441) // Wish
     {
-        penalty += sdata(id, chara_index);
+        penalty += sdata(id, caster.index);
     }
     if (id == 464) // Harvest
     {
-        penalty += sdata(id, chara_index) / 3;
+        penalty += sdata(id, caster.index) / 3;
     }
 
-    int percentage = 90 + sdata(id, chara_index) -
+    int percentage = 90 + sdata(id, caster.index) -
         the_ability_db[id]->difficulty * penalty /
-            (5 + sdata(172, chara_index) * 4);
+            (5 + sdata(172, caster.index) * 4);
     if (armor_skill == 169)
     {
         if (percentage > 80)
@@ -1425,11 +1425,11 @@ int calcspellfail(int id, int chara_index)
     {
         percentage = 100;
     }
-    if (cdata[chara_index].combat_style.dual_wield())
+    if (caster.combat_style.dual_wield())
     {
         percentage -= 6;
     }
-    if (cdata[chara_index].combat_style.shield())
+    if (caster.combat_style.shield())
     {
         percentage -= 12;
     }

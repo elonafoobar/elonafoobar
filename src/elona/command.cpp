@@ -4562,7 +4562,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
         efsource = 0;
         return 1;
     }
-    if (rnd(100) >= calcspellfail(efid, caster.index))
+    if (rnd(100) >= calc_spell_success_rate(caster, efid))
     {
         if (is_in_fov(caster))
         {
