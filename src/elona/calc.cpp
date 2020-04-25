@@ -1275,11 +1275,11 @@ int calclearncost(int skill_id, int chara_index, bool discount)
 
 
 
-int calcresurrectvalue(int pet)
+int calc_resurrection_value(const Character& chara)
 {
-    return cdata[pet].state() != Character::State::pet_dead
+    return chara.state() != Character::State::pet_dead
         ? 100
-        : cdata[pet].level * cdata[pet].level * 15;
+        : chara.level * chara.level * 15;
 }
 
 

@@ -88,7 +88,7 @@ int calccargoupdatecost();
 int calcidentifyvalue(int);
 int calctraincost(int, int, bool = false);
 int calclearncost(int, int, bool = false);
-int calcresurrectvalue(int = 0);
+int calc_resurrection_value(const Character& chara);
 int calcslavevalue(int = 0);
 int calcrestorecost();
 int calcinitgold(int);

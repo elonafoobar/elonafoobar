@@ -587,9 +587,9 @@ TalkResult talk_bartender_call_ally(Character& speaker)
         listmax = 0;
         buff = i18n::s.get(
             "core.talk.npc.bartender.call_ally.cost",
-            calcresurrectvalue(stat),
+            calc_resurrection_value(cdata[stat]),
             speaker);
-        if (cdata.player().gold >= calcresurrectvalue(stat))
+        if (cdata.player().gold >= calc_resurrection_value(cdata[stat]))
         {
             ELONA_APPEND_RESPONSE(
                 1,
@@ -603,7 +603,7 @@ TalkResult talk_bartender_call_ally(Character& speaker)
         if (chatval_ == 1)
         {
             snd("core.paygold1");
-            cdata.player().gold -= calcresurrectvalue(stat);
+            cdata.player().gold -= calc_resurrection_value(cdata[stat]);
             buff = i18n::s.get(
                 "core.talk.npc.bartender.call_ally.brings_back",
                 speaker,
