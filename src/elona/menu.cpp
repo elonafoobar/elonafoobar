@@ -522,8 +522,8 @@ std::string make_spell_description(int skill_id)
         return _make_buff_power_string(skill_id);
     }
     const auto damage = calc_skill_damage(
+        cdata.player(),
         skill_id,
-        cdata.player().index,
         calcspellpower(skill_id, cdata.player().index));
     if (damage)
     {

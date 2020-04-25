@@ -3773,8 +3773,7 @@ optional_ref<Character> _ball_spell_internal(
         tlocy = next_subject.position.y;
         if (next_subject.state() == Character::State::alive)
         {
-            const auto damage =
-                calc_skill_damage(efid, next_subject.index, efp);
+            const auto damage = calc_skill_damage(next_subject, efid, efp);
             dice1 = damage->dice_x;
             dice2 = damage->dice_y;
             bonus = damage->damage_bonus;
@@ -3927,7 +3926,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         }
         return true;
     }
-    if (const auto damage = calc_skill_damage(efid, subject.index, efp))
+    if (const auto damage = calc_skill_damage(subject, efid, efp))
     {
         dice1 = damage->dice_x;
         dice2 = damage->dice_y;

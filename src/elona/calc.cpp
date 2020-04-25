@@ -83,9 +83,10 @@ int rangedist = 0;
 
 
 
-optional<SkillDamage> calc_skill_damage(int skill, int chara_index, int power)
+optional<SkillDamage>
+calc_skill_damage(const Character& chara, int skill, int power)
 {
-    int x = sdata(the_ability_db[skill]->related_basic_attribute, chara_index);
+    int x = sdata(the_ability_db[skill]->related_basic_attribute, chara.index);
 
     switch (skill)
     {
@@ -107,11 +108,10 @@ optional<SkillDamage> calc_skill_damage(int skill, int chara_index, int power)
     case 406: return SkillDamage{0, 1, x * 5 + power * 2, 0, 0};
     case 407: return SkillDamage{0, 1, x * 5 + power * 3 / 2, 0, 0};
     case 623:
-        return SkillDamage{
-            1 + x / 10, cdata[chara_index].piety_point / 70 + 1 + 1, 0, 0, 0};
+        return SkillDamage{1 + x / 10, chara.piety_point / 70 + 1 + 1, 0, 0, 0};
     case 624:
         return SkillDamage{
-            1 + x / 20, cdata[chara_index].piety_point / 140 + 1 + 1, 0, 0, 0};
+            1 + x / 20, chara.piety_point / 140 + 1 + 1, 0, 0, 0};
     case 414:
         return SkillDamage{power / 125 + 2 + x / 50,
                            power / 60 + 9 + 1,

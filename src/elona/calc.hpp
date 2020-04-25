@@ -23,7 +23,11 @@ struct SkillDamage
     int element;
     int element_power;
 };
-optional<SkillDamage> calc_skill_damage(int, int, int);
+
+optional<SkillDamage>
+calc_skill_damage(const Character& chara, int skill, int power);
+
+
 int calcobjlv(int = 0);
 Quality calcfixlv(Quality base_quality = Quality::none);
 int calcfame(int = 0, int = 0);
