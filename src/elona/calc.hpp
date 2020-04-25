@@ -92,7 +92,7 @@ int calc_resurrection_value(const Character& chara);
 int calc_slave_value(const Character& chara);
 int calcrestorecost();
 int calcinitgold(int);
-int calcspellpower(int = 0, int = 0);
+int calc_spell_power(const Character& caster, int id);
 int calcspellfail(int = 0, int = 0);
 int calcspellcostmp(int = 0, int = 0);
 int calcspellcoststock(int = 0, int = 0);

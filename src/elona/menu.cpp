@@ -506,10 +506,10 @@ static std::string _make_buff_power_string(int skill_id)
     const auto buff_id = the_ability_db[skill_id]->ability_type % 1000;
     const auto duration = buff_calc_duration(
         *the_buff_db.get_id_from_legacy(buff_id),
-        calcspellpower(skill_id, cdata.player().index));
+        calc_spell_power(cdata.player(), skill_id));
     const auto description = buff_get_description(
         *the_buff_db.get_id_from_legacy(buff_id),
-        calcspellpower(skill_id, cdata.player().index));
+        calc_spell_power(cdata.player(), skill_id));
     return std::to_string(duration) +
         i18n::s.get("core.ui.spell.turn_counter") + " " + description;
 }
@@ -522,9 +522,7 @@ std::string make_spell_description(int skill_id)
         return _make_buff_power_string(skill_id);
     }
     const auto damage = calc_skill_damage(
-        cdata.player(),
-        skill_id,
-        calcspellpower(skill_id, cdata.player().index));
+        cdata.player(), skill_id, calc_spell_power(cdata.player(), skill_id));
     if (damage)
     {
         dice1 = damage->dice_x;

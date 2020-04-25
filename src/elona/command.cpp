@@ -4452,7 +4452,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
     int mp = 0;
     efsource = 3;
     efstatus = CurseState::none;
-    efp = calcspellpower(efid, caster.index);
+    efp = calc_spell_power(caster, efid);
     if (caster.index == 0)
     {
         if (calcspellcostmp(efid, caster.index) > caster.mp)
@@ -4578,7 +4578,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
         efsource = 0;
         return 1;
     }
-    efp = calcspellpower(efid, caster.index);
+    efp = calc_spell_power(caster, efid);
     if (const auto spell_enhancement = enchantment_find(caster, 34))
     {
         efp = efp * (100 + *spell_enhancement / 10) / 100;
@@ -5109,7 +5109,7 @@ int do_spact(Character& doer, int& enemy_index)
                 doer, the_ability_db[efid]->related_basic_attribute, 25);
         }
     }
-    efp = calcspellpower(efid, doer.index);
+    efp = calc_spell_power(doer, efid);
     if (noeffect == 1)
     {
         if (efid != 300)

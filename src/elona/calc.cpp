@@ -1330,7 +1330,7 @@ int calcinitgold(int owner)
 
 
 
-int calcspellpower(int id, int chara_index)
+int calc_spell_power(const Character& caster, int id)
 {
     if (id >= 600)
     {
@@ -1338,21 +1338,21 @@ int calcspellpower(int id, int chara_index)
         {
             return sdata(
                        the_ability_db[id]->related_basic_attribute,
-                       chara_index) *
+                       caster.index) *
                 6 +
                 10;
         }
         return 100;
     }
-    if (chara_index == 0)
+    if (caster.index == 0)
     {
-        return sdata(id, chara_index) * 10 + 50;
+        return sdata(id, caster.index) * 10 + 50;
     }
-    if (sdata(172, chara_index) == 0 && chara_index >= 16)
+    if (sdata(172, caster.index) == 0 && caster.index >= 16)
     {
-        return cdata[chara_index].level * 6 + 10;
+        return caster.level * 6 + 10;
     }
-    return sdata(172, chara_index) * 6 + 10;
+    return sdata(172, caster.index) * 6 + 10;
 }
 
 
