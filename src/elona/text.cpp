@@ -2841,58 +2841,38 @@ std::string ranktitle(int rank_id)
 
 
 
-std::string txttargetlevel(int chara_index, int target_chara_index)
+std::string txttargetlevel(
+    const Character& base_chara,
+    const Character& target_chara)
 {
-    int x = cdata[chara_index].level;
-    int y = cdata[target_chara_index].level;
+    const int x = base_chara.level;
+    const int y = target_chara.level;
+
     int danger;
     if (x * 20 < y)
-    {
         danger = 10;
-    }
     else if (x * 10 < y)
-    {
         danger = 9;
-    }
     else if (x * 5 < y)
-    {
         danger = 8;
-    }
     else if (x * 3 < y)
-    {
         danger = 7;
-    }
     else if (x * 2 < y)
-    {
         danger = 6;
-    }
     else if (x * 3 / 2 < y)
-    {
         danger = 5;
-    }
     else if (x < y)
-    {
         danger = 4;
-    }
     else if (x / 3 * 2 < y)
-    {
         danger = 3;
-    }
     else if (x / 2 < y)
-    {
         danger = 2;
-    }
     else if (x / 3 < y)
-    {
         danger = 1;
-    }
     else
-    {
         danger = 0;
-    }
 
-    return i18n::s.get_enum(
-        "core.action.target.level", danger, cdata[target_chara_index]);
+    return i18n::s.get_enum("core.action.target.level", danger, target_chara);
 }
 
 
@@ -2923,7 +2903,7 @@ void txttargetnpc(int x, int y)
         if (cdata[i_].is_invisible() == 0 ||
             cdata.player().can_see_invisible() || cdata[i_].wet)
         {
-            s = txttargetlevel(cdata.player().index, i_);
+            s = txttargetlevel(cdata.player(), cdata[i_]);
             bmes(s, 100, windowh - inf_verh - 45 - dy_ * 20);
             ++dy_;
             bmes(

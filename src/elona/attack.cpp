@@ -1123,7 +1123,7 @@ int find_enemy_target(Character& chara, bool silent)
 
 int prompt_really_attack(const Character& target)
 {
-    s = txttargetlevel(cdata.player().index, target.index);
+    s = txttargetlevel(cdata.player(), target);
     txt(s);
     txt(i18n::s.get("core.action.really_attack", target));
     if (yes_no())

@@ -38,7 +38,9 @@ std::string guildname();
 void initialize_rankn();
 void lenfix(std::string&, int = 0);
 std::string ranktitle(int = 0);
-std::string txttargetlevel(int, int);
+std::string txttargetlevel(
+    const Character& base_chara,
+    const Character& target_chara);
 void txttargetnpc(int x, int y);
 std::string fltname(int = 0);
 
