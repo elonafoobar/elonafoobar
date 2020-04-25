@@ -2173,7 +2173,7 @@ bool _magic_1118(Character& target)
         if (sdata.get(p, target.index).original_level >= 150)
         {
             ++f;
-            resistmod(target.index, p, 50 * -1);
+            chara_gain_registance(target, p, 50 * -1);
             if (f >= efp / 100)
             {
                 break;

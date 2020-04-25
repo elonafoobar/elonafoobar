@@ -324,7 +324,7 @@ void LuaCharacter::modify_resistance(
     int delta)
 {
     Element element_value = LuaEnums::ElementTable.ensure_from_string(element);
-    elona::resistmod(self.index, static_cast<int>(element_value), delta);
+    elona::chara_gain_registance(self, static_cast<int>(element_value), delta);
 }
 
 /**
