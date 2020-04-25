@@ -4455,7 +4455,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
     efp = calc_spell_power(caster, efid);
     if (caster.index == 0)
     {
-        if (calcspellcostmp(efid, caster.index) > caster.mp)
+        if (calc_spell_cost_mp(caster, efid) > caster.mp)
         {
             if (!g_config.skip_overcasting_warning())
             {
@@ -4502,7 +4502,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
             spell(efid - 400) = 0;
         }
     }
-    mp = calcspellcostmp(efid, caster.index);
+    mp = calc_spell_cost_mp(caster, efid);
     if (caster.index == 0)
     {
         if (cdata.player().god_id == core_god::ehekatl)

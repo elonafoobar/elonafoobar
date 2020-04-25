@@ -148,7 +148,7 @@ void UIMenuSpells::_draw_spell_name(int cnt, int spell_id)
 void UIMenuSpells::_draw_spell_cost(int cnt, int spell_id)
 {
     std::string spell_cost = ""s +
-        calcspellcostmp(spell_id, cdata.player().index) + u8" ("s +
+        calc_spell_cost_mp(cdata.player(), spell_id) + u8" ("s +
         spell((spell_id - 400)) + u8")"s;
     mes(wx + 328 - strlen_u(spell_cost) * 7,
         wy + 66 + cnt * 19 + 2,

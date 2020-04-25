@@ -1442,12 +1442,12 @@ int calc_spell_success_rate(const Character& caster, int id)
 
 
 
-int calcspellcostmp(int id, int chara_index)
+int calc_spell_cost_mp(const Character& caster, int id)
 {
     if (debug::voldemort)
         return 1;
 
-    if (chara_index == 0)
+    if (caster.index == 0)
     {
         if (id == 413 || id == 461 || id == 457 || id == 438 || id == 409 ||
             id == 408 || id == 410 || id == 466)
@@ -1457,14 +1457,13 @@ int calcspellcostmp(int id, int chara_index)
         else
         {
             return the_ability_db[id]->cost *
-                (100 + sdata(id, chara_index) * 3) / 100 +
-                sdata(id, chara_index) / 8;
+                (100 + sdata(id, caster.index) * 3) / 100 +
+                sdata(id, caster.index) / 8;
         }
     }
     else
     {
-        return the_ability_db[id]->cost * (50 + cdata[chara_index].level * 3) /
-            100;
+        return the_ability_db[id]->cost * (50 + caster.level * 3) / 100;
     }
 }
 
