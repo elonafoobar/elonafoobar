@@ -67,7 +67,7 @@ std::string cnvrank(int = 0);
 std::string cnvweight(int = 0);
 std::string txtbuilding(int x, int y);
 std::string txtitemoncell(int = 0, int = 0);
-std::string txtskillchange(int, int, bool);
+std::string txtskillchange(const Character& chara, int id, bool increase);
 std::string cheer_up_message(int);
 std::string name(int = 0);
 std::string maplevel(int = 0);

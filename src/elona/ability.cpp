@@ -250,7 +250,7 @@ void chara_gain_fixed_skill_exp(Character& chara, int id, int experience)
                 snd("core.ding3");
                 Message::instance().txtef(ColorIndex::green);
             }
-            txt(txtskillchange(id, chara.index, true));
+            txt(txtskillchange(chara, id, true));
         }
         chara_refresh(chara);
         return;
@@ -279,7 +279,7 @@ void chara_gain_fixed_skill_exp(Character& chara, int id, int experience)
             {
                 if (lv_delta != 0)
                 {
-                    txt(txtskillchange(id, chara.index, false),
+                    txt(txtskillchange(chara, id, false),
                         Message::color{ColorIndex::red});
                 }
             }
@@ -381,7 +381,7 @@ void chara_gain_skill_exp(
                 Message::instance().txtef(ColorIndex::green);
                 input_halt_input(HaltInput::alert);
             }
-            txt(txtskillchange(id, chara.index, true));
+            txt(txtskillchange(chara, id, true));
         }
         chara_refresh(chara);
         return;
@@ -411,7 +411,7 @@ void chara_gain_skill_exp(
                 if (lv_delta != 0)
                 {
                     input_halt_input(HaltInput::alert);
-                    txt(txtskillchange(id, chara.index, false),
+                    txt(txtskillchange(chara, id, false),
                         Message::color{ColorIndex::red});
                 }
             }

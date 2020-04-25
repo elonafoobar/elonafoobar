@@ -450,13 +450,10 @@ std::string txtbuilding(int x, int y)
 
 
 
-std::string txtskillchange(int id, int chara_index, bool increase)
+std::string txtskillchange(const Character& chara, int id, bool increase)
 {
     if (auto text = i18n::s.get_enum_property_optional(
-            "core.skill",
-            increase ? "increase" : "decrease",
-            id,
-            cdata[chara_index]))
+            "core.skill", increase ? "increase" : "decrease", id, chara))
     {
         return *text;
     }
@@ -466,7 +463,7 @@ std::string txtskillchange(int id, int chara_index, bool increase)
         {
             return i18n::s.get(
                 "core.skill.default.increase",
-                cdata[chara_index],
+                chara,
                 i18n::s.get_m(
                     "ability",
                     the_ability_db.get_id_from_legacy(id)->get(),
@@ -476,7 +473,7 @@ std::string txtskillchange(int id, int chara_index, bool increase)
         {
             return i18n::s.get(
                 "core.skill.default.decrease",
-                cdata[chara_index],
+                chara,
                 i18n::s.get_m(
                     "ability",
                     the_ability_db.get_id_from_legacy(id)->get(),
