@@ -67,10 +67,6 @@ bool UIMenuCtrlAlly::_should_display_ally(const Character& chara)
     {
         return false;
     }
-    if (chara.index == 0)
-    {
-        return false;
-    }
 
     return true;
 }
@@ -117,12 +113,12 @@ bool UIMenuCtrlAlly::init()
     {
         _insert_proceed_entry();
     }
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& ally : cdata.allies())
     {
-        if (_should_display_ally(cdata[cnt]))
+        if (_should_display_ally(ally))
         {
-            list(0, listmax) = cnt;
-            list(1, listmax) = -cdata[cnt].level;
+            list(0, listmax) = ally.index;
+            list(1, listmax) = -ally.level;
             ++listmax;
         }
     }
@@ -159,9 +155,9 @@ static void _update_sell()
 static void _update_pet_arena()
 {
     i = 0;
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (const auto& ally : cdata.player_and_allies())
     {
-        i += followerin(cnt) == 1;
+        i += followerin(ally.index) == 1;
     }
     if (i < arenaop(1))
     {
@@ -434,7 +430,7 @@ void UIMenuCtrlAlly::_draw_ally_list_entry_sell(int cnt, const Character& chara)
     cs_list(cs == cnt, ally_name, wx + 84, wy + 66 + cnt * 19 - 1);
 
     std::string ally_info =
-        ""s + calcslavevalue(chara.index) * 2 / 3 + i18n::s.get("core.ui.gold");
+        ""s + calc_slave_value(chara) * 2 / 3 + i18n::s.get("core.ui.gold");
 
     mes(wx + 390, wy + 66 + cnt * 19 + 2, ally_info);
 }
@@ -553,9 +549,9 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_gene_engineer(int _p)
 optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_pet_arena(int _p)
 {
     i = 0;
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (const auto& ally : cdata.player_and_allies())
     {
-        if (followerin(cnt) == 1)
+        if (followerin(ally.index) == 1)
         {
             ++i;
         }

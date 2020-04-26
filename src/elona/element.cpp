@@ -94,39 +94,25 @@ int element_color_id(int element_id)
 
 
 
-void resistmod(int chara_index, int element, int delta)
+void chara_gain_registance(Character& chara, int element, int delta)
 {
     if (delta >= 50)
     {
-        if (auto text = i18n::s.get_enum_optional(
-                "core.element.resist.gain", element, cdata[chara_index]))
-        {
-            txt(*text, Message::color{ColorIndex::green});
-        }
-        else
-        {
-            assert(false);
-        }
+        txt(i18n::s.get_enum("core.element.resist.gain", element, chara),
+            Message::color{ColorIndex::green});
     }
-    else if (delta <= 50 * -1)
+    else if (delta <= -50)
     {
-        if (auto text = i18n::s.get_enum_optional(
-                "core.element.resist.lose", element, cdata[chara_index]))
-        {
-            txt(*text, Message::color{ColorIndex::purple});
-        }
-        else
-        {
-            assert(false);
-        }
+        txt(i18n::s.get_enum("core.element.resist.lose", element, chara),
+            Message::color{ColorIndex::purple});
     }
 
-    sdata.get(element, chara_index).original_level =
-        clamp(sdata.get(element, chara_index).original_level + delta, 50, 200);
+    sdata.get(element, chara.index).original_level =
+        clamp(sdata.get(element, chara.index).original_level + delta, 50, 200);
     snd("core.atk_elec");
-    animeload(15, chara_index);
+    animeload(15, chara);
 
-    chara_refresh(chara_index);
+    chara_refresh(chara);
 }
 
 

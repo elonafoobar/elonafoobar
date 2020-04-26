@@ -251,9 +251,9 @@ TalkResult talk_game_begin(Character& initial_speaker)
         cdata.player().blind = 100;
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 0);
-        if (const auto larnneire_chara_index = chara_find("core.larnneire"))
+        if (const auto larnneire = chara_find("core.larnneire"))
         {
-            speaker = std::ref(cdata[larnneire_chara_index]);
+            speaker = std::ref(*larnneire);
         }
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
@@ -269,9 +269,9 @@ TalkResult talk_game_begin(Character& initial_speaker)
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 1);
-        if (const auto lomias_chara_index = chara_find("core.lomias"))
+        if (const auto lomias = chara_find("core.lomias"))
         {
-            speaker = std::ref(cdata[lomias_chara_index]);
+            speaker = std::ref(*lomias);
         }
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
@@ -301,9 +301,9 @@ TalkResult talk_game_begin(Character& initial_speaker)
         await(500);
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 2);
-        if (const auto larnneire_chara_index = chara_find("core.larnneire"))
+        if (const auto larnneire = chara_find("core.larnneire"))
         {
-            speaker = std::ref(cdata[larnneire_chara_index]);
+            speaker = std::ref(*larnneire);
         }
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
@@ -319,9 +319,9 @@ TalkResult talk_game_begin(Character& initial_speaker)
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 3);
-        if (const auto lomias_chara_index = chara_find("core.lomias"))
+        if (const auto lomias = chara_find("core.lomias"))
         {
-            speaker = std::ref(cdata[lomias_chara_index]);
+            speaker = std::ref(*lomias);
         }
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
@@ -337,9 +337,9 @@ TalkResult talk_game_begin(Character& initial_speaker)
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 4);
-        if (const auto larnneire_chara_index = chara_find("core.larnneire"))
+        if (const auto larnneire = chara_find("core.larnneire"))
         {
-            speaker = std::ref(cdata[larnneire_chara_index]);
+            speaker = std::ref(*larnneire);
         }
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
@@ -355,9 +355,9 @@ TalkResult talk_game_begin(Character& initial_speaker)
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 5);
-        if (const auto lomias_chara_index = chara_find("core.lomias"))
+        if (const auto lomias = chara_find("core.lomias"))
         {
-            speaker = std::ref(cdata[lomias_chara_index]);
+            speaker = std::ref(*lomias);
         }
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
@@ -373,9 +373,9 @@ TalkResult talk_game_begin(Character& initial_speaker)
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 6);
-        if (const auto larnneire_chara_index = chara_find("core.larnneire"))
+        if (const auto larnneire = chara_find("core.larnneire"))
         {
-            speaker = std::ref(cdata[larnneire_chara_index]);
+            speaker = std::ref(*larnneire);
         }
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
@@ -403,9 +403,9 @@ TalkResult talk_game_begin(Character& initial_speaker)
     txt(i18n::s.get("core.talk.unique.lomias.begin.regain_consciousness"));
     listmax = 0;
     buff = i18n::s.get_enum("core.talk.unique.lomias.begin", 0);
-    if (const auto lomias_chara_index = chara_find("core.lomias"))
+    if (const auto lomias = chara_find("core.lomias"))
     {
-        speaker = std::ref(cdata[lomias_chara_index]);
+        speaker = std::ref(*lomias);
     }
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
@@ -449,9 +449,9 @@ TalkResult talk_game_begin(Character& initial_speaker)
     }
     listmax = 0;
     buff = i18n::s.get_enum("core.talk.unique.lomias.begin", 3);
-    if (const auto larnneire_chara_index = chara_find("core.larnneire"))
+    if (const auto larnneire = chara_find("core.larnneire"))
     {
-        speaker = std::ref(cdata[larnneire_chara_index]);
+        speaker = std::ref(*larnneire);
     }
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
@@ -467,9 +467,9 @@ TalkResult talk_game_begin(Character& initial_speaker)
     }
     listmax = 0;
     buff = i18n::s.get_enum("core.talk.unique.lomias.begin", 4, cdatan(0, 0));
-    if (const auto lomias_chara_index = chara_find("core.lomias"))
+    if (const auto lomias = chara_find("core.lomias"))
     {
-        speaker = std::ref(cdata[lomias_chara_index]);
+        speaker = std::ref(*lomias);
     }
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");

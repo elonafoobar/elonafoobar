@@ -186,7 +186,7 @@ void chara_gain_skill(Character& chara, int id, int initial_level, int stock)
     sdata.get(id, chara.index).original_level = clamp(
         sdata.get(id, chara.index).original_level + initial_level, 1, 2000);
 
-    chara_refresh(chara.index);
+    chara_refresh(chara);
 }
 
 
@@ -250,9 +250,9 @@ void chara_gain_fixed_skill_exp(Character& chara, int id, int experience)
                 snd("core.ding3");
                 Message::instance().txtef(ColorIndex::green);
             }
-            txt(txtskillchange(id, chara.index, true));
+            txt(txtskillchange(chara, id, true));
         }
-        chara_refresh(chara.index);
+        chara_refresh(chara);
         return;
     }
     if (exp < 0)
@@ -279,12 +279,12 @@ void chara_gain_fixed_skill_exp(Character& chara, int id, int experience)
             {
                 if (lv_delta != 0)
                 {
-                    txt(txtskillchange(id, chara.index, false),
+                    txt(txtskillchange(chara, id, false),
                         Message::color{ColorIndex::red});
                 }
             }
         }
-        chara_refresh(chara.index);
+        chara_refresh(chara);
         return;
     }
     set_ability(chara, id, lv, exp, potential);
@@ -381,9 +381,9 @@ void chara_gain_skill_exp(
                 Message::instance().txtef(ColorIndex::green);
                 input_halt_input(HaltInput::alert);
             }
-            txt(txtskillchange(id, chara.index, true));
+            txt(txtskillchange(chara, id, true));
         }
-        chara_refresh(chara.index);
+        chara_refresh(chara);
         return;
     }
     if (new_exp_level < 0)
@@ -411,12 +411,12 @@ void chara_gain_skill_exp(
                 if (lv_delta != 0)
                 {
                     input_halt_input(HaltInput::alert);
-                    txt(txtskillchange(id, chara.index, false),
+                    txt(txtskillchange(chara, id, false),
                         Message::color{ColorIndex::red});
                 }
             }
         }
-        chara_refresh(chara.index);
+        chara_refresh(chara);
         return;
     }
 

@@ -174,7 +174,7 @@ bool _magic_1135(Character& target)
     {
         if (target.index == 0)
         {
-            eatstatus(efstatus, target.index);
+            food_apply_curse_state(target, efstatus);
         }
         else
         {
@@ -226,7 +226,7 @@ bool _magic_654(Character& subject, Character& target)
 bool _magic_626(Character& target)
 {
     txt(i18n::s.get("core.magic.mirror"));
-    animeload(10, target.index);
+    animeload(10, target);
     screen_analyze_self();
     return true;
 }
@@ -274,8 +274,8 @@ bool _magic_1101(Character& subject, Character& target)
     {
         show_eating_message(subject);
     }
-    eatstatus(efstatus, target.index);
-    animeload(15, target.index);
+    food_apply_curse_state(target, efstatus);
+    animeload(15, target);
     return true;
 }
 
@@ -298,7 +298,7 @@ bool _magic_1102(Character& target)
         }
     }
     status_ailment_damage(target, StatusAilment::drunk, efp);
-    eatstatus(efstatus, target.index);
+    food_apply_curse_state(target, efstatus);
     return true;
 }
 
@@ -794,7 +794,7 @@ bool _magic_406_407(Character& subject, Character& target)
         }
     }
     buff_add(target, "core.holy_veil", efp, 5 + efp / 30, subject);
-    animeload(11, target.index);
+    animeload(11, target);
     return true;
 }
 
@@ -954,7 +954,7 @@ bool _magic_632_454_1144(
             {
                 txt(traitrefn(1), Message::color{ColorIndex::red});
             }
-            animeload(8, 0);
+            animeload(8, cdata.player());
             f = 1;
             break;
         }
@@ -964,7 +964,7 @@ bool _magic_632_454_1144(
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
     }
-    chara_refresh(0);
+    chara_refresh(cdata.player());
     return true;
 }
 
@@ -1033,7 +1033,7 @@ bool _magic_1121(Character& subject, Character& target)
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
     }
-    chara_refresh(0);
+    chara_refresh(cdata.player());
     return true;
 }
 
@@ -1222,9 +1222,9 @@ bool _magic_412(Character& subject, Character& target)
     }
     else
     {
-        animeload(10, target.index);
+        animeload(10, target);
     }
-    chara_refresh(target.index);
+    chara_refresh(target);
     return true;
 }
 
@@ -1327,7 +1327,7 @@ bool _magic_1104(Character& target)
                                 "name")),
                         Message::color{ColorIndex::red});
                     snd("core.curse3");
-                    animeload(14, 0);
+                    animeload(14, cdata.player());
                     f = 1;
                     break;
                 }
@@ -1389,9 +1389,9 @@ bool _magic_1143(Character& target)
                 }
             }
         }
-        animeload(8, target.index);
+        animeload(8, target);
     }
-    chara_refresh(target.index);
+    chara_refresh(target);
     return true;
 }
 
@@ -1445,7 +1445,7 @@ bool _magic_1105(Character& target)
             }
         }
     }
-    chara_refresh(target.index);
+    chara_refresh(target);
     save_set_autosave();
     return true;
 }
@@ -1471,7 +1471,7 @@ bool _magic_1107(Character& target)
     {
         txt(i18n::s.get("core.magic.faith.doubt"));
         snd("core.curse3");
-        animeload(14, 0);
+        animeload(14, cdata.player());
         chara_gain_skill_exp(cdata.player(), 181, -1000);
         return true;
     }
@@ -1491,7 +1491,7 @@ bool _magic_1107(Character& target)
         1000 + (efstatus == CurseState::blessed) * 750,
         6,
         1000);
-    chara_refresh(target.index);
+    chara_refresh(target);
     return true;
 }
 
@@ -1558,7 +1558,7 @@ bool _magic_1119(Character& target)
             }
         }
     }
-    chara_refresh(target.index);
+    chara_refresh(target);
     save_set_autosave();
     return true;
 }
@@ -1572,7 +1572,7 @@ bool _magic_1106(Character& target)
     chara_gain_skill_exp(target, i, efstatusfix(-2000, -2000, -1000, -250));
     BrightAuraAnimation(target.position, BrightAuraAnimation::Type::debuff)
         .play();
-    chara_refresh(target.index);
+    chara_refresh(target);
     return true;
 }
 
@@ -1589,7 +1589,7 @@ bool _magic_1139(Character& target)
         txt(i18n::s.get("core.magic.troll_blood.blessed"),
             Message::color{ColorIndex::green});
     }
-    chara_refresh(target.index);
+    chara_refresh(target);
     return true;
 }
 
@@ -1658,7 +1658,7 @@ bool _magic_653(Character& target)
         return true;
     }
     txt(i18n::s.get("core.magic.vanish", target));
-    chara_vanquish(target.index);
+    chara_vanquish(target);
     return true;
 }
 
@@ -1735,7 +1735,7 @@ bool _magic_430_429(Character& target)
             txt(i18n::s.get("core.magic.sense.sense_object", target));
         }
     }
-    animeload(10, target.index);
+    animeload(10, target);
     update_minimap();
     update_screen();
     return true;
@@ -1787,12 +1787,12 @@ bool _magic_440_439(Character& target)
             else
             {
                 txt(i18n::s.get("core.magic.restore.body.apply", target));
-                animeload(10, target.index);
+                animeload(10, target);
             }
             if (efstatus == CurseState::blessed)
             {
                 txt(i18n::s.get("core.magic.restore.body.blessed", target));
-                animeload(10, target.index);
+                animeload(10, target);
             }
         }
         p(0) = 10;
@@ -1814,12 +1814,12 @@ bool _magic_440_439(Character& target)
             else
             {
                 txt(i18n::s.get("core.magic.restore.mind.apply", target));
-                animeload(10, target.index);
+                animeload(10, target);
             }
             if (efstatus == CurseState::blessed)
             {
                 txt(i18n::s.get("core.magic.restore.mind.blessed", target));
-                animeload(10, target.index);
+                animeload(10, target);
             }
         }
         p(0) = 14;
@@ -1856,7 +1856,7 @@ bool _magic_440_439(Character& target)
                 sdata.get(p(cnt), target.index).original_level / 10 + 5;
         }
     }
-    chara_refresh(target.index);
+    chara_refresh(target);
     return true;
 }
 
@@ -2148,9 +2148,9 @@ bool _magic_645_1114(Character& subject, Character& target)
             txt(i18n::s.get(
                 "core.magic.curse.apply", target, original_item_name));
         }
-        chara_refresh(target.index);
+        chara_refresh(target);
         snd("core.curse3");
-        animeload(14, target.index);
+        animeload(14, target);
         item_stack(target.index, cursed_item, true);
     }
     else
@@ -2173,7 +2173,7 @@ bool _magic_1118(Character& target)
         if (sdata.get(p, target.index).original_level >= 150)
         {
             ++f;
-            resistmod(target.index, p, 50 * -1);
+            chara_gain_registance(target, p, 50 * -1);
             if (f >= efp / 100)
             {
                 break;
@@ -2189,7 +2189,7 @@ bool _magic_1118(Character& target)
     {
         snd("core.curse1");
     }
-    chara_refresh(target.index);
+    chara_refresh(target);
     return true;
 }
 
@@ -2443,7 +2443,7 @@ bool _magic_49(Character& subject, Item& hammer)
     }
     randomize(hammer.param1);
     equip = target_item.body_part;
-    animeload(8, subject.index);
+    animeload(8, subject);
     target_item.quality = Quality::miracle;
     change_item_material(target_item, target_item.material);
     randomize(hammer.param1);
@@ -2470,7 +2470,7 @@ bool _magic_49(Character& subject, Item& hammer)
             target_item.index + 1;
         target_item.body_part = equip;
     }
-    chara_refresh(subject.index);
+    chara_refresh(subject);
     fixmaterial = 0;
     objfix = 0;
     hammer.modify_number(-1);
@@ -2520,7 +2520,7 @@ bool _magic_21_1127(Character& subject)
                     "core.magic.change_material.more_power_needed"));
                 return true;
             }
-            animeload(8, subject.index);
+            animeload(8, subject);
             txt(i18n::s.get(
                 "core.magic.change_material.artifact_reconstructed",
                 subject,
@@ -2542,7 +2542,7 @@ bool _magic_21_1127(Character& subject)
         {
             int material = fixmaterial;
 
-            animeload(8, subject.index);
+            animeload(8, subject);
             if (efp <= 50)
             {
                 if (rnd(3) == 0)
@@ -2574,7 +2574,7 @@ bool _magic_21_1127(Character& subject)
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
     }
-    chara_refresh(subject.index);
+    chara_refresh(subject);
     fixmaterial = 0;
     objfix = 0;
     return true;
@@ -2639,7 +2639,7 @@ bool _magic_1124_1125(Character& subject)
         {
             txt(i18n::s.get("core.magic.enchant.resist", target_item));
         }
-        chara_refresh(subject.index);
+        chara_refresh(subject);
     }
     else
     {
@@ -2731,7 +2731,7 @@ bool _magic_630_1129(Character& subject)
             }
             txt(i18n::s.get("core.magic.fill_charge.apply", target_item, p(0)));
             target_item.count += p;
-            animeload(8, subject.index);
+            animeload(8, subject);
         }
         else
         {
@@ -2800,7 +2800,7 @@ bool _magic_629(Character& subject)
             }
             p = 1;
         }
-        animeload(8, subject.index);
+        animeload(8, subject);
         p = p * target_item.count;
         game_data.charge_power += p;
         txt(i18n::s.get(
@@ -2842,7 +2842,7 @@ bool _magic_628(Character& subject, Character& target)
     }
     if (f == 1)
     {
-        animeload(8, target.index);
+        animeload(8, target);
         txt(i18n::s.get("core.magic.change.apply", target));
         flt(calcobjlv(target.level + 3), Quality::good);
         chara_create(56, 0, -3, 0);
@@ -2884,7 +2884,7 @@ bool _magic_1140(Character& subject)
         assert(target_item_opt);
         auto& target_item = *target_item_opt;
         save_set_autosave();
-        animeload(8, subject.index);
+        animeload(8, subject);
         if (!is_cursed(efstatus))
         {
             if (target_item.weight > 0)
@@ -2928,7 +2928,7 @@ bool _magic_1140(Character& subject)
         obvious = 0;
     }
 
-    chara_refresh(subject.index);
+    chara_refresh(subject);
     return true;
 }
 
@@ -2965,7 +2965,7 @@ bool _magic_1132(Character& subject, int& fltbk, int& valuebk)
         assert(target_item_opt);
         auto& target_item = *target_item_opt;
         save_set_autosave();
-        animeload(8, subject.index);
+        animeload(8, subject);
         fltbk = (int)the_item_db[itemid2int(target_item.id)]->category;
         valuebk = calcitemvalue(target_item, 0);
         target_item.remove();
@@ -3483,7 +3483,7 @@ bool _magic_464(Character& subject, Character& target)
     bool fastest = g_config.animation_wait() == 0;
     std::string messages;
 
-    animeload(10, target.index);
+    animeload(10, target);
     for (int i = 0, n = clamp(4 + rnd_capped(efp / 50 + 1), 1, 15); i < n; ++i)
     {
         snd("core.pray1");
@@ -3714,7 +3714,7 @@ optional_ref<Character> _ball_spell_internal(
             }
             dmg = roll(dice1, dice2, bonus) * 100 /
                 (75 + dist(tlocx, tlocy, dx, dy) * 25);
-            if (calcmagiccontrol(subject.index, target_index))
+            if (calc_magic_control(subject, cdata[target_index]))
             {
                 continue;
             }
@@ -3773,8 +3773,7 @@ optional_ref<Character> _ball_spell_internal(
         tlocy = next_subject.position.y;
         if (next_subject.state() == Character::State::alive)
         {
-            const auto damage =
-                calc_skill_damage(efid, next_subject.index, efp);
+            const auto damage = calc_skill_damage(next_subject, efid, efp);
             dice1 = damage->dice_x;
             dice2 = damage->dice_y;
             bonus = damage->damage_bonus;
@@ -3863,7 +3862,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
 
         if (buff_data.type == BuffType::buff)
         {
-            animeload(11, target.index);
+            animeload(11, target);
         }
         else if (buff_data.type == BuffType::hex)
         {
@@ -3927,7 +3926,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         }
         return true;
     }
-    if (const auto damage = calc_skill_damage(efid, subject.index, efp))
+    if (const auto damage = calc_skill_damage(subject, efid, efp))
     {
         dice1 = damage->dice_x;
         dice2 = damage->dice_y;
@@ -4023,8 +4022,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                         }
                     }
                     dmg = roll(dice1, dice2, bonus);
-                    int stat = calcmagiccontrol(subject.index, target_index);
-                    if (stat == 1)
+                    if (calc_magic_control(subject, cdata[target_index]))
                     {
                         continue;
                     }
@@ -4236,7 +4234,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                     txt(i18n::s.get("core.magic.weaken", target),
                         Message::color{ColorIndex::purple});
                 }
-                chara_refresh(target.index);
+                chara_refresh(target);
             }
         }
         return true;
@@ -4311,7 +4309,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                 {
                     if (chara->id == subject.id)
                     {
-                        chara_vanquish(chara->index);
+                        chara_vanquish(*chara);
                         --cnt;
                         continue;
                     }

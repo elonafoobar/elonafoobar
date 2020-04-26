@@ -419,7 +419,7 @@ bool UIMenuFeats::_gain_trait(int p_, bool show_text)
     cs = -10000 + tid;
     snd("core.ding3");
     ++trait(tid);
-    chara_refresh(_chara_index);
+    chara_refresh(cdata[_chara_index]);
 
     return true;
 }
@@ -437,7 +437,7 @@ bool UIMenuFeats::_can_select_trait(int p_)
 void UIMenuFeats::_switch_target(bool is_forwards)
 {
     int new_index = _chara_index;
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (int _i = 0; _i < 16; ++_i)
     {
         if (is_forwards)
         {

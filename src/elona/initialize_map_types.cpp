@@ -784,17 +784,17 @@ static void _init_map_arena()
 {
     map_initcustom(u8"arena_1"s);
     map_placeplayer();
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& chara : cdata.player_and_allies())
     {
-        if (cdata[cnt].state() == Character::State::alive)
+        if (chara.state() == Character::State::alive)
         {
-            if (cdata[cnt].relationship == 10)
+            if (chara.relationship == 10)
             {
-                if (cnt != 0)
+                if (chara.index != 0)
                 {
-                    cell_data.at(cdata[cnt].position.x, cdata[cnt].position.y)
+                    cell_data.at(chara.position.x, chara.position.y)
                         .chara_index_plus_one = 0;
-                    cdata[cnt].set_state(Character::State::pet_in_other_map);
+                    chara.set_state(Character::State::pet_in_other_map);
                 }
             }
         }
@@ -833,7 +833,7 @@ static void _init_map_arena()
                 chara->is_lord_of_dungeon() = true;
                 if (chara->level > arenaop(1) || chara->relationship != -3)
                 {
-                    chara_vanquish(chara->index);
+                    chara_vanquish(*chara);
                     --cnt;
                     continue;
                 }
@@ -854,21 +854,17 @@ static void _init_map_pet_arena()
     map_initcustom(u8"arena_2"s);
     map_data.max_crowd_density = 0;
     map_data.bgm = 81;
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& ally : cdata.allies())
     {
-        if (cnt == 0 || cnt == 56)
+        if (followerin(ally.index) == 0)
         {
-            continue;
-        }
-        if (followerin(cnt) == 0)
-        {
-            cdata[cnt].set_state(Character::State::pet_dead);
-            cdata[cnt].position.x = 0;
-            cdata[cnt].position.y = 0;
+            ally.set_state(Character::State::pet_dead);
+            ally.position.x = 0;
+            ally.position.y = 0;
         }
         else
         {
-            cdata[cnt].set_state(Character::State::alive);
+            ally.set_state(Character::State::alive);
         }
     }
     map_placeplayer();
@@ -894,11 +890,11 @@ static void _init_map_pet_arena()
             }
             if (f == 0)
             {
-                chara_vanquish(chara->index);
+                chara_vanquish(*chara);
                 --cnt;
                 continue;
             }
-            map_placearena(chara->index, true);
+            map_place_chara_on_pet_arena(*chara, true);
             if (cnt == 0)
             {
                 enemyteam = chara->index;
@@ -1284,7 +1280,7 @@ static void _init_map_derphy_thieves_guild()
         cdatan(0, chara->index) =
             i18n::s.get("core.chara.job.fence", cdatan(0, chara->index));
     }
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (int _i = 0; _i < 16; ++_i)
     {
         flt();
         chara_create(-1, 293, -3, 0);
@@ -1751,7 +1747,7 @@ static void _init_map_lumiest_mages_guild()
     {
         chara->role = Role::appraiser;
     }
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (int _i = 0; _i < 16; ++_i)
     {
         flt();
         chara_create(-1, 289, -3, 0);
@@ -2414,7 +2410,7 @@ static void _init_map_port_kapul_fighters_guild()
         chara->shop_rank = 12;
         cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
     }
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (int _i = 0; _i < 16; ++_i)
     {
         flt();
         chara_create(-1, 295, -3, 0);
@@ -2890,7 +2886,7 @@ static void _init_map_fields_maybe_generate_encounter()
             chara->shop_rank = encounterlv;
             cdatan(0, chara->index) = i18n::s.get(
                 "core.chara.job.wandering_vendor", cdatan(0, chara->index));
-            generatemoney(chara->index);
+            generatemoney(*chara);
             for (int cnt = 0, cnt_end = (encounterlv / 2 + 1); cnt < cnt_end;
                  ++cnt)
             {

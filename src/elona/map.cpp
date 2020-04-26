@@ -887,7 +887,7 @@ static void _restock_character_inventories()
         {
             continue;
         }
-        generatemoney(cnt.index);
+        generatemoney(cnt);
         if (cnt.id == CharaId::bard)
         {
             _proc_generate_bard_items(cnt);
@@ -1187,7 +1187,7 @@ void map_reload_noyel()
         {
             if (cnt.only_christmas())
             {
-                chara_vanquish(cnt.index);
+                chara_vanquish(cnt);
             }
         }
     }
@@ -1459,7 +1459,7 @@ TurnResult exit_map()
             if (area_data[game_data.current_map].has_been_conquered > 0)
             {
                 chara_vanquish(
-                    area_data[game_data.current_map].has_been_conquered);
+                    cdata[area_data[game_data.current_map].has_been_conquered]);
                 area_data[game_data.current_map].has_been_conquered = -1;
             }
         }
@@ -1769,26 +1769,26 @@ TurnResult exit_map()
                 i18n::s.get("core.action.exit_map.larna"));
         }
     }
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& chara : cdata.player_and_allies())
     {
-        cdata[cnt].hate = 0;
-        cdata[cnt].enemy_id = 0;
-        cdata[cnt].activity.finish();
-        if (cdata[cnt].state() != Character::State::alive)
+        chara.hate = 0;
+        chara.enemy_id = 0;
+        chara.activity.finish();
+        if (chara.state() != Character::State::alive)
         {
-            if (cdata[cnt].state() == Character::State::pet_in_other_map)
+            if (chara.state() == Character::State::pet_in_other_map)
             {
-                cdata[cnt].set_state(Character::State::alive);
+                chara.set_state(Character::State::alive);
             }
             continue;
         }
-        cell_data.at(cdata[cnt].position.x, cdata[cnt].position.y)
-            .chara_index_plus_one = 0;
-        if (cnt != 0)
+        cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one =
+            0;
+        if (chara.index != 0)
         {
-            if (cdata[cnt].current_map != 0)
+            if (chara.current_map != 0)
             {
-                cdata[cnt].set_state(Character::State::pet_moving_to_map);
+                chara.set_state(Character::State::pet_moving_to_map);
             }
         }
     }
@@ -1856,13 +1856,13 @@ void prepare_charas_for_map_unload()
     }
 
     // remove living adventurers from the map and set their states
-    for (int cnt = 16; cnt < 55; ++cnt)
+    for (auto&& adv : cdata.adventurers())
     {
-        if (cdata[cnt].state() == Character::State::alive)
+        if (adv.state() == Character::State::alive)
         {
-            cell_data.at(cdata[cnt].position.x, cdata[cnt].position.y)
-                .chara_index_plus_one = 0;
-            cdata[cnt].set_state(Character::State::adventurer_in_other_map);
+            cell_data.at(adv.position.x, adv.position.y).chara_index_plus_one =
+                0;
+            adv.set_state(Character::State::adventurer_in_other_map);
         }
     }
 }

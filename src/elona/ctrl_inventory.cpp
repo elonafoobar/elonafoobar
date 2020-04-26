@@ -1117,7 +1117,7 @@ void draw_window(optional_ref<Character> inventory_owner, bool dropcontinue)
             y + 35,
             i18n::s.get("core.ui.inv.take_ally.window.equip_weight") + ":" +
                 cnvweight(inventory_owner->sum_of_equipment_weight) + ""s +
-                cnveqweight(inventory_owner->index));
+                get_armor_class_name(*inventory_owner));
         x = wx + 40;
         y = wy + wh - 65 - wh % 8;
         mes(x, y, i18n::s.get("core.ui.inv.take_ally.window.equip"));
@@ -1615,8 +1615,8 @@ OnEnterResult on_enter_equip(Item& selected_item, MenuResult& result)
             return OnEnterResult{2};
         }
     }
-    equip_item(cdata.player().index, selected_item);
-    chara_refresh(cdata.player().index);
+    equip_item(cdata.player(), selected_item);
+    chara_refresh(cdata.player());
     screenupdate = -1;
     update_screen();
     snd("core.equip1");
@@ -1879,7 +1879,7 @@ OnEnterResult on_enter_give(
         {
             create_pcpic(inventory_owner);
         }
-        chara_refresh(inventory_owner.index);
+        chara_refresh(inventory_owner);
         refresh_burden_state();
         if (invally == 1)
         {
@@ -2044,7 +2044,7 @@ OnEnterResult on_enter_trade_target(
         supply_new_equipment(inventory_owner);
     }
     (void)inv_get_free_slot_force(inventory_owner.index);
-    chara_refresh(inventory_owner.index);
+    chara_refresh(inventory_owner);
     refresh_burden_state();
     invsubroutine = 0;
     result.succeeded = true;
@@ -2216,7 +2216,7 @@ OnEnterResult on_enter_receive(Item& selected_item, Character& inventory_owner)
     {
         create_pcpic(inventory_owner);
     }
-    chara_refresh(inventory_owner.index);
+    chara_refresh(inventory_owner);
     refresh_burden_state();
     return OnEnterResult{1};
 }

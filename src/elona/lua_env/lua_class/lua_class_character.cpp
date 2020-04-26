@@ -324,7 +324,7 @@ void LuaCharacter::modify_resistance(
     int delta)
 {
     Element element_value = LuaEnums::ElementTable.ensure_from_string(element);
-    elona::resistmod(self.index, static_cast<int>(element_value), delta);
+    elona::chara_gain_registance(self, static_cast<int>(element_value), delta);
 }
 
 /**
@@ -408,7 +408,7 @@ void LuaCharacter::eat_rotten_food(Character& self)
  */
 void LuaCharacter::vanquish(Character& self)
 {
-    chara_vanquish(self.index);
+    chara_vanquish(self);
 }
 
 /**
@@ -432,7 +432,7 @@ void LuaCharacter::act_hostile_against(
  */
 void LuaCharacter::refresh(Character& self)
 {
-    chara_refresh(self.index);
+    chara_refresh(self);
 }
 
 /**

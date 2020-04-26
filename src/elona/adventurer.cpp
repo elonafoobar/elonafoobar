@@ -28,9 +28,9 @@ int i_at_m145 = 0;
 
 void create_all_adventurers()
 {
-    for (int cnt = 16; cnt < 55; ++cnt)
+    for (auto&& adv : cdata.adventurers())
     {
-        create_adventurer(cdata[cnt]);
+        create_adventurer(adv);
     }
 }
 
@@ -199,9 +199,8 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
 
 void adventurer_update()
 {
-    for (int cnt = 16; cnt < 55; ++cnt)
+    for (auto&& adv : cdata.adventurers())
     {
-        auto& adv = cdata[cnt];
         if (adv.period_of_contract != 0)
         {
             if (adv.period_of_contract < game_data.date.hours())
@@ -334,9 +333,9 @@ void adventurer_discover_equipment(Character& adv)
         }
         if (item.number() != 0)
         {
-            if (cdata[adv.index].ai_item == item.index)
+            if (adv.ai_item == item.index)
             {
-                cdata[adv.index].ai_item = 0;
+                adv.ai_item = 0;
             }
             item.remove();
             f = 1;
@@ -347,7 +346,7 @@ void adventurer_discover_equipment(Character& adv)
     {
         return;
     }
-    flt(cdata[adv.index].level, Quality::miracle);
+    flt(adv.level, Quality::miracle);
     if (rnd(3) == 0)
     {
         flttypemajor = choice(fsetwear);

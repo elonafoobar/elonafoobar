@@ -150,7 +150,7 @@ void UIMenuEquipment::_draw_window_headers()
     display_note(
         i18n::s.get("core.ui.equip.equip_weight") + ": " +
         cnvweight(cdata.player().sum_of_equipment_weight) +
-        cnveqweight(cdata.player().index) + " " +
+        get_armor_class_name(cdata.player()) + " " +
         i18n::s.get("core.ui.equip.hit_bonus") + ":" +
         cdata.player().hit_bonus + " " +
         i18n::s.get("core.ui.equip.damage_bonus") + ":" +
@@ -288,8 +288,8 @@ static void _unequip_item()
         txt(i18n::s.get("core.ui.equip.cannot_be_taken_off", inv[item_index]));
         return;
     }
-    unequip_item(cdata.player().index);
-    chara_refresh(cdata.player().index);
+    unequip_item(cdata.player());
+    chara_refresh(cdata.player());
     snd("core.equip1");
     Message::instance().linebreak();
     txt(i18n::s.get("core.ui.equip.you_unequip", inv[item_index]));

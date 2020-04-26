@@ -481,7 +481,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_name()
     {
         s(3) = cnven(i18n::s.get("core.ui.sex3.female"));
     }
-    s(5) = ""s + calcage(_chara.index) + u8" "s +
+    s(5) = ""s + calc_age(_chara) + u8" "s +
         i18n::s.get("core.ui.chara_sheet.personal.age_counter");
     s(6) = ""s + _chara.height + u8" cm"s;
     s(7) = ""s + _chara.weight + u8" kg"s;
@@ -562,7 +562,7 @@ void UIMenuCharacterSheet::_draw_first_page_weapon_info()
         i18n::s.get("core.ui.chara_sheet.damage.evade"),
         {20, 10, 0});
     attackskill = 106;
-    const auto evade = calc_evasion(_chara.index);
+    const auto evade = calc_evasion(_chara);
     const auto prot = calc_attack_protection(_chara);
     font(14 - en * 2);
     mes(wx + 460 + en * 8,
@@ -639,7 +639,7 @@ void UIMenuCharacterSheet::_draw_first_page_stats_weight()
     s(0) = ""s + cnvweight(game_data.cargo_weight);
     s(1) = cnvweight(game_data.current_cart_limit);
     s(2) = cnvweight(_chara.sum_of_equipment_weight) + u8" "s +
-        cnveqweight(_chara.index);
+        get_armor_class_name(_chara);
     s(3) = i18n::s.get(
         "core.ui.chara_sheet.weight.level_counter",
         cnvrank(game_data.deepest_dungeon_level));

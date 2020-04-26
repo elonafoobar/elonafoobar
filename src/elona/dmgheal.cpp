@@ -364,26 +364,26 @@ int damage_hp(
     {
         if (victim.index < 16)
         {
-            for (int cnt = 0; cnt < 16; ++cnt)
+            for (auto&& chara : cdata.player_and_allies())
             {
-                if (victim.index == cnt)
+                if (victim.index == chara.index)
                 {
                     continue;
                 }
-                if (cdata[cnt].state() != Character::State::alive)
+                if (chara.state() != Character::State::alive)
                 {
                     continue;
                 }
-                if (cdata[cnt].has_lay_hand() == 0)
+                if (chara.has_lay_hand() == 0)
                 {
                     continue;
                 }
-                if (cdata[cnt].is_lay_hand_available() == 0)
+                if (chara.is_lay_hand_available() == 0)
                 {
                     continue;
                 }
-                cdata[cnt].is_lay_hand_available() = false;
-                txt(i18n::s.get("core.damage.lay_hand", cdata[cnt]),
+                chara.is_lay_hand_available() = false;
+                txt(i18n::s.get("core.damage.lay_hand", chara),
                     Message::color{ColorIndex::cyan});
                 txt(i18n::s.get("core.damage.is_healed", victim));
                 victim.hp = victim.max_hp / 2;
@@ -950,14 +950,14 @@ int damage_hp(
                 x = victim.position.x;
                 y = victim.position.y;
                 snd_at("core.crush1", victim.position, false, false);
-                animeblood(victim.index, 1, element);
+                animeblood(victim, 1, element);
             }
             spillfrag(victim.position.x, victim.position.y, 3);
         }
         else
         {
             sound_kill(victim.position);
-            animeblood(victim.index, 0, element);
+            animeblood(victim, 0, element);
             spillblood(victim.position.x, victim.position.y, 4);
         }
         if (victim.index == 0)
@@ -1155,22 +1155,21 @@ int damage_hp(
         if (victim.is_death_master() == 1)
         {
             txt(i18n::s.get("core.damage.death_word_breaks"));
-            for (int chara_index = 0; chara_index < ELONA_MAX_CHARACTERS;
-                 ++chara_index)
+            for (auto&& chara : cdata.all())
             {
-                if (cdata[chara_index].state() != Character::State::alive)
+                if (chara.state() != Character::State::alive)
                 {
                     continue;
                 }
                 for (int buff_index = 0; buff_index < 16; ++buff_index)
                 {
-                    if (cdata[chara_index].buffs[buff_index].id == 0)
+                    if (chara.buffs[buff_index].id == 0)
                     {
                         break;
                     }
-                    if (cdata[chara_index].buffs[buff_index].id == 16)
+                    if (chara.buffs[buff_index].id == 16)
                     {
-                        buff_delete(cdata[chara_index], buff_index);
+                        buff_delete(chara, buff_index);
                         --buff_index;
                         continue;
                     }
@@ -1580,7 +1579,7 @@ void character_drops_item(Character& victim)
                     item,
                     enchantment_generate(enchantment_gen_level(rnd(4))),
                     enchantment_gen_p());
-                animeload(8, victim.index);
+                animeload(8, victim);
             }
         }
         if (item.body_part != 0)

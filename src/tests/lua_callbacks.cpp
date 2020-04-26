@@ -266,7 +266,7 @@ Event.register("core.character_refreshed", my_chara_refreshed_handler)
         .get_mod("test_chara_refreshed")
         ->env.raw_set("idx", idx);
 
-    elona::chara_refresh(idx);
+    elona::chara_refresh(elona::cdata[idx]);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_chara_refreshed", R"(assert(mod.store.global.idx == idx))"));

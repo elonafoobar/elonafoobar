@@ -554,7 +554,7 @@ void initialize_debug_globals()
     cdata.player().platinum_coin = 30;
     cdata.player().fame = 65000;
     game_data.quest_flags.main_quest = 100;
-    chara_refresh(0);
+    chara_refresh(cdata.player());
 
     cdata.player().can_cast_rapid_magic() = true;
     mode = 0;

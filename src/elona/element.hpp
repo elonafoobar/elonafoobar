@@ -37,7 +37,7 @@ enum class Element
 int randomele();
 std::string elename(int ele);
 int element_color_id(int element_id);
-void resistmod(int chara_index, int element, int delta);
+void chara_gain_registance(Character& chara, int element, int delta);
 void txteledmg(
     int type,
     optional_ref<const Character> attacker,

@@ -159,18 +159,18 @@ void eh_conquer_lesimas(const DeferredEvent&)
 
 void eh_lomias_talks(const DeferredEvent&)
 {
-    const auto lomias_index = chara_find("core.lomias");
-    assert(lomias_index != 0);
-    talk_to_npc(cdata[lomias_index]);
+    const auto lomias = chara_find("core.lomias");
+    assert(lomias);
+    talk_to_npc(*lomias);
 }
 
 
 
 void eh_zeome_talks(const DeferredEvent&)
 {
-    const auto zeome_index = chara_find("core.zeome");
-    assert(zeome_index != 0);
-    talk_to_npc(cdata[zeome_index]);
+    const auto zeome = chara_find("core.zeome");
+    assert(zeome);
+    talk_to_npc(*zeome);
 }
 
 
@@ -229,8 +229,8 @@ void eh_conquer_nefia(const DeferredEvent&)
     snd("core.complete1");
     txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
     modrank(2, 300, 8);
-    game_data.executing_immediate_quest_fame_gained =
-        calcfame(0, game_data.current_dungeon_level * 30 + 200);
+    game_data.executing_immediate_quest_fame_gained = calc_gained_fame(
+        cdata.player(), game_data.current_dungeon_level * 30 + 200);
     txt(i18n::s.get(
             "core.quest.gain_fame",
             game_data.executing_immediate_quest_fame_gained),
@@ -276,8 +276,8 @@ void eh_player_died(const DeferredEvent&)
     }
     txt(i18n::s.get("core.event.you_lost_some_money"));
     cdata.player().gold -= cdata.player().gold / 3;
-    decfame(0, 10);
-    chara_refresh(0);
+    decrease_fame(cdata.player(), 10);
+    chara_refresh(cdata.player());
     save_set_autosave();
 }
 
@@ -299,9 +299,9 @@ void eh_quest_update_deadline(const DeferredEvent&)
 
 void eh_wandering_vendor(const DeferredEvent&)
 {
-    const auto shopkeeper_index = chara_find("core.shopkeeper");
-    assert(shopkeeper_index != 0);
-    talk_to_npc(cdata[shopkeeper_index]);
+    const auto shopkeeper = chara_find("core.shopkeeper");
+    assert(shopkeeper);
+    talk_to_npc(*shopkeeper);
 }
 
 
@@ -461,7 +461,7 @@ void eh_quest_escort_complete(const DeferredEvent& event)
     talk_to_npc(cdata[event.param2]);
     rq = event.param1;
     quest_complete();
-    chara_vanquish(event.param2);
+    chara_vanquish(cdata[event.param2]);
 }
 
 
@@ -589,16 +589,15 @@ void eh_lily_killed(const DeferredEvent& event)
     flt();
     itemcreate_extra_inv(55, cdata[event.param1].position, 4);
     game_data.quest_flags.pael_and_her_mom = 1001;
-    const auto pael_index = chara_find("core.pael");
-    if (pael_index != 0)
+    if (const auto pael = chara_find("core.pael"))
     {
-        if (cdata[pael_index].state() == Character::State::alive)
+        if (pael->state() == Character::State::alive)
         {
             txt(i18n::s.get("core.event.pael"),
                 Message::color{ColorIndex::blue});
-            cdata[pael_index].relationship = -3;
-            cdata[pael_index].hate = 1000;
-            cdata[pael_index].enemy_id = 0;
+            pael->relationship = -3;
+            pael->hate = 1000;
+            pael->enemy_id = 0;
         }
     }
 }
@@ -836,9 +835,9 @@ void eh_guild_alarm(const DeferredEvent& event)
 
 void eh_rogue_party_ambush(const DeferredEvent&)
 {
-    const auto rogue_boss_index = chara_find("core.rogue_boss");
-    assert(rogue_boss_index != 0);
-    talk_to_npc(cdata[rogue_boss_index]);
+    const auto rogue_boss = chara_find("core.rogue_boss");
+    assert(rogue_boss);
+    talk_to_npc(*rogue_boss);
     game_data.rogue_boss_encountered = 23;
 }
 
@@ -1137,15 +1136,14 @@ void eh_lord_of_void(const DeferredEvent&)
 void eh_snow_blindness(const DeferredEvent&)
 {
     i = 0;
-    for (int chara_index = 0; chara_index < 16; ++chara_index)
+    for (auto&& chara : cdata.player_and_allies())
     {
-        if (cdata[chara_index].state() != Character::State::alive)
+        if (chara.state() != Character::State::alive)
             continue;
-        if (cdata[chara_index].role != Role::adventurer &&
-            cdata[chara_index].role != Role::other)
+        if (chara.role != Role::adventurer && chara.role != Role::other)
         {
-            cdata[chara_index].emotion_icon = 2010;
-            txt(i18n::s.get("core.event.my_eyes", cdata[chara_index]));
+            chara.emotion_icon = 2010;
+            txt(i18n::s.get("core.event.my_eyes", chara));
         }
     }
 }

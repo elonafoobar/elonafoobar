@@ -618,13 +618,13 @@ struct CData
     }
 
 
-    CDataSlice pets()
+    CDataSlice allies()
     {
         return {std::begin(storage) + 1, std::begin(storage) + 16};
     }
 
 
-    CDataSlice pc_and_pets()
+    CDataSlice player_and_allies()
     {
         return {std::begin(storage), std::begin(storage) + 16};
     }
@@ -632,7 +632,7 @@ struct CData
 
     CDataSlice adventurers()
     {
-        return {std::begin(storage) + 16, std::begin(storage) + 56};
+        return {std::begin(storage) + 16, std::begin(storage) + 55};
     }
 
 
@@ -674,7 +674,7 @@ void chara_relocate(
     optional_ref<Character> destination_slot,
     CharaRelocationMode mode = CharaRelocationMode::normal);
 
-void chara_refresh(int);
+void chara_refresh(Character& chara);
 
 
 /**
@@ -687,7 +687,7 @@ int chara_copy(const Character& source);
 
 void chara_delete(int = 0);
 void chara_remove(Character&);
-void chara_vanquish(int = 0);
+void chara_vanquish(Character& chara);
 void chara_killed(Character&);
 
 enum class CharaFindLocation
@@ -696,8 +696,7 @@ enum class CharaFindLocation
     others
 };
 
-int chara_find(data::InstanceId chara_id);
-int chara_find(int id);
+optional_ref<Character> chara_find(data::InstanceId chara_id);
 int chara_find_ally(int id);
 int chara_get_free_slot();
 int chara_get_free_slot_ally();
@@ -740,8 +739,8 @@ void move_character(Character& chara);
 void proc_negative_enchantments(Character& chara);
 void proc_pregnant(Character& chara);
 void wake_up();
-int try_to_perceive_npc(int);
-int relationbetween(int, int);
+bool try_to_perceive_npc(const Character& chara, const Character& enemy);
+int relation_between(const Character& a, const Character& b);
 
 } // namespace elona
 

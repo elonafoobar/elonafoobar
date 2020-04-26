@@ -144,342 +144,210 @@ void set_npc_religion(Character& chara)
 
 
 
-void apply_god_blessing(int chara_index)
+void god_apply_blessing(Character& believer)
 {
-    if (cdata[chara_index].god_id == core_god::mani)
+    const auto P = believer.piety_point;
+    const auto F = sdata(181, believer.index);
+
+    if (believer.god_id == core_god::mani)
     {
-        if (sdata(12, chara_index) > 0)
+        if (sdata(12, believer.index) > 0)
         {
-            sdata(12, chara_index) += clamp(
-                cdata[chara_index].piety_point / 400,
-                1,
-                8 + sdata(181, 0) / 10);
+            sdata(12, believer.index) += clamp(P / 400, 1, 8 + F / 10);
         }
-        if (sdata(13, chara_index) > 0)
+        if (sdata(13, believer.index) > 0)
         {
-            sdata(13, chara_index) += clamp(
-                cdata[chara_index].piety_point / 300,
-                1,
-                14 + sdata(181, 0) / 10);
+            sdata(13, believer.index) += clamp(P / 300, 1, 14 + F / 10);
         }
-        if (sdata(154, chara_index) > 0)
+        if (sdata(154, believer.index) > 0)
         {
-            sdata(154, chara_index) += clamp(
-                cdata[chara_index].piety_point / 500,
-                1,
-                8 + sdata(181, 0) / 10);
+            sdata(154, believer.index) += clamp(P / 500, 1, 8 + F / 10);
         }
-        if (sdata(110, chara_index) > 0)
+        if (sdata(110, believer.index) > 0)
         {
-            sdata(110, chara_index) += clamp(
-                cdata[chara_index].piety_point / 250,
-                1,
-                18 + sdata(181, 0) / 10);
+            sdata(110, believer.index) += clamp(P / 250, 1, 18 + F / 10);
         }
-        if (sdata(159, chara_index) > 0)
+        if (sdata(159, believer.index) > 0)
         {
-            sdata(159, chara_index) += clamp(
-                cdata[chara_index].piety_point / 350,
-                1,
-                8 + sdata(181, 0) / 10);
+            sdata(159, believer.index) += clamp(P / 350, 1, 8 + F / 10);
         }
-        if (sdata(158, chara_index) > 0)
+        if (sdata(158, believer.index) > 0)
         {
-            sdata(158, chara_index) += clamp(
-                cdata[chara_index].piety_point / 250,
-                1,
-                16 + sdata(181, 0) / 10);
+            sdata(158, believer.index) += clamp(P / 250, 1, 16 + F / 10);
         }
-        if (sdata(176, chara_index) > 0)
+        if (sdata(176, believer.index) > 0)
         {
-            sdata(176, chara_index) += clamp(
-                cdata[chara_index].piety_point / 300,
-                1,
-                10 + sdata(181, 0) / 10);
+            sdata(176, believer.index) += clamp(P / 300, 1, 10 + F / 10);
         }
-        if (sdata(179, chara_index) > 0)
+        if (sdata(179, believer.index) > 0)
         {
-            sdata(179, chara_index) += clamp(
-                cdata[chara_index].piety_point / 350,
-                1,
-                12 + sdata(181, 0) / 10);
+            sdata(179, believer.index) += clamp(P / 350, 1, 12 + F / 10);
         }
     }
-    if (cdata[chara_index].god_id == core_god::lulwy)
+    if (believer.god_id == core_god::lulwy)
     {
-        if (sdata(13, chara_index) > 0)
+        if (sdata(13, believer.index) > 0)
         {
-            sdata(13, chara_index) += clamp(
-                cdata[chara_index].piety_point / 450,
-                1,
-                10 + sdata(181, 0) / 10);
+            sdata(13, believer.index) += clamp(P / 450, 1, 10 + F / 10);
         }
-        if (sdata(18, chara_index) > 0)
+        if (sdata(18, believer.index) > 0)
         {
-            sdata(18, chara_index) += clamp(
-                cdata[chara_index].piety_point / 350,
-                1,
-                30 + sdata(181, 0) / 10);
+            sdata(18, believer.index) += clamp(P / 350, 1, 30 + F / 10);
         }
-        if (sdata(108, chara_index) > 0)
+        if (sdata(108, believer.index) > 0)
         {
-            sdata(108, chara_index) += clamp(
-                cdata[chara_index].piety_point / 350,
-                1,
-                16 + sdata(181, 0) / 10);
+            sdata(108, believer.index) += clamp(P / 350, 1, 16 + F / 10);
         }
-        if (sdata(109, chara_index) > 0)
+        if (sdata(109, believer.index) > 0)
         {
-            sdata(109, chara_index) += clamp(
-                cdata[chara_index].piety_point / 450,
-                1,
-                12 + sdata(181, 0) / 10);
+            sdata(109, believer.index) += clamp(P / 450, 1, 12 + F / 10);
         }
-        if (sdata(157, chara_index) > 0)
+        if (sdata(157, believer.index) > 0)
         {
-            sdata(157, chara_index) += clamp(
-                cdata[chara_index].piety_point / 450,
-                1,
-                12 + sdata(181, 0) / 10);
+            sdata(157, believer.index) += clamp(P / 450, 1, 12 + F / 10);
         }
-        if (sdata(174, chara_index) > 0)
+        if (sdata(174, believer.index) > 0)
         {
-            sdata(174, chara_index) += clamp(
-                cdata[chara_index].piety_point / 550,
-                1,
-                8 + sdata(181, 0) / 10);
+            sdata(174, believer.index) += clamp(P / 550, 1, 8 + F / 10);
         }
     }
-    if (cdata[chara_index].god_id == core_god::itzpalt)
+    if (believer.god_id == core_god::itzpalt)
     {
-        if (sdata(16, chara_index) > 0)
+        if (sdata(16, believer.index) > 0)
         {
-            sdata(16, chara_index) += clamp(
-                cdata[chara_index].piety_point / 300,
-                1,
-                18 + sdata(181, 0) / 10);
+            sdata(16, believer.index) += clamp(P / 300, 1, 18 + F / 10);
         }
-        if (sdata(155, chara_index) > 0)
+        if (sdata(155, believer.index) > 0)
         {
-            sdata(155, chara_index) += clamp(
-                cdata[chara_index].piety_point / 350,
-                1,
-                15 + sdata(181, 0) / 10);
+            sdata(155, believer.index) += clamp(P / 350, 1, 15 + F / 10);
         }
-        if (sdata(50, chara_index) > 0)
+        if (sdata(50, believer.index) > 0)
         {
-            sdata(50, chara_index) += clamp(
-                cdata[chara_index].piety_point / 50,
-                1,
-                200 + sdata(181, 0) / 10);
+            sdata(50, believer.index) += clamp(P / 50, 1, 200 + F / 10);
         }
-        if (sdata(51, chara_index) > 0)
+        if (sdata(51, believer.index) > 0)
         {
-            sdata(51, chara_index) += clamp(
-                cdata[chara_index].piety_point / 50,
-                1,
-                200 + sdata(181, 0) / 10);
+            sdata(51, believer.index) += clamp(P / 50, 1, 200 + F / 10);
         }
-        if (sdata(52, chara_index) > 0)
+        if (sdata(52, believer.index) > 0)
         {
-            sdata(52, chara_index) += clamp(
-                cdata[chara_index].piety_point / 50,
-                1,
-                200 + sdata(181, 0) / 10);
+            sdata(52, believer.index) += clamp(P / 50, 1, 200 + F / 10);
         }
     }
-    if (cdata[chara_index].god_id == core_god::ehekatl)
+    if (believer.god_id == core_god::ehekatl)
     {
-        if (sdata(17, chara_index) > 0)
+        if (sdata(17, believer.index) > 0)
         {
-            sdata(17, chara_index) += clamp(
-                cdata[chara_index].piety_point / 250,
-                1,
-                20 + sdata(181, 0) / 10);
+            sdata(17, believer.index) += clamp(P / 250, 1, 20 + F / 10);
         }
-        if (sdata(19, chara_index) > 0)
+        if (sdata(19, believer.index) > 0)
         {
-            sdata(19, chara_index) += clamp(
-                cdata[chara_index].piety_point / 100,
-                1,
-                50 + sdata(181, 0) / 10);
+            sdata(19, believer.index) += clamp(P / 100, 1, 50 + F / 10);
         }
-        if (sdata(173, chara_index) > 0)
+        if (sdata(173, believer.index) > 0)
         {
-            sdata(173, chara_index) += clamp(
-                cdata[chara_index].piety_point / 300,
-                1,
-                15 + sdata(181, 0) / 10);
+            sdata(173, believer.index) += clamp(P / 300, 1, 15 + F / 10);
         }
-        if (sdata(164, chara_index) > 0)
+        if (sdata(164, believer.index) > 0)
         {
-            sdata(164, chara_index) += clamp(
-                cdata[chara_index].piety_point / 350,
-                1,
-                17 + sdata(181, 0) / 10);
+            sdata(164, believer.index) += clamp(P / 350, 1, 17 + F / 10);
         }
-        if (sdata(185, chara_index) > 0)
+        if (sdata(185, believer.index) > 0)
         {
-            sdata(185, chara_index) += clamp(
-                cdata[chara_index].piety_point / 300,
-                1,
-                12 + sdata(181, 0) / 10);
+            sdata(185, believer.index) += clamp(P / 300, 1, 12 + F / 10);
         }
-        if (sdata(158, chara_index) > 0)
+        if (sdata(158, believer.index) > 0)
         {
-            sdata(158, chara_index) += clamp(
-                cdata[chara_index].piety_point / 450,
-                1,
-                8 + sdata(181, 0) / 10);
+            sdata(158, believer.index) += clamp(P / 450, 1, 8 + F / 10);
         }
     }
-    if (cdata[chara_index].god_id == core_god::opatos)
+    if (believer.god_id == core_god::opatos)
     {
-        if (sdata(10, chara_index) > 0)
+        if (sdata(10, believer.index) > 0)
         {
-            sdata(10, chara_index) += clamp(
-                cdata[chara_index].piety_point / 450,
-                1,
-                11 + sdata(181, 0) / 10);
+            sdata(10, believer.index) += clamp(P / 450, 1, 11 + F / 10);
         }
-        if (sdata(11, chara_index) > 0)
+        if (sdata(11, believer.index) > 0)
         {
-            sdata(11, chara_index) += clamp(
-                cdata[chara_index].piety_point / 350,
-                1,
-                16 + sdata(181, 0) / 10);
+            sdata(11, believer.index) += clamp(P / 350, 1, 16 + F / 10);
         }
-        if (sdata(168, chara_index) > 0)
+        if (sdata(168, believer.index) > 0)
         {
-            sdata(168, chara_index) += clamp(
-                cdata[chara_index].piety_point / 350,
-                1,
-                15 + sdata(181, 0) / 10);
+            sdata(168, believer.index) += clamp(P / 350, 1, 15 + F / 10);
         }
-        if (sdata(153, chara_index) > 0)
+        if (sdata(153, believer.index) > 0)
         {
-            sdata(153, chara_index) += clamp(
-                cdata[chara_index].piety_point / 300,
-                1,
-                16 + sdata(181, 0) / 10);
+            sdata(153, believer.index) += clamp(P / 300, 1, 16 + F / 10);
         }
-        if (sdata(163, chara_index) > 0)
+        if (sdata(163, believer.index) > 0)
         {
-            sdata(163, chara_index) += clamp(
-                cdata[chara_index].piety_point / 350,
-                1,
-                12 + sdata(181, 0) / 10);
+            sdata(163, believer.index) += clamp(P / 350, 1, 12 + F / 10);
         }
-        if (sdata(174, chara_index) > 0)
+        if (sdata(174, believer.index) > 0)
         {
-            sdata(174, chara_index) += clamp(
-                cdata[chara_index].piety_point / 450,
-                1,
-                8 + sdata(181, 0) / 10);
+            sdata(174, believer.index) += clamp(P / 450, 1, 8 + F / 10);
         }
     }
-    if (cdata[chara_index].god_id == core_god::jure)
+    if (believer.god_id == core_god::jure)
     {
-        if (sdata(15, chara_index) > 0)
+        if (sdata(15, believer.index) > 0)
         {
-            sdata(15, chara_index) += clamp(
-                cdata[chara_index].piety_point / 300,
-                1,
-                16 + sdata(181, 0) / 10);
+            sdata(15, believer.index) += clamp(P / 300, 1, 16 + F / 10);
         }
-        if (sdata(154, chara_index) > 0)
+        if (sdata(154, believer.index) > 0)
         {
-            sdata(154, chara_index) += clamp(
-                cdata[chara_index].piety_point / 250,
-                1,
-                18 + sdata(181, 0) / 10);
+            sdata(154, believer.index) += clamp(P / 250, 1, 18 + F / 10);
         }
-        if (sdata(155, chara_index) > 0)
+        if (sdata(155, believer.index) > 0)
         {
-            sdata(155, chara_index) += clamp(
-                cdata[chara_index].piety_point / 400,
-                1,
-                10 + sdata(181, 0) / 10);
+            sdata(155, believer.index) += clamp(P / 400, 1, 10 + F / 10);
         }
-        if (sdata(161, chara_index) > 0)
+        if (sdata(161, believer.index) > 0)
         {
-            sdata(161, chara_index) += clamp(
-                cdata[chara_index].piety_point / 400,
-                1,
-                9 + sdata(181, 0) / 10);
+            sdata(161, believer.index) += clamp(P / 400, 1, 9 + F / 10);
         }
-        if (sdata(184, chara_index) > 0)
+        if (sdata(184, believer.index) > 0)
         {
-            sdata(184, chara_index) += clamp(
-                cdata[chara_index].piety_point / 450,
-                1,
-                8 + sdata(181, 0) / 10);
+            sdata(184, believer.index) += clamp(P / 450, 1, 8 + F / 10);
         }
-        if (sdata(174, chara_index) > 0)
+        if (sdata(174, believer.index) > 0)
         {
-            sdata(174, chara_index) += clamp(
-                cdata[chara_index].piety_point / 400,
-                1,
-                10 + sdata(181, 0) / 10);
+            sdata(174, believer.index) += clamp(P / 400, 1, 10 + F / 10);
         }
-        if (sdata(164, chara_index) > 0)
+        if (sdata(164, believer.index) > 0)
         {
-            sdata(164, chara_index) += clamp(
-                cdata[chara_index].piety_point / 400,
-                1,
-                12 + sdata(181, 0) / 10);
+            sdata(164, believer.index) += clamp(P / 400, 1, 12 + F / 10);
         }
     }
-    if (cdata[chara_index].god_id == core_god::kumiromi)
+    if (believer.god_id == core_god::kumiromi)
     {
-        if (sdata(13, chara_index) > 0)
+        if (sdata(13, believer.index) > 0)
         {
-            sdata(13, chara_index) += clamp(
-                cdata[chara_index].piety_point / 400,
-                1,
-                8 + sdata(181, 0) / 10);
+            sdata(13, believer.index) += clamp(P / 400, 1, 8 + F / 10);
         }
-        if (sdata(12, chara_index) > 0)
+        if (sdata(12, believer.index) > 0)
         {
-            sdata(12, chara_index) += clamp(
-                cdata[chara_index].piety_point / 350,
-                1,
-                12 + sdata(181, 0) / 10);
+            sdata(12, believer.index) += clamp(P / 350, 1, 12 + F / 10);
         }
-        if (sdata(14, chara_index) > 0)
+        if (sdata(14, believer.index) > 0)
         {
-            sdata(14, chara_index) += clamp(
-                cdata[chara_index].piety_point / 250,
-                1,
-                16 + sdata(181, 0) / 10);
+            sdata(14, believer.index) += clamp(P / 250, 1, 16 + F / 10);
         }
-        if (sdata(180, chara_index) > 0)
+        if (sdata(180, believer.index) > 0)
         {
-            sdata(180, chara_index) += clamp(
-                cdata[chara_index].piety_point / 300,
-                1,
-                12 + sdata(181, 0) / 10);
+            sdata(180, believer.index) += clamp(P / 300, 1, 12 + F / 10);
         }
-        if (sdata(178, chara_index) > 0)
+        if (sdata(178, believer.index) > 0)
         {
-            sdata(178, chara_index) += clamp(
-                cdata[chara_index].piety_point / 350,
-                1,
-                10 + sdata(181, 0) / 10);
+            sdata(178, believer.index) += clamp(P / 350, 1, 10 + F / 10);
         }
-        if (sdata(177, chara_index) > 0)
+        if (sdata(177, believer.index) > 0)
         {
-            sdata(177, chara_index) += clamp(
-                cdata[chara_index].piety_point / 350,
-                1,
-                9 + sdata(181, 0) / 10);
+            sdata(177, believer.index) += clamp(P / 350, 1, 9 + F / 10);
         }
-        if (sdata(150, chara_index) > 0)
+        if (sdata(150, believer.index) > 0)
         {
-            sdata(150, chara_index) += clamp(
-                cdata[chara_index].piety_point / 350,
-                1,
-                8 + sdata(181, 0) / 10);
+            sdata(150, believer.index) += clamp(P / 350, 1, 8 + F / 10);
         }
     }
 }
@@ -514,7 +382,7 @@ void god_proc_switching_penalty(const GodId& new_religion)
         switch_religion();
         msg_halt();
     }
-    chara_refresh(0);
+    chara_refresh(cdata.player());
 }
 
 
@@ -597,11 +465,11 @@ TurnResult do_pray()
         {
             f = 0;
             p = 0;
-            for (int cnt = 1; cnt < 16; ++cnt)
+            for (const auto& ally : cdata.allies())
             {
-                if (cdata[cnt].state() != Character::State::empty)
+                if (ally.state() != Character::State::empty)
                 {
-                    if (cdatan(2, cnt) == u8"core.servant"s)
+                    if (cdatan(2, ally.index) == u8"core.servant"s)
                     {
                         ++p;
                         if (p >= 2)

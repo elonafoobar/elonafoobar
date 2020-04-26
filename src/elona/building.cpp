@@ -694,7 +694,7 @@ void prompt_hiring()
             if (chara.state() != Character::State::empty &&
                 cdatan(0, chara.index) == cdatan(0, servant->index))
             {
-                chara_vanquish(servant->index);
+                chara_vanquish(*servant);
                 break;
             }
         }
@@ -706,14 +706,14 @@ void prompt_hiring()
     if (stat != -1)
     {
         Message::instance().linebreak();
-        if (cdata.player().gold < calchirecost(stat) * 20)
+        if (cdata.player().gold < calc_servant_hire_cost(cdata[stat]) * 20)
         {
             txt(i18n::s.get("core.building.not_enough_money"));
         }
         else
         {
             snd("core.paygold1");
-            cdata.player().gold -= calchirecost(stat) * 20;
+            cdata.player().gold -= calc_servant_hire_cost(cdata[stat]) * 20;
             await(g_config.animation_wait() * 10);
             cdata[stat].set_state(Character::State::alive);
             txt(i18n::s.get("core.building.home.hire.you_hire", cdata[stat]),
@@ -725,7 +725,7 @@ void prompt_hiring()
     {
         if (cnt.state() == Character::State::servant_being_selected)
         {
-            chara_vanquish(cnt.index);
+            chara_vanquish(cnt);
         }
     }
     calccosthire();
@@ -1724,7 +1724,7 @@ void supply_income()
                 txt(i18n::s.get(
                         "core.misc.tax.accused", game_data.left_bill - 1),
                     Message::color{ColorIndex::red});
-                int stat = decfame(0, 50);
+                int stat = decrease_fame(cdata.player(), 50);
                 p = stat;
                 txt(i18n::s.get("core.misc.tax.lose_fame", p(0)),
                     Message::color{ColorIndex::red});
@@ -1906,13 +1906,13 @@ void create_harvested_item()
 int getworker(int map_id, int exclude_with)
 {
     int ret = -1;
-    for (int i = 1; i < 16; ++i)
+    for (auto&& ally : cdata.allies())
     {
-        if (exclude_with != 0 && i != exclude_with)
+        if (exclude_with != 0 && ally.index != exclude_with)
             continue;
-        if (cdata[i].current_map == map_id)
+        if (ally.current_map == map_id)
         {
-            ret = i;
+            ret = ally.index;
             break;
         }
     }
@@ -1923,11 +1923,11 @@ int getworker(int map_id, int exclude_with)
 
 void removeworker(int map_id)
 {
-    for (int i = 1; i < 16; ++i)
+    for (auto&& ally : cdata.allies())
     {
-        if (cdata[i].current_map == map_id)
+        if (ally.current_map == map_id)
         {
-            cdata[i].current_map = 0;
+            ally.current_map = 0;
         }
     }
 }

@@ -322,31 +322,31 @@ void chara_vomit(Character& chara)
 
 
 
-void eatstatus(CurseState curse_state, int eater)
+void food_apply_curse_state(Character& eater, CurseState curse_state)
 {
-    if (cdata[eater].state() != Character::State::alive)
+    if (eater.state() != Character::State::alive)
         return;
 
     if (is_cursed(curse_state))
     {
-        cdata[eater].nutrition -= 1500;
-        if (is_in_fov(cdata[eater]))
+        eater.nutrition -= 1500;
+        if (is_in_fov(eater))
         {
-            txt(i18n::s.get("core.food.eat_status.bad", cdata[eater]));
+            txt(i18n::s.get("core.food.eat_status.bad", eater));
         }
-        chara_vomit(cdata[eater]);
+        chara_vomit(eater);
     }
     else if (curse_state == CurseState::blessed)
     {
-        if (is_in_fov(cdata[eater]))
+        if (is_in_fov(eater))
         {
-            txt(i18n::s.get("core.food.eat_status.good", cdata[eater]));
+            txt(i18n::s.get("core.food.eat_status.good", eater));
         }
         if (rnd(5) == 0)
         {
-            buff_add(cdata[eater], "core.luck", 100, 500 + rnd(500));
+            buff_add(eater, "core.luck", 100, 500 + rnd(500));
         }
-        heal_insanity(cdata[eater], 2);
+        heal_insanity(eater, 2);
     }
 }
 
@@ -1432,7 +1432,7 @@ void apply_general_eating_effect(Character& eater, Item& food)
             }
         }
     }
-    eatstatus(food.curse_state, eater.index);
+    food_apply_curse_state(eater, food.curse_state);
 }
 
 

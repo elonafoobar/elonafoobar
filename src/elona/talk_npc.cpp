@@ -193,18 +193,18 @@ TalkResult talk_healer_restore_attributes(Character& speaker)
     snd("core.paygold1");
     cdata.player().gold -= calcrestorecost();
     tcbk = speaker.index;
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& chara : cdata.player_and_allies())
     {
-        if (cdata[cnt].state() != Character::State::alive)
+        if (chara.state() != Character::State::alive)
         {
             continue;
         }
         efid = 439;
         efp = 100;
-        magic(cdata.player(), cdata[cnt]);
+        magic(cdata.player(), chara);
         efid = 440;
         efp = 100;
-        magic(cdata.player(), cdata[cnt]);
+        magic(cdata.player(), chara);
     }
     talk_start();
     buff = i18n::s.get("core.talk.npc.healer.restore_attributes", speaker);
@@ -252,8 +252,8 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
         txt(i18n::s.get("core.magic.mount.dismount", cdata[game_data.mount]));
         ride_end();
     }
-    game_data.executing_immediate_quest_fame_gained = calcfame(
-        0,
+    game_data.executing_immediate_quest_fame_gained = calc_gained_fame(
+        cdata.player(),
         (220 - game_data.ranks.at(0) / 50) *
                 (100 +
                  clamp(
@@ -363,8 +363,8 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
 
 TalkResult talk_pet_arena_master(Character& speaker, int chatval_)
 {
-    game_data.executing_immediate_quest_fame_gained = calcfame(
-        0,
+    game_data.executing_immediate_quest_fame_gained = calc_gained_fame(
+        cdata.player(),
         (220 - game_data.ranks.at(1) / 50) *
                 (50 +
                  clamp(
@@ -413,9 +413,9 @@ TalkResult talk_pet_arena_master(Character& speaker, int chatval_)
         return TalkResult::talk_npc;
     }
     DIM2(followerexist, 16);
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (const auto& chara : cdata.player_and_allies())
     {
-        followerexist(cnt) = static_cast<int>(cdata[cnt].state());
+        followerexist(chara.index) = static_cast<int>(chara.state());
     }
     int stat = ctrl_ally(ControlAllyOperation::pet_arena);
     if (stat == -1)
@@ -587,9 +587,9 @@ TalkResult talk_bartender_call_ally(Character& speaker)
         listmax = 0;
         buff = i18n::s.get(
             "core.talk.npc.bartender.call_ally.cost",
-            calcresurrectvalue(stat),
+            calc_resurrection_value(cdata[stat]),
             speaker);
-        if (cdata.player().gold >= calcresurrectvalue(stat))
+        if (cdata.player().gold >= calc_resurrection_value(cdata[stat]))
         {
             ELONA_APPEND_RESPONSE(
                 1,
@@ -603,7 +603,7 @@ TalkResult talk_bartender_call_ally(Character& speaker)
         if (chatval_ == 1)
         {
             snd("core.paygold1");
-            cdata.player().gold -= calcresurrectvalue(stat);
+            cdata.player().gold -= calc_resurrection_value(cdata[stat]);
             buff = i18n::s.get(
                 "core.talk.npc.bartender.call_ally.brings_back",
                 speaker,
@@ -688,7 +688,7 @@ TalkResult talk_slave_buy(Character& speaker, int chatval_)
         chara_create(56, 0, -3, 0);
         if (cdata.tmp().level == 0)
         {
-            chara_vanquish(56);
+            chara_vanquish(cdata.tmp());
             continue;
         }
         break;
@@ -697,9 +697,9 @@ TalkResult talk_slave_buy(Character& speaker, int chatval_)
     buff = i18n::s.get(
         "core.talk.npc.slave_trader.buy.cost",
         cnven(cdatan(0, 56)),
-        calcslavevalue(56),
+        calc_slave_value(cdata.tmp()),
         speaker);
-    if (cdata.player().gold >= calcslavevalue(56))
+    if (cdata.player().gold >= calc_slave_value(cdata.tmp()))
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.talk.npc.slave_trader.buy.choices.pay"));
@@ -715,7 +715,7 @@ TalkResult talk_slave_buy(Character& speaker, int chatval_)
         txt(i18n::s.get(
             "core.talk.npc.slave_trader.buy.you_buy", cnven(cdatan(0, 56))));
         snd("core.paygold1");
-        cdata.player().gold -= calcslavevalue(56);
+        cdata.player().gold -= calc_slave_value(cdata.tmp());
         new_ally_joins(cdata.tmp());
         buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
     }
@@ -736,7 +736,7 @@ TalkResult talk_slave_sell(Character& speaker)
         listmax = 0;
         buff = i18n::s.get(
             "core.talk.npc.slave_trader.sell.price",
-            (calcslavevalue(stat) * 2 / 3),
+            (calc_slave_value(cdata[stat]) * 2 / 3),
             speaker);
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.talk.npc.slave_trader.sell.choices.deal"));
@@ -750,7 +750,7 @@ TalkResult talk_slave_sell(Character& speaker)
                 "core.talk.npc.slave_trader.sell.you_sell_off",
                 cnven(cdatan(0, stat))));
             snd("core.getgold1");
-            earn_gold(cdata.player(), calcslavevalue(stat) * 2 / 3);
+            earn_gold(cdata.player(), calc_slave_value(cdata[stat]) * 2 / 3);
             if (cdata[stat].state() == Character::State::alive)
             {
                 cell_data.at(cdata[stat].position.x, cdata[stat].position.y)
@@ -880,7 +880,7 @@ TalkResult talk_servant_fire(Character& speaker)
     if (chatval_ == 1)
     {
         txt(i18n::s.get("core.talk.npc.servant.fire.you_dismiss", speaker));
-        chara_vanquish(speaker.index);
+        chara_vanquish(speaker);
         calccosthire();
         return TalkResult::talk_end;
     }
@@ -1010,9 +1010,9 @@ TalkResult talk_adventurer_hire(Character& speaker)
 {
     buff = i18n::s.get(
         "core.talk.npc.adventurer.hire.cost",
-        calchireadv(speaker.index),
+        calc_adventurer_hire_cost(speaker),
         speaker);
-    if (cdata.player().gold >= calchireadv(speaker.index))
+    if (cdata.player().gold >= calc_adventurer_hire_cost(speaker))
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.talk.npc.adventurer.hire.choices.pay"));
@@ -1024,7 +1024,7 @@ TalkResult talk_adventurer_hire(Character& speaker)
     if (chatval_ == 1)
     {
         snd("core.paygold1");
-        cdata.player().gold -= calchireadv(speaker.index);
+        cdata.player().gold -= calc_adventurer_hire_cost(speaker);
         speaker.relationship = 10;
         speaker.is_contracting() = true;
         speaker.period_of_contract = game_data.date.hours() + 168;
@@ -1102,11 +1102,12 @@ TalkResult talk_moyer_sell_paels_mom(Character& speaker)
         earn_gold(cdata.player(), 50000);
         game_data.quest_flags.pael_and_her_mom = 1002;
         const auto lily = chara_find("core.lily");
-        cdata[lily].ai_calm = 3;
-        cdata[lily].relationship = 0;
-        cdata[lily].initial_position.x = 48;
-        cdata[lily].initial_position.y = 18;
-        cell_movechara(lily, 48, 18);
+        assert(lily);
+        lily->ai_calm = 3;
+        lily->relationship = 0;
+        lily->initial_position.x = 48;
+        lily->initial_position.y = 18;
+        cell_movechara(lily->index, 48, 18);
         buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
     }
     else
@@ -1720,19 +1721,16 @@ TalkResult talk_quest_giver(Character& speaker)
                 f = !!chara;
                 if (f == 1)
                 {
-                    for (int cnt = 0; cnt < 16; ++cnt)
+                    for (const auto& ally : cdata.player_and_allies())
                     {
-                        if (cdata[cnt].state() == Character::State::empty)
+                        if (ally.state() == Character::State::empty)
                         {
                             continue;
                         }
-                        if (cdata[cnt].id == chara->id)
+                        if (ally.id == chara->id && ally.is_escorted())
                         {
-                            if (cdata[cnt].is_escorted() == 1)
-                            {
-                                f = 0;
-                                break;
-                            }
+                            f = 0;
+                            break;
                         }
                     }
                 }
@@ -2286,10 +2284,9 @@ TalkResult talk_npc(Character& speaker)
     {
         if (game_data.quest_flags.pael_and_her_mom == 1000)
         {
-            const auto lily = chara_find("core.lily");
-            if (lily != 0)
+            if (const auto lily = chara_find("core.lily"))
             {
-                if (cdata[lily].state() == Character::State::alive)
+                if (lily->state() == Character::State::alive)
                 {
                     ELONA_APPEND_RESPONSE(
                         52,

@@ -286,7 +286,8 @@ void quest_check()
         }
         if (game_data.executing_immediate_quest_type == 1008)
         {
-            if (chara_find(quest_data.immediate().extra_info_1) == 0)
+            if (!chara_find(
+                    the_character_db[quest_data.immediate().extra_info_1]->id))
             {
                 event_add(8);
             }
@@ -1192,13 +1193,13 @@ void quest_failed(int val0)
         {
             txt(i18n::s.get("core.quest.escort.you_failed_to_protect"),
                 Message::color{ColorIndex::purple});
-            for (int cnt = 1; cnt < 16; ++cnt)
+            for (auto&& ally : cdata.allies())
             {
-                if (cdata[cnt].is_escorted() &&
-                    quest_data[rq].extra_info_2 == charaid2int(cdata[cnt].id))
+                if (ally.is_escorted() &&
+                    quest_data[rq].extra_info_2 == charaid2int(ally.id))
                 {
-                    cdata[cnt].is_escorted() = false;
-                    if (cdata[cnt].state() == Character::State::alive)
+                    ally.is_escorted() = false;
+                    if (ally.state() == Character::State::alive)
                     {
                         if (quest_data[rq].escort_difficulty == 0)
                         {
@@ -1214,8 +1215,7 @@ void quest_failed(int val0)
                         if (quest_data[rq].escort_difficulty == 2)
                         {
                             s = i18n::s.get(
-                                "core.quest.escort.failed.deadline",
-                                cdata[cnt]);
+                                "core.quest.escort.failed.deadline", ally);
                             mef_add(
                                 cdata.player().position.x,
                                 cdata.player().position.y,
@@ -1226,14 +1226,14 @@ void quest_failed(int val0)
                                 0);
                             mapitem_fire(
                                 cdata.player(),
-                                cdata[cnt].position.x,
-                                cdata[cnt].position.y);
+                                ally.position.x,
+                                ally.position.y);
                             p = -9;
                         }
                         txt(s, Message::color{ColorIndex::cyan});
-                        damage_hp(cdata[cnt], 999999, p);
+                        damage_hp(ally, 999999, p);
                     }
-                    cdata[cnt].set_state(Character::State::empty);
+                    ally.set_state(Character::State::empty);
                     break;
                 }
             }
@@ -1242,7 +1242,7 @@ void quest_failed(int val0)
         quest_data[rq].id = 0;
         quest_data[rq].progress = 0;
     }
-    int stat = decfame(0, 40);
+    int stat = decrease_fame(cdata.player(), 40);
     p = stat;
     txt(i18n::s.get("core.quest.lose_fame", p(0)),
         Message::color{ColorIndex::red});
@@ -1252,15 +1252,15 @@ void quest_failed(int val0)
 
 void quest_team_victorious()
 {
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& ally : cdata.player_and_allies())
     {
-        if (followerin(cnt) == 0)
+        if (followerin(ally.index) == 0)
         {
             continue;
         }
-        if (cdata[cnt].hp < cdata[cnt].max_hp / 2)
+        if (ally.hp < ally.max_hp / 2)
         {
-            cdata[cnt].hp = cdata[cnt].max_hp / 2;
+            ally.hp = ally.max_hp / 2;
         }
     }
     snd("core.cheer");
@@ -1295,7 +1295,7 @@ void quest_team_victorious()
             Message::color{ColorIndex::purple});
         area_data[game_data.previous_map2].winning_streak_in_pet_arena = 0;
         modrank(1, -100);
-        int stat = decfame(0, 60);
+        int stat = decrease_fame(cdata.player(), 60);
         p = stat;
         if (arenaop == 0)
         {
@@ -1461,7 +1461,7 @@ void quest_complete()
     }
     modify_karma(cdata.player(), 1);
     game_data.executing_immediate_quest_fame_gained =
-        calcfame(0, quest_data[rq].difficulty * 3 + 10);
+        calc_gained_fame(cdata.player(), quest_data[rq].difficulty * 3 + 10);
     txt(i18n::s.get("core.quest.completed_taken_from", qname(rq)),
         Message::color{ColorIndex::green});
     txt(i18n::s.get(

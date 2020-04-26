@@ -506,10 +506,10 @@ static std::string _make_buff_power_string(int skill_id)
     const auto buff_id = the_ability_db[skill_id]->ability_type % 1000;
     const auto duration = buff_calc_duration(
         *the_buff_db.get_id_from_legacy(buff_id),
-        calcspellpower(skill_id, cdata.player().index));
+        calc_spell_power(cdata.player(), skill_id));
     const auto description = buff_get_description(
         *the_buff_db.get_id_from_legacy(buff_id),
-        calcspellpower(skill_id, cdata.player().index));
+        calc_spell_power(cdata.player(), skill_id));
     return std::to_string(duration) +
         i18n::s.get("core.ui.spell.turn_counter") + " " + description;
 }
@@ -522,9 +522,7 @@ std::string make_spell_description(int skill_id)
         return _make_buff_power_string(skill_id);
     }
     const auto damage = calc_skill_damage(
-        skill_id,
-        cdata.player().index,
-        calcspellpower(skill_id, cdata.player().index));
+        cdata.player(), skill_id, calc_spell_power(cdata.player(), skill_id));
     if (damage)
     {
         dice1 = damage->dice_x;
@@ -1374,7 +1372,7 @@ void screen_analyze_self()
     {
         sdata(cnt, 0) = 1;
     }
-    apply_god_blessing(56);
+    god_apply_blessing(cdata.tmp());
     if (cdata.player().god_id != core_god::eyth)
     {
         buff += u8"<title1>◆ "s + god_name(cdata.player().god_id) +
@@ -1386,7 +1384,7 @@ void screen_analyze_self()
         }
     }
     refreshmode = 1;
-    chara_refresh(0);
+    chara_refresh(cdata.player());
     refreshmode = 0;
     buff += u8"\n"s;
     buff += u8"<title1>◆ 特徴と特殊状態による能力の恩恵<def>\n"s;

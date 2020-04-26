@@ -51,8 +51,8 @@ void dump_player_info()
 
     ss << "  " << fixtxt(cdatan(1, 0) + cdatan(0, 0), 34)
        << i18n::s.get_enum("core.ui.sex", cdata.player().sex) << " "
-       << calcage(0) << u8"歳  " << cdata.player().height << u8"cm "
-       << cdata.player().weight << u8"kg" << std::endl;
+       << calc_age(cdata.player()) << u8"歳  " << cdata.player().height
+       << u8"cm " << cdata.player().weight << u8"kg" << std::endl;
 
     ss << std::endl;
 
@@ -147,7 +147,7 @@ void dump_player_info()
 
     attackskill = 106;
     {
-        const auto evade = calc_evasion(cdata.player().index);
+        const auto evade = calc_evasion(cdata.player());
         const auto prot = calc_attack_protection(cdata.player());
 
         ss << u8"回避    : " << evade << u8"%" << std::endl;
@@ -159,7 +159,7 @@ void dump_player_info()
 
     ss << u8"------------------------------ 装備品 合計重量"
        << cnvweight(cdata.player().sum_of_equipment_weight) << u8" "
-       << cnveqweight(cdata.player().index) << std::endl;
+       << get_armor_class_name(cdata.player()) << std::endl;
     ss << std::endl;
 
     for (const auto& body_part : cdata.player().body_parts)
@@ -224,22 +224,21 @@ void dump_player_info()
     ss << u8"------------------------------ 仲間" << std::endl;
     ss << std::endl;
 
-    for (int idx = 1; idx < 16; ++idx)
+    for (const auto& ally : cdata.allies())
     {
-        const auto& chara = cdata[idx];
-        if (chara.state() == Character::State::empty)
+        if (ally.state() == Character::State::empty)
         {
             continue;
         }
 
-        ss << cdatan(0, idx) << u8" "
-           << i18n::s.get_m("race", cdatan(2, idx), "name") << u8"の"
-           << class_get_name(data::InstanceId{cdatan(3, idx)}) << u8" "
-           << i18n::s.get_enum("core.ui.sex", chara.sex) << u8" "
-           << calcage(idx) << u8"歳" << u8"  " << chara.height << u8"cm"
-           << u8" " << chara.weight << u8"kg" << std::endl;
-        ss << u8"レベル " << chara.level;
-        if (chara.is_married())
+        ss << cdatan(0, ally.index) << u8" "
+           << i18n::s.get_m("race", cdatan(2, ally.index), "name") << u8"の"
+           << class_get_name(data::InstanceId{cdatan(3, ally.index)}) << u8" "
+           << i18n::s.get_enum("core.ui.sex", ally.sex) << u8" "
+           << calc_age(ally) << u8"歳" << u8"  " << ally.height << u8"cm"
+           << u8" " << ally.weight << u8"kg" << std::endl;
+        ss << u8"レベル " << ally.level;
+        if (ally.is_married())
         {
             ss << u8" 婚約済み";
         }

@@ -18,7 +18,7 @@ void cure_anorexia(Character& chara);
 
 void chara_vomit(Character& chara);
 
-void eatstatus(CurseState, int);
+void food_apply_curse_state(Character& eater, CurseState curse_state);
 
 void get_sick_if_cursed(CurseState state, Character& drinker);
 

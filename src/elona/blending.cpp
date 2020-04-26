@@ -1630,7 +1630,7 @@ void blending_spend_materials(bool success)
         }
         if (chara_unequip(inv[rpref(10 + cnt * 2)]))
         {
-            chara_refresh(0);
+            chara_refresh(cdata.player());
         }
         cell_refresh(
             inv[rpref(10 + cnt * 2)].position.x,
@@ -1943,7 +1943,7 @@ void blending_proc_on_success_events()
     {
         cell_refresh(item1.position.x, item1.position.y);
     }
-    chara_refresh(0);
+    chara_refresh(cdata.player());
 }
 
 } // namespace elona

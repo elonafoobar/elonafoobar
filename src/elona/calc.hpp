@@ -23,16 +23,20 @@ struct SkillDamage
     int element;
     int element_power;
 };
-optional<SkillDamage> calc_skill_damage(int, int, int);
+
+optional<SkillDamage>
+calc_skill_damage(const Character& chara, int skill, int power);
+
+
 int calcobjlv(int = 0);
 Quality calcfixlv(Quality base_quality = Quality::none);
-int calcfame(int = 0, int = 0);
-int decfame(int = 0, int = 0);
+int calc_gained_fame(const Character& chara, int base);
+int decrease_fame(Character& chara, int base);
 int calcshopreform();
 int calc_rate_to_pierce(int);
-std::string calcage(int);
+std::string calc_age(const Character& chara);
 int calcexpalive(int = 0);
-int calc_evasion(int chara_index);
+int calc_evasion(const Character& chara);
 int calc_accuracy(
     const Character& attacker,
     const Character& target,
@@ -71,9 +75,9 @@ int calcmedalvalue(const Item& item);
 int calcitemvalue(const Item& item, int calc_mode);
 int calcinvestvalue(const Character& shopkeeper);
 int calcguiltvalue();
-int calchireadv(int = 0);
-int calchirecost(int = 0);
-void generatemoney(int = 0);
+int calc_adventurer_hire_cost(const Character& adv);
+int calc_servant_hire_cost(const Character& servant);
+void generatemoney(Character& chara);
 void calccosthire();
 int calccostbuilding();
 int calccosttax();
@@ -84,14 +88,14 @@ int calccargoupdatecost();
 int calcidentifyvalue(int);
 int calctraincost(int, int, bool = false);
 int calclearncost(int, int, bool = false);
-int calcresurrectvalue(int = 0);
-int calcslavevalue(int = 0);
+int calc_resurrection_value(const Character& chara);
+int calc_slave_value(const Character& chara);
 int calcrestorecost();
 int calcinitgold(int);
-int calcspellpower(int = 0, int = 0);
-int calcspellfail(int = 0, int = 0);
-int calcspellcostmp(int = 0, int = 0);
-int calcspellcoststock(int = 0, int = 0);
+int calc_spell_power(const Character& caster, int id);
+int calc_spell_success_rate(const Character& caster, int id);
+int calc_spell_cost_mp(const Character& caster, int id);
+int calc_spell_cost_stock(const Character& caster, int id);
 int calcscore();
 void calcpartyscore();
 void calcpartyscore2();

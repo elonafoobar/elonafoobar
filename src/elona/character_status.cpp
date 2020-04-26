@@ -140,8 +140,8 @@ void modify_ether_disease_stage(int delta)
                 break;
             }
         }
-        animeload(8, 0);
-        chara_refresh(0);
+        animeload(8, cdata.player());
+        chara_refresh(cdata.player());
         return;
     }
     if (mod_amount < 0)
@@ -188,8 +188,8 @@ void modify_ether_disease_stage(int delta)
                 break;
             }
         }
-        animeload(10, 0);
-        chara_refresh(0);
+        animeload(10, cdata.player());
+        chara_refresh(cdata.player());
         return;
     }
 }
@@ -548,7 +548,7 @@ void gain_level(Character& chara)
         grow_primary_skills(chara);
     }
     update_required_experience(chara);
-    chara_refresh(chara.index);
+    chara_refresh(chara);
 }
 
 

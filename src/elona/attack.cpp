@@ -221,7 +221,7 @@ bool do_physical_attack_internal(
     if (cell_data.at(target.position.x, target.position.y).mef_index_plus_one !=
         0)
     {
-        bool return_now = mef_proc_from_physical_attack(attacker, target.index);
+        bool return_now = mef_proc_from_physical_attack(attacker, target);
         if (return_now)
         {
             return false;
@@ -1123,7 +1123,7 @@ int find_enemy_target(Character& chara, bool silent)
 
 int prompt_really_attack(const Character& target)
 {
-    s = txttargetlevel(cdata.player().index, target.index);
+    s = txttargetlevel(cdata.player(), target);
     txt(s);
     txt(i18n::s.get("core.action.really_attack", target));
     if (yes_no())

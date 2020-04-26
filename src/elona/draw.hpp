@@ -17,7 +17,10 @@ class CharaChipDB;
 class ItemChipDB;
 class PortraitDB;
 class MapChipDB;
+struct Character;
 struct Item;
+
+
 
 struct ItemChip
 {
@@ -74,9 +77,8 @@ void add_damage_popup(
 void clear_damage_popups();
 void show_damage_popups();
 
-void draw_emo(int = 0, int = 0, int = 0);
+void draw_emo(const Character& chara, int x, int y);
 
-struct Character;
 optional_ref<const Extent> chara_preparepic(const Character& chara);
 optional_ref<const Extent> chara_preparepic(int image_id);
 

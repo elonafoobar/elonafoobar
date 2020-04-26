@@ -258,27 +258,27 @@ sol::optional<LuaCharacterHandle> LuaApiChara::find(
             LuaEnums::CharaFindLocationTable.ensure_from_string(*location);
     }
 
-    int result = 0;
     if (location_value == CharaFindLocation::allies)
     {
-        result = chara_find_ally(data->legacy_id);
+        int result = chara_find_ally(data->legacy_id);
 
         if (result == -1)
         {
             return sol::nullopt;
         }
+        return lua::handle(elona::cdata[result]);
     }
     else
     {
-        result = chara_find(data->legacy_id);
-
-        if (result == 0)
+        if (const auto result = chara_find(data->id))
+        {
+            return lua::handle(*result);
+        }
+        else
         {
             return sol::nullopt;
         }
     }
-
-    return lua::handle(elona::cdata[result]);
 }
 
 
