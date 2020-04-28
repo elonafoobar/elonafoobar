@@ -91,13 +91,11 @@ void UIMenuFeats::_add_trait_desc(const std::string& trait_desc)
 void UIMenuFeats::_load_traits_by_enchantments()
 {
     std::vector<std::string> traits_by_enchantments;
-    for (int i = 0; i < 30; ++i)
+    for (const auto& [_type, equipment] : cdata[_chara_index].equipment_slots)
     {
-        if (cdata[_chara_index].body_parts[i] % 10000 != 0)
+        if (equipment)
         {
-            const auto item_index =
-                cdata[_chara_index].body_parts[i] % 10000 - 1;
-            for (const auto& enc : inv[item_index].enchantments)
+            for (const auto& enc : equipment->enchantments)
             {
                 if (enc.id == 0)
                     break;

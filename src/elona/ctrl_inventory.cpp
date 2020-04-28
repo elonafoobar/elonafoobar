@@ -387,7 +387,7 @@ void make_item_list(
             if (invctrl == 6)
             {
                 if (iequiploc(item) !=
-                    cdata.player().body_parts[body - 100] / 10000)
+                    cdata.player().equipment_slots[body - 100].type)
                 {
                     continue;
                 }
@@ -1122,16 +1122,16 @@ void draw_window(optional_ref<Character> inventory_owner, bool dropcontinue)
         y = wy + wh - 65 - wh % 8;
         mes(x, y, i18n::s.get("core.ui.inv.take_ally.window.equip"));
         x += 60;
-        for (int cnt = 0; cnt < 30; ++cnt)
+
+        for (const auto& equipment_slot : inventory_owner->equipment_slots)
         {
-            if (inventory_owner->body_parts[cnt] == 0)
+            if (!equipment_slot)
             {
                 continue;
             }
-            p = inventory_owner->body_parts[cnt];
             std::string body_part_desc =
-                i18n::s.get_enum("core.ui.body_part", p / 10000);
-            const auto text_color = p % 10000 != 0
+                i18n::s.get_enum("core.ui.body_part", equipment_slot.type);
+            const auto text_color = equipment_slot.equipment
                 ? snail::Color{50, 50, 200}
                 : snail::Color{100, 100, 100};
             mes(x, y, body_part_desc, text_color);
@@ -1615,7 +1615,7 @@ OnEnterResult on_enter_equip(Item& selected_item, MenuResult& result)
             return OnEnterResult{2};
         }
     }
-    equip_item(cdata.player(), selected_item);
+    equip_item(cdata.player(), body - 100, selected_item);
     chara_refresh(cdata.player());
     screenupdate = -1;
     update_screen();
@@ -1636,7 +1636,7 @@ OnEnterResult on_enter_equip(Item& selected_item, MenuResult& result)
         txt(i18n::s.get("core.ui.inv.equip.blessed", cdata.player()));
         break;
     }
-    if (cdata.player().body_parts[body - 100] / 10000 == 5)
+    if (cdata.player().equipment_slots[body - 100].type == 5)
     {
         equip_melee_weapon(cdata.player());
     }
@@ -2019,7 +2019,7 @@ OnEnterResult on_enter_trade_target(
     {
         inventory_owner.activity.type = Activity::Type::none;
         inventory_owner.activity.turn = 0;
-        inventory_owner.activity.item = 0;
+        inventory_owner.activity.item = ItemRef::null();
     }
     snd("core.equip1");
     inv[citrade].is_quest_target() = false;
@@ -2028,15 +2028,14 @@ OnEnterResult on_enter_trade_target(
     if (inv[citrade].body_part != 0)
     {
         p = inv[citrade].body_part;
-        inventory_owner.body_parts[p - 100] =
-            inventory_owner.body_parts[p - 100] / 10000 * 10000;
+        inventory_owner.equipment_slots[p - 100].unequip();
         inv[citrade].body_part = 0;
     }
     item_exchange(selected_item, inv[citrade]);
     item_convert_artifact(selected_item);
-    if (inventory_owner.ai_item == citrade)
+    if (inventory_owner.ai_item == inv[citrade])
     {
-        inventory_owner.ai_item = 0;
+        inventory_owner.ai_item = ItemRef::null();
     }
     wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
     if (inventory_owner.index >= 16)
@@ -2168,8 +2167,7 @@ OnEnterResult on_enter_receive(Item& selected_item, Character& inventory_owner)
             return OnEnterResult{1};
         }
         p = selected_item.body_part;
-        inventory_owner.body_parts[p - 100] =
-            inventory_owner.body_parts[p - 100] / 10000 * 10000;
+        inventory_owner.equipment_slots[p - 100].unequip();
         selected_item.body_part = 0;
     }
     if (selected_item.id == ItemId::engagement_ring ||

@@ -374,7 +374,7 @@ void run_random_event(RandomEvent event)
             f = 0;
             for (int i = 0; i < 30; ++i)
             {
-                if (cdata.player().body_parts[i] % 10000 == 0)
+                if (!cdata.player().equipment_slots[i].equipment)
                 {
                     continue;
                 }

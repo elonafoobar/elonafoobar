@@ -7,6 +7,7 @@
 namespace elona
 {
 
+struct Character;
 struct Item;
 struct Character;
 
@@ -25,7 +26,7 @@ void wear_most_valuable_equipment(Character& chara, Item& equipment);
 void supply_new_equipment(Character& chara);
 void supply_initial_equipments(Character& chara);
 
-void equip_item(Character& chara, Item& equipment);
-void unequip_item(Character& chara);
+void equip_item(Character& chara, size_t equipment_slot_index, Item& equipment);
+void unequip_item(Character& chara, size_t equipment_slot_index);
 
 } // namespace elona

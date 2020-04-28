@@ -449,7 +449,8 @@ optional<TurnResult> use_gene_machine()
             cdata[original_character], cdata[gene_chara_index]);
         if (stat != -1)
         {
-            cdata[original_character].body_parts[stat - 100] = rtval * 10000;
+            cdata[original_character].equipment_slots[stat - 100] =
+                EquipmentSlot{rtval, ItemRef::null()};
             txt(i18n::s.get(
                     "core.action.use.gene_machine.gains.body_part",
                     cdata[original_character],
@@ -1228,13 +1229,13 @@ TurnResult do_change_ammo_command()
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (cdata.player().body_parts[cnt] % 10000 == 0)
+        if (!cdata.player().equipment_slots[cnt].equipment)
         {
             continue;
         }
-        if (cdata.player().body_parts[cnt] / 10000 == 11)
+        if (cdata.player().equipment_slots[cnt].type == 11)
         {
-            ammo_opt = inv[cdata.player().body_parts[cnt] % 10000 - 1];
+            ammo_opt = *cdata.player().equipment_slots[cnt].equipment;
             break;
         }
     }
@@ -4191,7 +4192,7 @@ void do_rest(Character& chara)
         if (f == 1)
         {
             txt(i18n::s.get("core.activity.rest.drop_off_to_sleep"));
-            chara.activity.item = -1;
+            chara.activity.item = ItemRef::null();
             sleep_start(none);
             chara.activity.finish();
             return;
@@ -4237,7 +4238,7 @@ int decode_book(Character& reader, Item& book)
             p = the_ability_db[efid]->difficulty;
         }
         reader.activity.turn = p / (2 + sdata(150, 0)) + 1;
-        reader.activity.item = book.index;
+        reader.activity.item = ItemRef::from_ref(book);
         if (is_in_fov(reader))
         {
             txt(i18n::s.get("core.activity.read.start", reader, book));
@@ -5391,7 +5392,7 @@ PickUpItemResult pick_up_item(
         {
             if (cdata[game_data.mount].activity)
             {
-                if (cdata[game_data.mount].activity.item == item.index)
+                if (cdata[game_data.mount].activity.item == item)
                 {
                     txt(i18n::s.get(
                         "core.action.pick_up.used_by_mount",

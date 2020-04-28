@@ -159,17 +159,17 @@ CanDoRangedAttackResult can_do_ranged_attack(const Character& chara)
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (chara.body_parts[cnt] % 10000 == 0)
+        if (!chara.equipment_slots[cnt].equipment)
         {
             continue;
         }
-        if (chara.body_parts[cnt] / 10000 == 10)
+        if (chara.equipment_slots[cnt].type == 10)
         {
-            weapon = inv[chara.body_parts[cnt] % 10000 - 1];
+            weapon = *chara.equipment_slots[cnt].equipment;
         }
-        if (chara.body_parts[cnt] / 10000 == 11)
+        if (chara.equipment_slots[cnt].type == 11)
         {
-            ammo = inv[chara.body_parts[cnt] % 10000 - 1];
+            ammo = *chara.equipment_slots[cnt].equipment;
         }
     }
     if (!weapon)
@@ -862,19 +862,19 @@ void try_to_melee_attack(Character& attacker, Character& target)
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (attacker.body_parts[cnt] % 10000 == 0)
+        if (!attacker.equipment_slots[cnt].equipment)
         {
             continue;
         }
-        if (attacker.body_parts[cnt] / 10000 == 10)
+        if (attacker.equipment_slots[cnt].type == 10)
         {
             continue;
         }
-        if (attacker.body_parts[cnt] / 10000 == 11)
+        if (attacker.equipment_slots[cnt].type == 11)
         {
             continue;
         }
-        auto& weapon = inv[attacker.body_parts[cnt] % 10000 - 1];
+        auto& weapon = *attacker.equipment_slots[cnt].equipment;
         if (weapon.dice_x > 0)
         {
             attackskill = weapon.skill;

@@ -480,7 +480,7 @@ elona_vector1<std::string> usertxt;
 
 Character::Character()
     : growth_buffs(10)
-    , body_parts(30)
+    , equipment_slots(30)
     , buffs(16)
     , attr_adjs(10)
 {
@@ -681,7 +681,6 @@ optional_ref<Character> chara_create(int slot, int chara_id, int x, int y)
 
 void chara_refresh(Character& chara)
 {
-    int rp = 0;
     int rp2 = 0;
     int rp3 = 0;
     if (chara.index == 0)
@@ -703,17 +702,16 @@ void chara_refresh(Character& chara)
         chara.clear_flags();
         if (trait(161) != 0)
         {
-            for (int i = 0; i < 30; ++i)
+            for (auto&& equipment_slot : chara.equipment_slots)
             {
-                if (chara.body_parts[i] % 10000 == 0)
+                if (!equipment_slot.equipment)
                 {
                     continue;
                 }
-                rp = chara.body_parts[i] % 10000 - 1;
-                if (inv[rp].weight >= 1000)
+                if (equipment_slot.equipment->weight >= 1000)
                 {
-                    chara.body_parts[i] = chara.body_parts[i] / 10000 * 10000;
-                    inv[rp].body_part = 0;
+                    equipment_slot.equipment->body_part = 0;
+                    equipment_slot.unequip();
                 }
             }
         }
@@ -749,67 +747,67 @@ void chara_refresh(Character& chara)
     chara.decrease_physical_damage = 0;
     chara.nullify_damage = 0;
     chara.cut_counterattack = 0;
-    for (int i = 0; i < 30; ++i)
+
+    for (const auto& equipment_slot : chara.equipment_slots)
     {
-        if (chara.body_parts[i] % 10000 == 0)
+        if (!equipment_slot.equipment)
         {
             continue;
         }
-        rp = chara.body_parts[i] % 10000 - 1;
-        chara.sum_of_equipment_weight += inv[rp].weight;
-        if (inv[rp].skill == 168)
+        const auto& equipment = *equipment_slot.equipment;
+        chara.sum_of_equipment_weight += equipment.weight;
+        if (equipment.skill == 168)
         {
             chara.combat_style.set_shield();
         }
-        chara.dv += inv[rp].dv;
-        chara.pv += inv[rp].pv;
-        if (inv[rp].dice_x == 0)
+        chara.dv += equipment.dv;
+        chara.pv += equipment.pv;
+        if (equipment.dice_x == 0)
         {
-            chara.hit_bonus += inv[rp].hit_bonus;
-            chara.damage_bonus += inv[rp].damage_bonus;
-            chara.pv += inv[rp].enhancement * 2 +
-                (inv[rp].curse_state == CurseState::blessed) * 2;
+            chara.hit_bonus += equipment.hit_bonus;
+            chara.damage_bonus += equipment.damage_bonus;
+            chara.pv += equipment.enhancement * 2 +
+                (equipment.curse_state == CurseState::blessed) * 2;
         }
-        else if (chara.body_parts[i] / 10000 == 5)
+        else if (equipment_slot.type == 5)
         {
             ++attacknum;
         }
-        if (inv[rp].curse_state == CurseState::cursed)
+        if (equipment.curse_state == CurseState::cursed)
         {
             chara.curse_power += 20;
         }
-        if (inv[rp].curse_state == CurseState::doomed)
+        if (equipment.curse_state == CurseState::doomed)
         {
             chara.curse_power += 100;
         }
-        if (inv[rp].material == 8)
+        if (equipment.material == 8)
         {
             if (chara.index == 0)
             {
                 game_data.ether_disease_speed += 5;
             }
         }
-        for (int cnt = 0; cnt < 15; ++cnt)
+
+        for (const auto& enchantment : equipment.enchantments)
         {
-            if (inv[rp].enchantments[cnt].id == 0)
+            if (enchantment.id == 0)
             {
                 break;
             }
-            rp2 = inv[rp].enchantments[cnt].id;
+            rp2 = enchantment.id;
             if (rp2 >= 10000)
             {
                 rp3 = rp2 % 10000;
                 rp2 = rp2 / 10000;
                 if (rp2 == 1)
                 {
-                    sdata(rp3, chara.index) +=
-                        inv[rp].enchantments[cnt].power / 50 + 1;
+                    sdata(rp3, chara.index) += enchantment.power / 50 + 1;
                     continue;
                 }
                 if (rp2 == 2)
                 {
-                    sdata(rp3, chara.index) +=
-                        inv[rp].enchantments[cnt].power / 2;
+                    sdata(rp3, chara.index) += enchantment.power / 2;
                     if (sdata(rp3, chara.index) < 0)
                     {
                         sdata(rp3, chara.index) = 1;
@@ -820,8 +818,7 @@ void chara_refresh(Character& chara)
                 {
                     if (sdata.get(rp3, chara.index).original_level != 0)
                     {
-                        sdata(rp3, chara.index) +=
-                            inv[rp].enchantments[cnt].power / 50 + 1;
+                        sdata(rp3, chara.index) += enchantment.power / 50 + 1;
                         if (sdata(rp3, chara.index) < 1)
                         {
                             sdata(rp3, chara.index) = 1;
@@ -850,12 +847,11 @@ void chara_refresh(Character& chara)
                 }
                 if (rp2 == 29)
                 {
-                    sdata(18, chara.index) +=
-                        inv[rp].enchantments[cnt].power / 50 + 1;
+                    sdata(18, chara.index) += enchantment.power / 50 + 1;
                     if (chara.index == 0)
                     {
                         game_data.seven_league_boot_effect +=
-                            inv[rp].enchantments[cnt].power / 8;
+                            enchantment.power / 8;
                         continue;
                     }
                 }
@@ -917,41 +913,37 @@ void chara_refresh(Character& chara)
                 if (rp2 == 52)
                 {
                     chara.decrease_physical_damage +=
-                        inv[rp].enchantments[cnt].power / 40 + 5;
+                        enchantment.power / 40 + 5;
                     continue;
                 }
                 if (rp2 == 53)
                 {
-                    chara.nullify_damage +=
-                        inv[rp].enchantments[cnt].power / 60 + 3;
+                    chara.nullify_damage += enchantment.power / 60 + 3;
                     continue;
                 }
                 if (rp2 == 54)
                 {
-                    chara.cut_counterattack +=
-                        inv[rp].enchantments[cnt].power / 5;
+                    chara.cut_counterattack += enchantment.power / 5;
                     continue;
                 }
                 if (rp2 == 44)
                 {
-                    chara.rate_of_critical_hit +=
-                        inv[rp].enchantments[cnt].power / 50;
+                    chara.rate_of_critical_hit += enchantment.power / 50;
                     continue;
                 }
                 if (rp2 == 39)
                 {
-                    chara.rate_to_pierce +=
-                        inv[rp].enchantments[cnt].power / 50;
+                    chara.rate_to_pierce += enchantment.power / 50;
                     continue;
                 }
                 if (rp2 == 50)
                 {
-                    chara.extra_attack += inv[rp].enchantments[cnt].power / 15;
+                    chara.extra_attack += enchantment.power / 15;
                     continue;
                 }
                 if (rp2 == 51)
                 {
-                    chara.extra_shot += inv[rp].enchantments[cnt].power / 15;
+                    chara.extra_shot += enchantment.power / 15;
                     chara.extra_shot = 100;
                     continue;
                 }
@@ -976,6 +968,7 @@ void chara_refresh(Character& chara)
             }
         }
     }
+
     if (refreshmode == 1)
     {
         buff += u8"\n"s;
@@ -985,8 +978,7 @@ void chara_refresh(Character& chara)
             sdata(cnt, 56) = sdata.get(cnt, chara.index).original_level;
             if (sdata(cnt, 56) != sdata(cnt, chara.index))
             {
-                rp = sdata(cnt, chara.index) - sdata(cnt, 56);
-                cnvbonus(cnt, rp);
+                cnvbonus(cnt, sdata(cnt, chara.index) - sdata(cnt, 56));
             }
         }
     }
@@ -1463,9 +1455,9 @@ int chara_copy(const Character& source)
     destination.is_hung_on_sand_bag() = false;
 
     // Unequip all gears.
-    for (size_t i = 0; i < destination.body_parts.size(); ++i)
+    for (auto&& equipment_slot : destination.equipment_slots)
     {
-        destination.body_parts[i] = destination.body_parts[i] / 10000 * 10000;
+        equipment_slot.unequip();
     }
 
     // Increase crowd density.
@@ -1580,7 +1572,7 @@ void chara_relocate(
     }
 
     // Clear some fields which should not be copied.
-    source.ai_item = 0;
+    source.ai_item = ItemRef::null();
     source.is_livestock() = false;
 
     // Copy from `source` to `destination` and clear `source`
@@ -1614,9 +1606,9 @@ void chara_relocate(
     }
 
     // Unequip all gears.
-    for (size_t i = 0; i < destination.body_parts.size(); ++i)
+    for (auto&& equipment_slot : destination.equipment_slots)
     {
-        destination.body_parts[i] = destination.body_parts[i] / 10000 * 10000;
+        equipment_slot.unequip();
     }
 
     if (mode == CharaRelocationMode::change)
@@ -1691,13 +1683,13 @@ void chara_relocate(
 
 
 
-void chara_set_ai_item(Character& chara, const Item& item)
+void chara_set_ai_item(Character& chara, Item& item)
 {
     const auto category = the_item_db[itemid2int(item.id)]->category;
     if (category == ItemCategory::food || category == ItemCategory::potion ||
         category == ItemCategory::scroll)
     {
-        chara.ai_item = item.index;
+        chara.ai_item = ItemRef::from_ref(item);
     }
 }
 
@@ -2219,7 +2211,7 @@ void chara_clear_status_effects(Character& chara)
     chara.drunk = 0;
     chara.bleeding = 0;
     chara.gravity = 0;
-    chara.ai_item = 0;
+    chara.ai_item = ItemRef::null();
     chara.hate = 0;
     chara.enemy_id = 0;
     chara.sick = 0;
@@ -2407,14 +2399,13 @@ void proc_one_equipment_with_negative_enchantments(
 
 void proc_negative_enchantments(Character& chara)
 {
-    for (const auto& body_part : chara.body_parts)
+    for (const auto& [_type, equipment] : chara.equipment_slots)
     {
-        if (body_part % 10000 == 0)
+        if (!equipment)
         {
             continue;
         }
-        proc_one_equipment_with_negative_enchantments(
-            chara, inv[body_part % 10000 - 1]);
+        proc_one_equipment_with_negative_enchantments(chara, *equipment);
     }
 }
 
@@ -2755,19 +2746,16 @@ void move_character(Character& chara)
 
 void lost_body_part(int chara_index)
 {
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (auto&& equipment_slot : cdata[chara_index].equipment_slots)
     {
-        if (cdata[chara_index].body_parts[cnt] / 10000 == body)
+        if (equipment_slot.type == body)
         {
-            p = cdata[chara_index].body_parts[cnt] % 10000;
-            if (p == 0)
+            if (!equipment_slot.equipment)
             {
                 continue;
             }
-            --p;
-            inv[p].body_part = 0;
-            cdata[chara_index].body_parts[cnt] =
-                cdata[chara_index].body_parts[cnt] / 10000 * 10000;
+            equipment_slot.equipment->body_part = 0;
+            equipment_slot.unequip();
         }
     }
 }

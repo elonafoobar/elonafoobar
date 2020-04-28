@@ -262,7 +262,7 @@ int itemusingfind(const Item& item, bool disallow_pc)
             continue;
         }
         if (chara.activity && chara.activity.type != Activity::Type::sex &&
-            chara.activity.turn > 0 && chara.activity.item == item.index)
+            chara.activity.turn > 0 && chara.activity.item == item)
         {
             if (!disallow_pc || chara.index != 0)
             {
@@ -604,8 +604,7 @@ bool chara_unequip(Item& item)
     if (owner == -1)
         return false;
 
-    cdata[owner].body_parts[body_part - 100] =
-        cdata[owner].body_parts[body_part - 100] / 10000 * 10000;
+    cdata[owner].equipment_slots[body_part - 100].unequip();
     item.body_part = 0;
     return true;
 }
@@ -1645,22 +1644,21 @@ void item_acid(const Character& owner, optional_ref<Item> item)
 {
     if (!item)
     {
-        for (const auto& body_part : owner.body_parts)
+        for (const auto& equipment_slot : owner.equipment_slots)
         {
-            if (body_part / 10000 == 0)
+            if (!equipment_slot)
             {
                 break;
             }
-            int i = body_part % 10000 - 1;
-            if (i == -1)
+            if (!equipment_slot.equipment)
             {
                 continue;
             }
-            if (inv[i].enhancement >= -3)
+            if (equipment_slot.equipment->enhancement >= -3)
             {
                 if (rnd(30) == 0)
                 {
-                    item = inv[i];
+                    item = *equipment_slot.equipment;
                     break;
                 }
             }
@@ -1849,9 +1847,7 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
                             cdata[owner]),
                         Message::color{ColorIndex::purple});
                 }
-                cdata[owner].body_parts[item.body_part - 100] =
-                    cdata[owner].body_parts[item.body_part - 100] / 10000 *
-                    10000;
+                cdata[owner].equipment_slots[item.body_part - 100].unequip();
                 item.body_part = 0;
                 chara_refresh(cdata[owner]);
             }
@@ -2289,9 +2285,9 @@ Item& inv_get_free_slot_force(int inventory_id)
         if (item.body_part == 0)
         {
             item.remove();
-            if (cdata[inventory_id].ai_item == item.index)
+            if (cdata[inventory_id].ai_item == item)
             {
-                cdata[inventory_id].ai_item = 0;
+                cdata[inventory_id].ai_item = ItemRef::null();
             }
             return item;
         }
@@ -2707,15 +2703,15 @@ void equip_melee_weapon(Character& chara)
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (chara.body_parts[cnt] / 10000 != 5)
+        if (chara.equipment_slots[cnt].type != 5)
         {
             continue;
         }
-        if (chara.body_parts[cnt] % 10000 == 0)
+        if (!chara.equipment_slots[cnt].equipment)
         {
             continue;
         }
-        const auto& weapon = inv[chara.body_parts[cnt] % 10000 - 1];
+        const auto& weapon = *chara.equipment_slots[cnt].equipment;
         if (weapon.dice_x == 0)
         {
             continue;

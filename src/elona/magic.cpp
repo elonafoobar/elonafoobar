@@ -2098,21 +2098,20 @@ bool _magic_645_1114(Character& subject, Character& target)
         }
     }
     std::vector<std::reference_wrapper<Item>> candidates;
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (const auto& [_type, equipment] : target.equipment_slots)
     {
-        if (target.body_parts[cnt] % 10000 == 0)
+        if (!equipment)
         {
             continue;
         }
-        const auto item_index = target.body_parts[cnt] % 10000 - 1;
-        if (inv[item_index].curse_state == CurseState::blessed)
+        if (equipment->curse_state == CurseState::blessed)
         {
             if (rnd(10))
             {
                 continue;
             }
         }
-        candidates.emplace_back(std::ref(inv[item_index]));
+        candidates.emplace_back(std::ref(*equipment));
     }
     if (candidates.empty())
     {
@@ -2469,9 +2468,7 @@ bool _magic_49(Character& subject, Item& hammer)
     txt(i18n::s.get("core.magic.garoks_hammer.apply", target_item));
     if (equip != 0)
     {
-        subject.body_parts[equip - 100] =
-            subject.body_parts[equip - 100] / 10000 * 10000 +
-            target_item.index + 1;
+        subject.equipment_slots[equip - 100].equip(target_item);
         target_item.body_part = equip;
     }
     chara_refresh(subject);
@@ -2536,9 +2533,8 @@ bool _magic_21_1127(Character& subject)
             assert(reconstructed_artifact);
             if (equip != 0)
             {
-                subject.body_parts[equip - 100] =
-                    subject.body_parts[equip - 100] / 10000 * 10000 +
-                    reconstructed_artifact->index + 1;
+                subject.equipment_slots[equip - 100].equip(
+                    *reconstructed_artifact);
                 reconstructed_artifact->body_part = equip;
             }
         }
@@ -2566,9 +2562,7 @@ bool _magic_21_1127(Character& subject)
                 target_item));
             if (equip != 0)
             {
-                subject.body_parts[equip - 100] =
-                    subject.body_parts[equip - 100] / 10000 * 10000 +
-                    target_item.index + 1;
+                subject.equipment_slots[equip - 100].equip(target_item);
                 target_item.body_part = equip;
             }
         }

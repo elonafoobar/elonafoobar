@@ -255,59 +255,55 @@ void wear_most_valuable_equipment_for_all_body_parts(Character& chara)
 
 void wear_most_valuable_equipment(Character& chara, Item& equipment)
 {
-    int eqdup = 0;
-    elona_vector1<int> bodylist;
-    i = iequiploc(equipment);
-    if (i != 0)
+    const auto equipment_slot_type = iequiploc(equipment);
+    if (equipment_slot_type == 0)
+        return;
+
+    std::vector<size_t> equipment_slot_indice;
+    for (size_t i = 0; i < chara.equipment_slots.size(); ++i)
     {
-        eqdup = 0;
-        for (int j = 0; j < 30; ++j)
+        if (chara.equipment_slots[i].type == equipment_slot_type)
         {
-            if (chara.body_parts[j] / 10000 == i)
+            equipment_slot_indice.emplace_back(i);
+        }
+    }
+    if (equipment_slot_indice.empty())
+        return;
+
+    for (size_t i = 0; i < equipment_slot_indice.size(); ++i)
+    {
+        const auto equipment_slot_index = equipment_slot_indice[i];
+        body = equipment_slot_index + 100;
+        auto& equipment_slot = chara.equipment_slots[equipment_slot_index];
+        if (!equipment_slot.equipment)
+        {
+            equip_item(chara, equipment_slot_index, equipment);
+            break;
+        }
+        bool equip = false;
+        if (equipment.value >= equipment_slot.equipment->value)
+        {
+            equip = true;
+        }
+        if (equipment_slot_indice.size() > i + 1)
+        {
+            if (!chara.equipment_slots[equipment_slot_indice[i + 1]].equipment)
             {
-                bodylist(eqdup) = j + 100;
-                ++eqdup;
+                equip = false;
+            }
+            else if (
+                equipment_slot.equipment->value >=
+                chara.equipment_slots[equipment_slot_indice[i + 1]]
+                    .equipment->value)
+            {
+                equip = false;
             }
         }
-        if (eqdup == 0)
+        if (equip)
         {
-            return;
-        }
-        for (int cnt = 0, cnt_end = (eqdup); cnt < cnt_end; ++cnt)
-        {
-            body = bodylist(cnt);
-            i = chara.body_parts[body - 100] % 10000;
-            if (i == 0)
-            {
-                equip_item(chara, equipment);
-                break;
-            }
-            --i;
-            f = 0;
-            if (equipment.value >= inv[i].value)
-            {
-                f = 1;
-            }
-            if (eqdup > cnt + 1)
-            {
-                if (chara.body_parts[bodylist(cnt + 1) - 100] % 10000 == 0)
-                {
-                    f = 0;
-                }
-                else if (
-                    inv[i].value >=
-                    inv[chara.body_parts[bodylist(cnt + 1) - 100] % 10000 - 1]
-                        .value)
-                {
-                    f = 0;
-                }
-            }
-            if (f == 1)
-            {
-                unequip_item(chara);
-                equip_item(chara, equipment);
-                break;
-            }
+            unequip_item(chara, equipment_slot_index);
+            equip_item(chara, equipment_slot_index, equipment);
+            break;
         }
     }
 }
@@ -358,23 +354,22 @@ void supply_new_equipment(Character& chara)
             flt(chara.level, calcfixlv(Quality::bad));
         }
         mustequip = 0;
-        for (int cnt = 0; cnt < 30; ++cnt)
+        for (const auto& equipment_slot : chara.equipment_slots)
         {
-            p = chara.body_parts[cnt] / 10000;
+            p = equipment_slot.type;
             if (p == 0)
             {
                 break;
             }
-            if (chara.body_parts[cnt] % 10000 != 0)
+            if (equipment_slot.equipment)
             {
                 if (p == 5)
                 {
                     if (haveweapon == 0)
                     {
-                        if (the_item_db
-                                [itemid2int(
-                                     inv[chara.body_parts[cnt] % 10000 - 1].id)]
-                                    ->category == ItemCategory::melee_weapon)
+                        if (the_item_db[itemid2int(
+                                            equipment_slot.equipment->id)]
+                                ->category == ItemCategory::melee_weapon)
                         {
                             haveweapon = 1;
                         }
@@ -827,7 +822,7 @@ void supply_initial_equipments(Character& chara)
     }
     for (int i = 0; i < 30; ++i)
     {
-        p = chara.body_parts[i] / 10000;
+        p = chara.equipment_slots[i].type;
         if (p == 0)
         {
             break;
@@ -853,7 +848,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqamulet1 = 0;
                 continue;
@@ -877,7 +872,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqamulet2 = 0;
                 continue;
@@ -904,7 +899,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqring1 = 0;
                 continue;
@@ -928,7 +923,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqring2 = 0;
                 continue;
@@ -955,7 +950,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqcloack = 0;
                 continue;
@@ -983,7 +978,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqgirdle = 0;
                 continue;
@@ -1011,7 +1006,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqhelm = 0;
                 continue;
@@ -1039,7 +1034,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqarmor = 0;
                 continue;
@@ -1067,7 +1062,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqglove = 0;
                 continue;
@@ -1095,7 +1090,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqboots = 0;
                 continue;
@@ -1127,7 +1122,7 @@ void supply_initial_equipments(Character& chara)
                 if (equipment)
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqweapon1 = 0;
                 continue;
@@ -1178,7 +1173,7 @@ void supply_initial_equipments(Character& chara)
                 if (equipment)
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqweapon1 = 0;
                 continue;
@@ -1218,7 +1213,7 @@ void supply_initial_equipments(Character& chara)
                 if (equipment)
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqweapon2 = 0;
                 continue;
@@ -1242,7 +1237,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqshield = 0;
                 continue;
@@ -1270,7 +1265,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqrange = 0;
                 continue;
@@ -1298,7 +1293,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, *equipment);
+                    equip_item(chara, body - 100, *equipment);
                 }
                 eqammo = 0;
                 continue;
@@ -1344,35 +1339,38 @@ void supply_initial_equipments(Character& chara)
 
 
 
-void equip_item(Character& chara, Item& equipment)
+void equip_item(Character& chara, size_t equipment_slot_index, Item& equipment)
 {
-    if (chara.body_parts[body - 100] % 10000 != 0)
+    auto& equipment_slot = chara.equipment_slots.at(equipment_slot_index);
+    if (equipment_slot.equipment)
+    {
         return;
+    }
     if (equipment.body_part != 0)
+    {
         return;
+    }
     item_separate(equipment);
     if (chara.index == 0)
     {
         item_identify(equipment, IdentifyState::almost);
     }
-    equipment.body_part = body;
-    chara.body_parts[body - 100] =
-        chara.body_parts[body - 100] / 10000 * 10000 + equipment.index + 1;
+    equipment.body_part = equipment_slot_index + 100;
+    equipment_slot.equip(equipment);
 }
 
 
 
-void unequip_item(Character& chara)
+void unequip_item(Character& chara, size_t equipment_slot_index)
 {
-    p = chara.body_parts[body - 100] % 10000;
-    if (p == 0)
+    auto& equipment_slot = chara.equipment_slots.at(equipment_slot_index);
+    if (!equipment_slot.equipment)
     {
-        rtval = -2;
         return;
     }
-    chara.body_parts[body - 100] = chara.body_parts[body - 100] / 10000 * 10000;
-    inv[p - 1].body_part = 0;
-    item_stack(chara.index, inv[p - 1]);
+    equipment_slot.equipment->body_part = 0;
+    item_stack(chara.index, *equipment_slot.equipment);
+    equipment_slot.unequip();
 }
 
 } // namespace elona
