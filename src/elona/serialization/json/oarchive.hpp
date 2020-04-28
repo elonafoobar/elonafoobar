@@ -183,6 +183,63 @@ public:
 
 
 
+    class _InternalOArchiveTuple
+    {
+    public:
+        // @a length is constexpr, but it is passed as a runtime variable to
+        // avoid template code bloat.
+        _InternalOArchiveTuple(OArchive& ar, size_t length)
+            : _ar(ar)
+            , _length(length)
+        {
+            _indent = _ar._indent;
+            if (_length == 0)
+            {
+                _ar._out << "[]";
+            }
+            else
+            {
+                _ar._out << "[\n";
+            }
+            ++_ar._indent;
+        }
+
+
+
+        template <size_t Nth, typename T>
+        void tuple_item(T& item)
+        {
+            _ar.indent();
+            _ar(item);
+            if (Nth + 1 != _length)
+            {
+                _ar._out << ",\n";
+            }
+        }
+
+
+
+        void tuple_end()
+        {
+            --_ar._indent;
+            if (_length != 0)
+            {
+                _ar._out << '\n';
+                _ar.indent(_indent);
+                _ar._out << ']';
+            }
+        }
+
+
+
+    private:
+        OArchive& _ar;
+        uint64_t _length;
+        size_t _indent;
+    };
+
+
+
     OArchive(std::ostream& out)
         : _out(out)
     {
@@ -275,6 +332,14 @@ public:
         [maybe_unused]] const char* struct_name)
     {
         return _InternalOArchiveStruct{*this};
+    }
+
+
+
+    template <size_t Length>
+    _InternalOArchiveTuple tuple_begin()
+    {
+        return _InternalOArchiveTuple{*this, Length};
     }
 
 
