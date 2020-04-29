@@ -136,11 +136,7 @@ void UIMenuSpells::_draw_spell_name(int cnt, int spell_id)
     }
     cs_list(
         cs == cnt,
-        i18n::s.get_m(
-            "ability",
-            the_ability_db.get_id_from_legacy(spell_id)->get(),
-            "name") +
-            spell_shortcut,
+        the_ability_db.get_text(spell_id, "name") + spell_shortcut,
         wx + 84,
         wy + 66 + cnt * 19 - 1);
 }

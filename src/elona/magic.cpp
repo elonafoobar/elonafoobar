@@ -1305,10 +1305,7 @@ bool _magic_1104(Character& target)
                     txt(s +
                             i18n::s.get(
                                 "core.magic.gain_knowledge.gain",
-                                i18n::s.get_m(
-                                    "ability",
-                                    the_ability_db.get_id_from_legacy(p)->get(),
-                                    "name")),
+                                the_ability_db.get_text(p, "name")),
                         Message::color{ColorIndex::green});
                     snd("core.ding2");
                     f = 1;
@@ -1324,11 +1321,7 @@ bool _magic_1104(Character& target)
                     txt(i18n::s.get("core.magic.common.it_is_cursed"));
                     txt(i18n::s.get(
                             "core.magic.gain_knowledge.lose",
-                            i18n::s.get_m(
-                                "ability",
-                                the_ability_db.get_id_from_legacy(p + 400)
-                                    ->get(),
-                                "name")),
+                            the_ability_db.get_text(p + 400, "name")),
                         Message::color{ColorIndex::red});
                     snd("core.curse3");
                     animeload(14, cdata.player());
@@ -1425,10 +1418,7 @@ bool _magic_1105(Character& target)
                     txt(i18n::s.get(
                             "core.magic.gain_skill",
                             target,
-                            i18n::s.get_m(
-                                "ability",
-                                the_ability_db.get_id_from_legacy(p)->get(),
-                                "name")),
+                            the_ability_db.get_text(p, "name")),
                         Message::color{ColorIndex::green});
                 }
                 break;
@@ -1538,11 +1528,7 @@ bool _magic_1119(Character& target)
                                 i18n::s.get(
                                     "core.magic.gain_skill_potential.increases",
                                     target,
-                                    i18n::s.get_m(
-                                        "ability",
-                                        the_ability_db.get_id_from_legacy(p)
-                                            ->get(),
-                                        "name")),
+                                    the_ability_db.get_text(p, "name")),
                             Message::color{ColorIndex::green});
                     }
                 }
@@ -1552,10 +1538,7 @@ bool _magic_1119(Character& target)
                     txt(i18n::s.get(
                             "core.magic.gain_skill_potential.decreases",
                             target,
-                            i18n::s.get_m(
-                                "ability",
-                                the_ability_db.get_id_from_legacy(p)->get(),
-                                "name")),
+                            the_ability_db.get_text(p, "name")),
                         Message::color{ColorIndex::red});
                 }
                 break;
@@ -1618,8 +1601,7 @@ bool _magic_1113(Character& target)
     else
     {
         i = rnd(8) + 10;
-        const auto valn = i18n::s.get_m(
-            "ability", the_ability_db.get_id_from_legacy(i)->get(), "name");
+        const auto valn = the_ability_db.get_text(i, "name");
         if (efstatus == CurseState::none)
         {
             txt(i18n::s.get(
@@ -4119,10 +4101,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                     txt(i18n::s.get(
                         "core.magic.special_attack.self",
                         subject,
-                        i18n::s.get_m(
-                            "ability",
-                            the_ability_db.get_id_from_legacy(efid)->get(),
-                            "name"),
+                        the_ability_db.get_text(efid, "name"),
                         i18n::s.get_enum(
                             "core.ui.cast_style",
                             subject.special_attack_type)));
@@ -4516,10 +4495,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         {
             valn = i18n::s.get(
                 "core.magic.breath.named",
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(ele)->get(),
-                    "name"));
+                the_ability_db.get_text(ele, "name"));
         }
         else
         {

@@ -142,11 +142,7 @@ void UIMenuSkills::_draw_skill_name(int cnt, int skill_id)
     }
     cs_list(
         cs == cnt,
-        i18n::s.get_m(
-            "ability",
-            the_ability_db.get_id_from_legacy(skill_id)->get(),
-            "name") +
-            skill_shortcut,
+        the_ability_db.get_text(skill_id, "name") + skill_shortcut,
         wx + 84,
         wy + 66 + cnt * 19 - 1);
 }

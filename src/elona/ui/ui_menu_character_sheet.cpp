@@ -9,6 +9,7 @@
 #include "../class.hpp"
 #include "../data/types/type_asset.hpp"
 #include "../data/types/type_buff.hpp"
+#include "../data/types/type_race.hpp"
 #include "../draw.hpp"
 #include "../enchantment.hpp"
 #include "../keybind/keybind.hpp"
@@ -471,7 +472,8 @@ void UIMenuCharacterSheet::_draw_first_page_text_name()
 {
     s(0) = cdatan(0, _chara.index);
     s(1) = cdatan(1, _chara.index);
-    s(2) = cnven(i18n::s.get_m("race", cdatan(2, _chara.index), "name"));
+    s(2) = cnven(the_race_db.get_text(
+        data::InstanceId{cdatan(2, _chara.index)}, "name"));
     s(4) = cnven(class_get_name(data::InstanceId{cdatan(3, _chara.index)}));
     if (_chara.sex == 0)
     {
@@ -831,8 +833,7 @@ static bool _is_resistance(int skill)
 
 void UIMenuCharacterSheet::_draw_skill_name(int cnt, int skill_id)
 {
-    std::string skill_name = i18n::s.get_m(
-        "ability", the_ability_db.get_id_from_legacy(skill_id)->get(), "name");
+    std::string skill_name = the_ability_db.get_text(skill_id, "name");
 
     if (_is_resistance(skill_id))
     {
@@ -885,12 +886,7 @@ void UIMenuCharacterSheet::_draw_skill_desc(int cnt, int skill_id)
 {
     mes(wx + 330,
         wy + 66 + cnt * 19 + 2,
-        i18n::s
-            .get_m_optional(
-                "ability",
-                the_ability_db.get_id_from_legacy(skill_id)->get(),
-                "description")
-            .value_or(""));
+        the_ability_db.get_text_optional(skill_id, "description").value_or(""));
 }
 
 void UIMenuCharacterSheet::_draw_skill_train_cost(

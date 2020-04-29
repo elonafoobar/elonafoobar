@@ -1,5 +1,6 @@
-ELONA.i18n:add {
-   race = {
+ELONA.i18n:add_data_text(
+   "core.race",
+   {
       kobold = {
          name = "Kobold",
       },
@@ -244,5 +245,5 @@ ELONA.i18n:add {
          name = "Slug",
          description = "For debug",
       },
-   },
-}
+   }
+)

@@ -5,6 +5,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "class.hpp"
+#include "data/types/type_race.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "menu.hpp"
@@ -57,7 +58,8 @@ void dump_player_info()
     ss << std::endl;
 
     ss << fixtxt(
-              u8"種族       : " + i18n::s.get_m("race", cdatan(2, 0), "name"),
+              u8"種族       : " +
+                  the_race_db.get_text(data::InstanceId{cdatan(2, 0)}, "name"),
               30)
        << fixtxt(u8"信仰      : " + god_name(cdata.player().god_id), 32)
        << std::endl;
@@ -231,9 +233,10 @@ void dump_player_info()
         }
 
         ss << cdatan(0, ally.index) << u8" "
-           << i18n::s.get_m("race", cdatan(2, ally.index), "name") << u8"の"
-           << class_get_name(data::InstanceId{cdatan(3, ally.index)}) << u8" "
-           << i18n::s.get_enum("core.ui.sex", ally.sex) << u8" "
+           << the_race_db.get_text(
+                  data::InstanceId{cdatan(2, ally.index)}, "name")
+           << u8"の" << class_get_name(data::InstanceId{cdatan(3, ally.index)})
+           << u8" " << i18n::s.get_enum("core.ui.sex", ally.sex) << u8" "
            << calc_age(ally) << u8"歳" << u8"  " << ally.height << u8"cm"
            << u8" " << ally.weight << u8"kg" << std::endl;
         ss << u8"レベル " << ally.level;

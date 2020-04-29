@@ -1,5 +1,6 @@
-ELONA.i18n:add {
-   item_material = {
+ELONA.i18n:add_data_text(
+   "core.item_material",
+   {
       vegetable_seed = {
          name = "野菜",
          alias = "",
@@ -172,5 +173,5 @@ ELONA.i18n:add {
          name = "翼鳥鱗",
          alias = "翼を折られし",
       },
-   },
-}
+   }
+)

@@ -255,10 +255,7 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
     {
         buff = i18n::s.get(
             "core.talk.visitor.adventurer.train.learn.dialog",
-            i18n::s.get_m(
-                "ability",
-                the_ability_db.get_id_from_legacy(skill_id)->get(),
-                "name"),
+            the_ability_db.get_text(skill_id, "name"),
             std::to_string(
                 calclearncost(skill_id, cdata.player().index, true)) +
                 i18n::s.get("core.ui.platinum"),
@@ -276,10 +273,7 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
     {
         buff = i18n::s.get(
             "core.talk.visitor.adventurer.train.train.dialog",
-            i18n::s.get_m(
-                "ability",
-                the_ability_db.get_id_from_legacy(skill_id)->get(),
-                "name"),
+            the_ability_db.get_text(skill_id, "name"),
             std::to_string(
                 calclearncost(skill_id, cdata.player().index, true)) +
                 i18n::s.get("core.ui.platinum"),
@@ -501,10 +495,7 @@ TalkResult _talk_hv_adventurer_favorite_skill(Character& speaker)
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.favorite_skill.dialog",
-        i18n::s.get_m(
-            "ability",
-            the_ability_db.get_id_from_legacy(skill_id)->get(),
-            "name"),
+        the_ability_db.get_text(skill_id, "name"),
         speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
@@ -529,10 +520,7 @@ TalkResult _talk_hv_adventurer_favorite_stat(Character& speaker)
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.favorite_stat.dialog",
-        i18n::s.get_m(
-            "ability",
-            the_ability_db.get_id_from_legacy(skill_id)->get(),
-            "name"),
+        the_ability_db.get_text(skill_id, "name"),
         speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
@@ -730,10 +718,7 @@ void _trainer_do_training(int plat, int chatval_)
     txt(i18n::s.get(
             "core.talk.visitor.trainer.potential_expands",
             cdata.player(),
-            i18n::s.get_m(
-                "ability",
-                the_ability_db.get_id_from_legacy(chatval_)->get(),
-                "name")),
+            the_ability_db.get_text(chatval_, "name")),
         Message::color{ColorIndex::green});
     modify_potential(cdata.player(), chatval_, 10);
 }
@@ -782,10 +767,7 @@ TalkResult _talk_hv_trainer(Character& speaker)
             list(0, listmax) = p(cnt);
             listn(0, listmax) = i18n::s.get(
                 "core.talk.visitor.trainer.choices.improve",
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(p(cnt))->get(),
-                    "name"));
+                the_ability_db.get_text(p(cnt), "name"));
             ++listmax;
         }
     }

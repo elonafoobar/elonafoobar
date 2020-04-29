@@ -401,18 +401,11 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
             }
             else
             {
-                ally_info += ""s +
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(rtval)->get(),
-                        "name");
+                ally_info += ""s + the_ability_db.get_text(rtval, "name");
                 if (rtval(1) != -1)
                 {
-                    ally_info += u8", "s +
-                        i18n::s.get_m(
-                            "ability",
-                            the_ability_db.get_id_from_legacy(rtval(1))->get(),
-                            "name");
+                    ally_info +=
+                        u8", "s + the_ability_db.get_text(rtval(1), "name");
                 }
             }
         }

@@ -464,20 +464,14 @@ std::string txtskillchange(const Character& chara, int id, bool increase)
             return i18n::s.get(
                 "core.skill.default.increase",
                 chara,
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(id)->get(),
-                    "name"));
+                the_ability_db.get_text(id, "name"));
         }
         else
         {
             return i18n::s.get(
                 "core.skill.default.decrease",
                 chara,
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(id)->get(),
-                    "name"));
+                the_ability_db.get_text(id, "name"));
         }
     }
 }
@@ -2623,21 +2617,13 @@ void cnvbonus(int ability_id, int bonus)
     {
         if (bonus > 0)
         {
-            buff += u8"　　"s +
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(ability_id)->get(),
-                    "name") +
+            buff += u8"　　"s + the_ability_db.get_text(ability_id, "name") +
                 u8"耐性に <green>クラス"s + bonus / 50 + u8"<col>("s + bonus +
                 u8") のボーナス\n"s;
         }
         if (bonus < 0)
         {
-            buff += u8"　　"s +
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(ability_id)->get(),
-                    "name") +
+            buff += u8"　　"s + the_ability_db.get_text(ability_id, "name") +
                 u8"耐性に <red>クラス"s + bonus / 50 + u8"<col>("s + bonus +
                 u8") のマイナス修正\n"s;
         }
@@ -2646,20 +2632,12 @@ void cnvbonus(int ability_id, int bonus)
     {
         if (bonus > 0)
         {
-            buff += u8"　　"s +
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(ability_id)->get(),
-                    "name") +
+            buff += u8"　　"s + the_ability_db.get_text(ability_id, "name") +
                 u8"に <green>+"s + bonus + u8"<col> のボーナス\n"s;
         }
         if (bonus < 0)
         {
-            buff += u8"　　"s +
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(ability_id)->get(),
-                    "name") +
+            buff += u8"　　"s + the_ability_db.get_text(ability_id, "name") +
                 u8"に <red>"s + bonus + u8"<col> のマイナス修正\n"s;
         }
     }

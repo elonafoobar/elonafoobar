@@ -701,11 +701,7 @@ void activity_others_start(Character& doer, optional_ref<Item> activity_item)
         {
             txt(i18n::s.get(
                 "core.activity.study.start.studying",
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(activity_item->param1)
-                        ->get(),
-                    "name")));
+                the_ability_db.get_text(activity_item->param1, "name")));
         }
         else
         {
@@ -1112,10 +1108,7 @@ void activity_others_end_study(const Item& item)
     {
         txt(i18n::s.get(
             "core.activity.study.finish.studying",
-            i18n::s.get_m(
-                "ability",
-                the_ability_db.get_id_from_legacy(item.param1)->get(),
-                "name")));
+            the_ability_db.get_text(item.param1, "name")));
     }
     else
     {

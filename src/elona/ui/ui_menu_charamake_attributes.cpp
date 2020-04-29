@@ -58,8 +58,7 @@ static void _load_attributes_list(elona_vector1<int>& _attributes)
     for (int cnt = 10; cnt < 18; ++cnt)
     {
         list(0, listmax) = _attributes(cnt - 10);
-        listn(0, listmax) = i18n::s.get_m(
-            "ability", the_ability_db.get_id_from_legacy(cnt)->get(), "name");
+        listn(0, listmax) = the_ability_db.get_text(cnt, "name");
         ++listmax;
     }
 }

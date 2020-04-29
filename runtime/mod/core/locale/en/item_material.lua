@@ -1,5 +1,6 @@
-ELONA.i18n:add {
-   item_material = {
+ELONA.i18n:add_data_text(
+   "core.item_material",
+   {
       vegetable_seed = {
          name = "vegetable",
          alias = "",
@@ -172,5 +173,5 @@ ELONA.i18n:add {
          name = "griffon scale",
          alias = "fallen",
       },
-   },
-}
+   }
+)

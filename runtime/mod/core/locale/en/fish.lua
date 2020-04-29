@@ -1,5 +1,6 @@
-ELONA.i18n:add {
-   fish = {
+ELONA.i18n:add_data_text(
+   "core.fish",
+   {
       bug = {
          name = "bug",
       },
@@ -111,5 +112,5 @@ ELONA.i18n:add {
       broken_cell_phone = {
          name = "broken cell phone",
       },
-   },
-}
+   }
+)

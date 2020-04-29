@@ -50,6 +50,7 @@ I18NManager::I18NManager(LuaEnv& lua)
     {
         const auto result = safe_script(R"(
 get_optional = I18N.get_optional
+get_data_text_optional = I18N.get_data_text_optional
 get_list = I18N.get_list
 i18n = I18N.interface
 format = I18N.format

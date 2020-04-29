@@ -10,6 +10,7 @@
 #include "../../util/map_value_iterator.hpp"
 #include "../../util/noncopyable.hpp"
 #include "../filesystem.hpp"
+#include "../i18n.hpp"
 #include "../log.hpp"
 #include "../lua_env/config_table.hpp"
 #include "../lua_env/data_table.hpp"
@@ -138,6 +139,34 @@ public:
         }
 
         return *data;
+    }
+
+
+
+    template <typename... Args>
+    std::string
+    get_text(const IdType& id, const I18NKey& property_name, Args&&... args)
+    {
+        return i18n::s.get_data_text(
+            PrototypeId{Traits::type_id},
+            id,
+            property_name,
+            std::forward<Args>(args)...);
+    }
+
+
+
+    template <typename... Args>
+    optional<std::string> get_text_optional(
+        const IdType& id,
+        const I18NKey& property_name,
+        Args&&... args)
+    {
+        return i18n::s.get_data_text_optional(
+            PrototypeId{Traits::type_id},
+            id,
+            property_name,
+            std::forward<Args>(args)...);
     }
 
 
@@ -274,6 +303,40 @@ public:
         }
 
         return this->ensure(*id);
+    }
+
+
+
+    using Super::get_text; // Don't hide overload super class has.
+
+    template <typename... Args>
+    std::string
+    get_text(int legacy_id, const I18NKey& property_name, Args&&... args)
+    {
+        const auto id = *get_id_from_legacy(legacy_id);
+        return i18n::s.get_data_text(
+            PrototypeId{Traits::type_id},
+            id,
+            property_name,
+            std::forward<Args>(args)...);
+    }
+
+
+
+    using Super::get_text_optional; // Don't hide overload super class has.
+
+    template <typename... Args>
+    optional<std::string> get_text_optional(
+        int legacy_id,
+        const I18NKey& property_name,
+        Args&&... args)
+    {
+        const auto id = *get_id_from_legacy(legacy_id);
+        return i18n::s.get_data_text_optional(
+            PrototypeId{Traits::type_id},
+            id,
+            property_name,
+            std::forward<Args>(args)...);
     }
 
 

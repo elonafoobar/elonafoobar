@@ -42,7 +42,7 @@ void chara_db_set_stats(Character& chara, CharaId chara_id)
     chara.special_actions = data->special_actions;
     creaturepack = data->creaturepack;
     chara.can_talk = data->can_talk;
-    cdatan(0, chara.index) = i18n::s.get_m("chara", data->id.get(), "name");
+    cdatan(0, chara.index) = the_character_db.get_text(data->id, "name");
     if (data->has_random_name)
     {
         cdatan(0, chara.index) = i18n::s.get(
@@ -154,7 +154,7 @@ std::string chara_db_get_name(CharaId chara_id)
 {
     if (const auto data = the_character_db[charaid2int(chara_id)])
     {
-        return i18n::s.get_m("chara", data->id.get(), "name");
+        return the_character_db.get_text(data->id, "name");
     }
     else
     {
@@ -348,11 +348,9 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
     default: break;
     }
 
-    const auto chara_id_str =
-        the_character_db.get_id_from_legacy(charaid2int(chara_id))->get();
     const auto dialog_id = "text_" + std::to_string(talk_type);
-    if (const auto text =
-            i18n::s.get_m_optional("chara", chara_id_str, dialog_id))
+    if (const auto text = the_character_db.get_text_optional(
+            charaid2int(chara_id), dialog_id))
     {
         txt(*text, Message::color{ColorIndex::cyan});
     }
