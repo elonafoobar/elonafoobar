@@ -458,7 +458,11 @@ bool _magic_300(Character& subject, Character& target)
     invctrl(0) = 27;
     invctrl(1) = 0;
     snd("core.inv");
-    ctrl_inventory(target);
+    // In Pickpocket spact, target == player means that you attempts to steal
+    // items on the ground, not in someone's inventory.
+    ctrl_inventory(
+        target.index == 0 ? optional_ref<Character>{}
+                          : optional_ref<Character>{target});
     return true;
 }
 

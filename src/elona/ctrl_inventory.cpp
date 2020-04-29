@@ -1254,8 +1254,8 @@ void show_money(optional_ref<Character> inventory_owner)
 {
     if (show_inventory_owners_money(invctrl(0)))
     {
-        assert(inventory_owner);
-        if (g_show_additional_item_info == AdditionalItemInfo::none)
+        if (inventory_owner &&
+            g_show_additional_item_info == AdditionalItemInfo::none)
         {
             font(13 - en * 2);
             gmode(2);
