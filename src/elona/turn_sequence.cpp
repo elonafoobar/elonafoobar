@@ -454,7 +454,9 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     {
         return none;
     }
-    if (inv[chara.ai_item].number() == 0)
+
+    auto& ai_item = inv[chara.ai_item];
+    if (ai_item.number() == 0)
     {
         chara.ai_item = 0;
         return none;
@@ -464,22 +466,21 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
         chara.ai_item = 0;
     }
 
-    const auto category =
-        the_item_db[itemid2int(inv[chara.ai_item].id)]->category;
+    const auto category = the_item_db[itemid2int(ai_item.id)]->category;
     if (category == ItemCategory::food)
     {
         if (chara.relationship != 10 || chara.nutrition <= 6000)
         {
-            return do_eat_command(chara, inv[chara.ai_item]);
+            return do_eat_command(chara, ai_item);
         }
     }
     if (category == ItemCategory::potion)
     {
-        return do_drink_command(chara, inv[chara.ai_item]);
+        return do_drink_command(chara, ai_item);
     }
     if (category == ItemCategory::scroll)
     {
-        return do_read_command(chara, inv[chara.ai_item]);
+        return do_read_command(chara, ai_item);
     }
 
     chara.ai_item = 0;
