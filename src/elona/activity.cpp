@@ -202,7 +202,7 @@ int calc_performance_tips(const Character& performer, const Character& audience)
     // Quality factor
     const auto Q = performer.quality_of_performance;
     // Instrument factor
-    const auto I = inv[performer.activity.item].param1;
+    const auto I = performer.activity.item->param1;
 
     const auto max = sdata(183, performer.index) * 100;
 
@@ -324,7 +324,7 @@ std::pair<bool, int> activity_perform_proc_audience(
     Character& audience)
 {
     const auto performer_skill = sdata(183, performer.index);
-    const auto& instrument = inv[performer.activity.item];
+    const auto& instrument = *performer.activity.item;
 
     if (audience.state() != Character::State::alive)
     {
@@ -488,7 +488,7 @@ std::pair<bool, int> activity_perform_proc_audience(
 
 
 
-void activity_perform_start(Character& performer, const Item& instrument)
+void activity_perform_start(Character& performer, Item& instrument)
 {
     if (is_in_fov(performer))
     {
@@ -496,7 +496,7 @@ void activity_perform_start(Character& performer, const Item& instrument)
     }
     performer.activity.type = Activity::Type::perform;
     performer.activity.turn = 61;
-    performer.activity.item = instrument.index;
+    performer.activity.item = ItemRef::from_ref(instrument);
     performer.quality_of_performance = 40;
     performer.tip_gold = 0;
     if (performer.index == 0)
@@ -591,7 +591,7 @@ void activity_perform_end(Character& performer)
     if (performer.quality_of_performance > 40)
     {
         performer.quality_of_performance = performer.quality_of_performance *
-            (100 + inv[performer.activity.item].param1 / 5) / 100;
+            (100 + performer.activity.item->param1 / 5) / 100;
     }
     if (performer.tip_gold != 0)
     {
@@ -618,7 +618,7 @@ void activity_eating_start(Character& eater, Item& food)
 {
     eater.activity.type = Activity::Type::eat;
     eater.activity.turn = 8;
-    eater.activity.item = food.index;
+    eater.activity.item = ItemRef::from_ref(food);
     if (is_in_fov(eater))
     {
         snd("core.eat1");
@@ -642,7 +642,7 @@ void activity_eating_start(Character& eater, Item& food)
 void activity_others_start(Character& doer, optional_ref<Item> activity_item)
 {
     doer.activity.type = Activity::Type::others;
-    doer.activity.item = activity_item ? activity_item->index : -1;
+    doer.activity.item = ItemRef::from_opt(activity_item);
 
     switch (game_data.activity_about_to_start)
     {
@@ -1020,8 +1020,7 @@ void activity_others_end_steal(Item& steal_target)
         if (item_owner != -1)
         {
             p = steal_target.body_part;
-            cdata[item_owner].body_parts[p - 100] =
-                cdata[item_owner].body_parts[p - 100] / 10000 * 10000;
+            cdata[item_owner].equipment_slots[p - 100].unequip();
         }
         steal_target.body_part = 0;
         chara_refresh(cdata[item_owner]);
@@ -1185,7 +1184,7 @@ void rowact_item(const Item& item)
         if (chara.activity.type == Activity::Type::eat ||
             chara.activity.type == Activity::Type::read)
         {
-            if (chara.activity.item == item.index)
+            if (chara.activity.item == item)
             {
                 chara.activity.finish();
                 txt(i18n::s.get("core.activity.cancel.item", chara));
@@ -1236,7 +1235,6 @@ void activity_handle_damage(Character& chara)
 
 optional<TurnResult> activity_proc(Character& chara)
 {
-    const auto activity_item_index = chara.activity.item;
     --chara.activity.turn;
 
     const auto auto_turn = [&](int delay) {
@@ -1250,10 +1248,7 @@ optional<TurnResult> activity_proc(Character& chara)
     {
     case Activity::Type::fish:
         auto_turn(g_config.animation_wait() * 2);
-        spot_fishing(
-            chara,
-            rowactre(0) == 0 ? optional_ref<Item>{inv[activity_item_index]}
-                             : optional_ref<Item>{});
+        spot_fishing(chara, chara.activity.item.as_opt());
         break;
     case Activity::Type::dig_wall:
         auto_turn(g_config.animation_wait() * 0.75);
@@ -1272,11 +1267,13 @@ optional<TurnResult> activity_proc(Character& chara)
         do_rest(chara);
         break;
     case Activity::Type::eat:
+        assert(chara.activity.item);
         auto_turn(g_config.animation_wait() * 5);
-        return do_eat_command(chara, inv[activity_item_index]);
+        return do_eat_command(chara, *chara.activity.item);
     case Activity::Type::read:
+        assert(chara.activity.item);
         auto_turn(g_config.animation_wait() * 1.25);
-        return do_read_command(chara, inv[activity_item_index]);
+        return do_read_command(chara, *chara.activity.item);
     case Activity::Type::sex:
         auto_turn(g_config.animation_wait() * 2.5);
         activity_sex(chara, none);
@@ -1289,19 +1286,16 @@ optional<TurnResult> activity_proc(Character& chara)
         case 105: auto_turn(g_config.animation_wait() * 2.5); break;
         default: auto_turn(g_config.animation_wait()); break;
         }
-        activity_others(
-            chara,
-            activity_item_index != -1
-                ? optional_ref<Item>{inv[activity_item_index]}
-                : optional_ref<Item>{});
+        activity_others(chara, chara.activity.item.as_opt());
         break;
     case Activity::Type::blend:
         auto_turn(g_config.animation_wait());
         activity_blending();
         break;
     case Activity::Type::perform:
+        assert(chara.activity.item);
         auto_turn(g_config.animation_wait() * 2);
-        activity_perform(chara, inv[activity_item_index]);
+        activity_perform(chara, *chara.activity.item);
         break;
     case Activity::Type::travel:
         map_global_proc_travel_events(chara);
@@ -1328,7 +1322,7 @@ optional<TurnResult> activity_proc(Character& chara)
 
 
 
-void activity_perform(Character& performer, const Item& instrument)
+void activity_perform(Character& performer, Item& instrument)
 {
     if (!performer.activity)
     {
@@ -1565,9 +1559,9 @@ void activity_eating_finish(Character& eater, Item& food)
     }
     else
     {
-        if (food.index == eater.ai_item)
+        if (food == eater.ai_item)
         {
-            eater.ai_item = 0;
+            eater.ai_item = ItemRef::null();
         }
         if (eater.was_passed_item_by_you_just_now())
         {
@@ -1648,7 +1642,7 @@ void spot_fishing(Character& fisher, optional_ref<Item> rod)
         snd("core.fish_cast");
         if (rowactre == 0)
         {
-            fisher.activity.item = rod->index;
+            fisher.activity.item = ItemRef::from_ref(*rod);
         }
         fisher.activity.type = Activity::Type::fish;
         fisher.activity.turn = 100;
@@ -1669,7 +1663,7 @@ void spot_fishing(Character& fisher, optional_ref<Item> rod)
         if (rnd(5) == 0)
         {
             fishstat = 1;
-            fish = fish_select_at_random(inv[fisher.activity.item].param4);
+            fish = fish_select_at_random(fisher.activity.item->param4);
         }
         if (fishstat == 1)
         {

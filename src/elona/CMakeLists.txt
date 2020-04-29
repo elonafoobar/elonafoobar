@@ -57,6 +57,7 @@ set(ELONA_SOURCES
   item_db.cpp
   item_load_desc.cpp
   item_material.cpp
+  item_ref.cpp
   itemgen.cpp
   loading_screen.cpp
   log.cpp

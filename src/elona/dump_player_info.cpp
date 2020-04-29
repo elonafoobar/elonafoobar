@@ -162,16 +162,16 @@ void dump_player_info()
        << get_armor_class_name(cdata.player()) << std::endl;
     ss << std::endl;
 
-    for (const auto& body_part : cdata.player().body_parts)
+    for (const auto& equipment_slot : cdata.player().equipment_slots)
     {
-        if (body_part == 0)
+        if (!equipment_slot)
         {
             continue;
         }
 
-        if ((trait(206) != 0 && body_part / 10000 == 2) ||
-            (trait(203) != 0 && body_part / 10000 == 9) ||
-            (trait(205) != 0 && body_part / 10000 == 3))
+        if ((trait(206) != 0 && equipment_slot.type == 2) ||
+            (trait(203) != 0 && equipment_slot.type == 9) ||
+            (trait(205) != 0 && equipment_slot.type == 3))
         {
             continue;
         }
@@ -180,20 +180,19 @@ void dump_player_info()
         std::string item_desc;
         p(0) = 0;
         listmax = 0;
-        if (body_part % 10000 != 0)
+        if (equipment_slot.equipment)
         {
-            const auto item_index = body_part % 10000 - 1;
-            item_name = itemname(inv[item_index]);
-            item_desc = cnvweight(inv[item_index].weight);
-            item_dump_desc(inv[item_index]);
+            item_name = itemname(*equipment_slot.equipment);
+            item_desc = cnvweight(equipment_slot.equipment->weight);
+            item_dump_desc(*equipment_slot.equipment);
         }
         else
         {
             listmax = 0;
         }
 
-        ss << i18n::s.get_enum("core.ui.body_part", body_part / 10000) << u8":"
-           << std::endl;
+        ss << i18n::s.get_enum("core.ui.body_part", equipment_slot.type)
+           << u8":" << std::endl;
         ss << item_name << u8" " << item_desc << std::endl;
         for (int i = 0; i < listmax; ++i)
         {

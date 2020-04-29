@@ -9,6 +9,7 @@
 #include "consts.hpp"
 #include "data/types/type_character.hpp"
 #include "god.hpp"
+#include "item_ref.hpp"
 #include "lua_env/wrapped_function.hpp"
 #include "position.hpp"
 #include "serialization/macros.hpp"
@@ -73,7 +74,7 @@ struct Activity
 
     Type type = Activity::Type::none;
     int turn = 0;
-    int item = 0;
+    ItemRef item;
 
 
     bool is_doing_nothing() const
@@ -98,7 +99,7 @@ struct Activity
     {
         type = Activity::Type::none;
         turn = 0;
-        item = 0;
+        item = ItemRef::null();
     }
 
 
@@ -193,6 +194,50 @@ private:
 
 
 
+struct EquipmentSlot
+{
+    int type = 0;
+    ItemRef equipment;
+
+
+
+    explicit operator bool() const noexcept
+    {
+        return type != 0;
+    }
+
+
+
+    void equip(Item& item)
+    {
+        equipment = ItemRef::from_ref(item);
+    }
+
+
+
+    void unequip()
+    {
+        equipment = ItemRef::null();
+    }
+
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "EquipmentSlot");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, type);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, equipment);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
+    }
+};
+
+
+
 struct Character
 {
     enum class State : int
@@ -236,7 +281,7 @@ public:
     int relationship = 0;
     int turn_cost = 0;
     int current_speed = 0;
-    int ai_item = 0;
+    ItemRef ai_item;
     std::string portrait;
     int interest = 0;
     int time_interest_revive = 0;
@@ -342,7 +387,7 @@ public:
     int choked = 0;
     int furious = 0;
     std::vector<int> growth_buffs;
-    std::vector<int> body_parts;
+    std::vector<EquipmentSlot> equipment_slots;
     std::vector<int> normal_actions;
     std::vector<int> special_actions;
     std::vector<Buff> buffs;
@@ -544,7 +589,7 @@ public:
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, choked);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, furious);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, growth_buffs);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, body_parts);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, equipment_slots);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, normal_actions);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, special_actions);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, buffs);
@@ -704,7 +749,7 @@ bool chara_unequip(Item& item);
 int chara_custom_talk(int = 0, int = 0);
 int chara_impression_level(int = 0);
 void chara_modify_impression(Character& chara, int delta);
-void chara_set_ai_item(Character& chara, const Item& item);
+void chara_set_ai_item(Character& chara, Item& item);
 int chara_armor_class(const Character& chara);
 int chara_breed_power(const Character&);
 

@@ -424,9 +424,9 @@ void refresh_speed(Character& chara)
 void refresh_speed_correction_value(Character& chara)
 {
     int number_of_body_parts{};
-    for (const auto& body_part : chara.body_parts)
+    for (const auto& equipment_slot : chara.equipment_slots)
     {
-        if (body_part)
+        if (equipment_slot)
         {
             ++number_of_body_parts;
         }
@@ -446,9 +446,9 @@ void refresh_speed_correction_value(Character& chara)
 void gain_new_body_part(Character& chara)
 {
     int slot = -1;
-    for (size_t i = 0; i < chara.body_parts.size(); ++i)
+    for (size_t i = 0; i < chara.equipment_slots.size(); ++i)
     {
-        if (chara.body_parts[i] == 0)
+        if (!chara.equipment_slots[i])
         {
             slot = static_cast<int>(i);
             break;
@@ -462,7 +462,7 @@ void gain_new_body_part(Character& chara)
     }
 
     const auto body_part = get_random_body_part();
-    chara.body_parts[slot] = body_part * 10000;
+    chara.equipment_slots[slot] = EquipmentSlot{body_part, ItemRef::null()};
     if (!cm)
     {
         txt(i18n::s.get(
@@ -682,9 +682,9 @@ int transplant_body_parts(
         return -1;
     }
     rtval(1) = -1;
-    for (int i = 0; i < 30; ++i)
+    for (size_t i = 0; i < original_ally.equipment_slots.size(); ++i)
     {
-        if (original_ally.body_parts[i] == 0)
+        if (!original_ally.equipment_slots[i])
         {
             rtval(1) = i + 100;
         }
@@ -693,9 +693,9 @@ int transplant_body_parts(
     {
         return -1;
     }
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (size_t cnt = 0; cnt < gene_ally.equipment_slots.size(); ++cnt)
     {
-        f = gene_ally.body_parts[cnt] / 10000;
+        f = gene_ally.equipment_slots[cnt].type;
         if (f == 11 || f == 10 || f == 4)
         {
             continue;
@@ -715,13 +715,13 @@ int transplant_body_parts(
     {
         rtval = dblist(0, rnd(dbmax));
         f = 0;
-        for (int i = 0; i < 30; ++i)
+        for (size_t i = 0; i < original_ally.equipment_slots.size(); ++i)
         {
-            if (original_ally.body_parts[i] == 0)
+            if (!original_ally.equipment_slots[i])
             {
                 continue;
             }
-            if (original_ally.body_parts[i] / 10000 == rtval)
+            if (original_ally.equipment_slots[i].type == rtval)
             {
                 f = 1;
             }
@@ -739,7 +739,7 @@ int transplant_body_parts(
     DIM3(dblist, 2, 800);
     for (int i = 0; i < 30; ++i)
     {
-        ++dblist(0, gene_ally.body_parts[i] / 10000);
+        ++dblist(0, gene_ally.equipment_slots[i].type);
     }
     for (int cnt = 0; cnt < 25; ++cnt)
     {
@@ -747,7 +747,7 @@ int transplant_body_parts(
         f = 0;
         for (int i = 0; i < 30; ++i)
         {
-            if (original_ally.body_parts[i] / 10000 == rtval)
+            if (original_ally.equipment_slots[i].type == rtval)
             {
                 ++f;
             }

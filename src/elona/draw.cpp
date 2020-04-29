@@ -653,12 +653,11 @@ void create_pcpic(Character& chara, bool with_equipments)
         pcc(3, idx) = 0;
         pcc(8, idx) = 0;
         pcc(5, idx) = 0;
-        for (auto&& body_part : chara.body_parts)
+        for (const auto& [_type, equipment] : chara.equipment_slots)
         {
-            if (body_part % 10000 != 0)
+            if (equipment)
             {
-                _set_pcc_depending_on_equipments(
-                    chara, inv[body_part % 10000 - 1]);
+                _set_pcc_depending_on_equipments(chara, *equipment);
             }
         }
     }

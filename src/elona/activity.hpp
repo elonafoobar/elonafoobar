@@ -19,7 +19,7 @@ void rowact_item(const Item& item);
 void activity_handle_damage(Character& chara);
 optional<TurnResult> activity_proc(Character& chara);
 
-void activity_perform(Character& performer, const Item& instrument);
+void activity_perform(Character& performer, Item& instrument);
 void activity_sex(Character& chara_a, optional_ref<Character> chara_b);
 void activity_blending();
 void activity_eating(Character& eater, Item& food);

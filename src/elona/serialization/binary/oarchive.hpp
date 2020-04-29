@@ -130,6 +130,26 @@ public:
 
 
 
+    template <size_t Length>
+    OArchive& tuple_begin()
+    {
+        return *this;
+    }
+
+
+    template <size_t Nth, typename T>
+    void tuple_item(T& value)
+    {
+        (*this)(value);
+    }
+
+
+    void tuple_end()
+    {
+    }
+
+
+
 private:
     std::ostream& _out;
 };

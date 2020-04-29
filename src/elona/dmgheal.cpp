@@ -1418,8 +1418,7 @@ void character_drops_item(Character& victim)
             }
             if (item.body_part != 0)
             {
-                victim.body_parts[item.body_part - 100] =
-                    victim.body_parts[item.body_part - 100] / 10000 * 10000;
+                victim.equipment_slots[item.body_part - 100].unequip();
                 item.body_part = 0;
             }
             f = 0;
@@ -1584,8 +1583,7 @@ void character_drops_item(Character& victim)
         }
         if (item.body_part != 0)
         {
-            victim.body_parts[item.body_part - 100] =
-                victim.body_parts[item.body_part - 100] / 10000 * 10000;
+            victim.equipment_slots[item.body_part - 100].unequip();
             item.body_part = 0;
         }
         item.position.x = victim.position.x;

@@ -856,13 +856,12 @@ optional<int> enchantment_find(const Character& chara, int id)
 {
     optional<int> max;
 
-    for (const auto& body_part : chara.body_parts)
+    for (const auto& [_type, equipment] : chara.equipment_slots)
     {
-        if (body_part % 10000 == 0)
+        if (!equipment)
             continue;
 
-        const auto& equip = inv[body_part % 10000 - 1];
-        if (const auto power = enchantment_find(equip, id))
+        if (const auto power = enchantment_find(*equipment, id))
         {
             if (!max || *max < *power)
             {

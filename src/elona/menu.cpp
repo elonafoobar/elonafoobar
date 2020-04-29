@@ -1125,19 +1125,19 @@ void append_accuracy_info(const Character& chara, int val0)
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (chara.body_parts[cnt] % 10000 == 0)
+        if (!chara.equipment_slots[cnt].equipment)
         {
             continue;
         }
-        if (chara.body_parts[cnt] / 10000 == 10)
+        if (chara.equipment_slots[cnt].type == 10)
         {
             continue;
         }
-        if (chara.body_parts[cnt] / 10000 == 11)
+        if (chara.equipment_slots[cnt].type == 11)
         {
             continue;
         }
-        auto& weapon = inv[chara.body_parts[cnt] % 10000 - 1];
+        auto& weapon = *chara.equipment_slots[cnt].equipment;
         if (weapon.dice_x > 0)
         {
             attackskill = weapon.skill;

@@ -1056,7 +1056,7 @@ void show_shop_log()
                 {
                     continue;
                 }
-                if (chara.activity.item == item_for_sale.item.index)
+                if (chara.activity.item == item_for_sale.item)
                 {
                     chara.activity.finish();
                 }
