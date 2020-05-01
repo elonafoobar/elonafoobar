@@ -1,12 +1,17 @@
-# Elona foobar
+[![Elona foobar](resources/logo.png)](https://elonafoobar.com)
 
+
+[![Latest Release](https://img.shields.io/github/v/release/elonafoobar/elonafoobar)](https://github.com/elonafoobar/elonafoobar/releases/latest)
+[![License](https://img.shields.io/github/license/elonafoobar/elonafoobar)](LICENSE.txt)
 [![AppVeyor Status](https://ci.appveyor.com/api/projects/status/jqhbtdkx86lool4t/branch/develop?svg=true)](https://ci.appveyor.com/project/ki-foobar/elonafoobar/branch/develop)
 [![Travis CI Status](https://travis-ci.com/elonafoobar/elonafoobar.svg?branch=develop)](https://travis-ci.com/elonafoobar/elonafoobar)
 [![GitHub Actions Status](https://github.com/elonafoobar/elonafoobar/workflows/Build/badge.svg)](https://github.com/elonafoobar/elonafoobar/actions)
-[![License](https://img.shields.io/github/license/elonafoobar/elonafoobar)](LICENSE.txt)
-[![Latest Release](https://img.shields.io/github/v/release/elonafoobar/elonafoobar)](https://github.com/elonafoobar/elonafoobar/releases/latest)
 [![Twitter](https://img.shields.io/twitter/follow/ElonaFoobar?style=social)](https://twitter.com/ElonaFoobar)
 [![Discord](https://img.shields.io/discord/520137317206458383)](https://discord.gg/4htdyc2)
+
+
+
+# &lt;Elona foobar&gt;
 
 * One of the Elona variants.
 * It is made of C++.
@@ -15,6 +20,11 @@
 * It features high extensibility through a mod system. [####+]
 * It can be localized in multiple languages. [####+]
 * It works on Windows, Linux and macOS. [####+]
+
+> An Elona variant that has a mod system. With its high extensibility, you can build your own Elona.
+>
+> \~Ylva Fantasy Encyclopedia\~
+
 
 
 # How To Build
