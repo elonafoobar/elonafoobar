@@ -1,4 +1,12 @@
-# Elona foobar [![AppVeyor Build Status][appveyor-build-status-svg]][appveyor-build-status] [![Travis CI Build Status][travis-build-status-svg]][travis-build-status]
+# Elona foobar
+
+[![AppVeyor Status](https://ci.appveyor.com/api/projects/status/jqhbtdkx86lool4t/branch/develop?svg=true)](https://ci.appveyor.com/project/ki-foobar/elonafoobar/branch/develop)
+[![Travis CI Status](https://travis-ci.com/elonafoobar/elonafoobar.svg?branch=develop)](https://travis-ci.com/elonafoobar/elonafoobar)
+[![GitHub Actions Status](https://github.com/elonafoobar/elonafoobar/workflows/Build/badge.svg)](https://github.com/elonafoobar/elonafoobar/actions)
+[![License](https://img.shields.io/github/license/elonafoobar/elonafoobar)](LICENSE.txt)
+[![Latest Release](https://img.shields.io/github/v/release/elonafoobar/elonafoobar)](https://github.com/elonafoobar/elonafoobar/releases/latest)
+[![Twitter](https://img.shields.io/twitter/follow/ElonaFoobar?style=social)](https://twitter.com/ElonaFoobar)
+[![Discord](https://img.shields.io/discord/520137317206458383)](https://discord.gg/4htdyc2)
 
 * One of the Elona variants.
 * It is made of C++.
@@ -114,11 +122,3 @@ For files under [runtime/graphic](runtime/graphic/) folder of the repository, se
 * [minizip](https://github.com/mnoinvaz/minizip): see [license file](src/thirdparty/minizip/LICENSE).
 * [json5](https://github.com/ki-foobar/json5): see [license file](src/thirdparty/json5/LICENSE).
 * [inspect.lua](https://github.com/kikito/inspect.lua): see [license file](runtime/data/script/prelude/inspect.lua).
-
-
-
-<!-- Badges -->
-[appveyor-build-status]: https://ci.appveyor.com/project/ki-foobar/elonafoobar/branch/develop
-[appveyor-build-status-svg]: https://ci.appveyor.com/api/projects/status/jqhbtdkx86lool4t/branch/develop?svg=true
-[travis-build-status]: https://travis-ci.org/ElonaFoobar/ElonaFoobar?branch=develop
-[travis-build-status-svg]: https://travis-ci.org/ElonaFoobar/ElonaFoobar.svg?branch=develop
