@@ -101,22 +101,19 @@ For files under [runtime/graphic](runtime/graphic/) folder of the repository, se
 
 ## Thirdparty libraries
 
-* Catch2: see [src/thirdparty/catch2/LICENSE](src/thirdparty/catch2/LICENSE).
-* hayai: see [src/thirdparty/hayai/LICENSE](src/thirdparty/hayai/LICENSE).
-* sol2: see [src/thirdparty/sol2/LICENSE.txt](src/thirdparty/sol2/LICENSE.txt).
-* ordered_map: see [src/thirdparty/ordered_map/LICENSE](src/thirdparty/ordered_map/LICENSE).
-* boostrandom: see [src/thirdparty/boostrandom/LICENSE_1_0.txt](src/thirdparty/LICENSE_1_0.txt).
-* cmake/FindXXX.cmake: see [cmake/LICENSE](cmake/LICENSE).
-* nativefiledialog: see [src/thirdparty/nfd/LICENSE](src/thirdparty/nfd/LICENSE).
-* cpp-netlib/uri: see [src/thirdparty/uri/LICENSE_1_0.txt](src/thirdparty/uri/LICENSE_1_0.txt).
-* xxHash: see [src/thirdparty/xxHash/LICENSE](src/thirdparty/xxHash/LICENSE).
-* zstr: see [src/thirdparty/zstr/LICENSE](src/thirdparty/zstr/LICENSE).
-* minizip: see [src/thirdparty/minizip/LICENSE](src/thirdparty/minizip/LICENSE).
-* json5: see [src/thirdparty/json5/LICENSE](src/thirdparty/json5/LICENSE).
-
-## Lua libraries
-
-* [inspect.lua](https://github.com/kikito/inspect.lua) (MIT)
+* [Catch2](https://github.com/catchorg/Catch2): see [license file](src/thirdparty/catch2/LICENSE).
+* [hayai](https://github.com/nickbruun/hayai): see [license file](src/thirdparty/hayai/LICENSE).
+* [sol2](https://github.com/ThePhD/sol2): see [license file](src/thirdparty/sol2/LICENSE.txt).
+* [ordered_map](https://github.com/Tessil/ordered-map): see [license file](src/thirdparty/ordered_map/LICENSE).
+* [boostrandom](https://github.com/boostorg/random): see [license file](src/thirdparty/LICENSE_1_0.txt).
+* [cmake/FindXXX.cmake](https://github.com/tcbrindle/sdl2-cmake-scripts): see [license file](cmake/LICENSE).
+* [nativefiledialog](https://github.com/mlabbe/nativefiledialog): see [license file](src/thirdparty/nfd/LICENSE).
+* [cpp-netlib/uri](https://github.com/cpp-netlib/uri): see [license file](src/thirdparty/uri/LICENSE_1_0.txt).
+* [xxHash](https://github.com/Cyan4973/xxHash): see [license file](src/thirdparty/xxHash/LICENSE).
+* [zstr](https://github.com/mateidavid/zstr): see [license file](src/thirdparty/zstr/LICENSE).
+* [minizip](https://github.com/mnoinvaz/minizip): see [license file](src/thirdparty/minizip/LICENSE).
+* [json5](https://github.com/ki-foobar/json5): see [license file](src/thirdparty/json5/LICENSE).
+* [inspect.lua](https://github.com/kikito/inspect.lua): see [license file](runtime/data/script/prelude/inspect.lua).
 
 
 
