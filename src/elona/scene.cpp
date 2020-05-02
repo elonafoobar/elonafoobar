@@ -439,6 +439,7 @@ void conquer_lesimas()
 void play_the_last_scene_again()
 {
     update_entire_screen();
+    Message::instance().linebreak();
     txt(i18n::s.get("core.win.watch_event_again"));
     if (yes_no())
     {
