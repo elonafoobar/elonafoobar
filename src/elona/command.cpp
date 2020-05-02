@@ -6456,7 +6456,7 @@ TurnResult try_to_open_locked_door(Character& chara)
         cell_featset(dx, dy, tile_dooropen, 20, 0, -1);
         if (is_in_fov(chara))
         {
-            txt(i18n::s.get("core.action.open.door.suchara.indexeed", chara));
+            txt(i18n::s.get("core.action.open.door.succeed", chara));
             if (map_data.tileset == 8)
             {
                 snd("core.door2");
