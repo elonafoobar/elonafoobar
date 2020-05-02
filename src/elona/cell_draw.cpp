@@ -846,111 +846,85 @@ void draw_character_sprite(
 
 
 
-optional_ref<const Extent>
-prepare_chara_chip(const Character& chara, int dx, int dy)
+snail::Color color_index_to_snail_color(int color_index)
 {
-    const int col_ = chara.image / 1000;
-    const int p_ = chara.image % 1000;
-    auto rect = draw_get_rect_chara(p_);
-    if (chara.is_hung_on_sand_bag())
-    {
-        gmode(2, 80);
-        func_2(1, 96, 816, -80, 48, 96);
-        gmode(2);
-        gcopy(1, 96, 816, 48, 96, dx, dy - 63);
-        chara_chips[p_].offset_y += 24;
-    }
-    gsel(rect->buffer);
-    boxf(0, 960, rect->width, rect->height);
-    set_color_mod(
-        255 - c_col(0, col_), 255 - c_col(1, col_), 255 - c_col(2, col_));
-    gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height, 0, 960);
-    set_color_mod(255, 255, 255);
-    gsel(0);
-
-    return rect;
+    const uint8_t r = 255 - c_col(0, color_index);
+    const uint8_t g = 255 - c_col(1, color_index);
+    const uint8_t b = 255 - c_col(2, color_index);
+    return {r, g, b};
 }
 
 
 
 void draw_chara_chip_sprite_in_world_map(
-    int texture_id,
-    int chip_id,
+    const Extent& ext,
+    const snail::Color& tint,
     int x,
     int y,
-    int width,
-    int height)
+    int offset_y)
 {
     gmode(2, 85);
     draw_centered("character_shadow", x + 24, y + 32, 20, 10);
     gmode(2);
+    set_color_mod(tint.r, tint.g, tint.b, ext.buffer);
     gcopy_c(
-        texture_id,
-        0,
-        960,
-        width,
-        height,
-        x + 24,
-        y + 24 - chara_chips[chip_id].offset_y / 4,
-        24,
-        height / 2);
+        ext.buffer,
+        ext.x,
+        ext.y,
+        ext.width,
+        ext.height,
+        x + inf_tiles / 2,
+        y + inf_tiles / 2 - offset_y / 4,
+        ext.width / 2,
+        ext.height / 2);
 }
 
 
 
 void draw_chara_chip_sprite_in_water(
-    int texture_id,
-    int chip_id,
+    const Extent& ext,
+    const snail::Color& tint,
     int x,
     int y,
-    int width,
-    int height,
-    int ground_)
+    int offset_y)
 {
-    int dy = (chip_data[ground_].kind == 3) * -16;
+    set_color_mod(tint.r, tint.g, tint.b, ext.buffer);
+    // bottom (under water)
     gmode(2, 100);
     gcopy(
-        texture_id,
-        0,
-        976,
-        width,
-        height - 16,
+        ext.buffer,
+        ext.x,
+        ext.y + ext.height - 16,
+        ext.width,
+        16,
         x,
-        y + 16 - chara_chips[chip_id].offset_y - dy);
+        y - offset_y + ext.height - 16 + 16);
     gmode(2);
+    // top (above water)
     gcopy(
-        texture_id,
-        0,
-        960,
-        width,
-        height - 16,
+        ext.buffer,
+        ext.x,
+        ext.y,
+        ext.width,
+        ext.height - 16,
         x,
-        y - chara_chips[chip_id].offset_y - dy);
+        y - offset_y + 16);
 }
 
 
 
 void draw_chara_chip_sprite(
-    int texture_id,
-    int chip_id,
+    const Extent& ext,
+    const snail::Color& tint,
     int x,
     int y,
-    int width,
-    int height,
-    int ground_)
+    int offset_y)
 {
-    int dy = (chip_data[ground_].kind == 3) * -16;
     gmode(2, 110);
     draw("character_shadow", x + 8, y + 20);
     gmode(2);
-    gcopy(
-        texture_id,
-        0,
-        960,
-        width,
-        height,
-        x,
-        y - chara_chips[chip_id].offset_y - dy);
+    set_color_mod(tint.r, tint.g, tint.b, ext.buffer);
+    gcopy(ext.buffer, ext.x, ext.y, ext.width, ext.height, x, y - offset_y);
 }
 
 
@@ -991,17 +965,32 @@ void draw_npc_own_sprite(
 
 void draw_npc_chara_chip(const Character& chara, int dx, int dy, int ground_)
 {
-    int p_ = chara.image % 1000;
-    auto rect = prepare_chara_chip(chara, dx, dy);
+    const auto color_index = chara.image / 1000;
+    const auto image_legacy_id = chara.image % 1000;
 
+    const auto ext_opt = draw_get_rect_chara(image_legacy_id);
+    if (!ext_opt)
+        return;
+    const auto& ext = *ext_opt;
+
+    auto offset_y = chara_chips[image_legacy_id].offset_y;
+
+    if (chara.is_hung_on_sand_bag())
+    {
+        // gmode(2, 80);
+        // func_2(1, 96, 816, -80, 48, 96);
+        // gmode(2);
+        gcopy(1, 96, 816, 48, 96, dx, dy - 63);
+        offset_y += 24;
+    }
     if (map_data.type == mdata_t::MapType::world_map)
     {
         draw_chara_chip_sprite_in_world_map(
-            rect->buffer, p_, dx, dy, rect->width, rect->height);
+            ext, color_index_to_snail_color(color_index), dx, dy, offset_y);
 
         if (chara.emotion_icon != 0)
         {
-            draw_emo(chara, x + 4, y - chara_chips[p_].offset_y / 4 - 16);
+            draw_emo(chara, x + 4, y - offset_y / 4 - 16);
         }
     }
     else
@@ -1009,27 +998,26 @@ void draw_npc_chara_chip(const Character& chara, int dx, int dy, int ground_)
         if (chip_data[ground_].kind == 3)
         {
             draw_chara_chip_sprite_in_water(
-                rect->buffer, p_, dx, dy, rect->width, rect->height, ground_);
+                ext, color_index_to_snail_color(color_index), dx, dy, offset_y);
         }
         else
         {
             draw_chara_chip_sprite(
-                rect->buffer, p_, dx, dy, rect->width, rect->height, ground_);
+                ext, color_index_to_snail_color(color_index), dx, dy, offset_y);
         }
 
         if (chara.furious != 0)
         {
-            draw("furious_icon", dx + 12, dy - chara_chips[p_].offset_y - 12);
+            draw("furious_icon", dx + 12, dy - offset_y - 12);
         }
         if (chara.emotion_icon != 0)
         {
-            draw_emo(chara, dx + 4, dy - chara_chips[p_].offset_y - 16);
+            draw_emo(chara, dx + 4, dy - offset_y - 16);
         }
     }
     if (chara.is_hung_on_sand_bag())
     {
         gcopy(1, 96, 768, 48, 48, dx, dy - 26);
-        chara_chips[p_].offset_y -= 24;
     }
 }
 
