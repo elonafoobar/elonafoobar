@@ -936,6 +936,11 @@ optional<OnEnterResult> on_shortcut(int& citrade, bool dropcontinue)
                 return OnEnterResult{result};
             }
         }
+        if (!cargocheck(inv[p]))
+        {
+            result.turn_result = TurnResult::pc_turn_user_error;
+            return OnEnterResult{result};
+        }
         return on_enter(none, p(0), citrade, dropcontinue);
     }
 
@@ -2602,13 +2607,6 @@ optional<MenuResult> on_cancel(bool dropcontinue)
 
 bool on_assign_shortcut(const std::string& action, int shortcut)
 {
-    p = list(0, pagesize * page + cs);
-    if (inv[p].weight < 0)
-    {
-        snd("core.fail1");
-        txt(i18n::s.get("core.ui.inv.common.shortcut.cargo"));
-        return false;
-    }
     snd("core.ok1");
     p = itemid2int(inv[list(0, pagesize * page + cs)].id) + invctrl * 10000;
     if (game_data.skill_shortcuts.at(shortcut) == p)
