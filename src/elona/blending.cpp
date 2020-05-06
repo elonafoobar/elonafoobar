@@ -185,12 +185,7 @@ void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
                 : snail::Color{0, 120, 0};
             mes(dx_ + cnt % 2 * 140,
                 dy_ + cnt / 2 * 17,
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db
-                        .get_id_from_legacy(rpdata(10 + cnt * 2, rpid))
-                        ->get(),
-                    "name") +
+                the_ability_db.get_text(rpdata(10 + cnt * 2, rpid), "name") +
                     u8"  "s + rpdata((11 + cnt * 2), rpid) + u8"("s +
                     sdata(rpdata((10 + cnt * 2), rpid), 0) + u8")"s,
                 text_color);

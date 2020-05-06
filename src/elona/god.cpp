@@ -34,43 +34,59 @@ void txtgod(const GodId& id, int type)
     switch (type)
     {
     case 12:
-        message = i18n::s.get_m_optional("god", id, "random").value_or("");
+        message = the_god_db.get_text_optional(data::InstanceId{id}, "random")
+                      .value_or("");
         break;
     case 9:
-        message = i18n::s.get_m_optional("god", id, "kill").value_or("");
+        message = the_god_db.get_text_optional(data::InstanceId{id}, "kill")
+                      .value_or("");
         break;
     case 10:
-        message = i18n::s.get_m_optional("god", id, "night").value_or("");
+        message = the_god_db.get_text_optional(data::InstanceId{id}, "night")
+                      .value_or("");
         break;
     case 11:
-        message = i18n::s.get_m_optional("god", id, "welcome").value_or("");
+        message = the_god_db.get_text_optional(data::InstanceId{id}, "welcome")
+                      .value_or("");
         break;
     case 5:
-        message = i18n::s.get_m_optional("god", id, "believe").value_or("");
+        message = the_god_db.get_text_optional(data::InstanceId{id}, "believe")
+                      .value_or("");
         break;
     case 1:
-        message = i18n::s.get_m_optional("god", id, "betray").value_or("");
+        message = the_god_db.get_text_optional(data::InstanceId{id}, "betray")
+                      .value_or("");
         break;
     case 2:
-        message = i18n::s.get_m_optional("god", id, "take_over").value_or("");
+        message =
+            the_god_db.get_text_optional(data::InstanceId{id}, "take_over")
+                .value_or("");
         break;
     case 3:
         message =
-            i18n::s.get_m_optional("god", id, "fail_to_take_over").value_or("");
+            the_god_db
+                .get_text_optional(data::InstanceId{id}, "fail_to_take_over")
+                .value_or("");
         break;
     case 4:
-        message = i18n::s.get_m_optional("god", id, "offer").value_or("");
+        message = the_god_db.get_text_optional(data::InstanceId{id}, "offer")
+                      .value_or("");
         break;
     case 6:
         message =
-            i18n::s.get_m_optional("god", id, "receive_gift").value_or("");
+            the_god_db.get_text_optional(data::InstanceId{id}, "receive_gift")
+                .value_or("");
         break;
     case 7:
-        message = i18n::s.get_m_optional("god", id, "ready_to_receive_gift")
+        message = the_god_db
+                      .get_text_optional(
+                          data::InstanceId{id}, "ready_to_receive_gift")
                       .value_or("");
         break;
     case 8:
-        message = i18n::s.get_m_optional("god", id, "ready_to_receive_gift2")
+        message = the_god_db
+                      .get_text_optional(
+                          data::InstanceId{id}, "ready_to_receive_gift2")
                       .value_or("");
         break;
     default: assert(0);
@@ -656,11 +672,11 @@ std::string god_name(const GodId& id)
 {
     if (id == core_god::eyth)
     {
-        return i18n::s.get_m("god", "core.eyth", "name");
+        return the_god_db.get_text("core.eyth", "name");
     }
     else
     {
-        return i18n::s.get_m("god", id, "name");
+        return the_god_db.get_text(data::InstanceId{id}, "name");
     }
 }
 

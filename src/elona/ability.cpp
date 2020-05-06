@@ -200,7 +200,7 @@ void gain_special_action()
             spact(29) = 1;
             txt(i18n::s.get(
                     "core.skill.gained",
-                    i18n::s.get_m("ability", "core.draw_charge", "name")),
+                    the_ability_db.get_text("core.draw_charge", "name")),
                 Message::color{ColorIndex::orange});
         }
         if (spact(30) == 0)
@@ -208,7 +208,7 @@ void gain_special_action()
             spact(30) = 1;
             txt(i18n::s.get(
                     "core.skill.gained",
-                    i18n::s.get_m("ability", "core.fill_charge", "name")),
+                    the_ability_db.get_text("core.fill_charge", "name")),
                 Message::color{ColorIndex::orange});
         }
     }
@@ -219,7 +219,7 @@ void gain_special_action()
             spact(31) = 1;
             txt(i18n::s.get(
                     "core.skill.gained",
-                    i18n::s.get_m("ability", "core.swarm", "name")),
+                    the_ability_db.get_text("core.swarm", "name")),
                 Message::color{ColorIndex::orange});
         }
     }

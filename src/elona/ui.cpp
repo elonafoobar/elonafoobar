@@ -680,12 +680,7 @@ void render_skill_trackers()
             continue;
         }
         bmes(
-            strutil::take_by_width(
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(skill)->get(),
-                    "name"),
-                6),
+            strutil::take_by_width(the_ability_db.get_text(skill, "name"), 6),
             16,
             inf_clocky + 107 + y * 16);
         bmes(

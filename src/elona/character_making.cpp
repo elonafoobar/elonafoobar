@@ -513,11 +513,7 @@ void draw_race_or_class_info(const std::string& description)
             mes(cnt * 150 + tx + 32,
                 ty,
                 strutil::take_by_width(
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(r)->get(),
-                        "name"),
-                    jp ? 6 : 3) +
+                    the_ability_db.get_text(r, "name"), jp ? 6 : 3) +
                     u8": "s + s(p),
                 text_color);
         }
@@ -542,10 +538,7 @@ void draw_race_or_class_info(const std::string& description)
             {
                 s += u8","s;
             }
-            s += i18n::s.get_m(
-                "ability",
-                the_ability_db.get_id_from_legacy(cnt)->get(),
-                "name");
+            s += the_ability_db.get_text(cnt, "name");
             ++r;
         }
     }
@@ -560,10 +553,7 @@ void draw_race_or_class_info(const std::string& description)
     {
         if (sdata.get(cnt, 0).original_level != 0)
         {
-            s = i18n::s.get_m(
-                "ability",
-                the_ability_db.get_id_from_legacy(cnt)->get(),
-                "name");
+            s = the_ability_db.get_text(cnt, "name");
             if (jp)
             {
                 lenfix(s, 12);
@@ -581,11 +571,7 @@ void draw_race_or_class_info(const std::string& description)
                 inf_tiles,
                 tx + 13,
                 ty + 6);
-            s(1) = i18n::s
-                       .get_m_optional(
-                           "ability",
-                           the_ability_db.get_id_from_legacy(cnt)->get(),
-                           "description")
+            s(1) = the_ability_db.get_text_optional(cnt, "description")
                        .value_or("");
             if (en)
             {

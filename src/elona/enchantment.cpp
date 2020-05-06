@@ -215,10 +215,7 @@ void get_enchantment_description(
             if (power / 50 + 1 < 0)
             {
                 rtval = static_cast<int>(ItemDescriptionType::negative_effect);
-                const auto skill_name = i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(sid)->get(),
-                    "name");
+                const auto skill_name = the_ability_db.get_text(sid, "name");
                 if (category == ItemCategory::food)
                 {
                     s = i18n::s.get(
@@ -236,10 +233,7 @@ void get_enchantment_description(
             }
             else
             {
-                const auto skill_name = i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(sid)->get(),
-                    "name");
+                const auto skill_name = the_ability_db.get_text(sid, "name");
                 if (category == ItemCategory::food)
                 {
                     s = i18n::s.get(
@@ -263,27 +257,18 @@ void get_enchantment_description(
                 rtval = static_cast<int>(ItemDescriptionType::negative_effect);
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.resistance.decreases",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(sid)->get(),
-                        "name"));
+                    the_ability_db.get_text(sid, "name"));
             }
             else
             {
-                s = i18n::s
-                        .get_m_optional(
-                            "ability",
-                            the_ability_db.get_id_from_legacy(sid)->get(),
-                            "enchantment_description")
+                s = the_ability_db
+                        .get_text_optional(sid, "enchantment_description")
                         .value_or("");
                 if (s == ""s)
                 {
                     s = i18n::s.get(
                         "core.enchantment.with_parameters.resistance.increases",
-                        i18n::s.get_m(
-                            "ability",
-                            the_ability_db.get_id_from_legacy(sid)->get(),
-                            "name"));
+                        the_ability_db.get_text(sid, "name"));
                 }
             }
             s += enchantment_level_string(power / 100);
@@ -295,27 +280,18 @@ void get_enchantment_description(
                 rtval = static_cast<int>(ItemDescriptionType::negative_effect);
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.skill.decreases",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(sid)->get(),
-                        "name"));
+                    the_ability_db.get_text(sid, "name"));
             }
             else
             {
-                s = i18n::s
-                        .get_m_optional(
-                            "ability",
-                            the_ability_db.get_id_from_legacy(sid)->get(),
-                            "enchantment_description")
+                s = the_ability_db
+                        .get_text_optional(sid, "enchantment_description")
                         .value_or("");
                 if (s == ""s)
                 {
                     s = i18n::s.get(
                         "core.enchantment.with_parameters.skill.increases",
-                        i18n::s.get_m(
-                            "ability",
-                            the_ability_db.get_id_from_legacy(sid)->get(),
-                            "name"));
+                        the_ability_db.get_text(sid, "name"));
                 }
             }
             s += enchantment_level_string((power / 50 + 1) / 5);
@@ -326,38 +302,25 @@ void get_enchantment_description(
             {
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.skill_maintenance.in_food",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(sid)->get(),
-                        "name"));
+                    the_ability_db.get_text(sid, "name"));
                 s += enchantment_level_string(power / 50);
             }
             else
             {
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.skill_maintenance.other",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(sid)->get(),
-                        "name"));
+                    the_ability_db.get_text(sid, "name"));
             }
             break;
         case 7:
             rtval = static_cast<int>(ItemDescriptionType::enchantment);
-            s = i18n::s
-                    .get_m_optional(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(sid)->get(),
-                        "enchantment_description")
+            s = the_ability_db.get_text_optional(sid, "enchantment_description")
                     .value_or("");
             if (s == ""s)
             {
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.extra_damage",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(sid)->get(),
-                        "name"));
+                    the_ability_db.get_text(sid, "name"));
             }
             s += enchantment_level_string(power / 100);
             break;
@@ -366,10 +329,7 @@ void get_enchantment_description(
             sid = encprocref(0, sid);
             s = i18n::s.get(
                 "core.enchantment.with_parameters.invokes",
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(sid)->get(),
-                    "name"));
+                the_ability_db.get_text(sid, "name"));
             s += enchantment_level_string(power / 50);
             break;
         case 9:

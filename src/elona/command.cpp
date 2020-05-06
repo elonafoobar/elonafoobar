@@ -475,11 +475,7 @@ optional<TurnResult> use_gene_machine()
                 txt(i18n::s.get(
                         "core.action.use.gene_machine.gains.ability",
                         cdata[original_character],
-                        i18n::s.get_m(
-                            "ability",
-                            the_ability_db.get_id_from_legacy(rtval(cnt))
-                                ->get(),
-                            "name")),
+                        the_ability_db.get_text(rtval(cnt), "name")),
                     Message::color{ColorIndex::green});
             }
         }
@@ -4533,10 +4529,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
             txt(i18n::s.get(
                 "core.action.cast.self",
                 caster,
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(efid)->get(),
-                    "name"),
+                the_ability_db.get_text(efid, "name"),
                 i18n::s.get_enum(
                     "core.ui.cast_style", caster.special_attack_type)));
         }

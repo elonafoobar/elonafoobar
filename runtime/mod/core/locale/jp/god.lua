@@ -111,8 +111,9 @@ ELONA.i18n:add {
 
 
 
-ELONA.i18n:add {
-   god = {
+ELONA.i18n:add_data_text(
+   "core.god",
+   {
       eyth = {
          name = "無のエイス",
       },
@@ -277,5 +278,5 @@ ELONA.i18n:add {
          ready_to_receive_gift = "「君は…大切なしもべだ…」",
          ready_to_receive_gift2 = "「ずっと一緒…だよね？…もう離さない…君が死ぬまで」",
       },
-   },
-}
+   }
+)

@@ -562,12 +562,8 @@ std::string make_spell_description(int skill_id)
         }
         result += u8" "s;
     }
-    result += i18n::s
-                  .get_m_optional(
-                      "ability",
-                      the_ability_db.get_id_from_legacy(skill_id)->get(),
-                      "description")
-                  .value_or("");
+    result +=
+        the_ability_db.get_text_optional(skill_id, "description").value_or("");
 
     return result;
 }

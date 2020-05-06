@@ -3,6 +3,7 @@
 #include "../audio.hpp"
 #include "../character_making.hpp"
 #include "../class.hpp"
+#include "../data/types/type_race.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
@@ -56,7 +57,7 @@ void UIMenuCharamakeClass::update()
 }
 
 static void _draw_class_info(
-    const std::string& class_id,
+    data::InstanceId class_id,
     int chip_male,
     int chip_female,
     const std::string& race)
@@ -89,7 +90,7 @@ static void _draw_class_info(
             race);
 
     draw_race_or_class_info(
-        i18n::s.get_m_optional("class", class_id, "description").value_or(""));
+        the_class_db.get_text_optional(class_id, "description").value_or(""));
 }
 
 void UIMenuCharamakeClass::_draw_window()
@@ -159,15 +160,15 @@ void UIMenuCharamakeClass::draw()
     _draw_window();
     _draw_choices();
 
-    const std::string& selected_class = listn(1, cs);
-    _reload_selected_class(data::InstanceId{selected_class});
+    const auto selected_class = data::InstanceId{listn(1, cs)};
+    _reload_selected_class(selected_class);
 
     const auto& race_data = the_race_db.ensure(_race_id);
     _draw_class_info(
         selected_class,
         race_data.male_image,
         race_data.female_image,
-        i18n::s.get_m("race", _race_id.get(), "name"));
+        the_race_db.get_text(_race_id, "name"));
 }
 
 optional<UIMenuCharamakeClass::ResultType> UIMenuCharamakeClass::on_key(

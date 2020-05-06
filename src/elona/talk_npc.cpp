@@ -1477,10 +1477,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
     {
         buff = i18n::s.get(
             "core.talk.npc.trainer.cost.training",
-            i18n::s.get_m(
-                "ability",
-                the_ability_db.get_id_from_legacy(selected_skill)->get(),
-                "name"),
+            the_ability_db.get_text(selected_skill, "name"),
             calctraincost(selected_skill, cdata.player().index),
             speaker);
         if (cdata.player().platinum_coin >=
@@ -1496,10 +1493,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
     {
         buff = i18n::s.get(
             "core.talk.npc.trainer.cost.learning",
-            i18n::s.get_m(
-                "ability",
-                the_ability_db.get_id_from_legacy(selected_skill)->get(),
-                "name"),
+            the_ability_db.get_text(selected_skill, "name"),
             calclearncost(selected_skill, cdata.player().index),
             speaker);
         if (cdata.player().platinum_coin >=

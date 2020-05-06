@@ -1386,20 +1386,14 @@ void apply_general_eating_effect(Character& eater, Item& food)
                         txt(i18n::s.get(
                             "core.food.effect.ability.develops",
                             eater,
-                            i18n::s.get_m(
-                                "ability",
-                                the_ability_db.get_id_from_legacy(enc)->get(),
-                                "name")));
+                            the_ability_db.get_text(enc, "name")));
                     }
                     else
                     {
                         txt(i18n::s.get(
                             "core.food.effect.ability.deteriorates",
                             eater,
-                            i18n::s.get_m(
-                                "ability",
-                                the_ability_db.get_id_from_legacy(enc)->get(),
-                                "name")));
+                            the_ability_db.get_text(enc, "name")));
                     }
                 }
                 chara_gain_skill_exp(
