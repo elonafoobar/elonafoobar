@@ -58,10 +58,6 @@ ELONA.i18n:add {
             inventory_is_full = "Your inventory is full.",
 
             invalid = "Invalid Item Id found. Item No:{$1}, Id:{$2} has been removed from your inventory.",
-
-            shortcut = {
-               cargo = "You can't make a shortcut for cargo stuff.",
-            },
          },
 
          examine = {
