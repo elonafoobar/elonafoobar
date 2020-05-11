@@ -838,11 +838,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         lua::lua->get_console().grab_input();
         return none;
     }
-    if (action == "toggle_console")
-    {
-        lua::lua->get_console().toggle();
-        return none;
-    }
     if (action != ""s && action != "cancel" /* && key != key_alter */)
     {
         txt(i18n::s.get("core.action.hit_key_for_help"),

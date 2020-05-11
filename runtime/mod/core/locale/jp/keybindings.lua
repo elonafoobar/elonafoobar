@@ -105,7 +105,6 @@ ELONA.i18n:add {
       dump_player_info = "プレイヤー情報出力",
       reload_autopick = "Autopickの再読み込み",
       screenshot = "スクリーンショット",
-      toggle_console = "コンソールを切り替える",
       open_console = "コンソールを開く",
 
       wizard_mewmewmew = "うみみゃぁ！",
