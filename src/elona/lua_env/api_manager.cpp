@@ -70,8 +70,8 @@ void APIManager::load_prelude()
     if (!result.valid())
     {
         sol::error err = result;
-        throw std::runtime_error{"Failed to load prelude library: "s +
-                                 err.what()};
+        throw std::runtime_error{
+            "Failed to load prelude library: "s + err.what()};
     }
 
     sol::table prelude = result;

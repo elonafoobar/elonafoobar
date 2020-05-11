@@ -117,8 +117,9 @@ InventorySlice Inventory::for_chara(const Character& chara)
     }
     else
     {
-        return {std::begin(storage) + 200 + 20 * (chara.index - 1),
-                std::begin(storage) + 200 + 20 * (chara.index - 1) + 20};
+        return {
+            std::begin(storage) + 200 + 20 * (chara.index - 1),
+            std::begin(storage) + 200 + 20 * (chara.index - 1) + 20};
     }
 }
 

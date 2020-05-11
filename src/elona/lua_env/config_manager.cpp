@@ -28,8 +28,8 @@ void ConfigManager::load_schema(
     const std::string& filename,
     SharedId mod_id)
 {
-    std::string s{std::istreambuf_iterator<char>{in},
-                  std::istreambuf_iterator<char>{}};
+    std::string s{
+        std::istreambuf_iterator<char>{in}, std::istreambuf_iterator<char>{}};
     _impl["load_schema"](s, filename, mod_id.get());
 }
 
@@ -37,8 +37,8 @@ void ConfigManager::load_schema(
 
 void ConfigManager::load_options(std::istream& in, const std::string& filename)
 {
-    std::string s{std::istreambuf_iterator<char>{in},
-                  std::istreambuf_iterator<char>{}};
+    std::string s{
+        std::istreambuf_iterator<char>{in}, std::istreambuf_iterator<char>{}};
     _impl["load_options"](s, filename);
 }
 

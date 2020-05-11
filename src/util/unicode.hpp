@@ -200,8 +200,8 @@ inline encoded_result<wchar_t> code_point_to_utf16(char32_t codepoint)
              unicode_detail::lead_shifted_bits);
         auto trail = unicode_detail::first_trail_surrogate +
             (normal & unicode_detail::trail_surrogate_bitmask);
-        er.code_units = std::array<wchar_t, 4>{static_cast<wchar_t>(lead),
-                                               static_cast<wchar_t>(trail)};
+        er.code_units = std::array<wchar_t, 4>{
+            static_cast<wchar_t>(lead), static_cast<wchar_t>(trail)};
         er.code_units_size = 2;
         er.error = error_code::ok;
     }

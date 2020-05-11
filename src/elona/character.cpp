@@ -217,8 +217,8 @@ bool is_in_map(const Position& position)
 
 Position get_random_position(const Position& base_position, int n)
 {
-    return {base_position.x - rnd(n) + rnd(n),
-            base_position.y - rnd(n) + rnd(n)};
+    return {
+        base_position.x - rnd(n) + rnd(n), base_position.y - rnd(n) + rnd(n)};
 }
 
 

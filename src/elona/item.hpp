@@ -282,15 +282,17 @@ struct Inventory
 
     InventorySlice ground()
     {
-        return {std::begin(storage) + ELONA_ITEM_ON_GROUND_INDEX,
-                std::begin(storage) + ELONA_ITEM_ON_GROUND_INDEX + 400};
+        return {
+            std::begin(storage) + ELONA_ITEM_ON_GROUND_INDEX,
+            std::begin(storage) + ELONA_ITEM_ON_GROUND_INDEX + 400};
     }
 
 
     InventorySlice map_local()
     {
-        return {std::begin(storage) + ELONA_OTHER_INVENTORIES_INDEX,
-                std::end(storage)};
+        return {
+            std::begin(storage) + ELONA_OTHER_INVENTORIES_INDEX,
+            std::end(storage)};
     }
 
 

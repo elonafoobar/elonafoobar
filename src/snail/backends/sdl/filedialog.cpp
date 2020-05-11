@@ -38,8 +38,9 @@ FileDialogResult OpenFileDialog::show()
     });
 
     // TODO: throws exception if result type is error?
-    return {static_cast<FileDialogResultType>(result_type),
-            filepathutil::u8path(out)};
+    return {
+        static_cast<FileDialogResultType>(result_type),
+        filepathutil::u8path(out)};
 }
 
 
@@ -94,8 +95,9 @@ FileDialogResult SaveFileDialog::show()
     });
 
     // TODO: throws exception if result type is error?
-    return {static_cast<FileDialogResultType>(result_type),
-            filepathutil::u8path(out)};
+    return {
+        static_cast<FileDialogResultType>(result_type),
+        filepathutil::u8path(out)};
 }
 
 
@@ -116,8 +118,9 @@ FileDialogResult OpenFolderDialog::show()
     });
 
     // TODO: throws exception if result type is error?
-    return {static_cast<FileDialogResultType>(result_type),
-            filepathutil::u8path(out)};
+    return {
+        static_cast<FileDialogResultType>(result_type),
+        filepathutil::u8path(out)};
 }
 
 } // namespace snail
