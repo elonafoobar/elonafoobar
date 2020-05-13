@@ -134,8 +134,9 @@ public:
 
         if (!data)
         {
-            throw sol::error{"No data entry with ID \"" + id.get() +
-                             "\" of type \"" + Traits::type_id + "\" exists."};
+            throw sol::error{
+                "No data entry with ID \"" + id.get() + "\" of type \"" +
+                Traits::type_id + "\" exists."};
         }
 
         return *data;
@@ -297,9 +298,9 @@ public:
 
         if (!id)
         {
-            throw sol::error{"No data entry with legacy ID \"" +
-                             std::to_string(legacy_id) + "\" of type \"" +
-                             Traits::type_id + "\" exists."};
+            throw sol::error{
+                "No data entry with legacy ID \"" + std::to_string(legacy_id) +
+                "\" of type \"" + Traits::type_id + "\" exists."};
         }
 
         return this->ensure(*id);

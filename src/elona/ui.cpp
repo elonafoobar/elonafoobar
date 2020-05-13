@@ -1043,9 +1043,10 @@ void render_status_ailments()
             return i18n::s.get_enum("core.status_ailment.name.burden", state);
         },
         [](auto state) {
-            return snail::Color{0,
-                                static_cast<uint8_t>(state * 40),
-                                static_cast<uint8_t>(state * 40)};
+            return snail::Color{
+                0,
+                static_cast<uint8_t>(state * 40),
+                static_cast<uint8_t>(state * 40)};
         });
 
     y = render_one_status_ailment(
@@ -1694,8 +1695,9 @@ void update_slight()
     slight.clear();
     ++msync;
 
-    const Position center{cdata.player().position.x - (fov_max + 2) / 2,
-                          (fov_max + 2) / 2 - cdata.player().position.y};
+    const Position center{
+        cdata.player().position.x - (fov_max + 2) / 2,
+        (fov_max + 2) / 2 - cdata.player().position.y};
     sy(2) = cdata.player().position.y - fov_max / 2;
     sy(3) = cdata.player().position.y + fov_max / 2;
 

@@ -56,9 +56,10 @@ TEST_CASE(
     keybind::actions.clear();
     keybind::actions.emplace(
         "game_action1",
-        Action{ActionCategory::game,
-               {{Key::key_a, ModKey::none},
-                {Key::key_1, ModKey::ctrl | ModKey::shift}}});
+        Action{
+            ActionCategory::game,
+            {{Key::key_a, ModKey::none},
+             {Key::key_1, ModKey::ctrl | ModKey::shift}}});
     keybind::actions.emplace(
         "menu_action1",
         Action{ActionCategory::menu, {{Key::key_b, ModKey::shift}}});

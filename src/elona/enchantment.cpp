@@ -686,7 +686,7 @@ bool enchantment_add(
             sampler.add(cnt, encprocref(2, cnt));
         }
         i_at_m48 = sampler.get().value_or(0);
-        if(i_at_m48 == 0)
+        if (i_at_m48 == 0)
         {
             return false;
         }

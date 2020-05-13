@@ -84,10 +84,11 @@ void do_play_scene()
             notesel(buff);
             {
                 buff(0).clear();
-                std::ifstream in{lua::resolve_path_for_mod(
-                                     "<core>/locale/<LANGUAGE>/lazy/scene.hsp")
-                                     .native(),
-                                 std::ios::binary};
+                std::ifstream in{
+                    lua::resolve_path_for_mod(
+                        "<core>/locale/<LANGUAGE>/lazy/scene.hsp")
+                        .native(),
+                    std::ios::binary};
                 std::string tmp;
                 while (std::getline(in, tmp))
                 {

@@ -59,11 +59,13 @@ int last_received_chat_id = -1;
 
 
 
-Headers common_headers_get{{"Connection", "close"},
-                           {"User-Agent", latest_version.user_agent()}};
-Headers common_headers_post{{"Connection", "close"},
-                            {"User-Agent", latest_version.user_agent()},
-                            {"Content-Type", "application/json"}};
+Headers common_headers_get{
+    {"Connection", "close"},
+    {"User-Agent", latest_version.user_agent()}};
+Headers common_headers_post{
+    {"Connection", "close"},
+    {"User-Agent", latest_version.user_agent()},
+    {"Content-Type", "application/json"}};
 
 
 
@@ -104,10 +106,11 @@ void send_chat(ChatKind kind, const std::string& message)
     payload["kind"] = static_cast<json5::integer_type>(kind);
     payload["message"] = replace_f_word(message);
 
-    Request req{Verb::POST,
-                chat_url,
-                common_headers_post,
-                Body{json5::stringify(payload)}};
+    Request req{
+        Verb::POST,
+        chat_url,
+        common_headers_post,
+        Body{json5::stringify(payload)}};
     req.send(
         [](const auto& response) {
             if (response.status / 100 != 2)
@@ -460,10 +463,11 @@ void net_register_your_name()
     json5::value::object_type payload;
     payload["name"] = get_pc_alias() + i18n::space_if_needed() + get_pc_name();
 
-    Request req{Verb::POST,
-                poll_url,
-                common_headers_post,
-                Body{json5::stringify(payload)}};
+    Request req{
+        Verb::POST,
+        poll_url,
+        common_headers_post,
+        Body{json5::stringify(payload)}};
     req.send(
         [](const auto& response) {
             if (response.status / 100 != 2)
@@ -496,10 +500,11 @@ void net_send_vote(int poll_id)
     json5::value::object_type payload;
     payload["poll"] = static_cast<json5::integer_type>(poll_id);
 
-    Request req{Verb::POST,
-                vote_url,
-                common_headers_post,
-                Body{json5::stringify(payload)}};
+    Request req{
+        Verb::POST,
+        vote_url,
+        common_headers_post,
+        Body{json5::stringify(payload)}};
     req.send(
         [](const auto& response) {
             if (response.status / 100 != 2)

@@ -97,8 +97,8 @@ void UIMenuMods::_load_mods()
             if (lua::is_reserved_mod_id(id))
                 continue;
 
-            ModDescription desc{manifest,
-                                lua::lua->get_mod_manager().is_enabled(id)};
+            ModDescription desc{
+                manifest, lua::lua->get_mod_manager().is_enabled(id)};
             _mod_descriptions.emplace_back(desc);
             listmax++;
         }

@@ -349,10 +349,11 @@ void show_ex_help(int id)
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lua::resolve_path_for_mod(
-                             "<core>/locale/<LANGUAGE>/lazy/exhelp.txt")
-                             .native(),
-                         std::ios::binary};
+        std::ifstream in{
+            lua::resolve_path_for_mod(
+                "<core>/locale/<LANGUAGE>/lazy/exhelp.txt")
+                .native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {

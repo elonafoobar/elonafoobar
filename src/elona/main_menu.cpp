@@ -305,8 +305,9 @@ MainMenuResult main_title_menu()
                     ripples.push_back(std::make_tuple(
                         0,
                         rnd(rnd(3) + 1),
-                        Position{s.second.x - rnd(256) + rnd(256),
-                                 s.second.y - rnd(256) + rnd(256)}));
+                        Position{
+                            s.second.x - rnd(256) + rnd(256),
+                            s.second.y - rnd(256) + rnd(256)}));
                 }
                 ++s.first;
             }
