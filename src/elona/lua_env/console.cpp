@@ -144,13 +144,7 @@ void Console::grab_input()
 {
     using namespace snail;
 
-    bool reenable = false;
-
-    if (!_enabled)
-    {
-        _enabled = true;
-        reenable = true;
-    }
+    _enabled = true;
 
     _input = "";
     mesbox(_input, true);
@@ -224,10 +218,7 @@ void Console::grab_input()
 
     onkey_0();
 
-    if (reenable)
-    {
-        _enabled = false;
-    }
+    _enabled = false;
 }
 
 
