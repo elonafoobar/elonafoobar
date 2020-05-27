@@ -72,7 +72,6 @@ void UIMenuMods::_load_mods()
     listmax = 0;
     page = 0;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
     page_bk = -1;
     cs_bk2 = 0;
@@ -98,8 +97,8 @@ void UIMenuMods::_load_mods()
             if (lua::is_reserved_mod_id(id))
                 continue;
 
-            ModDescription desc{manifest,
-                                lua::lua->get_mod_manager().is_enabled(id)};
+            ModDescription desc{
+                manifest, lua::lua->get_mod_manager().is_enabled(id)};
             _mod_descriptions.emplace_back(desc);
             listmax++;
         }

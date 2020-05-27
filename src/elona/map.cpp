@@ -769,8 +769,7 @@ static void _modify_characters_on_regenerate()
 {
     for (auto&& cnt : cdata.others())
     {
-        rc = cnt.index;
-        chara_clear_status_effects_b();
+        chara_clear_status_effects_b(cnt);
         if (cnt.state() != Character::State::alive)
         {
             continue;
@@ -867,10 +866,10 @@ static void _proc_generate_bard_items(Character& chara)
 }
 
 
-static void _generate_bad_quality_item()
+static void _generate_bad_quality_item(Character& chara)
 {
-    flt(calcobjlv(cdata[rc].level), calcfixlv(Quality::bad));
-    if (const auto item = itemcreate_chara_inv(rc, 0, 0))
+    flt(calcobjlv(chara.level), calcfixlv(Quality::bad));
+    if (const auto item = itemcreate_chara_inv(chara.index, 0, 0))
     {
         if (item->weight <= 0 || item->weight >= 4000)
         {
@@ -888,19 +887,18 @@ static void _restock_character_inventories()
         {
             continue;
         }
-        generatemoney(cnt.index);
+        generatemoney(cnt);
         if (cnt.id == CharaId::bard)
         {
             _proc_generate_bard_items(cnt);
         }
-        rc = cnt.index;
         if (rnd(5) == 0)
         {
-            supply_new_equipment();
+            supply_new_equipment(cnt);
         }
-        if (rnd(2) == 0 && inv_sum(rc) < 8)
+        if (rnd(2) == 0 && inv_sum(cnt.index) < 8)
         {
-            _generate_bad_quality_item();
+            _generate_bad_quality_item(cnt);
         }
     }
 }
@@ -1189,7 +1187,7 @@ void map_reload_noyel()
         {
             if (cnt.only_christmas())
             {
-                chara_vanquish(cnt.index);
+                chara_vanquish(cnt);
             }
         }
     }
@@ -1461,7 +1459,7 @@ TurnResult exit_map()
             if (area_data[game_data.current_map].has_been_conquered > 0)
             {
                 chara_vanquish(
-                    area_data[game_data.current_map].has_been_conquered);
+                    cdata[area_data[game_data.current_map].has_been_conquered]);
                 area_data[game_data.current_map].has_been_conquered = -1;
             }
         }
@@ -1482,12 +1480,12 @@ TurnResult exit_map()
         cell_featread(cdata.player().position.x, cdata.player().position.y);
         if (game_data.current_map == mdata_t::MapId::your_home)
         {
-            if (mapitemfind(cdata[cc].position, ItemId::downstairs))
+            if (mapitemfind(cdata.player().position, ItemId::downstairs))
             {
                 feat(1) = 11;
                 feat(2) = 0;
             }
-            if (mapitemfind(cdata[cc].position, ItemId::upstairs))
+            if (mapitemfind(cdata.player().position, ItemId::upstairs))
             {
                 feat(1) = 10;
                 feat(2) = 0;
@@ -1536,8 +1534,8 @@ TurnResult exit_map()
         {
             if (map_data.type == mdata_t::MapType::world_map)
             {
-                game_data.pc_x_in_world_map = cdata[cc].position.x;
-                game_data.pc_y_in_world_map = cdata[cc].position.y;
+                game_data.pc_x_in_world_map = cdata.player().position.x;
+                game_data.pc_y_in_world_map = cdata.player().position.y;
                 game_data.current_dungeon_level = 1;
                 if (feat(2) != 0 || feat(3) != 0)
                 {
@@ -1659,8 +1657,7 @@ TurnResult exit_map()
     }
     if (cdata.player().state() == Character::State::empty)
     {
-        rc = 0;
-        revive_player();
+        revive_player(cdata.player());
         game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
         game_data.destination_outer_map =
             area_data[static_cast<int>(mdata_t::MapId::your_home)].outer_map;
@@ -1772,26 +1769,26 @@ TurnResult exit_map()
                 i18n::s.get("core.action.exit_map.larna"));
         }
     }
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& chara : cdata.player_and_allies())
     {
-        cdata[cnt].hate = 0;
-        cdata[cnt].enemy_id = 0;
-        cdata[cnt].activity.finish();
-        if (cdata[cnt].state() != Character::State::alive)
+        chara.hate = 0;
+        chara.enemy_id = 0;
+        chara.activity.finish();
+        if (chara.state() != Character::State::alive)
         {
-            if (cdata[cnt].state() == Character::State::pet_in_other_map)
+            if (chara.state() == Character::State::pet_in_other_map)
             {
-                cdata[cnt].set_state(Character::State::alive);
+                chara.set_state(Character::State::alive);
             }
             continue;
         }
-        cell_data.at(cdata[cnt].position.x, cdata[cnt].position.y)
-            .chara_index_plus_one = 0;
-        if (cnt != 0)
+        cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one =
+            0;
+        if (chara.index != 0)
         {
-            if (cdata[cnt].current_map != 0)
+            if (chara.current_map != 0)
             {
-                cdata[cnt].set_state(Character::State::pet_moving_to_map);
+                chara.set_state(Character::State::pet_moving_to_map);
             }
         }
     }
@@ -1855,17 +1852,17 @@ void prepare_charas_for_map_unload()
     for (int cnt = 0; cnt < 57; ++cnt)
     {
         cdata[cnt].activity.finish();
-        cdata[cnt].ai_item = 0;
+        cdata[cnt].ai_item = ItemRef::null();
     }
 
     // remove living adventurers from the map and set their states
-    for (int cnt = 16; cnt < 55; ++cnt)
+    for (auto&& adv : cdata.adventurers())
     {
-        if (cdata[cnt].state() == Character::State::alive)
+        if (adv.state() == Character::State::alive)
         {
-            cell_data.at(cdata[cnt].position.x, cdata[cnt].position.y)
-                .chara_index_plus_one = 0;
-            cdata[cnt].set_state(Character::State::adventurer_in_other_map);
+            cell_data.at(adv.position.x, adv.position.y).chara_index_plus_one =
+                0;
+            adv.set_state(Character::State::adventurer_in_other_map);
         }
     }
 }
@@ -2161,37 +2158,36 @@ void try_to_return()
 
 
 
-void map_global_proc_travel_events()
+void map_global_proc_travel_events(Character& chara)
 {
-    if (!cdata[cc].activity)
+    if (!chara.activity)
     {
-        cdata[cc].activity.type = Activity::Type::travel;
-        cdata[cc].activity.turn = 20;
+        chara.activity.type = Activity::Type::travel;
+        chara.activity.turn = 20;
         if (game_data.weather == 3)
         {
-            cdata[cc].activity.turn = cdata[cc].activity.turn * 13 / 10;
+            chara.activity.turn = chara.activity.turn * 13 / 10;
         }
         if (game_data.weather == 4)
         {
-            cdata[cc].activity.turn = cdata[cc].activity.turn * 16 / 10;
+            chara.activity.turn = chara.activity.turn * 16 / 10;
         }
         if (game_data.weather == 2 ||
-            chip_data.for_cell(cdata[cc].position.x, cdata[cc].position.y)
-                    .kind == 4)
+            chip_data.for_cell(chara.position.x, chara.position.y).kind == 4)
         {
-            cdata[cc].activity.turn = cdata[cc].activity.turn * 22 / 10;
+            chara.activity.turn = chara.activity.turn * 22 / 10;
         }
         if (game_data.weather == 1)
         {
-            cdata[cc].activity.turn = cdata[cc].activity.turn * 5 / 10;
+            chara.activity.turn = chara.activity.turn * 5 / 10;
         }
-        cdata[cc].activity.turn = cdata[cc].activity.turn * 100 /
+        chara.activity.turn = chara.activity.turn * 100 /
             (100 + game_data.seven_league_boot_effect + sdata(182, 0));
         return;
     }
     if (cdata.player().nutrition <= 5000)
     {
-        for (auto&& item : inv.for_chara(cdata[cc]))
+        for (auto&& item : inv.for_chara(chara))
         {
             if (item.number() == 0)
             {
@@ -2200,19 +2196,17 @@ void map_global_proc_travel_events()
             if (the_item_db[itemid2int(item.id)]->category ==
                 ItemCategory::travelers_food)
             {
-                if (is_in_fov(cdata[cc]))
+                if (is_in_fov(chara))
                 {
-                    txt(i18n::s.get(
-                        "core.misc.finished_eating", cdata[cc], item));
+                    txt(i18n::s.get("core.misc.finished_eating", chara, item));
                 }
-                activity_eating_finish(cdata[cc], item);
+                activity_eating_finish(chara, item);
                 break;
             }
         }
     }
     if (game_data.weather == 2 ||
-        chip_data.for_cell(cdata[cc].position.x, cdata[cc].position.y).kind ==
-            4)
+        chip_data.for_cell(chara.position.x, chara.position.y).kind == 4)
     {
         if (game_data.protects_from_bad_weather == 0)
         {
@@ -2224,14 +2218,14 @@ void map_global_proc_travel_events()
                     txt(i18n::s.get(
                             "core.action.move.global.weather.snow.sound"),
                         Message::color{ColorIndex::cyan});
-                    cdata[cc].activity.turn += 10;
+                    chara.activity.turn += 10;
                 }
             }
             if (rnd(1000) == 0)
             {
                 txt(i18n::s.get("core.action.move.global.weather.snow.message"),
                     Message::color{ColorIndex::purple});
-                cdata[cc].activity.turn += 50;
+                chara.activity.turn += 50;
             }
         }
         if (cdata.player().nutrition <= 2000)
@@ -2240,8 +2234,8 @@ void map_global_proc_travel_events()
             {
                 snd("core.eat1");
                 txt(i18n::s.get("core.action.move.global.weather.snow.eat"));
-                cdata[cc].nutrition += 5000;
-                show_eating_message();
+                chara.nutrition += 5000;
+                show_eating_message(chara);
                 status_ailment_damage(
                     cdata.player(), StatusAilment::dimmed, 1000);
             }
@@ -2259,7 +2253,7 @@ void map_global_proc_travel_events()
                     txt(i18n::s.get(
                             "core.action.move.global.weather.heavy_rain.sound"),
                         Message::color{ColorIndex::cyan});
-                    cdata[cc].activity.turn += 5;
+                    chara.activity.turn += 5;
                 }
             }
             if (cdata.player().confused == 0)
@@ -2279,191 +2273,182 @@ void map_global_proc_travel_events()
         }
         cdata.player().blind = 3;
     }
-    if (cdata[cc].activity.turn > 0)
+    if (chara.activity.turn > 0)
     {
         ++game_data.date.minute;
         return;
     }
     traveldone = 1;
     game_data.distance_between_town += 4;
-    cdata[cc].activity.finish();
+    chara.activity.finish();
 }
 
 
 
-void sense_map_feats_on_move()
+void sense_map_feats_on_move(Character& chara)
 {
-    if (cc == 0)
-    {
-        game_data.player_x_on_map_leave = -1;
-        game_data.player_y_on_map_leave = -1;
-        x = cdata.player().position.x;
-        y = cdata.player().position.y;
-        if (cell_data.at(x, y).item_appearances_actual != 0)
-        {
-            if (cdata.player().blind == 0)
-            {
-                txt(txtitemoncell(x, y));
-                proc_autopick();
-            }
-            else
-            {
-                txt(i18n::s.get("core.action.move.sense_something"));
-            }
-        }
-        p = chip_data.for_cell(x, y).kind;
-        if (p != 0)
-        {
-            std::string tname = ""s;
-            if (p == 1)
-            {
-                tname = i18n::s.get("core.map.chip.dryrock");
-            }
-            if (p == 2)
-            {
-                tname = i18n::s.get("core.map.chip.field");
-            }
+    if (chara.index != 0)
+        return;
 
-            if (tname != ""s)
+    game_data.player_x_on_map_leave = -1;
+    game_data.player_y_on_map_leave = -1;
+    x = cdata.player().position.x;
+    y = cdata.player().position.y;
+    if (cell_data.at(x, y).item_appearances_actual != 0)
+    {
+        if (cdata.player().blind == 0)
+        {
+            txt(txtitemoncell(x, y));
+            proc_autopick();
+        }
+        else
+        {
+            txt(i18n::s.get("core.action.move.sense_something"));
+        }
+    }
+    p = chip_data.for_cell(x, y).kind;
+    if (p != 0)
+    {
+        std::string tname = ""s;
+        if (p == 1)
+        {
+            tname = i18n::s.get("core.map.chip.dryrock");
+        }
+        if (p == 2)
+        {
+            tname = i18n::s.get("core.map.chip.field");
+        }
+
+        if (tname != ""s)
+        {
+            txt(i18n::s.get("core.action.move.walk_into", tname));
+        }
+        if (p == 3)
+        {
+            snd("core.water2");
+        }
+        if (p == 4)
+        {
+            addefmap(chara.position.x, chara.position.y, 3, 10, dirsub, rnd(2));
+            if (keybd_wait <=
+                    g_config.walk_wait() * g_config.start_run_wait() ||
+                cdata.player().turn % 2 == 0 ||
+                map_data.type == mdata_t::MapType::world_map)
             {
-                txt(i18n::s.get("core.action.move.walk_into", tname));
-            }
-            if (p == 3)
-            {
-                snd("core.water2");
-            }
-            if (p == 4)
-            {
-                addefmap(
-                    cdata[cc].position.x,
-                    cdata[cc].position.y,
-                    3,
-                    10,
-                    dirsub,
-                    rnd(2));
-                if (keybd_wait <=
-                        g_config.walk_wait() * g_config.start_run_wait() ||
-                    cdata.player().turn % 2 == 0 ||
-                    map_data.type == mdata_t::MapType::world_map)
-                {
-                    sound_footstep2(foot);
-                    foot += 1 + rnd(2);
-                }
+                sound_footstep2(foot);
+                foot += 1 + rnd(2);
             }
         }
-        else if (map_data.type == mdata_t::MapType::world_map)
+    }
+    else if (map_data.type == mdata_t::MapType::world_map)
+    {
+        addefmap(chara.position.x, chara.position.y, 2, 10, dirsub);
+        sound_footstep(foot);
+        ++foot;
+    }
+    if (cell_data.at(x, y).feats != 0)
+    {
+        cell_featread(x, y);
+        if (feat(1) == 32)
         {
-            addefmap(cdata[cc].position.x, cdata[cc].position.y, 2, 10, dirsub);
-            sound_footstep(foot);
-            ++foot;
+            txt(i18n::s.get("core.action.move.twinkle"),
+                Message::color{ColorIndex::orange});
         }
-        if (cell_data.at(x, y).feats != 0)
+        if (feat(1) == 15)
         {
-            cell_featread(x, y);
-            if (feat(1) == 32)
+            txt(mapname(feat(2) + feat(3) * 100, true));
+            if (area_data[feat(2) + feat(3) * 100].id ==
+                mdata_t::MapId::random_dungeon)
             {
-                txt(i18n::s.get("core.action.move.twinkle"),
-                    Message::color{ColorIndex::orange});
+                maybe_show_ex_help(6);
             }
-            if (feat(1) == 15)
+        }
+        if (feat(1) == 34)
+        {
+            txt(txtbuilding(feat(2), feat(3)));
+        }
+        if (feat(1) == 11)
+        {
+            txt(i18n::s.get("core.action.move.feature.stair.down"));
+        }
+        if (feat(1) == 10)
+        {
+            txt(i18n::s.get("core.action.move.feature.stair.up"));
+        }
+        if (feat(1) == 24)
+        {
+            txt(i18n::s.get("core.action.move.feature.material.spot"));
+        }
+        if (feat(1) == 27)
+        {
+            txt(i18n::s.get("core.action.move.feature.material.remains"));
+        }
+        if (feat(1) == 25)
+        {
+            txt(i18n::s.get("core.action.move.feature.material.mining"));
+        }
+        if (feat(1) == 26)
+        {
+            txt(i18n::s.get("core.action.move.feature.material.spring"));
+        }
+        if (feat(1) == 28)
+        {
+            txt(i18n::s.get("core.action.move.feature.material.plants"));
+        }
+        if (feat(1) == 29)
+        {
+            if (feat(2) == 36)
             {
-                txt(mapname(feat(2) + feat(3) * 100, true));
-                if (area_data[feat(2) + feat(3) * 100].id ==
-                    mdata_t::MapId::random_dungeon)
-                {
-                    maybe_show_ex_help(6);
-                }
+                s = i18n::s.get("core.action.move.feature.seed.type.vegetable");
             }
-            if (feat(1) == 34)
+            if (feat(2) == 37)
             {
-                txt(txtbuilding(feat(2), feat(3)));
+                s = i18n::s.get("core.action.move.feature.seed.type.fruit");
             }
-            if (feat(1) == 11)
+            if (feat(2) == 38)
             {
-                txt(i18n::s.get("core.action.move.feature.stair.down"));
+                s = i18n::s.get("core.action.move.feature.seed.type.herb");
             }
-            if (feat(1) == 10)
+            if (feat(2) == 39)
             {
-                txt(i18n::s.get("core.action.move.feature.stair.up"));
+                s = i18n::s.get("core.action.move.feature.seed.type.strange");
             }
-            if (feat(1) == 24)
+            if (feat(2) == 40)
             {
-                txt(i18n::s.get("core.action.move.feature.material.spot"));
+                s = i18n::s.get("core.action.move.feature.seed.type.artifact");
             }
-            if (feat(1) == 27)
+            if (feat(2) == 41)
             {
-                txt(i18n::s.get("core.action.move.feature.material.remains"));
+                s = i18n::s.get("core.action.move.feature.seed.type.gem");
             }
-            if (feat(1) == 25)
+            if (feat(2) == 42)
             {
-                txt(i18n::s.get("core.action.move.feature.material.mining"));
+                s = i18n::s.get("core.action.move.feature.seed.type.magic");
             }
-            if (feat(1) == 26)
+            if (feat == tile_plant)
             {
-                txt(i18n::s.get("core.action.move.feature.material.spring"));
+                txt(i18n::s.get(
+                    "core.action.move.feature.seed.growth.seed", s(0)));
             }
-            if (feat(1) == 28)
+            if (feat == tile_plant + 1)
             {
-                txt(i18n::s.get("core.action.move.feature.material.plants"));
+                txt(i18n::s.get(
+                    "core.action.move.feature.seed.growth.bud", s(0)));
             }
-            if (feat(1) == 29)
+            if (feat == tile_plant + 2)
             {
-                if (feat(2) == 36)
-                {
-                    s = i18n::s.get(
-                        "core.action.move.feature.seed.type.vegetable");
-                }
-                if (feat(2) == 37)
-                {
-                    s = i18n::s.get("core.action.move.feature.seed.type.fruit");
-                }
-                if (feat(2) == 38)
-                {
-                    s = i18n::s.get("core.action.move.feature.seed.type.herb");
-                }
-                if (feat(2) == 39)
-                {
-                    s = i18n::s.get(
-                        "core.action.move.feature.seed.type.strange");
-                }
-                if (feat(2) == 40)
-                {
-                    s = i18n::s.get(
-                        "core.action.move.feature.seed.type.artifact");
-                }
-                if (feat(2) == 41)
-                {
-                    s = i18n::s.get("core.action.move.feature.seed.type.gem");
-                }
-                if (feat(2) == 42)
-                {
-                    s = i18n::s.get("core.action.move.feature.seed.type.magic");
-                }
-                if (feat == tile_plant)
-                {
-                    txt(i18n::s.get(
-                        "core.action.move.feature.seed.growth.seed", s(0)));
-                }
-                if (feat == tile_plant + 1)
-                {
-                    txt(i18n::s.get(
-                        "core.action.move.feature.seed.growth.bud", s(0)));
-                }
-                if (feat == tile_plant + 2)
-                {
-                    txt(i18n::s.get(
-                        "core.action.move.feature.seed.growth.tree", s(0)));
-                }
-                if (feat == tile_plant + 3)
-                {
-                    txt(i18n::s.get(
-                        "core.action.move.feature.seed.growth.withered", s(0)));
-                }
+                txt(i18n::s.get(
+                    "core.action.move.feature.seed.growth.tree", s(0)));
             }
-            if (feat(1) >= 24 && feat(1) <= 28)
+            if (feat == tile_plant + 3)
             {
-                maybe_show_ex_help(5);
+                txt(i18n::s.get(
+                    "core.action.move.feature.seed.growth.withered", s(0)));
             }
+        }
+        if (feat(1) >= 24 && feat(1) <= 28)
+        {
+            maybe_show_ex_help(5);
         }
     }
 }

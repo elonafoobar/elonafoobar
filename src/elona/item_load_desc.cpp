@@ -122,10 +122,7 @@ void _load_item_stat_text(const Item& item, int& num_of_desc)
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get(
             "core.item.desc.it_is_made_of",
-            i18n::s.get_m(
-                "item_material",
-                the_item_material_db.get_id_from_legacy(item.material)->get(),
-                "name"));
+            the_item_material_db.get_text(item.material, "name"));
         ++num_of_desc;
     }
     if (item.material == 8)

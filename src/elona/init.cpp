@@ -332,7 +332,6 @@ void initialize_elona()
     gmode(2);
     text_set();
     ctrl_file(FileOperation::temp_dir_delete);
-    tc = 0;
     invctrl(0) = 0;
     invctrl(1) = 0;
     SDIM1(buffboard);
@@ -527,7 +526,6 @@ void initialize_debug_globals()
     mapstartx = 10;
     mapstarty = 23;
     initlv = 50;
-    rc = 0;
     flt(100);
     chara_create(0, 84, -3, 0);
     initialize_pc_character();
@@ -556,7 +554,7 @@ void initialize_debug_globals()
     cdata.player().platinum_coin = 30;
     cdata.player().fame = 65000;
     game_data.quest_flags.main_quest = 100;
-    chara_refresh(0);
+    chara_refresh(cdata.player());
 
     cdata.player().can_cast_rapid_magic() = true;
     mode = 0;

@@ -21,7 +21,6 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/lua_env.hpp"
-#include "macro.hpp"
 #include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -637,65 +636,66 @@ void prompt_hiring()
         const auto chara_id = isethire.at(hire).first;
         randomize(game_data.date.day + cnt);
         flt(20);
-        const auto chara = chara_create(-1, chara_id, -3, 0);
-        if (!chara)
+        const auto servant = chara_create(-1, chara_id, -3, 0);
+        if (!servant)
         {
             continue;
         }
-        cdata[rc].set_state(Character::State::servant_being_selected);
-        cdata[rc].role = isethire.at(hire).second;
-        if (cdata[rc].id == CharaId::shopkeeper)
+        servant->set_state(Character::State::servant_being_selected);
+        servant->role = isethire.at(hire).second;
+        if (servant->id == CharaId::shopkeeper)
         {
             p = rnd(6);
             if (p == 0)
             {
-                cdata[rc].role = Role::blacksmith;
-                cdatan(0, rc) =
-                    i18n::s.get("core.building.guests.armory", cdata[rc]);
+                servant->role = Role::blacksmith;
+                cdatan(0, servant->index) =
+                    i18n::s.get("core.building.guests.armory", *servant);
             }
             if (p == 1)
             {
-                cdata[rc].role = Role::general_vendor;
-                cdatan(0, rc) = i18n::s.get(
-                    "core.building.guests.general_store", cdata[rc]);
+                servant->role = Role::general_vendor;
+                cdatan(0, servant->index) =
+                    i18n::s.get("core.building.guests.general_store", *servant);
             }
             if (p == 2)
             {
-                cdata[rc].role = Role::magic_vendor;
-                cdatan(0, rc) =
-                    i18n::s.get("core.building.guests.magic_store", cdata[rc]);
+                servant->role = Role::magic_vendor;
+                cdatan(0, servant->index) =
+                    i18n::s.get("core.building.guests.magic_store", *servant);
             }
             if (p == 3)
             {
-                cdata[rc].role = Role::general_store;
-                cdatan(0, rc) =
-                    i18n::s.get("core.building.guests.goods_store", cdata[rc]);
+                servant->role = Role::general_store;
+                cdatan(0, servant->index) =
+                    i18n::s.get("core.building.guests.goods_store", *servant);
             }
             if (p == 4)
             {
-                cdata[rc].role = Role::blacksmith;
-                cdatan(0, rc) =
-                    i18n::s.get("core.building.guests.armory", cdata[rc]);
+                servant->role = Role::blacksmith;
+                cdatan(0, servant->index) =
+                    i18n::s.get("core.building.guests.armory", *servant);
             }
             if (p == 5)
             {
-                cdata[rc].role = Role::blackmarket_vendor;
-                cdatan(0, rc) =
-                    i18n::s.get("core.building.guests.blackmarket", cdata[rc]);
+                servant->role = Role::blackmarket_vendor;
+                cdatan(0, servant->index) =
+                    i18n::s.get("core.building.guests.blackmarket", *servant);
             }
             randomize();
-            cdata[rc].shop_rank = rnd(15) + 1;
+            servant->shop_rank = rnd(15) + 1;
         }
-        for (auto&& cnt : cdata.others())
+        for (const auto& chara : cdata.others())
         {
-            if (cnt.index == rc)
+            if (chara.index == servant->index)
             {
                 continue;
             }
-            if (cnt.state() != Character::State::empty &&
-                cdatan(0, cnt.index) == cdatan(0, rc))
+            if (chara.state() != Character::State::empty &&
+                cdatan(0, chara.index) == cdatan(0, servant->index))
             {
-                chara_vanquish(rc);
+                chara_vanquish(*servant);
+                break;
             }
         }
     }
@@ -705,19 +705,18 @@ void prompt_hiring()
     int stat = show_hire_menu(HireOperation::hire);
     if (stat != -1)
     {
-        tc = stat;
         Message::instance().linebreak();
-        if (cdata.player().gold < calchirecost(tc) * 20)
+        if (cdata.player().gold < calc_servant_hire_cost(cdata[stat]) * 20)
         {
             txt(i18n::s.get("core.building.not_enough_money"));
         }
         else
         {
             snd("core.paygold1");
-            cdata.player().gold -= calchirecost(tc) * 20;
+            cdata.player().gold -= calc_servant_hire_cost(cdata[stat]) * 20;
             await(g_config.animation_wait() * 10);
-            cdata[tc].set_state(Character::State::alive);
-            txt(i18n::s.get("core.building.home.hire.you_hire", cdata[tc]),
+            cdata[stat].set_state(Character::State::alive);
+            txt(i18n::s.get("core.building.home.hire.you_hire", cdata[stat]),
                 Message::color{ColorIndex::green});
             snd("core.pray1");
         }
@@ -726,7 +725,7 @@ void prompt_hiring()
     {
         if (cnt.state() == Character::State::servant_being_selected)
         {
-            chara_vanquish(cnt.index);
+            chara_vanquish(cnt);
         }
     }
     calccosthire();
@@ -848,8 +847,8 @@ void prompt_move_ally()
             break;
         }
         const auto tchome = stat;
-        tc = stat;
         snd("core.ok1");
+        bool canceled = false;
         while (true)
         {
             Message::instance().linebreak();
@@ -857,7 +856,8 @@ void prompt_move_ally()
             int stat = target_position();
             if (stat == -1)
             {
-                continue;
+                canceled = true;
+                break;
             }
             if (chip_data.for_cell(tlocx, tlocy).effect & 4 ||
                 cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
@@ -869,15 +869,18 @@ void prompt_move_ally()
                 break;
             }
         }
-        tc = tchome;
-        cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
+        if (canceled)
+        {
+            continue;
+        }
+        cell_data.at(cdata[tchome].position.x, cdata[tchome].position.y)
             .chara_index_plus_one = 0;
-        cell_data.at(tlocx, tlocy).chara_index_plus_one = tc + 1;
-        cdata[tc].position = cdata[tc].initial_position =
+        cell_data.at(tlocx, tlocy).chara_index_plus_one = tchome + 1;
+        cdata[tchome].position = cdata[tchome].initial_position =
             Position{tlocx, tlocy};
-        cdata[tc].activity.finish();
+        cdata[tchome].activity.finish();
         Message::instance().linebreak();
-        txt(i18n::s.get("core.building.home.move.is_moved", cdata[tc]));
+        txt(i18n::s.get("core.building.home.move.is_moved", cdata[tchome]));
         snd("core.foot");
     }
 }
@@ -886,45 +889,43 @@ void prompt_move_ally()
 
 void prompt_ally_staying()
 {
+    int stat = ctrl_ally(ControlAllyOperation::staying);
+    if (stat != -1)
     {
-        int stat = ctrl_ally(ControlAllyOperation::staying);
-        if (stat != -1)
+        int c = stat;
+        snd("core.ok1");
+        Message::instance().linebreak();
+        if (getworker(game_data.current_map, c) == c)
         {
-            int c = stat;
-            snd("core.ok1");
-            Message::instance().linebreak();
-            if (getworker(game_data.current_map, c) == c)
+            if (game_data.current_map == mdata_t::MapId::your_home)
             {
-                if (game_data.current_map == mdata_t::MapId::your_home)
-                {
-                    cdata[c].current_map = 0;
-                    txt(i18n::s.get(
-                        "core.building.home.staying.remove.ally", cdata[c]));
-                }
-                else
-                {
-                    removeworker(game_data.current_map);
-                    txt(i18n::s.get(
-                        "core.building.home.staying.remove.worker", cdata[c]));
-                }
+                cdata[c].current_map = 0;
+                txt(i18n::s.get(
+                    "core.building.home.staying.remove.ally", cdata[c]));
             }
             else
             {
-                if (game_data.current_map == mdata_t::MapId::your_home)
-                {
-                    cdata[c].initial_position.x = cdata[c].position.x;
-                    cdata[c].initial_position.y = cdata[c].position.y;
-                    txt(i18n::s.get(
-                        "core.building.home.staying.add.ally", cdata[c]));
-                }
-                else
-                {
-                    removeworker(game_data.current_map);
-                    txt(i18n::s.get(
-                        "core.building.home.staying.add.worker", cdata[c]));
-                }
-                cdata[c].current_map = game_data.current_map;
+                removeworker(game_data.current_map);
+                txt(i18n::s.get(
+                    "core.building.home.staying.remove.worker", cdata[c]));
             }
+        }
+        else
+        {
+            if (game_data.current_map == mdata_t::MapId::your_home)
+            {
+                cdata[c].initial_position.x = cdata[c].position.x;
+                cdata[c].initial_position.y = cdata[c].position.y;
+                txt(i18n::s.get(
+                    "core.building.home.staying.add.ally", cdata[c]));
+            }
+            else
+            {
+                removeworker(game_data.current_map);
+                txt(i18n::s.get(
+                    "core.building.home.staying.add.worker", cdata[c]));
+            }
+            cdata[c].current_map = game_data.current_map;
         }
     }
 }
@@ -1055,7 +1056,7 @@ void show_shop_log()
                 {
                     continue;
                 }
-                if (chara.activity.item == item_for_sale.item.index)
+                if (chara.activity.item == item_for_sale.item)
                 {
                     chara.activity.finish();
                 }
@@ -1211,9 +1212,8 @@ void update_shop()
 
 void calc_collection_value(int chara_id, bool val0)
 {
-    rc = 56;
     fixlv = Quality::good;
-    chara_db_set_stats(int2charaid(chara_id));
+    chara_db_set_stats(cdata.tmp(), int2charaid(chara_id));
     ++dblist(val0 ? 1 : 0, charaid2int(cdata.tmp().id));
     if (fixlv == Quality::special)
     {
@@ -1418,7 +1418,7 @@ void update_ranch()
             if (const auto chara =
                     chara_create(-1, chara_id, 4 + rnd(11), 4 + rnd(8)))
             {
-                cdata[rc].is_livestock() = true;
+                chara->is_livestock() = true;
                 ++livestock_count;
             }
         }
@@ -1724,7 +1724,7 @@ void supply_income()
                 txt(i18n::s.get(
                         "core.misc.tax.accused", game_data.left_bill - 1),
                     Message::color{ColorIndex::red});
-                int stat = decfame(0, 50);
+                int stat = decrease_fame(cdata.player(), 50);
                 p = stat;
                 txt(i18n::s.get("core.misc.tax.lose_fame", p(0)),
                     Message::color{ColorIndex::red});
@@ -1842,8 +1842,8 @@ void harvest_plant(int val)
     feat = tile_plant;
     try_to_grow_plant();
     cell_featset(
-        cdata[cc].position.x,
-        cdata[cc].position.y,
+        cdata.player().position.x,
+        cdata.player().position.y,
         feat,
         feat(1),
         feat(2),
@@ -1906,13 +1906,13 @@ void create_harvested_item()
 int getworker(int map_id, int exclude_with)
 {
     int ret = -1;
-    for (int i = 1; i < 16; ++i)
+    for (auto&& ally : cdata.allies())
     {
-        if (exclude_with != 0 && i != exclude_with)
+        if (exclude_with != 0 && ally.index != exclude_with)
             continue;
-        if (cdata[i].current_map == map_id)
+        if (ally.current_map == map_id)
         {
-            ret = i;
+            ret = ally.index;
             break;
         }
     }
@@ -1923,11 +1923,11 @@ int getworker(int map_id, int exclude_with)
 
 void removeworker(int map_id)
 {
-    for (int i = 1; i < 16; ++i)
+    for (auto&& ally : cdata.allies())
     {
-        if (cdata[i].current_map == map_id)
+        if (ally.current_map == map_id)
         {
-            cdata[i].current_map = 0;
+            ally.current_map = 0;
         }
     }
 }

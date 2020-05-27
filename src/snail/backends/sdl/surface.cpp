@@ -35,8 +35,8 @@ void Surface::save(const fs::path& filepath)
     }
     else
     {
-        throw std::runtime_error{"Unknown image file format: " +
-                                 filepathutil::to_utf8_path(ext)};
+        throw std::runtime_error{
+            "Unknown image file format: " + filepathutil::to_utf8_path(ext)};
     }
 }
 

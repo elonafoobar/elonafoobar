@@ -1,6 +1,7 @@
 #include "lua_api_animation.hpp"
 
 #include "../../animation.hpp"
+#include "../../character.hpp"
 #include "../../lua_env/enums/enums.hpp"
 
 
@@ -234,7 +235,7 @@ void LuaApiAnimation::play_gene_engineering(const Position& pos)
  */
 void LuaApiAnimation::play_miracle()
 {
-    MiracleAnimation().play();
+    MiracleAnimation(MiracleAnimation::Mode::target_one, cdata.player()).play();
 }
 
 

@@ -40,7 +40,6 @@ bool UIMenuBook::init()
     page = 0;
     pagesize = 40;
     cs = 0;
-    cc = 0;
     listmax = noteinfo();
     keyrange = 0;
     key_list(0) = key_enter;

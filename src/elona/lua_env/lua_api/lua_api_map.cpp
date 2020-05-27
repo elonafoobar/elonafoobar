@@ -188,8 +188,8 @@ bool LuaApiMap::is_blocked_xy(int x, int y)
  */
 Position LuaApiMap::random_pos()
 {
-    return Position{elona::rnd(map_data.width - 1),
-                    elona::rnd(map_data.height - 1)};
+    return Position{
+        elona::rnd(map_data.width - 1), elona::rnd(map_data.height - 1)};
 }
 
 /**

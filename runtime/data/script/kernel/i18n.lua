@@ -19,10 +19,15 @@ type FormattableObjectList = list of FormattableObject. It has field `__list`, t
 --]]
 
 
--- Stores all of locale resources.
+-- Stores all of locale resources except for data-associated text.
 --  Keys: I18NKey
 --  Values: FormattableObject | FormattableObjectList
 local storage = {}
+
+-- Stores all of data-associated locale resources.
+--  Keys: I18NKey
+--  Values: FormattableObject | FormattableObjectList
+local storage_for_data = {}
 
 -- These variables are passed from native code through _ENV.
 -- Parse format and returns fomattable object or error.
@@ -126,6 +131,7 @@ local function collect_i18n_resources(table, current_key, result)
 end
 
 
+
 -- @param fmt Formattable object. It is a plain string (which means that the
 --            string does not have interpolation) or a list of segments. Each
 --            segment can be a plain string or complex string interpolation,
@@ -171,6 +177,20 @@ end
 
 
 
+function I18N.get_data_text_optional(key, args)
+   local fmt = storage_for_data[key]
+   if fmt == nil then return nil end -- not found
+
+   if type(fmt) == "table" and fmt.__list then -- Is it a `FormattableObjectList`?
+      -- Choose one element of the list at random.
+      fmt = fmt[rnd(#fmt) + 1]
+   end
+
+   return format(fmt, args)
+end
+
+
+
 function I18N.get_list(key)
    local ret = storage[key]
    if ret == nil then return {} end
@@ -204,4 +224,13 @@ I18N.interface = {}
 
 function I18N.interface:add(data)
    collect_i18n_resources(data, _MOD_ID, storage)
+end
+
+
+
+function I18N.interface:add_data_text(prototype_id, data)
+   for k, v in pairs(data) do
+      local key = prototype_id.."#".._MOD_ID.."."..k
+      collect_i18n_resources(v, key, storage_for_data)
+   end
 end

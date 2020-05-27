@@ -10,7 +10,6 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
-#include "macro.hpp"
 #include "message.hpp"
 #include "random.hpp"
 #include "ui.hpp"
@@ -431,7 +430,7 @@ void crafting_menu()
 
             r2 = matuse;
             chara_gain_exp_crafting(cdata.player(), recipe->skill_used, matuse);
-            chara_refresh(0);
+            chara_refresh(cdata.player());
 
             // NOTE: page_load is called in UIMenuCrafting.
             render_hud();

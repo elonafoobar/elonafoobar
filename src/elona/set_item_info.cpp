@@ -7,11 +7,8 @@
 namespace elona
 {
 
-const std::set<std::string> randomizables = {"potion",
-                                             "spellbook",
-                                             "scroll",
-                                             "rod",
-                                             "ring"};
+const std::set<std::string> randomizables =
+    {"potion", "spellbook", "scroll", "rod", "ring"};
 
 bool is_randomizable(const std::string& original_name_ref)
 {

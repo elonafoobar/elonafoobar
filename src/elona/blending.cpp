@@ -16,7 +16,6 @@
 #include "input_prompt.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
-#include "macro.hpp"
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "random.hpp"
@@ -186,12 +185,7 @@ void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
                 : snail::Color{0, 120, 0};
             mes(dx_ + cnt % 2 * 140,
                 dy_ + cnt / 2 * 17,
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db
-                        .get_id_from_legacy(rpdata(10 + cnt * 2, rpid))
-                        ->get(),
-                    "name") +
+                the_ability_db.get_text(rpdata(10 + cnt * 2, rpid), "name") +
                     u8"  "s + rpdata((11 + cnt * 2), rpid) + u8"("s +
                     sdata(rpdata((10 + cnt * 2), rpid), 0) + u8")"s,
                 text_color);
@@ -606,18 +600,19 @@ void activity_blending()
         rpid = rpref(0);
         if (rpid == 0)
         {
-            cdata[cc].activity.finish();
+            cdata.player().activity.finish();
             return;
         }
-        if (!cdata[cc].activity)
+        if (!cdata.player().activity)
         {
             Message::instance().linebreak();
-            txt(i18n::s.get("core.blending.started", cdata[cc], rpname(rpid)));
-            cdata[cc].activity.type = Activity::Type::blend;
-            cdata[cc].activity.turn = rpref(2) % 10000;
+            txt(i18n::s.get(
+                "core.blending.started", cdata.player(), rpname(rpid)));
+            cdata.player().activity.type = Activity::Type::blend;
+            cdata.player().activity.turn = rpref(2) % 10000;
             return;
         }
-        if (cdata[cc].activity.turn > 0)
+        if (cdata.player().activity.turn > 0)
         {
             if (rnd(30) == 0)
             {
@@ -628,7 +623,7 @@ void activity_blending()
         }
         if (rpref(2) >= 10000)
         {
-            cdata[cc].activity.turn = rpref(2) / 10000;
+            cdata.player().activity.turn = rpref(2) / 10000;
             for (int cnt = 0;; ++cnt)
             {
                 mode = 12;
@@ -643,9 +638,8 @@ void activity_blending()
                 redraw();
                 await(g_config.animation_wait() * 5);
                 game_data.date.minute = 0;
-                cc = 0;
-                --cdata[cc].activity.turn;
-                if (cdata[cc].activity.turn <= 0)
+                --cdata.player().activity.turn;
+                if (cdata.player().activity.turn <= 0)
                 {
                     int stat = blending_find_required_mat();
                     if (stat == 0)
@@ -657,7 +651,7 @@ void activity_blending()
                     blending_start_attempt();
                     if (rpref(1) > 0)
                     {
-                        cdata[cc].activity.turn = rpref(2) / 10000;
+                        cdata.player().activity.turn = rpref(2) / 10000;
                         cnt = 0 - 1;
                         continue;
                     }
@@ -667,7 +661,7 @@ void activity_blending()
                     }
                 }
             }
-            cdata[cc].activity.finish();
+            cdata.player().activity.finish();
             mode = 0;
             return;
         }
@@ -675,13 +669,13 @@ void activity_blending()
         if (stat == 0)
         {
             txt(i18n::s.get("core.blending.required_material_not_found"));
-            cdata[cc].activity.finish();
+            cdata.player().activity.finish();
             return;
         }
         blending_start_attempt();
         if (rpref(1) > 0)
         {
-            cdata[cc].activity.type = Activity::Type::none;
+            cdata.player().activity.type = Activity::Type::none;
         }
         else
         {
@@ -689,7 +683,7 @@ void activity_blending()
         }
     }
 
-    cdata[cc].activity.finish();
+    cdata.player().activity.finish();
 }
 
 
@@ -1011,7 +1005,6 @@ TurnResult blending_menu()
         listmax = 0;
         cs = 0;
         cs_bk = -1;
-        cc = 0;
         screenupdate = -1;
         update_screen();
 
@@ -1632,7 +1625,7 @@ void blending_spend_materials(bool success)
         }
         if (chara_unequip(inv[rpref(10 + cnt * 2)]))
         {
-            chara_refresh(0);
+            chara_refresh(cdata.player());
         }
         cell_refresh(
             inv[rpref(10 + cnt * 2)].position.x,
@@ -1945,7 +1938,7 @@ void blending_proc_on_success_events()
     {
         cell_refresh(item1.position.x, item1.position.y);
     }
-    chara_refresh(0);
+    chara_refresh(cdata.player());
 }
 
 } // namespace elona

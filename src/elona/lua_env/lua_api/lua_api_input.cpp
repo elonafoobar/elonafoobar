@@ -9,6 +9,7 @@
 #include "../../macro.hpp"
 #include "../../menu.hpp"
 #include "../../message.hpp"
+#include "../../talk.hpp"
 
 
 

@@ -4,6 +4,8 @@
 
 #include "optional.hpp"
 
+
+
 namespace elona
 {
 
@@ -79,7 +81,7 @@ MenuResult menu_materials();
 MenuResult menu_character_sheet_normal();
 bool menu_character_sheet_character_making();
 optional<int> menu_character_sheet_trainer(bool is_training);
-void menu_character_sheet_investigate();
+void menu_character_sheet_investigate(Character& ally);
 
 int select_alias(int);
 MenuResult menu_feats();
@@ -96,9 +98,11 @@ void showeconomy(int, int, const std::string&, int = 0, int = 0);
 void show_city_chart();
 void begin_to_believe_god(int);
 void screen_analyze_self();
-int ctrl_ally(ControlAllyOperation);
+int ctrl_ally(
+    ControlAllyOperation,
+    optional_ref<Character> gene_engineering_original_character = none);
 void show_book_window(const Item& book);
-int change_npc_tone();
+int change_npc_tone(Character& chara);
 void item_show_description(Item& item);
 
 
@@ -108,14 +112,16 @@ struct CtrlInventoryResult
     optional_ref<Item> selected_item;
 };
 
-CtrlInventoryResult ctrl_inventory();
+CtrlInventoryResult ctrl_inventory(
+    optional_ref<Character> inventory_owner = none);
 
 
 void menu_chat_dialog();
 void menu_voting_box();
 
-void append_accuracy_info(int);
+void append_accuracy_info(const Character& chara, int);
 void show_weapon_dice(
+    const Character& chara,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo,
     int val0);

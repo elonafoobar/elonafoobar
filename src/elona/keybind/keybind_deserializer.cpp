@@ -62,8 +62,8 @@ optional<snail::Key> _deserialize_key(
 
 void KeybindDeserializer::load(std::istream& in)
 {
-    std::string file_content{std::istreambuf_iterator<char>{in},
-                             std::istreambuf_iterator<char>{}};
+    std::string file_content{
+        std::istreambuf_iterator<char>{in}, std::istreambuf_iterator<char>{}};
     const auto value = json5::parse(file_content);
 
     visit_object(value.get_object().find("core")->second.get_object());

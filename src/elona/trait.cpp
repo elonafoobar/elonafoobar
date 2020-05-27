@@ -756,12 +756,12 @@ int trait_get_info(int traitmode, int tid)
 
 
 
-void trait_load_desc()
+void trait_load_desc(Character& chara)
 {
     int featrq = 0;
 
     listmax = 0;
-    if (tc == 0 && game_data.acquirable_feat_count > 0)
+    if (chara.index == 0 && game_data.acquirable_feat_count > 0)
     {
         list(0, listmax) = -1;
         list(1, listmax) = 0;
@@ -770,7 +770,7 @@ void trait_load_desc()
     f = 0;
     for (int cnt = 0; cnt < 217; ++cnt)
     {
-        if (tc != 0)
+        if (chara.index != 0)
         {
             break;
         }
@@ -871,7 +871,7 @@ void trait_load_desc()
         }
         listn(0, cnt) = s;
     }
-    if (cdata[tc].is_incognito() == 1)
+    if (chara.is_incognito() == 1)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
@@ -880,7 +880,7 @@ void trait_load_desc()
             i18n::s.get("core.trait.incognito");
         ++listmax;
     }
-    if (cdata[tc].is_pregnant() == 1)
+    if (chara.is_pregnant() == 1)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
@@ -889,7 +889,7 @@ void trait_load_desc()
             i18n::s.get("core.trait.pregnant");
         ++listmax;
     }
-    if (cdata[tc].has_anorexia() == 1)
+    if (chara.has_anorexia() == 1)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
@@ -898,18 +898,17 @@ void trait_load_desc()
             i18n::s.get("core.trait.anorexia");
         ++listmax;
     }
-    if (cdata[tc].speed_correction_value != 0)
+    if (chara.speed_correction_value != 0)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
         listn(0, listmax) = u8"["s +
             i18n::s.get("core.trait.window.category.etc") + u8"]"s +
             i18n::s.get(
-                "core.trait.body_is_complicated",
-                cdata[tc].speed_correction_value);
+                "core.trait.body_is_complicated", chara.speed_correction_value);
         ++listmax;
     }
-    if (tc == 0 && game_data.ether_disease_speed != 0)
+    if (chara.index == 0 && game_data.ether_disease_speed != 0)
     {
         if (game_data.ether_disease_speed > 0)
         {

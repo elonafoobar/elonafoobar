@@ -637,7 +637,7 @@ void determine_item_material(Item& item)
     int mtlv = 0;
     if (cm)
     {
-        mtlv = cdata[rc].level / 15 + 1;
+        mtlv = cdata[cm - 1].level / 15 + 1;
     }
     else
     {
@@ -754,7 +754,7 @@ void change_item_material(Item& item, int material_id)
     }
     apply_item_material(item);
     calc_furniture_value(item);
-    chara_refresh(cc);
+    chara_refresh(cdata.player());
 }
 
 

@@ -167,9 +167,10 @@ int main(int argc, char** argv)
     app.set_call_redraw(false);
 
     app.get_renderer().enable_blended_text_rendering();
-    snail::Font font{filesystem::path("font") / "Bitstream Sans Vera Mono" /
-                         "Bitstream Sans Vera Mono.ttf",
-                     16};
+    snail::Font font{
+        filesystem::path("font") / "Bitstream Sans Vera Mono" /
+            "Bitstream Sans Vera Mono.ttf",
+        16};
     app.get_renderer().set_font(font);
 
     while (true)

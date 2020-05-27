@@ -440,8 +440,8 @@ public:
      */
     static VersionRequirement from_version(const Version& version)
     {
-        OneVersionRequirement req{OneVersionRequirement::Operator::equal,
-                                  version};
+        OneVersionRequirement req{
+            OneVersionRequirement::Operator::equal, version};
         return VersionRequirement{{req}};
     }
 

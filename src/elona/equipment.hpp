@@ -7,7 +7,9 @@
 namespace elona
 {
 
+struct Character;
 struct Item;
+struct Character;
 
 
 
@@ -19,12 +21,12 @@ std::string cut_item_name_for_additional_info(
 int eqweaponheavy();
 int eqweaponlight();
 void eqrandweaponmage();
-void wear_most_valuable_equipment_for_all_body_parts();
-void wear_most_valuable_equipment(Item& equipment);
-void supply_new_equipment();
-void supply_initial_equipments();
+void wear_most_valuable_equipment_for_all_body_parts(Character& chara);
+void wear_most_valuable_equipment(Character& chara, Item& equipment);
+void supply_new_equipment(Character& chara);
+void supply_initial_equipments(Character& chara);
 
-int equip_item(int cc, Item& equipment);
-void unequip_item(int);
+void equip_item(Character& chara, size_t equipment_slot_index, Item& equipment);
+void unequip_item(Character& chara, size_t equipment_slot_index);
 
 } // namespace elona

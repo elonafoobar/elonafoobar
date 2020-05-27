@@ -14,7 +14,6 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
-#include "macro.hpp"
 #include "map.hpp"
 #include "menu.hpp"
 #include "message.hpp"
@@ -777,7 +776,6 @@ void atxinit()
     listmax = 0;
     cs = 0;
     page = 0;
-    cc = 0;
     cs_bk = -1;
     pagesize = 16;
     chatesc = -1;

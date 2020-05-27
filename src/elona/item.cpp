@@ -117,8 +117,9 @@ InventorySlice Inventory::for_chara(const Character& chara)
     }
     else
     {
-        return {std::begin(storage) + 200 + 20 * (chara.index - 1),
-                std::begin(storage) + 200 + 20 * (chara.index - 1) + 20};
+        return {
+            std::begin(storage) + 200 + 20 * (chara.index - 1),
+            std::begin(storage) + 200 + 20 * (chara.index - 1) + 20};
     }
 }
 
@@ -262,7 +263,7 @@ int itemusingfind(const Item& item, bool disallow_pc)
             continue;
         }
         if (chara.activity && chara.activity.type != Activity::Type::sex &&
-            chara.activity.turn > 0 && chara.activity.item == item.index)
+            chara.activity.turn > 0 && chara.activity.item == item)
         {
             if (!disallow_pc || chara.index != 0)
             {
@@ -604,8 +605,7 @@ bool chara_unequip(Item& item)
     if (owner == -1)
         return false;
 
-    cdata[owner].body_parts[body_part - 100] =
-        cdata[owner].body_parts[body_part - 100] / 10000 * 10000;
+    cdata[owner].equipment_slots[body_part - 100].unequip();
     item.body_part = 0;
     return true;
 }
@@ -721,18 +721,10 @@ void itemname_additional_info(Item& item)
         if (item.id == ItemId::textbook)
         {
             s_ += lang(
-                u8"《"s +
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(item.param1)->get(),
-                        "name") +
+                u8"《"s + the_ability_db.get_text(item.param1, "name") +
                     u8"》という題名の"s,
                 u8" titled <Art of "s +
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(item.param1)->get(),
-                        "name") +
-                    u8">"s);
+                    the_ability_db.get_text(item.param1, "name") + u8">"s);
         }
         else if (item.id == ItemId::book_of_rachel)
         {
@@ -767,11 +759,7 @@ void itemname_additional_info(Item& item)
                     s_ = s_ +
                         foodname(
                              item.param1 / 1000,
-                             i18n::s.get_m(
-                                 "fish",
-                                 the_fish_db.get_id_from_legacy(item.subname)
-                                     ->get(),
-                                 "name"),
+                             the_fish_db.get_text(item.subname, "name"),
                              item.param2,
                              item.subname);
                 }
@@ -803,10 +791,7 @@ void itemname_additional_info(Item& item)
                 s_ += u8"/bugged/"s;
                 return;
             }
-            s_ += i18n::s.get_m(
-                "fish",
-                the_fish_db.get_id_from_legacy(item.subname)->get(),
-                "name");
+            s_ += the_fish_db.get_text(item.subname, "name");
         }
         else if (
             category == ItemCategory::food ||
@@ -1131,11 +1116,7 @@ std::string itemname(Item& item, int number, bool with_article)
     }
     if (item.id == ItemId::material_kit)
     {
-        s_ += ""s +
-            i18n::s.get_m(
-                "item_material",
-                the_item_material_db.get_id_from_legacy(item.material)->get(),
-                "name") +
+        s_ += ""s + the_item_material_db.get_text(item.material, "name") +
             lang(u8"製の"s, u8" "s);
     }
     if (jp)
@@ -1146,22 +1127,12 @@ std::string itemname(Item& item, int number, bool with_article)
     {
         if (jp)
         {
-            s_ += ""s +
-                i18n::s.get_m(
-                    "item_material",
-                    the_item_material_db.get_id_from_legacy(item.material)
-                        ->get(),
-                    "name") +
+            s_ += ""s + the_item_material_db.get_text(item.material, "name") +
                 u8"細工の"s;
         }
         else
         {
-            s_ += ""s +
-                i18n::s.get_m(
-                    "item_material",
-                    the_item_material_db.get_id_from_legacy(item.material)
-                        ->get(),
-                    "name") +
+            s_ += ""s + the_item_material_db.get_text(item.material, "name") +
                 u8"work "s;
         }
     }
@@ -1204,22 +1175,14 @@ std::string itemname(Item& item, int number, bool with_article)
                 {
                     if (item.quality >= Quality::miracle)
                     {
-                        s_ += i18n::s.get_m(
-                                  "item_material",
-                                  the_item_material_db
-                                      .get_id_from_legacy(item.material)
-                                      ->get(),
-                                  "alias") +
+                        s_ += the_item_material_db.get_text(
+                                  item.material, "alias") +
                             i18n::space_if_needed();
                     }
                     else
                     {
-                        s_ += i18n::s.get_m(
-                                  "item_material",
-                                  the_item_material_db
-                                      .get_id_from_legacy(item.material)
-                                      ->get(),
-                                  "name") +
+                        s_ += the_item_material_db.get_text(
+                                  item.material, "name") +
                             i18n::space_if_needed();
                         if (jp)
                         {
@@ -1473,21 +1436,12 @@ std::string itemname(Item& item, int number, bool with_article)
         if (jp)
         {
             s_ += u8"["s +
-                i18n::s.get_m(
-                    "item_material",
-                    the_item_material_db.get_id_from_legacy(item.material)
-                        ->get(),
-                    "name") +
-                u8"製]"s;
+                the_item_material_db.get_text(item.material, "name") + u8"製]"s;
         }
         else
         {
             s_ += u8"["s +
-                cnven(i18n::s.get_m(
-                    "item_material",
-                    the_item_material_db.get_id_from_legacy(item.material)
-                        ->get(),
-                    "name")) +
+                cnven(the_item_material_db.get_text(item.material, "name")) +
                 u8"]"s;
         }
         if (item.curse_state == CurseState::cursed)
@@ -1645,22 +1599,21 @@ void item_acid(const Character& owner, optional_ref<Item> item)
 {
     if (!item)
     {
-        for (const auto& body_part : owner.body_parts)
+        for (const auto& equipment_slot : owner.equipment_slots)
         {
-            if (body_part / 10000 == 0)
+            if (!equipment_slot)
             {
                 break;
             }
-            int i = body_part % 10000 - 1;
-            if (i == -1)
+            if (!equipment_slot.equipment)
             {
                 continue;
             }
-            if (inv[i].enhancement >= -3)
+            if (equipment_slot.equipment->enhancement >= -3)
             {
                 if (rnd(30) == 0)
                 {
-                    item = inv[i];
+                    item = *equipment_slot.equipment;
                     break;
                 }
             }
@@ -1849,11 +1802,9 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
                             cdata[owner]),
                         Message::color{ColorIndex::purple});
                 }
-                cdata[owner].body_parts[item.body_part - 100] =
-                    cdata[owner].body_parts[item.body_part - 100] / 10000 *
-                    10000;
+                cdata[owner].equipment_slots[item.body_part - 100].unequip();
                 item.body_part = 0;
-                chara_refresh(owner);
+                chara_refresh(cdata[owner]);
             }
             else if (is_in_fov(cdata[owner]))
             {
@@ -1884,7 +1835,7 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
 
 
 
-void mapitem_fire(int x, int y)
+void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
 {
     if (cell_data.at(x, y).item_appearances_actual == 0)
     {
@@ -1911,7 +1862,14 @@ void mapitem_fire(int x, int y)
         {
             if (cell_data.at(x, y).mef_index_plus_one == 0)
             {
-                mef_add(x, y, 5, 24, rnd(10) + 5, 100, cc);
+                mef_add(
+                    x,
+                    y,
+                    5,
+                    24,
+                    rnd(10) + 5,
+                    100,
+                    arsonist ? arsonist->index : -1);
             }
         }
         cell_refresh(x, y);
@@ -2282,9 +2240,9 @@ Item& inv_get_free_slot_force(int inventory_id)
         if (item.body_part == 0)
         {
             item.remove();
-            if (cdata[inventory_id].ai_item == item.index)
+            if (cdata[inventory_id].ai_item == item)
             {
-                cdata[inventory_id].ai_item = 0;
+                cdata[inventory_id].ai_item = ItemRef::null();
             }
             return item;
         }
@@ -2305,7 +2263,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
 
     auto& dropped_item = *slot;
     item_copy(item_in_inventory, dropped_item);
-    dropped_item.position = cdata[cc].position;
+    dropped_item.position = cdata.player().position;
     dropped_item.set_number(num);
     itemturn(dropped_item);
 
@@ -2327,7 +2285,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
         if (const auto altar = item_find(60002, 0))
         {
             // The altar is your god's.
-            if (core_god::int2godid(altar->param1) == cdata[cc].god_id)
+            if (core_god::int2godid(altar->param1) == cdata.player().god_id)
             {
                 if (dropped_item.curse_state != CurseState::blessed)
                 {
@@ -2545,7 +2503,7 @@ Item& item_convert_artifact(Item& artifact, bool ignore_external_container)
     }
 
     bool found = false;
-    for (const auto& chara : cdata.pc_and_pets())
+    for (const auto& chara : cdata.player_and_allies())
     {
         if (chara.state() == Character::State::empty)
         {
@@ -2609,39 +2567,35 @@ Item& item_convert_artifact(Item& artifact, bool ignore_external_container)
 
 
 
-void damage_by_cursed_equipments()
+void damage_by_cursed_equipments(Character& chara)
 {
     if (rnd(4) == 0)
     {
-        damage_hp(
-            cdata[cc],
-            cdata[cc].hp * (5 + cdata[cc].curse_power / 5) / 100,
-            -5);
+        damage_hp(chara, chara.hp * (5 + chara.curse_power / 5) / 100, -5);
         return;
     }
     if (map_data.type != mdata_t::MapType::world_map)
     {
-        if (rnd(10 - clamp(cdata[cc].curse_power / 10, 0, 9)) == 0)
+        if (rnd(10 - clamp(chara.curse_power / 10, 0, 9)) == 0)
         {
             efid = 408;
-            tc = cc;
-            magic();
+            magic(chara, chara);
             return;
         }
     }
     if (rnd(10) == 0)
     {
-        if (cdata[cc].gold > 0)
+        if (chara.gold > 0)
         {
-            p = rnd_capped(cdata[cc].gold) / 100 + rnd(10) + 1;
-            if (p > cdata[cc].gold)
+            p = rnd_capped(chara.gold) / 100 + rnd(10) + 1;
+            if (p > chara.gold)
             {
-                p = cdata[cc].gold;
+                p = chara.gold;
             }
-            cdata[cc].gold -= p;
-            if (is_in_fov(cdata[cc]))
+            chara.gold -= p;
+            if (is_in_fov(chara))
             {
-                txt(i18n::s.get("core.misc.curse.gold_stolen", cdata[cc]),
+                txt(i18n::s.get("core.misc.curse.gold_stolen", chara),
                     Message::color{ColorIndex::purple});
             }
             return;
@@ -2673,7 +2627,7 @@ void dipcursed(Item& item)
         txt(i18n::s.get("core.action.dip.rusts", item));
         if (inv_getowner(item) != -1)
         {
-            chara_refresh(inv_getowner(item));
+            chara_refresh(cdata[inv_getowner(item)]);
         }
     }
     else
@@ -2698,27 +2652,27 @@ int efstatusfix(int doomed, int cursed, int none, int blessed)
 
 
 
-void equip_melee_weapon()
+void equip_melee_weapon(Character& chara)
 {
     attacknum = 0;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (cdata[cc].body_parts[cnt] / 10000 != 5)
+        if (chara.equipment_slots[cnt].type != 5)
         {
             continue;
         }
-        if (cdata[cc].body_parts[cnt] % 10000 == 0)
+        if (!chara.equipment_slots[cnt].equipment)
         {
             continue;
         }
-        const auto& weapon = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
+        const auto& weapon = *chara.equipment_slots[cnt].equipment;
         if (weapon.dice_x == 0)
         {
             continue;
         }
         ++attacknum;
-        if (cdata[cc].combat_style.two_hand())
+        if (chara.combat_style.two_hand())
         {
             if (weapon.weight >= 4000)
             {
@@ -2731,7 +2685,7 @@ void equip_melee_weapon()
                     "core.action.equip.two_handed.too_light", weapon));
             }
         }
-        if (cdata[cc].combat_style.dual_wield())
+        if (chara.combat_style.dual_wield())
         {
             if (attacknum == 1)
             {
@@ -2748,7 +2702,7 @@ void equip_melee_weapon()
                     weapon));
             }
         }
-        if (cc == 0)
+        if (chara.index == 0)
         {
             if (game_data.mount != 0)
             {
@@ -2760,150 +2714,6 @@ void equip_melee_weapon()
                 }
             }
         }
-    }
-}
-
-
-
-int gain_skills_by_geen_engineering()
-{
-    if (cdata[tc].splits() || cdata[tc].splits2())
-    {
-        return 0;
-    }
-    randomize(charaid2int(cdata[tc].id));
-    int dbmax = 0;
-    for (int cnt = 0; cnt < 100; ++cnt)
-    {
-        rtval = rnd(40) + 150;
-        if (sdata(rtval, rc) == 0)
-        {
-            if (sdata(rtval, tc) > 0)
-            {
-                dblist(0, dbmax) = rtval;
-                ++dbmax;
-            }
-        }
-    }
-    rtval(0) = dblist(0, 0);
-    rtval(1) = -1;
-    if (dbmax >= 2)
-    {
-        if (rnd(3) == 0)
-        {
-            for (int cnt = 1, cnt_end = cnt + (dbmax - 1); cnt < cnt_end; ++cnt)
-            {
-                if (dblist(0, cnt) != rtval)
-                {
-                    rtval(1) = dblist(0, cnt);
-                    break;
-                }
-            }
-        }
-    }
-    randomize();
-    return dbmax;
-}
-
-
-
-int transplant_body_parts()
-{
-    int dbmax = 0;
-    s(1) = chara_db_get_filter(cdata[tc].id);
-    if (strutil::contains(s(1), u8"/man/"))
-    {
-        return -1;
-    }
-    if (cdata[tc].splits() || cdata[tc].splits2())
-    {
-        return -1;
-    }
-    rtval(1) = -1;
-    for (int i = 0; i < 30; ++i)
-    {
-        if (cdata[rc].body_parts[i] == 0)
-        {
-            rtval(1) = i + 100;
-        }
-    }
-    if (rtval(1) == -1)
-    {
-        return -1;
-    }
-    for (int cnt = 0; cnt < 30; ++cnt)
-    {
-        f = cdata[tc].body_parts[cnt] / 10000;
-        if (f == 11 || f == 10 || f == 4)
-        {
-            continue;
-        }
-        if (f != 0)
-        {
-            dblist(0, dbmax) = f;
-            ++dbmax;
-        }
-    }
-    if (dbmax == 0)
-    {
-        return -1;
-    }
-    randomize(charaid2int(cdata[tc].id));
-    for (int cnt = 0; cnt < 3; ++cnt)
-    {
-        rtval = dblist(0, rnd(dbmax));
-        f = 0;
-        for (int i = 0; i < 30; ++i)
-        {
-            if (cdata[rc].body_parts[i] == 0)
-            {
-                continue;
-            }
-            if (cdata[rc].body_parts[i] / 10000 == rtval)
-            {
-                f = 1;
-            }
-        }
-        if (f)
-        {
-            break;
-        }
-    }
-    if (f == 0)
-    {
-        randomize();
-        return rtval(1);
-    }
-    DIM3(dblist, 2, 800);
-    for (int i = 0; i < 30; ++i)
-    {
-        ++dblist(0, cdata[tc].body_parts[i] / 10000);
-    }
-    for (int cnt = 0; cnt < 25; ++cnt)
-    {
-        rtval = rnd(15) + 1;
-        f = 0;
-        for (int i = 0; i < 30; ++i)
-        {
-            if (cdata[rc].body_parts[i] / 10000 == rtval)
-            {
-                ++f;
-            }
-        }
-        if (f < dblist(0, rtval))
-        {
-            f = -1;
-            break;
-        }
-    }
-    randomize();
-    if (f == -1)
-    {
-        return rtval(1);
-    }
-    else
-    {
-        return -1;
     }
 }
 

@@ -158,22 +158,23 @@ bool cell_swap(int chara_index_a, int chara_index_b, int x, int y)
 
 
 
-void cell_movechara(int cc, int x, int y)
+void cell_movechara(int chara_index, int x, int y)
 {
     if (cell_data.at(x, y).chara_index_plus_one != 0)
     {
-        if (cell_data.at(x, y).chara_index_plus_one - 1 == cc)
+        if (cell_data.at(x, y).chara_index_plus_one - 1 == chara_index)
         {
             return;
         }
-        cell_swap(cc, tc_at_m81);
+        cell_swap(chara_index, tc_at_m81);
     }
     else
     {
-        cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+        cell_data
+            .at(cdata[chara_index].position.x, cdata[chara_index].position.y)
             .chara_index_plus_one = 0;
-        cdata[cc].position = {x, y};
-        cell_data.at(x, y).chara_index_plus_one = cc + 1;
+        cdata[chara_index].position = {x, y};
+        cell_data.at(x, y).chara_index_plus_one = chara_index + 1;
     }
 }
 
@@ -199,10 +200,10 @@ std::pair<int, int> cell_itemoncell(const Position& pos)
 
 
 
-void cell_setchara(int cc, int x, int y)
+void cell_setchara(int chara_index, int x, int y)
 {
-    cell_data.at(x, y).chara_index_plus_one = cc + 1;
-    cdata[cc].position = Position{x, y};
+    cell_data.at(x, y).chara_index_plus_one = chara_index + 1;
+    cdata[chara_index].position = Position{x, y};
 }
 
 

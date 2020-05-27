@@ -43,8 +43,8 @@ std::vector<Bone> parse_bone_file(const fs::path& filepath)
     if (!in)
         return {};
 
-    const std::string content{std::istreambuf_iterator<char>{in},
-                              std::istreambuf_iterator<char>{}};
+    const std::string content{
+        std::istreambuf_iterator<char>{in}, std::istreambuf_iterator<char>{}};
 
     try
     {
@@ -183,7 +183,6 @@ void show_game_score_ranking(
 
 TurnResult pc_died()
 {
-    cc = 0;
     snd("core.dead1");
     screenupdate = -1;
     update_screen();

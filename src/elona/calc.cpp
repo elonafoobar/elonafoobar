@@ -83,9 +83,10 @@ int rangedist = 0;
 
 
 
-optional<SkillDamage> calc_skill_damage(int skill, int cc, int power)
+optional<SkillDamage>
+calc_skill_damage(const Character& chara, int skill, int power)
 {
-    int x = sdata(the_ability_db[skill]->related_basic_attribute, cc);
+    int x = sdata(the_ability_db[skill]->related_basic_attribute, chara.index);
 
     switch (skill)
     {
@@ -107,101 +108,115 @@ optional<SkillDamage> calc_skill_damage(int skill, int cc, int power)
     case 406: return SkillDamage{0, 1, x * 5 + power * 2, 0, 0};
     case 407: return SkillDamage{0, 1, x * 5 + power * 3 / 2, 0, 0};
     case 623:
-        return SkillDamage{
-            1 + x / 10, cdata[cc].piety_point / 70 + 1 + 1, 0, 0, 0};
+        return SkillDamage{1 + x / 10, chara.piety_point / 70 + 1 + 1, 0, 0, 0};
     case 624:
         return SkillDamage{
-            1 + x / 20, cdata[cc].piety_point / 140 + 1 + 1, 0, 0, 0};
+            1 + x / 20, chara.piety_point / 140 + 1 + 1, 0, 0, 0};
     case 414:
-        return SkillDamage{power / 125 + 2 + x / 50,
-                           power / 60 + 9 + 1,
-                           0,
-                           60,
-                           100 + power / 4};
+        return SkillDamage{
+            power / 125 + 2 + x / 50,
+            power / 60 + 9 + 1,
+            0,
+            60,
+            100 + power / 4};
     case 459:
-        return SkillDamage{power / 100 + 3 + x / 25,
-                           power / 40 + 12 + 1,
-                           0,
-                           60,
-                           100 + power / 4};
+        return SkillDamage{
+            power / 100 + 3 + x / 25,
+            power / 40 + 12 + 1,
+            0,
+            60,
+            100 + power / 4};
     case 418:
-        return SkillDamage{power / 80 + 1 + x / 18,
-                           power / 25 + 8 + 1,
-                           0,
-                           53,
-                           200 + power / 3};
+        return SkillDamage{
+            power / 80 + 1 + x / 18,
+            power / 25 + 8 + 1,
+            0,
+            53,
+            200 + power / 3};
     case 415:
-        return SkillDamage{power / 70 + 1 + x / 18,
-                           power / 25 + 8 + 1,
-                           0,
-                           56,
-                           200 + power / 3};
+        return SkillDamage{
+            power / 70 + 1 + x / 18,
+            power / 25 + 8 + 1,
+            0,
+            56,
+            200 + power / 3};
     case 417:
-        return SkillDamage{power / 70 + 1 + x / 18,
-                           power / 25 + 8 + 1,
-                           0,
-                           59,
-                           200 + power / 3};
+        return SkillDamage{
+            power / 70 + 1 + x / 18,
+            power / 25 + 8 + 1,
+            0,
+            59,
+            200 + power / 3};
     case 416:
-        return SkillDamage{power / 70 + 1 + x / 18,
-                           power / 25 + 8 + 1,
-                           0,
-                           58,
-                           200 + power / 3};
+        return SkillDamage{
+            power / 70 + 1 + x / 18,
+            power / 25 + 8 + 1,
+            0,
+            58,
+            200 + power / 3};
     case 419:
-        return SkillDamage{power / 50 + 1 + x / 20,
-                           power / 26 + 4 + 1,
-                           0,
-                           51,
-                           180 + power / 4};
+        return SkillDamage{
+            power / 50 + 1 + x / 20,
+            power / 26 + 4 + 1,
+            0,
+            51,
+            180 + power / 4};
     case 420:
-        return SkillDamage{power / 50 + 1 + x / 20,
-                           power / 26 + 4 + 1,
-                           0,
-                           50,
-                           180 + power / 4};
+        return SkillDamage{
+            power / 50 + 1 + x / 20,
+            power / 26 + 4 + 1,
+            0,
+            50,
+            180 + power / 4};
     case 421:
-        return SkillDamage{power / 50 + 1 + x / 20,
-                           power / 26 + 4 + 1,
-                           0,
-                           52,
-                           180 + power / 4};
+        return SkillDamage{
+            power / 50 + 1 + x / 20,
+            power / 26 + 4 + 1,
+            0,
+            52,
+            180 + power / 4};
     case 422:
-        return SkillDamage{power / 50 + 1 + x / 20,
-                           power / 25 + 4 + 1,
-                           0,
-                           53,
-                           180 + power / 4};
+        return SkillDamage{
+            power / 50 + 1 + x / 20,
+            power / 25 + 4 + 1,
+            0,
+            53,
+            180 + power / 4};
     case 423:
-        return SkillDamage{power / 50 + 1 + x / 20,
-                           power / 25 + 4 + 1,
-                           0,
-                           54,
-                           180 + power / 4};
+        return SkillDamage{
+            power / 50 + 1 + x / 20,
+            power / 25 + 4 + 1,
+            0,
+            54,
+            180 + power / 4};
     case 431:
-        return SkillDamage{power / 100 + 1 + x / 20,
-                           power / 15 + 2 + 1,
-                           0,
-                           51,
-                           150 + power / 5};
+        return SkillDamage{
+            power / 100 + 1 + x / 20,
+            power / 15 + 2 + 1,
+            0,
+            51,
+            150 + power / 5};
     case 432:
-        return SkillDamage{power / 100 + 1 + x / 20,
-                           power / 15 + 2 + 1,
-                           0,
-                           50,
-                           150 + power / 5};
+        return SkillDamage{
+            power / 100 + 1 + x / 20,
+            power / 15 + 2 + 1,
+            0,
+            50,
+            150 + power / 5};
     case 433:
-        return SkillDamage{power / 80 + 1 + x / 20,
-                           power / 12 + 2 + 1,
-                           0,
-                           59,
-                           150 + power / 5};
+        return SkillDamage{
+            power / 80 + 1 + x / 20,
+            power / 12 + 2 + 1,
+            0,
+            59,
+            150 + power / 5};
     case 434:
-        return SkillDamage{power / 80 + 1 + x / 20,
-                           power / 12 + 2 + 1,
-                           0,
-                           57,
-                           150 + power / 5};
+        return SkillDamage{
+            power / 80 + 1 + x / 20,
+            power / 12 + 2 + 1,
+            0,
+            57,
+            150 + power / 5};
     case 460:
         return SkillDamage{
             power / 100 + 1 + x / 25, power / 18 + 2 + 1, 0, 60, 100};
@@ -289,10 +304,9 @@ Quality calcfixlv(Quality base_quality)
 
 
 
-int calcfame(int cc, int base)
+int calc_gained_fame(const Character& chara, int base)
 {
-    int ret = base * 100 /
-        (100 + cdata[cc].fame / 100 * (cdata[cc].fame / 100) / 2500);
+    int ret = base * 100 / (100 + chara.fame / 100 * (chara.fame / 100) / 2500);
     if (ret < 5)
     {
         ret = rnd(5) + 1;
@@ -302,14 +316,14 @@ int calcfame(int cc, int base)
 
 
 
-int decfame(int cc, int base)
+int decrease_fame(Character& chara, int base)
 {
-    int ret = cdata[cc].fame / base + 5;
+    int ret = chara.fame / base + 5;
     ret = ret + rnd_capped(ret / 2) - rnd_capped(ret / 2);
-    cdata[cc].fame -= ret;
-    if (cdata[cc].fame < 0)
+    chara.fame -= ret;
+    if (chara.fame < 0)
     {
-        cdata[cc].fame = 0;
+        chara.fame = 0;
     }
     return ret;
 }
@@ -377,9 +391,9 @@ int calc_rate_to_pierce(int id)
 
 
 
-std::string calcage(int cc)
+std::string calc_age(const Character& chara)
 {
-    int n = game_data.date.year - cdata[cc].birth_year;
+    int n = game_data.date.year - chara.birth_year;
     return n >= 0 ? std::to_string(n) : i18n::s.get("core.chara.age_unknown");
 }
 
@@ -392,14 +406,16 @@ int calcexpalive(int level)
 
 
 
-int calc_evasion(int cc)
+int calc_evasion(const Character& chara)
 {
-    return sdata(13, cc) / 3 + sdata(173, cc) + cdata[cc].dv + 25;
+    return sdata(13, chara.index) / 3 + sdata(173, chara.index) + chara.dv + 25;
 }
 
 
 
 int calc_accuracy(
+    const Character& attacker,
+    const Character& target,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo,
     bool consider_distance)
@@ -409,20 +425,22 @@ int calc_accuracy(
 
     if (attackskill == 106)
     {
-        accuracy =
-            sdata(12, cc) / 5 + sdata(10, cc) / 2 + sdata(attackskill, cc) + 50;
-        if (cdata[cc].combat_style.shield())
+        accuracy = sdata(12, attacker.index) / 5 +
+            sdata(10, attacker.index) / 2 + sdata(attackskill, attacker.index) +
+            50;
+        if (attacker.combat_style.shield())
         {
             accuracy = accuracy * 100 / 130;
         }
-        accuracy +=
-            sdata(12, cc) / 5 + sdata(10, cc) / 10 + cdata[cc].hit_bonus;
+        accuracy += sdata(12, attacker.index) / 5 +
+            sdata(10, attacker.index) / 10 + attacker.hit_bonus;
     }
     else
     {
-        accuracy = sdata(12, cc) / 4 + sdata(weapon->skill, cc) / 3 +
-            sdata(attackskill, cc) + 50;
-        accuracy += cdata[cc].hit_bonus + weapon->hit_bonus;
+        accuracy = sdata(12, attacker.index) / 4 +
+            sdata(weapon->skill, attacker.index) / 3 +
+            sdata(attackskill, attacker.index) + 50;
+        accuracy += attacker.hit_bonus + weapon->hit_bonus;
         if (ammo)
         {
             accuracy += ammo->hit_bonus;
@@ -437,10 +455,10 @@ int calc_accuracy(
             {
                 rangedist = clamp(
                     dist(
-                        cdata[cc].position.x,
-                        cdata[cc].position.y,
-                        cdata[tc].position.x,
-                        cdata[tc].position.y) -
+                        attacker.position.x,
+                        attacker.position.y,
+                        target.position.x,
+                        target.position.y) -
                         1,
                     0,
                     9);
@@ -451,28 +469,28 @@ int calc_accuracy(
         }
         else
         {
-            if (cdata[cc].combat_style.two_hand())
+            if (attacker.combat_style.two_hand())
             {
                 accuracy += 25;
                 if (weapon->weight >= 4000)
                 {
-                    accuracy += sdata(167, cc);
+                    accuracy += sdata(167, attacker.index);
                 }
             }
-            else if (cdata[cc].combat_style.dual_wield())
+            else if (attacker.combat_style.dual_wield())
             {
                 if (attacknum == 1)
                 {
                     if (weapon->weight >= 4000)
                     {
                         accuracy -= (weapon->weight - 4000 + 400) /
-                            (10 + sdata(166, cc) / 5);
+                            (10 + sdata(166, attacker.index) / 5);
                     }
                 }
                 else if (weapon->weight > 1500)
                 {
                     accuracy -= (weapon->weight - 1500 + 100) /
-                        (10 + sdata(166, cc) / 5);
+                        (10 + sdata(166, attacker.index) / 5);
                 }
             }
         }
@@ -480,34 +498,34 @@ int calc_accuracy(
 
     if (game_data.mount != 0)
     {
-        if (cc == 0)
+        if (attacker.index == 0)
         {
-            accuracy =
-                accuracy * 100 / clamp((150 - sdata(301, cc) / 2), 115, 150);
+            accuracy = accuracy * 100 /
+                clamp((150 - sdata(301, attacker.index) / 2), 115, 150);
             if (attackskill != 106 && attackrange == 0 &&
                 weapon->weight >= 4000)
             {
-                accuracy -=
-                    (weapon->weight - 4000 + 400) / (10 + sdata(301, cc) / 5);
+                accuracy -= (weapon->weight - 4000 + 400) /
+                    (10 + sdata(301, attacker.index) / 5);
             }
         }
-        if (cc == game_data.mount)
+        if (attacker.index == game_data.mount)
         {
-            accuracy =
-                accuracy * 100 / clamp((150 - sdata(10, cc) / 2), 115, 150);
+            accuracy = accuracy * 100 /
+                clamp((150 - sdata(10, attacker.index) / 2), 115, 150);
             if (attackskill != 106 && attackrange == 0 &&
                 weapon->weight >= 4000)
             {
-                accuracy -=
-                    (weapon->weight - 4000 + 400) / (10 + sdata(10, cc) / 10);
+                accuracy -= (weapon->weight - 4000 + 400) /
+                    (10 + sdata(10, attacker.index) / 10);
             }
         }
     }
 
     if (attacknum > 1)
     {
-        int twohit =
-            100 - (attacknum - 1) * (10000 / (100 + sdata(166, cc) * 10));
+        int twohit = 100 -
+            (attacknum - 1) * (10000 / (100 + sdata(166, attacker.index) * 10));
         if (accuracy > 0)
         {
             accuracy = accuracy * twohit / 100;
@@ -519,12 +537,16 @@ int calc_accuracy(
 
 
 
-int calcattackhit(optional_ref<Item> weapon, optional_ref<Item> ammo)
+int calcattackhit(
+    const Character& attacker,
+    const Character& target,
+    optional_ref<Item> weapon,
+    optional_ref<Item> ammo)
 {
-    int tohit = calc_accuracy(weapon, ammo, true);
-    int evasion = calc_evasion(tc);
+    int tohit = calc_accuracy(attacker, target, weapon, ammo, true);
+    int evasion = calc_evasion(target);
 
-    if (cdata[tc].dimmed != 0)
+    if (target.dimmed != 0)
     {
         if (rnd(4) == 0)
         {
@@ -533,19 +555,19 @@ int calcattackhit(optional_ref<Item> weapon, optional_ref<Item> ammo)
         }
         evasion /= 2;
     }
-    if (cdata[cc].blind != 0)
+    if (attacker.blind != 0)
     {
         tohit /= 2;
     }
-    if (cdata[tc].blind != 0)
+    if (target.blind != 0)
     {
         evasion /= 2;
     }
-    if (cdata[tc].sleep != 0)
+    if (target.sleep != 0)
     {
         return 1;
     }
-    if (cdata[cc].confused != 0 || cdata[cc].dimmed != 0)
+    if (attacker.confused != 0 || attacker.dimmed != 0)
     {
         if (attackrange)
         {
@@ -556,40 +578,40 @@ int calcattackhit(optional_ref<Item> weapon, optional_ref<Item> ammo)
             tohit = tohit / 3 * 2;
         }
     }
-    if (sdata(187, tc) != 0)
+    if (sdata(187, target.index) != 0)
     {
-        if (tohit < sdata(187, tc) * 10 && tohit > 0)
+        if (tohit < sdata(187, target.index) * 10 && tohit > 0)
         {
             int evaderef = evasion * 100 / clamp(tohit, 1, tohit);
             if (evaderef > 300)
             {
-                if (rnd_capped(sdata(187, tc) + 250) > 100)
+                if (rnd_capped(sdata(187, target.index) + 250) > 100)
                 {
                     return -2;
                 }
             }
             if (evaderef > 200)
             {
-                if (rnd_capped(sdata(187, tc) + 250) > 150)
+                if (rnd_capped(sdata(187, target.index) + 250) > 150)
                 {
                     return -2;
                 }
             }
             if (evaderef > 150)
             {
-                if (rnd_capped(sdata(187, tc) + 250) > 200)
+                if (rnd_capped(sdata(187, target.index) + 250) > 200)
                 {
                     return -2;
                 }
             }
         }
     }
-    if (rnd(5000) < sdata(13, cc) + 50)
+    if (rnd(5000) < sdata(13, attacker.index) + 50)
     {
         critical = 1;
         return 1;
     }
-    if (cdata[cc].rate_of_critical_hit > rnd(200))
+    if (attacker.rate_of_critical_hit > rnd(200))
     {
         critical = 1;
         return 1;
@@ -620,6 +642,8 @@ int calcattackhit(optional_ref<Item> weapon, optional_ref<Item> ammo)
 
 
 int calcattackdmg(
+    const Character& attacker,
+    const Character& target,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo,
     AttackDamageCalculationMode mode)
@@ -629,20 +653,21 @@ int calcattackdmg(
     int pierce;
     if (attackskill == 106)
     {
-        dmgfix =
-            sdata(10, cc) / 8 + sdata(106, cc) / 8 + cdata[cc].damage_bonus;
+        dmgfix = sdata(10, attacker.index) / 8 +
+            sdata(106, attacker.index) / 8 + attacker.damage_bonus;
         dice1 = 2;
-        dice2 = sdata(106, cc) / 8 + 5;
+        dice2 = sdata(106, attacker.index) / 8 + 5;
         dmgmulti = 0.5 +
             double(
-                (sdata(10, cc) + sdata(attackskill, cc) / 5 +
-                 sdata(152, cc) * 2)) /
+                (sdata(10, attacker.index) +
+                 sdata(attackskill, attacker.index) / 5 +
+                 sdata(152, attacker.index) * 2)) /
                 40;
-        pierce = clamp(sdata(attackskill, cc) / 5, 5, 50);
+        pierce = clamp(sdata(attackskill, attacker.index) / 5, 5, 50);
     }
     else
     {
-        dmgfix = cdata[cc].damage_bonus + weapon->damage_bonus +
+        dmgfix = attacker.damage_bonus + weapon->damage_bonus +
             weapon->enhancement + (weapon->curse_state == CurseState::blessed);
         dice1 = weapon->dice_x;
         dice2 = weapon->dice_y;
@@ -651,16 +676,20 @@ int calcattackdmg(
             dmgfix += ammo->damage_bonus + ammo->dice_x * ammo->dice_y / 2;
             dmgmulti = 0.5 +
                 double(
-                    (sdata(13, cc) + sdata(weapon->skill, cc) / 5 +
-                     sdata(attackskill, cc) / 5 + sdata(189, cc) * 3 / 2)) /
+                    (sdata(13, attacker.index) +
+                     sdata(weapon->skill, attacker.index) / 5 +
+                     sdata(attackskill, attacker.index) / 5 +
+                     sdata(189, attacker.index) * 3 / 2)) /
                     40;
         }
         else
         {
             dmgmulti = 0.6 +
                 double(
-                    (sdata(10, cc) + sdata(weapon->skill, cc) / 5 +
-                     sdata(attackskill, cc) / 5 + sdata(152, cc) * 2)) /
+                    (sdata(10, attacker.index) +
+                     sdata(weapon->skill, attacker.index) / 5 +
+                     sdata(attackskill, attacker.index) / 5 +
+                     sdata(152, attacker.index) * 2)) /
                     45;
         }
         pierce = calc_rate_to_pierce(itemid2int(weapon->id));
@@ -674,7 +703,7 @@ int calcattackdmg(
             dmgmulti = dmgmulti * effective_range[rangedist] / 100;
         }
     }
-    else if (cdata[cc].combat_style.two_hand())
+    else if (attacker.combat_style.two_hand())
     {
         if (weapon->weight >= 4000)
         {
@@ -684,9 +713,9 @@ int calcattackdmg(
         {
             dmgmulti *= 1.2;
         }
-        dmgmulti += 0.03 * sdata(167, cc);
+        dmgmulti += 0.03 * sdata(167, attacker.index);
     }
-    if (cc == 0)
+    if (attacker.index == 0)
     {
         if (trait(207))
         {
@@ -697,7 +726,7 @@ int calcattackdmg(
     {
         return damage;
     }
-    const auto prot = calc_attack_protection(cdata[tc]);
+    const auto prot = calc_attack_protection(target);
     if (dmgfix < -100)
     {
         dmgfix = -100;
@@ -730,10 +759,10 @@ int calcattackdmg(
     }
     if (attackrange == 0)
     {
-        if (cdata[cc].rate_to_pierce > rnd(100))
+        if (attacker.rate_to_pierce > rnd(100))
         {
             pierce = 100;
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(attacker))
             {
                 txt(i18n::s.get("core.damage.vorpal.melee"),
                     Message::color{ColorIndex::orange});
@@ -745,7 +774,7 @@ int calcattackdmg(
         if (ammoproc == 2)
         {
             pierce = 60;
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(attacker))
             {
                 txt(i18n::s.get("core.damage.vorpal.ranged"),
                     Message::color{ColorIndex::orange});
@@ -775,17 +804,17 @@ int calcattackdmg(
         }
     }
     damage = damagenormal + damagepierce;
-    if (tc == 0)
+    if (attacker.index == 0)
     {
         if (trait(164) != 0)
         {
             --damage;
         }
     }
-    if (cdata[tc].decrease_physical_damage != 0)
+    if (attacker.decrease_physical_damage != 0)
     {
         damage = damage * 100 /
-            clamp((100 + cdata[tc].decrease_physical_damage), 25, 1000);
+            clamp((100 + attacker.decrease_physical_damage), 25, 1000);
     }
     if (damage < 0)
     {
@@ -1014,9 +1043,9 @@ int calcitemvalue(const Item& item, int calc_mode)
 
 
 
-int calcinvestvalue()
+int calcinvestvalue(const Character& shopkeeper)
 {
-    int rank = clamp(cdata[tc].shop_rank, 1, 200);
+    int rank = clamp(shopkeeper.shop_rank, 1, 200);
     int ret = rank * rank * 15 + 200;
     if (ret > 500'000)
     {
@@ -1035,16 +1064,16 @@ int calcguiltvalue()
 
 
 
-int calchireadv(int adventurer)
+int calc_adventurer_hire_cost(const Character& adv)
 {
-    return 250 + cdata[adventurer].level * cdata[adventurer].level * 30;
+    return 250 + adv.level * adv.level * 30;
 }
 
 
 
-int calchirecost(int cc)
+int calc_servant_hire_cost(const Character& servant)
 {
-    switch (cdata[cc].role)
+    switch (servant.role)
     {
     case Role::maid: return 450;
     case Role::trainer: return 250;
@@ -1056,7 +1085,7 @@ int calchirecost(int cc)
     case Role::blackmarket_vendor: return 4000;
     case Role::guest_wandering_vendor: return 0;
     default:
-        if (is_shopkeeper(cdata[cc].role))
+        if (is_shopkeeper(servant.role))
         {
             return 1000;
         }
@@ -1069,16 +1098,16 @@ int calchirecost(int cc)
 
 
 
-void generatemoney(int cc)
+void generatemoney(Character& chara)
 {
-    int gold = rnd(100) + rnd_capped(cdata[cc].level * 50 + 1);
-    if (is_shopkeeper(cdata[cc].role))
+    int gold = rnd(100) + rnd_capped(chara.level * 50 + 1);
+    if (is_shopkeeper(chara.role))
     {
-        gold += 2500 + cdata[cc].shop_rank * 250;
+        gold += 2500 + chara.shop_rank * 250;
     }
-    if (cdata[cc].gold < gold / 2)
+    if (chara.gold < gold / 2)
     {
-        cdata[cc].gold = gold;
+        chara.gold = gold;
     }
 }
 
@@ -1093,7 +1122,7 @@ void calccosthire()
             continue;
         if (cnt.state() != Character::State::alive)
             continue;
-        cost += calchirecost(cnt.index);
+        cost += calc_servant_hire_cost(cnt);
     }
     cost = cost *
         clamp(100 - clamp(cdata.player().karma / 2, 0, 50) - 7 * trait(38) -
@@ -1242,18 +1271,18 @@ int calcidentifyvalue(int type)
 
 
 
-int calctraincost(int skill_id, int cc, bool discount)
+int calctraincost(int skill_id, int chara_index, bool discount)
 {
-    int platinum = sdata.get(skill_id, cc).original_level / 5 + 2;
+    int platinum = sdata.get(skill_id, chara_index).original_level / 5 + 2;
     return discount ? platinum / 2 : platinum;
 }
 
 
 
-int calclearncost(int skill_id, int cc, bool discount)
+int calclearncost(int skill_id, int chara_index, bool discount)
 {
     (void)skill_id;
-    (void)cc;
+    (void)chara_index;
 
     int platinum = 15 + 3 * game_data.number_of_learned_skills_by_trainer;
     return discount ? platinum * 2 / 3 : platinum;
@@ -1261,24 +1290,24 @@ int calclearncost(int skill_id, int cc, bool discount)
 
 
 
-int calcresurrectvalue(int pet)
+int calc_resurrection_value(const Character& chara)
 {
-    return cdata[pet].state() != Character::State::pet_dead
+    return chara.state() != Character::State::pet_dead
         ? 100
-        : cdata[pet].level * cdata[pet].level * 15;
+        : chara.level * chara.level * 15;
 }
 
 
 
-int calcslavevalue(int pet)
+int calc_slave_value(const Character& chara)
 {
-    int value = sdata(10, pet) * sdata(11, pet) +
-        cdata[pet].level * cdata[pet].level + 1000;
+    int value = sdata(10, chara.index) * sdata(11, chara.index) +
+        chara.level * chara.level + 1000;
     if (value > 50'000)
     {
         value = 50'000;
     }
-    if (cdata[pet].splits() || cdata[pet].splits2())
+    if (chara.splits() || chara.splits2())
     {
         value = 10;
     }
@@ -1316,40 +1345,43 @@ int calcinitgold(int owner)
 
 
 
-int calcspellpower(int id, int cc)
+int calc_spell_power(const Character& caster, int id)
 {
     if (id >= 600)
     {
         if (the_ability_db[id]->related_basic_attribute != 0)
         {
-            return sdata(the_ability_db[id]->related_basic_attribute, cc) * 6 +
+            return sdata(
+                       the_ability_db[id]->related_basic_attribute,
+                       caster.index) *
+                6 +
                 10;
         }
         return 100;
     }
-    if (cc == 0)
+    if (caster.index == 0)
     {
-        return sdata(id, cc) * 10 + 50;
+        return sdata(id, caster.index) * 10 + 50;
     }
-    if (sdata(172, cc) == 0 && cc >= 16)
+    if (sdata(172, caster.index) == 0 && caster.index >= 16)
     {
-        return cdata[cc].level * 6 + 10;
+        return caster.level * 6 + 10;
     }
-    return sdata(172, cc) * 6 + 10;
+    return sdata(172, caster.index) * 6 + 10;
 }
 
 
 
-int calcspellfail(int id, int cc)
+int calc_spell_success_rate(const Character& caster, int id)
 {
     if (debug::voldemort)
     {
         return 100;
     }
 
-    if (cc != 0)
+    if (caster.index != 0)
     {
-        if (game_data.mount == cc)
+        if (game_data.mount == caster.index)
         {
             return 95 - clamp(30 - sdata(301, 0) / 2, 0, 30);
         }
@@ -1361,14 +1393,14 @@ int calcspellfail(int id, int cc)
 
     int penalty = 4;
 
-    int armor_skill = chara_armor_class(cdata[cc]);
+    int armor_skill = chara_armor_class(caster);
     if (armor_skill == 169)
     {
-        penalty = 17 - sdata(169, cc) / 5;
+        penalty = 17 - sdata(169, caster.index) / 5;
     }
     else if (armor_skill == 170)
     {
-        penalty = 12 - sdata(170, cc) / 5;
+        penalty = 12 - sdata(170, caster.index) / 5;
     }
     if (penalty < 4)
     {
@@ -1380,15 +1412,16 @@ int calcspellfail(int id, int cc)
     }
     if (id == 441) // Wish
     {
-        penalty += sdata(id, cc);
+        penalty += sdata(id, caster.index);
     }
     if (id == 464) // Harvest
     {
-        penalty += sdata(id, cc) / 3;
+        penalty += sdata(id, caster.index) / 3;
     }
 
-    int percentage = 90 + sdata(id, cc) -
-        the_ability_db[id]->difficulty * penalty / (5 + sdata(172, cc) * 4);
+    int percentage = 90 + sdata(id, caster.index) -
+        the_ability_db[id]->difficulty * penalty /
+            (5 + sdata(172, caster.index) * 4);
     if (armor_skill == 169)
     {
         if (percentage > 80)
@@ -1407,11 +1440,11 @@ int calcspellfail(int id, int cc)
     {
         percentage = 100;
     }
-    if (cdata[cc].combat_style.dual_wield())
+    if (caster.combat_style.dual_wield())
     {
         percentage -= 6;
     }
-    if (cdata[cc].combat_style.shield())
+    if (caster.combat_style.shield())
     {
         percentage -= 12;
     }
@@ -1424,12 +1457,12 @@ int calcspellfail(int id, int cc)
 
 
 
-int calcspellcostmp(int id, int cc)
+int calc_spell_cost_mp(const Character& caster, int id)
 {
     if (debug::voldemort)
         return 1;
 
-    if (cc == 0)
+    if (caster.index == 0)
     {
         if (id == 413 || id == 461 || id == 457 || id == 438 || id == 409 ||
             id == 408 || id == 410 || id == 466)
@@ -1438,24 +1471,26 @@ int calcspellcostmp(int id, int cc)
         }
         else
         {
-            return the_ability_db[id]->cost * (100 + sdata(id, cc) * 3) / 100 +
-                sdata(id, cc) / 8;
+            return the_ability_db[id]->cost *
+                (100 + sdata(id, caster.index) * 3) / 100 +
+                sdata(id, caster.index) / 8;
         }
     }
     else
     {
-        return the_ability_db[id]->cost * (50 + cdata[cc].level * 3) / 100;
+        return the_ability_db[id]->cost * (50 + caster.level * 3) / 100;
     }
 }
 
 
 
-int calcspellcoststock(int id, int cc)
+int calc_spell_cost_stock(const Character& caster, int id)
 {
     if (debug::voldemort)
         return 1;
 
-    int cost = the_ability_db[id]->cost * 200 / (sdata(id, cc) * 3 + 100);
+    int cost =
+        the_ability_db[id]->cost * 200 / (sdata(id, caster.index) * 3 + 100);
     if (cost < the_ability_db[id]->cost / 5)
     {
         cost = the_ability_db[id]->cost / 5;

@@ -11,6 +11,7 @@
 #include "lua_env/interface.hpp"
 #include "message.hpp"
 #include "randomgen.hpp"
+#include "talk.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -83,10 +84,11 @@ void do_play_scene()
             notesel(buff);
             {
                 buff(0).clear();
-                std::ifstream in{lua::resolve_path_for_mod(
-                                     "<core>/locale/<LANGUAGE>/lazy/scene.hsp")
-                                     .native(),
-                                 std::ios::binary};
+                std::ifstream in{
+                    lua::resolve_path_for_mod(
+                        "<core>/locale/<LANGUAGE>/lazy/scene.hsp")
+                        .native(),
+                    std::ios::binary};
                 std::string tmp;
                 while (std::getline(in, tmp))
                 {
@@ -138,8 +140,7 @@ void do_play_scene()
                 gmode(0);
                 gcopy(4, 0, 0, windoww, windowh, 0, 0);
                 gmode(2);
-                tc = 0;
-                talk_to_npc();
+                talk_to_npc(cdata.player());
                 init = true;
                 continue;
             }
@@ -212,7 +213,7 @@ void do_play_scene()
         }
         if (strutil::contains(s(0), u8"{chat_"))
         {
-            rc = elona::stoi(strmid(s, 6, 1));
+            current_actor_index = elona::stoi(strmid(s, 6, 1));
             scidxtop = scidx;
             val0 = 1;
             continue;
@@ -270,10 +271,10 @@ void do_play_scene()
         }
         if (strutil::contains(s(0), u8"{actor_"))
         {
-            rc = elona::stoi(strmid(s, 7, 1));
+            const auto actor_index = elona::stoi(strmid(s, 7, 1));
             csvsort(s, s(1), 44);
-            actor(0, rc) = s;
-            actor(1, rc) = s(1);
+            actor(0, actor_index) = s;
+            actor(1, actor_index) = s(1);
         }
     }
 }
@@ -356,13 +357,15 @@ void conquer_lesimas()
         Message::instance().clear();
         txt(u8"あなたは、台座の上に置かれている絢爛な装飾の本を、いぶかしげに眺めた。"s);
         msg_halt();
-        tc = chara_find("core.orphe");
-        talk_to_npc();
+        // BUG: creation of Orphe can fail in a certain condition.
+        const auto orphe = chara_find("core.orphe");
+        assert(orphe);
+        talk_to_npc(*orphe);
         Message::instance().clear();
         txt(u8"青年は悪戯っぽくニヤリと笑い、壁に寄りかかった。"s);
         msg_halt();
         Message::instance().clear();
-        chara_vanquish(chara_find("core.orphe"));
+        chara_vanquish(*orphe);
         screenupdate = -1;
         update_screen();
         txt(u8"…どれくらい時間がたっただろう。氷の瞳の男は、いつの間にか姿を消していた。あなたは不安を振り払い、ゆっくりと本に手を伸ばした…"s);
@@ -437,6 +440,7 @@ void conquer_lesimas()
 void play_the_last_scene_again()
 {
     update_entire_screen();
+    Message::instance().linebreak();
     txt(i18n::s.get("core.win.watch_event_again"));
     if (yes_no())
     {

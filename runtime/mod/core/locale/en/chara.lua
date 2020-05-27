@@ -117,8 +117,9 @@ ELONA.i18n:add {
 
 
 
-ELONA.i18n:add {
-   chara = {
+ELONA.i18n:add_data_text(
+   "core.chara",
+   {
       bug = {
          name = "bug",
       },
@@ -1383,5 +1384,5 @@ ELONA.i18n:add {
       alien = {
          name = "alien",
       },
-   },
-}
+   }
+)

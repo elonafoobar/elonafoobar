@@ -188,8 +188,7 @@ bool LuaCharacter::recruit_as_ally(Character& self)
     {
         return false;
     }
-    elona::rc = self.index;
-    return new_ally_joins() == 1;
+    return !!new_ally_joins(self);
 }
 
 /**
@@ -325,7 +324,7 @@ void LuaCharacter::modify_resistance(
     int delta)
 {
     Element element_value = LuaEnums::ElementTable.ensure_from_string(element);
-    elona::resistmod(self.index, static_cast<int>(element_value), delta);
+    elona::chara_gain_registance(self, static_cast<int>(element_value), delta);
 }
 
 /**
@@ -388,12 +387,7 @@ void LuaCharacter::modify_corruption(Character& self, int delta)
  */
 void LuaCharacter::make_pregnant(Character& self)
 {
-    int tc_bk = self.index;
-    elona::tc = self.index;
-
-    elona::get_pregnant();
-
-    elona::tc = tc_bk;
+    elona::get_pregnant(self);
 }
 
 /**
@@ -403,12 +397,7 @@ void LuaCharacter::make_pregnant(Character& self)
  */
 void LuaCharacter::eat_rotten_food(Character& self)
 {
-    int cc_bk = self.index;
-    elona::cc = self.index;
-
-    elona::eat_rotten_food();
-
-    elona::cc = cc_bk;
+    elona::eat_rotten_food(self);
 }
 
 /**
@@ -419,7 +408,7 @@ void LuaCharacter::eat_rotten_food(Character& self)
  */
 void LuaCharacter::vanquish(Character& self)
 {
-    chara_vanquish(self.index);
+    chara_vanquish(self);
 }
 
 /**
@@ -443,7 +432,7 @@ void LuaCharacter::act_hostile_against(
  */
 void LuaCharacter::refresh(Character& self)
 {
-    chara_refresh(self.index);
+    chara_refresh(self);
 }
 
 /**
@@ -486,7 +475,7 @@ void LuaCharacter::move_to_xy(Character& self, int x, int y)
 {
     // NOTE: setting self.next_position may be safer if the position is changed
     // in the middle of the current turn.
-    cell_movechara(tc, x, y);
+    cell_movechara(self.index, x, y);
 
     if (self.index == 0)
     {

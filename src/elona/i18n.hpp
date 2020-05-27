@@ -6,6 +6,7 @@
 
 #include "../thirdparty/sol2/sol.hpp"
 #include "../util/strutil.hpp"
+#include "data/id.hpp"
 #include "filesystem.hpp"
 #include "lua_env/i18n_manager.hpp"
 #include "lua_env/lua_env.hpp"
@@ -138,38 +139,51 @@ public:
 
 
 
-    // TODO: rename
-    // Typical usage:
-    // i18n::s.get_m("class", "modname.classname", "name")
-    // // The above call is equivalent to:
-    // i18n::s.get("modname.class.classname.name")
-    [[nodiscard]] std::string get_m(
-        const I18NKey& data_type_key,
-        const I18NKey& data_key,
-        const I18NKey& property_name)
+    // Get data-associated text.
+    template <typename... Args>
+    [[nodiscard]] std::string get_data_text(
+        data::PrototypeId data_prototype_id,
+        data::InstanceId data_instance_id,
+        const I18NKey& property_name,
+        Args&&... args)
     {
-        const auto pair = strutil::split_on_string(data_key, ".");
-        const auto key = pair.first + "." + data_type_key + "." + pair.second +
-            "." + property_name;
-        return get(key);
+        if (const auto ret = get_data_text_optional(
+                data_prototype_id,
+                data_instance_id,
+                property_name,
+                std::forward<Args>(args)...))
+        {
+            return *ret;
+        }
+        else
+        {
+            return "<Unknown ID: " + data_prototype_id.get() + "#" +
+                data_instance_id.get() + "." + property_name + ">";
+        }
     }
 
 
 
-    // TODO: rename
-    // Typical usage:
-    // i18n::s.get_m_optional("class", "modname.classname", "name")
-    // // The above call is equivalent to:
-    // i18n::s.get_optional("modname.class.classname.name")
-    [[nodiscard]] optional<std::string> get_m_optional(
-        const I18NKey& data_type_key,
-        const I18NKey& data_key,
-        const I18NKey& property_name)
+    // Get data-associated text if exists.
+    template <typename... Args>
+    [[nodiscard]] optional<std::string> get_data_text_optional(
+        data::PrototypeId data_prototype_id,
+        data::InstanceId data_instance_id,
+        const I18NKey& property_name,
+        Args&&... args)
     {
-        const auto pair = strutil::split_on_string(data_key, ".");
-        const auto key = pair.first + "." + data_type_key + "." + pair.second +
-            "." + property_name;
-        return get_optional(key);
+        if (const auto ret =
+                lua::lua->get_i18n_manager().get_data_text_optional(
+                    data_prototype_id.get() + "#" + data_instance_id.get() +
+                        "." + property_name,
+                    std::forward<Args>(args)...))
+        {
+            return *ret;
+        }
+        else
+        {
+            return none;
+        }
     }
 
 

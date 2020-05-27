@@ -91,6 +91,7 @@ void _draw_progress_bar(int progress, const std::string& message)
 
 void _draw(int frame, int progress)
 {
+    (void)frame;
     _draw_background();
     _draw_progress_bar(progress % 101, "Load mod core");
 }

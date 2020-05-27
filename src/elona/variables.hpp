@@ -4,7 +4,6 @@
 #include "optional.hpp"
 #include "position.hpp"
 #include "random.hpp"
-#include "talk.hpp"
 
 
 #ifdef ELONA_DEFINE_GLOBAL_INSTANCE
@@ -99,6 +98,7 @@ ELONA_EXTERN(int enc);
 
 // talk.cpp
 ELONA_EXTERN(elona_vector2<std::string> actor);
+ELONA_EXTERN(int current_actor_index);
 
 // mef.cpp
 ELONA_EXTERN(elona_vector2<int> mef);
@@ -186,7 +186,6 @@ ELONA_EXTERN(elona_vector1<int> spact);
 ELONA_EXTERN(elona_vector1<int> spell);
 ELONA_EXTERN(elona_vector1<int> sx);
 ELONA_EXTERN(elona_vector1<int> sy);
-ELONA_EXTERN(elona_vector1<int> tc);
 ELONA_EXTERN(elona_vector1<int> tile);
 ELONA_EXTERN(elona_vector1<int> tile_default);
 ELONA_EXTERN(elona_vector1<int> tile_fog);
@@ -302,7 +301,6 @@ ELONA_EXTERN(elona_vector3<int> efmap);
 ELONA_EXTERN(elona_vector3<int> map);
 ELONA_EXTERN(int ammoproc);
 ELONA_EXTERN(int ammoprocbk);
-ELONA_EXTERN(int animode);
 ELONA_EXTERN(int area);
 ELONA_EXTERN(int attacknum);
 ELONA_EXTERN(int attackrange);
@@ -311,7 +309,6 @@ ELONA_EXTERN(int atxspot);
 ELONA_EXTERN(int body);
 ELONA_EXTERN(int bonus);
 ELONA_EXTERN(int camera);
-ELONA_EXTERN(int cc);
 ELONA_EXTERN(int ccbk);
 ELONA_EXTERN(int cellaccess);
 ELONA_EXTERN(int chatesc);
@@ -427,7 +424,6 @@ ELONA_EXTERN(int nowindowanime);
 ELONA_EXTERN(int objfix);
 ELONA_EXTERN(int objlv);
 ELONA_EXTERN(int obvious);
-ELONA_EXTERN(int oc);
 ELONA_EXTERN(int orgdmg);
 ELONA_EXTERN(int page);
 ELONA_EXTERN(int page_bk);
@@ -444,7 +440,6 @@ ELONA_EXTERN(int r2);
 ELONA_EXTERN(int r);
 ELONA_EXTERN(int range_);
 ELONA_EXTERN(int rapidmagic);
-ELONA_EXTERN(int rc);
 ELONA_EXTERN(int reftype);
 ELONA_EXTERN(int reftypeminor);
 ELONA_EXTERN(int returnfromidentify);

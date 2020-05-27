@@ -124,8 +124,8 @@ ModManifest ModManifest::load(const fs::path& path)
 {
     // TODO loading error handling.
     std::ifstream in{path.native()};
-    std::string source{std::istreambuf_iterator<char>{in},
-                       std::istreambuf_iterator<char>{}};
+    std::string source{
+        std::istreambuf_iterator<char>{in}, std::istreambuf_iterator<char>{}};
     const auto value = json5::parse(source);
     const auto& obj = value.get_object();
 
@@ -185,8 +185,9 @@ void ModManifest::save() const
     std::ofstream out{manifest_filepath.native()};
     if (!out)
     {
-        throw std::runtime_error{"failed to open mod manifest file to write: " +
-                                 filepathutil::to_utf8_path(manifest_filepath)};
+        throw std::runtime_error{
+            "failed to open mod manifest file to write: " +
+            filepathutil::to_utf8_path(manifest_filepath)};
     }
     out << json5::stringify(root_obj, opts) << std::endl;
 }

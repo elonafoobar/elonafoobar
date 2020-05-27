@@ -31,8 +31,10 @@ mod.store.global.charas = {}
 Event.register("core.character_created", my_chara_created_handler)
 )"));
 
-    REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    int idx = elona::rc;
+    const auto chara =
+        elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(chara);
+    int idx = chara->index;
     REQUIRE(idx != -1);
     elona::lua::lua->get_mod_manager()
         .get_mod("test_chara_created")
@@ -63,8 +65,10 @@ mod.store.global.hurt_amount = -1
 Event.register("core.character_damaged", my_chara_hurt_handler)
 )"));
 
-    REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    int idx = elona::rc;
+    const auto chara =
+        elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(chara);
+    int idx = chara->index;
     elona::lua::lua->get_mod_manager()
         .get_mod("test_chara_hurt")
         ->env.raw_set("idx", idx);
@@ -96,8 +100,10 @@ mod.store.global.removed_idx = -1
 Event.register("core.character_removed", my_chara_removed_handler)
 )"));
 
-    REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    int idx = elona::rc;
+    const auto chara =
+        elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(chara);
+    int idx = chara->index;
     elona::lua::lua->get_mod_manager()
         .get_mod("test_chara_removed")
         ->env.raw_set("idx", idx);
@@ -127,8 +133,10 @@ mod.store.global.killed_idx = -1
 Event.register("core.character_killed", my_chara_killed_handler)
 )"));
 
-    REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    int idx = elona::rc;
+    const auto chara_opt =
+        elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(chara_opt);
+    int idx = chara_opt->index;
     elona::Character& chara = elona::cdata[idx];
     elona::lua::lua->get_mod_manager()
         .get_mod("test_chara_killed")
@@ -211,8 +219,10 @@ Event.register("core.character_killed", my_chara_killed_handler)
 Event.register("core.character_removed", my_chara_removed_handler)
 )"));
 
-    REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    int idx = elona::rc;
+    const auto chara_opt =
+        elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(chara_opt);
+    int idx = chara_opt->index;
     elona::Character& chara = elona::cdata[idx];
     elona::lua::lua->get_mod_manager()
         .get_mod("test_special_chara_killed")
@@ -248,13 +258,15 @@ end
 Event.register("core.character_refreshed", my_chara_refreshed_handler)
 )"));
 
-    REQUIRE(elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    int idx = elona::rc;
+    const auto chara =
+        elona::chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(chara);
+    int idx = chara->index;
     elona::lua::lua->get_mod_manager()
         .get_mod("test_chara_refreshed")
         ->env.raw_set("idx", idx);
 
-    elona::chara_refresh(idx);
+    elona::chara_refresh(elona::cdata[idx]);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_chara_refreshed", R"(assert(mod.store.global.idx == idx))"));

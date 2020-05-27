@@ -41,7 +41,9 @@ void talk_start()
     gsel(0);
 }
 
-bool talk_setup_variables(Character &chara)
+
+
+bool talk_setup_variables(Character& chara)
 {
     input_halt_input(HaltInput::force);
     if (chara.role == Role::innkeeper)
@@ -55,7 +57,7 @@ bool talk_setup_variables(Character &chara)
     {
         maybe_show_ex_help(8, true);
     }
-    set_npc_religion();
+    set_npc_religion(chara);
     if (scenemode == 0)
     {
         snd("core.chat");
@@ -80,18 +82,15 @@ bool talk_setup_variables(Character &chara)
     if (is_shopkeeper(chara.role))
     {
         invfile = chara.shop_store_id;
-        shop_refresh_on_talk();
+        shop_refresh_on_talk(chara);
     }
 
     return true;
 }
 
-void talk_to_npc()
-{
-    talk_to_npc(cdata[tc]);
-}
 
-void talk_to_npc(Character &chara)
+
+void talk_to_npc(Character& chara)
 {
     if (!talk_setup_variables(chara))
     {
@@ -101,76 +100,76 @@ void talk_to_npc(Character &chara)
     talk_start();
     if (scenemode == 1)
     {
-        talk_wrapper(TalkResult::talk_more);
+        talk_wrapper(chara, TalkResult::talk_more);
         return;
     }
     chatval_unique_chara_id = none;
     chatval_show_impress = true;
-    if (chara.quality == Quality::special && tc >= 16)
+    if (chara.quality == Quality::special && chara.index >= 16)
     {
         chatval_unique_chara_id = charaid2int(chara.id);
         chatval_show_impress = false;
     }
     if (event_processing_event() == 2)
     {
-        talk_wrapper(TalkResult::talk_game_begin);
+        talk_wrapper(chara, TalkResult::talk_game_begin);
         return;
     }
     if (event_processing_event() == 16)
     {
-        talk_wrapper(TalkResult::talk_finish_escort);
+        talk_wrapper(chara, TalkResult::talk_finish_escort);
         return;
     }
     if (chara.sleep != 0)
     {
-        talk_wrapper(TalkResult::talk_sleeping);
+        talk_wrapper(chara, TalkResult::talk_sleeping);
         return;
     }
     if (chara.activity)
     {
-        talk_wrapper(TalkResult::talk_busy);
+        talk_wrapper(chara, TalkResult::talk_busy);
         return;
     }
-    if (tc == 0)
+    if (chara.index == 0)
     {
-        talk_wrapper(TalkResult::talk_end);
+        talk_wrapper(chara, TalkResult::talk_end);
         return;
     }
     if (chara.visited_just_now())
     {
         chara.visited_just_now() = false;
-        talk_wrapper(TalkResult::talk_house_visitor);
+        talk_wrapper(chara, TalkResult::talk_house_visitor);
     }
 
     if (chatval_unique_chara_id &&
-        game_data.current_map != mdata_t::MapId::show_house && tc >= 16)
+        game_data.current_map != mdata_t::MapId::show_house &&
+        chara.index >= 16)
     {
-        talk_wrapper(TalkResult::talk_unique);
+        talk_wrapper(chara, TalkResult::talk_unique);
         return;
     }
 
     if (quest_teleport)
     {
         quest_teleport = false;
-        talk_wrapper(TalkResult::talk_quest_giver);
+        talk_wrapper(chara, TalkResult::talk_quest_giver);
         return;
     }
     buff = "";
 
-    talk_wrapper(TalkResult::talk_npc);
+    talk_wrapper(chara, TalkResult::talk_npc);
 }
 
 
 
-TalkResult talk_more()
+TalkResult talk_more(Character& speaker)
 {
     listmax = 0;
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -182,16 +181,16 @@ TalkResult talk_more()
 }
 
 
-TalkResult talk_sleeping()
+
+TalkResult talk_sleeping(Character& speaker)
 {
     listmax = 0;
-    buff = u8"("s + i18n::s.get("core.talk.is_sleeping", cdata[tc]) + u8")"s;
-    tc = tc * 1 + 0;
+    buff = u8"("s + i18n::s.get("core.talk.is_sleeping", speaker) + u8")"s;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.bye");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -202,16 +201,17 @@ TalkResult talk_sleeping()
     return TalkResult::talk_end;
 }
 
-TalkResult talk_busy()
+
+
+TalkResult talk_busy(Character& speaker)
 {
     listmax = 0;
-    buff = u8"("s + i18n::s.get("core.talk.is_busy", cdata[tc]) + u8")"s;
-    tc = tc * 1 + 0;
+    buff = u8"("s + i18n::s.get("core.talk.is_busy", speaker) + u8")"s;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.bye");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -222,33 +222,44 @@ TalkResult talk_busy()
     return TalkResult::talk_end;
 }
 
-TalkResult talk_ignored()
+
+
+TalkResult talk_ignored(Character& speaker)
 {
     listmax = 0;
-    buff = i18n::s.get("core.talk.ignores_you", cdata[tc]);
-    tc = tc * 1 + 0;
+    buff = i18n::s.get("core.talk.ignores_you", speaker);
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.bye"));
     chatesc = 1;
-    ELONA_TALK_SCENE_CUT();
+    talk_window_query(speaker);
+    if (scenemode)
+    {
+        if (scene_cut == 1)
+        {
+            return TalkResult::talk_end;
+        }
+    }
     return TalkResult::talk_end;
 }
 
 
 
-TalkResult talk_game_begin()
+TalkResult talk_game_begin(Character& initial_speaker)
 {
+    auto speaker = std::ref(initial_speaker);
     if (lomiaseaster)
     {
         cdata.player().blind = 100;
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 0);
-        tc = tc * (chara_find("core.larnneire") == 0) +
-            (chara_find("core.larnneire") != 0) * chara_find("core.larnneire");
+        if (const auto larnneire = chara_find("core.larnneire"))
+        {
+            speaker = std::ref(*larnneire);
+        }
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker.get());
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -258,13 +269,15 @@ TalkResult talk_game_begin()
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 1);
-        tc = tc * (chara_find("core.lomias") == 0) +
-            (chara_find("core.lomias") != 0) * chara_find("core.lomias");
+        if (const auto lomias = chara_find("core.lomias"))
+        {
+            speaker = std::ref(*lomias);
+        }
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker.get());
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -288,13 +301,15 @@ TalkResult talk_game_begin()
         await(500);
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 2);
-        tc = tc * (chara_find("core.larnneire") == 0) +
-            (chara_find("core.larnneire") != 0) * chara_find("core.larnneire");
+        if (const auto larnneire = chara_find("core.larnneire"))
+        {
+            speaker = std::ref(*larnneire);
+        }
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker.get());
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -304,13 +319,15 @@ TalkResult talk_game_begin()
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 3);
-        tc = tc * (chara_find("core.lomias") == 0) +
-            (chara_find("core.lomias") != 0) * chara_find("core.lomias");
+        if (const auto lomias = chara_find("core.lomias"))
+        {
+            speaker = std::ref(*lomias);
+        }
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker.get());
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -320,13 +337,15 @@ TalkResult talk_game_begin()
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 4);
-        tc = tc * (chara_find("core.larnneire") == 0) +
-            (chara_find("core.larnneire") != 0) * chara_find("core.larnneire");
+        if (const auto larnneire = chara_find("core.larnneire"))
+        {
+            speaker = std::ref(*larnneire);
+        }
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker.get());
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -336,13 +355,15 @@ TalkResult talk_game_begin()
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 5);
-        tc = tc * (chara_find("core.lomias") == 0) +
-            (chara_find("core.lomias") != 0) * chara_find("core.lomias");
+        if (const auto lomias = chara_find("core.lomias"))
+        {
+            speaker = std::ref(*lomias);
+        }
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker.get());
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -352,13 +373,15 @@ TalkResult talk_game_begin()
         }
         listmax = 0;
         buff = i18n::s.get_enum("core.talk.unique.lomias.begin.easter_egg", 6);
-        tc = tc * (chara_find("core.larnneire") == 0) +
-            (chara_find("core.larnneire") != 0) * chara_find("core.larnneire");
+        if (const auto larnneire = chara_find("core.larnneire"))
+        {
+            speaker = std::ref(*larnneire);
+        }
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker.get());
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -380,13 +403,15 @@ TalkResult talk_game_begin()
     txt(i18n::s.get("core.talk.unique.lomias.begin.regain_consciousness"));
     listmax = 0;
     buff = i18n::s.get_enum("core.talk.unique.lomias.begin", 0);
-    tc = tc * (chara_find("core.lomias") == 0) +
-        (chara_find("core.lomias") != 0) * chara_find("core.lomias");
+    if (const auto lomias = chara_find("core.lomias"))
+    {
+        speaker = std::ref(*lomias);
+    }
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker.get());
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -396,12 +421,11 @@ TalkResult talk_game_begin()
     }
     listmax = 0;
     buff = i18n::s.get_enum("core.talk.unique.lomias.begin", 1);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker.get());
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -411,12 +435,11 @@ TalkResult talk_game_begin()
     }
     listmax = 0;
     buff = i18n::s.get_enum("core.talk.unique.lomias.begin", 2);
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker.get());
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -426,13 +449,15 @@ TalkResult talk_game_begin()
     }
     listmax = 0;
     buff = i18n::s.get_enum("core.talk.unique.lomias.begin", 3);
-    tc = tc * (chara_find("core.larnneire") == 0) +
-        (chara_find("core.larnneire") != 0) * chara_find("core.larnneire");
+    if (const auto larnneire = chara_find("core.larnneire"))
+    {
+        speaker = std::ref(*larnneire);
+    }
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker.get());
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -442,13 +467,15 @@ TalkResult talk_game_begin()
     }
     listmax = 0;
     buff = i18n::s.get_enum("core.talk.unique.lomias.begin", 4, cdatan(0, 0));
-    tc = tc * (chara_find("core.lomias") == 0) +
-        (chara_find("core.lomias") != 0) * chara_find("core.lomias");
+    if (const auto lomias = chara_find("core.lomias"))
+    {
+        speaker = std::ref(*lomias);
+    }
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker.get());
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -462,6 +489,7 @@ TalkResult talk_game_begin()
 }
 
 
+
 void talk_end()
 {
     quest_teleport = false;
@@ -472,13 +500,15 @@ void talk_end()
     }
 }
 
-std::string talk_get_speaker_name(const Character &chara)
+
+
+std::string talk_get_speaker_name(const Character& chara)
 {
     std::string speaker_name;
 
     if (scenemode)
     {
-        return actor(0, rc);
+        return actor(0, current_actor_index);
     }
     if (cdatan(1, chara.index) == ""s)
     {
@@ -517,12 +547,9 @@ std::string talk_get_speaker_name(const Character &chara)
     return speaker_name;
 }
 
-int talk_window_query()
-{
-    return talk_window_query(cdata[tc]);
-}
 
-int talk_window_query(const Character &chara)
+
+int talk_window_query(const Character& chara)
 {
     const auto speaker_name = talk_get_speaker_name(chara);
     optional<std::pair<int, int>> impress_interest = none;
@@ -534,7 +561,8 @@ int talk_window_query(const Character &chara)
 
     if (chara.portrait != "" || scenemode)
     {
-        const auto portrait_id = scenemode ? actor(1, rc) : chara.portrait;
+        const auto portrait_id =
+            scenemode ? actor(1, current_actor_index) : chara.portrait;
         return talk_window_query(
             portrait_id, none, speaker_name, buff, impress_interest);
     }
@@ -545,11 +573,13 @@ int talk_window_query(const Character &chara)
     }
 }
 
+
+
 int talk_window_query(
     optional_ref<const std::string> portrait_id,
     optional<int> chara_image,
-    const std::string &speaker_name,
-    std::string &text,
+    const std::string& speaker_name,
+    std::string& text,
     optional<std::pair<int, int>> impress_interest)
 {
     cs_bk = -1;
@@ -612,6 +642,8 @@ int talk_window_query(
     }
 }
 
+
+
 void talk_reset_variables()
 {
     snd("core.more1");
@@ -619,7 +651,9 @@ void talk_reset_variables()
     listmax = 0;
 }
 
-void talk_window_init(std::string &text)
+
+
+void talk_window_init(std::string& text)
 {
     if (scenemode == 0)
     {
@@ -636,11 +670,13 @@ void talk_window_init(std::string &text)
     draw("ie_chat", wx + 4, wy - 16);
 }
 
+
+
 void talk_window_show(
     optional_ref<const std::string> portrait_id,
     optional<int> chara_image,
-    const std::string &speaker_name,
-    std::string &text,
+    const std::string& speaker_name,
+    std::string& text,
     optional<std::pair<int, int>> impress_interest)
 {
     gmode(2);
@@ -727,6 +763,8 @@ void talk_window_show(
         mes(x, y, s, {20, 10, 5});
     }
 }
+
+
 
 int talk_guide_quest_client()
 {

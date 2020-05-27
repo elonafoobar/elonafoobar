@@ -426,8 +426,8 @@ fs::path ModManager::resolve_path_for_mod(const std::string& path)
         }
         else
         {
-            throw std::runtime_error{"Mod '" + mod_id +
-                                     "' is disabled: " + path};
+            throw std::runtime_error{
+                "Mod '" + mod_id + "' is disabled: " + path};
         }
     }
 }

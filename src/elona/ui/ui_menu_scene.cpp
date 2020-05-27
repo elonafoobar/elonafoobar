@@ -56,7 +56,6 @@ bool UIMenuScene::init()
     page = 0;
     pagesize = 12;
     cs = 0;
-    cc = 0;
 
     _load_scenes();
 

@@ -32,7 +32,8 @@ static void _load_race_list()
     }
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
-        listn(0, cnt) = i18n::s.get_m("race", listn(1, cnt), "name");
+        listn(0, cnt) =
+            the_race_db.get_text(data::InstanceId{listn(1, cnt)}, "name");
         if (list(0, cnt) == 1)
         {
             listn(0, cnt) = u8"(extra)"s + listn(0, cnt);
@@ -87,8 +88,7 @@ void UIMenuCharamakeRace::_draw_race_info(data::InstanceId race_id)
 
     gmode(2);
     draw_race_or_class_info(
-        i18n::s.get_m_optional("race", race_id.get(), "description")
-            .value_or(""));
+        the_race_db.get_text_optional(race_id, "description").value_or(""));
 }
 
 

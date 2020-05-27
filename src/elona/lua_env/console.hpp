@@ -41,11 +41,6 @@ public:
     void init_constants();
     void init_environment();
 
-    void toggle()
-    {
-        _enabled = !_enabled;
-    }
-
     void draw();
     void print(const std::string&);
     void grab_input();

@@ -38,19 +38,14 @@ public:
     template <typename T, typename N>
     elona::optional<T> optional(const N& name) const
     {
-        if (storage[name] == sol::lua_nil)
+        if (const auto it = storage.get<sol::optional<T>>(name))
+        {
+            return *it;
+        }
+        else
         {
             return none;
         }
-
-        sol::optional<T> it = storage[name];
-
-        if (!it)
-        {
-            return none;
-        }
-
-        return *it;
     }
 
     template <typename T, typename N>

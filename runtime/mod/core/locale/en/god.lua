@@ -113,8 +113,9 @@ ELONA.i18n:add {
 
 
 
-ELONA.i18n:add {
-   god = {
+ELONA.i18n:add_data_text(
+   "core.god",
+   {
       eyth = {
          name = "Eyth of Infidel",
       },
@@ -284,5 +285,5 @@ ELONA.i18n:add {
             "NOTE it is machine-translated: Together foreaver...right? I will not let you go...until you die.",
          },
       },
-   },
-}
+   }
+)

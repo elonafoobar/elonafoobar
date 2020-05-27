@@ -108,19 +108,18 @@ int _get_random_npc_id()
 
 
 
-int chara_create_internal(int chara_id)
+optional<int> chara_create_internal(int slot, int chara_id)
 {
-    if (rc == -1)
+    if (slot == -1)
     {
-        rc = chara_get_free_slot();
-        if (rc == -1)
+        slot = chara_get_free_slot();
+        if (slot == -1)
         {
-            rc = 56;
-            return 0;
+            return none;
         }
     }
-    chara_delete(rc);
-    if (rc == 0)
+    chara_delete(slot);
+    if (slot == 0)
     {
         p = 10;
     }
@@ -159,7 +158,7 @@ int chara_create_internal(int chara_id)
         }
     }
 
-    cm = 1;
+    cm = slot + 1;
     cmshade = 0;
     ++npcmemory(1, chara_id);
     if (chara_id == 323)
@@ -190,19 +189,19 @@ int chara_create_internal(int chara_id)
     }
     else
     {
-        chara_db_set_stats(int2charaid(chara_id));
+        chara_db_set_stats(cdata[slot], int2charaid(chara_id));
     }
     if (cmshade)
     {
-        cdatan(0, rc) = i18n::s.get("core.chara.job.shade");
-        cdata[rc].image = 280;
+        cdatan(0, slot) = i18n::s.get("core.chara.job.shade");
+        cdata[slot].image = 280;
     }
-    cdata[rc].quality = static_cast<Quality>(fixlv);
-    cdata[rc].index = rc;
-    initialize_character();
+    cdata[slot].quality = static_cast<Quality>(fixlv);
+    cdata[slot].index = slot;
+    initialize_character(cdata[slot]);
 
-    rtval = rc;
-    return 1;
+    rtval = slot;
+    return slot;
 }
 
 
@@ -218,8 +217,8 @@ bool is_in_map(const Position& position)
 
 Position get_random_position(const Position& base_position, int n)
 {
-    return {base_position.x - rnd(n) + rnd(n),
-            base_position.y - rnd(n) + rnd(n)};
+    return {
+        base_position.x - rnd(n) + rnd(n), base_position.y - rnd(n) + rnd(n)};
 }
 
 
@@ -267,11 +266,12 @@ int chara_get_free_slot_force()
     }
 
     std::vector<int> slots;
-    for (auto&& cc : cdata.others())
+    for (auto&& chara : cdata.others())
     {
-        if (cc.state() == Character::State::alive && cc.role == Role::none)
+        if (chara.state() == Character::State::alive &&
+            chara.role == Role::none)
         {
-            slots.push_back(cc.index);
+            slots.push_back(chara.index);
         }
     }
 
@@ -283,7 +283,7 @@ int chara_get_free_slot_force()
 
     ret = choice(slots);
     // Force to destroy the character in `ret`.
-    chara_vanquish(ret);
+    chara_vanquish(cdata[ret]);
     return ret;
 }
 
@@ -327,7 +327,7 @@ bool can_place_character_at(const Position& position, bool allow_stairs)
 
 
 bool chara_place_internal(
-    Character& cc,
+    Character& chara,
     optional<Position> position,
     bool enemy_respawn)
 {
@@ -338,7 +338,7 @@ bool chara_place_internal(
     {
         if (i == 99)
         {
-            if (cc.index >= 57)
+            if (chara.index >= 57)
             {
                 // Give up.
                 return false;
@@ -354,7 +354,7 @@ bool chara_place_internal(
             x = (i - 100) % map_data.width;
             if (y >= map_data.height)
             {
-                if (cc.index != 0)
+                if (chara.index != 0)
                 {
                     return false;
                 }
@@ -417,44 +417,44 @@ bool chara_place_internal(
             }
         }
 
-        if (can_place_character_at({x, y}, cc.index == 0 || position))
+        if (can_place_character_at({x, y}, chara.index == 0 || position))
         {
             break;
         }
     }
 
     // Do place character.
-    cc.initial_position = cc.position = {x, y};
-    cell_data.at(x, y).chara_index_plus_one = cc.index + 1;
+    chara.initial_position = chara.position = {x, y};
+    cell_data.at(x, y).chara_index_plus_one = chara.index + 1;
 
     return true; // placed successfully.
 }
 
 
 
-void failed_to_place_character(Character& cc)
+void failed_to_place_character(Character& chara)
 {
-    if (cc.index < 16)
+    if (chara.index < 16)
     {
-        cc.set_state(Character::State::pet_in_other_map);
-        txt(i18n::s.get("core.chara.place_failure.ally", cc));
+        chara.set_state(Character::State::pet_in_other_map);
+        txt(i18n::s.get("core.chara.place_failure.ally", chara));
     }
     else
     {
-        txt(i18n::s.get("core.chara.place_failure.other", cc));
-        cc.set_state(Character::State::empty);
+        txt(i18n::s.get("core.chara.place_failure.other", chara));
+        chara.set_state(Character::State::empty);
         // Exclude town residents because they occupy character slots even
         // if they are dead.
-        modify_crowd_density(cc.index, -1);
+        modify_crowd_density(chara.index, -1);
     }
-    if (cc.role != Role::none)
+    if (chara.role != Role::none)
     {
-        cc.set_state(Character::State::villager_dead);
+        chara.set_state(Character::State::villager_dead);
     }
-    if (cc.role == Role::adventurer)
+    if (chara.role == Role::adventurer)
     {
-        cc.set_state(Character::State::adventurer_dead);
-        cc.time_to_revive = game_data.date.hours() + 24 + rnd(12);
+        chara.set_state(Character::State::adventurer_dead);
+        chara.time_to_revive = game_data.date.hours() + 24 + rnd(12);
     }
 }
 
@@ -480,7 +480,7 @@ elona_vector1<std::string> usertxt;
 
 Character::Character()
     : growth_buffs(10)
-    , body_parts(30)
+    , equipment_slots(30)
     , buffs(16)
     , attr_adjs(10)
 {
@@ -543,30 +543,27 @@ CData::CData()
 
 
 
-bool chara_place()
+bool chara_place(Character& chara)
 {
-    if (rc == -1)
-        return false;
-
-    if (rc == 56)
+    if (chara.index == cdata.tmp().index)
     {
-        cdata[rc].set_state(Character::State::empty);
+        chara.set_state(Character::State::empty);
         return false;
     }
 
-    if (game_data.mount != 0 && game_data.mount == rc)
+    if (game_data.mount != 0 && game_data.mount == chara.index)
     {
-        cdata[rc].position = cdata.player().position;
+        chara.position = cdata.player().position;
         return true;
     }
 
     const auto success = chara_place_internal(
-        cdata[rc],
+        chara,
         cxinit >= 0 ? optional<Position>({cxinit, cyinit}) : none,
         cxinit == -2);
     if (!success)
     {
-        failed_to_place_character(cdata[rc]);
+        failed_to_place_character(chara);
     }
 
     return success;
@@ -574,59 +571,57 @@ bool chara_place()
 
 
 
-void initialize_character()
+void initialize_character(Character& chara)
 {
     if (mode != 1)
     {
-        chara_add_quality_parens();
+        chara_add_quality_parens(chara);
     }
-    cdata[rc].interest = 100;
-    cdata[rc].impression = 50;
-    cdata[rc].vision_distance = 14;
-    if (cdata[rc].id == CharaId::maid)
+    chara.interest = 100;
+    chara.impression = 50;
+    chara.vision_distance = 14;
+    if (chara.id == CharaId::maid)
     {
-        cdata[rc].image = rnd(33) * 2 + cdata[rc].sex + 1;
+        chara.image = rnd(33) * 2 + chara.sex + 1;
     }
-    if (rc == 0)
+    if (chara.index == 0)
     {
-        cdata[rc].nutrition = 9000;
+        chara.nutrition = 9000;
     }
     else
     {
-        cdata[rc].nutrition = 5000 + rnd(4000);
+        chara.nutrition = 5000 + rnd(4000);
     }
-    cdata[rc].height = cdata[rc].height +
-        rnd_capped((cdata[rc].height / 5 + 1)) -
-        rnd_capped((cdata[rc].height / 5 + 1));
-    cdata[rc].weight =
-        cdata[rc].height * cdata[rc].height * (rnd(6) + 18) / 10000;
-    update_required_experience(cdata[rc]);
-    chara_init_common_skills(cdata[rc]);
-    if (cdata[rc].portrait == "__random__")
+    chara.height = chara.height + rnd_capped((chara.height / 5 + 1)) -
+        rnd_capped((chara.height / 5 + 1));
+    chara.weight = chara.height * chara.height * (rnd(6) + 18) / 10000;
+    update_required_experience(chara);
+    chara_init_common_skills(chara);
+    if (chara.portrait == "__random__")
     {
         const auto index = std::to_string(1 + rnd(32));
-        const auto man_or_woman = cdata[rc].sex ? "woman" : "man";
-        cdata[rc].portrait = "core."s + man_or_woman + index;
+        const auto man_or_woman = chara.sex ? "woman" : "man";
+        chara.portrait = "core."s + man_or_woman + index;
     }
-    cdata[rc].personality = rnd(4);
-    cdata[rc].talk_type = rnd(7);
-    supply_initial_equipments();
-    chara_refresh(rc);
-    modify_crowd_density(rc, 1);
-    cdata[rc].hp = cdata[rc].max_hp;
-    cdata[rc].mp = cdata[rc].max_mp;
-    cdata[rc].sp = cdata[rc].max_sp;
-    if (rc == 0)
+    chara.personality = rnd(4);
+    chara.talk_type = rnd(7);
+    supply_initial_equipments(chara);
+    chara_refresh(chara);
+    modify_crowd_density(chara.index, 1);
+    chara.hp = chara.max_hp;
+    chara.mp = chara.max_mp;
+    chara.sp = chara.max_sp;
+    if (chara.index == 0)
     {
         game_data.initial_cart_limit = 80000;
         game_data.current_cart_limit = game_data.initial_cart_limit;
     }
-    if (cdata[rc].has_lay_hand())
+    if (chara.has_lay_hand())
     {
-        cdata[rc].is_lay_hand_available() = true;
+        chara.is_lay_hand_available() = true;
     }
 
-    cdata[rc].set_state(Character::State::alive);
+    chara.set_state(Character::State::alive);
 
     cm = 0;
 }
@@ -647,35 +642,34 @@ optional_ref<Character> chara_create(int slot, int chara_id, int x, int y)
         cxinit = x;
         cyinit = y;
     }
-    rc = slot;
-    int stat = chara_create_internal(chara_id == 0 ? -1 : chara_id);
+    const auto result =
+        chara_create_internal(slot, chara_id == 0 ? -1 : chara_id);
     initlv = 0;
     voidlv = 0;
-    if (stat == 1)
+    if (result)
     {
-        if (rc == 56)
+        if (*result == 56)
         {
-            cdata[rc].set_state(Character::State::empty);
-            --npcmemory(1, charaid2int(cdata[rc].id));
+            cdata[*result].set_state(Character::State::empty);
+            --npcmemory(1, charaid2int(cdata[*result].id));
             return cdata.tmp();
         }
-        if (rc != 0)
+        if (*result != 0)
         {
             if (x != -1)
             {
-                success = chara_place();
+                success = chara_place(cdata[*result]);
             }
         }
     }
     else
     {
-        rc = 56;
         return none;
     }
 
     if (success)
     {
-        return cdata[rc];
+        return cdata[*result];
     }
     else
     {
@@ -685,12 +679,11 @@ optional_ref<Character> chara_create(int slot, int chara_id, int x, int y)
 
 
 
-void chara_refresh(int cc)
+void chara_refresh(Character& chara)
 {
-    int rp = 0;
     int rp2 = 0;
     int rp3 = 0;
-    if (cc == 0)
+    if (chara.index == 0)
     {
         game_data.seven_league_boot_effect = 0;
         game_data.ether_disease_speed = 0;
@@ -702,30 +695,28 @@ void chara_refresh(int cc)
     }
     for (int cnt = 0; cnt < 600; ++cnt)
     {
-        sdata(cnt, cc) = sdata.get(cnt, cc).original_level;
+        sdata(cnt, chara.index) = sdata.get(cnt, chara.index).original_level;
     }
-    if (cc == 0)
+    if (chara.index == 0)
     {
-        cdata[cc].clear_flags();
+        chara.clear_flags();
         if (trait(161) != 0)
         {
-            for (int i = 0; i < 30; ++i)
+            for (auto&& equipment_slot : chara.equipment_slots)
             {
-                if (cdata[cc].body_parts[i] % 10000 == 0)
+                if (!equipment_slot.equipment)
                 {
                     continue;
                 }
-                rp = cdata[cc].body_parts[i] % 10000 - 1;
-                if (inv[rp].weight >= 1000)
+                if (equipment_slot.equipment->weight >= 1000)
                 {
-                    cdata[cc].body_parts[i] =
-                        cdata[cc].body_parts[i] / 10000 * 10000;
-                    inv[rp].body_part = 0;
+                    equipment_slot.equipment->body_part = 0;
+                    equipment_slot.unequip();
                 }
             }
         }
     }
-    else if (cdata[cc].id == CharaId::user)
+    else if (chara.id == CharaId::user)
     {
         // Vanilla-compatible CNPC is not supported now.
     }
@@ -733,103 +724,104 @@ void chara_refresh(int cc)
     {
         for (size_t i = 0; i < 32 * 30; ++i)
         {
-            cdata[cc]._flags[i] =
-                the_character_db[charaid2int(cdata[cc].id)]->_flags[i];
+            chara._flags[i] =
+                the_character_db[charaid2int(chara.id)]->_flags[i];
         }
     }
-    for (auto&& growth_buff : cdata[cc].growth_buffs)
+    for (auto&& growth_buff : chara.growth_buffs)
     {
         growth_buff = 0;
     }
-    cdata[cc].dv = 0;
-    cdata[cc].pv = 0;
-    cdata[cc].hit_bonus = 0;
-    cdata[cc].damage_bonus = 0;
-    cdata[cc].combat_style.reset();
+    chara.dv = 0;
+    chara.pv = 0;
+    chara.hit_bonus = 0;
+    chara.damage_bonus = 0;
+    chara.combat_style.reset();
     attacknum = 0;
-    cdata[cc].rate_to_pierce = 0;
-    cdata[cc].rate_of_critical_hit = 0;
-    cdata[cc].curse_power = 0;
-    cdata[cc].extra_attack = 0;
-    cdata[cc].extra_shot = 0;
-    cdata[cc].sum_of_equipment_weight = 0;
-    cdata[cc].decrease_physical_damage = 0;
-    cdata[cc].nullify_damage = 0;
-    cdata[cc].cut_counterattack = 0;
-    for (int i = 0; i < 30; ++i)
+    chara.rate_to_pierce = 0;
+    chara.rate_of_critical_hit = 0;
+    chara.curse_power = 0;
+    chara.extra_attack = 0;
+    chara.extra_shot = 0;
+    chara.sum_of_equipment_weight = 0;
+    chara.decrease_physical_damage = 0;
+    chara.nullify_damage = 0;
+    chara.cut_counterattack = 0;
+
+    for (const auto& equipment_slot : chara.equipment_slots)
     {
-        if (cdata[cc].body_parts[i] % 10000 == 0)
+        if (!equipment_slot.equipment)
         {
             continue;
         }
-        rp = cdata[cc].body_parts[i] % 10000 - 1;
-        cdata[cc].sum_of_equipment_weight += inv[rp].weight;
-        if (inv[rp].skill == 168)
+        const auto& equipment = *equipment_slot.equipment;
+        chara.sum_of_equipment_weight += equipment.weight;
+        if (equipment.skill == 168)
         {
-            cdata[cc].combat_style.set_shield();
+            chara.combat_style.set_shield();
         }
-        cdata[cc].dv += inv[rp].dv;
-        cdata[cc].pv += inv[rp].pv;
-        if (inv[rp].dice_x == 0)
+        chara.dv += equipment.dv;
+        chara.pv += equipment.pv;
+        if (equipment.dice_x == 0)
         {
-            cdata[cc].hit_bonus += inv[rp].hit_bonus;
-            cdata[cc].damage_bonus += inv[rp].damage_bonus;
-            cdata[cc].pv += inv[rp].enhancement * 2 +
-                (inv[rp].curse_state == CurseState::blessed) * 2;
+            chara.hit_bonus += equipment.hit_bonus;
+            chara.damage_bonus += equipment.damage_bonus;
+            chara.pv += equipment.enhancement * 2 +
+                (equipment.curse_state == CurseState::blessed) * 2;
         }
-        else if (cdata[cc].body_parts[i] / 10000 == 5)
+        else if (equipment_slot.type == 5)
         {
             ++attacknum;
         }
-        if (inv[rp].curse_state == CurseState::cursed)
+        if (equipment.curse_state == CurseState::cursed)
         {
-            cdata[cc].curse_power += 20;
+            chara.curse_power += 20;
         }
-        if (inv[rp].curse_state == CurseState::doomed)
+        if (equipment.curse_state == CurseState::doomed)
         {
-            cdata[cc].curse_power += 100;
+            chara.curse_power += 100;
         }
-        if (inv[rp].material == 8)
+        if (equipment.material == 8)
         {
-            if (cc == 0)
+            if (chara.index == 0)
             {
                 game_data.ether_disease_speed += 5;
             }
         }
-        for (int cnt = 0; cnt < 15; ++cnt)
+
+        for (const auto& enchantment : equipment.enchantments)
         {
-            if (inv[rp].enchantments[cnt].id == 0)
+            if (enchantment.id == 0)
             {
                 break;
             }
-            rp2 = inv[rp].enchantments[cnt].id;
+            rp2 = enchantment.id;
             if (rp2 >= 10000)
             {
                 rp3 = rp2 % 10000;
                 rp2 = rp2 / 10000;
                 if (rp2 == 1)
                 {
-                    sdata(rp3, cc) += inv[rp].enchantments[cnt].power / 50 + 1;
+                    sdata(rp3, chara.index) += enchantment.power / 50 + 1;
                     continue;
                 }
                 if (rp2 == 2)
                 {
-                    sdata(rp3, cc) += inv[rp].enchantments[cnt].power / 2;
-                    if (sdata(rp3, cc) < 0)
+                    sdata(rp3, chara.index) += enchantment.power / 2;
+                    if (sdata(rp3, chara.index) < 0)
                     {
-                        sdata(rp3, cc) = 1;
+                        sdata(rp3, chara.index) = 1;
                     }
                     continue;
                 }
                 if (rp2 == 3)
                 {
-                    if (sdata.get(rp3, cc).original_level != 0)
+                    if (sdata.get(rp3, chara.index).original_level != 0)
                     {
-                        sdata(rp3, cc) +=
-                            inv[rp].enchantments[cnt].power / 50 + 1;
-                        if (sdata(rp3, cc) < 1)
+                        sdata(rp3, chara.index) += enchantment.power / 50 + 1;
+                        if (sdata(rp3, chara.index) < 1)
                         {
-                            sdata(rp3, cc) = 1;
+                            sdata(rp3, chara.index) = 1;
                         }
                     }
                     continue;
@@ -839,7 +831,7 @@ void chara_refresh(int cc)
             {
                 if (rp2 == 56)
                 {
-                    if (cc == 0)
+                    if (chara.index == 0)
                     {
                         game_data.catches_god_signal = 1;
                         continue;
@@ -847,7 +839,7 @@ void chara_refresh(int cc)
                 }
                 if (rp2 == 59)
                 {
-                    if (cc == 0)
+                    if (chara.index == 0)
                     {
                         game_data.reveals_religion = 1;
                         continue;
@@ -855,118 +847,112 @@ void chara_refresh(int cc)
                 }
                 if (rp2 == 29)
                 {
-                    sdata(18, cc) += inv[rp].enchantments[cnt].power / 50 + 1;
-                    if (cc == 0)
+                    sdata(18, chara.index) += enchantment.power / 50 + 1;
+                    if (chara.index == 0)
                     {
                         game_data.seven_league_boot_effect +=
-                            inv[rp].enchantments[cnt].power / 8;
+                            enchantment.power / 8;
                         continue;
                     }
                 }
                 if (rp2 == 32)
                 {
-                    cdata[cc].is_floating() = true;
+                    chara.is_floating() = true;
                     continue;
                 }
                 if (rp2 == 35)
                 {
-                    cdata[cc].can_see_invisible() = true;
+                    chara.can_see_invisible() = true;
                     continue;
                 }
                 if (rp2 == 23)
                 {
-                    cdata[cc].is_immune_to_blindness() = true;
+                    chara.is_immune_to_blindness() = true;
                     continue;
                 }
                 if (rp2 == 24)
                 {
-                    cdata[cc].is_immune_to_paralyzation() = true;
+                    chara.is_immune_to_paralyzation() = true;
                     continue;
                 }
                 if (rp2 == 25)
                 {
-                    cdata[cc].is_immune_to_confusion() = true;
+                    chara.is_immune_to_confusion() = true;
                     continue;
                 }
                 if (rp2 == 26)
                 {
-                    cdata[cc].is_immune_to_fear() = true;
+                    chara.is_immune_to_fear() = true;
                     continue;
                 }
                 if (rp2 == 27)
                 {
-                    cdata[cc].is_immune_to_sleep() = true;
+                    chara.is_immune_to_sleep() = true;
                     continue;
                 }
                 if (rp2 == 28)
                 {
-                    cdata[cc].is_immune_to_poison() = true;
+                    chara.is_immune_to_poison() = true;
                     continue;
                 }
                 if (rp2 == 42)
                 {
-                    cdata[cc].can_digest_rotten_food() = true;
+                    chara.can_digest_rotten_food() = true;
                     continue;
                 }
                 if (rp2 == 41)
                 {
-                    cdata[cc].is_protected_from_thieves() = true;
+                    chara.is_protected_from_thieves() = true;
                     continue;
                 }
                 if (rp2 == 55)
                 {
-                    cdata[cc].cures_bleeding_quickly() = true;
+                    chara.cures_bleeding_quickly() = true;
                     continue;
                 }
                 if (rp2 == 52)
                 {
-                    cdata[cc].decrease_physical_damage +=
-                        inv[rp].enchantments[cnt].power / 40 + 5;
+                    chara.decrease_physical_damage +=
+                        enchantment.power / 40 + 5;
                     continue;
                 }
                 if (rp2 == 53)
                 {
-                    cdata[cc].nullify_damage +=
-                        inv[rp].enchantments[cnt].power / 60 + 3;
+                    chara.nullify_damage += enchantment.power / 60 + 3;
                     continue;
                 }
                 if (rp2 == 54)
                 {
-                    cdata[cc].cut_counterattack +=
-                        inv[rp].enchantments[cnt].power / 5;
+                    chara.cut_counterattack += enchantment.power / 5;
                     continue;
                 }
                 if (rp2 == 44)
                 {
-                    cdata[cc].rate_of_critical_hit +=
-                        inv[rp].enchantments[cnt].power / 50;
+                    chara.rate_of_critical_hit += enchantment.power / 50;
                     continue;
                 }
                 if (rp2 == 39)
                 {
-                    cdata[cc].rate_to_pierce +=
-                        inv[rp].enchantments[cnt].power / 50;
+                    chara.rate_to_pierce += enchantment.power / 50;
                     continue;
                 }
                 if (rp2 == 50)
                 {
-                    cdata[cc].extra_attack +=
-                        inv[rp].enchantments[cnt].power / 15;
+                    chara.extra_attack += enchantment.power / 15;
                     continue;
                 }
                 if (rp2 == 51)
                 {
-                    cdata[cc].extra_shot +=
-                        inv[rp].enchantments[cnt].power / 15;
-                    cdata[cc].extra_shot = 100;
+                    chara.extra_shot += enchantment.power / 15;
+                    chara.extra_shot = 100;
                     continue;
                 }
                 if (rp2 == 21 || rp2 == 45 || rp2 == 46 || rp2 == 47)
                 {
-                    cdata[cc].has_cursed_equipments() = true;
+                    chara.has_cursed_equipments() = true;
                     continue;
                 }
-                if (cc == 0)
+                if (chara.index == 0)
                 {
                     if (rp2 == 30)
                     {
@@ -982,43 +968,43 @@ void chara_refresh(int cc)
             }
         }
     }
+
     if (refreshmode == 1)
     {
         buff += u8"\n"s;
         buff += u8"<title1>◆ 装備による能力の修正<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
-            sdata(cnt, 56) = sdata.get(cnt, cc).original_level;
-            if (sdata(cnt, 56) != sdata(cnt, cc))
+            sdata(cnt, 56) = sdata.get(cnt, chara.index).original_level;
+            if (sdata(cnt, 56) != sdata(cnt, chara.index))
             {
-                rp = sdata(cnt, cc) - sdata(cnt, 56);
-                cnvbonus(cnt, rp);
+                cnvbonus(cnt, sdata(cnt, chara.index) - sdata(cnt, 56));
             }
         }
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        if (cdata[cc].attr_adjs[cnt] != 0)
+        if (chara.attr_adjs[cnt] != 0)
         {
-            if (cdata[cc].quality >= Quality::miracle)
+            if (chara.quality >= Quality::miracle)
             {
-                if (cdata[cc].attr_adjs[cnt] <
-                    sdata.get(10 + cnt, cc).original_level / 5)
+                if (chara.attr_adjs[cnt] <
+                    sdata.get(10 + cnt, chara.index).original_level / 5)
                 {
-                    cdata[cc].attr_adjs[cnt] =
-                        sdata.get(10 + cnt, cc).original_level / 5;
+                    chara.attr_adjs[cnt] =
+                        sdata.get(10 + cnt, chara.index).original_level / 5;
                 }
             }
-            sdata(10 + cnt, cc) += cdata[cc].attr_adjs[cnt];
+            sdata(10 + cnt, chara.index) += chara.attr_adjs[cnt];
         }
-        if (sdata(10 + cnt, cc) < 1)
+        if (sdata(10 + cnt, chara.index) < 1)
         {
-            sdata(10 + cnt, cc) = 1;
+            sdata(10 + cnt, chara.index) = 1;
         }
     }
-    if (cc == 0)
+    if (chara.index == 0)
     {
-        apply_god_blessing(cc);
+        god_apply_blessing(chara);
         for (int cnt = 0; cnt < 217; ++cnt)
         {
             if (trait(cnt) != 0)
@@ -1027,157 +1013,156 @@ void chara_refresh(int cc)
             }
         }
     }
-    if (cdata[cc].combat_style.shield())
+    if (chara.combat_style.shield())
     {
-        if (cdata[cc].pv > 0)
+        if (chara.pv > 0)
         {
-            cdata[cc].pv =
-                cdata[cc].pv * (120 + int(std::sqrt(sdata(168, cc))) * 2) / 100;
+            chara.pv = chara.pv *
+                (120 + int(std::sqrt(sdata(168, chara.index))) * 2) / 100;
         }
     }
     else if (attacknum == 1)
     {
-        cdata[cc].combat_style.set_two_hand();
+        chara.combat_style.set_two_hand();
     }
     else if (attacknum != 0)
     {
-        cdata[cc].combat_style.set_dual_wield();
+        chara.combat_style.set_dual_wield();
     }
-    cdata[cc].max_mp =
-        clamp(
-            ((sdata(16, cc) * 2 + sdata(15, cc) + sdata(14, cc) / 3) *
-                 cdata[cc].level / 25 +
-             sdata(16, cc)),
-            1,
-            1000000) *
-        sdata(3, cc) / 100;
-    cdata[cc].max_hp =
-        clamp(
-            ((sdata(11, cc) * 2 + sdata(10, cc) + sdata(15, cc) / 3) *
-                 cdata[cc].level / 25 +
-             sdata(11, cc)),
-            1,
-            1000000) *
-            sdata(2, cc) / 100 +
+    chara.max_mp = clamp(
+                       ((sdata(16, chara.index) * 2 + sdata(15, chara.index) +
+                         sdata(14, chara.index) / 3) *
+                            chara.level / 25 +
+                        sdata(16, chara.index)),
+                       1,
+                       1000000) *
+        sdata(3, chara.index) / 100;
+    chara.max_hp = clamp(
+                       ((sdata(11, chara.index) * 2 + sdata(10, chara.index) +
+                         sdata(15, chara.index) / 3) *
+                            chara.level / 25 +
+                        sdata(11, chara.index)),
+                       1,
+                       1000000) *
+            sdata(2, chara.index) / 100 +
         5;
-    cdata[cc].max_sp =
-        100 + (sdata(15, cc) + sdata(11, cc)) / 5 + trait(24) * 8;
-    if (cdata[cc].max_mp < 1)
+    chara.max_sp = 100 + (sdata(15, chara.index) + sdata(11, chara.index)) / 5 +
+        trait(24) * 8;
+    if (chara.max_mp < 1)
     {
-        cdata[cc].max_mp = 1;
+        chara.max_mp = 1;
     }
-    if (cdata[cc].max_hp < 1)
+    if (chara.max_hp < 1)
     {
-        cdata[cc].max_hp = 1;
+        chara.max_hp = 1;
     }
-    if (cc >= ELONA_MAX_PARTY_CHARACTERS || false)
+    if (chara.index >= ELONA_MAX_PARTY_CHARACTERS || false)
     {
-        cdata[cc].dv = cdata[cc].level / 2 +
-            cdata[cc].dv * cdata[cc].dv_correction_value / 100 +
-            cdata[cc].dv_correction_value - 100;
-        cdata[cc].pv = cdata[cc].level +
-            (cdata[cc].pv + cdata[cc].level / 2 +
-             cdata[cc].pv_correction_value / 25) *
-                cdata[cc].pv_correction_value / 100;
-        if (cdata[cc].quality == Quality::great)
+        chara.dv = chara.level / 2 +
+            chara.dv * chara.dv_correction_value / 100 +
+            chara.dv_correction_value - 100;
+        chara.pv = chara.level +
+            (chara.pv + chara.level / 2 + chara.pv_correction_value / 25) *
+                chara.pv_correction_value / 100;
+        if (chara.quality == Quality::great)
         {
-            cdata[cc].max_hp = cdata[cc].max_hp * 3 / 2;
+            chara.max_hp = chara.max_hp * 3 / 2;
         }
-        if (cdata[cc].quality >= Quality::miracle)
+        if (chara.quality >= Quality::miracle)
         {
-            cdata[cc].max_hp = cdata[cc].max_hp * 5;
+            chara.max_hp = chara.max_hp * 5;
         }
     }
     else
     {
-        cdata[cc].max_hp += 10;
+        chara.max_hp += 10;
     }
-    for (auto&& buff : cdata[cc].buffs)
+    for (auto&& buff : chara.buffs)
     {
         if (buff.id == 0)
         {
             break;
         }
-        buff_apply(
-            cdata[cc], *the_buff_db.get_id_from_legacy(buff.id), buff.power);
+        buff_apply(chara, *the_buff_db.get_id_from_legacy(buff.id), buff.power);
     }
-    if (cdata[cc].combat_style.dual_wield())
+    if (chara.combat_style.dual_wield())
     {
-        cdata[cc].extra_attack += int(std::sqrt(sdata(166, cc))) * 3 / 2 + 4;
+        chara.extra_attack +=
+            int(std::sqrt(sdata(166, chara.index))) * 3 / 2 + 4;
     }
-    if (sdata(186, cc))
+    if (sdata(186, chara.index))
     {
-        cdata[cc].rate_of_critical_hit += int(std::sqrt(sdata(186, cc))) + 2;
+        chara.rate_of_critical_hit +=
+            int(std::sqrt(sdata(186, chara.index))) + 2;
     }
-    if (cdata[cc].rate_of_critical_hit > 30)
+    if (chara.rate_of_critical_hit > 30)
     {
-        cdata[cc].hit_bonus += (cdata[cc].rate_of_critical_hit - 30) * 2;
-        cdata[cc].rate_of_critical_hit = 30;
+        chara.hit_bonus += (chara.rate_of_critical_hit - 30) * 2;
+        chara.rate_of_critical_hit = 30;
     }
     refresh_burden_state();
-    refresh_speed(cdata[cc]);
-    cdata[cc].needs_refreshing_status() = false;
+    refresh_speed(chara);
+    chara.needs_refreshing_status() = false;
 
     lua::lua->get_event_manager().trigger(
-        lua::CharacterInstanceEvent("core.character_refreshed", cdata[cc]));
+        lua::CharacterInstanceEvent("core.character_refreshed", chara));
 }
 
 
 
-int relationbetween(int c1, int c2)
+int relation_between(const Character& a, const Character& b)
 {
-    if (cdata[c1].relationship >= -2)
+    if (a.relationship >= -2)
     {
-        if (cdata[c2].relationship <= -3)
+        if (b.relationship <= -3)
         {
             return -3;
         }
     }
-    else if (cdata[c2].relationship >= -2)
+    else if (b.relationship >= -2)
     {
         return -3;
     }
     return 0;
 }
 
-int chara_find(data::InstanceId chara_id)
+
+
+optional_ref<Character> chara_find(data::InstanceId chara_id)
 {
     // Note: if `chara_id` not found, `ensure()` throws an exception.
-    return chara_find(the_character_db.ensure(chara_id).legacy_id);
-}
+    int legacy_id = the_character_db.ensure(chara_id).legacy_id;
 
-int chara_find(int id)
-{
-    for (auto&& i : cdata.others())
+    for (auto&& chara : cdata.others())
     {
-        if (i.state() != Character::State::villager_dead)
+        if (chara.state() != Character::State::villager_dead)
         {
-            if (i.state() != Character::State::alive)
+            if (chara.state() != Character::State::alive)
             {
                 continue;
             }
         }
-        if (i.id == int2charaid(id))
+        if (chara.id == int2charaid(legacy_id))
         {
-            return i.index;
+            return chara;
         }
     }
-    return 0;
+    return none;
 }
 
 
 
 int chara_find_ally(int id)
 {
-    for (int i = 0; i < 16; ++i)
+    for (auto&& ally : cdata.allies())
     {
-        if (cdata[i].state() != Character::State::alive)
+        if (ally.state() != Character::State::alive)
         {
             continue;
         }
-        if (cdata[i].id == int2charaid(id))
+        if (ally.id == int2charaid(id))
         {
-            return i;
+            return ally.index;
         }
     }
     return -1;
@@ -1214,16 +1199,16 @@ int chara_get_free_slot_ally()
 }
 
 
-int chara_custom_talk(int cc, int talk_type)
+int chara_custom_talk(int chara_index, int talk_type)
 {
     std::vector<std::string> talk_file_buffer;
 
     bool use_external_file = false;
 
-    if (cdata[cc].has_custom_talk())
+    if (cdata[chara_index].has_custom_talk())
     {
         const auto filepath =
-            filesystem::dirs::user() / u8"talk" / cdatan(4, cc);
+            filesystem::dirs::user() / u8"talk" / cdatan(4, chara_index);
         if (!fs::exists(filepath))
             return 0;
         range::copy(
@@ -1231,9 +1216,10 @@ int chara_custom_talk(int cc, int talk_type)
             std::back_inserter(talk_file_buffer));
         use_external_file = true;
     }
-    else if (cdata[cc].id == CharaId::user)
+    else if (cdata[chara_index].id == CharaId::user)
     {
-        talk_file_buffer = strutil::split_lines(usertxt(cdata[cc].cnpc_id));
+        talk_file_buffer =
+            strutil::split_lines(usertxt(cdata[chara_index].cnpc_id));
         use_external_file = true;
     }
 
@@ -1302,9 +1288,9 @@ int chara_custom_talk(int cc, int talk_type)
     if (talk_type == 106)
         return 0;
 
-    if (cdata[cc].can_talk != 0)
+    if (cdata[chara_index].can_talk != 0)
     {
-        chara_db_get_talk(cdata[cc].id, talk_type);
+        chara_db_get_talk(cdata[chara_index].id, talk_type);
         return 1;
     }
     return 0;
@@ -1336,9 +1322,9 @@ int chara_impression_level(int impression)
 
 
 
-void chara_modify_impression(Character& cc, int delta)
+void chara_modify_impression(Character& chara, int delta)
 {
-    int level1 = chara_impression_level(cc.impression);
+    int level1 = chara_impression_level(chara.impression);
     if (delta >= 0)
     {
         delta = delta * 100 / (50 + level1 * level1 * level1);
@@ -1350,23 +1336,23 @@ void chara_modify_impression(Character& cc, int delta)
             }
         }
     }
-    cc.impression += delta;
-    int level2 = chara_impression_level(cc.impression);
+    chara.impression += delta;
+    int level2 = chara_impression_level(chara.impression);
     if (level1 > level2)
     {
         txt(i18n::s.get(
                 "core.chara.impression.lose",
-                cc,
+                chara,
                 i18n::s.get_enum("core.ui.impression", level2)),
             Message::color{ColorIndex::purple});
     }
     else if (level2 > level1)
     {
-        if (cc.relationship != -3)
+        if (chara.relationship != -3)
         {
             txt(i18n::s.get(
                     "core.chara.impression.gain",
-                    cc,
+                    chara,
                     i18n::s.get_enum("core.ui.impression", level2)),
                 Message::color{ColorIndex::green});
         }
@@ -1375,28 +1361,28 @@ void chara_modify_impression(Character& cc, int delta)
 
 
 
-void chara_vanquish(int cc)
+void chara_vanquish(Character& chara)
 {
-    if (cc == 0)
+    if (chara.index == 0)
         return;
 
-    if (cc == game_data.mount)
+    if (chara.index == game_data.mount)
     {
         ride_end();
     }
     else if (
-        cdata[cc].state() == Character::State::alive ||
-        cdata[cc].state() == Character::State::servant_being_selected)
+        chara.state() == Character::State::alive ||
+        chara.state() == Character::State::servant_being_selected)
     {
-        cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-            .chara_index_plus_one = 0;
+        cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one =
+            0;
     }
-    cdata[cc].set_state(Character::State::empty);
-    cdata[cc].role = Role::none;
-    if (cdata[cc].shop_store_id != 0)
+    chara.set_state(Character::State::empty);
+    chara.role = Role::none;
+    if (chara.shop_store_id != 0)
     {
         const auto storage_filename = filepathutil::u8path(
-            "shop"s + std::to_string(cdata[cc].shop_store_id) + ".s2");
+            "shop"s + std::to_string(chara.shop_store_id) + ".s2");
         const auto storage_filepath =
             filesystem::dirs::tmp() / storage_filename;
         tmpload(storage_filename);
@@ -1405,10 +1391,10 @@ void chara_vanquish(int cc)
             fs::remove(storage_filepath);
             Save::instance().remove(storage_filepath.filename());
         }
-        cdata[cc].shop_store_id = 0;
+        chara.shop_store_id = 0;
     }
     quest_check();
-    modify_crowd_density(cc, 1);
+    modify_crowd_density(chara.index, 1);
 }
 
 
@@ -1469,9 +1455,9 @@ int chara_copy(const Character& source)
     destination.is_hung_on_sand_bag() = false;
 
     // Unequip all gears.
-    for (size_t i = 0; i < destination.body_parts.size(); ++i)
+    for (auto&& equipment_slot : destination.equipment_slots)
     {
-        destination.body_parts[i] = destination.body_parts[i] / 10000 * 10000;
+        equipment_slot.unequip();
     }
 
     // Increase crowd density.
@@ -1514,30 +1500,30 @@ void chara_remove(Character& chara)
 
 
 
-void chara_delete(int cc)
+void chara_delete(int chara_index)
 {
-    if (cc != -1)
+    if (chara_index != -1)
     {
-        chara_remove(cdata[cc]);
+        chara_remove(cdata[chara_index]);
     }
 
-    for (auto&& item : inv.for_chara(cdata[cc]))
+    for (auto&& item : inv.for_chara(cdata[chara_index]))
     {
         item.remove();
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        cdatan(cnt, cc) = "";
+        cdatan(cnt, chara_index) = "";
     }
-    sdata.clear(cc);
-    cdata[cc].clear();
+    sdata.clear(chara_index);
+    cdata[chara_index].clear();
 }
 
 
 
 void chara_relocate(
     Character& source,
-    optional<int> destination_slot,
+    optional_ref<Character> destination_slot,
     CharaRelocationMode mode)
 {
     if (source.index == game_data.mount)
@@ -1546,9 +1532,8 @@ void chara_relocate(
         source.position = cdata.player().position;
     }
 
-    const auto slot =
-        destination_slot ? *destination_slot : chara_get_free_slot_force();
-    auto& destination = cdata[slot];
+    auto& destination = destination_slot ? *destination_slot
+                                         : cdata[chara_get_free_slot_force()];
 
     // Backups for changing
     Position position;
@@ -1574,7 +1559,7 @@ void chara_relocate(
     const auto invhead = tmp.first;
     const auto invrange = tmp.second;
     int p = invhead;
-    for (auto&& item : inv.for_chara(cdata[slot]))
+    for (auto&& item : inv.for_chara(destination))
     {
         Item::copy(inv[p], item);
         inv[p].clear();
@@ -1587,11 +1572,11 @@ void chara_relocate(
     }
 
     // Clear some fields which should not be copied.
-    source.ai_item = 0;
+    source.ai_item = ItemRef::null();
     source.is_livestock() = false;
 
     // Copy from `source` to `destination` and clear `source`
-    sdata.copy(slot, source.index);
+    sdata.copy(destination.index, source.index);
     sdata.clear(source.index);
 
     Character::copy(source, destination);
@@ -1604,7 +1589,7 @@ void chara_relocate(
         // source's state will be empty. If the source's state is empty, the
         // destination slot will instead be set to empty as well.
         lua::lua->get_handle_manager().relocate_handle<Character>(
-            source, destination, slot);
+            source, destination, destination.index);
     }
     else
     {
@@ -1616,14 +1601,14 @@ void chara_relocate(
 
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        cdatan(cnt, slot) = cdatan(cnt, source.index);
+        cdatan(cnt, destination.index) = cdatan(cnt, source.index);
         cdatan(cnt, source.index) = "";
     }
 
     // Unequip all gears.
-    for (size_t i = 0; i < destination.body_parts.size(); ++i)
+    for (auto&& equipment_slot : destination.equipment_slots)
     {
-        destination.body_parts[i] = destination.body_parts[i] / 10000 * 10000;
+        equipment_slot.unequip();
     }
 
     if (mode == CharaRelocationMode::change)
@@ -1641,83 +1626,82 @@ void chara_relocate(
         destination.enemy_id = enemy_id;
         destination.hp = hp;
         cell_data.at(destination.position.x, destination.position.y)
-            .chara_index_plus_one = slot + 1;
+            .chara_index_plus_one = destination.index + 1;
     }
     else
     {
         if (source.index != 56)
         {
             cell_data.at(destination.position.x, destination.position.y)
-                .chara_index_plus_one = slot + 1;
+                .chara_index_plus_one = destination.index + 1;
         }
         else
         {
-            rc = slot;
             destination.set_state_raw(Character::State::alive);
             cxinit = cdata.player().position.x;
             cyinit = cdata.player().position.y;
-            chara_place();
+            chara_place(destination);
         }
         destination.enemy_id = 0;
         destination.hate = 0;
     }
 
     // Lose resistance.
-    if (slot < 16)
+    if (destination.index < 16)
     {
         for (int element = 50; element < 61; ++element)
         {
             auto resistance = 100;
-            if (sdata.get(element, slot).original_level >= 500 ||
-                sdata.get(element, slot).original_level <= 100)
+            if (sdata.get(element, destination.index).original_level >= 500 ||
+                sdata.get(element, destination.index).original_level <= 100)
             {
-                resistance = sdata.get(element, slot).original_level;
+                resistance =
+                    sdata.get(element, destination.index).original_level;
             }
             if (resistance > 500)
             {
                 resistance = 500;
             }
-            sdata.get(element, slot).original_level = resistance;
-            sdata.get(element, slot).experience = 0;
-            sdata.get(element, slot).potential = 0;
+            sdata.get(element, destination.index).original_level = resistance;
+            sdata.get(element, destination.index).experience = 0;
+            sdata.get(element, destination.index).potential = 0;
         }
     }
 
-    rc = slot;
-    wear_most_valuable_equipment_for_all_body_parts();
-    chara_refresh(slot);
+    wear_most_valuable_equipment_for_all_body_parts(destination);
+    chara_refresh(destination);
 
-    if (slot < 57)
+    if (destination.index < 57)
     {
         modify_crowd_density(source.index, -1);
     }
     if (source.index < 57)
     {
-        modify_crowd_density(slot, 1);
+        modify_crowd_density(destination.index, 1);
     }
 }
 
 
 
-void chara_set_ai_item(Character& chara, const Item& item)
+void chara_set_ai_item(Character& chara, Item& item)
 {
     const auto category = the_item_db[itemid2int(item.id)]->category;
     if (category == ItemCategory::food || category == ItemCategory::potion ||
         category == ItemCategory::scroll)
     {
-        chara.ai_item = item.index;
+        chara.ai_item = ItemRef::from_ref(item);
     }
 }
 
 
 
-int chara_armor_class(const Character& cc)
+int chara_armor_class(const Character& chara)
 {
-    if (cc.sum_of_equipment_weight >= 35000)
+    if (chara.sum_of_equipment_weight >= 35000)
     {
         return 169;
     }
-    else if (cc.sum_of_equipment_weight >= 15000)
+    else if (chara.sum_of_equipment_weight >= 15000)
     {
         return 170;
     }
@@ -1747,18 +1731,19 @@ bool belong_to_same_team(const Character& c1, const Character& c2)
 
 
 
-void chara_add_quality_parens()
+void chara_add_quality_parens(Character& chara)
 {
     if (fixlv == Quality::miracle)
     {
-        cdatan(0, rc) =
-            i18n::s.get("core.chara.quality.miracle", cdatan(0, rc));
-        cdata[rc].level = cdata[rc].level * 10 / 8;
+        cdatan(0, chara.index) =
+            i18n::s.get("core.chara.quality.miracle", cdatan(0, chara.index));
+        chara.level = chara.level * 10 / 8;
     }
     else if (fixlv == Quality::godly)
     {
-        cdatan(0, rc) = i18n::s.get("core.chara.quality.godly", cdatan(0, rc));
-        cdata[rc].level = cdata[rc].level * 10 / 6;
+        cdatan(0, chara.index) =
+            i18n::s.get("core.chara.quality.godly", cdatan(0, chara.index));
+        chara.level = chara.level * 10 / 6;
     }
 }
 
@@ -1834,21 +1819,21 @@ void initialize_pc_character()
         }
         item.identify_state = IdentifyState::completely;
     }
-    chara_refresh(0);
+    chara_refresh(cdata.player());
 }
 
 
 
 void go_hostile()
 {
-    for (auto&& cc : cdata.others())
+    for (auto&& chara : cdata.others())
     {
-        if (cc.role == Role::guard || cc.role == Role::shop_guard ||
-            cc.role == Role::wandering_vendor)
+        if (chara.role == Role::guard || chara.role == Role::shop_guard ||
+            chara.role == Role::wandering_vendor)
         {
-            cc.relationship = -3;
-            cc.hate = 80;
-            cc.emotion_icon = 218;
+            chara.relationship = -3;
+            chara.hate = 80;
+            chara.emotion_icon = 218;
         }
     }
 }
@@ -1893,15 +1878,15 @@ void ride_end()
 
 
 
-void turn_aggro(int cc, int tc, int hate)
+void turn_aggro(int chara_index, int target_index, int hate)
 {
-    if (tc < 16)
+    if (target_index < 16)
     {
-        cdata[cc].relationship = -3;
+        cdata[chara_index].relationship = -3;
     }
-    cdata[cc].hate = hate;
-    cdata[cc].emotion_icon = 218;
-    cdata[cc].enemy_id = tc;
+    cdata[chara_index].hate = hate;
+    cdata[chara_index].emotion_icon = 218;
+    cdata[chara_index].enemy_id = target_index;
 }
 
 
@@ -2109,15 +2094,15 @@ void incognitoend()
 
 
 
-void wet(int cc, int turns)
+void wet(int chara_index, int turns)
 {
-    cdata[cc].wet += turns;
-    if (is_in_fov(cdata[cc]))
+    cdata[chara_index].wet += turns;
+    if (is_in_fov(cdata[chara_index]))
     {
-        txt(i18n::s.get("core.misc.wet.gets_wet", cdata[cc]));
-        if (cdata[cc].is_invisible())
+        txt(i18n::s.get("core.misc.wet.gets_wet", cdata[chara_index]));
+        if (cdata[chara_index].is_invisible())
         {
-            txt(i18n::s.get("core.misc.wet.is_revealed", cdata[cc]));
+            txt(i18n::s.get("core.misc.wet.is_revealed", cdata[chara_index]));
         }
     }
 }
@@ -2163,104 +2148,104 @@ void refresh_burden_state()
 
 
 
-void revive_character()
+void revive_character(Character& chara)
 {
-    do_chara_revival();
+    do_chara_revival(chara);
     cxinit = cdata.player().position.x;
     cyinit = cdata.player().position.y;
-    chara_place();
-    cdata[rc].current_map = 0;
+    chara_place(chara);
+    chara.current_map = 0;
     snd("core.pray1");
-    txt(i18n::s.get("core.misc.resurrect", cdatan(0, rc), cdata[rc]),
+    txt(i18n::s.get("core.misc.resurrect", cdatan(0, chara.index), chara),
         Message::color{ColorIndex::orange});
 }
 
 
 
-void do_chara_revival()
+void do_chara_revival(Character& chara)
 {
-    chara_set_revived_status();
-    chara_clear_status_effects();
+    chara_set_revived_status(chara);
+    chara_clear_status_effects(chara);
 }
 
 
 
-void chara_clear_status_effects_b()
+void chara_clear_status_effects_b(Character& chara)
 {
-    chara_clear_status_effects();
+    chara_clear_status_effects(chara);
 }
 
 
 
-void chara_set_revived_status()
+void chara_set_revived_status(Character& chara)
 {
-    cdata[rc].will_explode_soon() = false;
-    cdata[rc].is_sentenced_daeth() = false;
-    cdata[rc].is_pregnant() = false;
-    cdata[rc].is_contracting_with_reaper() = false;
-    cdata[rc].has_anorexia() = false;
-    cdata[rc].hp = cdata[rc].max_hp / 3;
-    cdata[rc].mp = cdata[rc].max_mp / 3;
-    cdata[rc].sp = cdata[rc].max_sp / 3;
-    cdata[rc].insanity = 0;
-    cdata[rc].current_map = 0;
-    cdata[rc].relationship = cdata[rc].original_relationship;
-    cdata[rc].nutrition = 8000;
-    cdata[rc].set_state(Character::State::alive);
+    chara.will_explode_soon() = false;
+    chara.is_sentenced_daeth() = false;
+    chara.is_pregnant() = false;
+    chara.is_contracting_with_reaper() = false;
+    chara.has_anorexia() = false;
+    chara.hp = chara.max_hp / 3;
+    chara.mp = chara.max_mp / 3;
+    chara.sp = chara.max_sp / 3;
+    chara.insanity = 0;
+    chara.current_map = 0;
+    chara.relationship = chara.original_relationship;
+    chara.nutrition = 8000;
+    chara.set_state(Character::State::alive);
 }
 
 
 
-void chara_clear_status_effects()
+void chara_clear_status_effects(Character& chara)
 {
-    cdata[rc].is_contracting_with_reaper() = false;
-    cdata[rc].activity.finish();
-    cdata[rc].poisoned = 0;
-    cdata[rc].sleep = 0;
-    cdata[rc].confused = 0;
-    cdata[rc].blind = 0;
-    cdata[rc].paralyzed = 0;
-    cdata[rc].choked = 0;
-    cdata[rc].furious = 0;
-    cdata[rc].dimmed = 0;
-    cdata[rc].drunk = 0;
-    cdata[rc].bleeding = 0;
-    cdata[rc].gravity = 0;
-    cdata[rc].ai_item = 0;
-    cdata[rc].hate = 0;
-    cdata[rc].enemy_id = 0;
-    cdata[rc].sick = 0;
-    cdata[rc].emotion_icon = 0;
+    chara.is_contracting_with_reaper() = false;
+    chara.activity.finish();
+    chara.poisoned = 0;
+    chara.sleep = 0;
+    chara.confused = 0;
+    chara.blind = 0;
+    chara.paralyzed = 0;
+    chara.choked = 0;
+    chara.furious = 0;
+    chara.dimmed = 0;
+    chara.drunk = 0;
+    chara.bleeding = 0;
+    chara.gravity = 0;
+    chara.ai_item = ItemRef::null();
+    chara.hate = 0;
+    chara.enemy_id = 0;
+    chara.sick = 0;
+    chara.emotion_icon = 0;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        cdata[rc].attr_adjs[cnt] = 0;
+        chara.attr_adjs[cnt] = 0;
     }
-    if (cdata[rc].buffs[0].id != 0)
+    if (chara.buffs[0].id != 0)
     {
         for (int cnt = 0; cnt < 16; ++cnt)
         {
-            if (cdata[rc].buffs[cnt].id == 0)
+            if (chara.buffs[cnt].id == 0)
             {
                 break;
             }
-            if (cdata[rc].buffs[cnt].id == 13)
+            if (chara.buffs[cnt].id == 13)
             {
                 continue;
             }
-            buff_delete(cdata[rc], cnt);
+            buff_delete(chara, cnt);
             --cnt;
             continue;
         }
     }
-    chara_refresh(rc);
+    chara_refresh(chara);
 }
 
 
 
-void revive_player()
+void revive_player(Character& chara)
 {
-    do_chara_revival();
-    if (rc == 0)
+    do_chara_revival(chara);
+    if (chara.index == 0)
     {
         game_data.is_returning_or_escaping = 0;
         traveldone = 0;
@@ -2269,31 +2254,31 @@ void revive_player()
             event_add(6);
         }
     }
-    if (cdata[rc].role == Role::guard)
+    if (chara.role == Role::guard)
     {
         p = rnd(5) + 1;
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             r2 = 1;
-            gain_level(cdata[rc]);
+            gain_level(chara);
         }
     }
-    if (cdata[rc].id == CharaId::bard)
+    if (chara.id == CharaId::bard)
     {
-        chara_gain_fixed_skill_exp(cdata[rc], 183, 1000);
+        chara_gain_fixed_skill_exp(chara, 183, 1000);
     }
-    chara_refresh(rc);
+    chara_refresh(chara);
 }
 
 
 
-void proc_pregnant()
+void proc_pregnant(Character& chara)
 {
     if (rnd(15) == 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(chara))
         {
-            txt(i18n::s.get("core.misc.pregnant.pats_stomach", cdata[cc]));
+            txt(i18n::s.get("core.misc.pregnant.pats_stomach", chara));
             txt(i18n::s.get("core.misc.pregnant.something_is_wrong"));
         }
     }
@@ -2301,31 +2286,32 @@ void proc_pregnant()
     {
         if (rnd(30) == 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
-                    "core.misc.pregnant.something_breaks_out", cdata[cc]));
+                    "core.misc.pregnant.something_breaks_out", chara));
             }
-            cdata[cc].bleeding += 15;
+            chara.bleeding += 15;
             flt();
-            initlv = cdata[cc].level / 2 + 1;
+            initlv = chara.level / 2 + 1;
             novoidlv = 1;
-            if (const auto chara = chara_create(
-                    -1, 330, cdata[cc].position.x, cdata[cc].position.y))
+            if (const auto alien =
+                    chara_create(-1, 330, chara.position.x, chara.position.y))
             {
-                if (strlen_u(cdatan(0, cc)) > 10 ||
+                if (strlen_u(cdatan(0, chara.index)) > 10 ||
                     instr(
-                        cdatan(0, cc),
+                        cdatan(0, chara.index),
                         0,
                         i18n::s.get("core.chara.job.alien.child")) != -1)
                 {
-                    cdatan(0, rc) =
+                    cdatan(0, alien->index) =
                         i18n::s.get("core.chara.job.alien.alien_kid");
                 }
                 else
                 {
-                    cdatan(0, rc) = i18n::s.get(
-                        "core.chara.job.alien.child_of", cdatan(0, cc));
+                    cdatan(0, alien->index) = i18n::s.get(
+                        "core.chara.job.alien.child_of",
+                        cdatan(0, chara.index));
                 }
             }
         }
@@ -2351,8 +2337,7 @@ void proc_one_equipment_with_negative_enchantments(
                 if (rnd(25) < clamp(std::abs(enc.power) / 50, 1, 25))
                 {
                     efid = 408;
-                    tc = chara.index;
-                    magic();
+                    magic(chara, chara);
                 }
             }
             break;
@@ -2414,14 +2399,13 @@ void proc_one_equipment_with_negative_enchantments(
 
 void proc_negative_enchantments(Character& chara)
 {
-    for (const auto& body_part : chara.body_parts)
+    for (const auto& [_type, equipment] : chara.equipment_slots)
     {
-        if (body_part % 10000 == 0)
+        if (!equipment)
         {
             continue;
         }
-        proc_one_equipment_with_negative_enchantments(
-            chara, inv[body_part % 10000 - 1]);
+        proc_one_equipment_with_negative_enchantments(chara, *equipment);
     }
 }
 
@@ -2458,27 +2442,27 @@ void lovemiracle(int chara_index)
         }
     }
     snd("core.atk_elec");
-    animeload(15, chara_index);
+    animeload(15, cdata[chara_index]);
 }
 
 
 
-void get_pregnant()
+void get_pregnant(Character& chara)
 {
-    if (enchantment_find(cdata[tc], 48))
+    if (enchantment_find(chara, 48))
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(chara))
         {
-            txt(i18n::s.get("core.misc.pregnant.pukes_out", cdata[tc]));
+            txt(i18n::s.get("core.misc.pregnant.pukes_out", chara));
         }
         return;
     }
-    if (cdata[tc].is_pregnant() == 0)
+    if (chara.is_pregnant() == 0)
     {
-        txt(i18n::s.get("core.misc.pregnant.gets_pregnant", cdata[tc]),
+        txt(i18n::s.get("core.misc.pregnant.gets_pregnant", chara),
             Message::color{ColorIndex::orange});
-        animeload(8, tc);
-        cdata[tc].is_pregnant() = true;
+        animeload(8, chara);
+        chara.is_pregnant() = true;
     }
 }
 
@@ -2569,7 +2553,7 @@ bool move_character_internal(Character& chara)
     }
     if (feat(0) != tile_trap && chara.index == 0)
     {
-        if (try_to_reveal())
+        if (try_to_reveal(chara))
         {
             refx = movx;
             refy = movy;
@@ -2585,7 +2569,7 @@ bool move_character_internal(Character& chara)
         {
             if (sdata(175, chara.index) != 0)
             {
-                if (try_to_disarm_trap())
+                if (try_to_disarm_trap(chara))
                 {
                     disarm_trap(chara, movx, movy);
                     return false;
@@ -2598,7 +2582,7 @@ bool move_character_internal(Character& chara)
         }
     }
 
-    if (can_evade_trap())
+    if (can_evade_trap(chara))
     {
         if (is_in_fov(chara))
         {
@@ -2752,74 +2736,71 @@ bool move_character_internal(Character& chara)
 
 
 
-void move_character()
+void move_character(Character& chara)
 {
-    while (move_character_internal(cdata[cc]))
+    while (move_character_internal(chara))
         ;
 }
 
 
 
-void lost_body_part(int cc)
+void lost_body_part(int chara_index)
 {
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (auto&& equipment_slot : cdata[chara_index].equipment_slots)
     {
-        if (cdata[cc].body_parts[cnt] / 10000 == body)
+        if (equipment_slot.type == body)
         {
-            p = cdata[cc].body_parts[cnt] % 10000;
-            if (p == 0)
+            if (!equipment_slot.equipment)
             {
                 continue;
             }
-            --p;
-            inv[p].body_part = 0;
-            cdata[cc].body_parts[cnt] =
-                cdata[cc].body_parts[cnt] / 10000 * 10000;
+            equipment_slot.equipment->body_part = 0;
+            equipment_slot.unequip();
         }
     }
 }
 
 
 
-TurnResult proc_movement_event()
+TurnResult proc_movement_event(Character& chara)
 {
     auto result = lua::lua->get_event_manager().trigger(
-        lua::CharacterInstanceEvent("core.character_moved", cdata[cc]));
+        lua::CharacterInstanceEvent("core.character_moved", chara));
     if (result.blocked())
     {
         return TurnResult::turn_end;
     }
 
-    if (cdata[cc].is_ridden())
+    if (chara.is_ridden())
     {
         return TurnResult::turn_end;
     }
-    dx = cdata[cc].next_position.x;
-    dy = cdata[cc].next_position.y;
-    if (cc < 16)
+    dx = chara.next_position.x;
+    dy = chara.next_position.y;
+    if (chara.index < 16)
     {
-        if (cc != 0)
+        if (chara.index != 0)
         {
-            if (dx != cdata[cc].position.x)
+            if (dx != chara.position.x)
             {
-                if (cdata[cc].position.x > dx)
+                if (chara.position.x > dx)
                 {
-                    cdata[cc].direction = 1;
+                    chara.direction = 1;
                 }
                 else
                 {
-                    cdata[cc].direction = 2;
+                    chara.direction = 2;
                 }
             }
-            if (dy != cdata[cc].position.y)
+            if (dy != chara.position.y)
             {
-                if (cdata[cc].position.y > dy)
+                if (chara.position.y > dy)
                 {
-                    cdata[cc].direction = 3;
+                    chara.direction = 3;
                 }
                 else
                 {
-                    cdata[cc].direction = 0;
+                    chara.direction = 0;
                 }
             }
         }
@@ -2829,19 +2810,19 @@ TurnResult proc_movement_event()
         cell_featread(dx, dy);
         if (feat(1) == 21)
         {
-            return try_to_open_locked_door();
+            return try_to_open_locked_door(chara);
         }
         if (feat(1) == 30)
         {
             x = dx;
             y = dy;
-            return do_bash();
+            return do_bash(chara);
         }
     }
-    if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-            .mef_index_plus_one != 0)
+    if (cell_data.at(chara.position.x, chara.position.y).mef_index_plus_one !=
+        0)
     {
-        bool turn_ended = mef_proc_from_movement(cc);
+        bool turn_ended = mef_proc_from_movement(chara);
         if (turn_ended)
         {
             return TurnResult::turn_end;
@@ -2849,11 +2830,11 @@ TurnResult proc_movement_event()
     }
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        if (cc == 0)
+        if (chara.index == 0)
         {
             if (traveldone == 0)
             {
-                map_global_proc_travel_events();
+                map_global_proc_travel_events(chara);
                 keybd_wait = 1;
                 return TurnResult::turn_end;
             }
@@ -2863,33 +2844,31 @@ TurnResult proc_movement_event()
             }
         }
     }
-    move_character();
-    p = cell_data.at(cdata[cc].position.x, cdata[cc].position.y).chip_id_actual;
+    move_character(chara);
+    p = cell_data.at(chara.position.x, chara.position.y).chip_id_actual;
     if (chip_data[p].kind == 3)
     {
         if (chip_data[p].kind2 == 5)
         {
-            heal_insanity(cdata[cc], 1);
+            heal_insanity(chara, 1);
         }
-        addefmap(cdata[cc].position.x, cdata[cc].position.y, 1, 3);
-        if (cdata[cc].wet == 0)
+        addefmap(chara.position.x, chara.position.y, 1, 3);
+        if (chara.wet == 0)
         {
-            wet(cc, 20);
+            wet(chara.index, 20);
         }
     }
-    sense_map_feats_on_move();
+    sense_map_feats_on_move(chara);
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        if (cc == 0)
+        if (chara.index == 0)
         {
             encounter = 0;
             game_data.stood_world_map_tile =
-                cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                    .chip_id_actual;
-            if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                    .feats == 0)
+                cell_data.at(chara.position.x, chara.position.y).chip_id_actual;
+            if (cell_data.at(chara.position.x, chara.position.y).feats == 0)
             {
-                p = cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+                p = cell_data.at(chara.position.x, chara.position.y)
                         .chip_id_actual;
                 if (rnd(30) == 0)
                 {
@@ -2990,10 +2969,9 @@ TurnResult proc_movement_event()
                 {
                     encounterlv /= 2;
                 }
-                if (33 <=
-                        cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                            .chip_id_actual &&
-                    cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+                if (33 <= cell_data.at(chara.position.x, chara.position.y)
+                              .chip_id_actual &&
+                    cell_data.at(chara.position.x, chara.position.y)
                             .chip_id_actual < 66)
                 {
                     encounterlv /= 2;
@@ -3062,28 +3040,29 @@ TurnResult proc_movement_event()
 
 
 
-int new_ally_joins()
+optional_ref<Character> new_ally_joins(Character& new_ally)
 {
-    f = chara_get_free_slot_ally();
-    if (f == 0)
+    const auto slot_index = chara_get_free_slot_ally();
+    if (slot_index == 0)
     {
         txt(i18n::s.get("core.action.ally_joins.party_full"));
-        return -1;
+        return none;
     }
-    oc = rc;
-    chara_relocate(cdata[rc], f);
-    cdata[rc].relationship = 10;
-    cdata[rc].original_relationship = 10;
-    cdata[rc].role = Role::none;
-    cdata[rc].is_quest_target() = false;
-    cdata[rc].is_not_attacked_by_enemy() = false;
-    cdata[rc].is_hung_on_sand_bag() = false;
-    cdata[rc].is_temporary() = false;
-    cdata[rc].only_christmas() = false;
+    auto& slot = cdata[slot_index];
+
+    chara_relocate(new_ally, slot);
+    slot.relationship = 10;
+    slot.original_relationship = 10;
+    slot.role = Role::none;
+    slot.is_quest_target() = false;
+    slot.is_not_attacked_by_enemy() = false;
+    slot.is_hung_on_sand_bag() = false;
+    slot.is_temporary() = false;
+    slot.only_christmas() = false;
     snd("core.pray1");
-    txt(i18n::s.get("core.action.ally_joins.success", cdata[rc]),
+    txt(i18n::s.get("core.action.ally_joins.success", slot),
         Message::color{ColorIndex::orange});
-    return 1;
+    return slot;
 }
 
 } // namespace elona

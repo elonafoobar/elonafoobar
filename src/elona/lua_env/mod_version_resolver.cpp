@@ -164,8 +164,9 @@ void ModList::save(const fs::path& path)
     std::ofstream out{path.native()};
     if (!out)
     {
-        throw std::runtime_error{"failed to open mod list file to write: " +
-                                 filepathutil::to_utf8_path(path)};
+        throw std::runtime_error{
+            "failed to open mod list file to write: " +
+            filepathutil::to_utf8_path(path)};
     }
     out << json5::stringify(root_obj, opts) << std::endl;
 }

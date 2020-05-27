@@ -20,12 +20,9 @@ namespace
 {
 
 elona_vector2<int> encref;
-elona_vector1<int> p_at_m47;
-elona_vector2<int> enclist;
 elona_vector2<int> egoenc;
 elona_vector2<int> egoref;
 int maxegominorn = 0;
-int p_at_m48 = 0;
 
 
 
@@ -215,10 +212,7 @@ void get_enchantment_description(
             if (power / 50 + 1 < 0)
             {
                 rtval = static_cast<int>(ItemDescriptionType::negative_effect);
-                const auto skill_name = i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(sid)->get(),
-                    "name");
+                const auto skill_name = the_ability_db.get_text(sid, "name");
                 if (category == ItemCategory::food)
                 {
                     s = i18n::s.get(
@@ -236,10 +230,7 @@ void get_enchantment_description(
             }
             else
             {
-                const auto skill_name = i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(sid)->get(),
-                    "name");
+                const auto skill_name = the_ability_db.get_text(sid, "name");
                 if (category == ItemCategory::food)
                 {
                     s = i18n::s.get(
@@ -263,27 +254,18 @@ void get_enchantment_description(
                 rtval = static_cast<int>(ItemDescriptionType::negative_effect);
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.resistance.decreases",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(sid)->get(),
-                        "name"));
+                    the_ability_db.get_text(sid, "name"));
             }
             else
             {
-                s = i18n::s
-                        .get_m_optional(
-                            "ability",
-                            the_ability_db.get_id_from_legacy(sid)->get(),
-                            "enchantment_description")
+                s = the_ability_db
+                        .get_text_optional(sid, "enchantment_description")
                         .value_or("");
                 if (s == ""s)
                 {
                     s = i18n::s.get(
                         "core.enchantment.with_parameters.resistance.increases",
-                        i18n::s.get_m(
-                            "ability",
-                            the_ability_db.get_id_from_legacy(sid)->get(),
-                            "name"));
+                        the_ability_db.get_text(sid, "name"));
                 }
             }
             s += enchantment_level_string(power / 100);
@@ -295,27 +277,18 @@ void get_enchantment_description(
                 rtval = static_cast<int>(ItemDescriptionType::negative_effect);
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.skill.decreases",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(sid)->get(),
-                        "name"));
+                    the_ability_db.get_text(sid, "name"));
             }
             else
             {
-                s = i18n::s
-                        .get_m_optional(
-                            "ability",
-                            the_ability_db.get_id_from_legacy(sid)->get(),
-                            "enchantment_description")
+                s = the_ability_db
+                        .get_text_optional(sid, "enchantment_description")
                         .value_or("");
                 if (s == ""s)
                 {
                     s = i18n::s.get(
                         "core.enchantment.with_parameters.skill.increases",
-                        i18n::s.get_m(
-                            "ability",
-                            the_ability_db.get_id_from_legacy(sid)->get(),
-                            "name"));
+                        the_ability_db.get_text(sid, "name"));
                 }
             }
             s += enchantment_level_string((power / 50 + 1) / 5);
@@ -326,38 +299,25 @@ void get_enchantment_description(
             {
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.skill_maintenance.in_food",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(sid)->get(),
-                        "name"));
+                    the_ability_db.get_text(sid, "name"));
                 s += enchantment_level_string(power / 50);
             }
             else
             {
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.skill_maintenance.other",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(sid)->get(),
-                        "name"));
+                    the_ability_db.get_text(sid, "name"));
             }
             break;
         case 7:
             rtval = static_cast<int>(ItemDescriptionType::enchantment);
-            s = i18n::s
-                    .get_m_optional(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(sid)->get(),
-                        "enchantment_description")
+            s = the_ability_db.get_text_optional(sid, "enchantment_description")
                     .value_or("");
             if (s == ""s)
             {
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.extra_damage",
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(sid)->get(),
-                        "name"));
+                    the_ability_db.get_text(sid, "name"));
             }
             s += enchantment_level_string(power / 100);
             break;
@@ -366,10 +326,7 @@ void get_enchantment_description(
             sid = encprocref(0, sid);
             s = i18n::s.get(
                 "core.enchantment.with_parameters.invokes",
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(sid)->get(),
-                    "name"));
+                the_ability_db.get_text(sid, "name"));
             s += enchantment_level_string(power / 50);
             break;
         case 9:
@@ -671,9 +628,9 @@ bool enchantment_add(
     int enc = type;
     int encp = power;
 
-    int sum_at_m48 = 0;
-    int max_at_m48 = 0;
+    WeightedRandomSampler<int> sampler;
     int i_at_m48 = 0;
+    int p_at_m48 = 0;
 
     switch (enc)
     {
@@ -709,8 +666,6 @@ bool enchantment_add(
         enc += 70000;
         break;
     case 8:
-        sum_at_m48 = 0;
-        max_at_m48 = 0;
         for (int cnt = 0; cnt < 26; ++cnt)
         {
             if (encprocref(3, cnt) != 0)
@@ -728,24 +683,12 @@ bool enchantment_add(
                     }
                 }
             }
-            sum_at_m48 += encprocref(2, cnt);
-            enclist(0, max_at_m48) = cnt;
-            enclist(1, max_at_m48) = sum_at_m48;
-            ++max_at_m48;
+            sampler.add(cnt, encprocref(2, cnt));
         }
-        if (max_at_m48 == 0)
+        i_at_m48 = sampler.get().value_or(0);
+        if (i_at_m48 == 0)
         {
             return false;
-        }
-        i_at_m48 = 0;
-        p_at_m48 = rnd(sum_at_m48);
-        for (int cnt = 0, cnt_end = (max_at_m48); cnt < cnt_end; ++cnt)
-        {
-            if (p_at_m48 < enclist(1, cnt))
-            {
-                i_at_m48 = enclist(0, cnt);
-                break;
-            }
         }
         enc = 80000 + i_at_m48;
         break;
@@ -856,13 +799,12 @@ optional<int> enchantment_find(const Character& chara, int id)
 {
     optional<int> max;
 
-    for (const auto& body_part : chara.body_parts)
+    for (const auto& [_type, equipment] : chara.equipment_slots)
     {
-        if (body_part % 10000 == 0)
+        if (!equipment)
             continue;
 
-        const auto& equip = inv[body_part % 10000 - 1];
-        if (const auto power = enchantment_find(equip, id))
+        if (const auto power = enchantment_find(*equipment, id))
         {
             if (!max || *max < *power)
             {
@@ -896,11 +838,7 @@ optional<int> enchantment_find(const Item& item, int id)
 
 int enchantment_generate(int rank)
 {
-    int sum_at_m47 = 0;
-    int max_at_m47 = 0;
-    int i_at_m47 = 0;
-    sum_at_m47 = 0;
-    max_at_m47 = 0;
+    WeightedRandomSampler<int> sampler;
     for (int cnt = 0; cnt < 62; ++cnt)
     {
         if (encref(0, cnt) > rank)
@@ -918,26 +856,9 @@ int enchantment_generate(int rank)
         {
             continue;
         }
-        sum_at_m47 += encref(2, cnt);
-        enclist(0, max_at_m47) = cnt;
-        enclist(1, max_at_m47) = sum_at_m47;
-        ++max_at_m47;
+        sampler.add(cnt, encref(2, cnt));
     }
-    if (max_at_m47 == 0)
-    {
-        return 0;
-    }
-    i_at_m47 = 0;
-    p_at_m47 = rnd(sum_at_m47);
-    for (int cnt = 0, cnt_end = (max_at_m47); cnt < cnt_end; ++cnt)
-    {
-        if (p_at_m47 < enclist(1, cnt))
-        {
-            i_at_m47 = enclist(0, cnt);
-            break;
-        }
-    }
-    return i_at_m47;
+    return sampler.get().value_or(0);
 }
 
 
@@ -1206,7 +1127,6 @@ void initialize_ego_data()
 void enchantment_init()
 {
     DIM3(encref, 8, 62);
-    DIM3(enclist, 2, 62);
     DIM3(encammoref, 3, 6);
     SDIM2(ammoname, 6);
     encammoref(0, 0) = 30;

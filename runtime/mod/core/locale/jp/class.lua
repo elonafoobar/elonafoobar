@@ -6,8 +6,9 @@ ELONA.i18n:add {
 
 
 
-ELONA.i18n:add {
-   class = {
+ELONA.i18n:add_data_text(
+   "core.class",
+   {
       warrior = {
          name = "戦士",
          description = "戦士は己の肉体を武器に、立ちはだかるものを破壊し突き進みます。魔法の扱いには向いていませんが、その高い戦闘能力には目を見張るものがあります。",
@@ -59,5 +60,5 @@ ELONA.i18n:add {
          name = "デバッガー",
          description = "デバッグ用",
       },
-   },
-}
+   }
+)

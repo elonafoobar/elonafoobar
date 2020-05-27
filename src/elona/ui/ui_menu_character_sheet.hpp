@@ -11,9 +11,14 @@ namespace ui
 class UIMenuCharacterSheet : public UIMenu<UIMenuCompositeCharacterResult>
 {
 public:
-    UIMenuCharacterSheet(CharacterSheetOperation operation)
-        : _operation(operation)
+    UIMenuCharacterSheet(Character& chara, CharacterSheetOperation operation)
+        : _chara(chara)
+        , _operation(operation)
     {
+        assert(
+            operation == CharacterSheetOperation::investigate_ally
+                ? _chara.index != 0
+                : _chara.index == 0);
     }
 
 protected:
@@ -66,6 +71,7 @@ private:
         CharacterSheetOperation);
     void _draw_other_page_list_entries(CharacterSheetOperation);
 
+    Character& _chara;
     CharacterSheetOperation _operation;
 
     bool _returned_from_portrait = false;

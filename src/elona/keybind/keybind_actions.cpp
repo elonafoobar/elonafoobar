@@ -158,8 +158,7 @@ void initialize_keybind_actions(ActionMap& actions)
     BIND(dump_player_info,  K(f11)         );
     BIND(reload_autopick,   SHIFT_K(backspace) );
     BIND(screenshot,        K(printscreen) );
-    BIND(toggle_console,    K(f12)         );
-    BIND(open_console,      SHIFT_K(f12)   );
+    BIND(open_console,      K(f12)         );
 
 #undef CATEGORY
 #define CATEGORY wizard

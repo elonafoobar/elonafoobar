@@ -46,7 +46,7 @@ std::string class_get_name(data::InstanceId class_id)
     }
     else
     {
-        return i18n::s.get_m("class", class_id.get(), "name");
+        return the_class_db.get_text(class_id, "name");
     }
 }
 

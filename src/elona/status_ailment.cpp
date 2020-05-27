@@ -21,9 +21,12 @@ namespace elona
 namespace
 {
 
-int calc_power_decreased_by_resistance(int cc, int power, Element element)
+int calc_power_decreased_by_resistance(
+    int chara_index,
+    int power,
+    Element element)
 {
-    const auto resistance_level = sdata(int(element), cc) / 50;
+    const auto resistance_level = sdata(int(element), chara_index) / 50;
     power = (rnd_capped(power / 2 + 1) + power / 2) * 100 /
         (50 + resistance_level * 50);
 
@@ -211,7 +214,7 @@ void status_ailment_damage(
     case StatusAilment::dimmed:
         if (chara.quality > Quality::great && rnd_capped(chara.level / 3 + 1))
             return;
-        if (cdatan(2, chara.index) == u8"golem"s)
+        if (cdatan(2, chara.index) == u8"core.golem"s)
             return;
         power = calc_power_decreased_by_resistance(
             chara.index, power, Element::sound);
@@ -316,8 +319,8 @@ void status_ailment_damage(
         }
         return;
     default:
-        throw std::runtime_error{u8"Unknown status ailment: "s +
-                                 int(status_ailment)};
+        throw std::runtime_error{
+            u8"Unknown status ailment: "s + int(status_ailment)};
     }
 }
 
@@ -579,8 +582,8 @@ void status_ailment_heal(
         }
         break;
     default:
-        throw std::runtime_error{u8"Unknown status ailment: "s +
-                                 int(status_ailment)};
+        throw std::runtime_error{
+            u8"Unknown status ailment: "s + int(status_ailment)};
     }
 }
 

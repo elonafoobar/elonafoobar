@@ -44,15 +44,15 @@ int decrease_potential(int potential, int level_delta)
 
 
 void set_ability(
-    Character& cc,
+    Character& chara,
     int id,
     int original_level,
     int experience,
     int potential)
 {
-    sdata.get(id, cc.index).original_level = clamp(original_level, 0, 2000);
-    sdata.get(id, cc.index).experience = experience;
-    sdata.get(id, cc.index).potential = potential;
+    sdata.get(id, chara.index).original_level = clamp(original_level, 0, 2000);
+    sdata.get(id, chara.index).experience = experience;
+    sdata.get(id, chara.index).potential = potential;
 }
 
 } // namespace
@@ -70,35 +70,37 @@ SkillData::SkillData()
 
 
 
-void SkillData::clear(int cc)
+void SkillData::clear(int chara_index)
 {
-    range::fill(storage[cc], Ability{});
+    range::fill(storage[chara_index], Ability{});
 }
 
 
 
-void SkillData::copy(int tc, int cc)
+void SkillData::copy(int destination_chara_index, int source_chara_index)
 {
-    range::copy(storage[cc], std::begin(storage[tc]));
+    range::copy(
+        storage[source_chara_index],
+        std::begin(storage[destination_chara_index]));
 }
 
 
 
-void chara_init_skill(Character& cc, int skill_id, int initial_level)
+void chara_init_skill(Character& chara, int skill_id, int initial_level)
 {
-    int original_level = sdata.get(skill_id, cc.index).original_level;
+    int original_level = sdata.get(skill_id, chara.index).original_level;
     int potential = calc_initial_skill_base_potential(
         skill_id, original_level, initial_level);
     int level;
     if (skill_id == 18)
     {
-        level = calc_initial_skill_level_speed(initial_level, cc.level);
+        level = calc_initial_skill_level_speed(initial_level, chara.level);
     }
     else
     {
-        level = calc_initial_skill_level(initial_level, cc.level, potential);
+        level = calc_initial_skill_level(initial_level, chara.level, potential);
     }
-    potential = calc_initial_skill_decayed_potential(cc.level, potential);
+    potential = calc_initial_skill_decayed_potential(chara.level, potential);
     if (potential < 1)
     {
         potential = 1;
@@ -113,78 +115,78 @@ void chara_init_skill(Character& cc, int skill_id, int initial_level)
     {
         level = 2000 - original_level;
     }
-    sdata.get(skill_id, cc.index).original_level += clamp(level, 0, 2000);
-    sdata.get(skill_id, cc.index).potential += potential;
+    sdata.get(skill_id, chara.index).original_level += clamp(level, 0, 2000);
+    sdata.get(skill_id, chara.index).potential += potential;
 }
 
 
 
-void chara_init_common_skills(Character& cc)
+void chara_init_common_skills(Character& chara)
 {
     for (int element = 50; element < 61; ++element)
     {
         auto level = calc_initial_resistance_level(
-            cc, sdata(element, cc.index), element);
-        sdata.get(element, cc.index).original_level = clamp(level, 1, 2000);
-        sdata.get(element, cc.index).experience = 0;
-        sdata.get(element, cc.index).potential = 0;
+            chara, sdata(element, chara.index), element);
+        sdata.get(element, chara.index).original_level = clamp(level, 1, 2000);
+        sdata.get(element, chara.index).experience = 0;
+        sdata.get(element, chara.index).potential = 0;
     }
 
-    chara_init_skill(cc, 100, 4);
-    chara_init_skill(cc, 101, 4);
-    chara_init_skill(cc, 103, 4);
-    chara_init_skill(cc, 102, 4);
-    chara_init_skill(cc, 104, 4);
-    chara_init_skill(cc, 105, 4);
-    chara_init_skill(cc, 107, 4);
-    chara_init_skill(cc, 108, 4);
-    chara_init_skill(cc, 111, 4);
-    chara_init_skill(cc, 109, 4);
-    chara_init_skill(cc, 173, 4);
-    chara_init_skill(cc, 154, 4);
-    chara_init_skill(cc, 155, 4);
-    chara_init_skill(cc, 106, 4);
-    chara_init_skill(cc, 157, 4);
-    chara_init_skill(cc, 181, 4);
-    chara_init_skill(cc, 171, 4);
-    chara_init_skill(cc, 170, 4);
-    chara_init_skill(cc, 169, 4);
-    chara_init_skill(cc, 168, 3);
-    chara_init_skill(cc, 19, 50);
+    chara_init_skill(chara, 100, 4);
+    chara_init_skill(chara, 101, 4);
+    chara_init_skill(chara, 103, 4);
+    chara_init_skill(chara, 102, 4);
+    chara_init_skill(chara, 104, 4);
+    chara_init_skill(chara, 105, 4);
+    chara_init_skill(chara, 107, 4);
+    chara_init_skill(chara, 108, 4);
+    chara_init_skill(chara, 111, 4);
+    chara_init_skill(chara, 109, 4);
+    chara_init_skill(chara, 173, 4);
+    chara_init_skill(chara, 154, 4);
+    chara_init_skill(chara, 155, 4);
+    chara_init_skill(chara, 106, 4);
+    chara_init_skill(chara, 157, 4);
+    chara_init_skill(chara, 181, 4);
+    chara_init_skill(chara, 171, 4);
+    chara_init_skill(chara, 170, 4);
+    chara_init_skill(chara, 169, 4);
+    chara_init_skill(chara, 168, 3);
+    chara_init_skill(chara, 19, 50);
 }
 
 
 
-void chara_gain_skill(Character& cc, int id, int initial_level, int stock)
+void chara_gain_skill(Character& chara, int id, int initial_level, int stock)
 {
     if (id >= 400)
     {
-        if (cc.index == 0)
+        if (chara.index == 0)
         {
             spell(id - 400) += stock;
-            modify_potential(cc, id, 1);
+            modify_potential(chara, id, 1);
         }
     }
-    if (sdata.get(id, cc.index).original_level != 0)
+    if (sdata.get(id, chara.index).original_level != 0)
     {
         if (id < 400)
         {
-            modify_potential(cc, id, 20);
+            modify_potential(chara, id, 20);
         }
         return;
     }
     if (id >= 400)
     {
-        modify_potential(cc, id, 200);
+        modify_potential(chara, id, 200);
     }
     else
     {
-        modify_potential(cc, id, 50);
+        modify_potential(chara, id, 50);
     }
-    sdata.get(id, cc.index).original_level =
-        clamp(sdata.get(id, cc.index).original_level + initial_level, 1, 2000);
+    sdata.get(id, chara.index).original_level = clamp(
+        sdata.get(id, chara.index).original_level + initial_level, 1, 2000);
 
-    chara_refresh(cc.index);
+    chara_refresh(chara);
 }
 
 
@@ -198,7 +200,7 @@ void gain_special_action()
             spact(29) = 1;
             txt(i18n::s.get(
                     "core.skill.gained",
-                    i18n::s.get_m("ability", "core.draw_charge", "name")),
+                    the_ability_db.get_text("core.draw_charge", "name")),
                 Message::color{ColorIndex::orange});
         }
         if (spact(30) == 0)
@@ -206,7 +208,7 @@ void gain_special_action()
             spact(30) = 1;
             txt(i18n::s.get(
                     "core.skill.gained",
-                    i18n::s.get_m("ability", "core.fill_charge", "name")),
+                    the_ability_db.get_text("core.fill_charge", "name")),
                 Message::color{ColorIndex::orange});
         }
     }
@@ -217,7 +219,7 @@ void gain_special_action()
             spact(31) = 1;
             txt(i18n::s.get(
                     "core.skill.gained",
-                    i18n::s.get_m("ability", "core.swarm", "name")),
+                    the_ability_db.get_text("core.swarm", "name")),
                 Message::color{ColorIndex::orange});
         }
     }
@@ -225,11 +227,11 @@ void gain_special_action()
 
 
 
-void chara_gain_fixed_skill_exp(Character& cc, int id, int experience)
+void chara_gain_fixed_skill_exp(Character& chara, int id, int experience)
 {
-    auto lv = sdata.get(id, cc.index).original_level;
-    auto exp = sdata.get(id, cc.index).experience + experience;
-    auto potential = sdata.get(id, cc.index).potential;
+    auto lv = sdata.get(id, chara.index).original_level;
+    auto exp = sdata.get(id, chara.index).experience + experience;
+    auto potential = sdata.get(id, chara.index).potential;
 
     if (potential == 0)
         return;
@@ -240,17 +242,17 @@ void chara_gain_fixed_skill_exp(Character& cc, int id, int experience)
         lv += lv_delta;
         exp = exp % 1000;
         potential = decrease_potential(potential, lv_delta);
-        set_ability(cc, id, lv, exp, potential);
-        if (is_in_fov(cc))
+        set_ability(chara, id, lv, exp, potential);
+        if (is_in_fov(chara))
         {
-            if (cc.index == 0 || cc.index < 16)
+            if (chara.index == 0 || chara.index < 16)
             {
                 snd("core.ding3");
                 Message::instance().txtef(ColorIndex::green);
             }
-            txt(txtskillchange(id, cc.index, true));
+            txt(txtskillchange(chara, id, true));
         }
-        chara_refresh(cc.index);
+        chara_refresh(chara);
         return;
     }
     if (exp < 0)
@@ -270,34 +272,34 @@ void chara_gain_fixed_skill_exp(Character& cc, int id, int experience)
         }
         lv -= lv_delta;
         potential = increase_potential(potential, lv_delta);
-        set_ability(cc, id, lv, exp, potential);
-        if (cc.index == 0 || cc.index < 16)
+        set_ability(chara, id, lv, exp, potential);
+        if (chara.index == 0 || chara.index < 16)
         {
-            if (is_in_fov(cc))
+            if (is_in_fov(chara))
             {
                 if (lv_delta != 0)
                 {
-                    txt(txtskillchange(id, cc.index, false),
+                    txt(txtskillchange(chara, id, false),
                         Message::color{ColorIndex::red});
                 }
             }
         }
-        chara_refresh(cc.index);
+        chara_refresh(chara);
         return;
     }
-    set_ability(cc, id, lv, exp, potential);
+    set_ability(chara, id, lv, exp, potential);
 }
 
 
 
 void chara_gain_skill_exp(
-    Character& cc,
+    Character& chara,
     int id,
     int experience,
     int experience_divisor_of_related_basic_attribute,
     int experience_divisor_of_character_level)
 {
-    if (sdata.get(id, cc.index).original_level == 0)
+    if (sdata.get(id, chara.index).original_level == 0)
         return;
     if (experience == 0)
         return;
@@ -306,14 +308,14 @@ void chara_gain_skill_exp(
     {
         // Gain experience in the basic attribute the skill is related to.
         chara_gain_skill_exp(
-            cc,
+            chara,
             the_ability_db[id]->related_basic_attribute,
             calc_skill_related_attribute_exp(
                 experience, experience_divisor_of_related_basic_attribute));
     }
 
-    auto lv = sdata.get(id, cc.index).original_level;
-    auto potential = sdata.get(id, cc.index).potential;
+    auto lv = sdata.get(id, chara.index).original_level;
+    auto potential = sdata.get(id, chara.index).potential;
     if (potential == 0)
         return;
 
@@ -323,7 +325,8 @@ void chara_gain_skill_exp(
         exp = calc_base_skill_exp_gained(experience, potential, lv);
         if (id >= 10 && id <= 19)
         {
-            exp = calc_boosted_skill_exp_gained(exp, cc.growth_buffs[id - 10]);
+            exp =
+                calc_boosted_skill_exp_gained(exp, chara.growth_buffs[id - 10]);
         }
         if (exp == 0)
         {
@@ -352,9 +355,9 @@ void chara_gain_skill_exp(
             if (experience_divisor_of_character_level != 1000)
             {
                 const auto lvl_exp = calc_chara_exp_from_skill_exp(
-                    cc, exp, experience_divisor_of_character_level);
-                cc.experience += lvl_exp;
-                if (cc.index == 0)
+                    chara, exp, experience_divisor_of_character_level);
+                chara.experience += lvl_exp;
+                if (chara.index == 0)
                 {
                     game_data.sleep_experience += lvl_exp;
                 }
@@ -362,25 +365,25 @@ void chara_gain_skill_exp(
         }
     }
 
-    int new_exp_level = exp + sdata.get(id, cc.index).experience;
+    int new_exp_level = exp + sdata.get(id, chara.index).experience;
     if (new_exp_level >= 1000)
     {
         const auto lv_delta = new_exp_level / 1000;
         new_exp_level = new_exp_level % 1000;
         lv += lv_delta;
         potential = decrease_potential(potential, lv_delta);
-        set_ability(cc, id, lv, new_exp_level, potential);
-        if (is_in_fov(cc))
+        set_ability(chara, id, lv, new_exp_level, potential);
+        if (is_in_fov(chara))
         {
-            if (cc.index == 0 || cc.index < 16)
+            if (chara.index == 0 || chara.index < 16)
             {
                 snd("core.ding3");
                 Message::instance().txtef(ColorIndex::green);
                 input_halt_input(HaltInput::alert);
             }
-            txt(txtskillchange(id, cc.index, true));
+            txt(txtskillchange(chara, id, true));
         }
-        chara_refresh(cc.index);
+        chara_refresh(chara);
         return;
     }
     if (new_exp_level < 0)
@@ -400,24 +403,24 @@ void chara_gain_skill_exp(
         }
         lv -= lv_delta;
         potential = increase_potential(potential, lv_delta);
-        set_ability(cc, id, lv, new_exp_level, potential);
-        if (is_in_fov(cc))
+        set_ability(chara, id, lv, new_exp_level, potential);
+        if (is_in_fov(chara))
         {
-            if (cc.index == 0 || cc.index < 16)
+            if (chara.index == 0 || chara.index < 16)
             {
                 if (lv_delta != 0)
                 {
                     input_halt_input(HaltInput::alert);
-                    txt(txtskillchange(id, cc.index, false),
+                    txt(txtskillchange(chara, id, false),
                         Message::color{ColorIndex::red});
                 }
             }
         }
-        chara_refresh(cc.index);
+        chara_refresh(chara);
         return;
     }
 
-    set_ability(cc, id, lv, new_exp_level, potential);
+    set_ability(chara, id, lv, new_exp_level, potential);
 }
 
 

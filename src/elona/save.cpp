@@ -91,8 +91,8 @@ void load_save_data()
         int minor;
         int patch;
         {
-            std::ifstream in{(save_dir / "foobar_data.s1").native(),
-                             std::ios::binary};
+            std::ifstream in{
+                (save_dir / "foobar_data.s1").native(), std::ios::binary};
             serialization::binary::IArchive ar{in};
             ar(major);
             ar(minor);
@@ -114,11 +114,11 @@ void load_save_data()
 
     chara_delete(56);
     set_item_info();
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& chara : cdata.player_and_allies())
     {
-        if (cdata[cnt].has_own_sprite() == 1 || cnt == 0)
+        if (chara.has_own_sprite() || chara.index == 0)
         {
-            create_pcpic(cdata[cnt]);
+            create_pcpic(chara);
         }
     }
     if (game_data.wizard == 1)

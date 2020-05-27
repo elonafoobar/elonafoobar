@@ -471,8 +471,9 @@ protected:
             {
                 if (keybind_is_bindable_key(key))
                 {
-                    return KeyPromptResult{KeyPromptResult::Type::bind,
-                                           Keybind{key, _last_modifiers}};
+                    return KeyPromptResult{
+                        KeyPromptResult::Type::bind,
+                        Keybind{key, _last_modifiers}};
                 }
             }
         }

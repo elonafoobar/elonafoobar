@@ -14,7 +14,6 @@
 #include "input.hpp"
 #include "keybind/keybind.hpp"
 #include "lua_env/mod_manager.hpp"
-#include "macro.hpp"
 #include "main_menu.hpp"
 #include "menu.hpp"
 #include "random.hpp"
@@ -306,8 +305,9 @@ MainMenuResult main_title_menu()
                     ripples.push_back(std::make_tuple(
                         0,
                         rnd(rnd(3) + 1),
-                        Position{s.second.x - rnd(256) + rnd(256),
-                                 s.second.y - rnd(256) + rnd(256)}));
+                        Position{
+                            s.second.x - rnd(256) + rnd(256),
+                            s.second.y - rnd(256) + rnd(256)}));
                 }
                 ++s.first;
             }
@@ -511,7 +511,6 @@ MainMenuResult main_menu_new_game()
     {
         load_gene_files();
     }
-    rc = 0;
     mode = 1;
     cm = 1;
     asset_load("void");

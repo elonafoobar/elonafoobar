@@ -29,16 +29,15 @@ namespace elona
 namespace
 {
 
-TalkResult _talk_hv_visitor()
+TalkResult _talk_hv_visitor(Character& speaker)
 {
     listmax = 0;
-    buff = i18n::s.get("core.talk.visitor.wanted_to_say_hi", cdata[tc]);
-    tc = tc * 1 + 0;
+    buff = i18n::s.get("core.talk.visitor.wanted_to_say_hi", speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -50,28 +49,30 @@ TalkResult _talk_hv_visitor()
 }
 
 
-void _adventurer_give_new_year_gift()
+
+void _adventurer_give_new_year_gift(Character& speaker)
 {
     flt();
     if (const auto item = itemcreate_extra_inv(752, cdata.player().position, 0))
     {
-        item->param3 = cdata[tc].impression + rnd(50);
+        item->param3 = speaker.impression + rnd(50);
         txt(i18n::s.get(
-            "core.talk.visitor.adventurer.new_year.throws", cdata[tc], *item));
+            "core.talk.visitor.adventurer.new_year.throws", speaker, *item));
     }
 }
 
-TalkResult _talk_hv_adventurer_new_year()
+
+
+TalkResult _talk_hv_adventurer_new_year(Character& speaker)
 {
     listmax = 0;
     buff = i18n::s.get(
-        "core.talk.visitor.adventurer.new_year.happy_new_year", cdata[tc]);
-    tc = tc * 1 + 0;
+        "core.talk.visitor.adventurer.new_year.happy_new_year", speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -80,13 +81,12 @@ TalkResult _talk_hv_adventurer_new_year()
         }
     }
     listmax = 0;
-    buff = i18n::s.get("core.talk.visitor.adventurer.new_year.gift", cdata[tc]);
-    tc = tc * 1 + 0;
+    buff = i18n::s.get("core.talk.visitor.adventurer.new_year.gift", speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -95,42 +95,41 @@ TalkResult _talk_hv_adventurer_new_year()
         }
     }
 
-    _adventurer_give_new_year_gift();
+    _adventurer_give_new_year_gift(speaker);
 
     return TalkResult::talk_end;
 }
 
-void _adventurer_hate_action()
+
+
+void _adventurer_hate_action(Character& speaker)
 {
-    txt(i18n::s.get("core.talk.visitor.adventurer.hate.text", cdata[tc]));
+    txt(i18n::s.get("core.talk.visitor.adventurer.hate.text", speaker));
     if (rnd(2) == 0)
     {
         for (int cnt = 0; cnt < 28; ++cnt)
         {
-            tlocx = cdata[tc].position.x + rnd(3) - rnd(3);
-            tlocy = cdata[tc].position.y - rnd(3) + rnd(3);
+            tlocx = speaker.position.x + rnd(3) - rnd(3);
+            tlocy = speaker.position.y - rnd(3) + rnd(3);
             if (tlocx < 0 || tlocy < 0 || tlocx >= map_data.width ||
                 tlocy >= map_data.height)
             {
                 continue;
             }
-            if (tlocx == cdata[tc].position.x)
+            if (tlocx == speaker.position.x)
             {
-                if (tlocy == cdata[tc].position.y)
+                if (tlocy == speaker.position.y)
                 {
                     continue;
                 }
             }
             txt(i18n::s.get(
-                "core.talk.visitor.adventurer.hate.throws", cdata[tc]));
+                "core.talk.visitor.adventurer.hate.throws", speaker));
             snd("core.throw2");
-            ccbk = cc;
-            cc = tc;
-            ThrowingObjectAnimation({tlocx, tlocy}, cdata[cc].position, 223, 0)
+            ThrowingObjectAnimation({tlocx, tlocy}, speaker.position, 223, 0)
                 .play();
-            cc = ccbk;
-            mef_add(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, tc);
-            mapitem_fire(tlocx, tlocy);
+            mef_add(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, speaker.index);
+            mapitem_fire(speaker, tlocx, tlocy);
         }
     }
     else
@@ -139,7 +138,7 @@ void _adventurer_hate_action()
         {
             flt();
             itemcreate_extra_inv(704, -1, -1, 0);
-            txt(i18n::s.get("core.food.vomits", cdata[tc]));
+            txt(i18n::s.get("core.food.vomits", speaker));
             snd("core.vomit");
             await(g_config.animation_wait() / 2);
             update_screen();
@@ -147,16 +146,17 @@ void _adventurer_hate_action()
     }
 }
 
-TalkResult _talk_hv_adventurer_hate()
+
+
+TalkResult _talk_hv_adventurer_hate(Character& speaker)
 {
     listmax = 0;
-    buff = i18n::s.get("core.talk.visitor.adventurer.hate.dialog", cdata[tc]);
-    tc = tc * 1 + 0;
+    buff = i18n::s.get("core.talk.visitor.adventurer.hate.dialog", speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -165,76 +165,87 @@ TalkResult _talk_hv_adventurer_hate()
         }
     }
 
-    _adventurer_hate_action();
+    _adventurer_hate_action(speaker);
 
     return TalkResult::talk_end;
 }
 
-void _adventurer_become_best_friend()
+
+
+void _adventurer_become_best_friend(Character& speaker)
 {
-    cdata[tc].is_best_friend() = true;
+    speaker.is_best_friend() = true;
     flt();
     if (const auto item = itemcreate_extra_inv(730, cdata.player().position, 0))
     {
-        txt(i18n::s.get("core.talk.visitor.receive", *item, cdata[tc]));
+        txt(i18n::s.get("core.talk.visitor.receive", *item, speaker));
         txt(i18n::s.get("core.talk.visitor.adventurer.like.wonder_if"));
     }
 }
 
-void _talk_hv_adventurer_best_friend()
+
+
+void _talk_hv_adventurer_best_friend(Character& speaker)
 {
     listmax = 0;
-    buff = i18n::s.get("core.talk.visitor.adventurer.like.dialog", cdata[tc]);
-    tc = tc * 1 + 0;
+    buff = i18n::s.get("core.talk.visitor.adventurer.like.dialog", speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
 
-    _adventurer_become_best_friend();
+    _adventurer_become_best_friend(speaker);
 
     // NOTE: this dialog falls through.
     listmax = 0;
 }
 
-int _adventurer_get_trained_skill()
+
+
+int _adventurer_get_trained_skill(Character& speaker)
 {
-    int stat = advfavoriteskill(tc);
+    int stat = advfavoriteskill(speaker.index);
     int val = rtval(rnd(stat));
-    if (cdata[tc].impression >= 300)
+    if (speaker.impression >= 300)
     {
         if (rnd(3) == 0)
         {
-            stat = advfavoritestat(tc);
+            stat = advfavoritestat(speaker.index);
             val = stat;
         }
     }
     return val;
 }
 
+
+
 void _adventurer_learn_skill(int skill_id)
 {
     cdata.player().platinum_coin -= calclearncost(skill_id, 0, true);
-    chara_gain_skill(cdata[cc], skill_id);
+    chara_gain_skill(cdata.player(), skill_id);
     ++game_data.number_of_learned_skills_by_trainer;
 }
+
+
 
 void _adventurer_train_skill(int skill_id)
 {
     cdata.player().platinum_coin -= calctraincost(skill_id, 0, true);
     modify_potential(
-        cdata[cc],
+        cdata.player(),
         skill_id,
         clamp(
-            15 - sdata.get(skill_id, cc).potential / 15,
+            15 - sdata.get(skill_id, cdata.player().index).potential / 15,
             2,
             15 - (skill_id < 18) * 10));
 }
 
-TalkResult _talk_hv_adventurer_train()
+
+
+TalkResult _talk_hv_adventurer_train(Character& speaker)
 {
-    int skill_id = _adventurer_get_trained_skill();
+    int skill_id = _adventurer_get_trained_skill(speaker);
 
     list(0, listmax) = 0;
     listn(0, listmax) =
@@ -244,14 +255,13 @@ TalkResult _talk_hv_adventurer_train()
     {
         buff = i18n::s.get(
             "core.talk.visitor.adventurer.train.learn.dialog",
-            i18n::s.get_m(
-                "ability",
-                the_ability_db.get_id_from_legacy(skill_id)->get(),
-                "name"),
-            std::to_string(calclearncost(skill_id, cc, true)) +
+            the_ability_db.get_text(skill_id, "name"),
+            std::to_string(
+                calclearncost(skill_id, cdata.player().index, true)) +
                 i18n::s.get("core.ui.platinum"),
-            cdata[tc]);
-        if (cdata.player().platinum_coin >= calclearncost(skill_id, cc, true))
+            speaker);
+        if (cdata.player().platinum_coin >=
+            calclearncost(skill_id, cdata.player().index, true))
         {
             list(0, listmax) = 1;
             listn(0, listmax) =
@@ -263,14 +273,13 @@ TalkResult _talk_hv_adventurer_train()
     {
         buff = i18n::s.get(
             "core.talk.visitor.adventurer.train.train.dialog",
-            i18n::s.get_m(
-                "ability",
-                the_ability_db.get_id_from_legacy(skill_id)->get(),
-                "name"),
-            std::to_string(calclearncost(skill_id, cc, true)) +
+            the_ability_db.get_text(skill_id, "name"),
+            std::to_string(
+                calclearncost(skill_id, cdata.player().index, true)) +
                 i18n::s.get("core.ui.platinum"),
-            cdata[tc]);
-        if (cdata.player().platinum_coin >= calctraincost(skill_id, cc, true))
+            speaker);
+        if (cdata.player().platinum_coin >=
+            calctraincost(skill_id, cdata.player().index, true))
         {
             list(0, listmax) = 2;
             listn(0, listmax) =
@@ -279,18 +288,16 @@ TalkResult _talk_hv_adventurer_train()
         }
     }
     chatesc = 1;
-    int chatval_ = talk_window_query();
+    int chatval_ = talk_window_query(speaker);
     if (chatval_ == 0 || chatval_ == -1)
     {
         listmax = 0;
-        buff =
-            i18n::s.get("core.talk.visitor.adventurer.train.pass", cdata[tc]);
-        tc = tc * 1 + 0;
+        buff = i18n::s.get("core.talk.visitor.adventurer.train.pass", speaker);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker);
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -307,13 +314,12 @@ TalkResult _talk_hv_adventurer_train()
 
         listmax = 0;
         buff = i18n::s.get(
-            "core.talk.visitor.adventurer.train.learn.after", cdata[tc]);
-        tc = tc * 1 + 0;
+            "core.talk.visitor.adventurer.train.learn.after", speaker);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker);
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -328,13 +334,12 @@ TalkResult _talk_hv_adventurer_train()
 
         listmax = 0;
         buff = i18n::s.get(
-            "core.talk.visitor.adventurer.train.train.after", cdata[tc]);
-        tc = tc * 1 + 0;
+            "core.talk.visitor.adventurer.train.train.after", speaker);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker);
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -346,7 +351,9 @@ TalkResult _talk_hv_adventurer_train()
     return TalkResult::talk_end;
 }
 
-void _adventurer_receive_coin()
+
+
+void _adventurer_receive_coin(Character& speaker)
 {
     if (!inv_get_free_slot(-1))
     {
@@ -367,23 +374,24 @@ void _adventurer_receive_coin()
         if (const auto item =
                 itemcreate_extra_inv(p, cdata.player().position, 0))
         {
-            txt(i18n::s.get("core.talk.visitor.receive", *item, cdata[tc]));
+            txt(i18n::s.get("core.talk.visitor.receive", *item, speaker));
             snd("core.get1");
         }
     }
 }
 
-TalkResult _talk_hv_adventurer_friendship()
+
+
+TalkResult _talk_hv_adventurer_friendship(Character& speaker)
 {
     listmax = 0;
-    buff = i18n::s.get(
-        "core.talk.visitor.adventurer.friendship.dialog", cdata[tc]);
-    tc = tc * 1 + 0;
+    buff =
+        i18n::s.get("core.talk.visitor.adventurer.friendship.dialog", speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -392,7 +400,7 @@ TalkResult _talk_hv_adventurer_friendship()
         }
     }
 
-    _adventurer_receive_coin();
+    _adventurer_receive_coin(speaker);
 
     return TalkResult::talk_end;
 }
@@ -420,17 +428,15 @@ void _adventurer_receive_souvenir()
 
 
 
-TalkResult _talk_hv_adventurer_souvenir()
+TalkResult _talk_hv_adventurer_souvenir(Character& speaker)
 {
     listmax = 0;
-    buff =
-        i18n::s.get("core.talk.visitor.adventurer.souvenir.dialog", cdata[tc]);
-    tc = tc * 1 + 0;
+    buff = i18n::s.get("core.talk.visitor.adventurer.souvenir.dialog", speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -444,27 +450,29 @@ TalkResult _talk_hv_adventurer_souvenir()
     return TalkResult::talk_end;
 }
 
-void _adventurer_receive_materials()
+
+
+void _adventurer_receive_materials(Character& speaker)
 {
-    txt(i18n::s.get(
-        "core.talk.visitor.adventurer.materials.receive", cdata[tc]));
+    txt(i18n::s.get("core.talk.visitor.adventurer.materials.receive", speaker));
     efid = 1117;
     efp = 100;
-    tc = 0;
-    magic();
+    speaker.index = 0;
+    magic(cdata.player(), cdata.player());
 }
 
-TalkResult _talk_hv_adventurer_materials()
+
+
+TalkResult _talk_hv_adventurer_materials(Character& speaker)
 {
     listmax = 0;
     buff =
-        i18n::s.get("core.talk.visitor.adventurer.materials.dialog", cdata[tc]);
-    tc = tc * 1 + 0;
+        i18n::s.get("core.talk.visitor.adventurer.materials.dialog", speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -473,29 +481,27 @@ TalkResult _talk_hv_adventurer_materials()
         }
     }
 
-    _adventurer_receive_materials();
+    _adventurer_receive_materials(speaker);
 
     return TalkResult::talk_end;
 }
 
-TalkResult _talk_hv_adventurer_favorite_skill()
+
+
+TalkResult _talk_hv_adventurer_favorite_skill(Character& speaker)
 {
-    int stat = advfavoriteskill(tc);
+    int stat = advfavoriteskill(speaker.index);
     int skill_id = rtval(rnd(stat));
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.favorite_skill.dialog",
-        i18n::s.get_m(
-            "ability",
-            the_ability_db.get_id_from_legacy(skill_id)->get(),
-            "name"),
-        cdata[tc]);
-    tc = tc * 1 + 0;
+        the_ability_db.get_text(skill_id, "name"),
+        speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -506,23 +512,21 @@ TalkResult _talk_hv_adventurer_favorite_skill()
     return TalkResult::talk_end;
 }
 
-TalkResult _talk_hv_adventurer_favorite_stat()
+
+
+TalkResult _talk_hv_adventurer_favorite_stat(Character& speaker)
 {
-    int skill_id = advfavoritestat(tc);
+    int skill_id = advfavoritestat(speaker.index);
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.favorite_stat.dialog",
-        i18n::s.get_m(
-            "ability",
-            the_ability_db.get_id_from_legacy(skill_id)->get(),
-            "name"),
-        cdata[tc]);
-    tc = tc * 1 + 0;
+        the_ability_db.get_text(skill_id, "name"),
+        speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -533,26 +537,28 @@ TalkResult _talk_hv_adventurer_favorite_stat()
     return TalkResult::talk_end;
 }
 
-void _adventurer_hold_conversation()
+
+
+void _adventurer_hold_conversation(Character& speaker)
 {
-    txt(i18n::s.get(
-        "core.talk.visitor.adventurer.conversation.hold", cdata[tc]));
-    chara_modify_impression(cdata[tc], 10);
+    txt(i18n::s.get("core.talk.visitor.adventurer.conversation.hold", speaker));
+    chara_modify_impression(speaker, 10);
 }
 
-TalkResult _talk_hv_adventurer_conversation()
+
+
+TalkResult _talk_hv_adventurer_conversation(Character& speaker)
 {
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.conversation.dialog",
         cdata.player(),
-        cdata[tc]);
-    tc = tc * 1 + 0;
+        speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -561,32 +567,35 @@ TalkResult _talk_hv_adventurer_conversation()
         }
     }
 
-    _adventurer_hold_conversation();
+    _adventurer_hold_conversation(speaker);
 
     return TalkResult::talk_end;
 }
 
-void _adventurer_drink()
+
+
+void _adventurer_drink(Character& speaker)
 {
     snd("core.drink1");
-    txt(i18n::s.get("core.talk.visitor.adventurer.drink.cheers", cdata[tc]));
+    txt(i18n::s.get("core.talk.visitor.adventurer.drink.cheers", speaker));
     txt(i18n::s.get("core.magic.alcohol.normal"),
         Message::color{ColorIndex::cyan});
-    status_ailment_damage(cdata[tc], StatusAilment::drunk, 1000);
-    status_ailment_damage(cdata[cc], StatusAilment::drunk, 1000);
-    chara_modify_impression(cdata[tc], 15);
+    status_ailment_damage(speaker, StatusAilment::drunk, 1000);
+    status_ailment_damage(cdata.player(), StatusAilment::drunk, 1000);
+    chara_modify_impression(speaker, 15);
 }
 
-TalkResult _talk_hv_adventurer_drink()
+
+
+TalkResult _talk_hv_adventurer_drink(Character& speaker)
 {
     listmax = 0;
-    buff = i18n::s.get("core.talk.visitor.adventurer.drink.dialog", cdata[tc]);
-    tc = tc * 1 + 0;
+    buff = i18n::s.get("core.talk.visitor.adventurer.drink.dialog", speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -595,72 +604,73 @@ TalkResult _talk_hv_adventurer_drink()
         }
     }
 
-    _adventurer_drink();
+    _adventurer_drink(speaker);
 
     return TalkResult::talk_end;
 }
 
-TalkResult _talk_hv_adventurer()
+
+
+TalkResult _talk_hv_adventurer(Character& speaker)
 {
     if (game_data.date.month == 1 && rnd(4))
     {
-        return _talk_hv_adventurer_new_year();
+        return _talk_hv_adventurer_new_year(speaker);
     }
-    if (cdata[tc].impression < 25)
+    if (speaker.impression < 25)
     {
-        return _talk_hv_adventurer_hate();
+        return _talk_hv_adventurer_hate(speaker);
     }
-    if (cdata[tc].impression >= 100 && !cdata[tc].is_best_friend() &&
+    if (speaker.impression >= 100 && !speaker.is_best_friend() &&
         inv_get_free_slot(-1))
     {
         // NOTE: this dialog falls through.
-        _talk_hv_adventurer_best_friend();
+        _talk_hv_adventurer_best_friend(speaker);
     }
-    if (rnd(4) == 0 && cdata[tc].impression >= 150)
+    if (rnd(4) == 0 && speaker.impression >= 150)
     {
-        return _talk_hv_adventurer_train();
+        return _talk_hv_adventurer_train(speaker);
     }
-    if (rnd(5) == 0 && cdata[tc].impression >= 150)
+    if (rnd(5) == 0 && speaker.impression >= 150)
     {
-        return _talk_hv_adventurer_friendship();
+        return _talk_hv_adventurer_friendship(speaker);
     }
-    if (rnd(4) == 0 && cdata[tc].impression >= 100)
+    if (rnd(4) == 0 && speaker.impression >= 100)
     {
-        return _talk_hv_adventurer_souvenir();
+        return _talk_hv_adventurer_souvenir(speaker);
     }
-    if (rnd(5) == 0 && cdata[tc].impression >= 100)
+    if (rnd(5) == 0 && speaker.impression >= 100)
     {
-        return _talk_hv_adventurer_materials();
+        return _talk_hv_adventurer_materials(speaker);
     }
     if (rnd(8) == 0)
     {
-        return _talk_hv_adventurer_favorite_skill();
+        return _talk_hv_adventurer_favorite_skill(speaker);
     }
     if (rnd(10) == 0)
     {
-        return _talk_hv_adventurer_favorite_stat();
+        return _talk_hv_adventurer_favorite_stat(speaker);
     }
-    if (rnd(3) == 0 && cdata[tc].impression >= 75)
+    if (rnd(3) == 0 && speaker.impression >= 75)
     {
-        return _talk_hv_adventurer_conversation();
+        return _talk_hv_adventurer_conversation(speaker);
     }
     if (rnd(3) == 0)
     {
-        return _talk_hv_adventurer_drink();
+        return _talk_hv_adventurer_drink(speaker);
     }
-    return _talk_hv_visitor();
+    return _talk_hv_visitor(speaker);
 }
 
-int _trainer_calc_skills()
+
+
+int _trainer_calc_skills(Character& speaker)
 {
     int plat = 3;
 
     game_data.last_month_when_trainer_visited = game_data.date.month;
     buff = i18n::s.get(
-        "core.talk.visitor.trainer.dialog.member",
-        guildname(),
-        plat,
-        cdata[tc]);
+        "core.talk.visitor.trainer.dialog.member", guildname(), plat, speaker);
     if (game_data.guild.belongs_to_mages_guild != 0)
     {
         p(0) = 16;
@@ -693,11 +703,13 @@ int _trainer_calc_skills()
             p(cnt) = 10 + cnt + i;
         }
         buff = i18n::s.get(
-            "core.talk.visitor.trainer.dialog.nonmember", plat, cdata[tc]);
+            "core.talk.visitor.trainer.dialog.nonmember", plat, speaker);
     }
 
     return plat;
 }
+
+
 
 void _trainer_do_training(int plat, int chatval_)
 {
@@ -706,15 +718,14 @@ void _trainer_do_training(int plat, int chatval_)
     txt(i18n::s.get(
             "core.talk.visitor.trainer.potential_expands",
             cdata.player(),
-            i18n::s.get_m(
-                "ability",
-                the_ability_db.get_id_from_legacy(chatval_)->get(),
-                "name")),
+            the_ability_db.get_text(chatval_, "name")),
         Message::color{ColorIndex::green});
     modify_potential(cdata.player(), chatval_, 10);
 }
 
-TalkResult _talk_hv_trainer()
+
+
+TalkResult _talk_hv_trainer(Character& speaker)
 {
     int plat = 0;
 
@@ -722,13 +733,12 @@ TalkResult _talk_hv_trainer()
     {
         listmax = 0;
         buff = i18n::s.get(
-            "core.talk.visitor.trainer.no_more_this_month", cdata[tc]);
-        tc = tc * 1 + 0;
+            "core.talk.visitor.trainer.no_more_this_month", speaker);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker);
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -740,7 +750,7 @@ TalkResult _talk_hv_trainer()
     }
 
     // modifies buff/p
-    plat = _trainer_calc_skills();
+    plat = _trainer_calc_skills(speaker);
 
     list(0, listmax) = 0;
     listn(0, listmax) =
@@ -757,24 +767,20 @@ TalkResult _talk_hv_trainer()
             list(0, listmax) = p(cnt);
             listn(0, listmax) = i18n::s.get(
                 "core.talk.visitor.trainer.choices.improve",
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(p(cnt))->get(),
-                    "name"));
+                the_ability_db.get_text(p(cnt), "name"));
             ++listmax;
         }
     }
-    int chatval_ = talk_window_query();
+    int chatval_ = talk_window_query(speaker);
     if (chatval_ == 0 || chatval_ == -1)
     {
         listmax = 0;
-        buff = i18n::s.get("core.talk.visitor.trainer.regret", cdata[tc]);
-        tc = tc * 1 + 0;
+        buff = i18n::s.get("core.talk.visitor.trainer.regret", speaker);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker);
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -788,13 +794,12 @@ TalkResult _talk_hv_trainer()
     _trainer_do_training(plat, chatval_);
 
     listmax = 0;
-    buff = i18n::s.get("core.talk.visitor.trainer.after", cdata[tc]);
-    tc = tc * 1 + 0;
+    buff = i18n::s.get("core.talk.visitor.trainer.after", speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -805,17 +810,21 @@ TalkResult _talk_hv_trainer()
     return TalkResult::talk_end;
 }
 
-void _beggar_give()
+
+
+void _beggar_give(Character& speaker)
 {
     p = cdata.player().gold / 20 + 1;
-    txt(i18n::s.get("core.talk.visitor.beggar.spare", p(0), cdata[tc]));
+    txt(i18n::s.get("core.talk.visitor.beggar.spare", p(0), speaker));
     cdata.player().gold -= p;
     snd("core.paygold1");
-    earn_gold(cdata[tc], p);
+    earn_gold(speaker, p);
     modify_karma(cdata.player(), 2);
 }
 
-TalkResult _talk_hv_beggar()
+
+
+TalkResult _talk_hv_beggar(Character& speaker)
 {
     if (cdata.player().gold > 0)
     {
@@ -826,20 +835,19 @@ TalkResult _talk_hv_beggar()
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.talk.visitor.choices.no");
     ++listmax;
-    buff = i18n::s.get("core.talk.visitor.beggar.dialog", cdata[tc]);
-    int chatval_ = talk_window_query();
+    buff = i18n::s.get("core.talk.visitor.beggar.dialog", speaker);
+    int chatval_ = talk_window_query(speaker);
     if (chatval_ == 1)
     {
-        _beggar_give();
+        _beggar_give(speaker);
 
         listmax = 0;
-        buff = i18n::s.get("core.talk.visitor.beggar.after", cdata[tc]);
-        tc = tc * 1 + 0;
+        buff = i18n::s.get("core.talk.visitor.beggar.after", speaker);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.ui.more");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker);
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -851,12 +859,11 @@ TalkResult _talk_hv_beggar()
     }
     listmax = 0;
     buff = i18n::s.get("core.talk.visitor.beggar.cheap");
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -867,7 +874,9 @@ TalkResult _talk_hv_beggar()
     return TalkResult::talk_end;
 }
 
-TalkResult _talk_hv_punk()
+
+
+TalkResult _talk_hv_punk(Character& speaker)
 {
     list(0, listmax) = 1;
     listn(0, listmax) = i18n::s.get("core.talk.visitor.choices.yes");
@@ -875,18 +884,17 @@ TalkResult _talk_hv_punk()
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.talk.visitor.choices.no");
     ++listmax;
-    buff = i18n::s.get("core.talk.visitor.punk.dialog", cdata[tc]);
-    int chatval_ = talk_window_query();
+    buff = i18n::s.get("core.talk.visitor.punk.dialog", speaker);
+    int chatval_ = talk_window_query(speaker);
     if (chatval_ == 1)
     {
         listmax = 0;
-        buff = i18n::s.get("core.talk.npc.common.sex.start", cdata[tc]);
-        tc = tc * 1 + 0;
+        buff = i18n::s.get("core.talk.npc.common.sex.start", speaker);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.talk.npc.common.sex.response");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker);
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -895,18 +903,17 @@ TalkResult _talk_hv_punk()
             }
         }
 
-        activity_sex();
+        activity_sex(cdata.player(), speaker);
 
         return TalkResult::talk_end;
     }
     listmax = 0;
     buff = i18n::s.get("core.talk.visitor.punk.hump");
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -917,7 +924,9 @@ TalkResult _talk_hv_punk()
     return TalkResult::talk_end;
 }
 
-TalkResult _talk_hv_mysterious_producer()
+
+
+TalkResult _talk_hv_mysterious_producer(Character& speaker)
 {
 
     list(0, listmax) = 1;
@@ -927,19 +936,18 @@ TalkResult _talk_hv_mysterious_producer()
     listn(0, listmax) = i18n::s.get("core.talk.visitor.choices.no");
     ++listmax;
     buff = i18n::s.get(
-        "core.talk.visitor.mysterious_producer.want_to_be_star", cdata[tc]);
-    int chatval_ = talk_window_query();
+        "core.talk.visitor.mysterious_producer.want_to_be_star", speaker);
+    int chatval_ = talk_window_query(speaker);
     if (chatval_ == 1)
     {
         listmax = 0;
         buff = i18n::s.get(
-            "core.talk.visitor.mysterious_producer.no_turning_back", cdata[tc]);
-        tc = tc * 1 + 0;
+            "core.talk.visitor.mysterious_producer.no_turning_back", speaker);
         list(0, listmax) = 0;
         listn(0, listmax) = i18n::s.get("core.talk.npc.common.sex.response");
         ++listmax;
         chatesc = 1;
-        talk_window_query();
+        talk_window_query(speaker);
         if (scenemode)
         {
             if (scene_cut == 1)
@@ -948,18 +956,17 @@ TalkResult _talk_hv_mysterious_producer()
             }
         }
 
-        activity_sex();
+        activity_sex(cdata.player(), speaker);
 
         return TalkResult::talk_end;
     }
     listmax = 0;
     buff = i18n::s.get("core.talk.visitor.punk.hump");
-    tc = tc * 1 + 0;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -970,30 +977,35 @@ TalkResult _talk_hv_mysterious_producer()
     return TalkResult::talk_end;
 }
 
-void _merchant_buy()
+
+
+void _merchant_buy(Character& speaker)
 {
     invctrl = 11;
-    invfile = cdata[tc].shop_store_id;
-    shop_sell_item();
+    invfile = speaker.shop_store_id;
+    shop_sell_item(speaker);
     screenupdate = -1;
     update_screen();
     cs = 0;
     buff = "";
 }
 
-void _merchant_sell()
+
+
+void _merchant_sell(Character& speaker)
 {
     invctrl = 12;
-    invfile = cdata[tc].shop_store_id;
-    shop_sell_item();
-    cc = 0;
+    invfile = speaker.shop_store_id;
+    shop_sell_item(speaker);
     screenupdate = -1;
     update_screen();
     cs = 0;
     buff = "";
 }
 
-TalkResult _talk_hv_merchant()
+
+
+TalkResult _talk_hv_merchant(Character& speaker)
 {
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.talk.visitor.merchant.choices.buy");
@@ -1005,26 +1017,25 @@ TalkResult _talk_hv_merchant()
     listn(0, listmax) =
         i18n::s.get("core.talk.visitor.merchant.choices.not_now");
     ++listmax;
-    buff = i18n::s.get("core.talk.visitor.merchant.dialog", cdata[tc]);
-    int chatval_ = talk_window_query();
+    buff = i18n::s.get("core.talk.visitor.merchant.dialog", speaker);
+    int chatval_ = talk_window_query(speaker);
     if (chatval_ == 0)
     {
-        _merchant_buy();
+        _merchant_buy(speaker);
         return TalkResult::talk_house_visitor;
     }
     if (chatval_ == 1)
     {
-        _merchant_sell();
+        _merchant_sell(speaker);
         return TalkResult::talk_house_visitor;
     }
     listmax = 0;
-    buff = i18n::s.get("core.talk.visitor.merchant.regret", cdata[tc]);
-    tc = tc * 1 + 0;
+    buff = i18n::s.get("core.talk.visitor.merchant.regret", speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
     ++listmax;
     chatesc = 1;
-    talk_window_query();
+    talk_window_query(speaker);
     if (scenemode)
     {
         if (scene_cut == 1)
@@ -1032,25 +1043,26 @@ TalkResult _talk_hv_merchant()
             return TalkResult::talk_end;
         }
     }
-    cdata[tc].role = Role::guest_citizen;
+    speaker.role = Role::guest_citizen;
     return TalkResult::talk_end;
 }
 
 } // namespace
 
-TalkResult talk_house_visitor()
+
+
+TalkResult talk_house_visitor(Character& speaker)
 {
     listmax = 0;
-    cc = 0;
-    switch (cdata[tc].role)
+    switch (speaker.role)
     {
-    case Role::adventurer: return _talk_hv_adventurer();
-    case Role::guest_trainer: return _talk_hv_trainer();
-    case Role::guest_citizen: return _talk_hv_visitor();
-    case Role::guest_beggar: return _talk_hv_beggar();
-    case Role::guest_punk: return _talk_hv_punk();
-    case Role::guest_producer: return _talk_hv_mysterious_producer();
-    case Role::guest_wandering_vendor: return _talk_hv_merchant();
+    case Role::adventurer: return _talk_hv_adventurer(speaker);
+    case Role::guest_trainer: return _talk_hv_trainer(speaker);
+    case Role::guest_citizen: return _talk_hv_visitor(speaker);
+    case Role::guest_beggar: return _talk_hv_beggar(speaker);
+    case Role::guest_punk: return _talk_hv_punk(speaker);
+    case Role::guest_producer: return _talk_hv_mysterious_producer(speaker);
+    case Role::guest_wandering_vendor: return _talk_hv_merchant(speaker);
     default: return TalkResult::talk_end;
     }
 }

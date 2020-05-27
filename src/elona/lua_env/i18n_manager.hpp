@@ -44,6 +44,17 @@ public:
         return env()["get_optional"](key, lua_args);
     }
 
+    template <typename... Args>
+    sol::optional<std::string> get_data_text_optional(
+        const std::string& key,
+        Args&&... args)
+    {
+        using swallow = std::initializer_list<int>;
+        auto lua_args = lua_state()->create_table();
+        (void)swallow{(add_arg(lua_args, std::forward<Args>(args)), 0)...};
+        return env()["get_data_text_optional"](key, lua_args);
+    }
+
     std::vector<std::string> get_list(const std::string& key)
     {
         sol::optional<std::vector<std::string>> ret = env()["get_list"](key);

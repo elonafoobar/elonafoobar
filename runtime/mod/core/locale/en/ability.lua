@@ -1,5 +1,6 @@
-ELONA.i18n:add {
-   ability = {
+ELONA.i18n:add_data_text(
+   "core.ability",
+   {
       attribute_life = {
          name = "Life",
       },
@@ -786,5 +787,5 @@ ELONA.i18n:add {
          name = "Drop Mine",
          description = "Set Mine",
       },
-   },
-}
+   }
+)

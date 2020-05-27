@@ -10,7 +10,6 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
-#include "macro.hpp"
 #include "random.hpp"
 #include "variables.hpp"
 
