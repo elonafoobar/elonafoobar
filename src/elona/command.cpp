@@ -5963,7 +5963,8 @@ void proc_autopick()
 
 
 
-bool try_unlock(int difficulty)
+// Returns true on success, false on failure, or none on retry.
+optional<bool> try_unlock_internal(int difficulty)
 {
     const auto lockpick_opt = item_find(636, 3);
     if (!lockpick_opt)
@@ -6019,13 +6020,26 @@ bool try_unlock(int difficulty)
         txt(i18n::s.get("core.action.unlock.try_again"));
         if (yes_no())
         {
-            return try_unlock(difficulty);
+            return none; // retry
         }
         return false;
     }
     txt(i18n::s.get("core.action.unlock.succeed"));
     chara_gain_exp_lock_picking(cdata[cc]);
     return true;
+}
+
+
+
+bool try_unlock(int difficulty)
+{
+    while (true)
+    {
+        if (const auto result = try_unlock_internal(difficulty))
+        {
+            return *result;
+        }
+    }
 }
 
 
