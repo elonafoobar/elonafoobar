@@ -63,7 +63,15 @@ struct PickUpItemResult
 };
 PickUpItemResult pick_up_item(Item& item, bool play_sound = true);
 
-int unlock_box(int);
+
+/**
+ * Try unlocking lock of box, chest or jail door.
+ *
+ * @param difficulty The lock difficulty
+ * @return True on success; false on failure.
+ */
+bool try_unlock(int difficulty);
+
 int try_to_cast_spell();
 int read_scroll(Item& scroll);
 bool read_textbook(Item& textbook);

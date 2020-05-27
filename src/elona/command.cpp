@@ -2931,8 +2931,7 @@ TurnResult do_open_command(Item& box, bool play_sound)
     {
         if (box.param2 != 0)
         {
-            int stat = unlock_box(box.param2);
-            if (stat == 0)
+            if (!try_unlock(box.param2))
             {
                 screenupdate = -1;
                 update_screen();
@@ -5964,13 +5963,14 @@ void proc_autopick()
 
 
 
-int unlock_box(int difficulty)
+// Returns true on success, false on failure, or none on retry.
+optional<bool> try_unlock_internal(int difficulty)
 {
     const auto lockpick_opt = item_find(636, 3);
     if (!lockpick_opt)
     {
         txt(i18n::s.get("core.action.unlock.do_not_have_lockpicks"));
-        return 0;
+        return false;
     }
     auto& lockpick = *lockpick_opt;
 
@@ -6020,14 +6020,26 @@ int unlock_box(int difficulty)
         txt(i18n::s.get("core.action.unlock.try_again"));
         if (yes_no())
         {
-            unlock_box(difficulty);
-            return 0;
+            return none; // retry
         }
-        return 0;
+        return false;
     }
     txt(i18n::s.get("core.action.unlock.succeed"));
     chara_gain_exp_lock_picking(cdata[cc]);
-    return 1;
+    return true;
+}
+
+
+
+bool try_unlock(int difficulty)
+{
+    while (true)
+    {
+        if (const auto result = try_unlock_internal(difficulty))
+        {
+            return *result;
+        }
+    }
 }
 
 
@@ -6352,8 +6364,7 @@ TurnResult try_to_open_locked_door()
     {
         if (cc == 0)
         {
-            int stat = unlock_box(feat(2));
-            if (stat == 0)
+            if (!try_unlock(feat(2)))
             {
                 screenupdate = -1;
                 update_screen();
