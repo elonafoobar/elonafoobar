@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.7.2] - 2020-05-27
+
+### Fixed
+
+* Fix crash related to internal item management system.
+  * It is a workaround: it prevents the crash, but item names in some game messages are replaced with "something". The bug will be fully fixed in the next version.
+* Fix issue where a box or chest does not open when you fail to unlock it once and successfully unlock for the second time.
+* Fix crash when you try unlocking many times.
+
+
+
 ## [0.7.1] - 2020-04-12
 
 ### Fixed
