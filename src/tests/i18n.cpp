@@ -73,6 +73,8 @@ TEST_CASE("test format chara", "[I18N: Formatting]")
 
 TEST_CASE("test format item", "[I18N: Formatting]")
 {
+    // This test is disabled until bug #1631 is fixed.
+#if 0
     testing::start_in_debug_map();
     Item& i = testing::create_item(itemid2int(PUTITORO_PROTO_ID), 3);
 
@@ -82,6 +84,7 @@ TEST_CASE("test format item", "[I18N: Formatting]")
 
     REQUIRE(i18n::s.format("{itemname($1)}", i) == u8"3個のプチトロ"s);
     REQUIRE(i18n::s.format("{itembasename($1)}", i) == u8"プチトロ"s);
+#endif
 }
 
 

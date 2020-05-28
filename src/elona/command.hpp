@@ -67,7 +67,15 @@ PickUpItemResult pick_up_item(
     optional_ref<Character> shopkeeper,
     bool play_sound = true);
 
-int unlock_box(int);
+
+/**
+ * Try unlocking lock of box, chest or jail door.
+ *
+ * @param difficulty The lock difficulty
+ * @return True on success; false on failure.
+ */
+bool try_unlock(int difficulty);
+
 int try_to_cast_spell(Character& caster, int& enemy_index);
 int read_scroll(Character& reader, Item& scroll);
 bool read_textbook(Character& doer, Item& textbook);
