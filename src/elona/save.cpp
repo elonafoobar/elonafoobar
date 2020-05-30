@@ -123,7 +123,7 @@ void load_save_data()
     }
     if (game_data.wizard == 1)
     {
-        cdatan(1, 0) = u8"*Debug*"s;
+        cdata.player().alias = u8"*Debug*"s;
     }
     refresh_speed(cdata.player());
     time_begin = timeGetTime() / 1000;

@@ -50,7 +50,7 @@ void dump_player_info()
 
     ss << std::endl;
 
-    ss << "  " << fixtxt(cdatan(1, 0) + cdatan(0, 0), 34)
+    ss << "  " << fixtxt(cdata.player().alias + cdata.player().name, 34)
        << i18n::s.get_enum("core.ui.sex", cdata.player().sex) << " "
        << calc_age(cdata.player()) << u8"歳  " << cdata.player().height
        << u8"cm " << cdata.player().weight << u8"kg" << std::endl;
@@ -59,14 +59,11 @@ void dump_player_info()
 
     ss << fixtxt(
               u8"種族       : " +
-                  the_race_db.get_text(data::InstanceId{cdatan(2, 0)}, "name"),
+                  the_race_db.get_text(cdata.player().race, "name"),
               30)
        << fixtxt(u8"信仰      : " + god_name(cdata.player().god_id), 32)
        << std::endl;
-    ss << fixtxt(
-              u8"職業       : " +
-                  class_get_name(data::InstanceId{cdatan(3, 0)}),
-              30)
+    ss << fixtxt(u8"職業       : " + class_get_name(cdata.player().class_), 30)
        << fixtxt(u8"所属      : " + guildname(), 32) << std::endl;
     ss << fixtxt(u8"レベル     : " + std::to_string(cdata.player().level), 30)
        << fixtxt(u8"経過日数  : " + std::to_string(game_data.play_days), 32)
@@ -232,11 +229,9 @@ void dump_player_info()
             continue;
         }
 
-        ss << cdatan(0, ally.index) << u8" "
-           << the_race_db.get_text(
-                  data::InstanceId{cdatan(2, ally.index)}, "name")
-           << u8"の" << class_get_name(data::InstanceId{cdatan(3, ally.index)})
-           << u8" " << i18n::s.get_enum("core.ui.sex", ally.sex) << u8" "
+        ss << ally.name << u8" " << the_race_db.get_text(ally.race, "name")
+           << u8"の" << class_get_name(ally.class_) << u8" "
+           << i18n::s.get_enum("core.ui.sex", ally.sex) << u8" "
            << calc_age(ally) << u8"歳" << u8"  " << ally.height << u8"cm"
            << u8" " << ally.weight << u8"kg" << std::endl;
         ss << u8"レベル " << ally.level;

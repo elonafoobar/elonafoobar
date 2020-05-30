@@ -370,14 +370,13 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     enemy_index = chara.enemy_id;
 
     // Talk
-    if (cdatan(4, chara.index) != ""s)
+    if (!chara.talk.empty())
     {
         if (chara.has_custom_talk() == 0)
         {
             if (rnd(30) == 0)
             {
-                txt(""s + cdatan(4, chara.index),
-                    Message::color{ColorIndex::cyan});
+                txt(chara.talk, Message::color{ColorIndex::cyan});
             }
         }
     }

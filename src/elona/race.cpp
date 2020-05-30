@@ -18,7 +18,7 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
     if (!data)
         return;
 
-    cdatan(2, chara.index) = race_id.get();
+    chara.race = race_id;
 
     chara.melee_attack_type = data->melee_attack_type;
     chara.special_attack_type = data->special_attack_type;
@@ -111,50 +111,50 @@ std::vector<std::reference_wrapper<const RaceData>> race_get_available(
 
 void gain_race_feat()
 {
-    if (cdatan(2, 0) == u8"core.dwarf"s)
+    if (cdata.player().race == "core.dwarf")
     {
         trait(152) = 2;
         trait(155) = 1;
     }
-    if (cdatan(2, 0) == u8"core.elea"s)
+    if (cdata.player().race == "core.elea")
     {
         trait(168) = 1;
         trait(156) = 1;
     }
-    if (cdatan(2, 0) == u8"core.eulderna"s)
+    if (cdata.player().race == "core.eulderna")
     {
         trait(153) = 1;
     }
-    if (cdatan(2, 0) == u8"core.lich"s)
+    if (cdata.player().race == "core.lich")
     {
         trait(151) = 1;
         trait(155) = 2;
         trait(152) = 1;
     }
-    if (cdatan(2, 0) == u8"core.golem"s)
+    if (cdata.player().race == "core.golem")
     {
         trait(157) = 1;
         trait(152) = 2;
     }
-    if (cdatan(2, 0) == u8"core.yerles"s)
+    if (cdata.player().race == "core.yerles")
     {
         trait(154) = 1;
     }
-    if (cdatan(2, 0) == u8"core.juere"s)
+    if (cdata.player().race == "core.juere")
     {
         trait(158) = 1;
         trait(159) = 1;
     }
-    if (cdatan(2, 0) == u8"core.goblin"s)
+    if (cdata.player().race == "core.goblin")
     {
         trait(155) = 1;
         trait(159) = 1;
     }
-    if (cdatan(2, 0) == u8"core.mutant"s)
+    if (cdata.player().race == "core.mutant")
     {
         trait(0) = 1;
     }
-    if (cdatan(2, 0) == u8"core.fairy"s)
+    if (cdata.player().race == "core.fairy")
     {
         trait(160) = 1;
         trait(161) = 1;

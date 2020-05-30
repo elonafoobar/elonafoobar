@@ -399,13 +399,6 @@ bool _will_crush_wall(const Character& chara, int x, int y)
 
 
 
-const std::string& _chara_get_race(const Character& chara)
-{
-    return cdatan(2, chara.index);
-}
-
-
-
 // Handle 『恋のマイアヒ』
 void _proc_drunk_cat(Character& chara)
 {
@@ -938,8 +931,7 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
         return TurnResult::turn_end;
     }
 
-    if (chara.drunk != 0 && _chara_get_race(chara) == "core.cat" &&
-        is_in_fov(chara))
+    if (chara.drunk != 0 && chara.race == "core.cat" && is_in_fov(chara))
     {
         _proc_drunk_cat(chara);
     }
@@ -1021,7 +1013,7 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
                 distance = dist_helper(cdata[enemy_index], chara);
                 if (distance < 8)
                 {
-                    if (_chara_get_race(cdata.player()) == "core.snail")
+                    if (cdata.player().race == "core.snail")
                     {
                         tlocx = cdata.player().position.x;
                         tlocy = cdata.player().position.y;

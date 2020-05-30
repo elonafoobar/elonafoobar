@@ -485,7 +485,7 @@ TurnResult do_pray()
             {
                 if (ally.state() != Character::State::empty)
                 {
-                    if (cdatan(2, ally.index) == u8"core.servant"s)
+                    if (ally.race == "core.servant")
                     {
                         ++p;
                         if (p >= 2)

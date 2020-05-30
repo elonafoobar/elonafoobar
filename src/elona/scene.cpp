@@ -381,8 +381,10 @@ void conquer_lesimas()
     draw_region("void", 0, 0, 0, 0, windoww, windowh);
     asset_load("g1");
     gsel(0);
-    ui_draw_caption(
-        i18n::s.get("core.win.you_acquired_codex", cdatan(1, 0), cdatan(0, 0)));
+    ui_draw_caption(i18n::s.get(
+        "core.win.you_acquired_codex",
+        cdata.player().alias,
+        cdata.player().name));
     windowshadow = 1;
     ww = 680;
     wh = 488;

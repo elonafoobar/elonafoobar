@@ -789,19 +789,16 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set(
         "basename",
         sol::property(
-            [](Character& c) { return elona::cdatan(0, c.index); },
-            [](Character& c, const std::string& s) {
-                elona::cdatan(0, c.index) = s;
-            }));
+            [](Character& c) { return c.name; },
+            [](Character& c, const std::string& s) { c.name = s; }));
 
     /**
-     * @luadoc title field string
+     * @luadoc alias field string
      *
-     * [R] The title of the character.
+     * [R] The alias of the character.
      */
-    LuaCharacter.set("title", sol::property([](Character& c) {
-                         return elona::cdatan(1, c.index);
-                     }));
+    LuaCharacter.set(
+        "alias", sol::property([](Character& c) { return c.alias; }));
 
     /**
      * @luadoc sex field Gender

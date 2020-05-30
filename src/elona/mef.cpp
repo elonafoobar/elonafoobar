@@ -307,7 +307,7 @@ bool mef_proc_from_movement(Character& chara)
     }
     if (mef(0, i) == 1)
     {
-        if (cdatan(2, chara.index) != u8"core.spider"s)
+        if (chara.race != "core.spider")
         {
             if (rnd_capped(mef(5, i) + 25) <
                     rnd_capped(

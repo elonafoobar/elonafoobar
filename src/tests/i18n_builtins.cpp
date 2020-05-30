@@ -21,7 +21,7 @@ TEST_CASE("test i18n builtin: characters", "[I18N: Builtins]")
     testing::start_in_debug_map();
 
     Character& you = elona::cdata.player();
-    elona::cdatan(0, you.index) = u8"Orville";
+    you.name = "Orville";
     you.sex = 0;
 
     Character& out_of_fov =
@@ -111,7 +111,7 @@ TEST_CASE("test i18n builtin: characters", "[I18N: Builtins]")
             i18n::s.format("something go{s($1, true)} to hell.", chara) ==
             u8"something goes to hell.");
 
-        elona::cdatan(0, chara.index) = u8"Putit the mochi vendor";
+        chara.name = "Putit the mochi vendor";
         REQUIRE(i18n::s.format("{name_nojob($1)}", chara) == u8"Putit ");
     }
 }

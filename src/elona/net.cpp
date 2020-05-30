@@ -7,6 +7,7 @@
 #include "../thirdparty/json5/json5.hpp"
 #include "../thirdparty/xxHash/xxhashcpp.hpp"
 #include "../util/scope_guard.hpp"
+#include "character.hpp"
 #include "config.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -145,12 +146,12 @@ std::string get_pc_name()
 {
     if (config_get_boolean("core.net.hide_your_name"))
     {
-        const auto seed = xxhash::xxhash32(cdatan(0, 0));
+        const auto seed = xxhash::xxhash32(cdata.player().name);
         return eval_with_random_seed(seed, []() { return random_name(); });
     }
     else
     {
-        return cdatan(0, 0);
+        return cdata.player().name;
     }
 }
 
@@ -160,13 +161,13 @@ std::string get_pc_alias()
 {
     if (config_get_boolean("core.net.hide_your_alias"))
     {
-        const auto seed = xxhash::xxhash32(cdatan(1, 0));
+        const auto seed = xxhash::xxhash32(cdata.player().alias);
         return eval_with_random_seed(
             seed, []() { return random_title(RandomTitleType::character); });
     }
     else
     {
-        return cdatan(1, 0);
+        return cdata.player().alias;
     }
 }
 

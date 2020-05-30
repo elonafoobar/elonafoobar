@@ -649,37 +649,37 @@ void prompt_hiring()
             if (p == 0)
             {
                 servant->role = Role::blacksmith;
-                cdatan(0, servant->index) =
+                servant->name =
                     i18n::s.get("core.building.guests.armory", *servant);
             }
             if (p == 1)
             {
                 servant->role = Role::general_vendor;
-                cdatan(0, servant->index) =
+                servant->name =
                     i18n::s.get("core.building.guests.general_store", *servant);
             }
             if (p == 2)
             {
                 servant->role = Role::magic_vendor;
-                cdatan(0, servant->index) =
+                servant->name =
                     i18n::s.get("core.building.guests.magic_store", *servant);
             }
             if (p == 3)
             {
                 servant->role = Role::general_store;
-                cdatan(0, servant->index) =
+                servant->name =
                     i18n::s.get("core.building.guests.goods_store", *servant);
             }
             if (p == 4)
             {
                 servant->role = Role::blacksmith;
-                cdatan(0, servant->index) =
+                servant->name =
                     i18n::s.get("core.building.guests.armory", *servant);
             }
             if (p == 5)
             {
                 servant->role = Role::blackmarket_vendor;
-                cdatan(0, servant->index) =
+                servant->name =
                     i18n::s.get("core.building.guests.blackmarket", *servant);
             }
             randomize();
@@ -692,7 +692,7 @@ void prompt_hiring()
                 continue;
             }
             if (chara.state() != Character::State::empty &&
-                cdatan(0, chara.index) == cdatan(0, servant->index))
+                chara.name == servant->name)
             {
                 chara_vanquish(*servant);
                 break;
@@ -1408,7 +1408,7 @@ void update_ranch()
             }
             if (rnd(10) != 0)
             {
-                fltnrace = cdatan(2, worker);
+                fltnrace = cdata[worker].race.get();
             }
             if (cdata[worker].id == CharaId::little_sister)
             {
@@ -1478,7 +1478,7 @@ void update_ranch()
             case 0:
                 // Egg
                 if (rnd(60) == 0 ||
-                    (cdatan(2, chara.index) == "core.chicken" && rnd(20) == 0))
+                    (chara.race == "core.chicken" && rnd(20) == 0))
                 {
                     ++egg_or_milk_count;
                     if (const auto item = itemcreate_extra_inv(573, x, y, 0))
@@ -1493,7 +1493,7 @@ void update_ranch()
             case 1:
                 // Milk
                 if (rnd(60) == 0 ||
-                    (cdatan(2, chara.index) == "core.sheep" && rnd(20) == 0))
+                    (chara.race == "core.sheep" && rnd(20) == 0))
                 {
                     ++egg_or_milk_count;
                     if (const auto item = itemcreate_extra_inv(574, x, y, 0))

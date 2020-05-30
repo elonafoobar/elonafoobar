@@ -470,11 +470,10 @@ void UIMenuCharacterSheet::_draw_first_page_text_level()
 
 void UIMenuCharacterSheet::_draw_first_page_text_name()
 {
-    s(0) = cdatan(0, _chara.index);
-    s(1) = cdatan(1, _chara.index);
-    s(2) = cnven(the_race_db.get_text(
-        data::InstanceId{cdatan(2, _chara.index)}, "name"));
-    s(4) = cnven(class_get_name(data::InstanceId{cdatan(3, _chara.index)}));
+    s(0) = _chara.name;
+    s(1) = _chara.alias;
+    s(2) = cnven(the_race_db.get_text(_chara.race, "name"));
+    s(4) = cnven(class_get_name(_chara.class_));
     if (_chara.sex == 0)
     {
         s(3) = cnven(i18n::s.get("core.ui.sex3.male"));

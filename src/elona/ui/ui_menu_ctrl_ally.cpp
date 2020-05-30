@@ -280,8 +280,7 @@ snail::Color UIMenuCtrlAlly::_draw_get_color(const Character& chara)
 
 std::string UIMenuCtrlAlly::_get_ally_name(const Character& chara)
 {
-    std::string ally_name =
-        ""s + cdatan(1, chara.index) + u8" "s + cdatan(0, chara.index);
+    std::string ally_name = chara.alias + u8" "s + chara.name;
 
     if (chara.current_map != 0)
     {
@@ -416,8 +415,7 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
 
 void UIMenuCtrlAlly::_draw_ally_list_entry_sell(int cnt, const Character& chara)
 {
-    std::string ally_name =
-        ""s + cdatan(1, chara.index) + u8" "s + cdatan(0, chara.index);
+    std::string ally_name = chara.alias + u8" "s + chara.name;
     ally_name += u8" Lv."s + chara.level;
 
     cs_list(cs == cnt, ally_name, wx + 84, wy + 66 + cnt * 19 - 1);

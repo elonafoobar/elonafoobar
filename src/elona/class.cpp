@@ -20,7 +20,7 @@ void class_init_chara(Character& chara, data::InstanceId class_id)
     if (!data)
         return;
 
-    cdatan(3, chara.index) = class_id.get();
+    chara.class_ = class_id;
     for (const auto& pair : data->skills)
     {
         if (const auto ability_data = the_ability_db[pair.first])

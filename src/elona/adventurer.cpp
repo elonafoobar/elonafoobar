@@ -50,8 +50,8 @@ void create_adventurer(Character& adv)
     adv._156 = 100;
     adv.set_state(Character::State::adventurer_in_other_map);
     adv.image = rnd(33) * 2 + 1 + adv.sex;
-    cdatan(0, adv.index) = random_name();
-    cdatan(1, adv.index) = random_title(RandomTitleType::character);
+    adv.name = random_name();
+    adv.alias = random_title(RandomTitleType::character);
     adv.role = Role::adventurer;
     p = rnd(450);
     if (area_data[p].id == mdata_t::MapId::none ||
@@ -147,8 +147,8 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
         addnews2(
             i18n::s.get(
                 "core.news.discovery.text",
-                cdatan(1, adventurer),
-                cdatan(0, adventurer),
+                cdata[adventurer].alias,
+                cdata[adventurer].name,
                 valn,
                 mapname(cdata[adventurer].current_map)),
             1);
@@ -158,8 +158,8 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
         addnews2(
             i18n::s.get(
                 "core.news.growth.text",
-                cdatan(1, adventurer),
-                cdatan(0, adventurer),
+                cdata[adventurer].alias,
+                cdata[adventurer].name,
                 cdata[adventurer].level),
             1);
         break;
@@ -168,8 +168,8 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
         addnews2(
             i18n::s.get(
                 "core.news.recovery.text",
-                cdatan(1, adventurer),
-                cdatan(0, adventurer)),
+                cdata[adventurer].alias,
+                cdata[adventurer].name),
             1);
         break;
     case 4:
@@ -177,8 +177,8 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
         addnews2(
             i18n::s.get(
                 "core.news.accomplishment.text",
-                cdatan(1, adventurer),
-                cdatan(0, adventurer),
+                cdata[adventurer].alias,
+                cdata[adventurer].name,
                 fame),
             1);
         break;
@@ -187,8 +187,8 @@ void addnews(int news_type, int adventurer, int fame, const std::string& valn)
         addnews2(
             i18n::s.get(
                 "core.news.retirement.text",
-                cdatan(1, adventurer),
-                cdatan(0, adventurer)),
+                cdata[adventurer].alias,
+                cdata[adventurer].name),
             1);
         break;
     }

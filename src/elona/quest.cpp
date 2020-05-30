@@ -434,7 +434,7 @@ void quest_set_data(optional_ref<const Character> client, int val0)
         if (game_data.current_map == quest_data[rq].originating_map_id &&
             game_data.current_dungeon_level == 1)
         {
-            s(12) = ""s + cdatan(0, quest_data[rq].target_chara_index);
+            s(12) = cdata[quest_data[rq].target_chara_index].name;
         }
         else
         {
@@ -578,7 +578,7 @@ void quest_on_map_initialize()
         }
         quest_data[i].client_chara_index = cnt.index;
         quest_data[i].originating_map_id = game_data.current_map;
-        qname(i) = cdatan(0, cnt.index);
+        qname(i) = cnt.name;
         cnt.related_quest_id = i + 1;
         game_data.number_of_existing_quests = i + 1;
     }
