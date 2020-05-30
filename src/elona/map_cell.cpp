@@ -181,17 +181,17 @@ void cell_movechara(int chara_index, int x, int y)
 
 
 // Returns pair of number of items and the last item on the cell.
-std::pair<int, int> cell_itemoncell(const Position& pos)
+std::pair<int, optional_ref<Item>> cell_itemoncell(const Position& pos)
 {
     int number{};
-    int item_{};
+    optional_ref<Item> item_{};
 
-    for (const auto& item : inv.ground())
+    for (auto&& item : inv.ground())
     {
         if (item.number() > 0 && item.position == pos)
         {
             ++number;
-            item_ = item.index;
+            item_ = item;
         }
     }
 
