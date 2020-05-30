@@ -1,6 +1,9 @@
 --- Contains parameters for the current game save.
 --  @classmod LuaGameData
 
+--- [RW] The amount of the water which the the holy well has.
+--  @tfield num holy_well_count
+
 --- [RW] The player's home scale.
 --  @tfield num home_scale
 
