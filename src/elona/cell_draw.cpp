@@ -1346,7 +1346,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
             if (p_ == 528 || p_ == 531)
             {
                 rect = prepare_item_image(
-                    p_, i_, inv[cell_itemoncell({x, y}).second].param1);
+                    p_, i_, cell_itemoncell({x, y}).second->param1);
             }
             else
             {

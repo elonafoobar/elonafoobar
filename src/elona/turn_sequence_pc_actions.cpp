@@ -246,8 +246,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
             if (the_item_db[itemid2int(item.id)]->category ==
                 ItemCategory::altar)
             {
-                p(0) = 3;
-                p(1) = item.index;
+                p = 3;
             }
             if (item.function != 0 ||
                 the_item_db[itemid2int(item.id)]->is_usable)

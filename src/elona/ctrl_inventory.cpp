@@ -95,7 +95,8 @@ struct OnEnterResult
 OnEnterResult on_enter(
     optional_ref<Character> inventory_owner,
     int selected_item_index,
-    int& citrade,
+    ItemRef& citrade,
+    ItemRef& cidip,
     bool dropcontinue);
 optional<MenuResult> on_cancel(bool dropcontinue);
 
@@ -239,7 +240,8 @@ void restore_cursor()
 void make_item_list(
     optional_ref<Character> inventory_owner,
     int& mainweapon,
-    int citrade)
+    ItemRef citrade,
+    ItemRef cidip)
 {
     // cnt = 0 => extra
     // cnt = 1 => PC/NPC
@@ -501,14 +503,14 @@ void make_item_list(
             }
             if (invctrl == 18)
             {
-                if (inv[cidip].id == ItemId::bait)
+                if (cidip->id == ItemId::bait)
                 {
                     if (item.id != ItemId::fishing_pole)
                     {
                         continue;
                     }
                 }
-                if (cidip == item.index || item.id == ItemId::bottle_of_water)
+                if (cidip == item || item.id == ItemId::bottle_of_water)
                 {
                     continue;
                 }
@@ -533,8 +535,7 @@ void make_item_list(
             if (invctrl == 21)
             {
                 if (calcitemvalue(item, 0) * item.number() <
-                    calcitemvalue(inv[citrade], 0) * inv[citrade].number() / 2 *
-                        3)
+                    calcitemvalue(*citrade, 0) * citrade->number() / 2 * 3)
                 {
                     continue;
                 }
@@ -716,7 +717,7 @@ void make_item_list(
 // 不可能な行動を制限
 optional<MenuResult> check_command(
     optional_ref<Character> inventory_owner,
-    int citrade)
+    ItemRef citrade)
 {
     MenuResult result = {false, false, TurnResult::none};
 
@@ -725,7 +726,7 @@ optional<MenuResult> check_command(
     {
         if (invctrl == 21)
         {
-            txt(i18n::s.get("core.ui.inv.trade.too_low_value", inv[citrade]));
+            txt(i18n::s.get("core.ui.inv.trade.too_low_value", *citrade));
             f = 1;
         }
         if (invctrl == 27)
@@ -814,18 +815,18 @@ optional<MenuResult> check_pick_up()
 
 
 
-void show_message(int citrade)
+void show_message(ItemRef citrade, ItemRef cidip)
 {
     if (returnfromidentify == 0)
     {
         std::string valn;
         if (invctrl == 18)
         {
-            valn = itemname(inv[cidip], 1);
+            valn = itemname(*cidip, 1);
         }
         else if (invctrl == 21)
         {
-            valn = itemname(inv[citrade]);
+            valn = itemname(*citrade);
         }
 
         for (int cnt = 0; cnt < 30; cnt++)
@@ -885,7 +886,8 @@ void show_message(int citrade)
 
 
 // ショートカット経由
-optional<OnEnterResult> on_shortcut(int& citrade, bool dropcontinue)
+optional<OnEnterResult>
+on_shortcut(ItemRef& citrade, ItemRef& cidip, bool dropcontinue)
 {
     MenuResult result = {false, false, TurnResult::none};
 
@@ -941,7 +943,7 @@ optional<OnEnterResult> on_shortcut(int& citrade, bool dropcontinue)
             result.turn_result = TurnResult::pc_turn_user_error;
             return OnEnterResult{result};
         }
-        return on_enter(none, p(0), citrade, dropcontinue);
+        return on_enter(none, p(0), citrade, cidip, dropcontinue);
     }
 
     return none;
@@ -1959,9 +1961,9 @@ OnEnterResult on_enter_open(Item& selected_item, MenuResult& result)
 
 
 
-OnEnterResult on_enter_mix(Item& selected_item)
+OnEnterResult on_enter_mix(Item& selected_item, ItemRef& cidip)
 {
-    cidip = selected_item.index;
+    cidip = ItemRef::from_ref(selected_item);
     savecycle();
     invctrl = 18;
     Message::instance().linebreak();
@@ -1971,11 +1973,12 @@ OnEnterResult on_enter_mix(Item& selected_item)
 
 
 
-OnEnterResult on_enter_mix_target(Item& selected_item, MenuResult& result)
+OnEnterResult
+on_enter_mix_target(Item& selected_item, MenuResult& result, ItemRef cidip)
 {
     screenupdate = -1;
     update_screen();
-    result.turn_result = do_dip_command(inv[cidip], selected_item);
+    result.turn_result = do_dip_command(*cidip, selected_item);
     return OnEnterResult{result};
 }
 
@@ -1998,9 +2001,9 @@ OnEnterResult on_enter_offer(Item& selected_item, MenuResult& result)
 
 
 
-OnEnterResult on_enter_trade(Item& selected_item, int& citrade)
+OnEnterResult on_enter_trade(Item& selected_item, ItemRef& citrade)
 {
-    citrade = selected_item.index;
+    citrade = ItemRef::from_ref(selected_item);
     invctrl = 21;
     snd("core.pop2");
     return OnEnterResult{1};
@@ -2011,7 +2014,7 @@ OnEnterResult on_enter_trade(Item& selected_item, int& citrade)
 OnEnterResult on_enter_trade_target(
     Item& selected_item,
     MenuResult& result,
-    int& citrade,
+    ItemRef& citrade,
     Character& inventory_owner)
 {
     if (selected_item.is_marked_as_no_drop())
@@ -2027,18 +2030,17 @@ OnEnterResult on_enter_trade_target(
         inventory_owner.activity.item = ItemRef::null();
     }
     snd("core.equip1");
-    inv[citrade].is_quest_target() = false;
-    txt(i18n::s.get(
-        "core.ui.inv.trade.you_receive", selected_item, inv[citrade]));
-    if (inv[citrade].body_part != 0)
+    citrade->is_quest_target() = false;
+    txt(i18n::s.get("core.ui.inv.trade.you_receive", selected_item, *citrade));
+    if (citrade->body_part != 0)
     {
-        p = inv[citrade].body_part;
+        p = citrade->body_part;
         inventory_owner.equipment_slots[p - 100].unequip();
-        inv[citrade].body_part = 0;
+        citrade->body_part = 0;
     }
-    item_exchange(selected_item, inv[citrade]);
+    item_exchange(selected_item, *citrade);
     item_convert_artifact(selected_item);
-    if (inventory_owner.ai_item == inv[citrade])
+    if (inventory_owner.ai_item == *citrade)
     {
         inventory_owner.ai_item = ItemRef::null();
     }
@@ -2304,7 +2306,8 @@ OnEnterResult on_enter_small_medal(Item& selected_item)
 OnEnterResult on_enter(
     optional_ref<Character> inventory_owner,
     int selected_item_index,
-    int& citrade,
+    ItemRef& citrade,
+    ItemRef& cidip,
     bool dropcontinue)
 {
     MenuResult result = {false, false, TurnResult::none};
@@ -2373,11 +2376,11 @@ OnEnterResult on_enter(
     }
     if (invctrl == 17)
     {
-        return on_enter_mix(selected_item);
+        return on_enter_mix(selected_item, cidip);
     }
     if (invctrl == 18)
     {
-        return on_enter_mix_target(selected_item, result);
+        return on_enter_mix_target(selected_item, result, cidip);
     }
     if (invctrl == 19)
     {
@@ -2635,7 +2638,8 @@ bool on_assign_shortcut(const std::string& action, int shortcut)
 CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
 {
     int mainweapon = -1;
-    int citrade = 0;
+    ItemRef citrade;
+    ItemRef cidip;
     bool dropcontinue = false;
 
     remove_card_and_figure_from_heir_trunk();
@@ -2651,7 +2655,7 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
             fallback_to_default_command_if_unavailable();
             restore_cursor();
             mainweapon = -1;
-            make_item_list(inventory_owner, mainweapon, citrade);
+            make_item_list(inventory_owner, mainweapon, citrade, cidip);
             if (const auto result = check_command(inventory_owner, citrade))
             {
                 return {*result, none};
@@ -2661,14 +2665,14 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
             {
                 return {*result, none};
             }
-            show_message(citrade);
+            show_message(citrade, cidip);
         }
 
         if (update_page)
         {
             update_page = false;
 
-            if (const auto result = on_shortcut(citrade, dropcontinue))
+            if (const auto result = on_shortcut(citrade, cidip, dropcontinue))
             {
                 switch (result->type)
                 {
@@ -2696,7 +2700,7 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
         if (p != -1)
         {
             const auto result =
-                on_enter(inventory_owner, p(0), citrade, dropcontinue);
+                on_enter(inventory_owner, p(0), citrade, cidip, dropcontinue);
             switch (result.type)
             {
             case 0: return {result.menu_result, result.selected_item};

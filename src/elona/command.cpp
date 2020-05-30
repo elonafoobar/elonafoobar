@@ -3496,9 +3496,7 @@ TurnResult do_fire_command()
 
 TurnResult do_get_command()
 {
-    const auto item_info = cell_itemoncell(cdata.player().position);
-    const auto number = item_info.first;
-    const auto item_index = item_info.second;
+    const auto& [number, item_opt] = cell_itemoncell(cdata.player().position);
 
     if (cell_data.at(cdata.player().position.x, cdata.player().position.y)
                 .feats != 0 &&
@@ -3606,16 +3604,16 @@ TurnResult do_get_command()
         return mr.turn_result;
     }
 
-    if ((inv[item_index].own_state > 0 && inv[item_index].own_state < 3) ||
-        inv[item_index].own_state == 5)
+    if ((item_opt->own_state > 0 && item_opt->own_state < 3) ||
+        item_opt->own_state == 5)
     {
         snd("core.fail1");
-        if (inv[item_index].own_state == 2)
+        if (item_opt->own_state == 2)
         {
             txt(i18n::s.get("core.action.get.cannot_carry"),
                 Message::only_once{true});
         }
-        if (inv[item_index].own_state == 1 || inv[item_index].own_state == 5)
+        if (item_opt->own_state == 1 || item_opt->own_state == 5)
         {
             txt(i18n::s.get("core.action.get.not_owned"),
                 Message::only_once{true});
@@ -3624,8 +3622,8 @@ TurnResult do_get_command()
         return TurnResult::pc_turn_user_error;
     }
 
-    in = inv[item_index].number();
-    int stat = pick_up_item(cdata.player().index, inv[item_index], none).type;
+    in = item_opt->number();
+    int stat = pick_up_item(cdata.player().index, *item_opt, none).type;
     if (stat == 1 || stat == -1)
     {
         return TurnResult::turn_end;

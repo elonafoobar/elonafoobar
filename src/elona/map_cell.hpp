@@ -2,11 +2,14 @@
 
 #include <utility>
 
+#include "optional.hpp"
+
 
 
 namespace elona
 {
 
+struct Item;
 struct Position;
 
 
@@ -21,7 +24,7 @@ enum class TileKind : int
     fog = 4
 };
 
-std::pair<int, int> cell_itemoncell(const Position& pos);
+std::pair<int, optional_ref<Item>> cell_itemoncell(const Position& pos);
 void cell_featread(int x, int y);
 int cell_findspace(int = 0, int = 0, int = 0);
 void cell_check(int = 0, int = 0);

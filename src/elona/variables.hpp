@@ -313,7 +313,6 @@ ELONA_EXTERN(int ccbk);
 ELONA_EXTERN(int cellaccess);
 ELONA_EXTERN(int chatesc);
 ELONA_EXTERN(int chatteleport);
-ELONA_EXTERN(int cidip);
 ELONA_EXTERN(int client);
 ELONA_EXTERN(int cm);
 ELONA_EXTERN(int cmbg);

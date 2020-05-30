@@ -2552,9 +2552,7 @@ std::string name(int chara_index)
 
 std::string txtitemoncell(int x, int y)
 {
-    const auto item_info = cell_itemoncell({x, y});
-    const auto number = item_info.first;
-    const auto item = item_info.second;
+    const auto& [number, item_opt] = cell_itemoncell({x, y});
 
     if (number <= 3)
     {
@@ -2583,14 +2581,14 @@ std::string txtitemoncell(int x, int y)
         }
         else
         {
-            items_text = itemname(inv[item]);
+            items_text = itemname(*item_opt);
         }
-        if (inv[item].own_state <= 0)
+        if (item_opt->own_state <= 0)
         {
             return i18n::s.get(
                 "core.action.move.item_on_cell.item", items_text);
         }
-        else if (inv[item].own_state == 3)
+        else if (item_opt->own_state == 3)
         {
             return i18n::s.get(
                 "core.action.move.item_on_cell.building", items_text);
