@@ -40,6 +40,8 @@ sol::optional<LuaItemHandle> find(const std::string&, const EnumString&);
 
 std::string weight_string(int);
 
+bool has_free_slot(int);
+
 
 void bind(sol::table&);
 } // namespace LuaApiItem
