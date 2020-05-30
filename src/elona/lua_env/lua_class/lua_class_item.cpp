@@ -217,6 +217,189 @@ void LuaItem::bind(sol::state& lua)
         LUA_API_ENUM_PROPERTY(Item, identify_state, IdentifyState));
 
     /**
+     * @luadoc color field ColorIndex
+     *
+     * [RW] The color ID of the item.
+     */
+    LuaItem.set(
+        "color",
+        sol::property(
+            [](Item& it) {
+                return LuaEnums::ColorIndexTable.convert_to_string(
+                    static_cast<ColorIndex>(it.color));
+            },
+            [](Item& it, const EnumString& s) {
+                it.color = static_cast<int>(
+                    LuaEnums::ColorIndexTable.ensure_from_string(s));
+            }));
+
+    /**
+     * @luadoc is_acidproof field boolean
+     *
+     * [RW] The flag if the item is acidproof.
+     */
+    LuaItem.set(
+        "is_acidproof",
+        sol::property(
+            [](Item& i) { return i.is_acidproof(); },
+            [](Item& i, bool value) { i.is_acidproof() = value; }));
+
+    /**
+     * @luadoc is_fireproof field boolean
+     *
+     * [RW] The flag if the item is fireproof.
+     */
+    LuaItem.set(
+        "is_fireproof",
+        sol::property(
+            [](Item& i) { return i.is_fireproof(); },
+            [](Item& i, bool value) { i.is_fireproof() = value; }));
+
+    /**
+     * @luadoc has_charge field boolean
+     *
+     * [RW] The flag if the item has charge.
+     */
+    LuaItem.set(
+        "has_charge",
+        sol::property(
+            [](Item& i) { return i.has_charge(); },
+            [](Item& i, bool value) { i.has_charge() = value; }));
+
+    /**
+     * @luadoc is_precious field boolean
+     *
+     * [RW] The flag if the item is precious.
+     */
+    LuaItem.set(
+        "is_precious",
+        sol::property(
+            [](Item& i) { return i.is_precious(); },
+            [](Item& i, bool value) { i.is_precious() = value; }));
+
+    /**
+     * @luadoc is_aphrodisiac field boolean
+     *
+     * [RW] The flag if the item is aphrodisiac.
+     */
+    LuaItem.set(
+        "is_aphrodisiac",
+        sol::property(
+            [](Item& i) { return i.is_aphrodisiac(); },
+            [](Item& i, bool value) { i.is_aphrodisiac() = value; }));
+
+    /**
+     * @luadoc has_cooldown_time field boolean
+     *
+     * [RW] The flag if the item has cooldown time.
+     */
+    LuaItem.set(
+        "has_cooldown_time",
+        sol::property(
+            [](Item& i) { return i.has_cooldown_time(); },
+            [](Item& i, bool value) { i.has_cooldown_time() = value; }));
+
+    /**
+     * @luadoc is_blessed_by_ehekatl field boolean
+     *
+     * [RW] The flag if the item is blessed by Ehekatl.
+     */
+    LuaItem.set(
+        "is_blessed_by_ehekatl",
+        sol::property(
+            [](Item& i) { return i.is_blessed_by_ehekatl(); },
+            [](Item& i, bool value) { i.is_blessed_by_ehekatl() = value; }));
+
+    /**
+     * @luadoc is_stolen field boolean
+     *
+     * [RW] The flag if the item is stolen.
+     */
+    LuaItem.set(
+        "is_stolen",
+        sol::property(
+            [](Item& i) { return i.is_stolen(); },
+            [](Item& i, bool value) { i.is_stolen() = value; }));
+
+    /**
+     * @luadoc is_alive field boolean
+     *
+     * [RW] The flag if the item is alive.
+     */
+    LuaItem.set(
+        "is_alive",
+        sol::property(
+            [](Item& i) { return i.is_alive(); },
+            [](Item& i, bool value) { i.is_alive() = value; }));
+
+    /**
+     * @luadoc is_quest_target field boolean
+     *
+     * [RW] The flag if the item is quest target.
+     */
+    LuaItem.set(
+        "is_quest_target",
+        sol::property(
+            [](Item& i) { return i.is_quest_target(); },
+            [](Item& i, bool value) { i.is_quest_target() = value; }));
+
+    /**
+     * @luadoc is_marked_as_no_drop field boolean
+     *
+     * [RW] The flag if the item is marked as no-drop.
+     */
+    LuaItem.set(
+        "is_marked_as_no_drop",
+        sol::property(
+            [](Item& i) { return i.is_marked_as_no_drop(); },
+            [](Item& i, bool value) { i.is_marked_as_no_drop() = value; }));
+
+    /**
+     * @luadoc is_poisoned field boolean
+     *
+     * [RW] The flag if the item is poisoned.
+     */
+    LuaItem.set(
+        "is_poisoned",
+        sol::property(
+            [](Item& i) { return i.is_poisoned(); },
+            [](Item& i, bool value) { i.is_poisoned() = value; }));
+
+    /**
+     * @luadoc is_eternal_force field boolean
+     *
+     * [RW] The flag if the item is eternal force.
+     */
+    LuaItem.set(
+        "is_eternal_force",
+        sol::property(
+            [](Item& i) { return i.is_eternal_force(); },
+            [](Item& i, bool value) { i.is_eternal_force() = value; }));
+
+    /**
+     * @luadoc is_showroom_only field boolean
+     *
+     * [RW] The flag if the item is showroom only.
+     */
+    LuaItem.set(
+        "is_showroom_only",
+        sol::property(
+            [](Item& i) { return i.is_showroom_only(); },
+            [](Item& i, bool value) { i.is_showroom_only() = value; }));
+
+    /**
+     * @luadoc is_handmade field boolean
+     *
+     * [RW] The flag if the item is handmade.
+     */
+    LuaItem.set(
+        "is_handmade",
+        sol::property(
+            [](Item& i) { return i.is_handmade(); },
+            [](Item& i, bool value) { i.is_handmade() = value; }));
+
+
+    /**
      * @luadoc prototype field table
      *
      * [R] The prototype data of the character.
