@@ -96,6 +96,7 @@ OnEnterResult on_enter(
     optional_ref<Character> inventory_owner,
     int selected_item_index,
     int& citrade,
+    int& cidip,
     bool dropcontinue);
 optional<MenuResult> on_cancel(bool dropcontinue);
 
@@ -239,7 +240,8 @@ void restore_cursor()
 void make_item_list(
     optional_ref<Character> inventory_owner,
     int& mainweapon,
-    int citrade)
+    int citrade,
+    int cidip)
 {
     // cnt = 0 => extra
     // cnt = 1 => PC/NPC
@@ -814,7 +816,7 @@ optional<MenuResult> check_pick_up()
 
 
 
-void show_message(int citrade)
+void show_message(int citrade, int cidip)
 {
     if (returnfromidentify == 0)
     {
@@ -885,7 +887,7 @@ void show_message(int citrade)
 
 
 // ショートカット経由
-optional<OnEnterResult> on_shortcut(int& citrade, bool dropcontinue)
+optional<OnEnterResult> on_shortcut(int& citrade, int& cidip, bool dropcontinue)
 {
     MenuResult result = {false, false, TurnResult::none};
 
@@ -941,7 +943,7 @@ optional<OnEnterResult> on_shortcut(int& citrade, bool dropcontinue)
             result.turn_result = TurnResult::pc_turn_user_error;
             return OnEnterResult{result};
         }
-        return on_enter(none, p(0), citrade, dropcontinue);
+        return on_enter(none, p(0), citrade, cidip, dropcontinue);
     }
 
     return none;
@@ -1959,7 +1961,7 @@ OnEnterResult on_enter_open(Item& selected_item, MenuResult& result)
 
 
 
-OnEnterResult on_enter_mix(Item& selected_item)
+OnEnterResult on_enter_mix(Item& selected_item, int& cidip)
 {
     cidip = selected_item.index;
     savecycle();
@@ -1971,7 +1973,8 @@ OnEnterResult on_enter_mix(Item& selected_item)
 
 
 
-OnEnterResult on_enter_mix_target(Item& selected_item, MenuResult& result)
+OnEnterResult
+on_enter_mix_target(Item& selected_item, MenuResult& result, int cidip)
 {
     screenupdate = -1;
     update_screen();
@@ -2305,6 +2308,7 @@ OnEnterResult on_enter(
     optional_ref<Character> inventory_owner,
     int selected_item_index,
     int& citrade,
+    int& cidip,
     bool dropcontinue)
 {
     MenuResult result = {false, false, TurnResult::none};
@@ -2373,11 +2377,11 @@ OnEnterResult on_enter(
     }
     if (invctrl == 17)
     {
-        return on_enter_mix(selected_item);
+        return on_enter_mix(selected_item, cidip);
     }
     if (invctrl == 18)
     {
-        return on_enter_mix_target(selected_item, result);
+        return on_enter_mix_target(selected_item, result, cidip);
     }
     if (invctrl == 19)
     {
@@ -2636,6 +2640,7 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
 {
     int mainweapon = -1;
     int citrade = 0;
+    int cidip = 0;
     bool dropcontinue = false;
 
     remove_card_and_figure_from_heir_trunk();
@@ -2651,7 +2656,7 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
             fallback_to_default_command_if_unavailable();
             restore_cursor();
             mainweapon = -1;
-            make_item_list(inventory_owner, mainweapon, citrade);
+            make_item_list(inventory_owner, mainweapon, citrade, cidip);
             if (const auto result = check_command(inventory_owner, citrade))
             {
                 return {*result, none};
@@ -2661,14 +2666,14 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
             {
                 return {*result, none};
             }
-            show_message(citrade);
+            show_message(citrade, cidip);
         }
 
         if (update_page)
         {
             update_page = false;
 
-            if (const auto result = on_shortcut(citrade, dropcontinue))
+            if (const auto result = on_shortcut(citrade, cidip, dropcontinue))
             {
                 switch (result->type)
                 {
@@ -2696,7 +2701,7 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
         if (p != -1)
         {
             const auto result =
-                on_enter(inventory_owner, p(0), citrade, dropcontinue);
+                on_enter(inventory_owner, p(0), citrade, cidip, dropcontinue);
             switch (result.type)
             {
             case 0: return {result.menu_result, result.selected_item};
