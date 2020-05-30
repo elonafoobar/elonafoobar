@@ -298,19 +298,19 @@ static int _prompt_satisfied()
     return result;
 }
 
-static bool _validate_save_path(const std::string& playerid)
+// Returns unused directory name like "profile/<profile name>/save/save_<N>"
+// where "N" is a sequential number starting with 1.
+static std::string get_new_save_dir_name()
 {
-    if (range::any_of(
-            filesystem::glob_entries(filesystem::dirs::save()),
-            [&](const auto& entry) {
-                return filepathutil::to_utf8_path(entry.path().filename()) ==
-                    playerid;
-            }))
+    for (int i = 1;; ++i)
     {
-        return false;
+        const auto dir_name = "save_" + std::to_string(i);
+        if (!fs::exists(
+                filesystem::dirs::save() / filepathutil::u8path(dir_name)))
+        {
+            return dir_name;
+        }
     }
-
-    return true;
 }
 
 MainMenuResult character_making_final_phase()
@@ -367,37 +367,21 @@ MainMenuResult character_making_final_phase()
     ui_draw_caption(
         i18n::s.get("core.chara_making.final_screen.what_is_your_name"));
 
-    while (true)
+    inputlog = "";
+    bool canceled = input_text_dialog(
+        (windoww - 230) / 2 + inf_screenx, winposy(120), 10, true);
+    if (canceled)
     {
-        inputlog = "";
-        bool canceled = input_text_dialog(
-            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, true);
-        if (canceled)
-        {
-            return MainMenuResult::character_making_final_phase;
-        }
-
-        cmname = ""s + inputlog;
-        if (cmname == ""s || cmname == u8" "s)
-        {
-            cmname = random_name();
-        }
-
-        playerid = fs::unique_path().string();
-
-        if (_validate_save_path(playerid))
-        {
-            break;
-        }
-        else
-        {
-            gmode(0);
-            gcopy(2, 0, 0, windoww, windowh - 100, 0, 100);
-            gmode(2);
-            ui_draw_caption(i18n::s.get(
-                "core.chara_making.final_screen.name_is_already_taken"));
-        }
+        return MainMenuResult::character_making_final_phase;
     }
+
+    cmname = ""s + inputlog;
+    if (cmname == ""s || cmname == u8" "s)
+    {
+        cmname = random_name();
+    }
+
+    playerid = get_new_save_dir_name();
 
     snd("core.skill");
     cdatan(0, 0) = cmname;
