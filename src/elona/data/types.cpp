@@ -1,5 +1,6 @@
 #include "types/type_ability.cpp"
 #include "types/type_asset.cpp"
+#include "types/type_blending_recipe.cpp"
 #include "types/type_buff.cpp"
 #include "types/type_chara_chip.cpp"
 #include "types/type_character.cpp"

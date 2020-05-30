@@ -18,6 +18,7 @@ namespace
 void _initialize_iterable_dbs(lua::DataTable& data)
 {
     the_ability_db.initialize(data);
+    the_blending_recipe_db.initialize(data);
     the_buff_db.initialize(data);
     the_character_db.initialize(data);
     the_class_db.initialize(data);

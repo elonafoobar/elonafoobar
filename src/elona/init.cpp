@@ -371,7 +371,7 @@ void initialize_elona()
     enchantment_init();
     initialize_set_of_random_generation();
     initialize_picfood();
-    initialize_recipe();
+    blending_init_recipe_data();
     initialize_nefia_names();
     initialize_home_adata();
     initialize_damage_popups();
@@ -603,7 +603,7 @@ void initialize_game()
     {
         game_data.next_inventory_serial_id = 1000;
         game_data.next_shelter_serial_id = 100;
-        initialize_recipememory();
+        blending_clear_recipememory();
     }
     if (mode == 3)
     {
