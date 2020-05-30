@@ -8,6 +8,7 @@
 #include "lua_api_console.cpp"
 #include "lua_api_data.cpp"
 #include "lua_api_debug.cpp"
+#include "lua_api_enchantment.cpp"
 #include "lua_api_env.cpp"
 #include "lua_api_fov.cpp"
 #include "lua_api_gui.cpp"
@@ -47,6 +48,7 @@ void LuaApi::bind(sol::table& core)
     LUA_API_BIND(core, Console);
     LUA_API_BIND(core, Data);
     LUA_API_BIND(core, Debug);
+    LUA_API_BIND(core, Enchantment);
     LUA_API_BIND(core, Env);
     LUA_API_BIND(core, FOV);
     LUA_API_BIND(core, GUI);
