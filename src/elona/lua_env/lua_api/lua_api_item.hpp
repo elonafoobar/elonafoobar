@@ -32,7 +32,7 @@ sol::optional<LuaItemHandle> create_xy(int, int, sol::table);
 
 int memory(int, const std::string&);
 
-sol::optional<LuaItemHandle> stack(int, LuaItemHandle);
+sol::optional<LuaItemHandle> stack(int, LuaItemHandle, sol::optional<bool>);
 
 int trade_rate(LuaItemHandle);
 

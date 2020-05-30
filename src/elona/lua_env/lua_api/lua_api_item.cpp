@@ -244,7 +244,8 @@ int LuaApiItem::memory(int type, const std::string& id)
  */
 sol::optional<LuaItemHandle> LuaApiItem::stack(
     int inventory_id,
-    LuaItemHandle handle)
+    LuaItemHandle handle,
+    sol::optional<bool> show_message)
 {
     if (inventory_id < -1 || inventory_id > ELONA_MAX_CHARACTERS)
     {
@@ -253,7 +254,9 @@ sol::optional<LuaItemHandle> LuaApiItem::stack(
 
     auto& item_ref = lua::ref<Item>(handle);
 
-    auto& item = item_stack(inventory_id, item_ref).stacked_item;
+    auto& item =
+        item_stack(inventory_id, item_ref, show_message.value_or(false))
+            .stacked_item;
 
     if (item.number() == 0)
     {

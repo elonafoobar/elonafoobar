@@ -45,7 +45,7 @@ function memory(type, id) end
 --  @treturn[1] LuaItem The modified item stack on success
 --  @treturn[2] nil
 --  @function stack
-function stack(inventory_id, handle) end
+function stack(inventory_id, handle, show_message) end
 
 --- Returns the trading rate of a cargo item.
 --  @tparam LuaItem handle A cargo item
