@@ -11,6 +11,7 @@ namespace elona
 {
 
 struct Character;
+struct Item;
 
 
 
@@ -87,5 +88,7 @@ std::string god_name(const GodId& id);
 std::string god_name(int legacy_god_id);
 
 void god_fail_to_take_over_penalty();
+
+bool god_is_offerable(Item& offering, Character& believer);
 
 } // namespace elona

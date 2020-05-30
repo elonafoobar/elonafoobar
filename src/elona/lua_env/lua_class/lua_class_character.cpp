@@ -605,7 +605,7 @@ void LuaCharacter::bind(sol::state& lua)
      *
      * [RW] The character's worshipped god.
      */
-    LuaCharacter.set("god_id", &Character::god_id);
+    LuaCharacter.set("god", &Character::god_id);
 
     /**
      * @luadoc position field LuaPosition
