@@ -197,11 +197,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
                 if (cdata[pcattacker].relationship <= -3 &&
                     cdata[pcattacker].state() == Character::State::alive)
                 {
-                    if (fov_los(
-                            chara.position.x,
-                            chara.position.y,
-                            cdata[pcattacker].position.x,
-                            cdata[pcattacker].position.y))
+                    if (fov_los(chara.position, cdata[pcattacker].position))
                     {
                         chara.hate = 5;
                         chara.enemy_id = pcattacker;
@@ -216,10 +212,8 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
                         Character::State::alive)
                 {
                     if (fov_los(
-                            chara.position.x,
-                            chara.position.y,
-                            cdata[cdata.player().enemy_id].position.x,
-                            cdata[cdata.player().enemy_id].position.y))
+                            chara.position,
+                            cdata[cdata.player().enemy_id].position))
                     {
                         chara.hate = 5;
                         chara.enemy_id = cdata.player().enemy_id;
@@ -1050,11 +1044,7 @@ TurnResult pass_one_turn(bool time_passing)
                 {
                     continue;
                 }
-                if (fov_los(
-                        cdata[ct].position.x,
-                        cdata[ct].position.y,
-                        cnt.position.x,
-                        cnt.position.y) == 0)
+                if (!fov_los(cdata[ct].position, cnt.position))
                 {
                     continue;
                 }

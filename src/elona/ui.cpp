@@ -1759,11 +1759,7 @@ void update_slight()
                 (!blinded && (_fov_y_top <= sy && sy <= _fov_y_bottom) &&
                  (sx >= fovlist[sy + center.y][0] + center.x &&
                   sx < fovlist[sy + center.y][1] + center.x) &&
-                 fov_los(
-                     cdata.player().position.x,
-                     cdata.player().position.y,
-                     sx,
-                     sy)))
+                 fov_los(cdata.player().position, {sx, sy})))
             {
                 mapsync(sx, sy) = msync;
                 if (cell_data.at(sx, sy).chara_index_plus_one != 0)
