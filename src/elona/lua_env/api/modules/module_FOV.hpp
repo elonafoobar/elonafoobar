@@ -1,9 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -23,8 +24,7 @@ bool you_see_pos_xy(int, int);
 void refresh();
 
 
-void bind(sol::table&);
+void bind(sol::table);
 }; // namespace LuaApiFOV
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

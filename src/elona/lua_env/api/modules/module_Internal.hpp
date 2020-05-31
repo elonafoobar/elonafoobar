@@ -1,9 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -34,8 +35,7 @@ void leave_map();
 void strange_scientist_pick_reward();
 
 
-void bind(sol::table&);
+void bind(sol::table);
 }; // namespace LuaApiInternal
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

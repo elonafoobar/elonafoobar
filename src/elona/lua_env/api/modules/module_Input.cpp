@@ -13,9 +13,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -549,7 +547,7 @@ bool LuaApiInput::any_key_pressed()
 
 
 
-void LuaApiInput::bind(sol::table& api_table)
+void LuaApiInput::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiInput, yes_no);
     LUA_API_BIND_FUNCTION(api_table, LuaApiInput, prompt_choice);
@@ -586,5 +584,4 @@ void LuaApiInput::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiInput, any_key_pressed);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

@@ -1,9 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -25,8 +26,7 @@ int between(int min, int max);
 sol::object choice(sol::table table);
 
 
-void bind(sol::table&);
+void bind(sol::table);
 }; // namespace LuaApiRand
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

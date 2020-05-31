@@ -1,9 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -25,8 +26,7 @@ void show_journal_update_message();
 void fade_out();
 
 
-void bind(sol::table&);
+void bind(sol::table);
 }; // namespace LuaApiGUI
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

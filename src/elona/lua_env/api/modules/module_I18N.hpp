@@ -1,9 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -44,8 +45,7 @@ void register_function(
     sol::protected_function function);
 
 
-void bind(sol::table&);
+void bind(sol::table);
 } // namespace LuaApiI18N
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

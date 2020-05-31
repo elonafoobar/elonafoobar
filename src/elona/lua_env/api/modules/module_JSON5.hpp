@@ -4,9 +4,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -22,9 +20,8 @@ std::pair<sol::object, sol::optional<std::string>> parse(
     sol::this_state state);
 std::string stringify(sol::object value, sol::table opts);
 
-void bind(sol::table&);
+void bind(sol::table);
 
 } // namespace LuaApiJSON5
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

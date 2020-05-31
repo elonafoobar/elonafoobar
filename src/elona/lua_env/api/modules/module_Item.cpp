@@ -12,9 +12,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -341,7 +339,7 @@ bool LuaApiItem::has_free_slot(int inventory_id)
 
 
 
-void LuaApiItem::bind(sol::table& api_table)
+void LuaApiItem::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiItem, count);
     LUA_API_BIND_FUNCTION(api_table, LuaApiItem, has_enchantment);
@@ -363,5 +361,4 @@ void LuaApiItem::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiItem, has_free_slot);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

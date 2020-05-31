@@ -1,9 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -43,8 +44,7 @@ std::string weight_string(int);
 bool has_free_slot(int);
 
 
-void bind(sol::table&);
+void bind(sol::table);
 } // namespace LuaApiItem
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

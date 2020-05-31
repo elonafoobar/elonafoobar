@@ -2,9 +2,9 @@
 
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 
@@ -24,7 +24,6 @@ void dump_characters();
 void dump_items();
 
 
-void bind(sol::table&);
+void bind(sol::table);
 } // namespace LuaApiDebug
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

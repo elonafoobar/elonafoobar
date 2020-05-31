@@ -1,9 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -75,8 +76,7 @@ prompt_position_with_initial_xy(const std::string&, int, int);
 bool any_key_pressed();
 
 
-void bind(sol::table&);
+void bind(sol::table);
 }; // namespace LuaApiInput
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

@@ -7,9 +7,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -144,7 +142,7 @@ std::string LuaApiWorld::random_title(const EnumString& type)
     return random_title(type_value);
 }
 
-void LuaApiWorld::bind(sol::table& api_table)
+void LuaApiWorld::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, deferred_event_id);
     LUA_API_BIND_FUNCTION(api_table, LuaApiWorld, add_deferred_event);
@@ -162,5 +160,4 @@ void LuaApiWorld::bind(sol::table& api_table)
     api_table.set("data", &game_data);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

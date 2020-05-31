@@ -4,10 +4,7 @@
 
 
 
-namespace elona
-{
-
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -29,9 +26,8 @@ sol::optional<std::string> get_id_by_legacy(
     const std::string& prototype_id,
     int legacy_data_id);
 
-void bind(sol::table&);
+void bind(sol::table);
 
 } // namespace LuaApiData
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

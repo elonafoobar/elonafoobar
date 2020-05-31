@@ -4,9 +4,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -17,8 +15,7 @@ namespace lua
 namespace LuaApiEnv
 {
 
-void bind(sol::table&);
+void bind(sol::table);
 
 } // namespace LuaApiEnv
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

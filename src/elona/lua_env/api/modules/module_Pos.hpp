@@ -1,10 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
 
-namespace lua
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -18,8 +18,7 @@ int dist(const Position&, const Position&);
 int dist_xy(int, int, int, int);
 
 
-void bind(sol::table&);
+void bind(sol::table);
 } // namespace LuaApiPos
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

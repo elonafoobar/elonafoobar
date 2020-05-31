@@ -6,9 +6,9 @@
 #include "../../../ui.hpp"
 #include "../../enums/enums.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -79,7 +79,7 @@ void LuaApiGUI::fade_out()
     gsel(0);
 }
 
-void LuaApiGUI::bind(sol::table& api_table)
+void LuaApiGUI::bind(sol::table api_table)
 {
     api_table.set_function(
         "txt", sol::overload(LuaApiGUI::txt, LuaApiGUI::txt_txtef));
@@ -89,5 +89,4 @@ void LuaApiGUI::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiGUI, fade_out);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

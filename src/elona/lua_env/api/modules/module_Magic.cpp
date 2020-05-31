@@ -6,10 +6,9 @@
 
 
 
-namespace elona
+namespace elona::lua::api::modules
 {
-namespace lua
-{
+
 /**
  * @luadoc cast
  *
@@ -57,11 +56,10 @@ void LuaApiMagic::cast(
     elona::magic(caster_ref, target_ref);
 }
 
-void LuaApiMagic::bind(sol::table& api_table)
+void LuaApiMagic::bind(sol::table api_table)
 {
     api_table.set_function(
         "cast", sol::overload(LuaApiMagic::cast_self, LuaApiMagic::cast));
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

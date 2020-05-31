@@ -1,9 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -17,8 +18,7 @@ void cast_self(LuaCharacterHandle, int, int, const Position&);
 void cast(LuaCharacterHandle, LuaCharacterHandle, int, int);
 
 
-void bind(sol::table&);
+void bind(sol::table);
 } // namespace LuaApiMagic
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

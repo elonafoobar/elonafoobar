@@ -1,9 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -25,8 +26,7 @@ void set(int, int);
 void modify(int, int);
 
 
-void bind(sol::table&);
+void bind(sol::table);
 } // namespace LuaApiTrait
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

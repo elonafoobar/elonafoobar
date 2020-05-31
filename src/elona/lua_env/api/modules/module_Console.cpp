@@ -5,9 +5,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -44,12 +42,11 @@ sol::object LuaApiConsole::run(const std::string& cmdline)
 
 
 
-void LuaApiConsole::bind(sol::table& api_table)
+void LuaApiConsole::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION_WITH_NAME(
         api_table, LuaApiConsole, register_, "register");
     LUA_API_BIND_FUNCTION(api_table, LuaApiConsole, run);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

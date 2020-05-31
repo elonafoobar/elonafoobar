@@ -1,10 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
 
-namespace lua
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -45,8 +45,7 @@ void play_ragnarok();
 void play_breaking(const Position&);
 
 
-void bind(sol::table&);
+void bind(sol::table);
 } // namespace LuaApiAnimation
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

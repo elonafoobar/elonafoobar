@@ -7,9 +7,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -126,7 +124,7 @@ void LuaApiTrait::modify(int trait_id, int delta)
     chara_refresh(cdata.player());
 }
 
-void LuaApiTrait::bind(sol::table& api_table)
+void LuaApiTrait::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiTrait, level);
     LUA_API_BIND_FUNCTION(api_table, LuaApiTrait, min);
@@ -135,5 +133,4 @@ void LuaApiTrait::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiTrait, modify);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

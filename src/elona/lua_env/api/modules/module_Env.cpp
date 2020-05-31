@@ -4,11 +4,7 @@
 
 
 
-namespace elona
-{
-namespace lua
-{
-namespace LuaApiEnv
+namespace elona::lua::api::modules
 {
 
 /**
@@ -31,7 +27,7 @@ namespace LuaApiEnv
  * Elona foobar version. E.g., "1.2.3"
  */
 
-void bind(sol::table& api_table)
+void LuaApiEnv::bind(sol::table api_table)
 {
     LUA_API_BIND_CONSTANT(
         api_table, LUA_VERSION, LUA_VERSION_MAJOR "." LUA_VERSION_MINOR);
@@ -40,6 +36,4 @@ void bind(sol::table& api_table)
         api_table, ELONA_FOOBAR_VERSION, latest_version.short_string());
 }
 
-} // namespace LuaApiEnv
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

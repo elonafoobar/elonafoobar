@@ -4,9 +4,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -19,9 +17,8 @@ namespace LuaApiCalc
 
 int calc_objlv(int n);
 
-void bind(sol::table&);
+void bind(sol::table);
 
 } // namespace LuaApiCalc
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

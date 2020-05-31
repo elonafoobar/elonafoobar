@@ -6,9 +6,9 @@
 #include "../../enums/enums.hpp"
 #include "../../interface.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -312,7 +312,7 @@ void LuaApiChara::remove_from_party(LuaCharacterHandle ally)
     chara_relocate(chara_ref, none);
 }
 
-void LuaApiChara::bind(sol::table& api_table)
+void LuaApiChara::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, is_alive);
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, is_player);
@@ -341,5 +341,4 @@ void LuaApiChara::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiChara, remove_from_party);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

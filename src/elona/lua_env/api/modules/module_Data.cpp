@@ -6,9 +6,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -112,7 +110,7 @@ sol::optional<std::string> LuaApiData::get_id_by_legacy(
 
 
 
-void LuaApiData::bind(sol::table& api_table)
+void LuaApiData::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiData, reload_assets);
     LUA_API_BIND_FUNCTION(api_table, LuaApiData, reload_charas);
@@ -121,5 +119,4 @@ void LuaApiData::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiData, get_id_by_legacy);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

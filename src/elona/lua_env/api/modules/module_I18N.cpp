@@ -4,9 +4,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -482,7 +480,7 @@ void LuaApiI18N::register_function(
 
 
 
-void LuaApiI18N::bind(sol::table& api_table)
+void LuaApiI18N::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get);
     LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_optional);
@@ -494,5 +492,4 @@ void LuaApiI18N::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, register_function);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

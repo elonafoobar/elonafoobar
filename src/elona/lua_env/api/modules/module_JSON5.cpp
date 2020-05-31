@@ -4,9 +4,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 namespace
@@ -160,11 +158,10 @@ std::string LuaApiJSON5::stringify(sol::object value, sol::table opts)
 
 
 
-void LuaApiJSON5::bind(sol::table& api_table)
+void LuaApiJSON5::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiJSON5, parse);
     LUA_API_BIND_FUNCTION(api_table, LuaApiJSON5, stringify);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

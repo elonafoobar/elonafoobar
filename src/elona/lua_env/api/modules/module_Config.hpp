@@ -4,9 +4,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -22,9 +20,8 @@ void set(const std::string& key, sol::object value);
 sol::object get(const std::string& key);
 void save();
 
-void bind(sol::table&);
+void bind(sol::table);
 
 } // namespace LuaApiConfig
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

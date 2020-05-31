@@ -5,9 +5,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -104,7 +102,7 @@ void LuaApiWish::add(
 
 
 
-void LuaApiWish::bind(sol::table& api_table)
+void LuaApiWish::bind(sol::table api_table)
 {
     api_table.set_function(
         "wish", sol::overload(LuaApiWish::wish, LuaApiWish::wish_with_str));
@@ -113,5 +111,4 @@ void LuaApiWish::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiWish, add);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

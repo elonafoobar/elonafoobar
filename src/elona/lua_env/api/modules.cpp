@@ -28,46 +28,43 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
-#define LUA_API_BIND(top_level_module, name) \
+void bind(sol::table core)
+{
+#define ELONA_BIND_API(ModuleName) \
     { \
-        sol::table table = top_level_module.create_named(#name); \
-        LuaApi##name::bind(table); \
+        sol::table api_table = core.create_named(#ModuleName); \
+        LuaApi##ModuleName::bind(api_table); \
     }
 
-void LuaApi::bind(sol::table& core)
-{
-    LUA_API_BIND(core, Animation);
-    LUA_API_BIND(core, Calc);
-    LUA_API_BIND(core, Chara);
-    LUA_API_BIND(core, Config);
-    LUA_API_BIND(core, Console);
-    LUA_API_BIND(core, Data);
-    LUA_API_BIND(core, Debug);
-    LUA_API_BIND(core, Enchantment);
-    LUA_API_BIND(core, Env);
-    LUA_API_BIND(core, FOV);
-    LUA_API_BIND(core, GUI);
-    LUA_API_BIND(core, I18N);
-    LUA_API_BIND(core, Input);
-    LUA_API_BIND(core, Internal);
-    LUA_API_BIND(core, Item);
-    LUA_API_BIND(core, JSON5);
-    LUA_API_BIND(core, Magic);
-    LUA_API_BIND(core, Map);
-    LUA_API_BIND(core, Pos);
-    LUA_API_BIND(core, Rand);
-    LUA_API_BIND(core, Skill);
-    LUA_API_BIND(core, Trait);
-    LUA_API_BIND(core, Wish);
-    LUA_API_BIND(core, World);
+    ELONA_BIND_API(Animation);
+    ELONA_BIND_API(Calc);
+    ELONA_BIND_API(Chara);
+    ELONA_BIND_API(Config);
+    ELONA_BIND_API(Console);
+    ELONA_BIND_API(Data);
+    ELONA_BIND_API(Debug);
+    ELONA_BIND_API(Enchantment);
+    ELONA_BIND_API(Env);
+    ELONA_BIND_API(FOV);
+    ELONA_BIND_API(GUI);
+    ELONA_BIND_API(I18N);
+    ELONA_BIND_API(Input);
+    ELONA_BIND_API(Internal);
+    ELONA_BIND_API(Item);
+    ELONA_BIND_API(JSON5);
+    ELONA_BIND_API(Magic);
+    ELONA_BIND_API(Map);
+    ELONA_BIND_API(Pos);
+    ELONA_BIND_API(Rand);
+    ELONA_BIND_API(Skill);
+    ELONA_BIND_API(Trait);
+    ELONA_BIND_API(Wish);
+    ELONA_BIND_API(World);
+
+#undef ELONA_BIND_API
 }
 
-#undef LUA_API_BIND
-
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

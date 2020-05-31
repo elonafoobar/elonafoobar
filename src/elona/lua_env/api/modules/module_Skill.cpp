@@ -7,9 +7,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -27,10 +25,9 @@ int LuaApiSkill::resistance(const EnumString& element, LuaCharacterHandle chara)
     return elona::sdata(static_cast<int>(element_value), chara_ref.index);
 }
 
-void LuaApiSkill::bind(sol::table& api_table)
+void LuaApiSkill::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiSkill, resistance);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

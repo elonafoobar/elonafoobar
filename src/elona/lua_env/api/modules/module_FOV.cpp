@@ -7,9 +7,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -81,7 +79,7 @@ void LuaApiFOV::refresh()
     ui_render_non_hud();
 }
 
-void LuaApiFOV::bind(sol::table& api_table)
+void LuaApiFOV::bind(sol::table api_table)
 {
     api_table.set_function(
         "los", sol::overload(LuaApiFOV::los, LuaApiFOV::los_xy));
@@ -94,5 +92,4 @@ void LuaApiFOV::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiFOV, refresh);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

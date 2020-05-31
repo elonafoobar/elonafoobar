@@ -1,12 +1,20 @@
 #pragma once
+
 #include "../common.hpp"
+
+
 
 namespace elona
 {
+
 enum class TileKind;
 struct MapData;
 
-namespace lua
+} // namespace elona
+
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -79,8 +87,7 @@ void travel_to(const std::string&);
 void travel_to_with_level(const std::string&, int);
 
 
-void bind(sol::table&);
+void bind(sol::table);
 } // namespace LuaApiMap
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

@@ -6,9 +6,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -278,7 +276,7 @@ void LuaApiAnimation::play_breaking(const Position& pos)
 
 
 
-void LuaApiAnimation::bind(sol::table& api_table)
+void LuaApiAnimation::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_failure_to_cast);
     LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_bright_aura);
@@ -297,5 +295,4 @@ void LuaApiAnimation::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_breaking);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

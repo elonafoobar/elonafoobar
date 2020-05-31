@@ -1,9 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -19,8 +20,7 @@ namespace LuaApiSkill
 int resistance(const EnumString&, LuaCharacterHandle);
 
 
-void bind(sol::table&);
+void bind(sol::table);
 } // namespace LuaApiSkill
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

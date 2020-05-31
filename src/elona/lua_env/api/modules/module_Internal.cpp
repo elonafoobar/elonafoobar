@@ -13,9 +13,9 @@
 #include "../../../ui.hpp"
 #include "../../interface.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 #define GET_QUEST_FLAG(id_) \
@@ -239,7 +239,7 @@ void LuaApiInternal::strange_scientist_pick_reward()
     mode = 0;
 }
 
-void LuaApiInternal::bind(sol::table& api_table)
+void LuaApiInternal::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiInternal, get_quest_flag);
     LUA_API_BIND_FUNCTION(api_table, LuaApiInternal, set_quest_flag);
@@ -256,5 +256,4 @@ void LuaApiInternal::bind(sol::table& api_table)
         api_table, LuaApiInternal, strange_scientist_pick_reward);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

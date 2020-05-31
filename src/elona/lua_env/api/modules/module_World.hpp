@@ -1,9 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -30,8 +31,7 @@ void modify_ranking(int, int, int);
 std::string random_title(const EnumString&);
 
 
-void bind(sol::table&);
+void bind(sol::table);
 } // namespace LuaApiWorld
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

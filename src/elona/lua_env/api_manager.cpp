@@ -22,7 +22,7 @@ APIManager::APIManager(LuaEnv& lua)
     sol::table api_table = env().create_named("api_table");
     sol::table core = api_table.create_named("core");
 
-    LuaApi::bind(core);
+    api::modules::bind(core);
 
     // Register usertype classes globally, and add APIs for
     // constructors.

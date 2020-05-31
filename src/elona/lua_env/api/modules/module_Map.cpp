@@ -12,9 +12,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -520,7 +518,7 @@ void LuaApiMap::travel_to_with_level(const std::string& map_id, int level)
     initialize_map();
 }
 
-void LuaApiMap::bind(sol::table& api_table)
+void LuaApiMap::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, width);
     LUA_API_BIND_FUNCTION(api_table, LuaApiMap, height);
@@ -582,5 +580,4 @@ void LuaApiMap::bind(sol::table& api_table)
     api_table.set("area", sol::property([]() { return &area_data.current(); }));
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

@@ -1,8 +1,8 @@
 #include "module_Rand.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -88,7 +88,7 @@ sol::object LuaApiRand::choice(sol::table table)
     return table[elona::rnd(table.size()) + 1];
 }
 
-void LuaApiRand::bind(sol::table& api_table)
+void LuaApiRand::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, rnd);
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, rnd_capped);
@@ -98,5 +98,4 @@ void LuaApiRand::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiRand, choice);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

@@ -4,9 +4,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -24,10 +22,9 @@ void LuaApiEnchantment::add(LuaItemHandle item, int id, int power)
 
 
 
-void LuaApiEnchantment::bind(sol::table& api_table)
+void LuaApiEnchantment::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiEnchantment, add);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

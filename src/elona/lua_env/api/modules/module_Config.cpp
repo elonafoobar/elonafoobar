@@ -5,9 +5,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -54,12 +52,11 @@ void LuaApiConfig::save()
 
 
 
-void LuaApiConfig::bind(sol::table& api_table)
+void LuaApiConfig::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiConfig, set);
     LUA_API_BIND_FUNCTION(api_table, LuaApiConfig, get);
     LUA_API_BIND_FUNCTION(api_table, LuaApiConfig, save);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

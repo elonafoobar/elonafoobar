@@ -2,9 +2,9 @@
 
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::modules
 {
 
 /**
@@ -53,8 +53,7 @@ bool can_recruit_allies();
 
 void remove_from_party(LuaCharacterHandle);
 
-void bind(sol::table&);
+void bind(sol::table);
 } // namespace LuaApiChara
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

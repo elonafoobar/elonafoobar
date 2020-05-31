@@ -11,9 +11,7 @@
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::modules
 {
 
 /**
@@ -85,7 +83,7 @@ void LuaApiDebug::dump_items()
     }
 }
 
-void LuaApiDebug::bind(sol::table& api_table)
+void LuaApiDebug::bind(sol::table api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, log);
     LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, report_error);
@@ -93,5 +91,4 @@ void LuaApiDebug::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, dump_items);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules

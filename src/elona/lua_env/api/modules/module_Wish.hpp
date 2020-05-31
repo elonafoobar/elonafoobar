@@ -4,14 +4,8 @@
 
 
 
-namespace elona
+namespace elona::lua::api::modules
 {
-namespace lua
-{
-
-struct WrappedFunction;
-
-
 
 /**
  * @luadoc
@@ -35,9 +29,8 @@ bool match(
 void add(const std::string& hook_type, sol::protected_function callback);
 
 
-void bind(sol::table&);
+void bind(sol::table);
 
 } // namespace LuaApiWish
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::modules
