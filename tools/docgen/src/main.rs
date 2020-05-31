@@ -604,7 +604,7 @@ fn camel_case(s: &str) -> String {
 
 fn get_output_filename(source_path: &Path, is_class: bool) -> String {
     let file_name = source_path.file_name().and_then(|f| f.to_str()).unwrap();
-    let mod_name = Regex::new(r"lua_[^_]*_(.*)\..*$") // lua_(api|class)_<...>.cpp
+    let mod_name = Regex::new(r"^(?:module|lua_class)_(.*)\..*$") // (module|lua_class)_<...>.cpp
         .ok()
         .and_then(|r| r.captures(file_name))
         .and_then(|c| c.get(1))
@@ -737,7 +737,7 @@ fn main() {
     let index = Index::new(&clang, false, false);
 
     generate_docs(
-        &source_path.join("lua_api"),
+        &source_path.join("api").join("modules"),
         &output_path,
         &index,
         false,

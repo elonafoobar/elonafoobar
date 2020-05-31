@@ -127,7 +127,7 @@ set(ELONA_SOURCES
 
   lua_env/enums/enums.cpp
 
-  lua_env/lua_api/lua_api.cpp
+  lua_env/api/modules.cpp
 
   lua_env/lua_class/lua_class.cpp
   lua_env/lua_class/lua_class_ability.cpp

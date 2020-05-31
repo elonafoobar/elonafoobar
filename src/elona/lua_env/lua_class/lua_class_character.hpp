@@ -1,6 +1,6 @@
 #pragma once
 #include "../../status_ailment.hpp"
-#include "../lua_api/lua_api_common.hpp"
+#include "../api/common.hpp"
 
 namespace elona
 {

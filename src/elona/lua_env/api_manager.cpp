@@ -3,8 +3,8 @@
 #include <iterator>
 
 #include "../../util/strutil.hpp"
+#include "api/modules.hpp"
 #include "enums/enums.hpp"
-#include "lua_api/lua_api.hpp"
 #include "lua_class/lua_class.hpp"
 #include "mod_manager.hpp"
 
