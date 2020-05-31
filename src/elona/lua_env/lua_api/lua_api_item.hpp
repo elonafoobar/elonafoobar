@@ -32,13 +32,15 @@ sol::optional<LuaItemHandle> create_xy(int, int, sol::table);
 
 int memory(int, const std::string&);
 
-sol::optional<LuaItemHandle> stack(int, LuaItemHandle);
+sol::optional<LuaItemHandle> stack(int, LuaItemHandle, sol::optional<bool>);
 
 int trade_rate(LuaItemHandle);
 
 sol::optional<LuaItemHandle> find(const std::string&, const EnumString&);
 
 std::string weight_string(int);
+
+bool has_free_slot(int);
 
 
 void bind(sol::table&);

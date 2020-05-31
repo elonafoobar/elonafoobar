@@ -2,6 +2,8 @@
 
 #include "../../i18n.hpp"
 
+
+
 namespace elona
 {
 namespace lua
@@ -59,6 +61,8 @@ std::string LuaApiI18N::get(const std::string& key, sol::variadic_args args)
             args[5].get<sol::object>());
     }
 }
+
+
 
 /**
  * @luadoc
@@ -128,6 +132,8 @@ sol::optional<std::string> LuaApiI18N::get_optional(
     return sol::nullopt;
 }
 
+
+
 /**
  * @luadoc
  *
@@ -185,6 +191,87 @@ LuaApiI18N::get_enum(const std::string& key, int index, sol::variadic_args args)
             args[5].get<sol::object>());
     }
 }
+
+
+
+/**
+ * @luadoc
+ *
+ * Gets a localized string from an enum-style localization object and optionally
+ * formats it with arguments. This will return nil if the localization string
+ * doesn't exist.
+ * @tparam string key the ID of the localization string
+ * @tparam num index the index into the enum
+ * @treturn[1] string the formatted string
+ * @treturn[2] nil
+ */
+sol::optional<std::string> LuaApiI18N::get_enum_optional(
+    const std::string& key,
+    int index,
+    sol::variadic_args args)
+{
+    optional<std::string> opt = none;
+
+    switch (args.size())
+    {
+    case 0: opt = i18n::s.get_enum_optional(key, index); break;
+    case 1:
+        opt = i18n::s.get_enum_optional(key, index, args[0].get<sol::object>());
+        break;
+    case 2:
+        opt = i18n::s.get_enum_optional(
+            key, index, args[0].get<sol::object>(), args[1].get<sol::object>());
+        break;
+    case 3:
+        opt = i18n::s.get_enum_optional(
+            key,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>());
+        break;
+    case 4:
+        opt = i18n::s.get_enum_optional(
+            key,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>());
+        break;
+    case 5:
+        opt = i18n::s.get_enum_optional(
+            key,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>(),
+            args[4].get<sol::object>());
+        break;
+    case 6:
+    default:
+        opt = i18n::s.get_enum_optional(
+            key,
+            index,
+            args[0].get<sol::object>(),
+            args[1].get<sol::object>(),
+            args[2].get<sol::object>(),
+            args[3].get<sol::object>(),
+            args[4].get<sol::object>(),
+            args[5].get<sol::object>());
+        break;
+    }
+
+    if (opt)
+    {
+        return *opt;
+    }
+
+    return sol::nullopt;
+}
+
+
 
 /**
  * @luadoc
@@ -259,6 +346,8 @@ std::string LuaApiI18N::get_enum_property(
             args[5].get<sol::object>());
     }
 }
+
+
 
 /**
  * @luadoc
@@ -349,6 +438,32 @@ sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
     return sol::nullopt;
 }
 
+
+
+/**
+ * @luadoc
+ *
+ * Get a localized text associated with the given data ID.
+ * This will return a string with a warning if the localization
+ * string doesn't exist.
+ * @tparam string prototype_id Data prototype ID.
+ * @tparam string instance_id Data instance ID.
+ * @tparam string property_name I18N key of the property to get.
+ * @treturn string The formatted string
+ */
+std::string LuaApiI18N::get_data_text(
+    const std::string& prototype_id,
+    const std::string& instance_id,
+    const std::string& property_name)
+{
+    return i18n::s.get_data_text(
+        data::PrototypeId{prototype_id},
+        data::InstanceId{instance_id},
+        property_name);
+}
+
+
+
 /**
  * @luadoc
  *
@@ -365,14 +480,17 @@ void LuaApiI18N::register_function(
     lua::lua->get_i18n_manager().register_function(language, name, function);
 }
 
+
+
 void LuaApiI18N::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get);
     LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_optional);
     LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_enum);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_enum_optional);
     LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_enum_property);
-    api_table.set_function(
-        "get_enum_property_optional", LuaApiI18N::get_enum_property_optional);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_enum_property_optional);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_data_text);
     LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, register_function);
 }
 

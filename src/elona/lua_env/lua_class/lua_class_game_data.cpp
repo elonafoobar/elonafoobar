@@ -28,6 +28,13 @@ void LuaGameData::bind(sol::state& lua)
         lua.new_usertype<GameData>("LuaGameData", sol::no_constructor);
 
     /**
+     * @luadoc holy_well_count field num
+     *
+     * [RW] The amount of the water which the the holy well has.
+     */
+    LuaGameData.set("holy_well_count", &GameData::holy_well_count);
+
+    /**
      * @luadoc home_scale field num
      *
      * [RW] The player's home scale.

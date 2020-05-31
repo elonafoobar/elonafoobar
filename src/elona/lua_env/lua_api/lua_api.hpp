@@ -7,6 +7,7 @@
 #include "lua_api_console.hpp"
 #include "lua_api_data.hpp"
 #include "lua_api_debug.hpp"
+#include "lua_api_enchantment.hpp"
 #include "lua_api_env.hpp"
 #include "lua_api_fov.hpp"
 #include "lua_api_gui.hpp"

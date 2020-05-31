@@ -29,6 +29,16 @@ function get_optional(key, ...) end
 --  @function get_enum
 function get_enum(key, index, ...) end
 
+--- Gets a localized string from an enum-style localization object and optionally
+--  formats it with arguments. This will return nil if the localization string
+--  doesn't exist.
+--  @tparam string key the ID of the localization string
+--  @tparam num index the index into the enum
+--  @treturn[1] string the formatted string
+--  @treturn[2] nil
+--  @function get_enum_optional
+function get_enum_optional(key, index, ...) end
+
 --- Gets a localized string from an enum-style localization object
 --  where the enum's children are themselves objects. This will return
 --  a string with a warning if the localization string doesn't exist.
@@ -49,6 +59,16 @@ function get_enum_property(key_base, key_property, index, ...) end
 --  @treturn[2] nil
 --  @function get_enum_property_optional
 function get_enum_property_optional(key_base, key_property, index, ...) end
+
+--- Get a localized text associated with the given data ID.
+--  This will return a string with a warning if the localization
+--  string doesn't exist.
+--  @tparam string prototype_id Data prototype ID.
+--  @tparam string instance_id Data instance ID.
+--  @tparam string property_name I18N key of the property to get.
+--  @treturn string The formatted string
+--  @function get_data_text
+function get_data_text(prototype_id, instance_id, property_name) end
 
 --- Registers a new function for use inside localization files.
 --  @tparam string language Localized language the function is valid in

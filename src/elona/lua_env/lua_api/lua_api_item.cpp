@@ -244,7 +244,8 @@ int LuaApiItem::memory(int type, const std::string& id)
  */
 sol::optional<LuaItemHandle> LuaApiItem::stack(
     int inventory_id,
-    LuaItemHandle handle)
+    LuaItemHandle handle,
+    sol::optional<bool> show_message)
 {
     if (inventory_id < -1 || inventory_id > ELONA_MAX_CHARACTERS)
     {
@@ -253,7 +254,9 @@ sol::optional<LuaItemHandle> LuaApiItem::stack(
 
     auto& item_ref = lua::ref<Item>(handle);
 
-    auto& item = item_stack(inventory_id, item_ref).stacked_item;
+    auto& item =
+        item_stack(inventory_id, item_ref, show_message.value_or(false))
+            .stacked_item;
 
     if (item.number() == 0)
     {
@@ -322,6 +325,22 @@ std::string LuaApiItem::weight_string(int weight)
     return cnvweight(weight);
 }
 
+
+
+/**
+ * @luadoc
+ *
+ * Queries whether the inventory has at least one free slot.
+ * @tparam num inventory_id The inventory ID
+ * @treturn True if the inventory has at least one free slot; false if not.
+ */
+bool LuaApiItem::has_free_slot(int inventory_id)
+{
+    return inv_getspace(inventory_id);
+}
+
+
+
 void LuaApiItem::bind(sol::table& api_table)
 {
     LUA_API_BIND_FUNCTION(api_table, LuaApiItem, count);
@@ -341,6 +360,7 @@ void LuaApiItem::bind(sol::table& api_table)
     LUA_API_BIND_FUNCTION(api_table, LuaApiItem, trade_rate);
     LUA_API_BIND_FUNCTION(api_table, LuaApiItem, find);
     LUA_API_BIND_FUNCTION(api_table, LuaApiItem, weight_string);
+    LUA_API_BIND_FUNCTION(api_table, LuaApiItem, has_free_slot);
 }
 
 } // namespace lua

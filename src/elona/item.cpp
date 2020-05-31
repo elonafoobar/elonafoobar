@@ -709,8 +709,8 @@ void itemname_additional_info(Item& item)
         else
         {
             s_ += lang(
-                u8"《"s + rpname(item.subname) + u8"》の"s,
-                u8" of <"s + rpname(item.subname) + u8">"s);
+                u8"《"s + blending_get_recipe_name(item.subname) + u8"》の"s,
+                u8" of <"s + blending_get_recipe_name(item.subname) + u8">"s);
         }
     }
 
