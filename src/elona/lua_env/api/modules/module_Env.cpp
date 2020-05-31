@@ -1,9 +1,13 @@
-#include "module_Env.hpp"
-
 #include "../../../../version.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Information about Elona foobar and mod engine environment.
+ */
 namespace elona::lua::api::modules::module_Env
 {
 

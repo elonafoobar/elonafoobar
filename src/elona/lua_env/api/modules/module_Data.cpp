@@ -1,11 +1,16 @@
-#include "module_Data.hpp"
-
 #include "../../../data/types/type_character.hpp"
 #include "../../../draw.hpp"
 #include "../../data_manager.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for managing the asset system. With this module it is possible to
+ * reload built-in assets like textures and music.
+ */
 namespace elona::lua::api::modules::module_Data
 {
 

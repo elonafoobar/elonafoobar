@@ -1,11 +1,15 @@
-#include "module_Animation.hpp"
-
 #include "../../../animation.hpp"
 #include "../../../character.hpp"
 #include "../../enums/enums.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for rendering the built-in animations.
+ */
 namespace elona::lua::api::modules::module_Animation
 {
 

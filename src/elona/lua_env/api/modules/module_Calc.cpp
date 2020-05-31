@@ -1,9 +1,13 @@
-#include "module_Calc.hpp"
-
 #include "../../../calc.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Various calculation.
+ */
 namespace elona::lua::api::modules::module_Calc
 {
 

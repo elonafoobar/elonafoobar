@@ -1,5 +1,3 @@
-#include "module_Input.hpp"
-
 #include "../../../attack.hpp"
 #include "../../../dialog.hpp"
 #include "../../../i18n.hpp"
@@ -10,9 +8,15 @@
 #include "../../../menu.hpp"
 #include "../../../message.hpp"
 #include "../../../talk.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for prompting the player for input.
+ */
 namespace elona::lua::api::modules::module_Input
 {
 

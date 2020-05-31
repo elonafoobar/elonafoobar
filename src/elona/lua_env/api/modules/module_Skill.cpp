@@ -1,12 +1,19 @@
-#include "module_Skill.hpp"
-
 #include "../../../ability.hpp"
 #include "../../../character.hpp"
 #include "../../enums/enums.hpp"
 #include "../../handle_manager.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for working with skills or spells.
+ * Both skills and spells are represented through the same experience
+ * and leveling system. The only real difference is that spells have
+ * an additional spell stock value.
+ */
 namespace elona::lua::api::modules::module_Skill
 {
 

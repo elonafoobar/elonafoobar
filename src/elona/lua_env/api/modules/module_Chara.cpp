@@ -1,13 +1,17 @@
-#include "module_Chara.hpp"
-
 #include "../../../character.hpp"
 #include "../../../map.hpp"
 #include "../../../randomgen.hpp"
 #include "../../enums/enums.hpp"
 #include "../../interface.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for working with characters.
+ */
 namespace elona::lua::api::modules::module_Chara
 {
 

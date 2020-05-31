@@ -1,5 +1,3 @@
-#include "module_Internal.hpp"
-
 #include "../../../audio.hpp"
 #include "../../../calc.hpp"
 #include "../../../character.hpp"
@@ -13,9 +11,14 @@
 #include "../../../shop.hpp"
 #include "../../../ui.hpp"
 #include "../../interface.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * Functions solely needed for implementing mod functionality, but which are
+ * inconvenient to move to Lua completely.
+ */
 namespace elona::lua::api::modules::module_Internal
 {
 

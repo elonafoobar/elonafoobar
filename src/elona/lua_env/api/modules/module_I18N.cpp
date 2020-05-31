@@ -1,9 +1,14 @@
-#include "module_I18N.hpp"
-
 #include "../../../i18n.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for localization.
+ * See the I18N section for more information.
+ */
 namespace elona::lua::api::modules::module_I18N
 {
 

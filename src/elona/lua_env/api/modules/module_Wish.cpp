@@ -1,10 +1,14 @@
-#include "module_Wish.hpp"
-
 #include "../../../wish.hpp"
 #include "../../enums/enums.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions to invoke wish and add custom wishing.
+ */
 namespace elona::lua::api::modules::module_Wish
 {
 

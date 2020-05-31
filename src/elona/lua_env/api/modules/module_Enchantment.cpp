@@ -1,9 +1,13 @@
-#include "module_Enchantment.hpp"
-
 #include "../../../enchantment.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Handle item enchantments.
+ */
 namespace elona::lua::api::modules::module_Enchantment
 {
 

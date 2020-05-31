@@ -1,13 +1,17 @@
-#include "module_GUI.hpp"
-
 #include "../../../audio.hpp"
 #include "../../../message.hpp"
 #include "../../../quest.hpp"
 #include "../../../ui.hpp"
 #include "../../enums/enums.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for manipulating the player's user interface.
+ */
 namespace elona::lua::api::modules::module_GUI
 {
 

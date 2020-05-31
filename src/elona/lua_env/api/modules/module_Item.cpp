@@ -1,5 +1,3 @@
-#include "module_Item.hpp"
-
 #include "../../../calc.hpp"
 #include "../../../character.hpp"
 #include "../../../data/types/type_item.hpp"
@@ -9,9 +7,15 @@
 #include "../../../text.hpp"
 #include "../../enums/enums.hpp"
 #include "../../interface.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for working with items.
+ */
 namespace elona::lua::api::modules::module_Item
 {
 

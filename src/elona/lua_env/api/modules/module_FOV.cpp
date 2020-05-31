@@ -1,12 +1,16 @@
-#include "module_FOV.hpp"
-
 #include "../../../fov.hpp"
 #include "../../../ui.hpp"
 #include "../../api_manager.hpp"
 #include "../../handle_manager.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for testing visibility.
+ */
 namespace elona::lua::api::modules::module_FOV
 {
 

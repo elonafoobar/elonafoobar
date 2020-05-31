@@ -1,5 +1,3 @@
-#include "module_Map.hpp"
-
 #include "../../../area.hpp"
 #include "../../../character.hpp"
 #include "../../../data/types/type_map.hpp"
@@ -9,9 +7,16 @@
 #include "../../../mapgen.hpp"
 #include "../../enums/enums.hpp"
 #include "../../interface.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for working with the current map.
+ * There is only ever one map loaded at a given time.
+ */
 namespace elona::lua::api::modules::module_Map
 {
 

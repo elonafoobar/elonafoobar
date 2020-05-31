@@ -1,10 +1,14 @@
-#include "module_Console.hpp"
-
 #include "../../console.hpp"
 #include "../../lua_env.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions related to in-game console.
+ */
 namespace elona::lua::api::modules::module_Console
 {
 

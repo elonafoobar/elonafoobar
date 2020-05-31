@@ -1,7 +1,12 @@
-#include "module_Rand.hpp"
+#include "../../../random.hpp"
+#include "../common.hpp"
 
 
-
+/**
+ * @luadoc
+ *
+ * Functions for working with randomness.
+ */
 namespace elona::lua::api::modules::module_Rand
 {
 

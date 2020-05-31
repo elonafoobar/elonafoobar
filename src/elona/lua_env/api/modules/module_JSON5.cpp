@@ -1,9 +1,13 @@
-#include "module_JSON5.hpp"
-
 #include "../../../../thirdparty/json5/json5.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Parse/stringify JSON5 format.
+ */
 namespace elona::lua::api::modules::module_JSON5
 {
 

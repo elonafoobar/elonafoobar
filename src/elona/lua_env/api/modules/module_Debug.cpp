@@ -1,12 +1,16 @@
-#include "module_Debug.hpp"
-
 #include <sstream>
 
 #include "../../../log.hpp"
 #include "../../../message.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for debugging scripts.
+ */
 namespace elona::lua::api::modules::module_Debug
 {
 

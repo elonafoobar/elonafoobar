@@ -1,12 +1,17 @@
-#include "module_Trait.hpp"
-
 #include "../../../audio.hpp"
 #include "../../../character.hpp"
 #include "../../../message.hpp"
 #include "../../../trait.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for working with traits.
+ * Currently only the player can have traits.
+ */
 namespace elona::lua::api::modules::module_Trait
 {
 

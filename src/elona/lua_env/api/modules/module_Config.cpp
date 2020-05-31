@@ -1,10 +1,15 @@
-#include "module_Config.hpp"
-
 #include "../../../config.hpp"
 #include "../../config_manager.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for getting and setting config values. See the topic on creating
+ * config menus for more details.
+ */
 namespace elona::lua::api::modules::module_Config
 {
 

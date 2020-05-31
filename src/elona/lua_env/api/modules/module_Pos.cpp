@@ -1,9 +1,13 @@
-#include "module_Pos.hpp"
-
 #include "../../../position.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ *@luadoc
+ *
+ * Functions for working with positions.
+ */
 namespace elona::lua::api::modules::module_Pos
 {
 

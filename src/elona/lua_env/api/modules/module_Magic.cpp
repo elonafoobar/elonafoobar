@@ -1,11 +1,15 @@
-#include "module_Magic.hpp"
-
 #include "../../../character.hpp"
 #include "../../../magic.hpp"
 #include "../../handle_manager.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for working with magic.
+ */
 namespace elona::lua::api::modules::module_Magic
 {
 

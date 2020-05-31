@@ -1,12 +1,16 @@
-#include "module_World.hpp"
-
 #include "../../../deferred_event.hpp"
 #include "../../../gdata.hpp"
 #include "../../../text.hpp"
 #include "../../../world.hpp"
+#include "../common.hpp"
 
 
 
+/**
+ * @luadoc
+ *
+ * Functions for working with the state of the game world.
+ */
 namespace elona::lua::api::modules::module_World
 {
 
