@@ -1616,7 +1616,7 @@ void character_drops_item(Character& victim)
         }
     }
 
-    switch (class_get_item_type(data::InstanceId{cdatan(3, victim.index)}))
+    switch (class_get_item_type(victim.class_))
     {
     case 1:
         if (rnd(20) == 0)

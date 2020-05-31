@@ -220,7 +220,6 @@ void initialize_elona()
     DIM2(mdatatmp, 100);
     map_data.clear();
     SDIM3(mdatan, 20, 2);
-    SDIM4(cdatan, 40, 10, ELONA_MAX_CHARACTERS);
     SDIM2(s1, 1000);
     DIM2(spell, 200);
     DIM2(spact, 500);
@@ -565,8 +564,8 @@ void initialize_debug_globals()
     }
     create_all_adventurers();
     create_pcpic(cdata.player());
-    cdatan(1, 0) = random_title(RandomTitleType::character);
-    cdatan(0, 0) = random_name();
+    cdata.player().alias = random_title(RandomTitleType::character);
+    cdata.player().name = random_name();
 }
 
 

@@ -293,7 +293,6 @@ ELONA_EXTERN(elona_vector2<int> picfood);
 ELONA_EXTERN(elona_vector2<int> qdata);
 ELONA_EXTERN(elona_vector2<int> slight);
 ELONA_EXTERN(elona_vector2<std::string> _melee);
-ELONA_EXTERN(elona_vector2<std::string> cdatan);
 ELONA_EXTERN(elona_vector2<std::string> listn);
 ELONA_EXTERN(elona_vector2<std::string> mapnamerd);
 ELONA_EXTERN(elona_vector3<int> bddata);

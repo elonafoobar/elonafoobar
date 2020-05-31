@@ -159,7 +159,7 @@ void UIMenuHire::_draw_list_entry_pic(int cnt, const Character& chara)
 
 void UIMenuHire::_draw_list_entry_name(int cnt, const Character& chara)
 {
-    const auto chara_name = strutil::take_by_width(cdatan(0, chara.index), 36);
+    const auto chara_name = strutil::take_by_width(chara.name, 36);
     cs_list(cs == cnt, chara_name, wx + 84, wy + 66 + cnt * 19 - 1);
 }
 

@@ -214,7 +214,7 @@ void status_ailment_damage(
     case StatusAilment::dimmed:
         if (chara.quality > Quality::great && rnd_capped(chara.level / 3 + 1))
             return;
-        if (cdatan(2, chara.index) == u8"core.golem"s)
+        if (chara.race == "core.golem")
             return;
         power = calc_power_decreased_by_resistance(
             chara.index, power, Element::sound);

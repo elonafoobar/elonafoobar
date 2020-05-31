@@ -189,7 +189,7 @@ void eh_lord_of_normal_nefia(const DeferredEvent&)
 
     lord->is_lord_of_dungeon() = true;
     area_data[game_data.current_map].has_been_conquered = lord->index;
-    cdatan(0, lord->index) += u8" Lv"s + lord->level;
+    lord->name += u8" Lv"s + lord->level;
     txt(i18n::s.get("core.event.reached_deepest_level"));
     txt(i18n::s.get(
             "core.event.guarded_by_lord",

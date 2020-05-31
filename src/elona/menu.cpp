@@ -1475,12 +1475,12 @@ int change_npc_tone(Character& chara)
     if (result.value)
     {
         chara.has_custom_talk() = true;
-        cdatan(4, chara.index) = *result.value;
+        chara.talk = *result.value;
     }
     else
     {
         chara.has_custom_talk() = false;
-        cdatan(4, chara.index) = "";
+        chara.talk = "";
     }
 
     return 1;

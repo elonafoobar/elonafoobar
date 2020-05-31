@@ -29,8 +29,6 @@ namespace elona
 namespace
 {
 
-elona_vector2<std::string> cdatan2;
-int elona_export;
 std::set<fs::path> loaded_files;
 
 
@@ -66,52 +64,47 @@ void arrayfile_read(const std::string& fmode_str, const fs::path& filepath)
     }
     else if (fmode_str == u8"cdatan1"s)
     {
-        if (lines.size() <= 57 * 10 / 2)
-            lines.resize(57 * 10 / 2);
-        else
-            lines.resize(57 * 10);
+        lines.resize(57 * 10);
         auto itr = std::begin(lines);
         for (int i = 0; i < 57; ++i)
         {
-            for (int j = 0; j < 10; ++j)
-            {
-                if (lines.size() <= 57 * 10 / 2 && j >= 10 / 2)
-                    break;
-                cdatan(j, i) = *itr;
-                ++itr;
-            }
+            cdata[i].name = *itr;
+            ++itr;
+            cdata[i].alias = *itr;
+            ++itr;
+            cdata[i].race = data::InstanceId{*itr};
+            ++itr;
+            cdata[i].class_ = data::InstanceId{*itr};
+            ++itr;
+            cdata[i].talk = *itr;
+            ++itr;
+            ++itr;
+            ++itr;
+            ++itr;
+            ++itr;
+            ++itr;
         }
     }
     else if (fmode_str == u8"cdatan2"s)
     {
-        if (lines.size() <= 188 * 10 / 2)
-            lines.resize(188 * 10 / 2);
-        else
-            lines.resize(188 * 10);
+        lines.resize(188 * 10);
         auto itr = std::begin(lines);
         for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
         {
-            for (int j = 0; j < 10; ++j)
-            {
-                if (lines.size() <= 188 * 10 / 2 && j >= 10 / 2)
-                    break;
-                cdatan(j, i) = *itr;
-                ++itr;
-            }
-        }
-    }
-    else if (fmode_str == u8"cdatan3"s)
-    {
-        if (lines.size() <= 10 / 2)
-            lines.resize(10 / 2);
-        else
-            lines.resize(10);
-        auto itr = std::begin(lines);
-        for (int j = 0; j < 10; ++j)
-        {
-            if (lines.size() < 10 / 2 && j >= 10 / 2)
-                break;
-            cdatan(j, tg) = *itr;
+            cdata[i].name = *itr;
+            ++itr;
+            cdata[i].alias = *itr;
+            ++itr;
+            cdata[i].race = data::InstanceId{*itr};
+            ++itr;
+            cdata[i].class_ = data::InstanceId{*itr};
+            ++itr;
+            cdata[i].talk = *itr;
+            ++itr;
+            ++itr;
+            ++itr;
+            ++itr;
+            ++itr;
             ++itr;
         }
     }
@@ -147,35 +140,37 @@ void arrayfile_write(const std::string& fmode_str, const fs::path& filepath)
     {
         for (int i = 0; i < 57; ++i)
         {
-            for (int j = 0; j < 10; ++j)
-            {
-                out << cdatan(j, i) << std::endl;
-            }
+            out << cdata[i].name << std::endl;
+            out << cdata[i].alias << std::endl;
+            out << cdata[i].race.get() << std::endl;
+            out << cdata[i].class_.get() << std::endl;
+            out << cdata[i].talk << std::endl;
+            out << std::endl;
+            out << std::endl;
+            out << std::endl;
+            out << std::endl;
+            out << std::endl;
         }
     }
     else if (fmode_str == u8"cdatan2"s)
     {
         for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
         {
-            for (int j = 0; j < 10; ++j)
-            {
-                out << cdatan(j, i) << std::endl;
-            }
-        }
-    }
-    else if (fmode_str == u8"cdatan3"s)
-    {
-        for (int j = 0; j < 10; ++j)
-        {
-            out << cdatan(j, tg) << std::endl;
+            out << cdata[i].name << std::endl;
+            out << cdata[i].alias << std::endl;
+            out << cdata[i].race.get() << std::endl;
+            out << cdata[i].class_.get() << std::endl;
+            out << cdata[i].talk << std::endl;
+            out << std::endl;
+            out << std::endl;
+            out << std::endl;
+            out << std::endl;
+            out << std::endl;
         }
     }
 
     writeloadedbuff(filepath.filename());
-    if (elona_export == 0)
-    {
-        Save::instance().add(filepath.filename());
-    }
+    Save::instance().add(filepath.filename());
 }
 
 
@@ -194,8 +189,6 @@ void arrayfile(
         tmpload(filepath.filename());
         arrayfile_read(fmode_str, filepath);
     }
-
-    elona_export = 0;
 }
 
 
@@ -425,8 +418,8 @@ void fmode_7_8(bool read, const fs::path& dir)
 
     if (!read)
     {
-        playerheader =
-            cdatan(0, 0) + u8" Lv:" + cdata.player().level + u8" " + mdatan(0);
+        playerheader = cdata.player().name + u8" Lv:" + cdata.player().level +
+            u8" " + mdatan(0);
         bsave(dir / u8"header.txt", playerheader);
     }
 
@@ -866,8 +859,8 @@ void fmode_14_15(bool read)
         read ? filesystem::dirs::save(geneuse) : filesystem::dirs::tmp();
     if (!read)
     {
-        playerheader =
-            cdatan(0, 0) + u8"(Lv" + cdata.player().level + u8")の遺伝子";
+        playerheader = cdata.player().name + u8"(Lv" + cdata.player().level +
+            u8")の遺伝子";
         const auto filepath = dir / u8"gene_header.txt";
         bsave(filepath, playerheader);
         Save::instance().add(filepath.filename());

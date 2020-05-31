@@ -466,7 +466,8 @@ TalkResult talk_game_begin(Character& initial_speaker)
         }
     }
     listmax = 0;
-    buff = i18n::s.get_enum("core.talk.unique.lomias.begin", 4, cdatan(0, 0));
+    buff = i18n::s.get_enum(
+        "core.talk.unique.lomias.begin", 4, cdata.player().name);
     if (const auto lomias = chara_find("core.lomias"))
     {
         speaker = std::ref(*lomias);
@@ -510,17 +511,14 @@ std::string talk_get_speaker_name(const Character& chara)
     {
         return actor(0, current_actor_index);
     }
-    if (cdatan(1, chara.index) == ""s)
+    if (chara.alias == ""s)
     {
-        speaker_name = cdatan(0, chara.index) + u8" "s;
+        speaker_name = chara.name + u8" "s;
     }
     else
     {
-        speaker_name = i18n::s.get(
-                           "core.talk.window.of",
-                           cdatan(0, chara.index),
-                           cdatan(1, chara.index)) +
-            " ";
+        speaker_name =
+            i18n::s.get("core.talk.window.of", chara.name, chara.alias) + " ";
     }
     if (chara.sex == 0)
     {
@@ -530,7 +528,7 @@ std::string talk_get_speaker_name(const Character& chara)
     {
         speaker_name += cnven(i18n::s.get("core.ui.sex3.female"));
     }
-    if (cdatan(1, chara.index) != ""s)
+    if (chara.alias != ""s)
     {
         speaker_name += " " + i18n::s.get("core.talk.window.fame", chara.fame);
     }

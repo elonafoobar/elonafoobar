@@ -285,8 +285,8 @@ function get_ailment(ailment) end
 --- [R] The name of the character without article and title.
 --  @tfield string basename
 
---- [R] The title of the character.
---  @tfield string title
+--- [R] The alias of the character.
+--  @tfield string alias
 
 --- [RW] The sex of the character.
 --  @tfield Gender sex

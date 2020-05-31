@@ -259,8 +259,8 @@ static void _reroll_character()
     chara_delete(0);
     race_init_chara(cdata.player(), cmrace);
     class_init_chara(cdata.player(), cmclass);
-    cdatan(0, 0) = u8"????"s;
-    cdatan(1, 0) = cmaka;
+    cdata.player().name = u8"????"s;
+    cdata.player().alias = cmaka;
     cdata.player().level = 1;
     for (int cnt = 10; cnt < 18; ++cnt)
     {
@@ -384,7 +384,7 @@ MainMenuResult character_making_final_phase()
     playerid = get_new_save_dir_name();
 
     snd("core.skill");
-    cdatan(0, 0) = cmname;
+    cdata.player().name = cmname;
     cdata.player().gold = 400 + rnd(200);
 
     if (geneuse != ""s)

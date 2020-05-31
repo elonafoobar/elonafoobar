@@ -98,7 +98,7 @@ TEST_CASE("Test character data compatibility", "[C++: Serialization]")
     int player_idx = 0;
     load_previous_savefile();
     REQUIRE(elona::cdata[player_idx].index == player_idx);
-    REQUIRE(elona::cdatan(0, player_idx) == u8"foobar_test");
+    REQUIRE(elona::cdata[player_idx].name == u8"foobar_test");
 }
 
 TEST_CASE("Test other character data compatibility", "[C++: Serialization]")
@@ -106,7 +106,7 @@ TEST_CASE("Test other character data compatibility", "[C++: Serialization]")
     int chara_idx = 57;
     load_previous_savefile();
     REQUIRE(elona::cdata[chara_idx].index == chara_idx);
-    REQUIRE(elona::cdatan(0, chara_idx) == u8"風を聴く者『ラーネイレ』");
+    REQUIRE(elona::cdata[chara_idx].name == u8"風を聴く者『ラーネイレ』");
 }
 
 TEST_CASE("Test item data compatibility (in inventory)", "[C++: Serialization]")

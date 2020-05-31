@@ -462,7 +462,7 @@ void supply_initial_equipments(Character& chara)
     int fixeq = 0;
     int probeq = 0;
     int eqtwowield = 0;
-    if (cdatan(2, chara.index) == u8"core.mutant"s)
+    if (chara.race == "core.mutant")
     {
         for (int cnt = 0, cnt_end = cnt + clamp(chara.level / 3, 0, 12);
              cnt < cnt_end;
@@ -514,7 +514,7 @@ void supply_initial_equipments(Character& chara)
         fixeq = 1;
     }
 
-    switch (class_get_equipment_type(data::InstanceId{cdatan(3, chara.index)}))
+    switch (class_get_equipment_type(chara.class_))
     {
     case 0: break;
     case 1:

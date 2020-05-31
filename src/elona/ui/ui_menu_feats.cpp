@@ -273,7 +273,7 @@ void UIMenuFeats::_draw_acquirable_trait_number(int tc_)
     else
     {
         note = i18n::s.get(
-            "core.trait.window.your_trait", cnven(cdatan(0, _chara_index)));
+            "core.trait.window.your_trait", cnven(cdata[_chara_index].name));
     }
     display_note(note, 50);
 }

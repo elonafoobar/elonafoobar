@@ -377,7 +377,7 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
              ally.state() == Character::State::pet_dead) &&
             ally.has_been_used_stethoscope())
         {
-            const auto name = cdatan(0, ally.index);
+            const auto name = ally.name;
             const int x = 16 + (windoww - strlen_u(name) * 7 - 16) * right;
             int y = inf_clocky + (right ? 20 : 136) + cnt * 32;
 

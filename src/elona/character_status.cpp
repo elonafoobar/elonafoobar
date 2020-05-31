@@ -525,8 +525,7 @@ void gain_level(Character& chara)
     }
     chara.skill_bonus += p;
     chara.total_skill_bonus += p;
-    if (cdatan(2, chara.index) == u8"core.mutant"s ||
-        (chara.index == 0 && trait(0) == 1))
+    if (chara.race == "core.mutant" || (chara.index == 0 && trait(0) == 1))
     {
         if (chara.level < 37)
         {

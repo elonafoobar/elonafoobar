@@ -209,8 +209,8 @@ TurnResult pc_died()
 
     Bone this_death;
     this_death.score = calcscore();
-    this_death.alias = cdatan(1, 0);
-    this_death.name = cdatan(0, 0);
+    this_death.alias = cdata.player().alias;
+    this_death.name = cdata.player().name;
     this_death.last_words = last_words;
     this_death.date = i18n::s.get(
         "core.misc.death.date",

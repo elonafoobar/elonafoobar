@@ -1026,7 +1026,7 @@ void map_reload_noyel()
         {
             chara->only_christmas() = true;
             chara->is_hung_on_sand_bag() = true;
-            cdatan(0, chara->index) = i18n::s.get("core.chara.job.fanatic");
+            chara->name = i18n::s.get("core.chara.job.fanatic");
         }
         flt();
         if (const auto chara = chara_create(-1, 347, 35, 19))
@@ -1060,7 +1060,7 @@ void map_reload_noyel()
             chara->only_christmas() = true;
             chara->role = Role::food_vendor;
             chara->shop_rank = 10;
-            cdatan(0, chara->index) = snfood(cdatan(0, chara->index));
+            chara->name = snfood(chara->name);
         }
         flt();
         if (const auto chara = chara_create(-1, 239, 25, 8))
@@ -1071,9 +1071,9 @@ void map_reload_noyel()
             chara->only_christmas() = true;
             chara->role = Role::souvenir_vendor;
             chara->shop_rank = 30;
-            cdatan(0, chara->index) = random_name();
-            cdatan(0, chara->index) = i18n::s.get(
-                "core.chara.job.souvenir_vendor", cdatan(0, chara->index));
+            chara->name = random_name();
+            chara->name =
+                i18n::s.get("core.chara.job.souvenir_vendor", chara->name);
         }
         flt();
         if (const auto chara = chara_create(-1, 271, 24, 22))
@@ -1084,9 +1084,9 @@ void map_reload_noyel()
             chara->only_christmas() = true;
             chara->role = Role::souvenir_vendor;
             chara->shop_rank = 30;
-            cdatan(0, chara->index) = random_name();
-            cdatan(0, chara->index) = i18n::s.get(
-                "core.chara.job.souvenir_vendor", cdatan(0, chara->index));
+            chara->name = random_name();
+            chara->name =
+                i18n::s.get("core.chara.job.souvenir_vendor", chara->name);
         }
         flt();
         if (const auto chara = chara_create(-1, 1, 38, 12))
@@ -1094,7 +1094,7 @@ void map_reload_noyel()
             chara->ai_calm = 3;
             chara->role = Role::blackmarket_vendor;
             chara->shop_rank = 10;
-            cdatan(0, chara->index) = snblack(cdatan(0, chara->index));
+            chara->name = snblack(chara->name);
             chara->only_christmas() = true;
         }
         flt();
@@ -1106,9 +1106,9 @@ void map_reload_noyel()
             chara->only_christmas() = true;
             chara->role = Role::street_vendor;
             chara->shop_rank = 30;
-            cdatan(0, chara->index) = random_name();
-            cdatan(0, chara->index) = i18n::s.get(
-                "core.chara.job.street_vendor", cdatan(0, chara->index));
+            chara->name = random_name();
+            chara->name =
+                i18n::s.get("core.chara.job.street_vendor", chara->name);
         }
         flt();
         if (const auto chara = chara_create(-1, 271, 29, 24))
@@ -1119,9 +1119,9 @@ void map_reload_noyel()
             chara->only_christmas() = true;
             chara->role = Role::street_vendor;
             chara->shop_rank = 30;
-            cdatan(0, chara->index) = random_name();
-            cdatan(0, chara->index) = i18n::s.get(
-                "core.chara.job.street_vendor2", cdatan(0, chara->index));
+            chara->name = random_name();
+            chara->name =
+                i18n::s.get("core.chara.job.street_vendor2", chara->name);
         }
         for (int cnt = 0; cnt < 20; ++cnt)
         {

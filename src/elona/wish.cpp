@@ -265,7 +265,7 @@ void wish_for_character()
             cdata.player().position.x,
             cdata.player().position.y))
     {
-        txt(cdatan(0, chara->index) + " is summoned.");
+        txt(chara->name + " is summoned.");
     }
 }
 
@@ -409,7 +409,7 @@ bool grant_special_wishing(const std::string& wish)
             if (stat == 1)
             {
                 txt(i18n::s.get("core.wish.wish_alias.new_alias", cmaka));
-                cdatan(1, 0) = cmaka;
+                cdata.player().alias = cmaka;
             }
             else
             {

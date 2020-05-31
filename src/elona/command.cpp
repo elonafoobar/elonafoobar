@@ -743,13 +743,12 @@ TurnResult do_interact_command()
         cdata[target_index].has_custom_talk() = false;
         if (inputlog == ""s)
         {
-            cdatan(4, target_index) = "";
+            cdata[target_index].talk = "";
         }
         else
         {
-            cdatan(4, target_index) = inputlog;
-            txt(""s + cdatan(4, target_index),
-                Message::color{ColorIndex::cyan});
+            cdata[target_index].talk = inputlog;
+            txt(cdata[target_index].talk, Message::color{ColorIndex::cyan});
         }
         update_screen();
         return TurnResult::pc_turn_user_error;
@@ -799,7 +798,7 @@ TurnResult call_npc(Character& chara)
     }
     else
     {
-        cdatan(0, chara.index) = ""s + inputlog;
+        chara.name = inputlog;
         chara.has_own_name() = true;
         txt(i18n::s.get("core.action.interact.name.you_named", chara));
     }

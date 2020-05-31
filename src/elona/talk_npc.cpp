@@ -306,7 +306,7 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
             arenaop(1) = charaid2int(chara->id);
             buff = i18n::s.get(
                 "core.talk.npc.arena_master.enter.target",
-                cdatan(0, chara->index),
+                chara->name,
                 speaker);
             break;
         }
@@ -696,7 +696,7 @@ TalkResult talk_slave_buy(Character& speaker, int chatval_)
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.npc.slave_trader.buy.cost",
-        cnven(cdatan(0, 56)),
+        cnven(cdata[56].name),
         calc_slave_value(cdata.tmp()),
         speaker);
     if (cdata.player().gold >= calc_slave_value(cdata.tmp()))
@@ -713,7 +713,7 @@ TalkResult talk_slave_buy(Character& speaker, int chatval_)
     if (chatval_ == 1)
     {
         txt(i18n::s.get(
-            "core.talk.npc.slave_trader.buy.you_buy", cnven(cdatan(0, 56))));
+            "core.talk.npc.slave_trader.buy.you_buy", cnven(cdata[56].name)));
         snd("core.paygold1");
         cdata.player().gold -= calc_slave_value(cdata.tmp());
         new_ally_joins(cdata.tmp());
@@ -748,7 +748,7 @@ TalkResult talk_slave_sell(Character& speaker)
         {
             txt(i18n::s.get(
                 "core.talk.npc.slave_trader.sell.you_sell_off",
-                cnven(cdatan(0, stat))));
+                cnven(cdata[stat].name)));
             snd("core.getgold1");
             earn_gold(cdata.player(), calc_slave_value(cdata[stat]) * 2 / 3);
             if (cdata[stat].state() == Character::State::alive)

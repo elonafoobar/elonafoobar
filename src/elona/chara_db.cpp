@@ -42,11 +42,11 @@ void chara_db_set_stats(Character& chara, CharaId chara_id)
     chara.special_actions = data->special_actions;
     creaturepack = data->creaturepack;
     chara.can_talk = data->can_talk;
-    cdatan(0, chara.index) = the_character_db.get_text(data->id, "name");
+    chara.name = the_character_db.get_text(data->id, "name");
     if (data->has_random_name)
     {
-        cdatan(0, chara.index) = i18n::s.get(
-            "core.chara.job.own_name", cdatan(0, chara.index), random_name());
+        chara.name =
+            i18n::s.get("core.chara.job.own_name", chara.name, random_name());
         chara.has_own_name() = true;
     }
     chara.original_relationship = chara.relationship =

@@ -805,16 +805,16 @@ std::string replace_tag(
     }
     if (source == u8"player"s)
     {
-        return cdatan(0, 0);
+        return cdata.player().name;
     }
     if (source == u8"aka"s)
     {
-        return cdatan(1, 0);
+        return cdata.player().alias;
     }
     if (source == u8"npc"s)
     {
         assert(client);
-        return cdatan(0, client->index);
+        return client->name;
     }
     if (source == u8"ある"s)
     {
@@ -2404,18 +2404,18 @@ void text_replace_tags_in_quest_text(optional_ref<const Character> client)
             }
             if (s == u8"player"s)
             {
-                s = cdatan(0, 0);
+                s = cdata.player().name;
                 break;
             }
             if (s == u8"aka"s)
             {
-                s = cdatan(1, 0);
+                s = cdata.player().alias;
                 break;
             }
             if (s == u8"npc"s)
             {
                 assert(client);
-                s = cdatan(0, client->index);
+                s = client->name;
                 break;
             }
             if (s == u8"ある"s)
@@ -2535,17 +2535,17 @@ std::string name(int chara_index)
     }
     if (en)
     {
-        const char first = cdatan(0, chara_index)[0];
+        const char first = cdata[chara_index].name[0];
         if (first == '\"' || first == '<')
         {
-            return cdatan(0, chara_index);
+            return cdata[chara_index].name;
         }
         if (cdata[chara_index].has_own_name() == 0)
         {
-            return u8"the "s + cdatan(0, chara_index);
+            return u8"the "s + cdata[chara_index].name;
         }
     }
-    return cdatan(0, chara_index);
+    return cdata[chara_index].name;
 }
 
 

@@ -397,6 +397,12 @@ public:
     int _203 = 0;
     Position target_position;
 
+    std::string name;
+    std::string alias;
+    data::InstanceId race;
+    data::InstanceId class_;
+    std::string talk;
+
 
 
     void clear();

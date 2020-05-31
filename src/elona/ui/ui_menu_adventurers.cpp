@@ -102,8 +102,8 @@ _draw_list_entry_pic_and_rank(int cnt, const Character& chara, int _p)
 
 void UIMenuAdventurers::_draw_list_entry_name(int cnt, const Character& chara)
 {
-    const auto name = strutil::take_by_width(
-        cdatan(1, chara.index) + u8" "s + cdatan(0, chara.index), 26);
+    const auto name =
+        strutil::take_by_width(chara.alias + u8" "s + chara.name, 26);
     cs_list(cs == cnt, name, wx + 118, wy + 66 + cnt * 19 - 1);
 }
 

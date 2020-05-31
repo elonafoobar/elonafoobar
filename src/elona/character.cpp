@@ -193,7 +193,7 @@ optional<int> chara_create_internal(int slot, int chara_id)
     }
     if (cmshade)
     {
-        cdatan(0, slot) = i18n::s.get("core.chara.job.shade");
+        cdata[slot].name = i18n::s.get("core.chara.job.shade");
         cdata[slot].image = 280;
     }
     cdata[slot].quality = static_cast<Quality>(fixlv);
@@ -1208,7 +1208,7 @@ int chara_custom_talk(int chara_index, int talk_type)
     if (cdata[chara_index].has_custom_talk())
     {
         const auto filepath =
-            filesystem::dirs::user() / u8"talk" / cdatan(4, chara_index);
+            filesystem::dirs::user() / u8"talk" / cdata[chara_index].talk;
         if (!fs::exists(filepath))
             return 0;
         range::copy(
@@ -1432,10 +1432,6 @@ int chara_copy(const Character& source)
     // Copy from `source` to `destination`.
     Character::copy(source, destination);
     sdata.copy(slot, source.index);
-    for (int i = 0; i < 10; ++i)
-    {
-        cdatan(i, slot) = cdatan(i, source.index);
-    }
     lua::lua->get_handle_manager().create_chara_handle_run_callbacks(
         destination);
 
@@ -1510,10 +1506,6 @@ void chara_delete(int chara_index)
     for (auto&& item : inv.for_chara(cdata[chara_index]))
     {
         item.remove();
-    }
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        cdatan(cnt, chara_index) = "";
     }
     sdata.clear(chara_index);
     cdata[chara_index].clear();
@@ -1597,12 +1589,6 @@ void chara_relocate(
         // that exists in the slot already.
         lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(
             source);
-    }
-
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        cdatan(cnt, destination.index) = cdatan(cnt, source.index);
-        cdatan(cnt, source.index) = "";
     }
 
     // Unequip all gears.
@@ -1715,8 +1701,7 @@ int chara_armor_class(const Character& chara)
 
 int chara_breed_power(const Character& chara)
 {
-    const auto breed_power_base =
-        the_race_db[data::InstanceId{cdatan(2, chara.index)}]->breed_power;
+    const auto breed_power_base = the_race_db[chara.race]->breed_power;
     return breed_power_base * 100 / (100 + chara.level * 5);
 }
 
@@ -1735,14 +1720,12 @@ void chara_add_quality_parens(Character& chara)
 {
     if (fixlv == Quality::miracle)
     {
-        cdatan(0, chara.index) =
-            i18n::s.get("core.chara.quality.miracle", cdatan(0, chara.index));
+        chara.name = i18n::s.get("core.chara.quality.miracle", chara.name);
         chara.level = chara.level * 10 / 8;
     }
     else if (fixlv == Quality::godly)
     {
-        cdatan(0, chara.index) =
-            i18n::s.get("core.chara.quality.godly", cdatan(0, chara.index));
+        chara.name = i18n::s.get("core.chara.quality.godly", chara.name);
         chara.level = chara.level * 10 / 6;
     }
 }
@@ -1778,17 +1761,18 @@ void initialize_pc_character()
             item->set_number(3);
         }
     }
-    if (cdatan(3, 0) == u8"core.pianist"s)
+    if (cdata.player().class_ == "core.pianist")
     {
         flt();
         itemcreate_player_inv(88, 0);
     }
-    if (cdatan(3, 0) == u8"core.farmer"s)
+    if (cdata.player().class_ == "core.farmer")
     {
         flt();
         itemcreate_player_inv(256, 0);
     }
-    if (cdatan(3, 0) == u8"core.wizard"s || cdatan(3, 0) == u8"core.warmage"s)
+    if (cdata.player().class_ == "core.wizard" ||
+        cdata.player().class_ == "core.warmage")
     {
         flt();
         itemcreate_player_inv(116, 0);
@@ -1798,7 +1782,7 @@ void initialize_pc_character()
             item->set_number(3);
         }
     }
-    if (cdatan(3, 0) == u8"core.priest"s)
+    if (cdata.player().class_ == "core.priest")
     {
         flt();
         if (const auto item = itemcreate_player_inv(249, 0))
@@ -2156,7 +2140,7 @@ void revive_character(Character& chara)
     chara_place(chara);
     chara.current_map = 0;
     snd("core.pray1");
-    txt(i18n::s.get("core.misc.resurrect", cdatan(0, chara.index), chara),
+    txt(i18n::s.get("core.misc.resurrect", chara.name, chara),
         Message::color{ColorIndex::orange});
 }
 
@@ -2298,20 +2282,18 @@ void proc_pregnant(Character& chara)
             if (const auto alien =
                     chara_create(-1, 330, chara.position.x, chara.position.y))
             {
-                if (strlen_u(cdatan(0, chara.index)) > 10 ||
+                if (strlen_u(chara.name) > 10 ||
                     instr(
-                        cdatan(0, chara.index),
+                        chara.name,
                         0,
                         i18n::s.get("core.chara.job.alien.child")) != -1)
                 {
-                    cdatan(0, alien->index) =
-                        i18n::s.get("core.chara.job.alien.alien_kid");
+                    alien->name = i18n::s.get("core.chara.job.alien.alien_kid");
                 }
                 else
                 {
-                    cdatan(0, alien->index) = i18n::s.get(
-                        "core.chara.job.alien.child_of",
-                        cdatan(0, chara.index));
+                    alien->name = i18n::s.get(
+                        "core.chara.job.alien.child_of", chara.name);
                 }
             }
         }

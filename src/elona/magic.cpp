@@ -383,7 +383,7 @@ bool _magic_1147(Character& target)
 // Item: salt solution
 bool _magic_1142(Character& target)
 {
-    if (cdatan(2, target.index) == u8"core.snail"s)
+    if (target.race == "core.snail")
     {
         if (is_in_fov(target))
         {
@@ -1105,7 +1105,7 @@ bool _magic_461(Character& subject)
     cdata[stat].current_map = 0;
     txt(i18n::s.get(
             "core.magic.resurrection.apply",
-            cnven(cdatan(0, stat)),
+            cnven(cdata[stat].name),
             cdata[stat]),
         Message::color{ColorIndex::orange});
     txt(i18n::s.get("core.magic.resurrection.dialog"));
