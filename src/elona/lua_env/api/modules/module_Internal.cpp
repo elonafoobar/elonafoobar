@@ -6,6 +6,7 @@
 #include "../../../crafting.hpp"
 #include "../../../data/types/type_map.hpp"
 #include "../../../i18n.hpp"
+#include "../../../item.hpp"
 #include "../../../itemgen.hpp"
 #include "../../../map.hpp"
 #include "../../../menu.hpp"
@@ -15,24 +16,17 @@
 
 
 
-namespace elona::lua::api::modules
+namespace elona::lua::api::modules::module_Internal
 {
 
+int Internal_get_quest_flag(const std::string& id)
+{
 #define GET_QUEST_FLAG(id_) \
     if (id == #id_) \
     { \
         return game_data.quest_flags.id_; \
     }
 
-#define SET_QUEST_FLAG(id_, value) \
-    if (id == #id_) \
-    { \
-        game_data.quest_flags.id_ = value; \
-        return; \
-    }
-
-int LuaApiInternal::get_quest_flag(const std::string& id)
-{
     GET_QUEST_FLAG(tutorial);
     GET_QUEST_FLAG(main_quest);
     GET_QUEST_FLAG(putit_attacks);
@@ -61,10 +55,22 @@ int LuaApiInternal::get_quest_flag(const std::string& id)
 
     throw sol::error("No such quest " + id);
     return 0;
+
+#undef GET_QUEST_FLAG
 }
 
-void LuaApiInternal::set_quest_flag(const std::string& id, int value)
+
+
+void Internal_set_quest_flag(const std::string& id, int value)
 {
+#define SET_QUEST_FLAG(id_, value) \
+    if (id == #id_) \
+    { \
+        game_data.quest_flags.id_ = value; \
+        return; \
+    }
+
+
     SET_QUEST_FLAG(tutorial, value);
     SET_QUEST_FLAG(main_quest, value);
     SET_QUEST_FLAG(putit_attacks, value);
@@ -91,16 +97,14 @@ void LuaApiInternal::set_quest_flag(const std::string& id, int value)
     SET_QUEST_FLAG(save_count_of_little_sister, value);
     SET_QUEST_FLAG(gift_count_of_little_sister, value);
 
-
     throw sol::error("No such quest " + id);
+
+#undef SET_QUEST_FLAG
 }
 
-#undef GET_QUEST_FLAG
-#undef SET_QUEST_FLAG
 
-void LuaApiInternal::go_to_quest_map(
-    const std::string& map_name,
-    int dungeon_level)
+
+void Internal_go_to_quest_map(const std::string& map_name, int dungeon_level)
 {
     auto id = the_mapdef_db[data::InstanceId{map_name}]->legacy_id;
     map_data.stair_down_pos =
@@ -111,28 +115,36 @@ void LuaApiInternal::go_to_quest_map(
     chatteleport = 1;
 }
 
+
+
 /**
  * Returns the name of this character as displayed in the dialog screen.
  */
-std::string LuaApiInternal::speaker_name(LuaCharacterHandle chara)
+std::string Internal_speaker_name(LuaCharacterHandle chara)
 {
     auto& chara_ref = lua::ref<Character>(chara);
     return talk_get_speaker_name(chara_ref);
 }
 
-void LuaApiInternal::material_kit_crafting_menu()
+
+
+void Internal_material_kit_crafting_menu()
 {
     invctrl = 1;
     snd("core.pop2");
     elona::crafting_menu();
 }
 
-int LuaApiInternal::filter_set_dungeon()
+
+
+int Internal_filter_set_dungeon()
 {
     return elona::fltsetdungeon();
 }
 
-void LuaApiInternal::trade_small_medals(LuaCharacterHandle chara)
+
+
+void Internal_trade_small_medals(LuaCharacterHandle chara)
 {
     auto& chara_ref = lua::ref<Character>(chara);
     invctrl = 28;
@@ -143,7 +155,9 @@ void LuaApiInternal::trade_small_medals(LuaCharacterHandle chara)
     cs = 0;
 }
 
-int LuaApiInternal::generate_fighters_guild_target(int level)
+
+
+int Internal_generate_fighters_guild_target(int level)
 {
     while (true)
     {
@@ -170,13 +184,17 @@ int LuaApiInternal::generate_fighters_guild_target(int level)
     return id;
 }
 
-void LuaApiInternal::leave_map()
+
+
+void Internal_leave_map()
 {
     levelexitby = 4;
     chatteleport = 1;
 }
 
-void LuaApiInternal::strange_scientist_pick_reward()
+
+
+void Internal_strange_scientist_pick_reward()
 {
     begintempinv();
     mode = 6;
@@ -239,21 +257,24 @@ void LuaApiInternal::strange_scientist_pick_reward()
     mode = 0;
 }
 
-void LuaApiInternal::bind(sol::table api_table)
+
+
+void bind(sol::table api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, LuaApiInternal, get_quest_flag);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiInternal, set_quest_flag);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiInternal, go_to_quest_map);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiInternal, speaker_name);
-    LUA_API_BIND_FUNCTION(
-        api_table, LuaApiInternal, material_kit_crafting_menu);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiInternal, filter_set_dungeon);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiInternal, trade_small_medals);
-    LUA_API_BIND_FUNCTION(
-        api_table, LuaApiInternal, generate_fighters_guild_target);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiInternal, leave_map);
-    LUA_API_BIND_FUNCTION(
-        api_table, LuaApiInternal, strange_scientist_pick_reward);
+    /* clang-format off */
+
+    ELONA_LUA_API_BIND_FUNCTION("get_quest_flag", Internal_get_quest_flag);
+    ELONA_LUA_API_BIND_FUNCTION("set_quest_flag", Internal_set_quest_flag);
+    ELONA_LUA_API_BIND_FUNCTION("go_to_quest_map", Internal_go_to_quest_map);
+    ELONA_LUA_API_BIND_FUNCTION("speaker_name", Internal_speaker_name);
+    ELONA_LUA_API_BIND_FUNCTION("material_kit_crafting_menu", Internal_material_kit_crafting_menu);
+    ELONA_LUA_API_BIND_FUNCTION("filter_set_dungeon", Internal_filter_set_dungeon);
+    ELONA_LUA_API_BIND_FUNCTION("trade_small_medals", Internal_trade_small_medals);
+    ELONA_LUA_API_BIND_FUNCTION("generate_fighters_guild_target", Internal_generate_fighters_guild_target);
+    ELONA_LUA_API_BIND_FUNCTION("leave_map", Internal_leave_map);
+    ELONA_LUA_API_BIND_FUNCTION("strange_scientist_pick_reward", Internal_strange_scientist_pick_reward);
+
+    /* clang-format on */
 }
 
-} // namespace elona::lua::api::modules
+} // namespace elona::lua::api::modules::module_Internal

@@ -4,7 +4,7 @@
 
 
 
-namespace elona::lua::api::modules
+namespace elona::lua::api::modules::module_Env
 {
 
 /**
@@ -14,11 +14,14 @@ namespace elona::lua::api::modules
  * the Lua built-in global constants.
  */
 
+
+
 /**
  * @luadoc ELONA_VERSION field string
  *
  * Elona version. Currently, it is always "1.22".
  */
+
 
 
 /**
@@ -27,13 +30,17 @@ namespace elona::lua::api::modules
  * Elona foobar version. E.g., "1.2.3"
  */
 
-void LuaApiEnv::bind(sol::table api_table)
+
+
+void bind(sol::table api_table)
 {
-    LUA_API_BIND_CONSTANT(
-        api_table, LUA_VERSION, LUA_VERSION_MAJOR "." LUA_VERSION_MINOR);
-    LUA_API_BIND_CONSTANT(api_table, ELONA_VERSION, "1.22");
-    LUA_API_BIND_CONSTANT(
-        api_table, ELONA_FOOBAR_VERSION, latest_version.short_string());
+    /* clang-format off */
+
+    ELONA_LUA_API_BIND_CONSTANT("LUA_VERSION", LUA_VERSION_MAJOR "." LUA_VERSION_MINOR);
+    ELONA_LUA_API_BIND_CONSTANT("ELONA_VERSION", "1.22");
+    ELONA_LUA_API_BIND_CONSTANT("ELONA_FOOBAR_VERSION", latest_version.short_string());
+
+    /* clang-format on */
 }
 
-} // namespace elona::lua::api::modules
+} // namespace elona::lua::api::modules::module_Env

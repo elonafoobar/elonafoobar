@@ -7,27 +7,34 @@
 
 
 
-namespace elona::lua::api::modules
+namespace elona::lua::api::modules::module_Skill
 {
 
 /**
- * @luadoc
+ * @luadoc resistance
  *
  * Obtains a character's resistance level for an element.
+ *
  * @tparam Enums.Element element the element
  * @tparam LuaCharacter chara the character to get resistance information from
  * @treturn num the character's resistance level
  */
-int LuaApiSkill::resistance(const EnumString& element, LuaCharacterHandle chara)
+int Skill_resistance(const EnumString& element, LuaCharacterHandle chara)
 {
     auto& chara_ref = lua::ref<Character>(chara);
     Element element_value = LuaEnums::ElementTable.ensure_from_string(element);
-    return elona::sdata(static_cast<int>(element_value), chara_ref.index);
+    return sdata(static_cast<int>(element_value), chara_ref.index);
 }
 
-void LuaApiSkill::bind(sol::table api_table)
+
+
+void bind(sol::table api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, LuaApiSkill, resistance);
+    /* clang-format off */
+
+    ELONA_LUA_API_BIND_FUNCTION("resistance", Skill_resistance);
+
+    /* clang-format on */
 }
 
-} // namespace elona::lua::api::modules
+} // namespace elona::lua::api::modules::module_Skill

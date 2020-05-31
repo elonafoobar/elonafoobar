@@ -12,43 +12,65 @@
 
 
 
-namespace elona::lua::api::modules
+namespace elona::lua::api::modules::module_Map
 {
 
 /**
- * @luadoc
+ * @luadoc width
  *
  * Returns the current map's width. This is only valid until the map
  * changes.
+ *
  * @treturn num the current map's width in tiles
  */
-int LuaApiMap::width()
+int Map_width()
 {
     return map_data.width;
 }
 
+
+
 /**
- * @luadoc
+ * @luadoc height
  *
  * Returns the current map's height. This is only valid until the map
  * changes.
+ *
  * @treturn num the current map's height in tiles
  */
-int LuaApiMap::height()
+int Map_height()
 {
     return map_data.height;
 }
 
+
+
 /**
- * @luadoc
+ * @luadoc legacy_id
+ *
+ * Returns the current map's legacy ID.
+ *
+ * @treturn[1] num the current map's legacy ID
+ * @treturn[2] nil
+ */
+int Map_legacy_id()
+{
+    return area_data[game_data.current_map].id;
+}
+
+
+
+/**
+ * @luadoc id
  *
  * Returns the current map's ID.
+ *
  * @treturn[1] string the current map's ID
  * @treturn[2] nil
  */
-sol::optional<std::string> LuaApiMap::id()
+sol::optional<std::string> Map_id()
 {
-    auto legacy_id = LuaApiMap::legacy_id();
+    auto legacy_id = Map_legacy_id();
 
     auto id = the_mapdef_db.get_id_from_legacy(legacy_id);
     if (!legacy_id)
@@ -59,90 +81,79 @@ sol::optional<std::string> LuaApiMap::id()
     return id->get();
 }
 
-/**
- * @luadoc
- *
- * Returns the current map's legacy ID.
- * @treturn[1] num the current map's legacy ID
- * @treturn[2] nil
- */
-int LuaApiMap::legacy_id()
-{
-    return area_data[game_data.current_map].id;
-}
+
 
 /**
- * @luadoc
+ * @luadoc instance_id
  *
  * Returns the ID of the current map's instance. There can be more than one
  * instance of a map of the same kind, like player-owned buildings.
+ *
  * @treturn num the current map's instance ID
  */
-int LuaApiMap::instance_id()
+int Map_instance_id()
 {
     return game_data.current_map;
 }
 
 
+
 /**
- * @luadoc
+ * @luadoc current_dungeon_level
  *
  * Returns the current dungeon level.
  * TODO: unify with World.data or Map.data
  */
-int LuaApiMap::current_dungeon_level()
+int Map_current_dungeon_level()
 {
     return game_data.current_dungeon_level;
 }
 
+
+
 /**
- * @luadoc
+ * @luadoc is_overworld
  *
  * Returns true if this map is the overworld.
+ *
  * @treturn bool
  */
-bool LuaApiMap::is_overworld()
+bool Map_is_overworld()
 {
     return elona::map_data.atlas_number == 0;
 }
 
+
+
+bool Map_valid_xy(int x, int y)
+{
+    return x >= 0 && y >= 0 && x < Map_width() && y < Map_height();
+}
+
+
+
 /**
- * @luadoc
+ * @luadoc valid
  *
  * Checks if a position is inside the map. It might be blocked by something.
+ *
  * @tparam LuaPosition position
  * @treturn bool true if the position is inside the map.
  */
-bool LuaApiMap::valid(const Position& position)
+bool Map_valid(const Position& position)
 {
-    return LuaApiMap::valid_xy(position.x, position.y);
+    return Map_valid_xy(position.x, position.y);
 }
 
-bool LuaApiMap::valid_xy(int x, int y)
-{
-    return x >= 0 && y >= 0 && x < LuaApiMap::width() &&
-        y < LuaApiMap::height();
-}
 
-/**
- * @luadoc
- *
- * Returns true if the map tile at the given position is solid.
- * @tparam LuaPosition position
- * @treturn bool
- */
-bool LuaApiMap::is_solid(const Position& position)
-{
-    return LuaApiMap::is_solid_xy(position.x, position.y);
-}
 
-bool LuaApiMap::is_solid_xy(int x, int y)
+bool Map_is_solid_xy(int x, int y)
 {
-    if (LuaApiMap::is_overworld())
+    if (Map_is_overworld())
     {
         return true;
     }
-    if (!LuaApiMap::valid_xy(x, y))
+    if (!Map_valid_xy(x, y))
     {
         return true;
     }
@@ -150,25 +161,30 @@ bool LuaApiMap::is_solid_xy(int x, int y)
     return elona::chip_data.for_cell(x, y).effect & 4;
 }
 
+
+
 /**
- * @luadoc
+ * @luadoc is_solid
  *
- * Checks if a position is blocked and cannot be reached by walking.
+ * Returns true if the map tile at the given position is solid.
+ *
  * @tparam LuaPosition position
  * @treturn bool
  */
-bool LuaApiMap::is_blocked(const Position& position)
+bool Map_is_solid(const Position& position)
 {
-    return LuaApiMap::is_blocked_xy(position.x, position.y);
+    return Map_is_solid_xy(position.x, position.y);
 }
 
-bool LuaApiMap::is_blocked_xy(int x, int y)
+
+
+bool Map_is_blocked_xy(int x, int y)
 {
-    if (LuaApiMap::is_overworld())
+    if (Map_is_overworld())
     {
         return true;
     }
-    if (!LuaApiMap::valid_xy(x, y))
+    if (!Map_valid_xy(x, y))
     {
         return true;
     }
@@ -177,29 +193,50 @@ bool LuaApiMap::is_blocked_xy(int x, int y)
     return cellaccess == 0;
 }
 
+
+
 /**
- * @luadoc
+ * @luadoc is_blocked
+ *
+ * Checks if a position is blocked and cannot be reached by walking.
+ *
+ * @tparam LuaPosition position
+ * @treturn bool
+ */
+bool Map_is_blocked(const Position& position)
+{
+    return Map_is_blocked_xy(position.x, position.y);
+}
+
+
+
+/**
+ * @luadoc random_pos
  *
  * Returns a random position in the current map. It might be blocked by
  * something.
+ *
  * @treturn LuaPosition a random position
  */
-Position LuaApiMap::random_pos()
+Position Map_random_pos()
 {
     return Position{
         elona::rnd(map_data.width - 1), elona::rnd(map_data.height - 1)};
 }
 
+
+
 /**
- * @luadoc
+ * @luadoc generate_tile
  *
  * Generates a random tile ID from the current map's tileset.
  * Tile kinds can contain one of several different tile variations.
+ *
  * @tparam Enums.TileKind tile_kind the tile kind to set
  * @treturn num the generated tile ID
  * @see Enums.TileKind
  */
-int LuaApiMap::generate_tile(const EnumString& tile_kind)
+int Map_generate_tile(const EnumString& tile_kind)
 {
     TileKind tile_kind_value =
         LuaEnums::TileKindTable.ensure_from_string(tile_kind);
@@ -207,36 +244,26 @@ int LuaApiMap::generate_tile(const EnumString& tile_kind)
 }
 
 
+
 /**
- * @luadoc
+ * @luadoc chip_type
  *
  * Returns the type of chip for the given tile kind.
  */
-int LuaApiMap::chip_type(int tile_id)
+int Map_chip_type(int tile_id)
 {
     return elona::chip_data[tile_id].kind;
 }
 
 
-/**
- * @luadoc
- *
- * Gets the tile type of a tile position.
- * @tparam LuaPosition position
- * @treturn num
- */
-int LuaApiMap::get_tile(const Position& position)
-{
-    return LuaApiMap::get_tile_xy(position.x, position.y);
-}
 
-int LuaApiMap::get_tile_xy(int x, int y)
+int Map_get_tile_xy(int x, int y)
 {
-    if (LuaApiMap::is_overworld())
+    if (Map_is_overworld())
     {
         return -1;
     }
-    if (!LuaApiMap::valid_xy(x, y))
+    if (!Map_valid_xy(x, y))
     {
         return -1;
     }
@@ -244,25 +271,30 @@ int LuaApiMap::get_tile_xy(int x, int y)
     return elona::cell_data.at(x, y).chip_id_actual;
 }
 
+
+
 /**
- * @luadoc
+ * @luadoc get_tile
  *
- * Gets the player's memory of a tile position.
+ * Gets the tile type of a tile position.
+ *
  * @tparam LuaPosition position
  * @treturn num
  */
-int LuaApiMap::get_memory(const Position& position)
+int Map_get_tile(const Position& position)
 {
-    return LuaApiMap::get_memory_xy(position.x, position.y);
+    return Map_get_tile_xy(position.x, position.y);
 }
 
-int LuaApiMap::get_memory_xy(int x, int y)
+
+
+int Map_get_memory_xy(int x, int y)
 {
-    if (LuaApiMap::is_overworld())
+    if (Map_is_overworld())
     {
         return -1;
     }
-    if (!LuaApiMap::valid_xy(x, y))
+    if (!Map_valid_xy(x, y))
     {
         return -1;
     }
@@ -270,30 +302,30 @@ int LuaApiMap::get_memory_xy(int x, int y)
     return elona::cell_data.at(x, y).chip_id_memory;
 }
 
+
+
 /**
- * @luadoc
+ * @luadoc get_memory
  *
- * Returns a table containing map feature information at the given tile
- * position.
- * - id: Feature id.
- * - param1: Extra parameter.
- * - param2: Extra parameter.
- * - param3: Extra parameter. (unused)
+ * Gets the player's memory of a tile position.
+ *
  * @tparam LuaPosition position
- * @treturn table
+ * @treturn num
  */
-sol::table LuaApiMap::get_feat(const Position& position)
+int Map_get_memory(const Position& position)
 {
-    return LuaApiMap::get_feat_xy(position.x, position.y);
+    return Map_get_memory_xy(position.x, position.y);
 }
 
-sol::table LuaApiMap::get_feat_xy(int x, int y)
+
+
+sol::table Map_get_feat_xy(int x, int y)
 {
-    if (LuaApiMap::is_overworld())
+    if (Map_is_overworld())
     {
         return lua::create_table();
     }
-    if (!LuaApiMap::valid_xy(x, y))
+    if (!Map_valid_xy(x, y))
     {
         return lua::create_table();
     }
@@ -309,25 +341,35 @@ sol::table LuaApiMap::get_feat_xy(int x, int y)
         "id", id, "param1", param1, "param2", param2, "param3", param3);
 }
 
+
+
 /**
- * @luadoc
+ * @luadoc get_feat
  *
- * Returns the ID of the map effect at the given position.
+ * Returns a table containing map feature information at the given tile
+ * position.
+ * - id: Feature id.
+ * - param1: Extra parameter.
+ * - param2: Extra parameter.
+ * - param3: Extra parameter. (unused)
+ *
  * @tparam LuaPosition position
- * @treturn num
+ * @treturn table
  */
-int LuaApiMap::get_mef(const Position& position)
+sol::table Map_get_feat(const Position& position)
 {
-    return LuaApiMap::get_mef_xy(position.x, position.y);
+    return Map_get_feat_xy(position.x, position.y);
 }
 
-int LuaApiMap::get_mef_xy(int x, int y)
+
+
+int Map_get_mef_xy(int x, int y)
 {
-    if (LuaApiMap::is_overworld())
+    if (Map_is_overworld())
     {
         return 0;
     }
-    if (!LuaApiMap::valid_xy(x, y))
+    if (!Map_valid_xy(x, y))
     {
         return 0;
     }
@@ -342,21 +384,26 @@ int LuaApiMap::get_mef_xy(int x, int y)
     return mef(0, index_plus_one - 1);
 }
 
+
+
 /**
- * @luadoc
+ * @luadoc get_mef
  *
- * Gets the character standing at a tile position.
+ * Returns the ID of the map effect at the given position.
+ *
  * @tparam LuaPosition position
- * @treturn[opt] LuaCharacter
+ * @treturn num
  */
-sol::optional<LuaCharacterHandle> LuaApiMap::get_chara(const Position& position)
+int Map_get_mef(const Position& position)
 {
-    return LuaApiMap::get_chara_xy(position.x, position.y);
+    return Map_get_mef_xy(position.x, position.y);
 }
 
-sol::optional<LuaCharacterHandle> LuaApiMap::get_chara_xy(int x, int y)
+
+
+sol::optional<LuaCharacterHandle> Map_get_chara_xy(int x, int y)
 {
-    if (!LuaApiMap::valid_xy(x, y))
+    if (!Map_valid_xy(x, y))
     {
         return sol::nullopt;
     }
@@ -371,27 +418,30 @@ sol::optional<LuaCharacterHandle> LuaApiMap::get_chara_xy(int x, int y)
     return lua::handle(cdata[index_plus_one - 1]);
 }
 
+
+
 /**
- * @luadoc
+ * @luadoc get_chara
  *
- * Sets a tile of the current map. Only checks if the position is valid, not
- * things like blocking objects.
+ * Gets the character standing at a tile position.
+ *
  * @tparam LuaPosition position
- * @tparam num id the tile ID to set
- * @usage Map.set_tile(10, 10, Map.generate_tile(Enums.TileKind.Room))
+ * @treturn[opt] LuaCharacter
  */
-void LuaApiMap::set_tile(const Position& position, int id)
+sol::optional<LuaCharacterHandle> Map_get_chara(const Position& position)
 {
-    LuaApiMap::set_tile_xy(position.x, position.y, id);
+    return Map_get_chara_xy(position.x, position.y);
 }
 
-void LuaApiMap::set_tile_xy(int x, int y, int id)
+
+
+void Map_set_tile_xy(int x, int y, int id)
 {
-    if (LuaApiMap::is_overworld())
+    if (Map_is_overworld())
     {
         return;
     }
-    if (!LuaApiMap::valid_xy(x, y))
+    if (!Map_valid_xy(x, y))
     {
         return;
     }
@@ -400,26 +450,32 @@ void LuaApiMap::set_tile_xy(int x, int y, int id)
     elona::cell_data.at(x, y).chip_id_actual = id;
 }
 
+
+
 /**
- * @luadoc
+ * @luadoc set_tile
  *
- * Sets the player's memory of a tile position to the given tile kind.
+ * Sets a tile of the current map. Only checks if the position is valid, not
+ * things like blocking objects.
+ *
  * @tparam LuaPosition position
  * @tparam num id the tile ID to set
- * @usage Map.set_memory(10, 10, Map.generate_tile(Enums.TileKind.Room))
+ * @usage Map.set_tile(10, 10, Map.generate_tile(Enums.TileKind.Room))
  */
-void LuaApiMap::set_memory(const Position& position, int id)
+void Map_set_tile(const Position& position, int id)
 {
-    LuaApiMap::set_memory_xy(position.x, position.y, id);
+    Map_set_tile_xy(position.x, position.y, id);
 }
 
-void LuaApiMap::set_memory_xy(int x, int y, int id)
+
+
+void Map_set_memory_xy(int x, int y, int id)
 {
-    if (LuaApiMap::is_overworld())
+    if (Map_is_overworld())
     {
         return;
     }
-    if (!LuaApiMap::valid_xy(x, y))
+    if (!Map_valid_xy(x, y))
     {
         return;
     }
@@ -427,62 +483,82 @@ void LuaApiMap::set_memory_xy(int x, int y, int id)
     elona::cell_data.at(x, y).chip_id_memory = id;
 }
 
+
+
 /**
- * @luadoc
+ * @luadoc set_memory
+ *
+ * Sets the player's memory of a tile position to the given tile kind.
+ *
+ * @tparam LuaPosition position
+ * @tparam num id the tile ID to set
+ * @usage Map.set_memory(10, 10, Map.generate_tile(Enums.TileKind.Room))
+ */
+void Map_set_memory(const Position& position, int id)
+{
+    Map_set_memory_xy(position.x, position.y, id);
+}
+
+
+
+void Map_set_feat_xy(int x, int y, int tile, int param1, int param2)
+{
+    cell_featset(x, y, tile, param1, param2);
+}
+
+
+
+/**
+ * @luadoc set_feat
  *
  * Sets a feat at the given position.
+ *
  * @tparam LuaPosition position (const) the map position
  * @tparam num tile the tile ID of the feat
  * @tparam num param1 a parameter of the feat
  * @tparam num param2 a parameter of the feat
  */
-void LuaApiMap::set_feat(
-    const Position& position,
-    int tile,
-    int param1,
-    int param2)
+void Map_set_feat(const Position& position, int tile, int param1, int param2)
 {
-    LuaApiMap::set_feat_xy(position.x, position.y, tile, param1, param2);
+    Map_set_feat_xy(position.x, position.y, tile, param1, param2);
 }
 
-void LuaApiMap::set_feat_xy(int x, int y, int tile, int param1, int param2)
-{
-    cell_featset(x, y, tile, param1, param2);
-}
 
-/**
- * @luadoc
- *
- * Clears the feat at the given position.
- * @tparam LuaPosition position (const) the map position
- */
-void LuaApiMap::clear_feat(const Position& position)
-{
-    LuaApiMap::clear_feat_xy(position.x, position.y);
-}
 
-void LuaApiMap::clear_feat_xy(int x, int y)
+void Map_clear_feat_xy(int x, int y)
 {
     cell_featclear(x, y);
 }
 
 
+
 /**
- * @luadoc
+ * @luadoc clear_feat
+ *
+ * Clears the feat at the given position.
+ *
+ * @tparam LuaPosition position (const) the map position
+ */
+void Map_clear_feat(const Position& position)
+{
+    Map_clear_feat_xy(position.x, position.y);
+}
+
+
+
+/**
+ * @luadoc spray_tile
  *
  * Randomly sprays the map with the given tile type;
  */
-void LuaApiMap::spray_tile(int tile, int amount)
+void Map_spray_tile(int tile, int amount)
 {
     elona::map_randomtile(tile, amount);
 }
 
-void LuaApiMap::travel_to(const std::string& map_id)
-{
-    LuaApiMap::travel_to_with_level(map_id, 1);
-}
 
-void LuaApiMap::travel_to_with_level(const std::string& map_id, int level)
+
+void Map_travel_to_with_level(const std::string& map_id, int level)
 {
     auto map = the_mapdef_db.ensure(data::InstanceId{map_id});
 
@@ -518,51 +594,43 @@ void LuaApiMap::travel_to_with_level(const std::string& map_id, int level)
     initialize_map();
 }
 
-void LuaApiMap::bind(sol::table api_table)
+
+
+void Map_travel_to(const std::string& map_id)
 {
-    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, width);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, height);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, id);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, legacy_id);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, instance_id);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, is_overworld);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, current_dungeon_level);
-    api_table.set_function(
-        "valid", sol::overload(LuaApiMap::valid, LuaApiMap::valid_xy));
-    api_table.set_function(
-        "is_solid", sol::overload(LuaApiMap::is_solid, LuaApiMap::is_solid_xy));
-    api_table.set_function(
-        "is_blocked",
-        sol::overload(LuaApiMap::is_blocked, LuaApiMap::is_blocked_xy));
-    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, random_pos);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, generate_tile);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, chip_type);
-    api_table.set_function(
-        "get_tile", sol::overload(LuaApiMap::get_tile, LuaApiMap::get_tile_xy));
-    api_table.set_function(
-        "get_memory",
-        sol::overload(LuaApiMap::get_memory, LuaApiMap::get_memory_xy));
-    api_table.set_function(
-        "get_feat", sol::overload(LuaApiMap::get_feat, LuaApiMap::get_feat_xy));
-    api_table.set_function(
-        "get_mef", sol::overload(LuaApiMap::get_mef, LuaApiMap::get_mef_xy));
-    api_table.set_function(
-        "get_chara",
-        sol::overload(LuaApiMap::get_chara, LuaApiMap::get_chara_xy));
-    api_table.set_function(
-        "set_tile", sol::overload(LuaApiMap::set_tile, LuaApiMap::set_tile_xy));
-    api_table.set_function(
-        "set_memory",
-        sol::overload(LuaApiMap::set_memory, LuaApiMap::set_memory_xy));
-    api_table.set_function(
-        "set_feat", sol::overload(LuaApiMap::set_feat, LuaApiMap::set_feat_xy));
-    api_table.set_function(
-        "clear_feat",
-        sol::overload(LuaApiMap::clear_feat, LuaApiMap::clear_feat_xy));
-    LUA_API_BIND_FUNCTION(api_table, LuaApiMap, spray_tile);
-    api_table.set_function(
-        "travel_to",
-        sol::overload(LuaApiMap::travel_to, LuaApiMap::travel_to_with_level));
+    Map_travel_to_with_level(map_id, 1);
+}
+
+
+
+void bind(sol::table api_table)
+{
+    /* clang-format off */
+
+    ELONA_LUA_API_BIND_FUNCTION("width", Map_width);
+    ELONA_LUA_API_BIND_FUNCTION("height", Map_height);
+    ELONA_LUA_API_BIND_FUNCTION("id", Map_id);
+    ELONA_LUA_API_BIND_FUNCTION("legacy_id", Map_legacy_id);
+    ELONA_LUA_API_BIND_FUNCTION("instance_id", Map_instance_id);
+    ELONA_LUA_API_BIND_FUNCTION("is_overworld", Map_is_overworld);
+    ELONA_LUA_API_BIND_FUNCTION("current_dungeon_level", Map_current_dungeon_level);
+    ELONA_LUA_API_BIND_FUNCTION("valid", Map_valid, Map_valid_xy);
+    ELONA_LUA_API_BIND_FUNCTION("is_solid", Map_is_solid, Map_is_solid_xy);
+    ELONA_LUA_API_BIND_FUNCTION("is_blocked", Map_is_blocked, Map_is_blocked_xy);
+    ELONA_LUA_API_BIND_FUNCTION("random_pos", Map_random_pos);
+    ELONA_LUA_API_BIND_FUNCTION("generate_tile", Map_generate_tile);
+    ELONA_LUA_API_BIND_FUNCTION("chip_type", Map_chip_type);
+    ELONA_LUA_API_BIND_FUNCTION("get_tile", Map_get_tile, Map_get_tile_xy);
+    ELONA_LUA_API_BIND_FUNCTION("get_memory", Map_get_memory, Map_get_memory_xy);
+    ELONA_LUA_API_BIND_FUNCTION("get_feat", Map_get_feat, Map_get_feat_xy);
+    ELONA_LUA_API_BIND_FUNCTION("get_mef", Map_get_mef, Map_get_mef_xy);
+    ELONA_LUA_API_BIND_FUNCTION("get_chara", Map_get_chara, Map_get_chara_xy);
+    ELONA_LUA_API_BIND_FUNCTION("set_tile", Map_set_tile, Map_set_tile_xy);
+    ELONA_LUA_API_BIND_FUNCTION("set_memory", Map_set_memory, Map_set_memory_xy);
+    ELONA_LUA_API_BIND_FUNCTION("set_feat", Map_set_feat, Map_set_feat_xy);
+    ELONA_LUA_API_BIND_FUNCTION("clear_feat", Map_clear_feat, Map_clear_feat_xy);
+    ELONA_LUA_API_BIND_FUNCTION("spray_tile", Map_spray_tile);
+    ELONA_LUA_API_BIND_FUNCTION("travel_to", Map_travel_to, Map_travel_to_with_level);
 
     /**
      * @luadoc data field LuaMapData
@@ -578,6 +646,8 @@ void LuaApiMap::bind(sol::table api_table)
      * Returns the area in the world map that corresponds to this map.
      */
     api_table.set("area", sol::property([]() { return &area_data.current(); }));
+
+    /* clang-format on */
 }
 
-} // namespace elona::lua::api::modules
+} // namespace elona::lua::api::modules::module_Map

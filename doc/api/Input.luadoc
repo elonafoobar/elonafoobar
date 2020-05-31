@@ -3,6 +3,7 @@
 module "Input"
 
 --- Prompts the player to select "yes" or "no".
+--
 --  @tparam string message a message to display
 --  @treturn[1] bool true if "yes" was selected.
 --  @treturn[2] nil if canceled.
@@ -20,6 +21,7 @@ function yes_no(message) end
 
 --- Prompts the player to choose a number. Raises an error if
 --  <code>max</code> is less than 0.
+--
 --  @tparam string message a message to display
 --  @tparam num max the maximum number choosable
 --  @tparam[opt] num initial the initial value
@@ -38,6 +40,7 @@ function yes_no(message) end
 function prompt_number(message, max, initial) end
 
 --- Prompts the player to enter text.
+--
 --  @tparam string message a message to display
 --  @tparam bool is_cancelable whether or not the dialog can be canceled
 --  @treturn[1] string the text that was input
@@ -54,6 +57,7 @@ function prompt_text(message, is_cancelable) end
 
 --- Prompts the player to select from a list of choices. Raises an
 --  error if no arguments are provided.
+--
 --  @tparam table choices a list of string choices
 --  @treturn[1] num the index of the item chosen, starting from 1
 --  @treturn[2] nil if canceled
@@ -98,6 +102,7 @@ function prompt_dialog(text, portrait_id, speaker_name, choices, default_index, 
 function prompt_dialog(text, chara_image, speaker_name, choices, default_index, impression, interest) end
 
 --- Starts a dialog with a character.
+--
 --  @tparam LuaCharacter speaker Character who will speak.
 --  @tparam[opt] string dialog Dialog ID to use. Defaults to the one in the
 --  character's definition.
@@ -105,6 +110,7 @@ function prompt_dialog(text, chara_image, speaker_name, choices, default_index, 
 function start_dialog(speaker, dialog) end
 
 --- Prompts the player to choose an ally.
+--
 --  @tparam ChooseAllyOperation operation the operation to apply
 --  @treturn[1] LuaCharacter
 --  @treturn[2] nil
@@ -113,6 +119,7 @@ function choose_ally(operation) end
 
 --- Enqueues an action or a list of actions into the macro action queue. It will
 --  be run in order of insertion the next time input is queried.
+--
 --  @tparam[1] string action the action to run.
 --  @tparam[2] table actions an array of actions to run.
 --  @usage Macro.enqueue("north")
@@ -129,6 +136,7 @@ function clear_macro_queue() end
 function ignore_keywait() end
 
 --- Returns true if any key is pressed.
+--
 --  @treturn bool
 --  @function any_key_pressed
 function any_key_pressed() end

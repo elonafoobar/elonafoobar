@@ -6,35 +6,14 @@
 
 
 
-namespace elona::lua::api::modules
+namespace elona::lua::api::modules::module_Magic
 {
 
 /**
  * @luadoc cast
  *
- * Makes a character cast a spell targeting themselves or a position.
- * @tparam LuaCharacter caster (mut) the casting character
- * @tparam num effect_id the spell ID
- * @tparam num effect_power the power of the spell
- * @tparam LuaPosition target_location (const) the position the spell targets
- * @usage local pos = Map.random_pos()
- * Magic.cast(Chara.player(), 432, 100, pos) -- Ball magic
- */
-void LuaApiMagic::cast_self(
-    LuaCharacterHandle caster,
-    int effect_id,
-    int effect_power,
-    const Position& target_location)
-{
-    elona::tlocx = target_location.x;
-    elona::tlocy = target_location.y;
-    LuaApiMagic::cast(caster, caster, effect_id, effect_power);
-}
-
-/**
- * @luadoc
- *
  * Makes a character cast a spell targeting another character.
+ *
  * @tparam LuaCharacter caster (mut) the casting character
  * @tparam LuaCharacter target (mut) the target character
  * @tparam num effect_id the spell ID
@@ -43,7 +22,7 @@ void LuaApiMagic::cast_self(
  * local target = Chara.create(0, 0, "core.putit")
  * Magic.cast(caster, target, 414, 100) -- Magic missile
  */
-void LuaApiMagic::cast(
+void Magic_cast(
     LuaCharacterHandle caster,
     LuaCharacterHandle target,
     int effect_id,
@@ -51,15 +30,45 @@ void LuaApiMagic::cast(
 {
     auto& caster_ref = lua::ref<Character>(caster);
     auto& target_ref = lua::ref<Character>(target);
-    elona::efid = effect_id;
-    elona::efp = effect_power;
-    elona::magic(caster_ref, target_ref);
+    efid = effect_id;
+    efp = effect_power;
+    magic(caster_ref, target_ref);
 }
 
-void LuaApiMagic::bind(sol::table api_table)
+
+
+/**
+ * @luadoc cast
+ *
+ * Makes a character cast a spell targeting themselves or a position.
+ *
+ * @tparam LuaCharacter caster (mut) the casting character
+ * @tparam num effect_id the spell ID
+ * @tparam num effect_power the power of the spell
+ * @tparam LuaPosition target_location (const) the position the spell targets
+ * @usage local pos = Map.random_pos()
+ * Magic.cast(Chara.player(), 432, 100, pos) -- Ball magic
+ */
+void Magic_cast_self(
+    LuaCharacterHandle caster,
+    int effect_id,
+    int effect_power,
+    const Position& target_location)
 {
-    api_table.set_function(
-        "cast", sol::overload(LuaApiMagic::cast_self, LuaApiMagic::cast));
+    tlocx = target_location.x;
+    tlocy = target_location.y;
+    Magic_cast(caster, caster, effect_id, effect_power);
 }
 
-} // namespace elona::lua::api::modules
+
+
+void bind(sol::table api_table)
+{
+    /* clang-format off */
+
+    ELONA_LUA_API_BIND_FUNCTION("cast", Magic_cast_self, Magic_cast);
+
+    /* clang-format on */
+}
+
+} // namespace elona::lua::api::modules::module_Magic

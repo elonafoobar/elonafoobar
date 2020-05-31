@@ -4,35 +4,39 @@
 
 
 
-namespace elona::lua::api::modules
+namespace elona::lua::api::modules::module_Pos
 {
 
 /**
- * @luadoc
+ * @luadoc dist
  *
  * Returns the distance between two points.
+ *
  * @tparam LuaPosition from (const) the point from
  * @tparam LuaPosition to (const) the point to
  * @treturn num the distance between the points in tiles
  */
-int LuaApiPos::dist(const Position& from, const Position& to)
+int Pos_dist(const Position& from, const Position& to)
 {
-    return LuaApiPos::dist_xy(from.x, from.y, to.x, to.y);
+    return dist(from.x, from.y, to.x, to.y);
 }
 
 
 
-int LuaApiPos::dist_xy(int fx, int fy, int tx, int ty)
+int Pos_dist_xy(int fx, int fy, int tx, int ty)
 {
-    return elona::dist(fx, fy, tx, ty);
+    return dist(fx, fy, tx, ty);
 }
 
 
 
-void LuaApiPos::bind(sol::table api_table)
+void bind(sol::table api_table)
 {
-    api_table.set_function(
-        "dist", sol::overload(LuaApiPos::dist, LuaApiPos::dist_xy));
+    /* clang-format off */
+
+    ELONA_LUA_API_BIND_FUNCTION("dist", Pos_dist, Pos_dist_xy);
+
+    /* clang-format on */
 }
 
-} // namespace elona::lua::api::modules
+} // namespace elona::lua::api::modules::module_Pos

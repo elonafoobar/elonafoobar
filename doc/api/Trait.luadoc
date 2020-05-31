@@ -5,6 +5,7 @@ module "Trait"
 
 --- Obtains the player's level in a trait. It may be negative if the
 --  trait is harmful.
+--
 --  @tparam num trait_id the trait id
 --  @treturn[1] num the player's trait level
 --  @treturn[2] nil
@@ -12,6 +13,7 @@ module "Trait"
 function level(trait_id) end
 
 --- Obtains the minimum possible level of a trait.
+--
 --  @tparam num trait_id the trait id
 --  @treturn[1] num the trait's minimum level.
 --  @treturn[2] nil
@@ -19,6 +21,7 @@ function level(trait_id) end
 function min(trait_id) end
 
 --- Obtains the maximum possible level of a trait.
+--
 --  @tparam num trait_id the trait id
 --  @treturn[1] num the trait's maximum level.
 --  @treturn[2] nil
@@ -26,12 +29,14 @@ function min(trait_id) end
 function max(trait_id) end
 
 --- Sets the level of a trait, bounded within its min and max.
+--
 --  @tparam num trait_id the trait id
 --  @tparam num level the new trait level
 --  @function set
 function set(trait_id, level) end
 
 --- Modifies the level of a trait, bounded within its min and max.
+--
 --  @tparam num trait_id the trait id
 --  @tparam num delta the amount to change the trait level by
 --  @function modify

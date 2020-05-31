@@ -4,20 +4,21 @@
 
 
 
-namespace elona::lua::api::modules
+namespace elona::lua::api::modules::module_I18N
 {
 
 /**
- * @luadoc
+ * @luadoc get
  *
  * Gets a localized string and optionally formats it with arguments.
  * This will return a string with a warning if the localization
  * string doesn't exist.
+ *
  * @tparam string key the ID of the localization string
  * @treturn string the formatted string
  * @usage I18N.get("core.map.you_see", "Vernis")
  */
-std::string LuaApiI18N::get(const std::string& key, sol::variadic_args args)
+std::string I18N_get(const std::string& key, sol::variadic_args args)
 {
     switch (args.size())
     {
@@ -63,15 +64,16 @@ std::string LuaApiI18N::get(const std::string& key, sol::variadic_args args)
 
 
 /**
- * @luadoc
+ * @luadoc get_optional
  *
  * Gets a localized string and optionally formats it with arguments.
  * This will return nil if the localization string doesn't exist.
+ *
  * @tparam string key the ID of the localization string
  * @treturn[1] string the formatted string
  * @treturn[2] nil
  */
-sol::optional<std::string> LuaApiI18N::get_optional(
+sol::optional<std::string> I18N_get_optional(
     const std::string& key,
     sol::variadic_args args)
 {
@@ -133,17 +135,18 @@ sol::optional<std::string> LuaApiI18N::get_optional(
 
 
 /**
- * @luadoc
+ * @luadoc get_enum
  *
  * Gets a localized string from an enum-style localization object.
  * This will return a string with a warning if the localization
  * string doesn't exist.
+ *
  * @tparam string key the ID of the localization string
  * @tparam num index the index into the enum
  * @treturn string the formatted string
  */
 std::string
-LuaApiI18N::get_enum(const std::string& key, int index, sol::variadic_args args)
+I18N_get_enum(const std::string& key, int index, sol::variadic_args args)
 {
     switch (args.size())
     {
@@ -193,17 +196,18 @@ LuaApiI18N::get_enum(const std::string& key, int index, sol::variadic_args args)
 
 
 /**
- * @luadoc
+ * @luadoc get_enum_optional
  *
  * Gets a localized string from an enum-style localization object and optionally
  * formats it with arguments. This will return nil if the localization string
  * doesn't exist.
+ *
  * @tparam string key the ID of the localization string
  * @tparam num index the index into the enum
  * @treturn[1] string the formatted string
  * @treturn[2] nil
  */
-sol::optional<std::string> LuaApiI18N::get_enum_optional(
+sol::optional<std::string> I18N_get_enum_optional(
     const std::string& key,
     int index,
     sol::variadic_args args)
@@ -272,17 +276,18 @@ sol::optional<std::string> LuaApiI18N::get_enum_optional(
 
 
 /**
- * @luadoc
+ * @luadoc get_enum_property
  *
  * Gets a localized string from an enum-style localization object
  * where the enum's children are themselves objects. This will return
  * a string with a warning if the localization string doesn't exist.
+ *
  * @tparam string key_base the base ID of the localization string
  * @tparam string key_property the property of the enum object to get
  * @tparam num index the index into the enum
  * @treturn string the formatted string
  */
-std::string LuaApiI18N::get_enum_property(
+std::string I18N_get_enum_property(
     const std::string& key_base,
     const std::string& key_property,
     int index,
@@ -348,18 +353,19 @@ std::string LuaApiI18N::get_enum_property(
 
 
 /**
- * @luadoc
+ * @luadoc get_enum_property_optional
  *
  * Gets a localized string from an enum-style localization object
  * where the enum's children are themselves objects. This will return
  * nil if the localization string doesn't exist.
+ *
  * @tparam string key_base the base ID of the localization string
  * @tparam string key_property the property of the enum object to get
  * @tparam num index the index into the enum
  * @treturn[1] string the formatted string
  * @treturn[2] nil
  */
-sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
+sol::optional<std::string> I18N_get_enum_property_optional(
     const std::string& key_base,
     const std::string& key_property,
     int index,
@@ -439,17 +445,18 @@ sol::optional<std::string> LuaApiI18N::get_enum_property_optional(
 
 
 /**
- * @luadoc
+ * @luadoc get_data_text
  *
  * Get a localized text associated with the given data ID.
  * This will return a string with a warning if the localization
  * string doesn't exist.
+ *
  * @tparam string prototype_id Data prototype ID.
  * @tparam string instance_id Data instance ID.
  * @tparam string property_name I18N key of the property to get.
  * @treturn string The formatted string
  */
-std::string LuaApiI18N::get_data_text(
+std::string I18N_get_data_text(
     const std::string& prototype_id,
     const std::string& instance_id,
     const std::string& property_name)
@@ -463,14 +470,15 @@ std::string LuaApiI18N::get_data_text(
 
 
 /**
- * @luadoc
+ * @luadoc register_function
  *
  * Registers a new function for use inside localization files.
+ *
  * @tparam string language Localized language the function is valid in
  * @tparam string name The function's name
  * @tparam function function A function taking arguments and returning a string
  */
-void LuaApiI18N::register_function(
+void I18N_register_function(
     const std::string& language,
     const std::string& name,
     sol::protected_function function)
@@ -480,16 +488,20 @@ void LuaApiI18N::register_function(
 
 
 
-void LuaApiI18N::bind(sol::table api_table)
+void bind(sol::table api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_optional);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_enum);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_enum_optional);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_enum_property);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_enum_property_optional);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, get_data_text);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiI18N, register_function);
+    /* clang-format off */
+
+    ELONA_LUA_API_BIND_FUNCTION("get", I18N_get);
+    ELONA_LUA_API_BIND_FUNCTION("get_optional", I18N_get_optional);
+    ELONA_LUA_API_BIND_FUNCTION("get_enum", I18N_get_enum);
+    ELONA_LUA_API_BIND_FUNCTION("get_enum_optional", I18N_get_enum_optional);
+    ELONA_LUA_API_BIND_FUNCTION("get_enum_property", I18N_get_enum_property);
+    ELONA_LUA_API_BIND_FUNCTION("get_enum_property_optional", I18N_get_enum_property_optional);
+    ELONA_LUA_API_BIND_FUNCTION("get_data_text", I18N_get_data_text);
+    ELONA_LUA_API_BIND_FUNCTION("register_function", I18N_register_function);
+
+    /* clang-format on */
 }
 
-} // namespace elona::lua::api::modules
+} // namespace elona::lua::api::modules::module_I18N

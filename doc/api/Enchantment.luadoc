@@ -3,6 +3,7 @@
 module "Enchantment"
 
 --- Add an enchantment to the item.
+--
 --  @tparam num id The enchantment ID.
 --  @tparam num power The enchantment power.
 --  @function add

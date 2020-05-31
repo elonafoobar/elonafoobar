@@ -4,26 +4,31 @@
 
 
 
-namespace elona::lua::api::modules
+namespace elona::lua::api::modules::module_Calc
 {
 
 /**
- * @luadoc
+ * @luadoc calc_objlv
  *
  * Calculate object generation level.
+ *
  * @tparam num n The base object level.
  * @treturn num The object level.
  */
-int LuaApiCalc::calc_objlv(int n)
+int Calc_calc_objlv(int n)
 {
-    return elona::calcobjlv(n);
+    return calcobjlv(n);
 }
 
 
 
-void LuaApiCalc::bind(sol::table api_table)
+void bind(sol::table api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, LuaApiCalc, calc_objlv);
+    /* clang-format off */
+
+    ELONA_LUA_API_BIND_FUNCTION("calc_objlv", Calc_calc_objlv);
+
+    /* clang-format on */
 }
 
-} // namespace elona::lua::api::modules
+} // namespace elona::lua::api::modules::module_Calc

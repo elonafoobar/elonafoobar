@@ -21,23 +21,16 @@ using LuaItemHandle = sol::table;
 
 
 
-#define LUA_API_BIND_FUNCTION(api_table, api_name, function) \
+#define ELONA_LUA_API_BIND_FUNCTION(name, ...) \
     do \
     { \
-        api_table.set_function(#function, api_name::function); \
+        api_table.set_function(name, sol::overload(__VA_ARGS__)); \
     } while (false)
 
-// To avoid conflict with C++ keyword. See also LuaApiConsole::register_.
-#define LUA_API_BIND_FUNCTION_WITH_NAME(api_table, api_name, function, name) \
+#define ELONA_LUA_API_BIND_CONSTANT(name, value) \
     do \
     { \
-        api_table.set_function(name, api_name::function); \
-    } while (false)
-
-#define LUA_API_BIND_CONSTANT(api_table, name, value) \
-    do \
-    { \
-        api_table[#name] = (value); \
+        api_table[name] = (value); \
     } while (false)
 
 #define LUA_API_ENUM_PROPERTY(klass, field, enum_kind) \

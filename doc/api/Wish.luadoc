@@ -3,17 +3,20 @@
 module "Wish"
 
 --- Wish something you want.
+--
 --  @treturn bool True if something happens; otherwise false.
 --  @function wish
 function wish() end
 
 --- Wish `wish`.
+--
 --  @tparam string wish Your wish.
 --  @treturn bool True if something happens; otherwise false.
---  @function wish_with_str
-function wish_with_str(wish) end
+--  @function wish
+function wish(wish) end
 
 --- Check whether `input` matches particular words.
+--
 --  @tparam string input Your wish
 --  @tparam Enums.WishMatchType match_type Match type
 --  @tparam string i18n_key_to_word_list I18N key to localized word list

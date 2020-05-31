@@ -3,11 +3,13 @@
 module "Item"
 
 --- Returns the number of items on the ground.
+--
 --  @treturn num the item count
 --  @function count
 function count() end
 
 --- Checks if an item has an enchantment.
+--
 --  @tparam LuaItem item (const) an item
 --  @tparam num enchantment_id the ID of the enchantment
 --  @treturn bool true if the item has the enchantment
@@ -15,6 +17,7 @@ function count() end
 function has_enchantment(item, enchantment_id) end
 
 --- Returns the item's name.
+--
 --  @tparam LuaItem item (const) the item
 --  @tparam[opt] num number Overrides the item number
 --  @tparam[opt] bool use_article Prepend articles like "the" to the item name
@@ -24,6 +27,7 @@ function itemname(item, number, use_article) end
 
 --- Attempts to create an item of the given quantity at a position.
 --  Returns the item stack if it was created, nil otherwise.
+--
 --  @tparam LuaPosition position (const) position to create the item at
 --  @tparam num id the item prototype ID
 --  @tparam num number the number of items to create
@@ -33,6 +37,7 @@ function itemname(item, number, use_article) end
 function create(position, id, number) end
 
 --- Retrieves the player's memory of an item type.
+--
 --  @tparam num type
 --  @tparam string id
 --  @function memory
@@ -40,6 +45,7 @@ function memory(type, id) end
 
 --- Stacks an item in the inventory indicated. The item will no longer be valid
 --  for use.
+--
 --  @tparam num inventory_id
 --  @tparam LuaItem handle
 --  @treturn[1] LuaItem The modified item stack on success
@@ -48,24 +54,28 @@ function memory(type, id) end
 function stack(inventory_id, handle, show_message) end
 
 --- Returns the trading rate of a cargo item.
+--
 --  @tparam LuaItem handle A cargo item
 --  @treturn num
 --  @function trade_rate
 function trade_rate(handle) end
 
 --- Tries to find an item in the player's inventory, the ground, or both.
+--
 --  @tparam string item_id The item ID to find.
 --  @tparam ItemFindLocation location Where to search for the item.
 --  @function find
 function find(item_id, location) end
 
 --- Returns the string representation of a weight value.
+--
 --  @tparam num weight The weight value
 --  @treturn string
 --  @function weight_string
 function weight_string(weight) end
 
 --- Queries whether the inventory has at least one free slot.
+--
 --  @tparam num inventory_id The inventory ID
 --  @treturn True if the inventory has at least one free slot; false if not.
 --  @function has_free_slot

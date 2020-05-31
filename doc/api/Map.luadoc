@@ -5,30 +5,35 @@ module "Map"
 
 --- Returns the current map's width. This is only valid until the map
 --  changes.
+--
 --  @treturn num the current map's width in tiles
 --  @function width
 function width() end
 
 --- Returns the current map's height. This is only valid until the map
 --  changes.
+--
 --  @treturn num the current map's height in tiles
 --  @function height
 function height() end
 
---- Returns the current map's ID.
---  @treturn[1] string the current map's ID
---  @treturn[2] nil
---  @function id
-function id() end
-
 --- Returns the current map's legacy ID.
+--
 --  @treturn[1] num the current map's legacy ID
 --  @treturn[2] nil
 --  @function legacy_id
 function legacy_id() end
 
+--- Returns the current map's ID.
+--
+--  @treturn[1] string the current map's ID
+--  @treturn[2] nil
+--  @function id
+function id() end
+
 --- Returns the ID of the current map's instance. There can be more than one
 --  instance of a map of the same kind, like player-owned buildings.
+--
 --  @treturn num the current map's instance ID
 --  @function instance_id
 function instance_id() end
@@ -39,23 +44,27 @@ function instance_id() end
 function current_dungeon_level() end
 
 --- Returns true if this map is the overworld.
+--
 --  @treturn bool
 --  @function is_overworld
 function is_overworld() end
 
 --- Checks if a position is inside the map. It might be blocked by something.
+--
 --  @tparam LuaPosition position
 --  @treturn bool true if the position is inside the map.
 --  @function valid
 function valid(position) end
 
 --- Returns true if the map tile at the given position is solid.
+--
 --  @tparam LuaPosition position
 --  @treturn bool
 --  @function is_solid
 function is_solid(position) end
 
 --- Checks if a position is blocked and cannot be reached by walking.
+--
 --  @tparam LuaPosition position
 --  @treturn bool
 --  @function is_blocked
@@ -63,12 +72,14 @@ function is_blocked(position) end
 
 --- Returns a random position in the current map. It might be blocked by
 --  something.
+--
 --  @treturn LuaPosition a random position
 --  @function random_pos
 function random_pos() end
 
 --- Generates a random tile ID from the current map's tileset.
 --  Tile kinds can contain one of several different tile variations.
+--
 --  @tparam Enums.TileKind tile_kind the tile kind to set
 --  @treturn num the generated tile ID
 --  @see Enums.TileKind
@@ -80,12 +91,14 @@ function generate_tile(tile_kind) end
 function chip_type(tile_id) end
 
 --- Gets the tile type of a tile position.
+--
 --  @tparam LuaPosition position
 --  @treturn num
 --  @function get_tile
 function get_tile(position) end
 
 --- Gets the player's memory of a tile position.
+--
 --  @tparam LuaPosition position
 --  @treturn num
 --  @function get_memory
@@ -97,18 +110,21 @@ function get_memory(position) end
 --  - param1: Extra parameter.
 --  - param2: Extra parameter.
 --  - param3: Extra parameter. (unused)
+--
 --  @tparam LuaPosition position
 --  @treturn table
 --  @function get_feat
 function get_feat(position) end
 
 --- Returns the ID of the map effect at the given position.
+--
 --  @tparam LuaPosition position
 --  @treturn num
 --  @function get_mef
 function get_mef(position) end
 
 --- Gets the character standing at a tile position.
+--
 --  @tparam LuaPosition position
 --  @treturn[opt] LuaCharacter
 --  @function get_chara
@@ -116,6 +132,7 @@ function get_chara(position) end
 
 --- Sets a tile of the current map. Only checks if the position is valid, not
 --  things like blocking objects.
+--
 --  @tparam LuaPosition position
 --  @tparam num id the tile ID to set
 --  @usage Map.set_tile(10, 10, Map.generate_tile(Enums.TileKind.Room))
@@ -123,6 +140,7 @@ function get_chara(position) end
 function set_tile(position, id) end
 
 --- Sets the player's memory of a tile position to the given tile kind.
+--
 --  @tparam LuaPosition position
 --  @tparam num id the tile ID to set
 --  @usage Map.set_memory(10, 10, Map.generate_tile(Enums.TileKind.Room))
@@ -130,6 +148,7 @@ function set_tile(position, id) end
 function set_memory(position, id) end
 
 --- Sets a feat at the given position.
+--
 --  @tparam LuaPosition position (const) the map position
 --  @tparam num tile the tile ID of the feat
 --  @tparam num param1 a parameter of the feat
@@ -138,6 +157,7 @@ function set_memory(position, id) end
 function set_feat(position, tile, param1, param2) end
 
 --- Clears the feat at the given position.
+--
 --  @tparam LuaPosition position (const) the map position
 --  @function clear_feat
 function clear_feat(position) end

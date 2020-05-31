@@ -3,18 +3,21 @@
 module "Chara"
 
 --- Checks if a character is alive.
+--
 --  @tparam LuaCharacter chara (const) a character
 --  @treturn bool true if the character is alive
 --  @function is_alive
 function is_alive(chara) end
 
 --- Checks if a character is the player (has index 0).
+--
 --  @tparam LuaCharacter chara (const) a character
 --  @treturn bool true if the character is the player
 --  @function is_player
 function is_player(chara) end
 
 --- Checks if a character is a member of the player's party (has index < 16)
+--
 --  @tparam LuaCharacter chara (const) a character
 --  @treturn bool true if the character is in the player's party
 --  @function is_ally
@@ -24,19 +27,22 @@ function is_ally(chara) end
 --  @function count
 function count() end
 
---- Returns a reference to the player. They might not be alive.
---  @treturn LuaCharacter (mut) a reference to the player
---  @function player
-function player() end
-
 --- Returns the character at the given index.
+--
 --  @treturn[1] LuaCharacter
 --  @treturn[2] nil
 --  @function get
 function get(index) end
 
+--- Returns a reference to the player. They might not be alive.
+--
+--  @treturn LuaCharacter (mut) a reference to the player
+--  @function player
+function player() end
+
 --- Attempts to create a randomly generated character at a given position.
 --  Returns the character if creation succeeded, nil otherwise.
+--
 --  @tparam LuaPosition position (const) position to create the character at
 --  @treturn[1] LuaCharacter the created character
 --  @treturn[2] nil
@@ -45,6 +51,7 @@ function create(x, y) end
 
 --- Attempts to create a character at a given position.
 --  Returns the character if creation succeeded, nil otherwise.
+--
 --  @tparam LuaPosition position (const) position to create the character at
 --  @tparam string id the character prototype ID
 --  @treturn[1] LuaCharacter the created character
@@ -53,11 +60,13 @@ function create(x, y) end
 function create(position, id) end
 
 --- Obtains the number of times the character type has been killed.
+--
 --  @tparam string id the character prototype ID
 --  @function kill_count
 function kill_count(id) end
 
 --- Attempts to find a character with the given prototype ID.
+--
 --  @tparam string id Prototype ID to search
 --  @tparam[opt] CharaFindLocation location Location to search in (defaults to
 --  others)
@@ -68,11 +77,13 @@ function find(id, location) end
 
 --- Returns true if the player can recruit more allies, taking Charisma into
 --  account.
+--
 --  @treturn bool
 --  @function can_recruit_allies
 function can_recruit_allies() end
 
 --- Removes a character from the player's party, if they are an ally.
+--
 --  @tparam LuaCharacter ally
 --  @function remove_from_party
 function remove_from_party(ally) end

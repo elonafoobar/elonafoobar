@@ -6,17 +6,17 @@
 
 
 
-namespace elona::lua::api::modules
+namespace elona::lua::api::modules::module_Animation
 {
 
 /**
- * @luadoc
+ * @luadoc play_failure_to_cast
  *
  * Play failure to cast animation.
  *
  * @tparam LuaPosition caster_pos The caster's position.
  */
-void LuaApiAnimation::play_failure_to_cast(const Position& caster_pos)
+void Animation_play_failure_to_cast(const Position& caster_pos)
 {
     FailureToCastAnimation(caster_pos).play();
 }
@@ -24,14 +24,14 @@ void LuaApiAnimation::play_failure_to_cast(const Position& caster_pos)
 
 
 /**
- * @luadoc
+ * @luadoc play_bright_aura
  *
  * Play bright aura animation.
  *
  * @tparam LuaPosition target_pos The target's position.
  * @tparam number kind The kind of the aura
  */
-void LuaApiAnimation::play_bright_aura(const Position& target_pos, int kind)
+void Animation_play_bright_aura(const Position& target_pos, int kind)
 {
     auto anim_type = static_cast<BrightAuraAnimation::Type>(kind);
     BrightAuraAnimation(target_pos, anim_type).play();
@@ -40,7 +40,7 @@ void LuaApiAnimation::play_bright_aura(const Position& target_pos, int kind)
 
 
 /**
- * @luadoc
+ * @luadoc play_breath
  *
  * Play breath animation.
  *
@@ -48,7 +48,7 @@ void LuaApiAnimation::play_bright_aura(const Position& target_pos, int kind)
  * @tparam LuaPosition target_pos The target's position.
  * @tparam Enums.Element element_name The element of the breath
  */
-void LuaApiAnimation::play_breath(
+void Animation_play_breath(
     const Position& attacker_pos,
     const Position& target_pos,
     const EnumString& element_name)
@@ -60,14 +60,14 @@ void LuaApiAnimation::play_breath(
 
 
 /**
- * @luadoc
+ * @luadoc play_ball_atomic_bomb
  *
  * Play ball atomic bomb animation.
  *
  * @tparam LuaPosition pos The position at which the explosion happens
  * @tparam number range The range of the explosion
  */
-void LuaApiAnimation::play_ball_atomic_bomb(const Position& pos, int range)
+void Animation_play_ball_atomic_bomb(const Position& pos, int range)
 {
     BallAnimation(pos, range, BallAnimation::Type::atomic_bomb).play();
 }
@@ -75,7 +75,7 @@ void LuaApiAnimation::play_ball_atomic_bomb(const Position& pos, int range)
 
 
 /**
- * @luadoc
+ * @luadoc play_ball_magic
  *
  * Play ball magic animation.
  *
@@ -83,7 +83,7 @@ void LuaApiAnimation::play_ball_atomic_bomb(const Position& pos, int range)
  * @tparam number range The range of the ball
  * @tparam number element The element of the ball
  */
-void LuaApiAnimation::play_ball_magic(
+void Animation_play_ball_magic(
     const Position& caster_pos,
     int range,
     int element)
@@ -94,7 +94,7 @@ void LuaApiAnimation::play_ball_magic(
 
 
 /**
- * @luadoc
+ * @luadoc play_bolt
  *
  * Play bolt animation.
  *
@@ -104,7 +104,7 @@ void LuaApiAnimation::play_ball_magic(
  * @tparam number distance The distance between `attacker_pos` and the tile
  * which the animation lasts to
  */
-void LuaApiAnimation::play_bolt(
+void Animation_play_bolt(
     const Position& attacker_pos,
     const Position& target_pos,
     const EnumString& element_name,
@@ -118,7 +118,7 @@ void LuaApiAnimation::play_bolt(
 
 
 /**
- * @luadoc
+ * @luadoc play_throwing_object
  *
  * Play throwing object animation.
  *
@@ -127,7 +127,7 @@ void LuaApiAnimation::play_bolt(
  * @tparam number item_chip The item chip of the thrown object
  * @tparam number item_color The item color of the thrown object
  */
-void LuaApiAnimation::play_throwing_object(
+void Animation_play_throwing_object(
     const Position& attacker_pos,
     const Position& target_pos,
     int item_chip,
@@ -140,13 +140,13 @@ void LuaApiAnimation::play_throwing_object(
 
 
 /**
- * @luadoc
+ * @luadoc play_swarm
  *
  * Play swarm animation.
  *
  * @tparam LuaPosition target_pos The target's position.
  */
-void LuaApiAnimation::play_swarm(const Position& target_pos)
+void Animation_play_swarm(const Position& target_pos)
 {
     SwarmAnimation(target_pos).play();
 }
@@ -154,7 +154,7 @@ void LuaApiAnimation::play_swarm(const Position& target_pos)
 
 
 /**
- * @luadoc
+ * @luadoc play_ranged_attack
  *
  * Play ranged attack animation.
  *
@@ -165,7 +165,7 @@ void LuaApiAnimation::play_swarm(const Position& target_pos)
  * @tparam number fired_item_image The fired item image
  * @tparam number fired_item_color The fired item color
  */
-void LuaApiAnimation::play_ranged_attack(
+void Animation_play_ranged_attack(
     const Position& attacker_pos,
     const Position& target_pos,
     int kind,
@@ -187,7 +187,7 @@ void LuaApiAnimation::play_ranged_attack(
 
 
 /**
- * @luadoc
+ * @luadoc play_melee_attack
  *
  * Play melee attack animation.
  *
@@ -198,7 +198,7 @@ void LuaApiAnimation::play_ranged_attack(
  * @tparam number damage_percent The damage percentage
  * @tparam boolean is_critical True if the attack is critical.
  */
-void LuaApiAnimation::play_melee_attack(
+void Animation_play_melee_attack(
     const Position& target_pos,
     bool debris,
     int attack_skill,
@@ -213,13 +213,13 @@ void LuaApiAnimation::play_melee_attack(
 
 
 /**
- * @luadoc
+ * @luadoc play_gene_engineering
  *
  * Play gene engineering animation.
  *
  * @tparam LuaPosition pos The position of the animation.
  */
-void LuaApiAnimation::play_gene_engineering(const Position& pos)
+void Animation_play_gene_engineering(const Position& pos)
 {
     GeneEngineeringAnimation(pos).play();
 }
@@ -227,11 +227,11 @@ void LuaApiAnimation::play_gene_engineering(const Position& pos)
 
 
 /**
- * @luadoc
+ * @luadoc play_miracle
  *
  * Play miracle animation.
  */
-void LuaApiAnimation::play_miracle()
+void Animation_play_miracle()
 {
     MiracleAnimation(MiracleAnimation::Mode::target_one, cdata.player()).play();
 }
@@ -239,11 +239,11 @@ void LuaApiAnimation::play_miracle()
 
 
 /**
- * @luadoc
+ * @luadoc play_meteor
  *
  * Play meteor animation.
  */
-void LuaApiAnimation::play_meteor()
+void Animation_play_meteor()
 {
     MeteorAnimation().play();
 }
@@ -251,11 +251,11 @@ void LuaApiAnimation::play_meteor()
 
 
 /**
- * @luadoc
+ * @luadoc play_ragnarok
  *
  * Play The Ragnarok animation.
  */
-void LuaApiAnimation::play_ragnarok()
+void Animation_play_ragnarok()
 {
     RagnarokAnimation().play();
 }
@@ -263,36 +263,40 @@ void LuaApiAnimation::play_ragnarok()
 
 
 /**
- * @luadoc
+ * @luadoc play_breaking
  *
  * Play breaking animation.
  *
  * @tparam LuaPosition pos The position of the animation
  */
-void LuaApiAnimation::play_breaking(const Position& pos)
+void Animation_play_breaking(const Position& pos)
 {
     BreakingAnimation(pos).play();
 }
 
 
 
-void LuaApiAnimation::bind(sol::table api_table)
+void bind(sol::table api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_failure_to_cast);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_bright_aura);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_breath);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_ball_atomic_bomb);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_ball_magic);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_bolt);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_throwing_object);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_swarm);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_ranged_attack);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_melee_attack);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_gene_engineering);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_miracle);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_meteor);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_ragnarok);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiAnimation, play_breaking);
+    /* clang-format off */
+
+    ELONA_LUA_API_BIND_FUNCTION("play_failure_to_cast", Animation_play_failure_to_cast);
+    ELONA_LUA_API_BIND_FUNCTION("play_bright_aura", Animation_play_bright_aura);
+    ELONA_LUA_API_BIND_FUNCTION("play_breath", Animation_play_breath);
+    ELONA_LUA_API_BIND_FUNCTION("play_ball_atomic_bomb", Animation_play_ball_atomic_bomb);
+    ELONA_LUA_API_BIND_FUNCTION("play_ball_magic", Animation_play_ball_magic);
+    ELONA_LUA_API_BIND_FUNCTION("play_bolt", Animation_play_bolt);
+    ELONA_LUA_API_BIND_FUNCTION("play_throwing_object", Animation_play_throwing_object);
+    ELONA_LUA_API_BIND_FUNCTION("play_swarm", Animation_play_swarm);
+    ELONA_LUA_API_BIND_FUNCTION("play_ranged_attack", Animation_play_ranged_attack);
+    ELONA_LUA_API_BIND_FUNCTION("play_melee_attack", Animation_play_melee_attack);
+    ELONA_LUA_API_BIND_FUNCTION("play_gene_engineering", Animation_play_gene_engineering);
+    ELONA_LUA_API_BIND_FUNCTION("play_miracle", Animation_play_miracle);
+    ELONA_LUA_API_BIND_FUNCTION("play_meteor", Animation_play_meteor);
+    ELONA_LUA_API_BIND_FUNCTION("play_ragnarok", Animation_play_ragnarok);
+    ELONA_LUA_API_BIND_FUNCTION("play_breaking", Animation_play_breaking);
+
+    /* clang-format on */
 }
 
-} // namespace elona::lua::api::modules
+} // namespace elona::lua::api::modules::module_Animation

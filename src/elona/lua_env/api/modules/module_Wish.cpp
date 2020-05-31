@@ -5,16 +5,17 @@
 
 
 
-namespace elona::lua::api::modules
+namespace elona::lua::api::modules::module_Wish
 {
 
 /**
- * @luadoc
+ * @luadoc wish
  *
  * Wish something you want.
+ *
  * @treturn bool True if something happens; otherwise false.
  */
-bool LuaApiWish::wish()
+bool Wish_wish()
 {
     return what_do_you_wish_for(cdata.player());
 }
@@ -22,13 +23,14 @@ bool LuaApiWish::wish()
 
 
 /**
- * @luadoc
+ * @luadoc wish
  *
  * Wish `wish`.
+ *
  * @tparam string wish Your wish.
  * @treturn bool True if something happens; otherwise false.
  */
-bool LuaApiWish::wish_with_str(const std::string& wish)
+bool Wish_wish_with_str(const std::string& wish)
 {
     return what_do_you_wish_for(cdata.player(), wish);
 }
@@ -36,16 +38,17 @@ bool LuaApiWish::wish_with_str(const std::string& wish)
 
 
 /**
- * @luadoc
+ * @luadoc match
  *
  * Check whether `input` matches particular words.
+ *
  * @tparam string input Your wish
  * @tparam Enums.WishMatchType match_type Match type
  * @tparam string i18n_key_to_word_list I18N key to localized word list
  * @tparam table english_words List of English words
  * @treturn bool True if match.
  */
-bool LuaApiWish::match(
+bool Wish_match(
     const std::string& input,
     const std::string& match_type,
     const std::string& i18n_key_to_word_list,
@@ -66,7 +69,7 @@ bool LuaApiWish::match(
 
 // clang-format off
 /**
- * @luadoc
+ * @luadoc add
  *
  * Add custom wishing.
  * @tparam Enums.WishHook hook_type Hook point
@@ -90,9 +93,7 @@ bool LuaApiWish::match(
  * > end)
  */
 // clang-format on
-void LuaApiWish::add(
-    const std::string& hook_type,
-    sol::protected_function callback)
+void Wish_add(const std::string& hook_type, sol::protected_function callback)
 {
     const auto hook_type_ =
         LuaEnums::WishHookTable.ensure_from_string(hook_type);
@@ -102,13 +103,15 @@ void LuaApiWish::add(
 
 
 
-void LuaApiWish::bind(sol::table api_table)
+void bind(sol::table api_table)
 {
-    api_table.set_function(
-        "wish", sol::overload(LuaApiWish::wish, LuaApiWish::wish_with_str));
+    /* clang-format off */
 
-    LUA_API_BIND_FUNCTION(api_table, LuaApiWish, match);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiWish, add);
+    ELONA_LUA_API_BIND_FUNCTION("wish", Wish_wish, Wish_wish_with_str);
+    ELONA_LUA_API_BIND_FUNCTION("match", Wish_match);
+    ELONA_LUA_API_BIND_FUNCTION("add", Wish_add);
+
+    /* clang-format on */
 }
 
-} // namespace elona::lua::api::modules
+} // namespace elona::lua::api::modules::module_Wish

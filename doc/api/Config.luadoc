@@ -4,6 +4,7 @@
 module "Config"
 
 --- Sets config item's value.
+--
 --  @tparam string key Option key
 --  @tparam any value Option value
 --  @raise if the config item does not exist or is not a boolean, an integer, or
@@ -12,6 +13,7 @@ module "Config"
 function set(key, value) end
 
 --- Gets config item's value.
+--
 --  @tparam string key Option key
 --  @raise if the config item does not exist or is not a boolean, an integer, or
 --  a string.

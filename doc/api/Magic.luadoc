@@ -2,17 +2,8 @@
 --  @usage local Magic = ELONA.require("core.Magic")
 module "Magic"
 
---- Makes a character cast a spell targeting themselves or a position.
---  @tparam LuaCharacter caster (mut) the casting character
---  @tparam num effect_id the spell ID
---  @tparam num effect_power the power of the spell
---  @tparam LuaPosition target_location (const) the position the spell targets
---  @usage local pos = Map.random_pos()
---  Magic.cast(Chara.player(), 432, 100, pos) -- Ball magic
---  @function cast
-function cast(caster, effect_id, effect_power, target_location) end
-
 --- Makes a character cast a spell targeting another character.
+--
 --  @tparam LuaCharacter caster (mut) the casting character
 --  @tparam LuaCharacter target (mut) the target character
 --  @tparam num effect_id the spell ID
@@ -22,3 +13,14 @@ function cast(caster, effect_id, effect_power, target_location) end
 --  Magic.cast(caster, target, 414, 100) -- Magic missile
 --  @function cast
 function cast(caster, target, effect_id, effect_power) end
+
+--- Makes a character cast a spell targeting themselves or a position.
+--
+--  @tparam LuaCharacter caster (mut) the casting character
+--  @tparam num effect_id the spell ID
+--  @tparam num effect_power the power of the spell
+--  @tparam LuaPosition target_location (const) the position the spell targets
+--  @usage local pos = Map.random_pos()
+--  Magic.cast(Chara.player(), 432, 100, pos) -- Ball magic
+--  @function cast
+function cast(caster, effect_id, effect_power, target_location) end

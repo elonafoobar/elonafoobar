@@ -5,7 +5,7 @@
 
 
 
-namespace elona::lua::api::modules
+namespace elona::lua::api::modules::module_Console
 {
 
 /**
@@ -17,7 +17,7 @@ namespace elona::lua::api::modules
  * @tparam string name the command name.
  * @tparam function callback the command itself.
  */
-void LuaApiConsole::register_(
+void Console_register(
     const std::string& mod_id,
     const std::string& name,
     sol::protected_function callback)
@@ -28,25 +28,28 @@ void LuaApiConsole::register_(
 
 
 /**
- * @luadoc
+ * @luadoc run
  *
  * Runs registered command.
  *
  * @treturn any the result of executed commands.
  * @treturn nil on failure
  */
-sol::object LuaApiConsole::run(const std::string& cmdline)
+sol::object Console_run(const std::string& cmdline)
 {
     return lua->get_console().run(cmdline);
 }
 
 
 
-void LuaApiConsole::bind(sol::table api_table)
+void bind(sol::table api_table)
 {
-    LUA_API_BIND_FUNCTION_WITH_NAME(
-        api_table, LuaApiConsole, register_, "register");
-    LUA_API_BIND_FUNCTION(api_table, LuaApiConsole, run);
+    /* clang-format off */
+
+    ELONA_LUA_API_BIND_FUNCTION("register", Console_register);
+    ELONA_LUA_API_BIND_FUNCTION("run", Console_run);
+
+    /* clang-format on */
 }
 
-} // namespace elona::lua::api::modules
+} // namespace elona::lua::api::modules::module_Console

@@ -9,23 +9,24 @@ namespace elona
 namespace lua
 {
 
-namespace api::modules::LuaApiJSON5
+namespace api::modules::module_JSON5
 {
 
-std::pair<sol::object, sol::optional<std::string>> parse(
+std::pair<sol::object, sol::optional<std::string>> JSON5_parse(
     const std::string& source,
     sol::this_state state);
-std::string stringify(sol::object value, sol::table opts);
+std::string JSON5_stringify(sol::object value, sol::table opts);
 
-} // namespace api::modules::LuaApiJSON5
+} // namespace api::modules::module_JSON5
 
 
 
 ConfigManager::ConfigManager(LuaEnv& lua)
     : LuaSubmodule(lua)
 {
-    env().set_function("json5_parse", api::modules::LuaApiJSON5::parse);
-    env().set_function("json5_stringify", api::modules::LuaApiJSON5::stringify);
+    env().set_function("json5_parse", api::modules::module_JSON5::JSON5_parse);
+    env().set_function(
+        "json5_stringify", api::modules::module_JSON5::JSON5_stringify);
 
     const auto impl_filepath =
         filesystem::dirs::data() / "script" / "kernel" / "config.lua";

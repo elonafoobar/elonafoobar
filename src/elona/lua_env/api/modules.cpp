@@ -33,38 +33,38 @@ namespace elona::lua::api::modules
 
 void bind(sol::table core)
 {
-#define ELONA_BIND_API(ModuleName) \
+#define ELONA_LUA_API_BIND(ModuleName) \
     { \
         sol::table api_table = core.create_named(#ModuleName); \
-        LuaApi##ModuleName::bind(api_table); \
+        module_##ModuleName::bind(api_table); \
     }
 
-    ELONA_BIND_API(Animation);
-    ELONA_BIND_API(Calc);
-    ELONA_BIND_API(Chara);
-    ELONA_BIND_API(Config);
-    ELONA_BIND_API(Console);
-    ELONA_BIND_API(Data);
-    ELONA_BIND_API(Debug);
-    ELONA_BIND_API(Enchantment);
-    ELONA_BIND_API(Env);
-    ELONA_BIND_API(FOV);
-    ELONA_BIND_API(GUI);
-    ELONA_BIND_API(I18N);
-    ELONA_BIND_API(Input);
-    ELONA_BIND_API(Internal);
-    ELONA_BIND_API(Item);
-    ELONA_BIND_API(JSON5);
-    ELONA_BIND_API(Magic);
-    ELONA_BIND_API(Map);
-    ELONA_BIND_API(Pos);
-    ELONA_BIND_API(Rand);
-    ELONA_BIND_API(Skill);
-    ELONA_BIND_API(Trait);
-    ELONA_BIND_API(Wish);
-    ELONA_BIND_API(World);
+    ELONA_LUA_API_BIND(Animation);
+    ELONA_LUA_API_BIND(Calc);
+    ELONA_LUA_API_BIND(Chara);
+    ELONA_LUA_API_BIND(Config);
+    ELONA_LUA_API_BIND(Console);
+    ELONA_LUA_API_BIND(Data);
+    ELONA_LUA_API_BIND(Debug);
+    ELONA_LUA_API_BIND(Enchantment);
+    ELONA_LUA_API_BIND(Env);
+    ELONA_LUA_API_BIND(FOV);
+    ELONA_LUA_API_BIND(GUI);
+    ELONA_LUA_API_BIND(I18N);
+    ELONA_LUA_API_BIND(Input);
+    ELONA_LUA_API_BIND(Internal);
+    ELONA_LUA_API_BIND(Item);
+    ELONA_LUA_API_BIND(JSON5);
+    ELONA_LUA_API_BIND(Magic);
+    ELONA_LUA_API_BIND(Map);
+    ELONA_LUA_API_BIND(Pos);
+    ELONA_LUA_API_BIND(Rand);
+    ELONA_LUA_API_BIND(Skill);
+    ELONA_LUA_API_BIND(Trait);
+    ELONA_LUA_API_BIND(Wish);
+    ELONA_LUA_API_BIND(World);
 
-#undef ELONA_BIND_API
+#undef ELONA_LUA_API_BIND
 }
 
 } // namespace elona::lua::api::modules

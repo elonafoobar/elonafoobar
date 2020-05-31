@@ -3,6 +3,7 @@
 module "FOV"
 
 --- Checks if there is line of sight between two positions in the current map.
+--
 --  @tparam LuaPosition from (const) the position from
 --  @tparam LuaPosition to (const) the position to
 --  @treturn bool true if there is line of sight between the positions
@@ -11,6 +12,7 @@ function los(from, to) end
 
 --- Returns true if the player can see the given character, taking
 --  blindness into account.
+--
 --  @tparam LuaCharacter chara (const) a character
 --  @treturn bool true if the player can see the character
 --  @function you_see
@@ -18,6 +20,7 @@ function you_see(chara) end
 
 --- Returns true if the player can see the given position, taking
 --  blindness into account.
+--
 --  @tparam LuaPosition pos (const) a position
 --  @treturn bool true if the player can see the position
 --  @function you_see

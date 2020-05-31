@@ -3,6 +3,7 @@
 module "Calc"
 
 --- Calculate object generation level.
+--
 --  @tparam num n The base object level.
 --  @treturn num The object level.
 --  @function calc_objlv

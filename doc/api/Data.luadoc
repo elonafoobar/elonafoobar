@@ -14,6 +14,7 @@ function reload_assets() end
 function reload_charas() end
 
 --- Get the data for the prototype ID and the data ID.
+--
 --  @tparam string prototype_id a namespaced prototype ID.
 --  @tparam string data_id a namespaced data ID.
 --  @treturn[1] table the data.
@@ -22,6 +23,7 @@ function reload_charas() end
 function get(prototype_id, data_id) end
 
 --- Get the data table for the prototype ID.
+--
 --  @tparam string prototype_id a namespaced prototype ID.
 --  @treturn[1] table the table which stores data.
 --  @treturn[2] nil if not found.
@@ -29,6 +31,7 @@ function get(prototype_id, data_id) end
 function get_table(prototype_id) end
 
 --- Get new ID by legacy ID.
+--
 --  @tparam string prototype_id a namespaced prototype ID.
 --  @tparam num legacy_data_id a legacy data ID.
 --  @treturn[1] string the corresponding new ID.

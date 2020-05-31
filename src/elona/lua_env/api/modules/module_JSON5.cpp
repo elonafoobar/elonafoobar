@@ -4,7 +4,7 @@
 
 
 
-namespace elona::lua::api::modules
+namespace elona::lua::api::modules::module_JSON5
 {
 
 namespace
@@ -107,7 +107,7 @@ LuaParseResult make_parse_result(T&& a, U&& b)
 
 
 /**
- * @luadoc
+ * @luadoc parse
  *
  * Parses JSON5 text.
  *
@@ -116,9 +116,7 @@ LuaParseResult make_parse_result(T&& a, U&& b)
  * @treturn[2] nil If failed
  * @treturn[2] string Error message
  */
-LuaParseResult LuaApiJSON5::parse(
-    const std::string& source,
-    sol::this_state state)
+LuaParseResult JSON5_parse(const std::string& source, sol::this_state state)
 {
     try
     {
@@ -135,11 +133,11 @@ LuaParseResult LuaApiJSON5::parse(
 
 
 /**
- * @luadoc
+ * @luadoc stringify
  *
  * Stringify arbitary value as JSON5.
  */
-std::string LuaApiJSON5::stringify(sol::object value, sol::table opts)
+std::string JSON5_stringify(sol::object value, sol::table opts)
 {
     const auto value_ = to_json5_value(value);
 
@@ -158,10 +156,14 @@ std::string LuaApiJSON5::stringify(sol::object value, sol::table opts)
 
 
 
-void LuaApiJSON5::bind(sol::table api_table)
+void bind(sol::table api_table)
 {
-    LUA_API_BIND_FUNCTION(api_table, LuaApiJSON5, parse);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiJSON5, stringify);
+    /* clang-format off */
+
+    ELONA_LUA_API_BIND_FUNCTION("parse", JSON5_parse);
+    ELONA_LUA_API_BIND_FUNCTION("stringify", JSON5_stringify);
+
+    /* clang-format on */
 }
 
-} // namespace elona::lua::api::modules
+} // namespace elona::lua::api::modules::module_JSON5

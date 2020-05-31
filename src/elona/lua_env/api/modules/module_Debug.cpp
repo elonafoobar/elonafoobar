@@ -2,36 +2,36 @@
 
 #include <sstream>
 
-#include "../../../character.hpp"
-#include "../../../enums.hpp"
-#include "../../../item.hpp"
 #include "../../../log.hpp"
 #include "../../../message.hpp"
-#include "../../../text.hpp"
 
 
 
-namespace elona::lua::api::modules
+namespace elona::lua::api::modules::module_Debug
 {
 
 /**
- * @luadoc
+ * @luadoc log
  *
  * Logs a message to log.txt.
+ *
  * @tparam string message the message to log
  */
-void LuaApiDebug::log(const std::string& message)
+void Debug_log(const std::string& message)
 {
     ELONA_LOG("lua.debug") << message;
 }
 
+
+
 /**
- * @luadoc
+ * @luadoc report_error
  *
  * Reports an error to the game console and log file.
+ *
  * @tparam string message the error message to report
  */
-void LuaApiDebug::report_error(const std::string& message)
+void Debug_report_error(const std::string& message)
 {
     std::istringstream sstream(message);
     std::string line;
@@ -46,49 +46,16 @@ void LuaApiDebug::report_error(const std::string& message)
     std::cerr << "Script error: " << message << std::endl;
 }
 
-/**
- * @luadoc
- *
- * Dumps all characters to the log.
- */
-void LuaApiDebug::dump_characters()
+
+
+void bind(sol::table api_table)
 {
-    ELONA_LOG("lua.debug") << "===== Charas =====";
-    for (int cnt = 0; cnt < ELONA_MAX_CHARACTERS; ++cnt)
-    {
-        if (elona::cdata[cnt].state() != Character::State::empty)
-            ELONA_LOG("lua.debug")
-                << elona::cdata[cnt].index << ") Name: " << elona::name(cnt)
-                << ", Pos: " << elona::cdata[cnt].position;
-    }
+    /* clang-format off */
+
+    ELONA_LUA_API_BIND_FUNCTION("log", Debug_log);
+    ELONA_LUA_API_BIND_FUNCTION("report_error", Debug_report_error);
+
+    /* clang-format on */
 }
 
-
-/**
- * @luadoc
- *
- * Dumps all items to the log.
- */
-void LuaApiDebug::dump_items()
-{
-    ELONA_LOG("lua.debug") << "===== Items  =====";
-    for (auto&& item : inv.ground())
-    {
-        ELONA_LOG("lua.debug")
-            << item.index() << ") Name: " << elona::itemname(item)
-            << ", Pos: " << item.position
-            << ", Curse: " << static_cast<int>(item.curse_state)
-            << ", Ident: " << static_cast<int>(item.identify_state)
-            << ", Count: " << item.count;
-    }
-}
-
-void LuaApiDebug::bind(sol::table api_table)
-{
-    LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, log);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, report_error);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, dump_characters);
-    LUA_API_BIND_FUNCTION(api_table, LuaApiDebug, dump_items);
-}
-
-} // namespace elona::lua::api::modules
+} // namespace elona::lua::api::modules::module_Debug

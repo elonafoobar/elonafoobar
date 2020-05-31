@@ -3,11 +3,13 @@
 module "GUI"
 
 --- Prints some text in the HUD message window.
+--
 --  @tparam string message the message to print
 --  @function txt
 function txt(message) end
 
 --- Prints some text in the HUD message window.
+--
 --  @tparam string message the message to print
 --  @tparam Color color of the message
 --  @function txt
@@ -18,6 +20,7 @@ function txt(message, color) end
 function txtnew() end
 
 --- Plays a sound.
+--
 --  @tparam string sound_id The sound, of type core.sound
 --  @function play_sound
 function play_sound(sound_id) end
