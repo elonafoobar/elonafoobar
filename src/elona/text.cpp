@@ -2860,8 +2860,7 @@ void txttargetnpc(int x, int y)
     int p_ = 0;
     dy_ = 0;
     font(14 - en * 2);
-    if (fov_los(cdata.player().position.x, cdata.player().position.y, x, y) ==
-            0 ||
+    if (!fov_los(cdata.player().position, {x, y}) ||
         dist(cdata.player().position.x, cdata.player().position.y, x, y) >
             cdata.player().vision_distance / 2)
     {

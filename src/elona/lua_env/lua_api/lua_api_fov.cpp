@@ -22,12 +22,12 @@ namespace lua
  */
 bool LuaApiFOV::los(const Position& from, const Position& to)
 {
-    return LuaApiFOV::los_xy(from.x, from.y, to.x, to.y);
+    return elona::fov_los(from, to);
 }
 
 bool LuaApiFOV::los_xy(int fx, int fy, int tx, int ty)
 {
-    return elona::fov_los(fx, fy, tx, ty) == 1;
+    return elona::fov_los({fx, fy}, {tx, ty});
 }
 
 /**

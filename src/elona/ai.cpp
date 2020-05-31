@@ -229,22 +229,6 @@ bool _is_special_throwing_action(int action_id)
 
 
 
-// TODO: move it to fov.cpp
-bool fov_los_helper(const Position& a, const Position& b)
-{
-    return fov_los(a.x, a.y, b.x, b.y);
-}
-
-
-
-// TODO: move it to fov.cpp
-bool fov_los_helper(const Character& a, const Character& b)
-{
-    return fov_los_helper(a.position, b.position);
-}
-
-
-
 int dist_helper(const Position& a, const Position& b)
 {
     return dist(a.x, a.y, b.x, b.y);
@@ -293,7 +277,7 @@ bool _try_do_melee_attack(Character& attacker, Character& target)
     {
         return false; // Too far.
     }
-    if (!fov_los_helper(attacker, target))
+    if (!fov_los(attacker.position, target.position))
     {
         return false; // Cannot see the target.
     }
@@ -603,7 +587,7 @@ TurnResult ai_proc_basic(Character& chara, int& enemy_index)
             act = choice(chara.special_actions);
         }
         if (_is_special_throwing_action(act) && distance < 8 &&
-            fov_los_helper(chara, cdata[enemy_index]))
+            fov_los(chara.position, cdata[enemy_index].position))
         {
             tlocx = cdata[enemy_index].position.x;
             tlocy = cdata[enemy_index].position.y;
@@ -1056,7 +1040,7 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
                     }
                     if (dist_helper(chara, cdata[cnt]) < 6)
                     {
-                        if (fov_los_helper(chara, cdata[cnt]))
+                        if (fov_los(chara.position, cdata[cnt].position))
                         {
                             chara.enemy_id = cnt;
                             enemy_index = cnt;

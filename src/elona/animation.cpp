@@ -352,7 +352,7 @@ void BreathAnimation::do_play()
         {
             const auto dx = position.x;
             const auto dy = position.y;
-            if (!fov_los(attacker_pos.x, attacker_pos.y, dx, dy))
+            if (!fov_los(attacker_pos, {dx, dy}))
             {
                 continue;
             }
@@ -449,7 +449,7 @@ void BallAnimation::do_play()
                 anip1 = 48 - (anip - 4) * (anip - 4) * 2;
                 if (type == Type::ball)
                 {
-                    if (fov_los(position.x, position.y, anidx, anidy) == 0)
+                    if (!fov_los(position, {anidx, anidy}))
                     {
                         continue;
                     }

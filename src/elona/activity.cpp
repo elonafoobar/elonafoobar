@@ -250,7 +250,7 @@ void activity_perform_generate_item(
     cell_check(x, y);
     if (cellaccess == 0)
         return;
-    if (!fov_los(audience.position.x, audience.position.y, x, y))
+    if (!fov_los(audience.position, {x, y}))
         return;
 
     if (enchantment_find(instrument, 49))

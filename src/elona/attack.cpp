@@ -81,7 +81,7 @@ void build_target_list(const Character& attacker)
             {
                 continue;
             }
-            if (fov_los(attacker.position.x, attacker.position.y, x, y) == 0)
+            if (!fov_los(attacker.position, {x, y}))
             {
                 continue;
             }
@@ -809,11 +809,7 @@ void try_to_melee_attack(Character& attacker, Character& target)
         {
             if (distance < 6)
             {
-                if (fov_los(
-                        attacker.position.x,
-                        attacker.position.y,
-                        target.position.x,
-                        target.position.y))
+                if (fov_los(attacker.position, target.position))
                 {
                     const auto result = can_do_ranged_attack(attacker);
                     if (result.type == 1)
@@ -1216,11 +1212,7 @@ int target_position(bool target_cell)
             {
                 break;
             }
-            if (fov_los(
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    target_chara->position.x,
-                    target_chara->position.y) == 0)
+            if (!fov_los(cdata.player().position, target_chara->position))
             {
                 break;
             }

@@ -5181,18 +5181,11 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
         {
             if (tg == 9000)
             {
-                if (int stat = fov_los(
-                                   caster.position.x,
-                                   caster.position.y,
-                                   tglocx,
-                                   tglocy) == 0)
+                if (!fov_los(caster.position, {tglocx, tglocy}))
                 {
-                    if (stat == 0)
-                    {
-                        txt(i18n::s.get(
-                            "core.action.which_direction.cannot_see_location"));
-                        update_screen();
-                    }
+                    txt(i18n::s.get(
+                        "core.action.which_direction.cannot_see_location"));
+                    update_screen();
                     obvious = 0;
                     return 0;
                 }
@@ -5217,11 +5210,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
         }
         else
         {
-            if (fov_los(
-                    cdata[enemy_index].position.x,
-                    cdata[enemy_index].position.y,
-                    caster.position.x,
-                    caster.position.y) == 0)
+            if (!fov_los(cdata[enemy_index].position, caster.position))
             {
                 return 0;
             }
@@ -5245,11 +5234,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
                 {
                     return 0;
                 }
-                if (fov_los(
-                        caster.position.x,
-                        caster.position.y,
-                        cdata[enemy_index].position.x,
-                        cdata[enemy_index].position.y) == 0)
+                if (!fov_los(caster.position, cdata[enemy_index].position))
                 {
                     return 0;
                 }
@@ -5295,11 +5280,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
             }
             return 0;
         }
-        if (fov_los(
-                caster.position.x,
-                caster.position.y,
-                cdata[enemy_index].position.x,
-                cdata[enemy_index].position.y) == 0)
+        if (!fov_los(caster.position, cdata[enemy_index].position))
         {
             return 0;
         }

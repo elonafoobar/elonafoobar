@@ -3096,7 +3096,7 @@ bool _magic_631(Character& subject)
         {
             continue;
         }
-        if (fov_los(subject.position.x, subject.position.y, dx, dy) == 0)
+        if (!fov_los(subject.position, {dx, dy}))
         {
             continue;
         }
@@ -3261,7 +3261,7 @@ bool _magic_656(Character& subject)
         {
             continue;
         }
-        if (fov_los(subject.position.x, subject.position.y, dx, dy) == 0)
+        if (!fov_los(subject.position, {dx, dy}))
         {
             continue;
         }
@@ -3599,7 +3599,7 @@ optional_ref<Character> _ball_spell_internal(
             {
                 continue;
             }
-            if (fov_los(tlocx, tlocy, dx, dy) == 0)
+            if (!fov_los({tlocx, tlocy}, {dx, dy}))
             {
                 continue;
             }
@@ -4511,7 +4511,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         {
             dx = breathlist(0, cnt);
             dy = breathlist(1, cnt);
-            if (fov_los(subject.position.x, subject.position.y, dx, dy) == 0)
+            if (!fov_los(subject.position, {dx, dy}))
             {
                 continue;
             }
