@@ -828,9 +828,8 @@ static void _init_map_arena()
                 chara->relationship = -3;
                 chara->original_relationship = -3;
                 chara->hate = 30;
-                chara->relationship = -3;
                 chara->is_lord_of_dungeon() = true;
-                if (chara->level > arenaop(1) || chara->relationship != -3)
+                if (chara->level > arenaop(1))
                 {
                     chara_vanquish(*chara);
                     --cnt;

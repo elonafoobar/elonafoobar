@@ -1645,6 +1645,7 @@ bool _magic_653(Character& target)
     }
     txt(i18n::s.get("core.magic.vanish", target));
     chara_vanquish(target);
+    quest_check();
     return true;
 }
 
