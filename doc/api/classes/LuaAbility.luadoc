@@ -1,0 +1,17 @@
+--- A reference to a skill on a LuaCharacter.
+--  @classmod LuaAbility
+
+--- [R] The skill's current experience. To modify it, use
+--  LuaCharacter.gain_skill_exp, which will modify level and potential
+--  appropriately.
+--  @see LuaCharacter.gain_skill_exp
+--  @tfield num experience
+
+--- [RW] The skill's current level.
+--  @tfield num current_level
+
+--- [RW] The skill's original level.
+--  @tfield num original_level
+
+--- [RW] The skill's potential.
+--  @tfield num potential

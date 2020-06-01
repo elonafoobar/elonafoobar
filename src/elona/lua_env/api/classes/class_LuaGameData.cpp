@@ -1,4 +1,4 @@
-#include "class_LuaGameData.hpp"
+#include "../common.hpp"
 
 
 
@@ -6,6 +6,11 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::GameData)
 
 
 
+/**
+ * @luadoc
+ *
+ * Contains parameters for the current game save.
+ */
 namespace elona::lua::api::classes::class_LuaGameData
 {
 

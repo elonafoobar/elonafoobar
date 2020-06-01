@@ -1,5 +1,3 @@
-#include "class_LuaMapGenerator.hpp"
-
 #include "../../../area.hpp"
 #include "../../../map.hpp"
 #include "../../../mapgen.hpp"
@@ -7,6 +5,7 @@
 #include "../../../quest.hpp"
 #include "../../../world.hpp"
 #include "../../enums/enums.hpp"
+#include "../common.hpp"
 
 
 
@@ -14,6 +13,11 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::MapGenerator)
 
 
 
+/**
+ * @luadoc
+ *
+ * A class used in map generation.
+ */
 namespace elona::lua::api::classes::class_LuaMapGenerator
 {
 

@@ -1,8 +1,7 @@
-#include "class_LuaPosition.hpp"
-
 #include <sstream>
 
 #include "../../../position.hpp"
+#include "../common.hpp"
 
 
 
@@ -10,6 +9,12 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Position)
 
 
 
+/**
+ * @luadoc
+ *
+ * Represents a 2-dimensional position. Intended for representing tile
+ * locations.
+ */
 namespace elona::lua::api::classes::class_LuaPosition
 {
 

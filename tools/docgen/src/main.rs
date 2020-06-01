@@ -25,7 +25,7 @@ struct ModuleComment {
 impl ModuleComment {
     pub fn from_entity<'a>(entity: &Entity<'a>, text: String, is_class: bool) -> Self {
         let name = entity.get_name().unwrap();
-        let mut trimmed_name = name
+        let trimmed_name = name
             .trim_start_matches(LUA_MODULE)
             .trim_start_matches(LUA_CLASS)
             .into();
@@ -483,11 +483,7 @@ fn get_module_comment_of_entity<'a>(entity: &Entity<'a>, is_class: bool) -> Opti
         let location = entity.get_location().unwrap();
         let file = location.get_file_location().file.unwrap();
         let name = entity.get_name().unwrap();
-        if file
-            .get_path()
-            .extension()
-            .map_or(false, |e| if is_class { e == "hpp" } else { e == "cpp" })
-        {
+        if file.get_path().extension().map_or(false, |e| e == "cpp") {
             if let Some(comment) = entity.get_comment() {
                 if let Some((stripped, _)) = strip_comment(&comment) {
                     if name.starts_with(LUA_MODULE) || name.starts_with(LUA_CLASS) {

@@ -1,5 +1,3 @@
-#include "class_LuaDateTime.hpp"
-
 #include "../../../gdata.hpp"
 #include "../../../map.hpp"
 
@@ -9,6 +7,11 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::DateTime)
 
 
 
+/**
+ * @luadoc
+ *
+ * Represents a date and time.
+ */
 namespace elona::lua::api::classes::class_LuaDateTime
 {
 

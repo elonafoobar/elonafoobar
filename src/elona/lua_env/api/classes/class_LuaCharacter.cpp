@@ -1,5 +1,3 @@
-#include "class_LuaCharacter.hpp"
-
 #include "../../../ability.hpp"
 #include "../../../buff.hpp"
 #include "../../../character.hpp"
@@ -11,12 +9,14 @@
 #include "../../../food.hpp"
 #include "../../../god.hpp"
 #include "../../../map_cell.hpp"
+#include "../../../status_ailment.hpp"
 #include "../../../text.hpp"
 #include "../../../ui.hpp"
 #include "../../../variables.hpp"
 #include "../../data_manager.hpp"
 #include "../../enums/enums.hpp"
 #include "../../interface.hpp"
+#include "../common.hpp"
 #include "class_LuaAbility.hpp"
 
 
@@ -25,6 +25,11 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Character)
 
 
 
+/**
+ * @luadoc
+ *
+ * Represents a character.
+ */
 namespace elona::lua::api::classes::class_LuaCharacter
 {
 

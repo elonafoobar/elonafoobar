@@ -1,7 +1,6 @@
-#include "class_LuaArea.hpp"
-
 #include "../../../area.hpp"
 #include "../../../map.hpp"
+#include "../common.hpp"
 
 
 
@@ -9,6 +8,11 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Area)
 
 
 
+/**
+ * @luadoc
+ *
+ * Represents an area on the map.
+ */
 namespace elona::lua::api::classes::class_LuaArea
 {
 

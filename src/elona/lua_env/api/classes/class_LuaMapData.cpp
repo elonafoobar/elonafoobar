@@ -1,9 +1,8 @@
-#include "class_LuaMapData.hpp"
-
 #include "../../../data/types/type_music.hpp"
 #include "../../../map.hpp"
 #include "../../../position.hpp"
 #include "../../enums/enums.hpp"
+#include "../common.hpp"
 
 
 
@@ -11,6 +10,11 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::MapData)
 
 
 
+/**
+ * @luadoc
+ *
+ * Contains parameters for the current map.
+ */
 namespace elona::lua::api::classes::class_LuaMapData
 {
 

@@ -1,11 +1,10 @@
-#include "class_LuaItem.hpp"
-
 #include "../../../data/types/type_item.hpp"
 #include "../../../data/types/type_item_material.hpp"
 #include "../../../item.hpp"
 #include "../../../itemgen.hpp"
 #include "../../data_manager.hpp"
 #include "../../enums/enums.hpp"
+#include "../common.hpp"
 
 
 
@@ -13,6 +12,11 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Item)
 
 
 
+/**
+ * @luadoc
+ *
+ * Represents an item.
+ */
 namespace elona::lua::api::classes::class_LuaItem
 {
 

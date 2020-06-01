@@ -8,6 +8,11 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::lua::api::classes::LuaAbility)
 
 
 
+/**
+ * @luadoc
+ *
+ * A reference to a skill on a LuaCharacter.
+ */
 namespace elona::lua::api::classes::class_LuaAbility
 {
 
