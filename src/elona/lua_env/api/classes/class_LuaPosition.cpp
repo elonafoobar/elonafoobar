@@ -10,12 +10,10 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Position)
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::classes::class_LuaPosition
 {
 
-void LuaPosition::bind(sol::state& lua)
+void bind(sol::state& lua)
 {
     /**
      * @luadoc new function
@@ -44,5 +42,4 @@ void LuaPosition::bind(sol::state& lua)
     LuaPosition.set(sol::meta_function::to_string, &Position::to_string);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes::class_LuaPosition

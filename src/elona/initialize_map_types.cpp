@@ -3248,7 +3248,7 @@ void initialize_map_from_map_type()
 
     if (map && map->generator)
     {
-        lua::MapGenerator generator{};
+        MapGenerator generator{};
         map->generator->call(generator);
         return;
     }

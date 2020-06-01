@@ -1,9 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::classes
 {
 
 /**
@@ -11,10 +12,9 @@ namespace lua
  *
  * Contains parameters for the current game save.
  */
-namespace LuaGameData
+namespace class_LuaGameData
 {
 void bind(sol::state&);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes

@@ -25,14 +25,12 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Character)
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::classes::class_LuaCharacter
 {
 
-void LuaCharacter::damage_hp(Character& self, int amount)
+void damage_hp(Character& self, int amount)
 {
-    LuaCharacter::damage_hp_source(self, amount, "unseen_hand");
+    damage_hp_source(self, amount, "unseen_hand");
 }
 
 /**
@@ -45,10 +43,7 @@ void LuaCharacter::damage_hp(Character& self, int amount)
  * @usage local chara = Chara.player()
  * chara:damage_hp(100)
  */
-void LuaCharacter::damage_hp_source(
-    Character& self,
-    int amount,
-    const EnumString& source)
+void damage_hp_source(Character& self, int amount, const EnumString& source)
 {
     DamageSource source_value =
         LuaEnums::DamageSourceTable.ensure_from_string(source);
@@ -65,10 +60,7 @@ void LuaCharacter::damage_hp_source(
  * local other = Chara.create(0, 0, "core.putit")
  * chara:damage_hp(100, other)
  */
-void LuaCharacter::damage_hp_chara(
-    Character& self,
-    int amount,
-    LuaCharacterHandle source)
+void damage_hp_chara(Character& self, int amount, LuaCharacterHandle source)
 {
     auto& source_ref = lua::ref<Character>(source);
     elona::damage_hp(self, amount, source_ref.index);
@@ -83,10 +75,7 @@ void LuaCharacter::damage_hp_chara(
  * @usage local chara = Chara.player()
  * chara:apply_ailment("Blinded", 100)
  */
-void LuaCharacter::apply_ailment(
-    Character& self,
-    const EnumString& ailment,
-    int power)
+void apply_ailment(Character& self, const EnumString& ailment, int power)
 {
     if (power <= 0)
     {
@@ -108,10 +97,7 @@ void LuaCharacter::apply_ailment(
  * @usage local chara = Chara.player()
  * chara:heal_ailment("Blinded", 100)
  */
-void LuaCharacter::heal_ailment(
-    Character& self,
-    const EnumString& ailment,
-    int power)
+void heal_ailment(Character& self, const EnumString& ailment, int power)
 {
     if (power < 0)
     {
@@ -123,11 +109,7 @@ void LuaCharacter::heal_ailment(
     elona::status_ailment_heal(self, ailment_value, power);
 }
 
-void LuaCharacter::add_buff(
-    Character& self,
-    const std::string& buff_id,
-    int power,
-    int turns)
+void add_buff(Character& self, const std::string& buff_id, int power, int turns)
 {
     the_buff_db.ensure(data::InstanceId{buff_id});
 
@@ -143,7 +125,7 @@ void LuaCharacter::add_buff(
  * @tparam num turns the number of turns the buff will last
  * @tparam[opt] LuaCharacter doer the character who applied this buff
  */
-void LuaCharacter::add_buff_doer(
+void add_buff_doer(
     Character& self,
     const std::string& buff_id,
     int power,
@@ -163,7 +145,7 @@ void LuaCharacter::add_buff_doer(
  * @tparam num index
  * @tparam num power
  */
-void LuaCharacter::set_growth_buff(Character& self, int index, int power)
+void set_growth_buff(Character& self, int index, int power)
 {
     if (index < 0 || index > 10)
     {
@@ -181,7 +163,7 @@ void LuaCharacter::set_growth_buff(Character& self, int index, int power)
  * the player, is alive and the player has a free party slot.
  * @treturn bool true if the character was recruited successfully
  */
-bool LuaCharacter::recruit_as_ally(Character& self)
+bool recruit_as_ally(Character& self)
 {
     if (self.state() == Character::State::empty ||
         (self.index != 0 && self.index <= 16) || self.index == 0)
@@ -198,7 +180,7 @@ bool LuaCharacter::recruit_as_ally(Character& self)
  * @tparam Enums.CharaFlag flag the flag to get
  * @treturn bool
  */
-bool LuaCharacter::get_flag(Character& chara, const EnumString& flag)
+bool get_flag(Character& chara, const EnumString& flag)
 {
     int flag_value = LuaEnums::CharaFlagTable.ensure_from_string(flag);
     return chara._flags[flag_value] == 1;
@@ -225,7 +207,7 @@ bool LuaCharacter::get_flag(Character& chara, const EnumString& flag)
  * Event.register("core.character_refreshed", make_invisible)
  * Event.register("core.character_created", make_invisible)
  */
-void LuaCharacter::set_flag(Character& self, const EnumString& flag, bool value)
+void set_flag(Character& self, const EnumString& flag, bool value)
 {
     int flag_value = LuaEnums::CharaFlagTable.ensure_from_string(flag);
     int new_value = value ? 1 : 0;
@@ -239,7 +221,7 @@ void LuaCharacter::set_flag(Character& self, const EnumString& flag, bool value)
  * @tparam string skill_id ID of type core.ability
  * @treturn LuaAbility
  */
-sol::optional<LuaAbility> LuaCharacter::get_skill(
+sol::optional<LuaAbility> get_skill(
     Character& self,
     const std::string& skill_id)
 {
@@ -256,12 +238,9 @@ sol::optional<LuaAbility> LuaCharacter::get_skill(
     return LuaAbility(data->legacy_id, self.index, Character::lua_type(), uuid);
 }
 
-void LuaCharacter::gain_skill(
-    Character& self,
-    const std::string& skill_id,
-    int initial_level)
+void gain_skill(Character& self, const std::string& skill_id, int initial_level)
 {
-    LuaCharacter::gain_skill_stock(self, skill_id, initial_level, 0);
+    gain_skill_stock(self, skill_id, initial_level, 0);
 }
 
 /**
@@ -273,7 +252,7 @@ void LuaCharacter::gain_skill(
  * @tparam num initial_level the intial skill/spell level
  * @tparam[opt] num initial_stock the initial spell stock for spells
  */
-void LuaCharacter::gain_skill_stock(
+void gain_skill_stock(
     Character& self,
     const std::string& skill_id,
     int initial_level,
@@ -296,10 +275,7 @@ void LuaCharacter::gain_skill_stock(
  * @tparam string skill_id the skill/spell ID of type core.ability
  * @tparam num amount the amount of experience
  */
-void LuaCharacter::gain_skill_exp(
-    Character& self,
-    const std::string& skill_id,
-    int amount)
+void gain_skill_exp(Character& self, const std::string& skill_id, int amount)
 {
     auto data = the_ability_db[data::InstanceId{skill_id}];
     if (!data)
@@ -318,10 +294,7 @@ void LuaCharacter::gain_skill_exp(
  * @tparam num element the corresponding element
  * @tparam num delta the amount of increase/decrease (can be negative)
  */
-void LuaCharacter::modify_resistance(
-    Character& self,
-    const EnumString& element,
-    int delta)
+void modify_resistance(Character& self, const EnumString& element, int delta)
 {
     Element element_value = LuaEnums::ElementTable.ensure_from_string(element);
     elona::chara_gain_registance(self, static_cast<int>(element_value), delta);
@@ -333,7 +306,7 @@ void LuaCharacter::modify_resistance(
  * Modifies this character's sanity.
  * @tparam num delta the amount of increase/decrease (can be negative)
  */
-void LuaCharacter::modify_sanity(Character& self, int delta)
+void modify_sanity(Character& self, int delta)
 {
     if (delta < 0)
     {
@@ -352,7 +325,7 @@ void LuaCharacter::modify_sanity(Character& self, int delta)
  * the character is the player.
  * @tparam num delta the amount of increase/decrease (can be negative)
  */
-void LuaCharacter::modify_karma(Character& self, int delta)
+void modify_karma(Character& self, int delta)
 {
     if (self.index != 0)
     {
@@ -369,7 +342,7 @@ void LuaCharacter::modify_karma(Character& self, int delta)
  * effect if the character is the player.
  * @tparam num delta the amount of increase/decrease (can be negative)
  */
-void LuaCharacter::modify_corruption(Character& self, int delta)
+void modify_corruption(Character& self, int delta)
 {
     if (self.index != 0)
     {
@@ -385,7 +358,7 @@ void LuaCharacter::modify_corruption(Character& self, int delta)
  * Makes this character pregnant. Only has an effect if the character
  * is not already pregnant.
  */
-void LuaCharacter::make_pregnant(Character& self)
+void make_pregnant(Character& self)
 {
     elona::get_pregnant(self);
 }
@@ -395,7 +368,7 @@ void LuaCharacter::make_pregnant(Character& self)
  *
  * Applies the effects of eating rotten food to this character.
  */
-void LuaCharacter::eat_rotten_food(Character& self)
+void eat_rotten_food(Character& self)
 {
     elona::eat_rotten_food(self);
 }
@@ -406,7 +379,7 @@ void LuaCharacter::eat_rotten_food(Character& self)
  * Deletes this character and removes it from the map. The character will no
  * longer be valid for use.
  */
-void LuaCharacter::vanquish(Character& self)
+void vanquish(Character& self)
 {
     chara_vanquish(self);
 }
@@ -417,9 +390,7 @@ void LuaCharacter::vanquish(Character& self)
  * Applies the effects of acting hostile towards a target character.
  * @tparam LuaCharacter target Target to act hostile towards
  */
-void LuaCharacter::act_hostile_against(
-    Character& self,
-    LuaCharacterHandle target)
+void act_hostile_against(Character& self, LuaCharacterHandle target)
 {
     auto& target_ref = lua::ref<Character>(target);
     hostileaction(self.index, target_ref.index);
@@ -430,7 +401,7 @@ void LuaCharacter::act_hostile_against(
  *
  * Refreshes this character, reapplying bonuses given by equipment.
  */
-void LuaCharacter::refresh(Character& self)
+void refresh(Character& self)
 {
     chara_refresh(self);
 }
@@ -442,7 +413,7 @@ void LuaCharacter::refresh(Character& self)
  * player. Call this method if the character's inventory changes so the weight
  * can be reapplied.
  */
-void LuaCharacter::refresh_burden_state(Character& self)
+void refresh_burden_state(Character& self)
 {
     if (self.index != 0)
     {
@@ -459,9 +430,9 @@ void LuaCharacter::refresh_burden_state(Character& self)
  * Moves this character to a new position.
  * @tparam LuaPosition pos
  */
-void LuaCharacter::move_to(Character& self, Position& pos)
+void move_to(Character& self, Position& pos)
 {
-    LuaCharacter::move_to_xy(self, pos.x, pos.y);
+    move_to_xy(self, pos.x, pos.y);
 }
 
 /**
@@ -471,7 +442,7 @@ void LuaCharacter::move_to(Character& self, Position& pos)
  * @tparam num x
  * @tparam num y
  */
-void LuaCharacter::move_to_xy(Character& self, int x, int y)
+void move_to_xy(Character& self, int x, int y)
 {
     // NOTE: setting self.next_position may be safer if the position is changed
     // in the middle of the current turn.
@@ -490,7 +461,7 @@ void LuaCharacter::move_to_xy(Character& self, int x, int y)
  * switching penalty.
  * @tparam string god_id ID of type core.god.
  */
-void LuaCharacter::switch_religion(Character& self, const std::string& god_id)
+void switch_religion(Character& self, const std::string& god_id)
 {
     the_god_db.ensure(data::InstanceId{god_id});
 
@@ -505,7 +476,7 @@ void LuaCharacter::switch_religion(Character& self, const std::string& god_id)
  * @tparam StatusAilment ailment
  * @treturn num
  */
-int LuaCharacter::get_ailment(Character& self, const EnumString& ailment)
+int get_ailment(Character& self, const EnumString& ailment)
 {
     StatusAilment ailment_value =
         LuaEnums::StatusAilmentTable.ensure_from_string(ailment);
@@ -530,14 +501,14 @@ int LuaCharacter::get_ailment(Character& self, const EnumString& ailment)
 
 
 
-std::string LuaCharacter::metamethod_tostring(const Character& self)
+std::string metamethod_tostring(const Character& self)
 {
     return Character::lua_type() + "(" + std::to_string(self.index) + ")";
 }
 
 
 
-void LuaCharacter::bind(sol::state& lua)
+void bind(sol::state& lua)
 {
     auto LuaCharacter =
         lua.new_usertype<Character>("LuaCharacter", sol::no_constructor);
@@ -847,43 +818,48 @@ void LuaCharacter::bind(sol::state& lua)
     LuaCharacter.set(
         "damage_hp",
         sol::overload(
-            &LuaCharacter::damage_hp,
-            &LuaCharacter::damage_hp_source,
-            &LuaCharacter::damage_hp_chara));
-    LuaCharacter.set("apply_ailment", &LuaCharacter::apply_ailment);
-    LuaCharacter.set("heal_ailment", &LuaCharacter::heal_ailment);
+            &class_LuaCharacter::damage_hp,
+            &class_LuaCharacter::damage_hp_source,
+            &class_LuaCharacter::damage_hp_chara));
+    LuaCharacter.set("apply_ailment", &class_LuaCharacter::apply_ailment);
+    LuaCharacter.set("heal_ailment", &class_LuaCharacter::heal_ailment);
     LuaCharacter.set(
         "add_buff",
-        sol::overload(&LuaCharacter::add_buff, &LuaCharacter::add_buff_doer));
-    LuaCharacter.set("set_growth_buff", &LuaCharacter::set_growth_buff);
-    LuaCharacter.set("recruit_as_ally", &LuaCharacter::recruit_as_ally);
-    LuaCharacter.set("get_flag", &LuaCharacter::get_flag);
-    LuaCharacter.set("set_flag", &LuaCharacter::set_flag);
-    LuaCharacter.set("get_skill", &LuaCharacter::get_skill);
+        sol::overload(
+            &class_LuaCharacter::add_buff, &class_LuaCharacter::add_buff_doer));
+    LuaCharacter.set("set_growth_buff", &class_LuaCharacter::set_growth_buff);
+    LuaCharacter.set("recruit_as_ally", &class_LuaCharacter::recruit_as_ally);
+    LuaCharacter.set("get_flag", &class_LuaCharacter::get_flag);
+    LuaCharacter.set("set_flag", &class_LuaCharacter::set_flag);
+    LuaCharacter.set("get_skill", &class_LuaCharacter::get_skill);
     LuaCharacter.set(
         "gain_skill",
         sol::overload(
-            &LuaCharacter::gain_skill, &LuaCharacter::gain_skill_stock));
-    LuaCharacter.set("gain_skill_exp", &LuaCharacter::gain_skill_exp);
-    LuaCharacter.set("modify_resistance", &LuaCharacter::modify_resistance);
-    LuaCharacter.set("modify_sanity", &LuaCharacter::modify_sanity);
-    LuaCharacter.set("modify_karma", &LuaCharacter::modify_karma);
-    LuaCharacter.set("modify_corruption", &LuaCharacter::modify_corruption);
-    LuaCharacter.set("make_pregnant", &LuaCharacter::make_pregnant);
-    LuaCharacter.set("eat_rotten_food", &LuaCharacter::eat_rotten_food);
-    LuaCharacter.set("vanquish", &LuaCharacter::vanquish);
-    LuaCharacter.set("act_hostile_against", &LuaCharacter::act_hostile_against);
-    LuaCharacter.set("refresh", &LuaCharacter::refresh);
+            &class_LuaCharacter::gain_skill,
+            &class_LuaCharacter::gain_skill_stock));
+    LuaCharacter.set("gain_skill_exp", &class_LuaCharacter::gain_skill_exp);
     LuaCharacter.set(
-        "refresh_burden_state", &LuaCharacter::refresh_burden_state);
+        "modify_resistance", &class_LuaCharacter::modify_resistance);
+    LuaCharacter.set("modify_sanity", &class_LuaCharacter::modify_sanity);
+    LuaCharacter.set("modify_karma", &class_LuaCharacter::modify_karma);
+    LuaCharacter.set(
+        "modify_corruption", &class_LuaCharacter::modify_corruption);
+    LuaCharacter.set("make_pregnant", &class_LuaCharacter::make_pregnant);
+    LuaCharacter.set("eat_rotten_food", &class_LuaCharacter::eat_rotten_food);
+    LuaCharacter.set("vanquish", &class_LuaCharacter::vanquish);
+    LuaCharacter.set(
+        "act_hostile_against", &class_LuaCharacter::act_hostile_against);
+    LuaCharacter.set("refresh", &class_LuaCharacter::refresh);
+    LuaCharacter.set(
+        "refresh_burden_state", &class_LuaCharacter::refresh_burden_state);
     LuaCharacter.set(
         "move_to",
-        sol::overload(&LuaCharacter::move_to, &LuaCharacter::move_to_xy));
-    LuaCharacter.set("switch_religion", &LuaCharacter::switch_religion);
-    LuaCharacter.set("get_ailment", &LuaCharacter::get_ailment);
+        sol::overload(
+            &class_LuaCharacter::move_to, &class_LuaCharacter::move_to_xy));
+    LuaCharacter.set("switch_religion", &class_LuaCharacter::switch_religion);
+    LuaCharacter.set("get_ailment", &class_LuaCharacter::get_ailment);
 
-    LuaCharacter.set("__tostring", &LuaCharacter::metamethod_tostring);
-} // namespace lua
+    LuaCharacter.set("__tostring", &class_LuaCharacter::metamethod_tostring);
+}
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes::class_LuaCharacter

@@ -11,12 +11,10 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::MapData)
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::classes::class_LuaMapData
 {
 
-void LuaMapData::bind(sol::state& lua)
+void bind(sol::state& lua)
 {
     auto LuaMapData =
         lua.new_usertype<MapData>("LuaMapData", sol::no_constructor);
@@ -27,12 +25,14 @@ void LuaMapData::bind(sol::state& lua)
      * [RW] The map tile atlas to use for this map.
      */
     LuaMapData.set("atlas_number", &MapData::atlas_number);
+
     /**
      * @luadoc next_regenerate_date field num
      *
      * [RW] The date in hours when this map is next regenerated.
      */
     LuaMapData.set("next_regenerate_date", &MapData::next_regenerate_date);
+
     /**
      * @luadoc turn_cost field num
      *
@@ -201,5 +201,4 @@ void LuaMapData::bind(sol::state& lua)
     LuaMapData.set("bgm", LUA_API_DATA_PROPERTY(MapData, bgm, the_music_db));
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes::class_LuaMapData

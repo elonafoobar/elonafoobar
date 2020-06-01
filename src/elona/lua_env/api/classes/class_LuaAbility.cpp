@@ -4,17 +4,15 @@
 
 
 
-LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::lua::LuaAbility)
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::lua::api::classes::LuaAbility)
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::classes::class_LuaAbility
 {
 
 #define ELONA_LUA_SKILL_PROPERTY_READONLY(name) \
-    sol::property([](lua::LuaAbility& a) { \
+    sol::property([](classes::LuaAbility& a) { \
         if (!a.is_valid()) \
         { \
             return 0; \
@@ -24,14 +22,14 @@ namespace lua
 
 #define ELONA_LUA_SKILL_PROPERTY(name) \
     sol::property( \
-        [](lua::LuaAbility& a) { \
+        [](classes::LuaAbility& a) { \
             if (!a.is_valid()) \
             { \
                 return 0; \
             } \
             return sdata.get(a.skill_id, a.index).name; \
         }, \
-        [](lua::LuaAbility& a, int i) { \
+        [](classes::LuaAbility& a, int i) { \
             if (!a.is_valid()) \
             { \
                 return; \
@@ -39,10 +37,10 @@ namespace lua
             sdata.get(a.skill_id, a.index).name = i; \
         })
 
-void LuaAbility::bind(sol::state& lua)
+void bind(sol::state& lua)
 {
-    auto LuaAbility =
-        lua.new_usertype<lua::LuaAbility>("LuaAbility", sol::no_constructor);
+    auto LuaAbility = lua.new_usertype<classes::LuaAbility>(
+        "LuaAbility", sol::no_constructor);
 
     /**
      * @luadoc experience field num
@@ -78,5 +76,4 @@ void LuaAbility::bind(sol::state& lua)
 
 #undef ELONA_LUA_SKILL_PROPERTY
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes::class_LuaAbility

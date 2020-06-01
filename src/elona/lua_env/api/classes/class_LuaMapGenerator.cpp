@@ -10,13 +10,11 @@
 
 
 
-LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::lua::MapGenerator)
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::MapGenerator)
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::classes::class_LuaMapGenerator
 {
 
 /**
@@ -26,7 +24,7 @@ namespace lua
  * being generated.
  * @treturn num the tile ID
  */
-int LuaMapGenerator::stood_world_map_tile()
+int stood_world_map_tile()
 {
     return game_data.stood_world_map_tile;
 }
@@ -38,7 +36,7 @@ int LuaMapGenerator::stood_world_map_tile()
  * regenerations.
  * @treturn bool
  */
-bool LuaMapGenerator::is_first_generation()
+bool is_first_generation()
 {
     return mapupdate == 0;
 }
@@ -49,7 +47,7 @@ bool LuaMapGenerator::is_first_generation()
  * Returns true if the current dungeon level is the deepest in this map.
  * @treturn bool
  */
-bool LuaMapGenerator::is_deepest_level()
+bool is_deepest_level()
 {
     return game_data.current_dungeon_level ==
         area_data[game_data.current_map].deepest_level;
@@ -62,7 +60,7 @@ bool LuaMapGenerator::is_deepest_level()
  * @tparam num width
  * @tparam num height
  */
-void LuaMapGenerator::create(int width, int height)
+void create(int width, int height)
 {
     map_data.width = width;
     map_data.height = height;
@@ -75,7 +73,7 @@ void LuaMapGenerator::create(int width, int height)
  * Loads a custom map with the given name.
  * @tparam string map_name
  */
-void LuaMapGenerator::load_custom(const std::string& name)
+void load_custom(const std::string& name)
 {
     elona::map_initcustom(name);
 }
@@ -85,7 +83,7 @@ void LuaMapGenerator::load_custom(const std::string& name)
  *
  * Generates a random nefia (dungeon).
  */
-void LuaMapGenerator::generate_nefia()
+void generate_nefia()
 {
     elona::generate_random_nefia();
 }
@@ -96,7 +94,7 @@ void LuaMapGenerator::generate_nefia()
  * Sets the created map's name.
  * @tparam string name
  */
-void LuaMapGenerator::set_name(const std::string& name)
+void set_name(const std::string& name)
 {
     mdatan(0) = name;
 }
@@ -107,7 +105,7 @@ void LuaMapGenerator::set_name(const std::string& name)
  * Initializes the created map's tileset.
  * @tparam num tileset_id
  */
-void LuaMapGenerator::set_tileset(int tileset)
+void set_tileset(int tileset)
 {
     elona::map_tileset(tileset);
 }
@@ -119,7 +117,7 @@ void LuaMapGenerator::set_tileset(int tileset)
  * @tparam num x
  * @tparam num y
  */
-void LuaMapGenerator::set_stair_up_pos(int x, int y)
+void set_stair_up_pos(int x, int y)
 {
     map_data.stair_up_pos = y * 1000 + x;
 }
@@ -131,7 +129,7 @@ void LuaMapGenerator::set_stair_up_pos(int x, int y)
  * @tparam num x
  * @tparam num y
  */
-void LuaMapGenerator::set_stair_down_pos(int x, int y)
+void set_stair_down_pos(int x, int y)
 {
     map_data.stair_down_pos = y * 1000 + x;
 }
@@ -142,7 +140,7 @@ void LuaMapGenerator::set_stair_down_pos(int x, int y)
  * Sets the created map's entrance type.
  * @tparam Enums.EntranceType type
  */
-void LuaMapGenerator::set_entrance_type(const EnumString& type)
+void set_entrance_type(const EnumString& type)
 {
     game_data.entrance_type =
         LuaEnums::MapEntranceTypeTable.ensure_from_string(type);
@@ -157,7 +155,7 @@ void LuaMapGenerator::set_entrance_type(const EnumString& type)
  * or "hate" fields of any characters in the generation function.
  * @tparam bool flag
  */
-void LuaMapGenerator::set_no_aggro_refresh(bool flag)
+void set_no_aggro_refresh(bool flag)
 {
     noaggrorefresh = flag ? 1 : 0;
 }
@@ -167,7 +165,7 @@ void LuaMapGenerator::set_no_aggro_refresh(bool flag)
  *
  * Sets the position of the player based on the entrance type.
  */
-void LuaMapGenerator::place_player()
+void place_player()
 {
     elona::map_placeplayer();
 }
@@ -180,7 +178,7 @@ void LuaMapGenerator::place_player()
  * @tparam num x
  * @tparam num y
  */
-void LuaMapGenerator::place_player_xy(int x, int y)
+void place_player_xy(int x, int y)
 {
     // Set the entrance type to "Specified" as a specific position was
     // requested.
@@ -196,7 +194,7 @@ void LuaMapGenerator::place_player_xy(int x, int y)
  *
  * Creates new quests for the characters in the created map if necessary.
  */
-void LuaMapGenerator::update_quests_in_map()
+void update_quests_in_map()
 {
     elona::quest_on_map_initialize();
 }
@@ -206,7 +204,7 @@ void LuaMapGenerator::update_quests_in_map()
  *
  * Marks all characters in this map as being enemies and quest targets.
  */
-void LuaMapGenerator::mark_quest_targets()
+void mark_quest_targets()
 {
     elona::quest_place_target();
 }
@@ -216,45 +214,48 @@ void LuaMapGenerator::mark_quest_targets()
  *
  * Initializes this map as a world map,
  */
-void LuaMapGenerator::initialize_world_map()
+void initialize_world_map()
 {
     elona::initialize_world_map();
 }
 
 
-void LuaMapGenerator::bind(sol::state& lua)
+void bind(sol::state& lua)
 {
     auto LuaMapGenerator = lua.new_usertype<MapGenerator>("LuaMapGenerator");
 
     LuaMapGenerator.set(
-        "stood_world_map_tile", &LuaMapGenerator::stood_world_map_tile);
+        "stood_world_map_tile", &class_LuaMapGenerator::stood_world_map_tile);
     LuaMapGenerator.set(
-        "is_first_generation", &LuaMapGenerator::is_first_generation);
-    LuaMapGenerator.set("is_deepest_level", &LuaMapGenerator::is_deepest_level);
+        "is_first_generation", &class_LuaMapGenerator::is_first_generation);
+    LuaMapGenerator.set(
+        "is_deepest_level", &class_LuaMapGenerator::is_deepest_level);
 
-    LuaMapGenerator.set("create", &LuaMapGenerator::create);
-    LuaMapGenerator.set("load_custom", &LuaMapGenerator::load_custom);
-    LuaMapGenerator.set("generate_nefia", &LuaMapGenerator::generate_nefia);
-    LuaMapGenerator.set("set_name", &LuaMapGenerator::set_name);
-    LuaMapGenerator.set("set_tileset", &LuaMapGenerator::set_tileset);
-    LuaMapGenerator.set("set_stair_up_pos", &LuaMapGenerator::set_stair_up_pos);
+    LuaMapGenerator.set("create", &class_LuaMapGenerator::create);
+    LuaMapGenerator.set("load_custom", &class_LuaMapGenerator::load_custom);
     LuaMapGenerator.set(
-        "set_stair_down_pos", &LuaMapGenerator::set_stair_down_pos);
+        "generate_nefia", &class_LuaMapGenerator::generate_nefia);
+    LuaMapGenerator.set("set_name", &class_LuaMapGenerator::set_name);
+    LuaMapGenerator.set("set_tileset", &class_LuaMapGenerator::set_tileset);
     LuaMapGenerator.set(
-        "set_entrance_type", &LuaMapGenerator::set_entrance_type);
+        "set_stair_up_pos", &class_LuaMapGenerator::set_stair_up_pos);
     LuaMapGenerator.set(
-        "set_no_aggro_refresh", &LuaMapGenerator::set_no_aggro_refresh);
+        "set_stair_down_pos", &class_LuaMapGenerator::set_stair_down_pos);
+    LuaMapGenerator.set(
+        "set_entrance_type", &class_LuaMapGenerator::set_entrance_type);
+    LuaMapGenerator.set(
+        "set_no_aggro_refresh", &class_LuaMapGenerator::set_no_aggro_refresh);
     LuaMapGenerator.set(
         "place_player",
         sol::overload(
-            &LuaMapGenerator::place_player, &LuaMapGenerator::place_player_xy));
+            &class_LuaMapGenerator::place_player,
+            &class_LuaMapGenerator::place_player_xy));
     LuaMapGenerator.set(
-        "update_quests_in_map", &LuaMapGenerator::update_quests_in_map);
+        "update_quests_in_map", &class_LuaMapGenerator::update_quests_in_map);
     LuaMapGenerator.set(
-        "mark_quest_targets", &LuaMapGenerator::mark_quest_targets);
+        "mark_quest_targets", &class_LuaMapGenerator::mark_quest_targets);
     LuaMapGenerator.set(
-        "initialize_world_map", &LuaMapGenerator::initialize_world_map);
+        "initialize_world_map", &class_LuaMapGenerator::initialize_world_map);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes::class_LuaMapGenerator

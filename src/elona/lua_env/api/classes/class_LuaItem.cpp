@@ -13,9 +13,7 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Item)
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::classes::class_LuaItem
 {
 
 /**
@@ -23,7 +21,7 @@ namespace lua
  *
  * Removes this item. The item reference will no longer be valid for use.
  */
-void LuaItem::remove(Item& self)
+void remove(Item& self)
 {
     self.remove();
 }
@@ -34,7 +32,7 @@ void LuaItem::remove(Item& self)
  * Changes the material of this item.
  * @tparam string material_id ID of the item material
  */
-void LuaItem::change_material(Item& self, const std::string& material_id)
+void change_material(Item& self, const std::string& material_id)
 {
     const auto& data =
         the_item_material_db.ensure(data::InstanceId{material_id});
@@ -43,14 +41,14 @@ void LuaItem::change_material(Item& self, const std::string& material_id)
 
 
 
-std::string LuaItem::metamethod_tostring(const Item& self)
+std::string metamethod_tostring(const Item& self)
 {
     return Item::lua_type() + "(" + std::to_string(self.index()) + ")";
 }
 
 
 
-void LuaItem::bind(sol::state& lua)
+void bind(sol::state& lua)
 {
     auto LuaItem = lua.new_usertype<Item>("LuaItem", sol::no_constructor);
     LuaItem.set("lua_type", &Item::lua_type);
@@ -411,11 +409,11 @@ void LuaItem::bind(sol::state& lua)
                 }));
 
     // Methods
-    LuaItem.set("remove", &LuaItem::remove);
-    LuaItem.set("change_material", &LuaItem::change_material);
+    LuaItem.set("remove", &class_LuaItem::remove);
+    LuaItem.set("change_material", &class_LuaItem::change_material);
 
-    LuaItem.set(sol::meta_function::to_string, &LuaItem::metamethod_tostring);
+    LuaItem.set(
+        sol::meta_function::to_string, &class_LuaItem::metamethod_tostring);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes::class_LuaItem

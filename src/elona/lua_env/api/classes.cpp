@@ -18,15 +18,22 @@ namespace elona::lua::api::classes
 
 void bind(sol::state& L)
 {
-    LuaAbility::bind(L);
-    LuaArea::bind(L);
-    LuaCharacter::bind(L);
-    LuaDateTime::bind(L);
-    LuaGameData::bind(L);
-    LuaItem::bind(L);
-    LuaMapData::bind(L);
-    LuaMapGenerator::bind(L);
-    LuaPosition::bind(L);
+#define ELONA_LUA_API_BIND_CLASS(ClassName) \
+    { \
+        class_##ClassName::bind(L); \
+    }
+
+    ELONA_LUA_API_BIND_CLASS(LuaAbility);
+    ELONA_LUA_API_BIND_CLASS(LuaArea);
+    ELONA_LUA_API_BIND_CLASS(LuaCharacter);
+    ELONA_LUA_API_BIND_CLASS(LuaDateTime);
+    ELONA_LUA_API_BIND_CLASS(LuaGameData);
+    ELONA_LUA_API_BIND_CLASS(LuaItem);
+    ELONA_LUA_API_BIND_CLASS(LuaMapData);
+    ELONA_LUA_API_BIND_CLASS(LuaMapGenerator);
+    ELONA_LUA_API_BIND_CLASS(LuaPosition);
+
+#undef ELONA_LUA_API_BIND_CLASS
 }
 
 

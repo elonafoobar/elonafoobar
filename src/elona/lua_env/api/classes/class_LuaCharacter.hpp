@@ -1,10 +1,11 @@
 #pragma once
+
 #include "../../../status_ailment.hpp"
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::classes
 {
 
 struct LuaAbility;
@@ -14,7 +15,7 @@ struct LuaAbility;
  *
  * Represents a character.
  */
-namespace LuaCharacter
+namespace class_LuaCharacter
 {
 void damage_hp(Character&, int);
 void damage_hp_source(Character&, int, const EnumString&);
@@ -79,7 +80,6 @@ std::string metamethod_tostring(const Character&);
 
 
 void bind(sol::state&);
-} // namespace LuaCharacter
+} // namespace class_LuaCharacter
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes

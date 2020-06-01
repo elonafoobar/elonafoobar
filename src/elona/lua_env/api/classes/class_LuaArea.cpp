@@ -9,12 +9,10 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Area)
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::classes::class_LuaArea
 {
 
-void LuaArea::bind(sol::state& lua)
+void bind(sol::state& lua)
 {
     auto LuaArea = lua.new_usertype<Area>("LuaArea", sol::no_constructor);
 
@@ -149,5 +147,4 @@ void LuaArea::bind(sol::state& lua)
     LuaArea.set("outer_map", &Area::outer_map);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes::class_LuaArea

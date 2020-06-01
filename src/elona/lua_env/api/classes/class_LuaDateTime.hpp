@@ -1,12 +1,11 @@
 #pragma once
+
 #include "../../handle_manager.hpp"
 #include "../common.hpp"
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::classes
 {
 
 /**
@@ -14,10 +13,9 @@ namespace lua
  *
  * Represents a date and time.
  */
-namespace LuaDateTime
+namespace class_LuaDateTime
 {
 void bind(sol::state& lua);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes

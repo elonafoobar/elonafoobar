@@ -9,12 +9,10 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::DateTime)
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::classes::class_LuaDateTime
 {
 
-void LuaDateTime::bind(sol::state& lua)
+void bind(sol::state& lua)
 {
     auto LuaDateTime =
         lua.new_usertype<DateTime>("LuaDateTime", sol::no_constructor);
@@ -64,5 +62,4 @@ void LuaDateTime::bind(sol::state& lua)
     LuaDateTime.set(sol::meta_function::to_string, &DateTime::to_string);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes::class_LuaDateTime

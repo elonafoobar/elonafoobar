@@ -1,12 +1,11 @@
 #pragma once
+
 #include "../../handle_manager.hpp"
 #include "../common.hpp"
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::classes
 {
 
 /**
@@ -68,10 +67,14 @@ struct LuaAbility : LuaRef
         skill_id = skill_id_;
     }
 
-    static void bind(sol::state& lua);
-
     int skill_id;
 };
 
-} // namespace lua
-} // namespace elona
+
+
+namespace class_LuaAbility
+{
+void bind(sol::state& lua);
+}
+
+} // namespace elona::lua::api::classes

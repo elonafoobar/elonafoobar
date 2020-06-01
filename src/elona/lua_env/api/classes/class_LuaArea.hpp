@@ -1,12 +1,11 @@
 #pragma once
+
 #include "../../handle_manager.hpp"
 #include "../common.hpp"
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::classes
 {
 
 /**
@@ -14,10 +13,9 @@ namespace lua
  *
  * Represents an area on the map.
  */
-namespace LuaArea
+namespace class_LuaArea
 {
 void bind(sol::state& lua);
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes

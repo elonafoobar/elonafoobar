@@ -1,9 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::classes
 {
 
 /*A
@@ -11,11 +12,8 @@ namespace lua
  *
  * A class used in map generation.
  */
-struct MapGenerator
-{
-};
 
-namespace LuaMapGenerator
+namespace class_LuaMapGenerator
 {
 int stood_world_map_tile();
 
@@ -52,7 +50,6 @@ void initialize_world_map();
 
 
 void bind(sol::state&);
-} // namespace LuaMapGenerator
+} // namespace class_LuaMapGenerator
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes

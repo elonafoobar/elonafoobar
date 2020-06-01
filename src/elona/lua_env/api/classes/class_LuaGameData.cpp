@@ -6,9 +6,7 @@ LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::GameData)
 
 
 
-namespace elona
-{
-namespace lua
+namespace elona::lua::api::classes::class_LuaGameData
 {
 
 #define ELONA_LUA_GUILD_PROPERTY(field) \
@@ -22,7 +20,7 @@ namespace lua
         [](GameData& it, bool value) { it.guild.field = value ? 1 : 0; })
 
 
-void LuaGameData::bind(sol::state& lua)
+void bind(sol::state& lua)
 {
     auto LuaGameData =
         lua.new_usertype<GameData>("LuaGameData", sol::no_constructor);
@@ -163,5 +161,4 @@ void LuaGameData::bind(sol::state& lua)
         ELONA_LUA_GUILD_FLAG(thieves_guild_quota_recurring));
 }
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes::class_LuaGameData

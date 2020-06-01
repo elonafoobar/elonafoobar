@@ -1,9 +1,10 @@
 #pragma once
+
 #include "../common.hpp"
 
-namespace elona
-{
-namespace lua
+
+
+namespace elona::lua::api::classes
 {
 
 /**
@@ -11,7 +12,7 @@ namespace lua
  *
  * Represents an item.
  */
-namespace LuaItem
+namespace class_LuaItem
 {
 void remove(Item&);
 
@@ -21,7 +22,6 @@ std::string metamethod_tostring(const Item&);
 
 
 void bind(sol::state&);
-} // namespace LuaItem
+} // namespace class_LuaItem
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua::api::classes

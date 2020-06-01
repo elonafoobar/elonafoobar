@@ -33,38 +33,38 @@ namespace elona::lua::api::modules
 
 void bind(sol::table core)
 {
-#define ELONA_LUA_API_BIND(ModuleName) \
+#define ELONA_LUA_API_BIND_MODULE(ModuleName) \
     { \
         sol::table api_table = core.create_named(#ModuleName); \
         module_##ModuleName::bind(api_table); \
     }
 
-    ELONA_LUA_API_BIND(Animation);
-    ELONA_LUA_API_BIND(Calc);
-    ELONA_LUA_API_BIND(Chara);
-    ELONA_LUA_API_BIND(Config);
-    ELONA_LUA_API_BIND(Console);
-    ELONA_LUA_API_BIND(Data);
-    ELONA_LUA_API_BIND(Debug);
-    ELONA_LUA_API_BIND(Enchantment);
-    ELONA_LUA_API_BIND(Env);
-    ELONA_LUA_API_BIND(FOV);
-    ELONA_LUA_API_BIND(GUI);
-    ELONA_LUA_API_BIND(I18N);
-    ELONA_LUA_API_BIND(Input);
-    ELONA_LUA_API_BIND(Internal);
-    ELONA_LUA_API_BIND(Item);
-    ELONA_LUA_API_BIND(JSON5);
-    ELONA_LUA_API_BIND(Magic);
-    ELONA_LUA_API_BIND(Map);
-    ELONA_LUA_API_BIND(Pos);
-    ELONA_LUA_API_BIND(Rand);
-    ELONA_LUA_API_BIND(Skill);
-    ELONA_LUA_API_BIND(Trait);
-    ELONA_LUA_API_BIND(Wish);
-    ELONA_LUA_API_BIND(World);
+    ELONA_LUA_API_BIND_MODULE(Animation);
+    ELONA_LUA_API_BIND_MODULE(Calc);
+    ELONA_LUA_API_BIND_MODULE(Chara);
+    ELONA_LUA_API_BIND_MODULE(Config);
+    ELONA_LUA_API_BIND_MODULE(Console);
+    ELONA_LUA_API_BIND_MODULE(Data);
+    ELONA_LUA_API_BIND_MODULE(Debug);
+    ELONA_LUA_API_BIND_MODULE(Enchantment);
+    ELONA_LUA_API_BIND_MODULE(Env);
+    ELONA_LUA_API_BIND_MODULE(FOV);
+    ELONA_LUA_API_BIND_MODULE(GUI);
+    ELONA_LUA_API_BIND_MODULE(I18N);
+    ELONA_LUA_API_BIND_MODULE(Input);
+    ELONA_LUA_API_BIND_MODULE(Internal);
+    ELONA_LUA_API_BIND_MODULE(Item);
+    ELONA_LUA_API_BIND_MODULE(JSON5);
+    ELONA_LUA_API_BIND_MODULE(Magic);
+    ELONA_LUA_API_BIND_MODULE(Map);
+    ELONA_LUA_API_BIND_MODULE(Pos);
+    ELONA_LUA_API_BIND_MODULE(Rand);
+    ELONA_LUA_API_BIND_MODULE(Skill);
+    ELONA_LUA_API_BIND_MODULE(Trait);
+    ELONA_LUA_API_BIND_MODULE(Wish);
+    ELONA_LUA_API_BIND_MODULE(World);
 
-#undef ELONA_LUA_API_BIND
+#undef ELONA_LUA_API_BIND_MODULE
 }
 
 } // namespace elona::lua::api::modules
