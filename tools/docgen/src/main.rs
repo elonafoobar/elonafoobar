@@ -11,7 +11,7 @@ use std::path::{Path, PathBuf};
 const LUADOC: &str = "@luadoc";
 const NOLUADOC: &str = "@noluadoc";
 const LUA_MODULE: &str = "module_";
-const LUA_CLASS: &str = "Lua";
+const LUA_CLASS: &str = "class_";
 const VARARGS: &str = "sol::variadic_args";
 const EXTRA_COMPILE_OPTIONS: &[&str] = &["-DELONA_DOCGEN"];
 
@@ -30,9 +30,6 @@ impl ModuleComment {
             .trim_start_matches(LUA_CLASS)
             .into();
 
-        if is_class {
-            trimmed_name = format!("Lua{}", trimmed_name);
-        }
         ModuleComment {
             is_class: is_class,
             text: text,
