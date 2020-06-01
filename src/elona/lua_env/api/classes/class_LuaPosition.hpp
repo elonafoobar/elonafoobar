@@ -1,5 +1,5 @@
 #pragma once
-#include "../api/common.hpp"
+#include "../common.hpp"
 
 namespace elona
 {
@@ -9,9 +9,10 @@ namespace lua
 /**
  * @luadoc
  *
- * Contains parameters for the current game save.
+ * Represents a 2-dimensional position. Intended for representing tile
+ * locations.
  */
-namespace LuaGameData
+namespace LuaPosition
 {
 void bind(sol::state&);
 }

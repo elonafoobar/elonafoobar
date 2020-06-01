@@ -1,9 +1,9 @@
-#include "lua_class_map_data.hpp"
+#include "class_LuaMapData.hpp"
 
-#include "../../data/types/type_music.hpp"
-#include "../../lua_env/enums/enums.hpp"
-#include "../../map.hpp"
-#include "../../position.hpp"
+#include "../../../data/types/type_music.hpp"
+#include "../../../map.hpp"
+#include "../../../position.hpp"
+#include "../../enums/enums.hpp"
 
 
 

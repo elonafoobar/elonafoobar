@@ -1,7 +1,7 @@
-#include "lua_class_date_time.hpp"
+#include "class_LuaDateTime.hpp"
 
-#include "../../gdata.hpp"
-#include "../../map.hpp"
+#include "../../../gdata.hpp"
+#include "../../../map.hpp"
 
 
 

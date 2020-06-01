@@ -1,23 +1,20 @@
 #pragma once
-#include "../api/common.hpp"
 
-namespace elona
-{
-namespace lua
-{
+#include "common.hpp"
 
-/***
+
+
+/**
  * Binding functions for usertype classes.
  *
  * Methods for usertypes do not take a handle as a first argument,
  * because handles will transparently pass their underlying C++
  * references to them via metatables.
  */
-namespace LuaApiClasses
+namespace elona::lua::api::classes
 {
-void bind(sol::state&);
-void bind_api(sol::state&, sol::table&);
-} // namespace LuaApiClasses
 
-} // namespace lua
-} // namespace elona
+void bind(sol::state& L);
+void bind_api(sol::state& L, sol::table core);
+
+} // namespace elona::lua::api::classes

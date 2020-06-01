@@ -1,4 +1,4 @@
-#include "lua_class_game_data.hpp"
+#include "class_LuaGameData.hpp"
 
 
 

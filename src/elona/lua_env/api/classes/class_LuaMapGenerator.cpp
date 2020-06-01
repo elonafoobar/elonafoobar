@@ -1,12 +1,12 @@
-#include "lua_class_map_generator.hpp"
+#include "class_LuaMapGenerator.hpp"
 
-#include "../../area.hpp"
-#include "../../map.hpp"
-#include "../../mapgen.hpp"
-#include "../../position.hpp"
-#include "../../quest.hpp"
-#include "../../world.hpp"
-#include "../enums/enums.hpp"
+#include "../../../area.hpp"
+#include "../../../map.hpp"
+#include "../../../mapgen.hpp"
+#include "../../../position.hpp"
+#include "../../../quest.hpp"
+#include "../../../world.hpp"
+#include "../../enums/enums.hpp"
 
 
 

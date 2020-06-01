@@ -1,5 +1,5 @@
 #pragma once
-#include "../api/common.hpp"
+#include "../common.hpp"
 
 namespace elona
 {
@@ -9,9 +9,9 @@ namespace lua
 /**
  * @luadoc
  *
- * Contains parameters for the current map.
+ * Contains parameters for the current game save.
  */
-namespace LuaMapData
+namespace LuaGameData
 {
 void bind(sol::state&);
 }

@@ -1,11 +1,11 @@
-#include "lua_class_item.hpp"
+#include "class_LuaItem.hpp"
 
-#include "../../data/types/type_item.hpp"
-#include "../../data/types/type_item_material.hpp"
-#include "../../item.hpp"
-#include "../../itemgen.hpp"
-#include "../../lua_env/enums/enums.hpp"
-#include "../data_manager.hpp"
+#include "../../../data/types/type_item.hpp"
+#include "../../../data/types/type_item_material.hpp"
+#include "../../../item.hpp"
+#include "../../../itemgen.hpp"
+#include "../../data_manager.hpp"
+#include "../../enums/enums.hpp"
 
 
 

@@ -1,8 +1,8 @@
-#include "lua_class_position.hpp"
+#include "class_LuaPosition.hpp"
 
 #include <sstream>
 
-#include "../../position.hpp"
+#include "../../../position.hpp"
 
 
 

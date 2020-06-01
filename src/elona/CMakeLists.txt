@@ -128,17 +128,7 @@ set(ELONA_SOURCES
   lua_env/enums/enums.cpp
 
   lua_env/api/modules.cpp
-
-  lua_env/lua_class/lua_class.cpp
-  lua_env/lua_class/lua_class_ability.cpp
-  lua_env/lua_class/lua_class_area.cpp
-  lua_env/lua_class/lua_class_character.cpp
-  lua_env/lua_class/lua_class_date_time.cpp
-  lua_env/lua_class/lua_class_game_data.cpp
-  lua_env/lua_class/lua_class_item.cpp
-  lua_env/lua_class/lua_class_map_data.cpp
-  lua_env/lua_class/lua_class_map_generator.cpp
-  lua_env/lua_class/lua_class_position.cpp
+  lua_env/api/classes.cpp
 
   keybind/input_context.cpp
   keybind/key_names.cpp

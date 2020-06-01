@@ -1,6 +1,6 @@
-#include "lua_class_ability.hpp"
+#include "class_LuaAbility.hpp"
 
-#include "../../ability.hpp"
+#include "../../../ability.hpp"
 
 
 

@@ -9,7 +9,7 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
-#include "lua_env/lua_class/lua_class_map_generator.hpp"
+#include "lua_env/api/classes/class_LuaMapGenerator.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mapgen.hpp"

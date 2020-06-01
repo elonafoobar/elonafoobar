@@ -579,49 +579,16 @@ fn generate_doc<'a>(path: &Path, index: &Index<'a>, is_class: bool) -> Option<Do
     })
 }
 
-fn uppercase(s: &str) -> String {
-    let mut c = s.chars();
-    match c.next() {
-        None => String::new(),
-        Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
-    }
-}
-
-fn camel_case(s: &str) -> String {
-    let mut buffer = String::new();
-    let mut under = false;
-    for c in s.chars() {
-        match c {
-            '_' => under = true,
-            _ => {
-                if under {
-                    buffer.push_str(&c.to_uppercase().to_string());
-                    under = false;
-                } else {
-                    buffer.push(c)
-                }
-            }
-        }
-    }
-    buffer
-}
-
-fn get_output_filename(source_path: &Path, is_class: bool) -> String {
+fn get_output_filename(source_path: &Path) -> String {
     let file_name = source_path.file_name().and_then(|f| f.to_str()).unwrap();
-    let mod_name = Regex::new(r"^(?:module|lua_class)_(.*)\..*$") // (module|lua_class)_<...>.cpp
+    let mod_name = Regex::new(r"^(?:module|class)_(.*)\..*$") // (module|class)_<...>.cpp
         .ok()
         .and_then(|r| r.captures(file_name))
         .and_then(|c| c.get(1))
         .map(|c| c.as_str());
 
     match mod_name {
-        Some(name) => {
-            if is_class {
-                format!("Lua{}.luadoc", uppercase(&camel_case(&name)))
-            } else {
-                format!("{}.luadoc", name)
-            }
-        }
+        Some(name) => format!("{}.luadoc", name),
         None => {
             let name = source_path
                 .file_stem()
@@ -643,7 +610,7 @@ fn generate_and_write_doc<'a>(
 ) -> io::Result<()> {
     match output_path {
         Some(p) => {
-            let output_filename = get_output_filename(&path, is_class);
+            let output_filename = get_output_filename(&path);
             let output_file = p.join(output_filename);
             let modtime_source = fs::metadata(&path).and_then(|r| r.modified())?;
             let newer = force
@@ -749,7 +716,7 @@ fn main() {
     )
     .unwrap();
     generate_docs(
-        &source_path.join("lua_class"),
+        &source_path.join("api").join("classes"),
         &output_path.clone().map(|e| e.join("classes")),
         &index,
         true,

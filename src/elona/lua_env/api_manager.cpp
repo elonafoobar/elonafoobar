@@ -3,9 +3,9 @@
 #include <iterator>
 
 #include "../../util/strutil.hpp"
+#include "api/classes.hpp"
 #include "api/modules.hpp"
 #include "enums/enums.hpp"
-#include "lua_class/lua_class.hpp"
 #include "mod_manager.hpp"
 
 
@@ -24,10 +24,9 @@ APIManager::APIManager(LuaEnv& lua)
 
     api::modules::bind(core);
 
-    // Register usertype classes globally, and add APIs for
-    // constructors.
-    LuaApiClasses::bind(*lua_state());
-    LuaApiClasses::bind_api(*lua_state(), core);
+    // Register usertype classes globally, and add APIs for constructors.
+    api::classes::bind(*lua_state());
+    api::classes::bind_api(*lua_state(), core);
 
     load_prelude();
 

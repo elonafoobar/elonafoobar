@@ -1,7 +1,7 @@
-#include "lua_class_area.hpp"
+#include "class_LuaArea.hpp"
 
-#include "../../area.hpp"
-#include "../../map.hpp"
+#include "../../../area.hpp"
+#include "../../../map.hpp"
 
 
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "../api/common.hpp"
+#include "../common.hpp"
 
 namespace elona
 {

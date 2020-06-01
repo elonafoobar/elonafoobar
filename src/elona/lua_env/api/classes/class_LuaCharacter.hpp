@@ -1,6 +1,6 @@
 #pragma once
-#include "../../status_ailment.hpp"
-#include "../api/common.hpp"
+#include "../../../status_ailment.hpp"
+#include "../common.hpp"
 
 namespace elona
 {
