@@ -1393,7 +1393,6 @@ void chara_vanquish(Character& chara)
         }
         chara.shop_store_id = 0;
     }
-    quest_check();
     modify_crowd_density(chara.index, 1);
 }
 
