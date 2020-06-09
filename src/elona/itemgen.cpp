@@ -153,7 +153,7 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
 
     auto&& item = *empty_slot;
 
-    item_delete(item);
+    item.clear();
 
     if (slot == -1 && mode != 6 && mode != 9)
     {
