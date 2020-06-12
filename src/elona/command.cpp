@@ -5017,11 +5017,7 @@ int do_zap(Character& doer, Item& rod)
     efsource = 0;
     if (rod.number() == 0)
     {
-        if (rod.index >= ELONA_ITEM_ON_GROUND_INDEX)
-        {
-            cell_refresh(rod.position.x, rod.position.y);
-            return 1;
-        }
+        return 1;
     }
     item_separate(rod);
     --rod.count;

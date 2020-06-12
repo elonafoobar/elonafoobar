@@ -521,7 +521,6 @@ TalkResult talk_guard_return_item(Character& speaker)
         wallet_opt = itemfind(0, 283);
     }
     Item& wallet = *wallet_opt;
-    p = wallet.index;
     wallet.modify_number(-1);
     if (wallet.param1 == 0)
     {

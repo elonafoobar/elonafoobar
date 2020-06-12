@@ -542,11 +542,6 @@ void fmode_7_8(bool read, const fs::path& dir)
             if (fs::exists(filepath))
             {
                 load(filepath, inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
-                for (int index = 0; index < ELONA_OTHER_INVENTORIES_INDEX;
-                     index++)
-                {
-                    inv[index].index = index;
-                }
             }
         }
         else
@@ -943,11 +938,6 @@ void fmode_14_15(bool read)
             if (fs::exists(filepath))
             {
                 load(filepath, inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
-                for (int index = 0; index < ELONA_OTHER_INVENTORIES_INDEX;
-                     index++)
-                {
-                    inv[index].index = index;
-                }
             }
         }
         else
@@ -1325,11 +1315,6 @@ void fmode_3_4(bool read, const fs::path& filename)
     {
         tmpload(filename);
         load(filepath, inv, ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
-        for (int index = ELONA_OTHER_INVENTORIES_INDEX; index < ELONA_MAX_ITEMS;
-             index++)
-        {
-            inv[index].index = index;
-        }
     }
     else
     {
