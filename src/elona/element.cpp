@@ -138,23 +138,43 @@ void txteledmg(
     }
     else if (type == 1)
     {
-        assert(attacker);
-        auto text = i18n::s.get_enum_property_optional(
-            "core.death_by.element"s,
-            "active",
-            element,
-            cdata[target],
-            *attacker);
-        if (text)
+        if (attacker)
         {
-            txt(*text);
+            auto text = i18n::s.get_enum_property_optional(
+                "core.death_by.element"s,
+                "active.by_chara",
+                element,
+                cdata[target],
+                *attacker);
+            if (text)
+            {
+                txt(*text);
+            }
+            else
+            {
+                txt(i18n::s.get(
+                    "core.death_by.element.default.active.by_chara",
+                    cdata[target],
+                    *attacker));
+            }
         }
         else
         {
-            txt(i18n::s.get(
-                "core.death_by.element.default.active",
-                cdata[target],
-                *attacker));
+            auto text = i18n::s.get_enum_property_optional(
+                "core.death_by.element"s,
+                "active.by_spell",
+                element,
+                cdata[target]);
+            if (text)
+            {
+                txt(*text);
+            }
+            else
+            {
+                txt(i18n::s.get(
+                    "core.death_by.element.default.active.by_spell",
+                    cdata[target]));
+            }
         }
     }
     else if (type == 2)
