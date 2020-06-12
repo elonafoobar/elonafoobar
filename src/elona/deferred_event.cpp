@@ -1012,7 +1012,7 @@ void eh_guest_visit(const DeferredEvent&)
             {
                 break;
             }
-            else if (item.index == chair_for_guest->index)
+            else if (item == *chair_for_guest)
             {
                 continue;
             }

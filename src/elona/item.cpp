@@ -467,7 +467,7 @@ void item_copy(Item& src, Item& dst)
 
 void item_exchange(Item& a, Item& b)
 {
-    if (a.index == b.index)
+    if (a == b)
     {
         return;
     }
@@ -1523,8 +1523,7 @@ ItemStackResult item_stack(int inventory_id, Item& base_item, bool show_message)
 
     for (auto&& item : inv.by_index(inventory_id))
     {
-        if (item.index == base_item.index || item.number() == 0 ||
-            item.id != base_item.id)
+        if (item == base_item || item.number() == 0 || item.id != base_item.id)
             continue;
 
         bool stackable;
@@ -2492,8 +2491,7 @@ Item& item_convert_artifact(Item& artifact, bool ignore_external_container)
         }
         for (const auto& item : inv.for_chara(chara))
         {
-            if (item.number() > 0 && item.id == artifact.id &&
-                item.index != artifact.index)
+            if (item.number() > 0 && item.id == artifact.id && item != artifact)
             {
                 found = true;
                 break;
@@ -2508,8 +2506,7 @@ Item& item_convert_artifact(Item& artifact, bool ignore_external_container)
     {
         for (const auto& item : inv.ground())
         {
-            if (item.number() > 0 && item.id == artifact.id &&
-                item.index != artifact.index)
+            if (item.number() > 0 && item.id == artifact.id && item != artifact)
             {
                 found = true;
                 break;

@@ -162,6 +162,19 @@ public:
 
 
 
+    bool operator==(const Item& other) const noexcept
+    {
+        return this == &other;
+    }
+
+
+    bool operator!=(const Item& other) const noexcept
+    {
+        return !(*this == other);
+    }
+
+
+
     static void copy(const Item& from, Item& to)
     {
         const auto index_save = to.index;
