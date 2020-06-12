@@ -167,75 +167,44 @@ void remove_erase_if(Range& range, Predicate&& predicate)
 
 
 
-template <typename T>
-struct iota
+template <typename BeginIterator, typename EndIterator = BeginIterator>
+struct iterator_pair_t
 {
-    iota(T first, T last)
-        : first(first)
-        , last(last)
+    using begin_iterator_type = BeginIterator;
+    using end_iterator_type = EndIterator;
+
+
+
+    iterator_pair_t(begin_iterator_type begin_itr, end_iterator_type end_itr)
+        : _begin_itr(begin_itr)
+        , _end_itr(end_itr)
     {
     }
 
 
-    iota(T last)
-        : iota(0, last)
+    begin_iterator_type begin() const
     {
+        return _begin_itr;
     }
 
 
-    struct iterator
+    end_iterator_type end() const
     {
-        using value_type = const T;
-        using difference_type = size_t;
-        using pointer = const T*;
-        using reference = const T&;
-        using iterator_category = std::random_access_iterator_tag;
-
-
-        iterator(T n)
-            : n(n)
-        {
-        }
-
-
-        void operator++()
-        {
-            ++n;
-        }
-
-
-        reference operator*() const
-        {
-            return n;
-        }
-
-
-        bool operator!=(const iterator& other) const
-        {
-            return n != other.n;
-        }
-
-
-    private:
-        T n;
-    };
-
-
-    iterator begin() const
-    {
-        return {first};
-    }
-
-
-    iterator end() const
-    {
-        return {last};
+        return _end_itr;
     }
 
 
 private:
-    const T first;
-    const T last;
+    begin_iterator_type _begin_itr;
+    end_iterator_type _end_itr;
 };
+
+
+
+template <typename BeginIterator, typename EndIterator = BeginIterator>
+auto iterator_pair(BeginIterator begin_itr, EndIterator end_itr)
+{
+    return iterator_pair_t<BeginIterator, EndIterator>(begin_itr, end_itr);
+}
 
 } // namespace range

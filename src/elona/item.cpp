@@ -46,7 +46,7 @@ namespace elona
 {
 
 
-Inventory inv;
+AllInventory inv;
 
 int ci_at_m138 = 0;
 int p_at_m138 = 0;
@@ -98,34 +98,104 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
 
 
 
-Inventory::Inventory()
-    : storage(ELONA_MAX_ITEMS)
+Inventory::Inventory(
+    size_t index_start,
+    size_t inventory_size,
+    int inventory_id)
+    : _index_start(index_start)
+    , _storage(inventory_size)
+    , _inventory_id(inventory_id)
 {
-    for (size_t i = 0; i < storage.size(); ++i)
+    size_t i = index_start;
+    for (auto&& item : _storage)
     {
-        storage[i]._index = static_cast<int>(i);
+        item._index = i;
+        item._inventory = this;
+        ++i;
     }
 }
 
 
 
-InventorySlice Inventory::for_chara(const Character& chara)
+Inventory::Inventory(Inventory&& other)
+    : _index_start(other._index_start)
+    , _storage(std::move(other._storage))
+    , _inventory_id(other._inventory_id)
 {
-    if (chara.index == 0)
+    for (auto&& item : _storage)
     {
-        return pc();
-    }
-    else
-    {
-        return {
-            std::begin(storage) + 200 + 20 * (chara.index - 1),
-            std::begin(storage) + 200 + 20 * (chara.index - 1) + 20};
+        item._inventory = this;
     }
 }
 
 
 
-InventorySlice Inventory::by_index(int index)
+bool Inventory::contains(size_t index) const
+{
+    return _index_start <= index && index < _index_start + _storage.size();
+}
+
+
+
+Item& Inventory::at(size_t index)
+{
+    assert(index < size());
+    return _storage.at(index);
+}
+
+
+
+AllInventory::AllInventory()
+{
+    size_t index_start = 0;
+    _inventories.emplace_back(index_start, 200, 0);
+    index_start += _inventories.back().size();
+    for (size_t i = 1; i < 245; ++i)
+    {
+        _inventories.emplace_back(index_start, 20, static_cast<int>(i));
+        index_start += _inventories.back().size();
+    }
+    _inventories.emplace_back(index_start, 400, -1);
+}
+
+
+
+Item& AllInventory::operator[](int index)
+{
+    for (auto&& inv : _inventories)
+    {
+        if (inv.contains(static_cast<size_t>(index)))
+        {
+            return inv.at(static_cast<size_t>(index) - inv.index_start());
+        }
+    }
+    assert(0);
+}
+
+
+
+Inventory& AllInventory::pc()
+{
+    return _inventories.front();
+}
+
+
+
+Inventory& AllInventory::ground()
+{
+    return _inventories.back();
+}
+
+
+
+Inventory& AllInventory::for_chara(const Character& chara)
+{
+    return _inventories.at(chara.index);
+}
+
+
+
+Inventory& AllInventory::by_index(int index)
 {
     if (index == -1)
     {
@@ -135,6 +205,31 @@ InventorySlice Inventory::by_index(int index)
     {
         return for_chara(cdata[index]);
     }
+}
+
+
+
+AllInventory::iterator_pair_type AllInventory::all()
+{
+    return {_inventories.begin(), _inventories.end()};
+}
+
+
+
+AllInventory::iterator_pair_type AllInventory::global()
+{
+    auto end = _inventories.begin();
+    std::advance(end, 57);
+    return {_inventories.begin(), end};
+}
+
+
+
+AllInventory::iterator_pair_type AllInventory::map_local()
+{
+    auto begin = _inventories.begin();
+    std::advance(begin, 57);
+    return {begin, _inventories.end()};
 }
 
 
@@ -354,7 +449,8 @@ void cell_refresh(int x, int y)
         {
             if (item.position.x == x && item.position.y == y)
             {
-                floorstack(p_at_m55) = item.index();
+                floorstack(p_at_m55) =
+                    item.index() - inv.ground().index_start();
                 ++p_at_m55;
                 wpoke(
                     cell_data.at(x, y).item_appearances_actual, 0, item.image);
@@ -401,22 +497,20 @@ void cell_refresh(int x, int y)
                         continue;
                     }
                 }
-                if (inv[floorstack(cnt)].turn > i_at_m55)
+                if (inv.ground().at(floorstack(cnt)).turn > i_at_m55)
                 {
                     n_at_m55(cnt2_at_m55) = cnt;
-                    i_at_m55 = inv[floorstack(cnt)].turn;
+                    i_at_m55 = inv.ground().at(floorstack(cnt)).turn;
                 }
             }
         }
-        cell_data.at(x, y).item_appearances_actual =
-            floorstack(n_at_m55(0)) - ELONA_ITEM_ON_GROUND_INDEX;
+        cell_data.at(x, y).item_appearances_actual = floorstack(n_at_m55(0));
         cell_data.at(x, y).item_appearances_actual +=
-            (floorstack(n_at_m55(1)) - ELONA_ITEM_ON_GROUND_INDEX) * 1000;
+            floorstack(n_at_m55(1)) * 1000;
         if (p_at_m55 > 2)
         {
             cell_data.at(x, y).item_appearances_actual +=
-                (floorstack(n_at_m55(2)) - ELONA_ITEM_ON_GROUND_INDEX) *
-                1000000;
+                floorstack(n_at_m55(2)) * 1000000;
         }
         else
         {
@@ -2017,42 +2111,25 @@ void mapitem_cold(int x, int y)
 
 Item& get_random_inv(int owner)
 {
-    const auto tmp = inv_getheader(owner);
-    const auto index = tmp.first + rnd(tmp.second);
-    return inv[index];
+    auto& inv_ = inv.by_index(owner);
+    return inv_.at(rnd(inv_.size()));
 }
 
 
 
 std::pair<int, int> inv_getheader(int owner)
 {
-    if (owner == 0)
-    {
-        return {0, 200};
-    }
-    else if (owner == -1)
-    {
-        return {ELONA_ITEM_ON_GROUND_INDEX, 400};
-    }
-    else
-    {
-        return {200 + 20 * (owner - 1), 20};
-    }
+    return {
+        static_cast<int>(inv.by_index(owner).index_start()),
+        static_cast<int>(inv.by_index(owner).size()),
+    };
 }
 
 
 
 int inv_getowner(const Item& item)
 {
-    if (item.index() < 200)
-    {
-        return 0;
-    }
-    if (item.index() >= ELONA_ITEM_ON_GROUND_INDEX)
-    {
-        return -1;
-    }
-    return (item.index() - 200) / 20 + 1;
+    return item.inventory()->inventory_id();
 }
 
 

@@ -118,9 +118,12 @@ void _clear_map_and_objects()
     {
         cnt.set_state(Character::State::empty);
     }
-    for (auto&& item : inv.map_local())
+    for (auto&& inv_ : inv.map_local())
     {
-        item.remove();
+        for (auto&& item : inv_)
+        {
+            item.remove();
+        }
     }
 
     map_data.clear();

@@ -163,9 +163,12 @@ void HandleManager::clear_map_local_handles()
     {
         remove_chara_handle(cdata[i]);
     }
-    for (auto&& item : inv.map_local())
+    for (auto&& inv_ : inv.map_local())
     {
-        remove_item_handle(item);
+        for (auto&& item : inv_)
+        {
+            remove_item_handle(item);
+        }
     }
 }
 

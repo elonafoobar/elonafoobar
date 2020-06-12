@@ -1299,19 +1299,20 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
             // Several items are stacked.
             std::array<int, 3> items;
             p_ = -cell_data.at(x, y).item_appearances_memory;
-            items[0] = p_ % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
-            items[1] = p_ / 1000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
-            items[2] = p_ / 1000000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            items[0] = p_ % 1000;
+            items[1] = p_ / 1000 % 1000;
+            items[2] = p_ / 1000000 % 1000;
             int stack_height{};
             for (int i = 2; i >= 0; --i)
             {
-                if (items[i] == 6079) // 5080 + 999
+                if (items[i] == 999)
                 {
                     continue;
                 }
-                p_ = inv[items[i]].image;
-                i_ = inv[items[i]].color;
-                auto rect = prepare_item_image(p_, i_, inv[items[i]].param1);
+                const auto& item = inv.ground().at(items[i]);
+                p_ = item.image;
+                i_ = item.color;
+                auto rect = prepare_item_image(p_, i_, item.param1);
                 if (map_data.type == mdata_t::MapType::world_map)
                 {
                     draw_item_chip_in_world_map(
