@@ -421,16 +421,13 @@ TEST_CASE("Test relocation of character handle", "[Lua: Handles]")
 
     int first_index = chara_opt->index;
     std::string uuid = handle["__uuid"];
-    REQUIRE(handle["__index"].get<int>() == first_index);
 
     const auto ally = new_ally_joins(chara);
     REQUIRE_SOME(ally);
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
     REQUIRE(ally->index != first_index);
-    REQUIRE(handle["__index"].get<int>() == ally->index);
     REQUIRE(handle["__uuid"].get<std::string>() == uuid);
-    REQUIRE(handle["__index"].get<int>() == handle["index"].get<int>());
 }
 
 TEST_CASE(
@@ -447,7 +444,6 @@ TEST_CASE(
 
     int first_index = chara_opt->index;
     std::string uuid = handle["__uuid"];
-    REQUIRE(handle["__index"].get<int>() == first_index);
 
     int tc = chara_opt->index;
     flt(20, Quality::good);
@@ -457,7 +453,6 @@ TEST_CASE(
     chara_relocate(cdata.tmp(), cdata[tc], CharaRelocationMode::change);
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
-    REQUIRE(handle["__index"].get<int>() == cdata[tc].index);
     REQUIRE(handle["__uuid"].get<std::string>() == uuid);
     REQUIRE(handle_mgr.handle_is_valid(temporary_handle) == false);
 }
@@ -708,11 +703,6 @@ TEST_CASE("Test swapping of item handles", "[Lua: Handles]")
     elona::item_exchange(item_a, item_b);
 
     // Disabled temporarily.
-    // TODO: rethink how should swapping behave.
-    // // Handle indices should reflect the swapped item indices.
-    // REQUIRE(handle_a["__index"].get<int>() == item_b.index);
-    // REQUIRE(handle_b["__index"].get<int>() == item_a.index);
-
     // // UUIDs should still be the same as before.
     // REQUIRE(handle_a["__uuid"].get<std::string>() == uuid_a);
     // REQUIRE(handle_b["__uuid"].get<std::string>() == uuid_b);

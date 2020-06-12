@@ -127,13 +127,6 @@ void HandleManager::remove_chara_handle_run_callbacks(const Character& chara)
         return;
     }
 
-    // If the handle already exists, the object it references has to be invalid.
-    // Otherwise the handle would be mistakenly invalidated when the thing it
-    // points to is still valid.
-    int index = handle["__index"];
-    (void)index;
-    assert(cdata[index].state() != Character::State::alive);
-
     lua().get_event_manager().trigger(
         lua::CharacterInstanceEvent("core.character_removed", chara));
     remove_chara_handle(chara);
@@ -148,13 +141,6 @@ void HandleManager::remove_item_handle_run_callbacks(const Item& item)
     {
         return;
     }
-
-    // If the handle already exists, the object it references has to be invalid.
-    // Otherwise the handle would be mistakenly invalidated when the thing it
-    // points to is still valid.
-    int index = handle["__index"];
-    (void)index;
-    assert(inv[index].number() == 0);
 
     lua().get_event_manager().trigger(
         lua::ItemInstanceEvent("core.item_removed", item));
