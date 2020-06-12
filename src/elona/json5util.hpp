@@ -7,16 +7,14 @@
 
 
 
-namespace elona
-{
-namespace json5util
+namespace elona::json5util
 {
 
 using parse_result = either::either<std::string, json5::value>;
 
 
 
-parse_result parse_stream(std::istream& in)
+inline parse_result parse_stream(std::istream& in)
 {
     if (!in)
     {
@@ -36,5 +34,4 @@ parse_result parse_stream(std::istream& in)
     }
 }
 
-} // namespace json5util
-} // namespace elona
+} // namespace elona::json5util
