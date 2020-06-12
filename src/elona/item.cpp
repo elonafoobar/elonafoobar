@@ -871,7 +871,6 @@ void itemname_additional_info(Item& item)
 
 std::string itemname(Item& item, int number, bool with_article)
 {
-    elona_vector1<int> iqiality_;
     int num2_ = 0;
     std::string s2_;
     std::string s3_;
@@ -882,10 +881,6 @@ std::string itemname(Item& item, int number, bool with_article)
         static_cast<size_t>(itemid2int(item.id)) > ioriginalnameref.size())
     {
         return i18n::s.get("core.item.unknown_item");
-    }
-    if (item.quality >= Quality::godly)
-    {
-        iqiality_(item.index) = 5;
     }
     item_checkknown(item);
     if (number == 0)
