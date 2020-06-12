@@ -1674,16 +1674,7 @@ void supply_income()
         if (cdata.player().level > 5)
         {
             save_set_autosave();
-            p = -1;
-            for (const auto& item : inv.ground())
-            {
-                if (item.number() == 0)
-                {
-                    p = item.index;
-                    break;
-                }
-            }
-            if (p == -1)
+            if (!inv_getspace(-1))
             {
                 inv_compress(-1);
             }

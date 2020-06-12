@@ -788,7 +788,7 @@ void blending_menu_2()
             p = list(0, p);
             s = itemname(inv[p]);
             s = strutil::take_by_width(s, 28);
-            if (p >= ELONA_ITEM_ON_GROUND_INDEX)
+            if (inv_getowner(inv[p]) == -1)
             {
                 s += i18n::s.get("core.blending.steps.ground");
             }

@@ -491,12 +491,12 @@ void Item::remove()
 
 void item_refresh(Item& i)
 {
-    if (i.index >= ELONA_ITEM_ON_GROUND_INDEX && mode != 6)
+    if (inv_getowner(i) == -1 && mode != 6)
     {
         // Refresh the cell the item is on if it's on the ground.
         cell_refresh(i.position.x, i.position.y);
     }
-    else if (i.index < 200)
+    else if (inv_getowner(i) == 0)
     {
         // Refresh the player's burden state if the item is in their
         // inventory.
