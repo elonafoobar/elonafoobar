@@ -222,7 +222,7 @@ int damage_hp(
         }
         dmg_at_m141 = dmg_at_m141 * 100 / (sdata(60, victim.index) / 2 + 50);
     }
-    if (attacker_is_player)
+    if (attacker && attacker->index == 0)
     {
         if (critical)
         {
@@ -518,7 +518,7 @@ int damage_hp(
                         {
                             runs_away = false;
                         }
-                        if (attacker_is_player)
+                        if (attacker && attacker->index == 0)
                         {
                             if (trait(44)) // Gentle Face
                             {
@@ -660,7 +660,7 @@ int damage_hp(
                 txt(i18n::s.get("core.damage.sleep_is_disturbed", victim));
             }
         }
-        if (attacker_is_player)
+        if (attacker && attacker->index == 0)
         {
             hostileaction(0, victim.index);
             game_data.chara_last_attacked_by_player = victim.index;
@@ -765,7 +765,7 @@ int damage_hp(
                     apply_hate = true;
                 }
             }
-            if (!attacker_is_player)
+            if (attacker->index != 0)
             {
                 if (attacker->enemy_id == victim.index)
                 {
@@ -970,7 +970,7 @@ int damage_hp(
         }
         if (attacker)
         {
-            if (!attacker_is_player)
+            if (attacker->index != 0)
             {
                 chara_custom_talk(attacker->index, 103);
             }
@@ -987,7 +987,7 @@ int damage_hp(
                 gained_exp /= 20;
             }
             attacker->experience += gained_exp;
-            if (attacker_is_player)
+            if (attacker->index == 0)
             {
                 game_data.sleep_experience += gained_exp;
             }
@@ -1176,7 +1176,7 @@ int damage_hp(
                 }
             }
         }
-        if (attacker_is_player)
+        if (attacker && attacker->index == 0)
         {
             if (game_data.catches_god_signal)
             {
