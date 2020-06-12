@@ -83,6 +83,7 @@ set(ELONA_SOURCES
   random_event.cpp
   randomgen.cpp
   save.cpp
+  save_header.cpp
   save_update.cpp
   scene.cpp
   set_item_info.cpp

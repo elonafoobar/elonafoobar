@@ -18,6 +18,7 @@
 #include "menu.hpp"
 #include "random.hpp"
 #include "save.hpp"
+#include "save_header.hpp"
 #include "ui.hpp"
 #include "ui/menu_cursor_history.hpp"
 #include "ui/simple_prompt.hpp"
@@ -530,26 +531,22 @@ MainMenuResult main_menu_continue()
     cs = 0;
     cs_bk = -1;
     page = 0;
-    pagesize = 5;
+    pagesize = 4;
     keyrange = 0;
 
+    std::vector<SaveHeader> save_headers;
     for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
     {
-        s = filepathutil::to_utf8_path(entry.path().filename());
-        const auto header_filepath = filesystem::dirs::save(s) / u8"header.txt";
-        if (!fs::exists(header_filepath))
+        const auto dir_name =
+            filepathutil::to_utf8_path(entry.path().filename());
+        if (!SaveHeader::exists(filesystem::dirs::save(dir_name)))
         {
             continue;
         }
-
-        // the number of bytes read by bload depends on the size of
-        // the string passed in, so make it 100 bytes long.
-        playerheader = std::string(100, '\0');
-        bload(header_filepath, playerheader);
-
         list(0, save_data_count) = save_data_count;
-        listn(0, save_data_count) = s;
-        listn(1, save_data_count) = ""s + playerheader;
+        listn(0, save_data_count) = dir_name;
+        auto header = SaveHeader::load(filesystem::dirs::save(dir_name));
+        save_headers.emplace_back(std::move(header));
         key_list(save_data_count) = key_select(save_data_count);
         ++save_data_count;
     }
@@ -581,10 +578,10 @@ MainMenuResult main_menu_continue()
             i18n::s.get("core.main_menu.continue.title"),
             i18n::s.get("core.main_menu.continue.key_hint") + strhint2 +
                 strhint3b,
-            (windoww - 440) / 2 + inf_screenx,
-            winposy(288, 1),
-            440,
-            288);
+            (windoww - 540) / 2 + inf_screenx,
+            winposy(428, 1),
+            540,
+            428);
         cs_listbk();
         keyrange = 0;
         for (int cnt = 0, cnt_end = pagesize; cnt < cnt_end; ++cnt)
@@ -595,12 +592,16 @@ MainMenuResult main_menu_continue()
                 break;
             }
             x = wx + 20;
-            y = cnt * 40 + wy + 50;
-            display_key(x + 20, y - 2, cnt);
-            font(11 - en * 2);
-            mes(x + 48, y - 4, listn(0, index));
+            y = cnt * 80 + wy + 50;
+            display_key(x + 20, y - 4, cnt);
+            font(12 - en * 2);
+            cs_list(cs == cnt, save_headers.at(index).title(), x + 48, y - 4);
             font(13 - en * 2);
-            cs_list(cs == cnt, listn(1, index), x + 48, y + 8);
+            for (const auto& s : save_headers.at(index).to_string())
+            {
+                mes(x + 48, y + 14, s);
+                y += 16;
+            }
             ++keyrange;
         }
         cs_bk = cs;

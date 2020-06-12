@@ -937,5 +937,13 @@ ELONA.i18n:add {
          time = "{zfill($1, 2)}:{zfill($2, 2)}:{zfill($3, 2)}",
          date = "{zfill($1, 2)}/{zfill($2, 2)}/{zfill($3, 2)}",
       },
+
+      save_header = {
+         last_played_at = "最後にプレイした日時: {$1}/{zfill($2, 2)}/{zfill($3, 2)} {zfill($4, 2)}:{zfill($5, 2)}",
+         play_seconds = {
+            minutes = "プレイ時間: {$1}分",
+            hours = "プレイ時間: {$1}時間{$2}分",
+         },
+      },
    },
 }
