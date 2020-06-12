@@ -42,13 +42,9 @@ TEST_CASE("Test that handle properties can be read", "[Lua: Handles]")
         const auto item_opt =
             itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3);
         REQUIRE_SOME(item_opt);
-        int idx = item_opt->index;
-        Item& item = elona::inv[idx];
+        Item& item = *item_opt;
         auto handle = handle_mgr.get_handle(item);
         elona::lua::lua->get_state()->set("item", handle);
-        elona::lua::lua->get_state()->set("idx", idx);
-        REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
-            R"(assert(item.index == idx))"));
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
             R"(assert(item.position.x == 4))"));
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
@@ -224,8 +220,8 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
 
         testing::invalidate_item(item);
 
-        REQUIRE_THROWS(mod_mgr.run_in_mod(
-            "test2", "print(mod.store.global.items[0].index)"));
+        REQUIRE_THROWS(
+            mod_mgr.run_in_mod("test2", "print(mod.store.global.items[0].id)"));
     }
 }
 
@@ -258,18 +254,19 @@ mod.store.global.charas = {[0]=chara}
     {
         REQUIRE_NOTHROW(
             mod_mgr.load_testing_mod_from_script("test_invalid_item", R"(
+local Chara = ELONA.require("core.Chara")
 local Item = ELONA.require("core.Item")
-local item = Item.create(0, 0, "core.putitoro", 3)
-mod.store.global.idx = item.index
-mod.store.global.items = {[0]=items}
+local item = Item.create(Chara.player().position, "core.putitoro", 3)
+mod.store.global.items = {[0]=item}
 )"));
-        int idx = mod_mgr.get_mod("test_invalid_item")
-                      ->env.get<int>(std::tie("mod", "store", "global", "idx"));
 
-        testing::invalidate_item(elona::inv[idx]);
+        const auto item = item_find(
+            itemid2int(ItemId::putitoro), 3, ItemFindLocation::ground);
+        REQUIRE_SOME(item);
+        testing::invalidate_item(*item);
 
         REQUIRE_THROWS(mod_mgr.run_in_mod(
-            "test_invalid_item", "print(mod.store.global.items[0].index)"));
+            "test_invalid_item", "print(mod.store.global.items[0].id)"));
     }
 }
 

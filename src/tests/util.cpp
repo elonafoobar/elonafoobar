@@ -84,19 +84,19 @@ Item& create_item(int id, int number)
 
 void invalidate_item(Item& item)
 {
-    int old_index = item.index;
+    const Item* old_address = &item;
     int old_id = itemid2int(item.id);
     int old_x = item.position.x;
     int old_y = item.position.y;
 
     // Delete the item and create new ones until the index is taken again.
-    inv[old_index].remove();
-    inv[old_index].clear();
+    item.remove();
+    item.clear();
     while (true)
     {
         const auto new_item = itemcreate_extra_inv(old_id, old_x, old_y, 3);
         REQUIRE_SOME(new_item);
-        if (new_item->index != old_index)
+        if (&(*new_item) != old_address)
         {
             break;
         }

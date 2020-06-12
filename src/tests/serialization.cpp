@@ -39,7 +39,7 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
     const auto item =
         itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), x, y, number);
     REQUIRE_SOME(item);
-    int index = item->index;
+    int index = item->index();
     elona::inv[index].is_aphrodisiac() = true;
     elona::inv[index].curse_state = CurseState::blessed;
 
@@ -80,19 +80,6 @@ TEST_CASE("Test other character index preservation", "[C++: Serialization]")
     REQUIRE(elona::cdata[index].index == index);
 }
 
-TEST_CASE("Test item index preservation", "[C++: Serialization]")
-{
-    start_in_debug_map();
-    const auto item =
-        itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 0, 0, 0);
-    REQUIRE_SOME(item);
-    int index = item->index;
-
-    save_and_reload();
-
-    REQUIRE(elona::inv[index].index == index);
-}
-
 TEST_CASE("Test character data compatibility", "[C++: Serialization]")
 {
     int player_idx = 0;
@@ -111,18 +98,14 @@ TEST_CASE("Test other character data compatibility", "[C++: Serialization]")
 
 TEST_CASE("Test item data compatibility (in inventory)", "[C++: Serialization]")
 {
-    int item_idx = 0;
     load_previous_savefile();
-    REQUIRE(elona::inv[item_idx].index == item_idx);
-    REQUIRE(elona::itemname(inv[item_idx]) == u8"ブロンズの兜 [0,1]");
+    REQUIRE(elona::itemname(inv[0]) == u8"ブロンズの兜 [0,1]");
 }
 
 TEST_CASE("Test item data compatibility (on ground)", "[C++: Serialization]")
 {
-    int item_idx = 5080;
     load_previous_savefile();
-    REQUIRE(elona::inv[item_idx].index == item_idx);
-    REQUIRE(elona::itemname(inv[item_idx]) == u8"割れたつぼ");
+    REQUIRE(elona::itemname(inv[5080]) == u8"割れたつぼ");
 }
 
 TEST_CASE("Test ability data compatibility", "[C++: Serialization]")

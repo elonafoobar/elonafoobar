@@ -50,20 +50,31 @@ struct Enchantment
 
 
 
+struct Inventory;
+
+
+
 struct Item
 {
 private:
     using FlagSet = std::bitset<32>;
 
 
-public:
-    Item();
-
     // Index of this item into the global cdata array.
     // Used for communicating with legacy code that takes integer index
     // arguments. New code should pass Item& instead. Not serialized; set on
     // creation and load.
-    int index = -1;
+    int _index = -1;
+
+    friend Inventory;
+
+public:
+    Item();
+
+    int index() const noexcept
+    {
+        return _index;
+    }
 
 private:
     int number_ = 0;
@@ -177,9 +188,9 @@ public:
 
     static void copy(const Item& from, Item& to)
     {
-        const auto index_save = to.index;
+        const auto index_save = to._index;
         to = from;
-        to.index = index_save;
+        to._index = index_save;
     }
 
 

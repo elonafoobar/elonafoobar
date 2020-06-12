@@ -680,7 +680,7 @@ void make_item_list(
             }
 
             // リスト追加
-            list(0, listmax) = item.index;
+            list(0, listmax) = item.index();
 
             // ソート情報
             list(1, listmax) = reftype * 1000 + itemid2int(item.id);

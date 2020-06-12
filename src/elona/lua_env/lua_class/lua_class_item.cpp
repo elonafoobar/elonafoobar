@@ -45,7 +45,7 @@ void LuaItem::change_material(Item& self, const std::string& material_id)
 
 std::string LuaItem::metamethod_tostring(const Item& self)
 {
-    return Item::lua_type() + "(" + std::to_string(self.index) + ")";
+    return Item::lua_type() + "(" + std::to_string(self.index()) + ")";
 }
 
 
@@ -62,7 +62,8 @@ void LuaItem::bind(sol::state& lua)
      *
      * [R] The index of this item in the global items array.
      */
-    LuaItem.set("index", sol::readonly(&Item::index));
+    LuaItem.set(
+        "index", sol::property([](const Item& it) { return it.index(); }));
 
 
     /**

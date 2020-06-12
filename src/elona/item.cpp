@@ -103,7 +103,7 @@ Inventory::Inventory()
 {
     for (size_t i = 0; i < storage.size(); ++i)
     {
-        storage[i].index = static_cast<int>(i);
+        storage[i]._index = static_cast<int>(i);
     }
 }
 
@@ -354,7 +354,7 @@ void cell_refresh(int x, int y)
         {
             if (item.position.x == x && item.position.y == y)
             {
-                floorstack(p_at_m55) = item.index;
+                floorstack(p_at_m55) = item.index();
                 ++p_at_m55;
                 wpoke(
                     cell_data.at(x, y).item_appearances_actual, 0, item.image);
@@ -2044,15 +2044,15 @@ std::pair<int, int> inv_getheader(int owner)
 
 int inv_getowner(const Item& item)
 {
-    if (item.index < 200)
+    if (item.index() < 200)
     {
         return 0;
     }
-    if (item.index >= ELONA_ITEM_ON_GROUND_INDEX)
+    if (item.index() >= ELONA_ITEM_ON_GROUND_INDEX)
     {
         return -1;
     }
-    return (item.index - 200) / 20 + 1;
+    return (item.index() - 200) / 20 + 1;
 }
 
 

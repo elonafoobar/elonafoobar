@@ -130,7 +130,14 @@ public:
     template <typename T>
     sol::table get_handle(T& obj)
     {
-        return get_handle(obj.index, T::lua_type());
+        if constexpr (std::is_same_v<std::remove_cv_t<T>, Item>)
+        {
+            return get_handle(obj.index(), T::lua_type());
+        }
+        else
+        {
+            return get_handle(obj.index, T::lua_type());
+        }
     }
 
 
