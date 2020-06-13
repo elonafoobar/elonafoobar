@@ -18,6 +18,7 @@
 #include "map.hpp"
 #include "mef.hpp"
 #include "quest.hpp"
+#include "save_header.hpp"
 #include "serialization/serialization.hpp"
 #include "variables.hpp"
 
@@ -418,9 +419,7 @@ void fmode_7_8(bool read, const fs::path& dir)
 
     if (!read)
     {
-        playerheader = cdata.player().name + u8" Lv:" + cdata.player().level +
-            u8" " + mdatan(0);
-        bsave(dir / u8"header.txt", playerheader);
+        SaveHeader::save(dir);
     }
 
     {
