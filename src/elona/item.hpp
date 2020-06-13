@@ -50,20 +50,38 @@ struct Enchantment
 
 
 
+struct Inventory;
+
+
+
 struct Item
 {
 private:
     using FlagSet = std::bitset<32>;
 
 
-public:
-    Item();
-
     // Index of this item into the global cdata array.
     // Used for communicating with legacy code that takes integer index
     // arguments. New code should pass Item& instead. Not serialized; set on
     // creation and load.
-    int index = -1;
+    int _index = -1;
+
+    Inventory* _inventory = nullptr;
+
+    friend Inventory;
+
+public:
+    Item();
+
+    int index() const noexcept
+    {
+        return _index;
+    }
+
+    Inventory* inventory() const noexcept
+    {
+        return _inventory;
+    }
 
 private:
     int number_ = 0;
@@ -162,11 +180,26 @@ public:
 
 
 
+    bool operator==(const Item& other) const noexcept
+    {
+        return this == &other;
+    }
+
+
+    bool operator!=(const Item& other) const noexcept
+    {
+        return !(*this == other);
+    }
+
+
+
     static void copy(const Item& from, Item& to)
     {
-        const auto index_save = to.index;
+        const auto index_save = to._index;
+        const auto inventory_save = to._inventory;
         to = from;
-        to.index = index_save;
+        to._index = index_save;
+        to._inventory = inventory_save;
     }
 
 
@@ -225,87 +258,127 @@ public:
 
 
 
-struct InventorySlice
-{
-    using iterator = std::vector<Item>::iterator;
-
-    InventorySlice(const iterator& begin, const iterator& end)
-        : _begin(begin)
-        , _end(end)
-    {
-    }
-
-    iterator begin()
-    {
-        return _begin;
-    }
-
-    iterator end()
-    {
-        return _end;
-    }
-
-private:
-    const iterator _begin;
-    const iterator _end;
-};
-
-
-
 struct Character;
+
 
 
 struct Inventory
 {
-    Inventory();
+public:
+    using storage_type = std::vector<Item>;
 
 
-    Item& operator[](int index)
+    Inventory(size_t index_start, size_t inventory_size, int inventory_id);
+    Inventory(Inventory&&);
+
+    bool contains(size_t index) const;
+    Item& at(size_t index);
+
+
+    size_t index_start() const noexcept
     {
-        return storage[index];
+        return _index_start;
     }
 
 
-    InventorySlice all()
+    size_t size() const noexcept
     {
-        return {std::begin(storage), std::end(storage)};
+        return _storage.size();
     }
 
 
-    InventorySlice pc()
+
+    using iterator = storage_type::iterator;
+    using const_iterator = storage_type::const_iterator;
+
+
+
+    iterator begin()
     {
-        return {std::begin(storage), std::begin(storage) + 200};
+        return _storage.begin();
     }
 
 
-    InventorySlice ground()
+    iterator end()
     {
-        return {
-            std::begin(storage) + ELONA_ITEM_ON_GROUND_INDEX,
-            std::begin(storage) + ELONA_ITEM_ON_GROUND_INDEX + 400};
+        return _storage.end();
     }
 
 
-    InventorySlice map_local()
+    const_iterator begin() const
     {
-        return {
-            std::begin(storage) + ELONA_OTHER_INVENTORIES_INDEX,
-            std::end(storage)};
+        return _storage.begin();
     }
 
 
-    InventorySlice for_chara(const Character& chara);
+    const_iterator end() const
+    {
+        return _storage.end();
+    }
 
-    InventorySlice by_index(int index);
+
+    const_iterator cbegin() const
+    {
+        return _storage.cbegin();
+    }
+
+
+    const_iterator cend() const
+    {
+        return _storage.cend();
+    }
+
+
+
+    int inventory_id() const noexcept
+    {
+        return _inventory_id;
+    }
 
 
 
 private:
-    std::vector<Item> storage;
+    size_t _index_start;
+    storage_type _storage;
+    int _inventory_id;
 };
 
 
-extern Inventory inv;
+
+struct AllInventory
+{
+private:
+    using storage_type = std::vector<Inventory>;
+    using iterator_type = storage_type::iterator;
+    using iterator_pair_type = range::iterator_pair_t<iterator_type>;
+
+
+
+public:
+    AllInventory();
+
+
+    Item& operator[](int index);
+
+
+    Inventory& pc();
+    Inventory& ground();
+    Inventory& for_chara(const Character& chara);
+    Inventory& by_index(int index);
+
+    iterator_pair_type all();
+    iterator_pair_type global();
+    iterator_pair_type map_local();
+
+
+
+private:
+    std::vector<Inventory> _inventories;
+};
+
+
+
+extern AllInventory inv;
 
 
 

@@ -51,7 +51,7 @@ local function handle_error(handle, key)
    end
 
    if handle then
-      print("Error: handle is not valid! " .. handle.__kind .. ":" .. handle.__index)
+      print("Error: handle is not valid! " .. handle.__kind .. ":" .. handle.__uuid)
    else
       print("Error: handle is not valid! " .. tostring(handle))
    end
@@ -191,7 +191,6 @@ function Handle.create_handle(cpp_ref, kind, uuid)
    local handle = {
       __uuid = uuid,
       __kind = kind,
-      __index = cpp_ref.index,
       __handle = true
    }
 
@@ -221,15 +220,13 @@ function Handle.remove_handle(cpp_ref, kind)
 end
 
 
---- Moves a handle from one integer index to another and updates its
---- __index field with the new value, if it exists. If the handle
---- exists, the target slot must not be occupied. If not, the
---- destination slot will be set to empty as well.
+--- Moves a handle from one integer index to another if it exists. If the handle
+--- exists, the target slot must not be occupied. If not, the destination slot
+--- will be set to empty as well.
 function Handle.relocate_handle(cpp_ref, dest_cpp_ref, new_index, kind)
    local handle = handles_by_index[kind][cpp_ref.index]
 
    if Handle.is_valid(handle) then
-      handle.__index = new_index
       handles_by_index[kind][new_index] = handle
       Handle.set_ref(handle, dest_cpp_ref)
    else

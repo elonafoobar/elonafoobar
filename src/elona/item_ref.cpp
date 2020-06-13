@@ -9,7 +9,7 @@ namespace elona
 
 ItemRef ItemRef::from_ref(Item& item) noexcept
 {
-    return from_index(item.index);
+    return from_index(item.index());
 }
 
 
@@ -23,7 +23,7 @@ ItemRef ItemRef::from_opt(optional_ref<Item> item) noexcept
 
 bool ItemRef::operator==(const Item& other) const noexcept
 {
-    return *this == ItemRef::from_index(other.index);
+    return *this == ItemRef::from_index(other.index());
 }
 
 
@@ -32,7 +32,7 @@ bool ItemRef::operator==(optional_ref<const Item>& other) const noexcept
 {
     if (other)
     {
-        return *this == ItemRef::from_index(other->index);
+        return *this == ItemRef::from_index(other->index());
     }
     else
     {

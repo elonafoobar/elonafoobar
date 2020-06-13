@@ -239,7 +239,7 @@ void restore_cursor()
 
 void make_item_list(
     optional_ref<Character> inventory_owner,
-    int& mainweapon,
+    ItemRef& mainweapon,
     ItemRef citrade,
     ItemRef cidip)
 {
@@ -296,9 +296,7 @@ void make_item_list(
             if (itemid2int(item.id) >= maxitemid || itemid2int(item.id) < 0)
             {
                 dialog(i18n::s.get(
-                    "core.ui.inv.common.invalid",
-                    item.index,
-                    itemid2int(item.id)));
+                    "core.ui.inv.common.invalid", itemid2int(item.id)));
                 item.remove();
                 item.id = ItemId::none;
                 continue;
@@ -370,10 +368,9 @@ void make_item_list(
             {
                 if (reftype == 10000)
                 {
-                    if (mainweapon == -1 ||
-                        item.body_part < inv[mainweapon].body_part)
+                    if (!mainweapon || item.body_part < mainweapon->body_part)
                     {
-                        mainweapon = item.index;
+                        mainweapon = ItemRef::from_ref(item);
                     }
                 }
             }
@@ -683,7 +680,7 @@ void make_item_list(
             }
 
             // リスト追加
-            list(0, listmax) = item.index;
+            list(0, listmax) = item.index();
 
             // ソート情報
             list(1, listmax) = reftype * 1000 + itemid2int(item.id);
@@ -1172,7 +1169,7 @@ void update_key_list()
 
 
 
-void draw_item_list(int mainweapon)
+void draw_item_list(ItemRef mainweapon)
 {
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -1202,7 +1199,7 @@ void draw_item_list(int mainweapon)
         if (invctrl != 3 && invctrl != 11 && invctrl != 22 && invctrl != 27 &&
             invctrl != 28)
         {
-            if (p >= ELONA_ITEM_ON_GROUND_INDEX)
+            if (inv_getowner(inv[p]) == -1)
             {
                 s += i18n::space_if_needed() + "(" +
                     i18n::s.get("core.ui.inv.window.ground") + ")";
@@ -1225,7 +1222,7 @@ void draw_item_list(int mainweapon)
         if (inv[p].body_part != 0)
         {
             draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
-            if (p == mainweapon)
+            if (inv[p] == mainweapon)
             {
                 s += i18n::space_if_needed() + "(" +
                     i18n::s.get("core.ui.inv.window.main_hand") + ")";
@@ -2276,10 +2273,9 @@ OnEnterResult on_enter_small_medal(Item& selected_item)
         return OnEnterResult{1};
     }
     auto& slot = *slot_opt;
-    if (const auto small_medals =
-            item_find(622, 3, ItemFindLocation::player_inventory))
+    optional_ref<Item> small_medals;
+    if ((small_medals = item_find(622, 3, ItemFindLocation::player_inventory)))
     {
-        i = small_medals->index;
         p = small_medals->number();
     }
     else
@@ -2292,7 +2288,8 @@ OnEnterResult on_enter_small_medal(Item& selected_item)
         snd("core.fail1");
         return OnEnterResult{1};
     }
-    inv[i].modify_number(-calcmedalvalue(selected_item));
+    assert(small_medals);
+    small_medals->modify_number(-calcmedalvalue(selected_item));
     snd("core.paygold1");
     item_copy(selected_item, slot);
     txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", slot));
@@ -2637,7 +2634,7 @@ bool on_assign_shortcut(const std::string& action, int shortcut)
 
 CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
 {
-    int mainweapon = -1;
+    ItemRef mainweapon;
     ItemRef citrade;
     ItemRef cidip;
     bool dropcontinue = false;
@@ -2654,7 +2651,7 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
 
             fallback_to_default_command_if_unavailable();
             restore_cursor();
-            mainweapon = -1;
+            mainweapon = ItemRef::null();
             make_item_list(inventory_owner, mainweapon, citrade, cidip);
             if (const auto result = check_command(inventory_owner, citrade))
             {

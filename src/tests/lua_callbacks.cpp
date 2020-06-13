@@ -283,10 +283,8 @@ TEST_CASE("Test item created callback", "[Lua: Callbacks]")
 local Event = ELONA.require("core.Event")
 
 local function my_item_created_handler(e)
-   mod.store.global.items[e.item.index] = e.item
+   mod.store.global.event_handler_called = true
 end
-
-mod.store.global.items = {}
 
 Event.register("core.item_created", my_item_created_handler)
 )"));
@@ -294,15 +292,10 @@ Event.register("core.item_created", my_item_created_handler)
     const auto item =
         elona::itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3);
     REQUIRE_SOME(item);
-    int idx = item->index;
-    REQUIRE(idx != -1);
-    elona::lua::lua->get_mod_manager()
-        .get_mod("test_item_created")
-        ->env.raw_set("idx", idx);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_item_created",
-        R"(assert(mod.store.global.items[idx].index == idx))"));
+        R"(assert(mod.store.global.event_handler_called == true))"));
 }
 
 TEST_CASE("Test map unloading callback", "[Lua: Callbacks]")

@@ -274,7 +274,7 @@ void collect_blending_materials(
                 bool has_already_used = false;
                 for (int i = 0; i < step; ++i)
                 {
-                    if (rpref(10 + i * 2) == item.index)
+                    if (rpref(10 + i * 2) == item.index())
                     {
                         has_already_used = true;
                         break;
@@ -287,7 +287,7 @@ void collect_blending_materials(
             }
 
             result.emplace_back(
-                item.index,
+                item.index(),
                 static_cast<int>(the_item_db[itemid2int(item.id)]->category) *
                         1000 +
                     itemid2int(item.id));
@@ -788,7 +788,7 @@ void blending_menu_2()
             p = list(0, p);
             s = itemname(inv[p]);
             s = strutil::take_by_width(s, 28);
-            if (p >= ELONA_ITEM_ON_GROUND_INDEX)
+            if (inv_getowner(inv[p]) == -1)
             {
                 s += i18n::s.get("core.blending.steps.ground");
             }
@@ -988,7 +988,7 @@ void blending_proc_on_success_events()
     }
     else
     {
-        int stat = item_separate(inv[item1_index]).index;
+        int stat = item_separate(inv[item1_index]).index();
         if (rpref(10) == stat)
         {
             rpref(10) = -2;

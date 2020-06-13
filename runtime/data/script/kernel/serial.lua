@@ -31,7 +31,7 @@ local function remove_volatile_data(value)
          -- It's a private field, skipping.
       else
          -- This rule is only applied to top-level fields because we have to
-         -- save Handle object with its private fields such as `__index`.
+         -- save Handle object with its private fields such as `__uuid`.
          result[k] = v
       end
    end

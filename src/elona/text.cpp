@@ -2561,13 +2561,13 @@ std::string txtitemoncell(int x, int y)
         {
             std::array<int, 3> item_indice;
             const auto i = -cell_data.at(x, y).item_appearances_memory;
-            item_indice[0] = i % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
-            item_indice[1] = i / 1000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
-            item_indice[2] = i / 1000000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
+            item_indice[0] = i % 1000;
+            item_indice[1] = i / 1000 % 1000;
+            item_indice[2] = i / 1000000 % 1000;
             size_t counter{};
             for (const auto& item_index : item_indice)
             {
-                if (item_index == 6079)
+                if (item_index == 999)
                 {
                     continue;
                 }
@@ -2575,7 +2575,7 @@ std::string txtitemoncell(int x, int y)
                 {
                     items_text += i18n::s.get("core.misc.and");
                 }
-                items_text += itemname(inv[item_index]);
+                items_text += itemname(inv.ground().at(item_index));
                 ++counter;
             }
         }
