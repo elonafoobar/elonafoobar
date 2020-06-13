@@ -103,11 +103,26 @@ ELONA.i18n:add {
       },
 
       levels = {
-         scratch = "かすり傷をつけた。",
-         slightly = "軽い傷を負わせた。",
-         moderately = "傷つけた。",
-         severely = "深い傷を負わせた。",
-         critically = "致命傷を与えた。",
+         scratch = {
+            by_spell = "かすり傷をつけた。",
+            by_chara = "かすり傷をつけた。",
+         },
+         slightly = {
+            by_spell = "軽い傷を負わせた。",
+            by_chara = "軽い傷を負わせた。",
+         },
+         moderately = {
+            by_spell = "傷つけた。",
+            by_chara = "傷つけた。",
+         },
+         severely = {
+            by_spell = "深い傷を負わせた。",
+            by_chara = "深い傷を負わせた。",
+         },
+         critically = {
+            by_spell = "致命傷を与えた。",
+            by_chara = "致命傷を与えた。",
+         },
       },
 
       reactions = {

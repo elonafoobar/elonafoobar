@@ -3,19 +3,31 @@ ELONA.i18n:add {
       chara = {
          -- _1 is victim, _2 is attacker.
          transformed_into_meat = {
-            active = "transform{s($2)} {him($1)} into several pieces of meat.",
+            active = {
+               by_spell = "transforms {him($1)} into several pieces of meat.",
+               by_chara = "transform{s($2)} {him($1)} into several pieces of meat.",
+            },
             passive = "{name($1)} {is($1)} transformed into several pieces of meat.",
          },
          destroyed = {
-            active = "destroy{s($2)} {him($1)}.",
+            active = {
+               by_spell = "destroys {him($1)}.",
+               by_chara = "destroy{s($2)} {him($1)}.",
+            },
             passive = "{name($1)} {is($1)} killed.",
          },
          minced = {
-            active = "mince{s($2)} {him($1)}.",
+            active = {
+               by_spell = "minces {him($1)}.",
+               by_chara = "mince{s($2)} {him($1)}.",
+            },
             passive = "{name($1)} {is($1)} minced.",
          },
          killed = {
-            active = "kill{s($2)} {him($1)}.",
+            active = {
+               by_spell = "kills {him($1)}.",
+               by_chara = "kill{s($2)} {him($1)}.",
+            },
             passive = "{name($1)} {is($1)} slain.",
          },
          death_cause = "was killed by {basename($1)}",
@@ -23,57 +35,96 @@ ELONA.i18n:add {
       element = {
          -- _1 is victim, _2 is attacker.
          default = {
-            active = "kill{s($2)} {him($1)}.",
+            active = {
+               by_spell = "kills {him($1)}.",
+               by_chara = "kill{s($2)} {him($1)}.",
+            },
             passive = "{name($1)} {is($1)} killed.",
          },
          _50 = {
-            active = "burn{s($2)} {him($1)} to death.",
+            active = {
+               by_spell = "burns {him($1)} to death.",
+               by_chara = "burn{s($2)} {him($1)} to death.",
+            },
             passive = "{name($1)} {is($1)} burnt to ashes.",
          },
          _51 = {
-            active = "transform{s($2)} {him($1)} to an ice sculpture.",
+            active = {
+               by_spell = "transforms {him($1)} to an ice sculpture.",
+               by_chara = "transform{s($2)} {him($1)} to an ice sculpture.",
+            },
             passive = "{name($1)} {is($1)} frozen and turn{s($1)} into an ice sculpture.",
          },
          _52 = {
-            active = "electrocute{s($2)} {him($1)} to death.",
+            active = {
+               by_spell = "electrocutes {him($1)} to death.",
+               by_chara = "electrocute{s($2)} {him($1)} to death.",
+            },
             passive = "{name($1)} {is($1)} struck by lightning and die{s($1)}.",
          },
          _53 = {
-            active = "let{s($2)} the depths swallow {him($1)}.",
+            active = {
+               by_spell = "lets the depths swallow {him($1)}.",
+               by_chara = "let{s($2)} the depths swallow {him($1)}.",
+            },
             passive = "{name($1)} {is($1)} consumed by darkness.",
          },
          _54 = {
-            active = "completely disable{s($2)} {him($1)}.",
+            active = {
+               by_spell = "completely disables {him($1)}.",
+               by_chara = "completely disable{s($2)} {him($1)}.",
+            },
             passive = "{name($1)} lose{s($1)} {his($1)} mind and commit{s($1)} a suicide.",
          },
          _55 = {
-            active = "kill{s($2)} {him($1)} with poison.",
+            active = {
+               by_spell = "kills {him($1)} with poison.",
+               by_chara = "kill{s($2)} {him($1)} with poison.",
+            },
             passive = "{name($1)} {is($1)} poisoned to death.",
          },
          _56 = {
-            active = "entrap{s($2)} {him($1)} into the inferno.",
+            active = {
+               by_spell = "entraps {him($1)} into the inferno.",
+               by_chara = "entrap{s($2)} {him($1)} into the inferno.",
+            },
             passive = "{name($1)} go{s($1, true)} to hell.",
          },
          _57 = {
-            active = "shatter{s($2)} {him($1)} to atoms.",
+            active = {
+               by_spell = "shatters {him($1)} to atoms.",
+               by_chara = "shatter{s($2)} {him($1)} to atoms.",
+            },
             passive = "{name($1)} resonate{s($1)} and break up.",
          },
          _58 = {
-            active = "destroy{s($2)} {his($1)} nerves.",
+            active = {
+               by_spell = "destroys {his($1)} nerves.",
+               by_chara = "destroy{s($2)} {his($1)} nerves.",
+            },
             passive = "{name($1)} die{s($1)} from neurofibroma.",
          },
          _59 = {
-            active = "let{s($2)} the chaos consume {him($1)}.",
+            active = {
+               by_spell = "lets the chaos consume {him($1)}.",
+               by_chara = "let{s($2)} the chaos consume {him($1)}.",
+            },
             passive = "{name($1)} {is($1)} drawn into a chaotic vortex.",
          },
          -- _60
          _61 = {
-            active = "cut{s($2)} {him($1)} into thin strips.",
+            active = {
+               by_spell = "cuts {him($1)} into thin strips.",
+               by_chara = "cut{s($2)} {him($1)} into thin strips.",
+            },
             passive = "{name($1)} {is($1)} cut into thin strips.",
          },
          -- _62
          _63 = {
-            active = "melt{s($2)} {him($1)} away.",
+            active = {
+               by_spell = "melts {him($1)} away.",
+               by_chara = "melt{s($2)} {him($1)} away.",
+            },
             passive = "{name($1)} melt{s($1)}.",
          },
       },

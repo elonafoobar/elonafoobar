@@ -175,7 +175,6 @@ int damage_hp(
     int damage_level = 0;
     elona_vector1<int> p_at_m141;
     int gained_exp = 0;
-    bool attacker_is_player = false;
 
     optional_ref<Character> attacker = none;
     if (damage_source >= 0)
@@ -183,14 +182,10 @@ int damage_hp(
         attacker = cdata[damage_source];
     }
 
-    if (txt3rd == 0)
-    {
-        attacker_is_player = damage_source == 0;
-    }
-    else
-    {
-        attacker_is_player = false;
-    }
+    // E.g., the case that the casted spell is the subject.
+    // It controls 3rd-person singular present 's' in English message.
+    const bool damage_statements_subject_is_noncharacter = txt3rd == 1;
+
     if (victim.state() != Character::State::alive)
     {
         end_dmghp(victim);
@@ -222,7 +217,7 @@ int damage_hp(
         }
         dmg_at_m141 = dmg_at_m141 * 100 / (sdata(60, victim.index) / 2 + 50);
     }
-    if (attacker_is_player)
+    if (attacker && attacker->index == 0)
     {
         if (critical)
         {
@@ -429,32 +424,86 @@ int damage_hp(
             assert(attacker);
             if (damage_level == -1)
             {
-                txt(i18n::s.get(
-                    "core.damage.levels.scratch", victim, *attacker));
+                if (damage_statements_subject_is_noncharacter)
+                {
+                    txt(i18n::s.get(
+                        "core.damage.levels.scratch.by_spell", victim));
+                }
+                else
+                {
+                    txt(i18n::s.get(
+                        "core.damage.levels.scratch.by_chara",
+                        victim,
+                        *attacker));
+                }
             }
             if (damage_level == 0)
             {
-                txt(i18n::s.get(
-                        "core.damage.levels.slightly", victim, *attacker),
-                    Message::color{ColorIndex::orange});
+                if (damage_statements_subject_is_noncharacter)
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.slightly.by_spell", victim),
+                        Message::color{ColorIndex::orange});
+                }
+                else
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.slightly.by_chara",
+                            victim,
+                            *attacker),
+                        Message::color{ColorIndex::orange});
+                }
             }
             if (damage_level == 1)
             {
-                txt(i18n::s.get(
-                        "core.damage.levels.moderately", victim, *attacker),
-                    Message::color{ColorIndex::gold});
+                if (damage_statements_subject_is_noncharacter)
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.moderately.by_spell", victim),
+                        Message::color{ColorIndex::gold});
+                }
+                else
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.moderately.by_chara",
+                            victim,
+                            *attacker),
+                        Message::color{ColorIndex::gold});
+                }
             }
             if (damage_level == 2)
             {
-                txt(i18n::s.get(
-                        "core.damage.levels.severely", victim, *attacker),
-                    Message::color{ColorIndex::light_red});
+                if (damage_statements_subject_is_noncharacter)
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.severely.by_spell", victim),
+                        Message::color{ColorIndex::light_red});
+                }
+                else
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.severely.by_chara",
+                            victim,
+                            *attacker),
+                        Message::color{ColorIndex::light_red});
+                }
             }
             if (damage_level >= 3)
             {
-                txt(i18n::s.get(
-                        "core.damage.levels.critically", victim, *attacker),
-                    Message::color{ColorIndex::red});
+                if (damage_statements_subject_is_noncharacter)
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.critically.by_spell", victim),
+                        Message::color{ColorIndex::red});
+                }
+                else
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.critically.by_chara",
+                            victim,
+                            *attacker),
+                        Message::color{ColorIndex::red});
+                }
             }
             rowact_check(victim);
         }
@@ -518,7 +567,7 @@ int damage_hp(
                         {
                             runs_away = false;
                         }
-                        if (attacker_is_player)
+                        if (attacker && attacker->index == 0)
                         {
                             if (trait(44)) // Gentle Face
                             {
@@ -660,7 +709,7 @@ int damage_hp(
                 txt(i18n::s.get("core.damage.sleep_is_disturbed", victim));
             }
         }
-        if (attacker_is_player)
+        if (attacker && attacker->index == 0)
         {
             hostileaction(0, victim.index);
             game_data.chara_last_attacked_by_player = victim.index;
@@ -765,7 +814,7 @@ int damage_hp(
                     apply_hate = true;
                 }
             }
-            if (!attacker_is_player)
+            if (attacker->index != 0)
             {
                 if (attacker->enemy_id == victim.index)
                 {
@@ -809,7 +858,14 @@ int damage_hp(
                     game_data.proc_damage_events_flag == 2)
                 {
                     Message::instance().continue_sentence();
-                    txteledmg(1, *attacker, victim.index, element);
+                    if (damage_statements_subject_is_noncharacter)
+                    {
+                        txteledmg(1, none, victim.index, element);
+                    }
+                    else
+                    {
+                        txteledmg(1, *attacker, victim.index, element);
+                    }
                 }
                 else
                 {
@@ -825,10 +881,19 @@ int damage_hp(
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
-                        txt(i18n::s.get(
-                            "core.death_by.chara.transformed_into_meat.active",
-                            victim,
-                            *attacker));
+                        if (damage_statements_subject_is_noncharacter)
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.transformed_into_meat.active.by_spell",
+                                victim));
+                        }
+                        else
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.transformed_into_meat.active.by_chara",
+                                victim,
+                                *attacker));
+                        }
                     }
                     else
                     {
@@ -843,10 +908,19 @@ int damage_hp(
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
-                        txt(i18n::s.get(
-                            "core.death_by.chara.destroyed.active",
-                            victim,
-                            *attacker));
+                        if (damage_statements_subject_is_noncharacter)
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.destroyed.active.by_spell",
+                                victim));
+                        }
+                        else
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.destroyed.active.by_chara",
+                                victim,
+                                *attacker));
+                        }
                     }
                     else
                     {
@@ -860,10 +934,19 @@ int damage_hp(
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
-                        txt(i18n::s.get(
-                            "core.death_by.chara.minced.active",
-                            victim,
-                            *attacker));
+                        if (damage_statements_subject_is_noncharacter)
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.minced.active.by_spell",
+                                victim));
+                        }
+                        else
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.minced.active.by_chara",
+                                victim,
+                                *attacker));
+                        }
                     }
                     else
                     {
@@ -877,10 +960,19 @@ int damage_hp(
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
-                        txt(i18n::s.get(
-                            "core.death_by.chara.killed.active",
-                            victim,
-                            *attacker));
+                        if (damage_statements_subject_is_noncharacter)
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.killed.active.by_spell",
+                                victim));
+                        }
+                        else
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.killed.active.by_chara",
+                                victim,
+                                *attacker));
+                        }
                     }
                     else
                     {
@@ -970,7 +1062,7 @@ int damage_hp(
         }
         if (attacker)
         {
-            if (!attacker_is_player)
+            if (attacker->index != 0)
             {
                 chara_custom_talk(attacker->index, 103);
             }
@@ -987,7 +1079,7 @@ int damage_hp(
                 gained_exp /= 20;
             }
             attacker->experience += gained_exp;
-            if (attacker_is_player)
+            if (attacker->index == 0)
             {
                 game_data.sleep_experience += gained_exp;
             }
@@ -1176,7 +1268,7 @@ int damage_hp(
                 }
             }
         }
-        if (attacker_is_player)
+        if (attacker && attacker->index == 0)
         {
             if (game_data.catches_god_signal)
             {

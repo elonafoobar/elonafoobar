@@ -117,11 +117,26 @@ ELONA.i18n:add {
       },
 
       levels = {
-         scratch = "make{s($2)} a scratch.",
-         slightly = "slightly wound{s($2)} {him($1)}.",
-         moderately = "moderately wound{s($2)} {him($1)}.",
-         severely = "severely wound{s($2)} {him($1)}.",
-         critically = "critically wound{s($2)} {him($1)}!",
+         scratch = {
+            by_spell = "makes a scratch.",
+            by_chara = "make{s($2)} a scratch.",
+         },
+         slightly = {
+            by_spell = "slightly wounds {him($1)}.",
+            by_chara = "slightly wound{s($2)} {him($1)}.",
+         },
+         moderately = {
+            by_spell = "moderately wounds {him($1)}.",
+            by_chara = "moderately wound{s($2)} {him($1)}.",
+         },
+         severely = {
+            by_spell = "severely wounds {him($1)}.",
+            by_chara = "severely wound{s($2)} {him($1)}.",
+         },
+         critically = {
+            by_spell = "critically wounds {him($1)}!",
+            by_chara = "critically wound{s($2)} {him($1)}!",
+         },
       },
 
       reactions = {
