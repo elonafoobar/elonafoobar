@@ -171,8 +171,6 @@ public:
 
 
 private:
-    static void refresh();
-
     Item(const Item&) = default;
     Item(Item&&) = default;
     Item& operator=(const Item&) = default;
@@ -327,7 +325,6 @@ Item& inv_compress(int owner);
 void item_copy(Item& src, Item& dst);
 
 void item_acid(const Character& owner, optional_ref<Item> item = none);
-void item_delete(Item& item);
 
 /**
  * Swap the content of @a a and @a b. If they points to the same object, does

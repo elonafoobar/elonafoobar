@@ -61,7 +61,8 @@ std::string test_itemname(int id, int number, bool prefix)
     REQUIRE_SOME(item);
     normalize_item(*item);
     std::string name = itemname(*item, number, prefix);
-    item_delete(*item);
+    item->remove();
+    item->clear();
     return name;
 }
 
@@ -89,7 +90,8 @@ void invalidate_item(Item& item)
     int old_y = item.position.y;
 
     // Delete the item and create new ones until the index is taken again.
-    item_delete(inv[old_index]);
+    inv[old_index].remove();
+    inv[old_index].clear();
     while (true)
     {
         const auto new_item = itemcreate_extra_inv(old_id, old_x, old_y, 3);

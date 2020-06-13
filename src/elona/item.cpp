@@ -484,27 +484,13 @@ void item_exchange(Item& a, Item& b)
 
 void Item::remove()
 {
-    number_ = 0;
-}
-
-
-
-void item_delete(Item& item)
-{
-    const auto index = item.index;
-    item.remove();
-    item.clear();
-    item.index = index; // Restore "index".
+    set_number(0);
 }
 
 
 
 void item_refresh(Item& i)
 {
-    if (i.number() <= 0)
-    {
-        i.remove();
-    }
     if (i.index >= ELONA_ITEM_ON_GROUND_INDEX && mode != 6)
     {
         // Refresh the cell the item is on if it's on the ground.

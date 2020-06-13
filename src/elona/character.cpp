@@ -1552,8 +1552,7 @@ void chara_relocate(
     int p = invhead;
     for (auto&& item : inv.for_chara(destination))
     {
-        Item::copy(inv[p], item);
-        inv[p].clear();
+        item_copy(inv[p], item);
         item.body_part = 0;
         ++p;
         if (p >= invhead + invrange)
