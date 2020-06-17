@@ -359,6 +359,24 @@ void save_v3(
 
 
 template <typename T>
+void load_vec(const fs::path& filepath, std::vector<T>& data)
+{
+    std::ifstream in{filepath.native(), std::ios::binary};
+    if (in.fail())
+    {
+        throw std::runtime_error(
+            u8"Could not open file at "s +
+            filepathutil::to_utf8_path(filepath));
+    }
+    serialization::binary::IArchive ar{in};
+    for (size_t i = 0; i < data.size(); ++i)
+    {
+        ar(data[i]);
+    }
+}
+
+
+template <typename T>
 void load(const fs::path& filepath, T& data, size_t begin, size_t end)
 {
     std::ifstream in{filepath.native(), std::ios::binary};
@@ -1224,10 +1242,9 @@ void fmode_16()
 {
     DIM3(cmapdata, 5, 400);
 
-    elona_vector3<int> map;
-    load_v3(
-        fmapfile + u8".map", map, 0, map_data.width, 0, map_data.height, 0, 3);
-    cell_data.unpack_from(map, false);
+    std::vector<int> tile_grid(cell_data.width() * cell_data.height());
+    load_vec(fmapfile + u8".map", tile_grid);
+    cell_data.load_tile_grid(tile_grid);
 
     const auto filepath = fmapfile + u8".obj"s;
     if (!fs::exists(filepath))
@@ -1275,15 +1292,14 @@ void fmode_5_6(bool read)
         const auto filepath = fmapfile + u8".map"s;
         if (read)
         {
-            elona_vector3<int> map;
-            DIM4(map, map_data.width, map_data.height, 10);
             DIM3(
                 mapsync,
                 map_data.width,
                 map_data.height); // TODO length_exception
-            load_v3(
-                filepath, map, 0, map_data.width, 0, map_data.height, 0, 10);
-            cell_data.unpack_from(map);
+            cell_data.init(map_data.width, map_data.height);
+            std::vector<int> tile_grid(map_data.width * map_data.height);
+            load_vec(fmapfile + u8".map", tile_grid);
+            cell_data.load_tile_grid(tile_grid);
         }
         else
         {

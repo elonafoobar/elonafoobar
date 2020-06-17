@@ -247,8 +247,6 @@ void MapData::clear()
     SERIALIZE(0, chip_id_actual); \
     SERIALIZE(1, chara_index_plus_one); \
     SERIALIZE(2, chip_id_memory); \
-    if (!all_fields) \
-        return; \
     /* 3 */ \
     SERIALIZE(4, item_appearances_actual); \
     SERIALIZE(5, item_appearances_memory); \
@@ -261,7 +259,6 @@ void MapData::clear()
 #define SERIALIZE MAP_PACK
 void Cell::pack_to(elona_vector3<int>& legacy_map, int x, int y)
 {
-    constexpr auto all_fields = true;
     SERIALIZE_ALL();
 }
 #undef SERIALIZE
@@ -269,13 +266,6 @@ void Cell::pack_to(elona_vector3<int>& legacy_map, int x, int y)
 #define SERIALIZE MAP_UNPACK
 void Cell::unpack_from(elona_vector3<int>& legacy_map, int x, int y)
 {
-    constexpr auto all_fields = true;
-    SERIALIZE_ALL();
-}
-
-void Cell::partly_unpack_from(elona_vector3<int>& legacy_map, int x, int y)
-{
-    constexpr auto all_fields = false;
     SERIALIZE_ALL();
 }
 #undef SERIALIZE
@@ -330,32 +320,30 @@ void CellData::pack_to(elona_vector3<int>& legacy_map)
 
 
 
-void CellData::unpack_from(elona_vector3<int>& legacy_map, bool clear)
+void CellData::unpack_from(elona_vector3<int>& legacy_map)
 {
-    if (clear)
-    {
-        init(legacy_map.i_size(), legacy_map.j_size());
-    }
-    else
-    {
-        // In this case, the size of map must equal to the previous one.
-        assert(
-            legacy_map.i_size() == static_cast<size_t>(width_) &&
-            legacy_map.j_size() == static_cast<size_t>(height_));
-    }
+    init(legacy_map.i_size(), legacy_map.j_size());
 
     for (int y = 0; y < height_; y++)
     {
         for (int x = 0; x < width_; x++)
         {
-            if (clear)
-            {
-                at(x, y).unpack_from(legacy_map, x, y);
-            }
-            else
-            {
-                at(x, y).partly_unpack_from(legacy_map, x, y);
-            }
+            at(x, y).unpack_from(legacy_map, x, y);
+        }
+    }
+}
+
+
+
+void CellData::load_tile_grid(const std::vector<int>& tile_grid)
+{
+    assert(static_cast<int>(tile_grid.size()) == width_ * height_);
+
+    for (int y = 0; y < height_; ++y)
+    {
+        for (int x = 0; x < width_; ++x)
+        {
+            at(x, y).chip_id_actual = tile_grid[y * width_ + x];
         }
     }
 }
@@ -371,6 +359,8 @@ void map_reload(const std::string& map_filename)
     {
         for (int x = 0; x < map_data.width; ++x)
         {
+            cell_data.at(x, y).chip_id_memory =
+                cell_data.at(x, y).chip_id_actual;
             cell_data.at(x, y).mef_index_plus_one = 0;
             cell_data.at(x, y).light = 0;
         }

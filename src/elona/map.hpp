@@ -165,16 +165,12 @@ struct Cell
     void unpack_from(elona_vector3<int>& legacy_map, int x, int y);
 
     /**
-     * Moves part of `map` fields into this struct. To be called after
-     * deserializing `map`.
-     */
-    void partly_unpack_from(elona_vector3<int>& legacy_map, int x, int y);
-
-    /**
      * Clear this Cell.
      */
     void clear();
 };
+
+
 
 struct CellData
 {
@@ -213,9 +209,17 @@ struct CellData
 
 
     /// Helper method to unpack all cell data from `map`.
-    /// @param clear Whether the previous data is cleared or not. If it is true,
-    /// the size of `map` must be the same as the previous one.
-    void unpack_from(elona_vector3<int>& legacy_map, bool clear = true);
+    void unpack_from(elona_vector3<int>& legacy_map);
+
+
+
+    /**
+     * Reload tiles from @a tile_grid. Other properties are not modified.
+     *
+     * @param tile_grid The serialized array of tiles. Its size must be equal to
+     * @ref width_ times @ref height_.
+     */
+    void load_tile_grid(const std::vector<int>& tile_grid);
 
 
 private:
