@@ -460,7 +460,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
     if (rnd(10) == 0)
     {
         if (cell_data.at(chara.position.x, chara.position.y)
-                .item_appearances_actual == 0)
+                .item_info_actual.is_empty())
         {
             flt();
             if (const auto item = itemcreate_extra_inv(541, chara.position, 0))

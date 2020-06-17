@@ -164,7 +164,7 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
             {
                 sx = rnd(map_data.width - 2) + 2;
                 sy = rnd(map_data.height - 2) + 2;
-                if (cell_data.at(sx, sy).item_appearances_actual != 0)
+                if (!cell_data.at(sx, sy).item_info_actual.is_empty())
                 {
                     continue;
                 }

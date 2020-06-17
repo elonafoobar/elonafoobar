@@ -1042,7 +1042,7 @@ TurnResult do_throw_command_internal(Character& thrower, Item& throw_item)
             }
             if (throw_item.id == ItemId::handful_of_snow)
             {
-                if (cell_data.at(tlocx, tlocy).item_appearances_actual != 0)
+                if (!cell_data.at(tlocx, tlocy).item_info_actual.is_empty())
                 {
                     if (const auto snowman =
                             mapitemfind({tlocx, tlocy}, ItemId::snow_man))
@@ -3491,11 +3491,14 @@ TurnResult do_fire_command()
 
 TurnResult do_get_command()
 {
-    const auto& [number, item_opt] = cell_itemoncell(cdata.player().position);
+    const auto& item_info_actual =
+        cell_data.at(cdata.player().position.x, cdata.player().position.y)
+            .item_info_actual;
+    const auto stack_count = item_info_actual.stack_count();
 
     if (cell_data.at(cdata.player().position.x, cdata.player().position.y)
                 .feats != 0 &&
-        game_data.current_map != mdata_t::MapId::show_house && number == 0)
+        game_data.current_map != mdata_t::MapId::show_house && stack_count == 0)
     {
         cell_featread(cdata.player().position.x, cdata.player().position.y);
         if (feat(1) == 29)
@@ -3559,7 +3562,7 @@ TurnResult do_get_command()
         }
     }
 
-    if (number == 0)
+    if (stack_count == 0)
     {
         if ((map_is_town_or_guild()) &&
             chip_data
@@ -3590,7 +3593,7 @@ TurnResult do_get_command()
         return TurnResult::pc_turn_user_error;
     }
 
-    if (number > 1)
+    if (stack_count != 1)
     {
         invctrl = 3;
         snd("core.inv");
@@ -3599,6 +3602,7 @@ TurnResult do_get_command()
         return mr.turn_result;
     }
 
+    const auto item_opt = cell_get_item_if_only_one(cdata.player().position);
     if ((item_opt->own_state > 0 && item_opt->own_state < 3) ||
         item_opt->own_state == 5)
     {
@@ -5604,9 +5608,8 @@ PickUpItemResult pick_up_item(
     else
     {
         cell_refresh(item.position.x, item.position.y);
-        cell_data.at(item.position.x, item.position.y).item_appearances_memory =
-            cell_data.at(item.position.x, item.position.y)
-                .item_appearances_actual;
+        cell_data.at(item.position.x, item.position.y).item_info_memory =
+            cell_data.at(item.position.x, item.position.y).item_info_actual;
         sound_pick_up();
         txt(i18n::s.get(
             "core.action.pick_up.execute",
@@ -5664,7 +5667,7 @@ PickUpItemResult pick_up_item(
 
 TurnResult do_bash(Character& chara)
 {
-    if (cell_data.at(x, y).item_appearances_memory != 0)
+    if (!cell_data.at(x, y).item_info_actual.is_empty())
     {
         if (const auto tree_opt = mapitemfind({x, y}, ItemId::tree_of_fruits))
         {
@@ -5954,8 +5957,8 @@ void proc_autopick()
             txt(i18n::s.get("core.ui.autopick.destroyed", item));
             item.remove();
             cell_refresh(x, y);
-            cell_data.at(x, y).item_appearances_memory =
-                cell_data.at(x, y).item_appearances_actual;
+            cell_data.at(x, y).item_info_memory =
+                cell_data.at(x, y).item_info_actual;
             break;
         case Autopick::Operation::Type::open:
             // FIXME: DRY

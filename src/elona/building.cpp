@@ -1180,7 +1180,7 @@ void update_shop()
         y = cnt;
         for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
         {
-            cell_data.at(cnt, y).item_appearances_actual = 0;
+            cell_data.at(cnt, y).item_info_actual.clear();
             cell_data.at(cnt, y).light = 0;
         }
     }
@@ -1241,10 +1241,8 @@ void update_museum()
         {
             continue;
         }
-        if (wpeek(
-                cell_data.at(item.position.x, item.position.y)
-                    .item_appearances_actual,
-                0) != item.image)
+        if (cell_data.at(item.position.x, item.position.y)
+                .item_info_actual.stack_count() == 1)
         {
             continue;
         }
@@ -1301,10 +1299,8 @@ std::vector<HomeRankHeirloom> building_update_home_rank()
     std::vector<HomeRankHeirloom> heirlooms;
     for (auto&& item : inv.ground())
     {
-        if (wpeek(
-                cell_data.at(item.position.x, item.position.y)
-                    .item_appearances_actual,
-                0) != item.image)
+        if (cell_data.at(item.position.x, item.position.y)
+                .item_info_actual.stack_count() == 1)
         {
             continue;
         }
@@ -1416,7 +1412,7 @@ void update_ranch()
             }
             x = rnd(11) + 4;
             y = rnd(8) + 4;
-            if (cell_data.at(x, y).item_appearances_actual != 0)
+            if (!cell_data.at(x, y).item_info_actual.is_empty())
             {
                 continue;
             }

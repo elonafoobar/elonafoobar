@@ -2552,57 +2552,55 @@ std::string name(int chara_index)
 
 std::string txtitemoncell(int x, int y)
 {
-    const auto& [number, item_opt] = cell_itemoncell({x, y});
-
-    if (number <= 3)
+    const auto& item_info_memory = cell_data.at(x, y).item_info_memory;
+    if (item_info_memory.is_empty())
     {
-        std::string items_text;
-        if (cell_data.at(x, y).item_appearances_memory < 0)
+        return "";
+    }
+
+    const auto stack_count = item_info_memory.stack_count();
+    if (stack_count < 0)
+    {
+        return i18n::s.get(
+            "core.action.move.item_on_cell.many",
+            cell_count_exact_item_stacks({x, y}));
+    }
+
+    const auto item_indice = item_info_memory.item_indice();
+    std::string items_text;
+    bool first = true;
+    int own_state = 0;
+    for (const auto& item_index : item_indice)
+    {
+        if (item_index == 0)
+            break;
+
+        auto& item = item_index < 0 ? inv.ground().at(0) /* TODO phantom ref */
+                                    : inv.ground().at(item_index - 1);
+        if (first)
         {
-            std::array<int, 3> item_indice;
-            const auto i = -cell_data.at(x, y).item_appearances_memory;
-            item_indice[0] = i % 1000;
-            item_indice[1] = i / 1000 % 1000;
-            item_indice[2] = i / 1000000 % 1000;
-            size_t counter{};
-            for (const auto& item_index : item_indice)
-            {
-                if (item_index == 999)
-                {
-                    continue;
-                }
-                if (counter != 0)
-                {
-                    items_text += i18n::s.get("core.misc.and");
-                }
-                items_text += itemname(inv.ground().at(item_index));
-                ++counter;
-            }
+            first = false;
+            own_state = item.own_state;
         }
         else
         {
-            items_text = itemname(*item_opt);
+            items_text += i18n::s.get("core.misc.and");
         }
-        if (item_opt->own_state <= 0)
-        {
-            return i18n::s.get(
-                "core.action.move.item_on_cell.item", items_text);
-        }
-        else if (item_opt->own_state == 3)
-        {
-            return i18n::s.get(
-                "core.action.move.item_on_cell.building", items_text);
-        }
-        else
-        {
-            return i18n::s.get(
-                "core.action.move.item_on_cell.not_owned", items_text);
-        }
+        items_text += itemname(item);
+    }
+    if (own_state <= 0)
+    {
+        return i18n::s.get("core.action.move.item_on_cell.item", items_text);
+    }
+    else if (own_state == 3)
+    {
+        return i18n::s.get(
+            "core.action.move.item_on_cell.building", items_text);
     }
     else
     {
         return i18n::s.get(
-            "core.action.move.item_on_cell.more_than_three", number);
+            "core.action.move.item_on_cell.not_owned", items_text);
     }
 }
 
@@ -2895,7 +2893,7 @@ void txttargetnpc(int x, int y)
             ++dy_;
         }
     }
-    if (cell_data.at(x, y).item_appearances_memory != 0)
+    if (!cell_data.at(x, y).item_info_memory.is_empty())
     {
         bmes(txtitemoncell(x, y), 100, windowh - inf_verh - 45 - dy_ * 20);
         ++dy_;

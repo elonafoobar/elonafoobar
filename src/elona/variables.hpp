@@ -155,7 +155,6 @@ ELONA_EXTERN(elona_vector1<int> dx);
 ELONA_EXTERN(elona_vector1<int> feat);
 ELONA_EXTERN(elona_vector1<int> fishanime);
 ELONA_EXTERN(elona_vector1<int> fixeditemenc);
-ELONA_EXTERN(elona_vector1<int> floorstack);
 ELONA_EXTERN(elona_vector1<int> followerexist);
 ELONA_EXTERN(elona_vector1<int> followerin);
 ELONA_EXTERN(elona_vector1<int> fsetchest);

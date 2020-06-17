@@ -2215,7 +2215,7 @@ int initialize_quest_map_crop()
                 }
                 cell_data.at(x, y).chip_id_actual = tile;
                 if (rnd(10) != 0 ||
-                    cell_data.at(x, y).item_appearances_actual != 0)
+                    !cell_data.at(x, y).item_info_actual.is_empty())
                 {
                     continue;
                 }
@@ -2255,7 +2255,7 @@ int initialize_quest_map_crop()
         y = rnd(map_data.height);
         if (cell_data.at(x, y).chip_id_actual != 30 &&
             cell_data.at(x, y).chip_id_actual != 31 &&
-            cell_data.at(x, y).item_appearances_actual == 0)
+            cell_data.at(x, y).item_info_actual.is_empty())
         {
             if (rnd(8))
             {
@@ -2640,12 +2640,12 @@ int initialize_quest_map_party()
             {
                 x = dx + cnt;
                 if (cell_data.at(x, y).chip_id_actual != tile_tunnel ||
-                    cell_data.at(x, y).item_appearances_actual != 0)
+                    !cell_data.at(x, y).item_info_actual.is_empty())
                 {
                     p(0) = 0;
                 }
                 if (cell_data.at(x, y).chip_id_actual != tile_room ||
-                    cell_data.at(x, y).item_appearances_actual != 0)
+                    !cell_data.at(x, y).item_info_actual.is_empty())
                 {
                     p(1) = 0;
                 }
@@ -2775,7 +2775,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (cell_data.at(x, y).item_appearances_actual == 0)
+            if (cell_data.at(x, y).item_info_actual.is_empty())
             {
                 flt();
                 itemcreate_extra_inv(88, x, y, 0);
@@ -2785,7 +2785,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (cell_data.at(x, y).item_appearances_actual == 0)
+            if (cell_data.at(x, y).item_info_actual.is_empty())
             {
                 flt();
                 itemcreate_extra_inv(313, x, y, 0);
@@ -2795,7 +2795,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (cell_data.at(x, y).item_appearances_actual == 0)
+            if (cell_data.at(x, y).item_info_actual.is_empty())
             {
                 flt();
                 itemcreate_extra_inv(156, x, y, 0);
@@ -2805,7 +2805,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (cell_data.at(x, y).item_appearances_actual == 0)
+            if (cell_data.at(x, y).item_info_actual.is_empty())
             {
                 flt();
                 itemcreate_extra_inv(606, x, y, 0);
@@ -2837,7 +2837,7 @@ int initialize_quest_map_party()
     {
         x = rnd(map_data.width);
         y = rnd(map_data.height);
-        if (cell_data.at(x, y).item_appearances_actual != 0 ||
+        if (!cell_data.at(x, y).item_info_actual.is_empty() ||
             chip_data.for_cell(x, y).effect & 4)
         {
             continue;

@@ -1774,8 +1774,8 @@ void update_slight()
                         cell_data.at(sx, sy).chip_id_actual;
                     draw_minimap_pixel(sx, sy);
                 }
-                cell_data.at(sx, sy).item_appearances_memory =
-                    cell_data.at(sx, sy).item_appearances_actual;
+                cell_data.at(sx, sy).item_info_memory =
+                    cell_data.at(sx, sy).item_info_actual;
             }
             else
             {

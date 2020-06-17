@@ -1674,7 +1674,7 @@ bool _magic_430_429(Character& target)
                     }
                     if (efid == 430)
                     {
-                        cell_data.at(x, y).item_appearances_memory = 0;
+                        cell_data.at(x, y).item_info_memory.clear();
                     }
                     continue;
                 }
@@ -1689,7 +1689,7 @@ bool _magic_430_429(Character& target)
                     if (efid == 430)
                     {
                         if (cell_data.at(x, y).feats != 0 ||
-                            cell_data.at(x, y).item_appearances_memory != 0)
+                            !cell_data.at(x, y).item_info_memory.is_empty())
                         {
                             cell_data.at(x, y).chip_id_memory =
                                 cell_data.at(x, y).chip_id_actual;

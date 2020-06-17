@@ -1376,6 +1376,49 @@ int initialize_map_pregenerate()
     return 0;
 }
 
+
+
+// @see _update_save_data_16() in save_update.cpp
+void migrate_old_save_v17()
+{
+    for (int y = 0; y < map_data.height; ++y)
+    {
+        for (int x = 0; x < map_data.width; ++x)
+        {
+            if (cell_data.at(x, y).item_info_actual.stack_count() != -4 ||
+                cell_data.at(x, y).item_info_memory.stack_count() != -4)
+            {
+                return; // It's new format.
+            }
+        }
+    }
+
+    // Update old format.
+    for (int y = 0; y < map_data.height; ++y)
+    {
+        for (int x = 0; x < map_data.width; ++x)
+        {
+            cell_data.at(x, y).item_info_actual.clear();
+            cell_data.at(x, y).item_info_memory.clear();
+        }
+    }
+    for (const auto& item : inv.ground())
+    {
+        if (item.number() != 0)
+        {
+            cell_refresh(item.position.x, item.position.y);
+        }
+    }
+    for (int y = 0; y < map_data.height; ++y)
+    {
+        for (int x = 0; x < map_data.width; ++x)
+        {
+            cell_data.at(x, y).item_info_memory =
+                cell_data.at(x, y).item_info_actual;
+        }
+    }
+}
+
 } // namespace
 
 
@@ -1385,6 +1428,9 @@ TurnResult initialize_map()
     bool was_generated = false;
 
     const auto stat = initialize_map_pregenerate();
+
+    migrate_old_save_v17();
+
     if (stat == 0)
     {
         _generate_new_map();

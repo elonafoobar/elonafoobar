@@ -60,7 +60,7 @@ void _map_randsite()
         if ((chip_data.for_cell(x, y).effect & 4) == 0)
         {
             if (cell_data.at(x, y).feats == 0 &&
-                cell_data.at(x, y).item_appearances_actual == 0)
+                cell_data.at(x, y).item_info_actual.is_empty())
             {
                 pos = Position(x, y);
                 break;
@@ -240,97 +240,14 @@ void MapData::clear()
 }
 
 
-#define MAP_PACK(n, ident) legacy_map(x, y, n) = ident;
-#define MAP_UNPACK(n, ident) ident = legacy_map(x, y, n);
-
-#define SERIALIZE_ALL() \
-    SERIALIZE(0, chip_id_actual); \
-    SERIALIZE(1, chara_index_plus_one); \
-    SERIALIZE(2, chip_id_memory); \
-    /* 3 */ \
-    SERIALIZE(4, item_appearances_actual); \
-    SERIALIZE(5, item_appearances_memory); \
-    SERIALIZE(6, feats); \
-    SERIALIZE(7, blood_and_fragments); \
-    SERIALIZE(8, mef_index_plus_one); \
-    SERIALIZE(9, light);
-
-
-#define SERIALIZE MAP_PACK
-void Cell::pack_to(elona_vector3<int>& legacy_map, int x, int y)
-{
-    SERIALIZE_ALL();
-}
-#undef SERIALIZE
-
-#define SERIALIZE MAP_UNPACK
-void Cell::unpack_from(elona_vector3<int>& legacy_map, int x, int y)
-{
-    SERIALIZE_ALL();
-}
-#undef SERIALIZE
-
-
-
-void Cell::clear()
-{
-    *this = {};
-}
-
-
 
 void CellData::init(int width, int height)
 {
-    cells.clear();
     width_ = width;
     height_ = height;
 
-    cells.reserve(height_);
-
-    for (int y = 0; y < height_; y++)
-    {
-        std::vector<Cell> column;
-        column.reserve(width_);
-
-        for (int x = 0; x < width_; x++)
-        {
-            column.emplace_back(Cell{});
-        }
-        cells.emplace_back(std::move(column));
-    }
-}
-
-
-
-void CellData::pack_to(elona_vector3<int>& legacy_map)
-{
-    DIM4(legacy_map, map_data.width, map_data.height, 10);
-
-    assert(legacy_map.i_size() == static_cast<size_t>(width_));
-    assert(legacy_map.j_size() == static_cast<size_t>(height_));
-
-    for (int y = 0; y < height_; y++)
-    {
-        for (int x = 0; x < width_; x++)
-        {
-            at(x, y).pack_to(legacy_map, x, y);
-        }
-    }
-}
-
-
-
-void CellData::unpack_from(elona_vector3<int>& legacy_map)
-{
-    init(legacy_map.i_size(), legacy_map.j_size());
-
-    for (int y = 0; y < height_; y++)
-    {
-        for (int x = 0; x < width_; x++)
-        {
-            at(x, y).unpack_from(legacy_map, x, y);
-        }
-    }
+    cells.clear();
+    cells.resize(width_ * height_);
 }
 
 
@@ -389,7 +306,7 @@ void map_reload(const std::string& map_filename)
         const auto y = cmapdata(2, i);
         if (cmapdata(4, i) == 0)
         {
-            if (cell_data.at(x, y).item_appearances_actual == 0)
+            if (cell_data.at(x, y).item_info_actual.is_empty())
             {
                 flt();
                 if (const auto item =
@@ -2272,7 +2189,7 @@ void sense_map_feats_on_move(Character& chara)
     game_data.player_y_on_map_leave = -1;
     x = cdata.player().position.x;
     y = cdata.player().position.y;
-    if (cell_data.at(x, y).item_appearances_actual != 0)
+    if (!cell_data.at(x, y).item_info_actual.is_empty())
     {
         if (cdata.player().blind == 0)
         {

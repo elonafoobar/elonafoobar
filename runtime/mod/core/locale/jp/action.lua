@@ -161,7 +161,7 @@ ELONA.i18n:add {
             item = "{$1}が落ちている。",
             building = "{$1}が設置されている。",
             not_owned = "{$1}がある。",
-            more_than_three = "ここには{$1}種類のアイテムがある。",
+            many = "ここには{$1}種類のアイテムがある。",
          },
 
          feature = {

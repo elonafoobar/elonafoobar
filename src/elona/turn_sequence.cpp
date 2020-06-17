@@ -506,77 +506,65 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                 return ai_proc_misc_map_events(chara, enemy_index);
             }
         }
-        if (chara.relationship == 10)
+        if (chara.relationship == 10 && enemy_index == 0)
         {
-            if (enemy_index == 0)
+            if (const auto item_opt = cell_get_item_if_only_one(chara.position))
             {
-                if (cell_data.at(chara.position.x, chara.position.y)
-                        .item_appearances_actual != 0)
+                const auto category =
+                    the_item_db[itemid2int(item_opt->id)]->category;
+                if (chara.nutrition <= 6000)
                 {
-                    const auto& [number, item_opt] =
-                        cell_itemoncell(chara.position);
-                    if (number == 1)
+                    if (category == ItemCategory::food)
                     {
-                        const auto category =
-                            the_item_db[itemid2int(item_opt->id)]->category;
-                        if (chara.nutrition <= 6000)
+                        if (item_opt->own_state <= 0 &&
+                            !is_cursed(item_opt->curse_state))
                         {
-                            if (category == ItemCategory::food)
-                            {
-                                if (item_opt->own_state <= 0 &&
-                                    !is_cursed(item_opt->curse_state))
-                                {
-                                    return do_eat_command(chara, *item_opt);
-                                }
-                            }
-                            if (category == ItemCategory::well)
-                            {
-                                if (item_opt->own_state <= 1 &&
-                                    item_opt->param1 >= -5 &&
-                                    item_opt->param3 < 20 &&
-                                    item_opt->id != ItemId::holy_well)
-                                {
-                                    return do_drink_command(chara, *item_opt);
-                                }
-                            }
+                            return do_eat_command(chara, *item_opt);
                         }
-                        if (category == ItemCategory::gold_piece ||
-                            category == ItemCategory::ore)
+                    }
+                    if (category == ItemCategory::well)
+                    {
+                        if (item_opt->own_state <= 1 &&
+                            item_opt->param1 >= -5 && item_opt->param3 < 20 &&
+                            item_opt->id != ItemId::holy_well)
                         {
-                            if (item_opt->own_state <= 0 &&
-                                !item_opt->is_precious() &&
-                                map_data.type != mdata_t::MapType::player_owned)
+                            return do_drink_command(chara, *item_opt);
+                        }
+                    }
+                }
+                if (category == ItemCategory::gold_piece ||
+                    category == ItemCategory::ore)
+                {
+                    if (item_opt->own_state <= 0 && !item_opt->is_precious() &&
+                        map_data.type != mdata_t::MapType::player_owned)
+                    {
+                        in = item_opt->number();
+                        if (game_data.mount != chara.index)
+                        {
+                            int stat =
+                                pick_up_item(chara.index, *item_opt, none).type;
+                            if (stat == 1)
                             {
-                                in = item_opt->number();
-                                if (game_data.mount != chara.index)
-                                {
-                                    int stat = pick_up_item(
-                                                   chara.index, *item_opt, none)
-                                                   .type;
-                                    if (stat == 1)
-                                    {
-                                        return TurnResult::turn_end;
-                                    }
-                                }
+                                return TurnResult::turn_end;
                             }
                         }
                     }
                 }
-                if (chara.current_map == game_data.current_map)
-                {
-                    if (chara.is_contracting() == 0)
-                    {
-                        return ai_proc_misc_map_events(chara, enemy_index);
-                    }
-                }
-                if (distance > 2 || rnd(3))
-                {
-                    return proc_npc_movement_event(chara, enemy_index);
-                }
-                else
+            }
+            if (chara.current_map == game_data.current_map)
+            {
+                if (chara.is_contracting() == 0)
                 {
                     return ai_proc_misc_map_events(chara, enemy_index);
                 }
+            }
+            if (distance > 2 || rnd(3))
+            {
+                return proc_npc_movement_event(chara, enemy_index);
+            }
+            else
+            {
+                return ai_proc_misc_map_events(chara, enemy_index);
             }
         }
         if (chara.fear != 0)
