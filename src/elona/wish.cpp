@@ -274,7 +274,9 @@ void wish_for_character()
 void wish_for_card()
 {
     flt();
+    nooracle = 1;
     chara_create(56, select_wished_character(inputlog), -3, 0);
+    nooracle = 0;
     flt();
     if (const auto item = itemcreate_extra_inv(504, cdata.player().position, 0))
     {
@@ -291,7 +293,9 @@ void wish_for_card()
 void wish_for_figure()
 {
     flt();
+    nooracle = 1;
     chara_create(56, select_wished_character(inputlog), -3, 0);
+    nooracle = 0;
     flt();
     if (const auto item = itemcreate_extra_inv(503, cdata.player().position, 0))
     {
