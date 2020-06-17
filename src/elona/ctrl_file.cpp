@@ -1041,6 +1041,7 @@ void fmode_1_2(bool read)
         const auto filepath = dir / (u8"map_"s + mid + u8".s2");
         if (read)
         {
+            elona_vector3<int> map;
             DIM4(map, map_data.width, map_data.height, 10);
             DIM3(mapsync, map_data.width, map_data.height);
             DIM3(mef, 9, MEF_MAX);
@@ -1051,6 +1052,7 @@ void fmode_1_2(bool read)
         }
         else
         {
+            elona_vector3<int> map;
             Save::instance().add(filepath.filename());
             writeloadedbuff(u8"map_"s + mid + u8".s2");
             cell_data.pack_to(map);
@@ -1222,6 +1224,7 @@ void fmode_16()
 {
     DIM3(cmapdata, 5, 400);
 
+    elona_vector3<int> map;
     load_v3(
         fmapfile + u8".map", map, 0, map_data.width, 0, map_data.height, 0, 3);
     cell_data.unpack_from(map, false);
@@ -1272,6 +1275,7 @@ void fmode_5_6(bool read)
         const auto filepath = fmapfile + u8".map"s;
         if (read)
         {
+            elona_vector3<int> map;
             DIM4(map, map_data.width, map_data.height, 10);
             DIM3(
                 mapsync,
@@ -1283,6 +1287,7 @@ void fmode_5_6(bool read)
         }
         else
         {
+            elona_vector3<int> map;
             cell_data.pack_to(map);
             save_v3(
                 filepath, map, 0, map_data.width, 0, map_data.height, 0, 10);
