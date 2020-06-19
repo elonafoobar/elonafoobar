@@ -37,8 +37,65 @@ class Version:
             self.patch)
 
 
+def inc_ver(mode, dry_run, filename, ver_re, ver_fmt, target):
+    with open(filename, 'r') as file:
+        file_content = file.read()
+
+        ver_match = re.search(ver_re, file_content)
+
+        old_ver = Version(
+            int(ver_match.group(1)),
+            int(ver_match.group(2)),
+            int(ver_match.group(3)))
+        new_ver = old_ver.inc(mode)
+
+        file_content = re.sub(
+            ver_re,
+            ver_fmt.format(
+                new_ver.major, new_ver.minor, new_ver.patch),
+            file_content)
+
+    if not dry_run:
+        with open(filename, 'w') as file:
+            file.write(file_content)
+
+        cmd = 'git commit -a -m "Increment {}\'s {} version: {} -> {}"'.format(
+            target, mode, old_ver, new_ver)
+        subprocess.call(cmd, shell=True)
+
+        print('{}\'s {} version is successfully incremented: {} -> {}'.format(
+            target, mode, old_ver, new_ver))
+    else:
+        print('{}\'s {} version will be incremented: {} -> {}'.format(
+            target, mode, old_ver, new_ver))
+
+
+def inc_app_ver(args):
+    inc_ver(
+        args.mode,
+        args.dry_run,
+        'CMakeLists.txt',
+        r'project\(Elona_foobar VERSION (\d+)\.(\d+)\.(\d+)\)',
+        'project(Elona_foobar VERSION {}.{}.{})',
+        'Elona foobar',
+    )
+
+
+def inc_mod_ver(args):
+    mod = args.target
+    inc_ver(
+        args.mode,
+        args.dry_run,
+        'runtime/mod/{}/mod.json'.format(mod),
+        r'version: "(\d+)\.(\d+)\.(\d+)",',
+        'version: "{}.{}.{}",',
+        'mod {}'.format(mod),
+    )
+
+
 def make_argparser():
     p = argparse.ArgumentParser(description='Increment Elona foobar version.')
+    p.add_argument('target')
     p.add_argument('mode', choices=['major', 'minor', 'patch'])
     p.add_argument('-n', '--dry-run', action='store_true')
     return p
@@ -48,37 +105,10 @@ def main():
     parser = make_argparser()
     args = parser.parse_args()
 
-    with open('CMakeLists.txt', 'r') as file:
-        cmakelist = file.read()
-
-        ver = r'project\(Elona_foobar VERSION (\d+)\.(\d+)\.(\d+)\)'
-
-        ver_match = re.search(ver, cmakelist)
-
-        old_ver = Version(
-            int(ver_match.group(1)),
-            int(ver_match.group(2)),
-            int(ver_match.group(3)))
-        new_ver = old_ver.inc(args.mode)
-
-        cmakelist = re.sub(
-            ver,
-            'project(Elona_foobar VERSION {}.{}.{})'.format(
-                new_ver.major, new_ver.minor, new_ver.patch),
-            cmakelist)
-
-    if not args.dry_run:
-        with open('CMakeLists.txt', 'w') as file:
-            file.write(cmakelist)
-
-        cmd = 'git commit -a -m "Increment {} version: {} -> {}"'.format(
-            args.mode, old_ver, new_ver)
-        subprocess.call(cmd, shell=True)
-
-        print('Elona foobar''s {} version is successfully incremented: {} -> {}'.format(
-            args.mode, old_ver, new_ver))
+    if args.target == 'APP':
+        inc_app_ver(args)
     else:
-        print('Elona foobar''s {} version will be incremented: {} -> {}'.format(args.mode, old_ver, new_ver))
+        inc_mod_ver(args)
 
 
 if __name__ == '__main__':

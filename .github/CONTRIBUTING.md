@@ -67,3 +67,16 @@ Fix crash when calling function xxx()
 * Neither `fix`, `Fixed` nor `fixing`.
 * No period.
 * Other appropriate verbs are allowed.
+
+
+
+# Versioning convention
+
+## Application
+
+Ignore Semantic Versioning.
+
+
+## Built-in mods
+
+Follow Semantic Versioning. Each mod has its own version, not synchronized with each other.
