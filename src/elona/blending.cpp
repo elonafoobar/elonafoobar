@@ -37,7 +37,6 @@ namespace
 int step;
 elona_vector1<int> rpref;
 int rpid = 0;
-int rpmode = 0;
 elona_vector1<int> rppage;
 
 
@@ -574,7 +573,7 @@ bool all_ingredient_are_added(int step, int recipe_id)
 
 
 
-optional<TurnResult> blending_menu_1()
+optional<TurnResult> blending_menu_select_recipe()
 {
     elona_vector1<int> blendchecklist;
 
@@ -603,6 +602,10 @@ optional<TurnResult> blending_menu_1()
                     break;
                 }
                 blendchecklist(cnt) = blendcheckmat(list(0, p));
+            }
+            if (listmax <= pagesize * page + cs)
+            {
+                cs = listmax % pagesize - 1;
             }
         }
 
@@ -726,7 +729,7 @@ optional<TurnResult> blending_menu_1()
 
 
 
-void blending_menu_2()
+void blendig_menu_select_materials()
 {
     while (true)
     {
@@ -1231,19 +1234,14 @@ TurnResult blending_menu()
             window_recipe(none, wx + ww, wy, 400, wh);
             Message::instance().linebreak();
             txt(i18n::s.get("core.blending.prompt.how_many"));
-
-            p = calc_max_number_of_products_you_can_blend(rpid);
-
-            rpmode = 1;
-            PromptWithNumber prompt(p(0), "core.blending.prompt");
+            PromptWithNumber prompt(
+                calc_max_number_of_products_you_can_blend(rpid),
+                "core.blending.prompt");
             prompt.append("start", snail::Key::key_a);
             prompt.append("go_back", snail::Key::key_b);
             prompt.append("from_the_start", snail::Key::key_c);
             const auto result = prompt.query(promptx, prompty, 220);
-            rtval = result.index;
-            rpmode = 0;
-
-            if (rtval == 0) // start
+            if (result.index == 0) // start
             {
                 rpref(1) = result.number;
                 rpref(2) = the_blending_recipe_db.ensure(rpid).required_turns +
@@ -1252,7 +1250,7 @@ TurnResult blending_menu()
                 activity_blending();
                 return TurnResult::turn_end;
             }
-            else if (rtval == 2) // from the start
+            else if (result.index == 2) // from the start
             {
                 step = -1;
                 continue;
@@ -1292,7 +1290,7 @@ TurnResult blending_menu()
             txt(i18n::s.get("core.blending.recipe.warning"));
             Message::instance().linebreak();
             txt(i18n::s.get("core.blending.recipe.which"));
-            if (const auto result = blending_menu_1())
+            if (const auto result = blending_menu_select_recipe())
             {
                 return *result;
             }
@@ -1312,7 +1310,7 @@ TurnResult blending_menu()
             txt(i18n::s.get(
                 "core.blending.steps.add_ingredient",
                 get_recipe_material_name(rpid, step)));
-            blending_menu_2();
+            blendig_menu_select_materials();
         }
     }
 }
