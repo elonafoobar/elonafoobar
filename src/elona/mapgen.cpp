@@ -2934,10 +2934,7 @@ int initialize_quest_map_party()
     }
     for (auto&& item : inv.ground())
     {
-        if (item.number() > 0)
-        {
-            item.own_state = 1;
-        }
+        item.own_state = 1;
     }
     return 1;
 }
@@ -2986,10 +2983,6 @@ void initialize_quest_map_town()
     }
     for (auto&& item : inv.ground())
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         f = 0;
         if (item.id == ItemId::well || item.id == ItemId::fountain)
         {

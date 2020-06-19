@@ -157,10 +157,6 @@ std::vector<ItemForSale> list_items_for_sale()
 
     for (auto&& item : inv.ground())
     {
-        if (item.number() <= 0)
-        {
-            continue;
-        }
         if (item.id == ItemId::shop_strongbox)
         {
             continue;
@@ -464,21 +460,17 @@ TurnResult show_house_board()
     }
     p(0) = 0;
     p(1) = 0;
-    p(2) = 0;
+    p(2) = 400;
     for (const auto& item : inv.ground())
     {
-        ++p(2);
-        if (item.number() != 0)
+        if (the_item_db[itemid2int(item.id)]->category !=
+            ItemCategory::furniture)
         {
-            if (the_item_db[itemid2int(item.id)]->category !=
-                ItemCategory::furniture)
-            {
-                ++p;
-            }
-            else
-            {
-                ++p(1);
-            }
+            ++p;
+        }
+        else
+        {
+            ++p(1);
         }
     }
     if (map_data.max_item_count != 0)
@@ -1194,10 +1186,6 @@ void update_shop()
     }
     for (const auto& item : inv.ground())
     {
-        if (item.number() <= 0)
-        {
-            continue;
-        }
         x = item.position.x;
         y = item.position.y;
         if (x < 0 || x >= map_data.width || y < 0 || y >= map_data.height)
@@ -1249,10 +1237,6 @@ void update_museum()
     DIM3(dblist, 2, 800);
     for (const auto& item : inv.ground())
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (item.id != ItemId::figurine && item.id != ItemId::card)
         {
             continue;
@@ -1317,10 +1301,6 @@ std::vector<HomeRankHeirloom> building_update_home_rank()
     std::vector<HomeRankHeirloom> heirlooms;
     for (auto&& item : inv.ground())
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (wpeek(
                 cell_data.at(item.position.x, item.position.y)
                     .item_appearances_actual,

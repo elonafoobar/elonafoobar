@@ -1795,10 +1795,6 @@ void initialize_pc_character()
     cdata.player().total_skill_bonus = 5 + trait(154);
     for (auto&& item : inv.pc())
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         item.identify_state = IdentifyState::completely;
     }
     chara_refresh(cdata.player());

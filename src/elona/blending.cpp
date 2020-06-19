@@ -208,10 +208,6 @@ bool find_blending_materials(int inventory, int recipe_id, int step)
     const auto check_pos = inventory == -1;
     for (auto&& item : inventory == -1 ? inv.ground() : inv.pc())
     {
-        if (item.number() <= 0)
-        {
-            continue;
-        }
         if (check_one_blending_material(item, recipe_id, step, check_pos))
         {
             return true; // found
@@ -232,10 +228,6 @@ int count_blending_materials(int inventory, int recipe_id, int step)
     int ret = 0;
     for (auto&& item : inventory == -1 ? inv.ground() : inv.pc())
     {
-        if (item.number() <= 0)
-        {
-            continue;
-        }
         if (check_one_blending_material(item, recipe_id, step, check_pos))
         {
             ret += item.number();
@@ -261,10 +253,6 @@ void collect_blending_materials(
         if (result.size() >= 500)
         {
             break;
-        }
-        if (item.number() <= 0)
-        {
-            continue;
         }
         if (check_one_blending_material(item, recipe_id, step, check_pos))
         {

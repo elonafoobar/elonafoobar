@@ -77,10 +77,6 @@ void dmgheal_death_by_backpack(Character& chara)
 
     for (auto&& item : inv.for_chara(chara))
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (item.weight > heaviest_weight)
         {
             heaviest_item = item;
@@ -1429,10 +1425,6 @@ void character_drops_item(Character& victim)
         }
         for (auto&& item : inv.for_chara(victim))
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (map_data.refresh_type == 0)
             {
                 if (item.body_part != 0)
@@ -1605,10 +1597,6 @@ void character_drops_item(Character& victim)
     }
     for (auto&& item : inv.for_chara(victim))
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         f = 0;
         if (victim.role == Role::user)
         {

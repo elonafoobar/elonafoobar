@@ -989,8 +989,6 @@ void eh_guest_visit(const DeferredEvent&)
         auto distance_to_guest_chair = 6;
         for (const auto& item : inv.ground())
         {
-            if (item.number() == 0)
-                continue;
             if (item.function != 44)
                 continue;
             if (chara.index == guest->index)

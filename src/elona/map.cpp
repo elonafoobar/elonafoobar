@@ -380,16 +380,13 @@ void map_reload(const std::string& map_filename)
 
     for (auto&& item : inv.ground())
     {
-        if (item.number() > 0)
+        if (item.own_state == 1)
         {
-            if (item.own_state == 1)
+            if (the_item_db[itemid2int(item.id)]->category ==
+                ItemCategory::food)
             {
-                if (the_item_db[itemid2int(item.id)]->category ==
-                    ItemCategory::food)
-                {
-                    item.remove();
-                    cell_refresh(item.position.x, item.position.y);
-                }
+                item.remove();
+                cell_refresh(item.position.x, item.position.y);
             }
         }
     }
@@ -732,11 +729,6 @@ static void _modify_items_on_regenerate()
 {
     for (auto&& item : inv.ground())
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
-
         // Update tree of fruits.
         if (item.id == ItemId::tree_of_fruits)
         {
@@ -2189,10 +2181,6 @@ void map_global_proc_travel_events(Character& chara)
     {
         for (auto&& item : inv.for_chara(chara))
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (the_item_db[itemid2int(item.id)]->category ==
                 ItemCategory::travelers_food)
             {

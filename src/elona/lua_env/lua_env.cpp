@@ -94,10 +94,7 @@ void LuaEnv::clear()
     {
         for (auto&& item : inv_)
         {
-            if (item.number() != 0)
-            {
-                handle_mgr->remove_item_handle(item);
-            }
+            handle_mgr->remove_item_handle(item);
         }
     }
 

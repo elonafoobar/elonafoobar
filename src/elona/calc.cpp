@@ -1191,8 +1191,6 @@ int calccostreload(int owner, bool do_reload)
 
     for (auto&& item : inv.for_chara(cdata[owner]))
     {
-        if (item.number() == 0)
-            continue;
         if (the_item_db[itemid2int(item.id)]->category != ItemCategory::ammo)
             continue;
 
@@ -1250,10 +1248,6 @@ int calcidentifyvalue(int type)
         int need_to_identify{};
         for (const auto& item : inv.pc())
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (item.identify_state != IdentifyState::completely)
             {
                 ++need_to_identify;

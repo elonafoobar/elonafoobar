@@ -188,7 +188,7 @@ std::pair<int, optional_ref<Item>> cell_itemoncell(const Position& pos)
 
     for (auto&& item : inv.ground())
     {
-        if (item.number() > 0 && item.position == pos)
+        if (item.position == pos)
         {
             ++number;
             item_ = item;

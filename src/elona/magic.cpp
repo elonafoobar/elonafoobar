@@ -559,10 +559,6 @@ bool _magic_183(Character& subject, optional_ref<Item> instrument)
     {
         for (auto&& item : inv.for_chara(subject))
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (item.skill == 183)
             {
                 instrument = item;
@@ -1156,10 +1152,6 @@ bool _magic_412(Character& subject, Character& target)
     p(2) = 0;
     for (auto&& item : inv.for_chara(target))
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (!is_cursed(item.curse_state))
         {
             continue;
@@ -3400,10 +3392,6 @@ bool _magic_651(Character& subject, Character& target)
     optional_ref<Item> eat_item_opt;
     for (auto&& item : inv.for_chara(target))
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (item.id == ItemId::fish_a)
         {
             eat_item_opt = item;
@@ -3414,10 +3402,6 @@ bool _magic_651(Character& subject, Character& target)
     {
         for (auto&& item : inv.for_chara(target))
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (item.is_precious())
             {
                 continue;

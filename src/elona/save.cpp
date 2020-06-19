@@ -192,10 +192,6 @@ void load_gene_files()
     }
     for (auto&& item : inv.pc())
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (item.id == ItemId::secret_experience_of_lomias)
         {
             lomiaseaster = 1;

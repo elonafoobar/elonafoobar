@@ -280,12 +280,6 @@ void make_item_list(
 
         for (auto& item : inv.by_index(p))
         {
-            if (item.number() <= 0)
-            {
-                item.remove();
-                continue;
-            }
-
             // compatibility?
             if (item.id == ItemId::training_machine)
             {

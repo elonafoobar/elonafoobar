@@ -1836,10 +1836,6 @@ void spot_digging(Character& chara)
     {
         for (auto&& item : inv.pc())
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (item.id == ItemId::treasure_map && item.param1 != 0 &&
                 item.param1 == cdata.player().position.x &&
                 item.param2 == cdata.player().position.y)
