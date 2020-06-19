@@ -514,9 +514,7 @@ void make_item_list(
             }
             if (invctrl == 19)
             {
-                bool is_offerable =
-                    item_db_is_offerable(item, itemid2int(item.id));
-                if (is_offerable == 0)
+                if (!god_is_offerable(item, cdata.player()))
                 {
                     continue;
                 }

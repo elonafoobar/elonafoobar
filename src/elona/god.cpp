@@ -12,6 +12,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "lua_env/interface.hpp"
 #include "magic.hpp"
 #include "message.hpp"
 #include "random.hpp"
@@ -707,6 +708,17 @@ void god_fail_to_take_over_penalty()
         efp = 100;
         magic(cdata.player(), cdata.player());
     }
+}
+
+
+
+bool god_is_offerable(Item& offering, Character& believer)
+{
+    return lua::call_with_result(
+        "core.Impl.God.is_offerable",
+        false,
+        lua::handle(offering),
+        lua::handle(believer));
 }
 
 } // namespace elona
