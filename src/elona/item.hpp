@@ -274,6 +274,9 @@ public:
     bool contains(size_t index) const;
     Item& at(size_t index);
 
+    bool has_free_slot() const;
+    optional_ref<Item> get_free_slot();
+
 
     size_t index_start() const noexcept
     {
@@ -288,44 +291,95 @@ public:
 
 
 
-    using iterator = storage_type::iterator;
-    using const_iterator = storage_type::const_iterator;
+    template <typename Itr>
+    struct iterator_base
+    {
+    public:
+        iterator_base(Itr itr, Itr end)
+            : _itr(itr)
+            , _end(end)
+        {
+            skip_over_null_elements();
+        }
+
+
+        bool operator==(const iterator_base& other) const
+        {
+            return _itr == other._itr;
+        }
+
+
+        bool operator!=(const iterator_base& other) const
+        {
+            return !(*this == other);
+        }
+
+
+        auto& operator*() const
+        {
+            return *_itr;
+        }
+
+
+        iterator_base& operator++()
+        {
+            ++_itr;
+            skip_over_null_elements();
+            return *this;
+        }
+
+
+
+    private:
+        Itr _itr;
+        Itr _end;
+
+
+        void skip_over_null_elements()
+        {
+            while (_itr != _end && _itr->number() == 0)
+            {
+                ++_itr;
+            }
+        }
+    };
+
+
+    using iterator = iterator_base<storage_type::iterator>;
+    using const_iterator = iterator_base<storage_type::const_iterator>;
 
 
 
     iterator begin()
     {
-        return _storage.begin();
+        return iterator(_storage.begin(), _storage.end());
     }
-
 
     iterator end()
     {
-        return _storage.end();
+        return iterator(_storage.end(), _storage.end());
     }
 
 
     const_iterator begin() const
     {
-        return _storage.begin();
+        return const_iterator(_storage.begin(), _storage.end());
     }
-
 
     const_iterator end() const
     {
-        return _storage.end();
+        return const_iterator(_storage.end(), _storage.end());
     }
 
 
     const_iterator cbegin() const
     {
-        return _storage.cbegin();
+        return begin();
     }
-
 
     const_iterator cend() const
     {
-        return _storage.cend();
+        return end();
     }
 
 

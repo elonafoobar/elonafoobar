@@ -98,10 +98,6 @@ TalkResult talk_wizard_identify(Character& speaker, int chatval_)
     p = 0;
     for (const auto& item : inv.pc())
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (item.identify_state != IdentifyState::completely)
         {
             ++p;
@@ -121,10 +117,6 @@ TalkResult talk_wizard_identify(Character& speaker, int chatval_)
         p(1) = 0;
         for (auto&& item : inv.pc())
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (item.identify_state != IdentifyState::completely)
             {
                 const auto result = item_identify(item, 250);
@@ -218,10 +210,7 @@ TalkResult talk_trade(Character& speaker)
     invsubroutine = 1;
     for (auto&& item : inv.for_chara(speaker))
     {
-        if (item.number() != 0)
-        {
-            item.identify_state = IdentifyState::completely;
-        }
+        item.identify_state = IdentifyState::completely;
     }
     invctrl(0) = 20;
     invctrl(1) = 0;
@@ -2177,10 +2166,6 @@ TalkResult talk_npc(Character& speaker)
                     deliver = cnt;
                     for (auto&& item : inv.pc())
                     {
-                        if (item.number() == 0)
-                        {
-                            continue;
-                        }
                         if (item.id == int2itemid(p))
                         {
                             item_to_deliver = item;
@@ -2201,10 +2186,6 @@ TalkResult talk_npc(Character& speaker)
         {
             for (auto&& item : inv.pc())
             {
-                if (item.number() == 0)
-                {
-                    continue;
-                }
                 if (item.is_marked_as_no_drop())
                 {
                     continue;

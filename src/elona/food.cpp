@@ -267,12 +267,9 @@ void chara_vomit(Character& chara)
         auto p = 2;
         for (const auto& item : inv.ground())
         {
-            if (item.number() > 0)
+            if (item.id == ItemId::vomit)
             {
-                if (item.id == ItemId::vomit)
-                {
-                    ++p;
-                }
+                ++p;
             }
         }
         if (rnd_capped(p * p * p) == 0 || chara.index == 0)
@@ -1490,10 +1487,6 @@ void foods_get_rotten()
 
         for (auto&& item : inv.by_index(chara))
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             _food_gets_rotten(chara, item);
         }
     }

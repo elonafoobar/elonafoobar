@@ -230,8 +230,6 @@ optional<TurnResult> handle_pc_action(std::string& action)
         p = 0;
         for (const auto& item : inv.ground())
         {
-            if (item.number() == 0)
-                continue;
             if (item.position != cdata.player().position)
                 continue;
             if (the_item_db[itemid2int(item.id)]->category ==

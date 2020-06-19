@@ -145,6 +145,34 @@ Item& Inventory::at(size_t index)
 
 
 
+bool Inventory::has_free_slot() const
+{
+    for (auto&& item : _storage)
+    {
+        if (item.number() == 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+optional_ref<Item> Inventory::get_free_slot()
+{
+    for (auto&& item : _storage)
+    {
+        if (item.number() == 0)
+        {
+            return item;
+        }
+    }
+    return none;
+}
+
+
+
 AllInventory::AllInventory()
 {
     size_t index_start = 0;
@@ -279,10 +307,6 @@ item_find(int matcher, int matcher_type, ItemFindLocation location_type)
         }
         for (auto&& item : inv.by_index(inventory_id))
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (inventory_id == -1)
             {
                 if (item.position != cdata.player().position)
@@ -335,10 +359,6 @@ std::vector<std::reference_wrapper<Item>> itemlist(int owner, int id)
     std::vector<std::reference_wrapper<Item>> ret;
     for (auto&& item : inv.by_index(owner))
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (item.id == int2itemid(id))
         {
             ret.push_back(item);
@@ -377,10 +397,6 @@ optional_ref<Item> itemfind(int inventory_id, int matcher, int matcher_type)
     {
         for (auto&& item : inv.for_chara(cdata[inventory_id]))
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (item.id == int2itemid(matcher))
             {
                 return item;
@@ -392,10 +408,6 @@ optional_ref<Item> itemfind(int inventory_id, int matcher, int matcher_type)
     {
         for (auto&& item : inv.for_chara(cdata[inventory_id]))
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (the_item_db[itemid2int(item.id)]->subcategory == matcher)
             {
                 return item;
@@ -411,10 +423,6 @@ optional_ref<Item> mapitemfind(const Position& pos, ItemId id)
 {
     for (auto&& item : inv.ground())
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (item.id == id && item.position == pos)
         {
             return item;
@@ -445,21 +453,15 @@ void cell_refresh(int x, int y)
     cell_data.at(x, y).light = 0;
     for (const auto& item : inv.ground())
     {
-        if (item.number() > 0)
+        if (item.position.x == x && item.position.y == y)
         {
-            if (item.position.x == x && item.position.y == y)
+            floorstack(p_at_m55) = item.index() - inv.ground().index_start();
+            ++p_at_m55;
+            wpoke(cell_data.at(x, y).item_appearances_actual, 0, item.image);
+            wpoke(cell_data.at(x, y).item_appearances_actual, 2, item.color);
+            if (ilight(itemid2int(item.id)) != 0)
             {
-                floorstack(p_at_m55) =
-                    item.index() - inv.ground().index_start();
-                ++p_at_m55;
-                wpoke(
-                    cell_data.at(x, y).item_appearances_actual, 0, item.image);
-                wpoke(
-                    cell_data.at(x, y).item_appearances_actual, 2, item.color);
-                if (ilight(itemid2int(item.id)) != 0)
-                {
-                    cell_data.at(x, y).light = ilight(itemid2int(item.id));
-                }
+                cell_data.at(x, y).light = ilight(itemid2int(item.id));
             }
         }
     }
@@ -1617,7 +1619,7 @@ ItemStackResult item_stack(int inventory_id, Item& base_item, bool show_message)
 
     for (auto&& item : inv.by_index(inventory_id))
     {
-        if (item == base_item || item.number() == 0 || item.id != base_item.id)
+        if (item == base_item || item.id != base_item.id)
             continue;
 
         bool stackable;
@@ -1735,10 +1737,6 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
         }
         for (auto&& item : inv.by_index(owner))
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (item.id == ItemId::fireproof_blanket)
             {
                 if (!blanket)
@@ -1919,10 +1917,6 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
     optional_ref<Item> burned_item;
     for (auto&& item : inv.ground())
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (item.position == Position{x, y})
         {
             burned_item = item;
@@ -1969,10 +1963,6 @@ bool item_cold(int owner, optional_ref<Item> destroyed_item)
         }
         for (auto&& item : inv.by_index(owner))
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (item.id == ItemId::coldproof_blanket)
             {
                 if (!blanket)
@@ -2090,10 +2080,6 @@ void mapitem_cold(int x, int y)
     optional_ref<Item> destroyed_item;
     for (auto&& item : inv.ground())
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (item.position == Position{x, y})
         {
             destroyed_item = item;
@@ -2138,10 +2124,6 @@ bool inv_find(ItemId id, int owner)
 {
     for (const auto& item : inv.for_chara(cdata[owner]))
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (item.id == id)
         {
             return true;
@@ -2154,25 +2136,17 @@ bool inv_find(ItemId id, int owner)
 
 bool inv_getspace(int owner)
 {
-    for (const auto& item : inv.by_index(owner))
-    {
-        if (item.number() == 0)
-        {
-            return true;
-        }
-    }
-    return false;
+    return inv.by_index(owner).has_free_slot();
 }
+
+
 
 int inv_sum(int owner)
 {
     int n{};
     for (const auto& item : inv.by_index(owner))
     {
-        if (item.number() != 0)
-        {
-            ++n;
-        }
+        ++n;
     }
     return n;
 }
@@ -2187,19 +2161,14 @@ Item& inv_compress(int owner)
         int threshold = 200 * (i * i + 1);
         for (auto&& item : inv.by_index(owner))
         {
-            if (item.number() != 0)
+            if (!item.is_precious() && item.value < threshold)
             {
-                if (!item.is_precious() && item.value < threshold)
+                item.remove();
+                ++number_of_deleted_items;
+                if (item.position.x >= 0 && item.position.x < map_data.width &&
+                    item.position.y >= 0 && item.position.y < map_data.height)
                 {
-                    item.remove();
-                    ++number_of_deleted_items;
-                    if (item.position.x >= 0 &&
-                        item.position.x < map_data.width &&
-                        item.position.y >= 0 &&
-                        item.position.y < map_data.height)
-                    {
-                        cell_refresh(item.position.x, item.position.y);
-                    }
+                    cell_refresh(item.position.x, item.position.y);
                 }
             }
             if (number_of_deleted_items > 10)
@@ -2213,12 +2182,9 @@ Item& inv_compress(int owner)
         }
     }
 
-    for (auto&& item : inv.by_index(owner))
+    if (const auto& free_slot = inv.by_index(owner).get_free_slot())
     {
-        if (item.number() == 0)
-        {
-            return item;
-        }
+        return *free_slot;
     }
 
     // Destroy 1 existing item forcely.
@@ -2240,12 +2206,9 @@ Item& inv_compress(int owner)
 
 optional_ref<Item> inv_get_free_slot(int inventory_id)
 {
-    for (auto&& item : inv.by_index(inventory_id))
+    if (const auto& free_slot = inv.by_index(inventory_id).get_free_slot())
     {
-        if (item.number() == 0)
-        {
-            return item;
-        }
+        return *free_slot;
     }
     if (inventory_id == -1 && mode != 6)
     {
@@ -2266,16 +2229,13 @@ int inv_weight(int owner)
     }
     for (const auto& item : inv.by_index(owner))
     {
-        if (item.number() != 0)
+        if (item.weight >= 0)
         {
-            if (item.weight >= 0)
-            {
-                weight += item.weight * item.number();
-            }
-            else if (owner == 0)
-            {
-                game_data.cargo_weight += -item.weight * item.number();
-            }
+            weight += item.weight * item.number();
+        }
+        else if (owner == 0)
+        {
+            game_data.cargo_weight += -item.weight * item.number();
         }
     }
     return weight;
@@ -2455,8 +2415,7 @@ void auto_identify()
 
     for (auto&& item : inv.pc())
     {
-        if (item.number() == 0 ||
-            item.identify_state == IdentifyState::completely)
+        if (item.identify_state == IdentifyState::completely)
         {
             continue;
         }
@@ -2568,7 +2527,7 @@ Item& item_convert_artifact(Item& artifact, bool ignore_external_container)
         }
         for (const auto& item : inv.for_chara(chara))
         {
-            if (item.number() > 0 && item.id == artifact.id && item != artifact)
+            if (item.id == artifact.id && item != artifact)
             {
                 found = true;
                 break;
@@ -2583,7 +2542,7 @@ Item& item_convert_artifact(Item& artifact, bool ignore_external_container)
     {
         for (const auto& item : inv.ground())
         {
-            if (item.number() > 0 && item.id == artifact.id && item != artifact)
+            if (item.id == artifact.id && item != artifact)
             {
                 found = true;
                 break;

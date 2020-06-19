@@ -243,7 +243,7 @@ void wear_most_valuable_equipment_for_all_body_parts(Character& chara)
 {
     for (auto&& item : inv.for_chara(chara))
     {
-        if (item.number() == 0 || item.body_part != 0)
+        if (item.body_part != 0)
         {
             continue;
         }

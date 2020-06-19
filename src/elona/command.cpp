@@ -95,10 +95,6 @@ void _search_for_crystal()
     optional<int> d;
     for (const auto& item : inv.ground())
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (item.own_state != 5)
         {
             continue;
@@ -5626,10 +5622,6 @@ PickUpItemResult pick_up_item(
                 f = 0;
                 for (const auto& item_ : inv.ground())
                 {
-                    if (item_.number() == 0)
-                    {
-                        continue;
-                    }
                     if (item_.id == ItemId::campfire)
                     {
                         f = 1;
@@ -5883,8 +5875,6 @@ void proc_autopick()
 
     for (auto&& item : inv.ground())
     {
-        if (item.number() == 0)
-            continue;
         if (item.position != cdata.player().position)
             continue;
         if (item.own_state > 0)

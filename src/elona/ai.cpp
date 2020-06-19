@@ -301,10 +301,6 @@ void _ally_sells_item(Character& chara)
 
     for (auto&& item : inv.for_chara(chara))
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (the_item_db[itemid2int(item.id)]->category == ItemCategory::ore)
         {
             sold_item_count += item.number();
