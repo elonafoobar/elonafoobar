@@ -10,7 +10,7 @@ ELONA.i18n:add {
 
       hunt = {
          complete = "エリアを制圧した！",
-         remaining = "[殲滅依頼]残り{$1}体] ",
+         remaining = "[殲滅依頼]残り{$1}体 ",
       },
       party = {
          is_over = "パーティーは終了した。",

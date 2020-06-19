@@ -18,14 +18,14 @@ ELONA.i18n:add_data_text(
       },
       yerles = {
          name = "Yerles",
-         description = "The young kingdom which worships the ancient scientific civilization called Eyth Terre has gained power in the west. While they are realists amd materialistic, they are also adaptable to things that are beyond their comprehension if it benefits the kingdom. Yerles fit well in every class with their outstanding learning ability. They receive extra skill points with every level that they gain."
+         description = "The young kingdom which worships the ancient scientific civilization called Eyth Terre has gained power in the west. While they are realists and materialistic, they are also adaptable to things that are beyond their comprehension if it benefits the kingdom. Yerles fit well in every class with their outstanding learning ability. They receive extra skill points with every level that they gain."
       },
       norland = {
          name = "Norland",
       },
       eulderna = {
          name = "Eulderna",
-         description = "Eulderna is one of the most ancient races in Sierra Terre. Egoism and elitism dominate every thought behind actions of these perfectionists. They, are suitable to caster or hybrid classes as they are adept at magics and using magical devices. Euldernas have resistance to magic."
+         description = "Eulderna is one of the most ancient races in Sierra Terre. Egoism and elitism dominate every thought behind actions of these perfectionists. They, are suitable to caster or hybrid classes as they are adept at magic and using magical devices. Euldernas have resistance to magic."
       },
       fairy = {
          name = "Fairy",
@@ -53,7 +53,7 @@ ELONA.i18n:add_data_text(
       },
       elea = {
          name = "Elea",
-         description = "Elea, known by the other peoples of the world as \"Elf's\", live quietly in their forests, far from man. Nimble and graceful, their bows are of legend, and their wizards have forgotten more of magic than many will ever know. Still, the young ones from time to time leave and go on adventures, if only to fill their memories for their long lives."
+         description = "Elea, known by the other peoples of the world as \"Elves\", live quietly in their forests, far from man. Nimble and graceful, their bows are of legend, and their wizards have forgotten more of magic than many will ever know. Still, the young ones from time to time leave and go on adventures, if only to fill their memories for their long lives."
       },
       rabbit = {
          name = "Rabbit",
@@ -69,7 +69,7 @@ ELONA.i18n:add_data_text(
       },
       snail = {
          name = "Snail",
-         description = "Despite the fears that one day the rats will inherit the World, thanks to the Etherwind it seems the snails have gotten a head start. Slow and dull, even the mightiest among them fears salt, garlic and butter. Still for those seeking a true challenge, ony can harly do worse than being a snail. Can you imagine the looks of others when you inch ever so slowly towards them?"
+         description = "Despite the fears that one day the rats will inherit the World, thanks to the Etherwind it seems the snails have gotten a head start. Slow and dull, even the mightiest among them fears salt, garlic and butter. Still for those seeking a true challenge, one can hardly do worse than being a snail. Can you imagine the looks of others when you inch ever so slowly towards them?"
       },
       mandrake = {
          name = "Mandrake",
