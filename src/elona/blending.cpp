@@ -604,6 +604,10 @@ optional<TurnResult> blending_menu_1()
                 }
                 blendchecklist(cnt) = blendcheckmat(list(0, p));
             }
+            if (listmax <= pagesize * page + cs)
+            {
+                cs = listmax % pagesize - 1;
+            }
         }
 
         windowshadow = windowshadow(1);
