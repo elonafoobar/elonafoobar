@@ -111,20 +111,6 @@ void report_error(sol::error err)
     ELONA_ERROR("lua.mod") << what;
 }
 
-
-
-template <typename F>
-void internal_init_mod(ModEnv& mod, F run_script)
-{
-    auto result = run_script(mod.env);
-    if (!result.valid())
-    {
-        sol::error err = result;
-        report_error(err);
-        throw std::runtime_error("Failed initializing mod "s + mod.manifest.id);
-    }
-}
-
 } // namespace
 
 
@@ -232,12 +218,19 @@ void ModManager::load_mods(const ResolvedModList& resolved_mod_list)
 
 void ModManager::init_mod(ModEnv& mod)
 {
-    if (mod.manifest.path)
+    if (!mod.manifest.path)
+        return;
+
+    const auto script_path = *mod.manifest.path / "init.lua";
+    if (!fs::exists(script_path))
+        return;
+
+    auto result = safe_script_file(script_path, mod.env);
+    if (!result.valid())
     {
-        internal_init_mod(
-            mod, [this, path = (*mod.manifest.path / "init.lua")](auto env) {
-                return safe_script_file(path, env);
-            });
+        sol::error err = result;
+        report_error(err);
+        throw std::runtime_error("Failed initializing mod "s + mod.manifest.id);
     }
 }
 
@@ -298,8 +291,13 @@ void ModManager::load_testing_mod_from_script(
 {
     auto& mod = create_mod_env_from_script(id);
 
-    internal_init_mod(
-        mod, [this, &script](auto env) { return safe_script(script, env); });
+    auto result = safe_script(script, mod.env);
+    if (!result.valid())
+    {
+        sol::error err = result;
+        report_error(err);
+        throw std::runtime_error("Failed initializing mod "s + mod.manifest.id);
+    }
 
     _mod_versions.emplace(mod.manifest.id, mod.manifest.version);
     // Testing mods are always at the end.
