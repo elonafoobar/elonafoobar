@@ -122,6 +122,8 @@ ELONA.data:add(
          y = 384,
          width = 32,
          height = 16,
+         file = "<core>/graphic/interface_ex9.png",
+         load_type = "startup",
       },
       camera = {
          source = "interface",
