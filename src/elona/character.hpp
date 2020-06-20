@@ -8,6 +8,7 @@
 #include "../util/range.hpp"
 #include "consts.hpp"
 #include "data/types/type_character.hpp"
+#include "eobject/eobject.hpp"
 #include "god.hpp"
 #include "item_ref.hpp"
 #include "lua_env/wrapped_function.hpp"
@@ -268,6 +269,8 @@ struct Character
     // on creation and load.
     int index = -1;
 
+    ObjId obj_id;
+
 private:
     Character::State state_ = Character::State::empty;
 
@@ -479,6 +482,7 @@ public:
         /* clang-format off */
         ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Character");
 
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, obj_id);
         ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "state", state_);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, position);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, next_position);

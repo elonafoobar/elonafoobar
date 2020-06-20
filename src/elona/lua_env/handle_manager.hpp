@@ -8,6 +8,7 @@
 #include <boost/uuid/uuid_io.hpp>
 
 #include "../../util/noncopyable.hpp"
+#include "../eobject/eobject.hpp"
 #include "lua_submodule.hpp"
 
 
@@ -53,8 +54,8 @@ public:
      * If the handle already exists, handle_set is instead checked for
      * validity.
      */
-    void create_chara_handle(const Character& chara);
-    void create_item_handle(const Item& item);
+    void create_chara_handle(Character& chara);
+    void create_item_handle(Item& item);
 
     /***
      * Removes an existing handle in the isolated handle environment.
@@ -62,8 +63,8 @@ public:
      * If the handle doesn't exist in this manager's handle list, handle_set
      * is checked that the handle is invalid.
      */
-    void remove_chara_handle(const Character& chara);
-    void remove_item_handle(const Item& item);
+    void remove_chara_handle(Character& chara);
+    void remove_item_handle(Item& item);
 
 
     /***
@@ -71,10 +72,10 @@ public:
      * creation/removal event callbacks using the event manager
      * instance.
      */
-    void create_chara_handle_run_callbacks(const Character&);
-    void create_item_handle_run_callbacks(const Item&);
-    void remove_chara_handle_run_callbacks(const Character&);
-    void remove_item_handle_run_callbacks(const Item&);
+    void create_chara_handle_run_callbacks(Character&);
+    void create_item_handle_run_callbacks(Item&);
+    void remove_chara_handle_run_callbacks(Character&);
+    void remove_item_handle_run_callbacks(Item&);
 
 
     /***
@@ -141,13 +142,6 @@ public:
     }
 
 
-    sol::table
-    get_handle_range(const std::string& kind, int index_start, int index_end)
-    {
-        return env()["Handle"]["get_handle_range"](
-            kind, index_start, index_end);
-    }
-
     void
     clear_handle_range(const std::string& kind, int index_start, int index_end)
     {
@@ -160,14 +154,14 @@ public:
     }
 
     template <typename T>
-    void relocate_handle(const T& source, const T& destination, int new_index)
+    void relocate_handle(T& source, T& destination, int new_index)
     {
         env()["Handle"]["relocate_handle"](
             source, destination, new_index, T::lua_type());
     }
 
     template <typename T>
-    void swap_handles(const T& obj_a, const T& obj_b)
+    void swap_handles(T& obj_a, T& obj_b)
     {
         env()["Handle"]["swap_handles"](obj_a, obj_b, T::lua_type());
     }
@@ -196,19 +190,20 @@ private:
     template <typename T>
     void create_handle(T& obj)
     {
-        std::string uuid = boost::lexical_cast<std::string>(uuid_generator());
-        env()["Handle"]["create_handle"](obj, T::lua_type(), uuid);
+        const auto new_id = ObjId::generate();
+        obj.obj_id = new_id;
+        env()["Handle"]["create_handle"](
+            obj, T::lua_type(), new_id.to_string());
     }
 
     template <typename T>
     void remove_handle(T& obj)
     {
         env()["Handle"]["remove_handle"](obj, T::lua_type());
+        obj.obj_id = ObjId::nil();
     }
 
     void bind(LuaEnv&);
-
-    boost::uuids::random_generator uuid_generator;
 };
 
 } // namespace lua
