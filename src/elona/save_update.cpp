@@ -45,6 +45,41 @@ void for_each_cdata(const fs::path& save_dir, F f)
 
 
 
+template <typename F>
+void for_each_map(const fs::path& save_dir, F f)
+{
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(map_(.*)?\.s2)"}))
+    {
+        int width;
+        int height;
+
+        {
+            const auto mid =
+                filepathutil::to_utf8_path(entry.path().filename());
+            const auto mdata = save_dir / ("mdata_" + mid.substr(4));
+            std::ifstream in{mdata.native(), std::ios::binary};
+            serialization::binary::IArchive iar{in};
+            iar(width);
+            iar(height);
+        }
+
+        std::ifstream fin{entry.path().native(), std::ios::binary};
+        serialization::binary::IArchive iar{fin};
+
+        std::ostringstream out;
+        serialization::binary::OArchive oar{out};
+
+        f(width, height, iar, oar);
+
+        fin.close();
+        std::ofstream fout{entry.path().native(), std::ios::binary};
+        fout.write(out.str().c_str(), out.str().size());
+    }
+}
+
+
+
 void _update_save_data_15(const fs::path& save_dir)
 {
     for_each_cdata(save_dir, [](auto& iar, auto& oar, int chara_index) {
@@ -496,6 +531,60 @@ void _update_save_data_15(const fs::path& save_dir)
 
 
 
+void _update_save_data_16(const fs::path& save_dir)
+{
+    for_each_map(save_dir, [](int width, int height, auto& iar, auto& oar) {
+        size_t size = width * height;
+        std::vector<int> old_cells;
+        old_cells.resize(10 * size);
+        for (int k = 0; k < 10; ++k)
+        {
+            for (int y = 0; y < height; ++y)
+            {
+                for (int x = 0; x < width; ++x)
+                {
+                    size_t i = k * width * height + y * width + x;
+                    iar(old_cells[i]);
+                }
+            }
+        }
+
+        std::vector<
+            std::tuple<int, int, int, uint64_t, uint64_t, int, int, int, int>>
+            new_cells;
+        new_cells.resize(size);
+        for (int y = 0; y < height; ++y)
+        {
+            for (int x = 0; x < width; ++x)
+            {
+                auto& new_cell = new_cells[y * width + x];
+                std::get<0>(new_cell) =
+                    old_cells[0 * width * height + y * width + x];
+                std::get<1>(new_cell) =
+                    old_cells[2 * width * height + y * width + x];
+                std::get<2>(new_cell) =
+                    old_cells[1 * width * height + y * width + x];
+                std::get<3>(new_cell) = 0xF000'0000'0000'0000ULL;
+                std::get<4>(new_cell) = 0xF000'0000'0000'0000ULL;
+                std::get<5>(new_cell) =
+                    old_cells[6 * width * height + y * width + x];
+                std::get<6>(new_cell) =
+                    old_cells[7 * width * height + y * width + x];
+                std::get<7>(new_cell) =
+                    old_cells[8 * width * height + y * width + x];
+                std::get<8>(new_cell) =
+                    old_cells[9 * width * height + y * width + x];
+            }
+        }
+
+        oar(width);
+        oar(height);
+        oar(new_cells);
+    });
+}
+
+
+
 void _update_save_data(const fs::path& save_dir, int serial_id)
 {
     if (serial_id <= 14)
@@ -510,6 +599,7 @@ void _update_save_data(const fs::path& save_dir, int serial_id)
     switch (serial_id)
     {
         ELONA_CASE(15)
+        ELONA_CASE(16)
     default: assert(0); break;
     }
 #undef ELONA_CASE

@@ -161,7 +161,7 @@ ELONA.i18n:add {
             item = "You see {$1} here.",
             building = "{$1} is constructed here.",
             not_owned = "You see {$1} placed here.", -- TODO correct name?
-            more_than_three = "There are {$1} items lying here.",
+            many = "There are {$1} items lying here.",
          },
 
          feature = {

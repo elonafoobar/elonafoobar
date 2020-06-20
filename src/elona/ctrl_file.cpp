@@ -193,6 +193,39 @@ void arrayfile(
 }
 
 
+
+template <typename F>
+void load_internal(const fs::path& filepath, F do_load)
+{
+    std::ifstream in{filepath.native(), std::ios::binary};
+    if (in.fail())
+    {
+        throw std::runtime_error(
+            u8"Could not open file at "s +
+            filepathutil::to_utf8_path(filepath));
+    }
+    serialization::binary::IArchive ar{in};
+    do_load(ar);
+}
+
+
+
+template <typename F>
+void save_internal(const fs::path& filepath, F do_save)
+{
+    std::ofstream out{filepath.native(), std::ios::binary};
+    if (out.fail())
+    {
+        throw std::runtime_error(
+            u8"Could not open file at "s +
+            filepathutil::to_utf8_path(filepath));
+    }
+    serialization::binary::OArchive ar{out};
+    do_save(ar);
+}
+
+
+
 template <typename T>
 void load_v1(
     const fs::path& filepath,
@@ -200,21 +233,12 @@ void load_v1(
     size_t begin,
     size_t end)
 {
-    std::ifstream in{filepath.native(), std::ios::binary};
-    if (in.fail())
-    {
-        ELONA_FATAL("save")
-            << "Could not open file at "
-            << filepathutil::make_preferred_path_in_utf8(filepath);
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::IArchive ar(in);
-    for (size_t i = begin; i < end; ++i)
-    {
-        ar(data(i));
-    }
+    load_internal(filepath, [&](auto& ar) {
+        for (size_t i = begin; i < end; ++i)
+        {
+            ar(data(i));
+        }
+    });
 }
 
 
@@ -225,18 +249,12 @@ void save_v1(
     size_t begin,
     size_t end)
 {
-    std::ofstream out{filepath.native(), std::ios::binary};
-    if (out.fail())
-    {
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::OArchive ar(out);
-    for (size_t i = begin; i < end; ++i)
-    {
-        ar(data(i));
-    }
+    save_internal(filepath, [&](auto& ar) {
+        for (size_t i = begin; i < end; ++i)
+        {
+            ar(data(i));
+        }
+    });
 }
 
 
@@ -249,21 +267,15 @@ void load_v2(
     size_t j_begin,
     size_t j_end)
 {
-    std::ifstream in{filepath.native(), std::ios::binary};
-    if (in.fail())
-    {
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::IArchive ar{in};
-    for (size_t j = j_begin; j < j_end; ++j)
-    {
-        for (size_t i = i_begin; i < i_end; ++i)
+    load_internal(filepath, [&](auto& ar) {
+        for (size_t j = j_begin; j < j_end; ++j)
         {
-            ar(data(i, j));
+            for (size_t i = i_begin; i < i_end; ++i)
+            {
+                ar(data(i, j));
+            }
         }
-    }
+    });
 }
 
 
@@ -276,21 +288,15 @@ void save_v2(
     size_t j_begin,
     size_t j_end)
 {
-    std::ofstream out{filepath.native(), std::ios::binary};
-    if (out.fail())
-    {
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::OArchive ar{out};
-    for (size_t j = j_begin; j < j_end; ++j)
-    {
-        for (size_t i = i_begin; i < i_end; ++i)
+    save_internal(filepath, [&](auto& ar) {
+        for (size_t j = j_begin; j < j_end; ++j)
         {
-            ar(data(i, j));
+            for (size_t i = i_begin; i < i_end; ++i)
+            {
+                ar(data(i, j));
+            }
         }
-    }
+    });
 }
 
 
@@ -305,24 +311,18 @@ void load_v3(
     size_t k_begin,
     size_t k_end)
 {
-    std::ifstream in{filepath.native(), std::ios::binary};
-    if (in.fail())
-    {
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::IArchive ar{in};
-    for (size_t k = k_begin; k < k_end; ++k)
-    {
-        for (size_t j = j_begin; j < j_end; ++j)
+    load_internal(filepath, [&](auto& ar) {
+        for (size_t k = k_begin; k < k_end; ++k)
         {
-            for (size_t i = i_begin; i < i_end; ++i)
+            for (size_t j = j_begin; j < j_end; ++j)
             {
-                ar(data(i, j, k));
+                for (size_t i = i_begin; i < i_end; ++i)
+                {
+                    ar(data(i, j, k));
+                }
             }
         }
-    }
+    });
 }
 
 
@@ -337,60 +337,68 @@ void save_v3(
     size_t k_begin,
     size_t k_end)
 {
-    std::ofstream out{filepath.native(), std::ios::binary};
-    if (out.fail())
-    {
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::OArchive ar{out};
-    for (size_t k = k_begin; k < k_end; ++k)
-    {
-        for (size_t j = j_begin; j < j_end; ++j)
+    save_internal(filepath, [&](auto& ar) {
+        for (size_t k = k_begin; k < k_end; ++k)
         {
-            for (size_t i = i_begin; i < i_end; ++i)
+            for (size_t j = j_begin; j < j_end; ++j)
             {
-                ar(data(i, j, k));
+                for (size_t i = i_begin; i < i_end; ++i)
+                {
+                    ar(data(i, j, k));
+                }
             }
         }
-    }
+    });
+}
+
+
+template <typename T>
+void load_vec(const fs::path& filepath, std::vector<T>& data)
+{
+    load_internal(filepath, [&](auto& ar) {
+        for (auto&& element : data)
+        {
+            ar(element);
+        }
+    });
 }
 
 
 template <typename T>
 void load(const fs::path& filepath, T& data, size_t begin, size_t end)
 {
-    std::ifstream in{filepath.native(), std::ios::binary};
-    if (in.fail())
-    {
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::IArchive ar{in};
-    for (size_t i = begin; i < end; ++i)
-    {
-        ar(data[i]);
-    }
+    load_internal(filepath, [&](auto& ar) {
+        for (size_t i = begin; i < end; ++i)
+        {
+            ar(data[i]);
+        }
+    });
 }
 
 
 template <typename T>
 void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 {
-    std::ofstream out{filepath.native(), std::ios::binary};
-    if (out.fail())
-    {
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::OArchive ar{out};
-    for (size_t i = begin; i < end; ++i)
-    {
-        ar(data[i]);
-    }
+    save_internal(filepath, [&](auto& ar) {
+        for (size_t i = begin; i < end; ++i)
+        {
+            ar(data[i]);
+        }
+    });
+}
+
+
+template <typename T>
+void load(const fs::path& filepath, T& data)
+{
+    load_internal(filepath, [&](auto& ar) { ar(data); });
+}
+
+
+template <typename T>
+void save(const fs::path& filepath, T& data)
+{
+    save_internal(filepath, [&](auto& ar) { ar(data); });
 }
 
 
@@ -1041,21 +1049,16 @@ void fmode_1_2(bool read)
         const auto filepath = dir / (u8"map_"s + mid + u8".s2");
         if (read)
         {
-            DIM4(map, map_data.width, map_data.height, 10);
             DIM3(mapsync, map_data.width, map_data.height);
             DIM3(mef, 9, MEF_MAX);
             tmpload(u8"map_"s + mid + u8".s2");
-            load_v3(
-                filepath, map, 0, map_data.width, 0, map_data.height, 0, 10);
-            cell_data.unpack_from(map);
+            load(filepath, cell_data);
         }
         else
         {
             Save::instance().add(filepath.filename());
             writeloadedbuff(u8"map_"s + mid + u8".s2");
-            cell_data.pack_to(map);
-            save_v3(
-                filepath, map, 0, map_data.width, 0, map_data.height, 0, 10);
+            save(filepath, cell_data);
         }
     }
 
@@ -1222,9 +1225,9 @@ void fmode_16()
 {
     DIM3(cmapdata, 5, 400);
 
-    load_v3(
-        fmapfile + u8".map", map, 0, map_data.width, 0, map_data.height, 0, 3);
-    cell_data.unpack_from(map, false);
+    std::vector<int> tile_grid(cell_data.width() * cell_data.height());
+    load_vec(fmapfile + u8".map", tile_grid);
+    cell_data.load_tile_grid(tile_grid);
 
     const auto filepath = fmapfile + u8".obj"s;
     if (!fs::exists(filepath))
@@ -1272,20 +1275,18 @@ void fmode_5_6(bool read)
         const auto filepath = fmapfile + u8".map"s;
         if (read)
         {
-            DIM4(map, map_data.width, map_data.height, 10);
             DIM3(
                 mapsync,
                 map_data.width,
                 map_data.height); // TODO length_exception
-            load_v3(
-                filepath, map, 0, map_data.width, 0, map_data.height, 0, 10);
-            cell_data.unpack_from(map);
+            cell_data.init(map_data.width, map_data.height);
+            std::vector<int> tile_grid(map_data.width * map_data.height);
+            load_vec(fmapfile + u8".map", tile_grid);
+            cell_data.load_tile_grid(tile_grid);
         }
         else
         {
-            cell_data.pack_to(map);
-            save_v3(
-                filepath, map, 0, map_data.width, 0, map_data.height, 0, 10);
+            save(filepath, cell_data);
         }
     }
 

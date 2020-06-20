@@ -180,26 +180,6 @@ void cell_movechara(int chara_index, int x, int y)
 
 
 
-// Returns pair of number of items and the last item on the cell.
-std::pair<int, optional_ref<Item>> cell_itemoncell(const Position& pos)
-{
-    int number{};
-    optional_ref<Item> item_{};
-
-    for (auto&& item : inv.ground())
-    {
-        if (item.position == pos)
-        {
-            ++number;
-            item_ = item;
-        }
-    }
-
-    return std::make_pair(number, item_);
-}
-
-
-
 void cell_setchara(int chara_index, int x, int y)
 {
     cell_data.at(x, y).chara_index_plus_one = chara_index + 1;
@@ -257,6 +237,37 @@ int cell_findspace(int base_x, int base_y, int range)
         }
     }
     return f_at_m130;
+}
+
+
+
+int cell_count_exact_item_stacks(const Position& pos)
+{
+    int ret{};
+    for (auto&& item : inv.ground())
+    {
+        if (item.number() > 0 && item.position == pos)
+        {
+            ++ret;
+        }
+    }
+    return ret;
+}
+
+
+
+optional_ref<Item> cell_get_item_if_only_one(const Position& pos)
+{
+    const auto& item_info_actual = cell_data.at(pos.x, pos.y).item_info_actual;
+    if (item_info_actual.stack_count() != 1)
+    {
+        return none;
+    }
+    else
+    {
+        const auto index = item_info_actual.item_indice()[0];
+        return inv.ground().at(index - 1);
+    }
 }
 
 

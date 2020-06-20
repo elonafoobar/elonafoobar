@@ -1275,97 +1275,96 @@ void draw_item_chip_on_ground(
 
 
 
+void draw_one_item(
+    int dx,
+    int dy,
+    int item_chip_id,
+    int color_id,
+    int chara_chip_id,
+    int stack_height,
+    int scrturn_)
+{
+    const auto rect = prepare_item_image(item_chip_id, color_id, chara_chip_id);
+    if (map_data.type == mdata_t::MapType::world_map)
+    {
+        draw_item_chip_in_world_map(
+            dx + (inf_tiles / 2),
+            dy + (inf_tiles / 2) - (stack_height / 2),
+            *rect);
+    }
+    else
+    {
+        if (g_config.object_shadow() && item_chips[item_chip_id].shadow)
+        {
+            draw_item_chip_shadow(
+                dx, dy - stack_height, *rect, item_chip_id, 80);
+        }
+        draw_item_chip_on_ground(
+            dx,
+            dy - item_chips[item_chip_id].offset_y - stack_height,
+            *rect,
+            item_chip_id,
+            scrturn_);
+    }
+}
+
+
+
 void draw_items(int x, int y, int dx, int dy, int scrturn_)
 {
-    elona_vector1<int> p_;
+    const auto& item_info_memory = cell_data.at(x, y).item_info_memory;
+    if (item_info_memory.is_empty())
+        return;
 
-    if (cell_data.at(x, y).item_appearances_memory != 0)
+    if (mode == 6 || mode == 9)
+        return; // TODO
+
+    const auto stack_count = item_info_memory.stack_count();
+    if (stack_count < 0)
     {
-        const bool mode_6_or_9 = mode == 6 || mode == 9;
-        int i_;
-        if (mode_6_or_9)
+        const auto bag_icon = 363;
+        for (int i = 0; i < (-stack_count); ++i)
         {
-            i_ = 0;
-            p_ = 363;
+            draw_one_item(
+                dx,
+                dy,
+                bag_icon,
+                0,
+                0,
+                i * item_chips[bag_icon].stack_height,
+                scrturn_);
         }
-        else
+    }
+    else
+    {
+        const auto item_indice = item_info_memory.item_indice();
+        int stack_height = 0;
+        for (const auto& item_index : item_indice)
         {
-            i_ = wpeek(cell_data.at(x, y).item_appearances_memory, 2);
-            p_ = wpeek(cell_data.at(x, y).item_appearances_memory, 0);
-        }
+            if (item_index == 0)
+                break;
 
-        if (cell_data.at(x, y).item_appearances_memory < 0 && !mode_6_or_9)
-        {
-            // Several items are stacked.
-            std::array<int, 3> items;
-            p_ = -cell_data.at(x, y).item_appearances_memory;
-            items[0] = p_ % 1000;
-            items[1] = p_ / 1000 % 1000;
-            items[2] = p_ / 1000000 % 1000;
-            int stack_height{};
-            for (int i = 2; i >= 0; --i)
+            const auto& item = item_index < 0
+                ? inv.ground().at(0) /* TODO phantom ref */
+                : inv.ground().at(item_index - 1);
+
+            const auto item_chip_id = item.image;
+            const auto color_id = item.color;
+            const auto chara_chip_id = item.param1;
+            draw_one_item(
+                dx,
+                dy,
+                item_chip_id,
+                color_id,
+                chara_chip_id,
+                stack_height,
+                scrturn_);
+
+            stack_height += item_chips[item_chip_id].stack_height;
+            if (item_chip_id == 531 &&
+                draw_get_rect_chara(chara_chip_id)->height == 96)
             {
-                if (items[i] == 999)
-                {
-                    continue;
-                }
-                const auto& item = inv.ground().at(items[i]);
-                p_ = item.image;
-                i_ = item.color;
-                auto rect = prepare_item_image(p_, i_, item.param1);
-                if (map_data.type == mdata_t::MapType::world_map)
-                {
-                    draw_item_chip_in_world_map(
-                        dx + (inf_tiles / 2),
-                        dy + (inf_tiles / 2) - (stack_height / 2),
-                        *rect);
-                }
-                else
-                {
-                    if (g_config.object_shadow() && item_chips[p_].shadow)
-                    {
-                        draw_item_chip_shadow(
-                            dx, dy - stack_height, *rect, p_, 70);
-                    }
-                    draw_item_chip_on_ground(
-                        dx,
-                        dy - item_chips[p_].offset_y - stack_height,
-                        *rect,
-                        p_,
-                        scrturn_);
-                }
-                stack_height += item_chips[p_].stack_height;
-                if (p_ == 531 && draw_get_rect_chara(i_)->height == 96)
-                {
-                    stack_height += 44;
-                }
-            }
-        }
-        else
-        {
-            optional_ref<const Extent> rect;
-            if (p_ == 528 || p_ == 531)
-            {
-                rect = prepare_item_image(
-                    p_, i_, cell_itemoncell({x, y}).second->param1);
-            }
-            else
-            {
-                rect = prepare_item_image(p_, i_);
-            }
-            if (map_data.type == mdata_t::MapType::world_map)
-            {
-                draw_item_chip_in_world_map(
-                    dx + (inf_tiles / 2), dy + (inf_tiles / 2), *rect);
-            }
-            else
-            {
-                if (g_config.object_shadow() && item_chips[p_].shadow)
-                {
-                    draw_item_chip_shadow(dx, dy, *rect, p_, 80);
-                }
-                draw_item_chip_on_ground(
-                    dx, dy - item_chips[p_].offset_y, *rect, p_, scrturn_);
+                stack_height += 44;
             }
         }
     }

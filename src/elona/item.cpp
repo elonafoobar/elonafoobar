@@ -1,6 +1,7 @@
 #include "item.hpp"
 
 #include <iostream>
+#include <limits>
 #include <type_traits>
 
 #include "../util/strutil.hpp"
@@ -435,91 +436,62 @@ optional_ref<Item> mapitemfind(const Position& pos, ItemId id)
 
 void cell_refresh(int x, int y)
 {
-    int p_at_m55 = 0;
-    elona_vector1<int> n_at_m55;
-    int cnt2_at_m55 = 0;
-    int i_at_m55 = 0;
     if (mode == 6 || mode == 9)
-    {
         return;
-    }
-    if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
-    {
+    if (x < 0 || map_data.width <= x || y < 0 || map_data.height <= y)
         return;
-    }
 
-    p_at_m55 = 0;
-    cell_data.at(x, y).item_appearances_actual = 0;
     cell_data.at(x, y).light = 0;
+
+    std::array<const Item*, Cell::ItemInfo::max_stacks> items;
+    for (auto& i : items)
+        i = nullptr;
+
+    size_t number_of_items = 0;
     for (const auto& item : inv.ground())
     {
-        if (item.position.x == x && item.position.y == y)
+        if (item.position == Position{x, y})
         {
-            floorstack(p_at_m55) = item.index() - inv.ground().index_start();
-            ++p_at_m55;
-            wpoke(cell_data.at(x, y).item_appearances_actual, 0, item.image);
-            wpoke(cell_data.at(x, y).item_appearances_actual, 2, item.color);
+            if (number_of_items < items.size())
+            {
+                items.at(number_of_items) = &item;
+            }
+            ++number_of_items;
             if (ilight(itemid2int(item.id)) != 0)
             {
                 cell_data.at(x, y).light = ilight(itemid2int(item.id));
             }
         }
     }
-    if (p_at_m55 > 3)
+    if (number_of_items <= Cell::ItemInfo::max_stacks)
     {
-        wpoke(
-            cell_data.at(x, y).item_appearances_actual,
-            0,
-            363); // Item bag chip ID
-        wpoke(
-            cell_data.at(x, y).item_appearances_actual,
-            2,
-            static_cast<int>(ColorIndex::none));
+        range::sort(items, [](const auto i1, const auto i2) {
+            const auto t1 = i1
+                ? i1->turn
+                : std::numeric_limits<decltype(Item::turn)>::max();
+            const auto t2 = i2
+                ? i2->turn
+                : std::numeric_limits<decltype(Item::turn)>::max();
+            return t1 < t2;
+        });
     }
-    else if (p_at_m55 > 1)
+
+    std::array<int, Cell::ItemInfo::max_stacks> item_indice_plus_one;
+    for (size_t i = 0; i < item_indice_plus_one.size(); ++i)
     {
-        n_at_m55(2) = 0;
-        for (int cnt = 0, cnt_end = (p_at_m55); cnt < cnt_end; ++cnt)
+        if (items[i])
         {
-            cnt2_at_m55 = cnt;
-            i_at_m55 = -1;
-            for (int cnt = 0, cnt_end = (p_at_m55); cnt < cnt_end; ++cnt)
-            {
-                if (cnt2_at_m55 == 1)
-                {
-                    if (cnt == n_at_m55(0))
-                    {
-                        continue;
-                    }
-                }
-                if (cnt2_at_m55 == 2)
-                {
-                    if (cnt == n_at_m55(0) || cnt == n_at_m55(1))
-                    {
-                        continue;
-                    }
-                }
-                if (inv.ground().at(floorstack(cnt)).turn > i_at_m55)
-                {
-                    n_at_m55(cnt2_at_m55) = cnt;
-                    i_at_m55 = inv.ground().at(floorstack(cnt)).turn;
-                }
-            }
-        }
-        cell_data.at(x, y).item_appearances_actual = floorstack(n_at_m55(0));
-        cell_data.at(x, y).item_appearances_actual +=
-            floorstack(n_at_m55(1)) * 1000;
-        if (p_at_m55 > 2)
-        {
-            cell_data.at(x, y).item_appearances_actual +=
-                floorstack(n_at_m55(2)) * 1000000;
+            // TODO phantom ref
+            item_indice_plus_one[i] =
+                items[i]->index() - inv.ground().index_start() + 1;
         }
         else
         {
-            cell_data.at(x, y).item_appearances_actual += 999000000;
+            item_indice_plus_one[i] = 0;
         }
-        cell_data.at(x, y).item_appearances_actual *= -1;
     }
+    cell_data.at(x, y).item_info_actual.set(
+        item_indice_plus_one, number_of_items);
 }
 
 
@@ -1909,7 +1881,7 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
 
 void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
 {
-    if (cell_data.at(x, y).item_appearances_actual == 0)
+    if (cell_data.at(x, y).item_info_actual.is_empty())
     {
         return;
     }
@@ -2073,7 +2045,7 @@ bool item_cold(int owner, optional_ref<Item> destroyed_item)
 
 void mapitem_cold(int x, int y)
 {
-    if (cell_data.at(x, y).item_appearances_actual == 0)
+    if (cell_data.at(x, y).item_info_actual.is_empty())
     {
         return;
     }

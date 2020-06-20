@@ -317,7 +317,6 @@ void initialize_elona()
     c_col(1, 20) = 5;
     c_col(2, 20) = 95;
 
-    DIM2(floorstack, 400);
     SDIM3(key_list, 2, 20);
     SDIM2(playerheader, 100);
     artifactlocation.clear();
