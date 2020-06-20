@@ -1,9 +1,0 @@
---- Handle item enchantments.
---  @usage local Enchantment = ELONA.require("core.Enchantment")
-module "Enchantment"
-
---- Add an enchantment to the item.
---  @tparam num id The enchantment ID.
---  @tparam num power The enchantment power.
---  @function add
-function add(item, id, power) end

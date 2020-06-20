@@ -1,0 +1,34 @@
+--- Functions for manipulating the player's user interface.
+--  @usage local GUI = ELONA.require("core.GUI")
+module "GUI"
+
+--- Prints some text in the HUD message window.
+--
+--  @tparam string message the message to print
+--  @function txt
+function txt(message) end
+
+--- Prints some text in the HUD message window.
+--
+--  @tparam string message the message to print
+--  @tparam Color color of the message
+--  @function txt
+function txt(message, color) end
+
+--- Starts a new message line in the HUD message window.
+--  @function txtnew
+function txtnew() end
+
+--- Plays a sound.
+--
+--  @tparam string sound_id The sound, of type core.sound
+--  @function play_sound
+function play_sound(sound_id) end
+
+--- Displays the journal update message.
+--  @function show_journal_update_message
+function show_journal_update_message() end
+
+--- Fades out the screen, then fades it in.
+--  @function fade_out
+function fade_out() end

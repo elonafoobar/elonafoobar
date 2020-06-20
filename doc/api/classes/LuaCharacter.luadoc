@@ -7,8 +7,8 @@
 --  the unseen hand)
 --  @usage local chara = Chara.player()
 --  chara:damage_hp(100)
---  @function damage_hp_source
-function damage_hp_source(amount, source) end
+--  @function damage_hp
+function damage_hp(amount, source) end
 
 --- Damages this character, with the source being set as another character.
 --  @tparam num amount the amount to damage
@@ -159,15 +159,15 @@ function refresh() end
 function refresh_burden_state() end
 
 --- Moves this character to a new position.
+--  @tparam num x
+--  @tparam num y
+--  @function move_to
+function move_to(x, y) end
+
+--- Moves this character to a new position.
 --  @tparam LuaPosition pos
 --  @function move_to
 function move_to(pos) end
-
---- Moves this character to a new position.
---  @tparam num x
---  @tparam num y
---  @function move_to_xy
-function move_to_xy(x, y) end
 
 --- Changes the worshipped god of this character without invoking the god
 --  switching penalty.

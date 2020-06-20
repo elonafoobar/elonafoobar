@@ -71,6 +71,14 @@ struct MapData
 extern MapData map_data;
 
 
+
+// @see lua_env/api/classes/class_LuaMapGenerator.cpp
+struct MapGenerator
+{
+};
+
+
+
 struct Cell
 {
     /**

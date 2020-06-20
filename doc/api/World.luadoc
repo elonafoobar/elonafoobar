@@ -1,0 +1,52 @@
+--- Functions for working with the state of the game world.
+--  @usage local World = ELONA.require("core.World")
+module "World"
+
+--- Gets the ID of the next deferred event that will run.
+--
+--  @treturn num
+--  @function deferred_event_id
+function deferred_event_id() end
+
+--- Adds a deferred event.
+--
+--  @tparam num event_id the event id
+--  @tparam[opt] num param1 An extra parameter.
+--  @tparam[opt] num param2 An extra parameter.
+--  @function add_deferred_event
+function add_deferred_event(event_id, param1, param2) end
+
+--- Returns true if the player is part of the provided guild.
+--
+--  @tparam string guild_name One of "mages", "fighters" or "thieves"
+--  @function belongs_to_guild
+function belongs_to_guild(guild_name) end
+
+--- Sets the player's guild affiliation and resets guild quotas.
+--
+--  @tparam string guild_name One of "mages", "fighters" or "thieves"
+--  @function join_guild
+function join_guild(guild_name) end
+
+--- Returns the player's title for the given ranking.
+--
+--  @tparam num ranking_id
+--  @function ranking_title
+function ranking_title(ranking_id) end
+
+--- Modifies the player's rank in a given ranking.
+--
+--  @tparam num ranking_id
+--  @tparam num amount
+--  @tparam num min
+--  @function modify_ranking
+function modify_ranking(ranking_id, amount, min) end
+
+--- Generates a random title.
+--
+--  @tparam Enums.RandomTitleType The type of title to generate.
+--  @function random_title
+function random_title(type) end
+
+--- [R] Data for the current game save.
+--  @tfield LuaGameData data

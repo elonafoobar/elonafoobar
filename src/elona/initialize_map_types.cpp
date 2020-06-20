@@ -9,7 +9,6 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
-#include "lua_env/lua_class/lua_class_map_generator.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mapgen.hpp"
@@ -3248,7 +3247,7 @@ void initialize_map_from_map_type()
 
     if (map && map->generator)
     {
-        lua::MapGenerator generator{};
+        MapGenerator generator{};
         map->generator->call(generator);
         return;
     }

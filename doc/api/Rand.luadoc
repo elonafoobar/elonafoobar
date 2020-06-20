@@ -1,0 +1,46 @@
+--- Functions for working with randomness.
+--  @usage local Rand = ELONA.require("core.Rand")
+module "Rand"
+
+--- Returns a random number from 0 to n, exclusive.
+--
+--  @tparam num n
+--  @treturn num a number in [0, n)
+--  @function rnd
+function rnd(n) end
+
+--- Returns a random number from 0 to min(n, 32768), exclusive. It emulates
+--  vanilla's random number generation, capped by the upper limit.
+--
+--  @tparam num n
+--  @treturn num a number in [0, min(n, 32768))
+--  @function rnd_capped
+function rnd_capped(n) end
+
+--- Returns true one out of every n times.
+--
+--  @tparam num n
+--  @treturn bool true one out of every n times
+--  @function one_in
+function one_in(n) end
+
+--- Returns true 50% of the time.
+--
+--  @treturn bool true 50% of the time
+--  @function coinflip
+function coinflip() end
+
+--- Returns a random number from min to max, exclusive.
+--
+--  @tparam num min
+--  @tparam num max
+--  @treturn num a number in [min, max)
+--  @function between
+function between(min, max) end
+
+--- Returns a random object from a table.
+--
+--  @tparam table table a table
+--  @treturn object an object from the table
+--  @function choice
+function choice(table) end

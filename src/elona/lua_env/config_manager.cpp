@@ -1,7 +1,6 @@
 #include "config_manager.hpp"
 
 #include "../filesystem.hpp"
-#include "lua_api/lua_api_json5.hpp"
 
 
 
@@ -10,11 +9,24 @@ namespace elona
 namespace lua
 {
 
+namespace api::modules::module_JSON5
+{
+
+std::pair<sol::object, sol::optional<std::string>> JSON5_parse(
+    const std::string& source,
+    sol::this_state state);
+std::string JSON5_stringify(sol::object value, sol::table opts);
+
+} // namespace api::modules::module_JSON5
+
+
+
 ConfigManager::ConfigManager(LuaEnv& lua)
     : LuaSubmodule(lua)
 {
-    env().set_function("json5_parse", LuaApiJSON5::parse);
-    env().set_function("json5_stringify", LuaApiJSON5::stringify);
+    env().set_function("json5_parse", api::modules::module_JSON5::JSON5_parse);
+    env().set_function(
+        "json5_stringify", api::modules::module_JSON5::JSON5_stringify);
 
     const auto impl_filepath =
         filesystem::dirs::data() / "script" / "kernel" / "config.lua";
@@ -50,7 +62,7 @@ void ConfigManager::save(const fs::path& config_path)
     if (!out)
     {
         throw std::runtime_error{
-            u8"Failed to open: "s +
+            u8"Failed to open: " +
             filepathutil::make_preferred_path_in_utf8(config_path)};
     }
 

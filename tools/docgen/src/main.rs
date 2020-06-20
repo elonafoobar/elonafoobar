@@ -10,8 +10,8 @@ use std::path::{Path, PathBuf};
 
 const LUADOC: &str = "@luadoc";
 const NOLUADOC: &str = "@noluadoc";
-const LUA_API: &str = "LuaApi";
-const LUA_CLASS: &str = "Lua";
+const LUA_MODULE: &str = "module_";
+const LUA_CLASS: &str = "class_";
 const VARARGS: &str = "sol::variadic_args";
 const EXTRA_COMPILE_OPTIONS: &[&str] = &["-DELONA_DOCGEN"];
 
@@ -25,14 +25,11 @@ struct ModuleComment {
 impl ModuleComment {
     pub fn from_entity<'a>(entity: &Entity<'a>, text: String, is_class: bool) -> Self {
         let name = entity.get_name().unwrap();
-        let mut trimmed_name = name
-            .trim_start_matches(LUA_API)
+        let trimmed_name = name
+            .trim_start_matches(LUA_MODULE)
             .trim_start_matches(LUA_CLASS)
             .into();
 
-        if is_class {
-            trimmed_name = format!("Lua{}", trimmed_name);
-        }
         ModuleComment {
             is_class: is_class,
             text: text,
@@ -244,7 +241,7 @@ impl Comment {
             .unwrap()
             .get_name()
             .unwrap()
-            .trim_start_matches(LUA_API)
+            .trim_start_matches(LUA_MODULE)
             .into();
 
         let name = meta.name.unwrap_or(entity.get_name().unwrap());
@@ -486,10 +483,10 @@ fn get_module_comment_of_entity<'a>(entity: &Entity<'a>, is_class: bool) -> Opti
         let location = entity.get_location().unwrap();
         let file = location.get_file_location().file.unwrap();
         let name = entity.get_name().unwrap();
-        if file.get_path().extension().map_or(false, |e| e == "hpp") {
+        if file.get_path().extension().map_or(false, |e| e == "cpp") {
             if let Some(comment) = entity.get_comment() {
                 if let Some((stripped, _)) = strip_comment(&comment) {
-                    if name.starts_with(LUA_API) || name.starts_with(LUA_CLASS) {
+                    if name.starts_with(LUA_MODULE) || name.starts_with(LUA_CLASS) {
                         let comment = ModuleComment::from_entity(entity, stripped, is_class);
                         return Some(comment);
                     }
@@ -575,49 +572,16 @@ fn generate_doc<'a>(path: &Path, index: &Index<'a>, is_class: bool) -> Option<Do
     })
 }
 
-fn uppercase(s: &str) -> String {
-    let mut c = s.chars();
-    match c.next() {
-        None => String::new(),
-        Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
-    }
-}
-
-fn camel_case(s: &str) -> String {
-    let mut buffer = String::new();
-    let mut under = false;
-    for c in s.chars() {
-        match c {
-            '_' => under = true,
-            _ => {
-                if under {
-                    buffer.push_str(&c.to_uppercase().to_string());
-                    under = false;
-                } else {
-                    buffer.push(c)
-                }
-            }
-        }
-    }
-    buffer
-}
-
-fn get_output_filename(source_path: &Path, is_class: bool) -> String {
+fn get_output_filename(source_path: &Path) -> String {
     let file_name = source_path.file_name().and_then(|f| f.to_str()).unwrap();
-    let mod_name = Regex::new(r"lua_[^_]*_(.*)\..*$") // lua_(api|class)_<...>.cpp
+    let mod_name = Regex::new(r"^(?:module|class)_(.*)\..*$") // (module|class)_<...>.cpp
         .ok()
         .and_then(|r| r.captures(file_name))
         .and_then(|c| c.get(1))
         .map(|c| c.as_str());
 
     match mod_name {
-        Some(name) => {
-            if is_class {
-                format!("Lua{}.luadoc", uppercase(&camel_case(&name)))
-            } else {
-                format!("{}.luadoc", name)
-            }
-        }
+        Some(name) => format!("{}.luadoc", name),
         None => {
             let name = source_path
                 .file_stem()
@@ -639,7 +603,7 @@ fn generate_and_write_doc<'a>(
 ) -> io::Result<()> {
     match output_path {
         Some(p) => {
-            let output_filename = get_output_filename(&path, is_class);
+            let output_filename = get_output_filename(&path);
             let output_file = p.join(output_filename);
             let modtime_source = fs::metadata(&path).and_then(|r| r.modified())?;
             let newer = force
@@ -737,7 +701,7 @@ fn main() {
     let index = Index::new(&clang, false, false);
 
     generate_docs(
-        &source_path.join("lua_api"),
+        &source_path.join("api").join("modules"),
         &output_path,
         &index,
         false,
@@ -745,7 +709,7 @@ fn main() {
     )
     .unwrap();
     generate_docs(
-        &source_path.join("lua_class"),
+        &source_path.join("api").join("classes"),
         &output_path.clone().map(|e| e.join("classes")),
         &index,
         true,
