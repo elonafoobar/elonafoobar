@@ -402,6 +402,48 @@ void save(const fs::path& filepath, T& data)
 }
 
 
+
+template <typename T>
+decltype(auto) get_nth_object(int index);
+
+template <>
+decltype(auto) get_nth_object<Item>(int index)
+{
+    return inv[index];
+}
+
+template <>
+decltype(auto) get_nth_object<Character>(int index)
+{
+    return cdata[index];
+}
+
+
+
+template <typename T>
+void restore_handles(int index_start, int index_end)
+{
+    sol::table obj_ids = lua::lua->get_state()->create_table();
+    for (int index = index_start; index < index_end; ++index)
+    {
+        obj_ids[index] = get_nth_object<T>(index).obj_id.to_string();
+    }
+
+    auto& handle_mgr = lua::lua->get_handle_manager();
+    handle_mgr.clear_handle_range(T::lua_type(), index_start, index_end);
+    handle_mgr.merge_handles(T::lua_type(), obj_ids);
+
+    ELONA_LOG("lua.mod") << "Loaded handle data for " << T::lua_type()
+                         << " in [" << index_start << "," << index_end << "]";
+
+    for (int index = index_start; index < index_end; index++)
+    {
+        handle_mgr.resolve_handle<T>(get_nth_object<T>(index));
+    }
+}
+
+
+
 // reads or writes global save data:
 // - save game header file (on write)
 // - character/skill/inventory data for the player and characters in their party
@@ -486,6 +528,8 @@ void fmode_7_8(bool read, const fs::path& dir)
                 {
                     cdata[index].index = index;
                 }
+
+                restore_handles<Character>(0, ELONA_MAX_PARTY_CHARACTERS);
             }
         }
         else
@@ -550,6 +594,8 @@ void fmode_7_8(bool read, const fs::path& dir)
             if (fs::exists(filepath))
             {
                 load(filepath, inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
+
+                restore_handles<Item>(0, ELONA_OTHER_INVENTORIES_INDEX);
             }
         }
         else
@@ -775,7 +821,6 @@ void fmode_7_8(bool read, const fs::path& dir)
     }
 
     lua::ModSerializer mod_serializer(*lua::lua);
-    int index_start, index_end;
     if (read)
     {
         lua::lua->get_mod_manager().clear_global_stores();
@@ -798,56 +843,6 @@ void fmode_7_8(bool read, const fs::path& dir)
             std::ofstream out{filepath.native(), std::ios::binary};
             serialization::binary::OArchive ar{out};
             mod_serializer.save_mod_store_data(
-                ar, lua::ModEnv::StoreType::global);
-        }
-    }
-
-    {
-        const auto filepath = dir / u8"mod_cdata.s1";
-        if (read)
-        {
-            std::ifstream in{filepath.native(), std::ios::binary};
-            serialization::binary::IArchive ar{in};
-            std::tie(index_start, index_end) =
-                mod_serializer.load_handles<Character>(
-                    ar, lua::ModEnv::StoreType::global);
-
-            auto& handle_mgr = lua::lua->get_handle_manager();
-            for (int i = index_start; i < index_end; i++)
-            {
-                handle_mgr.resolve_handle<Character>(cdata[i]);
-            }
-        }
-        else
-        {
-            std::ofstream out{filepath.native(), std::ios::binary};
-            serialization::binary::OArchive ar{out};
-            mod_serializer.save_handles<Character>(
-                ar, lua::ModEnv::StoreType::global);
-        }
-    }
-
-    {
-        const auto filepath = dir / u8"mod_inv.s1";
-        if (read)
-        {
-            std::ifstream in{filepath.native(), std::ios::binary};
-            serialization::binary::IArchive ar{in};
-            std::tie(index_start, index_end) =
-                mod_serializer.load_handles<Item>(
-                    ar, lua::ModEnv::StoreType::global);
-
-            auto& handle_mgr = lua::lua->get_handle_manager();
-            for (int i = index_start; i < index_end; i++)
-            {
-                handle_mgr.resolve_handle<Item>(inv[i]);
-            }
-        }
-        else
-        {
-            std::ofstream out{filepath.native(), std::ios::binary};
-            serialization::binary::OArchive ar{out};
-            mod_serializer.save_handles<Item>(
                 ar, lua::ModEnv::StoreType::global);
         }
     }
@@ -1078,6 +1073,9 @@ void fmode_1_2(bool read)
             {
                 cdata[index].index = index;
             }
+
+            restore_handles<Character>(
+                ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
         }
         else
         {
@@ -1159,7 +1157,6 @@ void fmode_1_2(bool read)
     arrayfile(read, u8"mdatan", dir / (u8"mdatan_"s + mid + u8".s2"));
 
     lua::ModSerializer mod_serializer(*lua::lua);
-    int index_start, index_end;
     if (read)
     {
         lua::lua->get_mod_manager().clear_map_local_stores();
@@ -1184,37 +1181,6 @@ void fmode_1_2(bool read)
             std::ofstream out{filepath.native(), std::ios::binary};
             serialization::binary::OArchive ar{out};
             mod_serializer.save_mod_store_data(ar, lua::ModEnv::StoreType::map);
-        }
-    }
-
-    // Mod handle data of map-local characters
-    {
-        const auto filepath = dir / (u8"mod_cdata_"s + mid + u8".s2");
-        if (read)
-        {
-            tmpload(u8"mod_cdata_"s + mid + u8".s2");
-
-            std::ifstream in{filepath.native(), std::ios::binary};
-            serialization::binary::IArchive ar{in};
-            std::tie(index_start, index_end) =
-                mod_serializer.load_handles<Character>(
-                    ar, lua::ModEnv::StoreType::map);
-
-            auto& handle_mgr = lua::lua->get_handle_manager();
-            for (int i = index_start; i < index_end; i++)
-            {
-                handle_mgr.resolve_handle<Character>(cdata[i]);
-            }
-        }
-        else
-        {
-            Save::instance().add(filepath.filename());
-            writeloadedbuff(u8"mod_cdata_"s + mid + u8".s2");
-
-            std::ofstream out{filepath.native(), std::ios::binary};
-            serialization::binary::OArchive ar{out};
-            mod_serializer.save_handles<Character>(
-                ar, lua::ModEnv::StoreType::map);
         }
     }
 }
@@ -1316,42 +1282,14 @@ void fmode_3_4(bool read, const fs::path& filename)
     {
         tmpload(filename);
         load(filepath, inv, ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
+
+        restore_handles<Item>(ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
     }
     else
     {
         Save::instance().add(filepath.filename());
         tmpload(filename);
         save(filepath, inv, ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
-    }
-
-    // Mod handle data of map-local items
-    const auto mod_filename = "mod_"s + filepathutil::to_utf8_path(filename);
-    const auto mod_filepath = filesystem::dirs::tmp() / mod_filename;
-    lua::ModSerializer mod_serializer(*lua::lua);
-    int index_start, index_end;
-    if (read)
-    {
-        tmpload(mod_filename);
-
-        std::ifstream in{mod_filepath.native(), std::ios::binary};
-        serialization::binary::IArchive ar{in};
-        std::tie(index_start, index_end) =
-            mod_serializer.load_handles<Item>(ar, lua::ModEnv::StoreType::map);
-
-        auto& handle_mgr = lua::lua->get_handle_manager();
-        for (int i = index_start; i < index_end; i++)
-        {
-            handle_mgr.resolve_handle<Item>(inv[i]);
-        }
-    }
-    else
-    {
-        Save::instance().add(mod_filepath.filename());
-        tmpload(mod_filename);
-
-        std::ofstream out{mod_filepath.native(), std::ios::binary};
-        serialization::binary::OArchive ar{out};
-        mod_serializer.save_handles<Item>(ar, lua::ModEnv::StoreType::map);
     }
 }
 
@@ -1471,8 +1409,6 @@ void fmode_11_12(FileOperation file_operation)
         delete_file("cdatan_"s + mid + ".s2");
         delete_file("inv_"s + mid + ".s2");
         delete_file("mod_map_"s + mid + ".s2");
-        delete_file("mod_cdata_"s + mid + ".s2");
-        delete_file("mod_inv_"s + mid + ".s2");
     }
     delete_file("mdata_"s + mid + ".s2");
     delete_file("mdatan_"s + mid + ".s2");

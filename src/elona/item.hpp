@@ -8,6 +8,7 @@
 #include "consts.hpp"
 #include "data/types/type_item.hpp"
 #include "enums.hpp"
+#include "eobject/eobject.hpp"
 #include "position.hpp"
 #include "serialization/macros.hpp"
 #include "shared_id.hpp"
@@ -82,6 +83,8 @@ public:
     {
         return _inventory;
     }
+
+    ObjId obj_id;
 
 private:
     int number_ = 0;
@@ -218,6 +221,7 @@ public:
         /* clang-format off */
         ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Item");
 
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, obj_id);
         ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "number", number_);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, value);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, image);
