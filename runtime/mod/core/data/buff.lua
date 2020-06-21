@@ -306,7 +306,7 @@ ELONA.data:add(
             if not Chara.is_player(args.chara) then
                return
             end
-            for _, chara in Chara.iter(16, 245) do
+            for _, chara in ipairs(Chara.non_allies()) do
                if Chara.is_alive(chara) then
                   if chara.role == 14 and Chara.player().karma < -30 then
                      chara.relationship = "aggressive"

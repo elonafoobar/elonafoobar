@@ -28,24 +28,6 @@ HandleManager::HandleManager(LuaEnv& lua)
 
     // Load the Lua chunk for storing handles.
     safe_script(R"(Handle = require("handle"))");
-
-    bind(lua);
-}
-
-
-
-void HandleManager::bind(LuaEnv& lua)
-{
-    sol::table core = lua.get_api_manager().get_core_api_table();
-    sol::table Chara = core["Chara"];
-    sol::table Item = core["Item"];
-
-    // Add iterating methods implemented in Lua.
-    // TODO: See if this can be migrated to Sol's iteration scheme
-    // (last time I tried it didn't work because of "not a valid
-    // container" errors)
-    Chara.set("iter", env()["Handle"]["iter_charas"]);
-    Item.set("iter", env()["Handle"]["iter_items"]);
 }
 
 

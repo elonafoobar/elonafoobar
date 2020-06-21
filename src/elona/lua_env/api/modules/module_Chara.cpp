@@ -358,6 +358,53 @@ void Chara_remove_from_party(LuaCharacterHandle ally)
 
 
 
+/**
+ * @luadoc all
+ *
+ * Returns iterable object containing all characters.
+ *
+ * @treturn table A sequential table containing all characters.
+ */
+sol::table Chara_all(sol::this_state state)
+{
+    sol::state_view L = state;
+
+    sol::table ret = L.create_table();
+    for (auto& chara : cdata.all())
+    {
+        ret.add(lua::handle(chara));
+    }
+    return ret;
+}
+
+
+
+/**
+ * @luadoc non_allies
+ *
+ * Returns iterable object containing characters except for you and your allies.
+ *
+ * @treturn table A sequential table containing characters except for you and
+ * your allies.
+ */
+sol::table Chara_non_allies(sol::this_state state)
+{
+    sol::state_view L = state;
+
+    sol::table ret = L.create_table();
+    for (auto& chara : cdata.adventurers())
+    {
+        ret.add(lua::handle(chara));
+    }
+    for (auto& chara : cdata.others())
+    {
+        ret.add(lua::handle(chara));
+    }
+    return ret;
+}
+
+
+
 void bind(sol::table api_table)
 {
     /* clang-format off */
@@ -374,6 +421,8 @@ void bind(sol::table api_table)
     ELONA_LUA_API_BIND_FUNCTION("find", Chara_find);
     ELONA_LUA_API_BIND_FUNCTION("can_recruit_allies", Chara_can_recruit_allies);
     ELONA_LUA_API_BIND_FUNCTION("remove_from_party", Chara_remove_from_party);
+    ELONA_LUA_API_BIND_FUNCTION("all", Chara_all);
+    ELONA_LUA_API_BIND_FUNCTION("non_allies", Chara_non_allies);
 
     /* clang-format on */
 }

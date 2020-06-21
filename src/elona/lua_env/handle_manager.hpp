@@ -202,8 +202,6 @@ private:
         env()["Handle"]["remove_handle"](obj, T::lua_type());
         obj.obj_id = ObjId::nil();
     }
-
-    void bind(LuaEnv&);
 };
 
 } // namespace lua

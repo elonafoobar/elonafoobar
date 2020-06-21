@@ -52,7 +52,7 @@ end)
 
 local function tally()
    local count = 0
-   for _, c in Chara.iter(0, 245) do
+   for _, c in ipairs(Chara.all()) do
       count = count + 1
    end
    return count
