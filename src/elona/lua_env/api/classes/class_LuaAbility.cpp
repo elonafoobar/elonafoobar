@@ -1,6 +1,7 @@
 #include "class_LuaAbility.hpp"
 
 #include "../../../ability.hpp"
+#include "../../../character.hpp"
 
 
 
@@ -22,7 +23,8 @@ namespace elona::lua::api::classes::class_LuaAbility
         { \
             return 0; \
         } \
-        return sdata.get(a.skill_id, a.index).name; \
+        auto& ref = *a.get_ref(); \
+        return sdata.get(a.skill_id, ref.index).name; \
     })
 
 #define ELONA_LUA_SKILL_PROPERTY(name) \
@@ -32,14 +34,16 @@ namespace elona::lua::api::classes::class_LuaAbility
             { \
                 return 0; \
             } \
-            return sdata.get(a.skill_id, a.index).name; \
+            auto& ref = *a.get_ref(); \
+            return sdata.get(a.skill_id, ref.index).name; \
         }, \
         [](classes::LuaAbility& a, int i) { \
             if (!a.is_valid()) \
             { \
                 return; \
             } \
-            sdata.get(a.skill_id, a.index).name = i; \
+            auto& ref = *a.get_ref(); \
+            sdata.get(a.skill_id, ref.index).name = i; \
         })
 
 void bind(sol::state& lua)

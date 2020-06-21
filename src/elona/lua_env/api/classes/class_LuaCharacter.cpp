@@ -274,11 +274,7 @@ sol::optional<LuaAbility> LuaCharacter_get_skill(
         return sol::nullopt;
     }
 
-    auto handle = lua::handle(self);
-    assert(handle != sol::lua_nil);
-
-    std::string uuid = handle["__uuid"];
-    return LuaAbility(data->legacy_id, self.index, Character::lua_type(), uuid);
+    return LuaAbility(data->legacy_id, self.obj_id);
 }
 
 

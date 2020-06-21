@@ -8,12 +8,12 @@
 namespace elona::lua::api::classes
 {
 
-struct LuaAbility : LuaRef
+struct LuaAbility : LuaRef<Character>
 {
-    LuaAbility(int skill_id_, int index, std::string type, std::string uuid)
-        : LuaRef(index, type, uuid)
+    LuaAbility(int skill_id, const ObjId& obj_id)
+        : LuaRef(obj_id)
+        , skill_id(skill_id)
     {
-        skill_id = skill_id_;
     }
 
     int skill_id;

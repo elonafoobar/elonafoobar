@@ -11,47 +11,51 @@ namespace elona::lua::api::classes
 /**
  * Userdata object used to validate the handle reference it was created from.
  * For example, when a skill reference is retrieved from a character, it can be
- * tested for validity by comparing the UUID of the reference to that of the
- * handle corresponding to the index on the reference. If they don't match, then
- * the handle is out of date and any method calls on the reference can be safely
+ * tested for validity by calling Handle.is_valid() against inner object ID. If
+ * it has gone out of date, any method calls on the reference can be safely
  * ignored.
  */
+template <typename T>
 struct LuaRef
 {
-    LuaRef()
-        : index(-1)
-        , type("")
-        , uuid("")
+    ObjId obj_id;
+
+
+
+    LuaRef() = default;
+
+
+    LuaRef(const ObjId& obj_id)
+        : obj_id(obj_id)
     {
     }
 
-    LuaRef(int index, std::string type, std::string uuid)
-        : index(index)
-        , type(type)
-        , uuid(uuid)
+
+
+    bool is_valid() const
     {
+        auto h = make_handle();
+        return lua::lua->get_handle_manager().handle_is_valid(h);
     }
 
-    bool is_valid()
+
+    decltype(auto) get_ref()
     {
-        if (index == -1)
-        {
-            return false;
-        }
-
-        auto handle = lua::lua->get_handle_manager().get_handle(index, type);
-        if (handle == sol::lua_nil)
-        {
-            return false;
-        }
-
-        std::string handle_uuid = handle["__uuid"];
-        return handle_uuid == uuid;
+        auto h = make_handle();
+        return lua::lua->get_handle_manager().get_ref<T>(h);
     }
 
-    int index;
-    std::string type;
-    std::string uuid;
+
+
+private:
+    sol::table make_handle() const
+    {
+        auto handle = lua::lua->get_state()->create_table();
+        handle["__kind"] = T::lua_type();
+        handle["__uuid"] = obj_id.to_string();
+        handle["__handle"] = true;
+        return handle;
+    }
 };
 
 } // namespace elona::lua::api::classes
