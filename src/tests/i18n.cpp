@@ -62,7 +62,7 @@ TEST_CASE("test format chara", "[I18N: Formatting]")
 
     REQUIRE(
         i18n::s.format("{$1}", chara) ==
-        u8"LuaCharacter("s + std::to_string(chara.index) + u8")"s);
+        u8"LuaCharacter("s + chara.obj_id.to_string() + u8")"s);
 
     REQUIRE(i18n::s.format("{name($1)}", chara) == u8"何か"s);
     REQUIRE(i18n::s.format("{basename($1)}", chara) == u8"プチ"s);
@@ -80,7 +80,7 @@ TEST_CASE("test format item", "[I18N: Formatting]")
 
     REQUIRE(
         i18n::s.format("{$1}", i) ==
-        u8"LuaItem("s + std::to_string(i.index) + u8")"s);
+        u8"LuaItem("s + i.obj_id.to_string() + u8")"s);
 
     REQUIRE(i18n::s.format("{itemname($1)}", i) == u8"3個のプチトロ"s);
     REQUIRE(i18n::s.format("{itembasename($1)}", i) == u8"プチトロ"s);

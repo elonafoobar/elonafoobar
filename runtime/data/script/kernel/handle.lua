@@ -124,6 +124,18 @@ local function generate_metatable(kind)
    mt.__eq = function(lhs, rhs)
       return lhs.__kind == rhs.__kind and lhs.__uuid == rhs.__uuid
    end
+   mt.__tostring = function(handle)
+      local ref = refs[handle.__kind][handle.__uuid]
+      if ref then
+         return userdata_table.__tostring(ref)
+      else
+         return "nil"
+      end
+   end
+   -- for serpent
+   mt.__serialize = function(handle)
+      return handle
+   end
 
    refs[kind] = {}
    handles_by_index[kind] = {}
