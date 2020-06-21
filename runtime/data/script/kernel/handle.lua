@@ -22,11 +22,9 @@ local Handle = {}
 -- Indexed by [class_name][uuid].
 local refs = {}
 
--- Stores a map of integer ID -> handle.
+-- Stores a map of raw pointer -> handle.
 -- Indexed by [class_name][id].
--- NOTE: If integer indices as IDs are completely removed, then this
--- may have to be indexed by another value.
-local handles_by_index = {}
+local handles_by_pointer = {}
 
 -- Cache for function closures resolved when indexing a handle.
 -- Creating a new closure for every method lookup is expensive.
@@ -138,7 +136,7 @@ local function generate_metatable(kind)
    end
 
    refs[kind] = {}
-   handles_by_index[kind] = {}
+   handles_by_pointer[kind] = {}
 
    return mt
 end
@@ -174,10 +172,10 @@ function Handle.get_metatable(kind)
    return metatables[kind]
 end
 
---- Given an integer index of a C++ object and kind, retrieves the
+--- Given a raw pointer of a C++ object and kind, retrieves the
 --- handle that references it.
-function Handle.get_handle(index, kind)
-   local handle = handles_by_index[kind][index]
+function Handle.get_handle(pointer, kind)
+   local handle = handles_by_pointer[kind][pointer]
 
    if handle and handle.__kind ~= kind then
       print(debug.traceback())
@@ -188,17 +186,16 @@ function Handle.get_handle(index, kind)
    return handle
 end
 
---- Creates a new handle by using a C++ reference's integer index. The
---- handle's index must not be occupied by another handle, to prevent
---- overwrites.
-function Handle.create_handle(cpp_ref, kind, uuid)
-   if handles_by_index[kind][cpp_ref.index] ~= nil then
-      print(handles_by_index[kind][cpp_ref.index].__uuid)
-      error("Handle already exists: " .. kind .. ":" .. cpp_ref.index, 2)
+--- Creates a new handle by using a C++ raw pointer. The handle's pointer must
+--- not be occupied by another handle, to prevent overwrites.
+function Handle.create_handle(cpp_ref, pointer, kind, uuid)
+   if handles_by_pointer[kind][pointer] ~= nil then
+      print(handles_by_pointer[kind][pointer].__uuid)
+      error("Handle already exists: " .. kind .. ":" .. pointer, 2)
       return nil
    end
 
-   -- print("CREATE " .. kind .. " " .. cpp_ref.index .. " " .. uuid)
+   -- print("CREATE " .. kind .. " " .. pointer .. " " .. uuid)
 
    local handle = {
       __uuid = uuid,
@@ -208,38 +205,38 @@ function Handle.create_handle(cpp_ref, kind, uuid)
 
    setmetatable(handle, metatables[handle.__kind])
    refs[handle.__kind][handle.__uuid] = cpp_ref
-   handles_by_index[handle.__kind][cpp_ref.index] = handle
+   handles_by_pointer[handle.__kind][pointer] = handle
 
    return handle
 end
 
 
---- Removes an existing handle by using a C++ reference's integer
---- index. It is acceptable if the handle doesn't already exist.
-function Handle.remove_handle(cpp_ref, kind)
-   local handle = handles_by_index[kind][cpp_ref.index]
+--- Removes an existing handle by using a C++ raw pointer.
+--- It is acceptable if the handle doesn't already exist.
+function Handle.remove_handle(cpp_ref, pointer, kind)
+   local handle = handles_by_pointer[kind][pointer]
 
    if handle == nil then
       return
    end
 
-   -- print("REMOVE " .. cpp_ref.index .. " " .. handle.__uuid)
+   -- print("REMOVE " .. pointer .. " " .. handle.__uuid)
 
    assert(handle.__kind == kind)
 
    refs[handle.__kind][handle.__uuid] = nil
-   handles_by_index[handle.__kind][cpp_ref.index] = nil
+   handles_by_pointer[handle.__kind][pointer] = nil
 end
 
 
---- Moves a handle from one integer index to another if it exists. If the handle
+--- Moves a handle from one raw pointer to another if it exists. If the handle
 --- exists, the target slot must not be occupied. If not, the destination slot
 --- will be set to empty as well.
-function Handle.relocate_handle(cpp_ref, dest_cpp_ref, new_index, kind)
-   local handle = handles_by_index[kind][cpp_ref.index]
+function Handle.relocate_handle(cpp_ref, pointer, dest_cpp_ref, new_pointer, kind)
+   local handle = handles_by_pointer[kind][pointer]
 
    if Handle.is_valid(handle) then
-      handles_by_index[kind][new_index] = handle
+      handles_by_pointer[kind][new_pointer] = handle
       Handle.set_ref(handle, dest_cpp_ref)
    else
       -- When the handle is not valid, set the destination slot to be
@@ -248,11 +245,11 @@ function Handle.relocate_handle(cpp_ref, dest_cpp_ref, new_index, kind)
       -- This can happen when a temporary character is created as part
       -- of change creature magic, as the temporary's state will be
       -- empty at the time of relocation.
-      handles_by_index[kind][new_index] = nil
+      handles_by_pointer[kind][pointer] = nil
    end
 
    -- Clear the slot the handle was moved from.
-   handles_by_index[kind][cpp_ref.index] = nil
+   handles_by_pointer[kind][pointer] = nil
 end
 
 --- Exchanges the positions of two handles and updates their __index
@@ -262,54 +259,25 @@ function Handle.swap_handles(cpp_ref_a, cpp_ref_b, kind)
 end
 
 
-function Handle.assert_valid(cpp_ref, kind)
-   local handle = handles_by_index[kind][cpp_ref.index]
-
-   assert(Handle.is_valid(handle))
-end
-
-
-function Handle.assert_invalid(cpp_ref, kind)
-   local handle = handles_by_index[kind][cpp_ref.index]
-
-   assert(not Handle.is_valid(handle))
-end
-
-
 -- Functions for deserialization. The steps are as follows.
 -- 1. Deserialize mod data that contains the table of handles.
--- 2. Clear out existing handles/references in "handles_by_index" and
---    "refs" using "clear_handle_range".
--- 3. Place handles into the "handles_by_index" table using
+-- 2. Load handles onto the "handles_by_pointer" table using
 --    "merge_handles".
--- 4. In C++, for each object loaded, add its reference to the "refs"
+-- 3. In C++, for each object loaded, add its reference to the "refs"
 --    table using by looking up a newly inserted handle using the C++
---    object's integer index in "handles_by_index".
---    (handle_manager::resolve_handle)
-
-function Handle.clear_handle_range(kind, index_start, index_end)
-   for index=index_start, index_end-1 do
-      local handle = handles_by_index[kind][index]
-      if handle ~= nil then
-         refs[kind][handle.__uuid] = nil
-         handles_by_index[kind][index] = nil
-      end
-   end
-end
+--    raw pointer in "handles_by_pointer".
+--    See also HandleManager::resolve_handle in C++.
 
 function Handle.merge_handles(kind, obj_ids)
-   for index, obj_id in pairs(obj_ids) do
+   for pointer, obj_id in pairs(obj_ids) do
       if obj_id ~= nil then
-         if handles_by_index[kind][index] ~= nil then
-            error("Attempt to overwrite handle " .. kind .. ":" .. index, 2)
-         end
          local handle = {
             __uuid = obj_id,
             __kind = kind,
             __handle = true,
          }
          setmetatable(handle, metatables[kind])
-         handles_by_index[kind][index] = handle
+         handles_by_pointer[kind][pointer] = handle
       end
    end
 end
@@ -320,8 +288,8 @@ function Handle.clear()
       refs[kind] = {}
    end
 
-   for kind, _ in pairs(handles_by_index) do
-      handles_by_index[kind] = {}
+   for kind, _ in pairs(handles_by_pointer) do
+      handles_by_pointer[kind] = {}
    end
 end
 

@@ -426,11 +426,12 @@ void restore_handles(int index_start, int index_end)
     sol::table obj_ids = lua::lua->get_state()->create_table();
     for (int index = index_start; index < index_end; ++index)
     {
-        obj_ids[index] = get_nth_object<T>(index).obj_id.to_string();
+        auto& obj = get_nth_object<T>(index);
+        const auto key = reinterpret_cast<int64_t>(std::addressof(obj));
+        obj_ids[key] = obj.obj_id.to_string();
     }
 
     auto& handle_mgr = lua::lua->get_handle_manager();
-    handle_mgr.clear_handle_range(T::lua_type(), index_start, index_end);
     handle_mgr.merge_handles(T::lua_type(), obj_ids);
 
     ELONA_LOG("lua.mod") << "Loaded handle data for " << T::lua_type()

@@ -1240,14 +1240,7 @@ void _init_tileset_minimap_and_scroll()
 void _initialize_map_local_handles()
 {
     lua::lua->get_mod_manager().clear_map_local_stores();
-
-    auto& handle_mgr = lua::lua->get_handle_manager();
-    handle_mgr.clear_handle_range(
-        Character::lua_type(),
-        ELONA_MAX_PARTY_CHARACTERS,
-        ELONA_MAX_CHARACTERS);
-    handle_mgr.clear_handle_range(
-        Item::lua_type(), ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
+    lua::lua->get_handle_manager().clear_map_local_handles();
 }
 
 
