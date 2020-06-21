@@ -2,11 +2,6 @@
 
 #include <set>
 
-#include <boost/lexical_cast.hpp>
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_io.hpp>
-
 #include "../../util/noncopyable.hpp"
 #include "../eobject/eobject.hpp"
 #include "lua_submodule.hpp"
