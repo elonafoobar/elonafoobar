@@ -1,5 +1,56 @@
 # Changelog
 
+## [0.7.3] - 2020-06-21
+
+### Fixed
+
+* [vanilla] Fix a position in the log window where this message is displayed: "You want to watch this event again?"
+* [vanilla] Fix no-kill win in the arena or the pet arena.
+  * In a town arena, you win battle in about 5% even if you didn't kill any monsters. It also happens in a pet arena.
+* [vanilla] Fix issue where The Oracle records unexpected items.
+  * When you wish "card" or "figure" of someone, unique artifacts the character usually has were recorded in The Oracle. For example, wishing "card mani" or "figure mani" appended "cat's tail" to The Oracle.
+* Fix flickering in house design mode.
+* Fix player's targeting routine when `core.auto_target` option is on.
+* Fix golem's getting dimmed.
+* Fix issues (including potential crashes) related to our internal system.
+* Fix some routines related to damage by player's spells or rods.
+* Fix the number of the items that rogue boss, \<The leopard warrior\> or \<Silvia\> drop.
+* Fix typos.
+
+
+### Added
+
+* Add "Hang" option to `i` nteract menu to hang arbitrary NPCs. It is available only in Wizard mode.
+* Improve performance in drawing character chips.
+* Make it possible to assign shortcut to use cargo items.
+  * You cannot use cargo items in Nefias and some other locations, as you cannot do so before.
+* Add information to the save selection menu.
+  * When you save an old save data in this version or newer, a new file, `header.json`, will be created. If a save has the file, its information is displayed in the save selection menu.
+* Improve character shadow's rendering.
+* [mod] Allow mods without `init.lua`.
+
+
+### Changed
+
+* Change inventory menu of "Steal" a bit.
+  * When you try to steal items on the ground, in vanilla and old foobar, player's money is shown in the menu. As it is useless information, hide it since this version.
+* Change the naming rule of the save folders.
+  * Note that old save folders will not be renamed and you do not have to rename them.
+  * As a side-effect, you can choose any name you like without worrying whether the name is already used or not.
+* Remove unused parts of `.map` files. This change reduces file size 90% in average.
+* Change the internal representation of map items. Due to this, the number of items whih can be stacked at one tile increases from 3 to 4. Also, a bag icon comes to mean "5 or more items stacked here"; 2 bags, "10 or more"; 3 bags, "15 or more"; 4 bags, "20 or more"
+* Remove unnecessary save files, `mod_inv*` and `mod_cdata*`.
+* [mod] Simplify definition of localization text associated with data instances.
+* [mod] Move definition of blending recipe to Lua side.
+* [mod] Move definition of god offerings to Lua side.
+
+
+### Removed
+
+* Remove "Toggle Console" action, which shows or hides the in-game console window.
+
+
+
 ## [0.7.2] - 2020-05-27
 
 ### Fixed

@@ -30,3 +30,6 @@ Sora
 
 EvgenijM86
     Add digital clock/auto target options.
+
+2254FB
+    Clean code related to enchantment generation.
