@@ -590,7 +590,7 @@ int LuaCharacter_get_ailment(Character& self, const EnumString& ailment)
 
 std::string LuaCharacter_metamethod_tostring(const Character& self)
 {
-    return Character::lua_type() + "(" + std::to_string(self.index) + ")";
+    return Character::lua_type() + "(" + self.obj_id.to_string() + ")";
 }
 
 
