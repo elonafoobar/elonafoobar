@@ -62,15 +62,6 @@ void bind(sol::state& lua)
     // Properties
 
     /**
-     * @luadoc index field num
-     *
-     * [R] The index of this item in the global items array.
-     */
-    LuaItem.set(
-        "index", sol::property([](const Item& it) { return it.index(); }));
-
-
-    /**
      * @luadoc legacy_id field num
      *
      * [R] The legacy ID of this item.

@@ -10,9 +10,6 @@ function remove() end
 --  @function change_material
 function change_material(material_id) end
 
---- [R] The index of this item in the global items array.
---  @tfield num index
-
 --- [R] The legacy ID of this item.
 --  @tfield num legacy_id
 
