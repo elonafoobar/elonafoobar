@@ -92,11 +92,11 @@ function remove_from_party(ally) end
 --
 --  @treturn table A sequential table containing all characters.
 --  @function all
-function all(state) end
+function all() end
 
 --- Returns iterable object containing characters except for you and your allies.
 --
 --  @treturn table A sequential table containing characters except for you and
 --  your allies.
 --  @function non_allies
-function non_allies(state) end
+function non_allies() end

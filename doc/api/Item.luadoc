@@ -85,11 +85,11 @@ function has_free_slot(inventory_id) end
 --
 --  @treturn The player's inventory.
 --  @function player_inventory
-function player_inventory(state) end
+function player_inventory() end
 
 --- Gets the map inventory. It contains all items on the ground in the current
 --  map.
 --
 --  @treturn The map inventory.
 --  @function map_inventory
-function map_inventory(state) end
+function map_inventory() end
