@@ -143,7 +143,7 @@ ELONA.data:add(
       rogue_boss = {
          drops = {{
                on_create = function(args)
-                  for _=0, 2 + Rand.rnd(4) do
+                  for _ = 1, 2 + Rand.rnd(4) do
                      local item = Item.create(args.chara.position,
                                             {
                                                level = args.chara.level,
@@ -179,7 +179,7 @@ ELONA.data:add(
       the_leopard_warrior = {
          drops = {{
                on_create = function(args)
-                  for _=0,12 do
+                  for _ = 1, 12 do
                      local item = Item.create(args.chara.position,
                                               {
                                                  id = "core.tomato",

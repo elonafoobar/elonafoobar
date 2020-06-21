@@ -250,8 +250,6 @@ void run_random_event(RandomEvent event)
 {
     assert(event.id != 0);
 
-    cc = 0;
-    tc = 0;
     listmax = 0;
 
     if (event.is_evadable(sdata(19, 0)))
@@ -299,8 +297,7 @@ void run_random_event(RandomEvent event)
         break;
     case 24:
         efid = 1113;
-        tc = 0;
-        magic();
+        magic(cdata.player(), cdata.player());
         listmax = 1;
         event_bg = u8"bg_re4";
         break;
@@ -312,16 +309,14 @@ void run_random_event(RandomEvent event)
     case 12:
         efid = 1117;
         efp = 100;
-        tc = 0;
-        magic();
+        magic(cdata.player(), cdata.player());
         listmax = 1;
         event_bg = u8"bg_re3";
         break;
     case 23:
         efid = 1117;
         efp = 200;
-        tc = 0;
-        magic();
+        magic(cdata.player(), cdata.player());
         listmax = 1;
         event_bg = u8"bg_re3";
         break;
@@ -333,8 +328,7 @@ void run_random_event(RandomEvent event)
         snd("core.curse2");
         efid = 1118;
         efp = 100;
-        tc = 0;
-        magic();
+        magic(cdata.player(), cdata.player());
         listmax = 1;
         event_bg = u8"bg_re5";
         break;
@@ -342,8 +336,7 @@ void run_random_event(RandomEvent event)
         snd("core.curse2");
         efid = 454;
         efp = 100;
-        tc = 0;
-        magic();
+        magic(cdata.player(), cdata.player());
         listmax = 1;
         event_bg = u8"bg_re2";
         break;
@@ -357,7 +350,7 @@ void run_random_event(RandomEvent event)
         event_bg = u8"bg_re15";
         break;
     case 20:
-        buff_add(cdata[tc], "core.luck", 777, 1500);
+        buff_add(cdata.player(), "core.luck", 777, 1500);
         listmax = 1;
         event_bg = u8"bg_re12";
         break;
@@ -379,10 +372,9 @@ void run_random_event(RandomEvent event)
         else
         {
             f = 0;
-            tc = 0;
             for (int i = 0; i < 30; ++i)
             {
-                if (cdata[tc].body_parts[i] % 10000 == 0)
+                if (!cdata.player().equipment_slots[i].equipment)
                 {
                     continue;
                 }
@@ -395,7 +387,7 @@ void run_random_event(RandomEvent event)
             {
                 efid = 1114;
                 efp = 200;
-                magic();
+                magic(cdata.player(), cdata.player());
             }
             else if (!event_has_pending_events())
             {
@@ -431,16 +423,14 @@ void run_random_event(RandomEvent event)
     case 2:
         efid = 1104;
         efp = 100;
-        tc = 0;
-        magic();
+        magic(cdata.player(), cdata.player());
         listmax = 1;
         event_bg = u8"bg_re6";
         break;
     case 3:
         efid = 1119;
         efp = 100;
-        tc = 0;
-        magic();
+        magic(cdata.player(), cdata.player());
         listmax = 1;
         event_bg = u8"bg_re4";
         break;
@@ -470,8 +460,7 @@ void run_random_event(RandomEvent event)
     case 17:
         efid = 451;
         efp = 800;
-        tc = 0;
-        magic();
+        magic(cdata.player(), cdata.player());
         listmax = 1;
         event_bg = u8"bg_re11";
         break;
@@ -496,7 +485,7 @@ void run_random_event(RandomEvent event)
         {
             cdata.player().nutrition = 15000;
             txt(i18n::s.get("core.talk.npc.innkeeper.eat.results"));
-            show_eating_message();
+            show_eating_message(cdata.player());
             chara_anorexia(cdata.player());
         }
         break;
@@ -539,7 +528,6 @@ void run_random_event(RandomEvent event)
         }
     }
 
-    cc = 0;
     load_activity_animation();
 }
 

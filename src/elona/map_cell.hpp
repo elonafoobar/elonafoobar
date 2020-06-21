@@ -2,11 +2,14 @@
 
 #include <utility>
 
+#include "optional.hpp"
+
 
 
 namespace elona
 {
 
+struct Item;
 struct Position;
 
 
@@ -21,7 +24,6 @@ enum class TileKind : int
     fog = 4
 };
 
-std::pair<int, int> cell_itemoncell(const Position& pos);
 void cell_featread(int x, int y);
 int cell_findspace(int = 0, int = 0, int = 0);
 void cell_check(int = 0, int = 0);
@@ -32,6 +34,25 @@ void cell_refresh(int = 0, int = 0);
 void cell_removechara(int = 0, int = 0);
 void cell_setchara(int = 0, int = 0, int = 0);
 bool cell_swap(int = 0, int = 0, int = 0, int = 0);
+
+
+/**
+ * Count the exact number of item stacks at @a pos.
+ *
+ * @param The position to query.
+ * @return The exact number of item stacks.
+ */
+int cell_count_exact_item_stacks(const Position& pos);
+
+
+/**
+ * Get an item at @a pos if there is only one item.
+ *
+ * @param The position to query.
+ * @return The item placed at @a pos.
+ */
+optional_ref<Item> cell_get_item_if_only_one(const Position& pos);
+
 
 /**
  * \param type tile type to generate

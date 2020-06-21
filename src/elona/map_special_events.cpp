@@ -63,10 +63,10 @@ static void _map_events_quest_party()
                 objlv = 1;
                 if (const auto chara = chara_create(-1, chara_id, -3, 0))
                 {
-                    cdata[rc].relationship = -1;
-                    cdata[rc].original_relationship = -1;
-                    cdata[rc].hate = 100;
-                    cdata[rc].enemy_id = quest_data.immediate().extra_info_2;
+                    chara->relationship = -1;
+                    chara->original_relationship = -1;
+                    chara->hate = 100;
+                    chara->enemy_id = quest_data.immediate().extra_info_2;
                 }
             }
         }
@@ -83,7 +83,7 @@ static void _map_events_tower_of_fire()
             dmg = (6 - r) * (6 - r) * 2;
             txt(i18n::s.get("core.action.exit_map.it_is_hot"),
                 Message::color{ColorIndex::red});
-            damage_hp(cdata[cc], dmg, -9);
+            damage_hp(cdata.player(), dmg, -9);
         }
     }
 }
@@ -142,9 +142,11 @@ static void _map_events_port_kapul()
             cell_featset(18, 9, tile_downstairs, 11, 1);
         }
         flt();
-        chara_create(-1, p, x, y);
-        cdata[rc].hate = 1000;
-        cdata[rc].enemy_id = 0;
+        if (const auto chara = chara_create(-1, p, x, y))
+        {
+            chara->hate = 1000;
+            chara->enemy_id = 0;
+        }
         return;
     }
 }
@@ -192,8 +194,8 @@ static void _map_events_shelter()
             {
                 snd("core.eat1");
                 txt(i18n::s.get("core.misc.map.shelter.eat_stored_food"));
-                cdata[cc].nutrition += 5000;
-                show_eating_message();
+                cdata.player().nutrition += 5000;
+                show_eating_message(cdata.player());
             }
         }
         if (game_data.continuous_active_hours >= 15)

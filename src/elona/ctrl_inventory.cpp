@@ -19,7 +19,6 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "keybind/keybind.hpp"
-#include "macro.hpp"
 #include "map.hpp"
 #include "menu.hpp"
 #include "message.hpp"
@@ -35,9 +34,9 @@
 _1 = "どのアイテムを調べる？ "
 _2 = "どのアイテムを置く？ "
 _3 = "どのアイテムを拾う？ "
-_4 = "何を装備する？"
-_5 = "何を食べよう？ "
 
+_5 = "何を食べよう？ "
+_6 = "何を装備する？"
 _7 = "どれを読む？ "
 _8 = "どれを飲む？ "
 _9 = "どれを振る？ "
@@ -60,7 +59,6 @@ _25 = "何をもらう？ "
 _26 = "何を投げる？ "
 _27 = "何を盗む？ "
 _28 = "何と交換する？ "
-_29 = "何を予約する？"
 #endif
 
 
@@ -94,7 +92,12 @@ struct OnEnterResult
     }
 };
 
-OnEnterResult on_enter(int select_item_index, int& citrade, bool dropcontinue);
+OnEnterResult on_enter(
+    optional_ref<Character> inventory_owner,
+    int selected_item_index,
+    ItemRef& citrade,
+    ItemRef& cidip,
+    bool dropcontinue);
 optional<MenuResult> on_cancel(bool dropcontinue);
 
 
@@ -229,13 +232,16 @@ void restore_cursor()
     cs = invmark(invctrl) % 1000;
     page = invmark(invctrl) / 1000;
     cs_bk = -1;
-    cc = 0;
     page_load();
 }
 
 
 
-void make_item_list(int& mainweapon, int citrade)
+void make_item_list(
+    optional_ref<Character> inventory_owner,
+    ItemRef& mainweapon,
+    ItemRef citrade,
+    ItemRef cidip)
 {
     // cnt = 0 => extra
     // cnt = 1 => PC/NPC
@@ -251,10 +257,11 @@ void make_item_list(int& mainweapon, int citrade)
         }
         if (cnt == 1)
         {
-            p = cc;
+            p = 0;
             if (invctrl == 20 || invctrl == 25)
             {
-                p = tc;
+                assert(inventory_owner);
+                p = inventory_owner->index;
             }
             if (invctrl == 27)
             {
@@ -273,12 +280,6 @@ void make_item_list(int& mainweapon, int citrade)
 
         for (auto& item : inv.by_index(p))
         {
-            if (item.number() <= 0)
-            {
-                item.remove();
-                continue;
-            }
-
             // compatibility?
             if (item.id == ItemId::training_machine)
             {
@@ -289,9 +290,7 @@ void make_item_list(int& mainweapon, int citrade)
             if (itemid2int(item.id) >= maxitemid || itemid2int(item.id) < 0)
             {
                 dialog(i18n::s.get(
-                    "core.ui.inv.common.invalid",
-                    item.index,
-                    itemid2int(item.id)));
+                    "core.ui.inv.common.invalid", itemid2int(item.id)));
                 item.remove();
                 item.id = ItemId::none;
                 continue;
@@ -322,8 +321,8 @@ void make_item_list(int& mainweapon, int citrade)
                 }
                 else if (invctrl != 11 && invctrl != 22 && invctrl != 28)
                 {
-                    if (item.position.x != cdata[cc].position.x ||
-                        item.position.y != cdata[cc].position.y)
+                    if (item.position.x != cdata.player().position.x ||
+                        item.position.y != cdata.player().position.y)
                     {
                         // キャラと同じ座標にあるものしか対象に取れない
                         continue;
@@ -363,10 +362,9 @@ void make_item_list(int& mainweapon, int citrade)
             {
                 if (reftype == 10000)
                 {
-                    if (mainweapon == -1 ||
-                        item.body_part < inv[mainweapon].body_part)
+                    if (!mainweapon || item.body_part < mainweapon->body_part)
                     {
-                        mainweapon = item.index;
+                        mainweapon = ItemRef::from_ref(item);
                     }
                 }
             }
@@ -381,7 +379,8 @@ void make_item_list(int& mainweapon, int citrade)
             }
             if (invctrl == 6)
             {
-                if (iequiploc(item) != cdata[cc].body_parts[body - 100] / 10000)
+                if (iequiploc(item) !=
+                    cdata.player().equipment_slots[body - 100].type)
                 {
                     continue;
                 }
@@ -495,23 +494,21 @@ void make_item_list(int& mainweapon, int citrade)
             }
             if (invctrl == 18)
             {
-                if (inv[cidip].id == ItemId::bait)
+                if (cidip->id == ItemId::bait)
                 {
                     if (item.id != ItemId::fishing_pole)
                     {
                         continue;
                     }
                 }
-                if (cidip == item.index || item.id == ItemId::bottle_of_water)
+                if (cidip == item || item.id == ItemId::bottle_of_water)
                 {
                     continue;
                 }
             }
             if (invctrl == 19)
             {
-                bool is_offerable =
-                    item_db_is_offerable(item, itemid2int(item.id));
-                if (is_offerable == 0)
+                if (!god_is_offerable(item, cdata.player()))
                 {
                     continue;
                 }
@@ -527,8 +524,7 @@ void make_item_list(int& mainweapon, int citrade)
             if (invctrl == 21)
             {
                 if (calcitemvalue(item, 0) * item.number() <
-                    calcitemvalue(inv[citrade], 0) * inv[citrade].number() / 2 *
-                        3)
+                    calcitemvalue(*citrade, 0) * citrade->number() / 2 * 3)
                 {
                     continue;
                 }
@@ -676,7 +672,7 @@ void make_item_list(int& mainweapon, int citrade)
             }
 
             // リスト追加
-            list(0, listmax) = item.index;
+            list(0, listmax) = item.index();
 
             // ソート情報
             list(1, listmax) = reftype * 1000 + itemid2int(item.id);
@@ -708,7 +704,9 @@ void make_item_list(int& mainweapon, int citrade)
 
 
 // 不可能な行動を制限
-optional<MenuResult> check_command(int citrade)
+optional<MenuResult> check_command(
+    optional_ref<Character> inventory_owner,
+    ItemRef citrade)
 {
     MenuResult result = {false, false, TurnResult::none};
 
@@ -717,14 +715,15 @@ optional<MenuResult> check_command(int citrade)
     {
         if (invctrl == 21)
         {
-            txt(i18n::s.get("core.ui.inv.trade.too_low_value", inv[citrade]));
+            txt(i18n::s.get("core.ui.inv.trade.too_low_value", *citrade));
             f = 1;
         }
         if (invctrl == 27)
         {
-            if (tc != 0)
+            if (inventory_owner)
             {
-                txt(i18n::s.get("core.ui.inv.steal.has_nothing", cdata[tc]));
+                txt(i18n::s.get(
+                    "core.ui.inv.steal.has_nothing", *inventory_owner));
                 f = 1;
             }
             else
@@ -745,9 +744,9 @@ optional<MenuResult> check_command(int citrade)
     }
     if (invctrl == 27)
     {
-        if (tc > 0)
+        if (inventory_owner)
         {
-            if (cdata[tc].relationship == 10)
+            if (inventory_owner->relationship == 10)
             {
                 txt(i18n::s.get("core.ui.inv.steal.do_not_rob_ally"));
                 f = 1;
@@ -805,18 +804,18 @@ optional<MenuResult> check_pick_up()
 
 
 
-void show_message(int citrade)
+void show_message(ItemRef citrade, ItemRef cidip)
 {
     if (returnfromidentify == 0)
     {
         std::string valn;
         if (invctrl == 18)
         {
-            valn = itemname(inv[cidip], 1);
+            valn = itemname(*cidip, 1);
         }
         else if (invctrl == 21)
         {
-            valn = itemname(inv[citrade]);
+            valn = itemname(*citrade);
         }
 
         for (int cnt = 0; cnt < 30; cnt++)
@@ -876,7 +875,8 @@ void show_message(int citrade)
 
 
 // ショートカット経由
-optional<OnEnterResult> on_shortcut(int& citrade, bool dropcontinue)
+optional<OnEnterResult>
+on_shortcut(ItemRef& citrade, ItemRef& cidip, bool dropcontinue)
 {
     MenuResult result = {false, false, TurnResult::none};
 
@@ -899,7 +899,6 @@ optional<OnEnterResult> on_shortcut(int& citrade, bool dropcontinue)
                 break;
             }
         }
-        cc = 0;
         if (f == 0)
         {
             if (inv_find(int2itemid(invsc), 0))
@@ -928,7 +927,12 @@ optional<OnEnterResult> on_shortcut(int& citrade, bool dropcontinue)
                 return OnEnterResult{result};
             }
         }
-        return on_enter(p(0), citrade, dropcontinue);
+        if (!cargocheck(inv[p]))
+        {
+            result.turn_result = TurnResult::pc_turn_user_error;
+            return OnEnterResult{result};
+        }
+        return on_enter(none, p(0), citrade, cidip, dropcontinue);
     }
 
     return none;
@@ -1023,7 +1027,7 @@ void draw_menu(bool dropcontinue)
 
 
 
-void draw_window(bool dropcontinue)
+void draw_window(optional_ref<Character> inventory_owner, bool dropcontinue)
 {
     auto key_help = strhint2 + strhint5 + strhint5b + strhint3;
     if (invctrl == 5 || invctrl == 7 || invctrl == 8 || invctrl == 9 ||
@@ -1094,6 +1098,7 @@ void draw_window(bool dropcontinue)
     display_note(s);
     if (invctrl == 25)
     {
+        assert(inventory_owner);
         x = (windoww - 640) / 2 + inf_screenx + 455;
         y = winposy(432) - 32;
         int w = 200;
@@ -1101,26 +1106,28 @@ void draw_window(bool dropcontinue)
         window(x + 4, y + 4, w, h - h % 8, true);
         window(x, y, w, h - h % 8);
         font(12 + en - en * 2);
-        mes(x + 16, y + 17, u8"DV:"s + cdata[tc].dv + u8" PV:"s + cdata[tc].pv);
+        mes(x + 16,
+            y + 17,
+            u8"DV:"s + inventory_owner->dv + u8" PV:"s + inventory_owner->pv);
         mes(x + 16,
             y + 35,
             i18n::s.get("core.ui.inv.take_ally.window.equip_weight") + ":" +
-                cnvweight(cdata[tc].sum_of_equipment_weight) + ""s +
-                cnveqweight(tc));
+                cnvweight(inventory_owner->sum_of_equipment_weight) + ""s +
+                get_armor_class_name(*inventory_owner));
         x = wx + 40;
         y = wy + wh - 65 - wh % 8;
         mes(x, y, i18n::s.get("core.ui.inv.take_ally.window.equip"));
         x += 60;
-        for (int cnt = 0; cnt < 30; ++cnt)
+
+        for (const auto& equipment_slot : inventory_owner->equipment_slots)
         {
-            if (cdata[tc].body_parts[cnt] == 0)
+            if (!equipment_slot)
             {
                 continue;
             }
-            p = cdata[tc].body_parts[cnt];
             std::string body_part_desc =
-                i18n::s.get_enum("core.ui.body_part", p / 10000);
-            const auto text_color = p % 10000 != 0
+                i18n::s.get_enum("core.ui.body_part", equipment_slot.type);
+            const auto text_color = equipment_slot.equipment
                 ? snail::Color{50, 50, 200}
                 : snail::Color{100, 100, 100};
             mes(x, y, body_part_desc, text_color);
@@ -1154,7 +1161,7 @@ void update_key_list()
 
 
 
-void draw_item_list(int mainweapon)
+void draw_item_list(ItemRef mainweapon)
 {
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -1184,7 +1191,7 @@ void draw_item_list(int mainweapon)
         if (invctrl != 3 && invctrl != 11 && invctrl != 22 && invctrl != 27 &&
             invctrl != 28)
         {
-            if (p >= ELONA_ITEM_ON_GROUND_INDEX)
+            if (inv_getowner(inv[p]) == -1)
             {
                 s += i18n::space_if_needed() + "(" +
                     i18n::s.get("core.ui.inv.window.ground") + ")";
@@ -1207,7 +1214,7 @@ void draw_item_list(int mainweapon)
         if (inv[p].body_part != 0)
         {
             draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
-            if (p == mainweapon)
+            if (inv[p] == mainweapon)
             {
                 s += i18n::space_if_needed() + "(" +
                     i18n::s.get("core.ui.inv.window.main_hand") + ")";
@@ -1239,16 +1246,19 @@ void save_csbk()
 
 
 
-void show_money()
+void show_money(optional_ref<Character> inventory_owner)
 {
     if (show_inventory_owners_money(invctrl(0)))
     {
-        if (g_show_additional_item_info == AdditionalItemInfo::none)
+        if (inventory_owner &&
+            g_show_additional_item_info == AdditionalItemInfo::none)
         {
             font(13 - en * 2);
             gmode(2);
             draw("gold_coin", wx + 340, wy + 32);
-            mes(wx + 368, wy + 37 - en * 2, ""s + cdata[tc].gold + u8" gp"s);
+            mes(wx + 368,
+                wy + 37 - en * 2,
+                ""s + inventory_owner->gold + u8" gp"s);
         }
     }
 }
@@ -1348,7 +1358,8 @@ on_enter_drop(Item& selected_item, MenuResult& result, bool dropcontinue)
 OnEnterResult on_enter_external_inventory(
     Item& selected_item,
     MenuResult& result,
-    bool dropcontinue)
+    bool dropcontinue,
+    optional_ref<Character> inventory_owner)
 {
     if (invctrl != 3 && invctrl != 22)
     {
@@ -1506,20 +1517,30 @@ OnEnterResult on_enter_external_inventory(
         }
         if (invctrl == 12)
         {
-            if (cdata[tc].role != Role::trader)
+            if (inventory_owner->role != Role::trader)
             {
-                if (calcitemvalue(selected_item, 1) * in > cdata[tc].gold)
+                if (calcitemvalue(selected_item, 1) * in >
+                    inventory_owner->gold)
                 {
                     screenupdate = -1;
                     update_screen();
                     txt(i18n::s.get(
-                        "core.ui.inv.sell.not_enough_money", cdata[tc]));
+                        "core.ui.inv.sell.not_enough_money", *inventory_owner));
                     return OnEnterResult{1};
                 }
             }
         }
     }
-    int stat = pick_up_item(selected_item).type;
+    int inventory_id;
+    if (invctrl == 12 || (invctrl == 24 && invctrl(1) != 0))
+    {
+        inventory_id = -1;
+    }
+    else
+    {
+        inventory_id = 0;
+    }
+    int stat = pick_up_item(inventory_id, selected_item, inventory_owner).type;
     if (stat == 0)
     {
         return OnEnterResult{1};
@@ -1574,7 +1595,7 @@ OnEnterResult on_enter_eat(Item& selected_item, MenuResult& result)
         result.turn_result = TurnResult::pc_turn_user_error;
         return OnEnterResult{result};
     }
-    result.turn_result = do_eat_command(selected_item);
+    result.turn_result = do_eat_command(cdata.player(), selected_item);
     return OnEnterResult{result};
 }
 
@@ -1582,19 +1603,16 @@ OnEnterResult on_enter_eat(Item& selected_item, MenuResult& result)
 
 OnEnterResult on_enter_equip(Item& selected_item, MenuResult& result)
 {
-    if (cc == 0)
+    if (trait(161) != 0)
     {
-        if (trait(161) != 0)
+        if (selected_item.weight >= 1000)
         {
-            if (selected_item.weight >= 1000)
-            {
-                txt(i18n::s.get("core.ui.inv.equip.too_heavy"));
-                return OnEnterResult{2};
-            }
+            txt(i18n::s.get("core.ui.inv.equip.too_heavy"));
+            return OnEnterResult{2};
         }
     }
-    equip_item(cc, selected_item);
-    chara_refresh(cc);
+    equip_item(cdata.player(), body - 100, selected_item);
+    chara_refresh(cdata.player());
     screenupdate = -1;
     update_screen();
     snd("core.equip1");
@@ -1604,19 +1622,19 @@ OnEnterResult on_enter_equip(Item& selected_item, MenuResult& result)
     switch (selected_item.curse_state)
     {
     case CurseState::doomed:
-        txt(i18n::s.get("core.ui.inv.equip.doomed", cdata[cc]));
+        txt(i18n::s.get("core.ui.inv.equip.doomed", cdata.player()));
         break;
     case CurseState::cursed:
-        txt(i18n::s.get("core.ui.inv.equip.cursed", cdata[cc]));
+        txt(i18n::s.get("core.ui.inv.equip.cursed", cdata.player()));
         break;
     case CurseState::none: break;
     case CurseState::blessed:
-        txt(i18n::s.get("core.ui.inv.equip.blessed", cdata[cc]));
+        txt(i18n::s.get("core.ui.inv.equip.blessed", cdata.player()));
         break;
     }
-    if (cdata[cc].body_parts[body - 100] / 10000 == 5)
+    if (cdata.player().equipment_slots[body - 100].type == 5)
     {
-        equip_melee_weapon();
+        equip_melee_weapon(cdata.player());
     }
     menucycle = true;
     result.turn_result = TurnResult::menu_equipment;
@@ -1630,7 +1648,7 @@ OnEnterResult on_enter_read(Item& selected_item, MenuResult& result)
     screenupdate = -1;
     update_screen();
     savecycle();
-    result.turn_result = do_read_command(selected_item);
+    result.turn_result = do_read_command(cdata.player(), selected_item);
     return OnEnterResult{result};
 }
 
@@ -1641,7 +1659,7 @@ OnEnterResult on_enter_drink(Item& selected_item, MenuResult& result)
     screenupdate = -1;
     update_screen();
     savecycle();
-    result.turn_result = do_drink_command(selected_item);
+    result.turn_result = do_drink_command(cdata.player(), selected_item);
     return OnEnterResult{result};
 }
 
@@ -1658,7 +1676,10 @@ OnEnterResult on_enter_zap(Item& selected_item, MenuResult& result)
 
 
 
-OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
+OnEnterResult on_enter_give(
+    Item& selected_item,
+    MenuResult& result,
+    Character& inventory_owner)
 {
     if (selected_item.is_marked_as_no_drop())
     {
@@ -1666,16 +1687,16 @@ OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
         txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
         return OnEnterResult{2};
     }
-    if (cdata[tc].sleep)
+    if (inventory_owner.sleep)
     {
-        txt(i18n::s.get("core.ui.inv.give.is_sleeping", cdata[tc]));
+        txt(i18n::s.get("core.ui.inv.give.is_sleeping", inventory_owner));
         snd("core.fail1");
         return OnEnterResult{2};
     }
-    const auto slot_opt = inv_get_free_slot(tc);
+    const auto slot_opt = inv_get_free_slot(inventory_owner.index);
     if (!slot_opt)
     {
-        txt(i18n::s.get("core.ui.inv.give.inventory_is_full", cdata[tc]));
+        txt(i18n::s.get("core.ui.inv.give.inventory_is_full", inventory_owner));
         snd("core.fail1");
         return OnEnterResult{2};
     }
@@ -1684,11 +1705,12 @@ OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
     if (selected_item.id == ItemId::gift)
     {
         txt(i18n::s.get(
-            "core.ui.inv.give.present.text", cdata[tc], selected_item));
+            "core.ui.inv.give.present.text", inventory_owner, selected_item));
         selected_item.modify_number(-1);
-        txt(i18n::s.get("core.ui.inv.give.present.dialog", cdata[tc]));
-        chara_modify_impression(cdata[tc], giftvalue(selected_item.param4));
-        cdata[tc].emotion_icon = 317;
+        txt(i18n::s.get("core.ui.inv.give.present.dialog", inventory_owner));
+        chara_modify_impression(
+            inventory_owner, giftvalue(selected_item.param4));
+        inventory_owner.emotion_icon = 317;
         refresh_burden_state();
         if (invally == 1)
         {
@@ -1699,17 +1721,18 @@ OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
         return OnEnterResult{result};
     }
     f = 0;
-    p = sdata(10, tc) * 500 + sdata(11, tc) * 500 + sdata(153, tc) * 2500 +
-        25000;
-    if (cdata[tc].id == CharaId::golden_knight)
+    p = sdata(10, inventory_owner.index) * 500 +
+        sdata(11, inventory_owner.index) * 500 +
+        sdata(153, inventory_owner.index) * 2500 + 25000;
+    if (inventory_owner.id == CharaId::golden_knight)
     {
         p *= 5;
     }
-    if (inv_weight(tc) + selected_item.weight > p)
+    if (inv_weight(inventory_owner.index) + selected_item.weight > p)
     {
         f = 1;
     }
-    if (cdata[tc].id != CharaId::golden_knight)
+    if (inventory_owner.id != CharaId::golden_knight)
     {
         if (reftype == 60000)
         {
@@ -1728,11 +1751,11 @@ OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
     {
         snd("core.fail1");
         txt(i18n::s.get_enum(
-            "core.ui.inv.give.refuse_dialog", f - 1, cdata[tc]));
+            "core.ui.inv.give.refuse_dialog", f - 1, inventory_owner));
         return OnEnterResult{2};
     }
     f = 0;
-    if (cdata[tc].relationship == 10)
+    if (inventory_owner.relationship == 10)
     {
         f = 1;
     }
@@ -1741,13 +1764,13 @@ OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
         if (selected_item.identify_state <= IdentifyState::partly)
         {
             snd("core.fail1");
-            txt(i18n::s.get("core.ui.inv.give.too_creepy", cdata[tc]));
+            txt(i18n::s.get("core.ui.inv.give.too_creepy", inventory_owner));
             return OnEnterResult{2};
         }
         if (is_cursed(selected_item.curse_state))
         {
             snd("core.fail1");
-            txt(i18n::s.get("core.ui.inv.give.cursed", cdata[tc]));
+            txt(i18n::s.get("core.ui.inv.give.cursed", inventory_owner));
             return OnEnterResult{2};
         }
         if (reftype == 53000)
@@ -1780,11 +1803,11 @@ OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
             f = 1;
             if (the_item_db[itemid2int(selected_item.id)]->subcategory == 52002)
             {
-                if (cdata[tc].drunk)
+                if (inventory_owner.drunk)
                 {
                     snd("core.fail1");
                     txt(i18n::s.get(
-                        "core.ui.inv.give.no_more_drink", cdata[tc]));
+                        "core.ui.inv.give.no_more_drink", inventory_owner));
                     return OnEnterResult{2};
                 }
             }
@@ -1800,7 +1823,7 @@ OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
             {
                 f = 0;
             }
-            if (cdata[tc].is_pregnant())
+            if (inventory_owner.is_pregnant())
             {
                 if (selected_item.id == ItemId::poison ||
                     selected_item.id == ItemId::bottle_of_dye ||
@@ -1815,42 +1838,44 @@ OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
     if (f)
     {
         snd("core.equip1");
-        txt(i18n::s.get("core.ui.inv.give.you_hand", selected_item, cdata[tc]));
+        txt(i18n::s.get(
+            "core.ui.inv.give.you_hand", selected_item, inventory_owner));
         if (selected_item.id == ItemId::engagement_ring ||
             selected_item.id == ItemId::engagement_amulet)
         {
-            txt(i18n::s.get("core.ui.inv.give.engagement", cdata[tc]),
+            txt(i18n::s.get("core.ui.inv.give.engagement", inventory_owner),
                 Message::color{ColorIndex::green});
-            chara_modify_impression(cdata[tc], 15);
-            cdata[tc].emotion_icon = 317;
+            chara_modify_impression(inventory_owner, 15);
+            inventory_owner.emotion_icon = 317;
         }
         if (selected_item.id == ItemId::love_potion)
         {
             txt(i18n::s.get(
                     "core.ui.inv.give.love_potion.text",
-                    cdata[tc],
+                    inventory_owner,
                     selected_item),
                 Message::color{ColorIndex::purple});
             snd("core.crush2");
-            txt(i18n::s.get("core.ui.inv.give.love_potion.dialog", cdata[tc]),
+            txt(i18n::s.get(
+                    "core.ui.inv.give.love_potion.dialog", inventory_owner),
                 Message::color{ColorIndex::cyan});
-            chara_modify_impression(cdata[tc], -20);
-            cdata[tc].emotion_icon = 318;
+            chara_modify_impression(inventory_owner, -20);
+            inventory_owner.emotion_icon = 318;
             selected_item.modify_number(-1);
             return OnEnterResult{1};
         }
         item_copy(selected_item, slot);
         selected_item.modify_number(-1);
         slot.set_number(1);
-        auto& stacked_item = item_stack(tc, slot, true).stacked_item;
-        rc = tc;
-        chara_set_ai_item(cdata[tc], stacked_item);
-        wear_most_valuable_equipment_for_all_body_parts();
-        if (tc < 16)
+        auto& stacked_item =
+            item_stack(inventory_owner.index, slot, true).stacked_item;
+        chara_set_ai_item(inventory_owner, stacked_item);
+        wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
+        if (inventory_owner.index < 16)
         {
-            create_pcpic(cdata[tc]);
+            create_pcpic(inventory_owner);
         }
-        chara_refresh(tc);
+        chara_refresh(inventory_owner);
         refresh_burden_state();
         if (invally == 1)
         {
@@ -1861,7 +1886,8 @@ OnEnterResult on_enter_give(Item& selected_item, MenuResult& result)
         return OnEnterResult{result};
     }
     snd("core.fail1");
-    txt(i18n::s.get("core.ui.inv.give.refuses", cdata[tc], selected_item));
+    txt(i18n::s.get(
+        "core.ui.inv.give.refuses", inventory_owner, selected_item));
     return OnEnterResult{2};
 }
 
@@ -1924,9 +1950,9 @@ OnEnterResult on_enter_open(Item& selected_item, MenuResult& result)
 
 
 
-OnEnterResult on_enter_mix(Item& selected_item)
+OnEnterResult on_enter_mix(Item& selected_item, ItemRef& cidip)
 {
-    cidip = selected_item.index;
+    cidip = ItemRef::from_ref(selected_item);
     savecycle();
     invctrl = 18;
     Message::instance().linebreak();
@@ -1936,11 +1962,12 @@ OnEnterResult on_enter_mix(Item& selected_item)
 
 
 
-OnEnterResult on_enter_mix_target(Item& selected_item, MenuResult& result)
+OnEnterResult
+on_enter_mix_target(Item& selected_item, MenuResult& result, ItemRef cidip)
 {
     screenupdate = -1;
     update_screen();
-    result.turn_result = do_dip_command(inv[cidip], selected_item);
+    result.turn_result = do_dip_command(*cidip, selected_item);
     return OnEnterResult{result};
 }
 
@@ -1963,9 +1990,9 @@ OnEnterResult on_enter_offer(Item& selected_item, MenuResult& result)
 
 
 
-OnEnterResult on_enter_trade(Item& selected_item, int& citrade)
+OnEnterResult on_enter_trade(Item& selected_item, ItemRef& citrade)
 {
-    citrade = selected_item.index;
+    citrade = ItemRef::from_ref(selected_item);
     invctrl = 21;
     snd("core.pop2");
     return OnEnterResult{1};
@@ -1973,8 +2000,11 @@ OnEnterResult on_enter_trade(Item& selected_item, int& citrade)
 
 
 
-OnEnterResult
-on_enter_trade_target(Item& selected_item, MenuResult& result, int& citrade)
+OnEnterResult on_enter_trade_target(
+    Item& selected_item,
+    MenuResult& result,
+    ItemRef& citrade,
+    Character& inventory_owner)
 {
     if (selected_item.is_marked_as_no_drop())
     {
@@ -1982,37 +2012,34 @@ on_enter_trade_target(Item& selected_item, MenuResult& result, int& citrade)
         txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
         return OnEnterResult{2};
     }
-    if (cdata[tc].activity)
+    if (inventory_owner.activity)
     {
-        cdata[tc].activity.type = Activity::Type::none;
-        cdata[tc].activity.turn = 0;
-        cdata[tc].activity.item = 0;
+        inventory_owner.activity.type = Activity::Type::none;
+        inventory_owner.activity.turn = 0;
+        inventory_owner.activity.item = ItemRef::null();
     }
     snd("core.equip1");
-    inv[citrade].is_quest_target() = false;
-    txt(i18n::s.get(
-        "core.ui.inv.trade.you_receive", selected_item, inv[citrade]));
-    if (inv[citrade].body_part != 0)
+    citrade->is_quest_target() = false;
+    txt(i18n::s.get("core.ui.inv.trade.you_receive", selected_item, *citrade));
+    if (citrade->body_part != 0)
     {
-        p = inv[citrade].body_part;
-        cdata[tc].body_parts[p - 100] =
-            cdata[tc].body_parts[p - 100] / 10000 * 10000;
-        inv[citrade].body_part = 0;
+        p = citrade->body_part;
+        inventory_owner.equipment_slots[p - 100].unequip();
+        citrade->body_part = 0;
     }
-    item_exchange(selected_item, inv[citrade]);
+    item_exchange(selected_item, *citrade);
     item_convert_artifact(selected_item);
-    rc = tc;
-    if (cdata[rc].ai_item == citrade)
+    if (inventory_owner.ai_item == *citrade)
     {
-        cdata[rc].ai_item = 0;
+        inventory_owner.ai_item = ItemRef::null();
     }
-    wear_most_valuable_equipment_for_all_body_parts();
-    if (tc >= 16)
+    wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
+    if (inventory_owner.index >= 16)
     {
-        supply_new_equipment();
+        supply_new_equipment(inventory_owner);
     }
-    (void)inv_get_free_slot_force(tc);
-    chara_refresh(tc);
+    (void)inv_get_free_slot_force(inventory_owner.index);
+    chara_refresh(inventory_owner);
     refresh_burden_state();
     invsubroutine = 0;
     result.succeeded = true;
@@ -2111,7 +2138,7 @@ OnEnterResult on_enter_put_into(Item& selected_item)
 
 
 
-OnEnterResult on_enter_receive(Item& selected_item)
+OnEnterResult on_enter_receive(Item& selected_item, Character& inventory_owner)
 {
     const auto slot_opt = inv_get_free_slot(0);
     if (!slot_opt)
@@ -2124,7 +2151,7 @@ OnEnterResult on_enter_receive(Item& selected_item)
         ItemCategory::ore)
     {
         snd("core.fail1");
-        txt(i18n::s.get("core.ui.inv.take_ally.refuse_dialog", cdata[tc]),
+        txt(i18n::s.get("core.ui.inv.take_ally.refuse_dialog", inventory_owner),
             Message::color{ColorIndex::blue});
         return OnEnterResult{2};
     }
@@ -2136,8 +2163,7 @@ OnEnterResult on_enter_receive(Item& selected_item)
             return OnEnterResult{1};
         }
         p = selected_item.body_part;
-        cdata[tc].body_parts[p - 100] =
-            cdata[tc].body_parts[p - 100] / 10000 * 10000;
+        inventory_owner.equipment_slots[p - 100].unequip();
         selected_item.body_part = 0;
     }
     if (selected_item.id == ItemId::engagement_ring ||
@@ -2145,12 +2171,12 @@ OnEnterResult on_enter_receive(Item& selected_item)
     {
         txt(i18n::s.get(
                 "core.ui.inv.take_ally.swallows_ring",
-                cdata[tc],
+                inventory_owner,
                 selected_item),
             Message::color{ColorIndex::purple});
         snd("core.offer1");
-        chara_modify_impression(cdata[tc], -20);
-        cdata[tc].emotion_icon = 318;
+        chara_modify_impression(inventory_owner, -20);
+        inventory_owner.emotion_icon = 318;
         selected_item.modify_number(-1);
         return OnEnterResult{1};
     }
@@ -2179,13 +2205,12 @@ OnEnterResult on_enter_receive(Item& selected_item)
         auto& stacked_item = item_stack(0, slot, true).stacked_item;
         item_convert_artifact(stacked_item);
     }
-    rc = tc;
-    wear_most_valuable_equipment_for_all_body_parts();
-    if (tc < 16)
+    wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
+    if (inventory_owner.index < 16)
     {
-        create_pcpic(cdata[tc]);
+        create_pcpic(inventory_owner);
     }
-    chara_refresh(tc);
+    chara_refresh(inventory_owner);
     refresh_burden_state();
     return OnEnterResult{1};
 }
@@ -2213,7 +2238,7 @@ OnEnterResult on_enter_throw(Item& selected_item, MenuResult& result)
         result.turn_result = TurnResult::pc_turn_user_error;
         return OnEnterResult{result};
     }
-    result.turn_result = do_throw_command(selected_item);
+    result.turn_result = do_throw_command(cdata.player(), selected_item);
     return OnEnterResult{result};
 }
 
@@ -2221,7 +2246,7 @@ OnEnterResult on_enter_throw(Item& selected_item, MenuResult& result)
 
 OnEnterResult on_enter_steal(Item& selected_item, MenuResult& result)
 {
-    start_stealing(selected_item);
+    start_stealing(cdata.player(), selected_item);
     invsubroutine = 0;
     result.succeeded = true;
     return OnEnterResult{result};
@@ -2240,10 +2265,9 @@ OnEnterResult on_enter_small_medal(Item& selected_item)
         return OnEnterResult{1};
     }
     auto& slot = *slot_opt;
-    if (const auto small_medals =
-            item_find(622, 3, ItemFindLocation::player_inventory))
+    optional_ref<Item> small_medals;
+    if ((small_medals = item_find(622, 3, ItemFindLocation::player_inventory)))
     {
-        i = small_medals->index;
         p = small_medals->number();
     }
     else
@@ -2256,7 +2280,8 @@ OnEnterResult on_enter_small_medal(Item& selected_item)
         snd("core.fail1");
         return OnEnterResult{1};
     }
-    inv[i].modify_number(-calcmedalvalue(selected_item));
+    assert(small_medals);
+    small_medals->modify_number(-calcmedalvalue(selected_item));
     snd("core.paygold1");
     item_copy(selected_item, slot);
     txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", slot));
@@ -2267,20 +2292,16 @@ OnEnterResult on_enter_small_medal(Item& selected_item)
 
 
 
-OnEnterResult on_enter(int selected_item_index, int& citrade, bool dropcontinue)
+OnEnterResult on_enter(
+    optional_ref<Character> inventory_owner,
+    int selected_item_index,
+    ItemRef& citrade,
+    ItemRef& cidip,
+    bool dropcontinue)
 {
     MenuResult result = {false, false, TurnResult::none};
 
     auto& selected_item = inv[selected_item_index];
-
-    if (invctrl == 12 || (invctrl == 24 && invctrl(1) != 0))
-    {
-        cc = -1;
-    }
-    else
-    {
-        cc = 0;
-    }
 
     if (!cargocheck(selected_item))
     {
@@ -2298,7 +2319,8 @@ OnEnterResult on_enter(int selected_item_index, int& citrade, bool dropcontinue)
     if (invctrl == 3 || invctrl == 11 || invctrl == 12 || invctrl == 22 ||
         (invctrl == 24 && (invctrl(1) == 3 || invctrl(1) == 5)))
     {
-        return on_enter_external_inventory(selected_item, result, dropcontinue);
+        return on_enter_external_inventory(
+            selected_item, result, dropcontinue, inventory_owner);
     }
     if (invctrl == 5)
     {
@@ -2322,7 +2344,8 @@ OnEnterResult on_enter(int selected_item_index, int& citrade, bool dropcontinue)
     }
     if (invctrl == 10)
     {
-        return on_enter_give(selected_item, result);
+        assert(inventory_owner);
+        return on_enter_give(selected_item, result, *inventory_owner);
     }
     if (invctrl == 13)
     {
@@ -2342,11 +2365,11 @@ OnEnterResult on_enter(int selected_item_index, int& citrade, bool dropcontinue)
     }
     if (invctrl == 17)
     {
-        return on_enter_mix(selected_item);
+        return on_enter_mix(selected_item, cidip);
     }
     if (invctrl == 18)
     {
-        return on_enter_mix_target(selected_item, result);
+        return on_enter_mix_target(selected_item, result, cidip);
     }
     if (invctrl == 19)
     {
@@ -2358,7 +2381,9 @@ OnEnterResult on_enter(int selected_item_index, int& citrade, bool dropcontinue)
     }
     if (invctrl == 21)
     {
-        return on_enter_trade_target(selected_item, result, citrade);
+        assert(inventory_owner);
+        return on_enter_trade_target(
+            selected_item, result, citrade, *inventory_owner);
     }
     if (invctrl == 23)
     {
@@ -2370,7 +2395,8 @@ OnEnterResult on_enter(int selected_item_index, int& citrade, bool dropcontinue)
     }
     if (invctrl == 25)
     {
-        return on_enter_receive(selected_item);
+        assert(inventory_owner);
+        return on_enter_receive(selected_item, *inventory_owner);
     }
     if (invctrl == 26)
     {
@@ -2533,7 +2559,6 @@ optional<MenuResult> on_cancel(bool dropcontinue)
         }
     }
 
-    cc = 0;
     efcancel = 1;
     if (invsubroutine == 1)
     {
@@ -2574,13 +2599,6 @@ optional<MenuResult> on_cancel(bool dropcontinue)
 
 bool on_assign_shortcut(const std::string& action, int shortcut)
 {
-    p = list(0, pagesize * page + cs);
-    if (inv[p].weight < 0)
-    {
-        snd("core.fail1");
-        txt(i18n::s.get("core.ui.inv.common.shortcut.cargo"));
-        return false;
-    }
     snd("core.ok1");
     p = itemid2int(inv[list(0, pagesize * page + cs)].id) + invctrl * 10000;
     if (game_data.skill_shortcuts.at(shortcut) == p)
@@ -2606,10 +2624,11 @@ bool on_assign_shortcut(const std::string& action, int shortcut)
 
 
 
-CtrlInventoryResult ctrl_inventory()
+CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
 {
-    int mainweapon = -1;
-    int citrade = 0;
+    ItemRef mainweapon;
+    ItemRef citrade;
+    ItemRef cidip;
     bool dropcontinue = false;
 
     remove_card_and_figure_from_heir_trunk();
@@ -2624,9 +2643,9 @@ CtrlInventoryResult ctrl_inventory()
 
             fallback_to_default_command_if_unavailable();
             restore_cursor();
-            mainweapon = -1;
-            make_item_list(mainweapon, citrade);
-            if (const auto result = check_command(citrade))
+            mainweapon = ItemRef::null();
+            make_item_list(inventory_owner, mainweapon, citrade, cidip);
+            if (const auto result = check_command(inventory_owner, citrade))
             {
                 return {*result, none};
             }
@@ -2635,14 +2654,14 @@ CtrlInventoryResult ctrl_inventory()
             {
                 return {*result, none};
             }
-            show_message(citrade);
+            show_message(citrade, cidip);
         }
 
         if (update_page)
         {
             update_page = false;
 
-            if (const auto result = on_shortcut(citrade, dropcontinue))
+            if (const auto result = on_shortcut(citrade, cidip, dropcontinue))
             {
                 switch (result->type)
                 {
@@ -2660,16 +2679,17 @@ CtrlInventoryResult ctrl_inventory()
             draw_menu(dropcontinue);
         }
 
-        draw_window(dropcontinue);
+        draw_window(inventory_owner, dropcontinue);
         update_key_list();
         draw_item_list(mainweapon);
         save_csbk();
-        show_money();
+        show_money(inventory_owner);
         redraw();
         const auto action = get_action();
         if (p != -1)
         {
-            const auto result = on_enter(p(0), citrade, dropcontinue);
+            const auto result =
+                on_enter(inventory_owner, p(0), citrade, cidip, dropcontinue);
             switch (result.type)
             {
             case 0: return {result.menu_result, result.selected_item};

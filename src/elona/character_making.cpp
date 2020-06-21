@@ -10,7 +10,6 @@
 #include "input.hpp"
 #include "input_prompt.hpp"
 #include "lua_env/lua_env.hpp"
-#include "macro.hpp"
 #include "main_menu.hpp"
 #include "menu.hpp"
 #include "race.hpp"
@@ -260,8 +259,8 @@ static void _reroll_character()
     chara_delete(0);
     race_init_chara(cdata.player(), cmrace);
     class_init_chara(cdata.player(), cmclass);
-    cdatan(0, 0) = u8"????"s;
-    cdatan(1, 0) = cmaka;
+    cdata.player().name = u8"????"s;
+    cdata.player().alias = cmaka;
     cdata.player().level = 1;
     for (int cnt = 10; cnt < 18; ++cnt)
     {
@@ -269,7 +268,7 @@ static void _reroll_character()
         sdata.get(cnt, 0).experience = cmstats(cnt - 10) % 1'000'000 / 1'000;
         sdata.get(cnt, 0).potential = cmstats(cnt - 10) % 1'000;
     }
-    initialize_character();
+    initialize_character(cdata.player());
     initialize_pc_character();
     cdata.player().portrait = portrait_save;
     create_pcpic(cdata.player());
@@ -299,19 +298,19 @@ static int _prompt_satisfied()
     return result;
 }
 
-static bool _validate_save_path(const std::string& playerid)
+// Returns unused directory name like "profile/<profile name>/save/save_<N>"
+// where "N" is a sequential number starting with 1.
+static std::string get_new_save_dir_name()
 {
-    if (range::any_of(
-            filesystem::glob_entries(filesystem::dirs::save()),
-            [&](const auto& entry) {
-                return filepathutil::to_utf8_path(entry.path().filename()) ==
-                    playerid;
-            }))
+    for (int i = 1;; ++i)
     {
-        return false;
+        const auto dir_name = "save_" + std::to_string(i);
+        if (!fs::exists(
+                filesystem::dirs::save() / filepathutil::u8path(dir_name)))
+        {
+            return dir_name;
+        }
     }
-
-    return true;
 }
 
 MainMenuResult character_making_final_phase()
@@ -368,40 +367,24 @@ MainMenuResult character_making_final_phase()
     ui_draw_caption(
         i18n::s.get("core.chara_making.final_screen.what_is_your_name"));
 
-    while (true)
+    inputlog = "";
+    bool canceled = input_text_dialog(
+        (windoww - 230) / 2 + inf_screenx, winposy(120), 10, true);
+    if (canceled)
     {
-        inputlog = "";
-        bool canceled = input_text_dialog(
-            (windoww - 230) / 2 + inf_screenx, winposy(120), 10, true);
-        if (canceled)
-        {
-            return MainMenuResult::character_making_final_phase;
-        }
-
-        cmname = ""s + inputlog;
-        if (cmname == ""s || cmname == u8" "s)
-        {
-            cmname = random_name();
-        }
-
-        playerid = fs::unique_path().string();
-
-        if (_validate_save_path(playerid))
-        {
-            break;
-        }
-        else
-        {
-            gmode(0);
-            gcopy(2, 0, 0, windoww, windowh - 100, 0, 100);
-            gmode(2);
-            ui_draw_caption(i18n::s.get(
-                "core.chara_making.final_screen.name_is_already_taken"));
-        }
+        return MainMenuResult::character_making_final_phase;
     }
 
+    cmname = ""s + inputlog;
+    if (cmname == ""s || cmname == u8" "s)
+    {
+        cmname = random_name();
+    }
+
+    playerid = get_new_save_dir_name();
+
     snd("core.skill");
-    cdatan(0, rc) = cmname;
+    cdata.player().name = cmname;
     cdata.player().gold = 400 + rnd(200);
 
     if (geneuse != ""s)
@@ -514,11 +497,7 @@ void draw_race_or_class_info(const std::string& description)
             mes(cnt * 150 + tx + 32,
                 ty,
                 strutil::take_by_width(
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(r)->get(),
-                        "name"),
-                    jp ? 6 : 3) +
+                    the_ability_db.get_text(r, "name"), jp ? 6 : 3) +
                     u8": "s + s(p),
                 text_color);
         }
@@ -543,10 +522,7 @@ void draw_race_or_class_info(const std::string& description)
             {
                 s += u8","s;
             }
-            s += i18n::s.get_m(
-                "ability",
-                the_ability_db.get_id_from_legacy(cnt)->get(),
-                "name");
+            s += the_ability_db.get_text(cnt, "name");
             ++r;
         }
     }
@@ -561,10 +537,7 @@ void draw_race_or_class_info(const std::string& description)
     {
         if (sdata.get(cnt, 0).original_level != 0)
         {
-            s = i18n::s.get_m(
-                "ability",
-                the_ability_db.get_id_from_legacy(cnt)->get(),
-                "name");
+            s = the_ability_db.get_text(cnt, "name");
             if (jp)
             {
                 lenfix(s, 12);
@@ -582,11 +555,7 @@ void draw_race_or_class_info(const std::string& description)
                 inf_tiles,
                 tx + 13,
                 ty + 6);
-            s(1) = i18n::s
-                       .get_m_optional(
-                           "ability",
-                           the_ability_db.get_id_from_legacy(cnt)->get(),
-                           "description")
+            s(1) = the_ability_db.get_text_optional(cnt, "description")
                        .value_or("");
             if (en)
             {

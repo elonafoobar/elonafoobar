@@ -30,7 +30,6 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
-#include "macro.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
@@ -52,11 +51,11 @@ namespace
 {
 
 // Eye of Insanity
-bool _magic_636()
+bool _magic_636(Character& subject, Character& target)
 {
-    txt(i18n::s.get("core.magic.insanity", cdata[cc], cdata[tc]),
+    txt(i18n::s.get("core.magic.insanity", subject, target),
         Message::color{ColorIndex::purple});
-    damage_insanity(cdata[tc], rnd_capped(roll(dice1, dice2, bonus) + 1));
+    damage_insanity(target, rnd_capped(roll(dice1, dice2, bonus) + 1));
     return true;
 }
 
@@ -169,65 +168,65 @@ bool _magic_1136(Item& treasure_map)
 
 
 // Item: love potion
-bool _magic_1135()
+bool _magic_1135(Character& target)
 {
     if (is_cursed(efstatus))
     {
-        if (tc == 0)
+        if (target.index == 0)
         {
-            eatstatus(efstatus, tc);
+            food_apply_curse_state(target, efstatus);
         }
         else
         {
-            txt(i18n::s.get("core.magic.love_potion.cursed", cdata[tc]));
-            chara_modify_impression(cdata[tc], -15);
+            txt(i18n::s.get("core.magic.love_potion.cursed", target));
+            chara_modify_impression(target, -15);
         }
         obvious = 0;
         return true;
     }
-    cdata[tc].emotion_icon = 317;
+    target.emotion_icon = 317;
     if (potionspill || potionthrow)
     {
-        txt(i18n::s.get("core.magic.love_potion.spill", cdata[tc]));
-        chara_modify_impression(cdata[tc], clamp(efp / 15, 0, 15));
-        status_ailment_damage(cdata[tc], StatusAilment::dimmed, 100);
-        lovemiracle(tc);
+        txt(i18n::s.get("core.magic.love_potion.spill", target));
+        chara_modify_impression(target, clamp(efp / 15, 0, 15));
+        status_ailment_damage(target, StatusAilment::dimmed, 100);
+        lovemiracle(target.index);
         return true;
     }
-    if (tc == 0)
+    if (target.index == 0)
     {
-        txt(i18n::s.get("core.magic.love_potion.self", cdata[tc]));
+        txt(i18n::s.get("core.magic.love_potion.self", target));
     }
     else
     {
-        txt(i18n::s.get("core.magic.love_potion.other", cdata[tc]));
-        lovemiracle(tc);
-        chara_modify_impression(cdata[tc], clamp(efp / 4, 0, 25));
+        txt(i18n::s.get("core.magic.love_potion.other", target));
+        lovemiracle(target.index);
+        chara_modify_impression(target, clamp(efp / 4, 0, 25));
     }
-    status_ailment_damage(cdata[tc], StatusAilment::dimmed, 500);
+    status_ailment_damage(target, StatusAilment::dimmed, 500);
     return true;
 }
 
 
 
 // Pregnant
-bool _magic_654()
+bool _magic_654(Character& subject, Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
-        txt(i18n::s.get("core.magic.pregnant", cdata[cc], cdata[tc]));
+        txt(i18n::s.get("core.magic.pregnant", subject, target));
     }
-    get_pregnant();
+    get_pregnant(target);
     return true;
 }
 
 
 
 // Mirror
-bool _magic_626()
+bool _magic_626(Character& target)
 {
     txt(i18n::s.get("core.magic.mirror"));
-    animeload(10, tc);
+    animeload(10, target);
     screen_analyze_self();
     return true;
 }
@@ -235,14 +234,14 @@ bool _magic_626()
 
 
 // Item: milk
-bool _magic_1101()
+bool _magic_1101(Character& subject, Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
         snd("core.atk_elec");
         if (is_cursed(efstatus))
         {
-            if (tc == 0)
+            if (target.index == 0)
             {
                 txt(i18n::s.get("core.magic.milk.cursed.self"));
             }
@@ -252,7 +251,7 @@ bool _magic_1101()
                     Message::color{ColorIndex::cyan});
             }
         }
-        else if (tc == 0)
+        else if (target.index == 0)
         {
             txt(i18n::s.get("core.magic.milk.self"));
         }
@@ -264,28 +263,28 @@ bool _magic_1101()
     }
     if (efstatus == CurseState::blessed)
     {
-        modify_height(cdata[tc], rnd(5) + 1);
+        modify_height(target, rnd(5) + 1);
     }
     if (is_cursed(efstatus))
     {
-        modify_height(cdata[tc], (rnd(5) + 1) * -1);
+        modify_height(target, (rnd(5) + 1) * -1);
     }
-    cdata[tc].nutrition += 1000 * (efp / 100);
-    if (tc == 0)
+    target.nutrition += 1000 * (efp / 100);
+    if (target.index == 0)
     {
-        show_eating_message();
+        show_eating_message(subject);
     }
-    eatstatus(efstatus, tc);
-    animeload(15, tc);
+    food_apply_curse_state(target, efstatus);
+    animeload(15, target);
     return true;
 }
 
 
 
 // Item: alcohol
-bool _magic_1102()
+bool _magic_1102(Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
         if (is_cursed(efstatus))
         {
@@ -298,46 +297,45 @@ bool _magic_1102()
                 Message::color{ColorIndex::cyan});
         }
     }
-    status_ailment_damage(cdata[tc], StatusAilment::drunk, efp);
-    eatstatus(efstatus, tc);
+    status_ailment_damage(target, StatusAilment::drunk, efp);
+    food_apply_curse_state(target, efstatus);
     return true;
 }
 
 
 
 // Item: acid
-bool _magic_1116()
+bool _magic_1116(Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
-        if (tc == 0)
+        if (target.index == 0)
         {
             txt(i18n::s.get("core.magic.acid.self"));
         }
-        txt(i18n::s.get("core.magic.acid.apply", cdata[tc]));
+        txt(i18n::s.get("core.magic.acid.apply", target));
     }
-    if (cdata[tc].is_pregnant())
+    if (target.is_pregnant())
     {
-        cdata[tc].is_pregnant() = false;
-        if (is_in_fov(cdata[tc]))
+        target.is_pregnant() = false;
+        if (is_in_fov(target))
         {
-            txt(i18n::s.get(
-                "core.magic.common.melts_alien_children", cdata[tc]));
+            txt(i18n::s.get("core.magic.common.melts_alien_children", target));
         }
     }
     damage_hp(
-        cdata[tc], efp * efstatusfix(500, 400, 100, 50) / 1000, -15, 63, efp);
+        target, efp * efstatusfix(500, 400, 100, 50) / 1000, -15, 63, efp);
     return true;
 }
 
 
 
 // Item: water
-bool _magic_1103()
+bool _magic_1103(Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
-        if (tc == 0)
+        if (target.index == 0)
         {
             txt(i18n::s.get("core.magic.water.self"));
         }
@@ -346,62 +344,62 @@ bool _magic_1103()
             txt(i18n::s.get("core.magic.water.other"));
         }
     }
-    get_sick_if_cursed(efstatus, cdata[tc]);
+    get_sick_if_cursed(efstatus, target);
     return true;
 }
 
 
 
 // Item: soda
-bool _magic_1146()
+bool _magic_1146(Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
         txt(i18n::s.get("core.magic.restore_stamina.dialog"));
-        txt(i18n::s.get("core.magic.restore_stamina.apply", cdata[tc]));
+        txt(i18n::s.get("core.magic.restore_stamina.apply", target));
     }
-    heal_sp(cdata[tc], 25);
-    get_sick_if_cursed(efstatus, cdata[tc]);
+    heal_sp(target, 25);
+    get_sick_if_cursed(efstatus, target);
     return true;
 }
 
 
 
 // Item: blue capsule drug
-bool _magic_1147()
+bool _magic_1147(Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
         txt(i18n::s.get("core.magic.restore_stamina_greater.dialog"));
-        txt(i18n::s.get("core.magic.restore_stamina_greater.apply", cdata[tc]));
+        txt(i18n::s.get("core.magic.restore_stamina_greater.apply", target));
     }
-    heal_sp(cdata[tc], 100);
-    get_sick_if_cursed(efstatus, cdata[tc]);
+    heal_sp(target, 100);
+    get_sick_if_cursed(efstatus, target);
     return true;
 }
 
 
 
 // Item: salt solution
-bool _magic_1142()
+bool _magic_1142(Character& target)
 {
-    if (cdatan(2, tc) == u8"core.snail"s)
+    if (target.race == "core.snail")
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
-            txt(i18n::s.get("core.magic.salt.snail", cdata[tc]),
+            txt(i18n::s.get("core.magic.salt.snail", target),
                 Message::color{ColorIndex::red});
         }
-        if (cdata[tc].hp > 10)
+        if (target.hp > 10)
         {
-            damage_hp(cdata[tc], cdata[tc].hp - rnd(10), -15);
+            damage_hp(target, target.hp - rnd(10), -15);
         }
         else
         {
-            damage_hp(cdata[tc], rnd(20000), -15);
+            damage_hp(target, rnd(20000), -15);
         }
     }
-    else if (is_in_fov(cdata[tc]))
+    else if (is_in_fov(target))
     {
         txt(i18n::s.get("core.magic.salt.apply"),
             Message::color{ColorIndex::cyan});
@@ -412,11 +410,11 @@ bool _magic_1142()
 
 
 // Item: dirty water
-bool _magic_1130()
+bool _magic_1130(Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
-        if (tc == 0)
+        if (target.index == 0)
         {
             txt(i18n::s.get("core.magic.dirty_water.self"));
         }
@@ -425,14 +423,14 @@ bool _magic_1130()
             txt(i18n::s.get("core.magic.dirty_water.other"));
         }
     }
-    get_sick_if_cursed(efstatus, cdata[tc]);
+    get_sick_if_cursed(efstatus, target);
     return true;
 }
 
 
 
 // Pickpocket
-bool _magic_300()
+bool _magic_300(Character& subject, Character& target)
 {
     if (game_data.executing_immediate_quest_type == 1008 ||
         game_data.executing_immediate_quest_type == 1010)
@@ -440,7 +438,7 @@ bool _magic_300()
         txt(i18n::s.get("core.magic.steal.in_quest"));
         return false;
     }
-    if (cc == 0)
+    if (subject.index == 0)
     {
         if (cdata.player().sp < 50)
         {
@@ -460,16 +458,20 @@ bool _magic_300()
     invctrl(0) = 27;
     invctrl(1) = 0;
     snd("core.inv");
-    ctrl_inventory();
+    // In Pickpocket spact, target == player means that you attempts to steal
+    // items on the ground, not in someone's inventory.
+    ctrl_inventory(
+        target.index == 0 ? optional_ref<Character>{}
+                          : optional_ref<Character>{target});
     return true;
 }
 
 
 
 // Riding
-bool _magic_301()
+bool _magic_301(Character& subject, Character& target)
 {
-    if (cc == 0)
+    if (subject.index == 0)
     {
         if (cdata.player().sp < 50)
         {
@@ -487,7 +489,7 @@ bool _magic_301()
     }
     if (game_data.mount != 0)
     {
-        if (tc == cc)
+        if (target.index == subject.index)
         {
             int stat = cell_findspace(
                 cdata.player().position.x, cdata.player().position.y, 1);
@@ -506,26 +508,25 @@ bool _magic_301()
             return true;
         }
     }
-    if (tc >= 16)
+    if (target.index >= 16)
     {
         txt(i18n::s.get("core.magic.mount.only_ally"));
         return true;
     }
-    if (cdata[tc].is_escorted() == 1 ||
-        cdata[tc].is_escorted_in_sub_quest() == 1)
+    if (target.is_escorted() == 1 || target.is_escorted_in_sub_quest() == 1)
     {
         txt(i18n::s.get("core.magic.mount.not_client"));
         return true;
     }
-    if (tc == cc)
+    if (target.index == subject.index)
     {
         if (game_data.mount == 0)
         {
-            txt(i18n::s.get("core.magic.mount.ride_self", cdata[cc]));
+            txt(i18n::s.get("core.magic.mount.ride_self", subject));
         }
         return true;
     }
-    if (cdata[tc].current_map != 0)
+    if (target.current_map != 0)
     {
         txt(i18n::s.get("core.magic.mount.stays_in_area"));
         return true;
@@ -534,12 +535,12 @@ bool _magic_301()
     {
         txt(i18n::s.get(
             "core.magic.mount.currently_riding",
-            cdata[cc],
+            subject,
             cdata[game_data.mount]));
     }
     else
     {
-        ride_begin(tc);
+        ride_begin(target.index);
         txt(name(game_data.mount) + i18n::space_if_needed() +
                 i18n::s.get("core.magic.mount.mount.dialog"),
             Message::color{ColorIndex::cyan});
@@ -550,18 +551,14 @@ bool _magic_301()
 
 
 // Performance
-bool _magic_183(optional_ref<Item> instrument)
+bool _magic_183(Character& subject, optional_ref<Item> instrument)
 {
-    assert(cc != 0 || instrument);
+    assert(subject.index != 0 || instrument);
 
-    if (cc != 0)
+    if (subject.index != 0)
     {
-        for (auto&& item : inv.for_chara(cdata[cc]))
+        for (auto&& item : inv.for_chara(subject))
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (item.skill == 183)
             {
                 instrument = item;
@@ -573,15 +570,15 @@ bool _magic_183(optional_ref<Item> instrument)
             return false;
         }
     }
-    if (sdata(183, cc) == 0)
+    if (sdata(183, subject.index) == 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(subject))
         {
-            txt(i18n::s.get("core.magic.perform.do_not_know", cdata[cc]));
+            txt(i18n::s.get("core.magic.perform.do_not_know", subject));
             return false;
         }
     }
-    if (cc == 0)
+    if (subject.index == 0)
     {
         if (cdata.player().sp < 50)
         {
@@ -597,14 +594,14 @@ bool _magic_183(optional_ref<Item> instrument)
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    activity_perform(cdata[cc], *instrument);
+    activity_perform(subject, *instrument);
     return true;
 }
 
 
 
 // Cooking
-bool _magic_184(Item& cook_tool)
+bool _magic_184(Character& subject, Item& cook_tool)
 {
     if (sdata(184, 0) == 0)
     {
@@ -621,7 +618,7 @@ bool _magic_184(Item& cook_tool)
     }
     assert(food_opt);
     auto& food = *food_opt;
-    if (cc == 0)
+    if (subject.index == 0)
     {
         if (cdata.player().sp < 50)
         {
@@ -637,14 +634,14 @@ bool _magic_184(Item& cook_tool)
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    cook(cook_tool, food);
+    food_cook(subject, cook_tool, food);
     return true;
 }
 
 
 
 // Fishing
-bool _magic_185(Item& rod)
+bool _magic_185(Character& subject, Item& rod)
 {
     if (sdata(185, 0) == 0)
     {
@@ -664,8 +661,8 @@ bool _magic_185(Item& rod)
     f = 0;
     for (int cnt = 0; cnt < 3; ++cnt)
     {
-        y = cdata[cc].position.y + cnt - 1;
-        x = cdata[cc].position.x;
+        y = subject.position.y + cnt - 1;
+        x = subject.position.x;
         if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
         {
             continue;
@@ -680,8 +677,8 @@ bool _magic_185(Item& rod)
     {
         for (int cnt = 0; cnt < 3; ++cnt)
         {
-            y = cdata[cc].position.y;
-            x = cdata[cc].position.x + cnt - 1;
+            y = subject.position.y;
+            x = subject.position.x + cnt - 1;
             if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
             {
                 continue;
@@ -727,7 +724,7 @@ bool _magic_185(Item& rod)
     fishx = x;
     fishy = y;
     addefmap(fishx, fishy, 1, 3);
-    if (cc == 0)
+    if (subject.index == 0)
     {
         if (cdata.player().sp < 50)
         {
@@ -746,24 +743,24 @@ bool _magic_185(Item& rod)
     item_separate(rod);
     --rod.count;
     rowactre = 0;
-    spot_fishing(rod);
+    spot_fishing(subject, rod);
     return true;
 }
 
 
 
-bool _magic_645_1114();
+bool _magic_645_1114(Character&, Character&);
 
 // Holy Light / Vanquish Hex
-bool _magic_406_407()
+bool _magic_406_407(Character& subject, Character& target)
 {
     if (is_cursed(efstatus))
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
-            txt(i18n::s.get("core.magic.common.cursed", cdata[tc]));
+            txt(i18n::s.get("core.magic.common.cursed", target));
         }
-        return _magic_645_1114();
+        return _magic_645_1114(subject, target);
     }
     p = 0;
     for (int cnt = 0; cnt < 16; ++cnt)
@@ -776,40 +773,40 @@ bool _magic_406_407()
                 break;
             }
         }
-        if (cdata[tc].buffs[i].id == 0)
+        if (target.buffs[i].id == 0)
         {
             continue;
         }
-        if (cdata[tc].buffs[i].id == 13)
+        if (target.buffs[i].id == 13)
         {
             continue;
         }
-        if (the_buff_db[cdata[tc].buffs[i].id]->type != BuffType::hex)
+        if (the_buff_db[target.buffs[i].id]->type != BuffType::hex)
         {
             continue;
         }
-        if (rnd_capped(efp * 2 + 1) > rnd_capped(cdata[tc].buffs[i].power + 1))
+        if (rnd_capped(efp * 2 + 1) > rnd_capped(target.buffs[i].power + 1))
         {
-            buff_delete(cdata[tc], i);
+            buff_delete(target, i);
             ++p;
             --cnt;
             continue;
         }
     }
-    buff_add(cdata[tc], "core.holy_veil", efp, 5 + efp / 30, cdata[cc]);
-    animeload(11, tc);
+    buff_add(target, "core.holy_veil", efp, 5 + efp / 30, subject);
+    animeload(11, target);
     return true;
 }
 
 
 
 // Prayer
-bool _magic_1120()
+bool _magic_1120(Character& target)
 {
-    txt(i18n::s.get("core.magic.prayer", cdata[tc]),
+    txt(i18n::s.get("core.magic.prayer", target),
         Message::color{ColorIndex::orange});
-    heal_completely();
-    BrightAuraAnimation(cdata[tc].position, BrightAuraAnimation::Type::healing)
+    heal_completely(target);
+    BrightAuraAnimation(target.position, BrightAuraAnimation::Type::healing)
         .play();
     return true;
 }
@@ -817,9 +814,9 @@ bool _magic_1120()
 
 
 // Random craft material
-bool _magic_1117()
+bool _magic_1117(Character& target)
 {
-    if (tc >= 16)
+    if (target.index >= 16)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -857,31 +854,34 @@ bool _magic_1117()
 
 
 
-bool _magic_628();
+bool _magic_628(Character& subject, Character& target);
 
 // Eye of Mutation / Mutation
-bool _magic_632_454_1144(bool is_cursed_potion_of_cure_mutation = false)
+bool _magic_632_454_1144(
+    Character& subject,
+    Character& target,
+    bool is_cursed_potion_of_cure_mutation = false)
 {
     if (!is_cursed_potion_of_cure_mutation)
     {
-        if (tc != 0)
+        if (target.index != 0)
         {
-            return _magic_628();
+            return _magic_628(subject, target);
         }
         if (efid == 632)
         {
-            txt(i18n::s.get("core.magic.mutation.spell", cdata[cc], cdata[tc]));
+            txt(i18n::s.get("core.magic.mutation.spell", subject, target));
             if (rnd(3))
             {
                 return true;
             }
         }
-        if (tc != 0)
+        if (target.index != 0)
         {
             txt(i18n::s.get("core.common.nothing_happens"));
             return true;
         }
-        if (enchantment_find(cdata[tc], 33))
+        if (enchantment_find(target, 33))
         {
             if (rnd(5))
             {
@@ -954,7 +954,7 @@ bool _magic_632_454_1144(bool is_cursed_potion_of_cure_mutation = false)
             {
                 txt(traitrefn(1), Message::color{ColorIndex::red});
             }
-            animeload(8, 0);
+            animeload(8, cdata.player());
             f = 1;
             break;
         }
@@ -964,27 +964,27 @@ bool _magic_632_454_1144(bool is_cursed_potion_of_cure_mutation = false)
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
     }
-    chara_refresh(0);
+    chara_refresh(cdata.player());
     return true;
 }
 
 
 
 // Item: potion of cure mutation
-bool _magic_1121()
+bool _magic_1121(Character& subject, Character& target)
 {
-    if (tc != 0)
+    if (target.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         return true;
     }
     if (is_cursed(efstatus))
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
             txt(i18n::s.get("core.magic.common.it_is_cursed"));
         }
-        return _magic_632_454_1144(true);
+        return _magic_632_454_1144(subject, target, true);
     }
     f = 0;
     for (int cnt = 0,
@@ -1033,16 +1033,16 @@ bool _magic_1121()
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
     }
-    chara_refresh(0);
+    chara_refresh(cdata.player());
     return true;
 }
 
 
 
 // Identify
-bool _magic_411()
+bool _magic_411(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -1058,7 +1058,7 @@ bool _magic_411()
 
 
 // Resurrection
-bool _magic_461()
+bool _magic_461(Character& subject)
 {
     if (map_data.type == mdata_t::MapType::world_map)
     {
@@ -1079,41 +1079,39 @@ bool _magic_461()
         obvious = 0;
         return true;
     }
+    int stat = show_hire_menu(HireOperation::revive);
+    if (stat == -1)
     {
-        int stat = show_hire_menu(HireOperation::revive);
-        if (stat == -1)
-        {
-            txt(i18n::s.get("core.common.nothing_happens"));
-            obvious = 0;
-            return true;
-        }
-        if (bonus < rnd(100))
-        {
-            if (is_in_fov(cdata[cc]))
-            {
-                txt(i18n::s.get("core.magic.resurrection.fail", cdata[cc]));
-            }
-            return true;
-        }
-        rc = stat;
+        txt(i18n::s.get("core.common.nothing_happens"));
+        obvious = 0;
+        return true;
     }
-    do_chara_revival();
-    cxinit = cdata[cc].position.x;
-    cyinit = cdata[cc].position.y;
-    chara_place();
-    cdata[rc].current_map = 0;
+    if (bonus < rnd(100))
+    {
+        if (is_in_fov(subject))
+        {
+            txt(i18n::s.get("core.magic.resurrection.fail", subject));
+        }
+        return true;
+    }
+    do_chara_revival(cdata[stat]);
+    cxinit = subject.position.x;
+    cyinit = subject.position.y;
+    chara_place(cdata[stat]);
+    cdata[stat].current_map = 0;
     txt(i18n::s.get(
-            "core.magic.resurrection.apply", cnven(cdatan(0, rc)), cdata[rc]),
+            "core.magic.resurrection.apply",
+            cnven(cdata[stat].name),
+            cdata[stat]),
         Message::color{ColorIndex::orange});
     txt(i18n::s.get("core.magic.resurrection.dialog"));
-    animode = 100 + rc;
-    MiracleAnimation().play();
+    MiracleAnimation(MiracleAnimation::Mode::target_one, cdata[stat]).play();
     snd("core.pray2");
-    cdata[rc].emotion_icon = 317;
-    if (cc == 0)
+    cdata[stat].emotion_icon = 317;
+    if (subject.index == 0)
     {
-        chara_modify_impression(cdata[rc], 15);
-        if (rc >= 16)
+        chara_modify_impression(cdata[stat], 15);
+        if (stat >= 16)
         {
             modify_karma(cdata.player(), 2);
         }
@@ -1123,41 +1121,37 @@ bool _magic_461()
 
 
 
-bool _magic_645_1114();
+bool _magic_645_1114(Character&, Character&);
 
 // Uncurse
-bool _magic_412()
+bool _magic_412(Character& subject, Character& target)
 {
     if (efstatus == CurseState::none)
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
-            txt(i18n::s.get("core.magic.uncurse.apply", cdata[tc]));
+            txt(i18n::s.get("core.magic.uncurse.apply", target));
         }
     }
     if (efstatus == CurseState::blessed)
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
-            txt(i18n::s.get("core.magic.uncurse.blessed", cdata[tc]));
+            txt(i18n::s.get("core.magic.uncurse.blessed", target));
         }
     }
     if (is_cursed(efstatus))
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
-            txt(i18n::s.get("core.magic.common.cursed", cdata[tc]));
+            txt(i18n::s.get("core.magic.common.cursed", target));
         }
-        return _magic_645_1114();
+        return _magic_645_1114(subject, target);
     }
     p(1) = 0;
     p(2) = 0;
-    for (auto&& item : inv.for_chara(cdata[tc]))
+    for (auto&& item : inv.for_chara(target))
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (!is_cursed(item.curse_state))
         {
             continue;
@@ -1185,7 +1179,7 @@ bool _magic_412()
             {
                 ++p(1);
                 item.curse_state = CurseState::none;
-                item_stack(tc, item, true);
+                item_stack(target.index, item, true);
             }
             else
             {
@@ -1197,22 +1191,22 @@ bool _magic_412()
     {
         if (p(1) != 0)
         {
-            if (is_in_fov(cdata[tc]))
+            if (is_in_fov(target))
             {
-                txt(i18n::s.get("core.magic.uncurse.item", cdata[tc]));
+                txt(i18n::s.get("core.magic.uncurse.item", target));
             }
         }
     }
     else if (p(1) != 0)
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
-            txt(i18n::s.get("core.magic.uncurse.equipment", cdata[tc]));
+            txt(i18n::s.get("core.magic.uncurse.equipment", target));
         }
     }
     if (p(2) != 0)
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
             txt(i18n::s.get("core.magic.uncurse.resist"));
         }
@@ -1224,18 +1218,18 @@ bool _magic_412()
     }
     else
     {
-        animeload(10, tc);
+        animeload(10, target);
     }
-    chara_refresh(tc);
+    chara_refresh(target);
     return true;
 }
 
 
 
 // Oracle
-bool _magic_413()
+bool _magic_413(Character& target)
 {
-    if (tc >= 16)
+    if (target.index >= 16)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         return true;
@@ -1262,9 +1256,9 @@ bool _magic_413()
 
 
 // Gain spell stock
-bool _magic_1104()
+bool _magic_1104(Character& target)
 {
-    if (tc != 0)
+    if (target.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -1303,10 +1297,7 @@ bool _magic_1104()
                     txt(s +
                             i18n::s.get(
                                 "core.magic.gain_knowledge.gain",
-                                i18n::s.get_m(
-                                    "ability",
-                                    the_ability_db.get_id_from_legacy(p)->get(),
-                                    "name")),
+                                the_ability_db.get_text(p, "name")),
                         Message::color{ColorIndex::green});
                     snd("core.ding2");
                     f = 1;
@@ -1322,14 +1313,10 @@ bool _magic_1104()
                     txt(i18n::s.get("core.magic.common.it_is_cursed"));
                     txt(i18n::s.get(
                             "core.magic.gain_knowledge.lose",
-                            i18n::s.get_m(
-                                "ability",
-                                the_ability_db.get_id_from_legacy(p + 400)
-                                    ->get(),
-                                "name")),
+                            the_ability_db.get_text(p + 400, "name")),
                         Message::color{ColorIndex::red});
                     snd("core.curse3");
-                    animeload(14, 0);
+                    animeload(14, cdata.player());
                     f = 1;
                     break;
                 }
@@ -1349,30 +1336,30 @@ bool _magic_1104()
 
 
 // Item: potion of descent
-bool _magic_1143()
+bool _magic_1143(Character& target)
 {
     if (efstatus == CurseState::blessed)
     {
-        cdata[tc].experience = cdata[tc].required_experience;
+        target.experience = target.required_experience;
         r2 = 0;
-        gain_level(cdata[tc]);
-        if (is_in_fov(cdata[tc]))
+        gain_level(target);
+        if (is_in_fov(target))
         {
             snd("core.ding1");
         }
     }
     else
     {
-        if (cdata[tc].level <= 1)
+        if (target.level <= 1)
         {
             txt(i18n::s.get("core.common.nothing_happens"));
             obvious = 0;
             return true;
         }
-        --cdata[tc].level;
-        cdata[tc].experience = 0;
-        update_required_experience(cdata[tc]);
-        txt(i18n::s.get("core.magic.descent", cdata[tc]),
+        --target.level;
+        target.experience = 0;
+        update_required_experience(target);
+        txt(i18n::s.get("core.magic.descent", target),
             Message::color{ColorIndex::purple});
     }
     if (is_cursed(efstatus))
@@ -1384,23 +1371,23 @@ bool _magic_1143()
             {
                 if (cnt <= 17)
                 {
-                    if (sdata(cnt, tc) != 0)
+                    if (sdata(cnt, target.index) != 0)
                     {
-                        chara_gain_skill_exp(cdata[tc], cnt, -1000);
+                        chara_gain_skill_exp(target, cnt, -1000);
                     }
                 }
             }
         }
-        animeload(8, tc);
+        animeload(8, target);
     }
-    chara_refresh(tc);
+    chara_refresh(target);
     return true;
 }
 
 
 
 // Item: scroll of gain attribute
-bool _magic_1105()
+bool _magic_1105(Character& target)
 {
     for (int cnt = 0;; ++cnt)
     {
@@ -1411,43 +1398,40 @@ bool _magic_1105()
             {
                 if (cnt < efstatusfix(0, 0, 100, 2000))
                 {
-                    if (sdata(p, tc) != 0)
+                    if (sdata(p, target.index) != 0)
                     {
                         continue;
                     }
                 }
-                chara_gain_skill(cdata[tc], p, 1);
-                if (is_in_fov(cdata[tc]))
+                chara_gain_skill(target, p, 1);
+                if (is_in_fov(target))
                 {
                     snd("core.ding2");
                     txt(i18n::s.get(
                             "core.magic.gain_skill",
-                            cdata[tc],
-                            i18n::s.get_m(
-                                "ability",
-                                the_ability_db.get_id_from_legacy(p)->get(),
-                                "name")),
+                            target,
+                            the_ability_db.get_text(p, "name")),
                         Message::color{ColorIndex::green});
                 }
                 break;
             }
             else
             {
-                if (sdata(p, tc) == 0)
+                if (sdata(p, target.index) == 0)
                 {
                     continue;
                 }
-                if (is_in_fov(cdata[tc]))
+                if (is_in_fov(target))
                 {
                     snd("core.curse1");
                     txt(i18n::s.get("core.magic.common.it_is_cursed"));
                 }
-                chara_gain_skill_exp(cdata[tc], p, -1000);
+                chara_gain_skill_exp(target, p, -1000);
                 break;
             }
         }
     }
-    chara_refresh(tc);
+    chara_refresh(target);
     save_set_autosave();
     return true;
 }
@@ -1455,9 +1439,9 @@ bool _magic_1105()
 
 
 // Item: scroll of faith
-bool _magic_1107()
+bool _magic_1107(Character& target)
 {
-    if (tc != 0)
+    if (target.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -1473,7 +1457,7 @@ bool _magic_1107()
     {
         txt(i18n::s.get("core.magic.faith.doubt"));
         snd("core.curse3");
-        animeload(14, 0);
+        animeload(14, cdata.player());
         chara_gain_skill_exp(cdata.player(), 181, -1000);
         return true;
     }
@@ -1483,8 +1467,7 @@ bool _magic_1107()
     {
         txt(i18n::s.get("core.magic.faith.blessed"));
     }
-    animode = 100 + tc;
-    MiracleAnimation().play();
+    MiracleAnimation(MiracleAnimation::Mode::target_one, target).play();
     snd("core.pray2");
     cdata.player().praying_point += 500;
     god_modify_piety(75);
@@ -1494,14 +1477,14 @@ bool _magic_1107()
         1000 + (efstatus == CurseState::blessed) * 750,
         6,
         1000);
-    chara_refresh(tc);
+    chara_refresh(target);
     return true;
 }
 
 
 
 // Item: scroll of growth
-bool _magic_1119()
+bool _magic_1119(Character& target)
 {
     for (int cnt = 0, cnt_end = (1 + (efstatus == CurseState::blessed));
          cnt < cnt_end;
@@ -1513,12 +1496,12 @@ bool _magic_1119()
             p = rnd(300) + 100;
             if (the_ability_db[p])
             {
-                if (sdata.get(p, tc).original_level == 0)
+                if (sdata.get(p, target.index).original_level == 0)
                 {
                     continue;
                 }
                 modify_potential(
-                    cdata[tc], p, efp * efstatusfix(-4, -2, 5, 5) / 100);
+                    target, p, efp * efstatusfix(-4, -2, 5, 5) / 100);
                 if (cnt2 == 0)
                 {
                     s = i18n::s.get("core.magic.gain_skill_potential.the");
@@ -1530,38 +1513,31 @@ bool _magic_1119()
                 }
                 if (!is_cursed(efstatus))
                 {
-                    if (is_in_fov(cdata[tc]))
+                    if (is_in_fov(target))
                     {
                         snd("core.ding2");
                         txt(s +
                                 i18n::s.get(
                                     "core.magic.gain_skill_potential.increases",
-                                    cdata[tc],
-                                    i18n::s.get_m(
-                                        "ability",
-                                        the_ability_db.get_id_from_legacy(p)
-                                            ->get(),
-                                        "name")),
+                                    target,
+                                    the_ability_db.get_text(p, "name")),
                             Message::color{ColorIndex::green});
                     }
                 }
-                else if (is_in_fov(cdata[tc]))
+                else if (is_in_fov(target))
                 {
                     snd("core.curse3");
                     txt(i18n::s.get(
                             "core.magic.gain_skill_potential.decreases",
-                            cdata[tc],
-                            i18n::s.get_m(
-                                "ability",
-                                the_ability_db.get_id_from_legacy(p)->get(),
-                                "name")),
+                            target,
+                            the_ability_db.get_text(p, "name")),
                         Message::color{ColorIndex::red});
                 }
                 break;
             }
         }
     }
-    chara_refresh(tc);
+    chara_refresh(target);
     save_set_autosave();
     return true;
 }
@@ -1569,75 +1545,77 @@ bool _magic_1119()
 
 
 // Lose stats' experience
-bool _magic_1106()
+bool _magic_1106(Character& target)
 {
     i = rnd(10) + 10;
-    chara_gain_skill_exp(cdata[tc], i, efstatusfix(-2000, -2000, -1000, -250));
-    BrightAuraAnimation(cdata[tc].position, BrightAuraAnimation::Type::debuff)
+    chara_gain_skill_exp(target, i, efstatusfix(-2000, -2000, -1000, -250));
+    BrightAuraAnimation(target.position, BrightAuraAnimation::Type::debuff)
         .play();
-    chara_refresh(tc);
+    chara_refresh(target);
     return true;
 }
 
 
 
 // Item: troll blood
-bool _magic_1139()
+bool _magic_1139(Character& target)
 {
-    txt(i18n::s.get("core.magic.troll_blood.apply", cdata[tc]));
-    chara_gain_skill_exp(cdata[tc], 18, efstatusfix(-4000, -1000, 8000, 12000));
+    txt(i18n::s.get("core.magic.troll_blood.apply", target));
+    chara_gain_skill_exp(target, 18, efstatusfix(-4000, -1000, 8000, 12000));
     if (efstatus == CurseState::blessed)
     {
-        modify_potential(cdata[tc], 18, 15);
+        modify_potential(target, 18, 15);
         txt(i18n::s.get("core.magic.troll_blood.blessed"),
             Message::color{ColorIndex::green});
     }
-    chara_refresh(tc);
+    chara_refresh(target);
     return true;
 }
 
 
 
 // Gain stats' potential
-bool _magic_1113()
+bool _magic_1113(Character& target)
 {
     if (efstatus == CurseState::blessed)
     {
         for (int cnt = 10; cnt < 18; ++cnt)
         {
             modify_potential(
-                cdata[tc], cnt, rnd(sdata.get(cnt, tc).potential / 20 + 3) + 1);
+                target,
+                cnt,
+                rnd(sdata.get(cnt, target.index).potential / 20 + 3) + 1);
         }
-        txt(i18n::s.get("core.magic.gain_potential.blessed", cdata[tc]));
-        animode = 100 + tc;
-        MiracleAnimation().play();
+        txt(i18n::s.get("core.magic.gain_potential.blessed", target));
+        MiracleAnimation(MiracleAnimation::Mode::target_one, target).play();
         snd("core.ding3");
     }
     else
     {
         i = rnd(8) + 10;
-        const auto valn = i18n::s.get_m(
-            "ability", the_ability_db.get_id_from_legacy(i)->get(), "name");
+        const auto valn = the_ability_db.get_text(i, "name");
         if (efstatus == CurseState::none)
         {
             txt(i18n::s.get(
-                "core.magic.gain_potential.increases", cdata[tc], valn));
+                "core.magic.gain_potential.increases", target, valn));
             modify_potential(
-                cdata[tc], i, rnd(sdata.get(i, tc).potential / 10 + 10) + 1);
+                target,
+                i,
+                rnd(sdata.get(i, target.index).potential / 10 + 10) + 1);
             snd("core.ding2");
         }
         else
         {
             txt(i18n::s.get(
-                "core.magic.gain_potential.decreases", cdata[tc], valn));
+                "core.magic.gain_potential.decreases", target, valn));
             modify_potential(
-                cdata[tc],
+                target,
                 i,
-                (rnd(sdata.get(i, tc).potential / 10 + 10) + 1) * -1);
+                (rnd(sdata.get(i, target.index).potential / 10 + 10) + 1) * -1);
             snd("core.curse3");
         }
     }
-    if (cdata[tc].index == 0)
+    if (target.index == 0)
     {
         save_set_autosave();
     }
@@ -1647,27 +1625,28 @@ bool _magic_1113()
 
 
 // Vanish
-bool _magic_653()
+bool _magic_653(Character& target)
 {
-    if (tc < 57)
+    if (target.index < 57)
     {
         return true;
     }
-    if (cdata[tc].quality >= Quality::miracle)
+    if (target.quality >= Quality::miracle)
     {
         return true;
     }
-    txt(i18n::s.get("core.magic.vanish", cdata[tc]));
-    chara_vanquish(tc);
+    txt(i18n::s.get("core.magic.vanish", target));
+    chara_vanquish(target);
+    quest_check();
     return true;
 }
 
 
 
 // Sense Object / Magic Map
-bool _magic_430_429()
+bool _magic_430_429(Character& target)
 {
-    if (tc >= 16)
+    if (target.index >= 16)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -1686,7 +1665,7 @@ bool _magic_430_429()
             for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
             {
                 x = cnt;
-                p = dist(cdata[tc].position.x, cdata[tc].position.y, x, y);
+                p = dist(target.position.x, target.position.y, x, y);
                 if (is_cursed(efstatus))
                 {
                     if (efid == 429)
@@ -1695,7 +1674,7 @@ bool _magic_430_429()
                     }
                     if (efid == 430)
                     {
-                        cell_data.at(x, y).item_appearances_memory = 0;
+                        cell_data.at(x, y).item_info_memory.clear();
                     }
                     continue;
                 }
@@ -1710,7 +1689,7 @@ bool _magic_430_429()
                     if (efid == 430)
                     {
                         if (cell_data.at(x, y).feats != 0 ||
-                            cell_data.at(x, y).item_appearances_memory != 0)
+                            !cell_data.at(x, y).item_info_memory.is_empty())
                         {
                             cell_data.at(x, y).chip_id_memory =
                                 cell_data.at(x, y).chip_id_actual;
@@ -1728,14 +1707,14 @@ bool _magic_430_429()
     {
         if (efid == 429)
         {
-            txt(i18n::s.get("core.magic.sense.magic_mapping", cdata[tc]));
+            txt(i18n::s.get("core.magic.sense.magic_mapping", target));
         }
         if (efid == 430)
         {
-            txt(i18n::s.get("core.magic.sense.sense_object", cdata[tc]));
+            txt(i18n::s.get("core.magic.sense.sense_object", target));
         }
     }
-    animeload(10, tc);
+    animeload(10, target);
     update_minimap();
     update_screen();
     return true;
@@ -1744,55 +1723,55 @@ bool _magic_430_429()
 
 
 // Decapitation
-bool _magic_658()
+bool _magic_658(Character& subject, Character& target)
 {
-    if (cdata[tc].hp > cdata[tc].max_hp / 8)
+    if (target.hp > target.max_hp / 8)
     {
         return true;
     }
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
         snd("core.atksword");
         txt(i18n::s.get("core.magic.vorpal.sound"),
             Message::color{ColorIndex::red});
-        if (tc >= 16)
+        if (target.index >= 16)
         {
             game_data.proc_damage_events_flag = 2;
             txt3rd = 1;
-            txt(i18n::s.get("core.magic.vorpal.other", cdata[cc], cdata[tc]));
+            txt(i18n::s.get("core.magic.vorpal.other", subject, target));
         }
         else
         {
-            txt(i18n::s.get("core.magic.vorpal.ally", cdata[cc], cdata[tc]));
+            txt(i18n::s.get("core.magic.vorpal.ally", subject, target));
         }
     }
-    damage_hp(cdata[tc], cdata[tc].max_hp, cc, 658);
+    damage_hp(target, target.max_hp, subject.index, 658);
     return true;
 }
 
 
 
 // Restore Spirit / Restore Body
-bool _magic_440_439()
+bool _magic_440_439(Character& target)
 {
     if (efid == 439)
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
             if (is_cursed(efstatus))
             {
                 snd("core.curse3");
-                txt(i18n::s.get("core.magic.restore.body.cursed", cdata[tc]));
+                txt(i18n::s.get("core.magic.restore.body.cursed", target));
             }
             else
             {
-                txt(i18n::s.get("core.magic.restore.body.apply", cdata[tc]));
-                animeload(10, tc);
+                txt(i18n::s.get("core.magic.restore.body.apply", target));
+                animeload(10, target);
             }
             if (efstatus == CurseState::blessed)
             {
-                txt(i18n::s.get("core.magic.restore.body.blessed", cdata[tc]));
-                animeload(10, tc);
+                txt(i18n::s.get("core.magic.restore.body.blessed", target));
+                animeload(10, target);
             }
         }
         p(0) = 10;
@@ -1804,22 +1783,22 @@ bool _magic_440_439()
     }
     if (efid == 440)
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
             if (is_cursed(efstatus))
             {
                 snd("core.curse3");
-                txt(i18n::s.get("core.magic.restore.mind.cursed", cdata[tc]));
+                txt(i18n::s.get("core.magic.restore.mind.cursed", target));
             }
             else
             {
-                txt(i18n::s.get("core.magic.restore.mind.apply", cdata[tc]));
-                animeload(10, tc);
+                txt(i18n::s.get("core.magic.restore.mind.apply", target));
+                animeload(10, target);
             }
             if (efstatus == CurseState::blessed)
             {
-                txt(i18n::s.get("core.magic.restore.mind.blessed", cdata[tc]));
-                animeload(10, tc);
+                txt(i18n::s.get("core.magic.restore.mind.blessed", target));
+                animeload(10, target);
             }
         }
         p(0) = 14;
@@ -1838,33 +1817,34 @@ bool _magic_440_439()
         const auto attr = p(cnt) - 10;
         if (is_cursed(efstatus))
         {
-            if (cdata[tc].quality <= Quality::great)
+            if (target.quality <= Quality::great)
             {
-                cdata[tc].attr_adjs[attr] -=
-                    rnd(sdata.get(p(cnt), tc).original_level) / 5 + rnd(5);
+                target.attr_adjs[attr] -=
+                    rnd(sdata.get(p(cnt), target.index).original_level) / 5 +
+                    rnd(5);
                 continue;
             }
         }
-        if (cdata[tc].attr_adjs[attr] < 0)
+        if (target.attr_adjs[attr] < 0)
         {
-            cdata[tc].attr_adjs[attr] = 0;
+            target.attr_adjs[attr] = 0;
         }
         if (efstatus == CurseState::blessed)
         {
-            cdata[tc].attr_adjs[attr] =
-                sdata.get(p(cnt), tc).original_level / 10 + 5;
+            target.attr_adjs[attr] =
+                sdata.get(p(cnt), target.index).original_level / 10 + 5;
         }
     }
-    chara_refresh(tc);
+    chara_refresh(target);
     return true;
 }
 
 
 
 // Wish
-bool _magic_441()
+bool _magic_441(Character& subject)
 {
-    what_do_you_wish_for();
+    what_do_you_wish_for(subject);
     screenupdate = -1;
     gmode(2);
     update_screen();
@@ -1874,9 +1854,9 @@ bool _magic_441()
 
 
 // Item: scroll of escape
-bool _magic_1141()
+bool _magic_1141(Character& target)
 {
-    if (tc != 0)
+    if (target.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -1929,9 +1909,9 @@ bool _magic_1141()
 
 
 // Return
-bool _magic_428()
+bool _magic_428(Character& target)
 {
-    if (tc != 0)
+    if (target.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -1960,14 +1940,13 @@ bool _magic_428()
 
 
 // Harvest Mana
-bool _magic_621()
+bool _magic_621(Character& target)
 {
-    heal_mp(cdata[tc], efp / 2 + rnd_capped(efp / 2 + 1));
-    if (is_in_fov(cdata[tc]))
+    heal_mp(target, efp / 2 + rnd_capped(efp / 2 + 1));
+    if (is_in_fov(target))
     {
-        txt(i18n::s.get("core.magic.harvest_mana", cdata[tc]));
-        BrightAuraAnimation(
-            cdata[tc].position, BrightAuraAnimation::Type::healing)
+        txt(i18n::s.get("core.magic.harvest_mana", target));
+        BrightAuraAnimation(target.position, BrightAuraAnimation::Type::healing)
             .play();
     }
     return true;
@@ -1976,14 +1955,13 @@ bool _magic_621()
 
 
 // Absorb Magic
-bool _magic_624()
+bool _magic_624(Character& target)
 {
-    heal_mp(cdata[tc], roll(dice1, dice2, bonus));
-    if (is_in_fov(cdata[tc]))
+    heal_mp(target, roll(dice1, dice2, bonus));
+    if (is_in_fov(target))
     {
-        txt(i18n::s.get("core.magic.absorb_magic", cdata[tc]));
-        BrightAuraAnimation(
-            cdata[tc].position, BrightAuraAnimation::Type::healing)
+        txt(i18n::s.get("core.magic.absorb_magic", target));
+        BrightAuraAnimation(target.position, BrightAuraAnimation::Type::healing)
             .play();
     }
     return true;
@@ -1992,91 +1970,90 @@ bool _magic_624()
 
 
 // Item: poison
-bool _magic_1108()
+bool _magic_1108(Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
-        txt(i18n::s.get("core.magic.poison_attack", cdata[tc]));
+        txt(i18n::s.get("core.magic.poison_attack", target));
     }
-    if (cdata[tc].is_pregnant())
+    if (target.is_pregnant())
     {
-        cdata[tc].is_pregnant() = false;
-        if (is_in_fov(cdata[tc]))
+        target.is_pregnant() = false;
+        if (is_in_fov(target))
         {
-            txt(i18n::s.get(
-                "core.magic.common.melts_alien_children", cdata[tc]));
+            txt(i18n::s.get("core.magic.common.melts_alien_children", target));
         }
     }
-    status_ailment_damage(cdata[tc], StatusAilment::poisoned, efp);
+    status_ailment_damage(target, StatusAilment::poisoned, efp);
     return true;
 }
 
 
 
 // Item: potion of blindness
-bool _magic_1111()
+bool _magic_1111(Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
-        txt(i18n::s.get("core.magic.ink_attack", cdata[tc]));
+        txt(i18n::s.get("core.magic.ink_attack", target));
     }
-    status_ailment_damage(cdata[tc], StatusAilment::blinded, efp);
+    status_ailment_damage(target, StatusAilment::blinded, efp);
     return true;
 }
 
 
 
 // Item: potion of confusion
-bool _magic_1109()
+bool _magic_1109(Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
-        txt(i18n::s.get("core.magic.confusion", cdata[tc]));
+        txt(i18n::s.get("core.magic.confusion", target));
     }
-    status_ailment_damage(cdata[tc], StatusAilment::confused, efp);
+    status_ailment_damage(target, StatusAilment::confused, efp);
     return true;
 }
 
 
 
 // Item: potion of paralysis
-bool _magic_1110()
+bool _magic_1110(Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
-        txt(i18n::s.get("core.magic.paralysis", cdata[tc]));
+        txt(i18n::s.get("core.magic.paralysis", target));
     }
-    status_ailment_damage(cdata[tc], StatusAilment::paralyzed, efp);
+    status_ailment_damage(target, StatusAilment::paralyzed, efp);
     return true;
 }
 
 
 
 // Item: sleeping drug
-bool _magic_1112()
+bool _magic_1112(Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
-        txt(i18n::s.get("core.magic.sleep", cdata[tc]));
+        txt(i18n::s.get("core.magic.sleep", target));
     }
-    status_ailment_damage(cdata[tc], StatusAilment::sleep, efp);
+    status_ailment_damage(target, StatusAilment::sleep, efp);
     return true;
 }
 
 
 
 // Curse / Item: scroll of curse
-bool _magic_645_1114()
+bool _magic_645_1114(Character& subject, Character& target)
 {
     if (efid == 645)
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
-            txt(i18n::s.get("core.magic.curse.spell", cdata[cc], cdata[tc]));
+            txt(i18n::s.get("core.magic.curse.spell", subject, target));
         }
     }
-    int p = 75 + sdata(19, tc);
-    if (const auto anticurse = enchantment_find(cdata[tc], 43))
+    int p = 75 + sdata(19, target.index);
+    if (const auto anticurse = enchantment_find(target, 43))
     {
         p += *anticurse / 2;
     }
@@ -2084,7 +2061,7 @@ bool _magic_645_1114()
     {
         return true;
     }
-    if (tc < 16)
+    if (target.index < 16)
     {
         if (rnd(3))
         {
@@ -2096,27 +2073,26 @@ bool _magic_645_1114()
         }
     }
     std::vector<std::reference_wrapper<Item>> candidates;
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (const auto& [_type, equipment] : target.equipment_slots)
     {
-        if (cdata[tc].body_parts[cnt] % 10000 == 0)
+        if (!equipment)
         {
             continue;
         }
-        const auto item_index = cdata[tc].body_parts[cnt] % 10000 - 1;
-        if (inv[item_index].curse_state == CurseState::blessed)
+        if (equipment->curse_state == CurseState::blessed)
         {
             if (rnd(10))
             {
                 continue;
             }
         }
-        candidates.emplace_back(std::ref(inv[item_index]));
+        candidates.emplace_back(std::ref(*equipment));
     }
     if (candidates.empty())
     {
         for (int _i = 0; _i < 200; ++_i)
         {
-            auto& item = get_random_inv(tc);
+            auto& item = get_random_inv(target.index);
             if (item.number() == 0)
             {
                 continue;
@@ -2145,15 +2121,15 @@ bool _magic_645_1114()
         {
             cursed_item.curse_state = CurseState::cursed;
         }
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
             txt(i18n::s.get(
-                "core.magic.curse.apply", cdata[tc], original_item_name));
+                "core.magic.curse.apply", target, original_item_name));
         }
-        chara_refresh(tc);
+        chara_refresh(target);
         snd("core.curse3");
-        animeload(14, tc);
-        item_stack(tc, cursed_item, true);
+        animeload(14, target);
+        item_stack(target.index, cursed_item, true);
     }
     else
     {
@@ -2166,16 +2142,16 @@ bool _magic_645_1114()
 
 
 // Weaken resistance
-bool _magic_1118()
+bool _magic_1118(Character& target)
 {
     f = 0;
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         p = rnd(11) + 50;
-        if (sdata.get(p, tc).original_level >= 150)
+        if (sdata.get(p, target.index).original_level >= 150)
         {
             ++f;
-            resistmod(tc, p, 50 * -1);
+            chara_gain_registance(target, p, 50 * -1);
             if (f >= efp / 100)
             {
                 break;
@@ -2191,7 +2167,7 @@ bool _magic_1118()
     {
         snd("core.curse1");
     }
-    chara_refresh(tc);
+    chara_refresh(target);
     return true;
 }
 
@@ -2199,9 +2175,9 @@ bool _magic_1118()
 
 // Item: diary of cat sister / diary of younger sister / scroll of ally / diary
 // of young lady
-bool _magic_1138_1123_1122_1137()
+bool _magic_1138_1123_1122_1137(Character& subject)
 {
-    if (cc != 0 && cc < 16)
+    if (subject.index != 0 && subject.index < 16)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         return true;
@@ -2229,17 +2205,16 @@ bool _magic_1138_1123_1122_1137()
     }
     novoidlv = 1;
     chara_create(56, p, -3, 0);
-    rc = 56;
-    new_ally_joins();
+    new_ally_joins(cdata.tmp());
     return true;
 }
 
 
 
 // Dominate
-bool _magic_435()
+bool _magic_435(Character& subject, Character& target)
 {
-    if (cc != 0 || tc == 0 || cdata[tc].relationship == 10)
+    if (subject.index != 0 || target.index == 0 || target.relationship == 10)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2253,33 +2228,32 @@ bool _magic_435()
     }
     f = 1;
     {
-        if (inv_find(ItemId::monster_heart, cc))
+        if (inv_find(ItemId::monster_heart, subject.index))
         {
             efp = efp * 3 / 2;
         }
     }
-    if (rnd_capped(efp / 15 + 5) < cdata[tc].level)
+    if (rnd_capped(efp / 15 + 5) < target.level)
     {
         f = 0;
     }
-    if (cdata[tc].quality >= Quality::miracle || cdata[tc].role != Role::none ||
-        cdata[tc].is_lord_of_dungeon() == 1)
+    if (target.quality >= Quality::miracle || target.role != Role::none ||
+        target.is_lord_of_dungeon() == 1)
     {
         f = -1;
     }
     if (f == 1)
     {
-        rc = tc;
-        new_ally_joins();
+        new_ally_joins(target);
         quest_check();
     }
     else if (f == 0)
     {
-        txt(i18n::s.get("core.magic.common.resists", cdata[tc]));
+        txt(i18n::s.get("core.magic.common.resists", target));
     }
     else
     {
-        txt(i18n::s.get("core.magic.domination.cannot_be_charmed", cdata[tc]));
+        txt(i18n::s.get("core.magic.domination.cannot_be_charmed", target));
     }
     return true;
 }
@@ -2287,7 +2261,7 @@ bool _magic_435()
 
 
 // Web / Mist of Darkness / Acid Ground / Ether Ground / Fire Wall
-bool _magic_436_437_455_634_456()
+bool _magic_436_437_455_634_456(Character& subject)
 {
     if (efid == 436)
     {
@@ -2351,16 +2325,16 @@ bool _magic_436_437_455_634_456()
         }
         if (efid == 634)
         {
-            mef_add(x, y, 4, 20, rnd(4) + 2, efp, cc);
+            mef_add(x, y, 4, 20, rnd(4) + 2, efp, subject.index);
         }
         if (efid == 455)
         {
-            mef_add(x, y, 3, 19, rnd(10) + 5, efp, cc);
+            mef_add(x, y, 3, 19, rnd(10) + 5, efp, subject.index);
         }
         if (efid == 456)
         {
-            mef_add(x, y, 5, 24, rnd(10) + 5, efp, cc);
-            mapitem_fire(x, y);
+            mef_add(x, y, 5, 24, rnd(10) + 5, efp, subject.index);
+            mapitem_fire(subject, x, y);
         }
         if (efid == 436)
         {
@@ -2377,9 +2351,9 @@ bool _magic_436_437_455_634_456()
 
 
 // Item: scroll of name
-bool _magic_1145()
+bool _magic_1145(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2419,9 +2393,9 @@ bool _magic_1145()
 
 
 // Item: Garok's hammer
-bool _magic_49(Item& hammer)
+bool _magic_49(Character& subject, Item& hammer)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2447,7 +2421,7 @@ bool _magic_49(Item& hammer)
     }
     randomize(hammer.param1);
     equip = target_item.body_part;
-    animeload(8, cc);
+    animeload(8, subject);
     target_item.quality = Quality::miracle;
     change_item_material(target_item, target_item.material);
     randomize(hammer.param1);
@@ -2469,12 +2443,10 @@ bool _magic_49(Item& hammer)
     txt(i18n::s.get("core.magic.garoks_hammer.apply", target_item));
     if (equip != 0)
     {
-        cdata[cc].body_parts[equip - 100] =
-            cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
-            target_item.index + 1;
+        subject.equipment_slots[equip - 100].equip(target_item);
         target_item.body_part = equip;
     }
-    chara_refresh(cc);
+    chara_refresh(subject);
     fixmaterial = 0;
     objfix = 0;
     hammer.modify_number(-1);
@@ -2485,9 +2457,9 @@ bool _magic_49(Item& hammer)
 
 
 // Item: scroll of change material
-bool _magic_21_1127()
+bool _magic_21_1127(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2524,10 +2496,10 @@ bool _magic_21_1127()
                     "core.magic.change_material.more_power_needed"));
                 return true;
             }
-            animeload(8, cc);
+            animeload(8, subject);
             txt(i18n::s.get(
                 "core.magic.change_material.artifact_reconstructed",
-                cdata[cc],
+                subject,
                 target_item));
             target_item.modify_number(-1);
             flt();
@@ -2536,9 +2508,8 @@ bool _magic_21_1127()
             assert(reconstructed_artifact);
             if (equip != 0)
             {
-                cdata[cc].body_parts[equip - 100] =
-                    cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
-                    reconstructed_artifact->index + 1;
+                subject.equipment_slots[equip - 100].equip(
+                    *reconstructed_artifact);
                 reconstructed_artifact->body_part = equip;
             }
         }
@@ -2546,7 +2517,7 @@ bool _magic_21_1127()
         {
             int material = fixmaterial;
 
-            animeload(8, cc);
+            animeload(8, subject);
             if (efp <= 50)
             {
                 if (rnd(3) == 0)
@@ -2561,14 +2532,12 @@ bool _magic_21_1127()
             change_item_material(target_item, material);
             txt(i18n::s.get(
                 "core.magic.change_material.apply",
-                cdata[cc],
+                subject,
                 s(0),
                 target_item));
             if (equip != 0)
             {
-                cdata[cc].body_parts[equip - 100] =
-                    cdata[cc].body_parts[equip - 100] / 10000 * 10000 +
-                    target_item.index + 1;
+                subject.equipment_slots[equip - 100].equip(target_item);
                 target_item.body_part = equip;
             }
         }
@@ -2578,7 +2547,7 @@ bool _magic_21_1127()
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
     }
-    chara_refresh(cc);
+    chara_refresh(subject);
     fixmaterial = 0;
     objfix = 0;
     return true;
@@ -2587,9 +2556,9 @@ bool _magic_21_1127()
 
 
 // Item: deed of inheritance
-bool _magic_1128()
+bool _magic_1128(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2609,9 +2578,9 @@ bool _magic_1128()
 
 
 // Item: scroll of enchant weapon / armor
-bool _magic_1124_1125()
+bool _magic_1124_1125(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         return true;
@@ -2643,7 +2612,7 @@ bool _magic_1124_1125()
         {
             txt(i18n::s.get("core.magic.enchant.resist", target_item));
         }
-        chara_refresh(cc);
+        chara_refresh(subject);
     }
     else
     {
@@ -2655,9 +2624,9 @@ bool _magic_1124_1125()
 
 
 // Fill Charge / Item: scroll of charge
-bool _magic_630_1129()
+bool _magic_630_1129(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2735,7 +2704,7 @@ bool _magic_630_1129()
             }
             txt(i18n::s.get("core.magic.fill_charge.apply", target_item, p(0)));
             target_item.count += p;
-            animeload(8, cc);
+            animeload(8, subject);
         }
         else
         {
@@ -2761,9 +2730,9 @@ bool _magic_630_1129()
 
 
 // Draw Charge
-bool _magic_629()
+bool _magic_629(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2804,7 +2773,7 @@ bool _magic_629()
             }
             p = 1;
         }
-        animeload(8, cc);
+        animeload(8, subject);
         p = p * target_item.count;
         game_data.charge_power += p;
         txt(i18n::s.get(
@@ -2822,46 +2791,46 @@ bool _magic_629()
 
 
 // Change
-bool _magic_628()
+bool _magic_628(Character& subject, Character& target)
 {
-    if (tc == 0)
+    if (target.index == 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
         return true;
     }
     f = 1;
-    if (efp / 10 + 10 < cdata[tc].level)
+    if (efp / 10 + 10 < target.level)
     {
         f = 0;
     }
-    if (cdata[tc].quality >= Quality::miracle || cdata[tc].role != Role::none ||
-        cdata[tc].is_escorted() == 1 || cdata[tc].is_lord_of_dungeon() == 1)
+    if (target.quality >= Quality::miracle || target.role != Role::none ||
+        target.is_escorted() == 1 || target.is_lord_of_dungeon() == 1)
     {
         f = -1;
     }
-    if (tc < 57)
+    if (target.index < 57)
     {
         f = 0;
     }
     if (f == 1)
     {
-        animeload(8, tc);
-        txt(i18n::s.get("core.magic.change.apply", cdata[tc]));
-        flt(calcobjlv(cdata[tc].level + 3), Quality::good);
+        animeload(8, target);
+        txt(i18n::s.get("core.magic.change.apply", target));
+        flt(calcobjlv(target.level + 3), Quality::good);
         chara_create(56, 0, -3, 0);
-        chara_relocate(cdata.tmp(), tc(0), CharaRelocationMode::change);
-        cdata[tc].enemy_id = cc;
-        cdata[tc].is_quest_target() = false;
+        chara_relocate(cdata.tmp(), target, CharaRelocationMode::change);
+        target.enemy_id = subject.index;
+        target.is_quest_target() = false;
         quest_check();
     }
     else if (f == 0)
     {
-        txt(i18n::s.get("core.magic.common.resists", cdata[tc]));
+        txt(i18n::s.get("core.magic.common.resists", target));
     }
     else
     {
-        txt(i18n::s.get("core.magic.change.cannot_be_changed", cdata[tc]));
+        txt(i18n::s.get("core.magic.change.cannot_be_changed", target));
     }
     return true;
 }
@@ -2869,9 +2838,9 @@ bool _magic_628()
 
 
 // Item: scroll of flying
-bool _magic_1140()
+bool _magic_1140(Character& subject)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2888,7 +2857,7 @@ bool _magic_1140()
         assert(target_item_opt);
         auto& target_item = *target_item_opt;
         save_set_autosave();
-        animeload(8, cc);
+        animeload(8, subject);
         if (!is_cursed(efstatus))
         {
             if (target_item.weight > 0)
@@ -2932,16 +2901,16 @@ bool _magic_1140()
         obvious = 0;
     }
 
-    chara_refresh(cc);
+    chara_refresh(subject);
     return true;
 }
 
 
 
 // Item: rod of alchemy
-bool _magic_1132(int& fltbk, int& valuebk)
+bool _magic_1132(Character& subject, int& fltbk, int& valuebk)
 {
-    if (cc != 0)
+    if (subject.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2969,7 +2938,7 @@ bool _magic_1132(int& fltbk, int& valuebk)
         assert(target_item_opt);
         auto& target_item = *target_item_opt;
         save_set_autosave();
-        animeload(8, cc);
+        animeload(8, subject);
         fltbk = (int)the_item_db[itemid2int(target_item.id)]->category;
         valuebk = calcitemvalue(target_item, 0);
         target_item.remove();
@@ -3092,12 +3061,12 @@ bool _magic_457_438()
 
 
 // Swarm
-bool _magic_631()
+bool _magic_631(Character& subject)
 {
     txt(i18n::s.get("core.magic.swarm"), Message::color{ColorIndex::blue});
     for (auto&& cnt : cdata.all())
     {
-        if (cdata[cc].state() != Character::State::alive)
+        if (subject.state() != Character::State::alive)
         {
             continue;
         }
@@ -3105,28 +3074,27 @@ bool _magic_631()
         {
             continue;
         }
-        if (cc == cnt.index)
+        if (subject.index == cnt.index)
         {
             continue;
         }
-        if (belong_to_same_team(cdata[cc], cnt))
+        if (belong_to_same_team(subject, cnt))
         {
             continue;
         }
-        tc = cnt.index;
-        dx = cdata[tc].position.x;
-        dy = cdata[tc].position.y;
-        if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy) >
+        dx = cnt.position.x;
+        dy = cnt.position.y;
+        if (dist(subject.position.x, subject.position.y, dx, dy) >
             the_ability_db[631]->range % 1000 + 1)
         {
             continue;
         }
-        if (fov_los(cdata[cc].position.x, cdata[cc].position.y, dx, dy) == 0)
+        if (!fov_los(subject.position, {dx, dy}))
         {
             continue;
         }
-        SwarmAnimation(cdata[tc].position).play();
-        try_to_melee_attack();
+        SwarmAnimation(cnt.position).play();
+        try_to_melee_attack(subject, cnt);
     }
     return true;
 }
@@ -3134,20 +3102,21 @@ bool _magic_631()
 
 
 // Drop Mine
-bool _magic_659()
+bool _magic_659(Character& subject)
 {
     if (map_data.type == mdata_t::MapType::world_map)
     {
         return true;
     }
-    if (cell_data.at(cdata[cc].position.x, cdata[cc].position.y).feats != 0)
+    if (cell_data.at(subject.position.x, subject.position.y).feats != 0)
     {
         return true;
     }
-    cell_featset(cdata[cc].position.x, cdata[cc].position.y, 0, 14, 7, cc);
-    if (is_in_fov(cdata[cc]))
+    cell_featset(
+        subject.position.x, subject.position.y, 0, 14, 7, subject.index);
+    if (is_in_fov(subject))
     {
-        txt(i18n::s.get("core.magic.drop_mine", cdata[cc]));
+        txt(i18n::s.get("core.magic.drop_mine", subject));
     }
     return true;
 }
@@ -3155,7 +3124,7 @@ bool _magic_659()
 
 
 // Gravity
-bool _magic_466()
+bool _magic_466(Character& subject)
 {
     for (auto&& cnt : cdata.all())
     {
@@ -3163,7 +3132,7 @@ bool _magic_466()
         {
             continue;
         }
-        if (cc == cnt.index)
+        if (subject.index == cnt.index)
         {
             continue;
         }
@@ -3171,18 +3140,17 @@ bool _magic_466()
         {
             continue;
         }
-        tc = cnt.index;
-        dx = cdata[tc].position.x;
-        dy = cdata[tc].position.y;
-        if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy) > 4)
+        dx = cnt.position.x;
+        dy = cnt.position.y;
+        if (dist(subject.position.x, subject.position.y, dx, dy) > 4)
         {
             continue;
         }
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(cnt))
         {
-            txt(i18n::s.get("core.magic.gravity", cdata[tc]));
+            txt(i18n::s.get("core.magic.gravity", cnt));
         }
-        cdata[tc].gravity += 100 + rnd(100);
+        cnt.gravity += 100 + rnd(100);
     }
     return true;
 }
@@ -3190,14 +3158,13 @@ bool _magic_466()
 
 
 // Mewmewmew!
-bool _magic_657()
+bool _magic_657(Character& subject)
 {
     txt(i18n::s.get("core.magic.mewmewmew"), Message::color{ColorIndex::blue});
-    animode = 0;
-    MiracleAnimation().play();
+    MiracleAnimation(MiracleAnimation::Mode::target_all, subject).play();
     for (auto&& cnt : cdata.all())
     {
-        if (cdata[cc].state() != Character::State::alive)
+        if (subject.state() != Character::State::alive)
         {
             continue;
         }
@@ -3205,12 +3172,11 @@ bool _magic_657()
         {
             continue;
         }
-        if (cc == cnt.index)
+        if (subject.index == cnt.index)
         {
             continue;
         }
-        tc = cnt.index;
-        damage_hp(cdata[tc], 9999999, cc);
+        damage_hp(cnt, 9999999, subject.index);
     }
     return true;
 }
@@ -3218,7 +3184,7 @@ bool _magic_657()
 
 
 // Meteor
-bool _magic_465()
+bool _magic_465(Character& subject)
 {
     txt(i18n::s.get("core.magic.meteor"), Message::color{ColorIndex::blue});
     MeteorAnimation().play();
@@ -3238,9 +3204,13 @@ bool _magic_465()
             }
             if (cell_data.at(dx, dy).chara_index_plus_one != 0)
             {
-                tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
-                dmg = sdata(16, cc) * efp / 10;
-                damage_hp(cdata[tc], dmg, cc, 50, 1000);
+                dmg = sdata(16, subject.index) * efp / 10;
+                damage_hp(
+                    cdata[cell_data.at(dx, dy).chara_index_plus_one - 1],
+                    dmg,
+                    subject.index,
+                    50,
+                    1000);
             }
         }
     }
@@ -3250,11 +3220,11 @@ bool _magic_465()
 
 
 // Cheer
-bool _magic_656()
+bool _magic_656(Character& subject)
 {
-    if (is_in_fov(cdata[cc]))
+    if (is_in_fov(subject))
     {
-        txt(i18n::s.get("core.magic.cheer.apply", cdata[cc]));
+        txt(i18n::s.get("core.magic.cheer.apply", subject));
     }
     for (auto&& cnt : cdata.all())
     {
@@ -3262,43 +3232,42 @@ bool _magic_656()
         {
             continue;
         }
-        if (cc == cnt.index)
+        if (subject.index == cnt.index)
         {
             continue;
         }
-        if (cc < 16)
+        if (subject.index < 16)
         {
             if (cnt.index >= 16)
             {
                 continue;
             }
-            else if (cdata[cc].relationship != cdata[tc].relationship)
+            else if (subject.relationship != cnt.relationship)
             {
                 continue;
             }
         }
-        tc = cnt.index;
-        dx = cdata[tc].position.x;
-        dy = cdata[tc].position.y;
-        if (dist(cdata[cc].position.x, cdata[cc].position.y, dx, dy) >
+        dx = cnt.position.x;
+        dy = cnt.position.y;
+        if (dist(subject.position.x, subject.position.y, dx, dy) >
             the_ability_db[656]->range % 1000 + 1)
         {
             continue;
         }
-        if (fov_los(cdata[cc].position.x, cdata[cc].position.y, dx, dy) == 0)
+        if (!fov_los(subject.position, {dx, dy}))
         {
             continue;
         }
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(cnt))
         {
-            txt(i18n::s.get("core.magic.cheer.is_excited", cdata[tc]),
+            txt(i18n::s.get("core.magic.cheer.is_excited", cnt),
                 Message::color{ColorIndex::blue});
         }
         buff_add(
-            cdata[tc], "core.speed", sdata(17, cc) * 5 + 50, 15, cdata[cc]);
+            cnt, "core.speed", sdata(17, subject.index) * 5 + 50, 15, subject);
         buff_add(
-            cdata[tc], "core.hero", sdata(17, cc) * 5 + 100, 60, cdata[cc]);
-        buff_add(cdata[tc], "core.contingency", 1500, 30, cdata[cc]);
+            cnt, "core.hero", sdata(17, subject.index) * 5 + 100, 60, subject);
+        buff_add(cnt, "core.contingency", 1500, 30, subject);
     }
     return true;
 }
@@ -3306,9 +3275,9 @@ bool _magic_656()
 
 
 // Item: potion of cure corruption
-bool _magic_1131()
+bool _magic_1131(Character& target)
 {
-    if (tc != 0)
+    if (target.index != 0)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         return true;
@@ -3332,13 +3301,13 @@ bool _magic_1131()
 
 
 // Eye of Ether
-bool _magic_633()
+bool _magic_633(Character& subject, Character& target)
 {
-    if (tc != 0)
+    if (target.index != 0)
     {
         return true;
     }
-    txt(i18n::s.get("core.magic.eye_of_ether", cdata[cc]),
+    txt(i18n::s.get("core.magic.eye_of_ether", subject),
         Message::color{ColorIndex::purple});
     modify_ether_disease_stage(100);
     return true;
@@ -3347,14 +3316,14 @@ bool _magic_633()
 
 
 // Eye of Dimness
-bool _magic_638_648()
+bool _magic_638_648(Character& subject, Character& target)
 {
     if (efid == 648)
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
-            txt(i18n::s.get("core.magic.insult.apply", cdata[cc], cdata[tc]));
-            if (cdata[cc].sex == 0)
+            txt(i18n::s.get("core.magic.insult.apply", subject, target));
+            if (subject.sex == 0)
             {
                 txt(i18n::s.get("core.magic.insult.man"),
                     Message::color{ColorIndex::cyan});
@@ -3368,65 +3337,61 @@ bool _magic_638_648()
     }
     if (efid == 638)
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
-            txt(i18n::s.get("core.magic.gaze", cdata[cc], cdata[tc]));
+            txt(i18n::s.get("core.magic.gaze", subject, target));
         }
     }
-    status_ailment_damage(cdata[tc], StatusAilment::dimmed, 200);
+    status_ailment_damage(target, StatusAilment::dimmed, 200);
     return true;
 }
 
 
 
 // Insult
-bool _magic_652()
+bool _magic_652(Character& subject, Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
-        txt(i18n::s.get("core.magic.gaze", cdata[cc], cdata[tc]));
+        txt(i18n::s.get("core.magic.gaze", subject, target));
     }
-    damage_mp(cdata[tc], rnd(20) + 1);
+    damage_mp(target, rnd(20) + 1);
     return true;
 }
 
 
 
 // Item: molotov
-bool _magic_1133()
+bool _magic_1133(Character& subject, Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
-        txt(i18n::s.get("core.magic.molotov", cdata[tc]));
+        txt(i18n::s.get("core.magic.molotov", target));
     }
     mef_add(
-        cdata[tc].position.x,
-        cdata[tc].position.y,
+        target.position.x,
+        target.position.y,
         5,
         24,
         rnd(15) + 25,
         efp,
-        cc);
-    mapitem_fire(cdata[tc].position.x, cdata[tc].position.y);
+        subject.index);
+    mapitem_fire(subject, target.position.x, target.position.y);
     return true;
 }
 
 
 
 // Scavenge
-bool _magic_651()
+bool _magic_651(Character& subject, Character& target)
 {
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
-        txt(i18n::s.get("core.magic.scavenge.apply", cdata[cc], cdata[tc]));
+        txt(i18n::s.get("core.magic.scavenge.apply", subject, target));
     }
     optional_ref<Item> eat_item_opt;
-    for (auto&& item : inv.for_chara(cdata[tc]))
+    for (auto&& item : inv.for_chara(target))
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (item.id == ItemId::fish_a)
         {
             eat_item_opt = item;
@@ -3435,12 +3400,8 @@ bool _magic_651()
     }
     if (!eat_item_opt)
     {
-        for (auto&& item : inv.for_chara(cdata[tc]))
+        for (auto&& item : inv.for_chara(target))
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (item.is_precious())
             {
                 continue;
@@ -3461,20 +3422,20 @@ bool _magic_651()
     auto& eat_item = *eat_item_opt;
     if (eat_item.is_aphrodisiac())
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
-            txt(i18n::s.get("core.magic.scavenge.rotten", cdata[cc], eat_item));
+            txt(i18n::s.get("core.magic.scavenge.rotten", subject, eat_item));
         }
         return true;
     }
     rowact_item(eat_item);
-    if (is_in_fov(cdata[tc]))
+    if (is_in_fov(target))
     {
         snd("core.eat1");
-        txt(i18n::s.get("core.magic.scavenge.eats", cdata[cc], eat_item));
+        txt(i18n::s.get("core.magic.scavenge.eats", subject, eat_item));
     }
-    heal_hp(cdata[cc], cdata[cc].max_hp / 3);
-    activity_eating_finish(cdata[cc], eat_item);
+    heal_hp(subject, subject.max_hp / 3);
+    activity_eating_finish(subject, eat_item);
     refresh_burden_state();
     return true;
 }
@@ -3482,12 +3443,12 @@ bool _magic_651()
 
 
 // Wizard's Harvest
-bool _magic_464()
+bool _magic_464(Character& subject, Character& target)
 {
     bool fastest = g_config.animation_wait() == 0;
     std::string messages;
 
-    animeload(10, tc);
+    animeload(10, target);
     for (int i = 0, n = clamp(4 + rnd_capped(efp / 50 + 1), 1, 15); i < n; ++i)
     {
         snd("core.pray1");
@@ -3511,7 +3472,7 @@ bool _magic_464()
         }
         nostack = 1;
         if (const auto item =
-                itemcreate_extra_inv(item_id, cdata[cc].position, number))
+                itemcreate_extra_inv(item_id, subject.position, number))
         {
             const auto message =
                 i18n::s.get("core.magic.wizards_harvest", *item);
@@ -3575,10 +3536,10 @@ bool _magic_463()
 
 
 
-int _calc_ball_spell_range()
+int _calc_ball_spell_range(Character& subject)
 {
     int ret = the_ability_db[efid]->range % 1000 + 1;
-    if (debug::voldemort && cc == 0)
+    if (debug::voldemort && subject.index == 0)
     {
         ret *= 2;
     }
@@ -3591,11 +3552,13 @@ int _calc_ball_spell_range()
 
 
 
-bool _ball_spell_internal(std::stack<Character*>& bomb_chain)
+optional_ref<Character> _ball_spell_internal(
+    Character& subject,
+    std::stack<Character*>& bomb_chain)
 {
-    cdata[cc].will_explode_soon() = false;
+    subject.will_explode_soon() = false;
 
-    range_ = _calc_ball_spell_range();
+    range_ = _calc_ball_spell_range(subject);
 
     if (efid != 404 && efid != 637)
     {
@@ -3621,7 +3584,7 @@ bool _ball_spell_internal(std::stack<Character*>& bomb_chain)
             {
                 continue;
             }
-            if (fov_los(tlocx, tlocy, dx, dy) == 0)
+            if (!fov_los({tlocx, tlocy}, {dx, dy}))
             {
                 continue;
             }
@@ -3629,70 +3592,74 @@ bool _ball_spell_internal(std::stack<Character*>& bomb_chain)
             {
                 continue;
             }
-            tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
+            const auto target_index =
+                cell_data.at(dx, dy).chara_index_plus_one - 1;
             if (efid == 404)
             {
                 f = 0;
-                if (cc == 0 || cdata[cc].relationship >= 0)
+                if (subject.index == 0 || subject.relationship >= 0)
                 {
-                    if (cdata[tc].relationship >= 0)
+                    if (cdata[target_index].relationship >= 0)
                     {
                         f = 1;
                     }
                 }
-                else if (cdata[tc].relationship <= -1)
+                else if (cdata[target_index].relationship <= -1)
                 {
                     f = 1;
                 }
                 if (f)
                 {
                     BrightAuraAnimation(
-                        cdata[tc].position,
+                        cdata[target_index].position,
                         BrightAuraAnimation::Type::healing_rain)
                         .play();
-                    if (is_in_fov(cdata[tc]))
+                    if (is_in_fov(cdata[target_index]))
                     {
-                        txt(i18n::s.get("core.magic.healed.normal", cdata[tc]));
+                        txt(i18n::s.get(
+                            "core.magic.healed.normal", cdata[target_index]));
                     }
-                    heal_both_rider_and_mount();
+                    heal_both_rider_and_mount(cdata[target_index]);
                 }
                 continue;
             }
             if (efid == 637)
             {
                 f = 0;
-                if (cc == 0 || cdata[cc].relationship >= 0)
+                if (subject.index == 0 || subject.relationship >= 0)
                 {
-                    if (cdata[tc].relationship >= 0)
+                    if (cdata[target_index].relationship >= 0)
                     {
                         f = 1;
                     }
                 }
-                else if (cdata[tc].relationship <= -1)
+                else if (cdata[target_index].relationship <= -1)
                 {
                     f = 1;
                 }
                 if (f)
                 {
                     BrightAuraAnimation(
-                        cdata[tc].position,
+                        cdata[target_index].position,
                         BrightAuraAnimation::Type::healing_rain)
                         .play();
-                    txt(i18n::s.get("core.magic.rain_of_sanity", cdata[tc]));
-                    heal_insanity(cdata[tc], efp / 10);
-                    status_ailment_heal(cdata[tc], StatusAilment::insane, 9999);
+                    txt(i18n::s.get(
+                        "core.magic.rain_of_sanity", cdata[target_index]));
+                    heal_insanity(cdata[target_index], efp / 10);
+                    status_ailment_heal(
+                        cdata[target_index], StatusAilment::insane, 9999);
                 }
                 continue;
             }
-            if (dx == cdata[cc].position.x && dy == cdata[cc].position.y)
+            if (dx == subject.position.x && dy == subject.position.y)
             {
                 continue;
             }
             if (game_data.mount != 0)
             {
-                if (game_data.mount == cc)
+                if (game_data.mount == subject.index)
                 {
-                    if (tc == 0)
+                    if (target_index == 0)
                     {
                         continue;
                     }
@@ -3700,124 +3667,123 @@ bool _ball_spell_internal(std::stack<Character*>& bomb_chain)
             }
             if (ele == 50)
             {
-                mapitem_fire(dx, dy);
+                mapitem_fire(subject, dx, dy);
             }
             if (ele == 51)
             {
                 mapitem_cold(dx, dy);
             }
-            if (cc == tc)
+            if (subject.index == target_index)
             {
                 continue;
             }
             dmg = roll(dice1, dice2, bonus) * 100 /
                 (75 + dist(tlocx, tlocy, dx, dy) * 25);
-            if (calcmagiccontrol(cc, tc))
+            if (calc_magic_control(subject, cdata[target_index]))
             {
                 continue;
             }
             if (efid == 644)
             {
-                if (is_in_fov(cdata[tc]))
+                if (is_in_fov(cdata[target_index]))
                 {
-                    if (tc >= 16)
+                    if (target_index >= 16)
                     {
                         game_data.proc_damage_events_flag = 2;
                         txt3rd = 1;
                         txt(i18n::s.get(
-                            "core.magic.explosion.other", cdata[tc]));
+                            "core.magic.explosion.other", cdata[target_index]));
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.magic.explosion.ally", cdata[tc]));
+                            "core.magic.explosion.ally", cdata[target_index]));
                     }
                 }
-                if (cdata[tc].explodes())
+                if (cdata[target_index].explodes())
                 {
-                    bomb_chain.push(&cdata[tc]);
+                    bomb_chain.push(&cdata[target_index]);
                     continue;
                 }
             }
-            else if (is_in_fov(cdata[tc]))
+            else if (is_in_fov(cdata[target_index]))
             {
-                if (tc >= 16)
+                if (target_index >= 16)
                 {
                     game_data.proc_damage_events_flag = 2;
                     txt3rd = 1;
-                    txt(i18n::s.get("core.magic.ball.other", cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.magic.ball.other", cdata[target_index]));
                 }
                 else
                 {
-                    txt(i18n::s.get("core.magic.ball.ally", cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.magic.ball.ally", cdata[target_index]));
                 }
             }
-            damage_hp(cdata[tc], dmg, cc, ele, elep);
+            damage_hp(cdata[target_index], dmg, subject.index, ele, elep);
         }
     }
 
     if (efid == 644)
     {
-        damage_hp(cdata[cc], 99999, -16);
+        damage_hp(subject, 99999, -16);
     }
 
     if (!bomb_chain.empty())
     {
-        const auto next_cc = bomb_chain.top();
+        auto& next_subject = *bomb_chain.top();
         bomb_chain.pop();
-        cc = next_cc->index;
-        tlocx = cdata[cc].position.x;
-        tlocy = cdata[cc].position.y;
-        if (cdata[cc].state() == Character::State::alive)
+        tlocx = next_subject.position.x;
+        tlocy = next_subject.position.y;
+        if (next_subject.state() == Character::State::alive)
         {
-            const auto damage = calc_skill_damage(efid, cc, efp);
+            const auto damage = calc_skill_damage(next_subject, efid, efp);
             dice1 = damage->dice_x;
             dice2 = damage->dice_y;
             bonus = damage->damage_bonus;
             ele = damage->element;
             elep = damage->element_power;
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(next_subject))
             {
-                txt(i18n::s.get("core.magic.explosion.chain", cdata[cc]));
+                txt(i18n::s.get("core.magic.explosion.chain", next_subject));
             }
-            return true;
+            return next_subject;
         }
     }
 
-    return false;
+    return none;
 }
 
 
 
-void _ball_spell()
+void _ball_spell(Character& subject)
 {
-    std::stack<Character*> bomb_chian;
+    std::stack<Character*> bomb_chain;
 
-    ccbk = cc;
     if (efid == 644)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(subject))
         {
-            txt(i18n::s.get("core.magic.explosion.begins", cdata[cc]));
+            txt(i18n::s.get("core.magic.explosion.begins", subject));
         }
     }
 
-    while (_ball_spell_internal(bomb_chian))
-        ;
-
-    cc = ccbk;
+    optional_ref<Character> subject_ = subject;
+    while (subject_)
+    {
+        subject_ = _ball_spell_internal(*subject_, bomb_chain);
+    }
 }
 
 
 
-optional<bool> _proc_general_magic()
+optional<bool> _proc_general_magic(Character& subject, Character& target)
 {
     int efbad = 0;
-    int tcprev = 0;
     int telex = 0;
     int teley = 0;
     int efidprev = 0;
-    int ccprev = 0;
 
     f = 0;
     if (the_ability_db[efid]->ability_type / 1000 == 1)
@@ -3861,44 +3827,45 @@ optional<bool> _proc_general_magic()
 
         if (buff_data.type == BuffType::buff)
         {
-            animeload(11, tc);
+            animeload(11, target);
         }
         else if (buff_data.type == BuffType::hex)
         {
             BrightAuraAnimation(
-                cdata[tc].position, BrightAuraAnimation::Type::debuff)
+                target.position, BrightAuraAnimation::Type::debuff)
                 .play();
         }
         if (efid == 625 || efid == 446)
         {
-            if ((tc == 0 && cc == 0) || cc == game_data.mount)
+            if ((target.index == 0 && subject.index == 0) ||
+                subject.index == game_data.mount)
             {
                 if (game_data.mount != 0)
                 {
-                    tc = game_data.mount;
+                    target.index = game_data.mount;
                 }
             }
         }
 
         buff_add(
-            cdata[tc],
+            target,
             buff_data.id,
             efp,
             buff_calc_duration(buff_data.id, efp),
-            cdata[cc]);
+            subject);
 
         if (efid == 447)
         {
             if (efstatus == CurseState::blessed)
             {
-                cdata[tc].birth_year += rnd(3) + 1;
-                if (cdata[tc].birth_year + 12 > game_data.date.year)
+                target.birth_year += rnd(3) + 1;
+                if (target.birth_year + 12 > game_data.date.year)
                 {
-                    cdata[tc].birth_year = game_data.date.year - 12;
+                    target.birth_year = game_data.date.year - 12;
                 }
-                if (is_in_fov(cdata[tc]))
+                if (is_in_fov(target))
                 {
-                    txt(i18n::s.get("core.magic.slow", cdata[tc]),
+                    txt(i18n::s.get("core.magic.slow", target),
                         Message::color{ColorIndex::green});
                 }
             }
@@ -3907,24 +3874,24 @@ optional<bool> _proc_general_magic()
         {
             if (is_cursed(efstatus))
             {
-                cdata[tc].birth_year -= rnd(3) + 1;
-                if (is_in_fov(cdata[tc]))
+                target.birth_year -= rnd(3) + 1;
+                if (is_in_fov(target))
                 {
-                    txt(i18n::s.get("core.magic.speed", cdata[tc]),
+                    txt(i18n::s.get("core.magic.speed", target),
                         Message::color{ColorIndex::purple});
                 }
             }
         }
         if (efid == 458)
         {
-            if (tc == 0)
+            if (target.index == 0)
             {
                 incognitobegin();
             }
         }
         return true;
     }
-    if (const auto damage = calc_skill_damage(efid, cc, efp))
+    if (const auto damage = calc_skill_damage(subject, efid, efp))
     {
         dice1 = damage->dice_x;
         dice2 = damage->dice_y;
@@ -3932,7 +3899,7 @@ optional<bool> _proc_general_magic()
         ele = damage->element;
         elep = damage->element_power;
     }
-    if (cc == 0)
+    if (subject.index == 0)
     {
         if (trait(165))
         {
@@ -3954,15 +3921,15 @@ optional<bool> _proc_general_magic()
     default: return none;
     case 10:
         RangedAttackAnimation(
-            cdata[cc].position,
-            cdata[tc].position,
+            subject.position,
+            target.position,
             RangedAttackAnimation::Type::distant_attack)
             .play();
-        try_to_melee_attack();
+        try_to_melee_attack(subject, target);
         return true;
     case 1: {
         int stat =
-            get_route(cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy);
+            get_route(subject.position.x, subject.position.y, tlocx, tlocy);
         if (stat == 0)
         {
             return true;
@@ -3970,11 +3937,11 @@ optional<bool> _proc_general_magic()
     }
         {
             int distance = the_ability_db[efid]->range % 1000 + 1;
-            BoltAnimation(cdata[cc].position, {tlocx, tlocy}, ele, distance)
+            BoltAnimation(subject.position, {tlocx, tlocy}, ele, distance)
                 .play();
         }
-        dx = cdata[cc].position.x;
-        dy = cdata[cc].position.y;
+        dx = subject.position.x;
+        dy = subject.position.y;
         for (int cnt = 0; cnt < 20; ++cnt)
         {
             int stat = route_info(dx, dy, cnt);
@@ -3986,18 +3953,18 @@ optional<bool> _proc_general_magic()
             {
                 continue;
             }
-            if (dist(dx, dy, cdata[cc].position.x, cdata[cc].position.y) >
+            if (dist(dx, dy, subject.position.x, subject.position.y) >
                 the_ability_db[efid]->range % 1000 + 1)
             {
                 break;
             }
-            if (dx == cdata[cc].position.x && dy == cdata[cc].position.y)
+            if (dx == subject.position.x && dy == subject.position.y)
             {
                 continue;
             }
             if (ele == 50)
             {
-                mapitem_fire(dx, dy);
+                mapitem_fire(subject, dx, dy);
             }
             if (ele == 51)
             {
@@ -4005,238 +3972,236 @@ optional<bool> _proc_general_magic()
             }
             if (cell_data.at(dx, dy).chara_index_plus_one != 0)
             {
-                tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
-                if (cc != tc)
+                const auto target_index =
+                    cell_data.at(dx, dy).chara_index_plus_one - 1;
+                if (subject.index != target_index)
                 {
                     if (game_data.mount != 0)
                     {
-                        if (game_data.mount == cc)
+                        if (game_data.mount == subject.index)
                         {
-                            if (tc == 0)
+                            if (target_index == 0)
                             {
                                 continue;
                             }
                         }
                     }
                     dmg = roll(dice1, dice2, bonus);
-                    int stat = calcmagiccontrol(cc, tc);
-                    if (stat == 1)
+                    if (calc_magic_control(subject, cdata[target_index]))
                     {
                         continue;
                     }
-                    if (is_in_fov(cdata[tc]))
+                    if (is_in_fov(cdata[target_index]))
                     {
-                        if (tc >= 16)
+                        if (target_index >= 16)
                         {
                             game_data.proc_damage_events_flag = 2;
                             txt3rd = 1;
                             txt(i18n::s.get(
-                                "core.magic.bolt.other", cdata[tc]));
+                                "core.magic.bolt.other", cdata[target_index]));
                         }
                         else
                         {
-                            txt(i18n::s.get("core.magic.bolt.ally", cdata[tc]));
+                            txt(i18n::s.get(
+                                "core.magic.bolt.ally", cdata[target_index]));
                         }
                     }
-                    damage_hp(cdata[tc], dmg, cc, ele, elep);
+                    damage_hp(
+                        cdata[target_index], dmg, subject.index, ele, elep);
                 }
             }
         }
         return true;
-    case 3: _ball_spell(); return true;
+    case 3: _ball_spell(subject); return true;
     case 2:
         RangedAttackAnimation(
-            cdata[cc].position,
-            cdata[tc].position,
+            subject.position,
+            target.position,
             RangedAttackAnimation::Type::magic_arrow)
             .play();
         dmg = roll(dice1, dice2, bonus);
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(target))
         {
-            if (tc >= 16)
+            if (target.index >= 16)
             {
                 game_data.proc_damage_events_flag = 2;
                 txt3rd = 1;
-                txt(i18n::s.get("core.magic.arrow.other", cdata[tc]));
+                txt(i18n::s.get("core.magic.arrow.other", target));
             }
             else
             {
-                txt(i18n::s.get("core.magic.arrow.ally", cdata[tc]));
+                txt(i18n::s.get("core.magic.arrow.ally", target));
             }
         }
-        damage_hp(cdata[tc], dmg, cc, ele, elep);
+        damage_hp(target, dmg, subject.index, ele, elep);
         return true;
     case 4:
         if (efid == 400)
         {
-            if (is_in_fov(cdata[tc]))
+            if (is_in_fov(target))
             {
-                txt(i18n::s.get("core.magic.healed.slightly", cdata[tc]));
+                txt(i18n::s.get("core.magic.healed.slightly", target));
             }
         }
         if (efid == 401 || efid == 405)
         {
-            if (is_in_fov(cdata[tc]))
+            if (is_in_fov(target))
             {
-                txt(i18n::s.get("core.magic.healed.normal", cdata[tc]));
+                txt(i18n::s.get("core.magic.healed.normal", target));
             }
         }
         if (efid == 402)
         {
-            if (is_in_fov(cdata[tc]))
+            if (is_in_fov(target))
             {
-                txt(i18n::s.get("core.magic.healed.greatly", cdata[tc]));
+                txt(i18n::s.get("core.magic.healed.greatly", target));
             }
         }
         if (efid == 403)
         {
-            if (is_in_fov(cdata[tc]))
+            if (is_in_fov(target))
             {
-                txt(i18n::s.get("core.magic.healed.completely", cdata[tc]));
+                txt(i18n::s.get("core.magic.healed.completely", target));
             }
         }
-        heal_both_rider_and_mount();
+        heal_both_rider_and_mount(target);
         if (efstatus == CurseState::blessed)
         {
-            status_ailment_heal(cdata[tc], StatusAilment::sick, 5 + rnd(5));
+            status_ailment_heal(target, StatusAilment::sick, 5 + rnd(5));
         }
         if (rnd(3) == 0)
         {
-            get_sick_if_cursed(efstatus, cdata[tc]);
+            get_sick_if_cursed(efstatus, target);
         }
-        BrightAuraAnimation(
-            cdata[tc].position, BrightAuraAnimation::Type::healing)
+        BrightAuraAnimation(target.position, BrightAuraAnimation::Type::healing)
             .play();
         return true;
     case 6:
-        if (cdata[cc].special_attack_type != 0)
+        if (subject.special_attack_type != 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(subject))
             {
-                if (cc == 0)
+                if (subject.index == 0)
                 {
                     txt(i18n::s.get(
                         "core.magic.special_attack.self",
-                        cdata[cc],
-                        i18n::s.get_m(
-                            "ability",
-                            the_ability_db.get_id_from_legacy(efid)->get(),
-                            "name"),
+                        subject,
+                        the_ability_db.get_text(efid, "name"),
                         i18n::s.get_enum(
                             "core.ui.cast_style",
-                            cdata[cc].special_attack_type)));
+                            subject.special_attack_type)));
                 }
                 else
                 {
                     txt(i18n::s.get(
                         "core.magic.special_attack.other",
-                        cdata[cc],
+                        subject,
                         i18n::s.get_enum(
                             "core.ui.cast_style",
-                            cdata[cc].special_attack_type)));
+                            subject.special_attack_type)));
                 }
             }
         }
         else if (efid == 601)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(subject))
             {
-                if (tc >= 16)
+                if (target.index >= 16)
                 {
                     game_data.proc_damage_events_flag = 2;
                     txt(i18n::s.get(
-                        "core.magic.sucks_blood.other", cdata[cc], cdata[tc]));
+                        "core.magic.sucks_blood.other", subject, target));
                 }
                 else
                 {
                     txt(i18n::s.get(
-                        "core.magic.sucks_blood.ally", cdata[cc], cdata[tc]));
+                        "core.magic.sucks_blood.ally", subject, target));
                 }
             }
         }
         else if (efid == 660)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(subject))
             {
                 txt(i18n::s.get("core.magic.disassembly"));
             }
         }
-        else if (is_in_fov(cdata[cc]))
+        else if (is_in_fov(subject))
         {
-            if (tc >= 16)
+            if (target.index >= 16)
             {
                 game_data.proc_damage_events_flag = 2;
                 txt(i18n::s.get(
                     "core.magic.touch.other",
-                    cdata[cc],
-                    cdata[tc],
+                    subject,
+                    target,
                     elename(ele),
-                    _melee(2, cdata[cc].melee_attack_type),
-                    _melee(0, cdata[cc].melee_attack_type)));
+                    _melee(2, subject.melee_attack_type),
+                    _melee(0, subject.melee_attack_type)));
             }
             else
             {
                 txt(i18n::s.get(
                     "core.magic.touch.ally",
-                    cdata[cc],
-                    cdata[tc],
+                    subject,
+                    target,
                     elename(ele),
-                    _melee(2, cdata[cc].melee_attack_type),
-                    _melee(1, cdata[cc].melee_attack_type)));
+                    _melee(2, subject.melee_attack_type),
+                    _melee(1, subject.melee_attack_type)));
             }
         }
         if (efid == 660)
         {
-            cdata[tc].hp = cdata[tc].max_hp / 12 + 1;
+            target.hp = target.max_hp / 12 + 1;
             return true;
         }
-        damage_hp(cdata[tc], roll(dice1, dice2, bonus), cc, ele, elep);
+        damage_hp(target, roll(dice1, dice2, bonus), subject.index, ele, elep);
         if (efid == 617)
         {
-            status_ailment_damage(cdata[tc], StatusAilment::fear, elep);
+            status_ailment_damage(target, StatusAilment::fear, elep);
         }
         if (efid == 618)
         {
-            status_ailment_damage(cdata[tc], StatusAilment::sleep, elep);
+            status_ailment_damage(target, StatusAilment::sleep, elep);
         }
         if (efid == 614)
         {
-            cdata[tc].nutrition -= 800;
-            if (is_in_fov(cdata[tc]))
+            target.nutrition -= 800;
+            if (is_in_fov(target))
             {
-                txt(i18n::s.get("core.magic.hunger", cdata[tc]),
+                txt(i18n::s.get("core.magic.hunger", target),
                     Message::color{ColorIndex::purple});
             }
-            get_hungry(cdata[tc]);
+            get_hungry(target);
         }
         if (efid == 613)
         {
             p = rnd(10);
-            if ((cdata[tc].quality >= Quality::miracle && rnd(4)) ||
-                enchantment_find(cdata[tc], 60010 + p))
+            if ((target.quality >= Quality::miracle && rnd(4)) ||
+                enchantment_find(target, 60010 + p))
             {
                 p = -1;
             }
             if (p != -1)
             {
-                i = sdata.get(10 + p, tc).original_level +
-                    cdata[tc].attr_adjs[p];
+                i = sdata.get(10 + p, target.index).original_level +
+                    target.attr_adjs[p];
                 if (i > 0)
                 {
                     i = i * efp / 2000 + 1;
-                    cdata[tc].attr_adjs[p] -= i;
+                    target.attr_adjs[p] -= i;
                 }
-                if (is_in_fov(cdata[tc]))
+                if (is_in_fov(target))
                 {
-                    txt(i18n::s.get("core.magic.weaken", cdata[tc]),
+                    txt(i18n::s.get("core.magic.weaken", target),
                         Message::color{ColorIndex::purple});
                 }
-                chara_refresh(tc);
+                chara_refresh(target);
             }
         }
         return true;
     case 7:
-        if (cc == 0)
+        if (subject.index == 0)
         {
             if (game_data.crowd_density + 100 >= ELONA_MAX_OTHER_CHARACTERS)
             {
@@ -4246,7 +4211,7 @@ optional<bool> _proc_general_magic()
             }
         }
         p = 3;
-        efp = (efp / 25 + efp * efp / 10000 + cdata[cc].level) / 2;
+        efp = (efp / 25 + efp * efp / 10000 + subject.level) / 2;
         if (efp < 1)
         {
             efp = 1;
@@ -4299,50 +4264,52 @@ optional<bool> _proc_general_magic()
             {
                 chara_id = 176;
             }
-            const auto success = chara_create(
-                -1, chara_id, cdata[tc].position.x, cdata[tc].position.y);
-            if (success && efid != 643)
+            if (const auto chara = chara_create(
+                    -1, chara_id, target.position.x, target.position.y))
             {
-                if (cdata[rc].id == cdata[cc].id)
+                if (efid != 643)
                 {
-                    chara_vanquish(rc);
-                    --cnt;
-                    continue;
+                    if (chara->id == subject.id)
+                    {
+                        chara_vanquish(*chara);
+                        --cnt;
+                        continue;
+                    }
                 }
             }
         }
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(subject))
         {
             txt(i18n::s.get("core.magic.summon"));
         }
         return true;
-    case 5:
-        tcprev = tc;
+    case 5: {
         if (game_data.mount != 0)
         {
-            if (game_data.mount == tc)
+            if (game_data.mount == target.index)
             {
                 return true;
             }
         }
+        auto target_index = target.index;
         if (efid == 408)
         {
-            tc = cc;
+            target_index = subject.index;
         }
         if (efid == 619)
         {
-            telex = cdata[tc].position.x;
-            teley = cdata[tc].position.y;
-            tc = cc;
-            if (game_data.mount != 0 && game_data.mount == tc)
+            telex = cdata[target_index].position.x;
+            teley = cdata[target_index].position.y;
+            target_index = subject.index;
+            if (game_data.mount != 0 && game_data.mount == target_index)
             {
                 return true;
             }
         }
         if (efid == 620)
         {
-            telex = cdata[cc].position.x;
-            teley = cdata[cc].position.y;
+            telex = subject.position.x;
+            teley = subject.position.y;
         }
         if (efid == 409 || efid == 635)
         {
@@ -4352,19 +4319,20 @@ optional<bool> _proc_general_magic()
                 obvious = 0;
                 return true;
             }
-            tc = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
+            target_index = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
         }
         if (map_prevents_teleport())
         {
-            if (is_in_fov(cdata[tc]))
+            if (is_in_fov(cdata[target_index]))
             {
                 txt(i18n::s.get("core.magic.teleport.prevented"));
             }
             return true;
         }
-        if (efid != 619 && efid != 635 && enchantment_find(cdata[tc], 22))
+        if (efid != 619 && efid != 635 &&
+            enchantment_find(cdata[target_index], 22))
         {
-            if (is_in_fov(cdata[tc]))
+            if (is_in_fov(cdata[target_index]))
             {
                 txt(i18n::s.get("core.magic.teleport.prevented"));
             }
@@ -4372,49 +4340,50 @@ optional<bool> _proc_general_magic()
         }
         if (efid == 635)
         {
-            if (enchantment_find(cdata[cc], 22))
+            if (enchantment_find(subject, 22))
             {
-                if (is_in_fov(cdata[tc]))
+                if (is_in_fov(cdata[target_index]))
                 {
                     txt(i18n::s.get("core.magic.teleport.prevented"));
                 }
                 return true;
             }
-            p = rnd_capped(cdata[tc].gold / 10 + 1);
-            if (rnd_capped(sdata(13, tc)) > rnd_capped(sdata(12, cc) * 4) ||
-                cdata[tc].is_protected_from_thieves() == 1)
+            p = rnd_capped(cdata[target_index].gold / 10 + 1);
+            if (rnd_capped(sdata(13, target_index)) >
+                    rnd_capped(sdata(12, subject.index) * 4) ||
+                cdata[target_index].is_protected_from_thieves() == 1)
             {
                 txt(i18n::s.get(
                     "core.magic.teleport.suspicious_hand.prevented",
-                    cdata[tc]));
+                    cdata[target_index]));
                 p = 0;
             }
             if (p != 0)
             {
                 snd("core.paygold1");
-                cdata[tc].gold -= p;
+                cdata[target_index].gold -= p;
                 txt(i18n::s.get(
                     "core.magic.teleport.suspicious_hand.succeeded",
-                    cdata[cc],
-                    cdata[tc],
+                    subject,
+                    cdata[target_index],
                     p(0)));
-                earn_gold(cdata[cc], p);
+                earn_gold(subject, p);
             }
-            tc = cc;
+            target_index = subject.index;
             if (game_data.mount != 0)
             {
-                if (game_data.mount == tc)
+                if (game_data.mount == target_index)
                 {
                     return true;
                 }
             }
         }
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(cdata[target_index]))
         {
-            snd_at("core.teleport1", cdata[tc].position);
+            snd_at("core.teleport1", cdata[target_index].position);
         }
-        tx = cdata[tc].position.x;
-        ty = cdata[tc].position.y;
+        tx = cdata[target_index].position.x;
+        ty = cdata[target_index].position.y;
         efidprev = efid;
         for (int cnt = 0; cnt < 200; ++cnt)
         {
@@ -4422,52 +4391,59 @@ optional<bool> _proc_general_magic()
             {
                 p(0) = -1;
                 p(1) = 1;
-                cdata[tc].next_position.x =
-                    cdata[tc].position.x + (3 - cnt / 70 + rnd(5)) * p(rnd(2));
-                cdata[tc].next_position.y =
-                    cdata[tc].position.y + (3 - cnt / 70 + rnd(5)) * p(rnd(2));
+                cdata[target_index].next_position.x =
+                    cdata[target_index].position.x +
+                    (3 - cnt / 70 + rnd(5)) * p(rnd(2));
+                cdata[target_index].next_position.y =
+                    cdata[target_index].position.y +
+                    (3 - cnt / 70 + rnd(5)) * p(rnd(2));
             }
             else if (efidprev == 619)
             {
-                cdata[tc].next_position.x =
+                cdata[target_index].next_position.x =
                     telex + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
-                cdata[tc].next_position.y =
+                cdata[target_index].next_position.y =
                     teley + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
             }
             else if (efidprev == 620)
             {
-                cdata[tc].next_position.x =
+                cdata[target_index].next_position.x =
                     telex + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
-                cdata[tc].next_position.y =
+                cdata[target_index].next_position.y =
                     teley + rnd((cnt / 8 + 2)) - rnd((cnt / 8 + 2));
             }
             else
             {
-                cdata[tc].next_position.x = rnd(map_data.width - 2) + 1;
-                cdata[tc].next_position.y = rnd(map_data.height - 2) + 1;
+                cdata[target_index].next_position.x =
+                    rnd(map_data.width - 2) + 1;
+                cdata[target_index].next_position.y =
+                    rnd(map_data.height - 2) + 1;
             }
-            cell_check(cdata[tc].next_position.x, cdata[tc].next_position.y);
+            cell_check(
+                cdata[target_index].next_position.x,
+                cdata[target_index].next_position.y);
             if (cellaccess == 1)
             {
                 if (efidprev == 619)
                 {
-                    if (is_in_fov(cdata[cc]))
+                    if (is_in_fov(subject))
                     {
                         txt(i18n::s.get(
                             "core.magic.teleport.shadow_step",
-                            cdata[cc],
-                            cdata[tcprev]));
+                            subject,
+                            target));
                     }
                 }
                 else if (efidprev == 620)
                 {
-                    if (is_in_fov(cdata[cc]))
+                    if (is_in_fov(subject))
                     {
                         txt(i18n::s.get(
-                            "core.magic.teleport.draw_shadow", cdata[tc]));
+                            "core.magic.teleport.draw_shadow",
+                            cdata[target_index]));
                     }
                 }
-                else if (is_in_fov(cdata[cc]))
+                else if (is_in_fov(subject))
                 {
                     if (efidprev == 635)
                     {
@@ -4477,26 +4453,24 @@ optional<bool> _proc_general_magic()
                     else
                     {
                         txt(i18n::s.get(
-                            "core.magic.teleport.disappears", cdata[tc]));
+                            "core.magic.teleport.disappears",
+                            cdata[target_index]));
                     }
                 }
-                cdata[cc].activity.finish();
-                ccprev = cc;
-                cc = tc;
-                move_character();
-                cc = ccprev;
-                if (tc == 0)
+                subject.activity.finish();
+                move_character(cdata[target_index]);
+                if (target_index == 0)
                 {
                     update_screen();
                 }
                 break;
             }
         }
-        tc = tcprev;
         return true;
+    }
     case 8:
         int stat =
-            get_route(cdata[cc].position.x, cdata[cc].position.y, tlocx, tlocy);
+            get_route(subject.position.x, subject.position.y, tlocx, tlocy);
         if (stat == 0)
         {
             return true;
@@ -4506,49 +4480,33 @@ optional<bool> _proc_general_magic()
         {
             valn = i18n::s.get(
                 "core.magic.breath.named",
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(ele)->get(),
-                    "name"));
+                the_ability_db.get_text(ele, "name"));
         }
         else
         {
             valn = i18n::s.get("core.magic.breath.no_element");
         }
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(subject))
         {
-            txt(i18n::s.get("core.magic.breath.bellows", cdata[cc], valn));
+            txt(i18n::s.get("core.magic.breath.bellows", subject, valn));
         }
-        dx = cdata[cc].position.x;
-        dy = cdata[cc].position.y;
-        breath_list();
-        BreathAnimation(cdata[cc].position, {tlocx, tlocy}, ele).play();
+        breath_list(subject.position);
+        BreathAnimation(subject.position, {tlocx, tlocy}, ele).play();
         for (int cnt = 0, cnt_end = (maxbreath); cnt < cnt_end; ++cnt)
         {
             dx = breathlist(0, cnt);
             dy = breathlist(1, cnt);
-            if (fov_los(cdata[cc].position.x, cdata[cc].position.y, dx, dy) ==
-                0)
+            if (!fov_los(subject.position, {dx, dy}))
             {
                 continue;
             }
-            if (dx == cdata[cc].position.x && dy == cdata[cc].position.y)
+            if (dx == subject.position.x && dy == subject.position.y)
             {
                 continue;
-            }
-            if (game_data.mount != 0)
-            {
-                if (game_data.mount == cc)
-                {
-                    if (tc == 0)
-                    {
-                        continue;
-                    }
-                }
             }
             if (ele == 50)
             {
-                mapitem_fire(dx, dy);
+                mapitem_fire(subject, dx, dy);
             }
             if (ele == 51)
             {
@@ -4556,26 +4514,29 @@ optional<bool> _proc_general_magic()
             }
             if (cell_data.at(dx, dy).chara_index_plus_one != 0)
             {
-                tc = cell_data.at(dx, dy).chara_index_plus_one - 1;
-                if (cc != tc)
+                const auto target_index =
+                    cell_data.at(dx, dy).chara_index_plus_one - 1;
+                if (subject.index != target_index)
                 {
                     dmg = roll(dice1, dice2, bonus);
-                    if (is_in_fov(cdata[tc]))
+                    if (is_in_fov(cdata[target_index]))
                     {
-                        if (tc >= 16)
+                        if (target_index >= 16)
                         {
                             game_data.proc_damage_events_flag = 2;
                             txt3rd = 1;
                             txt(i18n::s.get(
-                                "core.magic.breath.other", cdata[tc]));
+                                "core.magic.breath.other",
+                                cdata[target_index]));
                         }
                         else
                         {
                             txt(i18n::s.get(
-                                "core.magic.breath.ally", cdata[tc]));
+                                "core.magic.breath.ally", cdata[target_index]));
                         }
                     }
-                    damage_hp(cdata[tc], dmg, cc, ele, elep);
+                    damage_hp(
+                        cdata[target_index], dmg, subject.index, ele, elep);
                 }
             }
         }
@@ -4585,106 +4546,112 @@ optional<bool> _proc_general_magic()
 
 
 
-bool _proc_magic(optional_ref<Item> efitem, int efid, int& fltbk, int& valuebk)
+bool _proc_magic(
+    Character& subject,
+    Character& target,
+    optional_ref<Item> efitem,
+    int efid,
+    int& fltbk,
+    int& valuebk)
 {
     switch (efid)
     {
-    case 636: return _magic_636();
+    case 636: return _magic_636(subject, target);
     case 1136: assert(efitem); return _magic_1136(*efitem);
-    case 1135: return _magic_1135();
-    case 654: return _magic_654();
-    case 626: return _magic_626();
-    case 1101: return _magic_1101();
-    case 1102: return _magic_1102();
-    case 1116: return _magic_1116();
-    case 1103: return _magic_1103();
-    case 1146: return _magic_1146();
-    case 1147: return _magic_1147();
-    case 1142: return _magic_1142();
-    case 1130: return _magic_1130();
-    case 300: return _magic_300();
-    case 301: return _magic_301();
-    case 183: return _magic_183(efitem);
-    case 184: assert(efitem); return _magic_184(*efitem);
-    case 185: assert(efitem); return _magic_185(*efitem);
+    case 1135: return _magic_1135(target);
+    case 654: return _magic_654(subject, target);
+    case 626: return _magic_626(target);
+    case 1101: return _magic_1101(subject, target);
+    case 1102: return _magic_1102(target);
+    case 1116: return _magic_1116(target);
+    case 1103: return _magic_1103(target);
+    case 1146: return _magic_1146(target);
+    case 1147: return _magic_1147(target);
+    case 1142: return _magic_1142(target);
+    case 1130: return _magic_1130(target);
+    case 300: return _magic_300(subject, target);
+    case 301: return _magic_301(subject, target);
+    case 183: return _magic_183(subject, efitem);
+    case 184: assert(efitem); return _magic_184(subject, *efitem);
+    case 185: assert(efitem); return _magic_185(subject, *efitem);
     case 406:
-    case 407: return _magic_406_407();
-    case 1120: return _magic_1120();
-    case 1117: return _magic_1117();
+    case 407: return _magic_406_407(subject, target);
+    case 1120: return _magic_1120(target);
+    case 1117: return _magic_1117(target);
     case 632:
     case 454:
-    case 1144: return _magic_632_454_1144();
-    case 1121: return _magic_1121();
-    case 411: return _magic_411();
-    case 461: return _magic_461();
-    case 412: return _magic_412();
-    case 413: return _magic_413();
-    case 1104: return _magic_1104();
-    case 1143: return _magic_1143();
-    case 1105: return _magic_1105();
-    case 1107: return _magic_1107();
-    case 1119: return _magic_1119();
-    case 1106: return _magic_1106();
-    case 1139: return _magic_1139();
-    case 1113: return _magic_1113();
-    case 653: return _magic_653();
+    case 1144: return _magic_632_454_1144(subject, target);
+    case 1121: return _magic_1121(subject, target);
+    case 411: return _magic_411(subject);
+    case 461: return _magic_461(subject);
+    case 412: return _magic_412(subject, target);
+    case 413: return _magic_413(target);
+    case 1104: return _magic_1104(target);
+    case 1143: return _magic_1143(target);
+    case 1105: return _magic_1105(target);
+    case 1107: return _magic_1107(target);
+    case 1119: return _magic_1119(target);
+    case 1106: return _magic_1106(target);
+    case 1139: return _magic_1139(target);
+    case 1113: return _magic_1113(target);
+    case 653: return _magic_653(target);
     case 430:
-    case 429: return _magic_430_429();
-    case 658: return _magic_658();
+    case 429: return _magic_430_429(target);
+    case 658: return _magic_658(subject, target);
     case 440:
-    case 439: return _magic_440_439();
-    case 441: return _magic_441();
-    case 1141: return _magic_1141();
-    case 428: return _magic_428();
-    case 621: return _magic_621();
-    case 624: return _magic_624();
-    case 1108: return _magic_1108();
-    case 1111: return _magic_1111();
-    case 1109: return _magic_1109();
-    case 1110: return _magic_1110();
-    case 1112: return _magic_1112();
+    case 439: return _magic_440_439(target);
+    case 441: return _magic_441(subject);
+    case 1141: return _magic_1141(target);
+    case 428: return _magic_428(target);
+    case 621: return _magic_621(target);
+    case 624: return _magic_624(target);
+    case 1108: return _magic_1108(target);
+    case 1111: return _magic_1111(target);
+    case 1109: return _magic_1109(target);
+    case 1110: return _magic_1110(target);
+    case 1112: return _magic_1112(target);
     case 645:
-    case 1114: return _magic_645_1114();
-    case 1118: return _magic_1118();
+    case 1114: return _magic_645_1114(subject, target);
+    case 1118: return _magic_1118(target);
     case 1138:
     case 1123:
     case 1122:
-    case 1137: return _magic_1138_1123_1122_1137();
-    case 435: return _magic_435();
+    case 1137: return _magic_1138_1123_1122_1137(subject);
+    case 435: return _magic_435(subject, target);
     case 436:
     case 437:
     case 455:
     case 634:
-    case 456: return _magic_436_437_455_634_456();
-    case 1145: return _magic_1145();
-    case 49: assert(efitem); return _magic_49(*efitem);
+    case 456: return _magic_436_437_455_634_456(subject);
+    case 1145: return _magic_1145(subject);
+    case 49: assert(efitem); return _magic_49(subject, *efitem);
     case 21:
-    case 1127: return _magic_21_1127();
-    case 1128: return _magic_1128();
+    case 1127: return _magic_21_1127(subject);
+    case 1128: return _magic_1128(subject);
     case 1124:
-    case 1125: return _magic_1124_1125();
+    case 1125: return _magic_1124_1125(subject);
     case 630:
-    case 1129: return _magic_630_1129();
-    case 629: return _magic_629();
-    case 628: return _magic_628();
-    case 1140: return _magic_1140();
-    case 1132: return _magic_1132(fltbk, valuebk);
+    case 1129: return _magic_630_1129(subject);
+    case 629: return _magic_629(subject);
+    case 628: return _magic_628(subject, target);
+    case 1140: return _magic_1140(subject);
+    case 1132: return _magic_1132(subject, fltbk, valuebk);
     case 457:
     case 438: return _magic_457_438();
-    case 631: return _magic_631();
-    case 659: return _magic_659();
-    case 466: return _magic_466();
-    case 657: return _magic_657();
-    case 465: return _magic_465();
-    case 656: return _magic_656();
-    case 1131: return _magic_1131();
-    case 633: return _magic_633();
+    case 631: return _magic_631(subject);
+    case 659: return _magic_659(subject);
+    case 466: return _magic_466(subject);
+    case 657: return _magic_657(subject);
+    case 465: return _magic_465(subject);
+    case 656: return _magic_656(subject);
+    case 1131: return _magic_1131(target);
+    case 633: return _magic_633(subject, target);
     case 638:
-    case 648: return _magic_638_648();
-    case 652: return _magic_652();
-    case 1133: return _magic_1133();
-    case 651: return _magic_651();
-    case 464: return _magic_464();
+    case 648: return _magic_638_648(subject, target);
+    case 652: return _magic_652(subject, target);
+    case 1133: return _magic_1133(subject, target);
+    case 651: return _magic_651(subject, target);
+    case 464: return _magic_464(subject, target);
     case 463: return _magic_463();
     default: return true;
     }
@@ -4697,7 +4664,7 @@ bool _proc_magic(optional_ref<Item> efitem, int efid, int& fltbk, int& valuebk)
 namespace elona
 {
 
-bool magic(optional_ref<Item> efitem)
+bool magic(Character& subject, Character& target, optional_ref<Item> efitem)
 {
     int fltbk = 0;
     int valuebk = 0;
@@ -4718,7 +4685,7 @@ bool magic(optional_ref<Item> efitem)
     {
         if (efid < 661)
         {
-            if (const auto ret = _proc_general_magic())
+            if (const auto ret = _proc_general_magic(subject, target))
             {
                 return *ret;
             }
@@ -4736,7 +4703,7 @@ bool magic(optional_ref<Item> efitem)
         }
     }
 
-    return _proc_magic(efitem, efid, fltbk, valuebk);
+    return _proc_magic(subject, target, efitem, efid, fltbk, valuebk);
 }
 
 } // namespace elona

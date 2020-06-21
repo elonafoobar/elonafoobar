@@ -9,6 +9,7 @@
 #include "../class.hpp"
 #include "../data/types/type_asset.hpp"
 #include "../data/types/type_buff.hpp"
+#include "../data/types/type_race.hpp"
 #include "../draw.hpp"
 #include "../enchantment.hpp"
 #include "../keybind/keybind.hpp"
@@ -28,17 +29,17 @@ namespace ui
         (ctrl +f for [TRACKING])
 */
 
-static void _load_skill_list(CharacterSheetOperation op)
+static void _load_skill_list(const Character& chara, CharacterSheetOperation op)
 {
     for (int cnt = 150; cnt < 400; ++cnt)
     {
         f = 0;
-        if (sdata(cnt, cc) != 0)
+        if (sdata(cnt, chara.index) != 0)
         {
             f = 1;
             if (op == CharacterSheetOperation::train_skill)
             {
-                if (sdata.get(cnt, cc).original_level == 0)
+                if (sdata.get(cnt, chara.index).original_level == 0)
                 {
                     f = 0;
                 }
@@ -54,19 +55,21 @@ static void _load_skill_list(CharacterSheetOperation op)
     }
 }
 
-static void _load_weapon_proficiency_list(CharacterSheetOperation op)
+static void _load_weapon_proficiency_list(
+    const Character& chara,
+    CharacterSheetOperation op)
 {
     for (int cnt = 100; cnt < 150; ++cnt)
     {
         f = 0;
         if (op != CharacterSheetOperation::learn_skill)
         {
-            if (sdata(cnt, cc) != 0)
+            if (sdata(cnt, chara.index) != 0)
             {
                 f = 1;
             }
         }
-        else if (sdata(cnt, cc) == 0)
+        else if (sdata(cnt, chara.index) == 0)
         {
             if (the_ability_db[cnt])
             {
@@ -83,7 +86,7 @@ static void _load_weapon_proficiency_list(CharacterSheetOperation op)
     }
 }
 
-static void _load_resistances_list()
+static void _load_resistances_list(const Character& chara)
 {
     list(0, listmax) = -1;
     list(1, listmax) = 40000;
@@ -91,7 +94,7 @@ static void _load_resistances_list()
     ++listmax;
     for (int cnt = 50; cnt < 100; ++cnt)
     {
-        if (sdata(cnt, cc) != 0)
+        if (sdata(cnt, chara.index) != 0)
         {
             list(0, listmax) = cnt;
             list(1, listmax) =
@@ -101,7 +104,9 @@ static void _load_resistances_list()
     }
 }
 
-static void _load_list_skill_category(CharacterSheetOperation op)
+static void _load_list_skill_category(
+    const Character& chara,
+    CharacterSheetOperation op)
 {
     list(0, listmax) = -1;
     list(1, listmax) = 20000;
@@ -109,34 +114,36 @@ static void _load_list_skill_category(CharacterSheetOperation op)
     ++listmax;
     if (op == CharacterSheetOperation::learn_skill)
     {
-        map_get_trainer_skills(cdata[cc]);
+        map_get_trainer_skills(chara);
     }
     else
     {
-        _load_skill_list(op);
+        _load_skill_list(chara, op);
     }
 }
 
-static void _load_list_proficiency_category(CharacterSheetOperation op)
+static void _load_list_proficiency_category(
+    const Character& chara,
+    CharacterSheetOperation op)
 {
     list(0, listmax) = -1;
     list(1, listmax) = 30000;
     listn(0, listmax) =
         i18n::s.get("core.ui.chara_sheet.category.weapon_proficiency");
     ++listmax;
-    _load_weapon_proficiency_list(op);
+    _load_weapon_proficiency_list(chara, op);
 
     if (op != CharacterSheetOperation::train_skill &&
         op != CharacterSheetOperation::learn_skill)
     {
-        _load_resistances_list();
+        _load_resistances_list(chara);
     }
 }
 
-static void _load_list(CharacterSheetOperation op)
+static void _load_list(const Character& chara, CharacterSheetOperation op)
 {
-    _load_list_skill_category(op);
-    _load_list_proficiency_category(op);
+    _load_list_skill_category(chara, op);
+    _load_list_proficiency_category(chara, op);
 
     sort_list_by_column1();
 }
@@ -149,10 +156,6 @@ bool UIMenuCharacterSheet::init()
     pagesize = 16;
     listmax = 0;
     cs = 0;
-    if (_operation != CharacterSheetOperation::investigate_ally)
-    {
-        cc = 0;
-    }
 
     if (_operation == CharacterSheetOperation::train_skill ||
         _operation == CharacterSheetOperation::learn_skill)
@@ -160,7 +163,7 @@ bool UIMenuCharacterSheet::init()
         page = 1;
     }
 
-    _load_list(_operation);
+    _load_list(_chara, _operation);
 
     const auto& data = asset_load("ie_sheet");
     gsel(0);
@@ -301,7 +304,7 @@ void UIMenuCharacterSheet::_draw_window(bool show_bonus)
     if (show_bonus && page != 0)
     {
         tips = i18n::s.get(
-            "core.ui.chara_sheet.you_can_spend_bonus", cdata[cc].skill_bonus);
+            "core.ui.chara_sheet.you_can_spend_bonus", _chara.skill_bonus);
     }
     ui_display_window2(
         tips, (windoww - 700) / 2 + inf_screenx, winposy(400) - 10, 700, 400);
@@ -326,9 +329,9 @@ void UIMenuCharacterSheet::_draw_first_page_topics()
 
 void UIMenuCharacterSheet::_draw_portrait_face()
 {
-    if (cdata[cc].portrait != "")
+    if (_chara.portrait != "")
     {
-        if (const auto rect = draw_get_rect_portrait(cdata[cc].portrait))
+        if (const auto rect = draw_get_rect_portrait(_chara.portrait))
         {
             gcopy(
                 rect->buffer,
@@ -345,11 +348,12 @@ void UIMenuCharacterSheet::_draw_portrait_face()
 
 void UIMenuCharacterSheet::_draw_portrait_sprite()
 {
-    if (cdata[cc].has_own_sprite() == 1)
+    if (_chara.has_own_sprite() == 1)
     {
         gmode(2);
         gcopy_c(
-            cc + 10 + PicLoader::max_buffers + TintedBuffers::max_buffers,
+            _chara.index + 10 + PicLoader::max_buffers +
+                TintedBuffers::max_buffers,
             32,
             0,
             32,
@@ -361,7 +365,7 @@ void UIMenuCharacterSheet::_draw_portrait_sprite()
     }
     else
     {
-        draw_chara_scale_height(cdata[cc], wx + 596 + 22, wy + 86 + 24);
+        draw_chara_scale_height(_chara, wx + 596 + 22, wy + 86 + 24);
     }
 }
 
@@ -453,10 +457,10 @@ void UIMenuCharacterSheet::_draw_first_page_text_weight()
 void UIMenuCharacterSheet::_draw_first_page_text_level()
 {
     font(14 - en * 2);
-    s(0) = ""s + cdata[cc].level;
-    s(1) = ""s + cdata[cc].experience;
-    s(2) = ""s + cdata[cc].required_experience;
-    s(3) = god_name(cdata[cc].god_id);
+    s(0) = ""s + _chara.level;
+    s(1) = ""s + _chara.experience;
+    s(2) = ""s + _chara.required_experience;
+    s(3) = god_name(_chara.god_id);
     s(4) = guildname();
     for (int cnt = 0; cnt < 5; ++cnt)
     {
@@ -466,11 +470,11 @@ void UIMenuCharacterSheet::_draw_first_page_text_level()
 
 void UIMenuCharacterSheet::_draw_first_page_text_name()
 {
-    s(0) = cdatan(0, cc);
-    s(1) = cdatan(1, cc);
-    s(2) = cnven(i18n::s.get_m("race", cdatan(2, cc), "name"));
-    s(4) = cnven(class_get_name(data::InstanceId{cdatan(3, cc)}));
-    if (cdata[cc].sex == 0)
+    s(0) = _chara.name;
+    s(1) = _chara.alias;
+    s(2) = cnven(the_race_db.get_text(_chara.race, "name"));
+    s(4) = cnven(class_get_name(_chara.class_));
+    if (_chara.sex == 0)
     {
         s(3) = cnven(i18n::s.get("core.ui.sex3.male"));
     }
@@ -478,10 +482,10 @@ void UIMenuCharacterSheet::_draw_first_page_text_name()
     {
         s(3) = cnven(i18n::s.get("core.ui.sex3.female"));
     }
-    s(5) = ""s + calcage(cc) + u8" "s +
+    s(5) = ""s + calc_age(_chara) + u8" "s +
         i18n::s.get("core.ui.chara_sheet.personal.age_counter");
-    s(6) = ""s + cdata[cc].height + u8" cm"s;
-    s(7) = ""s + cdata[cc].weight + u8" kg"s;
+    s(6) = ""s + _chara.height + u8" cm"s;
+    s(7) = ""s + _chara.weight + u8" kg"s;
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         mes(wx + 68 + cnt / 4 * 190 + en * ((cnt > 3) * 12),
@@ -494,18 +498,21 @@ void UIMenuCharacterSheet::_draw_first_page_text_name()
 void UIMenuCharacterSheet::_draw_attribute_level(int cnt)
 {
     std::string level =
-        u8"("s + sdata.get(10 + cnt, cc).original_level + u8")"s;
-    if (enchantment_find(cdata[cc], 60010 + cnt))
+        u8"("s + sdata.get(10 + cnt, _chara.index).original_level + u8")"s;
+    if (enchantment_find(_chara, 60010 + cnt))
     {
         level += u8"*"s;
     }
-    mes(wx + 92, wy + 151 + cnt * 15, ""s + sdata((10 + cnt), cc), {20, 10, 0});
+    mes(wx + 92,
+        wy + 151 + cnt * 15,
+        ""s + sdata((10 + cnt), _chara.index),
+        {20, 10, 0});
     mes(wx + 124, wy + 151 + cnt * 15, level, {20, 10, 0});
 }
 
 void UIMenuCharacterSheet::_draw_attribute_potential(int cnt)
 {
-    int potential = sdata.get(10 + cnt, cc).potential;
+    int potential = sdata.get(10 + cnt, _chara.index).potential;
     if (potential >= 200)
     {
         mes(wx + 176, wy + 152 + cnt * 15, u8"Superb"s, {20, 10, 0});
@@ -545,8 +552,7 @@ void UIMenuCharacterSheet::_draw_first_page_attributes()
 
 void UIMenuCharacterSheet::_draw_first_page_weapon_info()
 {
-    append_accuracy_info(0);
-    tc = cc;
+    append_accuracy_info(_chara, 0);
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     mes(wx + 417,
         wy + 281 + p(2) * 16,
@@ -557,8 +563,8 @@ void UIMenuCharacterSheet::_draw_first_page_weapon_info()
         i18n::s.get("core.ui.chara_sheet.damage.evade"),
         {20, 10, 0});
     attackskill = 106;
-    const auto evade = calc_evasion(tc);
-    const auto prot = calc_attack_protection(cdata[tc]);
+    const auto evade = calc_evasion(_chara);
+    const auto prot = calc_attack_protection(_chara);
     font(14 - en * 2);
     mes(wx + 460 + en * 8,
         wy + 279 + p(2) * 16,
@@ -594,16 +600,16 @@ void UIMenuCharacterSheet::_draw_first_page_text_fame()
 
 void UIMenuCharacterSheet::_draw_first_page_stats_fame()
 {
-    s(0) =
-        ""s + sdata(2, cc) + u8"("s + sdata.get(2, cc).original_level + u8")"s;
-    s(1) =
-        ""s + sdata(3, cc) + u8"("s + sdata.get(3, cc).original_level + u8")"s;
-    s(2) = ""s + cdata[cc].insanity;
-    s(3) = ""s + cdata[cc].current_speed + u8"("s +
-        sdata.get(18, cc).original_level + u8")"s;
+    s(0) = ""s + sdata(2, _chara.index) + u8"("s +
+        sdata.get(2, _chara.index).original_level + u8")"s;
+    s(1) = ""s + sdata(3, _chara.index) + u8"("s +
+        sdata.get(3, _chara.index).original_level + u8")"s;
+    s(2) = ""s + _chara.insanity;
+    s(3) = ""s + _chara.current_speed + u8"("s +
+        sdata.get(18, _chara.index).original_level + u8")"s;
     s(4) = "";
-    s(5) = ""s + cdata[cc].fame;
-    s(6) = ""s + cdata[cc].karma;
+    s(5) = ""s + _chara.fame;
+    s(6) = ""s + _chara.karma;
     s(7) = "";
     s(8) = "";
     for (int cnt = 0; cnt < 8; ++cnt)
@@ -633,8 +639,8 @@ void UIMenuCharacterSheet::_draw_first_page_stats_weight()
 {
     s(0) = ""s + cnvweight(game_data.cargo_weight);
     s(1) = cnvweight(game_data.current_cart_limit);
-    s(2) =
-        cnvweight(cdata[cc].sum_of_equipment_weight) + u8" "s + cnveqweight(cc);
+    s(2) = cnvweight(_chara.sum_of_equipment_weight) + u8" "s +
+        get_armor_class_name(_chara);
     s(3) = i18n::s.get(
         "core.ui.chara_sheet.weight.level_counter",
         cnvrank(game_data.deepest_dungeon_level));
@@ -653,7 +659,7 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
     {
         x = wx + 430 + cnt / 3 * 40;
         y = wy + 151 + cnt % 3 * 32;
-        if (cdata[cc].buffs[cnt].id == 0)
+        if (_chara.buffs[cnt].id == 0)
         {
             gmode(2, 120);
             elona::draw("buff_icon_none", x, y);
@@ -661,7 +667,7 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
             continue;
         }
         ++_cs_buffmax;
-        draw_indexed("buff_icon", x, y, cdata[cc].buffs[cnt].id);
+        draw_indexed("buff_icon", x, y, _chara.buffs[cnt].id);
         if (_cs_buff == cnt)
         {
             boxf(x, y, 32, 32, {200, 200, 255, 63});
@@ -673,15 +679,15 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
     if (_cs_buffmax != 0)
     {
         const auto duration = buff_calc_duration(
-            *the_buff_db.get_id_from_legacy(cdata[cc].buffs[_cs_buff].id),
-            cdata[cc].buffs[_cs_buff].power);
+            *the_buff_db.get_id_from_legacy(_chara.buffs[_cs_buff].id),
+            _chara.buffs[_cs_buff].power);
         const auto description = buff_get_description(
-            *the_buff_db.get_id_from_legacy(cdata[cc].buffs[_cs_buff].id),
-            cdata[cc].buffs[_cs_buff].power);
+            *the_buff_db.get_id_from_legacy(_chara.buffs[_cs_buff].id),
+            _chara.buffs[_cs_buff].power);
         buff_desc = ""s +
             i18n::s.get_enum_property(
-                "core.buff", "name", cdata[cc].buffs[_cs_buff].id) +
-            ": "s + cdata[cc].buffs[_cs_buff].turns +
+                "core.buff", "name", _chara.buffs[_cs_buff].id) +
+            ": "s + _chara.buffs[_cs_buff].turns +
             i18n::s.get("core.ui.chara_sheet.buff.duration", duration) +
             description;
     }
@@ -826,8 +832,7 @@ static bool _is_resistance(int skill)
 
 void UIMenuCharacterSheet::_draw_skill_name(int cnt, int skill_id)
 {
-    std::string skill_name = i18n::s.get_m(
-        "ability", the_ability_db.get_id_from_legacy(skill_id)->get(), "name");
+    std::string skill_name = the_ability_db.get_text(skill_id, "name");
 
     if (_is_resistance(skill_id))
     {
@@ -839,7 +844,7 @@ void UIMenuCharacterSheet::_draw_skill_name(int cnt, int skill_id)
     for (int cnt = 0; cnt < (elona::g_config.allow_enhanced_skill() ? 10 : 3);
          ++cnt)
     {
-        if (game_data.tracked_skills.at(cnt) == cc * 10000 + skill_id)
+        if (game_data.tracked_skills.at(cnt) == _chara.index * 10000 + skill_id)
         {
             skill_name = u8"*"s + skill_name;
         }
@@ -855,20 +860,22 @@ void UIMenuCharacterSheet::_draw_skill_power(int cnt, int skill_id)
 
     if (_is_resistance(skill_id))
     {
-        power = clamp(sdata(skill_id, cc) / 50, 0, 6);
+        power = clamp(sdata(skill_id, _chara.index) / 50, 0, 6);
         desc = i18n::s.get_enum("core.ui.resistance", power);
     }
     else
     {
-        desc = ""s + sdata.get(skill_id, cc).original_level + u8"."s +
-            std::to_string(1000 + sdata.get(skill_id, cc).experience % 1000)
+        desc = ""s + sdata.get(skill_id, _chara.index).original_level + u8"."s +
+            std::to_string(
+                1000 + sdata.get(skill_id, _chara.index).experience % 1000)
                 .substr(1);
-        if (sdata.get(skill_id, cc).original_level != sdata(skill_id, cc))
+        if (sdata.get(skill_id, _chara.index).original_level !=
+            sdata(skill_id, _chara.index))
         {
-            power =
-                sdata(skill_id, cc) - sdata.get(skill_id, cc).original_level;
+            power = sdata(skill_id, _chara.index) -
+                sdata.get(skill_id, _chara.index).original_level;
         }
-        desc += u8"("s + sdata.get(skill_id, cc).potential + u8"%)"s;
+        desc += u8"("s + sdata.get(skill_id, _chara.index).potential + u8"%)"s;
     }
 
     mes(wx + 280 - strlen_u(desc) * 7, wy + 66 + cnt * 19 + 2, desc);
@@ -878,12 +885,7 @@ void UIMenuCharacterSheet::_draw_skill_desc(int cnt, int skill_id)
 {
     mes(wx + 330,
         wy + 66 + cnt * 19 + 2,
-        i18n::s
-            .get_m_optional(
-                "ability",
-                the_ability_db.get_id_from_legacy(skill_id)->get(),
-                "description")
-            .value_or(""));
+        the_ability_db.get_text_optional(skill_id, "description").value_or(""));
 }
 
 void UIMenuCharacterSheet::_draw_skill_train_cost(
@@ -895,26 +897,27 @@ void UIMenuCharacterSheet::_draw_skill_train_cost(
 
     if (is_training)
     {
-        train_cost = ""s + calctraincost(skill_id, cc) + u8"p "s;
+        train_cost = ""s + calctraincost(skill_id, _chara.index) + u8"p "s;
     }
     else
     {
-        train_cost = ""s + calclearncost(skill_id, cc) + u8"p "s;
+        train_cost = ""s + calclearncost(skill_id, _chara.index) + u8"p "s;
     }
     mes(wx + 322 - strlen_u(train_cost) * 7,
         wy + 66 + cnt * 19 + 2,
         train_cost);
 }
 
-static bool _has_enchantment(int cc, int skill_id)
+static bool _has_enchantment(int chara_index, int skill_id)
 {
-    return sdata.get(skill_id, cc).original_level != sdata(skill_id, cc);
+    return sdata.get(skill_id, chara_index).original_level !=
+        sdata(skill_id, chara_index);
 }
 
 void UIMenuCharacterSheet::_draw_skill_enchantment_power(int cnt, int skill_id)
 {
-    const auto bonus =
-        sdata(skill_id, cc) - sdata.get(skill_id, cc).original_level;
+    const auto bonus = sdata(skill_id, _chara.index) -
+        sdata.get(skill_id, _chara.index).original_level;
     int star_count;
     if (skill_id >= 50)
     {
@@ -944,7 +947,7 @@ void UIMenuCharacterSheet::_draw_skill_entry(
         bool is_training = op == CharacterSheetOperation::train_skill;
         _draw_skill_train_cost(cnt, skill_id, is_training);
     }
-    else if (_has_enchantment(cc, skill_id))
+    else if (_has_enchantment(_chara.index, skill_id))
     {
         _draw_skill_enchantment_power(cnt, skill_id);
     }
@@ -1013,7 +1016,7 @@ void UIMenuCharacterSheet::draw()
     }
 }
 
-static void _track_skill(int skill_id)
+static void _track_skill(const Character& chara, int skill_id)
 {
     int tracked_skill_index = 0;
     int max_tracked_skills = elona::g_config.allow_enhanced_skill() ? 10 : 3;
@@ -1024,26 +1027,27 @@ static void _track_skill(int skill_id)
         {
             tracked_skill_index = cnt;
         }
-        if (game_data.tracked_skills.at(cnt) == cc * 10000 + skill_id)
+        if (game_data.tracked_skills.at(cnt) == chara.index * 10000 + skill_id)
         {
             tracked_skill_index = cnt;
             skill_id = 0;
             break;
         }
     }
-    game_data.tracked_skills.at(tracked_skill_index) = cc * 10000 + skill_id;
+    game_data.tracked_skills.at(tracked_skill_index) =
+        chara.index * 10000 + skill_id;
     snd("core.ok1");
 }
 
-static void _apply_skill_bonus(int csskill_)
+static void _apply_skill_bonus(Character& chara, int csskill_)
 {
     --cdata.player().skill_bonus;
     snd("core.spend1");
-    chara_gain_skill_exp(cdata[cc], csskill_, 400, 2, 1000);
+    chara_gain_skill_exp(chara, csskill_, 400, 2, 1000);
     modify_potential(
-        cdata[cc],
+        chara,
         csskill_,
-        clamp(15 - sdata.get(csskill_, cc).potential / 15, 2, 15));
+        clamp(15 - sdata.get(csskill_, chara.index).potential / 15, 2, 15));
 }
 
 optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
@@ -1063,9 +1067,9 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
         }
         if (action_ == "portrait")
         {
-            if (cc < 16)
+            if (_chara.index < 16)
             {
-                menu_change_appearance(cdata[cc]);
+                menu_change_appearance(_chara);
                 if (_operation != CharacterSheetOperation::character_making)
                 {
                     nowindowanime = 1;
@@ -1121,7 +1125,7 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
 
             if (skill_id != -1)
             {
-                _track_skill(skill_id);
+                _track_skill(_chara, skill_id);
             }
         }
     }
@@ -1140,7 +1144,6 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
             {
                 screenupdate = -1;
                 update_screen();
-                tc = tcbk;
                 return UIMenuCharacterSheet::Result::finish(
                     UIMenuCompositeCharacterResult{skill_id});
             }
@@ -1157,7 +1160,7 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
                 return none;
             }
 
-            _apply_skill_bonus(skill_id);
+            _apply_skill_bonus(_chara, skill_id);
 
             render_hud();
             set_reupdate();
@@ -1186,7 +1189,6 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
         {
             screenupdate = -1;
             update_screen();
-            tc = tcbk;
         }
         return UIMenuCharacterSheet::Result::cancel();
     }

@@ -8,10 +8,6 @@ jobs:
       - checkout
 
       - run:
-          name: clang-format
-          command: make format
-
-      - run:
           name: doc
           command: |
             source ~/.cargo/env && make docgen

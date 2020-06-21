@@ -220,7 +220,6 @@ void initialize_elona()
     DIM2(mdatatmp, 100);
     map_data.clear();
     SDIM3(mdatan, 20, 2);
-    SDIM4(cdatan, 40, 10, ELONA_MAX_CHARACTERS);
     SDIM2(s1, 1000);
     DIM2(spell, 200);
     DIM2(spact, 500);
@@ -318,7 +317,6 @@ void initialize_elona()
     c_col(1, 20) = 5;
     c_col(2, 20) = 95;
 
-    DIM2(floorstack, 400);
     SDIM3(key_list, 2, 20);
     SDIM2(playerheader, 100);
     artifactlocation.clear();
@@ -332,7 +330,6 @@ void initialize_elona()
     gmode(2);
     text_set();
     ctrl_file(FileOperation::temp_dir_delete);
-    tc = 0;
     invctrl(0) = 0;
     invctrl(1) = 0;
     SDIM1(buffboard);
@@ -372,7 +369,7 @@ void initialize_elona()
     enchantment_init();
     initialize_set_of_random_generation();
     initialize_picfood();
-    initialize_recipe();
+    blending_init_recipe_data();
     initialize_nefia_names();
     initialize_home_adata();
     initialize_damage_popups();
@@ -527,7 +524,6 @@ void initialize_debug_globals()
     mapstartx = 10;
     mapstarty = 23;
     initlv = 50;
-    rc = 0;
     flt(100);
     chara_create(0, 84, -3, 0);
     initialize_pc_character();
@@ -556,7 +552,7 @@ void initialize_debug_globals()
     cdata.player().platinum_coin = 30;
     cdata.player().fame = 65000;
     game_data.quest_flags.main_quest = 100;
-    chara_refresh(0);
+    chara_refresh(cdata.player());
 
     cdata.player().can_cast_rapid_magic() = true;
     mode = 0;
@@ -567,8 +563,8 @@ void initialize_debug_globals()
     }
     create_all_adventurers();
     create_pcpic(cdata.player());
-    cdatan(1, 0) = random_title(RandomTitleType::character);
-    cdatan(0, 0) = random_name();
+    cdata.player().alias = random_title(RandomTitleType::character);
+    cdata.player().name = random_name();
 }
 
 
@@ -605,7 +601,7 @@ void initialize_game()
     {
         game_data.next_inventory_serial_id = 1000;
         game_data.next_shelter_serial_id = 100;
-        initialize_recipememory();
+        blending_clear_recipememory();
     }
     if (mode == 3)
     {

@@ -8,7 +8,9 @@
 #include "../util/range.hpp"
 #include "consts.hpp"
 #include "data/types/type_character.hpp"
+#include "eobject/eobject.hpp"
 #include "god.hpp"
+#include "item_ref.hpp"
 #include "lua_env/wrapped_function.hpp"
 #include "position.hpp"
 #include "serialization/macros.hpp"
@@ -73,7 +75,7 @@ struct Activity
 
     Type type = Activity::Type::none;
     int turn = 0;
-    int item = 0;
+    ItemRef item;
 
 
     bool is_doing_nothing() const
@@ -98,7 +100,7 @@ struct Activity
     {
         type = Activity::Type::none;
         turn = 0;
-        item = 0;
+        item = ItemRef::null();
     }
 
 
@@ -193,6 +195,50 @@ private:
 
 
 
+struct EquipmentSlot
+{
+    int type = 0;
+    ItemRef equipment;
+
+
+
+    explicit operator bool() const noexcept
+    {
+        return type != 0;
+    }
+
+
+
+    void equip(Item& item)
+    {
+        equipment = ItemRef::from_ref(item);
+    }
+
+
+
+    void unequip()
+    {
+        equipment = ItemRef::null();
+    }
+
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "EquipmentSlot");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, type);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, equipment);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
+    }
+};
+
+
+
 struct Character
 {
     enum class State : int
@@ -223,6 +269,8 @@ struct Character
     // on creation and load.
     int index = -1;
 
+    ObjId obj_id;
+
 private:
     Character::State state_ = Character::State::empty;
 
@@ -236,7 +284,7 @@ public:
     int relationship = 0;
     int turn_cost = 0;
     int current_speed = 0;
-    int ai_item = 0;
+    ItemRef ai_item;
     std::string portrait;
     int interest = 0;
     int time_interest_revive = 0;
@@ -342,7 +390,7 @@ public:
     int choked = 0;
     int furious = 0;
     std::vector<int> growth_buffs;
-    std::vector<int> body_parts;
+    std::vector<EquipmentSlot> equipment_slots;
     std::vector<int> normal_actions;
     std::vector<int> special_actions;
     std::vector<Buff> buffs;
@@ -351,6 +399,12 @@ public:
     int _156 = 0;
     int _203 = 0;
     Position target_position;
+
+    std::string name;
+    std::string alias;
+    data::InstanceId race;
+    data::InstanceId class_;
+    std::string talk;
 
 
 
@@ -428,6 +482,7 @@ public:
         /* clang-format off */
         ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Character");
 
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, obj_id);
         ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "state", state_);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, position);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, next_position);
@@ -544,7 +599,7 @@ public:
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, choked);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, furious);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, growth_buffs);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, body_parts);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, equipment_slots);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, normal_actions);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, special_actions);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, buffs);
@@ -618,13 +673,13 @@ struct CData
     }
 
 
-    CDataSlice pets()
+    CDataSlice allies()
     {
         return {std::begin(storage) + 1, std::begin(storage) + 16};
     }
 
 
-    CDataSlice pc_and_pets()
+    CDataSlice player_and_allies()
     {
         return {std::begin(storage), std::begin(storage) + 16};
     }
@@ -632,7 +687,7 @@ struct CData
 
     CDataSlice adventurers()
     {
-        return {std::begin(storage) + 16, std::begin(storage) + 56};
+        return {std::begin(storage) + 16, std::begin(storage) + 55};
     }
 
 
@@ -651,8 +706,8 @@ private:
 extern CData cdata;
 
 optional_ref<Character> chara_create(int slot, int chara_id, int x, int y);
-void initialize_character();
-bool chara_place();
+void initialize_character(Character& chara);
+bool chara_place(Character& chara);
 
 
 enum class CharaRelocationMode
@@ -671,10 +726,10 @@ enum class CharaRelocationMode
  */
 void chara_relocate(
     Character& source,
-    optional<int> destination_slot,
+    optional_ref<Character> destination_slot,
     CharaRelocationMode mode = CharaRelocationMode::normal);
 
-void chara_refresh(int);
+void chara_refresh(Character& chara);
 
 
 /**
@@ -687,7 +742,7 @@ int chara_copy(const Character& source);
 
 void chara_delete(int = 0);
 void chara_remove(Character&);
-void chara_vanquish(int = 0);
+void chara_vanquish(Character& chara);
 void chara_killed(Character&);
 
 enum class CharaFindLocation
@@ -696,34 +751,33 @@ enum class CharaFindLocation
     others
 };
 
-int chara_find(data::InstanceId chara_id);
-int chara_find(int id);
+optional_ref<Character> chara_find(data::InstanceId chara_id);
 int chara_find_ally(int id);
 int chara_get_free_slot();
 int chara_get_free_slot_ally();
 bool chara_unequip(Item& item);
 int chara_custom_talk(int = 0, int = 0);
 int chara_impression_level(int = 0);
-void chara_modify_impression(Character& cc, int delta);
-void chara_set_ai_item(Character& chara, const Item& item);
-int chara_armor_class(const Character& cc);
+void chara_modify_impression(Character& chara, int delta);
+void chara_set_ai_item(Character& chara, Item& item);
+int chara_armor_class(const Character& chara);
 int chara_breed_power(const Character&);
 
-void chara_add_quality_parens();
+void chara_add_quality_parens(Character& chara);
 
 bool belong_to_same_team(const Character& c1, const Character& c2);
 
-TurnResult proc_movement_event();
-void chara_clear_status_effects();
-void chara_clear_status_effects_b();
-void revive_character();
-void do_chara_revival();
-void chara_set_revived_status();
-void revive_player();
-int new_ally_joins();
+TurnResult proc_movement_event(Character& chara);
+void chara_clear_status_effects(Character& chara);
+void chara_clear_status_effects_b(Character& chara);
+void revive_character(Character& chara);
+void do_chara_revival(Character& chara);
+void chara_set_revived_status(Character& chara);
+void revive_player(Character& chara);
+optional_ref<Character> new_ally_joins(Character& new_ally);
 void refresh_burden_state();
 void go_hostile();
-void get_pregnant();
+void get_pregnant(Character& chara);
 void wet(int = 0, int = 0);
 void hostileaction(int = 0, int = 0);
 void turn_aggro(int = 0, int = 0, int = 0);
@@ -736,12 +790,12 @@ void initialize_pc_character();
 void lost_body_part(int);
 void lovemiracle(int = 0);
 void monster_respawn();
-void move_character();
+void move_character(Character& chara);
 void proc_negative_enchantments(Character& chara);
-void proc_pregnant();
+void proc_pregnant(Character& chara);
 void wake_up();
-int try_to_perceive_npc(int);
-int relationbetween(int, int);
+bool try_to_perceive_npc(const Character& chara, const Character& enemy);
+int relation_between(const Character& a, const Character& b);
 
 } // namespace elona
 

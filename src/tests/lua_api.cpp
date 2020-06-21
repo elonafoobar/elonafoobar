@@ -86,7 +86,6 @@ local Env = ELONA.require("core.Env")
 assert(Env.LUA_VERSION, "5.3") -- _VERSION is not available.
 assert(Env.ELONA_VERSION, "1.22")
 assert(Env.ELONA_FOOBAR_VERSION, foobar_ver)
-assert(Env.MOD_API_VERSION, "0.1")
 )"));
 }
 

@@ -174,7 +174,11 @@ void mef_update()
                             continue;
                         }
                         mef_add(x, y, 5, 24, rnd(15) + 20, 50, i);
-                        mapitem_fire(x, y);
+                        mapitem_fire(
+                            i == -1 ? optional_ref<Character>{}
+                                    : optional_ref<Character>{cdata[i]},
+                            x,
+                            y);
                     }
                 }
             }
@@ -199,126 +203,129 @@ void mef_update()
     }
 }
 
-void mef_proc(int tc)
+
+
+void mef_proc(Character& chara)
 {
-    int ef = cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
-                 .mef_index_plus_one -
-        1;
+    int ef =
+        cell_data.at(chara.position.x, chara.position.y).mef_index_plus_one - 1;
     if (mef(0, ef) == 0)
     {
         return;
     }
     if (mef(0, ef) == 3)
     {
-        if (cdata[tc].is_floating() == 0 || cdata[tc].gravity > 0)
+        if (chara.is_floating() == 0 || chara.gravity > 0)
         {
-            if (sdata(63, tc) / 50 < 7)
+            if (sdata(63, chara.index) / 50 < 7)
             {
-                if (is_in_fov(cdata[tc]))
+                if (is_in_fov(chara))
                 {
                     snd("core.water2");
-                    txt(i18n::s.get("core.mef.melts", cdata[tc]));
+                    txt(i18n::s.get("core.mef.melts", chara));
                 }
                 if (mef(6, ef) == 0)
                 {
-                    if (tc != 0)
+                    if (chara.index != 0)
                     {
-                        hostileaction(0, tc);
+                        hostileaction(0, chara.index);
                     }
                 }
                 int stat = damage_hp(
-                    cdata[tc],
+                    chara,
                     rnd_capped(mef(5, ef) / 25 + 5) + 1,
                     -15,
                     63,
                     mef(5, ef));
                 if (stat == 0)
                 {
-                    check_kill(mef(6, ef), tc);
+                    check_kill(mef(6, ef), chara.index);
                 }
             }
         }
     }
     if (mef(0, ef) == 5)
     {
-        if (is_in_fov(cdata[tc]))
+        if (is_in_fov(chara))
         {
             snd("core.fire1");
-            txt(i18n::s.get("core.mef.is_burnt", cdata[tc]));
+            txt(i18n::s.get("core.mef.is_burnt", chara));
         }
         if (mef(6, ef) == 0)
         {
-            if (tc != 0)
+            if (chara.index != 0)
             {
-                hostileaction(0, tc);
+                hostileaction(0, chara.index);
             }
         }
         int stat = damage_hp(
-            cdata[tc], rnd_capped(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
+            chara, rnd_capped(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
         if (stat == 0)
         {
-            check_kill(mef(6, ef), tc);
+            check_kill(mef(6, ef), chara.index);
         }
     }
     if (mef(0, ef) == 6)
     {
-        if (cdata[tc].is_floating() == 0 || cdata[tc].gravity > 0)
+        if (chara.is_floating() == 0 || chara.gravity > 0)
         {
-            if (is_in_fov(cdata[tc]))
+            if (is_in_fov(chara))
             {
                 snd("core.water2");
-                txt(i18n::s.get("core.mef.steps_in_pool", cdata[tc]));
+                txt(i18n::s.get("core.mef.steps_in_pool", chara));
             }
-            wet(tc, 25);
+            wet(chara.index, 25);
             if (mef(6, ef) == 0)
             {
-                if (tc != 0)
+                if (chara.index != 0)
                 {
-                    hostileaction(0, tc);
+                    hostileaction(0, chara.index);
                 }
             }
             potionspill = 1;
-            efstatus = static_cast<CurseState>(mef(8, ef)); // TODO
-            item_db_on_drink(none, mef(7, ef));
-            if (cdata[tc].state() == Character::State::empty)
+            efstatus = static_cast<CurseState>(mef(8, ef));
+            item_db_on_drink(chara, none, mef(7, ef));
+            if (chara.state() == Character::State::empty)
             {
-                check_kill(mef(6, ef), tc);
+                check_kill(mef(6, ef), chara.index);
             }
             mef_delete(ef);
         }
     }
 }
 
+
+
 // returns true if turn ended
-bool mef_proc_from_movement(int cc)
+bool mef_proc_from_movement(Character& chara)
 {
-    int i = cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
-                .mef_index_plus_one -
-        1;
+    int i =
+        cell_data.at(chara.position.x, chara.position.y).mef_index_plus_one - 1;
     if (mef(0, i) == 0)
     {
         return false;
     }
     if (mef(0, i) == 1)
     {
-        if (cdatan(2, cc) != u8"core.spider"s)
+        if (chara.race != "core.spider")
         {
             if (rnd_capped(mef(5, i) + 25) <
-                    rnd_capped(sdata(10, cc) + sdata(12, cc) + 1) ||
-                cdata[cc].weight > 100)
+                    rnd_capped(
+                        sdata(10, chara.index) + sdata(12, chara.index) + 1) ||
+                chara.weight > 100)
             {
-                if (is_in_fov(cdata[cc]))
+                if (is_in_fov(chara))
                 {
-                    txt(i18n::s.get("core.mef.destroys_cobweb", cdata[cc]));
+                    txt(i18n::s.get("core.mef.destroys_cobweb", chara));
                 }
                 mef_delete(i);
             }
             else
             {
                 mef(5, i) = mef(5, i) * 3 / 4;
-                if (is_in_fov(cdata[cc]))
+                if (is_in_fov(chara))
                 {
-                    txt(i18n::s.get("core.mef.is_caught_in_cobweb", cdata[cc]));
+                    txt(i18n::s.get("core.mef.is_caught_in_cobweb", chara));
                 }
                 return true;
             }
@@ -327,11 +334,15 @@ bool mef_proc_from_movement(int cc)
     return false;
 }
 
+
+
 // returns true if caller needs to return directly after
-bool mef_proc_from_physical_attack(int tc)
+bool mef_proc_from_physical_attack(
+    const Character& attacker,
+    const Character& target)
 {
-    int i = cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
-                .mef_index_plus_one -
+    int i =
+        cell_data.at(target.position.x, target.position.y).mef_index_plus_one -
         1;
     if (mef(0, i) == 0)
     {
@@ -341,17 +352,18 @@ bool mef_proc_from_physical_attack(int tc)
     {
         if (rnd(2) == 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(attacker))
             {
-                txt(i18n::s.get(
-                    "core.mef.attacks_illusion_in_mist", cdata[cc]));
-                add_damage_popup(u8"miss", tc, {191, 191, 191});
+                txt(i18n::s.get("core.mef.attacks_illusion_in_mist", attacker));
+                add_damage_popup(u8"miss", target.index, {191, 191, 191});
             }
             return true;
         }
     }
     return false;
 }
+
+
 
 void mef_clear_all()
 {

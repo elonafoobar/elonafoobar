@@ -61,15 +61,17 @@ std::string test_itemname(int id, int number, bool prefix)
     REQUIRE_SOME(item);
     normalize_item(*item);
     std::string name = itemname(*item, number, prefix);
-    item_delete(*item);
+    item->remove();
+    item->clear();
     return name;
 }
 
 Character& create_chara(int id, int x, int y)
 {
     elona::fixlv = Quality::none;
-    REQUIRE(chara_create(-1, id, x, y));
-    return elona::cdata[elona::rc];
+    const auto chara = chara_create(-1, id, x, y);
+    REQUIRE_SOME(chara);
+    return *chara;
 }
 
 Item& create_item(int id, int number)
@@ -82,18 +84,19 @@ Item& create_item(int id, int number)
 
 void invalidate_item(Item& item)
 {
-    int old_index = item.index;
+    const Item* old_address = &item;
     int old_id = itemid2int(item.id);
     int old_x = item.position.x;
     int old_y = item.position.y;
 
     // Delete the item and create new ones until the index is taken again.
-    item_delete(inv[old_index]);
+    item.remove();
+    item.clear();
     while (true)
     {
         const auto new_item = itemcreate_extra_inv(old_id, old_x, old_y, 3);
         REQUIRE_SOME(new_item);
-        if (new_item->index != old_index)
+        if (&(*new_item) != old_address)
         {
             break;
         }
@@ -109,10 +112,15 @@ void invalidate_chara(Character& chara)
 
     // Delete the character and create new ones until the index is taken again.
     chara_delete(chara.index);
-    do
+    while (true)
     {
-        REQUIRE(chara_create(-1, old_id, old_x, old_y));
-    } while (elona::rc != old_index);
+        const auto new_chara = chara_create(-1, old_id, old_x, old_y);
+        REQUIRE_SOME(new_chara);
+        if (new_chara->index != old_index)
+        {
+            break;
+        }
+    }
 }
 
 void register_lua_function(

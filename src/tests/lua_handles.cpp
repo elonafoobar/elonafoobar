@@ -22,8 +22,10 @@ TEST_CASE("Test that handle properties can be read", "[Lua: Handles]")
 
     SECTION("Characters")
     {
-        REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-        int idx = elona::rc;
+        const auto chara_opt =
+            chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+        REQUIRE_SOME(chara_opt);
+        int idx = chara_opt->index;
         Character& chara = elona::cdata[idx];
         auto handle = handle_mgr.get_handle(chara);
         elona::lua::lua->get_state()->set("chara", handle);
@@ -40,13 +42,9 @@ TEST_CASE("Test that handle properties can be read", "[Lua: Handles]")
         const auto item_opt =
             itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3);
         REQUIRE_SOME(item_opt);
-        int idx = item_opt->index;
-        Item& item = elona::inv[idx];
+        Item& item = *item_opt;
         auto handle = handle_mgr.get_handle(item);
         elona::lua::lua->get_state()->set("item", handle);
-        elona::lua::lua->get_state()->set("idx", idx);
-        REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
-            R"(assert(item.index == idx))"));
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
             R"(assert(item.position.x == 4))"));
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
@@ -107,8 +105,10 @@ TEST_CASE("Test that handle methods can be called", "[Lua: Handles]")
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
     {
-        REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-        Character& chara = elona::cdata[elona::rc];
+        const auto chara_opt =
+            chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+        REQUIRE_SOME(chara_opt);
+        Character& chara = *chara_opt;
         auto handle = handle_mgr.get_handle(chara);
         elona::lua::lua->get_state()->set("chara", handle);
 
@@ -129,8 +129,10 @@ TEST_CASE("Test that handles go invalid", "[Lua: Handles]")
 
     SECTION("Characters")
     {
-        REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-        Character& chara = elona::cdata[elona::rc];
+        const auto chara_opt =
+            chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+        REQUIRE_SOME(chara_opt);
+        Character& chara = *chara_opt;
         auto handle = handle_mgr.get_handle(chara);
         elona::lua::lua->get_state()->set("chara", handle);
 
@@ -185,8 +187,10 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
 
     SECTION("Characters")
     {
-        REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-        Character& chara = elona::cdata[elona::rc];
+        const auto chara_opt =
+            chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+        REQUIRE_SOME(chara_opt);
+        Character& chara = *chara_opt;
         auto handle = handle_mgr.get_handle(chara);
 
         REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script("test", ""));
@@ -216,8 +220,8 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
 
         testing::invalidate_item(item);
 
-        REQUIRE_THROWS(mod_mgr.run_in_mod(
-            "test2", "print(mod.store.global.items[0].index)"));
+        REQUIRE_THROWS(
+            mod_mgr.run_in_mod("test2", "print(mod.store.global.items[0].id)"));
     }
 }
 
@@ -250,18 +254,19 @@ mod.store.global.charas = {[0]=chara}
     {
         REQUIRE_NOTHROW(
             mod_mgr.load_testing_mod_from_script("test_invalid_item", R"(
+local Chara = ELONA.require("core.Chara")
 local Item = ELONA.require("core.Item")
-local item = Item.create(0, 0, "core.putitoro", 3)
-mod.store.global.idx = item.index
-mod.store.global.items = {[0]=items}
+local item = Item.create(Chara.player().position, "core.putitoro", 3)
+mod.store.global.items = {[0]=item}
 )"));
-        int idx = mod_mgr.get_mod("test_invalid_item")
-                      ->env.get<int>(std::tie("mod", "store", "global", "idx"));
 
-        testing::invalidate_item(elona::inv[idx]);
+        const auto item = item_find(
+            itemid2int(ItemId::putitoro), 3, ItemFindLocation::ground);
+        REQUIRE_SOME(item);
+        testing::invalidate_item(*item);
 
         REQUIRE_THROWS(mod_mgr.run_in_mod(
-            "test_invalid_item", "print(mod.store.global.items[0].index)"));
+            "test_invalid_item", "print(mod.store.global.items[0].id)"));
     }
 }
 
@@ -276,8 +281,10 @@ TEST_CASE(
 
     SECTION("Characters")
     {
-        REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-        Character& chara = elona::cdata[elona::rc];
+        const auto chara_opt =
+            chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+        REQUIRE_SOME(chara_opt);
+        Character& chara = *chara_opt;
         auto handle = handle_mgr.get_handle(chara);
 
         REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script(
@@ -335,13 +342,17 @@ TEST_CASE(
     auto& mod_mgr = elona::lua::lua->get_mod_manager();
 
     {
-        REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-        Character& chara = elona::cdata[elona::rc];
+        const auto chara_opt =
+            chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+        REQUIRE_SOME(chara_opt);
+        Character& chara = *chara_opt;
         auto handle = handle_mgr.get_handle(chara);
         elona::lua::lua->get_state()->set("chara", handle);
 
-        REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 9));
-        Character& chara2 = elona::cdata[elona::rc];
+        const auto chara2_opt =
+            chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 9);
+        REQUIRE_SOME(chara2_opt);
+        Character& chara2 = *chara2_opt;
         auto handle2 = handle_mgr.get_handle(chara2);
         elona::lua::lua->get_state()->set("chara2", handle2);
 
@@ -357,8 +368,10 @@ TEST_CASE(
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
             R"(assert(chara ~= chara2))"));
 
-        REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-        Character& chara3 = elona::cdata[elona::rc];
+        const auto chara3_opt =
+            chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+        REQUIRE_SOME(chara3_opt);
+        Character& chara3 = *chara3_opt;
         auto handle3 = handle_mgr.get_handle(chara3);
         elona::lua::lua->get_state()->set("chara3", handle3);
 
@@ -378,11 +391,10 @@ TEST_CASE(
     const auto item =
         itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 1);
     REQUIRE_SOME(item);
-    elona::cc = 0;
     elona::in = item->number();
 
     REQUIRE(handle_mgr.get_handle(*item) != sol::lua_nil);
-    const auto pick_up_item_result = pick_up_item(*item);
+    const auto pick_up_item_result = pick_up_item(0, *item, none);
     REQUIRE(pick_up_item_result.type == 1);
     REQUIRE_SOME(pick_up_item_result.picked_up_item);
     REQUIRE(
@@ -399,21 +411,20 @@ TEST_CASE("Test relocation of character handle", "[Lua: Handles]")
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
-    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    Character& chara = elona::cdata[elona::rc];
+    const auto chara_opt = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(chara_opt);
+    Character& chara = *chara_opt;
     auto handle = handle_mgr.get_handle(chara);
 
-    int first_index = elona::rc;
+    int first_index = chara_opt->index;
     std::string uuid = handle["__uuid"];
-    REQUIRE(handle["__index"].get<int>() == first_index);
 
-    new_ally_joins();
+    const auto ally = new_ally_joins(chara);
+    REQUIRE_SOME(ally);
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
-    REQUIRE(elona::rc != first_index);
-    REQUIRE(handle["__index"].get<int>() == elona::rc);
+    REQUIRE(ally->index != first_index);
     REQUIRE(handle["__uuid"].get<std::string>() == uuid);
-    REQUIRE(handle["__index"].get<int>() == handle["index"].get<int>());
 }
 
 TEST_CASE(
@@ -423,22 +434,22 @@ TEST_CASE(
     reset_state();
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
-    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    Character& chara = elona::cdata[elona::rc];
+    const auto chara_opt = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(chara_opt);
+    Character& chara = *chara_opt;
     auto handle = handle_mgr.get_handle(chara);
 
-    int first_index = elona::rc;
+    int first_index = chara_opt->index;
     std::string uuid = handle["__uuid"];
-    REQUIRE(handle["__index"].get<int>() == first_index);
 
-    int tc = elona::rc;
+    int tc = chara_opt->index;
     flt(20, Quality::good);
-    REQUIRE(chara_create(56, 0, -3, 0));
+    const auto chara2_opt = chara_create(56, 0, -3, 0);
+    REQUIRE_SOME(chara2_opt);
     auto temporary_handle = handle_mgr.get_handle(cdata.tmp());
-    chara_relocate(cdata.tmp(), tc, CharaRelocationMode::change);
+    chara_relocate(cdata.tmp(), cdata[tc], CharaRelocationMode::change);
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
-    REQUIRE(handle["__index"].get<int>() == elona::rc);
     REQUIRE(handle["__uuid"].get<std::string>() == uuid);
     REQUIRE(handle_mgr.handle_is_valid(temporary_handle) == false);
 }
@@ -449,8 +460,9 @@ TEST_CASE("Test copying of character handles", "[Lua: Handles]")
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
-    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    Character& chara = elona::cdata[elona::rc];
+    const auto chara_opt = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(chara_opt);
+    Character& chara = *chara_opt;
     auto handle = handle_mgr.get_handle(chara);
 
     int tc = elona::chara_copy(chara);
@@ -477,11 +489,13 @@ TEST_CASE("Test copying of character handles after removal", "[Lua: Handles]")
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
-    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    Character& a = elona::cdata[elona::rc];
+    const auto a_opt = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(a_opt);
+    Character& a = *a_opt;
 
-    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 9));
-    Character& b = elona::cdata[elona::rc];
+    const auto b_opt = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 9);
+    REQUIRE_SOME(b_opt);
+    Character& b = *b_opt;
 
     // Mark the handle in b's slot as invalid.
     b.set_state(Character::State::empty);
@@ -498,8 +512,9 @@ TEST_CASE(
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
-    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    Character& chara = elona::cdata[elona::rc];
+    const auto chara_opt = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(chara_opt);
+    Character& chara = *chara_opt;
     auto handle = handle_mgr.get_handle(chara);
 
     chara_delete(chara.index);
@@ -516,8 +531,9 @@ TEST_CASE(
     start_in_debug_map();
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
-    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    Character& chara = elona::cdata[elona::rc];
+    const auto chara_opt = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(chara_opt);
+    Character& chara = *chara_opt;
     auto handle = handle_mgr.get_handle(chara);
     auto old_uuid = handle["__uuid"].get<std::string>();
 
@@ -684,11 +700,6 @@ TEST_CASE("Test swapping of item handles", "[Lua: Handles]")
     elona::item_exchange(item_a, item_b);
 
     // Disabled temporarily.
-    // TODO: rethink how should swapping behave.
-    // // Handle indices should reflect the swapped item indices.
-    // REQUIRE(handle_a["__index"].get<int>() == item_b.index);
-    // REQUIRE(handle_b["__index"].get<int>() == item_a.index);
-
     // // UUIDs should still be the same as before.
     // REQUIRE(handle_a["__uuid"].get<std::string>() == uuid_a);
     // REQUIRE(handle_b["__uuid"].get<std::string>() == uuid_b);

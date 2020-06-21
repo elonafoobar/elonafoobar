@@ -32,46 +32,6 @@ public:
         safe_script(R"(Serial = require("serial"))");
     }
 
-    template <typename T, typename Archive>
-    void save_handles(Archive& putit_archive, ModEnv::StoreType store_type)
-    {
-        int index_start, index_end;
-        std::tie(index_start, index_end) =
-            get_start_end_indices(T::lua_type(), store_type);
-
-        auto handles = lua().get_handle_manager().get_handle_range(
-            T::lua_type(), index_start, index_end);
-        save(handles, putit_archive);
-
-        ELONA_LOG("lua.mod")
-            << "Saved handle data for " << T::lua_type() << " in ["
-            << index_start << "," << index_end << "]";
-
-        handles = sol::lua_nil;
-    }
-
-    template <typename T, typename Archive>
-    std::pair<int, int> load_handles(
-        Archive& putit_archive,
-        ModEnv::StoreType store_type)
-    {
-        int index_start, index_end;
-        std::tie(index_start, index_end) =
-            get_start_end_indices(T::lua_type(), store_type);
-
-        sol::object handles = load(putit_archive);
-
-        auto& handle_mgr = lua().get_handle_manager();
-        handle_mgr.clear_handle_range(T::lua_type(), index_start, index_end);
-        handle_mgr.merge_handles(T::lua_type(), handles);
-
-        ELONA_LOG("lua.mod")
-            << "Loaded handle data for " << T::lua_type() << " in ["
-            << index_start << "," << index_end << "]";
-
-        return {index_start, index_end};
-    }
-
     template <typename Archive>
     void save_mod_store_data(
         Archive& putit_archive,

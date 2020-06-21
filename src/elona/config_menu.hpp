@@ -2,7 +2,6 @@
 
 #include "config.hpp"
 #include "i18n.hpp"
-#include "macro.hpp"
 #include "ui/ui_menu_config.hpp"
 #include "ui/ui_menu_keybindings.hpp"
 

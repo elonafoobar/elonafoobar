@@ -30,7 +30,6 @@
 #include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
 #include "lua_env/lua_event/base_event.hpp"
-#include "macro.hpp"
 #include "magic.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -74,7 +73,7 @@ optional<TurnResult> proc_return_or_escape()
     if (game_data.is_returning_or_escaping <= 0 && !event_has_pending_events())
     {
         f = 0;
-        for (const auto& chara : cdata.pets())
+        for (const auto& chara : cdata.allies())
         {
             if (chara.state() != Character::State::alive)
             {
@@ -125,7 +124,7 @@ optional<TurnResult> proc_return_or_escape()
 
 
 
-optional<TurnResult> npc_turn_misc(Character& chara)
+optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
 {
     // Hung on sandbag
     if (chara.is_hung_on_sand_bag())
@@ -134,7 +133,6 @@ optional<TurnResult> npc_turn_misc(Character& chara)
         {
             if (rnd(30) == 0)
             {
-                tc = chara.index;
                 txt(i18n::s.get("core.action.npc.sand_bag", chara));
             }
         }
@@ -169,9 +167,8 @@ optional<TurnResult> npc_turn_misc(Character& chara)
                     // TODO: 振りほどいたはずがテレポートする
                 }
             }
-            tc = 0;
             efid = 619;
-            magic();
+            magic(chara, cdata.player());
             return TurnResult::turn_end;
         }
     }
@@ -182,7 +179,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
         tlocx = chara.position.x;
         tlocy = chara.position.y;
         efid = 644;
-        magic();
+        magic(chara, chara);
         return TurnResult::turn_end;
     }
 
@@ -200,11 +197,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
                 if (cdata[pcattacker].relationship <= -3 &&
                     cdata[pcattacker].state() == Character::State::alive)
                 {
-                    if (fov_los(
-                            chara.position.x,
-                            chara.position.y,
-                            cdata[pcattacker].position.x,
-                            cdata[pcattacker].position.y))
+                    if (fov_los(chara.position, cdata[pcattacker].position))
                     {
                         chara.hate = 5;
                         chara.enemy_id = pcattacker;
@@ -219,10 +212,8 @@ optional<TurnResult> npc_turn_misc(Character& chara)
                         Character::State::alive)
                 {
                     if (fov_los(
-                            chara.position.x,
-                            chara.position.y,
-                            cdata[cdata.player().enemy_id].position.x,
-                            cdata[cdata.player().enemy_id].position.y))
+                            chara.position,
+                            cdata[cdata.player().enemy_id].position))
                     {
                         chara.hate = 5;
                         chara.enemy_id = cdata.player().enemy_id;
@@ -258,7 +249,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
                 txt(i18n::s.get("core.action.npc.arena"),
                     Message::color{ColorIndex::blue});
             }
-            return ai_proc_misc_map_events(chara);
+            return ai_proc_misc_map_events(chara, enemy_index);
         }
         chara.hate = 100;
         if (chara.relationship == 10)
@@ -280,7 +271,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
         {
             if (rnd(10) != 0)
             {
-                tc = i;
+                enemy_index = chara.enemy_id;
                 return none;
             }
         }
@@ -370,17 +361,16 @@ optional<TurnResult> npc_turn_misc(Character& chara)
         }
     }
 
-    tc = chara.enemy_id;
+    enemy_index = chara.enemy_id;
 
     // Talk
-    if (cdatan(4, chara.index) != ""s)
+    if (!chara.talk.empty())
     {
         if (chara.has_custom_talk() == 0)
         {
             if (rnd(30) == 0)
             {
-                txt(""s + cdatan(4, chara.index),
-                    Message::color{ColorIndex::cyan});
+                txt(chara.talk, Message::color{ColorIndex::cyan});
             }
         }
     }
@@ -423,7 +413,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
             {
                 x = cdata.player().position.x;
                 y = cdata.player().position.y;
-                return do_bash();
+                return do_bash(chara);
             }
         }
     }
@@ -436,7 +426,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
             efid = chara.ai_heal;
             if (efid >= 400 && efid < 467)
             {
-                int stat = do_cast_magic();
+                int stat = do_cast_magic(chara, enemy_index);
                 if (stat == 1)
                 {
                     return TurnResult::turn_end;
@@ -444,7 +434,7 @@ optional<TurnResult> npc_turn_misc(Character& chara)
             }
             else if (efid >= 600)
             {
-                int stat = do_magic_attempt();
+                int stat = do_spact(chara, enemy_index);
                 if (stat == 1)
                 {
                     return TurnResult::turn_end;
@@ -453,159 +443,149 @@ optional<TurnResult> npc_turn_misc(Character& chara)
         }
     }
 
-    if (chara.ai_item == 0)
+    if (!chara.ai_item)
     {
         return none;
     }
-    if (inv[chara.ai_item].number() == 0)
+
+    auto& ai_item = *chara.ai_item;
+    if (ai_item.number() == 0)
     {
-        chara.ai_item = 0;
+        chara.ai_item = ItemRef::null();
         return none;
     }
     if (chara.relationship != 0)
     {
-        chara.ai_item = 0;
+        chara.ai_item = ItemRef::null();
     }
 
-    const auto category =
-        the_item_db[itemid2int(inv[chara.ai_item].id)]->category;
+    const auto category = the_item_db[itemid2int(ai_item.id)]->category;
     if (category == ItemCategory::food)
     {
         if (chara.relationship != 10 || chara.nutrition <= 6000)
         {
-            return do_eat_command(inv[chara.ai_item]);
+            return do_eat_command(chara, ai_item);
         }
     }
     if (category == ItemCategory::potion)
     {
-        return do_drink_command(inv[chara.ai_item]);
+        return do_drink_command(chara, ai_item);
     }
     if (category == ItemCategory::scroll)
     {
-        return do_read_command(inv[chara.ai_item]);
+        return do_read_command(chara, ai_item);
     }
 
-    chara.ai_item = 0;
+    chara.ai_item = ItemRef::null();
 
     return none;
 }
 
 
 
-TurnResult npc_turn_ai_main(Character& chara)
+TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
 {
     if (chara.hate > 0 || chara.relationship == 10)
     {
         distance = dist(
-            cdata[tc].position.x,
-            cdata[tc].position.y,
+            cdata[enemy_index].position.x,
+            cdata[enemy_index].position.y,
             chara.position.x,
             chara.position.y);
         if (chara.blind != 0)
         {
             if (rnd(10) > 2)
             {
-                return ai_proc_misc_map_events(chara);
+                return ai_proc_misc_map_events(chara, enemy_index);
             }
         }
         if (chara.confused != 0)
         {
             if (rnd(10) > 3)
             {
-                return ai_proc_misc_map_events(chara);
+                return ai_proc_misc_map_events(chara, enemy_index);
             }
         }
-        if (chara.relationship == 10)
+        if (chara.relationship == 10 && enemy_index == 0)
         {
-            if (tc == 0)
+            if (const auto item_opt = cell_get_item_if_only_one(chara.position))
             {
-                if (cell_data.at(chara.position.x, chara.position.y)
-                        .item_appearances_actual != 0)
+                const auto category =
+                    the_item_db[itemid2int(item_opt->id)]->category;
+                if (chara.nutrition <= 6000)
                 {
-                    const auto item_info = cell_itemoncell(chara.position);
-                    const auto number = item_info.first;
-                    const auto item = item_info.second;
-                    if (number == 1)
+                    if (category == ItemCategory::food)
                     {
-                        const auto category =
-                            the_item_db[itemid2int(inv[item].id)]->category;
-                        if (chara.nutrition <= 6000)
+                        if (item_opt->own_state <= 0 &&
+                            !is_cursed(item_opt->curse_state))
                         {
-                            if (category == ItemCategory::food)
-                            {
-                                if (inv[item].own_state <= 0 &&
-                                    !is_cursed(inv[item].curse_state))
-                                {
-                                    return do_eat_command(inv[item]);
-                                }
-                            }
-                            if (category == ItemCategory::well)
-                            {
-                                if (inv[item].own_state <= 1 &&
-                                    inv[item].param1 >= -5 &&
-                                    inv[item].param3 < 20 &&
-                                    inv[item].id != ItemId::holy_well)
-                                {
-                                    return do_drink_command(inv[item]);
-                                }
-                            }
+                            return do_eat_command(chara, *item_opt);
                         }
-                        if (category == ItemCategory::gold_piece ||
-                            category == ItemCategory::ore)
+                    }
+                    if (category == ItemCategory::well)
+                    {
+                        if (item_opt->own_state <= 1 &&
+                            item_opt->param1 >= -5 && item_opt->param3 < 20 &&
+                            item_opt->id != ItemId::holy_well)
                         {
-                            if (inv[item].own_state <= 0 &&
-                                !inv[item].is_precious() &&
-                                map_data.type != mdata_t::MapType::player_owned)
+                            return do_drink_command(chara, *item_opt);
+                        }
+                    }
+                }
+                if (category == ItemCategory::gold_piece ||
+                    category == ItemCategory::ore)
+                {
+                    if (item_opt->own_state <= 0 && !item_opt->is_precious() &&
+                        map_data.type != mdata_t::MapType::player_owned)
+                    {
+                        in = item_opt->number();
+                        if (game_data.mount != chara.index)
+                        {
+                            int stat =
+                                pick_up_item(chara.index, *item_opt, none).type;
+                            if (stat == 1)
                             {
-                                in = inv[item].number();
-                                if (game_data.mount != chara.index)
-                                {
-                                    int stat = pick_up_item(inv[item]).type;
-                                    if (stat == 1)
-                                    {
-                                        return TurnResult::turn_end;
-                                    }
-                                }
+                                return TurnResult::turn_end;
                             }
                         }
                     }
                 }
-                if (chara.current_map == game_data.current_map)
+            }
+            if (chara.current_map == game_data.current_map)
+            {
+                if (chara.is_contracting() == 0)
                 {
-                    if (chara.is_contracting() == 0)
-                    {
-                        return ai_proc_misc_map_events(chara);
-                    }
+                    return ai_proc_misc_map_events(chara, enemy_index);
                 }
-                if (distance > 2 || rnd(3))
-                {
-                    return proc_npc_movement_event(chara);
-                }
-                else
-                {
-                    return ai_proc_misc_map_events(chara);
-                }
+            }
+            if (distance > 2 || rnd(3))
+            {
+                return proc_npc_movement_event(chara, enemy_index);
+            }
+            else
+            {
+                return ai_proc_misc_map_events(chara, enemy_index);
             }
         }
         if (chara.fear != 0)
         {
-            return proc_npc_movement_event(chara, true);
+            return proc_npc_movement_event(chara, enemy_index, true);
         }
         if (chara.blind != 0)
         {
             if (rnd(3))
             {
-                return ai_proc_misc_map_events(chara);
+                return ai_proc_misc_map_events(chara, enemy_index);
             }
         }
         if (distance != chara.ai_dist)
         {
             if (rnd(100) < chara.ai_move)
             {
-                return proc_npc_movement_event(chara);
+                return proc_npc_movement_event(chara, enemy_index);
             }
         }
-        return ai_proc_basic(chara);
+        return ai_proc_basic(chara, enemy_index);
     }
 
     if (chara.turn % 10 == 1)
@@ -668,11 +648,10 @@ TurnResult npc_turn_ai_main(Character& chara)
         }
     }
 
-    if (tc == 0)
+    if (enemy_index == 0)
     {
         r2 = chara.index;
-        int stat = try_to_perceive_npc(tc);
-        if (stat == 1)
+        if (try_to_perceive_npc(chara, cdata[enemy_index]))
         {
             if (chara.relationship == -3)
             {
@@ -680,7 +659,7 @@ TurnResult npc_turn_ai_main(Character& chara)
             }
         }
     }
-    return ai_proc_misc_map_events(chara);
+    return ai_proc_misc_map_events(chara, enemy_index);
 }
 
 } // namespace
@@ -689,12 +668,13 @@ TurnResult npc_turn_ai_main(Character& chara)
 
 TurnResult npc_turn(Character& chara)
 {
-    if (const auto result = npc_turn_misc(chara))
+    int enemy_index{};
+    if (const auto result = npc_turn_misc(chara, enemy_index))
     {
         return *result;
     }
 
-    return npc_turn_ai_main(chara);
+    return npc_turn_ai_main(chara, enemy_index);
 }
 
 
@@ -716,7 +696,7 @@ bool turn_wrapper()
             result = pass_turns(false);
             break;
         case TurnResult::pc_turn: result = pc_turn(); break;
-        case TurnResult::npc_turn: result = npc_turn(cdata[cc]); break;
+        case TurnResult::npc_turn: result = npc_turn(cdata[ct]); break;
         case TurnResult::pc_turn_user_error: result = pc_turn(false); break;
         case TurnResult::pc_died: result = pc_died(); break;
         case TurnResult::initialize_map: result = initialize_map(); break;
@@ -839,7 +819,6 @@ TurnResult turn_begin()
     if (game_data.date.second >= 60)
     {
         ++game_data.play_turns;
-        cc = 0;
         if (game_data.play_turns % 20 == 0)
         {
             monster_respawn();
@@ -911,10 +890,9 @@ TurnResult pass_one_turn(bool time_passing)
         }
     }
 
-    cc = ct;
-    cdata[cc].speed_percentage = cdata[cc].speed_percentage_in_next_turn;
-    ++cdata[cc].turn;
-    update_emoicon();
+    cdata[ct].speed_percentage = cdata[ct].speed_percentage_in_next_turn;
+    ++cdata[ct].turn;
+    update_emoicon(cdata[ct]);
     if (ct == 0)
     {
         Message::instance().new_turn();
@@ -922,7 +900,7 @@ TurnResult pass_one_turn(bool time_passing)
         switch (cdata.player().turn % 10)
         {
         case 1:
-            for (auto&& chara : cdata.pc_and_pets())
+            for (auto&& chara : cdata.player_and_allies())
             {
                 if (chara.state() == Character::State::alive)
                 {
@@ -976,8 +954,7 @@ TurnResult pass_one_turn(bool time_passing)
                     {
                         efid = 454;
                         efp = 100;
-                        tc = cc;
-                        magic();
+                        magic(cdata[ct], cdata[ct]);
                     }
                 }
             }
@@ -993,39 +970,38 @@ TurnResult pass_one_turn(bool time_passing)
         }
     }
 
-    tc = cc;
-    if (cell_data.at(cdata[tc].position.x, cdata[tc].position.y)
+    if (cell_data.at(cdata[ct].position.x, cdata[ct].position.y)
             .mef_index_plus_one != 0)
     {
-        mef_proc(tc);
+        mef_proc(cdata[ct]);
     }
-    if (cdata[cc].buffs[0].id != 0)
+    if (cdata[ct].buffs[0].id != 0)
     {
         for (int cnt = 0; cnt < 16; ++cnt)
         {
-            if (cdata[cc].buffs[cnt].id == 0)
+            if (cdata[ct].buffs[cnt].id == 0)
             {
                 break;
             }
-            --cdata[cc].buffs[cnt].turns;
-            if (cdata[cc].buffs[cnt].turns <= 0)
+            --cdata[ct].buffs[cnt].turns;
+            if (cdata[ct].buffs[cnt].turns <= 0)
             {
-                if (cdata[cc].buffs[cnt].id == 16)
+                if (cdata[ct].buffs[cnt].id == 16)
                 {
-                    damage_hp(cdata[cc], 9999, -11);
+                    damage_hp(cdata[ct], 9999, -11);
                 }
-                buff_delete(cdata[cc], cnt);
+                buff_delete(cdata[ct], cnt);
                 --cnt;
                 continue;
             }
         }
     }
-    if (cdata[cc].choked > 0 || cdata[cc].sleep > 0 ||
-        cdata[cc].paralyzed > 0 || cdata[cc].dimmed >= 60)
+    if (cdata[ct].choked > 0 || cdata[ct].sleep > 0 ||
+        cdata[ct].paralyzed > 0 || cdata[ct].dimmed >= 60)
     {
-        if (cc == 0)
+        if (ct == 0)
         {
-            if (cdata[cc].choked)
+            if (cdata[ct].choked)
             {
                 await(g_config.animation_wait() * 6);
             }
@@ -1036,7 +1012,8 @@ TurnResult pass_one_turn(bool time_passing)
         }
         return TurnResult::turn_end;
     }
-    if (cdata[cc].drunk != 0 && cc != 0)
+
+    if (cdata[ct].drunk != 0 && ct != 0)
     {
         if (rnd(200) == 0)
         {
@@ -1047,97 +1024,91 @@ TurnResult pass_one_turn(bool time_passing)
                     continue;
                 }
                 if (dist(
-                        cdata[cc].position.x,
-                        cdata[cc].position.y,
+                        cdata[ct].position.x,
+                        cdata[ct].position.y,
                         cnt.position.x,
                         cnt.position.y) > 5)
                 {
                     continue;
                 }
-                if (fov_los(
-                        cdata[cc].position.x,
-                        cdata[cc].position.y,
-                        cnt.position.x,
-                        cnt.position.y) == 0)
+                if (!fov_los(cdata[ct].position, cnt.position))
                 {
                     continue;
                 }
-                if (cnt.index == cc || rnd(3) ||
+                if (cnt.index == ct || rnd(3) ||
                     map_data.type == mdata_t::MapType::world_map)
                 {
                     continue;
                 }
-                tc = cnt.index;
-                if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
+                if (is_in_fov(cdata[ct]) || is_in_fov(cnt))
                 {
                     txt(i18n::s.get(
                             "core.action.npc.drunk.gets_the_worse",
-                            cdata[cc],
-                            cdata[tc]),
+                            cdata[ct],
+                            cnt),
                         Message::color{ColorIndex::cyan});
                     txt(i18n::s.get("core.action.npc.drunk.dialog"));
                 }
                 if (rnd(4) == 0)
                 {
-                    if (tc != 0)
+                    if (cnt.index != 0)
                     {
-                        if (is_in_fov(cdata[cc]) || is_in_fov(cdata[tc]))
+                        if (is_in_fov(cdata[ct]) || is_in_fov(cnt))
                         {
                             txt(i18n::s.get(
-                                    "core.action.npc.drunk.annoyed.text",
-                                    cdata[tc]),
+                                    "core.action.npc.drunk.annoyed.text", cnt),
                                 Message::color{ColorIndex::cyan});
                             txt(i18n::s.get(
                                 "core.action.npc.drunk.annoyed.dialog"));
                         }
-                        cdata[tc].hate = 20;
-                        cdata[tc].enemy_id = cc;
-                        cdata[tc].emotion_icon = 218;
+                        cnt.hate = 20;
+                        cnt.enemy_id = ct;
+                        cnt.emotion_icon = 218;
                     }
                 }
                 break;
             }
         }
     }
-    if (cdata[cc].drunk >= 45 || cdata[cc].nutrition > 35000)
+    if (cdata[ct].drunk >= 45 || cdata[ct].nutrition > 35000)
     {
         if (rnd(60) == 0)
         {
-            chara_vomit(cdata[cc]);
+            chara_vomit(cdata[ct]);
             return TurnResult::turn_end;
         }
     }
-    if (cdata[cc].stops_activity_if_damaged == 1)
+    if (cdata[ct].stops_activity_if_damaged == 1)
     {
-        activity_handle_damage(cdata[cc]);
+        activity_handle_damage(cdata[ct]);
     }
-    if (cdata[cc].turn % 25 == 0)
+    if (cdata[ct].turn % 25 == 0)
     {
-        if (cdata[cc].curse_power != 0)
+        if (cdata[ct].curse_power != 0)
         {
-            damage_by_cursed_equipments();
+            damage_by_cursed_equipments(cdata[ct]);
         }
-        if (cdata[cc].has_cursed_equipments())
+        if (cdata[ct].has_cursed_equipments())
         {
-            proc_negative_enchantments(cdata[cc]);
+            proc_negative_enchantments(cdata[ct]);
         }
-        if (cdata[cc].is_pregnant())
+        if (cdata[ct].is_pregnant())
         {
-            proc_pregnant();
+            proc_pregnant(cdata[ct]);
         }
     }
-    if (cdata[cc].activity)
+    if (cdata[ct].activity)
     {
-        if (auto result = activity_proc(cdata[cc]))
+        if (auto result = activity_proc(cdata[ct]))
         {
             return *result;
         }
     }
-    if (cdata[cc].needs_refreshing_status())
+    if (cdata[ct].needs_refreshing_status())
     {
-        chara_refresh(cc);
+        chara_refresh(cdata[ct]);
     }
-    if (cdata[cc].state() == Character::State::alive)
+    if (cdata[ct].state() == Character::State::alive)
     {
         if (ct == 0)
         {
@@ -1153,26 +1124,26 @@ TurnResult pass_one_turn(bool time_passing)
 
 
 
-void update_emoicon()
+void update_emoicon(Character& chara)
 {
-    cdata[cc].emotion_icon -= 100;
-    if (cdata[cc].emotion_icon < 0)
+    chara.emotion_icon -= 100;
+    if (chara.emotion_icon < 0)
     {
-        cdata[cc].emotion_icon = 0;
+        chara.emotion_icon = 0;
     }
     if (map_data.indoors_flag == 2 && game_data.weather >= 3)
     {
-        cdata[cc].wet = 50;
+        chara.wet = 50;
     }
-    while (cdata[cc].experience >= cdata[cc].required_experience)
+    while (chara.experience >= chara.required_experience)
     {
-        if (cc == 0)
+        if (chara.index == 0)
         {
             snd("core.ding1");
             input_halt_input(HaltInput::alert);
         }
         r2 = 0;
-        gain_level(cdata[cc]);
+        gain_level(chara);
     }
 }
 
@@ -1180,13 +1151,12 @@ void update_emoicon()
 
 TurnResult turn_end()
 {
-    cc = ct;
-    if (cdata[cc].state() != Character::State::alive)
+    if (cdata[ct].state() != Character::State::alive)
     {
         return TurnResult::pass_one_turn;
     }
-    proc_turn_end(cc);
-    if (cc == 0)
+    proc_turn_end(cdata[ct]);
+    if (ct == 0)
     {
         if (game_data.character_and_status_for_gene != 0)
         {
@@ -1194,7 +1164,7 @@ TurnResult turn_end()
             {
                 game_data.character_and_status_for_gene += 10000;
                 game_data.activity_about_to_start = 100;
-                activity_others(cdata[cc], none);
+                activity_others(cdata[ct], none);
             }
         }
         if (cdata.player().inventory_weight_type >= 3)
@@ -1203,8 +1173,8 @@ TurnResult turn_end()
             {
                 txt(i18n::s.get("core.action.backpack_squashing"));
                 damage_hp(
-                    cdata[cc],
-                    cdata[cc].max_hp *
+                    cdata[ct],
+                    cdata[ct].max_hp *
                             (cdata.player().inventory_weight * 10 /
                                  cdata.player().max_inventory_weight +
                              10) /
@@ -1213,24 +1183,24 @@ TurnResult turn_end()
                     -6);
             }
         }
-        get_hungry(cdata[cc]);
-        refresh_speed(cdata[cc]);
+        get_hungry(cdata[ct]);
+        refresh_speed(cdata[ct]);
     }
     else if (map_data.type != mdata_t::MapType::world_map)
     {
-        cdata[cc].nutrition -= 16;
-        if (cdata[cc].nutrition < 6000)
+        cdata[ct].nutrition -= 16;
+        if (cdata[ct].nutrition < 6000)
         {
-            if (cdata[cc].has_anorexia() == 0)
+            if (cdata[ct].has_anorexia() == 0)
             {
-                cdata[cc].nutrition = 6000;
+                cdata[ct].nutrition = 6000;
             }
         }
     }
     if (game_data.left_turns_of_timestop > 0)
     {
         --game_data.left_turns_of_timestop;
-        if (cdata[cc].state() != Character::State::alive ||
+        if (cdata[ct].state() != Character::State::alive ||
             game_data.left_turns_of_timestop == 0)
         {
             txt(i18n::s.get("core.action.time_stop.ends"),
@@ -1238,7 +1208,7 @@ TurnResult turn_end()
         }
         else
         {
-            if (cc != 0)
+            if (ct != 0)
             {
                 update_screen();
                 await(g_config.animation_wait() * 10);
@@ -1258,10 +1228,9 @@ optional<TurnResult> pc_turn_pet_arena()
 
     game_data.executing_immediate_quest_status = 3;
     bool pet_exists = false;
-    for (int cc = 1; cc < 16; ++cc)
+    for (const auto& ally : cdata.allies())
     {
-        if (cdata[cc].state() == Character::State::alive &&
-            cdata[cc].relationship == 10)
+        if (ally.state() == Character::State::alive && ally.relationship == 10)
         {
             pet_exists = true;
             break;
@@ -1280,16 +1249,16 @@ optional<TurnResult> pc_turn_pet_arena()
         msg_halt();
         levelexitby = 4;
         snd("core.exitmap1");
-        for (int cc = 0; cc < 16; ++cc)
+        for (auto&& chara : cdata.player_and_allies())
         {
-            if (arenaop == 0 && followerin(cc) == 1 &&
-                cdata[cc].state() == Character::State::pet_dead)
+            if (arenaop == 0 && followerin(chara.index) == 1 &&
+                chara.state() == Character::State::pet_dead)
                 continue;
-            if (petarenawin != 1 && followerin(cc) == 1 &&
-                cdata[cc].state() == Character::State::pet_dead && rnd(5) == 0)
+            if (petarenawin != 1 && followerin(chara.index) == 1 &&
+                chara.state() == Character::State::pet_dead && rnd(5) == 0)
                 continue;
-            cdata[cc].set_state(
-                static_cast<Character::State>(followerexist(cc)));
+            chara.set_state(
+                static_cast<Character::State>(followerexist(chara.index)));
         }
         return TurnResult::exit_map;
     }
@@ -1299,15 +1268,15 @@ optional<TurnResult> pc_turn_pet_arena()
         player.direction = 0;
         auto action = key_check();
         f = 0;
-        for (int cnt = 0; cnt < 16; ++cnt)
+        for (const auto& chara : cdata.player_and_allies())
         {
             if (action == "south" || action == "west")
             {
-                p = 15 - cnt;
+                p = 15 - chara.index;
             }
             else
             {
-                p = cnt;
+                p = chara.index;
             }
             if (cdata[p].state() != Character::State::alive)
             {
@@ -1430,14 +1399,14 @@ optional<TurnResult> pc_turn_advance_time()
         if (item.number() > 0 &&
             the_item_db[itemid2int(item.id)]->category == ItemCategory::potion)
         {
-            item_db_on_drink(item, itemid2int(item.id));
+            item_db_on_drink(cdata.player(), item, itemid2int(item.id));
         }
     }
     if (trait(214) != 0 && rnd(250) == 0 &&
         map_data.type != mdata_t::MapType::world_map)
     {
         efid = 408;
-        magic();
+        magic(cdata.player(), cdata.player());
     }
     if (cdata[player.enemy_id].is_invisible() == 1 &&
         player.can_see_invisible() == 0 && cdata[player.enemy_id].wet == 0)
@@ -1531,217 +1500,214 @@ TurnResult pc_turn(bool advance_time)
 
 
 
-void proc_turn_end(int cc)
+void proc_turn_end(Character& chara)
 {
     int regen = 0;
     regen = 1;
-    if (cdata[cc].sleep > 0)
+    if (chara.sleep > 0)
     {
-        status_ailment_heal(cdata[cc], StatusAilment::sleep, 1);
-        if (cdata[cc].sleep > 0)
+        status_ailment_heal(chara, StatusAilment::sleep, 1);
+        if (chara.sleep > 0)
         {
-            cdata[cc].emotion_icon = 114;
+            chara.emotion_icon = 114;
         }
-        heal_hp(cdata[cc], 1);
-        heal_mp(cdata[cc], 1);
+        heal_hp(chara, 1);
+        heal_mp(chara, 1);
     }
-    if (cdata[cc].poisoned > 0)
+    if (chara.poisoned > 0)
     {
-        damage_hp(cdata[cc], rnd_capped(2 + sdata(11, cc) / 10), -4);
-        status_ailment_heal(cdata[cc], StatusAilment::poisoned, 1);
-        if (cdata[cc].poisoned > 0)
+        damage_hp(chara, rnd_capped(2 + sdata(11, chara.index) / 10), -4);
+        status_ailment_heal(chara, StatusAilment::poisoned, 1);
+        if (chara.poisoned > 0)
         {
-            cdata[cc].emotion_icon = 108;
+            chara.emotion_icon = 108;
         }
         regen = 0;
     }
-    if (cdata[cc].choked > 0)
+    if (chara.choked > 0)
     {
-        if (cdata[cc].choked % 3 == 0)
+        if (chara.choked % 3 == 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get("core.misc.status_ailment.choked"));
             }
         }
-        ++cdata[cc].choked;
-        if (cdata[cc].choked > 15)
+        ++chara.choked;
+        if (chara.choked > 15)
         {
-            damage_hp(cdata[cc], 500, -21);
+            damage_hp(chara, 500, -21);
         }
         regen = 0;
     }
-    if (cdata[cc].gravity > 0)
+    if (chara.gravity > 0)
     {
-        --cdata[cc].gravity;
-        if (cdata[cc].gravity == 0)
+        --chara.gravity;
+        if (chara.gravity == 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(chara))
             {
                 txt(i18n::s.get(
                     "core.misc.status_ailment.breaks_away_from_gravity",
-                    cdata[cc]));
+                    chara));
             }
         }
     }
-    if (cdata[cc].furious > 0)
+    if (chara.furious > 0)
     {
-        --cdata[cc].furious;
-        if (cdata[cc].furious == 0)
+        --chara.furious;
+        if (chara.furious == 0)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(chara))
             {
-                txt(i18n::s.get(
-                    "core.misc.status_ailment.calms_down", cdata[cc]));
+                txt(i18n::s.get("core.misc.status_ailment.calms_down", chara));
             }
         }
     }
-    if (cdata[cc].sick > 0)
+    if (chara.sick > 0)
     {
         if (rnd(80) == 0)
         {
             p = rnd(10);
-            if (!enchantment_find(cdata[cc], 60010 + p))
+            if (!enchantment_find(chara, 60010 + p))
             {
-                cdata[cc].attr_adjs[p] -=
-                    sdata.get(10 + p, cc).original_level / 25 + 1;
-                chara_refresh(cc);
+                chara.attr_adjs[p] -=
+                    sdata.get(10 + p, chara.index).original_level / 25 + 1;
+                chara_refresh(chara);
             }
         }
         if (rnd(5))
         {
             regen = 0;
         }
-        if (cc >= 16)
+        if (chara.index >= 16)
         {
-            if (cdata[cc].quality >= Quality::miracle)
+            if (chara.quality >= Quality::miracle)
             {
                 if (rnd(200) == 0)
                 {
-                    status_ailment_heal(cdata[cc], StatusAilment::sick);
+                    status_ailment_heal(chara, StatusAilment::sick);
                 }
             }
         }
     }
-    if (cdata[cc].blind > 0)
+    if (chara.blind > 0)
     {
-        status_ailment_heal(cdata[cc], StatusAilment::blinded, 1);
-        if (cdata[cc].blind > 0)
+        status_ailment_heal(chara, StatusAilment::blinded, 1);
+        if (chara.blind > 0)
         {
-            cdata[cc].emotion_icon = 110;
+            chara.emotion_icon = 110;
         }
     }
-    if (cdata[cc].paralyzed > 0)
+    if (chara.paralyzed > 0)
     {
         regen = 0;
-        status_ailment_heal(cdata[cc], StatusAilment::paralyzed, 1);
-        if (cdata[cc].paralyzed > 0)
+        status_ailment_heal(chara, StatusAilment::paralyzed, 1);
+        if (chara.paralyzed > 0)
         {
-            cdata[cc].emotion_icon = 115;
+            chara.emotion_icon = 115;
         }
     }
-    if (cdata[cc].confused > 0)
+    if (chara.confused > 0)
     {
-        status_ailment_heal(cdata[cc], StatusAilment::confused, 1);
-        if (cdata[cc].confused > 0)
+        status_ailment_heal(chara, StatusAilment::confused, 1);
+        if (chara.confused > 0)
         {
-            cdata[cc].emotion_icon = 111;
+            chara.emotion_icon = 111;
         }
     }
-    if (cdata[cc].fear > 0)
+    if (chara.fear > 0)
     {
-        status_ailment_heal(cdata[cc], StatusAilment::fear, 1);
-        if (cdata[cc].fear > 0)
+        status_ailment_heal(chara, StatusAilment::fear, 1);
+        if (chara.fear > 0)
         {
-            cdata[cc].emotion_icon = 113;
+            chara.emotion_icon = 113;
         }
     }
-    if (cdata[cc].dimmed > 0)
+    if (chara.dimmed > 0)
     {
-        status_ailment_heal(cdata[cc], StatusAilment::dimmed, 1);
-        if (cdata[cc].dimmed > 0)
+        status_ailment_heal(chara, StatusAilment::dimmed, 1);
+        if (chara.dimmed > 0)
         {
-            cdata[cc].emotion_icon = 112;
+            chara.emotion_icon = 112;
         }
     }
-    if (cdata[cc].drunk > 0)
+    if (chara.drunk > 0)
     {
-        status_ailment_heal(cdata[cc], StatusAilment::drunk, 1);
-        if (cdata[cc].drunk > 0)
+        status_ailment_heal(chara, StatusAilment::drunk, 1);
+        if (chara.drunk > 0)
         {
-            cdata[cc].emotion_icon = 106;
+            chara.emotion_icon = 106;
         }
     }
-    if (cdata[cc].bleeding > 0)
+    if (chara.bleeding > 0)
     {
         damage_hp(
-            cdata[cc],
-            rnd_capped(cdata[cc].hp * (1 + cdata[cc].bleeding / 4) / 100 + 3) +
-                1,
+            chara,
+            rnd_capped(chara.hp * (1 + chara.bleeding / 4) / 100 + 3) + 1,
             -13);
         status_ailment_heal(
-            cdata[cc],
+            chara,
             StatusAilment::bleeding,
-            1 + cdata[cc].cures_bleeding_quickly() * 3);
-        if (cdata[cc].bleeding > 0)
+            1 + chara.cures_bleeding_quickly() * 3);
+        if (chara.bleeding > 0)
         {
-            cdata[cc].emotion_icon = 109;
+            chara.emotion_icon = 109;
         }
         regen = 0;
-        spillblood(cdata[cc].position.x, cdata[cc].position.y);
+        spillblood(chara.position.x, chara.position.y);
     }
-    if (cdata[cc].wet > 0)
+    if (chara.wet > 0)
     {
-        --cdata[cc].wet;
+        --chara.wet;
     }
-    if (cdata[cc].insane > 0)
+    if (chara.insane > 0)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(chara))
         {
             if (rnd(3) == 0)
             {
-                txt(i18n::s.get("core.misc.status_ailment.insane", cdata[cc]),
+                txt(i18n::s.get("core.misc.status_ailment.insane", chara),
                     Message::color{ColorIndex::cyan});
             }
         }
         if (rnd(5) == 0)
         {
-            cdata[cc].confused += rnd(10);
+            chara.confused += rnd(10);
         }
         if (rnd(5) == 0)
         {
-            cdata[cc].dimmed += rnd(10);
+            chara.dimmed += rnd(10);
         }
         if (rnd(5) == 0)
         {
-            cdata[cc].sleep += rnd(5);
+            chara.sleep += rnd(5);
         }
         if (rnd(5) == 0)
         {
-            cdata[cc].fear += rnd(10);
+            chara.fear += rnd(10);
         }
-        status_ailment_heal(cdata[cc], StatusAilment::insane, 1);
-        if (cdata[cc].insane > 0)
+        status_ailment_heal(chara, StatusAilment::insane, 1);
+        if (chara.insane > 0)
         {
-            cdata[cc].emotion_icon = 124;
+            chara.emotion_icon = 124;
         }
     }
-    if (cc == 0)
+    if (chara.index == 0)
     {
-        if (cdata[cc].nutrition < 2000)
+        if (chara.nutrition < 2000)
         {
-            if (cdata[cc].nutrition < 1000)
+            if (chara.nutrition < 1000)
             {
-                if (cdata[cc].activity.type != Activity::Type::eat)
+                if (chara.activity.type != Activity::Type::eat)
                 {
-                    damage_hp(
-                        cdata[cc], rnd(2) + cdata.player().max_hp / 50, -3);
+                    damage_hp(chara, rnd(2) + cdata.player().max_hp / 50, -3);
                     if (game_data.play_turns % 10 == 0)
                     {
-                        rowact_check(cdata[cc]);
+                        rowact_check(chara);
                         if (rnd(50) == 0)
                         {
-                            modify_weight(cdata[cc], -1);
+                            modify_weight(chara, -1);
                         }
                     }
                 }
@@ -1765,32 +1731,32 @@ void proc_turn_end(int cc)
             if (game_data.continuous_active_hours >= 50)
             {
                 regen = 0;
-                damage_sp(cdata[cc], 1);
+                damage_sp(chara, 1);
             }
         }
     }
-    else if (cdata[cc].related_quest_id != 0)
+    else if (chara.related_quest_id != 0)
     {
-        p = cdata[cc].related_quest_id - 1;
+        p = chara.related_quest_id - 1;
         if (quest_data[p].delivery_has_package_flag > 0)
         {
-            cdata[cc].emotion_icon = 122;
+            chara.emotion_icon = 122;
         }
         if (quest_data[p].progress != 0)
         {
-            if (cdata[cc].turn % 2 == 1)
+            if (chara.turn % 2 == 1)
             {
-                cdata[cc].emotion_icon = 123;
+                chara.emotion_icon = 123;
             }
         }
     }
     if (game_data.executing_immediate_quest_type == 1009)
     {
-        if (cc >= 57)
+        if (chara.index >= 57)
         {
-            if (cdata[cc].impression >= 53)
+            if (chara.impression >= 53)
             {
-                cdata[cc].emotion_icon = 225;
+                chara.emotion_icon = 225;
             }
         }
     }
@@ -1798,11 +1764,11 @@ void proc_turn_end(int cc)
     {
         if (rnd(6) == 0)
         {
-            heal_hp(cdata[cc], rnd_capped(sdata(154, cc) / 3 + 1) + 1);
+            heal_hp(chara, rnd_capped(sdata(154, chara.index) / 3 + 1) + 1);
         }
         if (rnd(5) == 0)
         {
-            heal_mp(cdata[cc], rnd_capped(sdata(155, cc) / 2 + 1) + 1);
+            heal_mp(chara, rnd_capped(sdata(155, chara.index) / 2 + 1) + 1);
         }
     }
 }

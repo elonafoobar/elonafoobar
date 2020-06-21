@@ -15,17 +15,16 @@
 #include "random.hpp"
 #include "variables.hpp"
 
+
+
 namespace elona
 {
 
-void shop_refresh_on_talk()
+void shop_refresh_on_talk(Character& shopkeeper)
 {
-    if (tc > 0)
+    if (shopkeeper.role == Role::trader)
     {
-        if (cdata[tc].role == Role::trader)
-        {
-            map_calc_trade_goods_price();
-        }
+        map_calc_trade_goods_price();
     }
     mode = 6;
     ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
@@ -33,37 +32,39 @@ void shop_refresh_on_talk()
     bool is_temporary = false;
 
     auto shop_inv =
-        lua::get_data("core.shop_inventory", static_cast<int>(cdata[tc].role));
+        lua::get_data("core.shop_inventory", static_cast<int>(shopkeeper.role));
     if (shop_inv)
     {
         is_temporary = shop_inv->optional_or<bool>("is_temporary", false);
     }
 
-    if (cdata[tc].shop_store_id == 0)
+    if (shopkeeper.shop_store_id == 0)
     {
         if (is_temporary)
         {
-            cdata[tc].shop_store_id = 1;
+            shopkeeper.shop_store_id = 1;
         }
         else
         {
             ++game_data.next_inventory_serial_id;
-            cdata[tc].shop_store_id = game_data.next_inventory_serial_id;
+            shopkeeper.shop_store_id = game_data.next_inventory_serial_id;
         }
-        shop_refresh();
+        shop_refresh(shopkeeper);
     }
-    else if (game_data.date.hours() >= cdata[tc].time_to_restore)
+    else if (game_data.date.hours() >= shopkeeper.time_to_restore)
     {
-        shop_refresh();
+        shop_refresh(shopkeeper);
     }
     else
     {
         ctrl_file(
             FileOperation2::map_items_read, u8"shop"s + invfile + u8".s2");
     }
-    invfile = cdata[tc].shop_store_id;
+    invfile = shopkeeper.shop_store_id;
     shop_load_shoptmp();
 }
+
+
 
 void shop_load_shoptmp()
 {
@@ -72,40 +73,44 @@ void shop_load_shoptmp()
     mode = 0;
 }
 
-void shop_refresh()
+
+
+void shop_refresh(Character& shopkeeper)
 {
     for (auto&& item : inv.ground())
     {
         item.remove();
     }
 
-    lua::call("core.Impl.shop_inventory.generate", lua::handle(cdata[tc]));
+    lua::call("core.Impl.shop_inventory.generate", lua::handle(shopkeeper));
 
     if (g_config.restock_interval())
     {
-        cdata[tc].time_to_restore =
+        shopkeeper.time_to_restore =
             game_data.date.hours() + 24 * g_config.restock_interval();
     }
     else
     {
-        cdata[tc].time_to_restore = game_data.date.hours() - 1;
+        shopkeeper.time_to_restore = game_data.date.hours() - 1;
     }
 }
 
-void shop_sell_item()
+
+
+void shop_sell_item(optional_ref<Character> shopkeeper)
 {
     mode = 6;
     ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
     ctrl_file(FileOperation2::map_items_read, u8"shop"s + invfile + u8".s2");
     shoptrade = 0;
-    if (tc > 0)
+    if (shopkeeper)
     {
-        if (cdata[tc].role == Role::trader)
+        if (shopkeeper->role == Role::trader)
         {
             shoptrade = 1;
         }
     }
-    ctrl_inventory();
+    ctrl_inventory(shopkeeper);
 }
 
 } // namespace elona

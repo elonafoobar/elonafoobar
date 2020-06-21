@@ -144,13 +144,7 @@ void Console::grab_input()
 {
     using namespace snail;
 
-    bool reenable = false;
-
-    if (!_enabled)
-    {
-        _enabled = true;
-        reenable = true;
-    }
+    _enabled = true;
 
     _input = "";
     mesbox(_input, true);
@@ -224,10 +218,7 @@ void Console::grab_input()
 
     onkey_0();
 
-    if (reenable)
-    {
-        _enabled = false;
-    }
+    _enabled = false;
 }
 
 
@@ -278,7 +269,7 @@ void Console::register_builtin_commands()
             return;
 
         game_data.wizard = 1;
-        cdatan(1, 0) = "*Debug*";
+        cdata.player().alias = "*Debug*";
         _term.println("Wizard mode activated.");
     });
 
@@ -292,7 +283,7 @@ void Console::register_builtin_commands()
             _term.println("Wizard mode activated.");
         }
         debug::voldemort = true;
-        cdatan(1, 0) = "*You-Know-Who*";
+        cdata.player().alias = "*You-Know-Who*";
         _term.println("I AM LORD VOLDEMORT.");
     });
 
@@ -302,7 +293,7 @@ void Console::register_builtin_commands()
 
         debug::voldemort = false;
         game_data.wizard = 0;
-        cdatan(1, 0) = random_title(RandomTitleType::character);
+        cdata.player().alias = random_title(RandomTitleType::character);
         _term.println("Wizard mode inactivated.");
     });
 
@@ -322,6 +313,7 @@ void Console::register_builtin_commands()
             for (int _i = 0; _i < num; ++_i)
             {
                 what_do_you_wish_for(
+                    cdata.player(),
                     wish ? optional<std::string>{*wish}
                          : optional<std::string>{});
             }
@@ -348,7 +340,7 @@ void Console::register_builtin_commands()
             _term.println("Activate wizard mode to run the command.");
             return;
         }
-        for (int i = 0; i < 61; ++i)
+        for (int i = 2; i < 61; ++i)
         {
             spact(i) = 1;
         }

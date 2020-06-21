@@ -10,6 +10,11 @@
 namespace elona
 {
 
+struct Character;
+struct Item;
+
+
+
 using GodId = std::string;
 
 
@@ -72,8 +77,8 @@ inline int godid2int(const GodId& id)
 
 void txtgod(const GodId& id, int type);
 void god_modify_piety(int amount);
-void set_npc_religion();
-void apply_god_blessing(int cc);
+void set_npc_religion(Character& chara);
+void god_apply_blessing(Character& believer);
 std::string get_god_description(int);
 void god_proc_switching_penalty(const GodId& new_religion);
 void switch_religion();
@@ -83,5 +88,7 @@ std::string god_name(const GodId& id);
 std::string god_name(int legacy_god_id);
 
 void god_fail_to_take_over_penalty();
+
+bool god_is_offerable(Item& offering, Character& believer);
 
 } // namespace elona

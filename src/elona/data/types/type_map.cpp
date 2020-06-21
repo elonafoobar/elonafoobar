@@ -49,8 +49,8 @@ MapDefData MapDefDB::convert(
     DATA_OPT_FUNC(generator);
     DATA_OPT_FUNC(chara_filter);
 
-    Position outer_map_position_{outer_map_position.get<int>("x"),
-                                 outer_map_position.get<int>("y")};
+    Position outer_map_position_{
+        outer_map_position.get<int>("x"), outer_map_position.get<int>("y")};
 
     optional<data::InstanceId> deed_ = none;
     if (deed)

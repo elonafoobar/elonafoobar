@@ -43,8 +43,8 @@ std::vector<Bone> parse_bone_file(const fs::path& filepath)
     if (!in)
         return {};
 
-    const std::string content{std::istreambuf_iterator<char>{in},
-                              std::istreambuf_iterator<char>{}};
+    const std::string content{
+        std::istreambuf_iterator<char>{in}, std::istreambuf_iterator<char>{}};
 
     try
     {
@@ -183,7 +183,6 @@ void show_game_score_ranking(
 
 TurnResult pc_died()
 {
-    cc = 0;
     snd("core.dead1");
     screenupdate = -1;
     update_screen();
@@ -210,8 +209,8 @@ TurnResult pc_died()
 
     Bone this_death;
     this_death.score = calcscore();
-    this_death.alias = cdatan(1, 0);
-    this_death.name = cdatan(0, 0);
+    this_death.alias = cdata.player().alias;
+    this_death.name = cdata.player().name;
     this_death.last_words = last_words;
     this_death.date = i18n::s.get(
         "core.misc.death.date",

@@ -259,13 +259,14 @@ void wish_for_character()
 {
     inputlog = strutil::remove_str(inputlog, u8"summon");
     flt();
-    chara_create(
-        -1,
-        select_wished_character(inputlog),
-        cdata.player().position.x,
-        cdata.player().position.y);
-    cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
-    txt(cdatan(0, rc) + " is summoned.");
+    if (const auto chara = chara_create(
+            -1,
+            select_wished_character(inputlog),
+            cdata.player().position.x,
+            cdata.player().position.y))
+    {
+        txt(chara->name + " is summoned.");
+    }
 }
 
 
@@ -273,13 +274,15 @@ void wish_for_character()
 void wish_for_card()
 {
     flt();
+    nooracle = 1;
     chara_create(56, select_wished_character(inputlog), -3, 0);
+    nooracle = 0;
     flt();
     if (const auto item = itemcreate_extra_inv(504, cdata.player().position, 0))
     {
         item->subname = charaid2int(cdata.tmp().id);
         item->param1 = cdata.tmp().image;
-        chara_vanquish(56);
+        chara_vanquish(cdata.tmp());
         cell_refresh(cdata.player().position.x, cdata.player().position.y);
         txt(i18n::s.get("core.wish.something_appears_from_nowhere", *item));
     }
@@ -290,13 +293,15 @@ void wish_for_card()
 void wish_for_figure()
 {
     flt();
+    nooracle = 1;
     chara_create(56, select_wished_character(inputlog), -3, 0);
+    nooracle = 0;
     flt();
     if (const auto item = itemcreate_extra_inv(503, cdata.player().position, 0))
     {
         item->subname = charaid2int(cdata.tmp().id);
         item->param1 = cdata.tmp().image;
-        chara_vanquish(56);
+        chara_vanquish(cdata.tmp());
         cell_refresh(cdata.player().position.x, cdata.player().position.y);
         txt(i18n::s.get("core.wish.something_appears_from_nowhere", *item));
     }
@@ -408,7 +413,7 @@ bool grant_special_wishing(const std::string& wish)
             if (stat == 1)
             {
                 txt(i18n::s.get("core.wish.wish_alias.new_alias", cmaka));
-                cdatan(1, 0) = cmaka;
+                cdata.player().alias = cmaka;
             }
             else
             {
@@ -498,7 +503,7 @@ bool grant_special_wishing(const std::string& wish)
 
 
 
-bool wish_for_item(const std::string& input)
+bool wish_for_item(Character& chara, const std::string& input)
 {
     using namespace strutil;
 
@@ -588,7 +593,7 @@ bool wish_for_item(const std::string& input)
 
         nostack = 1;
         nooracle = 1;
-        auto item = itemcreate_extra_inv(id, cdata[cc].position, 0);
+        auto item = itemcreate_extra_inv(id, chara.position, 0);
         nooracle = 0;
 
         if (!item)
@@ -621,8 +626,7 @@ bool wish_for_item(const std::string& input)
         {
             item->remove();
             flt();
-            if (const auto well =
-                    itemcreate_extra_inv(516, cdata[cc].position, 3))
+            if (const auto well = itemcreate_extra_inv(516, chara.position, 3))
             {
                 well->curse_state = CurseState::blessed;
                 txt(i18n::s.get("core.wish.it_is_sold_out"));
@@ -697,8 +701,7 @@ bool wish_for_skill(const std::string& input)
             continue;
         }
 
-        auto name = i18n::s.get_m(
-            "ability", the_ability_db.get_id_from_legacy(id)->get(), "name");
+        auto name = the_ability_db.get_text(id, "name");
         int similarity = 0;
         if (name == wish)
         {
@@ -727,8 +730,7 @@ bool wish_for_skill(const std::string& input)
     if (!selector.empty())
     {
         const auto id = selector.get_force();
-        const auto name = i18n::s.get_m(
-            "ability", the_ability_db.get_id_from_legacy(id)->get(), "name");
+        const auto name = the_ability_db.get_text(id, "name");
         if (!name.empty())
         {
             if (sdata.get(id, 0).original_level == 0)
@@ -761,7 +763,7 @@ bool wish_for_skill(const std::string& input)
 
 
 
-bool process_wish(optional<std::string> wish)
+bool process_wish(Character& chara, optional<std::string> wish)
 {
     using namespace strutil;
 
@@ -857,7 +859,7 @@ bool process_wish(optional<std::string> wish)
         return true;
     }
 
-    if (!skip_item && wish_for_item(inputlog))
+    if (!skip_item && wish_for_item(chara, inputlog))
     {
         return true;
     }
@@ -897,9 +899,9 @@ bool process_wish(optional<std::string> wish)
 namespace elona
 {
 
-bool what_do_you_wish_for(optional<std::string> wish)
+bool what_do_you_wish_for(Character& chara, optional<std::string> wish)
 {
-    const auto did_wish_something = process_wish(wish);
+    const auto did_wish_something = process_wish(chara, wish);
     if (did_wish_something)
     {
         wish_end();

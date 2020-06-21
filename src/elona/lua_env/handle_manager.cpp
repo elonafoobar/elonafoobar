@@ -8,7 +8,6 @@
 #include "../config.hpp"
 #include "../item.hpp"
 #include "../log.hpp"
-#include "../macro.hpp"
 #include "api_manager.hpp"
 #include "event_manager.hpp"
 #include "lua_env.hpp"
@@ -51,7 +50,7 @@ void HandleManager::bind(LuaEnv& lua)
 
 
 
-void HandleManager::create_chara_handle(const Character& chara)
+void HandleManager::create_chara_handle(Character& chara)
 {
     if (chara.state() == Character::State::empty)
     {
@@ -63,7 +62,7 @@ void HandleManager::create_chara_handle(const Character& chara)
 
 
 
-void HandleManager::create_item_handle(const Item& item)
+void HandleManager::create_item_handle(Item& item)
 {
     if (item.number() == 0)
     {
@@ -75,14 +74,14 @@ void HandleManager::create_item_handle(const Item& item)
 
 
 
-void HandleManager::remove_chara_handle(const Character& chara)
+void HandleManager::remove_chara_handle(Character& chara)
 {
     remove_handle(chara);
 }
 
 
 
-void HandleManager::remove_item_handle(const Item& item)
+void HandleManager::remove_item_handle(Item& item)
 {
     remove_handle(item);
 }
@@ -90,13 +89,13 @@ void HandleManager::remove_item_handle(const Item& item)
 
 
 // Handlers for brand-new instances of characters/objects being created
-void HandleManager::create_chara_handle_run_callbacks(const Character& chara)
+void HandleManager::create_chara_handle_run_callbacks(Character& chara)
 {
     assert(chara.state() != Character::State::empty);
     create_chara_handle(chara);
 
     auto handle = get_handle(chara);
-    UNUSED(handle);
+    (void)handle;
     assert(handle != sol::lua_nil);
     lua().get_event_manager().trigger(
         lua::CharacterInstanceEvent("core.character_created", chara));
@@ -104,13 +103,13 @@ void HandleManager::create_chara_handle_run_callbacks(const Character& chara)
 
 
 
-void HandleManager::create_item_handle_run_callbacks(const Item& item)
+void HandleManager::create_item_handle_run_callbacks(Item& item)
 {
     assert(item.number() != 0);
     create_item_handle(item);
 
     auto handle = get_handle(item);
-    UNUSED(handle);
+    (void)handle;
     assert(handle != sol::lua_nil);
     lua().get_event_manager().trigger(
         lua::ItemInstanceEvent("core.item_created", item));
@@ -120,20 +119,13 @@ void HandleManager::create_item_handle_run_callbacks(const Item& item)
 
 // Handlers for invalidation of characters/items (character death, item count is
 // 0)
-void HandleManager::remove_chara_handle_run_callbacks(const Character& chara)
+void HandleManager::remove_chara_handle_run_callbacks(Character& chara)
 {
     auto handle = get_handle(chara);
     if (handle == sol::lua_nil)
     {
         return;
     }
-
-    // If the handle already exists, the object it references has to be invalid.
-    // Otherwise the handle would be mistakenly invalidated when the thing it
-    // points to is still valid.
-    int index = handle["__index"];
-    UNUSED(index);
-    assert(cdata[index].state() != Character::State::alive);
 
     lua().get_event_manager().trigger(
         lua::CharacterInstanceEvent("core.character_removed", chara));
@@ -142,20 +134,13 @@ void HandleManager::remove_chara_handle_run_callbacks(const Character& chara)
 
 
 
-void HandleManager::remove_item_handle_run_callbacks(const Item& item)
+void HandleManager::remove_item_handle_run_callbacks(Item& item)
 {
     auto handle = get_handle(item);
     if (handle == sol::lua_nil)
     {
         return;
     }
-
-    // If the handle already exists, the object it references has to be invalid.
-    // Otherwise the handle would be mistakenly invalidated when the thing it
-    // points to is still valid.
-    int index = handle["__index"];
-    UNUSED(index);
-    assert(inv[index].number() == 0);
 
     lua().get_event_manager().trigger(
         lua::ItemInstanceEvent("core.item_removed", item));
@@ -178,9 +163,12 @@ void HandleManager::clear_map_local_handles()
     {
         remove_chara_handle(cdata[i]);
     }
-    for (auto&& item : inv.map_local())
+    for (auto&& inv_ : inv.map_local())
     {
-        remove_item_handle(item);
+        for (auto&& item : inv_)
+        {
+            remove_item_handle(item);
+        }
     }
 }
 

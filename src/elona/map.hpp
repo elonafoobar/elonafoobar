@@ -6,7 +6,9 @@
 
 #include "data/types/type_map_chip.hpp"
 #include "pic_loader/extent.hpp"
+#include "serialization/macros.hpp"
 #include "shared_id.hpp"
+
 
 
 namespace elona
@@ -71,8 +73,21 @@ struct MapData
 extern MapData map_data;
 
 
+
+// @see lua_env/api/classes/class_LuaMapGenerator.cpp
+struct MapGenerator
+{
+};
+
+
+
 struct Cell
 {
+    /**
+     * The actual map chip of this cell.
+     */
+    int chip_id_actual{};
+
     /**
      * The chip that is displayed when this cell is out of the player's field of
      * view.
@@ -87,41 +102,161 @@ struct Cell
      */
     int chara_index_plus_one{};
 
-    /**
-     * The actual map chip of this cell.
-     */
-    int chip_id_actual{};
+
 
     /**
-     * Absurdly complicated fields for storing item appearance data. They share
-     * the same format.
+     * Internal representation of item information at the cell:
      *
-     * For 1 item:
-     * Upper four bytes are item chip ID.
-     * Lower four bytes are item color ID.
+     * The data is represented by 64 bit unsigned integer. It has 5 sections.
      *
-     * For 2 items:
-     * Value is (-1) * ((top_item_index - 5080)
-     *               +  (bottom_item_index - 5080) * 1000
-     *               +  999 * 1000000)
+     *    xxxx aaaaaaaaaaaaaaa bbbbbbbbbbbbbbb ccccccccccccccc ddddddddddddddd
+     *            section 2       section 3       section 4       section 5
+     *  section 1
      *
-     * Since 5080 + 999 is 6079, if this index is encountered then the third
-     * item index is skipped.
+     * Section 1 consists of 4 bit and section 2-5 consist of 15 bit.
+     * Section 1 may be 5 different states:
      *
-     * For 3 items:
-     * Value is (-1) * ((top_item_index - 5080)
-     *               +  (middle_item_index - 5080) * 1000
-     *               +  (bottom_item_index - 5080) * 1000000)
+     * 0000: there is no items.
+     * 0001: there is 5-9 items.
+     * 0011: there is 10-14 items.
+     * 0111: there is 15-19 items.
+     * 1111: there is 20- items.
      *
-     * For 4 or more items:
-     * Upper two bytes make 363 (item bag chip ID)
-     * Lower two bytes make 0 (colorless ID)
+     * If there is 1-4 items at the cell, section 2-5 store item index plus one
+     * (0 means no item).
      *
-     * Item indices are not used in the 1 or 4 item case, but they are used for
-     * the 2 or 3 item case.
+     * Section 5 stores the item in the bottom, section 4 stores 2nd, ....
+     * and section 2 stores the item in the top of the stack.
+     *
+     * Thus, if the cell is empty, the internal value is 0.
      */
-    int item_appearances_memory{};
-    int item_appearances_actual{};
+    struct ItemInfo
+    {
+        static constexpr size_t max_stacks = 4;
+
+
+
+        ItemInfo() noexcept = default;
+        ItemInfo(const ItemInfo&) noexcept = default;
+        ItemInfo(ItemInfo&&) noexcept = default;
+        ItemInfo& operator=(const ItemInfo&) noexcept = default;
+        ItemInfo& operator=(ItemInfo&&) noexcept = default;
+        ~ItemInfo() = default;
+
+
+
+        bool is_empty() const noexcept
+        {
+            return _inner == 0;
+        }
+
+
+        void clear() noexcept
+        {
+            _inner = 0;
+        }
+
+
+        int stack_count() const noexcept
+        {
+            if (_inner == 0)
+                return 0;
+            else if (_inner & (1ULL << 63))
+                return -4;
+            else if (_inner & (1ULL << 62))
+                return -3;
+            else if (_inner & (1ULL << 61))
+                return -2;
+            else if (_inner & (1ULL << 60))
+                return -1;
+            else if (_inner & (32767ULL << 45))
+                return 4;
+            else if (_inner & (32767ULL << 30))
+                return 3;
+            else if (_inner & (32767ULL << 15))
+                return 2;
+            else
+                return 1;
+        }
+
+
+        std::array<int, max_stacks> item_indice() const noexcept
+        {
+            std::array<int, max_stacks> ret;
+            for (auto&& x : ret)
+                x = 0;
+
+            if (_inner == 0)
+                return ret;
+            if (_inner & (15ULL << 60))
+                return ret;
+
+            ret[0] = (_inner & (32767ULL << (15 * 0))) >> (15 * 0);
+            ret[1] = (_inner & (32767ULL << (15 * 1))) >> (15 * 1);
+            ret[2] = (_inner & (32767ULL << (15 * 2))) >> (15 * 2);
+            ret[3] = (_inner & (32767ULL << (15 * 3))) >> (15 * 3);
+
+            return ret;
+        }
+
+
+
+        void set(
+            const std::array<int, max_stacks>& item_indice_plus_one,
+            size_t number_of_items) noexcept
+        {
+            if (number_of_items == 0)
+            {
+                clear();
+            }
+            else if (number_of_items >= max_stacks + 1)
+            {
+                if (number_of_items >= (max_stacks + 1) * 4)
+                {
+                    _inner = 0xF000'0000'0000'0000ULL;
+                }
+                else if (number_of_items >= (max_stacks + 1) * 3)
+                {
+                    _inner = 0x7000'0000'0000'0000ULL;
+                }
+                else if (number_of_items >= (max_stacks + 1) * 2)
+                {
+                    _inner = 0x3000'0000'0000'0000ULL;
+                }
+                else
+                {
+                    _inner = 0x1000'0000'0000'0000ULL;
+                }
+            }
+            else
+            {
+                _inner = 0;
+                for (size_t i = 0; i < max_stacks; ++i)
+                {
+                    const auto index_plus_one = item_indice_plus_one[i];
+                    _inner |= static_cast<decltype(_inner)>(index_plus_one)
+                        << (15 * i);
+                }
+            }
+        }
+
+
+
+        template <typename Archive>
+        void serialize(Archive& ar)
+        {
+            ar(_inner);
+        }
+
+
+
+    private:
+        uint64_t _inner = 0;
+    };
+
+
+    ItemInfo item_info_actual{};
+    ItemInfo item_info_memory{};
 
     /**
      * Feat data. Value is transferred into feat() as follows:
@@ -164,41 +299,49 @@ struct Cell
      */
     void unpack_from(elona_vector3<int>& legacy_map, int x, int y);
 
-    /**
-     * Moves part of `map` fields into this struct. To be called after
-     * deserializing `map`.
-     */
-    void partly_unpack_from(elona_vector3<int>& legacy_map, int x, int y);
 
-    /**
-     * Clear this Cell.
-     */
-    void clear();
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Cell");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, chip_id_actual);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, chip_id_memory);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, chara_index_plus_one);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, item_info_actual);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, item_info_memory);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, feats);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, blood_and_fragments);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, mef_index_plus_one);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, light);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
+    }
 };
+
+
 
 struct CellData
 {
-    template <typename T>
-    using Grid = std::vector<std::vector<T>>;
-
-    CellData()
-    {
-    }
+    CellData() = default;
 
 
     Cell& at(int x, int y)
     {
-        return cells.at(static_cast<size_t>(y)).at(static_cast<size_t>(x));
+        return cells.at(y * width_ + x);
     }
 
 
-    int width() const
+    int width() const noexcept
     {
         return width_;
     }
 
 
-    int height() const
+    int height() const noexcept
     {
         return height_;
     }
@@ -208,20 +351,37 @@ struct CellData
     void init(int width, int height);
 
 
-    // Helper method to pack all cell data to `map`.
-    void pack_to(elona_vector3<int>& legacy_map);
+
+    /**
+     * Reload tiles from @a tile_grid. Other properties are not modified.
+     *
+     * @param tile_grid The serialized array of tiles. Its size must be equal to
+     * @ref width_ times @ref height_.
+     */
+    void load_tile_grid(const std::vector<int>& tile_grid);
 
 
-    /// Helper method to unpack all cell data from `map`.
-    /// @param clear Whether the previous data is cleared or not. If it is true,
-    /// the size of `map` must be the same as the previous one.
-    void unpack_from(elona_vector3<int>& legacy_map, bool clear = true);
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "CellData");
+
+        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "width", width_);
+        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "height", height_);
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, cells);
+
+        ELONA_SERIALIZATION_STRUCT_END();
+        /* clang-format on */
+    }
+
 
 
 private:
     int width_{};
     int height_{};
-    Grid<Cell> cells;
+    std::vector<Cell> cells;
 };
 
 extern CellData cell_data;
@@ -315,8 +475,8 @@ void map_global_proc_diastrophism();
 void map_global_prepare();
 void map_global_place_entrances();
 void map_clear_material_spots_and_light();
-void map_global_proc_travel_events();
-void sense_map_feats_on_move();
+void map_global_proc_travel_events(Character& chara);
+void sense_map_feats_on_move(Character& chara);
 void prepare_charas_for_map_unload();
 void spillblood(int = 0, int = 0, int = 0);
 void spillfrag(int = 0, int = 0, int = 0);

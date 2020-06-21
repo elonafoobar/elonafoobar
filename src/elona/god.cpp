@@ -12,7 +12,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
-#include "macro.hpp"
+#include "lua_env/interface.hpp"
 #include "magic.hpp"
 #include "message.hpp"
 #include "random.hpp"
@@ -35,43 +35,59 @@ void txtgod(const GodId& id, int type)
     switch (type)
     {
     case 12:
-        message = i18n::s.get_m_optional("god", id, "random").value_or("");
+        message = the_god_db.get_text_optional(data::InstanceId{id}, "random")
+                      .value_or("");
         break;
     case 9:
-        message = i18n::s.get_m_optional("god", id, "kill").value_or("");
+        message = the_god_db.get_text_optional(data::InstanceId{id}, "kill")
+                      .value_or("");
         break;
     case 10:
-        message = i18n::s.get_m_optional("god", id, "night").value_or("");
+        message = the_god_db.get_text_optional(data::InstanceId{id}, "night")
+                      .value_or("");
         break;
     case 11:
-        message = i18n::s.get_m_optional("god", id, "welcome").value_or("");
+        message = the_god_db.get_text_optional(data::InstanceId{id}, "welcome")
+                      .value_or("");
         break;
     case 5:
-        message = i18n::s.get_m_optional("god", id, "believe").value_or("");
+        message = the_god_db.get_text_optional(data::InstanceId{id}, "believe")
+                      .value_or("");
         break;
     case 1:
-        message = i18n::s.get_m_optional("god", id, "betray").value_or("");
+        message = the_god_db.get_text_optional(data::InstanceId{id}, "betray")
+                      .value_or("");
         break;
     case 2:
-        message = i18n::s.get_m_optional("god", id, "take_over").value_or("");
+        message =
+            the_god_db.get_text_optional(data::InstanceId{id}, "take_over")
+                .value_or("");
         break;
     case 3:
         message =
-            i18n::s.get_m_optional("god", id, "fail_to_take_over").value_or("");
+            the_god_db
+                .get_text_optional(data::InstanceId{id}, "fail_to_take_over")
+                .value_or("");
         break;
     case 4:
-        message = i18n::s.get_m_optional("god", id, "offer").value_or("");
+        message = the_god_db.get_text_optional(data::InstanceId{id}, "offer")
+                      .value_or("");
         break;
     case 6:
         message =
-            i18n::s.get_m_optional("god", id, "receive_gift").value_or("");
+            the_god_db.get_text_optional(data::InstanceId{id}, "receive_gift")
+                .value_or("");
         break;
     case 7:
-        message = i18n::s.get_m_optional("god", id, "ready_to_receive_gift")
+        message = the_god_db
+                      .get_text_optional(
+                          data::InstanceId{id}, "ready_to_receive_gift")
                       .value_or("");
         break;
     case 8:
-        message = i18n::s.get_m_optional("god", id, "ready_to_receive_gift2")
+        message = the_god_db
+                      .get_text_optional(
+                          data::InstanceId{id}, "ready_to_receive_gift2")
                       .value_or("");
         break;
     default: assert(0);
@@ -127,270 +143,228 @@ void god_modify_piety(int amount)
 
 
 
-void set_npc_religion()
+void set_npc_religion(Character& chara)
 {
-    if (cdata[tc].god_id != core_god::eyth || cdata[tc].has_learned_words() ||
-        tc == 0)
+    if (chara.god_id != core_god::eyth || chara.has_learned_words() ||
+        chara.index == 0)
     {
         return;
     }
     randomize(game_data.random_seed + game_data.current_map);
-    cdata[tc].god_id = core_god::int2godid(rnd(8));
+    chara.god_id = core_god::int2godid(rnd(8));
     randomize();
-    if (cdata[tc].god_id == core_god::eyth || rnd(4) == 0)
+    if (chara.god_id == core_god::eyth || rnd(4) == 0)
     {
-        cdata[tc].has_learned_words() = true;
+        chara.has_learned_words() = true;
     }
 }
 
 
 
-void apply_god_blessing(int cc)
+void god_apply_blessing(Character& believer)
 {
-    if (cdata[cc].god_id == core_god::mani)
+    const auto P = believer.piety_point;
+    const auto F = sdata(181, believer.index);
+
+    if (believer.god_id == core_god::mani)
     {
-        if (sdata(12, cc) > 0)
+        if (sdata(12, believer.index) > 0)
         {
-            sdata(12, cc) +=
-                clamp(cdata[cc].piety_point / 400, 1, 8 + sdata(181, 0) / 10);
+            sdata(12, believer.index) += clamp(P / 400, 1, 8 + F / 10);
         }
-        if (sdata(13, cc) > 0)
+        if (sdata(13, believer.index) > 0)
         {
-            sdata(13, cc) +=
-                clamp(cdata[cc].piety_point / 300, 1, 14 + sdata(181, 0) / 10);
+            sdata(13, believer.index) += clamp(P / 300, 1, 14 + F / 10);
         }
-        if (sdata(154, cc) > 0)
+        if (sdata(154, believer.index) > 0)
         {
-            sdata(154, cc) +=
-                clamp(cdata[cc].piety_point / 500, 1, 8 + sdata(181, 0) / 10);
+            sdata(154, believer.index) += clamp(P / 500, 1, 8 + F / 10);
         }
-        if (sdata(110, cc) > 0)
+        if (sdata(110, believer.index) > 0)
         {
-            sdata(110, cc) +=
-                clamp(cdata[cc].piety_point / 250, 1, 18 + sdata(181, 0) / 10);
+            sdata(110, believer.index) += clamp(P / 250, 1, 18 + F / 10);
         }
-        if (sdata(159, cc) > 0)
+        if (sdata(159, believer.index) > 0)
         {
-            sdata(159, cc) +=
-                clamp(cdata[cc].piety_point / 350, 1, 8 + sdata(181, 0) / 10);
+            sdata(159, believer.index) += clamp(P / 350, 1, 8 + F / 10);
         }
-        if (sdata(158, cc) > 0)
+        if (sdata(158, believer.index) > 0)
         {
-            sdata(158, cc) +=
-                clamp(cdata[cc].piety_point / 250, 1, 16 + sdata(181, 0) / 10);
+            sdata(158, believer.index) += clamp(P / 250, 1, 16 + F / 10);
         }
-        if (sdata(176, cc) > 0)
+        if (sdata(176, believer.index) > 0)
         {
-            sdata(176, cc) +=
-                clamp(cdata[cc].piety_point / 300, 1, 10 + sdata(181, 0) / 10);
+            sdata(176, believer.index) += clamp(P / 300, 1, 10 + F / 10);
         }
-        if (sdata(179, cc) > 0)
+        if (sdata(179, believer.index) > 0)
         {
-            sdata(179, cc) +=
-                clamp(cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
+            sdata(179, believer.index) += clamp(P / 350, 1, 12 + F / 10);
         }
     }
-    if (cdata[cc].god_id == core_god::lulwy)
+    if (believer.god_id == core_god::lulwy)
     {
-        if (sdata(13, cc) > 0)
+        if (sdata(13, believer.index) > 0)
         {
-            sdata(13, cc) +=
-                clamp(cdata[cc].piety_point / 450, 1, 10 + sdata(181, 0) / 10);
+            sdata(13, believer.index) += clamp(P / 450, 1, 10 + F / 10);
         }
-        if (sdata(18, cc) > 0)
+        if (sdata(18, believer.index) > 0)
         {
-            sdata(18, cc) +=
-                clamp(cdata[cc].piety_point / 350, 1, 30 + sdata(181, 0) / 10);
+            sdata(18, believer.index) += clamp(P / 350, 1, 30 + F / 10);
         }
-        if (sdata(108, cc) > 0)
+        if (sdata(108, believer.index) > 0)
         {
-            sdata(108, cc) +=
-                clamp(cdata[cc].piety_point / 350, 1, 16 + sdata(181, 0) / 10);
+            sdata(108, believer.index) += clamp(P / 350, 1, 16 + F / 10);
         }
-        if (sdata(109, cc) > 0)
+        if (sdata(109, believer.index) > 0)
         {
-            sdata(109, cc) +=
-                clamp(cdata[cc].piety_point / 450, 1, 12 + sdata(181, 0) / 10);
+            sdata(109, believer.index) += clamp(P / 450, 1, 12 + F / 10);
         }
-        if (sdata(157, cc) > 0)
+        if (sdata(157, believer.index) > 0)
         {
-            sdata(157, cc) +=
-                clamp(cdata[cc].piety_point / 450, 1, 12 + sdata(181, 0) / 10);
+            sdata(157, believer.index) += clamp(P / 450, 1, 12 + F / 10);
         }
-        if (sdata(174, cc) > 0)
+        if (sdata(174, believer.index) > 0)
         {
-            sdata(174, cc) +=
-                clamp(cdata[cc].piety_point / 550, 1, 8 + sdata(181, 0) / 10);
+            sdata(174, believer.index) += clamp(P / 550, 1, 8 + F / 10);
         }
     }
-    if (cdata[cc].god_id == core_god::itzpalt)
+    if (believer.god_id == core_god::itzpalt)
     {
-        if (sdata(16, cc) > 0)
+        if (sdata(16, believer.index) > 0)
         {
-            sdata(16, cc) +=
-                clamp(cdata[cc].piety_point / 300, 1, 18 + sdata(181, 0) / 10);
+            sdata(16, believer.index) += clamp(P / 300, 1, 18 + F / 10);
         }
-        if (sdata(155, cc) > 0)
+        if (sdata(155, believer.index) > 0)
         {
-            sdata(155, cc) +=
-                clamp(cdata[cc].piety_point / 350, 1, 15 + sdata(181, 0) / 10);
+            sdata(155, believer.index) += clamp(P / 350, 1, 15 + F / 10);
         }
-        if (sdata(50, cc) > 0)
+        if (sdata(50, believer.index) > 0)
         {
-            sdata(50, cc) +=
-                clamp(cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
+            sdata(50, believer.index) += clamp(P / 50, 1, 200 + F / 10);
         }
-        if (sdata(51, cc) > 0)
+        if (sdata(51, believer.index) > 0)
         {
-            sdata(51, cc) +=
-                clamp(cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
+            sdata(51, believer.index) += clamp(P / 50, 1, 200 + F / 10);
         }
-        if (sdata(52, cc) > 0)
+        if (sdata(52, believer.index) > 0)
         {
-            sdata(52, cc) +=
-                clamp(cdata[cc].piety_point / 50, 1, 200 + sdata(181, 0) / 10);
+            sdata(52, believer.index) += clamp(P / 50, 1, 200 + F / 10);
         }
     }
-    if (cdata[cc].god_id == core_god::ehekatl)
+    if (believer.god_id == core_god::ehekatl)
     {
-        if (sdata(17, cc) > 0)
+        if (sdata(17, believer.index) > 0)
         {
-            sdata(17, cc) +=
-                clamp(cdata[cc].piety_point / 250, 1, 20 + sdata(181, 0) / 10);
+            sdata(17, believer.index) += clamp(P / 250, 1, 20 + F / 10);
         }
-        if (sdata(19, cc) > 0)
+        if (sdata(19, believer.index) > 0)
         {
-            sdata(19, cc) +=
-                clamp(cdata[cc].piety_point / 100, 1, 50 + sdata(181, 0) / 10);
+            sdata(19, believer.index) += clamp(P / 100, 1, 50 + F / 10);
         }
-        if (sdata(173, cc) > 0)
+        if (sdata(173, believer.index) > 0)
         {
-            sdata(173, cc) +=
-                clamp(cdata[cc].piety_point / 300, 1, 15 + sdata(181, 0) / 10);
+            sdata(173, believer.index) += clamp(P / 300, 1, 15 + F / 10);
         }
-        if (sdata(164, cc) > 0)
+        if (sdata(164, believer.index) > 0)
         {
-            sdata(164, cc) +=
-                clamp(cdata[cc].piety_point / 350, 1, 17 + sdata(181, 0) / 10);
+            sdata(164, believer.index) += clamp(P / 350, 1, 17 + F / 10);
         }
-        if (sdata(185, cc) > 0)
+        if (sdata(185, believer.index) > 0)
         {
-            sdata(185, cc) +=
-                clamp(cdata[cc].piety_point / 300, 1, 12 + sdata(181, 0) / 10);
+            sdata(185, believer.index) += clamp(P / 300, 1, 12 + F / 10);
         }
-        if (sdata(158, cc) > 0)
+        if (sdata(158, believer.index) > 0)
         {
-            sdata(158, cc) +=
-                clamp(cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
+            sdata(158, believer.index) += clamp(P / 450, 1, 8 + F / 10);
         }
     }
-    if (cdata[cc].god_id == core_god::opatos)
+    if (believer.god_id == core_god::opatos)
     {
-        if (sdata(10, cc) > 0)
+        if (sdata(10, believer.index) > 0)
         {
-            sdata(10, cc) +=
-                clamp(cdata[cc].piety_point / 450, 1, 11 + sdata(181, 0) / 10);
+            sdata(10, believer.index) += clamp(P / 450, 1, 11 + F / 10);
         }
-        if (sdata(11, cc) > 0)
+        if (sdata(11, believer.index) > 0)
         {
-            sdata(11, cc) +=
-                clamp(cdata[cc].piety_point / 350, 1, 16 + sdata(181, 0) / 10);
+            sdata(11, believer.index) += clamp(P / 350, 1, 16 + F / 10);
         }
-        if (sdata(168, cc) > 0)
+        if (sdata(168, believer.index) > 0)
         {
-            sdata(168, cc) +=
-                clamp(cdata[cc].piety_point / 350, 1, 15 + sdata(181, 0) / 10);
+            sdata(168, believer.index) += clamp(P / 350, 1, 15 + F / 10);
         }
-        if (sdata(153, cc) > 0)
+        if (sdata(153, believer.index) > 0)
         {
-            sdata(153, cc) +=
-                clamp(cdata[cc].piety_point / 300, 1, 16 + sdata(181, 0) / 10);
+            sdata(153, believer.index) += clamp(P / 300, 1, 16 + F / 10);
         }
-        if (sdata(163, cc) > 0)
+        if (sdata(163, believer.index) > 0)
         {
-            sdata(163, cc) +=
-                clamp(cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
+            sdata(163, believer.index) += clamp(P / 350, 1, 12 + F / 10);
         }
-        if (sdata(174, cc) > 0)
+        if (sdata(174, believer.index) > 0)
         {
-            sdata(174, cc) +=
-                clamp(cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
+            sdata(174, believer.index) += clamp(P / 450, 1, 8 + F / 10);
         }
     }
-    if (cdata[cc].god_id == core_god::jure)
+    if (believer.god_id == core_god::jure)
     {
-        if (sdata(15, cc) > 0)
+        if (sdata(15, believer.index) > 0)
         {
-            sdata(15, cc) +=
-                clamp(cdata[cc].piety_point / 300, 1, 16 + sdata(181, 0) / 10);
+            sdata(15, believer.index) += clamp(P / 300, 1, 16 + F / 10);
         }
-        if (sdata(154, cc) > 0)
+        if (sdata(154, believer.index) > 0)
         {
-            sdata(154, cc) +=
-                clamp(cdata[cc].piety_point / 250, 1, 18 + sdata(181, 0) / 10);
+            sdata(154, believer.index) += clamp(P / 250, 1, 18 + F / 10);
         }
-        if (sdata(155, cc) > 0)
+        if (sdata(155, believer.index) > 0)
         {
-            sdata(155, cc) +=
-                clamp(cdata[cc].piety_point / 400, 1, 10 + sdata(181, 0) / 10);
+            sdata(155, believer.index) += clamp(P / 400, 1, 10 + F / 10);
         }
-        if (sdata(161, cc) > 0)
+        if (sdata(161, believer.index) > 0)
         {
-            sdata(161, cc) +=
-                clamp(cdata[cc].piety_point / 400, 1, 9 + sdata(181, 0) / 10);
+            sdata(161, believer.index) += clamp(P / 400, 1, 9 + F / 10);
         }
-        if (sdata(184, cc) > 0)
+        if (sdata(184, believer.index) > 0)
         {
-            sdata(184, cc) +=
-                clamp(cdata[cc].piety_point / 450, 1, 8 + sdata(181, 0) / 10);
+            sdata(184, believer.index) += clamp(P / 450, 1, 8 + F / 10);
         }
-        if (sdata(174, cc) > 0)
+        if (sdata(174, believer.index) > 0)
         {
-            sdata(174, cc) +=
-                clamp(cdata[cc].piety_point / 400, 1, 10 + sdata(181, 0) / 10);
+            sdata(174, believer.index) += clamp(P / 400, 1, 10 + F / 10);
         }
-        if (sdata(164, cc) > 0)
+        if (sdata(164, believer.index) > 0)
         {
-            sdata(164, cc) +=
-                clamp(cdata[cc].piety_point / 400, 1, 12 + sdata(181, 0) / 10);
+            sdata(164, believer.index) += clamp(P / 400, 1, 12 + F / 10);
         }
     }
-    if (cdata[cc].god_id == core_god::kumiromi)
+    if (believer.god_id == core_god::kumiromi)
     {
-        if (sdata(13, cc) > 0)
+        if (sdata(13, believer.index) > 0)
         {
-            sdata(13, cc) +=
-                clamp(cdata[cc].piety_point / 400, 1, 8 + sdata(181, 0) / 10);
+            sdata(13, believer.index) += clamp(P / 400, 1, 8 + F / 10);
         }
-        if (sdata(12, cc) > 0)
+        if (sdata(12, believer.index) > 0)
         {
-            sdata(12, cc) +=
-                clamp(cdata[cc].piety_point / 350, 1, 12 + sdata(181, 0) / 10);
+            sdata(12, believer.index) += clamp(P / 350, 1, 12 + F / 10);
         }
-        if (sdata(14, cc) > 0)
+        if (sdata(14, believer.index) > 0)
         {
-            sdata(14, cc) +=
-                clamp(cdata[cc].piety_point / 250, 1, 16 + sdata(181, 0) / 10);
+            sdata(14, believer.index) += clamp(P / 250, 1, 16 + F / 10);
         }
-        if (sdata(180, cc) > 0)
+        if (sdata(180, believer.index) > 0)
         {
-            sdata(180, cc) +=
-                clamp(cdata[cc].piety_point / 300, 1, 12 + sdata(181, 0) / 10);
+            sdata(180, believer.index) += clamp(P / 300, 1, 12 + F / 10);
         }
-        if (sdata(178, cc) > 0)
+        if (sdata(178, believer.index) > 0)
         {
-            sdata(178, cc) +=
-                clamp(cdata[cc].piety_point / 350, 1, 10 + sdata(181, 0) / 10);
+            sdata(178, believer.index) += clamp(P / 350, 1, 10 + F / 10);
         }
-        if (sdata(177, cc) > 0)
+        if (sdata(177, believer.index) > 0)
         {
-            sdata(177, cc) +=
-                clamp(cdata[cc].piety_point / 350, 1, 9 + sdata(181, 0) / 10);
+            sdata(177, believer.index) += clamp(P / 350, 1, 9 + F / 10);
         }
-        if (sdata(150, cc) > 0)
+        if (sdata(150, believer.index) > 0)
         {
-            sdata(150, cc) +=
-                clamp(cdata[cc].piety_point / 350, 1, 8 + sdata(181, 0) / 10);
+            sdata(150, believer.index) += clamp(P / 350, 1, 8 + F / 10);
         }
     }
 }
@@ -416,8 +390,7 @@ void god_proc_switching_penalty(const GodId& new_religion)
             redraw();
             efid = 622;
             efp = 10000;
-            tc = 0;
-            magic();
+            magic(cdata.player(), cdata.player());
             snd("core.punish1");
             mode = 0;
             await(g_config.animation_wait() * 20);
@@ -426,7 +399,7 @@ void god_proc_switching_penalty(const GodId& new_religion)
         switch_religion();
         msg_halt();
     }
-    chara_refresh(0);
+    chara_refresh(cdata.player());
 }
 
 
@@ -446,8 +419,8 @@ void switch_religion()
     }
     else
     {
-        animode = 100;
-        MiracleAnimation().play();
+        MiracleAnimation(MiracleAnimation::Mode::target_one, cdata.player())
+            .play();
         snd("core.complete1");
         txt(i18n::s.get(
                 "core.god.switch.follower", god_name(cdata.player().god_id)),
@@ -492,17 +465,14 @@ TurnResult do_pray()
             "core.god.pray.indifferent", god_name(cdata.player().god_id)));
         return TurnResult::turn_end;
     }
-    animode = 100;
-    MiracleAnimation().play();
+    MiracleAnimation(MiracleAnimation::Mode::target_one, cdata.player()).play();
     snd("core.pray2");
     efid = 1120;
     efp = 100;
-    tc = 0;
-    magic();
+    magic(cdata.player(), cdata.player());
     efid = 451;
     efp = 200;
-    tc = 0;
-    magic();
+    magic(cdata.player(), cdata.player());
     cdata.player().praying_point = 0;
     cdata.player().piety_point = cdata.player().piety_point * 85 / 100;
     if (game_data.god_rank % 2 == 1)
@@ -512,11 +482,11 @@ TurnResult do_pray()
         {
             f = 0;
             p = 0;
-            for (int cnt = 1; cnt < 16; ++cnt)
+            for (const auto& ally : cdata.allies())
             {
-                if (cdata[cnt].state() != Character::State::empty)
+                if (ally.state() != Character::State::empty)
                 {
-                    if (cdatan(2, cnt) == u8"core.servant"s)
+                    if (ally.race == "core.servant")
                     {
                         ++p;
                         if (p >= 2)
@@ -591,8 +561,7 @@ TurnResult do_pray()
             }
             novoidlv = 1;
             chara_create(56, chara_id, -3, 0);
-            rc = 56;
-            new_ally_joins();
+            new_ally_joins(cdata.tmp());
         }
         if (game_data.god_rank == 3)
         {
@@ -704,11 +673,11 @@ std::string god_name(const GodId& id)
 {
     if (id == core_god::eyth)
     {
-        return i18n::s.get_m("god", "core.eyth", "name");
+        return the_god_db.get_text("core.eyth", "name");
     }
     else
     {
-        return i18n::s.get_m("god", id, "name");
+        return the_god_db.get_text(data::InstanceId{id}, "name");
     }
 }
 
@@ -725,23 +694,31 @@ void god_fail_to_take_over_penalty()
 {
     efid = 1114;
     efp = 500;
-    tc = 0;
-    magic();
+    magic(cdata.player(), cdata.player());
     if (rnd(2))
     {
         efid = 622;
         efp = 250;
-        tc = 0;
-        magic();
+        magic(cdata.player(), cdata.player());
         snd("core.punish1");
     }
     if (rnd(2))
     {
         efid = 1106;
         efp = 100;
-        tc = 0;
-        magic();
+        magic(cdata.player(), cdata.player());
     }
+}
+
+
+
+bool god_is_offerable(Item& offering, Character& believer)
+{
+    return lua::call_with_result(
+        "core.Impl.God.is_offerable",
+        false,
+        lua::handle(offering),
+        lua::handle(believer));
 }
 
 } // namespace elona

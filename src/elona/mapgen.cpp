@@ -277,129 +277,128 @@ int dist_town()
 
 
 
-void map_placecharaonentrance(int chara_index, int entrance_type)
+void map_place_chara_on_entrance(Character& chara, int entrance_type)
 {
-    int x_at_m167 = 0;
-    int y_at_m167 = 0;
+    int x = 0;
+    int y = 0;
     if (entrance_type == 1)
     {
-        x_at_m167 = map_data.stair_up_pos % 1000;
-        y_at_m167 = map_data.stair_up_pos / 1000;
+        x = map_data.stair_up_pos % 1000;
+        y = map_data.stair_up_pos / 1000;
     }
     if (entrance_type == 2)
     {
-        x_at_m167 = map_data.stair_down_pos % 1000;
-        y_at_m167 = map_data.stair_down_pos / 1000;
+        x = map_data.stair_down_pos % 1000;
+        y = map_data.stair_down_pos / 1000;
     }
     if (entrance_type == 3)
     {
         if (game_data.player_next_move_direction == 1)
         {
-            x_at_m167 = map_data.width - 2;
-            y_at_m167 = map_data.height / 2;
+            x = map_data.width - 2;
+            y = map_data.height / 2;
             if (game_data.current_map == mdata_t::MapId::palmia)
             {
-                y_at_m167 = 22;
+                y = 22;
             }
             if (game_data.current_map == mdata_t::MapId::lumiest)
             {
-                x_at_m167 = 58;
-                y_at_m167 = 21;
+                x = 58;
+                y = 21;
             }
         }
         if (game_data.player_next_move_direction == 2)
         {
-            x_at_m167 = 1;
-            y_at_m167 = map_data.height / 2;
+            x = 1;
+            y = map_data.height / 2;
             if (game_data.current_map == mdata_t::MapId::noyel)
             {
-                y_at_m167 = 3;
+                y = 3;
             }
             if (game_data.current_map == mdata_t::MapId::lumiest)
             {
-                x_at_m167 = 25;
-                y_at_m167 = 1;
+                x = 25;
+                y = 1;
             }
         }
         if (game_data.player_next_move_direction == 3)
         {
-            x_at_m167 = map_data.width / 2;
-            y_at_m167 = map_data.height - 2;
+            x = map_data.width / 2;
+            y = map_data.height - 2;
             if (game_data.current_map == mdata_t::MapId::palmia)
             {
-                x_at_m167 = 30;
+                x = 30;
             }
             if (game_data.current_map == mdata_t::MapId::noyel)
             {
-                x_at_m167 = 28;
+                x = 28;
             }
             if (game_data.current_map == mdata_t::MapId::lumiest)
             {
-                x_at_m167 = 58;
-                y_at_m167 = 21;
+                x = 58;
+                y = 21;
             }
         }
         if (game_data.player_next_move_direction == 0)
         {
-            x_at_m167 = map_data.width / 2;
-            y_at_m167 = 1;
+            x = map_data.width / 2;
+            y = 1;
             if (game_data.current_map == mdata_t::MapId::noyel)
             {
-                x_at_m167 = 5;
+                x = 5;
             }
             if (game_data.current_map == mdata_t::MapId::lumiest)
             {
-                x_at_m167 = 25;
-                y_at_m167 = 1;
+                x = 25;
+                y = 1;
             }
         }
         if (game_data.current_map == mdata_t::MapId::larna)
         {
-            x_at_m167 = 1;
-            y_at_m167 = 14;
+            x = 1;
+            y = 14;
         }
         if (game_data.player_x_on_map_leave != -1)
         {
-            x_at_m167 = game_data.player_x_on_map_leave;
-            y_at_m167 = game_data.player_y_on_map_leave;
+            x = game_data.player_x_on_map_leave;
+            y = game_data.player_y_on_map_leave;
         }
     }
     if (entrance_type == 4)
     {
-        x_at_m167 = map_data.width / 2;
-        y_at_m167 = map_data.height / 2;
+        x = map_data.width / 2;
+        y = map_data.height / 2;
     }
     if (entrance_type == 8)
     {
-        x_at_m167 = map_data.width / 2;
-        y_at_m167 = map_data.height - 2;
+        x = map_data.width / 2;
+        y = map_data.height - 2;
     }
     if (entrance_type == 5)
     {
-        x_at_m167 = rnd(map_data.width - 5) + 2;
-        y_at_m167 = rnd(map_data.height - 5) + 2;
+        x = rnd(map_data.width - 5) + 2;
+        y = rnd(map_data.height - 5) + 2;
     }
     if (entrance_type == 6)
     {
-        x_at_m167 = game_data.pc_x_in_world_map + rnd(chara_index / 5 + 1);
-        y_at_m167 = game_data.pc_y_in_world_map + rnd(chara_index / 5 + 1);
+        x = game_data.pc_x_in_world_map + rnd(chara.index / 5 + 1);
+        y = game_data.pc_y_in_world_map + rnd(chara.index / 5 + 1);
     }
     if (entrance_type == 7)
     {
-        x_at_m167 = mapstartx;
-        y_at_m167 = mapstarty;
+        x = mapstartx;
+        y = mapstarty;
     }
-    cxinit = x_at_m167;
-    cyinit = y_at_m167;
-    rc = chara_index;
-    chara_place();
+    cxinit = x;
+    cyinit = y;
+    chara_place(chara);
 }
 
 
 
-void map_placearena(int chara_index, bool is_enemy)
+void map_place_chara_on_pet_arena(Character& chara, bool is_enemy)
 {
-    while (1)
+    while (true)
     {
         x = rnd(7) + 5;
         y = rnd(6) + 6;
@@ -409,29 +408,23 @@ void map_placearena(int chara_index, bool is_enemy)
         }
         cxinit = x;
         cyinit = y;
-        rc = chara_index;
-        chara_place();
+        chara_place(chara);
         if (!is_enemy)
         {
-            if (cdata[chara_index].position.x >= 13 &&
-                cdata[chara_index].position.y >= 6 &&
-                cdata[chara_index].position.x < 20 &&
-                cdata[chara_index].position.y < 12)
+            if (chara.position.x >= 13 && chara.position.y >= 6 &&
+                chara.position.x < 20 && chara.position.y < 12)
             {
                 break;
             }
         }
         else if (
-            cdata[chara_index].position.x >= 5 &&
-            cdata[chara_index].position.y >= 6 &&
-            cdata[chara_index].position.x < 12 &&
-            cdata[chara_index].position.y < 12)
+            chara.position.x >= 5 && chara.position.y >= 6 &&
+            chara.position.x < 12 && chara.position.y < 12)
         {
             break;
         }
-        cell_data
-            .at(cdata[chara_index].position.x, cdata[chara_index].position.y)
-            .chara_index_plus_one = 0;
+        cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one =
+            0;
     }
 }
 
@@ -444,15 +437,15 @@ void map_placeplayer()
         return;
     }
     camera = 0;
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& chara : cdata.player_and_allies())
     {
-        if (cdata[cnt].state() != Character::State::alive)
+        if (chara.state() != Character::State::alive)
         {
             continue;
         }
-        if (cnt != 0)
+        if (chara.index != 0)
         {
-            if (game_data.mount == cnt)
+            if (game_data.mount == chara.index)
             {
                 cdata[game_data.mount].position.x = cdata.player().position.x;
                 cdata[game_data.mount].position.y = cdata.player().position.y;
@@ -461,28 +454,27 @@ void map_placeplayer()
         }
         if (game_data.current_map == mdata_t::MapId::pet_arena)
         {
-            if (followerin(cnt) == 1)
+            if (followerin(chara.index) == 1)
             {
                 if (camera == 0)
                 {
-                    camera = cnt;
+                    camera = chara.index;
                 }
-                map_placearena(cnt, false);
+                map_place_chara_on_pet_arena(chara, false);
                 continue;
             }
         }
-        if (cdata[cnt].current_map == game_data.current_map)
+        if (chara.current_map == game_data.current_map)
         {
-            if (cnt != 0)
+            if (chara.index != 0)
             {
-                cxinit = cdata[cnt].initial_position.x;
-                cyinit = cdata[cnt].initial_position.y;
-                rc = cnt;
-                chara_place();
+                cxinit = chara.initial_position.x;
+                cyinit = chara.initial_position.y;
+                chara_place(chara);
                 continue;
             }
         }
-        map_placecharaonentrance(cnt, game_data.entrance_type);
+        map_place_chara_on_entrance(chara, game_data.entrance_type);
     }
 }
 
@@ -1973,7 +1965,7 @@ void generate_random_nefia()
                                  cnt < cnt_end;
                                  ++cnt)
                             {
-                                flt(cdata[rc].level, calcfixlv(Quality::bad));
+                                flt(chara->level, calcfixlv(Quality::bad));
                                 flttypemajor = creaturepack;
                                 chara_create(-1, 0, rnd(rw) + rx, rnd(rh) + ry);
                             }
@@ -2146,8 +2138,8 @@ void initialize_random_nefia_rdtype6()
         map_set_chara_generation_filter();
         if (const auto chara = chara_create(-1, 0, -3, 0))
         {
-            cdata[rc].relationship = -3;
-            cdata[rc].original_relationship = -3;
+            chara->relationship = -3;
+            chara->original_relationship = -3;
         }
     }
     for (int cnt = 0, cnt_end = (10 + rnd(10)); cnt < cnt_end; ++cnt)
@@ -2223,7 +2215,7 @@ int initialize_quest_map_crop()
                 }
                 cell_data.at(x, y).chip_id_actual = tile;
                 if (rnd(10) != 0 ||
-                    cell_data.at(x, y).item_appearances_actual != 0)
+                    !cell_data.at(x, y).item_info_actual.is_empty())
                 {
                     continue;
                 }
@@ -2263,7 +2255,7 @@ int initialize_quest_map_crop()
         y = rnd(map_data.height);
         if (cell_data.at(x, y).chip_id_actual != 30 &&
             cell_data.at(x, y).chip_id_actual != 31 &&
-            cell_data.at(x, y).item_appearances_actual == 0)
+            cell_data.at(x, y).item_info_actual.is_empty())
         {
             if (rnd(8))
             {
@@ -2648,12 +2640,12 @@ int initialize_quest_map_party()
             {
                 x = dx + cnt;
                 if (cell_data.at(x, y).chip_id_actual != tile_tunnel ||
-                    cell_data.at(x, y).item_appearances_actual != 0)
+                    !cell_data.at(x, y).item_info_actual.is_empty())
                 {
                     p(0) = 0;
                 }
                 if (cell_data.at(x, y).chip_id_actual != tile_room ||
-                    cell_data.at(x, y).item_appearances_actual != 0)
+                    !cell_data.at(x, y).item_info_actual.is_empty())
                 {
                     p(1) = 0;
                 }
@@ -2783,7 +2775,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (cell_data.at(x, y).item_appearances_actual == 0)
+            if (cell_data.at(x, y).item_info_actual.is_empty())
             {
                 flt();
                 itemcreate_extra_inv(88, x, y, 0);
@@ -2793,7 +2785,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (cell_data.at(x, y).item_appearances_actual == 0)
+            if (cell_data.at(x, y).item_info_actual.is_empty())
             {
                 flt();
                 itemcreate_extra_inv(313, x, y, 0);
@@ -2803,7 +2795,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (cell_data.at(x, y).item_appearances_actual == 0)
+            if (cell_data.at(x, y).item_info_actual.is_empty())
             {
                 flt();
                 itemcreate_extra_inv(156, x, y, 0);
@@ -2813,7 +2805,7 @@ int initialize_quest_map_party()
         {
             x = rnd(rw) + rx;
             y = rnd(rh) + ry;
-            if (cell_data.at(x, y).item_appearances_actual == 0)
+            if (cell_data.at(x, y).item_info_actual.is_empty())
             {
                 flt();
                 itemcreate_extra_inv(606, x, y, 0);
@@ -2826,12 +2818,14 @@ int initialize_quest_map_party()
         {
             flt(roomdiff * 5, calcfixlv(Quality::bad));
             initlv = roomdiff * 7 + rnd(5);
-            chara_create(
-                -1, list(rnd(3), roomdiff), rnd(rw) + rx, rnd(rh) + ry);
-            cdata[rc].role = Role::other;
-            cdata[rc].relationship = -1;
-            cdata[rc].original_relationship = -1;
-            cdata[rc].gold = cdata[rc].level * (20 + rnd(20));
+            if (const auto chara = chara_create(
+                    -1, list(rnd(3), roomdiff), rnd(rw) + rx, rnd(rh) + ry))
+            {
+                chara->role = Role::other;
+                chara->relationship = -1;
+                chara->original_relationship = -1;
+                chara->gold = chara->level * (20 + rnd(20));
+            }
         }
     }
     game_data.entrance_type = 7;
@@ -2843,7 +2837,7 @@ int initialize_quest_map_party()
     {
         x = rnd(map_data.width);
         y = rnd(map_data.height);
-        if (cell_data.at(x, y).item_appearances_actual != 0 ||
+        if (!cell_data.at(x, y).item_info_actual.is_empty() ||
             chip_data.for_cell(x, y).effect & 4)
         {
             continue;
@@ -2861,71 +2855,86 @@ int initialize_quest_map_party()
         itemcreate_extra_inv(p(rnd(9)), x, y, 0);
     }
     flt();
-    chara_create(-1, 29, -3, 0);
-    cdata[rc].role = Role::other;
-    cdata[rc].relationship = -1;
-    cdata[rc].original_relationship = -1;
+    if (const auto chara = chara_create(-1, 29, -3, 0))
+    {
+        chara->role = Role::other;
+        chara->relationship = -1;
+        chara->original_relationship = -1;
+    }
     flt();
-    chara_create(-1, 231, -3, 0);
-    cdata[rc].role = Role::other;
-    cdata[rc].relationship = -1;
-    cdata[rc].original_relationship = -1;
+    if (const auto chara = chara_create(-1, 231, -3, 0))
+    {
+        chara->role = Role::other;
+        chara->relationship = -1;
+        chara->original_relationship = -1;
+    }
     flt();
-    chara_create(-1, 31, -3, 0);
-    cdata[rc].role = Role::other;
-    cdata[rc].relationship = -1;
-    cdata[rc].original_relationship = -1;
+    if (const auto chara = chara_create(-1, 31, -3, 0))
+    {
+        chara->role = Role::other;
+        chara->relationship = -1;
+        chara->original_relationship = -1;
+    }
     flt();
-    chara_create(-1, 247, -3, 0);
-    cdata[rc].role = Role::other;
-    cdata[rc].relationship = -1;
-    cdata[rc].original_relationship = -1;
-    if (rnd(10) == 0)
+    if (const auto chara = chara_create(-1, 247, -3, 0))
     {
-        flt();
-        chara_create(-1, 34, -3, 0);
-        cdata[rc].role = Role::other;
-        cdata[rc].relationship = -1;
-        cdata[rc].original_relationship = -1;
+        chara->role = Role::other;
+        chara->relationship = -1;
+        chara->original_relationship = -1;
     }
     if (rnd(10) == 0)
     {
         flt();
-        chara_create(-1, 28, -3, 0);
-        cdata[rc].role = Role::other;
-        cdata[rc].relationship = -1;
-        cdata[rc].original_relationship = -1;
+        if (const auto chara = chara_create(-1, 34, -3, 0))
+        {
+            chara->role = Role::other;
+            chara->relationship = -1;
+            chara->original_relationship = -1;
+        }
     }
     if (rnd(10) == 0)
     {
         flt();
-        chara_create(-1, 223, -3, 0);
-        cdata[rc].role = Role::other;
-        cdata[rc].relationship = -1;
-        cdata[rc].original_relationship = -1;
+        if (const auto chara = chara_create(-1, 28, -3, 0))
+        {
+            chara->role = Role::other;
+            chara->relationship = -1;
+            chara->original_relationship = -1;
+        }
     }
     if (rnd(10) == 0)
     {
         flt();
-        chara_create(-1, 252, -3, 0);
-        cdata[rc].role = Role::other;
-        cdata[rc].relationship = -1;
-        cdata[rc].original_relationship = -1;
+        if (const auto chara = chara_create(-1, 223, -3, 0))
+        {
+            chara->role = Role::other;
+            chara->relationship = -1;
+            chara->original_relationship = -1;
+        }
     }
     if (rnd(10) == 0)
     {
         flt();
-        chara_create(-1, 322, -3, 0);
-        cdata[rc].role = Role::other;
-        cdata[rc].relationship = -1;
-        cdata[rc].original_relationship = -1;
+        if (const auto chara = chara_create(-1, 252, -3, 0))
+        {
+            chara->role = Role::other;
+            chara->relationship = -1;
+            chara->original_relationship = -1;
+        }
+    }
+    if (rnd(10) == 0)
+    {
+        flt();
+        if (const auto chara = chara_create(-1, 322, -3, 0))
+        {
+            chara->role = Role::other;
+            chara->relationship = -1;
+            chara->original_relationship = -1;
+        }
     }
     for (auto&& item : inv.ground())
     {
-        if (item.number() > 0)
-        {
-            item.own_state = 1;
-        }
+        item.own_state = 1;
     }
     return 1;
 }
@@ -2949,10 +2958,13 @@ void initialize_quest_map_town()
         flt();
         initlv = quest_data.immediate().difficulty;
         fixlv = Quality::godly;
-        chara_create(-1, quest_data.immediate().extra_info_1, -3, 0);
-        cdata[rc].relationship = -3;
-        cdata[rc].original_relationship = -3;
-        quest_data.immediate().extra_info_2 = rc;
+        if (const auto chara =
+                chara_create(-1, quest_data.immediate().extra_info_1, -3, 0))
+        {
+            chara->relationship = -3;
+            chara->original_relationship = -3;
+            quest_data.immediate().extra_info_2 = chara->index;
+        }
     }
     if (game_data.executing_immediate_quest_type == 1010)
     {
@@ -2961,17 +2973,16 @@ void initialize_quest_map_town()
             flt();
             initlv = quest_data.immediate().difficulty * 3 / 2;
             fixlv = Quality::bad;
-            chara_create(-1, quest_data.immediate().extra_info_1, -3, 0);
-            cdata[rc].relationship = -3;
-            cdata[rc].original_relationship = -3;
+            if (const auto chara = chara_create(
+                    -1, quest_data.immediate().extra_info_1, -3, 0))
+            {
+                chara->relationship = -3;
+                chara->original_relationship = -3;
+            }
         }
     }
     for (auto&& item : inv.ground())
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         f = 0;
         if (item.id == ItemId::well || item.id == ItemId::fountain)
         {

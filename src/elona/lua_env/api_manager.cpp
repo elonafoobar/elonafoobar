@@ -3,9 +3,9 @@
 #include <iterator>
 
 #include "../../util/strutil.hpp"
+#include "api/classes.hpp"
+#include "api/modules.hpp"
 #include "enums/enums.hpp"
-#include "lua_api/lua_api.hpp"
-#include "lua_class/lua_class.hpp"
 #include "mod_manager.hpp"
 
 
@@ -22,12 +22,11 @@ APIManager::APIManager(LuaEnv& lua)
     sol::table api_table = env().create_named("api_table");
     sol::table core = api_table.create_named("core");
 
-    LuaApi::bind(core);
+    api::modules::bind(core);
 
-    // Register usertype classes globally, and add APIs for
-    // constructors.
-    LuaApiClasses::bind(*lua_state());
-    LuaApiClasses::bind_api(*lua_state(), core);
+    // Register usertype classes globally, and add APIs for constructors.
+    api::classes::bind(*lua_state());
+    api::classes::bind_api(*lua_state(), core);
 
     load_prelude();
 
@@ -70,8 +69,8 @@ void APIManager::load_prelude()
     if (!result.valid())
     {
         sol::error err = result;
-        throw std::runtime_error{"Failed to load prelude library: "s +
-                                 err.what()};
+        throw std::runtime_error{
+            "Failed to load prelude library: "s + err.what()};
     }
 
     sol::table prelude = result;

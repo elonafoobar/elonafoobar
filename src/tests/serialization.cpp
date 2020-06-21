@@ -17,17 +17,17 @@ using namespace elona::testing;
 TEST_CASE("Test character saving and reloading", "[C++: Serialization]")
 {
     start_in_debug_map();
-    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8));
-    int index = elona::rc;
-    cdata[index].is_floating() = true;
+    const auto chara = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
+    REQUIRE_SOME(chara);
+    chara->is_floating() = true;
 
     save_and_reload();
 
-    REQUIRE(elona::cdata[index].state() != Character::State::empty);
-    REQUIRE(elona::cdata[index].position.x == 4);
-    REQUIRE(elona::cdata[index].position.y == 8);
-    REQUIRE(elona::cdata[index].id == PUTIT_PROTO_ID);
-    REQUIRE(elona::cdata[index].is_floating() == true);
+    REQUIRE(chara->state() != Character::State::empty);
+    REQUIRE(chara->position.x == 4);
+    REQUIRE(chara->position.y == 8);
+    REQUIRE(chara->id == PUTIT_PROTO_ID);
+    REQUIRE(chara->is_floating() == true);
 }
 
 TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
@@ -39,7 +39,7 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
     const auto item =
         itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), x, y, number);
     REQUIRE_SOME(item);
-    int index = item->index;
+    int index = item->index();
     elona::inv[index].is_aphrodisiac() = true;
     elona::inv[index].curse_state = CurseState::blessed;
 
@@ -57,9 +57,11 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
 TEST_CASE("Test party character index preservation", "[C++: Serialization]")
 {
     start_in_debug_map();
-    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 0, 0));
-    REQUIRE(new_ally_joins());
-    int index = elona::rc;
+    const auto chara = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 0, 0);
+    REQUIRE_SOME(chara);
+    const auto ally = new_ally_joins(*chara);
+    REQUIRE_SOME(ally);
+    int index = ally->index;
 
     save_and_reload();
 
@@ -69,25 +71,13 @@ TEST_CASE("Test party character index preservation", "[C++: Serialization]")
 TEST_CASE("Test other character index preservation", "[C++: Serialization]")
 {
     start_in_debug_map();
-    REQUIRE(chara_create(-1, charaid2int(PUTIT_PROTO_ID), 0, 0));
-    int index = elona::rc;
+    const auto chara = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 0, 0);
+    REQUIRE_SOME(chara);
+    int index = chara->index;
 
     save_and_reload();
 
     REQUIRE(elona::cdata[index].index == index);
-}
-
-TEST_CASE("Test item index preservation", "[C++: Serialization]")
-{
-    start_in_debug_map();
-    const auto item =
-        itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 0, 0, 0);
-    REQUIRE_SOME(item);
-    int index = item->index;
-
-    save_and_reload();
-
-    REQUIRE(elona::inv[index].index == index);
 }
 
 TEST_CASE("Test character data compatibility", "[C++: Serialization]")
@@ -95,7 +85,7 @@ TEST_CASE("Test character data compatibility", "[C++: Serialization]")
     int player_idx = 0;
     load_previous_savefile();
     REQUIRE(elona::cdata[player_idx].index == player_idx);
-    REQUIRE(elona::cdatan(0, player_idx) == u8"foobar_test");
+    REQUIRE(elona::cdata[player_idx].name == u8"foobar_test");
 }
 
 TEST_CASE("Test other character data compatibility", "[C++: Serialization]")
@@ -103,23 +93,19 @@ TEST_CASE("Test other character data compatibility", "[C++: Serialization]")
     int chara_idx = 57;
     load_previous_savefile();
     REQUIRE(elona::cdata[chara_idx].index == chara_idx);
-    REQUIRE(elona::cdatan(0, chara_idx) == u8"風を聴く者『ラーネイレ』");
+    REQUIRE(elona::cdata[chara_idx].name == u8"風を聴く者『ラーネイレ』");
 }
 
 TEST_CASE("Test item data compatibility (in inventory)", "[C++: Serialization]")
 {
-    int item_idx = 0;
     load_previous_savefile();
-    REQUIRE(elona::inv[item_idx].index == item_idx);
-    REQUIRE(elona::itemname(inv[item_idx]) == u8"ブロンズの兜 [0,1]");
+    REQUIRE(elona::itemname(inv[0]) == u8"ブロンズの兜 [0,1]");
 }
 
 TEST_CASE("Test item data compatibility (on ground)", "[C++: Serialization]")
 {
-    int item_idx = 5080;
     load_previous_savefile();
-    REQUIRE(elona::inv[item_idx].index == item_idx);
-    REQUIRE(elona::itemname(inv[item_idx]) == u8"割れたつぼ");
+    REQUIRE(elona::itemname(inv[5080]) == u8"割れたつぼ");
 }
 
 TEST_CASE("Test ability data compatibility", "[C++: Serialization]")

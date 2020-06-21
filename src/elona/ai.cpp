@@ -124,11 +124,11 @@ bool _ai_check(Character& chara, Direction direction, int p)
 
 
 
-bool _ai_dir_check_x()
+bool _ai_dir_check_x(Character& chara)
 {
-    if (cdata[cc].target_position.x > cdata[cc].position.x)
+    if (chara.target_position.x > chara.position.x)
     {
-        if (cdata[cc].target_position.y > cdata[cc].position.y)
+        if (chara.target_position.y > chara.position.y)
         {
             p = 1;
         }
@@ -139,15 +139,15 @@ bool _ai_dir_check_x()
         dir(0) = 2;
         dir(1) = 0;
         dir(2) = 3;
-        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        const auto ok = _ai_check(chara, static_cast<Direction>(dir(0)), p);
         if (ok)
         {
             return true;
         }
     }
-    if (cdata[cc].target_position.x < cdata[cc].position.x)
+    if (chara.target_position.x < chara.position.x)
     {
-        if (cdata[cc].target_position.y < cdata[cc].position.y)
+        if (chara.target_position.y < chara.position.y)
         {
             p = 0;
         }
@@ -158,7 +158,7 @@ bool _ai_dir_check_x()
         dir(0) = 1;
         dir(1) = 0;
         dir(2) = 3;
-        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        const auto ok = _ai_check(chara, static_cast<Direction>(dir(0)), p);
         if (ok)
         {
             return true;
@@ -169,11 +169,11 @@ bool _ai_dir_check_x()
 
 
 
-bool _ai_dir_check_y()
+bool _ai_dir_check_y(Character& chara)
 {
-    if (cdata[cc].target_position.y > cdata[cc].position.y)
+    if (chara.target_position.y > chara.position.y)
     {
-        if (cdata[cc].target_position.x > cdata[cc].position.x)
+        if (chara.target_position.x > chara.position.x)
         {
             p = 1;
         }
@@ -184,15 +184,15 @@ bool _ai_dir_check_y()
         dir(0) = 0;
         dir(1) = 1;
         dir(2) = 2;
-        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        const auto ok = _ai_check(chara, static_cast<Direction>(dir(0)), p);
         if (ok)
         {
             return true;
         }
     }
-    if (cdata[cc].target_position.y < cdata[cc].position.y)
+    if (chara.target_position.y < chara.position.y)
     {
-        if (cdata[cc].target_position.x > cdata[cc].position.x)
+        if (chara.target_position.x > chara.position.x)
         {
             p = 0;
         }
@@ -203,7 +203,7 @@ bool _ai_dir_check_y()
         dir(0) = 3;
         dir(1) = 1;
         dir(2) = 2;
-        const auto ok = _ai_check(cdata[cc], static_cast<Direction>(dir(0)), p);
+        const auto ok = _ai_check(chara, static_cast<Direction>(dir(0)), p);
         if (ok)
         {
             return true;
@@ -225,22 +225,6 @@ bool _percent(int percentage)
 bool _is_special_throwing_action(int action_id)
 {
     return -9999 <= action_id && action_id <= -9996;
-}
-
-
-
-// TODO: move it to fov.cpp
-bool fov_los_helper(const Position& a, const Position& b)
-{
-    return fov_los(a.x, a.y, b.x, b.y);
-}
-
-
-
-// TODO: move it to fov.cpp
-bool fov_los_helper(const Character& a, const Character& b)
-{
-    return fov_los_helper(a.position, b.position);
 }
 
 
@@ -287,24 +271,24 @@ optional_ref<Item> _try_generate_special_throwing_item(
 
 
 
-bool _try_do_melee_attack(const Character& attacker, const Character& target)
+bool _try_do_melee_attack(Character& attacker, Character& target)
 {
     if (distance >= 6)
     {
         return false; // Too far.
     }
-    if (!fov_los_helper(attacker, target))
+    if (!fov_los(attacker.position, target.position))
     {
         return false; // Cannot see the target.
     }
 
-    const auto result = can_do_ranged_attack();
+    const auto result = can_do_ranged_attack(attacker);
     if (result.type != 1)
     {
         return false; // Cannot do ranged attack.
     }
 
-    do_ranged_attack(result.weapon, result.ammo);
+    do_ranged_attack(attacker, target, result.weapon, result.ammo);
     return true;
 }
 
@@ -317,10 +301,6 @@ void _ally_sells_item(Character& chara)
 
     for (auto&& item : inv.for_chara(chara))
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (the_item_db[itemid2int(item.id)]->category == ItemCategory::ore)
         {
             sold_item_count += item.number();
@@ -378,7 +358,7 @@ void _ally_trains(Character& chara)
         }
     }
 
-    chara_refresh(chara.index);
+    chara_refresh(chara);
 }
 
 
@@ -395,13 +375,6 @@ bool _will_crush_wall(const Character& chara, int x, int y)
     return chara.index >= 16 && chara.quality >= Quality::miracle &&
         chara.relationship <= -2 && _is_valid_position(x, y) &&
         (chip_data.for_cell(x, y).effect & 4);
-}
-
-
-
-const std::string& _chara_get_race(const Character& chara)
-{
-    return cdatan(2, chara.index);
 }
 
 
@@ -450,7 +423,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
                 tlocy = cdata[game_data.fire_giant].position.y;
                 txt(i18n::s.get("core.ai.fire_giant"),
                     Message::color{ColorIndex::cyan});
-                return do_throw_command(*snowball);
+                return do_throw_command(chara, *snowball);
             }
         }
     }
@@ -478,7 +451,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
             {
                 tlocx = target_snowman->position.x;
                 tlocy = target_snowman->position.y;
-                return do_throw_command(*snowball);
+                return do_throw_command(chara, *snowball);
             }
         }
     }
@@ -487,7 +460,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
     if (rnd(10) == 0)
     {
         if (cell_data.at(chara.position.x, chara.position.y)
-                .item_appearances_actual == 0)
+                .item_info_actual.is_empty())
         {
             flt();
             if (const auto item = itemcreate_extra_inv(541, chara.position, 0))
@@ -509,7 +482,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
             tlocy = cdata.player().position.y;
             txt(i18n::s.get("core.ai.snowball"),
                 Message::color{ColorIndex::cyan});
-            return do_throw_command(*snowball);
+            return do_throw_command(chara, *snowball);
         }
     }
 
@@ -568,7 +541,7 @@ void _proc_hungry(Character& chara)
                 }
                 else
                 {
-                    chara.ai_item = item->index;
+                    chara.ai_item = ItemRef::from_ref(*item);
                     _change_nutrition(chara);
                 }
             }
@@ -587,9 +560,9 @@ void _proc_hungry(Character& chara)
 namespace elona
 {
 
-TurnResult ai_proc_basic(Character& chara)
+TurnResult ai_proc_basic(Character& chara, int& enemy_index)
 {
-    if (tc == 0)
+    if (enemy_index == 0)
     {
         pcattacker = chara.index;
     }
@@ -603,14 +576,14 @@ TurnResult ai_proc_basic(Character& chara)
             act = choice(chara.special_actions);
         }
         if (_is_special_throwing_action(act) && distance < 8 &&
-            fov_los_helper(chara, cdata[tc]))
+            fov_los(chara.position, cdata[enemy_index].position))
         {
-            tlocx = cdata[tc].position.x;
-            tlocy = cdata[tc].position.y;
+            tlocx = cdata[enemy_index].position.x;
+            tlocy = cdata[enemy_index].position.y;
             if (const auto throw_item =
                     _try_generate_special_throwing_item(chara, act))
             {
-                return do_throw_command(*throw_item);
+                return do_throw_command(chara, *throw_item);
             }
             return TurnResult::turn_end;
         }
@@ -624,7 +597,7 @@ TurnResult ai_proc_basic(Character& chara)
         cell_check(chara.next_position.x, chara.next_position.y);
         if (cellaccess == 1)
         {
-            return proc_movement_event();
+            return proc_movement_event(chara);
         }
         else
         {
@@ -635,14 +608,14 @@ TurnResult ai_proc_basic(Character& chara)
     // Do ranged attack.
     if (act == -2)
     {
-        const auto ok = _try_do_melee_attack(chara, cdata[tc]);
+        const auto ok = _try_do_melee_attack(chara, cdata[enemy_index]);
         if (ok)
         {
             return TurnResult::turn_end;
         }
     }
 
-    // Do any spact.
+    // Cast some spell.
     if (act >= 400 && act < 467)
     {
         efid = act;
@@ -656,18 +629,18 @@ TurnResult ai_proc_basic(Character& chara)
                 return TurnResult::turn_end;
             }
         }
-        const auto ok = do_cast_magic();
+        const auto ok = do_cast_magic(chara, enemy_index);
         if (ok)
         {
             return TurnResult::turn_end;
         }
     }
 
-    // Cast any spell.
+    // Do some spact.
     if (act >= 600)
     {
         efid = act;
-        const auto ok = do_magic_attempt();
+        const auto ok = do_spact(chara, enemy_index);
         if (ok)
         {
             return TurnResult::turn_end;
@@ -680,11 +653,11 @@ TurnResult ai_proc_basic(Character& chara)
     {
         if (distance == 1)
         {
-            try_to_melee_attack();
+            try_to_melee_attack(chara, cdata[enemy_index]);
         }
         else if (rnd(3) == 0 || chara.index < 16)
         {
-            const auto ok = _try_do_melee_attack(chara, cdata[tc]);
+            const auto ok = _try_do_melee_attack(chara, cdata[enemy_index]);
             if (ok)
             {
                 return TurnResult::turn_end;
@@ -696,13 +669,13 @@ TurnResult ai_proc_basic(Character& chara)
     // Do melee attack if the attacker stands next to the enemy.
     if (distance == 1)
     {
-        try_to_melee_attack();
+        try_to_melee_attack(chara, cdata[enemy_index]);
         return TurnResult::turn_end;
     }
 
     // Try to do ranged attack if possible.
     {
-        const auto ok = _try_do_melee_attack(chara, cdata[tc]);
+        const auto ok = _try_do_melee_attack(chara, cdata[enemy_index]);
         if (ok)
         {
             return TurnResult::turn_end;
@@ -722,7 +695,7 @@ TurnResult ai_proc_basic(Character& chara)
     }
     if (rnd(100) < chara.ai_move)
     {
-        return proc_npc_movement_event(chara);
+        return proc_npc_movement_event(chara, enemy_index);
     }
     else
     {
@@ -732,7 +705,8 @@ TurnResult ai_proc_basic(Character& chara)
 
 
 
-TurnResult proc_npc_movement_event(Character& chara, bool retreat)
+TurnResult
+proc_npc_movement_event(Character& chara, int& enemy_index, bool retreat)
 {
     if (map_data.type == mdata_t::MapType::town && chara.index < 16)
     {
@@ -746,7 +720,7 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
         }
     }
 
-    if (tc == chara.index)
+    if (enemy_index == chara.index)
     {
         chara.enemy_id = 0;
         return TurnResult::turn_end;
@@ -754,13 +728,13 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
 
     if (chara._203 <= 0)
     {
-        chara.target_position = cdata[tc].position;
+        chara.target_position = cdata[enemy_index].position;
         if (retreat || chara.ai_dist > distance)
         {
-            chara.target_position.x =
-                chara.position.x + (chara.position.x - cdata[tc].position.x);
-            chara.target_position.y =
-                chara.position.y + (chara.position.y - cdata[tc].position.y);
+            chara.target_position.x = chara.position.x +
+                (chara.position.x - cdata[enemy_index].position.x);
+            chara.target_position.y = chara.position.y +
+                (chara.position.y - cdata[enemy_index].position.y);
         }
     }
     else
@@ -778,39 +752,43 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
     cell_check(x, y);
     if (cellaccess == 1)
     {
-        return proc_movement_event();
+        return proc_movement_event(chara);
     }
     if (cellchara != -1)
     {
-        tc = cellchara;
-        if (relationbetween(chara.index, tc) == -3)
+        enemy_index = cellchara;
+        if (relation_between(chara, cdata[enemy_index]) == -3)
         {
-            chara.enemy_id = tc;
+            chara.enemy_id = enemy_index;
             chara.hate += 4;
-            distance = dist_helper(cdata[tc], chara);
-            return ai_proc_basic(chara);
+            distance = dist_helper(cdata[enemy_index], chara);
+            return ai_proc_basic(chara, enemy_index);
         }
         else if (
-            (chara.quality > Quality::great && chara.level > cdata[tc].level) ||
-            cdata[tc].is_hung_on_sand_bag())
+            (chara.quality > Quality::great &&
+             chara.level > cdata[enemy_index].level) ||
+            cdata[enemy_index].is_hung_on_sand_bag())
         {
-            if (chara.enemy_id != tc)
+            if (chara.enemy_id != enemy_index)
             {
-                const auto did_swap = cell_swap(chara.index, tc);
+                const auto did_swap = cell_swap(chara.index, enemy_index);
                 if (did_swap && is_in_fov(chara))
                 {
-                    txt(i18n::s.get("core.ai.swap.displace", chara, cdata[tc]));
+                    txt(i18n::s.get(
+                        "core.ai.swap.displace", chara, cdata[enemy_index]));
                 }
-                if (cdata[tc].activity.type == Activity::Type::eat)
+                if (cdata[enemy_index].activity.type == Activity::Type::eat)
                 {
-                    if (cdata[tc].activity.turn > 0)
+                    if (cdata[enemy_index].activity.turn > 0)
                     {
                         if (is_in_fov(chara))
                         {
                             txt(i18n::s.get(
-                                "core.ai.swap.glare", chara, cdata[tc]));
+                                "core.ai.swap.glare",
+                                chara,
+                                cdata[enemy_index]));
                         }
-                        cdata[tc].activity.finish();
+                        cdata[enemy_index].activity.finish();
                     }
                 }
                 return TurnResult::turn_end;
@@ -838,34 +816,34 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
         std::abs(chara.target_position.y - chara.position.y))
     {
         {
-            int stat = _ai_dir_check_x();
+            int stat = _ai_dir_check_x(chara);
             if (stat == 1)
             {
-                return proc_movement_event();
+                return proc_movement_event(chara);
             }
         }
         {
-            int stat = _ai_dir_check_y();
+            int stat = _ai_dir_check_y(chara);
             if (stat == 1)
             {
-                return proc_movement_event();
+                return proc_movement_event(chara);
             }
         }
     }
     else
     {
         {
-            int stat = _ai_dir_check_y();
+            int stat = _ai_dir_check_y(chara);
             if (stat == 1)
             {
-                return proc_movement_event();
+                return proc_movement_event(chara);
             }
         }
         {
-            int stat = _ai_dir_check_x();
+            int stat = _ai_dir_check_x(chara);
             if (stat == 1)
             {
-                return proc_movement_event();
+                return proc_movement_event(chara);
             }
         }
     }
@@ -877,7 +855,7 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
         cell_check(chara.next_position.x, chara.next_position.y);
         if (cellaccess == 1)
         {
-            return proc_movement_event();
+            return proc_movement_event(chara);
         }
     }
     else
@@ -894,22 +872,22 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
         if (dir == 1)
         {
             chara.target_position.x = chara.position.x - 6;
-            chara.target_position.y = cdata[tc].position.y;
+            chara.target_position.y = cdata[enemy_index].position.y;
         }
         if (dir == 2)
         {
             chara.target_position.x = chara.position.x + 6;
-            chara.target_position.y = cdata[tc].position.y;
+            chara.target_position.y = cdata[enemy_index].position.y;
         }
         if (dir == 3)
         {
             chara.target_position.y = chara.position.y - 6;
-            chara.target_position.x = cdata[tc].position.x;
+            chara.target_position.x = cdata[enemy_index].position.x;
         }
         if (dir == 0)
         {
             chara.target_position.y = chara.position.y + 6;
-            chara.target_position.x = cdata[tc].position.x;
+            chara.target_position.x = cdata[enemy_index].position.x;
         }
     }
 
@@ -918,14 +896,14 @@ TurnResult proc_npc_movement_event(Character& chara, bool retreat)
 
 
 
-TurnResult ai_proc_misc_map_events(Character& chara)
+TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
 {
     // Follows you, e.g., Gwen.
     if (chara.ai_calm == 4)
     {
-        tc = 0;
-        distance = dist_helper(cdata[tc], chara);
-        return proc_npc_movement_event(chara);
+        enemy_index = 0;
+        distance = dist_helper(cdata[enemy_index], chara);
+        return proc_npc_movement_event(chara, enemy_index);
     }
 
     if (rnd(5) != 0)
@@ -933,8 +911,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
         return TurnResult::turn_end;
     }
 
-    if (chara.drunk != 0 && _chara_get_race(chara) == "core.cat" &&
-        is_in_fov(chara))
+    if (chara.drunk != 0 && chara.race == "core.cat" && is_in_fov(chara))
     {
         _proc_drunk_cat(chara);
     }
@@ -949,7 +926,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
         }
     }
 
-    if (chara.ai_item == 0 && chara.relationship != 10)
+    if (!chara.ai_item && chara.relationship != 10)
     {
         if (game_data.current_map == mdata_t::MapId::quest &&
             game_data.executing_immediate_quest_type == 1009)
@@ -971,7 +948,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
                 }
                 if (const auto item = itemcreate_chara_inv(chara.index, 0, 0))
                 {
-                    chara.ai_item = item->index;
+                    chara.ai_item = ItemRef::from_ref(*item);
                 }
             }
         }
@@ -1004,7 +981,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
             if (rnd(5) == 0)
             {
                 efid = 183;
-                magic();
+                magic(chara, chara);
                 return TurnResult::turn_end;
             }
         }
@@ -1012,11 +989,11 @@ TurnResult ai_proc_misc_map_events(Character& chara)
         {
             if (is_in_fov(chara))
             {
-                tc = 0;
-                distance = dist_helper(cdata[tc], chara);
+                enemy_index = 0;
+                distance = dist_helper(cdata[enemy_index], chara);
                 if (distance < 8)
                 {
-                    if (_chara_get_race(cdata.player()) == "core.snail")
+                    if (cdata.player().race == "core.snail")
                     {
                         tlocx = cdata.player().position.x;
                         tlocy = cdata.player().position.y;
@@ -1029,7 +1006,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
                                 txt(i18n::s.get("core.ai.snail"),
                                     Message::color{ColorIndex::cyan});
                             }
-                            return do_throw_command(*salt_solution);
+                            return do_throw_command(chara, *salt_solution);
                         }
                     }
                 }
@@ -1051,30 +1028,30 @@ TurnResult ai_proc_misc_map_events(Character& chara)
                     }
                     if (dist_helper(chara, cdata[cnt]) < 6)
                     {
-                        if (fov_los_helper(chara, cdata[cnt]))
+                        if (fov_los(chara.position, cdata[cnt].position))
                         {
                             chara.enemy_id = cnt;
-                            tc = cnt;
+                            enemy_index = cnt;
                             break;
                         }
                     }
                 }
             }
-            distance = dist_helper(cdata[tc], chara);
-            if (tc != 0)
+            distance = dist_helper(cdata[enemy_index], chara);
+            if (enemy_index != 0)
             {
                 if (distance == 1)
                 {
-                    if (!cdata[tc].activity)
+                    if (!cdata[enemy_index].activity)
                     {
                         chara.enemy_id = 0;
-                        activity_sex();
+                        activity_sex(chara, cdata[enemy_index]);
                         return TurnResult::turn_end;
                     }
                 }
                 if (distance < 6)
                 {
-                    return proc_npc_movement_event(chara);
+                    return proc_npc_movement_event(chara, enemy_index);
                 }
             }
         }
@@ -1084,7 +1061,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
         cell_check(chara.next_position.x, chara.next_position.y);
         if (cellaccess == 1)
         {
-            return proc_movement_event();
+            return proc_movement_event(chara);
         }
     }
 
@@ -1096,7 +1073,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
         cell_check(chara.next_position.x, chara.next_position.y);
         if (cellaccess == 1)
         {
-            return proc_movement_event();
+            return proc_movement_event(chara);
         }
     }
 
@@ -1123,7 +1100,7 @@ TurnResult ai_proc_misc_map_events(Character& chara)
         cell_check(chara.next_position.x, chara.next_position.y);
         if (cellaccess == 1)
         {
-            return proc_movement_event();
+            return proc_movement_event(chara);
         }
     }
 

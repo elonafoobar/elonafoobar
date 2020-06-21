@@ -82,20 +82,13 @@ void _update_dungeon_level()
 
 void _update_pets_moving_status()
 {
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& ally : cdata.allies())
     {
-        if (cnt == 0)
+        if (ally.current_map != 0 && ally.current_map == game_data.current_map)
         {
-            continue;
-        }
-        if (cdata[cnt].current_map != 0)
-        {
-            if (cdata[cnt].current_map == game_data.current_map)
+            if (ally.state() == Character::State::pet_moving_to_map)
             {
-                if (cdata[cnt].state() == Character::State::pet_moving_to_map)
-                {
-                    cdata[cnt].set_state(Character::State::alive);
-                }
+                ally.set_state(Character::State::alive);
             }
         }
     }
@@ -125,9 +118,12 @@ void _clear_map_and_objects()
     {
         cnt.set_state(Character::State::empty);
     }
-    for (auto&& item : inv.map_local())
+    for (auto&& inv_ : inv.map_local())
     {
-        item.remove();
+        for (auto&& item : inv_)
+        {
+            item.remove();
+        }
     }
 
     map_data.clear();
@@ -364,20 +360,20 @@ void _proc_three_years_later()
 
 
 
-void _update_adventurer(int cnt)
+void _update_adventurer(Character& adv)
 {
-    if (cdata[cnt].state() != Character::State::adventurer_in_other_map)
+    if (adv.state() != Character::State::adventurer_in_other_map)
     {
         return;
     }
-    if (cdata[cnt].is_contracting())
+    if (adv.is_contracting())
     {
-        cdata[cnt].relationship = 10;
-        cdata[cnt].current_map = game_data.current_map;
+        adv.relationship = 10;
+        adv.current_map = game_data.current_map;
     }
     else
     {
-        if (cdata[cnt].current_map != game_data.current_map)
+        if (adv.current_map != game_data.current_map)
         {
             return;
         }
@@ -396,31 +392,30 @@ void _update_adventurer(int cnt)
     {
         return;
     }
-    rc = cnt;
-    cdata[rc].set_state(Character::State::alive);
-    if (cdata[cnt].is_contracting() == 1)
+    adv.set_state(Character::State::alive);
+    if (adv.is_contracting() == 1)
     {
         cxinit = cdata.player().position.x;
         cyinit = cdata.player().position.y;
-        chara_place();
+        chara_place(adv);
     }
     else
     {
         cxinit = -1;
-        chara_place();
-        cdata[rc].hp = cdata[rc].max_hp;
-        cdata[rc].mp = cdata[rc].max_mp;
+        chara_place(adv);
+        adv.hp = adv.max_hp;
+        adv.mp = adv.max_mp;
     }
-    chara_refresh(cnt);
+    chara_refresh(adv);
 }
 
 
 
 void _update_adventurers()
 {
-    for (int cnt = 16; cnt < 55; ++cnt)
+    for (auto&& adv : cdata.adventurers())
     {
-        _update_adventurer(cnt);
+        _update_adventurer(adv);
     }
 }
 
@@ -601,49 +596,48 @@ void _level_up_if_guard(Character& chara)
 
 void _refresh_map_character(Character& cnt)
 {
-    rc = cnt.index;
-    cdata[rc].was_passed_item_by_you_just_now() = false;
+    cnt.was_passed_item_by_you_just_now() = false;
 
-    if (rc < 57)
+    if (cnt.index < 57)
     {
         if (mode == 11)
         {
             return;
         }
     }
-    if (cdata[rc].state() == Character::State::villager_dead)
+    if (cnt.state() == Character::State::villager_dead)
     {
-        if (game_data.date.hours() >= cdata[rc].time_to_revive)
+        if (game_data.date.hours() >= cnt.time_to_revive)
         {
-            revive_player();
+            revive_player(cnt);
         }
         else
         {
             return;
         }
     }
-    if (cdata[rc].state() != Character::State::alive)
+    if (cnt.state() != Character::State::alive)
     {
         return;
     }
 
-    _level_up_if_guard(cdata[rc]);
+    _level_up_if_guard(cnt);
 
-    if (rc >= 57)
+    if (cnt.index >= 57)
     {
-        _refresh_map_character_other(cdata[rc]);
+        _refresh_map_character_other(cnt);
     }
-    if (rc == 0 || game_data.mount != rc)
+    if (cnt.index == 0 || game_data.mount != cnt.index)
     {
-        if (_position_blocked(cdata[rc]))
+        if (_position_blocked(cnt))
         {
-            _relocate_character(cdata[rc]);
+            _relocate_character(cnt);
         }
     }
-    if (cdata[rc].is_ridden() == 0)
+    if (cnt.is_ridden() == 0)
     {
-        cell_data.at(cdata[rc].position.x, cdata[rc].position.y)
-            .chara_index_plus_one = rc + 1;
+        cell_data.at(cnt.position.x, cnt.position.y).chara_index_plus_one =
+            cnt.index + 1;
     }
 }
 
@@ -866,13 +860,12 @@ void _update_quest_flags_lesimas()
 
 void _update_paels_mom()
 {
-    tc = chara_find("core.lily");
-    if (tc != 0)
+    if (const auto lily = chara_find("core.lily"))
     {
         if (game_data.quest_flags.pael_and_her_mom >= 10)
         {
-            cdata[tc].image = 360;
-            cdata[tc].portrait = "";
+            lily->image = 360;
+            lily->portrait = "";
         }
     }
 }
@@ -1015,18 +1008,18 @@ void _notify_distance_traveled()
     exp = cdata.player().level * game_data.distance_between_town *
             sdata(182, 0) / 100 +
         1;
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& chara : cdata.player_and_allies())
     {
-        if (cdata[cnt].state() != Character::State::alive)
+        if (chara.state() != Character::State::alive)
         {
             continue;
         }
-        if (cnt != 0 && cdata[cnt].current_map)
+        if (chara.index != 0 && chara.current_map)
         {
             continue;
         }
         ++p;
-        cdata[cnt].experience += exp;
+        chara.experience += exp;
     }
     if (p == 1)
     {
@@ -1053,13 +1046,13 @@ void _notify_distance_traveled()
 
 void _remove_lomias_and_larnneire()
 {
-    if (chara_find("core.larnneire") != 0)
+    if (const auto larnneire = chara_find("core.larnneire"))
     {
-        chara_vanquish(chara_find("core.larnneire"));
+        chara_vanquish(*larnneire);
     }
-    if (chara_find("core.lomias") != 0)
+    if (const auto lomias = chara_find("core.lomias"))
     {
-        chara_vanquish(chara_find("core.lomias"));
+        chara_vanquish(*lomias);
     }
 }
 
@@ -1067,9 +1060,9 @@ void _remove_lomias_and_larnneire()
 
 void _remove_xabi()
 {
-    if (chara_find("core.xabi") != 0)
+    if (const auto xabi = chara_find("core.xabi"))
     {
-        chara_vanquish(chara_find("core.xabi"));
+        chara_vanquish(*xabi);
     }
 }
 
@@ -1077,21 +1070,17 @@ void _remove_xabi()
 
 void _update_quest_escort(int cnt2)
 {
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& ally : cdata.allies())
     {
-        if (cdata[cnt].is_escorted() == 1)
+        if (ally.state() == Character::State::alive)
         {
-            if (cdata[cnt].state() == Character::State::alive)
+            if (ally.is_escorted() &&
+                ally.id == int2charaid(quest_data[cnt2].extra_info_2) &&
+                quest_data[cnt2].extra_info_1 == game_data.current_map)
             {
-                if (cdata[cnt].id == int2charaid(quest_data[cnt2].extra_info_2))
-                {
-                    if (quest_data[cnt2].extra_info_1 == game_data.current_map)
-                    {
-                        event_add(16, cnt2, cnt);
-                        cdata[cnt].is_escorted() = false;
-                        break;
-                    }
-                }
+                event_add(16, cnt2, ally.index);
+                ally.is_escorted() = false;
+                break;
             }
         }
     }
@@ -1387,6 +1376,49 @@ int initialize_map_pregenerate()
     return 0;
 }
 
+
+
+// @see _update_save_data_16() in save_update.cpp
+void migrate_old_save_v17()
+{
+    for (int y = 0; y < map_data.height; ++y)
+    {
+        for (int x = 0; x < map_data.width; ++x)
+        {
+            if (cell_data.at(x, y).item_info_actual.stack_count() != -4 ||
+                cell_data.at(x, y).item_info_memory.stack_count() != -4)
+            {
+                return; // It's new format.
+            }
+        }
+    }
+
+    // Update old format.
+    for (int y = 0; y < map_data.height; ++y)
+    {
+        for (int x = 0; x < map_data.width; ++x)
+        {
+            cell_data.at(x, y).item_info_actual.clear();
+            cell_data.at(x, y).item_info_memory.clear();
+        }
+    }
+    for (const auto& item : inv.ground())
+    {
+        if (item.number() != 0)
+        {
+            cell_refresh(item.position.x, item.position.y);
+        }
+    }
+    for (int y = 0; y < map_data.height; ++y)
+    {
+        for (int x = 0; x < map_data.width; ++x)
+        {
+            cell_data.at(x, y).item_info_memory =
+                cell_data.at(x, y).item_info_actual;
+        }
+    }
+}
+
 } // namespace
 
 
@@ -1396,6 +1428,9 @@ TurnResult initialize_map()
     bool was_generated = false;
 
     const auto stat = initialize_map_pregenerate();
+
+    migrate_old_save_v17();
+
     if (stat == 0)
     {
         _generate_new_map();

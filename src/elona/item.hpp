@@ -8,6 +8,7 @@
 #include "consts.hpp"
 #include "data/types/type_item.hpp"
 #include "enums.hpp"
+#include "eobject/eobject.hpp"
 #include "position.hpp"
 #include "serialization/macros.hpp"
 #include "shared_id.hpp"
@@ -50,20 +51,40 @@ struct Enchantment
 
 
 
+struct Inventory;
+
+
+
 struct Item
 {
 private:
     using FlagSet = std::bitset<32>;
 
 
-public:
-    Item();
-
     // Index of this item into the global cdata array.
     // Used for communicating with legacy code that takes integer index
     // arguments. New code should pass Item& instead. Not serialized; set on
     // creation and load.
-    int index = -1;
+    int _index = -1;
+
+    Inventory* _inventory = nullptr;
+
+    friend Inventory;
+
+public:
+    Item();
+
+    int index() const noexcept
+    {
+        return _index;
+    }
+
+    Inventory* inventory() const noexcept
+    {
+        return _inventory;
+    }
+
+    ObjId obj_id;
 
 private:
     int number_ = 0;
@@ -162,17 +183,30 @@ public:
 
 
 
+    bool operator==(const Item& other) const noexcept
+    {
+        return this == &other;
+    }
+
+
+    bool operator!=(const Item& other) const noexcept
+    {
+        return !(*this == other);
+    }
+
+
+
     static void copy(const Item& from, Item& to)
     {
-        const auto index_save = to.index;
+        const auto index_save = to._index;
+        const auto inventory_save = to._inventory;
         to = from;
-        to.index = index_save;
+        to._index = index_save;
+        to._inventory = inventory_save;
     }
 
 
 private:
-    static void refresh();
-
     Item(const Item&) = default;
     Item(Item&&) = default;
     Item& operator=(const Item&) = default;
@@ -187,6 +221,7 @@ public:
         /* clang-format off */
         ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Item");
 
+        ELONA_SERIALIZATION_STRUCT_FIELD(*this, obj_id);
         ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "number", number_);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, value);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, image);
@@ -227,85 +262,181 @@ public:
 
 
 
-struct InventorySlice
-{
-    using iterator = std::vector<Item>::iterator;
-
-    InventorySlice(const iterator& begin, const iterator& end)
-        : _begin(begin)
-        , _end(end)
-    {
-    }
-
-    iterator begin()
-    {
-        return _begin;
-    }
-
-    iterator end()
-    {
-        return _end;
-    }
-
-private:
-    const iterator _begin;
-    const iterator _end;
-};
-
-
-
 struct Character;
+
 
 
 struct Inventory
 {
-    Inventory();
+public:
+    using storage_type = std::vector<Item>;
 
 
-    Item& operator[](int index)
+    Inventory(size_t index_start, size_t inventory_size, int inventory_id);
+    Inventory(Inventory&&);
+
+    bool contains(size_t index) const;
+    Item& at(size_t index);
+
+    bool has_free_slot() const;
+    optional_ref<Item> get_free_slot();
+
+
+    size_t index_start() const noexcept
     {
-        return storage[index];
+        return _index_start;
     }
 
 
-    InventorySlice all()
+    size_t size() const noexcept
     {
-        return {std::begin(storage), std::end(storage)};
+        return _storage.size();
     }
 
 
-    InventorySlice pc()
+
+    template <typename Itr>
+    struct iterator_base
     {
-        return {std::begin(storage), std::begin(storage) + 200};
+    public:
+        iterator_base(Itr itr, Itr end)
+            : _itr(itr)
+            , _end(end)
+        {
+            skip_over_null_elements();
+        }
+
+
+        bool operator==(const iterator_base& other) const
+        {
+            return _itr == other._itr;
+        }
+
+
+        bool operator!=(const iterator_base& other) const
+        {
+            return !(*this == other);
+        }
+
+
+        auto& operator*() const
+        {
+            return *_itr;
+        }
+
+
+        iterator_base& operator++()
+        {
+            ++_itr;
+            skip_over_null_elements();
+            return *this;
+        }
+
+
+
+    private:
+        Itr _itr;
+        Itr _end;
+
+
+        void skip_over_null_elements()
+        {
+            while (_itr != _end && _itr->number() == 0)
+            {
+                ++_itr;
+            }
+        }
+    };
+
+
+    using iterator = iterator_base<storage_type::iterator>;
+    using const_iterator = iterator_base<storage_type::const_iterator>;
+
+
+
+    iterator begin()
+    {
+        return iterator(_storage.begin(), _storage.end());
+    }
+
+    iterator end()
+    {
+        return iterator(_storage.end(), _storage.end());
     }
 
 
-    InventorySlice ground()
+    const_iterator begin() const
     {
-        return {std::begin(storage) + ELONA_ITEM_ON_GROUND_INDEX,
-                std::begin(storage) + ELONA_ITEM_ON_GROUND_INDEX + 400};
+        return const_iterator(_storage.begin(), _storage.end());
+    }
+
+    const_iterator end() const
+    {
+        return const_iterator(_storage.end(), _storage.end());
     }
 
 
-    InventorySlice map_local()
+    const_iterator cbegin() const
     {
-        return {std::begin(storage) + ELONA_OTHER_INVENTORIES_INDEX,
-                std::end(storage)};
+        return begin();
+    }
+
+    const_iterator cend() const
+    {
+        return end();
     }
 
 
-    InventorySlice for_chara(const Character& chara);
 
-    InventorySlice by_index(int index);
+    int inventory_id() const noexcept
+    {
+        return _inventory_id;
+    }
 
 
 
 private:
-    std::vector<Item> storage;
+    size_t _index_start;
+    storage_type _storage;
+    int _inventory_id;
 };
 
 
-extern Inventory inv;
+
+struct AllInventory
+{
+private:
+    using storage_type = std::vector<Inventory>;
+    using iterator_type = storage_type::iterator;
+    using iterator_pair_type = range::iterator_pair_t<iterator_type>;
+
+
+
+public:
+    AllInventory();
+
+
+    Item& operator[](int index);
+
+
+    Inventory& pc();
+    Inventory& ground();
+    Inventory& for_chara(const Character& chara);
+    Inventory& by_index(int index);
+
+    iterator_pair_type all();
+    iterator_pair_type global();
+    iterator_pair_type map_local();
+
+
+
+private:
+    std::vector<Inventory> _inventories;
+};
+
+
+
+extern AllInventory inv;
 
 
 
@@ -325,7 +456,6 @@ Item& inv_compress(int owner);
 void item_copy(Item& src, Item& dst);
 
 void item_acid(const Character& owner, optional_ref<Item> item = none);
-void item_delete(Item& item);
 
 /**
  * Swap the content of @a a and @a b. If they points to the same object, does
@@ -369,7 +499,7 @@ item_stack(int inventory_id, Item& base_item, bool show_message = false);
 void item_dump_desc(Item&);
 
 bool item_fire(int owner, optional_ref<Item> burned_item = none);
-void mapitem_fire(int x, int y);
+void mapitem_fire(optional_ref<Character> arsonist, int x, int y);
 bool item_cold(int owner, optional_ref<Item> destroyed_item = none);
 void mapitem_cold(int x, int y);
 
@@ -416,13 +546,12 @@ size_t item_load_desc(const Item& item);
 int iequiploc(const Item& item);
 
 void item_db_set_basic_stats(Item& item, int legacy_id);
-bool item_db_is_offerable(Item& item, int legacy_id);
 void item_db_get_description(Item& item, int legacy_id);
 void item_db_get_charge_level(const Item& item, int legacy_id);
 void item_db_set_full_stats(Item& item, int legacy_id);
-void item_db_on_read(Item& item, int legacy_id);
+void item_db_on_read(Character& reader, Item& item, int legacy_id);
 void item_db_on_zap(Item& item, int legacy_id);
-void item_db_on_drink(optional_ref<Item> item, int legacy_id);
+void item_db_on_drink(Character& chara, optional_ref<Item> item, int legacy_id);
 
 
 std::vector<int> item_get_inheritance(const Item& item);
@@ -435,12 +564,10 @@ bool cargocheck(const Item& item);
 Item& item_convert_artifact(
     Item& artifact,
     bool ignore_external_container = false);
-void damage_by_cursed_equipments();
+void damage_by_cursed_equipments(Character& chara);
 void dipcursed(Item& item);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
-void equip_melee_weapon();
-int gain_skills_by_geen_engineering();
-int transplant_body_parts();
+void equip_melee_weapon(Character& chara);
 std::pair<int, int> inv_getheader(int);
 optional_ref<Item> mapitemfind(const Position& pos, ItemId id);
 std::string itemname(Item& item, int number = 0, bool with_article = true);

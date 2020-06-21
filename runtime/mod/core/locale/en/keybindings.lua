@@ -105,7 +105,6 @@ Enter to unbind, Escape to cancel.
       dump_player_info = "Dump Player Info",
       reload_autopick = "Reload Autopick",
       screenshot = "Take Screenshot",
-      toggle_console = "Toggle Console",
       open_console = "Open Console",
 
       wizard_mewmewmew = "Mewmewmew!",

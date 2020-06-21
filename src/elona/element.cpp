@@ -94,44 +94,34 @@ int element_color_id(int element_id)
 
 
 
-void resistmod(int cc, int element, int delta)
+void chara_gain_registance(Character& chara, int element, int delta)
 {
     if (delta >= 50)
     {
-        if (auto text = i18n::s.get_enum_optional(
-                "core.element.resist.gain", element, cdata[cc]))
-        {
-            txt(*text, Message::color{ColorIndex::green});
-        }
-        else
-        {
-            assert(false);
-        }
+        txt(i18n::s.get_enum("core.element.resist.gain", element, chara),
+            Message::color{ColorIndex::green});
     }
-    else if (delta <= 50 * -1)
+    else if (delta <= -50)
     {
-        if (auto text = i18n::s.get_enum_optional(
-                "core.element.resist.lose", element, cdata[cc]))
-        {
-            txt(*text, Message::color{ColorIndex::purple});
-        }
-        else
-        {
-            assert(false);
-        }
+        txt(i18n::s.get_enum("core.element.resist.lose", element, chara),
+            Message::color{ColorIndex::purple});
     }
 
-    sdata.get(element, cc).original_level =
-        clamp(sdata.get(element, cc).original_level + delta, 50, 200);
+    sdata.get(element, chara.index).original_level =
+        clamp(sdata.get(element, chara.index).original_level + delta, 50, 200);
     snd("core.atk_elec");
-    animeload(15, cc);
+    animeload(15, chara);
 
-    chara_refresh(cc);
+    chara_refresh(chara);
 }
 
 
 
-void txteledmg(int type, int attacker, int target, int element)
+void txteledmg(
+    int type,
+    optional_ref<const Character> attacker,
+    int target,
+    int element)
 {
     if (type == 0 && is_in_fov(cdata[target]))
     {
@@ -148,32 +138,49 @@ void txteledmg(int type, int attacker, int target, int element)
     }
     else if (type == 1)
     {
-        auto text = i18n::s.get_enum_property_optional(
-            "core.death_by.element"s,
-            "active",
-            element,
-            cdata[target],
-            cdata[attacker]);
-        if (text)
+        if (attacker)
         {
-            txt(*text);
+            auto text = i18n::s.get_enum_property_optional(
+                "core.death_by.element"s,
+                "active.by_chara",
+                element,
+                cdata[target],
+                *attacker);
+            if (text)
+            {
+                txt(*text);
+            }
+            else
+            {
+                txt(i18n::s.get(
+                    "core.death_by.element.default.active.by_chara",
+                    cdata[target],
+                    *attacker));
+            }
         }
         else
         {
-            txt(i18n::s.get(
-                "core.death_by.element.default.active",
-                cdata[target],
-                cdata[attacker]));
+            auto text = i18n::s.get_enum_property_optional(
+                "core.death_by.element"s,
+                "active.by_spell",
+                element,
+                cdata[target]);
+            if (text)
+            {
+                txt(*text);
+            }
+            else
+            {
+                txt(i18n::s.get(
+                    "core.death_by.element.default.active.by_spell",
+                    cdata[target]));
+            }
         }
     }
     else if (type == 2)
     {
         auto text = i18n::s.get_enum_property_optional(
-            "core.death_by.element"s,
-            "passive",
-            element,
-            cdata[target],
-            cdata[attacker]);
+            "core.death_by.element"s, "passive", element, cdata[target]);
         if (text)
         {
             txt(*text);
@@ -181,9 +188,7 @@ void txteledmg(int type, int attacker, int target, int element)
         else
         {
             txt(i18n::s.get(
-                "core.death_by.element.default.passive",
-                cdata[target],
-                cdata[attacker]));
+                "core.death_by.element.default.passive", cdata[target]));
         }
     }
 }

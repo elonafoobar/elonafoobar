@@ -2,9 +2,8 @@ ELONA.i18n:add {
    blending = {
       rate_panel = {
          success_rate = "Success Rate: {$1}",
-         turns = "{$1} turn{s($1)}",
-         and_hours = " and {$1} hour{s($1)}",
-         required_time = "Time: {$1}",
+         required_turns = "Time: {$1} turn{s($1)}",
+         required_turns_and_hours = "Time: {$1} turn{s($1)} and {$2} hour{s($2)}",
       },
 
       window = {
@@ -37,18 +36,6 @@ ELONA.i18n:add {
          which = "Which recipe do you want to use?",
          counter = "{$1} recipes",
          of = "Recipe of {$1}",
-
-         _200 = "love food",
-         _201 = "dyeing",
-         _202 = "poisoned food",
-         _203 = "fireproof coating",
-         _204 = "acidproof coating",
-         _205 = "bait attachment",
-         _206 = "blessed item",
-         _207 = "well refill",
-         _208 = "natural potion",
-         _209 = "2 artifacts fusion",
-         _210 = "3 artifacts fusion",
       },
 
       steps = {
@@ -89,13 +76,15 @@ ELONA.i18n:add {
          goes_down = "The success rate goes down.",
       },
 
-      ingredient = {
-         _1 = "suitable flavoring",
-         _2 = "any ore",
-         _3 = "something made of wood",
-         _4 = "fish",
-         _5 = "any item",
-         corpse = "{$1} corpse",
+      material = {
+         filter = {
+            flavor = "suitable flavoring",
+            ore = "any ore",
+            wood = "something made of wood",
+            fish = "fish",
+            anything = "any item",
+         },
+         item_of = "{$2} {$1}",
       },
    },
 }

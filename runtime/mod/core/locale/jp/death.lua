@@ -2,76 +2,127 @@ ELONA.i18n:add {
    death_by = {
       chara = {
          transformed_into_meat = {
-            active = "粉々の肉片に変えた。",
+            active = {
+               by_spell = "粉々の肉片に変えた。",
+               by_chara = "粉々の肉片に変えた。",
+            },
             passive = "{name($1)}は粉々の肉片に変えられた。",
          },
          destroyed = {
-            active = "破壊した。",
+            active = {
+               by_spell = "破壊した。",
+               by_chara = "破壊した。",
+            },
             passive = "{name($1)}は破壊された。",
          },
          minced = {
-            active = "ミンチにした。",
+            active = {
+               by_spell = "ミンチにした。",
+               by_chara = "ミンチにした。",
+            },
             passive = "{name($1)}はミンチにされた。",
          },
          killed = {
-            active = "殺した。",
+            active = {
+               by_spell = "殺した。",
+               by_chara = "殺した。",
+            },
             passive = "{name($1)}は殺された。",
          },
          death_cause = "{basename($1)}に殺された。",
       },
       element = {
          default = {
-            active = "殺した。",
+            active = {
+               by_spell = "殺した。",
+               by_chara = "殺した。",
+            },
             passive = "{name($1)}は死んだ。",
          },
          _50 = {
-            active = "燃やし尽くした。",
+            active = {
+               by_spell = "燃やし尽くした。",
+               by_chara = "燃やし尽くした。",
+            },
             passive = "{name($1)}は燃え尽きて灰になった。",
          },
          _51 = {
-            active = "氷の塊に変えた。",
+            active = {
+               by_spell = "氷の塊に変えた。",
+               by_chara = "氷の塊に変えた。",
+            },
             passive = "{name($1)}は氷の彫像になった。",
          },
          _52 = {
-            active = "焦げカスにした。",
+            active = {
+               by_spell = "焦げカスにした。",
+               by_chara = "焦げカスにした。",
+            },
             passive = "{name($1)}は雷に打たれ死んだ。",
          },
          _53 = {
-            active = "闇に飲み込んだ。",
+            active = {
+               by_spell = "闇に飲み込んだ。",
+               by_chara = "闇に飲み込んだ。",
+            },
             passive = "{name($1)}は闇に蝕まれて死んだ。",
          },
          _54 = {
-            active = "再起不能にした。",
+            active = {
+               by_spell = "再起不能にした。",
+               by_chara = "再起不能にした。",
+            },
             passive = "{name($1)}は発狂して死んだ。",
          },
          _55 = {
-            active = "毒殺した。",
+            active = {
+               by_spell = "毒殺した。",
+               by_chara = "毒殺した。",
+            },
             passive = "{name($1)}は毒に蝕まれて死んだ。",
          },
          _56 = {
-            active = "冥界に墜とした。",
+            active = {
+               by_spell = "冥界に墜とした。",
+               by_chara = "冥界に墜とした。",
+            },
             passive = "{name($1)}は冥界に墜ちた。",
          },
          _57 = {
-            active = "聴覚を破壊し殺した。",
+            active = {
+               by_spell = "聴覚を破壊し殺した。",
+               by_chara = "聴覚を破壊し殺した。",
+            },
             passive = "{name($1)}は朦朧となって死んだ。",
          },
          _58 = {
-            active = "神経を破壊した。",
+            active = {
+               by_spell = "神経を破壊した。",
+               by_chara = "神経を破壊した。",
+            },
             passive = "{name($1)}は神経を蝕まれて死んだ。",
          },
          _59 = {
-            active = "混沌の渦に吸い込んだ。",
+            active = {
+               by_spell = "混沌の渦に吸い込んだ。",
+               by_chara = "混沌の渦に吸い込んだ。",
+            },
             passive = "{name($1)}は混沌の渦に吸収された。",
          },
          -- _60
          _61 = {
-            active = "千切りにした。",
+            active = {
+               by_spell = "千切りにした。",
+               by_chara = "千切りにした。",
+            },
             passive = "{name($1)}は千切りになった。",
          },
          -- _62
          _63 = {
-            active = "ドロドロに溶かした。",
+            active = {
+               by_spell = "ドロドロに溶かした。",
+               by_chara = "ドロドロに溶かした。",
+            },
             passive = "{name($1)}は酸に焼かれ溶けた。",
          },
       },

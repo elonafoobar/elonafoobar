@@ -25,7 +25,6 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "lua_env/interface.hpp"
-#include "macro.hpp"
 #include "magic.hpp"
 #include "menu.hpp"
 #include "message.hpp"
@@ -34,6 +33,7 @@
 #include "pic_loader/tinted_buffers.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "talk.hpp"
 #include "text.hpp"
 #include "trait.hpp"
 #include "ui.hpp"
@@ -349,10 +349,11 @@ void show_ex_help(int id)
     notesel(buff);
     {
         buff(0).clear();
-        std::ifstream in{lua::resolve_path_for_mod(
-                             "<core>/locale/<LANGUAGE>/lazy/exhelp.txt")
-                             .native(),
-                         std::ios::binary};
+        std::ifstream in{
+            lua::resolve_path_for_mod(
+                "<core>/locale/<LANGUAGE>/lazy/exhelp.txt")
+                .native(),
+            std::ios::binary};
         std::string tmp;
         while (std::getline(in, tmp))
         {
@@ -480,7 +481,7 @@ static TurnResult _show_skill_spell_menu(size_t menu_index)
     if (std::holds_alternative<ui::UIMenuSkillsResult>(*result.value))
     {
         efid = std::get<ui::UIMenuSkillsResult>(*result.value).effect_id;
-        return do_use_magic();
+        return do_spact_command();
     }
     else
     {
@@ -505,9 +506,11 @@ static std::string _make_buff_power_string(int skill_id)
 {
     const auto buff_id = the_ability_db[skill_id]->ability_type % 1000;
     const auto duration = buff_calc_duration(
-        *the_buff_db.get_id_from_legacy(buff_id), calcspellpower(skill_id, cc));
+        *the_buff_db.get_id_from_legacy(buff_id),
+        calc_spell_power(cdata.player(), skill_id));
     const auto description = buff_get_description(
-        *the_buff_db.get_id_from_legacy(buff_id), calcspellpower(skill_id, cc));
+        *the_buff_db.get_id_from_legacy(buff_id),
+        calc_spell_power(cdata.player(), skill_id));
     return std::to_string(duration) +
         i18n::s.get("core.ui.spell.turn_counter") + " " + description;
 }
@@ -519,8 +522,8 @@ std::string make_spell_description(int skill_id)
     {
         return _make_buff_power_string(skill_id);
     }
-    const auto damage =
-        calc_skill_damage(skill_id, cc, calcspellpower(skill_id, cc));
+    const auto damage = calc_skill_damage(
+        cdata.player(), skill_id, calc_spell_power(cdata.player(), skill_id));
     if (damage)
     {
         dice1 = damage->dice_x;
@@ -528,14 +531,11 @@ std::string make_spell_description(int skill_id)
         bonus = damage->damage_bonus;
         ele = damage->element;
         elep = damage->element_power;
-        if (cc == 0)
+        if (trait(165) != 0)
         {
-            if (trait(165) != 0)
+            if (ele == 50 || ele == 51 || ele == 52)
             {
-                if (ele == 50 || ele == 51 || ele == 52)
-                {
-                    dice2 = dice2 * 125 / 100;
-                }
+                dice2 = dice2 * 125 / 100;
             }
         }
         if (dice1 != 0)
@@ -563,12 +563,8 @@ std::string make_spell_description(int skill_id)
         }
         result += u8" "s;
     }
-    result += i18n::s
-                  .get_m_optional(
-                      "ability",
-                      the_ability_db.get_id_from_legacy(skill_id)->get(),
-                      "description")
-                  .value_or("");
+    result +=
+        the_ability_db.get_text_optional(skill_id, "description").value_or("");
 
     return result;
 }
@@ -608,9 +604,9 @@ MenuResult menu_materials()
 // Returns false if canceled, true if confirmed
 bool menu_character_sheet_character_making()
 {
-    auto result =
-        ui::UIMenuCharacterSheet(CharacterSheetOperation::character_making)
-            .show();
+    auto result = ui::UIMenuCharacterSheet(
+                      cdata.player(), CharacterSheetOperation::character_making)
+                      .show();
 
     if (result.canceled)
     {
@@ -633,7 +629,7 @@ optional<int> menu_character_sheet_trainer(bool is_training)
         op = CharacterSheetOperation::learn_skill;
     }
 
-    auto result = ui::UIMenuCharacterSheet(op).show();
+    auto result = ui::UIMenuCharacterSheet(cdata.player(), op).show();
 
     if (result.canceled || !result.value)
     {
@@ -644,9 +640,10 @@ optional<int> menu_character_sheet_trainer(bool is_training)
     return sheet_result.trainer_skill_id;
 }
 
-void menu_character_sheet_investigate()
+void menu_character_sheet_investigate(Character& ally)
 {
-    ui::UIMenuCharacterSheet(CharacterSheetOperation::investigate_ally).show();
+    ui::UIMenuCharacterSheet(ally, CharacterSheetOperation::investigate_ally)
+        .show();
 }
 
 MenuResult menu_feats_character_making()
@@ -1116,7 +1113,7 @@ void change_appearance_equipment(Character& chara)
 
 
 
-void append_accuracy_info(int val0)
+void append_accuracy_info(const Character& chara, int val0)
 {
     p(1) = 0;
     p(2) = 0;
@@ -1125,50 +1122,50 @@ void append_accuracy_info(int val0)
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
-        if (cdata[cc].body_parts[cnt] % 10000 == 0)
+        if (!chara.equipment_slots[cnt].equipment)
         {
             continue;
         }
-        if (cdata[cc].body_parts[cnt] / 10000 == 10)
+        if (chara.equipment_slots[cnt].type == 10)
         {
             continue;
         }
-        if (cdata[cc].body_parts[cnt] / 10000 == 11)
+        if (chara.equipment_slots[cnt].type == 11)
         {
             continue;
         }
-        auto& weapon = inv[cdata[cc].body_parts[cnt] % 10000 - 1];
+        auto& weapon = *chara.equipment_slots[cnt].equipment;
         if (weapon.dice_x > 0)
         {
             attackskill = weapon.skill;
             ++p(1);
             s(1) = i18n::s.get("core.ui.chara_sheet.damage.melee") + p(1);
             ++attacknum;
-            show_weapon_dice(weapon, none, val0);
+            show_weapon_dice(chara, weapon, none, val0);
         }
     }
     if (attackskill == 106)
     {
         s(1) = i18n::s.get("core.ui.chara_sheet.damage.unarmed");
-        show_weapon_dice(none, none, val0);
+        show_weapon_dice(chara, none, none, val0);
     }
     attacknum = 0;
-    const auto result = can_do_ranged_attack();
+    const auto result = can_do_ranged_attack(chara);
     if (result.type == 1)
     {
         s(1) = i18n::s.get("core.ui.chara_sheet.damage.dist");
-        show_weapon_dice(result.weapon, result.ammo, val0);
+        show_weapon_dice(chara, result.weapon, result.ammo, val0);
     }
 }
 
 
 
 void show_weapon_dice(
+    const Character& chara,
     optional_ref<Item> weapon,
     optional_ref<Item> ammo,
     int val0)
 {
-    tc = cc;
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
     if (val0 == 0)
     {
@@ -1187,8 +1184,9 @@ void show_weapon_dice(
             attackrange = 1;
         }
     }
-    int tohit = calc_accuracy(weapon, ammo, false);
-    dmg = calcattackdmg(weapon, ammo, AttackDamageCalculationMode::raw_damage);
+    int tohit = calc_accuracy(chara, chara, weapon, ammo, false);
+    dmg = calcattackdmg(
+        chara, chara, weapon, ammo, AttackDamageCalculationMode::raw_damage);
     font(14 - en * 2);
     s(2) = std::to_string(dmgmulti);
     s = ""s + tohit + u8"%"s;
@@ -1221,16 +1219,14 @@ void show_weapon_dice(
 static TurnResult _visit_quest_giver(int quest_index)
 {
     // TODO move the below somewhere else to decouple quest_teleport
-    tc = quest_data[quest_index].client_chara_index;
     rq = quest_index;
-    client = tc;
+    client = quest_data[quest_index].client_chara_index;
     efid = 619;
-    magic();
-    tc = client;
+    magic(cdata.player(), cdata[client]);
     if (cdata.player().state() == Character::State::alive)
     {
         quest_teleport = true;
-        talk_to_npc();
+        talk_to_npc(cdata[client]);
     }
     if (chatteleport == 1)
     {
@@ -1239,6 +1235,8 @@ static TurnResult _visit_quest_giver(int quest_index)
     }
     return TurnResult::turn_end;
 }
+
+
 
 TurnResult show_quest_board()
 {
@@ -1333,9 +1331,13 @@ void house_board_update_screen()
 
 
 
-int ctrl_ally(ControlAllyOperation operation)
+int ctrl_ally(
+    ControlAllyOperation operation,
+    optional_ref<Character> gene_engineering_original_character)
 {
-    auto result = ui::UIMenuCtrlAlly(operation).show();
+    auto result =
+        ui::UIMenuCtrlAlly(operation, gene_engineering_original_character)
+            .show();
 
     if (!result.canceled && result.value)
     {
@@ -1352,19 +1354,10 @@ int ctrl_ally(ControlAllyOperation operation)
 void screen_analyze_self()
 {
     // TODO: untranslated
-    if (rc < 0)
-    {
-        rc = tc;
-        if (rc < 0)
-        {
-            rc = 0;
-        }
-    }
     listmax = 0;
     page = 0;
     pagesize = 14;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
     snd("core.pop2");
     buff = "";
@@ -1374,21 +1367,21 @@ void screen_analyze_self()
     cdata.tmp().god_id = cdata.player().god_id;
     for (int cnt = 0; cnt < 600; ++cnt)
     {
-        sdata(cnt, rc) = 1;
+        sdata(cnt, 0) = 1;
     }
-    apply_god_blessing(56);
+    god_apply_blessing(cdata.tmp());
     if (cdata.player().god_id != core_god::eyth)
     {
         buff += u8"<title1>◆ "s + god_name(cdata.player().god_id) +
             u8"による能力の恩恵<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
-            p = sdata(cnt, rc) - 1;
+            p = sdata(cnt, 0) - 1;
             cnvbonus(cnt, p);
         }
     }
     refreshmode = 1;
-    chara_refresh(0);
+    chara_refresh(cdata.player());
     refreshmode = 0;
     buff += u8"\n"s;
     buff += u8"<title1>◆ 特徴と特殊状態による能力の恩恵<def>\n"s;
@@ -1466,7 +1459,7 @@ void screen_analyze_self()
 
 
 
-int change_npc_tone()
+int change_npc_tone(Character& chara)
 {
     auto result = ui::UIMenuNPCTone().show();
 
@@ -1477,17 +1470,17 @@ int change_npc_tone()
 
     snd("core.ok1");
     txt(i18n::s.get(
-        "core.action.interact.change_tone.is_somewhat_different", cdata[tc]));
+        "core.action.interact.change_tone.is_somewhat_different", chara));
 
     if (result.value)
     {
-        cdata[tc].has_custom_talk() = true;
-        cdatan(4, tc) = *result.value;
+        chara.has_custom_talk() = true;
+        chara.talk = *result.value;
     }
     else
     {
-        cdata[tc].has_custom_talk() = false;
-        cdatan(4, tc) = "";
+        chara.has_custom_talk() = false;
+        chara.talk = "";
     }
 
     return 1;

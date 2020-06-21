@@ -16,7 +16,6 @@
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "log.hpp"
-#include "macro.hpp"
 #include "save.hpp"
 #include "variables.hpp"
 #ifdef ELONA_OS_WINDOWS
@@ -255,7 +254,7 @@ int dialog(const std::string& message, int option)
 #elif defined(ELONA_OS_MACOS)
     return dialog_macos(message, option);
 #else
-    UNUSED(option);
+    (void)option;
     std::cout << message << std::endl;
     return 0;
 #endif
@@ -399,7 +398,7 @@ void getstr(
     char delimiter,
     int limit)
 {
-    UNUSED(limit);
+    (void)limit;
     auto pos = source.find(delimiter, offset);
     if (pos == std::string::npos)
     {
@@ -740,8 +739,8 @@ void noteunsel()
 
 void pget(int x, int y)
 {
-    UNUSED(x);
-    UNUSED(y);
+    (void)x;
+    (void)y;
 }
 
 
@@ -990,7 +989,7 @@ void set_color_mod(int r, int g, int b, int window_id)
 
 void apledit(int& out, int kind, int column_no)
 {
-    UNUSED(column_no);
+    (void)column_no;
 
     if (kind == 0)
     {

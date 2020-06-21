@@ -88,7 +88,6 @@ ELONA.i18n:add {
          },
 
          what_is_your_name = "最後の質問だ。君の名前は？",
-         name_is_already_taken = "あいにく、その名前の冒険者はすでに存在する。",
       },
    },
 }

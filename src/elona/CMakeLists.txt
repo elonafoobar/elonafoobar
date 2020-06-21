@@ -57,6 +57,7 @@ set(ELONA_SOURCES
   item_db.cpp
   item_load_desc.cpp
   item_material.cpp
+  item_ref.cpp
   itemgen.cpp
   loading_screen.cpp
   log.cpp
@@ -82,6 +83,7 @@ set(ELONA_SOURCES
   random_event.cpp
   randomgen.cpp
   save.cpp
+  save_header.cpp
   save_update.cpp
   scene.cpp
   set_item_info.cpp
@@ -125,18 +127,8 @@ set(ELONA_SOURCES
 
   lua_env/enums/enums.cpp
 
-  lua_env/lua_api/lua_api.cpp
-
-  lua_env/lua_class/lua_class.cpp
-  lua_env/lua_class/lua_class_ability.cpp
-  lua_env/lua_class/lua_class_area.cpp
-  lua_env/lua_class/lua_class_character.cpp
-  lua_env/lua_class/lua_class_date_time.cpp
-  lua_env/lua_class/lua_class_game_data.cpp
-  lua_env/lua_class/lua_class_item.cpp
-  lua_env/lua_class/lua_class_map_data.cpp
-  lua_env/lua_class/lua_class_map_generator.cpp
-  lua_env/lua_class/lua_class_position.cpp
+  lua_env/api/modules.cpp
+  lua_env/api/classes.cpp
 
   keybind/input_context.cpp
   keybind/key_names.cpp

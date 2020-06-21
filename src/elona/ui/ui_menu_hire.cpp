@@ -74,7 +74,6 @@ bool UIMenuHire::init()
     page = 0;
     pagesize = 16;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
     windowshadow = 1;
 
@@ -160,7 +159,7 @@ void UIMenuHire::_draw_list_entry_pic(int cnt, const Character& chara)
 
 void UIMenuHire::_draw_list_entry_name(int cnt, const Character& chara)
 {
-    const auto chara_name = strutil::take_by_width(cdatan(0, chara.index), 36);
+    const auto chara_name = strutil::take_by_width(chara.name, 36);
     cs_list(cs == cnt, chara_name, wx + 84, wy + 66 + cnt * 19 - 1);
 }
 
@@ -177,7 +176,7 @@ void UIMenuHire::_draw_list_entry_info(int cnt, const Character& chara)
         level += cnven(i18n::s.get("core.ui.sex3.female"));
     }
 
-    level += i18n::s.get("core.ui.npc_list.age_counter", calcage(chara.index));
+    level += i18n::s.get("core.ui.npc_list.age_counter", calc_age(chara));
 
     mes(wx + 372, wy + 66 + cnt * 19 + 2, level);
 }
@@ -187,7 +186,7 @@ void UIMenuHire::_draw_list_entry_cost(int cnt, const Character& chara)
     if (_operation != HireOperation::revive)
     {
         std::string text;
-        int cost = calchirecost(chara.index);
+        int cost = calc_servant_hire_cost(chara);
 
         if (_operation == HireOperation::hire)
         {

@@ -7,7 +7,6 @@
 #include "elona.hpp"
 #include "fov.hpp"
 #include "item.hpp"
-#include "macro.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "pic_loader/pic_loader.hpp"
@@ -15,14 +14,13 @@
 #include "random.hpp"
 #include "variables.hpp"
 
-using namespace elona;
 
 
+namespace elona
+{
 
 namespace
 {
-
-
 
 int pcc_size(int shrinked, int fullscale)
 {
@@ -103,6 +101,7 @@ private:
     T width;
     T height;
 };
+
 
 
 template <typename T>
@@ -707,7 +706,7 @@ void initialize_cloud_data()
 void render_cloud()
 {
     static int dummy = ((void)initialize_cloud_data(), 0);
-    UNUSED(dummy);
+    (void)dummy;
 
     for (size_t i = 0; i < clouds.size(); ++i)
     {
@@ -735,13 +734,13 @@ void render_cloud()
 
 
 
-void draw_hp_bar(int cc, int x, int y)
+void draw_hp_bar(const Character& chara, int x, int y)
 {
-    const int ratio = std::min(cdata[cc].hp * 30 / cdata[cc].max_hp, 30);
+    const int ratio = std::min(chara.hp * 30 / chara.max_hp, 30);
     if (ratio <= 0)
         return;
 
-    if (cc < 16)
+    if (chara.index < 16)
     {
         if (map_data.type != mdata_t::MapType::world_map)
         {
@@ -847,147 +846,151 @@ void draw_character_sprite(
 
 
 
-optional_ref<const Extent> prepare_chara_chip(int c_, int dx, int dy)
+snail::Color color_index_to_snail_color(int color_index)
 {
-    const int col_ = cdata[c_].image / 1000;
-    const int p_ = cdata[c_].image % 1000;
-    auto rect = draw_get_rect_chara(p_);
-    if (cdata[c_].is_hung_on_sand_bag())
-    {
-        gmode(2, 80);
-        func_2(1, 96, 816, -80, 48, 96);
-        gmode(2);
-        gcopy(1, 96, 816, 48, 96, dx, dy - 63);
-        chara_chips[p_].offset_y += 24;
-    }
-    gsel(rect->buffer);
-    boxf(0, 960, rect->width, rect->height);
-    set_color_mod(
-        255 - c_col(0, col_), 255 - c_col(1, col_), 255 - c_col(2, col_));
-    gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height, 0, 960);
-    set_color_mod(255, 255, 255);
-    gsel(0);
-
-    return rect;
+    const uint8_t r = 255 - c_col(0, color_index);
+    const uint8_t g = 255 - c_col(1, color_index);
+    const uint8_t b = 255 - c_col(2, color_index);
+    return {r, g, b};
 }
 
 
+
 void draw_chara_chip_sprite_in_world_map(
-    int texture_id,
-    int chip_id,
+    const Extent& ext,
+    const snail::Color& tint,
     int x,
     int y,
-    int width,
-    int height)
+    int offset_y)
 {
     gmode(2, 85);
     draw_centered("character_shadow", x + 24, y + 32, 20, 10);
     gmode(2);
+    set_color_mod(tint.r, tint.g, tint.b, ext.buffer);
     gcopy_c(
-        texture_id,
-        0,
-        960,
-        width,
-        height,
-        x + 24,
-        y + 24 - chara_chips[chip_id].offset_y / 4,
-        24,
-        height / 2);
+        ext.buffer,
+        ext.x,
+        ext.y,
+        ext.width,
+        ext.height,
+        x + inf_tiles / 2,
+        y + inf_tiles / 2 - offset_y / 4,
+        ext.width / 2,
+        ext.height / 2);
 }
+
 
 
 void draw_chara_chip_sprite_in_water(
-    int texture_id,
-    int chip_id,
+    const Extent& ext,
+    const snail::Color& tint,
     int x,
     int y,
-    int width,
-    int height,
-    int ground_)
+    int offset_y)
 {
-    int dy = (chip_data[ground_].kind == 3) * -16;
+    set_color_mod(tint.r, tint.g, tint.b, ext.buffer);
+    // bottom (under water)
     gmode(2, 100);
     gcopy(
-        texture_id,
-        0,
-        976,
-        width,
-        height - 16,
+        ext.buffer,
+        ext.x,
+        ext.y + ext.height - 16,
+        ext.width,
+        16,
         x,
-        y + 16 - chara_chips[chip_id].offset_y - dy);
+        y - offset_y + ext.height - 16 + 16);
     gmode(2);
+    // top (above water)
     gcopy(
-        texture_id,
-        0,
-        960,
-        width,
-        height - 16,
+        ext.buffer,
+        ext.x,
+        ext.y,
+        ext.width,
+        ext.height - 16,
         x,
-        y - chara_chips[chip_id].offset_y - dy);
+        y - offset_y + 16);
 }
 
+
+
 void draw_chara_chip_sprite(
-    int texture_id,
-    int chip_id,
+    const Extent& ext,
+    const snail::Color& tint,
     int x,
     int y,
-    int width,
-    int height,
-    int ground_)
+    int offset_y)
 {
-    int dy = (chip_data[ground_].kind == 3) * -16;
     gmode(2, 110);
     draw("character_shadow", x + 8, y + 20);
     gmode(2);
-    gcopy(
-        texture_id,
-        0,
-        960,
-        width,
-        height,
-        x,
-        y - chara_chips[chip_id].offset_y - dy);
+    set_color_mod(tint.r, tint.g, tint.b, ext.buffer);
+    gcopy(ext.buffer, ext.x, ext.y, ext.width, ext.height, x, y - offset_y);
 }
 
-void draw_npc_own_sprite(int c_, int dx, int dy, int ani_, int ground_)
+
+
+void draw_npc_own_sprite(
+    const Character& chara,
+    int dx,
+    int dy,
+    int ani_,
+    int ground_)
 {
     if (map_data.type == mdata_t::MapType::world_map)
     {
         draw_character_sprite_in_world_map(
-            c_, dx, dy, ani_, cdata[c_].direction);
+            chara.index, dx, dy, ani_, chara.direction);
     }
     else if (chip_data[ground_].kind == 3)
     {
-        draw_character_sprite_in_water(c_, dx, dy, ani_, cdata[c_].direction);
+        draw_character_sprite_in_water(
+            chara.index, dx, dy, ani_, chara.direction);
     }
     else
     {
-        draw_character_sprite(c_, dx, dy, ani_, cdata[c_].direction);
+        draw_character_sprite(chara.index, dx, dy, ani_, chara.direction);
     }
     gmode(2);
-    if (cdata[c_].furious != 0)
+    if (chara.furious != 0)
     {
         draw("furious_icon", dx + 12, dy - 28);
     }
-    if (cdata[c_].emotion_icon != 0)
+    if (chara.emotion_icon != 0)
     {
-        draw_emo(c_, dx + 4, dy - 32);
+        draw_emo(chara, dx + 4, dy - 32);
     }
 }
 
-void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
-{
-    int p_ = cdata[c_].image % 1000;
-    auto rect = prepare_chara_chip(c_, dx, dy);
 
+
+void draw_npc_chara_chip(const Character& chara, int dx, int dy, int ground_)
+{
+    const auto color_index = chara.image / 1000;
+    const auto image_legacy_id = chara.image % 1000;
+
+    const auto ext_opt = draw_get_rect_chara(image_legacy_id);
+    if (!ext_opt)
+        return;
+    const auto& ext = *ext_opt;
+
+    auto offset_y = chara_chips[image_legacy_id].offset_y;
+
+    if (chara.is_hung_on_sand_bag())
+    {
+        // gmode(2, 80);
+        // func_2(1, 96, 816, -80, 48, 96);
+        // gmode(2);
+        gcopy(1, 96, 816, 48, 96, dx, dy - 63);
+        offset_y += 24;
+    }
     if (map_data.type == mdata_t::MapType::world_map)
     {
         draw_chara_chip_sprite_in_world_map(
-            rect->buffer, p_, dx, dy, rect->width, rect->height);
+            ext, color_index_to_snail_color(color_index), dx, dy, offset_y);
 
-        if (cdata[c_].emotion_icon != 0)
+        if (chara.emotion_icon != 0)
         {
-            draw_emo(c_, x + 4, y - chara_chips[p_].offset_y / 4 - 16);
+            draw_emo(chara, x + 4, y - offset_y / 4 - 16);
         }
     }
     else
@@ -995,29 +998,29 @@ void draw_npc_chara_chip(int c_, int dx, int dy, int ground_)
         if (chip_data[ground_].kind == 3)
         {
             draw_chara_chip_sprite_in_water(
-                rect->buffer, p_, dx, dy, rect->width, rect->height, ground_);
+                ext, color_index_to_snail_color(color_index), dx, dy, offset_y);
         }
         else
         {
             draw_chara_chip_sprite(
-                rect->buffer, p_, dx, dy, rect->width, rect->height, ground_);
+                ext, color_index_to_snail_color(color_index), dx, dy, offset_y);
         }
 
-        if (cdata[c_].furious != 0)
+        if (chara.furious != 0)
         {
-            draw("furious_icon", dx + 12, dy - chara_chips[p_].offset_y - 12);
+            draw("furious_icon", dx + 12, dy - offset_y - 12);
         }
-        if (cdata[c_].emotion_icon != 0)
+        if (chara.emotion_icon != 0)
         {
-            draw_emo(c_, dx + 4, dy - chara_chips[p_].offset_y - 16);
+            draw_emo(chara, dx + 4, dy - offset_y - 16);
         }
     }
-    if (cdata[c_].is_hung_on_sand_bag())
+    if (chara.is_hung_on_sand_bag())
     {
         gcopy(1, 96, 768, 48, 48, dx, dy - 26);
-        chara_chips[p_].offset_y -= 24;
     }
 }
+
 
 
 bool you_can_see(const Character& chara)
@@ -1027,12 +1030,16 @@ bool you_can_see(const Character& chara)
          chara.wet != 0);
 }
 
+
+
 bool hp_bar_visible(const Character& chara)
 {
     return chara.has_been_used_stethoscope() ||
         game_data.chara_last_attacked_by_player == chara.index ||
         debug::voldemort;
 }
+
+
 
 bool is_night()
 {
@@ -1239,6 +1246,7 @@ void draw_item_chip_shadow(int x, int y, const Extent& rect, int p_, int alpha)
 }
 
 
+
 void draw_item_chip_on_ground(
     int x,
     int y,
@@ -1267,96 +1275,96 @@ void draw_item_chip_on_ground(
 
 
 
+void draw_one_item(
+    int dx,
+    int dy,
+    int item_chip_id,
+    int color_id,
+    int chara_chip_id,
+    int stack_height,
+    int scrturn_)
+{
+    const auto rect = prepare_item_image(item_chip_id, color_id, chara_chip_id);
+    if (map_data.type == mdata_t::MapType::world_map)
+    {
+        draw_item_chip_in_world_map(
+            dx + (inf_tiles / 2),
+            dy + (inf_tiles / 2) - (stack_height / 2),
+            *rect);
+    }
+    else
+    {
+        if (g_config.object_shadow() && item_chips[item_chip_id].shadow)
+        {
+            draw_item_chip_shadow(
+                dx, dy - stack_height, *rect, item_chip_id, 80);
+        }
+        draw_item_chip_on_ground(
+            dx,
+            dy - item_chips[item_chip_id].offset_y - stack_height,
+            *rect,
+            item_chip_id,
+            scrturn_);
+    }
+}
+
+
+
 void draw_items(int x, int y, int dx, int dy, int scrturn_)
 {
-    elona_vector1<int> p_;
+    const auto& item_info_memory = cell_data.at(x, y).item_info_memory;
+    if (item_info_memory.is_empty())
+        return;
 
-    if (cell_data.at(x, y).item_appearances_memory != 0)
+    if (mode == 6 || mode == 9)
+        return; // TODO
+
+    const auto stack_count = item_info_memory.stack_count();
+    if (stack_count < 0)
     {
-        const bool mode_6_or_9 = mode == 6 || mode == 9;
-        int i_;
-        if (mode_6_or_9)
+        const auto bag_icon = 363;
+        for (int i = 0; i < (-stack_count); ++i)
         {
-            i_ = 0;
-            p_ = 363;
+            draw_one_item(
+                dx,
+                dy,
+                bag_icon,
+                0,
+                0,
+                i * item_chips[bag_icon].stack_height,
+                scrturn_);
         }
-        else
+    }
+    else
+    {
+        const auto item_indice = item_info_memory.item_indice();
+        int stack_height = 0;
+        for (const auto& item_index : item_indice)
         {
-            i_ = wpeek(cell_data.at(x, y).item_appearances_memory, 2);
-            p_ = wpeek(cell_data.at(x, y).item_appearances_memory, 0);
-        }
+            if (item_index == 0)
+                break;
 
-        if (cell_data.at(x, y).item_appearances_memory < 0 && !mode_6_or_9)
-        {
-            // Several items are stacked.
-            std::array<int, 3> items;
-            p_ = -cell_data.at(x, y).item_appearances_memory;
-            items[0] = p_ % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
-            items[1] = p_ / 1000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
-            items[2] = p_ / 1000000 % 1000 + ELONA_ITEM_ON_GROUND_INDEX;
-            int stack_height{};
-            for (int i = 2; i >= 0; --i)
+            const auto& item = item_index < 0
+                ? inv.ground().at(0) /* TODO phantom ref */
+                : inv.ground().at(item_index - 1);
+
+            const auto item_chip_id = item.image;
+            const auto color_id = item.color;
+            const auto chara_chip_id = item.param1;
+            draw_one_item(
+                dx,
+                dy,
+                item_chip_id,
+                color_id,
+                chara_chip_id,
+                stack_height,
+                scrturn_);
+
+            stack_height += item_chips[item_chip_id].stack_height;
+            if (item_chip_id == 531 &&
+                draw_get_rect_chara(chara_chip_id)->height == 96)
             {
-                if (items[i] == 6079) // 5080 + 999
-                {
-                    continue;
-                }
-                p_ = inv[items[i]].image;
-                i_ = inv[items[i]].color;
-                auto rect = prepare_item_image(p_, i_, inv[items[i]].param1);
-                if (map_data.type == mdata_t::MapType::world_map)
-                {
-                    draw_item_chip_in_world_map(
-                        dx + (inf_tiles / 2),
-                        dy + (inf_tiles / 2) - (stack_height / 2),
-                        *rect);
-                }
-                else
-                {
-                    if (g_config.object_shadow() && item_chips[p_].shadow)
-                    {
-                        draw_item_chip_shadow(
-                            dx, dy - stack_height, *rect, p_, 70);
-                    }
-                    draw_item_chip_on_ground(
-                        dx,
-                        dy - item_chips[p_].offset_y - stack_height,
-                        *rect,
-                        p_,
-                        scrturn_);
-                }
-                stack_height += item_chips[p_].stack_height;
-                if (p_ == 531 && draw_get_rect_chara(i_)->height == 96)
-                {
-                    stack_height += 44;
-                }
-            }
-        }
-        else
-        {
-            optional_ref<const Extent> rect;
-            if (p_ == 528 || p_ == 531)
-            {
-                rect = prepare_item_image(
-                    p_, i_, inv[cell_itemoncell({x, y}).second].param1);
-            }
-            else
-            {
-                rect = prepare_item_image(p_, i_);
-            }
-            if (map_data.type == mdata_t::MapType::world_map)
-            {
-                draw_item_chip_in_world_map(
-                    dx + (inf_tiles / 2), dy + (inf_tiles / 2), *rect);
-            }
-            else
-            {
-                if (g_config.object_shadow() && item_chips[p_].shadow)
-                {
-                    draw_item_chip_shadow(dx, dy, *rect, p_, 80);
-                }
-                draw_item_chip_on_ground(
-                    dx, dy - item_chips[p_].offset_y, *rect, p_, scrturn_);
+                stack_height += 44;
             }
         }
     }
@@ -1368,34 +1376,28 @@ void draw_npc(int x, int y, int dx, int dy, int ani_, int ground_)
 {
     if (cell_data.at(x, y).chara_index_plus_one != 0)
     {
-        const int c_ = cell_data.at(x, y).chara_index_plus_one - 1;
-        if (c_ != 0 && you_can_see(cdata[c_]))
+        const int chara_index = cell_data.at(x, y).chara_index_plus_one - 1;
+        if (chara_index != 0 && you_can_see(cdata[chara_index]))
         {
-            if (cdata[c_].has_own_sprite())
+            if (cdata[chara_index].has_own_sprite())
             {
-                draw_npc_own_sprite(c_, dx, dy, ani_, ground_);
+                draw_npc_own_sprite(cdata[chara_index], dx, dy, ani_, ground_);
             }
             else
             {
-                draw_npc_chara_chip(c_, dx, dy, ground_);
+                draw_npc_chara_chip(cdata[chara_index], dx, dy, ground_);
             }
 
-            if (hp_bar_visible(cdata[c_]))
+            if (hp_bar_visible(cdata[chara_index]))
             {
-                draw_hp_bar(c_, dx, dy);
+                draw_hp_bar(cdata[chara_index], dx, dy);
             }
         }
     }
 }
 
-
-
 } // namespace
 
-
-
-namespace elona
-{
 
 
 void cell_draw()
@@ -1572,7 +1574,7 @@ void cell_draw()
                 }
                 if (cdata.player().emotion_icon != 0)
                 {
-                    draw_emo(0, px_ + 4, py_ - 32);
+                    draw_emo(cdata.player(), px_ + 4, py_ - 32);
                 }
             }
 
@@ -1723,7 +1725,5 @@ void cell_draw()
     gmode(2);
     randomize();
 }
-
-
 
 } // namespace elona

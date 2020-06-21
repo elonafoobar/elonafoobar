@@ -9,7 +9,6 @@
 #include "i18n.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
-#include "lua_env/lua_class/lua_class_map_generator.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mapgen.hpp"
@@ -346,7 +345,7 @@ static void _init_map_test_world_north_border()
     {
         chara->role = Role::general_vendor;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+        chara->name = sngeneral(chara->name);
         chara->ai_calm = 3;
     }
     flt();
@@ -354,7 +353,7 @@ static void _init_map_test_world_north_border()
     {
         chara->role = Role::trader;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+        chara->name = sntrade(chara->name);
         chara->ai_calm = 3;
     }
     flt();
@@ -362,7 +361,7 @@ static void _init_map_test_world_north_border()
     {
         chara->role = Role::innkeeper;
         chara->shop_rank = 8;
-        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+        chara->name = sninn(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 70, 17, 13))
@@ -425,7 +424,7 @@ static void _init_map_tyris_border()
     {
         chara->role = Role::general_vendor;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+        chara->name = sngeneral(chara->name);
         chara->ai_calm = 3;
     }
     flt();
@@ -433,7 +432,7 @@ static void _init_map_tyris_border()
     {
         chara->role = Role::trader;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+        chara->name = sntrade(chara->name);
         chara->ai_calm = 3;
     }
     flt();
@@ -441,7 +440,7 @@ static void _init_map_tyris_border()
     {
         chara->role = Role::innkeeper;
         chara->shop_rank = 8;
-        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+        chara->name = sninn(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 70, 17, 13))
@@ -503,7 +502,7 @@ static void _init_map_the_smoke_and_pipe()
     {
         chara->role = Role::innkeeper;
         chara->shop_rank = 8;
-        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+        chara->name = sninn(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 351, 26, 16))
@@ -720,16 +719,15 @@ static void _init_map_larna()
     {
         chara->role = Role::dye_vendor;
         chara->shop_rank = 5;
-        cdatan(0, chara->index) =
-            i18n::s.get("core.chara.job.dye_vendor", cdatan(0, chara->index));
+        chara->name = i18n::s.get("core.chara.job.dye_vendor", chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 13, 37))
     {
         chara->role = Role::souvenir_vendor;
         chara->shop_rank = 30;
-        cdatan(0, chara->index) = i18n::s.get(
-            "core.chara.job.souvenir_vendor", cdatan(0, chara->index));
+        chara->name =
+            i18n::s.get("core.chara.job.souvenir_vendor", chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 70, 24, 48))
@@ -784,17 +782,17 @@ static void _init_map_arena()
 {
     map_initcustom(u8"arena_1"s);
     map_placeplayer();
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& chara : cdata.player_and_allies())
     {
-        if (cdata[cnt].state() == Character::State::alive)
+        if (chara.state() == Character::State::alive)
         {
-            if (cdata[cnt].relationship == 10)
+            if (chara.relationship == 10)
             {
-                if (cnt != 0)
+                if (chara.index != 0)
                 {
-                    cell_data.at(cdata[cnt].position.x, cdata[cnt].position.y)
+                    cell_data.at(chara.position.x, chara.position.y)
                         .chara_index_plus_one = 0;
-                    cdata[cnt].set_state(Character::State::pet_in_other_map);
+                    chara.set_state(Character::State::pet_in_other_map);
                 }
             }
         }
@@ -829,11 +827,10 @@ static void _init_map_arena()
                 chara->relationship = -3;
                 chara->original_relationship = -3;
                 chara->hate = 30;
-                chara->relationship = -3;
                 chara->is_lord_of_dungeon() = true;
-                if (chara->level > arenaop(1) || chara->relationship != -3)
+                if (chara->level > arenaop(1))
                 {
-                    chara_vanquish(chara->index);
+                    chara_vanquish(*chara);
                     --cnt;
                     continue;
                 }
@@ -854,21 +851,17 @@ static void _init_map_pet_arena()
     map_initcustom(u8"arena_2"s);
     map_data.max_crowd_density = 0;
     map_data.bgm = 81;
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& ally : cdata.allies())
     {
-        if (cnt == 0 || cnt == 56)
+        if (followerin(ally.index) == 0)
         {
-            continue;
-        }
-        if (followerin(cnt) == 0)
-        {
-            cdata[cnt].set_state(Character::State::pet_dead);
-            cdata[cnt].position.x = 0;
-            cdata[cnt].position.y = 0;
+            ally.set_state(Character::State::pet_dead);
+            ally.position.x = 0;
+            ally.position.y = 0;
         }
         else
         {
-            cdata[cnt].set_state(Character::State::alive);
+            ally.set_state(Character::State::alive);
         }
     }
     map_placeplayer();
@@ -894,11 +887,11 @@ static void _init_map_pet_arena()
             }
             if (f == 0)
             {
-                chara_vanquish(chara->index);
+                chara_vanquish(*chara);
                 --cnt;
                 continue;
             }
-            map_placearena(chara->index, true);
+            map_place_chara_on_pet_arena(*chara, true);
             if (cnt == 0)
             {
                 enemyteam = chara->index;
@@ -1009,10 +1002,6 @@ static void _init_map_your_home()
                 FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
             for (auto&& item : inv.ground())
             {
-                if (item.number() == 0)
-                {
-                    continue;
-                }
                 item.position.x = map_data.width / 2;
                 item.position.y = map_data.height / 2;
                 cell_refresh(item.position.x, item.position.y);
@@ -1033,21 +1022,21 @@ static void _init_map_your_home()
             {
                 chara->role = Role::general_vendor;
                 chara->shop_rank = 10;
-                cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+                chara->name = sngeneral(chara->name);
             }
             flt();
             if (const auto chara = chara_create(-1, 1, 9, 20))
             {
                 chara->role = Role::blacksmith;
                 chara->shop_rank = 12;
-                cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+                chara->name = snarmor(chara->name);
             }
             flt();
             if (const auto chara = chara_create(-1, 1, 4, 20))
             {
                 chara->role = Role::general_store;
                 chara->shop_rank = 10;
-                cdatan(0, chara->index) = sngoods(cdatan(0, chara->index));
+                chara->name = sngoods(chara->name);
             }
             flt();
             if (const auto chara = chara_create(-1, 41, 4, 11))
@@ -1069,7 +1058,7 @@ static void _init_map_your_home()
             {
                 chara->role = Role::magic_vendor;
                 chara->shop_rank = 11;
-                cdatan(0, chara->index) = snmagic(cdatan(0, chara->index));
+                chara->name = snmagic(chara->name);
             }
         }
     }
@@ -1136,7 +1125,7 @@ static void _init_map_derphy_town()
     {
         chara->role = Role::trader;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+        chara->name = sntrade(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 70, 15, 15))
@@ -1148,41 +1137,41 @@ static void _init_map_derphy_town()
     {
         chara->role = Role::general_vendor;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+        chara->name = sngeneral(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 29, 23))
     {
         chara->role = Role::innkeeper;
         chara->shop_rank = 8;
-        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+        chara->name = sninn(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 26, 7))
     {
         chara->role = Role::general_store;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = sngoods(cdatan(0, chara->index));
+        chara->name = sngoods(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 30, 4))
     {
         chara->role = Role::blackmarket_vendor;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = snblack(cdatan(0, chara->index));
+        chara->name = snblack(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 29, 4))
     {
         chara->role = Role::slave_master;
-        cdatan(0, chara->index) = i18n::s.get("core.chara.job.slave_master");
+        chara->name = i18n::s.get("core.chara.job.slave_master");
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 10, 6))
     {
         chara->role = Role::blacksmith;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+        chara->name = snarmor(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 73, 7, 15))
@@ -1193,14 +1182,13 @@ static void _init_map_derphy_town()
     if (const auto chara = chara_create(-1, 38, 9, 18))
     {
         chara->role = Role::mayer;
-        cdatan(0, chara->index) =
-            i18n::s.get("core.chara.job.of_derphy", cdatan(0, chara->index));
+        chara->name = i18n::s.get("core.chara.job.of_derphy", chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 40, 13, 18))
     {
         chara->role = Role::trainer;
-        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+        chara->name = sntrainer(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 41, 5, 26))
@@ -1255,7 +1243,7 @@ static void _init_map_derphy_thieves_guild()
     if (const auto chara = chara_create(-1, 40, 3, 6))
     {
         chara->role = Role::trainer;
-        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+        chara->name = sntrainer(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 41, 3, 12))
@@ -1267,24 +1255,23 @@ static void _init_map_derphy_thieves_guild()
     {
         chara->role = Role::blackmarket_vendor;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = snblack(cdatan(0, chara->index));
+        chara->name = snblack(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 27, 13))
     {
         chara->role = Role::blackmarket_vendor;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = snblack(cdatan(0, chara->index));
+        chara->name = snblack(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 21, 19))
     {
         chara->role = Role::fence;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) =
-            i18n::s.get("core.chara.job.fence", cdatan(0, chara->index));
+        chara->name = i18n::s.get("core.chara.job.fence", chara->name);
     }
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (int _i = 0; _i < 16; ++_i)
     {
         flt();
         chara_create(-1, 293, -3, 0);
@@ -1371,35 +1358,35 @@ static void _init_map_palmia()
     {
         chara->role = Role::general_vendor;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+        chara->name = sngeneral(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 30, 17))
     {
         chara->role = Role::innkeeper;
         chara->shop_rank = 8;
-        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+        chara->name = sninn(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 48, 3))
     {
         chara->role = Role::general_store;
         chara->shop_rank = 8;
-        cdatan(0, chara->index) = sngoods(cdatan(0, chara->index));
+        chara->name = sngoods(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 42, 17))
     {
         chara->role = Role::blacksmith;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+        chara->name = snarmor(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 11, 14))
     {
         chara->role = Role::bakery;
         chara->shop_rank = 9;
-        cdatan(0, chara->index) = snbakery(cdatan(0, chara->index));
+        chara->name = snbakery(chara->name);
         chara->image = 138;
     }
     flt();
@@ -1407,14 +1394,14 @@ static void _init_map_palmia()
     {
         chara->role = Role::magic_vendor;
         chara->shop_rank = 11;
-        cdatan(0, chara->index) = snmagic(cdatan(0, chara->index));
+        chara->name = snmagic(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 41, 28))
     {
         chara->role = Role::trader;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+        chara->name = sntrade(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 79, 7, 2))
@@ -1432,14 +1419,13 @@ static void _init_map_palmia()
     if (const auto chara = chara_create(-1, 38, 49, 11))
     {
         chara->role = Role::mayer;
-        cdatan(0, chara->index) =
-            i18n::s.get("core.chara.job.of_palmia", cdatan(0, chara->index));
+        chara->name = i18n::s.get("core.chara.job.of_palmia", chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 40, 30, 27))
     {
         chara->role = Role::trainer;
-        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+        chara->name = sntrainer(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 41, 32, 27))
@@ -1606,28 +1592,28 @@ static void _init_map_lumiest_town()
     {
         chara->role = Role::general_vendor;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+        chara->name = sngeneral(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 24, 47))
     {
         chara->role = Role::innkeeper;
         chara->shop_rank = 8;
-        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+        chara->name = sninn(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 37, 30))
     {
         chara->role = Role::blacksmith;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+        chara->name = snarmor(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 37, 12))
     {
         chara->role = Role::bakery;
         chara->shop_rank = 9;
-        cdatan(0, chara->index) = snbakery(cdatan(0, chara->index));
+        chara->name = snbakery(chara->name);
         chara->image = 138;
     }
     flt();
@@ -1635,34 +1621,33 @@ static void _init_map_lumiest_town()
     {
         chara->role = Role::magic_vendor;
         chara->shop_rank = 11;
-        cdatan(0, chara->index) = snmagic(cdatan(0, chara->index));
+        chara->name = snmagic(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 33, 43))
     {
         chara->role = Role::trader;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+        chara->name = sntrade(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 47, 12))
     {
         chara->role = Role::fisher;
         chara->shop_rank = 5;
-        cdatan(0, chara->index) = snfish(cdatan(0, chara->index));
+        chara->name = snfish(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 38, 3, 38))
     {
         chara->role = Role::mayer;
-        cdatan(0, chara->index) =
-            i18n::s.get("core.chara.job.of_lumiest", cdatan(0, chara->index));
+        chara->name = i18n::s.get("core.chara.job.of_lumiest", chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 40, 21, 28))
     {
         chara->role = Role::trainer;
-        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+        chara->name = sntrainer(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 41, 21, 30))
@@ -1725,15 +1710,14 @@ static void _init_map_lumiest_mages_guild()
     if (const auto chara = chara_create(-1, 41, 27, 8))
     {
         chara->role = Role::spell_writer;
-        cdatan(0, chara->index) =
-            i18n::s.get("core.chara.job.spell_writer", cdatan(0, chara->index));
+        chara->name = i18n::s.get("core.chara.job.spell_writer", chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 41, 22, 8))
     {
         chara->role = Role::magic_vendor;
         chara->shop_rank = 11;
-        cdatan(0, chara->index) = snmagic(cdatan(0, chara->index));
+        chara->name = snmagic(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 74, 3, 9))
@@ -1744,14 +1728,14 @@ static void _init_map_lumiest_mages_guild()
     if (const auto chara = chara_create(-1, 40, 12, 6))
     {
         chara->role = Role::trainer;
-        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+        chara->name = sntrainer(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 41, 3, 3))
     {
         chara->role = Role::appraiser;
     }
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (int _i = 0; _i < 16; ++_i)
     {
         flt();
         chara_create(-1, 289, -3, 0);
@@ -1825,35 +1809,34 @@ static void _init_map_yowyn_town()
     {
         chara->role = Role::general_vendor;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+        chara->name = sngeneral(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 25, 8))
     {
         chara->role = Role::innkeeper;
         chara->shop_rank = 8;
-        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+        chara->name = sninn(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 7, 8))
     {
         chara->role = Role::general_store;
         chara->shop_rank = 8;
-        cdatan(0, chara->index) = sngoods(cdatan(0, chara->index));
+        chara->name = sngoods(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 14, 14))
     {
         chara->role = Role::trader;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+        chara->name = sntrade(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 35, 18))
     {
         chara->role = Role::horse_master;
-        cdatan(0, chara->index) =
-            i18n::s.get("core.chara.job.horse_master", cdatan(0, chara->index));
+        chara->name = i18n::s.get("core.chara.job.horse_master", chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 267, 33, 16))
@@ -1879,14 +1862,13 @@ static void _init_map_yowyn_town()
     if (const auto chara = chara_create(-1, 38, 3, 4))
     {
         chara->role = Role::mayer;
-        cdatan(0, chara->index) =
-            i18n::s.get("core.chara.job.of_yowyn", cdatan(0, chara->index));
+        chara->name = i18n::s.get("core.chara.job.of_yowyn", chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 40, 20, 14))
     {
         chara->role = Role::trainer;
-        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+        chara->name = sntrainer(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 41, 24, 16))
@@ -2083,28 +2065,28 @@ static void _init_map_noyel()
     {
         chara->role = Role::blacksmith;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+        chara->name = snarmor(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 11, 31))
     {
         chara->role = Role::general_vendor;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+        chara->name = sngeneral(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 38, 34))
     {
         chara->role = Role::innkeeper;
         chara->shop_rank = 8;
-        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+        chara->name = sninn(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 5, 27))
     {
         chara->role = Role::bakery;
         chara->shop_rank = 9;
-        cdatan(0, chara->index) = snbakery(cdatan(0, chara->index));
+        chara->name = snbakery(chara->name);
         chara->image = 138;
     }
     flt();
@@ -2112,27 +2094,26 @@ static void _init_map_noyel()
     {
         chara->role = Role::magic_vendor;
         chara->shop_rank = 11;
-        cdatan(0, chara->index) = snmagic(cdatan(0, chara->index));
+        chara->name = snmagic(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 39, 35))
     {
         chara->role = Role::trader;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+        chara->name = sntrade(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 38, 5, 18))
     {
         chara->role = Role::mayer;
-        cdatan(0, chara->index) =
-            i18n::s.get("core.chara.job.of_noyel", cdatan(0, chara->index));
+        chara->name = i18n::s.get("core.chara.job.of_noyel", chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 40, 18, 20))
     {
         chara->role = Role::trainer;
-        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+        chara->name = sntrainer(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 41, 4, 33))
@@ -2237,56 +2218,56 @@ static void _init_map_port_kapul_town()
     {
         chara->role = Role::trader;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+        chara->name = sntrade(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 23, 7))
     {
         chara->role = Role::blacksmith;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+        chara->name = snarmor(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 32, 14))
     {
         chara->role = Role::general_vendor;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+        chara->name = sngeneral(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 22, 14))
     {
         chara->role = Role::general_store;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = sngoods(cdatan(0, chara->index));
+        chara->name = sngoods(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 16, 25))
     {
         chara->role = Role::blackmarket_vendor;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = snblack(cdatan(0, chara->index));
+        chara->name = snblack(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 17, 28))
     {
         chara->role = Role::food_vendor;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = snfood(cdatan(0, chara->index));
+        chara->name = snfood(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 41, 22, 22))
     {
         chara->role = Role::magic_vendor;
         chara->shop_rank = 11;
-        cdatan(0, chara->index) = snmagic(cdatan(0, chara->index));
+        chara->name = snmagic(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 35, 3))
     {
         chara->role = Role::innkeeper;
         chara->shop_rank = 8;
-        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+        chara->name = sninn(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 70, 15, 15))
@@ -2307,14 +2288,13 @@ static void _init_map_port_kapul_town()
     if (const auto chara = chara_create(-1, 38, 8, 12))
     {
         chara->role = Role::mayer;
-        cdatan(0, chara->index) = i18n::s.get(
-            "core.chara.job.of_port_kapul", cdatan(0, chara->index));
+        chara->name = i18n::s.get("core.chara.job.of_port_kapul", chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 40, 16, 4))
     {
         chara->role = Role::trainer;
-        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+        chara->name = sntrainer(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 41, 14, 4))
@@ -2400,7 +2380,7 @@ static void _init_map_port_kapul_fighters_guild()
     if (const auto chara = chara_create(-1, 40, 15, 10))
     {
         chara->role = Role::trainer;
-        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+        chara->name = sntrainer(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 41, 14, 18))
@@ -2412,9 +2392,9 @@ static void _init_map_port_kapul_fighters_guild()
     {
         chara->role = Role::blacksmith;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+        chara->name = snarmor(chara->name);
     }
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (int _i = 0; _i < 16; ++_i)
     {
         flt();
         chara_create(-1, 295, -3, 0);
@@ -2525,49 +2505,49 @@ static void _init_map_vernis_town()
     {
         chara->role = Role::fisher;
         chara->shop_rank = 5;
-        cdatan(0, chara->index) = snfish(cdatan(0, chara->index));
+        chara->name = snfish(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 14, 12))
     {
         chara->role = Role::blacksmith;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = snarmor(cdatan(0, chara->index));
+        chara->name = snarmor(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 39, 27))
     {
         chara->role = Role::trader;
         chara->shop_rank = 12;
-        cdatan(0, chara->index) = sntrade(cdatan(0, chara->index));
+        chara->name = sntrade(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 10, 15))
     {
         chara->role = Role::general_vendor;
         chara->shop_rank = 10;
-        cdatan(0, chara->index) = sngeneral(cdatan(0, chara->index));
+        chara->name = sngeneral(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 41, 7, 26))
     {
         chara->role = Role::magic_vendor;
         chara->shop_rank = 11;
-        cdatan(0, chara->index) = snmagic(cdatan(0, chara->index));
+        chara->name = snmagic(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 14, 25))
     {
         chara->role = Role::innkeeper;
         chara->shop_rank = 8;
-        cdatan(0, chara->index) = sninn(cdatan(0, chara->index));
+        chara->name = sninn(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 1, 22, 26))
     {
         chara->role = Role::bakery;
         chara->shop_rank = 9;
-        cdatan(0, chara->index) = snbakery(cdatan(0, chara->index));
+        chara->name = snbakery(chara->name);
         chara->image = 138;
     }
     flt();
@@ -2589,14 +2569,13 @@ static void _init_map_vernis_town()
     if (const auto chara = chara_create(-1, 38, 10, 7))
     {
         chara->role = Role::mayer;
-        cdatan(0, chara->index) =
-            i18n::s.get("core.chara.job.of_vernis", cdatan(0, chara->index));
+        chara->name = i18n::s.get("core.chara.job.of_vernis", chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 40, 27, 16))
     {
         chara->role = Role::trainer;
-        cdatan(0, chara->index) = sntrainer(cdatan(0, chara->index));
+        chara->name = sntrainer(chara->name);
     }
     flt();
     if (const auto chara = chara_create(-1, 69, 25, 16))
@@ -2851,7 +2830,7 @@ static void _init_map_fields_maybe_generate_encounter()
             initlv = encounterlv + rnd(10);
             if (const auto chara = chara_create(-1, 303 + rnd(3), 14, 11))
             {
-                cdatan(0, chara->index) += u8" Lv"s + chara->level;
+                chara->name += u8" Lv"s + chara->level;
             }
         }
         event_add(23);
@@ -2888,9 +2867,9 @@ static void _init_map_fields_maybe_generate_encounter()
         {
             chara->role = Role::wandering_vendor;
             chara->shop_rank = encounterlv;
-            cdatan(0, chara->index) = i18n::s.get(
-                "core.chara.job.wandering_vendor", cdatan(0, chara->index));
-            generatemoney(chara->index);
+            chara->name =
+                i18n::s.get("core.chara.job.wandering_vendor", chara->name);
+            generatemoney(*chara);
             for (int cnt = 0, cnt_end = (encounterlv / 2 + 1); cnt < cnt_end;
                  ++cnt)
             {
@@ -2906,7 +2885,7 @@ static void _init_map_fields_maybe_generate_encounter()
             if (const auto chara = chara_create(-1, 159 + rnd(3), 14, 11))
             {
                 chara->role = Role::shop_guard;
-                cdatan(0, chara->index) += u8" Lv"s + chara->level;
+                chara->name += u8" Lv"s + chara->level;
             }
         }
     }
@@ -3178,23 +3157,22 @@ static void _init_map_yeeks_nest()
         if (game_data.quest_flags.novice_knight < 2)
         {
             flt();
-            if (const auto chara = chara_create(-1, 242, -3, 0))
+            if (const auto rodlob = chara_create(-1, 242, -3, 0))
             {
-                tc = chara->index;
                 for (int cnt = 0; cnt < 5; ++cnt)
                 {
                     flt();
                     chara_create(
-                        -1, 240, cdata[tc].position.x, cdata[tc].position.y);
+                        -1, 240, rodlob->position.x, rodlob->position.y);
                 }
                 for (int cnt = 0; cnt < 10; ++cnt)
                 {
                     flt();
                     chara_create(
-                        -1, 238, cdata[tc].position.x, cdata[tc].position.y);
+                        -1, 238, rodlob->position.x, rodlob->position.y);
                     flt();
                     chara_create(
-                        -1, 237, cdata[tc].position.x, cdata[tc].position.y);
+                        -1, 237, rodlob->position.x, rodlob->position.y);
                 }
             }
         }
@@ -3269,7 +3247,7 @@ void initialize_map_from_map_type()
 
     if (map && map->generator)
     {
-        lua::MapGenerator generator{};
+        MapGenerator generator{};
         map->generator->call(generator);
         return;
     }

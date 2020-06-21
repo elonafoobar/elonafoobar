@@ -1,6 +1,7 @@
 #pragma once
 #include "types/type_ability.hpp"
 #include "types/type_asset.hpp"
+#include "types/type_blending_recipe.hpp"
 #include "types/type_buff.hpp"
 #include "types/type_chara_chip.hpp"
 #include "types/type_character.hpp"

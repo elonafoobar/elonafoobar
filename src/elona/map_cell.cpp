@@ -158,51 +158,32 @@ bool cell_swap(int chara_index_a, int chara_index_b, int x, int y)
 
 
 
-void cell_movechara(int cc, int x, int y)
+void cell_movechara(int chara_index, int x, int y)
 {
     if (cell_data.at(x, y).chara_index_plus_one != 0)
     {
-        if (cell_data.at(x, y).chara_index_plus_one - 1 == cc)
+        if (cell_data.at(x, y).chara_index_plus_one - 1 == chara_index)
         {
             return;
         }
-        cell_swap(cc, tc_at_m81);
+        cell_swap(chara_index, tc_at_m81);
     }
     else
     {
-        cell_data.at(cdata[cc].position.x, cdata[cc].position.y)
+        cell_data
+            .at(cdata[chara_index].position.x, cdata[chara_index].position.y)
             .chara_index_plus_one = 0;
-        cdata[cc].position = {x, y};
-        cell_data.at(x, y).chara_index_plus_one = cc + 1;
+        cdata[chara_index].position = {x, y};
+        cell_data.at(x, y).chara_index_plus_one = chara_index + 1;
     }
 }
 
 
 
-// Returns pair of number of items and the last item on the cell.
-std::pair<int, int> cell_itemoncell(const Position& pos)
+void cell_setchara(int chara_index, int x, int y)
 {
-    int number{};
-    int item_{};
-
-    for (const auto& item : inv.ground())
-    {
-        if (item.number() > 0 && item.position == pos)
-        {
-            ++number;
-            item_ = item.index;
-        }
-    }
-
-    return std::make_pair(number, item_);
-}
-
-
-
-void cell_setchara(int cc, int x, int y)
-{
-    cell_data.at(x, y).chara_index_plus_one = cc + 1;
-    cdata[cc].position = Position{x, y};
+    cell_data.at(x, y).chara_index_plus_one = chara_index + 1;
+    cdata[chara_index].position = Position{x, y};
 }
 
 
@@ -256,6 +237,37 @@ int cell_findspace(int base_x, int base_y, int range)
         }
     }
     return f_at_m130;
+}
+
+
+
+int cell_count_exact_item_stacks(const Position& pos)
+{
+    int ret{};
+    for (auto&& item : inv.ground())
+    {
+        if (item.number() > 0 && item.position == pos)
+        {
+            ++ret;
+        }
+    }
+    return ret;
+}
+
+
+
+optional_ref<Item> cell_get_item_if_only_one(const Position& pos)
+{
+    const auto& item_info_actual = cell_data.at(pos.x, pos.y).item_info_actual;
+    if (item_info_actual.stack_count() != 1)
+    {
+        return none;
+    }
+    else
+    {
+        const auto index = item_info_actual.item_indice()[0];
+        return inv.ground().at(index - 1);
+    }
 }
 
 

@@ -18,6 +18,7 @@
 #include "map.hpp"
 #include "mef.hpp"
 #include "quest.hpp"
+#include "save_header.hpp"
 #include "serialization/serialization.hpp"
 #include "variables.hpp"
 
@@ -29,8 +30,6 @@ namespace elona
 namespace
 {
 
-elona_vector2<std::string> cdatan2;
-int elona_export;
 std::set<fs::path> loaded_files;
 
 
@@ -66,52 +65,47 @@ void arrayfile_read(const std::string& fmode_str, const fs::path& filepath)
     }
     else if (fmode_str == u8"cdatan1"s)
     {
-        if (lines.size() <= 57 * 10 / 2)
-            lines.resize(57 * 10 / 2);
-        else
-            lines.resize(57 * 10);
+        lines.resize(57 * 10);
         auto itr = std::begin(lines);
         for (int i = 0; i < 57; ++i)
         {
-            for (int j = 0; j < 10; ++j)
-            {
-                if (lines.size() <= 57 * 10 / 2 && j >= 10 / 2)
-                    break;
-                cdatan(j, i) = *itr;
-                ++itr;
-            }
+            cdata[i].name = *itr;
+            ++itr;
+            cdata[i].alias = *itr;
+            ++itr;
+            cdata[i].race = data::InstanceId{*itr};
+            ++itr;
+            cdata[i].class_ = data::InstanceId{*itr};
+            ++itr;
+            cdata[i].talk = *itr;
+            ++itr;
+            ++itr;
+            ++itr;
+            ++itr;
+            ++itr;
+            ++itr;
         }
     }
     else if (fmode_str == u8"cdatan2"s)
     {
-        if (lines.size() <= 188 * 10 / 2)
-            lines.resize(188 * 10 / 2);
-        else
-            lines.resize(188 * 10);
+        lines.resize(188 * 10);
         auto itr = std::begin(lines);
         for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
         {
-            for (int j = 0; j < 10; ++j)
-            {
-                if (lines.size() <= 188 * 10 / 2 && j >= 10 / 2)
-                    break;
-                cdatan(j, i) = *itr;
-                ++itr;
-            }
-        }
-    }
-    else if (fmode_str == u8"cdatan3"s)
-    {
-        if (lines.size() <= 10 / 2)
-            lines.resize(10 / 2);
-        else
-            lines.resize(10);
-        auto itr = std::begin(lines);
-        for (int j = 0; j < 10; ++j)
-        {
-            if (lines.size() < 10 / 2 && j >= 10 / 2)
-                break;
-            cdatan(j, tg) = *itr;
+            cdata[i].name = *itr;
+            ++itr;
+            cdata[i].alias = *itr;
+            ++itr;
+            cdata[i].race = data::InstanceId{*itr};
+            ++itr;
+            cdata[i].class_ = data::InstanceId{*itr};
+            ++itr;
+            cdata[i].talk = *itr;
+            ++itr;
+            ++itr;
+            ++itr;
+            ++itr;
+            ++itr;
             ++itr;
         }
     }
@@ -147,35 +141,37 @@ void arrayfile_write(const std::string& fmode_str, const fs::path& filepath)
     {
         for (int i = 0; i < 57; ++i)
         {
-            for (int j = 0; j < 10; ++j)
-            {
-                out << cdatan(j, i) << std::endl;
-            }
+            out << cdata[i].name << std::endl;
+            out << cdata[i].alias << std::endl;
+            out << cdata[i].race.get() << std::endl;
+            out << cdata[i].class_.get() << std::endl;
+            out << cdata[i].talk << std::endl;
+            out << std::endl;
+            out << std::endl;
+            out << std::endl;
+            out << std::endl;
+            out << std::endl;
         }
     }
     else if (fmode_str == u8"cdatan2"s)
     {
         for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
         {
-            for (int j = 0; j < 10; ++j)
-            {
-                out << cdatan(j, i) << std::endl;
-            }
-        }
-    }
-    else if (fmode_str == u8"cdatan3"s)
-    {
-        for (int j = 0; j < 10; ++j)
-        {
-            out << cdatan(j, tg) << std::endl;
+            out << cdata[i].name << std::endl;
+            out << cdata[i].alias << std::endl;
+            out << cdata[i].race.get() << std::endl;
+            out << cdata[i].class_.get() << std::endl;
+            out << cdata[i].talk << std::endl;
+            out << std::endl;
+            out << std::endl;
+            out << std::endl;
+            out << std::endl;
+            out << std::endl;
         }
     }
 
     writeloadedbuff(filepath.filename());
-    if (elona_export == 0)
-    {
-        Save::instance().add(filepath.filename());
-    }
+    Save::instance().add(filepath.filename());
 }
 
 
@@ -194,9 +190,40 @@ void arrayfile(
         tmpload(filepath.filename());
         arrayfile_read(fmode_str, filepath);
     }
-
-    elona_export = 0;
 }
+
+
+
+template <typename F>
+void load_internal(const fs::path& filepath, F do_load)
+{
+    std::ifstream in{filepath.native(), std::ios::binary};
+    if (in.fail())
+    {
+        throw std::runtime_error(
+            u8"Could not open file at "s +
+            filepathutil::to_utf8_path(filepath));
+    }
+    serialization::binary::IArchive ar{in};
+    do_load(ar);
+}
+
+
+
+template <typename F>
+void save_internal(const fs::path& filepath, F do_save)
+{
+    std::ofstream out{filepath.native(), std::ios::binary};
+    if (out.fail())
+    {
+        throw std::runtime_error(
+            u8"Could not open file at "s +
+            filepathutil::to_utf8_path(filepath));
+    }
+    serialization::binary::OArchive ar{out};
+    do_save(ar);
+}
+
 
 
 template <typename T>
@@ -206,21 +233,12 @@ void load_v1(
     size_t begin,
     size_t end)
 {
-    std::ifstream in{filepath.native(), std::ios::binary};
-    if (in.fail())
-    {
-        ELONA_FATAL("save")
-            << "Could not open file at "
-            << filepathutil::make_preferred_path_in_utf8(filepath);
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::IArchive ar(in);
-    for (size_t i = begin; i < end; ++i)
-    {
-        ar(data(i));
-    }
+    load_internal(filepath, [&](auto& ar) {
+        for (size_t i = begin; i < end; ++i)
+        {
+            ar(data(i));
+        }
+    });
 }
 
 
@@ -231,18 +249,12 @@ void save_v1(
     size_t begin,
     size_t end)
 {
-    std::ofstream out{filepath.native(), std::ios::binary};
-    if (out.fail())
-    {
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::OArchive ar(out);
-    for (size_t i = begin; i < end; ++i)
-    {
-        ar(data(i));
-    }
+    save_internal(filepath, [&](auto& ar) {
+        for (size_t i = begin; i < end; ++i)
+        {
+            ar(data(i));
+        }
+    });
 }
 
 
@@ -255,21 +267,15 @@ void load_v2(
     size_t j_begin,
     size_t j_end)
 {
-    std::ifstream in{filepath.native(), std::ios::binary};
-    if (in.fail())
-    {
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::IArchive ar{in};
-    for (size_t j = j_begin; j < j_end; ++j)
-    {
-        for (size_t i = i_begin; i < i_end; ++i)
+    load_internal(filepath, [&](auto& ar) {
+        for (size_t j = j_begin; j < j_end; ++j)
         {
-            ar(data(i, j));
+            for (size_t i = i_begin; i < i_end; ++i)
+            {
+                ar(data(i, j));
+            }
         }
-    }
+    });
 }
 
 
@@ -282,21 +288,15 @@ void save_v2(
     size_t j_begin,
     size_t j_end)
 {
-    std::ofstream out{filepath.native(), std::ios::binary};
-    if (out.fail())
-    {
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::OArchive ar{out};
-    for (size_t j = j_begin; j < j_end; ++j)
-    {
-        for (size_t i = i_begin; i < i_end; ++i)
+    save_internal(filepath, [&](auto& ar) {
+        for (size_t j = j_begin; j < j_end; ++j)
         {
-            ar(data(i, j));
+            for (size_t i = i_begin; i < i_end; ++i)
+            {
+                ar(data(i, j));
+            }
         }
-    }
+    });
 }
 
 
@@ -311,24 +311,18 @@ void load_v3(
     size_t k_begin,
     size_t k_end)
 {
-    std::ifstream in{filepath.native(), std::ios::binary};
-    if (in.fail())
-    {
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::IArchive ar{in};
-    for (size_t k = k_begin; k < k_end; ++k)
-    {
-        for (size_t j = j_begin; j < j_end; ++j)
+    load_internal(filepath, [&](auto& ar) {
+        for (size_t k = k_begin; k < k_end; ++k)
         {
-            for (size_t i = i_begin; i < i_end; ++i)
+            for (size_t j = j_begin; j < j_end; ++j)
             {
-                ar(data(i, j, k));
+                for (size_t i = i_begin; i < i_end; ++i)
+                {
+                    ar(data(i, j, k));
+                }
             }
         }
-    }
+    });
 }
 
 
@@ -343,61 +337,111 @@ void save_v3(
     size_t k_begin,
     size_t k_end)
 {
-    std::ofstream out{filepath.native(), std::ios::binary};
-    if (out.fail())
-    {
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::OArchive ar{out};
-    for (size_t k = k_begin; k < k_end; ++k)
-    {
-        for (size_t j = j_begin; j < j_end; ++j)
+    save_internal(filepath, [&](auto& ar) {
+        for (size_t k = k_begin; k < k_end; ++k)
         {
-            for (size_t i = i_begin; i < i_end; ++i)
+            for (size_t j = j_begin; j < j_end; ++j)
             {
-                ar(data(i, j, k));
+                for (size_t i = i_begin; i < i_end; ++i)
+                {
+                    ar(data(i, j, k));
+                }
             }
         }
-    }
+    });
+}
+
+
+template <typename T>
+void load_vec(const fs::path& filepath, std::vector<T>& data)
+{
+    load_internal(filepath, [&](auto& ar) {
+        for (auto&& element : data)
+        {
+            ar(element);
+        }
+    });
 }
 
 
 template <typename T>
 void load(const fs::path& filepath, T& data, size_t begin, size_t end)
 {
-    std::ifstream in{filepath.native(), std::ios::binary};
-    if (in.fail())
-    {
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
-    }
-    serialization::binary::IArchive ar{in};
-    for (size_t i = begin; i < end; ++i)
-    {
-        ar(data[i]);
-    }
+    load_internal(filepath, [&](auto& ar) {
+        for (size_t i = begin; i < end; ++i)
+        {
+            ar(data[i]);
+        }
+    });
 }
 
 
 template <typename T>
 void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 {
-    std::ofstream out{filepath.native(), std::ios::binary};
-    if (out.fail())
+    save_internal(filepath, [&](auto& ar) {
+        for (size_t i = begin; i < end; ++i)
+        {
+            ar(data[i]);
+        }
+    });
+}
+
+
+template <typename T>
+void load(const fs::path& filepath, T& data)
+{
+    load_internal(filepath, [&](auto& ar) { ar(data); });
+}
+
+
+template <typename T>
+void save(const fs::path& filepath, T& data)
+{
+    save_internal(filepath, [&](auto& ar) { ar(data); });
+}
+
+
+
+template <typename T>
+decltype(auto) get_nth_object(int index);
+
+template <>
+decltype(auto) get_nth_object<Item>(int index)
+{
+    return inv[index];
+}
+
+template <>
+decltype(auto) get_nth_object<Character>(int index)
+{
+    return cdata[index];
+}
+
+
+
+template <typename T>
+void restore_handles(int index_start, int index_end)
+{
+    sol::table obj_ids = lua::lua->get_state()->create_table();
+    for (int index = index_start; index < index_end; ++index)
     {
-        throw std::runtime_error(
-            u8"Could not open file at "s +
-            filepathutil::to_utf8_path(filepath));
+        obj_ids[index] = get_nth_object<T>(index).obj_id.to_string();
     }
-    serialization::binary::OArchive ar{out};
-    for (size_t i = begin; i < end; ++i)
+
+    auto& handle_mgr = lua::lua->get_handle_manager();
+    handle_mgr.clear_handle_range(T::lua_type(), index_start, index_end);
+    handle_mgr.merge_handles(T::lua_type(), obj_ids);
+
+    ELONA_LOG("lua.mod") << "Loaded handle data for " << T::lua_type()
+                         << " in [" << index_start << "," << index_end << "]";
+
+    for (int index = index_start; index < index_end; index++)
     {
-        ar(data[i]);
+        handle_mgr.resolve_handle<T>(get_nth_object<T>(index));
     }
 }
+
 
 
 // reads or writes global save data:
@@ -425,9 +469,7 @@ void fmode_7_8(bool read, const fs::path& dir)
 
     if (!read)
     {
-        playerheader =
-            cdatan(0, 0) + u8" Lv:" + cdata.player().level + u8" " + mdatan(0);
-        bsave(dir / u8"header.txt", playerheader);
+        SaveHeader::save(dir);
     }
 
     {
@@ -486,6 +528,8 @@ void fmode_7_8(bool read, const fs::path& dir)
                 {
                     cdata[index].index = index;
                 }
+
+                restore_handles<Character>(0, ELONA_MAX_PARTY_CHARACTERS);
             }
         }
         else
@@ -502,11 +546,13 @@ void fmode_7_8(bool read, const fs::path& dir)
             {
                 std::ifstream in{filepath.native(), std::ios::binary};
                 serialization::binary::IArchive ar{in};
-                for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
+                for (int chara_index = 0;
+                     chara_index < ELONA_MAX_PARTY_CHARACTERS;
+                     ++chara_index)
                 {
                     for (int i = 0; i < 600; ++i)
                     {
-                        ar(sdata.get(i, cc));
+                        ar(sdata.get(i, chara_index));
                     }
                 }
             }
@@ -515,11 +561,12 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             std::ofstream out{filepath.native(), std::ios::binary};
             serialization::binary::OArchive ar{out};
-            for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
+            for (int chara_index = 0; chara_index < ELONA_MAX_PARTY_CHARACTERS;
+                 ++chara_index)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar(sdata.get(i, cc));
+                    ar(sdata.get(i, chara_index));
                 }
             }
         }
@@ -547,11 +594,8 @@ void fmode_7_8(bool read, const fs::path& dir)
             if (fs::exists(filepath))
             {
                 load(filepath, inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
-                for (int index = 0; index < ELONA_OTHER_INVENTORIES_INDEX;
-                     index++)
-                {
-                    inv[index].index = index;
-                }
+
+                restore_handles<Item>(0, ELONA_OTHER_INVENTORIES_INDEX);
             }
         }
         else
@@ -777,7 +821,6 @@ void fmode_7_8(bool read, const fs::path& dir)
     }
 
     lua::ModSerializer mod_serializer(*lua::lua);
-    int index_start, index_end;
     if (read)
     {
         lua::lua->get_mod_manager().clear_global_stores();
@@ -803,56 +846,6 @@ void fmode_7_8(bool read, const fs::path& dir)
                 ar, lua::ModEnv::StoreType::global);
         }
     }
-
-    {
-        const auto filepath = dir / u8"mod_cdata.s1";
-        if (read)
-        {
-            std::ifstream in{filepath.native(), std::ios::binary};
-            serialization::binary::IArchive ar{in};
-            std::tie(index_start, index_end) =
-                mod_serializer.load_handles<Character>(
-                    ar, lua::ModEnv::StoreType::global);
-
-            auto& handle_mgr = lua::lua->get_handle_manager();
-            for (int i = index_start; i < index_end; i++)
-            {
-                handle_mgr.resolve_handle<Character>(cdata[i]);
-            }
-        }
-        else
-        {
-            std::ofstream out{filepath.native(), std::ios::binary};
-            serialization::binary::OArchive ar{out};
-            mod_serializer.save_handles<Character>(
-                ar, lua::ModEnv::StoreType::global);
-        }
-    }
-
-    {
-        const auto filepath = dir / u8"mod_inv.s1";
-        if (read)
-        {
-            std::ifstream in{filepath.native(), std::ios::binary};
-            serialization::binary::IArchive ar{in};
-            std::tie(index_start, index_end) =
-                mod_serializer.load_handles<Item>(
-                    ar, lua::ModEnv::StoreType::global);
-
-            auto& handle_mgr = lua::lua->get_handle_manager();
-            for (int i = index_start; i < index_end; i++)
-            {
-                handle_mgr.resolve_handle<Item>(inv[i]);
-            }
-        }
-        else
-        {
-            std::ofstream out{filepath.native(), std::ios::binary};
-            serialization::binary::OArchive ar{out};
-            mod_serializer.save_handles<Item>(
-                ar, lua::ModEnv::StoreType::global);
-        }
-    }
 }
 
 
@@ -863,8 +856,8 @@ void fmode_14_15(bool read)
         read ? filesystem::dirs::save(geneuse) : filesystem::dirs::tmp();
     if (!read)
     {
-        playerheader =
-            cdatan(0, 0) + u8"(Lv" + cdata.player().level + u8")の遺伝子";
+        playerheader = cdata.player().name + u8"(Lv" + cdata.player().level +
+            u8")の遺伝子";
         const auto filepath = dir / u8"gene_header.txt";
         bsave(filepath, playerheader);
         Save::instance().add(filepath.filename());
@@ -898,11 +891,13 @@ void fmode_14_15(bool read)
             {
                 std::ifstream in{filepath.native(), std::ios::binary};
                 serialization::binary::IArchive ar{in};
-                for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
+                for (int chara_index = 0;
+                     chara_index < ELONA_MAX_PARTY_CHARACTERS;
+                     ++chara_index)
                 {
                     for (int i = 0; i < 600; ++i)
                     {
-                        ar(sdata.get(i, cc));
+                        ar(sdata.get(i, chara_index));
                     }
                 }
             }
@@ -912,11 +907,12 @@ void fmode_14_15(bool read)
             Save::instance().add(filepath.filename());
             std::ofstream out{filepath.native(), std::ios::binary};
             serialization::binary::OArchive ar{out};
-            for (int cc = 0; cc < ELONA_MAX_PARTY_CHARACTERS; ++cc)
+            for (int chara_index = 0; chara_index < ELONA_MAX_PARTY_CHARACTERS;
+                 ++chara_index)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar(sdata.get(i, cc));
+                    ar(sdata.get(i, chara_index));
                 }
             }
         }
@@ -945,11 +941,6 @@ void fmode_14_15(bool read)
             if (fs::exists(filepath))
             {
                 load(filepath, inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
-                for (int index = 0; index < ELONA_OTHER_INVENTORIES_INDEX;
-                     index++)
-                {
-                    inv[index].index = index;
-                }
             }
         }
         else
@@ -1053,21 +1044,16 @@ void fmode_1_2(bool read)
         const auto filepath = dir / (u8"map_"s + mid + u8".s2");
         if (read)
         {
-            DIM4(map, map_data.width, map_data.height, 10);
             DIM3(mapsync, map_data.width, map_data.height);
             DIM3(mef, 9, MEF_MAX);
             tmpload(u8"map_"s + mid + u8".s2");
-            load_v3(
-                filepath, map, 0, map_data.width, 0, map_data.height, 0, 10);
-            cell_data.unpack_from(map);
+            load(filepath, cell_data);
         }
         else
         {
             Save::instance().add(filepath.filename());
             writeloadedbuff(u8"map_"s + mid + u8".s2");
-            cell_data.pack_to(map);
-            save_v3(
-                filepath, map, 0, map_data.width, 0, map_data.height, 0, 10);
+            save(filepath, cell_data);
         }
     }
 
@@ -1087,6 +1073,9 @@ void fmode_1_2(bool read)
             {
                 cdata[index].index = index;
             }
+
+            restore_handles<Character>(
+                ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
         }
         else
         {
@@ -1107,12 +1096,13 @@ void fmode_1_2(bool read)
             tmpload(u8"sdata_"s + mid + u8".s2");
             std::ifstream in{filepath.native(), std::ios::binary};
             serialization::binary::IArchive ar{in};
-            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
-                 ++cc)
+            for (int chara_index = ELONA_MAX_PARTY_CHARACTERS;
+                 chara_index < ELONA_MAX_CHARACTERS;
+                 ++chara_index)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar(sdata.get(i, cc));
+                    ar(sdata.get(i, chara_index));
                 }
             }
         }
@@ -1122,12 +1112,13 @@ void fmode_1_2(bool read)
             writeloadedbuff(u8"sdata_"s + mid + u8".s2");
             std::ofstream out{filepath.native(), std::ios::binary};
             serialization::binary::OArchive ar{out};
-            for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
-                 ++cc)
+            for (int chara_index = ELONA_MAX_PARTY_CHARACTERS;
+                 chara_index < ELONA_MAX_CHARACTERS;
+                 ++chara_index)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar(sdata.get(i, cc));
+                    ar(sdata.get(i, chara_index));
                 }
             }
         }
@@ -1166,7 +1157,6 @@ void fmode_1_2(bool read)
     arrayfile(read, u8"mdatan", dir / (u8"mdatan_"s + mid + u8".s2"));
 
     lua::ModSerializer mod_serializer(*lua::lua);
-    int index_start, index_end;
     if (read)
     {
         lua::lua->get_mod_manager().clear_map_local_stores();
@@ -1193,37 +1183,6 @@ void fmode_1_2(bool read)
             mod_serializer.save_mod_store_data(ar, lua::ModEnv::StoreType::map);
         }
     }
-
-    // Mod handle data of map-local characters
-    {
-        const auto filepath = dir / (u8"mod_cdata_"s + mid + u8".s2");
-        if (read)
-        {
-            tmpload(u8"mod_cdata_"s + mid + u8".s2");
-
-            std::ifstream in{filepath.native(), std::ios::binary};
-            serialization::binary::IArchive ar{in};
-            std::tie(index_start, index_end) =
-                mod_serializer.load_handles<Character>(
-                    ar, lua::ModEnv::StoreType::map);
-
-            auto& handle_mgr = lua::lua->get_handle_manager();
-            for (int i = index_start; i < index_end; i++)
-            {
-                handle_mgr.resolve_handle<Character>(cdata[i]);
-            }
-        }
-        else
-        {
-            Save::instance().add(filepath.filename());
-            writeloadedbuff(u8"mod_cdata_"s + mid + u8".s2");
-
-            std::ofstream out{filepath.native(), std::ios::binary};
-            serialization::binary::OArchive ar{out};
-            mod_serializer.save_handles<Character>(
-                ar, lua::ModEnv::StoreType::map);
-        }
-    }
 }
 
 
@@ -1232,9 +1191,9 @@ void fmode_16()
 {
     DIM3(cmapdata, 5, 400);
 
-    load_v3(
-        fmapfile + u8".map", map, 0, map_data.width, 0, map_data.height, 0, 3);
-    cell_data.unpack_from(map, false);
+    std::vector<int> tile_grid(cell_data.width() * cell_data.height());
+    load_vec(fmapfile + u8".map", tile_grid);
+    cell_data.load_tile_grid(tile_grid);
 
     const auto filepath = fmapfile + u8".obj"s;
     if (!fs::exists(filepath))
@@ -1282,20 +1241,18 @@ void fmode_5_6(bool read)
         const auto filepath = fmapfile + u8".map"s;
         if (read)
         {
-            DIM4(map, map_data.width, map_data.height, 10);
             DIM3(
                 mapsync,
                 map_data.width,
                 map_data.height); // TODO length_exception
-            load_v3(
-                filepath, map, 0, map_data.width, 0, map_data.height, 0, 10);
-            cell_data.unpack_from(map);
+            cell_data.init(map_data.width, map_data.height);
+            std::vector<int> tile_grid(map_data.width * map_data.height);
+            load_vec(fmapfile + u8".map", tile_grid);
+            cell_data.load_tile_grid(tile_grid);
         }
         else
         {
-            cell_data.pack_to(map);
-            save_v3(
-                filepath, map, 0, map_data.width, 0, map_data.height, 0, 10);
+            save(filepath, cell_data);
         }
     }
 
@@ -1325,47 +1282,14 @@ void fmode_3_4(bool read, const fs::path& filename)
     {
         tmpload(filename);
         load(filepath, inv, ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
-        for (int index = ELONA_OTHER_INVENTORIES_INDEX; index < ELONA_MAX_ITEMS;
-             index++)
-        {
-            inv[index].index = index;
-        }
+
+        restore_handles<Item>(ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
     }
     else
     {
         Save::instance().add(filepath.filename());
         tmpload(filename);
         save(filepath, inv, ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
-    }
-
-    // Mod handle data of map-local items
-    const auto mod_filename = "mod_"s + filepathutil::to_utf8_path(filename);
-    const auto mod_filepath = filesystem::dirs::tmp() / mod_filename;
-    lua::ModSerializer mod_serializer(*lua::lua);
-    int index_start, index_end;
-    if (read)
-    {
-        tmpload(mod_filename);
-
-        std::ifstream in{mod_filepath.native(), std::ios::binary};
-        serialization::binary::IArchive ar{in};
-        std::tie(index_start, index_end) =
-            mod_serializer.load_handles<Item>(ar, lua::ModEnv::StoreType::map);
-
-        auto& handle_mgr = lua::lua->get_handle_manager();
-        for (int i = index_start; i < index_end; i++)
-        {
-            handle_mgr.resolve_handle<Item>(inv[i]);
-        }
-    }
-    else
-    {
-        Save::instance().add(mod_filepath.filename());
-        tmpload(mod_filename);
-
-        std::ofstream out{mod_filepath.native(), std::ios::binary};
-        serialization::binary::OArchive ar{out};
-        mod_serializer.save_handles<Item>(ar, lua::ModEnv::StoreType::map);
     }
 }
 
@@ -1410,12 +1334,13 @@ void fmode_17()
         tmpload(u8"sdata_"s + mid + u8".s2");
         std::ifstream in{filepath.native(), std::ios::binary};
         serialization::binary::IArchive ar{in};
-        for (int cc = ELONA_MAX_PARTY_CHARACTERS; cc < ELONA_MAX_CHARACTERS;
-             ++cc)
+        for (int chara_index = ELONA_MAX_PARTY_CHARACTERS;
+             chara_index < ELONA_MAX_CHARACTERS;
+             ++chara_index)
         {
             for (int i = 0; i < 600; ++i)
             {
-                ar(sdata.get(i, cc));
+                ar(sdata.get(i, chara_index));
             }
         }
     }
@@ -1484,8 +1409,6 @@ void fmode_11_12(FileOperation file_operation)
         delete_file("cdatan_"s + mid + ".s2");
         delete_file("inv_"s + mid + ".s2");
         delete_file("mod_map_"s + mid + ".s2");
-        delete_file("mod_cdata_"s + mid + ".s2");
-        delete_file("mod_inv_"s + mid + ".s2");
     }
     delete_file("mdata_"s + mid + ".s2");
     delete_file("mdatan_"s + mid + ".s2");

@@ -7,6 +7,7 @@
 #include "lua_env/lua_event/base_event.hpp"
 #include "main_menu.hpp"
 #include "profile/profile_manager.hpp"
+#include "save_header.hpp"
 #include "turn_sequence.hpp"
 #include "variables.hpp"
 
@@ -55,11 +56,9 @@ void _start_elona()
     }
     else if (defload != ""s)
     {
-        if (!fs::exists(filesystem::dirs::save(defload) / u8"header.txt"))
+        if (!SaveHeader::exists(filesystem::dirs::save(defload)))
         {
-            if (fs::exists(
-                    filesystem::dirs::save(u8"sav_" + defload) /
-                    u8"header.txt"))
+            if (SaveHeader::exists(filesystem::dirs::save(u8"sav_" + defload)))
             {
                 // TODO: Delete it when v1.0.0 stable is released.
                 defload = u8"sav_"s + defload;

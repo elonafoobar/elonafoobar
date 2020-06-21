@@ -7,8 +7,12 @@
 namespace elona
 {
 
+struct Character;
+
+
+
 int trait_get_info(int traitmode, int tid);
-void trait_load_desc();
+void trait_load_desc(Character& chara);
 
 void clear_trait_data();
 

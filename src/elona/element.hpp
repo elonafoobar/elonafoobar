@@ -2,10 +2,15 @@
 
 #include <string>
 
+#include "optional.hpp"
+
 
 
 namespace elona
 {
+
+struct Character;
+
 
 
 // TODO: they shouldn't be linked to specific magic numbers.
@@ -32,9 +37,11 @@ enum class Element
 int randomele();
 std::string elename(int ele);
 int element_color_id(int element_id);
-void resistmod(int cc, int element, int delta);
-void txteledmg(int type, int attacker, int target, int element);
-
-
+void chara_gain_registance(Character& chara, int element, int delta);
+void txteledmg(
+    int type,
+    optional_ref<const Character> attacker,
+    int target,
+    int element);
 
 } // namespace elona

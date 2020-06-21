@@ -77,10 +77,6 @@ void dmgheal_death_by_backpack(Character& chara)
 
     for (auto&& item : inv.for_chara(chara))
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         if (item.weight > heaviest_weight)
         {
             heaviest_item = item;
@@ -175,7 +171,6 @@ int damage_hp(
     int damage_level = 0;
     elona_vector1<int> p_at_m141;
     int gained_exp = 0;
-    bool attacker_is_player = false;
 
     optional_ref<Character> attacker = none;
     if (damage_source >= 0)
@@ -183,14 +178,10 @@ int damage_hp(
         attacker = cdata[damage_source];
     }
 
-    if (txt3rd == 0)
-    {
-        attacker_is_player = damage_source == 0;
-    }
-    else
-    {
-        attacker_is_player = false;
-    }
+    // E.g., the case that the casted spell is the subject.
+    // It controls 3rd-person singular present 's' in English message.
+    const bool damage_statements_subject_is_noncharacter = txt3rd == 1;
+
     if (victim.state() != Character::State::alive)
     {
         end_dmghp(victim);
@@ -222,7 +213,7 @@ int damage_hp(
         }
         dmg_at_m141 = dmg_at_m141 * 100 / (sdata(60, victim.index) / 2 + 50);
     }
-    if (attacker_is_player)
+    if (attacker && attacker->index == 0)
     {
         if (critical)
         {
@@ -364,31 +355,31 @@ int damage_hp(
     {
         if (victim.index < 16)
         {
-            for (int cnt = 0; cnt < 16; ++cnt)
+            for (auto&& chara : cdata.player_and_allies())
             {
-                if (victim.index == cnt)
+                if (victim.index == chara.index)
                 {
                     continue;
                 }
-                if (cdata[cnt].state() != Character::State::alive)
+                if (chara.state() != Character::State::alive)
                 {
                     continue;
                 }
-                if (cdata[cnt].has_lay_hand() == 0)
+                if (chara.has_lay_hand() == 0)
                 {
                     continue;
                 }
-                if (cdata[cnt].is_lay_hand_available() == 0)
+                if (chara.is_lay_hand_available() == 0)
                 {
                     continue;
                 }
-                cdata[cnt].is_lay_hand_available() = false;
-                txt(i18n::s.get("core.damage.lay_hand", cdata[cnt]),
+                chara.is_lay_hand_available() = false;
+                txt(i18n::s.get("core.damage.lay_hand", chara),
                     Message::color{ColorIndex::cyan});
                 txt(i18n::s.get("core.damage.is_healed", victim));
                 victim.hp = victim.max_hp / 2;
-                animode = 100 + victim.index;
-                MiracleAnimation().play();
+                MiracleAnimation(MiracleAnimation::Mode::target_one, victim)
+                    .play();
                 snd("core.pray2");
                 break;
             }
@@ -421,47 +412,94 @@ int damage_hp(
         }
         if (game_data.proc_damage_events_flag == 1)
         {
-            txteledmg(0, attacker_is_player ? 0 : -1, victim.index, element);
+            txteledmg(0, none, victim.index, element);
         }
         else if (game_data.proc_damage_events_flag == 2)
         {
             Message::instance().continue_sentence();
+            assert(attacker);
             if (damage_level == -1)
             {
-                txt(i18n::s.get(
-                    "core.damage.levels.scratch", victim, attacker_is_player));
+                if (damage_statements_subject_is_noncharacter)
+                {
+                    txt(i18n::s.get(
+                        "core.damage.levels.scratch.by_spell", victim));
+                }
+                else
+                {
+                    txt(i18n::s.get(
+                        "core.damage.levels.scratch.by_chara",
+                        victim,
+                        *attacker));
+                }
             }
             if (damage_level == 0)
             {
-                txt(i18n::s.get(
-                        "core.damage.levels.slightly",
-                        victim,
-                        attacker_is_player),
-                    Message::color{ColorIndex::orange});
+                if (damage_statements_subject_is_noncharacter)
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.slightly.by_spell", victim),
+                        Message::color{ColorIndex::orange});
+                }
+                else
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.slightly.by_chara",
+                            victim,
+                            *attacker),
+                        Message::color{ColorIndex::orange});
+                }
             }
             if (damage_level == 1)
             {
-                txt(i18n::s.get(
-                        "core.damage.levels.moderately",
-                        victim,
-                        attacker_is_player),
-                    Message::color{ColorIndex::gold});
+                if (damage_statements_subject_is_noncharacter)
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.moderately.by_spell", victim),
+                        Message::color{ColorIndex::gold});
+                }
+                else
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.moderately.by_chara",
+                            victim,
+                            *attacker),
+                        Message::color{ColorIndex::gold});
+                }
             }
             if (damage_level == 2)
             {
-                txt(i18n::s.get(
-                        "core.damage.levels.severely",
-                        victim,
-                        attacker_is_player),
-                    Message::color{ColorIndex::light_red});
+                if (damage_statements_subject_is_noncharacter)
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.severely.by_spell", victim),
+                        Message::color{ColorIndex::light_red});
+                }
+                else
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.severely.by_chara",
+                            victim,
+                            *attacker),
+                        Message::color{ColorIndex::light_red});
+                }
             }
             if (damage_level >= 3)
             {
-                txt(i18n::s.get(
-                        "core.damage.levels.critically",
-                        victim,
-                        attacker_is_player),
-                    Message::color{ColorIndex::red});
+                if (damage_statements_subject_is_noncharacter)
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.critically.by_spell", victim),
+                        Message::color{ColorIndex::red});
+                }
+                else
+                {
+                    txt(i18n::s.get(
+                            "core.damage.levels.critically.by_chara",
+                            victim,
+                            *attacker),
+                        Message::color{ColorIndex::red});
+                }
             }
             rowact_check(victim);
         }
@@ -525,7 +563,7 @@ int damage_hp(
                         {
                             runs_away = false;
                         }
-                        if (attacker_is_player)
+                        if (attacker && attacker->index == 0)
                         {
                             if (trait(44)) // Gentle Face
                             {
@@ -667,7 +705,7 @@ int damage_hp(
                 txt(i18n::s.get("core.damage.sleep_is_disturbed", victim));
             }
         }
-        if (attacker_is_player)
+        if (attacker && attacker->index == 0)
         {
             hostileaction(0, victim.index);
             game_data.chara_last_attacked_by_player = victim.index;
@@ -772,7 +810,7 @@ int damage_hp(
                     apply_hate = true;
                 }
             }
-            if (!attacker_is_player)
+            if (attacker->index != 0)
             {
                 if (attacker->enemy_id == victim.index)
                 {
@@ -816,11 +854,18 @@ int damage_hp(
                     game_data.proc_damage_events_flag == 2)
                 {
                     Message::instance().continue_sentence();
-                    txteledmg(1, attacker_is_player, victim.index, element);
+                    if (damage_statements_subject_is_noncharacter)
+                    {
+                        txteledmg(1, none, victim.index, element);
+                    }
+                    else
+                    {
+                        txteledmg(1, *attacker, victim.index, element);
+                    }
                 }
                 else
                 {
-                    txteledmg(2, attacker_is_player, victim.index, element);
+                    txteledmg(2, none, victim.index, element);
                 }
             }
             else
@@ -832,17 +877,25 @@ int damage_hp(
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
-                        txt(i18n::s.get(
-                            "core.death_by.chara.transformed_into_meat.active",
-                            victim,
-                            attacker_is_player));
+                        if (damage_statements_subject_is_noncharacter)
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.transformed_into_meat.active.by_spell",
+                                victim));
+                        }
+                        else
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.transformed_into_meat.active.by_chara",
+                                victim,
+                                *attacker));
+                        }
                     }
                     else
                     {
                         txt(i18n::s.get(
                             "core.death_by.chara.transformed_into_meat.passive",
-                            victim,
-                            attacker_is_player));
+                            victim));
                     }
                 }
                 if (death_type == 1)
@@ -851,17 +904,24 @@ int damage_hp(
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
-                        txt(i18n::s.get(
-                            "core.death_by.chara.destroyed.active",
-                            victim,
-                            attacker_is_player));
+                        if (damage_statements_subject_is_noncharacter)
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.destroyed.active.by_spell",
+                                victim));
+                        }
+                        else
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.destroyed.active.by_chara",
+                                victim,
+                                *attacker));
+                        }
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.death_by.chara.destroyed.passive",
-                            victim,
-                            attacker_is_player));
+                            "core.death_by.chara.destroyed.passive", victim));
                     }
                 }
                 if (death_type == 2)
@@ -870,17 +930,24 @@ int damage_hp(
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
-                        txt(i18n::s.get(
-                            "core.death_by.chara.minced.active",
-                            victim,
-                            attacker_is_player));
+                        if (damage_statements_subject_is_noncharacter)
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.minced.active.by_spell",
+                                victim));
+                        }
+                        else
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.minced.active.by_chara",
+                                victim,
+                                *attacker));
+                        }
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.death_by.chara.minced.passive",
-                            victim,
-                            attacker_is_player));
+                            "core.death_by.chara.minced.passive", victim));
                     }
                 }
                 if (death_type == 3)
@@ -889,17 +956,24 @@ int damage_hp(
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
-                        txt(i18n::s.get(
-                            "core.death_by.chara.killed.active",
-                            victim,
-                            attacker_is_player));
+                        if (damage_statements_subject_is_noncharacter)
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.killed.active.by_spell",
+                                victim));
+                        }
+                        else
+                        {
+                            txt(i18n::s.get(
+                                "core.death_by.chara.killed.active.by_chara",
+                                victim,
+                                *attacker));
+                        }
                     }
                     else
                     {
                         txt(i18n::s.get(
-                            "core.death_by.chara.killed.passive",
-                            victim,
-                            attacker_is_player));
+                            "core.death_by.chara.killed.passive", victim));
                     }
                 }
             }
@@ -964,14 +1038,14 @@ int damage_hp(
                 x = victim.position.x;
                 y = victim.position.y;
                 snd_at("core.crush1", victim.position, false, false);
-                animeblood(victim.index, 1, element);
+                animeblood(victim, 1, element);
             }
             spillfrag(victim.position.x, victim.position.y, 3);
         }
         else
         {
             sound_kill(victim.position);
-            animeblood(victim.index, 0, element);
+            animeblood(victim, 0, element);
             spillblood(victim.position.x, victim.position.y, 4);
         }
         if (victim.index == 0)
@@ -984,7 +1058,7 @@ int damage_hp(
         }
         if (attacker)
         {
-            if (!attacker_is_player)
+            if (attacker->index != 0)
             {
                 chara_custom_talk(attacker->index, 103);
             }
@@ -1001,7 +1075,7 @@ int damage_hp(
                 gained_exp /= 20;
             }
             attacker->experience += gained_exp;
-            if (attacker_is_player)
+            if (attacker->index == 0)
             {
                 game_data.sleep_experience += gained_exp;
             }
@@ -1158,8 +1232,7 @@ int damage_hp(
             }
             chara_gain_skill_exp(*attacker, 161, 10 + rollanatomy * 4);
         }
-        rc = victim.index;
-        character_drops_item();
+        character_drops_item(victim);
         if (game_data.current_map == mdata_t::MapId::pet_arena)
         {
             if (rnd(5) == 0)
@@ -1170,29 +1243,28 @@ int damage_hp(
         if (victim.is_death_master() == 1)
         {
             txt(i18n::s.get("core.damage.death_word_breaks"));
-            for (int chara_index = 0; chara_index < ELONA_MAX_CHARACTERS;
-                 ++chara_index)
+            for (auto&& chara : cdata.all())
             {
-                if (cdata[chara_index].state() != Character::State::alive)
+                if (chara.state() != Character::State::alive)
                 {
                     continue;
                 }
                 for (int buff_index = 0; buff_index < 16; ++buff_index)
                 {
-                    if (cdata[chara_index].buffs[buff_index].id == 0)
+                    if (chara.buffs[buff_index].id == 0)
                     {
                         break;
                     }
-                    if (cdata[chara_index].buffs[buff_index].id == 16)
+                    if (chara.buffs[buff_index].id == 16)
                     {
-                        buff_delete(cdata[chara_index], buff_index);
+                        buff_delete(chara, buff_index);
                         --buff_index;
                         continue;
                     }
                 }
             }
         }
-        if (attacker_is_player)
+        if (attacker && attacker->index == 0)
         {
             if (game_data.catches_god_signal)
             {
@@ -1216,29 +1288,29 @@ int damage_hp(
 
 
 
-void heal_hp(Character& cc, int delta)
+void heal_hp(Character& chara, int delta)
 {
-    cc.hp += delta;
-    if (cc.hp > cc.max_hp)
+    chara.hp += delta;
+    if (chara.hp > chara.max_hp)
     {
-        cc.hp = cc.max_hp;
+        chara.hp = chara.max_hp;
     }
 }
 
 
 
-void damage_mp(Character& cc, int delta)
+void damage_mp(Character& chara, int delta)
 {
-    cc.mp -= delta;
-    if (cc.mp < -999999)
+    chara.mp -= delta;
+    if (chara.mp < -999999)
     {
-        cc.mp = -999999;
+        chara.mp = -999999;
     }
-    if (cc.mp < 0)
+    if (chara.mp < 0)
     {
-        chara_gain_exp_mana_capacity(cc);
-        auto damage = -cc.mp * 400 / (100 + sdata(164, cc.index) * 10);
-        if (cc.index == 0)
+        chara_gain_exp_mana_capacity(chara);
+        auto damage = -chara.mp * 400 / (100 + sdata(164, chara.index) * 10);
+        if (chara.index == 0)
         {
             if (trait(156) == 1)
             {
@@ -1251,70 +1323,70 @@ void damage_mp(Character& cc, int delta)
             if (damage < 10)
                 return;
         }
-        txt(i18n::s.get("core.damage.magic_reaction_hurts", cc));
-        damage_hp(cc, damage, -2);
+        txt(i18n::s.get("core.damage.magic_reaction_hurts", chara));
+        damage_hp(chara, damage, -2);
     }
 }
 
 
 
-void heal_mp(Character& cc, int delta)
+void heal_mp(Character& chara, int delta)
 {
-    cc.mp += delta;
-    if (cc.mp > cc.max_mp)
+    chara.mp += delta;
+    if (chara.mp > chara.max_mp)
     {
-        cc.mp = cc.max_mp;
+        chara.mp = chara.max_mp;
     }
 }
 
 
 
-bool action_sp(Character& cc, int sp)
+bool action_sp(Character& chara, int sp)
 {
-    if (cc.index != 0 || debug::voldemort)
+    if (chara.index != 0 || debug::voldemort)
         return true;
 
-    damage_sp(cc, sp);
-    return cc.sp >= 50 || cc.sp >= rnd(75);
+    damage_sp(chara, sp);
+    return chara.sp >= 50 || chara.sp >= rnd(75);
 }
 
 
 
-void damage_sp(Character& cc, int delta)
+void damage_sp(Character& chara, int delta)
 {
-    if (cc.index != 0 || debug::voldemort)
+    if (chara.index != 0 || debug::voldemort)
         return;
 
-    if (cc.sp >= -100)
+    if (chara.sp >= -100)
     {
-        cc.sp -= delta;
+        chara.sp -= delta;
     }
 }
 
 
 
-void heal_sp(Character& cc, int delta)
+void heal_sp(Character& chara, int delta)
 {
-    cc.sp += delta;
-    if (cc.sp > cc.max_sp)
+    chara.sp += delta;
+    if (chara.sp > chara.max_sp)
     {
-        cc.sp = cc.max_sp;
+        chara.sp = chara.max_sp;
     }
 }
 
 
 
-void damage_insanity(Character& cc, int delta)
+void damage_insanity(Character& chara, int delta)
 {
-    if (cc.quality >= Quality::miracle)
+    if (chara.quality >= Quality::miracle)
         return;
 
-    int resistance = std::max(sdata(54, cc.index) / 50, 1);
+    int resistance = std::max(sdata(54, chara.index) / 50, 1);
     if (resistance > 10)
         return;
 
     delta /= resistance;
-    if (cc.index < 16)
+    if (chara.index < 16)
     {
         if (trait(166))
         {
@@ -1322,41 +1394,37 @@ void damage_insanity(Character& cc, int delta)
         }
     }
     delta = std::max(delta, 0);
-    cc.insanity += delta;
+    chara.insanity += delta;
     if (rnd(10) == 0 || rnd_capped(delta + 1) > 5 ||
-        rnd_capped(cc.insanity + 1) > 50)
+        rnd_capped(chara.insanity + 1) > 50)
     {
-        status_ailment_damage(cc, StatusAilment::insane, 100);
+        status_ailment_damage(chara, StatusAilment::insane, 100);
     }
 }
 
 
 
-void heal_insanity(Character& cc, int delta)
+void heal_insanity(Character& chara, int delta)
 {
-    cc.insanity -= delta;
-    if (cc.insanity < 0)
+    chara.insanity -= delta;
+    if (chara.insanity < 0)
     {
-        cc.insanity = 0;
+        chara.insanity = 0;
     }
 }
 
 
 
-void character_drops_item()
+void character_drops_item(Character& victim)
 {
-    if (rc == 0)
+    if (victim.index == 0)
     {
         if (game_data.executing_immediate_quest_type != 0)
         {
             return;
         }
-        for (auto&& item : inv.for_chara(cdata[rc]))
+        for (auto&& item : inv.for_chara(victim))
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (map_data.refresh_type == 0)
             {
                 if (item.body_part != 0)
@@ -1434,8 +1502,7 @@ void character_drops_item()
             }
             if (item.body_part != 0)
             {
-                cdata[rc].body_parts[item.body_part - 100] =
-                    cdata[rc].body_parts[item.body_part - 100] / 10000 * 10000;
+                victim.equipment_slots[item.body_part - 100].unequip();
                 item.body_part = 0;
             }
             f = 0;
@@ -1472,8 +1539,8 @@ void character_drops_item()
                 item.remove();
                 continue;
             }
-            item.position.x = cdata[rc].position.x;
-            item.position.y = cdata[rc].position.y;
+            item.position.x = victim.position.x;
+            item.position.y = victim.position.y;
             if (!item_stack(-1, item).stacked)
             {
                 if (const auto slot = inv_get_free_slot(-1))
@@ -1488,54 +1555,50 @@ void character_drops_item()
             }
             item.remove();
         }
-        cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
+        cell_refresh(victim.position.x, victim.position.y);
         create_pcpic(cdata.player());
         return;
     }
     else
     {
-        if (rc < 16)
+        if (victim.index < 16)
         {
-            if (cdata[rc].has_own_sprite() == 1)
+            if (victim.has_own_sprite() == 1)
             {
-                create_pcpic(cdata[rc]);
+                create_pcpic(victim);
             }
         }
-        if (cdata[rc].relationship == 10)
+        if (victim.relationship == 10)
         {
             return;
         }
     }
     if (game_data.current_map == mdata_t::MapId::noyel)
     {
-        if (cdata[rc].id == CharaId::tourist)
+        if (victim.id == CharaId::tourist)
         {
             return;
         }
-        if (cdata[rc].id == CharaId::palmian_elite_soldier)
+        if (victim.id == CharaId::palmian_elite_soldier)
         {
             return;
         }
     }
-    if (cdata[rc].is_contracting())
+    if (victim.is_contracting())
     {
         return;
     }
-    if (cdata[rc].splits() || cdata[rc].splits2())
+    if (victim.splits() || victim.splits2())
     {
         if (rnd(6))
         {
             return;
         }
     }
-    for (auto&& item : inv.for_chara(cdata[rc]))
+    for (auto&& item : inv.for_chara(victim))
     {
-        if (item.number() == 0)
-        {
-            continue;
-        }
         f = 0;
-        if (cdata[rc].role == Role::user)
+        if (victim.role == Role::user)
         {
             break;
         }
@@ -1547,14 +1610,14 @@ void character_drops_item()
         {
             f = 1;
         }
-        if (cdata[rc].quality >= Quality::miracle)
+        if (victim.quality >= Quality::miracle)
         {
             if (rnd(2) == 0)
             {
                 f = 1;
             }
         }
-        if (cdata[rc].role == Role::adventurer)
+        if (victim.role == Role::adventurer)
         {
             if (rnd(5))
             {
@@ -1595,17 +1658,16 @@ void character_drops_item()
                     item,
                     enchantment_generate(enchantment_gen_level(rnd(4))),
                     enchantment_gen_p());
-                animeload(8, rc);
+                animeload(8, victim);
             }
         }
         if (item.body_part != 0)
         {
-            cdata[rc].body_parts[item.body_part - 100] =
-                cdata[rc].body_parts[item.body_part - 100] / 10000 * 10000;
+            victim.equipment_slots[item.body_part - 100].unequip();
             item.body_part = 0;
         }
-        item.position.x = cdata[rc].position.x;
-        item.position.y = cdata[rc].position.y;
+        item.position.x = victim.position.x;
+        item.position.y = victim.position.y;
         itemturn(item);
         if (!item_stack(-1, item).stacked)
         {
@@ -1620,148 +1682,146 @@ void character_drops_item()
         }
         item.remove();
     }
-    if (cdata[rc].quality >= Quality::miracle || rnd(20) == 0 ||
-        cdata[rc].drops_gold() == 1 || rc < 16)
+    if (victim.quality >= Quality::miracle || rnd(20) == 0 ||
+        victim.drops_gold() == 1 || victim.index < 16)
     {
-        if (cdata[rc].gold > 0)
+        if (victim.gold > 0)
         {
             flt();
             itemcreate_extra_inv(
                 54,
-                cdata[rc].position,
-                cdata[rc].gold / (1 + 3 * (cdata[rc].drops_gold() == 0)));
-            cdata[rc].gold -=
-                cdata[rc].gold / (1 + 3 * (cdata[rc].drops_gold() == 0));
+                victim.position,
+                victim.gold / (1 + 3 * (victim.drops_gold() == 0)));
+            victim.gold -= victim.gold / (1 + 3 * (victim.drops_gold() == 0));
         }
     }
 
-    switch (class_get_item_type(data::InstanceId{cdatan(3, rc)}))
+    switch (class_get_item_type(victim.class_))
     {
     case 1:
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 7:
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 3:
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 2:
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 4:
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 5:
         if (rnd(50) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     }
 
-    switch (chara_db_get_item_type(cdata[rc].id))
+    switch (chara_db_get_item_type(victim.id))
     {
     case 3:
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 1:
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 62000;
             flttypeminor = 0;
-            if (const auto item =
-                    itemcreate_extra_inv(0, cdata[rc].position, 0))
+            if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
             {
-                remain_make(*item, cdata[rc]);
+                remain_make(*item, victim);
             }
         }
         break;
@@ -1769,13 +1829,12 @@ void character_drops_item()
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 62000;
             flttypeminor = 0;
-            if (const auto item =
-                    itemcreate_extra_inv(0, cdata[rc].position, 0))
+            if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
             {
-                remain_make(*item, cdata[rc]);
+                remain_make(*item, victim);
             }
         }
         break;
@@ -1783,166 +1842,166 @@ void character_drops_item()
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 32000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 34000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 77000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 4:
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(4) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     case 5:
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(15) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(4) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         if (rnd(4) == 0)
         {
             p = 0;
-            flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+            flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 77000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, cdata[rc].position, 0);
+            itemcreate_extra_inv(0, victim.position, 0);
         }
         break;
     }
@@ -1950,83 +2009,81 @@ void character_drops_item()
     if (rnd(40) == 0)
     {
         p = 0;
-        flt(calcobjlv(cdata[tc].level), calcfixlv(Quality::bad));
+        flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
         flttypemajor = 62000;
         flttypeminor = 0;
-        if (const auto item = itemcreate_extra_inv(0, cdata[rc].position, 0))
+        if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
         {
-            remain_make(*item, cdata[rc]);
+            remain_make(*item, victim);
         }
     }
     if (game_data.current_map == mdata_t::MapId::show_house)
     {
-        cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
+        cell_refresh(victim.position.x, victim.position.y);
         return;
     }
     if (game_data.current_map != mdata_t::MapId::arena &&
-        cdata[rc].role != Role::user)
+        victim.role != Role::user)
     {
-        if (rnd(175) == 0 || cdata[rc].quality == Quality::special || 0 ||
-            (cdata[rc].quality == Quality::miracle && rnd(2) == 0) ||
-            (cdata[rc].quality == Quality::godly && rnd(3) == 0))
+        if (rnd(175) == 0 || victim.quality == Quality::special || 0 ||
+            (victim.quality == Quality::miracle && rnd(2) == 0) ||
+            (victim.quality == Quality::godly && rnd(3) == 0))
         {
             flt();
-            if (const auto item =
-                    itemcreate_extra_inv(504, cdata[rc].position, 0))
+            if (const auto item = itemcreate_extra_inv(504, victim.position, 0))
             {
-                item->param1 = cdata[rc].image;
-                item->subname = charaid2int(cdata[rc].id);
+                item->param1 = victim.image;
+                item->subname = charaid2int(victim.id);
                 cell_refresh(item->position.x, item->position.y);
             }
         }
-        if (rnd(175) == 0 || cdata[rc].quality == Quality::special || 0 ||
-            (cdata[rc].quality == Quality::miracle && rnd(2) == 0) ||
-            (cdata[rc].quality == Quality::godly && rnd(3) == 0))
+        if (rnd(175) == 0 || victim.quality == Quality::special || 0 ||
+            (victim.quality == Quality::miracle && rnd(2) == 0) ||
+            (victim.quality == Quality::godly && rnd(3) == 0))
         {
             flt();
-            if (const auto item =
-                    itemcreate_extra_inv(503, cdata[rc].position, 0))
+            if (const auto item = itemcreate_extra_inv(503, victim.position, 0))
             {
-                item->param1 = cdata[rc].image;
-                item->subname = charaid2int(cdata[rc].id);
+                item->param1 = victim.image;
+                item->subname = charaid2int(victim.id);
                 cell_refresh(item->position.x, item->position.y);
             }
         }
     }
-    if (cdata[rc].role == Role::wandering_vendor)
+    if (victim.role == Role::wandering_vendor)
     {
         flt();
-        if (const auto item = itemcreate_extra_inv(361, cdata[rc].position, 0))
+        if (const auto item = itemcreate_extra_inv(361, victim.position, 0))
         {
-            item->param1 = cdata[rc].shop_store_id;
+            item->param1 = victim.shop_store_id;
             item->own_state = 2;
         }
     }
-    if (rollanatomy == 1 || cdata[rc].quality >= Quality::miracle || 0 ||
-        cdata[rc].is_livestock() == 1 || 0)
+    if (rollanatomy == 1 || victim.quality >= Quality::miracle || 0 ||
+        victim.is_livestock() == 1 || 0)
     {
         flt();
-        if (const auto item = itemcreate_extra_inv(204, cdata[rc].position, 0))
+        if (const auto item = itemcreate_extra_inv(204, victim.position, 0))
         {
-            remain_make(*item, cdata[rc]);
-            if (cdata[rc].is_livestock() == 1)
+            remain_make(*item, victim);
+            if (victim.is_livestock() == 1)
             {
                 if (sdata(161, 0) != 0)
                 {
                     item->modify_number(
-                        rnd(1 + (sdata(161, 0) > cdata[rc].level)));
+                        rnd(1 + (sdata(161, 0) > victim.level)));
                 }
             }
         }
     }
 
     // ../../runtime/mod/core/api/impl/chara_drop.lua
-    lua::call("core.Impl.chara_drop.drop_from_chara", lua::handle(cdata[rc]));
+    lua::call("core.Impl.chara_drop.drop_from_chara", lua::handle(victim));
 
-    cell_refresh(cdata[rc].position.x, cdata[rc].position.y);
-    if (cdata[rc].role == Role::adventurer)
+    cell_refresh(victim.position.x, victim.position.y);
+    if (victim.role == Role::adventurer)
     {
-        supply_new_equipment();
+        supply_new_equipment(victim);
     }
 }
 
@@ -2112,59 +2169,61 @@ void check_kill(int killer_chara_index, int victim_chara_index)
 
 
 
-void heal_both_rider_and_mount()
+void heal_both_rider_and_mount(Character& target)
 {
-    int subloop = 0;
-    subloop = 1;
+    std::vector<std::reference_wrapper<Character>> targets;
+    targets.push_back(std::ref(target));
     if (game_data.mount != 0)
     {
-        if (tc == game_data.mount || tc == 0)
+        if (target.index == game_data.mount || target.index == 0)
         {
-            subloop = 2;
-            if (tc == game_data.mount)
+            if (target.index == game_data.mount)
             {
-                tc(1) = 0;
+                targets.push_back(std::ref(cdata.player()));
             }
             else
             {
-                tc(1) = game_data.mount;
+                targets.push_back(std::ref(cdata[game_data.mount]));
             }
         }
     }
-    for (int cnt = 0, cnt_end = (subloop); cnt < cnt_end; ++cnt)
+
+    for (auto&& target_rw : targets)
     {
+        auto&& target = target_rw.get();
         const auto amount = roll(dice1, dice2, bonus);
-        heal_hp(cdata[tc(cnt)], amount);
-        status_ailment_heal(cdata[tc(cnt)], StatusAilment::fear);
-        status_ailment_heal(cdata[tc(cnt)], StatusAilment::poisoned, 50);
-        status_ailment_heal(cdata[tc(cnt)], StatusAilment::confused, 50);
-        status_ailment_heal(cdata[tc(cnt)], StatusAilment::dimmed, 30);
-        status_ailment_heal(cdata[tc(cnt)], StatusAilment::bleeding, 20);
-        heal_insanity(cdata[tc(cnt)], 1);
-        if (is_in_fov(cdata[tc(cnt)]))
+        heal_hp(target, amount);
+        status_ailment_heal(target, StatusAilment::fear);
+        status_ailment_heal(target, StatusAilment::poisoned, 50);
+        status_ailment_heal(target, StatusAilment::confused, 50);
+        status_ailment_heal(target, StatusAilment::dimmed, 30);
+        status_ailment_heal(target, StatusAilment::bleeding, 20);
+        heal_insanity(target, 1);
+        if (is_in_fov(target))
         {
-            add_damage_popup(std::to_string(amount), tc(cnt), {127, 255, 127});
+            add_damage_popup(
+                std::to_string(amount), target.index, {127, 255, 127});
         }
     }
 }
 
 
 
-void heal_completely()
+void heal_completely(Character& target)
 {
-    cdata[tc].poisoned = 0;
-    cdata[tc].sleep = 0;
-    cdata[tc].confused = 0;
-    cdata[tc].blind = 0;
-    cdata[tc].paralyzed = 0;
-    cdata[tc].choked = 0;
-    cdata[tc].dimmed = 0;
-    cdata[tc].drunk = 0;
-    cdata[tc].bleeding = 0;
+    target.poisoned = 0;
+    target.sleep = 0;
+    target.confused = 0;
+    target.blind = 0;
+    target.paralyzed = 0;
+    target.choked = 0;
+    target.dimmed = 0;
+    target.drunk = 0;
+    target.bleeding = 0;
     game_data.continuous_active_hours = 0;
-    cdata[tc].hp = cdata[tc].max_hp;
-    cdata[tc].mp = cdata[tc].max_mp;
-    cdata[tc].sp = cdata[tc].max_sp;
+    target.hp = target.max_hp;
+    target.mp = target.max_mp;
+    target.sp = target.max_sp;
 }
 
 } // namespace elona

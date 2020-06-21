@@ -26,8 +26,8 @@ static bool _should_display_quest(int cnt)
     {
         return false;
     }
-    rc = quest_data[cnt].client_chara_index;
-    if (cdata[rc].state() != Character::State::alive)
+    if (cdata[quest_data[cnt].client_chara_index].state() !=
+        Character::State::alive)
     {
         return false;
     }
@@ -82,7 +82,6 @@ bool UIMenuQuestBoard::init()
     page = 0;
     pagesize = 4;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
 
     _populate_quest_list();
@@ -182,7 +181,7 @@ void UIMenuQuestBoard::_draw_list_entry_date(const std::string& date_text)
 
 void UIMenuQuestBoard::_draw_list_entry_giver_name(int chara_index)
 {
-    const auto name = strutil::take_by_width(cdatan(0, chara_index), 20);
+    const auto name = strutil::take_by_width(cdata[chara_index].name, 20);
     mes(wx + 392, y + 2, name);
 }
 
@@ -225,15 +224,15 @@ void UIMenuQuestBoard::_draw_list_entry_desc()
     mes(wx + 20, y + 20, buff);
 }
 
-void UIMenuQuestBoard::_draw_list_entry(int cnt, int rq, int tc)
+void UIMenuQuestBoard::_draw_list_entry(int cnt, int rq, int giver_index)
 {
-    quest_set_data(0);
+    quest_set_data(cdata[giver_index], 0);
     int quest_difficulty = quest_data[rq].difficulty / 5 + 1;
     p(1) = 14;
 
     _draw_list_entry_title(cnt, s(3));
     _draw_list_entry_date(nquestdate);
-    _draw_list_entry_giver_name(tc);
+    _draw_list_entry_giver_name(giver_index);
 
 
     _draw_list_entry_difficulty(quest_data[rq].difficulty, quest_difficulty);
@@ -253,9 +252,7 @@ void UIMenuQuestBoard::_draw_list_entries()
         }
 
         rq = list(0, index);
-        tc = quest_data[rq].client_chara_index;
-
-        _draw_list_entry(cnt, rq, tc);
+        _draw_list_entry(cnt, rq, quest_data[rq].client_chara_index);
     }
     if (keyrange != 0)
     {

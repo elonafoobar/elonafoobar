@@ -5,6 +5,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "class.hpp"
+#include "data/types/type_race.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "menu.hpp"
@@ -41,8 +42,6 @@ void dump_player_info()
 
     std::stringstream ss;
 
-    cc = 0;
-
     ss << u8"Elona 1.22" << std::endl;
     ss << u8"Elona foobar " << latest_version.long_string() << std::endl;
 
@@ -51,22 +50,20 @@ void dump_player_info()
 
     ss << std::endl;
 
-    ss << "  " << fixtxt(cdatan(1, 0) + cdatan(0, 0), 34)
+    ss << "  " << fixtxt(cdata.player().alias + cdata.player().name, 34)
        << i18n::s.get_enum("core.ui.sex", cdata.player().sex) << " "
-       << calcage(0) << u8"歳  " << cdata.player().height << u8"cm "
-       << cdata.player().weight << u8"kg" << std::endl;
+       << calc_age(cdata.player()) << u8"歳  " << cdata.player().height
+       << u8"cm " << cdata.player().weight << u8"kg" << std::endl;
 
     ss << std::endl;
 
     ss << fixtxt(
-              u8"種族       : " + i18n::s.get_m("race", cdatan(2, 0), "name"),
+              u8"種族       : " +
+                  the_race_db.get_text(cdata.player().race, "name"),
               30)
        << fixtxt(u8"信仰      : " + god_name(cdata.player().god_id), 32)
        << std::endl;
-    ss << fixtxt(
-              u8"職業       : " +
-                  class_get_name(data::InstanceId{cdatan(3, 0)}),
-              30)
+    ss << fixtxt(u8"職業       : " + class_get_name(cdata.player().class_), 30)
        << fixtxt(u8"所属      : " + guildname(), 32) << std::endl;
     ss << fixtxt(u8"レベル     : " + std::to_string(cdata.player().level), 30)
        << fixtxt(u8"経過日数  : " + std::to_string(game_data.play_days), 32)
@@ -145,12 +142,11 @@ void dump_player_info()
 
     ss << std::endl;
 
-    append_accuracy_info(1);
+    append_accuracy_info(cdata.player(), 1);
 
-    tc = 0;
     attackskill = 106;
     {
-        const auto evade = calc_evasion(tc);
+        const auto evade = calc_evasion(cdata.player());
         const auto prot = calc_attack_protection(cdata.player());
 
         ss << u8"回避    : " << evade << u8"%" << std::endl;
@@ -161,20 +157,20 @@ void dump_player_info()
     ss << std::endl;
 
     ss << u8"------------------------------ 装備品 合計重量"
-       << cnvweight(cdata[cc].sum_of_equipment_weight) << u8" "
-       << cnveqweight(cc) << std::endl;
+       << cnvweight(cdata.player().sum_of_equipment_weight) << u8" "
+       << get_armor_class_name(cdata.player()) << std::endl;
     ss << std::endl;
 
-    for (const auto& body_part : cdata.player().body_parts)
+    for (const auto& equipment_slot : cdata.player().equipment_slots)
     {
-        if (body_part == 0)
+        if (!equipment_slot)
         {
             continue;
         }
 
-        if ((trait(206) != 0 && body_part / 10000 == 2) ||
-            (trait(203) != 0 && body_part / 10000 == 9) ||
-            (trait(205) != 0 && body_part / 10000 == 3))
+        if ((trait(206) != 0 && equipment_slot.type == 2) ||
+            (trait(203) != 0 && equipment_slot.type == 9) ||
+            (trait(205) != 0 && equipment_slot.type == 3))
         {
             continue;
         }
@@ -183,20 +179,19 @@ void dump_player_info()
         std::string item_desc;
         p(0) = 0;
         listmax = 0;
-        if (body_part % 10000 != 0)
+        if (equipment_slot.equipment)
         {
-            const auto item_index = body_part % 10000 - 1;
-            item_name = itemname(inv[item_index]);
-            item_desc = cnvweight(inv[item_index].weight);
-            item_dump_desc(inv[item_index]);
+            item_name = itemname(*equipment_slot.equipment);
+            item_desc = cnvweight(equipment_slot.equipment->weight);
+            item_dump_desc(*equipment_slot.equipment);
         }
         else
         {
             listmax = 0;
         }
 
-        ss << i18n::s.get_enum("core.ui.body_part", body_part / 10000) << u8":"
-           << std::endl;
+        ss << i18n::s.get_enum("core.ui.body_part", equipment_slot.type)
+           << u8":" << std::endl;
         ss << item_name << u8" " << item_desc << std::endl;
         for (int i = 0; i < listmax; ++i)
         {
@@ -208,8 +203,7 @@ void dump_player_info()
     ss << u8"------------------------------ 特徴" << std::endl;
     ss << std::endl;
 
-    tc = 0;
-    trait_load_desc();
+    trait_load_desc(cdata.player());
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
         if (list(0, cnt) < 0)
@@ -228,22 +222,20 @@ void dump_player_info()
     ss << u8"------------------------------ 仲間" << std::endl;
     ss << std::endl;
 
-    for (int idx = 1; idx < 16; ++idx)
+    for (const auto& ally : cdata.allies())
     {
-        const auto& chara = cdata[idx];
-        if (chara.state() == Character::State::empty)
+        if (ally.state() == Character::State::empty)
         {
             continue;
         }
 
-        ss << cdatan(0, idx) << u8" "
-           << i18n::s.get_m("race", cdatan(2, idx), "name") << u8"の"
-           << class_get_name(data::InstanceId{cdatan(3, idx)}) << u8" "
-           << i18n::s.get_enum("core.ui.sex", chara.sex) << u8" "
-           << calcage(idx) << u8"歳" << u8"  " << chara.height << u8"cm"
-           << u8" " << chara.weight << u8"kg" << std::endl;
-        ss << u8"レベル " << chara.level;
-        if (chara.is_married())
+        ss << ally.name << u8" " << the_race_db.get_text(ally.race, "name")
+           << u8"の" << class_get_name(ally.class_) << u8" "
+           << i18n::s.get_enum("core.ui.sex", ally.sex) << u8" "
+           << calc_age(ally) << u8"歳" << u8"  " << ally.height << u8"cm"
+           << u8" " << ally.weight << u8"kg" << std::endl;
+        ss << u8"レベル " << ally.level;
+        if (ally.is_married())
         {
             ss << u8" 婚約済み";
         }

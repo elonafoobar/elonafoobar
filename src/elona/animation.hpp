@@ -8,6 +8,8 @@
 namespace elona
 {
 
+struct Character;
+
 
 
 class AbstractAnimation
@@ -314,13 +316,26 @@ private:
 class MiracleAnimation : public AbstractAnimation
 {
 public:
-    MiracleAnimation()
+    enum class Mode
+    {
+        target_one,
+        target_all,
+    };
+
+
+    MiracleAnimation(Mode mode, const Character& chara)
+        : _mode(mode)
+        , _chara(chara)
     {
     }
 
 
 protected:
     virtual void do_play() override;
+
+private:
+    Mode _mode;
+    const Character& _chara;
 };
 
 
@@ -378,7 +393,7 @@ private:
 
 
 
-void animeblood(int = 0, int = 0, int = 0);
-void animeload(int = 0, int = 0);
+void animeblood(const Character& chara, int animation_type, int element);
+void animeload(int animation_type, const Character& chara);
 
 } // namespace elona

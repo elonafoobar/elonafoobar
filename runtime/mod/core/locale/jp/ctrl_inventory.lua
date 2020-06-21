@@ -57,11 +57,7 @@ ELONA.i18n:add {
             does_not_exist = "そのアイテムは存在しない。",
             inventory_is_full = "バックパックが一杯だ。",
 
-            invalid = "Invalid Item Id found. Item No:{$1}, Id:{$2} has been removed from your inventory.",
-
-            shortcut = {
-               cargo = "荷車の荷物は登録できない。",
-            },
+            invalid = "Invalid Item ID found ({$1}). It has been removed from your inventory.",
          },
 
          examine = {

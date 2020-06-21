@@ -153,7 +153,7 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
 
     auto&& item = *empty_slot;
 
-    item_delete(item);
+    item.clear();
 
     if (slot == -1 && mode != 6 && mode != 9)
     {
@@ -164,7 +164,7 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
             {
                 sx = rnd(map_data.width - 2) + 2;
                 sy = rnd(map_data.height - 2) + 2;
-                if (cell_data.at(sx, sy).item_appearances_actual != 0)
+                if (!cell_data.at(sx, sy).item_info_actual.is_empty())
                 {
                     continue;
                 }
@@ -637,7 +637,7 @@ void determine_item_material(Item& item)
     int mtlv = 0;
     if (cm)
     {
-        mtlv = cdata[rc].level / 15 + 1;
+        mtlv = cdata[cm - 1].level / 15 + 1;
     }
     else
     {
@@ -754,7 +754,7 @@ void change_item_material(Item& item, int material_id)
     }
     apply_item_material(item);
     calc_furniture_value(item);
-    chara_refresh(cc);
+    chara_refresh(cdata.player());
 }
 
 

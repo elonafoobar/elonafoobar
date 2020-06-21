@@ -352,7 +352,7 @@ void BreathAnimation::do_play()
         {
             const auto dx = position.x;
             const auto dy = position.y;
-            if (!fov_los(attacker_pos.x, attacker_pos.y, dx, dy))
+            if (!fov_los(attacker_pos, {dx, dy}))
             {
                 continue;
             }
@@ -449,7 +449,7 @@ void BallAnimation::do_play()
                 anip1 = 48 - (anip - 4) * (anip - 4) * 2;
                 if (type == Type::ball)
                 {
-                    if (fov_los(position.x, position.y, anidx, anidy) == 0)
+                    if (!fov_los(position, {anidx, anidy}))
                     {
                         continue;
                     }
@@ -919,16 +919,16 @@ void MiracleAnimation::do_play()
         {
             continue;
         }
-        if (animode == 0)
+        if (_mode == Mode::target_one)
         {
-            if (cnt.index == cc)
+            if (cnt.index != _chara.index)
             {
                 continue;
             }
         }
-        if (animode >= 100)
+        else
         {
-            if (cnt.index != animode - 100)
+            if (cnt.index == _chara.index)
             {
                 continue;
             }
@@ -1019,13 +1019,13 @@ void MiracleAnimation::do_play()
             {
                 if (cnt / 3 < am)
                 {
-                    if (animode == 0)
-                    {
-                        snd("core.bolt1");
-                    }
-                    if (animode >= 100)
+                    if (_mode == Mode::target_one)
                     {
                         snd("core.heal1");
+                    }
+                    else
+                    {
+                        snd("core.bolt1");
                     }
                 }
             }
@@ -1238,14 +1238,14 @@ void BreakingAnimation::do_play()
 
 
 
-void animeload(int animation_type, int chara_index)
+void animeload(int animation_type, const Character& chara)
 {
     elona_vector1<int> i_at_m133;
     if (mode != 0)
     {
         return;
     }
-    if (is_in_fov(cdata[chara_index]) == 0)
+    if (is_in_fov(chara) == 0)
     {
         return;
     }
@@ -1255,10 +1255,8 @@ void animeload(int animation_type, int chara_index)
     }
     screenupdate = -1;
     update_screen();
-    dx_at_m133 =
-        (cdata[chara_index].position.x - scx) * inf_tiles + inf_screenx;
-    dy_at_m133 =
-        (cdata[chara_index].position.y - scy) * inf_tiles + inf_screeny;
+    dx_at_m133 = (chara.position.x - scx) * inf_tiles + inf_screenx;
+    dy_at_m133 = (chara.position.y - scy) * inf_tiles + inf_screeny;
     gsel(7);
     picload(
         filesystem::dirs::graphic() / (u8"anime"s + animation_type + u8".bmp"),
@@ -1318,9 +1316,9 @@ void animeload(int animation_type, int chara_index)
 
 
 
-void animeblood(int cc, int animation_type, int element)
+void animeblood(const Character& chara, int animation_type, int element)
 {
-    if (is_in_fov(cdata[cc]) == 0)
+    if (is_in_fov(chara) == 0)
         return;
     if (g_config.animation_wait() == 0)
         return;
@@ -1338,8 +1336,8 @@ void animeblood(int cc, int animation_type, int element)
     {
         prepare_item_image(18, 0);
     }
-    dx_at_m133 = (cdata[cc].position.x - scx) * inf_tiles + inf_screenx;
-    dy_at_m133(0) = (cdata[cc].position.y - scy) * inf_tiles + inf_screeny;
+    dx_at_m133 = (chara.position.x - scx) * inf_tiles + inf_screenx;
+    dy_at_m133(0) = (chara.position.y - scy) * inf_tiles + inf_screeny;
     dy_at_m133(1) = 0;
     gsel(4);
     gmode(0);

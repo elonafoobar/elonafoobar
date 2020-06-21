@@ -1,4 +1,17 @@
-# Elona foobar [![AppVeyor Build Status][appveyor-build-status-svg]][appveyor-build-status] [![Travis CI Build Status][travis-build-status-svg]][travis-build-status]
+[![Elona foobar](resources/logo.png)](https://elonafoobar.com)
+
+
+[![Latest Release](https://img.shields.io/github/v/release/elonafoobar/elonafoobar)](https://github.com/elonafoobar/elonafoobar/releases/latest)
+[![License](https://img.shields.io/github/license/elonafoobar/elonafoobar)](LICENSE.txt)
+[![AppVeyor Status](https://ci.appveyor.com/api/projects/status/jqhbtdkx86lool4t/branch/develop?svg=true)](https://ci.appveyor.com/project/ki-foobar/elonafoobar/branch/develop)
+[![Travis CI Status](https://travis-ci.com/elonafoobar/elonafoobar.svg?branch=develop)](https://travis-ci.com/elonafoobar/elonafoobar)
+[![GitHub Actions Status](https://github.com/elonafoobar/elonafoobar/workflows/Build/badge.svg)](https://github.com/elonafoobar/elonafoobar/actions)
+[![Twitter](https://img.shields.io/twitter/follow/ElonaFoobar?style=social)](https://twitter.com/ElonaFoobar)
+[![Discord](https://img.shields.io/discord/520137317206458383)](https://discord.gg/4htdyc2)
+
+
+
+# &lt;Elona foobar&gt;
 
 * One of the Elona variants.
 * It is made of C++.
@@ -7,6 +20,11 @@
 * It features high extensibility through a mod system. [####+]
 * It can be localized in multiple languages. [####+]
 * It works on Windows, Linux and macOS. [####+]
+
+> An Elona variant that has a mod system. With its high extensibility, you can build your own Elona.
+>
+> \~Ylva Fantasy Encyclopedia\~
+
 
 
 # How To Build
@@ -101,27 +119,16 @@ For files under [runtime/graphic](runtime/graphic/) folder of the repository, se
 
 ## Thirdparty libraries
 
-* Catch2: see [src/thirdparty/catch2/LICENSE](src/thirdparty/catch2/LICENSE).
-* hayai: see [src/thirdparty/hayai/LICENSE](src/thirdparty/hayai/LICENSE).
-* sol2: see [src/thirdparty/sol2/LICENSE.txt](src/thirdparty/sol2/LICENSE.txt).
-* ordered_map: see [src/thirdparty/ordered_map/LICENSE](src/thirdparty/ordered_map/LICENSE).
-* boostrandom: see [src/thirdparty/boostrandom/LICENSE_1_0.txt](src/thirdparty/LICENSE_1_0.txt).
-* cmake/FindXXX.cmake: see [cmake/LICENSE](cmake/LICENSE).
-* nativefiledialog: see [src/thirdparty/nfd/LICENSE](src/thirdparty/nfd/LICENSE).
-* cpp-netlib/uri: see [src/thirdparty/uri/LICENSE_1_0.txt](src/thirdparty/uri/LICENSE_1_0.txt).
-* xxHash: see [src/thirdparty/xxHash/LICENSE](src/thirdparty/xxHash/LICENSE).
-* zstr: see [src/thirdparty/zstr/LICENSE](src/thirdparty/zstr/LICENSE).
-* minizip: see [src/thirdparty/minizip/LICENSE](src/thirdparty/minizip/LICENSE).
-* json5: see [src/thirdparty/json5/LICENSE](src/thirdparty/json5/LICENSE).
-
-## Lua libraries
-
-* [inspect.lua](https://github.com/kikito/inspect.lua) (MIT)
-
-
-
-<!-- Badges -->
-[appveyor-build-status]: https://ci.appveyor.com/project/ki-foobar/elonafoobar/branch/develop
-[appveyor-build-status-svg]: https://ci.appveyor.com/api/projects/status/jqhbtdkx86lool4t/branch/develop?svg=true
-[travis-build-status]: https://travis-ci.org/ElonaFoobar/ElonaFoobar?branch=develop
-[travis-build-status-svg]: https://travis-ci.org/ElonaFoobar/ElonaFoobar.svg?branch=develop
+* [Catch2](https://github.com/catchorg/Catch2): see [license file](src/thirdparty/catch2/LICENSE).
+* [hayai](https://github.com/nickbruun/hayai): see [license file](src/thirdparty/hayai/LICENSE).
+* [sol2](https://github.com/ThePhD/sol2): see [license file](src/thirdparty/sol2/LICENSE.txt).
+* [ordered_map](https://github.com/Tessil/ordered-map): see [license file](src/thirdparty/ordered_map/LICENSE).
+* [boostrandom](https://github.com/boostorg/random): see [license file](src/thirdparty/LICENSE_1_0.txt).
+* [cmake/FindXXX.cmake](https://github.com/tcbrindle/sdl2-cmake-scripts): see [license file](cmake/LICENSE).
+* [nativefiledialog](https://github.com/mlabbe/nativefiledialog): see [license file](src/thirdparty/nfd/LICENSE).
+* [cpp-netlib/uri](https://github.com/cpp-netlib/uri): see [license file](src/thirdparty/uri/LICENSE_1_0.txt).
+* [xxHash](https://github.com/Cyan4973/xxHash): see [license file](src/thirdparty/xxHash/LICENSE).
+* [zstr](https://github.com/mateidavid/zstr): see [license file](src/thirdparty/zstr/LICENSE).
+* [minizip](https://github.com/mnoinvaz/minizip): see [license file](src/thirdparty/minizip/LICENSE).
+* [json5](https://github.com/ki-foobar/json5): see [license file](src/thirdparty/json5/LICENSE).
+* [inspect.lua](https://github.com/kikito/inspect.lua): see [license file](runtime/data/script/prelude/inspect.lua).

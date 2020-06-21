@@ -7,6 +7,7 @@
 #include "../thirdparty/json5/json5.hpp"
 #include "../thirdparty/xxHash/xxhashcpp.hpp"
 #include "../util/scope_guard.hpp"
+#include "character.hpp"
 #include "config.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -59,11 +60,13 @@ int last_received_chat_id = -1;
 
 
 
-Headers common_headers_get{{"Connection", "close"},
-                           {"User-Agent", latest_version.user_agent()}};
-Headers common_headers_post{{"Connection", "close"},
-                            {"User-Agent", latest_version.user_agent()},
-                            {"Content-Type", "application/json"}};
+Headers common_headers_get{
+    {"Connection", "close"},
+    {"User-Agent", latest_version.user_agent()}};
+Headers common_headers_post{
+    {"Connection", "close"},
+    {"User-Agent", latest_version.user_agent()},
+    {"Content-Type", "application/json"}};
 
 
 
@@ -104,10 +107,11 @@ void send_chat(ChatKind kind, const std::string& message)
     payload["kind"] = static_cast<json5::integer_type>(kind);
     payload["message"] = replace_f_word(message);
 
-    Request req{Verb::POST,
-                chat_url,
-                common_headers_post,
-                Body{json5::stringify(payload)}};
+    Request req{
+        Verb::POST,
+        chat_url,
+        common_headers_post,
+        Body{json5::stringify(payload)}};
     req.send(
         [](const auto& response) {
             if (response.status / 100 != 2)
@@ -142,12 +146,12 @@ std::string get_pc_name()
 {
     if (config_get_boolean("core.net.hide_your_name"))
     {
-        const auto seed = xxhash::xxhash32(cdatan(0, 0));
+        const auto seed = xxhash::xxhash32(cdata.player().name);
         return eval_with_random_seed(seed, []() { return random_name(); });
     }
     else
     {
-        return cdatan(0, 0);
+        return cdata.player().name;
     }
 }
 
@@ -157,13 +161,13 @@ std::string get_pc_alias()
 {
     if (config_get_boolean("core.net.hide_your_alias"))
     {
-        const auto seed = xxhash::xxhash32(cdatan(1, 0));
+        const auto seed = xxhash::xxhash32(cdata.player().alias);
         return eval_with_random_seed(
             seed, []() { return random_title(RandomTitleType::character); });
     }
     else
     {
-        return cdatan(1, 0);
+        return cdata.player().alias;
     }
 }
 
@@ -460,10 +464,11 @@ void net_register_your_name()
     json5::value::object_type payload;
     payload["name"] = get_pc_alias() + i18n::space_if_needed() + get_pc_name();
 
-    Request req{Verb::POST,
-                poll_url,
-                common_headers_post,
-                Body{json5::stringify(payload)}};
+    Request req{
+        Verb::POST,
+        poll_url,
+        common_headers_post,
+        Body{json5::stringify(payload)}};
     req.send(
         [](const auto& response) {
             if (response.status / 100 != 2)
@@ -496,10 +501,11 @@ void net_send_vote(int poll_id)
     json5::value::object_type payload;
     payload["poll"] = static_cast<json5::integer_type>(poll_id);
 
-    Request req{Verb::POST,
-                vote_url,
-                common_headers_post,
-                Body{json5::stringify(payload)}};
+    Request req{
+        Verb::POST,
+        vote_url,
+        common_headers_post,
+        Body{json5::stringify(payload)}};
     req.send(
         [](const auto& response) {
             if (response.status / 100 != 2)

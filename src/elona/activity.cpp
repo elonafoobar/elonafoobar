@@ -189,7 +189,7 @@ void search_material_spot()
             s = i18n::s.get("core.activity.material.harvesting.no_more");
         }
         txt(s);
-        cdata[cc].activity.finish();
+        cdata.player().activity.finish();
         cell_data.at(cdata.player().position.x, cdata.player().position.y)
             .feats = 0;
     }
@@ -202,7 +202,7 @@ int calc_performance_tips(const Character& performer, const Character& audience)
     // Quality factor
     const auto Q = performer.quality_of_performance;
     // Instrument factor
-    const auto I = inv[performer.activity.item].param1;
+    const auto I = performer.activity.item->param1;
 
     const auto max = sdata(183, performer.index) * 100;
 
@@ -250,7 +250,7 @@ void activity_perform_generate_item(
     cell_check(x, y);
     if (cellaccess == 0)
         return;
-    if (!fov_los(audience.position.x, audience.position.y, x, y))
+    if (!fov_los(audience.position, {x, y}))
         return;
 
     if (enchantment_find(instrument, 49))
@@ -324,7 +324,7 @@ std::pair<bool, int> activity_perform_proc_audience(
     Character& audience)
 {
     const auto performer_skill = sdata(183, performer.index);
-    const auto& instrument = inv[performer.activity.item];
+    const auto& instrument = *performer.activity.item;
 
     if (audience.state() != Character::State::alive)
     {
@@ -365,7 +365,6 @@ std::pair<bool, int> activity_perform_proc_audience(
     {
         return std::make_pair(false, 0); // TODO: unreachable?
     }
-    tc = audience.index;
     if (audience.index == performer.index)
     {
         return std::make_pair(false, 0);
@@ -489,7 +488,7 @@ std::pair<bool, int> activity_perform_proc_audience(
 
 
 
-void activity_perform_start(Character& performer, const Item& instrument)
+void activity_perform_start(Character& performer, Item& instrument)
 {
     if (is_in_fov(performer))
     {
@@ -497,7 +496,7 @@ void activity_perform_start(Character& performer, const Item& instrument)
     }
     performer.activity.type = Activity::Type::perform;
     performer.activity.turn = 61;
-    performer.activity.item = instrument.index;
+    performer.activity.item = ItemRef::from_ref(instrument);
     performer.quality_of_performance = 40;
     performer.tip_gold = 0;
     if (performer.index == 0)
@@ -592,7 +591,7 @@ void activity_perform_end(Character& performer)
     if (performer.quality_of_performance > 40)
     {
         performer.quality_of_performance = performer.quality_of_performance *
-            (100 + inv[performer.activity.item].param1 / 5) / 100;
+            (100 + performer.activity.item->param1 / 5) / 100;
     }
     if (performer.tip_gold != 0)
     {
@@ -619,7 +618,7 @@ void activity_eating_start(Character& eater, Item& food)
 {
     eater.activity.type = Activity::Type::eat;
     eater.activity.turn = 8;
-    eater.activity.item = food.index;
+    eater.activity.item = ItemRef::from_ref(food);
     if (is_in_fov(eater))
     {
         snd("core.eat1");
@@ -643,8 +642,7 @@ void activity_eating_start(Character& eater, Item& food)
 void activity_others_start(Character& doer, optional_ref<Item> activity_item)
 {
     doer.activity.type = Activity::Type::others;
-    doer.activity.item = activity_item ? activity_item->index : -1;
-    doer.activity_target = tc;
+    doer.activity.item = ItemRef::from_opt(activity_item);
 
     switch (game_data.activity_about_to_start)
     {
@@ -703,11 +701,7 @@ void activity_others_start(Character& doer, optional_ref<Item> activity_item)
         {
             txt(i18n::s.get(
                 "core.activity.study.start.studying",
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db.get_id_from_legacy(activity_item->param1)
-                        ->get(),
-                    "name")));
+                the_ability_db.get_text(activity_item->param1, "name")));
         }
         else
         {
@@ -1018,15 +1012,14 @@ void activity_others_end_steal(Item& steal_target)
     steal_target.is_quest_target() = false;
     if (steal_target.body_part != 0)
     {
-        tc = inv_getowner(steal_target);
-        if (tc != -1)
+        const auto item_owner = inv_getowner(steal_target);
+        if (item_owner != -1)
         {
             p = steal_target.body_part;
-            cdata[tc].body_parts[p - 100] =
-                cdata[tc].body_parts[p - 100] / 10000 * 10000;
+            cdata[item_owner].equipment_slots[p - 100].unequip();
         }
         steal_target.body_part = 0;
-        chara_refresh(tc);
+        chara_refresh(cdata[item_owner]);
     }
     auto& stolen_item = *slot;
     item_copy(steal_target, stolen_item);
@@ -1104,7 +1097,7 @@ void activity_others_end_harvest(Item& crop)
     txt(i18n::s.get(
         "core.activity.harvest.finish", crop, cnvweight(crop.weight)));
     in = crop.number();
-    pick_up_item(crop);
+    pick_up_item(cdata.player().index, crop, none);
 }
 
 
@@ -1115,10 +1108,7 @@ void activity_others_end_study(const Item& item)
     {
         txt(i18n::s.get(
             "core.activity.study.finish.studying",
-            i18n::s.get_m(
-                "ability",
-                the_ability_db.get_id_from_legacy(item.param1)->get(),
-                "name")));
+            the_ability_db.get_text(item.param1, "name")));
     }
     else
     {
@@ -1187,7 +1177,7 @@ void rowact_item(const Item& item)
         if (chara.activity.type == Activity::Type::eat ||
             chara.activity.type == Activity::Type::read)
         {
-            if (chara.activity.item == item.index)
+            if (chara.activity.item == item)
             {
                 chara.activity.finish();
                 txt(i18n::s.get("core.activity.cancel.item", chara));
@@ -1238,42 +1228,48 @@ void activity_handle_damage(Character& chara)
 
 optional<TurnResult> activity_proc(Character& chara)
 {
-    const auto activity_item_index = chara.activity.item;
     --chara.activity.turn;
+
+    const auto auto_turn = [&](int delay) {
+        if (chara.index == 0)
+        {
+            elona::auto_turn(delay);
+        }
+    };
 
     switch (chara.activity.type)
     {
     case Activity::Type::fish:
         auto_turn(g_config.animation_wait() * 2);
-        spot_fishing(
-            rowactre(0) == 0 ? optional_ref<Item>{inv[activity_item_index]}
-                             : optional_ref<Item>{});
+        spot_fishing(chara, chara.activity.item.as_opt());
         break;
     case Activity::Type::dig_wall:
         auto_turn(g_config.animation_wait() * 0.75);
-        spot_mining_or_wall();
+        spot_mining_or_wall(chara);
         break;
     case Activity::Type::search_material:
         auto_turn(g_config.animation_wait() * 0.75);
-        spot_material();
+        spot_material(chara);
         break;
     case Activity::Type::dig_ground:
         auto_turn(g_config.animation_wait() * 0.75);
-        spot_digging();
+        spot_digging(chara);
         break;
     case Activity::Type::sleep:
         auto_turn(g_config.animation_wait() / 4);
-        do_rest();
+        do_rest(chara);
         break;
     case Activity::Type::eat:
+        assert(chara.activity.item);
         auto_turn(g_config.animation_wait() * 5);
-        return do_eat_command(inv[activity_item_index]);
+        return do_eat_command(chara, *chara.activity.item);
     case Activity::Type::read:
+        assert(chara.activity.item);
         auto_turn(g_config.animation_wait() * 1.25);
-        return do_read_command(inv[activity_item_index]);
+        return do_read_command(chara, *chara.activity.item);
     case Activity::Type::sex:
         auto_turn(g_config.animation_wait() * 2.5);
-        activity_sex();
+        activity_sex(chara, none);
         break;
     case Activity::Type::others:
         switch (game_data.activity_about_to_start)
@@ -1283,23 +1279,20 @@ optional<TurnResult> activity_proc(Character& chara)
         case 105: auto_turn(g_config.animation_wait() * 2.5); break;
         default: auto_turn(g_config.animation_wait()); break;
         }
-        activity_others(
-            chara,
-            activity_item_index != -1
-                ? optional_ref<Item>{inv[activity_item_index]}
-                : optional_ref<Item>{});
+        activity_others(chara, chara.activity.item.as_opt());
         break;
     case Activity::Type::blend:
         auto_turn(g_config.animation_wait());
         activity_blending();
         break;
     case Activity::Type::perform:
+        assert(chara.activity.item);
         auto_turn(g_config.animation_wait() * 2);
-        activity_perform(chara, inv[activity_item_index]);
+        activity_perform(chara, *chara.activity.item);
         break;
     case Activity::Type::travel:
-        map_global_proc_travel_events();
-        return proc_movement_event();
+        map_global_proc_travel_events(chara);
+        return proc_movement_event(chara);
     default: break;
     }
 
@@ -1322,7 +1315,7 @@ optional<TurnResult> activity_proc(Character& chara)
 
 
 
-void activity_perform(Character& performer, const Item& instrument)
+void activity_perform(Character& performer, Item& instrument)
 {
     if (!performer.activity)
     {
@@ -1340,62 +1333,64 @@ void activity_perform(Character& performer, const Item& instrument)
 
 
 
-void activity_sex()
+void activity_sex(Character& chara_a, optional_ref<Character> chara_b)
 {
     int sexhost = 0;
-    if (!cdata[cc].activity)
+    if (!chara_a.activity)
     {
-        cdata[cc].activity.type = Activity::Type::sex;
-        cdata[cc].activity.turn = 25 + rnd(10);
-        cdata[cc].activity_target = tc;
-        cdata[tc].activity.type = Activity::Type::sex;
-        cdata[tc].activity.turn = cdata[cc].activity.turn * 2;
-        cdata[tc].activity_target = cc + 10000;
-        if (is_in_fov(cdata[cc]))
+        assert(chara_b);
+        chara_a.activity.type = Activity::Type::sex;
+        chara_a.activity.turn = 25 + rnd(10);
+        chara_a.activity_target = chara_b->index;
+        chara_b->activity.type = Activity::Type::sex;
+        chara_b->activity.turn = chara_a.activity.turn * 2;
+        chara_b->activity_target = chara_a.index + 10000;
+        if (is_in_fov(chara_a))
         {
-            txt(i18n::s.get("core.activity.sex.take_clothes_off", cdata[cc]));
+            txt(i18n::s.get("core.activity.sex.take_clothes_off", chara_a));
         }
         return;
     }
+
     sexhost = 1;
-    tc = cdata[cc].activity_target;
-    if (tc >= 10000)
+    auto target_index = chara_a.activity_target;
+    if (target_index >= 10000)
     {
-        tc -= 10000;
+        target_index -= 10000;
         sexhost = 0;
     }
-    if (cdata[tc].state() != Character::State::alive ||
-        cdata[tc].activity.type != Activity::Type::sex)
+    if (cdata[target_index].state() != Character::State::alive ||
+        cdata[target_index].activity.type != Activity::Type::sex)
     {
-        if (is_in_fov(cdata[cc]))
+        if (is_in_fov(chara_a))
         {
             txt(i18n::s.get(
                 "core.activity.sex.spare_life",
-                i18n::s.get_enum("core.ui.sex2", cdata[tc].sex),
-                cdata[tc]));
+                i18n::s.get_enum("core.ui.sex2", cdata[target_index].sex),
+                cdata[target_index]));
         }
-        cdata[cc].activity.finish();
-        cdata[tc].activity.finish();
+        chara_a.activity.finish();
+        cdata[target_index].activity.finish();
         return;
     }
-    if (cc == 0)
+    if (chara_a.index == 0)
     {
         if (!action_sp(cdata.player(), 1 + rnd(2)))
         {
             txt(i18n::s.get("core.magic.common.too_exhausted"));
-            cdata[cc].activity.finish();
-            cdata[tc].activity.finish();
+            chara_a.activity.finish();
+            cdata[target_index].activity.finish();
             return;
         }
     }
-    cdata[cc].emotion_icon = 317;
-    if (cdata[cc].activity.turn > 0)
+    chara_a.emotion_icon = 317;
+    if (chara_a.activity.turn > 0)
     {
         if (sexhost == 0)
         {
-            if (cdata[cc].activity.turn % 5 == 0)
+            if (chara_a.activity.turn % 5 == 0)
             {
-                if (is_in_fov(cdata[cc]))
+                if (is_in_fov(chara_a))
                 {
                     txt(i18n::s.get("core.activity.sex.dialog"),
                         Message::color{ColorIndex::cyan});
@@ -1406,7 +1401,7 @@ void activity_sex()
     }
     if (sexhost == 0)
     {
-        cdata[cc].activity.finish();
+        chara_a.activity.finish();
         return;
     }
     for (int cnt = 0; cnt < 2; ++cnt)
@@ -1414,13 +1409,13 @@ void activity_sex()
         int c{};
         if (cnt == 0)
         {
-            c = cc;
+            c = chara_a.index;
         }
         else
         {
-            c = tc;
+            c = target_index;
         }
-        cdata[cc].drunk = 0;
+        chara_a.drunk = 0;
         if (cnt == 1)
         {
             if (rnd(3) == 0)
@@ -1442,62 +1437,64 @@ void activity_sex()
         }
         chara_gain_skill_exp(cdata[c], 17, 250 + (c >= 57) * 1000);
     }
-    int sexvalue = sdata(17, cc) * (50 + rnd(50)) + 100;
+    int sexvalue = sdata(17, chara_a.index) * (50 + rnd(50)) + 100;
 
     std::string dialog_head;
     std::string dialog_tail;
     std::string dialog_after;
 
-    if (is_in_fov(cdata[cc]))
+    if (is_in_fov(chara_a))
     {
-        dialog_head = i18n::s.get("core.activity.sex.after_dialog", cdata[tc]);
+        dialog_head =
+            i18n::s.get("core.activity.sex.after_dialog", cdata[target_index]);
         Message::instance().txtef(ColorIndex::yellow_green);
     }
-    if (tc != 0)
+    if (target_index != 0)
     {
-        if (cdata[tc].gold >= sexvalue)
+        if (cdata[target_index].gold >= sexvalue)
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(chara_a))
             {
-                dialog_tail = i18n::s.get("core.activity.sex.take", cdata[tc]);
+                dialog_tail =
+                    i18n::s.get("core.activity.sex.take", cdata[target_index]);
             }
         }
         else
         {
-            if (is_in_fov(cdata[cc]))
+            if (is_in_fov(chara_a))
             {
-                dialog_tail =
-                    i18n::s.get("core.activity.sex.take_all_i_have", cdata[tc]);
+                dialog_tail = i18n::s.get(
+                    "core.activity.sex.take_all_i_have", cdata[target_index]);
                 if (rnd(3) == 0)
                 {
-                    if (cc != 0)
+                    if (chara_a.index != 0)
                     {
                         dialog_after = i18n::s.get(
-                            "core.activity.sex.gets_furious", cdata[cc]);
-                        cdata[cc].enemy_id = tc;
-                        cdata[cc].hate = 20;
+                            "core.activity.sex.gets_furious", chara_a);
+                        chara_a.enemy_id = target_index;
+                        chara_a.hate = 20;
                     }
                 }
             }
-            if (cdata[tc].gold <= 0)
+            if (cdata[target_index].gold <= 0)
             {
-                cdata[tc].gold = 1;
+                cdata[target_index].gold = 1;
             }
-            sexvalue = cdata[tc].gold;
+            sexvalue = cdata[target_index].gold;
         }
-        cdata[tc].gold -= sexvalue;
-        if (cc == 0)
+        cdata[target_index].gold -= sexvalue;
+        if (chara_a.index == 0)
         {
-            chara_modify_impression(cdata[tc], 5);
+            chara_modify_impression(cdata[target_index], 5);
             flt();
-            itemcreate_extra_inv(54, cdata[cc].position, sexvalue);
+            itemcreate_extra_inv(54, chara_a.position, sexvalue);
             dialog_after +=
                 i18n::s.get("core.common.something_is_put_on_the_ground");
             modify_karma(cdata.player(), -1);
         }
         else
         {
-            earn_gold(cdata[cc], sexvalue);
+            earn_gold(chara_a, sexvalue);
         }
     }
     if (!dialog_head.empty() || !dialog_tail.empty() || !dialog_after.empty())
@@ -1505,8 +1502,8 @@ void activity_sex()
         txt(i18n::s.get("core.activity.sex.format", dialog_head, dialog_tail) +
             dialog_after);
     }
-    cdata[cc].activity.finish();
-    cdata[tc].activity.finish();
+    chara_a.activity.finish();
+    cdata[target_index].activity.finish();
 }
 
 
@@ -1544,20 +1541,20 @@ void activity_eating_finish(Character& eater, Item& food)
     }
     if (chara_unequip(food))
     {
-        chara_refresh(eater.index);
+        chara_refresh(eater);
     }
 
     food.modify_number(-1);
 
     if (eater.index == 0)
     {
-        show_eating_message();
+        show_eating_message(eater);
     }
     else
     {
-        if (food.index == eater.ai_item)
+        if (food == eater.ai_item)
         {
-            eater.ai_item = 0;
+            eater.ai_item = ItemRef::null();
         }
         if (eater.was_passed_item_by_you_just_now())
         {
@@ -1577,7 +1574,7 @@ void activity_eating_finish(Character& eater, Item& food)
                         modify_karma(cdata.player(), -1);
                     }
                 }
-                chara_modify_impression(cdata[tc], -25);
+                chara_modify_impression(eater, -25);
                 return;
             }
         }
@@ -1615,7 +1612,6 @@ void activity_others(Character& doer, optional_ref<Item> activity_item)
     }
     else
     {
-        tc = doer.activity_target;
         if (doer.activity.turn > 0)
         {
             activity_others_doing(doer, activity_item);
@@ -1629,20 +1625,20 @@ void activity_others(Character& doer, optional_ref<Item> activity_item)
 
 
 
-void spot_fishing(optional_ref<Item> rod)
+void spot_fishing(Character& fisher, optional_ref<Item> rod)
 {
     static int fishstat;
 
-    if (!cdata[cc].activity)
+    if (!fisher.activity)
     {
         txt(i18n::s.get("core.activity.fishing.start"));
         snd("core.fish_cast");
         if (rowactre == 0)
         {
-            cdata[cc].activity.item = rod->index;
+            fisher.activity.item = ItemRef::from_ref(*rod);
         }
-        cdata[cc].activity.type = Activity::Type::fish;
-        cdata[cc].activity.turn = 100;
+        fisher.activity.type = Activity::Type::fish;
+        fisher.activity.turn = 100;
         racount = 0;
         fishstat = 0;
         gsel(9);
@@ -1655,12 +1651,12 @@ void spot_fishing(optional_ref<Item> rod)
         search_material_spot();
         return;
     }
-    if (cdata[cc].activity.turn > 0)
+    if (fisher.activity.turn > 0)
     {
         if (rnd(5) == 0)
         {
             fishstat = 1;
-            fish = fish_select_at_random(inv[cdata[cc].activity.item].param4);
+            fish = fish_select_at_random(fisher.activity.item->param4);
         }
         if (fishstat == 1)
         {
@@ -1767,29 +1763,29 @@ void spot_fishing(optional_ref<Item> rod)
             }
             sound_pick_up();
             fishanime = 0;
-            cdata[cc].activity.finish();
+            fisher.activity.finish();
             fish_get(fish);
             chara_gain_exp_fishing(cdata.player());
             cdata.player().emotion_icon = 306;
         }
         if (rnd(10) == 0)
         {
-            damage_sp(cdata[cc], 1);
+            damage_sp(fisher, 1);
         }
         return;
     }
     txt(i18n::s.get("core.activity.fishing.fail"));
-    cdata[cc].activity.finish();
+    fisher.activity.finish();
 }
 
 
 
-void spot_material()
+void spot_material(Character& chara)
 {
-    if (!cdata[cc].activity)
+    if (!chara.activity)
     {
-        cdata[cc].activity.type = Activity::Type::search_material;
-        cdata[cc].activity.turn = 40;
+        chara.activity.type = Activity::Type::search_material;
+        chara.activity.turn = 40;
         txt(i18n::s.get("core.activity.material.start"));
         racount = 0;
         return;
@@ -1799,17 +1795,17 @@ void spot_material()
         search_material_spot();
         return;
     }
-    cdata[cc].activity.finish();
+    chara.activity.finish();
 }
 
 
 
-void spot_digging()
+void spot_digging(Character& chara)
 {
-    if (!cdata[cc].activity)
+    if (!chara.activity)
     {
-        cdata[cc].activity.type = Activity::Type::dig_ground;
-        cdata[cc].activity.turn = 20;
+        chara.activity.type = Activity::Type::dig_ground;
+        chara.activity.turn = 20;
         if (rowactre == 0)
         {
             txt(i18n::s.get("core.activity.dig_spot.start.global"));
@@ -1826,9 +1822,9 @@ void spot_digging()
         search_material_spot();
         return;
     }
-    if (cdata[cc].activity.turn > 0)
+    if (chara.activity.turn > 0)
     {
-        if (cdata[cc].turn % 5 == 0)
+        if (chara.turn % 5 == 0)
         {
             txt(i18n::s.get("core.activity.dig_spot.sound"),
                 Message::color{ColorIndex::blue});
@@ -1840,10 +1836,6 @@ void spot_digging()
     {
         for (auto&& item : inv.pc())
         {
-            if (item.number() == 0)
-            {
-                continue;
-            }
             if (item.id == ItemId::treasure_map && item.param1 != 0 &&
                 item.param1 == cdata.player().position.x &&
                 item.param2 == cdata.player().position.y)
@@ -1879,19 +1871,19 @@ void spot_digging()
         }
     }
     spillfrag(refx, refy, 1);
-    cdata[cc].activity.finish();
+    chara.activity.finish();
 }
 
 
 
-void spot_mining_or_wall()
+void spot_mining_or_wall(Character& chara)
 {
     static int countdig{};
 
-    if (!cdata[cc].activity)
+    if (!chara.activity)
     {
-        cdata[cc].activity.type = Activity::Type::dig_wall;
-        cdata[cc].activity.turn = 40;
+        chara.activity.type = Activity::Type::dig_wall;
+        chara.activity.turn = 40;
         if (rowactre == 0)
         {
             txt(i18n::s.get("core.activity.dig_mining.start.wall"));
@@ -1913,21 +1905,22 @@ void spot_mining_or_wall()
         search_material_spot();
         return;
     }
-    if (cdata[cc].activity.turn > 0)
+    if (chara.activity.turn > 0)
     {
         if (rnd(5) == 0)
         {
-            damage_sp(cdata[cc], 1);
+            damage_sp(chara, 1);
         }
         ++countdig;
         f = 0;
         if (chip_data.for_cell(refx, refy).kind == 6)
         {
-            if (rnd(12000) < sdata(10, cc) + sdata(163, cc) * 10)
+            if (rnd(12000) <
+                sdata(10, chara.index) + sdata(163, chara.index) * 10)
             {
                 f = 1;
             }
-            p = 30 - sdata(163, cc) / 2;
+            p = 30 - sdata(163, chara.index) / 2;
             if (p > 0)
             {
                 if (countdig <= p)
@@ -1938,11 +1931,12 @@ void spot_mining_or_wall()
         }
         else
         {
-            if (rnd(1500) < sdata(10, cc) + sdata(163, cc) * 10)
+            if (rnd(1500) <
+                sdata(10, chara.index) + sdata(163, chara.index) * 10)
             {
                 f = 1;
             }
-            p = 20 - sdata(163, cc) / 2;
+            p = 20 - sdata(163, chara.index) / 2;
             if (p > 0)
             {
                 if (countdig <= p)
@@ -2006,9 +2000,9 @@ void spot_mining_or_wall()
                 txt(i18n::s.get("core.activity.dig_mining.finish.find"));
             }
             chara_gain_exp_digging(cdata.player());
-            cdata[cc].activity.finish();
+            chara.activity.finish();
         }
-        else if (cdata[cc].turn % 5 == 0)
+        else if (chara.turn % 5 == 0)
         {
             txt(i18n::s.get("core.activity.dig_spot.sound"),
                 Message::color{ColorIndex::blue});
@@ -2016,7 +2010,7 @@ void spot_mining_or_wall()
         return;
     }
     txt(i18n::s.get("core.activity.dig_mining.fail"));
-    cdata[cc].activity.finish();
+    chara.activity.finish();
 }
 
 
@@ -2032,7 +2026,7 @@ TurnResult do_dig_after_sp_check(Character& chara)
     rowactre = 0;
     digx = tlocx;
     digy = tlocy;
-    spot_mining_or_wall();
+    spot_mining_or_wall(chara);
     return TurnResult::turn_end;
 }
 
@@ -2100,41 +2094,39 @@ void sleep_start(optional_ref<Item> bed)
         await(g_config.animation_wait() * 10);
     }
     gmode(2);
-    cc = 0;
     for (int cnt = 0; cnt < ELONA_MAX_PARTY_CHARACTERS; ++cnt)
     {
-        tc = cnt;
-        cdata[tc].wet = 0;
-        cdata[tc].poisoned = 0;
-        cdata[tc].sleep = 0;
-        cdata[tc].confused = 0;
-        cdata[tc].blind = 0;
-        cdata[tc].paralyzed = 0;
-        cdata[tc].dimmed = 0;
-        cdata[tc].drunk = 0;
-        cdata[tc].bleeding = 0;
+        cdata[cnt].wet = 0;
+        cdata[cnt].poisoned = 0;
+        cdata[cnt].sleep = 0;
+        cdata[cnt].confused = 0;
+        cdata[cnt].blind = 0;
+        cdata[cnt].paralyzed = 0;
+        cdata[cnt].dimmed = 0;
+        cdata[cnt].drunk = 0;
+        cdata[cnt].bleeding = 0;
         game_data.continuous_active_hours = 0;
-        cdata[tc].hp = cdata[tc].max_hp;
-        cdata[tc].mp = cdata[tc].max_mp;
-        cdata[tc].sp = cdata[tc].max_sp;
-        status_ailment_heal(cdata[tc], StatusAilment::sick, 7 + rnd(7));
-        if (cdata[tc].has_anorexia())
+        cdata[cnt].hp = cdata[cnt].max_hp;
+        cdata[cnt].mp = cdata[cnt].max_mp;
+        cdata[cnt].sp = cdata[cnt].max_sp;
+        status_ailment_heal(cdata[cnt], StatusAilment::sick, 7 + rnd(7));
+        if (cdata[cnt].has_anorexia())
         {
-            cdata[tc].anorexia_count -= rnd(6);
+            cdata[cnt].anorexia_count -= rnd(6);
         }
         else
         {
-            cdata[tc].anorexia_count -= rnd(3);
+            cdata[cnt].anorexia_count -= rnd(3);
         }
-        if (cdata[tc].anorexia_count < 0)
+        if (cdata[cnt].anorexia_count < 0)
         {
-            cure_anorexia(cdata[tc]);
-            cdata[tc].anorexia_count = 0;
+            cure_anorexia(cdata[cnt]);
+            cdata[cnt].anorexia_count = 0;
         }
-        heal_insanity(cdata[tc], 10);
-        if (cdata[tc].has_lay_hand())
+        heal_insanity(cdata[cnt], 10);
+        if (cdata[cnt].has_lay_hand())
         {
-            cdata[tc].is_lay_hand_available() = true;
+            cdata[cnt].is_lay_hand_available() = true;
         }
     }
     mode = 9;
@@ -2150,30 +2142,31 @@ void sleep_start(optional_ref<Item> bed)
         }
         game_data.continuous_active_hours = 0;
         game_data.date.minute = 0;
-        cc = 0;
         draw_sleep_background_frame();
         await(g_config.animation_wait() * 25);
     }
     if (game_data.character_and_status_for_gene != 0)
     {
-        tc = -1;
-        for (int cnt = 1; cnt < 16; ++cnt)
+        auto gene_chara_index = -1;
+        for (const auto& ally : cdata.allies())
         {
-            if (cdata[cnt].has_made_gene() == 1)
+            if (ally.has_made_gene())
             {
-                if (cdata[cnt].state() == Character::State::alive)
+                if (ally.state() == Character::State::alive)
                 {
-                    tc = cnt;
+                    gene_chara_index = ally.index;
                     break;
                 }
             }
         }
-        if (tc != -1)
+        if (gene_chara_index != -1)
         {
-            cdata[tc].has_made_gene() = false;
+            cdata[gene_chara_index].has_made_gene() = false;
             show_random_event_window(
                 i18n::s.get("core.activity.sleep.new_gene.title"),
-                i18n::s.get("core.activity.sleep.new_gene.text", cdata[tc]),
+                i18n::s.get(
+                    "core.activity.sleep.new_gene.text",
+                    cdata[gene_chara_index]),
                 {i18n::s.get_enum("core.activity.sleep.new_gene.choices", 0)},
                 u8"bg_re14");
             save_gene();
@@ -2183,7 +2176,7 @@ void sleep_start(optional_ref<Item> bed)
     game_data.character_and_status_for_gene = 0;
     mode = 0;
     wake_up();
-    cdata[cc].nutrition -= 1500 / (trait(158) + 1);
+    cdata.player().nutrition -= 1500 / (trait(158) + 1);
     txt(i18n::s.get("core.activity.sleep.slept_for", timeslept),
         Message::color{ColorIndex::green});
 
@@ -2246,10 +2239,10 @@ void sleep_start(optional_ref<Item> bed)
 
 
 
-void start_stealing(Item& steal_target)
+void start_stealing(Character& thief, Item& steal_target)
 {
     game_data.activity_about_to_start = 105;
-    activity_others(cdata[cc], steal_target);
+    activity_others(thief, steal_target);
 }
 
 } // namespace elona

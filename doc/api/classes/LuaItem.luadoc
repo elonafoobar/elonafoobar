@@ -75,5 +75,53 @@ function change_material(material_id) end
 --- [RW] The identify state of this item.
 --  @tfield IdentifyState identify_state
 
+--- [RW] The color ID of the item.
+--  @tfield ColorIndex color
+
+--- [RW] The flag if the item is acidproof.
+--  @tfield boolean is_acidproof
+
+--- [RW] The flag if the item is fireproof.
+--  @tfield boolean is_fireproof
+
+--- [RW] The flag if the item has charge.
+--  @tfield boolean has_charge
+
+--- [RW] The flag if the item is precious.
+--  @tfield boolean is_precious
+
+--- [RW] The flag if the item is aphrodisiac.
+--  @tfield boolean is_aphrodisiac
+
+--- [RW] The flag if the item has cooldown time.
+--  @tfield boolean has_cooldown_time
+
+--- [RW] The flag if the item is blessed by Ehekatl.
+--  @tfield boolean is_blessed_by_ehekatl
+
+--- [RW] The flag if the item is stolen.
+--  @tfield boolean is_stolen
+
+--- [RW] The flag if the item is alive.
+--  @tfield boolean is_alive
+
+--- [RW] The flag if the item is quest target.
+--  @tfield boolean is_quest_target
+
+--- [RW] The flag if the item is marked as no-drop.
+--  @tfield boolean is_marked_as_no_drop
+
+--- [RW] The flag if the item is poisoned.
+--  @tfield boolean is_poisoned
+
+--- [RW] The flag if the item is eternal force.
+--  @tfield boolean is_eternal_force
+
+--- [RW] The flag if the item is showroom only.
+--  @tfield boolean is_showroom_only
+
+--- [RW] The flag if the item is handmade.
+--  @tfield boolean is_handmade
+
 --- [R] The prototype data of the character.
 --  @tfield table prototype

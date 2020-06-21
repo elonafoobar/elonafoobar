@@ -6,6 +6,7 @@
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "data/types/type_blending_recipe.hpp"
 #include "data/types/type_item.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -16,7 +17,7 @@
 #include "input_prompt.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
-#include "macro.hpp"
+#include "lua_env/interface.hpp"
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "random.hpp"
@@ -34,13 +35,301 @@ namespace
 {
 
 int step;
-elona_vector2<int> rpdata;
-elona_vector2<std::string> rfnameorg;
-elona_vector1<std::string> rpdatan;
 elona_vector1<int> rpref;
 int rpid = 0;
-int rpmode = 0;
 elona_vector1<int> rppage;
+
+
+
+int dist(const Position& p1, const Position& p2)
+{
+    return elona::dist(p1.x, p1.y, p2.x, p2.y);
+}
+
+
+
+std::string get_recipe_material_name(int recipe_id, int step)
+{
+    return lua::call_with_result<std::string>(
+        "core.Impl.Blending.get_material_name",
+        "<error>",
+        the_blending_recipe_db.get_id_from_legacy(recipe_id)->get(),
+        step + 1);
+}
+
+
+
+int get_number_of_materials(int recipe_id)
+{
+    return the_blending_recipe_db.ensure(recipe_id).number_of_materials;
+}
+
+
+
+std::string success_rate_to_string(int success_rate)
+{
+    if (success_rate == 100)
+        return i18n::s.get("core.blending.success_rate.perfect");
+    else if (success_rate >= 90)
+        return i18n::s.get("core.blending.success_rate.piece_of_cake");
+    else if (success_rate >= 80)
+        return i18n::s.get("core.blending.success_rate.very_likely");
+    else if (success_rate >= 70)
+        return i18n::s.get("core.blending.success_rate.no_problem");
+    else if (success_rate >= 60)
+        return i18n::s.get("core.blending.success_rate.probably_ok");
+    else if (success_rate >= 50)
+        return i18n::s.get("core.blending.success_rate.maybe");
+    else if (success_rate >= 40)
+        return i18n::s.get("core.blending.success_rate.bad");
+    else if (success_rate >= 30)
+        return i18n::s.get("core.blending.success_rate.very_bad");
+    else if (success_rate >= 20)
+        return i18n::s.get("core.blending.success_rate.almost_impossible");
+    else
+        return i18n::s.get("core.blending.success_rate.impossible");
+}
+
+
+
+int calc_success_rate(
+    int recipe_id,
+    int number_of_ingredients,
+    int current_step)
+{
+    int factor = 100;
+    if (number_of_ingredients > 0)
+    {
+        for (int cnt = 0; cnt < number_of_ingredients; ++cnt)
+        {
+            if (rpref(10 + cnt * 2) == -1)
+            {
+                break;
+            }
+            const auto item_index = rpref(10 + cnt * 2);
+            if (inv[item_index].curse_state == CurseState::blessed)
+            {
+                factor -= 10;
+                if (cnt == current_step)
+                {
+                    txt(i18n::s.get("core.blending.success_rate.goes_up"),
+                        Message::color{ColorIndex::green});
+                }
+            }
+            else if (is_cursed(inv[item_index].curse_state))
+            {
+                factor += 20;
+                if (cnt == current_step)
+                {
+                    txt(i18n::s.get("core.blending.success_rate.goes_down"),
+                        Message::color{ColorIndex::red});
+                }
+            }
+        }
+    }
+
+    int rate = 80;
+    for (const auto& [skill_id, required_level] :
+         the_blending_recipe_db.ensure(recipe_id).required_skills)
+    {
+        const auto legacy_skill_id = the_ability_db.ensure(skill_id).legacy_id;
+        if (sdata(legacy_skill_id, 0) <= 0)
+        {
+            rate -= 125;
+            continue;
+        }
+        int d = required_level * factor / 100;
+        if (d < 1)
+        {
+            d = 1;
+        }
+        int p = (d * 200 / sdata(legacy_skill_id, 0) - 200) * -1;
+        if (p > 0)
+        {
+            p /= 5;
+        }
+        else if (p < -125)
+        {
+            p = -125;
+        }
+        rate += p;
+    }
+
+    if (rate < 25)
+    {
+        return 0;
+    }
+    else if (rate > 100)
+    {
+        return 100;
+    }
+    else
+    {
+        return rate;
+    }
+}
+
+
+
+bool check_one_blending_material(
+    Item& item,
+    int recipe_id,
+    int step,
+    bool check_pos)
+{
+    if ((the_blending_recipe_db.ensure(recipe_id).type == 0 || step != 0) &&
+        item.own_state > 0)
+    {
+        return false;
+    }
+    if (check_pos)
+    {
+        if (dist(item.position, cdata.player().position) > 4)
+        {
+            return false;
+        }
+    }
+
+    return lua::call_with_result<bool>(
+        "core.Impl.Blending.check_material",
+        false,
+        lua::handle(item),
+        the_blending_recipe_db.get_id_from_legacy(recipe_id)->get(),
+        step + 1);
+}
+
+
+
+// Find `step`th material of `recipe_id` in `inventory`.
+bool find_blending_materials(int inventory, int recipe_id, int step)
+{
+    assert(inventory == -1 || inventory == 0);
+
+    const auto check_pos = inventory == -1;
+    for (auto&& item : inventory == -1 ? inv.ground() : inv.pc())
+    {
+        if (check_one_blending_material(item, recipe_id, step, check_pos))
+        {
+            return true; // found
+        }
+    }
+
+    return false; // not found
+}
+
+
+
+// Count `step`th material of `recipe_id` in `inventory`.
+int count_blending_materials(int inventory, int recipe_id, int step)
+{
+    assert(inventory == -1 || inventory == 0);
+
+    const auto check_pos = inventory == -1;
+    int ret = 0;
+    for (auto&& item : inventory == -1 ? inv.ground() : inv.pc())
+    {
+        if (check_one_blending_material(item, recipe_id, step, check_pos))
+        {
+            ret += item.number();
+        }
+    }
+    return ret;
+}
+
+
+
+// Collect `step`th material of `recipe_id` in `inventory` into `result`.
+void collect_blending_materials(
+    std::vector<std::pair<int, int>>& result,
+    int inventory,
+    int recipe_id,
+    int step)
+{
+    assert(inventory == -1 || inventory == 0);
+
+    const auto check_pos = inventory == -1;
+    for (auto&& item : inventory == -1 ? inv.ground() : inv.pc())
+    {
+        if (result.size() >= 500)
+        {
+            break;
+        }
+        if (check_one_blending_material(item, recipe_id, step, check_pos))
+        {
+            if (step > 0)
+            {
+                bool has_already_used = false;
+                for (int i = 0; i < step; ++i)
+                {
+                    if (rpref(10 + i * 2) == item.index())
+                    {
+                        has_already_used = true;
+                        break;
+                    }
+                }
+                if (has_already_used)
+                {
+                    continue;
+                }
+            }
+
+            result.emplace_back(
+                item.index(),
+                static_cast<int>(the_item_db[itemid2int(item.id)]->category) *
+                        1000 +
+                    itemid2int(item.id));
+        }
+    }
+}
+
+
+
+bool blendcheckmat(int recipe_id)
+{
+    rpid = recipe_id;
+
+    for (int step = 0; step < get_number_of_materials(recipe_id); ++step)
+    {
+        if (!find_blending_materials(-1, recipe_id, step) &&
+            !find_blending_materials(0, recipe_id, step))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
+int blendmatnum(int recipe_id, int step)
+{
+    rpid = recipe_id;
+
+    int ret = 0;
+    ret += count_blending_materials(-1, recipe_id, step);
+    ret += count_blending_materials(0, recipe_id, step);
+    return ret;
+}
+
+
+
+int blendlist(elona_vector2<int>& result_array, int recipe_id, int step)
+{
+    rpid = recipe_id;
+
+    std::vector<std::pair<int, int>> tmp;
+    collect_blending_materials(tmp, -1, recipe_id, step);
+    collect_blending_materials(tmp, 0, recipe_id, step);
+
+    int n = 0;
+    for (const auto& pair : tmp)
+    {
+        result_array(0, n) = pair.first;
+        result_array(1, n) = pair.second;
+        ++n;
+    }
+    return n;
+}
 
 
 
@@ -118,16 +407,13 @@ void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
             dy_,
             ""s + i_ + u8"."s +
                 i18n::s.get(
-                    "core.blending.window.chose_the_recipe_of", rpname(rpid)));
+                    "core.blending.window.chose_the_recipe_of",
+                    blending_get_recipe_name(rpid)));
     }
     dy_ += 17;
     ++i_;
-    for (int cnt = 0; cnt < 10; ++cnt)
+    for (int cnt = 0; cnt < get_number_of_materials(rpid); ++cnt)
     {
-        if (rpdata(20 + cnt, rpid) == 0)
-        {
-            break;
-        }
         if (step == i_ - 2)
         {
             boxf(dx_ - 10, dy_ - 2, width - 60, 17, {60, 20, 10, 32});
@@ -138,8 +424,10 @@ void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
         }
         if (step <= cnt)
         {
-            int stat = blendmatnum(rpdata(20 + cnt, rpid), cnt);
-            s_ = i18n::s.get("core.blending.window.add", rpmatname(cnt), stat);
+            s_ = i18n::s.get(
+                "core.blending.window.add",
+                get_recipe_material_name(rpid, cnt),
+                blendmatnum(rpid, cnt));
         }
         else
         {
@@ -169,32 +457,29 @@ void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
         font(12 - en * 2, snail::Font::Style::bold);
         mes(dx_ - 10,
             dy_,
-            i18n::s.get("core.blending.window.the_recipe_of", rpname(rpid)));
+            i18n::s.get(
+                "core.blending.window.the_recipe_of",
+                blending_get_recipe_name(rpid)));
         dy_ += 20;
         mes(dx_ - 10, dy_, i18n::s.get("core.blending.window.required_skills"));
         dy_ = dy_ + 18;
         font(13 - en * 2);
-        for (int cnt = 0; cnt < 5; ++cnt)
+        int cnt = 0;
+        for (const auto& [skill_id, required_level] :
+             the_blending_recipe_db.ensure(rpid).required_skills)
         {
-            if (rpdata(10 + cnt * 2, rpid) == 0)
-            {
-                break;
-            }
-            const auto text_color = (rpdata(11 + cnt * 2, rpid) >
-                                     sdata(rpdata(10 + cnt * 2, rpid), 0))
+            const auto legacy_skill_id =
+                the_ability_db.ensure(skill_id).legacy_id;
+            const auto text_color = (required_level > sdata(legacy_skill_id, 0))
                 ? snail::Color{150, 0, 0}
                 : snail::Color{0, 120, 0};
             mes(dx_ + cnt % 2 * 140,
                 dy_ + cnt / 2 * 17,
-                i18n::s.get_m(
-                    "ability",
-                    the_ability_db
-                        .get_id_from_legacy(rpdata(10 + cnt * 2, rpid))
-                        ->get(),
-                    "name") +
-                    u8"  "s + rpdata((11 + cnt * 2), rpid) + u8"("s +
-                    sdata(rpdata((10 + cnt * 2), rpid), 0) + u8")"s,
+                the_ability_db.get_text(skill_id, "name") + u8"  "s +
+                    required_level + u8"("s + sdata(legacy_skill_id, 0) +
+                    u8")"s,
                 text_color);
+            ++cnt;
         }
         dy_ += 50;
         font(12 - en * 2, snail::Font::Style::bold);
@@ -255,7 +540,7 @@ int calc_max_number_of_products_you_can_blend(int recipe_id)
         {
             break;
         }
-        if (rpdata(2, recipe_id) == 2 && i == 0)
+        if (the_blending_recipe_db.ensure(recipe_id).type == 2 && i == 0)
         {
             continue;
         }
@@ -271,12 +556,12 @@ int calc_max_number_of_products_you_can_blend(int recipe_id)
 
 bool all_ingredient_are_added(int step, int recipe_id)
 {
-    return step != -1 && rpdata(20 + step, recipe_id) == 0;
+    return step != -1 && get_number_of_materials(recipe_id) <= step;
 }
 
 
 
-optional<TurnResult> blending_menu_1()
+optional<TurnResult> blending_menu_select_recipe()
 {
     elona_vector1<int> blendchecklist;
 
@@ -305,6 +590,10 @@ optional<TurnResult> blending_menu_1()
                     break;
                 }
                 blendchecklist(cnt) = blendcheckmat(list(0, p));
+            }
+            if (listmax <= pagesize * page + cs)
+            {
+                cs = listmax % pagesize - 1;
             }
         }
 
@@ -346,13 +635,13 @@ optional<TurnResult> blending_menu_1()
             draw_item_material(
                 550, wx + 37, wy + 70 + cnt * 19); // Recipe image
 
-            if (blendchecklist(cnt) == 1)
+            if (blendchecklist(cnt))
             {
                 draw("blend_ingredient", wx + 330, wy + 53 + cnt * 19);
             }
             rpid = list(0, p);
 
-            int difficulty = (4 - rpdiff(rpid, -1, -1) / 25);
+            int difficulty = (4 - calc_success_rate(rpid, -1, -1) / 25);
             draw_indexed(
                 "recipe_difficulty", wx + 317, wy + 60 + cnt * 19, difficulty);
         }
@@ -367,7 +656,9 @@ optional<TurnResult> blending_menu_1()
             }
             p = list(0, p);
             rpid = p;
-            s = i18n::s.get("core.blending.recipe.of", cnven(rpname(rpid)));
+            s = i18n::s.get(
+                "core.blending.recipe.of",
+                cnven(blending_get_recipe_name(rpid)));
             display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
             cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1);
         }
@@ -426,7 +717,7 @@ optional<TurnResult> blending_menu_1()
 
 
 
-void blending_menu_2()
+void blendig_menu_select_materials()
 {
     while (true)
     {
@@ -443,7 +734,8 @@ void blending_menu_2()
         windowshadow = windowshadow(1);
         ui_display_window(
             i18n::s.get(
-                "core.blending.steps.add_ingredient_prompt", rpmatname(step)),
+                "core.blending.steps.add_ingredient_prompt",
+                get_recipe_material_name(rpid, step)),
             strhint2,
             (windoww - 780) / 2 + inf_screenx,
             winposy(445),
@@ -485,9 +777,9 @@ void blending_menu_2()
                 break;
             }
             p = list(0, p);
-            s = itemname(inv[p], inv[p].number());
+            s = itemname(inv[p]);
             s = strutil::take_by_width(s, 28);
-            if (p >= ELONA_ITEM_ON_GROUND_INDEX)
+            if (inv_getowner(inv[p]) == -1)
             {
                 s += i18n::s.get("core.blending.steps.ground");
             }
@@ -564,7 +856,7 @@ void blending_menu_2()
             snd("core.drink1");
             txt(i18n::s.get("core.blending.steps.you_add", inv[item_index]));
             ++step;
-            p = rpdiff(rpid, step, step - 1);
+            p = calc_success_rate(rpid, step, step - 1);
             return;
         }
         if (action == "previous_menu")
@@ -595,371 +887,327 @@ void blending_menu_2()
     }
 }
 
+
+
+bool has_required_materials()
+{
+    for (int cnt = 0; cnt < 10; ++cnt)
+    {
+        if (rpref(10 + cnt * 2) == -1)
+        {
+            break;
+        }
+        if (rpref(10 + cnt * 2) == -2)
+        {
+            return false;
+        }
+        if (inv[rpref(10 + cnt * 2)].number() <= 0 ||
+            inv[rpref(10 + cnt * 2)].id != int2itemid(rpref(11 + cnt * 2)))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
+void clear_rprefmat()
+{
+    for (int cnt = 0; cnt < 10; ++cnt)
+    {
+        rpref(10 + cnt * 2) = -1;
+    }
+}
+
+
+
+void spend_materials(bool success)
+{
+    for (int cnt = 0; cnt < 10; ++cnt)
+    {
+        if (rpref(10 + cnt * 2) == -1)
+        {
+            break;
+        }
+        if (rpref(10 + cnt * 2) == -2)
+        {
+            continue;
+        }
+        if (the_blending_recipe_db.ensure(rpid).type != 0 && cnt == 0)
+        {
+            continue;
+        }
+        if (success)
+        {
+            inv[rpref(10 + cnt * 2)].modify_number(-1);
+        }
+        else
+        {
+            if (rnd(3) == 0)
+            {
+                txt(i18n::s.get(
+                    "core.blending.you_lose", inv[rpref(10 + cnt * 2)]));
+                inv[rpref(10 + cnt * 2)].modify_number(-1);
+            }
+        }
+        if (chara_unequip(inv[rpref(10 + cnt * 2)]))
+        {
+            chara_refresh(cdata.player());
+        }
+        cell_refresh(
+            inv[rpref(10 + cnt * 2)].position.x,
+            inv[rpref(10 + cnt * 2)].position.y);
+    }
+    refresh_burden_state();
+}
+
+
+
+// TODO: Much duplication with do_dip_command()
+void blending_proc_on_success_events()
+{
+    const auto item1_index = rpref(10);
+    const auto item2_index = rpref(12);
+    if (the_blending_recipe_db.ensure(rpid).type == 2)
+    {
+        item_separate(inv[item1_index]);
+    }
+    else if (inv[item1_index].number() <= 1)
+    {
+        rpref(10) = -2;
+    }
+    else
+    {
+        int stat = item_separate(inv[item1_index]).index();
+        if (rpref(10) == stat)
+        {
+            rpref(10) = -2;
+        }
+        else
+        {
+            rpref(10) = stat;
+        }
+    }
+
+    // See each `on_success` for parameter usage.
+    auto& item1 = inv[item1_index];
+    auto& item2 = inv[item2_index];
+    auto materials =
+        lua::create_table(1, lua::handle(item1), 2, lua::handle(item2));
+    auto on_success_args = lua::create_table("materials", materials);
+    the_blending_recipe_db.ensure(rpid).on_success.call(on_success_args);
+
+    item_stack(0, item1);
+    if (item1.body_part != 0)
+    {
+        create_pcpic(cdata.player());
+    }
+    if (inv_getowner(item1) == -1)
+    {
+        cell_refresh(item1.position.x, item1.position.y);
+    }
+    chara_refresh(cdata.player());
+}
+
+
+
+void blending_on_finish()
+{
+    const auto success = calc_success_rate(rpid, -1, -1) >= rnd(100);
+    if (success)
+    {
+        const auto& recipe_data = the_blending_recipe_db.ensure(rpid);
+        if (recipe_data.type != 0)
+        {
+            blending_proc_on_success_events();
+        }
+        else
+        {
+            recipe_data.on_success.call();
+        }
+        for (const auto& [skill_id, required_level] :
+             recipe_data.required_skills)
+        {
+            chara_gain_skill_exp(
+                cdata.player(),
+                the_ability_db.ensure(skill_id).legacy_id,
+                50 + required_level + rpref(2) / 10000 * 25,
+                2,
+                50);
+        }
+    }
+    else
+    {
+        txt(i18n::s.get("core.blending.failed"),
+            Message::color{ColorIndex::red});
+    }
+    --rpref(1);
+    spend_materials(success);
+}
+
+
+
+void activity_blending_start()
+{
+    Message::instance().linebreak();
+    txt(i18n::s.get(
+        "core.blending.started",
+        cdata.player(),
+        blending_get_recipe_name(rpid)));
+    cdata.player().activity.type = Activity::Type::blend;
+    cdata.player().activity.turn = rpref(2) % 10000;
+}
+
+
+
+void activity_blending_doing()
+{
+    if (rnd(30) == 0)
+    {
+        txt(i18n::s.get("core.blending.sounds"),
+            Message::color{ColorIndex::blue});
+    }
+}
+
+
+
+void activity_blending_end()
+{
+    if (rpref(2) >= 10000)
+    {
+        cdata.player().activity.turn = rpref(2) / 10000;
+        for (int cnt = 0;; ++cnt)
+        {
+            mode = 12;
+            ++game_data.date.hour;
+            weather_changes();
+            render_hud();
+            if (cnt % 5 == 0)
+            {
+                txt(i18n::s.get("core.blending.sounds"),
+                    Message::color{ColorIndex::blue});
+            }
+            redraw();
+            await(g_config.animation_wait() * 5);
+            game_data.date.minute = 0;
+            --cdata.player().activity.turn;
+            if (cdata.player().activity.turn <= 0)
+            {
+                if (!has_required_materials())
+                {
+                    txt(i18n::s.get(
+                        "core.blending.required_material_not_found"));
+                    break;
+                }
+                blending_on_finish();
+                if (rpref(1) > 0)
+                {
+                    cdata.player().activity.turn = rpref(2) / 10000;
+                    cnt = 0 - 1;
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        cdata.player().activity.finish();
+        mode = 0;
+        return;
+    }
+
+    if (!has_required_materials())
+    {
+        txt(i18n::s.get("core.blending.required_material_not_found"));
+        cdata.player().activity.finish();
+        return;
+    }
+    blending_on_finish();
+    if (rpref(1) > 0)
+    {
+        // restart
+        activity_blending_start();
+    }
+    else
+    {
+        cdata.player().activity.finish();
+    }
+}
+
 } // namespace
+
+
+
+void blending_init_recipe_data()
+{
+    // _1 = num
+    // _2 = required time
+    // _3 = calc_success_rate
+    DIM2(rpref, 100);
+
+    // randomly-generated recipe ID candidates
+    rpsourcelist.clear();
+    rpsourcelist(0) = 0;
+    for (const auto& [_, recipe_data] : the_blending_recipe_db)
+    {
+        if (recipe_data.generated)
+        {
+            rpsourcelist(rpsourcelist.size()) = recipe_data.legacy_id;
+        }
+    }
+}
+
+
+
+std::string blending_get_recipe_name(int recipe_id)
+{
+    return the_blending_recipe_db.get_text(recipe_id, "name");
+}
+
+
+
+void blending_clear_recipememory()
+{
+    for (const auto& [_, recipe_data] : the_blending_recipe_db)
+    {
+        if (recipe_data.known)
+        {
+            recipememory(recipe_data.legacy_id) = 1;
+        }
+    }
+}
 
 
 
 void activity_blending()
 {
-    while (true)
+    rpid = rpref(0);
+    if (rpid == 0)
     {
-        rpid = rpref(0);
-        if (rpid == 0)
-        {
-            cdata[cc].activity.finish();
-            return;
-        }
-        if (!cdata[cc].activity)
-        {
-            Message::instance().linebreak();
-            txt(i18n::s.get("core.blending.started", cdata[cc], rpname(rpid)));
-            cdata[cc].activity.type = Activity::Type::blend;
-            cdata[cc].activity.turn = rpref(2) % 10000;
-            return;
-        }
-        if (cdata[cc].activity.turn > 0)
-        {
-            if (rnd(30) == 0)
-            {
-                txt(i18n::s.get("core.blending.sounds"),
-                    Message::color{ColorIndex::blue});
-            }
-            return;
-        }
-        if (rpref(2) >= 10000)
-        {
-            cdata[cc].activity.turn = rpref(2) / 10000;
-            for (int cnt = 0;; ++cnt)
-            {
-                mode = 12;
-                ++game_data.date.hour;
-                weather_changes();
-                render_hud();
-                if (cnt % 5 == 0)
-                {
-                    txt(i18n::s.get("core.blending.sounds"),
-                        Message::color{ColorIndex::blue});
-                }
-                redraw();
-                await(g_config.animation_wait() * 5);
-                game_data.date.minute = 0;
-                cc = 0;
-                --cdata[cc].activity.turn;
-                if (cdata[cc].activity.turn <= 0)
-                {
-                    int stat = blending_find_required_mat();
-                    if (stat == 0)
-                    {
-                        txt(i18n::s.get(
-                            "core.blending.required_material_not_found"));
-                        break;
-                    }
-                    blending_start_attempt();
-                    if (rpref(1) > 0)
-                    {
-                        cdata[cc].activity.turn = rpref(2) / 10000;
-                        cnt = 0 - 1;
-                        continue;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-            cdata[cc].activity.finish();
-            mode = 0;
-            return;
-        }
-        int stat = blending_find_required_mat();
-        if (stat == 0)
-        {
-            txt(i18n::s.get("core.blending.required_material_not_found"));
-            cdata[cc].activity.finish();
-            return;
-        }
-        blending_start_attempt();
-        if (rpref(1) > 0)
-        {
-            cdata[cc].activity.type = Activity::Type::none;
-        }
-        else
-        {
-            break;
-        }
+        cdata.player().activity.finish();
+        return;
     }
 
-    cdata[cc].activity.finish();
-}
-
-
-
-void initialize_recipememory()
-{
-    for (int cnt = 0; cnt < 8; ++cnt)
+    if (!cdata.player().activity)
     {
-        recipememory(200 + cnt) = 1;
+        activity_blending_start();
     }
-}
-
-void initialize_recipe()
-{
-    DIM3(rpdata, 100, 1200);
-    SDIM4(rfnameorg, 20, 2, 6);
-    SDIM3(rpdatan, 40, 1200);
-    DIM2(rpref, 100);
-    rpsourcelist(0) = 0;
-    rpsourcelist(1) = 898;
-    rpsourcelist(2) = 1156;
-    rpsourcelist(3) = 1187;
-    rpsourcelist(4) = 209;
-    rpsourcelist(5) = 210;
-    rpid = 200;
-    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
-    rpdata(0, rpid) = 10000;
-    rpdata(1, rpid) = 10;
-    rpdata(2, rpid) = 1;
-    rpdata(10, rpid) = 184;
-    rpdata(11, rpid) = 8;
-    rpdata(12, rpid) = 178;
-    rpdata(13, rpid) = 3;
-    rpdata(20, rpid) = 57000;
-    rpdata(21, rpid) = 620;
-    rpid = 201;
-    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
-    rpdata(0, rpid) = 10001;
-    rpdata(1, rpid) = 4;
-    rpdata(2, rpid) = 1;
-    rpdata(10, rpid) = 12;
-    rpdata(11, rpid) = 6;
-    rpdata(20, rpid) = 9004;
-    rpdata(21, rpid) = 519;
-    rpid = 202;
-    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
-    rpdata(0, rpid) = 10002;
-    rpdata(1, rpid) = 7;
-    rpdata(2, rpid) = 1;
-    rpdata(10, rpid) = 184;
-    rpdata(11, rpid) = 3;
-    rpdata(20, rpid) = 57000;
-    rpdata(21, rpid) = 262;
-    rpid = 203;
-    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
-    rpdata(0, rpid) = 10003;
-    rpdata(1, rpid) = 15;
-    rpdata(2, rpid) = 1;
-    rpdata(10, rpid) = 12;
-    rpdata(11, rpid) = 18;
-    rpdata(20, rpid) = 9004;
-    rpdata(21, rpid) = 736;
-    rpid = 204;
-    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
-    rpdata(0, rpid) = 10004;
-    rpdata(1, rpid) = 15;
-    rpdata(2, rpid) = 1;
-    rpdata(10, rpid) = 12;
-    rpdata(11, rpid) = 10;
-    rpdata(20, rpid) = 9004;
-    rpdata(21, rpid) = 566;
-    rpid = 205;
-    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
-    rpdata(0, rpid) = 10005;
-    rpdata(1, rpid) = 10;
-    rpdata(2, rpid) = 1;
-    rpdata(10, rpid) = 185;
-    rpdata(11, rpid) = 2;
-    rpdata(12, rpid) = 12;
-    rpdata(13, rpid) = 10;
-    rpdata(20, rpid) = 342;
-    rpdata(21, rpid) = 617;
-    rpid = 206;
-    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
-    rpdata(0, rpid) = 10006;
-    rpdata(1, rpid) = 5;
-    rpdata(2, rpid) = 1;
-    rpdata(10, rpid) = 12;
-    rpdata(11, rpid) = 5;
-    rpdata(20, rpid) = 9004;
-    rpdata(21, rpid) = 516;
-    rpid = 207;
-    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
-    rpdata(0, rpid) = 10007;
-    rpdata(1, rpid) = 3;
-    rpdata(2, rpid) = 2;
-    rpdata(10, rpid) = 12;
-    rpdata(11, rpid) = 3;
-    rpdata(20, rpid) = 60001;
-    rpdata(21, rpid) = 52000;
-    rpid = 208;
-    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
-    rpdata(0, rpid) = 10008;
-    rpdata(1, rpid) = 16;
-    rpdata(2, rpid) = 2;
-    rpdata(10, rpid) = 12;
-    rpdata(11, rpid) = 24;
-    rpdata(20, rpid) = 60001;
-    rpdata(21, rpid) = 601;
-    rpid = 209;
-    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
-    rpdata(0, rpid) = 10009;
-    rpdata(1, rpid) = 16;
-    rpdata(2, rpid) = 2;
-    rpdata(10, rpid) = 178;
-    rpdata(11, rpid) = 999;
-    rpdata(20, rpid) = 9004;
-    rpdata(21, rpid) = 9004;
-    rpid = 210;
-    rpdatan(rpid) = i18n::s.get_enum("core.blending.recipe", rpid);
-    rpdata(0, rpid) = 10009;
-    rpdata(1, rpid) = 16;
-    rpdata(2, rpid) = 2;
-    rpdata(10, rpid) = 178;
-    rpdata(11, rpid) = 999;
-    rpdata(20, rpid) = 9004;
-    rpdata(21, rpid) = 9004;
-    rpdata(22, rpid) = 9004;
-    rpid = 898;
-    rpdata(0, rpid) = 498;
-    rpdata(1, rpid) = 150060;
-    rpdata(10, rpid) = 175;
-    rpdata(11, rpid) = 4;
-    rpdata(12, rpid) = 457;
-    rpdata(13, rpid) = 20;
-    rpdata(14, rpid) = 12;
-    rpdata(15, rpid) = 8;
-    rpdata(30, rpid) = 0;
-    rpdata(20, rpid) = 260;
-    rpdata(21, rpid) = 9001;
-    rpid = 1156;
-    rpdata(0, rpid) = 756;
-    rpdata(1, rpid) = 20020;
-    rpdata(10, rpid) = 184;
-    rpdata(11, rpid) = 4;
-    rpdata(12, rpid) = 179;
-    rpdata(13, rpid) = 20;
-    rpdata(14, rpid) = 157;
-    rpdata(15, rpid) = 8;
-    rpdata(30, rpid) = 0;
-    rpdata(20, rpid) = 260;
-    ++rpid;
-    rpid = 1187;
-    rpdata(0, rpid) = 787;
-    rpdata(1, rpid) = 30;
-    rpdata(10, rpid) = 184;
-    rpdata(11, rpid) = 10;
-    rpdata(12, rpid) = 178;
-    rpdata(13, rpid) = 5;
-    rpdata(30, rpid) = 0;
-    rpdata(20, rpid) = 9004;
-    rpid = 1191;
-    rpdata(0, rpid) = 791;
-    rpdata(1, rpid) = 160045;
-    rpdata(10, rpid) = 184;
-    rpdata(11, rpid) = 10;
-    rpdata(12, rpid) = 178;
-    rpdata(13, rpid) = 65;
-    rpdata(14, rpid) = 10;
-    rpdata(15, rpid) = 105;
-    rpdata(30, rpid) = 0;
-    rpdata(20, rpid) = 10000;
-    rpdata(21, rpid) = 748;
-    rpdata(22, rpid) = 716;
-    rpid = 1192;
-    rpdata(0, rpid) = 792;
-    rpdata(1, rpid) = 10024;
-    rpdata(10, rpid) = 184;
-    rpdata(11, rpid) = 20;
-    rpdata(12, rpid) = 0;
-    rpdata(13, rpid) = 10;
-    rpdata(14, rpid) = 151;
-    rpdata(15, rpid) = 5;
-    rpdata(30, rpid) = 0;
-    rpdata(20, rpid) = 204;
-    rpdata(21, rpid) = 9005;
-    rpdata(40, rpid) = 10003;
-    rpdata(50, rpid) = 10017;
-    rpdata(51, rpid) = 500;
-    rpdata(52, rpid) = 60017;
-    rpdata(53, rpid) = 500;
-    rpdata(54, rpid) = 10010;
-    rpdata(55, rpid) = 100;
-    rpdata(56, rpid) = 60010;
-    rpdata(57, rpid) = 100;
-    rpdata(58, rpid) = 10016;
-    rpdata(59, rpid) = 300;
-    rpdata(60, rpid) = 60016;
-    rpdata(61, rpid) = 300;
-    rpdata(62, rpid) = 10011;
-    rpdata(63, rpid) = 200;
-    rpdata(64, rpid) = 60011;
-    rpdata(65, rpid) = 200;
-    rfnameorg(0, 1) = u8"flavor"s;
-    rfnameorg(1, 1) = i18n::s.get_enum("core.blending.ingredient", 1);
-    rfnameorg(0, 2) = u8"ore"s;
-    rfnameorg(1, 2) = i18n::s.get_enum("core.blending.ingredient", 2);
-    rfnameorg(0, 3) = u8"wood"s;
-    rfnameorg(1, 3) = i18n::s.get_enum("core.blending.ingredient", 3);
-    rfnameorg(0, 5) = u8"fish"s;
-    rfnameorg(1, 5) = i18n::s.get_enum("core.blending.ingredient", 4);
-    rfnameorg(0, 4) = "";
-    rfnameorg(1, 4) = i18n::s.get_enum("core.blending.ingredient", 5);
-}
-
-void window_recipe2(int val0)
-{
-    int x_at_m183 = 0;
-    int w_at_m183 = 0;
-    int dx_at_m183 = 0;
-    int dy_at_m183 = 0;
-    std::string s_at_m183;
-    int p_at_m183 = 0;
-    x_at_m183 = wx + ww;
-    w_at_m183 = 400;
-    gmode(2);
-    draw("deco_blend_a", x_at_m183 + w_at_m183 - 520, 0);
-    dx_at_m183 = x_at_m183 + w_at_m183 - 500;
-    dy_at_m183 = 10;
-    font(15 - en * 2, snail::Font::Style::bold);
-    s_at_m183 = ""s + rpsuccessrate(rpdiff(rpid, step, -1));
-    bmes(
-        i18n::s.get("core.blending.rate_panel.success_rate", s_at_m183),
-        dx_at_m183 + 140,
-        dy_at_m183,
-        {235, 235, 235},
-        {30, 30, 30});
-    p_at_m183 = rpdata(1, rpid);
-    if (rpmode)
+    else if (cdata.player().activity.turn > 0)
     {
-        if (p_at_m183 < 10000)
-        {
-            p_at_m183 = p_at_m183 * val0;
-        }
-        else
-        {
-            p_at_m183 = p_at_m183 % 10000;
-        }
-        p_at_m183 += rpdata(1, rpid) / 10000 * val0 * 10000;
+        activity_blending_doing();
     }
-    s_at_m183 =
-        i18n::s.get("core.blending.rate_panel.turns", p_at_m183 % 10000);
-    if (p_at_m183 >= 10000)
+    else
     {
-        s_at_m183 += i18n::s.get(
-            "core.blending.rate_panel.and_hours", p_at_m183 / 10000);
+        activity_blending_end();
     }
-    bmes(
-        i18n::s.get("core.blending.rate_panel.required_time", s_at_m183),
-        dx_at_m183 + 140,
-        dy_at_m183 + 20,
-        {235, 235, 235},
-        {40, 40, 40});
 }
 
 
 
 TurnResult blending_menu()
 {
-    std::string action;
     step = -1;
     rpid = 0;
     asset_load("deco_blend");
@@ -974,27 +1222,23 @@ TurnResult blending_menu()
             window_recipe(none, wx + ww, wy, 400, wh);
             Message::instance().linebreak();
             txt(i18n::s.get("core.blending.prompt.how_many"));
-
-            p = calc_max_number_of_products_you_can_blend(rpid);
-
-            rpmode = 1;
-            PromptWithNumber prompt(p(0), "core.blending.prompt");
+            PromptWithNumber prompt(
+                calc_max_number_of_products_you_can_blend(rpid),
+                "core.blending.prompt");
             prompt.append("start", snail::Key::key_a);
             prompt.append("go_back", snail::Key::key_b);
             prompt.append("from_the_start", snail::Key::key_c);
             const auto result = prompt.query(promptx, prompty, 220);
-            rtval = result.index;
-            rpmode = 0;
-
-            if (rtval == 0) // start
+            if (result.index == 0) // start
             {
                 rpref(1) = result.number;
-                rpref(2) = rpdata(1, rpid);
-                rpref(3) = rpdiff(rpid, step, -1);
+                rpref(2) = the_blending_recipe_db.ensure(rpid).required_turns +
+                    10000 * the_blending_recipe_db.ensure(rpid).required_hours;
+                rpref(3) = calc_success_rate(rpid, step, -1);
                 activity_blending();
                 return TurnResult::turn_end;
             }
-            else if (rtval == 2) // from the start
+            else if (result.index == 2) // from the start
             {
                 step = -1;
                 continue;
@@ -1011,7 +1255,6 @@ TurnResult blending_menu()
         listmax = 0;
         cs = 0;
         cs_bk = -1;
-        cc = 0;
         screenupdate = -1;
         update_screen();
 
@@ -1020,16 +1263,12 @@ TurnResult blending_menu()
             rppage(0) = 0;
             rppage(1) = 0;
             listmax = 0;
-            for (int cnt = 0; cnt < 1200; ++cnt)
+            for (const auto& [_, recipe_data] : the_blending_recipe_db)
             {
-                if (rpdata(0, cnt) == 0)
+                if (recipememory(recipe_data.legacy_id) > 0)
                 {
-                    continue;
-                }
-                if (recipememory(cnt) > 0)
-                {
-                    list(0, listmax) = cnt;
-                    list(1, listmax) = cnt;
+                    list(0, listmax) = recipe_data.legacy_id;
+                    list(1, listmax) = recipe_data.legacy_id;
                     ++listmax;
                 }
             }
@@ -1039,7 +1278,7 @@ TurnResult blending_menu()
             txt(i18n::s.get("core.blending.recipe.warning"));
             Message::instance().linebreak();
             txt(i18n::s.get("core.blending.recipe.which"));
-            if (const auto result = blending_menu_1())
+            if (const auto result = blending_menu_select_recipe())
             {
                 return *result;
             }
@@ -1051,901 +1290,55 @@ TurnResult blending_menu()
         else
         {
             rppage = 1;
-            listmax = blendlist(list, step);
+            listmax = blendlist(list, rpid, step);
             sort_list_by_column1();
 
             windowshadow(1) = 1;
             Message::instance().linebreak();
             txt(i18n::s.get(
-                "core.blending.steps.add_ingredient", rpmatname(step)));
-            blending_menu_2();
+                "core.blending.steps.add_ingredient",
+                get_recipe_material_name(rpid, step)));
+            blendig_menu_select_materials();
         }
     }
 }
 
 
 
-std::string rpmatname(int step)
+void window_recipe2(int number_of_products)
 {
-    std::string s_at_m177;
-    int p_at_m177 = 0;
-    s_at_m177 = u8"?????"s;
-    if (rpdata(20 + step, rpid) < 9000)
+    const auto dx = wx + ww - 120;
+    const auto dy = 10;
+
+    gmode(2);
+    draw("deco_blend_a", dx, 0);
+
+    font(15 - en * 2, snail::Font::Style::bold);
+    bmes(
+        i18n::s.get(
+            "core.blending.rate_panel.success_rate",
+            success_rate_to_string(calc_success_rate(rpid, step, -1))),
+        dx + 160,
+        dy,
+        {235, 235, 235},
+        {30, 30, 30});
+
+    const auto& recipe_data = the_blending_recipe_db.ensure(rpid);
+    std::string required_time;
+    if (recipe_data.required_hours)
     {
-        s_at_m177 = ioriginalnameref(rpdata(20 + step, rpid));
-    }
-    else if (rpdata(20 + step, rpid) < 10000)
-    {
-        s_at_m177 = rfnameorg(1, rpdata(20 + step, rpid) - 9000);
+        required_time = i18n::s.get(
+            "core.blending.rate_panel.required_turns_and_hours",
+            recipe_data.required_turns,
+            recipe_data.required_hours * number_of_products);
     }
     else
     {
-        s_at_m177 = fltname(rpdata(20 + step, rpid));
+        required_time = i18n::s.get(
+            "core.blending.rate_panel.required_turns",
+            recipe_data.required_turns * number_of_products);
     }
-    if (rpdata(40 + step, rpid) == 0)
-    {
-        return s_at_m177;
-    }
-    if (rpdata(40 + step, rpid) >= 10000)
-    {
-        p_at_m177 = rpdata((40 + step), rpid) % 10000;
-        if (p_at_m177 < 0 || p_at_m177 >= 800)
-        {
-            s_at_m177 += u8"/bugged/"s;
-            return s_at_m177;
-        }
-        s_at_m177 = i18n::s.get(
-            "core.blending.ingredient.corpse",
-            chara_db_get_name(int2charaid(p_at_m177)));
-        return s_at_m177;
-    }
-    return s_at_m177;
-}
-
-
-
-std::string rpsuccessrate(int success_rate)
-{
-    if (success_rate == 100)
-    {
-        return i18n::s.get("core.blending.success_rate.perfect");
-    }
-    if (success_rate >= 90)
-    {
-        return i18n::s.get("core.blending.success_rate.piece_of_cake");
-    }
-    if (success_rate >= 80)
-    {
-        return i18n::s.get("core.blending.success_rate.very_likely");
-    }
-    if (success_rate >= 70)
-    {
-        return i18n::s.get("core.blending.success_rate.no_problem");
-    }
-    if (success_rate >= 60)
-    {
-        return i18n::s.get("core.blending.success_rate.probably_ok");
-    }
-    if (success_rate >= 50)
-    {
-        return i18n::s.get("core.blending.success_rate.maybe");
-    }
-    if (success_rate >= 40)
-    {
-        return i18n::s.get("core.blending.success_rate.bad");
-    }
-    if (success_rate >= 30)
-    {
-        return i18n::s.get("core.blending.success_rate.very_bad");
-    }
-    if (success_rate >= 20)
-    {
-        return i18n::s.get("core.blending.success_rate.almost_impossible");
-    }
-    return i18n::s.get("core.blending.success_rate.impossible");
-}
-
-
-
-std::string rpname(int recipe_id)
-{
-    std::string s_at_m62;
-    s_at_m62 = u8"?????"s;
-    if (rpdatan(recipe_id) != ""s)
-    {
-        return rpdatan(recipe_id);
-    }
-    if (recipe_id >= 400)
-    {
-        return ioriginalnameref(recipe_id - 400);
-    }
-    return s_at_m62;
-}
-
-
-
-int rpdiff(int, int number_of_ingredients, int current_step)
-{
-    int p1_at_m180 = 0;
-    int f_at_m180 = 0;
-    int f2_at_m180 = 0;
-    int i_at_m180 = 0;
-    int d_at_m180 = 0;
-    int p_at_m180 = 0;
-    p1_at_m180 = 80;
-    f_at_m180 = 100;
-    if (number_of_ingredients > 0)
-    {
-        for (int cnt = 0, cnt_end = (number_of_ingredients); cnt < cnt_end;
-             ++cnt)
-        {
-            f2_at_m180 = 0;
-            if (rpref(10 + cnt * 2) == -1)
-            {
-                break;
-            }
-            i_at_m180 = rpref(10 + cnt * 2);
-            if (inv[i_at_m180].curse_state == CurseState::blessed)
-            {
-                f2_at_m180 -= 10;
-            }
-            if (is_cursed(inv[i_at_m180].curse_state))
-            {
-                f2_at_m180 += 20;
-            }
-            f_at_m180 += f2_at_m180;
-            if (current_step == cnt)
-            {
-                while (1)
-                {
-                    if (f2_at_m180 < 0)
-                    {
-                        txt(i18n::s.get("core.blending.success_rate.goes_up"),
-                            Message::color{ColorIndex::green});
-                        break;
-                    }
-                    if (f2_at_m180 > 0)
-                    {
-                        txt(i18n::s.get("core.blending.success_rate.goes_down"),
-                            Message::color{ColorIndex::red});
-                        break;
-                    }
-                    break;
-                }
-            }
-        }
-    }
-    for (int cnt = 0; cnt < 5; ++cnt)
-    {
-        if (rpdata(10 + cnt * 2, rpid) == 0)
-        {
-            break;
-        }
-        if (sdata(rpdata(10 + cnt * 2, rpid), 0) <= 0)
-        {
-            p1_at_m180 -= 125;
-            continue;
-        }
-        d_at_m180 = rpdata(11 + cnt * 2, rpid);
-        if (number_of_ingredients > 0)
-        {
-            d_at_m180 = d_at_m180 * f_at_m180 / 100;
-            if (d_at_m180 < 1)
-            {
-                d_at_m180 = 1;
-            }
-        }
-        p_at_m180 =
-            (d_at_m180 * 200 / sdata(rpdata((10 + cnt * 2), rpid), 0) - 200) *
-            -1;
-        if (p_at_m180 > 0)
-        {
-            p_at_m180 /= 5;
-        }
-        if (p_at_m180 < -125)
-        {
-            p_at_m180 = -125;
-        }
-        p1_at_m180 += p_at_m180;
-    }
-    if (p1_at_m180 < 25)
-    {
-        p1_at_m180 = 0;
-    }
-    if (p1_at_m180 > 100)
-    {
-        p1_at_m180 = 100;
-    }
-    return p1_at_m180;
-}
-
-
-
-int blendcheckext(int item_index, int step)
-{
-    int p_at_m178 = 0;
-    if (rpdata(40 + step, rpid) >= 10000)
-    {
-        p_at_m178 = rpdata((40 + step), rpid) % 10000;
-        if (p_at_m178 < 0 || p_at_m178 >= 800)
-        {
-            return 0;
-        }
-        if (inv[item_index].subname == p_at_m178)
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
-    }
-    return 0;
-}
-
-
-
-int blendcheckmat(int recipe_id)
-{
-    int f_at_m181 = 0;
-    int step_at_m181 = 0;
-    int id_at_m181 = 0;
-    int rp_at_m181 = 0;
-    int o_at_m181 = 0;
-    rpid = recipe_id;
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        if (rpdata(20 + cnt, rpid) == 0)
-        {
-            break;
-        }
-        f_at_m181 = 0;
-        step_at_m181 = cnt;
-        id_at_m181 = rpdata(20 + cnt, rpid);
-        rp_at_m181 = cnt;
-        for (int cnt = 0; cnt < 2; ++cnt)
-        {
-            if (cnt == 0)
-            {
-                o_at_m181 = -1;
-            }
-            if (cnt == 1)
-            {
-                o_at_m181 = 0;
-            }
-            for (const auto& item : o_at_m181 == -1 ? inv.ground() : inv.pc())
-            {
-                if (item.number() <= 0)
-                {
-                    continue;
-                }
-                if ((rpdata(2, rpid) <= 0 || step_at_m181 != 0) &&
-                    item.own_state > 0)
-                {
-                    continue;
-                }
-                if (o_at_m181 == -1)
-                {
-                    if (dist(
-                            item.position.x,
-                            item.position.y,
-                            cdata.player().position.x,
-                            cdata.player().position.y) > 4)
-                    {
-                        continue;
-                    }
-                }
-                if (rpdata(40 + rp_at_m181, rpid))
-                {
-                    int stat = blendcheckext(item.index, rp_at_m181);
-                    if (stat == 0)
-                    {
-                        continue;
-                    }
-                }
-                if (id_at_m181 < 9000)
-                {
-                    if (item.id == int2itemid(id_at_m181))
-                    {
-                        f_at_m181 = 1;
-                        break;
-                    }
-                    continue;
-                }
-                if (id_at_m181 < 10000)
-                {
-                    if (instr(
-                            the_item_db[itemid2int(item.id)]->rffilter,
-                            0,
-                            u8"/"s + rfnameorg(0, (id_at_m181 - 9000)) +
-                                u8"/"s) != -1 ||
-                        id_at_m181 == 9004)
-                    {
-                        f_at_m181 = 1;
-                        break;
-                    }
-                    continue;
-                }
-                if (the_item_db[itemid2int(item.id)]->category ==
-                    (ItemCategory)id_at_m181)
-                {
-                    f_at_m181 = 1;
-                    break;
-                }
-            }
-            if (f_at_m181 == 1)
-            {
-                break;
-            }
-        }
-        if (f_at_m181 == 0)
-        {
-            break;
-        }
-    }
-    return f_at_m181;
-}
-
-
-
-int blendmatnum(int matcher, int step)
-{
-    int m_at_m182 = 0;
-    int o_at_m182 = 0;
-    m_at_m182 = 0;
-    for (int cnt = 0; cnt < 2; ++cnt)
-    {
-        if (cnt == 0)
-        {
-            o_at_m182 = -1;
-        }
-        if (cnt == 1)
-        {
-            o_at_m182 = 0;
-        }
-        for (const auto& item : o_at_m182 == -1 ? inv.ground() : inv.pc())
-        {
-            if (item.number() <= 0)
-            {
-                continue;
-            }
-            if ((rpdata(2, rpid) <= 0 || step != 0) && item.own_state > 0)
-            {
-                continue;
-            }
-            if (o_at_m182 == -1)
-            {
-                if (dist(
-                        item.position.x,
-                        item.position.y,
-                        cdata.player().position.x,
-                        cdata.player().position.y) > 4)
-                {
-                    continue;
-                }
-            }
-            if (rpdata(40 + step, rpid))
-            {
-                int stat = blendcheckext(item.index, step);
-                if (stat == 0)
-                {
-                    continue;
-                }
-            }
-            if (matcher < 9000)
-            {
-                if (item.id == int2itemid(matcher))
-                {
-                    m_at_m182 += item.number();
-                }
-                continue;
-            }
-            if (matcher < 10000)
-            {
-                if (instr(
-                        the_item_db[itemid2int(item.id)]->rffilter,
-                        0,
-                        u8"/"s + rfnameorg(0, (matcher - 9000)) + u8"/"s) !=
-                        -1 ||
-                    matcher == 9004)
-                {
-                    m_at_m182 += item.number();
-                }
-                continue;
-            }
-            if (the_item_db[itemid2int(item.id)]->category ==
-                (ItemCategory)matcher)
-            {
-                m_at_m182 += item.number();
-                continue;
-            }
-        }
-    }
-    return m_at_m182;
-}
-
-
-
-int blendlist(elona_vector2<int>& result_array, int step)
-{
-    int id_at_m183 = 0;
-    int m_at_m183 = 0;
-    int o_at_m183 = 0;
-    int reftype_at_m183 = 0;
-    id_at_m183 = rpdata(20 + step, rpid);
-    m_at_m183 = 0;
-    for (int cnt = 0; cnt < 2; ++cnt)
-    {
-        if (cnt == 0)
-        {
-            o_at_m183 = -1;
-        }
-        if (cnt == 1)
-        {
-            o_at_m183 = 0;
-        }
-        for (const auto& item : o_at_m183 == -1 ? inv.ground() : inv.pc())
-        {
-            if (m_at_m183 >= 500)
-            {
-                break;
-            }
-            if (item.number() <= 0)
-            {
-                continue;
-            }
-            if ((rpdata(2, rpid) <= 0 || step != 0) && item.own_state > 0)
-            {
-                continue;
-            }
-            if (o_at_m183 == -1)
-            {
-                if (dist(
-                        item.position.x,
-                        item.position.y,
-                        cdata.player().position.x,
-                        cdata.player().position.y) > 4)
-                {
-                    continue;
-                }
-            }
-            reftype_at_m183 = (int)the_item_db[itemid2int(item.id)]->category;
-            if (rpdata(40 + step, rpid))
-            {
-                int stat = blendcheckext(item.index, step);
-                if (stat == 0)
-                {
-                    continue;
-                }
-            }
-            if (id_at_m183 < 9000)
-            {
-                if (item.id != int2itemid(id_at_m183))
-                {
-                    continue;
-                }
-            }
-            else if (id_at_m183 < 10000)
-            {
-                if (instr(
-                        the_item_db[itemid2int(item.id)]->rffilter,
-                        0,
-                        u8"/"s + rfnameorg(0, (id_at_m183 - 9000)) + u8"/"s) ==
-                        -1 &&
-                    id_at_m183 != 9004)
-                {
-                    continue;
-                }
-            }
-            else if (reftype_at_m183 != id_at_m183)
-            {
-                continue;
-            }
-            if (step > 0)
-            {
-                bool has_already_used = false;
-                for (int i = 0; i < step; ++i)
-                {
-                    if (rpref(10 + i * 2) == item.index)
-                    {
-                        has_already_used = true;
-                        break;
-                    }
-                }
-                if (has_already_used)
-                {
-                    continue;
-                }
-            }
-            result_array(0, m_at_m183) = item.index;
-            result_array(1, m_at_m183) =
-                reftype_at_m183 * 1000 + itemid2int(item.id);
-            ++m_at_m183;
-        }
-    }
-    return m_at_m183;
-}
-
-
-
-void clear_rprefmat()
-{
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        rpref(10 + cnt * 2) = -1;
-    }
-}
-
-
-int blending_find_required_mat()
-{
-    f = 1;
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        if (rpref(10 + cnt * 2) == -1)
-        {
-            break;
-        }
-        if (rpref(10 + cnt * 2) == -2)
-        {
-            f = 0;
-            break;
-        }
-        if (inv[rpref(10 + cnt * 2)].number() <= 0 ||
-            inv[rpref(10 + cnt * 2)].id != int2itemid(rpref(11 + cnt * 2)))
-        {
-            f = 0;
-            break;
-        }
-    }
-    return f;
-}
-
-
-
-void blending_spend_materials(bool success)
-{
-    for (int cnt = 0; cnt < 10; ++cnt)
-    {
-        if (rpref(10 + cnt * 2) == -1)
-        {
-            break;
-        }
-        if (rpref(10 + cnt * 2) == -2)
-        {
-            continue;
-        }
-        if (rpdata(2, rpid) > 0 && cnt == 0)
-        {
-            continue;
-        }
-        if (success)
-        {
-            inv[rpref(10 + cnt * 2)].modify_number(-1);
-        }
-        else if (rnd(3) == 0)
-        {
-
-            txt(i18n::s.get(
-                "core.blending.you_lose", inv[rpref(10 + cnt * 2)]));
-            inv[rpref(10 + cnt * 2)].modify_number(-1);
-        }
-        if (chara_unequip(inv[rpref(10 + cnt * 2)]))
-        {
-            chara_refresh(0);
-        }
-        cell_refresh(
-            inv[rpref(10 + cnt * 2)].position.x,
-            inv[rpref(10 + cnt * 2)].position.y);
-    }
-    refresh_burden_state();
-}
-
-
-
-void blending_start_attempt()
-{
-    const auto success = rpdiff(rpid, -1, -1) >= rnd(100);
-    if (success)
-    {
-        if (rpdata(0, rpid) >= 10000)
-        {
-            blending_proc_on_success_events();
-        }
-        else
-        {
-            flt();
-            nostack = 1;
-            if (const auto item = itemcreate_extra_inv(
-                    rpdata(0, rpid), cdata.player().position, 0))
-            {
-                for (int cnt = 0;; ++cnt)
-                {
-                    if (rpdata(50 + cnt * 2, rpid) == 0)
-                    {
-                        break;
-                    }
-                    enchantment_add(
-                        *item,
-                        rpdata(50 + cnt * 2, rpid),
-                        rpdata(51 + cnt * 2, rpid),
-                        0,
-                        1);
-                }
-                txt(i18n::s.get("core.blending.succeeded", *item),
-                    Message::color{ColorIndex::green});
-                snd("core.drink1");
-            }
-        }
-        for (int cnt = 0; cnt < 5; ++cnt)
-        {
-            if (rpdata(10 + cnt * 2, rpid) == 0)
-            {
-                break;
-            }
-            chara_gain_skill_exp(
-                cdata.player(),
-                rpdata(10 + cnt * 2, rpid),
-                50 + rpdata((11 + cnt * 2), rpid) + rpref(2) / 10000 * 25,
-                2,
-                50);
-        }
-    }
-    else
-    {
-        txt(i18n::s.get("core.blending.failed"),
-            Message::color{ColorIndex::red});
-    }
-    --rpref(1);
-    blending_spend_materials(success);
-}
-
-
-
-void blending_proc_on_success_events_love_food(Item& food, Item&)
-{
-    food.is_aphrodisiac() = true;
-    txt(i18n::s.get("core.blending.succeeded", food),
-        Message::color{ColorIndex::green});
-    txt(i18n::s.get("core.action.dip.result.love_food.guilty"));
-    snd("core.offer1");
-}
-
-
-
-void blending_proc_on_success_events_dyeing(Item& target, Item& dye)
-{
-    target.color = dye.color;
-    txt(i18n::s.get("core.action.dip.result.dyeing", target),
-        Message::color{ColorIndex::green});
-    snd("core.drink1");
-}
-
-
-
-void blending_proc_on_success_events_poisoned_food(Item& food, Item&)
-{
-    food.is_poisoned() = true;
-    txt(i18n::s.get("core.blending.succeeded", food),
-        Message::color{ColorIndex::green});
-    txt(i18n::s.get("core.action.dip.result.poisoned_food"));
-    snd("core.offer1");
-}
-
-
-
-void blending_proc_on_success_events_fireproof(
-    Item& target,
-    Item& potion_of_fireproof)
-{
-    txt(i18n::s.get(
-            "core.action.dip.result.put_on", target, potion_of_fireproof),
-        Message::color{ColorIndex::green});
-    if (target.id == ItemId::fireproof_blanket)
-    {
-        txt(i18n::s.get("core.action.dip.result.good_idea_but"));
-    }
-    else
-    {
-        target.is_fireproof() = true;
-        txt(i18n::s.get("core.action.dip.result.gains_fireproof", target));
-    }
-    snd("core.drink1");
-}
-
-
-
-void blending_proc_on_success_events_acidproof(
-    Item& target,
-    Item& potion_of_acidproof)
-{
-    txt(i18n::s.get(
-            "core.action.dip.result.put_on", target, potion_of_acidproof),
-        Message::color{ColorIndex::green});
-    target.is_acidproof() = true;
-    txt(i18n::s.get("core.action.dip.result.gains_acidproof", target));
-    snd("core.drink1");
-}
-
-
-
-void blending_proc_on_success_events_bait_attachment(Item& rod, Item& bait)
-{
-    txt(i18n::s.get("core.action.dip.result.bait_attachment", rod, bait),
-        Message::color{ColorIndex::green});
-    if (rod.param4 == bait.param1)
-    {
-        rod.count += rnd(10) + 15;
-    }
-    else
-    {
-        rod.count = rnd(10) + 15;
-        rod.param4 = bait.param1;
-    }
-    snd("core.equip1");
-}
-
-
-
-void blending_proc_on_success_events_blessing(Item& target, Item& water)
-{
-    txt(i18n::s.get("core.action.dip.result.blessed_item", target, water),
-        Message::color{ColorIndex::green});
-    if (water.curse_state == CurseState::blessed)
-    {
-        txt(i18n::s.get("core.action.dip.result.becomes_blessed", target),
-            Message::color{ColorIndex::orange});
-        target.curse_state = CurseState::blessed;
-    }
-    if (is_cursed(water.curse_state))
-    {
-        txt(i18n::s.get("core.action.dip.result.becomes_cursed", target),
-            Message::color{ColorIndex::purple});
-        target.curse_state = CurseState::cursed;
-    }
-    snd("core.drink1");
-}
-
-
-
-void blending_proc_on_success_events_well_refill(Item& well, Item& potion)
-{
-    txt(i18n::s.get("core.action.dip.result.well_refill", well, potion));
-    if (potion.id == ItemId::empty_bottle)
-    {
-        txt(i18n::s.get("core.action.dip.result.empty_bottle_shatters"));
-        return;
-    }
-    snd("core.drink1");
-    if (well.id == ItemId::holy_well)
-    {
-        txt(i18n::s.get("core.action.dip.result.holy_well_polluted"));
-        return;
-    }
-    if (well.param3 >= 20)
-    {
-        txt(i18n::s.get("core.action.dip.result.well_dry", well));
-        return;
-    }
-    txt(i18n::s.get("core.action.dip.result.well_refilled", well),
-        Message::color{ColorIndex::green});
-    if (potion.id == ItemId::handful_of_snow)
-    {
-        txt(i18n::s.get("core.action.dip.result.snow_melts.blending"));
-    }
-    else
-    {
-        well.param1 += rnd(3);
-    }
-}
-
-
-
-void blending_proc_on_success_events_natural_potion(Item& well, Item&)
-{
-    if (well.param1 < -5 || well.param3 >= 20 ||
-        (well.id == ItemId::holy_well && game_data.holy_well_count <= 0))
-    {
-        txt(i18n::s.get("core.action.dip.result.natural_potion_dry", well));
-        txt(i18n::s.get("core.action.dip.result.natural_potion_drop"));
-        return;
-    }
-    if (!inv_get_free_slot(0))
-    {
-        txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
-        return;
-    }
-    optional_ref<Item> natural_potion;
-    if (well.id == ItemId::holy_well)
-    {
-        --game_data.holy_well_count;
-        flt();
-        if ((natural_potion = itemcreate_player_inv(516, 0)))
-        {
-            natural_potion->curse_state = CurseState::blessed;
-        }
-    }
-    else
-    {
-        well.param1 -= 3;
-        flt(20);
-        flttypemajor = 52000;
-        natural_potion = itemcreate_player_inv(0, 0);
-    }
-    if (natural_potion)
-    {
-        txt(i18n::s.get("core.action.dip.result.natural_potion"));
-        txt(i18n::s.get("core.action.dip.you_get", *natural_potion),
-            Message::color{ColorIndex::green});
-        item_stack(0, *natural_potion, true);
-        item_stack(0, *natural_potion);
-        snd("core.drink1");
-    }
-}
-
-
-
-// TODO: Much duplication with do_dip_command()
-void blending_proc_on_success_events()
-{
-    const auto item1_index = rpref(10);
-    const auto item2_index = rpref(12);
-    if (rpdata(2, rpid) == 2)
-    {
-        item_separate(inv[item1_index]);
-    }
-    else if (inv[item1_index].number() <= 1)
-    {
-        rpref(10) = -2;
-    }
-    else
-    {
-        int stat = item_separate(inv[item1_index]).index;
-        if (rpref(10) == stat)
-        {
-            rpref(10) = -2;
-        }
-        else
-        {
-            rpref(10) = stat;
-        }
-    }
-
-    // See each function for parameter usage.
-    auto& item1 = inv[item1_index];
-    auto& item2 = inv[item2_index];
-    switch (rpdata(0, rpid))
-    {
-    case 10000: blending_proc_on_success_events_love_food(item1, item2); break;
-    case 10001: blending_proc_on_success_events_dyeing(item1, item2); break;
-    case 10002:
-        blending_proc_on_success_events_poisoned_food(item1, item2);
-        break;
-    case 10003: blending_proc_on_success_events_fireproof(item1, item2); break;
-    case 10004: blending_proc_on_success_events_acidproof(item1, item2); break;
-    case 10005:
-        blending_proc_on_success_events_bait_attachment(item1, item2);
-        break;
-    case 10006: blending_proc_on_success_events_blessing(item1, item2); break;
-    case 10007:
-        blending_proc_on_success_events_well_refill(item1, item2);
-        break;
-    case 10008:
-        blending_proc_on_success_events_natural_potion(item1, item2);
-        break;
-    default: break;
-    }
-
-    item_stack(0, item1);
-    if (item1.body_part != 0)
-    {
-        create_pcpic(cdata.player());
-    }
-    if (inv_getowner(item1) == -1)
-    {
-        cell_refresh(item1.position.x, item1.position.y);
-    }
-    chara_refresh(0);
+    bmes(required_time, dx + 160, dy + 20, {235, 235, 235}, {40, 40, 40});
 }
 
 } // namespace elona

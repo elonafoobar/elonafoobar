@@ -1,5 +1,6 @@
-ELONA.i18n:add {
-   ability = {
+ELONA.i18n:add_data_text(
+   "core.ability",
+   {
       attribute_life = {
          name = "生命力",
       },
@@ -817,5 +818,5 @@ ELONA.i18n:add {
          name = "地雷投下",
          description = "足元に地雷設置",
       },
-   },
-}
+   }
+)

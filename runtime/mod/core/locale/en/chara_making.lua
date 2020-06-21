@@ -88,7 +88,6 @@ ELONA.i18n:add {
          },
 
          what_is_your_name = "Last question. What's your name?",
-         name_is_already_taken = "Sorry, but the name is already taken.",
       },
    },
 }

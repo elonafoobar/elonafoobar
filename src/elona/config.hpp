@@ -146,8 +146,6 @@ public:
     ELONA_DEFINE_OPTION(bool, net)
     ELONA_DEFINE_OPTION(bool, object_shadow)
     ELONA_DEFINE_OPTION(std::string, pcc_graphic_scale)
-    ELONA_DEFINE_OPTION(int, quick_action_size)
-    ELONA_DEFINE_OPTION(int, quick_action_transparency)
     ELONA_DEFINE_OPTION(int, restock_interval)
     ELONA_DEFINE_OPTION(int, run_wait)
     ELONA_DEFINE_OPTION(int, screen_refresh_wait)

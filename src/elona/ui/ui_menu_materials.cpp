@@ -26,7 +26,6 @@ bool UIMenuMaterials::init()
     page = 0;
     pagesize = 15;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
 
     const auto& info = asset_load("ie_scroll");

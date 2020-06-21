@@ -10,6 +10,8 @@
 #include "../menu.hpp"
 #include "../message.hpp"
 
+
+
 namespace elona
 {
 namespace ui
@@ -38,9 +40,12 @@ bool UIMenuCtrlAlly::_should_display_ally(const Character& chara)
     }
     if (_operation == ControlAllyOperation::gene_engineer)
     {
-        if (chara.index == rc)
+        if (_gene_engineering_original_character)
         {
-            return false;
+            if (chara.index == _gene_engineering_original_character->index)
+            {
+                return false;
+            }
         }
     }
     if (chara.current_map != 0)
@@ -59,10 +64,6 @@ bool UIMenuCtrlAlly::_should_display_ally(const Character& chara)
         }
     }
     if (chara.is_ridden())
-    {
-        return false;
-    }
-    if (chara.index == 0)
     {
         return false;
     }
@@ -107,18 +108,17 @@ bool UIMenuCtrlAlly::init()
     page = 0;
     pagesize = 16;
     cs = 0;
-    cc = 0;
     cs_bk = -1;
     if (_operation == ControlAllyOperation::pet_arena)
     {
         _insert_proceed_entry();
     }
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (auto&& ally : cdata.allies())
     {
-        if (_should_display_ally(cdata[cnt]))
+        if (_should_display_ally(ally))
         {
-            list(0, listmax) = cnt;
-            list(1, listmax) = -cdata[cnt].level;
+            list(0, listmax) = ally.index;
+            list(1, listmax) = -ally.level;
             ++listmax;
         }
     }
@@ -155,9 +155,9 @@ static void _update_sell()
 static void _update_pet_arena()
 {
     i = 0;
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (const auto& ally : cdata.player_and_allies())
     {
-        i += followerin(cnt) == 1;
+        i += followerin(ally.index) == 1;
     }
     if (i < arenaop(1))
     {
@@ -205,7 +205,8 @@ static void _update_staying()
     x = 20;
 }
 
-static void _update_investigate_and_gene_engineer(bool is_gene_engineer)
+void UIMenuCtrlAlly::_update_investigate_and_gene_engineer(
+    bool is_gene_engineer)
 {
     txt(i18n::s.get("core.ui.ally_list.gene_engineer.prompt"));
     s(10) = i18n::s.get("core.ui.ally_list.gene_engineer.title");
@@ -214,7 +215,7 @@ static void _update_investigate_and_gene_engineer(bool is_gene_engineer)
     s(13) = i18n::s.get("core.ui.ally_list.status");
     if (is_gene_engineer)
     {
-        if (rc != 0)
+        if (_gene_engineering_original_character)
         {
             s(13) = i18n::s.get("core.ui.ally_list.gene_engineer.body_skill");
         }
@@ -279,8 +280,7 @@ snail::Color UIMenuCtrlAlly::_draw_get_color(const Character& chara)
 
 std::string UIMenuCtrlAlly::_get_ally_name(const Character& chara)
 {
-    std::string ally_name =
-        ""s + cdatan(1, chara.index) + u8" "s + cdatan(0, chara.index);
+    std::string ally_name = chara.alias + u8" "s + chara.name;
 
     if (chara.current_map != 0)
     {
@@ -375,11 +375,11 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
 {
     std::string ally_info = ally_info_;
 
-    if (rc != 0)
+    if (_gene_engineering_original_character)
     {
-        tc = chara.index;
         {
-            int stat = transplant_body_parts();
+            int stat = transplant_body_parts(
+                *_gene_engineering_original_character, chara);
             if (stat == -1)
             {
                 ally_info = i18n::s.get("core.ui.ally_list.gene_engineer.none");
@@ -391,7 +391,8 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
         }
         ally_info += u8"/"s;
         {
-            int stat = gain_skills_by_geen_engineering();
+            int stat = gain_skills_by_geen_engineering(
+                *_gene_engineering_original_character, chara);
             if (stat == 0)
             {
                 ally_info +=
@@ -399,18 +400,11 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
             }
             else
             {
-                ally_info += ""s +
-                    i18n::s.get_m(
-                        "ability",
-                        the_ability_db.get_id_from_legacy(rtval)->get(),
-                        "name");
+                ally_info += ""s + the_ability_db.get_text(rtval, "name");
                 if (rtval(1) != -1)
                 {
-                    ally_info += u8", "s +
-                        i18n::s.get_m(
-                            "ability",
-                            the_ability_db.get_id_from_legacy(rtval(1))->get(),
-                            "name");
+                    ally_info +=
+                        u8", "s + the_ability_db.get_text(rtval(1), "name");
                 }
             }
         }
@@ -421,14 +415,13 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
 
 void UIMenuCtrlAlly::_draw_ally_list_entry_sell(int cnt, const Character& chara)
 {
-    std::string ally_name =
-        ""s + cdatan(1, chara.index) + u8" "s + cdatan(0, chara.index);
+    std::string ally_name = chara.alias + u8" "s + chara.name;
     ally_name += u8" Lv."s + chara.level;
 
     cs_list(cs == cnt, ally_name, wx + 84, wy + 66 + cnt * 19 - 1);
 
     std::string ally_info =
-        ""s + calcslavevalue(chara.index) * 2 / 3 + i18n::s.get("core.ui.gold");
+        ""s + calc_slave_value(chara) * 2 / 3 + i18n::s.get("core.ui.gold");
 
     mes(wx + 390, wy + 66 + cnt * 19 + 2, ally_info);
 }
@@ -547,9 +540,9 @@ optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_gene_engineer(int _p)
 optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_pet_arena(int _p)
 {
     i = 0;
-    for (int cnt = 0; cnt < 16; ++cnt)
+    for (const auto& ally : cdata.player_and_allies())
     {
-        if (followerin(cnt) == 1)
+        if (followerin(ally.index) == 1)
         {
             ++i;
         }

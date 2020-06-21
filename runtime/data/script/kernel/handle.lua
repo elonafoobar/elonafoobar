@@ -51,7 +51,7 @@ local function handle_error(handle, key)
    end
 
    if handle then
-      print("Error: handle is not valid! " .. handle.__kind .. ":" .. handle.__index)
+      print("Error: handle is not valid! " .. handle.__kind .. ":" .. handle.__uuid)
    else
       print("Error: handle is not valid! " .. tostring(handle))
    end
@@ -191,7 +191,6 @@ function Handle.create_handle(cpp_ref, kind, uuid)
    local handle = {
       __uuid = uuid,
       __kind = kind,
-      __index = cpp_ref.index,
       __handle = true
    }
 
@@ -221,15 +220,13 @@ function Handle.remove_handle(cpp_ref, kind)
 end
 
 
---- Moves a handle from one integer index to another and updates its
---- __index field with the new value, if it exists. If the handle
---- exists, the target slot must not be occupied. If not, the
---- destination slot will be set to empty as well.
+--- Moves a handle from one integer index to another if it exists. If the handle
+--- exists, the target slot must not be occupied. If not, the destination slot
+--- will be set to empty as well.
 function Handle.relocate_handle(cpp_ref, dest_cpp_ref, new_index, kind)
    local handle = handles_by_index[kind][cpp_ref.index]
 
    if Handle.is_valid(handle) then
-      handle.__index = new_index
       handles_by_index[kind][new_index] = handle
       Handle.set_ref(handle, dest_cpp_ref)
    else
@@ -270,22 +267,13 @@ end
 -- Functions for deserialization. The steps are as follows.
 -- 1. Deserialize mod data that contains the table of handles.
 -- 2. Clear out existing handles/references in "handles_by_index" and
---    "refs" using "get_handle_range" and "clear_handle_range".
+--    "refs" using "clear_handle_range".
 -- 3. Place handles into the "handles_by_index" table using
 --    "merge_handles".
 -- 4. In C++, for each object loaded, add its reference to the "refs"
 --    table using by looking up a newly inserted handle using the C++
 --    object's integer index in "handles_by_index".
 --    (handle_manager::resolve_handle)
-
-function Handle.get_handle_range(kind, index_start, index_end)
-   local ret = {}
-   for index, handle in Handle.iter(kind, index_start, index_end) do
-      -- Lua tables are 1-indexed, so convert to 0-indexed.
-      ret[index-1] = handle
-   end
-   return ret
-end
 
 function Handle.clear_handle_range(kind, index_start, index_end)
    for index=index_start, index_end-1 do
@@ -297,12 +285,18 @@ function Handle.clear_handle_range(kind, index_start, index_end)
    end
 end
 
-function Handle.merge_handles(kind, handles_)
-   for index, handle in pairs(handles_) do
-      if handle ~= nil then
+function Handle.merge_handles(kind, obj_ids)
+   for index, obj_id in pairs(obj_ids) do
+      if obj_id ~= nil then
          if handles_by_index[kind][index] ~= nil then
-            error("Attempt to overwrite handle " .. kind .. ":" .. adjusted_index, 2)
+            error("Attempt to overwrite handle " .. kind .. ":" .. index, 2)
          end
+         local handle = {
+            __uuid = obj_id,
+            __kind = kind,
+            __handle = true,
+         }
+         setmetatable(handle, metatables[kind])
          handles_by_index[kind][index] = handle
       end
    end
