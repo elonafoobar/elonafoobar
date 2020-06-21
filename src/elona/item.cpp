@@ -198,7 +198,7 @@ Item& AllInventory::operator[](int index)
             return inv.at(static_cast<size_t>(index) - inv.index_start());
         }
     }
-    assert(0);
+    throw "unreachable";
 }
 
 
