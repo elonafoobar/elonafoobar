@@ -9,7 +9,7 @@ module "JSON5"
 --  @treturn[2] nil If failed
 --  @treturn[2] string Error message
 --  @function parse
-function parse(source, state) end
+function parse(source) end
 
 --- Stringify arbitary value as JSON5.
 --  @function stringify

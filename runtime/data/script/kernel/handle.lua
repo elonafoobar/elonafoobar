@@ -314,39 +314,5 @@ function Handle.clear()
 end
 
 
-local function iter(a, i)
-   if i >= a.to then
-      return nil
-   end
-   local v = a.handles[i]
-   -- Skip over indices that point to invalid handles.
-   while not (v and Handle.is_valid(v)) do
-      i = i + 1
-      v = a.handles[i]
-      if i >= a.to then
-         return nil
-      end
-   end
-   i = i + 1
-   return i, v
-end
-
-function Handle.iter(kind, from, to)
-   if from > to then
-      return nil
-   end
-   return iter, {handles=handles_by_index[kind], to=to}, from
-end
-
--- These functions exist in the separate handle environment because I
--- couldn't quite figure out how to make a valid custom C++/Lua
--- iterator with Sol that returns Lua table references as values.
-
--- Chara.iter(from, to)
-Handle.iter_charas = function(from, to) return Handle.iter("LuaCharacter", from, to) end
-
--- Item.iter(from, to)
-Handle.iter_items = function(from, to) return Handle.iter("LuaItem", from, to) end
-
 
 return Handle

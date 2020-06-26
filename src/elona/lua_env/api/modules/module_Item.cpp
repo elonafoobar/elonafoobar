@@ -371,6 +371,49 @@ bool Item_has_free_slot(int inventory_id)
 
 
 
+/**
+ * @luadoc player_inventory
+ *
+ * Gets the player's inventory.
+ *
+ * @treturn The player's inventory.
+ */
+sol::table Item_player_inventory(sol::this_state state)
+{
+    sol::state_view L = state;
+
+    sol::table ret = L.create_table();
+    for (auto& item : inv.pc())
+    {
+        ret.add(lua::handle(item));
+    }
+    return ret;
+}
+
+
+
+/**
+ * @luadoc map_inventory
+ *
+ * Gets the map inventory. It contains all items on the ground in the current
+ * map.
+ *
+ * @treturn The map inventory.
+ */
+sol::table Item_map_inventory(sol::this_state state)
+{
+    sol::state_view L = state;
+
+    sol::table ret = L.create_table();
+    for (auto& item : inv.ground())
+    {
+        ret.add(lua::handle(item));
+    }
+    return ret;
+}
+
+
+
 void bind(sol::table api_table)
 {
     /* clang-format off */
@@ -385,6 +428,8 @@ void bind(sol::table api_table)
     ELONA_LUA_API_BIND_FUNCTION("find", Item_find);
     ELONA_LUA_API_BIND_FUNCTION("weight_string", Item_weight_string);
     ELONA_LUA_API_BIND_FUNCTION("has_free_slot", Item_has_free_slot);
+    ELONA_LUA_API_BIND_FUNCTION("player_inventory", Item_player_inventory);
+    ELONA_LUA_API_BIND_FUNCTION("map_inventory", Item_map_inventory);
 
     /* clang-format on */
 }
