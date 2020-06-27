@@ -737,7 +737,7 @@ TEST_CASE(
     run_in_temporary_map(2, 0, []() {
         REQUIRE(
             elona::lua::lua->get_handle_manager().get_handle(
-                57, Character::lua_type()) != sol::lua_nil);
+                elona::cdata[57]) != sol::lua_nil);
     });
 }
 
@@ -751,6 +751,6 @@ TEST_CASE(
     run_in_temporary_map(5, 1, []() {
         REQUIRE(
             elona::lua::lua->get_handle_manager().get_handle(
-                57, Character::lua_type()) != sol::lua_nil);
+                elona::cdata[57]) != sol::lua_nil);
     });
 }

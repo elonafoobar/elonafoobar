@@ -104,14 +104,11 @@ public:
      * Provides a Lua reference to a handle from the isolated handle
      * environment.
      */
-    sol::table get_handle(int index, std::string type)
+    template <typename T>
+    sol::table get_handle(T& obj)
     {
-        if (index < 0)
-        {
-            return sol::lua_nil;
-        }
-
-        sol::object handle = env()["Handle"]["get_handle"](index, type);
+        sol::object handle =
+            env()["Handle"]["get_handle"](pointer_arg(obj), T::lua_type());
         if (!handle.is<sol::table>())
         {
             return sol::lua_nil;
@@ -119,29 +116,6 @@ public:
         return handle;
     }
 
-    /***
-     * Provides a Lua reference to a handle from the isolated handle
-     * environment.
-     */
-    template <typename T>
-    sol::table get_handle(T& obj)
-    {
-        if constexpr (std::is_same_v<std::remove_cv_t<T>, Item>)
-        {
-            return get_handle(obj.index(), T::lua_type());
-        }
-        else
-        {
-            return get_handle(obj.index, T::lua_type());
-        }
-    }
-
-
-    void
-    clear_handle_range(const std::string& kind, int index_start, int index_end)
-    {
-        env()["Handle"]["clear_handle_range"](kind, index_start, index_end);
-    }
 
     void merge_handles(const std::string& kind, sol::table handles)
     {
@@ -149,10 +123,14 @@ public:
     }
 
     template <typename T>
-    void relocate_handle(T& source, T& destination, int new_index)
+    void relocate_handle(T& source, T& destination)
     {
         env()["Handle"]["relocate_handle"](
-            source, destination, new_index, T::lua_type());
+            source,
+            pointer_arg(source),
+            destination,
+            pointer_arg(destination),
+            T::lua_type());
     }
 
     template <typename T>
@@ -164,7 +142,7 @@ public:
     template <typename T>
     void resolve_handle(T& obj)
     {
-        auto handle = get_handle<T>(obj);
+        auto handle = get_handle(obj);
         if (handle != sol::lua_nil)
         {
             env()["Handle"]["set_ref"](handle, obj);
@@ -188,14 +166,22 @@ private:
         const auto new_id = ObjId::generate();
         obj.obj_id = new_id;
         env()["Handle"]["create_handle"](
-            obj, T::lua_type(), new_id.to_string());
+            obj, pointer_arg(obj), T::lua_type(), new_id.to_string());
     }
 
     template <typename T>
     void remove_handle(T& obj)
     {
-        env()["Handle"]["remove_handle"](obj, T::lua_type());
+        env()["Handle"]["remove_handle"](obj, pointer_arg(obj), T::lua_type());
         obj.obj_id = ObjId::nil();
+    }
+
+
+    template <typename T>
+    int64_t pointer_arg(T& obj)
+    {
+        static_assert(sizeof(T*) <= sizeof(int64_t));
+        return reinterpret_cast<int64_t>(std::addressof(obj));
     }
 };
 
