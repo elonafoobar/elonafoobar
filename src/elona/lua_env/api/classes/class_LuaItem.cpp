@@ -49,7 +49,7 @@ void LuaItem_change_material(Item& self, const std::string& material_id)
 
 std::string LuaItem_metamethod_tostring(const Item& self)
 {
-    return Item::lua_type() + "(" + std::to_string(self.index()) + ")";
+    return Item::lua_type() + "(" + self.obj_id.to_string() + ")";
 }
 
 
