@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.4] - 2020-06-29
+
+### Fixed
+
+* Fix crash when drawing a figurine of tinted monster, e.g., a figurine of red putit, Goda, etc.
+
+
+
 ## [0.7.3] - 2020-06-21
 
 ### Fixed
