@@ -1362,7 +1362,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
 
             stack_height += item_chips[item_chip_id].stack_height;
             if (item_chip_id == 531 &&
-                draw_get_rect_chara(chara_chip_id)->height == 96)
+                draw_get_rect_chara(chara_chip_id % 1000)->height == 96)
             {
                 stack_height += 44;
             }
