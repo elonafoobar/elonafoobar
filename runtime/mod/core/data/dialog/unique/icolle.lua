@@ -15,7 +15,7 @@ local function give_monster_balls()
          break
       end
 
-      if item.number > 0 and item.id == "core.monster_ball" and item.subname ~= 0 then
+      if item.id == "core.monster_ball" and item.subname ~= 0 then
          found = true
          while item.number > 0 and flag < 6 do
             GUI.txt(I18N.get("core.talk.unique.icolle.quest.give.deliver", item));

@@ -9,7 +9,7 @@ local common = require("../common.lua")
 local function take_books()
    local taken_books = {}
    for _, item in ipairs(Item.player_inventory()) do
-      if item.number ~= 0 and item.id == "core.book_of_rachel" and item.param2 >= 1 and item.param2 <= 4 then
+      if item.id == "core.book_of_rachel" and item.param2 >= 1 and item.param2 <= 4 then
          if not taken_books[item.param2] then
             item.number = item.number - 1
             taken_books[item.param2] = true
@@ -57,7 +57,7 @@ return {
          local found_books = {}
          local total_books = 0
          for _, item in ipairs(Item.player_inventory()) do
-            if item.number ~= 0 and item.id == "core.book_of_rachel" and item.param2 >= 1 and item.param2 <= 4 then
+            if item.id == "core.book_of_rachel" and item.param2 >= 1 and item.param2 <= 4 then
                if not found_books[item.param2] then
                   total_books = total_books + 1
                   found_books[item.param2] = true

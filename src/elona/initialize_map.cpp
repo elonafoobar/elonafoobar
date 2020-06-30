@@ -1397,10 +1397,7 @@ void migrate_old_save_v17()
     }
     for (const auto& item : g_inv.ground())
     {
-        if (item.number() != 0)
-        {
-            cell_refresh(item.position.x, item.position.y);
-        }
+        cell_refresh(item.position.x, item.position.y);
     }
     for (int y = 0; y < map_data.height; ++y)
     {
