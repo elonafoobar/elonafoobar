@@ -149,7 +149,7 @@ void HandleManager::clear_map_local_handles()
     {
         for (auto&& item : inv)
         {
-            remove_item_handle(item);
+            remove_item_handle(*item);
         }
     }
 }

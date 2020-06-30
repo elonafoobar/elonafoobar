@@ -77,9 +77,9 @@ void shop_load_shoptmp()
 
 void shop_refresh(Character& shopkeeper)
 {
-    for (auto&& item : g_inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        item.remove();
+        item->remove();
     }
 
     lua::call("core.Impl.shop_inventory.generate", lua::handle(shopkeeper));

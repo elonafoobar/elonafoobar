@@ -276,7 +276,7 @@ public:
     Inventory(Inventory&&);
 
     bool contains(size_t index) const;
-    Item& at(size_t index);
+    ItemRef at(size_t index);
 
     bool has_free_slot() const;
     optional_ref<Item> get_free_slot();
@@ -319,9 +319,9 @@ public:
         }
 
 
-        auto& operator*() const
+        ItemRef operator*() const
         {
-            return *_itr;
+            return ItemRef{&*_itr};
         }
 
 
@@ -416,7 +416,7 @@ public:
     AllInventory();
 
 
-    Item& operator[](int index);
+    ItemRef operator[](int index);
 
 
     Inventory& pc();

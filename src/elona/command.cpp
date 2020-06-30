@@ -95,17 +95,17 @@ void _search_for_crystal()
     optional<int> d;
     for (const auto& item : g_inv.ground())
     {
-        if (item.own_state != 5)
+        if (item->own_state != 5)
         {
             continue;
         }
-        if (item.id != ItemId::summoning_crystal)
+        if (item->id != ItemId::summoning_crystal)
         {
             continue;
         }
         const auto d_ = dist(
-            item.position.x,
-            item.position.y,
+            item->position.x,
+            item->position.y,
             cdata.player().position.x,
             cdata.player().position.y);
         if (!d || d_ < *d)
@@ -2916,9 +2916,9 @@ TurnResult do_open_command(Item& box, bool play_sound)
         }
         else
         {
-            for (auto&& item : g_inv.ground())
+            for (const auto& item : g_inv.ground())
             {
-                item.remove();
+                item->remove();
             }
         }
         shoptrade = 0;
@@ -5625,7 +5625,7 @@ PickUpItemResult pick_up_item(
                 f = 0;
                 for (const auto& item_ : g_inv.ground())
                 {
-                    if (item_.id == ItemId::campfire)
+                    if (item_->id == ItemId::campfire)
                     {
                         f = 1;
                         break;
@@ -5876,20 +5876,20 @@ void proc_autopick()
         return;
 
 
-    for (auto&& item : g_inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (item.position != cdata.player().position)
+        if (item->position != cdata.player().position)
             continue;
-        if (item.own_state > 0)
+        if (item->own_state > 0)
             continue;
 
-        item_checkknown(item);
+        item_checkknown(*item);
 
         const auto x = cdata.player().position.x;
         const auto y = cdata.player().position.y;
 
         bool did_something = true;
-        const auto op = Autopick::instance().get_operation(item);
+        const auto op = Autopick::instance().get_operation(*item);
         switch (op.type)
         {
         case Autopick::Operation::Type::do_nothing:
@@ -5903,7 +5903,7 @@ void proc_autopick()
             if (op.show_prompt)
             {
                 txt(i18n::s.get(
-                    "core.ui.autopick.do_you_really_pick_up", item));
+                    "core.ui.autopick.do_you_really_pick_up", *item));
                 if (!yes_no())
                 {
                     did_something = false;
@@ -5911,9 +5911,9 @@ void proc_autopick()
                 }
             }
             {
-                in = item.number();
+                in = item->number();
                 const auto pick_up_item_result =
-                    pick_up_item(cdata.player().index, item, none, !op.sound);
+                    pick_up_item(cdata.player().index, *item, none, !op.sound);
                 if (pick_up_item_result.type != 1)
                 {
                     break;
@@ -5943,7 +5943,7 @@ void proc_autopick()
             if (op.show_prompt)
             {
                 txt(i18n::s.get(
-                    "core.ui.autopick.do_you_really_destroy", item));
+                    "core.ui.autopick.do_you_really_destroy", *item));
                 if (!yes_no())
                 {
                     did_something = false;
@@ -5954,8 +5954,8 @@ void proc_autopick()
             {
                 snd("core.crush1");
             }
-            txt(i18n::s.get("core.ui.autopick.destroyed", item));
-            item.remove();
+            txt(i18n::s.get("core.ui.autopick.destroyed", *item));
+            item->remove();
             cell_refresh(x, y);
             cell_data.at(x, y).item_info_memory =
                 cell_data.at(x, y).item_info_actual;
@@ -5964,14 +5964,14 @@ void proc_autopick()
             // FIXME: DRY
             if (op.show_prompt)
             {
-                txt(i18n::s.get("core.ui.autopick.do_you_really_open", item));
+                txt(i18n::s.get("core.ui.autopick.do_you_really_open", *item));
                 if (!yes_no())
                 {
                     did_something = false;
                     break;
                 }
             }
-            (void)do_open_command(item, !op.sound); // Result is unused.
+            (void)do_open_command(*item, !op.sound); // Result is unused.
             break;
         }
         if (did_something && op.sound)

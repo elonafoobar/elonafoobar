@@ -557,11 +557,11 @@ bool _magic_183(Character& subject, optional_ref<Item> instrument)
 
     if (subject.index != 0)
     {
-        for (auto&& item : g_inv.for_chara(subject))
+        for (const auto& item : g_inv.for_chara(subject))
         {
-            if (item.skill == 183)
+            if (item->skill == 183)
             {
-                instrument = item;
+                instrument = *item;
                 break;
             }
         }
@@ -1150,18 +1150,18 @@ bool _magic_412(Character& subject, Character& target)
     }
     p(1) = 0;
     p(2) = 0;
-    for (auto&& item : g_inv.for_chara(target))
+    for (const auto& item : g_inv.for_chara(target))
     {
-        if (!is_cursed(item.curse_state))
+        if (!is_cursed(item->curse_state))
         {
             continue;
         }
         p = 0;
-        if (item.curse_state == CurseState::cursed)
+        if (item->curse_state == CurseState::cursed)
         {
             p = rnd(200) + 1;
         }
-        if (item.curse_state == CurseState::doomed)
+        if (item->curse_state == CurseState::doomed)
         {
             p = rnd(1000) + 1;
         }
@@ -1169,7 +1169,7 @@ bool _magic_412(Character& subject, Character& target)
         {
             p = p / 2 + 1;
         }
-        else if (item.body_part == 0)
+        else if (item->body_part == 0)
         {
             continue;
         }
@@ -1178,8 +1178,8 @@ bool _magic_412(Character& subject, Character& target)
             if (efp >= p)
             {
                 ++p(1);
-                item.curse_state = CurseState::none;
-                item_stack(target.index, item, true);
+                item->curse_state = CurseState::none;
+                item_stack(target.index, *item, true);
             }
             else
             {
@@ -3390,28 +3390,28 @@ bool _magic_651(Character& subject, Character& target)
         txt(i18n::s.get("core.magic.scavenge.apply", subject, target));
     }
     optional_ref<Item> eat_item_opt;
-    for (auto&& item : g_inv.for_chara(target))
+    for (const auto& item : g_inv.for_chara(target))
     {
-        if (item.id == ItemId::fish_a)
+        if (item->id == ItemId::fish_a)
         {
-            eat_item_opt = item;
+            eat_item_opt = *item;
             break;
         }
     }
     if (!eat_item_opt)
     {
-        for (auto&& item : g_inv.for_chara(target))
+        for (const auto& item : g_inv.for_chara(target))
         {
-            if (item.is_precious())
+            if (item->is_precious())
             {
                 continue;
             }
-            if (the_item_db[itemid2int(item.id)]->category !=
+            if (the_item_db[itemid2int(item->id)]->category !=
                 ItemCategory::food)
             {
                 continue;
             }
-            eat_item_opt = item;
+            eat_item_opt = *item;
             break;
         }
     }
@@ -3513,9 +3513,9 @@ bool _magic_463()
     }
     else
     {
-        for (auto&& item : g_inv.ground())
+        for (const auto& item : g_inv.ground())
         {
-            item.remove();
+            item->remove();
         }
     }
     shoptrade = 0;

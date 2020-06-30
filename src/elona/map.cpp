@@ -285,15 +285,15 @@ void map_reload(const std::string& map_filename)
 
     mef_clear_all();
 
-    for (auto&& item : g_inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (item.own_state == 1)
+        if (item->own_state == 1)
         {
-            if (the_item_db[itemid2int(item.id)]->category ==
+            if (the_item_db[itemid2int(item->id)]->category ==
                 ItemCategory::food)
             {
-                item.remove();
-                cell_refresh(item.position.x, item.position.y);
+                item->remove();
+                cell_refresh(item->position.x, item->position.y);
             }
         }
     }
@@ -634,30 +634,30 @@ static void _clear_material_spots()
 
 static void _modify_items_on_regenerate()
 {
-    for (auto&& item : g_inv.ground())
+    for (const auto& item : g_inv.ground())
     {
         // Update tree of fruits.
-        if (item.id == ItemId::tree_of_fruits)
+        if (item->id == ItemId::tree_of_fruits)
         {
-            if (item.param1 < 10)
+            if (item->param1 < 10)
             {
-                item.param1 += 1;
-                item.image = 591;
-                cell_refresh(item.position.x, item.position.y);
+                item->param1 += 1;
+                item->image = 591;
+                cell_refresh(item->position.x, item->position.y);
             }
         }
 
         // Clear player-owned items on the ground.
         if (map_is_town_or_guild())
         {
-            if (item.own_state < 0)
+            if (item->own_state < 0)
             {
-                ++item.own_state;
+                ++item->own_state;
             }
-            if (item.own_state == 0)
+            if (item->own_state == 0)
             {
-                item.remove();
-                cell_refresh(item.position.x, item.position.y);
+                item->remove();
+                cell_refresh(item->position.x, item->position.y);
             }
         }
     }
@@ -874,15 +874,15 @@ void map_proc_regen_and_update()
 
 void map_reload_noyel()
 {
-    for (auto&& item : g_inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (item.id == ItemId::shelter || item.id == ItemId::giants_shackle)
+        if (item->id == ItemId::shelter || item->id == ItemId::giants_shackle)
         {
             continue;
         }
-        item.remove();
+        item->remove();
 
-        cell_refresh(item.position.x, item.position.y);
+        cell_refresh(item->position.x, item->position.y);
     }
 
     if (area_data[game_data.current_map].christmas_festival)
@@ -2086,16 +2086,16 @@ void map_global_proc_travel_events(Character& chara)
     }
     if (cdata.player().nutrition <= 5000)
     {
-        for (auto&& item : g_inv.for_chara(chara))
+        for (const auto& item : g_inv.for_chara(chara))
         {
-            if (the_item_db[itemid2int(item.id)]->category ==
+            if (the_item_db[itemid2int(item->id)]->category ==
                 ItemCategory::travelers_food)
             {
                 if (is_in_fov(chara))
                 {
-                    txt(i18n::s.get("core.misc.finished_eating", chara, item));
+                    txt(i18n::s.get("core.misc.finished_eating", chara, *item));
                 }
-                activity_eating_finish(chara, item);
+                activity_eating_finish(chara, *item);
                 break;
             }
         }

@@ -1834,11 +1834,11 @@ void spot_digging(Character& chara)
     txt(i18n::s.get("core.activity.dig_spot.finish"));
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        for (auto&& item : g_inv.pc())
+        for (const auto& item : g_inv.pc())
         {
-            if (item.id == ItemId::treasure_map && item.param1 != 0 &&
-                item.param1 == cdata.player().position.x &&
-                item.param2 == cdata.player().position.y)
+            if (item->id == ItemId::treasure_map && item->param1 != 0 &&
+                item->param1 == cdata.player().position.x &&
+                item->param2 == cdata.player().position.y)
             {
                 snd("core.chest1");
                 txt(i18n::s.get("core.activity.dig_spot.something_is_there"),
@@ -1865,7 +1865,7 @@ void spot_digging(Character& chara)
                 }
                 txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
                 save_set_autosave();
-                item.modify_number(-1);
+                item->modify_number(-1);
                 break;
             }
         }

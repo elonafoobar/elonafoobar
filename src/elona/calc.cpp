@@ -1189,12 +1189,12 @@ int calccostreload(int owner, bool do_reload)
 {
     int cost{};
 
-    for (auto&& item : g_inv.for_chara(cdata[owner]))
+    for (const auto& item : g_inv.for_chara(cdata[owner]))
     {
-        if (the_item_db[itemid2int(item.id)]->category != ItemCategory::ammo)
+        if (the_item_db[itemid2int(item->id)]->category != ItemCategory::ammo)
             continue;
 
-        for (auto&& enc : item.enchantments)
+        for (auto&& enc : item->enchantments)
         {
             if (enc.id == 0)
                 break;
@@ -1248,7 +1248,7 @@ int calcidentifyvalue(int type)
         int need_to_identify{};
         for (const auto& item : g_inv.pc())
         {
-            if (item.identify_state != IdentifyState::completely)
+            if (item->identify_state != IdentifyState::completely)
             {
                 ++need_to_identify;
             }

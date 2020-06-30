@@ -388,6 +388,36 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 }
 
 
+void load(
+    const fs::path& filepath,
+    AllInventory& data,
+    size_t begin,
+    size_t end)
+{
+    load_internal(filepath, [&](auto& ar) {
+        for (size_t i = begin; i < end; ++i)
+        {
+            ar(*data[i]);
+        }
+    });
+}
+
+
+void save(
+    const fs::path& filepath,
+    AllInventory& data,
+    size_t begin,
+    size_t end)
+{
+    save_internal(filepath, [&](auto& ar) {
+        for (size_t i = begin; i < end; ++i)
+        {
+            ar(*data[i]);
+        }
+    });
+}
+
+
 template <typename T>
 void load(const fs::path& filepath, T& data)
 {
@@ -409,7 +439,7 @@ decltype(auto) get_nth_object(int index);
 template <>
 decltype(auto) get_nth_object<Item>(int index)
 {
-    return g_inv[index];
+    return *g_inv[index];
 }
 
 template <>

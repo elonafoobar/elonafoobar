@@ -2932,9 +2932,9 @@ int initialize_quest_map_party()
             chara->original_relationship = -1;
         }
     }
-    for (auto&& item : g_inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        item.own_state = 1;
+        item->own_state = 1;
     }
     return 1;
 }
@@ -2981,16 +2981,16 @@ void initialize_quest_map_town()
             }
         }
     }
-    for (auto&& item : g_inv.ground())
+    for (const auto& item : g_inv.ground())
     {
         f = 0;
-        if (item.id == ItemId::well || item.id == ItemId::fountain)
+        if (item->id == ItemId::well || item->id == ItemId::fountain)
         {
-            item.param1 = -10;
+            item->param1 = -10;
         }
-        if (item.id == ItemId::safe)
+        if (item->id == ItemId::safe)
         {
-            item.param1 = 0;
+            item->param1 = 0;
         }
     }
     for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)

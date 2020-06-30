@@ -155,52 +155,52 @@ std::vector<ItemForSale> list_items_for_sale()
 {
     std::vector<ItemForSale> ret;
 
-    for (auto&& item : g_inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (item.id == ItemId::shop_strongbox)
+        if (item->id == ItemId::shop_strongbox)
         {
             continue;
         }
-        if (item.id == ItemId::register_)
+        if (item->id == ItemId::register_)
         {
             continue;
         }
-        if (item.id == ItemId::book_b)
+        if (item->id == ItemId::book_b)
         {
             continue;
         }
-        if (item.id == ItemId::gold_piece)
+        if (item->id == ItemId::gold_piece)
         {
             continue;
         }
-        if (item.id == ItemId::shelter)
+        if (item->id == ItemId::shelter)
         {
             continue;
         }
-        if (item.id == ItemId::deed)
+        if (item->id == ItemId::deed)
         {
             continue;
         }
-        if (item.weight < 0)
+        if (item->weight < 0)
         {
             continue;
         }
-        if (item.quality >= Quality::special)
+        if (item->quality >= Quality::special)
         {
             continue;
         }
-        if (item.value < 50)
+        if (item->value < 50)
         {
             continue;
         }
 
-        const auto category = the_item_db[itemid2int(item.id)]->category;
+        const auto category = the_item_db[itemid2int(item->id)]->category;
         if (category == ItemCategory::furniture)
         {
             continue;
         }
 
-        ret.emplace_back(item, category);
+        ret.emplace_back(*item, category);
     }
 
     return ret;
@@ -463,7 +463,7 @@ TurnResult show_house_board()
     p(2) = 400;
     for (const auto& item : g_inv.ground())
     {
-        if (the_item_db[itemid2int(item.id)]->category !=
+        if (the_item_db[itemid2int(item->id)]->category !=
             ItemCategory::furniture)
         {
             ++p;
@@ -1073,9 +1073,9 @@ void show_shop_log()
     }
     else
     {
-        for (auto&& item : g_inv.ground())
+        for (const auto& item : g_inv.ground())
         {
-            item.remove();
+            item->remove();
         }
     }
     mode = 6;
@@ -1186,8 +1186,8 @@ void update_shop()
     }
     for (const auto& item : g_inv.ground())
     {
-        x = item.position.x;
-        y = item.position.y;
+        x = item->position.x;
+        y = item->position.y;
         if (x < 0 || x >= map_data.width || y < 0 || y >= map_data.height)
         {
             continue;
@@ -1237,17 +1237,17 @@ void update_museum()
     DIM3(dblist, 2, 800);
     for (const auto& item : g_inv.ground())
     {
-        if (item.id != ItemId::figurine && item.id != ItemId::card)
+        if (item->id != ItemId::figurine && item->id != ItemId::card)
         {
             continue;
         }
-        if (cell_data.at(item.position.x, item.position.y)
+        if (cell_data.at(item->position.x, item->position.y)
                 .item_info_actual.stack_count() == 1)
         {
             continue;
         }
-        calc_collection_value(item.subname, item.id != ItemId::figurine);
-        if (item.id == ItemId::figurine)
+        calc_collection_value(item->subname, item->id != ItemId::figurine);
+        if (item->id == ItemId::figurine)
         {
             rankcur += rtval;
         }
@@ -1297,15 +1297,15 @@ std::vector<HomeRankHeirloom> building_update_home_rank()
     game_data.total_heirloom_value = 0;
 
     std::vector<HomeRankHeirloom> heirlooms;
-    for (auto&& item : g_inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (cell_data.at(item.position.x, item.position.y)
+        if (cell_data.at(item->position.x, item->position.y)
                 .item_info_actual.stack_count() == 1)
         {
             continue;
         }
 
-        add_heirloom_if_valuable_enough(heirlooms, item);
+        add_heirloom_if_valuable_enough(heirlooms, *item);
     }
 
     for (const auto& [_, value] : heirlooms)
@@ -1568,9 +1568,9 @@ void supply_income()
     }
     else
     {
-        for (auto&& item : g_inv.ground())
+        for (const auto& item : g_inv.ground())
         {
-            item.remove();
+            item->remove();
         }
     }
     mode = 6;

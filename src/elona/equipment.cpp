@@ -241,13 +241,13 @@ void eqrandweaponmage()
 
 void wear_most_valuable_equipment_for_all_body_parts(Character& chara)
 {
-    for (auto&& item : g_inv.for_chara(chara))
+    for (const auto& item : g_inv.for_chara(chara))
     {
-        if (item.body_part != 0)
+        if (item->body_part != 0)
         {
             continue;
         }
-        wear_most_valuable_equipment(chara, item);
+        wear_most_valuable_equipment(chara, *item);
     }
 }
 

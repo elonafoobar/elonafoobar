@@ -45,7 +45,7 @@ bool IndexItemRef::operator==(optional_ref<const Item>& other) const noexcept
 Item& IndexItemRef::as_ref() const
 {
     assert(*this);
-    return g_inv[_objid - 1];
+    return *g_inv[_objid - 1];
 }
 
 

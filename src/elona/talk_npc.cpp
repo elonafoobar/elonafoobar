@@ -98,7 +98,7 @@ TalkResult talk_wizard_identify(Character& speaker, int chatval_)
     p = 0;
     for (const auto& item : g_inv.pc())
     {
-        if (item.identify_state != IdentifyState::completely)
+        if (item->identify_state != IdentifyState::completely)
         {
             ++p;
         }
@@ -115,12 +115,12 @@ TalkResult talk_wizard_identify(Character& speaker, int chatval_)
         p(1) = 0;
         p(0) = 0;
         p(1) = 0;
-        for (auto&& item : g_inv.pc())
+        for (const auto& item : g_inv.pc())
         {
-            if (item.identify_state != IdentifyState::completely)
+            if (item->identify_state != IdentifyState::completely)
             {
-                const auto result = item_identify(item, 250);
-                item_stack(0, item, true);
+                const auto result = item_identify(*item, 250);
+                item_stack(0, *item, true);
                 ++p(1);
                 if (result >= IdentifyState::completely)
                 {
@@ -208,9 +208,9 @@ TalkResult talk_healer_restore_attributes(Character& speaker)
 TalkResult talk_trade(Character& speaker)
 {
     invsubroutine = 1;
-    for (auto&& item : g_inv.for_chara(speaker))
+    for (const auto& item : g_inv.for_chara(speaker))
     {
-        item.identify_state = IdentifyState::completely;
+        item->identify_state = IdentifyState::completely;
     }
     invctrl(0) = 20;
     invctrl(1) = 0;
@@ -2164,11 +2164,11 @@ TalkResult talk_npc(Character& speaker)
                 {
                     p = quest_data[cnt].target_item_id;
                     deliver = cnt;
-                    for (auto&& item : g_inv.pc())
+                    for (const auto& item : g_inv.pc())
                     {
-                        if (item.id == int2itemid(p))
+                        if (item->id == int2itemid(p))
                         {
-                            item_to_deliver = item;
+                            item_to_deliver = *item;
                             break;
                         }
                     }
@@ -2184,28 +2184,28 @@ TalkResult talk_npc(Character& speaker)
             quest_data[rq].client_chara_type == 3 &&
             quest_data[rq].progress == 1)
         {
-            for (auto&& item : g_inv.pc())
+            for (const auto& item : g_inv.pc())
             {
-                if (item.is_marked_as_no_drop())
+                if (item->is_marked_as_no_drop())
                 {
                     continue;
                 }
                 if (quest_data[rq].id == 1003)
                 {
-                    if (the_item_db[itemid2int(item.id)]->category ==
+                    if (the_item_db[itemid2int(item->id)]->category ==
                             ItemCategory::food &&
-                        item.param1 / 1000 == quest_data[rq].extra_info_1 &&
-                        item.param2 == quest_data[rq].extra_info_2)
+                        item->param1 / 1000 == quest_data[rq].extra_info_1 &&
+                        item->param2 == quest_data[rq].extra_info_2)
                     {
-                        item_to_supply = item;
+                        item_to_supply = *item;
                         break;
                     }
                 }
                 if (quest_data[rq].id == 1004 || quest_data[rq].id == 1011)
                 {
-                    if (item.id == int2itemid(quest_data[rq].target_item_id))
+                    if (item->id == int2itemid(quest_data[rq].target_item_id))
                     {
-                        item_to_supply = item;
+                        item_to_supply = *item;
                         break;
                     }
                 }

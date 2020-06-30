@@ -299,14 +299,14 @@ void _ally_sells_item(Character& chara)
     int sold_item_count = 0;
     int earned_money = 0;
 
-    for (auto&& item : g_inv.for_chara(chara))
+    for (const auto& item : g_inv.for_chara(chara))
     {
-        if (the_item_db[itemid2int(item.id)]->category == ItemCategory::ore)
+        if (the_item_db[itemid2int(item->id)]->category == ItemCategory::ore)
         {
-            sold_item_count += item.number();
-            const auto total_value = item.value * item.number();
+            sold_item_count += item->number();
+            const auto total_value = item->value * item->number();
             earned_money += total_value;
-            item.remove();
+            item->remove();
             earn_gold(chara, total_value);
         }
     }

@@ -244,15 +244,6 @@ void Console::register_builtin_commands()
 {
     auto builtin_commands = env().create_named("builtin_commands");
 
-    builtin_commands.set_function("dump", [this]() {
-        std::stringstream ss;
-        serialization::json::save(ss, cdata.player());
-        ss << std::endl;
-        serialization::json::save(ss, g_inv[0]);
-        _term.println(ss.str());
-        std::cerr << ss.str() << std::endl;
-    });
-
     builtin_commands.set_function("ls", [this]() {
         const auto& mod_mgr = lua().get_mod_manager();
         auto mods = mod_mgr.sorted_mods();

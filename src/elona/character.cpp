@@ -1502,9 +1502,9 @@ void chara_delete(int chara_index)
         chara_remove(cdata[chara_index]);
     }
 
-    for (auto&& item : g_inv.for_chara(cdata[chara_index]))
+    for (const auto& item : g_inv.for_chara(cdata[chara_index]))
     {
-        item.remove();
+        item->remove();
     }
     sdata.clear(chara_index);
     cdata[chara_index].clear();
@@ -1550,10 +1550,10 @@ void chara_relocate(
     const auto invhead = tmp.first;
     const auto invrange = tmp.second;
     int p = invhead;
-    for (auto&& item : g_inv.for_chara(destination))
+    for (const auto& item : g_inv.for_chara(destination))
     {
-        item_copy(g_inv[p], item);
-        item.body_part = 0;
+        item_copy(*g_inv[p], *item);
+        item->body_part = 0;
         ++p;
         if (p >= invhead + invrange)
         {
@@ -1792,9 +1792,9 @@ void initialize_pc_character()
     gain_race_feat();
     cdata.player().skill_bonus = 5 + trait(154);
     cdata.player().total_skill_bonus = 5 + trait(154);
-    for (auto&& item : g_inv.pc())
+    for (const auto& item : g_inv.pc())
     {
-        item.identify_state = IdentifyState::completely;
+        item->identify_state = IdentifyState::completely;
     }
     chara_refresh(cdata.player());
 }
