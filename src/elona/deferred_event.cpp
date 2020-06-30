@@ -987,7 +987,7 @@ void eh_guest_visit(const DeferredEvent&)
         }
         optional_ref<const Item> chair;
         auto distance_to_guest_chair = 6;
-        for (const auto& item : inv.ground())
+        for (const auto& item : g_inv.ground())
         {
             if (item.function != 44)
                 continue;

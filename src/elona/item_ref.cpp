@@ -45,7 +45,7 @@ bool ItemRef::operator==(optional_ref<const Item>& other) const noexcept
 Item& ItemRef::as_ref() const
 {
     assert(*this);
-    return inv[_objid - 1];
+    return g_inv[_objid - 1];
 }
 
 

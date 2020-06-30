@@ -77,7 +77,7 @@ void shop_load_shoptmp()
 
 void shop_refresh(Character& shopkeeper)
 {
-    for (auto&& item : inv.ground())
+    for (auto&& item : g_inv.ground())
     {
         item.remove();
     }

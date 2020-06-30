@@ -244,7 +244,7 @@ int cell_findspace(int base_x, int base_y, int range)
 int cell_count_exact_item_stacks(const Position& pos)
 {
     int ret{};
-    for (auto&& item : inv.ground())
+    for (auto&& item : g_inv.ground())
     {
         if (item.number() > 0 && item.position == pos)
         {
@@ -266,7 +266,7 @@ optional_ref<Item> cell_get_item_if_only_one(const Position& pos)
     else
     {
         const auto index = item_info_actual.item_indice()[0];
-        return inv.ground().at(index - 1);
+        return g_inv.ground().at(index - 1);
     }
 }
 

@@ -557,7 +557,7 @@ bool _magic_183(Character& subject, optional_ref<Item> instrument)
 
     if (subject.index != 0)
     {
-        for (auto&& item : inv.for_chara(subject))
+        for (auto&& item : g_inv.for_chara(subject))
         {
             if (item.skill == 183)
             {
@@ -1150,7 +1150,7 @@ bool _magic_412(Character& subject, Character& target)
     }
     p(1) = 0;
     p(2) = 0;
-    for (auto&& item : inv.for_chara(target))
+    for (auto&& item : g_inv.for_chara(target))
     {
         if (!is_cursed(item.curse_state))
         {
@@ -3390,7 +3390,7 @@ bool _magic_651(Character& subject, Character& target)
         txt(i18n::s.get("core.magic.scavenge.apply", subject, target));
     }
     optional_ref<Item> eat_item_opt;
-    for (auto&& item : inv.for_chara(target))
+    for (auto&& item : g_inv.for_chara(target))
     {
         if (item.id == ItemId::fish_a)
         {
@@ -3400,7 +3400,7 @@ bool _magic_651(Character& subject, Character& target)
     }
     if (!eat_item_opt)
     {
-        for (auto&& item : inv.for_chara(target))
+        for (auto&& item : g_inv.for_chara(target))
         {
             if (item.is_precious())
             {
@@ -3513,7 +3513,7 @@ bool _magic_463()
     }
     else
     {
-        for (auto&& item : inv.ground())
+        for (auto&& item : g_inv.ground())
         {
             item.remove();
         }

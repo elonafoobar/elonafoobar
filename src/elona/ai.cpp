@@ -299,7 +299,7 @@ void _ally_sells_item(Character& chara)
     int sold_item_count = 0;
     int earned_money = 0;
 
-    for (auto&& item : inv.for_chara(chara))
+    for (auto&& item : g_inv.for_chara(chara))
     {
         if (the_item_db[itemid2int(item.id)]->category == ItemCategory::ore)
         {

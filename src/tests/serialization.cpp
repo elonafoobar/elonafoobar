@@ -40,18 +40,18 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
         itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), x, y, number);
     REQUIRE_SOME(item);
     int index = item->index();
-    elona::inv[index].is_aphrodisiac() = true;
-    elona::inv[index].curse_state = CurseState::blessed;
+    elona::g_inv[index].is_aphrodisiac() = true;
+    elona::g_inv[index].curse_state = CurseState::blessed;
 
     save_and_reload();
 
-    REQUIRE(elona::inv[index].number() == 3);
-    REQUIRE(elona::inv[index].id == PUTITORO_PROTO_ID);
-    REQUIRE(elona::inv[index].position.x == 4);
-    REQUIRE(elona::inv[index].position.y == 8);
-    REQUIRE(elona::inv[index].curse_state == CurseState::blessed);
-    REQUIRE(elona::inv[index].is_aphrodisiac());
-    REQUIRE(itemname(inv[index]) == u8"3個のプチトロ(媚薬混入)");
+    REQUIRE(elona::g_inv[index].number() == 3);
+    REQUIRE(elona::g_inv[index].id == PUTITORO_PROTO_ID);
+    REQUIRE(elona::g_inv[index].position.x == 4);
+    REQUIRE(elona::g_inv[index].position.y == 8);
+    REQUIRE(elona::g_inv[index].curse_state == CurseState::blessed);
+    REQUIRE(elona::g_inv[index].is_aphrodisiac());
+    REQUIRE(itemname(g_inv[index]) == u8"3個のプチトロ(媚薬混入)");
 }
 
 TEST_CASE("Test party character index preservation", "[C++: Serialization]")
@@ -99,13 +99,13 @@ TEST_CASE("Test other character data compatibility", "[C++: Serialization]")
 TEST_CASE("Test item data compatibility (in inventory)", "[C++: Serialization]")
 {
     load_previous_savefile();
-    REQUIRE(elona::itemname(inv[0]) == u8"ブロンズの兜 [0,1]");
+    REQUIRE(elona::itemname(g_inv[0]) == u8"ブロンズの兜 [0,1]");
 }
 
 TEST_CASE("Test item data compatibility (on ground)", "[C++: Serialization]")
 {
     load_previous_savefile();
-    REQUIRE(elona::itemname(inv[5080]) == u8"割れたつぼ");
+    REQUIRE(elona::itemname(g_inv[5080]) == u8"割れたつぼ");
 }
 
 TEST_CASE("Test ability data compatibility", "[C++: Serialization]")

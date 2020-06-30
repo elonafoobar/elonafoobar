@@ -1000,7 +1000,7 @@ static void _init_map_your_home()
             // map if the home was upgraded.
             ctrl_file(
                 FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
-            for (auto&& item : inv.ground())
+            for (auto&& item : g_inv.ground())
             {
                 item.position.x = map_data.width / 2;
                 item.position.y = map_data.height / 2;

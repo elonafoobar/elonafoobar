@@ -248,7 +248,7 @@ void Console::register_builtin_commands()
         std::stringstream ss;
         serialization::json::save(ss, cdata.player());
         ss << std::endl;
-        serialization::json::save(ss, inv[0]);
+        serialization::json::save(ss, g_inv[0]);
         _term.println(ss.str());
         std::cerr << ss.str() << std::endl;
     });

@@ -1834,7 +1834,7 @@ void spot_digging(Character& chara)
     txt(i18n::s.get("core.activity.dig_spot.finish"));
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        for (auto&& item : inv.pc())
+        for (auto&& item : g_inv.pc())
         {
             if (item.id == ItemId::treasure_map && item.param1 != 0 &&
                 item.param1 == cdata.player().position.x &&

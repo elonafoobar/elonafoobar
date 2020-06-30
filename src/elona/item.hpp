@@ -436,7 +436,7 @@ private:
 
 
 
-extern AllInventory inv;
+extern AllInventory g_inv;
 
 
 

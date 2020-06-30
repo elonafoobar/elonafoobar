@@ -1121,14 +1121,14 @@ void _update_save_data_17(const fs::path& save_dir)
         {
             std::fill(std::begin(obj_id), std::end(obj_id), 0);
             ELONA_LOG("save.update")
-                << "inv[" << item_index << "].obj_id: <nil>";
+                << "g_inv[" << item_index << "].obj_id: <nil>";
         }
         else
         {
             const auto uuid = gen();
             std::copy(std::begin(uuid), std::end(uuid), std::begin(obj_id));
             ELONA_LOG("save.update")
-                << "inv[" << item_index << "].obj_id: " << uuid;
+                << "g_inv[" << item_index << "].obj_id: " << uuid;
         }
 
         for (auto& b : obj_id)

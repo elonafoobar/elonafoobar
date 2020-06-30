@@ -179,7 +179,7 @@ void remove_card_and_figure_from_heir_trunk()
 {
     if (invctrl == 22 && invctrl(1) == 1)
     {
-        for (auto&& item : inv.ground())
+        for (auto&& item : g_inv.ground())
         {
             if (item.id == ItemId::card || item.id == ItemId::figurine)
             {
@@ -278,7 +278,7 @@ void make_item_list(
         }
         int cnt2 = cnt;
 
-        for (auto& item : inv.by_index(p))
+        for (auto& item : g_inv.by_index(p))
         {
             // compatibility?
             if (item.id == ItemId::training_machine)
@@ -886,12 +886,12 @@ on_shortcut(ItemRef& citrade, ItemRef& cidip, bool dropcontinue)
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
             p = list(0, cnt);
-            if (inv[p].id == int2itemid(invsc))
+            if (g_inv[p].id == int2itemid(invsc))
             {
                 f = 1;
-                if (inv[p].has_charge())
+                if (g_inv[p].has_charge())
                 {
-                    if (inv[p].count <= 0)
+                    if (g_inv[p].count <= 0)
                     {
                         continue;
                     }
@@ -927,7 +927,7 @@ on_shortcut(ItemRef& citrade, ItemRef& cidip, bool dropcontinue)
                 return OnEnterResult{result};
             }
         }
-        if (!cargocheck(inv[p]))
+        if (!cargocheck(g_inv[p]))
         {
             result.turn_result = TurnResult::pc_turn_user_error;
             return OnEnterResult{result};
@@ -1171,27 +1171,28 @@ void draw_item_list(ItemRef mainweapon)
             break;
         }
         p = list(0, p);
-        s(0) = itemname(inv[p]);
-        s(1) = cnvweight(inv[p].weight * inv[p].number());
+        s(0) = itemname(g_inv[p]);
+        s(1) = cnvweight(g_inv[p].weight * g_inv[p].number());
         if (invctrl == 11)
         {
-            s += u8" "s + cnvweight(inv[p].weight);
-            s(1) = ""s + calcitemvalue(inv[p], 0) + u8" gp"s;
+            s += u8" "s + cnvweight(g_inv[p].weight);
+            s(1) = ""s + calcitemvalue(g_inv[p], 0) + u8" gp"s;
         }
         if (invctrl == 12)
         {
-            s += u8" "s + cnvweight(inv[p].weight);
-            s(1) = ""s + calcitemvalue(inv[p], 1) + u8" gp"s;
+            s += u8" "s + cnvweight(g_inv[p].weight);
+            s(1) = ""s + calcitemvalue(g_inv[p], 1) + u8" gp"s;
         }
         if (invctrl == 28)
         {
             s(1) = i18n::s.get(
-                "core.ui.inv.trade_medals.medal_value", calcmedalvalue(inv[p]));
+                "core.ui.inv.trade_medals.medal_value",
+                calcmedalvalue(g_inv[p]));
         }
         if (invctrl != 3 && invctrl != 11 && invctrl != 22 && invctrl != 27 &&
             invctrl != 28)
         {
-            if (inv_getowner(inv[p]) == -1)
+            if (inv_getowner(g_inv[p]) == -1)
             {
                 s += i18n::space_if_needed() + "(" +
                     i18n::s.get("core.ui.inv.window.ground") + ")";
@@ -1200,7 +1201,7 @@ void draw_item_list(ItemRef mainweapon)
         for (int cnt = 0; cnt < 20; ++cnt)
         {
             if (game_data.skill_shortcuts.at(cnt) ==
-                itemid2int(inv[p].id) + invctrl * 10000)
+                itemid2int(g_inv[p].id) + invctrl * 10000)
             {
                 s +=
                     u8"{"s + get_bound_shortcut_key_name_by_index(cnt) + u8"}"s;
@@ -1209,23 +1210,23 @@ void draw_item_list(ItemRef mainweapon)
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
 
         draw_item_with_portrait_scale_height(
-            inv[p], wx + 37, wy + 69 + cnt * 19);
+            g_inv[p], wx + 37, wy + 69 + cnt * 19);
 
-        if (inv[p].body_part != 0)
+        if (g_inv[p].body_part != 0)
         {
             draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
-            if (inv[p] == mainweapon)
+            if (g_inv[p] == mainweapon)
             {
                 s += i18n::space_if_needed() + "(" +
                     i18n::s.get("core.ui.inv.window.main_hand") + ")";
             }
         }
-        draw_additional_item_info(inv[p], wx + 300, wy + 60 + cnt * 19 + 2);
+        draw_additional_item_info(g_inv[p], wx + 300, wy + 60 + cnt * 19 + 2);
         if (g_show_additional_item_info != AdditionalItemInfo::none)
         {
             s = cut_item_name_for_additional_info(s);
         }
-        const auto text_color = cs_list_get_item_color(inv[p]);
+        const auto text_color = cs_list_get_item_color(g_inv[p]);
         cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, text_color);
         mes(wx + 600 - strlen_u(s(1)) * 7,
             wy + 60 + cnt * 19 + 2,
@@ -2301,7 +2302,7 @@ OnEnterResult on_enter(
 {
     MenuResult result = {false, false, TurnResult::none};
 
-    auto& selected_item = inv[selected_item_index];
+    auto& selected_item = g_inv[selected_item_index];
 
     if (!cargocheck(selected_item))
     {
@@ -2421,7 +2422,7 @@ bool on_show_description()
     if (listmax != 0)
     {
         const auto item_index = list(0, pagesize * page + cs);
-        item_show_description(inv[item_index]);
+        item_show_description(g_inv[item_index]);
         return true;
     }
     return false;
@@ -2504,17 +2505,17 @@ bool on_switch_mode_2(bool& dropcontinue)
     if (invctrl == 1)
     {
         const auto item_index = list(0, pagesize * page + cs);
-        if (inv[item_index].is_marked_as_no_drop())
+        if (g_inv[item_index].is_marked_as_no_drop())
         {
-            inv[item_index].is_marked_as_no_drop() = false;
+            g_inv[item_index].is_marked_as_no_drop() = false;
             txt(i18n::s.get(
-                "core.ui.inv.examine.no_drop.unset", inv[item_index]));
+                "core.ui.inv.examine.no_drop.unset", g_inv[item_index]));
         }
         else
         {
-            inv[item_index].is_marked_as_no_drop() = true;
+            g_inv[item_index].is_marked_as_no_drop() = true;
             txt(i18n::s.get(
-                "core.ui.inv.examine.no_drop.set", inv[item_index]));
+                "core.ui.inv.examine.no_drop.set", g_inv[item_index]));
         }
     }
     if (invctrl == 2)
@@ -2600,7 +2601,7 @@ optional<MenuResult> on_cancel(bool dropcontinue)
 bool on_assign_shortcut(const std::string& action, int shortcut)
 {
     snd("core.ok1");
-    p = itemid2int(inv[list(0, pagesize * page + cs)].id) + invctrl * 10000;
+    p = itemid2int(g_inv[list(0, pagesize * page + cs)].id) + invctrl * 10000;
     if (game_data.skill_shortcuts.at(shortcut) == p)
     {
         game_data.skill_shortcuts.at(shortcut) = 0;

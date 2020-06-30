@@ -285,7 +285,7 @@ void map_reload(const std::string& map_filename)
 
     mef_clear_all();
 
-    for (auto&& item : inv.ground())
+    for (auto&& item : g_inv.ground())
     {
         if (item.own_state == 1)
         {
@@ -634,7 +634,7 @@ static void _clear_material_spots()
 
 static void _modify_items_on_regenerate()
 {
-    for (auto&& item : inv.ground())
+    for (auto&& item : g_inv.ground())
     {
         // Update tree of fruits.
         if (item.id == ItemId::tree_of_fruits)
@@ -874,7 +874,7 @@ void map_proc_regen_and_update()
 
 void map_reload_noyel()
 {
-    for (auto&& item : inv.ground())
+    for (auto&& item : g_inv.ground())
     {
         if (item.id == ItemId::shelter || item.id == ItemId::giants_shackle)
         {
@@ -2086,7 +2086,7 @@ void map_global_proc_travel_events(Character& chara)
     }
     if (cdata.player().nutrition <= 5000)
     {
-        for (auto&& item : inv.for_chara(chara))
+        for (auto&& item : g_inv.for_chara(chara))
         {
             if (the_item_db[itemid2int(item.id)]->category ==
                 ItemCategory::travelers_food)

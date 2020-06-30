@@ -186,11 +186,11 @@ void load_gene_files()
     sdata.clear(0);
     Character::copy(cdata.player(), cdata.tmp());
     cdata.player().clear();
-    for (auto&& item : inv.ground())
+    for (auto&& item : g_inv.ground())
     {
         item.remove();
     }
-    for (auto&& item : inv.pc())
+    for (auto&& item : g_inv.pc())
     {
         if (item.id == ItemId::secret_experience_of_lomias)
         {

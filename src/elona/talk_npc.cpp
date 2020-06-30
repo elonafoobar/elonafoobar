@@ -96,7 +96,7 @@ TalkResult talk_wizard_identify(Character& speaker, int chatval_)
         return TalkResult::talk_npc;
     }
     p = 0;
-    for (const auto& item : inv.pc())
+    for (const auto& item : g_inv.pc())
     {
         if (item.identify_state != IdentifyState::completely)
         {
@@ -115,7 +115,7 @@ TalkResult talk_wizard_identify(Character& speaker, int chatval_)
         p(1) = 0;
         p(0) = 0;
         p(1) = 0;
-        for (auto&& item : inv.pc())
+        for (auto&& item : g_inv.pc())
         {
             if (item.identify_state != IdentifyState::completely)
             {
@@ -208,7 +208,7 @@ TalkResult talk_healer_restore_attributes(Character& speaker)
 TalkResult talk_trade(Character& speaker)
 {
     invsubroutine = 1;
-    for (auto&& item : inv.for_chara(speaker))
+    for (auto&& item : g_inv.for_chara(speaker))
     {
         item.identify_state = IdentifyState::completely;
     }
@@ -2164,7 +2164,7 @@ TalkResult talk_npc(Character& speaker)
                 {
                     p = quest_data[cnt].target_item_id;
                     deliver = cnt;
-                    for (auto&& item : inv.pc())
+                    for (auto&& item : g_inv.pc())
                     {
                         if (item.id == int2itemid(p))
                         {
@@ -2184,7 +2184,7 @@ TalkResult talk_npc(Character& speaker)
             quest_data[rq].client_chara_type == 3 &&
             quest_data[rq].progress == 1)
         {
-            for (auto&& item : inv.pc())
+            for (auto&& item : g_inv.pc())
             {
                 if (item.is_marked_as_no_drop())
                 {

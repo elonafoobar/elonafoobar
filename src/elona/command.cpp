@@ -93,7 +93,7 @@ bool any_of_characters_around_you(F predicate, bool ignore_pc = true)
 void _search_for_crystal()
 {
     optional<int> d;
-    for (const auto& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
         if (item.own_state != 5)
         {
@@ -2916,7 +2916,7 @@ TurnResult do_open_command(Item& box, bool play_sound)
         }
         else
         {
-            for (auto&& item : inv.ground())
+            for (auto&& item : g_inv.ground())
             {
                 item.remove();
             }
@@ -5623,7 +5623,7 @@ PickUpItemResult pick_up_item(
             if (map_data.play_campfire_sound == 1)
             {
                 f = 0;
-                for (const auto& item_ : inv.ground())
+                for (const auto& item_ : g_inv.ground())
                 {
                     if (item_.id == ItemId::campfire)
                     {
@@ -5876,7 +5876,7 @@ void proc_autopick()
         return;
 
 
-    for (auto&& item : inv.ground())
+    for (auto&& item : g_inv.ground())
     {
         if (item.position != cdata.player().position)
             continue;

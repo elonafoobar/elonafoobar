@@ -155,7 +155,7 @@ std::vector<ItemForSale> list_items_for_sale()
 {
     std::vector<ItemForSale> ret;
 
-    for (auto&& item : inv.ground())
+    for (auto&& item : g_inv.ground())
     {
         if (item.id == ItemId::shop_strongbox)
         {
@@ -461,7 +461,7 @@ TurnResult show_house_board()
     p(0) = 0;
     p(1) = 0;
     p(2) = 400;
-    for (const auto& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
         if (the_item_db[itemid2int(item.id)]->category !=
             ItemCategory::furniture)
@@ -1073,7 +1073,7 @@ void show_shop_log()
     }
     else
     {
-        for (auto&& item : inv.ground())
+        for (auto&& item : g_inv.ground())
         {
             item.remove();
         }
@@ -1184,7 +1184,7 @@ void update_shop()
             cell_data.at(cnt, y).light = 0;
         }
     }
-    for (const auto& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
         x = item.position.x;
         y = item.position.y;
@@ -1235,7 +1235,7 @@ void update_museum()
     rankorg = game_data.ranks.at(3);
     rankcur = 0;
     DIM3(dblist, 2, 800);
-    for (const auto& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
         if (item.id != ItemId::figurine && item.id != ItemId::card)
         {
@@ -1297,7 +1297,7 @@ std::vector<HomeRankHeirloom> building_update_home_rank()
     game_data.total_heirloom_value = 0;
 
     std::vector<HomeRankHeirloom> heirlooms;
-    for (auto&& item : inv.ground())
+    for (auto&& item : g_inv.ground())
     {
         if (cell_data.at(item.position.x, item.position.y)
                 .item_info_actual.stack_count() == 1)
@@ -1568,7 +1568,7 @@ void supply_income()
     }
     else
     {
-        for (auto&& item : inv.ground())
+        for (auto&& item : g_inv.ground())
         {
             item.remove();
         }

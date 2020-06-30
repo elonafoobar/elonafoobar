@@ -2932,7 +2932,7 @@ int initialize_quest_map_party()
             chara->original_relationship = -1;
         }
     }
-    for (auto&& item : inv.ground())
+    for (auto&& item : g_inv.ground())
     {
         item.own_state = 1;
     }
@@ -2981,7 +2981,7 @@ void initialize_quest_map_town()
             }
         }
     }
-    for (auto&& item : inv.ground())
+    for (auto&& item : g_inv.ground())
     {
         f = 0;
         if (item.id == ItemId::well || item.id == ItemId::fountain)
