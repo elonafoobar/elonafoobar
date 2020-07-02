@@ -451,12 +451,12 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     auto& ai_item = *chara.ai_item;
     if (ai_item.number() == 0)
     {
-        chara.ai_item = ItemRef::null();
+        chara.ai_item = nullptr;
         return none;
     }
     if (chara.relationship != 0)
     {
-        chara.ai_item = ItemRef::null();
+        chara.ai_item = nullptr;
     }
 
     const auto category = the_item_db[itemid2int(ai_item.id)]->category;
@@ -476,7 +476,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
         return do_read_command(chara, ai_item);
     }
 
-    chara.ai_item = ItemRef::null();
+    chara.ai_item = nullptr;
 
     return none;
 }

@@ -95,8 +95,8 @@ struct OnEnterResult
 OnEnterResult on_enter(
     optional_ref<Character> inventory_owner,
     int selected_item_index,
-    ItemRef& citrade,
-    ItemRef& cidip,
+    IndexItemRef& citrade,
+    IndexItemRef& cidip,
     bool dropcontinue);
 optional<MenuResult> on_cancel(bool dropcontinue);
 
@@ -239,9 +239,9 @@ void restore_cursor()
 
 void make_item_list(
     optional_ref<Character> inventory_owner,
-    ItemRef& mainweapon,
-    ItemRef citrade,
-    ItemRef cidip)
+    IndexItemRef& mainweapon,
+    IndexItemRef citrade,
+    IndexItemRef cidip)
 {
     // cnt = 0 => extra
     // cnt = 1 => PC/NPC
@@ -364,7 +364,7 @@ void make_item_list(
                 {
                     if (!mainweapon || item.body_part < mainweapon->body_part)
                     {
-                        mainweapon = ItemRef::from_ref(item);
+                        mainweapon = IndexItemRef::from_ref(item);
                     }
                 }
             }
@@ -706,7 +706,7 @@ void make_item_list(
 // 不可能な行動を制限
 optional<MenuResult> check_command(
     optional_ref<Character> inventory_owner,
-    ItemRef citrade)
+    IndexItemRef citrade)
 {
     MenuResult result = {false, false, TurnResult::none};
 
@@ -804,7 +804,7 @@ optional<MenuResult> check_pick_up()
 
 
 
-void show_message(ItemRef citrade, ItemRef cidip)
+void show_message(IndexItemRef citrade, IndexItemRef cidip)
 {
     if (returnfromidentify == 0)
     {
@@ -876,7 +876,7 @@ void show_message(ItemRef citrade, ItemRef cidip)
 
 // ショートカット経由
 optional<OnEnterResult>
-on_shortcut(ItemRef& citrade, ItemRef& cidip, bool dropcontinue)
+on_shortcut(IndexItemRef& citrade, IndexItemRef& cidip, bool dropcontinue)
 {
     MenuResult result = {false, false, TurnResult::none};
 
@@ -1161,7 +1161,7 @@ void update_key_list()
 
 
 
-void draw_item_list(ItemRef mainweapon)
+void draw_item_list(IndexItemRef mainweapon)
 {
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -1951,9 +1951,9 @@ OnEnterResult on_enter_open(Item& selected_item, MenuResult& result)
 
 
 
-OnEnterResult on_enter_mix(Item& selected_item, ItemRef& cidip)
+OnEnterResult on_enter_mix(Item& selected_item, IndexItemRef& cidip)
 {
-    cidip = ItemRef::from_ref(selected_item);
+    cidip = IndexItemRef::from_ref(selected_item);
     savecycle();
     invctrl = 18;
     Message::instance().linebreak();
@@ -1964,7 +1964,7 @@ OnEnterResult on_enter_mix(Item& selected_item, ItemRef& cidip)
 
 
 OnEnterResult
-on_enter_mix_target(Item& selected_item, MenuResult& result, ItemRef cidip)
+on_enter_mix_target(Item& selected_item, MenuResult& result, IndexItemRef cidip)
 {
     screenupdate = -1;
     update_screen();
@@ -1991,9 +1991,9 @@ OnEnterResult on_enter_offer(Item& selected_item, MenuResult& result)
 
 
 
-OnEnterResult on_enter_trade(Item& selected_item, ItemRef& citrade)
+OnEnterResult on_enter_trade(Item& selected_item, IndexItemRef& citrade)
 {
-    citrade = ItemRef::from_ref(selected_item);
+    citrade = IndexItemRef::from_ref(selected_item);
     invctrl = 21;
     snd("core.pop2");
     return OnEnterResult{1};
@@ -2004,7 +2004,7 @@ OnEnterResult on_enter_trade(Item& selected_item, ItemRef& citrade)
 OnEnterResult on_enter_trade_target(
     Item& selected_item,
     MenuResult& result,
-    ItemRef& citrade,
+    IndexItemRef& citrade,
     Character& inventory_owner)
 {
     if (selected_item.is_marked_as_no_drop())
@@ -2017,7 +2017,7 @@ OnEnterResult on_enter_trade_target(
     {
         inventory_owner.activity.type = Activity::Type::none;
         inventory_owner.activity.turn = 0;
-        inventory_owner.activity.item = ItemRef::null();
+        inventory_owner.activity.item = nullptr;
     }
     snd("core.equip1");
     citrade->is_quest_target() = false;
@@ -2032,7 +2032,7 @@ OnEnterResult on_enter_trade_target(
     item_convert_artifact(selected_item);
     if (inventory_owner.ai_item == *citrade)
     {
-        inventory_owner.ai_item = ItemRef::null();
+        inventory_owner.ai_item = nullptr;
     }
     wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
     if (inventory_owner.index >= 16)
@@ -2296,8 +2296,8 @@ OnEnterResult on_enter_small_medal(Item& selected_item)
 OnEnterResult on_enter(
     optional_ref<Character> inventory_owner,
     int selected_item_index,
-    ItemRef& citrade,
-    ItemRef& cidip,
+    IndexItemRef& citrade,
+    IndexItemRef& cidip,
     bool dropcontinue)
 {
     MenuResult result = {false, false, TurnResult::none};
@@ -2627,9 +2627,9 @@ bool on_assign_shortcut(const std::string& action, int shortcut)
 
 CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
 {
-    ItemRef mainweapon;
-    ItemRef citrade;
-    ItemRef cidip;
+    IndexItemRef mainweapon;
+    IndexItemRef citrade;
+    IndexItemRef cidip;
     bool dropcontinue = false;
 
     remove_card_and_figure_from_heir_trunk();
@@ -2644,7 +2644,7 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
 
             fallback_to_default_command_if_unavailable();
             restore_cursor();
-            mainweapon = ItemRef::null();
+            mainweapon = nullptr;
             make_item_list(inventory_owner, mainweapon, citrade, cidip);
             if (const auto result = check_command(inventory_owner, citrade))
             {

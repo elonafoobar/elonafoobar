@@ -11,25 +11,25 @@ struct Item;
 
 
 
-struct ItemRef
+struct IndexItemRef
 {
-    constexpr ItemRef() noexcept = default;
+    constexpr IndexItemRef() noexcept = default;
 
 
-    static constexpr ItemRef null() noexcept
+    constexpr IndexItemRef(std::nullptr_t) noexcept
+        : IndexItemRef()
     {
-        return ItemRef{};
     }
 
 
-    static constexpr ItemRef from_index(int item_index) noexcept
+    static constexpr IndexItemRef from_index(int item_index) noexcept
     {
-        return ItemRef{item_index};
+        return IndexItemRef{item_index};
     }
 
 
-    static ItemRef from_ref(Item& item) noexcept;
-    static ItemRef from_opt(optional_ref<Item> item) noexcept;
+    static IndexItemRef from_ref(Item& item) noexcept;
+    static IndexItemRef from_opt(optional_ref<Item> item) noexcept;
 
 
 
@@ -52,12 +52,12 @@ struct ItemRef
 
 
 
-    bool operator==(ItemRef other) const noexcept
+    bool operator==(IndexItemRef other) const noexcept
     {
         return _objid == other._objid;
     }
 
-    bool operator!=(ItemRef other) const noexcept
+    bool operator!=(IndexItemRef other) const noexcept
     {
         return !(*this == other);
     }
@@ -75,7 +75,7 @@ struct ItemRef
 
     bool operator==(optional_ref<Item>& other) const noexcept
     {
-        return *this == ItemRef::from_opt(other);
+        return *this == IndexItemRef::from_opt(other);
     }
 
     bool operator!=(optional_ref<Item>& other) const noexcept
@@ -113,7 +113,7 @@ private:
 
 
 
-    constexpr explicit ItemRef(int item_index) noexcept
+    constexpr explicit IndexItemRef(int item_index) noexcept
         : _objid(item_index + 1)
     {
     }
@@ -122,12 +122,12 @@ private:
 
 
 // clang-format off
-inline bool operator==(const Item&              lhs, ItemRef rhs) noexcept { return rhs == lhs; }
-inline bool operator!=(const Item&              lhs, ItemRef rhs) noexcept { return rhs != lhs; }
-inline bool operator==(optional_ref<Item>       lhs, ItemRef rhs) noexcept { return rhs == lhs; }
-inline bool operator!=(optional_ref<Item>       lhs, ItemRef rhs) noexcept { return rhs != lhs; }
-inline bool operator==(optional_ref<const Item> lhs, ItemRef rhs) noexcept { return rhs == lhs; }
-inline bool operator!=(optional_ref<const Item> lhs, ItemRef rhs) noexcept { return rhs != lhs; }
+inline bool operator==(const Item&              lhs, IndexItemRef rhs) noexcept { return rhs == lhs; }
+inline bool operator!=(const Item&              lhs, IndexItemRef rhs) noexcept { return rhs != lhs; }
+inline bool operator==(optional_ref<Item>       lhs, IndexItemRef rhs) noexcept { return rhs == lhs; }
+inline bool operator!=(optional_ref<Item>       lhs, IndexItemRef rhs) noexcept { return rhs != lhs; }
+inline bool operator==(optional_ref<const Item> lhs, IndexItemRef rhs) noexcept { return rhs == lhs; }
+inline bool operator!=(optional_ref<const Item> lhs, IndexItemRef rhs) noexcept { return rhs != lhs; }
 // clang-format on
 
 } // namespace elona

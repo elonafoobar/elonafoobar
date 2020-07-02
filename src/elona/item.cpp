@@ -2231,7 +2231,7 @@ Item& inv_get_free_slot_force(int inventory_id)
             item.remove();
             if (cdata[inventory_id].ai_item == item)
             {
-                cdata[inventory_id].ai_item = ItemRef::null();
+                cdata[inventory_id].ai_item = nullptr;
             }
             return item;
         }

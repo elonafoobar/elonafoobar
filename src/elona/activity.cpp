@@ -496,7 +496,7 @@ void activity_perform_start(Character& performer, Item& instrument)
     }
     performer.activity.type = Activity::Type::perform;
     performer.activity.turn = 61;
-    performer.activity.item = ItemRef::from_ref(instrument);
+    performer.activity.item = IndexItemRef::from_ref(instrument);
     performer.quality_of_performance = 40;
     performer.tip_gold = 0;
     if (performer.index == 0)
@@ -618,7 +618,7 @@ void activity_eating_start(Character& eater, Item& food)
 {
     eater.activity.type = Activity::Type::eat;
     eater.activity.turn = 8;
-    eater.activity.item = ItemRef::from_ref(food);
+    eater.activity.item = IndexItemRef::from_ref(food);
     if (is_in_fov(eater))
     {
         snd("core.eat1");
@@ -642,7 +642,7 @@ void activity_eating_start(Character& eater, Item& food)
 void activity_others_start(Character& doer, optional_ref<Item> activity_item)
 {
     doer.activity.type = Activity::Type::others;
-    doer.activity.item = ItemRef::from_opt(activity_item);
+    doer.activity.item = IndexItemRef::from_opt(activity_item);
 
     switch (game_data.activity_about_to_start)
     {
@@ -1554,7 +1554,7 @@ void activity_eating_finish(Character& eater, Item& food)
     {
         if (food == eater.ai_item)
         {
-            eater.ai_item = ItemRef::null();
+            eater.ai_item = nullptr;
         }
         if (eater.was_passed_item_by_you_just_now())
         {
@@ -1635,7 +1635,7 @@ void spot_fishing(Character& fisher, optional_ref<Item> rod)
         snd("core.fish_cast");
         if (rowactre == 0)
         {
-            fisher.activity.item = ItemRef::from_ref(*rod);
+            fisher.activity.item = IndexItemRef::from_ref(*rod);
         }
         fisher.activity.type = Activity::Type::fish;
         fisher.activity.turn = 100;

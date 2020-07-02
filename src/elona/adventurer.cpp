@@ -335,7 +335,7 @@ void adventurer_discover_equipment(Character& adv)
         {
             if (adv.ai_item == item)
             {
-                adv.ai_item = ItemRef::null();
+                adv.ai_item = nullptr;
             }
             item.remove();
             f = 1;

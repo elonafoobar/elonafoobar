@@ -1751,7 +1751,7 @@ void prepare_charas_for_map_unload()
     for (int cnt = 0; cnt < 57; ++cnt)
     {
         cdata[cnt].activity.finish();
-        cdata[cnt].ai_item = ItemRef::null();
+        cdata[cnt].ai_item = nullptr;
     }
 
     // remove living adventurers from the map and set their states

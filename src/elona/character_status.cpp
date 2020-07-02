@@ -462,7 +462,7 @@ void gain_new_body_part(Character& chara)
     }
 
     const auto body_part = get_random_body_part();
-    chara.equipment_slots[slot] = EquipmentSlot{body_part, ItemRef::null()};
+    chara.equipment_slots[slot] = EquipmentSlot{body_part, nullptr};
     if (!cm)
     {
         txt(i18n::s.get(

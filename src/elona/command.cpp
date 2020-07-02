@@ -446,7 +446,7 @@ optional<TurnResult> use_gene_machine()
         if (stat != -1)
         {
             cdata[original_character].equipment_slots[stat - 100] =
-                EquipmentSlot{rtval, ItemRef::null()};
+                EquipmentSlot{rtval, nullptr};
             txt(i18n::s.get(
                     "core.action.use.gene_machine.gains.body_part",
                     cdata[original_character],
@@ -4184,7 +4184,7 @@ void do_rest(Character& chara)
         if (f == 1)
         {
             txt(i18n::s.get("core.activity.rest.drop_off_to_sleep"));
-            chara.activity.item = ItemRef::null();
+            chara.activity.item = nullptr;
             sleep_start(none);
             chara.activity.finish();
             return;
@@ -4230,7 +4230,7 @@ int decode_book(Character& reader, Item& book)
             p = the_ability_db[efid]->difficulty;
         }
         reader.activity.turn = p / (2 + sdata(150, 0)) + 1;
-        reader.activity.item = ItemRef::from_ref(book);
+        reader.activity.item = IndexItemRef::from_ref(book);
         if (is_in_fov(reader))
         {
             txt(i18n::s.get("core.activity.read.start", reader, book));
