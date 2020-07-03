@@ -416,8 +416,8 @@ int calc_evasion(const Character& chara)
 int calc_accuracy(
     const Character& attacker,
     const Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo,
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo,
     bool consider_distance)
 {
     critical = 0;
@@ -540,8 +540,8 @@ int calc_accuracy(
 int calcattackhit(
     const Character& attacker,
     const Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo)
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo)
 {
     int tohit = calc_accuracy(attacker, target, weapon, ammo, true);
     int evasion = calc_evasion(target);
@@ -644,8 +644,8 @@ int calcattackhit(
 int calcattackdmg(
     const Character& attacker,
     const Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo,
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo,
     AttackDamageCalculationMode mode)
 {
     int damagepierce = 0;

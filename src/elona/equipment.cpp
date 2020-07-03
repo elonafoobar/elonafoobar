@@ -1101,7 +1101,7 @@ void supply_initial_equipments(Character& chara)
         {
             if (eqmultiweapon)
             {
-                optional_ref<Item> equipment;
+                OptionalItemRef equipment;
                 for (int cnt = 0; cnt < 15; ++cnt)
                 {
                     flt(calcobjlv(chara.level),
@@ -1129,7 +1129,7 @@ void supply_initial_equipments(Character& chara)
             }
             if (eqweapon1)
             {
-                optional_ref<Item> equipment;
+                OptionalItemRef equipment;
                 if (eqweapon1 >= 10000)
                 {
                     for (int cnt = 0; cnt < 15; ++cnt)
@@ -1180,7 +1180,7 @@ void supply_initial_equipments(Character& chara)
             }
             if (eqweapon2)
             {
-                optional_ref<Item> equipment;
+                OptionalItemRef equipment;
                 if (eqweapon2 >= 10000)
                 {
                     for (int cnt = 0; cnt < 15; ++cnt)

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "eobject/eobject.hpp"
 #include "optional.hpp"
 
 
@@ -29,7 +30,7 @@ struct IndexItemRef
 
 
     static IndexItemRef from_ref(Item& item) noexcept;
-    static IndexItemRef from_opt(optional_ref<Item> item) noexcept;
+    static IndexItemRef from_opt(const OptionalItemRef& item) noexcept;
 
 
 
@@ -73,21 +74,12 @@ struct IndexItemRef
 
 
 
-    bool operator==(optional_ref<Item>& other) const noexcept
+    bool operator==(const OptionalItemRef& other) const noexcept
     {
         return *this == IndexItemRef::from_opt(other);
     }
 
-    bool operator!=(optional_ref<Item>& other) const noexcept
-    {
-        return !(*this == other);
-    }
-
-
-
-    bool operator==(optional_ref<const Item>& other) const noexcept;
-
-    bool operator!=(optional_ref<const Item>& other) const noexcept
+    bool operator!=(const OptionalItemRef& other) const noexcept
     {
         return !(*this == other);
     }
@@ -96,7 +88,7 @@ struct IndexItemRef
 
     Item& as_ref() const;
     Item* as_ptr() const;
-    optional_ref<Item> as_opt() const;
+    OptionalItemRef as_opt() const;
 
 
 
@@ -122,12 +114,10 @@ private:
 
 
 // clang-format off
-inline bool operator==(const Item&              lhs, IndexItemRef rhs) noexcept { return rhs == lhs; }
-inline bool operator!=(const Item&              lhs, IndexItemRef rhs) noexcept { return rhs != lhs; }
-inline bool operator==(optional_ref<Item>       lhs, IndexItemRef rhs) noexcept { return rhs == lhs; }
-inline bool operator!=(optional_ref<Item>       lhs, IndexItemRef rhs) noexcept { return rhs != lhs; }
-inline bool operator==(optional_ref<const Item> lhs, IndexItemRef rhs) noexcept { return rhs == lhs; }
-inline bool operator!=(optional_ref<const Item> lhs, IndexItemRef rhs) noexcept { return rhs != lhs; }
+inline bool operator==(const Item&           lhs, IndexItemRef rhs) noexcept { return rhs == lhs; }
+inline bool operator!=(const Item&           lhs, IndexItemRef rhs) noexcept { return rhs != lhs; }
+inline bool operator==(const OptionalItemRef lhs, IndexItemRef rhs) noexcept { return rhs == lhs; }
+inline bool operator!=(const OptionalItemRef lhs, IndexItemRef rhs) noexcept { return rhs != lhs; }
 // clang-format on
 
 } // namespace elona

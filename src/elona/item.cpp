@@ -159,16 +159,16 @@ bool Inventory::has_free_slot() const
 
 
 
-optional_ref<Item> Inventory::get_free_slot()
+OptionalItemRef Inventory::get_free_slot()
 {
     for (auto&& item : _storage)
     {
         if (item.number() == 0)
         {
-            return item;
+            return OptionalItemRef{&item};
         }
     }
-    return none;
+    return nullptr;
 }
 
 
@@ -283,10 +283,10 @@ int skip_ = 0;
  *    0: Both player's inventory and on ground
  *    1: Player's inventory
  */
-optional_ref<Item>
+OptionalItemRef
 item_find(int matcher, int matcher_type, ItemFindLocation location_type)
 {
-    optional_ref<Item> result;
+    OptionalItemRef result;
     int max_param1 = -1;
 
     for (const auto& inventory_id : {-1, 0})
@@ -319,7 +319,7 @@ item_find(int matcher, int matcher_type, ItemFindLocation location_type)
             case 0:
                 if ((int)the_item_db[itemid2int(item->id)]->category == matcher)
                 {
-                    result = *item;
+                    result = item.clone();
                 }
                 break;
             case 1:
@@ -327,7 +327,7 @@ item_find(int matcher, int matcher_type, ItemFindLocation location_type)
                 {
                     if (max_param1 < item->param1)
                     {
-                        result = *item;
+                        result = item.clone();
                         max_param1 = item->param1;
                     }
                 }
@@ -335,13 +335,13 @@ item_find(int matcher, int matcher_type, ItemFindLocation location_type)
             case 2:
                 if (the_item_db[itemid2int(item->id)]->subcategory == matcher)
                 {
-                    result = *item;
+                    result = item.clone();
                 }
                 break;
             case 3:
                 if (item->id == int2itemid(matcher))
                 {
-                    result = *item;
+                    result = item.clone();
                 }
                 break;
             default: assert(0); break;
@@ -391,7 +391,7 @@ int itemusingfind(const Item& item, bool disallow_pc)
 
 
 
-optional_ref<Item> itemfind(int inventory_id, int matcher, int matcher_type)
+OptionalItemRef itemfind(int inventory_id, int matcher, int matcher_type)
 {
     if (matcher_type == 0)
     {
@@ -399,10 +399,10 @@ optional_ref<Item> itemfind(int inventory_id, int matcher, int matcher_type)
         {
             if (item->id == int2itemid(matcher))
             {
-                return *item;
+                return item.clone();
             }
         }
-        return none;
+        return nullptr;
     }
     else
     {
@@ -410,25 +410,25 @@ optional_ref<Item> itemfind(int inventory_id, int matcher, int matcher_type)
         {
             if (the_item_db[itemid2int(item->id)]->subcategory == matcher)
             {
-                return *item;
+                return item.clone();
             }
         }
-        return none;
+        return nullptr;
     }
 }
 
 
 
-optional_ref<Item> mapitemfind(const Position& pos, ItemId id)
+OptionalItemRef mapitemfind(const Position& pos, ItemId id)
 {
     for (const auto& item : g_inv.ground())
     {
         if (item->id == id && item->position == pos)
         {
-            return *item;
+            return item.clone();
         }
     }
-    return none; // Not found
+    return nullptr; // Not found
 }
 
 
@@ -1642,7 +1642,7 @@ void item_dump_desc(Item& item)
 
 
 
-void item_acid(const Character& owner, optional_ref<Item> item)
+void item_acid(const Character& owner, OptionalItemRef item)
 {
     if (!item)
     {
@@ -1660,7 +1660,7 @@ void item_acid(const Character& owner, optional_ref<Item> item)
             {
                 if (rnd(30) == 0)
                 {
-                    item = *equipment_slot.equipment;
+                    item = equipment_slot.equipment.as_opt();
                     break;
                 }
             }
@@ -1690,9 +1690,9 @@ void item_acid(const Character& owner, optional_ref<Item> item)
 
 
 
-bool item_fire(int owner, optional_ref<Item> burned_item)
+bool item_fire(int owner, const OptionalItemRef& burned_item)
 {
-    optional_ref<Item> blanket;
+    OptionalItemRef blanket;
     std::vector<std::reference_wrapper<Item>> list;
     if (burned_item)
     {
@@ -1712,7 +1712,7 @@ bool item_fire(int owner, optional_ref<Item> burned_item)
             {
                 if (!blanket)
                 {
-                    blanket = *item;
+                    blanket = item.clone();
                 }
                 continue;
             }
@@ -1885,12 +1885,12 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
         return;
     }
 
-    optional_ref<Item> burned_item;
+    OptionalItemRef burned_item;
     for (const auto& item : g_inv.ground())
     {
         if (item->position == Position{x, y})
         {
-            burned_item = *item;
+            burned_item = item.clone();
             break;
         }
     }
@@ -1917,9 +1917,9 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
 
 
 
-bool item_cold(int owner, optional_ref<Item> destroyed_item)
+bool item_cold(int owner, const OptionalItemRef& destroyed_item)
 {
-    optional_ref<Item> blanket;
+    OptionalItemRef blanket;
     std::vector<std::reference_wrapper<Item>> list;
     if (destroyed_item)
     {
@@ -1938,7 +1938,7 @@ bool item_cold(int owner, optional_ref<Item> destroyed_item)
             {
                 if (!blanket)
                 {
-                    blanket = *item;
+                    blanket = item.clone();
                 }
                 continue;
             }
@@ -2048,12 +2048,12 @@ void mapitem_cold(int x, int y)
     {
         return;
     }
-    optional_ref<Item> destroyed_item;
+    OptionalItemRef destroyed_item;
     for (const auto& item : g_inv.ground())
     {
         if (item->position == Position{x, y})
         {
-            destroyed_item = *item;
+            destroyed_item = item.clone();
             break;
         }
     }
@@ -2117,6 +2117,7 @@ int inv_sum(int owner)
     int n{};
     for (const auto& _item : g_inv.by_index(owner))
     {
+        (void)_item;
         ++n;
     }
     return n;
@@ -2176,18 +2177,18 @@ Item& inv_compress(int owner)
 
 
 
-optional_ref<Item> inv_get_free_slot(int inventory_id)
+OptionalItemRef inv_get_free_slot(int inventory_id)
 {
-    if (const auto& free_slot = g_inv.by_index(inventory_id).get_free_slot())
+    if (auto free_slot = g_inv.by_index(inventory_id).get_free_slot())
     {
-        return *free_slot;
+        return free_slot;
     }
     if (inventory_id == -1 && mode != 6)
     {
         txt(i18n::s.get("core.item.items_are_destroyed"));
-        return inv_compress(inventory_id);
+        return OptionalItemRef{&inv_compress(inventory_id)};
     }
-    return none;
+    return nullptr;
 }
 
 

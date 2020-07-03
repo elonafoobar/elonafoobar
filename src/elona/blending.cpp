@@ -333,7 +333,12 @@ int blendlist(elona_vector2<int>& result_array, int recipe_id, int step)
 
 
 
-void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
+void window_recipe(
+    const OptionalItemRef& item,
+    int x,
+    int y,
+    int width,
+    int height)
 {
     elona_vector1<std::string> s_;
     int xfix2_ = 0;
@@ -666,7 +671,7 @@ optional<TurnResult> blending_menu_select_recipe()
         {
             rpid = list(0, pagesize * page + cs);
             windowshadow = windowshadow(1);
-            window_recipe(none, wx + ww, wy, 400, wh);
+            window_recipe(nullptr, wx + ww, wy, 400, wh);
         }
         if (keyrange != 0)
         {
@@ -809,7 +814,7 @@ void blendig_menu_select_materials()
         {
             windowshadow = windowshadow(1);
             window_recipe(
-                p == -1 ? none : optional_ref<Item>(*g_inv[p]),
+                p == -1 ? nullptr : OptionalItemRef{g_inv[p]},
                 wx + ww,
                 wy,
                 400,
@@ -1219,7 +1224,7 @@ TurnResult blending_menu()
         if (all_ingredient_are_added(step, rpid))
         {
             rppage = 0;
-            window_recipe(none, wx + ww, wy, 400, wh);
+            window_recipe(nullptr, wx + ww, wy, 400, wh);
             Message::instance().linebreak();
             txt(i18n::s.get("core.blending.prompt.how_many"));
             PromptWithNumber prompt(

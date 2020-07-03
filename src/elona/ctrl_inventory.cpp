@@ -73,7 +73,7 @@ struct OnEnterResult
 {
     int type;
     MenuResult menu_result;
-    optional_ref<Item> selected_item;
+    OptionalItemRef selected_item;
 
 
     OnEnterResult(int type)
@@ -84,10 +84,10 @@ struct OnEnterResult
 
     OnEnterResult(
         const MenuResult& menu_result,
-        optional_ref<Item> selected_item = none)
+        OptionalItemRef selected_item = nullptr)
         : type(0)
         , menu_result(menu_result)
-        , selected_item(selected_item)
+        , selected_item(std::move(selected_item))
     {
     }
 };
@@ -1937,7 +1937,7 @@ OnEnterResult on_enter_cook(Item& selected_item, MenuResult& result)
     update_screen();
     invsubroutine = 0;
     result.succeeded = true;
-    return OnEnterResult{result, selected_item};
+    return OnEnterResult{result, OptionalItemRef{&selected_item}};
 }
 
 
@@ -2065,7 +2065,7 @@ OnEnterResult on_enter_target(Item& selected_item, MenuResult& result)
     item_separate(selected_item);
     invsubroutine = 0;
     result.succeeded = true;
-    return OnEnterResult{result, selected_item};
+    return OnEnterResult{result, OptionalItemRef{&selected_item}};
 }
 
 
@@ -2268,7 +2268,7 @@ OnEnterResult on_enter_small_medal(Item& selected_item)
         return OnEnterResult{1};
     }
     auto& slot = *slot_opt;
-    optional_ref<Item> small_medals;
+    OptionalItemRef small_medals;
     if ((small_medals = item_find(622, 3, ItemFindLocation::player_inventory)))
     {
         p = small_medals->number();
@@ -2650,12 +2650,12 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
             make_item_list(inventory_owner, mainweapon, citrade, cidip);
             if (const auto result = check_command(inventory_owner, citrade))
             {
-                return {*result, none};
+                return {*result, nullptr};
             }
             sort_list_by_column1();
             if (const auto result = check_pick_up())
             {
-                return {*result, none};
+                return {*result, nullptr};
             }
             show_message(citrade, cidip);
         }
@@ -2664,11 +2664,13 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
         {
             update_page = false;
 
-            if (const auto result = on_shortcut(citrade, cidip, dropcontinue))
+            if (auto result = on_shortcut(citrade, cidip, dropcontinue))
             {
                 switch (result->type)
                 {
-                case 0: return {result->menu_result, result->selected_item};
+                case 0:
+                    return {
+                        result->menu_result, std::move(result->selected_item)};
                 case 1:
                     init = true;
                     update_page = true;
@@ -2691,11 +2693,12 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
         const auto action = get_action();
         if (p != -1)
         {
-            const auto result =
+            auto result =
                 on_enter(inventory_owner, p(0), citrade, cidip, dropcontinue);
             switch (result.type)
             {
-            case 0: return {result.menu_result, result.selected_item};
+            case 0:
+                return {result.menu_result, std::move(result.selected_item)};
             case 1:
                 init = true;
                 update_page = true;
@@ -2761,7 +2764,7 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
         {
             if (const auto result = on_cancel(dropcontinue))
             {
-                return {*result, none};
+                return {*result, nullptr};
             }
             else
             {

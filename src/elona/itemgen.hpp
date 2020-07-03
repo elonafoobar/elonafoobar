@@ -1,5 +1,6 @@
 #pragma once
 
+#include "eobject/eobject.hpp"
 #include "optional.hpp"
 #include "randomgen.hpp"
 
@@ -13,19 +14,18 @@ struct Position;
 
 
 
-optional_ref<Item> itemcreate(int slot, int id, int x, int y, int number = 0);
+OptionalItemRef itemcreate(int slot, int id, int x, int y, int number = 0);
 
-optional_ref<Item>
+OptionalItemRef
 itemcreate(int slot, int id, const Position& pos, int number = 0);
 
-optional_ref<Item> itemcreate_player_inv(int id, int number = 0);
+OptionalItemRef itemcreate_player_inv(int id, int number = 0);
 
-optional_ref<Item>
-itemcreate_chara_inv(int chara_index, int id, int number = 0);
+OptionalItemRef itemcreate_chara_inv(int chara_index, int id, int number = 0);
 
-optional_ref<Item> itemcreate_extra_inv(int id, int x, int y, int number = 0);
+OptionalItemRef itemcreate_extra_inv(int id, int x, int y, int number = 0);
 
-optional_ref<Item>
+OptionalItemRef
 itemcreate_extra_inv(int id, const Position& pos, int number = 0);
 
 

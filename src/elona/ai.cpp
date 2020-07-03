@@ -243,7 +243,7 @@ int dist_helper(const Character& a, const Character& b)
 
 
 
-optional_ref<Item> _try_generate_special_throwing_item(
+OptionalItemRef _try_generate_special_throwing_item(
     const Character& chara,
     int action_id)
 {
@@ -265,7 +265,7 @@ optional_ref<Item> _try_generate_special_throwing_item(
         return itemcreate_chara_inv(
             chara.index, choice(isetthrowpotiongreater), 0);
     case -9996: flt(); return itemcreate_chara_inv(chara.index, 698, 0);
-    default: assert(0); return none;
+    default: assert(0); return nullptr;
     }
 }
 
@@ -431,7 +431,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
     // Throws a snowball to a snowman.
     if (rnd(12) == 0)
     {
-        optional_ref<Item> target_snowman;
+        OptionalItemRef target_snowman;
         for (const auto& snowman_ref_wrapper : itemlist(-1, 541))
         {
             auto&& snowman = snowman_ref_wrapper.get();
@@ -440,7 +440,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
                 snowman.position.y >= scy &&
                 snowman.position.y < scy + inf_screenh)
             {
-                target_snowman = snowman;
+                target_snowman = OptionalItemRef{&snowman};
                 break;
             }
         }

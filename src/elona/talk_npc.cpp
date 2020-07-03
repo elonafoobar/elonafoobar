@@ -1818,8 +1818,8 @@ void talk_wrapper(Character& speaker, TalkResult initial)
 
 TalkResult talk_npc(Character& speaker)
 {
-    optional_ref<Item> item_to_deliver;
-    optional_ref<Item> item_to_supply;
+    OptionalItemRef item_to_deliver;
+    OptionalItemRef item_to_supply;
 
     listmax = 0;
     if (buff == ""s)
@@ -2168,7 +2168,7 @@ TalkResult talk_npc(Character& speaker)
                     {
                         if (item->id == int2itemid(p))
                         {
-                            item_to_deliver = *item;
+                            item_to_deliver = item.clone();
                             break;
                         }
                     }
@@ -2197,7 +2197,7 @@ TalkResult talk_npc(Character& speaker)
                         item->param1 / 1000 == quest_data[rq].extra_info_1 &&
                         item->param2 == quest_data[rq].extra_info_2)
                     {
-                        item_to_supply = *item;
+                        item_to_supply = item.clone();
                         break;
                     }
                 }
@@ -2205,7 +2205,7 @@ TalkResult talk_npc(Character& speaker)
                 {
                     if (item->id == int2itemid(quest_data[rq].target_item_id))
                     {
-                        item_to_supply = *item;
+                        item_to_supply = item.clone();
                         break;
                     }
                 }

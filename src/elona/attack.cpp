@@ -154,8 +154,8 @@ void build_target_list(const Character& attacker)
 
 CanDoRangedAttackResult can_do_ranged_attack(const Character& chara)
 {
-    optional_ref<Item> weapon;
-    optional_ref<Item> ammo;
+    OptionalItemRef weapon;
+    OptionalItemRef ammo;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
@@ -165,33 +165,33 @@ CanDoRangedAttackResult can_do_ranged_attack(const Character& chara)
         }
         if (chara.equipment_slots[cnt].type == 10)
         {
-            weapon = *chara.equipment_slots[cnt].equipment;
+            weapon = chara.equipment_slots[cnt].equipment.as_opt();
         }
         if (chara.equipment_slots[cnt].type == 11)
         {
-            ammo = *chara.equipment_slots[cnt].equipment;
+            ammo = chara.equipment_slots[cnt].equipment.as_opt();
         }
     }
     if (!weapon)
     {
-        return {-1, none, none};
+        return {-1, nullptr, nullptr};
     }
     if (!ammo)
     {
         if (weapon->skill != 111)
         {
-            return {-2, none, none};
+            return {-2, nullptr, nullptr};
         }
     }
     if (ammo)
     {
         if (weapon->skill != ammo->skill)
         {
-            return {-3, none, none};
+            return {-3, nullptr, nullptr};
         }
     }
     attackskill = weapon->skill;
-    return {1, weapon, ammo};
+    return {1, std::move(weapon), std::move(ammo)};
 }
 
 
@@ -199,8 +199,8 @@ CanDoRangedAttackResult can_do_ranged_attack(const Character& chara)
 bool do_physical_attack_internal(
     Character& attacker,
     Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo)
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo)
 {
     int attackdmg;
 
@@ -531,7 +531,7 @@ bool do_physical_attack_internal(
                         {
                             if (rnd(5) == 0)
                             {
-                                item_acid(attacker, *weapon);
+                                item_acid(attacker, weapon.clone());
                             }
                         }
                     }
@@ -665,8 +665,8 @@ bool do_physical_attack_internal(
 void do_physical_attack(
     Character& attacker,
     Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo)
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo)
 {
     while (do_physical_attack_internal(attacker, target, weapon, ammo))
         ;
@@ -677,8 +677,8 @@ void do_physical_attack(
 void do_ranged_attack(
     Character& attacker,
     Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo)
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo)
 {
     int ammox = 0;
     int ammoy = 0;
@@ -728,8 +728,8 @@ void do_ranged_attack(
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             const auto result = can_do_ranged_attack(attacker);
-            weapon = result.weapon;
-            ammo = result.ammo;
+            const auto& weapon = result.weapon;
+            const auto& ammo = result.ammo;
             ele = 0;
             extraattack = 0;
             do_physical_attack(attacker, rapidshot_target.get(), weapon, ammo);
@@ -753,8 +753,8 @@ void do_ranged_attack(
         for (int cnt = 0; cnt < 10; ++cnt)
         {
             const auto result = can_do_ranged_attack(attacker);
-            weapon = result.weapon;
-            ammo = result.ammo;
+            const auto& weapon = result.weapon;
+            const auto& ammo = result.ammo;
             ele = 0;
             build_target_list(attacker);
             if (listmax == 0)
@@ -876,13 +876,14 @@ void try_to_melee_attack(Character& attacker, Character& target)
             attackskill = weapon.skill;
             ++attacknum;
             extraattack = 0;
-            do_physical_attack(attacker, target, weapon, none);
+            do_physical_attack(
+                attacker, target, OptionalItemRef{&weapon}, nullptr);
         }
     }
     if (attackskill == 106)
     {
         extraattack = 0;
-        do_physical_attack(attacker, target, none, none);
+        do_physical_attack(attacker, target, nullptr, nullptr);
     }
 }
 

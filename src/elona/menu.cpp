@@ -1141,13 +1141,13 @@ void append_accuracy_info(const Character& chara, int val0)
             ++p(1);
             s(1) = i18n::s.get("core.ui.chara_sheet.damage.melee") + p(1);
             ++attacknum;
-            show_weapon_dice(chara, weapon, none, val0);
+            show_weapon_dice(chara, OptionalItemRef{&weapon}, nullptr, val0);
         }
     }
     if (attackskill == 106)
     {
         s(1) = i18n::s.get("core.ui.chara_sheet.damage.unarmed");
-        show_weapon_dice(chara, none, none, val0);
+        show_weapon_dice(chara, nullptr, nullptr, val0);
     }
     attacknum = 0;
     const auto result = can_do_ranged_attack(chara);
@@ -1162,8 +1162,8 @@ void append_accuracy_info(const Character& chara, int val0)
 
 void show_weapon_dice(
     const Character& chara,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo,
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo,
     int val0)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);

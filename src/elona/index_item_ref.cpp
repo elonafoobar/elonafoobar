@@ -14,7 +14,7 @@ IndexItemRef IndexItemRef::from_ref(Item& item) noexcept
 
 
 
-IndexItemRef IndexItemRef::from_opt(optional_ref<Item> item) noexcept
+IndexItemRef IndexItemRef::from_opt(const OptionalItemRef& item) noexcept
 {
     return item ? from_ref(*item) : nullptr;
 }
@@ -24,20 +24,6 @@ IndexItemRef IndexItemRef::from_opt(optional_ref<Item> item) noexcept
 bool IndexItemRef::operator==(const Item& other) const noexcept
 {
     return *this == IndexItemRef::from_index(other.index());
-}
-
-
-
-bool IndexItemRef::operator==(optional_ref<const Item>& other) const noexcept
-{
-    if (other)
-    {
-        return *this == IndexItemRef::from_index(other->index());
-    }
-    else
-    {
-        return !(*this);
-    }
 }
 
 
@@ -64,11 +50,11 @@ Item* IndexItemRef::as_ptr() const
 
 
 
-optional_ref<Item> IndexItemRef::as_opt() const
+OptionalItemRef IndexItemRef::as_opt() const
 {
     if (*this)
     {
-        return as_ref();
+        return OptionalItemRef{&as_ref()};
     }
     else
     {

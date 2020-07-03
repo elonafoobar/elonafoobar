@@ -72,14 +72,14 @@ void end_dmghp(const Character& victim)
 
 void dmgheal_death_by_backpack(Character& chara)
 {
-    optional_ref<Item> heaviest_item;
+    OptionalItemRef heaviest_item;
     int heaviest_weight = 0;
 
     for (const auto& item : g_inv.for_chara(chara))
     {
         if (item->weight > heaviest_weight)
         {
-            heaviest_item = *item;
+            heaviest_item = item.clone();
             heaviest_weight = item->weight;
         }
     }

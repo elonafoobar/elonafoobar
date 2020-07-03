@@ -551,7 +551,7 @@ bool _magic_301(Character& subject, Character& target)
 
 
 // Performance
-bool _magic_183(Character& subject, optional_ref<Item> instrument)
+bool _magic_183(Character& subject, OptionalItemRef instrument)
 {
     assert(subject.index != 0 || instrument);
 
@@ -561,7 +561,7 @@ bool _magic_183(Character& subject, optional_ref<Item> instrument)
         {
             if (item->skill == 183)
             {
-                instrument = *item;
+                instrument = item.clone();
                 break;
             }
         }
@@ -743,7 +743,7 @@ bool _magic_185(Character& subject, Item& rod)
     item_separate(rod);
     --rod.count;
     rowactre = 0;
-    spot_fishing(subject, rod);
+    spot_fishing(subject, OptionalItemRef{&rod});
     return true;
 }
 
@@ -3389,12 +3389,12 @@ bool _magic_651(Character& subject, Character& target)
     {
         txt(i18n::s.get("core.magic.scavenge.apply", subject, target));
     }
-    optional_ref<Item> eat_item_opt;
+    OptionalItemRef eat_item_opt;
     for (const auto& item : g_inv.for_chara(target))
     {
         if (item->id == ItemId::fish_a)
         {
-            eat_item_opt = *item;
+            eat_item_opt = item.clone();
             break;
         }
     }
@@ -3411,7 +3411,7 @@ bool _magic_651(Character& subject, Character& target)
             {
                 continue;
             }
-            eat_item_opt = *item;
+            eat_item_opt = item.clone();
             break;
         }
     }
@@ -4549,7 +4549,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
 bool _proc_magic(
     Character& subject,
     Character& target,
-    optional_ref<Item> efitem,
+    const OptionalItemRef& efitem,
     int efid,
     int& fltbk,
     int& valuebk)
@@ -4571,7 +4571,7 @@ bool _proc_magic(
     case 1130: return _magic_1130(target);
     case 300: return _magic_300(subject, target);
     case 301: return _magic_301(subject, target);
-    case 183: return _magic_183(subject, efitem);
+    case 183: return _magic_183(subject, efitem.clone());
     case 184: assert(efitem); return _magic_184(subject, *efitem);
     case 185: assert(efitem); return _magic_185(subject, *efitem);
     case 406:
@@ -4664,7 +4664,7 @@ bool _proc_magic(
 namespace elona
 {
 
-bool magic(Character& subject, Character& target, optional_ref<Item> efitem)
+bool magic(Character& subject, Character& target, const OptionalItemRef& efitem)
 {
     int fltbk = 0;
     int valuebk = 0;

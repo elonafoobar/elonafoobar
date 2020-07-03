@@ -639,7 +639,9 @@ void activity_eating_start(Character& eater, Item& food)
 
 
 
-void activity_others_start(Character& doer, optional_ref<Item> activity_item)
+void activity_others_start(
+    Character& doer,
+    const OptionalItemRef& activity_item)
 {
     doer.activity.type = Activity::Type::others;
     doer.activity.item = IndexItemRef::from_opt(activity_item);
@@ -725,7 +727,9 @@ void activity_others_start(Character& doer, optional_ref<Item> activity_item)
 
 
 
-void activity_others_doing(Character& doer, optional_ref<Item> activity_item)
+void activity_others_doing(
+    Character& doer,
+    const OptionalItemRef& activity_item)
 {
     switch (game_data.activity_about_to_start)
     {
@@ -1059,7 +1063,7 @@ void activity_others_end_steal(Item& steal_target)
 
 
 
-void activity_others_end_sleep(optional_ref<Item> bed)
+void activity_others_end_sleep(const OptionalItemRef& bed)
 {
     txt(i18n::s.get("core.activity.sleep.finish"));
     sleep_start(bed);
@@ -1118,7 +1122,7 @@ void activity_others_end_study(const Item& item)
 
 
 
-void activity_others_end(Character& doer, optional_ref<Item> activity_item)
+void activity_others_end(Character& doer, const OptionalItemRef& activity_item)
 {
     switch (game_data.activity_about_to_start)
     {
@@ -1597,7 +1601,7 @@ void activity_eating_finish(Character& eater, Item& food)
 
 
 
-void activity_others(Character& doer, optional_ref<Item> activity_item)
+void activity_others(Character& doer, const OptionalItemRef& activity_item)
 {
     if (doer.index != 0)
     {
@@ -1625,7 +1629,7 @@ void activity_others(Character& doer, optional_ref<Item> activity_item)
 
 
 
-void spot_fishing(Character& fisher, optional_ref<Item> rod)
+void spot_fishing(Character& fisher, const OptionalItemRef& rod)
 {
     static int fishstat;
 
@@ -2071,7 +2075,7 @@ void matdelmain(int material_id, int amount)
 
 
 
-void sleep_start(optional_ref<Item> bed)
+void sleep_start(const OptionalItemRef& bed)
 {
     int timeslept = 0;
     if (game_data.current_map == mdata_t::MapId::quest)
@@ -2242,7 +2246,7 @@ void sleep_start(optional_ref<Item> bed)
 void start_stealing(Character& thief, Item& steal_target)
 {
     game_data.activity_about_to_start = 105;
-    activity_others(thief, steal_target);
+    activity_others(thief, OptionalItemRef{&steal_target});
 }
 
 } // namespace elona

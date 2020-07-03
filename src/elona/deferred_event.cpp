@@ -972,7 +972,7 @@ void eh_guest_visit(const DeferredEvent&)
     }
 
     guest->visited_just_now() = true;
-    optional_ref<const Item> chair_for_guest;
+    OptionalItemRef chair_for_guest;
     for (int cnt = 0; cnt < 17; ++cnt)
     {
         const auto chara_index = cnt == 0 ? guest->index : cnt - 1;
@@ -985,7 +985,7 @@ void eh_guest_visit(const DeferredEvent&)
         {
             continue;
         }
-        optional_ref<const Item> chair;
+        OptionalItemRef chair;
         auto distance_to_guest_chair = 6;
         for (const auto& item : g_inv.ground())
         {
@@ -997,8 +997,8 @@ void eh_guest_visit(const DeferredEvent&)
                 {
                     cell_swap(
                         chara.index, -1, item->position.x, item->position.y);
-                    chair_for_guest = *item;
-                    chair = *item;
+                    chair_for_guest = item.clone();
+                    chair = item.clone();
                     break;
                 }
                 else
@@ -1025,13 +1025,13 @@ void eh_guest_visit(const DeferredEvent&)
                             .chara_index_plus_one == 0 ||
                     chara.index == 0 || chara.index == guest->index)
                 {
-                    chair = *item;
+                    chair = item.clone();
                     distance_to_guest_chair = d;
                 }
             }
             if (chara.index == 0 && item->param1 == 1)
             {
-                chair = *item;
+                chair = item.clone();
                 break;
             }
         }

@@ -256,17 +256,17 @@ int cell_count_exact_item_stacks(const Position& pos)
 
 
 
-optional_ref<Item> cell_get_item_if_only_one(const Position& pos)
+OptionalItemRef cell_get_item_if_only_one(const Position& pos)
 {
     const auto& item_info_actual = cell_data.at(pos.x, pos.y).item_info_actual;
     if (item_info_actual.stack_count() != 1)
     {
-        return none;
+        return nullptr;
     }
     else
     {
         const auto index = item_info_actual.item_indice()[0];
-        return *g_inv.ground().at(index - 1);
+        return g_inv.ground().at(index - 1);
     }
 }
 

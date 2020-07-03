@@ -2,6 +2,7 @@
 
 #include <utility>
 
+#include "eobject/eobject.hpp"
 #include "optional.hpp"
 
 
@@ -51,7 +52,7 @@ int cell_count_exact_item_stacks(const Position& pos);
  * @param The position to query.
  * @return The item placed at @a pos.
  */
-optional_ref<Item> cell_get_item_if_only_one(const Position& pos);
+OptionalItemRef cell_get_item_if_only_one(const Position& pos);
 
 
 /**

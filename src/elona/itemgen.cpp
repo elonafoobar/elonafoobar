@@ -44,11 +44,11 @@ int calculate_original_value(const Item& item)
 namespace elona
 {
 
-optional_ref<Item> do_create_item(int, int, int, int);
+OptionalItemRef do_create_item(int, int, int, int);
 
 
 
-optional_ref<Item> itemcreate(int slot, int id, int x, int y, int number)
+OptionalItemRef itemcreate(int slot, int id, int x, int y, int number)
 {
     if (flttypeminor != 0)
     {
@@ -60,35 +60,35 @@ optional_ref<Item> itemcreate(int slot, int id, int x, int y, int number)
 
 
 
-optional_ref<Item> itemcreate(int slot, int id, const Position& pos, int number)
+OptionalItemRef itemcreate(int slot, int id, const Position& pos, int number)
 {
     return itemcreate(slot, id, pos.x, pos.y, number);
 }
 
 
 
-optional_ref<Item> itemcreate_player_inv(int id, int number)
+OptionalItemRef itemcreate_player_inv(int id, int number)
 {
     return itemcreate_chara_inv(0, id, number);
 }
 
 
 
-optional_ref<Item> itemcreate_chara_inv(int chara_index, int id, int number)
+OptionalItemRef itemcreate_chara_inv(int chara_index, int id, int number)
 {
     return itemcreate(chara_index, id, -1, -1, number);
 }
 
 
 
-optional_ref<Item> itemcreate_extra_inv(int id, int x, int y, int number)
+OptionalItemRef itemcreate_extra_inv(int id, int x, int y, int number)
 {
     return itemcreate(-1, id, x, y, number);
 }
 
 
 
-optional_ref<Item> itemcreate_extra_inv(int id, const Position& pos, int number)
+OptionalItemRef itemcreate_extra_inv(int id, const Position& pos, int number)
 {
     return itemcreate_extra_inv(id, pos.x, pos.y, number);
 }
@@ -137,7 +137,7 @@ int get_random_item_id()
 
 
 
-optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
+OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
 {
     if ((slot == 0 || slot == -1) && fixlv < Quality::godly)
     {
@@ -149,7 +149,7 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
 
     const auto empty_slot = inv_get_free_slot(slot);
     if (!empty_slot)
-        return none;
+        return nullptr;
 
     auto&& item = *empty_slot;
 
@@ -212,7 +212,7 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
             }
         }
         if (!ok)
-            return none;
+            return nullptr;
     }
 
     if (item_id == -1)
@@ -346,7 +346,7 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
         {
             earn_gold(cdata[slot], item.number());
             item.remove();
-            return item; // TODO: invalid return value!
+            return OptionalItemRef{&item}; // TODO: invalid return value!
         }
     }
 
@@ -527,10 +527,10 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
     }
     else
     {
-        const auto item_stack_result = item_stack(slot, item);
+        auto item_stack_result = item_stack(slot, item);
         if (item_stack_result.stacked)
         {
-            return item_stack_result.stacked_item;
+            return OptionalItemRef{&item_stack_result.stacked_item};
         }
     }
 
@@ -538,7 +538,7 @@ optional_ref<Item> do_create_item(int item_id, int slot, int x, int y)
     {
         cell_refresh(item.position.x, item.position.y);
     }
-    return item;
+    return OptionalItemRef{&item};
 }
 
 
