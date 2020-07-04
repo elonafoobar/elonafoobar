@@ -368,8 +368,8 @@ MainMenuResult character_making_final_phase()
         i18n::s.get("core.chara_making.final_screen.what_is_your_name"));
 
     inputlog = "";
-    bool canceled = input_text_dialog(
-        (windoww - 230) / 2 + inf_screenx, winposy(120), 10, true);
+    bool canceled =
+        input_text_dialog((windoww - 230) / 2 + inf_screenx, winposy(120), 10);
     if (canceled)
     {
         return MainMenuResult::character_making_final_phase;

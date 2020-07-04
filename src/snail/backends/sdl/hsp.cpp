@@ -273,6 +273,10 @@ void mes(int x, int y, const std::string& text, const snail::Color& color)
 
     if (copy.size() >= 25 /* TODO */)
     {
+        if (copy.size() >= 300)
+        {
+            copy = strutil::take_by_width(copy, 100); // too long, truncate
+        }
         renderer.render_multiline_text(copy, x, y, color);
     }
     else

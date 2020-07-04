@@ -1576,7 +1576,7 @@ MainMenuResult main_menu_mods_develop()
         {
             inputlog = "";
             const auto canceled = input_text_dialog(
-                (windoww - 230) / 2 + inf_screenx, winposy(120), 10, true);
+                (windoww - 230) / 2 + inf_screenx, winposy(120), 10);
             if (!canceled && !inputlog(0).empty())
             {
                 const auto new_mod_id = inputlog(0);

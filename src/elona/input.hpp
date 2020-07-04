@@ -23,12 +23,7 @@ enum class PromptType
 
 void input_number_dialog(int x, int y, int max_number, int initial_number = 0);
 
-bool input_text_dialog(
-    int x,
-    int y,
-    int val2,
-    bool is_cancelable = true,
-    bool limit_length = true);
+bool input_text_dialog(int x, int y, int val2, bool is_cancelable = true);
 
 StickKey stick(StickKey allow_repeat_keys = StickKey::none);
 

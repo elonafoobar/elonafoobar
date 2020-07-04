@@ -776,8 +776,7 @@ bool process_wish(Character& chara, optional<std::string> wish)
     }
     else
     {
-        input_text_dialog(
-            (windoww - 290) / 2 + inf_screenx, winposy(90), 16, false);
+        input_text_dialog((windoww - 290) / 2 + inf_screenx, winposy(90), 16);
     }
 
     txt(i18n::s.get("core.wish.your_wish", inputlog(0)));
