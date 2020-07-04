@@ -301,8 +301,7 @@ TurnResult _bump_into_character(Character& chara)
             }
             if (g_config.scroll())
             {
-                cdata.player().next_position.x = chara.position.x;
-                cdata.player().next_position.y = chara.position.y;
+                cdata.player().next_position = chara.position;
                 ui_scroll_screen();
             }
             cell_swap(cdata.player().index, chara.index);

@@ -267,8 +267,7 @@ void initialize_home_adata()
     }
     if (game_data.home_scale != 0)
     {
-        area_data[p].position.x = cdata.player().position.x;
-        area_data[p].position.y = cdata.player().position.y;
+        area_data[p].position = cdata.player().position;
     }
     area_data[p].outer_map = game_data.destination_outer_map;
 }
@@ -906,8 +905,7 @@ void prompt_ally_staying()
         {
             if (game_data.current_map == mdata_t::MapId::your_home)
             {
-                cdata[c].initial_position.x = cdata[c].position.x;
-                cdata[c].initial_position.y = cdata[c].position.y;
+                cdata[c].initial_position = cdata[c].position;
                 txt(i18n::s.get(
                     "core.building.home.staying.add.ally", cdata[c]));
             }

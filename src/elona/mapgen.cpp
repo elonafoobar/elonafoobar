@@ -447,8 +447,7 @@ void map_placeplayer()
         {
             if (game_data.mount == chara.index)
             {
-                cdata[game_data.mount].position.x = cdata.player().position.x;
-                cdata[game_data.mount].position.y = cdata.player().position.y;
+                cdata[game_data.mount].position = cdata.player().position;
                 continue;
             }
         }
