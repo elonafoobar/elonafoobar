@@ -1328,11 +1328,7 @@ TalkResult talk_guard_where_is(Character& speaker, int chatval_)
     {
         s = i18n::s.get("core.talk.npc.guard.where_is.direction.south");
     }
-    p = dist(
-        cdata.player().position.x,
-        cdata.player().position.y,
-        chara_you_ask.position.x,
-        chara_you_ask.position.y);
+    p = dist(cdata.player().position, chara_you_ask.position);
 
     if (chara_you_ask.index == speaker.index)
     {

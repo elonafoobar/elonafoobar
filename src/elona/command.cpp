@@ -103,11 +103,7 @@ void _search_for_crystal()
         {
             continue;
         }
-        const auto d_ = dist(
-            item->pos().x,
-            item->pos().y,
-            cdata.player().position.x,
-            cdata.player().position.y);
+        const auto d_ = dist(item->pos(), cdata.player().position);
         if (!d || d_ < *d)
         {
             d = d_;
@@ -148,7 +144,7 @@ void _try_to_reveal_small_coin(Character& chara)
     }
     else
     {
-        if (dist(chara.position.x, chara.position.y, x, y) > 2)
+        if (dist(chara.position, x, y) > 2)
         {
             txt(i18n::s.get("core.action.search.small_coin.far"));
         }
@@ -1131,7 +1127,7 @@ TurnResult do_throw_command(Character& thrower, Item& throw_item)
     {
         txt(i18n::s.get("core.action.throw.execute", thrower, throw_item));
     }
-    if (dist(thrower.position.x, thrower.position.y, tlocx, tlocy) * 4 >
+    if (dist(thrower.position, tlocx, tlocy) * 4 >
             rnd_capped(sdata(111, thrower.index) + 10) +
                 sdata(111, thrower.index) / 4 ||
         rnd(10) == 0)
@@ -3988,11 +3984,7 @@ bool try_to_perceive_npc(const Character& chara, const Character& enemy)
             {
                 return true;
             }
-            const auto d = dist(
-                enemy.position.x,
-                enemy.position.y,
-                chara.position.x,
-                chara.position.y);
+            const auto d = dist(enemy.position, chara.position);
             const auto p = d * 150 + (sdata(157, enemy.index) * 100 + 150) + 1;
             if (rnd_capped(p) < rnd_capped(sdata(13, chara.index) * 60 + 150))
             {
@@ -5156,11 +5148,8 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
         }
         else
         {
-            if (dist(
-                    cdata[enemy_index].position.x,
-                    cdata[enemy_index].position.y,
-                    caster.position.x,
-                    caster.position.y) > the_ability_db[efid]->range % 1000 + 1)
+            if (dist(cdata[enemy_index].position, caster.position) >
+                the_ability_db[efid]->range % 1000 + 1)
             {
                 return 0;
             }
@@ -5219,11 +5208,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
         {
             if (the_ability_db[efid]->ability_type == 3)
             {
-                if (dist(
-                        cdata[enemy_index].position.x,
-                        cdata[enemy_index].position.y,
-                        caster.position.x,
-                        caster.position.y) >
+                if (dist(cdata[enemy_index].position, caster.position) >
                     the_ability_db[efid]->range % 1000 + 1)
                 {
                     return 0;
@@ -5260,11 +5245,8 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
                 }
             }
         }
-        if (dist(
-                cdata[enemy_index].position.x,
-                cdata[enemy_index].position.y,
-                caster.position.x,
-                caster.position.y) > the_ability_db[efid]->range % 1000 + 1)
+        if (dist(cdata[enemy_index].position, caster.position) >
+            the_ability_db[efid]->range % 1000 + 1)
         {
             if (caster.index == 0)
             {

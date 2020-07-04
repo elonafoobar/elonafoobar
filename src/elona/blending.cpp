@@ -41,13 +41,6 @@ elona_vector1<int> rppage;
 
 
 
-int dist(const Position& p1, const Position& p2)
-{
-    return elona::dist(p1.x, p1.y, p2.x, p2.y);
-}
-
-
-
 std::string get_recipe_material_name(int recipe_id, int step)
 {
     return lua::call_with_result<std::string>(

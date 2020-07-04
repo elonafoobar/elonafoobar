@@ -2860,7 +2860,7 @@ void txttargetnpc(int x, int y)
     dy_ = 0;
     font(14 - en * 2);
     if (!fov_los(cdata.player().position, {x, y}) ||
-        dist(cdata.player().position.x, cdata.player().position.y, x, y) >
+        dist(cdata.player().position, x, y) >
             cdata.player().vision_distance / 2)
     {
         bmes(
@@ -2884,11 +2884,7 @@ void txttargetnpc(int x, int y)
                 i18n::s.get(
                     "core.action.target.you_are_targeting",
                     cdata[i_],
-                    dist(
-                        cdata.player().position.x,
-                        cdata.player().position.y,
-                        cdata[i_].position.x,
-                        cdata[i_].position.y)),
+                    dist(cdata.player().position, cdata[i_].position)),
                 100,
                 windowh - inf_verh - 45 - dy_ * 20);
             ++dy_;

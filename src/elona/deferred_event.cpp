@@ -1013,11 +1013,7 @@ void eh_guest_visit(const DeferredEvent&)
             {
                 continue;
             }
-            const auto d = dist(
-                item->pos().x,
-                item->pos().y,
-                chair_for_guest->pos().x,
-                chair_for_guest->pos().y);
+            const auto d = dist(item->pos(), chair_for_guest->pos());
             if (d < distance_to_guest_chair)
             {
                 if (cell_data.at(item->pos().x, item->pos().y)

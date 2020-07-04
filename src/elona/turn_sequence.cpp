@@ -405,11 +405,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     {
         if (cdata.player().choked)
         {
-            if (dist(
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    chara.position.x,
-                    chara.position.y) == 1)
+            if (dist(cdata.player().position, chara.position) == 1)
             {
                 x = cdata.player().position.x;
                 y = cdata.player().position.y;
@@ -487,11 +483,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
 {
     if (chara.hate > 0 || chara.relationship == 10)
     {
-        distance = dist(
-            cdata[enemy_index].position.x,
-            cdata[enemy_index].position.y,
-            chara.position.x,
-            chara.position.y);
+        distance = dist(cdata[enemy_index].position, chara.position);
         if (chara.blind != 0)
         {
             if (rnd(10) > 2)
@@ -1023,11 +1015,7 @@ TurnResult pass_one_turn(bool time_passing)
                 {
                     continue;
                 }
-                if (dist(
-                        cdata[ct].position.x,
-                        cdata[ct].position.y,
-                        cnt.position.x,
-                        cnt.position.y) > 5)
+                if (dist(cdata[ct].position, cnt.position) > 5)
                 {
                     continue;
                 }

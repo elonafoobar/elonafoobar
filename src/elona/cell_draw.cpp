@@ -1631,15 +1631,9 @@ void cell_draw()
                 if ((is_night() || light.always_shines) &&
                     mapsync(x_, y) == msync)
                 {
-                    light_ -= (6 -
-                               clamp(
-                                   dist(
-                                       cdata.player().position.x,
-                                       cdata.player().position.y,
-                                       x_,
-                                       y),
-                                   0,
-                                   6)) *
+                    light_ -=
+                        (6 -
+                         clamp(dist(cdata.player().position, x_, y), 0, 6)) *
                         light.brightness;
                     gmode(5, light.alpha_base + rnd(light.alpha_random + 1));
                     draw_indexed(

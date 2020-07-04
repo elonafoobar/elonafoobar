@@ -341,12 +341,7 @@ std::pair<bool, int> activity_perform_proc_audience(
             return std::make_pair(false, 0);
         }
     }
-    else if (
-        dist(
-            performer.position.x,
-            performer.position.y,
-            audience.position.x,
-            audience.position.y) > 3)
+    else if (dist(performer.position, audience.position) > 3)
     {
         return std::make_pair(false, 0);
     }
@@ -849,11 +844,7 @@ void activity_others_doing(
             {
                 continue;
             }
-            if (dist(
-                    cdata[cnt].position.x,
-                    cdata[cnt].position.y,
-                    cdata.player().position.x,
-                    cdata.player().position.y) > 5)
+            if (dist(cdata[cnt].position, cdata.player().position) > 5)
             {
                 continue;
             }
@@ -866,12 +857,7 @@ void activity_others_doing(
             }
             p = rnd_capped(i + 1) *
                 (80 + (is_in_fov(cdata[cnt]) == 0) * 50 +
-                 dist(
-                     cdata[cnt].position.x,
-                     cdata[cnt].position.y,
-                     cdata.player().position.x,
-                     cdata.player().position.y) *
-                     20) /
+                 dist(cdata[cnt].position, cdata.player().position) * 20) /
                 100;
             if (cnt < 57)
             {
@@ -940,11 +926,7 @@ void activity_others_doing(
                     f = 1;
                 }
             }
-            if (dist(
-                    doer.position.x,
-                    doer.position.y,
-                    cdata[tg].position.x,
-                    cdata[tg].position.y) >= 3)
+            if (dist(doer.position, cdata[tg].position) >= 3)
             {
                 if (f != 1)
                 {

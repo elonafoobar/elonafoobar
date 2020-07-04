@@ -229,16 +229,9 @@ bool _is_special_throwing_action(int action_id)
 
 
 
-int dist_helper(const Position& a, const Position& b)
-{
-    return dist(a.x, a.y, b.x, b.y);
-}
-
-
-
 int dist_helper(const Character& a, const Character& b)
 {
-    return dist_helper(a.position, b.position);
+    return dist(a.position, b.position);
 }
 
 
@@ -1079,7 +1072,7 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
     if (chara.ai_calm == 2)
     {
         if (map_data.designated_spawns == 1 &&
-            dist_helper(chara.position, chara.initial_position) > 2)
+            dist(chara.position, chara.initial_position) > 2)
         {
             chara.next_position.x = chara.position.x +
                 rnd(2) *

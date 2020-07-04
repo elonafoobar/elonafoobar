@@ -777,10 +777,8 @@ int quest_generate()
         {
             rewardfix = 140 +
                 dist(
-                    area_data[game_data.current_map].position.x,
-                    area_data[game_data.current_map].position.y,
-                    area_data[p].position.x,
-                    area_data[p].position.y) *
+                    area_data[game_data.current_map].position,
+                    area_data[p].position) *
                     2;
             quest_data[rq].deadline_days = rnd(8) + 6;
             quest_data[rq].difficulty = clamp(
@@ -793,10 +791,8 @@ int quest_generate()
         {
             rewardfix = 130 +
                 dist(
-                    area_data[game_data.current_map].position.x,
-                    area_data[game_data.current_map].position.y,
-                    area_data[p].position.x,
-                    area_data[p].position.y) *
+                    area_data[game_data.current_map].position,
+                    area_data[p].position) *
                     2;
             quest_data[rq].deadline_days = rnd(5) + 2;
             quest_data[rq].difficulty = clamp(rewardfix / 10 + 1, 1, 40);
@@ -805,10 +801,8 @@ int quest_generate()
         {
             rewardfix = 80 +
                 dist(
-                    area_data[game_data.current_map].position.x,
-                    area_data[game_data.current_map].position.y,
-                    area_data[p].position.x,
-                    area_data[p].position.y) *
+                    area_data[game_data.current_map].position,
+                    area_data[p].position) *
                     2;
             quest_data[rq].deadline_days = rnd(8) + 6;
             quest_data[rq].difficulty = clamp(rewardfix / 20 + 1, 1, 40);
@@ -920,10 +914,8 @@ int quest_generate()
             p = quest_data[i].originating_map_id;
             rewardfix = 70 +
                 dist(
-                    area_data[game_data.current_map].position.x,
-                    area_data[game_data.current_map].position.y,
-                    area_data[p].position.x,
-                    area_data[p].position.y) *
+                    area_data[game_data.current_map].position,
+                    area_data[p].position) *
                     2;
             if (p == 33 || game_data.current_map == mdata_t::MapId::noyel)
             {
