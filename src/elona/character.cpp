@@ -1502,9 +1502,9 @@ void chara_delete(int chara_index)
         chara_remove(cdata[chara_index]);
     }
 
-    for (auto&& item : inv.for_chara(cdata[chara_index]))
+    for (const auto& item : g_inv.for_chara(cdata[chara_index]))
     {
-        item.remove();
+        item->remove();
     }
     sdata.clear(chara_index);
     cdata[chara_index].clear();
@@ -1550,10 +1550,10 @@ void chara_relocate(
     const auto invhead = tmp.first;
     const auto invrange = tmp.second;
     int p = invhead;
-    for (auto&& item : inv.for_chara(destination))
+    for (const auto& item : g_inv.for_chara(destination))
     {
-        item_copy(inv[p], item);
-        item.body_part = 0;
+        item_copy(*g_inv[p], *item);
+        item->body_part = 0;
         ++p;
         if (p >= invhead + invrange)
         {
@@ -1562,7 +1562,7 @@ void chara_relocate(
     }
 
     // Clear some fields which should not be copied.
-    source.ai_item = ItemRef::null();
+    source.ai_item = nullptr;
     source.is_livestock() = false;
 
     // Copy from `source` to `destination` and clear `source`
@@ -1672,7 +1672,7 @@ void chara_set_ai_item(Character& chara, Item& item)
     if (category == ItemCategory::food || category == ItemCategory::potion ||
         category == ItemCategory::scroll)
     {
-        chara.ai_item = ItemRef::from_ref(item);
+        chara.ai_item = IndexItemRef::from_ref(item);
     }
 }
 
@@ -1792,9 +1792,9 @@ void initialize_pc_character()
     gain_race_feat();
     cdata.player().skill_bonus = 5 + trait(154);
     cdata.player().total_skill_bonus = 5 + trait(154);
-    for (auto&& item : inv.pc())
+    for (const auto& item : g_inv.pc())
     {
-        item.identify_state = IdentifyState::completely;
+        item->identify_state = IdentifyState::completely;
     }
     chara_refresh(cdata.player());
 }
@@ -2188,7 +2188,7 @@ void chara_clear_status_effects(Character& chara)
     chara.drunk = 0;
     chara.bleeding = 0;
     chara.gravity = 0;
-    chara.ai_item = ItemRef::null();
+    chara.ai_item = nullptr;
     chara.hate = 0;
     chara.enemy_id = 0;
     chara.sick = 0;

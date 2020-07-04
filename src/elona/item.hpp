@@ -276,10 +276,10 @@ public:
     Inventory(Inventory&&);
 
     bool contains(size_t index) const;
-    Item& at(size_t index);
+    ItemRef at(size_t index);
 
     bool has_free_slot() const;
-    optional_ref<Item> get_free_slot();
+    OptionalItemRef get_free_slot();
 
 
     size_t index_start() const noexcept
@@ -319,9 +319,9 @@ public:
         }
 
 
-        auto& operator*() const
+        ItemRef operator*() const
         {
-            return *_itr;
+            return ItemRef{&*_itr};
         }
 
 
@@ -416,7 +416,7 @@ public:
     AllInventory();
 
 
-    Item& operator[](int index);
+    ItemRef operator[](int index);
 
 
     Inventory& pc();
@@ -436,7 +436,7 @@ private:
 
 
 
-extern AllInventory inv;
+extern AllInventory g_inv;
 
 
 
@@ -455,7 +455,7 @@ Item& inv_compress(int owner);
  */
 void item_copy(Item& src, Item& dst);
 
-void item_acid(const Character& owner, optional_ref<Item> item = none);
+void item_acid(const Character& owner, OptionalItemRef item = nullptr);
 
 /**
  * Swap the content of @a a and @a b. If they points to the same object, does
@@ -466,8 +466,7 @@ void item_acid(const Character& owner, optional_ref<Item> item = none);
 void item_exchange(Item& a, Item& b);
 
 void itemturn(Item& item);
-optional_ref<Item>
-itemfind(int inventory_id, int matcher, int matcher_type = 0);
+OptionalItemRef itemfind(int inventory_id, int matcher, int matcher_type = 0);
 int itemusingfind(const Item& item, bool disallow_pc = false);
 
 enum class ItemFindLocation
@@ -476,7 +475,7 @@ enum class ItemFindLocation
     ground,
     player_inventory_and_ground,
 };
-optional_ref<Item> item_find(
+OptionalItemRef item_find(
     int matcher,
     int matcher_type = 0,
     ItemFindLocation = ItemFindLocation::player_inventory_and_ground);
@@ -498,16 +497,16 @@ item_stack(int inventory_id, Item& base_item, bool show_message = false);
 
 void item_dump_desc(Item&);
 
-bool item_fire(int owner, optional_ref<Item> burned_item = none);
+bool item_fire(int owner, const OptionalItemRef& burned_item = nullptr);
 void mapitem_fire(optional_ref<Character> arsonist, int x, int y);
-bool item_cold(int owner, optional_ref<Item> destroyed_item = none);
+bool item_cold(int owner, const OptionalItemRef& destroyed_item = nullptr);
 void mapitem_cold(int x, int y);
 
 // TODO unsure how these are separate from item
 bool inv_find(ItemId id, int owner);
 Item& get_random_inv(int owner);
 
-optional_ref<Item> inv_get_free_slot(int inventory_id);
+OptionalItemRef inv_get_free_slot(int inventory_id);
 
 int inv_getowner(const Item& item);
 int inv_sum(int = 0);
@@ -551,7 +550,10 @@ void item_db_get_charge_level(const Item& item, int legacy_id);
 void item_db_set_full_stats(Item& item, int legacy_id);
 void item_db_on_read(Character& reader, Item& item, int legacy_id);
 void item_db_on_zap(Item& item, int legacy_id);
-void item_db_on_drink(Character& chara, optional_ref<Item> item, int legacy_id);
+void item_db_on_drink(
+    Character& chara,
+    const OptionalItemRef& item,
+    int legacy_id);
 
 
 std::vector<int> item_get_inheritance(const Item& item);
@@ -569,7 +571,7 @@ void dipcursed(Item& item);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 void equip_melee_weapon(Character& chara);
 std::pair<int, int> inv_getheader(int);
-optional_ref<Item> mapitemfind(const Position& pos, ItemId id);
+OptionalItemRef mapitemfind(const Position& pos, ItemId id);
 std::string itemname(Item& item, int number = 0, bool with_article = true);
 
 } // namespace elona

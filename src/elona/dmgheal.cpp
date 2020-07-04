@@ -72,15 +72,15 @@ void end_dmghp(const Character& victim)
 
 void dmgheal_death_by_backpack(Character& chara)
 {
-    optional_ref<Item> heaviest_item;
+    OptionalItemRef heaviest_item;
     int heaviest_weight = 0;
 
-    for (auto&& item : inv.for_chara(chara))
+    for (const auto& item : g_inv.for_chara(chara))
     {
-        if (item.weight > heaviest_weight)
+        if (item->weight > heaviest_weight)
         {
-            heaviest_item = item;
-            heaviest_weight = item.weight;
+            heaviest_item = item.clone();
+            heaviest_weight = item->weight;
         }
     }
 
@@ -1423,15 +1423,15 @@ void character_drops_item(Character& victim)
         {
             return;
         }
-        for (auto&& item : inv.for_chara(victim))
+        for (const auto& item : g_inv.for_chara(victim))
         {
             if (map_data.refresh_type == 0)
             {
-                if (item.body_part != 0)
+                if (item->body_part != 0)
                 {
                     continue;
                 }
-                if (item.is_precious())
+                if (item->is_precious())
                 {
                     continue;
                 }
@@ -1444,7 +1444,7 @@ void character_drops_item(Character& victim)
             {
                 continue;
             }
-            if (the_item_db[itemid2int(item.id)]->is_cargo)
+            if (the_item_db[itemid2int(item->id)]->is_cargo)
             {
                 if (map_data.type != mdata_t::MapType::world_map &&
                     map_data.type != mdata_t::MapType::player_owned &&
@@ -1461,27 +1461,27 @@ void character_drops_item(Character& victim)
                 }
             }
             f = 0;
-            if (item.body_part != 0)
+            if (item->body_part != 0)
             {
                 if (rnd(10))
                 {
                     f = 1;
                 }
-                if (item.curse_state == CurseState::blessed)
+                if (item->curse_state == CurseState::blessed)
                 {
                     if (rnd(2))
                     {
                         f = 1;
                     }
                 }
-                if (is_cursed(item.curse_state))
+                if (is_cursed(item->curse_state))
                 {
                     if (rnd(2))
                     {
                         f = 0;
                     }
                 }
-                if (item.curse_state == CurseState::doomed)
+                if (item->curse_state == CurseState::doomed)
                 {
                     if (rnd(2))
                     {
@@ -1489,7 +1489,7 @@ void character_drops_item(Character& victim)
                     }
                 }
             }
-            else if (item.identify_state == IdentifyState::completely)
+            else if (item->identify_state == IdentifyState::completely)
             {
                 if (rnd(4))
                 {
@@ -1500,33 +1500,33 @@ void character_drops_item(Character& victim)
             {
                 continue;
             }
-            if (item.body_part != 0)
+            if (item->body_part != 0)
             {
-                victim.equipment_slots[item.body_part - 100].unequip();
-                item.body_part = 0;
+                victim.equipment_slots[item->body_part - 100].unequip();
+                item->body_part = 0;
             }
             f = 0;
-            if (!item.is_precious())
+            if (!item->is_precious())
             {
                 if (rnd(4) == 0)
                 {
                     f = 1;
                 }
-                if (item.curse_state == CurseState::blessed)
+                if (item->curse_state == CurseState::blessed)
                 {
                     if (rnd(3) == 0)
                     {
                         f = 0;
                     }
                 }
-                if (is_cursed(item.curse_state))
+                if (is_cursed(item->curse_state))
                 {
                     if (rnd(3) == 0)
                     {
                         f = 1;
                     }
                 }
-                if (item.curse_state == CurseState::doomed)
+                if (item->curse_state == CurseState::doomed)
                 {
                     if (rnd(3) == 0)
                     {
@@ -1536,16 +1536,16 @@ void character_drops_item(Character& victim)
             }
             if (f)
             {
-                item.remove();
+                item->remove();
                 continue;
             }
-            item.position.x = victim.position.x;
-            item.position.y = victim.position.y;
-            if (!item_stack(-1, item).stacked)
+            item->position.x = victim.position.x;
+            item->position.y = victim.position.y;
+            if (!item_stack(-1, *item).stacked)
             {
                 if (const auto slot = inv_get_free_slot(-1))
                 {
-                    item_copy(item, *slot);
+                    item_copy(*item, *slot);
                     slot->own_state = -2;
                 }
                 else
@@ -1553,7 +1553,7 @@ void character_drops_item(Character& victim)
                     break;
                 }
             }
-            item.remove();
+            item->remove();
         }
         cell_refresh(victim.position.x, victim.position.y);
         create_pcpic(cdata.player());
@@ -1595,14 +1595,15 @@ void character_drops_item(Character& victim)
             return;
         }
     }
-    for (auto&& item : inv.for_chara(victim))
+    for (const auto& item : g_inv.for_chara(victim))
     {
         f = 0;
         if (victim.role == Role::user)
         {
             break;
         }
-        if (item.quality > Quality::miracle || item.id == ItemId::platinum_coin)
+        if (item->quality > Quality::miracle ||
+            item->id == ItemId::platinum_coin)
         {
             f = 1;
         }
@@ -1631,11 +1632,11 @@ void character_drops_item(Character& victim)
                 f = 0;
             }
         }
-        if (item.quality == Quality::special)
+        if (item->quality == Quality::special)
         {
             f = 1;
         }
-        if (item.is_quest_target())
+        if (item->is_quest_target())
         {
             f = 1;
         }
@@ -1643,44 +1644,44 @@ void character_drops_item(Character& victim)
         {
             continue;
         }
-        if (catitem != 0 && !item.is_blessed_by_ehekatl() &&
-            is_equipment(the_item_db[itemid2int(item.id)]->category) &&
-            item.quality >= Quality::great)
+        if (catitem != 0 && !item->is_blessed_by_ehekatl() &&
+            is_equipment(the_item_db[itemid2int(item->id)]->category) &&
+            item->quality >= Quality::great)
         {
             if (rnd(3))
             {
                 txt(i18n::s.get(
-                        "core.misc.black_cat_licks", cdata[catitem], item),
+                        "core.misc.black_cat_licks", cdata[catitem], *item),
                     Message::color{ColorIndex::cyan});
-                item.is_blessed_by_ehekatl() = true;
-                reftype = (int)the_item_db[itemid2int(item.id)]->category;
+                item->is_blessed_by_ehekatl() = true;
+                reftype = (int)the_item_db[itemid2int(item->id)]->category;
                 enchantment_add(
-                    item,
+                    *item,
                     enchantment_generate(enchantment_gen_level(rnd(4))),
                     enchantment_gen_p());
                 animeload(8, victim);
             }
         }
-        if (item.body_part != 0)
+        if (item->body_part != 0)
         {
-            victim.equipment_slots[item.body_part - 100].unequip();
-            item.body_part = 0;
+            victim.equipment_slots[item->body_part - 100].unequip();
+            item->body_part = 0;
         }
-        item.position.x = victim.position.x;
-        item.position.y = victim.position.y;
-        itemturn(item);
-        if (!item_stack(-1, item).stacked)
+        item->position.x = victim.position.x;
+        item->position.y = victim.position.y;
+        itemturn(*item);
+        if (!item_stack(-1, *item).stacked)
         {
             if (const auto slot = inv_get_free_slot(-1))
             {
-                item_copy(item, *slot);
+                item_copy(*item, *slot);
             }
             else
             {
                 break;
             }
         }
-        item.remove();
+        item->remove();
     }
     if (victim.quality >= Quality::miracle || rnd(20) == 0 ||
         victim.drops_gold() == 1 || victim.index < 16)

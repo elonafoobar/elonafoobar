@@ -451,12 +451,12 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     auto& ai_item = *chara.ai_item;
     if (ai_item.number() == 0)
     {
-        chara.ai_item = ItemRef::null();
+        chara.ai_item = nullptr;
         return none;
     }
     if (chara.relationship != 0)
     {
-        chara.ai_item = ItemRef::null();
+        chara.ai_item = nullptr;
     }
 
     const auto category = the_item_db[itemid2int(ai_item.id)]->category;
@@ -476,7 +476,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
         return do_read_command(chara, ai_item);
     }
 
-    chara.ai_item = ItemRef::null();
+    chara.ai_item = nullptr;
 
     return none;
 }
@@ -1164,7 +1164,7 @@ TurnResult turn_end()
             {
                 game_data.character_and_status_for_gene += 10000;
                 game_data.activity_about_to_start = 100;
-                activity_others(cdata[ct], none);
+                activity_others(cdata[ct], nullptr);
             }
         }
         if (cdata.player().inventory_weight_type >= 3)
@@ -1399,7 +1399,8 @@ optional<TurnResult> pc_turn_advance_time()
         if (item.number() > 0 &&
             the_item_db[itemid2int(item.id)]->category == ItemCategory::potion)
         {
-            item_db_on_drink(cdata.player(), item, itemid2int(item.id));
+            item_db_on_drink(
+                cdata.player(), OptionalItemRef{&item}, itemid2int(item.id));
         }
     }
     if (trait(214) != 0 && rnd(250) == 0 &&

@@ -630,7 +630,7 @@ bool wish_for_item(Character& chara, const std::string& input)
             {
                 well->curse_state = CurseState::blessed;
                 txt(i18n::s.get("core.wish.it_is_sold_out"));
-                item = well;
+                item = well.clone();
             }
             else
             {

@@ -383,9 +383,9 @@ sol::table Item_player_inventory(sol::this_state state)
     sol::state_view L = state;
 
     sol::table ret = L.create_table();
-    for (auto& item : inv.pc())
+    for (const auto& item : g_inv.pc())
     {
-        ret.add(lua::handle(item));
+        ret.add(lua::handle(*item));
     }
     return ret;
 }
@@ -405,9 +405,9 @@ sol::table Item_map_inventory(sol::this_state state)
     sol::state_view L = state;
 
     sol::table ret = L.create_table();
-    for (auto& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        ret.add(lua::handle(item));
+        ret.add(lua::handle(*item));
     }
     return ret;
 }

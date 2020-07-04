@@ -93,19 +93,19 @@ bool any_of_characters_around_you(F predicate, bool ignore_pc = true)
 void _search_for_crystal()
 {
     optional<int> d;
-    for (const auto& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (item.own_state != 5)
+        if (item->own_state != 5)
         {
             continue;
         }
-        if (item.id != ItemId::summoning_crystal)
+        if (item->id != ItemId::summoning_crystal)
         {
             continue;
         }
         const auto d_ = dist(
-            item.position.x,
-            item.position.y,
+            item->position.x,
+            item->position.y,
             cdata.player().position.x,
             cdata.player().position.y);
         if (!d || d_ < *d)
@@ -254,7 +254,7 @@ void _dig_material_spot(Character& chara)
     }
     if (feat(1) == 26)
     {
-        spot_fishing(chara, none);
+        spot_fishing(chara, nullptr);
     }
     if (feat(1) == 25)
     {
@@ -446,7 +446,7 @@ optional<TurnResult> use_gene_machine()
         if (stat != -1)
         {
             cdata[original_character].equipment_slots[stat - 100] =
-                EquipmentSlot{rtval, ItemRef::null()};
+                EquipmentSlot{rtval, nullptr};
             txt(i18n::s.get(
                     "core.action.use.gene_machine.gains.body_part",
                     cdata[original_character],
@@ -1037,7 +1037,9 @@ TurnResult do_throw_command_internal(Character& thrower, Item& throw_item)
                 }
                 potionthrow = 100;
                 item_db_on_drink(
-                    cdata[target_index], throw_item, itemid2int(throw_item.id));
+                    cdata[target_index],
+                    OptionalItemRef{&throw_item},
+                    itemid2int(throw_item.id));
                 return TurnResult::turn_end;
             }
             if (throw_item.id == ItemId::handful_of_snow)
@@ -1216,7 +1218,7 @@ TurnResult do_close_command()
 
 TurnResult do_change_ammo_command()
 {
-    optional_ref<Item> ammo_opt;
+    OptionalItemRef ammo_opt;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
@@ -1226,7 +1228,7 @@ TurnResult do_change_ammo_command()
         }
         if (cdata.player().equipment_slots[cnt].type == 11)
         {
-            ammo_opt = *cdata.player().equipment_slots[cnt].equipment;
+            ammo_opt = cdata.player().equipment_slots[cnt].equipment.as_opt();
             break;
         }
     }
@@ -1691,7 +1693,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
                     txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                     return TurnResult::turn_end;
                 }
-                optional_ref<Item> natural_potion;
+                OptionalItemRef natural_potion;
                 if (mix_target.id == ItemId::holy_well)
                 {
                     --game_data.holy_well_count;
@@ -1932,7 +1934,7 @@ TurnResult do_use_command(Item& use_item)
             return TurnResult::pc_turn_user_error;
         }
         game_data.activity_about_to_start = 100;
-        activity_others(cdata.player(), use_item);
+        activity_others(cdata.player(), OptionalItemRef{&use_item});
         return TurnResult::turn_end;
     }
     if (use_item.id == ItemId::red_treasure_machine ||
@@ -2180,15 +2182,15 @@ TurnResult do_use_command(Item& use_item)
     }
     case 15:
         efid = 184;
-        magic(cdata.player(), cdata.player(), use_item);
+        magic(cdata.player(), cdata.player(), OptionalItemRef{&use_item});
         break;
     case 16:
         efid = 185;
-        magic(cdata.player(), cdata.player(), use_item);
+        magic(cdata.player(), cdata.player(), OptionalItemRef{&use_item});
         break;
     case 17:
         efid = 183;
-        magic(cdata.player(), cdata.player(), use_item);
+        magic(cdata.player(), cdata.player(), OptionalItemRef{&use_item});
         break;
     case 14:
         if (cdata.player().index == 0)
@@ -2457,7 +2459,7 @@ TurnResult do_use_command(Item& use_item)
                 return TurnResult::pc_turn_user_error;
             }
             game_data.activity_about_to_start = 101;
-            activity_others(cdata.player(), use_item);
+            activity_others(cdata.player(), OptionalItemRef{&use_item});
             return TurnResult::turn_end;
         }
         if (area_data[game_data.current_map].id ==
@@ -2478,7 +2480,7 @@ TurnResult do_use_command(Item& use_item)
             }
         }
         game_data.activity_about_to_start = 102;
-        activity_others(cdata.player(), use_item);
+        activity_others(cdata.player(), OptionalItemRef{&use_item});
         break;
     case 11:
         if (moneybox(use_item.param2) > cdata.player().gold)
@@ -2523,7 +2525,7 @@ TurnResult do_use_command(Item& use_item)
         snd("core.build1");
         efid = 49;
         efp = 100;
-        magic(cdata.player(), cdata.player(), use_item);
+        magic(cdata.player(), cdata.player(), OptionalItemRef{&use_item});
         break;
     case 21:
         txt(i18n::s.get("core.action.use.hammer.use", use_item));
@@ -2916,9 +2918,9 @@ TurnResult do_open_command(Item& box, bool play_sound)
         }
         else
         {
-            for (auto&& item : inv.ground())
+            for (const auto& item : g_inv.ground())
             {
-                item.remove();
+                item->remove();
             }
         }
         shoptrade = 0;
@@ -3416,7 +3418,7 @@ TurnResult do_eat_command(Character& eater, Item& food)
 
 TurnResult do_drink_command(Character& chara, Item& potion)
 {
-    item_db_on_drink(chara, potion, itemid2int(potion.id));
+    item_db_on_drink(chara, OptionalItemRef{&potion}, itemid2int(potion.id));
     return TurnResult::turn_end;
 }
 
@@ -4107,7 +4109,7 @@ bool read_textbook(Character& doer, Item& textbook)
         }
     }
     game_data.activity_about_to_start = 104;
-    activity_others(doer, textbook);
+    activity_others(doer, OptionalItemRef{&textbook});
     return true;
 }
 
@@ -4184,8 +4186,8 @@ void do_rest(Character& chara)
         if (f == 1)
         {
             txt(i18n::s.get("core.activity.rest.drop_off_to_sleep"));
-            chara.activity.item = ItemRef::null();
-            sleep_start(none);
+            chara.activity.item = nullptr;
+            sleep_start(nullptr);
             chara.activity.finish();
             return;
         }
@@ -4230,7 +4232,7 @@ int decode_book(Character& reader, Item& book)
             p = the_ability_db[efid]->difficulty;
         }
         reader.activity.turn = p / (2 + sdata(150, 0)) + 1;
-        reader.activity.item = ItemRef::from_ref(book);
+        reader.activity.item = IndexItemRef::from_ref(book);
         if (is_in_fov(reader))
         {
             txt(i18n::s.get("core.activity.read.start", reader, book));
@@ -4607,7 +4609,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
 
 
 
-int drink_potion(Character& chara, optional_ref<Item> potion)
+int drink_potion(Character& chara, const OptionalItemRef& potion)
 {
     assert(potionspill || potion);
 
@@ -4895,7 +4897,7 @@ int read_scroll(Character& reader, Item& scroll)
         scroll.modify_number(-1);
         chara_gain_skill_exp(reader, 150, 25, 2);
     }
-    magic(reader, reader, scroll);
+    magic(reader, reader, OptionalItemRef{&scroll});
     if (reader.index == 0)
     {
         if (obvious == 1)
@@ -5349,7 +5351,7 @@ PickUpItemResult pick_up_item(
             in = item.number();
             item.remove();
             cell_refresh(item.position.x, item.position.y);
-            return {1, none};
+            return {1, nullptr};
         }
     }
     if (inventory_id == 0)
@@ -5363,7 +5365,7 @@ PickUpItemResult pick_up_item(
                     txt(i18n::s.get(
                         "core.action.pick_up.used_by_mount",
                         cdata[game_data.mount]));
-                    return {1, none};
+                    return {1, nullptr};
                 }
             }
         }
@@ -5377,11 +5379,12 @@ PickUpItemResult pick_up_item(
                     {
                         txt(i18n::s.get(
                             "core.ui.inv.common.inventory_is_full"));
-                        return {0, none};
+                        return {0, nullptr};
                     }
                     game_data.activity_about_to_start = 103;
-                    activity_others(cdata[inventory_id], item);
-                    return {-1, none};
+                    activity_others(
+                        cdata[inventory_id], OptionalItemRef{&item});
+                    return {-1, nullptr};
                 }
             }
         }
@@ -5409,13 +5412,13 @@ PickUpItemResult pick_up_item(
             }
             else
             {
-                return {0, none};
+                return {0, nullptr};
             }
         }
         if (!inv_get_free_slot(inventory_id))
         {
             txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
-            return {0, none};
+            return {0, nullptr};
         }
     }
     inumbk = item.number() - in;
@@ -5467,11 +5470,11 @@ PickUpItemResult pick_up_item(
     item.is_quest_target() = false;
     item_checkknown(item);
 
-    optional_ref<Item> picked_up_item;
+    OptionalItemRef picked_up_item;
     const auto item_stack_result = item_stack(inventory_id, item);
     if (item_stack_result.stacked)
     {
-        picked_up_item = item_stack_result.stacked_item;
+        picked_up_item = OptionalItemRef{&item_stack_result.stacked_item};
     }
     else
     {
@@ -5488,11 +5491,11 @@ PickUpItemResult pick_up_item(
             {
                 txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
             }
-            return {0, none};
+            return {0, nullptr};
         }
         item_copy(item, *slot);
         slot->set_number(in);
-        picked_up_item = *slot;
+        picked_up_item = slot.clone();
     }
     assert(picked_up_item);
 
@@ -5623,9 +5626,9 @@ PickUpItemResult pick_up_item(
             if (map_data.play_campfire_sound == 1)
             {
                 f = 0;
-                for (const auto& item_ : inv.ground())
+                for (const auto& item_ : g_inv.ground())
                 {
-                    if (item_.id == ItemId::campfire)
+                    if (item_->id == ItemId::campfire)
                     {
                         f = 1;
                         break;
@@ -5638,7 +5641,8 @@ PickUpItemResult pick_up_item(
                 }
             }
         }
-        picked_up_item = item_convert_artifact(*picked_up_item);
+        picked_up_item =
+            OptionalItemRef{&item_convert_artifact(*picked_up_item)};
         if (area_data[game_data.current_map].id == mdata_t::MapId::museum)
         {
             if (mode == 0)
@@ -5660,7 +5664,7 @@ PickUpItemResult pick_up_item(
         refresh_burden_state();
     }
 
-    return {1, picked_up_item};
+    return {1, std::move(picked_up_item)};
 }
 
 
@@ -5876,20 +5880,20 @@ void proc_autopick()
         return;
 
 
-    for (auto&& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (item.position != cdata.player().position)
+        if (item->position != cdata.player().position)
             continue;
-        if (item.own_state > 0)
+        if (item->own_state > 0)
             continue;
 
-        item_checkknown(item);
+        item_checkknown(*item);
 
         const auto x = cdata.player().position.x;
         const auto y = cdata.player().position.y;
 
         bool did_something = true;
-        const auto op = Autopick::instance().get_operation(item);
+        const auto op = Autopick::instance().get_operation(*item);
         switch (op.type)
         {
         case Autopick::Operation::Type::do_nothing:
@@ -5903,7 +5907,7 @@ void proc_autopick()
             if (op.show_prompt)
             {
                 txt(i18n::s.get(
-                    "core.ui.autopick.do_you_really_pick_up", item));
+                    "core.ui.autopick.do_you_really_pick_up", *item));
                 if (!yes_no())
                 {
                     did_something = false;
@@ -5911,16 +5915,16 @@ void proc_autopick()
                 }
             }
             {
-                in = item.number();
+                in = item->number();
                 const auto pick_up_item_result =
-                    pick_up_item(cdata.player().index, item, none, !op.sound);
+                    pick_up_item(cdata.player().index, *item, none, !op.sound);
                 if (pick_up_item_result.type != 1)
                 {
                     break;
                 }
                 if (int(op.type) & int(Autopick::Operation::Type::no_drop))
                 {
-                    if (const auto picked_up_item =
+                    if (const auto& picked_up_item =
                             pick_up_item_result.picked_up_item)
                     {
                         picked_up_item->is_marked_as_no_drop() = true;
@@ -5943,7 +5947,7 @@ void proc_autopick()
             if (op.show_prompt)
             {
                 txt(i18n::s.get(
-                    "core.ui.autopick.do_you_really_destroy", item));
+                    "core.ui.autopick.do_you_really_destroy", *item));
                 if (!yes_no())
                 {
                     did_something = false;
@@ -5954,8 +5958,8 @@ void proc_autopick()
             {
                 snd("core.crush1");
             }
-            txt(i18n::s.get("core.ui.autopick.destroyed", item));
-            item.remove();
+            txt(i18n::s.get("core.ui.autopick.destroyed", *item));
+            item->remove();
             cell_refresh(x, y);
             cell_data.at(x, y).item_info_memory =
                 cell_data.at(x, y).item_info_actual;
@@ -5964,14 +5968,14 @@ void proc_autopick()
             // FIXME: DRY
             if (op.show_prompt)
             {
-                txt(i18n::s.get("core.ui.autopick.do_you_really_open", item));
+                txt(i18n::s.get("core.ui.autopick.do_you_really_open", *item));
                 if (!yes_no())
                 {
                     did_something = false;
                     break;
                 }
             }
-            (void)do_open_command(item, !op.sound); // Result is unused.
+            (void)do_open_command(*item, !op.sound); // Result is unused.
             break;
         }
         if (did_something && op.sound)

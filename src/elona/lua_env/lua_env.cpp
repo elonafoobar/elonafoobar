@@ -90,11 +90,11 @@ void LuaEnv::load_mods()
 
 void LuaEnv::clear()
 {
-    for (auto&& inv_ : inv.all())
+    for (auto&& inv : g_inv.all())
     {
-        for (auto&& item : inv_)
+        for (auto&& item : inv)
         {
-            handle_mgr->remove_item_handle(item);
+            handle_mgr->remove_item_handle(*item);
         }
     }
 

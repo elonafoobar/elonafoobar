@@ -186,39 +186,39 @@ void load_gene_files()
     sdata.clear(0);
     Character::copy(cdata.player(), cdata.tmp());
     cdata.player().clear();
-    for (auto&& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        item.remove();
+        item->remove();
     }
-    for (auto&& item : inv.pc())
+    for (const auto& item : g_inv.pc())
     {
-        if (item.id == ItemId::secret_experience_of_lomias)
+        if (item->id == ItemId::secret_experience_of_lomias)
         {
             lomiaseaster = 1;
         }
-        if (item.id == ItemId::deed_of_heirship ||
-            the_item_db[itemid2int(item.id)]->subcategory == 53100)
+        if (item->id == ItemId::deed_of_heirship ||
+            the_item_db[itemid2int(item->id)]->subcategory == 53100)
         {
             continue;
         }
-        if (item.id == ItemId::kitty_bank)
+        if (item->id == ItemId::kitty_bank)
         {
             continue;
         }
-        if (item.quality == Quality::special)
+        if (item->quality == Quality::special)
         {
             continue;
         }
-        if (item.is_precious())
+        if (item->is_precious())
         {
             continue;
         }
-        if (the_item_db[itemid2int(item.id)]->category == ItemCategory::ammo)
+        if (the_item_db[itemid2int(item->id)]->category == ItemCategory::ammo)
         {
-            item.count = -1;
+            item->count = -1;
         }
-        item.body_part = 0;
-        item_copy(item, *inv_get_free_slot(-1));
+        item->body_part = 0;
+        item_copy(*item, *inv_get_free_slot(-1));
     }
     for (auto&& cnt : cdata.all())
     {

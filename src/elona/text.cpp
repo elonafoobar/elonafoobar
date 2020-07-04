@@ -2575,18 +2575,19 @@ std::string txtitemoncell(int x, int y)
         if (item_index == 0)
             break;
 
-        auto& item = item_index < 0 ? inv.ground().at(0) /* TODO phantom ref */
-                                    : inv.ground().at(item_index - 1);
+        const auto item = item_index < 0
+            ? g_inv.ground().at(0) /* TODO phantom ref */
+            : g_inv.ground().at(item_index - 1);
         if (first)
         {
             first = false;
-            own_state = item.own_state;
+            own_state = item->own_state;
         }
         else
         {
             items_text += i18n::s.get("core.misc.and");
         }
-        items_text += itemname(item);
+        items_text += itemname(*item);
     }
     if (own_state <= 0)
     {

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "eobject/eobject.hpp"
 #include "optional.hpp"
 
 
@@ -24,9 +25,9 @@ void activity_sex(Character& chara_a, optional_ref<Character> chara_b);
 void activity_blending();
 void activity_eating(Character& eater, Item& food);
 void activity_eating_finish(Character& eater, Item& food);
-void activity_others(Character& doer, optional_ref<Item> activity_item);
+void activity_others(Character& doer, const OptionalItemRef& activity_item);
 
-void spot_fishing(Character& fisher, optional_ref<Item> rod);
+void spot_fishing(Character& fisher, const OptionalItemRef& rod);
 void spot_material(Character& chara);
 void spot_digging(Character& chara);
 void spot_mining_or_wall(Character& chara);
@@ -36,6 +37,6 @@ void matgetmain(int material_id, int amount = 1, int spot_type = 0);
 
 
 void start_stealing(Character& thief, Item& steal_target);
-void sleep_start(optional_ref<Item> bed);
+void sleep_start(const OptionalItemRef& bed);
 
 } // namespace elona

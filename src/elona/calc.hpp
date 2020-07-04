@@ -3,6 +3,7 @@
 #include <string>
 
 #include "enums.hpp"
+#include "eobject/eobject.hpp"
 #include "optional.hpp"
 
 
@@ -40,14 +41,14 @@ int calc_evasion(const Character& chara);
 int calc_accuracy(
     const Character& attacker,
     const Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo,
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo,
     bool consider_distance);
 int calcattackhit(
     const Character& attacker,
     const Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo);
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo);
 
 
 enum class AttackDamageCalculationMode
@@ -58,8 +59,8 @@ enum class AttackDamageCalculationMode
 int calcattackdmg(
     const Character& attacker,
     const Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo,
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo,
     AttackDamageCalculationMode);
 
 

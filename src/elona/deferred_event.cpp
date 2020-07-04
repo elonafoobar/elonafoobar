@@ -972,7 +972,7 @@ void eh_guest_visit(const DeferredEvent&)
     }
 
     guest->visited_just_now() = true;
-    optional_ref<const Item> chair_for_guest;
+    OptionalItemRef chair_for_guest;
     for (int cnt = 0; cnt < 17; ++cnt)
     {
         const auto chara_index = cnt == 0 ? guest->index : cnt - 1;
@@ -985,20 +985,20 @@ void eh_guest_visit(const DeferredEvent&)
         {
             continue;
         }
-        optional_ref<const Item> chair;
+        OptionalItemRef chair;
         auto distance_to_guest_chair = 6;
-        for (const auto& item : inv.ground())
+        for (const auto& item : g_inv.ground())
         {
-            if (item.function != 44)
+            if (item->function != 44)
                 continue;
             if (chara.index == guest->index)
             {
-                if (item.param1 == 2)
+                if (item->param1 == 2)
                 {
                     cell_swap(
-                        chara.index, -1, item.position.x, item.position.y);
-                    chair_for_guest = item;
-                    chair = item;
+                        chara.index, -1, item->position.x, item->position.y);
+                    chair_for_guest = item.clone();
+                    chair = item.clone();
                     break;
                 }
                 else
@@ -1010,28 +1010,28 @@ void eh_guest_visit(const DeferredEvent&)
             {
                 break;
             }
-            else if (item == *chair_for_guest)
+            else if (*item == *chair_for_guest)
             {
                 continue;
             }
             const auto d = dist(
-                item.position.x,
-                item.position.y,
+                item->position.x,
+                item->position.y,
                 chair_for_guest->position.x,
                 chair_for_guest->position.y);
             if (d < distance_to_guest_chair)
             {
-                if (cell_data.at(item.position.x, item.position.y)
+                if (cell_data.at(item->position.x, item->position.y)
                             .chara_index_plus_one == 0 ||
                     chara.index == 0 || chara.index == guest->index)
                 {
-                    chair = item;
+                    chair = item.clone();
                     distance_to_guest_chair = d;
                 }
             }
-            if (chara.index == 0 && item.param1 == 1)
+            if (chara.index == 0 && item->param1 == 1)
             {
-                chair = item;
+                chair = item.clone();
                 break;
             }
         }

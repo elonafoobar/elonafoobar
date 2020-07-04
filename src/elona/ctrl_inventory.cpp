@@ -73,7 +73,7 @@ struct OnEnterResult
 {
     int type;
     MenuResult menu_result;
-    optional_ref<Item> selected_item;
+    OptionalItemRef selected_item;
 
 
     OnEnterResult(int type)
@@ -84,10 +84,10 @@ struct OnEnterResult
 
     OnEnterResult(
         const MenuResult& menu_result,
-        optional_ref<Item> selected_item = none)
+        OptionalItemRef selected_item = nullptr)
         : type(0)
         , menu_result(menu_result)
-        , selected_item(selected_item)
+        , selected_item(std::move(selected_item))
     {
     }
 };
@@ -95,8 +95,8 @@ struct OnEnterResult
 OnEnterResult on_enter(
     optional_ref<Character> inventory_owner,
     int selected_item_index,
-    ItemRef& citrade,
-    ItemRef& cidip,
+    IndexItemRef& citrade,
+    IndexItemRef& cidip,
     bool dropcontinue);
 optional<MenuResult> on_cancel(bool dropcontinue);
 
@@ -179,11 +179,11 @@ void remove_card_and_figure_from_heir_trunk()
 {
     if (invctrl == 22 && invctrl(1) == 1)
     {
-        for (auto&& item : inv.ground())
+        for (const auto& item : g_inv.ground())
         {
-            if (item.id == ItemId::card || item.id == ItemId::figurine)
+            if (item->id == ItemId::card || item->id == ItemId::figurine)
             {
-                item.remove();
+                item->remove();
             }
         }
     }
@@ -239,9 +239,9 @@ void restore_cursor()
 
 void make_item_list(
     optional_ref<Character> inventory_owner,
-    ItemRef& mainweapon,
-    ItemRef citrade,
-    ItemRef cidip)
+    IndexItemRef& mainweapon,
+    IndexItemRef citrade,
+    IndexItemRef cidip)
 {
     // cnt = 0 => extra
     // cnt = 1 => PC/NPC
@@ -278,21 +278,21 @@ void make_item_list(
         }
         int cnt2 = cnt;
 
-        for (auto& item : inv.by_index(p))
+        for (const auto& item : g_inv.by_index(p))
         {
             // compatibility?
-            if (item.id == ItemId::training_machine)
+            if (item->id == ItemId::training_machine)
             {
-                item.function = 9;
+                item->function = 9;
             }
 
             // compatibility?
-            if (itemid2int(item.id) >= maxitemid || itemid2int(item.id) < 0)
+            if (itemid2int(item->id) >= maxitemid || itemid2int(item->id) < 0)
             {
                 dialog(i18n::s.get(
-                    "core.ui.inv.common.invalid", itemid2int(item.id)));
-                item.remove();
-                item.id = ItemId::none;
+                    "core.ui.inv.common.invalid", itemid2int(item->id)));
+                item->remove();
+                item->id = ItemId::none;
                 continue;
             }
 
@@ -300,9 +300,9 @@ void make_item_list(
             {
                 if (invctrl == 7)
                 {
-                    if (the_item_db[itemid2int(item.id)]->subcategory !=
+                    if (the_item_db[itemid2int(item->id)]->subcategory !=
                             53100 &&
-                        item.id != ItemId::treasure_map)
+                        item->id != ItemId::treasure_map)
                     {
                         // ワールドマップでは権利書か宝の地図しか読めない
                         continue;
@@ -313,7 +313,7 @@ void make_item_list(
             {
                 if (invctrl == 27)
                 {
-                    if (item.position.x != tlocx || item.position.y != tlocy)
+                    if (item->position.x != tlocx || item->position.y != tlocy)
                     {
                         // その座標にあるものしか盗めない
                         continue;
@@ -321,8 +321,8 @@ void make_item_list(
                 }
                 else if (invctrl != 11 && invctrl != 22 && invctrl != 28)
                 {
-                    if (item.position.x != cdata.player().position.x ||
-                        item.position.y != cdata.player().position.y)
+                    if (item->position.x != cdata.player().position.x ||
+                        item->position.y != cdata.player().position.y)
                     {
                         // キャラと同じ座標にあるものしか対象に取れない
                         continue;
@@ -331,16 +331,15 @@ void make_item_list(
             }
 
             // ここで呼び出す?
-            item_checkknown(item);
+            item_checkknown(*item);
 
-            // reftype使ってるとこ案外減ってる
-            reftype = (int)the_item_db[itemid2int(item.id)]->category;
+            reftype = (int)the_item_db[itemid2int(item->id)]->category;
 
-            if (item.own_state == 5)
+            if (item->own_state == 5)
             {
                 // ショウルームのアイテムで、[調べる]でなく、showroom_onlyのものを
                 // 使おうとしているのでもないならリストから除外
-                if (!item.is_showroom_only() || invctrl != 14)
+                if (!item->is_showroom_only() || invctrl != 14)
                 {
                     if (invctrl != 1)
                     {
@@ -351,20 +350,20 @@ void make_item_list(
 
             if (exclude_equipped_items(invctrl(0)))
             {
-                if (item.body_part != 0) // `item` is worn.
+                if (item->body_part != 0) // `item` is worn.
                 {
                     continue;
                 }
             }
 
             // (利き腕)表示用
-            if (item.body_part != 0)
+            if (item->body_part != 0)
             {
                 if (reftype == 10000)
                 {
-                    if (!mainweapon || item.body_part < mainweapon->body_part)
+                    if (!mainweapon || item->body_part < mainweapon->body_part)
                     {
-                        mainweapon = ItemRef::from_ref(item);
+                        mainweapon = IndexItemRef::from_ref(*item);
                     }
                 }
             }
@@ -372,14 +371,15 @@ void make_item_list(
             // 各行動
             if (invctrl == 5)
             {
-                if (reftype != 57000 && reftype != 91000 && item.material != 35)
+                if (reftype != 57000 && reftype != 91000 &&
+                    item->material != 35)
                 {
                     continue;
                 }
             }
             if (invctrl == 6)
             {
-                if (iequiploc(item) !=
+                if (iequiploc(*item) !=
                     cdata.player().equipment_slots[body - 100].type)
                 {
                     continue;
@@ -387,29 +387,29 @@ void make_item_list(
             }
             if (invctrl == 7)
             {
-                if (!the_item_db[itemid2int(item.id)]->is_readable)
+                if (!the_item_db[itemid2int(item->id)]->is_readable)
                 {
                     continue;
                 }
             }
             if (invctrl == 8)
             {
-                if (!the_item_db[itemid2int(item.id)]->is_drinkable)
+                if (!the_item_db[itemid2int(item->id)]->is_drinkable)
                 {
                     continue;
                 }
             }
             if (invctrl == 9)
             {
-                if (!the_item_db[itemid2int(item.id)]->is_zappable)
+                if (!the_item_db[itemid2int(item->id)]->is_zappable)
                 {
                     continue;
                 }
             }
             if (invctrl == 11)
             {
-                if (item.id == ItemId::gold_piece ||
-                    item.id == ItemId::platinum_coin)
+                if (item->id == ItemId::gold_piece ||
+                    item->id == ItemId::platinum_coin)
                 {
                     continue;
                 }
@@ -418,7 +418,7 @@ void make_item_list(
             {
                 if (shoptrade)
                 {
-                    if (item.weight >= 0)
+                    if (item->weight >= 0)
                     {
                         continue;
                     }
@@ -427,42 +427,42 @@ void make_item_list(
                         continue;
                     }
                 }
-                else if (item.weight < 0)
+                else if (item->weight < 0)
                 {
                     if (reftype == 92000)
                     {
                         continue;
                     }
                 }
-                if (item.value <= 1)
+                if (item->value <= 1)
                 {
                     continue;
                 }
-                if (item.is_precious())
+                if (item->is_precious())
                 {
                     continue;
                 }
-                if (item.param3 < 0)
+                if (item->param3 < 0)
                 {
                     continue;
                 }
-                if (item.quality == Quality::special)
+                if (item->quality == Quality::special)
                 {
                     continue;
                 }
             }
             if (invctrl == 13)
             {
-                if (item.identify_state == IdentifyState::completely)
+                if (item->identify_state == IdentifyState::completely)
                 {
                     continue;
                 }
             }
             if (invctrl == 14)
             {
-                if (item.function == 0 &&
-                    !the_item_db[itemid2int(item.id)]->is_usable &&
-                    !item.is_alive())
+                if (item->function == 0 &&
+                    !the_item_db[itemid2int(item->id)]->is_usable &&
+                    !item->is_alive())
                 {
                     continue;
                 }
@@ -480,14 +480,14 @@ void make_item_list(
                 {
                     continue;
                 }
-                else if (item.param2 != 0)
+                else if (item->param2 != 0)
                 {
                     continue;
                 }
             }
             if (invctrl == 17)
             {
-                if (reftype != 52000 && item.id != ItemId::bait)
+                if (reftype != 52000 && item->id != ItemId::bait)
                 {
                     continue;
                 }
@@ -496,39 +496,39 @@ void make_item_list(
             {
                 if (cidip->id == ItemId::bait)
                 {
-                    if (item.id != ItemId::fishing_pole)
+                    if (item->id != ItemId::fishing_pole)
                     {
                         continue;
                     }
                 }
-                if (cidip == item || item.id == ItemId::bottle_of_water)
+                if (cidip == *item || item->id == ItemId::bottle_of_water)
                 {
                     continue;
                 }
             }
             if (invctrl == 19)
             {
-                if (!god_is_offerable(item, cdata.player()))
+                if (!god_is_offerable(*item, cdata.player()))
                 {
                     continue;
                 }
             }
             if (invctrl == 20)
             {
-                if (item.id == ItemId::gold_piece ||
-                    item.id == ItemId::platinum_coin)
+                if (item->id == ItemId::gold_piece ||
+                    item->id == ItemId::platinum_coin)
                 {
                     continue;
                 }
             }
             if (invctrl == 21)
             {
-                if (calcitemvalue(item, 0) * item.number() <
+                if (calcitemvalue(*item, 0) * item->number() <
                     calcitemvalue(*citrade, 0) * citrade->number() / 2 * 3)
                 {
                     continue;
                 }
-                if (item.is_stolen())
+                if (item->is_stolen())
                 {
                     continue;
                 }
@@ -561,14 +561,14 @@ void make_item_list(
                 }
                 if (invctrl(1) == 3)
                 {
-                    if (!item.has_charge())
+                    if (!item->has_charge())
                     {
                         continue;
                     }
                 }
                 if (invctrl(1) == 4)
                 {
-                    if (item.body_part != 0)
+                    if (item->body_part != 0)
                     {
                         continue;
                     }
@@ -582,14 +582,14 @@ void make_item_list(
                 }
                 if (invctrl(1) == 6)
                 {
-                    if (item.weight <= 0 || item.id == ItemId::cooler_box)
+                    if (item->weight <= 0 || item->id == ItemId::cooler_box)
                     {
                         continue;
                     }
                 }
                 if (invctrl(1) == 7)
                 {
-                    if (item.quality >= Quality::miracle || reftype >= 50000)
+                    if (item->quality >= Quality::miracle || reftype >= 50000)
                     {
                         continue;
                     }
@@ -601,23 +601,24 @@ void make_item_list(
                 {
                     if (game_data.current_map == mdata_t::MapId::lumiest)
                     {
-                        if (item.id != ItemId::ancient_book || item.param2 == 0)
+                        if (item->id != ItemId::ancient_book ||
+                            item->param2 == 0)
                         {
                             continue;
                         }
                     }
-                    else if (item.own_state != 4)
+                    else if (item->own_state != 4)
                     {
                         continue;
                     }
                 }
-                else if (item.own_state == 4)
+                else if (item->own_state == 4)
                 {
                     continue;
                 }
                 if (invctrl(1) == 2)
                 {
-                    if (item.id != ItemId::bill)
+                    if (item->id != ItemId::bill)
                     {
                         continue;
                     }
@@ -634,7 +635,7 @@ void make_item_list(
                     }
                 }
             }
-            else if (item.own_state == 4)
+            else if (item->own_state == 4)
             {
                 // 調べる、置く、拾う、食べる、納入する
                 // 以外は禁止(収穫依頼の野菜)
@@ -646,15 +647,16 @@ void make_item_list(
             }
             if (invctrl == 26)
             {
-                if (reftype != 52000 && item.id != ItemId::kitty_bank &&
-                    item.id != ItemId::monster_ball &&
-                    item.id != ItemId::little_ball && item.id != ItemId::tomato)
+                if (reftype != 52000 && item->id != ItemId::kitty_bank &&
+                    item->id != ItemId::monster_ball &&
+                    item->id != ItemId::little_ball &&
+                    item->id != ItemId::tomato)
                 {
                     continue;
                 }
-                if (item.id == ItemId::monster_ball)
+                if (item->id == ItemId::monster_ball)
                 {
-                    if (item.subname != 0)
+                    if (item->subname != 0)
                     {
                         continue;
                     }
@@ -664,7 +666,7 @@ void make_item_list(
             {
                 if (cnt2 == 0)
                 {
-                    if (item.own_state != 1)
+                    if (item->own_state != 1)
                     {
                         continue;
                     }
@@ -672,17 +674,17 @@ void make_item_list(
             }
 
             // リスト追加
-            list(0, listmax) = item.index();
+            list(0, listmax) = item->index();
 
             // ソート情報
-            list(1, listmax) = reftype * 1000 + itemid2int(item.id);
-            if (item.id == ItemId::disc)
+            list(1, listmax) = reftype * 1000 + itemid2int(item->id);
+            if (item->id == ItemId::disc)
             {
-                list(1, listmax) += item.param1 + 900;
+                list(1, listmax) += item->param1 + 900;
             }
             if (invctrl == 1 || invctrl == 13)
             {
-                if (item.body_part != 0)
+                if (item->body_part != 0)
                 {
                     list(1, listmax) -= 99999000;
                 }
@@ -693,7 +695,7 @@ void make_item_list(
             }
             if (invctrl == 28)
             {
-                list(1, listmax) = calcmedalvalue(item);
+                list(1, listmax) = calcmedalvalue(*item);
             }
 
             ++listmax;
@@ -706,7 +708,7 @@ void make_item_list(
 // 不可能な行動を制限
 optional<MenuResult> check_command(
     optional_ref<Character> inventory_owner,
-    ItemRef citrade)
+    IndexItemRef citrade)
 {
     MenuResult result = {false, false, TurnResult::none};
 
@@ -804,7 +806,7 @@ optional<MenuResult> check_pick_up()
 
 
 
-void show_message(ItemRef citrade, ItemRef cidip)
+void show_message(IndexItemRef citrade, IndexItemRef cidip)
 {
     if (returnfromidentify == 0)
     {
@@ -876,7 +878,7 @@ void show_message(ItemRef citrade, ItemRef cidip)
 
 // ショートカット経由
 optional<OnEnterResult>
-on_shortcut(ItemRef& citrade, ItemRef& cidip, bool dropcontinue)
+on_shortcut(IndexItemRef& citrade, IndexItemRef& cidip, bool dropcontinue)
 {
     MenuResult result = {false, false, TurnResult::none};
 
@@ -886,12 +888,12 @@ on_shortcut(ItemRef& citrade, ItemRef& cidip, bool dropcontinue)
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
             p = list(0, cnt);
-            if (inv[p].id == int2itemid(invsc))
+            if (g_inv[p]->id == int2itemid(invsc))
             {
                 f = 1;
-                if (inv[p].has_charge())
+                if (g_inv[p]->has_charge())
                 {
-                    if (inv[p].count <= 0)
+                    if (g_inv[p]->count <= 0)
                     {
                         continue;
                     }
@@ -927,7 +929,7 @@ on_shortcut(ItemRef& citrade, ItemRef& cidip, bool dropcontinue)
                 return OnEnterResult{result};
             }
         }
-        if (!cargocheck(inv[p]))
+        if (!cargocheck(*g_inv[p]))
         {
             result.turn_result = TurnResult::pc_turn_user_error;
             return OnEnterResult{result};
@@ -1161,7 +1163,7 @@ void update_key_list()
 
 
 
-void draw_item_list(ItemRef mainweapon)
+void draw_item_list(IndexItemRef mainweapon)
 {
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {
@@ -1171,27 +1173,28 @@ void draw_item_list(ItemRef mainweapon)
             break;
         }
         p = list(0, p);
-        s(0) = itemname(inv[p]);
-        s(1) = cnvweight(inv[p].weight * inv[p].number());
+        s(0) = itemname(*g_inv[p]);
+        s(1) = cnvweight(g_inv[p]->weight * g_inv[p]->number());
         if (invctrl == 11)
         {
-            s += u8" "s + cnvweight(inv[p].weight);
-            s(1) = ""s + calcitemvalue(inv[p], 0) + u8" gp"s;
+            s += u8" "s + cnvweight(g_inv[p]->weight);
+            s(1) = ""s + calcitemvalue(*g_inv[p], 0) + u8" gp"s;
         }
         if (invctrl == 12)
         {
-            s += u8" "s + cnvweight(inv[p].weight);
-            s(1) = ""s + calcitemvalue(inv[p], 1) + u8" gp"s;
+            s += u8" "s + cnvweight(g_inv[p]->weight);
+            s(1) = ""s + calcitemvalue(*g_inv[p], 1) + u8" gp"s;
         }
         if (invctrl == 28)
         {
             s(1) = i18n::s.get(
-                "core.ui.inv.trade_medals.medal_value", calcmedalvalue(inv[p]));
+                "core.ui.inv.trade_medals.medal_value",
+                calcmedalvalue(*g_inv[p]));
         }
         if (invctrl != 3 && invctrl != 11 && invctrl != 22 && invctrl != 27 &&
             invctrl != 28)
         {
-            if (inv_getowner(inv[p]) == -1)
+            if (inv_getowner(*g_inv[p]) == -1)
             {
                 s += i18n::space_if_needed() + "(" +
                     i18n::s.get("core.ui.inv.window.ground") + ")";
@@ -1200,7 +1203,7 @@ void draw_item_list(ItemRef mainweapon)
         for (int cnt = 0; cnt < 20; ++cnt)
         {
             if (game_data.skill_shortcuts.at(cnt) ==
-                itemid2int(inv[p].id) + invctrl * 10000)
+                itemid2int(g_inv[p]->id) + invctrl * 10000)
             {
                 s +=
                     u8"{"s + get_bound_shortcut_key_name_by_index(cnt) + u8"}"s;
@@ -1209,23 +1212,23 @@ void draw_item_list(ItemRef mainweapon)
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
 
         draw_item_with_portrait_scale_height(
-            inv[p], wx + 37, wy + 69 + cnt * 19);
+            *g_inv[p], wx + 37, wy + 69 + cnt * 19);
 
-        if (inv[p].body_part != 0)
+        if (g_inv[p]->body_part != 0)
         {
             draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
-            if (inv[p] == mainweapon)
+            if (*g_inv[p] == mainweapon)
             {
                 s += i18n::space_if_needed() + "(" +
                     i18n::s.get("core.ui.inv.window.main_hand") + ")";
             }
         }
-        draw_additional_item_info(inv[p], wx + 300, wy + 60 + cnt * 19 + 2);
+        draw_additional_item_info(*g_inv[p], wx + 300, wy + 60 + cnt * 19 + 2);
         if (g_show_additional_item_info != AdditionalItemInfo::none)
         {
             s = cut_item_name_for_additional_info(s);
         }
-        const auto text_color = cs_list_get_item_color(inv[p]);
+        const auto text_color = cs_list_get_item_color(*g_inv[p]);
         cs_list(cs == cnt, s, wx + 84, wy + 60 + cnt * 19 - 1, 0, text_color);
         mes(wx + 600 - strlen_u(s(1)) * 7,
             wy + 60 + cnt * 19 + 2,
@@ -1934,7 +1937,7 @@ OnEnterResult on_enter_cook(Item& selected_item, MenuResult& result)
     update_screen();
     invsubroutine = 0;
     result.succeeded = true;
-    return OnEnterResult{result, selected_item};
+    return OnEnterResult{result, OptionalItemRef{&selected_item}};
 }
 
 
@@ -1950,9 +1953,9 @@ OnEnterResult on_enter_open(Item& selected_item, MenuResult& result)
 
 
 
-OnEnterResult on_enter_mix(Item& selected_item, ItemRef& cidip)
+OnEnterResult on_enter_mix(Item& selected_item, IndexItemRef& cidip)
 {
-    cidip = ItemRef::from_ref(selected_item);
+    cidip = IndexItemRef::from_ref(selected_item);
     savecycle();
     invctrl = 18;
     Message::instance().linebreak();
@@ -1963,7 +1966,7 @@ OnEnterResult on_enter_mix(Item& selected_item, ItemRef& cidip)
 
 
 OnEnterResult
-on_enter_mix_target(Item& selected_item, MenuResult& result, ItemRef cidip)
+on_enter_mix_target(Item& selected_item, MenuResult& result, IndexItemRef cidip)
 {
     screenupdate = -1;
     update_screen();
@@ -1990,9 +1993,9 @@ OnEnterResult on_enter_offer(Item& selected_item, MenuResult& result)
 
 
 
-OnEnterResult on_enter_trade(Item& selected_item, ItemRef& citrade)
+OnEnterResult on_enter_trade(Item& selected_item, IndexItemRef& citrade)
 {
-    citrade = ItemRef::from_ref(selected_item);
+    citrade = IndexItemRef::from_ref(selected_item);
     invctrl = 21;
     snd("core.pop2");
     return OnEnterResult{1};
@@ -2003,7 +2006,7 @@ OnEnterResult on_enter_trade(Item& selected_item, ItemRef& citrade)
 OnEnterResult on_enter_trade_target(
     Item& selected_item,
     MenuResult& result,
-    ItemRef& citrade,
+    IndexItemRef& citrade,
     Character& inventory_owner)
 {
     if (selected_item.is_marked_as_no_drop())
@@ -2016,7 +2019,7 @@ OnEnterResult on_enter_trade_target(
     {
         inventory_owner.activity.type = Activity::Type::none;
         inventory_owner.activity.turn = 0;
-        inventory_owner.activity.item = ItemRef::null();
+        inventory_owner.activity.item = nullptr;
     }
     snd("core.equip1");
     citrade->is_quest_target() = false;
@@ -2031,7 +2034,7 @@ OnEnterResult on_enter_trade_target(
     item_convert_artifact(selected_item);
     if (inventory_owner.ai_item == *citrade)
     {
-        inventory_owner.ai_item = ItemRef::null();
+        inventory_owner.ai_item = nullptr;
     }
     wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
     if (inventory_owner.index >= 16)
@@ -2062,7 +2065,7 @@ OnEnterResult on_enter_target(Item& selected_item, MenuResult& result)
     item_separate(selected_item);
     invsubroutine = 0;
     result.succeeded = true;
-    return OnEnterResult{result, selected_item};
+    return OnEnterResult{result, OptionalItemRef{&selected_item}};
 }
 
 
@@ -2265,7 +2268,7 @@ OnEnterResult on_enter_small_medal(Item& selected_item)
         return OnEnterResult{1};
     }
     auto& slot = *slot_opt;
-    optional_ref<Item> small_medals;
+    OptionalItemRef small_medals;
     if ((small_medals = item_find(622, 3, ItemFindLocation::player_inventory)))
     {
         p = small_medals->number();
@@ -2295,13 +2298,13 @@ OnEnterResult on_enter_small_medal(Item& selected_item)
 OnEnterResult on_enter(
     optional_ref<Character> inventory_owner,
     int selected_item_index,
-    ItemRef& citrade,
-    ItemRef& cidip,
+    IndexItemRef& citrade,
+    IndexItemRef& cidip,
     bool dropcontinue)
 {
     MenuResult result = {false, false, TurnResult::none};
 
-    auto& selected_item = inv[selected_item_index];
+    auto& selected_item = *g_inv[selected_item_index];
 
     if (!cargocheck(selected_item))
     {
@@ -2421,7 +2424,7 @@ bool on_show_description()
     if (listmax != 0)
     {
         const auto item_index = list(0, pagesize * page + cs);
-        item_show_description(inv[item_index]);
+        item_show_description(*g_inv[item_index]);
         return true;
     }
     return false;
@@ -2504,17 +2507,17 @@ bool on_switch_mode_2(bool& dropcontinue)
     if (invctrl == 1)
     {
         const auto item_index = list(0, pagesize * page + cs);
-        if (inv[item_index].is_marked_as_no_drop())
+        if (g_inv[item_index]->is_marked_as_no_drop())
         {
-            inv[item_index].is_marked_as_no_drop() = false;
+            g_inv[item_index]->is_marked_as_no_drop() = false;
             txt(i18n::s.get(
-                "core.ui.inv.examine.no_drop.unset", inv[item_index]));
+                "core.ui.inv.examine.no_drop.unset", *g_inv[item_index]));
         }
         else
         {
-            inv[item_index].is_marked_as_no_drop() = true;
+            g_inv[item_index]->is_marked_as_no_drop() = true;
             txt(i18n::s.get(
-                "core.ui.inv.examine.no_drop.set", inv[item_index]));
+                "core.ui.inv.examine.no_drop.set", *g_inv[item_index]));
         }
     }
     if (invctrl == 2)
@@ -2600,7 +2603,7 @@ optional<MenuResult> on_cancel(bool dropcontinue)
 bool on_assign_shortcut(const std::string& action, int shortcut)
 {
     snd("core.ok1");
-    p = itemid2int(inv[list(0, pagesize * page + cs)].id) + invctrl * 10000;
+    p = itemid2int(g_inv[list(0, pagesize * page + cs)]->id) + invctrl * 10000;
     if (game_data.skill_shortcuts.at(shortcut) == p)
     {
         game_data.skill_shortcuts.at(shortcut) = 0;
@@ -2626,9 +2629,9 @@ bool on_assign_shortcut(const std::string& action, int shortcut)
 
 CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
 {
-    ItemRef mainweapon;
-    ItemRef citrade;
-    ItemRef cidip;
+    IndexItemRef mainweapon;
+    IndexItemRef citrade;
+    IndexItemRef cidip;
     bool dropcontinue = false;
 
     remove_card_and_figure_from_heir_trunk();
@@ -2643,16 +2646,16 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
 
             fallback_to_default_command_if_unavailable();
             restore_cursor();
-            mainweapon = ItemRef::null();
+            mainweapon = nullptr;
             make_item_list(inventory_owner, mainweapon, citrade, cidip);
             if (const auto result = check_command(inventory_owner, citrade))
             {
-                return {*result, none};
+                return {*result, nullptr};
             }
             sort_list_by_column1();
             if (const auto result = check_pick_up())
             {
-                return {*result, none};
+                return {*result, nullptr};
             }
             show_message(citrade, cidip);
         }
@@ -2661,11 +2664,13 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
         {
             update_page = false;
 
-            if (const auto result = on_shortcut(citrade, cidip, dropcontinue))
+            if (auto result = on_shortcut(citrade, cidip, dropcontinue))
             {
                 switch (result->type)
                 {
-                case 0: return {result->menu_result, result->selected_item};
+                case 0:
+                    return {
+                        result->menu_result, std::move(result->selected_item)};
                 case 1:
                     init = true;
                     update_page = true;
@@ -2688,11 +2693,12 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
         const auto action = get_action();
         if (p != -1)
         {
-            const auto result =
+            auto result =
                 on_enter(inventory_owner, p(0), citrade, cidip, dropcontinue);
             switch (result.type)
             {
-            case 0: return {result.menu_result, result.selected_item};
+            case 0:
+                return {result.menu_result, std::move(result.selected_item)};
             case 1:
                 init = true;
                 update_page = true;
@@ -2758,7 +2764,7 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
         {
             if (const auto result = on_cancel(dropcontinue))
             {
-                return {*result, none};
+                return {*result, nullptr};
             }
             else
             {

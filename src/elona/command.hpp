@@ -1,5 +1,6 @@
 #pragma once
 
+#include "eobject/eobject.hpp"
 #include "optional.hpp"
 
 
@@ -51,7 +52,7 @@ TurnResult do_spact_command();
 TurnResult do_use_stairs_command(int);
 TurnResult try_interact_with_npc(Character& chara);
 TurnResult try_to_open_locked_door(Character& chara);
-int drink_potion(Character& chara, optional_ref<Item> potion);
+int drink_potion(Character& chara, const OptionalItemRef& potion);
 int drink_well(Character& chara, Item& well);
 int do_zap(Character& doer, Item& rod);
 int do_spact(Character& doer, int& enemy_index);
@@ -59,7 +60,7 @@ int do_spact(Character& doer, int& enemy_index);
 struct PickUpItemResult
 {
     int type;
-    optional_ref<Item> picked_up_item;
+    OptionalItemRef picked_up_item;
 };
 PickUpItemResult pick_up_item(
     int inventory_id,

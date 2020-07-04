@@ -496,7 +496,7 @@ void activity_perform_start(Character& performer, Item& instrument)
     }
     performer.activity.type = Activity::Type::perform;
     performer.activity.turn = 61;
-    performer.activity.item = ItemRef::from_ref(instrument);
+    performer.activity.item = IndexItemRef::from_ref(instrument);
     performer.quality_of_performance = 40;
     performer.tip_gold = 0;
     if (performer.index == 0)
@@ -618,7 +618,7 @@ void activity_eating_start(Character& eater, Item& food)
 {
     eater.activity.type = Activity::Type::eat;
     eater.activity.turn = 8;
-    eater.activity.item = ItemRef::from_ref(food);
+    eater.activity.item = IndexItemRef::from_ref(food);
     if (is_in_fov(eater))
     {
         snd("core.eat1");
@@ -639,10 +639,12 @@ void activity_eating_start(Character& eater, Item& food)
 
 
 
-void activity_others_start(Character& doer, optional_ref<Item> activity_item)
+void activity_others_start(
+    Character& doer,
+    const OptionalItemRef& activity_item)
 {
     doer.activity.type = Activity::Type::others;
-    doer.activity.item = ItemRef::from_opt(activity_item);
+    doer.activity.item = IndexItemRef::from_opt(activity_item);
 
     switch (game_data.activity_about_to_start)
     {
@@ -725,7 +727,9 @@ void activity_others_start(Character& doer, optional_ref<Item> activity_item)
 
 
 
-void activity_others_doing(Character& doer, optional_ref<Item> activity_item)
+void activity_others_doing(
+    Character& doer,
+    const OptionalItemRef& activity_item)
 {
     switch (game_data.activity_about_to_start)
     {
@@ -1059,7 +1063,7 @@ void activity_others_end_steal(Item& steal_target)
 
 
 
-void activity_others_end_sleep(optional_ref<Item> bed)
+void activity_others_end_sleep(const OptionalItemRef& bed)
 {
     txt(i18n::s.get("core.activity.sleep.finish"));
     sleep_start(bed);
@@ -1118,7 +1122,7 @@ void activity_others_end_study(const Item& item)
 
 
 
-void activity_others_end(Character& doer, optional_ref<Item> activity_item)
+void activity_others_end(Character& doer, const OptionalItemRef& activity_item)
 {
     switch (game_data.activity_about_to_start)
     {
@@ -1554,7 +1558,7 @@ void activity_eating_finish(Character& eater, Item& food)
     {
         if (food == eater.ai_item)
         {
-            eater.ai_item = ItemRef::null();
+            eater.ai_item = nullptr;
         }
         if (eater.was_passed_item_by_you_just_now())
         {
@@ -1597,7 +1601,7 @@ void activity_eating_finish(Character& eater, Item& food)
 
 
 
-void activity_others(Character& doer, optional_ref<Item> activity_item)
+void activity_others(Character& doer, const OptionalItemRef& activity_item)
 {
     if (doer.index != 0)
     {
@@ -1625,7 +1629,7 @@ void activity_others(Character& doer, optional_ref<Item> activity_item)
 
 
 
-void spot_fishing(Character& fisher, optional_ref<Item> rod)
+void spot_fishing(Character& fisher, const OptionalItemRef& rod)
 {
     static int fishstat;
 
@@ -1635,7 +1639,7 @@ void spot_fishing(Character& fisher, optional_ref<Item> rod)
         snd("core.fish_cast");
         if (rowactre == 0)
         {
-            fisher.activity.item = ItemRef::from_ref(*rod);
+            fisher.activity.item = IndexItemRef::from_ref(*rod);
         }
         fisher.activity.type = Activity::Type::fish;
         fisher.activity.turn = 100;
@@ -1834,11 +1838,11 @@ void spot_digging(Character& chara)
     txt(i18n::s.get("core.activity.dig_spot.finish"));
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        for (auto&& item : inv.pc())
+        for (const auto& item : g_inv.pc())
         {
-            if (item.id == ItemId::treasure_map && item.param1 != 0 &&
-                item.param1 == cdata.player().position.x &&
-                item.param2 == cdata.player().position.y)
+            if (item->id == ItemId::treasure_map && item->param1 != 0 &&
+                item->param1 == cdata.player().position.x &&
+                item->param2 == cdata.player().position.y)
             {
                 snd("core.chest1");
                 txt(i18n::s.get("core.activity.dig_spot.something_is_there"),
@@ -1865,7 +1869,7 @@ void spot_digging(Character& chara)
                 }
                 txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
                 save_set_autosave();
-                item.modify_number(-1);
+                item->modify_number(-1);
                 break;
             }
         }
@@ -2071,7 +2075,7 @@ void matdelmain(int material_id, int amount)
 
 
 
-void sleep_start(optional_ref<Item> bed)
+void sleep_start(const OptionalItemRef& bed)
 {
     int timeslept = 0;
     if (game_data.current_map == mdata_t::MapId::quest)
@@ -2242,7 +2246,7 @@ void sleep_start(optional_ref<Item> bed)
 void start_stealing(Character& thief, Item& steal_target)
 {
     game_data.activity_about_to_start = 105;
-    activity_others(thief, steal_target);
+    activity_others(thief, OptionalItemRef{&steal_target});
 }
 
 } // namespace elona

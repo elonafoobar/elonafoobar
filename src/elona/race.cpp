@@ -49,12 +49,12 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
         size_t index{};
         for (const auto& limb : data->body_parts)
         {
-            chara.equipment_slots[index] = EquipmentSlot{limb, ItemRef::null()};
+            chara.equipment_slots[index] = EquipmentSlot{limb, nullptr};
             ++index;
         }
-        chara.equipment_slots[index] = EquipmentSlot{10, ItemRef::null()};
+        chara.equipment_slots[index] = EquipmentSlot{10, nullptr};
         ++index;
-        chara.equipment_slots[index] = EquipmentSlot{11, ItemRef::null()};
+        chara.equipment_slots[index] = EquipmentSlot{11, nullptr};
         ++index;
     }
 

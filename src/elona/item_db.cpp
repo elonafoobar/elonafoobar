@@ -2384,7 +2384,10 @@ void item_db_on_zap(Item& item, int legacy_id)
 
 
 
-void item_db_on_drink(Character& chara, optional_ref<Item> item, int legacy_id)
+void item_db_on_drink(
+    Character& chara,
+    const OptionalItemRef& item,
+    int legacy_id)
 {
     assert(potionspill || item);
 

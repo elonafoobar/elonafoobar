@@ -388,6 +388,36 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 }
 
 
+void load(
+    const fs::path& filepath,
+    AllInventory& data,
+    size_t begin,
+    size_t end)
+{
+    load_internal(filepath, [&](auto& ar) {
+        for (size_t i = begin; i < end; ++i)
+        {
+            ar(*data[i]);
+        }
+    });
+}
+
+
+void save(
+    const fs::path& filepath,
+    AllInventory& data,
+    size_t begin,
+    size_t end)
+{
+    save_internal(filepath, [&](auto& ar) {
+        for (size_t i = begin; i < end; ++i)
+        {
+            ar(*data[i]);
+        }
+    });
+}
+
+
 template <typename T>
 void load(const fs::path& filepath, T& data)
 {
@@ -409,7 +439,7 @@ decltype(auto) get_nth_object(int index);
 template <>
 decltype(auto) get_nth_object<Item>(int index)
 {
-    return inv[index];
+    return *g_inv[index];
 }
 
 template <>
@@ -594,14 +624,14 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             if (fs::exists(filepath))
             {
-                load(filepath, inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
+                load(filepath, g_inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
 
                 restore_handles<Item>(0, ELONA_OTHER_INVENTORIES_INDEX);
             }
         }
         else
         {
-            save(filepath, inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
+            save(filepath, g_inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
         }
     }
 
@@ -941,13 +971,13 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                load(filepath, inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
+                load(filepath, g_inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
             }
         }
         else
         {
             Save::instance().add(filepath.filename());
-            save(filepath, inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
+            save(filepath, g_inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
         }
     }
 
@@ -1282,7 +1312,7 @@ void fmode_3_4(bool read, const fs::path& filename)
     if (read)
     {
         tmpload(filename);
-        load(filepath, inv, ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
+        load(filepath, g_inv, ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
 
         restore_handles<Item>(ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
     }
@@ -1290,7 +1320,7 @@ void fmode_3_4(bool read, const fs::path& filename)
     {
         Save::instance().add(filepath.filename());
         tmpload(filename);
-        save(filepath, inv, ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
+        save(filepath, g_inv, ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
     }
 }
 

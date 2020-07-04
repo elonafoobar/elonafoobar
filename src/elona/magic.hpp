@@ -1,5 +1,6 @@
 #pragma once
 
+#include "eobject/eobject.hpp"
 #include "optional.hpp"
 
 
@@ -15,6 +16,6 @@ struct Item;
 bool magic(
     Character& subject,
     Character& target,
-    optional_ref<Item> item = none);
+    const OptionalItemRef& item = nullptr);
 
 } // namespace elona

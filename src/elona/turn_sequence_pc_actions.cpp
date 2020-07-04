@@ -228,48 +228,48 @@ optional<TurnResult> handle_pc_action(std::string& action)
             action = "search";
         }
         p = 0;
-        for (const auto& item : inv.ground())
+        for (const auto& item : g_inv.ground())
         {
-            if (item.position != cdata.player().position)
+            if (item->position != cdata.player().position)
                 continue;
-            if (the_item_db[itemid2int(item.id)]->category ==
+            if (the_item_db[itemid2int(item->id)]->category ==
                 ItemCategory::chest)
             {
                 p = 1;
             }
-            if (the_item_db[itemid2int(item.id)]->subcategory == 60001)
+            if (the_item_db[itemid2int(item->id)]->subcategory == 60001)
             {
                 p = 2;
             }
-            if (the_item_db[itemid2int(item.id)]->category ==
+            if (the_item_db[itemid2int(item->id)]->category ==
                 ItemCategory::altar)
             {
                 p = 3;
             }
-            if (item.function != 0 ||
-                the_item_db[itemid2int(item.id)]->is_usable)
+            if (item->function != 0 ||
+                the_item_db[itemid2int(item->id)]->is_usable)
             {
                 p = 4;
             }
-            if (the_item_db[itemid2int(item.id)]->is_readable)
+            if (the_item_db[itemid2int(item->id)]->is_readable)
             {
                 p = 5;
             }
-            if (item.id == ItemId::moon_gate)
+            if (item->id == ItemId::moon_gate)
             {
                 action = "go_down";
             }
-            if (item.id == ItemId::upstairs &&
+            if (item->id == ItemId::upstairs &&
                 game_data.current_map == mdata_t::MapId::your_home)
             {
                 action = "go_up";
             }
-            if (item.id == ItemId::downstairs &&
+            if (item->id == ItemId::downstairs &&
                 game_data.current_map == mdata_t::MapId::your_home)
             {
                 action = "go_down";
             }
-            if (item.id == ItemId::kotatsu)
+            if (item->id == ItemId::kotatsu)
             {
                 action = "go_down";
             }

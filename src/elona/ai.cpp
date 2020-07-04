@@ -243,7 +243,7 @@ int dist_helper(const Character& a, const Character& b)
 
 
 
-optional_ref<Item> _try_generate_special_throwing_item(
+OptionalItemRef _try_generate_special_throwing_item(
     const Character& chara,
     int action_id)
 {
@@ -265,7 +265,7 @@ optional_ref<Item> _try_generate_special_throwing_item(
         return itemcreate_chara_inv(
             chara.index, choice(isetthrowpotiongreater), 0);
     case -9996: flt(); return itemcreate_chara_inv(chara.index, 698, 0);
-    default: assert(0); return none;
+    default: assert(0); return nullptr;
     }
 }
 
@@ -299,14 +299,14 @@ void _ally_sells_item(Character& chara)
     int sold_item_count = 0;
     int earned_money = 0;
 
-    for (auto&& item : inv.for_chara(chara))
+    for (const auto& item : g_inv.for_chara(chara))
     {
-        if (the_item_db[itemid2int(item.id)]->category == ItemCategory::ore)
+        if (the_item_db[itemid2int(item->id)]->category == ItemCategory::ore)
         {
-            sold_item_count += item.number();
-            const auto total_value = item.value * item.number();
+            sold_item_count += item->number();
+            const auto total_value = item->value * item->number();
             earned_money += total_value;
-            item.remove();
+            item->remove();
             earn_gold(chara, total_value);
         }
     }
@@ -431,7 +431,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
     // Throws a snowball to a snowman.
     if (rnd(12) == 0)
     {
-        optional_ref<Item> target_snowman;
+        OptionalItemRef target_snowman;
         for (const auto& snowman_ref_wrapper : itemlist(-1, 541))
         {
             auto&& snowman = snowman_ref_wrapper.get();
@@ -440,7 +440,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
                 snowman.position.y >= scy &&
                 snowman.position.y < scy + inf_screenh)
             {
-                target_snowman = snowman;
+                target_snowman = OptionalItemRef{&snowman};
                 break;
             }
         }
@@ -541,7 +541,7 @@ void _proc_hungry(Character& chara)
                 }
                 else
                 {
-                    chara.ai_item = ItemRef::from_ref(*item);
+                    chara.ai_item = IndexItemRef::from_ref(*item);
                     _change_nutrition(chara);
                 }
             }
@@ -948,7 +948,7 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
                 }
                 if (const auto item = itemcreate_chara_inv(chara.index, 0, 0))
                 {
-                    chara.ai_item = ItemRef::from_ref(*item);
+                    chara.ai_item = IndexItemRef::from_ref(*item);
                 }
             }
         }
