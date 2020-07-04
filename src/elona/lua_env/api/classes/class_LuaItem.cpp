@@ -69,11 +69,15 @@ void bind(sol::state& lua)
     LuaItem.set("legacy_id", &Item::id);
 
     /**
-     * @luadoc position field num
+     * @luadoc pos field num
      *
      * [RW] The item's position.
      */
-    LuaItem.set("position", &Item::position);
+    LuaItem.set(
+        "pos",
+        sol::property(
+            [](Item& i) { return i.pos(); },
+            [](Item& i, const Position& pos) { i.set_pos(pos); }));
 
     /**
      * @luadoc count field num

@@ -86,8 +86,7 @@ void invalidate_item(Item& item)
 {
     const Item* old_address = &item;
     int old_id = itemid2int(item.id);
-    int old_x = item.position.x;
-    int old_y = item.position.y;
+    const auto [old_x, old_y] = item.pos();
 
     // Delete the item and create new ones until the index is taken again.
     item.remove();

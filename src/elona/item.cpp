@@ -79,7 +79,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         && value == other.value && image == other.image &&
         id == other.id
         // && quality == other.quality
-        && (ignore_position || position == other.position) &&
+        && (ignore_position || pos() == other.pos()) &&
         weight == other.weight && identify_state == other.identify_state &&
         count == other.count && dice_x == other.dice_x &&
         dice_y == other.dice_y && damage_bonus == other.damage_bonus &&
@@ -309,7 +309,7 @@ item_find(int matcher, int matcher_type, ItemFindLocation location_type)
         {
             if (inventory_id == -1)
             {
-                if (item->position != cdata.player().position)
+                if (item->pos() != cdata.player().position)
                 {
                     continue;
                 }
@@ -423,7 +423,7 @@ OptionalItemRef mapitemfind(const Position& pos, ItemId id)
 {
     for (const auto& item : g_inv.ground())
     {
-        if (item->id == id && item->position == pos)
+        if (item->id == id && item->pos() == pos)
         {
             return item.clone();
         }
@@ -449,7 +449,7 @@ void cell_refresh(int x, int y)
     size_t number_of_items = 0;
     for (const auto& item : g_inv.ground())
     {
-        if (item->position == Position{x, y})
+        if (item->pos() == Position{x, y})
         {
             if (number_of_items < items.size())
             {
@@ -561,7 +561,7 @@ void item_refresh(Item& i)
     if (inv_getowner(i) == -1 && mode != 6)
     {
         // Refresh the cell the item is on if it's on the ground.
-        cell_refresh(i.position.x, i.position.y);
+        cell_refresh(i.pos().x, i.pos().y);
     }
     else if (inv_getowner(i) == 0)
     {
@@ -603,6 +603,16 @@ void Item::set_number(int number_)
 
 
 
+void Item::set_pos(const Position& new_pos)
+{
+    if (_pos == new_pos)
+        return;
+
+    _pos = new_pos;
+}
+
+
+
 Item& item_separate(Item& stacked_item)
 {
     if (stacked_item.number() <= 1)
@@ -631,11 +641,11 @@ Item& item_separate(Item& stacked_item)
     {
         if (inv_getowner(stacked_item) != -1)
         {
-            stacked_item.position = cdata[inv_getowner(stacked_item)].position;
+            stacked_item.set_pos(cdata[inv_getowner(stacked_item)].position);
         }
-        dst.position = stacked_item.position;
+        dst.set_pos(stacked_item.pos());
         itemturn(dst);
-        cell_refresh(dst.position.x, dst.position.y);
+        cell_refresh(dst.pos().x, dst.pos().y);
         if (inv_getowner(stacked_item) != -1)
         {
             txt(i18n::s.get("core.item.something_falls_from_backpack"));
@@ -1597,7 +1607,7 @@ ItemStackResult item_stack(int inventory_id, Item& base_item, bool show_message)
         if (item->id == ItemId::small_medal)
         {
             stackable = inventory_id != -1 || mode == 6 ||
-                item->position == base_item.position;
+                item->pos() == base_item.pos();
         }
         else
         {
@@ -1612,7 +1622,7 @@ ItemStackResult item_stack(int inventory_id, Item& base_item, bool show_message)
 
             if (mode != 6 && inv_getowner(base_item) == -1)
             {
-                cell_refresh(base_item.position.x, base_item.position.y);
+                cell_refresh(base_item.pos().x, base_item.pos().y);
             }
             if (show_message)
             {
@@ -1748,7 +1758,7 @@ bool item_fire(int owner, const OptionalItemRef& burned_item)
         {
             if (owner == -1)
             {
-                if (is_in_fov(item.position))
+                if (is_in_fov(item.pos()))
                 {
                     txt(i18n::s.get(
                             "core.item.item_on_the_ground_get_broiled", item),
@@ -1859,7 +1869,7 @@ bool item_fire(int owner, const OptionalItemRef& burned_item)
                     Message::color{ColorIndex::purple});
             }
         }
-        else if (is_in_fov(item.position))
+        else if (is_in_fov(item.pos()))
         {
             txt(i18n::s.get(
                     "core.item.item_on_the_ground_turns_to_dust",
@@ -1868,7 +1878,7 @@ bool item_fire(int owner, const OptionalItemRef& burned_item)
                 Message::color{ColorIndex::purple});
         }
         item.modify_number(-p_);
-        cell_refresh(item.position.x, item.position.y);
+        cell_refresh(item.pos().x, item.pos().y);
         burned = true;
     }
 
@@ -1888,7 +1898,7 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
     OptionalItemRef burned_item;
     for (const auto& item : g_inv.ground())
     {
-        if (item->position == Position{x, y})
+        if (item->pos() == Position{x, y})
         {
             burned_item = item.clone();
             break;
@@ -2024,7 +2034,7 @@ bool item_cold(int owner, const OptionalItemRef& destroyed_item)
                     Message::color{ColorIndex::purple});
             }
         }
-        else if (is_in_fov(item.position))
+        else if (is_in_fov(item.pos()))
         {
             txt(i18n::s.get(
                     "core.item.item_on_the_ground_breaks_to_pieces",
@@ -2051,7 +2061,7 @@ void mapitem_cold(int x, int y)
     OptionalItemRef destroyed_item;
     for (const auto& item : g_inv.ground())
     {
-        if (item->position == Position{x, y})
+        if (item->pos() == Position{x, y})
         {
             destroyed_item = item.clone();
             break;
@@ -2137,11 +2147,10 @@ Item& inv_compress(int owner)
             {
                 item->remove();
                 ++number_of_deleted_items;
-                if (item->position.x >= 0 &&
-                    item->position.x < map_data.width &&
-                    item->position.y >= 0 && item->position.y < map_data.height)
+                if (item->pos().x >= 0 && item->pos().x < map_data.width &&
+                    item->pos().y >= 0 && item->pos().y < map_data.height)
                 {
-                    cell_refresh(item->position.x, item->position.y);
+                    cell_refresh(item->pos().x, item->pos().y);
                 }
             }
             if (number_of_deleted_items > 10)
@@ -2165,10 +2174,10 @@ Item& inv_compress(int owner)
     item.remove();
     if (mode != 6)
     {
-        if (item.position.x >= 0 && item.position.x < map_data.width &&
-            item.position.y >= 0 && item.position.y < map_data.height)
+        if (item.pos().x >= 0 && item.pos().x < map_data.width &&
+            item.pos().y >= 0 && item.pos().y < map_data.height)
         {
-            cell_refresh(item.position.x, item.position.y);
+            cell_refresh(item.pos().x, item.pos().y);
         }
     }
 
@@ -2253,7 +2262,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
 
     auto& dropped_item = *slot;
     item_copy(item_in_inventory, dropped_item);
-    dropped_item.position = cdata.player().position;
+    dropped_item.set_pos(cdata.player().position);
     dropped_item.set_number(num);
     itemturn(dropped_item);
 
@@ -2292,7 +2301,7 @@ void item_drop(Item& item_in_inventory, int num, bool building_shelter)
     item_in_inventory.modify_number(-num);
 
     refresh_burden_state();
-    cell_refresh(stacked_item.position.x, stacked_item.position.y);
+    cell_refresh(stacked_item.pos().x, stacked_item.pos().y);
     screenupdate = -1;
     update_screen();
 
@@ -2534,7 +2543,7 @@ Item& item_convert_artifact(Item& artifact, bool ignore_external_container)
         flt(the_item_db[itemid2int(artifact.id)]->level, Quality::miracle);
         flttypeminor = the_item_db[itemid2int(artifact.id)]->subcategory;
         if (const auto converted_item =
-                itemcreate(inv_getowner(artifact), 0, artifact.position, 0))
+                itemcreate(inv_getowner(artifact), 0, artifact.pos(), 0))
         {
             if (converted_item->quality != Quality::special)
             {
@@ -2601,7 +2610,7 @@ void dipcursed(Item& item)
             txt(i18n::s.get("core.action.dip.rots", item));
             item.param3 = -1;
             item.image = 336;
-            cell_refresh(item.position.x, item.position.y);
+            cell_refresh(item.pos().x, item.pos().y);
         }
         else
         {

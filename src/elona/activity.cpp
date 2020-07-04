@@ -307,12 +307,12 @@ void activity_perform_generate_item(
     {
         // NOTE: may cause Lua creation callbacks to run twice.
         item->modify_number(-1);
-        cell_refresh(item->position.x, item->position.y);
+        cell_refresh(item->pos().x, item->pos().y);
         ThrowingObjectAnimation(
-            item->position, performer.position, item->image, item->color)
+            item->pos(), performer.position, item->image, item->color)
             .play();
         item->modify_number(1);
-        cell_refresh(item->position.x, item->position.y);
+        cell_refresh(item->pos().x, item->pos().y);
         ++performance_tips;
     }
 }
@@ -1033,7 +1033,7 @@ void activity_others_end_steal(Item& steal_target)
     steal_target.modify_number(-in);
     if (steal_target.number() <= 0)
     {
-        cell_refresh(steal_target.position.x, steal_target.position.y);
+        cell_refresh(steal_target.pos().x, steal_target.pos().y);
     }
     txt(i18n::s.get("core.activity.steal.succeed", stolen_item));
     const auto item_weight = stolen_item.weight;

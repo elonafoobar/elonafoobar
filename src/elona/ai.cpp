@@ -435,10 +435,8 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
         for (const auto& snowman_ref_wrapper : itemlist(-1, 541))
         {
             auto&& snowman = snowman_ref_wrapper.get();
-            if (snowman.position.x >= scx &&
-                snowman.position.x < scx + inf_screenw &&
-                snowman.position.y >= scy &&
-                snowman.position.y < scy + inf_screenh)
+            if (snowman.pos().x >= scx && snowman.pos().x < scx + inf_screenw &&
+                snowman.pos().y >= scy && snowman.pos().y < scy + inf_screenh)
             {
                 target_snowman = OptionalItemRef{&snowman};
                 break;
@@ -449,8 +447,8 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
             flt();
             if (const auto snowball = itemcreate_chara_inv(chara.index, 587, 0))
             {
-                tlocx = target_snowman->position.x;
-                tlocy = target_snowman->position.y;
+                tlocx = target_snowman->pos().x;
+                tlocy = target_snowman->pos().y;
                 return do_throw_command(chara, *snowball);
             }
         }
