@@ -28,6 +28,20 @@ struct Position
 
 
 
+    bool operator==(const Position& other) const noexcept
+    {
+        return x == other.x && y == other.y;
+    }
+
+
+
+    bool operator!=(const Position& other) const noexcept
+    {
+        return !(*this == other);
+    }
+
+
+
     std::string to_string() const
     {
         std::stringstream ss;
@@ -50,18 +64,6 @@ struct Position
         /* clang-format on */
     }
 };
-
-
-inline bool operator==(const Position& lhs, const Position& rhs)
-{
-    return lhs.x == rhs.x && lhs.y == rhs.y;
-}
-
-
-inline bool operator!=(const Position& lhs, const Position& rhs)
-{
-    return !(lhs == rhs);
-}
 
 
 inline std::ostream& operator<<(std::ostream& out, const Position& pos)
