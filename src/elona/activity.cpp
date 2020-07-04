@@ -1015,10 +1015,6 @@ void activity_others_end_steal(const ItemRef& steal_target)
     stolen_item->is_stolen() = true;
     stolen_item->own_state = 0;
     steal_target->modify_number(-in);
-    if (steal_target->number() <= 0)
-    {
-        cell_refresh(steal_target->pos().x, steal_target->pos().y);
-    }
     txt(i18n::s.get("core.activity.steal.succeed", stolen_item));
     const auto item_weight = stolen_item->weight;
     if (stolen_item->id == ItemId::gold_piece)

@@ -1053,7 +1053,6 @@ TurnResult do_throw_command_internal(
                                 snowman.unwrap()));
                         }
                         snowman->modify_number(-1);
-                        cell_refresh(tlocx, tlocy);
                         return TurnResult::turn_end;
                     }
                 }
@@ -1771,10 +1770,6 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
         mix_item->modify_number(-1);
         mix_target->color = mix_item->color;
         txt(i18n::s.get("core.action.dip.result.dyeing", mix_target));
-        if (inv_getowner(mix_target) == -1)
-        {
-            cell_refresh(mix_target->pos().x, mix_target->pos().y);
-        }
         if (mix_target->body_part != 0)
         {
             create_pcpic(cdata.player());
@@ -2314,7 +2309,6 @@ TurnResult do_use_command(ItemRef use_item)
                                 "core.action.use.leash.other.start.resists",
                                 cdata[target_chara_index]));
                             use_item->modify_number(-1);
-                            cell_refresh(use_item->pos().x, use_item->pos().y);
                             refresh_burden_state();
                             break;
                         }
@@ -2401,7 +2395,6 @@ TurnResult do_use_command(ItemRef use_item)
                         cdata[target_chara_index]));
                     animeload(8, cdata[target_chara_index]);
                     use_item->modify_number(-1);
-                    cell_refresh(use_item->pos().x, use_item->pos().y);
                     refresh_burden_state();
                 }
                 f = 1;
@@ -2511,7 +2504,6 @@ TurnResult do_use_command(ItemRef use_item)
             break;
         }
         use_item->modify_number(-1);
-        cell_refresh(use_item->pos().x, use_item->pos().y);
         txt(i18n::s.get("core.action.use.rune.use"));
         // Showroom is not supported now.
         break;
@@ -2618,7 +2610,6 @@ TurnResult do_use_command(ItemRef use_item)
             }
         }
         use_item->modify_number(-1);
-        cell_refresh(use_item->pos().x, use_item->pos().y);
         txt(i18n::s.get("core.action.use.nuke.set_up"));
         snd("core.build1");
         mef_add(
@@ -2795,7 +2786,6 @@ TurnResult do_use_command(ItemRef use_item)
         }
         snd("core.card1");
         use_item->modify_number(-1);
-        cell_refresh(use_item->pos().x, use_item->pos().y);
         txt(i18n::s.get("core.action.use.deck.add_card", use_item));
         ++card(0, use_item->subname);
         break;
@@ -5333,7 +5323,6 @@ PickUpItemResult pick_up_item(
             }
             in = item->number();
             item->remove();
-            cell_refresh(item->pos().x, item->pos().y);
             return {1, nullptr};
         }
     }
@@ -5673,7 +5662,6 @@ TurnResult do_bash(Character& chara)
             if (tree->param1 <= 0)
             {
                 tree->image = 592;
-                cell_refresh(x, y);
             }
             if (y + 1 < map_data.height)
             {
@@ -5946,7 +5934,6 @@ void proc_autopick()
             }
             txt(i18n::s.get("core.ui.autopick.destroyed", item));
             item->remove();
-            cell_refresh(x, y);
             cell_data.at(x, y).item_info_memory =
                 cell_data.at(x, y).item_info_actual;
             break;
