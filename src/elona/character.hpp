@@ -209,9 +209,9 @@ struct EquipmentSlot
 
 
 
-    void equip(Item& item)
+    void equip(ItemRef item)
     {
-        equipment = IndexItemRef::from_ref(item);
+        equipment = IndexItemRef::from_ref(std::move(item));
     }
 
 
@@ -755,11 +755,11 @@ optional_ref<Character> chara_find(data::InstanceId chara_id);
 int chara_find_ally(int id);
 int chara_get_free_slot();
 int chara_get_free_slot_ally();
-bool chara_unequip(Item& item);
+bool chara_unequip(const ItemRef& item);
 int chara_custom_talk(int = 0, int = 0);
 int chara_impression_level(int = 0);
 void chara_modify_impression(Character& chara, int delta);
-void chara_set_ai_item(Character& chara, Item& item);
+void chara_set_ai_item(Character& chara, ItemRef item);
 int chara_armor_class(const Character& chara);
 int chara_breed_power(const Character&);
 

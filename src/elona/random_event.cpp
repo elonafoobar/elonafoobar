@@ -344,7 +344,8 @@ void run_random_event(RandomEvent event)
         flt();
         if (const auto item = itemcreate_player_inv(621, 0))
         {
-            txt(i18n::s.get("core.common.you_put_in_your_backpack", *item));
+            txt(i18n::s.get(
+                "core.common.you_put_in_your_backpack", item.unwrap()));
         }
         listmax = 1;
         event_bg = u8"bg_re15";
@@ -358,7 +359,8 @@ void run_random_event(RandomEvent event)
         flt();
         if (const auto item = itemcreate_player_inv(721, 0))
         {
-            txt(i18n::s.get("core.common.you_put_in_your_backpack", *item));
+            txt(i18n::s.get(
+                "core.common.you_put_in_your_backpack", item.unwrap()));
         }
         listmax = 1;
         event_bg = u8"bg_re15";

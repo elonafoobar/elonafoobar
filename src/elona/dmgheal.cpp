@@ -79,7 +79,7 @@ void dmgheal_death_by_backpack(Character& chara)
     {
         if (item->weight > heaviest_weight)
         {
-            heaviest_item = item.clone();
+            heaviest_item = item;
             heaviest_weight = item->weight;
         }
     }
@@ -87,7 +87,7 @@ void dmgheal_death_by_backpack(Character& chara)
     std::string heaviest_item_name;
     if (heaviest_item)
     {
-        heaviest_item_name = itemname(*heaviest_item);
+        heaviest_item_name = itemname(heaviest_item.unwrap());
     }
     else
     {
@@ -1540,11 +1540,12 @@ void character_drops_item(Character& victim)
                 continue;
             }
             item->set_pos(victim.position);
-            if (!item_stack(-1, *item).stacked)
+            item->set_pos(victim.position);
+            if (!item_stack(-1, item).stacked)
             {
                 if (const auto slot = inv_get_free_slot(-1))
                 {
-                    item_copy(*item, *slot);
+                    item_copy(item, slot.unwrap());
                     slot->own_state = -2;
                 }
                 else
@@ -1650,12 +1651,12 @@ void character_drops_item(Character& victim)
             if (rnd(3))
             {
                 txt(i18n::s.get(
-                        "core.misc.black_cat_licks", cdata[catitem], *item),
+                        "core.misc.black_cat_licks", cdata[catitem], item),
                     Message::color{ColorIndex::cyan});
                 item->is_blessed_by_ehekatl() = true;
                 reftype = (int)the_item_db[itemid2int(item->id)]->category;
                 enchantment_add(
-                    *item,
+                    item,
                     enchantment_generate(enchantment_gen_level(rnd(4))),
                     enchantment_gen_p());
                 animeload(8, victim);
@@ -1667,12 +1668,12 @@ void character_drops_item(Character& victim)
             item->body_part = 0;
         }
         item->set_pos(victim.position);
-        itemturn(*item);
-        if (!item_stack(-1, *item).stacked)
+        itemturn(item);
+        if (!item_stack(-1, item).stacked)
         {
             if (const auto slot = inv_get_free_slot(-1))
             {
-                item_copy(*item, *slot);
+                item_copy(item, slot.unwrap());
             }
             else
             {
@@ -1820,7 +1821,7 @@ void character_drops_item(Character& victim)
             flttypeminor = 0;
             if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
             {
-                remain_make(*item, victim);
+                remain_make(item.unwrap(), victim);
             }
         }
         break;
@@ -1833,7 +1834,7 @@ void character_drops_item(Character& victim)
             flttypeminor = 0;
             if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
             {
-                remain_make(*item, victim);
+                remain_make(item.unwrap(), victim);
             }
         }
         break;
@@ -2013,7 +2014,7 @@ void character_drops_item(Character& victim)
         flttypeminor = 0;
         if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
         {
-            remain_make(*item, victim);
+            remain_make(item.unwrap(), victim);
         }
     }
     if (game_data.current_map == mdata_t::MapId::show_house)
@@ -2064,7 +2065,7 @@ void character_drops_item(Character& victim)
         flt();
         if (const auto item = itemcreate_extra_inv(204, victim.position, 0))
         {
-            remain_make(*item, victim);
+            remain_make(item.unwrap(), victim);
             if (victim.is_livestock() == 1)
             {
                 if (sdata(161, 0) != 0)

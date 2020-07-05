@@ -1,5 +1,6 @@
 #include "interface.hpp"
 
+#include "../item.hpp"
 #include "config_table.hpp"
 #include "data_manager.hpp"
 #include "mod_manager.hpp"
@@ -34,6 +35,13 @@ std::vector<fs::path> mod_dirs_internal(const fs::path& base_dir, F predicate)
 }
 
 } // namespace
+
+
+
+sol::table handle(const ItemRef& it)
+{
+    return lua::lua->get_handle_manager().get_handle(*it.get_raw_ptr());
+}
 
 
 

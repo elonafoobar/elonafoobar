@@ -444,8 +444,8 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
         return none;
     }
 
-    auto& ai_item = *chara.ai_item;
-    if (ai_item.number() == 0)
+    const auto ai_item = chara.ai_item.as_ref();
+    if (ai_item->number() == 0)
     {
         chara.ai_item = nullptr;
         return none;
@@ -455,7 +455,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
         chara.ai_item = nullptr;
     }
 
-    const auto category = the_item_db[itemid2int(ai_item.id)]->category;
+    const auto category = the_item_db[itemid2int(ai_item->id)]->category;
     if (category == ItemCategory::food)
     {
         if (chara.relationship != 10 || chara.nutrition <= 6000)
@@ -511,7 +511,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                         if (item_opt->own_state <= 0 &&
                             !is_cursed(item_opt->curse_state))
                         {
-                            return do_eat_command(chara, *item_opt);
+                            return do_eat_command(chara, item_opt.unwrap());
                         }
                     }
                     if (category == ItemCategory::well)
@@ -520,7 +520,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                             item_opt->param1 >= -5 && item_opt->param3 < 20 &&
                             item_opt->id != ItemId::holy_well)
                         {
-                            return do_drink_command(chara, *item_opt);
+                            return do_drink_command(chara, item_opt.unwrap());
                         }
                     }
                 }
@@ -533,8 +533,9 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                         in = item_opt->number();
                         if (game_data.mount != chara.index)
                         {
-                            int stat =
-                                pick_up_item(chara.index, *item_opt, none).type;
+                            int stat = pick_up_item(
+                                           chara.index, item_opt.unwrap(), none)
+                                           .type;
                             if (stat == 1)
                             {
                                 return TurnResult::turn_end;
@@ -1383,12 +1384,11 @@ optional<TurnResult> pc_turn_advance_time()
     }
     if (trait(210) != 0 && rnd(5) == 0)
     {
-        auto&& item = get_random_inv(0);
-        if (item.number() > 0 &&
-            the_item_db[itemid2int(item.id)]->category == ItemCategory::potion)
+        const auto item = get_random_inv(0);
+        if (item->number() > 0 &&
+            the_item_db[itemid2int(item->id)]->category == ItemCategory::potion)
         {
-            item_db_on_drink(
-                cdata.player(), OptionalItemRef{&item}, itemid2int(item.id));
+            item_db_on_drink(cdata.player(), item, itemid2int(item->id));
         }
     }
     if (trait(214) != 0 && rnd(250) == 0 &&

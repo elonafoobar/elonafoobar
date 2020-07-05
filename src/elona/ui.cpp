@@ -2427,16 +2427,16 @@ void cs_list(
 
 
 
-snail::Color cs_list_get_item_color(const Item& item)
+snail::Color cs_list_get_item_color(const ItemRef& item)
 {
-    if (item.is_marked_as_no_drop())
+    if (item->is_marked_as_no_drop())
     {
         return {120, 80, 0};
     }
 
-    if (item.identify_state == IdentifyState::completely)
+    if (item->identify_state == IdentifyState::completely)
     {
-        switch (item.curse_state)
+        switch (item->curse_state)
         {
         case CurseState::doomed: return {100, 10, 100};
         case CurseState::cursed: return {150, 10, 10};

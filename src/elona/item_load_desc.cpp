@@ -115,89 +115,89 @@ void _load_item_main_description_text(
 
 
 
-void _load_item_stat_text(const Item& item, int& num_of_desc)
+void _load_item_stat_text(const ItemRef& item, int& num_of_desc)
 {
-    if (item.material != 0)
+    if (item->material != 0)
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get(
             "core.item.desc.it_is_made_of",
-            the_item_material_db.get_text(item.material, "name"));
+            the_item_material_db.get_text(item->material, "name"));
         ++num_of_desc;
     }
-    if (item.material == 8)
+    if (item->material == 8)
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) =
             i18n::s.get("core.item.desc.speeds_up_ether_disease");
         ++num_of_desc;
     }
-    if (item.is_acidproof())
+    if (item->is_acidproof())
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.acidproof");
         ++num_of_desc;
     }
-    if (item.is_fireproof())
+    if (item->is_fireproof())
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.fireproof");
         ++num_of_desc;
     }
-    if (item.is_precious())
+    if (item->is_precious())
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.precious");
         ++num_of_desc;
     }
-    if (item.is_blessed_by_ehekatl())
+    if (item->is_blessed_by_ehekatl())
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) =
             i18n::s.get("core.item.desc.bit.blessed_by_ehekatl");
         ++num_of_desc;
     }
-    if (item.is_stolen())
+    if (item->is_stolen())
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.stolen");
         ++num_of_desc;
     }
-    if (item.is_alive())
+    if (item->is_alive())
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.alive") +
-            u8" [Lv:"s + item.param1 + u8" Exp:"s +
-            clamp(item.param2 * 100 / calcexpalive(item.param1), 0, 100) +
+            u8" [Lv:"s + item->param1 + u8" Exp:"s +
+            clamp(item->param2 * 100 / calcexpalive(item->param1), 0, 100) +
             u8"%]"s;
         ++num_of_desc;
     }
-    if (item.is_showroom_only())
+    if (item->is_showroom_only())
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) =
             i18n::s.get("core.item.desc.bit.show_room_only");
         ++num_of_desc;
     }
-    if (item.is_handmade())
+    if (item->is_handmade())
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.handmade");
         ++num_of_desc;
     }
-    if (item.dice_x != 0)
+    if (item->dice_x != 0)
     {
-        const auto pierce = calc_rate_to_pierce(itemid2int(item.id));
+        const auto pierce = calc_rate_to_pierce(itemid2int(item->id));
         list(0, num_of_desc) =
             static_cast<int>(ItemDescriptionType::weapon_info);
         listn(0, num_of_desc) =
             i18n::s.get("core.item.desc.weapon.it_can_be_wielded") + u8" ("s +
-            item.dice_x + u8"d"s + item.dice_y +
+            item->dice_x + u8"d"s + item->dice_y +
             i18n::s.get("core.item.desc.weapon.pierce") + pierce + u8"%)"s;
         ++num_of_desc;
         if (reftype == 10000)
         {
-            if (item.weight <= 1500)
+            if (item->weight <= 1500)
             {
                 list(0, num_of_desc) =
                     static_cast<int>(ItemDescriptionType::weapon_info);
@@ -205,7 +205,7 @@ void _load_item_stat_text(const Item& item, int& num_of_desc)
                     i18n::s.get("core.item.desc.weapon.light");
                 ++num_of_desc;
             }
-            if (item.weight >= 4000)
+            if (item->weight >= 4000)
             {
                 list(0, num_of_desc) =
                     static_cast<int>(ItemDescriptionType::weapon_info);
@@ -215,38 +215,38 @@ void _load_item_stat_text(const Item& item, int& num_of_desc)
             }
         }
     }
-    if (item.hit_bonus != 0 || item.damage_bonus != 0)
+    if (item->hit_bonus != 0 || item->damage_bonus != 0)
     {
         list(0, num_of_desc) =
             static_cast<int>(ItemDescriptionType::weapon_info);
         listn(0, num_of_desc) = i18n::s.get(
-            "core.item.desc.bonus", item.hit_bonus, item.damage_bonus);
+            "core.item.desc.bonus", item->hit_bonus, item->damage_bonus);
         ++num_of_desc;
     }
-    if (item.pv != 0 || item.dv != 0)
+    if (item->pv != 0 || item->dv != 0)
     {
         list(0, num_of_desc) =
             static_cast<int>(ItemDescriptionType::armor_info);
         listn(0, num_of_desc) =
-            i18n::s.get("core.item.desc.dv_pv", item.dv, item.pv);
+            i18n::s.get("core.item.desc.dv_pv", item->dv, item->pv);
         ++num_of_desc;
     }
 }
 
 
 
-void _load_item_enchantment_desc(const Item& item, int& num_of_desc)
+void _load_item_enchantment_desc(const ItemRef& item, int& num_of_desc)
 {
     const auto inheritance = item_get_inheritance(item);
 
     size_t enc_index{};
-    for (const auto& enc : item.enchantments)
+    for (const auto& enc : item->enchantments)
     {
         if (enc.id == 0)
             break;
 
         get_enchantment_description(
-            enc.id, enc.power, the_item_db[itemid2int(item.id)]->category);
+            enc.id, enc.power, the_item_db[itemid2int(item->id)]->category);
         listn(0, num_of_desc) = i18n::s.get("core.enchantment.it") + s;
         list(0, num_of_desc) = rtval;
         list(1, num_of_desc) = rtval(1);
@@ -261,7 +261,7 @@ void _load_item_enchantment_desc(const Item& item, int& num_of_desc)
         ++enc_index;
     }
 
-    if (item.is_eternal_force())
+    if (item->is_eternal_force())
     {
         list(0, num_of_desc) =
             static_cast<int>(ItemDescriptionType::enchantment);
@@ -274,28 +274,28 @@ void _load_item_enchantment_desc(const Item& item, int& num_of_desc)
 
 
 
-size_t item_load_desc(const Item& item)
+size_t item_load_desc(const ItemRef& item)
 {
     int num_of_desc{};
 
     const I18NKey& locale_key_prefix =
-        the_item_db[itemid2int(item.id)]->locale_key_prefix;
+        the_item_db[itemid2int(item->id)]->locale_key_prefix;
 
-    if (item.identify_state == IdentifyState::completely)
+    if (item->identify_state == IdentifyState::completely)
     {
         _load_item_main_description_text(locale_key_prefix, num_of_desc);
     }
-    if (item.identify_state >= IdentifyState::almost)
+    if (item->identify_state >= IdentifyState::almost)
     {
         _load_item_stat_text(item, num_of_desc);
     }
-    if (item.identify_state <= IdentifyState::partly)
+    if (item->identify_state <= IdentifyState::partly)
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::normal);
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.have_to_identify");
         ++num_of_desc;
     }
-    if (item.identify_state == IdentifyState::completely)
+    if (item->identify_state == IdentifyState::completely)
     {
         _load_item_enchantment_desc(item, num_of_desc);
         _load_item_description_text(locale_key_prefix, num_of_desc);

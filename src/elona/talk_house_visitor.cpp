@@ -57,7 +57,9 @@ void _adventurer_give_new_year_gift(Character& speaker)
     {
         item->param3 = speaker.impression + rnd(50);
         txt(i18n::s.get(
-            "core.talk.visitor.adventurer.new_year.throws", speaker, *item));
+            "core.talk.visitor.adventurer.new_year.throws",
+            speaker,
+            item.unwrap()));
     }
 }
 
@@ -178,7 +180,7 @@ void _adventurer_become_best_friend(Character& speaker)
     flt();
     if (const auto item = itemcreate_extra_inv(730, cdata.player().position, 0))
     {
-        txt(i18n::s.get("core.talk.visitor.receive", *item, speaker));
+        txt(i18n::s.get("core.talk.visitor.receive", item.unwrap(), speaker));
         txt(i18n::s.get("core.talk.visitor.adventurer.like.wonder_if"));
     }
 }
@@ -374,7 +376,8 @@ void _adventurer_receive_coin(Character& speaker)
         if (const auto item =
                 itemcreate_extra_inv(p, cdata.player().position, 0))
         {
-            txt(i18n::s.get("core.talk.visitor.receive", *item, speaker));
+            txt(i18n::s.get(
+                "core.talk.visitor.receive", item.unwrap(), speaker));
             snd("core.get1");
         }
     }
@@ -420,7 +423,8 @@ void _adventurer_receive_souvenir()
         if (const auto item = itemcreate_player_inv(729, 0))
         {
             txt(i18n::s.get(
-                "core.talk.visitor.adventurer.souvenir.receive", *item));
+                "core.talk.visitor.adventurer.souvenir.receive",
+                item.unwrap()));
             snd("core.get1");
         }
     }

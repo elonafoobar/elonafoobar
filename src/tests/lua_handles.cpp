@@ -42,8 +42,8 @@ TEST_CASE("Test that handle properties can be read", "[Lua: Handles]")
         const auto item_opt =
             itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3);
         REQUIRE_SOME(item_opt);
-        Item& item = *item_opt;
-        auto handle = handle_mgr.get_handle(item);
+        const auto item = item_opt.unwrap();
+        auto handle = handle_mgr.get_handle(*item.get_raw_ptr());
         elona::lua::lua->get_state()->set("item", handle);
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
             R"(assert(item.pos.x == 4))"));
@@ -81,8 +81,8 @@ TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
         const auto item_opt =
             itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 0, 0, 1);
         REQUIRE_SOME(item_opt);
-        Item& item = *item_opt;
-        auto handle = handle_mgr.get_handle(item);
+        const auto item = item_opt.unwrap();
+        auto handle = handle_mgr.get_handle(*item.get_raw_ptr());
         elona::lua::lua->get_state()->set("item", handle);
 
         REQUIRE_NOTHROW(
@@ -96,9 +96,9 @@ TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
             R"(item.pos = LuaPosition.new(4, 8))"));
 
-        REQUIRE(item.number() == 3);
-        REQUIRE(item.pos().x == 4);
-        REQUIRE(item.pos().y == 8);
+        REQUIRE(item->number() == 3);
+        REQUIRE(item->pos().x == 4);
+        REQUIRE(item->pos().y == 8);
     }
 }
 
@@ -163,8 +163,8 @@ TEST_CASE("Test that handles go invalid", "[Lua: Handles]")
         const auto item_opt =
             itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3);
         REQUIRE_SOME(item_opt);
-        Item& item = *item_opt;
-        auto handle = handle_mgr.get_handle(item);
+        const auto item = item_opt.unwrap();
+        auto handle = handle_mgr.get_handle(*item.get_raw_ptr());
         elona::lua::lua->get_state()->set("item", handle);
 
         testing::invalidate_item(item);
@@ -213,8 +213,8 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
         const auto item_opt =
             itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3);
         REQUIRE_SOME(item_opt);
-        Item& item = *item_opt;
-        auto handle = handle_mgr.get_handle(item);
+        const auto item = item_opt.unwrap();
+        auto handle = handle_mgr.get_handle(*item.get_raw_ptr());
 
         REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script("test2", ""));
 
@@ -267,7 +267,7 @@ mod.store.global.items = {[0]=item}
         const auto item = item_find(
             itemid2int(ItemId::putitoro), 3, ItemFindLocation::ground);
         REQUIRE_SOME(item);
-        testing::invalidate_item(*item);
+        testing::invalidate_item(item.unwrap());
 
         REQUIRE_THROWS(mod_mgr.run_in_mod(
             "test_invalid_item", "print(mod.store.global.items[0].id)"));
@@ -313,8 +313,8 @@ print(Chara.is_ally(mod.store.global.charas[0]))
         const auto item_opt =
             itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3);
         REQUIRE_SOME(item_opt);
-        Item& item = *item_opt;
-        auto handle = handle_mgr.get_handle(item);
+        const auto item = item_opt.unwrap();
+        auto handle = handle_mgr.get_handle(*item.get_raw_ptr());
 
         REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script(
             "test_item_arg", "mod.store.global.items = {}"));
@@ -397,16 +397,19 @@ TEST_CASE(
     REQUIRE_SOME(item);
     elona::in = item->number();
 
-    REQUIRE(handle_mgr.get_handle(*item) != sol::lua_nil);
-    const auto pick_up_item_result = pick_up_item(0, *item, none);
+    REQUIRE(
+        handle_mgr.get_handle(*item.unwrap().get_raw_ptr()) != sol::lua_nil);
+    const auto pick_up_item_result = pick_up_item(0, item.unwrap(), none);
     REQUIRE(pick_up_item_result.type == 1);
     REQUIRE_SOME(pick_up_item_result.picked_up_item);
     REQUIRE(
-        handle_mgr.get_handle(*pick_up_item_result.picked_up_item) !=
+        handle_mgr.get_handle(
+            *pick_up_item_result.picked_up_item.unwrap().get_raw_ptr()) !=
         sol::lua_nil);
 
     // Removal of handle is deferred.
-    REQUIRE(handle_mgr.get_handle(*item) != sol::lua_nil);
+    REQUIRE(
+        handle_mgr.get_handle(*item.unwrap().get_raw_ptr()) != sol::lua_nil);
 }
 
 TEST_CASE("Test relocation of character handle", "[Lua: Handles]")
@@ -570,26 +573,26 @@ TEST_CASE(
     const auto item_opt =
         itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount);
     REQUIRE_SOME(item_opt);
-    Item& i = *item_opt;
-    auto handle = handle_mgr.get_handle(i);
+    const auto i = item_opt.unwrap();
+    auto handle = handle_mgr.get_handle(*i.get_raw_ptr());
     auto old_uuid = handle["__uuid"].get<std::string>();
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
 
     // Amount becomes 1.
-    i.set_number(1);
+    i->set_number(1);
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
 
     // Amount becomes 0.
-    i.set_number(-5);
+    i->set_number(-5);
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
 
     // Amount becomes 1 again. Item counts as recreated.
-    i.set_number(1);
+    i->set_number(1);
     REQUIRE(handle_mgr.handle_is_valid(handle) == false);
 
     // The handle has been replaced, so retrieve it again.
-    handle = handle_mgr.get_handle(i);
+    handle = handle_mgr.get_handle(*i.get_raw_ptr());
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
 
     REQUIRE(handle["__uuid"].get<std::string>() != old_uuid);
@@ -605,12 +608,12 @@ TEST_CASE("Test separation of item handles", "[Lua: Handles]")
     const auto i_opt =
         itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount);
     REQUIRE_SOME(i_opt);
-    Item& i = *i_opt;
-    sol::table handle = handle_mgr.get_handle(i);
+    const auto i = i_opt.unwrap();
+    sol::table handle = handle_mgr.get_handle(*i.get_raw_ptr());
 
     elona::item_separate(i);
-    Item& item_sep = i;
-    sol::table handle_sep = handle_mgr.get_handle(item_sep);
+    const auto item_sep = i;
+    sol::table handle_sep = handle_mgr.get_handle(*item_sep.get_raw_ptr());
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
     REQUIRE(handle_mgr.handle_is_valid(handle_sep) == true);
@@ -630,17 +633,17 @@ TEST_CASE("Test copying of item handles", "[Lua: Handles]")
     const auto i_opt =
         itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount);
     REQUIRE_SOME(i_opt);
-    Item& i = *i_opt;
-    sol::table handle = handle_mgr.get_handle(i);
+    const auto i = i_opt.unwrap();
+    sol::table handle = handle_mgr.get_handle(*i.get_raw_ptr());
 
     const auto slot_opt = elona::inv_get_free_slot(-1);
     REQUIRE_SOME(slot_opt);
-    auto& slot = *slot_opt;
-    REQUIRE(handle_mgr.get_handle(slot) == sol::lua_nil);
+    const auto slot = slot_opt.unwrap();
+    REQUIRE(handle_mgr.get_handle(*slot.get_raw_ptr()) == sol::lua_nil);
 
     elona::item_copy(i, slot);
-    Item& copy = slot;
-    sol::table handle_copy = handle_mgr.get_handle(copy);
+    const auto copy = slot;
+    sol::table handle_copy = handle_mgr.get_handle(*copy.get_raw_ptr());
 
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);
     REQUIRE(handle_mgr.handle_is_valid(handle_copy) == true);
@@ -666,15 +669,15 @@ TEST_CASE("Test copying of item handles after removal", "[Lua: Handles]")
     const auto a_opt =
         itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount);
     REQUIRE_SOME(a_opt);
-    Item& a = *a_opt;
+    const auto a = a_opt.unwrap();
 
     const auto b_opt =
         itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 9, amount);
     REQUIRE_SOME(b_opt);
-    Item& b = *b_opt;
+    const auto b = b_opt.unwrap();
 
     // Mark the handle in b's slot as invalid.
-    b.set_number(0);
+    b->set_number(0);
 
     // item_copy should clean up the handle in b's slot.
     REQUIRE_NOTHROW(elona::item_copy(a, b));
@@ -689,14 +692,14 @@ TEST_CASE("Test swapping of item handles", "[Lua: Handles]")
     const auto item_a_opt =
         itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 1);
     REQUIRE_SOME(item_a_opt);
-    Item& item_a = *item_a_opt;
-    sol::table handle_a = handle_mgr.get_handle(item_a);
+    const auto item_a = item_a_opt.unwrap();
+    sol::table handle_a = handle_mgr.get_handle(*item_a.get_raw_ptr());
 
     const auto item_b_opt =
         itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 9, 1);
     REQUIRE_SOME(item_b_opt);
-    Item& item_b = *item_b_opt;
-    sol::table handle_b = handle_mgr.get_handle(item_b);
+    const auto item_b = item_b_opt.unwrap();
+    sol::table handle_b = handle_mgr.get_handle(*item_b.get_raw_ptr());
 
     std::string uuid_a = handle_a["__uuid"];
     std::string uuid_b = handle_b["__uuid"];

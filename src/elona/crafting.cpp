@@ -399,8 +399,8 @@ static void _craft_item(int matid, const CraftingRecipe& recipe)
     nostack = 1;
     if (const auto item = itemcreate_player_inv(matid, 0))
     {
-        txt(i18n::s.get("core.crafting.you_crafted", *item));
-        item_stack(0, *item);
+        txt(i18n::s.get("core.crafting.you_crafted", item.unwrap()));
+        item_stack(0, item.unwrap());
     }
 }
 

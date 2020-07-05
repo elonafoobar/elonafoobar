@@ -18,25 +18,25 @@ TEST_CASE("test foodname", "[I18N: Regressions]")
     testing::set_japanese();
 
     {
-        Item& item = testing::create_item(260);
+        const auto item = testing::create_item(260);
         update_slight();
 
-        item.param2 = 1;
+        item->param2 = 1;
         REQUIRE(i18n::s.format("{itemname($1)}", item) == u8"恐怖のパン");
-        item.param2 = 8;
+        item->param2 = 8;
         REQUIRE(i18n::s.format("{itemname($1)}", item) == u8"カレーパン");
     }
     {
-        Item& item = testing::create_item(573);
+        const auto item = testing::create_item(573);
         update_slight();
 
-        item.param2 = 1;
+        item->param2 = 1;
         REQUIRE(
             i18n::s.format("{itemname($1)}", item) == u8"グロテスクな鳥の卵");
-        item.param2 = 8;
+        item->param2 = 8;
         REQUIRE(
             i18n::s.format("{itemname($1)}", item) == u8"鳥のレアチーズケーキ");
-        item.subname = 3;
+        item->subname = 3;
         REQUIRE(
             i18n::s.format("{itemname($1)}", item) ==
             u8"プチのレアチーズケーキ");

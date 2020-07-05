@@ -1134,14 +1134,14 @@ void append_accuracy_info(const Character& chara, int val0)
         {
             continue;
         }
-        auto& weapon = *chara.equipment_slots[cnt].equipment;
-        if (weapon.dice_x > 0)
+        const auto weapon = chara.equipment_slots[cnt].equipment.as_ref();
+        if (weapon->dice_x > 0)
         {
-            attackskill = weapon.skill;
+            attackskill = weapon->skill;
             ++p(1);
             s(1) = i18n::s.get("core.ui.chara_sheet.damage.melee") + p(1);
             ++attacknum;
-            show_weapon_dice(chara, OptionalItemRef{&weapon}, nullptr, val0);
+            show_weapon_dice(chara, weapon, nullptr, val0);
         }
     }
     if (attackskill == 106)
@@ -1488,14 +1488,14 @@ int change_npc_tone(Character& chara)
 
 
 
-void show_book_window(const Item& book)
+void show_book_window(const ItemRef& book)
 {
-    ui::UIMenuBook(book.param1).show();
+    ui::UIMenuBook(book->param1).show();
 }
 
 
 
-void item_show_description(Item& item)
+void item_show_description(const ItemRef& item)
 {
     ui::UIMenuItemDesc(item).show();
 

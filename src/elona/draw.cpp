@@ -108,9 +108,11 @@ double easing(double t)
 
 
 
-void _set_pcc_depending_on_equipments(Character& chara, const Item& equipment)
+void _set_pcc_depending_on_equipments(
+    Character& chara,
+    const ItemRef& equipment)
 {
-    int item_appearance = the_item_db[itemid2int(equipment.id)]->appearance;
+    int item_appearance = the_item_db[itemid2int(equipment->id)]->appearance;
     if (item_appearance == 0)
     {
         item_appearance = 1;
@@ -118,19 +120,19 @@ void _set_pcc_depending_on_equipments(Character& chara, const Item& equipment)
     switch (iequiploc(equipment))
     {
     case 3:
-        pcc(4, chara.index) = item_appearance + equipment.color * 1000;
+        pcc(4, chara.index) = item_appearance + equipment->color * 1000;
         break;
     case 4:
-        pcc(2, chara.index) = item_appearance + equipment.color * 1000;
+        pcc(2, chara.index) = item_appearance + equipment->color * 1000;
         break;
     case 7:
-        pcc(8, chara.index) = item_appearance + equipment.color * 1000;
+        pcc(8, chara.index) = item_appearance + equipment->color * 1000;
         break;
     case 8:
-        pcc(5, chara.index) = item_appearance + equipment.color * 1000;
+        pcc(5, chara.index) = item_appearance + equipment->color * 1000;
         break;
     case 9:
-        pcc(3, chara.index) = item_appearance + equipment.color * 1000;
+        pcc(3, chara.index) = item_appearance + equipment->color * 1000;
         break;
     default: break;
     }
@@ -654,7 +656,7 @@ void create_pcpic(Character& chara, bool with_equipments)
         {
             if (equipment)
             {
-                _set_pcc_depending_on_equipments(chara, *equipment);
+                _set_pcc_depending_on_equipments(chara, equipment.as_ref());
             }
         }
     }
@@ -1135,9 +1137,9 @@ void draw_item_material(int image_id, int x, int y)
 /**
  * Draws an item with a character sprite on top, for cards/figures.
  */
-void draw_item_with_portrait(const Item& item, int x, int y)
+void draw_item_with_portrait(const ItemRef& item, int x, int y)
 {
-    draw_item_with_portrait(item.image, item.color, item.param1, x, y);
+    draw_item_with_portrait(item->image, item->color, item->param1, x, y);
 }
 
 /**
@@ -1171,10 +1173,10 @@ void draw_item_with_portrait(
  * Draws an item sprite with a character sprite on top, for cards/figures.
  * Fits the sprite to @ref inf_tiles height if it is tall.
  */
-void draw_item_with_portrait_scale_height(const Item& item, int x, int y)
+void draw_item_with_portrait_scale_height(const ItemRef& item, int x, int y)
 {
     draw_item_with_portrait_scale_height(
-        item.image, item.color, item.param1, x, y);
+        item->image, item->color, item->param1, x, y);
 }
 
 /**

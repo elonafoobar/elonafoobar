@@ -735,7 +735,8 @@ bool casino_blackjack()
                 snd("core.get3");
                 noteadd(
                     "@GR" +
-                    i18n::s.get("core.casino.blackjack.game.loot", *item));
+                    i18n::s.get(
+                        "core.casino.blackjack.game.loot", item.unwrap()));
                 break;
             }
         }
@@ -750,7 +751,8 @@ bool casino_blackjack()
                     snd("core.get3");
                     noteadd(
                         "@GR" +
-                        i18n::s.get("core.casino.blackjack.game.loot", *item));
+                        i18n::s.get(
+                            "core.casino.blackjack.game.loot", item.unwrap()));
                 }
             }
         }

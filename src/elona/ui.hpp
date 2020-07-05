@@ -3,6 +3,9 @@
 #include <string>
 
 #include "../snail/application.hpp"
+#include "eobject/eobject.hpp"
+
+
 
 namespace elona
 {
@@ -80,7 +83,7 @@ void cs_list(
     int y,
     int x_offset = 0,
     const snail::Color& text_color = {10, 10, 10});
-snail::Color cs_list_get_item_color(const Item& item);
+snail::Color cs_list_get_item_color(const ItemRef& item);
 void showscroll(const std::string& title, int x, int y, int width, int height);
 
 

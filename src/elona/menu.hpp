@@ -102,9 +102,9 @@ void screen_analyze_self();
 int ctrl_ally(
     ControlAllyOperation,
     optional_ref<Character> gene_engineering_original_character = none);
-void show_book_window(const Item& book);
+void show_book_window(const ItemRef& book);
 int change_npc_tone(Character& chara);
-void item_show_description(Item& item);
+void item_show_description(const ItemRef& item);
 
 
 struct CtrlInventoryResult

@@ -121,7 +121,7 @@ TEST_CASE("test i18n builtin: items", "[I18N: Builtins]")
     testing::reset_state();
     testing::start_in_debug_map();
     testing::set_english();
-    Item& item = testing::create_item(itemid2int(PUTITORO_PROTO_ID), 1);
+    const auto item = testing::create_item(itemid2int(PUTITORO_PROTO_ID), 1);
     update_slight();
 
     REQUIRE(i18n::s.format("{itemname($1)}", item) == u8"a putitoro");

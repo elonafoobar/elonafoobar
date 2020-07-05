@@ -284,7 +284,8 @@ void wish_for_card()
         item->param1 = cdata.tmp().image;
         chara_vanquish(cdata.tmp());
         cell_refresh(cdata.player().position.x, cdata.player().position.y);
-        txt(i18n::s.get("core.wish.something_appears_from_nowhere", *item));
+        txt(i18n::s.get(
+            "core.wish.something_appears_from_nowhere", item.unwrap()));
     }
 }
 
@@ -303,7 +304,8 @@ void wish_for_figure()
         item->param1 = cdata.tmp().image;
         chara_vanquish(cdata.tmp());
         cell_refresh(cdata.player().position.x, cdata.player().position.y);
-        txt(i18n::s.get("core.wish.something_appears_from_nowhere", *item));
+        txt(i18n::s.get(
+            "core.wish.something_appears_from_nowhere", item.unwrap()));
     }
 }
 
@@ -630,7 +632,7 @@ bool wish_for_item(Character& chara, const std::string& input)
             {
                 well->curse_state = CurseState::blessed;
                 txt(i18n::s.get("core.wish.it_is_sold_out"));
-                item = well.clone();
+                item = well;
             }
             else
             {
@@ -672,8 +674,8 @@ bool wish_for_item(Character& chara, const std::string& input)
             item->curse_state = curse_state.value();
         }
 
-        item_identify(*item, IdentifyState::completely);
-        txt(i18n::s.get("core.wish.something_appears", *item));
+        item_identify(item.unwrap(), IdentifyState::completely);
+        txt(i18n::s.get("core.wish.something_appears", item.unwrap()));
         return true;
     }
 

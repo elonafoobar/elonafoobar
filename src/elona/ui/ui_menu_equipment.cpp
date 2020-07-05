@@ -219,20 +219,23 @@ _draw_single_list_entry(int cnt, int list_item, bool show_additional_info)
 
     if (equipment)
     {
-        item_name = itemname(*equipment);
-        item_weight = cnvweight(equipment->weight);
+        item_name = itemname(equipment.as_ref());
+        item_weight = cnvweight(equipment.as_ref()->weight);
 
-        draw_item_with_portrait(*equipment, wx + 126, wy + 70 + cnt * 19);
+        draw_item_with_portrait(
+            equipment.as_ref(), wx + 126, wy + 70 + cnt * 19);
 
-        draw_additional_item_info(*equipment, wx + 350, wy + 60 + cnt * 19 + 2);
+        draw_additional_item_info(
+            equipment.as_ref(), wx + 350, wy + 60 + cnt * 19 + 2);
         if (show_additional_info)
         {
             item_name = cut_item_name_for_additional_info(item_name, 2);
         }
     }
 
-    const auto text_color = equipment ? cs_list_get_item_color(*equipment)
-                                      : snail::Color{10, 10, 10};
+    const auto text_color = equipment
+        ? cs_list_get_item_color(equipment.as_opt().unwrap())
+        : snail::Color{10, 10, 10};
     cs_list(
         cs == cnt,
         item_name,
@@ -277,9 +280,9 @@ void UIMenuEquipment::draw()
 static void _unequip_item()
 {
     game_data.player_is_changing_equipment = 1;
-    const auto& equipment =
-        *cdata.player().equipment_slots[body - 100].equipment;
-    if (is_cursed(equipment.curse_state))
+    const auto equipment =
+        cdata.player().equipment_slots[body - 100].equipment.as_ref();
+    if (is_cursed(equipment->curse_state))
     {
         txt(i18n::s.get("core.ui.equip.cannot_be_taken_off", equipment));
         return;
@@ -325,8 +328,10 @@ static bool _on_list_entry_select(int index)
 
 static void _show_item_desc(int body_)
 {
-    item_show_description(
-        *cdata.player().equipment_slots[body_ - 100].equipment);
+    item_show_description(cdata.player()
+                              .equipment_slots[body_ - 100]
+                              .equipment.as_opt()
+                              .unwrap());
     nowindowanime = 1;
     returnfromidentify = 0;
     screenupdate = -1;

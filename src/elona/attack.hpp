@@ -40,6 +40,6 @@ int target_position(bool target_cell = false);
 void proc_weapon_enchantments(
     Character& attacker,
     Character& target,
-    const Item& weapon);
+    const ItemRef& weapon);
 
 } // namespace elona

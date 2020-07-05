@@ -119,8 +119,8 @@ TalkResult talk_wizard_identify(Character& speaker, int chatval_)
         {
             if (item->identify_state != IdentifyState::completely)
             {
-                const auto result = item_identify(*item, 250);
-                item_stack(0, *item, true);
+                const auto result = item_identify(item, 250);
+                item_stack(0, item, true);
                 ++p(1);
                 if (result >= IdentifyState::completely)
                 {
@@ -446,14 +446,16 @@ TalkResult talk_arena_master_score(Character& speaker)
 
 
 
-TalkResult talk_quest_delivery(Character& speaker, Item& item_to_deliver)
+TalkResult talk_quest_delivery(
+    Character& speaker,
+    const ItemRef& item_to_deliver)
 {
-    auto& slot = inv_get_free_slot_force(speaker.index);
+    const auto slot = inv_get_free_slot_force(speaker.index);
     item_copy(item_to_deliver, slot);
-    slot.set_number(1);
+    slot->set_number(1);
     chara_set_ai_item(speaker, slot);
     rq = deliver;
-    item_to_deliver.modify_number(-1);
+    item_to_deliver->modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_deliver));
     quest_set_data(speaker, 3);
     quest_complete();
@@ -463,14 +465,14 @@ TalkResult talk_quest_delivery(Character& speaker, Item& item_to_deliver)
 
 
 
-TalkResult talk_quest_supply(Character& speaker, Item& item_to_supply)
+TalkResult talk_quest_supply(Character& speaker, const ItemRef& item_to_supply)
 {
-    auto& slot = inv_get_free_slot_force(speaker.index);
+    const auto slot = inv_get_free_slot_force(speaker.index);
     item_copy(item_to_supply, slot);
-    slot.set_number(1);
+    slot->set_number(1);
     speaker.was_passed_item_by_you_just_now() = true;
     chara_set_ai_item(speaker, slot);
-    item_to_supply.modify_number(-1);
+    item_to_supply->modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_supply));
     quest_set_data(speaker, 3);
     quest_complete();
@@ -509,9 +511,9 @@ TalkResult talk_guard_return_item(Character& speaker)
     {
         wallet_opt = itemfind(0, 283);
     }
-    Item& wallet = *wallet_opt;
-    wallet.modify_number(-1);
-    if (wallet.param1 == 0)
+    const auto wallet = wallet_opt.unwrap();
+    wallet->modify_number(-1);
+    if (wallet->param1 == 0)
     {
         buff = i18n::s.get("core.talk.npc.guard.lost.empty.dialog", speaker);
         ELONA_APPEND_RESPONSE(
@@ -1735,7 +1737,8 @@ TalkResult talk_quest_giver(Character& speaker)
             if (const auto item =
                     itemcreate_player_inv(quest_data[rq].target_item_id, 0))
             {
-                txt(i18n::s.get("core.common.you_put_in_your_backpack", *item));
+                txt(i18n::s.get(
+                    "core.common.you_put_in_your_backpack", item.unwrap()));
                 snd("core.inv");
                 refresh_burden_state();
                 buff = i18n::s.get(
@@ -2164,7 +2167,7 @@ TalkResult talk_npc(Character& speaker)
                     {
                         if (item->id == int2itemid(p))
                         {
-                            item_to_deliver = item.clone();
+                            item_to_deliver = item;
                             break;
                         }
                     }
@@ -2193,7 +2196,7 @@ TalkResult talk_npc(Character& speaker)
                         item->param1 / 1000 == quest_data[rq].extra_info_1 &&
                         item->param2 == quest_data[rq].extra_info_2)
                     {
-                        item_to_supply = item.clone();
+                        item_to_supply = item;
                         break;
                     }
                 }
@@ -2201,7 +2204,7 @@ TalkResult talk_npc(Character& speaker)
                 {
                     if (item->id == int2itemid(quest_data[rq].target_item_id))
                     {
-                        item_to_supply = item.clone();
+                        item_to_supply = item;
                         break;
                     }
                 }
@@ -2212,7 +2215,7 @@ TalkResult talk_npc(Character& speaker)
                     26,
                     i18n::s.get(
                         "core.talk.npc.quest_giver.choices.here_is_item",
-                        *item_to_supply));
+                        item_to_supply.unwrap()));
             }
             else
             {
@@ -2331,10 +2334,10 @@ TalkResult talk_npc(Character& speaker)
     case 24: return TalkResult::talk_quest_giver;
     case 25:
         assert(item_to_deliver);
-        return talk_quest_delivery(speaker, *item_to_deliver);
+        return talk_quest_delivery(speaker, item_to_deliver.unwrap());
     case 26:
         assert(item_to_supply);
-        return talk_quest_supply(speaker, *item_to_supply);
+        return talk_quest_supply(speaker, item_to_supply.unwrap());
     case 30: return talk_trainer_learn_skill(speaker);
     case 31: return talk_shop_attack(speaker);
     case 32: return talk_guard_return_item(speaker);

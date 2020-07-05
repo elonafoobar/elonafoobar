@@ -708,9 +708,9 @@ void chara_refresh(Character& chara)
                 {
                     continue;
                 }
-                if (equipment_slot.equipment->weight >= 1000)
+                if (equipment_slot.equipment.as_ref()->weight >= 1000)
                 {
-                    equipment_slot.equipment->body_part = 0;
+                    equipment_slot.equipment.as_ref()->body_part = 0;
                     equipment_slot.unequip();
                 }
             }
@@ -754,34 +754,34 @@ void chara_refresh(Character& chara)
         {
             continue;
         }
-        const auto& equipment = *equipment_slot.equipment;
-        chara.sum_of_equipment_weight += equipment.weight;
-        if (equipment.skill == 168)
+        const auto equipment = equipment_slot.equipment.as_ref();
+        chara.sum_of_equipment_weight += equipment->weight;
+        if (equipment->skill == 168)
         {
             chara.combat_style.set_shield();
         }
-        chara.dv += equipment.dv;
-        chara.pv += equipment.pv;
-        if (equipment.dice_x == 0)
+        chara.dv += equipment->dv;
+        chara.pv += equipment->pv;
+        if (equipment->dice_x == 0)
         {
-            chara.hit_bonus += equipment.hit_bonus;
-            chara.damage_bonus += equipment.damage_bonus;
-            chara.pv += equipment.enhancement * 2 +
-                (equipment.curse_state == CurseState::blessed) * 2;
+            chara.hit_bonus += equipment->hit_bonus;
+            chara.damage_bonus += equipment->damage_bonus;
+            chara.pv += equipment->enhancement * 2 +
+                (equipment->curse_state == CurseState::blessed) * 2;
         }
         else if (equipment_slot.type == 5)
         {
             ++attacknum;
         }
-        if (equipment.curse_state == CurseState::cursed)
+        if (equipment->curse_state == CurseState::cursed)
         {
             chara.curse_power += 20;
         }
-        if (equipment.curse_state == CurseState::doomed)
+        if (equipment->curse_state == CurseState::doomed)
         {
             chara.curse_power += 100;
         }
-        if (equipment.material == 8)
+        if (equipment->material == 8)
         {
             if (chara.index == 0)
             {
@@ -789,7 +789,7 @@ void chara_refresh(Character& chara)
             }
         }
 
-        for (const auto& enchantment : equipment.enchantments)
+        for (const auto& enchantment : equipment->enchantments)
         {
             if (enchantment.id == 0)
             {
@@ -1552,7 +1552,7 @@ void chara_relocate(
     int p = invhead;
     for (const auto& item : g_inv.for_chara(destination))
     {
-        item_copy(*g_inv[p], *item);
+        item_copy(g_inv[p], item);
         item->body_part = 0;
         ++p;
         if (p >= invhead + invrange)
@@ -1666,13 +1666,13 @@ void chara_relocate(
 
 
 
-void chara_set_ai_item(Character& chara, Item& item)
+void chara_set_ai_item(Character& chara, ItemRef item)
 {
-    const auto category = the_item_db[itemid2int(item.id)]->category;
+    const auto category = the_item_db[itemid2int(item->id)]->category;
     if (category == ItemCategory::food || category == ItemCategory::potion ||
         category == ItemCategory::scroll)
     {
-        chara.ai_item = IndexItemRef::from_ref(item);
+        chara.ai_item = IndexItemRef::from_ref(std::move(item));
     }
 }
 
@@ -2293,9 +2293,9 @@ void proc_pregnant(Character& chara)
 
 void proc_one_equipment_with_negative_enchantments(
     Character& chara,
-    Item& equipment)
+    const ItemRef& equipment)
 {
-    for (const auto& enc : equipment.enchantments)
+    for (const auto& enc : equipment->enchantments)
     {
         if (enc.id == 0)
             break;
@@ -2376,7 +2376,8 @@ void proc_negative_enchantments(Character& chara)
         {
             continue;
         }
-        proc_one_equipment_with_negative_enchantments(chara, *equipment);
+        proc_one_equipment_with_negative_enchantments(
+            chara, equipment.as_ref());
     }
 }
 
@@ -2725,7 +2726,7 @@ void lost_body_part(int chara_index)
             {
                 continue;
             }
-            equipment_slot.equipment->body_part = 0;
+            equipment_slot.equipment.as_ref()->body_part = 0;
             equipment_slot.unequip();
         }
     }

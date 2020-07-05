@@ -454,20 +454,18 @@ extern AllInventory g_inv;
 
 
 
-IdentifyState item_identify(Item& item, IdentifyState level);
-IdentifyState item_identify(Item& item, int power);
+IdentifyState item_identify(const ItemRef& item, IdentifyState level);
+IdentifyState item_identify(const ItemRef& item, int power);
 
-std::vector<std::reference_wrapper<Item>> itemlist(int owner, int id);
-
-void item_checkknown(Item& item);
-Item& inv_compress(int owner);
+void item_checkknown(const ItemRef& item);
+ItemRef inv_compress(int owner);
 
 /**
  * Copy @a src to @a dst.
  * @param src the source
  * @param dst the destination
  */
-void item_copy(Item& src, Item& dst);
+void item_copy(const ItemRef& src, const ItemRef& dst);
 
 void item_acid(const Character& owner, OptionalItemRef item = nullptr);
 
@@ -477,11 +475,11 @@ void item_acid(const Character& owner, OptionalItemRef item = nullptr);
  * @param a one item
  * @param b another item
  */
-void item_exchange(Item& a, Item& b);
+void item_exchange(const ItemRef& a, const ItemRef& b);
 
-void itemturn(Item& item);
+void itemturn(const ItemRef& item);
 OptionalItemRef itemfind(int inventory_id, int matcher, int matcher_type = 0);
-int itemusingfind(const Item& item, bool disallow_pc = false);
+int itemusingfind(const ItemRef& item, bool disallow_pc = false);
 
 enum class ItemFindLocation
 {
@@ -498,18 +496,20 @@ OptionalItemRef item_find(
  * Separate @a item's stack.
  * @param item the item to separate
  */
-Item& item_separate(Item& stacked_item);
+ItemRef item_separate(const ItemRef& stacked_item);
 
 struct ItemStackResult
 {
     // If `stacked` is false, `stacked_item` is set to `base_item`.
     bool stacked;
-    Item& stacked_item;
+    ItemRef stacked_item;
 };
-ItemStackResult
-item_stack(int inventory_id, Item& base_item, bool show_message = false);
+ItemStackResult item_stack(
+    int inventory_id,
+    const ItemRef& base_item,
+    bool show_message = false);
 
-void item_dump_desc(Item&);
+void item_dump_desc(const ItemRef&);
 
 bool item_fire(int owner, const OptionalItemRef& burned_item = nullptr);
 void mapitem_fire(optional_ref<Character> arsonist, int x, int y);
@@ -518,22 +518,25 @@ void mapitem_cold(int x, int y);
 
 // TODO unsure how these are separate from item
 bool inv_find(ItemId id, int owner);
-Item& get_random_inv(int owner);
+ItemRef get_random_inv(int owner);
 
 OptionalItemRef inv_get_free_slot(int inventory_id);
 
-int inv_getowner(const Item& item);
+int inv_getowner(const ItemRef& item);
 int inv_sum(int = 0);
 int inv_weight(int = 0);
 bool inv_getspace(int);
 
-Item& inv_get_free_slot_force(int inventory_id);
+ItemRef inv_get_free_slot_force(int inventory_id);
 
-void remain_make(Item& remain, const Character& chara);
+void remain_make(const ItemRef& remain, const Character& chara);
 
 
-void item_drop(Item& item_in_inventory, int num, bool building_shelter = false);
-void item_build_shelter(Item& shelter);
+void item_drop(
+    const ItemRef& item_in_inventory,
+    int num,
+    bool building_shelter = false);
+void item_build_shelter(const ItemRef& shelter);
 
 
 enum class ItemDescriptionType : int
@@ -553,39 +556,40 @@ enum class ItemDescriptionType : int
     small_font_italic = -2,
 };
 
-size_t item_load_desc(const Item& item);
+size_t item_load_desc(const ItemRef& item);
 
 
-int iequiploc(const Item& item);
+int iequiploc(const ItemRef& item);
 
-void item_db_set_basic_stats(Item& item, int legacy_id);
-void item_db_get_description(Item& item, int legacy_id);
-void item_db_get_charge_level(const Item& item, int legacy_id);
-void item_db_set_full_stats(Item& item, int legacy_id);
-void item_db_on_read(Character& reader, Item& item, int legacy_id);
-void item_db_on_zap(Item& item, int legacy_id);
+void item_db_set_basic_stats(const ItemRef& item, int legacy_id);
+void item_db_get_description(const ItemRef& item, int legacy_id);
+void item_db_get_charge_level(const ItemRef& item, int legacy_id);
+void item_db_set_full_stats(const ItemRef& item, int legacy_id);
+void item_db_on_read(Character& reader, const ItemRef& item, int legacy_id);
+void item_db_on_zap(const ItemRef& item, int legacy_id);
 void item_db_on_drink(
     Character& chara,
     const OptionalItemRef& item,
     int legacy_id);
 
 
-std::vector<int> item_get_inheritance(const Item& item);
+std::vector<int> item_get_inheritance(const ItemRef& item);
 
 
 void auto_identify();
 void begintempinv();
 void exittempinv();
-bool cargocheck(const Item& item);
-Item& item_convert_artifact(
-    Item& artifact,
+bool cargocheck(const ItemRef& item);
+ItemRef item_convert_artifact(
+    const ItemRef& artifact,
     bool ignore_external_container = false);
 void damage_by_cursed_equipments(Character& chara);
-void dipcursed(Item& item);
+void dipcursed(const ItemRef& item);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 void equip_melee_weapon(Character& chara);
 std::pair<int, int> inv_getheader(int);
 OptionalItemRef mapitemfind(const Position& pos, ItemId id);
-std::string itemname(Item& item, int number = 0, bool with_article = true);
+std::string
+itemname(const ItemRef& item, int number = 0, bool with_article = true);
 
 } // namespace elona

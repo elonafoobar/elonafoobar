@@ -50,7 +50,7 @@ public:
      * validity.
      */
     void create_chara_handle(Character& chara);
-    void create_item_handle(Item& item);
+    void create_item_handle(const ItemRef& item);
 
     /***
      * Removes an existing handle in the isolated handle environment.
@@ -59,7 +59,7 @@ public:
      * is checked that the handle is invalid.
      */
     void remove_chara_handle(Character& chara);
-    void remove_item_handle(Item& item);
+    void remove_item_handle(const ItemRef& item);
 
 
     /***
@@ -68,9 +68,9 @@ public:
      * instance.
      */
     void create_chara_handle_run_callbacks(Character&);
-    void create_item_handle_run_callbacks(Item&);
+    void create_item_handle_run_callbacks(const ItemRef&);
     void remove_chara_handle_run_callbacks(Character&);
-    void remove_item_handle_run_callbacks(Item&);
+    void remove_item_handle_run_callbacks(const ItemRef&);
 
 
     /***
