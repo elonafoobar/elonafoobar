@@ -397,7 +397,7 @@ void load(
     load_internal(filepath, [&](auto& ar) {
         for (size_t i = begin; i < end; ++i)
         {
-            ar(*data[i]);
+            ar(*data[i].get_raw_ptr());
         }
     });
 }
@@ -412,7 +412,7 @@ void save(
     save_internal(filepath, [&](auto& ar) {
         for (size_t i = begin; i < end; ++i)
         {
-            ar(*data[i]);
+            ar(*data[i].get_raw_ptr());
         }
     });
 }
@@ -439,7 +439,7 @@ decltype(auto) get_nth_object(int index);
 template <>
 decltype(auto) get_nth_object<Item>(int index)
 {
-    return *g_inv[index];
+    return *g_inv[index].get_raw_ptr();
 }
 
 template <>

@@ -1,6 +1,8 @@
 #pragma once
 
+#include <stdexcept>
 #include <type_traits>
+#include <utility>
 
 
 
@@ -15,6 +17,13 @@ struct OptionalRef;
 
 
 
+class null_reference_exception : public std::logic_error
+{
+    using std::logic_error::logic_error;
+};
+
+
+
 /**
  * A reference-counted smart pointer of T. It usually holds a valid
  * object, i.e., points to non-null address, with one exception: a moved Ref
@@ -22,19 +31,9 @@ struct OptionalRef;
  * smart pointers in C++ cannot totally reject null to support move semantics.
  * When using this struct, you don't have to check its validity, but never use
  * moved values (It is safe to re-assign some valid value to a moved Ref and
- * then use the Ref, but it is not recommended). Also, note that it is a
- * reference-counted. Copy of the struct needs more cost than raw pointers.
- * This struct hides copy constructor and copy assignment operator by marking
- * them as private methods to prevent you from calling such inefficient
- * operations unintendedly. If you need to copy a Ref struct, you have to call
- * `Ref::clone()` explicitly. It makes a copy of it with incrementing
- * reference count and returns it to the caller.
+ * then use the Ref, but it is not recommended).
  *
- * // Example:
- * Ref<T> a_reference = other_reference.clone();   move constructor
- * a_reference = other_reference.clone();          move assignment
- *
- * Since the result of `Ref::clone()` is rvalue, these lines do move.
+ * Note: reference counting is not implemented yet.
  */
 template <typename T>
 struct Ref
@@ -48,79 +47,42 @@ struct Ref
 
 
 public:
-    /// Default ctor is deleted because Ref is non-null reference.
-    Ref() = delete;
-
-
-
-    /// Ctor from nullptr_t is deleted because Ref is non-null reference.
+    /// Constructor from nullptr_t is deleted because Ref is non-null reference.
     Ref(std::nullptr_t) = delete;
 
 
 
-    /// Ctor from a raw pointer.
-    explicit Ref(T* ptr) noexcept
+    /// Constructor from a raw pointer.
+    /// @throw std::null_reference_exception if @a ptr is null.
+    explicit Ref(T* ptr)
         : _ptr(ptr)
     {
+        if (!ptr)
+        {
+            throw null_reference_exception{
+                "Ref::Ref(): attempt to construct null reference."};
+        }
     }
 
 
 
-    /// Move ctor.
-    Ref(Ref&& other) noexcept
-        : _ptr(other._ptr)
-    {
-        other._ptr = nullptr;
-    }
+    /// Copy constructor.
+    Ref(const Ref& other) noexcept = default;
+
+    /// Move constructor.
+    Ref(Ref&& other) noexcept = default;
 
 
-
-    /// Ctor from an optional reference.
-    explicit Ref(OptionalRef<T>&& other) noexcept
-        : _ptr(other._ptr)
-    {
-        other._ptr = nullptr;
-    }
+    /// Copy assignment.
+    Ref& operator=(const Ref& other) noexcept = default;
 
 
-
-    /// Returns a copy of this Ref.
-    Ref clone() const& noexcept
-    {
-        return Ref{*this};
-    }
-
-
-
-    /// Returns a copy of this Ref. (for rvalue)
-    Ref clone() const&& noexcept
-    {
-        return Ref{std::move(*this)};
-    }
-
-
-
-    /// Move ctor.
-    Ref& operator=(Ref&& other) noexcept
-    {
-        _ptr = other._ptr;
-        other._ptr = nullptr;
-        return *this;
-    }
-
+    /// Move assignment.
+    Ref& operator=(Ref&& other) noexcept = default;
 
 
     /// Assignment from nullptr_t is deleted because Ref is non-null reference.
     Ref& operator=(std::nullptr_t) = delete;
-
-
-
-    /// It returns false in most cases, except for that you call it against a
-    /// moved value.
-    constexpr bool is_null() const noexcept
-    {
-        return _ptr == nullptr;
-    }
 
 
 
@@ -135,32 +97,6 @@ public:
 
     /// It it safe operation in most cases, except for that you call it against
     /// a moved value.
-    T& get_raw_ref() const
-    {
-        return *get_raw_ptr();
-    }
-
-
-
-    /// Returns true if it is null reference.
-    bool operator!() const noexcept
-    {
-        return is_null();
-    }
-
-
-
-    /// It returns true in most cases, except for that you call it against a
-    /// moved value.
-    explicit operator bool() const noexcept
-    {
-        return !is_null();
-    }
-
-
-
-    /// It it safe operation in most cases, except for that you call it against
-    /// a moved value.
     T* operator->() const
     {
         return get_raw_ptr();
@@ -168,17 +104,8 @@ public:
 
 
 
-    /// It it safe operation in most cases, except for that you call it against
-    /// a moved value.
-    T& operator*() const
-    {
-        return get_raw_ref();
-    }
-
-
-
     /// Compares reference identity.
-    bool operator==(const Ref& other) noexcept
+    bool operator==(const Ref& other) const noexcept
     {
         return _ptr == other._ptr;
     }
@@ -186,7 +113,7 @@ public:
 
 
     /// Compares reference identity.
-    bool operator!=(const Ref& other) noexcept
+    bool operator!=(const Ref& other) const noexcept
     {
         return _ptr != other._ptr;
     }
@@ -194,17 +121,17 @@ public:
 
 
     /// Compares reference identity.
-    bool operator==(const OptionalRef<T>& other) noexcept
+    bool operator==(const OptionalRef<T>& other) const noexcept
     {
-        return _ptr == other._ptr;
+        return _ptr == other._ref._ptr;
     }
 
 
 
     /// Compares reference identity.
-    bool operator!=(const OptionalRef<T>& other) noexcept
+    bool operator!=(const OptionalRef<T>& other) const noexcept
     {
-        return _ptr != other._ptr;
+        return _ptr != other._ref._ptr;
     }
 
 
@@ -214,25 +141,36 @@ private:
 
 
 
-    /// Copy ctor is hidden because it needs more cost.
-    Ref(const Ref& other) noexcept
-        : _ptr(other._ptr)
+    /// Default constructor is hidden because Ref is non-null reference.
+    /// If you want to make a null reference, use OptionalRef.
+    Ref()
+        : _ptr(nullptr)
     {
     }
 
 
 
-    /// Copy asssignment is hidden because it needs more cost.
-    Ref& operator=(const Ref& other) noexcept
+    struct no_null_check_tag
     {
-        _ptr = other._ptr;
-        return *this;
+    };
+
+
+    /// Constructor from a raw pointer without null check. @a ptr can be null.
+    /// This overload is provided for OptionalRef to construct null Ref.
+    /// The second parameter is just a tag to distinguish it from `Ref(T*)`
+    /// version.
+    explicit Ref(T* ptr, no_null_check_tag) noexcept
+        : _ptr(ptr)
+    {
     }
 
 
 
-    /// Copy ctor from OptionalRef is deleted because it needs more cost.
+    /// Constructors from OptionalRef are deleted because it potentially makes
+    /// null Ref. If you want to convert an OptionalRef which is surely
+    /// non-null, please call OptionalRef::unwrap().
     Ref(const OptionalRef<T>& other) = delete;
+    Ref(OptionalRef<T>&& other) = delete;
 };
 
 
@@ -240,19 +178,9 @@ private:
 /**
  * An optional reference-counted smart pointer of T. Note that it can be null
  * contrast to Ref. When using this struct, you must check its validity before
- * dereferencing. Also, note that it is a reference-counted. Copy of the struct
- * needs more cost than raw pointers. This struct hides copy constructor
- * and copy assignment operator by marking them as private methods to prevent
- * you from calling such inefficient operations unintendedly. If you need to
- * copy a OptionalRef struct, you have to call `OptionalRef::clone()`
- * explicitly. It makes a copy of it with incrementing reference count and
- * returns it to the caller.
+ * dereferencing.
  *
- * // Example:
- * OptionalRef<T> a_reference = other_reference.clone();   move constructor
- * a_reference = other_reference.clone();                  move assignment
- *
- * Since the result of `OptionalRef::clone()` is rvalue, these lines do move.
+ * Note: reference counting is not implemented yet.
  */
 template <typename T>
 struct OptionalRef
@@ -266,70 +194,49 @@ struct OptionalRef
 
 
 public:
-    /// Default ctor, null.
-    OptionalRef()
-        : _ptr(nullptr)
+    /// Default constructor; constructs null reference.
+    OptionalRef() noexcept
+        : _ref(nullptr, typename Ref<T>::no_null_check_tag{})
     {
     }
 
 
-
-    /// Ctor from nullptr_t.
+    /// Constructor from nullptr_t; constructs null reference.
     OptionalRef(std::nullptr_t)
-        : _ptr(nullptr)
+        : _ref(nullptr, typename Ref<T>::no_null_check_tag{})
     {
     }
 
 
 
-    /// Ctor from a raw pointer.
+    /// Constructor from a raw pointer. @a ptr can be null.
     explicit OptionalRef(T* ptr) noexcept
-        : _ptr(ptr)
+        : _ref(ptr, typename Ref<T>::no_null_check_tag{})
     {
     }
 
 
 
-    /// Move ctor.
-    OptionalRef(OptionalRef&& other) noexcept
-        : _ptr(other._ptr)
+    /// Copy constructor.
+    OptionalRef(const OptionalRef& other) noexcept = default;
+
+
+    /// Move constructor.
+    OptionalRef(OptionalRef&& other) noexcept = default;
+
+
+
+    /// Constructor from a non-null reference.
+    OptionalRef(const Ref<T>& other) noexcept
+        : _ref(other)
     {
-        other._ptr = nullptr;
     }
 
 
-
-    /// Ctor from a non-null reference.
+    /// Constructor from a non-null reference.
     OptionalRef(Ref<T>&& other) noexcept
-        : _ptr(other._ptr)
+        : _ref(std::move(other))
     {
-        other._ptr = nullptr;
-    }
-
-
-
-    /// Returns a copy of this OptionalRef.
-    OptionalRef clone() const& noexcept
-    {
-        return OptionalRef{*this};
-    }
-
-
-
-    /// Returns a copy of this OptionalRef. (for rvalue)
-    OptionalRef clone() const&& noexcept
-    {
-        return OptionalRef{std::move(*this)};
-    }
-
-
-
-    /// Move ctor.
-    OptionalRef& operator=(OptionalRef&& other) noexcept
-    {
-        _ptr = other._ptr;
-        other._ptr = nullptr;
-        return *this;
     }
 
 
@@ -337,8 +244,48 @@ public:
     /// Assignment from nullptr_t.
     OptionalRef& operator=(std::nullptr_t)
     {
-        _ptr = nullptr;
+        _ref._ptr = nullptr;
         return *this;
+    }
+
+
+    /// Copy assignment.
+    OptionalRef& operator=(const OptionalRef& other) noexcept = default;
+
+
+    /// Move assignment.
+    OptionalRef& operator=(OptionalRef&& other) noexcept = default;
+
+
+
+    /// Copy assignment from a non-null reference.
+    OptionalRef& operator=(const Ref<T>& other) noexcept
+    {
+        _ref = other;
+        return *this;
+    }
+
+
+    /// Move assignment from a non-null reference.
+    OptionalRef& operator=(Ref<T>&& other) noexcept
+    {
+        _ref = std::move(other);
+        return *this;
+    }
+
+
+
+    /// Unwrap this OptionalRef and convert to Ref with null check.
+    /// @throw null_reference_exception if this is null.
+    Ref<T> unwrap() const
+    {
+        if (is_null())
+        {
+            throw null_reference_exception{
+                "OptionalRef::unwrap(): attempt to unwrap null reference."};
+        }
+
+        return _ref;
     }
 
 
@@ -346,23 +293,7 @@ public:
     /// Returns true if it is null reference.
     constexpr bool is_null() const noexcept
     {
-        return _ptr == nullptr;
-    }
-
-
-
-    /// It returns an internal pointer.
-    T* get_raw_ptr() const noexcept
-    {
-        return _ptr;
-    }
-
-
-
-    /// Don't call it against null OptionalRef.
-    T& get_raw_ref() const
-    {
-        return *get_raw_ptr();
+        return _ref._ptr == nullptr;
     }
 
 
@@ -375,6 +306,26 @@ public:
 
 
 
+    /// It returns a raw pointer.
+    T* get_raw_ptr() const noexcept
+    {
+        return _ref._ptr;
+    }
+
+
+
+    T* operator->() const
+    {
+        if (is_null())
+        {
+            throw null_reference_exception{
+                "OptionalRef::operator->(): attempt to access member of null reference"};
+        }
+        return get_raw_ptr();
+    }
+
+
+
     /// Returns true if it points to a valid object.
     explicit operator bool() const noexcept
     {
@@ -383,78 +334,40 @@ public:
 
 
 
-    /// Don't call it against null OptionalRef.
-    T* operator->() const
+    /// Compares reference identity.
+    bool operator==(const OptionalRef& other) const noexcept
     {
-        return get_raw_ptr();
-    }
-
-
-
-    /// Don't call it against null OptionalRef.
-    T& operator*() const
-    {
-        return get_raw_ref();
+        return _ref._ptr == other._ref._ptr;
     }
 
 
 
     /// Compares reference identity.
-    bool operator==(const OptionalRef& other) noexcept
+    bool operator!=(const OptionalRef& other) const noexcept
     {
-        return _ptr == other._ptr;
+        return _ref._ptr != other._ref._ptr;
     }
 
 
 
     /// Compares reference identity.
-    bool operator!=(const OptionalRef& other) noexcept
+    bool operator==(const Ref<T>& other) const noexcept
     {
-        return _ptr != other._ptr;
+        return _ref._ptr == other._ptr;
     }
 
 
 
     /// Compares reference identity.
-    bool operator==(const Ref<T>& other) noexcept
+    bool operator!=(const Ref<T>& other) const noexcept
     {
-        return _ptr == other._ptr;
-    }
-
-
-
-    /// Compares reference identity.
-    bool operator!=(const Ref<T>& other) noexcept
-    {
-        return _ptr != other._ptr;
+        return _ref._ptr != other._ptr;
     }
 
 
 
 private:
-    T* _ptr;
-
-
-
-    /// Copy ctor is hidden because it needs more cost.
-    OptionalRef(const OptionalRef& other) noexcept
-        : _ptr(other._ptr)
-    {
-    }
-
-
-
-    /// Copy asssignment is hidden because it needs more cost.
-    OptionalRef& operator=(const OptionalRef& other) noexcept
-    {
-        _ptr = other._ptr;
-        return *this;
-    }
-
-
-
-    /// Copy ctor from Ref is deleted because it needs more cost.
-    OptionalRef(const Ref<T>& other) = delete;
+    Ref<T> _ref;
 };
 
 } // namespace elona::eobject

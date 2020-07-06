@@ -24,16 +24,16 @@ int initnum;
 
 
 
-int calculate_original_value(const Item& item)
+int calculate_original_value(const ItemRef& item)
 {
-    if (the_item_db[itemid2int(item.id)]->category == ItemCategory::furniture)
+    if (the_item_db[itemid2int(item->id)]->category == ItemCategory::furniture)
     {
-        return item.value * 100 / (80 + std::max(1, item.subname) * 20) -
-            the_item_material_db[item.material]->value * 2;
+        return item->value * 100 / (80 + std::max(1, item->subname) * 20) -
+            the_item_material_db[item->material]->value * 2;
     }
     else
     {
-        return item.value * 100 / the_item_material_db[item.material]->value;
+        return item->value * 100 / the_item_material_db[item->material]->value;
     }
 }
 
@@ -151,9 +151,9 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
     if (!empty_slot)
         return nullptr;
 
-    auto&& item = *empty_slot;
+    const auto item = empty_slot.unwrap();
 
-    item.clear();
+    item->clear();
 
     if (slot == -1 && mode != 6 && mode != 9)
     {
@@ -190,7 +190,7 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
             if (x != -1 && i == 0)
             {
                 ok = true;
-                item.set_pos({sx, sy});
+                item->set_pos({sx, sy});
                 break;
             }
             if (cell_data.at(sx, sy).feats != 0)
@@ -205,7 +205,7 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
             if ((chip_data.for_cell(sx, sy).effect & 4) == 0)
             {
                 ok = true;
-                item.set_pos({sx, sy});
+                item->set_pos({sx, sy});
                 break;
             }
         }
@@ -253,26 +253,26 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
     item_db_set_full_stats(item, item_id);
     item_db_get_charge_level(item, item_id);
 
-    item.color = generate_color(
-        the_item_db[itemid2int(item.id)]->color, itemid2int(item.id));
+    item->color = generate_color(
+        the_item_db[itemid2int(item->id)]->color, itemid2int(item->id));
 
-    if (item.id == ItemId::book_b && item.param1 == 0)
+    if (item->id == ItemId::book_b && item->param1 == 0)
     {
-        item.param1 = choice(isetbook);
+        item->param1 = choice(isetbook);
     }
-    if (item.id == ItemId::textbook && item.param1 == 0)
+    if (item->id == ItemId::textbook && item->param1 == 0)
     {
-        item.param1 = randskill();
+        item->param1 = randskill();
     }
-    if (item.id == ItemId::recipe)
+    if (item->id == ItemId::recipe)
     {
-        item.subname = choice(rpsourcelist);
-        item.param1 = 1;
+        item->subname = choice(rpsourcelist);
+        item->param1 = 1;
     }
 
     ++itemmemory(1, item_id);
 
-    item.quality = static_cast<Quality>(fixlv);
+    item->quality = static_cast<Quality>(fixlv);
     if (fixlv == Quality::special && mode != 6 && nooracle == 0)
     {
         int owner = inv_getowner(item);
@@ -282,7 +282,7 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
             {
                 artifactlocation.push_back(i18n::s.get(
                     "core.magic.oracle.was_held_by",
-                    cnven(iknownnameref(itemid2int(item.id))),
+                    cnven(iknownnameref(itemid2int(item->id))),
                     cdata[owner],
                     mapname(cdata[owner].current_map),
                     game_data.date.day,
@@ -298,7 +298,7 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
         {
             artifactlocation.push_back(i18n::s.get(
                 "core.magic.oracle.was_created_at",
-                iknownnameref(itemid2int(item.id)),
+                iknownnameref(itemid2int(item->id)),
                 mdatan(0),
                 game_data.date.day,
                 game_data.date.month,
@@ -306,160 +306,160 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
         }
     }
 
-    if (item.id == ItemId::bait)
+    if (item->id == ItemId::bait)
     {
-        item.param1 = rnd(6);
-        item.image = 385 + item.param1;
-        item.value = item.param1 * item.param1 * 500 + 200;
+        item->param1 = rnd(6);
+        item->image = 385 + item->param1;
+        item->value = item->param1 * item->param1 * 500 + 200;
     }
 
-    if (item.id == ItemId::deed)
+    if (item->id == ItemId::deed)
     {
-        item.param1 = rnd(5) + 1;
+        item->param1 = rnd(5) + 1;
         if (mode != 6)
         {
-            item.param1 = 2;
+            item->param1 = 2;
         }
-        item.subname = item.param1;
-        item.value = 5000 + 4500 * item.param1 * item.param1 * item.param1 +
-            item.param1 * 20000;
-        if (item.param1 == 5)
+        item->subname = item->param1;
+        item->value = 5000 + 4500 * item->param1 * item->param1 * item->param1 +
+            item->param1 * 20000;
+        if (item->param1 == 5)
         {
-            item.value *= 2;
+            item->value *= 2;
         }
     }
 
-    if (item.id == ItemId::gold_piece)
+    if (item->id == ItemId::gold_piece)
     {
-        item.set_number(calcinitgold(slot));
-        if (item.quality == Quality::great)
+        item->set_number(calcinitgold(slot));
+        if (item->quality == Quality::great)
         {
-            item.set_number(item.number() * 2);
+            item->set_number(item->number() * 2);
         }
-        if (item.quality >= Quality::miracle)
+        if (item->quality >= Quality::miracle)
         {
-            item.set_number(item.number() * 4);
+            item->set_number(item->number() * 4);
         }
         if (slot >= 0)
         {
-            earn_gold(cdata[slot], item.number());
-            item.remove();
-            return OptionalItemRef{&item}; // TODO: invalid return value!
+            earn_gold(cdata[slot], item->number());
+            item->remove();
+            return item; // TODO: invalid return value!
         }
     }
 
-    if (item.id == ItemId::gift)
+    if (item->id == ItemId::gift)
     {
-        item.param4 = rnd(rnd(rnd(giftvalue.size()) + 1) + 1);
-        item.value = item.param4 * 2500 + 500;
+        item->param4 = rnd(rnd(rnd(giftvalue.size()) + 1) + 1);
+        item->value = item->param4 * 2500 + 500;
     }
 
-    if (item.id == ItemId::kitty_bank)
+    if (item->id == ItemId::kitty_bank)
     {
-        item.param2 = rnd(rnd(moneybox.size()) + 1);
-        item.value = item.param2 * item.param2 * item.param2 * 1000 + 1000;
+        item->param2 = rnd(rnd(moneybox.size()) + 1);
+        item->value = item->param2 * item->param2 * item->param2 * 1000 + 1000;
     }
 
-    if (item.id == ItemId::monster_ball)
+    if (item->id == ItemId::monster_ball)
     {
-        item.param2 = rnd_capped(objlv + 1) + 1;
-        item.value = 2000 + item.param2 * item.param2 + item.param2 * 100;
+        item->param2 = rnd_capped(objlv + 1) + 1;
+        item->value = 2000 + item->param2 * item->param2 + item->param2 * 100;
     }
 
-    if (item.id == ItemId::material_kit)
+    if (item->id == ItemId::material_kit)
     {
         initialize_item_material(item);
     }
 
-    if (item.id == ItemId::ancient_book)
+    if (item->id == ItemId::ancient_book)
     {
-        item.param1 = rnd(rnd_capped(clamp(objlv / 2, 1, 15)) + 1);
+        item->param1 = rnd(rnd_capped(clamp(objlv / 2, 1, 15)) + 1);
     }
 
-    if (item.id == ItemId::sisters_love_fueled_lunch)
+    if (item->id == ItemId::sisters_love_fueled_lunch)
     {
-        item.is_handmade() = true;
+        item->is_handmade() = true;
     }
 
-    if (item.id == ItemId::cooler_box)
+    if (item->id == ItemId::cooler_box)
     {
         ++game_data.next_inventory_serial_id;
-        item.count = game_data.next_inventory_serial_id;
+        item->count = game_data.next_inventory_serial_id;
     }
 
-    if (item.id == ItemId::heir_trunk)
+    if (item->id == ItemId::heir_trunk)
     {
-        item.count = 3;
+        item->count = 3;
     }
 
-    if (item.id == ItemId::shop_strongbox)
+    if (item->id == ItemId::shop_strongbox)
     {
-        item.count = 5;
+        item->count = 5;
     }
 
-    if (item.id == ItemId::salary_chest)
+    if (item->id == ItemId::salary_chest)
     {
-        item.count = 4;
+        item->count = 4;
     }
 
-    if (item.id == ItemId::freezer)
+    if (item->id == ItemId::freezer)
     {
-        item.count = 6;
+        item->count = 6;
     }
 
-    const auto category = the_item_db[itemid2int(item.id)]->category;
+    const auto category = the_item_db[itemid2int(item->id)]->category;
 
     if (category == ItemCategory::chest)
     {
-        item.param1 = game_data.current_dungeon_level *
+        item->param1 = game_data.current_dungeon_level *
                 (game_data.current_map != mdata_t::MapId::shelter_) +
             5;
-        if (item.id == ItemId::suitcase)
+        if (item->id == ItemId::suitcase)
         {
-            item.param1 = (rnd(10) + 1) * (cdata.player().level / 10 + 1);
+            item->param1 = (rnd(10) + 1) * (cdata.player().level / 10 + 1);
         }
-        if (item.id == ItemId::treasure_ball ||
-            item.id == ItemId::rare_treasure_ball)
+        if (item->id == ItemId::treasure_ball ||
+            item->id == ItemId::rare_treasure_ball)
         {
-            item.param1 = cdata.player().level;
+            item->param1 = cdata.player().level;
         }
-        item.param2 = rnd_capped(
+        item->param2 = rnd_capped(
             std::abs(game_data.current_dungeon_level) *
                 (game_data.current_map != mdata_t::MapId::shelter_) +
             1);
-        if (item.id == ItemId::wallet || item.id == ItemId::suitcase)
+        if (item->id == ItemId::wallet || item->id == ItemId::suitcase)
         {
-            item.param2 = rnd(15);
+            item->param2 = rnd(15);
         }
-        item.param3 = rnd(30000);
-        if (item.id == ItemId::small_gamble_chest)
+        item->param3 = rnd(30000);
+        if (item->id == ItemId::small_gamble_chest)
         {
-            item.param2 = rnd(rnd(100) + 1) + 1;
-            item.value = item.param2 * 25 + 150;
+            item->param2 = rnd(rnd(100) + 1) + 1;
+            item->value = item->param2 * 25 + 150;
             initnum = rnd(8);
         }
     }
 
-    if (category == ItemCategory::food && item.param1 != 0)
+    if (category == ItemCategory::food && item->param1 != 0)
     {
         if (mode == 6)
         {
             if (rnd(2) == 0)
             {
-                item.param2 = 0;
+                item->param2 = 0;
             }
             else
             {
-                item.param2 = 3 + rnd(3);
+                item->param2 = 3 + rnd(3);
             }
         }
-        if (item.param2 != 0)
+        if (item->param2 != 0)
         {
-            item.image = picfood(item.param2, item.param1 / 1000);
+            item->image = picfood(item->param2, item->param1 / 1000);
         }
-        if (item.material == 35)
+        if (item->material == 35)
         {
-            item.param3 += game_data.date.hours();
+            item->param3 += game_data.date.hours();
         }
     }
 
@@ -468,36 +468,36 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
     {
         if (rnd(3) == 0)
         {
-            item.subname = rnd(rnd(12) + 1);
+            item->subname = rnd(rnd(12) + 1);
         }
         else
         {
-            item.subname = 0;
+            item->subname = 0;
         }
     }
 
     if (mode == 6)
     {
-        item.identify_state = IdentifyState::completely;
+        item->identify_state = IdentifyState::completely;
     }
     if (category == ItemCategory::gold_piece ||
         category == ItemCategory::platinum_coin ||
-        item.id == ItemId::small_medal || item.id == ItemId::music_ticket ||
-        item.id == ItemId::token_of_friendship || item.id == ItemId::bill)
+        item->id == ItemId::small_medal || item->id == ItemId::music_ticket ||
+        item->id == ItemId::token_of_friendship || item->id == ItemId::bill)
     {
-        item.curse_state = CurseState::none;
-        item.identify_state = IdentifyState::completely;
+        item->curse_state = CurseState::none;
+        item->identify_state = IdentifyState::completely;
     }
     if (category == ItemCategory::cargo)
     {
-        item.identify_state = IdentifyState::completely;
-        item.curse_state = CurseState::none;
-        itemmemory(0, itemid2int(item.id)) = 1;
+        item->identify_state = IdentifyState::completely;
+        item->curse_state = CurseState::none;
+        itemmemory(0, itemid2int(item->id)) = 1;
     }
     if (category == ItemCategory::bodyparts || category == ItemCategory::junk ||
         category == ItemCategory::ore)
     {
-        item.curse_state = CurseState::none;
+        item->curse_state = CurseState::none;
     }
     if (mode != 6)
     {
@@ -505,7 +505,7 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
         {
             if (rnd_capped(sdata(162, 0) + 1) > 5)
             {
-                item.identify_state = IdentifyState::almost;
+                item->identify_state = IdentifyState::almost;
             }
         }
     }
@@ -516,7 +516,7 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
 
     if (initnum != 0)
     {
-        item.set_number(initnum);
+        item->set_number(initnum);
     }
 
     if (nostack == 1)
@@ -528,49 +528,49 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
         auto item_stack_result = item_stack(slot, item);
         if (item_stack_result.stacked)
         {
-            return OptionalItemRef{&item_stack_result.stacked_item};
+            return item_stack_result.stacked_item;
         }
     }
 
     if (slot == -1)
     {
-        cell_refresh(item.pos().x, item.pos().y);
+        cell_refresh(item->pos().x, item->pos().y);
     }
-    return OptionalItemRef{&item};
+    return item;
 }
 
 
 
-void init_item_quality_curse_state_material_and_equipments(Item& item)
+void init_item_quality_curse_state_material_and_equipments(const ItemRef& item)
 {
-    const auto category = the_item_db[itemid2int(item.id)]->category;
+    const auto category = the_item_db[itemid2int(item->id)]->category;
 
     if (category < ItemCategory::furniture)
     {
         if (rnd(12) == 0)
         {
-            item.curse_state = CurseState::blessed;
+            item->curse_state = CurseState::blessed;
         }
         if (rnd(13) == 0)
         {
-            item.curse_state = CurseState::cursed;
+            item->curse_state = CurseState::cursed;
             if (is_equipment(category))
             {
                 if (rnd(4) == 0)
                 {
-                    item.curse_state = CurseState::doomed;
+                    item->curse_state = CurseState::doomed;
                 }
             }
         }
     }
-    if (cm || mode == 1 || item.quality == Quality::special)
+    if (cm || mode == 1 || item->quality == Quality::special)
     {
-        item.curse_state = CurseState::none;
+        item->curse_state = CurseState::none;
     }
     if (is_equipment(category) ||
         (category == ItemCategory::furniture && rnd(5) == 0))
     {
-        if (item.material >= 1000 || category == ItemCategory::furniture)
+        if (item->material >= 1000 || category == ItemCategory::furniture)
         {
             initialize_item_material(item);
         }
@@ -601,28 +601,28 @@ void init_item_quality_curse_state_material_and_equipments(Item& item)
     {
         add_enchantments(item);
     }
-    else if (item.quality != Quality::special)
+    else if (item->quality != Quality::special)
     {
-        item.quality = Quality::good;
+        item->quality = Quality::good;
     }
 }
 
 
 
-void calc_furniture_value(Item& item)
+void calc_furniture_value(const ItemRef& item)
 {
-    if (the_item_db[itemid2int(item.id)]->category == ItemCategory::furniture)
+    if (the_item_db[itemid2int(item->id)]->category == ItemCategory::furniture)
     {
-        if (item.subname != 0)
+        if (item->subname != 0)
         {
-            item.value = item.value * (80 + item.subname * 20) / 100;
+            item->value = item->value * (80 + item->subname * 20) / 100;
         }
     }
 }
 
 
 
-void initialize_item_material(Item& item)
+void initialize_item_material(const ItemRef& item)
 {
     determine_item_material(item);
     apply_item_material(item);
@@ -630,7 +630,7 @@ void initialize_item_material(Item& item)
 
 
 
-void determine_item_material(Item& item)
+void determine_item_material(const ItemRef& item)
 {
     int mtlv = 0;
     if (cm)
@@ -641,16 +641,16 @@ void determine_item_material(Item& item)
     {
         mtlv = rnd((objlv + 1)) / 10 + 1;
     }
-    if (item.id == ItemId::material_kit)
+    if (item->id == ItemId::material_kit)
     {
         mtlv = rnd(mtlv + 1);
         if (rnd(3))
         {
-            item.material = 1000;
+            item->material = 1000;
         }
         else
         {
-            item.material = 1001;
+            item->material = 1001;
         }
     }
     p = rnd(100);
@@ -685,53 +685,53 @@ void determine_item_material(Item& item)
     mtlv = clamp(rnd(mtlv + 1) + objfix, 0, 4);
     objfix = 0;
 
-    if (the_item_db[itemid2int(item.id)]->category == ItemCategory::furniture)
+    if (the_item_db[itemid2int(item->id)]->category == ItemCategory::furniture)
     {
         if (rnd(2) == 0)
         {
-            item.material = 1000;
+            item->material = 1000;
         }
         else
         {
-            item.material = 1001;
+            item->material = 1001;
         }
     }
-    if (item.material == 1000)
+    if (item->material == 1000)
     {
         if (rnd(10) != 0)
         {
-            item.material = item_material_lookup_metal(p, mtlv);
+            item->material = item_material_lookup_metal(p, mtlv);
         }
         else
         {
-            item.material = item_material_lookup_leather(p, mtlv);
+            item->material = item_material_lookup_leather(p, mtlv);
         }
     }
-    if (item.material == 1001)
+    if (item->material == 1001)
     {
         if (rnd(10) != 0)
         {
-            item.material = item_material_lookup_leather(p, mtlv);
+            item->material = item_material_lookup_leather(p, mtlv);
         }
         else
         {
-            item.material = item_material_lookup_metal(p, mtlv);
+            item->material = item_material_lookup_metal(p, mtlv);
         }
     }
     if (rnd(25) == 0)
     {
-        item.material = 35;
+        item->material = 35;
     }
 }
 
 
 
-void change_item_material(Item& item, int material_id)
+void change_item_material(const ItemRef& item, int material_id)
 {
-    item.color = 0;
-    p = item.material;
+    item->color = 0;
+    p = item->material;
 
-    fixlv = item.quality;
+    fixlv = item->quality;
     for (auto e : the_item_material_db[p]->enchantments)
     {
         enchantment_remove(item, e.first, e.second);
@@ -739,11 +739,11 @@ void change_item_material(Item& item, int material_id)
 
     const auto original_value = calculate_original_value(item);
 
-    item_db_set_basic_stats(item, itemid2int(item.id));
-    item.value = original_value;
+    item_db_set_basic_stats(item, itemid2int(item->id));
+    item->value = original_value;
     if (material_id != 0)
     {
-        item.material = material_id;
+        item->material = material_id;
         fixmaterial = 0;
     }
     else
@@ -757,30 +757,30 @@ void change_item_material(Item& item, int material_id)
 
 
 
-void apply_item_material(Item& item)
+void apply_item_material(const ItemRef& item)
 {
-    const auto category = the_item_db[itemid2int(item.id)]->category;
+    const auto category = the_item_db[itemid2int(item->id)]->category;
     if (category == ItemCategory::furniture)
     {
-        if (item.material == 3 || item.material == 16 || item.material == 21 ||
-            item.material == 2)
+        if (item->material == 3 || item->material == 16 ||
+            item->material == 21 || item->material == 2)
         {
-            item.material = 43;
+            item->material = 43;
         }
     }
-    p = item.material;
-    item.weight = item.weight * the_item_material_db[p]->weight / 100;
+    p = item->material;
+    item->weight = item->weight * the_item_material_db[p]->weight / 100;
     if (category == ItemCategory::furniture)
     {
-        item.value += the_item_material_db[p]->value * 2;
+        item->value += the_item_material_db[p]->value * 2;
     }
     else
     {
-        item.value = item.value * the_item_material_db[p]->value / 100;
+        item->value = item->value * the_item_material_db[p]->value / 100;
     }
-    if (item.color == 0)
+    if (item->color == 0)
     {
-        item.color = the_item_material_db[p]->color;
+        item->color = the_item_material_db[p]->color;
     }
     p(1) = 120;
     p(2) = 80;
@@ -799,37 +799,39 @@ void apply_item_material(Item& item)
         p(1) = 80;
         p(2) = 70;
     }
-    if (item.hit_bonus != 0)
+    if (item->hit_bonus != 0)
     {
-        item.hit_bonus = the_item_material_db[p]->hit_bonus * item.hit_bonus *
+        item->hit_bonus = the_item_material_db[p]->hit_bonus * item->hit_bonus *
             9 / (p(1) - rnd(30));
     }
-    if (item.damage_bonus != 0)
+    if (item->damage_bonus != 0)
     {
-        item.damage_bonus = the_item_material_db[p]->damage_bonus *
-            item.damage_bonus * 5 / (p(1) - rnd(30));
+        item->damage_bonus = the_item_material_db[p]->damage_bonus *
+            item->damage_bonus * 5 / (p(1) - rnd(30));
     }
-    if (item.dv != 0)
+    if (item->dv != 0)
     {
-        item.dv = the_item_material_db[p]->dv * item.dv * 7 / (p(1) - rnd(30));
+        item->dv =
+            the_item_material_db[p]->dv * item->dv * 7 / (p(1) - rnd(30));
     }
-    if (item.pv != 0)
+    if (item->pv != 0)
     {
-        item.pv = the_item_material_db[p]->pv * item.pv * 9 / (p(1) - rnd(30));
+        item->pv =
+            the_item_material_db[p]->pv * item->pv * 9 / (p(1) - rnd(30));
     }
-    if (item.dice_y != 0)
+    if (item->dice_y != 0)
     {
-        item.dice_y =
-            item.dice_y * the_item_material_db[p]->dice_y / (p(1) + rnd(25));
+        item->dice_y =
+            item->dice_y * the_item_material_db[p]->dice_y / (p(1) + rnd(25));
     }
     set_material_specific_attributes(item);
 }
 
 
 
-void set_material_specific_attributes(Item& item)
+void set_material_specific_attributes(const ItemRef& item)
 {
-    p = item.material;
+    p = item->material;
     for (auto e : the_item_material_db[p]->enchantments)
     {
         enchantment_add(item, e.first, e.second, 0, 1);
@@ -838,11 +840,11 @@ void set_material_specific_attributes(Item& item)
     {
         if (the_item_material_db[p]->fireproof)
         {
-            item.is_acidproof() = true;
+            item->is_acidproof() = true;
         }
         if (the_item_material_db[p]->acidproof)
         {
-            item.is_fireproof() = true;
+            item->is_fireproof() = true;
         }
     }
 }

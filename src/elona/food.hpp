@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "eobject/eobject.hpp"
+
 
 
 namespace elona
@@ -27,11 +29,11 @@ void get_hungry(Character& chara);
 void show_eating_message(const Character& eater);
 void eat_rotten_food(Character& eater);
 
-void food_cook(Character& cook, Item& cook_tool, Item& food);
+void food_cook(Character& cook, const ItemRef& cook_tool, const ItemRef& food);
 
-void make_dish(Item& food, int dish_rank);
+void make_dish(const ItemRef& food, int dish_rank);
 
-void apply_general_eating_effect(Character& eater, Item& food);
+void apply_general_eating_effect(Character& eater, const ItemRef& food);
 
 std::string foodname(int, const std::string&, int = 0, int = 0);
 

@@ -7,59 +7,31 @@
 namespace elona
 {
 
-IndexItemRef IndexItemRef::from_ref(Item& item) noexcept
+IndexItemRef IndexItemRef::from_ref(ItemRef item) noexcept
 {
-    return from_index(item.index());
+    return from_index(item->index());
 }
 
 
 
-IndexItemRef IndexItemRef::from_opt(const OptionalItemRef& item) noexcept
+IndexItemRef IndexItemRef::from_opt(OptionalItemRef item) noexcept
 {
-    return item ? from_ref(*item) : nullptr;
+    return item ? from_ref(item.unwrap()) : nullptr;
 }
 
 
 
-bool IndexItemRef::operator==(const Item& other) const noexcept
-{
-    return *this == IndexItemRef::from_index(other.index());
-}
-
-
-
-Item& IndexItemRef::as_ref() const
+ItemRef IndexItemRef::as_ref() const
 {
     assert(*this);
-    return *g_inv[_objid - 1];
-}
-
-
-
-Item* IndexItemRef::as_ptr() const
-{
-    if (*this)
-    {
-        return &as_ref();
-    }
-    else
-    {
-        return nullptr;
-    }
+    return g_inv[_objid - 1];
 }
 
 
 
 OptionalItemRef IndexItemRef::as_opt() const
 {
-    if (*this)
-    {
-        return OptionalItemRef{&as_ref()};
-    }
-    else
-    {
-        return nullptr;
-    }
+    return *this ? OptionalItemRef{as_ref()} : nullptr;
 }
 
 } // namespace elona

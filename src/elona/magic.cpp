@@ -62,7 +62,7 @@ bool _magic_636(Character& subject, Character& target)
 
 
 // Item: treasure map
-bool _magic_1136(Item& treasure_map)
+bool _magic_1136(const ItemRef& treasure_map)
 {
     if (map_data.type != mdata_t::MapType::world_map)
     {
@@ -74,11 +74,11 @@ bool _magic_1136(Item& treasure_map)
         if (rnd(5) == 0)
         {
             txt(i18n::s.get("core.magic.map.cursed"));
-            treasure_map.modify_number(-1);
+            treasure_map->modify_number(-1);
             return true;
         }
     }
-    if (treasure_map.param1 == 0)
+    if (treasure_map->param1 == 0)
     {
         item_separate(treasure_map);
         for (int cnt = 0; cnt < 1000; ++cnt)
@@ -121,8 +121,8 @@ bool _magic_1136(Item& treasure_map)
                 break;
             }
         }
-        treasure_map.param1 = dx;
-        treasure_map.param2 = dy;
+        treasure_map->param1 = dx;
+        treasure_map->param2 = dy;
     }
     txt(i18n::s.get("core.magic.map.apply"));
     snd("core.book1");
@@ -137,16 +137,16 @@ bool _magic_1136(Item& treasure_map)
     gmode(0);
     for (int cnt = 0; cnt < 5; ++cnt)
     {
-        y = cnt + treasure_map.param2 - 2;
+        y = cnt + treasure_map->param2 - 2;
         sy = cnt * inf_tiles + wy + 26;
         for (int cnt = 0; cnt < 7; ++cnt)
         {
-            x = cnt + treasure_map.param1 - 3;
+            x = cnt + treasure_map->param1 - 3;
             sx = cnt * inf_tiles + wx + 46;
             draw_map_tile(cell_data.at(x, y).chip_id_actual, sx + 1, sy + 1);
-            if (x == treasure_map.param1)
+            if (x == treasure_map->param1)
             {
-                if (y == treasure_map.param2)
+                if (y == treasure_map->param2)
                 {
                     font(40 - en * 2, snail::Font::Style::italic);
                     mes(sx,
@@ -561,7 +561,7 @@ bool _magic_183(Character& subject, OptionalItemRef instrument)
         {
             if (item->skill == 183)
             {
-                instrument = item.clone();
+                instrument = item;
                 break;
             }
         }
@@ -594,14 +594,14 @@ bool _magic_183(Character& subject, OptionalItemRef instrument)
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    activity_perform(subject, *instrument);
+    activity_perform(subject, std::move(instrument).unwrap());
     return true;
 }
 
 
 
 // Cooking
-bool _magic_184(Character& subject, Item& cook_tool)
+bool _magic_184(Character& subject, const ItemRef& cook_tool)
 {
     if (sdata(184, 0) == 0)
     {
@@ -617,7 +617,7 @@ bool _magic_184(Character& subject, Item& cook_tool)
         return false;
     }
     assert(food_opt);
-    auto& food = *food_opt;
+    const auto food = food_opt.unwrap();
     if (subject.index == 0)
     {
         if (cdata.player().sp < 50)
@@ -641,7 +641,7 @@ bool _magic_184(Character& subject, Item& cook_tool)
 
 
 // Fishing
-bool _magic_185(Character& subject, Item& rod)
+bool _magic_185(Character& subject, const ItemRef& rod)
 {
     if (sdata(185, 0) == 0)
     {
@@ -653,7 +653,7 @@ bool _magic_185(Character& subject, Item& rod)
         txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
         return false;
     }
-    if (rod.count == 0)
+    if (rod->count == 0)
     {
         txt(i18n::s.get("core.magic.fish.need_bait"));
         return false;
@@ -741,9 +741,9 @@ bool _magic_185(Character& subject, Item& rod)
                 the_ability_db[efid]->cost / 2 + 1);
     }
     item_separate(rod);
-    --rod.count;
+    --rod->count;
     rowactre = 0;
-    spot_fishing(subject, OptionalItemRef{&rod});
+    spot_fishing(subject, rod);
     return true;
 }
 
@@ -1179,7 +1179,7 @@ bool _magic_412(Character& subject, Character& target)
             {
                 ++p(1);
                 item->curse_state = CurseState::none;
-                item_stack(target.index, *item, true);
+                item_stack(target.index, item, true);
             }
             else
             {
@@ -2072,54 +2072,53 @@ bool _magic_645_1114(Character& subject, Character& target)
             }
         }
     }
-    std::vector<std::reference_wrapper<Item>> candidates;
+    std::vector<ItemRef> candidates;
     for (const auto& [_type, equipment] : target.equipment_slots)
     {
         if (!equipment)
         {
             continue;
         }
-        if (equipment->curse_state == CurseState::blessed)
+        if (equipment.as_ref()->curse_state == CurseState::blessed)
         {
             if (rnd(10))
             {
                 continue;
             }
         }
-        candidates.emplace_back(std::ref(*equipment));
+        candidates.emplace_back(equipment.as_opt().unwrap());
     }
     if (candidates.empty())
     {
         for (int _i = 0; _i < 200; ++_i)
         {
-            auto& item = get_random_inv(target.index);
-            if (item.number() == 0)
+            const auto item = get_random_inv(target.index);
+            if (item->number() == 0)
             {
                 continue;
             }
-            if (item.curse_state == CurseState::blessed)
+            if (item->curse_state == CurseState::blessed)
             {
                 if (rnd(10))
                 {
                     continue;
                 }
             }
-            candidates.emplace_back(std::ref(item));
+            candidates.emplace_back(item);
             break;
         }
     }
     if (!candidates.empty())
     {
-        const auto& cursed_item_wr = choice(candidates);
-        auto& cursed_item = cursed_item_wr.get();
+        const auto cursed_item = choice(std::move(candidates));
         const auto original_item_name = itemname(cursed_item, 1, false);
-        if (cursed_item.curse_state == CurseState::cursed)
+        if (cursed_item->curse_state == CurseState::cursed)
         {
-            cursed_item.curse_state = CurseState::doomed;
+            cursed_item->curse_state = CurseState::doomed;
         }
         else
         {
-            cursed_item.curse_state = CurseState::cursed;
+            cursed_item->curse_state = CurseState::cursed;
         }
         if (is_in_fov(target))
         {
@@ -2372,7 +2371,7 @@ bool _magic_1145(Character& subject)
         return true;
     }
     assert(target_item_opt);
-    auto& target_item = *target_item_opt;
+    const auto target_item = target_item_opt.unwrap();
     txt(i18n::s.get("core.magic.name.prompt"));
     {
         int stat = select_alias(3);
@@ -2384,7 +2383,7 @@ bool _magic_1145(Character& subject)
         }
         p = stat;
     }
-    target_item.subname = list(1, p) + 40000;
+    target_item->subname = list(1, p) + 40000;
     randomize();
     txt(i18n::s.get("core.magic.name.apply", listn(0, p)));
     return true;
@@ -2393,7 +2392,7 @@ bool _magic_1145(Character& subject)
 
 
 // Item: Garok's hammer
-bool _magic_49(Character& subject, Item& hammer)
+bool _magic_49(Character& subject, const ItemRef& hammer)
 {
     if (subject.index != 0)
     {
@@ -2411,45 +2410,45 @@ bool _magic_49(Character& subject, Item& hammer)
         return true;
     }
     assert(target_item_opt);
-    auto& target_item = *target_item_opt;
-    if (target_item.quality >= Quality::miracle || target_item.is_alive())
+    const auto target_item = target_item_opt.unwrap();
+    if (target_item->quality >= Quality::miracle || target_item->is_alive())
     {
         txt(i18n::s.get("core.magic.garoks_hammer.no_effect"));
         fixmaterial = 0;
         objfix = 0;
         return true;
     }
-    randomize(hammer.param1);
-    equip = target_item.body_part;
+    randomize(hammer->param1);
+    equip = target_item->body_part;
     animeload(8, subject);
-    target_item.quality = Quality::miracle;
-    change_item_material(target_item, target_item.material);
-    randomize(hammer.param1);
-    target_item.subname = 40000 + rnd(30000);
+    target_item->quality = Quality::miracle;
+    change_item_material(target_item, target_item->material);
+    randomize(hammer->param1);
+    target_item->subname = 40000 + rnd(30000);
     p = rnd(rnd(rnd(10) + 1) + 3) + 3;
     egolv = rnd(clamp(rnd(6), 0, 4) + 1);
     for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
     {
-        randomize(hammer.param1);
+        randomize(hammer->param1);
         enchantment_add(
             target_item,
             enchantment_generate(enchantment_gen_level(egolv)),
             enchantment_gen_p() + (fixlv == Quality::godly) * 100 +
-                (target_item.is_eternal_force()) * 100,
+                (target_item->is_eternal_force()) * 100,
             20 - (fixlv == Quality::godly) * 10 -
-                (target_item.is_eternal_force()) * 20);
+                (target_item->is_eternal_force()) * 20);
     }
     randomize();
     txt(i18n::s.get("core.magic.garoks_hammer.apply", target_item));
     if (equip != 0)
     {
         subject.equipment_slots[equip - 100].equip(target_item);
-        target_item.body_part = equip;
+        target_item->body_part = equip;
     }
     chara_refresh(subject);
     fixmaterial = 0;
     objfix = 0;
-    hammer.modify_number(-1);
+    hammer->modify_number(-1);
     save_set_autosave();
     return true;
 }
@@ -2486,9 +2485,9 @@ bool _magic_21_1127(Character& subject)
     if (f == 1)
     {
         assert(target_item_opt);
-        auto& target_item = *target_item_opt;
-        equip = target_item.body_part;
-        if (target_item.quality == Quality::special)
+        const auto target_item = target_item_opt.unwrap();
+        equip = target_item->body_part;
+        if (target_item->quality == Quality::special)
         {
             if (efp < 350)
             {
@@ -2501,15 +2500,15 @@ bool _magic_21_1127(Character& subject)
                 "core.magic.change_material.artifact_reconstructed",
                 subject,
                 target_item));
-            target_item.modify_number(-1);
+            target_item->modify_number(-1);
             flt();
             const auto reconstructed_artifact =
-                itemcreate_player_inv(itemid2int(target_item.id), 0);
+                itemcreate_player_inv(itemid2int(target_item->id), 0);
             assert(reconstructed_artifact);
             if (equip != 0)
             {
                 subject.equipment_slots[equip - 100].equip(
-                    *reconstructed_artifact);
+                    reconstructed_artifact.unwrap());
                 reconstructed_artifact->body_part = equip;
             }
         }
@@ -2538,7 +2537,7 @@ bool _magic_21_1127(Character& subject)
             if (equip != 0)
             {
                 subject.equipment_slots[equip - 100].equip(target_item);
-                target_item.body_part = equip;
+                target_item->body_part = equip;
             }
         }
     }
@@ -2601,12 +2600,12 @@ bool _magic_1124_1125(Character& subject)
     if (menu_result.succeeded)
     {
         assert(target_item_opt);
-        auto& target_item = *target_item_opt;
-        if (target_item.enhancement < efp / 100)
+        const auto target_item = target_item_opt.unwrap();
+        if (target_item->enhancement < efp / 100)
         {
             snd("core.ding2");
             txt(i18n::s.get("core.magic.enchant.apply", target_item));
-            ++target_item.enhancement;
+            ++target_item->enhancement;
         }
         else
         {
@@ -2652,19 +2651,20 @@ bool _magic_630_1129(Character& subject)
     if (menu_result.succeeded)
     {
         assert(target_item_opt);
-        auto& target_item = *target_item_opt;
-        item_db_get_charge_level(target_item, itemid2int(target_item.id));
-        if (ichargelevel < 1 || target_item.id == ItemId::rod_of_wishing ||
-            target_item.id == ItemId::rod_of_domination ||
-            target_item.id == ItemId::spellbook_of_wishing ||
-            target_item.id == ItemId::spellbook_of_harvest ||
-            (target_item.id == ItemId::ancient_book && target_item.param2 != 0))
+        const auto target_item = target_item_opt.unwrap();
+        item_db_get_charge_level(target_item, itemid2int(target_item->id));
+        if (ichargelevel < 1 || target_item->id == ItemId::rod_of_wishing ||
+            target_item->id == ItemId::rod_of_domination ||
+            target_item->id == ItemId::spellbook_of_wishing ||
+            target_item->id == ItemId::spellbook_of_harvest ||
+            (target_item->id == ItemId::ancient_book &&
+             target_item->param2 != 0))
         {
             txt(i18n::s.get("core.magic.fill_charge.cannot_recharge"));
             return true;
         }
         f = 1;
-        if (target_item.count > ichargelevel)
+        if (target_item->count > ichargelevel)
         {
             f = -1;
         }
@@ -2678,7 +2678,7 @@ bool _magic_630_1129(Character& subject)
         {
             f = 0;
         }
-        if (the_item_db[itemid2int(target_item.id)]->category ==
+        if (the_item_db[itemid2int(target_item->id)]->category ==
             ItemCategory::spellbook)
         {
             if (rnd(4) == 0)
@@ -2693,17 +2693,17 @@ bool _magic_630_1129(Character& subject)
         if (f == 1)
         {
             p = 1 + rnd((ichargelevel / 2 + 1));
-            if (p + target_item.count > ichargelevel)
+            if (p + target_item->count > ichargelevel)
             {
-                p = ichargelevel - target_item.count + 1;
+                p = ichargelevel - target_item->count + 1;
             }
-            if (the_item_db[itemid2int(target_item.id)]->category ==
+            if (the_item_db[itemid2int(target_item->id)]->category ==
                 ItemCategory::spellbook)
             {
                 p = 1;
             }
             txt(i18n::s.get("core.magic.fill_charge.apply", target_item, p(0)));
-            target_item.count += p;
+            target_item->count += p;
             animeload(8, subject);
         }
         else
@@ -2712,7 +2712,7 @@ bool _magic_630_1129(Character& subject)
             {
                 txt(i18n::s.get(
                     "core.magic.fill_charge.explodes", target_item));
-                target_item.modify_number(-1);
+                target_item->modify_number(-1);
                 refresh_burden_state();
                 return true;
             }
@@ -2747,8 +2747,8 @@ bool _magic_629(Character& subject)
     if (menu_result.succeeded)
     {
         assert(target_item_opt);
-        auto& target_item = *target_item_opt;
-        item_db_get_charge_level(target_item, itemid2int(target_item.id));
+        const auto target_item = target_item_opt.unwrap();
+        item_db_get_charge_level(target_item, itemid2int(target_item->id));
         for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (ichargelevel == 1)
@@ -2774,14 +2774,14 @@ bool _magic_629(Character& subject)
             p = 1;
         }
         animeload(8, subject);
-        p = p * target_item.count;
+        p = p * target_item->count;
         game_data.charge_power += p;
         txt(i18n::s.get(
             "core.magic.draw_charge",
             target_item,
             p(0),
             game_data.charge_power));
-        target_item.remove();
+        target_item->remove();
         refresh_burden_state();
     }
 
@@ -2855,41 +2855,42 @@ bool _magic_1140(Character& subject)
     if (menu_result.succeeded)
     {
         assert(target_item_opt);
-        auto& target_item = *target_item_opt;
+        const auto target_item = target_item_opt.unwrap();
         save_set_autosave();
         animeload(8, subject);
         if (!is_cursed(efstatus))
         {
-            if (target_item.weight > 0)
+            if (target_item->weight > 0)
             {
-                target_item.weight = clamp(
-                    target_item.weight * (100 - efp / 10) / 100,
+                target_item->weight = clamp(
+                    target_item->weight * (100 - efp / 10) / 100,
                     1,
-                    target_item.weight);
-                if (target_item.pv > 0)
+                    target_item->weight);
+                if (target_item->pv > 0)
                 {
-                    target_item.pv -= target_item.pv / 10 + 1 +
+                    target_item->pv -= target_item->pv / 10 + 1 +
                         (efstatus != CurseState::blessed);
                 }
-                if (target_item.damage_bonus > 0)
+                if (target_item->damage_bonus > 0)
                 {
-                    target_item.damage_bonus -= target_item.damage_bonus / 10 +
-                        1 + (efstatus != CurseState::blessed);
+                    target_item->damage_bonus -=
+                        target_item->damage_bonus / 10 + 1 +
+                        (efstatus != CurseState::blessed);
                 }
             }
             txt(i18n::s.get("core.magic.flying.apply", target_item));
         }
         else
         {
-            target_item.weight = target_item.weight * 150 / 100 + 1000;
-            if (target_item.pv > 0)
+            target_item->weight = target_item->weight * 150 / 100 + 1000;
+            if (target_item->pv > 0)
             {
-                target_item.pv += clamp(target_item.pv / 10, 1, 5);
+                target_item->pv += clamp(target_item->pv / 10, 1, 5);
             }
-            if (target_item.damage_bonus > 0)
+            if (target_item->damage_bonus > 0)
             {
-                target_item.damage_bonus +=
-                    clamp(target_item.damage_bonus / 10, 1, 5);
+                target_item->damage_bonus +=
+                    clamp(target_item->damage_bonus / 10, 1, 5);
             }
             txt(i18n::s.get("core.magic.flying.cursed", target_item));
         }
@@ -2936,12 +2937,12 @@ bool _magic_1132(Character& subject, int& fltbk, int& valuebk)
     if (f == 1)
     {
         assert(target_item_opt);
-        auto& target_item = *target_item_opt;
+        const auto target_item = target_item_opt.unwrap();
         save_set_autosave();
         animeload(8, subject);
-        fltbk = (int)the_item_db[itemid2int(target_item.id)]->category;
+        fltbk = (int)the_item_db[itemid2int(target_item->id)]->category;
         valuebk = calcitemvalue(target_item, 0);
-        target_item.remove();
+        target_item->remove();
         for (int cnt = 0;; ++cnt)
         {
             flt(calcobjlv(efp / 10) + 5, calcfixlv(Quality::good));
@@ -2958,7 +2959,7 @@ bool _magic_1132(Character& subject, int& fltbk, int& valuebk)
                 }
                 else
                 {
-                    txt(i18n::s.get("core.magic.alchemy", *item));
+                    txt(i18n::s.get("core.magic.alchemy", item.unwrap()));
                     break;
                 }
             }
@@ -3394,7 +3395,7 @@ bool _magic_651(Character& subject, Character& target)
     {
         if (item->id == ItemId::fish_a)
         {
-            eat_item_opt = item.clone();
+            eat_item_opt = item;
             break;
         }
     }
@@ -3411,7 +3412,7 @@ bool _magic_651(Character& subject, Character& target)
             {
                 continue;
             }
-            eat_item_opt = item.clone();
+            eat_item_opt = item;
             break;
         }
     }
@@ -3419,8 +3420,8 @@ bool _magic_651(Character& subject, Character& target)
     {
         return true;
     }
-    auto& eat_item = *eat_item_opt;
-    if (eat_item.is_aphrodisiac())
+    const auto eat_item = eat_item_opt.unwrap();
+    if (eat_item->is_aphrodisiac())
     {
         if (is_in_fov(target))
         {
@@ -3475,7 +3476,7 @@ bool _magic_464(Character& subject, Character& target)
                 itemcreate_extra_inv(item_id, subject.position, number))
         {
             const auto message =
-                i18n::s.get("core.magic.wizards_harvest", *item);
+                i18n::s.get("core.magic.wizards_harvest", item.unwrap());
             if (fastest)
             {
                 messages += message;
@@ -4557,7 +4558,7 @@ bool _proc_magic(
     switch (efid)
     {
     case 636: return _magic_636(subject, target);
-    case 1136: assert(efitem); return _magic_1136(*efitem);
+    case 1136: assert(efitem); return _magic_1136(efitem.unwrap());
     case 1135: return _magic_1135(target);
     case 654: return _magic_654(subject, target);
     case 626: return _magic_626(target);
@@ -4571,9 +4572,9 @@ bool _proc_magic(
     case 1130: return _magic_1130(target);
     case 300: return _magic_300(subject, target);
     case 301: return _magic_301(subject, target);
-    case 183: return _magic_183(subject, efitem.clone());
-    case 184: assert(efitem); return _magic_184(subject, *efitem);
-    case 185: assert(efitem); return _magic_185(subject, *efitem);
+    case 183: return _magic_183(subject, efitem);
+    case 184: assert(efitem); return _magic_184(subject, efitem.unwrap());
+    case 185: assert(efitem); return _magic_185(subject, efitem.unwrap());
     case 406:
     case 407: return _magic_406_407(subject, target);
     case 1120: return _magic_1120(target);
@@ -4624,7 +4625,7 @@ bool _proc_magic(
     case 634:
     case 456: return _magic_436_437_455_634_456(subject);
     case 1145: return _magic_1145(subject);
-    case 49: assert(efitem); return _magic_49(subject, *efitem);
+    case 49: assert(efitem); return _magic_49(subject, efitem.unwrap());
     case 21:
     case 1127: return _magic_21_1127(subject);
     case 1128: return _magic_1128(subject);

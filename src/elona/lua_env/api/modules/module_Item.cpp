@@ -45,7 +45,7 @@ int Item_count()
 bool Item_has_enchantment(const LuaItemHandle item, int enchantment_id)
 {
     auto& item_ref = lua::ref<Item>(item);
-    return !!enchantment_find(item_ref, enchantment_id);
+    return !!enchantment_find(ItemRef{&item_ref}, enchantment_id);
 }
 
 
@@ -63,7 +63,7 @@ bool Item_has_enchantment(const LuaItemHandle item, int enchantment_id)
 std::string Item_itemname(LuaItemHandle item, int number, bool use_article)
 {
     auto& item_ref = lua::ref<Item>(item);
-    return elona::itemname(item_ref, number, use_article);
+    return elona::itemname(ItemRef{&item_ref}, number, use_article);
 }
 
 
@@ -154,8 +154,7 @@ sol::optional<LuaItemHandle> Item_create_xy(int x, int y, sol::table args)
 
     if (const auto item = itemcreate(slot, id, x, y, number))
     {
-        LuaItemHandle handle = lua::lua->get_handle_manager().get_handle(*item);
-        return handle;
+        return lua::handle(item.unwrap());
     }
     else
     {
@@ -275,11 +274,12 @@ sol::optional<LuaItemHandle> Item_stack(
 
     auto& item_ref = lua::ref<Item>(handle);
 
-    auto& item =
-        item_stack(inventory_id, item_ref, show_message.value_or(false))
+    const auto item =
+        item_stack(
+            inventory_id, ItemRef{&item_ref}, show_message.value_or(false))
             .stacked_item;
 
-    if (item.number() == 0)
+    if (item->number() == 0)
     {
         return sol::nullopt;
     }
@@ -331,7 +331,7 @@ sol::optional<LuaItemHandle> Item_find(
 
     if (const auto item = item_find(data.legacy_id, 3, location_value))
     {
-        return lua::handle(*item);
+        return lua::handle(item.unwrap());
     }
     else
     {
@@ -385,7 +385,7 @@ sol::table Item_player_inventory(sol::this_state state)
     sol::table ret = L.create_table();
     for (const auto& item : g_inv.pc())
     {
-        ret.add(lua::handle(*item));
+        ret.add(lua::handle(item));
     }
     return ret;
 }
@@ -407,7 +407,7 @@ sol::table Item_map_inventory(sol::this_state state)
     sol::table ret = L.create_table();
     for (const auto& item : g_inv.ground())
     {
-        ret.add(lua::handle(*item));
+        ret.add(lua::handle(item));
     }
     return ret;
 }

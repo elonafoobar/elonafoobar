@@ -839,9 +839,9 @@ CalcAttackProtectionResult calc_attack_protection(const Character& chara)
 
 
 
-int calcmedalvalue(const Item& item)
+int calcmedalvalue(const ItemRef& item)
 {
-    switch (item.id)
+    switch (item->id)
     {
     case ItemId::diablo: return 65;
     case ItemId::artifact_seed: return 15;
@@ -868,20 +868,20 @@ int calcmedalvalue(const Item& item)
 
 
 
-int calcitemvalue(const Item& item, int calc_mode)
+int calcitemvalue(const ItemRef& item, int calc_mode)
 {
-    const auto category = the_item_db[itemid2int(item.id)]->category;
+    const auto category = the_item_db[itemid2int(item->id)]->category;
     int ret = 0;
-    if (item.identify_state == IdentifyState::unidentified)
+    if (item->identify_state == IdentifyState::unidentified)
     {
         if (calc_mode == 2)
         {
-            ret = item.value * 4 / 10;
+            ret = item->value * 4 / 10;
         }
         else
         {
             ret = cdata.player().level / 5 *
-                    ((game_data.random_seed + item.index() * 31) %
+                    ((game_data.random_seed + item->index() * 31) %
                          cdata.player().level +
                      4) +
                 10;
@@ -889,21 +889,21 @@ int calcitemvalue(const Item& item, int calc_mode)
     }
     else if (!is_equipment(category))
     {
-        ret = item.value;
+        ret = item->value;
     }
     else
     {
-        switch (item.identify_state)
+        switch (item->identify_state)
         {
         case IdentifyState::unidentified: break;
-        case IdentifyState::partly: ret = item.value * 2 / 10; break;
-        case IdentifyState::almost: ret = item.value * 5 / 10; break;
-        case IdentifyState::completely: ret = item.value; break;
+        case IdentifyState::partly: ret = item->value * 2 / 10; break;
+        case IdentifyState::almost: ret = item->value * 5 / 10; break;
+        case IdentifyState::completely: ret = item->value; break;
         }
     }
-    if (item.identify_state == IdentifyState::completely)
+    if (item->identify_state == IdentifyState::completely)
     {
-        switch (item.curse_state)
+        switch (item->curse_state)
         {
         case CurseState::doomed: ret = ret / 5; break;
         case CurseState::cursed: ret = ret / 2; break;
@@ -913,12 +913,12 @@ int calcitemvalue(const Item& item, int calc_mode)
     }
     if (category == ItemCategory::food)
     {
-        if (item.param2 > 0)
+        if (item->param2 > 0)
         {
-            ret = ret * item.param2 * item.param2 / 10;
+            ret = ret * item->param2 * item->param2 / 10;
         }
     }
-    if (item.id == ItemId::cargo_travelers_food)
+    if (item->id == ItemId::cargo_travelers_food)
     {
         if (calc_mode == 0)
         {
@@ -929,13 +929,13 @@ int calcitemvalue(const Item& item, int calc_mode)
                 800);
         }
     }
-    if (item.weight < 0)
+    if (item->weight < 0)
     {
         if (mode == 6)
         {
             if (category == ItemCategory::cargo)
             {
-                ret = ret * trate(item.param1) / 100;
+                ret = ret * trate(item->param1) / 100;
                 if (calc_mode == 1)
                 {
                     ret = ret * 65 / 100;
@@ -944,25 +944,25 @@ int calcitemvalue(const Item& item, int calc_mode)
             }
         }
     }
-    if (item.has_charge())
+    if (item->has_charge())
     {
-        item_db_get_charge_level(item, itemid2int(item.id));
-        if (item.count < 0)
+        item_db_get_charge_level(item, itemid2int(item->id));
+        if (item->count < 0)
         {
             ret = ret / 10;
         }
         else if (category == ItemCategory::spellbook)
         {
-            ret = ret / 5 + ret * item.count / (ichargelevel * 2 + 1);
+            ret = ret / 5 + ret * item->count / (ichargelevel * 2 + 1);
         }
         else
         {
-            ret = ret / 2 + ret * item.count / (ichargelevel * 3 + 1);
+            ret = ret / 2 + ret * item->count / (ichargelevel * 3 + 1);
         }
     }
     if (category == ItemCategory::chest)
     {
-        if (item.param1 == 0)
+        if (item->param1 == 0)
         {
             ret = ret / 100 + 1;
         }
@@ -995,7 +995,7 @@ int calcitemvalue(const Item& item, int calc_mode)
         {
             ret /= 20;
         }
-        if (item.is_stolen())
+        if (item->is_stolen())
         {
             if (game_data.guild.belongs_to_thieves_guild == 0)
             {
@@ -1022,7 +1022,7 @@ int calcitemvalue(const Item& item, int calc_mode)
         {
             ret = 15000;
         }
-        if (item.is_stolen())
+        if (item->is_stolen())
         {
             ret = 1;
         }

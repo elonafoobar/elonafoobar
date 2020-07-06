@@ -3,6 +3,7 @@
 #include <string>
 
 #include "enums.hpp"
+#include "eobject/eobject.hpp"
 #include "optional.hpp"
 
 
@@ -16,7 +17,7 @@ struct Item;
 
 
 bool enchantment_add(
-    Item& item,
+    const ItemRef& item,
     int type,
     int power,
     int flip_percentage = 0,
@@ -33,7 +34,7 @@ bool enchantment_add(
  * @param id The enchantment ID
  * @param power The enchantment's power will be reduced by @a power.
  */
-void enchantment_remove(Item& item, int id, int power);
+void enchantment_remove(const ItemRef& item, int id, int power);
 
 
 
@@ -56,7 +57,7 @@ optional<int> enchantment_find(const Character& chara, int id);
  * @param id The enchantment ID
  * @return The power of the enchantment if found; otherwise, returns none.
  */
-optional<int> enchantment_find(const Item& item, int id);
+optional<int> enchantment_find(const ItemRef& item, int id);
 
 int enchantment_generate(int rank);
 int enchantment_gen_level(int base_level);
@@ -72,7 +73,7 @@ int enchantment_gen_p(int multiplier = 100);
 
 std::string enchantment_print_level(int level);
 void get_enchantment_description(int, int, ItemCategory, bool = false);
-void add_enchantments(Item& item);
+void add_enchantments(const ItemRef& item);
 
 void initialize_ego_data();
 

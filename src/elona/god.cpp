@@ -712,7 +712,7 @@ void god_fail_to_take_over_penalty()
 
 
 
-bool god_is_offerable(Item& offering, Character& believer)
+bool god_is_offerable(const ItemRef& offering, Character& believer)
 {
     return lua::call_with_result(
         "core.Impl.God.is_offerable",

@@ -29,26 +29,14 @@ struct IndexItemRef
     }
 
 
-    static IndexItemRef from_ref(Item& item) noexcept;
-    static IndexItemRef from_opt(const OptionalItemRef& item) noexcept;
+    static IndexItemRef from_ref(ItemRef item) noexcept;
+    static IndexItemRef from_opt(OptionalItemRef item) noexcept;
 
 
 
     explicit operator bool() const noexcept
     {
         return _objid != 0;
-    }
-
-
-    Item& operator*() const
-    {
-        return as_ref();
-    }
-
-
-    Item* operator->() const
-    {
-        return as_ptr();
     }
 
 
@@ -65,29 +53,7 @@ struct IndexItemRef
 
 
 
-    bool operator==(const Item& other) const noexcept;
-
-    bool operator!=(const Item& other) const noexcept
-    {
-        return !(*this == other);
-    }
-
-
-
-    bool operator==(const OptionalItemRef& other) const noexcept
-    {
-        return *this == IndexItemRef::from_opt(other);
-    }
-
-    bool operator!=(const OptionalItemRef& other) const noexcept
-    {
-        return !(*this == other);
-    }
-
-
-
-    Item& as_ref() const;
-    Item* as_ptr() const;
+    ItemRef as_ref() const;
     OptionalItemRef as_opt() const;
 
 
@@ -110,14 +76,5 @@ private:
     {
     }
 };
-
-
-
-// clang-format off
-inline bool operator==(const Item&           lhs, IndexItemRef rhs) noexcept { return rhs == lhs; }
-inline bool operator!=(const Item&           lhs, IndexItemRef rhs) noexcept { return rhs != lhs; }
-inline bool operator==(const OptionalItemRef lhs, IndexItemRef rhs) noexcept { return rhs == lhs; }
-inline bool operator!=(const OptionalItemRef lhs, IndexItemRef rhs) noexcept { return rhs != lhs; }
-// clang-format on
 
 } // namespace elona

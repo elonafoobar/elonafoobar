@@ -44,14 +44,14 @@ void HandleManager::create_chara_handle(Character& chara)
 
 
 
-void HandleManager::create_item_handle(Item& item)
+void HandleManager::create_item_handle(const ItemRef& item)
 {
-    if (item.number() == 0)
+    if (item->number() == 0)
     {
         return;
     }
 
-    create_handle(item);
+    create_handle(*item.get_raw_ptr());
 }
 
 
@@ -63,9 +63,9 @@ void HandleManager::remove_chara_handle(Character& chara)
 
 
 
-void HandleManager::remove_item_handle(Item& item)
+void HandleManager::remove_item_handle(const ItemRef& item)
 {
-    remove_handle(item);
+    remove_handle(*item.get_raw_ptr());
 }
 
 
@@ -85,12 +85,12 @@ void HandleManager::create_chara_handle_run_callbacks(Character& chara)
 
 
 
-void HandleManager::create_item_handle_run_callbacks(Item& item)
+void HandleManager::create_item_handle_run_callbacks(const ItemRef& item)
 {
-    assert(item.number() != 0);
+    assert(item->number() != 0);
     create_item_handle(item);
 
-    auto handle = get_handle(item);
+    auto handle = get_handle(*item.get_raw_ptr());
     (void)handle;
     assert(handle != sol::lua_nil);
     lua().get_event_manager().trigger(
@@ -116,9 +116,9 @@ void HandleManager::remove_chara_handle_run_callbacks(Character& chara)
 
 
 
-void HandleManager::remove_item_handle_run_callbacks(Item& item)
+void HandleManager::remove_item_handle_run_callbacks(const ItemRef& item)
 {
-    auto handle = get_handle(item);
+    auto handle = get_handle(*item.get_raw_ptr());
     if (handle == sol::lua_nil)
     {
         return;
@@ -149,7 +149,7 @@ void HandleManager::clear_map_local_handles()
     {
         for (auto&& item : inv)
         {
-            remove_item_handle(*item);
+            remove_item_handle(item);
         }
     }
 }

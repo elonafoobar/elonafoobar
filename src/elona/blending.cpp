@@ -165,19 +165,19 @@ int calc_success_rate(
 
 
 bool check_one_blending_material(
-    Item& item,
+    const ItemRef& item,
     int recipe_id,
     int step,
     bool check_pos)
 {
     if ((the_blending_recipe_db.ensure(recipe_id).type == 0 || step != 0) &&
-        item.own_state > 0)
+        item->own_state > 0)
     {
         return false;
     }
     if (check_pos)
     {
-        if (dist(item.pos(), cdata.player().position) > 4)
+        if (dist(item->pos(), cdata.player().position) > 4)
         {
             return false;
         }
@@ -201,7 +201,7 @@ bool find_blending_materials(int inventory, int recipe_id, int step)
     const auto check_pos = inventory == -1;
     for (const auto& item : inventory == -1 ? g_inv.ground() : g_inv.pc())
     {
-        if (check_one_blending_material(*item, recipe_id, step, check_pos))
+        if (check_one_blending_material(item, recipe_id, step, check_pos))
         {
             return true; // found
         }
@@ -221,7 +221,7 @@ int count_blending_materials(int inventory, int recipe_id, int step)
     int ret = 0;
     for (const auto& item : inventory == -1 ? g_inv.ground() : g_inv.pc())
     {
-        if (check_one_blending_material(*item, recipe_id, step, check_pos))
+        if (check_one_blending_material(item, recipe_id, step, check_pos))
         {
             ret += item->number();
         }
@@ -247,7 +247,7 @@ void collect_blending_materials(
         {
             break;
         }
-        if (check_one_blending_material(*item, recipe_id, step, check_pos))
+        if (check_one_blending_material(item, recipe_id, step, check_pos))
         {
             if (step > 0)
             {
@@ -430,7 +430,7 @@ void window_recipe(
         else
         {
             s_ = i18n::s.get(
-                "core.blending.window.selected", *g_inv[rpref(10 + cnt * 2)]);
+                "core.blending.window.selected", g_inv[rpref(10 + cnt * 2)]);
             s_ = strutil::take_by_width(s_, 44);
         }
         mes(dx_, dy_, ""s + i_ + u8"."s + s_);
@@ -491,7 +491,7 @@ void window_recipe(
         return;
 
     font(12 - en * 2, snail::Font::Style::bold);
-    mes(dx_ - 10, dy_, itemname(*item));
+    mes(dx_ - 10, dy_, itemname(item.unwrap()));
     dy_ += 20;
     font(13 - en * 2);
     if (item->identify_state <= IdentifyState::partly)
@@ -501,7 +501,7 @@ void window_recipe(
         return;
     }
 
-    const auto inheritance = item_get_inheritance(*item);
+    const auto inheritance = item_get_inheritance(item.unwrap());
     if (inheritance.empty())
     {
         mes(dx_, dy_, i18n::s.get("core.blending.window.no_inherited_effects"));
@@ -775,16 +775,16 @@ void blendig_menu_select_materials()
                 break;
             }
             p = list(0, p);
-            s = itemname(*g_inv[p]);
+            s = itemname(g_inv[p]);
             s = strutil::take_by_width(s, 28);
-            if (inv_getowner(*g_inv[p]) == -1)
+            if (inv_getowner(g_inv[p]) == -1)
             {
                 s += i18n::s.get("core.blending.steps.ground");
             }
             display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
 
             draw_item_with_portrait_scale_height(
-                *g_inv[p], wx + 37, wy + 69 + cnt * 19);
+                g_inv[p], wx + 37, wy + 69 + cnt * 19);
 
             if (g_inv[p]->body_part != 0)
             {
@@ -796,7 +796,7 @@ void blendig_menu_select_materials()
                 wx + 84,
                 wy + 60 + cnt * 19 - 1,
                 0,
-                cs_list_get_item_color(*g_inv[p]));
+                cs_list_get_item_color(g_inv[p]));
         }
         p = list(0, pagesize * page + cs);
         if (listmax == 0)
@@ -852,7 +852,7 @@ void blendig_menu_select_materials()
             rpref(10 + step * 2 + 0) = item_index;
             rpref(10 + step * 2 + 1) = itemid2int(g_inv[item_index]->id);
             snd("core.drink1");
-            txt(i18n::s.get("core.blending.steps.you_add", *g_inv[item_index]));
+            txt(i18n::s.get("core.blending.steps.you_add", g_inv[item_index]));
             ++step;
             p = calc_success_rate(rpid, step, step - 1);
             return;
@@ -945,11 +945,11 @@ void spend_materials(bool success)
             if (rnd(3) == 0)
             {
                 txt(i18n::s.get(
-                    "core.blending.you_lose", *g_inv[rpref(10 + cnt * 2)]));
+                    "core.blending.you_lose", g_inv[rpref(10 + cnt * 2)]));
                 g_inv[rpref(10 + cnt * 2)]->modify_number(-1);
             }
         }
-        if (chara_unequip(*g_inv[rpref(10 + cnt * 2)]))
+        if (chara_unequip(g_inv[rpref(10 + cnt * 2)]))
         {
             chara_refresh(cdata.player());
         }
@@ -969,7 +969,7 @@ void blending_proc_on_success_events()
     const auto item2_index = rpref(12);
     if (the_blending_recipe_db.ensure(rpid).type == 2)
     {
-        item_separate(*g_inv[item1_index]);
+        item_separate(g_inv[item1_index]);
     }
     else if (g_inv[item1_index]->number() <= 1)
     {
@@ -977,7 +977,7 @@ void blending_proc_on_success_events()
     }
     else
     {
-        int stat = item_separate(*g_inv[item1_index]).index();
+        int stat = item_separate(g_inv[item1_index])->index();
         if (rpref(10) == stat)
         {
             rpref(10) = -2;
@@ -989,21 +989,21 @@ void blending_proc_on_success_events()
     }
 
     // See each `on_success` for parameter usage.
-    auto& item1 = *g_inv[item1_index];
-    auto& item2 = *g_inv[item2_index];
+    const auto item1 = g_inv[item1_index];
+    const auto item2 = g_inv[item2_index];
     auto materials =
         lua::create_table(1, lua::handle(item1), 2, lua::handle(item2));
     auto on_success_args = lua::create_table("materials", materials);
     the_blending_recipe_db.ensure(rpid).on_success.call(on_success_args);
 
     item_stack(0, item1);
-    if (item1.body_part != 0)
+    if (item1->body_part != 0)
     {
         create_pcpic(cdata.player());
     }
     if (inv_getowner(item1) == -1)
     {
-        cell_refresh(item1.pos().x, item1.pos().y);
+        cell_refresh(item1->pos().x, item1->pos().y);
     }
     chara_refresh(cdata.player());
 }

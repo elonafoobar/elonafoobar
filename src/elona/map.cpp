@@ -2093,9 +2093,9 @@ void map_global_proc_travel_events(Character& chara)
             {
                 if (is_in_fov(chara))
                 {
-                    txt(i18n::s.get("core.misc.finished_eating", chara, *item));
+                    txt(i18n::s.get("core.misc.finished_eating", chara, item));
                 }
-                activity_eating_finish(chara, *item);
+                activity_eating_finish(chara, item);
                 break;
             }
         }

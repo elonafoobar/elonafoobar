@@ -42,7 +42,7 @@ void LuaItem_change_material(Item& self, const std::string& material_id)
 {
     const auto& data =
         the_item_material_db.ensure(data::InstanceId{material_id});
-    change_item_material(self, data.legacy_id);
+    change_item_material(ItemRef{&self}, data.legacy_id);
 }
 
 
@@ -176,8 +176,9 @@ void bind(sol::state& lua)
      *
      * [R] The name of the item with article and number.
      */
-    LuaItem.set(
-        "name", sol::property([](Item& i) { return elona::itemname(i); }));
+    LuaItem.set("name", sol::property([](Item& i) {
+                    return elona::itemname(ItemRef{&i});
+                }));
 
     /**
      * @luadoc basename field string

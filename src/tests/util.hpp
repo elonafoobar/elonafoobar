@@ -15,13 +15,13 @@ namespace testing
 
 void set_english();
 void set_japanese();
-void normalize_item(Item&);
+void normalize_item(const ItemRef&);
 std::string test_itemname(int, int, bool = false);
 Character& create_chara(int, int = 0, int = 0);
-Item& create_item(int, int = 1);
+ItemRef create_item(int, int = 1);
 
 void invalidate_chara(Character&);
-void invalidate_item(Item&);
+void invalidate_item(const ItemRef&);
 
 /**
  * Registers a single callback in a mod.

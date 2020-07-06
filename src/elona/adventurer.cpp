@@ -321,23 +321,23 @@ void adventurer_discover_equipment(Character& adv)
     f = 0;
     for (int _i = 0; _i < 10; ++_i)
     {
-        auto&& item = get_random_inv(adv.index);
-        if (item.number() == 0)
+        const auto item = get_random_inv(adv.index);
+        if (item->number() == 0)
         {
             f = 1;
             break;
         }
-        if (item.body_part != 0)
+        if (item->body_part != 0)
         {
             continue;
         }
-        if (item.number() != 0)
+        if (item->number() != 0)
         {
-            if (adv.ai_item == item)
+            if (adv.ai_item.as_opt() == item)
             {
                 adv.ai_item = nullptr;
             }
-            item.remove();
+            item->remove();
             f = 1;
             break;
         }
@@ -362,10 +362,10 @@ void adventurer_discover_equipment(Character& adv)
         {
             if (is_equipment(the_item_db[itemid2int(item->id)]->category))
             {
-                addnews(1, adv.index, 0, itemname(*item));
+                addnews(1, adv.index, 0, itemname(item.unwrap()));
             }
         }
-        wear_most_valuable_equipment(adv, *item);
+        wear_most_valuable_equipment(adv, item.unwrap());
     }
 }
 

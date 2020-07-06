@@ -50,6 +50,16 @@ sol::table handle(T& it)
 }
 
 /**
+ * Obtains a Lua handle to a compatible C++ object.
+ */
+sol::table handle(const ItemRef& it);
+
+inline sol::table handle(ItemRef& it)
+{
+    return handle(std::cref(it));
+}
+
+/**
  * Obtains a reference to the C++ data pointed to by a handle.
  */
 template <typename T>

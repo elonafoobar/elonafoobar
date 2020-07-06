@@ -348,7 +348,7 @@ bool do_physical_attack_internal(
                 if (attackskill == 111)
                 {
                     // Special case for thrown weapons.
-                    weapon_name = itemname(*weapon, 1, false);
+                    weapon_name = itemname(weapon.unwrap(), 1, false);
                 }
                 else
                 {
@@ -462,7 +462,7 @@ bool do_physical_attack_internal(
         }
         if (attackskill != 106)
         {
-            proc_weapon_enchantments(attacker, target, *weapon);
+            proc_weapon_enchantments(attacker, target, weapon.unwrap());
         }
         if (target.cut_counterattack > 0)
         {
@@ -523,7 +523,7 @@ bool do_physical_attack_internal(
                         {
                             if (rnd(5) == 0)
                             {
-                                item_acid(attacker, weapon.clone());
+                                item_acid(attacker, weapon);
                             }
                         }
                     }
@@ -623,7 +623,8 @@ bool do_physical_attack_internal(
                     {
                         snd("core.ding3");
                         txt(i18n::s.get(
-                                "core.misc.living_weapon_taste_blood", *weapon),
+                                "core.misc.living_weapon_taste_blood",
+                                weapon.unwrap()),
                             Message::color{ColorIndex::green});
                     }
                 }
@@ -862,14 +863,13 @@ void try_to_melee_attack(Character& attacker, Character& target)
         {
             continue;
         }
-        auto& weapon = *attacker.equipment_slots[cnt].equipment;
-        if (weapon.dice_x > 0)
+        const auto weapon = attacker.equipment_slots[cnt].equipment.as_ref();
+        if (weapon->dice_x > 0)
         {
-            attackskill = weapon.skill;
+            attackskill = weapon->skill;
             ++attacknum;
             extraattack = 0;
-            do_physical_attack(
-                attacker, target, OptionalItemRef{&weapon}, nullptr);
+            do_physical_attack(attacker, target, weapon, nullptr);
         }
     }
     if (attackskill == 106)
@@ -884,25 +884,25 @@ void try_to_melee_attack(Character& attacker, Character& target)
 void proc_weapon_enchantments(
     Character& attacker,
     Character& target,
-    const Item& weapon)
+    const ItemRef& weapon)
 {
     for (int cnt = 0; cnt < 15; ++cnt)
     {
-        if (weapon.enchantments[cnt].id == 0)
+        if (weapon->enchantments[cnt].id == 0)
         {
             break;
         }
-        enc = weapon.enchantments[cnt].id;
+        enc = weapon->enchantments[cnt].id;
         if (enc == 36)
         {
-            p = rnd_capped(weapon.enchantments[cnt].power / 50 + 1) + 1;
+            p = rnd_capped(weapon->enchantments[cnt].power / 50 + 1) + 1;
             heal_sp(attacker, p);
             damage_sp(target, p / 2);
             continue;
         }
         if (enc == 38)
         {
-            p = rnd_capped(weapon.enchantments[cnt].power / 25 + 1) + 1;
+            p = rnd_capped(weapon->enchantments[cnt].power / 25 + 1) + 1;
             heal_mp(attacker, p / 5);
             if (target.state() != Character::State::alive)
             {
@@ -928,7 +928,7 @@ void proc_weapon_enchantments(
                     txt(i18n::s.get("core.action.time_stop.begins", attacker),
                         Message::color{ColorIndex::cyan});
                     game_data.left_turns_of_timestop =
-                        weapon.enchantments[cnt].power / 100 + 1 + 1;
+                        weapon->enchantments[cnt].power / 100 + 1 + 1;
                 }
                 continue;
             }
@@ -982,12 +982,13 @@ void proc_weapon_enchantments(
                 damage_hp(
                     target,
                     rnd_capped(
-                        orgdmg * (100 + weapon.enchantments[cnt].power) / 1000 +
+                        orgdmg * (100 + weapon->enchantments[cnt].power) /
+                            1000 +
                         1) +
                         5,
                     attacker.index,
                     ele,
-                    weapon.enchantments[cnt].power / 2 + 100);
+                    weapon->enchantments[cnt].power / 2 + 100);
                 continue;
             }
             if (i == 8)
@@ -1013,7 +1014,7 @@ void proc_weapon_enchantments(
                 if (rnd(100) < p)
                 {
                     efid = enc;
-                    efp = weapon.enchantments[cnt].power +
+                    efp = weapon->enchantments[cnt].power +
                         sdata(attackskill, attacker.index) * 10;
                     magic(attacker, cdata[invoke_target]);
                 }

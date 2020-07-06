@@ -4,8 +4,9 @@
 
 #include "../util/noncopyable.hpp"
 #include "data/id.hpp"
+#include "eobject/eobject.hpp"
 #include "filesystem.hpp"
-#include "item.hpp"
+#include "optional.hpp"
 
 
 
@@ -43,7 +44,7 @@ public:
 
     void load(const std::string& player_id);
 
-    Operation get_operation(const Item&);
+    Operation get_operation(const ItemRef&);
 
 
 private:
@@ -58,7 +59,7 @@ private:
         std::string text;
         Operation op;
 
-        bool matches(const Item&) const;
+        bool matches(const ItemRef&) const;
     };
 
 

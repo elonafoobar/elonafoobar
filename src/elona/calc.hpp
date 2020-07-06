@@ -72,8 +72,8 @@ struct CalcAttackProtectionResult
 };
 CalcAttackProtectionResult calc_attack_protection(const Character& chara);
 
-int calcmedalvalue(const Item& item);
-int calcitemvalue(const Item& item, int calc_mode);
+int calcmedalvalue(const ItemRef& item);
+int calcitemvalue(const ItemRef& item, int calc_mode);
 int calcinvestvalue(const Character& shopkeeper);
 int calcguiltvalue();
 int calc_adventurer_hire_cost(const Character& adv);

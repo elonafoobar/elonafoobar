@@ -416,7 +416,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
                 tlocy = cdata[game_data.fire_giant].position.y;
                 txt(i18n::s.get("core.ai.fire_giant"),
                     Message::color{ColorIndex::cyan});
-                return do_throw_command(chara, *snowball);
+                return do_throw_command(chara, snowball.unwrap());
             }
         }
     }
@@ -424,25 +424,21 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
     // Throws a snowball to a snowman.
     if (rnd(12) == 0)
     {
-        OptionalItemRef target_snowman;
-        for (const auto& snowman_ref_wrapper : itemlist(-1, 541))
+        for (const auto& item : g_inv.ground())
         {
-            auto&& snowman = snowman_ref_wrapper.get();
-            if (snowman.pos().x >= scx && snowman.pos().x < scx + inf_screenw &&
-                snowman.pos().y >= scy && snowman.pos().y < scy + inf_screenh)
+            if (item->id == ItemId::snow_man && item->pos().x >= scx &&
+                item->pos().x < scx + inf_screenw && item->pos().y >= scy &&
+                item->pos().y < scy + inf_screenh)
             {
-                target_snowman = OptionalItemRef{&snowman};
+                flt();
+                if (const auto snowball =
+                        itemcreate_chara_inv(chara.index, 587, 0))
+                {
+                    tlocx = item->pos().x;
+                    tlocy = item->pos().y;
+                    return do_throw_command(chara, snowball.unwrap());
+                }
                 break;
-            }
-        }
-        if (target_snowman)
-        {
-            flt();
-            if (const auto snowball = itemcreate_chara_inv(chara.index, 587, 0))
-            {
-                tlocx = target_snowman->pos().x;
-                tlocy = target_snowman->pos().y;
-                return do_throw_command(chara, *snowball);
             }
         }
     }
@@ -457,7 +453,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
             if (const auto item = itemcreate_extra_inv(541, chara.position, 0))
             {
                 snd("core.snow");
-                txt(i18n::s.get("core.ai.makes_snowman", chara, *item));
+                txt(i18n::s.get("core.ai.makes_snowman", chara, item.unwrap()));
                 return TurnResult::turn_end;
             }
         }
@@ -473,7 +469,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
             tlocy = cdata.player().position.y;
             txt(i18n::s.get("core.ai.snowball"),
                 Message::color{ColorIndex::cyan});
-            return do_throw_command(chara, *snowball);
+            return do_throw_command(chara, snowball.unwrap());
         }
     }
 
@@ -519,7 +515,7 @@ void _proc_hungry(Character& chara)
         {
             flttypeminor = 52002;
         }
-        if (const auto item = itemcreate_chara_inv(chara.index, 0, 0))
+        if (auto item = itemcreate_chara_inv(chara.index, 0, 0))
         {
             if (the_item_db[itemid2int(item->id)]->is_drinkable)
             {
@@ -532,7 +528,7 @@ void _proc_hungry(Character& chara)
                 }
                 else
                 {
-                    chara.ai_item = IndexItemRef::from_ref(*item);
+                    chara.ai_item = IndexItemRef::from_ref(item.unwrap());
                     _change_nutrition(chara);
                 }
             }
@@ -574,7 +570,7 @@ TurnResult ai_proc_basic(Character& chara, int& enemy_index)
             if (const auto throw_item =
                     _try_generate_special_throwing_item(chara, act))
             {
-                return do_throw_command(chara, *throw_item);
+                return do_throw_command(chara, throw_item.unwrap());
             }
             return TurnResult::turn_end;
         }
@@ -937,9 +933,9 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
                         flttypeminor = 52002;
                     }
                 }
-                if (const auto item = itemcreate_chara_inv(chara.index, 0, 0))
+                if (auto item = itemcreate_chara_inv(chara.index, 0, 0))
                 {
-                    chara.ai_item = IndexItemRef::from_ref(*item);
+                    chara.ai_item = IndexItemRef::from_ref(item.unwrap());
                 }
             }
         }
@@ -997,7 +993,8 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
                                 txt(i18n::s.get("core.ai.snail"),
                                     Message::color{ColorIndex::cyan});
                             }
-                            return do_throw_command(chara, *salt_solution);
+                            return do_throw_command(
+                                chara, salt_solution.unwrap());
                         }
                     }
                 }

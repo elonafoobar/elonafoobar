@@ -45,9 +45,9 @@ snail::Color _get_element_color(int element)
 
 
 
-void draw_additional_item_info_resistance(const Item& equip, int x, int y)
+void draw_additional_item_info_resistance(const ItemRef& equip, int x, int y)
 {
-    for (const auto& enc : equip.enchantments)
+    for (const auto& enc : equip->enchantments)
     {
         if (enc.id == 0)
             break;
@@ -83,7 +83,7 @@ void draw_additional_item_info_resistance(const Item& equip, int x, int y)
 
 
 void draw_additional_item_info_maintenance_and_ailment(
-    const Item& equip,
+    const ItemRef& equip,
     int x,
     int y)
 {
@@ -150,9 +150,9 @@ void draw_additional_item_info_label(int x, int y)
 
 
 
-void draw_additional_item_info(const Item& equip, int x, int y)
+void draw_additional_item_info(const ItemRef& equip, int x, int y)
 {
-    if (equip.identify_state != IdentifyState::completely)
+    if (equip->identify_state != IdentifyState::completely)
         return;
 
     switch (g_show_additional_item_info)
@@ -247,13 +247,13 @@ void wear_most_valuable_equipment_for_all_body_parts(Character& chara)
         {
             continue;
         }
-        wear_most_valuable_equipment(chara, *item);
+        wear_most_valuable_equipment(chara, item);
     }
 }
 
 
 
-void wear_most_valuable_equipment(Character& chara, Item& equipment)
+void wear_most_valuable_equipment(Character& chara, ItemRef equipment)
 {
     const auto equipment_slot_type = iequiploc(equipment);
     if (equipment_slot_type == 0)
@@ -277,11 +277,11 @@ void wear_most_valuable_equipment(Character& chara, Item& equipment)
         auto& equipment_slot = chara.equipment_slots[equipment_slot_index];
         if (!equipment_slot.equipment)
         {
-            equip_item(chara, equipment_slot_index, equipment);
+            equip_item(chara, equipment_slot_index, std::move(equipment));
             break;
         }
         bool equip = false;
-        if (equipment.value >= equipment_slot.equipment->value)
+        if (equipment->value >= equipment_slot.equipment.as_ref()->value)
         {
             equip = true;
         }
@@ -292,9 +292,10 @@ void wear_most_valuable_equipment(Character& chara, Item& equipment)
                 equip = false;
             }
             else if (
-                equipment_slot.equipment->value >=
+                equipment_slot.equipment.as_ref()->value >=
                 chara.equipment_slots[equipment_slot_indice[i + 1]]
-                    .equipment->value)
+                    .equipment.as_ref()
+                    ->value)
             {
                 equip = false;
             }
@@ -302,7 +303,7 @@ void wear_most_valuable_equipment(Character& chara, Item& equipment)
         if (equip)
         {
             unequip_item(chara, equipment_slot_index);
-            equip_item(chara, equipment_slot_index, equipment);
+            equip_item(chara, equipment_slot_index, std::move(equipment));
             break;
         }
     }
@@ -320,23 +321,23 @@ void supply_new_equipment(Character& chara)
         f = 0;
         for (int _j = 0; _j < 4; ++_j)
         {
-            auto&& item = get_random_inv(chara.index);
-            if (item.number() == 0)
+            const auto item = get_random_inv(chara.index);
+            if (item->number() == 0)
             {
                 f = 1;
                 break;
             }
-            if (item.body_part != 0)
+            if (item->body_part != 0)
             {
                 continue;
             }
-            if (item.is_quest_target())
+            if (item->is_quest_target())
             {
                 continue;
             }
-            if (item.number() != 0)
+            if (item->number() != 0)
             {
-                item.remove();
+                item->remove();
                 f = 1;
                 break;
             }
@@ -368,7 +369,8 @@ void supply_new_equipment(Character& chara)
                     if (haveweapon == 0)
                     {
                         if (the_item_db[itemid2int(
-                                            equipment_slot.equipment->id)]
+                                            equipment_slot.equipment.as_ref()
+                                                ->id)]
                                 ->category == ItemCategory::melee_weapon)
                         {
                             haveweapon = 1;
@@ -424,11 +426,11 @@ void supply_new_equipment(Character& chara)
                 {
                     if (chara.role == Role::adventurer)
                     {
-                        addnews(1, chara.index, 0, itemname(*item));
+                        addnews(1, chara.index, 0, itemname(item.unwrap()));
                     }
                 }
             }
-            wear_most_valuable_equipment(chara, *item);
+            wear_most_valuable_equipment(chara, item.unwrap());
             if (chara.role != Role::adventurer)
             {
                 if (rnd(3))
@@ -848,7 +850,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqamulet1 = 0;
                 continue;
@@ -872,7 +874,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqamulet2 = 0;
                 continue;
@@ -899,7 +901,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqring1 = 0;
                 continue;
@@ -923,7 +925,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqring2 = 0;
                 continue;
@@ -950,7 +952,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqcloack = 0;
                 continue;
@@ -978,7 +980,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqgirdle = 0;
                 continue;
@@ -1006,7 +1008,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqhelm = 0;
                 continue;
@@ -1034,7 +1036,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqarmor = 0;
                 continue;
@@ -1062,7 +1064,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqglove = 0;
                 continue;
@@ -1090,7 +1092,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqboots = 0;
                 continue;
@@ -1122,7 +1124,7 @@ void supply_initial_equipments(Character& chara)
                 if (equipment)
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqweapon1 = 0;
                 continue;
@@ -1173,7 +1175,7 @@ void supply_initial_equipments(Character& chara)
                 if (equipment)
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqweapon1 = 0;
                 continue;
@@ -1213,7 +1215,7 @@ void supply_initial_equipments(Character& chara)
                 if (equipment)
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqweapon2 = 0;
                 continue;
@@ -1237,7 +1239,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqshield = 0;
                 continue;
@@ -1265,7 +1267,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqrange = 0;
                 continue;
@@ -1293,7 +1295,7 @@ void supply_initial_equipments(Character& chara)
                         itemcreate_chara_inv(chara.index, item_id, 0))
                 {
                     body = 100 + i;
-                    equip_item(chara, body - 100, *equipment);
+                    equip_item(chara, body - 100, equipment.unwrap());
                 }
                 eqammo = 0;
                 continue;
@@ -1339,14 +1341,17 @@ void supply_initial_equipments(Character& chara)
 
 
 
-void equip_item(Character& chara, size_t equipment_slot_index, Item& equipment)
+void equip_item(
+    Character& chara,
+    size_t equipment_slot_index,
+    ItemRef equipment)
 {
     auto& equipment_slot = chara.equipment_slots.at(equipment_slot_index);
     if (equipment_slot.equipment)
     {
         return;
     }
-    if (equipment.body_part != 0)
+    if (equipment->body_part != 0)
     {
         return;
     }
@@ -1355,8 +1360,8 @@ void equip_item(Character& chara, size_t equipment_slot_index, Item& equipment)
     {
         item_identify(equipment, IdentifyState::almost);
     }
-    equipment.body_part = equipment_slot_index + 100;
-    equipment_slot.equip(equipment);
+    equipment->body_part = equipment_slot_index + 100;
+    equipment_slot.equip(std::move(equipment));
 }
 
 
@@ -1368,8 +1373,8 @@ void unequip_item(Character& chara, size_t equipment_slot_index)
     {
         return;
     }
-    equipment_slot.equipment->body_part = 0;
-    item_stack(chara.index, *equipment_slot.equipment);
+    equipment_slot.equipment.as_ref()->body_part = 0;
+    item_stack(chara.index, equipment_slot.equipment.as_ref());
     equipment_slot.unequip();
 }
 

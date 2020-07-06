@@ -22,7 +22,7 @@ namespace elona::lua::api::modules::module_Enchantment
 void Enchantment_add(LuaItemHandle item, int id, int power)
 {
     auto& item_ref = lua::ref<Item>(item);
-    enchantment_add(item_ref, id, power);
+    enchantment_add(ItemRef{&item_ref}, id, power);
 }
 
 
