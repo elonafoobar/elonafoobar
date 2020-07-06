@@ -94,7 +94,21 @@ public:
     int image = 0;
     ItemId id = ItemId::none;
     Quality quality = Quality::none;
-    Position position;
+
+private:
+    Position _pos;
+
+public:
+    const Position& pos() const noexcept
+    {
+        return _pos;
+    }
+
+
+    void set_pos(const Position& new_pos);
+
+
+
     int weight = 0;
     IdentifyState identify_state = IdentifyState::unidentified;
     int count = 0;
@@ -227,7 +241,7 @@ public:
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, image);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, id);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, quality);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, position);
+        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "position", _pos);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, weight);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, identify_state);
         ELONA_SERIALIZATION_STRUCT_FIELD(*this, count);

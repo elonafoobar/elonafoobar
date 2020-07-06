@@ -54,7 +54,7 @@ void _food_gets_rotten(int chara_idx, Item& food)
 
     // Is it corpse(s) on a dryrock?
     if (chara_idx == -1 && food.id == ItemId::corpse &&
-        chip_data.for_cell(food.position.x, food.position.y).kind == 1)
+        chip_data.for_cell(food.pos().x, food.pos().y).kind == 1)
     {
         if (game_data.weather != 0)
         {
@@ -66,7 +66,7 @@ void _food_gets_rotten(int chara_idx, Item& food)
         food.id = ItemId::jerky;
         food.param1 = 0;
         food.param2 = 5;
-        cell_refresh(food.position.x, food.position.y);
+        cell_refresh(food.pos().x, food.pos().y);
         return;
     }
 
@@ -80,7 +80,7 @@ void _food_gets_rotten(int chara_idx, Item& food)
 
     if (chara_idx == -1)
     {
-        cell_refresh(food.position.x, food.position.y);
+        cell_refresh(food.pos().x, food.pos().y);
     }
 
     if (chara_idx == 0 && cdata.player().god_id == core_god::kumiromi)

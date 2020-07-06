@@ -1882,11 +1882,7 @@ void make_sound(
         {
             continue;
         }
-        if (dist(
-                source_x,
-                source_y,
-                cdata[cnt].position.x,
-                cdata[cnt].position.y) < distance_threshold)
+        if (dist(source_x, source_y, cdata[cnt].position) < distance_threshold)
         {
             if (rnd(waken) == 0)
             {

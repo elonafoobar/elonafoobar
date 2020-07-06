@@ -175,27 +175,6 @@ void draw_rotated(data::InstanceId id, int x, int y, double scale, double angle)
 
 
 
-int dist(const Position& p, int x, int y)
-{
-    return dist(p.x, p.y, x, y);
-}
-
-
-
-int dist(int x, int y, const Position& p)
-{
-    return dist(x, y, p.x, p.y);
-}
-
-
-
-int dist(const Position& p1, const Position& p2)
-{
-    return dist(p1.x, p1.y, p2.x, p2.y);
-}
-
-
-
 void AbstractAnimation::play()
 {
     if (mode == 9)

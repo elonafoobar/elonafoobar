@@ -118,16 +118,8 @@ void build_target_list(const Character& attacker)
         i = 1;
         for (int cnt = 0, cnt_end = (listmax - 1); cnt < cnt_end; ++cnt)
         {
-            p = dist(
-                attacker.position.x,
-                attacker.position.y,
-                list(1, cnt),
-                list(2, cnt));
-            p(1) = dist(
-                attacker.position.x,
-                attacker.position.y,
-                list(1, cnt + 1),
-                list(2, cnt + 1));
+            p = dist(attacker.position, list(1, cnt), list(2, cnt));
+            p(1) = dist(attacker.position, list(1, cnt + 1), list(2, cnt + 1));
             if (p(1) < p)
             {
                 p(0) = list(0, cnt);

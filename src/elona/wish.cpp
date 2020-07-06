@@ -608,7 +608,7 @@ bool wish_for_item(Character& chara, const std::string& input)
                 selector.remove(id);
                 item->remove();
                 --itemmemory(1, itemid2int(item->id));
-                cell_refresh(item->position.x, item->position.y);
+                cell_refresh(item->pos().x, item->pos().y);
                 continue;
             }
         }

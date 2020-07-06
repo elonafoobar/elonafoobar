@@ -130,8 +130,7 @@ bool cell_swap(int chara_index_a, int chara_index_b, int x, int y)
             .chara_index_plus_one = tc_at_m81 + 1;
         x2_at_m81 = cdata[tc_at_m81].position.x;
         y2_at_m81 = cdata[tc_at_m81].position.y;
-        cdata[tc_at_m81].position.x = cdata[chara_index_a].position.x;
-        cdata[tc_at_m81].position.y = cdata[chara_index_a].position.y;
+        cdata[tc_at_m81].position = cdata[chara_index_a].position;
     }
     else
     {
@@ -149,8 +148,7 @@ bool cell_swap(int chara_index_a, int chara_index_b, int x, int y)
     {
         if (game_data.mount)
         {
-            cdata[game_data.mount].position.x = cdata.player().position.x;
-            cdata[game_data.mount].position.y = cdata.player().position.y;
+            cdata[game_data.mount].position = cdata.player().position;
         }
     }
     return true;
@@ -246,7 +244,7 @@ int cell_count_exact_item_stacks(const Position& pos)
     int ret{};
     for (const auto& item : g_inv.ground())
     {
-        if (item->number() > 0 && item->position == pos)
+        if (item->number() > 0 && item->pos() == pos)
         {
             ++ret;
         }

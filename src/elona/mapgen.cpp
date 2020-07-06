@@ -260,11 +260,7 @@ int dist_town()
             cell_featread(x_at_m165, y_at_m165);
             if (area_data[feat(2)].type == mdata_t::MapType::town)
             {
-                i_at_m165 = dist(
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    x_at_m165,
-                    y_at_m165);
+                i_at_m165 = dist(cdata.player().position, x_at_m165, y_at_m165);
                 if (i_at_m165 < p_at_m165)
                 {
                     p_at_m165 = i_at_m165;
@@ -447,8 +443,7 @@ void map_placeplayer()
         {
             if (game_data.mount == chara.index)
             {
-                cdata[game_data.mount].position.x = cdata.player().position.x;
-                cdata[game_data.mount].position.y = cdata.player().position.y;
+                cdata[game_data.mount].position = cdata.player().position;
                 continue;
             }
         }

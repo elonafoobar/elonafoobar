@@ -453,15 +453,8 @@ int calc_accuracy(
         {
             if (consider_distance)
             {
-                rangedist = clamp(
-                    dist(
-                        attacker.position.x,
-                        attacker.position.y,
-                        target.position.x,
-                        target.position.y) -
-                        1,
-                    0,
-                    9);
+                rangedist =
+                    clamp(dist(attacker.position, target.position) - 1, 0, 9);
                 const auto effective_range =
                     calc_effective_range(itemid2int(weapon->id));
                 accuracy = accuracy * effective_range[rangedist] / 100;

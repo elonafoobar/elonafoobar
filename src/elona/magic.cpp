@@ -1665,7 +1665,7 @@ bool _magic_430_429(Character& target)
             for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
             {
                 x = cnt;
-                p = dist(target.position.x, target.position.y, x, y);
+                p = dist(target.position, x, y);
                 if (is_cursed(efstatus))
                 {
                     if (efid == 429)
@@ -3084,7 +3084,7 @@ bool _magic_631(Character& subject)
         }
         dx = cnt.position.x;
         dy = cnt.position.y;
-        if (dist(subject.position.x, subject.position.y, dx, dy) >
+        if (dist(subject.position, dx, dy) >
             the_ability_db[631]->range % 1000 + 1)
         {
             continue;
@@ -3142,7 +3142,7 @@ bool _magic_466(Character& subject)
         }
         dx = cnt.position.x;
         dy = cnt.position.y;
-        if (dist(subject.position.x, subject.position.y, dx, dy) > 4)
+        if (dist(subject.position, dx, dy) > 4)
         {
             continue;
         }
@@ -3249,7 +3249,7 @@ bool _magic_656(Character& subject)
         }
         dx = cnt.position.x;
         dy = cnt.position.y;
-        if (dist(subject.position.x, subject.position.y, dx, dy) >
+        if (dist(subject.position, dx, dy) >
             the_ability_db[656]->range % 1000 + 1)
         {
             continue;
@@ -3953,7 +3953,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
             {
                 continue;
             }
-            if (dist(dx, dy, subject.position.x, subject.position.y) >
+            if (dist(dx, dy, subject.position) >
                 the_ability_db[efid]->range % 1000 + 1)
             {
                 break;

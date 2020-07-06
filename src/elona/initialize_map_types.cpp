@@ -1002,9 +1002,8 @@ static void _init_map_your_home()
                 FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
             for (const auto& item : g_inv.ground())
             {
-                item->position.x = map_data.width / 2;
-                item->position.y = map_data.height / 2;
-                cell_refresh(item->position.x, item->position.y);
+                item->set_pos({map_data.width / 2, map_data.height / 2});
+                cell_refresh(item->pos().x, item->pos().y);
             }
             ctrl_file(FileOperation::map_home_upgrade);
             for (auto&& cnt : cdata.others())
@@ -2700,7 +2699,7 @@ static void _init_map_fields_forest()
         if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
         {
             item->own_state = 1;
-            cell_data.at(item->position.x, item->position.y).chip_id_actual = 0;
+            cell_data.at(item->pos().x, item->pos().y).chip_id_actual = 0;
         }
     }
 }

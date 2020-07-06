@@ -267,8 +267,7 @@ void initialize_home_adata()
     }
     if (game_data.home_scale != 0)
     {
-        area_data[p].position.x = cdata.player().position.x;
-        area_data[p].position.y = cdata.player().position.y;
+        area_data[p].position = cdata.player().position;
     }
     area_data[p].outer_map = game_data.destination_outer_map;
 }
@@ -906,8 +905,7 @@ void prompt_ally_staying()
         {
             if (game_data.current_map == mdata_t::MapId::your_home)
             {
-                cdata[c].initial_position.x = cdata[c].position.x;
-                cdata[c].initial_position.y = cdata[c].position.y;
+                cdata[c].initial_position = cdata[c].position;
                 txt(i18n::s.get(
                     "core.building.home.staying.add.ally", cdata[c]));
             }
@@ -1186,8 +1184,8 @@ void update_shop()
     }
     for (const auto& item : g_inv.ground())
     {
-        x = item->position.x;
-        y = item->position.y;
+        x = item->pos().x;
+        y = item->pos().y;
         if (x < 0 || x >= map_data.width || y < 0 || y >= map_data.height)
         {
             continue;
@@ -1241,7 +1239,7 @@ void update_museum()
         {
             continue;
         }
-        if (cell_data.at(item->position.x, item->position.y)
+        if (cell_data.at(item->pos().x, item->pos().y)
                 .item_info_actual.stack_count() == 1)
         {
             continue;
@@ -1299,7 +1297,7 @@ std::vector<HomeRankHeirloom> building_update_home_rank()
     std::vector<HomeRankHeirloom> heirlooms;
     for (const auto& item : g_inv.ground())
     {
-        if (cell_data.at(item->position.x, item->position.y)
+        if (cell_data.at(item->pos().x, item->pos().y)
                 .item_info_actual.stack_count() == 1)
         {
             continue;

@@ -190,8 +190,7 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
             if (x != -1 && i == 0)
             {
                 ok = true;
-                item.position.x = sx;
-                item.position.y = sy;
+                item.set_pos({sx, sy});
                 break;
             }
             if (cell_data.at(sx, sy).feats != 0)
@@ -206,8 +205,7 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
             if ((chip_data.for_cell(sx, sy).effect & 4) == 0)
             {
                 ok = true;
-                item.position.x = sx;
-                item.position.y = sy;
+                item.set_pos({sx, sy});
                 break;
             }
         }
@@ -536,7 +534,7 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
 
     if (slot == -1)
     {
-        cell_refresh(item.position.x, item.position.y);
+        cell_refresh(item.pos().x, item.pos().y);
     }
     return OptionalItemRef{&item};
 }

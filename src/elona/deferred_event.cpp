@@ -995,8 +995,7 @@ void eh_guest_visit(const DeferredEvent&)
             {
                 if (item->param1 == 2)
                 {
-                    cell_swap(
-                        chara.index, -1, item->position.x, item->position.y);
+                    cell_swap(chara.index, -1, item->pos().x, item->pos().y);
                     chair_for_guest = item.clone();
                     chair = item.clone();
                     break;
@@ -1014,14 +1013,10 @@ void eh_guest_visit(const DeferredEvent&)
             {
                 continue;
             }
-            const auto d = dist(
-                item->position.x,
-                item->position.y,
-                chair_for_guest->position.x,
-                chair_for_guest->position.y);
+            const auto d = dist(item->pos(), chair_for_guest->pos());
             if (d < distance_to_guest_chair)
             {
-                if (cell_data.at(item->position.x, item->position.y)
+                if (cell_data.at(item->pos().x, item->pos().y)
                             .chara_index_plus_one == 0 ||
                     chara.index == 0 || chara.index == guest->index)
                 {
@@ -1037,7 +1032,7 @@ void eh_guest_visit(const DeferredEvent&)
         }
         if (chair)
         {
-            cell_swap(chara.index, -1, chair->position.x, chair->position.y);
+            cell_swap(chara.index, -1, chair->pos().x, chair->pos().y);
         }
         chara.direction = direction(
             chara.position.x,

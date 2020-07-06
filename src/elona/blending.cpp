@@ -41,13 +41,6 @@ elona_vector1<int> rppage;
 
 
 
-int dist(const Position& p1, const Position& p2)
-{
-    return elona::dist(p1.x, p1.y, p2.x, p2.y);
-}
-
-
-
 std::string get_recipe_material_name(int recipe_id, int step)
 {
     return lua::call_with_result<std::string>(
@@ -184,7 +177,7 @@ bool check_one_blending_material(
     }
     if (check_pos)
     {
-        if (dist(item.position, cdata.player().position) > 4)
+        if (dist(item.pos(), cdata.player().position) > 4)
         {
             return false;
         }
@@ -961,8 +954,8 @@ void spend_materials(bool success)
             chara_refresh(cdata.player());
         }
         cell_refresh(
-            g_inv[rpref(10 + cnt * 2)]->position.x,
-            g_inv[rpref(10 + cnt * 2)]->position.y);
+            g_inv[rpref(10 + cnt * 2)]->pos().x,
+            g_inv[rpref(10 + cnt * 2)]->pos().y);
     }
     refresh_burden_state();
 }
@@ -1010,7 +1003,7 @@ void blending_proc_on_success_events()
     }
     if (inv_getowner(item1) == -1)
     {
-        cell_refresh(item1.position.x, item1.position.y);
+        cell_refresh(item1.pos().x, item1.pos().y);
     }
     chara_refresh(cdata.player());
 }

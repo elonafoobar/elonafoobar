@@ -528,11 +528,8 @@ void show_damage_popups()
                 ++damage_popup.frame;
                 continue;
             }
-            if (dist(
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    chara.position.x,
-                    chara.position.y) > cdata.player().vision_distance / 2)
+            if (dist(cdata.player().position, chara.position) >
+                cdata.player().vision_distance / 2)
             {
                 ++damage_popup.frame;
                 continue;

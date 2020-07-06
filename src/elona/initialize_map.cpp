@@ -348,8 +348,7 @@ void _proc_three_years_later()
     {
         if (game_data.quest_flags.main_quest == 180)
         {
-            cdata.player().position.x = area_data[11].position.x;
-            cdata.player().position.y = area_data[11].position.y;
+            cdata.player().position = area_data[11].position;
             game_data.player_next_move_direction = 1;
             game_data.player_x_on_map_leave = -1;
             Message::instance().buffered_message_begin(
@@ -543,8 +542,7 @@ void _refresh_map_character_other(Character& chara)
 
     if (map_data.designated_spawns == 1)
     {
-        chara.position.x = chara.initial_position.x;
-        chara.position.y = chara.initial_position.y;
+        chara.position = chara.initial_position;
     }
     if (chara.is_quest_target() == 0)
     {
@@ -1397,7 +1395,7 @@ void migrate_old_save_v17()
     }
     for (const auto& item : g_inv.ground())
     {
-        cell_refresh(item->position.x, item->position.y);
+        cell_refresh(item->pos().x, item->pos().y);
     }
     for (int y = 0; y < map_data.height; ++y)
     {

@@ -148,11 +148,7 @@ void mef_update()
                     if (rnd(35) == 0)
                     {
                         p = 3;
-                        if (dist(
-                                dx,
-                                dy,
-                                cdata.player().position.x,
-                                cdata.player().position.y) < 6)
+                        if (dist(dx, dy, cdata.player().position) < 6)
                         {
                             sound = "core.fire1";
                         }

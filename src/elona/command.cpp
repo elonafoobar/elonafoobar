@@ -103,11 +103,7 @@ void _search_for_crystal()
         {
             continue;
         }
-        const auto d_ = dist(
-            item->position.x,
-            item->position.y,
-            cdata.player().position.x,
-            cdata.player().position.y);
+        const auto d_ = dist(item->pos(), cdata.player().position);
         if (!d || d_ < *d)
         {
             d = d_;
@@ -148,7 +144,7 @@ void _try_to_reveal_small_coin(Character& chara)
     }
     else
     {
-        if (dist(chara.position.x, chara.position.y, x, y) > 2)
+        if (dist(chara.position, x, y) > 2)
         {
             txt(i18n::s.get("core.action.search.small_coin.far"));
         }
@@ -301,8 +297,7 @@ TurnResult _bump_into_character(Character& chara)
             }
             if (g_config.scroll())
             {
-                cdata.player().next_position.x = chara.position.x;
-                cdata.player().next_position.y = chara.position.y;
+                cdata.player().next_position = chara.position;
                 ui_scroll_screen();
             }
             cell_swap(cdata.player().index, chara.index);
@@ -910,7 +905,7 @@ TurnResult do_throw_command_internal(Character& thrower, Item& throw_item)
         throw_item.id == ItemId::little_ball)
     {
         snd("core.throw2");
-        cell_refresh(throw_item.position.x, throw_item.position.y);
+        cell_refresh(throw_item.pos().x, throw_item.pos().y);
         if (cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
         {
             const auto target_index =
@@ -1132,7 +1127,7 @@ TurnResult do_throw_command(Character& thrower, Item& throw_item)
     {
         txt(i18n::s.get("core.action.throw.execute", thrower, throw_item));
     }
-    if (dist(thrower.position.x, thrower.position.y, tlocx, tlocy) * 4 >
+    if (dist(thrower.position, tlocx, tlocy) * 4 >
             rnd_capped(sdata(111, thrower.index) + 10) +
                 sdata(111, thrower.index) / 4 ||
         rnd(10) == 0)
@@ -1166,8 +1161,7 @@ TurnResult do_throw_command(Character& thrower, Item& throw_item)
         if (const auto slot = inv_get_free_slot(-1))
         {
             item_copy(throw_item, *slot);
-            slot->position.x = tlocx;
-            slot->position.y = tlocy;
+            slot->set_pos({tlocx, tlocy});
             slot->set_number(1);
             throw_item.modify_number(-1);
             return do_throw_command_internal(thrower, *slot);
@@ -1777,7 +1771,7 @@ TurnResult do_dip_command(Item& mix_item, Item& mix_target)
         txt(i18n::s.get("core.action.dip.result.dyeing", mix_target));
         if (inv_getowner(mix_target) == -1)
         {
-            cell_refresh(mix_target.position.x, mix_target.position.y);
+            cell_refresh(mix_target.pos().x, mix_target.pos().y);
         }
         if (mix_target.body_part != 0)
         {
@@ -2318,8 +2312,7 @@ TurnResult do_use_command(Item& use_item)
                                 "core.action.use.leash.other.start.resists",
                                 cdata[target_chara_index]));
                             use_item.modify_number(-1);
-                            cell_refresh(
-                                use_item.position.x, use_item.position.y);
+                            cell_refresh(use_item.pos().x, use_item.pos().y);
                             refresh_burden_state();
                             break;
                         }
@@ -2406,7 +2399,7 @@ TurnResult do_use_command(Item& use_item)
                         cdata[target_chara_index]));
                     animeload(8, cdata[target_chara_index]);
                     use_item.modify_number(-1);
-                    cell_refresh(use_item.position.x, use_item.position.y);
+                    cell_refresh(use_item.pos().x, use_item.pos().y);
                     refresh_burden_state();
                 }
                 f = 1;
@@ -2516,7 +2509,7 @@ TurnResult do_use_command(Item& use_item)
             break;
         }
         use_item.modify_number(-1);
-        cell_refresh(use_item.position.x, use_item.position.y);
+        cell_refresh(use_item.pos().x, use_item.pos().y);
         txt(i18n::s.get("core.action.use.rune.use"));
         // Showroom is not supported now.
         break;
@@ -2623,7 +2616,7 @@ TurnResult do_use_command(Item& use_item)
             }
         }
         use_item.modify_number(-1);
-        cell_refresh(use_item.position.x, use_item.position.y);
+        cell_refresh(use_item.pos().x, use_item.pos().y);
         txt(i18n::s.get("core.action.use.nuke.set_up"));
         snd("core.build1");
         mef_add(
@@ -2800,7 +2793,7 @@ TurnResult do_use_command(Item& use_item)
         }
         snd("core.card1");
         use_item.modify_number(-1);
-        cell_refresh(use_item.position.x, use_item.position.y);
+        cell_refresh(use_item.pos().x, use_item.pos().y);
         txt(i18n::s.get("core.action.use.deck.add_card", use_item));
         ++card(0, use_item.subname);
         break;
@@ -3991,11 +3984,7 @@ bool try_to_perceive_npc(const Character& chara, const Character& enemy)
             {
                 return true;
             }
-            const auto d = dist(
-                enemy.position.x,
-                enemy.position.y,
-                chara.position.x,
-                chara.position.y);
+            const auto d = dist(enemy.position, chara.position);
             const auto p = d * 150 + (sdata(157, enemy.index) * 100 + 150) + 1;
             if (rnd_capped(p) < rnd_capped(sdata(13, chara.index) * 60 + 150))
             {
@@ -5159,11 +5148,8 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
         }
         else
         {
-            if (dist(
-                    cdata[enemy_index].position.x,
-                    cdata[enemy_index].position.y,
-                    caster.position.x,
-                    caster.position.y) > the_ability_db[efid]->range % 1000 + 1)
+            if (dist(cdata[enemy_index].position, caster.position) >
+                the_ability_db[efid]->range % 1000 + 1)
             {
                 return 0;
             }
@@ -5222,11 +5208,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
         {
             if (the_ability_db[efid]->ability_type == 3)
             {
-                if (dist(
-                        cdata[enemy_index].position.x,
-                        cdata[enemy_index].position.y,
-                        caster.position.x,
-                        caster.position.y) >
+                if (dist(cdata[enemy_index].position, caster.position) >
                     the_ability_db[efid]->range % 1000 + 1)
                 {
                     return 0;
@@ -5263,11 +5245,8 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
                 }
             }
         }
-        if (dist(
-                cdata[enemy_index].position.x,
-                cdata[enemy_index].position.y,
-                caster.position.x,
-                caster.position.y) > the_ability_db[efid]->range % 1000 + 1)
+        if (dist(cdata[enemy_index].position, caster.position) >
+            the_ability_db[efid]->range % 1000 + 1)
         {
             if (caster.index == 0)
             {
@@ -5350,7 +5329,7 @@ PickUpItemResult pick_up_item(
             }
             in = item.number();
             item.remove();
-            cell_refresh(item.position.x, item.position.y);
+            cell_refresh(item.pos().x, item.pos().y);
             return {1, nullptr};
         }
     }
@@ -5610,9 +5589,9 @@ PickUpItemResult pick_up_item(
     }
     else
     {
-        cell_refresh(item.position.x, item.position.y);
-        cell_data.at(item.position.x, item.position.y).item_info_memory =
-            cell_data.at(item.position.x, item.position.y).item_info_actual;
+        cell_refresh(item.pos().x, item.pos().y);
+        cell_data.at(item.pos().x, item.pos().y).item_info_memory =
+            cell_data.at(item.pos().x, item.pos().y).item_info_actual;
         sound_pick_up();
         txt(i18n::s.get(
             "core.action.pick_up.execute",
@@ -5882,7 +5861,7 @@ void proc_autopick()
 
     for (const auto& item : g_inv.ground())
     {
-        if (item->position != cdata.player().position)
+        if (item->pos() != cdata.player().position)
             continue;
         if (item->own_state > 0)
             continue;

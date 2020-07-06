@@ -1539,8 +1539,7 @@ void character_drops_item(Character& victim)
                 item->remove();
                 continue;
             }
-            item->position.x = victim.position.x;
-            item->position.y = victim.position.y;
+            item->set_pos(victim.position);
             if (!item_stack(-1, *item).stacked)
             {
                 if (const auto slot = inv_get_free_slot(-1))
@@ -1667,8 +1666,7 @@ void character_drops_item(Character& victim)
             victim.equipment_slots[item->body_part - 100].unequip();
             item->body_part = 0;
         }
-        item->position.x = victim.position.x;
-        item->position.y = victim.position.y;
+        item->set_pos(victim.position);
         itemturn(*item);
         if (!item_stack(-1, *item).stacked)
         {
@@ -2035,7 +2033,7 @@ void character_drops_item(Character& victim)
             {
                 item->param1 = victim.image;
                 item->subname = charaid2int(victim.id);
-                cell_refresh(item->position.x, item->position.y);
+                cell_refresh(item->pos().x, item->pos().y);
             }
         }
         if (rnd(175) == 0 || victim.quality == Quality::special || 0 ||
@@ -2047,7 +2045,7 @@ void character_drops_item(Character& victim)
             {
                 item->param1 = victim.image;
                 item->subname = charaid2int(victim.id);
-                cell_refresh(item->position.x, item->position.y);
+                cell_refresh(item->pos().x, item->pos().y);
             }
         }
     }
