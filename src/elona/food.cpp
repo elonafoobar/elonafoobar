@@ -66,7 +66,6 @@ void _food_gets_rotten(int chara_idx, const ItemRef& food)
         food->id = ItemId::jerky;
         food->param1 = 0;
         food->param2 = 5;
-        cell_refresh(food->pos().x, food->pos().y);
         return;
     }
 
@@ -77,11 +76,6 @@ void _food_gets_rotten(int chara_idx, const ItemRef& food)
 
     food->param3 = -1;
     food->image = 336;
-
-    if (chara_idx == -1)
-    {
-        cell_refresh(food->pos().x, food->pos().y);
-    }
 
     if (chara_idx == 0 && cdata.player().god_id == core_god::kumiromi)
     {

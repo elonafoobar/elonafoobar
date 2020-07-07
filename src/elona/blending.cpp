@@ -953,9 +953,6 @@ void spend_materials(bool success)
         {
             chara_refresh(cdata.player());
         }
-        cell_refresh(
-            g_inv[rpref(10 + cnt * 2)]->pos().x,
-            g_inv[rpref(10 + cnt * 2)]->pos().y);
     }
     refresh_burden_state();
 }
@@ -1000,10 +997,6 @@ void blending_proc_on_success_events()
     if (item1->body_part != 0)
     {
         create_pcpic(cdata.player());
-    }
-    if (inv_getowner(item1) == -1)
-    {
-        cell_refresh(item1->pos().x, item1->pos().y);
     }
     chara_refresh(cdata.player());
 }

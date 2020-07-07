@@ -283,7 +283,6 @@ void wish_for_card()
         item->subname = charaid2int(cdata.tmp().id);
         item->param1 = cdata.tmp().image;
         chara_vanquish(cdata.tmp());
-        cell_refresh(cdata.player().position.x, cdata.player().position.y);
         txt(i18n::s.get(
             "core.wish.something_appears_from_nowhere", item.unwrap()));
     }
@@ -303,7 +302,6 @@ void wish_for_figure()
         item->subname = charaid2int(cdata.tmp().id);
         item->param1 = cdata.tmp().image;
         chara_vanquish(cdata.tmp());
-        cell_refresh(cdata.player().position.x, cdata.player().position.y);
         txt(i18n::s.get(
             "core.wish.something_appears_from_nowhere", item.unwrap()));
     }
@@ -610,7 +608,6 @@ bool wish_for_item(Character& chara, const std::string& input)
                 selector.remove(id);
                 item->remove();
                 --itemmemory(1, itemid2int(item->id));
-                cell_refresh(item->pos().x, item->pos().y);
                 continue;
             }
         }

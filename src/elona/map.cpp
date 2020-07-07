@@ -293,7 +293,6 @@ void map_reload(const std::string& map_filename)
                 ItemCategory::food)
             {
                 item->remove();
-                cell_refresh(item->pos().x, item->pos().y);
             }
         }
     }
@@ -315,7 +314,6 @@ void map_reload(const std::string& map_filename)
                     item->own_state = cmapdata(3, i);
                 }
             }
-            cell_refresh(x, y);
         }
     }
 }
@@ -643,7 +641,6 @@ static void _modify_items_on_regenerate()
             {
                 item->param1 += 1;
                 item->image = 591;
-                cell_refresh(item->pos().x, item->pos().y);
             }
         }
 
@@ -657,7 +654,6 @@ static void _modify_items_on_regenerate()
             if (item->own_state == 0)
             {
                 item->remove();
-                cell_refresh(item->pos().x, item->pos().y);
             }
         }
     }
@@ -881,8 +877,6 @@ void map_reload_noyel()
             continue;
         }
         item->remove();
-
-        cell_refresh(item->pos().x, item->pos().y);
     }
 
     if (area_data[game_data.current_map].christmas_festival)

@@ -1608,10 +1608,6 @@ item_stack(int inventory_id, const ItemRef& base_item, bool show_message)
             item->modify_number(base_item->number());
             base_item->remove();
 
-            if (mode != 6 && inv_getowner(base_item) == -1)
-            {
-                cell_refresh(base_item->pos().x, base_item->pos().y);
-            }
             if (show_message)
             {
                 txt(i18n::s.get("core.item.stacked", item, item->number()));
@@ -1867,7 +1863,6 @@ bool item_fire(int owner, const OptionalItemRef& burned_item)
                 Message::color{ColorIndex::purple});
         }
         item->modify_number(-p_);
-        cell_refresh(item->pos().x, item->pos().y);
         burned = true;
     }
 
@@ -1910,7 +1905,6 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
                     arsonist ? arsonist->index : -1);
             }
         }
-        cell_refresh(x, y);
     }
 }
 
@@ -2059,7 +2053,6 @@ void mapitem_cold(int x, int y)
     if (destroyed_item)
     {
         item_cold(-1, destroyed_item);
-        cell_refresh(x, y);
     }
 }
 
@@ -2136,11 +2129,6 @@ ItemRef inv_compress(int owner)
             {
                 item->remove();
                 ++number_of_deleted_items;
-                if (item->pos().x >= 0 && item->pos().x < map_data.width &&
-                    item->pos().y >= 0 && item->pos().y < map_data.height)
-                {
-                    cell_refresh(item->pos().x, item->pos().y);
-                }
             }
             if (number_of_deleted_items > 10)
             {
@@ -2161,14 +2149,6 @@ ItemRef inv_compress(int owner)
     // Destroy 1 existing item forcely.
     const auto item = get_random_inv(owner);
     item->remove();
-    if (mode != 6)
-    {
-        if (item->pos().x >= 0 && item->pos().x < map_data.width &&
-            item->pos().y >= 0 && item->pos().y < map_data.height)
-        {
-            cell_refresh(item->pos().x, item->pos().y);
-        }
-    }
 
     return item;
 }
@@ -2601,7 +2581,6 @@ void dipcursed(const ItemRef& item)
             txt(i18n::s.get("core.action.dip.rots", item));
             item->param3 = -1;
             item->image = 336;
-            cell_refresh(item->pos().x, item->pos().y);
         }
         else
         {

@@ -2034,7 +2034,6 @@ void character_drops_item(Character& victim)
             {
                 item->param1 = victim.image;
                 item->subname = charaid2int(victim.id);
-                cell_refresh(item->pos().x, item->pos().y);
             }
         }
         if (rnd(175) == 0 || victim.quality == Quality::special || 0 ||
@@ -2046,7 +2045,6 @@ void character_drops_item(Character& victim)
             {
                 item->param1 = victim.image;
                 item->subname = charaid2int(victim.id);
-                cell_refresh(item->pos().x, item->pos().y);
             }
         }
     }
