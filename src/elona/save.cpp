@@ -15,6 +15,7 @@
 #include "message.hpp"
 #include "save_update.hpp"
 #include "serialization/serialization.hpp"
+#include "serialization/utils.hpp"
 #include "set_item_info.hpp"
 #include "ui.hpp"
 #include "variables.hpp"

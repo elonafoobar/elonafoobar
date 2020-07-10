@@ -24,6 +24,7 @@
 #include "scene.hpp"
 #include "serialization/macros.hpp"
 #include "serialization/serialization.hpp"
+#include "serialization/utils.hpp"
 #include "talk.hpp"
 #include "text.hpp"
 #include "ui.hpp"

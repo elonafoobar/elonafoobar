@@ -20,6 +20,7 @@
 #include "quest.hpp"
 #include "save_header.hpp"
 #include "serialization/serialization.hpp"
+#include "serialization/utils.hpp"
 #include "variables.hpp"
 
 
