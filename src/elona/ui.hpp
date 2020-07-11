@@ -3,7 +3,7 @@
 #include <string>
 
 #include "../snail/application.hpp"
-#include "eobject/eobject.hpp"
+#include "eobject/forward.hpp"
 
 
 

@@ -3,7 +3,7 @@
 #include <string>
 
 #include "data/types/type_god.hpp"
-#include "eobject/eobject.hpp"
+#include "eobject/forward.hpp"
 
 
 

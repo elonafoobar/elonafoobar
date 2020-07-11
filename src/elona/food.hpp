@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "eobject/eobject.hpp"
+#include "eobject/forward.hpp"
 
 
 

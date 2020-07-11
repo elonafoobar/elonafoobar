@@ -3,7 +3,7 @@
 #include <string>
 
 #include "enums.hpp"
-#include "eobject/eobject.hpp"
+#include "eobject/forward.hpp"
 #include "optional.hpp"
 
 
