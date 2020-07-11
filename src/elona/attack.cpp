@@ -157,11 +157,11 @@ CanDoRangedAttackResult can_do_ranged_attack(const Character& chara)
         }
         if (chara.equipment_slots[cnt].type == 10)
         {
-            weapon = chara.equipment_slots[cnt].equipment.as_opt();
+            weapon = chara.equipment_slots[cnt].equipment;
         }
         if (chara.equipment_slots[cnt].type == 11)
         {
-            ammo = chara.equipment_slots[cnt].equipment.as_opt();
+            ammo = chara.equipment_slots[cnt].equipment;
         }
     }
     if (!weapon)
@@ -863,7 +863,7 @@ void try_to_melee_attack(Character& attacker, Character& target)
         {
             continue;
         }
-        const auto weapon = attacker.equipment_slots[cnt].equipment.as_ref();
+        const auto weapon = attacker.equipment_slots[cnt].equipment;
         if (weapon->dice_x > 0)
         {
             attackskill = weapon->skill;

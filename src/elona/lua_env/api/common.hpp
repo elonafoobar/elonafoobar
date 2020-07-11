@@ -15,7 +15,6 @@ struct Character;
 struct Item;
 
 using LuaCharacterHandle = sol::table;
-using LuaItemHandle = sol::table;
 
 } // namespace elona
 

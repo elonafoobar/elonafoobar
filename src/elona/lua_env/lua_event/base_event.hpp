@@ -5,7 +5,8 @@ namespace elona
 {
 
 using LuaCharacterHandle = sol::table;
-using LuaItemHandle = sol::table;
+
+
 
 namespace lua
 {

@@ -50,22 +50,12 @@ sol::table handle(T& it)
 }
 
 /**
- * Obtains a Lua handle to a compatible C++ object.
- */
-sol::table handle(const ItemRef& it);
-
-inline sol::table handle(ItemRef& it)
-{
-    return handle(std::cref(it));
-}
-
-/**
  * Obtains a reference to the C++ data pointed to by a handle.
  */
 template <typename T>
 sol::optional<T&> ref_opt(sol::table handle)
 {
-    return lua::lua->get_handle_manager().get_ref<T>(handle);
+    return lua::lua->get_handle_manager().get_ref(handle);
 }
 
 /**
@@ -74,7 +64,7 @@ sol::optional<T&> ref_opt(sol::table handle)
 template <typename T>
 T& ref(sol::table handle)
 {
-    auto result = lua::lua->get_handle_manager().get_ref<T>(handle);
+    auto result = lua::lua->get_handle_manager().get_ref(handle);
     if (!result)
     {
         throw sol::error(

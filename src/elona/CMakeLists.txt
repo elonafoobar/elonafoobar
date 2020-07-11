@@ -50,7 +50,6 @@ set(ELONA_SOURCES
   i18n.cpp
   init.cpp
   initialize_map.cpp
-  index_item_ref.cpp
   initialize_map_types.cpp
   input.cpp
   input_prompt.cpp

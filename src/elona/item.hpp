@@ -55,6 +55,14 @@ struct Inventory;
 
 
 
+struct InventorySlot
+{
+    Inventory* inventory;
+    size_t index;
+};
+
+
+
 struct Item
 {
 private:
@@ -79,10 +87,14 @@ public:
         return _index;
     }
 
+    int global_index() const noexcept;
+
     Inventory* inventory() const noexcept
     {
         return _inventory;
     }
+
+    InventorySlot inventory_slot() const noexcept;
 
     ObjId obj_id;
 
@@ -165,6 +177,10 @@ public:
     {
         return *the_item_db.get_id_from_legacy(itemid2int(this->id));
     }
+
+
+    void on_create();
+    void on_remove();
 
 
 #define ELONA_ITEM_DEFINE_FLAG_ACCESSOR(name, n) \
@@ -283,23 +299,26 @@ struct Character;
 struct Inventory
 {
 public:
-    using storage_type = std::vector<Item>;
+    using storage_type = std::vector<OptionalItemRef>;
 
 
-    Inventory(size_t index_start, size_t inventory_size, int inventory_id);
-    Inventory(Inventory&&);
 
-    bool contains(size_t index) const;
-    ItemRef at(size_t index);
+    Inventory(size_t inventory_size, int inventory_id);
+
+
+    const OptionalItemRef& at(size_t index)
+    {
+        return _storage.at(index);
+    }
+
+    void remove(size_t index)
+    {
+        _storage.at(index) = nullptr;
+    }
+
 
     bool has_free_slot() const;
-    OptionalItemRef get_free_slot();
-
-
-    size_t index_start() const noexcept
-    {
-        return _index_start;
-    }
+    optional<InventorySlot> get_free_slot();
 
 
     size_t size() const noexcept
@@ -308,38 +327,60 @@ public:
     }
 
 
+    void clear();
 
-    template <typename Itr>
-    struct iterator_base
+
+
+    /**
+     * Exchange item @a a and @a b.
+     * If they points to the same object, does nothing. For example, assume that
+     * @a a is an apinut owned by you and @a b is a fake gold bar owned by an
+     * NPC. After calling the function, @a a is owned by the NPC and @a b is
+     * owned by you. NOTE: The content of each reference continues to refer to
+     * the same object before the call.
+     *
+     * @param a one item
+     * @param b the other item
+     */
+    static void exchange(const ItemRef& a, const ItemRef& b);
+
+
+    static const OptionalItemRef& at(const InventorySlot& slot);
+
+    static ItemRef create(const InventorySlot& slot);
+
+
+    /**
+     * Move all items in @a source to @a destination.
+     */
+    static void move_all(Inventory& source, Inventory& destination);
+
+
+
+    struct const_iterator
     {
-    public:
-        iterator_base(Itr itr, Itr end)
-            : _itr(itr)
-            , _end(end)
-        {
-            skip_over_null_elements();
-        }
+        friend Inventory;
 
 
-        bool operator==(const iterator_base& other) const
+        bool operator==(const const_iterator& other) const
         {
             return _itr == other._itr;
         }
 
 
-        bool operator!=(const iterator_base& other) const
+        bool operator!=(const const_iterator& other) const
         {
             return !(*this == other);
         }
 
 
-        ItemRef operator*() const
+        decltype(auto) operator*() const
         {
-            return ItemRef{&*_itr};
+            return _itr->unwrap();
         }
 
 
-        iterator_base& operator++()
+        const_iterator& operator++()
         {
             ++_itr;
             skip_over_null_elements();
@@ -349,34 +390,29 @@ public:
 
 
     private:
-        Itr _itr;
-        Itr _end;
+        storage_type::const_iterator _itr;
+        storage_type::const_iterator _end;
+
+
+        const_iterator(
+            storage_type::const_iterator itr,
+            storage_type::const_iterator end)
+            : _itr(itr)
+            , _end(end)
+        {
+            skip_over_null_elements();
+        }
 
 
         void skip_over_null_elements()
         {
-            while (_itr != _end && _itr->number() == 0)
+            while (_itr != _end && _itr->is_null())
             {
                 ++_itr;
             }
         }
     };
 
-
-    using iterator = iterator_base<storage_type::iterator>;
-    using const_iterator = iterator_base<storage_type::const_iterator>;
-
-
-
-    iterator begin()
-    {
-        return iterator(_storage.begin(), _storage.end());
-    }
-
-    iterator end()
-    {
-        return iterator(_storage.end(), _storage.end());
-    }
 
 
     const_iterator begin() const
@@ -408,11 +444,20 @@ public:
     }
 
 
+    optional<int> capacity() const noexcept
+    {
+        return _capacity;
+    }
+
+
+    void set_capacity(optional<size_t> new_capacity);
+
+
 
 private:
-    size_t _index_start;
     storage_type _storage;
     int _inventory_id;
+    optional<size_t> _capacity;
 };
 
 
@@ -458,24 +503,20 @@ IdentifyState item_identify(const ItemRef& item, IdentifyState level);
 IdentifyState item_identify(const ItemRef& item, int power);
 
 void item_checkknown(const ItemRef& item);
-ItemRef inv_compress(int owner);
+InventorySlot inv_compress(int owner);
 
 /**
- * Copy @a src to @a dst.
- * @param src the source
- * @param dst the destination
+ * TODO
  */
-void item_copy(const ItemRef& src, const ItemRef& dst);
+ItemRef
+item_separate(const ItemRef& item, const InventorySlot& slot, int number);
+
+/**
+ * TODO
+ */
+ItemRef item_copy(const ItemRef& item, const InventorySlot& slot);
 
 void item_acid(const Character& owner, OptionalItemRef item = nullptr);
-
-/**
- * Swap the content of @a a and @a b. If they points to the same object, does
- * nothing.
- * @param a one item
- * @param b another item
- */
-void item_exchange(const ItemRef& a, const ItemRef& b);
 
 void itemturn(const ItemRef& item);
 OptionalItemRef itemfind(int inventory_id, int matcher, int matcher_type = 0);
@@ -507,7 +548,8 @@ struct ItemStackResult
 ItemStackResult item_stack(
     int inventory_id,
     const ItemRef& base_item,
-    bool show_message = false);
+    bool show_message = false,
+    optional<int> number = none);
 
 void item_dump_desc(const ItemRef&);
 
@@ -516,18 +558,18 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y);
 bool item_cold(int owner, const OptionalItemRef& destroyed_item = nullptr);
 void mapitem_cold(int x, int y);
 
-// TODO unsure how these are separate from item
 bool inv_find(ItemId id, int owner);
-ItemRef get_random_inv(int owner);
+InventorySlot inv_get_random_slot(int owner);
 
-OptionalItemRef inv_get_free_slot(int inventory_id);
+optional<InventorySlot> inv_get_free_slot(int inventory_id);
 
 int inv_getowner(const ItemRef& item);
 int inv_sum(int = 0);
 int inv_weight(int = 0);
-bool inv_getspace(int);
+bool inv_has_free_slot(int);
 
-ItemRef inv_get_free_slot_force(int inventory_id);
+optional<InventorySlot> inv_make_free_slot(int inventory_id);
+InventorySlot inv_make_free_slot_force(int inventory_id);
 
 void remain_make(const ItemRef& remain, const Character& chara);
 
@@ -587,7 +629,6 @@ void damage_by_cursed_equipments(Character& chara);
 void dipcursed(const ItemRef& item);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 void equip_melee_weapon(Character& chara);
-std::pair<int, int> inv_getheader(int);
 OptionalItemRef mapitemfind(const Position& pos, ItemId id);
 std::string
 itemname(const ItemRef& item, int number = 0, bool with_article = true);

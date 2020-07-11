@@ -186,7 +186,7 @@ bool check_one_blending_material(
     return lua::call_with_result<bool>(
         "core.Impl.Blending.check_material",
         false,
-        lua::handle(item),
+        item,
         the_blending_recipe_db.get_id_from_legacy(recipe_id)->get(),
         step + 1);
 }
@@ -254,7 +254,7 @@ void collect_blending_materials(
                 bool has_already_used = false;
                 for (int i = 0; i < step; ++i)
                 {
-                    if (rpref(10 + i * 2) == item->index())
+                    if (rpref(10 + i * 2) == item->global_index())
                     {
                         has_already_used = true;
                         break;
@@ -267,7 +267,7 @@ void collect_blending_materials(
             }
 
             result.emplace_back(
-                item->index(),
+                item->global_index(),
                 static_cast<int>(the_item_db[itemid2int(item->id)]->category) *
                         1000 +
                     itemid2int(item->id));
@@ -974,7 +974,7 @@ void blending_proc_on_success_events()
     }
     else
     {
-        int stat = item_separate(g_inv[item1_index])->index();
+        int stat = item_separate(g_inv[item1_index])->global_index();
         if (rpref(10) == stat)
         {
             rpref(10) = -2;
@@ -988,8 +988,7 @@ void blending_proc_on_success_events()
     // See each `on_success` for parameter usage.
     const auto item1 = g_inv[item1_index];
     const auto item2 = g_inv[item2_index];
-    auto materials =
-        lua::create_table(1, lua::handle(item1), 2, lua::handle(item2));
+    auto materials = lua::create_table(1, item1, 2, item2);
     auto on_success_args = lua::create_table("materials", materials);
     the_blending_recipe_db.ensure(rpid).on_success.call(on_success_args);
 

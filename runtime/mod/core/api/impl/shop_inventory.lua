@@ -270,7 +270,7 @@ function shop_inventory.do_generate(shopkeeper, inv)
          end
       end
 
-      if not item:is_valid() then
+      if item.number == 0 then
          goto continue
       end
 

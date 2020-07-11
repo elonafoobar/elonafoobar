@@ -10,7 +10,6 @@
 #include "data/types/type_character.hpp"
 #include "eobject/eobject.hpp"
 #include "god.hpp"
-#include "index_item_ref.hpp"
 #include "lua_env/wrapped_function.hpp"
 #include "position.hpp"
 #include "serialization/macros.hpp"
@@ -75,7 +74,7 @@ struct Activity
 
     Type type = Activity::Type::none;
     int turn = 0;
-    IndexItemRef item;
+    OptionalItemRef item;
 
 
     bool is_doing_nothing() const
@@ -198,7 +197,7 @@ private:
 struct EquipmentSlot
 {
     int type = 0;
-    IndexItemRef equipment;
+    OptionalItemRef equipment;
 
 
 
@@ -211,7 +210,7 @@ struct EquipmentSlot
 
     void equip(ItemRef item)
     {
-        equipment = IndexItemRef::from_ref(std::move(item));
+        equipment = std::move(item);
     }
 
 
@@ -284,7 +283,7 @@ public:
     int relationship = 0;
     int turn_cost = 0;
     int current_speed = 0;
-    IndexItemRef ai_item;
+    OptionalItemRef ai_item;
     std::string portrait;
     int interest = 0;
     int time_interest_revive = 0;

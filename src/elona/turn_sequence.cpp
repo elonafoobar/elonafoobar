@@ -444,7 +444,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
         return none;
     }
 
-    const auto ai_item = chara.ai_item.as_ref();
+    const auto ai_item = chara.ai_item.unwrap();
     if (ai_item->number() == 0)
     {
         chara.ai_item = nullptr;
@@ -1384,8 +1384,8 @@ optional<TurnResult> pc_turn_advance_time()
     }
     if (trait(210) != 0 && rnd(5) == 0)
     {
-        const auto item = get_random_inv(0);
-        if (item->number() > 0 &&
+        const auto item = Inventory::at(inv_get_random_slot(0));
+        if (item &&
             the_item_db[itemid2int(item->id)]->category == ItemCategory::potion)
         {
             item_db_on_drink(cdata.player(), item, itemid2int(item->id));

@@ -648,7 +648,7 @@ bool _magic_185(Character& subject, const ItemRef& rod)
         txt(i18n::s.get("core.magic.fish.do_not_know"));
         return false;
     }
-    if (!inv_getspace(0))
+    if (!inv_has_free_slot(0))
     {
         txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
         return false;
@@ -2079,21 +2079,21 @@ bool _magic_645_1114(Character& subject, Character& target)
         {
             continue;
         }
-        if (equipment.as_ref()->curse_state == CurseState::blessed)
+        if (equipment->curse_state == CurseState::blessed)
         {
             if (rnd(10))
             {
                 continue;
             }
         }
-        candidates.emplace_back(equipment.as_opt().unwrap());
+        candidates.emplace_back(equipment.unwrap());
     }
     if (candidates.empty())
     {
         for (int _i = 0; _i < 200; ++_i)
         {
-            const auto item = get_random_inv(target.index);
-            if (item->number() == 0)
+            const auto item = Inventory::at(inv_get_random_slot(target.index));
+            if (!item)
             {
                 continue;
             }
@@ -2104,7 +2104,7 @@ bool _magic_645_1114(Character& subject, Character& target)
                     continue;
                 }
             }
-            candidates.emplace_back(item);
+            candidates.emplace_back(item.unwrap());
             break;
         }
     }

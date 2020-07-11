@@ -98,14 +98,14 @@ optional<RandomEvent> generate_random_event_in_sleep()
     }
     if (rnd(250) == 0)
     {
-        if (inv_get_free_slot(0))
+        if (inv_has_free_slot(0))
         {
             id = 19;
         }
     }
     if (rnd(10000) == 0)
     {
-        if (inv_get_free_slot(0))
+        if (inv_has_free_slot(0))
         {
             id = 21;
         }

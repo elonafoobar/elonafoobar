@@ -90,14 +90,6 @@ void LuaEnv::load_mods()
 
 void LuaEnv::clear()
 {
-    for (auto&& inv : g_inv.all())
-    {
-        for (auto&& item : inv)
-        {
-            handle_mgr->remove_item_handle(item);
-        }
-    }
-
     for (int i = 0; i < ELONA_MAX_CHARACTERS; i++)
     {
         if (cdata[i].state() != Character::State::empty)

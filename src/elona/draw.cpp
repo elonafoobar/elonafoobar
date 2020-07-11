@@ -656,7 +656,7 @@ void create_pcpic(Character& chara, bool with_equipments)
         {
             if (equipment)
             {
-                _set_pcc_depending_on_equipments(chara, equipment.as_ref());
+                _set_pcc_depending_on_equipments(chara, equipment.unwrap());
             }
         }
     }

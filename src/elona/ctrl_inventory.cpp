@@ -675,7 +675,7 @@ void make_item_list(
             }
 
             // リスト追加
-            list(0, listmax) = item->index();
+            list(0, listmax) = item->global_index();
 
             // ソート情報
             list(1, listmax) = reftype * 1000 + itemid2int(item->id);
@@ -1306,7 +1306,7 @@ OnEnterResult on_enter_drop(
         txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
         return OnEnterResult{2};
     }
-    if (!inv_getspace(-1))
+    if (!inv_has_free_slot(-1))
     {
         txt(i18n::s.get("core.ui.inv.drop.cannot_anymore"));
         snd("core.fail1");
@@ -1707,7 +1707,7 @@ OnEnterResult on_enter_give(
         snd("core.fail1");
         return OnEnterResult{2};
     }
-    const auto slot = slot_opt.unwrap();
+    const auto slot = *slot_opt;
     reftype = (int)the_item_db[itemid2int(selected_item->id)]->category;
     if (selected_item->id == ItemId::gift)
     {
@@ -1872,11 +1872,10 @@ OnEnterResult on_enter_give(
             selected_item->modify_number(-1);
             return OnEnterResult{1};
         }
-        item_copy(selected_item, slot);
-        selected_item->modify_number(-1);
-        slot->set_number(1);
+        const auto handed_over_item = item_separate(selected_item, slot, 1);
         const auto stacked_item =
-            item_stack(inventory_owner.index, slot, true).stacked_item;
+            item_stack(inventory_owner.index, handed_over_item, true)
+                .stacked_item;
         chara_set_ai_item(inventory_owner, stacked_item);
         wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
         if (inventory_owner.index < 16)
@@ -2042,18 +2041,20 @@ OnEnterResult on_enter_trade_target(
         inventory_owner.equipment_slots[p - 100].unequip();
         citrade->body_part = 0;
     }
-    item_exchange(selected_item, citrade.unwrap());
-    item_convert_artifact(selected_item);
-    if (inventory_owner.ai_item.as_opt() == citrade)
+
+    if (inventory_owner.ai_item == citrade)
     {
         inventory_owner.ai_item = nullptr;
     }
+    Inventory::exchange(selected_item, citrade.unwrap());
+    item_convert_artifact(citrade.unwrap());
+
     wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
     if (inventory_owner.index >= 16)
     {
         supply_new_equipment(inventory_owner);
     }
-    (void)inv_get_free_slot_force(inventory_owner.index);
+    inv_make_free_slot_force(inventory_owner.index);
     chara_refresh(inventory_owner);
     refresh_burden_state();
     invsubroutine = 0;
@@ -2163,7 +2164,7 @@ OnEnterResult on_enter_receive(
         txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
         return OnEnterResult{2};
     }
-    const auto slot = slot_opt.unwrap();
+    const auto slot = *slot_opt;
     if (the_item_db[itemid2int(selected_item->id)]->category ==
         ItemCategory::ore)
     {
@@ -2216,10 +2217,9 @@ OnEnterResult on_enter_receive(
     }
     else
     {
-        item_copy(selected_item, slot);
-        selected_item->modify_number((-in));
-        slot->set_number(in);
-        const auto stacked_item = item_stack(0, slot, true).stacked_item;
+        const auto received_item = item_separate(selected_item, slot, in);
+        const auto stacked_item =
+            item_stack(0, received_item, true).stacked_item;
         item_convert_artifact(stacked_item);
     }
     wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
@@ -2281,7 +2281,7 @@ OnEnterResult on_enter_small_medal(const ItemRef& selected_item)
         snd("core.fail1");
         return OnEnterResult{1};
     }
-    const auto slot = slot_opt.unwrap();
+    const auto slot = *slot_opt;
     OptionalItemRef small_medals;
     if ((small_medals = item_find(622, 3, ItemFindLocation::player_inventory)))
     {
@@ -2300,9 +2300,9 @@ OnEnterResult on_enter_small_medal(const ItemRef& selected_item)
     assert(small_medals);
     small_medals->modify_number(-calcmedalvalue(selected_item));
     snd("core.paygold1");
-    item_copy(selected_item, slot);
-    txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", slot));
-    const auto stacked_item = item_stack(0, slot, true).stacked_item;
+    const auto received_item = item_copy(selected_item, slot);
+    txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", received_item));
+    const auto stacked_item = item_stack(0, received_item, true).stacked_item;
     item_convert_artifact(stacked_item, true);
     return OnEnterResult{1};
 }

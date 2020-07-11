@@ -26,8 +26,9 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "itemgen.hpp"
-#include "lua_env/handle_manager.hpp"
+#include "lua_env/event_manager.hpp"
 #include "lua_env/lua_env.hpp"
+#include "lua_env/lua_event/item_instance_event.hpp"
 #include "magic.hpp"
 #include "map.hpp"
 #include "mef.hpp"
@@ -99,57 +100,29 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
 
 
 
-Inventory::Inventory(
-    size_t index_start,
-    size_t inventory_size,
-    int inventory_id)
-    : _index_start(index_start)
-    , _storage(inventory_size)
+InventorySlot Item::inventory_slot() const noexcept
+{
+    return {inventory(), static_cast<size_t>(index())};
+}
+
+
+
+Inventory::Inventory(size_t inventory_size, int inventory_id)
+    : _storage(inventory_size)
     , _inventory_id(inventory_id)
+    , _capacity(inventory_size)
 {
-    size_t i = index_start;
-    for (auto&& item : _storage)
-    {
-        item._index = i;
-        item._inventory = this;
-        ++i;
-    }
-}
-
-
-
-Inventory::Inventory(Inventory&& other)
-    : _index_start(other._index_start)
-    , _storage(std::move(other._storage))
-    , _inventory_id(other._inventory_id)
-{
-    for (auto&& item : _storage)
-    {
-        item._inventory = this;
-    }
-}
-
-
-
-bool Inventory::contains(size_t index) const
-{
-    return _index_start <= index && index < _index_start + _storage.size();
-}
-
-
-
-ItemRef Inventory::at(size_t index)
-{
-    return ItemRef{&_storage.at(index)};
+    // Please uncomment the next line for testing dynamically-sized inventory.
+    // set_capacity(none);
 }
 
 
 
 bool Inventory::has_free_slot() const
 {
-    for (auto&& item : _storage)
+    for (const auto& item : _storage)
     {
-        if (item.number() == 0)
+        if (!item)
         {
             return true;
         }
@@ -159,45 +132,135 @@ bool Inventory::has_free_slot() const
 
 
 
-OptionalItemRef Inventory::get_free_slot()
+optional<InventorySlot> Inventory::get_free_slot()
+{
+    size_t i = 0;
+    for (const auto& item : _storage)
+    {
+        if (!item)
+        {
+            return InventorySlot{this, i};
+        }
+        ++i;
+    }
+    return none;
+}
+
+
+
+void Inventory::clear()
 {
     for (auto&& item : _storage)
     {
-        if (item.number() == 0)
+        if (item)
         {
-            return OptionalItemRef{&item};
+            item->number_ = 0;
+            item->obj_id = ObjId::nil();
+            item->_inventory = nullptr;
+            item->_index = -1;
+
+            item = nullptr;
         }
     }
-    return nullptr;
+}
+
+
+
+void Inventory::exchange(const ItemRef& a, const ItemRef& b)
+{
+    if (a == b)
+        return;
+
+    const auto [inv_a, idx_a] = a->inventory_slot();
+    const auto [inv_b, idx_b] = b->inventory_slot();
+
+    std::swap(inv_a->_storage.at(idx_a), inv_b->_storage.at(idx_b));
+    a->_inventory = inv_b;
+    b->_inventory = inv_a;
+    a->_index = idx_b;
+    b->_index = idx_a;
+    // TODO cell_refresh
+}
+
+
+
+const OptionalItemRef& Inventory::at(const InventorySlot& slot)
+{
+    return slot.inventory->at(slot.index);
+}
+
+
+
+ItemRef Inventory::create(const InventorySlot& slot)
+{
+    assert(!Inventory::at(slot));
+
+    const auto [inv, idx] = slot;
+    const auto new_item = eobject::Pool<Item>::instance().create();
+    new_item->_inventory = inv;
+    new_item->_index = idx;
+    inv->_storage.at(idx) = new_item;
+
+    return new_item;
+}
+
+
+
+void Inventory::move_all(Inventory& src, Inventory& dst)
+{
+    if (&src == &dst)
+        return;
+
+    const auto prev_size = src._storage.size();
+    dst._storage = std::move(src._storage);
+    src._storage.clear();
+    src._storage.resize(prev_size);
+
+    size_t i = 0;
+    for (const auto& item : dst._storage)
+    {
+        if (item)
+        {
+            item->_inventory = &dst;
+            item->_index = i;
+            item->body_part = 0;
+        }
+        ++i;
+    }
+
+    // TODO
+    // _capacity
+    // cell_refresh()
+    // src.size() != dst.size()
+}
+
+
+
+void Inventory::set_capacity(optional<size_t> new_capacity)
+{
+    _capacity = new_capacity;
+    // TODO
 }
 
 
 
 AllInventory::AllInventory()
 {
-    size_t index_start = 0;
-    _inventories.emplace_back(index_start, 200, 0);
-    index_start += _inventories.back().size();
+    _inventories.emplace_back(200, 0);
     for (size_t i = 1; i < 245; ++i)
     {
-        _inventories.emplace_back(index_start, 20, static_cast<int>(i));
-        index_start += _inventories.back().size();
+        _inventories.emplace_back(20, static_cast<int>(i));
     }
-    _inventories.emplace_back(index_start, 400, -1);
+    _inventories.emplace_back(400, -1);
 }
 
 
 
 ItemRef AllInventory::operator[](int index)
 {
-    for (auto&& inv : _inventories)
-    {
-        if (inv.contains(static_cast<size_t>(index)))
-        {
-            return inv.at(static_cast<size_t>(index) - inv.index_start());
-        }
-    }
-    throw "unreachable";
+    const auto inv_id = static_cast<int>(index >> 18) - 1;
+    const auto idx = index - ((inv_id + 1) << 18);
+    return by_index(inv_id).at(idx).unwrap();
 }
 
 
@@ -363,7 +426,7 @@ int itemusingfind(const ItemRef& item, bool disallow_pc)
             continue;
         }
         if (chara.activity && chara.activity.type != Activity::Type::sex &&
-            chara.activity.turn > 0 && chara.activity.item.as_opt() == item)
+            chara.activity.turn > 0 && chara.activity.item == item)
         {
             if (!disallow_pc || chara.index != 0)
             {
@@ -466,8 +529,7 @@ void cell_refresh(int x, int y)
         if (items[i])
         {
             // TODO phantom ref
-            item_indice_plus_one[i] =
-                items[i]->index() - g_inv.ground().index_start() + 1;
+            item_indice_plus_one[i] = items[i]->index() + 1;
         }
         else
         {
@@ -492,45 +554,36 @@ void itemturn(const ItemRef& item)
 
 
 
-void item_copy(const ItemRef& src, const ItemRef& dst)
+ItemRef
+item_separate(const ItemRef& item, const InventorySlot& slot, int number)
 {
-    const auto was_empty = dst->number() == 0;
-
-    if (was_empty && src->number() > 0)
-    {
-        // Clean up any stale handles that may have been left over from an item
-        // in the same index being removed.
-        lua::lua->get_handle_manager().remove_item_handle_run_callbacks(dst);
-    }
-
-    Item::copy(*src.get_raw_ptr(), *dst.get_raw_ptr());
-
-    if (was_empty && dst->number() != 0)
-    {
-        lua::lua->get_handle_manager().create_item_handle_run_callbacks(dst);
-    }
-    else if (!was_empty && dst->number() == 0)
-    {
-        dst->remove();
-    }
+    const auto dst = item_copy(item, slot);
+    item->modify_number(-number);
+    dst->set_number(number);
+    return dst;
 }
 
 
 
-void item_exchange(const ItemRef& a, const ItemRef& b)
+ItemRef item_copy(const ItemRef& item, const InventorySlot& slot)
 {
-    if (a == b)
-    {
-        return;
-    }
+    assert(!Inventory::at(slot));
+    assert(item->number() != 0);
 
-    Item tmp;
-    Item::copy(*a.get_raw_ptr(), tmp);
-    Item::copy(*b.get_raw_ptr(), *a.get_raw_ptr());
-    Item::copy(tmp, *b.get_raw_ptr());
+    const auto dst = Inventory::create(slot);
+    Item::copy(*item.get_raw_ptr(), *dst.get_raw_ptr());
+    dst->set_number(item->number());
+    dst->on_create();
+    return dst;
+}
 
-    lua::lua->get_handle_manager().swap_handles(
-        *b.get_raw_ptr(), *a.get_raw_ptr());
+
+
+int Item::global_index() const noexcept
+{
+    const auto inv_id = inventory()->inventory_id() + 1;
+    const auto idx = index();
+    return (inv_id << 18) + idx;
 }
 
 
@@ -542,23 +595,6 @@ void Item::remove()
 
 
 
-void item_refresh(const ItemRef& i)
-{
-    if (inv_getowner(i) == -1 && mode != 6)
-    {
-        // Refresh the cell the item is on if it's on the ground.
-        cell_refresh(i->pos().x, i->pos().y);
-    }
-    else if (inv_getowner(i) == 0)
-    {
-        // Refresh the player's burden state if the item is in their
-        // inventory.
-        refresh_burden_state();
-    }
-}
-
-
-
 void Item::modify_number(int delta)
 {
     this->set_number(this->number_ + delta);
@@ -566,26 +602,40 @@ void Item::modify_number(int delta)
 
 
 
-void Item::set_number(int number_)
+void Item::set_number(int new_number)
 {
-    bool item_was_empty = this->number_ <= 0;
+    new_number = std::max(new_number, 0);
+    if (number_ == new_number)
+        return;
 
-    if (item_was_empty && number_ > 0)
+    const auto needs_cell_refresh =
+        inventory()->inventory_id() == -1 && mode != 6;
+    const auto needs_refresh_burden_state = inventory()->inventory_id() == 0;
+
+    if (number_ == 0)
     {
-        // Clean up any stale handles that may have been left over from an item
-        // in the same index being removed.
-        lua::lua->get_handle_manager().remove_item_handle_run_callbacks(
-            ItemRef{this});
+        number_ = new_number;
+        on_create();
+    }
+    else
+    {
+        number_ = new_number;
+        if (number_ == 0)
+        {
+            on_remove();
+        }
     }
 
-    this->number_ = std::max(number_, 0);
-    item_refresh(ItemRef{this});
-
-    bool created_new = item_was_empty && this->number_ > 0;
-    if (created_new)
+    if (needs_cell_refresh)
     {
-        lua::lua->get_handle_manager().create_item_handle_run_callbacks(
-            ItemRef{this});
+        // Refresh the cell the item is on if it's on the ground.
+        cell_refresh(pos().x, pos().y);
+    }
+    else if (needs_refresh_burden_state)
+    {
+        // Refresh the player's burden state if the item is in their
+        // inventory.
+        refresh_burden_state();
     }
 }
 
@@ -601,6 +651,32 @@ void Item::set_pos(const Position& new_pos)
 
 
 
+void Item::on_create()
+{
+    const auto item_ref = inventory()->at(index()).unwrap();
+    obj_id = ObjId::generate();
+    ItemIdTable::instance().add(item_ref);
+    lua::lua->get_event_manager().trigger(
+        lua::ItemInstanceEvent("core.item_created", item_ref));
+}
+
+
+
+void Item::on_remove()
+{
+    const auto item_ref = inventory()->at(index()).unwrap();
+    lua::lua->get_event_manager().trigger(
+        lua::ItemInstanceEvent("core.item_removed", item_ref));
+    ItemIdTable::instance().remove(obj_id);
+    obj_id = ObjId::nil();
+
+    inventory()->remove(index());
+    _inventory = nullptr;
+    _index = -1;
+}
+
+
+
 ItemRef item_separate(const ItemRef& stacked_item)
 {
     if (stacked_item->number() <= 1)
@@ -608,22 +684,20 @@ ItemRef item_separate(const ItemRef& stacked_item)
         return stacked_item;
     }
 
-    auto slot = inv_get_free_slot(inv_getowner(stacked_item));
-    if (!slot)
+    auto slot_opt = inv_make_free_slot(inv_getowner(stacked_item));
+    if (!slot_opt)
     {
-        slot = inv_get_free_slot(-1);
-        if (!slot)
+        slot_opt = inv_make_free_slot(-1);
+        if (!slot_opt)
         {
             stacked_item->set_number(1);
             txt(i18n::s.get("core.item.something_falls_and_disappears"));
             return stacked_item;
         }
     }
-    const auto dst = slot.unwrap();
-
-    item_copy(stacked_item, dst);
-    dst->set_number(stacked_item->number() - 1);
-    stacked_item->set_number(1);
+    const auto slot = *slot_opt;
+    const auto dst =
+        item_separate(stacked_item, slot, stacked_item->number() - 1);
 
     if (inv_getowner(dst) == -1 && mode != 6)
     {
@@ -1577,8 +1651,11 @@ void remain_make(const ItemRef& remain, const Character& chara)
 
 
 
-ItemStackResult
-item_stack(int inventory_id, const ItemRef& base_item, bool show_message)
+ItemStackResult item_stack(
+    int inventory_id,
+    const ItemRef& base_item,
+    bool show_message,
+    optional<int> number)
 {
     if (base_item->quality == Quality::special &&
         is_equipment(the_item_db[itemid2int(base_item->id)]->category))
@@ -1605,8 +1682,9 @@ item_stack(int inventory_id, const ItemRef& base_item, bool show_message)
 
         if (stackable)
         {
-            item->modify_number(base_item->number());
-            base_item->remove();
+            const auto num = number.value_or(base_item->number());
+            item->modify_number(num);
+            base_item->modify_number(-num);
 
             if (show_message)
             {
@@ -1650,11 +1728,11 @@ void item_acid(const Character& owner, OptionalItemRef item)
             {
                 continue;
             }
-            if (equipment_slot.equipment.as_ref()->enhancement >= -3)
+            if (equipment_slot.equipment->enhancement >= -3)
             {
                 if (rnd(30) == 0)
                 {
-                    item = equipment_slot.equipment.as_opt();
+                    item = equipment_slot.equipment;
                     break;
                 }
             }
@@ -2058,20 +2136,11 @@ void mapitem_cold(int x, int y)
 
 
 
-ItemRef get_random_inv(int owner)
+InventorySlot inv_get_random_slot(int owner)
 {
     auto& inv = g_inv.by_index(owner);
-    return inv.at(rnd(inv.size()));
-}
-
-
-
-std::pair<int, int> inv_getheader(int owner)
-{
-    return {
-        static_cast<int>(g_inv.by_index(owner).index_start()),
-        static_cast<int>(g_inv.by_index(owner).size()),
-    };
+    const auto index = rnd(inv.size());
+    return {&inv, index};
 }
 
 
@@ -2097,7 +2166,7 @@ bool inv_find(ItemId id, int owner)
 
 
 
-bool inv_getspace(int owner)
+bool inv_has_free_slot(int owner)
 {
     return g_inv.by_index(owner).has_free_slot();
 }
@@ -2117,7 +2186,7 @@ int inv_sum(int owner)
 
 
 
-ItemRef inv_compress(int owner)
+InventorySlot inv_compress(int owner)
 {
     int number_of_deleted_items{};
     for (int i = 0; i < 100; ++i)
@@ -2143,30 +2212,21 @@ ItemRef inv_compress(int owner)
 
     if (const auto free_slot = g_inv.by_index(owner).get_free_slot())
     {
-        return free_slot.unwrap();
+        return *free_slot;
     }
 
     // Destroy 1 existing item forcely.
-    const auto item = get_random_inv(owner);
-    item->remove();
+    const auto slot = inv_get_random_slot(owner);
+    Inventory::at(slot)->remove();
 
-    return item;
+    return slot;
 }
 
 
 
-OptionalItemRef inv_get_free_slot(int inventory_id)
+optional<InventorySlot> inv_get_free_slot(int inventory_id)
 {
-    if (auto free_slot = g_inv.by_index(inventory_id).get_free_slot())
-    {
-        return free_slot;
-    }
-    if (inventory_id == -1 && mode != 6)
-    {
-        txt(i18n::s.get("core.item.items_are_destroyed"));
-        return inv_compress(inventory_id);
-    }
-    return nullptr;
+    return g_inv.by_index(inventory_id).get_free_slot();
 }
 
 
@@ -2194,25 +2254,46 @@ int inv_weight(int owner)
 
 
 
-ItemRef inv_get_free_slot_force(int inventory_id)
+optional<InventorySlot> inv_make_free_slot(int inventory_id)
 {
-    assert(inventory_id != -1);
+    if (inventory_id == -1 && mode != 6)
+    {
+        return inv_make_free_slot_force(inventory_id);
+    }
+    else
+    {
+        return inv_get_free_slot(inventory_id);
+    }
+}
 
+
+
+InventorySlot inv_make_free_slot_force(int inventory_id)
+{
     if (const auto slot = inv_get_free_slot(inventory_id))
     {
-        return slot.unwrap();
+        return *slot;
     }
+
+    if (inventory_id == -1)
+    {
+        assert(mode != 6);
+        txt(i18n::s.get("core.item.items_are_destroyed"));
+        return inv_compress(inventory_id);
+    }
+
     while (true)
     {
-        const auto item = get_random_inv(inventory_id);
+        const auto slot = inv_get_random_slot(inventory_id);
+        const auto item = Inventory::at(slot).unwrap();
         if (item->body_part == 0)
         {
-            item->remove();
-            if (cdata[inventory_id].ai_item.as_opt() == item)
+            if (cdata[inventory_id].ai_item == item)
             {
                 cdata[inventory_id].ai_item = nullptr;
             }
-            return item;
+            item->remove();
+            return slot;
         }
     }
 }
@@ -2221,18 +2302,9 @@ ItemRef inv_get_free_slot_force(int inventory_id)
 
 void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
 {
-    const auto slot = inv_get_free_slot(-1);
-    if (!slot)
-    {
-        txt(i18n::s.get("core.action.drop.too_many_items"));
-        update_screen();
-        return;
-    }
-
-    const auto dropped_item = slot.unwrap();
-    item_copy(item_in_inventory, dropped_item);
+    const auto slot = inv_make_free_slot_force(-1);
+    const auto dropped_item = item_separate(item_in_inventory, slot, num);
     dropped_item->set_pos(cdata.player().position);
-    dropped_item->set_number(num);
     itemturn(dropped_item);
 
     if (building_shelter)
@@ -2244,8 +2316,7 @@ void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
     else
     {
         snd("core.drop1");
-        txt(i18n::s.get(
-            "core.action.drop.execute", itemname(dropped_item, num)));
+        txt(i18n::s.get("core.action.drop.execute", itemname(dropped_item)));
     }
 
     if (dropped_item->id == ItemId::bottle_of_water) // Water
@@ -2267,7 +2338,6 @@ void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
     }
 
     const auto stacked_item = item_stack(-1, dropped_item).stacked_item;
-    item_in_inventory->modify_number(-num);
 
     refresh_burden_state();
     cell_refresh(stacked_item->pos().x, stacked_item->pos().y);
@@ -2632,7 +2702,7 @@ void equip_melee_weapon(Character& chara)
         {
             continue;
         }
-        const auto weapon = chara.equipment_slots[cnt].equipment.as_ref();
+        const auto weapon = chara.equipment_slots[cnt].equipment.unwrap();
         if (weapon->dice_x == 0)
         {
             continue;

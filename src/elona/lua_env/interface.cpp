@@ -38,13 +38,6 @@ std::vector<fs::path> mod_dirs_internal(const fs::path& base_dir, F predicate)
 
 
 
-sol::table handle(const ItemRef& it)
-{
-    return lua::lua->get_handle_manager().get_handle(*it.get_raw_ptr());
-}
-
-
-
 optional<ConfigTable> get_data(
     data::PrototypeId prototype_id,
     data::InstanceId instance_id)
