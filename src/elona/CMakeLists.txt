@@ -110,6 +110,9 @@ set(ELONA_SOURCES
   data/types.cpp
   data/util.cpp
 
+  eobject/internal/memory_cell.cpp
+  eobject/pool.cpp
+
   lua_env/api_manager.cpp
   lua_env/config_manager.cpp
   lua_env/console.cpp

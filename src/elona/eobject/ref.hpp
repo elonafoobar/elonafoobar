@@ -1,13 +1,23 @@
 #pragma once
 
+#include <cassert>
+
 #include <stdexcept>
 #include <type_traits>
 #include <utility>
+
+#include "../serialization/concepts.hpp"
+#include "id.hpp"
+#include "internal/_pending_ids.hpp"
+#include "internal/memory_cell_incomplete.hpp"
 
 
 
 namespace elona::eobject
 {
+
+template <typename T>
+class Pool;
 
 template <typename T>
 struct Ref;
@@ -17,7 +27,7 @@ struct OptionalRef;
 
 
 
-class null_reference_exception : public std::logic_error
+class bad_optional_error : public std::logic_error
 {
     using std::logic_error::logic_error;
 };
@@ -32,8 +42,6 @@ class null_reference_exception : public std::logic_error
  * When using this struct, you don't have to check its validity, but never use
  * moved values (It is safe to re-assign some valid value to a moved Ref and
  * then use the Ref, but it is not recommended).
- *
- * Note: reference counting is not implemented yet.
  */
 template <typename T>
 struct Ref
@@ -42,43 +50,45 @@ struct Ref
     static_assert(!std::is_const_v<T>);
     static_assert(!std::is_volatile_v<T>);
 
+    friend class Pool<T>;
     friend struct OptionalRef<T>;
 
 
 
 public:
-    /// Constructor from nullptr_t is deleted because Ref is non-null reference.
-    Ref(std::nullptr_t) = delete;
-
-
-
-    /// Constructor from a raw pointer.
-    /// @throw std::null_reference_exception if @a ptr is null.
-    explicit Ref(T* ptr)
-        : _ptr(ptr)
+    /// Copy constructor.
+    Ref(const Ref& other) noexcept
+        : _ptr(other._ptr)
     {
-        if (!ptr)
-        {
-            throw null_reference_exception{
-                "Ref::Ref(): attempt to construct null reference."};
-        }
+        inc_ref_count();
     }
 
 
-
-    /// Copy constructor.
-    Ref(const Ref& other) noexcept = default;
-
     /// Move constructor.
-    Ref(Ref&& other) noexcept = default;
+    Ref(Ref&& other) noexcept
+        : _ptr(other._ptr)
+    {
+        other._ptr = nullptr;
+    }
 
 
     /// Copy assignment.
-    Ref& operator=(const Ref& other) noexcept = default;
+    Ref& operator=(const Ref& other) noexcept
+    {
+        dec_ref_count();
+        _ptr = other._ptr;
+        inc_ref_count();
+        return *this;
+    }
 
 
     /// Move assignment.
-    Ref& operator=(Ref&& other) noexcept = default;
+    Ref& operator=(Ref&& other) noexcept
+    {
+        _ptr = other._ptr;
+        other._ptr = nullptr;
+        return *this;
+    }
 
 
     /// Assignment from nullptr_t is deleted because Ref is non-null reference.
@@ -90,7 +100,7 @@ public:
     /// against a moved value.
     T* get_raw_ptr() const noexcept
     {
-        return _ptr;
+        return _ptr ? &_ptr->value : nullptr;
     }
 
 
@@ -137,7 +147,7 @@ public:
 
 
 private:
-    T* _ptr;
+    internal::MemoryCell<T>* _ptr;
 
 
 
@@ -150,27 +160,41 @@ private:
 
 
 
-    struct no_null_check_tag
-    {
-    };
-
-
-    /// Constructor from a raw pointer without null check. @a ptr can be null.
-    /// This overload is provided for OptionalRef to construct null Ref.
-    /// The second parameter is just a tag to distinguish it from `Ref(T*)`
-    /// version.
-    explicit Ref(T* ptr, no_null_check_tag) noexcept
+    /// Constructor from a raw pointer.
+    explicit Ref(internal::MemoryCell<T>* ptr)
         : _ptr(ptr)
     {
     }
 
 
 
-    /// Constructors from OptionalRef are deleted because it potentially makes
-    /// null Ref. If you want to convert an OptionalRef which is surely
-    /// non-null, please call OptionalRef::unwrap().
-    Ref(const OptionalRef<T>& other) = delete;
-    Ref(OptionalRef<T>&& other) = delete;
+    void inc_ref_count()
+    {
+        if (_ptr)
+        {
+            internal::inc_ref_count(_ptr);
+        }
+    }
+
+
+
+    void dec_ref_count()
+    {
+        if (_ptr)
+        {
+            internal::dec_ref_count(_ptr);
+            if (internal::ref_count(_ptr) == 0)
+            {
+                Pool<T>::instance().finalize(_ptr);
+
+                internal::dec_weak_ref_count(_ptr);
+                if (internal::weak_ref_count(_ptr) == 0)
+                {
+                    Pool<T>::instance().destroy(_ptr);
+                }
+            }
+        }
+    }
 };
 
 
@@ -179,16 +203,10 @@ private:
  * An optional reference-counted smart pointer of T. Note that it can be null
  * contrast to Ref. When using this struct, you must check its validity before
  * dereferencing.
- *
- * Note: reference counting is not implemented yet.
  */
 template <typename T>
 struct OptionalRef
 {
-    static_assert(std::is_class_v<T>);
-    static_assert(!std::is_const_v<T>);
-    static_assert(!std::is_volatile_v<T>);
-
     friend struct Ref<T>;
 
 
@@ -196,22 +214,14 @@ struct OptionalRef
 public:
     /// Default constructor; constructs null reference.
     OptionalRef() noexcept
-        : _ref(nullptr, typename Ref<T>::no_null_check_tag{})
+        : _ref()
     {
     }
 
 
     /// Constructor from nullptr_t; constructs null reference.
     OptionalRef(std::nullptr_t)
-        : _ref(nullptr, typename Ref<T>::no_null_check_tag{})
-    {
-    }
-
-
-
-    /// Constructor from a raw pointer. @a ptr can be null.
-    explicit OptionalRef(T* ptr) noexcept
-        : _ref(ptr, typename Ref<T>::no_null_check_tag{})
+        : _ref()
     {
     }
 
@@ -244,8 +254,7 @@ public:
     /// Assignment from nullptr_t.
     OptionalRef& operator=(std::nullptr_t)
     {
-        _ref._ptr = nullptr;
-        return *this;
+        return (*this = Ref<T>{});
     }
 
 
@@ -276,12 +285,12 @@ public:
 
 
     /// Unwrap this OptionalRef and convert to Ref with null check.
-    /// @throw null_reference_exception if this is null.
+    /// @throw bad_optional_error if this is null.
     Ref<T> unwrap() const
     {
         if (is_null())
         {
-            throw null_reference_exception{
+            throw bad_optional_error{
                 "OptionalRef::unwrap(): attempt to unwrap null reference."};
         }
 
@@ -309,7 +318,7 @@ public:
     /// It returns a raw pointer.
     T* get_raw_ptr() const noexcept
     {
-        return _ref._ptr;
+        return _ref.get_raw_ptr();
     }
 
 
@@ -318,7 +327,7 @@ public:
     {
         if (is_null())
         {
-            throw null_reference_exception{
+            throw bad_optional_error{
                 "OptionalRef::operator->(): attempt to access member of null reference"};
         }
         return get_raw_ptr();
@@ -366,8 +375,30 @@ public:
 
 
 
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        if constexpr (serialization::concepts::is_iarchive_v<Archive>)
+        {
+            Id obj_id;
+            ar(obj_id);
+            internal::_pending_ids<T>.emplace_back(this, obj_id);
+        }
+        else
+        {
+            Id obj_id = is_null() ? Id::nil() : get_raw_ptr()->obj_id;
+            ar(obj_id);
+        }
+    }
+
+
+
 private:
     Ref<T> _ref;
 };
+
+
+
+// TODO weak reference support
 
 } // namespace elona::eobject
