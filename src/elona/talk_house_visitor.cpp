@@ -128,7 +128,7 @@ void _adventurer_hate_action(Character& speaker)
             txt(i18n::s.get(
                 "core.talk.visitor.adventurer.hate.throws", speaker));
             snd("core.throw2");
-            ThrowingObjectAnimation({tlocx, tlocy}, speaker.position, 223, 0)
+            ThrowingObjectAnimation(speaker.position, {tlocx, tlocy}, 223, 0)
                 .play();
             mef_add(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, speaker.index);
             mapitem_fire(speaker, tlocx, tlocy);

@@ -582,18 +582,18 @@ void BoltAnimation::do_play()
 
 void ThrowingObjectAnimation::do_play()
 {
-    if (!is_in_fov(target_pos))
+    if (!is_in_fov(thrower_pos))
         return;
 
     prepare_item_image(item_chip, item_color);
-    int x = (target_pos.x - scx) * inf_tiles;
-    int y = (target_pos.y - scy) * inf_tiles;
-    int p = dist(target_pos, attacker_pos.x, attacker_pos.y) / 2 + 1;
+    int x = (thrower_pos.x - scx) * inf_tiles;
+    int y = (thrower_pos.y - scy) * inf_tiles;
+    int p = dist(thrower_pos, target_pos) / 2 + 1;
 
     for (int t = 0; t < p; ++t)
     {
-        x -= (target_pos.x - attacker_pos.x) * inf_tiles / p;
-        y -= (target_pos.y - attacker_pos.y) * inf_tiles / p;
+        x -= (thrower_pos.x - target_pos.x) * inf_tiles / p;
+        y -= (thrower_pos.y - target_pos.y) * inf_tiles / p;
 
         gsel(4);
         gmode(0);
@@ -613,8 +613,8 @@ void ThrowingObjectAnimation::do_play()
                 x + inf_tiles / 2,
                 y,
                 std::atan2(
-                    attacker_pos.x - target_pos.x,
-                    target_pos.y - attacker_pos.y));
+                    target_pos.x - thrower_pos.x,
+                    thrower_pos.y - target_pos.y));
         }
         redraw();
         gmode(0);

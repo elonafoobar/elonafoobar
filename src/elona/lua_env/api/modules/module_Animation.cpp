@@ -126,18 +126,18 @@ void Animation_play_bolt(
  *
  * Play throwing object animation.
  *
- * @tparam LuaPosition attacker_pos The attacker's position.
+ * @tparam LuaPosition thrower_pos The thrower's position.
  * @tparam LuaPosition target_pos The target's position.
  * @tparam number item_chip The item chip of the thrown object
  * @tparam number item_color The item color of the thrown object
  */
 void Animation_play_throwing_object(
-    const Position& attacker_pos,
+    const Position& thrower_pos,
     const Position& target_pos,
     int item_chip,
     int item_color)
 {
-    ThrowingObjectAnimation(target_pos, attacker_pos, item_chip, item_color)
+    ThrowingObjectAnimation(thrower_pos, target_pos, item_chip, item_color)
         .play();
 }
 

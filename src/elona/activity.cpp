@@ -309,7 +309,7 @@ void activity_perform_generate_item(
         item->modify_number(-1);
         cell_refresh(item->pos().x, item->pos().y);
         ThrowingObjectAnimation(
-            item->pos(), audience.position, item->image, item->color)
+            audience.position, item->pos(), item->image, item->color)
             .play();
         item->modify_number(1);
         cell_refresh(item->pos().x, item->pos().y);

@@ -1154,7 +1154,7 @@ TurnResult do_throw_command(Character& thrower, const ItemRef& throw_item)
         }
     }
     ThrowingObjectAnimation(
-        {tlocx, tlocy}, thrower.position, throw_item->image, throw_item->color)
+        thrower.position, {tlocx, tlocy}, throw_item->image, throw_item->color)
         .play();
 
     if (throw_item->id == ItemId::monster_ball)
