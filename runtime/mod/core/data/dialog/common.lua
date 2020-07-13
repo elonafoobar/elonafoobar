@@ -14,6 +14,10 @@ local function quest_completed()
    GUI.show_journal_update_message()
 end
 
+local function journal_updated()
+   GUI.show_journal_update_message()
+end
+
 local function args_name()
    return {Chara.player().basename}
 end
@@ -29,6 +33,7 @@ end
 return {
    create_downstairs = create_downstairs,
    quest_completed = quest_completed,
+   journal_updated = journal_updated,
 
    args_name = args_name,
    args_alias = args_alias,

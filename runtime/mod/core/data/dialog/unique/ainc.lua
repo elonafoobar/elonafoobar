@@ -40,7 +40,7 @@ return {
       },
       quest_yes = {
          text = {
-            GUI.show_journal_update_message,
+            common.journal_updated,
             {"quest.do_it"},
          },
          on_finish = function()
