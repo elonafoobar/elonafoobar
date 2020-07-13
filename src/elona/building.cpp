@@ -1240,7 +1240,7 @@ void update_museum()
             continue;
         }
         if (cell_data.at(item->pos().x, item->pos().y)
-                .item_info_actual.stack_count() == 1)
+                .item_info_actual.stack_count() != 1)
         {
             continue;
         }
@@ -1298,7 +1298,7 @@ std::vector<HomeRankHeirloom> building_update_home_rank()
     for (const auto& item : g_inv.ground())
     {
         if (cell_data.at(item->pos().x, item->pos().y)
-                .item_info_actual.stack_count() == 1)
+                .item_info_actual.stack_count() != 1)
         {
             continue;
         }
