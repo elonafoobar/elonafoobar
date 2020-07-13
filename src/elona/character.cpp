@@ -1393,7 +1393,7 @@ void chara_vanquish(Character& chara)
         }
         chara.shop_store_id = 0;
     }
-    modify_crowd_density(chara.index, 1);
+    modify_crowd_density(chara.index, -1);
 }
 
 
@@ -1654,14 +1654,8 @@ void chara_relocate(
     wear_most_valuable_equipment_for_all_body_parts(destination);
     chara_refresh(destination);
 
-    if (destination.index < 57)
-    {
-        modify_crowd_density(source.index, -1);
-    }
-    if (source.index < 57)
-    {
-        modify_crowd_density(destination.index, 1);
-    }
+    modify_crowd_density(destination.index, 1);
+    modify_crowd_density(source.index, -1);
 }
 
 
