@@ -18,8 +18,8 @@ local function args_name()
    return {Chara.player().basename}
 end
 
-local function args_title()
-   return {Chara.player().title}
+local function args_alias()
+   return {Chara.player().alias}
 end
 
 local function args_speaker(t)
@@ -31,6 +31,6 @@ return {
    quest_completed = quest_completed,
 
    args_name = args_name,
-   args_title = args_title,
+   args_alias = args_alias,
    args_speaker = args_speaker,
 }

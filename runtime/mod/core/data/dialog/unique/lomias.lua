@@ -209,7 +209,7 @@ return {
          text = {
             {"after.get_out.dialog._0", args = common.args_name, speaker = "core.larnneire"},
             {"after.get_out.dialog._1", speaker = "core.lomias"},
-            {"after.get_out.dialog._2", args = common.args_title},
+            {"after.get_out.dialog._2", args = common.args_alias},
          },
          on_finish = function()
             Chara.find("core.larnneire", "others"):vanquish()
