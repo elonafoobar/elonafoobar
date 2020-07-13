@@ -15,10 +15,6 @@ public:
         : _chara(chara)
         , _operation(operation)
     {
-        assert(
-            operation == CharacterSheetOperation::investigate_ally
-                ? _chara.index != 0
-                : _chara.index == 0);
     }
 
 protected:
