@@ -50,12 +50,12 @@ function play_bolt(attacker_pos, target_pos, element_name, distance) end
 
 --- Play throwing object animation.
 --
---  @tparam LuaPosition attacker_pos The attacker's position.
+--  @tparam LuaPosition thrower_pos The thrower's position.
 --  @tparam LuaPosition target_pos The target's position.
 --  @tparam number item_chip The item chip of the thrown object
 --  @tparam number item_color The item color of the thrown object
 --  @function play_throwing_object
-function play_throwing_object(attacker_pos, target_pos, item_chip, item_color) end
+function play_throwing_object(thrower_pos, target_pos, item_chip, item_color) end
 
 --- Play swarm animation.
 --

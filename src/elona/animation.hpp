@@ -174,11 +174,11 @@ class ThrowingObjectAnimation : public AbstractAnimation
 {
 public:
     ThrowingObjectAnimation(
-        const Position& attacker_pos,
+        const Position& thrower_pos,
         const Position& target_pos,
         int item_chip,
         int item_color)
-        : attacker_pos(attacker_pos)
+        : thrower_pos(thrower_pos)
         , target_pos(target_pos)
         , item_chip(item_chip)
         , item_color(item_color)
@@ -191,7 +191,7 @@ protected:
 
 
 private:
-    const Position& attacker_pos;
+    const Position& thrower_pos;
     const Position& target_pos;
     int item_chip;
     int item_color;

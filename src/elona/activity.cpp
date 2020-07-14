@@ -303,16 +303,50 @@ void activity_perform_generate_item(
         }
     }
 
+    /*
+     * Generate an item and play throwing animation.
+     * The generated item should be hidden during the animation is playing, and
+     * then appear when the animation finishes. In vanilla, it is done by
+     * removing the item once and restore it after the animation. For vanilla's
+     * implementation, see diff of Pull Request #1687.
+     * https://github.com/elonafoobar/elonafoobar/pull/1687/files#diff-df8c633c69661a36d5d606d01e0bf6ca
+     * It does not work in foobar because these oprations trigger event
+     * `core.item_created` and `core.item_removed`, calling registered event
+     * handlers. To avoid firing events, only the drawing information is removed
+     * temporarily and then restored, instead of modifying the item itself.
+     */
+
+    // Save drawing information of the cell *before* tip generation.
+    const auto item_info_actual_before_tip_generation =
+        cell_data.at(x, y).item_info_actual;
+    const auto item_info_memory_before_tip_generation =
+        cell_data.at(x, y).item_info_memory;
     if (const auto item = itemcreate_extra_inv(item_id, x, y, 1))
     {
-        // NOTE: may cause Lua creation callbacks to run twice.
-        item->modify_number(-1);
-        cell_refresh(item->pos().x, item->pos().y);
+        // Save drawing information of the cell *after* tip generation.
+        const auto item_info_actual_after_tip_generation =
+            cell_data.at(x, y).item_info_actual;
+        const auto item_info_memory_after_tip_generation =
+            cell_data.at(x, y).item_info_memory;
+        // Restore drawing information of the cell *before* tip generation.
+        // It actually does hiding the generated item during the throwing
+        // animation is playing.
+        cell_data.at(x, y).item_info_actual =
+            item_info_actual_before_tip_generation;
+        cell_data.at(x, y).item_info_memory =
+            item_info_memory_before_tip_generation;
+        // Play animation.
         ThrowingObjectAnimation(
-            item->pos(), performer.position, item->image, item->color)
+            audience.position, item->pos(), item->image, item->color)
             .play();
-        item->modify_number(1);
-        cell_refresh(item->pos().x, item->pos().y);
+        // Restore drawing information of the cell *after* tip generation.
+        // It fixes the inconsistency that the drawing information is different
+        // from the actual item. Now, all invariant constraints are properly
+        // restored.
+        cell_data.at(x, y).item_info_actual =
+            item_info_actual_after_tip_generation;
+        cell_data.at(x, y).item_info_memory =
+            item_info_memory_after_tip_generation;
         ++performance_tips;
     }
 }
