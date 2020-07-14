@@ -164,12 +164,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
 
 
 
-bool input_text_dialog(
-    int x,
-    int y,
-    int val2,
-    bool is_cancelable,
-    bool limit_length)
+bool input_text_dialog(int x, int y, int val2, bool is_cancelable)
 {
     bool canceled = false;
 
@@ -228,15 +223,7 @@ bool input_text_dialog(
         }
         noteget(s, 0);
 
-        if (limit_length && p(4) == 20)
-        {
-            if (inputlog(0).back() != '\n')
-            {
-                inputlog = strutil::take_by_width(inputlog, 20);
-            }
-            s = strutil::take_by_width(s, 20);
-        }
-        else if (!limit_length && p(4) > 18)
+        if (p(4) > 18)
         {
             p(4) = 18;
             s = strutil::take_by_width(s, 18);
@@ -262,12 +249,6 @@ bool input_text_dialog(
             if (is_cancelable)
             {
                 canceled = true;
-            }
-        }
-        if (is_cancelable)
-        {
-            if (canceled)
-            {
                 inputlog = "";
                 keywait = 1;
                 break;
