@@ -33,7 +33,7 @@ void for_each_cdata(const fs::path& save_dir, F f)
         std::ostringstream out;
         serialization::binary::OArchive oar{out};
 
-        const auto is_cdatas1 = entry.path().extension() == "s1";
+        const auto is_cdatas1 = entry.path().extension() == ".s1";
         const auto begin = is_cdatas1 ? 0 : 57;
         const auto end = is_cdatas1 ? 57 : 245;
         for (int idx = begin; idx < end; ++idx)
