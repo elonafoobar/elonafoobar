@@ -321,8 +321,8 @@ void adventurer_discover_equipment(Character& adv)
     f = 0;
     for (int _i = 0; _i < 10; ++_i)
     {
-        const auto item = get_random_inv(adv.index);
-        if (item->number() == 0)
+        const auto item = Inventory::at(inv_get_random_slot(adv.index));
+        if (!item)
         {
             f = 1;
             break;
@@ -333,7 +333,7 @@ void adventurer_discover_equipment(Character& adv)
         }
         if (item->number() != 0)
         {
-            if (adv.ai_item.as_opt() == item)
+            if (adv.ai_item == item)
             {
                 adv.ai_item = nullptr;
             }

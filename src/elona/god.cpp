@@ -715,10 +715,7 @@ void god_fail_to_take_over_penalty()
 bool god_is_offerable(const ItemRef& offering, Character& believer)
 {
     return lua::call_with_result(
-        "core.Impl.God.is_offerable",
-        false,
-        lua::handle(offering),
-        lua::handle(believer));
+        "core.Impl.God.is_offerable", false, offering, lua::handle(believer));
 }
 
 } // namespace elona

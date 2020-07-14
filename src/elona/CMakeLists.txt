@@ -50,7 +50,6 @@ set(ELONA_SOURCES
   i18n.cpp
   init.cpp
   initialize_map.cpp
-  index_item_ref.cpp
   initialize_map_types.cpp
   input.cpp
   input_prompt.cpp
@@ -109,6 +108,9 @@ set(ELONA_SOURCES
   data/init.cpp
   data/types.cpp
   data/util.cpp
+
+  eobject/internal/memory_cell.cpp
+  eobject/pool.cpp
 
   lua_env/api_manager.cpp
   lua_env/config_manager.cpp

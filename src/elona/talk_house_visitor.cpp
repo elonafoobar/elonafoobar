@@ -357,29 +357,21 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
 
 void _adventurer_receive_coin(Character& speaker)
 {
-    if (!inv_get_free_slot(-1))
+    inv_make_free_slot_force(-1);
+
+    if (rnd(4))
     {
-        txt(i18n::s.get(
-            "core.talk.visitor.adventurer.friendship.no_empty_spot"));
+        p = 55;
     }
     else
     {
-        if (rnd(4))
-        {
-            p = 55;
-        }
-        else
-        {
-            p = 622;
-        }
-        flt();
-        if (const auto item =
-                itemcreate_extra_inv(p, cdata.player().position, 0))
-        {
-            txt(i18n::s.get(
-                "core.talk.visitor.receive", item.unwrap(), speaker));
-            snd("core.get1");
-        }
+        p = 622;
+    }
+    flt();
+    if (const auto item = itemcreate_extra_inv(p, cdata.player().position, 0))
+    {
+        txt(i18n::s.get("core.talk.visitor.receive", item.unwrap(), speaker));
+        snd("core.get1");
     }
 }
 
@@ -412,7 +404,7 @@ TalkResult _talk_hv_adventurer_friendship(Character& speaker)
 
 void _adventurer_receive_souvenir()
 {
-    if (!inv_get_free_slot(0))
+    if (!inv_has_free_slot(0))
     {
         txt(i18n::s.get(
             "core.talk.visitor.adventurer.souvenir.inventory_is_full"));
@@ -625,11 +617,11 @@ TalkResult _talk_hv_adventurer(Character& speaker)
     {
         return _talk_hv_adventurer_hate(speaker);
     }
-    if (speaker.impression >= 100 && !speaker.is_best_friend() &&
-        inv_get_free_slot(-1))
+    if (speaker.impression >= 100 && !speaker.is_best_friend())
     {
-        // NOTE: this dialog falls through.
+        inv_make_free_slot_force(-1);
         _talk_hv_adventurer_best_friend(speaker);
+        // NOTE: this dialog falls through.
     }
     if (rnd(4) == 0 && speaker.impression >= 150)
     {

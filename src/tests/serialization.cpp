@@ -99,13 +99,13 @@ TEST_CASE("Test other character data compatibility", "[C++: Serialization]")
 TEST_CASE("Test item data compatibility (in inventory)", "[C++: Serialization]")
 {
     load_previous_savefile();
-    REQUIRE(elona::itemname(g_inv[0]) == u8"ブロンズの兜 [0,1]");
+    REQUIRE(elona::itemname(g_inv[1 << 18]) == u8"ブロンズの兜 [0,1]");
 }
 
 TEST_CASE("Test item data compatibility (on ground)", "[C++: Serialization]")
 {
     load_previous_savefile();
-    REQUIRE(elona::itemname(g_inv[5080]) == u8"割れたつぼ");
+    REQUIRE(elona::itemname(g_inv[0]) == u8"割れたつぼ");
 }
 
 TEST_CASE("Test ability data compatibility", "[C++: Serialization]")

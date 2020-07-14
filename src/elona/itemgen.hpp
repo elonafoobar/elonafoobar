@@ -1,6 +1,6 @@
 #pragma once
 
-#include "eobject/eobject.hpp"
+#include "eobject/forward.hpp"
 #include "optional.hpp"
 #include "randomgen.hpp"
 

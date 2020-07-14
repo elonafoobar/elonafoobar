@@ -42,7 +42,7 @@ struct LuaRef
     decltype(auto) get_ref()
     {
         auto h = make_handle();
-        return lua::lua->get_handle_manager().get_ref<T>(h);
+        return lua::lua->get_handle_manager().get_ref(h);
     }
 
 

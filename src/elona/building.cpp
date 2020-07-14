@@ -1046,7 +1046,7 @@ void show_shop_log()
                 {
                     continue;
                 }
-                if (chara.activity.item.as_opt() == item_for_sale.item)
+                if (chara.activity.item == item_for_sale.item)
                 {
                     chara.activity.finish();
                 }
@@ -1648,7 +1648,7 @@ void supply_income()
         if (cdata.player().level > 5)
         {
             save_set_autosave();
-            if (!inv_getspace(-1))
+            if (!inv_has_free_slot(-1))
             {
                 inv_compress(-1);
             }

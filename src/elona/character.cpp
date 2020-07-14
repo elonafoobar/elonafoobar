@@ -708,9 +708,9 @@ void chara_refresh(Character& chara)
                 {
                     continue;
                 }
-                if (equipment_slot.equipment.as_ref()->weight >= 1000)
+                if (equipment_slot.equipment->weight >= 1000)
                 {
-                    equipment_slot.equipment.as_ref()->body_part = 0;
+                    equipment_slot.equipment->body_part = 0;
                     equipment_slot.unequip();
                 }
             }
@@ -754,7 +754,7 @@ void chara_refresh(Character& chara)
         {
             continue;
         }
-        const auto equipment = equipment_slot.equipment.as_ref();
+        const auto equipment = equipment_slot.equipment;
         chara.sum_of_equipment_weight += equipment->weight;
         if (equipment->skill == 168)
         {
@@ -1545,21 +1545,8 @@ void chara_relocate(
         hp = destination.hp;
     }
 
-    // Copy `source`'s inventory to `destination`.
-    const auto tmp = inv_getheader(source.index);
-    const auto invhead = tmp.first;
-    const auto invrange = tmp.second;
-    int p = invhead;
-    for (const auto& item : g_inv.for_chara(destination))
-    {
-        item_copy(g_inv[p], item);
-        item->body_part = 0;
-        ++p;
-        if (p >= invhead + invrange)
-        {
-            break;
-        }
-    }
+    // Move all items in `source`'s inventory to `destination`'s.
+    Inventory::move_all(g_inv.for_chara(source), g_inv.for_chara(destination));
 
     // Clear some fields which should not be copied.
     source.ai_item = nullptr;
@@ -1666,7 +1653,7 @@ void chara_set_ai_item(Character& chara, ItemRef item)
     if (category == ItemCategory::food || category == ItemCategory::potion ||
         category == ItemCategory::scroll)
     {
-        chara.ai_item = IndexItemRef::from_ref(std::move(item));
+        chara.ai_item = item;
     }
 }
 
@@ -2371,7 +2358,7 @@ void proc_negative_enchantments(Character& chara)
             continue;
         }
         proc_one_equipment_with_negative_enchantments(
-            chara, equipment.as_ref());
+            chara, equipment.unwrap());
     }
 }
 
@@ -2720,7 +2707,7 @@ void lost_body_part(int chara_index)
             {
                 continue;
             }
-            equipment_slot.equipment.as_ref()->body_part = 0;
+            equipment_slot.equipment->body_part = 0;
             equipment_slot.unequip();
         }
     }

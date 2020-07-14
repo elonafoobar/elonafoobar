@@ -5,7 +5,7 @@
 
 #include "../snail/color.hpp"
 #include "data/id.hpp"
-#include "eobject/eobject.hpp"
+#include "eobject/forward.hpp"
 #include "optional.hpp"
 #include "pic_loader/extent.hpp"
 

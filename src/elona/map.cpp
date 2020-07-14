@@ -664,6 +664,12 @@ static void _modify_characters_on_regenerate()
 {
     for (auto&& cnt : cdata.others())
     {
+        // TODO
+        if (cnt.state() == Character::State::empty)
+        {
+            continue;
+        }
+
         chara_clear_status_effects_b(cnt);
         if (cnt.state() != Character::State::alive)
         {

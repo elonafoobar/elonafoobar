@@ -121,7 +121,7 @@ void I18NManager::register_function(
 
 void I18NManager::add_arg(sol::table args, const ItemRef& value)
 {
-    args.add(lua::lua->get_handle_manager().get_handle(*value.get_raw_ptr()));
+    args.add(value);
 }
 
 

@@ -4,7 +4,7 @@
 
 #include "../util/noncopyable.hpp"
 #include "data/id.hpp"
-#include "eobject/eobject.hpp"
+#include "eobject/forward.hpp"
 #include "filesystem.hpp"
 #include "optional.hpp"
 

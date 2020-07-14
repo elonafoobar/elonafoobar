@@ -181,9 +181,9 @@ void dump_player_info()
         listmax = 0;
         if (equipment_slot.equipment)
         {
-            item_name = itemname(equipment_slot.equipment.as_ref());
-            item_desc = cnvweight(equipment_slot.equipment.as_ref()->weight);
-            item_dump_desc(equipment_slot.equipment.as_ref());
+            item_name = itemname(equipment_slot.equipment.unwrap());
+            item_desc = cnvweight(equipment_slot.equipment->weight);
+            item_dump_desc(equipment_slot.equipment.unwrap());
         }
         else
         {

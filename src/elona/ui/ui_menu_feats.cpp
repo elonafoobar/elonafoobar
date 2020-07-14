@@ -95,7 +95,7 @@ void UIMenuFeats::_load_traits_by_enchantments()
     {
         if (equipment)
         {
-            for (const auto& enc : equipment.as_ref()->enchantments)
+            for (const auto& enc : equipment->enchantments)
             {
                 if (enc.id == 0)
                     break;

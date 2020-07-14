@@ -42,10 +42,9 @@ int Item_count()
  * @tparam num enchantment_id the ID of the enchantment
  * @treturn bool true if the item has the enchantment
  */
-bool Item_has_enchantment(const LuaItemHandle item, int enchantment_id)
+bool Item_has_enchantment(const ItemRef& item, int enchantment_id)
 {
-    auto& item_ref = lua::ref<Item>(item);
-    return !!enchantment_find(ItemRef{&item_ref}, enchantment_id);
+    return !!enchantment_find(item, enchantment_id);
 }
 
 
@@ -60,15 +59,14 @@ bool Item_has_enchantment(const LuaItemHandle item, int enchantment_id)
  * @tparam[opt] bool use_article Prepend articles like "the" to the item name
  * @treturn string
  */
-std::string Item_itemname(LuaItemHandle item, int number, bool use_article)
+std::string Item_itemname(const ItemRef& item, int number, bool use_article)
 {
-    auto& item_ref = lua::ref<Item>(item);
-    return elona::itemname(ItemRef{&item_ref}, number, use_article);
+    return elona::itemname(item, number, use_article);
 }
 
 
 
-sol::optional<LuaItemHandle> Item_create_xy(int x, int y, sol::table args)
+sol::optional<ItemRef> Item_create_xy(int x, int y, sol::table args)
 {
     // `libclang`, invoked from `tools/docgen`, fails to parse this function's
     // body for some reason.
@@ -154,7 +152,7 @@ sol::optional<LuaItemHandle> Item_create_xy(int x, int y, sol::table args)
 
     if (const auto item = itemcreate(slot, id, x, y, number))
     {
-        return lua::handle(item.unwrap());
+        return item.unwrap();
     }
     else
     {
@@ -165,7 +163,7 @@ sol::optional<LuaItemHandle> Item_create_xy(int x, int y, sol::table args)
 
 
 
-sol::optional<LuaItemHandle>
+sol::optional<ItemRef>
 Item_create_with_id_xy(int x, int y, const std::string& id)
 {
     return Item_create_xy(
@@ -174,7 +172,7 @@ Item_create_with_id_xy(int x, int y, const std::string& id)
 
 
 
-sol::optional<LuaItemHandle> Item_create_with_id(
+sol::optional<ItemRef> Item_create_with_id(
     const Position& position,
     const std::string& id)
 {
@@ -183,7 +181,7 @@ sol::optional<LuaItemHandle> Item_create_with_id(
 
 
 
-sol::optional<LuaItemHandle>
+sol::optional<ItemRef>
 Item_create_with_number_xy(int x, int y, const std::string& id, int number)
 {
     return Item_create_xy(
@@ -206,7 +204,7 @@ Item_create_with_number_xy(int x, int y, const std::string& id, int number)
  * @treturn[1] LuaItem the created item stack
  * @treturn[2] nil
  */
-sol::optional<LuaItemHandle> Item_create_with_number(
+sol::optional<ItemRef> Item_create_with_number(
     const Position& position,
     const std::string& id,
     int number)
@@ -216,9 +214,7 @@ sol::optional<LuaItemHandle> Item_create_with_number(
 
 
 
-sol::optional<LuaItemHandle> Item_create(
-    const Position& position,
-    sol::table args)
+sol::optional<ItemRef> Item_create(const Position& position, sol::table args)
 {
     return Item_create_xy(position.x, position.y, args);
 }
@@ -258,13 +254,13 @@ int Item_memory(int type, const std::string& id)
  * for use.
  *
  * @tparam num inventory_id
- * @tparam LuaItem handle
+ * @tparam LuaItem item
  * @treturn[1] LuaItem The modified item stack on success
  * @treturn[2] nil
  */
-sol::optional<LuaItemHandle> Item_stack(
+sol::optional<ItemRef> Item_stack(
     int inventory_id,
-    LuaItemHandle handle,
+    const ItemRef& item,
     sol::optional<bool> show_message)
 {
     if (inventory_id < -1 || inventory_id > ELONA_MAX_CHARACTERS)
@@ -272,19 +268,16 @@ sol::optional<LuaItemHandle> Item_stack(
         return sol::nullopt;
     }
 
-    auto& item_ref = lua::ref<Item>(handle);
-
-    const auto item =
-        item_stack(
-            inventory_id, ItemRef{&item_ref}, show_message.value_or(false))
-            .stacked_item;
-
-    if (item->number() == 0)
+    const auto stack_result =
+        item_stack(inventory_id, item, show_message.value_or(false));
+    if (stack_result.stacked)
+    {
+        return stack_result.stacked_item;
+    }
+    else
     {
         return sol::nullopt;
     }
-
-    return lua::handle(item);
 }
 
 
@@ -294,20 +287,18 @@ sol::optional<LuaItemHandle> Item_stack(
  *
  * Returns the trading rate of a cargo item.
  *
- * @tparam LuaItem handle A cargo item
+ * @tparam LuaItem item A cargo item
  * @treturn num
  */
-int Item_trade_rate(LuaItemHandle handle)
+int Item_trade_rate(const ItemRef& item)
 {
-    auto& item_ref = lua::ref<Item>(handle);
-
     // Item must be in the cargo category.
-    if (the_item_db[itemid2int(item_ref.id)]->category != ItemCategory::cargo)
+    if (the_item_db[itemid2int(item->id)]->category != ItemCategory::cargo)
     {
         return 0;
     }
 
-    return trate(item_ref.param1);
+    return trate(item->param1);
 }
 
 
@@ -320,7 +311,7 @@ int Item_trade_rate(LuaItemHandle handle)
  * @tparam string item_id The item ID to find.
  * @tparam ItemFindLocation location Where to search for the item.
  */
-sol::optional<LuaItemHandle> Item_find(
+sol::optional<ItemRef> Item_find(
     const std::string& item_id,
     const EnumString& location)
 {
@@ -331,7 +322,7 @@ sol::optional<LuaItemHandle> Item_find(
 
     if (const auto item = item_find(data.legacy_id, 3, location_value))
     {
-        return lua::handle(item.unwrap());
+        return item.unwrap();
     }
     else
     {
@@ -366,7 +357,7 @@ std::string Item_weight_string(int weight)
  */
 bool Item_has_free_slot(int inventory_id)
 {
-    return inv_getspace(inventory_id);
+    return inv_has_free_slot(inventory_id);
 }
 
 
@@ -385,7 +376,7 @@ sol::table Item_player_inventory(sol::this_state state)
     sol::table ret = L.create_table();
     for (const auto& item : g_inv.pc())
     {
-        ret.add(lua::handle(item));
+        ret.add(item);
     }
     return ret;
 }
@@ -407,7 +398,7 @@ sol::table Item_map_inventory(sol::this_state state)
     sol::table ret = L.create_table();
     for (const auto& item : g_inv.ground())
     {
-        ret.add(lua::handle(item));
+        ret.add(item);
     }
     return ret;
 }

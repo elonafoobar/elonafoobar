@@ -804,8 +804,7 @@ optional<int> enchantment_find(const Character& chara, int id)
         if (!equipment)
             continue;
 
-        if (const auto power =
-                enchantment_find(equipment.as_opt().unwrap(), id))
+        if (const auto power = enchantment_find(equipment.unwrap(), id))
         {
             if (!max || *max < *power)
             {

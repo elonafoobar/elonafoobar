@@ -87,10 +87,7 @@ public:
     template <typename Archive>
     void serialize(Archive& ar)
     {
-        for (auto& b : _inner)
-        {
-            ar(b);
-        }
+        ar(_inner);
     }
 
 

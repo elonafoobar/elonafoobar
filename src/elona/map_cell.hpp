@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#include "eobject/eobject.hpp"
+#include "eobject/forward.hpp"
 #include "optional.hpp"
 
 

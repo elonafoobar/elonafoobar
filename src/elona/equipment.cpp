@@ -281,7 +281,7 @@ void wear_most_valuable_equipment(Character& chara, ItemRef equipment)
             break;
         }
         bool equip = false;
-        if (equipment->value >= equipment_slot.equipment.as_ref()->value)
+        if (equipment->value >= equipment_slot.equipment->value)
         {
             equip = true;
         }
@@ -292,10 +292,9 @@ void wear_most_valuable_equipment(Character& chara, ItemRef equipment)
                 equip = false;
             }
             else if (
-                equipment_slot.equipment.as_ref()->value >=
+                equipment_slot.equipment->value >=
                 chara.equipment_slots[equipment_slot_indice[i + 1]]
-                    .equipment.as_ref()
-                    ->value)
+                    .equipment->value)
             {
                 equip = false;
             }
@@ -321,8 +320,8 @@ void supply_new_equipment(Character& chara)
         f = 0;
         for (int _j = 0; _j < 4; ++_j)
         {
-            const auto item = get_random_inv(chara.index);
-            if (item->number() == 0)
+            const auto item = Inventory::at(inv_get_random_slot(chara.index));
+            if (!item)
             {
                 f = 1;
                 break;
@@ -369,8 +368,7 @@ void supply_new_equipment(Character& chara)
                     if (haveweapon == 0)
                     {
                         if (the_item_db[itemid2int(
-                                            equipment_slot.equipment.as_ref()
-                                                ->id)]
+                                            equipment_slot.equipment->id)]
                                 ->category == ItemCategory::melee_weapon)
                         {
                             haveweapon = 1;
@@ -1373,8 +1371,8 @@ void unequip_item(Character& chara, size_t equipment_slot_index)
     {
         return;
     }
-    equipment_slot.equipment.as_ref()->body_part = 0;
-    item_stack(chara.index, equipment_slot.equipment.as_ref());
+    equipment_slot.equipment->body_part = 0;
+    item_stack(chara.index, equipment_slot.equipment.unwrap());
     equipment_slot.unequip();
 }
 

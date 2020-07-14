@@ -60,7 +60,6 @@ namespace
 int dbg_freemove;
 int r3 = 0;
 int noeffect = 0;
-int inumbk = 0;
 
 
 
@@ -1159,19 +1158,10 @@ TurnResult do_throw_command(Character& thrower, const ItemRef& throw_item)
 
     if (throw_item->id == ItemId::monster_ball)
     {
-        if (const auto slot = inv_get_free_slot(-1))
-        {
-            item_copy(throw_item, slot.unwrap());
-            slot->set_pos({tlocx, tlocy});
-            slot->set_number(1);
-            throw_item->modify_number(-1);
-            return do_throw_command_internal(thrower, slot.unwrap());
-        }
-        else
-        {
-            throw_item->modify_number(-1);
-            return do_throw_command_internal(thrower, throw_item);
-        }
+        const auto slot = inv_make_free_slot_force(-1);
+        const auto ball = item_separate(throw_item, slot, 1);
+        ball->set_pos({tlocx, tlocy});
+        return do_throw_command_internal(thrower, ball);
     }
     else
     {
@@ -1223,7 +1213,7 @@ TurnResult do_change_ammo_command()
         }
         if (cdata.player().equipment_slots[cnt].type == 11)
         {
-            ammo_opt = cdata.player().equipment_slots[cnt].equipment.as_opt();
+            ammo_opt = cdata.player().equipment_slots[cnt].equipment;
             break;
         }
     }
@@ -1683,7 +1673,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
                         "core.action.dip.result.natural_potion_drop"));
                     return TurnResult::turn_end;
                 }
-                if (!inv_get_free_slot(0))
+                if (!inv_has_free_slot(0))
                 {
                     txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                     return TurnResult::turn_end;
@@ -1871,7 +1861,7 @@ TurnResult do_use_command(ItemRef use_item)
         bool success = lua::call_with_result(
             *item_data->on_use_callback,
             false,
-            lua::handle(use_item),
+            use_item,
             lua::handle(cdata.player()));
 
         if (success)
@@ -3507,7 +3497,7 @@ TurnResult do_get_command()
                     .feats = 0;
                 return TurnResult::turn_end;
             }
-            if (!inv_getspace(0))
+            if (!inv_has_free_slot(0))
             {
                 txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                 update_screen();
@@ -4214,7 +4204,7 @@ int decode_book(Character& reader, const ItemRef& book)
             p = the_ability_db[efid]->difficulty;
         }
         reader.activity.turn = p / (2 + sdata(150, 0)) + 1;
-        reader.activity.item = IndexItemRef::from_ref(book);
+        reader.activity.item = book;
         if (is_in_fov(reader))
         {
             txt(i18n::s.get("core.activity.read.start", reader, book));
@@ -5332,7 +5322,7 @@ PickUpItemResult pick_up_item(
         {
             if (cdata[game_data.mount].activity)
             {
-                if (cdata[game_data.mount].activity.item.as_opt() == item)
+                if (cdata[game_data.mount].activity.item == item)
                 {
                     txt(i18n::s.get(
                         "core.action.pick_up.used_by_mount",
@@ -5347,7 +5337,7 @@ PickUpItemResult pick_up_item(
             {
                 if (!cdata.player().activity)
                 {
-                    if (!inv_getspace(0))
+                    if (!inv_has_free_slot(0))
                     {
                         txt(i18n::s.get(
                             "core.ui.inv.common.inventory_is_full"));
@@ -5386,13 +5376,13 @@ PickUpItemResult pick_up_item(
                 return {0, nullptr};
             }
         }
-        if (!inv_get_free_slot(inventory_id))
+        if (!inv_has_free_slot(inventory_id))
         {
             txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
             return {0, nullptr};
         }
     }
-    inumbk = item->number() - in;
+    const auto inumbk = item->number();
     item->set_number(in);
     if (inventory_id == 0)
     {
@@ -5443,18 +5433,19 @@ PickUpItemResult pick_up_item(
     item->is_quest_target() = false;
     item_checkknown(item);
 
+    item->set_number(inumbk);
+
     OptionalItemRef picked_up_item;
-    const auto item_stack_result = item_stack(inventory_id, item);
+    const auto item_stack_result = item_stack(inventory_id, item, false, in);
     if (item_stack_result.stacked)
     {
         picked_up_item = item_stack_result.stacked_item;
     }
     else
     {
-        const auto slot = inv_get_free_slot(inventory_id);
-        if (!slot)
+        const auto slot_opt = inv_get_free_slot(inventory_id);
+        if (!slot_opt)
         {
-            item->set_number(inumbk + in);
             if (invctrl == 12)
             {
                 txt(i18n::s.get(
@@ -5466,13 +5457,11 @@ PickUpItemResult pick_up_item(
             }
             return {0, nullptr};
         }
-        item_copy(item, slot.unwrap());
-        slot->set_number(in);
-        picked_up_item = slot;
+        const auto slot = *slot_opt;
+        picked_up_item = item_separate(item, slot, in);
     }
     assert(picked_up_item);
 
-    item->set_number(inumbk);
     if (mode == 6)
     {
         if (the_item_db[itemid2int(picked_up_item->id)]->category ==

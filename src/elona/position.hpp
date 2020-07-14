@@ -2,8 +2,7 @@
 
 #include <cmath>
 
-#include <iostream>
-#include <sstream>
+#include <iosfwd>
 #include <string>
 
 #include "serialization/macros.hpp"
@@ -46,9 +45,7 @@ struct Position
 
     std::string to_string() const
     {
-        std::stringstream ss;
-        ss << '(' << x << ", " << y << ')';
-        return ss.str();
+        return "(" + std::to_string(x) + ", " + std::to_string(y) + ")";
     }
 
 
@@ -65,14 +62,12 @@ struct Position
         ELONA_SERIALIZATION_STRUCT_END();
         /* clang-format on */
     }
+
+
+
+    friend std::ostream& operator<<(std::ostream& out, const Position& pos);
 };
 
-
-inline std::ostream& operator<<(std::ostream& out, const Position& pos)
-{
-    out << pos.to_string();
-    return out;
-}
 
 
 int direction(int = 0, int = 0, int = 0, int = 0);

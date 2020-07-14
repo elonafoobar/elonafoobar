@@ -1543,17 +1543,11 @@ void character_drops_item(Character& victim)
             item->set_pos(victim.position);
             if (!item_stack(-1, item).stacked)
             {
-                if (const auto slot = inv_get_free_slot(-1))
-                {
-                    item_copy(item, slot.unwrap());
-                    slot->own_state = -2;
-                }
-                else
-                {
-                    break;
-                }
+                const auto slot = inv_make_free_slot_force(-1);
+                const auto dropped_item =
+                    item_separate(item, slot, item->number());
+                dropped_item->own_state = -2;
             }
-            item->remove();
         }
         cell_refresh(victim.position.x, victim.position.y);
         create_pcpic(cdata.player());
@@ -1671,16 +1665,9 @@ void character_drops_item(Character& victim)
         itemturn(item);
         if (!item_stack(-1, item).stacked)
         {
-            if (const auto slot = inv_get_free_slot(-1))
-            {
-                item_copy(item, slot.unwrap());
-            }
-            else
-            {
-                break;
-            }
+            const auto slot = inv_make_free_slot_force(-1);
+            item_separate(item, slot, item->number());
         }
-        item->remove();
     }
     if (victim.quality >= Quality::miracle || rnd(20) == 0 ||
         victim.drops_gold() == 1 || victim.index < 16)

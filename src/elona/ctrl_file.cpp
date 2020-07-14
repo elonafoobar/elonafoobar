@@ -388,36 +388,6 @@ void save(const fs::path& filepath, T& data, size_t begin, size_t end)
 }
 
 
-void load(
-    const fs::path& filepath,
-    AllInventory& data,
-    size_t begin,
-    size_t end)
-{
-    load_internal(filepath, [&](auto& ar) {
-        for (size_t i = begin; i < end; ++i)
-        {
-            ar(*data[i].get_raw_ptr());
-        }
-    });
-}
-
-
-void save(
-    const fs::path& filepath,
-    AllInventory& data,
-    size_t begin,
-    size_t end)
-{
-    save_internal(filepath, [&](auto& ar) {
-        for (size_t i = begin; i < end; ++i)
-        {
-            ar(*data[i].get_raw_ptr());
-        }
-    });
-}
-
-
 template <typename T>
 void load(const fs::path& filepath, T& data)
 {
@@ -433,43 +403,58 @@ void save(const fs::path& filepath, T& data)
 
 
 
-template <typename T>
-decltype(auto) get_nth_object(int index);
-
-template <>
-decltype(auto) get_nth_object<Item>(int index)
-{
-    return *g_inv[index].get_raw_ptr();
-}
-
-template <>
-decltype(auto) get_nth_object<Character>(int index)
-{
-    return cdata[index];
-}
-
-
-
-template <typename T>
 void restore_handles(int index_start, int index_end)
 {
     sol::table obj_ids = lua::lua->get_state()->create_table();
     for (int index = index_start; index < index_end; ++index)
     {
-        auto& obj = get_nth_object<T>(index);
+        auto& obj = cdata[index];
         const auto key = reinterpret_cast<int64_t>(std::addressof(obj));
         obj_ids[key] = obj.obj_id.to_string();
     }
 
     auto& handle_mgr = lua::lua->get_handle_manager();
-    handle_mgr.merge_handles(T::lua_type(), obj_ids);
+    handle_mgr.merge_handles(Character::lua_type(), obj_ids);
 
-    ELONA_LOG("lua.mod") << "Loaded handle data for " << T::lua_type()
+    ELONA_LOG("lua.mod") << "Loaded handle data for " << Character::lua_type()
                          << " in [" << index_start << "," << index_end << "]";
 
     for (int index = index_start; index < index_end; index++)
     {
-        handle_mgr.resolve_handle<T>(get_nth_object<T>(index));
+        handle_mgr.resolve_handle(cdata[index]);
+    }
+}
+
+
+
+bool will_resolve_object_reference = false;
+
+void schedule_object_reference_resolution()
+{
+    will_resolve_object_reference = true;
+}
+
+
+
+OptionalItemRef resolve_object_reference(const ObjId& obj_id)
+{
+    return ItemIdTable::instance().get(obj_id);
+}
+
+
+
+void clear_pending_ids()
+{
+    eobject::internal::_pending_ids<Item>.clear();
+}
+
+
+
+void resolve_pending_ids()
+{
+    for (auto& [ref_ptr, obj_id] : eobject::internal::_pending_ids<Item>)
+    {
+        *ref_ptr = resolve_object_reference(obj_id);
     }
 }
 
@@ -560,7 +545,7 @@ void fmode_7_8(bool read, const fs::path& dir)
                     cdata[index].index = index;
                 }
 
-                restore_handles<Character>(0, ELONA_MAX_PARTY_CHARACTERS);
+                restore_handles(0, ELONA_MAX_PARTY_CHARACTERS);
             }
         }
         else
@@ -624,14 +609,47 @@ void fmode_7_8(bool read, const fs::path& dir)
         {
             if (fs::exists(filepath))
             {
-                load(filepath, g_inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
-
-                restore_handles<Item>(0, ELONA_OTHER_INVENTORIES_INDEX);
+                load_internal(filepath, [&](auto& ar) {
+                    for (auto&& inv : g_inv.global())
+                    {
+                        inv.clear();
+                        const auto n = inv.size();
+                        for (size_t i = 0; i < n; ++i)
+                        {
+                            bool exists;
+                            ar(exists);
+                            if (exists)
+                            {
+                                const auto item_ref =
+                                    Inventory::create(InventorySlot{&inv, i});
+                                auto& item = *item_ref.get_raw_ptr();
+                                ar(item);
+                                ItemIdTable::instance().add(item_ref);
+                            }
+                        }
+                    }
+                });
             }
         }
         else
         {
-            save(filepath, g_inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
+            save_internal(filepath, [&](auto& ar) {
+                for (auto&& inv : g_inv.global())
+                {
+                    const auto n = inv.size();
+                    for (size_t i = 0; i < n; ++i)
+                    {
+                        bool exists = !!inv.at(i);
+                        ar(exists);
+                        if (exists)
+                        {
+                            const auto item_ref = inv.at(i).unwrap();
+                            auto& item = *item_ref.get_raw_ptr();
+                            ar(item);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -877,6 +895,12 @@ void fmode_7_8(bool read, const fs::path& dir)
                 ar, lua::ModEnv::StoreType::global);
         }
     }
+
+    if (read)
+    {
+        resolve_pending_ids();
+        clear_pending_ids();
+    }
 }
 
 
@@ -971,13 +995,47 @@ void fmode_14_15(bool read)
         {
             if (fs::exists(filepath))
             {
-                load(filepath, g_inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
+                load_internal(filepath, [&](auto& ar) {
+                    for (auto&& inv : g_inv.global())
+                    {
+                        inv.clear();
+                        const auto n = inv.size();
+                        for (size_t i = 0; i < n; ++i)
+                        {
+                            bool exists;
+                            ar(exists);
+                            if (exists)
+                            {
+                                const auto item_ref =
+                                    Inventory::create(InventorySlot{&inv, i});
+                                auto& item = *item_ref.get_raw_ptr();
+                                ar(item);
+                            }
+                        }
+                    }
+                });
             }
         }
         else
         {
             Save::instance().add(filepath.filename());
-            save(filepath, g_inv, 0, ELONA_OTHER_INVENTORIES_INDEX);
+            save_internal(filepath, [&](auto& ar) {
+                for (auto&& inv : g_inv.global())
+                {
+                    const auto n = inv.size();
+                    for (size_t i = 0; i < n; ++i)
+                    {
+                        bool exists = !!inv.at(i);
+                        ar(exists);
+                        if (exists)
+                        {
+                            const auto item_ref = inv.at(i).unwrap();
+                            auto& item = *item_ref.get_raw_ptr();
+                            ar(item);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -1044,6 +1102,14 @@ void fmode_14_15(bool read)
             save_v1(filepath, genetemp, 0, 1000);
         }
     }
+
+#if 0 // TODO
+    if (read)
+    {
+        resolve_pending_ids();
+        clear_pending_ids();
+    }
+#endif
 }
 
 
@@ -1105,8 +1171,7 @@ void fmode_1_2(bool read)
                 cdata[index].index = index;
             }
 
-            restore_handles<Character>(
-                ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
+            restore_handles(ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
         }
         else
         {
@@ -1214,6 +1279,8 @@ void fmode_1_2(bool read)
             mod_serializer.save_mod_store_data(ar, lua::ModEnv::StoreType::map);
         }
     }
+
+    schedule_object_reference_resolution();
 }
 
 
@@ -1312,15 +1379,59 @@ void fmode_3_4(bool read, const fs::path& filename)
     if (read)
     {
         tmpload(filename);
-        load(filepath, g_inv, ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
 
-        restore_handles<Item>(ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
+        load_internal(filepath, [&](auto& ar) {
+            for (auto&& inv : g_inv.map_local())
+            {
+                inv.clear();
+                const auto n = inv.size();
+                for (size_t i = 0; i < n; ++i)
+                {
+                    bool exists;
+                    ar(exists);
+                    if (exists)
+                    {
+                        const auto item_ref =
+                            Inventory::create(InventorySlot{&inv, i});
+                        auto& item = *item_ref.get_raw_ptr();
+                        ar(item);
+                    }
+                }
+            }
+        });
     }
     else
     {
         Save::instance().add(filepath.filename());
         tmpload(filename);
-        save(filepath, g_inv, ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
+
+        save_internal(filepath, [&](auto& ar) {
+            for (auto&& inv : g_inv.map_local())
+            {
+                const auto n = inv.size();
+                for (size_t i = 0; i < n; ++i)
+                {
+                    bool exists = !!inv.at(i);
+                    ar(exists);
+                    if (exists)
+                    {
+                        const auto item_ref = inv.at(i).unwrap();
+                        auto& item = *item_ref.get_raw_ptr();
+                        ar(item);
+                    }
+                }
+            }
+        });
+    }
+
+    if (read)
+    {
+        if (will_resolve_object_reference)
+        {
+            resolve_pending_ids();
+            clear_pending_ids();
+            will_resolve_object_reference = false;
+        }
     }
 }
 
@@ -1377,6 +1488,14 @@ void fmode_17()
     }
 
     arrayfile(true, u8"cdatan2", dir / (u8"cdatan_"s + mid + u8".s2"));
+
+#if 0
+    if (read)
+    {
+        resolve_pending_ids();
+        clear_pending_ids();
+    }
+#endif
 }
 
 

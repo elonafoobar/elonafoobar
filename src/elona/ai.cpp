@@ -528,7 +528,7 @@ void _proc_hungry(Character& chara)
                 }
                 else
                 {
-                    chara.ai_item = IndexItemRef::from_ref(item.unwrap());
+                    chara.ai_item = item;
                     _change_nutrition(chara);
                 }
             }
@@ -935,7 +935,7 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
                 }
                 if (auto item = itemcreate_chara_inv(chara.index, 0, 0))
                 {
-                    chara.ai_item = IndexItemRef::from_ref(item.unwrap());
+                    chara.ai_item = item;
                 }
             }
         }

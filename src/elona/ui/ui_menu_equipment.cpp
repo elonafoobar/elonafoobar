@@ -219,14 +219,14 @@ _draw_single_list_entry(int cnt, int list_item, bool show_additional_info)
 
     if (equipment)
     {
-        item_name = itemname(equipment.as_ref());
-        item_weight = cnvweight(equipment.as_ref()->weight);
+        item_name = itemname(equipment.unwrap());
+        item_weight = cnvweight(equipment->weight);
 
         draw_item_with_portrait(
-            equipment.as_ref(), wx + 126, wy + 70 + cnt * 19);
+            equipment.unwrap(), wx + 126, wy + 70 + cnt * 19);
 
         draw_additional_item_info(
-            equipment.as_ref(), wx + 350, wy + 60 + cnt * 19 + 2);
+            equipment.unwrap(), wx + 350, wy + 60 + cnt * 19 + 2);
         if (show_additional_info)
         {
             item_name = cut_item_name_for_additional_info(item_name, 2);
@@ -234,7 +234,7 @@ _draw_single_list_entry(int cnt, int list_item, bool show_additional_info)
     }
 
     const auto text_color = equipment
-        ? cs_list_get_item_color(equipment.as_opt().unwrap())
+        ? cs_list_get_item_color(equipment.unwrap())
         : snail::Color{10, 10, 10};
     cs_list(
         cs == cnt,
@@ -280,18 +280,18 @@ void UIMenuEquipment::draw()
 static void _unequip_item()
 {
     game_data.player_is_changing_equipment = 1;
-    const auto equipment =
-        cdata.player().equipment_slots[body - 100].equipment.as_ref();
+    const auto equipment = cdata.player().equipment_slots[body - 100].equipment;
     if (is_cursed(equipment->curse_state))
     {
-        txt(i18n::s.get("core.ui.equip.cannot_be_taken_off", equipment));
+        txt(i18n::s.get(
+            "core.ui.equip.cannot_be_taken_off", equipment.unwrap()));
         return;
     }
     unequip_item(cdata.player(), body - 100);
     chara_refresh(cdata.player());
     snd("core.equip1");
     Message::instance().linebreak();
-    txt(i18n::s.get("core.ui.equip.you_unequip", equipment));
+    txt(i18n::s.get("core.ui.equip.you_unequip", equipment.unwrap()));
     if (cdata.player().equipment_slots[body - 100].type == 5)
     {
         equip_melee_weapon(cdata.player());
@@ -328,10 +328,8 @@ static bool _on_list_entry_select(int index)
 
 static void _show_item_desc(int body_)
 {
-    item_show_description(cdata.player()
-                              .equipment_slots[body_ - 100]
-                              .equipment.as_opt()
-                              .unwrap());
+    item_show_description(
+        cdata.player().equipment_slots[body_ - 100].equipment.unwrap());
     nowindowanime = 1;
     returnfromidentify = 0;
     screenupdate = -1;

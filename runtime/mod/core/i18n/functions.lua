@@ -344,7 +344,7 @@ function i18n.all.itemname(item, number, needs_article)
    if not item then
       return I18N.get("core.chara.something")
    end
-   if item.__kind ~= "LuaItem" then
+   if item.lua_type ~= "LuaItem" then
       return I18N.get("core.chara.something")
    end
    if number == nil then
@@ -361,7 +361,7 @@ function i18n.all.itembasename(item)
    if not item then
       return I18N.get("core.chara.something")
    end
-   if item.__kind ~= "LuaItem" then
+   if item.lua_type ~= "LuaItem" then
       return I18N.get("core.chara.something")
    end
    return item.basename

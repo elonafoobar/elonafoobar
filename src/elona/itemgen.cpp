@@ -147,14 +147,13 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
         }
     }
 
-    const auto empty_slot = inv_get_free_slot(slot);
-    if (!empty_slot)
+    const auto empty_slot_opt = inv_make_free_slot(slot);
+    if (!empty_slot_opt)
         return nullptr;
 
-    const auto item = empty_slot.unwrap();
+    const auto empty_slot = *empty_slot_opt;
 
-    item->clear();
-
+    optional<Position> item_pos;
     if (slot == -1 && mode != 6 && mode != 9)
     {
         bool ok = false;
@@ -190,7 +189,7 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
             if (x != -1 && i == 0)
             {
                 ok = true;
-                item->set_pos({sx, sy});
+                item_pos = Position{sx, sy};
                 break;
             }
             if (cell_data.at(sx, sy).feats != 0)
@@ -205,7 +204,7 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
             if ((chip_data.for_cell(sx, sy).effect & 4) == 0)
             {
                 ok = true;
-                item->set_pos({sx, sy});
+                item_pos = Position{sx, sy};
                 break;
             }
         }
@@ -243,6 +242,12 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
             fltselect = 0;
             item_id = get_random_item_id();
         }
+    }
+
+    const auto item = Inventory::create(empty_slot);
+    if (item_pos)
+    {
+        item->set_pos(*item_pos);
     }
 
     if (item_id == 25 && flttypemajor == 60002)
