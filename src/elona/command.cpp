@@ -5281,7 +5281,7 @@ PickUpItemResult pick_up_item(
     optional_ref<Character> shopkeeper,
     bool play_sound)
 {
-    if (invctrl == 11 || invctrl == 12)
+    if (mode == 6 && (invctrl == 11 || invctrl == 12))
     {
         assert(shopkeeper);
     }
