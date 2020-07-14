@@ -1190,8 +1190,16 @@ boost::uuids::uuid _update_save_data_18_convert_item_index_to_object_id(
         std::string,
         std::unordered_map<int64_t, boost::uuids::uuid>>& item_obj_id_registry,
     const std::string& map_id,
-    int64_t item_index)
+    int64_t item_index_plus_one)
 {
+    if (item_index_plus_one == 0) // null reference
+    {
+        boost::uuids::uuid ret;
+        std::fill(std::begin(ret), std::end(ret), 0);
+        return ret;
+    }
+
+    int64_t item_index = item_index_plus_one - 1;
     if (item_index < 1320)
     {
         return item_obj_id_registry[""][item_index];
