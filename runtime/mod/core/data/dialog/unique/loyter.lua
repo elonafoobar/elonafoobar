@@ -39,7 +39,7 @@ return {
       },
       quest_ask = {
          text = {
-            {"quest.dialog._0", args = common.args_title},
+            {"quest.dialog._0", args = common.args_alias},
             {"quest.dialog._1"},
          },
          choices = {
@@ -50,7 +50,7 @@ return {
       },
       quest_yes = {
          text = {
-             GUI.show_journal_update_message,
+            common.journal_updated,
             {"quest.yes"},
          },
          on_finish = function()
@@ -74,7 +74,7 @@ return {
       },
       quest_begin_yes = {
          text = {
-            GUI.show_journal_update_message,
+            common.journal_updated,
             {"quest.begin.yes"},
          },
          on_finish = function()

@@ -30,7 +30,7 @@ return {
          text = {
             {"late._0"},
             {"late._1"},
-            {"late._2", args = function() return {Chara.player().title, Chara.player().basename} end},
+            {"late._2", args = function() return {Chara.player().alias, Chara.player().basename} end},
          },
          choices = {
             {"__END__", "__MORE__"},

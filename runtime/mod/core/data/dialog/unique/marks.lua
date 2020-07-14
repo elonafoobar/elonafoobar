@@ -34,7 +34,7 @@ return {
       },
       quest_ask = {
          text = {
-            {"quest.dialog._0", args = common.args_title},
+            {"quest.dialog._0", args = common.args_alias},
             {"quest.dialog._1"},
          },
          choices = function()
