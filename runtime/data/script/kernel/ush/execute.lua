@@ -125,7 +125,6 @@ function Executor:execute(command_name, ...)
 
    local args = {...}
    -- prelude.print("RUN  "..command_name.."  "..table.concat(args, " "))
-   -- return pcall(command, self._env, table.unpack(args))
    return pcall(command, table.unpack(args))
 end
 
@@ -134,5 +133,12 @@ end
 -- :: string -> Env -> (boolean, any)
 return function(input, env)
    local exe = Executor.new(env)
-   return exe:execute(parse(input))
+   local ok, result = pcall(parse, input)
+   if not ok then
+      return false, result
+   end
+   if not result then -- no input
+      return true, nil
+   end
+   return exe:execute(table.unpack(result))
 end

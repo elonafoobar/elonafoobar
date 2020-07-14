@@ -127,11 +127,11 @@ end
 
 
 
--- string -> tokens
+-- string -> List<Token>?
 return function(src)
    local tokens = tokenize(src)
    if #tokens == 0 then
-      error("(ush) invalid command line: "..src)
+      return nil -- no input
    end
-   return table.unpack(tokens)
+   return tokens
 end
