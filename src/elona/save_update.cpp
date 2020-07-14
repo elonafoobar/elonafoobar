@@ -1626,7 +1626,8 @@ void _update_save_data_18(const fs::path& save_dir)
             }
             else
             {
-                ELONA_LOG("save.update") << "chara(" << chara_index << "): nil";
+                ELONA_LOG("save.update")
+                    << "chara(" << chara_index << "): " << obj_id;
 
                 activity_item_ =
                     _update_save_data_18_convert_item_index_to_object_id(
