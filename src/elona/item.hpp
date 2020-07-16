@@ -503,7 +503,6 @@ IdentifyState item_identify(const ItemRef& item, IdentifyState level);
 IdentifyState item_identify(const ItemRef& item, int power);
 
 void item_checkknown(const ItemRef& item);
-InventorySlot inv_compress(int owner);
 
 /**
  * TODO
@@ -559,17 +558,9 @@ bool item_cold(int owner, const OptionalItemRef& destroyed_item = nullptr);
 void mapitem_cold(int x, int y);
 
 bool inv_find(ItemId id, int owner);
-InventorySlot inv_get_random_slot(int owner);
-
-optional<InventorySlot> inv_get_free_slot(int inventory_id);
 
 int inv_getowner(const ItemRef& item);
-int inv_sum(int = 0);
-int inv_weight(int = 0);
-bool inv_has_free_slot(int);
 
-optional<InventorySlot> inv_make_free_slot(int inventory_id);
-InventorySlot inv_make_free_slot_force(int inventory_id);
 
 void remain_make(const ItemRef& remain, const Character& chara);
 

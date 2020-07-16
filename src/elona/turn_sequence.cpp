@@ -25,6 +25,7 @@
 #include "init.hpp"
 #include "initialize_map.hpp"
 #include "input.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "keybind/input_context.hpp"
 #include "lua_env/event_manager.hpp"

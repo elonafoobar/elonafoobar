@@ -2,6 +2,7 @@
 #include "../../../character.hpp"
 #include "../../../data/types/type_item.hpp"
 #include "../../../enchantment.hpp"
+#include "../../../inventory.hpp"
 #include "../../../item.hpp"
 #include "../../../itemgen.hpp"
 #include "../../../text.hpp"

@@ -11,6 +11,7 @@
 #include "enchantment.hpp"
 #include "globals.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "random.hpp"

@@ -8,6 +8,7 @@
 #include "character_status.hpp"
 #include "config.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "magic.hpp"

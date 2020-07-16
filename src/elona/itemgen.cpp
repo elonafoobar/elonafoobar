@@ -7,6 +7,7 @@
 #include "data/types/type_item.hpp"
 #include "enchantment.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "item_material.hpp"
 #include "lua_env/lua_env.hpp"

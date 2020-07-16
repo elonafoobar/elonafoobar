@@ -8,6 +8,7 @@
 #include "ctrl_file.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "lua_env/lua_env.hpp"
 #include "map.hpp"

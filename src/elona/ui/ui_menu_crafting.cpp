@@ -5,6 +5,7 @@
 #include "../crafting.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
+#include "../inventory.hpp"
 #include "../item.hpp"
 #include "../message.hpp"
 

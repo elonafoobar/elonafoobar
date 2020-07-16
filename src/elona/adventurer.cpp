@@ -9,6 +9,7 @@
 #include "data/types/type_item.hpp"
 #include "equipment.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
