@@ -33,7 +33,7 @@ void for_each_cdata(const fs::path& save_dir, F f)
         std::ostringstream out;
         serialization::binary::OArchive oar{out};
 
-        const auto is_cdatas1 = entry.path().extension() == "s1";
+        const auto is_cdatas1 = entry.path().extension() == ".s1";
         const auto begin = is_cdatas1 ? 0 : 57;
         const auto end = is_cdatas1 ? 57 : 245;
         for (int idx = begin; idx < end; ++idx)
@@ -1190,8 +1190,16 @@ boost::uuids::uuid _update_save_data_18_convert_item_index_to_object_id(
         std::string,
         std::unordered_map<int64_t, boost::uuids::uuid>>& item_obj_id_registry,
     const std::string& map_id,
-    int64_t item_index)
+    int64_t item_index_plus_one)
 {
+    if (item_index_plus_one == 0) // null reference
+    {
+        boost::uuids::uuid ret;
+        std::fill(std::begin(ret), std::end(ret), 0);
+        return ret;
+    }
+
+    int64_t item_index = item_index_plus_one - 1;
     if (item_index < 1320)
     {
         return item_obj_id_registry[""][item_index];
@@ -1626,7 +1634,8 @@ void _update_save_data_18(const fs::path& save_dir)
             }
             else
             {
-                ELONA_LOG("save.update") << "chara(" << chara_index << "): nil";
+                ELONA_LOG("save.update")
+                    << "chara(" << chara_index << "): " << obj_id;
 
                 activity_item_ =
                     _update_save_data_18_convert_item_index_to_object_id(
