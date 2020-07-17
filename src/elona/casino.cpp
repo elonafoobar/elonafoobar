@@ -12,6 +12,7 @@
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
@@ -356,7 +357,7 @@ void casino_acquire_items()
 {
     mtilefilecur = -1;
     draw_prepare_map_chips();
-    const auto have_any_rewards = (inv_sum(-1) != 0);
+    const auto have_any_rewards = (inv_count(g_inv.ground()) != 0);
     if (have_any_rewards)
     {
         if (cdata.player().hp >= 0)

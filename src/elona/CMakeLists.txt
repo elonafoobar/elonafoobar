@@ -53,6 +53,7 @@ set(ELONA_SOURCES
   initialize_map_types.cpp
   input.cpp
   input_prompt.cpp
+  inventory.cpp
   item.cpp
   item_db.cpp
   item_load_desc.cpp

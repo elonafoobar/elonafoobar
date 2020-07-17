@@ -11,6 +11,7 @@
 #include "enchantment.hpp"
 #include "globals.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "random.hpp"
@@ -320,7 +321,8 @@ void supply_new_equipment(Character& chara)
         f = 0;
         for (int _j = 0; _j < 4; ++_j)
         {
-            const auto item = Inventory::at(inv_get_random_slot(chara.index));
+            const auto item =
+                Inventory::at(inv_get_random_slot(g_inv.for_chara(chara)));
             if (!item)
             {
                 f = 1;

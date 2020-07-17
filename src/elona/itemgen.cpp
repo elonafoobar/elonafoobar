@@ -7,6 +7,7 @@
 #include "data/types/type_item.hpp"
 #include "enchantment.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "item_material.hpp"
 #include "lua_env/lua_env.hpp"
@@ -147,7 +148,7 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
         }
     }
 
-    const auto empty_slot_opt = inv_make_free_slot(slot);
+    const auto empty_slot_opt = inv_make_free_slot(g_inv.by_index(slot));
     if (!empty_slot_opt)
         return nullptr;
 

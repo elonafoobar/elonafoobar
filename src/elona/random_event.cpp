@@ -15,6 +15,7 @@
 #include "food.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "magic.hpp"
@@ -98,14 +99,14 @@ optional<RandomEvent> generate_random_event_in_sleep()
     }
     if (rnd(250) == 0)
     {
-        if (inv_has_free_slot(0))
+        if (g_inv.pc().has_free_slot())
         {
             id = 19;
         }
     }
     if (rnd(10000) == 0)
     {
-        if (inv_has_free_slot(0))
+        if (g_inv.pc().has_free_slot())
         {
             id = 21;
         }

@@ -2,6 +2,7 @@
 #include "../../../character.hpp"
 #include "../../../data/types/type_item.hpp"
 #include "../../../enchantment.hpp"
+#include "../../../inventory.hpp"
 #include "../../../item.hpp"
 #include "../../../itemgen.hpp"
 #include "../../../text.hpp"
@@ -28,7 +29,7 @@ namespace elona::lua::api::modules::module_Item
  */
 int Item_count()
 {
-    return inv_sum(-1);
+    return inv_count(g_inv.ground());
 }
 
 
@@ -320,7 +321,7 @@ sol::optional<ItemRef> Item_find(
     auto location_value =
         LuaEnums::ItemFindLocationTable.ensure_from_string(location);
 
-    if (const auto item = item_find(data.legacy_id, 3, location_value))
+    if (const auto item = item_find(int2itemid(data.legacy_id), location_value))
     {
         return item.unwrap();
     }
@@ -357,7 +358,7 @@ std::string Item_weight_string(int weight)
  */
 bool Item_has_free_slot(int inventory_id)
 {
-    return inv_has_free_slot(inventory_id);
+    return g_inv.by_index(inventory_id).has_free_slot();
 }
 
 

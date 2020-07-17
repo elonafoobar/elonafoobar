@@ -1469,22 +1469,21 @@ foodname(int type, const std::string& ingredient_, int rank, int character_id)
 
 void foods_get_rotten()
 {
-    for (int j = 0; j < ELONA_MAX_CHARACTERS + 1; ++j)
+    for (auto&& chara : cdata.all())
     {
-        int chara = j;
-        if (j == ELONA_MAX_CHARACTERS)
-        {
-            chara = -1; // On the ground.
-        }
-        else if (cdata[chara].state() == Character::State::empty)
+        if (chara.state() == Character::State::empty)
         {
             continue;
         }
 
-        for (const auto& item : g_inv.by_index(chara))
+        for (const auto& item : g_inv.for_chara(chara))
         {
-            _food_gets_rotten(chara, item);
+            _food_gets_rotten(chara.index, item);
         }
+    }
+    for (const auto& item : g_inv.ground())
+    {
+        _food_gets_rotten(-1, item);
     }
 }
 

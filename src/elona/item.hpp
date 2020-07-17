@@ -503,7 +503,6 @@ IdentifyState item_identify(const ItemRef& item, IdentifyState level);
 IdentifyState item_identify(const ItemRef& item, int power);
 
 void item_checkknown(const ItemRef& item);
-InventorySlot inv_compress(int owner);
 
 /**
  * TODO
@@ -519,7 +518,10 @@ ItemRef item_copy(const ItemRef& item, const InventorySlot& slot);
 void item_acid(const Character& owner, OptionalItemRef item = nullptr);
 
 void itemturn(const ItemRef& item);
-OptionalItemRef itemfind(int inventory_id, int matcher, int matcher_type = 0);
+
+OptionalItemRef itemfind(Inventory& inv, ItemId id);
+OptionalItemRef itemfind(Inventory& inv, int subcategory);
+
 int itemusingfind(const ItemRef& item, bool disallow_pc = false);
 
 enum class ItemFindLocation
@@ -528,9 +530,16 @@ enum class ItemFindLocation
     ground,
     player_inventory_and_ground,
 };
+
+/**
+ * Tries to find an item in the player's inventory, the ground, or both. Returns
+ * the item's reference or none if not found.
+ */
 OptionalItemRef item_find(
-    int matcher,
-    int matcher_type = 0,
+    ItemId id,
+    ItemFindLocation = ItemFindLocation::player_inventory_and_ground);
+OptionalItemRef item_find(
+    ItemCategory category,
     ItemFindLocation = ItemFindLocation::player_inventory_and_ground);
 
 /**
@@ -553,23 +562,13 @@ ItemStackResult item_stack(
 
 void item_dump_desc(const ItemRef&);
 
-bool item_fire(int owner, const OptionalItemRef& burned_item = nullptr);
+bool item_fire(Inventory& inv, const OptionalItemRef& burned_item = nullptr);
 void mapitem_fire(optional_ref<Character> arsonist, int x, int y);
-bool item_cold(int owner, const OptionalItemRef& destroyed_item = nullptr);
+bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item = nullptr);
 void mapitem_cold(int x, int y);
 
-bool inv_find(ItemId id, int owner);
-InventorySlot inv_get_random_slot(int owner);
-
-optional<InventorySlot> inv_get_free_slot(int inventory_id);
-
 int inv_getowner(const ItemRef& item);
-int inv_sum(int = 0);
-int inv_weight(int = 0);
-bool inv_has_free_slot(int);
 
-optional<InventorySlot> inv_make_free_slot(int inventory_id);
-InventorySlot inv_make_free_slot_force(int inventory_id);
 
 void remain_make(const ItemRef& remain, const Character& chara);
 
