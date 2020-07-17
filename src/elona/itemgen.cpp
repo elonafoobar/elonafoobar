@@ -148,7 +148,7 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
         }
     }
 
-    const auto empty_slot_opt = inv_make_free_slot(slot);
+    const auto empty_slot_opt = inv_make_free_slot(g_inv.by_index(slot));
     if (!empty_slot_opt)
         return nullptr;
 

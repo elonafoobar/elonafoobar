@@ -749,7 +749,7 @@ static void _grow_plants()
 
 static void _proc_generate_bard_items(Character& chara)
 {
-    if (!itemfind(chara.index, 60005, 1))
+    if (!itemfind(g_inv.for_chara(chara), 60005))
     {
         if (rnd(150) == 0)
         {
@@ -798,7 +798,7 @@ static void _restock_character_inventories()
         {
             supply_new_equipment(cnt);
         }
-        if (rnd(2) == 0 && inv_sum(cnt.index) < 8)
+        if (rnd(2) == 0 && inv_count(g_inv.for_chara(cnt)) < 8)
         {
             _generate_bad_quality_item(cnt);
         }
@@ -1443,7 +1443,9 @@ TurnResult exit_map()
                     if (area_data[game_data.current_map].id ==
                         mdata_t::MapId::the_void)
                     {
-                        if (!itemfind(0, 742))
+                        if (!itemfind(
+                                g_inv.pc(),
+                                ItemId::license_of_the_void_explorer))
                         {
                             txt(i18n::s.get(
                                 "core.action.exit_map.not_permitted"));

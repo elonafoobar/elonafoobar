@@ -878,7 +878,7 @@ TurnResult do_search_command()
 
 TurnResult do_pray_command()
 {
-    if (const auto altar = item_find(60002))
+    if (const auto altar = item_find(ItemCategory::altar))
     {
         int god_id_int = altar->param1;
         if (core_god::int2godid(god_id_int) != cdata.player().god_id)
@@ -1159,7 +1159,7 @@ TurnResult do_throw_command(Character& thrower, const ItemRef& throw_item)
 
     if (throw_item->id == ItemId::monster_ball)
     {
-        const auto slot = inv_make_free_slot_force(-1);
+        const auto slot = inv_make_free_slot_force(g_inv.ground());
         const auto ball = item_separate(throw_item, slot, 1);
         ball->set_pos({tlocx, tlocy});
         return do_throw_command_internal(thrower, ball);
@@ -1319,7 +1319,7 @@ TurnResult do_offer_command(const ItemRef& offering)
         cdata.player().position, BrightAuraAnimation::Type::offering)
         .play();
 
-    const auto altar_opt = item_find(60002);
+    const auto altar_opt = item_find(ItemCategory::altar);
     if (!altar_opt)
     {
         return TurnResult::turn_end;
@@ -1674,7 +1674,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
                         "core.action.dip.result.natural_potion_drop"));
                     return TurnResult::turn_end;
                 }
-                if (!inv_has_free_slot(0))
+                if (!g_inv.pc().has_free_slot())
                 {
                     txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                     return TurnResult::turn_end;
@@ -2769,7 +2769,7 @@ TurnResult do_use_command(ItemRef use_item)
         txt(i18n::s.get("core.action.use.deck.put_away"));
         break;
     case 38:
-        if (!inv_find(ItemId::deck, 0))
+        if (!itemfind(g_inv.pc(), ItemId::deck))
         {
             txt(i18n::s.get("core.action.use.deck.no_deck"));
             update_screen();
@@ -2929,7 +2929,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
         invcontainer = 0;
         if (refweight == -1)
         {
-            refweight = inv_weight(-1) + 2500;
+            refweight = inv_weight(g_inv.ground()) + 2500;
         }
         ctrl_file(
             FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
@@ -2987,7 +2987,8 @@ TurnResult do_use_stairs_command(int val0)
         txt(i18n::s.get("core.action.use_stairs.cannot_during_debug"));
         return TurnResult::pc_turn_user_error;
     }
-    if (const auto moon_gate = item_find(631, 3, ItemFindLocation::ground))
+    if (const auto moon_gate =
+            item_find(ItemId::moon_gate, ItemFindLocation::ground))
     {
         if (map_is_town_or_guild())
         {
@@ -3498,7 +3499,7 @@ TurnResult do_get_command()
                     .feats = 0;
                 return TurnResult::turn_end;
             }
-            if (!inv_has_free_slot(0))
+            if (!g_inv.pc().has_free_slot())
             {
                 txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                 update_screen();
@@ -3601,7 +3602,7 @@ TurnResult do_get_command()
     }
 
     in = item_opt->number();
-    int stat = pick_up_item(cdata.player().index, item_opt.unwrap(), none).type;
+    int stat = pick_up_item(g_inv.pc(), item_opt.unwrap(), none).type;
     if (stat == 1 || stat == -1)
     {
         return TurnResult::turn_end;
@@ -5277,7 +5278,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
 
 
 PickUpItemResult pick_up_item(
-    int inventory_id,
+    Inventory& inv,
     const ItemRef& item,
     optional_ref<Character> shopkeeper,
     bool play_sound)
@@ -5295,29 +5296,29 @@ PickUpItemResult pick_up_item(
     };
 
     int sellgold = 0;
-    if (inventory_id != -1)
+    if (inv.inventory_id() != -1)
     {
         if (item->id == ItemId::gold_piece || item->id == ItemId::platinum_coin)
         {
             snd_("core.getgold1");
             txt(i18n::s.get(
                 "core.action.pick_up.execute",
-                cdata[inventory_id],
+                cdata[inv.inventory_id()],
                 itemname(item)));
             if (item->id == ItemId::gold_piece)
             {
-                earn_gold(cdata[inventory_id], item->number());
+                earn_gold(cdata[inv.inventory_id()], item->number());
             }
             else
             {
-                earn_platinum(cdata[inventory_id], item->number());
+                earn_platinum(cdata[inv.inventory_id()], item->number());
             }
             in = item->number();
             item->remove();
             return {1, nullptr};
         }
     }
-    if (inventory_id == 0)
+    if (inv.inventory_id() == 0)
     {
         if (game_data.mount != 0)
         {
@@ -5338,14 +5339,14 @@ PickUpItemResult pick_up_item(
             {
                 if (!cdata.player().activity)
                 {
-                    if (!inv_has_free_slot(0))
+                    if (!g_inv.pc().has_free_slot())
                     {
                         txt(i18n::s.get(
                             "core.ui.inv.common.inventory_is_full"));
                         return {0, nullptr};
                     }
                     game_data.activity_about_to_start = 103;
-                    activity_others(cdata[inventory_id], item);
+                    activity_others(cdata[inv.inventory_id()], item);
                     return {-1, nullptr};
                 }
             }
@@ -5377,7 +5378,7 @@ PickUpItemResult pick_up_item(
                 return {0, nullptr};
             }
         }
-        if (!inv_has_free_slot(inventory_id))
+        if (!inv.has_free_slot())
         {
             txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
             return {0, nullptr};
@@ -5385,7 +5386,7 @@ PickUpItemResult pick_up_item(
     }
     const auto inumbk = item->number();
     item->set_number(in);
-    if (inventory_id == 0)
+    if (inv.inventory_id() == 0)
     {
         if (trait(215) != 0)
         {
@@ -5437,14 +5438,15 @@ PickUpItemResult pick_up_item(
     item->set_number(inumbk);
 
     OptionalItemRef picked_up_item;
-    const auto item_stack_result = item_stack(inventory_id, item, false, in);
+    const auto item_stack_result =
+        item_stack(inv.inventory_id(), item, false, in);
     if (item_stack_result.stacked)
     {
         picked_up_item = item_stack_result.stacked_item;
     }
     else
     {
-        const auto slot_opt = inv_get_free_slot(inventory_id);
+        const auto slot_opt = inv_get_free_slot(inv);
         if (!slot_opt)
         {
             if (invctrl == 12)
@@ -5558,7 +5560,7 @@ PickUpItemResult pick_up_item(
             {
                 txt(i18n::s.get(
                     "core.action.pick_up.execute",
-                    cdata[inventory_id],
+                    cdata[inv.inventory_id()],
                     itemname(picked_up_item.unwrap(), in)));
             }
             else
@@ -5581,10 +5583,10 @@ PickUpItemResult pick_up_item(
         sound_pick_up();
         txt(i18n::s.get(
             "core.action.pick_up.execute",
-            cdata[inventory_id],
+            cdata[inv.inventory_id()],
             itemname(picked_up_item.unwrap(), in)));
     }
-    if (inventory_id == 0)
+    if (inv.inventory_id() == 0)
     {
         if (picked_up_item->id == ItemId::campfire)
         {
@@ -5623,7 +5625,7 @@ PickUpItemResult pick_up_item(
         }
         refresh_burden_state();
     }
-    if (inventory_id == -1)
+    if (inv.inventory_id() == -1)
     {
         refresh_burden_state();
     }
@@ -5881,7 +5883,7 @@ void proc_autopick()
             {
                 in = item->number();
                 const auto pick_up_item_result =
-                    pick_up_item(cdata.player().index, item, none, !op.sound);
+                    pick_up_item(g_inv.pc(), item, none, !op.sound);
                 if (pick_up_item_result.type != 1)
                 {
                     break;
@@ -5953,7 +5955,7 @@ void proc_autopick()
 // Returns true on success, false on failure, or none on retry.
 optional<bool> try_unlock_internal(int difficulty)
 {
-    const auto lockpick_opt = item_find(636, 3);
+    const auto lockpick_opt = item_find(ItemId::lockpick);
     if (!lockpick_opt)
     {
         txt(i18n::s.get("core.action.unlock.do_not_have_lockpicks"));
@@ -5964,7 +5966,7 @@ optional<bool> try_unlock_internal(int difficulty)
     txt(i18n::s.get("core.action.unlock.use_lockpick"));
     snd("core.locked1");
     {
-        if (item_find(637, 3))
+        if (item_find(ItemId::skeleton_key))
         {
             i = sdata(158, 0) * 150 / 100 + 5;
             txt(i18n::s.get("core.action.unlock.use_skeleton_key"));

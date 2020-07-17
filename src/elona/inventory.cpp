@@ -8,22 +8,14 @@
 namespace elona
 {
 
-int inv_weight(int owner)
+int inv_weight(Inventory& inv)
 {
     int weight{};
-    if (owner == 0)
-    {
-        game_data.cargo_weight = 0;
-    }
-    for (const auto& item : g_inv.by_index(owner))
+    for (const auto& item : inv)
     {
         if (item->weight >= 0)
         {
             weight += item->weight * item->number();
-        }
-        else if (owner == 0)
-        {
-            game_data.cargo_weight += -item->weight * item->number();
         }
     }
     return weight;
@@ -31,50 +23,65 @@ int inv_weight(int owner)
 
 
 
-optional<InventorySlot> inv_get_free_slot(int inventory_id)
+int inv_cargo_weight(Inventory& inv)
 {
-    return g_inv.by_index(inventory_id).get_free_slot();
+    int weight{};
+    for (const auto& item : inv)
+    {
+        if (item->weight < 0)
+        {
+            weight += -item->weight * item->number();
+        }
+    }
+    return weight;
 }
 
 
 
-optional<InventorySlot> inv_make_free_slot(int inventory_id)
+optional<InventorySlot> inv_get_free_slot(Inventory& inv)
 {
-    if (inventory_id == -1 && mode != 6)
+    return inv.get_free_slot();
+}
+
+
+
+optional<InventorySlot> inv_make_free_slot(Inventory& inv)
+{
+    if (inv.inventory_id() == -1 && mode != 6)
     {
-        return inv_make_free_slot_force(inventory_id);
+        return inv_make_free_slot_force(inv);
     }
     else
     {
-        return inv_get_free_slot(inventory_id);
+        return inv_get_free_slot(inv);
     }
 }
 
 
 
-InventorySlot inv_make_free_slot_force(int inventory_id)
+InventorySlot inv_make_free_slot_force(Inventory& inv)
 {
-    if (const auto slot = inv_get_free_slot(inventory_id))
+    if (const auto slot = inv_get_free_slot(inv))
     {
         return *slot;
     }
 
-    if (inventory_id == -1)
+    if (inv.inventory_id() == -1)
     {
         assert(mode != 6);
         txt(i18n::s.get("core.item.items_are_destroyed"));
-        return inv_compress(inventory_id);
+        return inv_compress(inv);
     }
 
     while (true)
     {
-        const auto slot = inv_get_random_slot(inventory_id);
+        const auto slot = inv_get_random_slot(inv);
         const auto item = Inventory::at(slot).unwrap();
         if (item->body_part == 0)
         {
-            if (cdata[inventory_id].ai_item == item)
+            if (cdata[inv.inventory_id()].ai_item == item)
             {
-                cdata[inventory_id].ai_item = nullptr;
+                cdata[inv.inventory_id()].ai_item = nullptr;
             }
             item->remove();
             return slot;
@@ -84,17 +91,10 @@ InventorySlot inv_make_free_slot_force(int inventory_id)
 
 
 
-bool inv_has_free_slot(int owner)
-{
-    return g_inv.by_index(owner).has_free_slot();
-}
-
-
-
-int inv_sum(int owner)
+int inv_count(Inventory& inv)
 {
     int n{};
-    for (const auto& _item : g_inv.by_index(owner))
+    for (const auto& _item : inv)
     {
         (void)_item;
         ++n;
@@ -104,13 +104,13 @@ int inv_sum(int owner)
 
 
 
-InventorySlot inv_compress(int owner)
+InventorySlot inv_compress(Inventory& inv)
 {
     int number_of_deleted_items{};
     for (int i = 0; i < 100; ++i)
     {
         int threshold = 200 * (i * i + 1);
-        for (const auto& item : g_inv.by_index(owner))
+        for (const auto& item : inv)
         {
             if (!item->is_precious() && item->value < threshold)
             {
@@ -128,13 +128,13 @@ InventorySlot inv_compress(int owner)
         }
     }
 
-    if (const auto free_slot = g_inv.by_index(owner).get_free_slot())
+    if (const auto free_slot = inv.get_free_slot())
     {
         return *free_slot;
     }
 
     // Destroy 1 existing item forcely.
-    const auto slot = inv_get_random_slot(owner);
+    const auto slot = inv_get_random_slot(inv);
     Inventory::at(slot)->remove();
 
     return slot;
@@ -142,9 +142,8 @@ InventorySlot inv_compress(int owner)
 
 
 
-InventorySlot inv_get_random_slot(int owner)
+InventorySlot inv_get_random_slot(Inventory& inv)
 {
-    auto& inv = g_inv.by_index(owner);
     const auto index = rnd(inv.size());
     return {&inv, index};
 }

@@ -219,7 +219,8 @@ void load_gene_files()
             item->count = -1;
         }
         item->body_part = 0;
-        item_separate(item, inv_make_free_slot_force(-1), item->number());
+        item_separate(
+            item, inv_make_free_slot_force(g_inv.ground()), item->number());
     }
     for (auto&& cnt : cdata.all())
     {

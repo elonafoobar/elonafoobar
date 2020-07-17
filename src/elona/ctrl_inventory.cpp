@@ -740,7 +740,7 @@ optional<MenuResult> check_command(
     }
     if (invctrl == 19)
     {
-        if (!item_find(60002, 2))
+        if (!item_find(ItemCategory::altar))
         {
             txt(i18n::s.get("core.ui.inv.offer.no_altar"),
                 Message::only_once{true});
@@ -846,8 +846,8 @@ void show_message(const OptionalItemRef& citrade, const OptionalItemRef& cidip)
         }
         if (invctrl == 28)
         {
-            if (const auto small_medals =
-                    item_find(622, 3, ItemFindLocation::player_inventory))
+            if (const auto small_medals = item_find(
+                    ItemId::small_medal, ItemFindLocation::player_inventory))
             {
                 p = small_medals->number();
             }
@@ -906,7 +906,7 @@ on_shortcut(OptionalItemRef& citrade, OptionalItemRef& cidip, bool dropcontinue)
         }
         if (f == 0)
         {
-            if (inv_find(int2itemid(invsc), 0))
+            if (itemfind(g_inv.pc(), int2itemid(invsc)))
             {
                 Message::instance().linebreak();
                 txt(i18n::s.get("core.action.cannot_do_in_global"));
@@ -1307,7 +1307,7 @@ OnEnterResult on_enter_drop(
         txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
         return OnEnterResult{2};
     }
-    if (!inv_has_free_slot(-1))
+    if (!g_inv.ground().has_free_slot())
     {
         txt(i18n::s.get("core.ui.inv.drop.cannot_anymore"));
         snd("core.fail1");
@@ -1315,7 +1315,7 @@ OnEnterResult on_enter_drop(
     }
     if (map_data.max_item_count != 0)
     {
-        if (inv_sum(-1) >= map_data.max_item_count)
+        if (inv_count(g_inv.ground()) >= map_data.max_item_count)
         {
             if (the_item_db[itemid2int(selected_item->id)]->category !=
                 ItemCategory::furniture)
@@ -1382,7 +1382,7 @@ OnEnterResult on_enter_external_inventory(
     {
         if (invctrl(1) == 3 || invctrl(1) == 5)
         {
-            if (inv_sum(-1) >= invcontainer)
+            if (inv_count(g_inv.ground()) >= invcontainer)
             {
                 snd("core.fail1");
                 txt(i18n::s.get("core.ui.inv.put.container.full"));
@@ -1548,7 +1548,9 @@ OnEnterResult on_enter_external_inventory(
     {
         inventory_id = 0;
     }
-    int stat = pick_up_item(inventory_id, selected_item, inventory_owner).type;
+    int stat = pick_up_item(
+                   g_inv.by_index(inventory_id), selected_item, inventory_owner)
+                   .type;
     if (stat == 0)
     {
         return OnEnterResult{1};
@@ -1701,7 +1703,7 @@ OnEnterResult on_enter_give(
         snd("core.fail1");
         return OnEnterResult{2};
     }
-    const auto slot_opt = inv_get_free_slot(inventory_owner.index);
+    const auto slot_opt = inv_get_free_slot(g_inv.for_chara(inventory_owner));
     if (!slot_opt)
     {
         txt(i18n::s.get("core.ui.inv.give.inventory_is_full", inventory_owner));
@@ -1736,7 +1738,8 @@ OnEnterResult on_enter_give(
     {
         p *= 5;
     }
-    if (inv_weight(inventory_owner.index) + selected_item->weight > p)
+    if (inv_weight(g_inv.for_chara(inventory_owner)) + selected_item->weight >
+        p)
     {
         f = 1;
     }
@@ -2055,7 +2058,7 @@ OnEnterResult on_enter_trade_target(
     {
         supply_new_equipment(inventory_owner);
     }
-    inv_make_free_slot_force(inventory_owner.index);
+    inv_make_free_slot_force(g_inv.for_chara(inventory_owner));
     chara_refresh(inventory_owner);
     refresh_burden_state();
     invsubroutine = 0;
@@ -2159,7 +2162,7 @@ OnEnterResult on_enter_receive(
     const ItemRef& selected_item,
     Character& inventory_owner)
 {
-    const auto slot_opt = inv_get_free_slot(0);
+    const auto slot_opt = inv_get_free_slot(g_inv.pc());
     if (!slot_opt)
     {
         txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
@@ -2275,7 +2278,7 @@ OnEnterResult on_enter_steal(const ItemRef& selected_item, MenuResult& result)
 OnEnterResult on_enter_small_medal(const ItemRef& selected_item)
 {
     Message::instance().linebreak();
-    const auto slot_opt = inv_get_free_slot(0);
+    const auto slot_opt = inv_get_free_slot(g_inv.pc());
     if (!slot_opt)
     {
         txt(i18n::s.get("core.ui.inv.trade_medals.inventory_full"));
@@ -2284,7 +2287,8 @@ OnEnterResult on_enter_small_medal(const ItemRef& selected_item)
     }
     const auto slot = *slot_opt;
     OptionalItemRef small_medals;
-    if ((small_medals = item_find(622, 3, ItemFindLocation::player_inventory)))
+    if ((small_medals = item_find(
+             ItemId::small_medal, ItemFindLocation::player_inventory)))
     {
         p = small_medals->number();
     }

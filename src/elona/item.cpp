@@ -332,88 +332,54 @@ int skip_ = 0;
 
 
 
-/**
- * Tries to find an item in the player's inventory, the ground, or both. Returns
- * the item's reference or none if not found.
- *
- * Valid values of @ref matcher_type:
- *   0: By category
- *   1: By skill
- *   2: By subcategory
- *   3: By ID
- *
- * Valid values of @ref inventory_type:
- *   -1: On ground
- *    0: Both player's inventory and on ground
- *    1: Player's inventory
- */
-OptionalItemRef
-item_find(int matcher, int matcher_type, ItemFindLocation location_type)
+template <typename F>
+OptionalItemRef item_find_internal(ItemFindLocation location_type, F predicate)
 {
-    OptionalItemRef result;
-    int max_param1 = -1;
-
-    for (const auto& inventory_id : {-1, 0})
+    switch (location_type)
     {
-        if (inventory_id == -1)
-        {
-            if (location_type == ItemFindLocation::player_inventory)
-            {
-                continue;
-            }
-        }
-        else
-        {
-            if (location_type == ItemFindLocation::ground)
-            {
-                continue;
-            }
-        }
-        for (const auto& item : g_inv.by_index(inventory_id))
-        {
-            if (inventory_id == -1)
-            {
-                if (item->pos() != cdata.player().position)
-                {
-                    continue;
-                }
-            }
-            switch (matcher_type)
-            {
-            case 0:
-                if ((int)the_item_db[itemid2int(item->id)]->category == matcher)
-                {
-                    result = item;
-                }
-                break;
-            case 1:
-                if (item->skill == matcher)
-                {
-                    if (max_param1 < item->param1)
-                    {
-                        result = item;
-                        max_param1 = item->param1;
-                    }
-                }
-                break;
-            case 2:
-                if (the_item_db[itemid2int(item->id)]->subcategory == matcher)
-                {
-                    result = item;
-                }
-                break;
-            case 3:
-                if (item->id == int2itemid(matcher))
-                {
-                    result = item;
-                }
-                break;
-            default: assert(0); break;
-            }
-        }
+    case ItemFindLocation::player_inventory:
+        return inv_find_last_match(g_inv.pc(), predicate);
+    case ItemFindLocation::ground:
+        return inv_find_last_match(g_inv.ground(), predicate);
+    case ItemFindLocation::player_inventory_and_ground: {
+        const auto a = inv_find_last_match(g_inv.ground(), predicate);
+        const auto b = inv_find_last_match(g_inv.pc(), predicate);
+        return b ? b : a;
     }
+    default: assert(0); return nullptr;
+    }
+}
 
-    return result;
+
+
+OptionalItemRef item_find(ItemId id, ItemFindLocation location_type)
+{
+    return item_find_internal(location_type, [&](const auto& item, auto& inv) {
+        if (inv.inventory_id() == -1)
+        {
+            if (item->pos() != cdata.player().position)
+            {
+                return false;
+            }
+        }
+        return item->id == id;
+    });
+}
+
+
+
+OptionalItemRef item_find(ItemCategory category, ItemFindLocation location_type)
+{
+    return item_find_internal(location_type, [&](const auto& item, auto& inv) {
+        if (inv.inventory_id() == -1)
+        {
+            if (item->pos() != cdata.player().position)
+            {
+                return false;
+            }
+        }
+        return the_item_db[itemid2int(item->id)]->category == category;
+    });
 }
 
 
@@ -440,30 +406,18 @@ int itemusingfind(const ItemRef& item, bool disallow_pc)
 
 
 
-OptionalItemRef itemfind(int inventory_id, int matcher, int matcher_type)
+OptionalItemRef itemfind(Inventory& inv, ItemId id)
 {
-    if (matcher_type == 0)
-    {
-        for (const auto& item : g_inv.for_chara(cdata[inventory_id]))
-        {
-            if (item->id == int2itemid(matcher))
-            {
-                return item;
-            }
-        }
-        return nullptr;
-    }
-    else
-    {
-        for (const auto& item : g_inv.for_chara(cdata[inventory_id]))
-        {
-            if (the_item_db[itemid2int(item->id)]->subcategory == matcher)
-            {
-                return item;
-            }
-        }
-        return nullptr;
-    }
+    return inv_find(inv, [&](const auto& item) { return item->id == id; });
+}
+
+
+
+OptionalItemRef itemfind(Inventory& inv, int subcategory)
+{
+    return inv_find(inv, [&](const auto& item) {
+        return the_item_db[itemid2int(item->id)]->subcategory == subcategory;
+    });
 }
 
 
@@ -685,10 +639,11 @@ ItemRef item_separate(const ItemRef& stacked_item)
         return stacked_item;
     }
 
-    auto slot_opt = inv_make_free_slot(inv_getowner(stacked_item));
+    auto slot_opt =
+        inv_make_free_slot(g_inv.by_index(inv_getowner(stacked_item)));
     if (!slot_opt)
     {
-        slot_opt = inv_make_free_slot(-1);
+        slot_opt = inv_make_free_slot(g_inv.ground());
         if (!slot_opt)
         {
             stacked_item->set_number(1);
@@ -1763,7 +1718,7 @@ void item_acid(const Character& owner, OptionalItemRef item)
 
 
 
-bool item_fire(int owner, const OptionalItemRef& burned_item)
+bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
 {
     OptionalItemRef blanket;
     std::vector<ItemRef> list;
@@ -1772,14 +1727,14 @@ bool item_fire(int owner, const OptionalItemRef& burned_item)
         list.emplace_back(burned_item.unwrap());
     }
 
-    if (owner != -1)
+    if (inv.inventory_id() != -1)
     {
-        if (sdata(50, owner) / 50 >= 6 ||
-            cdata[owner].quality >= Quality::miracle)
+        if (sdata(50, inv.inventory_id()) / 50 >= 6 ||
+            cdata[inv.inventory_id()].quality >= Quality::miracle)
         {
             return false;
         }
-        for (const auto& item : g_inv.by_index(owner))
+        for (const auto& item : inv)
         {
             if (item->id == ItemId::fireproof_blanket)
             {
@@ -1819,7 +1774,7 @@ bool item_fire(int owner, const OptionalItemRef& burned_item)
         const auto category = the_item_db[itemid2int(item->id)]->category;
         if (category == ItemCategory::food && item->param2 == 0)
         {
-            if (owner == -1)
+            if (inv.inventory_id() == -1)
             {
                 if (is_in_fov(item->pos()))
                 {
@@ -1830,12 +1785,12 @@ bool item_fire(int owner, const OptionalItemRef& burned_item)
             }
             else
             {
-                if (is_in_fov(cdata[owner]))
+                if (is_in_fov(cdata[inv.inventory_id()]))
                 {
                     txt(i18n::s.get(
                             "core.item.item_on_the_ground_get_broiled",
                             item,
-                            cdata[owner]),
+                            cdata[inv.inventory_id()]),
                         Message::color{ColorIndex::gold});
                 }
             }
@@ -1868,7 +1823,7 @@ bool item_fire(int owner, const OptionalItemRef& burned_item)
             {
                 continue;
             }
-            if (owner != -1)
+            if (inv.inventory_id() != -1)
             {
                 if (rnd(4))
                 {
@@ -1880,12 +1835,12 @@ bool item_fire(int owner, const OptionalItemRef& burned_item)
         if (blanket)
         {
             item_separate(blanket.unwrap());
-            if (is_in_fov(cdata[owner]))
+            if (is_in_fov(cdata[inv.inventory_id()]))
             {
                 txt(i18n::s.get(
                     "core.item.fireproof_blanket_protects_item",
                     blanket.unwrap(),
-                    cdata[owner]));
+                    cdata[inv.inventory_id()]));
             }
             if (blanket->count > 0)
             {
@@ -1894,7 +1849,7 @@ bool item_fire(int owner, const OptionalItemRef& burned_item)
             else if (rnd(20) == 0)
             {
                 blanket->modify_number(-1);
-                if (is_in_fov(cdata[owner]))
+                if (is_in_fov(cdata[inv.inventory_id()]))
                 {
                     txt(i18n::s.get(
                         "core.item.fireproof_blanket_turns_to_dust",
@@ -1906,30 +1861,32 @@ bool item_fire(int owner, const OptionalItemRef& burned_item)
         }
 
         int p_ = rnd_capped(item->number()) / 2 + 1;
-        if (owner != -1)
+        if (inv.inventory_id() != -1)
         {
             if (item->body_part != 0)
             {
-                if (is_in_fov(cdata[owner]))
+                if (is_in_fov(cdata[inv.inventory_id()]))
                 {
                     txt(i18n::s.get(
                             "core.item.item_someone_equips_turns_to_dust",
                             itemname(item, p_),
                             p_,
-                            cdata[owner]),
+                            cdata[inv.inventory_id()]),
                         Message::color{ColorIndex::purple});
                 }
-                cdata[owner].equipment_slots[item->body_part - 100].unequip();
+                cdata[inv.inventory_id()]
+                    .equipment_slots[item->body_part - 100]
+                    .unequip();
                 item->body_part = 0;
-                chara_refresh(cdata[owner]);
+                chara_refresh(cdata[inv.inventory_id()]);
             }
-            else if (is_in_fov(cdata[owner]))
+            else if (is_in_fov(cdata[inv.inventory_id()]))
             {
                 txt(i18n::s.get(
                         "core.item.someones_item_turns_to_dust",
                         itemname(item, p_, false),
                         p_,
-                        cdata[owner]),
+                        cdata[inv.inventory_id()]),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -1969,7 +1926,7 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
     }
     if (burned_item)
     {
-        const auto burned = item_fire(-1, burned_item);
+        const auto burned = item_fire(g_inv.ground(), burned_item);
         if (burned)
         {
             if (cell_data.at(x, y).mef_index_plus_one == 0)
@@ -1989,7 +1946,7 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
 
 
 
-bool item_cold(int owner, const OptionalItemRef& destroyed_item)
+bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
 {
     OptionalItemRef blanket;
     std::vector<ItemRef> list;
@@ -1997,14 +1954,14 @@ bool item_cold(int owner, const OptionalItemRef& destroyed_item)
     {
         list.emplace_back(destroyed_item.unwrap());
     }
-    if (owner != -1)
+    if (inv.inventory_id() != -1)
     {
-        if (sdata(51, owner) / 50 >= 6 ||
-            cdata[owner].quality >= Quality::miracle)
+        if (sdata(51, inv.inventory_id()) / 50 >= 6 ||
+            cdata[inv.inventory_id()].quality >= Quality::miracle)
         {
             return false;
         }
-        for (const auto& item : g_inv.by_index(owner))
+        for (const auto& item : inv)
         {
             if (item->id == ItemId::coldproof_blanket)
             {
@@ -2059,12 +2016,12 @@ bool item_cold(int owner, const OptionalItemRef& destroyed_item)
         if (blanket)
         {
             item_separate(blanket.unwrap());
-            if (is_in_fov(cdata[owner]))
+            if (is_in_fov(cdata[inv.inventory_id()]))
             {
                 txt(i18n::s.get(
                     "core.item.coldproof_blanket_protects_item",
                     blanket.unwrap(),
-                    cdata[owner]));
+                    cdata[inv.inventory_id()]));
             }
             if (blanket->count > 0)
             {
@@ -2073,7 +2030,7 @@ bool item_cold(int owner, const OptionalItemRef& destroyed_item)
             else if (rnd(20) == 0)
             {
                 blanket->modify_number(-1);
-                if (is_in_fov(cdata[owner]))
+                if (is_in_fov(cdata[inv.inventory_id()]))
                 {
                     txt(i18n::s.get(
                         "core.item.coldproof_blanket_is_broken_to_pieces",
@@ -2084,15 +2041,15 @@ bool item_cold(int owner, const OptionalItemRef& destroyed_item)
             continue;
         }
         int p_ = rnd_capped(item->number()) / 2 + 1;
-        if (owner != -1)
+        if (inv.inventory_id() != -1)
         {
-            if (is_in_fov(cdata[owner]))
+            if (is_in_fov(cdata[inv.inventory_id()]))
             {
                 txt(i18n::s.get(
                         "core.item.someones_item_breaks_to_pieces",
                         itemname(item, p_, false),
                         p_,
-                        cdata[owner]),
+                        cdata[inv.inventory_id()]),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -2131,7 +2088,7 @@ void mapitem_cold(int x, int y)
     }
     if (destroyed_item)
     {
-        item_cold(-1, destroyed_item);
+        item_cold(g_inv.ground(), destroyed_item);
     }
 }
 
@@ -2144,23 +2101,9 @@ int inv_getowner(const ItemRef& item)
 
 
 
-bool inv_find(ItemId id, int owner)
-{
-    for (const auto& item : g_inv.for_chara(cdata[owner]))
-    {
-        if (item->id == id)
-        {
-            return true;
-        }
-    }
-    return false; // Not found
-}
-
-
-
 void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
 {
-    const auto slot = inv_make_free_slot_force(-1);
+    const auto slot = inv_make_free_slot_force(g_inv.ground());
     const auto dropped_item = item_separate(item_in_inventory, slot, num);
     dropped_item->set_pos(cdata.player().position);
     itemturn(dropped_item);
@@ -2179,7 +2122,7 @@ void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
 
     if (dropped_item->id == ItemId::bottle_of_water) // Water
     {
-        if (const auto altar = item_find(60002, 0))
+        if (const auto altar = item_find(ItemCategory::altar))
         {
             // The altar is your god's.
             if (core_god::int2godid(altar->param1) == cdata.player().god_id)

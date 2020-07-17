@@ -326,7 +326,7 @@ optional<UIMenuCrafting::ResultType> UIMenuCrafting::on_key(
             set_reupdate();
             return none;
         }
-        if (!inv_has_free_slot(0))
+        if (!g_inv.pc().has_free_slot())
         {
             snd("core.fail1");
             txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));

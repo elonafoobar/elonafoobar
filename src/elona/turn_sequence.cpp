@@ -535,7 +535,9 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                         if (game_data.mount != chara.index)
                         {
                             int stat = pick_up_item(
-                                           chara.index, item_opt.unwrap(), none)
+                                           g_inv.for_chara(chara),
+                                           item_opt.unwrap(),
+                                           none)
                                            .type;
                             if (stat == 1)
                             {
@@ -1385,7 +1387,7 @@ optional<TurnResult> pc_turn_advance_time()
     }
     if (trait(210) != 0 && rnd(5) == 0)
     {
-        const auto item = Inventory::at(inv_get_random_slot(0));
+        const auto item = Inventory::at(inv_get_random_slot(g_inv.pc()));
         if (item &&
             the_item_db[itemid2int(item->id)]->category == ItemCategory::potion)
         {

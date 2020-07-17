@@ -649,7 +649,7 @@ bool _magic_185(Character& subject, const ItemRef& rod)
         txt(i18n::s.get("core.magic.fish.do_not_know"));
         return false;
     }
-    if (!inv_has_free_slot(0))
+    if (!g_inv.pc().has_free_slot())
     {
         txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
         return false;
@@ -2093,7 +2093,8 @@ bool _magic_645_1114(Character& subject, Character& target)
     {
         for (int _i = 0; _i < 200; ++_i)
         {
-            const auto item = Inventory::at(inv_get_random_slot(target.index));
+            const auto item =
+                Inventory::at(inv_get_random_slot(g_inv.for_chara(target)));
             if (!item)
             {
                 continue;
@@ -2228,7 +2229,7 @@ bool _magic_435(Character& subject, Character& target)
     }
     f = 1;
     {
-        if (inv_find(ItemId::monster_heart, subject.index))
+        if (itemfind(g_inv.for_chara(subject), ItemId::monster_heart))
         {
             efp = efp * 3 / 2;
         }

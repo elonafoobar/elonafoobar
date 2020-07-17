@@ -322,7 +322,8 @@ void adventurer_discover_equipment(Character& adv)
     f = 0;
     for (int _i = 0; _i < 10; ++_i)
     {
-        const auto item = Inventory::at(inv_get_random_slot(adv.index));
+        const auto item =
+            Inventory::at(inv_get_random_slot(g_inv.for_chara(adv)));
         if (!item)
         {
             f = 1;

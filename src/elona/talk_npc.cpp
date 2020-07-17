@@ -452,7 +452,7 @@ TalkResult talk_quest_delivery(
     const ItemRef& item_to_deliver)
 {
     txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_deliver));
-    const auto slot = inv_make_free_slot_force(speaker.index);
+    const auto slot = inv_make_free_slot_force(g_inv.for_chara(speaker));
     const auto handed_over_item = item_separate(item_to_deliver, slot, 1);
     chara_set_ai_item(speaker, handed_over_item);
     rq = deliver;
@@ -467,7 +467,7 @@ TalkResult talk_quest_delivery(
 TalkResult talk_quest_supply(Character& speaker, const ItemRef& item_to_supply)
 {
     txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_supply));
-    const auto slot = inv_make_free_slot_force(speaker.index);
+    const auto slot = inv_make_free_slot_force(g_inv.for_chara(speaker));
     const auto handed_over_item = item_separate(item_to_supply, slot, 1);
     speaker.was_passed_item_by_you_just_now() = true;
     chara_set_ai_item(speaker, handed_over_item);
@@ -503,10 +503,10 @@ TalkResult talk_shop_attack(Character& speaker)
 TalkResult talk_guard_return_item(Character& speaker)
 {
     listmax = 0;
-    auto wallet_opt = itemfind(0, 284);
+    auto wallet_opt = itemfind(g_inv.pc(), ItemId::wallet);
     if (!wallet_opt)
     {
-        wallet_opt = itemfind(0, 283);
+        wallet_opt = itemfind(g_inv.pc(), ItemId::suitcase);
     }
     const auto wallet = wallet_opt.unwrap();
     wallet->modify_number(-1);
@@ -1665,7 +1665,7 @@ TalkResult talk_quest_giver(Character& speaker)
         }
         if (quest_data[rq].id == 1002)
         {
-            if (!inv_has_free_slot(0))
+            if (!g_inv.pc().has_free_slot())
             {
                 buff = i18n::s.get(
                     "core.talk.npc.quest_giver.about.backpack_full", speaker);
@@ -2070,12 +2070,12 @@ TalkResult talk_npc(Character& speaker)
                         cdata[rtval(cnt)]));
             }
         }
-        if (itemfind(0, 284))
+        if (itemfind(g_inv.pc(), ItemId::wallet))
         {
             ELONA_APPEND_RESPONSE(
                 32, i18n::s.get("core.talk.npc.guard.choices.lost_wallet"));
         }
-        else if (itemfind(0, 283))
+        else if (itemfind(g_inv.pc(), ItemId::suitcase))
         {
             ELONA_APPEND_RESPONSE(
                 32, i18n::s.get("core.talk.npc.guard.choices.lost_suitcase"));

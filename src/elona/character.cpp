@@ -2066,10 +2066,12 @@ void wet(int chara_index, int turns)
 
 void refresh_burden_state()
 {
-    cdata.player().inventory_weight = clamp(inv_weight(0), 0, 20000000) *
+    cdata.player().inventory_weight =
+        clamp(inv_weight(g_inv.pc()), 0, 20000000) *
         (100 - trait(201) * 10 + trait(205) * 20) / 100;
     cdata.player().max_inventory_weight =
         sdata(10, 0) * 500 + sdata(11, 0) * 250 + sdata(153, 0) * 2000 + 45000;
+    game_data.cargo_weight = inv_cargo_weight(g_inv.pc());
     for (int cnt = 0; cnt < 1; ++cnt)
     {
         if (cdata.player().inventory_weight >

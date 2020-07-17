@@ -1649,9 +1649,9 @@ void supply_income()
         if (cdata.player().level > 5)
         {
             save_set_autosave();
-            if (!inv_has_free_slot(-1))
+            if (!g_inv.ground().has_free_slot())
             {
-                inv_compress(-1);
+                inv_compress(g_inv.ground());
             }
             flt();
             if (const auto item = itemcreate_extra_inv(615, -1, -1, 0))

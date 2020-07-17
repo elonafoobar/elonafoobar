@@ -692,11 +692,11 @@ int damage_hp(
         }
         if ((element == 50 || damage_source == -9) && victim.wet == 0)
         {
-            item_fire(victim.index);
+            item_fire(g_inv.for_chara(victim));
         }
         if (element == 51)
         {
-            item_cold(victim.index);
+            item_cold(g_inv.for_chara(victim));
         }
         if (victim.sleep != 0)
         {
@@ -1544,7 +1544,7 @@ void character_drops_item(Character& victim)
             item->set_pos(victim.position);
             if (!item_stack(-1, item).stacked)
             {
-                const auto slot = inv_make_free_slot_force(-1);
+                const auto slot = inv_make_free_slot_force(g_inv.ground());
                 const auto dropped_item =
                     item_separate(item, slot, item->number());
                 dropped_item->own_state = -2;
@@ -1666,7 +1666,7 @@ void character_drops_item(Character& victim)
         itemturn(item);
         if (!item_stack(-1, item).stacked)
         {
-            const auto slot = inv_make_free_slot_force(-1);
+            const auto slot = inv_make_free_slot_force(g_inv.ground());
             item_separate(item, slot, item->number());
         }
     }

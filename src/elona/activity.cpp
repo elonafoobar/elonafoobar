@@ -1027,7 +1027,7 @@ void activity_others_end_steal(const ItemRef& steal_target)
         in = steal_target->number();
     }
 
-    const auto slot_opt = inv_get_free_slot(0);
+    const auto slot_opt = inv_get_free_slot(g_inv.pc());
     if (!slot_opt)
     {
         txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
@@ -1116,7 +1116,7 @@ void activity_others_end_harvest(const ItemRef& crop)
     txt(i18n::s.get(
         "core.activity.harvest.finish", crop, cnvweight(crop->weight)));
     in = crop->number();
-    pick_up_item(cdata.player().index, crop, none);
+    pick_up_item(g_inv.pc(), crop, none);
 }
 
 
