@@ -32,6 +32,7 @@
 #include "position.hpp"
 #include "quest.hpp"
 #include "save.hpp"
+#include "save_fs.hpp"
 #include "status_ailment.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -1707,9 +1708,8 @@ TurnResult exit_map()
         // quest instance)
         prepare_charas_for_map_unload();
 
-        tmpload(filepathutil::u8path("mdata_" + mid + ".s2"));
         // delete all map-local data
-        if (fs::exists(filesystem::dirs::tmp() / (u8"mdata_"s + mid + u8".s2")))
+        if (save_fs_exists(u8"mdata_"s + mid + u8".s2"))
         {
             ctrl_file(FileOperation::map_delete);
         }

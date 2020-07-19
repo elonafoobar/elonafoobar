@@ -144,7 +144,28 @@ void SaveHeader::save(const fs::path& save_dir)
     }
     {
         // foobar
-        serialization::json::save(save_dir / foobar_filename, h);
+        std::ofstream out{(save_dir / foobar_filename).native()};
+        json5::value::object_type json;
+
+        json["version"] = h.version;
+        json["name"] = h.name;
+        json["alias"] = h.alias;
+        json["level"] = h.level;
+        json["race"] = h.race;
+        json["class"] = h.class_;
+        json["location"] = h.location;
+        json["is_wizard"] = h.is_wizard;
+        json["ingame_time"] = h.ingame_time;
+        json["last_played_at"] = h.last_played_at;
+        json["play_seconds"] = h.play_seconds;
+
+        json5::stringify_options opts;
+        opts.prettify = true;
+        opts.insert_trailing_comma = true;
+        opts.unquote_key = true;
+        opts.sort_by_key = true;
+
+        out << json5::stringify(json, opts) << std::endl;
     }
 }
 

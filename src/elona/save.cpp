@@ -13,8 +13,10 @@
 #include "lua_env/lua_env.hpp"
 #include "map.hpp"
 #include "message.hpp"
+#include "save_fs.hpp"
 #include "save_update.hpp"
 #include "serialization/serialization.hpp"
+#include "serialization/utils.hpp"
 #include "set_item_info.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -59,9 +61,9 @@ void _do_save_game()
     {
         fs::create_directory(save_dir);
     }
-    Save::instance().save(save_dir);
+    save_fs_save(save_dir);
     ctrl_file(FileOperation2::global_write, save_dir);
-    Save::instance().clear();
+    save_fs_clear();
     ELONA_LOG("save") << "Save end:" << playerid;
 }
 
@@ -73,8 +75,7 @@ void load_save_data()
 {
     ELONA_LOG("save") << "Load: " << playerid;
 
-    Save::instance().clear();
-    writeloadedbuff_clear();
+    save_fs_clear();
 
     ctrl_file(FileOperation::temp_dir_delete);
     const auto save_dir = filesystem::dirs::save(playerid);

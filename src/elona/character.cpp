@@ -45,6 +45,7 @@
 #include "race.hpp"
 #include "random.hpp"
 #include "randomgen.hpp"
+#include "save_fs.hpp"
 #include "status_ailment.hpp"
 #include "text.hpp"
 #include "trait.hpp"
@@ -1384,14 +1385,7 @@ void chara_vanquish(Character& chara)
     {
         const auto storage_filename = filepathutil::u8path(
             "shop"s + std::to_string(chara.shop_store_id) + ".s2");
-        const auto storage_filepath =
-            filesystem::dirs::tmp() / storage_filename;
-        tmpload(storage_filename);
-        if (fs::exists(storage_filepath))
-        {
-            fs::remove(storage_filepath);
-            Save::instance().remove(storage_filepath.filename());
-        }
+        save_fs_remove(storage_filename);
         chara.shop_store_id = 0;
     }
     modify_crowd_density(chara.index, -1);

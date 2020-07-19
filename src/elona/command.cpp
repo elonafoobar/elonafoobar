@@ -42,6 +42,7 @@
 #include "quest.hpp"
 #include "random.hpp"
 #include "save.hpp"
+#include "save_fs.hpp"
 #include "shop.hpp"
 #include "status_ailment.hpp"
 #include "talk.hpp"
@@ -2885,9 +2886,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
             }
         }
         ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
-        tmpload(filepathutil::u8path(u8"shop"s + invfile + u8".s2"));
-        if (fs::exists(
-                filesystem::dirs::tmp() / (u8"shop"s + invfile + u8".s2")))
+        if (save_fs_exists(u8"shop"s + invfile + u8".s2"))
         {
             ctrl_file(
                 FileOperation2::map_items_read, u8"shop"s + invfile + u8".s2");
@@ -5361,10 +5360,7 @@ PickUpItemResult pick_up_item(
                 {
                     std::string midbk = mid;
                     mid = ""s + 30 + u8"_"s + (100 + item->count);
-                    tmpload(filepathutil::u8path(u8"mdata_"s + mid + u8".s2"));
-                    if (fs::exists(
-                            filesystem::dirs::tmp() /
-                            (u8"mdata_"s + mid + u8".s2")))
+                    if (save_fs_exists(u8"mdata_"s + mid + u8".s2"))
                     {
                         ctrl_file(FileOperation::map_delete);
                     }

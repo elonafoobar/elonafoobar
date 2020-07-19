@@ -29,6 +29,7 @@
 #include "message.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "save_fs.hpp"
 #include "scene.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -98,8 +99,7 @@ void _update_pets_moving_status()
 
 void _prompt_initialize_map()
 {
-    tmpload(filepathutil::u8path(u8"mdata_"s + mid + u8".s2"));
-    if (fs::exists(filesystem::dirs::tmp() / (u8"mdata_"s + mid + u8".s2")))
+    if (save_fs_exists(u8"mdata_"s + mid + u8".s2"))
     {
         int stat = dialog(i18n::s.get("core.map.prompt_initialize"), 3);
         if (stat == 6)
@@ -1335,8 +1335,7 @@ int initialize_map_pregenerate()
         _prompt_initialize_map();
     }
 
-    tmpload(filepathutil::u8path(u8"mdata_"s + mid + u8".s2"));
-    if (fs::exists(filesystem::dirs::tmp() / (u8"mdata_"s + mid + u8".s2")))
+    if (save_fs_exists(u8"mdata_"s + mid + u8".s2"))
     {
         ctrl_file(FileOperation::map_read);
         if (map_data.refresh_type == 0)
