@@ -357,7 +357,7 @@ void adventurer_discover_equipment(Character& adv)
     {
         flttypemajor = choice(fsetitem);
     }
-    if (const auto item = itemcreate_chara_inv(adv.index, 0, 0))
+    if (const auto item = itemcreate_chara_inv(adv, 0, 0))
     {
         item->identify_state = IdentifyState::completely;
         if (item->quality >= Quality::miracle)

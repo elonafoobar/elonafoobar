@@ -186,4 +186,25 @@ OptionalItemRef inv_find_last_match(Inventory& inv, F predicate)
     return result;
 }
 
+
+
+/**
+ * Result of @ref inv_stack.
+ */
+struct InvStackResult
+{
+    // If `stacked` is false, `stacked_item` is set to `base_item`.
+    bool stacked;
+    ItemRef stacked_item;
+};
+
+/**
+ * Try to stack @a inv with @a base_item.
+ */
+InvStackResult inv_stack(
+    Inventory& inv,
+    const ItemRef& base_item,
+    bool show_message = false,
+    optional<int> number = none);
+
 } // namespace elona

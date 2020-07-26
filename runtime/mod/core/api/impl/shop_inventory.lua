@@ -1,4 +1,5 @@
 local Data = ELONA.require("core.Data")
+local Inventory = ELONA.require("core.Inventory")
 local Item = ELONA.require("core.Item")
 local math = math
 local Chara = ELONA.require("core.Chara")
@@ -284,7 +285,7 @@ function shop_inventory.do_generate(shopkeeper, inv)
          item.value = inv.item_base_value({item = item, shopkeeper = shopkeeper})
       end
 
-      Item.stack(-1, item, false) -- invalidates "item".
+      Inventory.map():stack(item) -- invalidates "item".
 
       ::continue::
    end

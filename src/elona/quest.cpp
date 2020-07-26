@@ -655,7 +655,7 @@ int quest_generate()
             }
             flt(40, Quality::good);
             flttypemajor = choice(fsetcollect);
-            if (const auto item = itemcreate_chara_inv(n, 0, 0))
+            if (const auto item = itemcreate_chara_inv(cdata[n], 0, 0))
             {
                 i(0) = n;
                 i(1) = itemid2int(item->id);

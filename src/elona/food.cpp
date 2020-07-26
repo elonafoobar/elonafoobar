@@ -17,6 +17,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
@@ -440,7 +441,7 @@ void food_cook(Character& cook, const ItemRef& cook_tool, const ItemRef& food)
 
     make_dish(food, dish_rank);
     txt(i18n::s.get("core.food.cook", item_name_prev, cook_tool, food));
-    item_stack(0, food, true);
+    inv_stack(g_inv.pc(), food, true);
     const auto rank = food->param2;
     if (rank > 2)
     {

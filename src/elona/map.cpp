@@ -756,14 +756,14 @@ static void _proc_generate_bard_items(Character& chara)
         {
             // Stradivarius
             flt();
-            itemcreate_chara_inv(chara.index, 707, 0);
+            itemcreate_chara_inv(chara, 707, 0);
         }
         else
         {
             // Random instrument
             flt(calcobjlv(chara.level), calcfixlv());
             flttypeminor = 60005;
-            itemcreate_chara_inv(chara.index, 0, 0);
+            itemcreate_chara_inv(chara, 0, 0);
         }
     }
 }
@@ -772,7 +772,7 @@ static void _proc_generate_bard_items(Character& chara)
 static void _generate_bad_quality_item(Character& chara)
 {
     flt(calcobjlv(chara.level), calcfixlv(Quality::bad));
-    if (const auto item = itemcreate_chara_inv(chara.index, 0, 0))
+    if (const auto item = itemcreate_chara_inv(chara, 0, 0))
     {
         if (item->weight <= 0 || item->weight >= 4000)
         {

@@ -417,7 +417,7 @@ void supply_new_equipment(Character& chara)
         {
             break;
         }
-        if (const auto item = itemcreate_chara_inv(chara.index, 0, 0))
+        if (const auto item = itemcreate_chara_inv(chara, 0, 0))
         {
             item->identify_state = IdentifyState::completely;
             if (item->quality >= Quality::miracle)
@@ -847,7 +847,7 @@ void supply_initial_equipments(Character& chara)
                     item_id = eqamulet1;
                 }
                 if (const auto equipment =
-                        itemcreate_chara_inv(chara.index, item_id, 0))
+                        itemcreate_chara_inv(chara, item_id, 0))
                 {
                     body = 100 + i;
                     equip_item(chara, body - 100, equipment.unwrap());
@@ -871,7 +871,7 @@ void supply_initial_equipments(Character& chara)
                     item_id = eqamulet2;
                 }
                 if (const auto equipment =
-                        itemcreate_chara_inv(chara.index, item_id, 0))
+                        itemcreate_chara_inv(chara, item_id, 0))
                 {
                     body = 100 + i;
                     equip_item(chara, body - 100, equipment.unwrap());
@@ -898,7 +898,7 @@ void supply_initial_equipments(Character& chara)
                     item_id = eqring1;
                 }
                 if (const auto equipment =
-                        itemcreate_chara_inv(chara.index, item_id, 0))
+                        itemcreate_chara_inv(chara, item_id, 0))
                 {
                     body = 100 + i;
                     equip_item(chara, body - 100, equipment.unwrap());
@@ -922,7 +922,7 @@ void supply_initial_equipments(Character& chara)
                     item_id = eqring2;
                 }
                 if (const auto equipment =
-                        itemcreate_chara_inv(chara.index, item_id, 0))
+                        itemcreate_chara_inv(chara, item_id, 0))
                 {
                     body = 100 + i;
                     equip_item(chara, body - 100, equipment.unwrap());
@@ -949,7 +949,7 @@ void supply_initial_equipments(Character& chara)
                     item_id = eqcloack;
                 }
                 if (const auto equipment =
-                        itemcreate_chara_inv(chara.index, item_id, 0))
+                        itemcreate_chara_inv(chara, item_id, 0))
                 {
                     body = 100 + i;
                     equip_item(chara, body - 100, equipment.unwrap());
@@ -977,7 +977,7 @@ void supply_initial_equipments(Character& chara)
                     item_id = eqgirdle;
                 }
                 if (const auto equipment =
-                        itemcreate_chara_inv(chara.index, item_id, 0))
+                        itemcreate_chara_inv(chara, item_id, 0))
                 {
                     body = 100 + i;
                     equip_item(chara, body - 100, equipment.unwrap());
@@ -1005,7 +1005,7 @@ void supply_initial_equipments(Character& chara)
                     item_id = eqhelm;
                 }
                 if (const auto equipment =
-                        itemcreate_chara_inv(chara.index, item_id, 0))
+                        itemcreate_chara_inv(chara, item_id, 0))
                 {
                     body = 100 + i;
                     equip_item(chara, body - 100, equipment.unwrap());
@@ -1033,7 +1033,7 @@ void supply_initial_equipments(Character& chara)
                     item_id = eqarmor;
                 }
                 if (const auto equipment =
-                        itemcreate_chara_inv(chara.index, item_id, 0))
+                        itemcreate_chara_inv(chara, item_id, 0))
                 {
                     body = 100 + i;
                     equip_item(chara, body - 100, equipment.unwrap());
@@ -1061,7 +1061,7 @@ void supply_initial_equipments(Character& chara)
                     item_id = eqglove;
                 }
                 if (const auto equipment =
-                        itemcreate_chara_inv(chara.index, item_id, 0))
+                        itemcreate_chara_inv(chara, item_id, 0))
                 {
                     body = 100 + i;
                     equip_item(chara, body - 100, equipment.unwrap());
@@ -1089,7 +1089,7 @@ void supply_initial_equipments(Character& chara)
                     item_id = eqboots;
                 }
                 if (const auto equipment =
-                        itemcreate_chara_inv(chara.index, item_id, 0))
+                        itemcreate_chara_inv(chara, item_id, 0))
                 {
                     body = 100 + i;
                     equip_item(chara, body - 100, equipment.unwrap());
@@ -1108,8 +1108,7 @@ void supply_initial_equipments(Character& chara)
                 {
                     flt(calcobjlv(chara.level),
                         calcfixlv(static_cast<Quality>(2 + fixeq)));
-                    equipment =
-                        itemcreate_chara_inv(chara.index, eqmultiweapon, 0);
+                    equipment = itemcreate_chara_inv(chara, eqmultiweapon, 0);
                     assert(equipment);
                     if (equipment->weight > 1500)
                     {
@@ -1140,7 +1139,7 @@ void supply_initial_equipments(Character& chara)
                             calcfixlv(
                                 static_cast<Quality>(fixeq + eqweapon1(1))));
                         flttypeminor = eqweapon1;
-                        equipment = itemcreate_chara_inv(chara.index, -1, 0);
+                        equipment = itemcreate_chara_inv(chara, -1, 0);
                         assert(equipment);
                         if (eqtwohand)
                         {
@@ -1170,7 +1169,7 @@ void supply_initial_equipments(Character& chara)
                 else
                 {
                     flt();
-                    equipment = itemcreate_chara_inv(chara.index, eqweapon1, 0);
+                    equipment = itemcreate_chara_inv(chara, eqweapon1, 0);
                 }
                 if (equipment)
                 {
@@ -1191,7 +1190,7 @@ void supply_initial_equipments(Character& chara)
                             calcfixlv(
                                 static_cast<Quality>(fixeq + eqweapon2(1))));
                         flttypeminor = eqweapon2;
-                        equipment = itemcreate_chara_inv(chara.index, -1, 0);
+                        equipment = itemcreate_chara_inv(chara, -1, 0);
                         assert(equipment);
                         if (eqtwowield)
                         {
@@ -1210,7 +1209,7 @@ void supply_initial_equipments(Character& chara)
                 else
                 {
                     flt();
-                    equipment = itemcreate_chara_inv(chara.index, eqweapon2, 0);
+                    equipment = itemcreate_chara_inv(chara, eqweapon2, 0);
                 }
                 if (equipment)
                 {
@@ -1236,7 +1235,7 @@ void supply_initial_equipments(Character& chara)
                     item_id = eqshield;
                 }
                 if (const auto equipment =
-                        itemcreate_chara_inv(chara.index, item_id, 0))
+                        itemcreate_chara_inv(chara, item_id, 0))
                 {
                     body = 100 + i;
                     equip_item(chara, body - 100, equipment.unwrap());
@@ -1264,7 +1263,7 @@ void supply_initial_equipments(Character& chara)
                     item_id = eqrange;
                 }
                 if (const auto equipment =
-                        itemcreate_chara_inv(chara.index, item_id, 0))
+                        itemcreate_chara_inv(chara, item_id, 0))
                 {
                     body = 100 + i;
                     equip_item(chara, body - 100, equipment.unwrap());
@@ -1292,7 +1291,7 @@ void supply_initial_equipments(Character& chara)
                     item_id = eqammo;
                 }
                 if (const auto equipment =
-                        itemcreate_chara_inv(chara.index, item_id, 0))
+                        itemcreate_chara_inv(chara, item_id, 0))
                 {
                     body = 100 + i;
                     equip_item(chara, body - 100, equipment.unwrap());
@@ -1308,13 +1307,13 @@ void supply_initial_equipments(Character& chara)
         if (rnd(150) == 0)
         {
             flt();
-            itemcreate_chara_inv(chara.index, 707, 0);
+            itemcreate_chara_inv(chara, 707, 0);
         }
         else
         {
             flt(calcobjlv(chara.level), calcfixlv());
             flttypeminor = 60005;
-            itemcreate_chara_inv(chara.index, 0, 0);
+            itemcreate_chara_inv(chara, 0, 0);
         }
     }
     if (chara.id == CharaId::the_leopard_warrior || chara.id == CharaId::silvia)
@@ -1323,7 +1322,7 @@ void supply_initial_equipments(Character& chara)
         {
             flt();
             nostack = 1;
-            if (const auto item = itemcreate_chara_inv(chara.index, 772, 0))
+            if (const auto item = itemcreate_chara_inv(chara, 772, 0))
             {
                 item->modify_number(rnd(4));
                 if (rnd(2))
@@ -1374,7 +1373,7 @@ void unequip_item(Character& chara, size_t equipment_slot_index)
         return;
     }
     equipment_slot.equipment->body_part = 0;
-    item_stack(chara.index, equipment_slot.equipment.unwrap());
+    inv_stack(g_inv.for_chara(chara), equipment_slot.equipment.unwrap());
     equipment_slot.unequip();
 }
 

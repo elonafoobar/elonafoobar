@@ -121,7 +121,7 @@ TalkResult talk_wizard_identify(Character& speaker, int chatval_)
             if (item->identify_state != IdentifyState::completely)
             {
                 const auto result = item_identify(item, 250);
-                item_stack(0, item, true);
+                inv_stack(g_inv.pc(), item, true);
                 ++p(1);
                 if (result >= IdentifyState::completely)
                 {

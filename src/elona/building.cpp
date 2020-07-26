@@ -1099,7 +1099,7 @@ void show_shop_log()
             {
                 if (item->value > sold_item.total_price * 2)
                 {
-                    item_stack(-1, item.unwrap());
+                    inv_stack(g_inv.ground(), item.unwrap());
                     generated = true;
                     break;
                 }
@@ -1862,7 +1862,7 @@ void create_harvested_item()
     if (const auto item = itemcreate_player_inv(item_id, 0))
     {
         txt(i18n::s.get("core.action.plant.harvest", item.unwrap()));
-        item_stack(0, item.unwrap(), true);
+        inv_stack(g_inv.pc(), item.unwrap(), true);
     }
 }
 

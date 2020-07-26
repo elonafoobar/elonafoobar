@@ -1,6 +1,7 @@
 require("tests/lua/support/minctest")
 
 local Item = ELONA.require("core.Item")
+local Inventory = ELONA.require("core.Inventory")
 
 lrun("test Item.create", function()
         Testing.start_in_debug_map()
@@ -31,7 +32,7 @@ end)
 local function tally()
    print("=====")
    local count = 0
-   for _, i in ipairs(Item.map_inventory()) do
+   for _, i in ipairs(Inventory.map():as_table()) do
       print(i.basename)
       count = count + 1
    end

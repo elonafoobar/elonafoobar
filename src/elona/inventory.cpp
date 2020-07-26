@@ -8,6 +8,34 @@
 namespace elona
 {
 
+namespace
+{
+
+bool is_nonstackable(const ItemRef& item)
+{
+    return item->quality == Quality::special &&
+        is_equipment(the_item_db[itemid2int(item->id)]->category);
+}
+
+
+
+bool is_stackable_with(const ItemRef& item, const ItemRef& base_item)
+{
+    const auto ignore_position = !item_get_owner(item).is_map();
+    if (item->id == ItemId::small_medal)
+    {
+        return ignore_position || item->pos() == base_item->pos();
+    }
+    else
+    {
+        return item->almost_equals(*base_item.get_raw_ptr(), ignore_position);
+    }
+}
+
+} // namespace
+
+
+
 int inv_weight(Inventory& inv)
 {
     int weight{};
@@ -146,6 +174,41 @@ InventorySlot inv_get_random_slot(Inventory& inv)
 {
     const auto index = rnd(inv.size());
     return {&inv, index};
+}
+
+
+
+InvStackResult inv_stack(
+    Inventory& inv,
+    const ItemRef& base_item,
+    bool show_message,
+    optional<int> number)
+{
+    if (is_nonstackable(base_item))
+    {
+        return {false, base_item};
+    }
+
+    for (const auto& item : inv)
+    {
+        if (item == base_item || item->id != base_item->id)
+            continue;
+
+        if (is_stackable_with(item, base_item))
+        {
+            const auto num = number.value_or(base_item->number());
+            item->modify_number(num);
+            base_item->modify_number(-num);
+
+            if (show_message)
+            {
+                txt(i18n::s.get("core.item.stacked", item, item->number()));
+            }
+            return {true, item};
+        }
+    }
+
+    return {false, base_item};
 }
 
 } // namespace elona

@@ -2,6 +2,7 @@
 
 #include <bitset>
 #include <memory>
+#include <variant>
 #include <vector>
 
 #include "../util/range.hpp"
@@ -548,18 +549,6 @@ OptionalItemRef item_find(
  */
 ItemRef item_separate(const ItemRef& stacked_item);
 
-struct ItemStackResult
-{
-    // If `stacked` is false, `stacked_item` is set to `base_item`.
-    bool stacked;
-    ItemRef stacked_item;
-};
-ItemStackResult item_stack(
-    int inventory_id,
-    const ItemRef& base_item,
-    bool show_message = false,
-    optional<int> number = none);
-
 void item_dump_desc(const ItemRef&);
 
 bool item_fire(Inventory& inv, const OptionalItemRef& burned_item = nullptr);
@@ -567,7 +556,110 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y);
 bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item = nullptr);
 void mapitem_cold(int x, int y);
 
-int inv_getowner(const ItemRef& item);
+
+
+/**
+ * Represents item owner. It is one of the following:
+ * - Character
+ * - Map
+ * - Container
+ */
+struct ItemOwner
+{
+    static ItemOwner character(elona::Character& chara) noexcept
+    {
+        return ItemOwner{Character{chara}};
+    }
+
+
+    static ItemOwner map() noexcept
+    {
+        return ItemOwner{Map{}};
+    }
+
+
+    static ItemOwner container() noexcept
+    {
+        return ItemOwner{Container{}};
+    }
+
+
+
+    bool is_character() const noexcept
+    {
+        return std::holds_alternative<Character>(_inner);
+    }
+
+
+    bool is_map() const noexcept
+    {
+        return std::holds_alternative<Map>(_inner);
+    }
+
+
+    bool is_container() const noexcept
+    {
+        return std::holds_alternative<Container>(_inner);
+    }
+
+
+    optional_ref<elona::Character> as_character()
+    {
+        if (const auto c = std::get_if<Character>(&_inner))
+        {
+            return c->chara;
+        }
+        else
+        {
+            return none;
+        }
+    }
+
+
+
+private:
+    struct Character
+    {
+        elona::Character& chara;
+    };
+
+    struct Map
+    {
+    };
+
+    struct Container
+    {
+    };
+
+
+    std::variant<Character, Map, Container> _inner;
+
+
+
+    ItemOwner(const std::variant<Character, Map, Container>& owner)
+        : _inner(owner)
+    {
+    }
+};
+
+
+/**
+ * Get an owner of @a item.
+ *
+ * @param item The item to query.
+ * @return @a item's owner.
+ */
+ItemOwner item_get_owner(const ItemRef& item);
+
+
+/**
+ * Returns if @a item is on ground.
+ *
+ * @param item The item to query.
+ * @return True if @a item is on ground; otherwise false
+ */
+bool item_is_on_ground(const ItemRef& item);
+
 
 
 void remain_make(const ItemRef& remain, const Character& chara);

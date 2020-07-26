@@ -2,6 +2,7 @@ local Chara = ELONA.require("core.Chara")
 local Enchantment = ELONA.require("core.Enchantment")
 local GUI = ELONA.require("core.GUI")
 local I18N = ELONA.require("core.I18N")
+local Inventory = ELONA.require("core.Inventory")
 local Item = ELONA.require("core.Item")
 local Rand = ELONA.require("core.Rand")
 local World = ELONA.require("core.World")
@@ -248,25 +249,25 @@ ELONA.data:add(
                GUI.txt(I18N.get("core.action.dip.result.natural_potion_drop"))
                return
             end
-            if not Item.has_free_slot(0) then
+            if not Inventory.player():has_free_slot() then
                GUI.txt(I18N.get("core.ui.inv.common.inventory_is_full"))
                return
             end
             local natural_potion
             if well.id == "core.holy_well" then
                World.data.holy_well_count = World.data.holy_well_count - 1
-               natural_potion = Item.create(-1, -1, { id = "core.bottle_of_water", slot = 0 })
+               natural_potion = Item.create(-1, -1, { id = "core.bottle_of_water", inventory = Inventory.player() })
                if natural_potion then
                   natural_potion.curse_state = "blessed"
                end
             else
                well.param1 = well.param1 - 3
-               natural_potion = Item.create(-1, -1, { objlv = 20, flttypemajor = 52000, slot = 0 })
+               natural_potion = Item.create(-1, -1, { objlv = 20, flttypemajor = 52000, inventory = Inventory.player() })
             end
             if natural_potion then
                GUI.txt(I18N.get("core.action.dip.result.natural_potion"))
                GUI.txt(I18N.get("core.action.dip.you_get", natural_potion), "green")
-               Item.stack(0, natural_potion, true)
+               Inventory.player():stack(natural_potion, true)
                GUI.play_sound("core.drink1")
             end
          end,

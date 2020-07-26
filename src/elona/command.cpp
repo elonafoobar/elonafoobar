@@ -1702,7 +1702,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
                     txt(i18n::s.get("core.action.dip.result.natural_potion"));
                     txt(i18n::s.get(
                         "core.action.dip.you_get", natural_potion.unwrap()));
-                    item_stack(0, natural_potion.unwrap(), true);
+                    inv_stack(g_inv.pc(), natural_potion.unwrap(), true);
                 }
                 return TurnResult::turn_end;
             }
@@ -2061,7 +2061,7 @@ TurnResult do_use_command(ItemRef use_item)
         snd("core.build1");
         break;
     case 44:
-        if (inv_getowner(use_item) != -1)
+        if (!item_is_on_ground(use_item))
         {
             txt(i18n::s.get("core.action.use.chair.needs_place_on_ground"));
             update_screen();
@@ -2969,7 +2969,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
         {
             open_box(box);
         }
-        item_stack(cdata.player().index, box);
+        inv_stack(g_inv.pc(), box);
     }
     screenupdate = -1;
     update_screen();
@@ -3562,7 +3562,7 @@ TurnResult do_get_command()
                 {
                     item->curse_state = CurseState::none;
                     item->identify_state = IdentifyState::completely;
-                    item_stack(0, item.unwrap(), true);
+                    inv_stack(g_inv.pc(), item.unwrap(), true);
                 }
             }
             return TurnResult::turn_end;
@@ -4288,7 +4288,7 @@ int decode_book(Character& reader, const ItemRef& book)
         book->param2 = 1;
         book->count = 1;
         book->has_charge() = false;
-        item_stack(0, book, true);
+        inv_stack(g_inv.pc(), book, true);
     }
     else
     {
@@ -5434,11 +5434,10 @@ PickUpItemResult pick_up_item(
     item->set_number(inumbk);
 
     OptionalItemRef picked_up_item;
-    const auto item_stack_result =
-        item_stack(inv.inventory_id(), item, false, in);
-    if (item_stack_result.stacked)
+    const auto inv_stack_result = inv_stack(inv, item, false, in);
+    if (inv_stack_result.stacked)
     {
-        picked_up_item = item_stack_result.stacked_item;
+        picked_up_item = inv_stack_result.stacked_item;
     }
     else
     {
@@ -5663,7 +5662,7 @@ TurnResult do_bash(Character& chara)
             {
                 txt(i18n::s.get(
                     "core.action.bash.tree.falls_down", fruit.unwrap()));
-                item_stack(-1, fruit.unwrap());
+                inv_stack(g_inv.ground(), fruit.unwrap());
             }
             return TurnResult::turn_end;
         }

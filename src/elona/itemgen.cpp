@@ -45,46 +45,47 @@ int calculate_original_value(const ItemRef& item)
 namespace elona
 {
 
-OptionalItemRef do_create_item(int, int, int, int);
+OptionalItemRef do_create_item(int, Inventory&, int, int);
 
 
 
-OptionalItemRef itemcreate(int slot, int id, int x, int y, int number)
+OptionalItemRef itemcreate(Inventory& inv, int id, int x, int y, int number)
 {
     if (flttypeminor != 0)
     {
         flttypemajor = 0;
     }
     initnum = number;
-    return do_create_item(id == 0 ? -1 : id, slot, x, y);
+    return do_create_item(id == 0 ? -1 : id, inv, x, y);
 }
 
 
 
-OptionalItemRef itemcreate(int slot, int id, const Position& pos, int number)
+OptionalItemRef
+itemcreate(Inventory& inv, int id, const Position& pos, int number)
 {
-    return itemcreate(slot, id, pos.x, pos.y, number);
+    return itemcreate(inv, id, pos.x, pos.y, number);
 }
 
 
 
 OptionalItemRef itemcreate_player_inv(int id, int number)
 {
-    return itemcreate_chara_inv(0, id, number);
+    return itemcreate_chara_inv(cdata.player(), id, number);
 }
 
 
 
-OptionalItemRef itemcreate_chara_inv(int chara_index, int id, int number)
+OptionalItemRef itemcreate_chara_inv(Character& chara, int id, int number)
 {
-    return itemcreate(chara_index, id, -1, -1, number);
+    return itemcreate(g_inv.for_chara(chara), id, -1, -1, number);
 }
 
 
 
 OptionalItemRef itemcreate_extra_inv(int id, int x, int y, int number)
 {
-    return itemcreate(-1, id, x, y, number);
+    return itemcreate(g_inv.ground(), id, x, y, number);
 }
 
 
@@ -138,9 +139,10 @@ int get_random_item_id()
 
 
 
-OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
+OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
 {
-    if ((slot == 0 || slot == -1) && fixlv < Quality::godly)
+    if ((inv.inventory_id() == 0 || inv.inventory_id() == -1) &&
+        fixlv < Quality::godly)
     {
         if (sdata(19, 0) > rnd(5000)) // TODO coupling
         {
@@ -148,14 +150,14 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
         }
     }
 
-    const auto empty_slot_opt = inv_make_free_slot(g_inv.by_index(slot));
+    const auto empty_slot_opt = inv_make_free_slot(inv);
     if (!empty_slot_opt)
         return nullptr;
 
     const auto empty_slot = *empty_slot_opt;
 
     optional<Position> item_pos;
-    if (slot == -1 && mode != 6 && mode != 9)
+    if (inv.inventory_id() == -1 && mode != 6 && mode != 9)
     {
         bool ok = false;
         for (int i = 0; i < 100; ++i)
@@ -281,26 +283,19 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
     item->quality = static_cast<Quality>(fixlv);
     if (fixlv == Quality::special && mode != 6 && nooracle == 0)
     {
-        int owner = inv_getowner(item);
-        if (owner != -1)
+        const auto owner = item_get_owner(item).as_character();
+        if (owner && owner->role == Role::adventurer)
         {
-            if (cdata[owner].role == Role::adventurer)
-            {
-                artifactlocation.push_back(i18n::s.get(
-                    "core.magic.oracle.was_held_by",
-                    cnven(iknownnameref(itemid2int(item->id))),
-                    cdata[owner],
-                    mapname(cdata[owner].current_map),
-                    game_data.date.day,
-                    game_data.date.month,
-                    game_data.date.year));
-            }
-            else
-            {
-                owner = -1;
-            }
+            artifactlocation.push_back(i18n::s.get(
+                "core.magic.oracle.was_held_by",
+                cnven(iknownnameref(itemid2int(item->id))),
+                *owner,
+                mapname(owner->current_map),
+                game_data.date.day,
+                game_data.date.month,
+                game_data.date.year));
         }
-        if (owner == -1)
+        else
         {
             artifactlocation.push_back(i18n::s.get(
                 "core.magic.oracle.was_created_at",
@@ -337,7 +332,7 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
 
     if (item->id == ItemId::gold_piece)
     {
-        item->set_number(calcinitgold(slot));
+        item->set_number(calcinitgold(inv.inventory_id()));
         if (item->quality == Quality::great)
         {
             item->set_number(item->number() * 2);
@@ -346,9 +341,9 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
         {
             item->set_number(item->number() * 4);
         }
-        if (slot >= 0)
+        if (inv.inventory_id() >= 0)
         {
-            earn_gold(cdata[slot], item->number());
+            earn_gold(cdata[inv.inventory_id()], item->number());
             item->remove();
             return item; // TODO: invalid return value!
         }
@@ -531,14 +526,14 @@ OptionalItemRef do_create_item(int item_id, int slot, int x, int y)
     }
     else
     {
-        auto item_stack_result = item_stack(slot, item);
-        if (item_stack_result.stacked)
+        auto inv_stack_result = inv_stack(inv, item);
+        if (inv_stack_result.stacked)
         {
-            return item_stack_result.stacked_item;
+            return inv_stack_result.stacked_item;
         }
     }
 
-    if (slot == -1)
+    if (inv.inventory_id() == -1)
     {
         cell_refresh(item->pos().x, item->pos().y);
     }

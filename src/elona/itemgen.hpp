@@ -9,19 +9,22 @@
 namespace elona
 {
 
+struct Inventory;
 struct Item;
+struct Character;
 struct Position;
 
 
 
-OptionalItemRef itemcreate(int slot, int id, int x, int y, int number = 0);
+OptionalItemRef
+itemcreate(Inventory& inv, int id, int x, int y, int number = 0);
 
 OptionalItemRef
-itemcreate(int slot, int id, const Position& pos, int number = 0);
+itemcreate(Inventory& inv, int id, const Position& pos, int number = 0);
 
 OptionalItemRef itemcreate_player_inv(int id, int number = 0);
 
-OptionalItemRef itemcreate_chara_inv(int chara_index, int id, int number = 0);
+OptionalItemRef itemcreate_chara_inv(Character& chara, int id, int number = 0);
 
 OptionalItemRef itemcreate_extra_inv(int id, int x, int y, int number = 0);
 

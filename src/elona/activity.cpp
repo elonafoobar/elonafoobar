@@ -849,7 +849,7 @@ void activity_others_doing(
         }
         f = 0;
         f2 = 0;
-        tg = inv_getowner(activity_item.unwrap());
+        tg = activity_item.unwrap()->inventory()->inventory_id();
         if (tg != -1)
         {
             if (cdata[tg].original_relationship == -3)
@@ -930,10 +930,9 @@ void activity_others_doing(
         {
             txt(i18n::s.get("core.activity.steal.notice.you_are_found"));
             modify_karma(cdata.player(), -5);
-            p = inv_getowner(activity_item.unwrap());
             if (tg != -1)
             {
-                if (cdata[p].id != CharaId::ebon)
+                if (cdata[tg].id != CharaId::ebon)
                 {
                     if (cdata[tg].sleep == 0)
                     {
@@ -1014,13 +1013,14 @@ void activity_others_doing(
 
 void activity_others_end_steal(const ItemRef& steal_target)
 {
-    tg = inv_getowner(steal_target);
-    if ((tg != -1 && cdata[tg].state() != Character::State::alive) ||
-        steal_target->number() <= 0)
+    const auto owner = item_get_owner(steal_target).as_character();
+    if ((owner && owner->state() != Character::State::alive) ||
+        steal_target->number() == 0)
     {
         txt(i18n::s.get("core.activity.steal.abort"));
         return;
     }
+
     in = 1;
     if (steal_target->id == ItemId::gold_piece)
     {
@@ -1037,14 +1037,11 @@ void activity_others_end_steal(const ItemRef& steal_target)
     steal_target->is_quest_target() = false;
     if (steal_target->body_part != 0)
     {
-        const auto item_owner = inv_getowner(steal_target);
-        if (item_owner != -1)
-        {
-            p = steal_target->body_part;
-            cdata[item_owner].equipment_slots[p - 100].unequip();
-        }
+        auto& item_owner = *item_get_owner(steal_target).as_character();
+        p = steal_target->body_part;
+        item_owner.equipment_slots[p - 100].unequip();
         steal_target->body_part = 0;
-        chara_refresh(cdata[item_owner]);
+        chara_refresh(item_owner);
     }
 
     const auto stolen_item = item_separate(steal_target, slot, in);
@@ -1060,7 +1057,7 @@ void activity_others_end_steal(const ItemRef& steal_target)
     }
     else
     {
-        item_stack(0, stolen_item, true);
+        inv_stack(g_inv.pc(), stolen_item, true);
         sound_pick_up();
     }
     refresh_burden_state();

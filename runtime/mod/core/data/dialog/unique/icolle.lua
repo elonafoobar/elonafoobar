@@ -10,7 +10,7 @@ local function give_monster_balls()
    local flag = Internal.get_quest_flag("ambitious_scientist")
    local found = false
 
-   for _, item in ipairs(Item.player_inventory()) do
+   for _, item in ipairs(Inventory.player():as_table()) do
       if flag >= 6 then
          break
       end

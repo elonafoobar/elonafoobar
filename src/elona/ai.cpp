@@ -237,7 +237,7 @@ int dist_helper(const Character& a, const Character& b)
 
 
 OptionalItemRef _try_generate_special_throwing_item(
-    const Character& chara,
+    Character& chara,
     int action_id)
 {
     switch (action_id)
@@ -245,19 +245,16 @@ OptionalItemRef _try_generate_special_throwing_item(
     case -9999:
         flt();
         flttypemajor = 52000;
-        return itemcreate_chara_inv(
-            chara.index, choice(isetthrowpotionminor), 0);
+        return itemcreate_chara_inv(chara, choice(isetthrowpotionminor), 0);
     case -9998:
         flt();
         flttypemajor = 52000;
-        return itemcreate_chara_inv(
-            chara.index, choice(isetthrowpotionmajor), 0);
+        return itemcreate_chara_inv(chara, choice(isetthrowpotionmajor), 0);
     case -9997:
         flt();
         flttypemajor = 52000;
-        return itemcreate_chara_inv(
-            chara.index, choice(isetthrowpotiongreater), 0);
-    case -9996: flt(); return itemcreate_chara_inv(chara.index, 698, 0);
+        return itemcreate_chara_inv(chara, choice(isetthrowpotiongreater), 0);
+    case -9996: flt(); return itemcreate_chara_inv(chara, 698, 0);
     default: assert(0); return nullptr;
     }
 }
@@ -410,7 +407,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
             is_in_fov(cdata[game_data.fire_giant]))
         {
             flt();
-            if (const auto snowball = itemcreate_chara_inv(chara.index, 587, 0))
+            if (const auto snowball = itemcreate_chara_inv(chara, 587, 0))
             {
                 tlocx = cdata[game_data.fire_giant].position.x;
                 tlocy = cdata[game_data.fire_giant].position.y;
@@ -431,8 +428,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
                 item->pos().y < scy + inf_screenh)
             {
                 flt();
-                if (const auto snowball =
-                        itemcreate_chara_inv(chara.index, 587, 0))
+                if (const auto snowball = itemcreate_chara_inv(chara, 587, 0))
                 {
                     tlocx = item->pos().x;
                     tlocy = item->pos().y;
@@ -463,7 +459,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
     if (rnd(12) == 0)
     {
         flt();
-        if (const auto snowball = itemcreate_chara_inv(chara.index, 587, 0))
+        if (const auto snowball = itemcreate_chara_inv(chara, 587, 0))
         {
             tlocx = cdata.player().position.x;
             tlocy = cdata.player().position.y;
@@ -515,7 +511,7 @@ void _proc_hungry(Character& chara)
         {
             flttypeminor = 52002;
         }
-        if (auto item = itemcreate_chara_inv(chara.index, 0, 0))
+        if (auto item = itemcreate_chara_inv(chara, 0, 0))
         {
             if (the_item_db[itemid2int(item->id)]->is_drinkable)
             {
@@ -933,7 +929,7 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
                         flttypeminor = 52002;
                     }
                 }
-                if (auto item = itemcreate_chara_inv(chara.index, 0, 0))
+                if (auto item = itemcreate_chara_inv(chara, 0, 0))
                 {
                     chara.ai_item = item;
                 }
@@ -986,7 +982,7 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
                         tlocy = cdata.player().position.y;
                         flt();
                         if (const auto salt_solution =
-                                itemcreate_chara_inv(chara.index, 698, 0))
+                                itemcreate_chara_inv(chara, 698, 0))
                         {
                             if (is_in_fov(chara))
                             {

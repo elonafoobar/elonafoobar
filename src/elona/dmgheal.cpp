@@ -1542,7 +1542,7 @@ void character_drops_item(Character& victim)
             }
             item->set_pos(victim.position);
             item->set_pos(victim.position);
-            if (!item_stack(-1, item).stacked)
+            if (!inv_stack(g_inv.ground(), item).stacked)
             {
                 const auto slot = inv_make_free_slot_force(g_inv.ground());
                 const auto dropped_item =
@@ -1664,7 +1664,7 @@ void character_drops_item(Character& victim)
         }
         item->set_pos(victim.position);
         itemturn(item);
-        if (!item_stack(-1, item).stacked)
+        if (!inv_stack(g_inv.ground(), item).stacked)
         {
             const auto slot = inv_make_free_slot_force(g_inv.ground());
             item_separate(item, slot, item->number());

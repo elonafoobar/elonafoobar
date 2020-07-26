@@ -15,7 +15,7 @@ local function surrender()
    GUI.play_sound("core.paygold1")
    Chara.player().gold = Chara.player().gold - surrender_cost()
 
-   for _, item in ipairs(Item.player_inventory()) do
+   for _, item in ipairs(Inventory.player():as_table()) do
       if item.prototype.is_cargo then
          GUI.txt(I18N.get("core.talk.npc.common.hand_over", item))
          item:remove()

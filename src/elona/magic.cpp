@@ -1181,7 +1181,7 @@ bool _magic_412(Character& subject, Character& target)
             {
                 ++p(1);
                 item->curse_state = CurseState::none;
-                item_stack(target.index, item, true);
+                inv_stack(g_inv.for_chara(target), item, true);
             }
             else
             {
@@ -2131,7 +2131,7 @@ bool _magic_645_1114(Character& subject, Character& target)
         chara_refresh(target);
         snd("core.curse3");
         animeload(14, target);
-        item_stack(target.index, cursed_item, true);
+        inv_stack(g_inv.for_chara(target), cursed_item, true);
     }
     else
     {
