@@ -989,6 +989,13 @@ void _proc_map_hooks_1()
     {
         _proc_no_dungeon_master();
     }
+
+    // Work-around: shop's `cell_data` should be fixed before `cell_draw()` is
+    // called.
+    if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
+    {
+        update_shop();
+    }
 }
 
 
@@ -1153,10 +1160,6 @@ void _proc_map_hooks_2()
     if (map_data.refresh_type == 1)
     {
         foods_get_rotten();
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
-    {
-        update_shop();
     }
     if (area_data[game_data.current_map].id == mdata_t::MapId::museum)
     {

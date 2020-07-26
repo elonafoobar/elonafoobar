@@ -1162,13 +1162,14 @@ void show_shop_log()
 void update_shop()
 {
     map_data.max_crowd_density = (100 - game_data.ranks.at(5) / 100) / 4 + 1;
-    for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
+    for (int y = 0; y < map_data.height; ++y)
     {
-        y = cnt;
-        for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
+        for (int x = 0; x < map_data.width; ++x)
         {
-            cell_data.at(cnt, y).item_info_actual.clear();
-            cell_data.at(cnt, y).light = 0;
+            cell_data.at(x, y).item_info_actual.clear();
+            // TODO phantom_ref
+            cell_data.at(x, y).item_info_memory.clear();
+            cell_data.at(x, y).light = 0;
         }
     }
     for (const auto& item : g_inv.ground())
