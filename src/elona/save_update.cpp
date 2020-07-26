@@ -1800,6 +1800,162 @@ void _update_save_data_18(const fs::path& save_dir)
 
 
 
+void _update_save_data_19(const fs::path& save_dir)
+{
+    for (const auto& entry :
+         filesystem::glob_files(save_dir, std::regex{u8R"(shop[0-9]*\.s2)"}))
+    {
+        std::ifstream fin{entry.path().native(), std::ios::binary};
+        serialization::binary::IArchive iar{fin};
+
+        std::ostringstream out;
+        serialization::binary::OArchive oar{out};
+
+        ELONA_LOG("save.update")
+            << "convert " << filepathutil::to_utf8_path(entry.path());
+
+        const auto begin = 1320;
+        const auto end = 5480;
+        for (int idx = begin; idx < end; ++idx)
+        {
+            boost::uuids::uuid obj_id;
+            int number;
+            int value;
+            int image;
+            int id;
+            int quality;
+            int position_x;
+            int position_y;
+            int weight;
+            int identify_state;
+            int count;
+            int dice_x;
+            int dice_y;
+            int damage_bonus;
+            int hit_bonus;
+            int dv;
+            int pv;
+            int skill;
+            int curse_state;
+            int body_part;
+            int function;
+            int enhancement;
+            int own_state;
+            int color;
+            int subname;
+            int material;
+            int param1;
+            int param2;
+            int param3;
+            int param4;
+            int difficulty_of_identification;
+            int turn;
+            uint32_t flags;
+            std::vector<std::tuple<int, int>> enchantments;
+
+            bool exists;
+            iar(exists);
+            ELONA_LOG("save.update")
+                << "inv[" << idx << "]: " << (exists ? "t" : "nil");
+            if (exists)
+            {
+                iar(obj_id);
+                iar(number);
+                iar(value);
+                iar(image);
+                iar(id);
+                iar(quality);
+                iar(position_x);
+                iar(position_y);
+                iar(weight);
+                iar(identify_state);
+                iar(count);
+                iar(dice_x);
+                iar(dice_y);
+                iar(damage_bonus);
+                iar(hit_bonus);
+                iar(dv);
+                iar(pv);
+                iar(skill);
+                iar(curse_state);
+                iar(body_part);
+                iar(function);
+                iar(enhancement);
+                iar(own_state);
+                iar(color);
+                iar(subname);
+                iar(material);
+                iar(param1);
+                iar(param2);
+                iar(param3);
+                iar(param4);
+                iar(difficulty_of_identification);
+                iar(turn);
+                iar(flags);
+                iar(enchantments);
+
+                if (idx < 5080)
+                {
+                    ELONA_LOG("save.update") << "  skipping";
+                    continue;
+                }
+
+                oar(exists);
+                oar(obj_id);
+                oar(number);
+                oar(value);
+                oar(image);
+                oar(id);
+                oar(quality);
+                oar(position_x);
+                oar(position_y);
+                oar(weight);
+                oar(identify_state);
+                oar(count);
+                oar(dice_x);
+                oar(dice_y);
+                oar(damage_bonus);
+                oar(hit_bonus);
+                oar(dv);
+                oar(pv);
+                oar(skill);
+                oar(curse_state);
+                oar(body_part);
+                oar(function);
+                oar(enhancement);
+                oar(own_state);
+                oar(color);
+                oar(subname);
+                oar(material);
+                oar(param1);
+                oar(param2);
+                oar(param3);
+                oar(param4);
+                oar(difficulty_of_identification);
+                oar(turn);
+                oar(flags);
+                oar(enchantments);
+            }
+            else
+            {
+                if (idx < 5080)
+                {
+                    ELONA_LOG("save.update") << "  skipping";
+                    continue;
+                }
+
+                oar(exists);
+            }
+        }
+
+        fin.close();
+        std::ofstream fout{entry.path().native(), std::ios::binary};
+        fout.write(out.str().c_str(), out.str().size());
+    }
+}
+
+
+
 void _update_save_data(const fs::path& save_dir, int serial_id)
 {
     if (serial_id <= 14)
@@ -1817,6 +1973,7 @@ void _update_save_data(const fs::path& save_dir, int serial_id)
         ELONA_CASE(16)
         ELONA_CASE(17)
         ELONA_CASE(18)
+        ELONA_CASE(19)
     default: assert(0); break;
     }
 #undef ELONA_CASE

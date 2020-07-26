@@ -270,7 +270,7 @@ void chara_vomit(Character& chara)
         if (rnd_capped(p * p * p) == 0 || chara.index == 0)
         {
             flt();
-            if (const auto item = itemcreate_extra_inv(704, chara.position, 0))
+            if (const auto item = itemcreate_map_inv(704, chara.position, 0))
             {
                 if (chara.index != 0)
                 {
@@ -1214,7 +1214,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         {
             flt(calcobjlv(eater.level));
             flttypeminor = 58500;
-            if (const auto item = itemcreate_extra_inv(0, eater.position, 0))
+            if (const auto item = itemcreate_map_inv(0, eater.position, 0))
             {
                 txt(i18n::s.get(
                         "core.food.effect.bomb_fish", eater, item.unwrap()),

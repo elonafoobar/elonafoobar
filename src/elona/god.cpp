@@ -589,13 +589,13 @@ TurnResult do_pray()
                 {
                     item_id = 559;
                 }
-                itemcreate_extra_inv(item_id, cdata.player().position, 0);
+                itemcreate_map_inv(item_id, cdata.player().position, 0);
             }
             else
             {
                 nostack = 1;
                 if (const auto item =
-                        itemcreate_extra_inv(672, cdata.player().position, 0))
+                        itemcreate_map_inv(672, cdata.player().position, 0))
                 {
                     if (cdata.player().god_id == core_god::itzpalt)
                     {
@@ -616,7 +616,7 @@ TurnResult do_pray()
                 flt();
                 nostack = 1;
                 if (const auto item =
-                        itemcreate_extra_inv(672, cdata.player().position, 0))
+                        itemcreate_map_inv(672, cdata.player().position, 0))
                 {
                     item->param1 = 166;
                 }
@@ -659,7 +659,7 @@ TurnResult do_pray()
             {
                 item_id = 621;
             }
-            itemcreate_extra_inv(item_id, cdata.player().position, 0);
+            itemcreate_map_inv(item_id, cdata.player().position, 0);
             txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }
         ++game_data.god_rank;

@@ -290,7 +290,7 @@ Event.register("core.item_created", my_item_created_handler)
 )"));
 
     const auto item =
-        elona::itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3);
+        elona::itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3);
     REQUIRE_SOME(item);
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(

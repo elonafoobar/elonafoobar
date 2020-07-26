@@ -40,12 +40,21 @@ Inventory* Inventory_map()
 
 
 
+// Undocumented because it is unstable API.
+Inventory* Inventory_tmp()
+{
+    return &g_inv.tmp();
+}
+
+
+
 void bind(sol::table api_table)
 {
     /* clang-format off */
 
     ELONA_LUA_API_BIND_FUNCTION("player", Inventory_player);
     ELONA_LUA_API_BIND_FUNCTION("map", Inventory_map);
+    ELONA_LUA_API_BIND_FUNCTION("tmp", Inventory_tmp);
 
     /* clang-format on */
 }

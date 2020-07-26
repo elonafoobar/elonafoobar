@@ -188,10 +188,7 @@ void load_gene_files()
     sdata.clear(0);
     Character::copy(cdata.player(), cdata.tmp());
     cdata.player().clear();
-    for (const auto& item : g_inv.ground())
-    {
-        item->remove();
-    }
+    inv_open_tmp_inv_no_physical_file();
     for (const auto& item : g_inv.pc())
     {
         if (item->id == ItemId::secret_experience_of_lomias)
@@ -221,7 +218,7 @@ void load_gene_files()
         }
         item->body_part = 0;
         item_separate(
-            item, inv_make_free_slot_force(g_inv.ground()), item->number());
+            item, inv_make_free_slot_force(g_inv.tmp()), item->number());
     }
     for (auto&& cnt : cdata.all())
     {
@@ -261,7 +258,7 @@ void save_map_local_data()
 
 void get_inheritance()
 {
-    ctrl_file(FileOperation2::map_items_write, u8"shop3.s2");
+    inv_close_tmp_inv("shop3.s2");
     p = 0;
     i = 0;
     for (int cnt = 0; cnt < 600; ++cnt)

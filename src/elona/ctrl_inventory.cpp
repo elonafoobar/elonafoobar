@@ -119,6 +119,13 @@ bool exclude_ground_items(int invctrl)
 
 
 
+bool refers_to_tmp_inventory(int invctrl)
+{
+    return invctrl == 11 || invctrl == 22 || invctrl == 28;
+}
+
+
+
 bool exclude_character_items(int invctrl)
 {
     return invctrl == 3 || invctrl == 11 || invctrl == 22 || invctrl == 28;
@@ -180,7 +187,7 @@ void remove_card_and_figure_from_heir_trunk()
 {
     if (invctrl == 22 && invctrl(1) == 1)
     {
-        for (const auto& item : g_inv.ground())
+        for (const auto& item : g_inv.tmp())
         {
             if (item->id == ItemId::card || item->id == ItemId::figurine)
             {
@@ -251,10 +258,17 @@ void make_item_list(
         Inventory* inv;
         if (cnt == 0)
         {
-            inv = &g_inv.ground();
             if (exclude_ground_items(invctrl(0)))
             {
                 continue;
+            }
+            if (refers_to_tmp_inventory(invctrl(0)))
+            {
+                inv = &g_inv.tmp();
+            }
+            else
+            {
+                inv = &g_inv.ground();
             }
         }
         if (cnt == 1)
@@ -1385,7 +1399,7 @@ OnEnterResult on_enter_external_inventory(
     {
         if (invctrl(1) == 3 || invctrl(1) == 5)
         {
-            if (inv_count(g_inv.ground()) >= invcontainer)
+            if (inv_count(g_inv.tmp()) >= invcontainer)
             {
                 snd("core.fail1");
                 txt(i18n::s.get("core.ui.inv.put.container.full"));
@@ -1543,7 +1557,7 @@ OnEnterResult on_enter_external_inventory(
         }
     }
     auto& destination_inventory =
-        (invctrl == 12 || (invctrl == 24 && invctrl(1) != 0)) ? g_inv.ground()
+        (invctrl == 12 || (invctrl == 24 && invctrl(1) != 0)) ? g_inv.tmp()
                                                               : g_inv.pc();
     int stat =
         pick_up_item(destination_inventory, selected_item, inventory_owner)

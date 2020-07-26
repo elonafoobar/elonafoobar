@@ -2,6 +2,7 @@ local Chara = ELONA.require("core.Chara")
 local GUI = ELONA.require("core.GUI")
 local I18N = ELONA.require("core.I18N")
 local Internal = ELONA.require("core.Internal")
+local Inventory = ELONA.require("core.Inventory")
 local Item = ELONA.require("core.Item")
 local World = ELONA.require("core.World")
 

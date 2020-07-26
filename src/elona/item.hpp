@@ -481,6 +481,7 @@ public:
 
     Inventory& pc();
     Inventory& ground();
+    Inventory& tmp();
     Inventory& for_chara(const Character& chara);
     Inventory& by_index(int index);
 
@@ -562,7 +563,7 @@ void mapitem_cold(int x, int y);
  * Represents item owner. It is one of the following:
  * - Character
  * - Map
- * - Container
+ * - Temporary
  */
 struct ItemOwner
 {
@@ -578,9 +579,9 @@ struct ItemOwner
     }
 
 
-    static ItemOwner container() noexcept
+    static ItemOwner temporary() noexcept
     {
-        return ItemOwner{Container{}};
+        return ItemOwner{Temporary{}};
     }
 
 
@@ -597,9 +598,9 @@ struct ItemOwner
     }
 
 
-    bool is_container() const noexcept
+    bool is_temporary() const noexcept
     {
-        return std::holds_alternative<Container>(_inner);
+        return std::holds_alternative<Temporary>(_inner);
     }
 
 
@@ -627,16 +628,16 @@ private:
     {
     };
 
-    struct Container
+    struct Temporary
     {
     };
 
 
-    std::variant<Character, Map, Container> _inner;
+    std::variant<Character, Map, Temporary> _inner;
 
 
 
-    ItemOwner(const std::variant<Character, Map, Container>& owner)
+    ItemOwner(const std::variant<Character, Map, Temporary>& owner)
         : _inner(owner)
     {
     }
@@ -715,7 +716,7 @@ void exittempinv();
 bool cargocheck(const ItemRef& item);
 ItemRef item_convert_artifact(
     const ItemRef& artifact,
-    bool ignore_external_container = false);
+    bool ignore_map_inventory = false);
 void damage_by_cursed_equipments(Character& chara);
 void dipcursed(const ItemRef& item);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);

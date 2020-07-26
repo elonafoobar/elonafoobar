@@ -11,7 +11,6 @@
 #include "character_status.hpp"
 #include "command.hpp"
 #include "config.hpp"
-#include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "death.hpp"
 #include "debug.hpp"

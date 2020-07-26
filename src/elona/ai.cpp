@@ -446,7 +446,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
                 .item_info_actual.is_empty())
         {
             flt();
-            if (const auto item = itemcreate_extra_inv(541, chara.position, 0))
+            if (const auto item = itemcreate_map_inv(541, chara.position, 0))
             {
                 snd("core.snow");
                 txt(i18n::s.get("core.ai.makes_snowman", chara, item.unwrap()));

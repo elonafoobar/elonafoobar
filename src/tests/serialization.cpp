@@ -37,7 +37,7 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
     int y = 8;
     int number = 3;
     const auto item =
-        itemcreate_extra_inv(itemid2int(PUTITORO_PROTO_ID), x, y, number);
+        itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), x, y, number);
     REQUIRE_SOME(item);
     int index = item->index();
     elona::g_inv[index]->is_aphrodisiac() = true;

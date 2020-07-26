@@ -83,16 +83,23 @@ OptionalItemRef itemcreate_chara_inv(Character& chara, int id, int number)
 
 
 
-OptionalItemRef itemcreate_extra_inv(int id, int x, int y, int number)
+OptionalItemRef itemcreate_map_inv(int id, int x, int y, int number)
 {
     return itemcreate(g_inv.ground(), id, x, y, number);
 }
 
 
 
-OptionalItemRef itemcreate_extra_inv(int id, const Position& pos, int number)
+OptionalItemRef itemcreate_map_inv(int id, const Position& pos, int number)
 {
-    return itemcreate_extra_inv(id, pos.x, pos.y, number);
+    return itemcreate_map_inv(id, pos.x, pos.y, number);
+}
+
+
+
+OptionalItemRef itemcreate_tmp_inv(int id, int number)
+{
+    return itemcreate(g_inv.tmp(), id, -1, -1, number);
 }
 
 
@@ -139,15 +146,22 @@ int get_random_item_id()
 
 
 
+bool upgrade_item_quality(Inventory& inv)
+{
+    const auto owner_chara = inv_get_owner(inv).as_character();
+    if (owner_chara && owner_chara->index != 0)
+        return false;
+
+    return sdata(19, 0) > rnd(5000);
+}
+
+
+
 OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
 {
-    if ((inv.inventory_id() == 0 || inv.inventory_id() == -1) &&
-        fixlv < Quality::godly)
+    if (fixlv < Quality::godly && upgrade_item_quality(inv))
     {
-        if (sdata(19, 0) > rnd(5000)) // TODO coupling
-        {
-            fixlv = static_cast<Quality>(static_cast<int>(fixlv) + 1);
-        }
+        fixlv = static_cast<Quality>(static_cast<int>(fixlv) + 1);
     }
 
     const auto empty_slot_opt = inv_make_free_slot(inv);
@@ -157,7 +171,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
     const auto empty_slot = *empty_slot_opt;
 
     optional<Position> item_pos;
-    if (inv.inventory_id() == -1 && mode != 6 && mode != 9)
+    if (inv_get_owner(inv).is_map())
     {
         bool ok = false;
         for (int i = 0; i < 100; ++i)
@@ -332,7 +346,8 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
 
     if (item->id == ItemId::gold_piece)
     {
-        item->set_number(calcinitgold(inv.inventory_id()));
+        const auto owner_chara = inv_get_owner(inv).as_character();
+        item->set_number(calcinitgold(owner_chara ? owner_chara->index : -1));
         if (item->quality == Quality::great)
         {
             item->set_number(item->number() * 2);
@@ -341,9 +356,9 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
         {
             item->set_number(item->number() * 4);
         }
-        if (inv.inventory_id() >= 0)
+        if (owner_chara)
         {
-            earn_gold(cdata[inv.inventory_id()], item->number());
+            earn_gold(*owner_chara, item->number());
             item->remove();
             return item; // TODO: invalid return value!
         }
@@ -533,7 +548,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
         }
     }
 
-    if (inv.inventory_id() == -1)
+    if (inv_get_owner(inv).is_map())
     {
         cell_refresh(item->pos().x, item->pos().y);
     }

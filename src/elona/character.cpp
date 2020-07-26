@@ -2373,7 +2373,7 @@ void lovemiracle(int chara_index)
     if (rnd(2))
     {
         if (const auto item =
-                itemcreate_extra_inv(573, cdata[chara_index].position, 0))
+                itemcreate_map_inv(573, cdata[chara_index].position, 0))
         {
             item->subname = charaid2int(cdata[chara_index].id);
             item->weight = cdata[chara_index].weight * 10 + 250;
@@ -2386,7 +2386,7 @@ void lovemiracle(int chara_index)
     else
     {
         if (const auto item =
-                itemcreate_extra_inv(574, cdata[chara_index].position, 0))
+                itemcreate_map_inv(574, cdata[chara_index].position, 0))
         {
             item->subname = charaid2int(cdata[chara_index].id);
         }

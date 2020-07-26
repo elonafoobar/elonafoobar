@@ -26,10 +26,11 @@ OptionalItemRef itemcreate_player_inv(int id, int number = 0);
 
 OptionalItemRef itemcreate_chara_inv(Character& chara, int id, int number = 0);
 
-OptionalItemRef itemcreate_extra_inv(int id, int x, int y, int number = 0);
+OptionalItemRef itemcreate_map_inv(int id, int x, int y, int number = 0);
 
-OptionalItemRef
-itemcreate_extra_inv(int id, const Position& pos, int number = 0);
+OptionalItemRef itemcreate_map_inv(int id, const Position& pos, int number = 0);
+
+OptionalItemRef itemcreate_tmp_inv(int id, int number = 0);
 
 
 int get_random_item_id();

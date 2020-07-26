@@ -4,6 +4,7 @@
 #include "../../../crafting.hpp"
 #include "../../../data/types/type_map.hpp"
 #include "../../../i18n.hpp"
+#include "../../../inventory.hpp"
 #include "../../../item.hpp"
 #include "../../../itemgen.hpp"
 #include "../../../map.hpp"
@@ -199,12 +200,12 @@ void Internal_leave_map()
 
 void Internal_strange_scientist_pick_reward()
 {
-    begintempinv();
+    inv_open_tmp_inv_no_physical_file();
     mode = 6;
     flt();
-    itemcreate_extra_inv(283, -1, -1, 0);
+    itemcreate_tmp_inv(283, 0);
     flt();
-    itemcreate_extra_inv(284, -1, -1, 0);
+    itemcreate_tmp_inv(284, 0);
     for (int cnt = 0; cnt < 800; ++cnt)
     {
         if (cnt == 672)
@@ -241,7 +242,7 @@ void Internal_strange_scientist_pick_reward()
         if (f)
         {
             flt(cdata.player().level * 3 / 2, calcfixlv(Quality::good));
-            if (const auto item = itemcreate_extra_inv(cnt, -1, -1, 0))
+            if (const auto item = itemcreate_tmp_inv(cnt, 0))
             {
                 if (item->quality < Quality::miracle)
                 {
@@ -256,7 +257,7 @@ void Internal_strange_scientist_pick_reward()
     invctrl(0) = 22;
     invctrl(1) = 4;
     ctrl_inventory();
-    exittempinv();
+    inv_close_tmp_inv_no_physical_file();
     mode = 0;
 }
 

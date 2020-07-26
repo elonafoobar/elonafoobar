@@ -54,7 +54,7 @@ TalkResult _talk_hv_visitor(Character& speaker)
 void _adventurer_give_new_year_gift(Character& speaker)
 {
     flt();
-    if (const auto item = itemcreate_extra_inv(752, cdata.player().position, 0))
+    if (const auto item = itemcreate_map_inv(752, cdata.player().position, 0))
     {
         item->param3 = speaker.impression + rnd(50);
         txt(i18n::s.get(
@@ -140,7 +140,7 @@ void _adventurer_hate_action(Character& speaker)
         for (int cnt = 0, cnt_end = (8 + rnd(6)); cnt < cnt_end; ++cnt)
         {
             flt();
-            itemcreate_extra_inv(704, -1, -1, 0);
+            itemcreate_map_inv(704, -1, -1, 0);
             txt(i18n::s.get("core.food.vomits", speaker));
             snd("core.vomit");
             await(g_config.animation_wait() / 2);
@@ -179,7 +179,7 @@ void _adventurer_become_best_friend(Character& speaker)
 {
     speaker.is_best_friend() = true;
     flt();
-    if (const auto item = itemcreate_extra_inv(730, cdata.player().position, 0))
+    if (const auto item = itemcreate_map_inv(730, cdata.player().position, 0))
     {
         txt(i18n::s.get("core.talk.visitor.receive", item.unwrap(), speaker));
         txt(i18n::s.get("core.talk.visitor.adventurer.like.wonder_if"));
@@ -369,7 +369,7 @@ void _adventurer_receive_coin(Character& speaker)
         p = 622;
     }
     flt();
-    if (const auto item = itemcreate_extra_inv(p, cdata.player().position, 0))
+    if (const auto item = itemcreate_map_inv(p, cdata.player().position, 0))
     {
         txt(i18n::s.get("core.talk.visitor.receive", item.unwrap(), speaker));
         snd("core.get1");

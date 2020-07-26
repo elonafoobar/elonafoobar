@@ -91,7 +91,7 @@ void _map_randsite()
             if (rnd(25) == 0)
             {
                 flt();
-                if (const auto item = itemcreate_extra_inv(173, *pos, 0))
+                if (const auto item = itemcreate_map_inv(173, *pos, 0))
                 {
                     item->own_state = 1;
                 }
@@ -100,7 +100,7 @@ void _map_randsite()
             if (rnd(100) == 0)
             {
                 flt();
-                if (const auto item = itemcreate_extra_inv(172, *pos, 0))
+                if (const auto item = itemcreate_map_inv(172, *pos, 0))
                 {
                     item->own_state = 1;
                     item->param1 = choice(isetgod);
@@ -141,25 +141,25 @@ void _map_randsite()
         if (rnd(3) == 0)
         {
             flt();
-            itemcreate_extra_inv(631, *pos, 0);
+            itemcreate_map_inv(631, *pos, 0);
             return;
         }
         if (rnd(15) == 0)
         {
             flt();
-            itemcreate_extra_inv(55, *pos, 0);
+            itemcreate_map_inv(55, *pos, 0);
             return;
         }
         if (rnd(20) == 0)
         {
             flt();
-            itemcreate_extra_inv(284, *pos, 0);
+            itemcreate_map_inv(284, *pos, 0);
             return;
         }
         if (rnd(15) == 0)
         {
             flt();
-            itemcreate_extra_inv(283, *pos, 0);
+            itemcreate_map_inv(283, *pos, 0);
             return;
         }
         if (rnd(18) == 0)
@@ -167,12 +167,12 @@ void _map_randsite()
             flt(calcobjlv(rnd_capped(cdata.player().level + 10)),
                 calcfixlv(Quality::good));
             flttypemajor = choice(fsetwear);
-            itemcreate_extra_inv(0, *pos, 0);
+            itemcreate_map_inv(0, *pos, 0);
             return;
         }
         flt(10);
         flttypeminor = 64100;
-        itemcreate_extra_inv(0, *pos, 0);
+        itemcreate_map_inv(0, *pos, 0);
         return;
     }
 }
@@ -311,7 +311,7 @@ void map_reload(const std::string& map_filename)
             {
                 flt();
                 if (const auto item =
-                        itemcreate_extra_inv(cmapdata(0, i), x, y, 0))
+                        itemcreate_map_inv(cmapdata(0, i), x, y, 0))
                 {
                     item->own_state = cmapdata(3, i);
                 }
@@ -890,23 +890,23 @@ void map_reload_noyel()
     if (area_data[game_data.current_map].christmas_festival)
     {
         flt();
-        if (const auto item = itemcreate_extra_inv(763, 29, 16, 0))
+        if (const auto item = itemcreate_map_inv(763, 29, 16, 0))
         {
             item->own_state = 1;
         }
         flt();
-        if (const auto item = itemcreate_extra_inv(686, 29, 16, 0))
+        if (const auto item = itemcreate_map_inv(686, 29, 16, 0))
         {
             item->own_state = 1;
         }
         flt();
-        if (const auto item = itemcreate_extra_inv(171, 29, 17, 0))
+        if (const auto item = itemcreate_map_inv(171, 29, 17, 0))
         {
             item->param1 = 6;
             item->own_state = 1;
         }
         flt();
-        if (const auto item = itemcreate_extra_inv(756, 29, 17, 0))
+        if (const auto item = itemcreate_map_inv(756, 29, 17, 0))
         {
             item->own_state = 5;
         }

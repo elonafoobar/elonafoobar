@@ -66,6 +66,15 @@ int inv_count(Inventory& inv);
 
 
 /**
+ * Get an owner of @a inv.
+ *
+ * @param inv The inventory to query.
+ * @return @a inv's owner.
+ */
+ItemOwner inv_get_owner(Inventory& inv);
+
+
+/**
  * Remove some items in @a inv to make a free slot.
  *
  * @param inv The inventory to compress.
@@ -206,5 +215,45 @@ InvStackResult inv_stack(
     const ItemRef& base_item,
     bool show_message = false,
     optional<int> number = none);
+
+
+
+/**
+ * Open a temporary inventory. All items stored in @a file_name are read into
+ * `g_inv.tmp()`.
+ *
+ * @param file_name The file name which stores a temporary inventory.
+ * @see inv_close_tmp_inv
+ */
+void inv_open_tmp_inv(const fs::path& file_name);
+
+
+
+/**
+ * Close a temporary inventory. All items stored in `g_inv.tmp()` are written
+ * into @a file_name.
+ *
+ * @param file_name The file name where a temporary inventory is written.
+ * @see inv_open_tmp_inv
+ */
+void inv_close_tmp_inv(const fs::path& file_name);
+
+
+
+/**
+ * Create an empty temporary inventory.
+ *
+ * @see inv_close_tmp_inv_no_physical_file
+ */
+void inv_open_tmp_inv_no_physical_file();
+
+
+
+/**
+ * Close a temporary inventory. All items stored in `g_inv.tmp()` are discarded.
+ *
+ * @see inv_open_tmp_inv_no_physical_file
+ */
+void inv_close_tmp_inv_no_physical_file();
 
 } // namespace elona

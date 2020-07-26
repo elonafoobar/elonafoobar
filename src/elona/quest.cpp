@@ -1373,7 +1373,7 @@ void quest_complete()
     if (p != 0)
     {
         flt();
-        itemcreate_extra_inv(54, cdata.player().position, p);
+        itemcreate_map_inv(54, cdata.player().position, p);
     }
     if (quest_data[rq].id == 1002)
     {
@@ -1388,14 +1388,14 @@ void quest_complete()
         p = 2 + (rnd(100) < rnd_capped(cdata.player().fame / 5000 + 1));
     }
     flt();
-    itemcreate_extra_inv(55, cdata.player().position, p);
+    itemcreate_map_inv(55, cdata.player().position, p);
     if (quest_data[rq].id == 1009)
     {
         if (quest_data[rq].extra_info_1 * 150 / 100 <
             quest_data[rq].extra_info_2)
         {
             flt();
-            itemcreate_extra_inv(
+            itemcreate_map_inv(
                 724,
                 cdata.player().position,
                 1 + quest_data[rq].extra_info_2 / 10);
@@ -1448,7 +1448,7 @@ void quest_complete()
             {
                 flttypemajor = quest_data[rq].reward_item_id;
             }
-            itemcreate_extra_inv(0, cdata.player().position, 0);
+            itemcreate_map_inv(0, cdata.player().position, 0);
         }
     }
     modify_karma(cdata.player(), 1);

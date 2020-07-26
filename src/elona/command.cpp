@@ -141,7 +141,7 @@ void _try_to_reveal_small_coin(Character& chara)
         txt(i18n::s.get("core.action.search.small_coin.find"));
         cell_data.at(x, y).feats = 0;
         flt();
-        itemcreate_extra_inv(622, x, y, 0);
+        itemcreate_map_inv(622, x, y, 0);
     }
     else
     {
@@ -758,7 +758,7 @@ TurnResult do_interact_command()
         cdata[target_index].is_hung_on_sand_bag() = false;
         txt(i18n::s.get("core.action.interact.release", cdata[target_index]));
         flt();
-        itemcreate_extra_inv(733, cdata[target_index].position, 0);
+        itemcreate_map_inv(733, cdata[target_index].position, 0);
     }
     if (p == 10)
     {
@@ -1116,7 +1116,7 @@ TurnResult do_throw_command_internal(
     if (throw_item->id == ItemId::kitty_bank)
     {
         flt();
-        itemcreate_extra_inv(54, tlocx, tlocy, throw_item->param1);
+        itemcreate_map_inv(54, tlocx, tlocy, throw_item->param1);
     }
     return TurnResult::turn_end;
 }
@@ -2187,7 +2187,7 @@ TurnResult do_use_command(ItemRef use_item)
             use_item->modify_number(-5);
         }
         flt();
-        itemcreate_extra_inv(541, cdata.player().position, 0);
+        itemcreate_map_inv(541, cdata.player().position, 0);
         if (is_in_fov(cdata.player()))
         {
             snd("core.snow");
@@ -2885,19 +2885,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
                 return TurnResult::pc_turn_user_error;
             }
         }
-        ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
-        if (save_fs_exists(u8"shop"s + invfile + u8".s2"))
-        {
-            ctrl_file(
-                FileOperation2::map_items_read, u8"shop"s + invfile + u8".s2");
-        }
-        else
-        {
-            for (const auto& item : g_inv.ground())
-            {
-                item->remove();
-            }
-        }
+        inv_open_tmp_inv(u8"shop"s + invfile + u8".s2");
         shoptrade = 0;
         invsubroutine = 1;
         invctrl(0) = 22;
@@ -2928,11 +2916,9 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
         invcontainer = 0;
         if (refweight == -1)
         {
-            refweight = inv_weight(g_inv.ground()) + 2500;
+            refweight = inv_weight(g_inv.tmp()) + 2500;
         }
-        ctrl_file(
-            FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
-        ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
+        inv_close_tmp_inv(u8"shop"s + invfile + u8".s2");
         if (refweight != 0)
         {
             box->weight = refweight;
@@ -4050,7 +4036,7 @@ TurnResult do_gatcha(const ItemRef& gatcha_machine)
             const auto gatcha_ball_id =
                 gatcha_machine->id == ItemId::red_treasure_machine ? 415 : 416;
             flt();
-            if (const auto item = itemcreate_extra_inv(
+            if (const auto item = itemcreate_map_inv(
                     gatcha_ball_id, cdata.player().position, 0))
             {
                 item->param2 = 0;
@@ -4726,7 +4712,7 @@ int drink_well(Character& chara, const ItemRef& well)
         if (p > 55)
         {
             flt();
-            itemcreate_extra_inv(
+            itemcreate_map_inv(
                 54,
                 chara.position,
                 rnd_capped(sdata(159, chara.index) / 2 * 50 + 100) + 1);
@@ -5295,29 +5281,31 @@ PickUpItemResult pick_up_item(
     };
 
     int sellgold = 0;
-    if (inv.inventory_id() != -1)
+    auto inv_owner = inv_get_owner(inv);
+    const auto inv_owner_chara = inv_owner.as_character();
+    if (inv_owner_chara)
     {
         if (item->id == ItemId::gold_piece || item->id == ItemId::platinum_coin)
         {
             snd_("core.getgold1");
             txt(i18n::s.get(
                 "core.action.pick_up.execute",
-                cdata[inv.inventory_id()],
+                *inv_owner_chara,
                 itemname(item)));
             if (item->id == ItemId::gold_piece)
             {
-                earn_gold(cdata[inv.inventory_id()], item->number());
+                earn_gold(*inv_owner_chara, item->number());
             }
             else
             {
-                earn_platinum(cdata[inv.inventory_id()], item->number());
+                earn_platinum(*inv_owner_chara, item->number());
             }
             in = item->number();
             item->remove();
             return {1, nullptr};
         }
     }
-    if (inv.inventory_id() == 0)
+    if (inv_owner_chara && inv_owner_chara->index == 0)
     {
         if (game_data.mount != 0)
         {
@@ -5345,7 +5333,7 @@ PickUpItemResult pick_up_item(
                         return {0, nullptr};
                     }
                     game_data.activity_about_to_start = 103;
-                    activity_others(cdata[inv.inventory_id()], item);
+                    activity_others(*inv_owner_chara, item);
                     return {-1, nullptr};
                 }
             }
@@ -5382,7 +5370,7 @@ PickUpItemResult pick_up_item(
     }
     const auto inumbk = item->number();
     item->set_number(in);
-    if (inv.inventory_id() == 0)
+    if (inv_owner_chara && inv_owner_chara->index == 0)
     {
         if (trait(215) != 0)
         {
@@ -5555,7 +5543,7 @@ PickUpItemResult pick_up_item(
             {
                 txt(i18n::s.get(
                     "core.action.pick_up.execute",
-                    cdata[inv.inventory_id()],
+                    *inv_owner_chara,
                     itemname(picked_up_item.unwrap(), in)));
             }
             else
@@ -5578,10 +5566,10 @@ PickUpItemResult pick_up_item(
         sound_pick_up();
         txt(i18n::s.get(
             "core.action.pick_up.execute",
-            cdata[inv.inventory_id()],
+            *inv_owner_chara,
             itemname(picked_up_item.unwrap(), in)));
     }
-    if (inv.inventory_id() == 0)
+    if (inv_owner_chara && inv_owner_chara->index == 0)
     {
         if (picked_up_item->id == ItemId::campfire)
         {
@@ -5620,7 +5608,7 @@ PickUpItemResult pick_up_item(
         }
         refresh_burden_state();
     }
-    if (inv.inventory_id() == -1)
+    if (!inv_owner_chara)
     {
         refresh_burden_state();
     }
@@ -5658,7 +5646,7 @@ TurnResult do_bash(Character& chara)
                 }
             }
             flt();
-            if (const auto fruit = itemcreate_extra_inv(tree->param2, x, y, 0))
+            if (const auto fruit = itemcreate_map_inv(tree->param2, x, y, 0))
             {
                 txt(i18n::s.get(
                     "core.action.bash.tree.falls_down", fruit.unwrap()));
@@ -5742,7 +5730,7 @@ TurnResult do_bash(Character& chara)
                     (game_data.current_map != mdata_t::MapId::shelter_)),
                 calcfixlv(Quality::bad));
             flttypemajor = choice(fsetbarrel);
-            itemcreate_extra_inv(0, x, y, 0);
+            itemcreate_map_inv(0, x, y, 0);
             if (is_in_fov(chara))
             {
                 snd("core.bash1");
@@ -6153,7 +6141,7 @@ void open_box(const ItemRef& box)
                 in = rnd(20000) + 10000;
             }
         }
-        itemcreate_extra_inv(item_id, cdata.player().position, in);
+        itemcreate_map_inv(item_id, cdata.player().position, in);
     }
     randomize();
     f = 0;
@@ -6174,7 +6162,7 @@ void open_box(const ItemRef& box)
     if (f)
     {
         flt();
-        itemcreate_extra_inv(622, cdata.player().position, 1);
+        itemcreate_map_inv(622, cdata.player().position, 1);
     }
     snd("core.ding2");
     txt(i18n::s.get("core.action.open.goods", box));
@@ -6297,7 +6285,7 @@ void open_new_year_gift(const ItemRef& box)
             txt(i18n::s.get("core.action.open.new_year_gift.something_inside"));
         }
         flt();
-        itemcreate_extra_inv(choice(isetgiftminor), cdata.player().position, 1);
+        itemcreate_map_inv(choice(isetgiftminor), cdata.player().position, 1);
         return;
     }
     if (rnd(3) == 0)
@@ -6332,7 +6320,7 @@ void open_new_year_gift(const ItemRef& box)
             txt(i18n::s.get("core.action.open.new_year_gift.wonderful"));
         }
         flt();
-        itemcreate_extra_inv(choice(isetgiftgrand), cdata.player().position, 1);
+        itemcreate_map_inv(choice(isetgiftgrand), cdata.player().position, 1);
         return;
     }
     if (is_in_fov(cdata.player()))
@@ -6340,7 +6328,7 @@ void open_new_year_gift(const ItemRef& box)
         txt(i18n::s.get("core.action.open.new_year_gift.something_inside"));
     }
     flt();
-    itemcreate_extra_inv(choice(isetgiftmajor), cdata.player().position, 1);
+    itemcreate_map_inv(choice(isetgiftmajor), cdata.player().position, 1);
 }
 
 

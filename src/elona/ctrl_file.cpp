@@ -1628,4 +1628,60 @@ void ctrl_file(FileOperation2 file_operation, const fs::path& filepath)
     }
 }
 
+
+
+void ctrl_file_tmp_inv_read(const fs::path& file_name)
+{
+    ELONA_LOG("save.ctrl_file")
+        << "tmp_inv_read: " << filepathutil::to_utf8_path(file_name);
+
+    const auto path = filesystem::dirs::tmp() / file_name;
+    (void)save_fs_exists(file_name);
+
+    load_internal(path, [&](auto& ar) {
+        auto& inv = g_inv.tmp();
+        inv.clear();
+        const auto n = inv.size();
+        for (size_t i = 0; i < n; ++i)
+        {
+            bool exists;
+            ar(exists);
+            if (exists)
+            {
+                const auto item_ref = Inventory::create(InventorySlot{&inv, i});
+                auto& item = *item_ref.get_raw_ptr();
+                ar(item);
+            }
+        }
+    });
+}
+
+
+
+void ctrl_file_tmp_inv_write(const fs::path& file_name)
+{
+    ELONA_LOG("save.ctrl_file")
+        << "tmp_inv_write: " << filepathutil::to_utf8_path(file_name);
+
+    const auto path = filesystem::dirs::tmp() / file_name;
+    save_fs_add(file_name);
+    (void)save_fs_exists(file_name);
+
+    save_internal(path, [&](auto& ar) {
+        auto& inv = g_inv.tmp();
+        const auto n = inv.size();
+        for (size_t i = 0; i < n; ++i)
+        {
+            bool exists = !!inv.at(i);
+            ar(exists);
+            if (exists)
+            {
+                const auto item_ref = inv.at(i).unwrap();
+                auto& item = *item_ref.get_raw_ptr();
+                ar(item);
+            }
+        }
+    });
+}
+
 } // namespace elona

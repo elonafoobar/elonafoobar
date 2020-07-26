@@ -1,7 +1,9 @@
 #include "inventory.hpp"
 
 #include "character.hpp"
+#include "ctrl_file.hpp"
 #include "random.hpp"
+#include "save_fs.hpp"
 
 
 
@@ -75,7 +77,7 @@ optional<InventorySlot> inv_get_free_slot(Inventory& inv)
 
 optional<InventorySlot> inv_make_free_slot(Inventory& inv)
 {
-    if (inv.inventory_id() == -1 && mode != 6)
+    if (inv_get_owner(inv).is_map())
     {
         return inv_make_free_slot_force(inv);
     }
@@ -94,9 +96,9 @@ InventorySlot inv_make_free_slot_force(Inventory& inv)
         return *slot;
     }
 
-    if (inv.inventory_id() == -1)
+    auto owner = inv_get_owner(inv);
+    if (owner.is_map())
     {
-        assert(mode != 6);
         txt(i18n::s.get("core.item.items_are_destroyed"));
         return inv_compress(inv);
     }
@@ -105,11 +107,13 @@ InventorySlot inv_make_free_slot_force(Inventory& inv)
     {
         const auto slot = inv_get_random_slot(inv);
         const auto item = Inventory::at(slot).unwrap();
+        const auto owner_chara = owner.as_character();
+        assert(owner_chara);
         if (item->body_part == 0)
         {
-            if (cdata[inv.inventory_id()].ai_item == item)
+            if (owner_chara->ai_item == item)
             {
-                cdata[inv.inventory_id()].ai_item = nullptr;
+                owner_chara->ai_item = nullptr;
             }
             item->remove();
             return slot;
@@ -128,6 +132,24 @@ int inv_count(Inventory& inv)
         ++n;
     }
     return n;
+}
+
+
+
+ItemOwner inv_get_owner(Inventory& inv)
+{
+    if (inv.inventory_id() == -1)
+    {
+        return ItemOwner::map();
+    }
+    else if (inv.inventory_id() == 255)
+    {
+        return ItemOwner::temporary();
+    }
+    else
+    {
+        return ItemOwner::character(cdata[inv.inventory_id()]);
+    }
 }
 
 
@@ -209,6 +231,42 @@ InvStackResult inv_stack(
     }
 
     return {false, base_item};
+}
+
+
+
+void inv_open_tmp_inv(const fs::path& file_name)
+{
+    if (save_fs_exists(file_name))
+    {
+        ctrl_file_tmp_inv_read(file_name);
+    }
+    else
+    {
+        g_inv.tmp().clear();
+    }
+}
+
+
+
+void inv_close_tmp_inv(const fs::path& file_name)
+{
+    ctrl_file_tmp_inv_write(file_name);
+    g_inv.tmp().clear();
+}
+
+
+
+void inv_open_tmp_inv_no_physical_file()
+{
+    g_inv.tmp().clear();
+}
+
+
+
+void inv_close_tmp_inv_no_physical_file()
+{
+    g_inv.tmp().clear();
 }
 
 } // namespace elona

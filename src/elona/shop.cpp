@@ -4,9 +4,9 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "config.hpp"
-#include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "food.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/interface.hpp"
@@ -27,7 +27,6 @@ void shop_refresh_on_talk(Character& shopkeeper)
         map_calc_trade_goods_price();
     }
     mode = 6;
-    ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
 
     bool is_temporary = false;
 
@@ -57,8 +56,7 @@ void shop_refresh_on_talk(Character& shopkeeper)
     }
     else
     {
-        ctrl_file(
-            FileOperation2::map_items_read, u8"shop"s + invfile + u8".s2");
+        inv_open_tmp_inv(u8"shop"s + invfile + u8".s2");
     }
     invfile = shopkeeper.shop_store_id;
     shop_load_shoptmp();
@@ -68,8 +66,7 @@ void shop_refresh_on_talk(Character& shopkeeper)
 
 void shop_load_shoptmp()
 {
-    ctrl_file(FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
-    ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
+    inv_close_tmp_inv(u8"shop"s + invfile + u8".s2");
     mode = 0;
 }
 
@@ -77,10 +74,7 @@ void shop_load_shoptmp()
 
 void shop_refresh(Character& shopkeeper)
 {
-    for (const auto& item : g_inv.ground())
-    {
-        item->remove();
-    }
+    inv_open_tmp_inv_no_physical_file();
 
     lua::call("core.Impl.shop_inventory.generate", lua::handle(shopkeeper));
 
@@ -100,8 +94,7 @@ void shop_refresh(Character& shopkeeper)
 void shop_sell_item(optional_ref<Character> shopkeeper)
 {
     mode = 6;
-    ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
-    ctrl_file(FileOperation2::map_items_read, u8"shop"s + invfile + u8".s2");
+    inv_open_tmp_inv(u8"shop"s + invfile + u8".s2");
     shoptrade = 0;
     if (shopkeeper)
     {
