@@ -2,6 +2,7 @@ local Chara = ELONA.require("core.Chara")
 local GUI = ELONA.require("core.GUI")
 local I18N = ELONA.require("core.I18N")
 local Internal = ELONA.require("core.Internal")
+local Inventory = ELONA.require("core.Inventory")
 local Item = ELONA.require("core.Item")
 local World = ELONA.require("core.World")
 
@@ -15,7 +16,7 @@ local function surrender()
    GUI.play_sound("core.paygold1")
    Chara.player().gold = Chara.player().gold - surrender_cost()
 
-   for _, item in ipairs(Item.player_inventory()) do
+   for _, item in ipairs(Inventory.player():as_table()) do
       if item.prototype.is_cargo then
          GUI.txt(I18N.get("core.talk.npc.common.hand_over", item))
          item:remove()

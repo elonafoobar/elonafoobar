@@ -1542,7 +1542,7 @@ void character_drops_item(Character& victim)
             }
             item->set_pos(victim.position);
             item->set_pos(victim.position);
-            if (!item_stack(-1, item).stacked)
+            if (!inv_stack(g_inv.ground(), item).stacked)
             {
                 const auto slot = inv_make_free_slot_force(g_inv.ground());
                 const auto dropped_item =
@@ -1664,7 +1664,7 @@ void character_drops_item(Character& victim)
         }
         item->set_pos(victim.position);
         itemturn(item);
-        if (!item_stack(-1, item).stacked)
+        if (!inv_stack(g_inv.ground(), item).stacked)
         {
             const auto slot = inv_make_free_slot_force(g_inv.ground());
             item_separate(item, slot, item->number());
@@ -1676,7 +1676,7 @@ void character_drops_item(Character& victim)
         if (victim.gold > 0)
         {
             flt();
-            itemcreate_extra_inv(
+            itemcreate_map_inv(
                 54,
                 victim.position,
                 victim.gold / (1 + 3 * (victim.drops_gold() == 0)));
@@ -1693,7 +1693,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 7:
@@ -1703,7 +1703,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 3:
@@ -1713,7 +1713,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 2:
@@ -1723,7 +1723,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -1731,7 +1731,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 4:
@@ -1741,7 +1741,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 5:
@@ -1751,7 +1751,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     }
@@ -1765,7 +1765,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -1773,7 +1773,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -1781,7 +1781,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -1789,7 +1789,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -1797,7 +1797,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 1:
@@ -1807,7 +1807,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 62000;
             flttypeminor = 0;
-            if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
+            if (const auto item = itemcreate_map_inv(0, victim.position, 0))
             {
                 remain_make(item.unwrap(), victim);
             }
@@ -1820,7 +1820,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 62000;
             flttypeminor = 0;
-            if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
+            if (const auto item = itemcreate_map_inv(0, victim.position, 0))
             {
                 remain_make(item.unwrap(), victim);
             }
@@ -1833,7 +1833,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 32000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1841,7 +1841,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 34000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -1849,7 +1849,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1857,7 +1857,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1865,7 +1865,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -1873,7 +1873,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1881,7 +1881,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1889,7 +1889,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 77000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 4:
@@ -1899,7 +1899,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -1907,7 +1907,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -1915,7 +1915,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(4) == 0)
         {
@@ -1923,7 +1923,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 5:
@@ -1933,7 +1933,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -1941,7 +1941,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(15) == 0)
         {
@@ -1949,7 +1949,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -1957,7 +1957,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -1965,7 +1965,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1973,7 +1973,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(4) == 0)
         {
@@ -1981,7 +1981,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(4) == 0)
         {
@@ -1989,7 +1989,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 77000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     }
@@ -2000,7 +2000,7 @@ void character_drops_item(Character& victim)
         flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
         flttypemajor = 62000;
         flttypeminor = 0;
-        if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
+        if (const auto item = itemcreate_map_inv(0, victim.position, 0))
         {
             remain_make(item.unwrap(), victim);
         }
@@ -2018,7 +2018,7 @@ void character_drops_item(Character& victim)
             (victim.quality == Quality::godly && rnd(3) == 0))
         {
             flt();
-            if (const auto item = itemcreate_extra_inv(504, victim.position, 0))
+            if (const auto item = itemcreate_map_inv(504, victim.position, 0))
             {
                 item->param1 = victim.image;
                 item->subname = charaid2int(victim.id);
@@ -2029,7 +2029,7 @@ void character_drops_item(Character& victim)
             (victim.quality == Quality::godly && rnd(3) == 0))
         {
             flt();
-            if (const auto item = itemcreate_extra_inv(503, victim.position, 0))
+            if (const auto item = itemcreate_map_inv(503, victim.position, 0))
             {
                 item->param1 = victim.image;
                 item->subname = charaid2int(victim.id);
@@ -2039,7 +2039,7 @@ void character_drops_item(Character& victim)
     if (victim.role == Role::wandering_vendor)
     {
         flt();
-        if (const auto item = itemcreate_extra_inv(361, victim.position, 0))
+        if (const auto item = itemcreate_map_inv(361, victim.position, 0))
         {
             item->param1 = victim.shop_store_id;
             item->own_state = 2;
@@ -2049,7 +2049,7 @@ void character_drops_item(Character& victim)
         victim.is_livestock() == 1 || 0)
     {
         flt();
-        if (const auto item = itemcreate_extra_inv(204, victim.position, 0))
+        if (const auto item = itemcreate_map_inv(204, victim.position, 0))
         {
             remain_make(item.unwrap(), victim);
             if (victim.is_livestock() == 1)

@@ -57,7 +57,7 @@ void normalize_item(const ItemRef& i)
 
 std::string test_itemname(int id, int number, bool prefix)
 {
-    const auto item = itemcreate_extra_inv(id, 0, 0, number);
+    const auto item = itemcreate_map_inv(id, 0, 0, number);
     REQUIRE_SOME(item);
     normalize_item(item.unwrap());
     std::string name = itemname(item.unwrap(), number, prefix);
@@ -76,7 +76,7 @@ Character& create_chara(int id, int x, int y)
 
 ItemRef create_item(int id, int number)
 {
-    const auto item_opt = itemcreate_extra_inv(id, 0, 0, number);
+    const auto item_opt = itemcreate_map_inv(id, 0, 0, number);
     REQUIRE_SOME(item_opt);
     const auto item = item_opt.unwrap();
     normalize_item(item);
@@ -94,7 +94,7 @@ void invalidate_item(const ItemRef& item)
     item->clear();
     while (true)
     {
-        const auto new_item = itemcreate_extra_inv(old_id, old_x, old_y, 3);
+        const auto new_item = itemcreate_map_inv(old_id, old_x, old_y, 3);
         REQUIRE_SOME(new_item);
         if (new_item.unwrap().get_raw_ptr() != old_address)
         {

@@ -499,7 +499,7 @@ void run_random_event(RandomEvent event)
             {
                 flt();
                 flttypemajor = choice(fsetremain);
-                itemcreate_extra_inv(0, cdata.player().position, 0);
+                itemcreate_map_inv(0, cdata.player().position, 0);
             }
             txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }
@@ -520,7 +520,7 @@ void run_random_event(RandomEvent event)
                 {
                     flttypemajor = choice(fsetremain);
                 }
-                itemcreate_extra_inv(0, cdata.player().position, 0);
+                itemcreate_map_inv(0, cdata.player().position, 0);
             }
             txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }

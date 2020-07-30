@@ -62,7 +62,7 @@ static void _init_map_museum()
     map_placeplayer();
     map_data.user_map_flag = 0;
     flt();
-    if (const auto item = itemcreate_extra_inv(24, 15, 17, 0))
+    if (const auto item = itemcreate_map_inv(24, 15, 17, 0))
     {
         item->param1 = 4;
     }
@@ -78,17 +78,17 @@ static void _init_map_shop()
     map_placeplayer();
     map_data.user_map_flag = 0;
     flt();
-    if (const auto item = itemcreate_extra_inv(24, 17, 14, 0))
+    if (const auto item = itemcreate_map_inv(24, 17, 14, 0))
     {
         item->param1 = 8;
     }
     flt();
-    if (const auto item = itemcreate_extra_inv(561, 19, 10, 0))
+    if (const auto item = itemcreate_map_inv(561, 19, 10, 0))
     {
         item->count = 5;
     }
     flt();
-    itemcreate_extra_inv(562, 17, 11, 0);
+    itemcreate_map_inv(562, 17, 11, 0);
 }
 
 
@@ -101,7 +101,7 @@ static void _init_map_crop()
     map_data.max_item_count = 80;
     map_data.user_map_flag = 0;
     flt();
-    if (const auto item = itemcreate_extra_inv(24, 14, 5, 0))
+    if (const auto item = itemcreate_map_inv(24, 14, 5, 0))
     {
         item->param1 = 9;
     }
@@ -117,12 +117,12 @@ static void _init_map_ranch()
     map_data.max_item_count = 80;
     map_data.user_map_flag = 0;
     flt();
-    if (const auto item = itemcreate_extra_inv(24, 23, 8, 0))
+    if (const auto item = itemcreate_map_inv(24, 23, 8, 0))
     {
         item->param1 = 11;
     }
     flt();
-    itemcreate_extra_inv(562, 22, 6, 0);
+    itemcreate_map_inv(562, 22, 6, 0);
 }
 
 
@@ -135,7 +135,7 @@ static void _init_map_your_dungeon()
     map_data.max_item_count = 350;
     map_data.user_map_flag = 0;
     flt();
-    if (const auto item = itemcreate_extra_inv(24, 39, 54, 0))
+    if (const auto item = itemcreate_map_inv(24, 39, 54, 0))
     {
         item->param1 = 15;
     }
@@ -223,49 +223,49 @@ static void _init_map_truce_ground()
     map_initcustom(u8"shrine_1"s);
     map_data.max_crowd_density = 10;
     flt();
-    if (const auto item = itemcreate_extra_inv(171, 10, 8, 0))
+    if (const auto item = itemcreate_map_inv(171, 10, 8, 0))
     {
         item->param1 = 1;
         item->own_state = 1;
     }
     flt();
-    if (const auto item = itemcreate_extra_inv(171, 13, 8, 0))
+    if (const auto item = itemcreate_map_inv(171, 13, 8, 0))
     {
         item->param1 = 2;
         item->own_state = 1;
     }
     flt();
-    if (const auto item = itemcreate_extra_inv(171, 10, 13, 0))
+    if (const auto item = itemcreate_map_inv(171, 10, 13, 0))
     {
         item->param1 = 5;
         item->own_state = 1;
     }
     flt();
-    if (const auto item = itemcreate_extra_inv(171, 13, 13, 0))
+    if (const auto item = itemcreate_map_inv(171, 13, 13, 0))
     {
         item->param1 = 4;
         item->own_state = 1;
     }
     flt();
-    if (const auto item = itemcreate_extra_inv(171, 20, 8, 0))
+    if (const auto item = itemcreate_map_inv(171, 20, 8, 0))
     {
         item->param1 = 3;
         item->own_state = 1;
     }
     flt();
-    if (const auto item = itemcreate_extra_inv(171, 23, 8, 0))
+    if (const auto item = itemcreate_map_inv(171, 23, 8, 0))
     {
         item->param1 = 7;
         item->own_state = 1;
     }
     flt();
-    if (const auto item = itemcreate_extra_inv(171, 20, 13, 0))
+    if (const auto item = itemcreate_map_inv(171, 20, 13, 0))
     {
         item->param1 = 6;
         item->own_state = 1;
     }
     flt();
-    if (const auto item = itemcreate_extra_inv(171, 23, 13, 0))
+    if (const auto item = itemcreate_map_inv(171, 23, 13, 0))
     {
         item->own_state = 1;
     }
@@ -622,7 +622,7 @@ static void _init_map_mansion_of_younger_sister()
     if (mapupdate == 0)
     {
         flt();
-        if (const auto item = itemcreate_extra_inv(668, 12, 8, 0))
+        if (const auto item = itemcreate_map_inv(668, 12, 8, 0))
         {
             item->param2 = 4;
         }
@@ -658,7 +658,7 @@ static void _init_map_cyber_dome()
     map_initcustom(u8"cyberdome"s);
     map_data.max_crowd_density = 10;
     flt();
-    if (const auto item = itemcreate_extra_inv(171, 19, 5, 0))
+    if (const auto item = itemcreate_map_inv(171, 19, 5, 0))
     {
         item->param1 = 1;
         item->own_state = 1;
@@ -974,22 +974,22 @@ static void _init_map_your_home()
                 chara->role = Role::other;
             }
             flt();
-            if (const auto item = itemcreate_extra_inv(510, 6, 10, 0))
+            if (const auto item = itemcreate_map_inv(510, 6, 10, 0))
             {
                 item->count = 3;
             }
             flt();
-            if (const auto item = itemcreate_extra_inv(547, 15, 19, 0))
+            if (const auto item = itemcreate_map_inv(547, 15, 19, 0))
             {
                 item->count = 4;
             }
             flt();
-            if (const auto item = itemcreate_extra_inv(579, 9, 8, 0))
+            if (const auto item = itemcreate_map_inv(579, 9, 8, 0))
             {
                 item->count = 6;
             }
             flt();
-            if (const auto item = itemcreate_extra_inv(24, 18, 19, 0))
+            if (const auto item = itemcreate_map_inv(24, 18, 19, 0))
             {
                 item->param1 = 1;
             }
@@ -1064,7 +1064,7 @@ static void _init_map_your_home()
     else
     {
         flt();
-        itemcreate_extra_inv(219, cdata.player().position, 0);
+        itemcreate_map_inv(219, cdata.player().position, 0);
     }
     initialize_home_mdata();
 }
@@ -2696,7 +2696,7 @@ static void _init_map_fields_forest()
     {
         flt();
         flttypemajor = 80000;
-        if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
+        if (const auto item = itemcreate_map_inv(0, -1, -1, 0))
         {
             item->own_state = 1;
             cell_data.at(item->pos().x, item->pos().y).chip_id_actual = 0;
@@ -2728,7 +2728,7 @@ static void _init_map_fields_grassland()
     {
         flt();
         flttypemajor = 80000;
-        if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
+        if (const auto item = itemcreate_map_inv(0, -1, -1, 0))
         {
             item->own_state = 1;
         }
@@ -2748,7 +2748,7 @@ static void _init_map_fields_desert()
     for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
     {
         flt();
-        if (const auto item = itemcreate_extra_inv(527, -1, -1, 0))
+        if (const auto item = itemcreate_map_inv(527, -1, -1, 0))
         {
             item->own_state = 1;
         }
@@ -2772,7 +2772,7 @@ static void _init_map_fields_snow_field()
         flt();
         flttypemajor = 80000;
         fltselect = 8;
-        if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
+        if (const auto item = itemcreate_map_inv(0, -1, -1, 0))
         {
             item->own_state = 1;
         }
@@ -2794,7 +2794,7 @@ static void _init_map_fields_plain_field()
     {
         flt();
         flttypemajor = 80000;
-        if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
+        if (const auto item = itemcreate_map_inv(0, -1, -1, 0))
         {
             item->own_state = 1;
         }
@@ -2970,7 +2970,7 @@ static void _init_map_fields()
         {
             flt();
             flttypeminor = 64000;
-            itemcreate_extra_inv(0, -1, -1, 0);
+            itemcreate_map_inv(0, -1, -1, 0);
         }
     }
 

@@ -17,6 +17,7 @@
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
@@ -269,7 +270,7 @@ void chara_vomit(Character& chara)
         if (rnd_capped(p * p * p) == 0 || chara.index == 0)
         {
             flt();
-            if (const auto item = itemcreate_extra_inv(704, chara.position, 0))
+            if (const auto item = itemcreate_map_inv(704, chara.position, 0))
             {
                 if (chara.index != 0)
                 {
@@ -440,7 +441,7 @@ void food_cook(Character& cook, const ItemRef& cook_tool, const ItemRef& food)
 
     make_dish(food, dish_rank);
     txt(i18n::s.get("core.food.cook", item_name_prev, cook_tool, food));
-    item_stack(0, food, true);
+    inv_stack(g_inv.pc(), food, true);
     const auto rank = food->param2;
     if (rank > 2)
     {
@@ -1213,7 +1214,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         {
             flt(calcobjlv(eater.level));
             flttypeminor = 58500;
-            if (const auto item = itemcreate_extra_inv(0, eater.position, 0))
+            if (const auto item = itemcreate_map_inv(0, eater.position, 0))
             {
                 txt(i18n::s.get(
                         "core.food.effect.bomb_fish", eater, item.unwrap()),

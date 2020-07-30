@@ -322,7 +322,7 @@ void activity_perform_generate_item(
         cell_data.at(x, y).item_info_actual;
     const auto item_info_memory_before_tip_generation =
         cell_data.at(x, y).item_info_memory;
-    if (const auto item = itemcreate_extra_inv(item_id, x, y, 1))
+    if (const auto item = itemcreate_map_inv(item_id, x, y, 1))
     {
         // Save drawing information of the cell *after* tip generation.
         const auto item_info_actual_after_tip_generation =
@@ -759,6 +759,190 @@ void activity_others_start(
 
 
 
+void activity_others_doing_steal(Character& doer, const ItemRef& steal_target)
+{
+    if (steal_target->id == ItemId::iron_maiden)
+    {
+        if (rnd(15) == 0)
+        {
+            doer.activity.finish();
+            txt(i18n::s.get("core.activity.iron_maiden"));
+            damage_hp(doer, 9999, -18);
+            return;
+        }
+    }
+    if (steal_target->id == ItemId::guillotine)
+    {
+        if (rnd(15) == 0)
+        {
+            doer.activity.finish();
+            txt(i18n::s.get("core.activity.guillotine"));
+            damage_hp(doer, 9999, -19);
+            return;
+        }
+    }
+
+    f = 0;
+    f2 = 0;
+    auto steal_target_owner = item_get_owner(steal_target);
+    if (const auto owner = steal_target_owner.as_character())
+    {
+        if (owner->original_relationship == -3)
+        {
+            f2 = 1;
+        }
+    }
+    i = sdata(300, 0) * 5 + sdata(12, 0) + 25;
+    if (game_data.date.hour >= 19 || game_data.date.hour < 7)
+    {
+        i = i * 15 / 10;
+    }
+    if (steal_target->quality == Quality::great)
+    {
+        i = i * 8 / 10;
+    }
+    if (steal_target->quality >= Quality::miracle)
+    {
+        i = i * 5 / 10;
+    }
+    make_sound(cdata.player().position.x, cdata.player().position.y, 5, 8);
+    for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    {
+        if (cdata[cnt].state() != Character::State::alive)
+        {
+            continue;
+        }
+        if (cdata[cnt].sleep != 0)
+        {
+            continue;
+        }
+        if (dist(cdata[cnt].position, cdata.player().position) > 5)
+        {
+            continue;
+        }
+        if (f2 == 1)
+        {
+            if (cnt != steal_target_owner.as_character()->index)
+            {
+                continue;
+            }
+        }
+        p = rnd_capped(i + 1) *
+            (80 + (is_in_fov(cdata[cnt]) == 0) * 50 +
+             dist(cdata[cnt].position, cdata.player().position) * 20) /
+            100;
+        if (cnt < 57)
+        {
+            p = p * 2 / 3;
+        }
+        if (rnd_capped(sdata(13, cnt) + 1) > p)
+        {
+            if (is_in_fov(cdata[cnt]))
+            {
+                txt(i18n::s.get(
+                    "core.activity.steal.notice.in_fov", cdata[cnt]));
+            }
+            else
+            {
+                txt(i18n::s.get(
+                    "core.activity.steal.notice.out_of_fov", cdata[cnt]));
+            }
+            if (cdata[cnt].role == Role::guard)
+            {
+                txt(i18n::s.get("core.activity.steal.notice.dialog.guard"));
+                chara_modify_impression(cdata[cnt], -5);
+            }
+            else
+            {
+                txt(i18n::s.get("core.activity.steal.notice.dialog.other"));
+                chara_modify_impression(cdata[cnt], -5);
+            }
+            cdata[cnt].emotion_icon = 520;
+            f = 1;
+        }
+    }
+    if (f)
+    {
+        txt(i18n::s.get("core.activity.steal.notice.you_are_found"));
+        modify_karma(cdata.player(), -5);
+        if (const auto owner = steal_target_owner.as_character())
+        {
+            if (owner->id != CharaId::ebon)
+            {
+                if (owner->sleep == 0)
+                {
+                    owner->relationship = -2;
+                    hostileaction(0, owner->index);
+                    chara_modify_impression(*owner, -20);
+                }
+            }
+        }
+        go_hostile();
+    }
+    if (const auto owner = steal_target_owner.as_character())
+    {
+        if (owner->state() != Character::State::alive)
+        {
+            if (f != 1)
+            {
+                txt(i18n::s.get("core.activity.steal.target_is_dead"));
+                f = 1;
+            }
+        }
+        if (owner->role == Role::user)
+        {
+            if (f != 1)
+            {
+                txt(i18n::s.get("core.activity.steal.cannot_be_stolen"));
+                f = 1;
+            }
+        }
+        if (dist(doer.position, owner->position) >= 3)
+        {
+            if (f != 1)
+            {
+                txt(i18n::s.get("core.activity.steal.you_lose_the_target"));
+                f = 0;
+            }
+        }
+    }
+    if (steal_target->number() <= 0)
+    {
+        f = 1;
+    }
+    if (steal_target->is_precious())
+    {
+        if (f != 1)
+        {
+            txt(i18n::s.get("core.activity.steal.cannot_be_stolen"));
+            f = 1;
+        }
+    }
+    if (steal_target->weight >= sdata(10, 0) * 500)
+    {
+        if (f != 1)
+        {
+            txt(i18n::s.get("core.activity.steal.it_is_too_heavy"));
+            f = 1;
+        }
+    }
+    if (itemusingfind(steal_target, true) != -1)
+    {
+        if (f != 1)
+        {
+            txt(i18n::s.get("core.action.someone_else_is_using"));
+            f = 1;
+        }
+    }
+    if (f)
+    {
+        txt(i18n::s.get("core.activity.steal.abort"));
+        doer.activity.finish();
+    }
+}
+
+
+
 void activity_others_doing(
     Character& doer,
     const OptionalItemRef& activity_item)
@@ -827,184 +1011,7 @@ void activity_others_doing(
     }
     case 105:
         assert(activity_item);
-        if (activity_item->id == ItemId::iron_maiden)
-        {
-            if (rnd(15) == 0)
-            {
-                doer.activity.finish();
-                txt(i18n::s.get("core.activity.iron_maiden"));
-                damage_hp(doer, 9999, -18);
-                return;
-            }
-        }
-        if (activity_item->id == ItemId::guillotine)
-        {
-            if (rnd(15) == 0)
-            {
-                doer.activity.finish();
-                txt(i18n::s.get("core.activity.guillotine"));
-                damage_hp(doer, 9999, -19);
-                return;
-            }
-        }
-        f = 0;
-        f2 = 0;
-        tg = inv_getowner(activity_item.unwrap());
-        if (tg != -1)
-        {
-            if (cdata[tg].original_relationship == -3)
-            {
-                f2 = 1;
-            }
-        }
-        i = sdata(300, 0) * 5 + sdata(12, 0) + 25;
-        if (game_data.date.hour >= 19 || game_data.date.hour < 7)
-        {
-            i = i * 15 / 10;
-        }
-        if (activity_item->quality == Quality::great)
-        {
-            i = i * 8 / 10;
-        }
-        if (activity_item->quality >= Quality::miracle)
-        {
-            i = i * 5 / 10;
-        }
-        make_sound(cdata.player().position.x, cdata.player().position.y, 5, 8);
-        for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
-        {
-            if (cdata[cnt].state() != Character::State::alive)
-            {
-                continue;
-            }
-            if (cdata[cnt].sleep != 0)
-            {
-                continue;
-            }
-            if (dist(cdata[cnt].position, cdata.player().position) > 5)
-            {
-                continue;
-            }
-            if (f2 == 1)
-            {
-                if (cnt != tg)
-                {
-                    continue;
-                }
-            }
-            p = rnd_capped(i + 1) *
-                (80 + (is_in_fov(cdata[cnt]) == 0) * 50 +
-                 dist(cdata[cnt].position, cdata.player().position) * 20) /
-                100;
-            if (cnt < 57)
-            {
-                p = p * 2 / 3;
-            }
-            if (rnd_capped(sdata(13, cnt) + 1) > p)
-            {
-                if (is_in_fov(cdata[cnt]))
-                {
-                    txt(i18n::s.get(
-                        "core.activity.steal.notice.in_fov", cdata[cnt]));
-                }
-                else
-                {
-                    txt(i18n::s.get(
-                        "core.activity.steal.notice.out_of_fov", cdata[cnt]));
-                }
-                if (cdata[cnt].role == Role::guard)
-                {
-                    txt(i18n::s.get("core.activity.steal.notice.dialog.guard"));
-                    chara_modify_impression(cdata[cnt], -5);
-                }
-                else
-                {
-                    txt(i18n::s.get("core.activity.steal.notice.dialog.other"));
-                    chara_modify_impression(cdata[cnt], -5);
-                }
-                cdata[cnt].emotion_icon = 520;
-                f = 1;
-            }
-        }
-        if (f)
-        {
-            txt(i18n::s.get("core.activity.steal.notice.you_are_found"));
-            modify_karma(cdata.player(), -5);
-            p = inv_getowner(activity_item.unwrap());
-            if (tg != -1)
-            {
-                if (cdata[p].id != CharaId::ebon)
-                {
-                    if (cdata[tg].sleep == 0)
-                    {
-                        cdata[tg].relationship = -2;
-                        hostileaction(0, tg);
-                        chara_modify_impression(cdata[tg], -20);
-                    }
-                }
-            }
-            go_hostile();
-        }
-        if (tg != -1)
-        {
-            if (cdata[tg].state() != Character::State::alive)
-            {
-                if (f != 1)
-                {
-                    txt(i18n::s.get("core.activity.steal.target_is_dead"));
-                    f = 1;
-                }
-            }
-            if (cdata[tg].role == Role::user)
-            {
-                if (f != 1)
-                {
-                    txt(i18n::s.get("core.activity.steal.cannot_be_stolen"));
-                    f = 1;
-                }
-            }
-            if (dist(doer.position, cdata[tg].position) >= 3)
-            {
-                if (f != 1)
-                {
-                    txt(i18n::s.get("core.activity.steal.you_lose_the_target"));
-                    f = 0;
-                }
-            }
-        }
-        if (activity_item->number() <= 0)
-        {
-            f = 1;
-        }
-        if (activity_item->is_precious())
-        {
-            if (f != 1)
-            {
-                txt(i18n::s.get("core.activity.steal.cannot_be_stolen"));
-                f = 1;
-            }
-        }
-        if (activity_item->weight >= sdata(10, 0) * 500)
-        {
-            if (f != 1)
-            {
-                txt(i18n::s.get("core.activity.steal.it_is_too_heavy"));
-                f = 1;
-            }
-        }
-        if (itemusingfind(activity_item.unwrap(), true) != -1)
-        {
-            if (f != 1)
-            {
-                txt(i18n::s.get("core.action.someone_else_is_using"));
-                f = 1;
-            }
-        }
-        if (f)
-        {
-            txt(i18n::s.get("core.activity.steal.abort"));
-            doer.activity.finish();
-        }
+        activity_others_doing_steal(doer, activity_item.unwrap());
         break;
     default: break;
     }
@@ -1014,13 +1021,14 @@ void activity_others_doing(
 
 void activity_others_end_steal(const ItemRef& steal_target)
 {
-    tg = inv_getowner(steal_target);
-    if ((tg != -1 && cdata[tg].state() != Character::State::alive) ||
-        steal_target->number() <= 0)
+    const auto owner = item_get_owner(steal_target).as_character();
+    if ((owner && owner->state() != Character::State::alive) ||
+        steal_target->number() == 0)
     {
         txt(i18n::s.get("core.activity.steal.abort"));
         return;
     }
+
     in = 1;
     if (steal_target->id == ItemId::gold_piece)
     {
@@ -1037,14 +1045,11 @@ void activity_others_end_steal(const ItemRef& steal_target)
     steal_target->is_quest_target() = false;
     if (steal_target->body_part != 0)
     {
-        const auto item_owner = inv_getowner(steal_target);
-        if (item_owner != -1)
-        {
-            p = steal_target->body_part;
-            cdata[item_owner].equipment_slots[p - 100].unequip();
-        }
+        auto& item_owner = *item_get_owner(steal_target).as_character();
+        p = steal_target->body_part;
+        item_owner.equipment_slots[p - 100].unequip();
         steal_target->body_part = 0;
-        chara_refresh(cdata[item_owner]);
+        chara_refresh(item_owner);
     }
 
     const auto stolen_item = item_separate(steal_target, slot, in);
@@ -1060,7 +1065,7 @@ void activity_others_end_steal(const ItemRef& steal_target)
     }
     else
     {
-        item_stack(0, stolen_item, true);
+        inv_stack(g_inv.pc(), stolen_item, true);
         sound_pick_up();
     }
     refresh_burden_state();
@@ -1506,7 +1511,7 @@ void activity_sex(Character& chara_a, optional_ref<Character> chara_b)
         {
             chara_modify_impression(cdata[target_index], 5);
             flt();
-            itemcreate_extra_inv(54, chara_a.position, sexvalue);
+            itemcreate_map_inv(54, chara_a.position, sexvalue);
             dialog_after +=
                 i18n::s.get("core.common.something_is_put_on_the_ground");
             modify_karma(cdata.player(), -1);
@@ -1865,11 +1870,11 @@ void spot_digging(Character& chara)
                 msg_halt();
                 snd("core.ding2");
                 flt();
-                itemcreate_extra_inv(622, cdata.player().position, 2 + rnd(3));
+                itemcreate_map_inv(622, cdata.player().position, 2 + rnd(3));
                 flt();
-                itemcreate_extra_inv(55, cdata.player().position, 1 + rnd(3));
+                itemcreate_map_inv(55, cdata.player().position, 1 + rnd(3));
                 flt();
-                itemcreate_extra_inv(
+                itemcreate_map_inv(
                     54, cdata.player().position, rnd(10000) + 2000);
                 for (int i = 0; i < 4; ++i)
                 {
@@ -1880,7 +1885,7 @@ void spot_digging(Character& chara)
                         fixlv = Quality::godly;
                     }
                     flttypemajor = choice(fsetchest);
-                    itemcreate_extra_inv(0, cdata.player().position, 0);
+                    itemcreate_map_inv(0, cdata.player().position, 0);
                 }
                 txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
                 save_set_autosave();
@@ -1994,7 +1999,7 @@ void spot_mining_or_wall(Character& chara)
                 game_data.current_map == mdata_t::MapId::your_home)
             {
                 flt();
-                if (const auto item = itemcreate_extra_inv(208, digx, digy, 0))
+                if (const auto item = itemcreate_map_inv(208, digx, digy, 0))
                 {
                     item->curse_state = CurseState::cursed;
                 }
@@ -2007,14 +2012,14 @@ void spot_mining_or_wall(Character& chara)
                 if (rtval > 0)
                 {
                     flt();
-                    itemcreate_extra_inv(rtval, digx, digy, 0);
+                    itemcreate_map_inv(rtval, digx, digy, 0);
                 }
                 else if (rtval == -1)
                 {
                     flt(calcobjlv(game_data.current_dungeon_level),
                         calcfixlv(Quality::good));
                     flttypemajor = 77000;
-                    itemcreate_extra_inv(0, digx, digy, 0);
+                    itemcreate_map_inv(0, digx, digy, 0);
                 }
                 txt(i18n::s.get("core.activity.dig_mining.finish.find"));
             }

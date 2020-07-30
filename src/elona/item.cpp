@@ -15,7 +15,6 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "crafting.hpp"
-#include "ctrl_file.hpp"
 #include "data/types/type_fish.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_material.hpp"
@@ -253,6 +252,7 @@ AllInventory::AllInventory()
         _inventories.emplace_back(20, static_cast<int>(i));
     }
     _inventories.emplace_back(400, -1);
+    _inventories.emplace_back(400, 255);
 }
 
 
@@ -275,6 +275,16 @@ Inventory& AllInventory::pc()
 
 Inventory& AllInventory::ground()
 {
+    auto itr = _inventories.end();
+    --itr;
+    --itr;
+    return *itr;
+}
+
+
+
+Inventory& AllInventory::tmp()
+{
     return _inventories.back();
 }
 
@@ -292,6 +302,10 @@ Inventory& AllInventory::by_index(int index)
     if (index == -1)
     {
         return ground();
+    }
+    else if (index == 255)
+    {
+        return tmp();
     }
     else
     {
@@ -321,7 +335,9 @@ AllInventory::iterator_pair_type AllInventory::map_local()
 {
     auto begin = _inventories.begin();
     std::advance(begin, 57);
-    return {begin, _inventories.end()};
+    auto end = _inventories.end();
+    --end;
+    return {begin, end};
 }
 
 
@@ -355,7 +371,7 @@ OptionalItemRef item_find_internal(ItemFindLocation location_type, F predicate)
 OptionalItemRef item_find(ItemId id, ItemFindLocation location_type)
 {
     return item_find_internal(location_type, [&](const auto& item, auto& inv) {
-        if (inv.inventory_id() == -1)
+        if (inv_get_owner(inv).is_map())
         {
             if (item->pos() != cdata.player().position)
             {
@@ -371,7 +387,7 @@ OptionalItemRef item_find(ItemId id, ItemFindLocation location_type)
 OptionalItemRef item_find(ItemCategory category, ItemFindLocation location_type)
 {
     return item_find_internal(location_type, [&](const auto& item, auto& inv) {
-        if (inv.inventory_id() == -1)
+        if (inv_get_owner(inv).is_map())
         {
             if (item->pos() != cdata.player().position)
             {
@@ -563,9 +579,11 @@ void Item::set_number(int new_number)
     if (number_ == new_number)
         return;
 
-    const auto needs_cell_refresh =
-        inventory()->inventory_id() == -1 && mode != 6;
-    const auto needs_refresh_burden_state = inventory()->inventory_id() == 0;
+    auto inv_owner = inv_get_owner(*inventory());
+    const auto inv_owner_chara = inv_owner.as_character();
+    const auto needs_cell_refresh = inv_owner.is_map();
+    const auto needs_refresh_burden_state =
+        inv_owner_chara && inv_owner_chara->index;
 
     if (number_ == 0)
     {
@@ -639,8 +657,7 @@ ItemRef item_separate(const ItemRef& stacked_item)
         return stacked_item;
     }
 
-    auto slot_opt =
-        inv_make_free_slot(g_inv.by_index(inv_getowner(stacked_item)));
+    auto slot_opt = inv_make_free_slot(*stacked_item->inventory());
     if (!slot_opt)
     {
         slot_opt = inv_make_free_slot(g_inv.ground());
@@ -655,16 +672,16 @@ ItemRef item_separate(const ItemRef& stacked_item)
     const auto dst =
         item_separate(stacked_item, slot, stacked_item->number() - 1);
 
-    if (inv_getowner(dst) == -1 && mode != 6)
+    if (item_is_on_ground(dst))
     {
-        if (inv_getowner(stacked_item) != -1)
+        if (const auto owner = item_get_owner(stacked_item).as_character())
         {
-            stacked_item->set_pos(cdata[inv_getowner(stacked_item)].position);
+            stacked_item->set_pos(owner->position);
         }
         dst->set_pos(stacked_item->pos());
         itemturn(dst);
         cell_refresh(dst->pos().x, dst->pos().y);
-        if (inv_getowner(stacked_item) != -1)
+        if (!item_is_on_ground(stacked_item))
         {
             txt(i18n::s.get("core.item.something_falls_from_backpack"));
         }
@@ -682,13 +699,16 @@ bool chara_unequip(const ItemRef& item)
         return false;
 
     int body_part = item->body_part;
-    int owner = inv_getowner(item);
-    if (owner == -1)
+    if (const auto owner = item_get_owner(item).as_character())
+    {
+        owner->equipment_slots[body_part - 100].unequip();
+        item->body_part = 0;
+        return true;
+    }
+    else
+    {
         return false;
-
-    cdata[owner].equipment_slots[body_part - 100].unequip();
-    item->body_part = 0;
-    return true;
+    }
 }
 
 
@@ -1607,54 +1627,6 @@ void remain_make(const ItemRef& remain, const Character& chara)
 
 
 
-ItemStackResult item_stack(
-    int inventory_id,
-    const ItemRef& base_item,
-    bool show_message,
-    optional<int> number)
-{
-    if (base_item->quality == Quality::special &&
-        is_equipment(the_item_db[itemid2int(base_item->id)]->category))
-    {
-        return {false, base_item};
-    }
-
-    for (const auto& item : g_inv.by_index(inventory_id))
-    {
-        if (item == base_item || item->id != base_item->id)
-            continue;
-
-        bool stackable;
-        if (item->id == ItemId::small_medal)
-        {
-            stackable = inventory_id != -1 || mode == 6 ||
-                item->pos() == base_item->pos();
-        }
-        else
-        {
-            stackable = item->almost_equals(
-                *base_item.get_raw_ptr(), inventory_id != -1 || mode == 6);
-        }
-
-        if (stackable)
-        {
-            const auto num = number.value_or(base_item->number());
-            item->modify_number(num);
-            base_item->modify_number(-num);
-
-            if (show_message)
-            {
-                txt(i18n::s.get("core.item.stacked", item, item->number()));
-            }
-            return {true, item};
-        }
-    }
-
-    return {false, base_item};
-}
-
-
-
 void item_dump_desc(const ItemRef& item)
 {
     reftype = (int)the_item_db[itemid2int(item->id)]->category;
@@ -1727,10 +1699,11 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
         list.emplace_back(burned_item.unwrap());
     }
 
-    if (inv.inventory_id() != -1)
+    auto inv_owner = inv_get_owner(inv);
+    if (const auto owner = inv_owner.as_character())
     {
-        if (sdata(50, inv.inventory_id()) / 50 >= 6 ||
-            cdata[inv.inventory_id()].quality >= Quality::miracle)
+        if (sdata(50, owner->index) / 50 >= 6 ||
+            owner->quality >= Quality::miracle)
         {
             return false;
         }
@@ -1774,7 +1747,7 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
         const auto category = the_item_db[itemid2int(item->id)]->category;
         if (category == ItemCategory::food && item->param2 == 0)
         {
-            if (inv.inventory_id() == -1)
+            if (inv_owner.is_map())
             {
                 if (is_in_fov(item->pos()))
                 {
@@ -1785,12 +1758,13 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
             }
             else
             {
-                if (is_in_fov(cdata[inv.inventory_id()]))
+                assert(inv_owner.is_character());
+                if (is_in_fov(*inv_owner.as_character()))
                 {
                     txt(i18n::s.get(
                             "core.item.item_on_the_ground_get_broiled",
                             item,
-                            cdata[inv.inventory_id()]),
+                            *inv_owner.as_character()),
                         Message::color{ColorIndex::gold});
                 }
             }
@@ -1823,7 +1797,7 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
             {
                 continue;
             }
-            if (inv.inventory_id() != -1)
+            if (inv_owner.is_character())
             {
                 if (rnd(4))
                 {
@@ -1834,13 +1808,14 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
 
         if (blanket)
         {
+            assert(inv_owner.is_character());
             item_separate(blanket.unwrap());
-            if (is_in_fov(cdata[inv.inventory_id()]))
+            if (is_in_fov(*inv_owner.as_character()))
             {
                 txt(i18n::s.get(
                     "core.item.fireproof_blanket_protects_item",
                     blanket.unwrap(),
-                    cdata[inv.inventory_id()]));
+                    *inv_owner.as_character()));
             }
             if (blanket->count > 0)
             {
@@ -1849,7 +1824,7 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
             else if (rnd(20) == 0)
             {
                 blanket->modify_number(-1);
-                if (is_in_fov(cdata[inv.inventory_id()]))
+                if (is_in_fov(*inv_owner.as_character()))
                 {
                     txt(i18n::s.get(
                         "core.item.fireproof_blanket_turns_to_dust",
@@ -1861,32 +1836,30 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
         }
 
         int p_ = rnd_capped(item->number()) / 2 + 1;
-        if (inv.inventory_id() != -1)
+        if (const auto owner = inv_owner.as_character())
         {
             if (item->body_part != 0)
             {
-                if (is_in_fov(cdata[inv.inventory_id()]))
+                if (is_in_fov(*owner))
                 {
                     txt(i18n::s.get(
                             "core.item.item_someone_equips_turns_to_dust",
                             itemname(item, p_),
                             p_,
-                            cdata[inv.inventory_id()]),
+                            *owner),
                         Message::color{ColorIndex::purple});
                 }
-                cdata[inv.inventory_id()]
-                    .equipment_slots[item->body_part - 100]
-                    .unequip();
+                owner->equipment_slots[item->body_part - 100].unequip();
                 item->body_part = 0;
-                chara_refresh(cdata[inv.inventory_id()]);
+                chara_refresh(*owner);
             }
-            else if (is_in_fov(cdata[inv.inventory_id()]))
+            else if (is_in_fov(*owner))
             {
                 txt(i18n::s.get(
                         "core.item.someones_item_turns_to_dust",
                         itemname(item, p_, false),
                         p_,
-                        cdata[inv.inventory_id()]),
+                        *owner),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -1954,10 +1927,12 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
     {
         list.emplace_back(destroyed_item.unwrap());
     }
-    if (inv.inventory_id() != -1)
+
+    auto inv_owner = inv_get_owner(inv);
+    if (const auto owner = inv_owner.as_character())
     {
-        if (sdata(51, inv.inventory_id()) / 50 >= 6 ||
-            cdata[inv.inventory_id()].quality >= Quality::miracle)
+        if (sdata(51, owner->index) / 50 >= 6 ||
+            owner->quality >= Quality::miracle)
         {
             return false;
         }
@@ -2015,13 +1990,14 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
         }
         if (blanket)
         {
+            assert(inv_owner.is_character());
             item_separate(blanket.unwrap());
-            if (is_in_fov(cdata[inv.inventory_id()]))
+            if (is_in_fov(*inv_owner.as_character()))
             {
                 txt(i18n::s.get(
                     "core.item.coldproof_blanket_protects_item",
                     blanket.unwrap(),
-                    cdata[inv.inventory_id()]));
+                    *inv_owner.as_character()));
             }
             if (blanket->count > 0)
             {
@@ -2030,7 +2006,7 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
             else if (rnd(20) == 0)
             {
                 blanket->modify_number(-1);
-                if (is_in_fov(cdata[inv.inventory_id()]))
+                if (is_in_fov(*inv_owner.as_character()))
                 {
                     txt(i18n::s.get(
                         "core.item.coldproof_blanket_is_broken_to_pieces",
@@ -2041,15 +2017,15 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
             continue;
         }
         int p_ = rnd_capped(item->number()) / 2 + 1;
-        if (inv.inventory_id() != -1)
+        if (const auto owner = inv_owner.as_character())
         {
-            if (is_in_fov(cdata[inv.inventory_id()]))
+            if (is_in_fov(*owner))
             {
                 txt(i18n::s.get(
                         "core.item.someones_item_breaks_to_pieces",
                         itemname(item, p_, false),
                         p_,
-                        cdata[inv.inventory_id()]),
+                        *owner),
                     Message::color{ColorIndex::purple});
             }
         }
@@ -2094,9 +2070,16 @@ void mapitem_cold(int x, int y)
 
 
 
-int inv_getowner(const ItemRef& item)
+ItemOwner item_get_owner(const ItemRef& item)
 {
-    return item->inventory()->inventory_id();
+    return inv_get_owner(*item->inventory());
+}
+
+
+
+bool item_is_on_ground(const ItemRef& item)
+{
+    return item_get_owner(item).is_map();
 }
 
 
@@ -2138,7 +2121,8 @@ void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
         }
     }
 
-    const auto stacked_item = item_stack(-1, dropped_item).stacked_item;
+    const auto stacked_item =
+        inv_stack(g_inv.ground(), dropped_item).stacked_item;
 
     refresh_burden_state();
     cell_refresh(stacked_item->pos().x, stacked_item->pos().y);
@@ -2282,24 +2266,6 @@ void auto_identify()
 
 
 
-void begintempinv()
-{
-    ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
-    for (const auto& item : g_inv.ground())
-    {
-        item->remove();
-    }
-}
-
-
-
-void exittempinv()
-{
-    ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
-}
-
-
-
 bool cargocheck(const ItemRef& item)
 {
     if (!the_item_db[itemid2int(item->id)]->is_cargo)
@@ -2327,7 +2293,7 @@ bool cargocheck(const ItemRef& item)
 
 ItemRef item_convert_artifact(
     const ItemRef& artifact,
-    bool ignore_external_container)
+    bool ignore_map_inventory)
 {
     if (!is_equipment(the_item_db[itemid2int(artifact->id)]->category))
     {
@@ -2362,7 +2328,7 @@ ItemRef item_convert_artifact(
             break;
         }
     }
-    if (!found && !ignore_external_container)
+    if (!found && !ignore_map_inventory)
     {
         for (const auto& item : g_inv.ground())
         {
@@ -2378,14 +2344,20 @@ ItemRef item_convert_artifact(
         return artifact; // is unique.
     }
 
+    // Save some properties to avoid use-after-free.
     const auto original_item_name = itemname(artifact);
+    const auto artifact_id = artifact->id;
+    const auto artifact_pos = artifact->pos();
+    auto artifact_inv = artifact->inventory();
+
     artifact->remove();
+
     while (true)
     {
-        flt(the_item_db[itemid2int(artifact->id)]->level, Quality::miracle);
-        flttypeminor = the_item_db[itemid2int(artifact->id)]->subcategory;
+        flt(the_item_db[itemid2int(artifact_id)]->level, Quality::miracle);
+        flttypeminor = the_item_db[itemid2int(artifact_id)]->subcategory;
         if (const auto converted_item =
-                itemcreate(inv_getowner(artifact), 0, artifact->pos(), 0))
+                itemcreate(*artifact_inv, 0, artifact_pos, 0))
         {
             if (converted_item->quality != Quality::special)
             {
@@ -2462,9 +2434,9 @@ void dipcursed(const ItemRef& item)
     {
         --item->enhancement;
         txt(i18n::s.get("core.action.dip.rusts", item));
-        if (inv_getowner(item) != -1)
+        if (const auto owner = item_get_owner(item).as_character())
         {
-            chara_refresh(cdata[inv_getowner(item)]);
+            chara_refresh(*owner);
         }
     }
     else

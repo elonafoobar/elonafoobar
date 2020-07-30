@@ -14,7 +14,6 @@
 #include "command.hpp"
 #include "config.hpp"
 #include "crafting.hpp"
-#include "ctrl_file.hpp"
 #include "data/types/type_asset.hpp"
 #include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
@@ -1181,7 +1180,7 @@ bool _magic_412(Character& subject, Character& target)
             {
                 ++p(1);
                 item->curse_state = CurseState::none;
-                item_stack(target.index, item, true);
+                inv_stack(g_inv.for_chara(target), item, true);
             }
             else
             {
@@ -2131,7 +2130,7 @@ bool _magic_645_1114(Character& subject, Character& target)
         chara_refresh(target);
         snd("core.curse3");
         animeload(14, target);
-        item_stack(target.index, cursed_item, true);
+        inv_stack(g_inv.for_chara(target), cursed_item, true);
     }
     else
     {
@@ -3476,7 +3475,7 @@ bool _magic_464(Character& subject, Character& target)
         }
         nostack = 1;
         if (const auto item =
-                itemcreate_extra_inv(item_id, subject.position, number))
+                itemcreate_map_inv(item_id, subject.position, number))
         {
             const auto message =
                 i18n::s.get("core.magic.wizards_harvest", item.unwrap());
@@ -3505,22 +3504,11 @@ bool _magic_464(Character& subject, Character& target)
 // 4-Dimentional Pocket
 bool _magic_463()
 {
+    const auto pocket_file_name = "shop8.s2";
+
     snd("core.teleport1");
     txt(i18n::s.get("core.magic.four_dimensional_pocket"));
-    invfile = 8;
-    ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
-    if (save_fs_exists(u8"shop"s + invfile + u8".s2"))
-    {
-        ctrl_file(
-            FileOperation2::map_items_read, u8"shop"s + invfile + u8".s2");
-    }
-    else
-    {
-        for (const auto& item : g_inv.ground())
-        {
-            item->remove();
-        }
-    }
+    inv_open_tmp_inv(pocket_file_name);
     shoptrade = 0;
     menucycle = 1;
     invsubroutine = 1;
@@ -3531,8 +3519,7 @@ bool _magic_463()
     snd("core.inv");
     ctrl_inventory();
     invcontainer = 0;
-    ctrl_file(FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
-    ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
+    inv_close_tmp_inv(pocket_file_name);
     mode = 0;
     return true;
 }

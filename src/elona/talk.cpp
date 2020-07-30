@@ -295,7 +295,7 @@ TalkResult talk_game_begin(Character& initial_speaker)
         snd("core.kill1");
         spillblood(28, 6, 10);
         flt();
-        itemcreate_extra_inv(705, 28, 6, 0);
+        itemcreate_map_inv(705, 28, 6, 0);
         update_screen();
         await(500);
         await(500);

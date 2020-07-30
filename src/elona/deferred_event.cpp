@@ -207,22 +207,22 @@ void eh_conquer_nefia(const DeferredEvent&)
     snd("core.complete1");
     flt(0, calcfixlv());
     flttypemajor = 54000;
-    itemcreate_extra_inv(0, cdata.player().position, 0);
+    itemcreate_map_inv(0, cdata.player().position, 0);
     flt();
-    itemcreate_extra_inv(236, cdata.player().position, 0);
+    itemcreate_map_inv(236, cdata.player().position, 0);
     nostack = 1;
     flt();
-    if (const auto item = itemcreate_extra_inv(54, cdata.player().position, 0))
+    if (const auto item = itemcreate_map_inv(54, cdata.player().position, 0))
     {
         item->set_number(200 + item->number() * 5);
     }
     flt();
-    itemcreate_extra_inv(
+    itemcreate_map_inv(
         55,
         cdata.player().position,
         clamp(rnd(3) + game_data.current_dungeon_level / 10, 1, 6));
     flt();
-    if (const auto item = itemcreate_extra_inv(239, cdata.player().position, 0))
+    if (const auto item = itemcreate_map_inv(239, cdata.player().position, 0))
     {
         item->param2 = 0;
     }
@@ -362,11 +362,11 @@ void eh_marriage(const DeferredEvent&)
     {
         flt(calcobjlv(cdata[marry].level + 5), calcfixlv(Quality::good));
         flttypemajor = choice(fsetchest);
-        itemcreate_extra_inv(0, cdata.player().position, 0);
+        itemcreate_map_inv(0, cdata.player().position, 0);
     }
-    itemcreate_extra_inv(559, cdata.player().position, 0);
+    itemcreate_map_inv(559, cdata.player().position, 0);
     flt();
-    itemcreate_extra_inv(55, cdata.player().position, rnd(3) + 2);
+    itemcreate_map_inv(55, cdata.player().position, rnd(3) + 2);
     txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
     save_set_autosave();
 }
@@ -588,7 +588,7 @@ void eh_lily_killed(const DeferredEvent& event)
     cdata[event.param1].role = Role::none;
     cdata[event.param1].set_state(Character::State::empty);
     flt();
-    itemcreate_extra_inv(55, cdata[event.param1].position, 4);
+    itemcreate_map_inv(55, cdata[event.param1].position, 4);
     game_data.quest_flags.pael_and_her_mom = 1001;
     if (const auto pael = chara_find("core.pael"))
     {

@@ -73,7 +73,7 @@ sol::optional<ItemRef> Item_create_xy(int x, int y, sol::table args)
     // body for some reason.
 #ifndef ELONA_DOCGEN
     int id = 0;
-    int slot = -1;
+    Inventory* inv = nullptr;
     int number = 0;
     objlv = 0;
     fixlv = Quality::none;
@@ -93,9 +93,13 @@ sol::optional<ItemRef> Item_create_xy(int x, int y, sol::table args)
         number = *it;
     }
 
-    if (auto it = args.get<sol::optional<int>>("slot"))
+    if (auto it = args.get<sol::optional<Inventory*>>("inventory"))
     {
-        slot = *it;
+        inv = *it;
+    }
+    if (!inv)
+    {
+        inv = &g_inv.ground();
     }
 
     // Random objlv
@@ -151,7 +155,7 @@ sol::optional<ItemRef> Item_create_xy(int x, int y, sol::table args)
         id = data.legacy_id;
     }
 
-    if (const auto item = itemcreate(slot, id, x, y, number))
+    if (const auto item = itemcreate(*inv, id, x, y, number))
     {
         return item.unwrap();
     }
@@ -249,41 +253,6 @@ int Item_memory(int type, const std::string& id)
 
 
 /**
- * @luadoc stack
- *
- * Stacks an item in the inventory indicated. The item will no longer be valid
- * for use.
- *
- * @tparam num inventory_id
- * @tparam LuaItem item
- * @treturn[1] LuaItem The modified item stack on success
- * @treturn[2] nil
- */
-sol::optional<ItemRef> Item_stack(
-    int inventory_id,
-    const ItemRef& item,
-    sol::optional<bool> show_message)
-{
-    if (inventory_id < -1 || inventory_id > ELONA_MAX_CHARACTERS)
-    {
-        return sol::nullopt;
-    }
-
-    const auto stack_result =
-        item_stack(inventory_id, item, show_message.value_or(false));
-    if (stack_result.stacked)
-    {
-        return stack_result.stacked_item;
-    }
-    else
-    {
-        return sol::nullopt;
-    }
-}
-
-
-
-/**
  * @luadoc trade_rate
  *
  * Returns the trading rate of a cargo item.
@@ -348,64 +317,6 @@ std::string Item_weight_string(int weight)
 
 
 
-/**
- * @luadoc has_free_slot
- *
- * Queries whether the inventory has at least one free slot.
- *
- * @tparam num inventory_id The inventory ID
- * @treturn True if the inventory has at least one free slot; false if not.
- */
-bool Item_has_free_slot(int inventory_id)
-{
-    return g_inv.by_index(inventory_id).has_free_slot();
-}
-
-
-
-/**
- * @luadoc player_inventory
- *
- * Gets the player's inventory.
- *
- * @treturn The player's inventory.
- */
-sol::table Item_player_inventory(sol::this_state state)
-{
-    sol::state_view L = state;
-
-    sol::table ret = L.create_table();
-    for (const auto& item : g_inv.pc())
-    {
-        ret.add(item);
-    }
-    return ret;
-}
-
-
-
-/**
- * @luadoc map_inventory
- *
- * Gets the map inventory. It contains all items on the ground in the current
- * map.
- *
- * @treturn The map inventory.
- */
-sol::table Item_map_inventory(sol::this_state state)
-{
-    sol::state_view L = state;
-
-    sol::table ret = L.create_table();
-    for (const auto& item : g_inv.ground())
-    {
-        ret.add(item);
-    }
-    return ret;
-}
-
-
-
 void bind(sol::table api_table)
 {
     /* clang-format off */
@@ -415,13 +326,9 @@ void bind(sol::table api_table)
     ELONA_LUA_API_BIND_FUNCTION("itemname", Item_itemname);
     ELONA_LUA_API_BIND_FUNCTION("create", Item_create, Item_create_xy, Item_create_with_id, Item_create_with_id_xy, Item_create_with_number, Item_create_with_number_xy);
     ELONA_LUA_API_BIND_FUNCTION("memory", Item_memory);
-    ELONA_LUA_API_BIND_FUNCTION("stack", Item_stack);
     ELONA_LUA_API_BIND_FUNCTION("trade_rate", Item_trade_rate);
     ELONA_LUA_API_BIND_FUNCTION("find", Item_find);
     ELONA_LUA_API_BIND_FUNCTION("weight_string", Item_weight_string);
-    ELONA_LUA_API_BIND_FUNCTION("has_free_slot", Item_has_free_slot);
-    ELONA_LUA_API_BIND_FUNCTION("player_inventory", Item_player_inventory);
-    ELONA_LUA_API_BIND_FUNCTION("map_inventory", Item_map_inventory);
 
     /* clang-format on */
 }

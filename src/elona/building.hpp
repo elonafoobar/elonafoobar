@@ -10,6 +10,7 @@ namespace elona
 {
 
 enum class TurnResult;
+struct Inventory;
 struct Item;
 
 

@@ -1316,7 +1316,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
     if (item_info_memory.is_empty())
         return;
 
-    if (mode == 6 || mode == 9)
+    if (mode == 9)
         return; // TODO
 
     const auto stack_count = item_info_memory.stack_count();

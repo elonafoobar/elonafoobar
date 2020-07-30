@@ -15,6 +15,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/interface.hpp"
@@ -777,7 +778,7 @@ void blendig_menu_select_materials()
             p = list(0, p);
             s = itemname(g_inv[p]);
             s = strutil::take_by_width(s, 28);
-            if (inv_getowner(g_inv[p]) == -1)
+            if (item_is_on_ground(g_inv[p]))
             {
                 s += i18n::s.get("core.blending.steps.ground");
             }
@@ -992,7 +993,7 @@ void blending_proc_on_success_events()
     auto on_success_args = lua::create_table("materials", materials);
     the_blending_recipe_db.ensure(rpid).on_success.call(on_success_args);
 
-    item_stack(0, item1);
+    inv_stack(g_inv.pc(), item1);
     if (item1->body_part != 0)
     {
         create_pcpic(cdata.player());

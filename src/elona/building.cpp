@@ -449,6 +449,8 @@ void addbuilding(int related_town_quest_id, int building_type, int x, int y)
     bddata(3, related_town_quest_id, slot) = bdref(0, building_type) + 363;
 }
 
+
+
 TurnResult show_house_board()
 {
     Message::instance().linebreak();
@@ -1060,29 +1062,16 @@ void show_shop_log()
     if (game_data.current_map != area)
     {
         ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
-    }
-    else
-    {
-        ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
+        ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
     }
 
-    if (save_fs_exists(u8"shop5.s2"))
-    {
-        ctrl_file(FileOperation2::map_items_read, u8"shop5.s2");
-    }
-    else
-    {
-        for (const auto& item : g_inv.ground())
-        {
-            item->remove();
-        }
-    }
+    inv_open_tmp_inv("shop5.s2");
     mode = 6;
 
     if (total_profit != 0)
     {
         flt();
-        itemcreate_extra_inv(54, -1, -1, total_profit);
+        itemcreate_tmp_inv(54, total_profit);
     }
 
     int num_of_exchanged_items = 0;
@@ -1095,11 +1084,11 @@ void show_shop_log()
             flt(sold_item.level, sold_item.quality);
             flttypemajor = static_cast<int>(sold_item.category);
             nostack = 1;
-            if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
+            if (const auto item = itemcreate_tmp_inv(0, 0))
             {
                 if (item->value > sold_item.total_price * 2)
                 {
-                    item_stack(-1, item.unwrap());
+                    inv_stack(g_inv.tmp(), item.unwrap());
                     generated = true;
                     break;
                 }
@@ -1119,7 +1108,7 @@ void show_shop_log()
         }
         else
         {
-            itemcreate_extra_inv(54, -1, -1, sold_item.total_price);
+            itemcreate_tmp_inv(54, sold_item.total_price);
             total_profit += sold_item.total_price;
         }
     }
@@ -1165,8 +1154,7 @@ void show_shop_log()
     }
 
     mode = 0;
-    ctrl_file(FileOperation2::map_items_write, u8"shop5.s2");
-    ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
+    inv_close_tmp_inv("shop5.s2");
 }
 
 
@@ -1174,13 +1162,14 @@ void show_shop_log()
 void update_shop()
 {
     map_data.max_crowd_density = (100 - game_data.ranks.at(5) / 100) / 4 + 1;
-    for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
+    for (int y = 0; y < map_data.height; ++y)
     {
-        y = cnt;
-        for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
+        for (int x = 0; x < map_data.width; ++x)
         {
-            cell_data.at(cnt, y).item_info_actual.clear();
-            cell_data.at(cnt, y).light = 0;
+            cell_data.at(x, y).item_info_actual.clear();
+            // TODO phantom_ref
+            cell_data.at(x, y).item_info_memory.clear();
+            cell_data.at(x, y).light = 0;
         }
     }
     for (const auto& item : g_inv.ground())
@@ -1228,6 +1217,8 @@ void calc_collection_value(int chara_id, bool val0)
         }
     }
 }
+
+
 
 void update_museum()
 {
@@ -1456,7 +1447,7 @@ void update_ranch()
                     (chara.race == "core.chicken" && rnd(20) == 0))
                 {
                     ++egg_or_milk_count;
-                    if (const auto item = itemcreate_extra_inv(573, x, y, 0))
+                    if (const auto item = itemcreate_map_inv(573, x, y, 0))
                     {
                         item->subname = charaid2int(chara.id);
                         item->weight = chara.weight * 10 + 250;
@@ -1471,7 +1462,7 @@ void update_ranch()
                     (chara.race == "core.sheep" && rnd(20) == 0))
                 {
                     ++egg_or_milk_count;
-                    if (const auto item = itemcreate_extra_inv(574, x, y, 0))
+                    if (const auto item = itemcreate_map_inv(574, x, y, 0))
                     {
                         item->subname = charaid2int(chara.id);
                     }
@@ -1481,7 +1472,7 @@ void update_ranch()
                 // Shit
                 if (rnd(80) == 0)
                 {
-                    if (const auto item = itemcreate_extra_inv(575, x, y, 0))
+                    if (const auto item = itemcreate_map_inv(575, x, y, 0))
                     {
                         item->subname = charaid2int(chara.id);
                         item->weight = chara.weight * 40 + 300;
@@ -1499,7 +1490,7 @@ void update_ranch()
                     {
                         item_id = 45;
                     }
-                    itemcreate_extra_inv(item_id, x, y, 0);
+                    itemcreate_map_inv(item_id, x, y, 0);
                 }
                 break;
             case 4:
@@ -1559,18 +1550,7 @@ int calcincome(int rank_id)
 void supply_income()
 {
     invfile = 4;
-    ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
-    if (save_fs_exists(u8"shop4.s2"s))
-    {
-        ctrl_file(FileOperation2::map_items_read, u8"shop4.s2"s);
-    }
-    else
-    {
-        for (const auto& item : g_inv.ground())
-        {
-            item->remove();
-        }
-    }
+    inv_open_tmp_inv("shop4.s2");
     mode = 6;
     income(0) = 0;
     income(1) = 0;
@@ -1584,7 +1564,7 @@ void supply_income()
             rnd_capped(calcincome(cnt) / 3 + 1);
         income += p;
         flt();
-        itemcreate_extra_inv(54, -1, -1, p);
+        itemcreate_tmp_inv(54, p);
         if (cnt == 5 || cnt == 6)
         {
             continue;
@@ -1610,7 +1590,7 @@ void supply_income()
             {
                 item_id = 559;
             }
-            itemcreate_extra_inv(item_id, -1, -1, 0);
+            itemcreate_tmp_inv(item_id, 0);
             ++income(1);
         }
     }
@@ -1623,7 +1603,7 @@ void supply_income()
         }
         income += p;
         flt();
-        itemcreate_extra_inv(54, -1, -1, p);
+        itemcreate_tmp_inv(54, p);
     }
     if (income != 0 || income(1) != 0)
     {
@@ -1648,12 +1628,12 @@ void supply_income()
         if (cdata.player().level > 5)
         {
             save_set_autosave();
-            if (!g_inv.ground().has_free_slot())
+            if (!g_inv.tmp().has_free_slot())
             {
-                inv_compress(g_inv.ground());
+                inv_compress(g_inv.tmp());
             }
             flt();
-            if (const auto item = itemcreate_extra_inv(615, -1, -1, 0))
+            if (const auto item = itemcreate_tmp_inv(615, 0))
             {
                 item->subname =
                     game_data.cost_to_hire + calccostbuilding() + calccosttax();
@@ -1701,8 +1681,7 @@ void supply_income()
             txt(i18n::s.get("core.misc.tax.no_duty"));
         }
     }
-    ctrl_file(FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
-    ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
+    inv_close_tmp_inv("shop4.s2");
     mode = 0;
     maybe_show_ex_help(16);
 }
@@ -1862,7 +1841,7 @@ void create_harvested_item()
     if (const auto item = itemcreate_player_inv(item_id, 0))
     {
         txt(i18n::s.get("core.action.plant.harvest", item.unwrap()));
-        item_stack(0, item.unwrap(), true);
+        inv_stack(g_inv.pc(), item.unwrap(), true);
     }
 }
 

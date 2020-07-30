@@ -119,6 +119,13 @@ bool exclude_ground_items(int invctrl)
 
 
 
+bool refers_to_tmp_inventory(int invctrl)
+{
+    return invctrl == 11 || invctrl == 22 || invctrl == 28;
+}
+
+
+
 bool exclude_character_items(int invctrl)
 {
     return invctrl == 3 || invctrl == 11 || invctrl == 22 || invctrl == 28;
@@ -180,7 +187,7 @@ void remove_card_and_figure_from_heir_trunk()
 {
     if (invctrl == 22 && invctrl(1) == 1)
     {
-        for (const auto& item : g_inv.ground())
+        for (const auto& item : g_inv.tmp())
         {
             if (item->id == ItemId::card || item->id == ItemId::figurine)
             {
@@ -248,29 +255,39 @@ void make_item_list(
     // cnt = 1 => PC/NPC
     for (int cnt = 0; cnt < 2; ++cnt)
     {
+        Inventory* inv;
         if (cnt == 0)
         {
-            p = -1;
             if (exclude_ground_items(invctrl(0)))
             {
                 continue;
             }
+            if (refers_to_tmp_inventory(invctrl(0)))
+            {
+                inv = &g_inv.tmp();
+            }
+            else
+            {
+                inv = &g_inv.ground();
+            }
         }
         if (cnt == 1)
         {
-            p = 0;
+            inv = &g_inv.pc();
             if (invctrl == 20 || invctrl == 25)
             {
                 assert(inventory_owner);
-                p = inventory_owner->index;
+                inv = &g_inv.for_chara(*inventory_owner);
             }
             if (invctrl == 27)
             {
-                p = cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
-                if (p == 0 || p == -1)
+                const auto target_chara_index =
+                    cell_data.at(tlocx, tlocy).chara_index_plus_one - 1;
+                if (target_chara_index == 0 || target_chara_index == -1)
                 {
                     continue;
                 }
+                inv = &g_inv.for_chara(cdata[target_chara_index]);
             }
             if (exclude_character_items(invctrl(0)))
             {
@@ -279,7 +296,7 @@ void make_item_list(
         }
         int cnt2 = cnt;
 
-        for (const auto& item : g_inv.by_index(p))
+        for (const auto& item : *inv)
         {
             // compatibility?
             if (item->id == ItemId::training_machine)
@@ -1197,7 +1214,7 @@ void draw_item_list(const OptionalItemRef& mainweapon)
         if (invctrl != 3 && invctrl != 11 && invctrl != 22 && invctrl != 27 &&
             invctrl != 28)
         {
-            if (inv_getowner(g_inv[p]) == -1)
+            if (item_is_on_ground(g_inv[p]))
             {
                 s += i18n::space_if_needed() + "(" +
                     i18n::s.get("core.ui.inv.window.ground") + ")";
@@ -1382,7 +1399,7 @@ OnEnterResult on_enter_external_inventory(
     {
         if (invctrl(1) == 3 || invctrl(1) == 5)
         {
-            if (inv_count(g_inv.ground()) >= invcontainer)
+            if (inv_count(g_inv.tmp()) >= invcontainer)
             {
                 snd("core.fail1");
                 txt(i18n::s.get("core.ui.inv.put.container.full"));
@@ -1539,18 +1556,12 @@ OnEnterResult on_enter_external_inventory(
             }
         }
     }
-    int inventory_id;
-    if (invctrl == 12 || (invctrl == 24 && invctrl(1) != 0))
-    {
-        inventory_id = -1;
-    }
-    else
-    {
-        inventory_id = 0;
-    }
-    int stat = pick_up_item(
-                   g_inv.by_index(inventory_id), selected_item, inventory_owner)
-                   .type;
+    auto& destination_inventory =
+        (invctrl == 12 || (invctrl == 24 && invctrl(1) != 0)) ? g_inv.tmp()
+                                                              : g_inv.pc();
+    int stat =
+        pick_up_item(destination_inventory, selected_item, inventory_owner)
+            .type;
     if (stat == 0)
     {
         return OnEnterResult{1};
@@ -1878,7 +1889,7 @@ OnEnterResult on_enter_give(
         }
         const auto handed_over_item = item_separate(selected_item, slot, 1);
         const auto stacked_item =
-            item_stack(inventory_owner.index, handed_over_item, true)
+            inv_stack(g_inv.for_chara(inventory_owner), handed_over_item, true)
                 .stacked_item;
         chara_set_ai_item(inventory_owner, stacked_item);
         wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
@@ -1923,7 +1934,7 @@ OnEnterResult on_enter_identify(
     {
         txt(i18n::s.get("core.ui.inv.identify.fully", selected_item));
     }
-    item_stack(0, selected_item, true);
+    inv_stack(g_inv.pc(), selected_item, true);
     refresh_burden_state();
     invsubroutine = 0;
     result.succeeded = true;
@@ -2223,7 +2234,7 @@ OnEnterResult on_enter_receive(
     {
         const auto received_item = item_separate(selected_item, slot, in);
         const auto stacked_item =
-            item_stack(0, received_item, true).stacked_item;
+            inv_stack(g_inv.pc(), received_item, true).stacked_item;
         item_convert_artifact(stacked_item);
     }
     wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
@@ -2307,7 +2318,8 @@ OnEnterResult on_enter_small_medal(const ItemRef& selected_item)
     snd("core.paygold1");
     const auto received_item = item_copy(selected_item, slot);
     txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", received_item));
-    const auto stacked_item = item_stack(0, received_item, true).stacked_item;
+    const auto stacked_item =
+        inv_stack(g_inv.pc(), received_item, true).stacked_item;
     item_convert_artifact(stacked_item, true);
     return OnEnterResult{1};
 }

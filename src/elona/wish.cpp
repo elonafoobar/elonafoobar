@@ -278,7 +278,7 @@ void wish_for_card()
     chara_create(56, select_wished_character(inputlog), -3, 0);
     nooracle = 0;
     flt();
-    if (const auto item = itemcreate_extra_inv(504, cdata.player().position, 0))
+    if (const auto item = itemcreate_map_inv(504, cdata.player().position, 0))
     {
         item->subname = charaid2int(cdata.tmp().id);
         item->param1 = cdata.tmp().image;
@@ -297,7 +297,7 @@ void wish_for_figure()
     chara_create(56, select_wished_character(inputlog), -3, 0);
     nooracle = 0;
     flt();
-    if (const auto item = itemcreate_extra_inv(503, cdata.player().position, 0))
+    if (const auto item = itemcreate_map_inv(503, cdata.player().position, 0))
     {
         item->subname = charaid2int(cdata.tmp().id);
         item->param1 = cdata.tmp().image;
@@ -459,7 +459,7 @@ bool grant_special_wishing(const std::string& wish)
         txt(i18n::s.get("core.wish.wish_gold"),
             Message::color{ColorIndex::orange});
         flt();
-        itemcreate_extra_inv(
+        itemcreate_map_inv(
             54,
             cdata.player().position,
             (cdata.player().level / 3 + 1) * 10000);
@@ -472,14 +472,14 @@ bool grant_special_wishing(const std::string& wish)
         txt(i18n::s.get("core.wish.wish_small_medal"),
             Message::color{ColorIndex::orange});
         flt();
-        itemcreate_extra_inv(622, cdata.player().position, 3 + rnd(3));
+        itemcreate_map_inv(622, cdata.player().position, 3 + rnd(3));
     }
     else if (match_special_wish(wish, "platinum", {"platinum", "platina"}))
     {
         txt(i18n::s.get("core.wish.wish_platinum"),
             Message::color{ColorIndex::orange});
         flt();
-        itemcreate_extra_inv(55, cdata.player().position, 5);
+        itemcreate_map_inv(55, cdata.player().position, 5);
     }
     else if (game_data.wizard)
     {
@@ -593,7 +593,7 @@ bool wish_for_item(Character& chara, const std::string& input)
 
         nostack = 1;
         nooracle = 1;
-        auto item = itemcreate_extra_inv(id, chara.position, 0);
+        auto item = itemcreate_map_inv(id, chara.position, 0);
         nooracle = 0;
 
         if (!item)
@@ -625,7 +625,7 @@ bool wish_for_item(Character& chara, const std::string& input)
         {
             item->remove();
             flt();
-            if (const auto well = itemcreate_extra_inv(516, chara.position, 3))
+            if (const auto well = itemcreate_map_inv(516, chara.position, 3))
             {
                 well->curse_state = CurseState::blessed;
                 txt(i18n::s.get("core.wish.it_is_sold_out"));

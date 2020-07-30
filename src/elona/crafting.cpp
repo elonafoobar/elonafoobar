@@ -8,6 +8,7 @@
 #include "draw.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "message.hpp"
@@ -400,7 +401,7 @@ static void _craft_item(int matid, const CraftingRecipe& recipe)
     if (const auto item = itemcreate_player_inv(matid, 0))
     {
         txt(i18n::s.get("core.crafting.you_crafted", item.unwrap()));
-        item_stack(0, item.unwrap());
+        inv_stack(g_inv.pc(), item.unwrap());
     }
 }
 

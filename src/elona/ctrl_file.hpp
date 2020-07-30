@@ -44,4 +44,7 @@ enum class FileOperation2
 void ctrl_file(FileOperation file_operation);
 void ctrl_file(FileOperation2 file_operation, const fs::path& filepath);
 
+void ctrl_file_tmp_inv_read(const fs::path& file_name);
+void ctrl_file_tmp_inv_write(const fs::path& file_name);
+
 } // namespace elona

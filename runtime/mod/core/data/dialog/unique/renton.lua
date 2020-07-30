@@ -2,13 +2,14 @@ local Chara = ELONA.require("core.Chara")
 local GUI = ELONA.require("core.GUI")
 local I18N = ELONA.require("core.I18N")
 local Internal = ELONA.require("core.Internal")
+local Inventory = ELONA.require("core.Inventory")
 local Item = ELONA.require("core.Item")
 
 local common = require("../common.lua")
 
 local function take_books()
    local taken_books = {}
-   for _, item in ipairs(Item.player_inventory()) do
+   for _, item in ipairs(Inventory.player():as_table()) do
       if item.id == "core.book_of_rachel" and item.param2 >= 1 and item.param2 <= 4 then
          if not taken_books[item.param2] then
             item.number = item.number - 1
@@ -56,7 +57,7 @@ return {
 
          local found_books = {}
          local total_books = 0
-         for _, item in ipairs(Item.player_inventory()) do
+         for _, item in ipairs(Inventory.player():as_table()) do
             if item.id == "core.book_of_rachel" and item.param2 >= 1 and item.param2 <= 4 then
                if not found_books[item.param2] then
                   total_books = total_books + 1
