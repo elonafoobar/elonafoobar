@@ -1853,47 +1853,43 @@ void turn_aggro(int chara_index, int target_index, int hate)
 
 
 void make_sound(
-    int source_x,
-    int source_y,
+    Character& source_chara,
     int distance_threshold,
     int waken,
-    int may_make_angry,
-    int source_chara_index)
+    bool may_make_angry)
 {
-    for (int cnt = 1; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    const auto& source_pos = source_chara.position;
+
+    for (auto&& chara : cdata.all())
     {
-        if (cdata[cnt].state() != Character::State::alive)
-        {
+        if (chara.state() != Character::State::alive)
             continue;
-        }
-        if (dist(source_x, source_y, cdata[cnt].position) < distance_threshold)
+        if (chara.is_player())
+            continue;
+        if (distance_threshold <= dist(source_pos, chara.position))
+            continue;
+        if (chara.sleep == 0)
+            continue;
+
+        if (rnd(waken) == 0)
         {
-            if (rnd(waken) == 0)
+            chara.sleep = 0;
+            if (is_in_fov(chara))
             {
-                if (cdata[cnt].sleep != 0)
+                txt(i18n::s.get("core.misc.sound.waken", chara));
+            }
+            chara.emotion_icon = 221;
+            if (may_make_angry)
+            {
+                if (rnd(500) == 0)
                 {
-                    cdata[cnt].sleep = 0;
-                    if (is_in_fov(cdata[cnt]))
+                    if (is_in_fov(chara))
                     {
-                        txt(i18n::s.get("core.misc.sound.waken", cdata[cnt]));
+                        txt(i18n::s.get("core.misc.sound.get_anger", chara),
+                            Message::color{ColorIndex::cyan});
+                        txt(i18n::s.get("core.misc.sound.can_no_longer_stand"));
                     }
-                    cdata[cnt].emotion_icon = 221;
-                    if (may_make_angry)
-                    {
-                        if (rnd(500) == 0)
-                        {
-                            if (is_in_fov(cdata[cnt]))
-                            {
-                                txt(i18n::s.get(
-                                        "core.misc.sound.get_anger",
-                                        cdata[cnt]),
-                                    Message::color{ColorIndex::cyan});
-                                txt(i18n::s.get(
-                                    "core.misc.sound.can_no_longer_stand"));
-                            }
-                            turn_aggro(cnt, source_chara_index, 80);
-                        }
-                    }
+                    turn_aggro(chara.index, source_chara.index, 80);
                 }
             }
         }

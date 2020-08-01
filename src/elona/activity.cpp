@@ -562,13 +562,7 @@ void activity_perform_doing(Character& performer)
     if (performer.activity.turn % 20 == 0)
     {
         int gold = 0;
-        make_sound(
-            performer.position.x,
-            performer.position.y,
-            5,
-            1,
-            1,
-            performer.index);
+        make_sound(performer, 5, 1, true);
         for (auto&& audience : cdata.all())
         {
             const auto result =
@@ -814,7 +808,7 @@ void activity_others_doing_steal(Character& doer, const ItemRef& steal_target)
     {
         i = i * 5 / 10;
     }
-    make_sound(cdata.player().position.x, cdata.player().position.y, 5, 8);
+    make_sound(cdata.player(), 5, 8, false);
     for (int cnt = 16; cnt < ELONA_MAX_CHARACTERS; ++cnt)
     {
         if (cdata[cnt].state() != Character::State::alive)

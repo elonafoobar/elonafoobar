@@ -2753,13 +2753,7 @@ TurnResult do_use_command(ItemRef use_item)
     case 39:
         txt(i18n::s.get("core.action.use.whistle.use"),
             Message::color{ColorIndex::cyan});
-        make_sound(
-            cdata.player().position.x,
-            cdata.player().position.y,
-            10,
-            1,
-            1,
-            cdata.player().index);
+        make_sound(cdata.player(), 10, 1, true);
         break;
     case 37:
         tcgdeck();

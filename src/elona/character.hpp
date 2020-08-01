@@ -810,7 +810,11 @@ void chara_act_hostile_action(Character& attacker, Character& target);
 void turn_aggro(int = 0, int = 0, int = 0);
 void ride_begin(int = 0);
 void ride_end();
-void make_sound(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
+void make_sound(
+    Character& source_chara,
+    int distance_threshold,
+    int waken,
+    bool may_make_angry);
 void incognitobegin();
 void incognitoend();
 void initialize_pc_character();
