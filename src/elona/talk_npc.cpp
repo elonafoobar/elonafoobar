@@ -1829,7 +1829,7 @@ TalkResult talk_npc(Character& speaker)
         {
             if (speaker.relationship != 10)
             {
-                if (speaker.index >= 16)
+                if (!speaker.is_player_or_ally())
                 {
                     if (rnd(3) == 0)
                     {
@@ -1909,7 +1909,7 @@ TalkResult talk_npc(Character& speaker)
                 57, i18n::s.get("core.talk.npc.horse_keeper.choices.buy"));
         }
     }
-    if (speaker.index < 16)
+    if (speaker.is_player_or_ally())
     {
         if (speaker.is_escorted() == 0)
         {
@@ -2099,7 +2099,7 @@ TalkResult talk_npc(Character& speaker)
     {
         if (game_data.current_map != mdata_t::MapId::show_house)
         {
-            if (speaker.index >= 16)
+            if (!speaker.is_player_or_ally())
             {
                 if (!event_has_pending_events())
                 {
@@ -2239,7 +2239,7 @@ TalkResult talk_npc(Character& speaker)
     }
     if (game_data.current_map == mdata_t::MapId::your_home)
     {
-        if (speaker.index >= 57)
+        if (speaker.is_map_local())
         {
             if (speaker.role != Role::none)
             {

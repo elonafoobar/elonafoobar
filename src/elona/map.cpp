@@ -1687,7 +1687,7 @@ TurnResult exit_map()
         }
         cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one =
             0;
-        if (chara.index != 0)
+        if (!chara.is_player())
         {
             if (chara.current_map != 0)
             {
@@ -2186,7 +2186,7 @@ void map_global_proc_travel_events(Character& chara)
 
 void sense_map_feats_on_move(Character& chara)
 {
-    if (chara.index != 0)
+    if (!chara.is_player())
         return;
 
     game_data.player_x_on_map_leave = -1;

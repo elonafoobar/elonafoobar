@@ -9,14 +9,14 @@ module "Chara"
 --  @function is_alive
 function is_alive(chara) end
 
---- Checks if a character is the player (has index 0).
+--- Checks if a character is the player.
 --
 --  @tparam LuaCharacter chara (const) a character
 --  @treturn bool true if the character is the player
 --  @function is_player
 function is_player(chara) end
 
---- Checks if a character is a member of the player's party (has index < 16)
+--- Checks if a character is a member of the player's party.
 --
 --  @tparam LuaCharacter chara (const) a character
 --  @treturn bool true if the character is in the player's party

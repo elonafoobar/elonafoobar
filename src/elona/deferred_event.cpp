@@ -1019,13 +1019,13 @@ void eh_guest_visit(const DeferredEvent&)
             {
                 if (cell_data.at(item->pos().x, item->pos().y)
                             .chara_index_plus_one == 0 ||
-                    chara.index == 0 || chara.index == guest->index)
+                    chara.is_player() || chara.index == guest->index)
                 {
                     chair = item;
                     distance_to_guest_chair = d;
                 }
             }
-            if (chara.index == 0 && item->param1 == 1)
+            if (chara.is_player() && item->param1 == 1)
             {
                 chair = item;
                 break;
@@ -1040,7 +1040,7 @@ void eh_guest_visit(const DeferredEvent&)
             chara.position.y,
             guest->position.x,
             guest->position.y);
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             game_data.player_next_move_direction = chara.direction;
         }

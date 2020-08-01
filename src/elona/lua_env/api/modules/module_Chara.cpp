@@ -56,7 +56,7 @@ bool Chara_is_alive(
 /**
  * @luadoc is_player
  *
- * Checks if a character is the player (has index 0).
+ * Checks if a character is the player.
  *
  * @tparam LuaCharacter chara (const) a character
  * @treturn bool true if the character is the player
@@ -64,7 +64,7 @@ bool Chara_is_alive(
 bool Chara_is_player(LuaCharacterHandle chara)
 {
     auto& chara_ref = lua::ref<Character>(chara);
-    return chara_ref.index == 0;
+    return chara_ref.is_player();
 }
 
 
@@ -72,7 +72,7 @@ bool Chara_is_player(LuaCharacterHandle chara)
 /**
  * @luadoc is_ally
  *
- * Checks if a character is a member of the player's party (has index < 16)
+ * Checks if a character is a member of the player's party.
  *
  * @tparam LuaCharacter chara (const) a character
  * @treturn bool true if the character is in the player's party
@@ -80,7 +80,7 @@ bool Chara_is_player(LuaCharacterHandle chara)
 bool Chara_is_ally(LuaCharacterHandle chara)
 {
     auto& chara_ref = lua::ref<Character>(chara);
-    return 0 < chara_ref.index && chara_ref.index < 16;
+    return chara_ref.is_ally();
 }
 
 

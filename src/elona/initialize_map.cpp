@@ -596,7 +596,7 @@ void _refresh_map_character(Character& cnt)
 {
     cnt.was_passed_item_by_you_just_now() = false;
 
-    if (cnt.index < 57)
+    if (cnt.is_global())
     {
         if (mode == 11)
         {
@@ -621,11 +621,11 @@ void _refresh_map_character(Character& cnt)
 
     _level_up_if_guard(cnt);
 
-    if (cnt.index >= 57)
+    if (cnt.is_map_local())
     {
         _refresh_map_character_other(cnt);
     }
-    if (cnt.index == 0 || game_data.mount != cnt.index)
+    if (cnt.is_player() || game_data.mount != cnt.index)
     {
         if (_position_blocked(cnt))
         {
@@ -1019,7 +1019,7 @@ void _notify_distance_traveled()
         {
             continue;
         }
-        if (chara.index != 0 && chara.current_map)
+        if (!chara.is_player() && chara.current_map)
         {
             continue;
         }

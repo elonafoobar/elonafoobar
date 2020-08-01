@@ -355,7 +355,7 @@ void highlight_characters_in_pet_arena()
     {
         if (chara.state() != Character::State::alive)
             continue;
-        if (chara.index == 0)
+        if (chara.is_player())
             continue;
         snail::Color color{0};
         if (chara.relationship == 10)

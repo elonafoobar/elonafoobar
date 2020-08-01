@@ -412,7 +412,7 @@ int itemusingfind(const ItemRef& item, bool disallow_pc)
         if (chara.activity && chara.activity.type != Activity::Type::sex &&
             chara.activity.turn > 0 && chara.activity.item == item)
         {
-            if (!disallow_pc || chara.index != 0)
+            if (!disallow_pc || !chara.is_player())
             {
                 return chara.index;
             }
@@ -2513,7 +2513,7 @@ void equip_melee_weapon(Character& chara)
                     weapon));
             }
         }
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             if (game_data.mount != 0)
             {

@@ -494,7 +494,7 @@ int calc_accuracy(
 
     if (game_data.mount != 0)
     {
-        if (attacker.index == 0)
+        if (attacker.is_player())
         {
             accuracy = accuracy * 100 /
                 clamp((150 - attacker.get_skill(301).level / 2), 115, 150);
@@ -712,7 +712,7 @@ int calcattackdmg(
         }
         dmgmulti += 0.03 * attacker.get_skill(167).level;
     }
-    if (attacker.index == 0)
+    if (attacker.is_player())
     {
         if (trait(207))
         {
@@ -801,7 +801,7 @@ int calcattackdmg(
         }
     }
     damage = damagenormal + damagepierce;
-    if (attacker.index == 0)
+    if (attacker.is_player())
     {
         if (trait(164) != 0)
         {
@@ -1350,11 +1350,11 @@ int calc_spell_power(const Character& caster, int id)
         }
         return 100;
     }
-    if (caster.index == 0)
+    if (caster.is_player())
     {
         return caster.get_skill(id).level * 10 + 50;
     }
-    if (caster.get_skill(172).level == 0 && caster.index >= 16)
+    if (caster.get_skill(172).level == 0 && !caster.is_player_or_ally())
     {
         return caster.level * 6 + 10;
     }
@@ -1370,7 +1370,7 @@ int calc_spell_success_rate(const Character& caster, int id)
         return 100;
     }
 
-    if (caster.index != 0)
+    if (!caster.is_player())
     {
         if (game_data.mount == caster.index)
         {
@@ -1454,7 +1454,7 @@ int calc_spell_cost_mp(const Character& caster, int id)
     if (debug::voldemort)
         return 1;
 
-    if (caster.index == 0)
+    if (caster.is_player())
     {
         if (id == 413 || id == 461 || id == 457 || id == 438 || id == 409 ||
             id == 408 || id == 410 || id == 466)
@@ -1670,7 +1670,7 @@ int calc_initial_resistance_level(
     int initial_level,
     int element_id)
 {
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         return 100;
     }

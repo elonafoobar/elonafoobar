@@ -1066,7 +1066,7 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
         }
         if (action_ == "portrait")
         {
-            if (_chara.index < 16)
+            if (_chara.is_player_or_ally())
             {
                 menu_change_appearance(_chara);
                 if (_operation != CharacterSheetOperation::character_making)

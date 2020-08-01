@@ -228,7 +228,7 @@ void _search_surroundings(Character& chara)
 
 void _proc_manis_disassembly(Character& chara)
 {
-    if (feat(1) == 14 && feat(0) == tile_trap && chara.index == 0 &&
+    if (feat(1) == 14 && feat(0) == tile_trap && chara.is_player() &&
         chara.god_id == core_god::mani)
     {
         disarm_trap(chara, chara.position.x, chara.position.y);
@@ -899,7 +899,7 @@ TurnResult do_throw_command_internal(
     Character& thrower,
     const ItemRef& throw_item)
 {
-    if (thrower.index == 0)
+    if (thrower.is_player())
     {
         refresh_burden_state();
     }
@@ -2133,7 +2133,7 @@ TurnResult do_use_command(ItemRef use_item)
         int chara = -1;
         // Are there any of your pets around you?
         const auto alone = !any_of_characters_around_you(
-            [](const auto& chara) { return chara.index < 16; });
+            [](const auto& chara) { return chara.is_player_or_ally(); });
         if (alone)
         {
             chara = 0;
@@ -2178,16 +2178,13 @@ TurnResult do_use_command(ItemRef use_item)
         magic(cdata.player(), cdata.player(), std::move(use_item));
         break;
     case 14:
-        if (cdata.player().index == 0)
+        if (use_item->number() < 5)
         {
-            if (use_item->number() < 5)
-            {
-                txt(i18n::s.get("core.action.use.snow.need_more"));
-                update_screen();
-                return TurnResult::pc_turn_user_error;
-            }
-            use_item->modify_number(-5);
+            txt(i18n::s.get("core.action.use.snow.need_more"));
+            update_screen();
+            return TurnResult::pc_turn_user_error;
         }
+        use_item->modify_number(-5);
         flt();
         itemcreate_map_inv(541, cdata.player().position, 0);
         if (is_in_fov(cdata.player()))
@@ -3345,7 +3342,7 @@ TurnResult do_read_command(Character& reader, const ItemRef& item)
 
 TurnResult do_eat_command(Character& eater, const ItemRef& food)
 {
-    if (eater.index == 0)
+    if (eater.is_player())
     {
         if (!cargocheck(food))
         {
@@ -3832,7 +3829,7 @@ int try_to_cast_spell(Character& caster, int& enemy_index)
         {
             txt(i18n::s.get("core.misc.fail_to_cast.mana_is_absorbed", caster));
         }
-        if (caster.index == 0)
+        if (caster.is_player())
         {
             damage_mp(caster, caster.max_mp);
         }
@@ -3913,7 +3910,7 @@ int can_evade_trap(Character& chara)
     {
         return 0;
     }
-    if (chara.index < 16)
+    if (chara.is_player_or_ally())
     {
         if (rnd_capped(refdiff + 1) <
             chara.get_skill(13).level + chara.get_skill(159).level * 4)
@@ -4409,7 +4406,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
     efsource = 3;
     efstatus = CurseState::none;
     efp = calc_spell_power(caster, efid);
-    if (caster.index == 0)
+    if (caster.is_player())
     {
         if (calc_spell_cost_mp(caster, efid) > caster.mp)
         {
@@ -4432,7 +4429,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
         efsource = 0;
         return 0;
     }
-    if (caster.index != 0)
+    if (!caster.is_player())
     {
         if (the_ability_db[efid]->ability_type == 7)
         {
@@ -4450,7 +4447,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
         }
     }
 
-    if (caster.index == 0)
+    if (caster.is_player())
     {
         spell(efid - 400) -= calc_spell_cost_stock(caster, efid);
         if (spell(efid - 400) < 0)
@@ -4459,7 +4456,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
         }
     }
     mp = calc_spell_cost_mp(caster, efid);
-    if (caster.index == 0)
+    if (caster.is_player())
     {
         if (cdata.player().god_id == core_god::ehekatl)
         {
@@ -4488,7 +4485,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
     }
     else if (is_in_fov(caster))
     {
-        if (caster.index == 0)
+        if (caster.is_player())
         {
             txt(i18n::s.get(
                 "core.action.cast.self",
@@ -4608,7 +4605,7 @@ int drink_potion(Character& chara, const OptionalItemRef& potion)
     {
         if (obvious == 1)
         {
-            if (chara.index == 0)
+            if (chara.is_player())
             {
                 item_identify(potion.unwrap(), IdentifyState::partly);
             }
@@ -4616,7 +4613,7 @@ int drink_potion(Character& chara, const OptionalItemRef& potion)
         potion->modify_number(-1);
     }
     chara.nutrition += 150;
-    if (chara.index < 16)
+    if (chara.is_player_or_ally())
     {
         if (chara.nutrition > 12000)
         {
@@ -4647,7 +4644,7 @@ int drink_well(Character& chara, const ItemRef& well)
     p = rnd(100);
     for (int cnt = 0; cnt < 1; ++cnt)
     {
-        if (chara.index != 0)
+        if (!chara.is_player())
         {
             if (rnd(15) == 0)
             {
@@ -4790,12 +4787,12 @@ int drink_well(Character& chara, const ItemRef& well)
             magic(chara, chara);
             break;
         }
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             txt(i18n::s.get("core.action.drink.well.effect.default"));
         }
     }
-    if (chara.index != 0)
+    if (!chara.is_player())
     {
         chara.nutrition += 4000;
     }
@@ -4865,7 +4862,7 @@ int read_scroll(Character& reader, const ItemRef& scroll)
         chara_gain_skill_exp(reader, 150, 25, 2);
     }
     magic(reader, reader, scroll);
-    if (reader.index == 0)
+    if (reader.is_player())
     {
         if (obvious == 1)
         {
@@ -4955,10 +4952,10 @@ bool do_zap_internal(Character& doer, const ItemRef& rod)
         f = 0;
     }
 
-    if (f == 1 || rod->id == ItemId::rod_of_wishing || doer.index != 0)
+    if (f == 1 || rod->id == ItemId::rod_of_wishing || !doer.is_player())
     {
         magic(doer, cdata[enemy_index]);
-        if (doer.index == 0)
+        if (doer.is_player())
         {
             if (obvious == 1)
             {
@@ -5039,7 +5036,7 @@ int do_spact(Character& doer, int& enemy_index)
     }
     if (efid >= 600)
     {
-        if (doer.index == 0)
+        if (doer.is_player())
         {
             if (cdata.player().sp < 50)
             {
@@ -5098,7 +5095,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
     }
     if (the_ability_db[efid]->ability_type == 7)
     {
-        if (caster.index == 0)
+        if (caster.is_player())
         {
             enemy_index = 0;
             return 1;
@@ -5106,7 +5103,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
     }
     if (tg == 8000)
     {
-        if (caster.index == 0)
+        if (caster.is_player())
         {
             enemy_index = 0;
             txt(i18n::s.get("core.action.which_direction.ask"));
@@ -5136,9 +5133,9 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
         }
         return 1;
     }
-    if (tg == 7000 || (tg == 9000 && tgloc == 1 && caster.index == 0))
+    if (tg == 7000 || (tg == 9000 && tgloc == 1 && caster.is_player()))
     {
-        if (caster.index == 0)
+        if (caster.is_player())
         {
             if (tg == 9000)
             {
@@ -5182,7 +5179,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
     }
     if (tg == 3000 || tg == 10000)
     {
-        if (caster.index != 0)
+        if (!caster.is_player())
         {
             if (the_ability_db[efid]->ability_type == 3)
             {
@@ -5204,7 +5201,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
     }
     if (tg == 2000 || tg == 6000 || tg == 9000)
     {
-        if (caster.index == 0)
+        if (caster.is_player())
         {
             int stat = find_enemy_target(caster);
             if (stat == 0)
@@ -5226,7 +5223,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
         if (dist(cdata[enemy_index].position, caster.position) >
             the_ability_db[efid]->range % 1000 + 1)
         {
-            if (caster.index == 0)
+            if (caster.is_player())
             {
                 txt(i18n::s.get("core.action.which_direction.out_of_range"),
                     Message::only_once{true});
@@ -5244,7 +5241,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
     }
     if (tg == 5000)
     {
-        if (caster.index == 0)
+        if (caster.is_player())
         {
             if (efsource == 3)
             {
@@ -5312,7 +5309,7 @@ PickUpItemResult pick_up_item(
             return {1, nullptr};
         }
     }
-    if (inv_owner_chara && inv_owner_chara->index == 0)
+    if (inv_owner_chara && inv_owner_chara->is_player())
     {
         if (game_data.mount != 0)
         {
@@ -5377,7 +5374,7 @@ PickUpItemResult pick_up_item(
     }
     const auto inumbk = item->number();
     item->set_number(in);
-    if (inv_owner_chara && inv_owner_chara->index == 0)
+    if (inv_owner_chara && inv_owner_chara->is_player())
     {
         if (trait(215) != 0)
         {
@@ -5576,7 +5573,7 @@ PickUpItemResult pick_up_item(
             *inv_owner_chara,
             itemname(picked_up_item.unwrap(), in)));
     }
-    if (inv_owner_chara && inv_owner_chara->index == 0)
+    if (inv_owner_chara && inv_owner_chara->is_player())
     {
         if (picked_up_item->id == ItemId::campfire)
         {
@@ -5668,7 +5665,7 @@ TurnResult do_bash(Character& chara)
             cell_data.at(x, y).chara_index_plus_one - 1;
         if (cdata[bash_target_index].sleep == 0)
         {
-            if (chara.index == 0)
+            if (chara.is_player())
             {
                 if (cdata[bash_target_index].relationship >= 0)
                 {
@@ -6345,7 +6342,7 @@ TurnResult try_to_open_locked_door(Character& chara)
     cell_featread(dx, dy);
     if (feat == tile_doorclosed4 && feat(2) > 0)
     {
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             if (!try_unlock(feat(2)))
             {
@@ -6410,7 +6407,7 @@ TurnResult try_to_open_locked_door(Character& chara)
                 Message::only_once{true});
         }
     }
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         await(g_config.animation_wait() * 5);
     }

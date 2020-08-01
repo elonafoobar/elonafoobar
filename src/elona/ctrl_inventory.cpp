@@ -1893,7 +1893,7 @@ OnEnterResult on_enter_give(
                 .stacked_item;
         chara_set_ai_item(inventory_owner, stacked_item);
         wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
-        if (inventory_owner.index < 16)
+        if (inventory_owner.is_player_or_ally())
         {
             create_pcpic(inventory_owner);
         }
@@ -2065,7 +2065,7 @@ OnEnterResult on_enter_trade_target(
     item_convert_artifact(citrade.unwrap());
 
     wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
-    if (inventory_owner.index >= 16)
+    if (!inventory_owner.is_player_or_ally())
     {
         supply_new_equipment(inventory_owner);
     }
@@ -2238,7 +2238,7 @@ OnEnterResult on_enter_receive(
         item_convert_artifact(stacked_item);
     }
     wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
-    if (inventory_owner.index < 16)
+    if (inventory_owner.is_player_or_ally())
     {
         create_pcpic(inventory_owner);
     }

@@ -439,7 +439,7 @@ void map_placeplayer()
         {
             continue;
         }
-        if (chara.index != 0)
+        if (!chara.is_player())
         {
             if (game_data.mount == chara.index)
             {
@@ -461,7 +461,7 @@ void map_placeplayer()
         }
         if (chara.current_map == game_data.current_map)
         {
-            if (chara.index != 0)
+            if (!chara.is_player())
             {
                 cxinit = chara.initial_position.x;
                 cyinit = chara.initial_position.y;

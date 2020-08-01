@@ -340,7 +340,7 @@ bool chara_place_internal(
     {
         if (i == 99)
         {
-            if (chara.index >= 57)
+            if (chara.is_map_local())
             {
                 // Give up.
                 return false;
@@ -356,7 +356,7 @@ bool chara_place_internal(
             x = (i - 100) % map_data.width;
             if (y >= map_data.height)
             {
-                if (chara.index != 0)
+                if (!chara.is_player())
                 {
                     return false;
                 }
@@ -419,7 +419,7 @@ bool chara_place_internal(
             }
         }
 
-        if (can_place_character_at({x, y}, chara.index == 0 || position))
+        if (can_place_character_at({x, y}, chara.is_player() || position))
         {
             break;
         }
@@ -436,7 +436,7 @@ bool chara_place_internal(
 
 void failed_to_place_character(Character& chara)
 {
-    if (chara.index < 16)
+    if (chara.is_player_or_ally())
     {
         chara.set_state(Character::State::pet_in_other_map);
         txt(i18n::s.get("core.chara.place_failure.ally", chara));
@@ -534,6 +534,50 @@ void Character::clear_flags()
 }
 
 
+
+bool Character::is_player() const
+{
+    return index == 0;
+}
+
+
+
+bool Character::is_ally() const
+{
+    return 1 <= index && index <= 15;
+}
+
+
+
+bool Character::is_player_or_ally() const
+{
+    return is_player() || is_ally();
+}
+
+
+
+bool Character::is_adventurer() const
+{
+    return 16 <= index && index <= 54;
+}
+
+
+
+bool Character::is_global() const
+{
+    return is_player_or_ally() || is_adventurer() || index == 55 /* unused */ ||
+        index == 56 /* temporary */;
+}
+
+
+
+bool Character::is_map_local() const
+{
+    return !is_global();
+}
+
+
+
 CData::CData()
     : storage(ELONA_MAX_CHARACTERS)
 {
@@ -586,7 +630,7 @@ void initialize_character(Character& chara)
     {
         chara.image = rnd(33) * 2 + chara.sex + 1;
     }
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         chara.nutrition = 9000;
     }
@@ -613,7 +657,7 @@ void initialize_character(Character& chara)
     chara.hp = chara.max_hp;
     chara.mp = chara.max_mp;
     chara.sp = chara.max_sp;
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         game_data.initial_cart_limit = 80000;
         game_data.current_cart_limit = game_data.initial_cart_limit;
@@ -685,7 +729,7 @@ void chara_refresh(Character& chara)
 {
     int rp2 = 0;
     int rp3 = 0;
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         game_data.seven_league_boot_effect = 0;
         game_data.ether_disease_speed = 0;
@@ -699,7 +743,7 @@ void chara_refresh(Character& chara)
     {
         chara.get_skill(cnt).level = chara.get_skill(cnt).base_level;
     }
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         chara.clear_flags();
         if (trait(161) != 0)
@@ -785,7 +829,7 @@ void chara_refresh(Character& chara)
         }
         if (equipment->material == 8)
         {
-            if (chara.index == 0)
+            if (chara.is_player())
             {
                 game_data.ether_disease_speed += 5;
             }
@@ -834,7 +878,7 @@ void chara_refresh(Character& chara)
             {
                 if (rp2 == 56)
                 {
-                    if (chara.index == 0)
+                    if (chara.is_player())
                     {
                         game_data.catches_god_signal = 1;
                         continue;
@@ -842,7 +886,7 @@ void chara_refresh(Character& chara)
                 }
                 if (rp2 == 59)
                 {
-                    if (chara.index == 0)
+                    if (chara.is_player())
                     {
                         game_data.reveals_religion = 1;
                         continue;
@@ -851,7 +895,7 @@ void chara_refresh(Character& chara)
                 if (rp2 == 29)
                 {
                     chara.get_skill(18).level += enchantment.power / 50 + 1;
-                    if (chara.index == 0)
+                    if (chara.is_player())
                     {
                         game_data.seven_league_boot_effect +=
                             enchantment.power / 8;
@@ -955,7 +999,7 @@ void chara_refresh(Character& chara)
                     chara.has_cursed_equipments() = true;
                     continue;
                 }
-                if (chara.index == 0)
+                if (chara.is_player())
                 {
                     if (rp2 == 30)
                     {
@@ -1008,7 +1052,7 @@ void chara_refresh(Character& chara)
             chara.get_skill(10 + cnt).level = 1;
         }
     }
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         god_apply_blessing(chara);
         for (int cnt = 0; cnt < 217; ++cnt)
@@ -1373,7 +1417,7 @@ void chara_modify_impression(Character& chara, int delta)
 
 void chara_vanquish(Character& chara)
 {
-    if (chara.index == 0)
+    if (chara.is_player())
         return;
 
     if (chara.index == game_data.mount)
@@ -1615,7 +1659,7 @@ void chara_relocate(
     }
 
     // Lose resistance.
-    if (destination.index < 16)
+    if (destination.is_player_or_ally())
     {
         for (int element = 50; element < 61; ++element)
         {
@@ -2200,7 +2244,7 @@ void chara_clear_status_effects(Character& chara)
 void revive_player(Character& chara)
 {
     do_chara_revival(chara);
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         game_data.is_returning_or_escaping = 0;
         traveldone = 0;
@@ -2471,7 +2515,7 @@ bool move_character_internal(Character& chara)
 {
     if (g_config.scroll())
     {
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             ui_scroll_screen();
         }
@@ -2482,7 +2526,7 @@ bool move_character_internal(Character& chara)
     cell_data.at(chara.next_position.x, chara.next_position.y)
         .chara_index_plus_one = chara.index + 1;
 
-    if (chara.index == 0 && game_data.mount != 0)
+    if (chara.is_player() && game_data.mount != 0)
     {
         cdata[game_data.mount].position = cdata.player().position;
     }
@@ -2505,7 +2549,7 @@ bool move_character_internal(Character& chara)
             return false;
         }
     }
-    if (feat(0) != tile_trap && chara.index == 0)
+    if (feat(0) != tile_trap && chara.is_player())
     {
         if (try_to_reveal(chara))
         {
@@ -2519,7 +2563,7 @@ bool move_character_internal(Character& chara)
     if (feat(0) == tile_trap)
     {
         refdiff = refdiff / 3;
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             if (chara.get_skill(175).level != 0)
             {
@@ -2542,7 +2586,7 @@ bool move_character_internal(Character& chara)
         {
             txt(i18n::s.get("core.action.move.trap.evade", chara));
         }
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             refx = movx;
             refy = movy;
@@ -2551,7 +2595,7 @@ bool move_character_internal(Character& chara)
     }
     else
     {
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             refx = movx;
             refy = movy;
@@ -2731,9 +2775,9 @@ TurnResult proc_movement_event(Character& chara)
     }
     dx = chara.next_position.x;
     dy = chara.next_position.y;
-    if (chara.index < 16)
+    if (chara.is_player_or_ally())
     {
-        if (chara.index != 0)
+        if (!chara.is_player())
         {
             if (dx != chara.position.x)
             {
@@ -2784,7 +2828,7 @@ TurnResult proc_movement_event(Character& chara)
     }
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             if (traveldone == 0)
             {
@@ -2815,7 +2859,7 @@ TurnResult proc_movement_event(Character& chara)
     sense_map_feats_on_move(chara);
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             encounter = 0;
             game_data.stood_world_map_tile =

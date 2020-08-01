@@ -174,7 +174,7 @@ bool _magic_1135(Character& target)
 {
     if (is_cursed(efstatus))
     {
-        if (target.index == 0)
+        if (target.is_player())
         {
             food_apply_curse_state(target, efstatus);
         }
@@ -195,7 +195,7 @@ bool _magic_1135(Character& target)
         lovemiracle(target.index);
         return true;
     }
-    if (target.index == 0)
+    if (target.is_player())
     {
         txt(i18n::s.get("core.magic.love_potion.self", target));
     }
@@ -243,7 +243,7 @@ bool _magic_1101(Character& subject, Character& target)
         snd("core.atk_elec");
         if (is_cursed(efstatus))
         {
-            if (target.index == 0)
+            if (target.is_player())
             {
                 txt(i18n::s.get("core.magic.milk.cursed.self"));
             }
@@ -253,7 +253,7 @@ bool _magic_1101(Character& subject, Character& target)
                     Message::color{ColorIndex::cyan});
             }
         }
-        else if (target.index == 0)
+        else if (target.is_player())
         {
             txt(i18n::s.get("core.magic.milk.self"));
         }
@@ -272,7 +272,7 @@ bool _magic_1101(Character& subject, Character& target)
         modify_height(target, (rnd(5) + 1) * -1);
     }
     target.nutrition += 1000 * (efp / 100);
-    if (target.index == 0)
+    if (target.is_player())
     {
         show_eating_message(subject);
     }
@@ -311,7 +311,7 @@ bool _magic_1116(Character& target)
 {
     if (is_in_fov(target))
     {
-        if (target.index == 0)
+        if (target.is_player())
         {
             txt(i18n::s.get("core.magic.acid.self"));
         }
@@ -337,7 +337,7 @@ bool _magic_1103(Character& target)
 {
     if (is_in_fov(target))
     {
-        if (target.index == 0)
+        if (target.is_player())
         {
             txt(i18n::s.get("core.magic.water.self"));
         }
@@ -416,7 +416,7 @@ bool _magic_1130(Character& target)
 {
     if (is_in_fov(target))
     {
-        if (target.index == 0)
+        if (target.is_player())
         {
             txt(i18n::s.get("core.magic.dirty_water.self"));
         }
@@ -440,7 +440,7 @@ bool _magic_300(Character& subject, Character& target)
         txt(i18n::s.get("core.magic.steal.in_quest"));
         return false;
     }
-    if (subject.index == 0)
+    if (subject.is_player())
     {
         if (cdata.player().sp < 50)
         {
@@ -463,8 +463,8 @@ bool _magic_300(Character& subject, Character& target)
     // In Pickpocket spact, target == player means that you attempts to steal
     // items on the ground, not in someone's inventory.
     ctrl_inventory(
-        target.index == 0 ? optional_ref<Character>{}
-                          : optional_ref<Character>{target});
+        target.is_player() ? optional_ref<Character>{}
+                           : optional_ref<Character>{target});
     return true;
 }
 
@@ -473,7 +473,7 @@ bool _magic_300(Character& subject, Character& target)
 // Riding
 bool _magic_301(Character& subject, Character& target)
 {
-    if (subject.index == 0)
+    if (subject.is_player())
     {
         if (cdata.player().sp < 50)
         {
@@ -510,7 +510,7 @@ bool _magic_301(Character& subject, Character& target)
             return true;
         }
     }
-    if (target.index >= 16)
+    if (!target.is_player_or_ally())
     {
         txt(i18n::s.get("core.magic.mount.only_ally"));
         return true;
@@ -555,9 +555,9 @@ bool _magic_301(Character& subject, Character& target)
 // Performance
 bool _magic_183(Character& subject, OptionalItemRef instrument)
 {
-    assert(subject.index != 0 || instrument);
+    assert(!subject.is_player() || instrument);
 
-    if (subject.index != 0)
+    if (!subject.is_player())
     {
         for (const auto& item : g_inv.for_chara(subject))
         {
@@ -580,7 +580,7 @@ bool _magic_183(Character& subject, OptionalItemRef instrument)
             return false;
         }
     }
-    if (subject.index == 0)
+    if (subject.is_player())
     {
         if (cdata.player().sp < 50)
         {
@@ -620,7 +620,7 @@ bool _magic_184(Character& subject, const ItemRef& cook_tool)
     }
     assert(food_opt);
     const auto food = food_opt.unwrap();
-    if (subject.index == 0)
+    if (subject.is_player())
     {
         if (cdata.player().sp < 50)
         {
@@ -726,7 +726,7 @@ bool _magic_185(Character& subject, const ItemRef& rod)
     fishx = x;
     fishy = y;
     addefmap(fishx, fishy, 1, 3);
-    if (subject.index == 0)
+    if (subject.is_player())
     {
         if (cdata.player().sp < 50)
         {
@@ -818,7 +818,7 @@ bool _magic_1120(Character& target)
 // Random craft material
 bool _magic_1117(Character& target)
 {
-    if (target.index >= 16)
+    if (!target.is_player_or_ally())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -866,7 +866,7 @@ bool _magic_632_454_1144(
 {
     if (!is_cursed_potion_of_cure_mutation)
     {
-        if (target.index != 0)
+        if (!target.is_player())
         {
             return _magic_628(subject, target);
         }
@@ -878,7 +878,7 @@ bool _magic_632_454_1144(
                 return true;
             }
         }
-        if (target.index != 0)
+        if (!target.is_player())
         {
             txt(i18n::s.get("core.common.nothing_happens"));
             return true;
@@ -975,7 +975,7 @@ bool _magic_632_454_1144(
 // Item: potion of cure mutation
 bool _magic_1121(Character& subject, Character& target)
 {
-    if (target.index != 0)
+    if (!target.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         return true;
@@ -1044,7 +1044,7 @@ bool _magic_1121(Character& subject, Character& target)
 // Identify
 bool _magic_411(Character& subject)
 {
-    if (subject.index != 0)
+    if (!subject.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -1110,7 +1110,7 @@ bool _magic_461(Character& subject)
     MiracleAnimation(MiracleAnimation::Mode::target_one, cdata[stat]).play();
     snd("core.pray2");
     cdata[stat].emotion_icon = 317;
-    if (subject.index == 0)
+    if (subject.is_player())
     {
         chara_modify_impression(cdata[stat], 15);
         if (stat >= 16)
@@ -1231,7 +1231,7 @@ bool _magic_412(Character& subject, Character& target)
 // Oracle
 bool _magic_413(Character& target)
 {
-    if (target.index >= 16)
+    if (!target.is_player_or_ally())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         return true;
@@ -1260,7 +1260,7 @@ bool _magic_413(Character& target)
 // Gain spell stock
 bool _magic_1104(Character& target)
 {
-    if (target.index != 0)
+    if (!target.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -1443,7 +1443,7 @@ bool _magic_1105(Character& target)
 // Item: scroll of faith
 bool _magic_1107(Character& target)
 {
-    if (target.index != 0)
+    if (!target.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -1613,7 +1613,7 @@ bool _magic_1113(Character& target)
             snd("core.curse3");
         }
     }
-    if (target.index == 0)
+    if (target.is_player())
     {
         save_set_autosave();
     }
@@ -1625,7 +1625,7 @@ bool _magic_1113(Character& target)
 // Vanish
 bool _magic_653(Character& target)
 {
-    if (target.index < 57)
+    if (target.is_global())
     {
         return true;
     }
@@ -1644,7 +1644,7 @@ bool _magic_653(Character& target)
 // Sense Object / Magic Map
 bool _magic_430_429(Character& target)
 {
-    if (target.index >= 16)
+    if (!target.is_player_or_ally())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -1732,7 +1732,7 @@ bool _magic_658(Character& subject, Character& target)
         snd("core.atksword");
         txt(i18n::s.get("core.magic.vorpal.sound"),
             Message::color{ColorIndex::red});
-        if (target.index >= 16)
+        if (!target.is_player_or_ally())
         {
             game_data.proc_damage_events_flag = 2;
             txt3rd = 1;
@@ -1853,7 +1853,7 @@ bool _magic_441(Character& subject)
 // Item: scroll of escape
 bool _magic_1141(Character& target)
 {
-    if (target.index != 0)
+    if (!target.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -1908,7 +1908,7 @@ bool _magic_1141(Character& target)
 // Return
 bool _magic_428(Character& target)
 {
-    if (target.index != 0)
+    if (!target.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2058,7 +2058,7 @@ bool _magic_645_1114(Character& subject, Character& target)
     {
         return true;
     }
-    if (target.index < 16)
+    if (target.is_player_or_ally())
     {
         if (rnd(3))
         {
@@ -2174,7 +2174,7 @@ bool _magic_1118(Character& target)
 // of young lady
 bool _magic_1138_1123_1122_1137(Character& subject)
 {
-    if (subject.index != 0 && subject.index < 16)
+    if (subject.is_ally())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         return true;
@@ -2211,7 +2211,7 @@ bool _magic_1138_1123_1122_1137(Character& subject)
 // Dominate
 bool _magic_435(Character& subject, Character& target)
 {
-    if (subject.index != 0 || target.index == 0 || target.relationship == 10)
+    if (!subject.is_player() || target.is_player() || target.relationship == 10)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2350,7 +2350,7 @@ bool _magic_436_437_455_634_456(Character& subject)
 // Item: scroll of name
 bool _magic_1145(Character& subject)
 {
-    if (subject.index != 0)
+    if (!subject.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2392,7 +2392,7 @@ bool _magic_1145(Character& subject)
 // Item: Garok's hammer
 bool _magic_49(Character& subject, const ItemRef& hammer)
 {
-    if (subject.index != 0)
+    if (!subject.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2456,7 +2456,7 @@ bool _magic_49(Character& subject, const ItemRef& hammer)
 // Item: scroll of change material
 bool _magic_21_1127(Character& subject)
 {
-    if (subject.index != 0)
+    if (!subject.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2555,7 +2555,7 @@ bool _magic_21_1127(Character& subject)
 // Item: deed of inheritance
 bool _magic_1128(Character& subject)
 {
-    if (subject.index != 0)
+    if (!subject.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2577,7 +2577,7 @@ bool _magic_1128(Character& subject)
 // Item: scroll of enchant weapon / armor
 bool _magic_1124_1125(Character& subject)
 {
-    if (subject.index != 0)
+    if (!subject.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         return true;
@@ -2623,7 +2623,7 @@ bool _magic_1124_1125(Character& subject)
 // Fill Charge / Item: scroll of charge
 bool _magic_630_1129(Character& subject)
 {
-    if (subject.index != 0)
+    if (!subject.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2730,7 +2730,7 @@ bool _magic_630_1129(Character& subject)
 // Draw Charge
 bool _magic_629(Character& subject)
 {
-    if (subject.index != 0)
+    if (!subject.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2791,7 +2791,7 @@ bool _magic_629(Character& subject)
 // Change
 bool _magic_628(Character& subject, Character& target)
 {
-    if (target.index == 0)
+    if (target.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2807,7 +2807,7 @@ bool _magic_628(Character& subject, Character& target)
     {
         f = -1;
     }
-    if (target.index < 57)
+    if (target.is_global())
     {
         f = 0;
     }
@@ -2838,7 +2838,7 @@ bool _magic_628(Character& subject, Character& target)
 // Item: scroll of flying
 bool _magic_1140(Character& subject)
 {
-    if (subject.index != 0)
+    if (!subject.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -2909,7 +2909,7 @@ bool _magic_1140(Character& subject)
 // Item: rod of alchemy
 bool _magic_1132(Character& subject, int& fltbk, int& valuebk)
 {
-    if (subject.index != 0)
+    if (!subject.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -3235,9 +3235,9 @@ bool _magic_656(Character& subject)
         {
             continue;
         }
-        if (subject.index < 16)
+        if (subject.is_player_or_ally())
         {
-            if (cnt.index >= 16)
+            if (!cnt.is_player_or_ally())
             {
                 continue;
             }
@@ -3284,7 +3284,7 @@ bool _magic_656(Character& subject)
 // Item: potion of cure corruption
 bool _magic_1131(Character& target)
 {
-    if (target.index != 0)
+    if (!target.is_player())
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         return true;
@@ -3310,7 +3310,7 @@ bool _magic_1131(Character& target)
 // Eye of Ether
 bool _magic_633(Character& subject, Character& target)
 {
-    if (target.index != 0)
+    if (!target.is_player())
     {
         return true;
     }
@@ -3533,7 +3533,7 @@ bool _magic_463()
 int _calc_ball_spell_range(Character& subject)
 {
     int ret = the_ability_db[efid]->range % 1000 + 1;
-    if (debug::voldemort && subject.index == 0)
+    if (debug::voldemort && subject.is_player())
     {
         ret *= 2;
     }
@@ -3591,7 +3591,7 @@ optional_ref<Character> _ball_spell_internal(
             if (efid == 404)
             {
                 f = 0;
-                if (subject.index == 0 || subject.relationship >= 0)
+                if (subject.is_player() || subject.relationship >= 0)
                 {
                     if (cdata[target_index].relationship >= 0)
                     {
@@ -3620,7 +3620,7 @@ optional_ref<Character> _ball_spell_internal(
             if (efid == 637)
             {
                 f = 0;
-                if (subject.index == 0 || subject.relationship >= 0)
+                if (subject.is_player() || subject.relationship >= 0)
                 {
                     if (cdata[target_index].relationship >= 0)
                     {
@@ -3831,7 +3831,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         }
         if (efid == 625 || efid == 446)
         {
-            if ((target.index == 0 && subject.index == 0) ||
+            if ((target.is_player() && subject.is_player()) ||
                 subject.index == game_data.mount)
             {
                 if (game_data.mount != 0)
@@ -3878,7 +3878,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         }
         if (efid == 458)
         {
-            if (target.index == 0)
+            if (target.is_player())
             {
                 incognitobegin();
             }
@@ -3893,7 +3893,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         ele = damage->element;
         elep = damage->element_power;
     }
-    if (subject.index == 0)
+    if (subject.is_player())
     {
         if (trait(165))
         {
@@ -4016,7 +4016,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         dmg = roll(dice1, dice2, bonus);
         if (is_in_fov(target))
         {
-            if (target.index >= 16)
+            if (!target.is_player_or_ally())
             {
                 game_data.proc_damage_events_flag = 2;
                 txt3rd = 1;
@@ -4075,7 +4075,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         {
             if (is_in_fov(subject))
             {
-                if (subject.index == 0)
+                if (subject.is_player())
                 {
                     txt(i18n::s.get(
                         "core.magic.special_attack.self",
@@ -4100,7 +4100,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         {
             if (is_in_fov(subject))
             {
-                if (target.index >= 16)
+                if (!target.is_player_or_ally())
                 {
                     game_data.proc_damage_events_flag = 2;
                     txt(i18n::s.get(
@@ -4122,7 +4122,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         }
         else if (is_in_fov(subject))
         {
-            if (target.index >= 16)
+            if (!target.is_player_or_ally())
             {
                 game_data.proc_damage_events_flag = 2;
                 txt(i18n::s.get(
@@ -4194,7 +4194,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         }
         return true;
     case 7:
-        if (subject.index == 0)
+        if (subject.is_player())
         {
             if (game_data.crowd_density + 100 >= ELONA_MAX_OTHER_CHARACTERS)
             {

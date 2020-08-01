@@ -217,7 +217,7 @@ int calc_performance_tips(const Character& performer, const Character& audience)
     const auto m = Q * Q * (100 + I / 5) / 100 / 1000 + rnd(10);
     auto ret = clamp(audience.gold * clamp(m, 1, 100) / 125, 0, max);
 
-    if (audience.index < 16)
+    if (audience.is_player_or_ally())
     {
         ret = rnd(clamp(ret, 1, 100)) + 1;
     }
@@ -418,7 +418,7 @@ std::pair<bool, int> activity_perform_proc_audience(
         audience.hate = 30;
         return std::make_pair(false, 0);
     }
-    if (performer.index == 0)
+    if (performer.is_player())
     {
         audience.interest -= rnd(15);
         audience.time_interest_revive = game_data.date.hours() + 12;
@@ -474,7 +474,7 @@ std::pair<bool, int> activity_perform_proc_audience(
     {
         if (game_data.executing_immediate_quest_type == 1009)
         {
-            if (audience.index >= 57)
+            if (audience.is_map_local())
             {
                 audience.impression += rnd(3);
                 calcpartyscore();
@@ -510,7 +510,7 @@ std::pair<bool, int> activity_perform_proc_audience(
                     Message::color{ColorIndex::cyan});
             }
             performer.quality_of_performance += audience.level + 5;
-            if (performer.index == 0 && audience.index >= 16)
+            if (performer.is_player() && !audience.is_player_or_ally())
             {
                 if (rnd_capped(performance_tips * 2 + 2) == 0)
                 {
@@ -536,7 +536,7 @@ void activity_perform_start(Character& performer, ItemRef instrument)
     performer.activity.item = instrument;
     performer.quality_of_performance = 40;
     performer.tip_gold = 0;
-    if (performer.index == 0)
+    if (performer.is_player())
     {
         performance_tips = 0;
     }
@@ -618,7 +618,7 @@ int calc_performance_quality_level(int quality)
 
 void activity_perform_end(Character& performer)
 {
-    if (performer.index == 0)
+    if (performer.is_player())
     {
         const auto quality_level =
             calc_performance_quality_level(performer.quality_of_performance);
@@ -659,7 +659,7 @@ void activity_eating_start(Character& eater, const ItemRef& food)
     if (is_in_fov(eater))
     {
         snd("core.eat1");
-        if (food->own_state == 1 && eater.index < 16)
+        if (food->own_state == 1 && eater.is_player_or_ally())
         {
             txt(i18n::s.get("core.activity.eat.start.in_secret", eater, food));
         }
@@ -1224,7 +1224,7 @@ void rowact_item(const ItemRef& item)
 void activity_handle_damage(Character& chara)
 {
     bool stop = false;
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         if (chara.activity.type != Activity::Type::eat &&
             chara.activity.type != Activity::Type::read &&
@@ -1264,7 +1264,7 @@ optional<TurnResult> activity_proc(Character& chara)
     --chara.activity.turn;
 
     const auto auto_turn = [&](int delay) {
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             elona::auto_turn(delay);
         }
@@ -1334,7 +1334,7 @@ optional<TurnResult> activity_proc(Character& chara)
         return TurnResult::turn_end;
     }
     chara.activity.finish();
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         if (chatteleport == 1)
         {
@@ -1406,7 +1406,7 @@ void activity_sex(Character& chara_a, optional_ref<Character> chara_b)
         cdata[target_index].activity.finish();
         return;
     }
-    if (chara_a.index == 0)
+    if (chara_a.is_player())
     {
         if (!action_sp(cdata.player(), 1 + rnd(2)))
         {
@@ -1500,7 +1500,7 @@ void activity_sex(Character& chara_a, optional_ref<Character> chara_b)
                     "core.activity.sex.take_all_i_have", cdata[target_index]);
                 if (rnd(3) == 0)
                 {
-                    if (chara_a.index != 0)
+                    if (!chara_a.is_player())
                     {
                         dialog_after = i18n::s.get(
                             "core.activity.sex.gets_furious", chara_a);
@@ -1516,7 +1516,7 @@ void activity_sex(Character& chara_a, optional_ref<Character> chara_b)
             sexvalue = cdata[target_index].gold;
         }
         cdata[target_index].gold -= sexvalue;
-        if (chara_a.index == 0)
+        if (chara_a.is_player())
         {
             chara_modify_impression(cdata[target_index], 5);
             flt();
@@ -1568,7 +1568,7 @@ void activity_eating_finish(Character& eater, const ItemRef& food)
 {
     apply_general_eating_effect(eater, food);
 
-    if (eater.index == 0)
+    if (eater.is_player())
     {
         item_identify(food, IdentifyState::partly);
     }
@@ -1579,7 +1579,7 @@ void activity_eating_finish(Character& eater, const ItemRef& food)
 
     food->modify_number(-1);
 
-    if (eater.index == 0)
+    if (eater.is_player())
     {
         show_eating_message(eater);
     }
@@ -1632,7 +1632,7 @@ void activity_eating_finish(Character& eater, const ItemRef& food)
 
 void activity_others(Character& doer, const OptionalItemRef& activity_item)
 {
-    if (doer.index != 0)
+    if (!doer.is_player())
     {
         doer.activity.finish();
         return;

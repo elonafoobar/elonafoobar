@@ -963,7 +963,7 @@ void get_npc_talk(Character& chara)
             p = instr(buff, 0, u8"%BORED,"s + i18n::s.get("core.meta.tag"));
             break;
         }
-        if (chara.index < 16)
+        if (chara.is_player_or_ally())
         {
             p = instr(
                 buff, 0, u8"%ALLY_DEFAULT,"s + i18n::s.get("core.meta.tag"));

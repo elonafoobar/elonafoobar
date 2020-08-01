@@ -362,7 +362,7 @@ bool _is_valid_position(int x, int y)
 
 bool _will_crush_wall(const Character& chara, int x, int y)
 {
-    return chara.index >= 16 && chara.quality >= Quality::miracle &&
+    return !chara.is_player_or_ally() && chara.quality >= Quality::miracle &&
         chara.relationship <= -2 && _is_valid_position(x, y) &&
         (chip_data.for_cell(x, y).effect & 4);
 }
@@ -604,7 +604,7 @@ TurnResult ai_proc_basic(Character& chara, int& enemy_index)
         efid = act;
         if (chara.mp < chara.max_mp / 7)
         {
-            if (rnd(3) || chara.index < 16 ||
+            if (rnd(3) || chara.is_player_or_ally() ||
                 chara.quality >= Quality::miracle ||
                 chara.cures_mp_frequently())
             {
@@ -638,7 +638,7 @@ TurnResult ai_proc_basic(Character& chara, int& enemy_index)
         {
             try_to_melee_attack(chara, cdata[enemy_index]);
         }
-        else if (rnd(3) == 0 || chara.index < 16)
+        else if (rnd(3) == 0 || chara.is_player_or_ally())
         {
             const auto ok = _try_do_melee_attack(chara, cdata[enemy_index]);
             if (ok)
@@ -691,7 +691,7 @@ TurnResult ai_proc_basic(Character& chara, int& enemy_index)
 TurnResult
 proc_npc_movement_event(Character& chara, int& enemy_index, bool retreat)
 {
-    if (map_data.type == mdata_t::MapType::town && chara.index < 16)
+    if (map_data.type == mdata_t::MapType::town && chara.is_player_or_ally())
     {
         if (rnd(100) == 0)
         {
@@ -900,8 +900,8 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
     }
 
     // Falls into sleep.
-    if (chara.index >= 16 && map_is_town_or_guild() && _is_at_night() &&
-        !chara.activity)
+    if (!chara.is_player_or_ally() && map_is_town_or_guild() &&
+        _is_at_night() && !chara.activity)
     {
         if (rnd(100) == 0)
         {

@@ -118,7 +118,7 @@ void load_save_data()
     set_item_info();
     for (auto&& chara : cdata.player_and_allies())
     {
-        if (chara.has_own_sprite() || chara.index == 0)
+        if (chara.has_own_sprite() || chara.is_player())
         {
             create_pcpic(chara);
         }

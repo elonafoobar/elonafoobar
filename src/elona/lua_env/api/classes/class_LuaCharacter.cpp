@@ -203,8 +203,7 @@ void LuaCharacter_set_growth_buff(Character& self, int index, int power)
  */
 bool LuaCharacter_recruit_as_ally(Character& self)
 {
-    if (self.state() == Character::State::empty ||
-        (self.index != 0 && self.index <= 16) || self.index == 0)
+    if (self.state() == Character::State::empty || self.is_player_or_ally())
     {
         return false;
     }
@@ -388,7 +387,7 @@ void LuaCharacter_modify_sanity(Character& self, int delta)
  */
 void LuaCharacter_modify_karma(Character& self, int delta)
 {
-    if (self.index != 0)
+    if (!self.is_player())
     {
         return;
     }
@@ -407,7 +406,7 @@ void LuaCharacter_modify_karma(Character& self, int delta)
  */
 void LuaCharacter_modify_corruption(Character& self, int delta)
 {
-    if (self.index != 0)
+    if (!self.is_player())
     {
         return;
     }
@@ -492,7 +491,7 @@ void LuaCharacter_refresh(Character& self)
  */
 void LuaCharacter_refresh_burden_state(Character& self)
 {
-    if (self.index != 0)
+    if (!self.is_player())
     {
         return;
     }
@@ -515,7 +514,7 @@ void LuaCharacter_move_to_xy(Character& self, int x, int y)
     // in the middle of the current turn.
     cell_movechara(self.index, x, y);
 
-    if (self.index == 0)
+    if (self.is_player())
     {
         update_screen();
     }

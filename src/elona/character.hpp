@@ -473,6 +473,16 @@ public:
     }
 
 
+
+    bool is_player() const;
+    bool is_ally() const;
+    bool is_player_or_ally() const;
+    bool is_adventurer() const;
+    bool is_global() const;
+    bool is_map_local() const;
+
+
+
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 
 

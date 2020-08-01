@@ -788,7 +788,7 @@ static void _init_map_arena()
         {
             if (chara.relationship == 10)
             {
-                if (chara.index != 0)
+                if (!chara.is_player())
                 {
                     cell_data.at(chara.position.x, chara.position.y)
                         .chara_index_plus_one = 0;

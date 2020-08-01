@@ -1355,7 +1355,7 @@ void equip_item(
         return;
     }
     item_separate(equipment);
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         item_identify(equipment, IdentifyState::almost);
     }

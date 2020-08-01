@@ -146,7 +146,7 @@ void god_modify_piety(int amount)
 void set_npc_religion(Character& chara)
 {
     if (chara.god_id != core_god::eyth || chara.has_learned_words() ||
-        chara.index == 0)
+        chara.is_player())
     {
         return;
     }

@@ -98,7 +98,7 @@ void dmgheal_death_by_backpack(Character& chara)
 
     txt(i18n::s.get_enum_property(
         "core.death_by.other", "text", 6, chara, heaviest_item_name));
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         ndeathcause = i18n::s.get_enum_property(
             "core.death_by.other", "death_cause", 6, heaviest_item_name);
@@ -129,22 +129,19 @@ Character::State dmgheal_set_death_status(Character& victim)
         victim.time_to_revive = game_data.date.hours() + 48;
     }
 
-    if (victim.index != 0)
+    if (victim.is_ally())
     {
-        if (victim.index < 16)
+        new_state = Character::State::pet_dead;
+        chara_modify_impression(victim, -10);
+        victim.current_map = 0;
+        if (victim.is_escorted() == 1)
         {
-            new_state = Character::State::pet_dead;
-            chara_modify_impression(victim, -10);
-            victim.current_map = 0;
-            if (victim.is_escorted() == 1)
-            {
-                event_add(15, charaid2int(victim.id));
-                new_state = Character::State::empty;
-            }
-            if (victim.is_escorted_in_sub_quest() == 1)
-            {
-                new_state = Character::State::empty;
-            }
+            event_add(15, charaid2int(victim.id));
+            new_state = Character::State::empty;
+        }
+        if (victim.is_escorted_in_sub_quest() == 1)
+        {
+            new_state = Character::State::empty;
         }
     }
 
@@ -214,7 +211,7 @@ int damage_hp(
         }
         dmg_at_m141 = dmg_at_m141 * 100 / (victim.get_skill(60).level / 2 + 50);
     }
-    if (attacker && attacker->index == 0)
+    if (attacker && attacker->is_player())
     {
         if (critical)
         {
@@ -276,12 +273,12 @@ int damage_hp(
     }
     rtdmg = dmg_at_m141;
 
-    if (victim.index == 0 && cdata.player().god_id == core_god::opatos)
+    if (victim.is_player() && cdata.player().god_id == core_god::opatos)
     {
         dmg_at_m141 = dmg_at_m141 * 90 / 100;
     }
 
-    if (debug::voldemort && victim.index == 0)
+    if (debug::voldemort && victim.is_player())
     {
         dmg_at_m141 = 0;
     }
@@ -330,7 +327,7 @@ int damage_hp(
             }
         }
     }
-    if (victim.index == 0)
+    if (victim.is_player())
     {
         if (victim.hp < 0)
         {
@@ -354,7 +351,7 @@ int damage_hp(
     }
     if (victim.hp < 0)
     {
-        if (victim.index < 16)
+        if (victim.is_player_or_ally())
         {
             for (auto&& chara : cdata.player_and_allies())
             {
@@ -549,7 +546,7 @@ int damage_hp(
         rowact_check(victim);
         if (victim.hp < victim.max_hp / 5)
         {
-            if (victim.index != 0)
+            if (!victim.is_player())
             {
                 if (victim.fear == 0)
                 {
@@ -564,7 +561,7 @@ int damage_hp(
                         {
                             runs_away = false;
                         }
-                        if (attacker && attacker->index == 0)
+                        if (attacker && attacker->is_player())
                         {
                             if (trait(44)) // Gentle Face
                             {
@@ -677,14 +674,14 @@ int damage_hp(
             }
             if (element == 62)
             {
-                if (victim.index == 0)
+                if (victim.is_player())
                 {
                     modify_ether_disease_stage(rnd_capped(element_power + 1));
                 }
             }
             if (element == 63)
             {
-                if (victim.index == 0 || rnd(3) == 0)
+                if (victim.is_player() || rnd(3) == 0)
                 {
                     item_acid(victim);
                 }
@@ -706,12 +703,12 @@ int damage_hp(
                 txt(i18n::s.get("core.damage.sleep_is_disturbed", victim));
             }
         }
-        if (attacker && attacker->index == 0)
+        if (attacker && attacker->is_player())
         {
             hostileaction(0, victim.index);
             game_data.chara_last_attacked_by_player = victim.index;
         }
-        if (victim.index == 0)
+        if (victim.is_player())
         {
             if (g_config.sound())
             {
@@ -811,7 +808,7 @@ int damage_hp(
                     apply_hate = true;
                 }
             }
-            if (attacker->index != 0)
+            if (!attacker->is_player())
             {
                 if (attacker->enemy_id == victim.index)
                 {
@@ -823,7 +820,7 @@ int damage_hp(
             }
             if (apply_hate)
             {
-                if (victim.index != 0)
+                if (!victim.is_player())
                 {
                     victim.enemy_id = attacker->index;
                     if (victim.hate == 0)
@@ -851,7 +848,7 @@ int damage_hp(
         {
             if (element)
             {
-                if (victim.index >= 16 &&
+                if (!victim.is_player_or_ally() &&
                     game_data.proc_damage_events_flag == 2)
                 {
                     Message::instance().continue_sentence();
@@ -874,7 +871,7 @@ int damage_hp(
                 int death_type = rnd(4);
                 if (death_type == 0)
                 {
-                    if (victim.index >= 16 &&
+                    if (!victim.is_player_or_ally() &&
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
@@ -901,7 +898,7 @@ int damage_hp(
                 }
                 if (death_type == 1)
                 {
-                    if (victim.index >= 16 &&
+                    if (!victim.is_player_or_ally() &&
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
@@ -927,7 +924,7 @@ int damage_hp(
                 }
                 if (death_type == 2)
                 {
-                    if (victim.index >= 16 &&
+                    if (!victim.is_player_or_ally() &&
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
@@ -953,7 +950,7 @@ int damage_hp(
                 }
                 if (death_type == 3)
                 {
-                    if (victim.index >= 16 &&
+                    if (!victim.is_player_or_ally() &&
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
@@ -993,7 +990,7 @@ int damage_hp(
 
                 txt(i18n::s.get_enum_property(
                     "core.death_by.other", "text", death_kind, victim));
-                if (victim.index == 0)
+                if (victim.is_player())
                 {
                     ndeathcause = i18n::s.get_enum_property(
                         "core.death_by.other", "death_cause", death_kind);
@@ -1024,7 +1021,7 @@ int damage_hp(
                 }
             }
         }
-        if (game_data.mount != victim.index || victim.index == 0)
+        if (game_data.mount != victim.index || victim.is_player())
         {
             cell_removechara(victim.position.x, victim.position.y);
         }
@@ -1049,7 +1046,7 @@ int damage_hp(
             animeblood(victim, 0, element);
             spillblood(victim.position.x, victim.position.y, 4);
         }
-        if (victim.index == 0)
+        if (victim.is_player())
         {
             ++game_data.death_count;
         }
@@ -1059,7 +1056,7 @@ int damage_hp(
         }
         if (attacker)
         {
-            if (attacker->index != 0)
+            if (!attacker->is_player())
             {
                 chara_custom_talk(attacker->index, 103);
             }
@@ -1076,19 +1073,19 @@ int damage_hp(
                 gained_exp /= 20;
             }
             attacker->experience += gained_exp;
-            if (attacker->index == 0)
+            if (attacker->is_player())
             {
                 game_data.sleep_experience += gained_exp;
             }
             attacker->hate = 0;
-            if (attacker->index < 16)
+            if (attacker->is_player_or_ally())
             {
                 attacker->enemy_id = 0;
                 cdata.player().enemy_id = 0;
                 game_data.chara_last_attacked_by_player = 0;
             }
         }
-        if (victim.index != 0)
+        if (!victim.is_player())
         {
             if (game_data.current_map != mdata_t::MapId::show_house)
             {
@@ -1191,11 +1188,11 @@ int damage_hp(
                 }
             }
         }
-        if (victim.index != 0)
+        if (!victim.is_player())
         {
             ++npcmemory(0, charaid2int(victim.id));
             chara_custom_talk(victim.index, 102);
-            if (victim.index < 16)
+            if (victim.is_player_or_ally())
             {
                 txt(i18n::s.get("core.damage.you_feel_sad"));
             }
@@ -1265,7 +1262,7 @@ int damage_hp(
                 }
             }
         }
-        if (attacker && attacker->index == 0)
+        if (attacker && attacker->is_player())
         {
             if (game_data.catches_god_signal)
             {
@@ -1311,7 +1308,7 @@ void damage_mp(Character& chara, int delta)
     {
         chara_gain_exp_mana_capacity(chara);
         auto damage = -chara.mp * 400 / (100 + chara.get_skill(164).level * 10);
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             if (trait(156) == 1)
             {
@@ -1344,7 +1341,7 @@ void heal_mp(Character& chara, int delta)
 
 bool action_sp(Character& chara, int sp)
 {
-    if (chara.index != 0 || debug::voldemort)
+    if (!chara.is_player() || debug::voldemort)
         return true;
 
     damage_sp(chara, sp);
@@ -1355,7 +1352,7 @@ bool action_sp(Character& chara, int sp)
 
 void damage_sp(Character& chara, int delta)
 {
-    if (chara.index != 0 || debug::voldemort)
+    if (!chara.is_player() || debug::voldemort)
         return;
 
     if (chara.sp >= -100)
@@ -1387,7 +1384,7 @@ void damage_insanity(Character& chara, int delta)
         return;
 
     delta /= resistance;
-    if (chara.index < 16)
+    if (chara.is_player_or_ally())
     {
         if (trait(166))
         {
@@ -1418,7 +1415,7 @@ void heal_insanity(Character& chara, int delta)
 
 void character_drops_item(Character& victim)
 {
-    if (victim.index == 0)
+    if (victim.is_player())
     {
         if (game_data.executing_immediate_quest_type != 0)
         {
@@ -1556,7 +1553,7 @@ void character_drops_item(Character& victim)
     }
     else
     {
-        if (victim.index < 16)
+        if (victim.is_player_or_ally())
         {
             if (victim.has_own_sprite() == 1)
             {
@@ -1671,7 +1668,7 @@ void character_drops_item(Character& victim)
         }
     }
     if (victim.quality >= Quality::miracle || rnd(20) == 0 ||
-        victim.drops_gold() == 1 || victim.index < 16)
+        victim.drops_gold() == 1 || victim.is_player_or_ally())
     {
         if (victim.gold > 0)
         {
@@ -2162,7 +2159,7 @@ void heal_both_rider_and_mount(Character& target)
     targets.push_back(std::ref(target));
     if (game_data.mount != 0)
     {
-        if (target.index == game_data.mount || target.index == 0)
+        if (target.index == game_data.mount || target.is_player())
         {
             if (target.index == game_data.mount)
             {

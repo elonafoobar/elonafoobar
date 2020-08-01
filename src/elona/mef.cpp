@@ -222,7 +222,7 @@ void mef_proc(Character& chara)
                 }
                 if (mef(6, ef) == 0)
                 {
-                    if (chara.index != 0)
+                    if (!chara.is_player())
                     {
                         hostileaction(0, chara.index);
                     }
@@ -249,7 +249,7 @@ void mef_proc(Character& chara)
         }
         if (mef(6, ef) == 0)
         {
-            if (chara.index != 0)
+            if (!chara.is_player())
             {
                 hostileaction(0, chara.index);
             }
@@ -273,7 +273,7 @@ void mef_proc(Character& chara)
             wet(chara.index, 25);
             if (mef(6, ef) == 0)
             {
-                if (chara.index != 0)
+                if (!chara.is_player())
                 {
                     hostileaction(0, chara.index);
                 }
