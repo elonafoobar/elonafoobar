@@ -426,7 +426,10 @@ void supply_new_equipment(Character& chara)
                 {
                     if (chara.role == Role::adventurer)
                     {
-                        addnews(1, chara.index, 0, itemname(item.unwrap()));
+                        adventurer_add_news(
+                            NewsType::discovery,
+                            chara,
+                            itemname(item.unwrap()));
                     }
                 }
             }

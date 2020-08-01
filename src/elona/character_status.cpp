@@ -506,7 +506,7 @@ void gain_level(Character& chara)
     }
     else
     {
-        addnews(2, chara.index);
+        adventurer_add_news(NewsType::growth, chara);
     }
     p = 5 * (100 + chara.get_skill(14).base_level * 10) /
             (300 + chara.level * 15) +
