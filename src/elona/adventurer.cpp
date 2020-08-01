@@ -111,36 +111,32 @@ void create_adventurer(Character& adv)
 
 
 
-int advfavoriteskill(int seed)
+int adventurer_favorite_skill(const Character& adv)
 {
+    const auto seed = adv.index;
     randomize(seed);
-    rtval = 0;
-    i_at_m145 = 0;
-    while (1)
+    std::vector<int> skills;
+    while (skills.size() < 2)
     {
-        rtval(i_at_m145) = rnd(300) + 100;
-        if (!the_ability_db[rtval(i_at_m145)])
+        const auto skill_id = rnd(300) + 100;
+        if (the_ability_db[skill_id])
         {
-            continue;
-        }
-        ++i_at_m145;
-        if (i_at_m145 >= 2)
-        {
-            break;
+            skills.push_back(skill_id);
         }
     }
     randomize();
-    return i_at_m145;
+    return choice(skills);
 }
 
 
 
-int advfavoritestat(int seed)
+int adventurer_favorite_stat(const Character& adv)
 {
+    const auto seed = adv.index;
     randomize(seed);
-    i_at_m145 = rnd(8) + 10;
+    const auto ret = rnd(8) + 10;
     randomize();
-    return i_at_m145;
+    return ret;
 }
 
 

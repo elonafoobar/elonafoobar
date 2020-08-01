@@ -209,17 +209,15 @@ void _talk_hv_adventurer_best_friend(Character& speaker)
 
 int _adventurer_get_trained_skill(Character& speaker)
 {
-    int stat = advfavoriteskill(speaker.index);
-    int val = rtval(rnd(stat));
+    int skill_id = adventurer_favorite_skill(speaker);
     if (speaker.impression >= 300)
     {
         if (rnd(3) == 0)
         {
-            stat = advfavoritestat(speaker.index);
-            val = stat;
+            skill_id = adventurer_favorite_stat(speaker);
         }
     }
-    return val;
+    return skill_id;
 }
 
 
@@ -490,8 +488,7 @@ TalkResult _talk_hv_adventurer_materials(Character& speaker)
 
 TalkResult _talk_hv_adventurer_favorite_skill(Character& speaker)
 {
-    int stat = advfavoriteskill(speaker.index);
-    int skill_id = rtval(rnd(stat));
+    int skill_id = adventurer_favorite_skill(speaker);
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.favorite_skill.dialog",
@@ -516,7 +513,7 @@ TalkResult _talk_hv_adventurer_favorite_skill(Character& speaker)
 
 TalkResult _talk_hv_adventurer_favorite_stat(Character& speaker)
 {
-    int skill_id = advfavoritestat(speaker.index);
+    int skill_id = adventurer_favorite_stat(speaker);
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.favorite_stat.dialog",

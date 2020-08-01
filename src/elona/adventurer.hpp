@@ -15,8 +15,9 @@ void create_all_adventurers();
 void create_adventurer(Character& adv);
 void adventurer_update();
 void adventurer_discover_equipment(Character& adv);
-int advfavoriteskill(int = 0);
-int advfavoritestat(int = 0);
+
+int adventurer_favorite_skill(const Character& adv);
+int adventurer_favorite_stat(const Character& adv);
 
 
 
