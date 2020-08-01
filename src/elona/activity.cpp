@@ -1431,39 +1431,49 @@ void activity_sex(Character& chara_a, optional_ref<Character> chara_b)
         chara_a.activity.finish();
         return;
     }
-    for (int cnt = 0; cnt < 2; ++cnt)
+
     {
-        int c{};
-        if (cnt == 0)
-        {
-            c = chara_a.index;
-        }
-        else
-        {
-            c = target_index;
-        }
         chara_a.drunk = 0;
-        if (cnt == 1)
-        {
-            if (rnd(3) == 0)
-            {
-                status_ailment_damage(cdata[c], StatusAilment::insane, 500);
-            }
-            if (rnd(5) == 0)
-            {
-                status_ailment_damage(cdata[c], StatusAilment::paralyzed, 500);
-            }
-            status_ailment_damage(cdata[c], StatusAilment::insane, 300);
-            heal_insanity(cdata[c], 10);
-            chara_gain_skill_exp(cdata[c], 11, 250 + (c >= 57) * 1000);
-            chara_gain_skill_exp(cdata[c], 15, 250 + (c >= 57) * 1000);
-        }
         if (rnd(15) == 0)
         {
-            status_ailment_damage(cdata[c], StatusAilment::sick, 200);
+            status_ailment_damage(chara_a, StatusAilment::sick, 200);
         }
-        chara_gain_skill_exp(cdata[c], 17, 250 + (c >= 57) * 1000);
+        chara_gain_skill_exp(
+            chara_a, 17, 250 + (chara_a.is_map_local()) * 1000);
     }
+
+    {
+        if (rnd(3) == 0)
+        {
+            status_ailment_damage(
+                cdata[target_index], StatusAilment::insane, 500);
+        }
+        if (rnd(5) == 0)
+        {
+            status_ailment_damage(
+                cdata[target_index], StatusAilment::paralyzed, 500);
+        }
+        status_ailment_damage(cdata[target_index], StatusAilment::insane, 300);
+        heal_insanity(cdata[target_index], 10);
+        chara_gain_skill_exp(
+            cdata[target_index],
+            11,
+            250 + (cdata[target_index].is_map_local()) * 1000);
+        chara_gain_skill_exp(
+            cdata[target_index],
+            15,
+            250 + (cdata[target_index].is_map_local()) * 1000);
+        if (rnd(15) == 0)
+        {
+            status_ailment_damage(
+                cdata[target_index], StatusAilment::sick, 200);
+        }
+        chara_gain_skill_exp(
+            cdata[target_index],
+            17,
+            250 + (cdata[target_index].is_map_local()) * 1000);
+    }
+
     int sexvalue = chara_a.get_skill(17).level * (50 + rnd(50)) + 100;
 
     std::string dialog_head;
