@@ -159,15 +159,15 @@ void buff_add(
     if (buff_data.type == BuffType::hex)
     {
         bool resists{};
-        if (sdata(60, chara.index) / 2 > rnd_capped(power * 2 + 100))
+        if (chara.get_skill(60).level / 2 > rnd_capped(power * 2 + 100))
         {
             resists = true;
         }
-        if (power * 3 < sdata(60, chara.index))
+        if (power * 3 < chara.get_skill(60).level)
         {
             resists = true;
         }
-        if (power / 3 > sdata(60, chara.index))
+        if (power / 3 > chara.get_skill(60).level)
         {
             resists = false;
         }

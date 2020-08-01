@@ -2084,7 +2084,8 @@ void map_global_proc_travel_events(Character& chara)
             chara.activity.turn = chara.activity.turn * 5 / 10;
         }
         chara.activity.turn = chara.activity.turn * 100 /
-            (100 + game_data.seven_league_boot_effect + sdata(182, 0));
+            (100 + game_data.seven_league_boot_effect +
+             cdata.player().get_skill(182).level);
         return;
     }
     if (cdata.player().nutrition <= 5000)

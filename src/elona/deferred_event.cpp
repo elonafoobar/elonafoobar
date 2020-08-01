@@ -257,7 +257,7 @@ void eh_player_died(const DeferredEvent&)
     {
         for (int i = 10; i < 18; ++i)
         {
-            if (sdata(i, 0) != 0 && rnd(3) == 0)
+            if (cdata.player().get_skill(i).level != 0 && rnd(3) == 0)
             {
                 chara_gain_skill_exp(cdata.player(), i, -500);
             }

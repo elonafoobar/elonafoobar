@@ -6,6 +6,7 @@
 #include "cell_draw.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "data/types/type_ability.hpp"
 #include "data/types/type_asset.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
@@ -486,7 +487,10 @@ void render_basic_attributes_and_pv_dv()
             const auto text_color = cdata.player().attr_adjs[i] < 0
                 ? snail::Color{200, 0, 0}
                 : snail::Color{0, 0, 0};
-            mes(x, y, std::to_string(sdata(10 + i, 0)), text_color);
+            mes(x,
+                y,
+                std::to_string(cdata.player().get_skill(10 + i).level),
+                text_color);
         }
         else if (i == 8)
         {
@@ -684,8 +688,9 @@ void render_skill_trackers()
             16,
             inf_clocky + 107 + y * 16);
         bmes(
-            ""s + sdata.get(skill, chara).original_level + u8"."s +
-                std::to_string(1000 + sdata.get(skill, chara).experience % 1000)
+            ""s + cdata[chara].get_skill(skill).base_level + u8"."s +
+                std::to_string(
+                    1000 + cdata[chara].get_skill(skill).experience % 1000)
                     .substr(1),
             66,
             inf_clocky + 107 + y * 16);
@@ -693,20 +698,20 @@ void render_skill_trackers()
         {
             elona::snail::Color col{255, 130, 130};
 
-            if (sdata.get(skill, chara).potential >
+            if (cdata[chara].get_skill(skill).potential >
                 elona::g_config.enhanced_skill_upperbound())
             {
                 col = {130, 255, 130};
             }
             else if (
-                sdata.get(skill, chara).potential >
+                cdata[chara].get_skill(skill).potential >
                 elona::g_config.enhanced_skill_lowerbound())
             {
                 col = {255, 255, 130};
             }
 
             bmes(
-                ""s + sdata.get(skill, chara).potential + u8"%"s,
+                ""s + cdata[chara].get_skill(skill).potential + u8"%"s,
                 128,
                 inf_clocky + 107 + y * 16,
                 col);

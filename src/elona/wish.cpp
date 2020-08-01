@@ -11,6 +11,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "config.hpp"
+#include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
 #include "deferred_event.hpp"
@@ -732,7 +733,7 @@ bool wish_for_skill(const std::string& input)
         const auto name = the_ability_db.get_text(id, "name");
         if (!name.empty())
         {
-            if (sdata.get(id, 0).original_level == 0)
+            if (cdata.player().get_skill(id).base_level == 0)
             {
                 txt(i18n::s.get("core.wish.you_learn_skill", name),
                     Message::color{ColorIndex::orange});

@@ -6,6 +6,7 @@
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "data/types/type_ability.hpp"
 #include "data/types/type_blending_recipe.hpp"
 #include "data/types/type_item.hpp"
 #include "draw.hpp"
@@ -127,7 +128,7 @@ int calc_success_rate(
          the_blending_recipe_db.ensure(recipe_id).required_skills)
     {
         const auto legacy_skill_id = the_ability_db.ensure(skill_id).legacy_id;
-        if (sdata(legacy_skill_id, 0) <= 0)
+        if (cdata.player().get_skill(legacy_skill_id).level <= 0)
         {
             rate -= 125;
             continue;
@@ -137,7 +138,9 @@ int calc_success_rate(
         {
             d = 1;
         }
-        int p = (d * 200 / sdata(legacy_skill_id, 0) - 200) * -1;
+        int p =
+            (d * 200 / cdata.player().get_skill(legacy_skill_id).level - 200) *
+            -1;
         if (p > 0)
         {
             p /= 5;
@@ -469,14 +472,16 @@ void window_recipe(
         {
             const auto legacy_skill_id =
                 the_ability_db.ensure(skill_id).legacy_id;
-            const auto text_color = (required_level > sdata(legacy_skill_id, 0))
+            const auto text_color =
+                (required_level >
+                 cdata.player().get_skill(legacy_skill_id).level)
                 ? snail::Color{150, 0, 0}
                 : snail::Color{0, 120, 0};
             mes(dx_ + cnt % 2 * 140,
                 dy_ + cnt / 2 * 17,
                 the_ability_db.get_text(skill_id, "name") + u8"  "s +
-                    required_level + u8"("s + sdata(legacy_skill_id, 0) +
-                    u8")"s,
+                    required_level + u8"("s +
+                    cdata.player().get_skill(legacy_skill_id).level + u8")"s,
                 text_color);
             ++cnt;
         }

@@ -30,7 +30,7 @@ int Skill_resistance(const EnumString& element, LuaCharacterHandle chara)
 {
     auto& chara_ref = lua::ref<Character>(chara);
     Element element_value = LuaEnums::ElementTable.ensure_from_string(element);
-    return sdata(static_cast<int>(element_value), chara_ref.index);
+    return chara_ref.get_skill(static_cast<int>(element_value)).level;
 }
 
 

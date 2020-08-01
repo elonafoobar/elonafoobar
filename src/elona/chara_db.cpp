@@ -2,6 +2,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "class.hpp"
+#include "data/types/type_ability.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "food.hpp"
@@ -65,7 +66,7 @@ void chara_db_set_stats(Character& chara, CharaId chara_id)
     {
         if (const auto ability_data = the_ability_db[pair.first])
         {
-            sdata(ability_data->legacy_id, chara.index) = pair.second;
+            chara.get_skill(ability_data->legacy_id).level = pair.second;
         }
         else
         {

@@ -630,7 +630,8 @@ bool casino_blackjack()
             }
             list(0, listmax) = 2;
             listn(0, listmax) = i18n::s.get(
-                "core.casino.blackjack.game.choices.cheat", sdata(12, 0));
+                "core.casino.blackjack.game.choices.cheat",
+                cdata.player().get_skill(12).level);
             ++listmax;
         }
         chatesc = -1;
@@ -653,7 +654,7 @@ bool casino_blackjack()
                 {
                     if (pileremain() > 10)
                     {
-                        if (rnd_capped(sdata(19, 0)) > 40)
+                        if (rnd_capped(cdata.player().get_skill(19).level) > 40)
                         {
                             txt(i18n::s.get(
                                 "core.casino.blackjack.game.bad_feeling"));
@@ -680,7 +681,7 @@ bool casino_blackjack()
             {
                 p = 60;
             }
-            if (rnd_capped(sdata(12, 0)) < rnd(p(0)))
+            if (rnd_capped(cdata.player().get_skill(12).level) < rnd(p(0)))
             {
                 atxinit();
                 noteadd(i18n::s.get("core.casino.blackjack.game.cheat.dialog"));

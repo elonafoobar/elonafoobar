@@ -1,5 +1,6 @@
 #include "ability.hpp"
 #include "character.hpp"
+#include "data/types/type_ability.hpp"
 #include "gdata.hpp"
 #include "variables.hpp"
 
@@ -180,7 +181,7 @@ void map_get_trainer_skills(const Character& chara)
 
     for (const auto& skill_id : skills)
     {
-        if (sdata.get(skill_id, chara.index).original_level == 0)
+        if (chara.get_skill(skill_id).base_level == 0)
         {
             list(0, listmax) = skill_id;
             list(1, listmax) =

@@ -24,7 +24,7 @@ namespace elona::lua::api::classes::class_LuaAbility
             return 0; \
         } \
         auto& ref = *a.get_ref(); \
-        return sdata.get(a.skill_id, ref.index).name; \
+        return ref.get_skill(a.skill_id).name; \
     })
 
 #define ELONA_LUA_SKILL_PROPERTY(name) \
@@ -35,7 +35,7 @@ namespace elona::lua::api::classes::class_LuaAbility
                 return 0; \
             } \
             auto& ref = *a.get_ref(); \
-            return sdata.get(a.skill_id, ref.index).name; \
+            return ref.get_skill(a.skill_id).name; \
         }, \
         [](classes::LuaAbility& a, int i) { \
             if (!a.is_valid()) \
@@ -43,7 +43,7 @@ namespace elona::lua::api::classes::class_LuaAbility
                 return; \
             } \
             auto& ref = *a.get_ref(); \
-            sdata.get(a.skill_id, ref.index).name = i; \
+            ref.get_skill(a.skill_id).name = i; \
         })
 
 void bind(sol::state& lua)
@@ -66,14 +66,14 @@ void bind(sol::state& lua)
      *
      * [RW] The skill's current level.
      */
-    LuaAbility.set("current_level", ELONA_LUA_SKILL_PROPERTY(current_level));
+    LuaAbility.set("current_level", ELONA_LUA_SKILL_PROPERTY(level));
 
     /**
      * @luadoc original_level field num
      *
      * [RW] The skill's original level.
      */
-    LuaAbility.set("original_level", ELONA_LUA_SKILL_PROPERTY(original_level));
+    LuaAbility.set("original_level", ELONA_LUA_SKILL_PROPERTY(base_level));
 
     /**
      * @luadoc potential field num

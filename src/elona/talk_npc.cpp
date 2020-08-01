@@ -6,6 +6,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
 #include "deferred_event.hpp"
 #include "elona.hpp"
@@ -1229,7 +1230,7 @@ TalkResult talk_result_maid_chase_out(Character& speaker)
 TalkResult talk_prostitute_buy(Character& speaker)
 {
     int sexvalue =
-        sdata(17, speaker.index) * 25 + 100 + cdata.player().fame / 10;
+        speaker.get_skill(17).level * 25 + 100 + cdata.player().fame / 10;
     if (cdata.player().gold >= sexvalue)
     {
         ELONA_APPEND_RESPONSE(
@@ -1505,9 +1506,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
                 selected_skill,
                 clamp(
                     15 -
-                        sdata.get(selected_skill, cdata.player().index)
-                                .potential /
-                            15,
+                        cdata.player().get_skill(selected_skill).potential / 15,
                     2,
                     15));
             buff =
@@ -1836,7 +1835,9 @@ TalkResult talk_npc(Character& speaker)
                     {
                         if (speaker.impression < 100)
                         {
-                            if (rnd_capped(sdata(17, 0) + 1) > 10)
+                            if (rnd_capped(
+                                    cdata.player().get_skill(17).level + 1) >
+                                10)
                             {
                                 chara_modify_impression(speaker, rnd(3));
                             }

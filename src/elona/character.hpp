@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "../util/range.hpp"
+#include "ability.hpp"
 #include "consts.hpp"
 #include "data/types/type_character.hpp"
 #include "eobject/eobject.hpp"
@@ -404,6 +405,24 @@ public:
     data::InstanceId race;
     data::InstanceId class_;
     std::string talk;
+
+
+
+private:
+    SkillData _skills;
+
+
+public:
+    Ability& get_skill(int id)
+    {
+        return _skills.get(id);
+    }
+
+
+    const Ability& get_skill(int id) const
+    {
+        return _skills.get(id);
+    }
 
 
 

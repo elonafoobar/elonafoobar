@@ -213,7 +213,7 @@ void mef_proc(Character& chara)
     {
         if (chara.is_floating() == 0 || chara.gravity > 0)
         {
-            if (sdata(63, chara.index) / 50 < 7)
+            if (chara.get_skill(63).level / 50 < 7)
             {
                 if (is_in_fov(chara))
                 {
@@ -307,7 +307,8 @@ bool mef_proc_from_movement(Character& chara)
         {
             if (rnd_capped(mef(5, i) + 25) <
                     rnd_capped(
-                        sdata(10, chara.index) + sdata(12, chara.index) + 1) ||
+                        chara.get_skill(10).level + chara.get_skill(12).level +
+                        1) ||
                 chara.weight > 100)
             {
                 if (is_in_fov(chara))

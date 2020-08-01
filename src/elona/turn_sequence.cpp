@@ -1507,7 +1507,7 @@ void proc_turn_end(Character& chara)
     }
     if (chara.poisoned > 0)
     {
-        damage_hp(chara, rnd_capped(2 + sdata(11, chara.index) / 10), -4);
+        damage_hp(chara, rnd_capped(2 + chara.get_skill(11).level / 10), -4);
         status_ailment_heal(chara, StatusAilment::poisoned, 1);
         if (chara.poisoned > 0)
         {
@@ -1563,7 +1563,7 @@ void proc_turn_end(Character& chara)
             if (!enchantment_find(chara, 60010 + p))
             {
                 chara.attr_adjs[p] -=
-                    sdata.get(10 + p, chara.index).original_level / 25 + 1;
+                    chara.get_skill(10 + p).base_level / 25 + 1;
                 chara_refresh(chara);
             }
         }
@@ -1755,11 +1755,11 @@ void proc_turn_end(Character& chara)
     {
         if (rnd(6) == 0)
         {
-            heal_hp(chara, rnd_capped(sdata(154, chara.index) / 3 + 1) + 1);
+            heal_hp(chara, rnd_capped(chara.get_skill(154).level / 3 + 1) + 1);
         }
         if (rnd(5) == 0)
         {
-            heal_mp(chara, rnd_capped(sdata(155, chara.index) / 2 + 1) + 1);
+            heal_mp(chara, rnd_capped(chara.get_skill(155).level / 2 + 1) + 1);
         }
     }
 }

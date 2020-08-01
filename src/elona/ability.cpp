@@ -5,6 +5,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "data/types/type_ability.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -46,51 +47,31 @@ int decrease_potential(int potential, int level_delta)
 void set_ability(
     Character& chara,
     int id,
-    int original_level,
+    int base_level,
     int experience,
     int potential)
 {
-    sdata.get(id, chara.index).original_level = clamp(original_level, 0, 2000);
-    sdata.get(id, chara.index).experience = experience;
-    sdata.get(id, chara.index).potential = potential;
+    chara.get_skill(id).base_level = clamp(base_level, 0, 2000);
+    chara.get_skill(id).experience = experience;
+    chara.get_skill(id).potential = potential;
 }
 
 } // namespace
 
 
 
-SkillData sdata;
-
-
-
 SkillData::SkillData()
-    : storage(ELONA_MAX_CHARACTERS, std::vector<Ability>(600))
+    : _storage(600)
 {
-}
-
-
-
-void SkillData::clear(int chara_index)
-{
-    range::fill(storage[chara_index], Ability{});
-}
-
-
-
-void SkillData::copy(int destination_chara_index, int source_chara_index)
-{
-    range::copy(
-        storage[source_chara_index],
-        std::begin(storage[destination_chara_index]));
 }
 
 
 
 void chara_init_skill(Character& chara, int skill_id, int initial_level)
 {
-    int original_level = sdata.get(skill_id, chara.index).original_level;
-    int potential = calc_initial_skill_base_potential(
-        skill_id, original_level, initial_level);
+    int base_level = chara.get_skill(skill_id).base_level;
+    int potential =
+        calc_initial_skill_base_potential(skill_id, base_level, initial_level);
     int level;
     if (skill_id == 18)
     {
@@ -111,12 +92,12 @@ void chara_init_skill(Character& chara, int skill_id, int initial_level)
         level = initial_level;
         potential = 100;
     }
-    if (original_level + level > 2000)
+    if (base_level + level > 2000)
     {
-        level = 2000 - original_level;
+        level = 2000 - base_level;
     }
-    sdata.get(skill_id, chara.index).original_level += clamp(level, 0, 2000);
-    sdata.get(skill_id, chara.index).potential += potential;
+    chara.get_skill(skill_id).base_level += clamp(level, 0, 2000);
+    chara.get_skill(skill_id).potential += potential;
 }
 
 
@@ -126,10 +107,10 @@ void chara_init_common_skills(Character& chara)
     for (int element = 50; element < 61; ++element)
     {
         auto level = calc_initial_resistance_level(
-            chara, sdata(element, chara.index), element);
-        sdata.get(element, chara.index).original_level = clamp(level, 1, 2000);
-        sdata.get(element, chara.index).experience = 0;
-        sdata.get(element, chara.index).potential = 0;
+            chara, chara.get_skill(element).level, element);
+        chara.get_skill(element).base_level = clamp(level, 1, 2000);
+        chara.get_skill(element).experience = 0;
+        chara.get_skill(element).potential = 0;
     }
 
     chara_init_skill(chara, 100, 4);
@@ -167,7 +148,7 @@ void chara_gain_skill(Character& chara, int id, int initial_level, int stock)
             modify_potential(chara, id, 1);
         }
     }
-    if (sdata.get(id, chara.index).original_level != 0)
+    if (chara.get_skill(id).base_level != 0)
     {
         if (id < 400)
         {
@@ -183,8 +164,8 @@ void chara_gain_skill(Character& chara, int id, int initial_level, int stock)
     {
         modify_potential(chara, id, 50);
     }
-    sdata.get(id, chara.index).original_level = clamp(
-        sdata.get(id, chara.index).original_level + initial_level, 1, 2000);
+    chara.get_skill(id).base_level =
+        clamp(chara.get_skill(id).base_level + initial_level, 1, 2000);
 
     chara_refresh(chara);
 }
@@ -193,7 +174,7 @@ void chara_gain_skill(Character& chara, int id, int initial_level, int stock)
 
 void gain_special_action()
 {
-    if (sdata.get(174, 0).original_level > 15)
+    if (cdata.player().get_skill(174).base_level > 15)
     {
         if (spact(29) == 0)
         {
@@ -212,7 +193,7 @@ void gain_special_action()
                 Message::color{ColorIndex::orange});
         }
     }
-    if (sdata.get(152, 0).original_level > 15)
+    if (cdata.player().get_skill(152).base_level > 15)
     {
         if (spact(31) == 0)
         {
@@ -229,9 +210,9 @@ void gain_special_action()
 
 void chara_gain_fixed_skill_exp(Character& chara, int id, int experience)
 {
-    auto lv = sdata.get(id, chara.index).original_level;
-    auto exp = sdata.get(id, chara.index).experience + experience;
-    auto potential = sdata.get(id, chara.index).potential;
+    auto lv = chara.get_skill(id).base_level;
+    auto exp = chara.get_skill(id).experience + experience;
+    auto potential = chara.get_skill(id).potential;
 
     if (potential == 0)
         return;
@@ -299,7 +280,7 @@ void chara_gain_skill_exp(
     int experience_divisor_of_related_basic_attribute,
     int experience_divisor_of_character_level)
 {
-    if (sdata.get(id, chara.index).original_level == 0)
+    if (chara.get_skill(id).base_level == 0)
         return;
     if (experience == 0)
         return;
@@ -314,8 +295,8 @@ void chara_gain_skill_exp(
                 experience, experience_divisor_of_related_basic_attribute));
     }
 
-    auto lv = sdata.get(id, chara.index).original_level;
-    auto potential = sdata.get(id, chara.index).potential;
+    auto lv = chara.get_skill(id).base_level;
+    auto potential = chara.get_skill(id).potential;
     if (potential == 0)
         return;
 
@@ -365,7 +346,7 @@ void chara_gain_skill_exp(
         }
     }
 
-    int new_exp_level = exp + sdata.get(id, chara.index).experience;
+    int new_exp_level = exp + chara.get_skill(id).experience;
     if (new_exp_level >= 1000)
     {
         const auto lv_delta = new_exp_level / 1000;
@@ -441,7 +422,7 @@ void chara_gain_exp_literacy(Character& chara)
 
 void chara_gain_exp_negotiation(Character& chara, int gold)
 {
-    const auto current_level = sdata(156, chara.index);
+    const auto current_level = chara.get_skill(156).level;
     if (gold >= calc_exp_gain_negotiation_gold_threshold(current_level))
     {
         chara_gain_skill_exp(
