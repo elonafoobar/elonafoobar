@@ -586,7 +586,7 @@ CData::CData()
 
 bool chara_place(Character& chara)
 {
-    if (chara.index == cdata.tmp().index)
+    if (chara == cdata.tmp())
     {
         chara.set_state(Character::State::empty);
         return false;

@@ -491,7 +491,7 @@ bool _magic_301(Character& subject, Character& target)
     }
     if (game_data.mount != 0)
     {
-        if (target.index == subject.index)
+        if (target == subject)
         {
             int stat = cell_findspace(
                 cdata.player().position.x, cdata.player().position.y, 1);
@@ -520,7 +520,7 @@ bool _magic_301(Character& subject, Character& target)
         txt(i18n::s.get("core.magic.mount.not_client"));
         return true;
     }
-    if (target.index == subject.index)
+    if (target == subject)
     {
         if (game_data.mount == 0)
         {
@@ -3073,7 +3073,7 @@ bool _magic_631(Character& subject)
         {
             continue;
         }
-        if (subject.index == cnt.index)
+        if (subject == cnt)
         {
             continue;
         }
@@ -3131,7 +3131,7 @@ bool _magic_466(Character& subject)
         {
             continue;
         }
-        if (subject.index == cnt.index)
+        if (subject == cnt)
         {
             continue;
         }
@@ -3171,7 +3171,7 @@ bool _magic_657(Character& subject)
         {
             continue;
         }
-        if (subject.index == cnt.index)
+        if (subject == cnt)
         {
             continue;
         }
@@ -3231,7 +3231,7 @@ bool _magic_656(Character& subject)
         {
             continue;
         }
-        if (subject.index == cnt.index)
+        if (subject == cnt)
         {
             continue;
         }

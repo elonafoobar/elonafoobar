@@ -495,6 +495,19 @@ public:
 
 
 
+    bool operator==(const Character& other) const noexcept
+    {
+        return this == &other;
+    }
+
+
+    bool operator!=(const Character& other) const noexcept
+    {
+        return this != &other;
+    }
+
+
+
 private:
     Character(const Character&) = default;
     Character(Character&&) = default;

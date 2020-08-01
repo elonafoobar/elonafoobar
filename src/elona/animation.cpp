@@ -900,14 +900,14 @@ void MiracleAnimation::do_play()
         }
         if (_mode == Mode::target_one)
         {
-            if (cnt.index != _chara.index)
+            if (cnt != _chara)
             {
                 continue;
             }
         }
         else
         {
-            if (cnt.index == _chara.index)
+            if (cnt == _chara)
             {
                 continue;
             }

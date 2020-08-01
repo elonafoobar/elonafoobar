@@ -355,7 +355,7 @@ int damage_hp(
         {
             for (auto&& chara : cdata.player_and_allies())
             {
-                if (victim.index == chara.index)
+                if (victim == chara)
                 {
                     continue;
                 }

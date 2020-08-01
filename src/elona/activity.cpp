@@ -402,7 +402,7 @@ std::pair<bool, int> activity_perform_proc_audience(
     {
         return std::make_pair(false, 0); // TODO: unreachable?
     }
-    if (audience.index == performer.index)
+    if (audience == performer)
     {
         return std::make_pair(false, 0);
     }

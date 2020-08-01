@@ -1332,7 +1332,7 @@ TalkResult talk_guard_where_is(Character& speaker, int chatval_)
     }
     p = dist(cdata.player().position, chara_you_ask.position);
 
-    if (chara_you_ask.index == speaker.index)
+    if (chara_you_ask == speaker)
     {
         s = i18n::s.get("core.talk.npc.common.you_kidding", speaker);
     }
