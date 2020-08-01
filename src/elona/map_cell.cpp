@@ -9,10 +9,6 @@
 namespace elona
 {
 
-int tc_at_m81 = 0;
-
-
-
 void cell_featset(int x, int y, int info1, int info2, int info3, int info4)
 {
     elona_vector1<int> feat_at_m80;
@@ -172,7 +168,7 @@ void cell_movechara(Character& chara, int x, int y)
         {
             return;
         }
-        cell_swap(chara, cdata[tc_at_m81]);
+        cell_swap(chara, cdata[chara_b_index_plus_one - 1]);
     }
     else
     {
