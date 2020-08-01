@@ -13,7 +13,7 @@ local function mod_skill_level_clamp(args, id, amount)
 
    skill.level =
       math.clamp(skill.level + amount,
-                 skill.level and 1 or 0, 9999)
+                 skill.level > 0 and 1 or 0, 9999)
 end
 
 local function get_description(self, power)
