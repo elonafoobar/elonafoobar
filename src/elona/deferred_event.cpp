@@ -996,7 +996,7 @@ void eh_guest_visit(const DeferredEvent&)
             {
                 if (item->param1 == 2)
                 {
-                    cell_swap(chara.index, -1, item->pos().x, item->pos().y);
+                    cell_swap(chara, item->pos());
                     chair_for_guest = item;
                     chair = item;
                     break;
@@ -1033,7 +1033,7 @@ void eh_guest_visit(const DeferredEvent&)
         }
         if (chair)
         {
-            cell_swap(chara.index, -1, chair->pos().x, chair->pos().y);
+            cell_swap(chara, chair->pos());
         }
         chara.direction = direction(
             chara.position.x,

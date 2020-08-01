@@ -102,49 +102,56 @@ void cell_check(int x, int y)
 
 
 
-bool cell_swap(int chara_index_a, int chara_index_b, int x, int y)
+bool cell_swap(Character& chara, const Position& pos)
 {
-    int x2_at_m81 = 0;
-    int y2_at_m81 = 0;
+    if (const auto chara_b_index_plus_one =
+            cell_data.at(pos.x, pos.y).chara_index_plus_one)
+    {
+        return cell_swap(chara, cdata[chara_b_index_plus_one - 1]);
+    }
+
     if (game_data.mount != 0)
     {
-        if (game_data.mount == chara_index_a ||
-            game_data.mount == chara_index_b)
+        if (game_data.mount == chara.index)
         {
             return false;
         }
     }
-    tc_at_m81 = chara_index_b;
-    if (tc_at_m81 == -1)
+
+    cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one = 0;
+    chara.position = pos;
+    cell_data.at(pos.x, pos.y).chara_index_plus_one = chara.index + 1;
+
+    if (chara.is_player())
     {
-        if (cell_data.at(x, y).chara_index_plus_one != 0)
+        if (game_data.mount)
         {
-            tc_at_m81 = cell_data.at(x, y).chara_index_plus_one - 1;
+            cdata[game_data.mount].position = cdata.player().position;
         }
     }
-    if (tc_at_m81 != -1)
+    return true;
+}
+
+
+
+bool cell_swap(Character& chara_a, Character& chara_b)
+{
+    if (game_data.mount != 0)
     {
-        cell_data
-            .at(cdata[chara_index_a].position.x,
-                cdata[chara_index_a].position.y)
-            .chara_index_plus_one = tc_at_m81 + 1;
-        x2_at_m81 = cdata[tc_at_m81].position.x;
-        y2_at_m81 = cdata[tc_at_m81].position.y;
-        cdata[tc_at_m81].position = cdata[chara_index_a].position;
+        if (game_data.mount == chara_a.index ||
+            game_data.mount == chara_b.index)
+        {
+            return false;
+        }
     }
-    else
-    {
-        cell_data
-            .at(cdata[chara_index_a].position.x,
-                cdata[chara_index_a].position.y)
-            .chara_index_plus_one = 0;
-        x2_at_m81 = x;
-        y2_at_m81 = y;
-    }
-    cell_data.at(x2_at_m81, y2_at_m81).chara_index_plus_one = chara_index_a + 1;
-    cdata[chara_index_a].position.x = x2_at_m81;
-    cdata[chara_index_a].position.y = y2_at_m81;
-    if (chara_index_a == 0 || tc_at_m81 == 0)
+
+    std::swap(chara_a.position, chara_b.position);
+    cell_data.at(chara_a.position.x, chara_a.position.y).chara_index_plus_one =
+        chara_a.index + 1;
+    cell_data.at(chara_b.position.x, chara_b.position.y).chara_index_plus_one =
+        chara_b.index + 1;
+
+    if (chara_a.is_player() || chara_b.is_player())
     {
         if (game_data.mount)
         {
@@ -164,7 +171,7 @@ void cell_movechara(int chara_index, int x, int y)
         {
             return;
         }
-        cell_swap(chara_index, tc_at_m81);
+        cell_swap(cdata[chara_index], cdata[tc_at_m81]);
     }
     else
     {

@@ -302,7 +302,7 @@ TurnResult _bump_into_character(Character& chara)
                 cdata.player().next_position = chara.position;
                 ui_scroll_screen();
             }
-            cell_swap(cdata.player().index, chara.index);
+            cell_swap(cdata.player(), chara);
             txt(i18n::s.get("core.action.move.displace.text", chara));
             if (chara.id == CharaId::rogue)
             {

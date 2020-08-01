@@ -754,7 +754,7 @@ proc_npc_movement_event(Character& chara, int& enemy_index, bool retreat)
         {
             if (chara.enemy_id != enemy_index)
             {
-                const auto did_swap = cell_swap(chara.index, enemy_index);
+                const auto did_swap = cell_swap(chara, cdata[enemy_index]);
                 if (did_swap && is_in_fov(chara))
                 {
                     txt(i18n::s.get(
