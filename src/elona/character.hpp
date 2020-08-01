@@ -807,7 +807,7 @@ void go_hostile();
 void get_pregnant(Character& chara);
 void chara_get_wet(Character& chara, int turns);
 void chara_act_hostile_action(Character& attacker, Character& target);
-void turn_aggro(int = 0, int = 0, int = 0);
+void turn_aggro(Character& chara, Character& target, int hate);
 void ride_begin(int = 0);
 void ride_end();
 void make_sound(

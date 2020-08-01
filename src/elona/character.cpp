@@ -1839,15 +1839,15 @@ void ride_end()
 
 
 
-void turn_aggro(int chara_index, int target_index, int hate)
+void turn_aggro(Character& chara, Character& target, int hate)
 {
-    if (target_index < 16)
+    if (target.is_player_or_ally())
     {
-        cdata[chara_index].relationship = -3;
+        chara.relationship = -3;
     }
-    cdata[chara_index].hate = hate;
-    cdata[chara_index].emotion_icon = 218;
-    cdata[chara_index].enemy_id = target_index;
+    chara.hate = hate;
+    chara.emotion_icon = 218;
+    chara.enemy_id = target.index;
 }
 
 
@@ -1889,7 +1889,7 @@ void make_sound(
                             Message::color{ColorIndex::cyan});
                         txt(i18n::s.get("core.misc.sound.can_no_longer_stand"));
                     }
-                    turn_aggro(chara.index, source_chara.index, 80);
+                    turn_aggro(chara, source_chara, 80);
                 }
             }
         }
