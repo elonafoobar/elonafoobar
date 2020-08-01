@@ -2175,26 +2175,24 @@ void sleep_start(const OptionalItemRef& bed)
     }
     if (game_data.character_and_status_for_gene != 0)
     {
-        auto gene_chara_index = -1;
-        for (const auto& ally : cdata.allies())
+        optional_ref<Character> gene_chara;
+        for (auto& ally : cdata.allies())
         {
-            if (ally.has_made_gene())
+            if (ally.state() == Character::State::alive)
             {
-                if (ally.state() == Character::State::alive)
+                if (ally.has_made_gene())
                 {
-                    gene_chara_index = ally.index;
+                    gene_chara = ally;
                     break;
                 }
             }
         }
-        if (gene_chara_index != -1)
+        if (gene_chara)
         {
-            cdata[gene_chara_index].has_made_gene() = false;
+            gene_chara->has_made_gene() = false;
             show_random_event_window(
                 i18n::s.get("core.activity.sleep.new_gene.title"),
-                i18n::s.get(
-                    "core.activity.sleep.new_gene.text",
-                    cdata[gene_chara_index]),
+                i18n::s.get("core.activity.sleep.new_gene.text", *gene_chara),
                 {i18n::s.get_enum("core.activity.sleep.new_gene.choices", 0)},
                 u8"bg_re14");
             save_gene();
