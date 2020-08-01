@@ -112,7 +112,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         find_enemy_target(cdata.player(), true);
     }
 
-    if (game_data.wizard)
+    if (debug_is_wizard())
     {
         if (action == "wizard_mewmewmew")
         {

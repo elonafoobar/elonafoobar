@@ -9,6 +9,7 @@
 #include "../util/scope_guard.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "debug.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "log.hpp"
@@ -378,7 +379,7 @@ void net_send_death(
     {
         return;
     }
-    if (game_data.wizard)
+    if (debug_is_wizard())
     {
         return;
     }
@@ -406,7 +407,7 @@ void net_send_wish(const std::string& input, const std::string& result)
     {
         return;
     }
-    if (game_data.wizard)
+    if (debug_is_wizard())
     {
         return;
     }
@@ -433,7 +434,7 @@ void net_send_news(const std::string& locale_id, const std::string& extra_info)
     {
         return;
     }
-    if (game_data.wizard)
+    if (debug_is_wizard())
     {
         return;
     }

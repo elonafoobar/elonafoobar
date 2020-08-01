@@ -164,7 +164,6 @@ public:
     ELONA_DEFINE_OPTION(int, walk_wait)
     ELONA_DEFINE_OPTION(bool, weather_effect)
     ELONA_DEFINE_OPTION(bool, window_animation)
-    ELONA_DEFINE_OPTION(bool, wizard)
 
     ELONA_DEFINE_OPTION(bool, is_test) // testing use only
 };

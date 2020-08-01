@@ -299,11 +299,19 @@ config {
       option "auto_target", false,
    },
 
-   -- Hidden sections
+   section "wizard", {
+      option "is_enabled", {
+         default = false,
+         is_hidden = true,
+      },
 
-   section "debug", {
-      option "wizard", false,
-
-      is_hidden = true,
+      option "no_hp_damage", false,
+      option "no_mp_damage", false,
+      option "no_sp_damage", false,
+      option "no_spellstock_cost", false,
+      option "no_hungry", false,
+      option "no_sleepy", false,
+      option "can_unlock_all_keys", false,
+      option "can_cast_all_spells", false,
    },
 }

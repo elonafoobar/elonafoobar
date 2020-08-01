@@ -584,6 +584,50 @@ Provide a script's name, like 'my_script.lua' for 'data/script/my_script.lua'.
             },
          },
 
+         wizard = {
+            name = "Wizard Mode Settings",
+
+            no_hp_damage = {
+               name = "No HP Damage",
+               doc = "You don't receive any HP damage."
+            },
+
+            no_mp_damage = {
+               name = "No MP Damage",
+               doc = "You don't receive any MP damage."
+            },
+
+            no_sp_damage = {
+               name = "No SP Damage",
+               doc = "You don't receive any SP (stamina) damage."
+            },
+
+            no_spellstock_cost = {
+               name = "No Spellstock Cost",
+               doc = "You spend no spellstock."
+            },
+
+            no_hungry = {
+               name = "No Hungry",
+               doc = "You won't get hungry."
+            },
+
+            no_sleepy = {
+               name = "No Sleepy",
+               doc = "You won't get sleepy."
+            },
+
+            can_unlock_all_keys = {
+               name = "Can Unlock All Keys",
+               doc = "You can unlock all keys without failure."
+            },
+
+            can_cast_all_spells = {
+               name = "Can Cast All Spells",
+               doc = "You can cast all spells without failure. (Your success rates to cast spells become 100%.)"
+            },
+         },
+
          keybindings = {
             name = "Keybindings",
             doc = "Configure game keybindings.",

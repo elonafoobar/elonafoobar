@@ -659,7 +659,7 @@ TurnResult do_interact_command()
         }
     }
     prompt.append("name", 3);
-    if (game_data.wizard)
+    if (debug_is_wizard())
     {
         prompt.append("info", 6);
         if (target_index != 0 && !cdata[target_index].is_hung_on_sand_bag())
@@ -3971,7 +3971,7 @@ TurnResult step_into_gate(const ItemRef& moon_gate)
         return TurnResult::pc_turn_user_error;
     }
 
-    if (!game_data.wizard)
+    if (!debug_is_wizard())
     {
         save_game();
     }
@@ -5882,10 +5882,7 @@ void proc_autopick()
                 }
                 if (int(op.type) & int(Autopick::Operation::Type::save))
                 {
-                    if (!game_data.wizard)
-                    {
-                        save_game();
-                    }
+                    save_set_autosave();
                 }
             }
             break;
@@ -5963,7 +5960,7 @@ optional<bool> try_unlock_internal(int difficulty)
         txt(i18n::s.get("core.action.unlock.too_difficult"));
         f = 1;
     }
-    if (debug::voldemort)
+    if (debug_has_wizard_flag("core.wizard.can_unlock_all_keys"))
     {
         f = 0;
     }
@@ -6364,7 +6361,7 @@ TurnResult try_to_open_locked_door(Character& chara)
     {
         f = 1;
     }
-    if (debug::voldemort)
+    if (debug_has_wizard_flag("core.wizard.can_unlock_all_keys"))
     {
         f = 1;
     }

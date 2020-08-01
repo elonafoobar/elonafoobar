@@ -1820,7 +1820,7 @@ void ui_render_non_hud()
 
     render_pc_position_in_minimap();
 
-    if (debug::voldemort)
+    if (debug_is_wizard())
     {
         render_stair_positions_in_minimap();
     }

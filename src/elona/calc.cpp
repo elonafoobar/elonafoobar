@@ -1371,7 +1371,7 @@ int calc_spell_power(const Character& caster, int id)
 
 int calc_spell_success_rate(const Character& caster, int id)
 {
-    if (debug::voldemort)
+    if (debug_has_wizard_flag("core.wizard.can_cast_all_spells"))
     {
         return 100;
     }
@@ -1457,7 +1457,7 @@ int calc_spell_success_rate(const Character& caster, int id)
 
 int calc_spell_cost_mp(const Character& caster, int id)
 {
-    if (debug::voldemort)
+    if (debug_has_wizard_flag("core.wizard.no_mp_damage"))
         return 1;
 
     if (caster.is_player())
@@ -1484,7 +1484,7 @@ int calc_spell_cost_mp(const Character& caster, int id)
 
 int calc_spell_cost_stock(const Character& caster, int id)
 {
-    if (debug::voldemort)
+    if (debug_has_wizard_flag("core.wizard.no_spellstock_cost"))
         return 1;
 
     int cost =
@@ -1511,10 +1511,6 @@ int calcscore()
     if (game_data.death_count > 1)
     {
         score = score / 10 + 1;
-    }
-    if (game_data.wizard)
-    {
-        score = 0;
     }
     return score;
 }

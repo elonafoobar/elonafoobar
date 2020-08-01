@@ -1423,7 +1423,7 @@ TurnResult pc_turn(bool advance_time)
 
     while (true)
     {
-        if (game_data.wizard)
+        if (debug_is_wizard())
         {
             InputContext::instance().enable_category(ActionCategory::wizard);
         }
@@ -1707,7 +1707,7 @@ void proc_turn_end(Character& chara)
         }
         if (game_data.continuous_active_hours >= 30)
         {
-            if (debug::voldemort)
+            if (debug_has_wizard_flag("core.wizard.no_sleepy"))
             {
                 game_data.continuous_active_hours = 0;
             }

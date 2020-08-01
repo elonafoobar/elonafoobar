@@ -2,6 +2,7 @@
 
 #include "../audio.hpp"
 #include "../character_making.hpp"
+#include "../debug.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
@@ -38,14 +39,7 @@ void UIMenuCharamakeAlias::_reroll_aliases()
     {
         if (list(0, 0) == -1 && _locked_aliases(cnt) == 0)
         {
-            if (game_data.wizard == 1)
-            {
-                listn(0, cnt) = u8"*Debug*"s;
-            }
-            else
-            {
-                listn(0, cnt) = random_title(RandomTitleType::character);
-            }
+            listn(0, cnt) = random_title(RandomTitleType::character);
         }
         if (cnt == 0)
         {

@@ -329,7 +329,6 @@ void bind_setters()
     CONFIG_OPTION("balance.extra_class", bool, extra_class);
     CONFIG_OPTION("balance.extra_race", bool, extra_race);
     CONFIG_OPTION("balance.restock_interval", int, restock_interval);
-    CONFIG_OPTION("debug.wizard", bool, wizard);
     CONFIG_OPTION("font.file", std::string, font_filename);
     CONFIG_OPTION("foobar.allow_enhanced_skill_tracking", bool, allow_enhanced_skill);
     CONFIG_OPTION("foobar.autopick", bool, autopick);

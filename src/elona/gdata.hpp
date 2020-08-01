@@ -214,7 +214,6 @@ struct GameData
     int last_month_when_trainer_visited;
     int item_turns;
     int next_level_minus_one_kumiromis_experience_becomes_available;
-    int wizard;
     ArrayType<5> tcg_decks;
     int destination_outer_map;
     int lost_wallet_count;

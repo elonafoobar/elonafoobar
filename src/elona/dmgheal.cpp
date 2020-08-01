@@ -278,7 +278,7 @@ int damage_hp(
         dmg_at_m141 = dmg_at_m141 * 90 / 100;
     }
 
-    if (debug::voldemort && victim.is_player())
+    if (debug_has_wizard_flag("core.wizard.no_hp_damage") && victim.is_player())
     {
         dmg_at_m141 = 0;
     }
@@ -1341,7 +1341,9 @@ void heal_mp(Character& chara, int delta)
 
 bool action_sp(Character& chara, int sp)
 {
-    if (!chara.is_player() || debug::voldemort)
+    if (!chara.is_player())
+        return true;
+    if (debug_has_wizard_flag("core.wizard.no_sp_damage"))
         return true;
 
     damage_sp(chara, sp);
@@ -1352,7 +1354,9 @@ bool action_sp(Character& chara, int sp)
 
 void damage_sp(Character& chara, int delta)
 {
-    if (!chara.is_player() || debug::voldemort)
+    if (!chara.is_player())
+        return;
+    if (debug_has_wizard_flag("core.wizard.no_sp_damage"))
         return;
 
     if (chara.sp >= -100)

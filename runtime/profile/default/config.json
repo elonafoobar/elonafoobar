@@ -115,10 +115,6 @@
       hide_shop_updates: false,
     },
 
-    debug: {
-      wizard: false,
-    },
-
     message: {
       add_timestamps: false,
 

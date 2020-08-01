@@ -59,10 +59,6 @@ struct SaveHeader
     /// The location where you are. Note that it is not a map ID.
     std::string location;
 
-    /// The flag whether Wizard mode is on.
-    /// @ref SaveHeader::Format::foobar only
-    bool is_wizard;
-
     /// In-game current time.
     /// @ref SaveHeader::Format::foobar only
     std::string ingame_time;
