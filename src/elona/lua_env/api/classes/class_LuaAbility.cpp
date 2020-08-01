@@ -62,18 +62,18 @@ void bind(sol::state& lua)
     LuaAbility.set("experience", ELONA_LUA_SKILL_PROPERTY_READONLY(experience));
 
     /**
-     * @luadoc current_level field num
+     * @luadoc level field num
      *
      * [RW] The skill's current level.
      */
-    LuaAbility.set("current_level", ELONA_LUA_SKILL_PROPERTY(level));
+    LuaAbility.set("level", ELONA_LUA_SKILL_PROPERTY(level));
 
     /**
-     * @luadoc original_level field num
+     * @luadoc base_level field num
      *
-     * [RW] The skill's original level.
+     * [RW] The skill's base level.
      */
-    LuaAbility.set("original_level", ELONA_LUA_SKILL_PROPERTY(base_level));
+    LuaAbility.set("base_level", ELONA_LUA_SKILL_PROPERTY(base_level));
 
     /**
      * @luadoc potential field num
