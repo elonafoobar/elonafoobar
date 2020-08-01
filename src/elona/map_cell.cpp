@@ -185,10 +185,10 @@ void cell_movechara(Character& chara, int x, int y)
 
 
 
-void cell_setchara(int chara_index, int x, int y)
+void cell_setchara(Character& chara, int x, int y)
 {
-    cell_data.at(x, y).chara_index_plus_one = chara_index + 1;
-    cdata[chara_index].position = Position{x, y};
+    cell_data.at(x, y).chara_index_plus_one = chara.index + 1;
+    chara.position = {x, y};
 }
 
 

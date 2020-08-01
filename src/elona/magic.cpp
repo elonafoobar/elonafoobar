@@ -500,7 +500,7 @@ bool _magic_301(Character& subject, Character& target)
                 txt(i18n::s.get("core.magic.mount.no_place_to_get_off"));
                 return true;
             }
-            cell_setchara(game_data.mount, rtval, rtval(1));
+            cell_setchara(cdata[game_data.mount], rtval, rtval(1));
             txt(i18n::s.get(
                 "core.magic.mount.dismount", cdata[game_data.mount]));
             txt(name(game_data.mount) +

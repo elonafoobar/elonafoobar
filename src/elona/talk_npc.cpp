@@ -239,7 +239,7 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
             txt(i18n::s.get("core.magic.mount.no_place_to_get_off"));
             return TalkResult::talk_end;
         }
-        cell_setchara(game_data.mount, rtval, rtval(1));
+        cell_setchara(cdata[game_data.mount], rtval, rtval(1));
         txt(i18n::s.get("core.magic.mount.dismount", cdata[game_data.mount]));
         ride_end();
     }
