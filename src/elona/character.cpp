@@ -697,7 +697,7 @@ void chara_refresh(Character& chara)
     }
     for (int cnt = 0; cnt < 600; ++cnt)
     {
-        sdata(cnt, chara.index) = sdata.get(cnt, chara.index).original_level;
+        chara.get_skill(cnt).level = chara.get_skill(cnt).base_level;
     }
     if (chara.index == 0)
     {
@@ -804,26 +804,27 @@ void chara_refresh(Character& chara)
                 rp2 = rp2 / 10000;
                 if (rp2 == 1)
                 {
-                    sdata(rp3, chara.index) += enchantment.power / 50 + 1;
+                    chara.get_skill(rp3).level += enchantment.power / 50 + 1;
                     continue;
                 }
                 if (rp2 == 2)
                 {
-                    sdata(rp3, chara.index) += enchantment.power / 2;
-                    if (sdata(rp3, chara.index) < 0)
+                    chara.get_skill(rp3).level += enchantment.power / 2;
+                    if (chara.get_skill(rp3).level < 0)
                     {
-                        sdata(rp3, chara.index) = 1;
+                        chara.get_skill(rp3).level = 1;
                     }
                     continue;
                 }
                 if (rp2 == 3)
                 {
-                    if (sdata.get(rp3, chara.index).original_level != 0)
+                    if (chara.get_skill(rp3).base_level != 0)
                     {
-                        sdata(rp3, chara.index) += enchantment.power / 50 + 1;
-                        if (sdata(rp3, chara.index) < 1)
+                        chara.get_skill(rp3).level +=
+                            enchantment.power / 50 + 1;
+                        if (chara.get_skill(rp3).level < 1)
                         {
-                            sdata(rp3, chara.index) = 1;
+                            chara.get_skill(rp3).level = 1;
                         }
                     }
                     continue;
@@ -849,7 +850,7 @@ void chara_refresh(Character& chara)
                 }
                 if (rp2 == 29)
                 {
-                    sdata(18, chara.index) += enchantment.power / 50 + 1;
+                    chara.get_skill(18).level += enchantment.power / 50 + 1;
                     if (chara.index == 0)
                     {
                         game_data.seven_league_boot_effect +=
@@ -977,10 +978,13 @@ void chara_refresh(Character& chara)
         buff += u8"<title1>◆ 装備による能力の修正<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
-            sdata(cnt, 56) = sdata.get(cnt, chara.index).original_level;
-            if (sdata(cnt, 56) != sdata(cnt, chara.index))
+            cdata.tmp().get_skill(cnt).level = chara.get_skill(cnt).base_level;
+            if (cdata.tmp().get_skill(cnt).level != chara.get_skill(cnt).level)
             {
-                cnvbonus(cnt, sdata(cnt, chara.index) - sdata(cnt, 56));
+                cnvbonus(
+                    cnt,
+                    chara.get_skill(cnt).level -
+                        cdata.tmp().get_skill(cnt).level);
             }
         }
     }
@@ -991,17 +995,17 @@ void chara_refresh(Character& chara)
             if (chara.quality >= Quality::miracle)
             {
                 if (chara.attr_adjs[cnt] <
-                    sdata.get(10 + cnt, chara.index).original_level / 5)
+                    chara.get_skill(10 + cnt).base_level / 5)
                 {
                     chara.attr_adjs[cnt] =
-                        sdata.get(10 + cnt, chara.index).original_level / 5;
+                        chara.get_skill(10 + cnt).base_level / 5;
                 }
             }
-            sdata(10 + cnt, chara.index) += chara.attr_adjs[cnt];
+            chara.get_skill(10 + cnt).level += chara.attr_adjs[cnt];
         }
-        if (sdata(10 + cnt, chara.index) < 1)
+        if (chara.get_skill(10 + cnt).level < 1)
         {
-            sdata(10 + cnt, chara.index) = 1;
+            chara.get_skill(10 + cnt).level = 1;
         }
     }
     if (chara.index == 0)
@@ -1020,7 +1024,7 @@ void chara_refresh(Character& chara)
         if (chara.pv > 0)
         {
             chara.pv = chara.pv *
-                (120 + int(std::sqrt(sdata(168, chara.index))) * 2) / 100;
+                (120 + int(std::sqrt(chara.get_skill(168).level)) * 2) / 100;
         }
     }
     else if (attacknum == 1)
@@ -1031,24 +1035,27 @@ void chara_refresh(Character& chara)
     {
         chara.combat_style.set_dual_wield();
     }
-    chara.max_mp = clamp(
-                       ((sdata(16, chara.index) * 2 + sdata(15, chara.index) +
-                         sdata(14, chara.index) / 3) *
-                            chara.level / 25 +
-                        sdata(16, chara.index)),
-                       1,
-                       1000000) *
-        sdata(3, chara.index) / 100;
-    chara.max_hp = clamp(
-                       ((sdata(11, chara.index) * 2 + sdata(10, chara.index) +
-                         sdata(15, chara.index) / 3) *
-                            chara.level / 25 +
-                        sdata(11, chara.index)),
-                       1,
-                       1000000) *
-            sdata(2, chara.index) / 100 +
+    chara.max_mp =
+        clamp(
+            ((chara.get_skill(16).level * 2 + chara.get_skill(15).level +
+              chara.get_skill(14).level / 3) *
+                 chara.level / 25 +
+             chara.get_skill(16).level),
+            1,
+            1000000) *
+        chara.get_skill(3).level / 100;
+    chara.max_hp =
+        clamp(
+            ((chara.get_skill(11).level * 2 + chara.get_skill(10).level +
+              chara.get_skill(15).level / 3) *
+                 chara.level / 25 +
+             chara.get_skill(11).level),
+            1,
+            1000000) *
+            chara.get_skill(2).level / 100 +
         5;
-    chara.max_sp = 100 + (sdata(15, chara.index) + sdata(11, chara.index)) / 5 +
+    chara.max_sp = 100 +
+        (chara.get_skill(15).level + chara.get_skill(11).level) / 5 +
         trait(24) * 8;
     if (chara.max_mp < 1)
     {
@@ -1090,12 +1097,12 @@ void chara_refresh(Character& chara)
     if (chara.combat_style.dual_wield())
     {
         chara.extra_attack +=
-            int(std::sqrt(sdata(166, chara.index))) * 3 / 2 + 4;
+            int(std::sqrt(chara.get_skill(166).level)) * 3 / 2 + 4;
     }
-    if (sdata(186, chara.index))
+    if (chara.get_skill(186).level)
     {
         chara.rate_of_critical_hit +=
-            int(std::sqrt(sdata(186, chara.index))) + 2;
+            int(std::sqrt(chara.get_skill(186).level)) + 2;
     }
     if (chara.rate_of_critical_hit > 30)
     {
@@ -1188,7 +1195,8 @@ int chara_get_free_slot()
 
 int chara_get_free_slot_ally()
 {
-    const auto max_allies = clamp(sdata(17, 0) / 5 + 1, 2, 15);
+    const auto max_allies =
+        clamp(cdata.player().get_skill(17).level / 5 + 1, 2, 15);
     for (int i = 1; i < max_allies + 1; ++i)
     {
         if (cdata[i].state() != Character::State::empty)
@@ -1425,7 +1433,6 @@ int chara_copy(const Character& source)
 
     // Copy from `source` to `destination`.
     Character::copy(source, destination);
-    sdata.copy(slot, source.index);
     lua::lua->get_handle_manager().create_chara_handle_run_callbacks(
         destination);
 
@@ -1501,7 +1508,6 @@ void chara_delete(int chara_index)
     {
         item->remove();
     }
-    sdata.clear(chara_index);
     cdata[chara_index].clear();
 }
 
@@ -1548,9 +1554,6 @@ void chara_relocate(
     source.is_livestock() = false;
 
     // Copy from `source` to `destination` and clear `source`
-    sdata.copy(destination.index, source.index);
-    sdata.clear(source.index);
-
     Character::copy(source, destination);
     source.clear();
 
@@ -1617,19 +1620,18 @@ void chara_relocate(
         for (int element = 50; element < 61; ++element)
         {
             auto resistance = 100;
-            if (sdata.get(element, destination.index).original_level >= 500 ||
-                sdata.get(element, destination.index).original_level <= 100)
+            if (destination.get_skill(element).base_level >= 500 ||
+                destination.get_skill(element).base_level <= 100)
             {
-                resistance =
-                    sdata.get(element, destination.index).original_level;
+                resistance = destination.get_skill(element).base_level;
             }
             if (resistance > 500)
             {
                 resistance = 500;
             }
-            sdata.get(element, destination.index).original_level = resistance;
-            sdata.get(element, destination.index).experience = 0;
-            sdata.get(element, destination.index).potential = 0;
+            destination.get_skill(element).base_level = resistance;
+            destination.get_skill(element).experience = 0;
+            destination.get_skill(element).potential = 0;
         }
     }
 
@@ -1726,7 +1728,7 @@ void initialize_pc_character()
     {
         item->set_number(2);
     }
-    if (sdata(150, 0) == 0)
+    if (cdata.player().get_skill(150).level == 0)
     {
         flt();
         if (const auto item = itemcreate_player_inv(68, 0))
@@ -2064,7 +2066,9 @@ void refresh_burden_state()
         clamp(inv_weight(g_inv.pc()), 0, 20000000) *
         (100 - trait(201) * 10 + trait(205) * 20) / 100;
     cdata.player().max_inventory_weight =
-        sdata(10, 0) * 500 + sdata(11, 0) * 250 + sdata(153, 0) * 2000 + 45000;
+        cdata.player().get_skill(10).level * 500 +
+        cdata.player().get_skill(11).level * 250 +
+        cdata.player().get_skill(153).level * 2000 + 45000;
     game_data.cargo_weight = inv_cargo_weight(g_inv.pc());
     for (int cnt = 0; cnt < 1; ++cnt)
     {
@@ -2517,7 +2521,7 @@ bool move_character_internal(Character& chara)
         refdiff = refdiff / 3;
         if (chara.index == 0)
         {
-            if (sdata(175, chara.index) != 0)
+            if (chara.get_skill(175).level != 0)
             {
                 if (try_to_disarm_trap(chara))
                 {

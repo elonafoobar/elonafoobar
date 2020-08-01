@@ -7,6 +7,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "config.hpp"
+#include "data/types/type_ability.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"
@@ -239,7 +240,7 @@ void _adventurer_train_skill(int skill_id)
         cdata.player(),
         skill_id,
         clamp(
-            15 - sdata.get(skill_id, cdata.player().index).potential / 15,
+            15 - cdata.player().get_skill(skill_id).potential / 15,
             2,
             15 - (skill_id < 18) * 10));
 }
@@ -254,7 +255,7 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
     listn(0, listmax) =
         i18n::s.get("core.talk.visitor.adventurer.train.choices.pass");
     ++listmax;
-    if (sdata.get(skill_id, 0).original_level == 0)
+    if (cdata.player().get_skill(skill_id).base_level == 0)
     {
         buff = i18n::s.get(
             "core.talk.visitor.adventurer.train.learn.dialog",

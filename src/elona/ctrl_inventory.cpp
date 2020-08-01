@@ -1742,9 +1742,9 @@ OnEnterResult on_enter_give(
         return OnEnterResult{result};
     }
     f = 0;
-    p = sdata(10, inventory_owner.index) * 500 +
-        sdata(11, inventory_owner.index) * 500 +
-        sdata(153, inventory_owner.index) * 2500 + 25000;
+    p = inventory_owner.get_skill(10).level * 500 +
+        inventory_owner.get_skill(11).level * 500 +
+        inventory_owner.get_skill(153).level * 2500 + 25000;
     if (inventory_owner.id == CharaId::golden_knight)
     {
         p *= 5;

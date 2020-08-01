@@ -113,10 +113,10 @@ TEST_CASE("Test ability data compatibility", "[C++: Serialization]")
     int ability_idx = 170; // Medium Armor
     int chara_idx = 57;
     load_previous_savefile();
-    REQUIRE(elona::sdata.get(ability_idx, chara_idx).current_level == 28);
-    REQUIRE(elona::sdata.get(ability_idx, chara_idx).original_level == 28);
-    REQUIRE(elona::sdata.get(ability_idx, chara_idx).experience == 0);
-    REQUIRE(elona::sdata.get(ability_idx, chara_idx).potential == 22);
+    REQUIRE(elona::cdata[chara_idx].get_skill(ability_idx).level == 28);
+    REQUIRE(elona::cdata[chara_idx].get_skill(ability_idx).base_level == 28);
+    REQUIRE(elona::cdata[chara_idx].get_skill(ability_idx).experience == 0);
+    REQUIRE(elona::cdata[chara_idx].get_skill(ability_idx).potential == 22);
 }
 
 TEST_CASE("Test foobar save data compatibility", "[C++: Serialization]")

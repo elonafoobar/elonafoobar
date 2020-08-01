@@ -2,6 +2,7 @@
 #include "../../../buff.hpp"
 #include "../../../character.hpp"
 #include "../../../character_status.hpp"
+#include "../../../data/types/type_ability.hpp"
 #include "../../../data/types/type_buff.hpp"
 #include "../../../dmgheal.hpp"
 #include "../../../element.hpp"

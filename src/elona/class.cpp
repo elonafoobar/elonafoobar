@@ -2,6 +2,7 @@
 
 #include "ability.hpp"
 #include "character.hpp"
+#include "data/types/type_ability.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "variables.hpp"

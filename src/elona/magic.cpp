@@ -14,6 +14,7 @@
 #include "command.hpp"
 #include "config.hpp"
 #include "crafting.hpp"
+#include "data/types/type_ability.hpp"
 #include "data/types/type_asset.hpp"
 #include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
@@ -571,7 +572,7 @@ bool _magic_183(Character& subject, OptionalItemRef instrument)
             return false;
         }
     }
-    if (sdata(183, subject.index) == 0)
+    if (subject.get_skill(183).level == 0)
     {
         if (is_in_fov(subject))
         {
@@ -604,7 +605,7 @@ bool _magic_183(Character& subject, OptionalItemRef instrument)
 // Cooking
 bool _magic_184(Character& subject, const ItemRef& cook_tool)
 {
-    if (sdata(184, 0) == 0)
+    if (cdata.player().get_skill(184).level == 0)
     {
         txt(i18n::s.get("core.magic.cook.do_not_know"));
         return false;
@@ -644,7 +645,7 @@ bool _magic_184(Character& subject, const ItemRef& cook_tool)
 // Fishing
 bool _magic_185(Character& subject, const ItemRef& rod)
 {
-    if (sdata(185, 0) == 0)
+    if (cdata.player().get_skill(185).level == 0)
     {
         txt(i18n::s.get("core.magic.fish.do_not_know"));
         return false;
@@ -1372,7 +1373,7 @@ bool _magic_1143(Character& target)
             {
                 if (cnt <= 17)
                 {
-                    if (sdata(cnt, target.index) != 0)
+                    if (target.get_skill(cnt).level != 0)
                     {
                         chara_gain_skill_exp(target, cnt, -1000);
                     }
@@ -1399,7 +1400,7 @@ bool _magic_1105(Character& target)
             {
                 if (cnt < efstatusfix(0, 0, 100, 2000))
                 {
-                    if (sdata(p, target.index) != 0)
+                    if (target.get_skill(p).level != 0)
                     {
                         continue;
                     }
@@ -1418,7 +1419,7 @@ bool _magic_1105(Character& target)
             }
             else
             {
-                if (sdata(p, target.index) == 0)
+                if (target.get_skill(p).level == 0)
                 {
                     continue;
                 }
@@ -1497,7 +1498,7 @@ bool _magic_1119(Character& target)
             p = rnd(300) + 100;
             if (the_ability_db[p])
             {
-                if (sdata.get(p, target.index).original_level == 0)
+                if (target.get_skill(p).base_level == 0)
                 {
                     continue;
                 }
@@ -1583,9 +1584,7 @@ bool _magic_1113(Character& target)
         for (int cnt = 10; cnt < 18; ++cnt)
         {
             modify_potential(
-                target,
-                cnt,
-                rnd(sdata.get(cnt, target.index).potential / 20 + 3) + 1);
+                target, cnt, rnd(target.get_skill(cnt).potential / 20 + 3) + 1);
         }
         txt(i18n::s.get("core.magic.gain_potential.blessed", target));
         MiracleAnimation(MiracleAnimation::Mode::target_one, target).play();
@@ -1600,9 +1599,7 @@ bool _magic_1113(Character& target)
             txt(i18n::s.get(
                 "core.magic.gain_potential.increases", target, valn));
             modify_potential(
-                target,
-                i,
-                rnd(sdata.get(i, target.index).potential / 10 + 10) + 1);
+                target, i, rnd(target.get_skill(i).potential / 10 + 10) + 1);
             snd("core.ding2");
         }
         else
@@ -1612,7 +1609,7 @@ bool _magic_1113(Character& target)
             modify_potential(
                 target,
                 i,
-                (rnd(sdata.get(i, target.index).potential / 10 + 10) + 1) * -1);
+                (rnd(target.get_skill(i).potential / 10 + 10) + 1) * -1);
             snd("core.curse3");
         }
     }
@@ -1821,8 +1818,7 @@ bool _magic_440_439(Character& target)
             if (target.quality <= Quality::great)
             {
                 target.attr_adjs[attr] -=
-                    rnd(sdata.get(p(cnt), target.index).original_level) / 5 +
-                    rnd(5);
+                    rnd(target.get_skill(p(cnt)).base_level) / 5 + rnd(5);
                 continue;
             }
         }
@@ -1833,7 +1829,7 @@ bool _magic_440_439(Character& target)
         if (efstatus == CurseState::blessed)
         {
             target.attr_adjs[attr] =
-                sdata.get(p(cnt), target.index).original_level / 10 + 5;
+                target.get_skill(p(cnt)).base_level / 10 + 5;
         }
     }
     chara_refresh(target);
@@ -2053,7 +2049,7 @@ bool _magic_645_1114(Character& subject, Character& target)
             txt(i18n::s.get("core.magic.curse.spell", subject, target));
         }
     }
-    int p = 75 + sdata(19, target.index);
+    int p = 75 + target.get_skill(19).level;
     if (const auto anticurse = enchantment_find(target, 43))
     {
         p += *anticurse / 2;
@@ -2149,7 +2145,7 @@ bool _magic_1118(Character& target)
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         p = rnd(11) + 50;
-        if (sdata.get(p, target.index).original_level >= 150)
+        if (target.get_skill(p).base_level >= 150)
         {
             ++f;
             chara_gain_registance(target, p, 50 * -1);
@@ -3207,7 +3203,7 @@ bool _magic_465(Character& subject)
             }
             if (cell_data.at(dx, dy).chara_index_plus_one != 0)
             {
-                dmg = sdata(16, subject.index) * efp / 10;
+                dmg = subject.get_skill(16).level * efp / 10;
                 damage_hp(
                     cdata[cell_data.at(dx, dy).chara_index_plus_one - 1],
                     dmg,
@@ -3267,9 +3263,17 @@ bool _magic_656(Character& subject)
                 Message::color{ColorIndex::blue});
         }
         buff_add(
-            cnt, "core.speed", sdata(17, subject.index) * 5 + 50, 15, subject);
+            cnt,
+            "core.speed",
+            subject.get_skill(17).level * 5 + 50,
+            15,
+            subject);
         buff_add(
-            cnt, "core.hero", sdata(17, subject.index) * 5 + 100, 60, subject);
+            cnt,
+            "core.hero",
+            subject.get_skill(17).level * 5 + 100,
+            60,
+            subject);
         buff_add(cnt, "core.contingency", 1500, 30, subject);
     }
     return true;
@@ -4174,8 +4178,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
             }
             if (p != -1)
             {
-                i = sdata.get(10 + p, target.index).original_level +
-                    target.attr_adjs[p];
+                i = target.get_skill(10 + p).base_level + target.attr_adjs[p];
                 if (i > 0)
                 {
                     i = i * efp / 2000 + 1;
@@ -4339,8 +4342,8 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                 return true;
             }
             p = rnd_capped(cdata[target_index].gold / 10 + 1);
-            if (rnd_capped(sdata(13, target_index)) >
-                    rnd_capped(sdata(12, subject.index) * 4) ||
+            if (rnd_capped(cdata[target_index].get_skill(13).level) >
+                    rnd_capped(subject.get_skill(12).level * 4) ||
                 cdata[target_index].is_protected_from_thieves() == 1)
             {
                 txt(i18n::s.get(

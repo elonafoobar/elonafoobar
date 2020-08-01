@@ -15,6 +15,7 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "crafting.hpp"
+#include "data/types/type_ability.hpp"
 #include "data/types/type_fish.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_material.hpp"
@@ -1702,7 +1703,7 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
     auto inv_owner = inv_get_owner(inv);
     if (const auto owner = inv_owner.as_character())
     {
-        if (sdata(50, owner->index) / 50 >= 6 ||
+        if (owner->get_skill(50).level / 50 >= 6 ||
             owner->quality >= Quality::miracle)
         {
             return false;
@@ -1931,7 +1932,7 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
     auto inv_owner = inv_get_owner(inv);
     if (const auto owner = inv_owner.as_character())
     {
-        if (sdata(51, owner->index) / 50 >= 6 ||
+        if (owner->get_skill(51).level / 50 >= 6 ||
             owner->quality >= Quality::miracle)
         {
             return false;
@@ -2230,7 +2231,8 @@ void auto_identify()
             continue;
         }
 
-        const auto skill = sdata(13, 0) + sdata(162, 0) * 5;
+        const auto skill = cdata.player().get_skill(13).level +
+            cdata.player().get_skill(162).level * 5;
         const auto difficulty = 1500 + item->difficulty_of_identification * 5;
         if (skill > rnd(difficulty * 5))
         {

@@ -8,10 +8,10 @@
 --  @tfield num experience
 
 --- [RW] The skill's current level.
---  @tfield num current_level
+--  @tfield num level
 
---- [RW] The skill's original level.
---  @tfield num original_level
+--- [RW] The skill's base level.
+--  @tfield num base_level
 
 --- [RW] The skill's potential.
 --  @tfield num potential

@@ -198,7 +198,7 @@ int damage_hp(
     }
     if (element != 0 && element < 61)
     {
-        int resistance = sdata(element, victim.index) / 50;
+        int resistance = victim.get_skill(element).level / 50;
         if (resistance < 3)
         {
             dmg_at_m141 =
@@ -212,7 +212,7 @@ int damage_hp(
         {
             dmg_at_m141 = 0;
         }
-        dmg_at_m141 = dmg_at_m141 * 100 / (sdata(60, victim.index) / 2 + 50);
+        dmg_at_m141 = dmg_at_m141 * 100 / (victim.get_skill(60).level / 2 + 50);
     }
     if (attacker && attacker->index == 0)
     {
@@ -1227,7 +1227,7 @@ int damage_hp(
             {
                 catitem = attacker->index;
             }
-            if (int(std::sqrt(sdata(161, attacker->index))) > rnd(150))
+            if (int(std::sqrt(attacker->get_skill(161).level)) > rnd(150))
             {
                 rollanatomy = 1;
             }
@@ -1310,7 +1310,7 @@ void damage_mp(Character& chara, int delta)
     if (chara.mp < 0)
     {
         chara_gain_exp_mana_capacity(chara);
-        auto damage = -chara.mp * 400 / (100 + sdata(164, chara.index) * 10);
+        auto damage = -chara.mp * 400 / (100 + chara.get_skill(164).level * 10);
         if (chara.index == 0)
         {
             if (trait(156) == 1)
@@ -1382,7 +1382,7 @@ void damage_insanity(Character& chara, int delta)
     if (chara.quality >= Quality::miracle)
         return;
 
-    int resistance = std::max(sdata(54, chara.index) / 50, 1);
+    int resistance = std::max(chara.get_skill(54).level / 50, 1);
     if (resistance > 10)
         return;
 
@@ -2054,10 +2054,11 @@ void character_drops_item(Character& victim)
             remain_make(item.unwrap(), victim);
             if (victim.is_livestock() == 1)
             {
-                if (sdata(161, 0) != 0)
+                if (cdata.player().get_skill(161).level != 0)
                 {
-                    item->modify_number(
-                        rnd(1 + (sdata(161, 0) > victim.level)));
+                    item->modify_number(rnd(
+                        1 +
+                        (cdata.player().get_skill(161).level > victim.level)));
                 }
             }
         }

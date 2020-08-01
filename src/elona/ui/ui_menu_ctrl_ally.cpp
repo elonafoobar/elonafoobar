@@ -5,6 +5,7 @@
 #include "../audio.hpp"
 #include "../calc.hpp"
 #include "../character.hpp"
+#include "../data/types/type_ability.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
@@ -267,7 +268,7 @@ snail::Color UIMenuCtrlAlly::_draw_get_color(const Character& chara)
 {
     if (_operation == ControlAllyOperation::gene_engineer)
     {
-        if (chara.level > sdata(151, 0) + 5)
+        if (chara.level > cdata.player().get_skill(151).level + 5)
         {
             return {160, 10, 10};
         }
@@ -335,8 +336,8 @@ std::string UIMenuCtrlAlly::_get_specific_ally_info(const Character& chara)
 
     if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
     {
-        _s = u8"   "s + sdata(17, chara.index) + u8" / " +
-            sdata(156, chara.index);
+        _s = u8"   "s + chara.get_skill(17).level + u8" / " +
+            chara.get_skill(156).level;
     }
     else if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
     {
@@ -526,7 +527,7 @@ void UIMenuCtrlAlly::draw()
 
 optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_gene_engineer(int _p)
 {
-    if (cdata[_p].level > sdata(151, 0) + 5)
+    if (cdata[_p].level > cdata.player().get_skill(151).level + 5)
     {
         snd("core.fail1");
         txt(i18n::s.get("core.ui.ally_list.gene_engineer.skill_too_low"));

@@ -339,7 +339,7 @@ void _ally_trains(Character& chara)
         while (true)
         {
             const auto skill_id = rnd(4) == 0 ? rnd(8) + 10 : rnd(300) + 100;
-            if (sdata.get(skill_id, chara.index).original_level == 0)
+            if (chara.get_skill(skill_id).base_level == 0)
             {
                 continue;
             }

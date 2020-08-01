@@ -378,12 +378,12 @@ static Quality _determine_crafted_fixlv(const CraftingRecipe& recipe)
 {
     Quality ret = Quality::good;
     if (rnd(200 + recipe.required_skill_level * 2) <
-        sdata(recipe.skill_used, 0) + 20)
+        cdata.player().get_skill(recipe.skill_used).level + 20)
     {
         ret = Quality::miracle;
     }
     if (rnd(100 + recipe.required_skill_level * 2) <
-        sdata(recipe.skill_used, 0) + 20)
+        cdata.player().get_skill(recipe.skill_used).level + 20)
     {
         ret = Quality::great;
     }
@@ -396,7 +396,8 @@ static Quality _determine_crafted_fixlv(const CraftingRecipe& recipe)
 static void _craft_item(int matid, const CraftingRecipe& recipe)
 {
     fixlv = _determine_crafted_fixlv(recipe);
-    flt(calcobjlv(sdata(recipe.skill_used, 0)), calcfixlv(fixlv));
+    flt(calcobjlv(cdata.player().get_skill(recipe.skill_used).level),
+        calcfixlv(fixlv));
     nostack = 1;
     if (const auto item = itemcreate_player_inv(matid, 0))
     {

@@ -818,8 +818,8 @@ int quest_generate()
         (game_data.current_map == mdata_t::MapId::palmia && rnd(8) == 0))
     {
         quest_data[rq].difficulty = clamp(
-            rnd_capped(sdata(183, 0) + 10),
-            int(1.5 * std::sqrt(sdata(183, 0))) + 1,
+            rnd_capped(cdata.player().get_skill(183).level + 10),
+            int(1.5 * std::sqrt(cdata.player().get_skill(183).level)) + 1,
             cdata.player().fame / 1000 + 10);
         quest_data[rq].deadline_hours =
             (rnd(6) + 2) * 24 + game_data.date.hours();

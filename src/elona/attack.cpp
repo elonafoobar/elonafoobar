@@ -403,15 +403,15 @@ bool do_physical_attack_internal(
             chara_gain_skill_exp(attacker, 186, 60 / expmodifer, 2);
             critical = 0;
         }
-        if (rtdmg > target.max_hp / 20 || rtdmg > sdata(154, target.index) ||
+        if (rtdmg > target.max_hp / 20 || rtdmg > target.get_skill(154).level ||
             rnd(5) == 0)
         {
             chara_gain_skill_exp(
                 attacker,
                 attackskill,
                 clamp(
-                    (sdata(173, target.index) * 2 -
-                     sdata(attackskill, attacker.index) + 1),
+                    (target.get_skill(173).level * 2 -
+                     attacker.get_skill(attackskill).level + 1),
                     5,
                     50) /
                     expmodifer,
@@ -555,12 +555,13 @@ bool do_physical_attack_internal(
         {
             snd("core.miss");
         }
-        if (sdata(attackskill, attacker.index) > sdata(173, target.index) ||
+        if (attacker.get_skill(attackskill).level >
+                target.get_skill(173).level ||
             rnd(5) == 0)
         {
             p = clamp(
-                    (sdata(attackskill, attacker.index) -
-                     sdata(173, target.index) / 2 + 1),
+                    (attacker.get_skill(attackskill).level -
+                     target.get_skill(173).level / 2 + 1),
                     1,
                     20) /
                 expmodifer;
@@ -785,7 +786,7 @@ void do_ranged_attack(
         tlocx = ammox;
         tlocy = ammoy;
         efid = 460;
-        efp = sdata(attackskill, attacker.index) * 8 + 10;
+        efp = attacker.get_skill(attackskill).level * 8 + 10;
         magic(cdata.player(), target);
     }
     ammoproc = -1;
@@ -828,7 +829,7 @@ void try_to_melee_attack(Character& attacker, Character& target)
     ele = 0;
     if (attacker.combat_style.shield())
     {
-        if (clamp(int(std::sqrt(sdata(168, attacker.index)) - 3), 1, 5) +
+        if (clamp(int(std::sqrt(attacker.get_skill(168).level) - 3), 1, 5) +
                 attacker.has_power_bash() * 5 >
             rnd(100))
         {
@@ -839,12 +840,12 @@ void try_to_melee_attack(Character& attacker, Character& target)
             }
             damage_hp(
                 target,
-                rnd_capped(sdata(168, attacker.index)) + 1,
+                rnd_capped(attacker.get_skill(168).level) + 1,
                 attacker.index);
             status_ailment_damage(
                 target,
                 StatusAilment::dimmed,
-                50 + int(std::sqrt(sdata(168, attacker.index))) * 15);
+                50 + int(std::sqrt(attacker.get_skill(168).level)) * 15);
             target.paralyzed += rnd(3);
         }
     }
@@ -1015,7 +1016,7 @@ void proc_weapon_enchantments(
                 {
                     efid = enc;
                     efp = weapon->enchantments[cnt].power +
-                        sdata(attackskill, attacker.index) * 10;
+                        attacker.get_skill(attackskill).level * 10;
                     magic(attacker, cdata[invoke_target]);
                 }
                 continue;
@@ -1039,7 +1040,7 @@ void proc_weapon_enchantments(
                 orgdmg * 2 / 3,
                 attacker.index,
                 rnd(11) + 50,
-                sdata(attackskill, attacker.index) * 10 + 100);
+                attacker.get_skill(attackskill).level * 10 + 100);
         }
     }
 }

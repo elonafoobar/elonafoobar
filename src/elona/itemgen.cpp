@@ -152,7 +152,7 @@ bool upgrade_item_quality(Inventory& inv)
     if (owner_chara && owner_chara->index != 0)
         return false;
 
-    return sdata(19, 0) > rnd(5000);
+    return cdata.player().get_skill(19).level > rnd(5000);
 }
 
 
@@ -519,7 +519,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
     {
         if (reftype < 50000)
         {
-            if (rnd_capped(sdata(162, 0) + 1) > 5)
+            if (rnd_capped(cdata.player().get_skill(162).level + 1) > 5)
             {
                 item->identify_state = IdentifyState::almost;
             }

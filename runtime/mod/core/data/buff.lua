@@ -5,15 +5,15 @@ local I18N = ELONA.require("core.I18N")
 local function mod_skill_level(args, id, amount)
    local skill = args.chara:get_skill(id)
 
-   skill.current_level = skill.current_level + amount
+   skill.level = skill.level + amount
 end
 
 local function mod_skill_level_clamp(args, id, amount)
    local skill = args.chara:get_skill(id)
 
-   skill.current_level =
-      math.clamp(skill.current_level + amount,
-                 skill.current_level and 1 or 0, 9999)
+   skill.level =
+      math.clamp(skill.level + amount,
+                 skill.level > 0 and 1 or 0, 9999)
 end
 
 local function get_description(self, power)
@@ -150,8 +150,8 @@ ELONA.data:add(
             return 8 + power // 30
          end,
          on_refresh = function(self, args)
-            args.chara:get_skill("core.attribute_speed").current_level =
-               args.chara:get_skill("core.attribute_speed").current_level - self._effect(args.power)
+            args.chara:get_skill("core.attribute_speed").level =
+               args.chara:get_skill("core.attribute_speed").level - self._effect(args.power)
          end,
          _effect = function(power)
             return math.min(20 + power // 20, 50)
@@ -353,10 +353,10 @@ ELONA.data:add(
          end,
          on_refresh = function(self, args)
             mod_skill_level(args, "core.attribute_speed", self._effect(args.power))
-            args.chara:get_skill("core.attribute_strength").current_level =
-               args.chara:get_skill("core.attribute_strength").current_level * 150 // 100 + 10
-            args.chara:get_skill("core.attribute_dexterity").current_level =
-               args.chara:get_skill("core.attribute_dexterity").current_level * 150 // 100 + 10
+            args.chara:get_skill("core.attribute_strength").level =
+               args.chara:get_skill("core.attribute_strength").level * 150 // 100 + 10
+            args.chara:get_skill("core.attribute_dexterity").level =
+               args.chara:get_skill("core.attribute_dexterity").level * 150 // 100 + 10
             mod_skill_level(args, "core.healing", 50)
             args.chara.pv = args.chara.pv * 150 // 100 + 25
             args.chara.dv = args.chara.dv * 150 // 100 + 25

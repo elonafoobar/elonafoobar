@@ -738,14 +738,14 @@ TEST_CASE("Test validity check of lua reference userdata", "[Lua: Handles]")
 local Chara = ELONA.require("core.Chara")
 local chara = Chara.create(0, 0, "core.putit")
 local skill = chara:get_skill("core.attribute_strength")
-assert(skill.original_level > 0)
+assert(skill.base_level > 0)
 
 local old_index = chara.index
 chara:damage_hp(chara.max_hp + 1)
 local chara = Chara.create(0, 0, "core.putit")
 assert(chara.index == old_index)
 
-assert(skill.original_level == 0)
+assert(skill.base_level == 0)
 )"));
 }
 

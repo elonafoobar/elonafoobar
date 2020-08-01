@@ -26,7 +26,8 @@ int calc_power_decreased_by_resistance(
     int power,
     Element element)
 {
-    const auto resistance_level = sdata(int(element), chara_index) / 50;
+    const auto resistance_level =
+        cdata[chara_index].get_skill(static_cast<int>(element)).level / 50;
     power = (rnd_capped(power / 2 + 1) + power / 2) * 100 /
         (50 + resistance_level * 50);
 

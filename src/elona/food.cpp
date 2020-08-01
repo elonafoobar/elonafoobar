@@ -8,6 +8,7 @@
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "data/types/type_ability.hpp"
 #include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
@@ -405,18 +406,18 @@ void food_cook(Character& cook, const ItemRef& cook_tool, const ItemRef& food)
 
     const auto item_name_prev = itemname(food);
 
-    int dish_rank = rnd_capped(sdata(184, cook.index) + 6) +
+    int dish_rank = rnd_capped(cook.get_skill(184).level + 6) +
         rnd(cook_tool->param1 / 50 + 1);
-    if (dish_rank > sdata(184, cook.index) / 5 + 7)
+    if (dish_rank > cook.get_skill(184).level / 5 + 7)
     {
-        dish_rank = sdata(184, cook.index) / 5 + 7;
+        dish_rank = cook.get_skill(184).level / 5 + 7;
     }
     dish_rank = rnd(dish_rank + 1);
     if (dish_rank > 3)
     {
         dish_rank = rnd(dish_rank);
     }
-    if (sdata(184, cook.index) >= 5)
+    if (cook.get_skill(184).level >= 5)
     {
         if (dish_rank < 3)
         {
@@ -426,7 +427,7 @@ void food_cook(Character& cook, const ItemRef& cook_tool, const ItemRef& food)
             }
         }
     }
-    if (sdata(184, cook.index) >= 10)
+    if (cook.get_skill(184).level >= 10)
     {
         if (dish_rank < 3)
         {
@@ -1229,15 +1230,15 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             txt(i18n::s.get("core.food.effect.little_sister", eater),
                 Message::color{ColorIndex::green});
             if (rnd_capped(
-                    sdata.get(2, eater.index).original_level *
-                        sdata.get(2, eater.index).original_level +
+                    eater.get_skill(2).base_level *
+                        eater.get_skill(2).base_level +
                     1) < 2000)
             {
                 chara_gain_fixed_skill_exp(eater, 2, 1000);
             }
             if (rnd_capped(
-                    sdata.get(3, eater.index).original_level *
-                        sdata.get(3, eater.index).original_level +
+                    eater.get_skill(3).base_level *
+                        eater.get_skill(3).base_level +
                     1) < 2000)
             {
                 chara_gain_fixed_skill_exp(eater, 3, 1000);
@@ -1246,7 +1247,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             {
                 if (!the_ability_db[cnt] ||
                     the_ability_db[cnt]->related_basic_attribute == 0 ||
-                    sdata.get(cnt, eater.index).original_level == 0)
+                    eater.get_skill(cnt).base_level == 0)
                 {
                     continue;
                 }

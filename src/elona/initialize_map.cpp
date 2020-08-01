@@ -1011,7 +1011,7 @@ void _notify_distance_traveled()
         cnvdate(game_data.departure_date, false)));
     p = 0;
     exp = cdata.player().level * game_data.distance_between_town *
-            sdata(182, 0) / 100 +
+            cdata.player().get_skill(182).level / 100 +
         1;
     for (auto&& chara : cdata.player_and_allies())
     {

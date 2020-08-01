@@ -4,6 +4,7 @@
 #include "animation.hpp"
 #include "audio.hpp"
 #include "character.hpp"
+#include "data/types/type_ability.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
@@ -107,8 +108,8 @@ void chara_gain_registance(Character& chara, int element, int delta)
             Message::color{ColorIndex::purple});
     }
 
-    sdata.get(element, chara.index).original_level =
-        clamp(sdata.get(element, chara.index).original_level + delta, 50, 200);
+    chara.get_skill(element).base_level =
+        clamp(chara.get_skill(element).base_level + delta, 50, 200);
     snd("core.atk_elec");
     animeload(15, chara);
 

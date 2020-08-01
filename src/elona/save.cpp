@@ -184,8 +184,6 @@ void load_gene_files()
     {
         cnt.set_state(Character::State::empty);
     }
-    sdata.copy(56, 0);
-    sdata.clear(0);
     Character::copy(cdata.player(), cdata.tmp());
     cdata.player().clear();
     inv_open_tmp_inv_no_physical_file();
@@ -265,11 +263,11 @@ void get_inheritance()
     {
         if (cnt >= 10 && cnt < 20)
         {
-            p += sdata.get(cnt, 56).original_level;
+            p += cdata.tmp().get_skill(cnt).base_level;
         }
         if (cnt >= 100 && cnt < 400)
         {
-            i += sdata.get(cnt, 56).original_level;
+            i += cdata.tmp().get_skill(cnt).base_level;
         }
     }
     p = (p - 250) / 7;

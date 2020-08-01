@@ -564,7 +564,7 @@ void fmode_7_8(bool read, const fs::path& dir)
                 {
                     for (int i = 0; i < 600; ++i)
                     {
-                        ar(sdata.get(i, chara_index));
+                        ar(cdata[chara_index].get_skill(i));
                     }
                 }
             }
@@ -578,7 +578,7 @@ void fmode_7_8(bool read, const fs::path& dir)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar(sdata.get(i, chara_index));
+                    ar(cdata[chara_index].get_skill(i));
                 }
             }
         }
@@ -948,7 +948,7 @@ void fmode_14_15(bool read)
                 {
                     for (int i = 0; i < 600; ++i)
                     {
-                        ar(sdata.get(i, chara_index));
+                        ar(cdata[chara_index].get_skill(i));
                     }
                 }
             }
@@ -963,7 +963,7 @@ void fmode_14_15(bool read)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar(sdata.get(i, chara_index));
+                    ar(cdata[chara_index].get_skill(i));
                 }
             }
         }
@@ -1191,7 +1191,7 @@ void fmode_1_2(bool read)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar(sdata.get(i, chara_index));
+                    ar(cdata[chara_index].get_skill(i));
                 }
             }
         }
@@ -1206,7 +1206,7 @@ void fmode_1_2(bool read)
             {
                 for (int i = 0; i < 600; ++i)
                 {
-                    ar(sdata.get(i, chara_index));
+                    ar(cdata[chara_index].get_skill(i));
                 }
             }
         }
@@ -1472,7 +1472,7 @@ void fmode_17()
         {
             for (int i = 0; i < 600; ++i)
             {
-                ar(sdata.get(i, chara_index));
+                ar(cdata[chara_index].get_skill(i));
             }
         }
     }

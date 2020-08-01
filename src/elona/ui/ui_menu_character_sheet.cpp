@@ -7,6 +7,7 @@
 #include "../character.hpp"
 #include "../character_status.hpp"
 #include "../class.hpp"
+#include "../data/types/type_ability.hpp"
 #include "../data/types/type_asset.hpp"
 #include "../data/types/type_buff.hpp"
 #include "../data/types/type_race.hpp"
@@ -34,12 +35,12 @@ static void _load_skill_list(const Character& chara, CharacterSheetOperation op)
     for (int cnt = 150; cnt < 400; ++cnt)
     {
         f = 0;
-        if (sdata(cnt, chara.index) != 0)
+        if (chara.get_skill(cnt).level != 0)
         {
             f = 1;
             if (op == CharacterSheetOperation::train_skill)
             {
-                if (sdata.get(cnt, chara.index).original_level == 0)
+                if (chara.get_skill(cnt).base_level == 0)
                 {
                     f = 0;
                 }
@@ -64,12 +65,12 @@ static void _load_weapon_proficiency_list(
         f = 0;
         if (op != CharacterSheetOperation::learn_skill)
         {
-            if (sdata(cnt, chara.index) != 0)
+            if (chara.get_skill(cnt).level != 0)
             {
                 f = 1;
             }
         }
-        else if (sdata(cnt, chara.index) == 0)
+        else if (chara.get_skill(cnt).level == 0)
         {
             if (the_ability_db[cnt])
             {
@@ -94,7 +95,7 @@ static void _load_resistances_list(const Character& chara)
     ++listmax;
     for (int cnt = 50; cnt < 100; ++cnt)
     {
-        if (sdata(cnt, chara.index) != 0)
+        if (chara.get_skill(cnt).level != 0)
         {
             list(0, listmax) = cnt;
             list(1, listmax) =
@@ -497,22 +498,21 @@ void UIMenuCharacterSheet::_draw_first_page_text_name()
 
 void UIMenuCharacterSheet::_draw_attribute_level(int cnt)
 {
-    std::string level =
-        u8"("s + sdata.get(10 + cnt, _chara.index).original_level + u8")"s;
+    std::string level = u8"("s + _chara.get_skill(10 + cnt).base_level + u8")"s;
     if (enchantment_find(_chara, 60010 + cnt))
     {
         level += u8"*"s;
     }
     mes(wx + 92,
         wy + 151 + cnt * 15,
-        ""s + sdata((10 + cnt), _chara.index),
+        ""s + _chara.get_skill(10 + cnt).level,
         {20, 10, 0});
     mes(wx + 124, wy + 151 + cnt * 15, level, {20, 10, 0});
 }
 
 void UIMenuCharacterSheet::_draw_attribute_potential(int cnt)
 {
-    int potential = sdata.get(10 + cnt, _chara.index).potential;
+    int potential = _chara.get_skill(10 + cnt).potential;
     if (potential >= 200)
     {
         mes(wx + 176, wy + 152 + cnt * 15, u8"Superb"s, {20, 10, 0});
@@ -600,13 +600,13 @@ void UIMenuCharacterSheet::_draw_first_page_text_fame()
 
 void UIMenuCharacterSheet::_draw_first_page_stats_fame()
 {
-    s(0) = ""s + sdata(2, _chara.index) + u8"("s +
-        sdata.get(2, _chara.index).original_level + u8")"s;
-    s(1) = ""s + sdata(3, _chara.index) + u8"("s +
-        sdata.get(3, _chara.index).original_level + u8")"s;
+    s(0) = ""s + _chara.get_skill(2).level + u8"("s +
+        _chara.get_skill(2).base_level + u8")"s;
+    s(1) = ""s + _chara.get_skill(3).level + u8"("s +
+        _chara.get_skill(3).base_level + u8")"s;
     s(2) = ""s + _chara.insanity;
     s(3) = ""s + _chara.current_speed + u8"("s +
-        sdata.get(18, _chara.index).original_level + u8")"s;
+        _chara.get_skill(18).base_level + u8")"s;
     s(4) = "";
     s(5) = ""s + _chara.fame;
     s(6) = ""s + _chara.karma;
@@ -860,22 +860,21 @@ void UIMenuCharacterSheet::_draw_skill_power(int cnt, int skill_id)
 
     if (_is_resistance(skill_id))
     {
-        power = clamp(sdata(skill_id, _chara.index) / 50, 0, 6);
+        power = clamp(_chara.get_skill(skill_id).level / 50, 0, 6);
         desc = i18n::s.get_enum("core.ui.resistance", power);
     }
     else
     {
-        desc = ""s + sdata.get(skill_id, _chara.index).original_level + u8"."s +
-            std::to_string(
-                1000 + sdata.get(skill_id, _chara.index).experience % 1000)
+        desc = ""s + _chara.get_skill(skill_id).base_level + u8"."s +
+            std::to_string(1000 + _chara.get_skill(skill_id).experience % 1000)
                 .substr(1);
-        if (sdata.get(skill_id, _chara.index).original_level !=
-            sdata(skill_id, _chara.index))
+        if (_chara.get_skill(skill_id).base_level !=
+            _chara.get_skill(skill_id).level)
         {
-            power = sdata(skill_id, _chara.index) -
-                sdata.get(skill_id, _chara.index).original_level;
+            power = _chara.get_skill(skill_id).level -
+                _chara.get_skill(skill_id).base_level;
         }
-        desc += u8"("s + sdata.get(skill_id, _chara.index).potential + u8"%)"s;
+        desc += u8"("s + _chara.get_skill(skill_id).potential + u8"%)"s;
     }
 
     mes(wx + 280 - strlen_u(desc) * 7, wy + 66 + cnt * 19 + 2, desc);
@@ -910,14 +909,14 @@ void UIMenuCharacterSheet::_draw_skill_train_cost(
 
 static bool _has_enchantment(int chara_index, int skill_id)
 {
-    return sdata.get(skill_id, chara_index).original_level !=
-        sdata(skill_id, chara_index);
+    return cdata[chara_index].get_skill(skill_id).base_level !=
+        cdata[chara_index].get_skill(skill_id).level;
 }
 
 void UIMenuCharacterSheet::_draw_skill_enchantment_power(int cnt, int skill_id)
 {
-    const auto bonus = sdata(skill_id, _chara.index) -
-        sdata.get(skill_id, _chara.index).original_level;
+    const auto bonus = _chara.get_skill(skill_id).level -
+        _chara.get_skill(skill_id).base_level;
     int star_count;
     if (skill_id >= 50)
     {
@@ -1047,7 +1046,7 @@ static void _apply_skill_bonus(Character& chara, int csskill_)
     modify_potential(
         chara,
         csskill_,
-        clamp(15 - sdata.get(csskill_, chara.index).potential / 15, 2, 15));
+        clamp(15 - chara.get_skill(csskill_).potential / 15, 2, 15));
 }
 
 optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
@@ -1153,7 +1152,7 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
                 set_reupdate();
                 return none;
             }
-            if (sdata.get(skill_id, 0).original_level == 0)
+            if (cdata.player().get_skill(skill_id).base_level == 0)
             {
                 snd("core.fail1");
                 set_reupdate();

@@ -253,7 +253,7 @@ void run_random_event(RandomEvent event)
 
     listmax = 0;
 
-    if (event.is_evadable(sdata(19, 0)))
+    if (event.is_evadable(cdata.player().get_skill(19).level))
     {
         // Default to "Avoiding Misfortune" if Luck is good enough.
         event.id = 1;

@@ -14,6 +14,7 @@
 #include "command.hpp"
 #include "config.hpp"
 #include "config_menu.hpp"
+#include "data/types/type_ability.hpp"
 #include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_portrait.hpp"
@@ -1367,7 +1368,7 @@ void screen_analyze_self()
     cdata.tmp().god_id = cdata.player().god_id;
     for (int cnt = 0; cnt < 600; ++cnt)
     {
-        sdata(cnt, 0) = 1;
+        cdata.player().get_skill(cnt).level = 1;
     }
     god_apply_blessing(cdata.tmp());
     if (cdata.player().god_id != core_god::eyth)
@@ -1376,7 +1377,7 @@ void screen_analyze_self()
             u8"による能力の恩恵<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
-            p = sdata(cnt, 0) - 1;
+            p = cdata.player().get_skill(cnt).level - 1;
             cnvbonus(cnt, p);
         }
     }
