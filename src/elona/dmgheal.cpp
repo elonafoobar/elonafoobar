@@ -410,7 +410,7 @@ int damage_hp(
         }
         if (game_data.proc_damage_events_flag == 1)
         {
-            txteledmg(0, none, victim.index, element);
+            txteledmg(0, none, victim, element);
         }
         else if (game_data.proc_damage_events_flag == 2)
         {
@@ -854,16 +854,16 @@ int damage_hp(
                     Message::instance().continue_sentence();
                     if (damage_statements_subject_is_noncharacter)
                     {
-                        txteledmg(1, none, victim.index, element);
+                        txteledmg(1, none, victim, element);
                     }
                     else
                     {
-                        txteledmg(1, *attacker, victim.index, element);
+                        txteledmg(1, *attacker, victim, element);
                     }
                 }
                 else
                 {
-                    txteledmg(2, none, victim.index, element);
+                    txteledmg(2, none, victim, element);
                 }
             }
             else

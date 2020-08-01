@@ -121,20 +121,20 @@ void chara_gain_registance(Character& chara, int element, int delta)
 void txteledmg(
     int type,
     optional_ref<const Character> attacker,
-    int target,
+    const Character& target,
     int element)
 {
-    if (type == 0 && is_in_fov(cdata[target]))
+    if (type == 0 && is_in_fov(target))
     {
-        auto text = i18n::s.get_enum_optional(
-            "core.element.damage"s, element, cdata[target]);
+        auto text =
+            i18n::s.get_enum_optional("core.element.damage"s, element, target);
         if (text)
         {
             txt(*text);
         }
         else
         {
-            txt(i18n::s.get("core.element.damage.default", cdata[target]));
+            txt(i18n::s.get("core.element.damage.default", target));
         }
     }
     else if (type == 1)
@@ -145,7 +145,7 @@ void txteledmg(
                 "core.death_by.element"s,
                 "active.by_chara",
                 element,
-                cdata[target],
+                target,
                 *attacker);
             if (text)
             {
@@ -155,17 +155,14 @@ void txteledmg(
             {
                 txt(i18n::s.get(
                     "core.death_by.element.default.active.by_chara",
-                    cdata[target],
+                    target,
                     *attacker));
             }
         }
         else
         {
             auto text = i18n::s.get_enum_property_optional(
-                "core.death_by.element"s,
-                "active.by_spell",
-                element,
-                cdata[target]);
+                "core.death_by.element"s, "active.by_spell", element, target);
             if (text)
             {
                 txt(*text);
@@ -173,23 +170,21 @@ void txteledmg(
             else
             {
                 txt(i18n::s.get(
-                    "core.death_by.element.default.active.by_spell",
-                    cdata[target]));
+                    "core.death_by.element.default.active.by_spell", target));
             }
         }
     }
     else if (type == 2)
     {
         auto text = i18n::s.get_enum_property_optional(
-            "core.death_by.element"s, "passive", element, cdata[target]);
+            "core.death_by.element"s, "passive", element, target);
         if (text)
         {
             txt(*text);
         }
         else
         {
-            txt(i18n::s.get(
-                "core.death_by.element.default.passive", cdata[target]));
+            txt(i18n::s.get("core.death_by.element.default.passive", target));
         }
     }
 }

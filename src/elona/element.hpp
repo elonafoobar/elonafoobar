@@ -41,7 +41,7 @@ void chara_gain_registance(Character& chara, int element, int delta);
 void txteledmg(
     int type,
     optional_ref<const Character> attacker,
-    int target,
+    const Character& target,
     int element);
 
 } // namespace elona
