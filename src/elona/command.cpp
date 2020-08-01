@@ -996,7 +996,7 @@ TurnResult do_throw_command_internal(
                 {
                     txt(i18n::s.get(
                         "core.action.throw.hits", cdata[target_index]));
-                    wet(target_index, 25);
+                    chara_get_wet(cdata[target_index], 25);
                 }
                 rowact_check(cdata[target_index]);
                 if (throw_item->id == ItemId::handful_of_snow)

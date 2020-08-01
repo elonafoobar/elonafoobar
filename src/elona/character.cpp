@@ -2046,15 +2046,15 @@ void incognitoend()
 
 
 
-void wet(int chara_index, int turns)
+void chara_get_wet(Character& chara, int turns)
 {
-    cdata[chara_index].wet += turns;
-    if (is_in_fov(cdata[chara_index]))
+    chara.wet += turns;
+    if (is_in_fov(chara))
     {
-        txt(i18n::s.get("core.misc.wet.gets_wet", cdata[chara_index]));
-        if (cdata[chara_index].is_invisible())
+        txt(i18n::s.get("core.misc.wet.gets_wet", chara));
+        if (chara.is_invisible())
         {
-            txt(i18n::s.get("core.misc.wet.is_revealed", cdata[chara_index]));
+            txt(i18n::s.get("core.misc.wet.is_revealed", chara));
         }
     }
 }
@@ -2810,7 +2810,7 @@ TurnResult proc_movement_event(Character& chara)
         addefmap(chara.position.x, chara.position.y, 1, 3);
         if (chara.wet == 0)
         {
-            wet(chara.index, 20);
+            chara_get_wet(chara, 20);
         }
     }
     sense_map_feats_on_move(chara);

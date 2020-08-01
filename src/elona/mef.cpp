@@ -270,7 +270,7 @@ void mef_proc(Character& chara)
                 snd("core.water2");
                 txt(i18n::s.get("core.mef.steps_in_pool", chara));
             }
-            wet(chara.index, 25);
+            chara_get_wet(chara, 25);
             if (mef(6, ef) == 0)
             {
                 if (!chara.is_player())
