@@ -87,7 +87,10 @@ int calccostreload(int, bool = false);
 int calccargoupdate();
 int calccargoupdatecost();
 int calcidentifyvalue(int);
-int calctraincost(int, int, bool = false);
+int calc_skill_training_cost(
+    int skill_id,
+    const Character& chara,
+    bool discount = false);
 int calclearncost(int, int, bool = false);
 int calc_resurrection_value(const Character& chara);
 int calc_slave_value(const Character& chara);

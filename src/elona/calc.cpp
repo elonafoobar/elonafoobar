@@ -1263,9 +1263,12 @@ int calcidentifyvalue(int type)
 
 
 
-int calctraincost(int skill_id, int chara_index, bool discount)
+int calc_skill_training_cost(
+    int skill_id,
+    const Character& chara,
+    bool discount)
 {
-    int platinum = cdata[chara_index].get_skill(skill_id).base_level / 5 + 2;
+    int platinum = chara.get_skill(skill_id).base_level / 5 + 2;
     return discount ? platinum / 2 : platinum;
 }
 

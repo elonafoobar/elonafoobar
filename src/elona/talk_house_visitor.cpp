@@ -235,7 +235,8 @@ void _adventurer_learn_skill(int skill_id)
 
 void _adventurer_train_skill(int skill_id)
 {
-    cdata.player().platinum_coin -= calctraincost(skill_id, 0, true);
+    cdata.player().platinum_coin -=
+        calc_skill_training_cost(skill_id, cdata.player(), true);
     modify_potential(
         cdata.player(),
         skill_id,
@@ -283,7 +284,7 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
                 i18n::s.get("core.ui.platinum"),
             speaker);
         if (cdata.player().platinum_coin >=
-            calctraincost(skill_id, cdata.player().index, true))
+            calc_skill_training_cost(skill_id, cdata.player(), true))
         {
             list(0, listmax) = 2;
             listn(0, listmax) =

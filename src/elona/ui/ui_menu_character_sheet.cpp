@@ -896,7 +896,7 @@ void UIMenuCharacterSheet::_draw_skill_train_cost(
 
     if (is_training)
     {
-        train_cost = ""s + calctraincost(skill_id, _chara.index) + u8"p "s;
+        train_cost = ""s + calc_skill_training_cost(skill_id, _chara) + u8"p "s;
     }
     else
     {
