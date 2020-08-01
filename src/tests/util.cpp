@@ -111,7 +111,7 @@ void invalidate_chara(Character& chara)
     int old_y = chara.position.y;
 
     // Delete the character and create new ones until the index is taken again.
-    chara_delete(chara.index);
+    chara_delete(chara);
     while (true)
     {
         const auto new_chara = chara_create(-1, old_id, old_x, old_y);

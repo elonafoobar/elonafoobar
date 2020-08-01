@@ -368,7 +368,7 @@ TEST_CASE(
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
             R"(assert(chara ~= chara2))"));
 
-        chara_delete(chara.index);
+        chara_delete(chara);
 
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
             R"(assert(chara ~= nil))"));
@@ -529,7 +529,7 @@ TEST_CASE(
     Character& chara = *chara_opt;
     auto handle = handle_mgr.get_handle(chara);
 
-    chara_delete(chara.index);
+    chara_delete(chara);
 
     // Invalidation is deferred until the handle is recreated in the same slot.
     REQUIRE(handle_mgr.handle_is_valid(handle) == true);

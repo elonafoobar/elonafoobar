@@ -650,7 +650,7 @@ TalkResult talk_ally_abandon(Character& speaker)
         txt(i18n::s.get("core.talk.npc.ally.abandon.you_abandoned", speaker));
         cell_data.at(speaker.position.x, speaker.position.y)
             .chara_index_plus_one = 0;
-        chara_delete(speaker.index);
+        chara_delete(speaker);
         return TalkResult::talk_end;
     }
     buff = "";
@@ -748,7 +748,7 @@ TalkResult talk_slave_sell(Character& speaker)
             {
                 event_add(15, charaid2int(cdata[stat].id));
             }
-            chara_delete(stat);
+            chara_delete(cdata[stat]);
             buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
         }
         else

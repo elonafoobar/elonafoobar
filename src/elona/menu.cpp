@@ -1363,7 +1363,7 @@ void screen_analyze_self()
     snd("core.pop2");
     buff = "";
     notesel(buff);
-    chara_delete(56);
+    chara_delete(cdata.tmp());
     cdata.tmp().piety_point = cdata.player().piety_point;
     cdata.tmp().god_id = cdata.player().god_id;
     for (int cnt = 0; cnt < 600; ++cnt)

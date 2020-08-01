@@ -114,7 +114,7 @@ void load_save_data()
     update_save_data(save_dir);
     ctrl_file(FileOperation2::global_read, save_dir);
 
-    chara_delete(56);
+    chara_delete(cdata.tmp());
     set_item_info();
     for (auto&& chara : cdata.player_and_allies())
     {
@@ -220,7 +220,7 @@ void load_gene_files()
     }
     for (auto&& cnt : cdata.all())
     {
-        chara_delete(cnt.index);
+        chara_delete(cnt);
     }
     game_data.play_time = genetemp(805);
 }

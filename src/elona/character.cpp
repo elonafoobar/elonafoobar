@@ -120,7 +120,7 @@ optional<int> chara_create_internal(int slot, int chara_id)
             return none;
         }
     }
-    chara_delete(slot);
+    chara_delete(cdata[slot]);
     if (slot == 0)
     {
         p = 10;
@@ -1468,7 +1468,7 @@ int chara_copy(const Character& source)
     }
 
     // Delete completely the previous character in `slot`.
-    chara_delete(slot);
+    chara_delete(cdata[slot]);
 
     // Copy from `source` to `destination`.
     Character::copy(source, destination);
@@ -1506,18 +1506,15 @@ int chara_copy(const Character& source)
 
 
 
-void chara_delete(int chara_index)
+void chara_delete(Character& chara)
 {
-    if (chara_index != -1)
-    {
-        cdata[chara_index].set_state(Character::State::empty);
-    }
+    chara.set_state(Character::State::empty);
 
-    for (const auto& item : g_inv.for_chara(cdata[chara_index]))
+    for (const auto& item : g_inv.for_chara(chara))
     {
         item->remove();
     }
-    cdata[chara_index].clear();
+    chara.clear();
 }
 
 
