@@ -512,7 +512,7 @@ void LuaCharacter_move_to_xy(Character& self, int x, int y)
 {
     // NOTE: setting self.next_position may be safer if the position is changed
     // in the middle of the current turn.
-    cell_movechara(self.index, x, y);
+    cell_movechara(self, x, y);
 
     if (self.is_player())
     {

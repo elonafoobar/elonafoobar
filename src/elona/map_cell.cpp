@@ -163,23 +163,23 @@ bool cell_swap(Character& chara_a, Character& chara_b)
 
 
 
-void cell_movechara(int chara_index, int x, int y)
+void cell_movechara(Character& chara, int x, int y)
 {
-    if (cell_data.at(x, y).chara_index_plus_one != 0)
+    if (const auto chara_b_index_plus_one =
+            cell_data.at(x, y).chara_index_plus_one)
     {
-        if (cell_data.at(x, y).chara_index_plus_one - 1 == chara_index)
+        if (chara_b_index_plus_one - 1 == chara.index)
         {
             return;
         }
-        cell_swap(cdata[chara_index], cdata[tc_at_m81]);
+        cell_swap(chara, cdata[tc_at_m81]);
     }
     else
     {
-        cell_data
-            .at(cdata[chara_index].position.x, cdata[chara_index].position.y)
-            .chara_index_plus_one = 0;
-        cdata[chara_index].position = {x, y};
-        cell_data.at(x, y).chara_index_plus_one = chara_index + 1;
+        cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one =
+            0;
+        chara.position = {x, y};
+        cell_data.at(x, y).chara_index_plus_one = chara.index + 1;
     }
 }
 

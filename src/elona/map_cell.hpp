@@ -31,7 +31,7 @@ int cell_findspace(int = 0, int = 0, int = 0);
 void cell_check(int = 0, int = 0);
 void cell_featclear(int = 0, int = 0);
 void cell_featset(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
-void cell_movechara(int = 0, int = 0, int = 0);
+void cell_movechara(Character& chara, int x, int y);
 void cell_refresh(int = 0, int = 0);
 void cell_removechara(int = 0, int = 0);
 void cell_setchara(int = 0, int = 0, int = 0);

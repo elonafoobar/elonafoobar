@@ -1095,7 +1095,7 @@ TalkResult talk_moyer_sell_paels_mom(Character& speaker)
         lily->relationship = 0;
         lily->initial_position.x = 48;
         lily->initial_position.y = 18;
-        cell_movechara(lily->index, 48, 18);
+        cell_movechara(*lily, 48, 18);
         buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
     }
     else
