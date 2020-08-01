@@ -881,7 +881,7 @@ void activity_others_doing_steal(Character& doer, const ItemRef& steal_target)
                 if (owner->sleep == 0)
                 {
                     owner->relationship = -2;
-                    hostileaction(0, owner->index);
+                    chara_act_hostile_action(cdata.player(), *owner);
                     chara_modify_impression(*owner, -20);
                 }
             }

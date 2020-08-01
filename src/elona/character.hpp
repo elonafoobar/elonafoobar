@@ -806,7 +806,7 @@ void refresh_burden_state();
 void go_hostile();
 void get_pregnant(Character& chara);
 void wet(int = 0, int = 0);
-void hostileaction(int = 0, int = 0);
+void chara_act_hostile_action(Character& attacker, Character& target);
 void turn_aggro(int = 0, int = 0, int = 0);
 void ride_begin(int = 0);
 void ride_end();

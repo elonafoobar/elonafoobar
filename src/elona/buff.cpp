@@ -205,7 +205,7 @@ void buff_add(
         }
         if (doer && doer->is_player())
         {
-            hostileaction(0, chara.index);
+            chara_act_hostile_action(cdata.player(), chara);
         }
     }
 

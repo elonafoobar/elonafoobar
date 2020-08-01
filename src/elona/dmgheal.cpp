@@ -705,7 +705,7 @@ int damage_hp(
         }
         if (attacker && attacker->is_player())
         {
-            hostileaction(0, victim.index);
+            chara_act_hostile_action(cdata.player(), victim);
             game_data.chara_last_attacked_by_player = victim.index;
         }
         if (victim.is_player())

@@ -465,7 +465,7 @@ void LuaCharacter_act_hostile_against(
     LuaCharacterHandle target)
 {
     auto& target_ref = lua::ref<Character>(target);
-    hostileaction(self.index, target_ref.index);
+    chara_act_hostile_action(self, target_ref);
 }
 
 

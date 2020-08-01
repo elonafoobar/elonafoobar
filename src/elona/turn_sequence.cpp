@@ -157,7 +157,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
                 if (rnd(2))
                 {
                     txt(i18n::s.get("core.action.npc.leash.dialog"));
-                    hostileaction(0, chara.index);
+                    chara_act_hostile_action(cdata.player(), chara);
                 }
                 if (rnd(4) == 0)
                 {

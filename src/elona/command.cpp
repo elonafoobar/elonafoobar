@@ -1033,7 +1033,7 @@ TurnResult do_throw_command_internal(
                 }
                 if (target_index >= 16)
                 {
-                    hostileaction(thrower.index, target_index);
+                    chara_act_hostile_action(thrower, cdata[target_index]);
                 }
                 potionthrow = 100;
                 item_db_on_drink(
@@ -5704,7 +5704,7 @@ TurnResult do_bash(Character& chara)
                     "core.action.bash.execute",
                     chara,
                     cdata[bash_target_index]));
-                hostileaction(chara.index, bash_target_index);
+                chara_act_hostile_action(chara, cdata[bash_target_index]);
             }
         }
         else

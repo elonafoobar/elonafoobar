@@ -224,7 +224,7 @@ void mef_proc(Character& chara)
                 {
                     if (!chara.is_player())
                     {
-                        hostileaction(0, chara.index);
+                        chara_act_hostile_action(cdata.player(), chara);
                     }
                 }
                 int stat = damage_hp(
@@ -251,7 +251,7 @@ void mef_proc(Character& chara)
         {
             if (!chara.is_player())
             {
-                hostileaction(0, chara.index);
+                chara_act_hostile_action(cdata.player(), chara);
             }
         }
         int stat = damage_hp(
@@ -275,7 +275,7 @@ void mef_proc(Character& chara)
             {
                 if (!chara.is_player())
                 {
-                    hostileaction(0, chara.index);
+                    chara_act_hostile_action(cdata.player(), chara);
                 }
             }
             potionspill = 1;

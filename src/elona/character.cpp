@@ -1902,63 +1902,58 @@ void make_sound(
 
 
 
-void hostileaction(int chara_index1, int chara_index2)
+void chara_act_hostile_action(Character& attacker, Character& target)
 {
-    if (chara_index1 >= 16 || chara_index2 == 0)
+    if (!attacker.is_player_or_ally() || target.is_player())
     {
         return;
     }
-    if (cdata[chara_index2].relationship != -3)
+    if (target.relationship != -3)
     {
-        cdata[chara_index2].emotion_icon = 418;
+        target.emotion_icon = 418;
     }
-    if (cdata[chara_index2].relationship == 10)
+    if (target.relationship == 10)
     {
-        txt(i18n::s.get(
-                "core.misc.hostile_action.glares_at_you", cdata[chara_index2]),
+        txt(i18n::s.get("core.misc.hostile_action.glares_at_you", target),
             Message::color{ColorIndex::purple});
     }
     else
     {
-        if (cdata[chara_index2].relationship == 0)
+        if (target.relationship == 0)
         {
             modify_karma(cdata.player(), -2);
         }
-        if (cdata[chara_index2].id == CharaId::ebon)
+        if (target.id == CharaId::ebon)
         {
             if (game_data.released_fire_giant == 0)
             {
                 txt(i18n::s.get(
-                        "core.misc.hostile_action.glares_at_you",
-                        cdata[chara_index2]),
+                        "core.misc.hostile_action.glares_at_you", target),
                     Message::color{ColorIndex::purple});
                 return;
             }
         }
-        if (cdata[chara_index2].relationship > -2)
+        if (target.relationship > -2)
         {
-            txt(i18n::s.get(
-                    "core.misc.hostile_action.glares_at_you",
-                    cdata[chara_index2]),
+            txt(i18n::s.get("core.misc.hostile_action.glares_at_you", target),
                 Message::color{ColorIndex::purple});
-            cdata[chara_index2].relationship = -2;
+            target.relationship = -2;
         }
         else
         {
-            if (cdata[chara_index2].relationship != -3)
+            if (target.relationship != -3)
             {
                 txt(i18n::s.get(
-                        "core.misc.hostile_action.gets_furious",
-                        cdata[chara_index2]),
+                        "core.misc.hostile_action.gets_furious", target),
                     Message::color{ColorIndex::purple});
             }
-            cdata[chara_index2].relationship = -3;
-            cdata[chara_index2].hate = 80;
-            cdata[chara_index2].enemy_id = chara_index1;
+            target.relationship = -3;
+            target.hate = 80;
+            target.enemy_id = attacker.index;
         }
-        chara_custom_talk(cdata[chara_index2], 101);
+        chara_custom_talk(target, 101);
     }
-    if (cdata[chara_index2].is_livestock() == 1)
+    if (target.is_livestock())
     {
         if (rnd(50) == 0)
         {
@@ -1975,7 +1970,7 @@ void hostileaction(int chara_index1, int chara_index2)
             }
         }
     }
-    cdata[chara_index2].activity.finish();
+    target.activity.finish();
 }
 
 
