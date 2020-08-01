@@ -1211,7 +1211,7 @@ int damage_hp(
                 ride_end();
             }
         }
-        check_kill(damage_source, victim.index);
+        check_kill(attacker, victim);
         catitem = 0;
         rollanatomy = 0;
         if (rnd(60) == 0)
@@ -2073,81 +2073,80 @@ void character_drops_item(Character& victim)
 
 
 
-void check_kill(int killer_chara_index, int victim_chara_index)
+void check_kill(optional_ref<Character> killer_chara, Character& victim)
 {
-    int p_at_m137 = 0;
     if (game_data.current_map == mdata_t::MapId::pet_arena ||
         game_data.current_map == mdata_t::MapId::show_house ||
         game_data.current_map == mdata_t::MapId::arena)
     {
         return;
     }
-    p_at_m137 = 0;
-    if (killer_chara_index >= 0)
+    if (!killer_chara)
     {
-        if (killer_chara_index == 0 ||
-            cdata[killer_chara_index].relationship >= 10)
+        return;
+    }
+
+    int karma = 0;
+    if (killer_chara->is_player() || killer_chara->relationship >= 10)
+    {
+        if (!victim.is_player_or_ally())
         {
-            if (victim_chara_index >= 16)
+            ++game_data.kill_count;
+            if (victim.id == int2charaid(game_data.guild.fighters_guild_target))
             {
-                ++game_data.kill_count;
-                if (cdata[victim_chara_index].id ==
-                    int2charaid(game_data.guild.fighters_guild_target))
+                if (game_data.guild.fighters_guild_quota > 0)
                 {
-                    if (game_data.guild.fighters_guild_quota > 0)
-                    {
-                        --game_data.guild.fighters_guild_quota;
-                    }
-                }
-                if (cdata[victim_chara_index].original_relationship >= 0)
-                {
-                    p_at_m137 = -2;
-                }
-                if (cdata[victim_chara_index].id == CharaId::rich_person)
-                {
-                    p_at_m137 = -15;
-                }
-                if (cdata[victim_chara_index].id == CharaId::noble_child)
-                {
-                    p_at_m137 = -10;
-                }
-                if (cdata[victim_chara_index].id == CharaId::tourist)
-                {
-                    p_at_m137 = -5;
-                }
-                if (is_shopkeeper(cdata[victim_chara_index].role))
-                {
-                    p_at_m137 = -10;
-                }
-                if (cdata[victim_chara_index].role == Role::adventurer)
-                {
-                    chara_modify_impression(cdata[victim_chara_index], -25);
+                    --game_data.guild.fighters_guild_quota;
                 }
             }
-        }
-        if (cdata[killer_chara_index].relationship >= 10)
-        {
-            if (killer_chara_index != 0)
+            if (victim.original_relationship >= 0)
             {
-                if (cdata[killer_chara_index].impression < 200)
-                {
-                    if (rnd(2))
-                    {
-                        chara_modify_impression(cdata[killer_chara_index], 1);
-                        cdata[killer_chara_index].emotion_icon = 317;
-                    }
-                }
-                else if (rnd(10) == 0)
-                {
-                    chara_modify_impression(cdata[killer_chara_index], 1);
-                    cdata[killer_chara_index].emotion_icon = 317;
-                }
+                karma = -2;
+            }
+            if (victim.id == CharaId::rich_person)
+            {
+                karma = -15;
+            }
+            if (victim.id == CharaId::noble_child)
+            {
+                karma = -10;
+            }
+            if (victim.id == CharaId::tourist)
+            {
+                karma = -5;
+            }
+            if (is_shopkeeper(victim.role))
+            {
+                karma = -10;
+            }
+            if (victim.role == Role::adventurer)
+            {
+                chara_modify_impression(victim, -25);
             }
         }
     }
-    if (p_at_m137 != 0)
+    if (killer_chara->relationship >= 10)
     {
-        modify_karma(cdata.player(), p_at_m137);
+        if (!killer_chara->is_player())
+        {
+            if (killer_chara->impression < 200)
+            {
+                if (rnd(2))
+                {
+                    chara_modify_impression(*killer_chara, 1);
+                    killer_chara->emotion_icon = 317;
+                }
+            }
+            else if (rnd(10) == 0)
+            {
+                chara_modify_impression(*killer_chara, 1);
+                killer_chara->emotion_icon = 317;
+            }
+        }
+    }
+    if (karma != 0)
+    {
+        modify_karma(cdata.player(), karma);
     }
 }
 

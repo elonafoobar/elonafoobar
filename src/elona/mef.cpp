@@ -235,7 +235,11 @@ void mef_proc(Character& chara)
                     mef(5, ef));
                 if (stat == 0)
                 {
-                    check_kill(mef(6, ef), chara.index);
+                    check_kill(
+                        mef(6, ef) >= 0
+                            ? optional_ref<Character>{cdata[mef(6, ef)]}
+                            : optional_ref<Character>{},
+                        chara);
                 }
             }
         }
@@ -258,7 +262,10 @@ void mef_proc(Character& chara)
             chara, rnd_capped(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
         if (stat == 0)
         {
-            check_kill(mef(6, ef), chara.index);
+            check_kill(
+                mef(6, ef) >= 0 ? optional_ref<Character>{cdata[mef(6, ef)]}
+                                : optional_ref<Character>{},
+                chara);
         }
     }
     if (mef(0, ef) == 6)
@@ -283,7 +290,10 @@ void mef_proc(Character& chara)
             item_db_on_drink(chara, nullptr, mef(7, ef));
             if (chara.state() == Character::State::empty)
             {
-                check_kill(mef(6, ef), chara.index);
+                check_kill(
+                    mef(6, ef) >= 0 ? optional_ref<Character>{cdata[mef(6, ef)]}
+                                    : optional_ref<Character>{},
+                    chara);
             }
             mef_delete(ef);
         }
