@@ -900,7 +900,7 @@ void UIMenuCharacterSheet::_draw_skill_train_cost(
     }
     else
     {
-        train_cost = ""s + calclearncost(skill_id, _chara.index) + u8"p "s;
+        train_cost = ""s + calc_skill_learning_cost(skill_id, _chara) + u8"p "s;
     }
     mes(wx + 322 - strlen_u(train_cost) * 7,
         wy + 66 + cnt * 19 + 2,

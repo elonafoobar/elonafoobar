@@ -226,7 +226,8 @@ int _adventurer_get_trained_skill(Character& speaker)
 
 void _adventurer_learn_skill(int skill_id)
 {
-    cdata.player().platinum_coin -= calclearncost(skill_id, 0, true);
+    cdata.player().platinum_coin -=
+        calc_skill_learning_cost(skill_id, cdata.player(), true);
     chara_gain_skill(cdata.player(), skill_id);
     ++game_data.number_of_learned_skills_by_trainer;
 }
@@ -262,11 +263,11 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
             "core.talk.visitor.adventurer.train.learn.dialog",
             the_ability_db.get_text(skill_id, "name"),
             std::to_string(
-                calclearncost(skill_id, cdata.player().index, true)) +
+                calc_skill_learning_cost(skill_id, cdata.player(), true)) +
                 i18n::s.get("core.ui.platinum"),
             speaker);
         if (cdata.player().platinum_coin >=
-            calclearncost(skill_id, cdata.player().index, true))
+            calc_skill_learning_cost(skill_id, cdata.player(), true))
         {
             list(0, listmax) = 1;
             listn(0, listmax) =
@@ -280,7 +281,7 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
             "core.talk.visitor.adventurer.train.train.dialog",
             the_ability_db.get_text(skill_id, "name"),
             std::to_string(
-                calclearncost(skill_id, cdata.player().index, true)) +
+                calc_skill_learning_cost(skill_id, cdata.player(), true)) +
                 i18n::s.get("core.ui.platinum"),
             speaker);
         if (cdata.player().platinum_coin >=

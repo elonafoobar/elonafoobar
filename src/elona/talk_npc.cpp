@@ -1478,10 +1478,10 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         buff = i18n::s.get(
             "core.talk.npc.trainer.cost.learning",
             the_ability_db.get_text(selected_skill, "name"),
-            calclearncost(selected_skill, cdata.player().index),
+            calc_skill_learning_cost(selected_skill, cdata.player()),
             speaker);
         if (cdata.player().platinum_coin >=
-            calclearncost(selected_skill, cdata.player().index))
+            calc_skill_learning_cost(selected_skill, cdata.player()))
         {
             list(0, listmax) = 1;
             listn(0, listmax) =
@@ -1515,7 +1515,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         else
         {
             cdata.player().platinum_coin -=
-                calclearncost(selected_skill, cdata.player().index);
+                calc_skill_learning_cost(selected_skill, cdata.player());
             chara_gain_skill(cdata.player(), selected_skill);
             ++game_data.number_of_learned_skills_by_trainer;
             buff =
