@@ -1129,14 +1129,16 @@ TalkResult talk_wizard_return(Character& speaker)
 
 TalkResult talk_shop_reload_ammo(Character& speaker)
 {
-    if (calccostreload(0) == 0)
+    if (calc_ammo_reloading_cost(cdata.player()) == 0)
     {
         buff = i18n::s.get("core.talk.npc.shop.ammo.no_ammo", speaker);
         return TalkResult::talk_npc;
     }
-    buff =
-        i18n::s.get("core.talk.npc.shop.ammo.cost", calccostreload(0), speaker);
-    if (cdata.player().gold >= calccostreload(0))
+    buff = i18n::s.get(
+        "core.talk.npc.shop.ammo.cost",
+        calc_ammo_reloading_cost(cdata.player()),
+        speaker);
+    if (cdata.player().gold >= calc_ammo_reloading_cost(cdata.player()))
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.talk.npc.shop.ammo.choices.pay"));
@@ -1148,8 +1150,8 @@ TalkResult talk_shop_reload_ammo(Character& speaker)
     if (chatval_ == 1)
     {
         snd("core.paygold1");
-        cdata.player().gold -= calccostreload(0);
-        p = calccostreload(0, true);
+        cdata.player().gold -= calc_ammo_reloading_cost(cdata.player());
+        p = calc_ammo_reloading_cost(cdata.player(), true);
         buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
     }
     else

@@ -1183,11 +1183,11 @@ int calcmealvalue()
 
 
 
-int calccostreload(int owner, bool do_reload)
+int calc_ammo_reloading_cost(Character& owner, bool do_reload)
 {
     int cost{};
 
-    for (const auto& item : g_inv.for_chara(cdata[owner]))
+    for (const auto& item : g_inv.for_chara(owner))
     {
         if (the_item_db[itemid2int(item->id)]->category != ItemCategory::ammo)
             continue;

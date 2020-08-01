@@ -83,7 +83,7 @@ void calccosthire();
 int calccostbuilding();
 int calccosttax();
 int calcmealvalue();
-int calccostreload(int, bool = false);
+int calc_ammo_reloading_cost(Character& owner, bool do_reload = false);
 int calccargoupdate();
 int calccargoupdatecost();
 int calcidentifyvalue(int);
