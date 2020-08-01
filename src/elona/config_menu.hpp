@@ -120,7 +120,7 @@ public:
     virtual void change(int delta) override
     {
         _value = delta == 1;
-        config_set_boolean(_key, _value);
+        config_set(_key, _value);
     }
 
 
@@ -169,7 +169,7 @@ public:
     virtual void change(int delta) override
     {
         _value = clamp(_value + delta * _step, _min, _max);
-        config_set_integer(_key, _value);
+        config_set(_key, _value);
     }
 
 
@@ -239,7 +239,7 @@ public:
     {
         _index =
             clamp(_index + delta, 0, static_cast<int>(_choices.size() - 1));
-        config_set_string(_key, _choices[_index].value);
+        config_set(_key, _choices[_index].value);
     }
 
 

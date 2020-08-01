@@ -180,7 +180,7 @@ calculate_position(int listener_x, int listener_y, int source_x, int source_y)
 
 std::pair<short, unsigned char> calculate_position(const Position& p)
 {
-    if (!config_get_boolean("core.screen.stereo_sound"))
+    if (!config_get<bool>("core.screen.stereo_sound"))
     {
         return {0, 0};
     }

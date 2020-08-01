@@ -74,14 +74,12 @@ void config_save();
 void config_clear();
 
 // get
-bool config_get_boolean(const std::string& key);
-int config_get_integer(const std::string& key);
-std::string config_get_string(const std::string& key);
+template <typename T>
+T config_get(const std::string& key);
 
 // set
-void config_set_boolean(const std::string& key, bool value);
-void config_set_integer(const std::string& key, int value);
-void config_set_string(const std::string& key, const std::string& value);
+template <typename T>
+void config_set(const std::string& key, const T& value);
 
 
 

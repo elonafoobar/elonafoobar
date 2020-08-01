@@ -715,7 +715,7 @@ int damage_hp(
                 if (g_config.heartbeat())
                 {
                     int threshold =
-                        config_get_integer("core.screen.heartbeat_threshold");
+                        config_get<int>("core.screen.heartbeat_threshold");
                     if (victim.hp < victim.max_hp * (threshold * 0.01))
                     {
                         snd("core.Heart1");
