@@ -1023,7 +1023,7 @@ int damage_hp(
         }
         if (game_data.mount != victim.index || victim.is_player())
         {
-            cell_removechara(victim.position.x, victim.position.y);
+            cell_removechara(victim.position);
         }
 
         Character::State new_state = dmgheal_set_death_status(victim);

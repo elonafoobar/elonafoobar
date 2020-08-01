@@ -193,9 +193,9 @@ void cell_setchara(Character& chara, int x, int y)
 
 
 
-void cell_removechara(int x, int y)
+void cell_removechara(const Position& pos)
 {
-    cell_data.at(x, y).chara_index_plus_one = 0;
+    cell_data.at(pos.x, pos.y).chara_index_plus_one = 0;
 }
 
 

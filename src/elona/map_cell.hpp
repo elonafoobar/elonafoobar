@@ -33,7 +33,7 @@ void cell_featclear(int = 0, int = 0);
 void cell_featset(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
 void cell_movechara(Character& chara, int x, int y);
 void cell_refresh(int = 0, int = 0);
-void cell_removechara(int = 0, int = 0);
+void cell_removechara(const Position& pos);
 void cell_setchara(Character& chara, int x, int y);
 bool cell_swap(Character& chara, const Position& pos);
 bool cell_swap(Character& chara_a, Character& chara_b);
