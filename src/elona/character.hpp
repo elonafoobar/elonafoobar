@@ -784,7 +784,7 @@ int chara_find_ally(int id);
 int chara_get_free_slot();
 int chara_get_free_slot_ally();
 bool chara_unequip(const ItemRef& item);
-int chara_custom_talk(int = 0, int = 0);
+bool chara_custom_talk(Character& speaker, int talk_type);
 int chara_impression_level(int = 0);
 void chara_modify_impression(Character& chara, int delta);
 void chara_set_ai_item(Character& chara, ItemRef item);

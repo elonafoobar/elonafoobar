@@ -1822,8 +1822,8 @@ TalkResult talk_npc(Character& speaker)
     if (buff == ""s)
     {
         get_npc_talk(speaker);
-        int stat = chara_custom_talk(speaker.index, 106);
-        if (stat)
+        bool did_speak = chara_custom_talk(speaker, 106);
+        if (did_speak)
         {
             text_replace_tags_in_quest_board(speaker);
         }

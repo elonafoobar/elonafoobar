@@ -482,8 +482,8 @@ void eh_okaeri(const DeferredEvent&)
                 cdata[chara_index].current_map == game_data.current_map)
             {
                 cdata[chara_index].emotion_icon = 2006;
-                int stat = chara_custom_talk(chara_index, 104);
-                if (stat == 0)
+                bool did_speak = chara_custom_talk(cdata[chara_index], 104);
+                if (!did_speak)
                 {
                     ++i;
                 }

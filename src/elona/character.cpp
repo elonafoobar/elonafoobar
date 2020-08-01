@@ -1253,27 +1253,27 @@ int chara_get_free_slot_ally()
 }
 
 
-int chara_custom_talk(int chara_index, int talk_type)
+
+bool chara_custom_talk(Character& speaker, int talk_type)
 {
     std::vector<std::string> talk_file_buffer;
 
     bool use_external_file = false;
 
-    if (cdata[chara_index].has_custom_talk())
+    if (speaker.has_custom_talk())
     {
         const auto filepath =
-            filesystem::dirs::user() / u8"talk" / cdata[chara_index].talk;
+            filesystem::dirs::user() / u8"talk" / speaker.talk;
         if (!fs::exists(filepath))
-            return 0;
+            return false;
         range::copy(
             fileutil::read_by_line(filepath),
             std::back_inserter(talk_file_buffer));
         use_external_file = true;
     }
-    else if (cdata[chara_index].id == CharaId::user)
+    else if (speaker.id == CharaId::user)
     {
-        talk_file_buffer =
-            strutil::split_lines(usertxt(cdata[chara_index].cnpc_id));
+        talk_file_buffer = strutil::split_lines(usertxt(speaker.cnpc_id));
         use_external_file = true;
     }
 
@@ -1336,18 +1336,18 @@ int chara_custom_talk(int chara_index, int talk_type)
                 }
             }
         }
-        return 1;
+        return true;
     }
 
     if (talk_type == 106)
-        return 0;
+        return false;
 
-    if (cdata[chara_index].can_talk != 0)
+    if (speaker.can_talk != 0)
     {
-        chara_db_get_talk(cdata[chara_index].id, talk_type);
-        return 1;
+        chara_db_get_talk(speaker.id, talk_type);
+        return true;
     }
-    return 0;
+    return false;
 }
 
 
@@ -1994,7 +1994,7 @@ void hostileaction(int chara_index1, int chara_index2)
             cdata[chara_index2].hate = 80;
             cdata[chara_index2].enemy_id = chara_index1;
         }
-        chara_custom_talk(chara_index2, 101);
+        chara_custom_talk(cdata[chara_index2], 101);
     }
     if (cdata[chara_index2].is_livestock() == 1)
     {

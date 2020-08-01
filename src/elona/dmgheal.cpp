@@ -1058,7 +1058,7 @@ int damage_hp(
         {
             if (!attacker->is_player())
             {
-                chara_custom_talk(attacker->index, 103);
+                chara_custom_talk(*attacker, 103);
             }
             gained_exp = clamp(victim.level, 1, 200) *
                     clamp((victim.level + 1), 1, 200) *
@@ -1191,7 +1191,7 @@ int damage_hp(
         if (!victim.is_player())
         {
             ++npcmemory(0, charaid2int(victim.id));
-            chara_custom_talk(victim.index, 102);
+            chara_custom_talk(victim, 102);
             if (victim.is_player_or_ally())
             {
                 txt(i18n::s.get("core.damage.you_feel_sad"));

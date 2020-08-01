@@ -389,11 +389,11 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
                 {
                     if (chara.hate <= 0)
                     {
-                        chara_custom_talk(chara.index, 100);
+                        chara_custom_talk(chara, 100);
                     }
                     if (chara.hate > 0)
                     {
-                        chara_custom_talk(chara.index, 101);
+                        chara_custom_talk(chara, 101);
                     }
                 }
             }
