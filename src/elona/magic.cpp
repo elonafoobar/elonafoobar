@@ -192,7 +192,7 @@ bool _magic_1135(Character& target)
         txt(i18n::s.get("core.magic.love_potion.spill", target));
         chara_modify_impression(target, clamp(efp / 15, 0, 15));
         status_ailment_damage(target, StatusAilment::dimmed, 100);
-        lovemiracle(target.index);
+        lovemiracle(target);
         return true;
     }
     if (target.is_player())
@@ -202,7 +202,7 @@ bool _magic_1135(Character& target)
     else
     {
         txt(i18n::s.get("core.magic.love_potion.other", target));
-        lovemiracle(target.index);
+        lovemiracle(target);
         chara_modify_impression(target, clamp(efp / 4, 0, 25));
     }
     status_ailment_damage(target, StatusAilment::dimmed, 500);

@@ -2362,38 +2362,35 @@ void proc_negative_enchantments(Character& chara)
 
 
 
-void lovemiracle(int chara_index)
+void lovemiracle(Character& chara)
 {
-    if (rnd(2) || chara_index == 0)
+    if (rnd(2) || chara.is_player())
     {
         return;
     }
+
     txt(i18n::s.get("core.misc.love_miracle.uh"),
         Message::color{ColorIndex::cyan});
     flt();
     if (rnd(2))
     {
-        if (const auto item =
-                itemcreate_map_inv(573, cdata[chara_index].position, 0))
+        if (const auto item = itemcreate_map_inv(573, chara.position, 0))
         {
-            item->subname = charaid2int(cdata[chara_index].id);
-            item->weight = cdata[chara_index].weight * 10 + 250;
-            item->value = clamp(
-                cdata[chara_index].weight * cdata[chara_index].weight / 10000,
-                200,
-                40000);
+            item->subname = charaid2int(chara.id);
+            item->weight = chara.weight * 10 + 250;
+            item->value =
+                clamp(chara.weight * chara.weight / 10000, 200, 40000);
         }
     }
     else
     {
-        if (const auto item =
-                itemcreate_map_inv(574, cdata[chara_index].position, 0))
+        if (const auto item = itemcreate_map_inv(574, chara.position, 0))
         {
-            item->subname = charaid2int(cdata[chara_index].id);
+            item->subname = charaid2int(chara.id);
         }
     }
     snd("core.atk_elec");
-    animeload(15, cdata[chara_index]);
+    animeload(15, chara);
 }
 
 

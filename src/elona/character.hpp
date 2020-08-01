@@ -819,7 +819,7 @@ void incognitobegin();
 void incognitoend();
 void initialize_pc_character();
 void lost_body_part(int);
-void lovemiracle(int = 0);
+void lovemiracle(Character& chara);
 void monster_respawn();
 void move_character(Character& chara);
 void proc_negative_enchantments(Character& chara);

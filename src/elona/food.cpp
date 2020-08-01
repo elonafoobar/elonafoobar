@@ -1328,7 +1328,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             eater.emotion_icon = 317;
             chara_modify_impression(eater, 30);
             modify_karma(cdata.player(), -10);
-            lovemiracle(eater.index);
+            lovemiracle(eater);
         }
         status_ailment_damage(eater, StatusAilment::dimmed, 500);
         eater.emotion_icon = 317;
