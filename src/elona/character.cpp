@@ -489,10 +489,13 @@ Character::Character()
 }
 
 
+
 void Character::set_state(Character::State new_state)
 {
-    bool was_alive = !this->is_dead();
-    bool was_empty = this->state_ == Character::State::empty;
+    if (state_ == new_state)
+        return;
+
+    bool was_empty = state_ == Character::State::empty;
 
     if (was_empty && new_state != Character::State::empty)
     {
@@ -501,22 +504,14 @@ void Character::set_state(Character::State new_state)
         lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(*this);
     }
 
-    this->state_ = new_state;
+    state_ = new_state;
 
-    if (was_alive && this->is_dead())
-    {
-        chara_killed(*this);
-    }
-
-    if (was_empty && this->state_ != Character::State::empty)
+    if (was_empty && state_ != Character::State::empty)
     {
         lua::lua->get_handle_manager().create_chara_handle_run_callbacks(*this);
     }
-    else if (!was_empty && this->state_ == Character::State::empty)
-    {
-        chara_remove(*this);
-    }
 }
+
 
 
 void Character::clear()
@@ -1511,41 +1506,11 @@ int chara_copy(const Character& source)
 
 
 
-void chara_killed(Character& chara)
-{
-    if (chara.state() == Character::State::empty)
-    {
-        // This character slot is invalid, and can be overwritten by newly
-        // created characters at any time. Defer removing its handle until a new
-        // character is created in its slot.
-    }
-    else if (
-        chara.state() == Character::State::villager_dead ||
-        chara.state() == Character::State::adventurer_dead ||
-        chara.state() == Character::State::pet_dead)
-    {
-        // This character revives.
-    }
-    else
-    {
-        assert(0);
-    }
-}
-
-
-
-void chara_remove(Character& chara)
-{
-    chara.set_state(Character::State::empty);
-}
-
-
-
 void chara_delete(int chara_index)
 {
     if (chara_index != -1)
     {
-        chara_remove(cdata[chara_index]);
+        cdata[chara_index].set_state(Character::State::empty);
     }
 
     for (const auto& item : g_inv.for_chara(cdata[chara_index]))

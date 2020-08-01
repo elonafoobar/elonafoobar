@@ -769,7 +769,6 @@ void chara_refresh(Character& chara);
 int chara_copy(const Character& source);
 
 void chara_delete(int = 0);
-void chara_remove(Character&);
 void chara_vanquish(Character& chara);
 void chara_killed(Character&);
 
