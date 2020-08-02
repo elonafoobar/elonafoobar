@@ -257,7 +257,7 @@ static void _reroll_character()
 {
     const auto portrait_save = cdata.player().portrait;
 
-    chara_delete(0);
+    chara_delete(cdata.player());
     race_init_chara(cdata.player(), cmrace);
     class_init_chara(cdata.player(), cmclass);
     cdata.player().name = u8"????"s;

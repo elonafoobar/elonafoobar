@@ -209,24 +209,23 @@ void _talk_hv_adventurer_best_friend(Character& speaker)
 
 int _adventurer_get_trained_skill(Character& speaker)
 {
-    int stat = advfavoriteskill(speaker.index);
-    int val = rtval(rnd(stat));
+    int skill_id = adventurer_favorite_skill(speaker);
     if (speaker.impression >= 300)
     {
         if (rnd(3) == 0)
         {
-            stat = advfavoritestat(speaker.index);
-            val = stat;
+            skill_id = adventurer_favorite_stat(speaker);
         }
     }
-    return val;
+    return skill_id;
 }
 
 
 
 void _adventurer_learn_skill(int skill_id)
 {
-    cdata.player().platinum_coin -= calclearncost(skill_id, 0, true);
+    cdata.player().platinum_coin -=
+        calc_skill_learning_cost(skill_id, cdata.player(), true);
     chara_gain_skill(cdata.player(), skill_id);
     ++game_data.number_of_learned_skills_by_trainer;
 }
@@ -235,7 +234,8 @@ void _adventurer_learn_skill(int skill_id)
 
 void _adventurer_train_skill(int skill_id)
 {
-    cdata.player().platinum_coin -= calctraincost(skill_id, 0, true);
+    cdata.player().platinum_coin -=
+        calc_skill_training_cost(skill_id, cdata.player(), true);
     modify_potential(
         cdata.player(),
         skill_id,
@@ -261,11 +261,11 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
             "core.talk.visitor.adventurer.train.learn.dialog",
             the_ability_db.get_text(skill_id, "name"),
             std::to_string(
-                calclearncost(skill_id, cdata.player().index, true)) +
+                calc_skill_learning_cost(skill_id, cdata.player(), true)) +
                 i18n::s.get("core.ui.platinum"),
             speaker);
         if (cdata.player().platinum_coin >=
-            calclearncost(skill_id, cdata.player().index, true))
+            calc_skill_learning_cost(skill_id, cdata.player(), true))
         {
             list(0, listmax) = 1;
             listn(0, listmax) =
@@ -279,11 +279,11 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
             "core.talk.visitor.adventurer.train.train.dialog",
             the_ability_db.get_text(skill_id, "name"),
             std::to_string(
-                calclearncost(skill_id, cdata.player().index, true)) +
+                calc_skill_learning_cost(skill_id, cdata.player(), true)) +
                 i18n::s.get("core.ui.platinum"),
             speaker);
         if (cdata.player().platinum_coin >=
-            calctraincost(skill_id, cdata.player().index, true))
+            calc_skill_training_cost(skill_id, cdata.player(), true))
         {
             list(0, listmax) = 2;
             listn(0, listmax) =
@@ -488,8 +488,7 @@ TalkResult _talk_hv_adventurer_materials(Character& speaker)
 
 TalkResult _talk_hv_adventurer_favorite_skill(Character& speaker)
 {
-    int stat = advfavoriteskill(speaker.index);
-    int skill_id = rtval(rnd(stat));
+    int skill_id = adventurer_favorite_skill(speaker);
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.favorite_skill.dialog",
@@ -514,7 +513,7 @@ TalkResult _talk_hv_adventurer_favorite_skill(Character& speaker)
 
 TalkResult _talk_hv_adventurer_favorite_stat(Character& speaker)
 {
-    int skill_id = advfavoritestat(speaker.index);
+    int skill_id = adventurer_favorite_stat(speaker);
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.favorite_stat.dialog",

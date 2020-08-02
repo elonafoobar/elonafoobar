@@ -131,7 +131,7 @@ std::string _set_pcc_info(Character& chara, int val0)
         }
         if (val0 == 9)
         {
-            if (chara.index != 0)
+            if (!chara.is_player())
             {
                 rtval(0) = 101;
                 rtval(1) = 0;
@@ -714,7 +714,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                 s(6) = i18n::s.get("core.ui.appearance.basic.cloth");
                 s(7) = i18n::s.get("core.ui.appearance.basic.pants");
                 s(8) = i18n::s.get("core.ui.appearance.basic.set_detail");
-                if (chara.index != 0)
+                if (!chara.is_player())
                 {
                     s(9) = i18n::s.get("core.ui.appearance.basic.custom");
                 }
@@ -722,8 +722,8 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                 {
                     s(9) = i18n::s.get("core.ui.appearance.basic.riding");
                 }
-                p = 9 + (chara.index != 0) +
-                    (chara.index == 0) * (game_data.mount != 0);
+                p = 9 + (!chara.is_player()) +
+                    (chara.is_player()) * (game_data.mount != 0);
             }
             else
             {
@@ -1363,7 +1363,7 @@ void screen_analyze_self()
     snd("core.pop2");
     buff = "";
     notesel(buff);
-    chara_delete(56);
+    chara_delete(cdata.tmp());
     cdata.tmp().piety_point = cdata.player().piety_point;
     cdata.tmp().god_id = cdata.player().god_id;
     for (int cnt = 0; cnt < 600; ++cnt)

@@ -142,7 +142,7 @@ void chara_gain_skill(Character& chara, int id, int initial_level, int stock)
 {
     if (id >= 400)
     {
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             spell(id - 400) += stock;
             modify_potential(chara, id, 1);
@@ -226,7 +226,7 @@ void chara_gain_fixed_skill_exp(Character& chara, int id, int experience)
         set_ability(chara, id, lv, exp, potential);
         if (is_in_fov(chara))
         {
-            if (chara.index == 0 || chara.index < 16)
+            if (chara.is_player() || chara.is_player_or_ally())
             {
                 snd("core.ding3");
                 Message::instance().txtef(ColorIndex::green);
@@ -254,7 +254,7 @@ void chara_gain_fixed_skill_exp(Character& chara, int id, int experience)
         lv -= lv_delta;
         potential = increase_potential(potential, lv_delta);
         set_ability(chara, id, lv, exp, potential);
-        if (chara.index == 0 || chara.index < 16)
+        if (chara.is_player() || chara.is_player_or_ally())
         {
             if (is_in_fov(chara))
             {
@@ -338,7 +338,7 @@ void chara_gain_skill_exp(
                 const auto lvl_exp = calc_chara_exp_from_skill_exp(
                     chara, exp, experience_divisor_of_character_level);
                 chara.experience += lvl_exp;
-                if (chara.index == 0)
+                if (chara.is_player())
                 {
                     game_data.sleep_experience += lvl_exp;
                 }
@@ -356,7 +356,7 @@ void chara_gain_skill_exp(
         set_ability(chara, id, lv, new_exp_level, potential);
         if (is_in_fov(chara))
         {
-            if (chara.index == 0 || chara.index < 16)
+            if (chara.is_player() || chara.is_player_or_ally())
             {
                 snd("core.ding3");
                 Message::instance().txtef(ColorIndex::green);
@@ -387,7 +387,7 @@ void chara_gain_skill_exp(
         set_ability(chara, id, lv, new_exp_level, potential);
         if (is_in_fov(chara))
         {
-            if (chara.index == 0 || chara.index < 16)
+            if (chara.is_player() || chara.is_player_or_ally())
             {
                 if (lv_delta != 0)
                 {
@@ -449,7 +449,7 @@ void chara_gain_exp_detection(Character& chara)
 
 void chara_gain_exp_casting(Character& chara, int spell_id)
 {
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         chara_gain_skill_exp(
             chara, spell_id, calc_spell_exp_gain(spell_id), 4, 5);
@@ -502,7 +502,7 @@ void chara_gain_exp_weight_lifting(Character& chara)
 
 void chara_gain_exp_magic_device(Character& chara)
 {
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         chara_gain_skill_exp(chara, 174, 40);
     }

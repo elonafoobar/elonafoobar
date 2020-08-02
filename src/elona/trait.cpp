@@ -870,7 +870,7 @@ void trait_load_desc(Character& chara)
     int featrq = 0;
 
     listmax = 0;
-    if (chara.index == 0 && game_data.acquirable_feat_count > 0)
+    if (chara.is_player() && game_data.acquirable_feat_count > 0)
     {
         list(0, listmax) = -1;
         list(1, listmax) = 0;
@@ -879,7 +879,7 @@ void trait_load_desc(Character& chara)
     f = 0;
     for (int cnt = 0; cnt < 217; ++cnt)
     {
-        if (chara.index != 0)
+        if (!chara.is_player())
         {
             break;
         }
@@ -1017,7 +1017,7 @@ void trait_load_desc(Character& chara)
                 "core.trait.body_is_complicated", chara.speed_correction_value);
         ++listmax;
     }
-    if (chara.index == 0 && game_data.ether_disease_speed != 0)
+    if (chara.is_player() && game_data.ether_disease_speed != 0)
     {
         if (game_data.ether_disease_speed > 0)
         {

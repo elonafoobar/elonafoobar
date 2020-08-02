@@ -22,12 +22,12 @@ namespace
 {
 
 int calc_power_decreased_by_resistance(
-    int chara_index,
+    Character& chara,
     int power,
     Element element)
 {
     const auto resistance_level =
-        cdata[chara_index].get_skill(static_cast<int>(element)).level / 50;
+        chara.get_skill(static_cast<int>(element)).level / 50;
     power = (rnd_capped(power / 2 + 1) + power / 2) * 100 /
         (50 + resistance_level * 50);
 
@@ -62,8 +62,8 @@ void status_ailment_damage(
             return;
         if (chara.quality > Quality::great && rnd_capped(chara.level / 2 + 1))
             return;
-        power = calc_power_decreased_by_resistance(
-            chara.index, power, Element::darkness);
+        power =
+            calc_power_decreased_by_resistance(chara, power, Element::darkness);
         turn = power / 6;
         if (turn <= 0)
             return;
@@ -90,8 +90,7 @@ void status_ailment_damage(
             return;
         if (chara.quality > Quality::great && rnd_capped(chara.level / 2 + 1))
             return;
-        power = calc_power_decreased_by_resistance(
-            chara.index, power, Element::mind);
+        power = calc_power_decreased_by_resistance(chara, power, Element::mind);
         turn = power / 7;
         if (turn <= 0)
             return;
@@ -116,8 +115,8 @@ void status_ailment_damage(
             return;
         if (chara.quality > Quality::great && rnd_capped(chara.level + 1))
             return;
-        power = calc_power_decreased_by_resistance(
-            chara.index, power, Element::nerve);
+        power =
+            calc_power_decreased_by_resistance(chara, power, Element::nerve);
         turn = power / 10;
         if (turn <= 0)
             return;
@@ -142,8 +141,8 @@ void status_ailment_damage(
             return;
         if (chara.quality > Quality::great && rnd_capped(chara.level / 3 + 1))
             return;
-        power = calc_power_decreased_by_resistance(
-            chara.index, power, Element::poison);
+        power =
+            calc_power_decreased_by_resistance(chara, power, Element::poison);
         turn = power / 5;
         if (turn <= 0)
             return;
@@ -168,8 +167,8 @@ void status_ailment_damage(
             return;
         if (chara.quality > Quality::great && rnd_capped(chara.level / 5 + 1))
             return;
-        power = calc_power_decreased_by_resistance(
-            chara.index, power, Element::nerve);
+        power =
+            calc_power_decreased_by_resistance(chara, power, Element::nerve);
         turn = power / 4;
         if (turn <= 0)
             return;
@@ -198,8 +197,7 @@ void status_ailment_damage(
             return;
         if (chara.quality > Quality::great && rnd_capped(chara.level / 5 + 1))
             return;
-        power = calc_power_decreased_by_resistance(
-            chara.index, power, Element::mind);
+        power = calc_power_decreased_by_resistance(chara, power, Element::mind);
         turn = power / 7;
         if (turn <= 0)
             return;
@@ -217,8 +215,8 @@ void status_ailment_damage(
             return;
         if (chara.race == "core.golem")
             return;
-        power = calc_power_decreased_by_resistance(
-            chara.index, power, Element::sound);
+        power =
+            calc_power_decreased_by_resistance(chara, power, Element::sound);
         turn = power / 8;
         if (turn <= 0)
             return;

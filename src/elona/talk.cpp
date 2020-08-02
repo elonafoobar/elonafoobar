@@ -105,7 +105,7 @@ void talk_to_npc(Character& chara)
     }
     chatval_unique_chara_id = none;
     chatval_show_impress = true;
-    if (chara.quality == Quality::special && chara.index >= 16)
+    if (chara.quality == Quality::special && !chara.is_player_or_ally())
     {
         chatval_unique_chara_id = charaid2int(chara.id);
         chatval_show_impress = false;
@@ -130,7 +130,7 @@ void talk_to_npc(Character& chara)
         talk_wrapper(chara, TalkResult::talk_busy);
         return;
     }
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         talk_wrapper(chara, TalkResult::talk_end);
         return;
@@ -143,7 +143,7 @@ void talk_to_npc(Character& chara)
 
     if (chatval_unique_chara_id &&
         game_data.current_map != mdata_t::MapId::show_house &&
-        chara.index >= 16)
+        !chara.is_player_or_ally())
     {
         talk_wrapper(chara, TalkResult::talk_unique);
         return;

@@ -239,7 +239,7 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
             txt(i18n::s.get("core.magic.mount.no_place_to_get_off"));
             return TalkResult::talk_end;
         }
-        cell_setchara(game_data.mount, rtval, rtval(1));
+        cell_setchara(cdata[game_data.mount], rtval, rtval(1));
         txt(i18n::s.get("core.magic.mount.dismount", cdata[game_data.mount]));
         ride_end();
     }
@@ -650,7 +650,7 @@ TalkResult talk_ally_abandon(Character& speaker)
         txt(i18n::s.get("core.talk.npc.ally.abandon.you_abandoned", speaker));
         cell_data.at(speaker.position.x, speaker.position.y)
             .chara_index_plus_one = 0;
-        chara_delete(speaker.index);
+        chara_delete(speaker);
         return TalkResult::talk_end;
     }
     buff = "";
@@ -748,7 +748,7 @@ TalkResult talk_slave_sell(Character& speaker)
             {
                 event_add(15, charaid2int(cdata[stat].id));
             }
-            chara_delete(stat);
+            chara_delete(cdata[stat]);
             buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
         }
         else
@@ -1095,7 +1095,7 @@ TalkResult talk_moyer_sell_paels_mom(Character& speaker)
         lily->relationship = 0;
         lily->initial_position.x = 48;
         lily->initial_position.y = 18;
-        cell_movechara(lily->index, 48, 18);
+        cell_movechara(*lily, 48, 18);
         buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
     }
     else
@@ -1129,14 +1129,16 @@ TalkResult talk_wizard_return(Character& speaker)
 
 TalkResult talk_shop_reload_ammo(Character& speaker)
 {
-    if (calccostreload(0) == 0)
+    if (calc_ammo_reloading_cost(cdata.player()) == 0)
     {
         buff = i18n::s.get("core.talk.npc.shop.ammo.no_ammo", speaker);
         return TalkResult::talk_npc;
     }
-    buff =
-        i18n::s.get("core.talk.npc.shop.ammo.cost", calccostreload(0), speaker);
-    if (cdata.player().gold >= calccostreload(0))
+    buff = i18n::s.get(
+        "core.talk.npc.shop.ammo.cost",
+        calc_ammo_reloading_cost(cdata.player()),
+        speaker);
+    if (cdata.player().gold >= calc_ammo_reloading_cost(cdata.player()))
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.talk.npc.shop.ammo.choices.pay"));
@@ -1148,8 +1150,8 @@ TalkResult talk_shop_reload_ammo(Character& speaker)
     if (chatval_ == 1)
     {
         snd("core.paygold1");
-        cdata.player().gold -= calccostreload(0);
-        p = calccostreload(0, true);
+        cdata.player().gold -= calc_ammo_reloading_cost(cdata.player());
+        p = calc_ammo_reloading_cost(cdata.player(), true);
         buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
     }
     else
@@ -1330,7 +1332,7 @@ TalkResult talk_guard_where_is(Character& speaker, int chatval_)
     }
     p = dist(cdata.player().position, chara_you_ask.position);
 
-    if (chara_you_ask.index == speaker.index)
+    if (chara_you_ask == speaker)
     {
         s = i18n::s.get("core.talk.npc.common.you_kidding", speaker);
     }
@@ -1462,10 +1464,10 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         buff = i18n::s.get(
             "core.talk.npc.trainer.cost.training",
             the_ability_db.get_text(selected_skill, "name"),
-            calctraincost(selected_skill, cdata.player().index),
+            calc_skill_training_cost(selected_skill, cdata.player()),
             speaker);
         if (cdata.player().platinum_coin >=
-            calctraincost(selected_skill, cdata.player().index))
+            calc_skill_training_cost(selected_skill, cdata.player()))
         {
             list(0, listmax) = 1;
             listn(0, listmax) =
@@ -1478,10 +1480,10 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         buff = i18n::s.get(
             "core.talk.npc.trainer.cost.learning",
             the_ability_db.get_text(selected_skill, "name"),
-            calclearncost(selected_skill, cdata.player().index),
+            calc_skill_learning_cost(selected_skill, cdata.player()),
             speaker);
         if (cdata.player().platinum_coin >=
-            calclearncost(selected_skill, cdata.player().index))
+            calc_skill_learning_cost(selected_skill, cdata.player()))
         {
             list(0, listmax) = 1;
             listn(0, listmax) =
@@ -1500,7 +1502,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         if (is_training)
         {
             cdata.player().platinum_coin -=
-                calctraincost(selected_skill, cdata.player().index);
+                calc_skill_training_cost(selected_skill, cdata.player());
             modify_potential(
                 cdata.player(),
                 selected_skill,
@@ -1515,7 +1517,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         else
         {
             cdata.player().platinum_coin -=
-                calclearncost(selected_skill, cdata.player().index);
+                calc_skill_learning_cost(selected_skill, cdata.player());
             chara_gain_skill(cdata.player(), selected_skill);
             ++game_data.number_of_learned_skills_by_trainer;
             buff =
@@ -1820,8 +1822,8 @@ TalkResult talk_npc(Character& speaker)
     if (buff == ""s)
     {
         get_npc_talk(speaker);
-        int stat = chara_custom_talk(speaker.index, 106);
-        if (stat)
+        bool did_speak = chara_custom_talk(speaker, 106);
+        if (did_speak)
         {
             text_replace_tags_in_quest_board(speaker);
         }
@@ -1829,7 +1831,7 @@ TalkResult talk_npc(Character& speaker)
         {
             if (speaker.relationship != 10)
             {
-                if (speaker.index >= 16)
+                if (!speaker.is_player_or_ally())
                 {
                     if (rnd(3) == 0)
                     {
@@ -1909,7 +1911,7 @@ TalkResult talk_npc(Character& speaker)
                 57, i18n::s.get("core.talk.npc.horse_keeper.choices.buy"));
         }
     }
-    if (speaker.index < 16)
+    if (speaker.is_player_or_ally())
     {
         if (speaker.is_escorted() == 0)
         {
@@ -2099,7 +2101,7 @@ TalkResult talk_npc(Character& speaker)
     {
         if (game_data.current_map != mdata_t::MapId::show_house)
         {
-            if (speaker.index >= 16)
+            if (!speaker.is_player_or_ally())
             {
                 if (!event_has_pending_events())
                 {
@@ -2239,7 +2241,7 @@ TalkResult talk_npc(Character& speaker)
     }
     if (game_data.current_map == mdata_t::MapId::your_home)
     {
-        if (speaker.index >= 57)
+        if (speaker.is_map_local())
         {
             if (speaker.role != Role::none)
             {

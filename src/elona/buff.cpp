@@ -203,9 +203,9 @@ void buff_add(
             }
             return;
         }
-        if (doer && doer->index == 0)
+        if (doer && doer->is_player())
         {
-            hostileaction(0, chara.index);
+            chara_act_hostile_action(cdata.player(), chara);
         }
     }
 
@@ -233,7 +233,7 @@ void buff_add(
 
 void buff_delete(Character& chara, int slot)
 {
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         txt(i18n::s.get(
                 "core.magic.buff.ends",

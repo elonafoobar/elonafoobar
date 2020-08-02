@@ -149,7 +149,7 @@ int get_random_item_id()
 bool upgrade_item_quality(Inventory& inv)
 {
     const auto owner_chara = inv_get_owner(inv).as_character();
-    if (owner_chara && owner_chara->index != 0)
+    if (owner_chara && !owner_chara->is_player())
         return false;
 
     return cdata.player().get_skill(19).level > rnd(5000);

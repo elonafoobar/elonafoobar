@@ -146,7 +146,7 @@ void UIMenuCharamakeClass::_draw_choices()
 
 static void _reload_selected_class(data::InstanceId class_id)
 {
-    chara_delete(0);
+    chara_delete(cdata.player());
     class_init_chara(cdata.player(), class_id);
 }
 

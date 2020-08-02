@@ -120,7 +120,7 @@ optional<int> chara_create_internal(int slot, int chara_id)
             return none;
         }
     }
-    chara_delete(slot);
+    chara_delete(cdata[slot]);
     if (slot == 0)
     {
         p = 10;
@@ -340,7 +340,7 @@ bool chara_place_internal(
     {
         if (i == 99)
         {
-            if (chara.index >= 57)
+            if (chara.is_map_local())
             {
                 // Give up.
                 return false;
@@ -356,7 +356,7 @@ bool chara_place_internal(
             x = (i - 100) % map_data.width;
             if (y >= map_data.height)
             {
-                if (chara.index != 0)
+                if (!chara.is_player())
                 {
                     return false;
                 }
@@ -419,7 +419,7 @@ bool chara_place_internal(
             }
         }
 
-        if (can_place_character_at({x, y}, chara.index == 0 || position))
+        if (can_place_character_at({x, y}, chara.is_player() || position))
         {
             break;
         }
@@ -436,7 +436,7 @@ bool chara_place_internal(
 
 void failed_to_place_character(Character& chara)
 {
-    if (chara.index < 16)
+    if (chara.is_player_or_ally())
     {
         chara.set_state(Character::State::pet_in_other_map);
         txt(i18n::s.get("core.chara.place_failure.ally", chara));
@@ -489,10 +489,13 @@ Character::Character()
 }
 
 
+
 void Character::set_state(Character::State new_state)
 {
-    bool was_alive = !this->is_dead();
-    bool was_empty = this->state_ == Character::State::empty;
+    if (state_ == new_state)
+        return;
+
+    bool was_empty = state_ == Character::State::empty;
 
     if (was_empty && new_state != Character::State::empty)
     {
@@ -501,22 +504,14 @@ void Character::set_state(Character::State new_state)
         lua::lua->get_handle_manager().remove_chara_handle_run_callbacks(*this);
     }
 
-    this->state_ = new_state;
+    state_ = new_state;
 
-    if (was_alive && this->is_dead())
-    {
-        chara_killed(*this);
-    }
-
-    if (was_empty && this->state_ != Character::State::empty)
+    if (was_empty && state_ != Character::State::empty)
     {
         lua::lua->get_handle_manager().create_chara_handle_run_callbacks(*this);
     }
-    else if (!was_empty && this->state_ == Character::State::empty)
-    {
-        chara_remove(*this);
-    }
 }
+
 
 
 void Character::clear()
@@ -534,6 +529,50 @@ void Character::clear_flags()
 }
 
 
+
+bool Character::is_player() const
+{
+    return index == 0;
+}
+
+
+
+bool Character::is_ally() const
+{
+    return 1 <= index && index <= 15;
+}
+
+
+
+bool Character::is_player_or_ally() const
+{
+    return is_player() || is_ally();
+}
+
+
+
+bool Character::is_adventurer() const
+{
+    return 16 <= index && index <= 54;
+}
+
+
+
+bool Character::is_global() const
+{
+    return is_player_or_ally() || is_adventurer() || index == 55 /* unused */ ||
+        index == 56 /* temporary */;
+}
+
+
+
+bool Character::is_map_local() const
+{
+    return !is_global();
+}
+
+
+
 CData::CData()
     : storage(ELONA_MAX_CHARACTERS)
 {
@@ -547,7 +586,7 @@ CData::CData()
 
 bool chara_place(Character& chara)
 {
-    if (chara.index == cdata.tmp().index)
+    if (chara == cdata.tmp())
     {
         chara.set_state(Character::State::empty);
         return false;
@@ -586,7 +625,7 @@ void initialize_character(Character& chara)
     {
         chara.image = rnd(33) * 2 + chara.sex + 1;
     }
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         chara.nutrition = 9000;
     }
@@ -613,7 +652,7 @@ void initialize_character(Character& chara)
     chara.hp = chara.max_hp;
     chara.mp = chara.max_mp;
     chara.sp = chara.max_sp;
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         game_data.initial_cart_limit = 80000;
         game_data.current_cart_limit = game_data.initial_cart_limit;
@@ -685,7 +724,7 @@ void chara_refresh(Character& chara)
 {
     int rp2 = 0;
     int rp3 = 0;
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         game_data.seven_league_boot_effect = 0;
         game_data.ether_disease_speed = 0;
@@ -699,7 +738,7 @@ void chara_refresh(Character& chara)
     {
         chara.get_skill(cnt).level = chara.get_skill(cnt).base_level;
     }
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         chara.clear_flags();
         if (trait(161) != 0)
@@ -785,7 +824,7 @@ void chara_refresh(Character& chara)
         }
         if (equipment->material == 8)
         {
-            if (chara.index == 0)
+            if (chara.is_player())
             {
                 game_data.ether_disease_speed += 5;
             }
@@ -834,7 +873,7 @@ void chara_refresh(Character& chara)
             {
                 if (rp2 == 56)
                 {
-                    if (chara.index == 0)
+                    if (chara.is_player())
                     {
                         game_data.catches_god_signal = 1;
                         continue;
@@ -842,7 +881,7 @@ void chara_refresh(Character& chara)
                 }
                 if (rp2 == 59)
                 {
-                    if (chara.index == 0)
+                    if (chara.is_player())
                     {
                         game_data.reveals_religion = 1;
                         continue;
@@ -851,7 +890,7 @@ void chara_refresh(Character& chara)
                 if (rp2 == 29)
                 {
                     chara.get_skill(18).level += enchantment.power / 50 + 1;
-                    if (chara.index == 0)
+                    if (chara.is_player())
                     {
                         game_data.seven_league_boot_effect +=
                             enchantment.power / 8;
@@ -955,7 +994,7 @@ void chara_refresh(Character& chara)
                     chara.has_cursed_equipments() = true;
                     continue;
                 }
-                if (chara.index == 0)
+                if (chara.is_player())
                 {
                     if (rp2 == 30)
                     {
@@ -1008,7 +1047,7 @@ void chara_refresh(Character& chara)
             chara.get_skill(10 + cnt).level = 1;
         }
     }
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         god_apply_blessing(chara);
         for (int cnt = 0; cnt < 217; ++cnt)
@@ -1209,27 +1248,27 @@ int chara_get_free_slot_ally()
 }
 
 
-int chara_custom_talk(int chara_index, int talk_type)
+
+bool chara_custom_talk(Character& speaker, int talk_type)
 {
     std::vector<std::string> talk_file_buffer;
 
     bool use_external_file = false;
 
-    if (cdata[chara_index].has_custom_talk())
+    if (speaker.has_custom_talk())
     {
         const auto filepath =
-            filesystem::dirs::user() / u8"talk" / cdata[chara_index].talk;
+            filesystem::dirs::user() / u8"talk" / speaker.talk;
         if (!fs::exists(filepath))
-            return 0;
+            return false;
         range::copy(
             fileutil::read_by_line(filepath),
             std::back_inserter(talk_file_buffer));
         use_external_file = true;
     }
-    else if (cdata[chara_index].id == CharaId::user)
+    else if (speaker.id == CharaId::user)
     {
-        talk_file_buffer =
-            strutil::split_lines(usertxt(cdata[chara_index].cnpc_id));
+        talk_file_buffer = strutil::split_lines(usertxt(speaker.cnpc_id));
         use_external_file = true;
     }
 
@@ -1292,18 +1331,18 @@ int chara_custom_talk(int chara_index, int talk_type)
                 }
             }
         }
-        return 1;
+        return true;
     }
 
     if (talk_type == 106)
-        return 0;
+        return false;
 
-    if (cdata[chara_index].can_talk != 0)
+    if (speaker.can_talk != 0)
     {
-        chara_db_get_talk(cdata[chara_index].id, talk_type);
-        return 1;
+        chara_db_get_talk(speaker.id, talk_type);
+        return true;
     }
-    return 0;
+    return false;
 }
 
 
@@ -1373,7 +1412,7 @@ void chara_modify_impression(Character& chara, int delta)
 
 void chara_vanquish(Character& chara)
 {
-    if (chara.index == 0)
+    if (chara.is_player())
         return;
 
     if (chara.index == game_data.mount)
@@ -1429,7 +1468,7 @@ int chara_copy(const Character& source)
     }
 
     // Delete completely the previous character in `slot`.
-    chara_delete(slot);
+    chara_delete(cdata[slot]);
 
     // Copy from `source` to `destination`.
     Character::copy(source, destination);
@@ -1467,48 +1506,15 @@ int chara_copy(const Character& source)
 
 
 
-void chara_killed(Character& chara)
-{
-    if (chara.state() == Character::State::empty)
-    {
-        // This character slot is invalid, and can be overwritten by newly
-        // created characters at any time. Defer removing its handle until a new
-        // character is created in its slot.
-    }
-    else if (
-        chara.state() == Character::State::villager_dead ||
-        chara.state() == Character::State::adventurer_dead ||
-        chara.state() == Character::State::pet_dead)
-    {
-        // This character revives.
-    }
-    else
-    {
-        assert(0);
-    }
-}
-
-
-
-void chara_remove(Character& chara)
+void chara_delete(Character& chara)
 {
     chara.set_state(Character::State::empty);
-}
 
-
-
-void chara_delete(int chara_index)
-{
-    if (chara_index != -1)
-    {
-        chara_remove(cdata[chara_index]);
-    }
-
-    for (const auto& item : g_inv.for_chara(cdata[chara_index]))
+    for (const auto& item : g_inv.for_chara(chara))
     {
         item->remove();
     }
-    cdata[chara_index].clear();
+    chara.clear();
 }
 
 
@@ -1615,7 +1621,7 @@ void chara_relocate(
     }
 
     // Lose resistance.
-    if (destination.index < 16)
+    if (destination.is_player_or_ally())
     {
         for (int element = 50; element < 61; ++element)
         {
@@ -1833,61 +1839,57 @@ void ride_end()
 
 
 
-void turn_aggro(int chara_index, int target_index, int hate)
+void turn_aggro(Character& chara, Character& target, int hate)
 {
-    if (target_index < 16)
+    if (target.is_player_or_ally())
     {
-        cdata[chara_index].relationship = -3;
+        chara.relationship = -3;
     }
-    cdata[chara_index].hate = hate;
-    cdata[chara_index].emotion_icon = 218;
-    cdata[chara_index].enemy_id = target_index;
+    chara.hate = hate;
+    chara.emotion_icon = 218;
+    chara.enemy_id = target.index;
 }
 
 
 
 void make_sound(
-    int source_x,
-    int source_y,
+    Character& source_chara,
     int distance_threshold,
     int waken,
-    int may_make_angry,
-    int source_chara_index)
+    bool may_make_angry)
 {
-    for (int cnt = 1; cnt < ELONA_MAX_CHARACTERS; ++cnt)
+    const auto& source_pos = source_chara.position;
+
+    for (auto&& chara : cdata.all())
     {
-        if (cdata[cnt].state() != Character::State::alive)
-        {
+        if (chara.state() != Character::State::alive)
             continue;
-        }
-        if (dist(source_x, source_y, cdata[cnt].position) < distance_threshold)
+        if (chara.is_player())
+            continue;
+        if (distance_threshold <= dist(source_pos, chara.position))
+            continue;
+        if (chara.sleep == 0)
+            continue;
+
+        if (rnd(waken) == 0)
         {
-            if (rnd(waken) == 0)
+            chara.sleep = 0;
+            if (is_in_fov(chara))
             {
-                if (cdata[cnt].sleep != 0)
+                txt(i18n::s.get("core.misc.sound.waken", chara));
+            }
+            chara.emotion_icon = 221;
+            if (may_make_angry)
+            {
+                if (rnd(500) == 0)
                 {
-                    cdata[cnt].sleep = 0;
-                    if (is_in_fov(cdata[cnt]))
+                    if (is_in_fov(chara))
                     {
-                        txt(i18n::s.get("core.misc.sound.waken", cdata[cnt]));
+                        txt(i18n::s.get("core.misc.sound.get_anger", chara),
+                            Message::color{ColorIndex::cyan});
+                        txt(i18n::s.get("core.misc.sound.can_no_longer_stand"));
                     }
-                    cdata[cnt].emotion_icon = 221;
-                    if (may_make_angry)
-                    {
-                        if (rnd(500) == 0)
-                        {
-                            if (is_in_fov(cdata[cnt]))
-                            {
-                                txt(i18n::s.get(
-                                        "core.misc.sound.get_anger",
-                                        cdata[cnt]),
-                                    Message::color{ColorIndex::cyan});
-                                txt(i18n::s.get(
-                                    "core.misc.sound.can_no_longer_stand"));
-                            }
-                            turn_aggro(cnt, source_chara_index, 80);
-                        }
-                    }
+                    turn_aggro(chara, source_chara, 80);
                 }
             }
         }
@@ -1896,63 +1898,58 @@ void make_sound(
 
 
 
-void hostileaction(int chara_index1, int chara_index2)
+void chara_act_hostile_action(Character& attacker, Character& target)
 {
-    if (chara_index1 >= 16 || chara_index2 == 0)
+    if (!attacker.is_player_or_ally() || target.is_player())
     {
         return;
     }
-    if (cdata[chara_index2].relationship != -3)
+    if (target.relationship != -3)
     {
-        cdata[chara_index2].emotion_icon = 418;
+        target.emotion_icon = 418;
     }
-    if (cdata[chara_index2].relationship == 10)
+    if (target.relationship == 10)
     {
-        txt(i18n::s.get(
-                "core.misc.hostile_action.glares_at_you", cdata[chara_index2]),
+        txt(i18n::s.get("core.misc.hostile_action.glares_at_you", target),
             Message::color{ColorIndex::purple});
     }
     else
     {
-        if (cdata[chara_index2].relationship == 0)
+        if (target.relationship == 0)
         {
             modify_karma(cdata.player(), -2);
         }
-        if (cdata[chara_index2].id == CharaId::ebon)
+        if (target.id == CharaId::ebon)
         {
             if (game_data.released_fire_giant == 0)
             {
                 txt(i18n::s.get(
-                        "core.misc.hostile_action.glares_at_you",
-                        cdata[chara_index2]),
+                        "core.misc.hostile_action.glares_at_you", target),
                     Message::color{ColorIndex::purple});
                 return;
             }
         }
-        if (cdata[chara_index2].relationship > -2)
+        if (target.relationship > -2)
         {
-            txt(i18n::s.get(
-                    "core.misc.hostile_action.glares_at_you",
-                    cdata[chara_index2]),
+            txt(i18n::s.get("core.misc.hostile_action.glares_at_you", target),
                 Message::color{ColorIndex::purple});
-            cdata[chara_index2].relationship = -2;
+            target.relationship = -2;
         }
         else
         {
-            if (cdata[chara_index2].relationship != -3)
+            if (target.relationship != -3)
             {
                 txt(i18n::s.get(
-                        "core.misc.hostile_action.gets_furious",
-                        cdata[chara_index2]),
+                        "core.misc.hostile_action.gets_furious", target),
                     Message::color{ColorIndex::purple});
             }
-            cdata[chara_index2].relationship = -3;
-            cdata[chara_index2].hate = 80;
-            cdata[chara_index2].enemy_id = chara_index1;
+            target.relationship = -3;
+            target.hate = 80;
+            target.enemy_id = attacker.index;
         }
-        chara_custom_talk(chara_index2, 101);
+        chara_custom_talk(target, 101);
     }
-    if (cdata[chara_index2].is_livestock() == 1)
+    if (target.is_livestock())
     {
         if (rnd(50) == 0)
         {
@@ -1969,7 +1966,7 @@ void hostileaction(int chara_index1, int chara_index2)
             }
         }
     }
-    cdata[chara_index2].activity.finish();
+    target.activity.finish();
 }
 
 
@@ -2045,15 +2042,15 @@ void incognitoend()
 
 
 
-void wet(int chara_index, int turns)
+void chara_get_wet(Character& chara, int turns)
 {
-    cdata[chara_index].wet += turns;
-    if (is_in_fov(cdata[chara_index]))
+    chara.wet += turns;
+    if (is_in_fov(chara))
     {
-        txt(i18n::s.get("core.misc.wet.gets_wet", cdata[chara_index]));
-        if (cdata[chara_index].is_invisible())
+        txt(i18n::s.get("core.misc.wet.gets_wet", chara));
+        if (chara.is_invisible())
         {
-            txt(i18n::s.get("core.misc.wet.is_revealed", cdata[chara_index]));
+            txt(i18n::s.get("core.misc.wet.is_revealed", chara));
         }
     }
 }
@@ -2200,7 +2197,7 @@ void chara_clear_status_effects(Character& chara)
 void revive_player(Character& chara)
 {
     do_chara_revival(chara);
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         game_data.is_returning_or_escaping = 0;
         traveldone = 0;
@@ -2365,38 +2362,35 @@ void proc_negative_enchantments(Character& chara)
 
 
 
-void lovemiracle(int chara_index)
+void lovemiracle(Character& chara)
 {
-    if (rnd(2) || chara_index == 0)
+    if (rnd(2) || chara.is_player())
     {
         return;
     }
+
     txt(i18n::s.get("core.misc.love_miracle.uh"),
         Message::color{ColorIndex::cyan});
     flt();
     if (rnd(2))
     {
-        if (const auto item =
-                itemcreate_map_inv(573, cdata[chara_index].position, 0))
+        if (const auto item = itemcreate_map_inv(573, chara.position, 0))
         {
-            item->subname = charaid2int(cdata[chara_index].id);
-            item->weight = cdata[chara_index].weight * 10 + 250;
-            item->value = clamp(
-                cdata[chara_index].weight * cdata[chara_index].weight / 10000,
-                200,
-                40000);
+            item->subname = charaid2int(chara.id);
+            item->weight = chara.weight * 10 + 250;
+            item->value =
+                clamp(chara.weight * chara.weight / 10000, 200, 40000);
         }
     }
     else
     {
-        if (const auto item =
-                itemcreate_map_inv(574, cdata[chara_index].position, 0))
+        if (const auto item = itemcreate_map_inv(574, chara.position, 0))
         {
-            item->subname = charaid2int(cdata[chara_index].id);
+            item->subname = charaid2int(chara.id);
         }
     }
     snd("core.atk_elec");
-    animeload(15, cdata[chara_index]);
+    animeload(15, chara);
 }
 
 
@@ -2471,7 +2465,7 @@ bool move_character_internal(Character& chara)
 {
     if (g_config.scroll())
     {
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             ui_scroll_screen();
         }
@@ -2482,7 +2476,7 @@ bool move_character_internal(Character& chara)
     cell_data.at(chara.next_position.x, chara.next_position.y)
         .chara_index_plus_one = chara.index + 1;
 
-    if (chara.index == 0 && game_data.mount != 0)
+    if (chara.is_player() && game_data.mount != 0)
     {
         cdata[game_data.mount].position = cdata.player().position;
     }
@@ -2505,7 +2499,7 @@ bool move_character_internal(Character& chara)
             return false;
         }
     }
-    if (feat(0) != tile_trap && chara.index == 0)
+    if (feat(0) != tile_trap && chara.is_player())
     {
         if (try_to_reveal(chara))
         {
@@ -2519,7 +2513,7 @@ bool move_character_internal(Character& chara)
     if (feat(0) == tile_trap)
     {
         refdiff = refdiff / 3;
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             if (chara.get_skill(175).level != 0)
             {
@@ -2542,7 +2536,7 @@ bool move_character_internal(Character& chara)
         {
             txt(i18n::s.get("core.action.move.trap.evade", chara));
         }
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             refx = movx;
             refy = movy;
@@ -2551,7 +2545,7 @@ bool move_character_internal(Character& chara)
     }
     else
     {
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             refx = movx;
             refy = movy;
@@ -2731,9 +2725,9 @@ TurnResult proc_movement_event(Character& chara)
     }
     dx = chara.next_position.x;
     dy = chara.next_position.y;
-    if (chara.index < 16)
+    if (chara.is_player_or_ally())
     {
-        if (chara.index != 0)
+        if (!chara.is_player())
         {
             if (dx != chara.position.x)
             {
@@ -2784,7 +2778,7 @@ TurnResult proc_movement_event(Character& chara)
     }
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             if (traveldone == 0)
             {
@@ -2809,13 +2803,13 @@ TurnResult proc_movement_event(Character& chara)
         addefmap(chara.position.x, chara.position.y, 1, 3);
         if (chara.wet == 0)
         {
-            wet(chara.index, 20);
+            chara_get_wet(chara, 20);
         }
     }
     sense_map_feats_on_move(chara);
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             encounter = 0;
             game_data.stood_world_map_tile =

@@ -33,7 +33,7 @@ bool UIMenuHire::_should_display_chara(const Character& chara)
         {
             return false;
         }
-        if (chara.index < 16)
+        if (chara.is_player_or_ally())
         {
             if (chara.current_map != game_data.current_map)
             {
@@ -41,7 +41,7 @@ bool UIMenuHire::_should_display_chara(const Character& chara)
             }
         }
     }
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         return false;
     }

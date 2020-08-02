@@ -212,7 +212,7 @@ void cure_anorexia(Character& chara)
         return;
 
     chara.has_anorexia() = false;
-    if (is_in_fov(chara) || chara.index < 16)
+    if (is_in_fov(chara) || chara.is_player_or_ally())
     {
         txt(i18n::s.get("core.food.anorexia.recovers_from", chara));
         snd("core.offer1");
@@ -268,12 +268,12 @@ void chara_vomit(Character& chara)
                 ++p;
             }
         }
-        if (rnd_capped(p * p * p) == 0 || chara.index == 0)
+        if (rnd_capped(p * p * p) == 0 || chara.is_player())
         {
             flt();
             if (const auto item = itemcreate_map_inv(704, chara.position, 0))
             {
-                if (chara.index != 0)
+                if (!chara.is_player())
                 {
                     item->subname = charaid2int(chara.id);
                 }
@@ -289,8 +289,8 @@ void chara_vomit(Character& chara)
     }
     else
     {
-        if ((chara.index < 16 && chara.anorexia_count > 10) ||
-            (chara.index >= 16 && rnd(4) == 0))
+        if ((chara.is_player_or_ally() && chara.anorexia_count > 10) ||
+            (!chara.is_player_or_ally() && rnd(4) == 0))
         {
             if (rnd(5) == 0)
             {
@@ -679,12 +679,12 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             fdlist(1, cnt) = fdlist(1, cnt) * 100 / (food->param2 * 50);
         }
     }
-    if (eater.index == 0)
+    if (eater.is_player())
     {
         p = food->param1 / 1000;
         for (int cnt = 0; cnt < 1; ++cnt)
         {
-            if (eater.index == 0)
+            if (eater.is_player())
             {
                 if (trait(41))
                 {
@@ -810,7 +810,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             ++fdmax;
         }
         nutrition = 2500;
-        if (eater.index == 0)
+        if (eater.is_player())
         {
             txt(i18n::s.get("core.food.effect.herb.curaria"),
                 Message::color{ColorIndex::green});
@@ -870,7 +870,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         nutrition = 500;
         modify_potential(eater, 10, 2);
         modify_potential(eater, 11, 2);
-        if (eater.index == 0)
+        if (eater.is_player())
         {
             txt(i18n::s.get("core.food.effect.herb.morgia"),
                 Message::color{ColorIndex::green});
@@ -930,7 +930,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         nutrition = 500;
         modify_potential(eater, 16, 2);
         modify_potential(eater, 15, 2);
-        if (eater.index == 0)
+        if (eater.is_player())
         {
             txt(i18n::s.get("core.food.effect.herb.mareilon"),
                 Message::color{ColorIndex::green});
@@ -990,7 +990,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         modify_potential(eater, 12, 2);
         modify_potential(eater, 13, 2);
         nutrition = 500;
-        if (eater.index == 0)
+        if (eater.is_player())
         {
             txt(i18n::s.get("core.food.effect.herb.spenseweed"),
                 Message::color{ColorIndex::green});
@@ -1050,7 +1050,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         nutrition = 500;
         modify_potential(eater, 17, 2);
         modify_potential(eater, 14, 2);
-        if (eater.index == 0)
+        if (eater.is_player())
         {
             txt(i18n::s.get("core.food.effect.herb.alraunia"),
                 Message::color{ColorIndex::green});
@@ -1113,7 +1113,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
     {
         nutrition = 750;
     }
-    if (eater.index == 0)
+    if (eater.is_player())
     {
         if (food->material == 35)
         {
@@ -1126,7 +1126,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
     if (food->id == ItemId::corpse)
     {
         s = chara_db_get_filter(int2charaid(food->subname));
-        if (eater.index == 0)
+        if (eater.is_player())
         {
             if (strutil::contains(s(0), u8"/man/"))
             {
@@ -1172,7 +1172,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             p = (eater.nutrition - 5000) / 25;
             i = i * 100 / (100 + p);
         }
-        if (eater.index != 0)
+        if (!eater.is_player())
         {
             i = 1500;
             if (food->material == 35)
@@ -1278,7 +1278,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
     }
     if (food->id == ItemId::fortune_cookie)
     {
-        if (eater.index < 16)
+        if (eater.is_player_or_ally())
         {
             txt(i18n::s.get("core.food.effect.fortune_cookie", eater));
             read_talk_file(u8"%COOKIE2");
@@ -1305,7 +1305,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         damage_hp(eater, rnd(250) + 250, -4);
         if (eater.state() != Character::State::alive)
         {
-            if (eater.index != 0)
+            if (!eater.is_player())
             {
                 if (eater.relationship >= 0)
                 {
@@ -1317,7 +1317,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
     }
     if (food->is_aphrodisiac())
     {
-        if (eater.index == 0)
+        if (eater.is_player())
         {
             txt(i18n::s.get("core.food.effect.spiked.self"));
         }
@@ -1328,7 +1328,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             eater.emotion_icon = 317;
             chara_modify_impression(eater, 30);
             modify_karma(cdata.player(), -10);
-            lovemiracle(eater.index);
+            lovemiracle(eater);
         }
         status_ailment_damage(eater, StatusAilment::dimmed, 500);
         eater.emotion_icon = 317;
@@ -1395,7 +1395,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                     eater,
                     enc,
                     (food->enchantments[cnt].power / 50 + 1) * 100 *
-                        (1 + (eater.index != 0) * 5));
+                        (1 + (!eater.is_player()) * 5));
                 continue;
             }
             if (enc2 == 6)
@@ -1414,7 +1414,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                     eater,
                     *buff_id,
                     (food->enchantments[cnt].power / 50 + 1) * 5 *
-                        (1 + (eater.index != 0) * 2),
+                        (1 + (!eater.is_player()) * 2),
                     2000);
 
                 continue;

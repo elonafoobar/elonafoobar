@@ -22,7 +22,7 @@ bool UIMenuCharamakeAttributes::init()
 
 void UIMenuCharamakeAttributes::_reroll_attributes()
 {
-    chara_delete(0);
+    chara_delete(cdata.player());
     race_init_chara(cdata.player(), _race_id);
     class_init_chara(cdata.player(), _class_id);
     cdata.player().level = 1;

@@ -896,11 +896,11 @@ void UIMenuCharacterSheet::_draw_skill_train_cost(
 
     if (is_training)
     {
-        train_cost = ""s + calctraincost(skill_id, _chara.index) + u8"p "s;
+        train_cost = ""s + calc_skill_training_cost(skill_id, _chara) + u8"p "s;
     }
     else
     {
-        train_cost = ""s + calclearncost(skill_id, _chara.index) + u8"p "s;
+        train_cost = ""s + calc_skill_learning_cost(skill_id, _chara) + u8"p "s;
     }
     mes(wx + 322 - strlen_u(train_cost) * 7,
         wy + 66 + cnt * 19 + 2,
@@ -1066,7 +1066,7 @@ optional<UIMenuCharacterSheet::ResultType> UIMenuCharacterSheet::on_key(
         }
         if (action_ == "portrait")
         {
-            if (_chara.index < 16)
+            if (_chara.is_player_or_ally())
             {
                 menu_change_appearance(_chara);
                 if (_operation != CharacterSheetOperation::character_making)

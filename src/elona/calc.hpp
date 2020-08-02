@@ -83,12 +83,18 @@ void calccosthire();
 int calccostbuilding();
 int calccosttax();
 int calcmealvalue();
-int calccostreload(int, bool = false);
+int calc_ammo_reloading_cost(Character& owner, bool do_reload = false);
 int calccargoupdate();
 int calccargoupdatecost();
 int calcidentifyvalue(int);
-int calctraincost(int, int, bool = false);
-int calclearncost(int, int, bool = false);
+int calc_skill_training_cost(
+    int skill_id,
+    const Character& chara,
+    bool discount = false);
+int calc_skill_learning_cost(
+    int skill_id,
+    const Character& chara,
+    bool discount = false);
 int calc_resurrection_value(const Character& chara);
 int calc_slave_value(const Character& chara);
 int calcrestorecost();

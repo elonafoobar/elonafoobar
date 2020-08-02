@@ -334,7 +334,7 @@ void refresh_speed(Character& chara)
     }
     chara.speed_percentage_in_next_turn = 0;
 
-    if (chara.index != 0 && game_data.mount != chara.index)
+    if (!chara.is_player() && game_data.mount != chara.index)
         return;
 
     if (game_data.mount != 0)
@@ -491,7 +491,7 @@ void gain_level(Character& chara)
     {
         if (r2 == 0)
         {
-            if (chara.index == 0)
+            if (chara.is_player())
             {
                 txt(i18n::s.get(
                         "core.chara.gain_level.self", chara, chara.level),
@@ -506,12 +506,12 @@ void gain_level(Character& chara)
     }
     else
     {
-        addnews(2, chara.index);
+        adventurer_add_news(NewsType::growth, chara);
     }
     p = 5 * (100 + chara.get_skill(14).base_level * 10) /
             (300 + chara.level * 15) +
         1;
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         if (chara.level % 5 == 0)
         {
@@ -528,7 +528,7 @@ void gain_level(Character& chara)
     }
     chara.skill_bonus += p;
     chara.total_skill_bonus += p;
-    if (chara.race == "core.mutant" || (chara.index == 0 && trait(0) == 1))
+    if (chara.race == "core.mutant" || (chara.is_player() && trait(0) == 1))
     {
         if (chara.level < 37)
         {
@@ -545,7 +545,7 @@ void gain_level(Character& chara)
     {
         chara.max_level = chara.level;
     }
-    if (chara.index >= 16)
+    if (!chara.is_player_or_ally())
     {
         grow_primary_skills(chara);
     }

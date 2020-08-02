@@ -740,7 +740,7 @@ void draw_hp_bar(const Character& chara, int x, int y)
     if (ratio <= 0)
         return;
 
-    if (chara.index < 16)
+    if (chara.is_player_or_ally())
     {
         if (map_data.type != mdata_t::MapType::world_map)
         {

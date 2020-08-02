@@ -147,7 +147,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     {
         if (rnd(4) == 0)
         {
-            if (chara.index < 16)
+            if (chara.is_player_or_ally())
             {
                 chara.hate = 0;
                 chara.enemy_id = 0;
@@ -157,7 +157,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
                 if (rnd(2))
                 {
                     txt(i18n::s.get("core.action.npc.leash.dialog"));
-                    hostileaction(0, chara.index);
+                    chara_act_hostile_action(cdata.player(), chara);
                 }
                 if (rnd(4) == 0)
                 {
@@ -324,7 +324,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     {
         if (chara.index != game_data.fire_giant)
         {
-            if (chara.index >= 16)
+            if (!chara.is_player_or_ally())
             {
                 if (game_data.released_fire_giant != 0)
                 {
@@ -389,11 +389,11 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
                 {
                     if (chara.hate <= 0)
                     {
-                        chara_custom_talk(chara.index, 100);
+                        chara_custom_talk(chara, 100);
                     }
                     if (chara.hate > 0)
                     {
-                        chara_custom_talk(chara.index, 101);
+                        chara_custom_talk(chara, 101);
                     }
                 }
             }
@@ -1042,7 +1042,7 @@ TurnResult pass_one_turn(bool time_passing)
                 }
                 if (rnd(4) == 0)
                 {
-                    if (cnt.index != 0)
+                    if (!cnt.is_player())
                     {
                         if (is_in_fov(cdata[ct]) || is_in_fov(cnt))
                         {
@@ -1128,7 +1128,7 @@ void update_emoicon(Character& chara)
     }
     while (chara.experience >= chara.required_experience)
     {
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             snd("core.ding1");
             input_halt_input(HaltInput::alert);
@@ -1571,7 +1571,7 @@ void proc_turn_end(Character& chara)
         {
             regen = 0;
         }
-        if (chara.index >= 16)
+        if (!chara.is_player_or_ally())
         {
             if (chara.quality >= Quality::miracle)
             {
@@ -1684,7 +1684,7 @@ void proc_turn_end(Character& chara)
             chara.emotion_icon = 124;
         }
     }
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         if (chara.nutrition < 2000)
         {
@@ -1743,7 +1743,7 @@ void proc_turn_end(Character& chara)
     }
     if (game_data.executing_immediate_quest_type == 1009)
     {
-        if (chara.index >= 57)
+        if (chara.is_map_local())
         {
             if (chara.impression >= 53)
             {

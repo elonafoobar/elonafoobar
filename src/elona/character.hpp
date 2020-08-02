@@ -473,6 +473,16 @@ public:
     }
 
 
+
+    bool is_player() const;
+    bool is_ally() const;
+    bool is_player_or_ally() const;
+    bool is_adventurer() const;
+    bool is_global() const;
+    bool is_map_local() const;
+
+
+
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 
 
@@ -481,6 +491,19 @@ public:
         const auto index_save = to.index;
         to = from;
         to.index = index_save;
+    }
+
+
+
+    bool operator==(const Character& other) const noexcept
+    {
+        return this == &other;
+    }
+
+
+    bool operator!=(const Character& other) const noexcept
+    {
+        return this != &other;
     }
 
 
@@ -758,8 +781,7 @@ void chara_refresh(Character& chara);
  */
 int chara_copy(const Character& source);
 
-void chara_delete(int = 0);
-void chara_remove(Character&);
+void chara_delete(Character& chara);
 void chara_vanquish(Character& chara);
 void chara_killed(Character&);
 
@@ -774,7 +796,7 @@ int chara_find_ally(int id);
 int chara_get_free_slot();
 int chara_get_free_slot_ally();
 bool chara_unequip(const ItemRef& item);
-int chara_custom_talk(int = 0, int = 0);
+bool chara_custom_talk(Character& speaker, int talk_type);
 int chara_impression_level(int = 0);
 void chara_modify_impression(Character& chara, int delta);
 void chara_set_ai_item(Character& chara, ItemRef item);
@@ -796,17 +818,21 @@ optional_ref<Character> new_ally_joins(Character& new_ally);
 void refresh_burden_state();
 void go_hostile();
 void get_pregnant(Character& chara);
-void wet(int = 0, int = 0);
-void hostileaction(int = 0, int = 0);
-void turn_aggro(int = 0, int = 0, int = 0);
+void chara_get_wet(Character& chara, int turns);
+void chara_act_hostile_action(Character& attacker, Character& target);
+void turn_aggro(Character& chara, Character& target, int hate);
 void ride_begin(int = 0);
 void ride_end();
-void make_sound(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
+void make_sound(
+    Character& source_chara,
+    int distance_threshold,
+    int waken,
+    bool may_make_angry);
 void incognitobegin();
 void incognitoend();
 void initialize_pc_character();
 void lost_body_part(int);
-void lovemiracle(int = 0);
+void lovemiracle(Character& chara);
 void monster_respawn();
 void move_character(Character& chara);
 void proc_negative_enchantments(Character& chara);

@@ -222,9 +222,9 @@ void mef_proc(Character& chara)
                 }
                 if (mef(6, ef) == 0)
                 {
-                    if (chara.index != 0)
+                    if (!chara.is_player())
                     {
-                        hostileaction(0, chara.index);
+                        chara_act_hostile_action(cdata.player(), chara);
                     }
                 }
                 int stat = damage_hp(
@@ -235,7 +235,11 @@ void mef_proc(Character& chara)
                     mef(5, ef));
                 if (stat == 0)
                 {
-                    check_kill(mef(6, ef), chara.index);
+                    check_kill(
+                        mef(6, ef) >= 0
+                            ? optional_ref<Character>{cdata[mef(6, ef)]}
+                            : optional_ref<Character>{},
+                        chara);
                 }
             }
         }
@@ -249,16 +253,19 @@ void mef_proc(Character& chara)
         }
         if (mef(6, ef) == 0)
         {
-            if (chara.index != 0)
+            if (!chara.is_player())
             {
-                hostileaction(0, chara.index);
+                chara_act_hostile_action(cdata.player(), chara);
             }
         }
         int stat = damage_hp(
             chara, rnd_capped(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
         if (stat == 0)
         {
-            check_kill(mef(6, ef), chara.index);
+            check_kill(
+                mef(6, ef) >= 0 ? optional_ref<Character>{cdata[mef(6, ef)]}
+                                : optional_ref<Character>{},
+                chara);
         }
     }
     if (mef(0, ef) == 6)
@@ -270,12 +277,12 @@ void mef_proc(Character& chara)
                 snd("core.water2");
                 txt(i18n::s.get("core.mef.steps_in_pool", chara));
             }
-            wet(chara.index, 25);
+            chara_get_wet(chara, 25);
             if (mef(6, ef) == 0)
             {
-                if (chara.index != 0)
+                if (!chara.is_player())
                 {
-                    hostileaction(0, chara.index);
+                    chara_act_hostile_action(cdata.player(), chara);
                 }
             }
             potionspill = 1;
@@ -283,7 +290,10 @@ void mef_proc(Character& chara)
             item_db_on_drink(chara, nullptr, mef(7, ef));
             if (chara.state() == Character::State::empty)
             {
-                check_kill(mef(6, ef), chara.index);
+                check_kill(
+                    mef(6, ef) >= 0 ? optional_ref<Character>{cdata[mef(6, ef)]}
+                                    : optional_ref<Character>{},
+                    chara);
             }
             mef_delete(ef);
         }

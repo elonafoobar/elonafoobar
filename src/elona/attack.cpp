@@ -65,11 +65,11 @@ void build_target_list(const Character& attacker)
             {
                 continue;
             }
-            if (attacker.index == 0 || attacker.relationship >= 0)
+            if (attacker.is_player() || attacker.relationship >= 0)
             {
                 if (cnt.relationship == 10)
                 {
-                    if (cnt.index == 0)
+                    if (cnt.is_player())
                     {
                         continue;
                     }
@@ -240,7 +240,7 @@ bool do_physical_attack_internal(
     {
         if (critical)
         {
-            if (attacker.index == 0)
+            if (attacker.is_player())
             {
                 txt(i18n::s.get("core.damage.critical_hit"),
                     Message::color{ColorIndex::red});
@@ -253,7 +253,7 @@ bool do_physical_attack_internal(
             ammo,
             AttackDamageCalculationMode::actual_damage);
         attackdmg = dmg;
-        if (attacker.index == 0)
+        if (attacker.is_player())
         {
             if (g_config.attack_animation())
             {
@@ -324,7 +324,7 @@ bool do_physical_attack_internal(
             }
             if (attackskill == 106)
             {
-                if (target.index >= 16)
+                if (!target.is_player_or_ally())
                 {
                     game_data.proc_damage_events_flag = 2;
                     txt(i18n::s.get(
@@ -357,7 +357,7 @@ bool do_physical_attack_internal(
                 }
                 if (weapon_name)
                 {
-                    if (target.index >= 16)
+                    if (!target.is_player_or_ally())
                     {
                         game_data.proc_damage_events_flag = 2;
                         if (attackskill == 111)
@@ -437,7 +437,7 @@ bool do_physical_attack_internal(
             {
                 chara_gain_skill_exp(attacker, 189, 25 / expmodifer, 0, 4);
             }
-            if (attacker.index == 0)
+            if (attacker.is_player())
             {
                 if (game_data.mount != 0)
                 {
@@ -551,7 +551,7 @@ bool do_physical_attack_internal(
     }
     else
     {
-        if (attacker.index == 0)
+        if (attacker.is_player())
         {
             snd("core.miss");
         }
@@ -578,7 +578,7 @@ bool do_physical_attack_internal(
                 txt(i18n::s.get("core.damage.furthermore"));
                 Message::instance().continue_sentence();
             }
-            if (target.index < 16)
+            if (target.is_player_or_ally())
             {
                 txt(i18n::s.get("core.damage.miss.ally", attacker, target));
             }
@@ -598,7 +598,7 @@ bool do_physical_attack_internal(
                 txt(i18n::s.get("core.damage.furthermore"));
                 Message::instance().continue_sentence();
             }
-            if (target.index < 16)
+            if (target.is_player_or_ally())
             {
                 txt(i18n::s.get("core.damage.evade.ally", attacker, target));
             }
@@ -695,7 +695,7 @@ void do_ranged_attack(
             else
             {
                 ammoproc = ammo->enchantments[ammo->count].id % 10000;
-                if (attacker.index == 0)
+                if (attacker.is_player())
                 {
                     if (cdata.player().sp < 50)
                     {
@@ -756,7 +756,7 @@ void do_ranged_attack(
                 break;
             }
             const auto shot_target = list(0, rnd(listmax));
-            if (attacker.index == 0 || attacker.relationship >= 0)
+            if (attacker.is_player() || attacker.relationship >= 0)
             {
                 if (cdata[shot_target].relationship >= 0)
                 {
@@ -797,7 +797,7 @@ void do_ranged_attack(
 
 void try_to_melee_attack(Character& attacker, Character& target)
 {
-    if (attacker.index != 0)
+    if (!attacker.is_player())
     {
         if (target.damage_reaction_info)
         {
@@ -1063,7 +1063,7 @@ int find_enemy_target(Character& chara, bool silent)
         if (listmax != 0)
         {
             f = 0;
-            if (chara.index == 0 || chara.relationship >= 0)
+            if (chara.is_player() || chara.relationship >= 0)
             {
                 p(0) = -3;
                 p(1) = -1;
@@ -1096,7 +1096,7 @@ int find_enemy_target(Character& chara, bool silent)
     }
     if (chara.enemy_id == 0 || chara.blind != 0)
     {
-        if (chara.index == 0 && !silent)
+        if (chara.is_player() && !silent)
         {
             txt(i18n::s.get("core.action.ranged.no_target"));
             update_screen();

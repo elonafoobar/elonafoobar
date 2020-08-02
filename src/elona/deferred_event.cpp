@@ -482,8 +482,8 @@ void eh_okaeri(const DeferredEvent&)
                 cdata[chara_index].current_map == game_data.current_map)
             {
                 cdata[chara_index].emotion_icon = 2006;
-                int stat = chara_custom_talk(chara_index, 104);
-                if (stat == 0)
+                bool did_speak = chara_custom_talk(cdata[chara_index], 104);
+                if (!did_speak)
                 {
                     ++i;
                 }
@@ -996,7 +996,7 @@ void eh_guest_visit(const DeferredEvent&)
             {
                 if (item->param1 == 2)
                 {
-                    cell_swap(chara.index, -1, item->pos().x, item->pos().y);
+                    cell_swap(chara, item->pos());
                     chair_for_guest = item;
                     chair = item;
                     break;
@@ -1019,13 +1019,13 @@ void eh_guest_visit(const DeferredEvent&)
             {
                 if (cell_data.at(item->pos().x, item->pos().y)
                             .chara_index_plus_one == 0 ||
-                    chara.index == 0 || chara.index == guest->index)
+                    chara.is_player() || chara.index == guest->index)
                 {
                     chair = item;
                     distance_to_guest_chair = d;
                 }
             }
-            if (chara.index == 0 && item->param1 == 1)
+            if (chara.is_player() && item->param1 == 1)
             {
                 chair = item;
                 break;
@@ -1033,14 +1033,14 @@ void eh_guest_visit(const DeferredEvent&)
         }
         if (chair)
         {
-            cell_swap(chara.index, -1, chair->pos().x, chair->pos().y);
+            cell_swap(chara, chair->pos());
         }
         chara.direction = direction(
             chara.position.x,
             chara.position.y,
             guest->position.x,
             guest->position.y);
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             game_data.player_next_move_direction = chara.direction;
         }
