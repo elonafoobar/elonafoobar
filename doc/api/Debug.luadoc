@@ -13,3 +13,33 @@ function log(message) end
 --  @tparam string message the error message to report
 --  @function report_error
 function report_error(message) end
+
+--- Enable Wizard mode. It is equivalent to turn `core.wizard.is_enabled` on.
+--  @function enable_wizard
+function enable_wizard() end
+
+--- Disable Wizard mode. It is equivalent to turn `core.wizard.is_enabled` off.
+--  @function disable_wizard
+function disable_wizard() end
+
+--- Returns whether you are Wizard or not. It is opposite to `Debug.is_muggle`.
+--
+--  @treturn boolean `true` if Wizard mode; otherwise `false`.
+--  @function is_wizard
+function is_wizard() end
+
+--- Returns whether you are Muggle or not. It is opposite to `Debug.is_wizard`.
+--
+--  @treturn boolean `true` if Muggle mode; otherwise `false`.
+--  @function is_muggle
+function is_muggle() end
+
+--- Return if you are Wizard and `flag_name` is on.
+--
+--  @tparam string flag_name The flag option's name.
+--  @treturn boolean `true` if Muggle mode; otherwise `false`.
+--  @treturn boolean `true` if you are Wizard and `flag_name` is on; if not,
+--  `false`. Even if `flag_name` is not a boolean option, its value is
+--  interpreted as boolean (e.g., check truthy or falsy).
+--  @function has_wizard_flag
+function has_wizard_flag(flag_name) end
