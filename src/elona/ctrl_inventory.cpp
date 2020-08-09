@@ -2699,9 +2699,7 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
             {
                 switch (result->type)
                 {
-                case 0:
-                    return {
-                        result->menu_result, std::move(result->selected_item)};
+                case 0: return {result->menu_result, result->selected_item};
                 case 1:
                     init = true;
                     update_page = true;
@@ -2728,8 +2726,7 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
                 on_enter(inventory_owner, p(0), citrade, cidip, dropcontinue);
             switch (result.type)
             {
-            case 0:
-                return {result.menu_result, std::move(result.selected_item)};
+            case 0: return {result.menu_result, result.selected_item};
             case 1:
                 init = true;
                 update_page = true;

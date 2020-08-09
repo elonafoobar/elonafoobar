@@ -1919,7 +1919,7 @@ TurnResult do_use_command(ItemRef use_item)
             return TurnResult::pc_turn_user_error;
         }
         game_data.activity_about_to_start = 100;
-        activity_others(cdata.player(), std::move(use_item));
+        activity_others(cdata.player(), use_item);
         return TurnResult::turn_end;
     }
     if (use_item->id == ItemId::red_treasure_machine ||
@@ -2167,15 +2167,15 @@ TurnResult do_use_command(ItemRef use_item)
     }
     case 15:
         efid = 184;
-        magic(cdata.player(), cdata.player(), std::move(use_item));
+        magic(cdata.player(), cdata.player(), use_item);
         break;
     case 16:
         efid = 185;
-        magic(cdata.player(), cdata.player(), std::move(use_item));
+        magic(cdata.player(), cdata.player(), use_item);
         break;
     case 17:
         efid = 183;
-        magic(cdata.player(), cdata.player(), std::move(use_item));
+        magic(cdata.player(), cdata.player(), use_item);
         break;
     case 14:
         if (cdata.player().index == 0)
@@ -2212,7 +2212,7 @@ TurnResult do_use_command(ItemRef use_item)
         chara_refresh(cdata.player());
         break;
     case 9: {
-        if (read_textbook(cdata.player(), std::move(use_item)))
+        if (read_textbook(cdata.player(), use_item))
         {
             return TurnResult::turn_end;
         }
@@ -2441,7 +2441,7 @@ TurnResult do_use_command(ItemRef use_item)
                 return TurnResult::pc_turn_user_error;
             }
             game_data.activity_about_to_start = 101;
-            activity_others(cdata.player(), std::move(use_item));
+            activity_others(cdata.player(), use_item);
             return TurnResult::turn_end;
         }
         if (area_data[game_data.current_map].id ==
@@ -2462,7 +2462,7 @@ TurnResult do_use_command(ItemRef use_item)
             }
         }
         game_data.activity_about_to_start = 102;
-        activity_others(cdata.player(), std::move(use_item));
+        activity_others(cdata.player(), use_item);
         break;
     case 11:
         if (moneybox(use_item->param2) > cdata.player().gold)
@@ -2506,7 +2506,7 @@ TurnResult do_use_command(ItemRef use_item)
         snd("core.build1");
         efid = 49;
         efp = 100;
-        magic(cdata.player(), cdata.player(), std::move(use_item));
+        magic(cdata.player(), cdata.player(), use_item);
         break;
     case 21:
         txt(i18n::s.get("core.action.use.hammer.use", use_item));
@@ -3383,7 +3383,7 @@ TurnResult do_eat_command(Character& eater, const ItemRef& food)
 TurnResult do_drink_command(Character& chara, ItemRef potion)
 {
     const auto item_id = itemid2int(potion->id);
-    item_db_on_drink(chara, std::move(potion), item_id);
+    item_db_on_drink(chara, potion, item_id);
     return TurnResult::turn_end;
 }
 
@@ -4074,7 +4074,7 @@ bool read_textbook(Character& doer, ItemRef textbook)
         }
     }
     game_data.activity_about_to_start = 104;
-    activity_others(doer, std::move(textbook));
+    activity_others(doer, textbook);
     return true;
 }
 
@@ -4341,7 +4341,7 @@ int read_normal_book(Character& reader, ItemRef book)
     }
     if (book->id == ItemId::textbook)
     {
-        return read_textbook(reader, std::move(book));
+        return read_textbook(reader, book);
     }
     if (book->id == ItemId::book_of_rachel)
     {
@@ -5620,7 +5620,7 @@ PickUpItemResult pick_up_item(
         refresh_burden_state();
     }
 
-    return {1, std::move(picked_up_item)};
+    return {1, picked_up_item};
 }
 
 

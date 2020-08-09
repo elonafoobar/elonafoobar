@@ -183,7 +183,7 @@ CanDoRangedAttackResult can_do_ranged_attack(const Character& chara)
         }
     }
     attackskill = weapon->skill;
-    return {1, std::move(weapon), std::move(ammo)};
+    return {1, weapon, ammo};
 }
 
 

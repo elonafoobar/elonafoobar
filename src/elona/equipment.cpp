@@ -278,7 +278,7 @@ void wear_most_valuable_equipment(Character& chara, ItemRef equipment)
         auto& equipment_slot = chara.equipment_slots[equipment_slot_index];
         if (!equipment_slot.equipment)
         {
-            equip_item(chara, equipment_slot_index, std::move(equipment));
+            equip_item(chara, equipment_slot_index, equipment);
             break;
         }
         bool equip = false;
@@ -303,7 +303,7 @@ void wear_most_valuable_equipment(Character& chara, ItemRef equipment)
         if (equip)
         {
             unequip_item(chara, equipment_slot_index);
-            equip_item(chara, equipment_slot_index, std::move(equipment));
+            equip_item(chara, equipment_slot_index, equipment);
             break;
         }
     }
@@ -1360,7 +1360,7 @@ void equip_item(
         item_identify(equipment, IdentifyState::almost);
     }
     equipment->body_part = equipment_slot_index + 100;
-    equipment_slot.equip(std::move(equipment));
+    equipment_slot.equip(equipment);
 }
 
 

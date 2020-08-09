@@ -1352,7 +1352,7 @@ void activity_perform(Character& performer, ItemRef instrument)
 {
     if (!performer.activity)
     {
-        activity_perform_start(performer, std::move(instrument));
+        activity_perform_start(performer, instrument);
     }
     else if (performer.activity.turn > 0)
     {
@@ -2276,7 +2276,7 @@ void sleep_start(const OptionalItemRef& bed)
 void start_stealing(Character& thief, ItemRef steal_target)
 {
     game_data.activity_about_to_start = 105;
-    activity_others(thief, std::move(steal_target));
+    activity_others(thief, steal_target);
 }
 
 } // namespace elona
