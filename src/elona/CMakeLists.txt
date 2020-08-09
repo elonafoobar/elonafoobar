@@ -35,7 +35,6 @@ set(ELONA_SOURCES
   dmgheal.cpp
   draw.cpp
   draw_asset.cpp
-  dump_player_info.cpp
   element.cpp
   enchantment.cpp
   equipment.cpp
@@ -83,6 +82,7 @@ set(ELONA_SOURCES
   random_event.cpp
   randomgen.cpp
   save.cpp
+  save_dump.cpp
   save_fs.cpp
   save_header.cpp
   save_update.cpp

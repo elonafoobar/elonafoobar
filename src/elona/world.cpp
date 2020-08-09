@@ -407,7 +407,7 @@ void initialize_economy()
     bkdata(1) = game_data.current_dungeon_level;
     bkdata(2) = cdata.player().position.x;
     bkdata(3) = cdata.player().position.y;
-    save_game(save_game_no_message);
+    save_save_game(save_game_no_message);
     mode = 11;
     cdata.player().position.x = 0;
     cdata.player().position.y = 0;
@@ -477,7 +477,7 @@ void initialize_economy()
             }
             podata(200, p) = podata(100, p) * 5 + rnd(1000);
         }
-        save_map_local_data();
+        save_save_map_local_data();
     }
     game_data.current_map = bkdata(0);
     game_data.current_dungeon_level = bkdata(1);

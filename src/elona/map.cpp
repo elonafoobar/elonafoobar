@@ -1588,7 +1588,7 @@ TurnResult exit_map()
             area_data[game_data.current_map].type != mdata_t::MapType::field &&
             game_data.current_map != mdata_t::MapId::show_house)
         {
-            save_set_autosave();
+            save_trigger_autosaving();
         }
         if (map_data.type != mdata_t::MapType::world_map)
         {
@@ -1700,7 +1700,7 @@ TurnResult exit_map()
     if (map_data.refresh_type == 1)
     {
         // This map should be saved.
-        save_map_local_data();
+        save_save_map_local_data();
 
         ELONA_LOG("map") << "exit_map save local";
     }

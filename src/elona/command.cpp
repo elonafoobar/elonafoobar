@@ -514,7 +514,7 @@ optional<TurnResult> use_gene_machine()
     }
 
     chara_vanquish(cdata[gene_chara_index]);
-    save_set_autosave();
+    save_trigger_autosaving();
     chara_gain_skill_exp(cdata.player(), 151, 1200);
     randomize();
     screenupdate = -1;
@@ -3493,7 +3493,7 @@ TurnResult do_get_command()
                     : 0);
             if (feat(2) == 40)
             {
-                save_set_autosave();
+                save_trigger_autosaving();
             }
             refresh_burden_state();
             return TurnResult::turn_end;
@@ -3697,7 +3697,7 @@ TurnResult do_exit_command()
     {
         if (game_data.current_map != mdata_t::MapId::show_house)
         {
-            save_game(save_game_no_message);
+            save_save_game(save_game_no_message);
             txt(i18n::s.get("core.action.exit.saved"));
             txt(i18n::s.get(
                 "core.action.exit.you_close_your_eyes", cdata.player()));
@@ -3973,7 +3973,7 @@ TurnResult step_into_gate(const ItemRef& moon_gate)
 
     if (!debug_is_wizard())
     {
-        save_game();
+        save_save_game();
     }
     txt(i18n::s.get("core.action.exit_map.gate.step_into"));
     moon_gate->modify_number(-1);
@@ -5882,7 +5882,7 @@ void proc_autopick()
                 }
                 if (int(op.type) & int(Autopick::Operation::Type::save))
                 {
-                    save_set_autosave();
+                    save_trigger_autosaving();
                 }
             }
             break;
@@ -6161,7 +6161,7 @@ void open_box(const ItemRef& box)
     }
     snd("core.ding2");
     txt(i18n::s.get("core.action.open.goods", box));
-    save_set_autosave();
+    save_trigger_autosaving();
     box->param1 = 0;
     if (box->id == ItemId::wallet)
     {

@@ -1469,7 +1469,7 @@ void quest_complete()
     }
     quest_data[rq].id = 0;
     quest_data[rq].progress = 0;
-    save_set_autosave();
+    save_trigger_autosaving();
 }
 
 

@@ -1,6 +1,5 @@
 #include "save.hpp"
 
-#include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
@@ -11,13 +10,9 @@
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"
-#include "lua_env/lua_env.hpp"
 #include "map.hpp"
-#include "message.hpp"
 #include "save_fs.hpp"
 #include "save_update.hpp"
-#include "serialization/serialization.hpp"
-#include "serialization/utils.hpp"
 #include "set_item_info.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -38,7 +33,6 @@ void _do_save_game()
 {
     ELONA_LOG("save") << "Save: " << playerid;
 
-    int save_f = 0;
     if (game_data.current_map == mdata_t::MapId::show_house)
     {
         txt(i18n::s.get("core.misc.save.cannot_save_in_user_map"),
@@ -46,26 +40,20 @@ void _do_save_game()
         update_screen();
         return;
     }
+
     ctrl_file(FileOperation::map_write);
     ctrl_file(
         FileOperation2::map_items_write, fs::u8path(u8"inv_"s + mid + u8".s2"));
-    save_f = 0;
-    for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
-    {
-        if (entry.path().filename().to_u8string() == playerid)
-        {
-            save_f = 1;
-            break;
-        }
-    }
+
     const auto save_dir = filesystem::dirs::save(playerid);
-    if (save_f == 0)
+    if (!fs::exists(save_dir))
     {
         fs::create_directory(save_dir);
     }
     save_fs_save(save_dir);
     ctrl_file(FileOperation2::global_write, save_dir);
     save_fs_clear();
+
     ELONA_LOG("save") << "Save end:" << playerid;
 }
 
@@ -73,66 +61,7 @@ void _do_save_game()
 
 
 
-void load_save_data()
-{
-    ELONA_LOG("save") << "Load: " << playerid;
-
-    save_fs_clear();
-
-    ctrl_file(FileOperation::temp_dir_delete);
-    const auto save_dir = filesystem::dirs::save(playerid);
-
-    // TODO: Delete this line when the v1.0.0 stable is released!
-    if (!fs::exists(save_dir / "version.s0"))
-    {
-        if (!fs::exists(save_dir / "foobar_data.s1"))
-        {
-            throw std::runtime_error{
-                "Please update your save in v0.2.7 first."};
-        }
-
-        int major;
-        int minor;
-        int patch;
-        {
-            std::ifstream in{
-                (save_dir / "foobar_data.s1").native(), std::ios::binary};
-            serialization::binary::IArchive ar{in};
-            ar(major);
-            ar(minor);
-            ar(patch);
-        }
-
-        if (!(major == 0 && minor == 2 && patch == 7))
-        {
-            throw std::runtime_error{
-                "Please update your save in v0.2.7 first."};
-        }
-
-        Version v028 = {0, 2, 8, 0, "", "", ""};
-        serialization::binary::save(save_dir / "version.s0", v028);
-    }
-
-    update_save_data(save_dir);
-    ctrl_file(FileOperation2::global_read, save_dir);
-
-    chara_delete(cdata.tmp());
-    set_item_info();
-    for (auto&& chara : cdata.player_and_allies())
-    {
-        if (chara.has_own_sprite() || chara.is_player())
-        {
-            create_pcpic(chara);
-        }
-    }
-    refresh_speed(cdata.player());
-    time_begin = timeGetTime() / 1000;
-    ELONA_LOG("save") << "Load end: " << playerid;
-}
-
-
-
-void save_game(bool no_message, bool silent)
+void save_save_game(bool no_message, bool silent)
 {
     if (!silent)
     {
@@ -149,31 +78,65 @@ void save_game(bool no_message, bool silent)
 
 
 
-void save_set_autosave()
+void save_load_game()
 {
-    will_autosave = true;
-}
+    ELONA_LOG("save") << "Load: " << playerid;
 
+    save_fs_clear();
 
+    ctrl_file(FileOperation::temp_dir_delete);
+    const auto save_dir = filesystem::dirs::save(playerid);
 
-void save_autosave_if_needed()
-{
-    if (will_autosave)
+    save_update(save_dir);
+    ctrl_file(FileOperation2::global_read, save_dir);
+
+    chara_delete(cdata.tmp());
+    set_item_info();
+    for (auto&& chara : cdata.player_and_allies())
     {
-        will_autosave = false;
-        if (!debug_is_wizard() &&
-            game_data.current_map != mdata_t::MapId::show_house &&
-            game_data.current_map != mdata_t::MapId::pet_arena &&
-            g_config.autosave())
+        if (chara.has_own_sprite() || chara.is_player())
         {
-            save_game();
+            create_pcpic(chara);
         }
     }
+    refresh_speed(cdata.player());
+
+    time_begin = timeGetTime() / 1000;
+
+    ELONA_LOG("save") << "Load end: " << playerid;
 }
 
 
 
-void load_gene_files()
+void save_save_map_local_data()
+{
+    prepare_charas_for_map_unload();
+    for (int y = 0; y < map_data.height; ++y)
+    {
+        for (int x = 0; x < map_data.width; ++x)
+        {
+            cell_data.at(x, y).blood_and_fragments = 0;
+        }
+    }
+
+    // write map data and characters/skill data local to this map
+    ctrl_file(FileOperation::map_write);
+
+    // write data for items/character inventories local to this map
+    ctrl_file(
+        FileOperation2::map_items_write, fs::u8path(u8"inv_"s + mid + u8".s2"));
+}
+
+
+
+void save_save_gene()
+{
+    ctrl_file(FileOperation::gene_write);
+}
+
+
+
+void save_load_gene()
 {
     ctrl_file(FileOperation::gene_read);
     DIM2(spell, 200);
@@ -225,35 +188,7 @@ void load_gene_files()
 
 
 
-void save_gene()
-{
-    ctrl_file(FileOperation::gene_write);
-}
-
-
-
-void save_map_local_data()
-{
-    prepare_charas_for_map_unload();
-    for (int y = 0; y < map_data.height; ++y)
-    {
-        for (int x = 0; x < map_data.width; ++x)
-        {
-            cell_data.at(x, y).blood_and_fragments = 0;
-        }
-    }
-
-    // write map data and characters/skill data local to this map
-    ctrl_file(FileOperation::map_write);
-
-    // write data for items/character inventories local to this map
-    ctrl_file(
-        FileOperation2::map_items_write, fs::u8path(u8"inv_"s + mid + u8".s2"));
-}
-
-
-
-void get_inheritance()
+void save_get_inheritance()
 {
     inv_close_tmp_inv("shop3.s2");
     p = 0;
@@ -293,6 +228,30 @@ void get_inheritance()
     for (int cnt = 0; cnt < 400; ++cnt)
     {
         mat(cnt) = mat(cnt) / 3;
+    }
+}
+
+
+
+void save_trigger_autosaving()
+{
+    will_autosave = true;
+}
+
+
+
+void save_autosave_if_triggered()
+{
+    if (!will_autosave)
+        return;
+
+    will_autosave = false;
+    if (!debug_is_wizard() &&
+        game_data.current_map != mdata_t::MapId::show_house &&
+        game_data.current_map != mdata_t::MapId::pet_arena &&
+        g_config.autosave())
+    {
+        save_save_game();
     }
 }
 

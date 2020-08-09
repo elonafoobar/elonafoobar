@@ -152,7 +152,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
 
     if (action == "quicksave")
     {
-        save_game(save_game_no_message, save_game_silent);
+        save_save_game(save_game_no_message, save_game_silent);
         txt(i18n::s.get("core.action.quicksave"));
         return none;
     }
@@ -160,7 +160,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         Message::instance().clear();
         firstturn = 1;
-        load_save_data();
+        save_load_game();
         mode = 3;
         return TurnResult::initialize_map;
     }
@@ -201,7 +201,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     }
     if (action == "dump_player_info")
     {
-        dump_player_info();
+        save_dump_player_info();
         await(500);
         return none;
     }

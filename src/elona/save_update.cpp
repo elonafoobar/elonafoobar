@@ -2472,7 +2472,7 @@ void _update_save_data(const fs::path& save_dir, int serial_id)
 
 
 
-void update_save_data(const fs::path& save_dir)
+void save_update(const fs::path& save_dir)
 {
     const auto version_filepath = save_dir / "version.s0";
 

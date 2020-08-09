@@ -1625,13 +1625,13 @@ void supply_income()
                     income(1)),
                 Message::color{ColorIndex::orange});
         }
-        save_set_autosave();
+        save_trigger_autosaving();
     }
     if (game_data.date.day == 1)
     {
         if (cdata.player().level > 5)
         {
-            save_set_autosave();
+            save_trigger_autosaving();
             if (!g_inv.tmp().has_free_slot())
             {
                 inv_compress(g_inv.tmp());
@@ -1821,7 +1821,7 @@ void create_harvested_item()
     {
         flttypemajor = choice(fsetplantartifact);
         fixlv = Quality::miracle;
-        save_set_autosave();
+        save_trigger_autosaving();
     }
     if (feat(2) == 36)
     {

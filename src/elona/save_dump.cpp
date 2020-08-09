@@ -36,7 +36,7 @@ std::string game_date_time()
 
 
 
-void dump_player_info()
+void save_dump_player_info()
 {
     // TODO: i18n
 

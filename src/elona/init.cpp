@@ -605,7 +605,7 @@ void initialize_game()
     }
     if (mode == 3)
     {
-        load_save_data();
+        save_load_game();
 
         if (config_get<bool>("core.foobar.run_script_in_save"))
         {

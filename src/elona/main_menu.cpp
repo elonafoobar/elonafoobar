@@ -507,7 +507,7 @@ MainMenuResult main_menu_new_game()
 {
     if (geneuse != ""s)
     {
-        load_gene_files();
+        save_load_gene();
     }
     mode = 1;
     cm = 1;
