@@ -895,7 +895,8 @@ void fmode_7_8(bool read, const fs::path& dir)
     if (read)
     {
         resolve_pending_ids();
-        clear_pending_ids();
+        // References to map-local objects have not been resolved.
+        // clear_pending_ids();
     }
 }
 
@@ -1270,7 +1271,10 @@ void fmode_1_2(bool read)
         }
     }
 
-    schedule_object_reference_resolution();
+    if (read)
+    {
+        schedule_object_reference_resolution();
+    }
 }
 
 
@@ -1385,6 +1389,7 @@ void fmode_3_4(bool read, const fs::path& filename)
                             Inventory::create(InventorySlot{&inv, i});
                         auto& item = *item_ref.get_raw_ptr();
                         ar(item);
+                        ItemIdTable::instance().add(item_ref);
                     }
                 }
             }
@@ -1479,13 +1484,7 @@ void fmode_17()
 
     arrayfile(true, u8"cdatan2", dir / (u8"cdatan_"s + mid + u8".s2"));
 
-#if 0
-    if (read)
-    {
-        resolve_pending_ids();
-        clear_pending_ids();
-    }
-#endif
+    schedule_object_reference_resolution();
 }
 
 
@@ -1651,6 +1650,7 @@ void ctrl_file_tmp_inv_read(const fs::path& file_name)
                 const auto item_ref = Inventory::create(InventorySlot{&inv, i});
                 auto& item = *item_ref.get_raw_ptr();
                 ar(item);
+                ItemIdTable::instance().add(item_ref);
             }
         }
     });

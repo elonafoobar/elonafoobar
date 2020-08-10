@@ -998,13 +998,6 @@ static void _init_map_your_home()
         {
             // Move existing characters/items to the center of the
             // map if the home was upgraded.
-            ctrl_file(
-                FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
-            for (const auto& item : g_inv.ground())
-            {
-                item->set_pos({map_data.width / 2, map_data.height / 2});
-                cell_refresh(item->pos().x, item->pos().y);
-            }
             ctrl_file(FileOperation::map_home_upgrade);
             for (auto&& cnt : cdata.others())
             {
@@ -1012,6 +1005,13 @@ static void _init_map_your_home()
                 cnt.position.y = map_data.height / 2;
                 cnt.initial_position.x = map_data.width / 2;
                 cnt.initial_position.y = map_data.height / 2;
+            }
+            ctrl_file(
+                FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
+            for (const auto& item : g_inv.ground())
+            {
+                item->set_pos({map_data.width / 2, map_data.height / 2});
+                cell_refresh(item->pos().x, item->pos().y);
             }
         }
         if (game_data.home_scale == 5)
