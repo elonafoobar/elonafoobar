@@ -635,6 +635,7 @@ public:
         ar(_156);
         ar(_203);
         ar(target_position);
+        ar(_skills);
         /* clang-format on */
     }
 };

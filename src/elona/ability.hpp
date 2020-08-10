@@ -62,6 +62,16 @@ public:
 
 
 
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ar(_storage);
+        /* clang-format on */
+    }
+
+
+
 private:
     std::vector<Ability> _storage;
 };
