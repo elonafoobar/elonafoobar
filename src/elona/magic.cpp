@@ -596,7 +596,7 @@ bool _magic_183(Character& subject, OptionalItemRef instrument)
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    activity_perform(subject, std::move(instrument).unwrap());
+    activity_perform(subject, instrument.unwrap());
     return true;
 }
 
@@ -2108,7 +2108,7 @@ bool _magic_645_1114(Character& subject, Character& target)
     }
     if (!candidates.empty())
     {
-        const auto cursed_item = choice(std::move(candidates));
+        const auto cursed_item = choice(candidates);
         const auto original_item_name = itemname(cursed_item, 1, false);
         if (cursed_item->curse_state == CurseState::cursed)
         {

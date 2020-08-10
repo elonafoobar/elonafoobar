@@ -1734,7 +1734,7 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
 
     for (int _i = 0; _i < 3; ++_i)
     {
-        const auto item = choice(std::move(list));
+        const auto item = choice(list);
         if (item->number() <= 0)
         {
             continue;
@@ -1961,7 +1961,7 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
     bool broken{};
     for (int _i = 0; _i < 2; ++_i)
     {
-        const auto item = choice(std::move(list));
+        const auto item = choice(list);
         if (item->number() <= 0)
         {
             continue;
