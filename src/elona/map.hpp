@@ -6,7 +6,6 @@
 
 #include "data/types/type_map_chip.hpp"
 #include "pic_loader/extent.hpp"
-#include "serialization/macros.hpp"
 #include "shared_id.hpp"
 
 
@@ -305,19 +304,15 @@ struct Cell
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Cell");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, chip_id_actual);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, chip_id_memory);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, chara_index_plus_one);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, item_info_actual);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, item_info_memory);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, feats);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, blood_and_fragments);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, mef_index_plus_one);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, light);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(chip_id_actual);
+        ar(chip_id_memory);
+        ar(chara_index_plus_one);
+        ar(item_info_actual);
+        ar(item_info_memory);
+        ar(feats);
+        ar(blood_and_fragments);
+        ar(mef_index_plus_one);
+        ar(light);
         /* clang-format on */
     }
 };
@@ -366,13 +361,9 @@ struct CellData
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "CellData");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "width", width_);
-        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "height", height_);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, cells);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(width_);
+        ar(height_);
+        ar(cells);
         /* clang-format on */
     }
 

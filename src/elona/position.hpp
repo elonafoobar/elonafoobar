@@ -5,8 +5,6 @@
 #include <iosfwd>
 #include <string>
 
-#include "serialization/macros.hpp"
-
 
 
 namespace elona
@@ -54,12 +52,8 @@ struct Position
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Position");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, x);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, y);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(x);
+        ar(y);
         /* clang-format on */
     }
 

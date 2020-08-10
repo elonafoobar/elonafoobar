@@ -3,7 +3,6 @@
 #include <array>
 
 #include "../version.hpp"
-#include "serialization/macros.hpp"
 
 
 
@@ -249,11 +248,7 @@ struct FoobarData
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "FoobarData");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, is_autodig_enabled);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(is_autodig_enabled);
         /* clang-format on */
     }
 };
