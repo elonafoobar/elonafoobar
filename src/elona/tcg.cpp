@@ -1767,7 +1767,7 @@ void tcgdeck()
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             s_at_tcg(cnt) = i18n::s.get("core.tcg.deck.name", s_at_tcg(cnt));
-            if (save_fs_exists(u8"deck_"s + cnt + u8".s2"))
+            if (save_fs_exists(fs::u8path(u8"deck_"s + cnt + u8".s2")))
             {
                 if (game_data.tcg_decks.at(cnt) != 30)
                 {
@@ -1792,7 +1792,7 @@ void tcgdeck()
         }
         DIM2(deck, 1000);
         curdeck = rtval;
-        if (save_fs_exists(u8"deck_"s + curdeck + u8".s2"))
+        if (save_fs_exists(fs::u8path(u8"deck_"s + curdeck + u8".s2")))
         {
             Prompt prompt;
             prompt.append(i18n::s.get("core.tcg.deck.choices.edit"));
@@ -1812,7 +1812,8 @@ void tcgdeck()
             {
                 ctrl_file(
                     FileOperation2::deck_read,
-                    filesystem::dirs::tmp() / (u8"deck_"s + curdeck + u8".s2"));
+                    filesystem::dirs::tmp() /
+                        fs::u8path(u8"deck_"s + curdeck + u8".s2"));
             }
         }
         decksizebk_at_tcg = game_data.tcg_decks.at(curdeck);
@@ -2716,7 +2717,7 @@ void tcg_draw_menu()
                     ctrl_file(
                         FileOperation2::deck_write,
                         filesystem::dirs::tmp() /
-                            (u8"deck_"s + curdeck + u8".s2"));
+                            fs::u8path(u8"deck_"s + curdeck + u8".s2"));
                 }
                 else
                 {

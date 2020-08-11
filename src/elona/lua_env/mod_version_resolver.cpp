@@ -109,7 +109,7 @@ auto calculate_loading_order(
 ModList ModList::from_file(const fs::path& path)
 {
     std::ifstream in{path.native()};
-    return from_stream(in, filepathutil::to_utf8_path(path));
+    return from_stream(in, path.to_u8string());
 }
 
 
@@ -165,8 +165,7 @@ void ModList::save(const fs::path& path)
     if (!out)
     {
         throw std::runtime_error{
-            "failed to open mod list file to write: " +
-            filepathutil::to_utf8_path(path)};
+            "failed to open mod list file to write: " + path.to_u8string()};
     }
     out << json5::stringify(root_obj, opts) << std::endl;
 }

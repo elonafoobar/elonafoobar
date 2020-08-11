@@ -255,7 +255,8 @@ TEST_CASE("Test resolve_path_for_mod", "[Lua: Mods]")
     using namespace filesystem;
 
     REQUIRE(
-        lua::resolve_path_for_mod("<_builtin_>/dood") == dirs::exe() / "dood");
+        lua::resolve_path_for_mod("<_builtin_>/dood") ==
+        dirs::exe() / "dood");
     REQUIRE(
         lua::resolve_path_for_mod("<test>/dood") ==
         dirs::for_mod("test") / "dood");

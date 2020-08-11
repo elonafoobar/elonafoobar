@@ -14,7 +14,8 @@ static lua::DataTable load(elona::lua::LuaEnv& lua, const std::string& name)
     const auto base_path = testing::get_test_data_path() / "registry";
 
     lua.load_mods();
-    lua.get_mod_manager().load_testing_mod_from_file(base_path / name);
+    lua.get_mod_manager().load_testing_mod_from_file(
+        base_path / fs::u8path(name));
 
     REQUIRE_NOTHROW(lua.get_data_manager().init_from_mods());
 

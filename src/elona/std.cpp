@@ -149,8 +149,7 @@ void bload(const fs::path& filename, std::string& data, int size, int)
     if (!in)
     {
         throw std::runtime_error(
-            u8"Error: fail to read " +
-            filepathutil::make_preferred_path_in_utf8(filename));
+            u8"Error: fail to read " + filename.to_u8string());
     }
     auto buf = read_binary(in, size).first;
     data = std::string{buf.get(), static_cast<size_t>(size)};
@@ -167,8 +166,7 @@ void bsave(const fs::path& filename, const std::string& data)
     if (!out)
     {
         throw std::runtime_error(
-            u8"Error: fail to write " +
-            filepathutil::make_preferred_path_in_utf8(filename));
+            u8"Error: fail to write " + filename.to_u8string());
     }
     out.write(reinterpret_cast<const char*>(data.c_str()), data.size());
 }
@@ -270,8 +268,7 @@ void font(int size, snail::Font::Style style)
     snail::hsp::font(
         size,
         style,
-        filesystem::path(u8"font") /
-            filepathutil::u8path(g_config.font_filename()));
+        filesystem::path(u8"font") / fs::u8path(g_config.font_filename()));
 }
 
 
@@ -753,11 +750,11 @@ void pget(int x, int y)
 void picload(const fs::path& filepath, int x, int y, bool create_buffer)
 {
     optional<snail::Color> keycolor = snail::Color{0, 0, 0};
-    if (filepathutil::to_utf8_path(filepath).find(u8"pcc") != std::string::npos)
+    if (filepath.to_u8string().find(u8"pcc") != std::string::npos)
     {
         keycolor = snail::Color(43, 133, 133);
     }
-    if (filepathutil::to_utf8_path(filepath).find(u8"bg") != std::string::npos)
+    if (filepath.to_u8string().find(u8"bg") != std::string::npos)
     {
         keycolor = none;
     }

@@ -977,7 +977,9 @@ void show_shop_log()
     if (game_data.current_map != area)
     {
         ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
-        ctrl_file(FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
+        ctrl_file(
+            FileOperation2::map_items_read,
+            fs::u8path(u8"inv_"s + mid + u8".s2"));
     }
     mode = 6;
 
@@ -1061,7 +1063,9 @@ void show_shop_log()
     mode = 0;
     if (game_data.current_map != area)
     {
-        ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
+        ctrl_file(
+            FileOperation2::map_items_write,
+            fs::u8path(u8"inv_"s + mid + u8".s2"));
         ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
     }
 

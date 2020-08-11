@@ -33,9 +33,10 @@ optional<fs::path> UIMenuModInfo::_find_readme(const fs::path& mod_dir)
     for (const auto& filename :
          {"README.md", "README.markdown", "README.txt", "README"})
     {
-        if (fs::exists(mod_dir / filename))
+        const auto path = mod_dir / fs::u8path(filename);
+        if (fs::exists(path))
         {
-            return mod_dir / filename;
+            return path;
         }
     }
     return none;

@@ -242,7 +242,7 @@ void Autopick::load(const std::string& player_id)
         for (const auto filename :
              {u8"autopick", u8"autopick.txt", u8"autopick.txt.txt"})
         {
-            const auto filepath = directory / filename;
+            const auto filepath = directory / fs::u8path(filename);
             bool file_exists = _try_load(filepath);
             if (file_exists)
                 break;

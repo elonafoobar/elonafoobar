@@ -2878,7 +2878,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
                 return TurnResult::pc_turn_user_error;
             }
         }
-        inv_open_tmp_inv(u8"shop"s + invfile + u8".s2");
+        inv_open_tmp_inv(fs::u8path(u8"shop"s + invfile + u8".s2"));
         shoptrade = 0;
         invsubroutine = 1;
         invctrl(0) = 22;
@@ -2911,7 +2911,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
         {
             refweight = inv_weight(g_inv.tmp()) + 2500;
         }
-        inv_close_tmp_inv(u8"shop"s + invfile + u8".s2");
+        inv_close_tmp_inv(fs::u8path(u8"shop"s + invfile + u8".s2"));
         if (refweight != 0)
         {
             box->weight = refweight;
@@ -5346,7 +5346,7 @@ PickUpItemResult pick_up_item(
                 {
                     std::string midbk = mid;
                     mid = ""s + 30 + u8"_"s + (100 + item->count);
-                    if (save_fs_exists(u8"mdata_"s + mid + u8".s2"))
+                    if (save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
                     {
                         ctrl_file(FileOperation::map_delete);
                     }

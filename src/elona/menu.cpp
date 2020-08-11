@@ -906,8 +906,9 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
             {
                 if (fs::exists(
                         filesystem::dirs::graphic() /
-                        (u8"pcc_"s + text + u8"_" +
-                         (pcc(rtval, chara.index) % 1000 + 1) + u8".bmp")))
+                        fs::u8path(
+                            u8"pcc_"s + text + u8"_" +
+                            (pcc(rtval, chara.index) % 1000 + 1) + u8".bmp")))
                 {
                     ++pcc(rtval, chara.index);
                     changed = true;
@@ -938,8 +939,9 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                 if ((pcc(rtval, chara.index) % 1000 == 1 && rtval != 15) ||
                     fs::exists(
                         filesystem::dirs::graphic() /
-                        (u8"pcc_"s + text + u8"_"s +
-                         (pcc(rtval, chara.index) % 1000 - 1) + u8".bmp"s)))
+                        fs::u8path(
+                            u8"pcc_"s + text + u8"_"s +
+                            (pcc(rtval, chara.index) % 1000 - 1) + u8".bmp"s)))
                 {
                     --pcc(rtval, chara.index);
                     changed = true;

@@ -54,7 +54,7 @@ void DataManager::_init_from_mod(ModEnv& mod)
     //                             "extensions-update.lua"})
     for (const auto filename : {"data.lua", "data-update.lua"})
     {
-        const auto script_filepath = *mod.manifest.path / filename;
+        const auto script_filepath = *mod.manifest.path / fs::u8path(filename);
         if (fs::exists(script_filepath))
         {
             auto result = safe_script_file(

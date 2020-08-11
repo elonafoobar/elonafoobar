@@ -1258,7 +1258,7 @@ bool chara_custom_talk(Character& speaker, int talk_type)
     if (speaker.has_custom_talk())
     {
         const auto filepath =
-            filesystem::dirs::user() / u8"talk" / speaker.talk;
+            filesystem::dirs::user() / u8"talk" / fs::u8path(speaker.talk);
         if (!fs::exists(filepath))
             return false;
         range::copy(
@@ -1430,8 +1430,8 @@ void chara_vanquish(Character& chara)
     chara.role = Role::none;
     if (chara.shop_store_id != 0)
     {
-        const auto storage_filename = filepathutil::u8path(
-            "shop"s + std::to_string(chara.shop_store_id) + ".s2");
+        const auto storage_filename =
+            fs::u8path("shop"s + std::to_string(chara.shop_store_id) + ".s2");
         save_fs_remove(storage_filename);
         chara.shop_store_id = 0;
     }

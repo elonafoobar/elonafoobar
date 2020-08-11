@@ -1238,7 +1238,8 @@ void animeload(int animation_type, const Character& chara)
     dy_at_m133 = (chara.position.y - scy) * inf_tiles + inf_screeny;
     gsel(7);
     picload(
-        filesystem::dirs::graphic() / (u8"anime"s + animation_type + u8".bmp"),
+        filesystem::dirs::graphic() /
+            fs::u8path(u8"anime"s + animation_type + u8".bmp"),
         0,
         0,
         true);

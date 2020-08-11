@@ -21,8 +21,8 @@ namespace elona
 namespace
 {
 
-const fs::path vanilla_filename = filepathutil::u8path("header.txt");
-const fs::path foobar_filename = filepathutil::u8path("header.json");
+const fs::path vanilla_filename = "header.txt";
+const fs::path foobar_filename = "header.json";
 
 
 
@@ -229,7 +229,7 @@ SaveHeader SaveHeader::load_vanilla(const fs::path& save_dir)
     SaveHeader h;
 
     h.format = Format::vanilla;
-    h.save_dir_name = filepathutil::to_utf8_path(save_dir.filename());
+    h.save_dir_name = save_dir.filename().to_u8string();
 
     h.version = detect_save_data_version();
     h.name = name;
@@ -260,7 +260,7 @@ SaveHeader SaveHeader::load_foobar(const fs::path& save_dir)
     SaveHeader h;
 
     h.format = Format::foobar;
-    h.save_dir_name = filepathutil::to_utf8_path(save_dir.filename());
+    h.save_dir_name = save_dir.filename().to_u8string();
 
     h.version = obj["version"].get_string();
     h.name = obj["name"].get_string();

@@ -240,8 +240,7 @@ void inject_save_files()
         for (const auto& entry :
              filesystem::glob_dirs(filesystem::dirs::save()))
         {
-            saves.push_back(
-                filepathutil::to_utf8_path(entry.path().filename()));
+            saves.push_back(entry.path().filename().to_u8string());
         }
     }
 
@@ -515,7 +514,7 @@ Config g_config;
 PreinitConfigOptions PreinitConfigOptions::from_file(const fs::path& path)
 {
     std::ifstream in{path.native()};
-    return from_stream(in, filepathutil::to_utf8_path(path));
+    return from_stream(in, path.to_u8string());
 }
 
 
@@ -568,9 +567,7 @@ void config_load_all_schema()
             {
                 std::ifstream in{schema_path.native()};
                 lua::lua->get_config_manager().load_schema(
-                    in,
-                    filepathutil::to_utf8_path(schema_path),
-                    SharedId{mod_manifest.id});
+                    in, schema_path.to_u8string(), SharedId{mod_manifest.id});
             }
         }
     }
@@ -590,7 +587,7 @@ void config_load_options()
 {
     const auto path = filesystem::files::profile_local_config();
     std::ifstream in{path.native()};
-    load_options_internal(in, filepathutil::to_utf8_path(path));
+    load_options_internal(in, path.to_u8string());
 }
 
 

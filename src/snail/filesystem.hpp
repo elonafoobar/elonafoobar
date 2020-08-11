@@ -1,5 +1,5 @@
 #pragma once
 
-#include "../util/filepathutil.hpp"
+#include "../util/filesystem.hpp"
 
-namespace fs = boost::filesystem;
+namespace fs = lib::filesystem;

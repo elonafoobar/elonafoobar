@@ -36,7 +36,7 @@ bool try_copy(const fs::path& filename)
             filesystem::dirs::save(playerid) / filename,
             filesystem::dirs::tmp() / filename,
             fs::copy_option::overwrite_if_exists);
-        ELONA_LOG("save") << "Copy " << filename;
+        ELONA_LOG("save") << "Copy " << filename.to_u8string();
         return true;
     }
     else
@@ -80,7 +80,7 @@ bool save_fs_exists(const fs::path& filename)
 void save_fs_add(const fs::path& filename)
 {
     files[filename] = FileStatus::added;
-    ELONA_LOG("save") << "Add " << filename;
+    ELONA_LOG("save") << "Add " << filename.to_u8string();
 }
 
 
@@ -88,7 +88,7 @@ void save_fs_add(const fs::path& filename)
 void save_fs_remove(const fs::path& filename)
 {
     files[filename] = FileStatus::removed;
-    ELONA_LOG("save") << "Remove " << filename;
+    ELONA_LOG("save") << "Remove " << filename.to_u8string();
 }
 
 

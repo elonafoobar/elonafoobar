@@ -9,7 +9,7 @@ using namespace elona;
 TEST_CASE("Test is_portable_path", "[C++: Filesystem]")
 {
     const auto is_portable_path = [](const char* path) {
-        return filepathutil::is_portable_path(filepathutil::u8path(path));
+        return fs::is_portable_path(fs::u8path(path));
     };
 
     CHECK(is_portable_path("."));

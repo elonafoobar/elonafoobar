@@ -39,11 +39,10 @@ public:
             return it->second;
 
         const auto full_path = resolve_path(name, state);
-        if (!file_contained_in_dir(full_path))
+        if (!fs::file_contained_in_dir(full_path, base_path))
             return sol::lua_nil;
 
-        sol::object result =
-            state.script_file(filepathutil::to_utf8_path(full_path), env);
+        sol::object result = state.script_file(full_path.to_u8string(), env);
 
         if (result != sol::lua_nil)
             chunk_cache[name] = result;
@@ -55,38 +54,6 @@ public:
 private:
     fs::path base_path;
     std::unordered_map<std::string, sol::object> chunk_cache;
-
-
-
-    bool file_contained_in_dir(fs::path file)
-    {
-        // Modifies filename, so copy is needed.
-        if (!file.has_filename())
-        {
-            return false;
-        }
-        file.remove_filename();
-
-        if (!fs::exists(file))
-        {
-            return false;
-        }
-
-        // Strip "." and ".."
-        file = fs::canonical(file);
-        fs::path dir = fs::canonical(base_path);
-
-        std::size_t dir_len = std::distance(dir.begin(), dir.end());
-        std::size_t file_len = std::distance(file.begin(), file.end());
-
-        if (dir_len > file_len)
-        {
-            return false;
-        }
-
-        bool dir_is_prefix = std::equal(dir.begin(), dir.end(), file.begin());
-        return dir_is_prefix;
-    }
 
 
 
@@ -104,7 +71,7 @@ private:
         if (filename[0] == '/')
         {
             // relative from the root directory of the mod.
-            return base_path / filename;
+            return base_path / fs::u8path(filename);
         }
         else
         {
@@ -131,9 +98,9 @@ private:
                 return {}; // the caller function is defined by evaluating a
                            // string.
             }
-            const auto caller_path = filepathutil::u8path(
-                source.substr(1) /* remove the head '@' */);
-            return caller_path.parent_path() / filename;
+            const auto caller_path =
+                fs::u8path(source.substr(1) /* remove the head '@' */);
+            return caller_path.parent_path() / fs::u8path(filename);
         }
     }
 };

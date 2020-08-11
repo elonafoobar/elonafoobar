@@ -616,7 +616,7 @@ void initialize_game()
     if (will_load_script && g_config.startup_script() != ""s)
     {
         lua::lua->get_mod_manager().run_startup_script(
-            g_config.startup_script());
+            fs::u8path(g_config.startup_script()));
         script_loaded = true;
     }
 

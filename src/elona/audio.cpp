@@ -328,9 +328,8 @@ void play_music_inner(data::InstanceId music_id, bool loop)
     }
     if (!fs::exists(music->file))
     {
-        ELONA_ERROR("audio")
-            << "Cannot load file " << filepathutil::to_utf8_path(music->file)
-            << " for music " << music_id.get();
+        ELONA_ERROR("audio") << "Cannot load file " << music->file.to_u8string()
+                             << " for music " << music_id.get();
         return;
     }
 

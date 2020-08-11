@@ -84,7 +84,7 @@ std::vector<fs::path> all_mod_dirs(const fs::path& base_dir)
 std::vector<fs::path> template_mod_dirs(const fs::path& base_dir)
 {
     return mod_dirs_internal(base_dir, [](const auto& path) {
-        const auto id_and_version = filepathutil::to_utf8_path(path.filename());
+        const auto id_and_version = path.filename().to_u8string();
         return strutil::has_prefix(id_and_version, "template_");
     });
 }
@@ -94,7 +94,7 @@ std::vector<fs::path> template_mod_dirs(const fs::path& base_dir)
 std::vector<fs::path> normal_mod_dirs(const fs::path& base_dir)
 {
     return mod_dirs_internal(base_dir, [](const auto& path) {
-        const auto id_and_version = filepathutil::to_utf8_path(path.filename());
+        const auto id_and_version = path.filename().to_u8string();
         return !strutil::has_prefix(id_and_version, "template_");
     });
 }

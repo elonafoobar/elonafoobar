@@ -13,8 +13,7 @@ Surface::Surface(
     optional<Format> format)
 {
     _ptr.reset(
-        detail::enforce_img(
-            ::IMG_Load(filepathutil::to_utf8_path(filepath).c_str())),
+        detail::enforce_img(::IMG_Load(filepath.to_u8string().c_str())),
         ::SDL_FreeSurface);
 
     if (keycolor)

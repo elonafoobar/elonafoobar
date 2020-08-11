@@ -80,9 +80,7 @@ void KeybindManager::save()
     std::ofstream file{path.native(), std::ios::binary};
     if (!file)
     {
-        throw std::runtime_error{
-            u8"Failed to open: "s +
-            filepathutil::make_preferred_path_in_utf8(path)};
+        throw std::runtime_error{u8"Failed to open: "s + path.to_u8string()};
     }
 
     KeybindSerializer(*this).save(file);
