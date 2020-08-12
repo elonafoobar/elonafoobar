@@ -3532,11 +3532,9 @@ bool _magic_463()
 
 int _calc_ball_spell_range(Character& subject)
 {
+    (void)subject;
+
     int ret = the_ability_db[efid]->range % 1000 + 1;
-    if (debug::voldemort && subject.is_player())
-    {
-        ret *= 2;
-    }
     if (efid == 644)
     {
         ret = 2;

@@ -21,7 +21,7 @@ namespace testing
 
 void set_english()
 {
-    config_set_string("core.language.language", "en");
+    config_set("core.language.language", "en"s);
     elona::jp = 0;
     elona::en = 1;
     initialize_i18n();
@@ -30,7 +30,7 @@ void set_english()
 
 void set_japanese()
 {
-    config_set_string("core.language.language", "jp");
+    config_set("core.language.language", "jp"s);
     elona::jp = 1;
     elona::en = 0;
     initialize_i18n();

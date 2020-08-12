@@ -607,7 +607,7 @@ void initialize_game()
     {
         load_save_data();
 
-        if (config_get_boolean("core.foobar.run_script_in_save"))
+        if (config_get<bool>("core.foobar.run_script_in_save"))
         {
             will_load_script = true;
         }

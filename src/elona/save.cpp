@@ -6,6 +6,7 @@
 #include "character_status.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
+#include "debug.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
@@ -123,10 +124,6 @@ void load_save_data()
             create_pcpic(chara);
         }
     }
-    if (game_data.wizard == 1)
-    {
-        cdata.player().alias = u8"*Debug*"s;
-    }
     refresh_speed(cdata.player());
     time_begin = timeGetTime() / 1000;
     ELONA_LOG("save") << "Load end: " << playerid;
@@ -163,7 +160,7 @@ void save_autosave_if_needed()
     if (will_autosave)
     {
         will_autosave = false;
-        if (!game_data.wizard &&
+        if (!debug_is_wizard() &&
             game_data.current_map != mdata_t::MapId::show_house &&
             game_data.current_map != mdata_t::MapId::pet_arena &&
             g_config.autosave())

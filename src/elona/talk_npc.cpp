@@ -823,10 +823,7 @@ TalkResult talk_ally_gene(Character& speaker)
         }
     }
     speaker.has_made_gene() = true;
-    if (game_data.wizard == 0)
-    {
-        game_data.character_and_status_for_gene = speaker.index;
-    }
+    game_data.character_and_status_for_gene = speaker.index;
     return TalkResult::talk_end;
 }
 

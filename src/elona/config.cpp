@@ -329,7 +329,6 @@ void bind_setters()
     CONFIG_OPTION("balance.extra_class", bool, extra_class);
     CONFIG_OPTION("balance.extra_race", bool, extra_race);
     CONFIG_OPTION("balance.restock_interval", int, restock_interval);
-    CONFIG_OPTION("debug.wizard", bool, wizard);
     CONFIG_OPTION("font.file", std::string, font_filename);
     CONFIG_OPTION("foobar.allow_enhanced_skill_tracking", bool, allow_enhanced_skill);
     CONFIG_OPTION("foobar.autopick", bool, autopick);
@@ -620,44 +619,28 @@ void config_clear()
 
 
 
-bool config_get_boolean(const std::string& key)
+template <typename T>
+T config_get(const std::string& key)
 {
-    return lua::lua->get_config_manager().get<bool>(key);
+    return lua::lua->get_config_manager().get<T>(key);
 }
 
-
-
-int config_get_integer(const std::string& key)
-{
-    return lua::lua->get_config_manager().get<int>(key);
-}
-
-
-
-std::string config_get_string(const std::string& key)
-{
-    return lua::lua->get_config_manager().get<std::string>(key);
-}
+// explicit template instantiation
+template bool config_get<bool>(const std::string&);
+template int config_get<int>(const std::string&);
+template std::string config_get<std::string>(const std::string&);
 
 
 
-void config_set_boolean(const std::string& key, bool value)
+template <typename T>
+void config_set(const std::string& key, const T& value)
 {
     lua::lua->get_config_manager().set(key, value);
 }
 
-
-
-void config_set_integer(const std::string& key, int value)
-{
-    lua::lua->get_config_manager().set(key, value);
-}
-
-
-
-void config_set_string(const std::string& key, const std::string& value)
-{
-    lua::lua->get_config_manager().set(key, value);
-}
+// explicit template instantiation
+template void config_set<bool>(const std::string&, const bool&);
+template void config_set<int>(const std::string&, const int&);
+template void config_set<std::string>(const std::string&, const std::string&);
 
 } // namespace elona

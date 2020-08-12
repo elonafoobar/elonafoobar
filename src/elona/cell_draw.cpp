@@ -1036,7 +1036,7 @@ bool hp_bar_visible(const Character& chara)
 {
     return chara.has_been_used_stethoscope() ||
         game_data.chara_last_attacked_by_player == chara.index ||
-        debug::voldemort;
+        debug_is_wizard();
 }
 
 

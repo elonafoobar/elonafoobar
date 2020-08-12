@@ -371,7 +371,9 @@ void get_sick_if_cursed(CurseState curse_state, Character& drinker)
 
 void get_hungry(Character& chara)
 {
-    if ((trait(158) && rnd(3) == 0) || debug::voldemort)
+    if ((trait(158) && rnd(3) == 0))
+        return;
+    if (debug_has_wizard_flag("core.wizard.no_hungry"))
         return;
 
     int p = chara.nutrition / 1000;

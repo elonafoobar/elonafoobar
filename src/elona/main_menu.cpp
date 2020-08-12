@@ -8,6 +8,7 @@
 #include "character_making.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
+#include "debug.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
 #include "init.hpp"
@@ -504,10 +505,6 @@ MainMenuResult main_menu_wrapper()
 
 MainMenuResult main_menu_new_game()
 {
-    if (g_config.wizard())
-    {
-        game_data.wizard = 1;
-    }
     if (geneuse != ""s)
     {
         load_gene_files();

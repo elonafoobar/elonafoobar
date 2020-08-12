@@ -256,42 +256,39 @@ void Console::register_builtin_commands()
     });
 
     builtin_commands.set_function("wizard", [this]() {
-        if (game_data.wizard)
-            return;
-
-        game_data.wizard = 1;
-        cdata.player().alias = "*Debug*";
+        debug_enable_wizard();
         _term.println("Wizard mode activated.");
     });
 
     builtin_commands.set_function("voldemort", [this]() {
-        if (debug::voldemort)
-            return;
-
-        if (!game_data.wizard)
+        if (!debug_is_wizard())
         {
-            game_data.wizard = 1;
+            debug_enable_wizard();
             _term.println("Wizard mode activated.");
         }
-        debug::voldemort = true;
-        cdata.player().alias = "*You-Know-Who*";
+
+        // TODO generalize more
+        config_set("core.wizard.can_cast_all_spells", true);
+        config_set("core.wizard.can_unlock_all_keys", true);
+        config_set("core.wizard.no_hp_damage", true);
+        config_set("core.wizard.no_hungry", true);
+        config_set("core.wizard.no_mp_damage", true);
+        config_set("core.wizard.no_sleepy", true);
+        config_set("core.wizard.no_sp_damage", true);
+        config_set("core.wizard.no_spellstock_cost", true);
+
         _term.println("I AM LORD VOLDEMORT.");
     });
 
     builtin_commands.set_function("muggle", [this]() {
-        if (!game_data.wizard)
-            return;
-
-        debug::voldemort = false;
-        game_data.wizard = 0;
-        cdata.player().alias = random_title(RandomTitleType::character);
+        debug_disable_wizard();
         _term.println("Wizard mode inactivated.");
     });
 
     builtin_commands.set_function(
         "wish",
         [this](sol::optional<std::string> wish, sol::optional<std::string> n) {
-            if (!game_data.wizard)
+            if (!debug_is_wizard())
             {
                 _term.println("Activate wizard mode to run the command.");
                 return;
@@ -311,7 +308,7 @@ void Console::register_builtin_commands()
         });
 
     builtin_commands.set_function("gain_spell", [this]() {
-        if (!game_data.wizard)
+        if (!debug_is_wizard())
         {
             _term.println("Activate wizard mode to run the command.");
             return;
@@ -326,7 +323,7 @@ void Console::register_builtin_commands()
     });
 
     builtin_commands.set_function("gain_spact", [this]() {
-        if (!game_data.wizard)
+        if (!debug_is_wizard())
         {
             _term.println("Activate wizard mode to run the command.");
             return;
@@ -339,7 +336,7 @@ void Console::register_builtin_commands()
 
     builtin_commands.set_function(
         "gain_exp", [this](sol::optional<std::string> exp) {
-            if (!game_data.wizard)
+            if (!debug_is_wizard())
             {
                 _term.println("Activate wizard mode to run the command.");
                 return;
@@ -351,7 +348,7 @@ void Console::register_builtin_commands()
 
     builtin_commands.set_function(
         "gain_fame", [this](sol::optional<std::string> fame) {
-            if (!game_data.wizard)
+            if (!debug_is_wizard())
             {
                 _term.println("Activate wizard mode to run the command.");
                 return;

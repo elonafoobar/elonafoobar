@@ -814,7 +814,7 @@ static void _draw_fps()
  */
 void redraw()
 {
-    if (config_get_boolean("core.foobar.show_fps"))
+    if (config_get<bool>("core.foobar.show_fps"))
     {
         _draw_fps();
     }

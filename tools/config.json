@@ -25,9 +25,6 @@
       extra_race: true,
       restock_interval: 0,
     },
-    debug: {
-      wizard: false,
-    },
     font: {
       file: "",
       quality: "high",
@@ -102,6 +99,17 @@
       skip_random_event_popups: false,
       sound: false,
       stereo_sound: true,
+    },
+    wizard: {
+      is_enabled: true,
+      can_cast_all_spells: true,
+      can_unlock_all_keys: true,
+      no_hp_damage: true,
+      no_hungry: true,
+      no_mp_damage: true,
+      no_sleepy: true,
+      no_sp_damage: true,
+      no_spellstock_cost: true,
     },
   },
 }

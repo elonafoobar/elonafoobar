@@ -12,6 +12,7 @@
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_map.hpp"
+#include "debug.hpp"
 #include "deferred_event.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -2006,7 +2007,7 @@ void try_to_return()
         {
             f = 1;
         }
-        if (game_data.wizard)
+        if (debug_is_wizard())
         {
             if (area_data[i].can_return_to_if_wizard())
             {

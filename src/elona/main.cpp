@@ -47,7 +47,7 @@ void _main_loop()
 void _start_elona()
 {
     if (g_config.startup_script() != ""s &&
-        !config_get_boolean("core.foobar.run_script_in_save"))
+        !config_get<bool>("core.foobar.run_script_in_save"))
     {
         mode = 6;
         initialize_game();

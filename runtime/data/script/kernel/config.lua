@@ -362,7 +362,12 @@ end
 
 
 function Config.is_hidden(option_key)
-   return not not _schemas[option_key].is_hidden
+   if option_key:match("^[%w_]+%.wizard$") then
+      -- Section <any mod name>.wizard is hidden unless wizard mode is enabled.
+      return not Config.get("core.wizard.is_enabled")
+   else
+      return not not _schemas[option_key].is_hidden
+   end
 end
 
 
