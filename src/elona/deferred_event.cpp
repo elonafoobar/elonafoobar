@@ -22,7 +22,6 @@
 #include "random_event.hpp"
 #include "save.hpp"
 #include "scene.hpp"
-#include "serialization/macros.hpp"
 #include "serialization/serialization.hpp"
 #include "serialization/utils.hpp"
 #include "talk.hpp"
@@ -68,13 +67,9 @@ struct DeferredEvent
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "DeferredEvent");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, id);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param1);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param2);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(id);
+        ar(param1);
+        ar(param2);
         /* clang-format on */
     }
 };
@@ -126,11 +121,7 @@ public:
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "DeferredEventQueue");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "queue", _queue);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(_queue);
         /* clang-format on */
     }
 

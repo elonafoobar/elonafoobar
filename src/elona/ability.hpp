@@ -4,8 +4,6 @@
 
 #include <vector>
 
-#include "serialization/macros.hpp"
-
 
 
 namespace elona
@@ -30,14 +28,10 @@ struct Ability
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Ability");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, level);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, base_level);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, experience);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, potential);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(level);
+        ar(base_level);
+        ar(experience);
+        ar(potential);
         /* clang-format on */
     }
 };
@@ -64,6 +58,16 @@ public:
     const Ability& get(int id) const
     {
         return _storage.at(id);
+    }
+
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ar(_storage);
+        /* clang-format on */
     }
 
 

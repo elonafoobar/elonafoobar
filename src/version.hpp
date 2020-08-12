@@ -53,17 +53,13 @@ struct Version
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        auto&& ar_struct = ar.struct_begin("Version");
-
-        ar_struct.struct_field("major", this->major);
-        ar_struct.struct_field("minor", this->minor);
-        ar_struct.struct_field("patch", this->patch);
-        ar_struct.struct_field("serial_id", this->serial_id);
-        ar_struct.struct_field("revision", this->revision);
-        ar_struct.struct_field("timestamp", this->timestamp);
-        ar_struct.struct_field("platform", this->platform);
-
-        ar_struct.struct_end();
+        ar(major);
+        ar(minor);
+        ar(patch);
+        ar(serial_id);
+        ar(revision);
+        ar(timestamp);
+        ar(platform);
         /* clang-format on */
     }
 };

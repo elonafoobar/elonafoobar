@@ -11,7 +11,6 @@
 #include "enums.hpp"
 #include "eobject/eobject.hpp"
 #include "position.hpp"
-#include "serialization/macros.hpp"
 #include "shared_id.hpp"
 
 
@@ -40,12 +39,8 @@ struct Enchantment
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Enchantment");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, id);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, power);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(id);
+        ar(power);
         /* clang-format on */
     }
 };
@@ -250,43 +245,39 @@ public:
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Item");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, obj_id);
-        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "number", number_);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, value);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, image);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, id);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, quality);
-        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "position", _pos);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, weight);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, identify_state);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, count);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dice_x);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dice_y);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, damage_bonus);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, hit_bonus);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dv);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, pv);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, skill);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, curse_state);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, body_part);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, function);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, enhancement);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, own_state);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, color);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, subname);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, material);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param1);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param2);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param3);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param4);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, difficulty_of_identification);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, turn);
-        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "flags", _flags);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, enchantments);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(obj_id);
+        ar(number_);
+        ar(value);
+        ar(image);
+        ar(id);
+        ar(quality);
+        ar(_pos);
+        ar(weight);
+        ar(identify_state);
+        ar(count);
+        ar(dice_x);
+        ar(dice_y);
+        ar(damage_bonus);
+        ar(hit_bonus);
+        ar(dv);
+        ar(pv);
+        ar(skill);
+        ar(curse_state);
+        ar(body_part);
+        ar(function);
+        ar(enhancement);
+        ar(own_state);
+        ar(color);
+        ar(subname);
+        ar(material);
+        ar(param1);
+        ar(param2);
+        ar(param3);
+        ar(param4);
+        ar(difficulty_of_identification);
+        ar(turn);
+        ar(_flags);
+        ar(enchantments);
         /* clang-format on */
     }
 };

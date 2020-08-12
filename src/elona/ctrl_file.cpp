@@ -551,40 +551,6 @@ void fmode_7_8(bool read, const fs::path& dir)
     }
 
     {
-        const auto filepath = dir / u8"sdata.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                std::ifstream in{filepath.native(), std::ios::binary};
-                serialization::binary::IArchive ar{in};
-                for (int chara_index = 0;
-                     chara_index < ELONA_MAX_PARTY_CHARACTERS;
-                     ++chara_index)
-                {
-                    for (int i = 0; i < 600; ++i)
-                    {
-                        ar(cdata[chara_index].get_skill(i));
-                    }
-                }
-            }
-        }
-        else
-        {
-            std::ofstream out{filepath.native(), std::ios::binary};
-            serialization::binary::OArchive ar{out};
-            for (int chara_index = 0; chara_index < ELONA_MAX_PARTY_CHARACTERS;
-                 ++chara_index)
-            {
-                for (int i = 0; i < 600; ++i)
-                {
-                    ar(cdata[chara_index].get_skill(i));
-                }
-            }
-        }
-    }
-
-    {
         const auto filepath = dir / u8"spell.s1";
         if (read)
         {
@@ -936,41 +902,6 @@ void fmode_14_15(bool read)
     }
 
     {
-        const auto filepath = dir / u8"g_sdata.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                std::ifstream in{filepath.native(), std::ios::binary};
-                serialization::binary::IArchive ar{in};
-                for (int chara_index = 0;
-                     chara_index < ELONA_MAX_PARTY_CHARACTERS;
-                     ++chara_index)
-                {
-                    for (int i = 0; i < 600; ++i)
-                    {
-                        ar(cdata[chara_index].get_skill(i));
-                    }
-                }
-            }
-        }
-        else
-        {
-            save_fs_add(filepath.filename());
-            std::ofstream out{filepath.native(), std::ios::binary};
-            serialization::binary::OArchive ar{out};
-            for (int chara_index = 0; chara_index < ELONA_MAX_PARTY_CHARACTERS;
-                 ++chara_index)
-            {
-                for (int i = 0; i < 600; ++i)
-                {
-                    ar(cdata[chara_index].get_skill(i));
-                }
-            }
-        }
-    }
-
-    {
         const auto filepath = dir / u8"g_spell.s1";
         if (read)
         {
@@ -1112,7 +1043,7 @@ void fmode_14_15(bool read)
 
 // reads or writes map-local data for the map with id "mid" (map data,
 // tiles, characters, skill status, map effects, character names)
-// does not read/write cdata or sdata for player or party characters.
+// does not read/write cdata for player or party characters.
 void fmode_1_2(bool read)
 {
     const auto dir = filesystem::dirs::tmp();
@@ -1176,40 +1107,6 @@ void fmode_1_2(bool read)
                 cdata,
                 ELONA_MAX_PARTY_CHARACTERS,
                 ELONA_MAX_CHARACTERS);
-        }
-    }
-
-    {
-        const auto filepath = dir / (u8"sdata_"s + mid + u8".s2");
-        if (read)
-        {
-            (void)save_fs_exists(u8"sdata_"s + mid + u8".s2");
-            std::ifstream in{filepath.native(), std::ios::binary};
-            serialization::binary::IArchive ar{in};
-            for (int chara_index = ELONA_MAX_PARTY_CHARACTERS;
-                 chara_index < ELONA_MAX_CHARACTERS;
-                 ++chara_index)
-            {
-                for (int i = 0; i < 600; ++i)
-                {
-                    ar(cdata[chara_index].get_skill(i));
-                }
-            }
-        }
-        else
-        {
-            save_fs_add(filepath.filename());
-            std::ofstream out{filepath.native(), std::ios::binary};
-            serialization::binary::OArchive ar{out};
-            for (int chara_index = ELONA_MAX_PARTY_CHARACTERS;
-                 chara_index < ELONA_MAX_CHARACTERS;
-                 ++chara_index)
-            {
-                for (int i = 0; i < 600; ++i)
-                {
-                    ar(cdata[chara_index].get_skill(i));
-                }
-            }
         }
     }
 
@@ -1466,22 +1363,6 @@ void fmode_17()
         }
     }
 
-    {
-        const auto filepath = dir / (u8"sdata_"s + mid + u8".s2");
-        (void)save_fs_exists(u8"sdata_"s + mid + u8".s2");
-        std::ifstream in{filepath.native(), std::ios::binary};
-        serialization::binary::IArchive ar{in};
-        for (int chara_index = ELONA_MAX_PARTY_CHARACTERS;
-             chara_index < ELONA_MAX_CHARACTERS;
-             ++chara_index)
-        {
-            for (int i = 0; i < 600; ++i)
-            {
-                ar(cdata[chara_index].get_skill(i));
-            }
-        }
-    }
-
     arrayfile(true, u8"cdatan2", dir / (u8"cdatan_"s + mid + u8".s2"));
 
     schedule_object_reference_resolution();
@@ -1527,7 +1408,6 @@ void fmode_11_12(FileOperation file_operation)
     if (file_operation == FileOperation::map_delete)
     {
         save_fs_remove("cdata_"s + mid + ".s2");
-        save_fs_remove("sdata_"s + mid + ".s2");
         save_fs_remove("cdatan_"s + mid + ".s2");
         save_fs_remove("inv_"s + mid + ".s2");
         save_fs_remove("mod_map_"s + mid + ".s2");
