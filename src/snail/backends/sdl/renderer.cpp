@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 
+#include "../../../util/strutil.hpp"
 #include "../../detail/sdl.hpp"
 #include "../../surface.hpp"
 
@@ -18,7 +19,7 @@ namespace
 template <typename F>
 Rect _render_text_base(
     F draw,
-    const std::string& text,
+    std::string text,
     int x,
     int y,
     const Color& color,
@@ -31,6 +32,11 @@ Rect _render_text_base(
 {
     if (text.empty())
         return Rect{x, y, 0, 0};
+
+    if (text.size() >= 300)
+    {
+        text = strutil::take_by_width(text, 100); // too long, truncate
+    }
 
     auto render_func = blended_text_rendering ? &::TTF_RenderUTF8_Blended
                                               : &::TTF_RenderUTF8_Solid;
