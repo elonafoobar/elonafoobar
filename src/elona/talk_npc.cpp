@@ -794,6 +794,7 @@ TalkResult talk_ally_marriage(Character& speaker)
 
 TalkResult talk_ally_gene(Character& speaker)
 {
+    /*
     if (game_data.current_map == mdata_t::MapId::shelter_)
     {
         listmax = 0;
@@ -824,6 +825,15 @@ TalkResult talk_ally_gene(Character& speaker)
     }
     speaker.has_made_gene() = true;
     game_data.character_and_status_for_gene = speaker.index;
+    return TalkResult::talk_end;
+    */
+
+    listmax = 0;
+    buff =
+        "Making a nege is disabled in this version. Please wait for a future release.";
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.more"));
+    chatesc = 1;
+    talk_window_query(speaker);
     return TalkResult::talk_end;
 }
 
