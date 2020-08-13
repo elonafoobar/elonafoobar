@@ -1007,7 +1007,8 @@ static void _init_map_your_home()
                 cnt.initial_position.y = map_data.height / 2;
             }
             ctrl_file(
-                FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
+                FileOperation2::map_items_read,
+                fs::u8path(u8"inv_"s + mid + u8".s2"));
             for (const auto& item : g_inv.ground())
             {
                 item->set_pos({map_data.width / 2, map_data.height / 2});

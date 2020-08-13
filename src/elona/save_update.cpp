@@ -34,15 +34,14 @@ void for_each_cdata(const fs::path& save_dir, F f)
         std::ostringstream out;
         serialization::binary::OArchive oar{out};
 
-        const auto is_cdatas1 = entry.path().extension() == ".s1";
+        const auto is_cdatas1 = entry.path().extension().to_u8string() == ".s1";
         const auto begin = is_cdatas1 ? 0 : 57;
         const auto end = is_cdatas1 ? 57 : 245;
         for (int idx = begin; idx < end; ++idx)
         {
             const std::string map_id = is_cdatas1
                 ? ""
-                : filepathutil::to_utf8_path(entry.path().filename())
-                      .substr(6 /* cdata_ */);
+                : entry.path().filename().to_u8string().substr(6 /* cdata_ */);
             f(iar, oar, map_id, idx);
         }
 
@@ -66,16 +65,14 @@ void for_each_inv(const fs::path& save_dir, F f)
         std::ostringstream out;
         serialization::binary::OArchive oar{out};
 
-        const auto is_invs1 = entry.path().filename() == "inv.s1" ||
-            entry.path().filename() == "g_inv.s1";
+        const auto is_invs1 = entry.path().extension().to_u8string() == ".s1";
         const auto begin = is_invs1 ? 0 : 1320;
         const auto end = is_invs1 ? 1320 : 5480;
         for (int idx = begin; idx < end; ++idx)
         {
             const std::string map_id = is_invs1
                 ? ""
-                : filepathutil::to_utf8_path(entry.path().filename())
-                      .substr(4 /* inv_ */);
+                : entry.path().filename().to_u8string().substr(4 /* inv_ */);
             f(iar, oar, map_id, idx);
         }
 
@@ -97,9 +94,8 @@ void for_each_map(const fs::path& save_dir, F f)
         int height;
 
         {
-            const auto mid =
-                filepathutil::to_utf8_path(entry.path().filename());
-            const auto mdata = save_dir / ("mdata_" + mid.substr(4));
+            const auto mid = entry.path().filename().to_u8string();
+            const auto mdata = save_dir / fs::u8path("mdata_" + mid.substr(4));
             std::ifstream in{mdata.native(), std::ios::binary};
             serialization::binary::IArchive iar{in};
             iar(width);
@@ -634,7 +630,7 @@ void _update_save_data_17(const fs::path& save_dir)
     for (const auto& entry : filesystem::glob_files(
              save_dir, std::regex{u8R"(mod_(inv|cdata).*\.s[12])"}))
     {
-        ELONA_LOG("save.update") << "Remove " << entry.path();
+        ELONA_LOG("save.update") << "Remove " << entry.path().to_u8string();
         fs::remove(entry.path());
     }
 
@@ -1811,8 +1807,7 @@ void _update_save_data_19(const fs::path& save_dir)
         std::ostringstream out;
         serialization::binary::OArchive oar{out};
 
-        ELONA_LOG("save.update")
-            << "convert " << filepathutil::to_utf8_path(entry.path());
+        ELONA_LOG("save.update") << "convert " << entry.path().to_u8string();
 
         const auto begin = 1320;
         const auto end = 5480;
@@ -1993,13 +1988,12 @@ void _update_save_data_20(const fs::path& save_dir)
         }
         const std::string map_id = is_sdatas1
             ? ""
-            : filepathutil::to_utf8_path(entry.path().filename())
-                  .substr(6 /* sdata_ */);
+            : entry.path().filename().to_u8string().substr(6 /* sdata_ */);
         all_sdata.emplace(map_id, sdata);
 
         fin.close();
         ELONA_LOG("save.update")
-            << "Remove " << filepathutil::to_utf8_path(entry.path().filename());
+            << "Remove " << entry.path().filename().to_u8string();
         fs::remove(entry.path());
     }
 

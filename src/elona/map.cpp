@@ -272,7 +272,8 @@ void CellData::load_tile_grid(const std::vector<int>& tile_grid)
 
 void map_reload(const std::string& map_filename)
 {
-    fmapfile = (filesystem::dirs::map() / map_filename).generic_string();
+    fmapfile =
+        (filesystem::dirs::map() / fs::u8path(map_filename)).to_u8string();
     ctrl_file(FileOperation::map_load_map_obj_files);
 
     for (int y = 0; y < map_data.height; ++y)
@@ -1710,7 +1711,7 @@ TurnResult exit_map()
         prepare_charas_for_map_unload();
 
         // delete all map-local data
-        if (save_fs_exists(u8"mdata_"s + mid + u8".s2"))
+        if (save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
         {
             ctrl_file(FileOperation::map_delete);
         }

@@ -26,8 +26,7 @@ std::string _read_string(
     else
     {
         throw std::runtime_error(
-            filepathutil::to_utf8_path(path) + ": Missing \"" + key +
-            "\" in mod manifest");
+            path.to_u8string() + ": Missing \"" + key + "\" in mod manifest");
     }
 }
 
@@ -59,8 +58,7 @@ semver::Version _read_mod_version(
     else
     {
         throw std::runtime_error(
-            filepathutil::to_utf8_path(path) +
-            ": Missing \"version\" in mod manifest");
+            path.to_u8string() + ": Missing \"version\" in mod manifest");
     }
 }
 
@@ -93,14 +91,13 @@ ModManifest::Dependencies _read_dependencies(
                     else
                     {
                         throw std::runtime_error(
-                            filepathutil::to_utf8_path(path) + ": " +
-                            req.left());
+                            path.to_u8string() + ": " + req.left());
                     }
                 }
                 else
                 {
                     throw std::runtime_error(
-                        filepathutil::to_utf8_path(path) +
+                        path.to_u8string() +
                         ": \"dependencies\" field must be an object.");
                 }
             }
@@ -108,7 +105,7 @@ ModManifest::Dependencies _read_dependencies(
         else
         {
             throw std::runtime_error(
-                filepathutil::to_utf8_path(path) +
+                path.to_u8string() +
                 ": \"dependencies\" field must be an object.");
         }
     }
@@ -187,7 +184,7 @@ void ModManifest::save() const
     {
         throw std::runtime_error{
             "failed to open mod manifest file to write: " +
-            filepathutil::to_utf8_path(manifest_filepath)};
+            manifest_filepath.to_u8string()};
     }
     out << json5::stringify(root_obj, opts) << std::endl;
 }

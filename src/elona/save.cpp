@@ -47,11 +47,12 @@ void _do_save_game()
         return;
     }
     ctrl_file(FileOperation::map_write);
-    ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
+    ctrl_file(
+        FileOperation2::map_items_write, fs::u8path(u8"inv_"s + mid + u8".s2"));
     save_f = 0;
     for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
     {
-        if (filepathutil::to_utf8_path(entry.path().filename()) == playerid)
+        if (entry.path().filename().to_u8string() == playerid)
         {
             save_f = 1;
             break;
@@ -246,7 +247,8 @@ void save_map_local_data()
     ctrl_file(FileOperation::map_write);
 
     // write data for items/character inventories local to this map
-    ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
+    ctrl_file(
+        FileOperation2::map_items_write, fs::u8path(u8"inv_"s + mid + u8".s2"));
 }
 
 

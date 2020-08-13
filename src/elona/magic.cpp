@@ -3508,7 +3508,7 @@ bool _magic_464(Character& subject, Character& target)
 // 4-Dimentional Pocket
 bool _magic_463()
 {
-    const auto pocket_file_name = "shop8.s2";
+    const auto pocket_file_name = fs::u8path("shop8.s2");
 
     snd("core.teleport1");
     txt(i18n::s.get("core.magic.four_dimensional_pocket"));

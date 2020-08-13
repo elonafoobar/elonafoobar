@@ -56,7 +56,7 @@ void shop_refresh_on_talk(Character& shopkeeper)
     }
     else
     {
-        inv_open_tmp_inv(u8"shop"s + invfile + u8".s2");
+        inv_open_tmp_inv(fs::u8path(u8"shop"s + invfile + u8".s2"));
     }
     invfile = shopkeeper.shop_store_id;
     shop_load_shoptmp();
@@ -66,7 +66,7 @@ void shop_refresh_on_talk(Character& shopkeeper)
 
 void shop_load_shoptmp()
 {
-    inv_close_tmp_inv(u8"shop"s + invfile + u8".s2");
+    inv_close_tmp_inv(fs::u8path(u8"shop"s + invfile + u8".s2"));
     mode = 0;
 }
 
@@ -94,7 +94,7 @@ void shop_refresh(Character& shopkeeper)
 void shop_sell_item(optional_ref<Character> shopkeeper)
 {
     mode = 6;
-    inv_open_tmp_inv(u8"shop"s + invfile + u8".s2");
+    inv_open_tmp_inv(fs::u8path(u8"shop"s + invfile + u8".s2"));
     shoptrade = 0;
     if (shopkeeper)
     {

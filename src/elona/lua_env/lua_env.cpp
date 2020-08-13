@@ -41,9 +41,8 @@ LuaEnv::LuaEnv()
     fs::path kernel_path = filesystem::dirs::data() / "script" / "kernel";
     fs::path prelude_path = filesystem::dirs::data() / "script" / "prelude";
     lua_->safe_script(
-        u8"package.path = [[" + filepathutil::to_utf8_path(kernel_path) +
-        "/?.lua;" + filepathutil::to_utf8_path(prelude_path) +
-        "/?.lua;]]..package.path"s);
+        u8"package.path = [[" + kernel_path.to_u8string() + "/?.lua;" +
+        prelude_path.to_u8string() + "/?.lua;]]..package.path"s);
 
     // Make sure the API environment is initialized first so any
     // dependent managers can add new internal C++ methods to it (like

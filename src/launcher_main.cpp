@@ -34,7 +34,7 @@ std::vector<std::string> list_profiles()
     for (const auto& entry :
          filesystem::glob_dirs(filesystem::dirs::profile_root()))
     {
-        const auto id = filepathutil::to_utf8_path(entry.path().filename());
+        const auto id = entry.path().filename().to_u8string();
         if (profile::is_valid_id(id))
         {
             result.push_back(id);
@@ -139,7 +139,7 @@ bool handle_event()
                 if (fs::exists(path))
                 {
                     boost::process::spawn(
-                        path,
+                        path.inner(),
                         u8"--profile=" + profiles[static_cast<size_t>(cursor)]);
                 }
             }

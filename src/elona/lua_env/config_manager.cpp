@@ -62,8 +62,7 @@ void ConfigManager::save(const fs::path& config_path)
     if (!out)
     {
         throw std::runtime_error{
-            u8"Failed to open: " +
-            filepathutil::make_preferred_path_in_utf8(config_path)};
+            u8"Failed to open: " + config_path.to_u8string()};
     }
 
     const std::string serialized_config = _impl["serialize"]();

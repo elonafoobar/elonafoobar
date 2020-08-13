@@ -3743,7 +3743,8 @@ void initialize_home_mdata()
 
 void map_initcustom(const std::string& map_filename)
 {
-    fmapfile = (filesystem::dirs::map() / map_filename).generic_string();
+    fmapfile =
+        (filesystem::dirs::map() / fs::u8path(map_filename)).to_u8string();
     ctrl_file(FileOperation::custom_map_read);
     map_tileset(map_data.tileset);
     nooracle = 1;

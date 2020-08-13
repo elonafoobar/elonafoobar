@@ -1,6 +1,6 @@
 #include <boost/predef.h>
 
-#include "filepathutil.hpp"
+#include "filesystem.hpp"
 
 #if BOOST_OS_LINUX || BOOST_OS_MACOS
 #include <cxxabi.h>
@@ -58,7 +58,7 @@ char cmd_buffer[buffer_size];
 FILE *addr2line(void **addresses, char **symbols, int address_count)
 {
     int length;
-    auto exe_path = filepathutil::get_executable_path();
+    auto exe_path = lib::filesystem::get_executable_path();
     if (!exe_path)
     {
         return nullptr;
@@ -69,7 +69,7 @@ FILE *addr2line(void **addresses, char **symbols, int address_count)
         cmd_buffer,
         buffer_size,
         "eu-addr2line -C -f -e \"%s\"",
-        exe_path->c_str());
+        exe_path->to_u8string().c_str());
 #elif BOOST_OS_MACOS
     length = snprintf(cmd_buffer, buffer_size, "atos -p %d", (int)getpid());
 #endif

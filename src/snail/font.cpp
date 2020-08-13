@@ -18,9 +18,8 @@ Font::Font(const fs::path& filepath, int size, Style style)
     , _size(size)
     , _style(style)
     , _ptr(
-          detail::enforce_ttf(::TTF_OpenFont(
-              filepathutil::to_utf8_path(filepath).c_str(),
-              size)),
+          detail::enforce_ttf(
+              ::TTF_OpenFont(filepath.to_u8string().c_str(), size)),
           ::TTF_CloseFont)
 {
     ::TTF_SetFontStyle(ptr(), static_cast<int>(style));

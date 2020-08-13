@@ -4,8 +4,6 @@
 #include <map>
 #include <sstream>
 
-#include <boost/lexical_cast.hpp>
-
 #include "../../hsp.hpp"
 #include "../../input.hpp"
 

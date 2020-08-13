@@ -53,8 +53,7 @@ protected:
 
     auto safe_script_file_in_global_env(const fs::path& filepath)
     {
-        return lua_state()->safe_script_file(
-            filepathutil::to_utf8_path(filepath));
+        return lua_state()->safe_script_file(filepath.to_u8string());
     }
 
 
@@ -66,8 +65,7 @@ protected:
 
     auto safe_script_file(const fs::path& filepath, sol::environment& env)
     {
-        return lua_state()->safe_script_file(
-            filepathutil::to_utf8_path(filepath), env);
+        return lua_state()->safe_script_file(filepath.to_u8string(), env);
     }
 
 
@@ -101,7 +99,7 @@ protected:
         ErrorHandler&& error_handler)
     {
         return lua_state()->safe_script_file(
-            filepathutil::to_utf8_path(filepath),
+            filepath.to_u8string(),
             env,
             std::forward<ErrorHandler>(error_handler));
     }

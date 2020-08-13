@@ -58,8 +58,8 @@ void load(int channel, const fs::path& path)
         ::Mix_FreeChunk(chunk);
     }
 
-    auto chunk = snail::detail::enforce_mixer(
-        ::Mix_LoadWAV(filepathutil::to_utf8_path(path).c_str()));
+    auto chunk =
+        snail::detail::enforce_mixer(::Mix_LoadWAV(path.to_u8string().c_str()));
     chunks[channel] = chunk;
 }
 
@@ -153,8 +153,8 @@ void load(const fs::path& path)
         ::Mix_FreeMusic(played_music);
     }
 
-    played_music = snail::detail::enforce_mixer(
-        ::Mix_LoadMUS(filepathutil::to_utf8_path(path).c_str()));
+    played_music =
+        snail::detail::enforce_mixer(::Mix_LoadMUS(path.to_u8string().c_str()));
 }
 
 

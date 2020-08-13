@@ -13,12 +13,12 @@ namespace
 fs::path get_executable_dir()
 {
     static auto cache = ([] {
-        auto exe_name = filepathutil::get_executable_path();
+        auto exe_name = fs::get_executable_path();
         if (!exe_name)
         {
             throw std::runtime_error(u8"Error: fail to get excutable path");
         }
-        return fs::canonical(fs::path{*exe_name}.remove_filename());
+        return fs::canonical(exe_name->remove_filename());
     })();
 
     return cache;
@@ -114,14 +114,14 @@ void set_base_user_directory(const fs::path& base_user_dir)
 
 fs::path for_mod(const std::string& id, const semver::Version& version)
 {
-    return mod() / filepathutil::u8path(id + "-" + version.to_string());
+    return mod() / fs::u8path(id + "-" + version.to_string());
 }
 
 
 
 fs::path save(const std::string& player_id)
 {
-    return save() / filepathutil::u8path(player_id);
+    return save() / fs::u8path(player_id);
 }
 
 
@@ -172,50 +172,7 @@ fs::path mod_list()
 
 fs::path path(const std::string& str)
 {
-    return get_executable_dir() / filepathutil::u8path(str);
-}
-
-
-
-void copy_recursively(const fs::path& source, const fs::path& destination)
-{
-    // Check pre-conditions.
-    if (!fs::exists(source) || !fs::is_directory(source))
-    {
-        throw std::runtime_error(
-            "Source must be an existing directory: " +
-            filepathutil::to_utf8_path(source));
-    }
-    if (fs::exists(destination))
-    {
-        throw std::runtime_error(
-            "Destination must not exist: " +
-            filepathutil::to_utf8_path(destination));
-    }
-
-    // mkdir destination
-    if (!fs::create_directories(destination))
-    {
-        throw std::runtime_error{
-            "Failed to create directory: " +
-            filepathutil::make_preferred_path_in_utf8(destination)};
-    }
-
-    // Iterate all files under source.
-    for (const auto& entry : fs::directory_iterator{source})
-    {
-        const auto from = entry.path();
-        const auto to = destination / from.filename();
-        if (fs::is_directory(from))
-        {
-            // Call itself recursively.
-            copy_recursively(from, to);
-        }
-        else
-        {
-            fs::copy_file(from, to);
-        }
-    }
+    return get_executable_dir() / fs::u8path(str);
 }
 
 } // namespace filesystem

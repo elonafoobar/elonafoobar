@@ -50,8 +50,7 @@ void _mv(const fs::path& src, const fs::path& dst)
 // Returns {root_dir}/{nth}.log.
 fs::path _get_log_filepath(const fs::path& root_dir, int nth = 0)
 {
-    const auto filename =
-        filepathutil::u8path(std::to_string(nth) + _log_file_extension);
+    const auto filename = fs::u8path(std::to_string(nth) + _log_file_extension);
     return root_dir / filename;
 }
 

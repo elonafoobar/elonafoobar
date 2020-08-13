@@ -308,8 +308,7 @@ static std::string get_new_save_dir_name()
     for (int i = 1;; ++i)
     {
         const auto dir_name = "save_" + std::to_string(i);
-        if (!fs::exists(
-                filesystem::dirs::save() / filepathutil::u8path(dir_name)))
+        if (!fs::exists(filesystem::dirs::save() / fs::u8path(dir_name)))
         {
             return dir_name;
         }

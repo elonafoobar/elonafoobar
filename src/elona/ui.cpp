@@ -2297,7 +2297,8 @@ void load_background_variants(int buffer)
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         picload(
-            filesystem::dirs::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"),
+            filesystem::dirs::graphic() /
+                fs::u8path(u8"g"s + (cnt + 1) + u8".bmp"),
             cnt % 4 * 180,
             cnt / 4 * 300,
             false);

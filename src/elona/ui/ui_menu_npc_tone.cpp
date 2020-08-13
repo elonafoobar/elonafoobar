@@ -25,8 +25,8 @@ static int _load_talk_entries()
              filesystem::glob_files(base_dir, std::regex{u8R"(.*\.txt)"}))
         {
             list(0, _listmax) = _listmax;
-            listn(0, _listmax) = filepathutil::to_utf8_path(
-                fs::relative(entry.path(), base_dir));
+            listn(0, _listmax) =
+                fs::relative(entry.path(), base_dir).to_u8string();
             ++_listmax;
         }
     }

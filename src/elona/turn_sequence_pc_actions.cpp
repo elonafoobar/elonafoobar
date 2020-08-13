@@ -53,14 +53,15 @@ void _take_screenshot()
     char buf[len + 1];
     std::strftime(buf, len, "%Y%m%d%H%M", now_tm);
 
-    auto filepath =
-        filesystem::dirs::screenshot() / (playerid + "-" + buf + ".png");
+    auto filepath = filesystem::dirs::screenshot() /
+        fs::u8path(playerid + "-" + buf + ".png");
     for (int i = 2;; ++i)
     {
         if (fs::exists(filepath))
         {
             filepath = filesystem::dirs::screenshot() /
-                (playerid + "-" + buf + "-" + std::to_string(i) + ".png");
+                fs::u8path(playerid + "-" + buf + "-" + std::to_string(i) +
+                           ".png");
         }
         else
         {
@@ -72,7 +73,7 @@ void _take_screenshot()
     ss.save(filepath);
     txt(i18n::s.get("core.action.take_screenshot"));
     Message::instance().linebreak();
-    txt(filepathutil::to_utf8_path(filepath));
+    txt(filepath.to_u8string());
     snd("core.screenshot");
 }
 

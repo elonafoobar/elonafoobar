@@ -267,7 +267,7 @@ void dump_player_info()
     }
 
     std::ofstream out{
-        (filesystem::dirs::save() / (playerid + u8".txt")).native()};
+        (filesystem::dirs::save() / fs::u8path(playerid + u8".txt")).native()};
     out << ss.str() << std::endl;
 
     std::cout << ss.str();

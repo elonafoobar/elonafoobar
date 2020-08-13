@@ -534,8 +534,7 @@ MainMenuResult main_menu_continue()
     std::vector<SaveHeader> save_headers;
     for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
     {
-        const auto dir_name =
-            filepathutil::to_utf8_path(entry.path().filename());
+        const auto dir_name = entry.path().filename().to_u8string();
         if (!SaveHeader::exists(filesystem::dirs::save(dir_name)))
         {
             continue;
@@ -706,7 +705,7 @@ MainMenuResult main_menu_incarnate()
     /*
     for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
     {
-        s = filepathutil::to_utf8_path(entry.path().filename());
+        s = entry.path().filename().to_u8string();
         const auto gene_header_filepath =
             filesystem::dirs::save(s) / u8"gene_header.txt";
         if (!fs::exists(gene_header_filepath))
