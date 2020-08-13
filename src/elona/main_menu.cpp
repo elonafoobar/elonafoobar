@@ -702,6 +702,8 @@ MainMenuResult main_menu_incarnate()
     ui_draw_caption(i18n::s.get("core.main_menu.incarnate.which_gene"));
     keyrange = 0;
     listmax = 0;
+
+    /*
     for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
     {
         s = filepathutil::to_utf8_path(entry.path().filename());
@@ -719,6 +721,8 @@ MainMenuResult main_menu_incarnate()
         ++keyrange;
         ++listmax;
     }
+    */
+
     windowshadow = 1;
 
     while (1)
@@ -745,9 +749,14 @@ MainMenuResult main_menu_incarnate()
         if (listmax == 0)
         {
             font(14 - en * 2);
+            /*
             mes(wx + 140,
                 wy + 120,
                 i18n::s.get("core.main_menu.incarnate.no_gene"));
+            */
+            mes(wx + 140,
+                wy + 120,
+                "Incarnation is disabled in this version. Please wait for a future release");
         }
         redraw();
 
