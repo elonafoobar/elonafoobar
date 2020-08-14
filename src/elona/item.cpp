@@ -582,7 +582,8 @@ void Item::set_number(int new_number)
 
     auto inv_owner = inv_get_owner(*inventory());
     const auto inv_owner_chara = inv_owner.as_character();
-    const auto needs_cell_refresh = inv_owner.is_map();
+    const auto needs_cell_refresh =
+        inv_owner.is_map() && (number_ == 0 || new_number == 0);
     const auto needs_refresh_burden_state =
         inv_owner_chara && inv_owner_chara->index;
 
