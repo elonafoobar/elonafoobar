@@ -1,5 +1,7 @@
 #include "position.hpp"
 
+#include <iostream>
+
 
 
 namespace elona

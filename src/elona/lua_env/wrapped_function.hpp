@@ -1,8 +1,13 @@
 #pragma once
+
+#include <iostream>
+
 #include "../../thirdparty/sol2/sol.hpp"
 #include "../enums.hpp"
 #include "../message.hpp"
 #include "../variables.hpp"
+
+
 
 namespace elona
 {
