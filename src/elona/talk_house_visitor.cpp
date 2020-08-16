@@ -455,7 +455,6 @@ void _adventurer_receive_materials(Character& speaker)
     txt(i18n::s.get("core.talk.visitor.adventurer.materials.receive", speaker));
     efid = 1117;
     efp = 100;
-    speaker.index = 0;
     magic(cdata.player(), cdata.player());
 }
 
