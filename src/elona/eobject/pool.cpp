@@ -1,6 +1,8 @@
 #include "pool.hpp"
 
+#include "../character.hpp"
 #include "../item.hpp"
+#include "../lua_env/lua_env.hpp"
 
 
 

@@ -22,8 +22,10 @@ class Pool
 public:
     static Pool& instance()
     {
-        static Pool the_instance;
-        return the_instance;
+        // TODO: work-argound for use-after-free
+        // See issue #1713
+        static Pool* ptr = new Pool();
+        return *ptr;
     }
 
 
