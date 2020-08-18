@@ -14,14 +14,9 @@
 #include "shared_id.hpp"
 
 
-#define ELONA_OTHER_INVENTORIES_INDEX 1320
-#define ELONA_ITEM_ON_GROUND_INDEX 5080
-#define ELONA_MAX_ITEMS 5480
-
 
 namespace elona
 {
-
 
 struct Enchantment
 {
