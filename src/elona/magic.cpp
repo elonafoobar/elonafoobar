@@ -3827,6 +3827,8 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                 target.position, BrightAuraAnimation::Type::debuff)
                 .play();
         }
+
+        std::reference_wrapper<Character> target_ref = target;
         if (efid == 625 || efid == 446)
         {
             if ((target.is_player() && subject.is_player()) ||
@@ -3834,13 +3836,14 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
             {
                 if (game_data.mount != 0)
                 {
-                    target.index = game_data.mount;
+                    target_ref = cdata[game_data.mount];
                 }
             }
         }
+        Character& target_ = target_ref.get();
 
         buff_add(
-            target,
+            target_,
             buff_data.id,
             efp,
             buff_calc_duration(buff_data.id, efp),
@@ -3850,14 +3853,14 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         {
             if (efstatus == CurseState::blessed)
             {
-                target.birth_year += rnd(3) + 1;
-                if (target.birth_year + 12 > game_data.date.year)
+                target_.birth_year += rnd(3) + 1;
+                if (target_.birth_year + 12 > game_data.date.year)
                 {
-                    target.birth_year = game_data.date.year - 12;
+                    target_.birth_year = game_data.date.year - 12;
                 }
-                if (is_in_fov(target))
+                if (is_in_fov(target_))
                 {
-                    txt(i18n::s.get("core.magic.slow", target),
+                    txt(i18n::s.get("core.magic.slow", target_),
                         Message::color{ColorIndex::green});
                 }
             }
@@ -3866,17 +3869,17 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         {
             if (is_cursed(efstatus))
             {
-                target.birth_year -= rnd(3) + 1;
-                if (is_in_fov(target))
+                target_.birth_year -= rnd(3) + 1;
+                if (is_in_fov(target_))
                 {
-                    txt(i18n::s.get("core.magic.speed", target),
+                    txt(i18n::s.get("core.magic.speed", target_),
                         Message::color{ColorIndex::purple});
                 }
             }
         }
         if (efid == 458)
         {
-            if (target.is_player())
+            if (target_.is_player())
             {
                 incognitobegin();
             }
