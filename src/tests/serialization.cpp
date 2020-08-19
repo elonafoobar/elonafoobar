@@ -33,15 +33,19 @@ TEST_CASE("Test character saving and reloading", "[C++: Serialization]")
 TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
 {
     start_in_debug_map();
-    int x = 4;
-    int y = 8;
-    int number = 3;
-    const auto item =
-        itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), x, y, number);
-    REQUIRE_SOME(item);
-    int index = item->index();
-    elona::g_inv[index]->is_aphrodisiac() = true;
-    elona::g_inv[index]->curse_state = CurseState::blessed;
+    int index;
+    {
+        int x = 4;
+        int y = 8;
+        int number = 3;
+        const auto item =
+            itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), x, y, number);
+        REQUIRE_SOME(item);
+        item->is_aphrodisiac() = true;
+        item->curse_state = CurseState::blessed;
+        item->identify_state = IdentifyState::partly;
+        index = item->global_index();
+    }
 
     save_and_reload();
 

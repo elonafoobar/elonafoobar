@@ -85,6 +85,7 @@ public:
     /// Move assignment.
     Ref& operator=(Ref&& other) noexcept
     {
+        dec_ref_count();
         _ptr = other._ptr;
         other._ptr = nullptr;
         return *this;
@@ -93,6 +94,13 @@ public:
 
     /// Assignment from nullptr_t is deleted because Ref is non-null reference.
     Ref& operator=(std::nullptr_t) = delete;
+
+
+    /// Destructs the reference. It decrements its reference count.
+    ~Ref()
+    {
+        dec_ref_count();
+    }
 
 
 
