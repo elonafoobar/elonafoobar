@@ -26,8 +26,8 @@ Pool<T>::~Pool() noexcept
 template <typename T>
 void Pool<T>::finalize(cell_type* obj_ptr)
 {
-    (void)obj_ptr;
     assert(obj_ptr);
+    obj_ptr->value.clear();
 }
 
 
