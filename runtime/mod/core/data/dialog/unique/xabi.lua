@@ -35,7 +35,7 @@ return {
          text = {
             function() Internal.set_quest_flag("main_quest", 50) end,
             {"early._0"},
-            GUI.fade_out,
+            function() GUI.fade_out() end,
             {"early._1", args = common.args_name},
          },
          choices = {
