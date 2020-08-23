@@ -1,7 +1,5 @@
 #pragma once
 
-#include <unordered_map>
-
 #include "filesystem.hpp"
 
 
@@ -9,39 +7,32 @@
 namespace elona
 {
 
+void ctrl_file_global_read(const fs::path& save_dir);
+void ctrl_file_global_write(const fs::path& save_dir);
 
-enum class FileOperation
-{
-    map_read,
-    map_write,
-    custom_map_read,
-    save_game_delete,
-    temp_dir_delete,
-    map_delete,
-    map_delete_preserve_items,
-    temp_dir_delete_area,
-    map_load_map_obj_files,
-    map_home_upgrade,
-};
+void ctrl_file_map_read();
+void ctrl_file_map_write();
 
+void ctrl_file_map_items_read(const fs::path& filename);
+void ctrl_file_map_items_write(const fs::path& filename);
 
+void ctrl_file_custom_map_read();
+void ctrl_file_map_load_map_obj_files();
 
-enum class FileOperation2
-{
-    map_items_read,
-    map_items_write,
-    global_read,
-    global_write,
-    deck_write,
-    deck_read,
-};
+void ctrl_file_save_game_delete();
+void ctrl_file_temp_dir_delete();
 
+void ctrl_file_map_delete();
+void ctrl_file_map_delete_preserve_items();
 
+void ctrl_file_temp_dir_delete_area();
 
-void ctrl_file(FileOperation file_operation);
-void ctrl_file(FileOperation2 file_operation, const fs::path& filepath);
+void ctrl_file_map_home_upgrade();
 
-void ctrl_file_tmp_inv_read(const fs::path& file_name);
-void ctrl_file_tmp_inv_write(const fs::path& file_name);
+void ctrl_file_deck_read(const fs::path& filename);
+void ctrl_file_deck_write(const fs::path& filename);
+
+void ctrl_file_tmp_inv_read(const fs::path& filename);
+void ctrl_file_tmp_inv_write(const fs::path& filename);
 
 } // namespace elona

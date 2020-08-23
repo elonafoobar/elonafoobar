@@ -375,573 +375,505 @@ void resolve_pending_ids()
 
 
 
-// reads or writes global save data:
-// - save game header file (on write)
-// - character/skill/inventory data for the player and characters in their party
-// - global variables
-// - NPC memory
-// - Item identification memory
-// - Foobar save data
-// - quest data
-// - list of pending events
-// - lots of things relevant to the player only, like traits/material
-// counts/spell data/recipes...
-// - trading cards
-// - appearance of the character (PCC)
-// - adventurer news
-// - artifact discovery information
-// - other things...
-void fmode_7_8(bool read, const fs::path& dir)
+void inventory_deserialize(serialization::binary::IArchive& ar, Inventory& inv)
 {
-    if (!fs::exists(dir))
+    inv.clear();
+    const auto n = inv.size();
+    for (size_t i = 0; i < n; ++i)
     {
-        fs::create_directory(dir);
-    }
-
-    if (!read)
-    {
-        SaveHeader::save(dir);
-    }
-
-    {
-        const auto filepath = dir / u8"version.s0";
-        if (read)
+        bool exists;
+        ar(exists);
+        if (exists)
         {
-            // Do nothing.
-        }
-        else
-        {
-            auto v = latest_version;
-            serialization::binary::save(filepath, v);
+            const auto item_ref = Inventory::create(InventorySlot{&inv, i});
+            auto& item = *item_ref.get_raw_ptr();
+            ar(item);
+            ItemIdTable::instance().add(item_ref);
         }
     }
+}
+
+
+
+void inventory_serialize(serialization::binary::OArchive& ar, Inventory& inv)
+{
+    const auto n = inv.size();
+    for (size_t i = 0; i < n; ++i)
+    {
+        bool exists = !!inv.at(i);
+        ar(exists);
+        if (exists)
+        {
+            const auto item_ref = inv.at(i).unwrap();
+            auto& item = *item_ref.get_raw_ptr();
+            ar(item);
+        }
+    }
+}
+
+} // namespace
+
+
+
+void ctrl_file_global_read(const fs::path& dir)
+{
+    ELONA_LOG("save.ctrl_file")
+        << "global_read(" << dir.to_u8string() << ") BEGIN";
+
+    game_data.play_time =
+        game_data.play_time + timeGetTime() / 1000 - time_begin;
+    time_begin = timeGetTime() / 1000;
 
     {
         const auto filepath = dir / u8"gdata.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v1(filepath, gdata, 0, 1000);
-                game_data.unpack_from(gdata);
-            }
-        }
-        else
-        {
-            game_data.pack_to(gdata);
-            save_v1(filepath, gdata, 0, 1000);
-        }
+        load_v1(filepath, gdata, 0, 1000);
+        game_data.unpack_from(gdata);
     }
 
     {
         const auto filepath = dir / u8"foobar_data.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                serialization::binary::load(filepath, foobar_data);
-            }
-        }
-        else
-        {
-            serialization::binary::save(filepath, foobar_data);
-        }
+        serialization::binary::load(filepath, foobar_data);
     }
 
     {
         const auto filepath = dir / u8"cdata.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
-                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
-                {
-                    cdata[index].index = index;
-                }
+        load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
 
-                restore_handles(0, ELONA_MAX_PARTY_CHARACTERS);
-            }
-        }
-        else
-        {
-            save(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
-        }
+        restore_handles(0, ELONA_MAX_PARTY_CHARACTERS);
     }
 
     {
         const auto filepath = dir / u8"spell.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v1(filepath, spell, 0, 200);
-            }
-        }
-        else
-        {
-            save_v1(filepath, spell, 0, 200);
-        }
+        load_v1(filepath, spell, 0, 200);
     }
 
     {
         const auto filepath = dir / u8"inv.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
+        load_internal(filepath, [&](auto& ar) {
+            for (auto&& inv : g_inv.global())
             {
-                load_internal(filepath, [&](auto& ar) {
-                    for (auto&& inv : g_inv.global())
-                    {
-                        inv.clear();
-                        const auto n = inv.size();
-                        for (size_t i = 0; i < n; ++i)
-                        {
-                            bool exists;
-                            ar(exists);
-                            if (exists)
-                            {
-                                const auto item_ref =
-                                    Inventory::create(InventorySlot{&inv, i});
-                                auto& item = *item_ref.get_raw_ptr();
-                                ar(item);
-                                ItemIdTable::instance().add(item_ref);
-                            }
-                        }
-                    }
-                });
+                inventory_deserialize(ar, inv);
             }
-        }
-        else
-        {
-            save_internal(filepath, [&](auto& ar) {
-                for (auto&& inv : g_inv.global())
-                {
-                    const auto n = inv.size();
-                    for (size_t i = 0; i < n; ++i)
-                    {
-                        bool exists = !!inv.at(i);
-                        ar(exists);
-                        if (exists)
-                        {
-                            const auto item_ref = inv.at(i).unwrap();
-                            auto& item = *item_ref.get_raw_ptr();
-                            ar(item);
-                        }
-                    }
-                }
-            });
-        }
+        });
     }
 
     {
         const auto filepath = dir / u8"kitem.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v2(filepath, itemmemory, 0, 3, 0, 800);
-            }
-        }
-        else
-        {
-            save_v2(filepath, itemmemory, 0, 3, 0, 800);
-        }
+        load_v2(filepath, itemmemory, 0, 3, 0, 800);
     }
 
     {
         const auto filepath = dir / u8"knpc.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v2(filepath, npcmemory, 0, 2, 0, 800);
-            }
-        }
-        else
-        {
-            save_v2(filepath, npcmemory, 0, 2, 0, 800);
-        }
+        load_v2(filepath, npcmemory, 0, 2, 0, 800);
     }
 
     {
         const auto filepath = dir / u8"adata.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v2(filepath, adata, 0, 40, 0, 500);
-                area_data.unpack_from(adata);
-            }
-        }
-        else
-        {
-            area_data.pack_to(adata);
-            save_v2(filepath, adata, 0, 40, 0, 500);
-        }
+        load_v2(filepath, adata, 0, 40, 0, 500);
+        area_data.unpack_from(adata);
     }
 
     {
         const auto filepath = dir / u8"spact.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v1(filepath, spact, 0, 500);
-            }
-        }
-        else
-        {
-            save_v1(filepath, spact, 0, 500);
-        }
+        load_v1(filepath, spact, 0, 500);
     }
 
     {
         const auto filepath = dir / u8"qdata.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v2(filepath, qdata, 0, 20, 0, 500);
-                quest_data.unpack_from(qdata);
-            }
-        }
-        else
-        {
-            quest_data.pack_to(qdata);
-            save_v2(filepath, qdata, 0, 20, 0, 500);
-        }
+        load_v2(filepath, qdata, 0, 20, 0, 500);
+        quest_data.unpack_from(qdata);
     }
 
     {
         const auto filepath = dir / u8"mat.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v1(filepath, mat, 0, 400);
-            }
-        }
-        else
-        {
-            save_v1(filepath, mat, 0, 400);
-        }
+        load_v1(filepath, mat, 0, 400);
     }
 
     {
         const auto filepath = dir / u8"trait.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v1(filepath, trait, 0, 500);
-            }
-        }
-        else
-        {
-            save_v1(filepath, trait, 0, 500);
-        }
+        load_v1(filepath, trait, 0, 500);
     }
 
     {
         const auto filepath = dir / u8"pcc.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v2(filepath, pcc, 0, 30, 0, 20);
-            }
-        }
-        else
-        {
-            save_v2(filepath, pcc, 0, 30, 0, 20);
-        }
+        load_v2(filepath, pcc, 0, 30, 0, 20);
     }
 
     {
         const auto filepath = dir / u8"card.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v2(filepath, card, 0, 100, 0, 40);
-            }
-        }
-        else
-        {
-            save_v2(filepath, card, 0, 100, 0, 40);
-        }
+        load_v2(filepath, card, 0, 100, 0, 40);
     }
 
     {
         const auto filepath = dir / u8"krecipe.s1";
-        if (read)
+        if (game_data.version >= 1200)
         {
-            if (fs::exists(filepath))
-            {
-                if (game_data.version >= 1200)
-                {
-                    load_v1(filepath, recipememory, 0, 1200);
-                }
-            }
-        }
-        else
-        {
-            save_v1(filepath, recipememory, 0, 1200);
+            load_v1(filepath, recipememory, 0, 1200);
         }
     }
 
     {
         const auto filepath = dir / u8"art.log";
-        if (!read)
-        {
-            std::ofstream out{filepath.native(), std::ios::binary};
-            range::for_each(artifactlocation, [&](const auto& line) {
-                out << line << std::endl;
-            });
-        }
-        if (read)
-        {
-            artifactlocation.clear();
-            range::copy(
-                fileutil::read_by_line(filepath),
-                std::back_inserter(artifactlocation));
-        }
+        artifactlocation.clear();
+        range::copy(
+            fileutil::read_by_line(filepath),
+            std::back_inserter(artifactlocation));
     }
 
     {
         const auto filepath = dir / u8"news.log";
         notesel(newsbuff);
-        if (!read)
+        newsbuff(0).clear();
+        std::ifstream in{filepath.native(), std::ios::binary};
+        std::string tmp;
+        while (std::getline(in, tmp))
         {
-            std::ofstream out{filepath.native(), std::ios::binary};
-            out << newsbuff(0) << std::endl;
-        }
-        if (read)
-        {
-            newsbuff(0).clear();
-            std::ifstream in{filepath.native(), std::ios::binary};
-            std::string tmp;
-            while (std::getline(in, tmp))
-            {
-                newsbuff(0) += tmp + '\n';
-            }
+            newsbuff(0) += tmp + '\n';
         }
     }
 
-    arrayfile(read, u8"qname", dir / u8"qname.s1");
+    arrayfile(true, u8"qname", dir / u8"qname.s1");
 
-    // TODO: Delete this line when the v1.0.0 stable is released!
-    if (!read && fs::exists(dir / u8"gdatan.s1"))
+    if (fs::exists(dir / "deferred_events.s1"))
     {
-        fs::remove(dir / u8"gdatan.s1");
-    }
-
-    if (!read)
-    {
-        event_save(dir / "deferred_events.s1");
-    }
-    else
-    {
-        if (fs::exists(dir / "deferred_events.s1"))
-        {
-            event_load(dir / "deferred_events.s1");
-        }
+        event_load(dir / "deferred_events.s1");
     }
 
     lua::ModSerializer mod_serializer(*lua::lua);
-    if (read)
-    {
-        lua::lua->get_mod_manager().clear_global_stores();
-    }
+    lua::lua->get_mod_manager().clear_global_stores();
 
     {
         const auto filepath = dir / u8"mod.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                std::ifstream in{filepath.native(), std::ios::binary};
-                serialization::binary::IArchive ar{in};
-                mod_serializer.load_mod_store_data(
-                    ar, lua::ModEnv::StoreType::global);
-            }
-        }
-        else
-        {
-            std::ofstream out{filepath.native(), std::ios::binary};
-            serialization::binary::OArchive ar{out};
-            mod_serializer.save_mod_store_data(
-                ar, lua::ModEnv::StoreType::global);
-        }
+        std::ifstream in{filepath.native(), std::ios::binary};
+        serialization::binary::IArchive ar{in};
+        mod_serializer.load_mod_store_data(ar, lua::ModEnv::StoreType::global);
     }
 
-    if (read)
-    {
-        resolve_pending_ids();
-        // References to map-local objects have not been resolved.
-        // clear_pending_ids();
-    }
+    resolve_pending_ids();
+    // References to map-local objects have not been resolved.
+    // clear_pending_ids();
+
+    ELONA_LOG("save.ctrl_file")
+        << "global_read(" << dir.to_u8string() << ") END";
 }
 
 
 
-// reads or writes map-local data for the map with id "mid" (map data,
-// tiles, characters, skill status, map effects, character names)
-// does not read/write cdata for player or party characters.
-void fmode_1_2(bool read)
+void ctrl_file_global_write(const fs::path& dir)
 {
+    ELONA_LOG("save.ctrl_file")
+        << "global_write(" << dir.to_u8string() << ") BEGIN";
+
+    game_data.play_time =
+        game_data.play_time + timeGetTime() / 1000 - time_begin;
+    time_begin = timeGetTime() / 1000;
+
+    if (!fs::exists(dir))
+    {
+        fs::create_directory(dir);
+    }
+
+    SaveHeader::save(dir);
+
+    {
+        const auto filepath = dir / u8"version.s0";
+        auto v = latest_version;
+        serialization::binary::save(filepath, v);
+    }
+
+    {
+        const auto filepath = dir / u8"gdata.s1";
+        game_data.pack_to(gdata);
+        save_v1(filepath, gdata, 0, 1000);
+    }
+
+    {
+        const auto filepath = dir / u8"foobar_data.s1";
+        serialization::binary::save(filepath, foobar_data);
+    }
+
+    {
+        const auto filepath = dir / u8"cdata.s1";
+        save(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
+    }
+
+    {
+        const auto filepath = dir / u8"spell.s1";
+        save_v1(filepath, spell, 0, 200);
+    }
+
+    {
+        const auto filepath = dir / u8"inv.s1";
+        save_internal(filepath, [&](auto& ar) {
+            for (auto&& inv : g_inv.global())
+            {
+                inventory_serialize(ar, inv);
+            }
+        });
+    }
+
+    {
+        const auto filepath = dir / u8"kitem.s1";
+        save_v2(filepath, itemmemory, 0, 3, 0, 800);
+    }
+
+    {
+        const auto filepath = dir / u8"knpc.s1";
+        save_v2(filepath, npcmemory, 0, 2, 0, 800);
+    }
+
+    {
+        const auto filepath = dir / u8"adata.s1";
+        area_data.pack_to(adata);
+        save_v2(filepath, adata, 0, 40, 0, 500);
+    }
+
+    {
+        const auto filepath = dir / u8"spact.s1";
+        save_v1(filepath, spact, 0, 500);
+    }
+
+    {
+        const auto filepath = dir / u8"qdata.s1";
+        quest_data.pack_to(qdata);
+        save_v2(filepath, qdata, 0, 20, 0, 500);
+    }
+
+    {
+        const auto filepath = dir / u8"mat.s1";
+        save_v1(filepath, mat, 0, 400);
+    }
+
+    {
+        const auto filepath = dir / u8"trait.s1";
+        save_v1(filepath, trait, 0, 500);
+    }
+
+    {
+        const auto filepath = dir / u8"pcc.s1";
+        save_v2(filepath, pcc, 0, 30, 0, 20);
+    }
+
+    {
+        const auto filepath = dir / u8"card.s1";
+        save_v2(filepath, card, 0, 100, 0, 40);
+    }
+
+    {
+        const auto filepath = dir / u8"krecipe.s1";
+        save_v1(filepath, recipememory, 0, 1200);
+    }
+
+    {
+        const auto filepath = dir / u8"art.log";
+        std::ofstream out{filepath.native(), std::ios::binary};
+        range::for_each(artifactlocation, [&](const auto& line) {
+            out << line << std::endl;
+        });
+    }
+
+    {
+        const auto filepath = dir / u8"news.log";
+        notesel(newsbuff);
+        std::ofstream out{filepath.native(), std::ios::binary};
+        out << newsbuff(0) << std::endl;
+    }
+
+    arrayfile(false, u8"qname", dir / u8"qname.s1");
+
+    event_save(dir / "deferred_events.s1");
+
+    lua::ModSerializer mod_serializer(*lua::lua);
+
+    {
+        const auto filepath = dir / u8"mod.s1";
+        std::ofstream out{filepath.native(), std::ios::binary};
+        serialization::binary::OArchive ar{out};
+        mod_serializer.save_mod_store_data(ar, lua::ModEnv::StoreType::global);
+    }
+
+    ELONA_LOG("save.ctrl_file")
+        << "global_write(" << dir.to_u8string() << ") END";
+}
+
+
+
+void ctrl_file_map_read()
+{
+    ELONA_LOG("save.ctrl_file") << "map_read() BEGIN";
+
     const auto dir = filesystem::dirs::tmp();
 
     {
         const auto filepath = dir / fs::u8path(u8"mdata_"s + mid + u8".s2");
-        if (read)
-        {
-            (void)save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2"));
-            load_v1(filepath, mdata, 0, 100);
-            map_data.unpack_from(mdata);
-        }
-        else
-        {
-            save_fs_add(filepath.filename());
-            map_data.pack_to(mdata);
-            save_v1(filepath, mdata, 0, 100);
-        }
+        (void)save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2"));
+        load_v1(filepath, mdata, 0, 100);
+        map_data.unpack_from(mdata);
     }
 
     {
         const auto filepath = dir / fs::u8path(u8"map_"s + mid + u8".s2");
-        if (read)
-        {
-            DIM3(mapsync, map_data.width, map_data.height);
-            DIM3(mef, 9, MEF_MAX);
-            (void)save_fs_exists(fs::u8path(u8"map_"s + mid + u8".s2"));
-            load(filepath, cell_data);
-        }
-        else
-        {
-            save_fs_add(filepath.filename());
-            save(filepath, cell_data);
-        }
+        DIM3(mapsync, map_data.width, map_data.height);
+        DIM3(mef, 9, MEF_MAX);
+        (void)save_fs_exists(fs::u8path(u8"map_"s + mid + u8".s2"));
+        load(filepath, cell_data);
     }
 
     {
         const auto filepath = dir / fs::u8path(u8"cdata_"s + mid + u8".s2");
-        if (read)
-        {
-            (void)save_fs_exists(fs::u8path(u8"cdata_"s + mid + u8".s2"));
-            load(
-                filepath,
-                cdata,
-                ELONA_MAX_PARTY_CHARACTERS,
-                ELONA_MAX_CHARACTERS);
-            for (int index = ELONA_MAX_PARTY_CHARACTERS;
-                 index < ELONA_MAX_CHARACTERS;
-                 index++)
-            {
-                cdata[index].index = index;
-            }
+        (void)save_fs_exists(fs::u8path(u8"cdata_"s + mid + u8".s2"));
+        load(filepath, cdata, ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
 
-            restore_handles(ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
-        }
-        else
-        {
-            save_fs_add(filepath.filename());
-            save(
-                filepath,
-                cdata,
-                ELONA_MAX_PARTY_CHARACTERS,
-                ELONA_MAX_CHARACTERS);
-        }
+        restore_handles(ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
     }
 
     {
         const auto filepath = dir / fs::u8path(u8"mef_"s + mid + u8".s2");
-        if (read)
+        if (map_data.mefs_loaded_flag == 0)
         {
-            if (map_data.mefs_loaded_flag == 0)
+            for (int y = 0; y < map_data.height; ++y)
             {
-                for (int y = 0; y < map_data.height; ++y)
+                for (int x = 0; x < map_data.width; ++x)
                 {
-                    for (int x = 0; x < map_data.width; ++x)
-                    {
-                        cell_data.at(x, y).mef_index_plus_one = 0;
-                    }
+                    cell_data.at(x, y).mef_index_plus_one = 0;
                 }
-                map_data.mefs_loaded_flag = 1;
             }
-            else
-            {
-                (void)save_fs_exists(fs::u8path(u8"mef_"s + mid + u8".s2"));
-                load_v2(filepath, mef, 0, 9, 0, MEF_MAX);
-            }
+            map_data.mefs_loaded_flag = 1;
         }
         else
         {
-            save_fs_add(filepath.filename());
-            save_v2(filepath, mef, 0, 9, 0, MEF_MAX);
+            (void)save_fs_exists(fs::u8path(u8"mef_"s + mid + u8".s2"));
+            load_v2(filepath, mef, 0, 9, 0, MEF_MAX);
         }
     }
 
-    arrayfile(read, u8"mdatan", dir / fs::u8path(u8"mdatan_"s + mid + u8".s2"));
+    arrayfile(true, u8"mdatan", dir / fs::u8path(u8"mdatan_"s + mid + u8".s2"));
 
     lua::ModSerializer mod_serializer(*lua::lua);
-    if (read)
-    {
-        lua::lua->get_mod_manager().clear_map_local_stores();
-    }
+    lua::lua->get_mod_manager().clear_map_local_stores();
 
     // Mod map-local store data (Store.map)
     {
         const auto filepath = dir / fs::u8path(u8"mod_map_"s + mid + u8".s2");
-        if (read)
-        {
-            (void)save_fs_exists(fs::u8path(u8"mod_map_"s + mid + u8".s2"));
+        (void)save_fs_exists(fs::u8path(u8"mod_map_"s + mid + u8".s2"));
 
-            std::ifstream in{filepath.native(), std::ios::binary};
-            serialization::binary::IArchive ar{in};
-            mod_serializer.load_mod_store_data(ar, lua::ModEnv::StoreType::map);
-        }
-        else
-        {
-            save_fs_add(filepath.filename());
-
-            std::ofstream out{filepath.native(), std::ios::binary};
-            serialization::binary::OArchive ar{out};
-            mod_serializer.save_mod_store_data(ar, lua::ModEnv::StoreType::map);
-        }
+        std::ifstream in{filepath.native(), std::ios::binary};
+        serialization::binary::IArchive ar{in};
+        mod_serializer.load_mod_store_data(ar, lua::ModEnv::StoreType::map);
     }
 
-    if (read)
-    {
-        schedule_object_reference_resolution();
-    }
+    schedule_object_reference_resolution();
+
+    ELONA_LOG("save.ctrl_file") << "map_read() END";
 }
 
 
 
-void fmode_16()
+void ctrl_file_map_write()
 {
-    DIM3(cmapdata, 5, 400);
+    ELONA_LOG("save.ctrl_file") << "map_write() BEGIN";
 
-    std::vector<int> tile_grid(cell_data.width() * cell_data.height());
-    load_vec(fs::u8path(fmapfile + u8".map"), tile_grid);
-    cell_data.load_tile_grid(tile_grid);
+    const auto dir = filesystem::dirs::tmp();
 
-    const auto filepath = fs::u8path(fmapfile + u8".obj"s);
-    if (!fs::exists(filepath))
     {
-        return;
+        const auto filepath = dir / fs::u8path(u8"mdata_"s + mid + u8".s2");
+        save_fs_add(filepath.filename());
+        map_data.pack_to(mdata);
+        save_v1(filepath, mdata, 0, 100);
     }
-    load_v2(filepath, cmapdata, 0, 5, 0, 400);
+
+    {
+        const auto filepath = dir / fs::u8path(u8"map_"s + mid + u8".s2");
+        save_fs_add(filepath.filename());
+        save(filepath, cell_data);
+    }
+
+    {
+        const auto filepath = dir / fs::u8path(u8"cdata_"s + mid + u8".s2");
+        save_fs_add(filepath.filename());
+        save(filepath, cdata, ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
+    }
+
+    {
+        const auto filepath = dir / fs::u8path(u8"mef_"s + mid + u8".s2");
+        save_fs_add(filepath.filename());
+        save_v2(filepath, mef, 0, 9, 0, MEF_MAX);
+    }
+
+    arrayfile(
+        false, u8"mdatan", dir / fs::u8path(u8"mdatan_"s + mid + u8".s2"));
+
+    lua::ModSerializer mod_serializer(*lua::lua);
+
+    // Mod map-local store data (Store.map)
+    {
+        const auto filepath = dir / fs::u8path(u8"mod_map_"s + mid + u8".s2");
+        save_fs_add(filepath.filename());
+
+        std::ofstream out{filepath.native(), std::ios::binary};
+        serialization::binary::OArchive ar{out};
+        mod_serializer.save_mod_store_data(ar, lua::ModEnv::StoreType::map);
+    }
+
+    ELONA_LOG("save.ctrl_file") << "map_write() END";
 }
 
 
-// reads or writes a custom map.
-// this is currently never called to write anything, as the built-in map editor
-// from 1.22 was removed.
-void fmode_5_6()
+
+void ctrl_file_map_items_read(const fs::path& filename)
 {
+    ELONA_LOG("save.ctrl_file")
+        << "map_items_read(" << filename.to_u8string() << ") BEGIN";
+
+    const auto filepath = filesystem::dirs::tmp() / filename;
+    (void)save_fs_exists(filename);
+
+    load_internal(filepath, [&](auto& ar) {
+        for (auto&& inv : g_inv.map_local())
+        {
+            inventory_deserialize(ar, inv);
+        }
+    });
+
+    if (will_resolve_object_reference)
+    {
+        resolve_pending_ids();
+        clear_pending_ids();
+        will_resolve_object_reference = false;
+    }
+
+    ELONA_LOG("save.ctrl_file")
+        << "map_items_read(" << filename.to_u8string() << ") END";
+}
+
+
+
+void ctrl_file_map_items_write(const fs::path& filename)
+{
+    ELONA_LOG("save.ctrl_file")
+        << "map_items_write(" << filename.to_u8string() << ") BEGIN";
+
+    const auto filepath = filesystem::dirs::tmp() / filename;
+    save_fs_add(filepath.filename());
+    (void)save_fs_exists(filename);
+
+    save_internal(filepath, [&](auto& ar) {
+        for (auto&& inv : g_inv.map_local())
+        {
+            inventory_serialize(ar, inv);
+        }
+    });
+
+    ELONA_LOG("save.ctrl_file")
+        << "map_items_write(" << filename.to_u8string() << ") END";
+}
+
+
+
+void ctrl_file_custom_map_read()
+{
+    ELONA_LOG("save.ctrl_file") << "custom_map_read() BEGIN";
+
     DIM3(cmapdata, 5, 400);
     DIM3(mef, 9, MEF_MAX);
 
@@ -976,166 +908,109 @@ void fmode_5_6()
             load_v2(filepath, cmapdata, 0, 5, 0, 400);
         }
     }
-}
 
-
-// reads or writes map-local item data (inv_xx.s2)
-// does not read/write player or party character inventories.
-void fmode_3_4(bool read, const fs::path& filename)
-{
-    const auto filepath = filesystem::dirs::tmp() / filename;
-    if (read)
-    {
-        (void)save_fs_exists(filename);
-
-        load_internal(filepath, [&](auto& ar) {
-            for (auto&& inv : g_inv.map_local())
-            {
-                inv.clear();
-                const auto n = inv.size();
-                for (size_t i = 0; i < n; ++i)
-                {
-                    bool exists;
-                    ar(exists);
-                    if (exists)
-                    {
-                        const auto item_ref =
-                            Inventory::create(InventorySlot{&inv, i});
-                        auto& item = *item_ref.get_raw_ptr();
-                        ar(item);
-                        ItemIdTable::instance().add(item_ref);
-                    }
-                }
-            }
-        });
-    }
-    else
-    {
-        save_fs_add(filepath.filename());
-        (void)save_fs_exists(filename);
-
-        save_internal(filepath, [&](auto& ar) {
-            for (auto&& inv : g_inv.map_local())
-            {
-                const auto n = inv.size();
-                for (size_t i = 0; i < n; ++i)
-                {
-                    bool exists = !!inv.at(i);
-                    ar(exists);
-                    if (exists)
-                    {
-                        const auto item_ref = inv.at(i).unwrap();
-                        auto& item = *item_ref.get_raw_ptr();
-                        ar(item);
-                    }
-                }
-            }
-        });
-    }
-
-    if (read)
-    {
-        if (will_resolve_object_reference)
-        {
-            resolve_pending_ids();
-            clear_pending_ids();
-            will_resolve_object_reference = false;
-        }
-    }
+    ELONA_LOG("save.ctrl_file") << "custom_map_read() END";
 }
 
 
 
-void fmode_23_24(bool read, const fs::path& filepath)
+void ctrl_file_map_load_map_obj_files()
 {
-    if (read)
+    ELONA_LOG("save.ctrl_file") << "map_load_map_obj_files() BEGIN";
+
+    DIM3(cmapdata, 5, 400);
+
+    std::vector<int> tile_grid(cell_data.width() * cell_data.height());
+    load_vec(fs::u8path(fmapfile + u8".map"), tile_grid);
+    cell_data.load_tile_grid(tile_grid);
+
+    const auto filepath = fs::u8path(fmapfile + u8".obj"s);
+    if (!fs::exists(filepath))
     {
-        load_v1(filepath, deck, 0, 1000);
-    }
-    else
-    {
-        save_fs_add(filepath.filename());
-        save_v1(filepath, deck, 0, 1000);
-    }
-}
-
-
-// reads character and skill data when upgrading the character's home.
-void fmode_17()
-{
-    const auto dir = filesystem::dirs::tmp();
-
-    if (!fs::exists(dir / fs::u8path(u8"cdata_"s + mid + u8".s2")))
         return;
-
-    {
-        const auto filepath = dir / fs::u8path(u8"cdata_"s + mid + u8".s2");
-        (void)save_fs_exists(fs::u8path(u8"cdata_"s + mid + u8".s2"));
-        load(filepath, cdata, ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
-        for (int index = ELONA_MAX_PARTY_CHARACTERS;
-             index < ELONA_MAX_CHARACTERS;
-             index++)
-        {
-            cdata[index].index = index;
-        }
     }
+    load_v2(filepath, cmapdata, 0, 5, 0, 400);
 
-    schedule_object_reference_resolution();
+    ELONA_LOG("save.ctrl_file") << "map_load_map_obj_files() END";
 }
 
 
-void fmode_10()
+
+void ctrl_file_save_game_delete()
 {
+    ELONA_LOG("save.ctrl_file") << "save_game_delete() BEGIN";
+
+    fs::remove_all(filesystem::dirs::save(playerid));
+
+    ELONA_LOG("save.ctrl_file") << "save_game_delete() END";
+}
+
+
+
+void ctrl_file_temp_dir_delete()
+{
+    ELONA_LOG("save.ctrl_file") << "temp_dir_delete() BEGIN";
+
     for (const auto& entry : filesystem::glob_files(
              filesystem::dirs::tmp(), std::regex{u8R"(.*\..*)"}))
     {
         fs::remove_all(entry.path());
     }
+
+    ELONA_LOG("save.ctrl_file") << "temp_dir_delete() END";
 }
 
 
-// deletes a saved game.
-void fmode_9()
+
+void ctrl_file_map_delete()
 {
-    fs::remove_all(filesystem::dirs::save(playerid));
+    ELONA_LOG("save.ctrl_file") << "map_delete() BEGIN";
+
+    const auto filename = fs::u8path(u8"map_"s + mid + u8".s2");
+    if (!save_fs_exists(filename))
+        return;
+
+    save_fs_remove(filename);
+    save_fs_remove(fs::u8path("cdata_"s + mid + ".s2"));
+    save_fs_remove(fs::u8path("inv_"s + mid + ".s2"));
+    save_fs_remove(fs::u8path("mod_map_"s + mid + ".s2"));
+    save_fs_remove(fs::u8path("mdata_"s + mid + ".s2"));
+    save_fs_remove(fs::u8path("mdatan_"s + mid + ".s2"));
+    save_fs_remove(fs::u8path("mef_"s + mid + ".s2"));
+
+    ELONA_LOG("save.ctrl_file") << "map_delete() END";
 }
 
 
-// deletes a map and optionally deletes characters/skills/items in it.
-// the optional case is so the characters/skills/items can be
-// preserved in the case of upgrading the player's home.
-void fmode_11_12(FileOperation file_operation)
+
+void ctrl_file_map_delete_preserve_items()
 {
-    if (file_operation == FileOperation::map_delete_preserve_items)
+    ELONA_LOG("save.ctrl_file") << "map_delete_preserve_items() BEGIN";
+
+    if (!save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
     {
-        if (!save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
-        {
-            // We tried preserving the characters/items, but the home
-            // map to transfer them from didn't exist.
-            return;
-        }
+        // We tried preserving the characters/items, but the home
+        // map to transfer them from didn't exist.
+        return;
     }
     const auto filename = fs::u8path(u8"map_"s + mid + u8".s2");
     if (!save_fs_exists(filename))
         return;
 
     save_fs_remove(filename);
-    if (file_operation == FileOperation::map_delete)
-    {
-        save_fs_remove(fs::u8path("cdata_"s + mid + ".s2"));
-        save_fs_remove(fs::u8path("cdatan_"s + mid + ".s2"));
-        save_fs_remove(fs::u8path("inv_"s + mid + ".s2"));
-        save_fs_remove(fs::u8path("mod_map_"s + mid + ".s2"));
-    }
     save_fs_remove(fs::u8path("mdata_"s + mid + ".s2"));
     save_fs_remove(fs::u8path("mdatan_"s + mid + ".s2"));
     save_fs_remove(fs::u8path("mef_"s + mid + ".s2"));
+
+    ELONA_LOG("save.ctrl_file") << "map_delete_preserve_items() END";
 }
 
 
-// deletes files inside the temporary directory (tmp/)
-void fmode_13()
+
+void ctrl_file_temp_dir_delete_area()
 {
+    ELONA_LOG("save.ctrl_file") << "temp_dir_delete_area() BEGIN";
+
     area_data[area].clear();
 
     for (const auto& entry : filesystem::glob_files(
@@ -1150,125 +1025,92 @@ void fmode_13()
     {
         save_fs_remove(entry.path().filename());
     }
+
+    ELONA_LOG("save.ctrl_file") << "temp_dir_delete_area() END";
 }
 
-} // namespace
+
+
+void ctrl_file_map_home_upgrade()
+{
+    ELONA_LOG("save.ctrl_file") << "map_home_upgrade() BEGIN";
+
+    const auto dir = filesystem::dirs::tmp();
+
+    if (!fs::exists(dir / fs::u8path(u8"cdata_"s + mid + u8".s2")))
+        return;
+
+    {
+        const auto filepath = dir / fs::u8path(u8"cdata_"s + mid + u8".s2");
+        (void)save_fs_exists(fs::u8path(u8"cdata_"s + mid + u8".s2"));
+        load(filepath, cdata, ELONA_MAX_PARTY_CHARACTERS, ELONA_MAX_CHARACTERS);
+    }
+
+    schedule_object_reference_resolution();
+
+    ELONA_LOG("save.ctrl_file") << "map_home_upgrade() END";
+}
 
 
 
-void ctrl_file(FileOperation file_operation)
+void ctrl_file_deck_read(const fs::path& filename)
 {
     ELONA_LOG("save.ctrl_file")
-        << "ctrl_file " << static_cast<int>(file_operation) << " mid: " << mid
-        << " fmapfile: " << fmapfile;
+        << "deck_read(" << filename.to_u8string() << ") BEGIN";
 
-    game_data.play_time =
-        game_data.play_time + timeGetTime() / 1000 - time_begin;
-    time_begin = timeGetTime() / 1000;
+    load_v1(filesystem::dirs::tmp() / filename, deck, 0, 1000);
 
-    switch (file_operation)
-    {
-    case FileOperation::map_read:
-    case FileOperation::map_write:
-        fmode_1_2(file_operation == FileOperation::map_read);
-        break;
-    case FileOperation::custom_map_read: fmode_5_6(); break;
-    case FileOperation::save_game_delete: fmode_9(); break;
-    case FileOperation::temp_dir_delete: fmode_10(); break;
-    case FileOperation::map_delete:
-    case FileOperation::map_delete_preserve_items:
-        fmode_11_12(file_operation);
-        break;
-    case FileOperation::temp_dir_delete_area: fmode_13(); break;
-    case FileOperation::map_home_upgrade: fmode_17(); break;
-    case FileOperation::map_load_map_obj_files: fmode_16(); break;
-    default: assert(0);
-    }
+    ELONA_LOG("save.ctrl_file")
+        << "deck_read(" << filename.to_u8string() << ") END";
 }
 
 
 
-void ctrl_file(FileOperation2 file_operation, const fs::path& filepath)
+void ctrl_file_deck_write(const fs::path& filename)
 {
     ELONA_LOG("save.ctrl_file")
-        << "ctrl_file2 " << static_cast<int>(file_operation) << " mid: " << mid
-        << " filepath: " << filepath.to_u8string();
+        << "deck_write(" << filename.to_u8string() << ") BEGIN";
 
-    game_data.play_time =
-        game_data.play_time + timeGetTime() / 1000 - time_begin;
-    time_begin = timeGetTime() / 1000;
+    save_fs_add(filename);
+    save_v1(filesystem::dirs::tmp() / filename, deck, 0, 1000);
 
-    switch (file_operation)
-    {
-    case FileOperation2::map_items_read:
-    case FileOperation2::map_items_write:
-        fmode_3_4(file_operation == FileOperation2::map_items_read, filepath);
-        break;
-    case FileOperation2::global_read:
-    case FileOperation2::global_write:
-        fmode_7_8(file_operation == FileOperation2::global_read, filepath);
-        break;
-    case FileOperation2::deck_write:
-    case FileOperation2::deck_read:
-        fmode_23_24(file_operation == FileOperation2::deck_read, filepath);
-        break;
-    default: assert(0);
-    }
+    ELONA_LOG("save.ctrl_file")
+        << "deck_write(" << filename.to_u8string() << ") END";
 }
 
 
 
-void ctrl_file_tmp_inv_read(const fs::path& file_name)
+void ctrl_file_tmp_inv_read(const fs::path& filename)
 {
-    ELONA_LOG("save.ctrl_file") << "tmp_inv_read: " << file_name.to_u8string();
+    ELONA_LOG("save.ctrl_file")
+        << "tmp_inv_read(" << filename.to_u8string() << ") BEGIN";
 
-    const auto path = filesystem::dirs::tmp() / file_name;
-    (void)save_fs_exists(file_name);
+    const auto path = filesystem::dirs::tmp() / filename;
+    (void)save_fs_exists(filename);
 
-    load_internal(path, [&](auto& ar) {
-        auto& inv = g_inv.tmp();
-        inv.clear();
-        const auto n = inv.size();
-        for (size_t i = 0; i < n; ++i)
-        {
-            bool exists;
-            ar(exists);
-            if (exists)
-            {
-                const auto item_ref = Inventory::create(InventorySlot{&inv, i});
-                auto& item = *item_ref.get_raw_ptr();
-                ar(item);
-                ItemIdTable::instance().add(item_ref);
-            }
-        }
-    });
+    load_internal(
+        path, [&](auto& ar) { inventory_deserialize(ar, g_inv.tmp()); });
+
+    ELONA_LOG("save.ctrl_file")
+        << "tmp_inv_read(" << filename.to_u8string() << ") END";
 }
 
 
 
-void ctrl_file_tmp_inv_write(const fs::path& file_name)
+void ctrl_file_tmp_inv_write(const fs::path& filename)
 {
-    ELONA_LOG("save.ctrl_file") << "tmp_inv_write: " << file_name.to_u8string();
+    ELONA_LOG("save.ctrl_file")
+        << "tmp_inv_write(" << filename.to_u8string() << ") BEGIN";
 
-    const auto path = filesystem::dirs::tmp() / file_name;
-    save_fs_add(file_name);
-    (void)save_fs_exists(file_name);
+    const auto path = filesystem::dirs::tmp() / filename;
+    save_fs_add(filename);
+    (void)save_fs_exists(filename);
 
-    save_internal(path, [&](auto& ar) {
-        auto& inv = g_inv.tmp();
-        const auto n = inv.size();
-        for (size_t i = 0; i < n; ++i)
-        {
-            bool exists = !!inv.at(i);
-            ar(exists);
-            if (exists)
-            {
-                const auto item_ref = inv.at(i).unwrap();
-                auto& item = *item_ref.get_raw_ptr();
-                ar(item);
-            }
-        }
-    });
+    save_internal(
+        path, [&](auto& ar) { inventory_serialize(ar, g_inv.tmp()); });
+
+    ELONA_LOG("save.ctrl_file")
+        << "tmp_inv_write(" << filename.to_u8string() << ") END";
 }
 
 } // namespace elona

@@ -3513,7 +3513,7 @@ TurnResult do_get_command()
             area_data[area].id = static_cast<int>(mdata_t::MapId::none);
             removeworker(area);
             map_global_prepare();
-            ctrl_file(FileOperation::temp_dir_delete_area);
+            ctrl_file_temp_dir_delete_area();
             snd("core.build1");
             txt(i18n::s.get("core.action.get.building.remove"));
             return TurnResult::turn_end;
@@ -5348,7 +5348,7 @@ PickUpItemResult pick_up_item(
                     mid = ""s + 30 + u8"_"s + (100 + item->count);
                     if (save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
                     {
-                        ctrl_file(FileOperation::map_delete);
+                        ctrl_file_map_delete();
                     }
                     mid = midbk;
                     item->count = 0;

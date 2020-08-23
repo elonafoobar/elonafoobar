@@ -41,9 +41,8 @@ void _do_save_game()
         return;
     }
 
-    ctrl_file(FileOperation::map_write);
-    ctrl_file(
-        FileOperation2::map_items_write, fs::u8path(u8"inv_"s + mid + u8".s2"));
+    ctrl_file_map_write();
+    ctrl_file_map_items_write(fs::u8path(u8"inv_"s + mid + u8".s2"));
 
     const auto save_dir = filesystem::dirs::save(playerid);
     if (!fs::exists(save_dir))
@@ -51,7 +50,7 @@ void _do_save_game()
         fs::create_directory(save_dir);
     }
     save_fs_save(save_dir);
-    ctrl_file(FileOperation2::global_write, save_dir);
+    ctrl_file_global_write(save_dir);
     save_fs_clear();
 
     ELONA_LOG("save") << "Save end:" << playerid;
@@ -84,11 +83,11 @@ void save_load_game()
 
     save_fs_clear();
 
-    ctrl_file(FileOperation::temp_dir_delete);
+    ctrl_file_temp_dir_delete();
     const auto save_dir = filesystem::dirs::save(playerid);
 
     save_update(save_dir);
-    ctrl_file(FileOperation2::global_read, save_dir);
+    ctrl_file_global_read(save_dir);
 
     chara_delete(cdata.tmp());
     set_item_info();
@@ -120,115 +119,31 @@ void save_save_map_local_data()
     }
 
     // write map data and characters/skill data local to this map
-    ctrl_file(FileOperation::map_write);
+    ctrl_file_map_write();
 
     // write data for items/character inventories local to this map
-    ctrl_file(
-        FileOperation2::map_items_write, fs::u8path(u8"inv_"s + mid + u8".s2"));
+    ctrl_file_map_items_write(fs::u8path(u8"inv_"s + mid + u8".s2"));
 }
 
 
 
 void save_save_gene()
 {
-    ctrl_file(FileOperation::gene_write);
+    // TODO
 }
 
 
 
 void save_load_gene()
 {
-    ctrl_file(FileOperation::gene_read);
-    DIM2(spell, 200);
-    DIM2(spact, 500);
-    for (auto&& cnt : cdata.all())
-    {
-        cnt.set_state(Character::State::empty);
-    }
-    Character::copy(cdata.player(), cdata.tmp());
-    cdata.player().clear();
-    inv_open_tmp_inv_no_physical_file();
-    for (const auto& item : g_inv.pc())
-    {
-        if (item->id == ItemId::secret_experience_of_lomias)
-        {
-            lomiaseaster = 1;
-        }
-        if (item->id == ItemId::deed_of_heirship ||
-            the_item_db[itemid2int(item->id)]->subcategory == 53100)
-        {
-            continue;
-        }
-        if (item->id == ItemId::kitty_bank)
-        {
-            continue;
-        }
-        if (item->quality == Quality::special)
-        {
-            continue;
-        }
-        if (item->is_precious())
-        {
-            continue;
-        }
-        if (the_item_db[itemid2int(item->id)]->category == ItemCategory::ammo)
-        {
-            item->count = -1;
-        }
-        item->body_part = 0;
-        item_separate(
-            item, inv_make_free_slot_force(g_inv.tmp()), item->number());
-    }
-    for (auto&& cnt : cdata.all())
-    {
-        chara_delete(cnt);
-    }
-    game_data.play_time = genetemp(805);
+    // TODO
 }
 
 
 
 void save_get_inheritance()
 {
-    inv_close_tmp_inv("shop3.s2");
-    p = 0;
-    i = 0;
-    for (int cnt = 0; cnt < 600; ++cnt)
-    {
-        if (cnt >= 10 && cnt < 20)
-        {
-            p += cdata.tmp().get_skill(cnt).base_level;
-        }
-        if (cnt >= 100 && cnt < 400)
-        {
-            i += cdata.tmp().get_skill(cnt).base_level;
-        }
-    }
-    p = (p - 250) / 7;
-    if (p < 5)
-    {
-        p = 5;
-    }
-    else if (p > 50)
-    {
-        p = 50;
-    }
-    i = (p - 250) / 8;
-    if (i < 5)
-    {
-        i = 5;
-    }
-    else if (i > 40)
-    {
-        i = 40;
-    }
-    earn_gold(cdata.player(), clamp(cdata.tmp().gold / 100, 1000, 100000));
-    earn_platinum(cdata.player(), p);
-    cdata.player().skill_bonus += i;
-    for (int cnt = 0; cnt < 400; ++cnt)
-    {
-        mat(cnt) = mat(cnt) / 3;
-    }
+    // TODO
 }
 
 

@@ -3745,7 +3745,7 @@ void map_initcustom(const std::string& map_filename)
 {
     fmapfile =
         (filesystem::dirs::map() / fs::u8path(map_filename)).to_u8string();
-    ctrl_file(FileOperation::custom_map_read);
+    ctrl_file_custom_map_read();
     map_tileset(map_data.tileset);
     nooracle = 1;
     for (int cnt = 0; cnt < 400; ++cnt)

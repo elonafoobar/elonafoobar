@@ -1810,10 +1810,7 @@ void tcgdeck()
             }
             if (rtval == 0)
             {
-                ctrl_file(
-                    FileOperation2::deck_read,
-                    filesystem::dirs::tmp() /
-                        fs::u8path(u8"deck_"s + curdeck + u8".s2"));
+                ctrl_file_deck_read(fs::u8path(u8"deck_"s + curdeck + u8".s2"));
             }
         }
         decksizebk_at_tcg = game_data.tcg_decks.at(curdeck);
@@ -2714,10 +2711,8 @@ void tcg_draw_menu()
 
                 if (rtval == 0)
                 {
-                    ctrl_file(
-                        FileOperation2::deck_write,
-                        filesystem::dirs::tmp() /
-                            fs::u8path(u8"deck_"s + curdeck + u8".s2"));
+                    ctrl_file_deck_write(
+                        fs::u8path(u8"deck_"s + curdeck + u8".s2"));
                 }
                 else
                 {

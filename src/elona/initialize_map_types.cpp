@@ -998,7 +998,7 @@ static void _init_map_your_home()
         {
             // Move existing characters/items to the center of the
             // map if the home was upgraded.
-            ctrl_file(FileOperation::map_home_upgrade);
+            ctrl_file_map_home_upgrade();
             for (auto&& cnt : cdata.others())
             {
                 cnt.position.x = map_data.width / 2;
@@ -1006,9 +1006,7 @@ static void _init_map_your_home()
                 cnt.initial_position.x = map_data.width / 2;
                 cnt.initial_position.y = map_data.height / 2;
             }
-            ctrl_file(
-                FileOperation2::map_items_read,
-                fs::u8path(u8"inv_"s + mid + u8".s2"));
+            ctrl_file_map_items_read(fs::u8path(u8"inv_"s + mid + u8".s2"));
             for (const auto& item : g_inv.ground())
             {
                 item->set_pos({map_data.width / 2, map_data.height / 2});
