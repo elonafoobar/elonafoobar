@@ -864,179 +864,6 @@ void fmode_7_8(bool read, const fs::path& dir)
 }
 
 
-// reads or writes gene data.
-void fmode_14_15(bool read)
-{
-    const auto dir =
-        read ? filesystem::dirs::save(geneuse) : filesystem::dirs::tmp();
-    if (!read)
-    {
-        playerheader = cdata.player().name + u8"(Lv" + cdata.player().level +
-            u8")の遺伝子";
-        const auto filepath = dir / u8"gene_header.txt";
-        bsave(filepath, playerheader);
-        save_fs_add(filepath.filename());
-    }
-
-    {
-        const auto filepath = dir / u8"g_cdata.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
-                for (int index = 0; index < ELONA_MAX_PARTY_CHARACTERS; index++)
-                {
-                    cdata[index].index = index;
-                }
-            }
-        }
-        else
-        {
-            save_fs_add(filepath.filename());
-            save(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
-        }
-    }
-
-    {
-        const auto filepath = dir / u8"g_spell.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v1(filepath, spell, 0, 200);
-            }
-        }
-        else
-        {
-            save_fs_add(filepath.filename());
-            save_v1(filepath, spell, 0, 200);
-        }
-    }
-
-    {
-        const auto filepath = dir / u8"g_inv.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_internal(filepath, [&](auto& ar) {
-                    for (auto&& inv : g_inv.global())
-                    {
-                        inv.clear();
-                        const auto n = inv.size();
-                        for (size_t i = 0; i < n; ++i)
-                        {
-                            bool exists;
-                            ar(exists);
-                            if (exists)
-                            {
-                                const auto item_ref =
-                                    Inventory::create(InventorySlot{&inv, i});
-                                auto& item = *item_ref.get_raw_ptr();
-                                ar(item);
-                            }
-                        }
-                    }
-                });
-            }
-        }
-        else
-        {
-            save_fs_add(filepath.filename());
-            save_internal(filepath, [&](auto& ar) {
-                for (auto&& inv : g_inv.global())
-                {
-                    const auto n = inv.size();
-                    for (size_t i = 0; i < n; ++i)
-                    {
-                        bool exists = !!inv.at(i);
-                        ar(exists);
-                        if (exists)
-                        {
-                            const auto item_ref = inv.at(i).unwrap();
-                            auto& item = *item_ref.get_raw_ptr();
-                            ar(item);
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    {
-        const auto filepath = dir / u8"g_spact.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v1(filepath, spact, 0, 500);
-            }
-        }
-        else
-        {
-            save_fs_add(filepath.filename());
-            save_v1(filepath, spact, 0, 500);
-        }
-    }
-
-    {
-        const auto filepath = dir / u8"g_mat.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v1(filepath, mat, 0, 400);
-            }
-        }
-        else
-        {
-            save_fs_add(filepath.filename());
-            save_v1(filepath, mat, 0, 400);
-        }
-    }
-
-    {
-        const auto filepath = dir / u8"g_card.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v2(filepath, card, 0, 100, 0, 40);
-            }
-        }
-        else
-        {
-            save_fs_add(filepath.filename());
-            save_v2(filepath, card, 0, 100, 0, 40);
-        }
-    }
-
-    {
-        const auto filepath = dir / u8"g_genetemp.s1";
-        if (read)
-        {
-            if (fs::exists(filepath))
-            {
-                load_v1(filepath, genetemp, 0, 1000);
-            }
-        }
-        else
-        {
-            save_fs_add(filepath.filename());
-            save_v1(filepath, genetemp, 0, 1000);
-        }
-    }
-
-#if 0 // TODO
-    if (read)
-    {
-        resolve_pending_ids();
-        clear_pending_ids();
-    }
-#endif
-}
-
 
 // reads or writes map-local data for the map with id "mid" (map data,
 // tiles, characters, skill status, map effects, character names)
@@ -1194,67 +1021,40 @@ void fmode_16()
 // reads or writes a custom map.
 // this is currently never called to write anything, as the built-in map editor
 // from 1.22 was removed.
-void fmode_5_6(bool read)
+void fmode_5_6()
 {
-    if (read)
-    {
-        DIM3(cmapdata, 5, 400);
-        DIM3(mef, 9, MEF_MAX);
-    }
+    DIM3(cmapdata, 5, 400);
+    DIM3(mef, 9, MEF_MAX);
 
     {
         const auto filepath = fs::u8path(fmapfile + u8".idx"s);
-        if (read)
+        load_v1(filepath, mdatatmp, 0, 100);
+        for (int j = 0; j < 5; ++j)
         {
-            load_v1(filepath, mdatatmp, 0, 100);
-            for (int j = 0; j < 5; ++j)
-            {
-                mdata(j) = mdatatmp(j);
-            }
-            map_data.width = mdata(0);
-            map_data.height = mdata(1);
-            map_data.atlas_number = mdata(2);
-            map_data.next_regenerate_date = mdata(3);
-            map_data.stair_down_pos = mdata(4);
+            mdata(j) = mdatatmp(j);
         }
-        else
-        {
-            map_data.pack_to(mdata);
-            save_v1(filepath, mdata, 0, 100);
-        }
+        map_data.width = mdata(0);
+        map_data.height = mdata(1);
+        map_data.atlas_number = mdata(2);
+        map_data.next_regenerate_date = mdata(3);
+        map_data.stair_down_pos = mdata(4);
     }
 
     {
         const auto filepath = fs::u8path(fmapfile + u8".map"s);
-        if (read)
-        {
-            DIM3(
-                mapsync,
-                map_data.width,
-                map_data.height); // TODO length_exception
-            cell_data.init(map_data.width, map_data.height);
-            std::vector<int> tile_grid(map_data.width * map_data.height);
-            load_vec(filepath, tile_grid);
-            cell_data.load_tile_grid(tile_grid);
-        }
-        else
-        {
-            save(filepath, cell_data);
-        }
+        DIM3(mapsync, map_data.width,
+             map_data.height); // TODO length_exception
+        cell_data.init(map_data.width, map_data.height);
+        std::vector<int> tile_grid(map_data.width * map_data.height);
+        load_vec(filepath, tile_grid);
+        cell_data.load_tile_grid(tile_grid);
     }
 
     {
         const auto filepath = fs::u8path(fmapfile + u8".obj"s);
-        if (read)
+        if (fs::exists(filepath))
         {
-            if (fs::exists(filepath))
-            {
-                load_v2(filepath, cmapdata, 0, 5, 0, 400);
-            }
-        }
-        else
-        {
-            save_v2(filepath, cmapdata, 0, 5, 0, 400);
+            load_v2(filepath, cmapdata, 0, 5, 0, 400);
         }
     }
 }
@@ -1456,10 +1256,7 @@ void ctrl_file(FileOperation file_operation)
     case FileOperation::map_write:
         fmode_1_2(file_operation == FileOperation::map_read);
         break;
-    case FileOperation::custom_map_read:
-    case FileOperation::custom_map_write:
-        fmode_5_6(file_operation == FileOperation::custom_map_read);
-        break;
+    case FileOperation::custom_map_read: fmode_5_6(); break;
     case FileOperation::save_game_delete: fmode_9(); break;
     case FileOperation::temp_dir_delete: fmode_10(); break;
     case FileOperation::map_delete:
@@ -1467,15 +1264,12 @@ void ctrl_file(FileOperation file_operation)
         fmode_11_12(file_operation);
         break;
     case FileOperation::temp_dir_delete_area: fmode_13(); break;
-    case FileOperation::gene_write:
-    case FileOperation::gene_read:
-        fmode_14_15(file_operation == FileOperation::gene_read);
-        break;
     case FileOperation::map_home_upgrade: fmode_17(); break;
     case FileOperation::map_load_map_obj_files: fmode_16(); break;
     default: assert(0);
     }
 }
+
 
 
 void ctrl_file(FileOperation2 file_operation, const fs::path& filepath)
