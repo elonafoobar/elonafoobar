@@ -56,7 +56,7 @@ return {
       stones = {
          text = {
             {"stones.dialog._0", args = common.args_name},
-            GUI.fade_out,
+            function() GUI.fade_out() end,
             {"stones.dialog._1"},
             {"stones.dialog._2"},
             {"stones.dialog._3"},
