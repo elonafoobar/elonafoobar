@@ -18,6 +18,7 @@
 #include "gdata.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "item.hpp"
 #include "lua_env/console.hpp"
 #include "magic.hpp"
 #include "map.hpp"
@@ -52,14 +53,15 @@ void _take_screenshot()
     char buf[len + 1];
     std::strftime(buf, len, "%Y%m%d%H%M", now_tm);
 
-    auto filepath =
-        filesystem::dirs::screenshot() / (playerid + "-" + buf + ".png");
+    auto filepath = filesystem::dirs::screenshot() /
+        fs::u8path(playerid + "-" + buf + ".png");
     for (int i = 2;; ++i)
     {
         if (fs::exists(filepath))
         {
             filepath = filesystem::dirs::screenshot() /
-                (playerid + "-" + buf + "-" + std::to_string(i) + ".png");
+                fs::u8path(playerid + "-" + buf + "-" + std::to_string(i) +
+                           ".png");
         }
         else
         {
@@ -71,7 +73,7 @@ void _take_screenshot()
     ss.save(filepath);
     txt(i18n::s.get("core.action.take_screenshot"));
     Message::instance().linebreak();
-    txt(filepathutil::to_utf8_path(filepath));
+    txt(filepath.to_u8string());
     snd("core.screenshot");
 }
 
@@ -111,7 +113,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         find_enemy_target(cdata.player(), true);
     }
 
-    if (game_data.wizard)
+    if (debug_is_wizard())
     {
         if (action == "wizard_mewmewmew")
         {
@@ -228,48 +230,48 @@ optional<TurnResult> handle_pc_action(std::string& action)
             action = "search";
         }
         p = 0;
-        for (const auto& item : inv.ground())
+        for (const auto& item : g_inv.ground())
         {
-            if (item.position != cdata.player().position)
+            if (item->pos() != cdata.player().position)
                 continue;
-            if (the_item_db[itemid2int(item.id)]->category ==
+            if (the_item_db[itemid2int(item->id)]->category ==
                 ItemCategory::chest)
             {
                 p = 1;
             }
-            if (the_item_db[itemid2int(item.id)]->subcategory == 60001)
+            if (the_item_db[itemid2int(item->id)]->subcategory == 60001)
             {
                 p = 2;
             }
-            if (the_item_db[itemid2int(item.id)]->category ==
+            if (the_item_db[itemid2int(item->id)]->category ==
                 ItemCategory::altar)
             {
                 p = 3;
             }
-            if (item.function != 0 ||
-                the_item_db[itemid2int(item.id)]->is_usable)
+            if (item->function != 0 ||
+                the_item_db[itemid2int(item->id)]->is_usable)
             {
                 p = 4;
             }
-            if (the_item_db[itemid2int(item.id)]->is_readable)
+            if (the_item_db[itemid2int(item->id)]->is_readable)
             {
                 p = 5;
             }
-            if (item.id == ItemId::moon_gate)
+            if (item->id == ItemId::moon_gate)
             {
                 action = "go_down";
             }
-            if (item.id == ItemId::upstairs &&
+            if (item->id == ItemId::upstairs &&
                 game_data.current_map == mdata_t::MapId::your_home)
             {
                 action = "go_up";
             }
-            if (item.id == ItemId::downstairs &&
+            if (item->id == ItemId::downstairs &&
                 game_data.current_map == mdata_t::MapId::your_home)
             {
                 action = "go_down";
             }
-            if (item.id == ItemId::kotatsu)
+            if (item->id == ItemId::kotatsu)
             {
                 action = "go_down";
             }

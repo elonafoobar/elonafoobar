@@ -6,6 +6,8 @@ local Internal = ELONA.require("core.Internal")
 local Item = ELONA.require("core.Item")
 local table = table
 
+local common = require("../common.lua")
+
 local function give_wife(raphael, wife)
    if not table.contains(wife.prototype.tags, "man") then
       raphael:apply_ailment("insane", 1000)
@@ -48,7 +50,7 @@ return {
       },
       quest_yes = {
          text = {
-            GUI.show_journal_update_message,
+            common.journal_updated,
             {"quest.yes"},
          },
          on_finish = function()

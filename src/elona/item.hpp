@@ -2,6 +2,7 @@
 
 #include <bitset>
 #include <memory>
+#include <variant>
 #include <vector>
 
 #include "../util/range.hpp"
@@ -10,18 +11,12 @@
 #include "enums.hpp"
 #include "eobject/eobject.hpp"
 #include "position.hpp"
-#include "serialization/macros.hpp"
 #include "shared_id.hpp"
 
-
-#define ELONA_OTHER_INVENTORIES_INDEX 1320
-#define ELONA_ITEM_ON_GROUND_INDEX 5080
-#define ELONA_MAX_ITEMS 5480
 
 
 namespace elona
 {
-
 
 struct Enchantment
 {
@@ -39,12 +34,8 @@ struct Enchantment
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Enchantment");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, id);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, power);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(id);
+        ar(power);
         /* clang-format on */
     }
 };
@@ -52,6 +43,14 @@ struct Enchantment
 
 
 struct Inventory;
+
+
+
+struct InventorySlot
+{
+    Inventory* inventory;
+    size_t index;
+};
 
 
 
@@ -79,10 +78,14 @@ public:
         return _index;
     }
 
+    int global_index() const noexcept;
+
     Inventory* inventory() const noexcept
     {
         return _inventory;
     }
+
+    InventorySlot inventory_slot() const noexcept;
 
     ObjId obj_id;
 
@@ -94,7 +97,21 @@ public:
     int image = 0;
     ItemId id = ItemId::none;
     Quality quality = Quality::none;
-    Position position;
+
+private:
+    Position _pos;
+
+public:
+    const Position& pos() const noexcept
+    {
+        return _pos;
+    }
+
+
+    void set_pos(const Position& new_pos);
+
+
+
     int weight = 0;
     IdentifyState identify_state = IdentifyState::unidentified;
     int count = 0;
@@ -151,6 +168,10 @@ public:
     {
         return *the_item_db.get_id_from_legacy(itemid2int(this->id));
     }
+
+
+    void on_create();
+    void on_remove();
 
 
 #define ELONA_ITEM_DEFINE_FLAG_ACCESSOR(name, n) \
@@ -219,43 +240,39 @@ public:
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Item");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, obj_id);
-        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "number", number_);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, value);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, image);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, id);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, quality);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, position);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, weight);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, identify_state);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, count);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dice_x);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dice_y);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, damage_bonus);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, hit_bonus);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dv);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, pv);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, skill);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, curse_state);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, body_part);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, function);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, enhancement);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, own_state);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, color);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, subname);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, material);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param1);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param2);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param3);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param4);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, difficulty_of_identification);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, turn);
-        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "flags", _flags);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, enchantments);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(obj_id);
+        ar(number_);
+        ar(value);
+        ar(image);
+        ar(id);
+        ar(quality);
+        ar(_pos);
+        ar(weight);
+        ar(identify_state);
+        ar(count);
+        ar(dice_x);
+        ar(dice_y);
+        ar(damage_bonus);
+        ar(hit_bonus);
+        ar(dv);
+        ar(pv);
+        ar(skill);
+        ar(curse_state);
+        ar(body_part);
+        ar(function);
+        ar(enhancement);
+        ar(own_state);
+        ar(color);
+        ar(subname);
+        ar(material);
+        ar(param1);
+        ar(param2);
+        ar(param3);
+        ar(param4);
+        ar(difficulty_of_identification);
+        ar(turn);
+        ar(_flags);
+        ar(enchantments);
         /* clang-format on */
     }
 };
@@ -269,23 +286,26 @@ struct Character;
 struct Inventory
 {
 public:
-    using storage_type = std::vector<Item>;
+    using storage_type = std::vector<OptionalItemRef>;
 
 
-    Inventory(size_t index_start, size_t inventory_size, int inventory_id);
-    Inventory(Inventory&&);
 
-    bool contains(size_t index) const;
-    Item& at(size_t index);
+    Inventory(size_t inventory_size, int inventory_id);
+
+
+    const OptionalItemRef& at(size_t index)
+    {
+        return _storage.at(index);
+    }
+
+    void remove(size_t index)
+    {
+        _storage.at(index) = nullptr;
+    }
+
 
     bool has_free_slot() const;
-    optional_ref<Item> get_free_slot();
-
-
-    size_t index_start() const noexcept
-    {
-        return _index_start;
-    }
+    optional<InventorySlot> get_free_slot();
 
 
     size_t size() const noexcept
@@ -294,38 +314,60 @@ public:
     }
 
 
+    void clear();
 
-    template <typename Itr>
-    struct iterator_base
+
+
+    /**
+     * Exchange item @a a and @a b.
+     * If they points to the same object, does nothing. For example, assume that
+     * @a a is an apinut owned by you and @a b is a fake gold bar owned by an
+     * NPC. After calling the function, @a a is owned by the NPC and @a b is
+     * owned by you. NOTE: The content of each reference continues to refer to
+     * the same object before the call.
+     *
+     * @param a one item
+     * @param b the other item
+     */
+    static void exchange(const ItemRef& a, const ItemRef& b);
+
+
+    static const OptionalItemRef& at(const InventorySlot& slot);
+
+    static ItemRef create(const InventorySlot& slot);
+
+
+    /**
+     * Move all items in @a source to @a destination.
+     */
+    static void move_all(Inventory& source, Inventory& destination);
+
+
+
+    struct const_iterator
     {
-    public:
-        iterator_base(Itr itr, Itr end)
-            : _itr(itr)
-            , _end(end)
-        {
-            skip_over_null_elements();
-        }
+        friend Inventory;
 
 
-        bool operator==(const iterator_base& other) const
+        bool operator==(const const_iterator& other) const
         {
             return _itr == other._itr;
         }
 
 
-        bool operator!=(const iterator_base& other) const
+        bool operator!=(const const_iterator& other) const
         {
             return !(*this == other);
         }
 
 
-        auto& operator*() const
+        decltype(auto) operator*() const
         {
-            return *_itr;
+            return _itr->unwrap();
         }
 
 
-        iterator_base& operator++()
+        const_iterator& operator++()
         {
             ++_itr;
             skip_over_null_elements();
@@ -335,34 +377,29 @@ public:
 
 
     private:
-        Itr _itr;
-        Itr _end;
+        storage_type::const_iterator _itr;
+        storage_type::const_iterator _end;
+
+
+        const_iterator(
+            storage_type::const_iterator itr,
+            storage_type::const_iterator end)
+            : _itr(itr)
+            , _end(end)
+        {
+            skip_over_null_elements();
+        }
 
 
         void skip_over_null_elements()
         {
-            while (_itr != _end && _itr->number() == 0)
+            while (_itr != _end && _itr->is_null())
             {
                 ++_itr;
             }
         }
     };
 
-
-    using iterator = iterator_base<storage_type::iterator>;
-    using const_iterator = iterator_base<storage_type::const_iterator>;
-
-
-
-    iterator begin()
-    {
-        return iterator(_storage.begin(), _storage.end());
-    }
-
-    iterator end()
-    {
-        return iterator(_storage.end(), _storage.end());
-    }
 
 
     const_iterator begin() const
@@ -394,11 +431,20 @@ public:
     }
 
 
+    optional<int> capacity() const noexcept
+    {
+        return _capacity;
+    }
+
+
+    void set_capacity(optional<size_t> new_capacity);
+
+
 
 private:
-    size_t _index_start;
     storage_type _storage;
     int _inventory_id;
+    optional<size_t> _capacity;
 };
 
 
@@ -416,11 +462,12 @@ public:
     AllInventory();
 
 
-    Item& operator[](int index);
+    ItemRef operator[](int index);
 
 
     Inventory& pc();
     Inventory& ground();
+    Inventory& tmp();
     Inventory& for_chara(const Character& chara);
     Inventory& by_index(int index);
 
@@ -436,39 +483,34 @@ private:
 
 
 
-extern AllInventory inv;
+extern AllInventory g_inv;
 
 
 
-IdentifyState item_identify(Item& item, IdentifyState level);
-IdentifyState item_identify(Item& item, int power);
+IdentifyState item_identify(const ItemRef& item, IdentifyState level);
+IdentifyState item_identify(const ItemRef& item, int power);
 
-std::vector<std::reference_wrapper<Item>> itemlist(int owner, int id);
-
-void item_checkknown(Item& item);
-Item& inv_compress(int owner);
+void item_checkknown(const ItemRef& item);
 
 /**
- * Copy @a src to @a dst.
- * @param src the source
- * @param dst the destination
+ * TODO
  */
-void item_copy(Item& src, Item& dst);
-
-void item_acid(const Character& owner, optional_ref<Item> item = none);
+ItemRef
+item_separate(const ItemRef& item, const InventorySlot& slot, int number);
 
 /**
- * Swap the content of @a a and @a b. If they points to the same object, does
- * nothing.
- * @param a one item
- * @param b another item
+ * TODO
  */
-void item_exchange(Item& a, Item& b);
+ItemRef item_copy(const ItemRef& item, const InventorySlot& slot);
 
-void itemturn(Item& item);
-optional_ref<Item>
-itemfind(int inventory_id, int matcher, int matcher_type = 0);
-int itemusingfind(const Item& item, bool disallow_pc = false);
+void item_acid(const Character& owner, OptionalItemRef item = nullptr);
+
+void itemturn(const ItemRef& item);
+
+OptionalItemRef itemfind(Inventory& inv, ItemId id);
+OptionalItemRef itemfind(Inventory& inv, int subcategory);
+
+int itemusingfind(const ItemRef& item, bool disallow_pc = false);
 
 enum class ItemFindLocation
 {
@@ -476,51 +518,145 @@ enum class ItemFindLocation
     ground,
     player_inventory_and_ground,
 };
-optional_ref<Item> item_find(
-    int matcher,
-    int matcher_type = 0,
+
+/**
+ * Tries to find an item in the player's inventory, the ground, or both. Returns
+ * the item's reference or none if not found.
+ */
+OptionalItemRef item_find(
+    ItemId id,
+    ItemFindLocation = ItemFindLocation::player_inventory_and_ground);
+OptionalItemRef item_find(
+    ItemCategory category,
     ItemFindLocation = ItemFindLocation::player_inventory_and_ground);
 
 /**
  * Separate @a item's stack.
  * @param item the item to separate
  */
-Item& item_separate(Item& stacked_item);
+ItemRef item_separate(const ItemRef& stacked_item);
 
-struct ItemStackResult
-{
-    // If `stacked` is false, `stacked_item` is set to `base_item`.
-    bool stacked;
-    Item& stacked_item;
-};
-ItemStackResult
-item_stack(int inventory_id, Item& base_item, bool show_message = false);
+void item_dump_desc(const ItemRef&);
 
-void item_dump_desc(Item&);
-
-bool item_fire(int owner, optional_ref<Item> burned_item = none);
+bool item_fire(Inventory& inv, const OptionalItemRef& burned_item = nullptr);
 void mapitem_fire(optional_ref<Character> arsonist, int x, int y);
-bool item_cold(int owner, optional_ref<Item> destroyed_item = none);
+bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item = nullptr);
 void mapitem_cold(int x, int y);
 
-// TODO unsure how these are separate from item
-bool inv_find(ItemId id, int owner);
-Item& get_random_inv(int owner);
-
-optional_ref<Item> inv_get_free_slot(int inventory_id);
-
-int inv_getowner(const Item& item);
-int inv_sum(int = 0);
-int inv_weight(int = 0);
-bool inv_getspace(int);
-
-Item& inv_get_free_slot_force(int inventory_id);
-
-void remain_make(Item& remain, const Character& chara);
 
 
-void item_drop(Item& item_in_inventory, int num, bool building_shelter = false);
-void item_build_shelter(Item& shelter);
+/**
+ * Represents item owner. It is one of the following:
+ * - Character
+ * - Map
+ * - Temporary
+ */
+struct ItemOwner
+{
+    static ItemOwner character(elona::Character& chara) noexcept
+    {
+        return ItemOwner{Character{chara}};
+    }
+
+
+    static ItemOwner map() noexcept
+    {
+        return ItemOwner{Map{}};
+    }
+
+
+    static ItemOwner temporary() noexcept
+    {
+        return ItemOwner{Temporary{}};
+    }
+
+
+
+    bool is_character() const noexcept
+    {
+        return std::holds_alternative<Character>(_inner);
+    }
+
+
+    bool is_map() const noexcept
+    {
+        return std::holds_alternative<Map>(_inner);
+    }
+
+
+    bool is_temporary() const noexcept
+    {
+        return std::holds_alternative<Temporary>(_inner);
+    }
+
+
+    optional_ref<elona::Character> as_character()
+    {
+        if (const auto c = std::get_if<Character>(&_inner))
+        {
+            return c->chara;
+        }
+        else
+        {
+            return none;
+        }
+    }
+
+
+
+private:
+    struct Character
+    {
+        elona::Character& chara;
+    };
+
+    struct Map
+    {
+    };
+
+    struct Temporary
+    {
+    };
+
+
+    std::variant<Character, Map, Temporary> _inner;
+
+
+
+    ItemOwner(const std::variant<Character, Map, Temporary>& owner)
+        : _inner(owner)
+    {
+    }
+};
+
+
+/**
+ * Get an owner of @a item.
+ *
+ * @param item The item to query.
+ * @return @a item's owner.
+ */
+ItemOwner item_get_owner(const ItemRef& item);
+
+
+/**
+ * Returns if @a item is on ground.
+ *
+ * @param item The item to query.
+ * @return True if @a item is on ground; otherwise false
+ */
+bool item_is_on_ground(const ItemRef& item);
+
+
+
+void remain_make(const ItemRef& remain, const Character& chara);
+
+
+void item_drop(
+    const ItemRef& item_in_inventory,
+    int num,
+    bool building_shelter = false);
+void item_build_shelter(const ItemRef& shelter);
 
 
 enum class ItemDescriptionType : int
@@ -540,36 +676,39 @@ enum class ItemDescriptionType : int
     small_font_italic = -2,
 };
 
-size_t item_load_desc(const Item& item);
+size_t item_load_desc(const ItemRef& item);
 
 
-int iequiploc(const Item& item);
+int iequiploc(const ItemRef& item);
 
-void item_db_set_basic_stats(Item& item, int legacy_id);
-void item_db_get_description(Item& item, int legacy_id);
-void item_db_get_charge_level(const Item& item, int legacy_id);
-void item_db_set_full_stats(Item& item, int legacy_id);
-void item_db_on_read(Character& reader, Item& item, int legacy_id);
-void item_db_on_zap(Item& item, int legacy_id);
-void item_db_on_drink(Character& chara, optional_ref<Item> item, int legacy_id);
+void item_db_set_basic_stats(const ItemRef& item, int legacy_id);
+void item_db_get_description(const ItemRef& item, int legacy_id);
+void item_db_get_charge_level(const ItemRef& item, int legacy_id);
+void item_db_set_full_stats(const ItemRef& item, int legacy_id);
+void item_db_on_read(Character& reader, const ItemRef& item, int legacy_id);
+void item_db_on_zap(const ItemRef& item, int legacy_id);
+void item_db_on_drink(
+    Character& chara,
+    const OptionalItemRef& item,
+    int legacy_id);
 
 
-std::vector<int> item_get_inheritance(const Item& item);
+std::vector<int> item_get_inheritance(const ItemRef& item);
 
 
 void auto_identify();
 void begintempinv();
 void exittempinv();
-bool cargocheck(const Item& item);
-Item& item_convert_artifact(
-    Item& artifact,
-    bool ignore_external_container = false);
+bool cargocheck(const ItemRef& item);
+ItemRef item_convert_artifact(
+    const ItemRef& artifact,
+    bool ignore_map_inventory = false);
 void damage_by_cursed_equipments(Character& chara);
-void dipcursed(Item& item);
+void dipcursed(const ItemRef& item);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 void equip_melee_weapon(Character& chara);
-std::pair<int, int> inv_getheader(int);
-optional_ref<Item> mapitemfind(const Position& pos, ItemId id);
-std::string itemname(Item& item, int number = 0, bool with_article = true);
+OptionalItemRef mapitemfind(const Position& pos, ItemId id);
+std::string
+itemname(const ItemRef& item, int number = 0, bool with_article = true);
 
 } // namespace elona

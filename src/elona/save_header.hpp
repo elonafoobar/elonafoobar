@@ -1,7 +1,6 @@
 #pragma once
 
 #include "filesystem.hpp"
-#include "serialization/macros.hpp"
 
 
 
@@ -59,10 +58,6 @@ struct SaveHeader
     /// The location where you are. Note that it is not a map ID.
     std::string location;
 
-    /// The flag whether Wizard mode is on.
-    /// @ref SaveHeader::Format::foobar only
-    bool is_wizard;
-
     /// In-game current time.
     /// @ref SaveHeader::Format::foobar only
     std::string ingame_time;
@@ -93,30 +88,6 @@ struct SaveHeader
      * @return The lines of text.
      */
     std::vector<std::string> to_string() const;
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "SaveHeader");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, version);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, name);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, alias);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, level);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, race);
-        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "class", class_);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, location);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, is_wizard);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, ingame_time);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, last_played_at);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, play_seconds);
-
-        ELONA_SERIALIZATION_STRUCT_END();
-        /* clang-format on */
-    }
 
 
 

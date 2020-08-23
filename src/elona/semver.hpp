@@ -10,7 +10,6 @@
 #include "../util/either.hpp"
 #include "../util/range.hpp"
 #include "../util/strutil.hpp"
-#include "serialization/macros.hpp"
 
 // A GNU system header defines these two macro named "major" and "minor". To
 // avoid breackage of semver::Version's fields, save and undefine the two here.
@@ -157,13 +156,9 @@ struct Version
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Version");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, major);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, minor);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, patch);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(major);
+        ar(minor);
+        ar(patch);
         /* clang-format on */
     }
 

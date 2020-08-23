@@ -86,7 +86,7 @@ return {
       reward_pick = {
          text = {
             {"reward.dialog"},
-            Internal.strange_scientist_pick_reward,
+            function() Internal.strange_scientist_pick_reward() end,
             {"reward.find"},
          },
       },

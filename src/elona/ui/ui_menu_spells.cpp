@@ -3,6 +3,7 @@
 #include "../ability.hpp"
 #include "../audio.hpp"
 #include "../calc.hpp"
+#include "../data/types/type_ability.hpp"
 #include "../i18n.hpp"
 #include "../keybind/keybind.hpp"
 #include "../menu.hpp"
@@ -157,7 +158,7 @@ void UIMenuSpells::_draw_spell_power(int cnt, int spell_id)
         strutil::take_by_width(make_spell_description(spell_id), 40);
     mes(wx + 340,
         wy + 66 + cnt * 19 + 2,
-        ""s + sdata(spell_id, cdata.player().index) + u8"/"s +
+        ""s + cdata.player().get_skill(spell_id).level + u8"/"s +
             calc_spell_success_rate(cdata.player(), spell_id) + u8"%"s);
     mes(wx + 420, wy + 66 + cnt * 19 + 2, spell_power);
 }

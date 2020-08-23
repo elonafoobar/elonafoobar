@@ -15,6 +15,7 @@
 #include "food.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "magic.hpp"
@@ -98,14 +99,14 @@ optional<RandomEvent> generate_random_event_in_sleep()
     }
     if (rnd(250) == 0)
     {
-        if (inv_get_free_slot(0))
+        if (g_inv.pc().has_free_slot())
         {
             id = 19;
         }
     }
     if (rnd(10000) == 0)
     {
-        if (inv_get_free_slot(0))
+        if (g_inv.pc().has_free_slot())
         {
             id = 21;
         }
@@ -252,7 +253,7 @@ void run_random_event(RandomEvent event)
 
     listmax = 0;
 
-    if (event.is_evadable(sdata(19, 0)))
+    if (event.is_evadable(cdata.player().get_skill(19).level))
     {
         // Default to "Avoiding Misfortune" if Luck is good enough.
         event.id = 1;
@@ -344,7 +345,8 @@ void run_random_event(RandomEvent event)
         flt();
         if (const auto item = itemcreate_player_inv(621, 0))
         {
-            txt(i18n::s.get("core.common.you_put_in_your_backpack", *item));
+            txt(i18n::s.get(
+                "core.common.you_put_in_your_backpack", item.unwrap()));
         }
         listmax = 1;
         event_bg = u8"bg_re15";
@@ -358,7 +360,8 @@ void run_random_event(RandomEvent event)
         flt();
         if (const auto item = itemcreate_player_inv(721, 0))
         {
-            txt(i18n::s.get("core.common.you_put_in_your_backpack", *item));
+            txt(i18n::s.get(
+                "core.common.you_put_in_your_backpack", item.unwrap()));
         }
         listmax = 1;
         event_bg = u8"bg_re15";
@@ -496,7 +499,7 @@ void run_random_event(RandomEvent event)
             {
                 flt();
                 flttypemajor = choice(fsetremain);
-                itemcreate_extra_inv(0, cdata.player().position, 0);
+                itemcreate_map_inv(0, cdata.player().position, 0);
             }
             txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }
@@ -517,7 +520,7 @@ void run_random_event(RandomEvent event)
                 {
                     flttypemajor = choice(fsetremain);
                 }
-                itemcreate_extra_inv(0, cdata.player().position, 0);
+                itemcreate_map_inv(0, cdata.player().position, 0);
             }
             txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }

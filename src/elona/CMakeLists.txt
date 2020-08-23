@@ -53,11 +53,11 @@ set(ELONA_SOURCES
   initialize_map_types.cpp
   input.cpp
   input_prompt.cpp
+  inventory.cpp
   item.cpp
   item_db.cpp
   item_load_desc.cpp
   item_material.cpp
-  item_ref.cpp
   itemgen.cpp
   loading_screen.cpp
   log.cpp
@@ -83,6 +83,7 @@ set(ELONA_SOURCES
   random_event.cpp
   randomgen.cpp
   save.cpp
+  save_fs.cpp
   save_header.cpp
   save_update.cpp
   scene.cpp
@@ -109,6 +110,9 @@ set(ELONA_SOURCES
   data/init.cpp
   data/types.cpp
   data/util.cpp
+
+  eobject/internal/memory_cell.cpp
+  eobject/pool.cpp
 
   lua_env/api_manager.cpp
   lua_env/config_manager.cpp

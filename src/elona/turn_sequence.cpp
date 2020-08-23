@@ -11,7 +11,6 @@
 #include "character_status.hpp"
 #include "command.hpp"
 #include "config.hpp"
-#include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "death.hpp"
 #include "debug.hpp"
@@ -25,6 +24,7 @@
 #include "init.hpp"
 #include "initialize_map.hpp"
 #include "input.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "keybind/input_context.hpp"
 #include "lua_env/event_manager.hpp"
@@ -147,7 +147,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     {
         if (rnd(4) == 0)
         {
-            if (chara.index < 16)
+            if (chara.is_player_or_ally())
             {
                 chara.hate = 0;
                 chara.enemy_id = 0;
@@ -157,7 +157,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
                 if (rnd(2))
                 {
                     txt(i18n::s.get("core.action.npc.leash.dialog"));
-                    hostileaction(0, chara.index);
+                    chara_act_hostile_action(cdata.player(), chara);
                 }
                 if (rnd(4) == 0)
                 {
@@ -324,7 +324,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     {
         if (chara.index != game_data.fire_giant)
         {
-            if (chara.index >= 16)
+            if (!chara.is_player_or_ally())
             {
                 if (game_data.released_fire_giant != 0)
                 {
@@ -389,11 +389,11 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
                 {
                     if (chara.hate <= 0)
                     {
-                        chara_custom_talk(chara.index, 100);
+                        chara_custom_talk(chara, 100);
                     }
                     if (chara.hate > 0)
                     {
-                        chara_custom_talk(chara.index, 101);
+                        chara_custom_talk(chara, 101);
                     }
                 }
             }
@@ -405,11 +405,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     {
         if (cdata.player().choked)
         {
-            if (dist(
-                    cdata.player().position.x,
-                    cdata.player().position.y,
-                    chara.position.x,
-                    chara.position.y) == 1)
+            if (dist(cdata.player().position, chara.position) == 1)
             {
                 x = cdata.player().position.x;
                 y = cdata.player().position.y;
@@ -448,18 +444,18 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
         return none;
     }
 
-    auto& ai_item = *chara.ai_item;
-    if (ai_item.number() == 0)
+    const auto ai_item = chara.ai_item.unwrap();
+    if (ai_item->number() == 0)
     {
-        chara.ai_item = ItemRef::null();
+        chara.ai_item = nullptr;
         return none;
     }
     if (chara.relationship != 0)
     {
-        chara.ai_item = ItemRef::null();
+        chara.ai_item = nullptr;
     }
 
-    const auto category = the_item_db[itemid2int(ai_item.id)]->category;
+    const auto category = the_item_db[itemid2int(ai_item->id)]->category;
     if (category == ItemCategory::food)
     {
         if (chara.relationship != 10 || chara.nutrition <= 6000)
@@ -476,7 +472,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
         return do_read_command(chara, ai_item);
     }
 
-    chara.ai_item = ItemRef::null();
+    chara.ai_item = nullptr;
 
     return none;
 }
@@ -487,11 +483,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
 {
     if (chara.hate > 0 || chara.relationship == 10)
     {
-        distance = dist(
-            cdata[enemy_index].position.x,
-            cdata[enemy_index].position.y,
-            chara.position.x,
-            chara.position.y);
+        distance = dist(cdata[enemy_index].position, chara.position);
         if (chara.blind != 0)
         {
             if (rnd(10) > 2)
@@ -519,7 +511,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                         if (item_opt->own_state <= 0 &&
                             !is_cursed(item_opt->curse_state))
                         {
-                            return do_eat_command(chara, *item_opt);
+                            return do_eat_command(chara, item_opt.unwrap());
                         }
                     }
                     if (category == ItemCategory::well)
@@ -528,7 +520,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                             item_opt->param1 >= -5 && item_opt->param3 < 20 &&
                             item_opt->id != ItemId::holy_well)
                         {
-                            return do_drink_command(chara, *item_opt);
+                            return do_drink_command(chara, item_opt.unwrap());
                         }
                     }
                 }
@@ -541,8 +533,11 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                         in = item_opt->number();
                         if (game_data.mount != chara.index)
                         {
-                            int stat =
-                                pick_up_item(chara.index, *item_opt, none).type;
+                            int stat = pick_up_item(
+                                           g_inv.for_chara(chara),
+                                           item_opt.unwrap(),
+                                           none)
+                                           .type;
                             if (stat == 1)
                             {
                                 return TurnResult::turn_end;
@@ -1023,11 +1018,7 @@ TurnResult pass_one_turn(bool time_passing)
                 {
                     continue;
                 }
-                if (dist(
-                        cdata[ct].position.x,
-                        cdata[ct].position.y,
-                        cnt.position.x,
-                        cnt.position.y) > 5)
+                if (dist(cdata[ct].position, cnt.position) > 5)
                 {
                     continue;
                 }
@@ -1051,7 +1042,7 @@ TurnResult pass_one_turn(bool time_passing)
                 }
                 if (rnd(4) == 0)
                 {
-                    if (cnt.index != 0)
+                    if (!cnt.is_player())
                     {
                         if (is_in_fov(cdata[ct]) || is_in_fov(cnt))
                         {
@@ -1137,7 +1128,7 @@ void update_emoicon(Character& chara)
     }
     while (chara.experience >= chara.required_experience)
     {
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             snd("core.ding1");
             input_halt_input(HaltInput::alert);
@@ -1164,7 +1155,7 @@ TurnResult turn_end()
             {
                 game_data.character_and_status_for_gene += 10000;
                 game_data.activity_about_to_start = 100;
-                activity_others(cdata[ct], none);
+                activity_others(cdata[ct], nullptr);
             }
         }
         if (cdata.player().inventory_weight_type >= 3)
@@ -1395,11 +1386,11 @@ optional<TurnResult> pc_turn_advance_time()
     }
     if (trait(210) != 0 && rnd(5) == 0)
     {
-        auto&& item = get_random_inv(0);
-        if (item.number() > 0 &&
-            the_item_db[itemid2int(item.id)]->category == ItemCategory::potion)
+        const auto item = Inventory::at(inv_get_random_slot(g_inv.pc()));
+        if (item &&
+            the_item_db[itemid2int(item->id)]->category == ItemCategory::potion)
         {
-            item_db_on_drink(cdata.player(), item, itemid2int(item.id));
+            item_db_on_drink(cdata.player(), item, itemid2int(item->id));
         }
     }
     if (trait(214) != 0 && rnd(250) == 0 &&
@@ -1432,7 +1423,7 @@ TurnResult pc_turn(bool advance_time)
 
     while (true)
     {
-        if (game_data.wizard)
+        if (debug_is_wizard())
         {
             InputContext::instance().enable_category(ActionCategory::wizard);
         }
@@ -1516,7 +1507,7 @@ void proc_turn_end(Character& chara)
     }
     if (chara.poisoned > 0)
     {
-        damage_hp(chara, rnd_capped(2 + sdata(11, chara.index) / 10), -4);
+        damage_hp(chara, rnd_capped(2 + chara.get_skill(11).level / 10), -4);
         status_ailment_heal(chara, StatusAilment::poisoned, 1);
         if (chara.poisoned > 0)
         {
@@ -1572,7 +1563,7 @@ void proc_turn_end(Character& chara)
             if (!enchantment_find(chara, 60010 + p))
             {
                 chara.attr_adjs[p] -=
-                    sdata.get(10 + p, chara.index).original_level / 25 + 1;
+                    chara.get_skill(10 + p).base_level / 25 + 1;
                 chara_refresh(chara);
             }
         }
@@ -1580,7 +1571,7 @@ void proc_turn_end(Character& chara)
         {
             regen = 0;
         }
-        if (chara.index >= 16)
+        if (!chara.is_player_or_ally())
         {
             if (chara.quality >= Quality::miracle)
             {
@@ -1693,7 +1684,7 @@ void proc_turn_end(Character& chara)
             chara.emotion_icon = 124;
         }
     }
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         if (chara.nutrition < 2000)
         {
@@ -1716,7 +1707,7 @@ void proc_turn_end(Character& chara)
         }
         if (game_data.continuous_active_hours >= 30)
         {
-            if (debug::voldemort)
+            if (debug_has_wizard_flag("core.wizard.no_sleepy"))
             {
                 game_data.continuous_active_hours = 0;
             }
@@ -1752,7 +1743,7 @@ void proc_turn_end(Character& chara)
     }
     if (game_data.executing_immediate_quest_type == 1009)
     {
-        if (chara.index >= 57)
+        if (chara.is_map_local())
         {
             if (chara.impression >= 53)
             {
@@ -1764,11 +1755,11 @@ void proc_turn_end(Character& chara)
     {
         if (rnd(6) == 0)
         {
-            heal_hp(chara, rnd_capped(sdata(154, chara.index) / 3 + 1) + 1);
+            heal_hp(chara, rnd_capped(chara.get_skill(154).level / 3 + 1) + 1);
         }
         if (rnd(5) == 0)
         {
-            heal_mp(chara, rnd_capped(sdata(155, chara.index) / 2 + 1) + 1);
+            heal_mp(chara, rnd_capped(chara.get_skill(155).level / 2 + 1) + 1);
         }
     }
 }

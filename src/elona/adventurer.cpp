@@ -6,9 +6,11 @@
 #include "area.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
 #include "equipment.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
@@ -21,6 +23,35 @@
 
 namespace elona
 {
+
+namespace
+{
+
+void add_news_entry(std::string news_content, bool show_message)
+{
+    if (show_message)
+    {
+        txt(u8"[News] "s + news_content,
+            Message::color{ColorIndex::light_brown});
+    }
+    talk_conv(news_content, 38 - en * 5);
+    newsbuff += news_content + u8"\n"s;
+}
+
+
+
+void add_news_topic(const std::string& mark, const std::string& news_content)
+{
+    const auto date = std::to_string(game_data.date.year) + "/" +
+        std::to_string(game_data.date.month) + "/" +
+        std::to_string(game_data.date.day) + " h" +
+        std::to_string(game_data.date.hour);
+    add_news_entry(mark + " " + date + " " + news_content, false);
+}
+
+} // namespace
+
+
 
 int i_at_m145 = 0;
 
@@ -80,118 +111,91 @@ void create_adventurer(Character& adv)
 
 
 
-int advfavoriteskill(int seed)
+int adventurer_favorite_skill(const Character& adv)
 {
+    const auto seed = adv.index;
     randomize(seed);
-    rtval = 0;
-    i_at_m145 = 0;
-    while (1)
+    std::vector<int> skills;
+    while (skills.size() < 2)
     {
-        rtval(i_at_m145) = rnd(300) + 100;
-        if (!the_ability_db[rtval(i_at_m145)])
+        const auto skill_id = rnd(300) + 100;
+        if (the_ability_db[skill_id])
         {
-            continue;
-        }
-        ++i_at_m145;
-        if (i_at_m145 >= 2)
-        {
-            break;
+            skills.push_back(skill_id);
         }
     }
     randomize();
-    return i_at_m145;
+    return choice(skills);
 }
 
 
 
-int advfavoritestat(int seed)
+int adventurer_favorite_stat(const Character& adv)
 {
+    const auto seed = adv.index;
     randomize(seed);
-    i_at_m145 = rnd(8) + 10;
+    const auto ret = rnd(8) + 10;
     randomize();
-    return i_at_m145;
+    return ret;
 }
 
 
 
-void addnews2(const std::string& news_content, int show_message)
-{
-    std::string n_at_m36 = news_content;
-    if (show_message)
-    {
-        txt(u8"[News] "s + n_at_m36, Message::color{ColorIndex::light_brown});
-    }
-    talk_conv(n_at_m36, 38 - en * 5);
-    newsbuff += n_at_m36 + u8"\n"s;
-}
-
-
-
-void addnewstopic(const std::string& mark, const std::string& news_content)
-{
-    addnews2(
-        mark + u8" "s + game_data.date.year + u8"/"s + game_data.date.month +
-        u8"/"s + game_data.date.day + u8" h"s + game_data.date.hour + ""s +
-        u8" "s + news_content);
-}
-
-
-
-void addnews(int news_type, int adventurer, int fame, const std::string& valn)
+void adventurer_add_news(
+    NewsType news_type,
+    const Character& adventurer,
+    const std::string& extra_info)
 {
     switch (news_type)
     {
-    case 0: addnews2(valn); break;
-    case 1:
-        addnewstopic(u8"@01"s, i18n::s.get("core.news.discovery.title"));
-        addnews2(
+    case NewsType::discovery:
+        add_news_topic(u8"@01"s, i18n::s.get("core.news.discovery.title"));
+        add_news_entry(
             i18n::s.get(
                 "core.news.discovery.text",
-                cdata[adventurer].alias,
-                cdata[adventurer].name,
-                valn,
-                mapname(cdata[adventurer].current_map)),
-            1);
+                adventurer.alias,
+                adventurer.name,
+                extra_info /* discovered artifact */,
+                mapname(adventurer.current_map)),
+            true);
         break;
-    case 2:
-        addnewstopic(u8"@02"s, i18n::s.get("core.news.growth.title"));
-        addnews2(
+    case NewsType::growth:
+        add_news_topic(u8"@02"s, i18n::s.get("core.news.growth.title"));
+        add_news_entry(
             i18n::s.get(
                 "core.news.growth.text",
-                cdata[adventurer].alias,
-                cdata[adventurer].name,
-                cdata[adventurer].level),
-            1);
+                adventurer.alias,
+                adventurer.name,
+                adventurer.level),
+            true);
         break;
-    case 3:
-        addnewstopic(u8"@02"s, i18n::s.get("core.news.recovery.title"));
-        addnews2(
+    case NewsType::recovery:
+        add_news_topic(u8"@02"s, i18n::s.get("core.news.recovery.title"));
+        add_news_entry(
             i18n::s.get(
-                "core.news.recovery.text",
-                cdata[adventurer].alias,
-                cdata[adventurer].name),
-            1);
+                "core.news.recovery.text", adventurer.alias, adventurer.name),
+            true);
         break;
-    case 4:
-        addnewstopic(u8"@03"s, i18n::s.get("core.news.accomplishment.title"));
-        addnews2(
+    case NewsType::accomplishment:
+        add_news_topic(u8"@03"s, i18n::s.get("core.news.accomplishment.title"));
+        add_news_entry(
             i18n::s.get(
                 "core.news.accomplishment.text",
-                cdata[adventurer].alias,
-                cdata[adventurer].name,
-                fame),
-            1);
+                adventurer.alias,
+                adventurer.name,
+                extra_info /* gained fame */),
+            true);
         break;
-    case 5:
-        addnewstopic(u8"@04"s, i18n::s.get("core.news.retirement.title"));
-        addnews2(
+    case NewsType::retirement:
+        add_news_topic(u8"@04"s, i18n::s.get("core.news.retirement.title"));
+        add_news_entry(
             i18n::s.get(
-                "core.news.retirement.text",
-                cdata[adventurer].alias,
-                cdata[adventurer].name),
-            1);
+                "core.news.retirement.text", adventurer.alias, adventurer.name),
+            true);
         break;
+    default: assert(0); break;
     }
+
     newsbuff += u8"\n"s;
 }
 
@@ -224,13 +228,13 @@ void adventurer_update()
                 {
                     if (rnd(3) == 0)
                     {
-                        addnews(5, adv.index);
+                        adventurer_add_news(NewsType::retirement, adv);
                         adv.set_state(Character::State::empty);
                         create_adventurer(adv);
                     }
                     else
                     {
-                        addnews(3, adv.index);
+                        adventurer_add_news(NewsType::recovery, adv);
                         adv.set_state(
                             Character::State::adventurer_in_other_map);
                     }
@@ -295,7 +299,8 @@ void adventurer_update()
                 clamp(adv.level, 1, 1000) * clamp(adv.level, 1, 1000) * 100;
             int fame = rnd_capped(adv.level * adv.level / 20 + 10) + 10;
             adv.fame += fame;
-            addnews(4, adv.index, fame);
+            adventurer_add_news(
+                NewsType::accomplishment, adv, std::to_string(fame));
             adventurer_discover_equipment(adv);
         }
         if (adv.experience >= adv.required_experience)
@@ -321,23 +326,24 @@ void adventurer_discover_equipment(Character& adv)
     f = 0;
     for (int _i = 0; _i < 10; ++_i)
     {
-        auto&& item = get_random_inv(adv.index);
-        if (item.number() == 0)
+        const auto item =
+            Inventory::at(inv_get_random_slot(g_inv.for_chara(adv)));
+        if (!item)
         {
             f = 1;
             break;
         }
-        if (item.body_part != 0)
+        if (item->body_part != 0)
         {
             continue;
         }
-        if (item.number() != 0)
+        if (item->number() != 0)
         {
             if (adv.ai_item == item)
             {
-                adv.ai_item = ItemRef::null();
+                adv.ai_item = nullptr;
             }
-            item.remove();
+            item->remove();
             f = 1;
             break;
         }
@@ -355,17 +361,18 @@ void adventurer_discover_equipment(Character& adv)
     {
         flttypemajor = choice(fsetitem);
     }
-    if (const auto item = itemcreate_chara_inv(adv.index, 0, 0))
+    if (const auto item = itemcreate_chara_inv(adv, 0, 0))
     {
         item->identify_state = IdentifyState::completely;
         if (item->quality >= Quality::miracle)
         {
             if (is_equipment(the_item_db[itemid2int(item->id)]->category))
             {
-                addnews(1, adv.index, 0, itemname(*item));
+                adventurer_add_news(
+                    NewsType::discovery, adv, itemname(item.unwrap()));
             }
         }
-        wear_most_valuable_equipment(adv, *item);
+        wear_most_valuable_equipment(adv, item.unwrap());
     }
 }
 

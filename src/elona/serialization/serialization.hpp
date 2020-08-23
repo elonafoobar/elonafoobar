@@ -1,9 +1,10 @@
 #pragma once
 
-#include "macros.hpp"
+// Disable re-ordering include directives
+/* clang-format off */
 #include "serialize.hpp"
 #include "std.hpp"
-
-// Archives must be included after the above files.
-#include "binary.hpp"
-#include "json.hpp"
+#include "boost.hpp"
+#include "iarchive.hpp"
+#include "oarchive.hpp"
+/* clang-format on */

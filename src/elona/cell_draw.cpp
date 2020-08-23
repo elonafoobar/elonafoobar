@@ -740,7 +740,7 @@ void draw_hp_bar(const Character& chara, int x, int y)
     if (ratio <= 0)
         return;
 
-    if (chara.index < 16)
+    if (chara.is_player_or_ally())
     {
         if (map_data.type != mdata_t::MapType::world_map)
         {
@@ -1036,7 +1036,7 @@ bool hp_bar_visible(const Character& chara)
 {
     return chara.has_been_used_stethoscope() ||
         game_data.chara_last_attacked_by_player == chara.index ||
-        debug::voldemort;
+        debug_is_wizard();
 }
 
 
@@ -1316,7 +1316,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
     if (item_info_memory.is_empty())
         return;
 
-    if (mode == 6 || mode == 9)
+    if (mode == 9)
         return; // TODO
 
     const auto stack_count = item_info_memory.stack_count();
@@ -1344,13 +1344,18 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
             if (item_index == 0)
                 break;
 
-            const auto& item = item_index < 0
-                ? inv.ground().at(0) /* TODO phantom ref */
-                : inv.ground().at(item_index - 1);
+            const auto item = item_index < 0
+                ? g_inv.ground().at(0) /* TODO phantom ref */
+                : g_inv.ground().at(item_index - 1);
 
-            const auto item_chip_id = item.image;
-            const auto color_id = item.color;
-            const auto chara_chip_id = item.param1;
+            if (!item)
+            {
+                continue; /* TODO phantom ref */
+            }
+
+            const auto item_chip_id = item->image;
+            const auto color_id = item->color;
+            const auto chara_chip_id = item->param1;
             draw_one_item(
                 dx,
                 dy,
@@ -1631,15 +1636,9 @@ void cell_draw()
                 if ((is_night() || light.always_shines) &&
                     mapsync(x_, y) == msync)
                 {
-                    light_ -= (6 -
-                               clamp(
-                                   dist(
-                                       cdata.player().position.x,
-                                       cdata.player().position.y,
-                                       x_,
-                                       y),
-                                   0,
-                                   6)) *
+                    light_ -=
+                        (6 -
+                         clamp(dist(cdata.player().position, x_, y), 0, 6)) *
                         light.brightness;
                     gmode(5, light.alpha_base + rnd(light.alpha_random + 1));
                     draw_indexed(

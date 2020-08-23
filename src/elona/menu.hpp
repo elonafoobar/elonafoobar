@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "eobject/eobject.hpp"
 #include "optional.hpp"
 
 
@@ -101,15 +102,15 @@ void screen_analyze_self();
 int ctrl_ally(
     ControlAllyOperation,
     optional_ref<Character> gene_engineering_original_character = none);
-void show_book_window(const Item& book);
+void show_book_window(const ItemRef& book);
 int change_npc_tone(Character& chara);
-void item_show_description(Item& item);
+void item_show_description(const ItemRef& item);
 
 
 struct CtrlInventoryResult
 {
     MenuResult menu_result;
-    optional_ref<Item> selected_item;
+    OptionalItemRef selected_item;
 };
 
 CtrlInventoryResult ctrl_inventory(
@@ -122,8 +123,8 @@ void menu_voting_box();
 void append_accuracy_info(const Character& chara, int);
 void show_weapon_dice(
     const Character& chara,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo,
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo,
     int val0);
 void house_board_update_screen();
 

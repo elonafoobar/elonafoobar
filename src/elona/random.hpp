@@ -66,12 +66,34 @@ inline Integer rnd_capped(Integer max)
 template <typename Range>
 auto choice(const Range& range)
 {
-    // std::initializer_list does not have empty() for some reason.
-    assert(range.size() != 0);
+    using std::begin;
+    using std::size;
 
-    auto itr = std::begin(range);
-    std::advance(itr, rnd(range.size()));
+    assert(size(range) != 0);
+
+    auto itr = begin(range);
+    std::advance(itr, rnd(size(range)));
     return *itr;
+}
+
+
+
+// For non-copy-constructible types.
+// It takes @a range's ownership and move the result.
+template <
+    typename Range,
+    std::enable_if_t<!std::is_lvalue_reference_v<Range>, std::nullptr_t> =
+        nullptr>
+auto choice(Range&& range)
+{
+    using std::begin;
+    using std::size;
+
+    assert(size(range) != 0);
+
+    auto itr = begin(range);
+    std::advance(itr, rnd(size(range)));
+    return std::move(*itr);
 }
 
 

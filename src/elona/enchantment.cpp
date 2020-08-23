@@ -75,16 +75,16 @@ bool check_enchantment_filters(int category, int type)
 
 
 /// Sort item's enchantments by ID (DESCENDING).
-void enchantment_sort(Item& item)
+void enchantment_sort(const ItemRef& item)
 {
-    range::sort(item.enchantments, [](const auto& e1, const auto& e2) {
+    range::sort(item->enchantments, [](const auto& e1, const auto& e2) {
         return e1.id > e2.id;
     });
 }
 
 
 
-void add_one_enchantment_by_fixed_ego(Item& item, int ego_type)
+void add_one_enchantment_by_fixed_ego(const ItemRef& item, int ego_type)
 {
     for (int i = 0; i < 10; ++i)
     {
@@ -101,7 +101,7 @@ void add_one_enchantment_by_fixed_ego(Item& item, int ego_type)
 
 
 
-void add_enchantment_by_fixed_ego(Item& item, int egolv)
+void add_enchantment_by_fixed_ego(const ItemRef& item, int egolv)
 {
     std::vector<int> ego_list;
     for (int i = 0; i < 11; ++i)
@@ -124,7 +124,7 @@ void add_enchantment_by_fixed_ego(Item& item, int egolv)
         return;
 
     const auto ego_id = choice(ego_list);
-    item.subname = 10000 + ego_id;
+    item->subname = 10000 + ego_id;
     add_one_enchantment_by_fixed_ego(item, ego_id);
     if (rnd(2) == 0)
     {
@@ -146,7 +146,7 @@ void add_enchantment_by_fixed_ego(Item& item, int egolv)
 
 
 
-void add_enchantments_depending_on_ego(Item& item, int egolv)
+void add_enchantments_depending_on_ego(const ItemRef& item, int egolv)
 {
     const auto num_of_enc = rnd(rnd(5) + 1) + 1;
     for (int _i = 0; _i < num_of_enc; ++_i)
@@ -157,7 +157,7 @@ void add_enchantments_depending_on_ego(Item& item, int egolv)
             enchantment_gen_p(),
             8);
     }
-    item.subname = 20000 + rnd(maxegominorn);
+    item->subname = 20000 + rnd(maxegominorn);
 }
 
 } // namespace
@@ -594,7 +594,7 @@ void get_enchantment_description(
 
 
 bool enchantment_add(
-    Item& item,
+    const ItemRef& item,
     int type,
     int power,
     int flip_percentage,
@@ -602,7 +602,7 @@ bool enchantment_add(
     bool only_check,
     bool force)
 {
-    const auto category = the_item_db[itemid2int(item.id)]->category;
+    const auto category = the_item_db[itemid2int(item->id)]->category;
 
     if (type == 0)
     {
@@ -705,14 +705,14 @@ bool enchantment_add(
     i_at_m48 = -1;
     for (int cnt = 0; cnt < 15; ++cnt)
     {
-        if (item.enchantments[cnt].id == enc)
+        if (item->enchantments[cnt].id == enc)
         {
             i_at_m48 = cnt;
             continue;
         }
         if (i_at_m48 == -1)
         {
-            if (item.enchantments[cnt].id == 0)
+            if (item->enchantments[cnt].id == 0)
             {
                 i_at_m48 = cnt;
             }
@@ -723,7 +723,7 @@ bool enchantment_add(
         return false;
     }
 
-    if (item.enchantments[i_at_m48].id == enc)
+    if (item->enchantments[i_at_m48].id == enc)
     {
         if (category == ItemCategory::ammo)
         {
@@ -742,12 +742,12 @@ bool enchantment_add(
         return true;
     }
 
-    if (item.enchantments[i_at_m48].id == enc)
+    if (item->enchantments[i_at_m48].id == enc)
     {
-        encp += item.enchantments[i_at_m48].power;
+        encp += item->enchantments[i_at_m48].power;
     }
-    item.enchantments[i_at_m48].id = enc;
-    item.enchantments[i_at_m48].power = encp;
+    item->enchantments[i_at_m48].id = enc;
+    item->enchantments[i_at_m48].power = encp;
 
     if (type < 10000)
     {
@@ -757,9 +757,9 @@ bool enchantment_add(
     {
         p_at_m48 = type / 10000;
     }
-    if (item.value * encref(1, p_at_m48) / 100 > 0)
+    if (item->value * encref(1, p_at_m48) / 100 > 0)
     {
-        item.value = item.value * encref(1, p_at_m48) / 100;
+        item->value = item->value * encref(1, p_at_m48) / 100;
     }
     enchantment_sort(item);
 
@@ -768,13 +768,13 @@ bool enchantment_add(
 
 
 
-void enchantment_remove(Item& item, int id, int power)
+void enchantment_remove(const ItemRef& item, int id, int power)
 {
     if (id == 0)
         return;
 
     // Reduce the power by `power`.
-    for (auto&& enc : item.enchantments)
+    for (auto&& enc : item->enchantments)
     {
         if (enc.id == id)
         {
@@ -788,7 +788,7 @@ void enchantment_remove(Item& item, int id, int power)
     }
 
     // Updates the value.
-    item.value = item.value * 100 / encref(1, id < 10000 ? id : id / 10000);
+    item->value = item->value * 100 / encref(1, id < 10000 ? id : id / 10000);
 
     enchantment_sort(item);
 }
@@ -804,7 +804,7 @@ optional<int> enchantment_find(const Character& chara, int id)
         if (!equipment)
             continue;
 
-        if (const auto power = enchantment_find(*equipment, id))
+        if (const auto power = enchantment_find(equipment.unwrap(), id))
         {
             if (!max || *max < *power)
             {
@@ -818,9 +818,9 @@ optional<int> enchantment_find(const Character& chara, int id)
 
 
 
-optional<int> enchantment_find(const Item& item, int id)
+optional<int> enchantment_find(const ItemRef& item, int id)
 {
-    for (const auto& enc : item.enchantments)
+    for (const auto& enc : item->enchantments)
     {
         if (enc.id == 0)
             break;
@@ -878,11 +878,11 @@ int enchantment_gen_p(int multiplier)
 
 
 
-void add_enchantments(Item& item)
+void add_enchantments(const ItemRef& item)
 {
     if (reftype == 25000)
     {
-        item.count = -1;
+        item->count = -1;
     }
     if (fixlv <= Quality::good)
     {
@@ -895,8 +895,8 @@ void add_enchantments(Item& item)
     else
     {
         egolv = rnd(clamp(rnd(objlv / 10 + 3), 0, 4) + 1);
-        item.value = item.value * 3;
-        item.difficulty_of_identification = 50 +
+        item->value = item->value * 3;
+        item->difficulty_of_identification = 50 +
             rnd(std::abs(
                     static_cast<int>(fixlv) - static_cast<int>(Quality::good)) *
                     100 +
@@ -944,7 +944,7 @@ void add_enchantments(Item& item)
     }
     if (fixlv == Quality::miracle || fixlv == Quality::godly)
     {
-        item.subname = 40000 + rnd(30000);
+        item->subname = 40000 + rnd(30000);
         if (fixlv == Quality::godly ||
             (fixlv == Quality::miracle && rnd(10) == 0))
         {
@@ -955,8 +955,8 @@ void add_enchantments(Item& item)
         {
             if (reftype == 24000 || reftype == 10000)
             {
-                item.is_alive() = true;
-                item.param1 = 1;
+                item->is_alive() = true;
+                item->param1 = 1;
                 return;
             }
         }
@@ -974,10 +974,10 @@ void add_enchantments(Item& item)
             {
                 if (rnd(10) == 0)
                 {
-                    item.is_eternal_force() = true;
+                    item->is_eternal_force() = true;
                     enchantment_add(
                         item, enchantment_generate(99), enchantment_gen_p());
-                    item.curse_state = CurseState::blessed;
+                    item->curse_state = CurseState::blessed;
                 }
             }
         }
@@ -987,9 +987,9 @@ void add_enchantments(Item& item)
                 item,
                 enchantment_generate(enchantment_gen_level(egolv)),
                 enchantment_gen_p() + (fixlv == Quality::godly) * 100 +
-                    (item.is_eternal_force()) * 100,
+                    (item->is_eternal_force()) * 100,
                 20 - (fixlv == Quality::godly) * 10 -
-                    (item.is_eternal_force()) * 20);
+                    (item->is_eternal_force()) * 20);
         }
     }
     if (fixlv == Quality::special)
@@ -1003,16 +1003,16 @@ void add_enchantments(Item& item)
                 10);
         }
     }
-    if (is_cursed(item.curse_state))
+    if (is_cursed(item->curse_state))
     {
         enchantment_add(
             item,
             enchantment_generate(enchantment_gen_level(egolv)),
             clamp(enchantment_gen_p(), 250, 10000) *
-                (125 + (item.curse_state == CurseState::doomed) * 25) / 100);
+                (125 + (item->curse_state == CurseState::doomed) * 25) / 100);
         for (int cnt = 0,
                  cnt_end = cnt +
-                 (1 + (item.curse_state == CurseState::doomed) + rnd(2));
+                 (1 + (item->curse_state == CurseState::doomed) + rnd(2));
              cnt < cnt_end;
              ++cnt)
         {

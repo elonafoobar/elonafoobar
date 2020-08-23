@@ -54,14 +54,9 @@ local function receive_reward()
    World.modify_ranking(8, 500, 8)
 end
 
-local function extract_id_parts(key)
-   return string.match(key, "(.+)%.(.+)")
-end
-
 local function quota_args()
    local id = Data.get_id_by_legacy("core.chara", World.data.fighters_guild_target)
-   local mod_id, instance_id = extract_id_parts(id)
-   local name = I18N.get(mod_id .. ".chara." .. instance_id .. ".name")
+   local name = I18N.get_data_text("core.chara", id, "name")
    return {World.data.fighters_guild_quota, name}
 end
 

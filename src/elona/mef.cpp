@@ -148,11 +148,7 @@ void mef_update()
                     if (rnd(35) == 0)
                     {
                         p = 3;
-                        if (dist(
-                                dx,
-                                dy,
-                                cdata.player().position.x,
-                                cdata.player().position.y) < 6)
+                        if (dist(dx, dy, cdata.player().position) < 6)
                         {
                             sound = "core.fire1";
                         }
@@ -217,7 +213,7 @@ void mef_proc(Character& chara)
     {
         if (chara.is_floating() == 0 || chara.gravity > 0)
         {
-            if (sdata(63, chara.index) / 50 < 7)
+            if (chara.get_skill(63).level / 50 < 7)
             {
                 if (is_in_fov(chara))
                 {
@@ -226,9 +222,9 @@ void mef_proc(Character& chara)
                 }
                 if (mef(6, ef) == 0)
                 {
-                    if (chara.index != 0)
+                    if (!chara.is_player())
                     {
-                        hostileaction(0, chara.index);
+                        chara_act_hostile_action(cdata.player(), chara);
                     }
                 }
                 int stat = damage_hp(
@@ -239,7 +235,11 @@ void mef_proc(Character& chara)
                     mef(5, ef));
                 if (stat == 0)
                 {
-                    check_kill(mef(6, ef), chara.index);
+                    check_kill(
+                        mef(6, ef) >= 0
+                            ? optional_ref<Character>{cdata[mef(6, ef)]}
+                            : optional_ref<Character>{},
+                        chara);
                 }
             }
         }
@@ -253,16 +253,19 @@ void mef_proc(Character& chara)
         }
         if (mef(6, ef) == 0)
         {
-            if (chara.index != 0)
+            if (!chara.is_player())
             {
-                hostileaction(0, chara.index);
+                chara_act_hostile_action(cdata.player(), chara);
             }
         }
         int stat = damage_hp(
             chara, rnd_capped(mef(5, ef) / 15 + 5) + 1, -9, 50, mef(5, ef));
         if (stat == 0)
         {
-            check_kill(mef(6, ef), chara.index);
+            check_kill(
+                mef(6, ef) >= 0 ? optional_ref<Character>{cdata[mef(6, ef)]}
+                                : optional_ref<Character>{},
+                chara);
         }
     }
     if (mef(0, ef) == 6)
@@ -274,20 +277,23 @@ void mef_proc(Character& chara)
                 snd("core.water2");
                 txt(i18n::s.get("core.mef.steps_in_pool", chara));
             }
-            wet(chara.index, 25);
+            chara_get_wet(chara, 25);
             if (mef(6, ef) == 0)
             {
-                if (chara.index != 0)
+                if (!chara.is_player())
                 {
-                    hostileaction(0, chara.index);
+                    chara_act_hostile_action(cdata.player(), chara);
                 }
             }
             potionspill = 1;
             efstatus = static_cast<CurseState>(mef(8, ef));
-            item_db_on_drink(chara, none, mef(7, ef));
+            item_db_on_drink(chara, nullptr, mef(7, ef));
             if (chara.state() == Character::State::empty)
             {
-                check_kill(mef(6, ef), chara.index);
+                check_kill(
+                    mef(6, ef) >= 0 ? optional_ref<Character>{cdata[mef(6, ef)]}
+                                    : optional_ref<Character>{},
+                    chara);
             }
             mef_delete(ef);
         }
@@ -311,7 +317,8 @@ bool mef_proc_from_movement(Character& chara)
         {
             if (rnd_capped(mef(5, i) + 25) <
                     rnd_capped(
-                        sdata(10, chara.index) + sdata(12, chara.index) + 1) ||
+                        chara.get_skill(10).level + chara.get_skill(12).level +
+                        1) ||
                 chara.weight > 100)
             {
                 if (is_in_fov(chara))

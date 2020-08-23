@@ -22,6 +22,7 @@
 #include "equipment.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/event_manager.hpp"
@@ -72,22 +73,22 @@ void end_dmghp(const Character& victim)
 
 void dmgheal_death_by_backpack(Character& chara)
 {
-    optional_ref<Item> heaviest_item;
+    OptionalItemRef heaviest_item;
     int heaviest_weight = 0;
 
-    for (auto&& item : inv.for_chara(chara))
+    for (const auto& item : g_inv.for_chara(chara))
     {
-        if (item.weight > heaviest_weight)
+        if (item->weight > heaviest_weight)
         {
             heaviest_item = item;
-            heaviest_weight = item.weight;
+            heaviest_weight = item->weight;
         }
     }
 
     std::string heaviest_item_name;
     if (heaviest_item)
     {
-        heaviest_item_name = itemname(*heaviest_item);
+        heaviest_item_name = itemname(heaviest_item.unwrap());
     }
     else
     {
@@ -97,7 +98,7 @@ void dmgheal_death_by_backpack(Character& chara)
 
     txt(i18n::s.get_enum_property(
         "core.death_by.other", "text", 6, chara, heaviest_item_name));
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         ndeathcause = i18n::s.get_enum_property(
             "core.death_by.other", "death_cause", 6, heaviest_item_name);
@@ -128,22 +129,19 @@ Character::State dmgheal_set_death_status(Character& victim)
         victim.time_to_revive = game_data.date.hours() + 48;
     }
 
-    if (victim.index != 0)
+    if (victim.is_ally())
     {
-        if (victim.index < 16)
+        new_state = Character::State::pet_dead;
+        chara_modify_impression(victim, -10);
+        victim.current_map = 0;
+        if (victim.is_escorted() == 1)
         {
-            new_state = Character::State::pet_dead;
-            chara_modify_impression(victim, -10);
-            victim.current_map = 0;
-            if (victim.is_escorted() == 1)
-            {
-                event_add(15, charaid2int(victim.id));
-                new_state = Character::State::empty;
-            }
-            if (victim.is_escorted_in_sub_quest() == 1)
-            {
-                new_state = Character::State::empty;
-            }
+            event_add(15, charaid2int(victim.id));
+            new_state = Character::State::empty;
+        }
+        if (victim.is_escorted_in_sub_quest() == 1)
+        {
+            new_state = Character::State::empty;
         }
     }
 
@@ -197,7 +195,7 @@ int damage_hp(
     }
     if (element != 0 && element < 61)
     {
-        int resistance = sdata(element, victim.index) / 50;
+        int resistance = victim.get_skill(element).level / 50;
         if (resistance < 3)
         {
             dmg_at_m141 =
@@ -211,9 +209,9 @@ int damage_hp(
         {
             dmg_at_m141 = 0;
         }
-        dmg_at_m141 = dmg_at_m141 * 100 / (sdata(60, victim.index) / 2 + 50);
+        dmg_at_m141 = dmg_at_m141 * 100 / (victim.get_skill(60).level / 2 + 50);
     }
-    if (attacker && attacker->index == 0)
+    if (attacker && attacker->is_player())
     {
         if (critical)
         {
@@ -275,12 +273,12 @@ int damage_hp(
     }
     rtdmg = dmg_at_m141;
 
-    if (victim.index == 0 && cdata.player().god_id == core_god::opatos)
+    if (victim.is_player() && cdata.player().god_id == core_god::opatos)
     {
         dmg_at_m141 = dmg_at_m141 * 90 / 100;
     }
 
-    if (debug::voldemort && victim.index == 0)
+    if (debug_has_wizard_flag("core.wizard.no_hp_damage") && victim.is_player())
     {
         dmg_at_m141 = 0;
     }
@@ -329,7 +327,7 @@ int damage_hp(
             }
         }
     }
-    if (victim.index == 0)
+    if (victim.is_player())
     {
         if (victim.hp < 0)
         {
@@ -353,11 +351,11 @@ int damage_hp(
     }
     if (victim.hp < 0)
     {
-        if (victim.index < 16)
+        if (victim.is_player_or_ally())
         {
             for (auto&& chara : cdata.player_and_allies())
             {
-                if (victim.index == chara.index)
+                if (victim == chara)
                 {
                     continue;
                 }
@@ -412,7 +410,7 @@ int damage_hp(
         }
         if (game_data.proc_damage_events_flag == 1)
         {
-            txteledmg(0, none, victim.index, element);
+            txteledmg(0, none, victim, element);
         }
         else if (game_data.proc_damage_events_flag == 2)
         {
@@ -548,7 +546,7 @@ int damage_hp(
         rowact_check(victim);
         if (victim.hp < victim.max_hp / 5)
         {
-            if (victim.index != 0)
+            if (!victim.is_player())
             {
                 if (victim.fear == 0)
                 {
@@ -563,7 +561,7 @@ int damage_hp(
                         {
                             runs_away = false;
                         }
-                        if (attacker && attacker->index == 0)
+                        if (attacker && attacker->is_player())
                         {
                             if (trait(44)) // Gentle Face
                             {
@@ -676,14 +674,14 @@ int damage_hp(
             }
             if (element == 62)
             {
-                if (victim.index == 0)
+                if (victim.is_player())
                 {
                     modify_ether_disease_stage(rnd_capped(element_power + 1));
                 }
             }
             if (element == 63)
             {
-                if (victim.index == 0 || rnd(3) == 0)
+                if (victim.is_player() || rnd(3) == 0)
                 {
                     item_acid(victim);
                 }
@@ -691,11 +689,11 @@ int damage_hp(
         }
         if ((element == 50 || damage_source == -9) && victim.wet == 0)
         {
-            item_fire(victim.index);
+            item_fire(g_inv.for_chara(victim));
         }
         if (element == 51)
         {
-            item_cold(victim.index);
+            item_cold(g_inv.for_chara(victim));
         }
         if (victim.sleep != 0)
         {
@@ -705,19 +703,19 @@ int damage_hp(
                 txt(i18n::s.get("core.damage.sleep_is_disturbed", victim));
             }
         }
-        if (attacker && attacker->index == 0)
+        if (attacker && attacker->is_player())
         {
-            hostileaction(0, victim.index);
+            chara_act_hostile_action(cdata.player(), victim);
             game_data.chara_last_attacked_by_player = victim.index;
         }
-        if (victim.index == 0)
+        if (victim.is_player())
         {
             if (g_config.sound())
             {
                 if (g_config.heartbeat())
                 {
                     int threshold =
-                        config_get_integer("core.screen.heartbeat_threshold");
+                        config_get<int>("core.screen.heartbeat_threshold");
                     if (victim.hp < victim.max_hp * (threshold * 0.01))
                     {
                         snd("core.Heart1");
@@ -810,7 +808,7 @@ int damage_hp(
                     apply_hate = true;
                 }
             }
-            if (attacker->index != 0)
+            if (!attacker->is_player())
             {
                 if (attacker->enemy_id == victim.index)
                 {
@@ -822,7 +820,7 @@ int damage_hp(
             }
             if (apply_hate)
             {
-                if (victim.index != 0)
+                if (!victim.is_player())
                 {
                     victim.enemy_id = attacker->index;
                     if (victim.hate == 0)
@@ -850,22 +848,22 @@ int damage_hp(
         {
             if (element)
             {
-                if (victim.index >= 16 &&
+                if (!victim.is_player_or_ally() &&
                     game_data.proc_damage_events_flag == 2)
                 {
                     Message::instance().continue_sentence();
                     if (damage_statements_subject_is_noncharacter)
                     {
-                        txteledmg(1, none, victim.index, element);
+                        txteledmg(1, none, victim, element);
                     }
                     else
                     {
-                        txteledmg(1, *attacker, victim.index, element);
+                        txteledmg(1, *attacker, victim, element);
                     }
                 }
                 else
                 {
-                    txteledmg(2, none, victim.index, element);
+                    txteledmg(2, none, victim, element);
                 }
             }
             else
@@ -873,7 +871,7 @@ int damage_hp(
                 int death_type = rnd(4);
                 if (death_type == 0)
                 {
-                    if (victim.index >= 16 &&
+                    if (!victim.is_player_or_ally() &&
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
@@ -900,7 +898,7 @@ int damage_hp(
                 }
                 if (death_type == 1)
                 {
-                    if (victim.index >= 16 &&
+                    if (!victim.is_player_or_ally() &&
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
@@ -926,7 +924,7 @@ int damage_hp(
                 }
                 if (death_type == 2)
                 {
-                    if (victim.index >= 16 &&
+                    if (!victim.is_player_or_ally() &&
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
@@ -952,7 +950,7 @@ int damage_hp(
                 }
                 if (death_type == 3)
                 {
-                    if (victim.index >= 16 &&
+                    if (!victim.is_player_or_ally() &&
                         game_data.proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
@@ -992,7 +990,7 @@ int damage_hp(
 
                 txt(i18n::s.get_enum_property(
                     "core.death_by.other", "text", death_kind, victim));
-                if (victim.index == 0)
+                if (victim.is_player())
                 {
                     ndeathcause = i18n::s.get_enum_property(
                         "core.death_by.other", "death_cause", death_kind);
@@ -1023,9 +1021,9 @@ int damage_hp(
                 }
             }
         }
-        if (game_data.mount != victim.index || victim.index == 0)
+        if (game_data.mount != victim.index || victim.is_player())
         {
-            cell_removechara(victim.position.x, victim.position.y);
+            cell_removechara(victim.position);
         }
 
         Character::State new_state = dmgheal_set_death_status(victim);
@@ -1048,7 +1046,7 @@ int damage_hp(
             animeblood(victim, 0, element);
             spillblood(victim.position.x, victim.position.y, 4);
         }
-        if (victim.index == 0)
+        if (victim.is_player())
         {
             ++game_data.death_count;
         }
@@ -1058,9 +1056,9 @@ int damage_hp(
         }
         if (attacker)
         {
-            if (attacker->index != 0)
+            if (!attacker->is_player())
             {
-                chara_custom_talk(attacker->index, 103);
+                chara_custom_talk(*attacker, 103);
             }
             gained_exp = clamp(victim.level, 1, 200) *
                     clamp((victim.level + 1), 1, 200) *
@@ -1075,19 +1073,19 @@ int damage_hp(
                 gained_exp /= 20;
             }
             attacker->experience += gained_exp;
-            if (attacker->index == 0)
+            if (attacker->is_player())
             {
                 game_data.sleep_experience += gained_exp;
             }
             attacker->hate = 0;
-            if (attacker->index < 16)
+            if (attacker->is_player_or_ally())
             {
                 attacker->enemy_id = 0;
                 cdata.player().enemy_id = 0;
                 game_data.chara_last_attacked_by_player = 0;
             }
         }
-        if (victim.index != 0)
+        if (!victim.is_player())
         {
             if (game_data.current_map != mdata_t::MapId::show_house)
             {
@@ -1190,11 +1188,11 @@ int damage_hp(
                 }
             }
         }
-        if (victim.index != 0)
+        if (!victim.is_player())
         {
             ++npcmemory(0, charaid2int(victim.id));
-            chara_custom_talk(victim.index, 102);
-            if (victim.index < 16)
+            chara_custom_talk(victim, 102);
+            if (victim.is_player_or_ally())
             {
                 txt(i18n::s.get("core.damage.you_feel_sad"));
             }
@@ -1213,7 +1211,7 @@ int damage_hp(
                 ride_end();
             }
         }
-        check_kill(damage_source, victim.index);
+        check_kill(attacker, victim);
         catitem = 0;
         rollanatomy = 0;
         if (rnd(60) == 0)
@@ -1226,7 +1224,7 @@ int damage_hp(
             {
                 catitem = attacker->index;
             }
-            if (int(std::sqrt(sdata(161, attacker->index))) > rnd(150))
+            if (int(std::sqrt(attacker->get_skill(161).level)) > rnd(150))
             {
                 rollanatomy = 1;
             }
@@ -1264,7 +1262,7 @@ int damage_hp(
                 }
             }
         }
-        if (attacker && attacker->index == 0)
+        if (attacker && attacker->is_player())
         {
             if (game_data.catches_god_signal)
             {
@@ -1309,8 +1307,8 @@ void damage_mp(Character& chara, int delta)
     if (chara.mp < 0)
     {
         chara_gain_exp_mana_capacity(chara);
-        auto damage = -chara.mp * 400 / (100 + sdata(164, chara.index) * 10);
-        if (chara.index == 0)
+        auto damage = -chara.mp * 400 / (100 + chara.get_skill(164).level * 10);
+        if (chara.is_player())
         {
             if (trait(156) == 1)
             {
@@ -1343,7 +1341,9 @@ void heal_mp(Character& chara, int delta)
 
 bool action_sp(Character& chara, int sp)
 {
-    if (chara.index != 0 || debug::voldemort)
+    if (!chara.is_player())
+        return true;
+    if (debug_has_wizard_flag("core.wizard.no_sp_damage"))
         return true;
 
     damage_sp(chara, sp);
@@ -1354,7 +1354,9 @@ bool action_sp(Character& chara, int sp)
 
 void damage_sp(Character& chara, int delta)
 {
-    if (chara.index != 0 || debug::voldemort)
+    if (!chara.is_player())
+        return;
+    if (debug_has_wizard_flag("core.wizard.no_sp_damage"))
         return;
 
     if (chara.sp >= -100)
@@ -1381,12 +1383,12 @@ void damage_insanity(Character& chara, int delta)
     if (chara.quality >= Quality::miracle)
         return;
 
-    int resistance = std::max(sdata(54, chara.index) / 50, 1);
+    int resistance = std::max(chara.get_skill(54).level / 50, 1);
     if (resistance > 10)
         return;
 
     delta /= resistance;
-    if (chara.index < 16)
+    if (chara.is_player_or_ally())
     {
         if (trait(166))
         {
@@ -1417,21 +1419,21 @@ void heal_insanity(Character& chara, int delta)
 
 void character_drops_item(Character& victim)
 {
-    if (victim.index == 0)
+    if (victim.is_player())
     {
         if (game_data.executing_immediate_quest_type != 0)
         {
             return;
         }
-        for (auto&& item : inv.for_chara(victim))
+        for (const auto& item : g_inv.for_chara(victim))
         {
             if (map_data.refresh_type == 0)
             {
-                if (item.body_part != 0)
+                if (item->body_part != 0)
                 {
                     continue;
                 }
-                if (item.is_precious())
+                if (item->is_precious())
                 {
                     continue;
                 }
@@ -1444,7 +1446,7 @@ void character_drops_item(Character& victim)
             {
                 continue;
             }
-            if (the_item_db[itemid2int(item.id)]->is_cargo)
+            if (the_item_db[itemid2int(item->id)]->is_cargo)
             {
                 if (map_data.type != mdata_t::MapType::world_map &&
                     map_data.type != mdata_t::MapType::player_owned &&
@@ -1461,27 +1463,27 @@ void character_drops_item(Character& victim)
                 }
             }
             f = 0;
-            if (item.body_part != 0)
+            if (item->body_part != 0)
             {
                 if (rnd(10))
                 {
                     f = 1;
                 }
-                if (item.curse_state == CurseState::blessed)
+                if (item->curse_state == CurseState::blessed)
                 {
                     if (rnd(2))
                     {
                         f = 1;
                     }
                 }
-                if (is_cursed(item.curse_state))
+                if (is_cursed(item->curse_state))
                 {
                     if (rnd(2))
                     {
                         f = 0;
                     }
                 }
-                if (item.curse_state == CurseState::doomed)
+                if (item->curse_state == CurseState::doomed)
                 {
                     if (rnd(2))
                     {
@@ -1489,7 +1491,7 @@ void character_drops_item(Character& victim)
                     }
                 }
             }
-            else if (item.identify_state == IdentifyState::completely)
+            else if (item->identify_state == IdentifyState::completely)
             {
                 if (rnd(4))
                 {
@@ -1500,33 +1502,33 @@ void character_drops_item(Character& victim)
             {
                 continue;
             }
-            if (item.body_part != 0)
+            if (item->body_part != 0)
             {
-                victim.equipment_slots[item.body_part - 100].unequip();
-                item.body_part = 0;
+                victim.equipment_slots[item->body_part - 100].unequip();
+                item->body_part = 0;
             }
             f = 0;
-            if (!item.is_precious())
+            if (!item->is_precious())
             {
                 if (rnd(4) == 0)
                 {
                     f = 1;
                 }
-                if (item.curse_state == CurseState::blessed)
+                if (item->curse_state == CurseState::blessed)
                 {
                     if (rnd(3) == 0)
                     {
                         f = 0;
                     }
                 }
-                if (is_cursed(item.curse_state))
+                if (is_cursed(item->curse_state))
                 {
                     if (rnd(3) == 0)
                     {
                         f = 1;
                     }
                 }
-                if (item.curse_state == CurseState::doomed)
+                if (item->curse_state == CurseState::doomed)
                 {
                     if (rnd(3) == 0)
                     {
@@ -1536,24 +1538,18 @@ void character_drops_item(Character& victim)
             }
             if (f)
             {
-                item.remove();
+                item->remove();
                 continue;
             }
-            item.position.x = victim.position.x;
-            item.position.y = victim.position.y;
-            if (!item_stack(-1, item).stacked)
+            item->set_pos(victim.position);
+            item->set_pos(victim.position);
+            if (!inv_stack(g_inv.ground(), item).stacked)
             {
-                if (const auto slot = inv_get_free_slot(-1))
-                {
-                    item_copy(item, *slot);
-                    slot->own_state = -2;
-                }
-                else
-                {
-                    break;
-                }
+                const auto slot = inv_make_free_slot_force(g_inv.ground());
+                const auto dropped_item =
+                    item_separate(item, slot, item->number());
+                dropped_item->own_state = -2;
             }
-            item.remove();
         }
         cell_refresh(victim.position.x, victim.position.y);
         create_pcpic(cdata.player());
@@ -1561,7 +1557,7 @@ void character_drops_item(Character& victim)
     }
     else
     {
-        if (victim.index < 16)
+        if (victim.is_player_or_ally())
         {
             if (victim.has_own_sprite() == 1)
             {
@@ -1595,14 +1591,15 @@ void character_drops_item(Character& victim)
             return;
         }
     }
-    for (auto&& item : inv.for_chara(victim))
+    for (const auto& item : g_inv.for_chara(victim))
     {
         f = 0;
         if (victim.role == Role::user)
         {
             break;
         }
-        if (item.quality > Quality::miracle || item.id == ItemId::platinum_coin)
+        if (item->quality > Quality::miracle ||
+            item->id == ItemId::platinum_coin)
         {
             f = 1;
         }
@@ -1631,11 +1628,11 @@ void character_drops_item(Character& victim)
                 f = 0;
             }
         }
-        if (item.quality == Quality::special)
+        if (item->quality == Quality::special)
         {
             f = 1;
         }
-        if (item.is_quest_target())
+        if (item->is_quest_target())
         {
             f = 1;
         }
@@ -1643,17 +1640,17 @@ void character_drops_item(Character& victim)
         {
             continue;
         }
-        if (catitem != 0 && !item.is_blessed_by_ehekatl() &&
-            is_equipment(the_item_db[itemid2int(item.id)]->category) &&
-            item.quality >= Quality::great)
+        if (catitem != 0 && !item->is_blessed_by_ehekatl() &&
+            is_equipment(the_item_db[itemid2int(item->id)]->category) &&
+            item->quality >= Quality::great)
         {
             if (rnd(3))
             {
                 txt(i18n::s.get(
                         "core.misc.black_cat_licks", cdata[catitem], item),
                     Message::color{ColorIndex::cyan});
-                item.is_blessed_by_ehekatl() = true;
-                reftype = (int)the_item_db[itemid2int(item.id)]->category;
+                item->is_blessed_by_ehekatl() = true;
+                reftype = (int)the_item_db[itemid2int(item->id)]->category;
                 enchantment_add(
                     item,
                     enchantment_generate(enchantment_gen_level(rnd(4))),
@@ -1661,34 +1658,26 @@ void character_drops_item(Character& victim)
                 animeload(8, victim);
             }
         }
-        if (item.body_part != 0)
+        if (item->body_part != 0)
         {
-            victim.equipment_slots[item.body_part - 100].unequip();
-            item.body_part = 0;
+            victim.equipment_slots[item->body_part - 100].unequip();
+            item->body_part = 0;
         }
-        item.position.x = victim.position.x;
-        item.position.y = victim.position.y;
+        item->set_pos(victim.position);
         itemturn(item);
-        if (!item_stack(-1, item).stacked)
+        if (!inv_stack(g_inv.ground(), item).stacked)
         {
-            if (const auto slot = inv_get_free_slot(-1))
-            {
-                item_copy(item, *slot);
-            }
-            else
-            {
-                break;
-            }
+            const auto slot = inv_make_free_slot_force(g_inv.ground());
+            item_separate(item, slot, item->number());
         }
-        item.remove();
     }
     if (victim.quality >= Quality::miracle || rnd(20) == 0 ||
-        victim.drops_gold() == 1 || victim.index < 16)
+        victim.drops_gold() == 1 || victim.is_player_or_ally())
     {
         if (victim.gold > 0)
         {
             flt();
-            itemcreate_extra_inv(
+            itemcreate_map_inv(
                 54,
                 victim.position,
                 victim.gold / (1 + 3 * (victim.drops_gold() == 0)));
@@ -1705,7 +1694,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 7:
@@ -1715,7 +1704,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 3:
@@ -1725,7 +1714,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 2:
@@ -1735,7 +1724,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -1743,7 +1732,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 4:
@@ -1753,7 +1742,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 5:
@@ -1763,7 +1752,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     }
@@ -1777,7 +1766,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -1785,7 +1774,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -1793,7 +1782,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(40) == 0)
         {
@@ -1801,7 +1790,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -1809,7 +1798,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 1:
@@ -1819,9 +1808,9 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 62000;
             flttypeminor = 0;
-            if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
+            if (const auto item = itemcreate_map_inv(0, victim.position, 0))
             {
-                remain_make(*item, victim);
+                remain_make(item.unwrap(), victim);
             }
         }
         break;
@@ -1832,9 +1821,9 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 62000;
             flttypeminor = 0;
-            if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
+            if (const auto item = itemcreate_map_inv(0, victim.position, 0))
             {
-                remain_make(*item, victim);
+                remain_make(item.unwrap(), victim);
             }
         }
         break;
@@ -1845,7 +1834,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 32000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1853,7 +1842,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 34000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -1861,7 +1850,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1869,7 +1858,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1877,7 +1866,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -1885,7 +1874,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1893,7 +1882,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1901,7 +1890,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 77000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 4:
@@ -1911,7 +1900,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -1919,7 +1908,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(20) == 0)
         {
@@ -1927,7 +1916,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(4) == 0)
         {
@@ -1935,7 +1924,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     case 5:
@@ -1945,7 +1934,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetwear);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -1953,7 +1942,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = choice(fsetweapon);
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(15) == 0)
         {
@@ -1961,7 +1950,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 54000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -1969,7 +1958,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 52000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(5) == 0)
         {
@@ -1977,7 +1966,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 53000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(10) == 0)
         {
@@ -1985,7 +1974,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 72000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(4) == 0)
         {
@@ -1993,7 +1982,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 68000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         if (rnd(4) == 0)
         {
@@ -2001,7 +1990,7 @@ void character_drops_item(Character& victim)
             flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
             flttypemajor = 77000;
             flttypeminor = 0;
-            itemcreate_extra_inv(0, victim.position, 0);
+            itemcreate_map_inv(0, victim.position, 0);
         }
         break;
     }
@@ -2012,9 +2001,9 @@ void character_drops_item(Character& victim)
         flt(calcobjlv(victim.level), calcfixlv(Quality::bad));
         flttypemajor = 62000;
         flttypeminor = 0;
-        if (const auto item = itemcreate_extra_inv(0, victim.position, 0))
+        if (const auto item = itemcreate_map_inv(0, victim.position, 0))
         {
-            remain_make(*item, victim);
+            remain_make(item.unwrap(), victim);
         }
     }
     if (game_data.current_map == mdata_t::MapId::show_house)
@@ -2030,11 +2019,10 @@ void character_drops_item(Character& victim)
             (victim.quality == Quality::godly && rnd(3) == 0))
         {
             flt();
-            if (const auto item = itemcreate_extra_inv(504, victim.position, 0))
+            if (const auto item = itemcreate_map_inv(504, victim.position, 0))
             {
                 item->param1 = victim.image;
                 item->subname = charaid2int(victim.id);
-                cell_refresh(item->position.x, item->position.y);
             }
         }
         if (rnd(175) == 0 || victim.quality == Quality::special || 0 ||
@@ -2042,18 +2030,17 @@ void character_drops_item(Character& victim)
             (victim.quality == Quality::godly && rnd(3) == 0))
         {
             flt();
-            if (const auto item = itemcreate_extra_inv(503, victim.position, 0))
+            if (const auto item = itemcreate_map_inv(503, victim.position, 0))
             {
                 item->param1 = victim.image;
                 item->subname = charaid2int(victim.id);
-                cell_refresh(item->position.x, item->position.y);
             }
         }
     }
     if (victim.role == Role::wandering_vendor)
     {
         flt();
-        if (const auto item = itemcreate_extra_inv(361, victim.position, 0))
+        if (const auto item = itemcreate_map_inv(361, victim.position, 0))
         {
             item->param1 = victim.shop_store_id;
             item->own_state = 2;
@@ -2063,15 +2050,16 @@ void character_drops_item(Character& victim)
         victim.is_livestock() == 1 || 0)
     {
         flt();
-        if (const auto item = itemcreate_extra_inv(204, victim.position, 0))
+        if (const auto item = itemcreate_map_inv(204, victim.position, 0))
         {
-            remain_make(*item, victim);
+            remain_make(item.unwrap(), victim);
             if (victim.is_livestock() == 1)
             {
-                if (sdata(161, 0) != 0)
+                if (cdata.player().get_skill(161).level != 0)
                 {
-                    item->modify_number(
-                        rnd(1 + (sdata(161, 0) > victim.level)));
+                    item->modify_number(rnd(
+                        1 +
+                        (cdata.player().get_skill(161).level > victim.level)));
                 }
             }
         }
@@ -2089,81 +2077,80 @@ void character_drops_item(Character& victim)
 
 
 
-void check_kill(int killer_chara_index, int victim_chara_index)
+void check_kill(optional_ref<Character> killer_chara, Character& victim)
 {
-    int p_at_m137 = 0;
     if (game_data.current_map == mdata_t::MapId::pet_arena ||
         game_data.current_map == mdata_t::MapId::show_house ||
         game_data.current_map == mdata_t::MapId::arena)
     {
         return;
     }
-    p_at_m137 = 0;
-    if (killer_chara_index >= 0)
+    if (!killer_chara)
     {
-        if (killer_chara_index == 0 ||
-            cdata[killer_chara_index].relationship >= 10)
+        return;
+    }
+
+    int karma = 0;
+    if (killer_chara->is_player() || killer_chara->relationship >= 10)
+    {
+        if (!victim.is_player_or_ally())
         {
-            if (victim_chara_index >= 16)
+            ++game_data.kill_count;
+            if (victim.id == int2charaid(game_data.guild.fighters_guild_target))
             {
-                ++game_data.kill_count;
-                if (cdata[victim_chara_index].id ==
-                    int2charaid(game_data.guild.fighters_guild_target))
+                if (game_data.guild.fighters_guild_quota > 0)
                 {
-                    if (game_data.guild.fighters_guild_quota > 0)
-                    {
-                        --game_data.guild.fighters_guild_quota;
-                    }
-                }
-                if (cdata[victim_chara_index].original_relationship >= 0)
-                {
-                    p_at_m137 = -2;
-                }
-                if (cdata[victim_chara_index].id == CharaId::rich_person)
-                {
-                    p_at_m137 = -15;
-                }
-                if (cdata[victim_chara_index].id == CharaId::noble_child)
-                {
-                    p_at_m137 = -10;
-                }
-                if (cdata[victim_chara_index].id == CharaId::tourist)
-                {
-                    p_at_m137 = -5;
-                }
-                if (is_shopkeeper(cdata[victim_chara_index].role))
-                {
-                    p_at_m137 = -10;
-                }
-                if (cdata[victim_chara_index].role == Role::adventurer)
-                {
-                    chara_modify_impression(cdata[victim_chara_index], -25);
+                    --game_data.guild.fighters_guild_quota;
                 }
             }
-        }
-        if (cdata[killer_chara_index].relationship >= 10)
-        {
-            if (killer_chara_index != 0)
+            if (victim.original_relationship >= 0)
             {
-                if (cdata[killer_chara_index].impression < 200)
-                {
-                    if (rnd(2))
-                    {
-                        chara_modify_impression(cdata[killer_chara_index], 1);
-                        cdata[killer_chara_index].emotion_icon = 317;
-                    }
-                }
-                else if (rnd(10) == 0)
-                {
-                    chara_modify_impression(cdata[killer_chara_index], 1);
-                    cdata[killer_chara_index].emotion_icon = 317;
-                }
+                karma = -2;
+            }
+            if (victim.id == CharaId::rich_person)
+            {
+                karma = -15;
+            }
+            if (victim.id == CharaId::noble_child)
+            {
+                karma = -10;
+            }
+            if (victim.id == CharaId::tourist)
+            {
+                karma = -5;
+            }
+            if (is_shopkeeper(victim.role))
+            {
+                karma = -10;
+            }
+            if (victim.role == Role::adventurer)
+            {
+                chara_modify_impression(victim, -25);
             }
         }
     }
-    if (p_at_m137 != 0)
+    if (killer_chara->relationship >= 10)
     {
-        modify_karma(cdata.player(), p_at_m137);
+        if (!killer_chara->is_player())
+        {
+            if (killer_chara->impression < 200)
+            {
+                if (rnd(2))
+                {
+                    chara_modify_impression(*killer_chara, 1);
+                    killer_chara->emotion_icon = 317;
+                }
+            }
+            else if (rnd(10) == 0)
+            {
+                chara_modify_impression(*killer_chara, 1);
+                killer_chara->emotion_icon = 317;
+            }
+        }
+    }
+    if (karma != 0)
+    {
+        modify_karma(cdata.player(), karma);
     }
 }
 
@@ -2175,7 +2162,7 @@ void heal_both_rider_and_mount(Character& target)
     targets.push_back(std::ref(target));
     if (game_data.mount != 0)
     {
-        if (target.index == game_data.mount || target.index == 0)
+        if (target.index == game_data.mount || target.is_player())
         {
             if (target.index == game_data.mount)
             {

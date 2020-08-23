@@ -3,6 +3,7 @@
 #include <string>
 
 #include "enums.hpp"
+#include "eobject/forward.hpp"
 #include "optional.hpp"
 
 
@@ -40,14 +41,14 @@ int calc_evasion(const Character& chara);
 int calc_accuracy(
     const Character& attacker,
     const Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo,
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo,
     bool consider_distance);
 int calcattackhit(
     const Character& attacker,
     const Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo);
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo);
 
 
 enum class AttackDamageCalculationMode
@@ -58,8 +59,8 @@ enum class AttackDamageCalculationMode
 int calcattackdmg(
     const Character& attacker,
     const Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo,
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo,
     AttackDamageCalculationMode);
 
 
@@ -71,8 +72,8 @@ struct CalcAttackProtectionResult
 };
 CalcAttackProtectionResult calc_attack_protection(const Character& chara);
 
-int calcmedalvalue(const Item& item);
-int calcitemvalue(const Item& item, int calc_mode);
+int calcmedalvalue(const ItemRef& item);
+int calcitemvalue(const ItemRef& item, int calc_mode);
 int calcinvestvalue(const Character& shopkeeper);
 int calcguiltvalue();
 int calc_adventurer_hire_cost(const Character& adv);
@@ -82,12 +83,18 @@ void calccosthire();
 int calccostbuilding();
 int calccosttax();
 int calcmealvalue();
-int calccostreload(int, bool = false);
+int calc_ammo_reloading_cost(Character& owner, bool do_reload = false);
 int calccargoupdate();
 int calccargoupdatecost();
 int calcidentifyvalue(int);
-int calctraincost(int, int, bool = false);
-int calclearncost(int, int, bool = false);
+int calc_skill_training_cost(
+    int skill_id,
+    const Character& chara,
+    bool discount = false);
+int calc_skill_learning_cost(
+    int skill_id,
+    const Character& chara,
+    bool discount = false);
 int calc_resurrection_value(const Character& chara);
 int calc_slave_value(const Character& chara);
 int calcrestorecost();

@@ -18,6 +18,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/lua_env.hpp"
@@ -29,6 +30,7 @@
 #include "message.hpp"
 #include "random.hpp"
 #include "save.hpp"
+#include "save_fs.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -56,11 +58,11 @@ const std::vector<std::pair<int, Role>> isethire = {
 
 
 
-int calc_heirloom_value(const Item& heirloom)
+int calc_heirloom_value(const ItemRef& heirloom)
 {
-    const auto category = the_item_db[itemid2int(heirloom.id)]->category;
+    const auto category = the_item_db[itemid2int(heirloom->id)]->category;
 
-    auto value = heirloom.value;
+    auto value = heirloom->value;
     switch (category)
     {
     case ItemCategory::furniture: return value / 20;
@@ -78,25 +80,25 @@ constexpr size_t heirloom_list_size = 10;
 // most valuable one.
 void add_heirloom_if_valuable_enough(
     std::vector<HomeRankHeirloom>& heirlooms,
-    Item& heirloom)
+    const ItemRef& heirloom)
 {
-    const auto category = the_item_db[itemid2int(heirloom.id)]->category;
+    const auto category = the_item_db[itemid2int(heirloom->id)]->category;
     if (category == ItemCategory::furniture)
     {
-        game_data.total_deco_value += clamp(heirloom.value / 50, 50, 500);
+        game_data.total_deco_value += clamp(heirloom->value / 50, 50, 500);
     }
 
     const auto value = calc_heirloom_value(heirloom);
     if (heirlooms.size() < heirloom_list_size)
     {
-        heirlooms.push_back({std::ref(heirloom), value});
+        heirlooms.push_back({heirloom, value});
         range::sort(heirlooms, [](const auto& a, const auto& b) {
             return a.value > b.value;
         });
     }
     else if (heirlooms.back().value < value)
     {
-        heirlooms.back() = {std::ref(heirloom), value};
+        heirlooms.push_back({heirloom, value});
         range::sort(heirlooms, [](const auto& a, const auto& b) {
             return a.value > b.value;
         });
@@ -126,7 +128,7 @@ int calc_num_of_shop_customers(int shop_level, const Character& shopkeeper)
     {
         ret += rnd(shop_level / 3 + 5);
     }
-    ret = ret * (80 + sdata(17, shopkeeper.index) * 3 / 2) / 100;
+    ret = ret * (80 + shopkeeper.get_skill(17).level * 3 / 2) / 100;
     if (ret < 1)
     {
         ret = 1;
@@ -138,11 +140,11 @@ int calc_num_of_shop_customers(int shop_level, const Character& shopkeeper)
 
 struct ItemForSale
 {
-    Item& item;
+    ItemRef item;
     ItemCategory category;
 
 
-    ItemForSale(Item& item, ItemCategory category)
+    ItemForSale(const ItemRef& item, ItemCategory category)
         : item(item)
         , category(category)
     {
@@ -155,46 +157,46 @@ std::vector<ItemForSale> list_items_for_sale()
 {
     std::vector<ItemForSale> ret;
 
-    for (auto&& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (item.id == ItemId::shop_strongbox)
+        if (item->id == ItemId::shop_strongbox)
         {
             continue;
         }
-        if (item.id == ItemId::register_)
+        if (item->id == ItemId::register_)
         {
             continue;
         }
-        if (item.id == ItemId::book_b)
+        if (item->id == ItemId::book_b)
         {
             continue;
         }
-        if (item.id == ItemId::gold_piece)
+        if (item->id == ItemId::gold_piece)
         {
             continue;
         }
-        if (item.id == ItemId::shelter)
+        if (item->id == ItemId::shelter)
         {
             continue;
         }
-        if (item.id == ItemId::deed)
+        if (item->id == ItemId::deed)
         {
             continue;
         }
-        if (item.weight < 0)
+        if (item->weight < 0)
         {
             continue;
         }
-        if (item.quality >= Quality::special)
+        if (item->quality >= Quality::special)
         {
             continue;
         }
-        if (item.value < 50)
+        if (item->value < 50)
         {
             continue;
         }
 
-        const auto category = the_item_db[itemid2int(item.id)]->category;
+        const auto category = the_item_db[itemid2int(item->id)]->category;
         if (category == ItemCategory::furniture)
         {
             continue;
@@ -208,10 +210,10 @@ std::vector<ItemForSale> list_items_for_sale()
 
 
 
-int calc_item_price_per_one(Item& item, const Character& shopkeeper)
+int calc_item_price_per_one(const ItemRef& item, const Character& shopkeeper)
 {
     const auto V = calcitemvalue(item, 2);
-    const auto I = sdata(156, shopkeeper.index);
+    const auto I = shopkeeper.get_skill(156).level;
 
     return V * static_cast<int>(10 + std::sqrt(I * 200)) / 100;
 }
@@ -267,8 +269,7 @@ void initialize_home_adata()
     }
     if (game_data.home_scale != 0)
     {
-        area_data[p].position.x = cdata.player().position.x;
-        area_data[p].position.y = cdata.player().position.y;
+        area_data[p].position = cdata.player().position;
     }
     area_data[p].outer_map = game_data.destination_outer_map;
 }
@@ -358,7 +359,7 @@ static int _find_free_area_slot()
     return area_;
 }
 
-TurnResult build_new_building(Item& deed)
+TurnResult build_new_building(const ItemRef& deed)
 {
     if (map_data.type != mdata_t::MapType::world_map)
     {
@@ -390,10 +391,10 @@ TurnResult build_new_building(Item& deed)
         return TurnResult::pc_turn_user_error;
     }
 
-    if (deed.id == ItemId::deed)
+    if (deed->id == ItemId::deed)
     {
-        auto home_scale = deed.param1;
-        deed.modify_number(-1);
+        auto home_scale = deed->param1;
+        deed->modify_number(-1);
 
         return _build_new_home(home_scale);
     }
@@ -403,7 +404,7 @@ TurnResult build_new_building(Item& deed)
 
     // Find the map which is generated by the deed and generate the map's area
     // from it.
-    const auto map = _find_map_from_deed(itemid2int(deed.id));
+    const auto map = _find_map_from_deed(itemid2int(deed->id));
 
     if (!map)
     {
@@ -415,13 +416,13 @@ TurnResult build_new_building(Item& deed)
     area_generate_from_mapdef(
         area, *map, game_data.destination_outer_map, pos.x, pos.y);
 
-    s = i18n::s.get_enum("core.building.names", itemid2int(deed.id));
+    s = i18n::s.get_enum("core.building.names", itemid2int(deed->id));
     snd("core.build1");
     txt(i18n::s.get("core.building.built_new", s(0)),
         Message::color{ColorIndex::orange});
 
     map_global_prepare();
-    deed.modify_number(-1);
+    deed->modify_number(-1);
 
     return TurnResult::turn_end;
 }
@@ -448,6 +449,8 @@ void addbuilding(int related_town_quest_id, int building_type, int x, int y)
     bddata(3, related_town_quest_id, slot) = bdref(0, building_type) + 363;
 }
 
+
+
 TurnResult show_house_board()
 {
     Message::instance().linebreak();
@@ -461,9 +464,9 @@ TurnResult show_house_board()
     p(0) = 0;
     p(1) = 0;
     p(2) = 400;
-    for (const auto& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (the_item_db[itemid2int(item.id)]->category !=
+        if (the_item_db[itemid2int(item->id)]->category !=
             ItemCategory::furniture)
         {
             ++p;
@@ -798,11 +801,11 @@ void show_home_value()
     for (const auto& [heirloom, _value] : heirlooms)
     {
         draw_item_with_portrait_scale_height(
-            heirloom.get(), wx + 37, i * 16 + wy + 138);
+            heirloom, wx + 37, i * 16 + wy + 138);
         mes(wx + 68,
             i * 16 + wy + 138,
             i18n::s.get("core.building.home.rank.place", cnvrank(i + 1)));
-        mes(wx + 110, i * 16 + wy + 138, itemname(heirloom.get()));
+        mes(wx + 110, i * 16 + wy + 138, itemname(heirloom));
         ++i;
     }
 
@@ -906,8 +909,7 @@ void prompt_ally_staying()
         {
             if (game_data.current_map == mdata_t::MapId::your_home)
             {
-                cdata[c].initial_position.x = cdata[c].position.x;
-                cdata[c].initial_position.y = cdata[c].position.y;
+                cdata[c].initial_position = cdata[c].position;
                 txt(i18n::s.get(
                     "core.building.home.staying.add.ally", cdata[c]));
             }
@@ -975,7 +977,9 @@ void show_shop_log()
     if (game_data.current_map != area)
     {
         ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
-        ctrl_file(FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
+        ctrl_file(
+            FileOperation2::map_items_read,
+            fs::u8path(u8"inv_"s + mid + u8".s2"));
     }
     mode = 6;
 
@@ -1009,7 +1013,7 @@ void show_shop_log()
         {
             continue; // too expensive
         }
-        if (item_for_sale.item.number() <= 0)
+        if (item_for_sale.item->number() <= 0)
         {
             continue; // sold out
         }
@@ -1018,16 +1022,16 @@ void show_shop_log()
             continue;
         }
 
-        const auto num = rnd_capped(item_for_sale.item.number()) + 1;
-        item_for_sale.item.modify_number(-num);
+        const auto num = rnd_capped(item_for_sale.item->number()) + 1;
+        item_for_sale.item->modify_number(-num);
         total_sold_items += num;
         const auto total_price = price_per_one * num;
 
         if (rnd(4) == 0)
         {
             sold_items.emplace_back(
-                the_item_db[itemid2int(item_for_sale.item.id)]->level,
-                item_for_sale.item.quality,
+                the_item_db[itemid2int(item_for_sale.item->id)]->level,
+                item_for_sale.item->quality,
                 item_for_sale.category,
                 total_price);
         }
@@ -1059,31 +1063,19 @@ void show_shop_log()
     mode = 0;
     if (game_data.current_map != area)
     {
-        ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
-    }
-    else
-    {
-        ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
+        ctrl_file(
+            FileOperation2::map_items_write,
+            fs::u8path(u8"inv_"s + mid + u8".s2"));
+        ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
     }
 
-    tmpload(filepathutil::u8path(u8"shop5.s2"));
-    if (fs::exists(filesystem::dirs::tmp() / u8"shop5.s2"))
-    {
-        ctrl_file(FileOperation2::map_items_read, u8"shop5.s2");
-    }
-    else
-    {
-        for (auto&& item : inv.ground())
-        {
-            item.remove();
-        }
-    }
+    inv_open_tmp_inv("shop5.s2");
     mode = 6;
 
     if (total_profit != 0)
     {
         flt();
-        itemcreate_extra_inv(54, -1, -1, total_profit);
+        itemcreate_tmp_inv(54, total_profit);
     }
 
     int num_of_exchanged_items = 0;
@@ -1096,11 +1088,11 @@ void show_shop_log()
             flt(sold_item.level, sold_item.quality);
             flttypemajor = static_cast<int>(sold_item.category);
             nostack = 1;
-            if (const auto item = itemcreate_extra_inv(0, -1, -1, 0))
+            if (const auto item = itemcreate_tmp_inv(0, 0))
             {
                 if (item->value > sold_item.total_price * 2)
                 {
-                    item_stack(-1, *item);
+                    inv_stack(g_inv.tmp(), item.unwrap());
                     generated = true;
                     break;
                 }
@@ -1120,7 +1112,7 @@ void show_shop_log()
         }
         else
         {
-            itemcreate_extra_inv(54, -1, -1, sold_item.total_price);
+            itemcreate_tmp_inv(54, sold_item.total_price);
             total_profit += sold_item.total_price;
         }
     }
@@ -1166,8 +1158,7 @@ void show_shop_log()
     }
 
     mode = 0;
-    ctrl_file(FileOperation2::map_items_write, u8"shop5.s2");
-    ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
+    inv_close_tmp_inv("shop5.s2");
 }
 
 
@@ -1175,19 +1166,20 @@ void show_shop_log()
 void update_shop()
 {
     map_data.max_crowd_density = (100 - game_data.ranks.at(5) / 100) / 4 + 1;
-    for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
+    for (int y = 0; y < map_data.height; ++y)
     {
-        y = cnt;
-        for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
+        for (int x = 0; x < map_data.width; ++x)
         {
-            cell_data.at(cnt, y).item_info_actual.clear();
-            cell_data.at(cnt, y).light = 0;
+            cell_data.at(x, y).item_info_actual.clear();
+            // TODO phantom_ref
+            cell_data.at(x, y).item_info_memory.clear();
+            cell_data.at(x, y).light = 0;
         }
     }
-    for (const auto& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        x = item.position.x;
-        y = item.position.y;
+        x = item->pos().x;
+        y = item->pos().y;
         if (x < 0 || x >= map_data.width || y < 0 || y >= map_data.height)
         {
             continue;
@@ -1230,24 +1222,26 @@ void calc_collection_value(int chara_id, bool val0)
     }
 }
 
+
+
 void update_museum()
 {
     rankorg = game_data.ranks.at(3);
     rankcur = 0;
     DIM3(dblist, 2, 800);
-    for (const auto& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (item.id != ItemId::figurine && item.id != ItemId::card)
+        if (item->id != ItemId::figurine && item->id != ItemId::card)
         {
             continue;
         }
-        if (cell_data.at(item.position.x, item.position.y)
-                .item_info_actual.stack_count() == 1)
+        if (cell_data.at(item->pos().x, item->pos().y)
+                .item_info_actual.stack_count() != 1)
         {
             continue;
         }
-        calc_collection_value(item.subname, item.id != ItemId::figurine);
-        if (item.id == ItemId::figurine)
+        calc_collection_value(item->subname, item->id != ItemId::figurine);
+        if (item->id == ItemId::figurine)
         {
             rankcur += rtval;
         }
@@ -1297,10 +1291,10 @@ std::vector<HomeRankHeirloom> building_update_home_rank()
     game_data.total_heirloom_value = 0;
 
     std::vector<HomeRankHeirloom> heirlooms;
-    for (auto&& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (cell_data.at(item.position.x, item.position.y)
-                .item_info_actual.stack_count() == 1)
+        if (cell_data.at(item->pos().x, item->pos().y)
+                .item_info_actual.stack_count() != 1)
         {
             continue;
         }
@@ -1457,7 +1451,7 @@ void update_ranch()
                     (chara.race == "core.chicken" && rnd(20) == 0))
                 {
                     ++egg_or_milk_count;
-                    if (const auto item = itemcreate_extra_inv(573, x, y, 0))
+                    if (const auto item = itemcreate_map_inv(573, x, y, 0))
                     {
                         item->subname = charaid2int(chara.id);
                         item->weight = chara.weight * 10 + 250;
@@ -1472,7 +1466,7 @@ void update_ranch()
                     (chara.race == "core.sheep" && rnd(20) == 0))
                 {
                     ++egg_or_milk_count;
-                    if (const auto item = itemcreate_extra_inv(574, x, y, 0))
+                    if (const auto item = itemcreate_map_inv(574, x, y, 0))
                     {
                         item->subname = charaid2int(chara.id);
                     }
@@ -1482,7 +1476,7 @@ void update_ranch()
                 // Shit
                 if (rnd(80) == 0)
                 {
-                    if (const auto item = itemcreate_extra_inv(575, x, y, 0))
+                    if (const auto item = itemcreate_map_inv(575, x, y, 0))
                     {
                         item->subname = charaid2int(chara.id);
                         item->weight = chara.weight * 40 + 300;
@@ -1500,7 +1494,7 @@ void update_ranch()
                     {
                         item_id = 45;
                     }
-                    itemcreate_extra_inv(item_id, x, y, 0);
+                    itemcreate_map_inv(item_id, x, y, 0);
                 }
                 break;
             case 4:
@@ -1560,19 +1554,7 @@ int calcincome(int rank_id)
 void supply_income()
 {
     invfile = 4;
-    ctrl_file(FileOperation2::map_items_write, u8"shoptmp.s2");
-    tmpload(filepathutil::u8path(u8"shop4.s2"));
-    if (fs::exists(filesystem::dirs::tmp() / u8"shop4.s2"s))
-    {
-        ctrl_file(FileOperation2::map_items_read, u8"shop4.s2"s);
-    }
-    else
-    {
-        for (auto&& item : inv.ground())
-        {
-            item.remove();
-        }
-    }
+    inv_open_tmp_inv("shop4.s2");
     mode = 6;
     income(0) = 0;
     income(1) = 0;
@@ -1586,7 +1568,7 @@ void supply_income()
             rnd_capped(calcincome(cnt) / 3 + 1);
         income += p;
         flt();
-        itemcreate_extra_inv(54, -1, -1, p);
+        itemcreate_tmp_inv(54, p);
         if (cnt == 5 || cnt == 6)
         {
             continue;
@@ -1612,7 +1594,7 @@ void supply_income()
             {
                 item_id = 559;
             }
-            itemcreate_extra_inv(item_id, -1, -1, 0);
+            itemcreate_tmp_inv(item_id, 0);
             ++income(1);
         }
     }
@@ -1625,7 +1607,7 @@ void supply_income()
         }
         income += p;
         flt();
-        itemcreate_extra_inv(54, -1, -1, p);
+        itemcreate_tmp_inv(54, p);
     }
     if (income != 0 || income(1) != 0)
     {
@@ -1650,12 +1632,12 @@ void supply_income()
         if (cdata.player().level > 5)
         {
             save_set_autosave();
-            if (!inv_getspace(-1))
+            if (!g_inv.tmp().has_free_slot())
             {
-                inv_compress(-1);
+                inv_compress(g_inv.tmp());
             }
             flt();
-            if (const auto item = itemcreate_extra_inv(615, -1, -1, 0))
+            if (const auto item = itemcreate_tmp_inv(615, 0))
             {
                 item->subname =
                     game_data.cost_to_hire + calccostbuilding() + calccosttax();
@@ -1703,8 +1685,7 @@ void supply_income()
             txt(i18n::s.get("core.misc.tax.no_duty"));
         }
     }
-    ctrl_file(FileOperation2::map_items_write, u8"shop"s + invfile + u8".s2");
-    ctrl_file(FileOperation2::map_items_read, u8"shoptmp.s2");
+    inv_close_tmp_inv("shop4.s2");
     mode = 0;
     maybe_show_ex_help(16);
 }
@@ -1765,7 +1746,7 @@ void try_to_grow_plant(int val0)
             p = p * 2;
         }
     }
-    if (sdata(180, 0) < rnd(p + 1) || rnd(20) == 0)
+    if (cdata.player().get_skill(180).level < rnd(p + 1) || rnd(20) == 0)
     {
         feat(3) += 50;
     }
@@ -1800,7 +1781,8 @@ void harvest_plant(int val)
     {
         p = p * 4 / 3;
     }
-    if (sdata(180, 0) < rnd(p + 1) || rnd(5) == 0 || feat(2) == 40)
+    if (cdata.player().get_skill(180).level < rnd(p + 1) || rnd(5) == 0 ||
+        feat(2) == 40)
     {
         cell_data.at(cdata.player().position.x, cdata.player().position.y)
             .feats = 0;
@@ -1825,7 +1807,7 @@ void create_harvested_item()
 {
     chara_gain_skill_exp(cdata.player(), 180, 75);
     snd("core.bush1");
-    flt(sdata(180, 0) / 2 + 15, Quality::good);
+    flt(cdata.player().get_skill(180).level / 2 + 15, Quality::good);
     int item_id = 0;
     if (feat(2) == 39)
     {
@@ -1863,8 +1845,8 @@ void create_harvested_item()
     }
     if (const auto item = itemcreate_player_inv(item_id, 0))
     {
-        txt(i18n::s.get("core.action.plant.harvest", *item));
-        item_stack(0, *item, true);
+        txt(i18n::s.get("core.action.plant.harvest", item.unwrap()));
+        inv_stack(g_inv.pc(), item.unwrap(), true);
     }
 }
 

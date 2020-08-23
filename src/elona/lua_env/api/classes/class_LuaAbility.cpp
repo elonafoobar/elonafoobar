@@ -1,6 +1,7 @@
 #include "class_LuaAbility.hpp"
 
 #include "../../../ability.hpp"
+#include "../../../character.hpp"
 
 
 
@@ -22,7 +23,8 @@ namespace elona::lua::api::classes::class_LuaAbility
         { \
             return 0; \
         } \
-        return sdata.get(a.skill_id, a.index).name; \
+        auto& ref = *a.get_ref(); \
+        return ref.get_skill(a.skill_id).name; \
     })
 
 #define ELONA_LUA_SKILL_PROPERTY(name) \
@@ -32,14 +34,16 @@ namespace elona::lua::api::classes::class_LuaAbility
             { \
                 return 0; \
             } \
-            return sdata.get(a.skill_id, a.index).name; \
+            auto& ref = *a.get_ref(); \
+            return ref.get_skill(a.skill_id).name; \
         }, \
         [](classes::LuaAbility& a, int i) { \
             if (!a.is_valid()) \
             { \
                 return; \
             } \
-            sdata.get(a.skill_id, a.index).name = i; \
+            auto& ref = *a.get_ref(); \
+            ref.get_skill(a.skill_id).name = i; \
         })
 
 void bind(sol::state& lua)
@@ -58,18 +62,18 @@ void bind(sol::state& lua)
     LuaAbility.set("experience", ELONA_LUA_SKILL_PROPERTY_READONLY(experience));
 
     /**
-     * @luadoc current_level field num
+     * @luadoc level field num
      *
      * [RW] The skill's current level.
      */
-    LuaAbility.set("current_level", ELONA_LUA_SKILL_PROPERTY(current_level));
+    LuaAbility.set("level", ELONA_LUA_SKILL_PROPERTY(level));
 
     /**
-     * @luadoc original_level field num
+     * @luadoc base_level field num
      *
-     * [RW] The skill's original level.
+     * [RW] The skill's base level.
      */
-    LuaAbility.set("original_level", ELONA_LUA_SKILL_PROPERTY(original_level));
+    LuaAbility.set("base_level", ELONA_LUA_SKILL_PROPERTY(base_level));
 
     /**
      * @luadoc potential field num

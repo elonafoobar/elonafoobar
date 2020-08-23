@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iterator>
 
-#include "filepathutil.hpp"
+#include "filesystem.hpp"
 
 
 
@@ -97,14 +97,13 @@ struct ByLineReader
     };
 
 
-    ByLineReader(const boost::filesystem::path& filepath)
+    ByLineReader(const lib::filesystem::path& filepath)
     {
         in.open(filepath.native());
         if (!in)
         {
             throw std::runtime_error(
-                u8"Could not open file " +
-                filepathutil::make_preferred_path_in_utf8(filepath));
+                u8"Could not open file " + filepath.to_u8string());
         }
         skip_bom(in);
     }
@@ -128,7 +127,7 @@ private:
 
 
 
-inline ByLineReader read_by_line(const boost::filesystem::path& filepath)
+inline ByLineReader read_by_line(const lib::filesystem::path& filepath)
 {
     return {filepath};
 }

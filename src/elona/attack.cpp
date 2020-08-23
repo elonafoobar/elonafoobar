@@ -65,11 +65,11 @@ void build_target_list(const Character& attacker)
             {
                 continue;
             }
-            if (attacker.index == 0 || attacker.relationship >= 0)
+            if (attacker.is_player() || attacker.relationship >= 0)
             {
                 if (cnt.relationship == 10)
                 {
-                    if (cnt.index == 0)
+                    if (cnt.is_player())
                     {
                         continue;
                     }
@@ -118,16 +118,8 @@ void build_target_list(const Character& attacker)
         i = 1;
         for (int cnt = 0, cnt_end = (listmax - 1); cnt < cnt_end; ++cnt)
         {
-            p = dist(
-                attacker.position.x,
-                attacker.position.y,
-                list(1, cnt),
-                list(2, cnt));
-            p(1) = dist(
-                attacker.position.x,
-                attacker.position.y,
-                list(1, cnt + 1),
-                list(2, cnt + 1));
+            p = dist(attacker.position, list(1, cnt), list(2, cnt));
+            p(1) = dist(attacker.position, list(1, cnt + 1), list(2, cnt + 1));
             if (p(1) < p)
             {
                 p(0) = list(0, cnt);
@@ -154,8 +146,8 @@ void build_target_list(const Character& attacker)
 
 CanDoRangedAttackResult can_do_ranged_attack(const Character& chara)
 {
-    optional_ref<Item> weapon;
-    optional_ref<Item> ammo;
+    OptionalItemRef weapon;
+    OptionalItemRef ammo;
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         body = 100 + cnt;
@@ -165,29 +157,29 @@ CanDoRangedAttackResult can_do_ranged_attack(const Character& chara)
         }
         if (chara.equipment_slots[cnt].type == 10)
         {
-            weapon = *chara.equipment_slots[cnt].equipment;
+            weapon = chara.equipment_slots[cnt].equipment;
         }
         if (chara.equipment_slots[cnt].type == 11)
         {
-            ammo = *chara.equipment_slots[cnt].equipment;
+            ammo = chara.equipment_slots[cnt].equipment;
         }
     }
     if (!weapon)
     {
-        return {-1, none, none};
+        return {-1, nullptr, nullptr};
     }
     if (!ammo)
     {
         if (weapon->skill != 111)
         {
-            return {-2, none, none};
+            return {-2, nullptr, nullptr};
         }
     }
     if (ammo)
     {
         if (weapon->skill != ammo->skill)
         {
-            return {-3, none, none};
+            return {-3, nullptr, nullptr};
         }
     }
     attackskill = weapon->skill;
@@ -199,8 +191,8 @@ CanDoRangedAttackResult can_do_ranged_attack(const Character& chara)
 bool do_physical_attack_internal(
     Character& attacker,
     Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo)
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo)
 {
     int attackdmg;
 
@@ -248,7 +240,7 @@ bool do_physical_attack_internal(
     {
         if (critical)
         {
-            if (attacker.index == 0)
+            if (attacker.is_player())
             {
                 txt(i18n::s.get("core.damage.critical_hit"),
                     Message::color{ColorIndex::red});
@@ -261,7 +253,7 @@ bool do_physical_attack_internal(
             ammo,
             AttackDamageCalculationMode::actual_damage);
         attackdmg = dmg;
-        if (attacker.index == 0)
+        if (attacker.is_player())
         {
             if (g_config.attack_animation())
             {
@@ -332,7 +324,7 @@ bool do_physical_attack_internal(
             }
             if (attackskill == 106)
             {
-                if (target.index >= 16)
+                if (!target.is_player_or_ally())
                 {
                     game_data.proc_damage_events_flag = 2;
                     txt(i18n::s.get(
@@ -356,7 +348,7 @@ bool do_physical_attack_internal(
                 if (attackskill == 111)
                 {
                     // Special case for thrown weapons.
-                    weapon_name = itemname(*weapon, 1, false);
+                    weapon_name = itemname(weapon.unwrap(), 1, false);
                 }
                 else
                 {
@@ -365,7 +357,7 @@ bool do_physical_attack_internal(
                 }
                 if (weapon_name)
                 {
-                    if (target.index >= 16)
+                    if (!target.is_player_or_ally())
                     {
                         game_data.proc_damage_events_flag = 2;
                         if (attackskill == 111)
@@ -411,15 +403,15 @@ bool do_physical_attack_internal(
             chara_gain_skill_exp(attacker, 186, 60 / expmodifer, 2);
             critical = 0;
         }
-        if (rtdmg > target.max_hp / 20 || rtdmg > sdata(154, target.index) ||
+        if (rtdmg > target.max_hp / 20 || rtdmg > target.get_skill(154).level ||
             rnd(5) == 0)
         {
             chara_gain_skill_exp(
                 attacker,
                 attackskill,
                 clamp(
-                    (sdata(173, target.index) * 2 -
-                     sdata(attackskill, attacker.index) + 1),
+                    (target.get_skill(173).level * 2 -
+                     attacker.get_skill(attackskill).level + 1),
                     5,
                     50) /
                     expmodifer,
@@ -445,7 +437,7 @@ bool do_physical_attack_internal(
             {
                 chara_gain_skill_exp(attacker, 189, 25 / expmodifer, 0, 4);
             }
-            if (attacker.index == 0)
+            if (attacker.is_player())
             {
                 if (game_data.mount != 0)
                 {
@@ -470,7 +462,7 @@ bool do_physical_attack_internal(
         }
         if (attackskill != 106)
         {
-            proc_weapon_enchantments(attacker, target, *weapon);
+            proc_weapon_enchantments(attacker, target, weapon.unwrap());
         }
         if (target.cut_counterattack > 0)
         {
@@ -531,7 +523,7 @@ bool do_physical_attack_internal(
                         {
                             if (rnd(5) == 0)
                             {
-                                item_acid(attacker, *weapon);
+                                item_acid(attacker, weapon);
                             }
                         }
                     }
@@ -559,16 +551,17 @@ bool do_physical_attack_internal(
     }
     else
     {
-        if (attacker.index == 0)
+        if (attacker.is_player())
         {
             snd("core.miss");
         }
-        if (sdata(attackskill, attacker.index) > sdata(173, target.index) ||
+        if (attacker.get_skill(attackskill).level >
+                target.get_skill(173).level ||
             rnd(5) == 0)
         {
             p = clamp(
-                    (sdata(attackskill, attacker.index) -
-                     sdata(173, target.index) / 2 + 1),
+                    (attacker.get_skill(attackskill).level -
+                     target.get_skill(173).level / 2 + 1),
                     1,
                     20) /
                 expmodifer;
@@ -585,7 +578,7 @@ bool do_physical_attack_internal(
                 txt(i18n::s.get("core.damage.furthermore"));
                 Message::instance().continue_sentence();
             }
-            if (target.index < 16)
+            if (target.is_player_or_ally())
             {
                 txt(i18n::s.get("core.damage.miss.ally", attacker, target));
             }
@@ -605,7 +598,7 @@ bool do_physical_attack_internal(
                 txt(i18n::s.get("core.damage.furthermore"));
                 Message::instance().continue_sentence();
             }
-            if (target.index < 16)
+            if (target.is_player_or_ally())
             {
                 txt(i18n::s.get("core.damage.evade.ally", attacker, target));
             }
@@ -631,7 +624,8 @@ bool do_physical_attack_internal(
                     {
                         snd("core.ding3");
                         txt(i18n::s.get(
-                                "core.misc.living_weapon_taste_blood", *weapon),
+                                "core.misc.living_weapon_taste_blood",
+                                weapon.unwrap()),
                             Message::color{ColorIndex::green});
                     }
                 }
@@ -665,8 +659,8 @@ bool do_physical_attack_internal(
 void do_physical_attack(
     Character& attacker,
     Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo)
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo)
 {
     while (do_physical_attack_internal(attacker, target, weapon, ammo))
         ;
@@ -677,8 +671,8 @@ void do_physical_attack(
 void do_ranged_attack(
     Character& attacker,
     Character& target,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo)
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo)
 {
     int ammox = 0;
     int ammoy = 0;
@@ -701,7 +695,7 @@ void do_ranged_attack(
             else
             {
                 ammoproc = ammo->enchantments[ammo->count].id % 10000;
-                if (attacker.index == 0)
+                if (attacker.is_player())
                 {
                     if (cdata.player().sp < 50)
                     {
@@ -728,8 +722,8 @@ void do_ranged_attack(
         for (int cnt = 0; cnt < 3; ++cnt)
         {
             const auto result = can_do_ranged_attack(attacker);
-            weapon = result.weapon;
-            ammo = result.ammo;
+            const auto& weapon = result.weapon;
+            const auto& ammo = result.ammo;
             ele = 0;
             extraattack = 0;
             do_physical_attack(attacker, rapidshot_target.get(), weapon, ammo);
@@ -753,8 +747,8 @@ void do_ranged_attack(
         for (int cnt = 0; cnt < 10; ++cnt)
         {
             const auto result = can_do_ranged_attack(attacker);
-            weapon = result.weapon;
-            ammo = result.ammo;
+            const auto& weapon = result.weapon;
+            const auto& ammo = result.ammo;
             ele = 0;
             build_target_list(attacker);
             if (listmax == 0)
@@ -762,7 +756,7 @@ void do_ranged_attack(
                 break;
             }
             const auto shot_target = list(0, rnd(listmax));
-            if (attacker.index == 0 || attacker.relationship >= 0)
+            if (attacker.is_player() || attacker.relationship >= 0)
             {
                 if (cdata[shot_target].relationship >= 0)
                 {
@@ -792,7 +786,7 @@ void do_ranged_attack(
         tlocx = ammox;
         tlocy = ammoy;
         efid = 460;
-        efp = sdata(attackskill, attacker.index) * 8 + 10;
+        efp = attacker.get_skill(attackskill).level * 8 + 10;
         magic(cdata.player(), target);
     }
     ammoproc = -1;
@@ -803,7 +797,7 @@ void do_ranged_attack(
 
 void try_to_melee_attack(Character& attacker, Character& target)
 {
-    if (attacker.index != 0)
+    if (!attacker.is_player())
     {
         if (target.damage_reaction_info)
         {
@@ -835,7 +829,7 @@ void try_to_melee_attack(Character& attacker, Character& target)
     ele = 0;
     if (attacker.combat_style.shield())
     {
-        if (clamp(int(std::sqrt(sdata(168, attacker.index)) - 3), 1, 5) +
+        if (clamp(int(std::sqrt(attacker.get_skill(168).level) - 3), 1, 5) +
                 attacker.has_power_bash() * 5 >
             rnd(100))
         {
@@ -846,12 +840,12 @@ void try_to_melee_attack(Character& attacker, Character& target)
             }
             damage_hp(
                 target,
-                rnd_capped(sdata(168, attacker.index)) + 1,
+                rnd_capped(attacker.get_skill(168).level) + 1,
                 attacker.index);
             status_ailment_damage(
                 target,
                 StatusAilment::dimmed,
-                50 + int(std::sqrt(sdata(168, attacker.index))) * 15);
+                50 + int(std::sqrt(attacker.get_skill(168).level)) * 15);
             target.paralyzed += rnd(3);
         }
     }
@@ -870,19 +864,19 @@ void try_to_melee_attack(Character& attacker, Character& target)
         {
             continue;
         }
-        auto& weapon = *attacker.equipment_slots[cnt].equipment;
-        if (weapon.dice_x > 0)
+        const auto weapon = attacker.equipment_slots[cnt].equipment;
+        if (weapon->dice_x > 0)
         {
-            attackskill = weapon.skill;
+            attackskill = weapon->skill;
             ++attacknum;
             extraattack = 0;
-            do_physical_attack(attacker, target, weapon, none);
+            do_physical_attack(attacker, target, weapon, nullptr);
         }
     }
     if (attackskill == 106)
     {
         extraattack = 0;
-        do_physical_attack(attacker, target, none, none);
+        do_physical_attack(attacker, target, nullptr, nullptr);
     }
 }
 
@@ -891,25 +885,25 @@ void try_to_melee_attack(Character& attacker, Character& target)
 void proc_weapon_enchantments(
     Character& attacker,
     Character& target,
-    const Item& weapon)
+    const ItemRef& weapon)
 {
     for (int cnt = 0; cnt < 15; ++cnt)
     {
-        if (weapon.enchantments[cnt].id == 0)
+        if (weapon->enchantments[cnt].id == 0)
         {
             break;
         }
-        enc = weapon.enchantments[cnt].id;
+        enc = weapon->enchantments[cnt].id;
         if (enc == 36)
         {
-            p = rnd_capped(weapon.enchantments[cnt].power / 50 + 1) + 1;
+            p = rnd_capped(weapon->enchantments[cnt].power / 50 + 1) + 1;
             heal_sp(attacker, p);
             damage_sp(target, p / 2);
             continue;
         }
         if (enc == 38)
         {
-            p = rnd_capped(weapon.enchantments[cnt].power / 25 + 1) + 1;
+            p = rnd_capped(weapon->enchantments[cnt].power / 25 + 1) + 1;
             heal_mp(attacker, p / 5);
             if (target.state() != Character::State::alive)
             {
@@ -935,7 +929,7 @@ void proc_weapon_enchantments(
                     txt(i18n::s.get("core.action.time_stop.begins", attacker),
                         Message::color{ColorIndex::cyan});
                     game_data.left_turns_of_timestop =
-                        weapon.enchantments[cnt].power / 100 + 1 + 1;
+                        weapon->enchantments[cnt].power / 100 + 1 + 1;
                 }
                 continue;
             }
@@ -989,12 +983,13 @@ void proc_weapon_enchantments(
                 damage_hp(
                     target,
                     rnd_capped(
-                        orgdmg * (100 + weapon.enchantments[cnt].power) / 1000 +
+                        orgdmg * (100 + weapon->enchantments[cnt].power) /
+                            1000 +
                         1) +
                         5,
                     attacker.index,
                     ele,
-                    weapon.enchantments[cnt].power / 2 + 100);
+                    weapon->enchantments[cnt].power / 2 + 100);
                 continue;
             }
             if (i == 8)
@@ -1020,8 +1015,8 @@ void proc_weapon_enchantments(
                 if (rnd(100) < p)
                 {
                     efid = enc;
-                    efp = weapon.enchantments[cnt].power +
-                        sdata(attackskill, attacker.index) * 10;
+                    efp = weapon->enchantments[cnt].power +
+                        attacker.get_skill(attackskill).level * 10;
                     magic(attacker, cdata[invoke_target]);
                 }
                 continue;
@@ -1045,7 +1040,7 @@ void proc_weapon_enchantments(
                 orgdmg * 2 / 3,
                 attacker.index,
                 rnd(11) + 50,
-                sdata(attackskill, attacker.index) * 10 + 100);
+                attacker.get_skill(attackskill).level * 10 + 100);
         }
     }
 }
@@ -1068,7 +1063,7 @@ int find_enemy_target(Character& chara, bool silent)
         if (listmax != 0)
         {
             f = 0;
-            if (chara.index == 0 || chara.relationship >= 0)
+            if (chara.is_player() || chara.relationship >= 0)
             {
                 p(0) = -3;
                 p(1) = -1;
@@ -1101,7 +1096,7 @@ int find_enemy_target(Character& chara, bool silent)
     }
     if (chara.enemy_id == 0 || chara.blind != 0)
     {
-        if (chara.index == 0 && !silent)
+        if (chara.is_player() && !silent)
         {
             txt(i18n::s.get("core.action.ranged.no_target"));
             update_screen();

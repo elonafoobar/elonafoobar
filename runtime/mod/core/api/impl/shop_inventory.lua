@@ -1,4 +1,5 @@
 local Data = ELONA.require("core.Data")
+local Inventory = ELONA.require("core.Inventory")
 local Item = ELONA.require("core.Item")
 local math = math
 local Chara = ELONA.require("core.Chara")
@@ -188,7 +189,7 @@ shop_inventory.cargo_amount_rates = {
 }
 
 function shop_inventory.cargo_amount_modifier(amount)
-   return amount * (100 + Chara.player():get_skill("core.negotiation").current_level * 10) // 100 + 1
+   return amount * (100 + Chara.player():get_skill("core.negotiation").level * 10) // 100 + 1
 end
 
 -- Calculate adjusted amount of cargo items to be sold based on the
@@ -235,6 +236,7 @@ function shop_inventory.do_generate(shopkeeper, inv)
       end
 
       args.nostack = true
+      args.inventory = Inventory.tmp()
       local item = Item.create(1, -1, args)
       if not item then
          -- Shop inventory is full, don't generate anything else.
@@ -270,7 +272,7 @@ function shop_inventory.do_generate(shopkeeper, inv)
          end
       end
 
-      if not item:is_valid() then
+      if item.number == 0 then
          goto continue
       end
 
@@ -284,7 +286,7 @@ function shop_inventory.do_generate(shopkeeper, inv)
          item.value = inv.item_base_value({item = item, shopkeeper = shopkeeper})
       end
 
-      Item.stack(-1, item, false) -- invalidates "item".
+      Inventory.tmp():stack(item) -- invalidates "item".
 
       ::continue::
    end

@@ -6,6 +6,7 @@
 #include "cell_draw.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "data/types/type_ability.hpp"
 #include "data/types/type_asset.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
@@ -354,7 +355,7 @@ void highlight_characters_in_pet_arena()
     {
         if (chara.state() != Character::State::alive)
             continue;
-        if (chara.index == 0)
+        if (chara.is_player())
             continue;
         snail::Color color{0};
         if (chara.relationship == 10)
@@ -486,7 +487,10 @@ void render_basic_attributes_and_pv_dv()
             const auto text_color = cdata.player().attr_adjs[i] < 0
                 ? snail::Color{200, 0, 0}
                 : snail::Color{0, 0, 0};
-            mes(x, y, std::to_string(sdata(10 + i, 0)), text_color);
+            mes(x,
+                y,
+                std::to_string(cdata.player().get_skill(10 + i).level),
+                text_color);
         }
         else if (i == 8)
         {
@@ -684,8 +688,9 @@ void render_skill_trackers()
             16,
             inf_clocky + 107 + y * 16);
         bmes(
-            ""s + sdata.get(skill, chara).original_level + u8"."s +
-                std::to_string(1000 + sdata.get(skill, chara).experience % 1000)
+            ""s + cdata[chara].get_skill(skill).base_level + u8"."s +
+                std::to_string(
+                    1000 + cdata[chara].get_skill(skill).experience % 1000)
                     .substr(1),
             66,
             inf_clocky + 107 + y * 16);
@@ -693,20 +698,20 @@ void render_skill_trackers()
         {
             elona::snail::Color col{255, 130, 130};
 
-            if (sdata.get(skill, chara).potential >
+            if (cdata[chara].get_skill(skill).potential >
                 elona::g_config.enhanced_skill_upperbound())
             {
                 col = {130, 255, 130};
             }
             else if (
-                sdata.get(skill, chara).potential >
+                cdata[chara].get_skill(skill).potential >
                 elona::g_config.enhanced_skill_lowerbound())
             {
                 col = {255, 255, 130};
             }
 
             bmes(
-                ""s + sdata.get(skill, chara).potential + u8"%"s,
+                ""s + cdata[chara].get_skill(skill).potential + u8"%"s,
                 128,
                 inf_clocky + 107 + y * 16,
                 col);
@@ -1815,7 +1820,7 @@ void ui_render_non_hud()
 
     render_pc_position_in_minimap();
 
-    if (debug::voldemort)
+    if (debug_is_wizard())
     {
         render_stair_positions_in_minimap();
     }
@@ -2292,7 +2297,8 @@ void load_background_variants(int buffer)
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         picload(
-            filesystem::dirs::graphic() / (u8"g"s + (cnt + 1) + u8".bmp"),
+            filesystem::dirs::graphic() /
+                fs::u8path(u8"g"s + (cnt + 1) + u8".bmp"),
             cnt % 4 * 180,
             cnt / 4 * 300,
             false);
@@ -2427,16 +2433,16 @@ void cs_list(
 
 
 
-snail::Color cs_list_get_item_color(const Item& item)
+snail::Color cs_list_get_item_color(const ItemRef& item)
 {
-    if (item.is_marked_as_no_drop())
+    if (item->is_marked_as_no_drop())
     {
         return {120, 80, 0};
     }
 
-    if (item.identify_state == IdentifyState::completely)
+    if (item->identify_state == IdentifyState::completely)
     {
-        switch (item.curse_state)
+        switch (item->curse_state)
         {
         case CurseState::doomed: return {100, 10, 100};
         case CurseState::cursed: return {150, 10, 10};

@@ -55,7 +55,7 @@ sol::table handle(T& it)
 template <typename T>
 sol::optional<T&> ref_opt(sol::table handle)
 {
-    return lua::lua->get_handle_manager().get_ref<T>(handle);
+    return lua::lua->get_handle_manager().get_ref(handle);
 }
 
 /**
@@ -64,7 +64,7 @@ sol::optional<T&> ref_opt(sol::table handle)
 template <typename T>
 T& ref(sol::table handle)
 {
-    auto result = lua::lua->get_handle_manager().get_ref<T>(handle);
+    auto result = lua::lua->get_handle_manager().get_ref(handle);
     if (!result)
     {
         throw sol::error(

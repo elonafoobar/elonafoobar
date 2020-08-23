@@ -40,7 +40,7 @@ CharaChipData CharaChipDB::convert(
         if (!fs::exists(*filepath))
         {
             throw std::runtime_error(
-                id + ": Image file doesn't exist: " + filepath->string());
+                id + ": Image file doesn't exist: " + filepath->to_u8string());
         }
     }
 

@@ -21,8 +21,8 @@ namespace elona
 namespace
 {
 
-const fs::path vanilla_filename = filepathutil::u8path("header.txt");
-const fs::path foobar_filename = filepathutil::u8path("header.json");
+const fs::path vanilla_filename = "header.txt";
+const fs::path foobar_filename = "header.json";
 
 
 
@@ -90,7 +90,7 @@ std::string detect_save_data_version()
 
 std::string SaveHeader::title() const
 {
-    return save_dir_name + "   " + version + (is_wizard ? "   (wizard)" : "");
+    return save_dir_name + "   " + version;
 }
 
 
@@ -144,7 +144,27 @@ void SaveHeader::save(const fs::path& save_dir)
     }
     {
         // foobar
-        serialization::json::save(save_dir / foobar_filename, h);
+        std::ofstream out{(save_dir / foobar_filename).native()};
+        json5::value::object_type json;
+
+        json["version"] = h.version;
+        json["name"] = h.name;
+        json["alias"] = h.alias;
+        json["level"] = h.level;
+        json["race"] = h.race;
+        json["class"] = h.class_;
+        json["location"] = h.location;
+        json["ingame_time"] = h.ingame_time;
+        json["last_played_at"] = h.last_played_at;
+        json["play_seconds"] = h.play_seconds;
+
+        json5::stringify_options opts;
+        opts.prettify = true;
+        opts.insert_trailing_comma = true;
+        opts.unquote_key = true;
+        opts.sort_by_key = true;
+
+        out << json5::stringify(json, opts) << std::endl;
     }
 }
 
@@ -177,7 +197,6 @@ SaveHeader SaveHeader::current_state()
     h.race = the_race_db.get_text(cdata.player().race, "name");
     h.class_ = class_get_name(cdata.player().class_);
     h.location = mdatan(0) + maplevel();
-    h.is_wizard = game_data.wizard;
     h.ingame_time = game_data.date.to_string(); // TODO localize
     h.last_played_at = now;
     h.play_seconds = play_seconds;
@@ -210,7 +229,7 @@ SaveHeader SaveHeader::load_vanilla(const fs::path& save_dir)
     SaveHeader h;
 
     h.format = Format::vanilla;
-    h.save_dir_name = filepathutil::to_utf8_path(save_dir.filename());
+    h.save_dir_name = save_dir.filename().to_u8string();
 
     h.version = detect_save_data_version();
     h.name = name;
@@ -219,7 +238,6 @@ SaveHeader SaveHeader::load_vanilla(const fs::path& save_dir)
     h.race = "<unknown>";
     h.class_ = "<unknown>";
     h.location = location;
-    h.is_wizard = false;
     h.ingame_time = "<unknown>";
     h.last_played_at = -1;
     h.play_seconds = 0;
@@ -242,7 +260,7 @@ SaveHeader SaveHeader::load_foobar(const fs::path& save_dir)
     SaveHeader h;
 
     h.format = Format::foobar;
-    h.save_dir_name = filepathutil::to_utf8_path(save_dir.filename());
+    h.save_dir_name = save_dir.filename().to_u8string();
 
     h.version = obj["version"].get_string();
     h.name = obj["name"].get_string();
@@ -251,7 +269,6 @@ SaveHeader SaveHeader::load_foobar(const fs::path& save_dir)
     h.race = obj["race"].get_string();
     h.class_ = obj["class"].get_string();
     h.location = obj["location"].get_string();
-    h.is_wizard = obj["is_wizard"].get_boolean();
     h.ingame_time = obj["ingame_time"].get_string();
     h.last_played_at = obj["last_played_at"].get_integer();
     h.play_seconds = obj["play_seconds"].get_integer();

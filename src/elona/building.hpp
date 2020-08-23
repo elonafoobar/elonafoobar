@@ -1,7 +1,8 @@
 #pragma once
 
-#include <functional>
 #include <vector>
+
+#include "eobject/eobject.hpp"
 
 
 
@@ -9,12 +10,13 @@ namespace elona
 {
 
 enum class TurnResult;
+struct Inventory;
 struct Item;
 
 
 
 void initialize_home_adata();
-TurnResult build_new_building(Item& deed);
+TurnResult build_new_building(const ItemRef& deed);
 TurnResult show_house_board();
 void addbuilding(int related_town_quest_id, int building_type, int x, int y);
 void show_home_value();
@@ -33,7 +35,7 @@ void calc_hairloom_value(int);
 
 struct HomeRankHeirloom
 {
-    std::reference_wrapper<Item> item;
+    ItemRef item;
     int value;
 };
 std::vector<HomeRankHeirloom> building_update_home_rank();

@@ -7,7 +7,9 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "config.hpp"
+#include "data/types/type_ability.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "magic.hpp"
@@ -53,11 +55,13 @@ TalkResult _talk_hv_visitor(Character& speaker)
 void _adventurer_give_new_year_gift(Character& speaker)
 {
     flt();
-    if (const auto item = itemcreate_extra_inv(752, cdata.player().position, 0))
+    if (const auto item = itemcreate_map_inv(752, cdata.player().position, 0))
     {
         item->param3 = speaker.impression + rnd(50);
         txt(i18n::s.get(
-            "core.talk.visitor.adventurer.new_year.throws", speaker, *item));
+            "core.talk.visitor.adventurer.new_year.throws",
+            speaker,
+            item.unwrap()));
     }
 }
 
@@ -126,7 +130,7 @@ void _adventurer_hate_action(Character& speaker)
             txt(i18n::s.get(
                 "core.talk.visitor.adventurer.hate.throws", speaker));
             snd("core.throw2");
-            ThrowingObjectAnimation({tlocx, tlocy}, speaker.position, 223, 0)
+            ThrowingObjectAnimation(speaker.position, {tlocx, tlocy}, 223, 0)
                 .play();
             mef_add(tlocx, tlocy, 5, 24, rnd(15) + 20, 50, speaker.index);
             mapitem_fire(speaker, tlocx, tlocy);
@@ -137,7 +141,7 @@ void _adventurer_hate_action(Character& speaker)
         for (int cnt = 0, cnt_end = (8 + rnd(6)); cnt < cnt_end; ++cnt)
         {
             flt();
-            itemcreate_extra_inv(704, -1, -1, 0);
+            itemcreate_map_inv(704, -1, -1, 0);
             txt(i18n::s.get("core.food.vomits", speaker));
             snd("core.vomit");
             await(g_config.animation_wait() / 2);
@@ -176,9 +180,9 @@ void _adventurer_become_best_friend(Character& speaker)
 {
     speaker.is_best_friend() = true;
     flt();
-    if (const auto item = itemcreate_extra_inv(730, cdata.player().position, 0))
+    if (const auto item = itemcreate_map_inv(730, cdata.player().position, 0))
     {
-        txt(i18n::s.get("core.talk.visitor.receive", *item, speaker));
+        txt(i18n::s.get("core.talk.visitor.receive", item.unwrap(), speaker));
         txt(i18n::s.get("core.talk.visitor.adventurer.like.wonder_if"));
     }
 }
@@ -205,24 +209,23 @@ void _talk_hv_adventurer_best_friend(Character& speaker)
 
 int _adventurer_get_trained_skill(Character& speaker)
 {
-    int stat = advfavoriteskill(speaker.index);
-    int val = rtval(rnd(stat));
+    int skill_id = adventurer_favorite_skill(speaker);
     if (speaker.impression >= 300)
     {
         if (rnd(3) == 0)
         {
-            stat = advfavoritestat(speaker.index);
-            val = stat;
+            skill_id = adventurer_favorite_stat(speaker);
         }
     }
-    return val;
+    return skill_id;
 }
 
 
 
 void _adventurer_learn_skill(int skill_id)
 {
-    cdata.player().platinum_coin -= calclearncost(skill_id, 0, true);
+    cdata.player().platinum_coin -=
+        calc_skill_learning_cost(skill_id, cdata.player(), true);
     chara_gain_skill(cdata.player(), skill_id);
     ++game_data.number_of_learned_skills_by_trainer;
 }
@@ -231,12 +234,13 @@ void _adventurer_learn_skill(int skill_id)
 
 void _adventurer_train_skill(int skill_id)
 {
-    cdata.player().platinum_coin -= calctraincost(skill_id, 0, true);
+    cdata.player().platinum_coin -=
+        calc_skill_training_cost(skill_id, cdata.player(), true);
     modify_potential(
         cdata.player(),
         skill_id,
         clamp(
-            15 - sdata.get(skill_id, cdata.player().index).potential / 15,
+            15 - cdata.player().get_skill(skill_id).potential / 15,
             2,
             15 - (skill_id < 18) * 10));
 }
@@ -251,17 +255,17 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
     listn(0, listmax) =
         i18n::s.get("core.talk.visitor.adventurer.train.choices.pass");
     ++listmax;
-    if (sdata.get(skill_id, 0).original_level == 0)
+    if (cdata.player().get_skill(skill_id).base_level == 0)
     {
         buff = i18n::s.get(
             "core.talk.visitor.adventurer.train.learn.dialog",
             the_ability_db.get_text(skill_id, "name"),
             std::to_string(
-                calclearncost(skill_id, cdata.player().index, true)) +
+                calc_skill_learning_cost(skill_id, cdata.player(), true)) +
                 i18n::s.get("core.ui.platinum"),
             speaker);
         if (cdata.player().platinum_coin >=
-            calclearncost(skill_id, cdata.player().index, true))
+            calc_skill_learning_cost(skill_id, cdata.player(), true))
         {
             list(0, listmax) = 1;
             listn(0, listmax) =
@@ -275,11 +279,11 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
             "core.talk.visitor.adventurer.train.train.dialog",
             the_ability_db.get_text(skill_id, "name"),
             std::to_string(
-                calclearncost(skill_id, cdata.player().index, true)) +
+                calc_skill_learning_cost(skill_id, cdata.player(), true)) +
                 i18n::s.get("core.ui.platinum"),
             speaker);
         if (cdata.player().platinum_coin >=
-            calctraincost(skill_id, cdata.player().index, true))
+            calc_skill_training_cost(skill_id, cdata.player(), true))
         {
             list(0, listmax) = 2;
             listn(0, listmax) =
@@ -355,28 +359,21 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
 
 void _adventurer_receive_coin(Character& speaker)
 {
-    if (!inv_get_free_slot(-1))
+    inv_make_free_slot_force(g_inv.ground());
+
+    if (rnd(4))
     {
-        txt(i18n::s.get(
-            "core.talk.visitor.adventurer.friendship.no_empty_spot"));
+        p = 55;
     }
     else
     {
-        if (rnd(4))
-        {
-            p = 55;
-        }
-        else
-        {
-            p = 622;
-        }
-        flt();
-        if (const auto item =
-                itemcreate_extra_inv(p, cdata.player().position, 0))
-        {
-            txt(i18n::s.get("core.talk.visitor.receive", *item, speaker));
-            snd("core.get1");
-        }
+        p = 622;
+    }
+    flt();
+    if (const auto item = itemcreate_map_inv(p, cdata.player().position, 0))
+    {
+        txt(i18n::s.get("core.talk.visitor.receive", item.unwrap(), speaker));
+        snd("core.get1");
     }
 }
 
@@ -409,7 +406,7 @@ TalkResult _talk_hv_adventurer_friendship(Character& speaker)
 
 void _adventurer_receive_souvenir()
 {
-    if (!inv_get_free_slot(0))
+    if (!g_inv.pc().has_free_slot())
     {
         txt(i18n::s.get(
             "core.talk.visitor.adventurer.souvenir.inventory_is_full"));
@@ -420,7 +417,8 @@ void _adventurer_receive_souvenir()
         if (const auto item = itemcreate_player_inv(729, 0))
         {
             txt(i18n::s.get(
-                "core.talk.visitor.adventurer.souvenir.receive", *item));
+                "core.talk.visitor.adventurer.souvenir.receive",
+                item.unwrap()));
             snd("core.get1");
         }
     }
@@ -457,7 +455,6 @@ void _adventurer_receive_materials(Character& speaker)
     txt(i18n::s.get("core.talk.visitor.adventurer.materials.receive", speaker));
     efid = 1117;
     efp = 100;
-    speaker.index = 0;
     magic(cdata.player(), cdata.player());
 }
 
@@ -490,8 +487,7 @@ TalkResult _talk_hv_adventurer_materials(Character& speaker)
 
 TalkResult _talk_hv_adventurer_favorite_skill(Character& speaker)
 {
-    int stat = advfavoriteskill(speaker.index);
-    int skill_id = rtval(rnd(stat));
+    int skill_id = adventurer_favorite_skill(speaker);
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.favorite_skill.dialog",
@@ -516,7 +512,7 @@ TalkResult _talk_hv_adventurer_favorite_skill(Character& speaker)
 
 TalkResult _talk_hv_adventurer_favorite_stat(Character& speaker)
 {
-    int skill_id = advfavoritestat(speaker.index);
+    int skill_id = adventurer_favorite_stat(speaker);
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.favorite_stat.dialog",
@@ -621,11 +617,11 @@ TalkResult _talk_hv_adventurer(Character& speaker)
     {
         return _talk_hv_adventurer_hate(speaker);
     }
-    if (speaker.impression >= 100 && !speaker.is_best_friend() &&
-        inv_get_free_slot(-1))
+    if (speaker.impression >= 100 && !speaker.is_best_friend())
     {
-        // NOTE: this dialog falls through.
+        inv_make_free_slot_force(g_inv.ground());
         _talk_hv_adventurer_best_friend(speaker);
+        // NOTE: this dialog falls through.
     }
     if (rnd(4) == 0 && speaker.impression >= 150)
     {

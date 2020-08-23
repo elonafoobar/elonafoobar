@@ -5,6 +5,7 @@
 #include "character.hpp"
 #include "class.hpp"
 #include "config.hpp"
+#include "data/types/type_ability.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -256,7 +257,7 @@ static void _reroll_character()
 {
     const auto portrait_save = cdata.player().portrait;
 
-    chara_delete(0);
+    chara_delete(cdata.player());
     race_init_chara(cdata.player(), cmrace);
     class_init_chara(cdata.player(), cmclass);
     cdata.player().name = u8"????"s;
@@ -264,9 +265,11 @@ static void _reroll_character()
     cdata.player().level = 1;
     for (int cnt = 10; cnt < 18; ++cnt)
     {
-        sdata.get(cnt, 0).original_level = cmstats(cnt - 10) / 1'000'000;
-        sdata.get(cnt, 0).experience = cmstats(cnt - 10) % 1'000'000 / 1'000;
-        sdata.get(cnt, 0).potential = cmstats(cnt - 10) % 1'000;
+        cdata.player().get_skill(cnt).base_level =
+            cmstats(cnt - 10) / 1'000'000;
+        cdata.player().get_skill(cnt).experience =
+            cmstats(cnt - 10) % 1'000'000 / 1'000;
+        cdata.player().get_skill(cnt).potential = cmstats(cnt - 10) % 1'000;
     }
     initialize_character(cdata.player());
     initialize_pc_character();
@@ -305,8 +308,7 @@ static std::string get_new_save_dir_name()
     for (int i = 1;; ++i)
     {
         const auto dir_name = "save_" + std::to_string(i);
-        if (!fs::exists(
-                filesystem::dirs::save() / filepathutil::u8path(dir_name)))
+        if (!fs::exists(filesystem::dirs::save() / fs::u8path(dir_name)))
         {
             return dir_name;
         }
@@ -368,8 +370,8 @@ MainMenuResult character_making_final_phase()
         i18n::s.get("core.chara_making.final_screen.what_is_your_name"));
 
     inputlog = "";
-    bool canceled = input_text_dialog(
-        (windoww - 230) / 2 + inf_screenx, winposy(120), 10, true);
+    bool canceled =
+        input_text_dialog((windoww - 230) / 2 + inf_screenx, winposy(120), 10);
     if (canceled)
     {
         return MainMenuResult::character_making_final_phase;
@@ -445,37 +447,37 @@ void draw_race_or_class_info(const std::string& description)
             }
             r = cnt2 * 3 + cnt + 10;
             snail::Color text_color{0, 0, 0};
-            if (sdata.get(r, 0).original_level > 13)
+            if (cdata.player().get_skill(r).base_level > 13)
             {
                 p = 1;
                 text_color = snail::Color{0, 0, 200};
             }
-            else if (sdata.get(r, 0).original_level > 11)
+            else if (cdata.player().get_skill(r).base_level > 11)
             {
                 p = 2;
                 text_color = snail::Color{0, 0, 200};
             }
-            else if (sdata.get(r, 0).original_level > 9)
+            else if (cdata.player().get_skill(r).base_level > 9)
             {
                 p = 3;
                 text_color = snail::Color{0, 0, 150};
             }
-            else if (sdata.get(r, 0).original_level > 7)
+            else if (cdata.player().get_skill(r).base_level > 7)
             {
                 p = 4;
                 text_color = snail::Color{0, 0, 150};
             }
-            else if (sdata.get(r, 0).original_level > 5)
+            else if (cdata.player().get_skill(r).base_level > 5)
             {
                 p = 5;
                 text_color = snail::Color{0, 0, 0};
             }
-            else if (sdata.get(r, 0).original_level > 3)
+            else if (cdata.player().get_skill(r).base_level > 3)
             {
                 p = 6;
                 text_color = snail::Color{150, 0, 0};
             }
-            else if (sdata.get(r, 0).original_level > 0)
+            else if (cdata.player().get_skill(r).base_level > 0)
             {
                 p = 7;
                 text_color = snail::Color{200, 0, 0};
@@ -516,7 +518,7 @@ void draw_race_or_class_info(const std::string& description)
         "core.chara_making.select_race.race_info.trained_skill.proficient_in");
     for (int cnt = 100; cnt < 150; ++cnt)
     {
-        if (sdata.get(cnt, 0).original_level != 0)
+        if (cdata.player().get_skill(cnt).base_level != 0)
         {
             if (r != 0)
             {
@@ -535,7 +537,7 @@ void draw_race_or_class_info(const std::string& description)
     }
     for (int cnt = 150; cnt < 600; ++cnt)
     {
-        if (sdata.get(cnt, 0).original_level != 0)
+        if (cdata.player().get_skill(cnt).base_level != 0)
         {
             s = the_ability_db.get_text(cnt, "name");
             if (jp)

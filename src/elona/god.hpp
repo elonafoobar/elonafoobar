@@ -3,7 +3,7 @@
 #include <string>
 
 #include "data/types/type_god.hpp"
-#include "enums.hpp"
+#include "eobject/forward.hpp"
 
 
 
@@ -12,6 +12,7 @@ namespace elona
 
 struct Character;
 struct Item;
+enum class TurnResult;
 
 
 
@@ -89,6 +90,6 @@ std::string god_name(int legacy_god_id);
 
 void god_fail_to_take_over_penalty();
 
-bool god_is_offerable(Item& offering, Character& believer);
+bool god_is_offerable(const ItemRef& offering, Character& believer);
 
 } // namespace elona

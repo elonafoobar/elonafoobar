@@ -29,6 +29,7 @@
 #include "message.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "save_fs.hpp"
 #include "scene.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -98,8 +99,7 @@ void _update_pets_moving_status()
 
 void _prompt_initialize_map()
 {
-    tmpload(filepathutil::u8path(u8"mdata_"s + mid + u8".s2"));
-    if (fs::exists(filesystem::dirs::tmp() / (u8"mdata_"s + mid + u8".s2")))
+    if (save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
     {
         int stat = dialog(i18n::s.get("core.map.prompt_initialize"), 3);
         if (stat == 6)
@@ -118,11 +118,11 @@ void _clear_map_and_objects()
     {
         cnt.set_state(Character::State::empty);
     }
-    for (auto&& inv_ : inv.map_local())
+    for (auto&& inv : g_inv.map_local())
     {
-        for (auto&& item : inv_)
+        for (auto&& item : inv)
         {
-            item.remove();
+            item->remove();
         }
     }
 
@@ -348,8 +348,7 @@ void _proc_three_years_later()
     {
         if (game_data.quest_flags.main_quest == 180)
         {
-            cdata.player().position.x = area_data[11].position.x;
-            cdata.player().position.y = area_data[11].position.y;
+            cdata.player().position = area_data[11].position;
             game_data.player_next_move_direction = 1;
             game_data.player_x_on_map_leave = -1;
             Message::instance().buffered_message_begin(
@@ -543,8 +542,7 @@ void _refresh_map_character_other(Character& chara)
 
     if (map_data.designated_spawns == 1)
     {
-        chara.position.x = chara.initial_position.x;
-        chara.position.y = chara.initial_position.y;
+        chara.position = chara.initial_position;
     }
     if (chara.is_quest_target() == 0)
     {
@@ -598,7 +596,7 @@ void _refresh_map_character(Character& cnt)
 {
     cnt.was_passed_item_by_you_just_now() = false;
 
-    if (cnt.index < 57)
+    if (cnt.is_global())
     {
         if (mode == 11)
         {
@@ -623,11 +621,11 @@ void _refresh_map_character(Character& cnt)
 
     _level_up_if_guard(cnt);
 
-    if (cnt.index >= 57)
+    if (cnt.is_map_local())
     {
         _refresh_map_character_other(cnt);
     }
-    if (cnt.index == 0 || game_data.mount != cnt.index)
+    if (cnt.is_player() || game_data.mount != cnt.index)
     {
         if (_position_blocked(cnt))
         {
@@ -991,6 +989,13 @@ void _proc_map_hooks_1()
     {
         _proc_no_dungeon_master();
     }
+
+    // Work-around: shop's `cell_data` should be fixed before `cell_draw()` is
+    // called.
+    if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
+    {
+        update_shop();
+    }
 }
 
 
@@ -1006,7 +1011,7 @@ void _notify_distance_traveled()
         cnvdate(game_data.departure_date, false)));
     p = 0;
     exp = cdata.player().level * game_data.distance_between_town *
-            sdata(182, 0) / 100 +
+            cdata.player().get_skill(182).level / 100 +
         1;
     for (auto&& chara : cdata.player_and_allies())
     {
@@ -1014,7 +1019,7 @@ void _notify_distance_traveled()
         {
             continue;
         }
-        if (chara.index != 0 && chara.current_map)
+        if (!chara.is_player() && chara.current_map)
         {
             continue;
         }
@@ -1156,10 +1161,6 @@ void _proc_map_hooks_2()
     {
         foods_get_rotten();
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
-    {
-        update_shop();
-    }
     if (area_data[game_data.current_map].id == mdata_t::MapId::museum)
     {
         update_museum();
@@ -1240,14 +1241,7 @@ void _init_tileset_minimap_and_scroll()
 void _initialize_map_local_handles()
 {
     lua::lua->get_mod_manager().clear_map_local_stores();
-
-    auto& handle_mgr = lua::lua->get_handle_manager();
-    handle_mgr.clear_handle_range(
-        Character::lua_type(),
-        ELONA_MAX_PARTY_CHARACTERS,
-        ELONA_MAX_CHARACTERS);
-    handle_mgr.clear_handle_range(
-        Item::lua_type(), ELONA_OTHER_INVENTORIES_INDEX, ELONA_MAX_ITEMS);
+    lua::lua->get_handle_manager().clear_map_local_handles();
 }
 
 
@@ -1335,7 +1329,9 @@ int initialize_map_pregenerate()
     if (mode == 3)
     {
         ctrl_file(FileOperation::map_read);
-        ctrl_file(FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
+        ctrl_file(
+            FileOperation2::map_items_read,
+            fs::u8path(u8"inv_"s + mid + u8".s2"));
         return 2;
     }
 
@@ -1344,8 +1340,7 @@ int initialize_map_pregenerate()
         _prompt_initialize_map();
     }
 
-    tmpload(filepathutil::u8path(u8"mdata_"s + mid + u8".s2"));
-    if (fs::exists(filesystem::dirs::tmp() / (u8"mdata_"s + mid + u8".s2")))
+    if (save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
     {
         ctrl_file(FileOperation::map_read);
         if (map_data.refresh_type == 0)
@@ -1365,7 +1360,9 @@ int initialize_map_pregenerate()
                 return 0;
             }
         }
-        ctrl_file(FileOperation2::map_items_read, u8"inv_"s + mid + u8".s2");
+        ctrl_file(
+            FileOperation2::map_items_read,
+            fs::u8path(u8"inv_"s + mid + u8".s2"));
         if (mode == 2)
         {
             map_placeplayer();
@@ -1402,12 +1399,9 @@ void migrate_old_save_v17()
             cell_data.at(x, y).item_info_memory.clear();
         }
     }
-    for (const auto& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (item.number() != 0)
-        {
-            cell_refresh(item.position.x, item.position.y);
-        }
+        cell_refresh(item->pos().x, item->pos().y);
     }
     for (int y = 0; y < map_data.height; ++y)
     {

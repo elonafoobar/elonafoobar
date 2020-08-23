@@ -5,6 +5,7 @@
 #include "data/types/type_item.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
+#include "item.hpp"
 #include "text.hpp"
 #include "variables.hpp"
 
@@ -26,93 +27,95 @@ struct ModifierMatcher
 {
     // It does not contain the prefix, "core.autopick.modifier."
     const char* locale_key;
-    std::function<bool(const Item&)> predicate;
+    std::function<bool(const ItemRef&)> predicate;
 };
 
 
 
 std::vector<ModifierMatcher> _modifier_matchers = {
-    {"all", [](const Item&) { return true; }},
+    {"all", [](const ItemRef&) { return true; }},
     {"unknown",
-     [](const Item& item) {
-         return item.identify_state == IdentifyState::unidentified;
+     [](const ItemRef& item) {
+         return item->identify_state == IdentifyState::unidentified;
      }},
     {"identify_stage1",
-     [](const Item& item) {
-         return item.identify_state == IdentifyState::partly;
+     [](const ItemRef& item) {
+         return item->identify_state == IdentifyState::partly;
      }},
     {"identify_stage2",
-     [](const Item& item) {
-         return item.identify_state == IdentifyState::almost;
+     [](const ItemRef& item) {
+         return item->identify_state == IdentifyState::almost;
      }},
     {"identify_stage3",
-     [](const Item& item) {
-         return item.identify_state == IdentifyState::completely;
+     [](const ItemRef& item) {
+         return item->identify_state == IdentifyState::completely;
      }},
-    {"worthless", [](const Item& item) { return item.value <= 10; }},
-    {"rotten", [](const Item& item) { return item.param3 < 0; }},
+    {"worthless", [](const ItemRef& item) { return item->value <= 10; }},
+    {"rotten", [](const ItemRef& item) { return item->param3 < 0; }},
     {"empty",
-     [](const Item& item) {
-         return the_item_db[itemid2int(item.id)]->category ==
+     [](const ItemRef& item) {
+         return the_item_db[itemid2int(item->id)]->category ==
              ItemCategory::chest &&
-             item.param1 == 0;
+             item->param1 == 0;
      }},
     {"bad",
-     [](const Item& item) {
-         return item.identify_state >= IdentifyState::almost &&
-             item.quality == Quality::bad;
+     [](const ItemRef& item) {
+         return item->identify_state >= IdentifyState::almost &&
+             item->quality == Quality::bad;
      }},
     {"good",
-     [](const Item& item) {
-         return item.identify_state >= IdentifyState::almost &&
-             item.quality == Quality::good;
+     [](const ItemRef& item) {
+         return item->identify_state >= IdentifyState::almost &&
+             item->quality == Quality::good;
      }},
     {"great",
-     [](const Item& item) {
-         return item.identify_state >= IdentifyState::almost &&
-             item.quality == Quality::great;
+     [](const ItemRef& item) {
+         return item->identify_state >= IdentifyState::almost &&
+             item->quality == Quality::great;
      }},
     {"miracle",
-     [](const Item& item) {
-         return item.identify_state >= IdentifyState::almost &&
-             item.quality == Quality::miracle;
+     [](const ItemRef& item) {
+         return item->identify_state >= IdentifyState::almost &&
+             item->quality == Quality::miracle;
      }},
     {"godly",
-     [](const Item& item) {
-         return item.identify_state >= IdentifyState::almost &&
-             item.quality == Quality::godly;
+     [](const ItemRef& item) {
+         return item->identify_state >= IdentifyState::almost &&
+             item->quality == Quality::godly;
      }},
     {"special",
-     [](const Item& item) {
-         return item.identify_state >= IdentifyState::almost &&
-             item.quality == Quality::special;
+     [](const ItemRef& item) {
+         return item->identify_state >= IdentifyState::almost &&
+             item->quality == Quality::special;
      }},
     {"precious",
-     [](const Item& item) {
-         return item.identify_state >= IdentifyState::almost &&
-             item.is_precious();
+     [](const ItemRef& item) {
+         return item->identify_state >= IdentifyState::almost &&
+             item->is_precious();
      }},
     {"blessed",
-     [](const Item& item) {
-         return item.identify_state >= IdentifyState::almost &&
-             item.curse_state == CurseState::blessed;
+     [](const ItemRef& item) {
+         return item->identify_state >= IdentifyState::almost &&
+             item->curse_state == CurseState::blessed;
      }},
     {"cursed",
-     [](const Item& item) {
-         return item.identify_state >= IdentifyState::almost &&
-             item.curse_state == CurseState::cursed;
+     [](const ItemRef& item) {
+         return item->identify_state >= IdentifyState::almost &&
+             item->curse_state == CurseState::cursed;
      }},
     {"doomed",
-     [](const Item& item) {
-         return item.identify_state >= IdentifyState::almost &&
-             item.curse_state == CurseState::doomed;
+     [](const ItemRef& item) {
+         return item->identify_state >= IdentifyState::almost &&
+             item->curse_state == CurseState::doomed;
      }},
-    {"alive", [](const Item& item) { return item.is_alive(); }},
+    {"alive", [](const ItemRef& item) { return item->is_alive(); }},
 };
 
 
 
-ModifierMatchResult _check_modifiers(const std::string& text, const Item& item)
+ModifierMatchResult _check_modifiers(
+    const std::string& text,
+    const ItemRef& item)
 {
     const auto word_separator = i18n::s.get("core.meta.word_separator");
 
@@ -144,9 +147,9 @@ ModifierMatchResult _check_modifiers(const std::string& text, const Item& item)
 
 
 
-bool _check_category(const std::string& text, const Item& item)
+bool _check_category(const std::string& text, const ItemRef& item)
 {
-    const auto category = the_item_db[itemid2int(item.id)]->category;
+    const auto category = the_item_db[itemid2int(item->id)]->category;
     const auto word_separator = i18n::s.get("core.meta.word_separator");
     const auto text_ = word_separator + text + word_separator;
 
@@ -239,7 +242,7 @@ void Autopick::load(const std::string& player_id)
         for (const auto filename :
              {u8"autopick", u8"autopick.txt", u8"autopick.txt.txt"})
         {
-            const auto filepath = directory / filename;
+            const auto filepath = directory / fs::u8path(filename);
             bool file_exists = _try_load(filepath);
             if (file_exists)
                 break;
@@ -351,7 +354,7 @@ bool Autopick::_try_load(const fs::path& filepath)
 
 
 
-Autopick::Operation Autopick::get_operation(const Item& item)
+Autopick::Operation Autopick::get_operation(const ItemRef& item)
 {
     for (const auto& m : matchers)
     {
@@ -366,7 +369,7 @@ Autopick::Operation Autopick::get_operation(const Item& item)
 
 
 
-bool Autopick::Matcher::matches(const Item& item) const
+bool Autopick::Matcher::matches(const ItemRef& item) const
 {
     /* Check modifiers. */
     const auto modifier_match_result = _check_modifiers(text, item);
@@ -376,10 +379,10 @@ bool Autopick::Matcher::matches(const Item& item) const
     }
 
     /* Check item's name. */
-    const auto item_name = cnvitemname(itemid2int(item.id));
+    const auto item_name = cnvitemname(itemid2int(item->id));
     // You have to know that the item is known as the name to match by the name.
     const auto you_know_the_name =
-        item.identify_state != IdentifyState::unidentified;
+        item->identify_state != IdentifyState::unidentified;
     const auto item_name_matched_with_text = you_know_the_name &&
         strutil::contains(item_name,
                           modifier_match_result.text_without_modifier);

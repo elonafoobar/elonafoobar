@@ -15,27 +15,21 @@ void serialize(std::vector<T>& value, Archive& ar)
     if constexpr (concepts::is_iarchive_v<Archive>)
     {
         uint64_t len = 0;
-        auto&& ar_seq = ar.seq_begin(len);
+        ar(len);
         value.resize(len);
-        uint64_t i = 0;
         for (auto&& element : value)
         {
-            ar_seq.seq_element(i, element);
-            ++i;
+            ar(element);
         }
-        ar_seq.seq_end();
     }
     else
     {
         uint64_t len = value.size();
-        auto&& ar_seq = ar.seq_begin(len);
-        uint64_t i = 0;
+        ar(len);
         for (auto&& element : value)
         {
-            ar_seq.seq_element(i, element);
-            ++i;
+            ar(element);
         }
-        ar_seq.seq_end();
     }
 }
 

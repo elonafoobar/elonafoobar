@@ -8,6 +8,7 @@
 #include "character_making.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
+#include "debug.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
 #include "init.hpp"
@@ -504,10 +505,6 @@ MainMenuResult main_menu_wrapper()
 
 MainMenuResult main_menu_new_game()
 {
-    if (g_config.wizard())
-    {
-        game_data.wizard = 1;
-    }
     if (geneuse != ""s)
     {
         load_gene_files();
@@ -537,8 +534,7 @@ MainMenuResult main_menu_continue()
     std::vector<SaveHeader> save_headers;
     for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
     {
-        const auto dir_name =
-            filepathutil::to_utf8_path(entry.path().filename());
+        const auto dir_name = entry.path().filename().to_u8string();
         if (!SaveHeader::exists(filesystem::dirs::save(dir_name)))
         {
             continue;
@@ -705,9 +701,11 @@ MainMenuResult main_menu_incarnate()
     ui_draw_caption(i18n::s.get("core.main_menu.incarnate.which_gene"));
     keyrange = 0;
     listmax = 0;
+
+    /*
     for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
     {
-        s = filepathutil::to_utf8_path(entry.path().filename());
+        s = entry.path().filename().to_u8string();
         const auto gene_header_filepath =
             filesystem::dirs::save(s) / u8"gene_header.txt";
         if (!fs::exists(gene_header_filepath))
@@ -722,6 +720,8 @@ MainMenuResult main_menu_incarnate()
         ++keyrange;
         ++listmax;
     }
+    */
+
     windowshadow = 1;
 
     while (1)
@@ -748,9 +748,14 @@ MainMenuResult main_menu_incarnate()
         if (listmax == 0)
         {
             font(14 - en * 2);
+            /*
             mes(wx + 140,
                 wy + 120,
                 i18n::s.get("core.main_menu.incarnate.no_gene"));
+            */
+            mes(wx + 140,
+                wy + 120,
+                "Incarnation is disabled in this version. Please wait for a future release");
         }
         redraw();
 
@@ -1576,7 +1581,7 @@ MainMenuResult main_menu_mods_develop()
         {
             inputlog = "";
             const auto canceled = input_text_dialog(
-                (windoww - 230) / 2 + inf_screenx, winposy(120), 10, true);
+                (windoww - 230) / 2 + inf_screenx, winposy(120), 10);
             if (!canceled && !inputlog(0).empty())
             {
                 const auto new_mod_id = inputlog(0);

@@ -180,7 +180,7 @@ calculate_position(int listener_x, int listener_y, int source_x, int source_y)
 
 std::pair<short, unsigned char> calculate_position(const Position& p)
 {
-    if (!config_get_boolean("core.screen.stereo_sound"))
+    if (!config_get<bool>("core.screen.stereo_sound"))
     {
         return {0, 0};
     }
@@ -328,9 +328,8 @@ void play_music_inner(data::InstanceId music_id, bool loop)
     }
     if (!fs::exists(music->file))
     {
-        ELONA_ERROR("audio")
-            << "Cannot load file " << filepathutil::to_utf8_path(music->file)
-            << " for music " << music_id.get();
+        ELONA_ERROR("audio") << "Cannot load file " << music->file.to_u8string()
+                             << " for music " << music_id.get();
         return;
     }
 

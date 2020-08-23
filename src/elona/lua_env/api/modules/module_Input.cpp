@@ -168,11 +168,7 @@ sol::optional<std::string> Input_prompt_text(
 {
     txt(message + i18n::space_if_needed());
     bool canceled = input_text_dialog(
-        (windoww - 360) / 2 + inf_screenx,
-        winposy(90),
-        20,
-        is_cancelable,
-        true);
+        (windoww - 360) / 2 + inf_screenx, winposy(90), 20, is_cancelable);
     if (canceled)
     {
         return sol::nullopt;

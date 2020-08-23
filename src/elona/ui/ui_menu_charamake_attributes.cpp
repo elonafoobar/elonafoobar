@@ -4,6 +4,7 @@
 #include "../audio.hpp"
 #include "../character_making.hpp"
 #include "../class.hpp"
+#include "../data/types/type_ability.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
@@ -21,7 +22,7 @@ bool UIMenuCharamakeAttributes::init()
 
 void UIMenuCharamakeAttributes::_reroll_attributes()
 {
-    chara_delete(0);
+    chara_delete(cdata.player());
     race_init_chara(cdata.player(), _race_id);
     class_init_chara(cdata.player(), _class_id);
     cdata.player().level = 1;
@@ -31,17 +32,18 @@ void UIMenuCharamakeAttributes::_reroll_attributes()
         {
             if (_minimum)
             {
-                sdata.get(cnt, 0).original_level -=
-                    sdata.get(cnt, 0).original_level / 2;
+                cdata.player().get_skill(cnt).base_level -=
+                    cdata.player().get_skill(cnt).base_level / 2;
             }
             else
             {
-                sdata.get(cnt, 0).original_level -=
-                    rnd(sdata.get(cnt, 0).original_level / 2 + 1);
+                cdata.player().get_skill(cnt).base_level -=
+                    rnd(cdata.player().get_skill(cnt).base_level / 2 + 1);
             }
-            _attributes(cnt - 10) = sdata.get(cnt, 0).original_level * 1000000 +
-                sdata.get(cnt, 0).experience * 1000 +
-                sdata.get(cnt, 0).potential;
+            _attributes(cnt - 10) =
+                cdata.player().get_skill(cnt).base_level * 1000000 +
+                cdata.player().get_skill(cnt).experience * 1000 +
+                cdata.player().get_skill(cnt).potential;
         }
     }
 }

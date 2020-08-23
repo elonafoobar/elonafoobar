@@ -14,10 +14,6 @@ namespace elona
 namespace lua
 {
 
-std::pair<int, int> get_start_end_indices(
-    const std::string& kind,
-    ModEnv::StoreType store_type);
-
 std::string get_store_name(ModEnv::StoreType store_type);
 
 

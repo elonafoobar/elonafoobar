@@ -229,22 +229,15 @@ bool _is_special_throwing_action(int action_id)
 
 
 
-int dist_helper(const Position& a, const Position& b)
-{
-    return dist(a.x, a.y, b.x, b.y);
-}
-
-
-
 int dist_helper(const Character& a, const Character& b)
 {
-    return dist_helper(a.position, b.position);
+    return dist(a.position, b.position);
 }
 
 
 
-optional_ref<Item> _try_generate_special_throwing_item(
-    const Character& chara,
+OptionalItemRef _try_generate_special_throwing_item(
+    Character& chara,
     int action_id)
 {
     switch (action_id)
@@ -252,20 +245,17 @@ optional_ref<Item> _try_generate_special_throwing_item(
     case -9999:
         flt();
         flttypemajor = 52000;
-        return itemcreate_chara_inv(
-            chara.index, choice(isetthrowpotionminor), 0);
+        return itemcreate_chara_inv(chara, choice(isetthrowpotionminor), 0);
     case -9998:
         flt();
         flttypemajor = 52000;
-        return itemcreate_chara_inv(
-            chara.index, choice(isetthrowpotionmajor), 0);
+        return itemcreate_chara_inv(chara, choice(isetthrowpotionmajor), 0);
     case -9997:
         flt();
         flttypemajor = 52000;
-        return itemcreate_chara_inv(
-            chara.index, choice(isetthrowpotiongreater), 0);
-    case -9996: flt(); return itemcreate_chara_inv(chara.index, 698, 0);
-    default: assert(0); return none;
+        return itemcreate_chara_inv(chara, choice(isetthrowpotiongreater), 0);
+    case -9996: flt(); return itemcreate_chara_inv(chara, 698, 0);
+    default: assert(0); return nullptr;
     }
 }
 
@@ -299,14 +289,14 @@ void _ally_sells_item(Character& chara)
     int sold_item_count = 0;
     int earned_money = 0;
 
-    for (auto&& item : inv.for_chara(chara))
+    for (const auto& item : g_inv.for_chara(chara))
     {
-        if (the_item_db[itemid2int(item.id)]->category == ItemCategory::ore)
+        if (the_item_db[itemid2int(item->id)]->category == ItemCategory::ore)
         {
-            sold_item_count += item.number();
-            const auto total_value = item.value * item.number();
+            sold_item_count += item->number();
+            const auto total_value = item->value * item->number();
             earned_money += total_value;
-            item.remove();
+            item->remove();
             earn_gold(chara, total_value);
         }
     }
@@ -349,7 +339,7 @@ void _ally_trains(Character& chara)
         while (true)
         {
             const auto skill_id = rnd(4) == 0 ? rnd(8) + 10 : rnd(300) + 100;
-            if (sdata.get(skill_id, chara.index).original_level == 0)
+            if (chara.get_skill(skill_id).base_level == 0)
             {
                 continue;
             }
@@ -372,7 +362,7 @@ bool _is_valid_position(int x, int y)
 
 bool _will_crush_wall(const Character& chara, int x, int y)
 {
-    return chara.index >= 16 && chara.quality >= Quality::miracle &&
+    return !chara.is_player_or_ally() && chara.quality >= Quality::miracle &&
         chara.relationship <= -2 && _is_valid_position(x, y) &&
         (chip_data.for_cell(x, y).effect & 4);
 }
@@ -417,13 +407,13 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
             is_in_fov(cdata[game_data.fire_giant]))
         {
             flt();
-            if (const auto snowball = itemcreate_chara_inv(chara.index, 587, 0))
+            if (const auto snowball = itemcreate_chara_inv(chara, 587, 0))
             {
                 tlocx = cdata[game_data.fire_giant].position.x;
                 tlocy = cdata[game_data.fire_giant].position.y;
                 txt(i18n::s.get("core.ai.fire_giant"),
                     Message::color{ColorIndex::cyan});
-                return do_throw_command(chara, *snowball);
+                return do_throw_command(chara, snowball.unwrap());
             }
         }
     }
@@ -431,27 +421,20 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
     // Throws a snowball to a snowman.
     if (rnd(12) == 0)
     {
-        optional_ref<Item> target_snowman;
-        for (const auto& snowman_ref_wrapper : itemlist(-1, 541))
+        for (const auto& item : g_inv.ground())
         {
-            auto&& snowman = snowman_ref_wrapper.get();
-            if (snowman.position.x >= scx &&
-                snowman.position.x < scx + inf_screenw &&
-                snowman.position.y >= scy &&
-                snowman.position.y < scy + inf_screenh)
+            if (item->id == ItemId::snow_man && item->pos().x >= scx &&
+                item->pos().x < scx + inf_screenw && item->pos().y >= scy &&
+                item->pos().y < scy + inf_screenh)
             {
-                target_snowman = snowman;
+                flt();
+                if (const auto snowball = itemcreate_chara_inv(chara, 587, 0))
+                {
+                    tlocx = item->pos().x;
+                    tlocy = item->pos().y;
+                    return do_throw_command(chara, snowball.unwrap());
+                }
                 break;
-            }
-        }
-        if (target_snowman)
-        {
-            flt();
-            if (const auto snowball = itemcreate_chara_inv(chara.index, 587, 0))
-            {
-                tlocx = target_snowman->position.x;
-                tlocy = target_snowman->position.y;
-                return do_throw_command(chara, *snowball);
             }
         }
     }
@@ -463,10 +446,10 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
                 .item_info_actual.is_empty())
         {
             flt();
-            if (const auto item = itemcreate_extra_inv(541, chara.position, 0))
+            if (const auto item = itemcreate_map_inv(541, chara.position, 0))
             {
                 snd("core.snow");
-                txt(i18n::s.get("core.ai.makes_snowman", chara, *item));
+                txt(i18n::s.get("core.ai.makes_snowman", chara, item.unwrap()));
                 return TurnResult::turn_end;
             }
         }
@@ -476,13 +459,13 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
     if (rnd(12) == 0)
     {
         flt();
-        if (const auto snowball = itemcreate_chara_inv(chara.index, 587, 0))
+        if (const auto snowball = itemcreate_chara_inv(chara, 587, 0))
         {
             tlocx = cdata.player().position.x;
             tlocy = cdata.player().position.y;
             txt(i18n::s.get("core.ai.snowball"),
                 Message::color{ColorIndex::cyan});
-            return do_throw_command(chara, *snowball);
+            return do_throw_command(chara, snowball.unwrap());
         }
     }
 
@@ -528,7 +511,7 @@ void _proc_hungry(Character& chara)
         {
             flttypeminor = 52002;
         }
-        if (const auto item = itemcreate_chara_inv(chara.index, 0, 0))
+        if (auto item = itemcreate_chara_inv(chara, 0, 0))
         {
             if (the_item_db[itemid2int(item->id)]->is_drinkable)
             {
@@ -541,7 +524,7 @@ void _proc_hungry(Character& chara)
                 }
                 else
                 {
-                    chara.ai_item = ItemRef::from_ref(*item);
+                    chara.ai_item = item;
                     _change_nutrition(chara);
                 }
             }
@@ -583,7 +566,7 @@ TurnResult ai_proc_basic(Character& chara, int& enemy_index)
             if (const auto throw_item =
                     _try_generate_special_throwing_item(chara, act))
             {
-                return do_throw_command(chara, *throw_item);
+                return do_throw_command(chara, throw_item.unwrap());
             }
             return TurnResult::turn_end;
         }
@@ -621,7 +604,7 @@ TurnResult ai_proc_basic(Character& chara, int& enemy_index)
         efid = act;
         if (chara.mp < chara.max_mp / 7)
         {
-            if (rnd(3) || chara.index < 16 ||
+            if (rnd(3) || chara.is_player_or_ally() ||
                 chara.quality >= Quality::miracle ||
                 chara.cures_mp_frequently())
             {
@@ -655,7 +638,7 @@ TurnResult ai_proc_basic(Character& chara, int& enemy_index)
         {
             try_to_melee_attack(chara, cdata[enemy_index]);
         }
-        else if (rnd(3) == 0 || chara.index < 16)
+        else if (rnd(3) == 0 || chara.is_player_or_ally())
         {
             const auto ok = _try_do_melee_attack(chara, cdata[enemy_index]);
             if (ok)
@@ -708,7 +691,7 @@ TurnResult ai_proc_basic(Character& chara, int& enemy_index)
 TurnResult
 proc_npc_movement_event(Character& chara, int& enemy_index, bool retreat)
 {
-    if (map_data.type == mdata_t::MapType::town && chara.index < 16)
+    if (map_data.type == mdata_t::MapType::town && chara.is_player_or_ally())
     {
         if (rnd(100) == 0)
         {
@@ -771,7 +754,7 @@ proc_npc_movement_event(Character& chara, int& enemy_index, bool retreat)
         {
             if (chara.enemy_id != enemy_index)
             {
-                const auto did_swap = cell_swap(chara.index, enemy_index);
+                const auto did_swap = cell_swap(chara, cdata[enemy_index]);
                 if (did_swap && is_in_fov(chara))
                 {
                     txt(i18n::s.get(
@@ -917,8 +900,8 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
     }
 
     // Falls into sleep.
-    if (chara.index >= 16 && map_is_town_or_guild() && _is_at_night() &&
-        !chara.activity)
+    if (!chara.is_player_or_ally() && map_is_town_or_guild() &&
+        _is_at_night() && !chara.activity)
     {
         if (rnd(100) == 0)
         {
@@ -946,9 +929,9 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
                         flttypeminor = 52002;
                     }
                 }
-                if (const auto item = itemcreate_chara_inv(chara.index, 0, 0))
+                if (auto item = itemcreate_chara_inv(chara, 0, 0))
                 {
-                    chara.ai_item = ItemRef::from_ref(*item);
+                    chara.ai_item = item;
                 }
             }
         }
@@ -999,14 +982,15 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
                         tlocy = cdata.player().position.y;
                         flt();
                         if (const auto salt_solution =
-                                itemcreate_chara_inv(chara.index, 698, 0))
+                                itemcreate_chara_inv(chara, 698, 0))
                         {
                             if (is_in_fov(chara))
                             {
                                 txt(i18n::s.get("core.ai.snail"),
                                     Message::color{ColorIndex::cyan});
                             }
-                            return do_throw_command(chara, *salt_solution);
+                            return do_throw_command(
+                                chara, salt_solution.unwrap());
                         }
                     }
                 }
@@ -1081,7 +1065,7 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
     if (chara.ai_calm == 2)
     {
         if (map_data.designated_spawns == 1 &&
-            dist_helper(chara.position, chara.initial_position) > 2)
+            dist(chara.position, chara.initial_position) > 2)
         {
             chara.next_position.x = chara.position.x +
                 rnd(2) *

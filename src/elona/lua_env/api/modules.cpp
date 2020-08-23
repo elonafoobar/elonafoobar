@@ -15,6 +15,7 @@
 #include "modules/module_I18N.cpp"
 #include "modules/module_Input.cpp"
 #include "modules/module_Internal.cpp"
+#include "modules/module_Inventory.cpp"
 #include "modules/module_Item.cpp"
 #include "modules/module_JSON5.cpp"
 #include "modules/module_Magic.cpp"
@@ -53,6 +54,7 @@ void bind(sol::table core)
     ELONA_LUA_API_BIND_MODULE(I18N);
     ELONA_LUA_API_BIND_MODULE(Input);
     ELONA_LUA_API_BIND_MODULE(Internal);
+    ELONA_LUA_API_BIND_MODULE(Inventory);
     ELONA_LUA_API_BIND_MODULE(Item);
     ELONA_LUA_API_BIND_MODULE(JSON5);
     ELONA_LUA_API_BIND_MODULE(Magic);

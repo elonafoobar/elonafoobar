@@ -21,6 +21,7 @@
 #include "map.hpp"
 #include "profile/profile_manager.hpp"
 #include "save.hpp"
+#include "save_fs.hpp"
 #include "set_item_info.hpp"
 #include "variables.hpp"
 
@@ -126,8 +127,7 @@ void start_in_map(int map, int level)
     fs::remove_all(filesystem::dirs::save(player_id));
     fs::remove_all(filesystem::dirs::tmp());
     fs::create_directory(filesystem::dirs::tmp());
-    writeloadedbuff_clear();
-    Save::instance().clear();
+    save_fs_clear();
 
     game_data.current_map = map;
     game_data.current_dungeon_level = level;
@@ -204,8 +204,7 @@ void post_run()
     filesystem::dirs::set_base_save_directory(filesystem::path(save_dir));
     fs::remove_all(filesystem::dirs::save(player_id));
     fs::remove_all(filesystem::dirs::tmp());
-    writeloadedbuff_clear();
-    Save::instance().clear();
+    save_fs_clear();
     fs::create_directory(filesystem::dirs::tmp());
     finish_elona();
 }

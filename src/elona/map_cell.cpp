@@ -9,10 +9,6 @@
 namespace elona
 {
 
-int tc_at_m81 = 0;
-
-
-
 void cell_featset(int x, int y, int info1, int info2, int info3, int info4)
 {
     elona_vector1<int> feat_at_m80;
@@ -102,55 +98,31 @@ void cell_check(int x, int y)
 
 
 
-bool cell_swap(int chara_index_a, int chara_index_b, int x, int y)
+bool cell_swap(Character& chara, const Position& pos)
 {
-    int x2_at_m81 = 0;
-    int y2_at_m81 = 0;
+    if (const auto chara_b_index_plus_one =
+            cell_data.at(pos.x, pos.y).chara_index_plus_one)
+    {
+        return cell_swap(chara, cdata[chara_b_index_plus_one - 1]);
+    }
+
     if (game_data.mount != 0)
     {
-        if (game_data.mount == chara_index_a ||
-            game_data.mount == chara_index_b)
+        if (game_data.mount == chara.index)
         {
             return false;
         }
     }
-    tc_at_m81 = chara_index_b;
-    if (tc_at_m81 == -1)
-    {
-        if (cell_data.at(x, y).chara_index_plus_one != 0)
-        {
-            tc_at_m81 = cell_data.at(x, y).chara_index_plus_one - 1;
-        }
-    }
-    if (tc_at_m81 != -1)
-    {
-        cell_data
-            .at(cdata[chara_index_a].position.x,
-                cdata[chara_index_a].position.y)
-            .chara_index_plus_one = tc_at_m81 + 1;
-        x2_at_m81 = cdata[tc_at_m81].position.x;
-        y2_at_m81 = cdata[tc_at_m81].position.y;
-        cdata[tc_at_m81].position.x = cdata[chara_index_a].position.x;
-        cdata[tc_at_m81].position.y = cdata[chara_index_a].position.y;
-    }
-    else
-    {
-        cell_data
-            .at(cdata[chara_index_a].position.x,
-                cdata[chara_index_a].position.y)
-            .chara_index_plus_one = 0;
-        x2_at_m81 = x;
-        y2_at_m81 = y;
-    }
-    cell_data.at(x2_at_m81, y2_at_m81).chara_index_plus_one = chara_index_a + 1;
-    cdata[chara_index_a].position.x = x2_at_m81;
-    cdata[chara_index_a].position.y = y2_at_m81;
-    if (chara_index_a == 0 || tc_at_m81 == 0)
+
+    cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one = 0;
+    chara.position = pos;
+    cell_data.at(pos.x, pos.y).chara_index_plus_one = chara.index + 1;
+
+    if (chara.is_player())
     {
         if (game_data.mount)
         {
-            cdata[game_data.mount].position.x = cdata.player().position.x;
-            cdata[game_data.mount].position.y = cdata.player().position.y;
+            cdata[game_data.mount].position = cdata.player().position;
         }
     }
     return true;
@@ -158,39 +130,68 @@ bool cell_swap(int chara_index_a, int chara_index_b, int x, int y)
 
 
 
-void cell_movechara(int chara_index, int x, int y)
+bool cell_swap(Character& chara_a, Character& chara_b)
 {
-    if (cell_data.at(x, y).chara_index_plus_one != 0)
+    if (game_data.mount != 0)
     {
-        if (cell_data.at(x, y).chara_index_plus_one - 1 == chara_index)
+        if (game_data.mount == chara_a.index ||
+            game_data.mount == chara_b.index)
+        {
+            return false;
+        }
+    }
+
+    std::swap(chara_a.position, chara_b.position);
+    cell_data.at(chara_a.position.x, chara_a.position.y).chara_index_plus_one =
+        chara_a.index + 1;
+    cell_data.at(chara_b.position.x, chara_b.position.y).chara_index_plus_one =
+        chara_b.index + 1;
+
+    if (chara_a.is_player() || chara_b.is_player())
+    {
+        if (game_data.mount)
+        {
+            cdata[game_data.mount].position = cdata.player().position;
+        }
+    }
+    return true;
+}
+
+
+
+void cell_movechara(Character& chara, int x, int y)
+{
+    if (const auto chara_b_index_plus_one =
+            cell_data.at(x, y).chara_index_plus_one)
+    {
+        if (chara_b_index_plus_one - 1 == chara.index)
         {
             return;
         }
-        cell_swap(chara_index, tc_at_m81);
+        cell_swap(chara, cdata[chara_b_index_plus_one - 1]);
     }
     else
     {
-        cell_data
-            .at(cdata[chara_index].position.x, cdata[chara_index].position.y)
-            .chara_index_plus_one = 0;
-        cdata[chara_index].position = {x, y};
-        cell_data.at(x, y).chara_index_plus_one = chara_index + 1;
+        cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one =
+            0;
+        chara.position = {x, y};
+        cell_data.at(x, y).chara_index_plus_one = chara.index + 1;
     }
 }
 
 
 
-void cell_setchara(int chara_index, int x, int y)
+void cell_setchara(Character& chara, int x, int y)
 {
-    cell_data.at(x, y).chara_index_plus_one = chara_index + 1;
-    cdata[chara_index].position = Position{x, y};
+    cell_data.at(x, y).chara_index_plus_one = chara.index + 1;
+    chara.position = {x, y};
 }
 
 
 
-void cell_removechara(int x, int y)
+void cell_removechara(const Position& pos)
 {
-    cell_data.at(x, y).chara_index_plus_one = 0;
+    cell_data.at(pos.x, pos.y).chara_index_plus_one = 0;
 }
 
 
@@ -244,9 +245,9 @@ int cell_findspace(int base_x, int base_y, int range)
 int cell_count_exact_item_stacks(const Position& pos)
 {
     int ret{};
-    for (auto&& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (item.number() > 0 && item.position == pos)
+        if (item->number() > 0 && item->pos() == pos)
         {
             ++ret;
         }
@@ -256,17 +257,17 @@ int cell_count_exact_item_stacks(const Position& pos)
 
 
 
-optional_ref<Item> cell_get_item_if_only_one(const Position& pos)
+OptionalItemRef cell_get_item_if_only_one(const Position& pos)
 {
     const auto& item_info_actual = cell_data.at(pos.x, pos.y).item_info_actual;
     if (item_info_actual.stack_count() != 1)
     {
-        return none;
+        return nullptr;
     }
     else
     {
         const auto index = item_info_actual.item_indice()[0];
-        return inv.ground().at(index - 1);
+        return g_inv.ground().at(index - 1);
     }
 }
 

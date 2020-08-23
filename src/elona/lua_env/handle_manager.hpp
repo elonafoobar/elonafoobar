@@ -2,13 +2,8 @@
 
 #include <set>
 
-#include <boost/lexical_cast.hpp>
-#include <boost/uuid/uuid.hpp>
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_io.hpp>
-
 #include "../../util/noncopyable.hpp"
-#include "../eobject/eobject.hpp"
+#include "../character.hpp"
 #include "lua_submodule.hpp"
 
 
@@ -17,7 +12,6 @@ namespace elona
 {
 
 struct Character;
-struct Item;
 
 
 
@@ -55,7 +49,6 @@ public:
      * validity.
      */
     void create_chara_handle(Character& chara);
-    void create_item_handle(Item& item);
 
     /***
      * Removes an existing handle in the isolated handle environment.
@@ -64,7 +57,6 @@ public:
      * is checked that the handle is invalid.
      */
     void remove_chara_handle(Character& chara);
-    void remove_item_handle(Item& item);
 
 
     /***
@@ -73,30 +65,22 @@ public:
      * instance.
      */
     void create_chara_handle_run_callbacks(Character&);
-    void create_item_handle_run_callbacks(Item&);
     void remove_chara_handle_run_callbacks(Character&);
-    void remove_item_handle_run_callbacks(Item&);
 
 
     /***
      * Looks up the C++ reference that a handle points to. Will throw
      * if the handle is invalid or of the wrong type.
      */
-    template <typename T>
-    sol::optional<T&> get_ref(sol::table handle)
+    sol::optional<Character&> get_ref(sol::table handle)
     {
-        sol::object obj = env()["Handle"]["get_ref"](handle, T::lua_type());
+        sol::object obj =
+            env()["Handle"]["get_ref"](handle, Character::lua_type());
         if (obj == sol::lua_nil)
         {
             return sol::nullopt;
         }
-        return obj.as<T&>();
-    }
-
-    template <typename T>
-    bool handle_is(sol::table handle)
-    {
-        return handle["__kind"] == T::lua_type();
+        return obj.as<Character&>();
     }
 
     bool handle_is_valid(sol::table handle)
@@ -109,14 +93,10 @@ public:
      * Provides a Lua reference to a handle from the isolated handle
      * environment.
      */
-    sol::table get_handle(int index, std::string type)
+    sol::table get_handle(const Character& obj)
     {
-        if (index < 0)
-        {
-            return sol::lua_nil;
-        }
-
-        sol::object handle = env()["Handle"]["get_handle"](index, type);
+        sol::object handle = env()["Handle"]["get_handle"](
+            pointer_arg(obj), Character::lua_type());
         if (!handle.is<sol::table>())
         {
             return sol::lua_nil;
@@ -124,52 +104,30 @@ public:
         return handle;
     }
 
-    /***
-     * Provides a Lua reference to a handle from the isolated handle
-     * environment.
-     */
-    template <typename T>
-    sol::table get_handle(T& obj)
-    {
-        if constexpr (std::is_same_v<std::remove_cv_t<T>, Item>)
-        {
-            return get_handle(obj.index(), T::lua_type());
-        }
-        else
-        {
-            return get_handle(obj.index, T::lua_type());
-        }
-    }
-
-
-    void
-    clear_handle_range(const std::string& kind, int index_start, int index_end)
-    {
-        env()["Handle"]["clear_handle_range"](kind, index_start, index_end);
-    }
 
     void merge_handles(const std::string& kind, sol::table handles)
     {
         env()["Handle"]["merge_handles"](kind, handles);
     }
 
-    template <typename T>
-    void relocate_handle(T& source, T& destination, int new_index)
+    void relocate_handle(Character& source, Character& destination)
     {
         env()["Handle"]["relocate_handle"](
-            source, destination, new_index, T::lua_type());
+            source,
+            pointer_arg(source),
+            destination,
+            pointer_arg(destination),
+            Character::lua_type());
     }
 
-    template <typename T>
-    void swap_handles(T& obj_a, T& obj_b)
+    void swap_handles(Character& obj_a, Character& obj_b)
     {
-        env()["Handle"]["swap_handles"](obj_a, obj_b, T::lua_type());
+        env()["Handle"]["swap_handles"](obj_a, obj_b, Character::lua_type());
     }
 
-    template <typename T>
-    void resolve_handle(T& obj)
+    void resolve_handle(Character& obj)
     {
-        auto handle = get_handle<T>(obj);
+        auto handle = get_handle(obj);
         if (handle != sol::lua_nil)
         {
             env()["Handle"]["set_ref"](handle, obj);
@@ -181,29 +139,33 @@ public:
 
     /***
      * Clears handles that are local to the current map without
-     * running removal callbacks. Player and party character/item
+     * running removal callbacks. Player and party character
      * handles are not cleared.
      */
     void clear_map_local_handles();
 
 private:
-    template <typename T>
-    void create_handle(T& obj)
+    void create_handle(Character& obj)
     {
         const auto new_id = ObjId::generate();
         obj.obj_id = new_id;
         env()["Handle"]["create_handle"](
-            obj, T::lua_type(), new_id.to_string());
+            obj, pointer_arg(obj), Character::lua_type(), new_id.to_string());
     }
 
-    template <typename T>
-    void remove_handle(T& obj)
+    void remove_handle(Character& obj)
     {
-        env()["Handle"]["remove_handle"](obj, T::lua_type());
+        env()["Handle"]["remove_handle"](
+            obj, pointer_arg(obj), Character::lua_type());
         obj.obj_id = ObjId::nil();
     }
 
-    void bind(LuaEnv&);
+
+    int64_t pointer_arg(const Character& obj)
+    {
+        static_assert(sizeof(Character*) <= sizeof(int64_t));
+        return reinterpret_cast<int64_t>(std::addressof(obj));
+    }
 };
 
 } // namespace lua

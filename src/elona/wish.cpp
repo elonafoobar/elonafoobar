@@ -11,6 +11,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "config.hpp"
+#include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
 #include "debug.hpp"
 #include "deferred_event.hpp"
@@ -154,23 +155,6 @@ std::string fix_wish(const std::string& text)
 
     auto ret{text};
 
-    // TODO
-    if (debug::voldemort)
-    {
-        const auto pos = ret.find_first_not_of(u8"0123456789");
-        if (pos != std::string::npos)
-        {
-            ret = ret.substr(pos);
-        }
-        ret = remove_str(ret, u8"呪われた");
-        ret = remove_str(ret, u8"堕落した");
-        ret = remove_str(ret, u8"祝福された");
-        ret = remove_str(ret, u8"呪われていない");
-        ret = remove_str(ret, u8"cursed ");
-        ret = remove_str(ret, u8"doomed ");
-        ret = remove_str(ret, u8"blessed ");
-        ret = remove_str(ret, u8"uncursed ");
-    }
     if (jp)
     {
         ret = remove_str(ret, u8",");
@@ -278,13 +262,13 @@ void wish_for_card()
     chara_create(56, select_wished_character(inputlog), -3, 0);
     nooracle = 0;
     flt();
-    if (const auto item = itemcreate_extra_inv(504, cdata.player().position, 0))
+    if (const auto item = itemcreate_map_inv(504, cdata.player().position, 0))
     {
         item->subname = charaid2int(cdata.tmp().id);
         item->param1 = cdata.tmp().image;
         chara_vanquish(cdata.tmp());
-        cell_refresh(cdata.player().position.x, cdata.player().position.y);
-        txt(i18n::s.get("core.wish.something_appears_from_nowhere", *item));
+        txt(i18n::s.get(
+            "core.wish.something_appears_from_nowhere", item.unwrap()));
     }
 }
 
@@ -297,13 +281,13 @@ void wish_for_figure()
     chara_create(56, select_wished_character(inputlog), -3, 0);
     nooracle = 0;
     flt();
-    if (const auto item = itemcreate_extra_inv(503, cdata.player().position, 0))
+    if (const auto item = itemcreate_map_inv(503, cdata.player().position, 0))
     {
         item->subname = charaid2int(cdata.tmp().id);
         item->param1 = cdata.tmp().image;
         chara_vanquish(cdata.tmp());
-        cell_refresh(cdata.player().position.x, cdata.player().position.y);
-        txt(i18n::s.get("core.wish.something_appears_from_nowhere", *item));
+        txt(i18n::s.get(
+            "core.wish.something_appears_from_nowhere", item.unwrap()));
     }
 }
 
@@ -402,23 +386,16 @@ bool grant_special_wishing(const std::string& wish)
     else if (match_special_wish(
                  wish, "alias", {"aka", "title", "name", "alias"}))
     {
-        if (game_data.wizard)
+        txt(i18n::s.get("core.wish.wish_alias.what_is_your_new_alias"));
+        int stat = select_alias(0);
+        if (stat == 1)
         {
-            txt(i18n::s.get("core.wish.wish_alias.impossible"));
+            txt(i18n::s.get("core.wish.wish_alias.new_alias", cmaka));
+            cdata.player().alias = cmaka;
         }
         else
         {
-            txt(i18n::s.get("core.wish.wish_alias.what_is_your_new_alias"));
-            int stat = select_alias(0);
-            if (stat == 1)
-            {
-                txt(i18n::s.get("core.wish.wish_alias.new_alias", cmaka));
-                cdata.player().alias = cmaka;
-            }
-            else
-            {
-                txt(i18n::s.get("core.wish.wish_alias.no_change"));
-            }
+            txt(i18n::s.get("core.wish.wish_alias.no_change"));
         }
     }
     else if (match_special_wish(wish, "sex", {"sex"}))
@@ -456,42 +433,32 @@ bool grant_special_wishing(const std::string& wish)
     else if (match_special_wish(
                  wish, "gold", {"money", "gold", "wealth", "fortune"}))
     {
+        const auto amount = debug_is_wizard()
+            ? (1000 * 1000 * 1000)
+            : (cdata.player().level / 3 + 1) * 10000;
         txt(i18n::s.get("core.wish.wish_gold"),
             Message::color{ColorIndex::orange});
         flt();
-        itemcreate_extra_inv(
-            54,
-            cdata.player().position,
-            (cdata.player().level / 3 + 1) * 10000);
+        itemcreate_map_inv(54, cdata.player().position, amount);
     }
     else if (match_special_wish(
                  wish,
                  "small_medal",
                  {"small medal", "small coin", "medal", "coin"}))
     {
+        const auto amount = debug_is_wizard() ? 1000 : 3 + rnd(3);
         txt(i18n::s.get("core.wish.wish_small_medal"),
             Message::color{ColorIndex::orange});
         flt();
-        itemcreate_extra_inv(622, cdata.player().position, 3 + rnd(3));
+        itemcreate_map_inv(622, cdata.player().position, amount);
     }
     else if (match_special_wish(wish, "platinum", {"platinum", "platina"}))
     {
+        const auto amount = debug_is_wizard() ? (1000 * 1000) : 5;
         txt(i18n::s.get("core.wish.wish_platinum"),
             Message::color{ColorIndex::orange});
         flt();
-        itemcreate_extra_inv(55, cdata.player().position, 5);
-    }
-    else if (game_data.wizard)
-    {
-        if (match_special_wish(wish, "fame", {"fame"}))
-        {
-            txt(u8"fame +1,000,000", Message::color{ColorIndex::orange});
-            cdata.player().fame += 1'000'000;
-        }
-        else
-        {
-            return false; // No match
-        }
+        itemcreate_map_inv(55, cdata.player().position, amount);
     }
     else
     {
@@ -506,33 +473,6 @@ bool grant_special_wishing(const std::string& wish)
 bool wish_for_item(Character& chara, const std::string& input)
 {
     using namespace strutil;
-
-    const auto number_of_items = elona::stoi(input);
-    optional<CurseState> curse_state;
-
-    // TODO
-    if (debug::voldemort)
-    {
-        if (contains(input, u8"呪われた") || contains(input, u8"cursed "))
-        {
-            curse_state = CurseState::cursed;
-        }
-        else if (contains(input, u8"堕落した") || contains(input, u8"doomed "))
-        {
-            curse_state = CurseState::doomed;
-        }
-        else if (
-            contains(input, u8"祝福された") || contains(input, u8"blessed "))
-        {
-            curse_state = CurseState::blessed;
-        }
-        else if (
-            contains(input, u8"呪われていない") ||
-            contains(input, u8"uncursed "))
-        {
-            curse_state = CurseState::none;
-        }
-    }
 
     BySimilaritySelector<int> selector;
     const auto wish = fix_wish(input);
@@ -593,7 +533,7 @@ bool wish_for_item(Character& chara, const std::string& input)
 
         nostack = 1;
         nooracle = 1;
-        auto item = itemcreate_extra_inv(id, chara.position, 0);
+        auto item = itemcreate_map_inv(id, chara.position, 0);
         nooracle = 0;
 
         if (!item)
@@ -602,13 +542,12 @@ bool wish_for_item(Character& chara, const std::string& input)
         // Unwishable item
         if (item->is_precious() || item->quality == Quality::special)
         {
-            if (!game_data.wizard)
+            if (!debug_is_wizard())
             {
                 // Remove this item and retry.
                 selector.remove(id);
                 item->remove();
                 --itemmemory(1, itemid2int(item->id));
-                cell_refresh(item->position.x, item->position.y);
                 continue;
             }
         }
@@ -626,7 +565,7 @@ bool wish_for_item(Character& chara, const std::string& input)
         {
             item->remove();
             flt();
-            if (const auto well = itemcreate_extra_inv(516, chara.position, 3))
+            if (const auto well = itemcreate_map_inv(516, chara.position, 3))
             {
                 well->curse_state = CurseState::blessed;
                 txt(i18n::s.get("core.wish.it_is_sold_out"));
@@ -663,17 +602,9 @@ bool wish_for_item(Character& chara, const std::string& input)
             case 706: item->set_number(1); break;
             }
         }
-        if (debug::voldemort && number_of_items != 0)
-        {
-            item->set_number(number_of_items);
-        }
-        if (debug::voldemort && curse_state)
-        {
-            item->curse_state = curse_state.value();
-        }
 
-        item_identify(*item, IdentifyState::completely);
-        txt(i18n::s.get("core.wish.something_appears", *item));
+        item_identify(item.unwrap(), IdentifyState::completely);
+        txt(i18n::s.get("core.wish.something_appears", item.unwrap()));
         return true;
     }
 
@@ -733,7 +664,7 @@ bool wish_for_skill(const std::string& input)
         const auto name = the_ability_db.get_text(id, "name");
         if (!name.empty())
         {
-            if (sdata.get(id, 0).original_level == 0)
+            if (cdata.player().get_skill(id).base_level == 0)
             {
                 txt(i18n::s.get("core.wish.you_learn_skill", name),
                     Message::color{ColorIndex::orange});
@@ -776,8 +707,7 @@ bool process_wish(Character& chara, optional<std::string> wish)
     }
     else
     {
-        input_text_dialog(
-            (windoww - 290) / 2 + inf_screenx, winposy(90), 16, false);
+        input_text_dialog((windoww - 290) / 2 + inf_screenx, winposy(90), 16);
     }
 
     txt(i18n::s.get("core.wish.your_wish", inputlog(0)));
@@ -839,7 +769,7 @@ bool process_wish(Character& chara, optional<std::string> wish)
             wish_for_card();
             return true;
         }
-        if (debug::voldemort)
+        if (debug_is_wizard())
         {
             if (match_general_wish(inputlog, "summon", {"summon"}))
             {

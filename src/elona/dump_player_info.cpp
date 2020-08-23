@@ -93,10 +93,12 @@ void dump_player_info()
 
     ss << std::endl;
 
-    s(1) = u8"生命力    : " + std::to_string(sdata(2, 0)) + u8"(" +
-        std::to_string(sdata.get(2, 0).original_level) + u8")";
-    s(2) = u8"マナ      : " + std::to_string(sdata(3, 0)) + u8"(" +
-        std::to_string(sdata.get(3, 0).original_level) + u8")";
+    s(1) = u8"生命力    : " +
+        std::to_string(cdata.player().get_skill(2).level) + u8"(" +
+        std::to_string(cdata.player().get_skill(2).base_level) + u8")";
+    s(2) = u8"マナ      : " +
+        std::to_string(cdata.player().get_skill(3).level) + u8"(" +
+        std::to_string(cdata.player().get_skill(3).base_level) + u8")";
     s(3) = u8"狂気度    : " + std::to_string(cdata.player().insanity);
     s(4) = u8"速度      : " + std::to_string(cdata.player().current_speed);
     s(5) = u8"名声度    : " + std::to_string(cdata.player().fame);
@@ -108,7 +110,7 @@ void dump_player_info()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         s = "";
-        p = sdata.get(10 + cnt, 0).potential;
+        p = cdata.player().get_skill(10 + cnt).potential;
         if (p >= 200)
         {
             s += u8"superb"s;
@@ -132,8 +134,8 @@ void dump_player_info()
         s = fixtxt(s, 15);
         s = fixtxt(
                 i18n::s.get_enum("core.ui.attribute", cnt) + u8"    : "s +
-                    sdata((10 + cnt), 0) + u8"("s +
-                    sdata.get(10 + cnt, 0).original_level + u8")"s,
+                    cdata.player().get_skill(10 + cnt).level + u8"("s +
+                    cdata.player().get_skill(10 + cnt).base_level + u8")"s,
                 24) +
             s;
 
@@ -181,9 +183,9 @@ void dump_player_info()
         listmax = 0;
         if (equipment_slot.equipment)
         {
-            item_name = itemname(*equipment_slot.equipment);
+            item_name = itemname(equipment_slot.equipment.unwrap());
             item_desc = cnvweight(equipment_slot.equipment->weight);
-            item_dump_desc(*equipment_slot.equipment);
+            item_dump_desc(equipment_slot.equipment.unwrap());
         }
         else
         {
@@ -265,7 +267,7 @@ void dump_player_info()
     }
 
     std::ofstream out{
-        (filesystem::dirs::save() / (playerid + u8".txt")).native()};
+        (filesystem::dirs::save() / fs::u8path(playerid + u8".txt")).native()};
     out << ss.str() << std::endl;
 
     std::cout << ss.str();

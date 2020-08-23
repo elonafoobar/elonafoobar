@@ -2,6 +2,7 @@ local Chara = ELONA.require("core.Chara")
 local GUI = ELONA.require("core.GUI")
 local I18N = ELONA.require("core.I18N")
 local Internal = ELONA.require("core.Internal")
+local Inventory = ELONA.require("core.Inventory")
 local Item = ELONA.require("core.Item")
 
 local common = require("../common.lua")
@@ -10,12 +11,12 @@ local function give_monster_balls()
    local flag = Internal.get_quest_flag("ambitious_scientist")
    local found = false
 
-   for _, item in Item.iter(0, 200) do
+   for _, item in ipairs(Inventory.player():as_table()) do
       if flag >= 6 then
          break
       end
 
-      if item.number > 0 and item.id == "core.monster_ball" and item.subname ~= 0 then
+      if item.id == "core.monster_ball" and item.subname ~= 0 then
          found = true
          while item.number > 0 and flag < 6 do
             GUI.txt(I18N.get("core.talk.unique.icolle.quest.give.deliver", item));

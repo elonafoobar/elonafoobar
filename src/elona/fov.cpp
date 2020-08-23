@@ -2,6 +2,7 @@
 
 #include "ability.hpp"
 #include "character.hpp"
+#include "data/types/type_ability.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "variables.hpp"

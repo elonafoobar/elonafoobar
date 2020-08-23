@@ -2,7 +2,6 @@
 
 #include <unordered_map>
 
-#include "../util/noncopyable.hpp"
 #include "filesystem.hpp"
 
 
@@ -42,32 +41,10 @@ enum class FileOperation2
 
 
 
-class Save : public lib::noncopyable
-{
-public:
-    static Save& instance();
-
-
-    void clear();
-    void add(const fs::path& filename);
-    void remove(const fs::path& filename);
-
-    void save(const fs::path& save_dir);
-
-
-private:
-    Save() = default;
-
-    std::unordered_map<fs::path, bool> saved_files;
-};
-
-
-
 void ctrl_file(FileOperation file_operation);
 void ctrl_file(FileOperation2 file_operation, const fs::path& filepath);
-void tmpload(const fs::path& filename);
-bool writeloadedbuff(const fs::path& filename);
-void writeloadedbuff_clear();
 
+void ctrl_file_tmp_inv_read(const fs::path& file_name);
+void ctrl_file_tmp_inv_write(const fs::path& file_name);
 
 } // namespace elona

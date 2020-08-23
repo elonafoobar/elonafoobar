@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.2)
 
 
 # Project
-project(Elona_foobar VERSION 0.7.4)
+project(Elona_foobar VERSION 0.7.5)
 
 
 

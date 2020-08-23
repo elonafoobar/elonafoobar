@@ -6,6 +6,7 @@
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "data/types/type_ability.hpp"
 #include "data/types/type_blending_recipe.hpp"
 #include "data/types/type_item.hpp"
 #include "draw.hpp"
@@ -15,6 +16,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/interface.hpp"
@@ -38,13 +40,6 @@ int step;
 elona_vector1<int> rpref;
 int rpid = 0;
 elona_vector1<int> rppage;
-
-
-
-int dist(const Position& p1, const Position& p2)
-{
-    return elona::dist(p1.x, p1.y, p2.x, p2.y);
-}
 
 
 
@@ -107,7 +102,7 @@ int calc_success_rate(
                 break;
             }
             const auto item_index = rpref(10 + cnt * 2);
-            if (inv[item_index].curse_state == CurseState::blessed)
+            if (g_inv[item_index]->curse_state == CurseState::blessed)
             {
                 factor -= 10;
                 if (cnt == current_step)
@@ -116,7 +111,7 @@ int calc_success_rate(
                         Message::color{ColorIndex::green});
                 }
             }
-            else if (is_cursed(inv[item_index].curse_state))
+            else if (is_cursed(g_inv[item_index]->curse_state))
             {
                 factor += 20;
                 if (cnt == current_step)
@@ -133,7 +128,7 @@ int calc_success_rate(
          the_blending_recipe_db.ensure(recipe_id).required_skills)
     {
         const auto legacy_skill_id = the_ability_db.ensure(skill_id).legacy_id;
-        if (sdata(legacy_skill_id, 0) <= 0)
+        if (cdata.player().get_skill(legacy_skill_id).level <= 0)
         {
             rate -= 125;
             continue;
@@ -143,7 +138,9 @@ int calc_success_rate(
         {
             d = 1;
         }
-        int p = (d * 200 / sdata(legacy_skill_id, 0) - 200) * -1;
+        int p =
+            (d * 200 / cdata.player().get_skill(legacy_skill_id).level - 200) *
+            -1;
         if (p > 0)
         {
             p /= 5;
@@ -172,19 +169,19 @@ int calc_success_rate(
 
 
 bool check_one_blending_material(
-    Item& item,
+    const ItemRef& item,
     int recipe_id,
     int step,
     bool check_pos)
 {
     if ((the_blending_recipe_db.ensure(recipe_id).type == 0 || step != 0) &&
-        item.own_state > 0)
+        item->own_state > 0)
     {
         return false;
     }
     if (check_pos)
     {
-        if (dist(item.position, cdata.player().position) > 4)
+        if (dist(item->pos(), cdata.player().position) > 4)
         {
             return false;
         }
@@ -193,7 +190,7 @@ bool check_one_blending_material(
     return lua::call_with_result<bool>(
         "core.Impl.Blending.check_material",
         false,
-        lua::handle(item),
+        item,
         the_blending_recipe_db.get_id_from_legacy(recipe_id)->get(),
         step + 1);
 }
@@ -206,7 +203,7 @@ bool find_blending_materials(int inventory, int recipe_id, int step)
     assert(inventory == -1 || inventory == 0);
 
     const auto check_pos = inventory == -1;
-    for (auto&& item : inventory == -1 ? inv.ground() : inv.pc())
+    for (const auto& item : inventory == -1 ? g_inv.ground() : g_inv.pc())
     {
         if (check_one_blending_material(item, recipe_id, step, check_pos))
         {
@@ -226,11 +223,11 @@ int count_blending_materials(int inventory, int recipe_id, int step)
 
     const auto check_pos = inventory == -1;
     int ret = 0;
-    for (auto&& item : inventory == -1 ? inv.ground() : inv.pc())
+    for (const auto& item : inventory == -1 ? g_inv.ground() : g_inv.pc())
     {
         if (check_one_blending_material(item, recipe_id, step, check_pos))
         {
-            ret += item.number();
+            ret += item->number();
         }
     }
     return ret;
@@ -248,7 +245,7 @@ void collect_blending_materials(
     assert(inventory == -1 || inventory == 0);
 
     const auto check_pos = inventory == -1;
-    for (auto&& item : inventory == -1 ? inv.ground() : inv.pc())
+    for (const auto& item : inventory == -1 ? g_inv.ground() : g_inv.pc())
     {
         if (result.size() >= 500)
         {
@@ -261,7 +258,7 @@ void collect_blending_materials(
                 bool has_already_used = false;
                 for (int i = 0; i < step; ++i)
                 {
-                    if (rpref(10 + i * 2) == item.index())
+                    if (rpref(10 + i * 2) == item->global_index())
                     {
                         has_already_used = true;
                         break;
@@ -274,10 +271,10 @@ void collect_blending_materials(
             }
 
             result.emplace_back(
-                item.index(),
-                static_cast<int>(the_item_db[itemid2int(item.id)]->category) *
+                item->global_index(),
+                static_cast<int>(the_item_db[itemid2int(item->id)]->category) *
                         1000 +
-                    itemid2int(item.id));
+                    itemid2int(item->id));
         }
     }
 }
@@ -333,7 +330,12 @@ int blendlist(elona_vector2<int>& result_array, int recipe_id, int step)
 
 
 
-void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
+void window_recipe(
+    const OptionalItemRef& item,
+    int x,
+    int y,
+    int width,
+    int height)
 {
     elona_vector1<std::string> s_;
     int xfix2_ = 0;
@@ -432,7 +434,7 @@ void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
         else
         {
             s_ = i18n::s.get(
-                "core.blending.window.selected", inv[rpref(10 + cnt * 2)]);
+                "core.blending.window.selected", g_inv[rpref(10 + cnt * 2)]);
             s_ = strutil::take_by_width(s_, 44);
         }
         mes(dx_, dy_, ""s + i_ + u8"."s + s_);
@@ -470,14 +472,16 @@ void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
         {
             const auto legacy_skill_id =
                 the_ability_db.ensure(skill_id).legacy_id;
-            const auto text_color = (required_level > sdata(legacy_skill_id, 0))
+            const auto text_color =
+                (required_level >
+                 cdata.player().get_skill(legacy_skill_id).level)
                 ? snail::Color{150, 0, 0}
                 : snail::Color{0, 120, 0};
             mes(dx_ + cnt % 2 * 140,
                 dy_ + cnt / 2 * 17,
                 the_ability_db.get_text(skill_id, "name") + u8"  "s +
-                    required_level + u8"("s + sdata(legacy_skill_id, 0) +
-                    u8")"s,
+                    required_level + u8"("s +
+                    cdata.player().get_skill(legacy_skill_id).level + u8")"s,
                 text_color);
             ++cnt;
         }
@@ -493,7 +497,7 @@ void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
         return;
 
     font(12 - en * 2, snail::Font::Style::bold);
-    mes(dx_ - 10, dy_, itemname(*item));
+    mes(dx_ - 10, dy_, itemname(item.unwrap()));
     dy_ += 20;
     font(13 - en * 2);
     if (item->identify_state <= IdentifyState::partly)
@@ -503,7 +507,7 @@ void window_recipe(optional_ref<Item> item, int x, int y, int width, int height)
         return;
     }
 
-    const auto inheritance = item_get_inheritance(*item);
+    const auto inheritance = item_get_inheritance(item.unwrap());
     if (inheritance.empty())
     {
         mes(dx_, dy_, i18n::s.get("core.blending.window.no_inherited_effects"));
@@ -544,9 +548,9 @@ int calc_max_number_of_products_you_can_blend(int recipe_id)
         {
             continue;
         }
-        if (inv[item_index].number() < ret)
+        if (g_inv[item_index]->number() < ret)
         {
-            ret = inv[item_index].number();
+            ret = g_inv[item_index]->number();
         }
     }
     return ret;
@@ -666,7 +670,7 @@ optional<TurnResult> blending_menu_select_recipe()
         {
             rpid = list(0, pagesize * page + cs);
             windowshadow = windowshadow(1);
-            window_recipe(none, wx + ww, wy, 400, wh);
+            window_recipe(nullptr, wx + ww, wy, 400, wh);
         }
         if (keyrange != 0)
         {
@@ -777,18 +781,18 @@ void blendig_menu_select_materials()
                 break;
             }
             p = list(0, p);
-            s = itemname(inv[p]);
+            s = itemname(g_inv[p]);
             s = strutil::take_by_width(s, 28);
-            if (inv_getowner(inv[p]) == -1)
+            if (item_is_on_ground(g_inv[p]))
             {
                 s += i18n::s.get("core.blending.steps.ground");
             }
             display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
 
             draw_item_with_portrait_scale_height(
-                inv[p], wx + 37, wy + 69 + cnt * 19);
+                g_inv[p], wx + 37, wy + 69 + cnt * 19);
 
-            if (inv[p].body_part != 0)
+            if (g_inv[p]->body_part != 0)
             {
                 draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
             }
@@ -798,7 +802,7 @@ void blendig_menu_select_materials()
                 wx + 84,
                 wy + 60 + cnt * 19 - 1,
                 0,
-                cs_list_get_item_color(inv[p]));
+                cs_list_get_item_color(g_inv[p]));
         }
         p = list(0, pagesize * page + cs);
         if (listmax == 0)
@@ -809,7 +813,7 @@ void blendig_menu_select_materials()
         {
             windowshadow = windowshadow(1);
             window_recipe(
-                p == -1 ? none : optional_ref<Item>(inv[p]),
+                p == -1 ? nullptr : OptionalItemRef{g_inv[p]},
                 wx + ww,
                 wy,
                 400,
@@ -845,16 +849,16 @@ void blendig_menu_select_materials()
         if (p != -1)
         {
             const auto item_index = p(0);
-            if (inv[item_index].is_marked_as_no_drop())
+            if (g_inv[item_index]->is_marked_as_no_drop())
             {
                 snd("core.fail1");
                 txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
                 continue;
             }
             rpref(10 + step * 2 + 0) = item_index;
-            rpref(10 + step * 2 + 1) = itemid2int(inv[item_index].id);
+            rpref(10 + step * 2 + 1) = itemid2int(g_inv[item_index]->id);
             snd("core.drink1");
-            txt(i18n::s.get("core.blending.steps.you_add", inv[item_index]));
+            txt(i18n::s.get("core.blending.steps.you_add", g_inv[item_index]));
             ++step;
             p = calc_success_rate(rpid, step, step - 1);
             return;
@@ -901,8 +905,8 @@ bool has_required_materials()
         {
             return false;
         }
-        if (inv[rpref(10 + cnt * 2)].number() <= 0 ||
-            inv[rpref(10 + cnt * 2)].id != int2itemid(rpref(11 + cnt * 2)))
+        if (g_inv[rpref(10 + cnt * 2)]->number() <= 0 ||
+            g_inv[rpref(10 + cnt * 2)]->id != int2itemid(rpref(11 + cnt * 2)))
         {
             return false;
         }
@@ -940,24 +944,21 @@ void spend_materials(bool success)
         }
         if (success)
         {
-            inv[rpref(10 + cnt * 2)].modify_number(-1);
+            g_inv[rpref(10 + cnt * 2)]->modify_number(-1);
         }
         else
         {
             if (rnd(3) == 0)
             {
                 txt(i18n::s.get(
-                    "core.blending.you_lose", inv[rpref(10 + cnt * 2)]));
-                inv[rpref(10 + cnt * 2)].modify_number(-1);
+                    "core.blending.you_lose", g_inv[rpref(10 + cnt * 2)]));
+                g_inv[rpref(10 + cnt * 2)]->modify_number(-1);
             }
         }
-        if (chara_unequip(inv[rpref(10 + cnt * 2)]))
+        if (chara_unequip(g_inv[rpref(10 + cnt * 2)]))
         {
             chara_refresh(cdata.player());
         }
-        cell_refresh(
-            inv[rpref(10 + cnt * 2)].position.x,
-            inv[rpref(10 + cnt * 2)].position.y);
     }
     refresh_burden_state();
 }
@@ -971,15 +972,15 @@ void blending_proc_on_success_events()
     const auto item2_index = rpref(12);
     if (the_blending_recipe_db.ensure(rpid).type == 2)
     {
-        item_separate(inv[item1_index]);
+        item_separate(g_inv[item1_index]);
     }
-    else if (inv[item1_index].number() <= 1)
+    else if (g_inv[item1_index]->number() <= 1)
     {
         rpref(10) = -2;
     }
     else
     {
-        int stat = item_separate(inv[item1_index]).index();
+        int stat = item_separate(g_inv[item1_index])->global_index();
         if (rpref(10) == stat)
         {
             rpref(10) = -2;
@@ -991,21 +992,16 @@ void blending_proc_on_success_events()
     }
 
     // See each `on_success` for parameter usage.
-    auto& item1 = inv[item1_index];
-    auto& item2 = inv[item2_index];
-    auto materials =
-        lua::create_table(1, lua::handle(item1), 2, lua::handle(item2));
+    const auto item1 = g_inv[item1_index];
+    const auto item2 = g_inv[item2_index];
+    auto materials = lua::create_table(1, item1, 2, item2);
     auto on_success_args = lua::create_table("materials", materials);
     the_blending_recipe_db.ensure(rpid).on_success.call(on_success_args);
 
-    item_stack(0, item1);
-    if (item1.body_part != 0)
+    inv_stack(g_inv.pc(), item1);
+    if (item1->body_part != 0)
     {
         create_pcpic(cdata.player());
-    }
-    if (inv_getowner(item1) == -1)
-    {
-        cell_refresh(item1.position.x, item1.position.y);
     }
     chara_refresh(cdata.player());
 }
@@ -1219,7 +1215,7 @@ TurnResult blending_menu()
         if (all_ingredient_are_added(step, rpid))
         {
             rppage = 0;
-            window_recipe(none, wx + ww, wy, 400, wh);
+            window_recipe(nullptr, wx + ww, wy, 400, wh);
             Message::instance().linebreak();
             txt(i18n::s.get("core.blending.prompt.how_many"));
             PromptWithNumber prompt(

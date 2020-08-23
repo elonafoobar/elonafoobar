@@ -2,6 +2,7 @@
 #include "../../../buff.hpp"
 #include "../../../character.hpp"
 #include "../../../character_status.hpp"
+#include "../../../data/types/type_ability.hpp"
 #include "../../../data/types/type_buff.hpp"
 #include "../../../dmgheal.hpp"
 #include "../../../element.hpp"
@@ -202,8 +203,7 @@ void LuaCharacter_set_growth_buff(Character& self, int index, int power)
  */
 bool LuaCharacter_recruit_as_ally(Character& self)
 {
-    if (self.state() == Character::State::empty ||
-        (self.index != 0 && self.index <= 16) || self.index == 0)
+    if (self.state() == Character::State::empty || self.is_player_or_ally())
     {
         return false;
     }
@@ -274,11 +274,7 @@ sol::optional<LuaAbility> LuaCharacter_get_skill(
         return sol::nullopt;
     }
 
-    auto handle = lua::handle(self);
-    assert(handle != sol::lua_nil);
-
-    std::string uuid = handle["__uuid"];
-    return LuaAbility(data->legacy_id, self.index, Character::lua_type(), uuid);
+    return LuaAbility(data->legacy_id, self.obj_id);
 }
 
 
@@ -391,7 +387,7 @@ void LuaCharacter_modify_sanity(Character& self, int delta)
  */
 void LuaCharacter_modify_karma(Character& self, int delta)
 {
-    if (self.index != 0)
+    if (!self.is_player())
     {
         return;
     }
@@ -410,7 +406,7 @@ void LuaCharacter_modify_karma(Character& self, int delta)
  */
 void LuaCharacter_modify_corruption(Character& self, int delta)
 {
-    if (self.index != 0)
+    if (!self.is_player())
     {
         return;
     }
@@ -469,7 +465,7 @@ void LuaCharacter_act_hostile_against(
     LuaCharacterHandle target)
 {
     auto& target_ref = lua::ref<Character>(target);
-    hostileaction(self.index, target_ref.index);
+    chara_act_hostile_action(self, target_ref);
 }
 
 
@@ -495,7 +491,7 @@ void LuaCharacter_refresh(Character& self)
  */
 void LuaCharacter_refresh_burden_state(Character& self)
 {
-    if (self.index != 0)
+    if (!self.is_player())
     {
         return;
     }
@@ -516,9 +512,9 @@ void LuaCharacter_move_to_xy(Character& self, int x, int y)
 {
     // NOTE: setting self.next_position may be safer if the position is changed
     // in the middle of the current turn.
-    cell_movechara(self.index, x, y);
+    cell_movechara(self, x, y);
 
-    if (self.index == 0)
+    if (self.is_player())
     {
         update_screen();
     }
@@ -590,7 +586,7 @@ int LuaCharacter_get_ailment(Character& self, const EnumString& ailment)
 
 std::string LuaCharacter_metamethod_tostring(const Character& self)
 {
-    return Character::lua_type() + "(" + std::to_string(self.index) + ")";
+    return Character::lua_type() + "(" + self.obj_id.to_string() + ")";
 }
 
 

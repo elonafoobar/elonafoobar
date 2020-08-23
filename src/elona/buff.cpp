@@ -159,15 +159,15 @@ void buff_add(
     if (buff_data.type == BuffType::hex)
     {
         bool resists{};
-        if (sdata(60, chara.index) / 2 > rnd_capped(power * 2 + 100))
+        if (chara.get_skill(60).level / 2 > rnd_capped(power * 2 + 100))
         {
             resists = true;
         }
-        if (power * 3 < sdata(60, chara.index))
+        if (power * 3 < chara.get_skill(60).level)
         {
             resists = true;
         }
-        if (power / 3 > sdata(60, chara.index))
+        if (power / 3 > chara.get_skill(60).level)
         {
             resists = false;
         }
@@ -203,9 +203,9 @@ void buff_add(
             }
             return;
         }
-        if (doer && doer->index == 0)
+        if (doer && doer->is_player())
         {
-            hostileaction(0, chara.index);
+            chara_act_hostile_action(cdata.player(), chara);
         }
     }
 
@@ -233,7 +233,7 @@ void buff_add(
 
 void buff_delete(Character& chara, int slot)
 {
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         txt(i18n::s.get(
                 "core.magic.buff.ends",

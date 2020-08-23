@@ -4,9 +4,6 @@
 
 #include <vector>
 
-#include "data/types/type_ability.hpp"
-#include "serialization/macros.hpp"
-
 
 
 namespace elona
@@ -17,9 +14,9 @@ struct Ability
     // NOTE: Don't add new fields unless you add them to serialization, which
     // will break save compatibility.
 
-    int current_level = 0;
+    int level = 0;
 
-    int original_level = 0;
+    int base_level = 0;
 
     int experience = 0;
 
@@ -31,14 +28,10 @@ struct Ability
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Ability");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, current_level);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, original_level);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, experience);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, potential);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(level);
+        ar(base_level);
+        ar(experience);
+        ar(potential);
         /* clang-format on */
     }
 };
@@ -50,31 +43,39 @@ class SkillData
 public:
     SkillData();
 
+    SkillData(const SkillData&) = default;
+    SkillData(SkillData&&) = default;
+    SkillData& operator=(const SkillData&) = default;
+    SkillData& operator=(SkillData&&) = default;
 
-    int& operator()(int id, int chara_index)
+
+    Ability& get(int id)
     {
-        return get(id, chara_index).current_level;
+        return _storage.at(id);
     }
 
 
-    Ability& get(int id, int chara_index)
+    const Ability& get(int id) const
     {
-        assert(id < 600);
-        return storage[chara_index][id];
+        return _storage.at(id);
     }
 
 
-    void clear(int chara_index);
 
-    void copy(int destination_chara_index, int source_chara_index);
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        ar(_storage);
+        /* clang-format on */
+    }
+
 
 
 private:
-    std::vector<std::vector<Ability>> storage;
+    std::vector<Ability> _storage;
 };
 
-
-extern SkillData sdata;
 
 
 struct Character;

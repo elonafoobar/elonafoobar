@@ -22,8 +22,8 @@
 #include "random_event.hpp"
 #include "save.hpp"
 #include "scene.hpp"
-#include "serialization/macros.hpp"
 #include "serialization/serialization.hpp"
+#include "serialization/utils.hpp"
 #include "talk.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -67,13 +67,9 @@ struct DeferredEvent
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "DeferredEvent");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, id);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param1);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, param2);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(id);
+        ar(param1);
+        ar(param2);
         /* clang-format on */
     }
 };
@@ -125,11 +121,7 @@ public:
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "DeferredEventQueue");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "queue", _queue);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(_queue);
         /* clang-format on */
     }
 
@@ -206,22 +198,22 @@ void eh_conquer_nefia(const DeferredEvent&)
     snd("core.complete1");
     flt(0, calcfixlv());
     flttypemajor = 54000;
-    itemcreate_extra_inv(0, cdata.player().position, 0);
+    itemcreate_map_inv(0, cdata.player().position, 0);
     flt();
-    itemcreate_extra_inv(236, cdata.player().position, 0);
+    itemcreate_map_inv(236, cdata.player().position, 0);
     nostack = 1;
     flt();
-    if (const auto item = itemcreate_extra_inv(54, cdata.player().position, 0))
+    if (const auto item = itemcreate_map_inv(54, cdata.player().position, 0))
     {
         item->set_number(200 + item->number() * 5);
     }
     flt();
-    itemcreate_extra_inv(
+    itemcreate_map_inv(
         55,
         cdata.player().position,
         clamp(rnd(3) + game_data.current_dungeon_level / 10, 1, 6));
     flt();
-    if (const auto item = itemcreate_extra_inv(239, cdata.player().position, 0))
+    if (const auto item = itemcreate_map_inv(239, cdata.player().position, 0))
     {
         item->param2 = 0;
     }
@@ -256,7 +248,7 @@ void eh_player_died(const DeferredEvent&)
     {
         for (int i = 10; i < 18; ++i)
         {
-            if (sdata(i, 0) != 0 && rnd(3) == 0)
+            if (cdata.player().get_skill(i).level != 0 && rnd(3) == 0)
             {
                 chara_gain_skill_exp(cdata.player(), i, -500);
             }
@@ -361,11 +353,11 @@ void eh_marriage(const DeferredEvent&)
     {
         flt(calcobjlv(cdata[marry].level + 5), calcfixlv(Quality::good));
         flttypemajor = choice(fsetchest);
-        itemcreate_extra_inv(0, cdata.player().position, 0);
+        itemcreate_map_inv(0, cdata.player().position, 0);
     }
-    itemcreate_extra_inv(559, cdata.player().position, 0);
+    itemcreate_map_inv(559, cdata.player().position, 0);
     flt();
-    itemcreate_extra_inv(55, cdata.player().position, rnd(3) + 2);
+    itemcreate_map_inv(55, cdata.player().position, rnd(3) + 2);
     txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
     save_set_autosave();
 }
@@ -481,8 +473,8 @@ void eh_okaeri(const DeferredEvent&)
                 cdata[chara_index].current_map == game_data.current_map)
             {
                 cdata[chara_index].emotion_icon = 2006;
-                int stat = chara_custom_talk(chara_index, 104);
-                if (stat == 0)
+                bool did_speak = chara_custom_talk(cdata[chara_index], 104);
+                if (!did_speak)
                 {
                     ++i;
                 }
@@ -587,7 +579,7 @@ void eh_lily_killed(const DeferredEvent& event)
     cdata[event.param1].role = Role::none;
     cdata[event.param1].set_state(Character::State::empty);
     flt();
-    itemcreate_extra_inv(55, cdata[event.param1].position, 4);
+    itemcreate_map_inv(55, cdata[event.param1].position, 4);
     game_data.quest_flags.pael_and_her_mom = 1001;
     if (const auto pael = chara_find("core.pael"))
     {
@@ -972,7 +964,7 @@ void eh_guest_visit(const DeferredEvent&)
     }
 
     guest->visited_just_now() = true;
-    optional_ref<const Item> chair_for_guest;
+    OptionalItemRef chair_for_guest;
     for (int cnt = 0; cnt < 17; ++cnt)
     {
         const auto chara_index = cnt == 0 ? guest->index : cnt - 1;
@@ -985,18 +977,17 @@ void eh_guest_visit(const DeferredEvent&)
         {
             continue;
         }
-        optional_ref<const Item> chair;
+        OptionalItemRef chair;
         auto distance_to_guest_chair = 6;
-        for (const auto& item : inv.ground())
+        for (const auto& item : g_inv.ground())
         {
-            if (item.function != 44)
+            if (item->function != 44)
                 continue;
             if (chara.index == guest->index)
             {
-                if (item.param1 == 2)
+                if (item->param1 == 2)
                 {
-                    cell_swap(
-                        chara.index, -1, item.position.x, item.position.y);
+                    cell_swap(chara, item->pos());
                     chair_for_guest = item;
                     chair = item;
                     break;
@@ -1010,26 +1001,22 @@ void eh_guest_visit(const DeferredEvent&)
             {
                 break;
             }
-            else if (item == *chair_for_guest)
+            else if (item == chair_for_guest)
             {
                 continue;
             }
-            const auto d = dist(
-                item.position.x,
-                item.position.y,
-                chair_for_guest->position.x,
-                chair_for_guest->position.y);
+            const auto d = dist(item->pos(), chair_for_guest->pos());
             if (d < distance_to_guest_chair)
             {
-                if (cell_data.at(item.position.x, item.position.y)
+                if (cell_data.at(item->pos().x, item->pos().y)
                             .chara_index_plus_one == 0 ||
-                    chara.index == 0 || chara.index == guest->index)
+                    chara.is_player() || chara.index == guest->index)
                 {
                     chair = item;
                     distance_to_guest_chair = d;
                 }
             }
-            if (chara.index == 0 && item.param1 == 1)
+            if (chara.is_player() && item->param1 == 1)
             {
                 chair = item;
                 break;
@@ -1037,14 +1024,14 @@ void eh_guest_visit(const DeferredEvent&)
         }
         if (chair)
         {
-            cell_swap(chara.index, -1, chair->position.x, chair->position.y);
+            cell_swap(chara, chair->pos());
         }
         chara.direction = direction(
             chara.position.x,
             chara.position.y,
             guest->position.x,
             guest->position.y);
-        if (chara.index == 0)
+        if (chara.is_player())
         {
             game_data.player_next_move_direction = chara.direction;
         }

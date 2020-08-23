@@ -8,7 +8,7 @@
 
 
 
-LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Item)
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::ItemRef)
 
 
 
@@ -25,9 +25,9 @@ namespace elona::lua::api::classes::class_LuaItem
  *
  * Removes this item. The item reference will no longer be valid for use.
  */
-void LuaItem_remove(Item& self)
+void LuaItem_remove(const ItemRef& self)
 {
-    self.remove();
+    self->remove();
 }
 
 
@@ -38,7 +38,9 @@ void LuaItem_remove(Item& self)
  * Changes the material of this item.
  * @tparam string material_id ID of the item material
  */
-void LuaItem_change_material(Item& self, const std::string& material_id)
+void LuaItem_change_material(
+    const ItemRef& self,
+    const std::string& material_id)
 {
     const auto& data =
         the_item_material_db.ensure(data::InstanceId{material_id});
@@ -47,49 +49,61 @@ void LuaItem_change_material(Item& self, const std::string& material_id)
 
 
 
-std::string LuaItem_metamethod_tostring(const Item& self)
+std::string LuaItem_metamethod_tostring(const ItemRef& self)
 {
-    return Item::lua_type() + "(" + std::to_string(self.index()) + ")";
+    return self->lua_type() + "(" + self->obj_id.to_string() + ")";
 }
 
 
 
 void bind(sol::state& lua)
 {
-    auto LuaItem = lua.new_usertype<Item>("LuaItem", sol::no_constructor);
-    LuaItem.set("lua_type", &Item::lua_type);
+    auto LuaItem = lua.new_usertype<ItemRef>("LuaItem", sol::no_constructor);
+
+    LuaItem.set("lua_type", sol::property([](const ItemRef& self) {
+                    return self->lua_type();
+                }));
 
     // Properties
-
-    /**
-     * @luadoc index field num
-     *
-     * [R] The index of this item in the global items array.
-     */
-    LuaItem.set(
-        "index", sol::property([](const Item& it) { return it.index(); }));
-
 
     /**
      * @luadoc legacy_id field num
      *
      * [R] The legacy ID of this item.
      */
-    LuaItem.set("legacy_id", &Item::id);
+    LuaItem.set(
+        "legacy_id",
+        sol::property(
+            [](const ItemRef& self) { return itemid2int(self->id); },
+            [](const ItemRef& self, int new_value) {
+                self->id = int2itemid(new_value);
+            }));
 
     /**
-     * @luadoc position field num
+     * @luadoc pos field num
      *
      * [RW] The item's position.
      */
-    LuaItem.set("position", &Item::position);
+    LuaItem.set(
+        "pos",
+        sol::property(
+            [](const ItemRef& self) { return self->pos(); },
+            [](const ItemRef& self, const Position& pos) {
+                self->set_pos(pos);
+            }));
 
     /**
      * @luadoc count field num
      *
      * [RW] The number of charges this item holds (for rods, bait, etc.)
      */
-    LuaItem.set("count", &Item::count);
+    LuaItem.set(
+        "count",
+        sol::property(
+            [](const ItemRef& self) { return self->count; },
+            [](const ItemRef& self, int new_value) {
+                self->count = new_value;
+            }));
 
 
     /**
@@ -98,7 +112,13 @@ void bind(sol::state& lua)
      * [RW] The subname of this item. Controls the character index of
      * corpses, etc.
      */
-    LuaItem.set("subname", &Item::subname);
+    LuaItem.set(
+        "subname",
+        sol::property(
+            [](const ItemRef& self) { return self->subname; },
+            [](const ItemRef& self, int new_value) {
+                self->subname = new_value;
+            }));
 
 
     /**
@@ -106,42 +126,78 @@ void bind(sol::state& lua)
      *
      * [RW] The image ID of the item.
      */
-    LuaItem.set("image", &Item::image);
+    LuaItem.set(
+        "image",
+        sol::property(
+            [](const ItemRef& self) { return self->image; },
+            [](const ItemRef& self, int new_value) {
+                self->image = new_value;
+            }));
 
     /**
      * @luadoc value field num
      *
      * [RW] The value of the item.
      */
-    LuaItem.set("value", &Item::value);
+    LuaItem.set(
+        "value",
+        sol::property(
+            [](const ItemRef& self) { return self->value; },
+            [](const ItemRef& self, int new_value) {
+                self->value = new_value;
+            }));
 
     /**
      * @luadoc param1 field num
      *
      * [RW] A generic parameter.
      */
-    LuaItem.set("param1", &Item::param1);
+    LuaItem.set(
+        "param1",
+        sol::property(
+            [](const ItemRef& self) { return self->param1; },
+            [](const ItemRef& self, int new_value) {
+                self->param1 = new_value;
+            }));
 
     /**
      * @luadoc param2 field num
      *
      * [RW] A generic parameter.
      */
-    LuaItem.set("param2", &Item::param2);
+    LuaItem.set(
+        "param2",
+        sol::property(
+            [](const ItemRef& self) { return self->param2; },
+            [](const ItemRef& self, int new_value) {
+                self->param2 = new_value;
+            }));
 
     /**
      * @luadoc param3 field num
      *
      * [RW] A generic parameter.
      */
-    LuaItem.set("param3", &Item::param3);
+    LuaItem.set(
+        "param3",
+        sol::property(
+            [](const ItemRef& self) { return self->param3; },
+            [](const ItemRef& self, int new_value) {
+                self->param3 = new_value;
+            }));
 
     /**
      * @luadoc param4 field num
      *
      * [RW] A generic parameter.
      */
-    LuaItem.set("param4", &Item::param4);
+    LuaItem.set(
+        "param4",
+        sol::property(
+            [](const ItemRef& self) { return self->param4; },
+            [](const ItemRef& self, int new_value) {
+                self->param4 = new_value;
+            }));
 
     /**
      * @luadoc own_state field num
@@ -154,7 +210,13 @@ void bind(sol::state& lua)
      * <code>3</code>: Built shelter
      * <code>4</code>: Harvestable item in harvest quests
      */
-    LuaItem.set("own_state", &Item::own_state);
+    LuaItem.set(
+        "own_state",
+        sol::property(
+            [](const ItemRef& self) { return self->own_state; },
+            [](const ItemRef& self, int new_value) {
+                self->own_state = new_value;
+            }));
 
     /**
      * @luadoc material field string
@@ -164,7 +226,24 @@ void bind(sol::state& lua)
      */
     LuaItem.set(
         "material",
-        LUA_API_DATA_PROPERTY(Item, material, the_item_material_db));
+        sol::property(
+            [](const ItemRef& self) {
+                auto id =
+                    the_item_material_db.get_id_from_legacy(self->material);
+                if (!id)
+                {
+                    return ""s;
+                }
+                return id->get();
+            },
+            [](const ItemRef& self, const std::string& new_value) {
+                auto data = the_item_material_db[data::InstanceId{new_value}];
+                if (!data)
+                {
+                    return;
+                }
+                self->material = data->legacy_id;
+            }));
 
 
     /**
@@ -173,24 +252,25 @@ void bind(sol::state& lua)
      * [R] The new-style prototype ID of the item.
      */
     LuaItem.set(
-        "id", sol::property([](Item& i) {
-            return the_item_db.get_id_from_legacy(itemid2int(i.id))->get();
+        "id", sol::property([](const ItemRef& self) {
+            return the_item_db.get_id_from_legacy(itemid2int(self->id))->get();
         }));
     /**
      * @luadoc name field string
      *
      * [R] The name of the item with article and number.
      */
-    LuaItem.set(
-        "name", sol::property([](Item& i) { return elona::itemname(i); }));
+    LuaItem.set("name", sol::property([](const ItemRef& self) {
+                    return elona::itemname(self);
+                }));
 
     /**
      * @luadoc basename field string
      *
      * [R] The name of the item without article and number.
      */
-    LuaItem.set("basename", sol::property([](Item& i) {
-                    return elona::ioriginalnameref(itemid2int(i.id));
+    LuaItem.set("basename", sol::property([](const ItemRef& self) {
+                    return elona::ioriginalnameref(itemid2int(self->id));
                 }));
 
     /**
@@ -201,8 +281,8 @@ void bind(sol::state& lua)
     LuaItem.set(
         "number",
         sol::property(
-            [](Item& i) { return i.number(); },
-            [](Item& i, int number) { i.set_number(number); }));
+            [](const ItemRef& self) { return self->number(); },
+            [](const ItemRef& self, int number) { self->set_number(number); }));
 
     /**
      * @luadoc curse_state field CurseState
@@ -210,7 +290,16 @@ void bind(sol::state& lua)
      * [RW] The curse state of this item.
      */
     LuaItem.set(
-        "curse_state", LUA_API_ENUM_PROPERTY(Item, curse_state, CurseState));
+        "curse_state",
+        sol::property(
+            [](const ItemRef& self) {
+                return LuaEnums::CurseStateTable.convert_to_string(
+                    self->curse_state);
+            },
+            [](const ItemRef& self, const EnumString& s) {
+                self->curse_state =
+                    LuaEnums::CurseStateTable.ensure_from_string(s);
+            }));
 
     /**
      * @luadoc identify_state field IdentifyState
@@ -219,7 +308,15 @@ void bind(sol::state& lua)
      */
     LuaItem.set(
         "identify_state",
-        LUA_API_ENUM_PROPERTY(Item, identify_state, IdentifyState));
+        sol::property(
+            [](const ItemRef& self) {
+                return LuaEnums::IdentifyStateTable.convert_to_string(
+                    self->identify_state);
+            },
+            [](const ItemRef& self, const EnumString& s) {
+                self->identify_state =
+                    LuaEnums::IdentifyStateTable.ensure_from_string(s);
+            }));
 
     /**
      * @luadoc color field ColorIndex
@@ -229,12 +326,12 @@ void bind(sol::state& lua)
     LuaItem.set(
         "color",
         sol::property(
-            [](Item& it) {
+            [](const ItemRef& self) {
                 return LuaEnums::ColorIndexTable.convert_to_string(
-                    static_cast<ColorIndex>(it.color));
+                    static_cast<ColorIndex>(self->color));
             },
-            [](Item& it, const EnumString& s) {
-                it.color = static_cast<int>(
+            [](const ItemRef& self, const EnumString& s) {
+                self->color = static_cast<int>(
                     LuaEnums::ColorIndexTable.ensure_from_string(s));
             }));
 
@@ -246,8 +343,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_acidproof",
         sol::property(
-            [](Item& i) { return i.is_acidproof(); },
-            [](Item& i, bool value) { i.is_acidproof() = value; }));
+            [](const ItemRef& self) { return self->is_acidproof(); },
+            [](const ItemRef& self, bool new_value) {
+                self->is_acidproof() = new_value;
+            }));
 
     /**
      * @luadoc is_fireproof field boolean
@@ -257,8 +356,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_fireproof",
         sol::property(
-            [](Item& i) { return i.is_fireproof(); },
-            [](Item& i, bool value) { i.is_fireproof() = value; }));
+            [](const ItemRef& self) { return self->is_fireproof(); },
+            [](const ItemRef& self, bool new_value) {
+                self->is_fireproof() = new_value;
+            }));
 
     /**
      * @luadoc has_charge field boolean
@@ -268,8 +369,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "has_charge",
         sol::property(
-            [](Item& i) { return i.has_charge(); },
-            [](Item& i, bool value) { i.has_charge() = value; }));
+            [](const ItemRef& self) { return self->has_charge(); },
+            [](const ItemRef& self, bool new_value) {
+                self->has_charge() = new_value;
+            }));
 
     /**
      * @luadoc is_precious field boolean
@@ -279,8 +382,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_precious",
         sol::property(
-            [](Item& i) { return i.is_precious(); },
-            [](Item& i, bool value) { i.is_precious() = value; }));
+            [](const ItemRef& self) { return self->is_precious(); },
+            [](const ItemRef& self, bool new_value) {
+                self->is_precious() = new_value;
+            }));
 
     /**
      * @luadoc is_aphrodisiac field boolean
@@ -290,8 +395,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_aphrodisiac",
         sol::property(
-            [](Item& i) { return i.is_aphrodisiac(); },
-            [](Item& i, bool value) { i.is_aphrodisiac() = value; }));
+            [](const ItemRef& self) { return self->is_aphrodisiac(); },
+            [](const ItemRef& self, bool new_value) {
+                self->is_aphrodisiac() = new_value;
+            }));
 
     /**
      * @luadoc has_cooldown_time field boolean
@@ -301,8 +408,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "has_cooldown_time",
         sol::property(
-            [](Item& i) { return i.has_cooldown_time(); },
-            [](Item& i, bool value) { i.has_cooldown_time() = value; }));
+            [](const ItemRef& self) { return self->has_cooldown_time(); },
+            [](const ItemRef& self, bool new_value) {
+                self->has_cooldown_time() = new_value;
+            }));
 
     /**
      * @luadoc is_blessed_by_ehekatl field boolean
@@ -312,8 +421,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_blessed_by_ehekatl",
         sol::property(
-            [](Item& i) { return i.is_blessed_by_ehekatl(); },
-            [](Item& i, bool value) { i.is_blessed_by_ehekatl() = value; }));
+            [](const ItemRef& self) { return self->is_blessed_by_ehekatl(); },
+            [](const ItemRef& self, bool new_value) {
+                self->is_blessed_by_ehekatl() = new_value;
+            }));
 
     /**
      * @luadoc is_stolen field boolean
@@ -323,8 +434,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_stolen",
         sol::property(
-            [](Item& i) { return i.is_stolen(); },
-            [](Item& i, bool value) { i.is_stolen() = value; }));
+            [](const ItemRef& self) { return self->is_stolen(); },
+            [](const ItemRef& self, bool new_value) {
+                self->is_stolen() = new_value;
+            }));
 
     /**
      * @luadoc is_alive field boolean
@@ -334,8 +447,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_alive",
         sol::property(
-            [](Item& i) { return i.is_alive(); },
-            [](Item& i, bool value) { i.is_alive() = value; }));
+            [](const ItemRef& self) { return self->is_alive(); },
+            [](const ItemRef& self, bool new_value) {
+                self->is_alive() = new_value;
+            }));
 
     /**
      * @luadoc is_quest_target field boolean
@@ -345,8 +460,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_quest_target",
         sol::property(
-            [](Item& i) { return i.is_quest_target(); },
-            [](Item& i, bool value) { i.is_quest_target() = value; }));
+            [](const ItemRef& self) { return self->is_quest_target(); },
+            [](const ItemRef& self, bool new_value) {
+                self->is_quest_target() = new_value;
+            }));
 
     /**
      * @luadoc is_marked_as_no_drop field boolean
@@ -356,8 +473,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_marked_as_no_drop",
         sol::property(
-            [](Item& i) { return i.is_marked_as_no_drop(); },
-            [](Item& i, bool value) { i.is_marked_as_no_drop() = value; }));
+            [](const ItemRef& self) { return self->is_marked_as_no_drop(); },
+            [](const ItemRef& self, bool new_value) {
+                self->is_marked_as_no_drop() = new_value;
+            }));
 
     /**
      * @luadoc is_poisoned field boolean
@@ -367,8 +486,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_poisoned",
         sol::property(
-            [](Item& i) { return i.is_poisoned(); },
-            [](Item& i, bool value) { i.is_poisoned() = value; }));
+            [](const ItemRef& self) { return self->is_poisoned(); },
+            [](const ItemRef& self, bool new_value) {
+                self->is_poisoned() = new_value;
+            }));
 
     /**
      * @luadoc is_eternal_force field boolean
@@ -378,8 +499,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_eternal_force",
         sol::property(
-            [](Item& i) { return i.is_eternal_force(); },
-            [](Item& i, bool value) { i.is_eternal_force() = value; }));
+            [](const ItemRef& self) { return self->is_eternal_force(); },
+            [](const ItemRef& self, bool new_value) {
+                self->is_eternal_force() = new_value;
+            }));
 
     /**
      * @luadoc is_showroom_only field boolean
@@ -389,8 +512,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_showroom_only",
         sol::property(
-            [](Item& i) { return i.is_showroom_only(); },
-            [](Item& i, bool value) { i.is_showroom_only() = value; }));
+            [](const ItemRef& self) { return self->is_showroom_only(); },
+            [](const ItemRef& self, bool new_value) {
+                self->is_showroom_only() = new_value;
+            }));
 
     /**
      * @luadoc is_handmade field boolean
@@ -400,8 +525,10 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_handmade",
         sol::property(
-            [](Item& i) { return i.is_handmade(); },
-            [](Item& i, bool value) { i.is_handmade() = value; }));
+            [](const ItemRef& self) { return self->is_handmade(); },
+            [](const ItemRef& self, bool new_value) {
+                self->is_handmade() = new_value;
+            }));
 
 
     /**
@@ -409,9 +536,9 @@ void bind(sol::state& lua)
      *
      * [R] The prototype data of the character.
      */
-    LuaItem.set("prototype", sol::property([](Item& self) {
+    LuaItem.set("prototype", sol::property([](const ItemRef& self) {
                     return *lua::lua->get_data_manager().get().raw(
-                        "core.item", self.new_id());
+                        "core.item", self->new_id());
                 }));
 
     // Methods

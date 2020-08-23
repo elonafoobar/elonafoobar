@@ -1,12 +1,5 @@
 #pragma once
 
-#include "id.hpp"
-
-
-
-namespace elona
-{
-
-using ObjId = eobject::Id;
-
-}
+#include "forward.hpp"
+#include "id_table.hpp"
+#include "pool.hpp"

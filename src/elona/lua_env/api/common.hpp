@@ -15,9 +15,20 @@ struct Character;
 struct Item;
 
 using LuaCharacterHandle = sol::table;
-using LuaItemHandle = sol::table;
 
 } // namespace elona
+
+
+
+// For LDoc generation.
+// As LibClang, internally used by tools/docgen, is not a compiler, it is not
+// good at name resolution. To assist it, this declares `sol::this_state`.
+namespace sol
+{
+
+struct this_state;
+
+} // namespace sol
 
 
 

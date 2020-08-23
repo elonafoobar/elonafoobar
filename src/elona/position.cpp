@@ -1,17 +1,15 @@
 #include "position.hpp"
 
-#include <cmath>
+#include <iostream>
 
 
 
 namespace elona
 {
 
-int dist(int x1, int y1, int x2, int y2)
+std::ostream& operator<<(std::ostream& out, const Position& pos)
 {
-    const auto dx = x1 - x2;
-    const auto dy = y1 - y2;
-    return int(std::sqrt(dx * dx + dy * dy));
+    return out << pos.to_string();
 }
 
 

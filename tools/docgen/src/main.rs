@@ -15,6 +15,10 @@ const LUA_CLASS: &str = "class_";
 const VARARGS: &str = "sol::variadic_args";
 const EXTRA_COMPILE_OPTIONS: &[&str] = &["-DELONA_DOCGEN"];
 
+// sol::this_state is an implicit parameter passed by sol runtime. It should not be included in
+// documentation.
+const SOL_THIS_STATE: &str = "sol::this_state";
+
 #[derive(Debug, Clone)]
 struct ModuleComment {
     is_class: bool,
@@ -252,6 +256,7 @@ impl Comment {
                 let arg_entities = entity.get_arguments().unwrap();
                 let mut args = arg_entities
                     .iter()
+                    .filter(|a| a.get_type().unwrap().get_display_name() != SOL_THIS_STATE)
                     .map(|a| a.get_name().unwrap())
                     .collect::<Vec<String>>();
 

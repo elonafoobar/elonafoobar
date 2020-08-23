@@ -1,5 +1,42 @@
 # Changelog
 
+## [0.7.5] - 2020-08-23
+
+### Fixed
+
+* [vanilla] Fix a trivial known bug in vanilla related to character's position.
+* Fix a crash when you input invalid command lines to in-game console.
+* Fix an issue where monster spawn rate decreases as gold/silver bells vanish.
+* Fix crashes and text replacement errors in unique NPC talk.
+* Fix calculation of museum/home rank. Only stacked cards/figurines/furniture affected your museum/home rank in the previous version.
+* Fix glitch of throwing object animation thrown by performance audience.
+* Fix a crash when mod's README includes multi-byte characters.
+* Fix file handling on Windows, especially for files whose name contain multi-byte characters.
+* Fix a crucial bug causing data inconsistency when you cast Speed spell or zap a rod of speed with riding on a mount.
+
+
+### Added
+
+* Reduce file access when you operates container items or talk to shopkeepers.
+  * Also reduce size of certain save files.
+* [mod] Add functionalities involved in Wizard mode to `Debug` module.
+
+
+### Changed
+
+* Abolish the limit of the length of text input box.
+* Merge `sdata` files into `cdata` files. `sdata` files are automatically deleted on update.
+* Re-design Wizard mode. It was changed from a save data flag to a setting option.
+* Some limitations in Wizard mode are now abolished.
+* [mod] Improve error message when you call methods by using dot syntax.
+* [mod] Rename `LuaAbility.current_level` to `LuaAbility.level` and `LuaAbility.original_level` to `LuaAbility.base_level`.
+
+### Removed
+
+* Disable gene-related features (making it and incarnating it) temporarily. Judging from the current development status of foobar, it is hard to keep compatibility of gene files between releases.
+
+
+
 ## [0.7.4] - 2020-06-29
 
 ### Fixed

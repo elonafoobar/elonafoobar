@@ -6,14 +6,18 @@
 #include "character_status.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
+#include "debug.hpp"
 #include "draw.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "lua_env/lua_env.hpp"
 #include "map.hpp"
 #include "message.hpp"
+#include "save_fs.hpp"
 #include "save_update.hpp"
 #include "serialization/serialization.hpp"
+#include "serialization/utils.hpp"
 #include "set_item_info.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -43,11 +47,12 @@ void _do_save_game()
         return;
     }
     ctrl_file(FileOperation::map_write);
-    ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
+    ctrl_file(
+        FileOperation2::map_items_write, fs::u8path(u8"inv_"s + mid + u8".s2"));
     save_f = 0;
     for (const auto& entry : filesystem::glob_dirs(filesystem::dirs::save()))
     {
-        if (filepathutil::to_utf8_path(entry.path().filename()) == playerid)
+        if (entry.path().filename().to_u8string() == playerid)
         {
             save_f = 1;
             break;
@@ -58,9 +63,9 @@ void _do_save_game()
     {
         fs::create_directory(save_dir);
     }
-    Save::instance().save(save_dir);
+    save_fs_save(save_dir);
     ctrl_file(FileOperation2::global_write, save_dir);
-    Save::instance().clear();
+    save_fs_clear();
     ELONA_LOG("save") << "Save end:" << playerid;
 }
 
@@ -72,8 +77,7 @@ void load_save_data()
 {
     ELONA_LOG("save") << "Load: " << playerid;
 
-    Save::instance().clear();
-    writeloadedbuff_clear();
+    save_fs_clear();
 
     ctrl_file(FileOperation::temp_dir_delete);
     const auto save_dir = filesystem::dirs::save(playerid);
@@ -112,18 +116,14 @@ void load_save_data()
     update_save_data(save_dir);
     ctrl_file(FileOperation2::global_read, save_dir);
 
-    chara_delete(56);
+    chara_delete(cdata.tmp());
     set_item_info();
     for (auto&& chara : cdata.player_and_allies())
     {
-        if (chara.has_own_sprite() || chara.index == 0)
+        if (chara.has_own_sprite() || chara.is_player())
         {
             create_pcpic(chara);
         }
-    }
-    if (game_data.wizard == 1)
-    {
-        cdata.player().alias = u8"*Debug*"s;
     }
     refresh_speed(cdata.player());
     time_begin = timeGetTime() / 1000;
@@ -161,7 +161,7 @@ void save_autosave_if_needed()
     if (will_autosave)
     {
         will_autosave = false;
-        if (!game_data.wizard &&
+        if (!debug_is_wizard() &&
             game_data.current_map != mdata_t::MapId::show_house &&
             game_data.current_map != mdata_t::MapId::pet_arena &&
             g_config.autosave())
@@ -182,47 +182,43 @@ void load_gene_files()
     {
         cnt.set_state(Character::State::empty);
     }
-    sdata.copy(56, 0);
-    sdata.clear(0);
     Character::copy(cdata.player(), cdata.tmp());
     cdata.player().clear();
-    for (auto&& item : inv.ground())
+    inv_open_tmp_inv_no_physical_file();
+    for (const auto& item : g_inv.pc())
     {
-        item.remove();
-    }
-    for (auto&& item : inv.pc())
-    {
-        if (item.id == ItemId::secret_experience_of_lomias)
+        if (item->id == ItemId::secret_experience_of_lomias)
         {
             lomiaseaster = 1;
         }
-        if (item.id == ItemId::deed_of_heirship ||
-            the_item_db[itemid2int(item.id)]->subcategory == 53100)
+        if (item->id == ItemId::deed_of_heirship ||
+            the_item_db[itemid2int(item->id)]->subcategory == 53100)
         {
             continue;
         }
-        if (item.id == ItemId::kitty_bank)
+        if (item->id == ItemId::kitty_bank)
         {
             continue;
         }
-        if (item.quality == Quality::special)
+        if (item->quality == Quality::special)
         {
             continue;
         }
-        if (item.is_precious())
+        if (item->is_precious())
         {
             continue;
         }
-        if (the_item_db[itemid2int(item.id)]->category == ItemCategory::ammo)
+        if (the_item_db[itemid2int(item->id)]->category == ItemCategory::ammo)
         {
-            item.count = -1;
+            item->count = -1;
         }
-        item.body_part = 0;
-        item_copy(item, *inv_get_free_slot(-1));
+        item->body_part = 0;
+        item_separate(
+            item, inv_make_free_slot_force(g_inv.tmp()), item->number());
     }
     for (auto&& cnt : cdata.all())
     {
-        chara_delete(cnt.index);
+        chara_delete(cnt);
     }
     game_data.play_time = genetemp(805);
 }
@@ -251,25 +247,26 @@ void save_map_local_data()
     ctrl_file(FileOperation::map_write);
 
     // write data for items/character inventories local to this map
-    ctrl_file(FileOperation2::map_items_write, u8"inv_"s + mid + u8".s2");
+    ctrl_file(
+        FileOperation2::map_items_write, fs::u8path(u8"inv_"s + mid + u8".s2"));
 }
 
 
 
 void get_inheritance()
 {
-    ctrl_file(FileOperation2::map_items_write, u8"shop3.s2");
+    inv_close_tmp_inv("shop3.s2");
     p = 0;
     i = 0;
     for (int cnt = 0; cnt < 600; ++cnt)
     {
         if (cnt >= 10 && cnt < 20)
         {
-            p += sdata.get(cnt, 56).original_level;
+            p += cdata.tmp().get_skill(cnt).base_level;
         }
         if (cnt >= 100 && cnt < 400)
         {
-            i += sdata.get(cnt, 56).original_level;
+            i += cdata.tmp().get_skill(cnt).base_level;
         }
     }
     p = (p - 250) / 7;

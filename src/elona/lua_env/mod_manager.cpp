@@ -130,7 +130,7 @@ std::vector<ModManifest> ModManager::installed_mods() const
     for (const auto& dir : normal_mod_dirs(filesystem::dirs::mod()))
     {
         // Get mod ID and version from folder name.
-        const auto dir_name = filepathutil::to_utf8_path(dir.filename());
+        const auto dir_name = dir.filename().to_u8string();
         std::string id;
         std::string version_str;
         std::tie(id, version_str) = strutil::split_on_string(dir_name, "-");
@@ -243,10 +243,9 @@ void ModManager::run_startup_script(const fs::path& script_filename)
     safe_script_file(
         filesystem::dirs::user_script() / script_filename, script_mod.env);
 
-    ELONA_LOG("lua.mod") << "Loaded startup script " << script_filename;
-    txt(i18n::s.get(
-            "core.mod.loaded_script",
-            filepathutil::to_utf8_path(script_filename)),
+    ELONA_LOG("lua.mod") << "Loaded startup script "
+                         << script_filename.to_u8string();
+    txt(i18n::s.get("core.mod.loaded_script", script_filename.to_u8string()),
         Message::color{ColorIndex::purple});
     Message::instance().linebreak();
 }
@@ -367,7 +366,7 @@ void ModManager::create_mod_from_template(
     const auto from =
         filesystem::dirs::for_mod(template_mod_id, template_mod_version);
     const auto to = filesystem::dirs::for_mod(new_mod_id, new_mod_version);
-    filesystem::copy_recursively(from, to);
+    fs::copy_recursively(from, to);
 
     // Edit the new mod's manifest file.
     auto new_mod_manifest = ModManifest::load(to / "mod.json");
@@ -383,7 +382,7 @@ bool ModManager::exists(const std::string& mod_id)
 {
     for (const auto& dir : all_mod_dirs(filesystem::dirs::mod()))
     {
-        if (mod_id == filepathutil::to_utf8_path(dir.filename()))
+        if (mod_id == dir.filename().to_u8string())
         {
             return true;
         }
@@ -414,13 +413,14 @@ fs::path ModManager::resolve_path_for_mod(const std::string& path)
 
     if (mod_id == "_builtin_")
     {
-        return filesystem::dirs::exe() / rest;
+        return filesystem::dirs::exe() / fs::u8path(rest);
     }
     else
     {
         if (const auto version = get_enabled_version(mod_id))
         {
-            return filesystem::dirs::for_mod(mod_id, *version) / rest;
+            return filesystem::dirs::for_mod(mod_id, *version) /
+                fs::u8path(rest);
         }
         else
         {
@@ -521,8 +521,7 @@ void ModManager::setup_mod_globals(ModEnv& mod)
 bool is_valid_mod_id(const std::string& id)
 {
     return !id.empty() && _is_alnum_only(id) &&
-        filepathutil::is_portable_path(filepathutil::u8path(id)) &&
-        !is_reserved_mod_id(id);
+        fs::is_portable_path(fs::u8path(id)) && !is_reserved_mod_id(id);
 }
 
 

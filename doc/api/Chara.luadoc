@@ -9,14 +9,14 @@ module "Chara"
 --  @function is_alive
 function is_alive(chara) end
 
---- Checks if a character is the player (has index 0).
+--- Checks if a character is the player.
 --
 --  @tparam LuaCharacter chara (const) a character
 --  @treturn bool true if the character is the player
 --  @function is_player
 function is_player(chara) end
 
---- Checks if a character is a member of the player's party (has index < 16)
+--- Checks if a character is a member of the player's party.
 --
 --  @tparam LuaCharacter chara (const) a character
 --  @treturn bool true if the character is in the player's party
@@ -87,3 +87,16 @@ function can_recruit_allies() end
 --  @tparam LuaCharacter ally
 --  @function remove_from_party
 function remove_from_party(ally) end
+
+--- Returns iterable object containing all characters.
+--
+--  @treturn table A sequential table containing all characters.
+--  @function all
+function all() end
+
+--- Returns iterable object containing characters except for you and your allies.
+--
+--  @treturn table A sequential table containing characters except for you and
+--  your allies.
+--  @function non_allies
+function non_allies() end

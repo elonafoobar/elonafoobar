@@ -21,7 +21,7 @@ namespace testing
 
 void set_english()
 {
-    config_set_string("core.language.language", "en");
+    config_set("core.language.language", "en"s);
     elona::jp = 0;
     elona::en = 1;
     initialize_i18n();
@@ -30,37 +30,37 @@ void set_english()
 
 void set_japanese()
 {
-    config_set_string("core.language.language", "jp");
+    config_set("core.language.language", "jp"s);
     elona::jp = 1;
     elona::en = 0;
     initialize_i18n();
     set_item_info();
 }
 
-void normalize_item(Item& i)
+void normalize_item(const ItemRef& i)
 {
-    i.quality = Quality::great;
-    i.curse_state = CurseState::none;
-    i.identify_state = IdentifyState::completely;
-    i.material = 34;
-    i.quality = Quality::bad;
-    i.dv = 0;
-    i.pv = 0;
-    i.count = 1;
-    i.dice_x = 0;
-    i.dice_y = 0;
-    i.damage_bonus = 0;
-    i.hit_bonus = 0;
-    i.subname = 0;
-    i.enchantments.clear();
+    i->quality = Quality::great;
+    i->curse_state = CurseState::none;
+    i->identify_state = IdentifyState::completely;
+    i->material = 34;
+    i->quality = Quality::bad;
+    i->dv = 0;
+    i->pv = 0;
+    i->count = 1;
+    i->dice_x = 0;
+    i->dice_y = 0;
+    i->damage_bonus = 0;
+    i->hit_bonus = 0;
+    i->subname = 0;
+    i->enchantments.clear();
 }
 
 std::string test_itemname(int id, int number, bool prefix)
 {
-    const auto item = itemcreate_extra_inv(id, 0, 0, number);
+    const auto item = itemcreate_map_inv(id, 0, 0, number);
     REQUIRE_SOME(item);
-    normalize_item(*item);
-    std::string name = itemname(*item, number, prefix);
+    normalize_item(item.unwrap());
+    std::string name = itemname(item.unwrap(), number, prefix);
     item->remove();
     item->clear();
     return name;
@@ -74,29 +74,29 @@ Character& create_chara(int id, int x, int y)
     return *chara;
 }
 
-Item& create_item(int id, int number)
+ItemRef create_item(int id, int number)
 {
-    const auto item = itemcreate_extra_inv(id, 0, 0, number);
-    REQUIRE_SOME(item);
-    normalize_item(*item);
-    return *item;
+    const auto item_opt = itemcreate_map_inv(id, 0, 0, number);
+    REQUIRE_SOME(item_opt);
+    const auto item = item_opt.unwrap();
+    normalize_item(item);
+    return item;
 }
 
-void invalidate_item(Item& item)
+void invalidate_item(const ItemRef& item)
 {
-    const Item* old_address = &item;
-    int old_id = itemid2int(item.id);
-    int old_x = item.position.x;
-    int old_y = item.position.y;
+    const Item* old_address = item.get_raw_ptr();
+    int old_id = itemid2int(item->id);
+    const auto [old_x, old_y] = item->pos();
 
     // Delete the item and create new ones until the index is taken again.
-    item.remove();
-    item.clear();
+    item->remove();
+    item->clear();
     while (true)
     {
-        const auto new_item = itemcreate_extra_inv(old_id, old_x, old_y, 3);
+        const auto new_item = itemcreate_map_inv(old_id, old_x, old_y, 3);
         REQUIRE_SOME(new_item);
-        if (&(*new_item) != old_address)
+        if (new_item.unwrap().get_raw_ptr() != old_address)
         {
             break;
         }
@@ -111,7 +111,7 @@ void invalidate_chara(Character& chara)
     int old_y = chara.position.y;
 
     // Delete the character and create new ones until the index is taken again.
-    chara_delete(chara.index);
+    chara_delete(chara);
     while (true)
     {
         const auto new_chara = chara_create(-1, old_id, old_x, old_y);

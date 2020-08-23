@@ -70,8 +70,8 @@ void I18NManager::load(ModEnv& mod)
     if (!mod.manifest.path)
         return;
 
-    const auto script_filepath =
-        *mod.manifest.path / "locale" / g_config.language() / "i18n.lua";
+    const auto script_filepath = *mod.manifest.path / "locale" /
+        fs::u8path(g_config.language()) / "i18n.lua";
     if (!fs::exists(script_filepath))
         return;
 
@@ -119,9 +119,9 @@ void I18NManager::register_function(
 
 
 
-void I18NManager::add_arg(sol::table args, const Item& value)
+void I18NManager::add_arg(sol::table args, const ItemRef& value)
 {
-    args.add(lua::lua->get_handle_manager().get_handle(value));
+    args.add(value);
 }
 
 

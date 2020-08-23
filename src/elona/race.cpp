@@ -2,6 +2,7 @@
 
 #include "ability.hpp"
 #include "character.hpp"
+#include "data/types/type_ability.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
 #include "random.hpp"
@@ -49,12 +50,12 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
         size_t index{};
         for (const auto& limb : data->body_parts)
         {
-            chara.equipment_slots[index] = EquipmentSlot{limb, ItemRef::null()};
+            chara.equipment_slots[index] = EquipmentSlot{limb, nullptr};
             ++index;
         }
-        chara.equipment_slots[index] = EquipmentSlot{10, ItemRef::null()};
+        chara.equipment_slots[index] = EquipmentSlot{10, nullptr};
         ++index;
-        chara.equipment_slots[index] = EquipmentSlot{11, ItemRef::null()};
+        chara.equipment_slots[index] = EquipmentSlot{11, nullptr};
         ++index;
     }
 
@@ -76,7 +77,7 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
     {
         if (const auto ability_data = the_ability_db[pair.first])
         {
-            sdata(ability_data->legacy_id, chara.index) = pair.second;
+            chara.get_skill(ability_data->legacy_id).level = pair.second;
         }
         else
         {

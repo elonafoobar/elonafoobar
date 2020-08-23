@@ -2,6 +2,7 @@
 
 #include "../ability.hpp"
 #include "../audio.hpp"
+#include "../data/types/type_ability.hpp"
 #include "../i18n.hpp"
 #include "../keybind/keybind.hpp"
 #include "../menu.hpp"
@@ -16,7 +17,7 @@ static void _populate_skill_list()
 {
     for (int cnt = 300; cnt < 400; ++cnt)
     {
-        if (sdata(cnt, cdata.player().index) > 0)
+        if (cdata.player().get_skill(cnt).level > 0)
         {
             list(0, listmax) = cnt;
             list(1, listmax) =

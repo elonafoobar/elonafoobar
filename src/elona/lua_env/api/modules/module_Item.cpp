@@ -2,6 +2,7 @@
 #include "../../../character.hpp"
 #include "../../../data/types/type_item.hpp"
 #include "../../../enchantment.hpp"
+#include "../../../inventory.hpp"
 #include "../../../item.hpp"
 #include "../../../itemgen.hpp"
 #include "../../../text.hpp"
@@ -28,7 +29,7 @@ namespace elona::lua::api::modules::module_Item
  */
 int Item_count()
 {
-    return inv_sum(-1);
+    return inv_count(g_inv.ground());
 }
 
 
@@ -42,10 +43,9 @@ int Item_count()
  * @tparam num enchantment_id the ID of the enchantment
  * @treturn bool true if the item has the enchantment
  */
-bool Item_has_enchantment(const LuaItemHandle item, int enchantment_id)
+bool Item_has_enchantment(const ItemRef& item, int enchantment_id)
 {
-    auto& item_ref = lua::ref<Item>(item);
-    return !!enchantment_find(item_ref, enchantment_id);
+    return !!enchantment_find(item, enchantment_id);
 }
 
 
@@ -60,21 +60,20 @@ bool Item_has_enchantment(const LuaItemHandle item, int enchantment_id)
  * @tparam[opt] bool use_article Prepend articles like "the" to the item name
  * @treturn string
  */
-std::string Item_itemname(LuaItemHandle item, int number, bool use_article)
+std::string Item_itemname(const ItemRef& item, int number, bool use_article)
 {
-    auto& item_ref = lua::ref<Item>(item);
-    return elona::itemname(item_ref, number, use_article);
+    return elona::itemname(item, number, use_article);
 }
 
 
 
-sol::optional<LuaItemHandle> Item_create_xy(int x, int y, sol::table args)
+sol::optional<ItemRef> Item_create_xy(int x, int y, sol::table args)
 {
     // `libclang`, invoked from `tools/docgen`, fails to parse this function's
     // body for some reason.
 #ifndef ELONA_DOCGEN
     int id = 0;
-    int slot = -1;
+    Inventory* inv = nullptr;
     int number = 0;
     objlv = 0;
     fixlv = Quality::none;
@@ -94,9 +93,13 @@ sol::optional<LuaItemHandle> Item_create_xy(int x, int y, sol::table args)
         number = *it;
     }
 
-    if (auto it = args.get<sol::optional<int>>("slot"))
+    if (auto it = args.get<sol::optional<Inventory*>>("inventory"))
     {
-        slot = *it;
+        inv = *it;
+    }
+    if (!inv)
+    {
+        inv = &g_inv.ground();
     }
 
     // Random objlv
@@ -152,10 +155,9 @@ sol::optional<LuaItemHandle> Item_create_xy(int x, int y, sol::table args)
         id = data.legacy_id;
     }
 
-    if (const auto item = itemcreate(slot, id, x, y, number))
+    if (const auto item = itemcreate(*inv, id, x, y, number))
     {
-        LuaItemHandle handle = lua::lua->get_handle_manager().get_handle(*item);
-        return handle;
+        return item.unwrap();
     }
     else
     {
@@ -166,7 +168,7 @@ sol::optional<LuaItemHandle> Item_create_xy(int x, int y, sol::table args)
 
 
 
-sol::optional<LuaItemHandle>
+sol::optional<ItemRef>
 Item_create_with_id_xy(int x, int y, const std::string& id)
 {
     return Item_create_xy(
@@ -175,7 +177,7 @@ Item_create_with_id_xy(int x, int y, const std::string& id)
 
 
 
-sol::optional<LuaItemHandle> Item_create_with_id(
+sol::optional<ItemRef> Item_create_with_id(
     const Position& position,
     const std::string& id)
 {
@@ -184,7 +186,7 @@ sol::optional<LuaItemHandle> Item_create_with_id(
 
 
 
-sol::optional<LuaItemHandle>
+sol::optional<ItemRef>
 Item_create_with_number_xy(int x, int y, const std::string& id, int number)
 {
     return Item_create_xy(
@@ -207,7 +209,7 @@ Item_create_with_number_xy(int x, int y, const std::string& id, int number)
  * @treturn[1] LuaItem the created item stack
  * @treturn[2] nil
  */
-sol::optional<LuaItemHandle> Item_create_with_number(
+sol::optional<ItemRef> Item_create_with_number(
     const Position& position,
     const std::string& id,
     int number)
@@ -217,9 +219,7 @@ sol::optional<LuaItemHandle> Item_create_with_number(
 
 
 
-sol::optional<LuaItemHandle> Item_create(
-    const Position& position,
-    sol::table args)
+sol::optional<ItemRef> Item_create(const Position& position, sol::table args)
 {
     return Item_create_xy(position.x, position.y, args);
 }
@@ -253,61 +253,22 @@ int Item_memory(int type, const std::string& id)
 
 
 /**
- * @luadoc stack
- *
- * Stacks an item in the inventory indicated. The item will no longer be valid
- * for use.
- *
- * @tparam num inventory_id
- * @tparam LuaItem handle
- * @treturn[1] LuaItem The modified item stack on success
- * @treturn[2] nil
- */
-sol::optional<LuaItemHandle> Item_stack(
-    int inventory_id,
-    LuaItemHandle handle,
-    sol::optional<bool> show_message)
-{
-    if (inventory_id < -1 || inventory_id > ELONA_MAX_CHARACTERS)
-    {
-        return sol::nullopt;
-    }
-
-    auto& item_ref = lua::ref<Item>(handle);
-
-    auto& item =
-        item_stack(inventory_id, item_ref, show_message.value_or(false))
-            .stacked_item;
-
-    if (item.number() == 0)
-    {
-        return sol::nullopt;
-    }
-
-    return lua::handle(item);
-}
-
-
-
-/**
  * @luadoc trade_rate
  *
  * Returns the trading rate of a cargo item.
  *
- * @tparam LuaItem handle A cargo item
+ * @tparam LuaItem item A cargo item
  * @treturn num
  */
-int Item_trade_rate(LuaItemHandle handle)
+int Item_trade_rate(const ItemRef& item)
 {
-    auto& item_ref = lua::ref<Item>(handle);
-
     // Item must be in the cargo category.
-    if (the_item_db[itemid2int(item_ref.id)]->category != ItemCategory::cargo)
+    if (the_item_db[itemid2int(item->id)]->category != ItemCategory::cargo)
     {
         return 0;
     }
 
-    return trate(item_ref.param1);
+    return trate(item->param1);
 }
 
 
@@ -320,7 +281,7 @@ int Item_trade_rate(LuaItemHandle handle)
  * @tparam string item_id The item ID to find.
  * @tparam ItemFindLocation location Where to search for the item.
  */
-sol::optional<LuaItemHandle> Item_find(
+sol::optional<ItemRef> Item_find(
     const std::string& item_id,
     const EnumString& location)
 {
@@ -329,9 +290,9 @@ sol::optional<LuaItemHandle> Item_find(
     auto location_value =
         LuaEnums::ItemFindLocationTable.ensure_from_string(location);
 
-    if (const auto item = item_find(data.legacy_id, 3, location_value))
+    if (const auto item = item_find(int2itemid(data.legacy_id), location_value))
     {
-        return lua::handle(*item);
+        return item.unwrap();
     }
     else
     {
@@ -356,21 +317,6 @@ std::string Item_weight_string(int weight)
 
 
 
-/**
- * @luadoc has_free_slot
- *
- * Queries whether the inventory has at least one free slot.
- *
- * @tparam num inventory_id The inventory ID
- * @treturn True if the inventory has at least one free slot; false if not.
- */
-bool Item_has_free_slot(int inventory_id)
-{
-    return inv_getspace(inventory_id);
-}
-
-
-
 void bind(sol::table api_table)
 {
     /* clang-format off */
@@ -380,11 +326,9 @@ void bind(sol::table api_table)
     ELONA_LUA_API_BIND_FUNCTION("itemname", Item_itemname);
     ELONA_LUA_API_BIND_FUNCTION("create", Item_create, Item_create_xy, Item_create_with_id, Item_create_with_id_xy, Item_create_with_number, Item_create_with_number_xy);
     ELONA_LUA_API_BIND_FUNCTION("memory", Item_memory);
-    ELONA_LUA_API_BIND_FUNCTION("stack", Item_stack);
     ELONA_LUA_API_BIND_FUNCTION("trade_rate", Item_trade_rate);
     ELONA_LUA_API_BIND_FUNCTION("find", Item_find);
     ELONA_LUA_API_BIND_FUNCTION("weight_string", Item_weight_string);
-    ELONA_LUA_API_BIND_FUNCTION("has_free_slot", Item_has_free_slot);
 
     /* clang-format on */
 }

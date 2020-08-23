@@ -6,11 +6,13 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
 #include "deferred_event.hpp"
 #include "elona.hpp"
 #include "food.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "macro.hpp"
@@ -96,9 +98,9 @@ TalkResult talk_wizard_identify(Character& speaker, int chatval_)
         return TalkResult::talk_npc;
     }
     p = 0;
-    for (const auto& item : inv.pc())
+    for (const auto& item : g_inv.pc())
     {
-        if (item.identify_state != IdentifyState::completely)
+        if (item->identify_state != IdentifyState::completely)
         {
             ++p;
         }
@@ -115,12 +117,12 @@ TalkResult talk_wizard_identify(Character& speaker, int chatval_)
         p(1) = 0;
         p(0) = 0;
         p(1) = 0;
-        for (auto&& item : inv.pc())
+        for (const auto& item : g_inv.pc())
         {
-            if (item.identify_state != IdentifyState::completely)
+            if (item->identify_state != IdentifyState::completely)
             {
                 const auto result = item_identify(item, 250);
-                item_stack(0, item, true);
+                inv_stack(g_inv.pc(), item, true);
                 ++p(1);
                 if (result >= IdentifyState::completely)
                 {
@@ -208,9 +210,9 @@ TalkResult talk_healer_restore_attributes(Character& speaker)
 TalkResult talk_trade(Character& speaker)
 {
     invsubroutine = 1;
-    for (auto&& item : inv.for_chara(speaker))
+    for (const auto& item : g_inv.for_chara(speaker))
     {
-        item.identify_state = IdentifyState::completely;
+        item->identify_state = IdentifyState::completely;
     }
     invctrl(0) = 20;
     invctrl(1) = 0;
@@ -237,7 +239,7 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
             txt(i18n::s.get("core.magic.mount.no_place_to_get_off"));
             return TalkResult::talk_end;
         }
-        cell_setchara(game_data.mount, rtval, rtval(1));
+        cell_setchara(cdata[game_data.mount], rtval, rtval(1));
         txt(i18n::s.get("core.magic.mount.dismount", cdata[game_data.mount]));
         ride_end();
     }
@@ -446,15 +448,15 @@ TalkResult talk_arena_master_score(Character& speaker)
 
 
 
-TalkResult talk_quest_delivery(Character& speaker, Item& item_to_deliver)
+TalkResult talk_quest_delivery(
+    Character& speaker,
+    const ItemRef& item_to_deliver)
 {
-    auto& slot = inv_get_free_slot_force(speaker.index);
-    item_copy(item_to_deliver, slot);
-    slot.set_number(1);
-    chara_set_ai_item(speaker, slot);
-    rq = deliver;
-    item_to_deliver.modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_deliver));
+    const auto slot = inv_make_free_slot_force(g_inv.for_chara(speaker));
+    const auto handed_over_item = item_separate(item_to_deliver, slot, 1);
+    chara_set_ai_item(speaker, handed_over_item);
+    rq = deliver;
     quest_set_data(speaker, 3);
     quest_complete();
     refresh_burden_state();
@@ -463,15 +465,13 @@ TalkResult talk_quest_delivery(Character& speaker, Item& item_to_deliver)
 
 
 
-TalkResult talk_quest_supply(Character& speaker, Item& item_to_supply)
+TalkResult talk_quest_supply(Character& speaker, const ItemRef& item_to_supply)
 {
-    auto& slot = inv_get_free_slot_force(speaker.index);
-    item_copy(item_to_supply, slot);
-    slot.set_number(1);
-    speaker.was_passed_item_by_you_just_now() = true;
-    chara_set_ai_item(speaker, slot);
-    item_to_supply.modify_number(-1);
     txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_supply));
+    const auto slot = inv_make_free_slot_force(g_inv.for_chara(speaker));
+    const auto handed_over_item = item_separate(item_to_supply, slot, 1);
+    speaker.was_passed_item_by_you_just_now() = true;
+    chara_set_ai_item(speaker, handed_over_item);
     quest_set_data(speaker, 3);
     quest_complete();
     refresh_burden_state();
@@ -504,14 +504,14 @@ TalkResult talk_shop_attack(Character& speaker)
 TalkResult talk_guard_return_item(Character& speaker)
 {
     listmax = 0;
-    auto wallet_opt = itemfind(0, 284);
+    auto wallet_opt = itemfind(g_inv.pc(), ItemId::wallet);
     if (!wallet_opt)
     {
-        wallet_opt = itemfind(0, 283);
+        wallet_opt = itemfind(g_inv.pc(), ItemId::suitcase);
     }
-    Item& wallet = *wallet_opt;
-    wallet.modify_number(-1);
-    if (wallet.param1 == 0)
+    const auto wallet = wallet_opt.unwrap();
+    wallet->modify_number(-1);
+    if (wallet->param1 == 0)
     {
         buff = i18n::s.get("core.talk.npc.guard.lost.empty.dialog", speaker);
         ELONA_APPEND_RESPONSE(
@@ -650,7 +650,7 @@ TalkResult talk_ally_abandon(Character& speaker)
         txt(i18n::s.get("core.talk.npc.ally.abandon.you_abandoned", speaker));
         cell_data.at(speaker.position.x, speaker.position.y)
             .chara_index_plus_one = 0;
-        chara_delete(speaker.index);
+        chara_delete(speaker);
         return TalkResult::talk_end;
     }
     buff = "";
@@ -748,7 +748,7 @@ TalkResult talk_slave_sell(Character& speaker)
             {
                 event_add(15, charaid2int(cdata[stat].id));
             }
-            chara_delete(stat);
+            chara_delete(cdata[stat]);
             buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
         }
         else
@@ -794,6 +794,7 @@ TalkResult talk_ally_marriage(Character& speaker)
 
 TalkResult talk_ally_gene(Character& speaker)
 {
+    /*
     if (game_data.current_map == mdata_t::MapId::shelter_)
     {
         listmax = 0;
@@ -823,10 +824,16 @@ TalkResult talk_ally_gene(Character& speaker)
         }
     }
     speaker.has_made_gene() = true;
-    if (game_data.wizard == 0)
-    {
-        game_data.character_and_status_for_gene = speaker.index;
-    }
+    game_data.character_and_status_for_gene = speaker.index;
+    return TalkResult::talk_end;
+    */
+
+    listmax = 0;
+    buff =
+        "Making a nege is disabled in this version. Please wait for a future release.";
+    ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.more"));
+    chatesc = 1;
+    talk_window_query(speaker);
     return TalkResult::talk_end;
 }
 
@@ -1095,7 +1102,7 @@ TalkResult talk_moyer_sell_paels_mom(Character& speaker)
         lily->relationship = 0;
         lily->initial_position.x = 48;
         lily->initial_position.y = 18;
-        cell_movechara(lily->index, 48, 18);
+        cell_movechara(*lily, 48, 18);
         buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
     }
     else
@@ -1129,14 +1136,16 @@ TalkResult talk_wizard_return(Character& speaker)
 
 TalkResult talk_shop_reload_ammo(Character& speaker)
 {
-    if (calccostreload(0) == 0)
+    if (calc_ammo_reloading_cost(cdata.player()) == 0)
     {
         buff = i18n::s.get("core.talk.npc.shop.ammo.no_ammo", speaker);
         return TalkResult::talk_npc;
     }
-    buff =
-        i18n::s.get("core.talk.npc.shop.ammo.cost", calccostreload(0), speaker);
-    if (cdata.player().gold >= calccostreload(0))
+    buff = i18n::s.get(
+        "core.talk.npc.shop.ammo.cost",
+        calc_ammo_reloading_cost(cdata.player()),
+        speaker);
+    if (cdata.player().gold >= calc_ammo_reloading_cost(cdata.player()))
     {
         ELONA_APPEND_RESPONSE(
             1, i18n::s.get("core.talk.npc.shop.ammo.choices.pay"));
@@ -1148,8 +1157,8 @@ TalkResult talk_shop_reload_ammo(Character& speaker)
     if (chatval_ == 1)
     {
         snd("core.paygold1");
-        cdata.player().gold -= calccostreload(0);
-        p = calccostreload(0, true);
+        cdata.player().gold -= calc_ammo_reloading_cost(cdata.player());
+        p = calc_ammo_reloading_cost(cdata.player(), true);
         buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
     }
     else
@@ -1230,7 +1239,7 @@ TalkResult talk_result_maid_chase_out(Character& speaker)
 TalkResult talk_prostitute_buy(Character& speaker)
 {
     int sexvalue =
-        sdata(17, speaker.index) * 25 + 100 + cdata.player().fame / 10;
+        speaker.get_skill(17).level * 25 + 100 + cdata.player().fame / 10;
     if (cdata.player().gold >= sexvalue)
     {
         ELONA_APPEND_RESPONSE(
@@ -1328,13 +1337,9 @@ TalkResult talk_guard_where_is(Character& speaker, int chatval_)
     {
         s = i18n::s.get("core.talk.npc.guard.where_is.direction.south");
     }
-    p = dist(
-        cdata.player().position.x,
-        cdata.player().position.y,
-        chara_you_ask.position.x,
-        chara_you_ask.position.y);
+    p = dist(cdata.player().position, chara_you_ask.position);
 
-    if (chara_you_ask.index == speaker.index)
+    if (chara_you_ask == speaker)
     {
         s = i18n::s.get("core.talk.npc.common.you_kidding", speaker);
     }
@@ -1466,10 +1471,10 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         buff = i18n::s.get(
             "core.talk.npc.trainer.cost.training",
             the_ability_db.get_text(selected_skill, "name"),
-            calctraincost(selected_skill, cdata.player().index),
+            calc_skill_training_cost(selected_skill, cdata.player()),
             speaker);
         if (cdata.player().platinum_coin >=
-            calctraincost(selected_skill, cdata.player().index))
+            calc_skill_training_cost(selected_skill, cdata.player()))
         {
             list(0, listmax) = 1;
             listn(0, listmax) =
@@ -1482,10 +1487,10 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         buff = i18n::s.get(
             "core.talk.npc.trainer.cost.learning",
             the_ability_db.get_text(selected_skill, "name"),
-            calclearncost(selected_skill, cdata.player().index),
+            calc_skill_learning_cost(selected_skill, cdata.player()),
             speaker);
         if (cdata.player().platinum_coin >=
-            calclearncost(selected_skill, cdata.player().index))
+            calc_skill_learning_cost(selected_skill, cdata.player()))
         {
             list(0, listmax) = 1;
             listn(0, listmax) =
@@ -1504,15 +1509,13 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         if (is_training)
         {
             cdata.player().platinum_coin -=
-                calctraincost(selected_skill, cdata.player().index);
+                calc_skill_training_cost(selected_skill, cdata.player());
             modify_potential(
                 cdata.player(),
                 selected_skill,
                 clamp(
                     15 -
-                        sdata.get(selected_skill, cdata.player().index)
-                                .potential /
-                            15,
+                        cdata.player().get_skill(selected_skill).potential / 15,
                     2,
                     15));
             buff =
@@ -1521,7 +1524,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         else
         {
             cdata.player().platinum_coin -=
-                calclearncost(selected_skill, cdata.player().index);
+                calc_skill_learning_cost(selected_skill, cdata.player());
             chara_gain_skill(cdata.player(), selected_skill);
             ++game_data.number_of_learned_skills_by_trainer;
             buff =
@@ -1670,7 +1673,7 @@ TalkResult talk_quest_giver(Character& speaker)
         }
         if (quest_data[rq].id == 1002)
         {
-            if (!inv_get_free_slot(0))
+            if (!g_inv.pc().has_free_slot())
             {
                 buff = i18n::s.get(
                     "core.talk.npc.quest_giver.about.backpack_full", speaker);
@@ -1739,7 +1742,8 @@ TalkResult talk_quest_giver(Character& speaker)
             if (const auto item =
                     itemcreate_player_inv(quest_data[rq].target_item_id, 0))
             {
-                txt(i18n::s.get("core.common.you_put_in_your_backpack", *item));
+                txt(i18n::s.get(
+                    "core.common.you_put_in_your_backpack", item.unwrap()));
                 snd("core.inv");
                 refresh_burden_state();
                 buff = i18n::s.get(
@@ -1818,15 +1822,15 @@ void talk_wrapper(Character& speaker, TalkResult initial)
 
 TalkResult talk_npc(Character& speaker)
 {
-    optional_ref<Item> item_to_deliver;
-    optional_ref<Item> item_to_supply;
+    OptionalItemRef item_to_deliver;
+    OptionalItemRef item_to_supply;
 
     listmax = 0;
     if (buff == ""s)
     {
         get_npc_talk(speaker);
-        int stat = chara_custom_talk(speaker.index, 106);
-        if (stat)
+        bool did_speak = chara_custom_talk(speaker, 106);
+        if (did_speak)
         {
             text_replace_tags_in_quest_board(speaker);
         }
@@ -1834,13 +1838,15 @@ TalkResult talk_npc(Character& speaker)
         {
             if (speaker.relationship != 10)
             {
-                if (speaker.index >= 16)
+                if (!speaker.is_player_or_ally())
                 {
                     if (rnd(3) == 0)
                     {
                         if (speaker.impression < 100)
                         {
-                            if (rnd_capped(sdata(17, 0) + 1) > 10)
+                            if (rnd_capped(
+                                    cdata.player().get_skill(17).level + 1) >
+                                10)
                             {
                                 chara_modify_impression(speaker, rnd(3));
                             }
@@ -1912,7 +1918,7 @@ TalkResult talk_npc(Character& speaker)
                 57, i18n::s.get("core.talk.npc.horse_keeper.choices.buy"));
         }
     }
-    if (speaker.index < 16)
+    if (speaker.is_player_or_ally())
     {
         if (speaker.is_escorted() == 0)
         {
@@ -2074,12 +2080,12 @@ TalkResult talk_npc(Character& speaker)
                         cdata[rtval(cnt)]));
             }
         }
-        if (itemfind(0, 284))
+        if (itemfind(g_inv.pc(), ItemId::wallet))
         {
             ELONA_APPEND_RESPONSE(
                 32, i18n::s.get("core.talk.npc.guard.choices.lost_wallet"));
         }
-        else if (itemfind(0, 283))
+        else if (itemfind(g_inv.pc(), ItemId::suitcase))
         {
             ELONA_APPEND_RESPONSE(
                 32, i18n::s.get("core.talk.npc.guard.choices.lost_suitcase"));
@@ -2102,7 +2108,7 @@ TalkResult talk_npc(Character& speaker)
     {
         if (game_data.current_map != mdata_t::MapId::show_house)
         {
-            if (speaker.index >= 16)
+            if (!speaker.is_player_or_ally())
             {
                 if (!event_has_pending_events())
                 {
@@ -2164,9 +2170,9 @@ TalkResult talk_npc(Character& speaker)
                 {
                     p = quest_data[cnt].target_item_id;
                     deliver = cnt;
-                    for (auto&& item : inv.pc())
+                    for (const auto& item : g_inv.pc())
                     {
-                        if (item.id == int2itemid(p))
+                        if (item->id == int2itemid(p))
                         {
                             item_to_deliver = item;
                             break;
@@ -2184,18 +2190,18 @@ TalkResult talk_npc(Character& speaker)
             quest_data[rq].client_chara_type == 3 &&
             quest_data[rq].progress == 1)
         {
-            for (auto&& item : inv.pc())
+            for (const auto& item : g_inv.pc())
             {
-                if (item.is_marked_as_no_drop())
+                if (item->is_marked_as_no_drop())
                 {
                     continue;
                 }
                 if (quest_data[rq].id == 1003)
                 {
-                    if (the_item_db[itemid2int(item.id)]->category ==
+                    if (the_item_db[itemid2int(item->id)]->category ==
                             ItemCategory::food &&
-                        item.param1 / 1000 == quest_data[rq].extra_info_1 &&
-                        item.param2 == quest_data[rq].extra_info_2)
+                        item->param1 / 1000 == quest_data[rq].extra_info_1 &&
+                        item->param2 == quest_data[rq].extra_info_2)
                     {
                         item_to_supply = item;
                         break;
@@ -2203,7 +2209,7 @@ TalkResult talk_npc(Character& speaker)
                 }
                 if (quest_data[rq].id == 1004 || quest_data[rq].id == 1011)
                 {
-                    if (item.id == int2itemid(quest_data[rq].target_item_id))
+                    if (item->id == int2itemid(quest_data[rq].target_item_id))
                     {
                         item_to_supply = item;
                         break;
@@ -2216,7 +2222,7 @@ TalkResult talk_npc(Character& speaker)
                     26,
                     i18n::s.get(
                         "core.talk.npc.quest_giver.choices.here_is_item",
-                        *item_to_supply));
+                        item_to_supply.unwrap()));
             }
             else
             {
@@ -2242,7 +2248,7 @@ TalkResult talk_npc(Character& speaker)
     }
     if (game_data.current_map == mdata_t::MapId::your_home)
     {
-        if (speaker.index >= 57)
+        if (speaker.is_map_local())
         {
             if (speaker.role != Role::none)
             {
@@ -2335,10 +2341,10 @@ TalkResult talk_npc(Character& speaker)
     case 24: return TalkResult::talk_quest_giver;
     case 25:
         assert(item_to_deliver);
-        return talk_quest_delivery(speaker, *item_to_deliver);
+        return talk_quest_delivery(speaker, item_to_deliver.unwrap());
     case 26:
         assert(item_to_supply);
-        return talk_quest_supply(speaker, *item_to_supply);
+        return talk_quest_supply(speaker, item_to_supply.unwrap());
     case 30: return talk_trainer_learn_skill(speaker);
     case 31: return talk_shop_attack(speaker);
     case 32: return talk_guard_return_item(speaker);

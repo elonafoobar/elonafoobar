@@ -9,6 +9,7 @@
 #include "../util/scope_guard.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "debug.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "log.hpp"
@@ -73,7 +74,7 @@ Headers common_headers_post{
 Duration chat_receive_interval()
 {
     return std::chrono::minutes{
-        config_get_integer("core.net.chat_receive_interval")};
+        config_get<int>("core.net.chat_receive_interval")};
 }
 
 
@@ -144,7 +145,7 @@ auto eval_with_random_seed(Seed seed, F func)
 
 std::string get_pc_name()
 {
-    if (config_get_boolean("core.net.hide_your_name"))
+    if (config_get<bool>("core.net.hide_your_name"))
     {
         const auto seed = xxhash::xxhash32(cdata.player().name);
         return eval_with_random_seed(seed, []() { return random_name(); });
@@ -159,7 +160,7 @@ std::string get_pc_name()
 
 std::string get_pc_alias()
 {
-    if (config_get_boolean("core.net.hide_your_alias"))
+    if (config_get<bool>("core.net.hide_your_alias"))
     {
         const auto seed = xxhash::xxhash32(cdata.player().alias);
         return eval_with_random_seed(
@@ -237,25 +238,25 @@ std::vector<ChatData> net_receive_chats(bool skip_old_chat)
                 switch (static_cast<ChatKind>(kind))
                 {
                 case ChatKind::chat:
-                    if (config_get_string("core.net.chat") == "disabled")
+                    if (config_get<std::string>("core.net.chat") == "disabled")
                     {
                         continue;
                     }
                     break;
                 case ChatKind::death:
-                    if (config_get_string("core.net.death") == "disabled")
+                    if (config_get<std::string>("core.net.death") == "disabled")
                     {
                         continue;
                     }
                     break;
                 case ChatKind::wish:
-                    if (config_get_string("core.net.wish") == "disabled")
+                    if (config_get<std::string>("core.net.wish") == "disabled")
                     {
                         continue;
                     }
                     break;
                 case ChatKind::news:
-                    if (config_get_string("core.net.news") == "disabled")
+                    if (config_get<std::string>("core.net.news") == "disabled")
                     {
                         continue;
                     }
@@ -295,7 +296,7 @@ std::vector<PollData> net_receive_polls()
     {
         return {};
     }
-    if (!config_get_boolean("core.net.is_alias_vote_enabled"))
+    if (!config_get<bool>("core.net.is_alias_vote_enabled"))
     {
         return {};
     }
@@ -349,7 +350,7 @@ void net_send_chat(const std::string& message)
     {
         return;
     }
-    if (config_get_string("core.net.chat") != "send_receive")
+    if (config_get<std::string>("core.net.chat") != "send_receive")
     {
         return;
     }
@@ -374,11 +375,11 @@ void net_send_death(
     {
         return;
     }
-    if (config_get_string("core.net.death") != "send_receive")
+    if (config_get<std::string>("core.net.death") != "send_receive")
     {
         return;
     }
-    if (game_data.wizard)
+    if (debug_is_wizard())
     {
         return;
     }
@@ -402,11 +403,11 @@ void net_send_wish(const std::string& input, const std::string& result)
     {
         return;
     }
-    if (config_get_string("core.net.wish") != "send_receive")
+    if (config_get<std::string>("core.net.wish") != "send_receive")
     {
         return;
     }
-    if (game_data.wizard)
+    if (debug_is_wizard())
     {
         return;
     }
@@ -429,11 +430,11 @@ void net_send_news(const std::string& locale_id, const std::string& extra_info)
     {
         return;
     }
-    if (config_get_string("core.net.news") != "send_receive")
+    if (config_get<std::string>("core.net.news") != "send_receive")
     {
         return;
     }
-    if (game_data.wizard)
+    if (debug_is_wizard())
     {
         return;
     }
@@ -456,7 +457,7 @@ void net_register_your_name()
     {
         return;
     }
-    if (!config_get_boolean("core.net.is_alias_vote_enabled"))
+    if (!config_get<bool>("core.net.is_alias_vote_enabled"))
     {
         return;
     }
@@ -493,7 +494,7 @@ void net_send_vote(int poll_id)
     {
         return;
     }
-    if (!config_get_boolean("core.net.is_alias_vote_enabled"))
+    if (!config_get<bool>("core.net.is_alias_vote_enabled"))
     {
         return;
     }

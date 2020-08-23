@@ -30,7 +30,7 @@ return {
          text = {
             {"late._0"},
             {"late._1"},
-            {"late._2", args = function() return {Chara.player().title, Chara.player().basename} end},
+            {"late._2", args = function() return {Chara.player().alias, Chara.player().basename} end},
          },
          choices = {
             {"__END__", "__MORE__"},
@@ -56,7 +56,7 @@ return {
       stones = {
          text = {
             {"stones.dialog._0", args = common.args_name},
-            GUI.fade_out,
+            function() GUI.fade_out() end,
             {"stones.dialog._1"},
             {"stones.dialog._2"},
             {"stones.dialog._3"},

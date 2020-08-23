@@ -6,14 +6,14 @@
 #include <vector>
 
 #include "../util/range.hpp"
+#include "ability.hpp"
 #include "consts.hpp"
 #include "data/types/type_character.hpp"
 #include "eobject/eobject.hpp"
 #include "god.hpp"
-#include "item_ref.hpp"
 #include "lua_env/wrapped_function.hpp"
 #include "position.hpp"
-#include "serialization/macros.hpp"
+
 
 
 #define ELONA_MAX_CHARACTERS 245
@@ -41,13 +41,9 @@ struct Buff
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Buff");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, id);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, power);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, turns);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(id);
+        ar(power);
+        ar(turns);
         /* clang-format on */
     }
 };
@@ -75,7 +71,7 @@ struct Activity
 
     Type type = Activity::Type::none;
     int turn = 0;
-    ItemRef item;
+    OptionalItemRef item;
 
 
     bool is_doing_nothing() const
@@ -100,7 +96,7 @@ struct Activity
     {
         type = Activity::Type::none;
         turn = 0;
-        item = ItemRef::null();
+        item = nullptr;
     }
 
 
@@ -109,13 +105,9 @@ struct Activity
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Activity");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, type);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, turn);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, item);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(type);
+        ar(turn);
+        ar(item);
         /* clang-format on */
     }
 };
@@ -198,7 +190,7 @@ private:
 struct EquipmentSlot
 {
     int type = 0;
-    ItemRef equipment;
+    OptionalItemRef equipment;
 
 
 
@@ -209,16 +201,16 @@ struct EquipmentSlot
 
 
 
-    void equip(Item& item)
+    void equip(ItemRef item)
     {
-        equipment = ItemRef::from_ref(item);
+        equipment = std::move(item);
     }
 
 
 
     void unequip()
     {
-        equipment = ItemRef::null();
+        equipment = nullptr;
     }
 
 
@@ -227,12 +219,8 @@ struct EquipmentSlot
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "EquipmentSlot");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, type);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, equipment);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(type);
+        ar(equipment);
         /* clang-format on */
     }
 };
@@ -284,7 +272,7 @@ public:
     int relationship = 0;
     int turn_cost = 0;
     int current_speed = 0;
-    ItemRef ai_item;
+    OptionalItemRef ai_item;
     std::string portrait;
     int interest = 0;
     int time_interest_revive = 0;
@@ -408,6 +396,24 @@ public:
 
 
 
+private:
+    SkillData _skills;
+
+
+public:
+    Ability& get_skill(int id)
+    {
+        return _skills.get(id);
+    }
+
+
+    const Ability& get_skill(int id) const
+    {
+        return _skills.get(id);
+    }
+
+
+
     void clear();
     void clear_flags();
 
@@ -455,6 +461,16 @@ public:
     }
 
 
+
+    bool is_player() const;
+    bool is_ally() const;
+    bool is_player_or_ally() const;
+    bool is_adventurer() const;
+    bool is_global() const;
+    bool is_map_local() const;
+
+
+
     ELONA_CHARACTER_DEFINE_FLAG_ACCESSORS
 
 
@@ -463,6 +479,19 @@ public:
         const auto index_save = to.index;
         to = from;
         to.index = index_save;
+    }
+
+
+
+    bool operator==(const Character& other) const noexcept
+    {
+        return this == &other;
+    }
+
+
+    bool operator!=(const Character& other) const noexcept
+    {
+        return this != &other;
     }
 
 
@@ -480,136 +509,133 @@ public:
     void serialize(Archive& ar)
     {
         /* clang-format off */
-        ELONA_SERIALIZATION_STRUCT_BEGIN(ar, "Character");
-
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, obj_id);
-        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "state", state_);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, position);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, next_position);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, time_to_revive);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, vision_flag);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, image);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, sex);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, relationship);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, turn_cost);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, current_speed);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, ai_item);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, portrait);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, interest);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, time_interest_revive);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, personality);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, impression);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, talk_type);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, height);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, weight);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, birth_year);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, nutrition);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, can_talk);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, quality);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, turn);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, id);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, vision_distance);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, enemy_id);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, gold);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, platinum_coin);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, combat_style);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, melee_attack_type);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, fame);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, experience);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, required_experience);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, speed_percentage);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, level);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, speed_percentage_in_next_turn);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, skill_bonus);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, total_skill_bonus);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, inventory_weight);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, max_inventory_weight);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, inventory_weight_type);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, max_level);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, karma);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, hp);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, max_hp);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, sp);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, max_sp);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, mp);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, max_mp);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, heal_value_per_nether_attack);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, god_id);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, piety_point);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, praying_point);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, sum_of_equipment_weight);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, special_attack_type);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, rate_to_pierce);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, rate_of_critical_hit);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, speed_correction_value);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, original_relationship);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, pv);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dv);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, hit_bonus);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, damage_bonus);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, pv_correction_value);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dv_correction_value);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, damage_reaction_info);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, emotion_icon);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, current_map);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, current_dungeon_level);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, related_quest_id);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, direction);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, period_of_contract);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, hire_count);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, insanity);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, curse_power);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, extra_attack);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, extra_shot);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, decrease_physical_damage);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, nullify_damage);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, cut_counterattack);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, anorexia_count);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, activity);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, stops_activity_if_damaged);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, quality_of_performance);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, tip_gold);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, role);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, shop_rank);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, activity_target);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, shop_store_id);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, time_to_restore);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, cnpc_id);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, initial_position);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, hate);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, ai_calm);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, ai_move);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, ai_dist);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, ai_act_sub_freq);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, ai_heal);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, element_of_unarmed_attack);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, poisoned);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, sleep);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, paralyzed);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, blind);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, confused);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, fear);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, dimmed);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, drunk);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, bleeding);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, wet);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, insane);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, sick);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, gravity);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, choked);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, furious);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, growth_buffs);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, equipment_slots);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, normal_actions);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, special_actions);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, buffs);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, attr_adjs);
-        ELONA_SERIALIZATION_STRUCT_FIELD_WITH_NAME(*this, "flags", _flags);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, _156);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, _203);
-        ELONA_SERIALIZATION_STRUCT_FIELD(*this, target_position);
-
-        ELONA_SERIALIZATION_STRUCT_END();
+        ar(obj_id);
+        ar(state_);
+        ar(position);
+        ar(next_position);
+        ar(time_to_revive);
+        ar(vision_flag);
+        ar(image);
+        ar(sex);
+        ar(relationship);
+        ar(turn_cost);
+        ar(current_speed);
+        ar(ai_item);
+        ar(portrait);
+        ar(interest);
+        ar(time_interest_revive);
+        ar(personality);
+        ar(impression);
+        ar(talk_type);
+        ar(height);
+        ar(weight);
+        ar(birth_year);
+        ar(nutrition);
+        ar(can_talk);
+        ar(quality);
+        ar(turn);
+        ar(id);
+        ar(vision_distance);
+        ar(enemy_id);
+        ar(gold);
+        ar(platinum_coin);
+        ar(combat_style);
+        ar(melee_attack_type);
+        ar(fame);
+        ar(experience);
+        ar(required_experience);
+        ar(speed_percentage);
+        ar(level);
+        ar(speed_percentage_in_next_turn);
+        ar(skill_bonus);
+        ar(total_skill_bonus);
+        ar(inventory_weight);
+        ar(max_inventory_weight);
+        ar(inventory_weight_type);
+        ar(max_level);
+        ar(karma);
+        ar(hp);
+        ar(max_hp);
+        ar(sp);
+        ar(max_sp);
+        ar(mp);
+        ar(max_mp);
+        ar(heal_value_per_nether_attack);
+        ar(god_id);
+        ar(piety_point);
+        ar(praying_point);
+        ar(sum_of_equipment_weight);
+        ar(special_attack_type);
+        ar(rate_to_pierce);
+        ar(rate_of_critical_hit);
+        ar(speed_correction_value);
+        ar(original_relationship);
+        ar(pv);
+        ar(dv);
+        ar(hit_bonus);
+        ar(damage_bonus);
+        ar(pv_correction_value);
+        ar(dv_correction_value);
+        ar(damage_reaction_info);
+        ar(emotion_icon);
+        ar(current_map);
+        ar(current_dungeon_level);
+        ar(related_quest_id);
+        ar(direction);
+        ar(period_of_contract);
+        ar(hire_count);
+        ar(insanity);
+        ar(curse_power);
+        ar(extra_attack);
+        ar(extra_shot);
+        ar(decrease_physical_damage);
+        ar(nullify_damage);
+        ar(cut_counterattack);
+        ar(anorexia_count);
+        ar(activity);
+        ar(stops_activity_if_damaged);
+        ar(quality_of_performance);
+        ar(tip_gold);
+        ar(role);
+        ar(shop_rank);
+        ar(activity_target);
+        ar(shop_store_id);
+        ar(time_to_restore);
+        ar(cnpc_id);
+        ar(initial_position);
+        ar(hate);
+        ar(ai_calm);
+        ar(ai_move);
+        ar(ai_dist);
+        ar(ai_act_sub_freq);
+        ar(ai_heal);
+        ar(element_of_unarmed_attack);
+        ar(poisoned);
+        ar(sleep);
+        ar(paralyzed);
+        ar(blind);
+        ar(confused);
+        ar(fear);
+        ar(dimmed);
+        ar(drunk);
+        ar(bleeding);
+        ar(wet);
+        ar(insane);
+        ar(sick);
+        ar(gravity);
+        ar(choked);
+        ar(furious);
+        ar(growth_buffs);
+        ar(equipment_slots);
+        ar(normal_actions);
+        ar(special_actions);
+        ar(buffs);
+        ar(attr_adjs);
+        ar(_flags);
+        ar(_156);
+        ar(_203);
+        ar(target_position);
+        ar(_skills);
         /* clang-format on */
     }
 };
@@ -740,8 +766,7 @@ void chara_refresh(Character& chara);
  */
 int chara_copy(const Character& source);
 
-void chara_delete(int = 0);
-void chara_remove(Character&);
+void chara_delete(Character& chara);
 void chara_vanquish(Character& chara);
 void chara_killed(Character&);
 
@@ -755,11 +780,11 @@ optional_ref<Character> chara_find(data::InstanceId chara_id);
 int chara_find_ally(int id);
 int chara_get_free_slot();
 int chara_get_free_slot_ally();
-bool chara_unequip(Item& item);
-int chara_custom_talk(int = 0, int = 0);
+bool chara_unequip(const ItemRef& item);
+bool chara_custom_talk(Character& speaker, int talk_type);
 int chara_impression_level(int = 0);
 void chara_modify_impression(Character& chara, int delta);
-void chara_set_ai_item(Character& chara, Item& item);
+void chara_set_ai_item(Character& chara, ItemRef item);
 int chara_armor_class(const Character& chara);
 int chara_breed_power(const Character&);
 
@@ -778,17 +803,21 @@ optional_ref<Character> new_ally_joins(Character& new_ally);
 void refresh_burden_state();
 void go_hostile();
 void get_pregnant(Character& chara);
-void wet(int = 0, int = 0);
-void hostileaction(int = 0, int = 0);
-void turn_aggro(int = 0, int = 0, int = 0);
+void chara_get_wet(Character& chara, int turns);
+void chara_act_hostile_action(Character& attacker, Character& target);
+void turn_aggro(Character& chara, Character& target, int hate);
 void ride_begin(int = 0);
 void ride_end();
-void make_sound(int = 0, int = 0, int = 0, int = 0, int = 0, int = 0);
+void make_sound(
+    Character& source_chara,
+    int distance_threshold,
+    int waken,
+    bool may_make_angry);
 void incognitobegin();
 void incognitoend();
 void initialize_pc_character();
 void lost_body_part(int);
-void lovemiracle(int = 0);
+void lovemiracle(Character& chara);
 void monster_respawn();
 void move_character(Character& chara);
 void proc_negative_enchantments(Character& chara);

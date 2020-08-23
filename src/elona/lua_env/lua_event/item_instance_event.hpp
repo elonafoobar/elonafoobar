@@ -11,11 +11,11 @@ namespace lua
 struct ItemInstanceEvent : BaseEvent
 {
 public:
-    ItemInstanceEvent(const char* id, const Item& item)
+    ItemInstanceEvent(const char* id, const ItemRef& item)
         : BaseEvent(id)
+        , _item(item)
+        , _item_id(item->new_id())
     {
-        _item = lua::handle(item);
-        _item_id = item.new_id();
     }
 
     sol::table make_event_table() const override
@@ -35,7 +35,7 @@ public:
     }
 
 protected:
-    LuaItemHandle _item;
+    ItemRef _item;
     data::InstanceId _item_id;
 };
 

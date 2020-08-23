@@ -43,22 +43,12 @@ function create(position, id, number) end
 --  @function memory
 function memory(type, id) end
 
---- Stacks an item in the inventory indicated. The item will no longer be valid
---  for use.
---
---  @tparam num inventory_id
---  @tparam LuaItem handle
---  @treturn[1] LuaItem The modified item stack on success
---  @treturn[2] nil
---  @function stack
-function stack(inventory_id, handle, show_message) end
-
 --- Returns the trading rate of a cargo item.
 --
---  @tparam LuaItem handle A cargo item
+--  @tparam LuaItem item A cargo item
 --  @treturn num
 --  @function trade_rate
-function trade_rate(handle) end
+function trade_rate(item) end
 
 --- Tries to find an item in the player's inventory, the ground, or both.
 --
@@ -73,10 +63,3 @@ function find(item_id, location) end
 --  @treturn string
 --  @function weight_string
 function weight_string(weight) end
-
---- Queries whether the inventory has at least one free slot.
---
---  @tparam num inventory_id The inventory ID
---  @treturn True if the inventory has at least one free slot; false if not.
---  @function has_free_slot
-function has_free_slot(inventory_id) end

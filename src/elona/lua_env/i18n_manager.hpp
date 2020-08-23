@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../eobject/forward.hpp"
 #include "../optional.hpp"
 #include "lua_submodule.hpp"
 
@@ -106,7 +107,7 @@ private:
     }
 
 
-    void add_arg(sol::table args, const Item& value);
+    void add_arg(sol::table args, const ItemRef& value);
     void add_arg(sol::table args, const Character& value);
 };
 

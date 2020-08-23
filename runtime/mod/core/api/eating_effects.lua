@@ -203,7 +203,7 @@ EatingEffects.nymph = eating_effect_ghost(400)
 function EatingEffects.quickling(eater)
    eat_message(eater, "quickling", "green")
 
-   local current = eater:get_skill("core.attribute_speed").current_level
+   local current = eater:get_skill("core.attribute_speed").level
    local amount = math.clamp(2500 - current * current // 10, 20, 2500)
    eater:gain_skill_exp("core.attribute_speed", amount);
 end

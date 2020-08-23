@@ -154,7 +154,7 @@ void UIMenuCharamakeRace::_draw_choices()
 
 static void _reload_selected_race(data::InstanceId race_id)
 {
-    chara_delete(0);
+    chara_delete(cdata.player());
     race_init_chara(cdata.player(), race_id);
 }
 

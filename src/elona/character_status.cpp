@@ -198,8 +198,8 @@ void modify_ether_disease_stage(int delta)
 
 void modify_potential(Character& chara, int id, int delta)
 {
-    sdata.get(id, chara.index).potential =
-        clamp(sdata.get(id, chara.index).potential + delta, 2, 400);
+    chara.get_skill(id).potential =
+        clamp(chara.get_skill(id).potential + delta, 2, 400);
 }
 
 
@@ -326,7 +326,7 @@ void modify_height(Character& chara, int delta)
 
 void refresh_speed(Character& chara)
 {
-    chara.current_speed = sdata(18, chara.index) *
+    chara.current_speed = chara.get_skill(18).level *
         clamp((100 - chara.speed_correction_value), 0, 100) / 100;
     if (chara.current_speed < 10)
     {
@@ -334,18 +334,19 @@ void refresh_speed(Character& chara)
     }
     chara.speed_percentage_in_next_turn = 0;
 
-    if (chara.index != 0 && game_data.mount != chara.index)
+    if (!chara.is_player() && game_data.mount != chara.index)
         return;
 
     if (game_data.mount != 0)
     {
-        const auto mount_speed = sdata(18, game_data.mount) *
+        const auto mount_speed = cdata[game_data.mount].get_skill(18).level *
             clamp(100 - cdata[game_data.mount].speed_correction_value, 0, 100) /
             100;
 
         cdata.player().current_speed = mount_speed * 100 /
-            clamp(100 + mount_speed - sdata(10, game_data.mount) * 3 / 2 -
-                      sdata(301, 0) * 2 -
+            clamp(100 + mount_speed -
+                      cdata[game_data.mount].get_skill(10).level * 3 / 2 -
+                      cdata.player().get_skill(301).level * 2 -
                       (cdata[game_data.mount].is_suitable_for_mount() == 1) *
                           50,
                   100,
@@ -356,13 +357,15 @@ void refresh_speed(Character& chara)
         }
         if (game_data.mount == chara.index)
         {
-            chara.current_speed =
-                clamp(sdata(10, chara.index) + sdata(301, 0), 10, mount_speed);
+            chara.current_speed = clamp(
+                chara.get_skill(10).level + cdata.player().get_skill(301).level,
+                10,
+                mount_speed);
             return;
         }
     }
 
-    gspdorg = sdata.get(18, 0).original_level;
+    gspdorg = cdata.player().get_skill(18).base_level;
 
     if (game_data.mount == 0)
     {
@@ -462,7 +465,7 @@ void gain_new_body_part(Character& chara)
     }
 
     const auto body_part = get_random_body_part();
-    chara.equipment_slots[slot] = EquipmentSlot{body_part, ItemRef::null()};
+    chara.equipment_slots[slot] = EquipmentSlot{body_part, nullptr};
     if (!cm)
     {
         txt(i18n::s.get(
@@ -488,7 +491,7 @@ void gain_level(Character& chara)
     {
         if (r2 == 0)
         {
-            if (chara.index == 0)
+            if (chara.is_player())
             {
                 txt(i18n::s.get(
                         "core.chara.gain_level.self", chara, chara.level),
@@ -503,12 +506,12 @@ void gain_level(Character& chara)
     }
     else
     {
-        addnews(2, chara.index);
+        adventurer_add_news(NewsType::growth, chara);
     }
-    p = 5 * (100 + sdata.get(14, chara.index).original_level * 10) /
+    p = 5 * (100 + chara.get_skill(14).base_level * 10) /
             (300 + chara.level * 15) +
         1;
-    if (chara.index == 0)
+    if (chara.is_player())
     {
         if (chara.level % 5 == 0)
         {
@@ -525,7 +528,7 @@ void gain_level(Character& chara)
     }
     chara.skill_bonus += p;
     chara.total_skill_bonus += p;
-    if (chara.race == "core.mutant" || (chara.index == 0 && trait(0) == 1))
+    if (chara.race == "core.mutant" || (chara.is_player() && trait(0) == 1))
     {
         if (chara.level < 37)
         {
@@ -542,7 +545,7 @@ void gain_level(Character& chara)
     {
         chara.max_level = chara.level;
     }
-    if (chara.index >= 16)
+    if (!chara.is_player_or_ally())
     {
         grow_primary_skills(chara);
     }
@@ -556,18 +559,18 @@ void grow_primary_skills(Character& chara)
 {
     for (int i = 10; i < 20; ++i)
     {
-        sdata.get(i, chara.index).original_level += rnd(3);
-        if (sdata.get(i, chara.index).original_level > 2000)
+        chara.get_skill(i).base_level += rnd(3);
+        if (chara.get_skill(i).base_level > 2000)
         {
-            sdata.get(i, chara.index).original_level = 2000;
+            chara.get_skill(i).base_level = 2000;
         }
     }
     for (const auto& skill : mainskill)
     {
-        sdata.get(skill, chara.index).original_level += rnd(3);
-        if (sdata.get(skill, chara.index).original_level > 2000)
+        chara.get_skill(skill).base_level += rnd(3);
+        if (chara.get_skill(skill).base_level > 2000)
         {
-            sdata.get(skill, chara.index).original_level = 2000;
+            chara.get_skill(skill).base_level = 2000;
         }
     }
 }
@@ -635,9 +638,9 @@ int gain_skills_by_geen_engineering(
     for (int cnt = 0; cnt < 100; ++cnt)
     {
         rtval = rnd(40) + 150;
-        if (sdata(rtval, original_ally.index) == 0)
+        if (original_ally.get_skill(rtval).level == 0)
         {
-            if (sdata(rtval, gene_ally.index) > 0)
+            if (gene_ally.get_skill(rtval).level > 0)
             {
                 dblist(0, dbmax) = rtval;
                 ++dbmax;

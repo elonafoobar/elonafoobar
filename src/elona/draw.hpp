@@ -5,6 +5,7 @@
 
 #include "../snail/color.hpp"
 #include "data/id.hpp"
+#include "eobject/forward.hpp"
 #include "optional.hpp"
 #include "pic_loader/extent.hpp"
 
@@ -115,7 +116,7 @@ void draw_chara_scale_height(const Character& chara, int x, int y);
 void draw_chara_scale_height(int image_id, int x, int y);
 
 void draw_item_material(int mat_id, int x, int y);
-void draw_item_with_portrait(const Item& item, int x, int y);
+void draw_item_with_portrait(const ItemRef& item, int x, int y);
 void draw_item_with_portrait(
     int image_id,
     int color,
@@ -123,7 +124,7 @@ void draw_item_with_portrait(
     int x,
     int y);
 
-void draw_item_with_portrait_scale_height(const Item& item, int x, int y);
+void draw_item_with_portrait_scale_height(const ItemRef& item, int x, int y);
 void draw_item_with_portrait_scale_height(
     int image_id,
     int color,

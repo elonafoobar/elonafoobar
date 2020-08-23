@@ -178,7 +178,6 @@ FoobarData foobar_data;
     SERIALIZE(826, item_turns); \
     SERIALIZE( \
         827, next_level_minus_one_kumiromis_experience_becomes_available); \
-    SERIALIZE(828, wizard); \
     SERIALIZE_ARRAY(830, tcg_decks); \
     SERIALIZE(850, destination_outer_map); \
     SERIALIZE(851, lost_wallet_count);

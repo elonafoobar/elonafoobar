@@ -14,6 +14,7 @@
 #include "command.hpp"
 #include "config.hpp"
 #include "config_menu.hpp"
+#include "data/types/type_ability.hpp"
 #include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_portrait.hpp"
@@ -130,7 +131,7 @@ std::string _set_pcc_info(Character& chara, int val0)
         }
         if (val0 == 9)
         {
-            if (chara.index != 0)
+            if (!chara.is_player())
             {
                 rtval(0) = 101;
                 rtval(1) = 0;
@@ -713,7 +714,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                 s(6) = i18n::s.get("core.ui.appearance.basic.cloth");
                 s(7) = i18n::s.get("core.ui.appearance.basic.pants");
                 s(8) = i18n::s.get("core.ui.appearance.basic.set_detail");
-                if (chara.index != 0)
+                if (!chara.is_player())
                 {
                     s(9) = i18n::s.get("core.ui.appearance.basic.custom");
                 }
@@ -721,8 +722,8 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                 {
                     s(9) = i18n::s.get("core.ui.appearance.basic.riding");
                 }
-                p = 9 + (chara.index != 0) +
-                    (chara.index == 0) * (game_data.mount != 0);
+                p = 9 + (!chara.is_player()) +
+                    (chara.is_player()) * (game_data.mount != 0);
             }
             else
             {
@@ -905,8 +906,9 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
             {
                 if (fs::exists(
                         filesystem::dirs::graphic() /
-                        (u8"pcc_"s + text + u8"_" +
-                         (pcc(rtval, chara.index) % 1000 + 1) + u8".bmp")))
+                        fs::u8path(
+                            u8"pcc_"s + text + u8"_" +
+                            (pcc(rtval, chara.index) % 1000 + 1) + u8".bmp")))
                 {
                     ++pcc(rtval, chara.index);
                     changed = true;
@@ -937,8 +939,9 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                 if ((pcc(rtval, chara.index) % 1000 == 1 && rtval != 15) ||
                     fs::exists(
                         filesystem::dirs::graphic() /
-                        (u8"pcc_"s + text + u8"_"s +
-                         (pcc(rtval, chara.index) % 1000 - 1) + u8".bmp"s)))
+                        fs::u8path(
+                            u8"pcc_"s + text + u8"_"s +
+                            (pcc(rtval, chara.index) % 1000 - 1) + u8".bmp"s)))
                 {
                     --pcc(rtval, chara.index);
                     changed = true;
@@ -1134,20 +1137,20 @@ void append_accuracy_info(const Character& chara, int val0)
         {
             continue;
         }
-        auto& weapon = *chara.equipment_slots[cnt].equipment;
-        if (weapon.dice_x > 0)
+        const auto weapon = chara.equipment_slots[cnt].equipment;
+        if (weapon->dice_x > 0)
         {
-            attackskill = weapon.skill;
+            attackskill = weapon->skill;
             ++p(1);
             s(1) = i18n::s.get("core.ui.chara_sheet.damage.melee") + p(1);
             ++attacknum;
-            show_weapon_dice(chara, weapon, none, val0);
+            show_weapon_dice(chara, weapon, nullptr, val0);
         }
     }
     if (attackskill == 106)
     {
         s(1) = i18n::s.get("core.ui.chara_sheet.damage.unarmed");
-        show_weapon_dice(chara, none, none, val0);
+        show_weapon_dice(chara, nullptr, nullptr, val0);
     }
     attacknum = 0;
     const auto result = can_do_ranged_attack(chara);
@@ -1162,8 +1165,8 @@ void append_accuracy_info(const Character& chara, int val0)
 
 void show_weapon_dice(
     const Character& chara,
-    optional_ref<Item> weapon,
-    optional_ref<Item> ammo,
+    const OptionalItemRef& weapon,
+    const OptionalItemRef& ammo,
     int val0)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
@@ -1362,12 +1365,12 @@ void screen_analyze_self()
     snd("core.pop2");
     buff = "";
     notesel(buff);
-    chara_delete(56);
+    chara_delete(cdata.tmp());
     cdata.tmp().piety_point = cdata.player().piety_point;
     cdata.tmp().god_id = cdata.player().god_id;
     for (int cnt = 0; cnt < 600; ++cnt)
     {
-        sdata(cnt, 0) = 1;
+        cdata.player().get_skill(cnt).level = 1;
     }
     god_apply_blessing(cdata.tmp());
     if (cdata.player().god_id != core_god::eyth)
@@ -1376,7 +1379,7 @@ void screen_analyze_self()
             u8"による能力の恩恵<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
-            p = sdata(cnt, 0) - 1;
+            p = cdata.player().get_skill(cnt).level - 1;
             cnvbonus(cnt, p);
         }
     }
@@ -1488,14 +1491,14 @@ int change_npc_tone(Character& chara)
 
 
 
-void show_book_window(const Item& book)
+void show_book_window(const ItemRef& book)
 {
-    ui::UIMenuBook(book.param1).show();
+    ui::UIMenuBook(book->param1).show();
 }
 
 
 
-void item_show_description(Item& item)
+void item_show_description(const ItemRef& item)
 {
     ui::UIMenuItemDesc(item).show();
 

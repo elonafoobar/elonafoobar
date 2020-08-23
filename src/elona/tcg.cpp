@@ -11,6 +11,7 @@
 #include "input.hpp"
 #include "input_prompt.hpp"
 #include "random.hpp"
+#include "save_fs.hpp"
 #include "variables.hpp"
 
 
@@ -1766,14 +1767,7 @@ void tcgdeck()
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             s_at_tcg(cnt) = i18n::s.get("core.tcg.deck.name", s_at_tcg(cnt));
-            const auto deck_filepath =
-                filesystem::dirs::tmp() / (u8"deck_"s + cnt + u8".s2");
-            tmpload(filepathutil::u8path(u8"deck_"s + cnt + u8".s2"));
-            if (!fs::exists(deck_filepath))
-            {
-                s_at_tcg(cnt) += " (" + i18n::s.get("core.tcg.deck.new") + ")";
-            }
-            else
+            if (save_fs_exists(fs::u8path(u8"deck_"s + cnt + u8".s2")))
             {
                 if (game_data.tcg_decks.at(cnt) != 30)
                 {
@@ -1785,6 +1779,10 @@ void tcgdeck()
                     s_at_tcg(cnt) += u8" [Use]"s;
                 }
             }
+            else
+            {
+                s_at_tcg(cnt) += " (" + i18n::s.get("core.tcg.deck.new") + ")";
+            }
             prompt.append(s_at_tcg(cnt));
         }
         rtval = prompt.query(basex_at_tcg + 400, basey_at_tcg + 230, 300);
@@ -1794,9 +1792,7 @@ void tcgdeck()
         }
         DIM2(deck, 1000);
         curdeck = rtval;
-        tmpload(filepathutil::u8path(u8"deck_"s + curdeck + u8".s2"));
-        if (fs::exists(
-                filesystem::dirs::tmp() / (u8"deck_"s + curdeck + u8".s2")))
+        if (save_fs_exists(fs::u8path(u8"deck_"s + curdeck + u8".s2")))
         {
             Prompt prompt;
             prompt.append(i18n::s.get("core.tcg.deck.choices.edit"));
@@ -1816,7 +1812,8 @@ void tcgdeck()
             {
                 ctrl_file(
                     FileOperation2::deck_read,
-                    filesystem::dirs::tmp() / (u8"deck_"s + curdeck + u8".s2"));
+                    filesystem::dirs::tmp() /
+                        fs::u8path(u8"deck_"s + curdeck + u8".s2"));
             }
         }
         decksizebk_at_tcg = game_data.tcg_decks.at(curdeck);
@@ -2720,8 +2717,7 @@ void tcg_draw_menu()
                     ctrl_file(
                         FileOperation2::deck_write,
                         filesystem::dirs::tmp() /
-                            (u8"deck_"s + curdeck + u8".s2"));
-                    writeloadedbuff(u8"deck_"s + curdeck + u8".s2");
+                            fs::u8path(u8"deck_"s + curdeck + u8".s2"));
                 }
                 else
                 {

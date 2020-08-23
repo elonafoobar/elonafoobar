@@ -191,10 +191,11 @@ function Event.trigger(event_id, args, opts)
       check_event(event_id)
    end
 
-   local instances = opts.instances
-   if type(instances) ~= "table" then
-      instances = {instances}
-   end
+   -- local instances = opts.instances
+   -- if type(instances) ~= "table" then
+   --    instances = {instances}
+   -- end
+   local instances = {}
 
    for _, instance in ipairs(instances) do
       local instance = get_instance(instance)
@@ -202,7 +203,7 @@ function Event.trigger(event_id, args, opts)
       events:traverse(run_event, args)
    end
 
-   events = get_events(event_id)
+   local events = get_events(event_id)
    events:traverse(run_event, args)
 
    return args

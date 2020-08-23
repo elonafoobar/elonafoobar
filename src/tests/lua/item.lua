@@ -1,6 +1,7 @@
 require("tests/lua/support/minctest")
 
 local Item = ELONA.require("core.Item")
+local Inventory = ELONA.require("core.Inventory")
 
 lrun("test Item.create", function()
         Testing.start_in_debug_map()
@@ -9,14 +10,14 @@ lrun("test Item.create", function()
         local item = Item.create(item_pos, "core.putitoro", 3)
         lok(item ~= nil, "Item was nil")
         lequal(item.number, 3)
-        lequal(item.position.x, item_pos.x)
-        lequal(item.position.y, item_pos.y)
+        lequal(item.pos.x, item_pos.x)
+        lequal(item.pos.y, item_pos.y)
 
         item = Item.create(item_pos.x, item_pos.y + 1, "core.putitoro", 3)
         lok(item ~= nil, "Item was nil")
         lequal(item.number, 3)
-        lequal(item.position.x, item_pos.x)
-        lequal(item.position.y, item_pos.y + 1)
+        lequal(item.pos.x, item_pos.x)
+        lequal(item.pos.y, item_pos.y + 1)
 end)
 
 lrun("test Item.has_enchantment", function()
@@ -31,7 +32,7 @@ end)
 local function tally()
    print("=====")
    local count = 0
-   for _, i in Item.iter(5080, 5480) do
+   for _, i in ipairs(Inventory.map():as_table()) do
       print(i.basename)
       count = count + 1
    end

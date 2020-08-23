@@ -19,10 +19,9 @@ namespace elona::lua::api::modules::module_Enchantment
  * @tparam num id The enchantment ID.
  * @tparam num power The enchantment power.
  */
-void Enchantment_add(LuaItemHandle item, int id, int power)
+void Enchantment_add(const ItemRef& item, int id, int power)
 {
-    auto& item_ref = lua::ref<Item>(item);
-    enchantment_add(item_ref, id, power);
+    enchantment_add(item, id, power);
 }
 
 

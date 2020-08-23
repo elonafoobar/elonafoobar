@@ -12,6 +12,7 @@
 #include "ctrl_file.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_map.hpp"
+#include "debug.hpp"
 #include "deferred_event.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -21,6 +22,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/event_manager.hpp"
@@ -31,6 +33,7 @@
 #include "position.hpp"
 #include "quest.hpp"
 #include "save.hpp"
+#include "save_fs.hpp"
 #include "status_ailment.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -89,7 +92,7 @@ void _map_randsite()
             if (rnd(25) == 0)
             {
                 flt();
-                if (const auto item = itemcreate_extra_inv(173, *pos, 0))
+                if (const auto item = itemcreate_map_inv(173, *pos, 0))
                 {
                     item->own_state = 1;
                 }
@@ -98,7 +101,7 @@ void _map_randsite()
             if (rnd(100) == 0)
             {
                 flt();
-                if (const auto item = itemcreate_extra_inv(172, *pos, 0))
+                if (const auto item = itemcreate_map_inv(172, *pos, 0))
                 {
                     item->own_state = 1;
                     item->param1 = choice(isetgod);
@@ -139,25 +142,25 @@ void _map_randsite()
         if (rnd(3) == 0)
         {
             flt();
-            itemcreate_extra_inv(631, *pos, 0);
+            itemcreate_map_inv(631, *pos, 0);
             return;
         }
         if (rnd(15) == 0)
         {
             flt();
-            itemcreate_extra_inv(55, *pos, 0);
+            itemcreate_map_inv(55, *pos, 0);
             return;
         }
         if (rnd(20) == 0)
         {
             flt();
-            itemcreate_extra_inv(284, *pos, 0);
+            itemcreate_map_inv(284, *pos, 0);
             return;
         }
         if (rnd(15) == 0)
         {
             flt();
-            itemcreate_extra_inv(283, *pos, 0);
+            itemcreate_map_inv(283, *pos, 0);
             return;
         }
         if (rnd(18) == 0)
@@ -165,12 +168,12 @@ void _map_randsite()
             flt(calcobjlv(rnd_capped(cdata.player().level + 10)),
                 calcfixlv(Quality::good));
             flttypemajor = choice(fsetwear);
-            itemcreate_extra_inv(0, *pos, 0);
+            itemcreate_map_inv(0, *pos, 0);
             return;
         }
         flt(10);
         flttypeminor = 64100;
-        itemcreate_extra_inv(0, *pos, 0);
+        itemcreate_map_inv(0, *pos, 0);
         return;
     }
 }
@@ -269,7 +272,8 @@ void CellData::load_tile_grid(const std::vector<int>& tile_grid)
 
 void map_reload(const std::string& map_filename)
 {
-    fmapfile = (filesystem::dirs::map() / map_filename).generic_string();
+    fmapfile =
+        (filesystem::dirs::map() / fs::u8path(map_filename)).to_u8string();
     ctrl_file(FileOperation::map_load_map_obj_files);
 
     for (int y = 0; y < map_data.height; ++y)
@@ -285,15 +289,14 @@ void map_reload(const std::string& map_filename)
 
     mef_clear_all();
 
-    for (auto&& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (item.own_state == 1)
+        if (item->own_state == 1)
         {
-            if (the_item_db[itemid2int(item.id)]->category ==
+            if (the_item_db[itemid2int(item->id)]->category ==
                 ItemCategory::food)
             {
-                item.remove();
-                cell_refresh(item.position.x, item.position.y);
+                item->remove();
             }
         }
     }
@@ -310,12 +313,11 @@ void map_reload(const std::string& map_filename)
             {
                 flt();
                 if (const auto item =
-                        itemcreate_extra_inv(cmapdata(0, i), x, y, 0))
+                        itemcreate_map_inv(cmapdata(0, i), x, y, 0))
                 {
                     item->own_state = cmapdata(3, i);
                 }
             }
-            cell_refresh(x, y);
         }
     }
 }
@@ -634,30 +636,28 @@ static void _clear_material_spots()
 
 static void _modify_items_on_regenerate()
 {
-    for (auto&& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
         // Update tree of fruits.
-        if (item.id == ItemId::tree_of_fruits)
+        if (item->id == ItemId::tree_of_fruits)
         {
-            if (item.param1 < 10)
+            if (item->param1 < 10)
             {
-                item.param1 += 1;
-                item.image = 591;
-                cell_refresh(item.position.x, item.position.y);
+                item->param1 += 1;
+                item->image = 591;
             }
         }
 
         // Clear player-owned items on the ground.
         if (map_is_town_or_guild())
         {
-            if (item.own_state < 0)
+            if (item->own_state < 0)
             {
-                ++item.own_state;
+                ++item->own_state;
             }
-            if (item.own_state == 0)
+            if (item->own_state == 0)
             {
-                item.remove();
-                cell_refresh(item.position.x, item.position.y);
+                item->remove();
             }
         }
     }
@@ -668,6 +668,12 @@ static void _modify_characters_on_regenerate()
 {
     for (auto&& cnt : cdata.others())
     {
+        // TODO
+        if (cnt.state() == Character::State::empty)
+        {
+            continue;
+        }
+
         chara_clear_status_effects_b(cnt);
         if (cnt.state() != Character::State::alive)
         {
@@ -746,20 +752,20 @@ static void _grow_plants()
 
 static void _proc_generate_bard_items(Character& chara)
 {
-    if (!itemfind(chara.index, 60005, 1))
+    if (!itemfind(g_inv.for_chara(chara), 60005))
     {
         if (rnd(150) == 0)
         {
             // Stradivarius
             flt();
-            itemcreate_chara_inv(chara.index, 707, 0);
+            itemcreate_chara_inv(chara, 707, 0);
         }
         else
         {
             // Random instrument
             flt(calcobjlv(chara.level), calcfixlv());
             flttypeminor = 60005;
-            itemcreate_chara_inv(chara.index, 0, 0);
+            itemcreate_chara_inv(chara, 0, 0);
         }
     }
 }
@@ -768,7 +774,7 @@ static void _proc_generate_bard_items(Character& chara)
 static void _generate_bad_quality_item(Character& chara)
 {
     flt(calcobjlv(chara.level), calcfixlv(Quality::bad));
-    if (const auto item = itemcreate_chara_inv(chara.index, 0, 0))
+    if (const auto item = itemcreate_chara_inv(chara, 0, 0))
     {
         if (item->weight <= 0 || item->weight >= 4000)
         {
@@ -795,7 +801,7 @@ static void _restock_character_inventories()
         {
             supply_new_equipment(cnt);
         }
-        if (rnd(2) == 0 && inv_sum(cnt.index) < 8)
+        if (rnd(2) == 0 && inv_count(g_inv.for_chara(cnt)) < 8)
         {
             _generate_bad_quality_item(cnt);
         }
@@ -874,37 +880,35 @@ void map_proc_regen_and_update()
 
 void map_reload_noyel()
 {
-    for (auto&& item : inv.ground())
+    for (const auto& item : g_inv.ground())
     {
-        if (item.id == ItemId::shelter || item.id == ItemId::giants_shackle)
+        if (item->id == ItemId::shelter || item->id == ItemId::giants_shackle)
         {
             continue;
         }
-        item.remove();
-
-        cell_refresh(item.position.x, item.position.y);
+        item->remove();
     }
 
     if (area_data[game_data.current_map].christmas_festival)
     {
         flt();
-        if (const auto item = itemcreate_extra_inv(763, 29, 16, 0))
+        if (const auto item = itemcreate_map_inv(763, 29, 16, 0))
         {
             item->own_state = 1;
         }
         flt();
-        if (const auto item = itemcreate_extra_inv(686, 29, 16, 0))
+        if (const auto item = itemcreate_map_inv(686, 29, 16, 0))
         {
             item->own_state = 1;
         }
         flt();
-        if (const auto item = itemcreate_extra_inv(171, 29, 17, 0))
+        if (const auto item = itemcreate_map_inv(171, 29, 17, 0))
         {
             item->param1 = 6;
             item->own_state = 1;
         }
         flt();
-        if (const auto item = itemcreate_extra_inv(756, 29, 17, 0))
+        if (const auto item = itemcreate_map_inv(756, 29, 17, 0))
         {
             item->own_state = 5;
         }
@@ -1442,7 +1446,9 @@ TurnResult exit_map()
                     if (area_data[game_data.current_map].id ==
                         mdata_t::MapId::the_void)
                     {
-                        if (!itemfind(0, 742))
+                        if (!itemfind(
+                                g_inv.pc(),
+                                ItemId::license_of_the_void_explorer))
                         {
                             txt(i18n::s.get(
                                 "core.action.exit_map.not_permitted"));
@@ -1683,7 +1689,7 @@ TurnResult exit_map()
         }
         cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one =
             0;
-        if (chara.index != 0)
+        if (!chara.is_player())
         {
             if (chara.current_map != 0)
             {
@@ -1704,9 +1710,8 @@ TurnResult exit_map()
         // quest instance)
         prepare_charas_for_map_unload();
 
-        tmpload(filepathutil::u8path("mdata_" + mid + ".s2"));
         // delete all map-local data
-        if (fs::exists(filesystem::dirs::tmp() / (u8"mdata_"s + mid + u8".s2")))
+        if (save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
         {
             ctrl_file(FileOperation::map_delete);
         }
@@ -1751,7 +1756,7 @@ void prepare_charas_for_map_unload()
     for (int cnt = 0; cnt < 57; ++cnt)
     {
         cdata[cnt].activity.finish();
-        cdata[cnt].ai_item = ItemRef::null();
+        cdata[cnt].ai_item = nullptr;
     }
 
     // remove living adventurers from the map and set their states
@@ -2003,7 +2008,7 @@ void try_to_return()
         {
             f = 1;
         }
-        if (game_data.wizard)
+        if (debug_is_wizard())
         {
             if (area_data[i].can_return_to_if_wizard())
             {
@@ -2081,14 +2086,15 @@ void map_global_proc_travel_events(Character& chara)
             chara.activity.turn = chara.activity.turn * 5 / 10;
         }
         chara.activity.turn = chara.activity.turn * 100 /
-            (100 + game_data.seven_league_boot_effect + sdata(182, 0));
+            (100 + game_data.seven_league_boot_effect +
+             cdata.player().get_skill(182).level);
         return;
     }
     if (cdata.player().nutrition <= 5000)
     {
-        for (auto&& item : inv.for_chara(chara))
+        for (const auto& item : g_inv.for_chara(chara))
         {
-            if (the_item_db[itemid2int(item.id)]->category ==
+            if (the_item_db[itemid2int(item->id)]->category ==
                 ItemCategory::travelers_food)
             {
                 if (is_in_fov(chara))
@@ -2182,7 +2188,7 @@ void map_global_proc_travel_events(Character& chara)
 
 void sense_map_feats_on_move(Character& chara)
 {
-    if (chara.index != 0)
+    if (!chara.is_player())
         return;
 
     game_data.player_x_on_map_leave = -1;

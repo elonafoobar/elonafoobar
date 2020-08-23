@@ -1,0 +1,16 @@
+--- Functions for working with inventory.
+--  @usage local Inventory = ELONA.require("core.Inventory")
+module "Inventory"
+
+--- Gets the player's inventory.
+--
+--  @treturn LuaInventory The player's inventory.
+--  @function player
+function player() end
+
+--- Gets the map inventory. It contains all items on the ground in the current
+--  map.
+--
+--  @treturn LuaInventory The map inventory.
+--  @function map
+function map() end

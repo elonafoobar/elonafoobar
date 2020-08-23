@@ -655,7 +655,7 @@ int quest_generate()
             }
             flt(40, Quality::good);
             flttypemajor = choice(fsetcollect);
-            if (const auto item = itemcreate_chara_inv(n, 0, 0))
+            if (const auto item = itemcreate_chara_inv(cdata[n], 0, 0))
             {
                 i(0) = n;
                 i(1) = itemid2int(item->id);
@@ -777,10 +777,8 @@ int quest_generate()
         {
             rewardfix = 140 +
                 dist(
-                    area_data[game_data.current_map].position.x,
-                    area_data[game_data.current_map].position.y,
-                    area_data[p].position.x,
-                    area_data[p].position.y) *
+                    area_data[game_data.current_map].position,
+                    area_data[p].position) *
                     2;
             quest_data[rq].deadline_days = rnd(8) + 6;
             quest_data[rq].difficulty = clamp(
@@ -793,10 +791,8 @@ int quest_generate()
         {
             rewardfix = 130 +
                 dist(
-                    area_data[game_data.current_map].position.x,
-                    area_data[game_data.current_map].position.y,
-                    area_data[p].position.x,
-                    area_data[p].position.y) *
+                    area_data[game_data.current_map].position,
+                    area_data[p].position) *
                     2;
             quest_data[rq].deadline_days = rnd(5) + 2;
             quest_data[rq].difficulty = clamp(rewardfix / 10 + 1, 1, 40);
@@ -805,10 +801,8 @@ int quest_generate()
         {
             rewardfix = 80 +
                 dist(
-                    area_data[game_data.current_map].position.x,
-                    area_data[game_data.current_map].position.y,
-                    area_data[p].position.x,
-                    area_data[p].position.y) *
+                    area_data[game_data.current_map].position,
+                    area_data[p].position) *
                     2;
             quest_data[rq].deadline_days = rnd(8) + 6;
             quest_data[rq].difficulty = clamp(rewardfix / 20 + 1, 1, 40);
@@ -824,8 +818,8 @@ int quest_generate()
         (game_data.current_map == mdata_t::MapId::palmia && rnd(8) == 0))
     {
         quest_data[rq].difficulty = clamp(
-            rnd_capped(sdata(183, 0) + 10),
-            int(1.5 * std::sqrt(sdata(183, 0))) + 1,
+            rnd_capped(cdata.player().get_skill(183).level + 10),
+            int(1.5 * std::sqrt(cdata.player().get_skill(183).level)) + 1,
             cdata.player().fame / 1000 + 10);
         quest_data[rq].deadline_hours =
             (rnd(6) + 2) * 24 + game_data.date.hours();
@@ -920,10 +914,8 @@ int quest_generate()
             p = quest_data[i].originating_map_id;
             rewardfix = 70 +
                 dist(
-                    area_data[game_data.current_map].position.x,
-                    area_data[game_data.current_map].position.y,
-                    area_data[p].position.x,
-                    area_data[p].position.y) *
+                    area_data[game_data.current_map].position,
+                    area_data[p].position) *
                     2;
             if (p == 33 || game_data.current_map == mdata_t::MapId::noyel)
             {
@@ -1117,11 +1109,11 @@ void quest_exit_map()
 {
     if (game_data.executing_immediate_quest_type == 1006)
     {
-        for (auto&& item : inv.pc())
+        for (const auto& item : g_inv.pc())
         {
-            if (item.own_state == 4)
+            if (item->own_state == 4)
             {
-                item.remove();
+                item->remove();
             }
         }
         refresh_burden_state();
@@ -1381,7 +1373,7 @@ void quest_complete()
     if (p != 0)
     {
         flt();
-        itemcreate_extra_inv(54, cdata.player().position, p);
+        itemcreate_map_inv(54, cdata.player().position, p);
     }
     if (quest_data[rq].id == 1002)
     {
@@ -1396,14 +1388,14 @@ void quest_complete()
         p = 2 + (rnd(100) < rnd_capped(cdata.player().fame / 5000 + 1));
     }
     flt();
-    itemcreate_extra_inv(55, cdata.player().position, p);
+    itemcreate_map_inv(55, cdata.player().position, p);
     if (quest_data[rq].id == 1009)
     {
         if (quest_data[rq].extra_info_1 * 150 / 100 <
             quest_data[rq].extra_info_2)
         {
             flt();
-            itemcreate_extra_inv(
+            itemcreate_map_inv(
                 724,
                 cdata.player().position,
                 1 + quest_data[rq].extra_info_2 / 10);
@@ -1456,7 +1448,7 @@ void quest_complete()
             {
                 flttypemajor = quest_data[rq].reward_item_id;
             }
-            itemcreate_extra_inv(0, cdata.player().position, 0);
+            itemcreate_map_inv(0, cdata.player().position, 0);
         }
     }
     modify_karma(cdata.player(), 1);

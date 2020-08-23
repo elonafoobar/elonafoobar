@@ -963,7 +963,7 @@ void get_npc_talk(Character& chara)
             p = instr(buff, 0, u8"%BORED,"s + i18n::s.get("core.meta.tag"));
             break;
         }
-        if (chara.index < 16)
+        if (chara.is_player_or_ally())
         {
             p = instr(
                 buff, 0, u8"%ALLY_DEFAULT,"s + i18n::s.get("core.meta.tag"));
@@ -2575,18 +2575,19 @@ std::string txtitemoncell(int x, int y)
         if (item_index == 0)
             break;
 
-        auto& item = item_index < 0 ? inv.ground().at(0) /* TODO phantom ref */
-                                    : inv.ground().at(item_index - 1);
+        const auto item = item_index < 0
+            ? g_inv.ground().at(0) /* TODO phantom ref */
+            : g_inv.ground().at(item_index - 1);
         if (first)
         {
             first = false;
-            own_state = item.own_state;
+            own_state = item->own_state;
         }
         else
         {
             items_text += i18n::s.get("core.misc.and");
         }
-        items_text += itemname(item);
+        items_text += itemname(item.unwrap());
     }
     if (own_state <= 0)
     {
@@ -2859,7 +2860,7 @@ void txttargetnpc(int x, int y)
     dy_ = 0;
     font(14 - en * 2);
     if (!fov_los(cdata.player().position, {x, y}) ||
-        dist(cdata.player().position.x, cdata.player().position.y, x, y) >
+        dist(cdata.player().position, x, y) >
             cdata.player().vision_distance / 2)
     {
         bmes(
@@ -2883,11 +2884,7 @@ void txttargetnpc(int x, int y)
                 i18n::s.get(
                     "core.action.target.you_are_targeting",
                     cdata[i_],
-                    dist(
-                        cdata.player().position.x,
-                        cdata.player().position.y,
-                        cdata[i_].position.x,
-                        cdata[i_].position.y)),
+                    dist(cdata.player().position, cdata[i_].position)),
                 100,
                 windowh - inf_verh - 45 - dy_ * 20);
             ++dy_;

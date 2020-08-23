@@ -20,8 +20,7 @@ SoundData SoundDB::convert(const lua::ConfigTable& data, const std::string& id)
     if (!fs::exists(sound_file))
     {
         throw std::runtime_error(
-            id + ": Sound file doesn't exist: " +
-            filepathutil::to_utf8_path(sound_file));
+            id + ": Sound file doesn't exist: " + sound_file.to_u8string());
     }
 
     return SoundData{

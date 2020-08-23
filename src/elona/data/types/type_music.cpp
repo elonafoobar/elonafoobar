@@ -20,8 +20,7 @@ MusicData MusicDB::convert(const lua::ConfigTable& data, const std::string& id)
     if (!fs::exists(music_file))
     {
         throw std::runtime_error(
-            id + ": Music file doesn't exist: " +
-            filepathutil::to_utf8_path(music_file));
+            id + ": Music file doesn't exist: " + music_file.to_u8string());
     }
 
     return MusicData{
