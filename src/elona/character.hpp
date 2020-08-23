@@ -635,6 +635,11 @@ public:
         ar(_156);
         ar(_203);
         ar(target_position);
+        ar(name);
+        ar(alias);
+        ar(race);
+        ar(class_);
+        ar(talk);
         ar(_skills);
         /* clang-format on */
     }

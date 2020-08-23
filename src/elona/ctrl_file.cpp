@@ -61,52 +61,6 @@ void arrayfile_read(const std::string& fmode_str, const fs::path& filepath)
             ++itr;
         }
     }
-    else if (fmode_str == u8"cdatan1"s)
-    {
-        lines.resize(57 * 10);
-        auto itr = std::begin(lines);
-        for (int i = 0; i < 57; ++i)
-        {
-            cdata[i].name = *itr;
-            ++itr;
-            cdata[i].alias = *itr;
-            ++itr;
-            cdata[i].race = data::InstanceId{*itr};
-            ++itr;
-            cdata[i].class_ = data::InstanceId{*itr};
-            ++itr;
-            cdata[i].talk = *itr;
-            ++itr;
-            ++itr;
-            ++itr;
-            ++itr;
-            ++itr;
-            ++itr;
-        }
-    }
-    else if (fmode_str == u8"cdatan2"s)
-    {
-        lines.resize(188 * 10);
-        auto itr = std::begin(lines);
-        for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
-        {
-            cdata[i].name = *itr;
-            ++itr;
-            cdata[i].alias = *itr;
-            ++itr;
-            cdata[i].race = data::InstanceId{*itr};
-            ++itr;
-            cdata[i].class_ = data::InstanceId{*itr};
-            ++itr;
-            cdata[i].talk = *itr;
-            ++itr;
-            ++itr;
-            ++itr;
-            ++itr;
-            ++itr;
-            ++itr;
-        }
-    }
 }
 
 
@@ -132,38 +86,6 @@ void arrayfile_write(const std::string& fmode_str, const fs::path& filepath)
         for (int i = 0; i < 2; ++i)
         {
             out << mdatan(i) << std::endl;
-        }
-    }
-    else if (fmode_str == u8"cdatan1"s)
-    {
-        for (int i = 0; i < 57; ++i)
-        {
-            out << cdata[i].name << std::endl;
-            out << cdata[i].alias << std::endl;
-            out << cdata[i].race.get() << std::endl;
-            out << cdata[i].class_.get() << std::endl;
-            out << cdata[i].talk << std::endl;
-            out << std::endl;
-            out << std::endl;
-            out << std::endl;
-            out << std::endl;
-            out << std::endl;
-        }
-    }
-    else if (fmode_str == u8"cdatan2"s)
-    {
-        for (int i = ELONA_MAX_PARTY_CHARACTERS; i < ELONA_MAX_CHARACTERS; ++i)
-        {
-            out << cdata[i].name << std::endl;
-            out << cdata[i].alias << std::endl;
-            out << cdata[i].race.get() << std::endl;
-            out << cdata[i].class_.get() << std::endl;
-            out << cdata[i].talk << std::endl;
-            out << std::endl;
-            out << std::endl;
-            out << std::endl;
-            out << std::endl;
-            out << std::endl;
         }
     }
 
@@ -807,7 +729,6 @@ void fmode_7_8(bool read, const fs::path& dir)
         }
     }
 
-    arrayfile(read, u8"cdatan1", dir / u8"cdatan.s1");
     arrayfile(read, u8"qname", dir / u8"qname.s1");
 
     // TODO: Delete this line when the v1.0.0 stable is released!
@@ -962,8 +883,6 @@ void fmode_1_2(bool read)
         }
     }
 
-    arrayfile(
-        read, u8"cdatan2", dir / fs::u8path(u8"cdatan_"s + mid + u8".s2"));
     arrayfile(read, u8"mdatan", dir / fs::u8path(u8"mdatan_"s + mid + u8".s2"));
 
     lua::ModSerializer mod_serializer(*lua::lua);
@@ -1160,9 +1079,6 @@ void fmode_17()
             cdata[index].index = index;
         }
     }
-
-    arrayfile(
-        true, u8"cdatan2", dir / fs::u8path(u8"cdatan_"s + mid + u8".s2"));
 
     schedule_object_reference_resolution();
 }
