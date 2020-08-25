@@ -30,7 +30,6 @@ void UIMenuTownChart::update()
     windowshadow = 1;
 
     _city = area_data[game_data.current_map].quest_town_id;
-    lv = 0;
 
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -73,7 +72,7 @@ void UIMenuTownChart::draw()
             wy + 34);
         for (int cnt = 0;; ++cnt)
         {
-            if (pochart(j0, n, lv) == 0 || cnt == 0)
+            if (pochart(j0, n, 0) == 0 || cnt == 0)
             {
                 if (cnt != 0)
                 {
@@ -83,7 +82,7 @@ void UIMenuTownChart::draw()
                 i = 0;
                 for (int cnt = 0; cnt < 10; ++cnt)
                 {
-                    if (pochart(cnt, n, lv) != 0)
+                    if (pochart(cnt, n, 0) != 0)
                     {
                         ++i;
                     }
@@ -96,7 +95,7 @@ void UIMenuTownChart::draw()
             }
             x = wx + (ww - 70) / (i + 1) * (j0 + 1);
             elona::draw("deco_politics_b", x - 26, y - 3);
-            p = pochart(j0, n, lv);
+            p = pochart(j0, n, 0);
             key_list(cnt) = key_select(cnt);
             ++keyrange;
             display_key(x - 30, y + 21, cnt);

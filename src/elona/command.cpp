@@ -476,7 +476,8 @@ optional<TurnResult> use_gene_machine()
 
     if (cdata[gene_chara_index].level > cdata[original_character].level)
     {
-        lv = (cdata[gene_chara_index].level - cdata[original_character].level) /
+        const auto lv =
+            (cdata[gene_chara_index].level - cdata[original_character].level) /
                 2 +
             1;
         for (int cnt = 0, cnt_end = (lv); cnt < cnt_end; ++cnt)
