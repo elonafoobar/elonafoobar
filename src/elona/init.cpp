@@ -688,12 +688,6 @@ void init()
 
 void initialize_post_data()
 {
-    DIM4(pochart, 10, 10, 10);
-    pochart(0, 0, 0) = 2;
-    pochart(0, 1, 0) = 3;
-    pochart(1, 1, 0) = 4;
-    pochart(0, 2, 0) = 5;
-    pochart(1, 2, 0) = 6;
     DIM3(podata, 300, 20);
 }
 

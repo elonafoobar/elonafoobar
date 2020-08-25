@@ -56,7 +56,6 @@ ELONA_EXTERN(int firstautoturn);
 ELONA_EXTERN(int racount);
 ELONA_EXTERN(elona_vector1<std::string> matdesc);
 ELONA_EXTERN(std::string nquestdate);
-ELONA_EXTERN(elona_vector3<int> pochart);
 ELONA_EXTERN(elona_vector2<int> podata);
 ELONA_EXTERN(int refreshmode);
 ELONA_EXTERN(bool quest_teleport);
