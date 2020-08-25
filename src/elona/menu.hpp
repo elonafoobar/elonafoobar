@@ -10,6 +10,7 @@
 namespace elona
 {
 
+enum class RandomTitleType;
 enum class TurnResult;
 struct Character;
 struct Item;
@@ -84,7 +85,17 @@ bool menu_character_sheet_character_making();
 optional<int> menu_character_sheet_trainer(bool is_training);
 void menu_character_sheet_investigate(Character& ally);
 
-int select_alias(int);
+
+
+struct SelectAliasResult
+{
+    int seed;
+    std::string alias;
+};
+
+optional<SelectAliasResult> select_alias(RandomTitleType type);
+
+
 MenuResult menu_feats();
 MenuResult menu_feats_character_making();
 void deco_traits_menu();

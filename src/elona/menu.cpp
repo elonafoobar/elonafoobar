@@ -1285,25 +1285,20 @@ void list_adventurers()
     ui::UIMenuAdventurers().show();
 }
 
-int select_alias(int val0)
+
+
+optional<SelectAliasResult> select_alias(RandomTitleType type)
 {
-    auto result = ui::UIMenuAlias(val0).show();
+    const auto result = ui::UIMenuAlias(static_cast<int>(type)).show();
 
     if (result.canceled)
     {
-        return 0;
+        return none;
     }
-
-    if (val0 == 3)
-    {
-        return result.value->seed;
-    }
-    else
-    {
-        cmaka = result.value->alias;
-        return 1;
-    }
+    return SelectAliasResult{result.value->seed, result.value->alias};
 }
+
+
 
 void show_city_chart()
 {
