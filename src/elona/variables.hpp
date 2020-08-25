@@ -143,7 +143,6 @@ ELONA_EXTERN(int mousey);
 ELONA_EXTERN(int noaggrorefresh);
 
 ELONA_EXTERN(elona_vector1<int> arenaop);
-ELONA_EXTERN(elona_vector1<int> commark);
 ELONA_EXTERN(elona_vector1<int> cyclemax);
 ELONA_EXTERN(elona_vector1<int> deck);
 ELONA_EXTERN(elona_vector1<int> deliver);
