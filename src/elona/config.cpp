@@ -109,13 +109,6 @@ void foobar_show_fps(const bool&)
 
 
 
-void game_default_save(const std::string& value)
-{
-    elona::defload = value;
-}
-
-
-
 void screen_fullscreen(const std::string& value)
 {
     g_config.set_fullscreen(convert_to_fullscreen(value));
@@ -381,7 +374,6 @@ void bind_setters()
         "core.font.size_adjustment", &setters::font_size_adjustment);
     conf.bind_setter(
         "core.font.vertical_offset", &setters::font_vertical_offset);
-    conf.bind_setter("core.game.default_save", &setters::game_default_save);
     conf.bind_setter("core.foobar.show_fps", &setters::foobar_show_fps);
     conf.bind_setter("core.screen.fullscreen", &setters::screen_fullscreen);
 

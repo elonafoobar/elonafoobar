@@ -54,27 +54,21 @@ void _start_elona()
         _main_loop();
         return;
     }
-    else if (defload != ""s)
+
+    auto default_save = config_get<std::string>("core.game.default_save");
+    if (!default_save.empty())
     {
-        if (!SaveHeader::exists(filesystem::dirs::save(defload)))
+        if (fs::exists(filesystem::dirs::save(default_save)))
         {
-            if (SaveHeader::exists(filesystem::dirs::save(u8"sav_" + defload)))
-            {
-                // TODO: Delete it when v1.0.0 stable is released.
-                defload = u8"sav_"s + defload;
-            }
-            else
-            {
-                defload = "";
-            }
+            playerid = default_save;
+            mode = 3;
+            initialize_game();
+            _main_loop();
+            return;
         }
-        if (defload == ""s)
+        else if (fs::exists(filesystem::dirs::save(u8"save_" + default_save)))
         {
-            dialog(u8"Invalid defLoadFolder. name"s);
-        }
-        else
-        {
-            playerid = defload;
+            playerid = u8"save_"s + default_save;
             mode = 3;
             initialize_game();
             _main_loop();
