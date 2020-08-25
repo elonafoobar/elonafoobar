@@ -19,6 +19,7 @@
 #include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "keybind/keybind.hpp"
 #include "lua_env/interface.hpp"
 #include "map_cell.hpp"
 #include "message.hpp"
@@ -365,7 +366,8 @@ void window_recipe(
         y + height - 49 - height % 8,
         {234, 220, 188});
     s_(0) = u8"Page."s + (rppage + 1) + u8"/"s + (rppage(1) + 1);
-    s_(1) = ""s + key_prev + u8","s + key_next + ""s +
+    s_(1) = keybind_get_bound_key_name("northwest") + "," +
+        keybind_get_bound_key_name("northeast") + ""s +
         i18n::s.get("core.blending.recipe.hint");
     if (step == -1)
     {

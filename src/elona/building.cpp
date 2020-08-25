@@ -21,6 +21,7 @@
 #include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "keybind/keybind.hpp"
 #include "lua_env/lua_env.hpp"
 #include "magic.hpp"
 #include "map.hpp"
@@ -735,7 +736,7 @@ void show_home_value()
     snd("core.pop2");
     pagesize = 0;
     keyrange = 0;
-    key_list = key_cancel;
+    key_list = keybind_get_bound_key_name("cancel");
 
     windowshadow = 1;
     ui_display_window(

@@ -4,7 +4,10 @@
 #include "../data/types/type_asset.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
+#include "../keybind/keybind.hpp"
 #include "../lua_env/interface.hpp"
+
+
 
 namespace elona
 {
@@ -42,7 +45,7 @@ bool UIMenuBook::init()
     cs = 0;
     listmax = noteinfo();
     keyrange = 0;
-    key_list(0) = key_enter;
+    key_list(0) = keybind_get_bound_key_name("enter");
 
     return true;
 }

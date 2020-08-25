@@ -30,7 +30,7 @@ bool UIMenuItemDesc::init()
 
 void UIMenuItemDesc::update()
 {
-    key_list = key_enter;
+    key_list = keybind_get_bound_key_name("enter");
     keyrange = 0;
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;

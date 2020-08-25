@@ -214,13 +214,16 @@ namespace elona
 void text_set()
 {
     strhint1 = i18n::s.get("core.ui.hint.cursor");
-    strhint2 = ""s + key_pageup + u8","s + key_pagedown +
+    strhint2 = keybind_get_bound_key_name("next_page") + "," +
+        keybind_get_bound_key_name("previous_page") +
         i18n::s.get("core.ui.hint.page");
     strhint3 = i18n::s.get("core.ui.hint.close");
     strhint3b = i18n::s.get("core.ui.hint.back");
     strhint4 = i18n::s.get("core.ui.hint.enter");
-    strhint5 = ""s + key_identify + i18n::s.get("core.ui.hint.known_info");
-    strhint5b = ""s + key_mode + i18n::s.get("core.ui.hint.mode");
+    strhint5 = keybind_get_bound_key_name("identify") +
+        i18n::s.get("core.ui.hint.known_info");
+    strhint5b = keybind_get_bound_key_name("switch_mode") +
+        i18n::s.get("core.ui.hint.mode");
     strhint7 = i18n::s.get("core.ui.hint.shortcut");
 
     SDIM4(_melee, 20, 3, 8);
@@ -751,7 +754,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                 {
                     break;
                 }
-                key_list(cnt) = key_enter;
+                key_list(cnt) = keybind_get_bound_key_name("enter");
                 ++keyrange;
             }
         }
@@ -1015,7 +1018,7 @@ void change_appearance_equipment(Character& chara)
         {
             break;
         }
-        key_list(cnt) = key_enter;
+        key_list(cnt) = keybind_get_bound_key_name("enter");
         ++keyrange;
     }
 

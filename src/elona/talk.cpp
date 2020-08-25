@@ -11,6 +11,7 @@
 #include "input.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "keybind/keybind.hpp"
 #include "macro.hpp"
 #include "map.hpp"
 #include "menu.hpp"
@@ -581,7 +582,7 @@ int talk_window_query(
     optional<std::pair<int, int>> impress_interest)
 {
     cs_bk = -1;
-    key_list = key_enter;
+    key_list = keybind_get_bound_key_name("enter");
     for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
     {
         key_list(cnt) = key_select(cnt);

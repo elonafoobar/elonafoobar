@@ -266,7 +266,7 @@ void UIMenuCharacterSheet::_draw_title(CharacterSheetOperation op)
     {
         if (page != 0)
         {
-            title += ""s + key_mode2 + u8" ["s +
+            title += keybind_get_bound_key_name("switch_mode_2") + " [" +
                 i18n::s.get("core.ui.chara_sheet.hint.track_skill") + u8"]"s;
         }
     }
@@ -708,7 +708,7 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
 void UIMenuCharacterSheet::_draw_first_page(int& _cs_buff, int& _cs_buffmax)
 {
     keyrange = 0;
-    key_list = key_enter;
+    key_list = keybind_get_bound_key_name("enter");
 
     _draw_first_page_topics();
     _draw_first_page_portrait();

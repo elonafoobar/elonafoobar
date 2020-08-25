@@ -1041,8 +1041,9 @@ void draw_menu(bool dropcontinue)
         }
     }
     bmes(
-        ""s + key_prev + u8","s + key_next + u8",Tab,Ctrl+Tab "s + "[" +
-            i18n::s.get("core.ui.inv.window.change") + "]",
+        keybind_get_bound_key_name("northwest") + "," +
+            keybind_get_bound_key_name("northeast") + u8",Tab,Ctrl+Tab "s +
+            "[" + i18n::s.get("core.ui.inv.window.change") + "]",
         x + 260,
         y + 32);
 }
@@ -1059,14 +1060,14 @@ void draw_window(optional_ref<Character> inventory_owner, bool dropcontinue)
     }
     if (invctrl == 1)
     {
-        key_help += ""s + key_mode2 + u8" "s + "[" +
+        key_help += keybind_get_bound_key_name("switch_mode_2") + " [" +
             i18n::s.get("core.ui.inv.window.tag.no_drop") + "]";
     }
     if (invctrl == 2)
     {
         if (!dropcontinue)
         {
-            key_help += ""s + key_mode2 + u8" "s + "[" +
+            key_help += keybind_get_bound_key_name("switch_mode_2") + " [" +
                 i18n::s.get("core.ui.inv.window.tag.multi_drop") + "]";
         }
     }

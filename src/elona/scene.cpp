@@ -8,6 +8,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
+#include "keybind/keybind.hpp"
 #include "lua_env/interface.hpp"
 #include "message.hpp"
 #include "randomgen.hpp"
@@ -96,7 +97,7 @@ void do_play_scene()
                 }
             }
             cs = 0;
-            key_list = key_enter;
+            key_list = keybind_get_bound_key_name("enter");
             scidxtop = scidx;
             scidxtop = 0;
             val0 = 0;
@@ -423,7 +424,7 @@ void conquer_lesimas()
         wy + 246,
         i18n::s.get("core.win.window.your_journey_continues"));
     redraw();
-    key_list = key_enter;
+    key_list = keybind_get_bound_key_name("enter");
     keyrange = 0;
 
     while (1)

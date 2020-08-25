@@ -154,18 +154,19 @@ void UIMenuMods::_draw_key(int cnt, int index)
 
 void UIMenuMods::_draw_window()
 {
-    auto hint = ""s + key_enter + " " +
+    auto hint = keybind_get_bound_key_name("enter") + " " +
         i18n::s.get("core.main_menu.mod_list.hint.toggle") + "  " +
-        key_identify + " " + i18n::s.get("core.main_menu.mod_list.hint.info");
+        keybind_get_bound_key_name("identify") + " " +
+        i18n::s.get("core.main_menu.mod_list.hint.info");
 
     if (_is_download)
     {
-        hint += "  " + key_mode + " " +
+        hint += "  " + keybind_get_bound_key_name("switch_mode") + " " +
             i18n::s.get("core.main_menu.mod_list.hint.installed");
     }
     else
     {
-        hint += "  " + key_mode + " " +
+        hint += "  " + keybind_get_bound_key_name("switch_mode") + " " +
             i18n::s.get("core.main_menu.mod_list.hint.download");
     }
 
