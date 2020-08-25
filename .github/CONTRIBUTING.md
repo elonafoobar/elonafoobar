@@ -3,7 +3,7 @@ Thank you for contributing!
 
 # Bug report or new feature proposal
 
-Create a new issue from [here](https://github.com/elonafoobar/elonafoobar/issues/new).
+Create a new issue from [here](https://github.com/elonafoobar/elonafoobar/issues/new/choose).
 
 
 
