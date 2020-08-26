@@ -387,11 +387,10 @@ bool grant_special_wishing(const std::string& wish)
                  wish, "alias", {"aka", "title", "name", "alias"}))
     {
         txt(i18n::s.get("core.wish.wish_alias.what_is_your_new_alias"));
-        int stat = select_alias(0);
-        if (stat == 1)
+        if (const auto result = select_alias(RandomTitleType::character))
         {
-            txt(i18n::s.get("core.wish.wish_alias.new_alias", cmaka));
-            cdata.player().alias = cmaka;
+            txt(i18n::s.get("core.wish.wish_alias.new_alias", result->alias));
+            cdata.player().alias = result->alias;
         }
         else
         {

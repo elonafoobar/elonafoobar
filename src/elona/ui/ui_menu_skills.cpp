@@ -7,6 +7,7 @@
 #include "../keybind/keybind.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
+#include "menu_cursor_history.hpp"
 
 namespace elona
 {
@@ -45,8 +46,13 @@ bool UIMenuSkills::init()
     pagesize = 16;
     cs = 0;
     cs_bk = -1;
-    cs = commark(0) % 1000;
-    page = commark(0) / 1000;
+
+    if (const auto cursor =
+            MenuCursorHistory::instance().restore("core.spact_menu"))
+    {
+        cs = cursor->position();
+        page = cursor->page();
+    }
 
     snd("core.skill");
     asset_load("deco_skill");
@@ -221,7 +227,7 @@ void UIMenuSkills::_assign_shortcut(int sc_, int skill_id)
 optional<UIMenuSkills::ResultType> UIMenuSkills::on_key(
     const std::string& action)
 {
-    commark(0) = page * 1000 + cs;
+    MenuCursorHistory::instance().save("core.spact_menu", MenuCursor{page, cs});
 
     if (auto selected = get_selected_item())
     {

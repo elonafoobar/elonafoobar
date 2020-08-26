@@ -229,7 +229,6 @@ void initialize_elona()
     DIM3(npcmemory, 2, 800);
     DIM2(recipememory, 1200);
     DIM2(invmark, 35);
-    DIM2(commark, 3);
     DIM2(feat, 5);
 
     DIM3(pcc, 30, 20);
@@ -324,7 +323,6 @@ void initialize_elona()
     DIM3(slight, inf_screenw + 4, inf_screenh + 4);
 
     keybind_regenerate_key_select();
-    keybind_regenerate_key_names();
 
     gsel(0);
     gmode(2);
@@ -439,24 +437,24 @@ void initialize_elona()
     DIM2(invicon, 40);
     SDIM3(invkey, 4, 40);
     invkey(0) = "";
-    invkey(1) = ""s + key_inventory;
-    invkey(2) = ""s + key_drop;
+    invkey(1) = keybind_get_bound_key_name("inventory");
+    invkey(2) = keybind_get_bound_key_name("drop");
     invkey(3) = "";
     invkey(4) = "";
-    invkey(5) = ""s + key_eat;
+    invkey(5) = keybind_get_bound_key_name("eat");
     invkey(6) = "";
-    invkey(7) = ""s + key_read;
-    invkey(8) = ""s + key_drink;
-    invkey(9) = ""s + key_zap;
+    invkey(7) = keybind_get_bound_key_name("read");
+    invkey(8) = keybind_get_bound_key_name("drink");
+    invkey(9) = keybind_get_bound_key_name("zap");
     invkey(10) = "";
     invkey(11) = "";
     invkey(12) = "";
     invkey(13) = "";
-    invkey(14) = ""s + key_use;
-    invkey(15) = ""s + key_open;
+    invkey(14) = keybind_get_bound_key_name("use");
+    invkey(15) = keybind_get_bound_key_name("open");
     invkey(16) = "";
-    invkey(17) = ""s + key_dip;
-    invkey(26) = ""s + key_throw;
+    invkey(17) = keybind_get_bound_key_name("dip");
+    invkey(26) = keybind_get_bound_key_name("throw");
     invicon(0) = -1;
     invicon(1) = 7;
     invicon(2) = 8;
@@ -688,12 +686,6 @@ void init()
 
 void initialize_post_data()
 {
-    DIM4(pochart, 10, 10, 10);
-    pochart(0, 0, 0) = 2;
-    pochart(0, 1, 0) = 3;
-    pochart(1, 1, 0) = 4;
-    pochart(0, 2, 0) = 5;
-    pochart(1, 2, 0) = 6;
     DIM3(podata, 300, 20);
 }
 

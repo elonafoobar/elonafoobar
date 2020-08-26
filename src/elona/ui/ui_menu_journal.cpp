@@ -20,7 +20,7 @@ bool UIMenuJournal::init()
     pagesize = 40;
     cs = 0;
     keyrange = 0;
-    key_list(0) = key_enter;
+    key_list(0) = keybind_get_bound_key_name("enter");
     buff = newsbuff;
     if (newsbuff == ""s)
     {

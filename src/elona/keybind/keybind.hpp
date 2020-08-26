@@ -114,7 +114,9 @@ std::unordered_set<ActionCategory> keybind_conflicting_action_categories(
     ActionCategory action_category);
 
 void keybind_regenerate_key_select();
-void keybind_regenerate_key_names();
+
+// for key hint
+std::string keybind_get_bound_key_name(const std::string& action);
 
 
 /**

@@ -8,6 +8,7 @@
 #include "../keybind/keybind.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
+#include "menu_cursor_history.hpp"
 
 namespace elona
 {
@@ -36,8 +37,13 @@ bool UIMenuSpells::init()
     pagesize = 16;
     cs = 0;
     cs_bk = -1;
-    cs = commark(1) % 1000;
-    page = commark(1) / 1000;
+
+    if (const auto cursor =
+            MenuCursorHistory::instance().restore("core.spell_menu"))
+    {
+        cs = cursor->position();
+        page = cursor->page();
+    }
 
     snd("core.spell");
     asset_load("deco_spell");
@@ -221,7 +227,7 @@ void UIMenuSpells::_assign_shortcut(int sc_, int spell_id)
 optional<UIMenuSpells::ResultType> UIMenuSpells::on_key(
     const std::string& action)
 {
-    commark(1) = page * 1000 + cs;
+    MenuCursorHistory::instance().save("core.spell_menu", MenuCursor{page, cs});
 
     if (auto selected = get_selected_item())
     {

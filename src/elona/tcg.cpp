@@ -10,6 +10,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
+#include "keybind/keybind.hpp"
 #include "random.hpp"
 #include "save_fs.hpp"
 #include "variables.hpp"
@@ -2267,7 +2268,8 @@ void tcg_draw_selection()
     font(13 - en * 2);
     mes(basex_at_tcg + 160,
         basey_at_tcg + 510,
-        ""s + key_next + u8","s + key_prev +
+        keybind_get_bound_key_name("northeast") + "," +
+            keybind_get_bound_key_name("northwest") +
             i18n::s.get("core.tcg.select.hint"),
         {255, 255, 255});
     mes(basex_at_tcg + 700,

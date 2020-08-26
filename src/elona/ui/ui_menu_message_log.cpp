@@ -94,7 +94,7 @@ bool UIMenuMessageLog::init()
 {
 
     windowshadow = 1;
-    key_list(0) = key_enter;
+    key_list(0) = keybind_get_bound_key_name("enter");
     keyrange = 0;
     pagesize = 0;
     wx = inf_msgx - 2;

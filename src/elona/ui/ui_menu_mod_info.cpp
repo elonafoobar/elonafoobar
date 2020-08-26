@@ -16,7 +16,7 @@ namespace ui
 
 bool UIMenuModInfo::init()
 {
-    key_list(0) = key_enter;
+    key_list(0) = keybind_get_bound_key_name("enter");
     keyrange = 0;
     pagesize = 1;
     listmax = 0;

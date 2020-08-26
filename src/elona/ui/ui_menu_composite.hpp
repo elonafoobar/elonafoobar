@@ -1,10 +1,14 @@
 #pragma once
+
 #include <vector>
 
 #include "../audio.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
+#include "../keybind/keybind.hpp"
 #include "ui_menu.hpp"
+
+
 
 namespace elona
 {
@@ -201,7 +205,8 @@ private:
         }
 
         bmes(
-            ""s + key_prev + u8","s + key_next + u8",Tab,Ctrl+Tab ["s +
+            keybind_get_bound_key_name("northwest") + "," +
+                keybind_get_bound_key_name("northeast") + u8",Tab,Ctrl+Tab ["s +
                 i18n::s.get("core.ui.menu.change") + u8"]"s,
             x + width - 215,
             y + 28);

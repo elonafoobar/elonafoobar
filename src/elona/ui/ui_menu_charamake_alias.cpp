@@ -63,7 +63,7 @@ void UIMenuCharamakeAlias::_draw_window()
 {
     ui_display_window(
         i18n::s.get("core.chara_making.select_alias.title"),
-        strhint3b + key_mode2 + " [" +
+        strhint3b + keybind_get_bound_key_name("switch_mode_2") + " [" +
             i18n::s.get("core.chara_making.select_alias.lock_alias") + "]",
         (windoww - 400) / 2 + inf_screenx,
         winposy(458, 1) + 20,

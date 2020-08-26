@@ -212,57 +212,10 @@ std::vector<std::string> KeybindManager::find_conflicts(
 
 
 
-// TODO: delete this.
-void keybind_regenerate_key_names()
+std::string keybind_get_bound_key_name(const std::string& action)
 {
     auto& km = KeybindManager::instance();
-
-    // clang-format off
-    key_prev      = _binding_name(km, "northwest");
-    key_next      = _binding_name(km, "northeast");
-    key_wait      = _binding_name(km, "wait");
-    key_cancel    = _binding_name(km, "cancel");
-    key_pageup    = _binding_name(km, "next_page");
-    key_pagedown  = _binding_name(km, "previous_page");
-    key_mode      = _binding_name(km, "switch_mode");
-    key_mode2     = _binding_name(km, "switch_mode_2");
-    key_zap       = _binding_name(km, "zap");
-    key_inventory = _binding_name(km, "inventory");
-    key_get       = _binding_name(km, "get");
-    key_drop      = _binding_name(km, "drop");
-    key_charainfo = _binding_name(km, "chara_info");
-    key_enter     = _binding_name(km, "enter");
-    key_eat       = _binding_name(km, "eat");
-    key_wear      = _binding_name(km, "wear");
-    key_cast      = _binding_name(km, "cast");
-    key_drink     = _binding_name(km, "drink");
-    key_read      = _binding_name(km, "read");
-    key_fire      = _binding_name(km, "fire");
-    key_godown    = _binding_name(km, "go_down");
-    key_goup      = _binding_name(km, "go_up");
-    key_save      = _binding_name(km, "save");
-    key_search    = _binding_name(km, "search");
-    key_interact  = _binding_name(km, "interact");
-    key_identify  = _binding_name(km, "identify");
-    key_skill     = _binding_name(km, "skill");
-    key_close     = _binding_name(km, "close");
-    key_target    = _binding_name(km, "target");
-    key_dig       = _binding_name(km, "dig");
-    key_use       = _binding_name(km, "use");
-    key_bash      = _binding_name(km, "bash");
-    key_open      = _binding_name(km, "open");
-    key_dip       = _binding_name(km, "dip");
-    key_pray      = _binding_name(km, "pray");
-    key_offer     = _binding_name(km, "offer");
-    key_journal   = _binding_name(km, "journal");
-    key_material  = _binding_name(km, "material");
-    key_trait     = _binding_name(km, "trait");
-    key_give      = _binding_name(km, "give");
-    key_throw     = _binding_name(km, "throw");
-    key_ammo      = _binding_name(km, "ammo");
-    key_help      = _binding_name(km, "help");
-    key_msglog    = _binding_name(km, "message_log");
-    // clang-format on
+    return _binding_name(km, action);
 }
 
 } // namespace elona

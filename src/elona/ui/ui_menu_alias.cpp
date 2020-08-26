@@ -88,16 +88,8 @@ optional<UIMenuAlias::ResultType> UIMenuAlias::on_key(const std::string& action)
         else
         {
             UIMenuAliasResult res;
-
-            if (_alias_type == 3)
-            {
-                res.seed = *selected;
-            }
-            else
-            {
-                res.alias = listn(0, *selected);
-            }
-
+            res.seed = list(1, *selected);
+            res.alias = listn(0, *selected);
             return UIMenuAlias::Result::finish(res);
         }
     }

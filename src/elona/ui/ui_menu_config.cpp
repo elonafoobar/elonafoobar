@@ -5,8 +5,11 @@
 #include "../config_menu.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
+#include "../keybind/keybind.hpp"
 #include "../menu.hpp"
 #include "simple_prompt.hpp"
+
+
 
 namespace elona
 {
@@ -91,7 +94,8 @@ void UIMenuConfig::_draw_window(const std::string& title, int width, int height)
     }
     ui_display_window(
         title,
-        strhint3 + key_mode2 + i18n::s.get("core.ui.hint.help"),
+        strhint3 + keybind_get_bound_key_name("switch_mode_2") +
+            i18n::s.get("core.ui.hint.help"),
         (windoww - width) / 2 + inf_screenx,
         y,
         width,
@@ -145,7 +149,7 @@ void UIMenuConfig::_draw_keys(bool is_root_menu)
         }
         else
         {
-            key_list(cnt) = key_cancel;
+            key_list(cnt) = keybind_get_bound_key_name("cancel");
             ++keyrange;
         }
     }

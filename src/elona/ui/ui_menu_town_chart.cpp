@@ -30,7 +30,6 @@ void UIMenuTownChart::update()
     windowshadow = 1;
 
     _city = area_data[game_data.current_map].quest_town_id;
-    lv = 0;
 
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -46,6 +45,12 @@ void UIMenuTownChart::update()
 
 void UIMenuTownChart::draw()
 {
+    static const std::vector<std::vector<int>> posts{
+        {2},
+        {3, 4},
+        {5, 6},
+    };
+
     ui_display_window(
         i18n::s.get("core.ui.town_chart.title"),
         strhint3b,
@@ -54,8 +59,6 @@ void UIMenuTownChart::draw()
         580,
         400);
     keyrange = 0;
-    int j0 = 0;
-    int n = 0;
     cs_listbk();
     if (area_data[game_data.current_map].quest_town_id == 0 ||
         game_data.current_dungeon_level != 1)
@@ -71,45 +74,48 @@ void UIMenuTownChart::draw()
                 mapname(area_data[game_data.current_map].id)),
             wx + 40,
             wy + 34);
-        for (int cnt = 0;; ++cnt)
+
+        size_t post_count = 0;
+        size_t row_count = 0;
+        for (const auto& row : posts)
         {
-            if (pochart(j0, n, lv) == 0 || cnt == 0)
+            size_t column_count = 0;
+            for (const auto& column : row)
             {
-                if (cnt != 0)
+                const auto x =
+                    wx + (ww - 70) / (row.size() + 1) * (column_count + 1);
+                const auto y = wy + 70 + row_count * 55;
+
+                elona::draw("deco_politics_b", x - 26, y - 3);
+
+                key_list(post_count) = key_select(post_count);
+                ++keyrange;
+                display_key(x - 30, y + 21, post_count);
+
+                font(12 + sizefix - en * 2);
+                bmes(
+                    i18n::s.get_enum("core.politics.post", column),
+                    x - 2,
+                    y + jp * 2);
+
+                font(14 - en * 2);
+                std::string assigned;
+                if (podata(post_count, _city) == 0)
                 {
-                    ++n;
+                    assigned = i18n::s.get("core.ui.town_chart.empty");
                 }
-                j0 = 0;
-                i = 0;
-                for (int cnt = 0; cnt < 10; ++cnt)
-                {
-                    if (pochart(cnt, n, lv) != 0)
-                    {
-                        ++i;
-                    }
-                }
-                if (i == 0)
-                {
-                    break;
-                }
-                y = wy + 70 + n * 55;
+                cs_list(
+                    cs == static_cast<int>(post_count),
+                    assigned,
+                    x - 2,
+                    y + 20);
+
+                ++column_count;
+                ++post_count;
             }
-            x = wx + (ww - 70) / (i + 1) * (j0 + 1);
-            elona::draw("deco_politics_b", x - 26, y - 3);
-            p = pochart(j0, n, lv);
-            key_list(cnt) = key_select(cnt);
-            ++keyrange;
-            display_key(x - 30, y + 21, cnt);
-            font(12 + sizefix - en * 2);
-            bmes(i18n::s.get_enum("core.politics.post", p), x - 2, y + jp * 2);
-            font(14 - en * 2);
-            if (podata(0 + cnt, _city) == 0)
-            {
-                s = i18n::s.get("core.ui.town_chart.empty");
-            }
-            cs_list(cs == cnt, s, x - 2, y + 20);
-            ++j0;
+            ++row_count;
         }
+
         if (keyrange != 0)
         {
             cs_bk = cs;

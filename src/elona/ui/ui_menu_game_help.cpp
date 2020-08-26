@@ -5,6 +5,7 @@
 #include "../audio.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
+#include "../keybind/keybind.hpp"
 
 
 
@@ -77,18 +78,30 @@ void UIMenuGameHelp::_draw_key_list()
             i18n::s.get("core.ui.manual.keys.item.title"), x + 18, y + 30);
 
         std::vector<KeyDescPair> keys{
-            {key_get, i18n::s.get("core.ui.manual.keys.item.get")},
-            {key_read, i18n::s.get("core.ui.manual.keys.item.read")},
-            {key_drop, i18n::s.get("core.ui.manual.keys.item.drop")},
-            {key_zap, i18n::s.get("core.ui.manual.keys.item.zap")},
-            {key_inventory, i18n::s.get("core.ui.manual.keys.item.examine")},
-            {key_use, i18n::s.get("core.ui.manual.keys.item.tool")},
-            {key_wear, i18n::s.get("core.ui.manual.keys.item.wear_wield")},
-            {key_dip, i18n::s.get("core.ui.manual.keys.item.blend")},
-            {key_eat, i18n::s.get("core.ui.manual.keys.item.eat")},
-            {key_throw, i18n::s.get("core.ui.manual.keys.item.throw")},
-            {key_drink, i18n::s.get("core.ui.manual.keys.item.quaff")},
-            {key_ammo, i18n::s.get("core.ui.manual.keys.item.ammo")},
+            {keybind_get_bound_key_name("get"),
+             i18n::s.get("core.ui.manual.keys.item.get")},
+            {keybind_get_bound_key_name("read"),
+             i18n::s.get("core.ui.manual.keys.item.read")},
+            {keybind_get_bound_key_name("drop"),
+             i18n::s.get("core.ui.manual.keys.item.drop")},
+            {keybind_get_bound_key_name("zap"),
+             i18n::s.get("core.ui.manual.keys.item.zap")},
+            {keybind_get_bound_key_name("inventory"),
+             i18n::s.get("core.ui.manual.keys.item.examine")},
+            {keybind_get_bound_key_name("use"),
+             i18n::s.get("core.ui.manual.keys.item.tool")},
+            {keybind_get_bound_key_name("wear"),
+             i18n::s.get("core.ui.manual.keys.item.wear_wield")},
+            {keybind_get_bound_key_name("dip"),
+             i18n::s.get("core.ui.manual.keys.item.blend")},
+            {keybind_get_bound_key_name("eat"),
+             i18n::s.get("core.ui.manual.keys.item.eat")},
+            {keybind_get_bound_key_name("throw"),
+             i18n::s.get("core.ui.manual.keys.item.throw")},
+            {keybind_get_bound_key_name("drink"),
+             i18n::s.get("core.ui.manual.keys.item.quaff")},
+            {keybind_get_bound_key_name("ammo"),
+             i18n::s.get("core.ui.manual.keys.item.ammo")},
         };
 
         int index = 0;
@@ -108,18 +121,30 @@ void UIMenuGameHelp::_draw_key_list()
             i18n::s.get("core.ui.manual.keys.action.title"), x + 18, y + 142);
 
         std::vector<KeyDescPair> keys{
-            {key_search, i18n::s.get("core.ui.manual.keys.action.search")},
-            {key_target, i18n::s.get("core.ui.manual.keys.action.target")},
-            {key_cast, i18n::s.get("core.ui.manual.keys.action.cast")},
-            {key_fire, i18n::s.get("core.ui.manual.keys.action.fire")},
-            {key_interact, i18n::s.get("core.ui.manual.keys.action.interact")},
-            {key_skill, i18n::s.get("core.ui.manual.keys.action.apply")},
-            {key_godown, i18n::s.get("core.ui.manual.keys.action.go_down")},
-            {key_bash, i18n::s.get("core.ui.manual.keys.action.bash")},
-            {key_goup, i18n::s.get("core.ui.manual.keys.action.go_up")},
-            {key_dig, i18n::s.get("core.ui.manual.keys.action.dig")},
-            {key_wait, i18n::s.get("core.ui.manual.keys.action.wait")},
-            {key_open, i18n::s.get("core.ui.manual.keys.action.open")},
+            {keybind_get_bound_key_name("search"),
+             i18n::s.get("core.ui.manual.keys.action.search")},
+            {keybind_get_bound_key_name("target"),
+             i18n::s.get("core.ui.manual.keys.action.target")},
+            {keybind_get_bound_key_name("cast"),
+             i18n::s.get("core.ui.manual.keys.action.cast")},
+            {keybind_get_bound_key_name("fire"),
+             i18n::s.get("core.ui.manual.keys.action.fire")},
+            {keybind_get_bound_key_name("interact"),
+             i18n::s.get("core.ui.manual.keys.action.interact")},
+            {keybind_get_bound_key_name("skill"),
+             i18n::s.get("core.ui.manual.keys.action.apply")},
+            {keybind_get_bound_key_name("go_down"),
+             i18n::s.get("core.ui.manual.keys.action.go_down")},
+            {keybind_get_bound_key_name("bash"),
+             i18n::s.get("core.ui.manual.keys.action.bash")},
+            {keybind_get_bound_key_name("go_up"),
+             i18n::s.get("core.ui.manual.keys.action.go_up")},
+            {keybind_get_bound_key_name("dig"),
+             i18n::s.get("core.ui.manual.keys.action.dig")},
+            {keybind_get_bound_key_name("wait"),
+             i18n::s.get("core.ui.manual.keys.action.wait")},
+            {keybind_get_bound_key_name("open"),
+             i18n::s.get("core.ui.manual.keys.action.open")},
         };
 
         int index = 0;
@@ -139,12 +164,18 @@ void UIMenuGameHelp::_draw_key_list()
             i18n::s.get("core.ui.manual.keys.info.title"), x + 18, y + 256);
 
         std::vector<KeyDescPair> keys{
-            {key_charainfo, i18n::s.get("core.ui.manual.keys.info.chara")},
-            {key_msglog, i18n::s.get("core.ui.manual.keys.info.log")},
-            {key_journal, i18n::s.get("core.ui.manual.keys.info.journal")},
-            {key_material, i18n::s.get("core.ui.manual.keys.info.material")},
-            {key_help, i18n::s.get("core.ui.manual.keys.info.help")},
-            {key_trait, i18n::s.get("core.ui.manual.keys.info.feat")},
+            {keybind_get_bound_key_name("chara_info"),
+             i18n::s.get("core.ui.manual.keys.info.chara")},
+            {keybind_get_bound_key_name("message_log"),
+             i18n::s.get("core.ui.manual.keys.info.log")},
+            {keybind_get_bound_key_name("journal"),
+             i18n::s.get("core.ui.manual.keys.info.journal")},
+            {keybind_get_bound_key_name("material"),
+             i18n::s.get("core.ui.manual.keys.info.material")},
+            {keybind_get_bound_key_name("help"),
+             i18n::s.get("core.ui.manual.keys.info.help")},
+            {keybind_get_bound_key_name("trait"),
+             i18n::s.get("core.ui.manual.keys.info.feat")},
         };
 
         int index = 0;
@@ -164,11 +195,16 @@ void UIMenuGameHelp::_draw_key_list()
             i18n::s.get("core.ui.manual.keys.other.title"), x + 18, y + 328);
 
         std::vector<KeyDescPair> keys{
-            {key_save, i18n::s.get("core.ui.manual.keys.other.save")},
-            {key_close, i18n::s.get("core.ui.manual.keys.other.close")},
-            {key_pray, i18n::s.get("core.ui.manual.keys.other.pray")},
-            {key_give, i18n::s.get("core.ui.manual.keys.other.give")},
-            {key_offer, i18n::s.get("core.ui.manual.keys.other.offer")},
+            {keybind_get_bound_key_name("save"),
+             i18n::s.get("core.ui.manual.keys.other.save")},
+            {keybind_get_bound_key_name("close"),
+             i18n::s.get("core.ui.manual.keys.other.close")},
+            {keybind_get_bound_key_name("pray"),
+             i18n::s.get("core.ui.manual.keys.other.pray")},
+            {keybind_get_bound_key_name("give"),
+             i18n::s.get("core.ui.manual.keys.other.give")},
+            {keybind_get_bound_key_name("offer"),
+             i18n::s.get("core.ui.manual.keys.other.offer")},
         };
 
         int index = 0;

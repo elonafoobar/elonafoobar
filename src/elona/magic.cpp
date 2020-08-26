@@ -2371,19 +2371,17 @@ bool _magic_1145(Character& subject)
     assert(target_item_opt);
     const auto target_item = target_item_opt.unwrap();
     txt(i18n::s.get("core.magic.name.prompt"));
+
+    const auto result = select_alias(RandomTitleType::living_weapon);
+    if (!result)
     {
-        int stat = select_alias(3);
-        if (stat == 0)
-        {
-            obvious = 0;
-            randomize();
-            return true;
-        }
-        p = stat;
+        obvious = 0;
+        randomize();
+        return true;
     }
-    target_item->subname = list(1, p) + 40000;
+    target_item->subname = result->seed + 40000;
     randomize();
-    txt(i18n::s.get("core.magic.name.apply", listn(0, p)));
+    txt(i18n::s.get("core.magic.name.apply", result->alias));
     return true;
 }
 

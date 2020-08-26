@@ -35,6 +35,7 @@ namespace
 
 data::InstanceId cmrace;
 data::InstanceId cmclass;
+std::string cmaka;
 elona_vector1<int> cmstats;
 elona_vector1<int> cmlock;
 
