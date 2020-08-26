@@ -13,25 +13,6 @@ namespace elona::lua::api::modules::module_Console
 {
 
 /**
- * @luadoc register
- *
- * Registers a new console command.
- *
- * @tparam string mod_id the mod's id where the command is defined.
- * @tparam string name the command name.
- * @tparam function callback the command itself.
- */
-void Console_register(
-    const std::string& mod_id,
-    const std::string& name,
-    sol::protected_function callback)
-{
-    lua->get_console().register_(mod_id, name, callback);
-}
-
-
-
-/**
  * @luadoc run
  *
  * Runs registered command.
@@ -46,12 +27,41 @@ sol::object Console_run(const std::string& cmdline)
 
 
 
+/**
+ * @luadoc print
+ *
+ * Prints the given string.
+ *
+ * @treturn string str the string
+ */
+void Console_print(const std::string& str)
+{
+    return lua->get_console().print(str);
+}
+
+
+
+/**
+ * @luadoc get_history
+ *
+ * Get command line history.
+ *
+ * @return the history object
+ */
+sol::object Console_get_history()
+{
+    return lua->get_console().get_history();
+}
+
+
+
 void bind(sol::table api_table)
 {
     /* clang-format off */
 
-    ELONA_LUA_API_BIND_FUNCTION("register", Console_register);
     ELONA_LUA_API_BIND_FUNCTION("run", Console_run);
+    ELONA_LUA_API_BIND_FUNCTION("print", Console_print);
+    ELONA_LUA_API_BIND_FUNCTION("get_history", Console_get_history);
 
     /* clang-format on */
 }

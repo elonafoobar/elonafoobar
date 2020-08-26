@@ -1,7 +1,9 @@
 #include "../../../audio.hpp"
 #include "../../../calc.hpp"
 #include "../../../character.hpp"
+#include "../../../character_status.hpp"
 #include "../../../crafting.hpp"
+#include "../../../data/types/type_ability.hpp"
 #include "../../../data/types/type_map.hpp"
 #include "../../../game.hpp"
 #include "../../../i18n.hpp"
@@ -14,6 +16,7 @@
 #include "../../../ui.hpp"
 #include "../../fmt.hpp"
 #include "../../interface.hpp"
+#include "../../mod_manager.hpp"
 #include "../common.hpp"
 
 
@@ -279,6 +282,54 @@ fmt::ParseResult Internal_parse_fmt(
 
 
 
+std::vector<std::string> Internal_get_enabled_mods()
+{
+    std::vector<std::string> ret;
+    const auto& mod_mgr = lua::lua->get_mod_manager();
+    auto mods = mod_mgr.sorted_mods();
+    range::sort(mods);
+    for (const auto& mod : mods)
+    {
+        const auto version = mod_mgr.get_enabled_version(mod)->to_string();
+        ret.push_back(mod + " v" + version);
+    }
+    return ret;
+}
+
+
+
+void Internal_gain_spell()
+{
+    for (int i = 400; i < 467; ++i)
+    {
+        if (i != 426 && i != 427)
+        {
+            chara_gain_skill(cdata.player(), i, 100, 10000);
+        }
+    }
+}
+
+
+
+void Internal_gain_spact()
+{
+    for (int i = 1; i < 61; ++i)
+    {
+        cdata.player().spacts().gain(
+            *the_ability_db.get_id_from_integer(i + 600));
+    }
+}
+
+
+
+void Internal_gain_exp(int exp)
+{
+    cdata.player().experience += exp;
+    gain_level(cdata.player());
+}
+
+
+
 void bind(sol::table api_table)
 {
     /* clang-format off */
@@ -294,6 +345,10 @@ void bind(sol::table api_table)
     ELONA_LUA_API_BIND_FUNCTION("leave_map", Internal_leave_map);
     ELONA_LUA_API_BIND_FUNCTION("strange_scientist_pick_reward", Internal_strange_scientist_pick_reward);
     ELONA_LUA_API_BIND_FUNCTION("parse_fmt", Internal_parse_fmt);
+    ELONA_LUA_API_BIND_FUNCTION("get_enabled_mods", Internal_get_enabled_mods);
+    ELONA_LUA_API_BIND_FUNCTION("gain_spell", Internal_gain_spell);
+    ELONA_LUA_API_BIND_FUNCTION("gain_spact", Internal_gain_spact);
+    ELONA_LUA_API_BIND_FUNCTION("gain_exp", Internal_gain_exp);
 
     /* clang-format on */
 }

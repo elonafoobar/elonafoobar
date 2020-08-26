@@ -12,6 +12,12 @@ local function _normalize_command_name(s)
 end
 
 
+local function split_data_id(namespaced_id)
+   local dot = namespaced_id:find(".", 1, true)
+   return namespaced_id:sub(1, dot - 1), namespaced_id:sub(dot + 1)
+end
+
+
 
 local Executor = {}
 
@@ -37,24 +43,21 @@ function Executor:_look_up_command(command_name)
    local is_prefixed = command_name:find("%.")
 
    local commands = {}
-   for mod_id, command_table in pairs(self._env.COMMANDS) do
-      for name, command in pairs(command_table) do
-         local full_name = mod_id.."."..name
-         if is_prefixed then
-            if full_name == command_name then
-               return command -- perfect match; return it immediately.
-            end
-         else
-            if name == command_name then
-               -- partial match; add it to candidates.
-               commands[#commands+1] = {
-                  mod_id = mod_id,
-                  name = name,
-                  full_name = full_name,
-                  command = command,
-               }
-               break
-            end
+   for full_name, command in pairs(self._env.COMMANDS) do
+      local mod_id, short_name = split_data_id(full_name)
+      if is_prefixed then
+         if full_name == command_name then
+            return command -- perfect match; return it immediately.
+         end
+      else
+         if short_name == command_name then
+            -- partial match; add it to candidates.
+            commands[#commands+1] = {
+               mod_id = mod_id,
+               name = short_name,
+               full_name = full_name,
+               command = command,
+            }
          end
       end
    end
@@ -65,12 +68,9 @@ function Executor:_look_up_command(command_name)
 
    if #commands > 1 then
       if #commands == 2 then
-         -- If one of the two is built-in command, the other overrides it and is executed.
-         if commands[1].mod_id == "_builtin_" then return commands[2].command end
-         if commands[2].mod_id == "_builtin_" then return commands[1].command end
-         -- If one of the two is user-defined command, it overrides the other and is executed.
-         if commands[1].mod_id == "_console_" then return commands[1].command end
-         if commands[2].mod_id == "_console_" then return commands[2].command end
+         -- If one of the two is core command, the other overrides it and is executed.
+         if commands[1].mod_id == "core" then return commands[2].command end
+         if commands[2].mod_id == "core" then return commands[1].command end
       end
 
       -- Ambiguous invocation.
@@ -88,13 +88,11 @@ function Executor:_look_up_command(command_name)
    -- Do "Did you mean?" suggestion.
    local did_you_mean = {}
    local calculator = jarowinkler.DefaultCalculator.new()
-   for mod_id, command_table in pairs(self._env.COMMANDS) do
-      for name, _ in pairs(command_table) do
-         local full_name = mod_id.."."..name
-         local distance = calculator:distance(command_name, is_prefixed and full_name or name)
-         if distance >= _did_you_mean_threshold then
-            did_you_mean[#did_you_mean+1] = {distance = distance, command_name = full_name}
-         end
+   for full_name, _ in pairs(self._env.COMMANDS) do
+      local _mod_name, short_name = split_data_id(full_name)
+      local distance = calculator:distance(command_name, is_prefixed and full_name or short_name)
+      if distance >= _did_you_mean_threshold then
+         did_you_mean[#did_you_mean+1] = {distance = distance, command_name = full_name}
       end
    end
    table.sort(did_you_mean, function(a, b) return a.distance < b.distance end)
@@ -123,9 +121,7 @@ function Executor:execute(command_name, ...)
       return nil -- not found
    end
 
-   local args = {...}
-   -- prelude.print("RUN  "..command_name.."  "..table.concat(args, " "))
-   return pcall(command, table.unpack(args))
+   return pcall(command, ...)
 end
 
 

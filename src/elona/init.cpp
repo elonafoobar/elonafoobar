@@ -146,9 +146,6 @@ void initialize_lua()
     // Load mods.
     lua::lua->load_mods();
 
-    // Initialize "console" mod.
-    lua::lua->get_console().init_environment();
-
     auto& api_manager = lua::lua->get_api_manager();
     api_manager.clear();
     api_manager.init_from_mods();
@@ -164,6 +161,9 @@ void initialize_lua()
 
     // Remove unknown event types from the event tables.
     lua::lua->get_event_manager().remove_unknown_events();
+
+    // Initialize console environment.
+    lua::lua->get_console().init_environment();
 }
 
 

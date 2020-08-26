@@ -67,12 +67,10 @@ void Console::init_environment()
     term.set_function(
         "set_input", [this](const std::string& s) { _input = s; });
 
-    register_builtin_commands();
-
     env()["shell"] = env()["kernel"]["USH"]["new_shell"](term);
     env()["shell"]["inject_core_api"](
         lua().get_api_manager().get_core_api_table());
-    env()["shell"]["register_builtins"](env()["builtin_commands"]);
+    env()["shell"]["register_commands"]();
 }
 
 
@@ -219,16 +217,6 @@ void Console::grab_input()
 
 
 
-void Console::register_(
-    const std::string& mod_id,
-    const std::string& name,
-    sol::protected_function callback)
-{
-    env()["shell"]["register"](mod_id, name, callback);
-}
-
-
-
 sol::object Console::run(const std::string& cmdline)
 {
     return env()["shell"]["run"](cmdline);
@@ -236,123 +224,16 @@ sol::object Console::run(const std::string& cmdline)
 
 
 
-void Console::register_builtin_commands()
+void Console::print(const std::string& str)
 {
-    auto builtin_commands = env().create_named("builtin_commands");
+    _term.println(str);
+}
 
-    builtin_commands.set_function("ls", [this]() {
-        const auto& mod_mgr = lua().get_mod_manager();
-        auto mods = mod_mgr.sorted_mods();
-        range::sort(mods);
-        for (const auto& mod : mods)
-        {
-            const auto version = mod_mgr.get_enabled_version(mod)->to_string();
-            _term.println(mod + " v" + version);
-        }
-    });
 
-    builtin_commands.set_function("wizard", [this]() {
-        debug_enable_wizard();
-        _term.println("Wizard mode activated.");
-    });
 
-    builtin_commands.set_function("voldemort", [this]() {
-        if (!debug_is_wizard())
-        {
-            debug_enable_wizard();
-            _term.println("Wizard mode activated.");
-        }
-
-        // TODO generalize more
-        config_set("core.wizard.can_cast_all_spells", true);
-        config_set("core.wizard.can_unlock_all_keys", true);
-        config_set("core.wizard.no_hp_damage", true);
-        config_set("core.wizard.no_hungry", true);
-        config_set("core.wizard.no_mp_damage", true);
-        config_set("core.wizard.no_sleepy", true);
-        config_set("core.wizard.no_sp_damage", true);
-        config_set("core.wizard.no_spellstock_cost", true);
-
-        _term.println("I AM LORD VOLDEMORT.");
-    });
-
-    builtin_commands.set_function("muggle", [this]() {
-        debug_disable_wizard();
-        _term.println("Wizard mode inactivated.");
-    });
-
-    builtin_commands.set_function(
-        "wish",
-        [this](sol::optional<std::string> wish, sol::optional<std::string> n) {
-            if (!debug_is_wizard())
-            {
-                _term.println("Activate wizard mode to run the command.");
-                return;
-            }
-            int num = elona::stoi(n.value_or("1"));
-            if (num < 1)
-            {
-                num = 1;
-            }
-            for (int _i = 0; _i < num; ++_i)
-            {
-                what_do_you_wish_for(
-                    cdata.player(),
-                    wish ? optional<std::string>{*wish}
-                         : optional<std::string>{});
-            }
-        });
-
-    builtin_commands.set_function("gain_spell", [this]() {
-        if (!debug_is_wizard())
-        {
-            _term.println("Activate wizard mode to run the command.");
-            return;
-        }
-        for (int i = 400; i < 467; ++i)
-        {
-            if (i != 426 && i != 427)
-            {
-                chara_gain_skill(cdata.player(), i, 100, 10000);
-            }
-        }
-    });
-
-    builtin_commands.set_function("gain_spact", [this]() {
-        if (!debug_is_wizard())
-        {
-            _term.println("Activate wizard mode to run the command.");
-            return;
-        }
-        for (int i = 1; i < 61; ++i)
-        {
-            cdata.player().spacts().gain(
-                *the_ability_db.get_id_from_integer(i + 600));
-        }
-    });
-
-    builtin_commands.set_function(
-        "gain_exp", [this](sol::optional<std::string> exp) {
-            if (!debug_is_wizard())
-            {
-                _term.println("Activate wizard mode to run the command.");
-                return;
-            }
-            int exp_ = elona::stoi(exp.value_or("1000000000"));
-            cdata.player().experience += exp_;
-            gain_level(cdata.player());
-        });
-
-    builtin_commands.set_function(
-        "gain_fame", [this](sol::optional<std::string> fame) {
-            if (!debug_is_wizard())
-            {
-                _term.println("Activate wizard mode to run the command.");
-                return;
-            }
-            int fame_ = elona::stoi(fame.value_or("1000000"));
-            cdata.player().fame += fame_;
-        });
+sol::object Console::get_history()
+{
+    return env()["shell"]["get_history"]();
 }
 
 } // namespace lua
