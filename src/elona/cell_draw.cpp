@@ -1354,7 +1354,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
             }
 
             const auto item_chip_id = item->image;
-            const auto color_id = item->color;
+            const auto color_id = item->tint;
             const auto chara_chip_id = item->param1;
             draw_one_item(
                 dx,

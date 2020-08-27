@@ -1107,7 +1107,7 @@ TurnResult do_throw_command_internal(
                 thrower.index,
                 the_item_db[throw_item->id]->legacy_id,
                 static_cast<int>(throw_item->curse_state), // TODO
-                throw_item->color);
+                throw_item->tint);
             return TurnResult::turn_end;
         }
     }
@@ -1158,7 +1158,7 @@ TurnResult do_throw_command(Character& thrower, const ItemRef& throw_item)
         }
     }
     ThrowingObjectAnimation(
-        thrower.position, {tlocx, tlocy}, throw_item->image, throw_item->color)
+        thrower.position, {tlocx, tlocy}, throw_item->image, throw_item->tint)
         .play();
 
     if (throw_item->id == "core.monster_ball")
@@ -1761,7 +1761,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
             item_separate(mix_target);
         }
         mix_item->modify_number(-1);
-        mix_target->color = mix_item->color;
+        mix_target->tint = mix_item->tint;
         txt(i18n::s.get("core.action.dip.result.dyeing", mix_target));
         if (mix_target->body_part != 0)
         {

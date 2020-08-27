@@ -19,6 +19,7 @@
 #include "variables.hpp"
 
 
+
 namespace
 {
 
@@ -279,8 +280,8 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
     item_db_set_full_stats(item, item_id);
     item_db_get_charge_level(item, item_id);
 
-    item->color = generate_color(
-        the_item_db[item->id]->color, the_item_db[item->id]->legacy_id);
+    item->tint = generate_color(
+        the_item_db[item->id]->tint, the_item_db[item->id]->legacy_id);
 
     if (item->id == "core.book_b" && item->param1 == 0)
     {
@@ -750,7 +751,7 @@ void determine_item_material(const ItemRef& item)
 
 void change_item_material(const ItemRef& item, data::InstanceId material)
 {
-    item->color = 0;
+    item->tint = 0;
 
     fixlv = item->quality;
     if (item->material != "")
@@ -809,9 +810,9 @@ void apply_item_material(const ItemRef& item)
     {
         item->value = item->value * the_item_material_db[p]->value / 100;
     }
-    if (item->color == 0)
+    if (item->tint == 0)
     {
-        item->color = the_item_material_db[p]->color;
+        item->tint = the_item_material_db[p]->tint;
     }
     p(1) = 120;
     p(2) = 80;

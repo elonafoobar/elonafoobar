@@ -313,10 +313,10 @@ void bind(sol::state& lua)
         sol::property(
             [](const ItemRef& self) {
                 return LuaEnums::ColorIndexTable.convert_to_string(
-                    static_cast<ColorIndex>(self->color));
+                    static_cast<ColorIndex>(self->tint));
             },
             [](const ItemRef& self, const EnumString& s) {
-                self->color = static_cast<int>(
+                self->tint = static_cast<int>(
                     LuaEnums::ColorIndexTable.ensure_from_string(s));
             }));
 

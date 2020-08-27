@@ -345,7 +345,7 @@ void activity_perform_generate_item(
             item_info_memory_before_tip_generation;
         // Play animation.
         ThrowingObjectAnimation(
-            audience.position, item->position(), item->image, item->color)
+            audience.position, item->position(), item->image, item->tint)
             .play();
         // Restore drawing information of the cell *after* tip generation.
         // It fixes the inconsistency that the drawing information is different

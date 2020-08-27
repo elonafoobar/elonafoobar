@@ -67,7 +67,7 @@ ELONA.data:add(
          on_success = function(args)
             local target, dye = args.materials[1], args.materials[2]
 
-            target.color = dye.color
+            target.tint = dye.tint
             GUI.txt(I18N.get("core.action.dip.result.dyeing", target), "green")
             GUI.play_sound("core.drink1")
          end,

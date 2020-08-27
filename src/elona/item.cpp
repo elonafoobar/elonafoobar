@@ -88,7 +88,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         skill == other.skill && curse_state == other.curse_state &&
         body_part == other.body_part && function == other.function &&
         bonus_value == other.bonus_value && own_state == other.own_state &&
-        color == other.color && subname == other.subname &&
+        tint == other.tint && subname == other.subname &&
         material == other.material && param1 == other.param1 &&
         param2 == other.param2 && param3 == other.param3 &&
         param4 == other.param4 &&
@@ -1602,7 +1602,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
 void remain_make(const ItemRef& remain, const Character& chara)
 {
     remain->subname = charaid2int(chara.id);
-    remain->color = chara.image / 1000;
+    remain->tint = chara.image / 1000;
 
     if (remain->id == "core.corpse")
     {

@@ -493,7 +493,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_identify",
       },
       scroll_of_oracle = {
@@ -526,7 +526,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_oracle",
       },
       scroll_of_teleportation = {
@@ -559,7 +559,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_teleportation",
       },
       scroll_of_incognito = {
@@ -592,7 +592,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_incognito",
       },
       rod_of_identify = {
@@ -625,7 +625,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_identify",
       },
       rod_of_teleportation = {
@@ -658,7 +658,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_teleportation",
       },
       spellbook_of_teleportation = {
@@ -691,7 +691,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_teleportation",
       },
       spellbook_of_identify = {
@@ -724,7 +724,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_identify",
       },
       spellbook_of_uncurse = {
@@ -757,7 +757,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_uncurse",
       },
       book_a = {
@@ -918,7 +918,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_blindness",
       },
       potion_of_confusion = {
@@ -951,7 +951,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_confusion",
       },
       potion_of_paralysis = {
@@ -984,7 +984,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_paralysis",
       },
       sleeping_drug = {
@@ -1017,7 +1017,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "nogive" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.sleeping_drug",
       },
       crim_ale = {
@@ -1082,7 +1082,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_ice_bolt",
       },
       spellbook_of_fire_bolt = {
@@ -1115,7 +1115,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_fire_bolt",
       },
       spellbook_of_lightning_bolt = {
@@ -1148,7 +1148,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_lightning_bolt",
       },
       earth_crystal = {
@@ -1181,7 +1181,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         color = "yellow",
+         tint = "yellow",
          locale_key_prefix = "core.item.earth_crystal",
       },
       mana_crystal = {
@@ -1214,7 +1214,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.mana_crystal",
       },
       sun_crystal = {
@@ -1247,7 +1247,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         color = "orange",
+         tint = "orange",
          locale_key_prefix = "core.item.sun_crystal",
       },
       gold_bar = {
@@ -1312,7 +1312,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.raw_ore_of_rubynus",
       },
       raw_ore_of_mica = {
@@ -1377,7 +1377,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         color = "green",
+         tint = "green",
          locale_key_prefix = "core.item.raw_ore_of_emerald",
       },
       raw_ore_of_diamond = {
@@ -1410,7 +1410,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = { "ore" },
-         color = "blue",
+         tint = "blue",
          locale_key_prefix = "core.item.raw_ore_of_diamond",
       },
       wood_piece = {
@@ -1860,7 +1860,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "grey",
+         tint = "grey",
          locale_key_prefix = "core.item.diablo",
       },
       zantetsu = {
@@ -1894,7 +1894,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "blue",
+         tint = "blue",
          locale_key_prefix = "core.item.zantetsu",
       },
       long_bow = {
@@ -2093,7 +2093,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.scythe_of_void",
       },
       mournblade = {
@@ -2127,7 +2127,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "blue",
+         tint = "blue",
          locale_key_prefix = "core.item.mournblade",
       },
       light_cloak = {
@@ -2259,7 +2259,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_minor_wound",
       },
       potion_of_cure_major_wound = {
@@ -2292,7 +2292,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_major_wound",
       },
       potion_of_cure_critical_wound = {
@@ -2325,7 +2325,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_critical_wound",
       },
       potion_of_healing = {
@@ -2358,7 +2358,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healing",
       },
       potion_of_healer = {
@@ -2391,7 +2391,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healer",
       },
       ragnarok = {
@@ -2425,7 +2425,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "grey",
+         tint = "grey",
          locale_key_prefix = "core.item.ragnarok",
       },
       potion_of_healer_odina = {
@@ -2458,7 +2458,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healer_odina",
       },
       potion_of_healer_eris = {
@@ -2491,7 +2491,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healer_eris",
       },
       potion_of_healer_jure = {
@@ -2524,7 +2524,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_healer_jure",
       },
       round_chair = {
@@ -2653,7 +2653,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.boring_bed",
       },
       rag_doll = {
@@ -2686,7 +2686,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.rag_doll",
       },
       toy = {
@@ -2719,7 +2719,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.toy",
       },
       modern_table = {
@@ -2752,7 +2752,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.modern_table",
       },
       dining_table = {
@@ -2785,7 +2785,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.dining_table",
       },
       armor = {
@@ -2818,7 +2818,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.armor",
       },
       lot_of_goods = {
@@ -2851,7 +2851,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.lot_of_goods",
       },
       lot_of_accessories = {
@@ -2884,7 +2884,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.lot_of_accessories",
       },
       grand_piano = {
@@ -2949,7 +2949,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.bar_table_alpha",
       },
       bar_table_beta = {
@@ -2982,7 +2982,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.bar_table_beta",
       },
       barrel = {
@@ -3047,7 +3047,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.modern_chair",
       },
       pick = {
@@ -3080,7 +3080,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.pick",
       },
       lantern = {
@@ -3113,7 +3113,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.lantern",
       },
       decorative_armor = {
@@ -3146,7 +3146,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.decorative_armor",
       },
       anvil = {
@@ -3179,7 +3179,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.anvil",
       },
       closed_pot = {
@@ -3212,7 +3212,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.closed_pot",
       },
       open_pot = {
@@ -3245,7 +3245,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.open_pot",
       },
       academic_table = {
@@ -3278,7 +3278,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.academic_table",
       },
       rack_of_potions = {
@@ -3343,7 +3343,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.square_chair",
       },
       cheap_chair = {
@@ -3376,7 +3376,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.cheap_chair",
       },
       cupboard = {
@@ -3505,7 +3505,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.closet",
       },
       variety_of_tools = {
@@ -3634,7 +3634,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.variety_of_clothes",
       },
       furnace = {
@@ -3827,7 +3827,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_minor_teleportation",
       },
       empty_basket = {
@@ -3860,7 +3860,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = { "fish" },
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.empty_basket",
       },
       spellbook_of_summon_monsters = {
@@ -3893,7 +3893,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_summon_monsters",
       },
       rod_of_cure_minor_wound = {
@@ -3926,7 +3926,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_cure_minor_wound",
       },
       rod_of_magic_missile = {
@@ -3959,7 +3959,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_magic_missile",
       },
       rod_of_summon_monsters = {
@@ -3992,7 +3992,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_summon_monsters",
       },
       rod_of_ice_bolt = {
@@ -4025,7 +4025,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_ice_bolt",
       },
       rod_of_fire_bolt = {
@@ -4058,7 +4058,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_fire_bolt",
       },
       show_case_of_breads = {
@@ -4123,7 +4123,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_heal",
       },
       beaker = {
@@ -4156,7 +4156,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.beaker",
       },
       alchemy_kit = {
@@ -4189,7 +4189,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.alchemy_kit",
       },
       pentagram = {
@@ -4222,7 +4222,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.pentagram",
       },
       small_foliage_plant = {
@@ -4255,7 +4255,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.small_foliage_plant",
       },
       rose = {
@@ -4288,7 +4288,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.rose",
       },
       large_foliage_plant = {
@@ -4321,7 +4321,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.large_foliage_plant",
       },
       sage = {
@@ -4354,7 +4354,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.sage",
       },
       gazania = {
@@ -4387,7 +4387,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.gazania",
       },
       nerine = {
@@ -4420,7 +4420,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.nerine",
       },
       anemos = {
@@ -4453,7 +4453,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.anemos",
       },
       foxtail_grass = {
@@ -4486,7 +4486,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.foxtail_grass",
       },
       carnation = {
@@ -4519,7 +4519,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.carnation",
       },
       pillar_ornamented_with_plants = {
@@ -4616,7 +4616,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.canvas",
       },
       map = {
@@ -4649,7 +4649,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.map",
       },
       food_maker = {
@@ -4746,7 +4746,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.bundle_of_weapons",
       },
       decorated_cloth = {
@@ -4779,7 +4779,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.decorated_cloth",
       },
       decorated_armor = {
@@ -4812,7 +4812,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.decorated_armor",
       },
       statue_of_armor = {
@@ -4845,7 +4845,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.statue_of_armor",
       },
       disorderly_book = {
@@ -4942,7 +4942,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.craft_rack",
       },
       craft_book_shelf = {
@@ -4975,7 +4975,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.craft_book_shelf",
       },
       lot_of_alcohols = {
@@ -5008,7 +5008,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.lot_of_alcohols",
       },
       kitchen = {
@@ -5041,7 +5041,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.kitchen",
       },
       washstand = {
@@ -5074,7 +5074,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.washstand",
       },
       kitchen_oven = {
@@ -5107,7 +5107,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.kitchen_oven",
       },
       narrow_dining_table = {
@@ -5172,7 +5172,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.elegant_table",
       },
       gorgeous_candlestick = {
@@ -5237,7 +5237,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.simple_shelf",
       },
       sewing_kit = {
@@ -5270,7 +5270,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.sewing_kit",
       },
       carpenters_tool = {
@@ -5303,7 +5303,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.carpenters_tool",
       },
       messy_cloth = {
@@ -5336,7 +5336,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.messy_cloth",
       },
       silk_cloth = {
@@ -5369,7 +5369,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.silk_cloth",
       },
       collapsed_grave = {
@@ -5754,7 +5754,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_lightning_bolt",
       },
       rod_of_slow = {
@@ -5787,7 +5787,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_slow",
       },
       quwapana = {
@@ -6640,7 +6640,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_magic_mapping",
       },
       rod_of_cure = {
@@ -6673,7 +6673,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_cure",
       },
       corpse = {
@@ -6772,7 +6772,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "blue",
+         tint = "blue",
          locale_key_prefix = "core.item.ether_dagger",
       },
       bow_of_vindale = {
@@ -6806,7 +6806,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "grey",
+         tint = "grey",
          locale_key_prefix = "core.item.bow_of_vindale",
       },
       worthless_fake_gold_bar = {
@@ -6871,7 +6871,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_uncurse",
       },
       stone = {
@@ -7036,7 +7036,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.ore_piece",
       },
       lot_of_empty_bottles = {
@@ -7069,7 +7069,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.lot_of_empty_bottles",
       },
       basket = {
@@ -7102,7 +7102,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = { "fest" },
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.basket",
       },
       empty_bowl = {
@@ -7135,7 +7135,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.empty_bowl",
       },
       bowl = {
@@ -7168,7 +7168,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.bowl",
       },
       tight_rope = {
@@ -7201,7 +7201,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.tight_rope",
       },
       dead_fish = {
@@ -7757,7 +7757,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_return",
       },
       figurine_of_warrior = {
@@ -7790,7 +7790,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.figurine_of_warrior",
       },
       figurine_of_sword = {
@@ -7823,7 +7823,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.figurine_of_sword",
       },
       bejeweled_chest = {
@@ -7856,7 +7856,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.bejeweled_chest",
       },
       chest = {
@@ -7889,7 +7889,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.chest",
       },
       safe = {
@@ -7922,7 +7922,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.safe",
       },
       scroll_of_magical_map = {
@@ -7955,7 +7955,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_magical_map",
       },
       scroll_of_gain_attribute = {
@@ -7988,7 +7988,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_gain_attribute",
       },
       scroll_of_wonder = {
@@ -8021,7 +8021,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_wonder",
       },
       scroll_of_minor_teleportation = {
@@ -8054,7 +8054,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_minor_teleportation",
       },
       spellbook_of_magic_mapping = {
@@ -8087,7 +8087,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_magic_mapping",
       },
       spellbook_of_oracle = {
@@ -8120,7 +8120,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_oracle",
       },
       spellbook_of_return = {
@@ -8153,7 +8153,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_return",
       },
       spellbook_of_cure_minor_wound = {
@@ -8186,7 +8186,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_cure_minor_wound",
       },
       spellbook_of_cure_critical_wound = {
@@ -8219,7 +8219,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_cure_critical_wound",
       },
       spellbook_of_cure_eris = {
@@ -8252,7 +8252,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_cure_eris",
       },
       spellbook_of_cure_jure = {
@@ -8285,7 +8285,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_cure_jure",
       },
       bottle_of_beer = {
@@ -8446,7 +8446,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_magic_arrow",
       },
       stick_bread = {
@@ -8609,7 +8609,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "nogive" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.poison",
       },
       spellbook_of_nether_eye = {
@@ -8642,7 +8642,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_nether_eye",
       },
       spellbook_of_chaos_eye = {
@@ -8675,7 +8675,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_chaos_eye",
       },
       spellbook_of_nerve_eye = {
@@ -8708,7 +8708,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_nerve_eye",
       },
       wakizashi = {
@@ -8774,7 +8774,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_darkness_beam",
       },
       spellbook_of_illusion_beam = {
@@ -8807,7 +8807,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_illusion_beam",
       },
       spellbook_of_ice_ball = {
@@ -8840,7 +8840,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_ice_ball",
       },
       spellbook_of_fire_ball = {
@@ -8873,7 +8873,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_fire_ball",
       },
       spellbook_of_sound_ball = {
@@ -8906,7 +8906,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_sound_ball",
       },
       spellbook_of_chaos_ball = {
@@ -8939,7 +8939,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_chaos_ball",
       },
       fire_wood = {
@@ -8972,7 +8972,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.fire_wood",
       },
       scarecrow = {
@@ -9005,7 +9005,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.scarecrow",
       },
       broom = {
@@ -9358,7 +9358,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_restore_body",
       },
       potion_of_restore_spirit = {
@@ -9391,7 +9391,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_restore_spirit",
       },
       potion_of_potential = {
@@ -9424,7 +9424,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "spshop" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_potential",
       },
       scroll_of_curse = {
@@ -9457,7 +9457,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_curse",
       },
       spellbook_of_wishing = {
@@ -9490,7 +9490,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_wishing",
       },
       rod_of_wishing = {
@@ -9523,7 +9523,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_wishing",
       },
       well_kept_armor = {
@@ -11252,7 +11252,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "green",
+         tint = "green",
          locale_key_prefix = "core.item.deed",
       },
       moonfish = {
@@ -11616,7 +11616,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.gloves_of_vesda",
       },
       blood_moon = {
@@ -11650,7 +11650,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.blood_moon",
       },
       ring_of_steel_dragon = {
@@ -11750,7 +11750,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.rankis",
       },
       palmia_pride = {
@@ -11848,7 +11848,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_greater_identify",
       },
       scroll_of_vanish_curse = {
@@ -11881,7 +11881,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_vanish_curse",
       },
       potion_of_defender = {
@@ -11914,7 +11914,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_defender",
       },
       spellbook_of_holy_shield = {
@@ -11947,7 +11947,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_holy_shield",
       },
       rod_of_silence = {
@@ -11980,7 +11980,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_silence",
       },
       spellbook_of_silence = {
@@ -12013,7 +12013,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_silence",
       },
       potion_of_silence = {
@@ -12046,7 +12046,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_silence",
       },
       spellbook_of_regeneration = {
@@ -12079,7 +12079,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_regeneration",
       },
       potion_of_troll_blood = {
@@ -12112,7 +12112,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_troll_blood",
       },
       spellbook_of_resistance = {
@@ -12145,7 +12145,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_resistance",
       },
       potion_of_resistance = {
@@ -12178,7 +12178,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_resistance",
       },
       spellbook_of_speed = {
@@ -12211,7 +12211,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_speed",
       },
       spellbook_of_slow = {
@@ -12244,7 +12244,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_slow",
       },
       potion_of_speed = {
@@ -12277,7 +12277,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_speed",
       },
       potion_of_slow = {
@@ -12310,7 +12310,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_slow",
       },
       rod_of_speed = {
@@ -12343,7 +12343,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_speed",
       },
       spellbook_of_hero = {
@@ -12376,7 +12376,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_hero",
       },
       potion_of_hero = {
@@ -12409,7 +12409,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_hero",
       },
       spellbook_of_weakness = {
@@ -12442,7 +12442,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_weakness",
       },
       spellbook_of_elemental_scar = {
@@ -12475,7 +12475,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_elemental_scar",
       },
       potion_of_weakness = {
@@ -12508,7 +12508,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_weakness",
       },
       spellbook_of_holy_veil = {
@@ -12541,7 +12541,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_holy_veil",
       },
       scroll_of_holy_veil = {
@@ -12574,7 +12574,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_holy_veil",
       },
       rod_of_holy_light = {
@@ -12607,7 +12607,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_holy_light",
       },
       spellbook_of_holy_light = {
@@ -12640,7 +12640,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_holy_light",
       },
       spellbook_of_holy_rain = {
@@ -12673,7 +12673,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_holy_rain",
       },
       scroll_of_holy_light = {
@@ -12706,7 +12706,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_holy_light",
       },
       scroll_of_holy_rain = {
@@ -12739,7 +12739,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_holy_rain",
       },
       scroll_of_mana = {
@@ -12772,7 +12772,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_mana",
       },
       rod_of_mana = {
@@ -12805,7 +12805,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_mana",
       },
       bottle_of_sulfuric = {
@@ -12870,7 +12870,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.gem_cutter",
       },
       material_box = {
@@ -12935,7 +12935,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_gain_material",
       },
       spellbook_of_nightmare = {
@@ -12968,7 +12968,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_nightmare",
       },
       spellbook_of_knowledge = {
@@ -13001,7 +13001,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_knowledge",
       },
       scroll_of_knowledge = {
@@ -13034,7 +13034,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_knowledge",
       },
       cargo_rag_doll = {
@@ -13419,7 +13419,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_detect_objects",
       },
       scroll_of_detect_objects = {
@@ -13452,7 +13452,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_detect_objects",
       },
       rod_of_uncurse = {
@@ -13485,7 +13485,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_uncurse",
       },
       red_treasure_machine = {
@@ -13647,7 +13647,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "green",
+         tint = "green",
          locale_key_prefix = "core.item.vegetable_seed",
       },
       fruit_seed = {
@@ -13681,7 +13681,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "yellow",
+         tint = "yellow",
          locale_key_prefix = "core.item.fruit_seed",
       },
       herb_seed = {
@@ -13715,7 +13715,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "blue",
+         tint = "blue",
          locale_key_prefix = "core.item.herb_seed",
       },
       unknown_seed = {
@@ -13749,7 +13749,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.unknown_seed",
       },
       artifact_seed = {
@@ -13783,7 +13783,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = { "noshop", "spshop" },
          rftags = {},
-         color = "orange",
+         tint = "orange",
          locale_key_prefix = "core.item.artifact_seed",
       },
       morgia = {
@@ -14040,7 +14040,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_weaken_resistance",
       },
       scroll_of_growth = {
@@ -14073,7 +14073,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_growth",
       },
       scroll_of_faith = {
@@ -14106,7 +14106,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_faith",
       },
       potion_of_mutation = {
@@ -14139,7 +14139,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "nogive" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_mutation",
       },
       potion_of_cure_mutation = {
@@ -14172,7 +14172,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_mutation",
       },
       spellbook_of_mutation = {
@@ -14205,7 +14205,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_mutation",
       },
       banded_mail = {
@@ -15689,7 +15689,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_ally",
       },
       rod_of_domination = {
@@ -15722,7 +15722,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_domination",
       },
       spellbook_of_domination = {
@@ -15755,7 +15755,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_domination",
       },
       crossbow = {
@@ -15854,7 +15854,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_web",
       },
       rod_of_web = {
@@ -15887,7 +15887,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_web",
       },
       machine = {
@@ -16369,7 +16369,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "neg" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_inferior_material",
       },
       scroll_of_change_material = {
@@ -16402,7 +16402,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_change_material",
       },
       scroll_of_superior_material = {
@@ -16435,7 +16435,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "spshop" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_superior_material",
       },
       figurine = {
@@ -16532,7 +16532,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.little_sisters_diary",
       },
       scroll_of_enchant_weapon = {
@@ -16565,7 +16565,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_enchant_weapon",
       },
       scroll_of_greater_enchant_weapon = {
@@ -16598,7 +16598,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_greater_enchant_weapon",
       },
       scroll_of_enchant_armor = {
@@ -16631,7 +16631,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_enchant_armor",
       },
       scroll_of_greater_enchant_armor = {
@@ -16664,7 +16664,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_greater_enchant_armor",
       },
       heir_trunk = {
@@ -16860,7 +16860,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_recharge",
       },
       bottle_of_water = {
@@ -16925,7 +16925,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_change_creature",
       },
       rod_of_alchemy = {
@@ -16958,7 +16958,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_alchemy",
       },
       bottle_of_dye = {
@@ -16991,7 +16991,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "nogive" },
          rftags = {},
-         color = "random_any",
+         tint = "random_any",
          locale_key_prefix = "core.item.bottle_of_dye",
       },
       wing = {
@@ -17057,7 +17057,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "orange",
+         tint = "orange",
          locale_key_prefix = "core.item.deed_of_museum",
       },
       deed_of_shop = {
@@ -17090,7 +17090,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.deed_of_shop",
       },
       tree_of_beech = {
@@ -17731,7 +17731,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "light_blue",
+         tint = "light_blue",
          locale_key_prefix = "core.item.deed_of_farm",
       },
       deed_of_storage_house = {
@@ -17764,7 +17764,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "pale_red",
+         tint = "pale_red",
          locale_key_prefix = "core.item.deed_of_storage_house",
       },
       disc = {
@@ -17797,7 +17797,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.disc",
       },
       rod_of_wall_creation = {
@@ -17830,7 +17830,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_wall_creation",
       },
       spellbook_of_wall_creation = {
@@ -17863,7 +17863,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_wall_creation",
       },
       salary_chest = {
@@ -17928,7 +17928,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_healing_rain",
       },
       scroll_of_healing_rain = {
@@ -17961,7 +17961,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_healing_rain",
       },
       spellbook_of_healing_hands = {
@@ -17994,7 +17994,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_healing_hands",
       },
       rod_of_healing_hands = {
@@ -18027,7 +18027,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_healing_hands",
       },
       feather = {
@@ -18094,7 +18094,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "purple",
+         tint = "purple",
          locale_key_prefix = "core.item.gem_seed",
       },
       magical_seed = {
@@ -18128,7 +18128,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "cyan",
+         tint = "cyan",
          locale_key_prefix = "core.item.magical_seed",
       },
       shelter = {
@@ -18292,7 +18292,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_cure_corruption",
       },
       masters_delivery_chest = {
@@ -18453,7 +18453,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_acid_ground",
       },
       rod_of_acid_ground = {
@@ -18486,7 +18486,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_acid_ground",
       },
       acidproof_liquid = {
@@ -18519,7 +18519,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "nogive" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.acidproof_liquid",
       },
       fireproof_blanket = {
@@ -18552,7 +18552,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.fireproof_blanket",
       },
       coldproof_blanket = {
@@ -18585,7 +18585,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "blue",
+         tint = "blue",
          locale_key_prefix = "core.item.coldproof_blanket",
       },
       spellbook_of_fire_wall = {
@@ -18618,7 +18618,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_fire_wall",
       },
       rod_of_fire_wall = {
@@ -18651,7 +18651,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_fire_wall",
       },
       jerky = {
@@ -18716,7 +18716,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "gold",
+         tint = "gold",
          locale_key_prefix = "core.item.deed_of_ranch",
       },
       egg = {
@@ -18845,7 +18845,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.playback_disc",
       },
       molotov = {
@@ -18878,7 +18878,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "nogive" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.molotov",
       },
       kitty_bank = {
@@ -19007,7 +19007,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.rod_of_make_door",
       },
       spellbook_of_make_door = {
@@ -19040,7 +19040,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_make_door",
       },
       torch = {
@@ -19105,7 +19105,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.candle",
       },
       fancy_lamp = {
@@ -19298,7 +19298,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.snow_scarecrow",
       },
       mini_snow_man = {
@@ -20356,7 +20356,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.cat_sisters_diary",
       },
       girls_diary = {
@@ -20389,7 +20389,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.girls_diary",
       },
       shrine_gate = {
@@ -20454,7 +20454,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "spshop" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.bottle_of_hermes_blood",
       },
       sages_helm = {
@@ -20488,7 +20488,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "orange",
+         tint = "orange",
          locale_key_prefix = "core.item.sages_helm",
       },
       spellbook_of_incognito = {
@@ -20521,7 +20521,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_incognito",
       },
       disguise_set = {
@@ -20650,7 +20650,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.flying_scroll",
       },
       panty = {
@@ -20844,7 +20844,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_escape",
       },
       happy_apple = {
@@ -20877,7 +20877,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "light_blue",
+         tint = "light_blue",
          locale_key_prefix = "core.item.happy_apple",
       },
       unicorn_horn = {
@@ -21166,7 +21166,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.sofa",
       },
       flowerbed = {
@@ -21199,7 +21199,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.flowerbed",
       },
       toilet = {
@@ -21232,7 +21232,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.toilet",
       },
       craft_cupboard = {
@@ -21361,7 +21361,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.double_bed",
       },
       hero_cheese = {
@@ -21394,7 +21394,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "blue",
+         tint = "blue",
          locale_key_prefix = "core.item.hero_cheese",
       },
       eastern_lamp = {
@@ -21523,7 +21523,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.partition",
       },
       spellbook_of_darkness_arrow = {
@@ -21556,7 +21556,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_darkness_arrow",
       },
       dal_i_thalion = {
@@ -21590,7 +21590,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.dal_i_thalion",
       },
       magic_fruit = {
@@ -21623,7 +21623,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.magic_fruit",
       },
       monster_heart = {
@@ -21978,7 +21978,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "light_blue",
+         tint = "light_blue",
          locale_key_prefix = "core.item.wind_bow",
       },
       winchester_premium = {
@@ -22012,7 +22012,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.winchester_premium",
       },
       kumiromi_scythe = {
@@ -22046,7 +22046,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "green",
+         tint = "green",
          locale_key_prefix = "core.item.kumiromi_scythe",
       },
       elemental_staff = {
@@ -22080,7 +22080,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "light_green",
+         tint = "light_green",
          locale_key_prefix = "core.item.elemental_staff",
       },
       holy_lance = {
@@ -22147,7 +22147,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "orange",
+         tint = "orange",
          locale_key_prefix = "core.item.lucky_dagger",
       },
       gaia_hammer = {
@@ -22181,7 +22181,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "orange",
+         tint = "orange",
          locale_key_prefix = "core.item.gaia_hammer",
       },
       lulwys_gem_stone_of_god_speed = {
@@ -22214,7 +22214,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "blue",
+         tint = "blue",
          locale_key_prefix = "core.item.lulwys_gem_stone_of_god_speed",
       },
       jures_gem_stone_of_holy_rain = {
@@ -22247,7 +22247,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "light_blue",
+         tint = "light_blue",
          locale_key_prefix = "core.item.jures_gem_stone_of_holy_rain",
       },
       kumiromis_gem_stone_of_rejuvenation = {
@@ -22280,7 +22280,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "green",
+         tint = "green",
          locale_key_prefix = "core.item.kumiromis_gem_stone_of_rejuvenation",
       },
       gem_stone_of_mani = {
@@ -22313,7 +22313,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.gem_stone_of_mani",
       },
       gene_machine = {
@@ -22699,7 +22699,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.axe_of_destruction",
       },
       spellbook_of_magic_ball = {
@@ -22732,7 +22732,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_magic_ball",
       },
       spellbook_of_magic_laser = {
@@ -22765,7 +22765,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_magic_laser",
       },
       potion_of_salt_solution = {
@@ -22830,7 +22830,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.little_ball",
       },
       town_book = {
@@ -22927,7 +22927,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.rabbits_tail",
       },
       whistle = {
@@ -23057,7 +23057,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_descent",
       },
       stradivarius = {
@@ -23122,7 +23122,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.book_of_resurrection",
       },
       scroll_of_contingency = {
@@ -23155,7 +23155,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_contingency",
       },
       spellbook_of_contingency = {
@@ -23188,7 +23188,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_contingency",
       },
       potion_of_evolution = {
@@ -23221,7 +23221,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.potion_of_evolution",
       },
       deed_of_dungeon = {
@@ -23254,7 +23254,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "blue",
+         tint = "blue",
          locale_key_prefix = "core.item.deed_of_dungeon",
       },
       shuriken = {
@@ -23353,7 +23353,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = { "noshop" },
          rftags = {},
-         color = "cyan",
+         tint = "cyan",
          locale_key_prefix = "core.item.secret_experience_of_kumiromi",
       },
       vanilla_rock = {
@@ -23419,7 +23419,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "cyan",
+         tint = "cyan",
          locale_key_prefix = "core.item.secret_experience_of_lomias",
       },
       shenas_panty = {
@@ -23453,7 +23453,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.shenas_panty",
       },
       claymore_unique = {
@@ -23519,7 +23519,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = { "noshop" },
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.happy_bed",
       },
       statue_of_ehekatl = {
@@ -23585,7 +23585,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "purple",
+         tint = "purple",
          locale_key_prefix = "core.item.arbalest",
       },
       twin_edge = {
@@ -23619,7 +23619,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "orange",
+         tint = "orange",
          locale_key_prefix = "core.item.twin_edge",
       },
       music_ticket = {
@@ -23685,7 +23685,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "orange",
+         tint = "orange",
          locale_key_prefix = "core.item.kill_kill_piano",
       },
       alud = {
@@ -23719,7 +23719,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "yellow",
+         tint = "yellow",
          locale_key_prefix = "core.item.alud",
       },
       shield_of_thorn = {
@@ -23753,7 +23753,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.shield_of_thorn",
       },
       crimson_plate = {
@@ -23787,7 +23787,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.crimson_plate",
       },
       gift = {
@@ -23884,7 +23884,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_4_dimensional_pocket",
       },
       spellbook_of_harvest = {
@@ -23917,7 +23917,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = {},
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.spellbook_of_harvest",
       },
       sand_bag = {
@@ -24047,7 +24047,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "nogive" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.fireproof_liquid",
       },
       scroll_of_name = {
@@ -24080,7 +24080,7 @@ ELONA.data:add(
          has_random_name = true,
          tags = { "noshop" },
          rftags = {},
-         color = "random_seeded",
+         tint = "random_seeded",
          locale_key_prefix = "core.item.scroll_of_name",
       },
       fortune_cookie = {
@@ -24179,7 +24179,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "blue",
+         tint = "blue",
          locale_key_prefix = "core.item.unknown_shell",
       },
       hiryu_to = {
@@ -24213,7 +24213,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.hiryu_to",
       },
       license_of_the_void_explorer = {
@@ -24278,7 +24278,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.plank_of_carneades",
       },
       schrodingers_cat = {
@@ -24311,7 +24311,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.schrodingers_cat",
       },
       heart = {
@@ -24344,7 +24344,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.heart",
       },
       tamers_whip = {
@@ -24377,7 +24377,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "red",
+         tint = "red",
          locale_key_prefix = "core.item.tamers_whip",
       },
       book_of_bokonon = {
@@ -24602,7 +24602,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.kotatsu",
       },
       daruma = {
@@ -24732,7 +24732,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "blue",
+         tint = "blue",
          locale_key_prefix = "core.item.five_horned_helm",
       },
       mauser_c96_custom = {
@@ -24766,7 +24766,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = { "sf" },
          rftags = {},
-         color = "grey",
+         tint = "grey",
          locale_key_prefix = "core.item.mauser_c96_custom",
       },
       lightsabre = {
@@ -24800,7 +24800,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.lightsabre",
       },
       garoks_hammer = {
@@ -24865,7 +24865,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "white2",
+         tint = "white2",
          locale_key_prefix = "core.item.goulds_piano",
       },
       festival_wreath = {
@@ -24930,7 +24930,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.pedestal",
       },
       counter = {
@@ -25412,7 +25412,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.luxury_sofa",
       },
       deer_head = {
@@ -25767,7 +25767,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.pot_for_testing",
       },
       frying_pan_for_testing = {
@@ -25800,7 +25800,7 @@ ELONA.data:add(
          has_random_name = false,
          tags = {},
          rftags = {},
-         color = "random_furniture",
+         tint = "random_furniture",
          locale_key_prefix = "core.item.frying_pan_for_testing",
       },
       dragon_slayer = {

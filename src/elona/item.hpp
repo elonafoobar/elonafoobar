@@ -126,7 +126,7 @@ public:
     int function = 0;
     lua_int bonus_value{};
     OwnState own_state{};
-    int color = 0;
+    int tint = 0;
     int subname = 0;
     data::InstanceId material{};
     int param1 = 0;
@@ -253,7 +253,7 @@ public:
         ar(function);
         ar(bonus_value);
         ar(own_state);
-        ar(color);
+        ar(tint);
         ar(subname);
         ar(material);
         ar(param1);

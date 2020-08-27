@@ -22,7 +22,7 @@ ItemMaterialData ItemMaterialDB::convert(
     DATA_OPT_OR(dv, int, 0);
     DATA_OPT_OR(pv, int, 0);
     DATA_OPT_OR(dice_y, int, 0);
-    DATA_OPT_OR(color, int, 0);
+    DATA_OPT_OR(tint, int, 0);
     DATA_TABLE(enchantments, int, int);
     DATA_OPT_OR(fireproof, bool, false);
     DATA_OPT_OR(acidproof, bool, false);
@@ -37,7 +37,7 @@ ItemMaterialData ItemMaterialDB::convert(
         dv,
         pv,
         dice_y,
-        color,
+        tint,
         enchantments,
         fireproof,
         acidproof,
