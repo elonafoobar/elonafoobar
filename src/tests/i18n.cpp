@@ -76,7 +76,7 @@ TEST_CASE("test format item", "[I18N: Formatting]")
     // This test is disabled until bug #1631 is fixed.
 #if 0
     testing::start_in_debug_map();
-    Item& i = testing::create_item(itemid2int(PUTITORO_PROTO_ID), 3);
+    Item& i = testing::create_item(PUTITORO_PROTO_ID, 3);
 
     REQUIRE(
         i18n::s.format("{$1}", i) ==

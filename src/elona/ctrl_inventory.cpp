@@ -189,7 +189,7 @@ void remove_card_and_figure_from_heir_trunk()
     {
         for (const auto& item : g_inv.tmp())
         {
-            if (item->id == ItemId::card || item->id == ItemId::figurine)
+            if (item->id == "core.card" || item->id == "core.figurine")
             {
                 item->remove();
             }
@@ -299,18 +299,20 @@ void make_item_list(
         for (const auto& item : *inv)
         {
             // compatibility?
-            if (item->id == ItemId::training_machine)
+            if (item->id == "core.training_machine")
             {
                 item->function = 9;
             }
 
             // compatibility?
-            if (itemid2int(item->id) >= maxitemid || itemid2int(item->id) < 0)
+            if (the_item_db[item->id]->legacy_id >= maxitemid ||
+                the_item_db[item->id]->legacy_id < 0)
             {
                 dialog(i18n::s.get(
-                    "core.ui.inv.common.invalid", itemid2int(item->id)));
+                    "core.ui.inv.common.invalid",
+                    the_item_db[item->id]->legacy_id));
                 item->remove();
-                item->id = ItemId::none;
+                item->id = "core.none";
                 continue;
             }
 
@@ -318,9 +320,8 @@ void make_item_list(
             {
                 if (invctrl == 7)
                 {
-                    if (the_item_db[itemid2int(item->id)]->subcategory !=
-                            53100 &&
-                        item->id != ItemId::treasure_map)
+                    if (the_item_db[item->id]->subcategory != 53100 &&
+                        item->id != "core.treasure_map")
                     {
                         // ワールドマップでは権利書か宝の地図しか読めない
                         continue;
@@ -351,7 +352,7 @@ void make_item_list(
             // ここで呼び出す?
             item_checkknown(item);
 
-            reftype = (int)the_item_db[itemid2int(item->id)]->category;
+            reftype = (int)the_item_db[item->id]->category;
 
             if (item->own_state == 5)
             {
@@ -405,29 +406,29 @@ void make_item_list(
             }
             if (invctrl == 7)
             {
-                if (!the_item_db[itemid2int(item->id)]->is_readable)
+                if (!the_item_db[item->id]->is_readable)
                 {
                     continue;
                 }
             }
             if (invctrl == 8)
             {
-                if (!the_item_db[itemid2int(item->id)]->is_drinkable)
+                if (!the_item_db[item->id]->is_drinkable)
                 {
                     continue;
                 }
             }
             if (invctrl == 9)
             {
-                if (!the_item_db[itemid2int(item->id)]->is_zappable)
+                if (!the_item_db[item->id]->is_zappable)
                 {
                     continue;
                 }
             }
             if (invctrl == 11)
             {
-                if (item->id == ItemId::gold_piece ||
-                    item->id == ItemId::platinum_coin)
+                if (item->id == "core.gold_piece" ||
+                    item->id == "core.platinum_coin")
                 {
                     continue;
                 }
@@ -478,8 +479,7 @@ void make_item_list(
             }
             if (invctrl == 14)
             {
-                if (item->function == 0 &&
-                    !the_item_db[itemid2int(item->id)]->is_usable &&
+                if (item->function == 0 && !the_item_db[item->id]->is_usable &&
                     !item->is_alive())
                 {
                     continue;
@@ -505,21 +505,21 @@ void make_item_list(
             }
             if (invctrl == 17)
             {
-                if (reftype != 52000 && item->id != ItemId::bait)
+                if (reftype != 52000 && item->id != "core.bait")
                 {
                     continue;
                 }
             }
             if (invctrl == 18)
             {
-                if (cidip->id == ItemId::bait)
+                if (cidip->id == "core.bait")
                 {
-                    if (item->id != ItemId::fishing_pole)
+                    if (item->id != "core.fishing_pole")
                     {
                         continue;
                     }
                 }
-                if (cidip == item || item->id == ItemId::bottle_of_water)
+                if (cidip == item || item->id == "core.bottle_of_water")
                 {
                     continue;
                 }
@@ -533,8 +533,8 @@ void make_item_list(
             }
             if (invctrl == 20)
             {
-                if (item->id == ItemId::gold_piece ||
-                    item->id == ItemId::platinum_coin)
+                if (item->id == "core.gold_piece" ||
+                    item->id == "core.platinum_coin")
                 {
                     continue;
                 }
@@ -601,7 +601,7 @@ void make_item_list(
                 }
                 if (invctrl(1) == 6)
                 {
-                    if (item->weight <= 0 || item->id == ItemId::cooler_box)
+                    if (item->weight <= 0 || item->id == "core.cooler_box")
                     {
                         continue;
                     }
@@ -620,7 +620,7 @@ void make_item_list(
                 {
                     if (game_data.current_map == mdata_t::MapId::lumiest)
                     {
-                        if (item->id != ItemId::ancient_book ||
+                        if (item->id != "core.ancient_book" ||
                             item->param2 == 0)
                         {
                             continue;
@@ -637,7 +637,7 @@ void make_item_list(
                 }
                 if (invctrl(1) == 2)
                 {
-                    if (item->id != ItemId::bill)
+                    if (item->id != "core.bill")
                     {
                         continue;
                     }
@@ -666,14 +666,13 @@ void make_item_list(
             }
             if (invctrl == 26)
             {
-                if (reftype != 52000 && item->id != ItemId::kitty_bank &&
-                    item->id != ItemId::monster_ball &&
-                    item->id != ItemId::little_ball &&
-                    item->id != ItemId::tomato)
+                if (reftype != 52000 && item->id != "core.kitty_bank" &&
+                    item->id != "core.monster_ball" &&
+                    item->id != "core.little_ball" && item->id != "core.tomato")
                 {
                     continue;
                 }
-                if (item->id == ItemId::monster_ball)
+                if (item->id == "core.monster_ball")
                 {
                     if (item->subname != 0)
                     {
@@ -696,8 +695,9 @@ void make_item_list(
             list(0, listmax) = item->global_index();
 
             // ソート情報
-            list(1, listmax) = reftype * 1000 + itemid2int(item->id);
-            if (item->id == ItemId::disc)
+            list(1, listmax) =
+                reftype * 1000 + the_item_db[item->id]->legacy_id;
+            if (item->id == "core.disc")
             {
                 list(1, listmax) += item->param1 + 900;
             }
@@ -864,7 +864,7 @@ void show_message(const OptionalItemRef& citrade, const OptionalItemRef& cidip)
         if (invctrl == 28)
         {
             if (const auto small_medals = item_find(
-                    ItemId::small_medal, ItemFindLocation::player_inventory))
+                    "core.small_medal", ItemFindLocation::player_inventory))
             {
                 p = small_medals->number();
             }
@@ -908,7 +908,7 @@ on_shortcut(OptionalItemRef& citrade, OptionalItemRef& cidip, bool dropcontinue)
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
             p = list(0, cnt);
-            if (g_inv[p]->id == int2itemid(invsc))
+            if (the_item_db[g_inv[p]->id]->legacy_id == invsc)
             {
                 f = 1;
                 if (g_inv[p]->has_charge())
@@ -923,7 +923,7 @@ on_shortcut(OptionalItemRef& citrade, OptionalItemRef& cidip, bool dropcontinue)
         }
         if (f == 0)
         {
-            if (itemfind(g_inv.pc(), int2itemid(invsc)))
+            if (itemfind(g_inv.pc(), *the_item_db.get_id_from_legacy(invsc)))
             {
                 Message::instance().linebreak();
                 txt(i18n::s.get("core.action.cannot_do_in_global"));
@@ -1224,7 +1224,7 @@ void draw_item_list(const OptionalItemRef& mainweapon)
         for (int cnt = 0; cnt < 20; ++cnt)
         {
             if (game_data.skill_shortcuts.at(cnt) ==
-                itemid2int(g_inv[p]->id) + invctrl * 10000)
+                the_item_db[g_inv[p]->id]->legacy_id + invctrl * 10000)
             {
                 s +=
                     u8"{"s + get_bound_shortcut_key_name_by_index(cnt) + u8"}"s;
@@ -1335,7 +1335,7 @@ OnEnterResult on_enter_drop(
     {
         if (inv_count(g_inv.ground()) >= map_data.max_item_count)
         {
-            if (the_item_db[itemid2int(selected_item->id)]->category !=
+            if (the_item_db[selected_item->id]->category !=
                 ItemCategory::furniture)
             {
                 txt(i18n::s.get("core.ui.inv.drop.cannot_anymore"));
@@ -1723,8 +1723,8 @@ OnEnterResult on_enter_give(
         return OnEnterResult{2};
     }
     const auto slot = *slot_opt;
-    reftype = (int)the_item_db[itemid2int(selected_item->id)]->category;
-    if (selected_item->id == ItemId::gift)
+    reftype = (int)the_item_db[selected_item->id]->category;
+    if (selected_item->id == "core.gift")
     {
         txt(i18n::s.get(
             "core.ui.inv.give.present.text", inventory_owner, selected_item));
@@ -1800,13 +1800,12 @@ OnEnterResult on_enter_give(
         {
             f = 1;
             if (strutil::contains(
-                    the_item_db[itemid2int(selected_item->id)]->filter,
-                    u8"/neg/"))
+                    the_item_db[selected_item->id]->filter, u8"/neg/"))
             {
                 f = 0;
             }
             // scroll of teleport/treasure map/deeds
-            switch (itemid2int(selected_item->id))
+            switch (the_item_db[selected_item->id]->legacy_id)
             {
             case 16:
             case 245:
@@ -1824,8 +1823,7 @@ OnEnterResult on_enter_give(
         if (reftype == 52000)
         {
             f = 1;
-            if (the_item_db[itemid2int(selected_item->id)]->subcategory ==
-                52002)
+            if (the_item_db[selected_item->id]->subcategory == 52002)
             {
                 if (inventory_owner.drunk)
                 {
@@ -1836,22 +1834,20 @@ OnEnterResult on_enter_give(
                 }
             }
             if (strutil::contains(
-                    the_item_db[itemid2int(selected_item->id)]->filter,
-                    u8"/neg/"))
+                    the_item_db[selected_item->id]->filter, u8"/neg/"))
             {
                 f = 0;
             }
             if (strutil::contains(
-                    the_item_db[itemid2int(selected_item->id)]->filter,
-                    u8"/nogive/"))
+                    the_item_db[selected_item->id]->filter, u8"/nogive/"))
             {
                 f = 0;
             }
             if (inventory_owner.is_pregnant())
             {
-                if (selected_item->id == ItemId::poison ||
-                    selected_item->id == ItemId::bottle_of_dye ||
-                    selected_item->id == ItemId::bottle_of_sulfuric)
+                if (selected_item->id == "core.poison" ||
+                    selected_item->id == "core.bottle_of_dye" ||
+                    selected_item->id == "core.bottle_of_sulfuric")
                 {
                     f = 1;
                     txt(i18n::s.get("core.ui.inv.give.abortion"));
@@ -1864,15 +1860,15 @@ OnEnterResult on_enter_give(
         snd("core.equip1");
         txt(i18n::s.get(
             "core.ui.inv.give.you_hand", selected_item, inventory_owner));
-        if (selected_item->id == ItemId::engagement_ring ||
-            selected_item->id == ItemId::engagement_amulet)
+        if (selected_item->id == "core.engagement_ring" ||
+            selected_item->id == "core.engagement_amulet")
         {
             txt(i18n::s.get("core.ui.inv.give.engagement", inventory_owner),
                 Message::color{ColorIndex::green});
             chara_modify_impression(inventory_owner, 15);
             inventory_owner.emotion_icon = 317;
         }
-        if (selected_item->id == ItemId::love_potion)
+        if (selected_item->id == "core.love_potion")
         {
             txt(i18n::s.get(
                     "core.ui.inv.give.love_potion.text",
@@ -2181,8 +2177,7 @@ OnEnterResult on_enter_receive(
         return OnEnterResult{2};
     }
     const auto slot = *slot_opt;
-    if (the_item_db[itemid2int(selected_item->id)]->category ==
-        ItemCategory::ore)
+    if (the_item_db[selected_item->id]->category == ItemCategory::ore)
     {
         snd("core.fail1");
         txt(i18n::s.get("core.ui.inv.take_ally.refuse_dialog", inventory_owner),
@@ -2200,8 +2195,8 @@ OnEnterResult on_enter_receive(
         inventory_owner.equipment_slots[p - 100].unequip();
         selected_item->body_part = 0;
     }
-    if (selected_item->id == ItemId::engagement_ring ||
-        selected_item->id == ItemId::engagement_amulet)
+    if (selected_item->id == "core.engagement_ring" ||
+        selected_item->id == "core.engagement_amulet")
     {
         txt(i18n::s.get(
                 "core.ui.inv.take_ally.swallows_ring",
@@ -2216,7 +2211,7 @@ OnEnterResult on_enter_receive(
     }
     snd("core.equip1");
     selected_item->is_quest_target() = false;
-    if (selected_item->id == ItemId::gold_piece)
+    if (selected_item->id == "core.gold_piece")
     {
         in = selected_item->number();
     }
@@ -2226,7 +2221,7 @@ OnEnterResult on_enter_receive(
     }
     txt(i18n::s.get(
         "core.ui.inv.take_ally.you_take", itemname(selected_item, in)));
-    if (selected_item->id == ItemId::gold_piece)
+    if (selected_item->id == "core.gold_piece")
     {
         earn_gold(cdata.player(), in);
         selected_item->remove();
@@ -2299,8 +2294,8 @@ OnEnterResult on_enter_small_medal(const ItemRef& selected_item)
     }
     const auto slot = *slot_opt;
     OptionalItemRef small_medals;
-    if ((small_medals = item_find(
-             ItemId::small_medal, ItemFindLocation::player_inventory)))
+    if ((small_medals =
+             item_find("core.small_medal", ItemFindLocation::player_inventory)))
     {
         p = small_medals->number();
     }
@@ -2635,7 +2630,8 @@ optional<MenuResult> on_cancel(bool dropcontinue)
 bool on_assign_shortcut(const std::string& action, int shortcut)
 {
     snd("core.ok1");
-    p = itemid2int(g_inv[list(0, pagesize * page + cs)]->id) + invctrl * 10000;
+    p = the_item_db[g_inv[list(0, pagesize * page + cs)]->id]->legacy_id +
+        invctrl * 10000;
     if (game_data.skill_shortcuts.at(shortcut) == p)
     {
         game_data.skill_shortcuts.at(shortcut) = 0;

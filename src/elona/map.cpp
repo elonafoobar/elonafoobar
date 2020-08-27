@@ -293,8 +293,7 @@ void map_reload(const std::string& map_filename)
     {
         if (item->own_state == 1)
         {
-            if (the_item_db[itemid2int(item->id)]->category ==
-                ItemCategory::food)
+            if (the_item_db[item->id]->category == ItemCategory::food)
             {
                 item->remove();
             }
@@ -639,7 +638,7 @@ static void _modify_items_on_regenerate()
     for (const auto& item : g_inv.ground())
     {
         // Update tree of fruits.
-        if (item->id == ItemId::tree_of_fruits)
+        if (item->id == "core.tree_of_fruits")
         {
             if (item->param1 < 10)
             {
@@ -882,7 +881,7 @@ void map_reload_noyel()
 {
     for (const auto& item : g_inv.ground())
     {
-        if (item->id == ItemId::shelter || item->id == ItemId::giants_shackle)
+        if (item->id == "core.shelter" || item->id == "core.giants_shackle")
         {
             continue;
         }
@@ -1383,12 +1382,12 @@ TurnResult exit_map()
         cell_featread(cdata.player().position.x, cdata.player().position.y);
         if (game_data.current_map == mdata_t::MapId::your_home)
         {
-            if (mapitemfind(cdata.player().position, ItemId::downstairs))
+            if (mapitemfind(cdata.player().position, "core.downstairs"))
             {
                 feat(1) = 11;
                 feat(2) = 0;
             }
-            if (mapitemfind(cdata.player().position, ItemId::upstairs))
+            if (mapitemfind(cdata.player().position, "core.upstairs"))
             {
                 feat(1) = 10;
                 feat(2) = 0;
@@ -1448,7 +1447,7 @@ TurnResult exit_map()
                     {
                         if (!itemfind(
                                 g_inv.pc(),
-                                ItemId::license_of_the_void_explorer))
+                                "core.license_of_the_void_explorer"))
                         {
                             txt(i18n::s.get(
                                 "core.action.exit_map.not_permitted"));
@@ -2094,8 +2093,7 @@ void map_global_proc_travel_events(Character& chara)
     {
         for (const auto& item : g_inv.for_chara(chara))
         {
-            if (the_item_db[itemid2int(item->id)]->category ==
-                ItemCategory::travelers_food)
+            if (the_item_db[item->id]->category == ItemCategory::travelers_food)
             {
                 if (is_in_fov(chara))
                 {

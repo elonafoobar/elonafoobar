@@ -1,7 +1,7 @@
 #pragma once
 #include "util.hpp"
 #define PUTIT_PROTO_ID int2charaid(3)
-#define PUTITORO_PROTO_ID int2itemid(792)
+#define PUTITORO_PROTO_ID 792
 
 // macros for std::optional results
 #define REQUIRE_SOME(x) REQUIRE(static_cast<bool>(x) == true)

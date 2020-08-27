@@ -38,8 +38,7 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
         int x = 4;
         int y = 8;
         int number = 3;
-        const auto item =
-            itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), x, y, number);
+        const auto item = itemcreate_map_inv(PUTITORO_PROTO_ID, x, y, number);
         REQUIRE_SOME(item);
         item->is_aphrodisiac() = true;
         item->curse_state = CurseState::blessed;
@@ -50,7 +49,8 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
     save_and_reload();
 
     REQUIRE(elona::g_inv[index]->number() == 3);
-    REQUIRE(elona::g_inv[index]->id == PUTITORO_PROTO_ID);
+    REQUIRE(
+        the_item_db[elona::g_inv[index]->id]->legacy_id == PUTITORO_PROTO_ID);
     REQUIRE(elona::g_inv[index]->pos().x == 4);
     REQUIRE(elona::g_inv[index]->pos().y == 8);
     REQUIRE(elona::g_inv[index]->curse_state == CurseState::blessed);

@@ -234,44 +234,41 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             if (item->pos() != cdata.player().position)
                 continue;
-            if (the_item_db[itemid2int(item->id)]->category ==
-                ItemCategory::chest)
+            if (the_item_db[item->id]->category == ItemCategory::chest)
             {
                 p = 1;
             }
-            if (the_item_db[itemid2int(item->id)]->subcategory == 60001)
+            if (the_item_db[item->id]->subcategory == 60001)
             {
                 p = 2;
             }
-            if (the_item_db[itemid2int(item->id)]->category ==
-                ItemCategory::altar)
+            if (the_item_db[item->id]->category == ItemCategory::altar)
             {
                 p = 3;
             }
-            if (item->function != 0 ||
-                the_item_db[itemid2int(item->id)]->is_usable)
+            if (item->function != 0 || the_item_db[item->id]->is_usable)
             {
                 p = 4;
             }
-            if (the_item_db[itemid2int(item->id)]->is_readable)
+            if (the_item_db[item->id]->is_readable)
             {
                 p = 5;
             }
-            if (item->id == ItemId::moon_gate)
+            if (item->id == "core.moon_gate")
             {
                 action = "go_down";
             }
-            if (item->id == ItemId::upstairs &&
+            if (item->id == "core.upstairs" &&
                 game_data.current_map == mdata_t::MapId::your_home)
             {
                 action = "go_up";
             }
-            if (item->id == ItemId::downstairs &&
+            if (item->id == "core.downstairs" &&
                 game_data.current_map == mdata_t::MapId::your_home)
             {
                 action = "go_down";
             }
-            if (item->id == ItemId::kotatsu)
+            if (item->id == "core.kotatsu")
             {
                 action = "go_down";
             }

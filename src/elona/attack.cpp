@@ -225,7 +225,7 @@ bool do_physical_attack_internal(
             attacker.position,
             target.position,
             static_cast<RangedAttackAnimation::Type>(attackskill),
-            the_item_db[itemid2int(weapon->id)]->subcategory,
+            the_item_db[weapon->id]->subcategory,
             weapon->image % 1000,
             weapon->image / 1000)
             .play();
@@ -274,7 +274,7 @@ bool do_physical_attack_internal(
                 if (weapon->quality == Quality::special)
                 {
                     s(1) = i18n::s.get("core.misc.wields_proudly.the") +
-                        iknownnameref(itemid2int(weapon->id));
+                        iknownnameref(the_item_db[weapon->id]->legacy_id);
                 }
                 else if (weapon->subname >= 40000)
                 {
@@ -285,7 +285,7 @@ bool do_physical_attack_internal(
                 else
                 {
                     s(1) = i18n::s.get("core.misc.wields_proudly.the") +
-                        iknownnameref(itemid2int(weapon->id));
+                        iknownnameref(the_item_db[weapon->id]->legacy_id);
                 }
                 if (weapon->quality == Quality::godly)
                 {

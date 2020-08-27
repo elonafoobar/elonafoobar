@@ -602,7 +602,7 @@ bool enchantment_add(
     bool only_check,
     bool force)
 {
-    const auto category = the_item_db[itemid2int(item->id)]->category;
+    const auto category = the_item_db[item->id]->category;
 
     if (type == 0)
     {

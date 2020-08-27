@@ -95,7 +95,7 @@ private:
 public:
     int value = 0;
     int image = 0;
-    ItemId id = ItemId::none;
+    data::InstanceId id{};
     Quality quality = Quality::none;
 
 private:
@@ -162,12 +162,6 @@ public:
     void set_number(int number_);
     void modify_number(int delta);
     void remove();
-
-
-    data::InstanceId new_id() const
-    {
-        return *the_item_db.get_id_from_legacy(itemid2int(this->id));
-    }
 
 
     void on_create();
@@ -507,7 +501,7 @@ void item_acid(const Character& owner, OptionalItemRef item = nullptr);
 
 void itemturn(const ItemRef& item);
 
-OptionalItemRef itemfind(Inventory& inv, ItemId id);
+OptionalItemRef itemfind(Inventory& inv, data::InstanceId id);
 OptionalItemRef itemfind(Inventory& inv, int subcategory);
 
 int itemusingfind(const ItemRef& item, bool disallow_pc = false);
@@ -524,7 +518,7 @@ enum class ItemFindLocation
  * the item's reference or none if not found.
  */
 OptionalItemRef item_find(
-    ItemId id,
+    data::InstanceId id,
     ItemFindLocation = ItemFindLocation::player_inventory_and_ground);
 OptionalItemRef item_find(
     ItemCategory category,
@@ -707,7 +701,7 @@ void damage_by_cursed_equipments(Character& chara);
 void dipcursed(const ItemRef& item);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 void equip_melee_weapon(Character& chara);
-OptionalItemRef mapitemfind(const Position& pos, ItemId id);
+OptionalItemRef mapitemfind(const Position& pos, data::InstanceId id);
 std::string
 itemname(const ItemRef& item, int number = 0, bool with_article = true);
 

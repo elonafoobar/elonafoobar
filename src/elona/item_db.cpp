@@ -77,7 +77,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     // Common initialization
     item_db_set_basic_stats(item, legacy_id);
 
-    item->id = int2itemid(legacy_id);
+    item->id = info.id;
     item->set_number(1);
     item->difficulty_of_identification = 0; // Default value
     item->image = info.image;

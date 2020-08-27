@@ -1652,7 +1652,7 @@ void chara_relocate(
 
 void chara_set_ai_item(Character& chara, ItemRef item)
 {
-    const auto category = the_item_db[itemid2int(item->id)]->category;
+    const auto category = the_item_db[item->id]->category;
     if (category == ItemCategory::food || category == ItemCategory::potion ||
         category == ItemCategory::scroll)
     {

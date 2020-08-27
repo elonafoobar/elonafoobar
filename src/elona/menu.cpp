@@ -1184,7 +1184,7 @@ void show_weapon_dice(
     attackrange = 0;
     if (weapon)
     {
-        if (the_item_db[itemid2int(weapon->id)]->category ==
+        if (the_item_db[weapon->id]->category ==
             ItemCategory::ranged_weapon) // TODO coupling
         {
             attackrange = 1;

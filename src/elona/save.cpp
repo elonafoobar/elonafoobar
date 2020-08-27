@@ -143,7 +143,6 @@ void save_load_gene()
 
 void save_get_inheritance()
 {
-    // TODO
 }
 
 

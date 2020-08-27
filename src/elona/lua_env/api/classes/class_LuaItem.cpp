@@ -71,13 +71,9 @@ void bind(sol::state& lua)
      *
      * [R] The legacy ID of this item.
      */
-    LuaItem.set(
-        "legacy_id",
-        sol::property(
-            [](const ItemRef& self) { return itemid2int(self->id); },
-            [](const ItemRef& self, int new_value) {
-                self->id = int2itemid(new_value);
-            }));
+    LuaItem.set("legacy_id", sol::property([](const ItemRef& self) {
+                    return the_item_db[self->id]->legacy_id;
+                }));
 
     /**
      * @luadoc pos field num
@@ -251,10 +247,11 @@ void bind(sol::state& lua)
      *
      * [R] The new-style prototype ID of the item.
      */
-    LuaItem.set(
-        "id", sol::property([](const ItemRef& self) {
-            return the_item_db.get_id_from_legacy(itemid2int(self->id))->get();
-        }));
+    LuaItem.set("id", sol::property([](const ItemRef& self) {
+                    return the_item_db
+                        .get_id_from_legacy(the_item_db[self->id]->legacy_id)
+                        ->get();
+                }));
     /**
      * @luadoc name field string
      *
@@ -269,9 +266,10 @@ void bind(sol::state& lua)
      *
      * [R] The name of the item without article and number.
      */
-    LuaItem.set("basename", sol::property([](const ItemRef& self) {
-                    return elona::ioriginalnameref(itemid2int(self->id));
-                }));
+    LuaItem.set(
+        "basename", sol::property([](const ItemRef& self) {
+            return elona::ioriginalnameref(the_item_db[self->id]->legacy_id);
+        }));
 
     /**
      * @luadoc number field num
@@ -538,7 +536,7 @@ void bind(sol::state& lua)
      */
     LuaItem.set("prototype", sol::property([](const ItemRef& self) {
                     return *lua::lua->get_data_manager().get().raw(
-                        "core.item", self->new_id());
+                        "core.item", self->id);
                 }));
 
     // Methods

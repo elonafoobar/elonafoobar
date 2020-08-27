@@ -16,7 +16,7 @@ namespace
 bool is_nonstackable(const ItemRef& item)
 {
     return item->quality == Quality::special &&
-        is_equipment(the_item_db[itemid2int(item->id)]->category);
+        is_equipment(the_item_db[item->id]->category);
 }
 
 
@@ -24,7 +24,7 @@ bool is_nonstackable(const ItemRef& item)
 bool is_stackable_with(const ItemRef& item, const ItemRef& base_item)
 {
     const auto ignore_position = !item_get_owner(item).is_map();
-    if (item->id == ItemId::small_medal)
+    if (item->id == "core.small_medal")
     {
         return ignore_position || item->pos() == base_item->pos();
     }

@@ -1446,7 +1446,7 @@ void character_drops_item(Character& victim)
             {
                 continue;
             }
-            if (the_item_db[itemid2int(item->id)]->is_cargo)
+            if (the_item_db[item->id]->is_cargo)
             {
                 if (map_data.type != mdata_t::MapType::world_map &&
                     map_data.type != mdata_t::MapType::player_owned &&
@@ -1599,7 +1599,7 @@ void character_drops_item(Character& victim)
             break;
         }
         if (item->quality > Quality::miracle ||
-            item->id == ItemId::platinum_coin)
+            item->id == "core.platinum_coin")
         {
             f = 1;
         }
@@ -1641,7 +1641,7 @@ void character_drops_item(Character& victim)
             continue;
         }
         if (catitem != 0 && !item->is_blessed_by_ehekatl() &&
-            is_equipment(the_item_db[itemid2int(item->id)]->category) &&
+            is_equipment(the_item_db[item->id]->category) &&
             item->quality >= Quality::great)
         {
             if (rnd(3))
@@ -1650,7 +1650,7 @@ void character_drops_item(Character& victim)
                         "core.misc.black_cat_licks", cdata[catitem], item),
                     Message::color{ColorIndex::cyan});
                 item->is_blessed_by_ehekatl() = true;
-                reftype = (int)the_item_db[itemid2int(item->id)]->category;
+                reftype = (int)the_item_db[item->id]->category;
                 enchantment_add(
                     item,
                     enchantment_generate(enchantment_gen_level(rnd(4))),

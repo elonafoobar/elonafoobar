@@ -2225,7 +2225,7 @@ bool _magic_435(Character& subject, Character& target)
     }
     f = 1;
     {
-        if (itemfind(g_inv.for_chara(subject), ItemId::monster_heart))
+        if (itemfind(g_inv.for_chara(subject), "core.monster_heart"))
         {
             efp = efp * 3 / 2;
         }
@@ -2498,8 +2498,8 @@ bool _magic_21_1127(Character& subject)
                 target_item));
             target_item->modify_number(-1);
             flt();
-            const auto reconstructed_artifact =
-                itemcreate_player_inv(itemid2int(target_item->id), 0);
+            const auto reconstructed_artifact = itemcreate_player_inv(
+                the_item_db[target_item->id]->legacy_id, 0);
             assert(reconstructed_artifact);
             if (equip != 0)
             {
@@ -2648,12 +2648,13 @@ bool _magic_630_1129(Character& subject)
     {
         assert(target_item_opt);
         const auto target_item = target_item_opt.unwrap();
-        item_db_get_charge_level(target_item, itemid2int(target_item->id));
-        if (ichargelevel < 1 || target_item->id == ItemId::rod_of_wishing ||
-            target_item->id == ItemId::rod_of_domination ||
-            target_item->id == ItemId::spellbook_of_wishing ||
-            target_item->id == ItemId::spellbook_of_harvest ||
-            (target_item->id == ItemId::ancient_book &&
+        item_db_get_charge_level(
+            target_item, the_item_db[target_item->id]->legacy_id);
+        if (ichargelevel < 1 || target_item->id == "core.rod_of_wishing" ||
+            target_item->id == "core.rod_of_domination" ||
+            target_item->id == "core.spellbook_of_wishing" ||
+            target_item->id == "core.spellbook_of_harvest" ||
+            (target_item->id == "core.ancient_book" &&
              target_item->param2 != 0))
         {
             txt(i18n::s.get("core.magic.fill_charge.cannot_recharge"));
@@ -2674,8 +2675,7 @@ bool _magic_630_1129(Character& subject)
         {
             f = 0;
         }
-        if (the_item_db[itemid2int(target_item->id)]->category ==
-            ItemCategory::spellbook)
+        if (the_item_db[target_item->id]->category == ItemCategory::spellbook)
         {
             if (rnd(4) == 0)
             {
@@ -2693,7 +2693,7 @@ bool _magic_630_1129(Character& subject)
             {
                 p = ichargelevel - target_item->count + 1;
             }
-            if (the_item_db[itemid2int(target_item->id)]->category ==
+            if (the_item_db[target_item->id]->category ==
                 ItemCategory::spellbook)
             {
                 p = 1;
@@ -2744,7 +2744,8 @@ bool _magic_629(Character& subject)
     {
         assert(target_item_opt);
         const auto target_item = target_item_opt.unwrap();
-        item_db_get_charge_level(target_item, itemid2int(target_item->id));
+        item_db_get_charge_level(
+            target_item, the_item_db[target_item->id]->legacy_id);
         for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (ichargelevel == 1)
@@ -2936,7 +2937,7 @@ bool _magic_1132(Character& subject, int& fltbk, int& valuebk)
         const auto target_item = target_item_opt.unwrap();
         save_trigger_autosaving();
         animeload(8, subject);
-        fltbk = (int)the_item_db[itemid2int(target_item->id)]->category;
+        fltbk = (int)the_item_db[target_item->id]->category;
         valuebk = calcitemvalue(target_item, 0);
         target_item->remove();
         for (int cnt = 0;; ++cnt)
@@ -3397,7 +3398,7 @@ bool _magic_651(Character& subject, Character& target)
     OptionalItemRef eat_item_opt;
     for (const auto& item : g_inv.for_chara(target))
     {
-        if (item->id == ItemId::fish_a)
+        if (item->id == "core.fish_a")
         {
             eat_item_opt = item;
             break;
@@ -3411,8 +3412,7 @@ bool _magic_651(Character& subject, Character& target)
             {
                 continue;
             }
-            if (the_item_db[itemid2int(item->id)]->category !=
-                ItemCategory::food)
+            if (the_item_db[item->id]->category != ItemCategory::food)
             {
                 continue;
             }

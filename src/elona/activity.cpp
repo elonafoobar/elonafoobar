@@ -661,7 +661,7 @@ void activity_eating_start(Character& eater, const ItemRef& food)
         {
             txt(i18n::s.get("core.activity.eat.start.normal", eater, food));
         }
-        if (food->id == ItemId::corpse && food->subname == 344)
+        if (food->id == "core.corpse" && food->subname == 344)
         {
             txt(i18n::s.get("core.activity.eat.start.mammoth"));
         }
@@ -733,7 +733,7 @@ void activity_others_start(
         }
         game_data.time_when_textbook_becomes_available =
             game_data.date.hours() + 48;
-        if (activity_item->id == ItemId::textbook)
+        if (activity_item->id == "core.textbook")
         {
             txt(i18n::s.get(
                 "core.activity.study.start.studying",
@@ -763,7 +763,7 @@ void activity_others_start(
 
 void activity_others_doing_steal(Character& doer, const ItemRef& steal_target)
 {
-    if (steal_target->id == ItemId::iron_maiden)
+    if (steal_target->id == "core.iron_maiden")
     {
         if (rnd(15) == 0)
         {
@@ -773,7 +773,7 @@ void activity_others_doing_steal(Character& doer, const ItemRef& steal_target)
             return;
         }
     }
-    if (steal_target->id == ItemId::guillotine)
+    if (steal_target->id == "core.guillotine")
     {
         if (rnd(15) == 0)
         {
@@ -999,7 +999,7 @@ void activity_others_doing(
                 game_data.date.minute += 30;
             }
         }
-        if (activity_item->id == ItemId::textbook)
+        if (activity_item->id == "core.textbook")
         {
             if (rnd(p) == 0)
             {
@@ -1033,7 +1033,7 @@ void activity_others_end_steal(const ItemRef& steal_target)
     }
 
     in = 1;
-    if (steal_target->id == ItemId::gold_piece)
+    if (steal_target->id == "core.gold_piece")
     {
         in = steal_target->number();
     }
@@ -1060,7 +1060,7 @@ void activity_others_end_steal(const ItemRef& steal_target)
     stolen_item->own_state = 0;
     txt(i18n::s.get("core.activity.steal.succeed", stolen_item));
     const auto item_weight = stolen_item->weight;
-    if (stolen_item->id == ItemId::gold_piece)
+    if (stolen_item->id == "core.gold_piece")
     {
         snd("core.getgold1");
         earn_gold(cdata.player(), in);
@@ -1131,7 +1131,7 @@ void activity_others_end_harvest(const ItemRef& crop)
 
 void activity_others_end_study(const ItemRef& item)
 {
-    if (item->id == ItemId::textbook)
+    if (item->id == "core.textbook")
     {
         txt(i18n::s.get(
             "core.activity.study.finish.studying",
@@ -1619,8 +1619,8 @@ void activity_eating_finish(Character& eater, const ItemRef& food)
 
     chara_anorexia(eater);
 
-    if ((food->id == ItemId::kagami_mochi && rnd(3)) ||
-        (food->id == ItemId::mochi && rnd(10) == 0))
+    if ((food->id == "core.kagami_mochi" && rnd(3)) ||
+        (food->id == "core.mochi" && rnd(10) == 0))
     {
         if (is_in_fov(eater))
         {
@@ -1874,7 +1874,7 @@ void spot_digging(Character& chara)
     {
         for (const auto& item : g_inv.pc())
         {
-            if (item->id == ItemId::treasure_map && item->param1 != 0 &&
+            if (item->id == "core.treasure_map" && item->param1 != 0 &&
                 item->param1 == cdata.player().position.x &&
                 item->param2 == cdata.player().position.y)
             {
@@ -2218,7 +2218,7 @@ void sleep_start(const OptionalItemRef& bed)
 
     optional<int> bed_quality;
     if (bed && bed->param1 != 0 && bed->number() != 0 &&
-        the_item_db[itemid2int(bed->id)]->subcategory == 60004)
+        the_item_db[bed->id]->subcategory == 60004)
     {
         bed_quality = bed->param1;
     }

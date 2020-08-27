@@ -187,7 +187,8 @@ void _load_item_stat_text(const ItemRef& item, int& num_of_desc)
     }
     if (item->dice_x != 0)
     {
-        const auto pierce = calc_rate_to_pierce(itemid2int(item->id));
+        const auto pierce =
+            calc_rate_to_pierce(the_item_db[item->id]->legacy_id);
         list(0, num_of_desc) =
             static_cast<int>(ItemDescriptionType::weapon_info);
         listn(0, num_of_desc) =
@@ -246,7 +247,7 @@ void _load_item_enchantment_desc(const ItemRef& item, int& num_of_desc)
             break;
 
         get_enchantment_description(
-            enc.id, enc.power, the_item_db[itemid2int(item->id)]->category);
+            enc.id, enc.power, the_item_db[item->id]->category);
         listn(0, num_of_desc) = i18n::s.get("core.enchantment.it") + s;
         list(0, num_of_desc) = rtval;
         list(1, num_of_desc) = rtval(1);
@@ -278,8 +279,7 @@ size_t item_load_desc(const ItemRef& item)
 {
     int num_of_desc{};
 
-    const I18NKey& locale_key_prefix =
-        the_item_db[itemid2int(item->id)]->locale_key_prefix;
+    const I18NKey& locale_key_prefix = the_item_db[item->id]->locale_key_prefix;
 
     if (item->identify_state == IdentifyState::completely)
     {

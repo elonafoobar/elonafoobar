@@ -369,7 +369,7 @@ OptionalItemRef item_find_internal(ItemFindLocation location_type, F predicate)
 
 
 
-OptionalItemRef item_find(ItemId id, ItemFindLocation location_type)
+OptionalItemRef item_find(data::InstanceId id, ItemFindLocation location_type)
 {
     return item_find_internal(location_type, [&](const auto& item, auto& inv) {
         if (inv_get_owner(inv).is_map())
@@ -395,7 +395,7 @@ OptionalItemRef item_find(ItemCategory category, ItemFindLocation location_type)
                 return false;
             }
         }
-        return the_item_db[itemid2int(item->id)]->category == category;
+        return the_item_db[item->id]->category == category;
     });
 }
 
@@ -423,7 +423,7 @@ int itemusingfind(const ItemRef& item, bool disallow_pc)
 
 
 
-OptionalItemRef itemfind(Inventory& inv, ItemId id)
+OptionalItemRef itemfind(Inventory& inv, data::InstanceId id)
 {
     return inv_find(inv, [&](const auto& item) { return item->id == id; });
 }
@@ -433,13 +433,13 @@ OptionalItemRef itemfind(Inventory& inv, ItemId id)
 OptionalItemRef itemfind(Inventory& inv, int subcategory)
 {
     return inv_find(inv, [&](const auto& item) {
-        return the_item_db[itemid2int(item->id)]->subcategory == subcategory;
+        return the_item_db[item->id]->subcategory == subcategory;
     });
 }
 
 
 
-OptionalItemRef mapitemfind(const Position& pos, ItemId id)
+OptionalItemRef mapitemfind(const Position& pos, data::InstanceId id)
 {
     for (const auto& item : g_inv.ground())
     {
@@ -476,9 +476,10 @@ void cell_refresh(int x, int y)
                 items.at(number_of_items) = item;
             }
             ++number_of_items;
-            if (ilight(itemid2int(item->id)) != 0)
+            if (ilight(the_item_db[item->id]->legacy_id) != 0)
             {
-                cell_data.at(x, y).light = ilight(itemid2int(item->id));
+                cell_data.at(x, y).light =
+                    ilight(the_item_db[item->id]->legacy_id);
             }
         }
     }
@@ -718,7 +719,7 @@ bool chara_unequip(const ItemRef& item)
 IdentifyState item_identify(const ItemRef& item, IdentifyState level)
 {
     if (level == IdentifyState::almost &&
-        !is_equipment(the_item_db[itemid2int(item->id)]->category))
+        !is_equipment(the_item_db[item->id]->category))
     {
         level = IdentifyState::completely;
     }
@@ -730,7 +731,7 @@ IdentifyState item_identify(const ItemRef& item, IdentifyState level)
     item->identify_state = level;
     if (item->identify_state >= IdentifyState::partly)
     {
-        itemmemory(0, itemid2int(item->id)) = 1;
+        itemmemory(0, the_item_db[item->id]->legacy_id) = 1;
     }
     idtresult = level;
     return idtresult;
@@ -751,7 +752,7 @@ IdentifyState item_identify(const ItemRef& item, int power)
 
 void item_checkknown(const ItemRef& item)
 {
-    if (itemmemory(0, itemid2int(item->id)) &&
+    if (itemmemory(0, the_item_db[item->id]->legacy_id) &&
         item->identify_state == IdentifyState::unidentified)
     {
         item_identify(item, IdentifyState::partly);
@@ -762,18 +763,18 @@ void item_checkknown(const ItemRef& item)
 
 void itemname_additional_info(const ItemRef& item)
 {
-    if (item->id == ItemId::kitty_bank)
+    if (item->id == "core.kitty_bank")
     {
         s_ += i18n::s.get_enum("core.item.kitty_bank_rank", item->param2);
     }
-    if (item->id == ItemId::bait)
+    if (item->id == "core.bait")
     {
         s_ += lang(
             ""s + i18n::s.get_enum("core.item.bait_rank", item->param1),
             u8" <"s + i18n::s.get_enum("core.item.bait_rank", item->param1) +
                 u8">"s);
     }
-    if (item->id == ItemId::ancient_book)
+    if (item->id == "core.ancient_book")
     {
         if (jp)
         {
@@ -795,7 +796,7 @@ void itemname_additional_info(const ItemRef& item)
                     u8">"s);
         }
     }
-    if (item->id == ItemId::recipe)
+    if (item->id == "core.recipe")
     {
         if (item->param1 == 0)
         {
@@ -813,11 +814,11 @@ void itemname_additional_info(const ItemRef& item)
         }
     }
 
-    auto category = the_item_db[itemid2int(item->id)]->category;
+    auto category = the_item_db[item->id]->category;
 
     if (category == ItemCategory::book)
     {
-        if (item->id == ItemId::textbook)
+        if (item->id == "core.textbook")
         {
             s_ += lang(
                 u8"《"s + the_ability_db.get_text(item->param1, "name") +
@@ -825,12 +826,12 @@ void itemname_additional_info(const ItemRef& item)
                 u8" titled <Art of "s +
                     the_ability_db.get_text(item->param1, "name") + u8">"s);
         }
-        else if (item->id == ItemId::book_of_rachel)
+        else if (item->id == "core.book_of_rachel")
         {
             s_ += lang(u8"第"s, u8" of Rachel No."s) + item->param2 +
                 lang(u8"巻目の"s, ""s);
         }
-        else if (item->id == ItemId::book_b)
+        else if (item->id == "core.book_b")
         {
             s_ += lang(
                 u8"《"s + booktitle(item->param1) + u8"》という題名の"s,
@@ -853,7 +854,7 @@ void itemname_additional_info(const ItemRef& item)
             if (item->param2 != 0)
             {
                 skip_ = 1;
-                if (item->id == ItemId::fish_a)
+                if (item->id == "core.fish_a")
                 {
                     s_ = s_ +
                         foodname(
@@ -867,7 +868,7 @@ void itemname_additional_info(const ItemRef& item)
                     s_ = s_ +
                         foodname(
                              item->param1 / 1000,
-                             ioriginalnameref(itemid2int(item->id)),
+                             ioriginalnameref(the_item_db[item->id]->legacy_id),
                              item->param2,
                              item->subname);
                 }
@@ -883,7 +884,7 @@ void itemname_additional_info(const ItemRef& item)
     }
     if (item->subname != 0)
     {
-        if (item->id == ItemId::fish_a || item->id == ItemId::fish_b)
+        if (item->id == "core.fish_a" || item->id == "core.fish_b")
         {
             if (item->subname < 0 || item->subname >= 100)
             {
@@ -895,8 +896,8 @@ void itemname_additional_info(const ItemRef& item)
         else if (
             category == ItemCategory::food ||
             category == ItemCategory::bodyparts ||
-            item->id == ItemId::figurine || item->id == ItemId::card ||
-            item->id == ItemId::shit || item->id == ItemId::bottle_of_milk)
+            item->id == "core.figurine" || item->id == "core.card" ||
+            item->id == "core.shit" || item->id == "core.bottle_of_milk")
         {
             if (item->subname < 0 || item->subname >= 800)
             {
@@ -927,19 +928,19 @@ void itemname_additional_info(const ItemRef& item)
                 }
             }
         }
-        if (item->id == ItemId::deed)
+        if (item->id == "core.deed")
         {
             s_ += lang(""s, u8" of "s) +
                 i18n::s.get_enum("core.ui.home", item->param1) +
                 lang(u8"の"s, ""s);
         }
-        if (item->id == ItemId::bill)
+        if (item->id == "core.bill")
         {
             s_ += lang(
                 ""s + item->subname + u8"goldの"s,
                 u8" <"s + item->subname + u8" gp>"s);
         }
-        if (item->id == ItemId::vomit)
+        if (item->id == "core.vomit")
         {
             if (item->subname < 0 || item->subname >= 800)
             {
@@ -951,7 +952,7 @@ void itemname_additional_info(const ItemRef& item)
                 u8" of "s + chara_db_get_name(int2charaid(item->subname)));
         }
     }
-    if (item->id == ItemId::secret_treasure)
+    if (item->id == "core.secret_treasure")
     {
         if (item->param1 == 169)
         {
@@ -990,8 +991,9 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
     int alpha_ = 0;
     std::string s4_;
     elona_vector1<std::string> buf_;
-    if (itemid2int(item->id) >= maxitemid - 2 ||
-        static_cast<size_t>(itemid2int(item->id)) > ioriginalnameref.size())
+    if (the_item_db[item->id]->legacy_id >= maxitemid - 2 ||
+        static_cast<size_t>(the_item_db[item->id]->legacy_id) >
+            ioriginalnameref.size())
     {
         return i18n::s.get("core.item.unknown_item");
     }
@@ -1004,7 +1006,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
     {
         num2_ = number;
     }
-    const auto category = the_item_db[itemid2int(item->id)]->category;
+    const auto category = the_item_db[item->id]->category;
     if (jp)
     {
         if (num2_ > 1)
@@ -1017,7 +1019,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             if (category == ItemCategory::spellbook ||
                 category == ItemCategory::book)
             {
-                if (item->id == ItemId::recipe)
+                if (item->id == "core.recipe")
                 {
                     s2_ = u8"枚の"s;
                 }
@@ -1045,13 +1047,13 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             }
             if (category == ItemCategory::gold_piece ||
                 category == ItemCategory::platinum_coin ||
-                item->id == ItemId::small_medal ||
-                item->id == ItemId::music_ticket ||
-                item->id == ItemId::token_of_friendship)
+                item->id == "core.small_medal" ||
+                item->id == "core.music_ticket" ||
+                item->id == "core.token_of_friendship")
             {
                 s2_ = u8"枚の"s;
             }
-            if (item->id == ItemId::fish_a)
+            if (item->id == "core.fish_a")
             {
                 s2_ = u8"匹の"s;
             }
@@ -1097,21 +1099,22 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
                 break;
             }
         }
-        if (irandomname(itemid2int(item->id)) == 1 &&
+        if (irandomname(the_item_db[item->id]->legacy_id) == 1 &&
             item->identify_state == IdentifyState::unidentified)
         {
             s2_ = "";
         }
         else
         {
-            s2_ = ""s + ioriginalnameref2(itemid2int(item->id));
+            s2_ = ""s + ioriginalnameref2(the_item_db[item->id]->legacy_id);
             if (strutil::contains(
-                    ioriginalnameref(itemid2int(item->id)), u8"with"))
+                    ioriginalnameref(the_item_db[item->id]->legacy_id),
+                    u8"with"))
             {
                 s3_ = "";
             }
             else if (strutil::contains(
-                         ioriginalnameref(itemid2int(item->id)),
+                         ioriginalnameref(the_item_db[item->id]->legacy_id),
                          u8"for testing"))
             {
                 s3_ = "";
@@ -1200,16 +1203,16 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
                     u8" "s;
             }
         }
-        if (item->id == ItemId::ancient_book && item->param2 != 0)
+        if (item->id == "core.ancient_book" && item->param2 != 0)
         {
             s_ += u8"undecoded "s;
         }
-        if (item->id == ItemId::recipe && item->subname == 0)
+        if (item->id == "core.recipe" && item->subname == 0)
         {
             s_ += u8"custom "s;
         }
     }
-    if (item->id == ItemId::material_kit)
+    if (item->id == "core.material_kit")
     {
         s_ += ""s + the_item_material_db.get_text(item->material, "name") +
             lang(u8"製の"s, u8" "s);
@@ -1231,7 +1234,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
                 u8"work "s;
         }
     }
-    if (item->id == ItemId::gift)
+    if (item->id == "core.gift")
     {
         s_ += i18n::s.get_enum("core.item.gift_rank", item->param4) +
             i18n::space_if_needed();
@@ -1296,28 +1299,29 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
         }
         if (item->identify_state == IdentifyState::unidentified)
         {
-            s_ += iknownnameref(itemid2int(item->id));
+            s_ += iknownnameref(the_item_db[item->id]->legacy_id);
         }
         else if (item->identify_state != IdentifyState::completely)
         {
             if (item->quality < Quality::miracle || !is_equipment(category))
             {
-                s_ += ioriginalnameref(itemid2int(item->id));
+                s_ += ioriginalnameref(the_item_db[item->id]->legacy_id);
             }
             else
             {
-                s_ += iknownnameref(itemid2int(item->id));
+                s_ += iknownnameref(the_item_db[item->id]->legacy_id);
             }
         }
         else if (item->quality == Quality::special || item->is_precious())
         {
             if (jp)
             {
-                s_ = u8"★"s + s_ + ioriginalnameref(itemid2int(item->id));
+                s_ = u8"★"s + s_ +
+                    ioriginalnameref(the_item_db[item->id]->legacy_id);
             }
             else
             {
-                s_ += ioriginalnameref(itemid2int(item->id));
+                s_ += ioriginalnameref(the_item_db[item->id]->legacy_id);
             }
         }
         else
@@ -1328,11 +1332,11 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             }
             if (alpha_ == 1 && jp)
             {
-                s_ += ialphanameref(itemid2int(item->id));
+                s_ += ialphanameref(the_item_db[item->id]->legacy_id);
             }
             else
             {
-                s_ += ioriginalnameref(itemid2int(item->id));
+                s_ += ioriginalnameref(the_item_db[item->id]->legacy_id);
             }
             if (en && is_equipment(category) && item->subname >= 10000 &&
                 item->subname < 20000)
@@ -1383,7 +1387,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
                 }
             }
         }
-        if (s2_ == "" && item->id != ItemId::fish_a && num2_ > 1)
+        if (s2_ == "" && item->id != "core.fish_a" && num2_ > 1)
         {
             switch (s_.back())
             {
@@ -1494,11 +1498,11 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             s_ += u8" ["s + item->dv + u8","s + item->pv + u8"]"s;
         }
     }
-    if (en && (item->id == ItemId::wallet || item->id == ItemId::suitcase))
+    if (en && (item->id == "core.wallet" || item->id == "core.suitcase"))
     {
         s_ += u8"(Lost property)"s;
     }
-    if (item->id == ItemId::fishing_pole && item->count != 0)
+    if (item->id == "core.fishing_pole" && item->count != 0)
     {
         s_ += lang(
             u8"("s + i18n::s.get_enum("core.item.bait_rank", item->param4) +
@@ -1506,7 +1510,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             u8"("s + item->count + u8" "s +
                 i18n::s.get_enum("core.item.bait_rank", item->param4) + u8")"s);
     }
-    if (item->id == ItemId::monster_ball)
+    if (item->id == "core.monster_ball")
     {
         if (item->subname == 0)
         {
@@ -1519,7 +1523,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
                 u8")"s;
         }
     }
-    if (item->id == ItemId::small_gamble_chest)
+    if (item->id == "core.small_gamble_chest")
     {
         s_ += lang(u8" Lv"s, u8" Level "s) + item->param2;
     }
@@ -1552,7 +1556,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
     }
     if (category == ItemCategory::chest)
     {
-        if (item->id == ItemId::shopkeepers_trunk)
+        if (item->id == "core.shopkeepers_trunk")
         {
             s_ += lang(u8"(移動時消滅)"s, u8"(Temporal)"s);
         }
@@ -1584,11 +1588,11 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             u8"("s + (item->count - game_data.date.hours()) + u8"時間)"s,
             u8"(Next: "s + (item->count - game_data.date.hours()) + u8"h.)"s);
     }
-    if (item->id == ItemId::shelter && item->count != 0)
+    if (item->id == "core.shelter" && item->count != 0)
     {
         s_ += lang(u8" シリアルNo."s, u8" serial no."s) + item->count;
     }
-    if (item->id == ItemId::disc)
+    if (item->id == "core.disc")
     {
         s_ += u8" <BGM"s + item->param1 + u8">"s;
     }
@@ -1607,7 +1611,7 @@ void remain_make(const ItemRef& remain, const Character& chara)
     remain->subname = charaid2int(chara.id);
     remain->color = chara.image / 1000;
 
-    if (remain->id == ItemId::corpse)
+    if (remain->id == "core.corpse")
     {
         remain->weight = 250 * (chara.weight + 100) / 100 + 500;
         remain->value = remain->weight / 5;
@@ -1631,10 +1635,10 @@ void remain_make(const ItemRef& remain, const Character& chara)
 
 void item_dump_desc(const ItemRef& item)
 {
-    reftype = (int)the_item_db[itemid2int(item->id)]->category;
+    reftype = (int)the_item_db[item->id]->category;
 
-    item_db_get_charge_level(item, itemid2int(item->id));
-    item_db_get_description(item, itemid2int(item->id));
+    item_db_get_charge_level(item, the_item_db[item->id]->legacy_id);
+    item_db_get_description(item, the_item_db[item->id]->legacy_id);
 
     p = item_load_desc(item);
 
@@ -1673,7 +1677,7 @@ void item_acid(const Character& owner, OptionalItemRef item)
         }
     }
 
-    if (!is_equipment(the_item_db[itemid2int(item->id)]->category))
+    if (!is_equipment(the_item_db[item->id]->category))
     {
         return;
     }
@@ -1711,7 +1715,7 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
         }
         for (const auto& item : inv)
         {
-            if (item->id == ItemId::fireproof_blanket)
+            if (item->id == "core.fireproof_blanket")
             {
                 if (!blanket)
                 {
@@ -1746,7 +1750,7 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
             continue;
         }
 
-        const auto category = the_item_db[itemid2int(item->id)]->category;
+        const auto category = the_item_db[item->id]->category;
         if (category == ItemCategory::food && item->param2 == 0)
         {
             if (inv_owner.is_map())
@@ -1940,7 +1944,7 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
         }
         for (const auto& item : inv)
         {
-            if (item->id == ItemId::coldproof_blanket)
+            if (item->id == "core.coldproof_blanket")
             {
                 if (!blanket)
                 {
@@ -1973,7 +1977,7 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
             continue;
         }
 
-        const auto category = the_item_db[itemid2int(item->id)]->category;
+        const auto category = the_item_db[item->id]->category;
         if (category == ItemCategory::chest || category == ItemCategory::tool ||
             category == ItemCategory::gold_piece)
         {
@@ -2105,7 +2109,7 @@ void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
         txt(i18n::s.get("core.action.drop.execute", itemname(dropped_item)));
     }
 
-    if (dropped_item->id == ItemId::bottle_of_water) // Water
+    if (dropped_item->id == "core.bottle_of_water") // Water
     {
         if (const auto altar = item_find(ItemCategory::altar))
         {
@@ -2145,7 +2149,7 @@ void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
             building_update_home_rank();
         }
     }
-    if (stacked_item->id == ItemId::campfire)
+    if (stacked_item->id == "core.campfire")
     {
         map_data.play_campfire_sound = 1;
         play_music();
@@ -2163,7 +2167,7 @@ void item_build_shelter(const ItemRef& shelter)
 
 int iequiploc(const ItemRef& item)
 {
-    switch (the_item_db[itemid2int(item->id)]->category)
+    switch (the_item_db[item->id]->category)
     {
     case ItemCategory::helm: return 1;
     case ItemCategory::necklace: return 2;
@@ -2227,7 +2231,7 @@ void auto_identify()
         {
             continue;
         }
-        if (!is_equipment(the_item_db[itemid2int(item->id)]->category))
+        if (!is_equipment(the_item_db[item->id]->category))
         {
             continue;
         }
@@ -2239,7 +2243,7 @@ void auto_identify()
         {
             const auto prev_name = itemname(item);
             item_identify(item, IdentifyState::completely);
-            itemmemory(0, itemid2int(item->id)) = 1;
+            itemmemory(0, the_item_db[item->id]->legacy_id) = 1;
             if (!g_config.hide_autoidentify())
             {
                 txt(i18n::s.get(
@@ -2271,7 +2275,7 @@ void auto_identify()
 
 bool cargocheck(const ItemRef& item)
 {
-    if (!the_item_db[itemid2int(item->id)]->is_cargo)
+    if (!the_item_db[item->id]->is_cargo)
         return true;
 
     if (map_data.type != mdata_t::MapType::world_map &&
@@ -2298,7 +2302,7 @@ ItemRef item_convert_artifact(
     const ItemRef& artifact,
     bool ignore_map_inventory)
 {
-    if (!is_equipment(the_item_db[itemid2int(artifact->id)]->category))
+    if (!is_equipment(the_item_db[artifact->id]->category))
     {
         return artifact; // is not an equipment.
     }
@@ -2357,8 +2361,8 @@ ItemRef item_convert_artifact(
 
     while (true)
     {
-        flt(the_item_db[itemid2int(artifact_id)]->level, Quality::miracle);
-        flttypeminor = the_item_db[itemid2int(artifact_id)]->subcategory;
+        flt(the_item_db[artifact_id]->level, Quality::miracle);
+        flttypeminor = the_item_db[artifact_id]->subcategory;
         if (const auto converted_item =
                 itemcreate(*artifact_inv, 0, artifact_pos, 0))
         {
@@ -2420,7 +2424,7 @@ void damage_by_cursed_equipments(Character& chara)
 
 void dipcursed(const ItemRef& item)
 {
-    if (the_item_db[itemid2int(item->id)]->category == ItemCategory::food)
+    if (the_item_db[item->id]->category == ItemCategory::food)
     {
         if (item->material == 35)
         {
@@ -2433,7 +2437,7 @@ void dipcursed(const ItemRef& item)
             txt(i18n::s.get("core.action.dip.unchanged", item));
         }
     }
-    else if (is_equipment(the_item_db[itemid2int(item->id)]->category))
+    else if (is_equipment(the_item_db[item->id]->category))
     {
         --item->enhancement;
         txt(i18n::s.get("core.action.dip.rusts", item));

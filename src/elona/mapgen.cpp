@@ -2978,11 +2978,11 @@ void initialize_quest_map_town()
     for (const auto& item : g_inv.ground())
     {
         f = 0;
-        if (item->id == ItemId::well || item->id == ItemId::fountain)
+        if (item->id == "core.well" || item->id == "core.fountain")
         {
             item->param1 = -10;
         }
-        if (item->id == ItemId::safe)
+        if (item->id == "core.safe")
         {
             item->param1 = 0;
         }

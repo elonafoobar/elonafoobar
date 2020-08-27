@@ -366,7 +366,7 @@ void adventurer_discover_equipment(Character& adv)
         item->identify_state = IdentifyState::completely;
         if (item->quality >= Quality::miracle)
         {
-            if (is_equipment(the_item_db[itemid2int(item->id)]->category))
+            if (is_equipment(the_item_db[item->id]->category))
             {
                 adventurer_add_news(
                     NewsType::discovery, adv, itemname(item.unwrap()));

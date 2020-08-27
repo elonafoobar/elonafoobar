@@ -291,7 +291,7 @@ void _ally_sells_item(Character& chara)
 
     for (const auto& item : g_inv.for_chara(chara))
     {
-        if (the_item_db[itemid2int(item->id)]->category == ItemCategory::ore)
+        if (the_item_db[item->id]->category == ItemCategory::ore)
         {
             sold_item_count += item->number();
             const auto total_value = item->value * item->number();
@@ -423,7 +423,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
     {
         for (const auto& item : g_inv.ground())
         {
-            if (item->id == ItemId::snow_man && item->pos().x >= scx &&
+            if (item->id == "core.snow_man" && item->pos().x >= scx &&
                 item->pos().x < scx + inf_screenw && item->pos().y >= scy &&
                 item->pos().y < scy + inf_screenh)
             {
@@ -513,9 +513,9 @@ void _proc_hungry(Character& chara)
         }
         if (auto item = itemcreate_chara_inv(chara, 0, 0))
         {
-            if (the_item_db[itemid2int(item->id)]->is_drinkable)
+            if (the_item_db[item->id]->is_drinkable)
             {
-                if (item->id == ItemId::molotov)
+                if (item->id == "core.molotov")
                 {
                     if (rnd(5) == 0)
                     {
