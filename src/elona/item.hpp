@@ -91,10 +91,10 @@ public:
     ObjId obj_id;
 
 private:
-    int number_ = 0;
+    lua_int _number{};
 
 public:
-    int value = 0;
+    lua_int value{};
     int image = 0;
     data::InstanceId id{};
     Quality quality = Quality::none;
@@ -113,18 +113,18 @@ public:
 
 
 
-    int weight = 0;
+    lua_int weight{};
     IdentifyState identify_state = IdentifyState::unidentified;
-    int count = 0;
+    lua_int count{};
     Dice dice{};
-    int hit_bonus = 0;
-    int dv = 0;
-    int pv = 0;
+    lua_int hit_bonus{};
+    lua_int dv{};
+    lua_int pv{};
     int skill = 0;
     CurseState curse_state = CurseState::none;
     int body_part = 0;
     int function = 0;
-    int enhancement = 0;
+    lua_int enhancement{};
     OwnState own_state{};
     int color = 0;
     int subname = 0;
@@ -133,8 +133,8 @@ public:
     int param2 = 0;
     int param3 = 0;
     int param4 = 0;
-    int difficulty_of_identification = 0;
-    int turn = 0;
+    lua_int difficulty_of_identification{};
+    lua_int turn{};
 
 private:
     FlagSet _flags;
@@ -153,13 +153,13 @@ public:
         return "LuaItem";
     }
 
-    int number() const
+    lua_int number() const
     {
-        return number_;
+        return _number;
     }
 
-    void set_number(int number_);
-    void modify_number(int delta);
+    void set_number(lua_int new_number);
+    void modify_number(lua_int delta);
     void remove();
 
 
@@ -234,7 +234,7 @@ public:
     {
         /* clang-format off */
         ar(obj_id);
-        ar(number_);
+        ar(_number);
         ar(value);
         ar(image);
         ar(id);
@@ -422,7 +422,7 @@ public:
     }
 
 
-    optional<int> capacity() const noexcept
+    optional<size_t> capacity() const noexcept
     {
         return _capacity;
     }
@@ -487,7 +487,7 @@ void item_checkknown(const ItemRef& item);
  * TODO
  */
 ItemRef
-item_separate(const ItemRef& item, const InventorySlot& slot, int number);
+item_separate(const ItemRef& item, const InventorySlot& slot, lua_int number);
 
 /**
  * TODO
@@ -645,7 +645,7 @@ void remain_make(const ItemRef& remain, const Character& chara);
 
 void item_drop(
     const ItemRef& item_in_inventory,
-    int num,
+    lua_int num,
     bool building_shelter = false);
 void item_build_shelter(const ItemRef& shelter);
 
@@ -700,6 +700,6 @@ int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 void equip_melee_weapon(Character& chara);
 OptionalItemRef mapitemfind(const Position& pos, data::InstanceId id);
 std::string
-itemname(const ItemRef& item, int number = 0, bool with_article = true);
+itemname(const ItemRef& item, lua_int number = 0, bool with_article = true);
 
 } // namespace elona

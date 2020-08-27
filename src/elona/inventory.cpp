@@ -38,9 +38,9 @@ bool is_stackable_with(const ItemRef& item, const ItemRef& base_item)
 
 
 
-int inv_weight(Inventory& inv)
+lua_int inv_weight(Inventory& inv)
 {
-    int weight{};
+    lua_int weight{};
     for (const auto& item : inv)
     {
         if (item->weight >= 0)
@@ -53,9 +53,9 @@ int inv_weight(Inventory& inv)
 
 
 
-int inv_cargo_weight(Inventory& inv)
+lua_int inv_cargo_weight(Inventory& inv)
 {
-    int weight{};
+    lua_int weight{};
     for (const auto& item : inv)
     {
         if (item->weight < 0)
@@ -204,7 +204,7 @@ InvStackResult inv_stack(
     Inventory& inv,
     const ItemRef& base_item,
     bool show_message,
-    optional<int> number)
+    optional<lua_int> number)
 {
     if (is_nonstackable(base_item))
     {

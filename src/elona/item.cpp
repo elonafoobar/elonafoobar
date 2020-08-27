@@ -154,7 +154,7 @@ void Inventory::clear()
     {
         if (item)
         {
-            item->number_ = 0;
+            item->_number = 0;
             item->obj_id = ObjId::nil();
             item->_inventory = nullptr;
             item->_index = -1;
@@ -527,7 +527,7 @@ void itemturn(const ItemRef& item)
 
 
 ItemRef
-item_separate(const ItemRef& item, const InventorySlot& slot, int number)
+item_separate(const ItemRef& item, const InventorySlot& slot, lua_int number)
 {
     const auto dst = item_copy(item, slot);
     item->modify_number(-number);
@@ -567,35 +567,35 @@ void Item::remove()
 
 
 
-void Item::modify_number(int delta)
+void Item::modify_number(lua_int delta)
 {
-    this->set_number(this->number_ + delta);
+    set_number(_number + delta);
 }
 
 
 
-void Item::set_number(int new_number)
+void Item::set_number(lua_int new_number)
 {
-    new_number = std::max(new_number, 0);
-    if (number_ == new_number)
+    new_number = std::max(new_number, lua_int{0});
+    if (_number == new_number)
         return;
 
     auto inv_owner = inv_get_owner(*inventory());
     const auto inv_owner_chara = inv_owner.as_character();
     const auto needs_cell_refresh =
-        inv_owner.is_map() && (number_ == 0 || new_number == 0);
+        inv_owner.is_map() && (_number == 0 || new_number == 0);
     const auto needs_refresh_burden_state =
         inv_owner_chara && inv_owner_chara->index;
 
-    if (number_ == 0)
+    if (_number == 0)
     {
-        number_ = new_number;
+        _number = new_number;
         on_create();
     }
     else
     {
-        number_ = new_number;
-        if (number_ == 0)
+        _number = new_number;
+        if (_number == 0)
         {
             on_remove();
         }
@@ -982,9 +982,8 @@ void itemname_additional_info(const ItemRef& item)
 
 
 
-std::string itemname(const ItemRef& item, int number, bool with_article)
+std::string itemname(const ItemRef& item, lua_int number, bool with_article)
 {
-    int num2_ = 0;
     std::string s2_;
     std::string s3_;
     int alpha_ = 0;
@@ -999,16 +998,12 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
     item_checkknown(item);
     if (number == 0)
     {
-        num2_ = item->number();
-    }
-    else
-    {
-        num2_ = number;
+        number = item->number();
     }
     const auto category = the_item_db[item->id]->category;
     if (jp)
     {
-        if (num2_ > 1)
+        if (number > 1)
         {
             s2_ = u8"個の"s;
             if (category == ItemCategory::armor)
@@ -1056,7 +1051,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             {
                 s2_ = u8"匹の"s;
             }
-            s_ = ""s + num2_ + s2_;
+            s_ = ""s + number + s2_;
         }
         else
         {
@@ -1147,19 +1142,19 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             {
                 s3_ += " ";
             }
-            if (num2_ > 1)
+            if (number > 1)
             {
                 if (s2_ == "variety")
                 {
-                    s_ = ""s + num2_ + u8" " + s_ + u8"variety " + s3_;
+                    s_ = ""s + number + u8" " + s_ + u8"variety " + s3_;
                 }
                 else if (s2_ == "dish")
                 {
-                    s_ = ""s + num2_ + u8" " + s_ + u8"dishes " + s3_;
+                    s_ = ""s + number + u8" " + s_ + u8"dishes " + s3_;
                 }
                 else
                 {
-                    s_ = ""s + num2_ + u8" " + s_ + s2_ + u8"s " + s3_;
+                    s_ = ""s + number + u8" " + s_ + s2_ + u8"s " + s3_;
                 }
             }
             else
@@ -1167,9 +1162,9 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
                 s_ = s_ + s2_ + u8" " + s3_;
             }
         }
-        else if (num2_ > 1)
+        else if (number > 1)
         {
-            s_ = ""s + num2_ + u8" " + s_;
+            s_ = ""s + number + u8" " + s_;
         }
     }
     if (item->material == "core.raw" && item->param3 < 0)
@@ -1372,7 +1367,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             {
                 s_ = u8"the "s + s_;
             }
-            else if (num2_ == 1)
+            else if (number == 1)
             {
                 s4_ = strmid(s_, 0, 1);
                 if (s4_ == u8"a"s || s4_ == u8"o"s || s4_ == u8"i"s ||
@@ -1386,7 +1381,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
                 }
             }
         }
-        if (s2_ == "" && item->id != "core.fish_a" && num2_ > 1)
+        if (s2_ == "" && item->id != "core.fish_a" && number > 1)
         {
             switch (s_.back())
             {
@@ -2089,7 +2084,10 @@ bool item_is_on_ground(const ItemRef& item)
 
 
 
-void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
+void item_drop(
+    const ItemRef& item_in_inventory,
+    lua_int num,
+    bool building_shelter)
 {
     const auto slot = inv_make_free_slot_force(g_inv.ground());
     const auto dropped_item = item_separate(item_in_inventory, slot, num);

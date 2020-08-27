@@ -95,7 +95,7 @@ void bind(sol::state& lua)
         "count",
         sol::property(
             [](const ItemRef& self) { return self->count; },
-            [](const ItemRef& self, int new_value) {
+            [](const ItemRef& self, lua_int new_value) {
                 self->count = new_value;
             }));
 
@@ -137,7 +137,7 @@ void bind(sol::state& lua)
         "value",
         sol::property(
             [](const ItemRef& self) { return self->value; },
-            [](const ItemRef& self, int new_value) {
+            [](const ItemRef& self, lua_int new_value) {
                 self->value = new_value;
             }));
 
@@ -265,7 +265,9 @@ void bind(sol::state& lua)
         "number",
         sol::property(
             [](const ItemRef& self) { return self->number(); },
-            [](const ItemRef& self, int number) { self->set_number(number); }));
+            [](const ItemRef& self, lua_int number) {
+                self->set_number(number);
+            }));
 
     /**
      * @luadoc curse_state field CurseState
