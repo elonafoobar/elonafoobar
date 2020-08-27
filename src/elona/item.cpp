@@ -874,7 +874,7 @@ void itemname_additional_info(const ItemRef& item)
                 return;
             }
         }
-        if (item->own_state == 4)
+        if (item->own_state == OwnState::crop)
         {
             s_ += lang(""s, u8" grown "s) +
                 i18n::s.get_enum("core.ui.weight", item->subname) +
@@ -903,7 +903,7 @@ void itemname_additional_info(const ItemRef& item)
                 s_ += u8"/bugged/"s;
                 return;
             }
-            if (item->own_state != 4)
+            if (item->own_state != OwnState::crop)
             {
                 s_ += lang(""s, u8" of "s) +
                     chara_db_get_name(int2charaid(item->subname));
@@ -2098,7 +2098,7 @@ void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
 
     if (building_shelter)
     {
-        dropped_item->own_state = 3;
+        dropped_item->own_state = OwnState::shelter;
         dropped_item->count = game_data.next_shelter_serial_id + 100;
         ++game_data.next_shelter_serial_id;
     }

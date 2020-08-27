@@ -2569,7 +2569,7 @@ std::string txtitemoncell(int x, int y)
     const auto item_indice = item_info_memory.item_indice();
     std::string items_text;
     bool first = true;
-    int own_state = 0;
+    auto own_state = OwnState::none;
     for (const auto& item_index : item_indice)
     {
         if (item_index == 0)
@@ -2589,11 +2589,11 @@ std::string txtitemoncell(int x, int y)
         }
         items_text += itemname(item.unwrap());
     }
-    if (own_state <= 0)
+    if (own_state <= OwnState::none)
     {
         return i18n::s.get("core.action.move.item_on_cell.item", items_text);
     }
-    else if (own_state == 3)
+    else if (own_state == OwnState::shelter)
     {
         return i18n::s.get(
             "core.action.move.item_on_cell.building", items_text);

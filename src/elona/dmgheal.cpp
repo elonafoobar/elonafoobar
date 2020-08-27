@@ -1548,7 +1548,7 @@ void character_drops_item(Character& victim)
                 const auto slot = inv_make_free_slot_force(g_inv.ground());
                 const auto dropped_item =
                     item_separate(item, slot, item->number());
-                dropped_item->own_state = -2;
+                dropped_item->own_state = OwnState::lost;
             }
         }
         cell_refresh(victim.position.x, victim.position.y);
@@ -2043,7 +2043,7 @@ void character_drops_item(Character& victim)
         if (const auto item = itemcreate_map_inv(361, victim.position, 0))
         {
             item->param1 = victim.shop_store_id;
-            item->own_state = 2;
+            item->own_state = OwnState::shop;
         }
     }
     if (rollanatomy == 1 || victim.quality >= Quality::miracle || 0 ||

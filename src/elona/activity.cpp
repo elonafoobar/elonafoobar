@@ -653,7 +653,7 @@ void activity_eating_start(Character& eater, const ItemRef& food)
     if (is_in_fov(eater))
     {
         snd("core.eat1");
-        if (food->own_state == 1 && eater.is_player_or_ally())
+        if (food->own_state == OwnState::town && eater.is_player_or_ally())
         {
             txt(i18n::s.get("core.activity.eat.start.in_secret", eater, food));
         }
@@ -1057,7 +1057,7 @@ void activity_others_end_steal(const ItemRef& steal_target)
 
     const auto stolen_item = item_separate(steal_target, slot, in);
     stolen_item->is_stolen() = true;
-    stolen_item->own_state = 0;
+    stolen_item->own_state = OwnState::none;
     txt(i18n::s.get("core.activity.steal.succeed", stolen_item));
     const auto item_weight = stolen_item->weight;
     if (stolen_item->id == "core.gold_piece")

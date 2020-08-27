@@ -209,7 +209,7 @@ void bind(sol::state& lua)
         sol::property(
             [](const ItemRef& self) { return self->own_state; },
             [](const ItemRef& self, int new_value) {
-                self->own_state = new_value;
+                self->own_state = static_cast<OwnState>(new_value);
             }));
 
     /**

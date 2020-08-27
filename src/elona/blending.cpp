@@ -176,7 +176,7 @@ bool check_one_blending_material(
     bool check_pos)
 {
     if ((the_blending_recipe_db.ensure(recipe_id).type == 0 || step != 0) &&
-        item->own_state > 0)
+        item->own_state > OwnState::none)
     {
         return false;
     }

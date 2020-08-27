@@ -226,48 +226,48 @@ static void _init_map_truce_ground()
     if (const auto item = itemcreate_map_inv(171, 10, 8, 0))
     {
         item->param1 = 1;
-        item->own_state = 1;
+        item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 13, 8, 0))
     {
         item->param1 = 2;
-        item->own_state = 1;
+        item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 10, 13, 0))
     {
         item->param1 = 5;
-        item->own_state = 1;
+        item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 13, 13, 0))
     {
         item->param1 = 4;
-        item->own_state = 1;
+        item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 20, 8, 0))
     {
         item->param1 = 3;
-        item->own_state = 1;
+        item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 23, 8, 0))
     {
         item->param1 = 7;
-        item->own_state = 1;
+        item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 20, 13, 0))
     {
         item->param1 = 6;
-        item->own_state = 1;
+        item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 23, 13, 0))
     {
-        item->own_state = 1;
+        item->own_state = OwnState::town;
     }
     map_data.bgm = 79;
     map_placeplayer();
@@ -661,7 +661,7 @@ static void _init_map_cyber_dome()
     if (const auto item = itemcreate_map_inv(171, 19, 5, 0))
     {
         item->param1 = 1;
-        item->own_state = 1;
+        item->own_state = OwnState::town;
     }
     flt();
     if (const auto chara = chara_create(-1, 173, 9, 16))
@@ -2697,7 +2697,7 @@ static void _init_map_fields_forest()
         flttypemajor = 80000;
         if (const auto item = itemcreate_map_inv(0, -1, -1, 0))
         {
-            item->own_state = 1;
+            item->own_state = OwnState::town;
             cell_data.at(item->position().x, item->position().y)
                 .chip_id_actual = 0;
         }
@@ -2730,7 +2730,7 @@ static void _init_map_fields_grassland()
         flttypemajor = 80000;
         if (const auto item = itemcreate_map_inv(0, -1, -1, 0))
         {
-            item->own_state = 1;
+            item->own_state = OwnState::town;
         }
     }
 }
@@ -2750,7 +2750,7 @@ static void _init_map_fields_desert()
         flt();
         if (const auto item = itemcreate_map_inv(527, -1, -1, 0))
         {
-            item->own_state = 1;
+            item->own_state = OwnState::town;
         }
     }
 }
@@ -2774,7 +2774,7 @@ static void _init_map_fields_snow_field()
         fltselect = 8;
         if (const auto item = itemcreate_map_inv(0, -1, -1, 0))
         {
-            item->own_state = 1;
+            item->own_state = OwnState::town;
         }
     }
 }
@@ -2796,7 +2796,7 @@ static void _init_map_fields_plain_field()
         flttypemajor = 80000;
         if (const auto item = itemcreate_map_inv(0, -1, -1, 0))
         {
-            item->own_state = 1;
+            item->own_state = OwnState::town;
         }
     }
 }

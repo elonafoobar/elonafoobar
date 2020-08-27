@@ -94,7 +94,7 @@ void _map_randsite()
                 flt();
                 if (const auto item = itemcreate_map_inv(173, *pos, 0))
                 {
-                    item->own_state = 1;
+                    item->own_state = OwnState::town;
                 }
                 return;
             }
@@ -103,7 +103,7 @@ void _map_randsite()
                 flt();
                 if (const auto item = itemcreate_map_inv(172, *pos, 0))
                 {
-                    item->own_state = 1;
+                    item->own_state = OwnState::town;
                     item->param1 = choice(isetgod);
                 }
                 return;
@@ -291,7 +291,7 @@ void map_reload(const std::string& map_filename)
 
     for (const auto& item : g_inv.ground())
     {
-        if (item->own_state == 1)
+        if (item->own_state == OwnState::town)
         {
             if (the_item_db[item->id]->category == ItemCategory::food)
             {
@@ -314,7 +314,7 @@ void map_reload(const std::string& map_filename)
                 if (const auto item =
                         itemcreate_map_inv(cmapdata(0, i), x, y, 0))
                 {
-                    item->own_state = cmapdata(3, i);
+                    item->own_state = static_cast<OwnState>(cmapdata(3, i));
                 }
             }
         }
@@ -650,11 +650,11 @@ static void _modify_items_on_regenerate()
         // Clear player-owned items on the ground.
         if (map_is_town_or_guild())
         {
-            if (item->own_state < 0)
+            if (item->own_state == OwnState::lost)
             {
-                ++item->own_state;
+                item->own_state = OwnState::lost_disappearing;
             }
-            if (item->own_state == 0)
+            if (item->own_state == OwnState::none)
             {
                 item->remove();
             }
@@ -893,23 +893,23 @@ void map_reload_noyel()
         flt();
         if (const auto item = itemcreate_map_inv(763, 29, 16, 0))
         {
-            item->own_state = 1;
+            item->own_state = OwnState::town;
         }
         flt();
         if (const auto item = itemcreate_map_inv(686, 29, 16, 0))
         {
-            item->own_state = 1;
+            item->own_state = OwnState::town;
         }
         flt();
         if (const auto item = itemcreate_map_inv(171, 29, 17, 0))
         {
             item->param1 = 6;
-            item->own_state = 1;
+            item->own_state = OwnState::town;
         }
         flt();
         if (const auto item = itemcreate_map_inv(756, 29, 17, 0))
         {
-            item->own_state = 5;
+            item->own_state = OwnState::town_special;
         }
         flt();
         if (const auto chara = chara_create(-1, 345, 48, 19))

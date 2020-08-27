@@ -315,4 +315,45 @@ inline bool is_guest(Role role)
     return 2000 <= static_cast<int>(role);
 }
 
+
+
+enum class OwnState : int
+{
+    /// Your lost items on death.
+    lost = -2,
+
+    /// Your lost items on death. When you enter the map where you died, the
+    /// lost items's `OwnState` are set to this value. If you do not pick
+    /// them up, they will disappear in your second visit.
+    lost_disappearing = -1,
+
+    /// Usual state. Items in character inventory or on dungeons.
+    none = 0,
+
+    /// Town's property. It cannot be obtained.
+    // TODO rename?
+    town = 1,
+
+    /// It cannot be carried (e.g., wandering vendor's trunk)
+    // TODO rename?
+    shop = 2,
+
+    /// Built shelter.
+    shelter = 3,
+
+    /// Crops placed in Harvest quests.
+    crop = 4,
+
+    /// Town's property, and not available for use.
+    // TODO rename?
+    town_special = 5,
+
+    // Harvested crops. Defining it can fix one known bug in vanilla, but for
+    // now, I don't.
+    // crop_harvested = 6,
+};
+
+
+ENUMUTIL_DEFINE_COMPARISON_OPERATORS(OwnState)
+
 } // namespace elona

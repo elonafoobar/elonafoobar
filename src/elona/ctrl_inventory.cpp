@@ -355,7 +355,7 @@ void make_item_list(
 
             reftype = (int)the_item_db[item->id]->category;
 
-            if (item->own_state == 5)
+            if (item->own_state == OwnState::town_special)
             {
                 // ショウルームのアイテムで、[調べる]でなく、showroom_onlyのものを
                 // 使おうとしているのでもないならリストから除外
@@ -627,12 +627,12 @@ void make_item_list(
                             continue;
                         }
                     }
-                    else if (item->own_state != 4)
+                    else if (item->own_state != OwnState::crop)
                     {
                         continue;
                     }
                 }
-                else if (item->own_state == 4)
+                else if (item->own_state == OwnState::crop)
                 {
                     continue;
                 }
@@ -655,7 +655,7 @@ void make_item_list(
                     }
                 }
             }
-            else if (item->own_state == 4)
+            else if (item->own_state == OwnState::crop)
             {
                 // 調べる、置く、拾う、食べる、納入する
                 // 以外は禁止(収穫依頼の野菜)
@@ -685,7 +685,7 @@ void make_item_list(
             {
                 if (cnt2 == 0)
                 {
-                    if (item->own_state != 1)
+                    if (item->own_state != OwnState::town)
                     {
                         continue;
                     }
@@ -1453,15 +1453,16 @@ OnEnterResult on_enter_external_inventory(
             }
         }
     }
-    if (selected_item->own_state > 0 && selected_item->own_state < 3)
+    if (selected_item->own_state > OwnState::none &&
+        selected_item->own_state < OwnState::shelter)
     {
         snd("core.fail1");
-        if (selected_item->own_state == 2)
+        if (selected_item->own_state == OwnState::shop)
         {
             txt(i18n::s.get("core.action.get.cannot_carry"),
                 Message::only_once{true});
         }
-        if (selected_item->own_state == 1)
+        if (selected_item->own_state == OwnState::town)
         {
             txt(i18n::s.get("core.action.get.not_owned"),
                 Message::only_once{true});

@@ -507,7 +507,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                 {
                     if (category == ItemCategory::food)
                     {
-                        if (item_opt->own_state <= 0 &&
+                        if (item_opt->own_state <= OwnState::none &&
                             !is_cursed(item_opt->curse_state))
                         {
                             return do_eat_command(chara, item_opt.unwrap());
@@ -515,7 +515,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                     }
                     if (category == ItemCategory::well)
                     {
-                        if (item_opt->own_state <= 1 &&
+                        if (item_opt->own_state <= OwnState::town &&
                             item_opt->param1 >= -5 && item_opt->param3 < 20 &&
                             item_opt->id != "core.holy_well")
                         {
@@ -526,7 +526,8 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                 if (category == ItemCategory::gold_piece ||
                     category == ItemCategory::ore)
                 {
-                    if (item_opt->own_state <= 0 && !item_opt->is_precious() &&
+                    if (item_opt->own_state <= OwnState::none &&
+                        !item_opt->is_precious() &&
                         map_data.type != mdata_t::MapType::player_owned)
                     {
                         in = item_opt->number();

@@ -125,7 +125,7 @@ public:
     int body_part = 0;
     int function = 0;
     int enhancement = 0;
-    int own_state = 0;
+    OwnState own_state{};
     int color = 0;
     int subname = 0;
     data::InstanceId material{};

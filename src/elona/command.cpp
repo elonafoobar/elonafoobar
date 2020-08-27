@@ -98,7 +98,7 @@ void _search_for_crystal()
     optional<int> d;
     for (const auto& item : g_inv.ground())
     {
-        if (item->own_state != 5)
+        if (item->own_state != OwnState::town_special)
         {
             continue;
         }
@@ -2419,7 +2419,7 @@ TurnResult do_use_command(ItemRef use_item)
         update_screen();
         return TurnResult::play_scene;
     case 7:
-        if (use_item->own_state != 3)
+        if (use_item->own_state != OwnState::shelter)
         {
             if (map_prevents_building_shelter())
             {
@@ -3560,16 +3560,18 @@ TurnResult do_get_command()
     }
 
     const auto item_opt = cell_get_item_if_only_one(cdata.player().position);
-    if ((item_opt->own_state > 0 && item_opt->own_state < 3) ||
-        item_opt->own_state == 5)
+    if ((item_opt->own_state > OwnState::none &&
+         item_opt->own_state < OwnState::shelter) ||
+        item_opt->own_state == OwnState::town_special)
     {
         snd("core.fail1");
-        if (item_opt->own_state == 2)
+        if (item_opt->own_state == OwnState::shop)
         {
             txt(i18n::s.get("core.action.get.cannot_carry"),
                 Message::only_once{true});
         }
-        if (item_opt->own_state == 1 || item_opt->own_state == 5)
+        if (item_opt->own_state == OwnState::town ||
+            item_opt->own_state == OwnState::town_special)
         {
             txt(i18n::s.get("core.action.get.not_owned"),
                 Message::only_once{true});
@@ -5319,7 +5321,7 @@ PickUpItemResult pick_up_item(
         }
         if (the_item_db[item->id]->category == ItemCategory::food)
         {
-            if (item->own_state == 4)
+            if (item->own_state == OwnState::crop)
             {
                 if (!cdata.player().activity)
                 {
@@ -5335,7 +5337,7 @@ PickUpItemResult pick_up_item(
                 }
             }
         }
-        if (item->own_state == 3)
+        if (item->own_state == OwnState::shelter)
         {
             txt(i18n::s.get("core.action.pick_up.do_you_want_to_remove", item));
             if (yes_no())
@@ -5351,7 +5353,7 @@ PickUpItemResult pick_up_item(
                     }
                     mid = midbk;
                     item->count = 0;
-                    item->own_state = 0;
+                    item->own_state = OwnState::none;
                 }
             }
             else
@@ -5407,9 +5409,9 @@ PickUpItemResult pick_up_item(
             }
         }
     }
-    if (item->own_state < 0)
+    if (item->own_state < OwnState::none)
     {
-        item->own_state = 0;
+        item->own_state = OwnState::none;
     }
     item->is_quest_target() = false;
     item_checkknown(item);
@@ -5622,7 +5624,7 @@ TurnResult do_bash(Character& chara)
             item_separate(tree);
             snd("core.bash1");
             txt(i18n::s.get("core.action.bash.tree.execute", tree));
-            if (tree->own_state == 5 || tree->param1 <= 0)
+            if (tree->own_state == OwnState::town_special || tree->param1 <= 0)
             {
                 txt(i18n::s.get("core.action.bash.tree.no_fruits"));
                 return TurnResult::turn_end;
@@ -5827,7 +5829,7 @@ void proc_autopick()
     {
         if (item->position() != cdata.player().position)
             continue;
-        if (item->own_state > 0)
+        if (item->own_state > OwnState::none)
             continue;
 
         item_checkknown(item);

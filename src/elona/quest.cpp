@@ -1111,7 +1111,7 @@ void quest_exit_map()
     {
         for (const auto& item : g_inv.pc())
         {
-            if (item->own_state == 4)
+            if (item->own_state == OwnState::crop)
             {
                 item->remove();
             }

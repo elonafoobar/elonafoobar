@@ -49,7 +49,7 @@ void _food_gets_rotten(int chara_idx, const ItemRef& food)
     {
         return; // The expiration date has not come yet.
     }
-    if (food->own_state > 0)
+    if (food->own_state > OwnState::none)
     {
         return; // On the field.
     }
