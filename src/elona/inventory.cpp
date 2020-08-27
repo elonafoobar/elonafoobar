@@ -162,7 +162,7 @@ InventorySlot inv_compress(Inventory& inv)
         int threshold = 200 * (i * i + 1);
         for (const auto& item : inv)
         {
-            if (!item->is_precious() && item->value < threshold)
+            if (!item->is_precious && item->value < threshold)
             {
                 item->remove();
                 ++number_of_deleted_items;

@@ -76,26 +76,54 @@ void Item::clear()
 
 bool Item::almost_equals(const Item& other, bool ignore_position) const
 {
-    return true
-        // && number == other.number
-        && value == other.value && image == other.image &&
-        id == other.id
-        // && quality == other.quality
-        && (ignore_position || position() == other.position()) &&
-        weight == other.weight && identify_state == other.identify_state &&
-        charges == other.charges && dice == other.dice &&
-        hit_bonus == other.hit_bonus && dv == other.dv && pv == other.pv &&
-        skill == other.skill && curse_state == other.curse_state &&
-        body_part == other.body_part && function == other.function &&
-        bonus_value == other.bonus_value && own_state == other.own_state &&
-        tint == other.tint && subname == other.subname &&
-        material == other.material && param1 == other.param1 &&
-        param2 == other.param2 && param3 == other.param3 &&
+    /* clang-format off */
+    return
+        // number() == other.number() &&
+        value == other.value &&
+        image == other.image &&
+        id == other.id &&
+        // quality == other.quality &&
+        (ignore_position || position() == other.position()) &&
+        weight == other.weight &&
+        identify_state == other.identify_state &&
+        charges == other.charges &&
+        dice == other.dice &&
+        hit_bonus == other.hit_bonus &&
+        dv == other.dv &&
+        pv == other.pv &&
+        skill == other.skill &&
+        curse_state == other.curse_state &&
+        body_part == other.body_part &&
+        function == other.function &&
+        bonus_value == other.bonus_value &&
+        own_state == other.own_state &&
+        tint == other.tint &&
+        subname == other.subname &&
+        material == other.material &&
+        param1 == other.param1 &&
+        param2 == other.param2 &&
+        param3 == other.param3 &&
         param4 == other.param4 &&
-        identify_level == other.identify_level
-        // && turn == other.turn
-        && _flags == other._flags &&
+        identify_level == other.identify_level &&
+        // turn == other.turn &&
+        is_acidproof == other.is_acidproof &&
+        is_fireproof == other.is_fireproof &&
+        is_coldproof == other.is_coldproof &&
+        is_precious == other.is_precious &&
+        has_charges == other.has_charges &&
+        has_cooldown_time == other.has_cooldown_time &&
+        is_aphrodisiac == other.is_aphrodisiac &&
+        is_poisoned == other.is_poisoned &&
+        is_blessed_by_ehekatl == other.is_blessed_by_ehekatl &&
+        is_stolen == other.is_stolen &&
+        is_quest_target == other.is_quest_target &&
+        is_no_drop == other.is_no_drop &&
+        is_alive == other.is_alive &&
+        is_eternal_force == other.is_eternal_force &&
+        is_handmade == other.is_handmade &&
+        is_showroom_only == other.is_showroom_only &&
         range::equal(enchantments, other.enchantments);
+    /* clang-format on */
 }
 
 
@@ -1238,7 +1266,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
         if (item->identify_state == IdentifyState::completely &&
             is_equipment(category))
         {
-            if (item->is_eternal_force())
+            if (item->is_eternal_force)
             {
                 alpha_ = 1;
                 s_ += lang(u8"エターナルフォース"s, u8"eternal force"s) +
@@ -1305,7 +1333,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
                 s_ += iknownnameref(the_item_db[item->id]->legacy_id);
             }
         }
-        else if (item->quality == Quality::special || item->is_precious())
+        else if (item->quality == Quality::special || item->is_precious)
         {
             if (jp)
             {
@@ -1452,7 +1480,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
         {
             s_ += ""s + cnvfix(item->bonus_value) + u8" "s;
         }
-        if (item->has_charge())
+        if (item->has_charges)
         {
             s_ += i18n::s.get("core.item.charges", item->charges);
         }
@@ -1567,15 +1595,15 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
             u8"(仕入れ値 "s + item->param2 + u8"g)"s,
             u8"(Buying price: "s + item->param2 + u8")"s);
     }
-    if (item->is_aphrodisiac())
+    if (item->is_aphrodisiac)
     {
         s_ += lang(u8"(媚薬混入)"s, u8"(Aphrodisiac)"s);
     }
-    if (item->is_poisoned())
+    if (item->is_poisoned)
     {
         s_ += lang(u8"(毒物混入)"s, u8"(Poisoned)"s);
     }
-    if (item->has_cooldown_time() && game_data.date.hours() < item->charges)
+    if (item->has_cooldown_time && game_data.date.hours() < item->charges)
     {
         s_ += lang(
             u8"("s + (item->charges - game_data.date.hours()) + u8"時間)"s,
@@ -1675,7 +1703,7 @@ void item_acid(const Character& owner, OptionalItemRef item)
         return;
     }
 
-    if (item->is_acidproof())
+    if (item->is_acidproof)
     {
         txt(i18n::s.get("core.item.acid.immune", owner, item.unwrap()));
     }
@@ -1738,7 +1766,7 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
             continue;
         }
         rowact_item(item);
-        if (item->is_fireproof() || item->is_precious())
+        if (item->is_fireproof || item->is_precious)
         {
             continue;
         }
@@ -1965,7 +1993,7 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
             continue;
         }
         rowact_item(item);
-        if (item->is_precious())
+        if (item->is_precious)
         {
             continue;
         }

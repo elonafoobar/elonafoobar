@@ -1433,7 +1433,7 @@ void character_drops_item(Character& victim)
                 {
                     continue;
                 }
-                if (item->is_precious())
+                if (item->is_precious)
                 {
                     continue;
                 }
@@ -1508,7 +1508,7 @@ void character_drops_item(Character& victim)
                 item->body_part = 0;
             }
             f = 0;
-            if (!item->is_precious())
+            if (!item->is_precious)
             {
                 if (rnd(4) == 0)
                 {
@@ -1632,7 +1632,7 @@ void character_drops_item(Character& victim)
         {
             f = 1;
         }
-        if (item->is_quest_target())
+        if (item->is_quest_target)
         {
             f = 1;
         }
@@ -1640,7 +1640,7 @@ void character_drops_item(Character& victim)
         {
             continue;
         }
-        if (catitem != 0 && !item->is_blessed_by_ehekatl() &&
+        if (catitem != 0 && !item->is_blessed_by_ehekatl &&
             is_equipment(the_item_db[item->id]->category) &&
             item->quality >= Quality::great)
         {
@@ -1649,7 +1649,7 @@ void character_drops_item(Character& victim)
                 txt(i18n::s.get(
                         "core.misc.black_cat_licks", cdata[catitem], item),
                     Message::color{ColorIndex::cyan});
-                item->is_blessed_by_ehekatl() = true;
+                item->is_blessed_by_ehekatl = true;
                 reftype = (int)the_item_db[item->id]->category;
                 enchantment_add(
                     item,

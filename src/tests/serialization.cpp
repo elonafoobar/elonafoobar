@@ -40,7 +40,7 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
         int number = 3;
         const auto item = itemcreate_map_inv(PUTITORO_PROTO_ID, x, y, number);
         REQUIRE_SOME(item);
-        item->is_aphrodisiac() = true;
+        item->is_aphrodisiac = true;
         item->curse_state = CurseState::blessed;
         item->identify_state = IdentifyState::partly;
         index = item->global_index();
@@ -54,7 +54,7 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
     REQUIRE(elona::g_inv[index]->position().x == 4);
     REQUIRE(elona::g_inv[index]->position().y == 8);
     REQUIRE(elona::g_inv[index]->curse_state == CurseState::blessed);
-    REQUIRE(elona::g_inv[index]->is_aphrodisiac());
+    REQUIRE(elona::g_inv[index]->is_aphrodisiac);
     REQUIRE(itemname(g_inv[index]) == u8"3個のプチトロ(媚薬混入)");
 }
 

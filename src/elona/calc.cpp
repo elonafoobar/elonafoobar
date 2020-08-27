@@ -967,7 +967,7 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
             }
         }
     }
-    if (item->has_charge())
+    if (item->has_charges)
     {
         item_db_get_charge_level(item, the_item_db[item->id]->legacy_id);
         if (item->charges < 0)
@@ -1018,7 +1018,7 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
         {
             ret /= 20;
         }
-        if (item->is_stolen())
+        if (item->is_stolen)
         {
             if (game_data.guild.belongs_to_thieves_guild == 0)
             {
@@ -1045,7 +1045,7 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
         {
             ret = 15000;
         }
-        if (item->is_stolen())
+        if (item->is_stolen)
         {
             ret = 1;
         }

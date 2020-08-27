@@ -399,7 +399,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
 
     if (item->id == "core.sisters_love_fueled_lunch")
     {
-        item->is_handmade() = true;
+        item->is_handmade = true;
     }
 
     if (item->id == "core.cooler_box")
@@ -875,11 +875,11 @@ void set_material_specific_attributes(const ItemRef& item)
     {
         if (material_data.fireproof)
         {
-            item->is_acidproof() = true;
+            item->is_acidproof = true;
         }
         if (material_data.acidproof)
         {
-            item->is_fireproof() = true;
+            item->is_fireproof = true;
         }
     }
 }

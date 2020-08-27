@@ -955,7 +955,7 @@ void add_enchantments(const ItemRef& item)
         {
             if (reftype == 24000 || reftype == 10000)
             {
-                item->is_alive() = true;
+                item->is_alive = true;
                 item->param1 = 1;
                 return;
             }
@@ -974,7 +974,7 @@ void add_enchantments(const ItemRef& item)
             {
                 if (rnd(10) == 0)
                 {
-                    item->is_eternal_force() = true;
+                    item->is_eternal_force = true;
                     enchantment_add(
                         item, enchantment_generate(99), enchantment_gen_p());
                     item->curse_state = CurseState::blessed;
@@ -987,9 +987,9 @@ void add_enchantments(const ItemRef& item)
                 item,
                 enchantment_generate(enchantment_gen_level(egolv)),
                 enchantment_gen_p() + (fixlv == Quality::godly) * 100 +
-                    (item->is_eternal_force()) * 100,
+                    (item->is_eternal_force) * 100,
                 20 - (fixlv == Quality::godly) * 10 -
-                    (item->is_eternal_force()) * 20);
+                    (item->is_eternal_force) * 20);
         }
     }
     if (fixlv == Quality::special)

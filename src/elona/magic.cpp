@@ -2408,7 +2408,7 @@ bool _magic_49(Character& subject, const ItemRef& hammer)
     }
     assert(target_item_opt);
     const auto target_item = target_item_opt.unwrap();
-    if (target_item->quality >= Quality::miracle || target_item->is_alive())
+    if (target_item->quality >= Quality::miracle || target_item->is_alive)
     {
         txt(i18n::s.get("core.magic.garoks_hammer.no_effect"));
         fixmaterial = 0;
@@ -2431,9 +2431,9 @@ bool _magic_49(Character& subject, const ItemRef& hammer)
             target_item,
             enchantment_generate(enchantment_gen_level(egolv)),
             enchantment_gen_p() + (fixlv == Quality::godly) * 100 +
-                (target_item->is_eternal_force()) * 100,
+                (target_item->is_eternal_force) * 100,
             20 - (fixlv == Quality::godly) * 10 -
-                (target_item->is_eternal_force()) * 20);
+                (target_item->is_eternal_force) * 20);
     }
     randomize();
     txt(i18n::s.get("core.magic.garoks_hammer.apply", target_item));
@@ -2471,7 +2471,7 @@ bool _magic_21_1127(Character& subject)
     if (f)
     {
         if (target_item_opt->quality == Quality::godly ||
-            target_item_opt->is_alive())
+            target_item_opt->is_alive)
         {
             if (efid == 1127)
             {
@@ -2928,7 +2928,7 @@ bool _magic_1132(Character& subject, int& fltbk, int& valuebk)
     {
         assert(target_item_opt);
         if (target_item_opt->quality > Quality::miracle ||
-            target_item_opt->is_precious())
+            target_item_opt->is_precious)
         {
             f = 0;
         }
@@ -3410,7 +3410,7 @@ bool _magic_651(Character& subject, Character& target)
     {
         for (const auto& item : g_inv.for_chara(target))
         {
-            if (item->is_precious())
+            if (item->is_precious)
             {
                 continue;
             }
@@ -3427,7 +3427,7 @@ bool _magic_651(Character& subject, Character& target)
         return true;
     }
     const auto eat_item = eat_item_opt.unwrap();
-    if (eat_item->is_aphrodisiac())
+    if (eat_item->is_aphrodisiac)
     {
         if (is_in_fov(target))
         {

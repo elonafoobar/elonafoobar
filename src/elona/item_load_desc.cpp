@@ -132,38 +132,38 @@ void _load_item_stat_text(const ItemRef& item, int& num_of_desc)
             i18n::s.get("core.item.desc.speeds_up_ether_disease");
         ++num_of_desc;
     }
-    if (item->is_acidproof())
+    if (item->is_acidproof)
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.acidproof");
         ++num_of_desc;
     }
-    if (item->is_fireproof())
+    if (item->is_fireproof)
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.fireproof");
         ++num_of_desc;
     }
-    if (item->is_precious())
+    if (item->is_precious)
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.precious");
         ++num_of_desc;
     }
-    if (item->is_blessed_by_ehekatl())
+    if (item->is_blessed_by_ehekatl)
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) =
             i18n::s.get("core.item.desc.bit.blessed_by_ehekatl");
         ++num_of_desc;
     }
-    if (item->is_stolen())
+    if (item->is_stolen)
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.stolen");
         ++num_of_desc;
     }
-    if (item->is_alive())
+    if (item->is_alive)
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.alive") +
@@ -172,14 +172,14 @@ void _load_item_stat_text(const ItemRef& item, int& num_of_desc)
             u8"%]"s;
         ++num_of_desc;
     }
-    if (item->is_showroom_only())
+    if (item->is_showroom_only)
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) =
             i18n::s.get("core.item.desc.bit.show_room_only");
         ++num_of_desc;
     }
-    if (item->is_handmade())
+    if (item->is_handmade)
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.handmade");
@@ -262,7 +262,7 @@ void _load_item_enchantment_desc(const ItemRef& item, int& num_of_desc)
         ++enc_index;
     }
 
-    if (item->is_eternal_force())
+    if (item->is_eternal_force)
     {
         list(0, num_of_desc) =
             static_cast<int>(ItemDescriptionType::enchantment);

@@ -90,7 +90,7 @@ std::vector<ModifierMatcher> _modifier_matchers = {
     {"precious",
      [](const ItemRef& item) {
          return item->identify_state >= IdentifyState::almost &&
-             item->is_precious();
+             item->is_precious;
      }},
     {"blessed",
      [](const ItemRef& item) {
@@ -107,7 +107,7 @@ std::vector<ModifierMatcher> _modifier_matchers = {
          return item->identify_state >= IdentifyState::almost &&
              item->curse_state == CurseState::doomed;
      }},
-    {"alive", [](const ItemRef& item) { return item->is_alive(); }},
+    {"alive", [](const ItemRef& item) { return item->is_alive; }},
 };
 
 

@@ -332,7 +332,7 @@ void supply_new_equipment(Character& chara)
             {
                 continue;
             }
-            if (item->is_quest_target())
+            if (item->is_quest_target)
             {
                 continue;
             }

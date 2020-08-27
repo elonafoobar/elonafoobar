@@ -659,7 +659,7 @@ int quest_generate()
             {
                 i(0) = n;
                 i(1) = the_item_db[item->id]->legacy_id;
-                item->is_quest_target() = true;
+                item->is_quest_target = true;
                 break;
             }
             else

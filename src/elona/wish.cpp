@@ -539,7 +539,7 @@ bool wish_for_item(Character& chara, const std::string& input)
             continue;
 
         // Unwishable item
-        if (item->is_precious() || item->quality == Quality::special)
+        if (item->is_precious || item->quality == Quality::special)
         {
             if (!debug_is_wizard())
             {

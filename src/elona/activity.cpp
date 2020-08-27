@@ -913,7 +913,7 @@ void activity_others_doing_steal(Character& doer, const ItemRef& steal_target)
     {
         f = 1;
     }
-    if (steal_target->is_precious())
+    if (steal_target->is_precious)
     {
         if (f != 1)
         {
@@ -1045,7 +1045,7 @@ void activity_others_end_steal(const ItemRef& steal_target)
         return;
     }
     const auto slot = *slot_opt;
-    steal_target->is_quest_target() = false;
+    steal_target->is_quest_target = false;
     if (steal_target->body_part != 0)
     {
         auto& item_owner = *item_get_owner(steal_target).as_character();
@@ -1056,7 +1056,7 @@ void activity_others_end_steal(const ItemRef& steal_target)
     }
 
     const auto stolen_item = item_separate(steal_target, slot, in);
-    stolen_item->is_stolen() = true;
+    stolen_item->is_stolen = true;
     stolen_item->own_state = OwnState::none;
     txt(i18n::s.get("core.activity.steal.succeed", stolen_item));
     const auto item_weight = stolen_item->weight;

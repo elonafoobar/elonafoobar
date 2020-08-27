@@ -58,9 +58,6 @@ struct InventorySlot
 struct Item
 {
 private:
-    using FlagSet = std::bitset<32>;
-
-
     // Index of this item into the global cdata array.
     // Used for communicating with legacy code that takes integer index
     // arguments. New code should pass Item& instead. Not serialized; set on
@@ -136,10 +133,23 @@ public:
     lua_int identify_level{};
     lua_int turn{};
 
-private:
-    FlagSet _flags;
+    bool is_acidproof{};
+    bool is_fireproof{};
+    bool is_coldproof{};
+    bool is_precious{};
+    bool has_charges{};
+    bool has_cooldown_time{};
+    bool is_aphrodisiac{};
+    bool is_poisoned{};
+    bool is_blessed_by_ehekatl{};
+    bool is_stolen{};
+    bool is_quest_target{};
+    bool is_no_drop{};
+    bool is_alive{};
+    bool is_eternal_force{};
+    bool is_handmade{};
+    bool is_showroom_only{};
 
-public:
     std::vector<Enchantment> enchantments;
 
 
@@ -165,35 +175,6 @@ public:
 
     void on_create();
     void on_remove();
-
-
-#define ELONA_ITEM_DEFINE_FLAG_ACCESSOR(name, n) \
-    bool name() const \
-    { \
-        return _flags[n]; \
-    } \
-    FlagSet::reference name() \
-    { \
-        return _flags[n]; \
-    }
-
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_acidproof, 1)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_fireproof, 2)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(has_charge, 4)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_precious, 5)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_aphrodisiac, 6)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(has_cooldown_time, 7)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_blessed_by_ehekatl, 8)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_stolen, 9)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_alive, 10)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_quest_target, 12)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_marked_as_no_drop, 13)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_poisoned, 14)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_eternal_force, 15)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_showroom_only, 16)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_handmade, 17)
-
-#undef ELONA_ITEM_DEFINE_FLAG_ACCESSOR
 
 
 
@@ -262,7 +243,22 @@ public:
         ar(param4);
         ar(identify_level);
         ar(turn);
-        ar(_flags);
+        ar(is_acidproof);
+        ar(is_fireproof);
+        ar(is_coldproof);
+        ar(is_precious);
+        ar(has_charges);
+        ar(has_cooldown_time);
+        ar(is_aphrodisiac);
+        ar(is_poisoned);
+        ar(is_blessed_by_ehekatl);
+        ar(is_stolen);
+        ar(is_quest_target);
+        ar(is_no_drop);
+        ar(is_alive);
+        ar(is_eternal_force);
+        ar(is_handmade);
+        ar(is_showroom_only);
         ar(enchantments);
         /* clang-format on */
     }

@@ -850,7 +850,7 @@ void blendig_menu_select_materials()
         if (p != -1)
         {
             const auto item_index = p(0);
-            if (g_inv[item_index]->is_marked_as_no_drop())
+            if (g_inv[item_index]->is_no_drop)
             {
                 snd("core.fail1");
                 txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));

@@ -2192,7 +2192,7 @@ TalkResult talk_npc(Character& speaker)
         {
             for (const auto& item : g_inv.pc())
             {
-                if (item->is_marked_as_no_drop())
+                if (item->is_no_drop)
                 {
                     continue;
                 }

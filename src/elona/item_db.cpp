@@ -95,7 +95,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(2) = 61;
         fixeditemenc(3) = 200;
         fixeditemenc(4) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -112,20 +112,20 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 778: item->function = 44; break;
     case 777:
         item->function = 26;
-        item->is_precious() = true;
-        item->has_cooldown_time() = true;
+        item->is_precious = true;
+        item->has_cooldown_time = true;
         item->param3 = 240;
         fixlv = Quality::special;
         break;
     case 776:
         item->function = 26;
-        item->is_precious() = true;
-        item->has_cooldown_time() = true;
+        item->is_precious = true;
+        item->has_cooldown_time = true;
         item->param3 = 240;
         fixlv = Quality::special;
         break;
     case 775:
-        item->is_precious() = true;
+        item->is_precious = true;
         item->param2 = 8;
         break;
     case 772:
@@ -140,13 +140,13 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(1) = 100;
         fixeditemenc(2) = 0;
         item->function = 17;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->param1 = 200;
         fixlv = Quality::special;
         break;
     case 760:
         item->function = 49;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->param1 = rnd(20000) + 1;
         fixlv = Quality::special;
         break;
@@ -156,7 +156,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(0) = 35;
         fixeditemenc(1) = 100;
         fixeditemenc(2) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -172,7 +172,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(8) = 33;
         fixeditemenc(9) = 100;
         fixeditemenc(10) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -180,12 +180,12 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 755: item->param2 = 6; break;
     case 749:
         item->function = 48;
-        item->is_precious() = true;
+        item->is_precious = true;
         break;
     case 748:
         item->function = 47;
-        item->is_precious() = true;
-        item->is_showroom_only() = true;
+        item->is_precious = true;
+        item->is_showroom_only = true;
         break;
     case 747:
         item->param1 = 1;
@@ -193,38 +193,38 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 746:
         item->function = 30;
-        item->is_precious() = true;
-        item->has_cooldown_time() = true;
+        item->is_precious = true;
+        item->has_cooldown_time = true;
         item->param1 = 1132;
         item->param2 = 100;
         item->param3 = 24;
         break;
     case 745:
         item->function = 30;
-        item->is_precious() = true;
-        item->has_cooldown_time() = true;
+        item->is_precious = true;
+        item->has_cooldown_time = true;
         item->param1 = 1132;
         item->param2 = 100;
         item->param3 = 24;
         break;
     case 744:
         item->function = 30;
-        item->is_precious() = true;
-        item->has_cooldown_time() = true;
+        item->is_precious = true;
+        item->has_cooldown_time = true;
         item->param1 = 1132;
         item->param2 = 100;
         item->param3 = 24;
         break;
     case 743:
         item->function = 30;
-        item->is_precious() = true;
-        item->has_cooldown_time() = true;
+        item->is_precious = true;
+        item->has_cooldown_time = true;
         item->param1 = 1132;
         item->param2 = 100;
         item->param3 = 24;
         break;
     case 742:
-        item->is_precious() = true;
+        item->is_precious = true;
         fixlv = Quality::special;
         break;
     case 741:
@@ -238,7 +238,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(6) = 10011;
         fixeditemenc(7) = 720;
         fixeditemenc(8) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -250,7 +250,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(4) = 20057;
         fixeditemenc(5) = 400;
         fixeditemenc(6) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -269,7 +269,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(10) = 80003;
         fixeditemenc(11) = 350;
         fixeditemenc(12) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -283,13 +283,13 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 733: item->function = 45; break;
     case 732:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 731:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
-    case 730: item->is_precious() = true; break;
+    case 730: item->is_precious = true; break;
     case 728:
         fixeditemenc(0) = 55;
         fixeditemenc(1) = 100;
@@ -298,7 +298,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(4) = 20050;
         fixeditemenc(5) = 350;
         fixeditemenc(6) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -309,7 +309,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(2) = 20058;
         fixeditemenc(3) = 450;
         fixeditemenc(4) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -322,7 +322,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(4) = 53;
         fixeditemenc(5) = 400;
         fixeditemenc(6) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -335,18 +335,18 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(4) = 44;
         fixeditemenc(5) = 450;
         fixeditemenc(6) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
-    case 724: item->is_precious() = true; break;
+    case 724: item->is_precious = true; break;
     case 723:
         fixeditemenc(0) = 50;
         fixeditemenc(1) = 600;
         fixeditemenc(2) = 30166;
         fixeditemenc(3) = 650;
         fixeditemenc(4) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -356,14 +356,14 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(2) = 30109;
         fixeditemenc(3) = 700;
         fixeditemenc(4) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 721:
         item->function = 43;
-        item->is_precious() = true;
-        item->has_cooldown_time() = true;
+        item->is_precious = true;
+        item->has_cooldown_time = true;
         item->param3 = 480;
         fixlv = Quality::special;
         break;
@@ -377,7 +377,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(4) = 33;
         fixeditemenc(5) = 100;
         fixeditemenc(6) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -394,14 +394,14 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(8) = 30;
         fixeditemenc(9) = 500;
         fixeditemenc(10) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 717: item->function = 42; break;
     case 716:
         item->skill = 111;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -420,7 +420,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 710:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 707:
         item->skill = 183;
@@ -428,7 +428,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(1) = 100;
         fixeditemenc(2) = 0;
         item->function = 17;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->param1 = 180;
         fixlv = Quality::special;
         break;
@@ -440,32 +440,32 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(4) = 41;
         fixeditemenc(5) = 100;
         fixeditemenc(6) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 703: item->function = 39; break;
     case 702:
-        item->is_precious() = true;
+        item->is_precious = true;
         item->param2 = 4;
         fixlv = Quality::special;
         break;
     case 701: item->function = 37; break;
-    case 699: item->is_precious() = true; break;
+    case 699: item->is_precious = true; break;
     case 697:
         item->charges = 2 + rnd(2) - rnd(2);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 696:
         item->charges = 2 + rnd(2) - rnd(2);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 695:
         item->skill = 102;
         fixeditemenc(0) = 44;
         fixeditemenc(1) = 750;
         fixeditemenc(2) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -493,24 +493,24 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 688: item->function = 35; break;
     case 687:
         item->charges = 2 + rnd(2) - rnd(2);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 686:
         item->function = 34;
-        item->is_precious() = true;
-        item->has_cooldown_time() = true;
+        item->is_precious = true;
+        item->has_cooldown_time = true;
         item->param3 = 720;
         fixlv = Quality::special;
         break;
     case 685: item->function = 33; break;
     case 684:
         item->function = 32;
-        item->is_precious() = true;
+        item->is_precious = true;
         break;
     case 683:
         item->function = 30;
-        item->is_precious() = true;
-        item->has_cooldown_time() = true;
+        item->is_precious = true;
+        item->has_cooldown_time = true;
         item->param1 = 1132;
         item->param2 = 100;
         item->param3 = 24;
@@ -518,15 +518,15 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 682:
         item->function = 31;
-        item->is_precious() = true;
-        item->has_cooldown_time() = true;
+        item->is_precious = true;
+        item->has_cooldown_time = true;
         item->param3 = 72;
         fixlv = Quality::special;
         break;
     case 681:
         item->function = 30;
-        item->is_precious() = true;
-        item->has_cooldown_time() = true;
+        item->is_precious = true;
+        item->has_cooldown_time = true;
         item->param1 = 404;
         item->param2 = 400;
         item->param3 = 8;
@@ -534,8 +534,8 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 680:
         item->function = 30;
-        item->is_precious() = true;
-        item->has_cooldown_time() = true;
+        item->is_precious = true;
+        item->has_cooldown_time = true;
         item->param1 = 446;
         item->param2 = 300;
         item->param3 = 12;
@@ -554,7 +554,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(8) = 20054;
         fixeditemenc(9) = 400;
         fixeditemenc(10) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -571,7 +571,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(8) = 30185;
         fixeditemenc(9) = 600;
         fixeditemenc(10) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -588,7 +588,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(8) = 20056;
         fixeditemenc(9) = 150;
         fixeditemenc(10) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -609,7 +609,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(12) = 20052;
         fixeditemenc(13) = 250;
         fixeditemenc(14) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -630,7 +630,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(12) = 80025;
         fixeditemenc(13) = 100;
         fixeditemenc(14) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -645,7 +645,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(6) = 20057;
         fixeditemenc(7) = 350;
         fixeditemenc(8) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -660,18 +660,18 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(6) = 20052;
         fixeditemenc(7) = 300;
         fixeditemenc(8) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 672:
         item->function = 29;
-        item->is_precious() = true;
+        item->is_precious = true;
         fixlv = Quality::special;
         break;
     case 671:
         item->function = 28;
-        item->is_precious() = true;
+        item->is_precious = true;
         fixlv = Quality::special;
         break;
     case 670: item->param1 = 7; break;
@@ -683,15 +683,15 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 667: item->param2 = 7; break;
     case 666:
         item->function = 27;
-        item->is_precious() = true;
-        item->has_cooldown_time() = true;
+        item->is_precious = true;
+        item->has_cooldown_time = true;
         item->param3 = 120;
         fixlv = Quality::special;
         break;
     case 665:
         item->function = 26;
-        item->is_precious() = true;
-        item->has_cooldown_time() = true;
+        item->is_precious = true;
+        item->has_cooldown_time = true;
         item->param3 = 240;
         fixlv = Quality::special;
         break;
@@ -701,11 +701,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(2) = 0;
         break;
     case 663:
-        item->is_precious() = true;
+        item->is_precious = true;
         fixlv = Quality::special;
         break;
     case 662:
-        item->is_precious() = true;
+        item->is_precious = true;
         item->param2 = 7;
         fixlv = Quality::special;
         break;
@@ -719,16 +719,16 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(6) = 30182;
         fixeditemenc(7) = 200;
         fixeditemenc(8) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 660:
         item->charges = 5 + rnd(5) - rnd(5);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 655:
-        item->is_precious() = true;
+        item->is_precious = true;
         item->param2 = 7;
         fixlv = Quality::special;
         break;
@@ -736,17 +736,17 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 648: item->function = 44; break;
     case 643: item->param1 = 130; break;
     case 641:
-        item->is_precious() = true;
+        item->is_precious = true;
         fixlv = Quality::special;
         break;
     case 640: item->function = 25; break;
     case 639:
-        item->is_precious() = true;
+        item->is_precious = true;
         item->param2 = 7;
         fixlv = Quality::special;
         break;
     case 637:
-        item->is_precious() = true;
+        item->is_precious = true;
         fixlv = Quality::special;
         break;
     case 635: item->function = 24; break;
@@ -761,11 +761,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 629:
         item->function = 20;
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 628:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 627:
         fixeditemenc(0) = 25;
@@ -781,21 +781,21 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(10) = 30161;
         fixeditemenc(11) = 300;
         fixeditemenc(12) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
-    case 626: item->is_precious() = true; break;
-    case 625: item->is_precious() = true; break;
-    case 624: item->is_precious() = true; break;
-    case 623: item->is_precious() = true; break;
-    case 622: item->is_precious() = true; break;
+    case 626: item->is_precious = true; break;
+    case 625: item->is_precious = true; break;
+    case 624: item->is_precious = true; break;
+    case 623: item->is_precious = true; break;
+    case 622: item->is_precious = true; break;
     case 618:
         item->param1 = 6000;
         item->param3 = 4;
         break;
-    case 616: item->is_precious() = true; break;
-    case 615: item->is_precious() = true; break;
+    case 616: item->is_precious = true; break;
+    case 615: item->is_precious = true; break;
     case 613: item->param1 = 180; break;
     case 611: item->function = 8; break;
     case 606:
@@ -804,10 +804,10 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 603:
         item->function = 44;
-        item->is_precious() = true;
+        item->is_precious = true;
         break;
     case 602: item->param2 = 100; break;
-    case 600: item->is_precious() = true; break;
+    case 600: item->is_precious = true; break;
     case 598: item->param1 = 6; break;
     case 597: item->param1 = 6; break;
     case 587: item->function = 14; break;
@@ -817,11 +817,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 582:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 581:
         item->charges = 6 + rnd(6) - rnd(6);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 578: item->function = 11; break;
     case 576: item->function = 10; break;
@@ -832,31 +832,31 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 571: item->param2 = 5; break;
     case 570:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 569:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 568:
         item->charges = 12 + rnd(12) - rnd(12);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 567:
         item->charges = 12 + rnd(12) - rnd(12);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 565:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 564:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 563: item->param1 = 0; break;
     case 562: item->function = 8; break;
-    case 560: item->is_precious() = true; break;
+    case 560: item->is_precious = true; break;
     case 558:
         fixeditemenc(0) = 31;
         fixeditemenc(1) = 100;
@@ -884,23 +884,23 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 551:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 550:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 548:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 546:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 545:
         item->charges = 7 + rnd(7) - rnd(7);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 544:
         item->function = 6;
@@ -919,11 +919,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 518:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 517:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 514:
         item->skill = 110;
@@ -938,14 +938,14 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(8) = 20059;
         fixeditemenc(9) = 300;
         fixeditemenc(10) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 513: item->skill = 110; break;
     case 512: item->skill = 110; break;
     case 511: item->param1 = 100 + rnd(200); break;
-    case 505: item->is_precious() = true; break;
+    case 505: item->is_precious = true; break;
     case 504: item->function = 38; break;
     case 499: item->param2 = 7; break;
     case 498: item->param2 = 6; break;
@@ -954,21 +954,21 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 488: item->function = 9; break;
     case 485:
         item->charges = 8 + rnd(8) - rnd(8);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 484:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 483: item->skill = 109; break;
     case 482: item->skill = 109; break;
     case 481:
         item->charges = 2 + rnd(2) - rnd(2);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 480:
         item->charges = 2 + rnd(2) - rnd(2);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 478: item->function = 5; break;
     case 454: item->skill = 168; break;
@@ -979,7 +979,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 449: item->skill = 168; break;
     case 434:
         item->charges = 2 + rnd(2) - rnd(2);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 428: item->param1 = 0; break;
     case 427: item->param2 = 7; break;
@@ -995,11 +995,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 417: item->param2 = 1; break;
     case 412:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 410:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 409: item->param1 = 5; break;
     case 408: item->param1 = 1; break;
@@ -1014,76 +1014,76 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 399: item->param1 = 1; break;
     case 397:
         item->charges = 5 + rnd(5) - rnd(5);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 396:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 393: item->function = 3; break;
     case 391:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 387:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 386:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 385:
         item->charges = 6 + rnd(6) - rnd(6);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 383:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 381:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 380:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 378:
         item->charges = 5 + rnd(5) - rnd(5);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 377:
         item->charges = 8 + rnd(8) - rnd(8);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 374:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 373:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 371:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 369:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 367:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 366:
         item->charges = 7 + rnd(7) - rnd(7);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 365:
         item->charges = 5 + rnd(5) - rnd(5);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 360:
         fixeditemenc(0) = 41;
@@ -1099,7 +1099,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(10) = 20059;
         fixeditemenc(11) = 200;
         fixeditemenc(12) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -1114,7 +1114,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(6) = 26;
         fixeditemenc(7) = 100;
         fixeditemenc(8) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -1133,7 +1133,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(10) = 30172;
         fixeditemenc(11) = 420;
         fixeditemenc(12) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -1155,7 +1155,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(14) = 24;
         fixeditemenc(15) = 100;
         fixeditemenc(16) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -1174,7 +1174,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(10) = 26;
         fixeditemenc(11) = 100;
         fixeditemenc(12) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -1194,7 +1194,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(12) = 25;
         fixeditemenc(13) = 100;
         fixeditemenc(14) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -1269,48 +1269,48 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 297: item->param1 = 150; break;
     case 290:
         item->charges = 1 + rnd(1) - rnd(1);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 289:
         item->charges = 1 + rnd(1) - rnd(1);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 272:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 271:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 270:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 269:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 268:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 267:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 266: item->skill = 101; break;
     case 265:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 264:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 263:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 261:
         item->param1 = 6000;
@@ -1327,7 +1327,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 258: item->param2 = 3; break;
     case 257:
         item->charges = 5 + rnd(5) - rnd(5);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 256:
         item->function = 15;
@@ -1344,31 +1344,31 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 252:
         item->charges = 2 + rnd(2) - rnd(2);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 251:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 250:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 249:
         item->charges = 5 + rnd(5) - rnd(5);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 248:
         item->charges = 3 + rnd(3) - rnd(3);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 247:
         item->charges = 2 + rnd(2) - rnd(2);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 246:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 235: item->skill = 104; break;
     case 234: item->skill = 102; break;
@@ -1411,7 +1411,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(10) = 70055;
         fixeditemenc(11) = 300;
         fixeditemenc(12) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -1426,7 +1426,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(6) = 30172;
         fixeditemenc(7) = 350;
         fixeditemenc(8) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -1436,11 +1436,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 203:
         item->charges = 8 + rnd(8) - rnd(8);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 202:
         item->charges = 9 + rnd(9) - rnd(9);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 201:
         item->param1 = 2000;
@@ -1528,11 +1528,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 176:
         item->charges = 8 + rnd(8) - rnd(8);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 175:
         item->charges = 10 + rnd(10) - rnd(10);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 174: item->param1 = 110; break;
     case 173: item->param2 = 100; break;
@@ -1557,35 +1557,35 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 127: item->function = 2; break;
     case 125:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 123:
         item->charges = 10 + rnd(10) - rnd(10);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 122:
         item->charges = 8 + rnd(8) - rnd(8);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 121:
         item->charges = 8 + rnd(8) - rnd(8);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 120:
         item->charges = 10 + rnd(10) - rnd(10);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 119:
         item->charges = 8 + rnd(8) - rnd(8);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 118:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 116:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 112:
         item->function = 15;
@@ -1608,7 +1608,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(0) = 37;
         fixeditemenc(1) = 100;
         fixeditemenc(2) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -1627,7 +1627,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(10) = 20056;
         fixeditemenc(11) = 200;
         fixeditemenc(12) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -1644,7 +1644,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(8) = 80025;
         fixeditemenc(9) = 100;
         fixeditemenc(10) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -1664,7 +1664,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(6) = 20058;
         fixeditemenc(7) = 200;
         fixeditemenc(8) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
@@ -1679,44 +1679,44 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(6) = 24;
         fixeditemenc(7) = 100;
         fixeditemenc(8) = 0;
-        item->is_precious() = true;
+        item->is_precious = true;
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 34:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 33:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 32:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 25: item->param1 = 2; break;
     case 24: item->param1 = 0; break;
     case 23: item->param1 = 1; break;
     case 22:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 21:
         item->charges = 4 + rnd(4) - rnd(4);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 20:
         item->charges = 5 + rnd(5) - rnd(5);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 19:
         item->charges = 12 + rnd(12) - rnd(12);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 18:
         item->charges = 8 + rnd(8) - rnd(8);
-        item->has_charge() = true;
+        item->has_charges = true;
         break;
     case 6:
         fixeditemenc(0) = 33;

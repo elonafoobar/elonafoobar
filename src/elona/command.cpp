@@ -1726,7 +1726,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
             {
                 dipcursed(mix_target);
             }
-            mix_target->is_poisoned() = true;
+            mix_target->is_poisoned = true;
             return TurnResult::turn_end;
         }
     }
@@ -1745,7 +1745,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
             {
                 dipcursed(mix_target);
             }
-            mix_target->is_aphrodisiac() = true;
+            mix_target->is_aphrodisiac = true;
             return TurnResult::turn_end;
         }
     }
@@ -1787,7 +1787,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
         }
         else
         {
-            mix_target->is_acidproof() = true;
+            mix_target->is_acidproof = true;
             txt(i18n::s.get(
                 "core.action.dip.result.gains_acidproof", mix_target));
         }
@@ -1816,7 +1816,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
         }
         else
         {
-            mix_target->is_fireproof() = true;
+            mix_target->is_fireproof = true;
             txt(i18n::s.get(
                 "core.action.dip.result.gains_fireproof", mix_target));
         }
@@ -1878,7 +1878,7 @@ TurnResult do_use_command(ItemRef use_item)
         }
     }
 
-    if (use_item->has_cooldown_time())
+    if (use_item->has_cooldown_time)
     {
         if (game_data.date.hours() < use_item->charges)
         {
@@ -1891,7 +1891,7 @@ TurnResult do_use_command(ItemRef use_item)
         item_separate(use_item);
         use_item->charges = game_data.date.hours() + use_item->param3;
     }
-    if (use_item->has_charge())
+    if (use_item->has_charges)
     {
         if (use_item->charges <= 0)
         {
@@ -1945,7 +1945,7 @@ TurnResult do_use_command(ItemRef use_item)
         return TurnResult::turn_end;
     }
 
-    if (use_item->is_alive())
+    if (use_item->is_alive)
     {
         if (use_item->param2 < calcexpalive(use_item->param1))
         {
@@ -4273,7 +4273,7 @@ int decode_book(Character& reader, const ItemRef& book)
         txt(i18n::s.get("core.action.read.book.finished_decoding", book));
         book->param2 = 1;
         book->charges = 1;
-        book->has_charge() = false;
+        book->has_charges = false;
         inv_stack(g_inv.pc(), book, true);
     }
     else
@@ -5414,7 +5414,7 @@ PickUpItemResult pick_up_item(
     {
         item->own_state = OwnState::none;
     }
-    item->is_quest_target() = false;
+    item->is_quest_target = false;
     item_checkknown(item);
 
     item->set_number(inumbk);
@@ -5499,7 +5499,7 @@ PickUpItemResult pick_up_item(
         if (invctrl == 12)
         {
             sellgold = calcitemvalue(item, 1) * in;
-            if (!picked_up_item->is_stolen())
+            if (!picked_up_item->is_stolen)
             {
                 txt(i18n::s.get(
                     "core.action.pick_up.you_sell",
@@ -5507,7 +5507,7 @@ PickUpItemResult pick_up_item(
             }
             else
             {
-                picked_up_item->is_stolen() = false;
+                picked_up_item->is_stolen = false;
                 txt(i18n::s.get(
                     "core.action.pick_up.you_sell_stolen",
                     itemname(picked_up_item.unwrap(), in)));
@@ -5873,7 +5873,7 @@ void proc_autopick()
                     if (const auto& picked_up_item =
                             pick_up_item_result.picked_up_item)
                     {
-                        picked_up_item->is_marked_as_no_drop() = true;
+                        picked_up_item->is_no_drop = true;
                         txt(i18n::s.get(
                             "core.ui.inv.examine.no_drop.set",
                             picked_up_item.unwrap()));

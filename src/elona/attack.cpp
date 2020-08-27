@@ -614,7 +614,7 @@ bool do_physical_attack_internal(
     {
         if (target.state() != Character::State::alive)
         {
-            if (weapon->is_alive())
+            if (weapon->is_alive)
             {
                 if (weapon->param2 < calcexpalive(weapon->param1))
                 {

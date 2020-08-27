@@ -359,7 +359,7 @@ void make_item_list(
             {
                 // ショウルームのアイテムで、[調べる]でなく、showroom_onlyのものを
                 // 使おうとしているのでもないならリストから除外
-                if (!item->is_showroom_only() || invctrl != 14)
+                if (!item->is_showroom_only || invctrl != 14)
                 {
                     if (invctrl != 1)
                     {
@@ -458,7 +458,7 @@ void make_item_list(
                 {
                     continue;
                 }
-                if (item->is_precious())
+                if (item->is_precious)
                 {
                     continue;
                 }
@@ -481,7 +481,7 @@ void make_item_list(
             if (invctrl == 14)
             {
                 if (item->function == 0 && !the_item_db[item->id]->is_usable &&
-                    !item->is_alive())
+                    !item->is_alive)
                 {
                     continue;
                 }
@@ -548,7 +548,7 @@ void make_item_list(
                 {
                     continue;
                 }
-                if (item->is_stolen())
+                if (item->is_stolen)
                 {
                     continue;
                 }
@@ -581,7 +581,7 @@ void make_item_list(
                 }
                 if (invctrl(1) == 3)
                 {
-                    if (!item->has_charge())
+                    if (!item->has_charges)
                     {
                         continue;
                     }
@@ -912,7 +912,7 @@ on_shortcut(OptionalItemRef& citrade, OptionalItemRef& cidip, bool dropcontinue)
             if (the_item_db[g_inv[p]->id]->legacy_id == invsc)
             {
                 f = 1;
-                if (g_inv[p]->has_charge())
+                if (g_inv[p]->has_charges)
                 {
                     if (g_inv[p]->charges <= 0)
                     {
@@ -1320,7 +1320,7 @@ OnEnterResult on_enter_drop(
     MenuResult& result,
     bool dropcontinue)
 {
-    if (selected_item->is_marked_as_no_drop())
+    if (selected_item->is_no_drop)
     {
         snd("core.fail1");
         txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
@@ -1390,7 +1390,7 @@ OnEnterResult on_enter_external_inventory(
 {
     if (invctrl != 3 && invctrl != 22)
     {
-        if (selected_item->is_marked_as_no_drop())
+        if (selected_item->is_no_drop)
         {
             snd("core.fail1");
             txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
@@ -1603,7 +1603,7 @@ OnEnterResult on_enter_external_inventory(
 
 OnEnterResult on_enter_eat(const ItemRef& selected_item, MenuResult& result)
 {
-    if (selected_item->is_marked_as_no_drop())
+    if (selected_item->is_no_drop)
     {
         snd("core.fail1");
         txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
@@ -1705,7 +1705,7 @@ OnEnterResult on_enter_give(
     MenuResult& result,
     Character& inventory_owner)
 {
-    if (selected_item->is_marked_as_no_drop())
+    if (selected_item->is_no_drop)
     {
         snd("core.fail1");
         txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
@@ -2000,7 +2000,7 @@ OnEnterResult on_enter_mix_target(
 
 OnEnterResult on_enter_offer(const ItemRef& selected_item, MenuResult& result)
 {
-    if (selected_item->is_marked_as_no_drop())
+    if (selected_item->is_no_drop)
     {
         snd("core.fail1");
         txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
@@ -2033,7 +2033,7 @@ OnEnterResult on_enter_trade_target(
     OptionalItemRef& citrade,
     Character& inventory_owner)
 {
-    if (selected_item->is_marked_as_no_drop())
+    if (selected_item->is_no_drop)
     {
         snd("core.fail1");
         txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
@@ -2046,7 +2046,7 @@ OnEnterResult on_enter_trade_target(
         inventory_owner.activity.item = nullptr;
     }
     snd("core.equip1");
-    citrade->is_quest_target() = false;
+    citrade->is_quest_target = false;
     txt(i18n::s.get(
         "core.ui.inv.trade.you_receive", selected_item, citrade.unwrap()));
     if (citrade->body_part != 0)
@@ -2082,7 +2082,7 @@ OnEnterResult on_enter_target(const ItemRef& selected_item, MenuResult& result)
 {
     if (invctrl(1) == 4)
     {
-        if (selected_item->is_marked_as_no_drop())
+        if (selected_item->is_no_drop)
         {
             snd("core.fail1");
             txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
@@ -2212,7 +2212,7 @@ OnEnterResult on_enter_receive(
         return OnEnterResult{1};
     }
     snd("core.equip1");
-    selected_item->is_quest_target() = false;
+    selected_item->is_quest_target = false;
     if (selected_item->id == "core.gold_piece")
     {
         in = selected_item->number();
@@ -2536,15 +2536,15 @@ bool on_switch_mode_2(bool& dropcontinue)
     if (invctrl == 1)
     {
         const auto item_index = list(0, pagesize * page + cs);
-        if (g_inv[item_index]->is_marked_as_no_drop())
+        if (g_inv[item_index]->is_no_drop)
         {
-            g_inv[item_index]->is_marked_as_no_drop() = false;
+            g_inv[item_index]->is_no_drop = false;
             txt(i18n::s.get(
                 "core.ui.inv.examine.no_drop.unset", g_inv[item_index]));
         }
         else
         {
-            g_inv[item_index]->is_marked_as_no_drop() = true;
+            g_inv[item_index]->is_no_drop = true;
             txt(i18n::s.get(
                 "core.ui.inv.examine.no_drop.set", g_inv[item_index]));
         }

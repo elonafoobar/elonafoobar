@@ -1297,7 +1297,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         txt(i18n::s.get("core.food.effect.sisters_love_fueled_lunch", eater));
         heal_insanity(eater, 30);
     }
-    if (food->is_poisoned())
+    if (food->is_poisoned)
     {
         if (is_in_fov(eater))
         {
@@ -1317,7 +1317,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             return;
         }
     }
-    if (food->is_aphrodisiac())
+    if (food->is_aphrodisiac)
     {
         if (eater.is_player())
         {

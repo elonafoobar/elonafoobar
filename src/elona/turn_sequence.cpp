@@ -527,7 +527,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                     category == ItemCategory::ore)
                 {
                     if (item_opt->own_state <= OwnState::none &&
-                        !item_opt->is_precious() &&
+                        !item_opt->is_precious &&
                         map_data.type != mdata_t::MapType::player_owned)
                     {
                         in = item_opt->number();

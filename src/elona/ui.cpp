@@ -2435,7 +2435,7 @@ void cs_list(
 
 snail::Color cs_list_get_item_color(const ItemRef& item)
 {
-    if (item->is_marked_as_no_drop())
+    if (item->is_no_drop)
     {
         return {120, 80, 0};
     }
