@@ -7,6 +7,6 @@
 namespace elona
 {
 
-void update_save_data(const fs::path& save_dir);
+void save_update(const fs::path& save_dir);
 
 }

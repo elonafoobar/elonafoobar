@@ -491,7 +491,7 @@ bool casino_blackjack()
     stake = rtval;
     winrow = 0;
     cardround = 0;
-    save_set_autosave();
+    save_trigger_autosaving();
     for (int cnt = 0;; ++cnt)
     {
         screenupdate = -1;

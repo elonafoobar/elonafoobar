@@ -1,3 +1,6 @@
+/**
+ * High-level save/load operations.
+ */
 #pragma once
 
 
@@ -5,25 +8,59 @@
 namespace elona
 {
 
-void load_save_data();
-
-
+/**
+ * Save the current game data.
+ */
 constexpr bool save_game_silent = true;
 constexpr bool save_game_no_message = true;
-
-void save_game(bool no_message = false, bool silent = false);
-
-
-// Will autosave in the next PC's turn.
-void save_set_autosave();
-// Autosave if save_set_autosave() was called.
-void save_autosave_if_needed();
+void save_save_game(bool no_message = false, bool silent = false);
 
 
-void load_gene_files();
-void save_gene();
-void save_map_local_data();
-void get_inheritance();
-void dump_player_info();
+/**
+ * Load a game data.
+ */
+void save_load_game();
+
+
+/**
+ * TODO
+ */
+void save_save_map_local_data();
+
+
+/**
+ * Save a gene data.
+ */
+void save_save_gene();
+
+
+/**
+ * Load a gene data.
+ */
+void save_load_gene();
+
+
+/**
+ * TODO
+ */
+void save_get_inheritance();
+
+
+/**
+ * Dump the player's information.
+ */
+void save_dump_player_info();
+
+
+/**
+ * Trigger auto-saving in the next player's turn.
+ */
+void save_trigger_autosaving();
+
+
+/**
+ * Auto-save if @ref save_trigger_autosaving was called.
+ */
+void save_autosave_if_triggered();
 
 } // namespace elona

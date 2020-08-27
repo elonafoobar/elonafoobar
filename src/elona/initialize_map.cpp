@@ -104,7 +104,7 @@ void _prompt_initialize_map()
         int stat = dialog(i18n::s.get("core.map.prompt_initialize"), 3);
         if (stat == 6)
         {
-            ctrl_file(FileOperation::map_delete);
+            ctrl_file_map_delete();
         }
     }
 }
@@ -1328,10 +1328,8 @@ int initialize_map_pregenerate()
 
     if (mode == 3)
     {
-        ctrl_file(FileOperation::map_read);
-        ctrl_file(
-            FileOperation2::map_items_read,
-            fs::u8path(u8"inv_"s + mid + u8".s2"));
+        ctrl_file_map_read();
+        ctrl_file_map_items_read(fs::u8path(u8"inv_"s + mid + u8".s2"));
         return 2;
     }
 
@@ -1342,7 +1340,7 @@ int initialize_map_pregenerate()
 
     if (save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
     {
-        ctrl_file(FileOperation::map_read);
+        ctrl_file_map_read();
         if (map_data.refresh_type == 0)
         {
             return 0;
@@ -1360,9 +1358,7 @@ int initialize_map_pregenerate()
                 return 0;
             }
         }
-        ctrl_file(
-            FileOperation2::map_items_read,
-            fs::u8path(u8"inv_"s + mid + u8".s2"));
+        ctrl_file_map_items_read(fs::u8path(u8"inv_"s + mid + u8".s2"));
         if (mode == 2)
         {
             map_placeplayer();

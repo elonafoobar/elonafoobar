@@ -1902,7 +1902,7 @@ void spot_digging(Character& chara)
                     itemcreate_map_inv(0, cdata.player().position, 0);
                 }
                 txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
-                save_set_autosave();
+                save_trigger_autosaving();
                 item->modify_number(-1);
                 break;
             }
@@ -2205,7 +2205,7 @@ void sleep_start(const OptionalItemRef& bed)
                 i18n::s.get("core.activity.sleep.new_gene.text", *gene_chara),
                 {i18n::s.get_enum("core.activity.sleep.new_gene.choices", 0)},
                 u8"bg_re14");
-            save_gene();
+            save_save_gene();
         }
     }
     draw_sleep_background_frame();
@@ -2266,7 +2266,7 @@ void sleep_start(const OptionalItemRef& bed)
 
     msg_halt();
     play_music();
-    save_set_autosave();
+    save_trigger_autosaving();
     if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
     {
         update_shop();

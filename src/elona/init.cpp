@@ -327,7 +327,7 @@ void initialize_elona()
     gsel(0);
     gmode(2);
     text_set();
-    ctrl_file(FileOperation::temp_dir_delete);
+    ctrl_file_temp_dir_delete();
     invctrl(0) = 0;
     invctrl(1) = 0;
     SDIM1(buffboard);
@@ -603,7 +603,7 @@ void initialize_game()
     }
     if (mode == 3)
     {
-        load_save_data();
+        save_load_game();
 
         if (config_get<bool>("core.foobar.run_script_in_save"))
         {

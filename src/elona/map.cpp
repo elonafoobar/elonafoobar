@@ -274,7 +274,7 @@ void map_reload(const std::string& map_filename)
 {
     fmapfile =
         (filesystem::dirs::map() / fs::u8path(map_filename)).to_u8string();
-    ctrl_file(FileOperation::map_load_map_obj_files);
+    ctrl_file_map_load_map_obj_files();
 
     for (int y = 0; y < map_data.height; ++y)
     {
@@ -1101,7 +1101,7 @@ void map_reload_noyel()
 static void _create_nefia(int index, int x, int y)
 {
     area = index;
-    ctrl_file(FileOperation::temp_dir_delete_area);
+    ctrl_file_temp_dir_delete_area();
 
     auto& area = area_data[index];
     const auto& map = the_mapdef_db.ensure("core.random_dungeon");
@@ -1588,7 +1588,7 @@ TurnResult exit_map()
             area_data[game_data.current_map].type != mdata_t::MapType::field &&
             game_data.current_map != mdata_t::MapId::show_house)
         {
-            save_set_autosave();
+            save_trigger_autosaving();
         }
         if (map_data.type != mdata_t::MapType::world_map)
         {
@@ -1700,7 +1700,7 @@ TurnResult exit_map()
     if (map_data.refresh_type == 1)
     {
         // This map should be saved.
-        save_map_local_data();
+        save_save_map_local_data();
 
         ELONA_LOG("map") << "exit_map save local";
     }
@@ -1713,7 +1713,7 @@ TurnResult exit_map()
         // delete all map-local data
         if (save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
         {
-            ctrl_file(FileOperation::map_delete);
+            ctrl_file_map_delete();
         }
 
         // forget about all NPCs that were here

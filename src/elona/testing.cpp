@@ -53,7 +53,7 @@ void load_previous_savefile()
     // This file was saved directly after the dialog at the start of the game.
     elona::playerid = "sav_foobar_test";
     filesystem::dirs::set_base_save_directory(filesystem::path(save_dir));
-    load_save_data();
+    save_load_game();
     elona::firstturn = 1;
     elona::mode =
         3; // begin the game as if it were loaded from a save; load inv_xxx.s2
@@ -76,13 +76,13 @@ void save_and_reload()
 void save()
 {
     filesystem::dirs::set_base_save_directory(filesystem::path(save_dir));
-    save_game(save_game_no_message, save_game_silent);
+    save_save_game(save_game_no_message, save_game_silent);
 }
 
 void load()
 {
     elona::firstturn = 1;
-    load_save_data();
+    save_load_game();
     elona::mode = 3;
     initialize_map();
 }
@@ -135,7 +135,7 @@ void start_in_map(int map, int level)
     elona::mode = 2;
     initialize_map();
 
-    save_game(save_game_no_message, save_game_silent);
+    save_save_game(save_game_no_message, save_game_silent);
 }
 
 void start_in_debug_map()

@@ -507,7 +507,7 @@ MainMenuResult main_menu_new_game()
 {
     if (geneuse != ""s)
     {
-        load_gene_files();
+        save_load_gene();
     }
     mode = 1;
     cm = 1;
@@ -653,7 +653,7 @@ MainMenuResult main_menu_continue()
                     if (yes_no())
                     {
                         snd("core.ok1");
-                        ctrl_file(FileOperation::save_game_delete);
+                        ctrl_file_save_game_delete();
                     }
                     return MainMenuResult::main_menu_continue;
                 }

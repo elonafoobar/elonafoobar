@@ -711,7 +711,7 @@ bool process_wish(Character& chara, optional<std::string> wish)
 
     txt(i18n::s.get("core.wish.your_wish", inputlog(0)));
 
-    save_set_autosave();
+    save_trigger_autosaving();
 
     log_copy_observer = std::make_unique<LogCopyObserver>();
     subscribe_log(log_copy_observer.get());

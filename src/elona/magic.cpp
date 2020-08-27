@@ -834,7 +834,7 @@ bool _magic_1117(Character& target)
     }
     snd("core.ding2");
     txt(i18n::s.get("core.magic.create_material.apply", s(0)));
-    save_set_autosave();
+    save_trigger_autosaving();
     for (int cnt = 0,
              cnt_end = (rnd(3) + 3 + (efstatus == CurseState::blessed) * 6);
          cnt < cnt_end;
@@ -1331,7 +1331,7 @@ bool _magic_1104(Character& target)
         obvious = 0;
         return true;
     }
-    save_set_autosave();
+    save_trigger_autosaving();
     return true;
 }
 
@@ -1434,7 +1434,7 @@ bool _magic_1105(Character& target)
         }
     }
     chara_refresh(target);
-    save_set_autosave();
+    save_trigger_autosaving();
     return true;
 }
 
@@ -1540,7 +1540,7 @@ bool _magic_1119(Character& target)
         }
     }
     chara_refresh(target);
-    save_set_autosave();
+    save_trigger_autosaving();
     return true;
 }
 
@@ -1615,7 +1615,7 @@ bool _magic_1113(Character& target)
     }
     if (target.is_player())
     {
-        save_set_autosave();
+        save_trigger_autosaving();
     }
     return true;
 }
@@ -2445,7 +2445,7 @@ bool _magic_49(Character& subject, const ItemRef& hammer)
     fixmaterial = 0;
     objfix = 0;
     hammer->modify_number(-1);
-    save_set_autosave();
+    save_trigger_autosaving();
     return true;
 }
 
@@ -2852,7 +2852,7 @@ bool _magic_1140(Character& subject)
     {
         assert(target_item_opt);
         const auto target_item = target_item_opt.unwrap();
-        save_set_autosave();
+        save_trigger_autosaving();
         animeload(8, subject);
         if (!is_cursed(efstatus))
         {
@@ -2934,7 +2934,7 @@ bool _magic_1132(Character& subject, int& fltbk, int& valuebk)
     {
         assert(target_item_opt);
         const auto target_item = target_item_opt.unwrap();
-        save_set_autosave();
+        save_trigger_autosaving();
         animeload(8, subject);
         fltbk = (int)the_item_db[itemid2int(target_item->id)]->category;
         valuebk = calcitemvalue(target_item, 0);

@@ -1363,7 +1363,7 @@ optional<TurnResult> pc_turn_advance_time()
     {
         return TurnResult::pc_died;
     }
-    save_autosave_if_needed();
+    save_autosave_if_triggered();
     if (autoturn == 1)
     {
         autoturn = 0;

@@ -142,7 +142,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
                 dbg_revealmap = 1;
                 ++game_data.current_dungeon_level;
                 txt(u8"lv:"s + game_data.current_dungeon_level);
-                ctrl_file(FileOperation::map_delete);
+                ctrl_file_map_delete();
                 mode = 2;
                 levelexitby = 4;
                 return TurnResult::initialize_map;
@@ -152,7 +152,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
 
     if (action == "quicksave")
     {
-        save_game(save_game_no_message, save_game_silent);
+        save_save_game(save_game_no_message, save_game_silent);
         txt(i18n::s.get("core.action.quicksave"));
         return none;
     }
@@ -160,7 +160,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         Message::instance().clear();
         firstturn = 1;
-        load_save_data();
+        save_load_game();
         mode = 3;
         return TurnResult::initialize_map;
     }
@@ -201,7 +201,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     }
     if (action == "dump_player_info")
     {
-        dump_player_info();
+        save_dump_player_info();
         await(500);
         return none;
     }

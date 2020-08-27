@@ -270,7 +270,7 @@ void eh_player_died(const DeferredEvent&)
     cdata.player().gold -= cdata.player().gold / 3;
     decrease_fame(cdata.player(), 10);
     chara_refresh(cdata.player());
-    save_set_autosave();
+    save_trigger_autosaving();
 }
 
 
@@ -359,7 +359,7 @@ void eh_marriage(const DeferredEvent&)
     flt();
     itemcreate_map_inv(55, cdata.player().position, rnd(3) + 2);
     txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
-    save_set_autosave();
+    save_trigger_autosaving();
 }
 
 

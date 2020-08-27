@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../serialization/concepts.hpp"
 #include "../shared_id.hpp"
 
 
@@ -76,6 +77,27 @@ struct PrototypeId
     }
 
 
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        if constexpr (serialization::concepts::is_iarchive_v<Archive>)
+        {
+            std::string tmp;
+            ar(tmp);
+            _inner = tmp;
+        }
+        else
+        {
+            std::string tmp = _inner.get();
+            ar(tmp);
+        }
+        /* clang-format on */
+    }
+
+
+
 private:
     SharedId _inner;
 };
@@ -145,6 +167,26 @@ struct InstanceId
     size_t hash() const noexcept
     {
         return std::hash<SharedId>{}(_inner);
+    }
+
+
+
+    template <typename Archive>
+    void serialize(Archive& ar)
+    {
+        /* clang-format off */
+        if constexpr (serialization::concepts::is_iarchive_v<Archive>)
+        {
+            std::string tmp;
+            ar(tmp);
+            _inner = tmp;
+        }
+        else
+        {
+            std::string tmp = _inner.get();
+            ar(tmp);
+        }
+        /* clang-format on */
     }
 
 

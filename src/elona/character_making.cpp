@@ -392,7 +392,7 @@ MainMenuResult character_making_final_phase()
 
     if (geneuse != ""s)
     {
-        get_inheritance();
+        save_get_inheritance();
     }
     else
     {
