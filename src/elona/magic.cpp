@@ -2600,11 +2600,11 @@ bool _magic_1124_1125(Character& subject)
     {
         assert(target_item_opt);
         const auto target_item = target_item_opt.unwrap();
-        if (target_item->enhancement < efp / 100)
+        if (target_item->bonus_value < efp / 100)
         {
             snd("core.ding2");
             txt(i18n::s.get("core.magic.enchant.apply", target_item));
-            ++target_item->enhancement;
+            ++target_item->bonus_value;
         }
         else
         {

@@ -665,7 +665,7 @@ int calcattackdmg(
     else
     {
         dmgfix = attacker.damage_bonus + weapon->dice.bonus +
-            weapon->enhancement + (weapon->curse_state == CurseState::blessed);
+            weapon->bonus_value + (weapon->curse_state == CurseState::blessed);
         dice1 = weapon->dice.rolls;
         dice2 = weapon->dice.faces;
         if (ammo)

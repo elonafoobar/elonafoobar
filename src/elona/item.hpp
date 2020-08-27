@@ -124,7 +124,7 @@ public:
     CurseState curse_state = CurseState::none;
     int body_part = 0;
     int function = 0;
-    lua_int enhancement{};
+    lua_int bonus_value{};
     OwnState own_state{};
     int color = 0;
     int subname = 0;
@@ -251,7 +251,7 @@ public:
         ar(curse_state);
         ar(body_part);
         ar(function);
-        ar(enhancement);
+        ar(bonus_value);
         ar(own_state);
         ar(color);
         ar(subname);

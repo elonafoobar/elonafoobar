@@ -2008,7 +2008,7 @@ TurnResult do_use_command(ItemRef use_item)
             {
                 if (list(0, rtval) == -1)
                 {
-                    ++use_item->enhancement;
+                    ++use_item->bonus_value;
                 }
                 else
                 {

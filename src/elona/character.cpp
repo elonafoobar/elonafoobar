@@ -807,7 +807,7 @@ void chara_refresh(Character& chara)
         {
             chara.hit_bonus += equipment->hit_bonus;
             chara.damage_bonus += equipment->dice.bonus;
-            chara.pv += equipment->enhancement * 2 +
+            chara.pv += equipment->bonus_value * 2 +
                 (equipment->curse_state == CurseState::blessed) * 2;
         }
         else if (equipment_slot.type == 5)

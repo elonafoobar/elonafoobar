@@ -87,7 +87,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         hit_bonus == other.hit_bonus && dv == other.dv && pv == other.pv &&
         skill == other.skill && curse_state == other.curse_state &&
         body_part == other.body_part && function == other.function &&
-        enhancement == other.enhancement && own_state == other.own_state &&
+        bonus_value == other.bonus_value && own_state == other.own_state &&
         color == other.color && subname == other.subname &&
         material == other.material && param1 == other.param1 &&
         param2 == other.param2 && param3 == other.param3 &&
@@ -1449,9 +1449,9 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
     }
     if (item->identify_state == IdentifyState::completely)
     {
-        if (item->enhancement != 0)
+        if (item->bonus_value != 0)
         {
-            s_ += ""s + cnvfix(item->enhancement) + u8" "s;
+            s_ += ""s + cnvfix(item->bonus_value) + u8" "s;
         }
         if (item->has_charge())
         {
@@ -1656,7 +1656,7 @@ void item_acid(const Character& owner, OptionalItemRef item)
             {
                 continue;
             }
-            if (equipment_slot.equipment->enhancement >= -3)
+            if (equipment_slot.equipment->bonus_value >= -3)
             {
                 if (rnd(30) == 0)
                 {
@@ -1684,7 +1684,7 @@ void item_acid(const Character& owner, OptionalItemRef item)
     {
         txt(i18n::s.get("core.item.acid.damaged", owner, item.unwrap()),
             Message::color{ColorIndex::purple});
-        --item->enhancement;
+        --item->bonus_value;
     }
 }
 
@@ -2436,7 +2436,7 @@ void dipcursed(const ItemRef& item)
     }
     else if (is_equipment(the_item_db[item->id]->category))
     {
-        --item->enhancement;
+        --item->bonus_value;
         txt(i18n::s.get("core.action.dip.rusts", item));
         if (const auto owner = item_get_owner(item).as_character())
         {
