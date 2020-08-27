@@ -105,7 +105,7 @@ void _search_for_crystal()
         {
             continue;
         }
-        const auto d_ = dist(item->pos(), cdata.player().position);
+        const auto d_ = dist(item->position(), cdata.player().position);
         if (!d || d_ < *d)
         {
             d = d_;
@@ -911,7 +911,7 @@ TurnResult do_throw_command_internal(
         throw_item->id == "core.little_ball")
     {
         snd("core.throw2");
-        cell_refresh(throw_item->pos().x, throw_item->pos().y);
+        cell_refresh(throw_item->position().x, throw_item->position().y);
         if (cell_data.at(tlocx, tlocy).chara_index_plus_one != 0)
         {
             const auto target_index =
@@ -1164,7 +1164,7 @@ TurnResult do_throw_command(Character& thrower, const ItemRef& throw_item)
     {
         const auto slot = inv_make_free_slot_force(g_inv.ground());
         const auto ball = item_separate(throw_item, slot, 1);
-        ball->set_pos({tlocx, tlocy});
+        ball->set_position({tlocx, tlocy});
         return do_throw_command_internal(thrower, ball);
     }
     else
@@ -5552,9 +5552,10 @@ PickUpItemResult pick_up_item(
     }
     else
     {
-        cell_refresh(item->pos().x, item->pos().y);
-        cell_data.at(item->pos().x, item->pos().y).item_info_memory =
-            cell_data.at(item->pos().x, item->pos().y).item_info_actual;
+        cell_refresh(item->position().x, item->position().y);
+        cell_data.at(item->position().x, item->position().y).item_info_memory =
+            cell_data.at(item->position().x, item->position().y)
+                .item_info_actual;
         sound_pick_up();
         txt(i18n::s.get(
             "core.action.pick_up.execute",
@@ -5823,7 +5824,7 @@ void proc_autopick()
 
     for (const auto& item : g_inv.ground())
     {
-        if (item->pos() != cdata.player().position)
+        if (item->position() != cdata.player().position)
             continue;
         if (item->own_state > 0)
             continue;

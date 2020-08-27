@@ -182,7 +182,7 @@ bool check_one_blending_material(
     }
     if (check_pos)
     {
-        if (dist(item->pos(), cdata.player().position) > 4)
+        if (dist(item->position(), cdata.player().position) > 4)
         {
             return false;
         }

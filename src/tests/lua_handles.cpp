@@ -44,9 +44,9 @@ TEST_CASE("Test that handle properties can be read", "[Lua: Handles]")
         const auto item = item_opt.unwrap();
         elona::lua::lua->get_state()->set("item", item);
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
-            R"(assert(item.pos.x == 4))"));
+            R"(assert(item.position.x == 4))"));
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
-            R"(assert(item.pos.y == 8))"));
+            R"(assert(item.position.y == 8))"));
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
             R"(assert(item.number == 3))"));
     }
@@ -85,16 +85,16 @@ TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
             elona::lua::lua->get_state()->safe_script(R"(item.number = 3)"));
 #if 0 // TODO
         REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(item.pos.x = 4)"));
+            elona::lua::lua->get_state()->safe_script(R"(item.position.x = 4)"));
         REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(item.pos.y = 8)"));
+            elona::lua::lua->get_state()->safe_script(R"(item.position.y = 8)"));
 #endif
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
-            R"(item.pos = LuaPosition.new(4, 8))"));
+            R"(item.position = LuaPosition.new(4, 8))"));
 
         REQUIRE(item->number() == 3);
-        REQUIRE(item->pos().x == 4);
-        REQUIRE(item->pos().y == 8);
+        REQUIRE(item->position().x == 4);
+        REQUIRE(item->position().y == 8);
     }
 }
 
@@ -172,7 +172,7 @@ TEST_CASE("Test that handles go invalid", "[Lua: Handles]")
         }
         {
             auto result = elona::lua::lua->get_state()->safe_script(
-                R"(item.pos.x = 2)", &sol::script_pass_on_error);
+                R"(item.position.x = 2)", &sol::script_pass_on_error);
             REQUIRE(!result.valid());
         }
 #endif

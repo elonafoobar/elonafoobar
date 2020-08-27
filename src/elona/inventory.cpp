@@ -26,7 +26,7 @@ bool is_stackable_with(const ItemRef& item, const ItemRef& base_item)
     const auto ignore_position = !item_get_owner(item).is_map();
     if (item->id == "core.small_medal")
     {
-        return ignore_position || item->pos() == base_item->pos();
+        return ignore_position || item->position() == base_item->position();
     }
     else
     {

@@ -232,7 +232,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         p = 0;
         for (const auto& item : g_inv.ground())
         {
-            if (item->pos() != cdata.player().position)
+            if (item->position() != cdata.player().position)
                 continue;
             if (the_item_db[item->id]->category == ItemCategory::chest)
             {

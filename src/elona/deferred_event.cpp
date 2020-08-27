@@ -987,7 +987,7 @@ void eh_guest_visit(const DeferredEvent&)
             {
                 if (item->param1 == 2)
                 {
-                    cell_swap(chara, item->pos());
+                    cell_swap(chara, item->position());
                     chair_for_guest = item;
                     chair = item;
                     break;
@@ -1005,10 +1005,10 @@ void eh_guest_visit(const DeferredEvent&)
             {
                 continue;
             }
-            const auto d = dist(item->pos(), chair_for_guest->pos());
+            const auto d = dist(item->position(), chair_for_guest->position());
             if (d < distance_to_guest_chair)
             {
-                if (cell_data.at(item->pos().x, item->pos().y)
+                if (cell_data.at(item->position().x, item->position().y)
                             .chara_index_plus_one == 0 ||
                     chara.is_player() || chara.index == guest->index)
                 {
@@ -1024,7 +1024,7 @@ void eh_guest_visit(const DeferredEvent&)
         }
         if (chair)
         {
-            cell_swap(chara, chair->pos());
+            cell_swap(chara, chair->position());
         }
         chara.direction = direction(
             chara.position.x,

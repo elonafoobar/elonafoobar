@@ -264,7 +264,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
     const auto item = Inventory::create(empty_slot);
     if (item_pos)
     {
-        item->set_pos(*item_pos);
+        item->set_position(*item_pos);
     }
 
     if (item_id == 25 && flttypemajor == 60002)
@@ -550,7 +550,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
 
     if (inv_get_owner(inv).is_map())
     {
-        cell_refresh(item->pos().x, item->pos().y);
+        cell_refresh(item->position().x, item->position().y);
     }
     return item;
 }

@@ -51,8 +51,8 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
     REQUIRE(elona::g_inv[index]->number() == 3);
     REQUIRE(
         the_item_db[elona::g_inv[index]->id]->legacy_id == PUTITORO_PROTO_ID);
-    REQUIRE(elona::g_inv[index]->pos().x == 4);
-    REQUIRE(elona::g_inv[index]->pos().y == 8);
+    REQUIRE(elona::g_inv[index]->position().x == 4);
+    REQUIRE(elona::g_inv[index]->position().y == 8);
     REQUIRE(elona::g_inv[index]->curse_state == CurseState::blessed);
     REQUIRE(elona::g_inv[index]->is_aphrodisiac());
     REQUIRE(itemname(g_inv[index]) == u8"3個のプチトロ(媚薬混入)");

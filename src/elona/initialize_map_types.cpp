@@ -1009,8 +1009,8 @@ static void _init_map_your_home()
             ctrl_file_map_items_read(fs::u8path(u8"inv_"s + mid + u8".s2"));
             for (const auto& item : g_inv.ground())
             {
-                item->set_pos({map_data.width / 2, map_data.height / 2});
-                cell_refresh(item->pos().x, item->pos().y);
+                item->set_position({map_data.width / 2, map_data.height / 2});
+                cell_refresh(item->position().x, item->position().y);
             }
         }
         if (game_data.home_scale == 5)
@@ -2698,7 +2698,8 @@ static void _init_map_fields_forest()
         if (const auto item = itemcreate_map_inv(0, -1, -1, 0))
         {
             item->own_state = 1;
-            cell_data.at(item->pos().x, item->pos().y).chip_id_actual = 0;
+            cell_data.at(item->position().x, item->position().y)
+                .chip_id_actual = 0;
         }
     }
 }

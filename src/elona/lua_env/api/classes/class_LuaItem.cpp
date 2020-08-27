@@ -76,16 +76,16 @@ void bind(sol::state& lua)
                 }));
 
     /**
-     * @luadoc pos field num
+     * @luadoc position field num
      *
      * [RW] The item's position.
      */
     LuaItem.set(
-        "pos",
+        "position",
         sol::property(
-            [](const ItemRef& self) { return self->pos(); },
+            [](const ItemRef& self) { return self->position(); },
             [](const ItemRef& self, const Position& pos) {
-                self->set_pos(pos);
+                self->set_position(pos);
             }));
 
     /**

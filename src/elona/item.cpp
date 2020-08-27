@@ -81,7 +81,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         && value == other.value && image == other.image &&
         id == other.id
         // && quality == other.quality
-        && (ignore_position || pos() == other.pos()) &&
+        && (ignore_position || position() == other.position()) &&
         weight == other.weight && identify_state == other.identify_state &&
         count == other.count && dice == other.dice &&
         hit_bonus == other.hit_bonus && dv == other.dv && pv == other.pv &&
@@ -373,7 +373,7 @@ OptionalItemRef item_find(data::InstanceId id, ItemFindLocation location_type)
     return item_find_internal(location_type, [&](const auto& item, auto& inv) {
         if (inv_get_owner(inv).is_map())
         {
-            if (item->pos() != cdata.player().position)
+            if (item->position() != cdata.player().position)
             {
                 return false;
             }
@@ -389,7 +389,7 @@ OptionalItemRef item_find(ItemCategory category, ItemFindLocation location_type)
     return item_find_internal(location_type, [&](const auto& item, auto& inv) {
         if (inv_get_owner(inv).is_map())
         {
-            if (item->pos() != cdata.player().position)
+            if (item->position() != cdata.player().position)
             {
                 return false;
             }
@@ -442,7 +442,7 @@ OptionalItemRef mapitemfind(const Position& pos, data::InstanceId id)
 {
     for (const auto& item : g_inv.ground())
     {
-        if (item->id == id && item->pos() == pos)
+        if (item->id == id && item->position() == pos)
         {
             return item;
         }
@@ -468,7 +468,7 @@ void cell_refresh(int x, int y)
     size_t number_of_items = 0;
     for (const auto& item : g_inv.ground())
     {
-        if (item->pos() == Position{x, y})
+        if (item->position() == Position{x, y})
         {
             if (number_of_items < items.size())
             {
@@ -604,7 +604,7 @@ void Item::set_number(int new_number)
     if (needs_cell_refresh)
     {
         // Refresh the cell the item is on if it's on the ground.
-        cell_refresh(pos().x, pos().y);
+        cell_refresh(position().x, position().y);
     }
     else if (needs_refresh_burden_state)
     {
@@ -616,12 +616,12 @@ void Item::set_number(int new_number)
 
 
 
-void Item::set_pos(const Position& new_pos)
+void Item::set_position(const Position& new_pos)
 {
-    if (_pos == new_pos)
+    if (_position == new_pos)
         return;
 
-    _pos = new_pos;
+    _position = new_pos;
 }
 
 
@@ -678,11 +678,11 @@ ItemRef item_separate(const ItemRef& stacked_item)
     {
         if (const auto owner = item_get_owner(stacked_item).as_character())
         {
-            stacked_item->set_pos(owner->position);
+            stacked_item->set_position(owner->position);
         }
-        dst->set_pos(stacked_item->pos());
+        dst->set_position(stacked_item->position());
         itemturn(dst);
-        cell_refresh(dst->pos().x, dst->pos().y);
+        cell_refresh(dst->position().x, dst->position().y);
         if (!item_is_on_ground(stacked_item))
         {
             txt(i18n::s.get("core.item.something_falls_from_backpack"));
@@ -1754,7 +1754,7 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
         {
             if (inv_owner.is_map())
             {
-                if (is_in_fov(item->pos()))
+                if (is_in_fov(item->position()))
                 {
                     txt(i18n::s.get(
                             "core.item.item_on_the_ground_get_broiled", item),
@@ -1868,7 +1868,7 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
                     Message::color{ColorIndex::purple});
             }
         }
-        else if (is_in_fov(item->pos()))
+        else if (is_in_fov(item->position()))
         {
             txt(i18n::s.get(
                     "core.item.item_on_the_ground_turns_to_dust",
@@ -1896,7 +1896,7 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
     OptionalItemRef burned_item;
     for (const auto& item : g_inv.ground())
     {
-        if (item->pos() == Position{x, y})
+        if (item->position() == Position{x, y})
         {
             burned_item = item;
             break;
@@ -2034,7 +2034,7 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
                     Message::color{ColorIndex::purple});
             }
         }
-        else if (is_in_fov(item->pos()))
+        else if (is_in_fov(item->position()))
         {
             txt(i18n::s.get(
                     "core.item.item_on_the_ground_breaks_to_pieces",
@@ -2061,7 +2061,7 @@ void mapitem_cold(int x, int y)
     OptionalItemRef destroyed_item;
     for (const auto& item : g_inv.ground())
     {
-        if (item->pos() == Position{x, y})
+        if (item->position() == Position{x, y})
         {
             destroyed_item = item;
             break;
@@ -2093,7 +2093,7 @@ void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
 {
     const auto slot = inv_make_free_slot_force(g_inv.ground());
     const auto dropped_item = item_separate(item_in_inventory, slot, num);
-    dropped_item->set_pos(cdata.player().position);
+    dropped_item->set_position(cdata.player().position);
     itemturn(dropped_item);
 
     if (building_shelter)
@@ -2130,7 +2130,7 @@ void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
         inv_stack(g_inv.ground(), dropped_item).stacked_item;
 
     refresh_burden_state();
-    cell_refresh(stacked_item->pos().x, stacked_item->pos().y);
+    cell_refresh(stacked_item->position().x, stacked_item->position().y);
     screenupdate = -1;
     update_screen();
 
@@ -2353,7 +2353,7 @@ ItemRef item_convert_artifact(
     // Save some properties to avoid use-after-free.
     const auto original_item_name = itemname(artifact);
     const auto artifact_id = artifact->id;
-    const auto artifact_pos = artifact->pos();
+    const auto artifact_pos = artifact->position();
     auto artifact_inv = artifact->inventory();
 
     artifact->remove();

@@ -332,7 +332,8 @@ void make_item_list(
             {
                 if (invctrl == 27)
                 {
-                    if (item->pos().x != tlocx || item->pos().y != tlocy)
+                    if (item->position().x != tlocx ||
+                        item->position().y != tlocy)
                     {
                         // その座標にあるものしか盗めない
                         continue;
@@ -340,8 +341,8 @@ void make_item_list(
                 }
                 else if (invctrl != 11 && invctrl != 22 && invctrl != 28)
                 {
-                    if (item->pos().x != cdata.player().position.x ||
-                        item->pos().y != cdata.player().position.y)
+                    if (item->position().x != cdata.player().position.x ||
+                        item->position().y != cdata.player().position.y)
                     {
                         // キャラと同じ座標にあるものしか対象に取れない
                         continue;

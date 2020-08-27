@@ -423,15 +423,16 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
     {
         for (const auto& item : g_inv.ground())
         {
-            if (item->id == "core.snow_man" && item->pos().x >= scx &&
-                item->pos().x < scx + inf_screenw && item->pos().y >= scy &&
-                item->pos().y < scy + inf_screenh)
+            if (item->id == "core.snow_man" && item->position().x >= scx &&
+                item->position().x < scx + inf_screenw &&
+                item->position().y >= scy &&
+                item->position().y < scy + inf_screenh)
             {
                 flt();
                 if (const auto snowball = itemcreate_chara_inv(chara, 587, 0))
                 {
-                    tlocx = item->pos().x;
-                    tlocy = item->pos().y;
+                    tlocx = item->position().x;
+                    tlocy = item->position().y;
                     return do_throw_command(chara, snowball.unwrap());
                 }
                 break;

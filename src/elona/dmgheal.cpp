@@ -1541,8 +1541,8 @@ void character_drops_item(Character& victim)
                 item->remove();
                 continue;
             }
-            item->set_pos(victim.position);
-            item->set_pos(victim.position);
+            item->set_position(victim.position);
+            item->set_position(victim.position);
             if (!inv_stack(g_inv.ground(), item).stacked)
             {
                 const auto slot = inv_make_free_slot_force(g_inv.ground());
@@ -1663,7 +1663,7 @@ void character_drops_item(Character& victim)
             victim.equipment_slots[item->body_part - 100].unequip();
             item->body_part = 0;
         }
-        item->set_pos(victim.position);
+        item->set_position(victim.position);
         itemturn(item);
         if (!inv_stack(g_inv.ground(), item).stacked)
         {

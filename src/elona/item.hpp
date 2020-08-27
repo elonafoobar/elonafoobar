@@ -100,16 +100,16 @@ public:
     Quality quality = Quality::none;
 
 private:
-    Position _pos;
+    Position _position;
 
 public:
-    const Position& pos() const noexcept
+    const Position& position() const noexcept
     {
-        return _pos;
+        return _position;
     }
 
 
-    void set_pos(const Position& new_pos);
+    void set_position(const Position& new_pos);
 
 
 
@@ -239,7 +239,7 @@ public:
         ar(image);
         ar(id);
         ar(quality);
-        ar(_pos);
+        ar(_position);
         ar(weight);
         ar(identify_state);
         ar(count);
