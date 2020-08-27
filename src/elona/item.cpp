@@ -83,8 +83,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         // && quality == other.quality
         && (ignore_position || pos() == other.pos()) &&
         weight == other.weight && identify_state == other.identify_state &&
-        count == other.count && dice_x == other.dice_x &&
-        dice_y == other.dice_y && damage_bonus == other.damage_bonus &&
+        count == other.count && dice == other.dice &&
         hit_bonus == other.hit_bonus && dv == other.dv && pv == other.pv &&
         skill == other.skill && curse_state == other.curse_state &&
         body_part == other.body_part && function == other.function &&
@@ -1463,22 +1462,22 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
         {
             s_ += i18n::s.get("core.item.charges", item->count);
         }
-        if (item->dice_x != 0 || item->hit_bonus != 0 ||
-            item->damage_bonus != 0)
+        if (item->dice.rolls != 0 || item->hit_bonus != 0 ||
+            item->dice.bonus != 0)
         {
             s_ += u8" ("s;
-            if (item->dice_x != 0)
+            if (item->dice.rolls != 0)
             {
-                s_ += ""s + item->dice_x + u8"d"s + item->dice_y;
-                if (item->damage_bonus != 0)
+                s_ += ""s + item->dice.rolls + u8"d"s + item->dice.faces;
+                if (item->dice.bonus != 0)
                 {
-                    if (item->damage_bonus > 0)
+                    if (item->dice.bonus > 0)
                     {
-                        s_ += u8"+"s + item->damage_bonus;
+                        s_ += u8"+"s + item->dice.bonus;
                     }
                     else
                     {
-                        s_ += ""s + item->damage_bonus;
+                        s_ += ""s + item->dice.bonus;
                     }
                 }
                 s_ += u8")"s;
@@ -1489,8 +1488,8 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             }
             else
             {
-                s_ += ""s + item->hit_bonus + u8","s + item->damage_bonus +
-                    u8")"s;
+                s_ +=
+                    ""s + item->hit_bonus + u8","s + item->dice.bonus + u8")"s;
             }
         }
         if (item->dv != 0 || item->pv != 0)
@@ -2483,7 +2482,7 @@ void equip_melee_weapon(Character& chara)
             continue;
         }
         const auto weapon = chara.equipment_slots[cnt].equipment.unwrap();
-        if (weapon->dice_x == 0)
+        if (weapon->dice.rolls == 0)
         {
             continue;
         }

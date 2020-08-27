@@ -820,10 +820,10 @@ void apply_item_material(const ItemRef& item)
         item->hit_bonus = the_item_material_db[p]->hit_bonus * item->hit_bonus *
             9 / (p(1) - rnd(30));
     }
-    if (item->damage_bonus != 0)
+    if (item->dice.bonus != 0)
     {
-        item->damage_bonus = the_item_material_db[p]->damage_bonus *
-            item->damage_bonus * 5 / (p(1) - rnd(30));
+        item->dice.bonus = the_item_material_db[p]->damage_bonus *
+            item->dice.bonus * 5 / (p(1) - rnd(30));
     }
     if (item->dv != 0)
     {
@@ -835,10 +835,10 @@ void apply_item_material(const ItemRef& item)
         item->pv =
             the_item_material_db[p]->pv * item->pv * 9 / (p(1) - rnd(30));
     }
-    if (item->dice_y != 0)
+    if (item->dice.faces != 0)
     {
-        item->dice_y =
-            item->dice_y * the_item_material_db[p]->dice_y / (p(1) + rnd(25));
+        item->dice.faces = item->dice.faces * the_item_material_db[p]->dice_y /
+            (p(1) + rnd(25));
     }
     set_material_specific_attributes(item);
 }

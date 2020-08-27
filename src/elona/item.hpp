@@ -8,6 +8,7 @@
 #include "../util/range.hpp"
 #include "consts.hpp"
 #include "data/types/type_item.hpp"
+#include "dice.hpp"
 #include "enums.hpp"
 #include "eobject/eobject.hpp"
 #include "position.hpp"
@@ -115,9 +116,7 @@ public:
     int weight = 0;
     IdentifyState identify_state = IdentifyState::unidentified;
     int count = 0;
-    int dice_x = 0;
-    int dice_y = 0;
-    int damage_bonus = 0;
+    Dice dice{};
     int hit_bonus = 0;
     int dv = 0;
     int pv = 0;
@@ -244,9 +243,7 @@ public:
         ar(weight);
         ar(identify_state);
         ar(count);
-        ar(dice_x);
-        ar(dice_y);
-        ar(damage_bonus);
+        ar(dice);
         ar(hit_bonus);
         ar(dv);
         ar(pv);

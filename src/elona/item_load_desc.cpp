@@ -185,7 +185,7 @@ void _load_item_stat_text(const ItemRef& item, int& num_of_desc)
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.handmade");
         ++num_of_desc;
     }
-    if (item->dice_x != 0)
+    if (item->dice.rolls != 0)
     {
         const auto pierce =
             calc_rate_to_pierce(the_item_db[item->id]->legacy_id);
@@ -193,7 +193,7 @@ void _load_item_stat_text(const ItemRef& item, int& num_of_desc)
             static_cast<int>(ItemDescriptionType::weapon_info);
         listn(0, num_of_desc) =
             i18n::s.get("core.item.desc.weapon.it_can_be_wielded") + u8" ("s +
-            item->dice_x + u8"d"s + item->dice_y +
+            item->dice.rolls + u8"d"s + item->dice.faces +
             i18n::s.get("core.item.desc.weapon.pierce") + pierce + u8"%)"s;
         ++num_of_desc;
         if (reftype == 10000)
@@ -216,12 +216,12 @@ void _load_item_stat_text(const ItemRef& item, int& num_of_desc)
             }
         }
     }
-    if (item->hit_bonus != 0 || item->damage_bonus != 0)
+    if (item->hit_bonus != 0 || item->dice.bonus != 0)
     {
         list(0, num_of_desc) =
             static_cast<int>(ItemDescriptionType::weapon_info);
         listn(0, num_of_desc) = i18n::s.get(
-            "core.item.desc.bonus", item->hit_bonus, item->damage_bonus);
+            "core.item.desc.bonus", item->hit_bonus, item->dice.bonus);
         ++num_of_desc;
     }
     if (item->pv != 0 || item->dv != 0)

@@ -1141,7 +1141,7 @@ void append_accuracy_info(const Character& chara, int val0)
             continue;
         }
         const auto weapon = chara.equipment_slots[cnt].equipment;
-        if (weapon->dice_x > 0)
+        if (weapon->dice.rolls > 0)
         {
             attackskill = weapon->skill;
             ++p(1);

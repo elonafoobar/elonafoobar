@@ -865,7 +865,7 @@ void try_to_melee_attack(Character& attacker, Character& target)
             continue;
         }
         const auto weapon = attacker.equipment_slots[cnt].equipment;
-        if (weapon->dice_x > 0)
+        if (weapon->dice.rolls > 0)
         {
             attackskill = weapon->skill;
             ++attacknum;

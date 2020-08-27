@@ -2868,11 +2868,10 @@ bool _magic_1140(Character& subject)
                     target_item->pv -= target_item->pv / 10 + 1 +
                         (efstatus != CurseState::blessed);
                 }
-                if (target_item->damage_bonus > 0)
+                if (target_item->dice.bonus > 0)
                 {
-                    target_item->damage_bonus -=
-                        target_item->damage_bonus / 10 + 1 +
-                        (efstatus != CurseState::blessed);
+                    target_item->dice.bonus -= target_item->dice.bonus / 10 +
+                        1 + (efstatus != CurseState::blessed);
                 }
             }
             txt(i18n::s.get("core.magic.flying.apply", target_item));
@@ -2884,10 +2883,10 @@ bool _magic_1140(Character& subject)
             {
                 target_item->pv += clamp(target_item->pv / 10, 1, 5);
             }
-            if (target_item->damage_bonus > 0)
+            if (target_item->dice.bonus > 0)
             {
-                target_item->damage_bonus +=
-                    clamp(target_item->damage_bonus / 10, 1, 5);
+                target_item->dice.bonus +=
+                    clamp(target_item->dice.bonus / 10, 1, 5);
             }
             txt(i18n::s.get("core.magic.flying.cursed", target_item));
         }

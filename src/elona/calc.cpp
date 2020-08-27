@@ -664,13 +664,14 @@ int calcattackdmg(
     }
     else
     {
-        dmgfix = attacker.damage_bonus + weapon->damage_bonus +
+        dmgfix = attacker.damage_bonus + weapon->dice.bonus +
             weapon->enhancement + (weapon->curse_state == CurseState::blessed);
-        dice1 = weapon->dice_x;
-        dice2 = weapon->dice_y;
+        dice1 = weapon->dice.rolls;
+        dice2 = weapon->dice.faces;
         if (ammo)
         {
-            dmgfix += ammo->damage_bonus + ammo->dice_x * ammo->dice_y / 2;
+            dmgfix +=
+                ammo->dice.bonus + ammo->dice.rolls * ammo->dice.faces / 2;
             dmgmulti = 0.5 +
                 double(
                     (attacker.get_skill(13).level +

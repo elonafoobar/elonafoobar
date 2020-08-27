@@ -803,10 +803,10 @@ void chara_refresh(Character& chara)
         }
         chara.dv += equipment->dv;
         chara.pv += equipment->pv;
-        if (equipment->dice_x == 0)
+        if (equipment->dice.rolls == 0)
         {
             chara.hit_bonus += equipment->hit_bonus;
-            chara.damage_bonus += equipment->damage_bonus;
+            chara.damage_bonus += equipment->dice.bonus;
             chara.pv += equipment->enhancement * 2 +
                 (equipment->curse_state == CurseState::blessed) * 2;
         }

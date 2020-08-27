@@ -47,9 +47,7 @@ void normalize_item(const ItemRef& i)
     i->dv = 0;
     i->pv = 0;
     i->count = 1;
-    i->dice_x = 0;
-    i->dice_y = 0;
-    i->damage_bonus = 0;
+    i->dice = Dice{};
     i->hit_bonus = 0;
     i->subname = 0;
     i->enchantments.clear();

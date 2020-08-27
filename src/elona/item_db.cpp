@@ -22,10 +22,10 @@ void item_db_set_basic_stats(const ItemRef& item, int legacy_id)
     const auto& info = the_item_db.ensure(legacy_id);
     item->value = info.value;
     item->weight = info.weight;
-    item->dice_x = info.dice_x;
-    item->dice_y = info.dice_y;
+    item->dice.rolls = info.dice_x;
+    item->dice.faces = info.dice_y;
+    item->dice.bonus = info.damage_bonus;
     item->hit_bonus = info.hit_bonus;
-    item->damage_bonus = info.damage_bonus;
     item->pv = info.pv;
     item->dv = info.dv;
     item->material = info.material;
