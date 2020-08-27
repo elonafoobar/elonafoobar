@@ -882,7 +882,7 @@ void add_enchantments(const ItemRef& item)
 {
     if (reftype == 25000)
     {
-        item->count = -1;
+        item->charges = -1;
     }
     if (fixlv <= Quality::good)
     {

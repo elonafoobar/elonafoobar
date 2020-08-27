@@ -970,17 +970,17 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
     if (item->has_charge())
     {
         item_db_get_charge_level(item, the_item_db[item->id]->legacy_id);
-        if (item->count < 0)
+        if (item->charges < 0)
         {
             ret = ret / 10;
         }
         else if (category == ItemCategory::spellbook)
         {
-            ret = ret / 5 + ret * item->count / (ichargelevel * 2 + 1);
+            ret = ret / 5 + ret * item->charges / (ichargelevel * 2 + 1);
         }
         else
         {
-            ret = ret / 2 + ret * item->count / (ichargelevel * 3 + 1);
+            ret = ret / 2 + ret * item->charges / (ichargelevel * 3 + 1);
         }
     }
     if (category == ItemCategory::chest)

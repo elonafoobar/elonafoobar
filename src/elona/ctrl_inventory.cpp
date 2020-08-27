@@ -914,7 +914,7 @@ on_shortcut(OptionalItemRef& citrade, OptionalItemRef& cidip, bool dropcontinue)
                 f = 1;
                 if (g_inv[p]->has_charge())
                 {
-                    if (g_inv[p]->count <= 0)
+                    if (g_inv[p]->charges <= 0)
                     {
                         continue;
                     }

@@ -115,7 +115,7 @@ public:
 
     lua_int weight{};
     IdentifyState identify_state = IdentifyState::unidentified;
-    lua_int count{};
+    lua_int charges{};
     Dice dice{};
     lua_int hit_bonus{};
     lua_int dv{};
@@ -242,7 +242,7 @@ public:
         ar(_position);
         ar(weight);
         ar(identify_state);
-        ar(count);
+        ar(charges);
         ar(dice);
         ar(hit_bonus);
         ar(dv);

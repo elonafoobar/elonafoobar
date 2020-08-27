@@ -282,11 +282,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 733: item->function = 45; break;
     case 732:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 731:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 730: item->is_precious() = true; break;
@@ -419,7 +419,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(2) = 0;
         break;
     case 710:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 707:
@@ -453,11 +453,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 701: item->function = 37; break;
     case 699: item->is_precious() = true; break;
     case 697:
-        item->count = 2 + rnd(2) - rnd(2);
+        item->charges = 2 + rnd(2) - rnd(2);
         item->has_charge() = true;
         break;
     case 696:
-        item->count = 2 + rnd(2) - rnd(2);
+        item->charges = 2 + rnd(2) - rnd(2);
         item->has_charge() = true;
         break;
     case 695:
@@ -492,7 +492,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 689: item->function = 36; break;
     case 688: item->function = 35; break;
     case 687:
-        item->count = 2 + rnd(2) - rnd(2);
+        item->charges = 2 + rnd(2) - rnd(2);
         item->has_charge() = true;
         break;
     case 686:
@@ -724,7 +724,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixlv = Quality::special;
         break;
     case 660:
-        item->count = 5 + rnd(5) - rnd(5);
+        item->charges = 5 + rnd(5) - rnd(5);
         item->has_charge() = true;
         break;
     case 655:
@@ -760,11 +760,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 630: item->function = 21; break;
     case 629:
         item->function = 20;
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 628:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 627:
@@ -816,11 +816,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         item->param1 = 100;
         break;
     case 582:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 581:
-        item->count = 6 + rnd(6) - rnd(6);
+        item->charges = 6 + rnd(6) - rnd(6);
         item->has_charge() = true;
         break;
     case 578: item->function = 11; break;
@@ -831,27 +831,27 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 571: item->param2 = 5; break;
     case 570:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 569:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 568:
-        item->count = 12 + rnd(12) - rnd(12);
+        item->charges = 12 + rnd(12) - rnd(12);
         item->has_charge() = true;
         break;
     case 567:
-        item->count = 12 + rnd(12) - rnd(12);
+        item->charges = 12 + rnd(12) - rnd(12);
         item->has_charge() = true;
         break;
     case 565:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 564:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 563: item->param1 = 0; break;
@@ -883,23 +883,23 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(2) = 0;
         break;
     case 551:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 550:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 548:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 546:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 545:
-        item->count = 7 + rnd(7) - rnd(7);
+        item->charges = 7 + rnd(7) - rnd(7);
         item->has_charge() = true;
         break;
     case 544:
@@ -918,11 +918,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(2) = 0;
         break;
     case 518:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 517:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 514:
@@ -953,21 +953,21 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 496: item->skill = 110; break;
     case 488: item->function = 9; break;
     case 485:
-        item->count = 8 + rnd(8) - rnd(8);
+        item->charges = 8 + rnd(8) - rnd(8);
         item->has_charge() = true;
         break;
     case 484:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 483: item->skill = 109; break;
     case 482: item->skill = 109; break;
     case 481:
-        item->count = 2 + rnd(2) - rnd(2);
+        item->charges = 2 + rnd(2) - rnd(2);
         item->has_charge() = true;
         break;
     case 480:
-        item->count = 2 + rnd(2) - rnd(2);
+        item->charges = 2 + rnd(2) - rnd(2);
         item->has_charge() = true;
         break;
     case 478: item->function = 5; break;
@@ -978,7 +978,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 450: item->skill = 168; break;
     case 449: item->skill = 168; break;
     case 434:
-        item->count = 2 + rnd(2) - rnd(2);
+        item->charges = 2 + rnd(2) - rnd(2);
         item->has_charge() = true;
         break;
     case 428: item->param1 = 0; break;
@@ -994,11 +994,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 418: item->param2 = 1; break;
     case 417: item->param2 = 1; break;
     case 412:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 410:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 409: item->param1 = 5; break;
@@ -1013,76 +1013,76 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 400: item->param1 = 2; break;
     case 399: item->param1 = 1; break;
     case 397:
-        item->count = 5 + rnd(5) - rnd(5);
+        item->charges = 5 + rnd(5) - rnd(5);
         item->has_charge() = true;
         break;
     case 396:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 393: item->function = 3; break;
     case 391:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 387:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 386:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 385:
-        item->count = 6 + rnd(6) - rnd(6);
+        item->charges = 6 + rnd(6) - rnd(6);
         item->has_charge() = true;
         break;
     case 383:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 381:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 380:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 378:
-        item->count = 5 + rnd(5) - rnd(5);
+        item->charges = 5 + rnd(5) - rnd(5);
         item->has_charge() = true;
         break;
     case 377:
-        item->count = 8 + rnd(8) - rnd(8);
+        item->charges = 8 + rnd(8) - rnd(8);
         item->has_charge() = true;
         break;
     case 374:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 373:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 371:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 369:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 367:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 366:
-        item->count = 7 + rnd(7) - rnd(7);
+        item->charges = 7 + rnd(7) - rnd(7);
         item->has_charge() = true;
         break;
     case 365:
-        item->count = 5 + rnd(5) - rnd(5);
+        item->charges = 5 + rnd(5) - rnd(5);
         item->has_charge() = true;
         break;
     case 360:
@@ -1268,48 +1268,48 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     case 299: item->function = 19; break;
     case 297: item->param1 = 150; break;
     case 290:
-        item->count = 1 + rnd(1) - rnd(1);
+        item->charges = 1 + rnd(1) - rnd(1);
         item->has_charge() = true;
         break;
     case 289:
-        item->count = 1 + rnd(1) - rnd(1);
+        item->charges = 1 + rnd(1) - rnd(1);
         item->has_charge() = true;
         break;
     case 272:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 271:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 270:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 269:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 268:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 267:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 266: item->skill = 101; break;
     case 265:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 264:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 263:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 261:
@@ -1326,7 +1326,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 258: item->param2 = 3; break;
     case 257:
-        item->count = 5 + rnd(5) - rnd(5);
+        item->charges = 5 + rnd(5) - rnd(5);
         item->has_charge() = true;
         break;
     case 256:
@@ -1343,31 +1343,31 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         item->param1 = 110;
         break;
     case 252:
-        item->count = 2 + rnd(2) - rnd(2);
+        item->charges = 2 + rnd(2) - rnd(2);
         item->has_charge() = true;
         break;
     case 251:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 250:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 249:
-        item->count = 5 + rnd(5) - rnd(5);
+        item->charges = 5 + rnd(5) - rnd(5);
         item->has_charge() = true;
         break;
     case 248:
-        item->count = 3 + rnd(3) - rnd(3);
+        item->charges = 3 + rnd(3) - rnd(3);
         item->has_charge() = true;
         break;
     case 247:
-        item->count = 2 + rnd(2) - rnd(2);
+        item->charges = 2 + rnd(2) - rnd(2);
         item->has_charge() = true;
         break;
     case 246:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 235: item->skill = 104; break;
@@ -1435,11 +1435,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         item->param3 = 4;
         break;
     case 203:
-        item->count = 8 + rnd(8) - rnd(8);
+        item->charges = 8 + rnd(8) - rnd(8);
         item->has_charge() = true;
         break;
     case 202:
-        item->count = 9 + rnd(9) - rnd(9);
+        item->charges = 9 + rnd(9) - rnd(9);
         item->has_charge() = true;
         break;
     case 201:
@@ -1527,11 +1527,11 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         item->param3 = 72;
         break;
     case 176:
-        item->count = 8 + rnd(8) - rnd(8);
+        item->charges = 8 + rnd(8) - rnd(8);
         item->has_charge() = true;
         break;
     case 175:
-        item->count = 10 + rnd(10) - rnd(10);
+        item->charges = 10 + rnd(10) - rnd(10);
         item->has_charge() = true;
         break;
     case 174: item->param1 = 110; break;
@@ -1556,35 +1556,35 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         break;
     case 127: item->function = 2; break;
     case 125:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 123:
-        item->count = 10 + rnd(10) - rnd(10);
+        item->charges = 10 + rnd(10) - rnd(10);
         item->has_charge() = true;
         break;
     case 122:
-        item->count = 8 + rnd(8) - rnd(8);
+        item->charges = 8 + rnd(8) - rnd(8);
         item->has_charge() = true;
         break;
     case 121:
-        item->count = 8 + rnd(8) - rnd(8);
+        item->charges = 8 + rnd(8) - rnd(8);
         item->has_charge() = true;
         break;
     case 120:
-        item->count = 10 + rnd(10) - rnd(10);
+        item->charges = 10 + rnd(10) - rnd(10);
         item->has_charge() = true;
         break;
     case 119:
-        item->count = 8 + rnd(8) - rnd(8);
+        item->charges = 8 + rnd(8) - rnd(8);
         item->has_charge() = true;
         break;
     case 118:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 116:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 112:
@@ -1684,38 +1684,38 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixlv = Quality::special;
         break;
     case 34:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 33:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 32:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 25: item->param1 = 2; break;
     case 24: item->param1 = 0; break;
     case 23: item->param1 = 1; break;
     case 22:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 21:
-        item->count = 4 + rnd(4) - rnd(4);
+        item->charges = 4 + rnd(4) - rnd(4);
         item->has_charge() = true;
         break;
     case 20:
-        item->count = 5 + rnd(5) - rnd(5);
+        item->charges = 5 + rnd(5) - rnd(5);
         item->has_charge() = true;
         break;
     case 19:
-        item->count = 12 + rnd(12) - rnd(12);
+        item->charges = 12 + rnd(12) - rnd(12);
         item->has_charge() = true;
         break;
     case 18:
-        item->count = 8 + rnd(8) - rnd(8);
+        item->charges = 8 + rnd(8) - rnd(8);
         item->has_charge() = true;
         break;
     case 6:

@@ -685,16 +685,16 @@ void do_ranged_attack(
     ammoy = target.position.y;
     if (ammo)
     {
-        if (ammo->count != -1)
+        if (ammo->charges != -1)
         {
-            if (ammo->enchantments[ammo->count].power % 1000 <= 0)
+            if (ammo->enchantments[ammo->charges].power % 1000 <= 0)
             {
                 txt(i18n::s.get("core.action.ranged.load_normal_ammo"));
-                ammo->count = -1;
+                ammo->charges = -1;
             }
             else
             {
-                ammoproc = ammo->enchantments[ammo->count].id % 10000;
+                ammoproc = ammo->enchantments[ammo->charges].id % 10000;
                 if (attacker.is_player())
                 {
                     if (cdata.player().sp < 50)
@@ -711,7 +711,7 @@ void do_ranged_attack(
                     }
                     damage_sp(cdata.player(), rnd(encammoref(2, ammoproc) + 1));
                 }
-                --ammo->enchantments[ammo->count].power;
+                --ammo->enchantments[ammo->charges].power;
             }
         }
     }

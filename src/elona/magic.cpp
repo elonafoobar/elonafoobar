@@ -656,7 +656,7 @@ bool _magic_185(Character& subject, const ItemRef& rod)
         txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
         return false;
     }
-    if (rod->count == 0)
+    if (rod->charges == 0)
     {
         txt(i18n::s.get("core.magic.fish.need_bait"));
         return false;
@@ -744,7 +744,7 @@ bool _magic_185(Character& subject, const ItemRef& rod)
                 the_ability_db[efid]->cost / 2 + 1);
     }
     item_separate(rod);
-    --rod->count;
+    --rod->charges;
     rowactre = 0;
     spot_fishing(subject, rod);
     return true;
@@ -2664,7 +2664,7 @@ bool _magic_630_1129(Character& subject)
             return true;
         }
         f = 1;
-        if (target_item->count > ichargelevel)
+        if (target_item->charges > ichargelevel)
         {
             f = -1;
         }
@@ -2692,9 +2692,9 @@ bool _magic_630_1129(Character& subject)
         if (f == 1)
         {
             p = 1 + rnd((ichargelevel / 2 + 1));
-            if (p + target_item->count > ichargelevel)
+            if (p + target_item->charges > ichargelevel)
             {
-                p = ichargelevel - target_item->count + 1;
+                p = ichargelevel - target_item->charges + 1;
             }
             if (the_item_db[target_item->id]->category ==
                 ItemCategory::spellbook)
@@ -2702,7 +2702,7 @@ bool _magic_630_1129(Character& subject)
                 p = 1;
             }
             txt(i18n::s.get("core.magic.fill_charge.apply", target_item, p(0)));
-            target_item->count += p;
+            target_item->charges += p;
             animeload(8, subject);
         }
         else
@@ -2774,7 +2774,7 @@ bool _magic_629(Character& subject)
             p = 1;
         }
         animeload(8, subject);
-        p = p * target_item->count;
+        p = p * target_item->charges;
         game_data.charge_power += p;
         txt(i18n::s.get(
             "core.magic.draw_charge",

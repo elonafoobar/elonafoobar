@@ -85,7 +85,7 @@ static void _init_map_shop()
     flt();
     if (const auto item = itemcreate_map_inv(561, 19, 10, 0))
     {
-        item->count = 5;
+        item->charges = 5;
     }
     flt();
     itemcreate_map_inv(562, 17, 11, 0);
@@ -976,17 +976,17 @@ static void _init_map_your_home()
             flt();
             if (const auto item = itemcreate_map_inv(510, 6, 10, 0))
             {
-                item->count = 3;
+                item->charges = 3;
             }
             flt();
             if (const auto item = itemcreate_map_inv(547, 15, 19, 0))
             {
-                item->count = 4;
+                item->charges = 4;
             }
             flt();
             if (const auto item = itemcreate_map_inv(579, 9, 8, 0))
             {
-                item->count = 6;
+                item->charges = 6;
             }
             flt();
             if (const auto item = itemcreate_map_inv(24, 18, 19, 0))

@@ -46,7 +46,7 @@ void normalize_item(const ItemRef& i)
     i->quality = Quality::bad;
     i->dv = 0;
     i->pv = 0;
-    i->count = 1;
+    i->charges = 1;
     i->dice = Dice{};
     i->hit_bonus = 0;
     i->subname = 0;

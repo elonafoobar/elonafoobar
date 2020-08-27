@@ -83,7 +83,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         // && quality == other.quality
         && (ignore_position || position() == other.position()) &&
         weight == other.weight && identify_state == other.identify_state &&
-        count == other.count && dice == other.dice &&
+        charges == other.charges && dice == other.dice &&
         hit_bonus == other.hit_bonus && dv == other.dv && pv == other.pv &&
         skill == other.skill && curse_state == other.curse_state &&
         body_part == other.body_part && function == other.function &&
@@ -1454,7 +1454,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
         }
         if (item->has_charge())
         {
-            s_ += i18n::s.get("core.item.charges", item->count);
+            s_ += i18n::s.get("core.item.charges", item->charges);
         }
         if (item->dice.rolls != 0 || item->hit_bonus != 0 ||
             item->dice.bonus != 0)
@@ -1495,12 +1495,12 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
     {
         s_ += u8"(Lost property)"s;
     }
-    if (item->id == "core.fishing_pole" && item->count != 0)
+    if (item->id == "core.fishing_pole" && item->charges != 0)
     {
         s_ += lang(
             u8"("s + i18n::s.get_enum("core.item.bait_rank", item->param4) +
-                u8"残り"s + item->count + u8"匹)"s,
-            u8"("s + item->count + u8" "s +
+                u8"残り"s + item->charges + u8"匹)"s,
+            u8"("s + item->charges + u8" "s +
                 i18n::s.get_enum("core.item.bait_rank", item->param4) + u8")"s);
     }
     if (item->id == "core.monster_ball")
@@ -1553,7 +1553,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
         {
             s_ += lang(u8"(移動時消滅)"s, u8"(Temporal)"s);
         }
-        else if (item->count == 0)
+        else if (item->charges == 0)
         {
             if (item->param1 == 0)
             {
@@ -1575,15 +1575,15 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
     {
         s_ += lang(u8"(毒物混入)"s, u8"(Poisoned)"s);
     }
-    if (item->has_cooldown_time() && game_data.date.hours() < item->count)
+    if (item->has_cooldown_time() && game_data.date.hours() < item->charges)
     {
         s_ += lang(
-            u8"("s + (item->count - game_data.date.hours()) + u8"時間)"s,
-            u8"(Next: "s + (item->count - game_data.date.hours()) + u8"h.)"s);
+            u8"("s + (item->charges - game_data.date.hours()) + u8"時間)"s,
+            u8"(Next: "s + (item->charges - game_data.date.hours()) + u8"h.)"s);
     }
-    if (item->id == "core.shelter" && item->count != 0)
+    if (item->id == "core.shelter" && item->charges != 0)
     {
-        s_ += lang(u8" シリアルNo."s, u8" serial no."s) + item->count;
+        s_ += lang(u8" シリアルNo."s, u8" serial no."s) + item->charges;
     }
     if (item->id == "core.disc")
     {
@@ -1816,9 +1816,9 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
                     blanket.unwrap(),
                     *inv_owner.as_character()));
             }
-            if (blanket->count > 0)
+            if (blanket->charges > 0)
             {
-                --blanket->count;
+                --blanket->charges;
             }
             else if (rnd(20) == 0)
             {
@@ -1998,9 +1998,9 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
                     blanket.unwrap(),
                     *inv_owner.as_character()));
             }
-            if (blanket->count > 0)
+            if (blanket->charges > 0)
             {
-                --blanket->count;
+                --blanket->charges;
             }
             else if (rnd(20) == 0)
             {
@@ -2096,7 +2096,7 @@ void item_drop(
     if (building_shelter)
     {
         dropped_item->own_state = OwnState::shelter;
-        dropped_item->count = game_data.next_shelter_serial_id + 100;
+        dropped_item->charges = game_data.next_shelter_serial_id + 100;
         ++game_data.next_shelter_serial_id;
     }
     else

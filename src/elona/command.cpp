@@ -1245,7 +1245,7 @@ TurnResult do_change_ammo_command()
             enc = enc % 10000;
             if (i == 9)
             {
-                if (ammo->count == cnt)
+                if (ammo->charges == cnt)
                 {
                     cs = cnt;
                 }
@@ -1257,7 +1257,7 @@ TurnResult do_change_ammo_command()
     }
     if (listmax == 0)
     {
-        ammo->count = -1;
+        ammo->charges = -1;
         txt(i18n::s.get("core.action.ammo.is_not_capable", ammo));
         return TurnResult::pc_turn_user_error;
     }
@@ -1265,11 +1265,11 @@ TurnResult do_change_ammo_command()
     ++cs;
     if (cs >= listmax)
     {
-        ammo->count = -1;
+        ammo->charges = -1;
     }
     else
     {
-        ammo->count = list(0, cs);
+        ammo->charges = list(0, cs);
     }
     Message::instance().linebreak();
     txt(i18n::s.get("core.action.ammo.current") + ":");
@@ -1289,7 +1289,7 @@ TurnResult do_change_ammo_command()
             s(1) = ""s + i + u8"/"s + i(1);
         }
         s = s + u8":"s + s(1);
-        if (ammo->count == cnt - 1)
+        if (ammo->charges == cnt - 1)
         {
             s = u8"["s + s + u8"]"s;
             Message::instance().txtef(ColorIndex::blue);
@@ -1621,11 +1621,11 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
             "core.action.dip.result.bait_attachment", mix_target, mix_item));
         if (mix_target->param4 == mix_item->param1)
         {
-            mix_target->count += rnd(10) + 15;
+            mix_target->charges += rnd(10) + 15;
         }
         else
         {
-            mix_target->count = rnd(10) + 15;
+            mix_target->charges = rnd(10) + 15;
             mix_target->param4 = mix_item->param1;
         }
         return TurnResult::turn_end;
@@ -1880,26 +1880,27 @@ TurnResult do_use_command(ItemRef use_item)
 
     if (use_item->has_cooldown_time())
     {
-        if (game_data.date.hours() < use_item->count)
+        if (game_data.date.hours() < use_item->charges)
         {
             txt(i18n::s.get(
-                "core.action.use.useable_again_at", cnvdate(use_item->count)));
+                "core.action.use.useable_again_at",
+                cnvdate(use_item->charges)));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
         item_separate(use_item);
-        use_item->count = game_data.date.hours() + use_item->param3;
+        use_item->charges = game_data.date.hours() + use_item->param3;
     }
     if (use_item->has_charge())
     {
-        if (use_item->count <= 0)
+        if (use_item->charges <= 0)
         {
             txt(i18n::s.get("core.action.use.out_of_charge"));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
         item_separate(use_item);
-        --use_item->count;
+        --use_item->charges;
     }
     if (item_data->subcategory == 58500)
     {
@@ -2847,9 +2848,9 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
         }
         return TurnResult::turn_end;
     }
-    if (box->count != 0)
+    if (box->charges != 0)
     {
-        invfile = box->count;
+        invfile = box->charges;
         invcontainer(1) = the_item_db[box->id]->legacy_id;
         if (box->id == "core.cooler_box")
         {
@@ -2859,7 +2860,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
         {
             refweight = 0;
         }
-        if (box->count == 3 || box->count == 4 || box->count == 6)
+        if (box->charges == 3 || box->charges == 4 || box->charges == 6)
         {
             if (game_data.current_map != mdata_t::MapId::your_home)
             {
@@ -2868,7 +2869,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
                 return TurnResult::pc_turn_user_error;
             }
         }
-        if (box->count == 5)
+        if (box->charges == 5)
         {
             if (area_data[game_data.current_map].id != mdata_t::MapId::shop)
             {
@@ -4228,12 +4229,12 @@ int decode_book(Character& reader, const ItemRef& book)
         if (stat == 0)
         {
             reader.activity.finish();
-            --book->count;
-            if (book->count < 0)
+            --book->charges;
+            if (book->charges < 0)
             {
-                book->count = 0;
+                book->charges = 0;
             }
-            if (book->count == 0)
+            if (book->charges == 0)
             {
                 book->modify_number(-1);
                 if (is_in_fov(reader))
@@ -4271,7 +4272,7 @@ int decode_book(Character& reader, const ItemRef& book)
         item_identify(book, IdentifyState::completely);
         txt(i18n::s.get("core.action.read.book.finished_decoding", book));
         book->param2 = 1;
-        book->count = 1;
+        book->charges = 1;
         book->has_charge() = false;
         inv_stack(g_inv.pc(), book, true);
     }
@@ -4295,12 +4296,12 @@ int decode_book(Character& reader, const ItemRef& book)
     item_identify(book, IdentifyState::partly);
     if (book->id != "core.ancient_book")
     {
-        --book->count;
-        if (book->count < 0)
+        --book->charges;
+        if (book->charges < 0)
         {
-            book->count = 0;
+            book->charges = 0;
         }
-        if (book->count == 0)
+        if (book->charges == 0)
         {
             book->modify_number(-1);
             if (is_in_fov(reader))
@@ -4871,7 +4872,7 @@ int read_scroll(Character& reader, const ItemRef& scroll)
 
 bool do_zap_internal(Character& doer, const ItemRef& rod)
 {
-    if (rod->count <= 0)
+    if (rod->charges <= 0)
     {
         if (is_in_fov(doer))
         {
@@ -4981,7 +4982,7 @@ int do_zap(Character& doer, const ItemRef& rod)
         return 1;
     }
     item_separate(rod);
-    --rod->count;
+    --rod->charges;
     return 1;
 }
 
@@ -5346,13 +5347,13 @@ PickUpItemResult pick_up_item(
                 if (item->id == "core.shelter")
                 {
                     std::string midbk = mid;
-                    mid = ""s + 30 + u8"_"s + (100 + item->count);
+                    mid = ""s + 30 + u8"_"s + (100 + item->charges);
                     if (save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
                     {
                         ctrl_file_map_delete();
                     }
                     mid = midbk;
-                    item->count = 0;
+                    item->charges = 0;
                     item->own_state = OwnState::none;
                 }
             }
@@ -5375,21 +5376,21 @@ PickUpItemResult pick_up_item(
         {
             if (the_item_db[item->id]->category == ItemCategory::rod)
             {
-                if (item->count > 0)
+                if (item->charges > 0)
                 {
                     item_db_on_zap(item, the_item_db[item->id]->legacy_id);
                     txt(i18n::s.get(
                         "core.action.pick_up.you_absorb_magic", item));
                     if (efid >= 400 && efid < 467)
                     {
-                        spell(efid - 400) += item->count * 5 * item->number();
+                        spell(efid - 400) += item->charges * 5 * item->number();
                     }
                     else
                     {
                         heal_mp(
-                            cdata.player(), item->count * 5 * item->number());
+                            cdata.player(), item->charges * 5 * item->number());
                     }
-                    item->count = 0;
+                    item->charges = 0;
                 }
             }
         }

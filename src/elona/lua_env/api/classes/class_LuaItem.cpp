@@ -87,16 +87,16 @@ void bind(sol::state& lua)
             }));
 
     /**
-     * @luadoc count field num
+     * @luadoc charges field num
      *
      * [RW] The number of charges this item holds (for rods, bait, etc.)
      */
     LuaItem.set(
-        "count",
+        "charges",
         sol::property(
-            [](const ItemRef& self) { return self->count; },
+            [](const ItemRef& self) { return self->charges; },
             [](const ItemRef& self, lua_int new_value) {
-                self->count = new_value;
+                self->charges = new_value;
             }));
 
 

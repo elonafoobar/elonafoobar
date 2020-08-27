@@ -1112,7 +1112,7 @@ void activity_others_end_enter_shelter(const ItemRef& shelter)
     game_data.previous_x = cdata.player().position.x;
     game_data.previous_y = cdata.player().position.y;
     game_data.destination_map = static_cast<int>(mdata_t::MapId::shelter_);
-    game_data.destination_dungeon_level = shelter->count;
+    game_data.destination_dungeon_level = shelter->charges;
     levelexitby = 2;
     snd("core.exitmap1");
 }

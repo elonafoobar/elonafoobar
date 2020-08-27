@@ -404,27 +404,27 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
     if (item->id == "core.cooler_box")
     {
         ++game_data.next_inventory_serial_id;
-        item->count = game_data.next_inventory_serial_id;
+        item->charges = game_data.next_inventory_serial_id;
     }
 
     if (item->id == "core.heir_trunk")
     {
-        item->count = 3;
+        item->charges = 3;
     }
 
     if (item->id == "core.shop_strongbox")
     {
-        item->count = 5;
+        item->charges = 5;
     }
 
     if (item->id == "core.salary_chest")
     {
-        item->count = 4;
+        item->charges = 4;
     }
 
     if (item->id == "core.freezer")
     {
-        item->count = 6;
+        item->charges = 6;
     }
 
     const auto category = the_item_db[item->id]->category;
