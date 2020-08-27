@@ -92,7 +92,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         material == other.material && param1 == other.param1 &&
         param2 == other.param2 && param3 == other.param3 &&
         param4 == other.param4 &&
-        difficulty_of_identification == other.difficulty_of_identification
+        identify_level == other.identify_level
         // && turn == other.turn
         && _flags == other._flags &&
         range::equal(enchantments, other.enchantments);
@@ -742,9 +742,8 @@ IdentifyState item_identify(const ItemRef& item, int power)
 {
     return item_identify(
         item,
-        power >= item->difficulty_of_identification
-            ? IdentifyState::completely
-            : IdentifyState::unidentified);
+        power >= item->identify_level ? IdentifyState::completely
+                                      : IdentifyState::unidentified);
 }
 
 
@@ -2235,7 +2234,7 @@ void auto_identify()
 
         const auto skill = cdata.player().get_skill(13).level +
             cdata.player().get_skill(162).level * 5;
-        const auto difficulty = 1500 + item->difficulty_of_identification * 5;
+        const auto difficulty = 1500 + item->identify_level * 5;
         if (skill > rnd(difficulty * 5))
         {
             const auto prev_name = itemname(item);

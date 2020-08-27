@@ -133,7 +133,7 @@ public:
     int param2 = 0;
     int param3 = 0;
     int param4 = 0;
-    lua_int difficulty_of_identification{};
+    lua_int identify_level{};
     lua_int turn{};
 
 private:
@@ -260,7 +260,7 @@ public:
         ar(param2);
         ar(param3);
         ar(param4);
-        ar(difficulty_of_identification);
+        ar(identify_level);
         ar(turn);
         ar(_flags);
         ar(enchantments);

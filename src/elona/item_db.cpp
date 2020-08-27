@@ -79,7 +79,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
 
     item->id = info.id;
     item->set_number(1);
-    item->difficulty_of_identification = 0; // Default value
+    item->identify_level = 0; // Default value
     item->image = info.image;
     fixeditemenc(0) = 0; // Default value
     reftype = (int)info.category;
@@ -96,7 +96,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(3) = 200;
         fixeditemenc(4) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 790: item->function = 15; break;
@@ -157,7 +157,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(1) = 100;
         fixeditemenc(2) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 757:
@@ -173,7 +173,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(9) = 100;
         fixeditemenc(10) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 756: item->param2 = 7; break;
@@ -239,7 +239,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(7) = 720;
         fixeditemenc(8) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 740:
@@ -251,7 +251,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(5) = 400;
         fixeditemenc(6) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 739:
@@ -270,7 +270,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(11) = 350;
         fixeditemenc(12) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 738: item->param2 = 6; break;
@@ -299,7 +299,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(5) = 350;
         fixeditemenc(6) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 727:
@@ -310,7 +310,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(3) = 450;
         fixeditemenc(4) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 726:
@@ -323,7 +323,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(5) = 400;
         fixeditemenc(6) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 725:
@@ -336,7 +336,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(5) = 450;
         fixeditemenc(6) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 724: item->is_precious() = true; break;
@@ -347,7 +347,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(3) = 650;
         fixeditemenc(4) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 722:
@@ -357,7 +357,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(3) = 700;
         fixeditemenc(4) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 721:
@@ -378,7 +378,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(5) = 100;
         fixeditemenc(6) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 718:
@@ -395,14 +395,14 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(9) = 500;
         fixeditemenc(10) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 717: item->function = 42; break;
     case 716:
         item->skill = 111;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 715: item->function = 41; break;
@@ -441,7 +441,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(5) = 100;
         fixeditemenc(6) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 703: item->function = 39; break;
@@ -466,7 +466,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(1) = 750;
         fixeditemenc(2) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 693:
@@ -555,7 +555,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(9) = 400;
         fixeditemenc(10) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 678:
@@ -572,7 +572,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(9) = 600;
         fixeditemenc(10) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 677:
@@ -589,7 +589,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(9) = 150;
         fixeditemenc(10) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 676:
@@ -610,7 +610,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(13) = 250;
         fixeditemenc(14) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 675:
@@ -631,7 +631,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(13) = 100;
         fixeditemenc(14) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 674:
@@ -646,7 +646,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(7) = 350;
         fixeditemenc(8) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 673:
@@ -661,7 +661,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(7) = 300;
         fixeditemenc(8) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 672:
@@ -720,7 +720,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(7) = 200;
         fixeditemenc(8) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 660:
@@ -782,7 +782,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(11) = 300;
         fixeditemenc(12) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 626: item->is_precious() = true; break;
@@ -939,7 +939,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(9) = 300;
         fixeditemenc(10) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 513: item->skill = 110; break;
@@ -1100,7 +1100,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(11) = 200;
         fixeditemenc(12) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 359:
@@ -1115,7 +1115,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(7) = 100;
         fixeditemenc(8) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 358:
@@ -1134,7 +1134,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(11) = 420;
         fixeditemenc(12) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 357:
@@ -1156,7 +1156,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(15) = 100;
         fixeditemenc(16) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 356:
@@ -1175,7 +1175,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(11) = 100;
         fixeditemenc(12) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 355:
@@ -1195,7 +1195,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(13) = 100;
         fixeditemenc(14) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 354:
@@ -1412,7 +1412,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(11) = 300;
         fixeditemenc(12) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 206:
@@ -1427,7 +1427,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(7) = 350;
         fixeditemenc(8) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 204:
@@ -1609,7 +1609,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(1) = 100;
         fixeditemenc(2) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 64:
@@ -1628,7 +1628,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(11) = 200;
         fixeditemenc(12) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 63:
@@ -1645,7 +1645,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(9) = 100;
         fixeditemenc(10) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 62: item->skill = 110; break;
@@ -1665,7 +1665,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(7) = 200;
         fixeditemenc(8) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 56:
@@ -1680,7 +1680,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
         fixeditemenc(7) = 100;
         fixeditemenc(8) = 0;
         item->is_precious() = true;
-        item->difficulty_of_identification = 500;
+        item->identify_level = 500;
         fixlv = Quality::special;
         break;
     case 34:

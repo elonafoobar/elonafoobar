@@ -1086,7 +1086,7 @@ void _update_save_data_17(const fs::path& save_dir)
             int param2;
             int param3;
             int param4;
-            int difficulty_of_identification;
+            int identify_level;
             int turn;
             uint32_t flags;
             std::vector<std::tuple<int, int>> enchantments;
@@ -1120,7 +1120,7 @@ void _update_save_data_17(const fs::path& save_dir)
             iar(param2);
             iar(param3);
             iar(param4);
-            iar(difficulty_of_identification);
+            iar(identify_level);
             iar(turn);
             iar(flags);
             iar(enchantments);
@@ -1173,7 +1173,7 @@ void _update_save_data_17(const fs::path& save_dir)
             oar(param2);
             oar(param3);
             oar(param4);
-            oar(difficulty_of_identification);
+            oar(identify_level);
             oar(turn);
             oar(flags);
             oar(enchantments);
@@ -1249,7 +1249,7 @@ void _update_save_data_18(const fs::path& save_dir)
             int param2;
             int param3;
             int param4;
-            int difficulty_of_identification;
+            int identify_level;
             int turn;
             uint32_t flags;
             std::vector<std::tuple<int, int>> enchantments;
@@ -1284,7 +1284,7 @@ void _update_save_data_18(const fs::path& save_dir)
             iar(param2);
             iar(param3);
             iar(param4);
-            iar(difficulty_of_identification);
+            iar(identify_level);
             iar(turn);
             iar(flags);
             iar(enchantments);
@@ -1334,7 +1334,7 @@ void _update_save_data_18(const fs::path& save_dir)
             oar(param2);
             oar(param3);
             oar(param4);
-            oar(difficulty_of_identification);
+            oar(identify_level);
             oar(turn);
             oar(flags);
             oar(enchantments);
@@ -1843,7 +1843,7 @@ void _update_save_data_19(const fs::path& save_dir)
             int param2;
             int param3;
             int param4;
-            int difficulty_of_identification;
+            int identify_level;
             int turn;
             uint32_t flags;
             std::vector<std::tuple<int, int>> enchantments;
@@ -1884,7 +1884,7 @@ void _update_save_data_19(const fs::path& save_dir)
                 iar(param2);
                 iar(param3);
                 iar(param4);
-                iar(difficulty_of_identification);
+                iar(identify_level);
                 iar(turn);
                 iar(flags);
                 iar(enchantments);
@@ -1926,7 +1926,7 @@ void _update_save_data_19(const fs::path& save_dir)
                 oar(param2);
                 oar(param3);
                 oar(param4);
-                oar(difficulty_of_identification);
+                oar(identify_level);
                 oar(turn);
                 oar(flags);
                 oar(enchantments);

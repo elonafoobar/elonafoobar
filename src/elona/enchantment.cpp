@@ -896,7 +896,7 @@ void add_enchantments(const ItemRef& item)
     {
         egolv = rnd(clamp(rnd(objlv / 10 + 3), 0, 4) + 1);
         item->value = item->value * 3;
-        item->difficulty_of_identification = 50 +
+        item->identify_level = 50 +
             rnd(std::abs(
                     static_cast<int>(fixlv) - static_cast<int>(Quality::good)) *
                     100 +
