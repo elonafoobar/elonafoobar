@@ -117,7 +117,7 @@ void _load_item_main_description_text(
 
 void _load_item_stat_text(const ItemRef& item, int& num_of_desc)
 {
-    if (item->material != 0)
+    if (item->material != "")
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get(
@@ -125,7 +125,7 @@ void _load_item_stat_text(const ItemRef& item, int& num_of_desc)
             the_item_material_db.get_text(item->material, "name"));
         ++num_of_desc;
     }
-    if (item->material == 8)
+    if (item->material == "core.ether")
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) =

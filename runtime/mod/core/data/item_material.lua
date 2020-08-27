@@ -2,6 +2,15 @@ ELONA.data:define_prototype("item_material")
 ELONA.data:add(
    "core.item_material",
    {
+      -- TODO
+      _heavy = {
+         legacy_id = 1000,
+      },
+      -- TODO
+      _light = {
+         legacy_id = 1001,
+      },
+
       vegetable_seed = {
          legacy_id = 36,
       },

@@ -392,7 +392,7 @@ void make_item_list(
             if (invctrl == 5)
             {
                 if (reftype != 57000 && reftype != 91000 &&
-                    item->material != 35)
+                    item->material != "core.raw")
                 {
                     continue;
                 }

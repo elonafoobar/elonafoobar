@@ -128,7 +128,7 @@ public:
     int own_state = 0;
     int color = 0;
     int subname = 0;
-    int material = 0;
+    data::InstanceId material{};
     int param1 = 0;
     int param2 = 0;
     int param3 = 0;

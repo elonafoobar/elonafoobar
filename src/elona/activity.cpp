@@ -1595,7 +1595,7 @@ void activity_eating_finish(Character& eater, const ItemRef& food)
         }
         if (eater.was_passed_item_by_you_just_now())
         {
-            if (food->material == 35 && food->param3 < 0)
+            if (food->material == "core.raw" && food->param3 < 0)
             {
                 txt(i18n::s.get("core.food.passed_rotten"),
                     Message::color{ColorIndex::cyan});

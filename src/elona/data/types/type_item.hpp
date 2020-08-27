@@ -29,7 +29,7 @@ struct ItemData
     int damage_bonus;
     int pv;
     int dv;
-    int material;
+    data::InstanceId material;
     int chargelevel;
     bool is_readable;
     bool is_zappable;

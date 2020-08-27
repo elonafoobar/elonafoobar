@@ -42,7 +42,7 @@ void normalize_item(const ItemRef& i)
     i->quality = Quality::great;
     i->curse_state = CurseState::none;
     i->identify_state = IdentifyState::completely;
-    i->material = 34;
+    i->material = "core.lead";
     i->quality = Quality::bad;
     i->dv = 0;
     i->pv = 0;

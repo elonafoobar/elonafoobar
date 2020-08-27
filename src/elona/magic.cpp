@@ -18,6 +18,7 @@
 #include "data/types/type_asset.hpp"
 #include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_item_material.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
@@ -2524,7 +2525,9 @@ bool _magic_21_1127(Character& subject)
             objlv = efp / 10;
             objfix = efp / 100;
             randomize();
-            change_item_material(target_item, material);
+            change_item_material(
+                target_item,
+                *the_item_material_db.get_id_from_legacy(material));
             txt(i18n::s.get(
                 "core.magic.change_material.apply",
                 subject,

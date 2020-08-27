@@ -822,7 +822,7 @@ void chara_refresh(Character& chara)
         {
             chara.curse_power += 100;
         }
-        if (equipment->material == 8)
+        if (equipment->material == "core.ether")
         {
             if (chara.is_player())
             {

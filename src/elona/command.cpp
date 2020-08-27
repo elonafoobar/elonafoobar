@@ -19,6 +19,7 @@
 #include "ctrl_file.hpp"
 #include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_item_material.hpp"
 #include "data/types/type_music.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
@@ -2507,7 +2508,7 @@ TurnResult do_use_command(ItemRef use_item)
         txt(i18n::s.get("core.action.use.hammer.use", use_item));
         snd("core.build1");
         use_item->modify_number(-1);
-        fixmaterial = use_item->material;
+        fixmaterial = the_item_material_db[use_item->material]->legacy_id;
         efid = 21;
         efp = 500;
         magic(cdata.player(), cdata.player());
@@ -5457,7 +5458,7 @@ PickUpItemResult pick_up_item(
                 }
                 else if (
                     picked_up_item->param3 != 0 &&
-                    picked_up_item->material == 35)
+                    picked_up_item->material == "core.raw")
                 {
                     picked_up_item->param3 = game_data.date.hours() +
                         the_item_db[picked_up_item->id]->expiration_date;
@@ -6446,7 +6447,7 @@ TurnResult do_plant(const ItemRef& seed)
     }
     feat(0) = tile_plant;
     feat(1) = 29;
-    feat(2) = seed->material;
+    feat(2) = the_item_material_db[seed->material]->legacy_id;
     try_to_grow_plant(val0);
     if (val0)
     {
@@ -6464,7 +6465,7 @@ TurnResult do_plant(const ItemRef& seed)
         cdata.player().position.y,
         tile_plant,
         29,
-        seed->material,
+        the_item_material_db[seed->material]->legacy_id,
         feat(3));
     chara_gain_skill_exp(cdata.player(), 180, 300);
     return TurnResult::turn_end;

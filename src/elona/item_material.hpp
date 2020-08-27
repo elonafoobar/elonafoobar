@@ -7,7 +7,7 @@
 namespace elona
 {
 
-int item_material_lookup_leather(int x, int y);
-int item_material_lookup_metal(int x, int y);
+data::InstanceId item_material_lookup_leather(int x, int y);
+data::InstanceId item_material_lookup_metal(int x, int y);
 
 } // namespace elona

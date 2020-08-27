@@ -1172,7 +1172,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             s_ = ""s + num2_ + u8" " + s_;
         }
     }
-    if (item->material == 35 && item->param3 < 0)
+    if (item->material == "core.raw" && item->param3 < 0)
     {
         if (jp)
         {
@@ -1220,7 +1220,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
     {
         itemname_additional_info(item);
     }
-    if (category == ItemCategory::furniture && item->material != 0)
+    if (category == ItemCategory::furniture && item->material != "")
     {
         if (jp)
         {
@@ -2425,7 +2425,7 @@ void dipcursed(const ItemRef& item)
 {
     if (the_item_db[item->id]->category == ItemCategory::food)
     {
-        if (item->material == 35)
+        if (item->material == "core.raw")
         {
             txt(i18n::s.get("core.action.dip.rots", item));
             item->param3 = -1;

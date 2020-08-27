@@ -26,7 +26,7 @@ ItemData ItemDB::convert(const lua::ConfigTable& data, const std::string& id)
     DATA_OPT_OR(damage_bonus, int, 0);
     DATA_OPT_OR(pv, int, 0);
     DATA_OPT_OR(dv, int, 0);
-    DATA_OPT_OR(material, int, 0);
+    DATA_OPT_OR(material, std::string, "");
     DATA_OPT_OR(chargelevel, int, 0);
 
     DATA_OPT_OR(is_readable, bool, false);
@@ -73,7 +73,7 @@ ItemData ItemDB::convert(const lua::ConfigTable& data, const std::string& id)
         damage_bonus,
         pv,
         dv,
-        material,
+        data::InstanceId{material},
         chargelevel,
 
         is_readable,

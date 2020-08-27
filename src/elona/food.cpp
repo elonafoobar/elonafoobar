@@ -37,7 +37,7 @@ namespace
 
 void _food_gets_rotten(int chara_idx, const ItemRef& food)
 {
-    if (food->material != 35)
+    if (food->material != "core.raw")
     {
         return;
     }
@@ -460,7 +460,7 @@ void make_dish(const ItemRef& food, int dish_rank)
     food->image = picfood(dish_rank, food->param1 / 1000);
     food->weight = 500;
     food->param2 = dish_rank;
-    if (food->material == 35 && 0 <= food->param3)
+    if (food->material == "core.raw" && 0 <= food->param3)
     {
         food->param3 = game_data.date.hours() + 72;
     }
@@ -702,7 +702,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                     }
                 }
             }
-            if (food->material == 35)
+            if (food->material == "core.raw")
             {
                 if (food->param3 < 0)
                 {
@@ -753,7 +753,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             txt(i18n::s.get("core.food.effect.quality.delicious"));
         }
     }
-    else if (food->material == 35)
+    else if (food->material == "core.raw")
     {
         if (food->param3 < 0)
         {
@@ -1117,7 +1117,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
     }
     if (eater.is_player())
     {
-        if (food->material == 35)
+        if (food->material == "core.raw")
         {
             if (food->param3 < 0)
             {
@@ -1177,7 +1177,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         if (!eater.is_player())
         {
             i = 1500;
-            if (food->material == 35)
+            if (food->material == "core.raw")
             {
                 if (food->param3 < 0)
                 {

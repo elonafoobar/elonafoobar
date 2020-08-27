@@ -5,6 +5,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_item_material.hpp"
 #include "enchantment.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
@@ -27,6 +28,9 @@ int initnum;
 
 int calculate_original_value(const ItemRef& item)
 {
+    if (item->material == "")
+        return item->value;
+
     if (the_item_db[item->id]->category == ItemCategory::furniture)
     {
         return item->value * 100 / (80 + std::max(1, item->subname) * 20) -
@@ -473,7 +477,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
         {
             item->image = picfood(item->param2, item->param1 / 1000);
         }
-        if (item->material == 35)
+        if (item->material == "core.raw")
         {
             item->param3 += game_data.date.hours();
         }
@@ -586,7 +590,9 @@ void init_item_quality_curse_state_material_and_equipments(const ItemRef& item)
     if (is_equipment(category) ||
         (category == ItemCategory::furniture && rnd(5) == 0))
     {
-        if (item->material >= 1000 || category == ItemCategory::furniture)
+        if (item->material == "core._light" ||
+            item->material == "core._heavy" ||
+            category == ItemCategory::furniture)
         {
             initialize_item_material(item);
         }
@@ -662,11 +668,11 @@ void determine_item_material(const ItemRef& item)
         mtlv = rnd(mtlv + 1);
         if (rnd(3))
         {
-            item->material = 1000;
+            item->material = "core._heavy";
         }
         else
         {
-            item->material = 1001;
+            item->material = "core._light";
         }
     }
     p = rnd(100);
@@ -705,14 +711,14 @@ void determine_item_material(const ItemRef& item)
     {
         if (rnd(2) == 0)
         {
-            item->material = 1000;
+            item->material = "core._heavy";
         }
         else
         {
-            item->material = 1001;
+            item->material = "core._light";
         }
     }
-    if (item->material == 1000)
+    if (item->material == "core._heavy")
     {
         if (rnd(10) != 0)
         {
@@ -723,7 +729,7 @@ void determine_item_material(const ItemRef& item)
             item->material = item_material_lookup_leather(p, mtlv);
         }
     }
-    if (item->material == 1001)
+    if (item->material == "core._light")
     {
         if (rnd(10) != 0)
         {
@@ -736,30 +742,32 @@ void determine_item_material(const ItemRef& item)
     }
     if (rnd(25) == 0)
     {
-        item->material = 35;
+        item->material = "core.raw";
     }
 }
 
 
 
-void change_item_material(const ItemRef& item, int material_id)
+void change_item_material(const ItemRef& item, data::InstanceId material)
 {
     item->color = 0;
-    p = item->material;
 
     fixlv = item->quality;
-    for (auto e : the_item_material_db[p]->enchantments)
+    if (item->material != "")
     {
-        enchantment_remove(item, e.first, e.second);
+        for (auto e : the_item_material_db[item->material]->enchantments)
+        {
+            enchantment_remove(item, e.first, e.second);
+        }
     }
 
     const auto original_value = calculate_original_value(item);
 
     item_db_set_basic_stats(item, the_item_db[item->id]->legacy_id);
     item->value = original_value;
-    if (material_id != 0)
+    if (material != "")
     {
-        item->material = material_id;
+        item->material = material;
         fixmaterial = 0;
     }
     else
@@ -778,13 +786,20 @@ void apply_item_material(const ItemRef& item)
     const auto category = the_item_db[item->id]->category;
     if (category == ItemCategory::furniture)
     {
-        if (item->material == 3 || item->material == 16 ||
-            item->material == 21 || item->material == 2)
+        if (item->material == "core.cloth" || item->material == "core.paper" ||
+            item->material == "core.mica" || item->material == "core.silk")
         {
-            item->material = 43;
+            item->material = "core.wood";
         }
     }
-    p = item->material;
+    if (item->material == "")
+    {
+        p = 0;
+    }
+    else
+    {
+        p = the_item_material_db[item->material]->legacy_id;
+    }
     item->weight = item->weight * the_item_material_db[p]->weight / 100;
     if (category == ItemCategory::furniture)
     {
@@ -847,18 +862,21 @@ void apply_item_material(const ItemRef& item)
 
 void set_material_specific_attributes(const ItemRef& item)
 {
-    p = item->material;
-    for (auto e : the_item_material_db[p]->enchantments)
+    if (item->material == "")
+        return;
+
+    const auto& material_data = the_item_material_db.ensure(item->material);
+    for (auto e : material_data.enchantments)
     {
         enchantment_add(item, e.first, e.second, 0, 1);
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        if (the_item_material_db[p]->fireproof)
+        if (material_data.fireproof)
         {
             item->is_acidproof() = true;
         }
-        if (the_item_material_db[p]->acidproof)
+        if (material_data.acidproof)
         {
             item->is_fireproof() = true;
         }

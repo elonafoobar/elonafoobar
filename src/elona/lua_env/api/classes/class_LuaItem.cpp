@@ -42,9 +42,7 @@ void LuaItem_change_material(
     const ItemRef& self,
     const std::string& material_id)
 {
-    const auto& data =
-        the_item_material_db.ensure(data::InstanceId{material_id});
-    change_item_material(self, data.legacy_id);
+    change_item_material(self, data::InstanceId{material_id});
 }
 
 
@@ -217,28 +215,15 @@ void bind(sol::state& lua)
     /**
      * @luadoc material field string
      *
-     * [R] The material ID of this item. To change it, use
+     * [RW] The material ID of this item. To change it, use
      * LuaItem.change_material.
      */
     LuaItem.set(
         "material",
         sol::property(
-            [](const ItemRef& self) {
-                auto id =
-                    the_item_material_db.get_id_from_legacy(self->material);
-                if (!id)
-                {
-                    return ""s;
-                }
-                return id->get();
-            },
+            [](const ItemRef& self) { return self->material.get(); },
             [](const ItemRef& self, const std::string& new_value) {
-                auto data = the_item_material_db[data::InstanceId{new_value}];
-                if (!data)
-                {
-                    return;
-                }
-                self->material = data->legacy_id;
+                self->material = data::InstanceId{new_value};
             }));
 
 
