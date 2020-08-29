@@ -247,7 +247,7 @@ int cell_count_exact_item_stacks(const Position& pos)
     int ret{};
     for (const auto& item : g_inv.ground())
     {
-        if (item->number() > 0 && item->pos() == pos)
+        if (item->number() > 0 && item->position() == pos)
         {
             ++ret;
         }

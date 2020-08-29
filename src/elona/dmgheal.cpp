@@ -1433,7 +1433,7 @@ void character_drops_item(Character& victim)
                 {
                     continue;
                 }
-                if (item->is_precious())
+                if (item->is_precious)
                 {
                     continue;
                 }
@@ -1446,7 +1446,7 @@ void character_drops_item(Character& victim)
             {
                 continue;
             }
-            if (the_item_db[itemid2int(item->id)]->is_cargo)
+            if (the_item_db[item->id]->is_cargo)
             {
                 if (map_data.type != mdata_t::MapType::world_map &&
                     map_data.type != mdata_t::MapType::player_owned &&
@@ -1508,7 +1508,7 @@ void character_drops_item(Character& victim)
                 item->body_part = 0;
             }
             f = 0;
-            if (!item->is_precious())
+            if (!item->is_precious)
             {
                 if (rnd(4) == 0)
                 {
@@ -1541,14 +1541,14 @@ void character_drops_item(Character& victim)
                 item->remove();
                 continue;
             }
-            item->set_pos(victim.position);
-            item->set_pos(victim.position);
+            item->set_position(victim.position);
+            item->set_position(victim.position);
             if (!inv_stack(g_inv.ground(), item).stacked)
             {
                 const auto slot = inv_make_free_slot_force(g_inv.ground());
                 const auto dropped_item =
                     item_separate(item, slot, item->number());
-                dropped_item->own_state = -2;
+                dropped_item->own_state = OwnState::lost;
             }
         }
         cell_refresh(victim.position.x, victim.position.y);
@@ -1599,7 +1599,7 @@ void character_drops_item(Character& victim)
             break;
         }
         if (item->quality > Quality::miracle ||
-            item->id == ItemId::platinum_coin)
+            item->id == "core.platinum_coin")
         {
             f = 1;
         }
@@ -1632,7 +1632,7 @@ void character_drops_item(Character& victim)
         {
             f = 1;
         }
-        if (item->is_quest_target())
+        if (item->is_quest_target)
         {
             f = 1;
         }
@@ -1640,8 +1640,8 @@ void character_drops_item(Character& victim)
         {
             continue;
         }
-        if (catitem != 0 && !item->is_blessed_by_ehekatl() &&
-            is_equipment(the_item_db[itemid2int(item->id)]->category) &&
+        if (catitem != 0 && !item->is_blessed_by_ehekatl &&
+            is_equipment(the_item_db[item->id]->category) &&
             item->quality >= Quality::great)
         {
             if (rnd(3))
@@ -1649,8 +1649,8 @@ void character_drops_item(Character& victim)
                 txt(i18n::s.get(
                         "core.misc.black_cat_licks", cdata[catitem], item),
                     Message::color{ColorIndex::cyan});
-                item->is_blessed_by_ehekatl() = true;
-                reftype = (int)the_item_db[itemid2int(item->id)]->category;
+                item->is_blessed_by_ehekatl = true;
+                reftype = (int)the_item_db[item->id]->category;
                 enchantment_add(
                     item,
                     enchantment_generate(enchantment_gen_level(rnd(4))),
@@ -1663,7 +1663,7 @@ void character_drops_item(Character& victim)
             victim.equipment_slots[item->body_part - 100].unequip();
             item->body_part = 0;
         }
-        item->set_pos(victim.position);
+        item->set_position(victim.position);
         itemturn(item);
         if (!inv_stack(g_inv.ground(), item).stacked)
         {
@@ -2043,7 +2043,7 @@ void character_drops_item(Character& victim)
         if (const auto item = itemcreate_map_inv(361, victim.position, 0))
         {
             item->param1 = victim.shop_store_id;
-            item->own_state = 2;
+            item->own_state = OwnState::shop;
         }
     }
     if (rollanatomy == 1 || victim.quality >= Quality::miracle || 0 ||

@@ -263,7 +263,7 @@ int Item_memory(int type, const std::string& id)
 int Item_trade_rate(const ItemRef& item)
 {
     // Item must be in the cargo category.
-    if (the_item_db[itemid2int(item->id)]->category != ItemCategory::cargo)
+    if (the_item_db[item->id]->category != ItemCategory::cargo)
     {
         return 0;
     }
@@ -285,12 +285,10 @@ sol::optional<ItemRef> Item_find(
     const std::string& item_id,
     const EnumString& location)
 {
-    auto data = the_item_db.ensure(data::InstanceId{item_id});
-
     auto location_value =
         LuaEnums::ItemFindLocationTable.ensure_from_string(location);
 
-    if (const auto item = item_find(int2itemid(data.legacy_id), location_value))
+    if (const auto item = item_find(data::InstanceId{item_id}, location_value))
     {
         return item.unwrap();
     }

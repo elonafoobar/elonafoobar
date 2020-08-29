@@ -42,9 +42,7 @@ void LuaItem_change_material(
     const ItemRef& self,
     const std::string& material_id)
 {
-    const auto& data =
-        the_item_material_db.ensure(data::InstanceId{material_id});
-    change_item_material(self, data.legacy_id);
+    change_item_material(self, data::InstanceId{material_id});
 }
 
 
@@ -71,38 +69,34 @@ void bind(sol::state& lua)
      *
      * [R] The legacy ID of this item.
      */
-    LuaItem.set(
-        "legacy_id",
-        sol::property(
-            [](const ItemRef& self) { return itemid2int(self->id); },
-            [](const ItemRef& self, int new_value) {
-                self->id = int2itemid(new_value);
-            }));
+    LuaItem.set("legacy_id", sol::property([](const ItemRef& self) {
+                    return the_item_db[self->id]->legacy_id;
+                }));
 
     /**
-     * @luadoc pos field num
+     * @luadoc position field num
      *
      * [RW] The item's position.
      */
     LuaItem.set(
-        "pos",
+        "position",
         sol::property(
-            [](const ItemRef& self) { return self->pos(); },
+            [](const ItemRef& self) { return self->position(); },
             [](const ItemRef& self, const Position& pos) {
-                self->set_pos(pos);
+                self->set_position(pos);
             }));
 
     /**
-     * @luadoc count field num
+     * @luadoc charges field num
      *
      * [RW] The number of charges this item holds (for rods, bait, etc.)
      */
     LuaItem.set(
-        "count",
+        "charges",
         sol::property(
-            [](const ItemRef& self) { return self->count; },
-            [](const ItemRef& self, int new_value) {
-                self->count = new_value;
+            [](const ItemRef& self) { return self->charges; },
+            [](const ItemRef& self, lua_int new_value) {
+                self->charges = new_value;
             }));
 
 
@@ -143,7 +137,7 @@ void bind(sol::state& lua)
         "value",
         sol::property(
             [](const ItemRef& self) { return self->value; },
-            [](const ItemRef& self, int new_value) {
+            [](const ItemRef& self, lua_int new_value) {
                 self->value = new_value;
             }));
 
@@ -215,34 +209,21 @@ void bind(sol::state& lua)
         sol::property(
             [](const ItemRef& self) { return self->own_state; },
             [](const ItemRef& self, int new_value) {
-                self->own_state = new_value;
+                self->own_state = static_cast<OwnState>(new_value);
             }));
 
     /**
      * @luadoc material field string
      *
-     * [R] The material ID of this item. To change it, use
+     * [RW] The material ID of this item. To change it, use
      * LuaItem.change_material.
      */
     LuaItem.set(
         "material",
         sol::property(
-            [](const ItemRef& self) {
-                auto id =
-                    the_item_material_db.get_id_from_legacy(self->material);
-                if (!id)
-                {
-                    return ""s;
-                }
-                return id->get();
-            },
+            [](const ItemRef& self) { return self->material.get(); },
             [](const ItemRef& self, const std::string& new_value) {
-                auto data = the_item_material_db[data::InstanceId{new_value}];
-                if (!data)
-                {
-                    return;
-                }
-                self->material = data->legacy_id;
+                self->material = data::InstanceId{new_value};
             }));
 
 
@@ -251,10 +232,11 @@ void bind(sol::state& lua)
      *
      * [R] The new-style prototype ID of the item.
      */
-    LuaItem.set(
-        "id", sol::property([](const ItemRef& self) {
-            return the_item_db.get_id_from_legacy(itemid2int(self->id))->get();
-        }));
+    LuaItem.set("id", sol::property([](const ItemRef& self) {
+                    return the_item_db
+                        .get_id_from_legacy(the_item_db[self->id]->legacy_id)
+                        ->get();
+                }));
     /**
      * @luadoc name field string
      *
@@ -269,9 +251,10 @@ void bind(sol::state& lua)
      *
      * [R] The name of the item without article and number.
      */
-    LuaItem.set("basename", sol::property([](const ItemRef& self) {
-                    return elona::ioriginalnameref(itemid2int(self->id));
-                }));
+    LuaItem.set(
+        "basename", sol::property([](const ItemRef& self) {
+            return elona::ioriginalnameref(the_item_db[self->id]->legacy_id);
+        }));
 
     /**
      * @luadoc number field num
@@ -282,7 +265,9 @@ void bind(sol::state& lua)
         "number",
         sol::property(
             [](const ItemRef& self) { return self->number(); },
-            [](const ItemRef& self, int number) { self->set_number(number); }));
+            [](const ItemRef& self, lua_int number) {
+                self->set_number(number);
+            }));
 
     /**
      * @luadoc curse_state field CurseState
@@ -328,10 +313,10 @@ void bind(sol::state& lua)
         sol::property(
             [](const ItemRef& self) {
                 return LuaEnums::ColorIndexTable.convert_to_string(
-                    static_cast<ColorIndex>(self->color));
+                    static_cast<ColorIndex>(self->tint));
             },
             [](const ItemRef& self, const EnumString& s) {
-                self->color = static_cast<int>(
+                self->tint = static_cast<int>(
                     LuaEnums::ColorIndexTable.ensure_from_string(s));
             }));
 
@@ -343,9 +328,9 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_acidproof",
         sol::property(
-            [](const ItemRef& self) { return self->is_acidproof(); },
+            [](const ItemRef& self) { return self->is_acidproof; },
             [](const ItemRef& self, bool new_value) {
-                self->is_acidproof() = new_value;
+                self->is_acidproof = new_value;
             }));
 
     /**
@@ -356,22 +341,22 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_fireproof",
         sol::property(
-            [](const ItemRef& self) { return self->is_fireproof(); },
+            [](const ItemRef& self) { return self->is_fireproof; },
             [](const ItemRef& self, bool new_value) {
-                self->is_fireproof() = new_value;
+                self->is_fireproof = new_value;
             }));
 
     /**
-     * @luadoc has_charge field boolean
+     * @luadoc is_coldproof field boolean
      *
-     * [RW] The flag if the item has charge.
+     * [RW] The flag if the item is coldproof.
      */
     LuaItem.set(
-        "has_charge",
+        "is_coldproof",
         sol::property(
-            [](const ItemRef& self) { return self->has_charge(); },
+            [](const ItemRef& self) { return self->is_coldproof; },
             [](const ItemRef& self, bool new_value) {
-                self->has_charge() = new_value;
+                self->is_coldproof = new_value;
             }));
 
     /**
@@ -382,22 +367,22 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_precious",
         sol::property(
-            [](const ItemRef& self) { return self->is_precious(); },
+            [](const ItemRef& self) { return self->is_precious; },
             [](const ItemRef& self, bool new_value) {
-                self->is_precious() = new_value;
+                self->is_precious = new_value;
             }));
 
     /**
-     * @luadoc is_aphrodisiac field boolean
+     * @luadoc has_charges field boolean
      *
-     * [RW] The flag if the item is aphrodisiac.
+     * [RW] The flag if the item has charge.
      */
     LuaItem.set(
-        "is_aphrodisiac",
+        "has_charges",
         sol::property(
-            [](const ItemRef& self) { return self->is_aphrodisiac(); },
+            [](const ItemRef& self) { return self->has_charges; },
             [](const ItemRef& self, bool new_value) {
-                self->is_aphrodisiac() = new_value;
+                self->has_charges = new_value;
             }));
 
     /**
@@ -408,74 +393,22 @@ void bind(sol::state& lua)
     LuaItem.set(
         "has_cooldown_time",
         sol::property(
-            [](const ItemRef& self) { return self->has_cooldown_time(); },
+            [](const ItemRef& self) { return self->has_cooldown_time; },
             [](const ItemRef& self, bool new_value) {
-                self->has_cooldown_time() = new_value;
+                self->has_cooldown_time = new_value;
             }));
 
     /**
-     * @luadoc is_blessed_by_ehekatl field boolean
+     * @luadoc is_aphrodisiac field boolean
      *
-     * [RW] The flag if the item is blessed by Ehekatl.
+     * [RW] The flag if the item is aphrodisiac.
      */
     LuaItem.set(
-        "is_blessed_by_ehekatl",
+        "is_aphrodisiac",
         sol::property(
-            [](const ItemRef& self) { return self->is_blessed_by_ehekatl(); },
+            [](const ItemRef& self) { return self->is_aphrodisiac; },
             [](const ItemRef& self, bool new_value) {
-                self->is_blessed_by_ehekatl() = new_value;
-            }));
-
-    /**
-     * @luadoc is_stolen field boolean
-     *
-     * [RW] The flag if the item is stolen.
-     */
-    LuaItem.set(
-        "is_stolen",
-        sol::property(
-            [](const ItemRef& self) { return self->is_stolen(); },
-            [](const ItemRef& self, bool new_value) {
-                self->is_stolen() = new_value;
-            }));
-
-    /**
-     * @luadoc is_alive field boolean
-     *
-     * [RW] The flag if the item is alive.
-     */
-    LuaItem.set(
-        "is_alive",
-        sol::property(
-            [](const ItemRef& self) { return self->is_alive(); },
-            [](const ItemRef& self, bool new_value) {
-                self->is_alive() = new_value;
-            }));
-
-    /**
-     * @luadoc is_quest_target field boolean
-     *
-     * [RW] The flag if the item is quest target.
-     */
-    LuaItem.set(
-        "is_quest_target",
-        sol::property(
-            [](const ItemRef& self) { return self->is_quest_target(); },
-            [](const ItemRef& self, bool new_value) {
-                self->is_quest_target() = new_value;
-            }));
-
-    /**
-     * @luadoc is_marked_as_no_drop field boolean
-     *
-     * [RW] The flag if the item is marked as no-drop.
-     */
-    LuaItem.set(
-        "is_marked_as_no_drop",
-        sol::property(
-            [](const ItemRef& self) { return self->is_marked_as_no_drop(); },
-            [](const ItemRef& self, bool new_value) {
-                self->is_marked_as_no_drop() = new_value;
+                self->is_aphrodisiac = new_value;
             }));
 
     /**
@@ -486,9 +419,74 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_poisoned",
         sol::property(
-            [](const ItemRef& self) { return self->is_poisoned(); },
+            [](const ItemRef& self) { return self->is_poisoned; },
             [](const ItemRef& self, bool new_value) {
-                self->is_poisoned() = new_value;
+                self->is_poisoned = new_value;
+            }));
+
+    /**
+     * @luadoc is_blessed_by_ehekatl field boolean
+     *
+     * [RW] The flag if the item is blessed by Ehekatl.
+     */
+    LuaItem.set(
+        "is_blessed_by_ehekatl",
+        sol::property(
+            [](const ItemRef& self) { return self->is_blessed_by_ehekatl; },
+            [](const ItemRef& self, bool new_value) {
+                self->is_blessed_by_ehekatl = new_value;
+            }));
+
+    /**
+     * @luadoc is_stolen field boolean
+     *
+     * [RW] The flag if the item is stolen.
+     */
+    LuaItem.set(
+        "is_stolen",
+        sol::property(
+            [](const ItemRef& self) { return self->is_stolen; },
+            [](const ItemRef& self, bool new_value) {
+                self->is_stolen = new_value;
+            }));
+
+    /**
+     * @luadoc is_quest_target field boolean
+     *
+     * [RW] The flag if the item is quest target.
+     */
+    LuaItem.set(
+        "is_quest_target",
+        sol::property(
+            [](const ItemRef& self) { return self->is_quest_target; },
+            [](const ItemRef& self, bool new_value) {
+                self->is_quest_target = new_value;
+            }));
+
+    /**
+     * @luadoc is_no_drop field boolean
+     *
+     * [RW] The flag if the item is marked as no-drop.
+     */
+    LuaItem.set(
+        "is_no_drop",
+        sol::property(
+            [](const ItemRef& self) { return self->is_no_drop; },
+            [](const ItemRef& self, bool new_value) {
+                self->is_no_drop = new_value;
+            }));
+
+    /**
+     * @luadoc is_alive field boolean
+     *
+     * [RW] The flag if the item is alive.
+     */
+    LuaItem.set(
+        "is_alive",
+        sol::property(
+            [](const ItemRef& self) { return self->is_alive; },
+            [](const ItemRef& self, bool new_value) {
+                self->is_alive = new_value;
             }));
 
     /**
@@ -499,22 +497,9 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_eternal_force",
         sol::property(
-            [](const ItemRef& self) { return self->is_eternal_force(); },
+            [](const ItemRef& self) { return self->is_eternal_force; },
             [](const ItemRef& self, bool new_value) {
-                self->is_eternal_force() = new_value;
-            }));
-
-    /**
-     * @luadoc is_showroom_only field boolean
-     *
-     * [RW] The flag if the item is showroom only.
-     */
-    LuaItem.set(
-        "is_showroom_only",
-        sol::property(
-            [](const ItemRef& self) { return self->is_showroom_only(); },
-            [](const ItemRef& self, bool new_value) {
-                self->is_showroom_only() = new_value;
+                self->is_eternal_force = new_value;
             }));
 
     /**
@@ -525,9 +510,22 @@ void bind(sol::state& lua)
     LuaItem.set(
         "is_handmade",
         sol::property(
-            [](const ItemRef& self) { return self->is_handmade(); },
+            [](const ItemRef& self) { return self->is_handmade; },
             [](const ItemRef& self, bool new_value) {
-                self->is_handmade() = new_value;
+                self->is_handmade = new_value;
+            }));
+
+    /**
+     * @luadoc is_showroom_only field boolean
+     *
+     * [RW] The flag if the item is showroom only.
+     */
+    LuaItem.set(
+        "is_showroom_only",
+        sol::property(
+            [](const ItemRef& self) { return self->is_showroom_only; },
+            [](const ItemRef& self, bool new_value) {
+                self->is_showroom_only = new_value;
             }));
 
 
@@ -538,7 +536,7 @@ void bind(sol::state& lua)
      */
     LuaItem.set("prototype", sol::property([](const ItemRef& self) {
                     return *lua::lua->get_data_manager().get().raw(
-                        "core.item", self->new_id());
+                        "core.item", self->id);
                 }));
 
     // Methods

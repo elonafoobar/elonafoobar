@@ -39,15 +39,14 @@ TEST_CASE("Test that handle properties can be read", "[Lua: Handles]")
     }
     SECTION("Items")
     {
-        const auto item_opt =
-            itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3);
+        const auto item_opt = itemcreate_map_inv(PUTITORO_PROTO_ID, 4, 8, 3);
         REQUIRE_SOME(item_opt);
         const auto item = item_opt.unwrap();
         elona::lua::lua->get_state()->set("item", item);
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
-            R"(assert(item.pos.x == 4))"));
+            R"(assert(item.position.x == 4))"));
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
-            R"(assert(item.pos.y == 8))"));
+            R"(assert(item.position.y == 8))"));
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
             R"(assert(item.number == 3))"));
     }
@@ -77,8 +76,7 @@ TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
     }
     SECTION("Items")
     {
-        const auto item_opt =
-            itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), 0, 0, 1);
+        const auto item_opt = itemcreate_map_inv(PUTITORO_PROTO_ID, 0, 0, 1);
         REQUIRE_SOME(item_opt);
         const auto item = item_opt.unwrap();
         elona::lua::lua->get_state()->set("item", item);
@@ -87,16 +85,16 @@ TEST_CASE("Test that handle properties can be written", "[Lua: Handles]")
             elona::lua::lua->get_state()->safe_script(R"(item.number = 3)"));
 #if 0 // TODO
         REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(item.pos.x = 4)"));
+            elona::lua::lua->get_state()->safe_script(R"(item.position.x = 4)"));
         REQUIRE_NOTHROW(
-            elona::lua::lua->get_state()->safe_script(R"(item.pos.y = 8)"));
+            elona::lua::lua->get_state()->safe_script(R"(item.position.y = 8)"));
 #endif
         REQUIRE_NOTHROW(elona::lua::lua->get_state()->safe_script(
-            R"(item.pos = LuaPosition.new(4, 8))"));
+            R"(item.position = LuaPosition.new(4, 8))"));
 
         REQUIRE(item->number() == 3);
-        REQUIRE(item->pos().x == 4);
-        REQUIRE(item->pos().y == 8);
+        REQUIRE(item->position().x == 4);
+        REQUIRE(item->position().y == 8);
     }
 }
 
@@ -160,7 +158,7 @@ TEST_CASE("Test that handles go invalid", "[Lua: Handles]")
     {
 #if 0
         const auto item_opt =
-            itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3);
+            itemcreate_map_inv(PUTITORO_PROTO_ID, 4, 8, 3);
         REQUIRE_SOME(item_opt);
         const auto item = item_opt.unwrap();
         elona::lua::lua->get_state()->set("item", item);
@@ -174,7 +172,7 @@ TEST_CASE("Test that handles go invalid", "[Lua: Handles]")
         }
         {
             auto result = elona::lua::lua->get_state()->safe_script(
-                R"(item.pos.x = 2)", &sol::script_pass_on_error);
+                R"(item.position.x = 2)", &sol::script_pass_on_error);
             REQUIRE(!result.valid());
         }
 #endif
@@ -211,7 +209,7 @@ TEST_CASE("Test invalid references to handles in store table", "[Lua: Handles]")
     {
 #if 0
         const auto item_opt =
-            itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3);
+            itemcreate_map_inv(PUTITORO_PROTO_ID, 4, 8, 3);
         REQUIRE_SOME(item_opt);
         const auto item = item_opt.unwrap();
 
@@ -266,7 +264,7 @@ mod.store.global.items = {[0]=item}
 )"));
 
         const auto item = item_find(
-            itemid2int(ItemId::putitoro), 3, ItemFindLocation::ground);
+            itemid2int("core.putitoro"), 3, ItemFindLocation::ground);
         REQUIRE_SOME(item);
         testing::invalidate_item(item.unwrap());
 
@@ -314,7 +312,7 @@ print(Chara.is_ally(mod.store.global.charas[0]))
     {
 #if 0
         const auto item_opt =
-            itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 3);
+            itemcreate_map_inv(PUTITORO_PROTO_ID, 4, 8, 3);
         REQUIRE_SOME(item_opt);
         const auto item = item_opt.unwrap();
 
@@ -397,7 +395,7 @@ TEST_CASE(
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
     const auto item =
-        itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 1);
+        itemcreate_map_inv(PUTITORO_PROTO_ID, 4, 8, 1);
     REQUIRE_SOME(item);
     elona::in = item->number();
 
@@ -577,7 +575,7 @@ TEST_CASE(
     int amount = 2;
 
     const auto item_opt =
-        itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount);
+        itemcreate_map_inv(PUTITORO_PROTO_ID, 4, 8, amount);
     REQUIRE_SOME(item_opt);
     const auto i = item_opt.unwrap();
     auto handle = handle_mgr.get_handle(*i.get_raw_ptr());
@@ -614,7 +612,7 @@ TEST_CASE("Test separation of item handles", "[Lua: Handles]")
     int amount = 3;
 
     const auto i_opt =
-        itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount);
+        itemcreate_map_inv(PUTITORO_PROTO_ID, 4, 8, amount);
     REQUIRE_SOME(i_opt);
     const auto i = i_opt.unwrap();
     sol::table handle = handle_mgr.get_handle(*i.get_raw_ptr());
@@ -641,7 +639,7 @@ TEST_CASE("Test copying of item handles", "[Lua: Handles]")
     int amount = 1;
 
     const auto i_opt =
-        itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount);
+        itemcreate_map_inv(PUTITORO_PROTO_ID, 4, 8, amount);
     REQUIRE_SOME(i_opt);
     const auto i = i_opt.unwrap();
     sol::table handle = handle_mgr.get_handle(*i.get_raw_ptr());
@@ -679,12 +677,12 @@ TEST_CASE("Test copying of item handles after removal", "[Lua: Handles]")
     int amount = 1;
 
     const auto a_opt =
-        itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, amount);
+        itemcreate_map_inv(PUTITORO_PROTO_ID, 4, 8, amount);
     REQUIRE_SOME(a_opt);
     const auto a = a_opt.unwrap();
 
     const auto b_opt =
-        itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), 4, 9, amount);
+        itemcreate_map_inv(PUTITORO_PROTO_ID, 4, 9, amount);
     REQUIRE_SOME(b_opt);
     const auto b = b_opt.unwrap();
 
@@ -704,13 +702,13 @@ TEST_CASE("Test swapping of item handles", "[Lua: Handles]")
     auto& handle_mgr = elona::lua::lua->get_handle_manager();
 
     const auto item_a_opt =
-        itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), 4, 8, 1);
+        itemcreate_map_inv(PUTITORO_PROTO_ID, 4, 8, 1);
     REQUIRE_SOME(item_a_opt);
     const auto item_a = item_a_opt.unwrap();
     sol::table handle_a = handle_mgr.get_handle(*item_a.get_raw_ptr());
 
     const auto item_b_opt =
-        itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), 4, 9, 1);
+        itemcreate_map_inv(PUTITORO_PROTO_ID, 4, 9, 1);
     REQUIRE_SOME(item_b_opt);
     const auto item_b = item_b_opt.unwrap();
     sol::table handle_b = handle_mgr.get_handle(*item_b.get_raw_ptr());

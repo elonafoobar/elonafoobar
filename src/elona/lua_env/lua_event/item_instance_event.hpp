@@ -14,7 +14,7 @@ public:
     ItemInstanceEvent(const char* id, const ItemRef& item)
         : BaseEvent(id)
         , _item(item)
-        , _item_id(item->new_id())
+        , _item_id(item->id)
     {
     }
 

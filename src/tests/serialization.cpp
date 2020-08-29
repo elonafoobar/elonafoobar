@@ -38,10 +38,9 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
         int x = 4;
         int y = 8;
         int number = 3;
-        const auto item =
-            itemcreate_map_inv(itemid2int(PUTITORO_PROTO_ID), x, y, number);
+        const auto item = itemcreate_map_inv(PUTITORO_PROTO_ID, x, y, number);
         REQUIRE_SOME(item);
-        item->is_aphrodisiac() = true;
+        item->is_aphrodisiac = true;
         item->curse_state = CurseState::blessed;
         item->identify_state = IdentifyState::partly;
         index = item->global_index();
@@ -50,11 +49,12 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
     save_and_reload();
 
     REQUIRE(elona::g_inv[index]->number() == 3);
-    REQUIRE(elona::g_inv[index]->id == PUTITORO_PROTO_ID);
-    REQUIRE(elona::g_inv[index]->pos().x == 4);
-    REQUIRE(elona::g_inv[index]->pos().y == 8);
+    REQUIRE(
+        the_item_db[elona::g_inv[index]->id]->legacy_id == PUTITORO_PROTO_ID);
+    REQUIRE(elona::g_inv[index]->position().x == 4);
+    REQUIRE(elona::g_inv[index]->position().y == 8);
     REQUIRE(elona::g_inv[index]->curse_state == CurseState::blessed);
-    REQUIRE(elona::g_inv[index]->is_aphrodisiac());
+    REQUIRE(elona::g_inv[index]->is_aphrodisiac);
     REQUIRE(itemname(g_inv[index]) == u8"3個のプチトロ(媚薬混入)");
 }
 

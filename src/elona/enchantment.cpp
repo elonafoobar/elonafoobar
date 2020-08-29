@@ -602,7 +602,7 @@ bool enchantment_add(
     bool only_check,
     bool force)
 {
-    const auto category = the_item_db[itemid2int(item->id)]->category;
+    const auto category = the_item_db[item->id]->category;
 
     if (type == 0)
     {
@@ -882,7 +882,7 @@ void add_enchantments(const ItemRef& item)
 {
     if (reftype == 25000)
     {
-        item->count = -1;
+        item->charges = -1;
     }
     if (fixlv <= Quality::good)
     {
@@ -896,7 +896,7 @@ void add_enchantments(const ItemRef& item)
     {
         egolv = rnd(clamp(rnd(objlv / 10 + 3), 0, 4) + 1);
         item->value = item->value * 3;
-        item->difficulty_of_identification = 50 +
+        item->identify_level = 50 +
             rnd(std::abs(
                     static_cast<int>(fixlv) - static_cast<int>(Quality::good)) *
                     100 +
@@ -955,7 +955,7 @@ void add_enchantments(const ItemRef& item)
         {
             if (reftype == 24000 || reftype == 10000)
             {
-                item->is_alive() = true;
+                item->is_alive = true;
                 item->param1 = 1;
                 return;
             }
@@ -974,7 +974,7 @@ void add_enchantments(const ItemRef& item)
             {
                 if (rnd(10) == 0)
                 {
-                    item->is_eternal_force() = true;
+                    item->is_eternal_force = true;
                     enchantment_add(
                         item, enchantment_generate(99), enchantment_gen_p());
                     item->curse_state = CurseState::blessed;
@@ -987,9 +987,9 @@ void add_enchantments(const ItemRef& item)
                 item,
                 enchantment_generate(enchantment_gen_level(egolv)),
                 enchantment_gen_p() + (fixlv == Quality::godly) * 100 +
-                    (item->is_eternal_force()) * 100,
+                    (item->is_eternal_force) * 100,
                 20 - (fixlv == Quality::godly) * 10 -
-                    (item->is_eternal_force()) * 20);
+                    (item->is_eternal_force) * 20);
         }
     }
     if (fixlv == Quality::special)

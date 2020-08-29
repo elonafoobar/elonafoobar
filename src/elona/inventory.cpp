@@ -16,7 +16,7 @@ namespace
 bool is_nonstackable(const ItemRef& item)
 {
     return item->quality == Quality::special &&
-        is_equipment(the_item_db[itemid2int(item->id)]->category);
+        is_equipment(the_item_db[item->id]->category);
 }
 
 
@@ -24,9 +24,9 @@ bool is_nonstackable(const ItemRef& item)
 bool is_stackable_with(const ItemRef& item, const ItemRef& base_item)
 {
     const auto ignore_position = !item_get_owner(item).is_map();
-    if (item->id == ItemId::small_medal)
+    if (item->id == "core.small_medal")
     {
-        return ignore_position || item->pos() == base_item->pos();
+        return ignore_position || item->position() == base_item->position();
     }
     else
     {
@@ -38,9 +38,9 @@ bool is_stackable_with(const ItemRef& item, const ItemRef& base_item)
 
 
 
-int inv_weight(Inventory& inv)
+lua_int inv_weight(Inventory& inv)
 {
-    int weight{};
+    lua_int weight{};
     for (const auto& item : inv)
     {
         if (item->weight >= 0)
@@ -53,9 +53,9 @@ int inv_weight(Inventory& inv)
 
 
 
-int inv_cargo_weight(Inventory& inv)
+lua_int inv_cargo_weight(Inventory& inv)
 {
-    int weight{};
+    lua_int weight{};
     for (const auto& item : inv)
     {
         if (item->weight < 0)
@@ -162,7 +162,7 @@ InventorySlot inv_compress(Inventory& inv)
         int threshold = 200 * (i * i + 1);
         for (const auto& item : inv)
         {
-            if (!item->is_precious() && item->value < threshold)
+            if (!item->is_precious && item->value < threshold)
             {
                 item->remove();
                 ++number_of_deleted_items;
@@ -204,7 +204,7 @@ InvStackResult inv_stack(
     Inventory& inv,
     const ItemRef& base_item,
     bool show_message,
-    optional<int> number)
+    optional<lua_int> number)
 {
     if (is_nonstackable(base_item))
     {

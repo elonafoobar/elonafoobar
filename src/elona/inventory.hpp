@@ -14,7 +14,7 @@ namespace elona
  * @param inv The inventory to calculate weight.
  * @return The sum of item weight.
  */
-int inv_weight(Inventory& inv);
+lua_int inv_weight(Inventory& inv);
 
 
 /**
@@ -23,7 +23,7 @@ int inv_weight(Inventory& inv);
  * @param inv The inventory to calculate weight.
  * @return The sum of cargo item's weight.
  */
-int inv_cargo_weight(Inventory& inv);
+lua_int inv_cargo_weight(Inventory& inv);
 
 
 /**
@@ -214,7 +214,7 @@ InvStackResult inv_stack(
     Inventory& inv,
     const ItemRef& base_item,
     bool show_message = false,
-    optional<int> number = none);
+    optional<lua_int> number = none);
 
 
 

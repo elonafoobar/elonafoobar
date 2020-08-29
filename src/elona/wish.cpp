@@ -539,28 +539,28 @@ bool wish_for_item(Character& chara, const std::string& input)
             continue;
 
         // Unwishable item
-        if (item->is_precious() || item->quality == Quality::special)
+        if (item->is_precious || item->quality == Quality::special)
         {
             if (!debug_is_wizard())
             {
                 // Remove this item and retry.
                 selector.remove(id);
                 item->remove();
-                --itemmemory(1, itemid2int(item->id));
+                --itemmemory(1, the_item_db[item->id]->legacy_id);
                 continue;
             }
         }
 
-        if (item->id == ItemId::gold_piece)
+        if (item->id == "core.gold_piece")
         {
             item->set_number(
                 cdata.player().level * cdata.player().level * 50 + 20000);
         }
-        else if (item->id == ItemId::platinum_coin)
+        else if (item->id == "core.platinum_coin")
         {
             item->set_number(8 + rnd(5));
         }
-        else if (item->id == ItemId::holy_well)
+        else if (item->id == "core.holy_well")
         {
             item->remove();
             flt();
@@ -575,9 +575,8 @@ bool wish_for_item(Character& chara, const std::string& input)
                 continue;
             }
         }
-        if (the_item_db[itemid2int(item->id)]->category ==
-                ItemCategory::potion ||
-            the_item_db[itemid2int(item->id)]->category == ItemCategory::scroll)
+        if (the_item_db[item->id]->category == ItemCategory::potion ||
+            the_item_db[item->id]->category == ItemCategory::scroll)
         {
             item->set_number(3 + rnd(2));
             if (item->value >= 20000)
@@ -592,7 +591,7 @@ bool wish_for_item(Character& chara, const std::string& input)
             {
                 item->set_number(3);
             }
-            switch (itemid2int(item->id))
+            switch (the_item_db[item->id]->legacy_id)
             {
             case 559: item->set_number(2 + rnd(2)); break;
             case 502: item->set_number(2); break;

@@ -455,7 +455,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
         chara.ai_item = nullptr;
     }
 
-    const auto category = the_item_db[itemid2int(ai_item->id)]->category;
+    const auto category = the_item_db[ai_item->id]->category;
     if (category == ItemCategory::food)
     {
         if (chara.relationship != 10 || chara.nutrition <= 6000)
@@ -502,13 +502,12 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
         {
             if (const auto item_opt = cell_get_item_if_only_one(chara.position))
             {
-                const auto category =
-                    the_item_db[itemid2int(item_opt->id)]->category;
+                const auto category = the_item_db[item_opt->id]->category;
                 if (chara.nutrition <= 6000)
                 {
                     if (category == ItemCategory::food)
                     {
-                        if (item_opt->own_state <= 0 &&
+                        if (item_opt->own_state <= OwnState::none &&
                             !is_cursed(item_opt->curse_state))
                         {
                             return do_eat_command(chara, item_opt.unwrap());
@@ -516,9 +515,9 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                     }
                     if (category == ItemCategory::well)
                     {
-                        if (item_opt->own_state <= 1 &&
+                        if (item_opt->own_state <= OwnState::town &&
                             item_opt->param1 >= -5 && item_opt->param3 < 20 &&
-                            item_opt->id != ItemId::holy_well)
+                            item_opt->id != "core.holy_well")
                         {
                             return do_drink_command(chara, item_opt.unwrap());
                         }
@@ -527,7 +526,8 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                 if (category == ItemCategory::gold_piece ||
                     category == ItemCategory::ore)
                 {
-                    if (item_opt->own_state <= 0 && !item_opt->is_precious() &&
+                    if (item_opt->own_state <= OwnState::none &&
+                        !item_opt->is_precious &&
                         map_data.type != mdata_t::MapType::player_owned)
                     {
                         in = item_opt->number();
@@ -1387,10 +1387,10 @@ optional<TurnResult> pc_turn_advance_time()
     if (trait(210) != 0 && rnd(5) == 0)
     {
         const auto item = Inventory::at(inv_get_random_slot(g_inv.pc()));
-        if (item &&
-            the_item_db[itemid2int(item->id)]->category == ItemCategory::potion)
+        if (item && the_item_db[item->id]->category == ItemCategory::potion)
         {
-            item_db_on_drink(cdata.player(), item, itemid2int(item->id));
+            item_db_on_drink(
+                cdata.player(), item, the_item_db[item->id]->legacy_id);
         }
     }
     if (trait(214) != 0 && rnd(250) == 0 &&

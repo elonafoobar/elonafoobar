@@ -42,14 +42,12 @@ void normalize_item(const ItemRef& i)
     i->quality = Quality::great;
     i->curse_state = CurseState::none;
     i->identify_state = IdentifyState::completely;
-    i->material = 34;
+    i->material = "core.lead";
     i->quality = Quality::bad;
     i->dv = 0;
     i->pv = 0;
-    i->count = 1;
-    i->dice_x = 0;
-    i->dice_y = 0;
-    i->damage_bonus = 0;
+    i->charges = 1;
+    i->dice = Dice{};
     i->hit_bonus = 0;
     i->subname = 0;
     i->enchantments.clear();
@@ -86,8 +84,8 @@ ItemRef create_item(int id, int number)
 void invalidate_item(const ItemRef& item)
 {
     const Item* old_address = item.get_raw_ptr();
-    int old_id = itemid2int(item->id);
-    const auto [old_x, old_y] = item->pos();
+    int old_id = the_item_db[item->id]->legacy_id;
+    const auto [old_x, old_y] = item->position();
 
     // Delete the item and create new ones until the index is taken again.
     item->remove();

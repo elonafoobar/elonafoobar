@@ -76,27 +76,54 @@ void Item::clear()
 
 bool Item::almost_equals(const Item& other, bool ignore_position) const
 {
-    return true
-        // && number == other.number
-        && value == other.value && image == other.image &&
-        id == other.id
-        // && quality == other.quality
-        && (ignore_position || pos() == other.pos()) &&
-        weight == other.weight && identify_state == other.identify_state &&
-        count == other.count && dice_x == other.dice_x &&
-        dice_y == other.dice_y && damage_bonus == other.damage_bonus &&
-        hit_bonus == other.hit_bonus && dv == other.dv && pv == other.pv &&
-        skill == other.skill && curse_state == other.curse_state &&
-        body_part == other.body_part && function == other.function &&
-        enhancement == other.enhancement && own_state == other.own_state &&
-        color == other.color && subname == other.subname &&
-        material == other.material && param1 == other.param1 &&
-        param2 == other.param2 && param3 == other.param3 &&
+    /* clang-format off */
+    return
+        // number() == other.number() &&
+        value == other.value &&
+        image == other.image &&
+        id == other.id &&
+        // quality == other.quality &&
+        (ignore_position || position() == other.position()) &&
+        weight == other.weight &&
+        identify_state == other.identify_state &&
+        charges == other.charges &&
+        dice == other.dice &&
+        hit_bonus == other.hit_bonus &&
+        dv == other.dv &&
+        pv == other.pv &&
+        skill == other.skill &&
+        curse_state == other.curse_state &&
+        body_part == other.body_part &&
+        function == other.function &&
+        bonus_value == other.bonus_value &&
+        own_state == other.own_state &&
+        tint == other.tint &&
+        subname == other.subname &&
+        material == other.material &&
+        param1 == other.param1 &&
+        param2 == other.param2 &&
+        param3 == other.param3 &&
         param4 == other.param4 &&
-        difficulty_of_identification == other.difficulty_of_identification
-        // && turn == other.turn
-        && _flags == other._flags &&
+        identify_level == other.identify_level &&
+        // turn == other.turn &&
+        is_acidproof == other.is_acidproof &&
+        is_fireproof == other.is_fireproof &&
+        is_coldproof == other.is_coldproof &&
+        is_precious == other.is_precious &&
+        has_charges == other.has_charges &&
+        has_cooldown_time == other.has_cooldown_time &&
+        is_aphrodisiac == other.is_aphrodisiac &&
+        is_poisoned == other.is_poisoned &&
+        is_blessed_by_ehekatl == other.is_blessed_by_ehekatl &&
+        is_stolen == other.is_stolen &&
+        is_quest_target == other.is_quest_target &&
+        is_no_drop == other.is_no_drop &&
+        is_alive == other.is_alive &&
+        is_eternal_force == other.is_eternal_force &&
+        is_handmade == other.is_handmade &&
+        is_showroom_only == other.is_showroom_only &&
         range::equal(enchantments, other.enchantments);
+    /* clang-format on */
 }
 
 
@@ -155,7 +182,7 @@ void Inventory::clear()
     {
         if (item)
         {
-            item->number_ = 0;
+            item->_number = 0;
             item->obj_id = ObjId::nil();
             item->_inventory = nullptr;
             item->_index = -1;
@@ -369,12 +396,12 @@ OptionalItemRef item_find_internal(ItemFindLocation location_type, F predicate)
 
 
 
-OptionalItemRef item_find(ItemId id, ItemFindLocation location_type)
+OptionalItemRef item_find(data::InstanceId id, ItemFindLocation location_type)
 {
     return item_find_internal(location_type, [&](const auto& item, auto& inv) {
         if (inv_get_owner(inv).is_map())
         {
-            if (item->pos() != cdata.player().position)
+            if (item->position() != cdata.player().position)
             {
                 return false;
             }
@@ -390,12 +417,12 @@ OptionalItemRef item_find(ItemCategory category, ItemFindLocation location_type)
     return item_find_internal(location_type, [&](const auto& item, auto& inv) {
         if (inv_get_owner(inv).is_map())
         {
-            if (item->pos() != cdata.player().position)
+            if (item->position() != cdata.player().position)
             {
                 return false;
             }
         }
-        return the_item_db[itemid2int(item->id)]->category == category;
+        return the_item_db[item->id]->category == category;
     });
 }
 
@@ -423,7 +450,7 @@ int itemusingfind(const ItemRef& item, bool disallow_pc)
 
 
 
-OptionalItemRef itemfind(Inventory& inv, ItemId id)
+OptionalItemRef itemfind(Inventory& inv, data::InstanceId id)
 {
     return inv_find(inv, [&](const auto& item) { return item->id == id; });
 }
@@ -433,17 +460,17 @@ OptionalItemRef itemfind(Inventory& inv, ItemId id)
 OptionalItemRef itemfind(Inventory& inv, int subcategory)
 {
     return inv_find(inv, [&](const auto& item) {
-        return the_item_db[itemid2int(item->id)]->subcategory == subcategory;
+        return the_item_db[item->id]->subcategory == subcategory;
     });
 }
 
 
 
-OptionalItemRef mapitemfind(const Position& pos, ItemId id)
+OptionalItemRef mapitemfind(const Position& pos, data::InstanceId id)
 {
     for (const auto& item : g_inv.ground())
     {
-        if (item->id == id && item->pos() == pos)
+        if (item->id == id && item->position() == pos)
         {
             return item;
         }
@@ -469,16 +496,17 @@ void cell_refresh(int x, int y)
     size_t number_of_items = 0;
     for (const auto& item : g_inv.ground())
     {
-        if (item->pos() == Position{x, y})
+        if (item->position() == Position{x, y})
         {
             if (number_of_items < items.size())
             {
                 items.at(number_of_items) = item;
             }
             ++number_of_items;
-            if (ilight(itemid2int(item->id)) != 0)
+            if (ilight(the_item_db[item->id]->legacy_id) != 0)
             {
-                cell_data.at(x, y).light = ilight(itemid2int(item->id));
+                cell_data.at(x, y).light =
+                    ilight(the_item_db[item->id]->legacy_id);
             }
         }
     }
@@ -527,7 +555,7 @@ void itemturn(const ItemRef& item)
 
 
 ItemRef
-item_separate(const ItemRef& item, const InventorySlot& slot, int number)
+item_separate(const ItemRef& item, const InventorySlot& slot, lua_int number)
 {
     const auto dst = item_copy(item, slot);
     item->modify_number(-number);
@@ -567,35 +595,35 @@ void Item::remove()
 
 
 
-void Item::modify_number(int delta)
+void Item::modify_number(lua_int delta)
 {
-    this->set_number(this->number_ + delta);
+    set_number(_number + delta);
 }
 
 
 
-void Item::set_number(int new_number)
+void Item::set_number(lua_int new_number)
 {
-    new_number = std::max(new_number, 0);
-    if (number_ == new_number)
+    new_number = std::max(new_number, lua_int{0});
+    if (_number == new_number)
         return;
 
     auto inv_owner = inv_get_owner(*inventory());
     const auto inv_owner_chara = inv_owner.as_character();
     const auto needs_cell_refresh =
-        inv_owner.is_map() && (number_ == 0 || new_number == 0);
+        inv_owner.is_map() && (_number == 0 || new_number == 0);
     const auto needs_refresh_burden_state =
         inv_owner_chara && inv_owner_chara->index;
 
-    if (number_ == 0)
+    if (_number == 0)
     {
-        number_ = new_number;
+        _number = new_number;
         on_create();
     }
     else
     {
-        number_ = new_number;
-        if (number_ == 0)
+        _number = new_number;
+        if (_number == 0)
         {
             on_remove();
         }
@@ -604,7 +632,7 @@ void Item::set_number(int new_number)
     if (needs_cell_refresh)
     {
         // Refresh the cell the item is on if it's on the ground.
-        cell_refresh(pos().x, pos().y);
+        cell_refresh(position().x, position().y);
     }
     else if (needs_refresh_burden_state)
     {
@@ -616,12 +644,12 @@ void Item::set_number(int new_number)
 
 
 
-void Item::set_pos(const Position& new_pos)
+void Item::set_position(const Position& new_pos)
 {
-    if (_pos == new_pos)
+    if (_position == new_pos)
         return;
 
-    _pos = new_pos;
+    _position = new_pos;
 }
 
 
@@ -678,11 +706,11 @@ ItemRef item_separate(const ItemRef& stacked_item)
     {
         if (const auto owner = item_get_owner(stacked_item).as_character())
         {
-            stacked_item->set_pos(owner->position);
+            stacked_item->set_position(owner->position);
         }
-        dst->set_pos(stacked_item->pos());
+        dst->set_position(stacked_item->position());
         itemturn(dst);
-        cell_refresh(dst->pos().x, dst->pos().y);
+        cell_refresh(dst->position().x, dst->position().y);
         if (!item_is_on_ground(stacked_item))
         {
             txt(i18n::s.get("core.item.something_falls_from_backpack"));
@@ -718,7 +746,7 @@ bool chara_unequip(const ItemRef& item)
 IdentifyState item_identify(const ItemRef& item, IdentifyState level)
 {
     if (level == IdentifyState::almost &&
-        !is_equipment(the_item_db[itemid2int(item->id)]->category))
+        !is_equipment(the_item_db[item->id]->category))
     {
         level = IdentifyState::completely;
     }
@@ -730,7 +758,7 @@ IdentifyState item_identify(const ItemRef& item, IdentifyState level)
     item->identify_state = level;
     if (item->identify_state >= IdentifyState::partly)
     {
-        itemmemory(0, itemid2int(item->id)) = 1;
+        itemmemory(0, the_item_db[item->id]->legacy_id) = 1;
     }
     idtresult = level;
     return idtresult;
@@ -742,16 +770,15 @@ IdentifyState item_identify(const ItemRef& item, int power)
 {
     return item_identify(
         item,
-        power >= item->difficulty_of_identification
-            ? IdentifyState::completely
-            : IdentifyState::unidentified);
+        power >= item->identify_level ? IdentifyState::completely
+                                      : IdentifyState::unidentified);
 }
 
 
 
 void item_checkknown(const ItemRef& item)
 {
-    if (itemmemory(0, itemid2int(item->id)) &&
+    if (itemmemory(0, the_item_db[item->id]->legacy_id) &&
         item->identify_state == IdentifyState::unidentified)
     {
         item_identify(item, IdentifyState::partly);
@@ -762,18 +789,18 @@ void item_checkknown(const ItemRef& item)
 
 void itemname_additional_info(const ItemRef& item)
 {
-    if (item->id == ItemId::kitty_bank)
+    if (item->id == "core.kitty_bank")
     {
         s_ += i18n::s.get_enum("core.item.kitty_bank_rank", item->param2);
     }
-    if (item->id == ItemId::bait)
+    if (item->id == "core.bait")
     {
         s_ += lang(
             ""s + i18n::s.get_enum("core.item.bait_rank", item->param1),
             u8" <"s + i18n::s.get_enum("core.item.bait_rank", item->param1) +
                 u8">"s);
     }
-    if (item->id == ItemId::ancient_book)
+    if (item->id == "core.ancient_book")
     {
         if (jp)
         {
@@ -795,7 +822,7 @@ void itemname_additional_info(const ItemRef& item)
                     u8">"s);
         }
     }
-    if (item->id == ItemId::recipe)
+    if (item->id == "core.recipe")
     {
         if (item->param1 == 0)
         {
@@ -813,11 +840,11 @@ void itemname_additional_info(const ItemRef& item)
         }
     }
 
-    auto category = the_item_db[itemid2int(item->id)]->category;
+    auto category = the_item_db[item->id]->category;
 
     if (category == ItemCategory::book)
     {
-        if (item->id == ItemId::textbook)
+        if (item->id == "core.textbook")
         {
             s_ += lang(
                 u8"《"s + the_ability_db.get_text(item->param1, "name") +
@@ -825,12 +852,12 @@ void itemname_additional_info(const ItemRef& item)
                 u8" titled <Art of "s +
                     the_ability_db.get_text(item->param1, "name") + u8">"s);
         }
-        else if (item->id == ItemId::book_of_rachel)
+        else if (item->id == "core.book_of_rachel")
         {
             s_ += lang(u8"第"s, u8" of Rachel No."s) + item->param2 +
                 lang(u8"巻目の"s, ""s);
         }
-        else if (item->id == ItemId::book_b)
+        else if (item->id == "core.book_b")
         {
             s_ += lang(
                 u8"《"s + booktitle(item->param1) + u8"》という題名の"s,
@@ -853,7 +880,7 @@ void itemname_additional_info(const ItemRef& item)
             if (item->param2 != 0)
             {
                 skip_ = 1;
-                if (item->id == ItemId::fish_a)
+                if (item->id == "core.fish_a")
                 {
                     s_ = s_ +
                         foodname(
@@ -867,14 +894,14 @@ void itemname_additional_info(const ItemRef& item)
                     s_ = s_ +
                         foodname(
                              item->param1 / 1000,
-                             ioriginalnameref(itemid2int(item->id)),
+                             ioriginalnameref(the_item_db[item->id]->legacy_id),
                              item->param2,
                              item->subname);
                 }
                 return;
             }
         }
-        if (item->own_state == 4)
+        if (item->own_state == OwnState::crop)
         {
             s_ += lang(""s, u8" grown "s) +
                 i18n::s.get_enum("core.ui.weight", item->subname) +
@@ -883,7 +910,7 @@ void itemname_additional_info(const ItemRef& item)
     }
     if (item->subname != 0)
     {
-        if (item->id == ItemId::fish_a || item->id == ItemId::fish_b)
+        if (item->id == "core.fish_a" || item->id == "core.fish_b")
         {
             if (item->subname < 0 || item->subname >= 100)
             {
@@ -895,15 +922,15 @@ void itemname_additional_info(const ItemRef& item)
         else if (
             category == ItemCategory::food ||
             category == ItemCategory::bodyparts ||
-            item->id == ItemId::figurine || item->id == ItemId::card ||
-            item->id == ItemId::shit || item->id == ItemId::bottle_of_milk)
+            item->id == "core.figurine" || item->id == "core.card" ||
+            item->id == "core.shit" || item->id == "core.bottle_of_milk")
         {
             if (item->subname < 0 || item->subname >= 800)
             {
                 s_ += u8"/bugged/"s;
                 return;
             }
-            if (item->own_state != 4)
+            if (item->own_state != OwnState::crop)
             {
                 s_ += lang(""s, u8" of "s) +
                     chara_db_get_name(int2charaid(item->subname));
@@ -927,19 +954,19 @@ void itemname_additional_info(const ItemRef& item)
                 }
             }
         }
-        if (item->id == ItemId::deed)
+        if (item->id == "core.deed")
         {
             s_ += lang(""s, u8" of "s) +
                 i18n::s.get_enum("core.ui.home", item->param1) +
                 lang(u8"の"s, ""s);
         }
-        if (item->id == ItemId::bill)
+        if (item->id == "core.bill")
         {
             s_ += lang(
                 ""s + item->subname + u8"goldの"s,
                 u8" <"s + item->subname + u8" gp>"s);
         }
-        if (item->id == ItemId::vomit)
+        if (item->id == "core.vomit")
         {
             if (item->subname < 0 || item->subname >= 800)
             {
@@ -951,7 +978,7 @@ void itemname_additional_info(const ItemRef& item)
                 u8" of "s + chara_db_get_name(int2charaid(item->subname)));
         }
     }
-    if (item->id == ItemId::secret_treasure)
+    if (item->id == "core.secret_treasure")
     {
         if (item->param1 == 169)
         {
@@ -982,32 +1009,28 @@ void itemname_additional_info(const ItemRef& item)
 
 
 
-std::string itemname(const ItemRef& item, int number, bool with_article)
+std::string itemname(const ItemRef& item, lua_int number, bool with_article)
 {
-    int num2_ = 0;
     std::string s2_;
     std::string s3_;
     int alpha_ = 0;
     std::string s4_;
     elona_vector1<std::string> buf_;
-    if (itemid2int(item->id) >= maxitemid - 2 ||
-        static_cast<size_t>(itemid2int(item->id)) > ioriginalnameref.size())
+    if (the_item_db[item->id]->legacy_id >= maxitemid - 2 ||
+        static_cast<size_t>(the_item_db[item->id]->legacy_id) >
+            ioriginalnameref.size())
     {
         return i18n::s.get("core.item.unknown_item");
     }
     item_checkknown(item);
     if (number == 0)
     {
-        num2_ = item->number();
+        number = item->number();
     }
-    else
-    {
-        num2_ = number;
-    }
-    const auto category = the_item_db[itemid2int(item->id)]->category;
+    const auto category = the_item_db[item->id]->category;
     if (jp)
     {
-        if (num2_ > 1)
+        if (number > 1)
         {
             s2_ = u8"個の"s;
             if (category == ItemCategory::armor)
@@ -1017,7 +1040,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             if (category == ItemCategory::spellbook ||
                 category == ItemCategory::book)
             {
-                if (item->id == ItemId::recipe)
+                if (item->id == "core.recipe")
                 {
                     s2_ = u8"枚の"s;
                 }
@@ -1045,17 +1068,17 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             }
             if (category == ItemCategory::gold_piece ||
                 category == ItemCategory::platinum_coin ||
-                item->id == ItemId::small_medal ||
-                item->id == ItemId::music_ticket ||
-                item->id == ItemId::token_of_friendship)
+                item->id == "core.small_medal" ||
+                item->id == "core.music_ticket" ||
+                item->id == "core.token_of_friendship")
             {
                 s2_ = u8"枚の"s;
             }
-            if (item->id == ItemId::fish_a)
+            if (item->id == "core.fish_a")
             {
                 s2_ = u8"匹の"s;
             }
-            s_ = ""s + num2_ + s2_;
+            s_ = ""s + number + s2_;
         }
         else
         {
@@ -1097,21 +1120,22 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
                 break;
             }
         }
-        if (irandomname(itemid2int(item->id)) == 1 &&
+        if (irandomname(the_item_db[item->id]->legacy_id) == 1 &&
             item->identify_state == IdentifyState::unidentified)
         {
             s2_ = "";
         }
         else
         {
-            s2_ = ""s + ioriginalnameref2(itemid2int(item->id));
+            s2_ = ""s + ioriginalnameref2(the_item_db[item->id]->legacy_id);
             if (strutil::contains(
-                    ioriginalnameref(itemid2int(item->id)), u8"with"))
+                    ioriginalnameref(the_item_db[item->id]->legacy_id),
+                    u8"with"))
             {
                 s3_ = "";
             }
             else if (strutil::contains(
-                         ioriginalnameref(itemid2int(item->id)),
+                         ioriginalnameref(the_item_db[item->id]->legacy_id),
                          u8"for testing"))
             {
                 s3_ = "";
@@ -1145,19 +1169,19 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             {
                 s3_ += " ";
             }
-            if (num2_ > 1)
+            if (number > 1)
             {
                 if (s2_ == "variety")
                 {
-                    s_ = ""s + num2_ + u8" " + s_ + u8"variety " + s3_;
+                    s_ = ""s + number + u8" " + s_ + u8"variety " + s3_;
                 }
                 else if (s2_ == "dish")
                 {
-                    s_ = ""s + num2_ + u8" " + s_ + u8"dishes " + s3_;
+                    s_ = ""s + number + u8" " + s_ + u8"dishes " + s3_;
                 }
                 else
                 {
-                    s_ = ""s + num2_ + u8" " + s_ + s2_ + u8"s " + s3_;
+                    s_ = ""s + number + u8" " + s_ + s2_ + u8"s " + s3_;
                 }
             }
             else
@@ -1165,12 +1189,12 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
                 s_ = s_ + s2_ + u8" " + s3_;
             }
         }
-        else if (num2_ > 1)
+        else if (number > 1)
         {
-            s_ = ""s + num2_ + u8" " + s_;
+            s_ = ""s + number + u8" " + s_;
         }
     }
-    if (item->material == 35 && item->param3 < 0)
+    if (item->material == "core.raw" && item->param3 < 0)
     {
         if (jp)
         {
@@ -1200,16 +1224,16 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
                     u8" "s;
             }
         }
-        if (item->id == ItemId::ancient_book && item->param2 != 0)
+        if (item->id == "core.ancient_book" && item->param2 != 0)
         {
             s_ += u8"undecoded "s;
         }
-        if (item->id == ItemId::recipe && item->subname == 0)
+        if (item->id == "core.recipe" && item->subname == 0)
         {
             s_ += u8"custom "s;
         }
     }
-    if (item->id == ItemId::material_kit)
+    if (item->id == "core.material_kit")
     {
         s_ += ""s + the_item_material_db.get_text(item->material, "name") +
             lang(u8"製の"s, u8" "s);
@@ -1218,7 +1242,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
     {
         itemname_additional_info(item);
     }
-    if (category == ItemCategory::furniture && item->material != 0)
+    if (category == ItemCategory::furniture && item->material != "")
     {
         if (jp)
         {
@@ -1231,7 +1255,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
                 u8"work "s;
         }
     }
-    if (item->id == ItemId::gift)
+    if (item->id == "core.gift")
     {
         s_ += i18n::s.get_enum("core.item.gift_rank", item->param4) +
             i18n::space_if_needed();
@@ -1242,7 +1266,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
         if (item->identify_state == IdentifyState::completely &&
             is_equipment(category))
         {
-            if (item->is_eternal_force())
+            if (item->is_eternal_force)
             {
                 alpha_ = 1;
                 s_ += lang(u8"エターナルフォース"s, u8"eternal force"s) +
@@ -1296,28 +1320,29 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
         }
         if (item->identify_state == IdentifyState::unidentified)
         {
-            s_ += iknownnameref(itemid2int(item->id));
+            s_ += iknownnameref(the_item_db[item->id]->legacy_id);
         }
         else if (item->identify_state != IdentifyState::completely)
         {
             if (item->quality < Quality::miracle || !is_equipment(category))
             {
-                s_ += ioriginalnameref(itemid2int(item->id));
+                s_ += ioriginalnameref(the_item_db[item->id]->legacy_id);
             }
             else
             {
-                s_ += iknownnameref(itemid2int(item->id));
+                s_ += iknownnameref(the_item_db[item->id]->legacy_id);
             }
         }
-        else if (item->quality == Quality::special || item->is_precious())
+        else if (item->quality == Quality::special || item->is_precious)
         {
             if (jp)
             {
-                s_ = u8"★"s + s_ + ioriginalnameref(itemid2int(item->id));
+                s_ = u8"★"s + s_ +
+                    ioriginalnameref(the_item_db[item->id]->legacy_id);
             }
             else
             {
-                s_ += ioriginalnameref(itemid2int(item->id));
+                s_ += ioriginalnameref(the_item_db[item->id]->legacy_id);
             }
         }
         else
@@ -1328,11 +1353,11 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             }
             if (alpha_ == 1 && jp)
             {
-                s_ += ialphanameref(itemid2int(item->id));
+                s_ += ialphanameref(the_item_db[item->id]->legacy_id);
             }
             else
             {
-                s_ += ioriginalnameref(itemid2int(item->id));
+                s_ += ioriginalnameref(the_item_db[item->id]->legacy_id);
             }
             if (en && is_equipment(category) && item->subname >= 10000 &&
                 item->subname < 20000)
@@ -1369,7 +1394,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             {
                 s_ = u8"the "s + s_;
             }
-            else if (num2_ == 1)
+            else if (number == 1)
             {
                 s4_ = strmid(s_, 0, 1);
                 if (s4_ == u8"a"s || s4_ == u8"o"s || s4_ == u8"i"s ||
@@ -1383,7 +1408,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
                 }
             }
         }
-        if (s2_ == "" && item->id != ItemId::fish_a && num2_ > 1)
+        if (s2_ == "" && item->id != "core.fish_a" && number > 1)
         {
             switch (s_.back())
             {
@@ -1451,30 +1476,30 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
     }
     if (item->identify_state == IdentifyState::completely)
     {
-        if (item->enhancement != 0)
+        if (item->bonus_value != 0)
         {
-            s_ += ""s + cnvfix(item->enhancement) + u8" "s;
+            s_ += ""s + cnvfix(item->bonus_value) + u8" "s;
         }
-        if (item->has_charge())
+        if (item->has_charges)
         {
-            s_ += i18n::s.get("core.item.charges", item->count);
+            s_ += i18n::s.get("core.item.charges", item->charges);
         }
-        if (item->dice_x != 0 || item->hit_bonus != 0 ||
-            item->damage_bonus != 0)
+        if (item->dice.rolls != 0 || item->hit_bonus != 0 ||
+            item->dice.bonus != 0)
         {
             s_ += u8" ("s;
-            if (item->dice_x != 0)
+            if (item->dice.rolls != 0)
             {
-                s_ += ""s + item->dice_x + u8"d"s + item->dice_y;
-                if (item->damage_bonus != 0)
+                s_ += ""s + item->dice.rolls + u8"d"s + item->dice.faces;
+                if (item->dice.bonus != 0)
                 {
-                    if (item->damage_bonus > 0)
+                    if (item->dice.bonus > 0)
                     {
-                        s_ += u8"+"s + item->damage_bonus;
+                        s_ += u8"+"s + item->dice.bonus;
                     }
                     else
                     {
-                        s_ += ""s + item->damage_bonus;
+                        s_ += ""s + item->dice.bonus;
                     }
                 }
                 s_ += u8")"s;
@@ -1485,8 +1510,8 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             }
             else
             {
-                s_ += ""s + item->hit_bonus + u8","s + item->damage_bonus +
-                    u8")"s;
+                s_ +=
+                    ""s + item->hit_bonus + u8","s + item->dice.bonus + u8")"s;
             }
         }
         if (item->dv != 0 || item->pv != 0)
@@ -1494,19 +1519,19 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             s_ += u8" ["s + item->dv + u8","s + item->pv + u8"]"s;
         }
     }
-    if (en && (item->id == ItemId::wallet || item->id == ItemId::suitcase))
+    if (en && (item->id == "core.wallet" || item->id == "core.suitcase"))
     {
         s_ += u8"(Lost property)"s;
     }
-    if (item->id == ItemId::fishing_pole && item->count != 0)
+    if (item->id == "core.fishing_pole" && item->charges != 0)
     {
         s_ += lang(
             u8"("s + i18n::s.get_enum("core.item.bait_rank", item->param4) +
-                u8"残り"s + item->count + u8"匹)"s,
-            u8"("s + item->count + u8" "s +
+                u8"残り"s + item->charges + u8"匹)"s,
+            u8"("s + item->charges + u8" "s +
                 i18n::s.get_enum("core.item.bait_rank", item->param4) + u8")"s);
     }
-    if (item->id == ItemId::monster_ball)
+    if (item->id == "core.monster_ball")
     {
         if (item->subname == 0)
         {
@@ -1519,7 +1544,7 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
                 u8")"s;
         }
     }
-    if (item->id == ItemId::small_gamble_chest)
+    if (item->id == "core.small_gamble_chest")
     {
         s_ += lang(u8" Lv"s, u8" Level "s) + item->param2;
     }
@@ -1552,11 +1577,11 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
     }
     if (category == ItemCategory::chest)
     {
-        if (item->id == ItemId::shopkeepers_trunk)
+        if (item->id == "core.shopkeepers_trunk")
         {
             s_ += lang(u8"(移動時消滅)"s, u8"(Temporal)"s);
         }
-        else if (item->count == 0)
+        else if (item->charges == 0)
         {
             if (item->param1 == 0)
             {
@@ -1570,25 +1595,25 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
             u8"(仕入れ値 "s + item->param2 + u8"g)"s,
             u8"(Buying price: "s + item->param2 + u8")"s);
     }
-    if (item->is_aphrodisiac())
+    if (item->is_aphrodisiac)
     {
         s_ += lang(u8"(媚薬混入)"s, u8"(Aphrodisiac)"s);
     }
-    if (item->is_poisoned())
+    if (item->is_poisoned)
     {
         s_ += lang(u8"(毒物混入)"s, u8"(Poisoned)"s);
     }
-    if (item->has_cooldown_time() && game_data.date.hours() < item->count)
+    if (item->has_cooldown_time && game_data.date.hours() < item->charges)
     {
         s_ += lang(
-            u8"("s + (item->count - game_data.date.hours()) + u8"時間)"s,
-            u8"(Next: "s + (item->count - game_data.date.hours()) + u8"h.)"s);
+            u8"("s + (item->charges - game_data.date.hours()) + u8"時間)"s,
+            u8"(Next: "s + (item->charges - game_data.date.hours()) + u8"h.)"s);
     }
-    if (item->id == ItemId::shelter && item->count != 0)
+    if (item->id == "core.shelter" && item->charges != 0)
     {
-        s_ += lang(u8" シリアルNo."s, u8" serial no."s) + item->count;
+        s_ += lang(u8" シリアルNo."s, u8" serial no."s) + item->charges;
     }
-    if (item->id == ItemId::disc)
+    if (item->id == "core.disc")
     {
         s_ += u8" <BGM"s + item->param1 + u8">"s;
     }
@@ -1605,9 +1630,9 @@ std::string itemname(const ItemRef& item, int number, bool with_article)
 void remain_make(const ItemRef& remain, const Character& chara)
 {
     remain->subname = charaid2int(chara.id);
-    remain->color = chara.image / 1000;
+    remain->tint = chara.image / 1000;
 
-    if (remain->id == ItemId::corpse)
+    if (remain->id == "core.corpse")
     {
         remain->weight = 250 * (chara.weight + 100) / 100 + 500;
         remain->value = remain->weight / 5;
@@ -1631,10 +1656,10 @@ void remain_make(const ItemRef& remain, const Character& chara)
 
 void item_dump_desc(const ItemRef& item)
 {
-    reftype = (int)the_item_db[itemid2int(item->id)]->category;
+    reftype = (int)the_item_db[item->id]->category;
 
-    item_db_get_charge_level(item, itemid2int(item->id));
-    item_db_get_description(item, itemid2int(item->id));
+    item_db_get_charge_level(item, the_item_db[item->id]->legacy_id);
+    item_db_get_description(item, the_item_db[item->id]->legacy_id);
 
     p = item_load_desc(item);
 
@@ -1658,7 +1683,7 @@ void item_acid(const Character& owner, OptionalItemRef item)
             {
                 continue;
             }
-            if (equipment_slot.equipment->enhancement >= -3)
+            if (equipment_slot.equipment->bonus_value >= -3)
             {
                 if (rnd(30) == 0)
                 {
@@ -1673,12 +1698,12 @@ void item_acid(const Character& owner, OptionalItemRef item)
         }
     }
 
-    if (!is_equipment(the_item_db[itemid2int(item->id)]->category))
+    if (!is_equipment(the_item_db[item->id]->category))
     {
         return;
     }
 
-    if (item->is_acidproof())
+    if (item->is_acidproof)
     {
         txt(i18n::s.get("core.item.acid.immune", owner, item.unwrap()));
     }
@@ -1686,7 +1711,7 @@ void item_acid(const Character& owner, OptionalItemRef item)
     {
         txt(i18n::s.get("core.item.acid.damaged", owner, item.unwrap()),
             Message::color{ColorIndex::purple});
-        --item->enhancement;
+        --item->bonus_value;
     }
 }
 
@@ -1711,7 +1736,7 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
         }
         for (const auto& item : inv)
         {
-            if (item->id == ItemId::fireproof_blanket)
+            if (item->id == "core.fireproof_blanket")
             {
                 if (!blanket)
                 {
@@ -1741,17 +1766,17 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
             continue;
         }
         rowact_item(item);
-        if (item->is_fireproof() || item->is_precious())
+        if (item->is_fireproof || item->is_precious)
         {
             continue;
         }
 
-        const auto category = the_item_db[itemid2int(item->id)]->category;
+        const auto category = the_item_db[item->id]->category;
         if (category == ItemCategory::food && item->param2 == 0)
         {
             if (inv_owner.is_map())
             {
-                if (is_in_fov(item->pos()))
+                if (is_in_fov(item->position()))
                 {
                     txt(i18n::s.get(
                             "core.item.item_on_the_ground_get_broiled", item),
@@ -1819,9 +1844,9 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
                     blanket.unwrap(),
                     *inv_owner.as_character()));
             }
-            if (blanket->count > 0)
+            if (blanket->charges > 0)
             {
-                --blanket->count;
+                --blanket->charges;
             }
             else if (rnd(20) == 0)
             {
@@ -1865,7 +1890,7 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
                     Message::color{ColorIndex::purple});
             }
         }
-        else if (is_in_fov(item->pos()))
+        else if (is_in_fov(item->position()))
         {
             txt(i18n::s.get(
                     "core.item.item_on_the_ground_turns_to_dust",
@@ -1893,7 +1918,7 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
     OptionalItemRef burned_item;
     for (const auto& item : g_inv.ground())
     {
-        if (item->pos() == Position{x, y})
+        if (item->position() == Position{x, y})
         {
             burned_item = item;
             break;
@@ -1940,7 +1965,7 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
         }
         for (const auto& item : inv)
         {
-            if (item->id == ItemId::coldproof_blanket)
+            if (item->id == "core.coldproof_blanket")
             {
                 if (!blanket)
                 {
@@ -1968,12 +1993,12 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
             continue;
         }
         rowact_item(item);
-        if (item->is_precious())
+        if (item->is_precious)
         {
             continue;
         }
 
-        const auto category = the_item_db[itemid2int(item->id)]->category;
+        const auto category = the_item_db[item->id]->category;
         if (category == ItemCategory::chest || category == ItemCategory::tool ||
             category == ItemCategory::gold_piece)
         {
@@ -2001,9 +2026,9 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
                     blanket.unwrap(),
                     *inv_owner.as_character()));
             }
-            if (blanket->count > 0)
+            if (blanket->charges > 0)
             {
-                --blanket->count;
+                --blanket->charges;
             }
             else if (rnd(20) == 0)
             {
@@ -2031,7 +2056,7 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
                     Message::color{ColorIndex::purple});
             }
         }
-        else if (is_in_fov(item->pos()))
+        else if (is_in_fov(item->position()))
         {
             txt(i18n::s.get(
                     "core.item.item_on_the_ground_breaks_to_pieces",
@@ -2058,7 +2083,7 @@ void mapitem_cold(int x, int y)
     OptionalItemRef destroyed_item;
     for (const auto& item : g_inv.ground())
     {
-        if (item->pos() == Position{x, y})
+        if (item->position() == Position{x, y})
         {
             destroyed_item = item;
             break;
@@ -2086,17 +2111,20 @@ bool item_is_on_ground(const ItemRef& item)
 
 
 
-void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
+void item_drop(
+    const ItemRef& item_in_inventory,
+    lua_int num,
+    bool building_shelter)
 {
     const auto slot = inv_make_free_slot_force(g_inv.ground());
     const auto dropped_item = item_separate(item_in_inventory, slot, num);
-    dropped_item->set_pos(cdata.player().position);
+    dropped_item->set_position(cdata.player().position);
     itemturn(dropped_item);
 
     if (building_shelter)
     {
-        dropped_item->own_state = 3;
-        dropped_item->count = game_data.next_shelter_serial_id + 100;
+        dropped_item->own_state = OwnState::shelter;
+        dropped_item->charges = game_data.next_shelter_serial_id + 100;
         ++game_data.next_shelter_serial_id;
     }
     else
@@ -2105,7 +2133,7 @@ void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
         txt(i18n::s.get("core.action.drop.execute", itemname(dropped_item)));
     }
 
-    if (dropped_item->id == ItemId::bottle_of_water) // Water
+    if (dropped_item->id == "core.bottle_of_water") // Water
     {
         if (const auto altar = item_find(ItemCategory::altar))
         {
@@ -2127,7 +2155,7 @@ void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
         inv_stack(g_inv.ground(), dropped_item).stacked_item;
 
     refresh_burden_state();
-    cell_refresh(stacked_item->pos().x, stacked_item->pos().y);
+    cell_refresh(stacked_item->position().x, stacked_item->position().y);
     screenupdate = -1;
     update_screen();
 
@@ -2145,7 +2173,7 @@ void item_drop(const ItemRef& item_in_inventory, int num, bool building_shelter)
             building_update_home_rank();
         }
     }
-    if (stacked_item->id == ItemId::campfire)
+    if (stacked_item->id == "core.campfire")
     {
         map_data.play_campfire_sound = 1;
         play_music();
@@ -2163,7 +2191,7 @@ void item_build_shelter(const ItemRef& shelter)
 
 int iequiploc(const ItemRef& item)
 {
-    switch (the_item_db[itemid2int(item->id)]->category)
+    switch (the_item_db[item->id]->category)
     {
     case ItemCategory::helm: return 1;
     case ItemCategory::necklace: return 2;
@@ -2227,19 +2255,19 @@ void auto_identify()
         {
             continue;
         }
-        if (!is_equipment(the_item_db[itemid2int(item->id)]->category))
+        if (!is_equipment(the_item_db[item->id]->category))
         {
             continue;
         }
 
         const auto skill = cdata.player().get_skill(13).level +
             cdata.player().get_skill(162).level * 5;
-        const auto difficulty = 1500 + item->difficulty_of_identification * 5;
+        const auto difficulty = 1500 + item->identify_level * 5;
         if (skill > rnd(difficulty * 5))
         {
             const auto prev_name = itemname(item);
             item_identify(item, IdentifyState::completely);
-            itemmemory(0, itemid2int(item->id)) = 1;
+            itemmemory(0, the_item_db[item->id]->legacy_id) = 1;
             if (!g_config.hide_autoidentify())
             {
                 txt(i18n::s.get(
@@ -2271,7 +2299,7 @@ void auto_identify()
 
 bool cargocheck(const ItemRef& item)
 {
-    if (!the_item_db[itemid2int(item->id)]->is_cargo)
+    if (!the_item_db[item->id]->is_cargo)
         return true;
 
     if (map_data.type != mdata_t::MapType::world_map &&
@@ -2298,7 +2326,7 @@ ItemRef item_convert_artifact(
     const ItemRef& artifact,
     bool ignore_map_inventory)
 {
-    if (!is_equipment(the_item_db[itemid2int(artifact->id)]->category))
+    if (!is_equipment(the_item_db[artifact->id]->category))
     {
         return artifact; // is not an equipment.
     }
@@ -2350,15 +2378,15 @@ ItemRef item_convert_artifact(
     // Save some properties to avoid use-after-free.
     const auto original_item_name = itemname(artifact);
     const auto artifact_id = artifact->id;
-    const auto artifact_pos = artifact->pos();
+    const auto artifact_pos = artifact->position();
     auto artifact_inv = artifact->inventory();
 
     artifact->remove();
 
     while (true)
     {
-        flt(the_item_db[itemid2int(artifact_id)]->level, Quality::miracle);
-        flttypeminor = the_item_db[itemid2int(artifact_id)]->subcategory;
+        flt(the_item_db[artifact_id]->level, Quality::miracle);
+        flttypeminor = the_item_db[artifact_id]->subcategory;
         if (const auto converted_item =
                 itemcreate(*artifact_inv, 0, artifact_pos, 0))
         {
@@ -2420,9 +2448,9 @@ void damage_by_cursed_equipments(Character& chara)
 
 void dipcursed(const ItemRef& item)
 {
-    if (the_item_db[itemid2int(item->id)]->category == ItemCategory::food)
+    if (the_item_db[item->id]->category == ItemCategory::food)
     {
-        if (item->material == 35)
+        if (item->material == "core.raw")
         {
             txt(i18n::s.get("core.action.dip.rots", item));
             item->param3 = -1;
@@ -2433,9 +2461,9 @@ void dipcursed(const ItemRef& item)
             txt(i18n::s.get("core.action.dip.unchanged", item));
         }
     }
-    else if (is_equipment(the_item_db[itemid2int(item->id)]->category))
+    else if (is_equipment(the_item_db[item->id]->category))
     {
-        --item->enhancement;
+        --item->bonus_value;
         txt(i18n::s.get("core.action.dip.rusts", item));
         if (const auto owner = item_get_owner(item).as_character())
         {
@@ -2479,7 +2507,7 @@ void equip_melee_weapon(Character& chara)
             continue;
         }
         const auto weapon = chara.equipment_slots[cnt].equipment.unwrap();
-        if (weapon->dice_x == 0)
+        if (weapon->dice.rolls == 0)
         {
             continue;
         }

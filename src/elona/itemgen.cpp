@@ -5,6 +5,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_item_material.hpp"
 #include "enchantment.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
@@ -18,6 +19,7 @@
 #include "variables.hpp"
 
 
+
 namespace
 {
 
@@ -27,7 +29,10 @@ int initnum;
 
 int calculate_original_value(const ItemRef& item)
 {
-    if (the_item_db[itemid2int(item->id)]->category == ItemCategory::furniture)
+    if (item->material == "")
+        return item->value;
+
+    if (the_item_db[item->id]->category == ItemCategory::furniture)
     {
         return item->value * 100 / (80 + std::max(1, item->subname) * 20) -
             the_item_material_db[item->material]->value * 2;
@@ -264,7 +269,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
     const auto item = Inventory::create(empty_slot);
     if (item_pos)
     {
-        item->set_pos(*item_pos);
+        item->set_position(*item_pos);
     }
 
     if (item_id == 25 && flttypemajor == 60002)
@@ -275,18 +280,18 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
     item_db_set_full_stats(item, item_id);
     item_db_get_charge_level(item, item_id);
 
-    item->color = generate_color(
-        the_item_db[itemid2int(item->id)]->color, itemid2int(item->id));
+    item->tint = generate_color(
+        the_item_db[item->id]->tint, the_item_db[item->id]->legacy_id);
 
-    if (item->id == ItemId::book_b && item->param1 == 0)
+    if (item->id == "core.book_b" && item->param1 == 0)
     {
         item->param1 = choice(isetbook);
     }
-    if (item->id == ItemId::textbook && item->param1 == 0)
+    if (item->id == "core.textbook" && item->param1 == 0)
     {
         item->param1 = randskill();
     }
-    if (item->id == ItemId::recipe)
+    if (item->id == "core.recipe")
     {
         item->subname = choice(rpsourcelist);
         item->param1 = 1;
@@ -302,7 +307,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
         {
             artifactlocation.push_back(i18n::s.get(
                 "core.magic.oracle.was_held_by",
-                cnven(iknownnameref(itemid2int(item->id))),
+                cnven(iknownnameref(the_item_db[item->id]->legacy_id)),
                 *owner,
                 mapname(owner->current_map),
                 game_data.date.day,
@@ -313,7 +318,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
         {
             artifactlocation.push_back(i18n::s.get(
                 "core.magic.oracle.was_created_at",
-                iknownnameref(itemid2int(item->id)),
+                iknownnameref(the_item_db[item->id]->legacy_id),
                 mdatan(0),
                 game_data.date.day,
                 game_data.date.month,
@@ -321,14 +326,14 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
         }
     }
 
-    if (item->id == ItemId::bait)
+    if (item->id == "core.bait")
     {
         item->param1 = rnd(6);
         item->image = 385 + item->param1;
         item->value = item->param1 * item->param1 * 500 + 200;
     }
 
-    if (item->id == ItemId::deed)
+    if (item->id == "core.deed")
     {
         item->param1 = rnd(5) + 1;
         if (mode != 6)
@@ -344,7 +349,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
         }
     }
 
-    if (item->id == ItemId::gold_piece)
+    if (item->id == "core.gold_piece")
     {
         const auto owner_chara = inv_get_owner(inv).as_character();
         item->set_number(calcinitgold(owner_chara ? owner_chara->index : -1));
@@ -364,78 +369,78 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
         }
     }
 
-    if (item->id == ItemId::gift)
+    if (item->id == "core.gift")
     {
         item->param4 = rnd(rnd(rnd(giftvalue.size()) + 1) + 1);
         item->value = item->param4 * 2500 + 500;
     }
 
-    if (item->id == ItemId::kitty_bank)
+    if (item->id == "core.kitty_bank")
     {
         item->param2 = rnd(rnd(moneybox.size()) + 1);
         item->value = item->param2 * item->param2 * item->param2 * 1000 + 1000;
     }
 
-    if (item->id == ItemId::monster_ball)
+    if (item->id == "core.monster_ball")
     {
         item->param2 = rnd_capped(objlv + 1) + 1;
         item->value = 2000 + item->param2 * item->param2 + item->param2 * 100;
     }
 
-    if (item->id == ItemId::material_kit)
+    if (item->id == "core.material_kit")
     {
         initialize_item_material(item);
     }
 
-    if (item->id == ItemId::ancient_book)
+    if (item->id == "core.ancient_book")
     {
         item->param1 = rnd(rnd_capped(clamp(objlv / 2, 1, 15)) + 1);
     }
 
-    if (item->id == ItemId::sisters_love_fueled_lunch)
+    if (item->id == "core.sisters_love_fueled_lunch")
     {
-        item->is_handmade() = true;
+        item->is_handmade = true;
     }
 
-    if (item->id == ItemId::cooler_box)
+    if (item->id == "core.cooler_box")
     {
         ++game_data.next_inventory_serial_id;
-        item->count = game_data.next_inventory_serial_id;
+        item->charges = game_data.next_inventory_serial_id;
     }
 
-    if (item->id == ItemId::heir_trunk)
+    if (item->id == "core.heir_trunk")
     {
-        item->count = 3;
+        item->charges = 3;
     }
 
-    if (item->id == ItemId::shop_strongbox)
+    if (item->id == "core.shop_strongbox")
     {
-        item->count = 5;
+        item->charges = 5;
     }
 
-    if (item->id == ItemId::salary_chest)
+    if (item->id == "core.salary_chest")
     {
-        item->count = 4;
+        item->charges = 4;
     }
 
-    if (item->id == ItemId::freezer)
+    if (item->id == "core.freezer")
     {
-        item->count = 6;
+        item->charges = 6;
     }
 
-    const auto category = the_item_db[itemid2int(item->id)]->category;
+    const auto category = the_item_db[item->id]->category;
 
     if (category == ItemCategory::chest)
     {
         item->param1 = game_data.current_dungeon_level *
                 (game_data.current_map != mdata_t::MapId::shelter_) +
             5;
-        if (item->id == ItemId::suitcase)
+        if (item->id == "core.suitcase")
         {
             item->param1 = (rnd(10) + 1) * (cdata.player().level / 10 + 1);
         }
-        if (item->id == ItemId::treasure_ball ||
-            item->id == ItemId::rare_treasure_ball)
+        if (item->id == "core.treasure_ball" ||
+            item->id == "core.rare_treasure_ball")
         {
             item->param1 = cdata.player().level;
         }
@@ -443,12 +448,12 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
             std::abs(game_data.current_dungeon_level) *
                 (game_data.current_map != mdata_t::MapId::shelter_) +
             1);
-        if (item->id == ItemId::wallet || item->id == ItemId::suitcase)
+        if (item->id == "core.wallet" || item->id == "core.suitcase")
         {
             item->param2 = rnd(15);
         }
         item->param3 = rnd(30000);
-        if (item->id == ItemId::small_gamble_chest)
+        if (item->id == "core.small_gamble_chest")
         {
             item->param2 = rnd(rnd(100) + 1) + 1;
             item->value = item->param2 * 25 + 150;
@@ -473,7 +478,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
         {
             item->image = picfood(item->param2, item->param1 / 1000);
         }
-        if (item->material == 35)
+        if (item->material == "core.raw")
         {
             item->param3 += game_data.date.hours();
         }
@@ -498,8 +503,8 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
     }
     if (category == ItemCategory::gold_piece ||
         category == ItemCategory::platinum_coin ||
-        item->id == ItemId::small_medal || item->id == ItemId::music_ticket ||
-        item->id == ItemId::token_of_friendship || item->id == ItemId::bill)
+        item->id == "core.small_medal" || item->id == "core.music_ticket" ||
+        item->id == "core.token_of_friendship" || item->id == "core.bill")
     {
         item->curse_state = CurseState::none;
         item->identify_state = IdentifyState::completely;
@@ -508,7 +513,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
     {
         item->identify_state = IdentifyState::completely;
         item->curse_state = CurseState::none;
-        itemmemory(0, itemid2int(item->id)) = 1;
+        itemmemory(0, the_item_db[item->id]->legacy_id) = 1;
     }
     if (category == ItemCategory::bodyparts || category == ItemCategory::junk ||
         category == ItemCategory::ore)
@@ -550,7 +555,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
 
     if (inv_get_owner(inv).is_map())
     {
-        cell_refresh(item->pos().x, item->pos().y);
+        cell_refresh(item->position().x, item->position().y);
     }
     return item;
 }
@@ -559,7 +564,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
 
 void init_item_quality_curse_state_material_and_equipments(const ItemRef& item)
 {
-    const auto category = the_item_db[itemid2int(item->id)]->category;
+    const auto category = the_item_db[item->id]->category;
 
     if (category < ItemCategory::furniture)
     {
@@ -586,7 +591,9 @@ void init_item_quality_curse_state_material_and_equipments(const ItemRef& item)
     if (is_equipment(category) ||
         (category == ItemCategory::furniture && rnd(5) == 0))
     {
-        if (item->material >= 1000 || category == ItemCategory::furniture)
+        if (item->material == "core._light" ||
+            item->material == "core._heavy" ||
+            category == ItemCategory::furniture)
         {
             initialize_item_material(item);
         }
@@ -627,7 +634,7 @@ void init_item_quality_curse_state_material_and_equipments(const ItemRef& item)
 
 void calc_furniture_value(const ItemRef& item)
 {
-    if (the_item_db[itemid2int(item->id)]->category == ItemCategory::furniture)
+    if (the_item_db[item->id]->category == ItemCategory::furniture)
     {
         if (item->subname != 0)
         {
@@ -657,16 +664,16 @@ void determine_item_material(const ItemRef& item)
     {
         mtlv = rnd((objlv + 1)) / 10 + 1;
     }
-    if (item->id == ItemId::material_kit)
+    if (item->id == "core.material_kit")
     {
         mtlv = rnd(mtlv + 1);
         if (rnd(3))
         {
-            item->material = 1000;
+            item->material = "core._heavy";
         }
         else
         {
-            item->material = 1001;
+            item->material = "core._light";
         }
     }
     p = rnd(100);
@@ -701,18 +708,18 @@ void determine_item_material(const ItemRef& item)
     mtlv = clamp(rnd(mtlv + 1) + objfix, 0, 4);
     objfix = 0;
 
-    if (the_item_db[itemid2int(item->id)]->category == ItemCategory::furniture)
+    if (the_item_db[item->id]->category == ItemCategory::furniture)
     {
         if (rnd(2) == 0)
         {
-            item->material = 1000;
+            item->material = "core._heavy";
         }
         else
         {
-            item->material = 1001;
+            item->material = "core._light";
         }
     }
-    if (item->material == 1000)
+    if (item->material == "core._heavy")
     {
         if (rnd(10) != 0)
         {
@@ -723,7 +730,7 @@ void determine_item_material(const ItemRef& item)
             item->material = item_material_lookup_leather(p, mtlv);
         }
     }
-    if (item->material == 1001)
+    if (item->material == "core._light")
     {
         if (rnd(10) != 0)
         {
@@ -736,30 +743,32 @@ void determine_item_material(const ItemRef& item)
     }
     if (rnd(25) == 0)
     {
-        item->material = 35;
+        item->material = "core.raw";
     }
 }
 
 
 
-void change_item_material(const ItemRef& item, int material_id)
+void change_item_material(const ItemRef& item, data::InstanceId material)
 {
-    item->color = 0;
-    p = item->material;
+    item->tint = 0;
 
     fixlv = item->quality;
-    for (auto e : the_item_material_db[p]->enchantments)
+    if (item->material != "")
     {
-        enchantment_remove(item, e.first, e.second);
+        for (auto e : the_item_material_db[item->material]->enchantments)
+        {
+            enchantment_remove(item, e.first, e.second);
+        }
     }
 
     const auto original_value = calculate_original_value(item);
 
-    item_db_set_basic_stats(item, itemid2int(item->id));
+    item_db_set_basic_stats(item, the_item_db[item->id]->legacy_id);
     item->value = original_value;
-    if (material_id != 0)
+    if (material != "")
     {
-        item->material = material_id;
+        item->material = material;
         fixmaterial = 0;
     }
     else
@@ -775,16 +784,23 @@ void change_item_material(const ItemRef& item, int material_id)
 
 void apply_item_material(const ItemRef& item)
 {
-    const auto category = the_item_db[itemid2int(item->id)]->category;
+    const auto category = the_item_db[item->id]->category;
     if (category == ItemCategory::furniture)
     {
-        if (item->material == 3 || item->material == 16 ||
-            item->material == 21 || item->material == 2)
+        if (item->material == "core.cloth" || item->material == "core.paper" ||
+            item->material == "core.mica" || item->material == "core.silk")
         {
-            item->material = 43;
+            item->material = "core.wood";
         }
     }
-    p = item->material;
+    if (item->material == "")
+    {
+        p = 0;
+    }
+    else
+    {
+        p = the_item_material_db[item->material]->legacy_id;
+    }
     item->weight = item->weight * the_item_material_db[p]->weight / 100;
     if (category == ItemCategory::furniture)
     {
@@ -794,9 +810,9 @@ void apply_item_material(const ItemRef& item)
     {
         item->value = item->value * the_item_material_db[p]->value / 100;
     }
-    if (item->color == 0)
+    if (item->tint == 0)
     {
-        item->color = the_item_material_db[p]->color;
+        item->tint = the_item_material_db[p]->tint;
     }
     p(1) = 120;
     p(2) = 80;
@@ -820,10 +836,10 @@ void apply_item_material(const ItemRef& item)
         item->hit_bonus = the_item_material_db[p]->hit_bonus * item->hit_bonus *
             9 / (p(1) - rnd(30));
     }
-    if (item->damage_bonus != 0)
+    if (item->dice.bonus != 0)
     {
-        item->damage_bonus = the_item_material_db[p]->damage_bonus *
-            item->damage_bonus * 5 / (p(1) - rnd(30));
+        item->dice.bonus = the_item_material_db[p]->damage_bonus *
+            item->dice.bonus * 5 / (p(1) - rnd(30));
     }
     if (item->dv != 0)
     {
@@ -835,10 +851,10 @@ void apply_item_material(const ItemRef& item)
         item->pv =
             the_item_material_db[p]->pv * item->pv * 9 / (p(1) - rnd(30));
     }
-    if (item->dice_y != 0)
+    if (item->dice.faces != 0)
     {
-        item->dice_y =
-            item->dice_y * the_item_material_db[p]->dice_y / (p(1) + rnd(25));
+        item->dice.faces = item->dice.faces * the_item_material_db[p]->dice_y /
+            (p(1) + rnd(25));
     }
     set_material_specific_attributes(item);
 }
@@ -847,20 +863,23 @@ void apply_item_material(const ItemRef& item)
 
 void set_material_specific_attributes(const ItemRef& item)
 {
-    p = item->material;
-    for (auto e : the_item_material_db[p]->enchantments)
+    if (item->material == "")
+        return;
+
+    const auto& material_data = the_item_material_db.ensure(item->material);
+    for (auto e : material_data.enchantments)
     {
         enchantment_add(item, e.first, e.second, 0, 1);
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        if (the_item_material_db[p]->fireproof)
+        if (material_data.fireproof)
         {
-            item->is_acidproof() = true;
+            item->is_acidproof = true;
         }
-        if (the_item_material_db[p]->acidproof)
+        if (material_data.acidproof)
         {
-            item->is_fireproof() = true;
+            item->is_fireproof = true;
         }
     }
 }

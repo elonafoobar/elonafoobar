@@ -2,6 +2,15 @@ ELONA.data:define_prototype("item_material")
 ELONA.data:add(
    "core.item_material",
    {
+      -- TODO
+      _heavy = {
+         legacy_id = 1000,
+      },
+      -- TODO
+      _light = {
+         legacy_id = 1001,
+      },
+
       vegetable_seed = {
          legacy_id = 36,
       },
@@ -42,7 +51,7 @@ ELONA.data:add(
          dv = -5,
          pv = -5,
          dice_y = 100,
-         color = 0,
+         tint = 0,
       },
       wood = {
          legacy_id = 43,
@@ -53,7 +62,7 @@ ELONA.data:add(
          dv = -5,
          pv = -5,
          dice_y = 100,
-         color = 0,
+         tint = 0,
       },
       lead = {
          legacy_id = 34,
@@ -64,7 +73,7 @@ ELONA.data:add(
          dv = -3,
          pv = 11,
          dice_y = 100,
-         color = 0,
+         tint = 0,
          fireproof = true,
       },
       bronze = {
@@ -76,7 +85,7 @@ ELONA.data:add(
          dv = 1,
          pv = 5,
          dice_y = 100,
-         color = 6,
+         tint = 6,
          enchantments = {
             [20052] = 50,
          },
@@ -90,7 +99,7 @@ ELONA.data:add(
          dv = 12,
          pv = 0,
          dice_y = 100,
-         color = 0,
+         tint = 0,
          enchantments = {
             [10019] = 100,
          },
@@ -104,7 +113,7 @@ ELONA.data:add(
          dv = 10,
          pv = 7,
          dice_y = 120,
-         color = 5,
+         tint = 5,
          enchantments = {
             [20052] = 100,
          },
@@ -118,7 +127,7 @@ ELONA.data:add(
          dv = 3,
          pv = 14,
          dice_y = 130,
-         color = 0,
+         tint = 0,
          enchantments = {
             [20050] = 25,
          },
@@ -133,7 +142,7 @@ ELONA.data:add(
          dv = 7,
          pv = 11,
          dice_y = 130,
-         color = 0,
+         tint = 0,
          enchantments = {
             [20053] = 50,
          },
@@ -148,7 +157,7 @@ ELONA.data:add(
          dv = 17,
          pv = 0,
          dice_y = 100,
-         color = 4,
+         tint = 4,
          enchantments = {
             [10018] = 150,
          },
@@ -163,7 +172,7 @@ ELONA.data:add(
          dv = 13,
          pv = 14,
          dice_y = 130,
-         color = 0,
+         tint = 0,
          enchantments = {
             [20059] = 100,
          },
@@ -177,7 +186,7 @@ ELONA.data:add(
          dv = 8,
          pv = 18,
          dice_y = 140,
-         color = 0,
+         tint = 0,
          acidproof = true,
       },
       platinum = {
@@ -189,7 +198,7 @@ ELONA.data:add(
          dv = 14,
          pv = 17,
          dice_y = 140,
-         color = 0,
+         tint = 0,
          enchantments = {
             [20053] = 100,
          },
@@ -204,7 +213,7 @@ ELONA.data:add(
          dv = 18,
          pv = 12,
          dice_y = 140,
-         color = 10,
+         tint = 10,
          enchantments = {
             [10013] = 100,
          },
@@ -218,7 +227,7 @@ ELONA.data:add(
          dv = 25,
          pv = 17,
          dice_y = 190,
-         color = 2,
+         tint = 2,
          enchantments = {
             [30172] = 100,
          },
@@ -234,7 +243,7 @@ ELONA.data:add(
          dv = 12,
          pv = 22,
          dice_y = 150,
-         color = 0,
+         tint = 0,
       },
       crystal = {
          legacy_id = 11,
@@ -245,7 +254,7 @@ ELONA.data:add(
          dv = 16,
          pv = 19,
          dice_y = 150,
-         color = 12,
+         tint = 12,
          enchantments = {
             [10016] = 100,
          },
@@ -259,7 +268,7 @@ ELONA.data:add(
          dv = 18,
          pv = 28,
          dice_y = 190,
-         color = 2,
+         tint = 2,
          enchantments = {
             [20058] = 100,
          },
@@ -273,7 +282,7 @@ ELONA.data:add(
          dv = 8,
          pv = 42,
          dice_y = 240,
-         color = 10,
+         tint = 10,
          enchantments = {
             [10011] = 100,
          },
@@ -289,7 +298,7 @@ ELONA.data:add(
          dv = 19,
          pv = 22,
          dice_y = 160,
-         color = 0,
+         tint = 0,
          enchantments = {
             [10010] = 100,
          },
@@ -304,7 +313,7 @@ ELONA.data:add(
          dv = 13,
          pv = 31,
          dice_y = 220,
-         color = 0,
+         tint = 0,
          enchantments = {
             [20052] = 100,
          },
@@ -318,7 +327,7 @@ ELONA.data:add(
          dv = 31,
          pv = 24,
          dice_y = 190,
-         color = 3,
+         tint = 3,
          enchantments = {
             [10002] = 125,
          },
@@ -334,7 +343,7 @@ ELONA.data:add(
          dv = 35,
          pv = 8,
          dice_y = 250,
-         color = 4,
+         tint = 4,
          enchantments = {
             [10018] = 200,
          },
@@ -350,7 +359,7 @@ ELONA.data:add(
          dv = 7,
          pv = 2,
          dice_y = 100,
-         color = 10,
+         tint = 10,
       },
       silk = {
          legacy_id = 2,
@@ -361,7 +370,7 @@ ELONA.data:add(
          dv = 10,
          pv = 2,
          dice_y = 100,
-         color = 5,
+         tint = 5,
          enchantments = {
             [20054] = 50,
          },
@@ -375,7 +384,7 @@ ELONA.data:add(
          dv = 12,
          pv = 0,
          dice_y = 100,
-         color = 0,
+         tint = 0,
          enchantments = {
             [30173] = 100,
          },
@@ -389,7 +398,7 @@ ELONA.data:add(
          dv = 12,
          pv = 11,
          dice_y = 140,
-         color = 0,
+         tint = 0,
          enchantments = {
             [20056] = 100,
          },
@@ -404,7 +413,7 @@ ELONA.data:add(
          dv = 13,
          pv = 6,
          dice_y = 100,
-         color = 6,
+         tint = 6,
       },
       scale = {
          legacy_id = 4,
@@ -415,7 +424,7 @@ ELONA.data:add(
          dv = 12,
          pv = 11,
          dice_y = 120,
-         color = 10,
+         tint = 10,
          enchantments = {
             [20050] = 50,
          },
@@ -429,7 +438,7 @@ ELONA.data:add(
          dv = 17,
          pv = 14,
          dice_y = 100,
-         color = 0,
+         tint = 0,
          enchantments = {
             [20053] = 50,
          },
@@ -444,7 +453,7 @@ ELONA.data:add(
          dv = 21,
          pv = 16,
          dice_y = 100,
-         color = 4,
+         tint = 4,
          enchantments = {
             [20056] = 50,
          },
@@ -458,7 +467,7 @@ ELONA.data:add(
          dv = 14,
          pv = 22,
          dice_y = 140,
-         color = 5,
+         tint = 5,
          enchantments = {
             [10010] = 100,
          },
@@ -473,7 +482,7 @@ ELONA.data:add(
          dv = 34,
          pv = 6,
          dice_y = 100,
-         color = 4,
+         tint = 4,
          enchantments = {
             [10018] = 200,
          },
@@ -488,7 +497,7 @@ ELONA.data:add(
          dv = 29,
          pv = 24,
          dice_y = 160,
-         color = 2,
+         tint = 2,
          enchantments = {
             [20050] = 50,
             [20051] = 50,
@@ -505,7 +514,7 @@ ELONA.data:add(
          dv = 35,
          pv = 15,
          dice_y = 100,
-         color = 4,
+         tint = 4,
          enchantments = {
             [10003] = 200,
          },
@@ -519,7 +528,7 @@ ELONA.data:add(
          dv = 32,
          pv = 24,
          dice_y = 120,
-         color = 2,
+         tint = 2,
          enchantments = {
             [30173] = 100,
          },

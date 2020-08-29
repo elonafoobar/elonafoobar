@@ -26,7 +26,7 @@ ItemData ItemDB::convert(const lua::ConfigTable& data, const std::string& id)
     DATA_OPT_OR(damage_bonus, int, 0);
     DATA_OPT_OR(pv, int, 0);
     DATA_OPT_OR(dv, int, 0);
-    DATA_OPT_OR(material, int, 0);
+    DATA_OPT_OR(material, std::string, "");
     DATA_OPT_OR(chargelevel, int, 0);
 
     DATA_OPT_OR(is_readable, bool, false);
@@ -47,7 +47,7 @@ ItemData ItemDB::convert(const lua::ConfigTable& data, const std::string& id)
     DATA_OPT_OR(light, int, 0);
     DATA_OPT_OR(originalnameref2, std::string, "");
     DATA_OPT_OR(has_random_name, bool, false);
-    DATA_ENUM(color, ColorIndex, ColorIndexTable, ColorIndex::none);
+    DATA_ENUM(tint, ColorIndex, ColorIndexTable, ColorIndex::none);
 
     DATA_REQ(locale_key_prefix, std::string);
 
@@ -73,7 +73,7 @@ ItemData ItemDB::convert(const lua::ConfigTable& data, const std::string& id)
         damage_bonus,
         pv,
         dv,
-        material,
+        data::InstanceId{material},
         chargelevel,
 
         is_readable,
@@ -93,7 +93,7 @@ ItemData ItemDB::convert(const lua::ConfigTable& data, const std::string& id)
         light,
         originalnameref2,
         has_random_name,
-        static_cast<ColorIndex>(color),
+        static_cast<ColorIndex>(tint),
 
         filter,
         rffilter,

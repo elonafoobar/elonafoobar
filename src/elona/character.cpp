@@ -803,11 +803,11 @@ void chara_refresh(Character& chara)
         }
         chara.dv += equipment->dv;
         chara.pv += equipment->pv;
-        if (equipment->dice_x == 0)
+        if (equipment->dice.rolls == 0)
         {
             chara.hit_bonus += equipment->hit_bonus;
-            chara.damage_bonus += equipment->damage_bonus;
-            chara.pv += equipment->enhancement * 2 +
+            chara.damage_bonus += equipment->dice.bonus;
+            chara.pv += equipment->bonus_value * 2 +
                 (equipment->curse_state == CurseState::blessed) * 2;
         }
         else if (equipment_slot.type == 5)
@@ -822,7 +822,7 @@ void chara_refresh(Character& chara)
         {
             chara.curse_power += 100;
         }
-        if (equipment->material == 8)
+        if (equipment->material == "core.ether")
         {
             if (chara.is_player())
             {
@@ -1652,7 +1652,7 @@ void chara_relocate(
 
 void chara_set_ai_item(Character& chara, ItemRef item)
 {
-    const auto category = the_item_db[itemid2int(item->id)]->category;
+    const auto category = the_item_db[item->id]->category;
     if (category == ItemCategory::food || category == ItemCategory::potion ||
         category == ItemCategory::scroll)
     {

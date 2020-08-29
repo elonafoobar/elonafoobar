@@ -658,8 +658,8 @@ int quest_generate()
             if (const auto item = itemcreate_chara_inv(cdata[n], 0, 0))
             {
                 i(0) = n;
-                i(1) = itemid2int(item->id);
-                item->is_quest_target() = true;
+                i(1) = the_item_db[item->id]->legacy_id;
+                item->is_quest_target = true;
                 break;
             }
             else
@@ -1111,7 +1111,7 @@ void quest_exit_map()
     {
         for (const auto& item : g_inv.pc())
         {
-            if (item->own_state == 4)
+            if (item->own_state == OwnState::crop)
             {
                 item->remove();
             }

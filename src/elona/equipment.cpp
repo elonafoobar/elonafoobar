@@ -332,7 +332,7 @@ void supply_new_equipment(Character& chara)
             {
                 continue;
             }
-            if (item->is_quest_target())
+            if (item->is_quest_target)
             {
                 continue;
             }
@@ -369,8 +369,7 @@ void supply_new_equipment(Character& chara)
                 {
                     if (haveweapon == 0)
                     {
-                        if (the_item_db[itemid2int(
-                                            equipment_slot.equipment->id)]
+                        if (the_item_db[equipment_slot.equipment->id]
                                 ->category == ItemCategory::melee_weapon)
                         {
                             haveweapon = 1;
@@ -422,7 +421,7 @@ void supply_new_equipment(Character& chara)
             item->identify_state = IdentifyState::completely;
             if (item->quality >= Quality::miracle)
             {
-                if (is_equipment(the_item_db[itemid2int(item->id)]->category))
+                if (is_equipment(the_item_db[item->id]->category))
                 {
                     if (chara.role == Role::adventurer)
                     {

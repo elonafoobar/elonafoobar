@@ -2142,7 +2142,7 @@ void initialize_random_nefia_rdtype6()
         flttypemajor = 80000;
         if (const auto item = itemcreate_map_inv(0, -1, -1, 0))
         {
-            item->own_state = 1;
+            item->own_state = OwnState::town;
         }
     }
 }
@@ -2225,7 +2225,7 @@ int initialize_quest_map_crop()
                 flt();
                 if (const auto item = itemcreate_map_inv(item_id, x, y, 0))
                 {
-                    item->own_state = 4;
+                    item->own_state = OwnState::crop;
                     p = clamp(size + rnd(rnd(4) + 1), 0, 9);
                     item->weight = item->weight * (80 + p * p * 100) / 100;
                     item->subname = p;
@@ -2241,7 +2241,7 @@ int initialize_quest_map_crop()
     if (const auto item = itemcreate_map_inv(
             560, cdata.player().position.x + 1, cdata.player().position.y, 0))
     {
-        item->own_state = 1;
+        item->own_state = OwnState::town;
     }
     for (int cnt = 0, cnt_end = (70 + rnd(20)); cnt < cnt_end; ++cnt)
     {
@@ -2257,7 +2257,7 @@ int initialize_quest_map_crop()
                 flttypemajor = 80000;
                 if (const auto item = itemcreate_map_inv(0, x, y, 0))
                 {
-                    item->own_state = 1;
+                    item->own_state = OwnState::town;
                 }
             }
             else
@@ -2928,7 +2928,7 @@ int initialize_quest_map_party()
     }
     for (const auto& item : g_inv.ground())
     {
-        item->own_state = 1;
+        item->own_state = OwnState::town;
     }
     return 1;
 }
@@ -2978,11 +2978,11 @@ void initialize_quest_map_town()
     for (const auto& item : g_inv.ground())
     {
         f = 0;
-        if (item->id == ItemId::well || item->id == ItemId::fountain)
+        if (item->id == "core.well" || item->id == "core.fountain")
         {
             item->param1 = -10;
         }
-        if (item->id == ItemId::safe)
+        if (item->id == "core.safe")
         {
             item->param1 = 0;
         }
@@ -3760,7 +3760,7 @@ void map_initcustom(const std::string& map_filename)
             if (const auto item = itemcreate_map_inv(
                     cmapdata(0, cnt), cmapdata(1, cnt), cmapdata(2, cnt), 0))
             {
-                item->own_state = cmapdata(3, cnt);
+                item->own_state = static_cast<OwnState>(cmapdata(3, cnt));
             }
         }
         if (cmapdata(4, cnt) == 1)

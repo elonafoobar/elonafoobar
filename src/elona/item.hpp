@@ -8,6 +8,7 @@
 #include "../util/range.hpp"
 #include "consts.hpp"
 #include "data/types/type_item.hpp"
+#include "dice.hpp"
 #include "enums.hpp"
 #include "eobject/eobject.hpp"
 #include "position.hpp"
@@ -57,9 +58,6 @@ struct InventorySlot
 struct Item
 {
 private:
-    using FlagSet = std::bitset<32>;
-
-
     // Index of this item into the global cdata array.
     // Used for communicating with legacy code that takes integer index
     // arguments. New code should pass Item& instead. Not serialized; set on
@@ -90,57 +88,68 @@ public:
     ObjId obj_id;
 
 private:
-    int number_ = 0;
+    lua_int _number{};
 
 public:
-    int value = 0;
+    lua_int value{};
     int image = 0;
-    ItemId id = ItemId::none;
+    data::InstanceId id{};
     Quality quality = Quality::none;
 
 private:
-    Position _pos;
+    Position _position;
 
 public:
-    const Position& pos() const noexcept
+    const Position& position() const noexcept
     {
-        return _pos;
+        return _position;
     }
 
 
-    void set_pos(const Position& new_pos);
+    void set_position(const Position& new_pos);
 
 
 
-    int weight = 0;
+    lua_int weight{};
     IdentifyState identify_state = IdentifyState::unidentified;
-    int count = 0;
-    int dice_x = 0;
-    int dice_y = 0;
-    int damage_bonus = 0;
-    int hit_bonus = 0;
-    int dv = 0;
-    int pv = 0;
+    lua_int charges{};
+    Dice dice{};
+    lua_int hit_bonus{};
+    lua_int dv{};
+    lua_int pv{};
     int skill = 0;
     CurseState curse_state = CurseState::none;
     int body_part = 0;
     int function = 0;
-    int enhancement = 0;
-    int own_state = 0;
-    int color = 0;
+    lua_int bonus_value{};
+    OwnState own_state{};
+    int tint = 0;
     int subname = 0;
-    int material = 0;
+    data::InstanceId material{};
     int param1 = 0;
     int param2 = 0;
     int param3 = 0;
     int param4 = 0;
-    int difficulty_of_identification = 0;
-    int turn = 0;
+    lua_int identify_level{};
+    lua_int turn{};
 
-private:
-    FlagSet _flags;
+    bool is_acidproof{};
+    bool is_fireproof{};
+    bool is_coldproof{};
+    bool is_precious{};
+    bool has_charges{};
+    bool has_cooldown_time{};
+    bool is_aphrodisiac{};
+    bool is_poisoned{};
+    bool is_blessed_by_ehekatl{};
+    bool is_stolen{};
+    bool is_quest_target{};
+    bool is_no_drop{};
+    bool is_alive{};
+    bool is_eternal_force{};
+    bool is_handmade{};
+    bool is_showroom_only{};
 
-public:
     std::vector<Enchantment> enchantments;
 
 
@@ -154,53 +163,18 @@ public:
         return "LuaItem";
     }
 
-    int number() const
+    lua_int number() const
     {
-        return number_;
+        return _number;
     }
 
-    void set_number(int number_);
-    void modify_number(int delta);
+    void set_number(lua_int new_number);
+    void modify_number(lua_int delta);
     void remove();
-
-
-    data::InstanceId new_id() const
-    {
-        return *the_item_db.get_id_from_legacy(itemid2int(this->id));
-    }
 
 
     void on_create();
     void on_remove();
-
-
-#define ELONA_ITEM_DEFINE_FLAG_ACCESSOR(name, n) \
-    bool name() const \
-    { \
-        return _flags[n]; \
-    } \
-    FlagSet::reference name() \
-    { \
-        return _flags[n]; \
-    }
-
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_acidproof, 1)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_fireproof, 2)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(has_charge, 4)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_precious, 5)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_aphrodisiac, 6)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(has_cooldown_time, 7)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_blessed_by_ehekatl, 8)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_stolen, 9)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_alive, 10)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_quest_target, 12)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_marked_as_no_drop, 13)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_poisoned, 14)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_eternal_force, 15)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_showroom_only, 16)
-    ELONA_ITEM_DEFINE_FLAG_ACCESSOR(is_handmade, 17)
-
-#undef ELONA_ITEM_DEFINE_FLAG_ACCESSOR
 
 
 
@@ -241,18 +215,16 @@ public:
     {
         /* clang-format off */
         ar(obj_id);
-        ar(number_);
+        ar(_number);
         ar(value);
         ar(image);
         ar(id);
         ar(quality);
-        ar(_pos);
+        ar(_position);
         ar(weight);
         ar(identify_state);
-        ar(count);
-        ar(dice_x);
-        ar(dice_y);
-        ar(damage_bonus);
+        ar(charges);
+        ar(dice);
         ar(hit_bonus);
         ar(dv);
         ar(pv);
@@ -260,18 +232,33 @@ public:
         ar(curse_state);
         ar(body_part);
         ar(function);
-        ar(enhancement);
+        ar(bonus_value);
         ar(own_state);
-        ar(color);
+        ar(tint);
         ar(subname);
         ar(material);
         ar(param1);
         ar(param2);
         ar(param3);
         ar(param4);
-        ar(difficulty_of_identification);
+        ar(identify_level);
         ar(turn);
-        ar(_flags);
+        ar(is_acidproof);
+        ar(is_fireproof);
+        ar(is_coldproof);
+        ar(is_precious);
+        ar(has_charges);
+        ar(has_cooldown_time);
+        ar(is_aphrodisiac);
+        ar(is_poisoned);
+        ar(is_blessed_by_ehekatl);
+        ar(is_stolen);
+        ar(is_quest_target);
+        ar(is_no_drop);
+        ar(is_alive);
+        ar(is_eternal_force);
+        ar(is_handmade);
+        ar(is_showroom_only);
         ar(enchantments);
         /* clang-format on */
     }
@@ -431,7 +418,7 @@ public:
     }
 
 
-    optional<int> capacity() const noexcept
+    optional<size_t> capacity() const noexcept
     {
         return _capacity;
     }
@@ -496,7 +483,7 @@ void item_checkknown(const ItemRef& item);
  * TODO
  */
 ItemRef
-item_separate(const ItemRef& item, const InventorySlot& slot, int number);
+item_separate(const ItemRef& item, const InventorySlot& slot, lua_int number);
 
 /**
  * TODO
@@ -507,7 +494,7 @@ void item_acid(const Character& owner, OptionalItemRef item = nullptr);
 
 void itemturn(const ItemRef& item);
 
-OptionalItemRef itemfind(Inventory& inv, ItemId id);
+OptionalItemRef itemfind(Inventory& inv, data::InstanceId id);
 OptionalItemRef itemfind(Inventory& inv, int subcategory);
 
 int itemusingfind(const ItemRef& item, bool disallow_pc = false);
@@ -524,7 +511,7 @@ enum class ItemFindLocation
  * the item's reference or none if not found.
  */
 OptionalItemRef item_find(
-    ItemId id,
+    data::InstanceId id,
     ItemFindLocation = ItemFindLocation::player_inventory_and_ground);
 OptionalItemRef item_find(
     ItemCategory category,
@@ -654,7 +641,7 @@ void remain_make(const ItemRef& remain, const Character& chara);
 
 void item_drop(
     const ItemRef& item_in_inventory,
-    int num,
+    lua_int num,
     bool building_shelter = false);
 void item_build_shelter(const ItemRef& shelter);
 
@@ -707,8 +694,8 @@ void damage_by_cursed_equipments(Character& chara);
 void dipcursed(const ItemRef& item);
 int efstatusfix(int = 0, int = 0, int = 0, int = 0);
 void equip_melee_weapon(Character& chara);
-OptionalItemRef mapitemfind(const Position& pos, ItemId id);
+OptionalItemRef mapitemfind(const Position& pos, data::InstanceId id);
 std::string
-itemname(const ItemRef& item, int number = 0, bool with_article = true);
+itemname(const ItemRef& item, lua_int number = 0, bool with_article = true);
 
 } // namespace elona

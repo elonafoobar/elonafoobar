@@ -225,7 +225,7 @@ bool do_physical_attack_internal(
             attacker.position,
             target.position,
             static_cast<RangedAttackAnimation::Type>(attackskill),
-            the_item_db[itemid2int(weapon->id)]->subcategory,
+            the_item_db[weapon->id]->subcategory,
             weapon->image % 1000,
             weapon->image / 1000)
             .play();
@@ -274,7 +274,7 @@ bool do_physical_attack_internal(
                 if (weapon->quality == Quality::special)
                 {
                     s(1) = i18n::s.get("core.misc.wields_proudly.the") +
-                        iknownnameref(itemid2int(weapon->id));
+                        iknownnameref(the_item_db[weapon->id]->legacy_id);
                 }
                 else if (weapon->subname >= 40000)
                 {
@@ -285,7 +285,7 @@ bool do_physical_attack_internal(
                 else
                 {
                     s(1) = i18n::s.get("core.misc.wields_proudly.the") +
-                        iknownnameref(itemid2int(weapon->id));
+                        iknownnameref(the_item_db[weapon->id]->legacy_id);
                 }
                 if (weapon->quality == Quality::godly)
                 {
@@ -614,7 +614,7 @@ bool do_physical_attack_internal(
     {
         if (target.state() != Character::State::alive)
         {
-            if (weapon->is_alive())
+            if (weapon->is_alive)
             {
                 if (weapon->param2 < calcexpalive(weapon->param1))
                 {
@@ -685,16 +685,16 @@ void do_ranged_attack(
     ammoy = target.position.y;
     if (ammo)
     {
-        if (ammo->count != -1)
+        if (ammo->charges != -1)
         {
-            if (ammo->enchantments[ammo->count].power % 1000 <= 0)
+            if (ammo->enchantments[ammo->charges].power % 1000 <= 0)
             {
                 txt(i18n::s.get("core.action.ranged.load_normal_ammo"));
-                ammo->count = -1;
+                ammo->charges = -1;
             }
             else
             {
-                ammoproc = ammo->enchantments[ammo->count].id % 10000;
+                ammoproc = ammo->enchantments[ammo->charges].id % 10000;
                 if (attacker.is_player())
                 {
                     if (cdata.player().sp < 50)
@@ -711,7 +711,7 @@ void do_ranged_attack(
                     }
                     damage_sp(cdata.player(), rnd(encammoref(2, ammoproc) + 1));
                 }
-                --ammo->enchantments[ammo->count].power;
+                --ammo->enchantments[ammo->charges].power;
             }
         }
     }
@@ -865,7 +865,7 @@ void try_to_melee_attack(Character& attacker, Character& target)
             continue;
         }
         const auto weapon = attacker.equipment_slots[cnt].equipment;
-        if (weapon->dice_x > 0)
+        if (weapon->dice.rolls > 0)
         {
             attackskill = weapon->skill;
             ++attacknum;

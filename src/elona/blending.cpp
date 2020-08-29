@@ -176,13 +176,13 @@ bool check_one_blending_material(
     bool check_pos)
 {
     if ((the_blending_recipe_db.ensure(recipe_id).type == 0 || step != 0) &&
-        item->own_state > 0)
+        item->own_state > OwnState::none)
     {
         return false;
     }
     if (check_pos)
     {
-        if (dist(item->pos(), cdata.player().position) > 4)
+        if (dist(item->position(), cdata.player().position) > 4)
         {
             return false;
         }
@@ -273,9 +273,8 @@ void collect_blending_materials(
 
             result.emplace_back(
                 item->global_index(),
-                static_cast<int>(the_item_db[itemid2int(item->id)]->category) *
-                        1000 +
-                    itemid2int(item->id));
+                static_cast<int>(the_item_db[item->id]->category) * 1000 +
+                    the_item_db[item->id]->legacy_id);
         }
     }
 }
@@ -524,7 +523,7 @@ void window_recipe(
             get_enchantment_description(
                 item->enchantments[inh].id,
                 item->enchantments[inh].power,
-                the_item_db[itemid2int(item->id)]->category);
+                the_item_db[item->id]->category);
             const auto text_color = item->enchantments[inh].power < 0
                 ? snail::Color{180, 0, 0}
                 : snail::Color{0, 0, 100};
@@ -851,14 +850,15 @@ void blendig_menu_select_materials()
         if (p != -1)
         {
             const auto item_index = p(0);
-            if (g_inv[item_index]->is_marked_as_no_drop())
+            if (g_inv[item_index]->is_no_drop)
             {
                 snd("core.fail1");
                 txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
                 continue;
             }
             rpref(10 + step * 2 + 0) = item_index;
-            rpref(10 + step * 2 + 1) = itemid2int(g_inv[item_index]->id);
+            rpref(10 + step * 2 + 1) =
+                the_item_db[g_inv[item_index]->id]->legacy_id;
             snd("core.drink1");
             txt(i18n::s.get("core.blending.steps.you_add", g_inv[item_index]));
             ++step;
@@ -908,7 +908,8 @@ bool has_required_materials()
             return false;
         }
         if (g_inv[rpref(10 + cnt * 2)]->number() <= 0 ||
-            g_inv[rpref(10 + cnt * 2)]->id != int2itemid(rpref(11 + cnt * 2)))
+            the_item_db[g_inv[rpref(10 + cnt * 2)]->id]->legacy_id !=
+                rpref(11 + cnt * 2))
         {
             return false;
         }

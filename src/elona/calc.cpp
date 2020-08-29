@@ -459,7 +459,7 @@ int calc_accuracy(
                 rangedist =
                     clamp(dist(attacker.position, target.position) - 1, 0, 9);
                 const auto effective_range =
-                    calc_effective_range(itemid2int(weapon->id));
+                    calc_effective_range(the_item_db[weapon->id]->legacy_id);
                 accuracy = accuracy * effective_range[rangedist] / 100;
             }
         }
@@ -664,13 +664,14 @@ int calcattackdmg(
     }
     else
     {
-        dmgfix = attacker.damage_bonus + weapon->damage_bonus +
-            weapon->enhancement + (weapon->curse_state == CurseState::blessed);
-        dice1 = weapon->dice_x;
-        dice2 = weapon->dice_y;
+        dmgfix = attacker.damage_bonus + weapon->dice.bonus +
+            weapon->bonus_value + (weapon->curse_state == CurseState::blessed);
+        dice1 = weapon->dice.rolls;
+        dice2 = weapon->dice.faces;
         if (ammo)
         {
-            dmgfix += ammo->damage_bonus + ammo->dice_x * ammo->dice_y / 2;
+            dmgfix +=
+                ammo->dice.bonus + ammo->dice.rolls * ammo->dice.faces / 2;
             dmgmulti = 0.5 +
                 double(
                     (attacker.get_skill(13).level +
@@ -689,14 +690,14 @@ int calcattackdmg(
                      attacker.get_skill(152).level * 2)) /
                     45;
         }
-        pierce = calc_rate_to_pierce(itemid2int(weapon->id));
+        pierce = calc_rate_to_pierce(the_item_db[weapon->id]->legacy_id);
     }
     if (attackrange)
     {
         if (mode == AttackDamageCalculationMode::actual_damage)
         {
             const auto effective_range =
-                calc_effective_range(itemid2int(weapon->id));
+                calc_effective_range(the_item_db[weapon->id]->legacy_id);
             dmgmulti = dmgmulti * effective_range[rangedist] / 100;
         }
     }
@@ -846,36 +847,53 @@ CalcAttackProtectionResult calc_attack_protection(const Character& chara)
 
 int calcmedalvalue(const ItemRef& item)
 {
-    switch (item->id)
-    {
-    case ItemId::diablo: return 65;
-    case ItemId::artifact_seed: return 15;
-    case ItemId::scroll_of_growth: return 5;
-    case ItemId::scroll_of_faith: return 8;
-    case ItemId::rod_of_domination: return 20;
-    case ItemId::scroll_of_superior_material: return 7;
-    case ItemId::little_sisters_diary: return 12;
-    case ItemId::bottle_of_water: return 3;
-    case ItemId::potion_of_cure_corruption: return 10;
-    case ItemId::presidents_chair: return 20;
-    case ItemId::bill: return 5;
-    case ItemId::tax_masters_tax_box: return 18;
-    case ItemId::cat_sisters_diary: return 85;
-    case ItemId::girls_diary: return 25;
-    case ItemId::shrine_gate: return 11;
-    case ItemId::bottle_of_hermes_blood: return 30;
-    case ItemId::sages_helm: return 55;
-    case ItemId::license_of_the_void_explorer: return 72;
-    case ItemId::garoks_hammer: return 94;
-    default: return 1;
-    }
+    if (item->id == "core.diablo")
+        return 65;
+    else if (item->id == "core.artifact_seed")
+        return 15;
+    else if (item->id == "core.scroll_of_growth")
+        return 5;
+    else if (item->id == "core.scroll_of_faith")
+        return 8;
+    else if (item->id == "core.rod_of_domination")
+        return 20;
+    else if (item->id == "core.scroll_of_superior_material")
+        return 7;
+    else if (item->id == "core.little_sisters_diary")
+        return 12;
+    else if (item->id == "core.bottle_of_water")
+        return 3;
+    else if (item->id == "core.potion_of_cure_corruption")
+        return 10;
+    else if (item->id == "core.presidents_chair")
+        return 20;
+    else if (item->id == "core.bill")
+        return 5;
+    else if (item->id == "core.tax_masters_tax_box")
+        return 18;
+    else if (item->id == "core.cat_sisters_diary")
+        return 85;
+    else if (item->id == "core.girls_diary")
+        return 25;
+    else if (item->id == "core.shrine_gate")
+        return 11;
+    else if (item->id == "core.bottle_of_hermes_blood")
+        return 30;
+    else if (item->id == "core.sages_helm")
+        return 55;
+    else if (item->id == "core.license_of_the_void_explorer")
+        return 72;
+    else if (item->id == "core.garoks_hammer")
+        return 94;
+    else
+        return 1;
 }
 
 
 
 int calcitemvalue(const ItemRef& item, int calc_mode)
 {
-    const auto category = the_item_db[itemid2int(item->id)]->category;
+    const auto category = the_item_db[item->id]->category;
     int ret = 0;
     if (item->identify_state == IdentifyState::unidentified)
     {
@@ -923,7 +941,7 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
             ret = ret * item->param2 * item->param2 / 10;
         }
     }
-    if (item->id == ItemId::cargo_travelers_food)
+    if (item->id == "core.cargo_travelers_food")
     {
         if (calc_mode == 0)
         {
@@ -949,20 +967,20 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
             }
         }
     }
-    if (item->has_charge())
+    if (item->has_charges)
     {
-        item_db_get_charge_level(item, itemid2int(item->id));
-        if (item->count < 0)
+        item_db_get_charge_level(item, the_item_db[item->id]->legacy_id);
+        if (item->charges < 0)
         {
             ret = ret / 10;
         }
         else if (category == ItemCategory::spellbook)
         {
-            ret = ret / 5 + ret * item->count / (ichargelevel * 2 + 1);
+            ret = ret / 5 + ret * item->charges / (ichargelevel * 2 + 1);
         }
         else
         {
-            ret = ret / 2 + ret * item->count / (ichargelevel * 3 + 1);
+            ret = ret / 2 + ret * item->charges / (ichargelevel * 3 + 1);
         }
     }
     if (category == ItemCategory::chest)
@@ -1000,7 +1018,7 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
         {
             ret /= 20;
         }
-        if (item->is_stolen())
+        if (item->is_stolen)
         {
             if (game_data.guild.belongs_to_thieves_guild == 0)
             {
@@ -1027,7 +1045,7 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
         {
             ret = 15000;
         }
-        if (item->is_stolen())
+        if (item->is_stolen)
         {
             ret = 1;
         }
@@ -1189,7 +1207,7 @@ int calc_ammo_reloading_cost(Character& owner, bool do_reload)
 
     for (const auto& item : g_inv.for_chara(owner))
     {
-        if (the_item_db[itemid2int(item->id)]->category != ItemCategory::ammo)
+        if (the_item_db[item->id]->category != ItemCategory::ammo)
             continue;
 
         for (auto&& enc : item->enchantments)

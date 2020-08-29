@@ -603,13 +603,11 @@ void bload(const fs::path& filename, std::string& data, int size = 0, int = 0);
 void bsave(const fs::path& filename, const std::string& data);
 
 
-template <typename T>
-inline T clamp(const T& x, const T& min, const T& max)
+template <typename T, typename U = T, typename V = T>
+inline T clamp(T x, U min, V max)
 {
-    return std::min(std::max(x, min), max);
+    return std::min(std::max(x, T{min}), T{max});
 }
-
-
 
 } // namespace elona
 

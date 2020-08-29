@@ -17,7 +17,7 @@ struct ItemMaterialData
     int dv;
     int pv;
     int dice_y;
-    int color;
+    int tint;
     std::unordered_map<int, int> enchantments;
     bool fireproof;
     bool acidproof;

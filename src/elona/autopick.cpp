@@ -54,8 +54,7 @@ std::vector<ModifierMatcher> _modifier_matchers = {
     {"rotten", [](const ItemRef& item) { return item->param3 < 0; }},
     {"empty",
      [](const ItemRef& item) {
-         return the_item_db[itemid2int(item->id)]->category ==
-             ItemCategory::chest &&
+         return the_item_db[item->id]->category == ItemCategory::chest &&
              item->param1 == 0;
      }},
     {"bad",
@@ -91,7 +90,7 @@ std::vector<ModifierMatcher> _modifier_matchers = {
     {"precious",
      [](const ItemRef& item) {
          return item->identify_state >= IdentifyState::almost &&
-             item->is_precious();
+             item->is_precious;
      }},
     {"blessed",
      [](const ItemRef& item) {
@@ -108,7 +107,7 @@ std::vector<ModifierMatcher> _modifier_matchers = {
          return item->identify_state >= IdentifyState::almost &&
              item->curse_state == CurseState::doomed;
      }},
-    {"alive", [](const ItemRef& item) { return item->is_alive(); }},
+    {"alive", [](const ItemRef& item) { return item->is_alive; }},
 };
 
 
@@ -149,7 +148,7 @@ ModifierMatchResult _check_modifiers(
 
 bool _check_category(const std::string& text, const ItemRef& item)
 {
-    const auto category = the_item_db[itemid2int(item->id)]->category;
+    const auto category = the_item_db[item->id]->category;
     const auto word_separator = i18n::s.get("core.meta.word_separator");
     const auto text_ = word_separator + text + word_separator;
 
@@ -379,7 +378,7 @@ bool Autopick::Matcher::matches(const ItemRef& item) const
     }
 
     /* Check item's name. */
-    const auto item_name = cnvitemname(itemid2int(item->id));
+    const auto item_name = cnvitemname(the_item_db[item->id]->legacy_id);
     // You have to know that the item is known as the name to match by the name.
     const auto you_know_the_name =
         item->identify_state != IdentifyState::unidentified;

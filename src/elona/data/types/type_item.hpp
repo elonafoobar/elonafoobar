@@ -29,7 +29,7 @@ struct ItemData
     int damage_bonus;
     int pv;
     int dv;
-    int material;
+    data::InstanceId material;
     int chargelevel;
     bool is_readable;
     bool is_zappable;
@@ -47,7 +47,7 @@ struct ItemData
     int light;
     std::string originalnameref2;
     bool has_random_name;
-    ColorIndex color;
+    ColorIndex tint;
     std::string filter;
     std::string rffilter;
     I18NKey locale_key_prefix;

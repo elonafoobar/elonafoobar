@@ -504,10 +504,10 @@ TalkResult talk_shop_attack(Character& speaker)
 TalkResult talk_guard_return_item(Character& speaker)
 {
     listmax = 0;
-    auto wallet_opt = itemfind(g_inv.pc(), ItemId::wallet);
+    auto wallet_opt = itemfind(g_inv.pc(), "core.wallet");
     if (!wallet_opt)
     {
-        wallet_opt = itemfind(g_inv.pc(), ItemId::suitcase);
+        wallet_opt = itemfind(g_inv.pc(), "core.suitcase");
     }
     const auto wallet = wallet_opt.unwrap();
     wallet->modify_number(-1);
@@ -2080,12 +2080,12 @@ TalkResult talk_npc(Character& speaker)
                         cdata[rtval(cnt)]));
             }
         }
-        if (itemfind(g_inv.pc(), ItemId::wallet))
+        if (itemfind(g_inv.pc(), "core.wallet"))
         {
             ELONA_APPEND_RESPONSE(
                 32, i18n::s.get("core.talk.npc.guard.choices.lost_wallet"));
         }
-        else if (itemfind(g_inv.pc(), ItemId::suitcase))
+        else if (itemfind(g_inv.pc(), "core.suitcase"))
         {
             ELONA_APPEND_RESPONSE(
                 32, i18n::s.get("core.talk.npc.guard.choices.lost_suitcase"));
@@ -2172,7 +2172,7 @@ TalkResult talk_npc(Character& speaker)
                     deliver = cnt;
                     for (const auto& item : g_inv.pc())
                     {
-                        if (item->id == int2itemid(p))
+                        if (the_item_db[item->id]->legacy_id == p)
                         {
                             item_to_deliver = item;
                             break;
@@ -2192,14 +2192,13 @@ TalkResult talk_npc(Character& speaker)
         {
             for (const auto& item : g_inv.pc())
             {
-                if (item->is_marked_as_no_drop())
+                if (item->is_no_drop)
                 {
                     continue;
                 }
                 if (quest_data[rq].id == 1003)
                 {
-                    if (the_item_db[itemid2int(item->id)]->category ==
-                            ItemCategory::food &&
+                    if (the_item_db[item->id]->category == ItemCategory::food &&
                         item->param1 / 1000 == quest_data[rq].extra_info_1 &&
                         item->param2 == quest_data[rq].extra_info_2)
                     {
@@ -2209,7 +2208,8 @@ TalkResult talk_npc(Character& speaker)
                 }
                 if (quest_data[rq].id == 1004 || quest_data[rq].id == 1011)
                 {
-                    if (item->id == int2itemid(quest_data[rq].target_item_id))
+                    if (the_item_db[item->id]->legacy_id ==
+                        quest_data[rq].target_item_id)
                     {
                         item_to_supply = item;
                         break;

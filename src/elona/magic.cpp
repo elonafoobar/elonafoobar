@@ -18,6 +18,7 @@
 #include "data/types/type_asset.hpp"
 #include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_item_material.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
@@ -655,7 +656,7 @@ bool _magic_185(Character& subject, const ItemRef& rod)
         txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
         return false;
     }
-    if (rod->count == 0)
+    if (rod->charges == 0)
     {
         txt(i18n::s.get("core.magic.fish.need_bait"));
         return false;
@@ -743,7 +744,7 @@ bool _magic_185(Character& subject, const ItemRef& rod)
                 the_ability_db[efid]->cost / 2 + 1);
     }
     item_separate(rod);
-    --rod->count;
+    --rod->charges;
     rowactre = 0;
     spot_fishing(subject, rod);
     return true;
@@ -2225,7 +2226,7 @@ bool _magic_435(Character& subject, Character& target)
     }
     f = 1;
     {
-        if (itemfind(g_inv.for_chara(subject), ItemId::monster_heart))
+        if (itemfind(g_inv.for_chara(subject), "core.monster_heart"))
         {
             efp = efp * 3 / 2;
         }
@@ -2407,7 +2408,7 @@ bool _magic_49(Character& subject, const ItemRef& hammer)
     }
     assert(target_item_opt);
     const auto target_item = target_item_opt.unwrap();
-    if (target_item->quality >= Quality::miracle || target_item->is_alive())
+    if (target_item->quality >= Quality::miracle || target_item->is_alive)
     {
         txt(i18n::s.get("core.magic.garoks_hammer.no_effect"));
         fixmaterial = 0;
@@ -2430,9 +2431,9 @@ bool _magic_49(Character& subject, const ItemRef& hammer)
             target_item,
             enchantment_generate(enchantment_gen_level(egolv)),
             enchantment_gen_p() + (fixlv == Quality::godly) * 100 +
-                (target_item->is_eternal_force()) * 100,
+                (target_item->is_eternal_force) * 100,
             20 - (fixlv == Quality::godly) * 10 -
-                (target_item->is_eternal_force()) * 20);
+                (target_item->is_eternal_force) * 20);
     }
     randomize();
     txt(i18n::s.get("core.magic.garoks_hammer.apply", target_item));
@@ -2470,7 +2471,7 @@ bool _magic_21_1127(Character& subject)
     if (f)
     {
         if (target_item_opt->quality == Quality::godly ||
-            target_item_opt->is_alive())
+            target_item_opt->is_alive)
         {
             if (efid == 1127)
             {
@@ -2498,8 +2499,8 @@ bool _magic_21_1127(Character& subject)
                 target_item));
             target_item->modify_number(-1);
             flt();
-            const auto reconstructed_artifact =
-                itemcreate_player_inv(itemid2int(target_item->id), 0);
+            const auto reconstructed_artifact = itemcreate_player_inv(
+                the_item_db[target_item->id]->legacy_id, 0);
             assert(reconstructed_artifact);
             if (equip != 0)
             {
@@ -2524,7 +2525,9 @@ bool _magic_21_1127(Character& subject)
             objlv = efp / 10;
             objfix = efp / 100;
             randomize();
-            change_item_material(target_item, material);
+            change_item_material(
+                target_item,
+                *the_item_material_db.get_id_from_legacy(material));
             txt(i18n::s.get(
                 "core.magic.change_material.apply",
                 subject,
@@ -2597,11 +2600,11 @@ bool _magic_1124_1125(Character& subject)
     {
         assert(target_item_opt);
         const auto target_item = target_item_opt.unwrap();
-        if (target_item->enhancement < efp / 100)
+        if (target_item->bonus_value < efp / 100)
         {
             snd("core.ding2");
             txt(i18n::s.get("core.magic.enchant.apply", target_item));
-            ++target_item->enhancement;
+            ++target_item->bonus_value;
         }
         else
         {
@@ -2648,19 +2651,20 @@ bool _magic_630_1129(Character& subject)
     {
         assert(target_item_opt);
         const auto target_item = target_item_opt.unwrap();
-        item_db_get_charge_level(target_item, itemid2int(target_item->id));
-        if (ichargelevel < 1 || target_item->id == ItemId::rod_of_wishing ||
-            target_item->id == ItemId::rod_of_domination ||
-            target_item->id == ItemId::spellbook_of_wishing ||
-            target_item->id == ItemId::spellbook_of_harvest ||
-            (target_item->id == ItemId::ancient_book &&
+        item_db_get_charge_level(
+            target_item, the_item_db[target_item->id]->legacy_id);
+        if (ichargelevel < 1 || target_item->id == "core.rod_of_wishing" ||
+            target_item->id == "core.rod_of_domination" ||
+            target_item->id == "core.spellbook_of_wishing" ||
+            target_item->id == "core.spellbook_of_harvest" ||
+            (target_item->id == "core.ancient_book" &&
              target_item->param2 != 0))
         {
             txt(i18n::s.get("core.magic.fill_charge.cannot_recharge"));
             return true;
         }
         f = 1;
-        if (target_item->count > ichargelevel)
+        if (target_item->charges > ichargelevel)
         {
             f = -1;
         }
@@ -2674,8 +2678,7 @@ bool _magic_630_1129(Character& subject)
         {
             f = 0;
         }
-        if (the_item_db[itemid2int(target_item->id)]->category ==
-            ItemCategory::spellbook)
+        if (the_item_db[target_item->id]->category == ItemCategory::spellbook)
         {
             if (rnd(4) == 0)
             {
@@ -2689,17 +2692,17 @@ bool _magic_630_1129(Character& subject)
         if (f == 1)
         {
             p = 1 + rnd((ichargelevel / 2 + 1));
-            if (p + target_item->count > ichargelevel)
+            if (p + target_item->charges > ichargelevel)
             {
-                p = ichargelevel - target_item->count + 1;
+                p = ichargelevel - target_item->charges + 1;
             }
-            if (the_item_db[itemid2int(target_item->id)]->category ==
+            if (the_item_db[target_item->id]->category ==
                 ItemCategory::spellbook)
             {
                 p = 1;
             }
             txt(i18n::s.get("core.magic.fill_charge.apply", target_item, p(0)));
-            target_item->count += p;
+            target_item->charges += p;
             animeload(8, subject);
         }
         else
@@ -2744,7 +2747,8 @@ bool _magic_629(Character& subject)
     {
         assert(target_item_opt);
         const auto target_item = target_item_opt.unwrap();
-        item_db_get_charge_level(target_item, itemid2int(target_item->id));
+        item_db_get_charge_level(
+            target_item, the_item_db[target_item->id]->legacy_id);
         for (int cnt = 0; cnt < 1; ++cnt)
         {
             if (ichargelevel == 1)
@@ -2770,7 +2774,7 @@ bool _magic_629(Character& subject)
             p = 1;
         }
         animeload(8, subject);
-        p = p * target_item->count;
+        p = p * target_item->charges;
         game_data.charge_power += p;
         txt(i18n::s.get(
             "core.magic.draw_charge",
@@ -2867,11 +2871,10 @@ bool _magic_1140(Character& subject)
                     target_item->pv -= target_item->pv / 10 + 1 +
                         (efstatus != CurseState::blessed);
                 }
-                if (target_item->damage_bonus > 0)
+                if (target_item->dice.bonus > 0)
                 {
-                    target_item->damage_bonus -=
-                        target_item->damage_bonus / 10 + 1 +
-                        (efstatus != CurseState::blessed);
+                    target_item->dice.bonus -= target_item->dice.bonus / 10 +
+                        1 + (efstatus != CurseState::blessed);
                 }
             }
             txt(i18n::s.get("core.magic.flying.apply", target_item));
@@ -2883,10 +2886,10 @@ bool _magic_1140(Character& subject)
             {
                 target_item->pv += clamp(target_item->pv / 10, 1, 5);
             }
-            if (target_item->damage_bonus > 0)
+            if (target_item->dice.bonus > 0)
             {
-                target_item->damage_bonus +=
-                    clamp(target_item->damage_bonus / 10, 1, 5);
+                target_item->dice.bonus +=
+                    clamp(target_item->dice.bonus / 10, 1, 5);
             }
             txt(i18n::s.get("core.magic.flying.cursed", target_item));
         }
@@ -2925,7 +2928,7 @@ bool _magic_1132(Character& subject, int& fltbk, int& valuebk)
     {
         assert(target_item_opt);
         if (target_item_opt->quality > Quality::miracle ||
-            target_item_opt->is_precious())
+            target_item_opt->is_precious)
         {
             f = 0;
         }
@@ -2936,7 +2939,7 @@ bool _magic_1132(Character& subject, int& fltbk, int& valuebk)
         const auto target_item = target_item_opt.unwrap();
         save_trigger_autosaving();
         animeload(8, subject);
-        fltbk = (int)the_item_db[itemid2int(target_item->id)]->category;
+        fltbk = (int)the_item_db[target_item->id]->category;
         valuebk = calcitemvalue(target_item, 0);
         target_item->remove();
         for (int cnt = 0;; ++cnt)
@@ -3397,7 +3400,7 @@ bool _magic_651(Character& subject, Character& target)
     OptionalItemRef eat_item_opt;
     for (const auto& item : g_inv.for_chara(target))
     {
-        if (item->id == ItemId::fish_a)
+        if (item->id == "core.fish_a")
         {
             eat_item_opt = item;
             break;
@@ -3407,12 +3410,11 @@ bool _magic_651(Character& subject, Character& target)
     {
         for (const auto& item : g_inv.for_chara(target))
         {
-            if (item->is_precious())
+            if (item->is_precious)
             {
                 continue;
             }
-            if (the_item_db[itemid2int(item->id)]->category !=
-                ItemCategory::food)
+            if (the_item_db[item->id]->category != ItemCategory::food)
             {
                 continue;
             }
@@ -3425,7 +3427,7 @@ bool _magic_651(Character& subject, Character& target)
         return true;
     }
     const auto eat_item = eat_item_opt.unwrap();
-    if (eat_item->is_aphrodisiac())
+    if (eat_item->is_aphrodisiac)
     {
         if (is_in_fov(target))
         {
