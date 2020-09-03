@@ -389,7 +389,7 @@ private:
                 return;
             }
 
-            on_successfully_recieved();
+            on_successfully_received();
         }
     }
 
@@ -431,12 +431,12 @@ private:
             return;
         }
 
-        on_successfully_recieved();
+        on_successfully_received();
     }
 
 
 
-    void on_successfully_recieved()
+    void on_successfully_received()
     {
         using namespace beast::http;
 
