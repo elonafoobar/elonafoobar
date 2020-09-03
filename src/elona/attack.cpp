@@ -226,8 +226,8 @@ bool do_physical_attack_internal(
             target.position,
             static_cast<RangedAttackAnimation::Type>(attackskill),
             the_item_db[weapon->id]->subcategory,
-            weapon->image % 1000,
-            weapon->image / 1000)
+            weapon->image,
+            weapon->tint)
             .play();
     }
 
