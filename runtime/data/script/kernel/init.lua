@@ -11,8 +11,6 @@ local ReadOnly = require("readonly")
 local Serial = require("serial")
 local USH = require("ush")
 
-_LOADED = true
-
 return {
    Config = Config,
    Data = Data,

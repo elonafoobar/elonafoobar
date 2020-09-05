@@ -18,18 +18,7 @@ namespace lua
 APIManager::APIManager(LuaEnv& lua)
     : LuaSubmodule(lua)
 {
-    // Bind the API tables at e.g. api_table["core"]["Chara"]
-    sol::table api_table = env().create_named("api_table");
-    sol::table core = api_table.create_named("core");
-
-    api::modules::bind(core);
-
-    // Register usertype classes globally, and add APIs for constructors.
-    api::classes::bind(*lua_state());
-    api::classes::bind_api(*lua_state(), core);
-
-    lua_state()->globals()["native"] = core;
-
+    load_native();
     load_prelude();
 
     safe_script(R"EOS(
@@ -51,32 +40,64 @@ api = {
 }
 )EOS");
 
-    load_lua_support_libraries();
+    load_kernel();
+    load_core();
 }
 
 
 
-bool APIManager::is_loaded()
+void APIManager::load_native()
 {
-    sol::optional<bool> loaded = env()["_LOADED"];
-    return loaded && *loaded;
+    // Bind the API tables at e.g. api_table["core"]["Chara"]
+    sol::table api_table = env().create_named("api_table");
+    sol::table core = api_table.create_named("core");
+
+    api::modules::bind(core);
+
+    // Register usertype classes globally, and add APIs for constructors.
+    api::classes::bind(*lua_state());
+    api::classes::bind_api(*lua_state(), core);
+
+    lua_state()->globals()["native"] = core;
 }
 
 
 
 void APIManager::load_prelude()
 {
-    auto result = safe_script_file(
-        filesystem::dirs::data() / "script" / "prelude" / "init.lua");
+    load_library(fs::u8path("prelude") / "init.lua", "prelude");
+}
+
+
+
+void APIManager::load_kernel()
+{
+    load_library(fs::u8path("kernel") / "init.lua", "kernel");
+}
+
+
+
+void APIManager::load_core()
+{
+    load_library(fs::u8path("core") / "init.lua", "core");
+}
+
+
+
+void APIManager::load_library(
+    const fs::path& path,
+    const std::string& library_name)
+{
+    auto result = safe_script_file(filesystem::dirs::data() / "script" / path);
     if (!result.valid())
     {
         sol::error err = result;
-        throw std::runtime_error{
-            "Failed to load prelude library: "s + err.what()};
+        ELONA_ERROR("lua.core") << err.what();
+        throw std::runtime_error(
+            "Failed initializing internal Lua library '" + library_name + "'.");
     }
 
-    sol::table prelude = result;
-    lua_state()->globals()["prelude"] = prelude;
+    lua_state()->globals()[library_name] = result;
 }
 
 
@@ -153,32 +174,6 @@ sol::optional<sol::table> APIManager::try_find_api(
     const auto pair = strutil::split_on_string(name, ".");
     return env().traverse_get<sol::optional<sol::table>>(
         "api_table", pair.first, pair.second);
-}
-
-
-
-void APIManager::load_lua_support_libraries()
-{
-    // Don't load the support libraries again if they're already
-    // loaded, because all the tables will be read-only.
-    if (is_loaded())
-    {
-        return;
-    }
-
-    auto result = safe_script_file(
-        filesystem::dirs::data() / "script" / "kernel" / "init.lua");
-
-    if (!result.valid())
-    {
-        sol::error err = result;
-        std::string what = err.what();
-        ELONA_FATAL("lua.core") << what;
-        throw std::runtime_error("Failed initializing Lua support libraries.");
-    }
-
-    sol::table kernel = result;
-    lua_state()->globals()["kernel"] = kernel;
 }
 
 
