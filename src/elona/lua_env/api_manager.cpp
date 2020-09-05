@@ -80,6 +80,12 @@ void APIManager::load_kernel()
 void APIManager::load_core()
 {
     load_library(fs::u8path("core") / "init.lua", "core");
+
+    safe_script(R"(
+for k, v in pairs(core) do
+   api_table.core[k] = v
+end
+)");
 }
 
 
