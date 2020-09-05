@@ -28,6 +28,8 @@ APIManager::APIManager(LuaEnv& lua)
     api::classes::bind(*lua_state());
     api::classes::bind_api(*lua_state(), core);
 
+    lua_state()->globals()["native"] = core;
+
     load_prelude();
 
     safe_script(R"EOS(
@@ -175,8 +177,8 @@ void APIManager::load_lua_support_libraries()
         throw std::runtime_error("Failed initializing Lua support libraries.");
     }
 
-    sol::table api = result;
-    get_core_api_table()["ReadOnly"] = api["ReadOnly"];
+    sol::table kernel = result;
+    lua_state()->globals()["kernel"] = kernel;
 }
 
 
@@ -185,8 +187,7 @@ void APIManager::lock()
 {
     safe_script(
         R"(
-local make_read_only = api_table.core.ReadOnly.make_read_only
-api_table = make_read_only(api_table)
+api_table = kernel.ReadOnly.make_read_only(api_table)
 )");
 }
 

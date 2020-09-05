@@ -29,13 +29,15 @@ local storage = {}
 --  Values: FormattableObject | FormattableObjectList
 local storage_for_data = {}
 
--- These variables are passed from native code through _ENV.
+local localize_functions = {}
+
+-- These variables are passed from native code through "_ENV.native".
 -- Parse format and returns fomattable object or error.
-local parse_fmt = parse_fmt
+local parse_fmt = native.Internal.parse_fmt
 -- Generate random number.
-local rnd = rnd
+local rnd = native.Rand.rnd
 -- Config API
-local Config = Config
+local Config = native.Config
 
 
 
@@ -70,7 +72,7 @@ local function eval(x, args)
          --  ...
          -- TODO use x[2]
          local language = Config.get("core.language.language")
-         local func = _ENV[language][x[3]]
+         local func = localize_functions[language][x[3]]
          if not func then
             return "<unknown function "..tostring(x[3])..">"
          end
@@ -159,7 +161,7 @@ end
 
 
 
-I18N = {}
+local I18N = {}
 
 
 
@@ -218,6 +220,15 @@ end
 
 
 
+function I18N.register_function(lang, name, fn)
+   if not localize_functions[lang] then
+      localize_functions[lang] = {}
+   end
+   localize_functions[lang][name] = fn
+end
+
+
+
 I18N.interface = {}
 
 
@@ -234,3 +245,6 @@ function I18N.interface:add_data_text(prototype_id, data)
       collect_i18n_resources(v, key, storage_for_data)
    end
 end
+
+
+return I18N

@@ -1,3 +1,7 @@
+local USH = {}
+
+
+
 local utils = require("utils")
 
 local execute = require("ush/execute")
@@ -6,23 +10,18 @@ local History = require("ush/history")
 
 
 
--- These variables are passed from C++ side.
-local term = _ENV.term
-local builtin_commands = _ENV.builtin_commands
-
-
-
 local Shell = {}
 
 
 
-function Shell.new()
+function Shell.new(term)
    local self = {
       _input = "",
       _multiline_input = "",
       _is_multiline = false,
       _history = History.new(),
-      _env = Env.new(term)
+      _env = Env.new(term),
+      _term = term,
    }
 
    setmetatable(self, {__index = Shell})
@@ -32,7 +31,7 @@ end
 
 
 
-function Shell:register_builtins()
+function Shell:register_builtins(native_builtin_commands)
    local function register(name, callback)
       self.register("_builtin_", name, callback)
    end
@@ -46,12 +45,12 @@ function Shell:register_builtins()
       end
       table.sort(all_commands)
       for _, command in ipairs(all_commands) do
-         term.println(command)
+         self._term.println(command)
       end
    end)
 
    register("echo", function(s)
-      term.println(tostring(s))
+      self._term.println(tostring(s))
    end)
 
    register("history", function()
@@ -62,12 +61,12 @@ function Shell:register_builtins()
       for i = 1, n do
          local idx = self._history:count() - n + i
          local entry = self._history:get(idx)
-         term.println("  "..tostring(idx).."  "..entry)
+         self._term.println("  "..tostring(idx).."  "..entry)
       end
    end)
 
    -- Native commands
-   for name, callback in pairs(builtin_commands) do
+   for name, callback in pairs(native_builtin_commands) do
       register(name, callback)
    end
 end
@@ -103,19 +102,19 @@ end
 
 
 function Shell:welcome()
-   term.println("Elona foobar <Unknown Shell>")
-   term.println("Type ':?' or ':help' to list all commands")
-   term.println("")
+   self._term.println("Elona foobar <Unknown Shell>")
+   self._term.println("Type ':?' or ':help' to list all commands")
+   self._term.println("")
 end
 
 
 
 function Shell:prompt()
-   term.delete_line()
+   self._term.delete_line()
    if self._is_multiline then
-      term.print(self._env.PROMPT2..self._input)
+      self._term.print(self._env.PROMPT2..self._input)
    else
-      term.print(self._env.PROMPT..self._input)
+      self._term.print(self._env.PROMPT..self._input)
    end
 end
 
@@ -152,7 +151,7 @@ function Shell:enter()
       return
    end
 
-   term.println("")
+   self._term.println("")
 
    self._multiline_input = self._multiline_input..self._input
    self._set_input("")
@@ -193,7 +192,7 @@ function Shell:_interpret_command(input)
       self._print_result(result)
    else
       self._env.RESULT = nil
-      term.println(tostring(result))
+      self._term.println(tostring(result))
    end
    return false
 end
@@ -206,7 +205,7 @@ function Shell:_interpret_lua(input)
    if status == "incomplete" then
       return true
    elseif status == "syntax_error" then
-      term.println(result)
+      self._term.println(result)
       return false
    elseif status then
       self._env.RESULT = result
@@ -214,7 +213,7 @@ function Shell:_interpret_lua(input)
       return false
    else
       self._env.RESULT = nil
-      term.println(tostring(result))
+      self._term.println(tostring(result))
       return false
    end
 end
@@ -242,11 +241,11 @@ end
 
 function Shell:_print_result(result)
    if result == nil then
-      term.println("nil")
+      self._term.println("nil")
    elseif type(result) == "string" then
-      term.println(result)
+      self._term.println(result)
    else
-      term.println(prelude.inspect(result))
+      self._term.println(prelude.inspect(result))
    end
 end
 
@@ -254,9 +253,14 @@ end
 
 function Shell:_set_input(input)
    self._input = input
-   term.set_input(input)
+   self._term.set_input(input)
 end
 
 
 
-return utils.make_singleton(Shell)
+function USH.new_shell(term)
+   return utils.make_singleton(Shell, term)
+end
+
+
+return USH

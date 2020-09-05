@@ -14,7 +14,6 @@ namespace lua
 DataManager::DataManager(LuaEnv& lua)
     : LuaSubmodule(lua)
 {
-    _data = DataTable(lua_state()->create_table());
     clear();
 }
 
@@ -22,9 +21,9 @@ DataManager::DataManager(LuaEnv& lua)
 
 void DataManager::clear()
 {
-    sol::table data = safe_script_file_in_global_env(
-        filesystem::dirs::data() / "script" / "kernel" / "data.lua");
-    std::pair<sol::table, sol::table> result = data["new_registry"]();
+    std::pair<sol::table, sol::table> result = safe_script(R"(
+return kernel.Data.new_registry()
+)");
     _public_interface = result.first;
     _data.storage() = result.second;
 }

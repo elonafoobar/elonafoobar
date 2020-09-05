@@ -44,7 +44,7 @@ resolve_handles = function(data, seen)
    end
 end
 
-Serial.save = function(s)
+function Serial.save(s)
    s = remove_volatile_data(s)
    local dump = serpent.dump(s)
    return dump
