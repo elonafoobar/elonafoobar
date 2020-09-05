@@ -176,7 +176,6 @@ void APIManager::load_lua_support_libraries()
     }
 
     sol::table api = result;
-    get_core_api_table()["Iter"] = api["Iter"];
     get_core_api_table()["ReadOnly"] = api["ReadOnly"];
 }
 
