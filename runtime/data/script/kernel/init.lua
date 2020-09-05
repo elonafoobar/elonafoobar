@@ -1,15 +1,15 @@
 --- WARNING: This file is always implicitly loaded by C++.
 --- Don't change anything here unless you know what you're doing!
 
-local Config = require("config")
-local Data = require("data")
-local Event = require("event")
-local Export = require("export")
-local Handle = require("handle")
-local I18N = require("i18n")
-local ReadOnly = require("readonly")
-local Serial = require("serial")
-local USH = require("ush")
+local Config = require("kernel.config")
+local Data = require("kernel.data")
+local Event = require("kernel.event")
+local Export = require("kernel.export")
+local Handle = require("kernel.handle")
+local I18N = require("kernel.i18n")
+local ReadOnly = require("kernel.readonly")
+local Serial = require("kernel.serial")
+local USH = require("kernel.ush")
 
 return {
    Config = Config,

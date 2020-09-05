@@ -1,5 +1,5 @@
-local Handle = require("handle")
-local serpent = require("serpent")
+local Handle = require("kernel.handle")
+local serpent = require("kernel.serpent")
 
 local Serial = {}
 

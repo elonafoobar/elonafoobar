@@ -41,7 +41,7 @@ EventResult EventManager::trigger(const BaseEvent& event)
         sol::error error = result;
         auto message =
             "Error triggering event "s + event.id + ":" + error.what();
-        txt(message, Message::color{ColorIndex::red});
+        // txt(message, Message::color{ColorIndex::red});
         std::cerr << message << std::endl;
         ELONA_ERROR("lua.event") << message;
 

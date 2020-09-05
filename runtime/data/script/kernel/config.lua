@@ -8,7 +8,7 @@ local json5_stringify = _ENV.native.JSON5.stringify
 
 
 
-local eval_in_dsl_env = require("config_dsl")
+local eval_in_dsl_env = require("kernel.config_dsl")
 
 
 

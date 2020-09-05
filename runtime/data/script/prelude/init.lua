@@ -18,15 +18,15 @@ exports.tostring = tostring
 exports.type = type
 exports.xpcall = xpcall
 
-exports.coroutine = require("coroutine_ext")
-exports.math = require("math_ext")
-exports.string = require("string_ext")
-exports.table = require("table_ext")
-exports.utf8 = require("utf8_ext")
+exports.coroutine = require("prelude.coroutine_ext")
+exports.math = require("prelude.math_ext")
+exports.string = require("prelude.string_ext")
+exports.table = require("prelude.table_ext")
+exports.utf8 = require("prelude.utf8_ext")
 
 
 -- Additional libraries
-exports.inspect = require("inspect")
+exports.inspect = require("prelude.inspect")
 
 
 
