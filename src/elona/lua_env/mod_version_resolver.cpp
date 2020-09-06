@@ -82,7 +82,7 @@ auto calculate_loading_order(
         const auto& version = pair.second;
         sorter.add(mod);
 
-        for (const auto& dep_mod_id : index.get_dependencies(mod, version))
+        for (const auto& [dep_mod_id, _] : index.get_dependencies(mod, version))
         {
             sorter.add_dependency(mod, dep_mod_id);
         }
@@ -218,8 +218,8 @@ ModIndex::QueryResult ModIndex::query_latest(
 
 
 
-std::vector<std::string> ModIndex::get_dependencies(
-    const std::string& id,
+const ModIndex::IndexEntry& ModIndex::get_index_entry(
+    const ModId& id,
     const semver::Version& version) const
 {
     const auto itr = _mods.find(id);
@@ -232,12 +232,7 @@ std::vector<std::string> ModIndex::get_dependencies(
     {
         if (v.version == version)
         {
-            std::vector<std::string> ret;
-            for (const auto& pair : v.dependencies)
-            {
-                ret.push_back(pair.first);
-            }
-            return ret;
+            return v;
         }
     }
     throw std::runtime_error{
