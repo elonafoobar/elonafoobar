@@ -2527,7 +2527,9 @@ bool _magic_21_1127(Character& subject)
             randomize();
             change_item_material(
                 target_item,
-                *the_item_material_db.get_id_from_legacy(material));
+                material == 0
+                    ? data::InstanceId{}
+                    : *the_item_material_db.get_id_from_legacy(material));
             txt(i18n::s.get(
                 "core.magic.change_material.apply",
                 subject,
