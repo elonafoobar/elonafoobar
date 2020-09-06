@@ -1,8 +1,11 @@
 {
   id: "core",
   name: "Core Content",
-  author: "KI, Ruin0x11",
+  authors: "KI, Ruin0x11",
   version: "0.2.6",
   license: "MIT",
-  description: "Base game content. Currently, the game cannot be run without this mod.",
+  description: {
+    jp: "ゲームの基本コンテンツ。Elona foobar の動作にはこの MOD が必須です。",
+    en: "Base game content. Elona foobar cannot be run without this mod.",
+  },
 }

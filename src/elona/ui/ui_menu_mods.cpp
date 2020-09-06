@@ -229,7 +229,7 @@ void UIMenuMods::_draw_mod_list()
 
         cs_list(
             cs == cnt,
-            desc.manifest.name,
+            desc.manifest.name.localize(g_config.language()),
             wx + 84,
             wy + 66 + cnt * 19 - 1,
             0,

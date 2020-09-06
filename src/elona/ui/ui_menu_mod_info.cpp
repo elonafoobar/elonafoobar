@@ -144,7 +144,7 @@ void UIMenuModInfo::_draw_mod_page()
         false);
     gmes(
         "<b>" + i18n::s.get("core.main_menu.mod_list.info.author") + ":<def> " +
-            _desc.manifest.author,
+            _desc.manifest.authors,
         wx + 30,
         y + 16,
         570,
@@ -160,7 +160,8 @@ void UIMenuModInfo::_draw_mod_page()
         false);
     gmes(
         "<b>" + i18n::s.get("core.main_menu.mod_list.info.description") +
-            ":<def> " + _desc.manifest.description,
+            ":<def> " +
+            _desc.manifest.description.localize(g_config.language()),
         wx + 30,
         y + 48,
         570,
@@ -188,7 +189,7 @@ void UIMenuModInfo::_draw_mod_page()
 void UIMenuModInfo::_draw_window()
 {
     ui_display_window(
-        _desc.manifest.name,
+        _desc.manifest.name.localize(g_config.language()),
         strhint2 + strhint3b,
         (windoww - 700) / 2 + inf_screenx,
         winposy(480, 1),

@@ -127,6 +127,42 @@ std::string JSONTable::convert<std::string>(
 
 
 template <>
+ModManifest::LocalizableString JSONTable::convert<
+    ModManifest::LocalizableString>(const json5::value& value, const char* key)
+{
+    ModManifest::LocalizableString result;
+    if (value.is_string())
+    {
+        result.default_text = value.get_string();
+        return result;
+    }
+    else if (value.is_object())
+    {
+        std::unordered_map<std::string, std::string> strings;
+        for (const auto& [locale_id, string] : value.get_object())
+        {
+            if (!string.is_string())
+            {
+                throw std::runtime_error{
+                    "failed to load " + _path + ": value of \"" + key +
+                    "\" must be a string, but " + to_string(string.type())};
+            }
+            strings.emplace(locale_id, string.get_string());
+        }
+        result.localized_strings = strings;
+        return result;
+    }
+    else
+    {
+        throw std::runtime_error{
+            "failed to load " + _path + ": property \"" + key +
+            "\" must be a string or an object, but " + to_string(value.type())};
+    }
+}
+
+
+
+template <>
 semver::Version JSONTable::convert<semver::Version>(
     const json5::value& value,
     const char* key)
@@ -162,7 +198,7 @@ ModManifest::Dependencies JSONTable::convert<ModManifest::Dependencies>(
         if (!version.is_string())
         {
             throw std::runtime_error{
-                "failed to load " + _path + ": key of \"" + key +
+                "failed to load " + _path + ": value of \"" + key +
                 "\" must be a string, but " + to_string(version.type())};
         }
         if (const auto req =
@@ -179,6 +215,33 @@ ModManifest::Dependencies JSONTable::convert<ModManifest::Dependencies>(
     return result;
 }
 
+
+
+template <>
+std::vector<std::string> JSONTable::convert<std::vector<std::string>>(
+    const json5::value& value,
+    const char* key)
+{
+    if (!value.is_array())
+    {
+        throw std::runtime_error{
+            "failed to load " + _path + ": property \"" + key +
+            "\" must be an array, but " + to_string(value.type())};
+    }
+    std::vector<std::string> result;
+    for (const auto& element : value.get_array())
+    {
+        if (!element.is_string())
+        {
+            throw std::runtime_error{
+                "failed to load " + _path + ": element of \"" + key +
+                "\" must be a string, but " + to_string(element.type())};
+        }
+        result.push_back(element.get_string());
+    }
+    return result;
+}
+
 } // namespace
 
 
@@ -188,23 +251,36 @@ ModManifest ModManifest::load(const fs::path& path)
     JSONTable table{path};
 
     const auto id = table.get<std::string>("id");
-    const auto name = table.get_or<std::string>("name", id);
-    const auto author = table.get_or_default<std::string>("author");
-    const auto description = table.get_or_default<std::string>("description");
+    auto name = table.get_or_default<LocalizableString>("name");
+    if (name.default_text.empty())
+    {
+        name.default_text = id;
+    }
+    const auto authors = table.get_or_default<std::string>("authors");
+    const auto description =
+        table.get_or_default<LocalizableString>("description");
     const auto license = table.get_or_default<std::string>("license");
     const auto version = table.get<semver::Version>("version");
     const auto dependencies =
         table.get_or_default<ModManifest::Dependencies>("dependencies");
+    const auto optional_dependencies =
+        table.get_or_default<ModManifest::Dependencies>(
+            "optional_dependencies");
+    const auto homepage = table.get_or_default<std::string>("homepage");
+    const auto tags = table.get_or_default<std::vector<std::string>>("tags");
 
     return {
         id,
         name,
-        author,
+        authors,
         description,
         license,
         version,
-        path.parent_path(),
         dependencies,
+        optional_dependencies,
+        homepage,
+        tags,
+        path.parent_path(),
     };
 }
 
@@ -220,9 +296,33 @@ void ModManifest::save() const
 
     json5::value::object_type root_obj;
     root_obj["id"] = id;
-    root_obj["name"] = name;
-    root_obj["author"] = author;
-    root_obj["description"] = description;
+    if (name.localized_strings.empty())
+    {
+        root_obj["name"] = name.default_text;
+    }
+    else
+    {
+        json5::value::object_type names;
+        for (const auto& [locale_id, n] : name.localized_strings)
+        {
+            names[locale_id] = n;
+        }
+        root_obj["name"] = names;
+    }
+    root_obj["authors"] = authors;
+    if (description.localized_strings.empty())
+    {
+        root_obj["description"] = description.default_text;
+    }
+    else
+    {
+        json5::value::object_type descriptions;
+        for (const auto& [locale_id, desc] : description.localized_strings)
+        {
+            descriptions[locale_id] = desc;
+        }
+        root_obj["description"] = descriptions;
+    }
     root_obj["license"] = license;
     root_obj["version"] = version.to_string();
 
@@ -232,6 +332,13 @@ void ModManifest::save() const
         deps[dep.first] = dep.second.to_string();
     }
     root_obj["dependencies"] = deps;
+
+    json5::value::object_type opt_deps;
+    for (const auto& dep : optional_dependencies)
+    {
+        opt_deps[dep.first] = dep.second.to_string();
+    }
+    root_obj["optional_dependencies"] = opt_deps;
 
     json5::stringify_options opts;
     opts.prettify = true;

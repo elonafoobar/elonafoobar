@@ -75,6 +75,7 @@ public:
     {
         semver::Version version;
         Dependencies dependencies;
+        Dependencies optional_dependencies;
     };
 
 
@@ -101,6 +102,14 @@ public:
         const semver::Version& version) const
     {
         return get_index_entry(id, version).dependencies;
+    }
+
+
+    const Dependencies& get_optional_dependencies(
+        const ModId& id,
+        const semver::Version& version) const
+    {
+        return get_index_entry(id, version).optional_dependencies;
     }
 
 
