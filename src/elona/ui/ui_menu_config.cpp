@@ -30,8 +30,8 @@ void UIMenuConfig::_draw_background()
     if (mode == 10)
     {
         gmode(0);
-        asset_load("title");
-        elona::draw("title", 0, 0, windoww, windowh);
+        asset_load("core.title");
+        elona::draw("core.title", 0, 0, windoww, windowh);
         gsel(0);
         gmode(0);
         gcopy(4, 0, 0, windoww, windowh, 0, 0);
@@ -157,8 +157,8 @@ void UIMenuConfig::_draw_keys(bool is_root_menu)
 
 void UIMenuConfig::_draw_arrows(int item_pos)
 {
-    elona::draw("arrow_left", wx + 220, wy + 66 + item_pos * 19 - 5);
-    elona::draw("arrow_right", wx + 358, wy + 66 + item_pos * 19 - 5);
+    elona::draw("core.arrow_left", wx + 220, wy + 66 + item_pos * 19 - 5);
+    elona::draw("core.arrow_right", wx + 358, wy + 66 + item_pos * 19 - 5);
 }
 
 void UIMenuConfig::_draw_items(ConfigMenu& menu, bool is_root_menu)

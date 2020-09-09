@@ -68,11 +68,12 @@ void update_screen_hud()
         {
             sx = 192;
         }
-        draw_bar_vert("hud_bar", cnt * 192, inf_bary, sx, inf_barh, inf_barh);
-        draw_region("message_window", cnt * 192, inf_msgy, sx, inf_msgh);
+        draw_bar_vert(
+            "core.hud_bar", cnt * 192, inf_bary, sx, inf_barh, inf_barh);
+        draw_region("core.message_window", cnt * 192, inf_msgy, sx, inf_msgh);
     }
-    draw_region("hud_minimap", 0, inf_msgy, inf_msgx, inf_verh);
-    draw("map_name_icon", inf_radarw + 6, inf_bary);
+    draw_region("core.hud_minimap", 0, inf_msgy, inf_msgx, inf_verh);
+    draw("core.map_name_icon", inf_radarw + 6, inf_bary);
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         sx = 0;
@@ -85,7 +86,7 @@ void update_screen_hud()
             sx = 14;
         }
         draw_indexed(
-            "attribute_icon",
+            "core.attribute_icon",
             inf_radarw + cnt * 47 + 148 + sx,
             inf_bary + 1,
             cnt);
@@ -229,7 +230,7 @@ void render_weather_effect_snow()
         {
             // Draw.
             draw_indexed_region(
-                "weather_particle",
+                "core.weather_particle",
                 particle.x,
                 particle.y,
                 particle.x % 2,
@@ -281,7 +282,7 @@ void render_weather_effect_etherwind()
         {
             // Draw.
             draw_indexed_region(
-                "weather_particle",
+                "core.weather_particle",
                 particle.x,
                 particle.y,
                 2 + particle.x % 2,
@@ -338,7 +339,7 @@ void draw_minimap_pixel(int x, int y)
     const auto x2 = 120 * x / map_data.width;
     const auto y2 = 84 * y / map_data.height;
     draw_region(
-        "minimap_scratch",
+        "core.minimap_scratch",
         inf_radarx + x2,
         inf_radary + y2,
         x2,
@@ -384,7 +385,7 @@ void highlight_characters_in_pet_arena()
             if (chara.index == camera)
             {
                 gmode(2, 120);
-                draw("camera", x + 36, y + 32);
+                draw("core.camera", x + 36, y + 32);
                 gmode(2);
             }
         }
@@ -402,7 +403,7 @@ void render_pc_position_in_minimap()
 
     raderx = x;
     radery = y;
-    draw("minimap_position", inf_radarx + x, inf_radary + y);
+    draw("core.minimap_position", inf_radarx + x, inf_radary + y);
 }
 
 
@@ -418,7 +419,7 @@ void render_stair_positions_in_minimap()
             {
                 const auto sx = clamp(120 * x / map_data.width, 2, 112);
                 const auto sy = clamp(84 * y / map_data.height, 2, 76);
-                draw("minimap_position", inf_radarx + sx, inf_radary + sy);
+                draw("core.minimap_position", inf_radarx + sx, inf_radary + sy);
             }
         }
     }
@@ -434,7 +435,7 @@ void _render_hp_or_mp_bar(
     data::InstanceId bar_id,
     bool show_digit = false)
 {
-    draw("hp_bar_frame", x, y);
+    draw("core.hp_bar_frame", x, y);
 
     if (value > 0)
     {
@@ -457,7 +458,7 @@ void render_hp_bar(
     bool show_digit = false)
 {
     _render_hp_or_mp_bar(
-        chara.hp, chara.max_hp, x, y, "hud_hp_bar", show_digit);
+        chara.hp, chara.max_hp, x, y, "core.hud_hp_bar", show_digit);
 }
 
 
@@ -469,7 +470,7 @@ void render_mp_bar(
     bool show_digit = false)
 {
     _render_hp_or_mp_bar(
-        chara.mp, chara.max_mp, x, y, "hud_mp_bar", show_digit);
+        chara.mp, chara.max_mp, x, y, "core.hud_mp_bar", show_digit);
 }
 
 
@@ -483,7 +484,7 @@ void render_basic_attributes_and_pv_dv()
         if (i < 8)
         {
             // Basic attributes except for Speed
-            draw_region("attributes_bar", x, y, 28);
+            draw_region("core.attributes_bar", x, y, 28);
             const auto text_color = cdata.player().attr_adjs[i] < 0
                 ? snail::Color{200, 0, 0}
                 : snail::Color{0, 0, 0};
@@ -495,7 +496,7 @@ void render_basic_attributes_and_pv_dv()
         else if (i == 8)
         {
             // Speed
-            draw_region("attributes_bar", x + 8, y, 34);
+            draw_region("core.attributes_bar", x + 8, y, 34);
             snail::Color text_color{0, 0, 0};
             if (gspdorg > gspd)
             {
@@ -514,7 +515,7 @@ void render_basic_attributes_and_pv_dv()
         else
         {
             // PV/DV
-            draw_region("attributes_bar", x + 14, y, 64);
+            draw_region("core.attributes_bar", x + 14, y, 64);
             mes(x + 14,
                 y,
                 ""s + cdata.player().dv + u8"/"s + cdata.player().pv);
@@ -540,7 +541,11 @@ void _render_gold_or_platinum(
 void render_gold()
 {
     _render_gold_or_platinum(
-        cdata.player().gold, windoww - 240, inf_ver - 16, "gold_coin", "gp");
+        cdata.player().gold,
+        windoww - 240,
+        inf_ver - 16,
+        "core.gold_coin",
+        "gp");
 }
 
 
@@ -551,7 +556,7 @@ void render_platinum()
         cdata.player().platinum_coin,
         windoww - 120,
         inf_ver - 16,
-        "platinum_coin",
+        "core.platinum_coin",
         "pp");
 }
 
@@ -563,7 +568,7 @@ void render_character_level()
     const auto exp =
         cdata.player().required_experience - cdata.player().experience;
 
-    draw("character_level_icon", 4, inf_ver - 16);
+    draw("core.character_level_icon", 4, inf_ver - 16);
     bmes(u8"Lv"s + lvl + u8"/"s + exp, 32, inf_ver - 14);
 }
 
@@ -571,8 +576,8 @@ void render_character_level()
 
 void render_date_label()
 {
-    draw("clock", 0, inf_clocky);
-    draw("date_label_frame", 78, inf_clocky + 8);
+    draw("core.clock", 0, inf_clocky);
+    draw("core.date_label_frame", 78, inf_clocky + 8);
 }
 
 
@@ -588,7 +593,7 @@ void render_buffs()
             break;
 
         // Icon
-        draw_indexed("buff_icon", x, y, buff.id);
+        draw_indexed("core.buff_icon", x, y, buff.id);
         // Turns
         mes(x + 3, y + 19, std::to_string(buff.turns));
         // Turns
@@ -602,17 +607,17 @@ void render_buffs()
 
 void render_analogue_clock()
 {
-    const auto& info = get_image_info("clock_hand");
+    const auto& info = get_image_info("core.clock_hand");
 
     // Short hand
     draw_rotated(
-        "clock_hand",
+        "core.clock_hand",
         inf_clockarrowx,
         inf_clockarrowy,
         game_data.date.hour * 30 + game_data.date.minute / 2);
     // Long hand
     draw_rotated(
-        "clock_hand",
+        "core.clock_hand",
         inf_clockarrowx,
         inf_clockarrowy,
         info.width / 2,
@@ -746,7 +751,7 @@ int render_one_status_ailment(
     if (!do_render(value))
         return y;
 
-    draw_region("status_ailment_bar", x, y, 50 + en * 30);
+    draw_region("core.status_ailment_bar", x, y, 50 + en * 30);
     const auto text_color = get_color(value);
     mes(x + 6, y + vfix + 1, get_text(value), text_color);
 
@@ -1097,7 +1102,8 @@ void render_autoturn_animation()
     font(13 - en * 2, snail::Font::Style::bold);
     bmes(u8"AUTO TURN"s, sx + 43, sy + vfix + 6, {235, 235, 235});
     gmode(2);
-    draw_rotated("hourglass", sx + 18, sy + 12, game_data.date.minute / 4 * 24);
+    draw_rotated(
+        "core.hourglass", sx + 18, sy + 12, game_data.date.minute / 4 * 24);
 
     if (cdata.player().activity.type == Activity::Type::dig_ground ||
         cdata.player().activity.type == Activity::Type::dig_wall ||
@@ -1431,9 +1437,9 @@ void screen_txtadv()
         {
             sx = 265;
             sy = 8;
-            draw("casino_title_decoration_left", sx - 30, 5);
+            draw("core.casino_title_decoration_left", sx - 30, 5);
             draw(
-                "casino_title_decoration_right",
+                "core.casino_title_decoration_right",
                 sx + strlen_u(atxinfon(0)) * 13 / 2 + 14,
                 5);
         }
@@ -1605,9 +1611,9 @@ void ui_draw_caption(const std::string& text)
             ap = 128;
         }
 
-        draw_region("caption", cnt * 128 + msgx, msgy, 0, 0, ap, 3);
-        draw_region("caption", cnt * 128 + msgx, msgy + 2, 0, 3, ap, 22);
-        draw_region("caption", cnt * 128 + msgx, msgy + 22, 0, 0, ap, 2);
+        draw_region("core.caption", cnt * 128 + msgx, msgy, 0, 0, ap, 3);
+        draw_region("core.caption", cnt * 128 + msgx, msgy + 2, 0, 3, ap, 22);
+        draw_region("core.caption", cnt * 128 + msgx, msgy + 22, 0, 0, ap, 2);
     }
     mes(msgx + 18, msgy + vfix + 4, text, {245, 245, 245});
     gmode(2);
@@ -1809,7 +1815,7 @@ void ui_render_non_hud()
     if (raderx != -1)
     {
         draw_region(
-            "minimap_scratch",
+            "core.minimap_scratch",
             inf_radarx + raderx,
             inf_radary + radery,
             raderx,
@@ -2136,7 +2142,7 @@ void ui_display_window(
             1);
     }
     gmode(2);
-    draw("tip_icon", x + 30 + x_offset, y + height - 47 - height % 8);
+    draw("core.tip_icon", x + 30 + x_offset, y + height - 47 - height % 8);
     line(
         x + 50 + x_offset,
         y + height - 48 - height % 8,
@@ -2233,7 +2239,7 @@ void display_note(const std::string& text, int x_offset)
 void display_topic(const std::string& topic, int x, int y)
 {
     font(12 + sizefix - en * 2, snail::Font::Style::bold);
-    draw("topic_icon", x, y + 7);
+    draw("core.topic_icon", x, y + 7);
     mes(x + 26, y + vfix + 8, topic);
     line(x + 22, y + 21, x + strlen_u(topic) * 7 + 36, y + 21);
 }
@@ -2310,11 +2316,11 @@ void load_background_variants(int buffer)
 
 void clear_background_in_character_making()
 {
-    asset_load("void");
-    draw("void", 0, 0, windoww, windowh);
+    asset_load("core.void");
+    draw("core.void", 0, 0, windoww, windowh);
     gsel(0);
     gmode(0);
-    draw_region("void", 0, 0, 0, 0, windoww, 64);
+    draw_region("core.void", 0, 0, 0, 0, windoww, 64);
     gmode(2);
 }
 
@@ -2322,11 +2328,11 @@ void clear_background_in_character_making()
 
 void clear_background_in_continue()
 {
-    asset_load("void");
-    draw("void", 0, 0, windoww, windowh);
+    asset_load("core.void");
+    draw("core.void", 0, 0, windoww, windowh);
     gsel(0);
     gmode(0);
-    draw("void", 0, 0, windoww, windowh);
+    draw("core.void", 0, 0, windoww, windowh);
     gmode(2);
 }
 
@@ -2343,21 +2349,33 @@ void draw_scroll(int x, int y, int width, int height)
         {
             if (i == 0)
             {
-                draw_region("ie_scroll", x, y, 0, 0, 64, 48);
-                draw_region("ie_scroll", x, y3, 0, 144, 64, 48);
+                draw_region("core.ie_scroll", x, y, 0, 0, 64, 48);
+                draw_region("core.ie_scroll", x, y3, 0, 144, 64, 48);
             }
             continue;
         }
         if (i < width / 8 - 8)
         {
             draw_region(
-                "ie_scroll", i * 8 + x, y, (i - 8) % 18 * 8 + 64, 0, 8, 48);
+                "core.ie_scroll",
+                i * 8 + x,
+                y,
+                (i - 8) % 18 * 8 + 64,
+                0,
+                8,
+                48);
             draw_region(
-                "ie_scroll", i * 8 + x, y3, (i - 8) % 18 * 8 + 64, 144, 8, 48);
+                "core.ie_scroll",
+                i * 8 + x,
+                y3,
+                (i - 8) % 18 * 8 + 64,
+                144,
+                8,
+                48);
             continue;
         }
-        draw_region("ie_scroll", x3, y, 208, 0, 64, 48);
-        draw_region("ie_scroll", x3, y3, 208, 144, 64, 48);
+        draw_region("core.ie_scroll", x3, y, 208, 0, 64, 48);
+        draw_region("core.ie_scroll", x3, y3, 208, 144, 64, 48);
         break;
     }
 
@@ -2368,13 +2386,19 @@ void draw_scroll(int x, int y, int width, int height)
             if (j == 0)
             {
                 draw_region(
-                    "ie_scroll", x, i * 8 + y + 48, 0, i % 12 * 8 + 48, 64, 8);
+                    "core.ie_scroll",
+                    x,
+                    i * 8 + y + 48,
+                    0,
+                    i % 12 * 8 + 48,
+                    64,
+                    8);
                 continue;
             }
             if (j < width / 8 - 15)
             {
                 draw_region(
-                    "ie_scroll",
+                    "core.ie_scroll",
                     j * 8 + x + 56,
                     i * 8 + y + 48,
                     j % 18 * 8 + 64,
@@ -2384,7 +2408,13 @@ void draw_scroll(int x, int y, int width, int height)
                 continue;
             }
             draw_region(
-                "ie_scroll", x3, i * 8 + y + 48, 208, i % 12 * 8 + 48, 64, 8);
+                "core.ie_scroll",
+                x3,
+                i * 8 + y + 48,
+                208,
+                i % 12 * 8 + 48,
+                64,
+                8);
             break;
         }
     }
@@ -2396,7 +2426,8 @@ void cs_listbk()
 {
     if (cs_bk == -1)
         return;
-    draw_region("list_scratch", cs_posbk_x, cs_posbk_y, cs_posbk_w, cs_posbk_h);
+    draw_region(
+        "core.list_scratch", cs_posbk_x, cs_posbk_y, cs_posbk_w, cs_posbk_h);
 }
 
 
@@ -2416,11 +2447,11 @@ void cs_list(
 
         gsel(3);
         gcopy(0, x, y, width, 19, 264, 96);
-        asset_copy_from(0, x, y, width, 19, "list_scratch");
+        asset_copy_from(0, x, y, width, 19, "core.list_scratch");
         gsel(0);
 
         boxf(x, y, width, 19, {127, 191, 255, 63});
-        draw("list_bullet", x + width - 20, y + 4);
+        draw("core.list_bullet", x + width - 20, y + 4);
 
         cs_posbk_x = x;
         cs_posbk_y = y;
@@ -2473,7 +2504,7 @@ void showscroll(const std::string& hint, int x, int y, int width, int height)
     if (hint.empty())
         return;
 
-    draw("tip_icon", x + 40, y + height - 67 - height % 8);
+    draw("core.tip_icon", x + 40, y + height - 67 - height % 8);
     line(
         x + 60,
         y + height - 68 - height % 8,
@@ -2525,14 +2556,14 @@ void window(int x, int y, int width, int height, bool shadow)
     if (!shadow)
     {
         // Top left
-        draw_region("window", x, y, 0, 0, 64, 48);
+        draw_region("core.window", x, y, 0, 0, 64, 48);
     }
     // Top right
-    draw_region("window", x3, y, 208, 0, 56, 48);
+    draw_region("core.window", x3, y, 208, 0, 56, 48);
     // Bottom left
-    draw_region("window", x, y3, 0, 144, 64, 48);
+    draw_region("core.window", x, y3, 0, 144, 64, 48);
     // Bottom right
-    draw_region("window", x3, y3, 208, 144, 56, 48);
+    draw_region("core.window", x3, y3, 208, 144, 56, 48);
 
     for (int dx = 8; dx < width / 8 - 8; ++dx)
     {
@@ -2540,11 +2571,11 @@ void window(int x, int y, int width, int height, bool shadow)
         {
             // Top middle
             draw_region(
-                "window", dx * 8 + x, y, (dx - 8) % 18 * 8 + 36, 0, 8, 48);
+                "core.window", dx * 8 + x, y, (dx - 8) % 18 * 8 + 36, 0, 8, 48);
         }
         // Bottom middle
         draw_region(
-            "window", dx * 8 + x, y3, (dx - 8) % 18 * 8 + 54, 144, 8, 48);
+            "core.window", dx * 8 + x, y3, (dx - 8) % 18 * 8 + 54, 144, 8, 48);
     }
 
     for (int dy = 0; dy < height / 8 - 14; ++dy)
@@ -2553,12 +2584,12 @@ void window(int x, int y, int width, int height, bool shadow)
         {
             // Middle left
             draw_region(
-                "window", x, dy * 8 + y + 48, 0, dy % 12 * 8 + 48, 64, 8);
+                "core.window", x, dy * 8 + y + 48, 0, dy % 12 * 8 + 48, 64, 8);
             // Middle middle
             for (int dx = 1; dx < width / 8 - 15; ++dx)
             {
                 draw_region(
-                    "window",
+                    "core.window",
                     dx * 8 + x + 56,
                     dy * 8 + y + 48,
                     dx % 18 * 8 + 64,
@@ -2569,7 +2600,7 @@ void window(int x, int y, int width, int height, bool shadow)
         }
         // Middle right
         draw_region(
-            "window", x3, dy * 8 + y + 48, 208, dy % 12 * 8 + 48, 56, 8);
+            "core.window", x3, dy * 8 + y + 48, 208, dy % 12 * 8 + 48, 56, 8);
     }
 
     gmode(2);
@@ -2602,33 +2633,73 @@ void window2(
     {
     case 0:
         draw_region(
-            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
+            "core.window",
+            x + 4,
+            y + 4,
+            24,
+            24,
+            228,
+            144,
+            width - 6,
+            height - 8);
         break;
     case 1:
         draw_region(
-            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
+            "core.window",
+            x + 4,
+            y + 4,
+            24,
+            24,
+            228,
+            144,
+            width - 6,
+            height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 195});
         break;
     case 2:
         draw_region(
-            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
+            "core.window",
+            x + 4,
+            y + 4,
+            24,
+            24,
+            228,
+            144,
+            width - 6,
+            height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 210});
         break;
     case 3:
         draw_region(
-            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
+            "core.window",
+            x + 4,
+            y + 4,
+            24,
+            24,
+            228,
+            144,
+            width - 6,
+            height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 10});
         break;
     case 4:
         draw_region(
-            "window", x + 4, y + 4, 24, 24, 228, 144, width - 6, height - 8);
+            "core.window",
+            x + 4,
+            y + 4,
+            24,
+            24,
+            228,
+            144,
+            width - 6,
+            height - 8);
         boxf(x + 4, y + 4, width - 4, height - 4, {0, 0, 0, 195});
         break;
     case 5: break;
     case 6:
         gmode(2, 180);
         draw_region_centered(
-            "window",
+            "core.window",
             x + width / 2,
             y + height / 2,
             24,
@@ -2645,7 +2716,7 @@ void window2(
     for (int cnt = 0, cnt_end = (width / 16 - 2); cnt < cnt_end; ++cnt)
     {
         draw_region(
-            "window_frame",
+            "core.window_frame",
             cnt * 16 + x + 16,
             y,
             frame_style * 48 + 16,
@@ -2653,7 +2724,7 @@ void window2(
             16,
             16);
         draw_region(
-            "window_frame",
+            "core.window_frame",
             cnt * 16 + x + 16,
             y + height - 16,
             frame_style * 48 + 16,
@@ -2666,9 +2737,9 @@ void window2(
     const auto y2 = y + height / 16 * 16 - 16;
 
     draw_region(
-        "window_frame", x2, y, frame_style * 48 + 16, 0, width % 16, 16);
+        "core.window_frame", x2, y, frame_style * 48 + 16, 0, width % 16, 16);
     draw_region(
-        "window_frame",
+        "core.window_frame",
         x2,
         y + height - 16,
         frame_style * 48 + 16,
@@ -2679,9 +2750,15 @@ void window2(
     for (int i = 0; i < height / 16 - 2; ++i)
     {
         draw_region(
-            "window_frame", x, i * 16 + y + 16, frame_style * 48, 16, 16, 16);
+            "core.window_frame",
+            x,
+            i * 16 + y + 16,
+            frame_style * 48,
+            16,
+            16,
+            16);
         draw_region(
-            "window_frame",
+            "core.window_frame",
             x + width - 16,
             i * 16 + y + 16,
             frame_style * 48 + 32,
@@ -2689,22 +2766,29 @@ void window2(
             16,
             16);
     }
-    draw_region("window_frame", x, y2, frame_style * 48, 16, 16, height % 16);
     draw_region(
-        "window_frame",
+        "core.window_frame", x, y2, frame_style * 48, 16, 16, height % 16);
+    draw_region(
+        "core.window_frame",
         x + width - 16,
         y2,
         frame_style * 48 + 32,
         16,
         16,
         height % 16);
-    draw_region("window_frame", x, y, frame_style * 48, 0, 16, 16);
+    draw_region("core.window_frame", x, y, frame_style * 48, 0, 16, 16);
     draw_region(
-        "window_frame", x, y + height - 16, frame_style * 48, 32, 16, 16);
+        "core.window_frame", x, y + height - 16, frame_style * 48, 32, 16, 16);
     draw_region(
-        "window_frame", x + width - 16, y, frame_style * 48 + 32, 0, 16, 16);
+        "core.window_frame",
+        x + width - 16,
+        y,
+        frame_style * 48 + 32,
+        0,
+        16,
+        16);
     draw_region(
-        "window_frame",
+        "core.window_frame",
         x + width - 16,
         y + height - 16,
         frame_style * 48 + 32,
@@ -2715,7 +2799,15 @@ void window2(
     if (fill_style == 5)
     {
         draw_region(
-            "window", x + 2, y + 2, 24, 24, 228, 144, width - 4, height - 5);
+            "core.window",
+            x + 2,
+            y + 2,
+            24,
+            24,
+            228,
+            144,
+            width - 4,
+            height - 5);
         boxf(x + 2, y + 2, width - 4, height - 4, {0, 0, 0, 195});
     }
 }
@@ -2839,10 +2931,10 @@ void show_title(const std::string& title)
     }
     for (int i = 0; i < (windoww - x - 8) / 192 + 1; ++i)
     {
-        draw("title_label_frame", x + 8 + i * 192, y);
+        draw("core.title_label_frame", x + 8 + i * 192, y);
     }
     gmode(2);
-    draw("tip_icon", x, y + (mode != 1));
+    draw("core.tip_icon", x, y + (mode != 1));
     font(12 + sizefix - en * 2);
     bmes(title, x + 32, y + 1 + vfix + jp, {250, 250, 250});
 }

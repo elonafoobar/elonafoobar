@@ -93,7 +93,7 @@ bool UIMenuEquipment::init()
     }
 
     window_animation(wx, wy, ww, wh, 9, 4);
-    asset_load("deco_wear");
+    asset_load("core.deco_wear");
     gsel(0);
     windowshadow = 1;
 
@@ -139,9 +139,9 @@ void UIMenuEquipment::_draw_window_deco(bool show_additional_info)
     {
         display_topic(i18n::s.get("core.ui.equip.weight"), wx + 524, wy + 30);
     }
-    draw_indexed("inventory_icon", wx + 46, wy - 16, 10);
-    elona::draw("deco_wear_a", wx + ww - 106, wy);
-    elona::draw("deco_wear_b", wx, wy + wh - 164);
+    draw_indexed("core.inventory_icon", wx + 46, wy - 16, 10);
+    elona::draw("core.deco_wear_a", wx + ww - 106, wy);
+    elona::draw("core.deco_wear_b", wx, wy + wh - 164);
     draw_additional_item_info_label(wx + 350, wy + 40);
 }
 
@@ -183,7 +183,10 @@ void UIMenuEquipment::_draw_key(int cnt, int p_, bool is_main_hand)
     }
 
     draw_indexed(
-        "body_part_icon", wx + 22, wy + 60 + cnt * 19 - 4, list(1, p_) - 1);
+        "core.body_part_icon",
+        wx + 22,
+        wy + 60 + cnt * 19 - 4,
+        list(1, p_) - 1);
     mes(wx + 46, wy + 60 + cnt * 19 + 3, body_part_name);
 }
 

@@ -228,11 +228,11 @@ void QuickMenu::_draw()
 
         if (index == 0 || index == 4 || index == 8)
         {
-            draw("quickmenu_submenu", entry.x + _pos_x, entry.y + _pos_y);
+            draw("core.quickmenu_submenu", entry.x + _pos_x, entry.y + _pos_y);
         }
         else
         {
-            draw("quickmenu_action", entry.x + _pos_x, entry.y + _pos_y);
+            draw("core.quickmenu_action", entry.x + _pos_x, entry.y + _pos_y);
         }
 
         uint8_t alpha;
@@ -256,11 +256,11 @@ void QuickMenu::_draw()
 
         if (index == 0 || index == 4 || index == 8)
         {
-            draw("quickmenu_submenu", entry.x + _pos_x, entry.y + _pos_y);
+            draw("core.quickmenu_submenu", entry.x + _pos_x, entry.y + _pos_y);
         }
         else
         {
-            draw("quickmenu_action", entry.x + _pos_x, entry.y + _pos_y);
+            draw("core.quickmenu_action", entry.x + _pos_x, entry.y + _pos_y);
         }
 
         gmode(2);

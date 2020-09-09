@@ -442,7 +442,7 @@ void window_recipe(
         dy_ += 17;
         ++i_;
     }
-    draw("deco_blend_b", wx + ww + 243, wy - 4);
+    draw("core.deco_blend_b", wx + ww + 243, wy - 4);
     if (step == i_ - 2)
     {
         boxf(dx_ - 10, dy_ - 2, width - 60, 17, {60, 20, 10, 32});
@@ -642,13 +642,16 @@ optional<TurnResult> blending_menu_select_recipe()
 
             if (blendchecklist(cnt))
             {
-                draw("blend_ingredient", wx + 330, wy + 53 + cnt * 19);
+                draw("core.blend_ingredient", wx + 330, wy + 53 + cnt * 19);
             }
             rpid = list(0, p);
 
             int difficulty = (4 - calc_success_rate(rpid, -1, -1) / 25);
             draw_indexed(
-                "recipe_difficulty", wx + 317, wy + 60 + cnt * 19, difficulty);
+                "core.recipe_difficulty",
+                wx + 317,
+                wy + 60 + cnt * 19,
+                difficulty);
         }
         font(14 - en * 2);
         cs_listbk();
@@ -678,7 +681,7 @@ optional<TurnResult> blending_menu_select_recipe()
             cs_bk = cs;
         }
         windowshadow(1) = 0;
-        draw("deco_blend_c", wx + 10, wy + wh - 100);
+        draw("core.deco_blend_c", wx + 10, wy + wh - 100);
         redraw();
 
         const auto action = get_selected_item(p(0));
@@ -795,7 +798,7 @@ void blendig_menu_select_materials()
 
             if (g_inv[p]->body_part != 0)
             {
-                draw("equipped", wx + 46, wy + 72 + cnt * 18 - 3);
+                draw("core.equipped", wx + 46, wy + 72 + cnt * 18 - 3);
             }
             cs_list(
                 cs == cnt,
@@ -825,7 +828,7 @@ void blendig_menu_select_materials()
             cs_bk = cs;
         }
         windowshadow(1) = 0;
-        draw("deco_blend_c", wx + 10, wy + wh - 100);
+        draw("core.deco_blend_c", wx + 10, wy + wh - 100);
         redraw();
 
         const auto action = get_selected_item(p(0));
@@ -1209,7 +1212,7 @@ TurnResult blending_menu()
 {
     step = -1;
     rpid = 0;
-    asset_load("deco_blend");
+    asset_load("core.deco_blend");
     gsel(0);
     clear_rprefmat();
 
@@ -1310,7 +1313,7 @@ void window_recipe2(int number_of_products)
     const auto dy = 10;
 
     gmode(2);
-    draw("deco_blend_a", dx, 0);
+    draw("core.deco_blend_a", dx, 0);
 
     font(15 - en * 2, snail::Font::Style::bold);
     bmes(

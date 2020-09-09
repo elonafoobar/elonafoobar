@@ -56,10 +56,10 @@ static void _populate_quest_list()
 
 void UIMenuQuestBoard::_draw_background()
 {
-    asset_load("deco_board");
+    asset_load("core.deco_board");
     gsel(0);
     gsel(4);
-    draw_bg("deco_board_a");
+    draw_bg("core.deco_board_a");
     ww = 560;
     int h = 140;
     wh = h * 4;
@@ -70,7 +70,7 @@ void UIMenuQuestBoard::_draw_background()
         y = wy + cnt * 120;
         window(wx + 4, y + 4, ww, h, true);
         window(wx, y, ww, h);
-        elona::draw("deco_board_b", wx + 20, y + 8);
+        elona::draw("core.deco_board_b", wx + 20, y + 8);
     }
     render_hud();
     gsel(0);

@@ -347,7 +347,7 @@ bool maybe_show_ex_help(int id, bool should_update_screen)
 
 void show_ex_help(int id)
 {
-    asset_load("deco_help");
+    asset_load("core.deco_help");
     gsel(0);
     page = 0;
     notesel(buff);
@@ -389,9 +389,9 @@ void show_ex_help(int id)
         wy = winposy(dy);
         window2(
             (windoww - 325) / 2 + inf_screenx, winposy(dy) + 6, 325, 32, 0, 1);
-        draw("deco_help_a", wx + 5, wy + 4);
-        draw("deco_help_a", wx + dx - 55, wy + 4);
-        draw("deco_help_b", wx + 10, wy + 42);
+        draw("core.deco_help_a", wx + 5, wy + 4);
+        draw("core.deco_help_a", wx + dx - 55, wy + 4);
+        draw("core.deco_help_b", wx + 10, wy + 42);
         font(16 - en * 2, snail::Font::Style::bold);
         bmes(
             i18n::s.get("core.ui.exhelp.title"),
@@ -693,7 +693,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
     wy = winposy(wh);
     snd("core.port");
     window_animation(wx, wy, ww, wh, 9, 7);
-    asset_load("deco_mirror");
+    asset_load("core.deco_mirror");
     gsel(0);
     windowshadow = 1;
 
@@ -770,7 +770,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
         pagesize = listmax;
         display_topic(
             i18n::s.get("core.ui.appearance.basic.category"), wx + 34, wy + 36);
-        draw("deco_mirror_a", wx + ww - 40, wy);
+        draw("core.deco_mirror_a", wx + ww - 40, wy);
         window2(wx + 234, wy + 71, 88, 120, 1, 1);
         if (cs == 1 && page == 0)
         {
@@ -845,8 +845,8 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
             cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1);
             if (rtval != -2)
             {
-                draw("arrow_left", wx + 30, wy + 66 + cnt * 21 - 5);
-                draw("arrow_right", wx + 175, wy + 66 + cnt * 21 - 5);
+                draw("core.arrow_left", wx + 30, wy + 66 + cnt * 21 - 5);
+                draw("core.arrow_right", wx + 175, wy + 66 + cnt * 21 - 5);
             }
         }
         if (keyrange != 0)
@@ -1077,8 +1077,8 @@ void change_appearance_equipment(Character& chara)
                 {
                     s += u8"Off"s;
                 }
-                draw("arrow_left", wx + 30, wy + 66 + cnt * 21 - 5);
-                draw("arrow_right", wx + 175, wy + 66 + cnt * 21 - 5);
+                draw("core.arrow_left", wx + 30, wy + 66 + cnt * 21 - 5);
+                draw("core.arrow_right", wx + 175, wy + 66 + cnt * 21 - 5);
             }
             cs_list(cs == cnt, s, wx + 60, wy + 66 + cnt * 21 - 1);
         }

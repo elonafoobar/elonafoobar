@@ -2204,7 +2204,7 @@ void sleep_start(const OptionalItemRef& bed)
                 i18n::s.get("core.activity.sleep.new_gene.title"),
                 i18n::s.get("core.activity.sleep.new_gene.text", *gene_chara),
                 {i18n::s.get_enum("core.activity.sleep.new_gene.choices", 0)},
-                u8"bg_re14");
+                u8"core.bg_re14");
             save_save_gene();
         }
     }

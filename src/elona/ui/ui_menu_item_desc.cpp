@@ -97,7 +97,8 @@ _get_pos(int cnt, int list_item, const std::string& list_text)
 void UIMenuItemDesc::_draw_normal_mark(int cnt, int list_item)
 {
     int icon_index = list_item % 10000 - 1;
-    draw_indexed("item_enchant_mark", wx + 40, wy + 61 + cnt * 18, icon_index);
+    draw_indexed(
+        "core.item_enchant_mark", wx + 40, wy + 61 + cnt * 18, icon_index);
 }
 
 void UIMenuItemDesc::_draw_marks(int cnt, int list_item)
@@ -108,7 +109,7 @@ void UIMenuItemDesc::_draw_marks(int cnt, int list_item)
     }
     if (list_item > 10000)
     {
-        elona::draw("inheritance_mark", wx + 15, wy + 63 + cnt * 18);
+        elona::draw("core.inheritance_mark", wx + 15, wy + 63 + cnt * 18);
     }
 }
 

@@ -51,8 +51,8 @@ bool UIMenuGod::init()
 
     snd("core.pop4");
     gmode(0);
-    asset_load("bg_altar");
-    elona::draw("bg_altar", 0, 0, windoww, windowh - inf_verh);
+    asset_load("core.bg_altar");
+    elona::draw("core.bg_altar", 0, 0, windoww, windowh - inf_verh);
     gsel(0);
 
     return true;
@@ -97,10 +97,11 @@ static std::string _get_god_description(int god_id)
 void UIMenuGod::_draw_window()
 {
     gmode(0);
-    elona::draw_region("bg_altar", 0, 0, 0, 0, windoww, windowh - inf_verh);
+    elona::draw_region(
+        "core.bg_altar", 0, 0, 0, 0, windoww, windowh - inf_verh);
     gmode(2);
     render_hud();
-    const auto& info = get_image_info("bg_altar");
+    const auto& info = get_image_info("core.bg_altar");
     dx = info.width - 80;
     dy = info.height - 130;
     wx = (windoww - dx) / 2 + inf_screenx;

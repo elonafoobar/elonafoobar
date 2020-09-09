@@ -34,11 +34,11 @@ bool UIMenuTownEconomy::init()
     keyrange = 0;
     pagesize = 1;
     listmax = 2;
-    asset_load("deco_politics");
+    asset_load("core.deco_politics");
     gsel(0);
-    draw_bg("deco_politics_a");
+    draw_bg("core.deco_politics_a");
     render_hud();
-    asset_load("ie_scroll");
+    asset_load("core.ie_scroll");
     gsel(0);
     windowshadow = 1;
     snd("core.scroll");

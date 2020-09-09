@@ -46,7 +46,7 @@ bool UIMenuSpells::init()
     }
 
     snd("core.spell");
-    asset_load("deco_spell");
+    asset_load("core.deco_spell");
     gsel(0);
     windowshadow = 1;
 
@@ -87,9 +87,9 @@ void UIMenuSpells::_draw_window()
         wy + 36);
     display_topic(i18n::s.get("core.ui.spell.effect"), wx + 400, wy + 36);
 
-    draw_indexed("inventory_icon", wx + 46, wy - 16, 13);
-    elona::draw("deco_spell_a", wx + ww - 78, wy);
-    elona::draw("deco_spell_b", wx + ww - 180, wy);
+    draw_indexed("core.inventory_icon", wx + 46, wy - 16, 13);
+    elona::draw("core.deco_spell_a", wx + ww - 78, wy);
+    elona::draw("core.deco_spell_b", wx + ww - 180, wy);
 }
 
 void UIMenuSpells::_draw_key(int cnt)

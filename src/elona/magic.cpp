@@ -129,7 +129,7 @@ bool _magic_1136(const ItemRef& treasure_map)
     }
     txt(i18n::s.get("core.magic.map.apply"));
     snd("core.book1");
-    const auto& info = asset_load("paper");
+    const auto& info = asset_load("core.paper");
     gsel(0);
     ww = info.width;
     wh = info.height;

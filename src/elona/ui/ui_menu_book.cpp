@@ -17,7 +17,7 @@ namespace ui
 bool UIMenuBook::init()
 {
     snd("core.book1");
-    asset_load("book");
+    asset_load("core.book");
     gsel(0);
     notesel(buff);
     {
@@ -66,10 +66,10 @@ void UIMenuBook::update()
 
 void UIMenuBook::draw()
 {
-    const auto& info = get_image_info("book");
+    const auto& info = get_image_info("core.book");
     wx = (windoww - info.width + 16) / 2 + inf_screenx;
     wy = winposy(info.height + 20);
-    elona::draw("book", wx, wy);
+    elona::draw("core.book", wx, wy);
 
     for (int cnt = 0, cnt_end = (pagesize); cnt < cnt_end; ++cnt)
     {

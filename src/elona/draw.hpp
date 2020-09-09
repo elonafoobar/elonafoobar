@@ -138,7 +138,6 @@ void draw_item_with_portrait_scale_height(
 struct AssetData;
 
 const AssetData& asset_load(data::InstanceId id);
-const AssetData& asset_load(data::InstanceId id, int window_id);
 void init_assets();
 
 void draw(data::InstanceId id, int x, int y);

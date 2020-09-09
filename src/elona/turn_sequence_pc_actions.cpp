@@ -191,7 +191,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
             {
                 sx = 192;
             }
-            draw_region("message_window", i * 192, inf_msgy, sx);
+            draw_region("core.message_window", i * 192, inf_msgy, sx);
         }
         redraw();
         wait_key_pressed();

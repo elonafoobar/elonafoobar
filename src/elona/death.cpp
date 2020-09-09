@@ -109,7 +109,7 @@ void show_game_score_ranking(
     constexpr size_t range_of_ranking = 8;
 
     gmode(0);
-    draw("void", 0, 0, windoww, windowh);
+    draw("core.void", 0, 0, windoww, windowh);
     gmode(2);
     font(14 - en * 2);
 
@@ -235,7 +235,7 @@ TurnResult pc_died()
 
     save_bone_file(bones, bone_filepath);
 
-    asset_load("void");
+    asset_load("core.void");
     gsel(0);
     show_game_score_ranking(bones, this_death_index);
     ui_draw_caption(i18n::s.get("core.misc.death.you_are_about_to_be_buried"));

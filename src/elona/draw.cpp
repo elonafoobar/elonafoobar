@@ -410,7 +410,7 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
                 const int width = clamp(ally.hp * 30 / ally.max_hp, 1, 30);
                 const int x_ = 16 + (windoww - 108) * right;
                 const int y_ = y + 17;
-                draw_bar("ally_health_bar", x_, y_, width * 3, 9, width);
+                draw_bar("core.ally_health_bar", x_, y_, width * 3, 9, width);
 
                 // Show leash icon.
                 if (g_config.leash_icon() && ally.is_leashed())
@@ -590,7 +590,7 @@ void show_damage_popups()
 void draw_emo(const Character& chara, int x, int y)
 {
     gmode(2);
-    draw_indexed("emotion_icons", x + 16, y, chara.emotion_icon);
+    draw_indexed("core.emotion_icons", x + 16, y, chara.emotion_icon);
 }
 
 
@@ -886,7 +886,7 @@ void draw_prepare_map_chips()
     gmode(0);
 
     // Contains the sprites for world map clouds.
-    asset_load("map");
+    asset_load("core.map");
 
     gsel(0);
     gmode(2);
@@ -1029,8 +1029,8 @@ void draw_select_key(const std::string& key, int x, int y)
 {
     gmode(0);
     font(13);
-    draw("select_key", x, y);
-    const auto& image_info = get_image_info("select_key");
+    draw("core.select_key", x, y);
+    const auto& image_info = get_image_info("core.select_key");
     const auto glyph_size =
         snail::Application::instance().get_renderer().calculate_text_size(key);
     bmes(
@@ -1277,8 +1277,8 @@ void draw_sleep_background_frame()
 void load_sleep_background()
 {
     gmode(0);
-    asset_load("bg_night");
-    draw("bg_night", 0, 0, windoww, windowh - inf_verh);
+    asset_load("core.bg_night");
+    draw("core.bg_night", 0, 0, windoww, windowh - inf_verh);
     gsel(0);
 }
 

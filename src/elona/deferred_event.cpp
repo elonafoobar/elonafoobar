@@ -311,7 +311,7 @@ void eh_reunoin_with_pets(const DeferredEvent&)
         i18n::s.get("core.event.popup.reunion_with_pet.title"),
         i18n::s.get("core.event.popup.reunion_with_pet.text"),
         choices,
-        u8"bg_re13");
+        u8"core.bg_re13");
     p = 3;
     if (result == 0)
     {
@@ -348,7 +348,7 @@ void eh_marriage(const DeferredEvent&)
         i18n::s.get("core.event.popup.marriage.title"),
         i18n::s.get("core.event.popup.marriage.text", cdata[marry]),
         {i18n::s.get_enum("core.event.popup.marriage.choices", 0)},
-        u8"bg_re14");
+        u8"core.bg_re14");
     for (int i = 0; i < 5; ++i)
     {
         flt(calcobjlv(cdata[marry].level + 5), calcfixlv(Quality::good));

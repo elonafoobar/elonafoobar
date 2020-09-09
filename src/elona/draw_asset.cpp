@@ -502,15 +502,12 @@ void asset_copy_from(
 
 /**
  * Obtains the window and region data for the asset in @a id. Throws if the
- * asset does not exist. If a mod prefix is not provided in the @a id, it is
- * assumed to be "core".
+ * asset does not exist.
  */
 const AssetData& get_image_info(data::InstanceId id)
 {
     // TODO: Instead of throwing, log once and return a default.
     auto data = the_asset_db[id];
-    if (!data)
-        data = the_asset_db[data::InstanceId{"core." + id.get()}];
     if (!data)
         throw std::runtime_error{u8"Unknown asset ID: "s + id.get()};
     return *data;

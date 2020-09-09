@@ -17,7 +17,7 @@ bool UIMenuChatHistory::init()
     key_list(0) = keybind_get_bound_key_name("enter");
     keyrange = 0;
     pagesize = 0;
-    asset_load("ie_scroll");
+    asset_load("core.ie_scroll");
     gsel(0);
     windowshadow = 1;
     snd("core.scroll");

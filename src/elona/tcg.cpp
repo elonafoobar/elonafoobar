@@ -1561,7 +1561,7 @@ int putcard(int card_index, int player_index)
 
 void tcgdrawbg()
 {
-    const auto& info = get_image_info("deco_card_a");
+    const auto& info = get_image_info("core.deco_card_a");
 
     gmode(0);
     for (int cnt = 0, cnt_end = (windowh / info.height + 1); cnt < cnt_end;
@@ -1649,11 +1649,11 @@ void tcginit()
     deckiy_at_tcg(0) = basey_at_tcg + 420;
     deckiy_at_tcg(1) = basey_at_tcg + 20;
     selectmode_at_tcg = -1;
-    asset_load("deco_card");
-    asset_load("interface2");
+    asset_load("core.deco_card");
+    asset_load("core.interface2");
     gsel(2);
     picload(filesystem::dirs::graphic() / u8"card0.bmp", 0, 0, false);
-    asset_load("bg_card");
+    asset_load("core.bg_card");
     tcg_prepare_cnt2();
     tcgdrawbg();
 }
@@ -2097,7 +2097,7 @@ void tcg_update_mana()
 {
     elona_vector1<int> mana_at_tcg;
     int m_at_tcg = 0;
-    asset_load("bg_card");
+    asset_load("core.bg_card");
     gmode(2);
     font(14 - en * 2);
     for (int cnt = 0; cnt < 2; ++cnt)
@@ -2281,7 +2281,7 @@ void tcg_draw_selection()
 void tcg_draw_deck_editor()
 {
     gmode(0);
-    draw("bg_card", basex_at_tcg, basey_at_tcg);
+    draw("core.bg_card", basex_at_tcg, basey_at_tcg);
     font(13 - en * 2);
     gmode(2);
     if (cardmode_at_tcg != 0 || ct_at_tcg == player_at_tcg)
@@ -2448,7 +2448,7 @@ void tcg_update_page()
 
 void tcg_draw_menu()
 {
-    asset_load("bg_card");
+    asset_load("core.bg_card");
     gsel(0);
     DIM3(dlist_at_tcg, 2, 400);
     DIM2(cflist_at_tcg, 10);
@@ -2736,7 +2736,7 @@ void tcg_draw_menu()
 
 int tcg_draw_background()
 {
-    asset_load("bg_card");
+    asset_load("core.bg_card");
     tcg_prepare_cnt2();
     return rtval_at_tcg;
 }
