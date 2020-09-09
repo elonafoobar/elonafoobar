@@ -15,7 +15,7 @@
 #include "../lua_env/config_table.hpp"
 #include "../lua_env/data_table.hpp"
 #include "../optional.hpp"
-#include "common.hpp"
+#include "id.hpp"
 
 
 
@@ -207,8 +207,9 @@ private:
         {
             using namespace std::literals::string_literals;
 
-            std::string message = "Error initializing "s + Traits::type_id +
-                data_id_separator + id.get() + ": " + e.what();
+            std::string message = "Error initializing "s +
+                make_fqid(PrototypeId{Traits::type_id}, id).get() + ": " +
+                e.what();
             ELONA_WARN("lua.data") << message;
             std::cerr << message << std::endl;
 

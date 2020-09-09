@@ -113,6 +113,10 @@ struct _InstanceIdTag
 {
 };
 
+struct _FullyQualifiedIdTag
+{
+};
+
 } // namespace detail
 
 
@@ -122,6 +126,29 @@ using PrototypeId = detail::_Id<detail::_PrototypeIdTag>;
 
 /// Represents instance ID.
 using InstanceId = detail::_Id<detail::_InstanceIdTag>;
+
+/// Represents fully-qualified ID.
+using FullyQualifiedId = detail::_Id<detail::_FullyQualifiedIdTag>;
+
+
+
+constexpr char id_separator = '#';
+
+
+
+/**
+ * Make a fully-qualified ID from the given @a prototype_id and @a instance_id.
+ *
+ * Example:
+ * make_fqid("core.chara", "core.putit") == "core.chara#core.putit"
+ */
+inline FullyQualifiedId make_fqid(
+    PrototypeId prototype_id,
+    InstanceId instance_id)
+{
+    return FullyQualifiedId{
+        prototype_id.get() + id_separator + instance_id.get()};
+}
 
 } // namespace elona::data
 

@@ -207,7 +207,8 @@ optional_ref<const Extent> draw_get_rect_item(int id)
  */
 optional_ref<const Extent> draw_get_rect_portrait(const std::string& key)
 {
-    return loader["core.portrait"s + data_id_separator + key];
+    return loader[data::make_fqid("core.portrait", data::InstanceId{key})
+                      .get()];
 }
 
 
