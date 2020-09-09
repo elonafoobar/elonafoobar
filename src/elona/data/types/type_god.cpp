@@ -12,11 +12,11 @@ const constexpr char* data::DatabaseTraits<GodDB>::type_id;
 
 GodData GodDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
-    DATA_LEGACY_ID();
+    DATA_INTEGER_ID();
 
     return GodData{
         data::InstanceId{id},
-        legacy_id,
+        integer_id,
     };
 }
 

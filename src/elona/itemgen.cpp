@@ -129,7 +129,7 @@ int get_random_item_id()
             bool ok = true;
             for (int i = 0; i < filtermax; ++i)
             {
-                if (the_item_db[data.legacy_id]->filter.find(filtern(i)) ==
+                if (the_item_db[data.integer_id]->filter.find(filtern(i)) ==
                     std::string::npos)
                 {
                     ok = false;
@@ -140,7 +140,7 @@ int get_random_item_id()
                 continue;
         }
         sampler.add(
-            data.legacy_id,
+            data.integer_id,
             data.rarity /
                     (1000 + std::abs(data.level - objlv) * data.coefficient) +
                 1);
@@ -281,7 +281,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
     item_db_get_charge_level(item, item_id);
 
     item->tint = generate_color(
-        the_item_db[item->id]->tint, the_item_db[item->id]->legacy_id);
+        the_item_db[item->id]->tint, the_item_db[item->id]->integer_id);
 
     if (item->id == "core.book_b" && item->param1 == 0)
     {
@@ -307,7 +307,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
         {
             artifactlocation.push_back(i18n::s.get(
                 "core.magic.oracle.was_held_by",
-                cnven(iknownnameref(the_item_db[item->id]->legacy_id)),
+                cnven(iknownnameref(the_item_db[item->id]->integer_id)),
                 *owner,
                 mapname(owner->current_map),
                 game_data.date.day,
@@ -318,7 +318,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
         {
             artifactlocation.push_back(i18n::s.get(
                 "core.magic.oracle.was_created_at",
-                iknownnameref(the_item_db[item->id]->legacy_id),
+                iknownnameref(the_item_db[item->id]->integer_id),
                 mdatan(0),
                 game_data.date.day,
                 game_data.date.month,
@@ -513,7 +513,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
     {
         item->identify_state = IdentifyState::completely;
         item->curse_state = CurseState::none;
-        itemmemory(0, the_item_db[item->id]->legacy_id) = 1;
+        itemmemory(0, the_item_db[item->id]->integer_id) = 1;
     }
     if (category == ItemCategory::bodyparts || category == ItemCategory::junk ||
         category == ItemCategory::ore)
@@ -764,7 +764,7 @@ void change_item_material(const ItemRef& item, data::InstanceId material)
 
     const auto original_value = calculate_original_value(item);
 
-    item_db_set_basic_stats(item, the_item_db[item->id]->legacy_id);
+    item_db_set_basic_stats(item, the_item_db[item->id]->integer_id);
     item->value = original_value;
     if (material != "")
     {
@@ -799,7 +799,7 @@ void apply_item_material(const ItemRef& item)
     }
     else
     {
-        p = the_item_material_db[item->material]->legacy_id;
+        p = the_item_material_db[item->material]->integer_id;
     }
     item->weight = item->weight * the_item_material_db[p]->weight / 100;
     if (category == ItemCategory::furniture)

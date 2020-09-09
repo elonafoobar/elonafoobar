@@ -90,7 +90,7 @@ namespace elona
 struct CharacterData
 {
     data::InstanceId id;
-    int legacy_id;
+    int integer_id;
     std::vector<int> normal_actions;
     std::vector<int> special_actions;
     int ai_act_sub_freq;

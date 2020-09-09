@@ -39,12 +39,12 @@ TEST_CASE("test declaring and loading datatype", "[Lua: Data]")
     auto normal = table.raw("putit.putit", "putit.normal");
     REQUIRE_SOME(normal);
     REQUIRE((*normal)["display_name"].get<std::string>() == "putit");
-    REQUIRE((*normal)["legacy_id"].get<int>() == 3);
+    REQUIRE((*normal)["integer_id"].get<int>() == 3);
 
     auto red = table.raw("putit.putit", "putit.red");
     REQUIRE_SOME(red);
     REQUIRE((*red)["display_name"].get<std::string>() == "red putit");
-    REQUIRE((*red)["legacy_id"].get<int>() == 4);
+    REQUIRE((*red)["integer_id"].get<int>() == 4);
 }
 
 
@@ -65,7 +65,7 @@ TEST_CASE("test loading datatype originating from other mod", "[Lua: Data]")
     auto green = table.raw("putit.putit", "putit_b.green");
     REQUIRE_SOME(green);
     REQUIRE((*green)["display_name"].get<std::string>() == "green putit");
-    REQUIRE((*green)["legacy_id"].get<int>() == 5);
+    REQUIRE((*green)["integer_id"].get<int>() == 5);
 }
 
 

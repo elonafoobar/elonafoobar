@@ -503,10 +503,10 @@ void cell_refresh(int x, int y)
                 items.at(number_of_items) = item;
             }
             ++number_of_items;
-            if (ilight(the_item_db[item->id]->legacy_id) != 0)
+            if (ilight(the_item_db[item->id]->integer_id) != 0)
             {
                 cell_data.at(x, y).light =
-                    ilight(the_item_db[item->id]->legacy_id);
+                    ilight(the_item_db[item->id]->integer_id);
             }
         }
     }
@@ -758,7 +758,7 @@ IdentifyState item_identify(const ItemRef& item, IdentifyState level)
     item->identify_state = level;
     if (item->identify_state >= IdentifyState::partly)
     {
-        itemmemory(0, the_item_db[item->id]->legacy_id) = 1;
+        itemmemory(0, the_item_db[item->id]->integer_id) = 1;
     }
     idtresult = level;
     return idtresult;
@@ -778,7 +778,7 @@ IdentifyState item_identify(const ItemRef& item, int power)
 
 void item_checkknown(const ItemRef& item)
 {
-    if (itemmemory(0, the_item_db[item->id]->legacy_id) &&
+    if (itemmemory(0, the_item_db[item->id]->integer_id) &&
         item->identify_state == IdentifyState::unidentified)
     {
         item_identify(item, IdentifyState::partly);
@@ -891,12 +891,13 @@ void itemname_additional_info(const ItemRef& item)
                 }
                 else
                 {
-                    s_ = s_ +
+                    s_ =
+                        s_ +
                         foodname(
-                             item->param1 / 1000,
-                             ioriginalnameref(the_item_db[item->id]->legacy_id),
-                             item->param2,
-                             item->subname);
+                            item->param1 / 1000,
+                            ioriginalnameref(the_item_db[item->id]->integer_id),
+                            item->param2,
+                            item->subname);
                 }
                 return;
             }
@@ -1016,8 +1017,8 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
     int alpha_ = 0;
     std::string s4_;
     elona_vector1<std::string> buf_;
-    if (the_item_db[item->id]->legacy_id >= maxitemid - 2 ||
-        static_cast<size_t>(the_item_db[item->id]->legacy_id) >
+    if (the_item_db[item->id]->integer_id >= maxitemid - 2 ||
+        static_cast<size_t>(the_item_db[item->id]->integer_id) >
             ioriginalnameref.size())
     {
         return i18n::s.get("core.item.unknown_item");
@@ -1120,22 +1121,22 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
                 break;
             }
         }
-        if (irandomname(the_item_db[item->id]->legacy_id) == 1 &&
+        if (irandomname(the_item_db[item->id]->integer_id) == 1 &&
             item->identify_state == IdentifyState::unidentified)
         {
             s2_ = "";
         }
         else
         {
-            s2_ = ""s + ioriginalnameref2(the_item_db[item->id]->legacy_id);
+            s2_ = ""s + ioriginalnameref2(the_item_db[item->id]->integer_id);
             if (strutil::contains(
-                    ioriginalnameref(the_item_db[item->id]->legacy_id),
+                    ioriginalnameref(the_item_db[item->id]->integer_id),
                     u8"with"))
             {
                 s3_ = "";
             }
             else if (strutil::contains(
-                         ioriginalnameref(the_item_db[item->id]->legacy_id),
+                         ioriginalnameref(the_item_db[item->id]->integer_id),
                          u8"for testing"))
             {
                 s3_ = "";
@@ -1320,17 +1321,17 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
         }
         if (item->identify_state == IdentifyState::unidentified)
         {
-            s_ += iknownnameref(the_item_db[item->id]->legacy_id);
+            s_ += iknownnameref(the_item_db[item->id]->integer_id);
         }
         else if (item->identify_state != IdentifyState::completely)
         {
             if (item->quality < Quality::miracle || !is_equipment(category))
             {
-                s_ += ioriginalnameref(the_item_db[item->id]->legacy_id);
+                s_ += ioriginalnameref(the_item_db[item->id]->integer_id);
             }
             else
             {
-                s_ += iknownnameref(the_item_db[item->id]->legacy_id);
+                s_ += iknownnameref(the_item_db[item->id]->integer_id);
             }
         }
         else if (item->quality == Quality::special || item->is_precious)
@@ -1338,11 +1339,11 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
             if (jp)
             {
                 s_ = u8"★"s + s_ +
-                    ioriginalnameref(the_item_db[item->id]->legacy_id);
+                    ioriginalnameref(the_item_db[item->id]->integer_id);
             }
             else
             {
-                s_ += ioriginalnameref(the_item_db[item->id]->legacy_id);
+                s_ += ioriginalnameref(the_item_db[item->id]->integer_id);
             }
         }
         else
@@ -1353,11 +1354,11 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
             }
             if (alpha_ == 1 && jp)
             {
-                s_ += ialphanameref(the_item_db[item->id]->legacy_id);
+                s_ += ialphanameref(the_item_db[item->id]->integer_id);
             }
             else
             {
-                s_ += ioriginalnameref(the_item_db[item->id]->legacy_id);
+                s_ += ioriginalnameref(the_item_db[item->id]->integer_id);
             }
             if (en && is_equipment(category) && item->subname >= 10000 &&
                 item->subname < 20000)
@@ -1658,8 +1659,8 @@ void item_dump_desc(const ItemRef& item)
 {
     reftype = (int)the_item_db[item->id]->category;
 
-    item_db_get_charge_level(item, the_item_db[item->id]->legacy_id);
-    item_db_get_description(item, the_item_db[item->id]->legacy_id);
+    item_db_get_charge_level(item, the_item_db[item->id]->integer_id);
+    item_db_get_description(item, the_item_db[item->id]->integer_id);
 
     p = item_load_desc(item);
 
@@ -2267,7 +2268,7 @@ void auto_identify()
         {
             const auto prev_name = itemname(item);
             item_identify(item, IdentifyState::completely);
-            itemmemory(0, the_item_db[item->id]->legacy_id) = 1;
+            itemmemory(0, the_item_db[item->id]->integer_id) = 1;
             if (!g_config.hide_autoidentify())
             {
                 txt(i18n::s.get(

@@ -14,7 +14,7 @@ ItemMaterialData ItemMaterialDB::convert(
     const lua::ConfigTable& data,
     const std::string& id)
 {
-    DATA_LEGACY_ID();
+    DATA_INTEGER_ID();
     DATA_OPT_OR(weight, int, 0);
     DATA_OPT_OR(value, int, 0);
     DATA_OPT_OR(hit_bonus, int, 0);
@@ -29,7 +29,7 @@ ItemMaterialData ItemMaterialDB::convert(
 
     return ItemMaterialData{
         data::InstanceId{id},
-        legacy_id,
+        integer_id,
         weight,
         value,
         hit_bonus,

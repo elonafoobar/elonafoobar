@@ -10,7 +10,7 @@ namespace elona
 struct ItemChipData
 {
     data::InstanceId id;
-    int legacy_id;
+    int integer_id;
     Extent rect;
     ItemChip chip;
     optional<fs::path> filepath;

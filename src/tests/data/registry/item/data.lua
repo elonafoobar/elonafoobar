@@ -3,7 +3,7 @@ ELONA.data:add(
    "core.item",
    {
       putitoro = {
-         legacy_id = 9999,
+         integer_id = 9999,
          image = 695,
          value = 2000,
          weight = 200,

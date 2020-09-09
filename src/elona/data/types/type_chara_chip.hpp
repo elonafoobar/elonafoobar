@@ -9,7 +9,7 @@ namespace elona
 struct CharaChipData
 {
     data::InstanceId id;
-    int legacy_id;
+    int integer_id;
     Extent rect;
     CharaChip chip;
     optional<fs::path> filepath;

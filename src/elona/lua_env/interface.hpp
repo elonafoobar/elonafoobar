@@ -106,7 +106,7 @@ optional<ConfigTable> get_data(
  */
 optional<ConfigTable> get_data(
     data::PrototypeId prototype_id,
-    int legacy_instance_id);
+    int integer_instance_id);
 
 fs::path resolve_path_for_mod(const std::string& path);
 

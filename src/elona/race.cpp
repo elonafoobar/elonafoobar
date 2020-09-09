@@ -63,7 +63,7 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
     {
         if (const auto ability_data = the_ability_db[pair.first])
         {
-            chara_init_skill(chara, ability_data->legacy_id, pair.second);
+            chara_init_skill(chara, ability_data->integer_id, pair.second);
         }
         else
         {
@@ -77,7 +77,7 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
     {
         if (const auto ability_data = the_ability_db[pair.first])
         {
-            chara.get_skill(ability_data->legacy_id).level = pair.second;
+            chara.get_skill(ability_data->integer_id).level = pair.second;
         }
         else
         {

@@ -105,8 +105,8 @@ bool buff_has(const Character& chara, data::InstanceId id)
     const auto& buff_data = the_buff_db.ensure(id);
 
     return range::any_of(
-        chara.buffs, [legacy_id = buff_data.legacy_id](const auto& buff) {
-            return buff.id == legacy_id;
+        chara.buffs, [integer_id = buff_data.integer_id](const auto& buff) {
+            return buff.id == integer_id;
         });
 }
 
@@ -117,8 +117,8 @@ optional_ref<const Buff> buff_find(const Character& chara, data::InstanceId id)
     const auto& buff_data = the_buff_db.ensure(id);
 
     const auto itr = range::find_if(
-        chara.buffs, [legacy_id = buff_data.legacy_id](const auto& buff) {
-            return buff.id == legacy_id;
+        chara.buffs, [integer_id = buff_data.integer_id](const auto& buff) {
+            return buff.id == integer_id;
         });
     if (itr == std::end(chara.buffs))
     {
@@ -144,9 +144,9 @@ void buff_add(
 
     const auto& buff_data = the_buff_db.ensure(id);
 
-    const auto legacy_id = buff_data.legacy_id;
+    const auto integer_id = buff_data.integer_id;
 
-    const auto slot = buff_find_slot(chara, legacy_id, turns);
+    const auto slot = buff_find_slot(chara, integer_id, turns);
     if (slot == buff_find_slot_no_effect)
     {
         if (is_in_fov(chara))
@@ -215,16 +215,16 @@ void buff_add(
         if (buff_data.type != BuffType::food)
         {
             txt(i18n::s.get_enum_property(
-                "core.buff", "apply", legacy_id, chara));
+                "core.buff", "apply", integer_id, chara));
         }
 
         add_damage_popup(
-            i18n::s.get_enum_property("core.buff", "name", legacy_id),
+            i18n::s.get_enum_property("core.buff", "name", integer_id),
             chara.index,
             {255, 255, 255});
     }
 
-    chara.buffs[slot] = {legacy_id, power, turns};
+    chara.buffs[slot] = {integer_id, power, turns};
 
     chara_refresh(chara);
 }

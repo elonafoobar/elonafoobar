@@ -4,7 +4,7 @@ local function make_atlas(atlas_index)
       for x=0,33 do
          local chip_index = x + y * 33
          atlas[chip_index] = {
-            legacy_id = chip_index,
+            integer_id = chip_index,
             atlas = atlas_index,
             source = {
                x = x * 48,

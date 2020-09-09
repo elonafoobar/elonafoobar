@@ -58,7 +58,7 @@ function Blending.check_material(item, recipe_id, step)
    end
    if material.id then
       if material.of then
-         return item.id == material.id and (material.of == Data.get_id_by_legacy("core.chara", item.subname))
+         return item.id == material.id and (material.of == Data.get_id_by_integer("core.chara", item.subname))
       else
          return item.id == material.id
       end

@@ -50,7 +50,7 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
 
     REQUIRE(elona::g_inv[index]->number() == 3);
     REQUIRE(
-        the_item_db[elona::g_inv[index]->id]->legacy_id == PUTITORO_PROTO_ID);
+        the_item_db[elona::g_inv[index]->id]->integer_id == PUTITORO_PROTO_ID);
     REQUIRE(elona::g_inv[index]->position().x == 4);
     REQUIRE(elona::g_inv[index]->position().y == 8);
     REQUIRE(elona::g_inv[index]->curse_state == CurseState::blessed);

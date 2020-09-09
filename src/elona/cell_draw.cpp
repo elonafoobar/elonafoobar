@@ -973,14 +973,14 @@ void draw_npc_own_sprite(
 void draw_npc_chara_chip(const Character& chara, int dx, int dy, int ground_)
 {
     const auto color_index = chara.image / 1000;
-    const auto image_legacy_id = chara.image % 1000;
+    const auto image_integer_id = chara.image % 1000;
 
-    const auto ext_opt = draw_get_rect_chara(image_legacy_id);
+    const auto ext_opt = draw_get_rect_chara(image_integer_id);
     if (!ext_opt)
         return;
     const auto& ext = *ext_opt;
 
-    auto offset_y = chara_chips[image_legacy_id].offset_y;
+    auto offset_y = chara_chips[image_integer_id].offset_y;
 
     if (chara.is_hung_on_sand_bag())
     {

@@ -10,7 +10,7 @@ namespace elona
 struct AbilityData
 {
     data::InstanceId id;
-    int legacy_id;
+    int integer_id;
     int related_basic_attribute;
     int ability_type;
     int cost;

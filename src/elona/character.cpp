@@ -81,7 +81,7 @@ int _get_random_npc_id()
             continue;
         if (fltselect != data.fltselect)
             continue;
-        if (fltselect == 2 && npcmemory(1, data.legacy_id) != 0)
+        if (fltselect == 2 && npcmemory(1, data.integer_id) != 0)
             continue;
         if (flttypemajor != 0 && flttypemajor != data.category)
             continue;
@@ -102,7 +102,7 @@ int _get_random_npc_id()
             if (!ok)
                 continue;
         }
-        sampler.add(data.legacy_id, _calc_chara_generation_rate(data));
+        sampler.add(data.integer_id, _calc_chara_generation_rate(data));
     }
 
     return sampler.get().value_or(0);
@@ -1131,7 +1131,8 @@ void chara_refresh(Character& chara)
         {
             break;
         }
-        buff_apply(chara, *the_buff_db.get_id_from_legacy(buff.id), buff.power);
+        buff_apply(
+            chara, *the_buff_db.get_id_from_integer(buff.id), buff.power);
     }
     if (chara.combat_style.dual_wield())
     {
@@ -1179,7 +1180,7 @@ int relation_between(const Character& a, const Character& b)
 optional_ref<Character> chara_find(data::InstanceId chara_id)
 {
     // Note: if `chara_id` not found, `ensure()` throws an exception.
-    int legacy_id = the_character_db.ensure(chara_id).legacy_id;
+    int integer_id = the_character_db.ensure(chara_id).integer_id;
 
     for (auto&& chara : cdata.others())
     {
@@ -1190,7 +1191,7 @@ optional_ref<Character> chara_find(data::InstanceId chara_id)
                 continue;
             }
         }
-        if (chara.id == int2charaid(legacy_id))
+        if (chara.id == int2charaid(integer_id))
         {
             return chara;
         }

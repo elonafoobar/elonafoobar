@@ -16,7 +16,7 @@ BlendingRecipeData BlendingRecipeDB::convert(
     const lua::ConfigTable& data,
     const std::string& id)
 {
-    DATA_LEGACY_ID();
+    DATA_INTEGER_ID();
     DATA_OPT_OR(type, int, 0);
     DATA_OPT_OR(required_turns, int, 1);
     DATA_OPT_OR(required_hours, int, 0);
@@ -29,7 +29,7 @@ BlendingRecipeData BlendingRecipeDB::convert(
 
     return BlendingRecipeData{
         data::InstanceId{id},
-        legacy_id,
+        integer_id,
         type,
         required_turns,
         required_hours,

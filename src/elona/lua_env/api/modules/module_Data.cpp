@@ -92,21 +92,21 @@ sol::optional<sol::table> Data_get_table(const std::string& prototype_id)
 
 
 /**
- * @luadoc get_id_by_legacy
+ * @luadoc get_id_by_integer
  *
- * Get new ID by legacy ID.
+ * Get new ID by integer ID.
  *
  * @tparam string prototype_id a namespaced prototype ID.
- * @tparam num legacy_data_id a legacy data ID.
+ * @tparam num integer_data_id an integer data ID.
  * @treturn[1] string the corresponding new ID.
  * @treturn[2] nil if not found.
  */
-sol::optional<std::string> Data_get_id_by_legacy(
+sol::optional<std::string> Data_get_id_by_integer(
     const std::string& prototype_id,
-    int legacy_data_id)
+    int integer_data_id)
 {
-    if (const auto ret = lua->get_data_manager().get().by_legacy(
-            data::PrototypeId{prototype_id}, legacy_data_id))
+    if (const auto ret = lua->get_data_manager().get().by_integer(
+            data::PrototypeId{prototype_id}, integer_data_id))
     {
         return ret->get();
     }
@@ -126,7 +126,7 @@ void bind(sol::table api_table)
     ELONA_LUA_API_BIND_FUNCTION("reload_charas", Data_reload_charas);
     ELONA_LUA_API_BIND_FUNCTION("get", Data_get);
     ELONA_LUA_API_BIND_FUNCTION("get_table", Data_get_table);
-    ELONA_LUA_API_BIND_FUNCTION("get_id_by_legacy", Data_get_id_by_legacy);
+    ELONA_LUA_API_BIND_FUNCTION("get_id_by_integer", Data_get_id_by_integer);
 
     /* clang-format on */
 }

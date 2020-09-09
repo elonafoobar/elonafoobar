@@ -274,7 +274,7 @@ bool do_physical_attack_internal(
                 if (weapon->quality == Quality::special)
                 {
                     s(1) = i18n::s.get("core.misc.wields_proudly.the") +
-                        iknownnameref(the_item_db[weapon->id]->legacy_id);
+                        iknownnameref(the_item_db[weapon->id]->integer_id);
                 }
                 else if (weapon->subname >= 40000)
                 {
@@ -285,7 +285,7 @@ bool do_physical_attack_internal(
                 else
                 {
                     s(1) = i18n::s.get("core.misc.wields_proudly.the") +
-                        iknownnameref(the_item_db[weapon->id]->legacy_id);
+                        iknownnameref(the_item_db[weapon->id]->integer_id);
                 }
                 if (weapon->quality == Quality::godly)
                 {

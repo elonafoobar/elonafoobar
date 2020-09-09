@@ -1040,7 +1040,7 @@ TurnResult do_throw_command_internal(
                 item_db_on_drink(
                     cdata[target_index],
                     throw_item,
-                    the_item_db[throw_item->id]->legacy_id);
+                    the_item_db[throw_item->id]->integer_id);
                 return TurnResult::turn_end;
             }
             if (throw_item->id == "core.handful_of_snow")
@@ -1105,7 +1105,7 @@ TurnResult do_throw_command_internal(
                 -1,
                 efp,
                 thrower.index,
-                the_item_db[throw_item->id]->legacy_id,
+                the_item_db[throw_item->id]->integer_id,
                 static_cast<int>(throw_item->curse_state), // TODO
                 throw_item->tint);
             return TurnResult::turn_end;
@@ -2406,7 +2406,7 @@ TurnResult do_use_command(ItemRef use_item)
         }
         map_data.bgm = music;
 
-        auto music_id = the_music_db.get_id_from_legacy(music);
+        auto music_id = the_music_db.get_id_from_integer(music);
         assert(music_id);
         if (!music_id)
         {
@@ -2509,7 +2509,7 @@ TurnResult do_use_command(ItemRef use_item)
         txt(i18n::s.get("core.action.use.hammer.use", use_item));
         snd("core.build1");
         use_item->modify_number(-1);
-        fixmaterial = the_item_material_db[use_item->material]->legacy_id;
+        fixmaterial = the_item_material_db[use_item->material]->integer_id;
         efid = 21;
         efp = 500;
         magic(cdata.player(), cdata.player());
@@ -2851,7 +2851,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
     if (box->charges != 0)
     {
         invfile = box->charges;
-        invcontainer(1) = the_item_db[box->id]->legacy_id;
+        invcontainer(1) = the_item_db[box->id]->integer_id;
         if (box->id == "core.cooler_box")
         {
             refweight = -1;
@@ -3324,7 +3324,7 @@ TurnResult do_read_command(Character& reader, const ItemRef& item)
         }
     }
     efid = 0;
-    item_db_on_read(reader, item, the_item_db[item->id]->legacy_id);
+    item_db_on_read(reader, item, the_item_db[item->id]->integer_id);
     if (efid == 1115)
     {
         return build_new_building(item);
@@ -3373,7 +3373,7 @@ TurnResult do_eat_command(Character& eater, const ItemRef& food)
 
 TurnResult do_drink_command(Character& chara, ItemRef potion)
 {
-    const auto item_id = the_item_db[potion->id]->legacy_id;
+    const auto item_id = the_item_db[potion->id]->integer_id;
     item_db_on_drink(chara, potion, item_id);
     return TurnResult::turn_end;
 }
@@ -3382,7 +3382,7 @@ TurnResult do_drink_command(Character& chara, ItemRef potion)
 
 TurnResult do_zap_command(const ItemRef& rod)
 {
-    item_db_on_zap(rod, the_item_db[rod->id]->legacy_id);
+    item_db_on_zap(rod, the_item_db[rod->id]->integer_id);
     int stat = do_zap(cdata.player(), rod);
     if (stat == 0)
     {
@@ -4288,9 +4288,9 @@ int decode_book(Character& reader, const ItemRef& book)
                     clamp((100 + spell((efid - 400)) / 2), 50, 1000) +
                 1);
         chara_gain_exp_memorization(cdata.player(), efid);
-        if (itemmemory(2, the_item_db[book->id]->legacy_id) == 0)
+        if (itemmemory(2, the_item_db[book->id]->integer_id) == 0)
         {
-            itemmemory(2, the_item_db[book->id]->legacy_id) = 1;
+            itemmemory(2, the_item_db[book->id]->integer_id) = 1;
         }
     }
     item_identify(book, IdentifyState::partly);
@@ -5378,7 +5378,7 @@ PickUpItemResult pick_up_item(
             {
                 if (item->charges > 0)
                 {
-                    item_db_on_zap(item, the_item_db[item->id]->legacy_id);
+                    item_db_on_zap(item, the_item_db[item->id]->integer_id);
                     txt(i18n::s.get(
                         "core.action.pick_up.you_absorb_magic", item));
                     if (efid >= 400 && efid < 467)
@@ -6450,7 +6450,7 @@ TurnResult do_plant(const ItemRef& seed)
     }
     feat(0) = tile_plant;
     feat(1) = 29;
-    feat(2) = the_item_material_db[seed->material]->legacy_id;
+    feat(2) = the_item_material_db[seed->material]->integer_id;
     try_to_grow_plant(val0);
     if (val0)
     {
@@ -6468,7 +6468,7 @@ TurnResult do_plant(const ItemRef& seed)
         cdata.player().position.y,
         tile_plant,
         29,
-        the_item_material_db[seed->material]->legacy_id,
+        the_item_material_db[seed->material]->integer_id,
         feat(3));
     chara_gain_skill_exp(cdata.player(), 180, 300);
     return TurnResult::turn_end;

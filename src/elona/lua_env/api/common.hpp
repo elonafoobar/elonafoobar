@@ -56,7 +56,7 @@ struct this_state;
 #define LUA_API_DATA_PROPERTY(klass, field, db) \
     sol::property( \
         [](klass& d) { \
-            auto id = db.get_id_from_legacy(d.field); \
+            auto id = db.get_id_from_integer(d.field); \
             if (!id) \
             { \
                 return ""s; \
@@ -69,7 +69,7 @@ struct this_state;
             { \
                 return; \
             } \
-            d.field = data->legacy_id; \
+            d.field = data->integer_id; \
         })
 
 #define LUA_API_OPTOUT_SOL_AUTOMAGIC(T) \

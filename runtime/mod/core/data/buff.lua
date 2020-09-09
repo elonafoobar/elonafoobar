@@ -17,7 +17,7 @@ local function mod_skill_level_clamp(args, id, amount)
 end
 
 local function get_description(self, power)
-   return I18N.get_enum_property("core.buff", "description", self.legacy_id, self._effect(power))
+   return I18N.get_enum_property("core.buff", "description", self.integer_id, self._effect(power))
 end
 
 --[[
@@ -70,7 +70,7 @@ ELONA.data:add(
       holy_shield = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Attempts to apply fear will be ignored.
-         legacy_id = 1,
+         integer_id = 1,
          buff_type = "buff",
          duration = function(power)
             return 10 + power // 10
@@ -87,7 +87,7 @@ ELONA.data:add(
       mist_of_silence = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Silence behavior.
-         legacy_id = 2,
+         integer_id = 2,
          buff_type = "hex",
          duration = function(power)
             return 5 + power // 40
@@ -100,7 +100,7 @@ ELONA.data:add(
          description = get_description
       },
       regeneration = {
-         legacy_id = 3,
+         integer_id = 3,
          buff_type = "buff",
          duration = function(power)
             return 12 + power // 20
@@ -114,7 +114,7 @@ ELONA.data:add(
          description = get_description
       },
       elemental_shield = {
-         legacy_id = 4,
+         integer_id = 4,
          buff_type = "buff",
          duration = function(power)
             return 4 + power // 6
@@ -130,7 +130,7 @@ ELONA.data:add(
          description = get_description
       },
       speed = {
-         legacy_id = 5,
+         integer_id = 5,
          buff_type = "buff",
          duration = function(power)
             return 8 + power // 30
@@ -144,7 +144,7 @@ ELONA.data:add(
          description = get_description
       },
       slow = {
-         legacy_id = 6,
+         integer_id = 6,
          buff_type = "hex",
          duration = function(power)
             return 8 + power // 30
@@ -161,7 +161,7 @@ ELONA.data:add(
       hero = {
          -- NOTE: Has these hardcoded behaviors.
          --  + Attempts to apply confusion or fear will be ignored.
-         legacy_id = 7,
+         integer_id = 7,
          buff_type = "buff",
          duration = function(power)
             return 10 + power // 4
@@ -178,7 +178,7 @@ ELONA.data:add(
          description = get_description
       },
       mist_of_frailness = {
-         legacy_id = 8,
+         integer_id = 8,
          buff_type = "hex",
          duration = function(power)
             return 6 + power // 10
@@ -193,7 +193,7 @@ ELONA.data:add(
          description = get_description
       },
       element_scar = {
-         legacy_id = 9,
+         integer_id = 9,
          buff_type = "hex",
          duration = function(power)
             return 4 + power // 15
@@ -212,7 +212,7 @@ ELONA.data:add(
          -- NOTE: Has these hardcoded behaviors.
          --  + Additional chance to resist if a hex is applied to this
          --    character.
-         legacy_id = 10,
+         integer_id = 10,
          buff_type = "buff",
          duration = function(power)
             return 15 + power // 5
@@ -225,7 +225,7 @@ ELONA.data:add(
          description = get_description
       },
       nightmare = {
-         legacy_id = 11,
+         integer_id = 11,
          buff_type = "hex",
          duration = function(power)
             return 4 + power // 15
@@ -240,7 +240,7 @@ ELONA.data:add(
          description = get_description
       },
       divine_wisdom = {
-         legacy_id = 12,
+         integer_id = 12,
          buff_type = "buff",
          duration = function(power)
             return 10 + power // 4
@@ -260,7 +260,7 @@ ELONA.data:add(
          -- NOTE: Has these hardcoded behaviors.
          --  + Ignored when removing status effects on a character.
          --  + Ignored when casting Holy Light/Vanquish Hex.
-         legacy_id = 13,
+         integer_id = 13,
          buff_type = "hex",
          duration = function(power)
             return power
@@ -277,7 +277,7 @@ ELONA.data:add(
          description = get_description
       },
       lulwys_trick = {
-         legacy_id = 14,
+         integer_id = 14,
          buff_type = "buff",
          duration = function(_power)
             return 7
@@ -294,7 +294,7 @@ ELONA.data:add(
          -- NOTE: The initial incognito effect is applied by the
          -- incognito spell when it is cast, but the effect when the
          -- buff expires is handled by the buff itself.
-         legacy_id = 15,
+         integer_id = 15,
          buff_type = "buff",
          duration = function(power)
             return 4 + power // 40
@@ -329,7 +329,7 @@ ELONA.data:add(
          --    of "miracle" or "godly" quality.
          --  + Removed when a character with the "is_death_master" flag
          --    is killed.
-         legacy_id = 16,
+         integer_id = 16,
          buff_type = "hex",
          duration = function(_power)
             return 20
@@ -346,7 +346,7 @@ ELONA.data:add(
          description = get_description
       },
       boost = {
-         legacy_id = 17,
+         integer_id = 17,
          buff_type = "buff",
          duration = function(_power)
             return 5
@@ -372,7 +372,7 @@ ELONA.data:add(
          --  + Check for lethal damage and chance to heal. If the
          --    "is_contracting_with_reaper" flag is set then the buff is
          --    expected to be be active on the same character.
-         legacy_id = 18,
+         integer_id = 18,
          buff_type = "buff",
          duration = function(_power)
             return 66
@@ -389,7 +389,7 @@ ELONA.data:add(
          description = get_description
       },
       luck = {
-         legacy_id = 19,
+         integer_id = 19,
          buff_type = "buff",
          duration = function(_power)
             return 777
@@ -410,7 +410,7 @@ local function register_growth_buff(attribute_index, attribute_name)
       "core.buff",
       {
          ["grow_" .. attribute_name] = {
-            legacy_id = attribute_index + 20,
+            integer_id = attribute_index + 20,
             buff_type = "food",
             duration = function(power)
                return 10 + power // 10

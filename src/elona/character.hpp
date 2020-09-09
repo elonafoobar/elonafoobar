@@ -457,7 +457,7 @@ public:
 
     data::InstanceId new_id() const
     {
-        return *the_character_db.get_id_from_legacy(charaid2int(this->id));
+        return *the_character_db.get_id_from_integer(charaid2int(this->id));
     }
 
 

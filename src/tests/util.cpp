@@ -84,7 +84,7 @@ ItemRef create_item(int id, int number)
 void invalidate_item(const ItemRef& item)
 {
     const Item* old_address = item.get_raw_ptr();
-    int old_id = the_item_db[item->id]->legacy_id;
+    int old_id = the_item_db[item->id]->integer_id;
     const auto [old_x, old_y] = item->position();
 
     // Delete the item and create new ones until the index is taken again.

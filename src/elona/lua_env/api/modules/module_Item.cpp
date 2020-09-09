@@ -152,7 +152,7 @@ sol::optional<ItemRef> Item_create_xy(int x, int y, sol::table args)
     if (auto it = args.get<sol::optional<std::string>>("id"))
     {
         auto data = the_item_db.ensure(data::InstanceId{*it});
-        id = data.legacy_id;
+        id = data.integer_id;
     }
 
     if (const auto item = itemcreate(*inv, id, x, y, number))
@@ -247,7 +247,7 @@ int Item_memory(int type, const std::string& id)
         return 0;
     }
 
-    return itemmemory(type, data->legacy_id);
+    return itemmemory(type, data->integer_id);
 }
 
 

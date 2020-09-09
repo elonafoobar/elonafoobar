@@ -14,14 +14,14 @@ const constexpr char* data::DatabaseTraits<TraitDB>::type_id;
 
 TraitData TraitDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
-    DATA_LEGACY_ID();
+    DATA_INTEGER_ID();
     DATA_ENUM(trait_type, int, TraitTypeTable, 0 /* feat */);
     DATA_REQ(min, int);
     DATA_REQ(max, int);
 
     return TraitData{
         data::InstanceId{id},
-        legacy_id,
+        integer_id,
         trait_type,
         min,
         max,

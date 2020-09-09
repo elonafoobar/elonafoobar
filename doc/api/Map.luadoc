@@ -17,12 +17,12 @@ function width() end
 --  @function height
 function height() end
 
---- Returns the current map's legacy ID.
+--- Returns the current map's integer ID.
 --
---  @treturn[1] num the current map's legacy ID
+--  @treturn[1] num the current map's integer ID
 --  @treturn[2] nil
---  @function legacy_id
-function legacy_id() end
+--  @function integer_id
+function integer_id() end
 
 --- Returns the current map's ID.
 --

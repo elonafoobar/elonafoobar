@@ -477,7 +477,7 @@ bool wish_for_item(Character& chara, const std::string& input)
     const auto wish = fix_wish(input);
     for (const auto& item_data : the_item_db.values())
     {
-        const auto id = item_data.legacy_id;
+        const auto id = item_data.integer_id;
 
         if (id == 0 || id == 23 || id == 290 || id == 289 || id == 361)
             continue;
@@ -546,7 +546,7 @@ bool wish_for_item(Character& chara, const std::string& input)
                 // Remove this item and retry.
                 selector.remove(id);
                 item->remove();
-                --itemmemory(1, the_item_db[item->id]->legacy_id);
+                --itemmemory(1, the_item_db[item->id]->integer_id);
                 continue;
             }
         }
@@ -591,7 +591,7 @@ bool wish_for_item(Character& chara, const std::string& input)
             {
                 item->set_number(3);
             }
-            switch (the_item_db[item->id]->legacy_id)
+            switch (the_item_db[item->id]->integer_id)
             {
             case 559: item->set_number(2 + rnd(2)); break;
             case 502: item->set_number(2); break;
@@ -620,7 +620,7 @@ bool wish_for_skill(const std::string& input)
 
     for (const auto& ability_data : the_ability_db.values())
     {
-        const int id = ability_data.legacy_id;
+        const int id = ability_data.integer_id;
         const bool is_basic_attribute_excluding_life_and_mana =
             10 <= id && id <= 19;
         const bool is_skill = 100 <= id && id <= 399;

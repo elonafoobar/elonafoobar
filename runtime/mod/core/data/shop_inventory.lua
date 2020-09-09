@@ -131,7 +131,7 @@ ELONA.data:add(
    "core.shop_inventory",
    {
       magic_vendor = {
-         legacy_id = 1004,
+         integer_id = 1004,
          rules = {
             {
                choices = {
@@ -146,13 +146,13 @@ ELONA.data:add(
          }
       },
       younger_sister_of_mansion = {
-         legacy_id = 1019,
+         integer_id = 1019,
          rules = {
             { id = "core.sisters_love_fueled_lunch" }
          }
       },
       spell_writer = {
-         legacy_id = 1020,
+         integer_id = 1020,
          rules = {
             {
                on_generate = function()
@@ -184,7 +184,7 @@ ELONA.data:add(
          end
       },
       moyer = {
-         legacy_id = 1015,
+         integer_id = 1015,
          rules = {
             {
                choices = {
@@ -201,7 +201,7 @@ ELONA.data:add(
          end
       },
       general_vendor = {
-         legacy_id = 1006,
+         integer_id = 1006,
          rules = {
             {
                choices = {
@@ -218,7 +218,7 @@ ELONA.data:add(
          }
       },
       bakery = {
-         legacy_id = 1003,
+         integer_id = 1003,
          rules = {
             { all_but_one_in = 3, id = "Skip" },
             {
@@ -231,7 +231,7 @@ ELONA.data:add(
          }
       },
       food_vendor = {
-         legacy_id = 1002,
+         integer_id = 1002,
          rules = {
             { all_but_one_in = 3, id = "Skip" },
             { flttypemajor = 57000 },
@@ -239,7 +239,7 @@ ELONA.data:add(
          }
       },
       blackmarket = {
-         legacy_id = 1007,
+         integer_id = 1007,
          rules = {
             { choices = filter_set_wear },
             { one_in = 3, fixlv = "great" },
@@ -257,7 +257,7 @@ ELONA.data:add(
          end
       },
       wandering_merchant = {
-         legacy_id = 1010,
+         integer_id = 1010,
          rules = merchant_rules,
          item_number = merchant_item_number,
          item_base_value = function(args)
@@ -267,7 +267,7 @@ ELONA.data:add(
       },
       visiting_merchant = {
          -- NOTE: the only shop ID for which (id // 1000) != 1.
-         legacy_id = 2003,
+         integer_id = 2003,
          rules = merchant_rules,
          item_number = merchant_item_number,
          item_base_value = function(args)
@@ -276,7 +276,7 @@ ELONA.data:add(
          is_temporary = true -- Uses shop ID 1.
       },
       innkeeper = {
-         legacy_id = 1005,
+         integer_id = 1005,
          rules = {
             { flttypemajor = 91000 },
             { one_in = 4, flttypeminor = 52002 },
@@ -284,7 +284,7 @@ ELONA.data:add(
          }
       },
       general_store = {
-         legacy_id = 1008,
+         integer_id = 1008,
          rules = {
             { flttypemajor = 56000 },
             { one_in = 3, choices = filter_set_wear },
@@ -298,7 +298,7 @@ ELONA.data:add(
          }
       },
       blacksmith = {
-         legacy_id = 1001,
+         integer_id = 1001,
          rules = {
             {
                choices = {
@@ -328,13 +328,13 @@ ELONA.data:add(
          --    much money the trader has on hand.
          --  + On shop refresh, updates the buying rates of each cargo
          --    type based on the current map.
-         legacy_id = 1009,
+         integer_id = 1009,
          rules = {
             { flttypemajor = 92000 },
          }
       },
       the_fence = {
-         legacy_id = 1021,
+         integer_id = 1021,
          rules = {
             { flttypemajor = 59000 },
             { one_in = 2, id = "core.lockpick" },
@@ -342,7 +342,7 @@ ELONA.data:add(
          }
       },
       sales_person_a = {
-         legacy_id = 1011,
+         integer_id = 1011,
          rules = {
             { one_in = 4, flttypemajor = 24000 },
             { one_in = 5, flttypemajor = 24000 },
@@ -351,7 +351,7 @@ ELONA.data:add(
          }
       },
       sales_person_c = {
-         legacy_id = 1013,
+         integer_id = 1013,
          rules = {
             { all_but_one_in = 3, id = "Skip" },
             { flttypemajor = 55000 },
@@ -360,7 +360,7 @@ ELONA.data:add(
          }
       },
       souvenir_vendor = {
-         legacy_id = 1018,
+         integer_id = 1018,
          ignores_noshop = true,
          rules = {
             { fltn = "spshop" },
@@ -375,7 +375,7 @@ ELONA.data:add(
          end
       },
       street_vendor = {
-         legacy_id = 1022,
+         integer_id = 1022,
          rules = {
             { fltn = "fest" },
             { one_in = 12, id = "core.upstairs" },
@@ -387,13 +387,13 @@ ELONA.data:add(
          }
       },
       dye_vendor = {
-         legacy_id = 1017,
+         integer_id = 1017,
          rules = {
             { id = "core.bottle_of_dye" },
          }
       },
       sales_person_b = {
-         legacy_id = 1012,
+         integer_id = 1012,
          rules = {
             { flttypemajor = 60000 },
             { index = 0, id = "core.microwave_oven" },
@@ -410,7 +410,7 @@ ELONA.data:add(
          },
       },
       fisher = {
-         legacy_id = 1014,
+         integer_id = 1014,
          rules = {
             { id = "core.bait" }
          }
@@ -431,7 +431,7 @@ ELONA.data:add(
          --    triggered through Miral's dialog. In normal shops,
          --    items with those properties are not displayed even if
          --    they are generated successfully.
-         legacy_id = 1016,
+         integer_id = 1016,
          rules = medal_items,
          item_number = function() return #medal_items end,
          on_generate_item = function(args)

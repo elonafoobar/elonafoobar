@@ -30,20 +30,20 @@ struct DataTable
 
 
     /**
-     * Get a new ID by a legacy ID.
+     * Get a new ID by an integer ID.
      *
      * @param prototype_id the namespaced data prototype ID.
-     * @param legacy_instance_id the legacy data instance ID.
+     * @param integer_instance_id the integer data instance ID.
      * @return the corresponding new ID or none if not found.
      */
-    optional<data::InstanceId> by_legacy(
+    optional<data::InstanceId> by_integer(
         data::PrototypeId prototype_id,
-        int legacy_instance_id)
+        int integer_instance_id)
     {
         if (const auto id = _storage.traverse_get<sol::optional<std::string>>(
-                "_by_legacy_id_tables",
+                "_by_integer_id_tables",
                 prototype_id.get(),
-                legacy_instance_id,
+                integer_instance_id,
                 "id"))
         {
             return data::InstanceId{*id};

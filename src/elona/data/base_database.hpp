@@ -28,20 +28,20 @@ namespace detail
 {
 
 template <typename T, typename = void>
-struct has_legacy_id : public std::false_type
+struct has_integer_id : public std::false_type
 {
 };
 
 
 template <typename T>
-struct has_legacy_id<T, decltype((void)T::legacy_id)> : public std::true_type
+struct has_integer_id<T, decltype((void)T::integer_id)> : public std::true_type
 {
 };
 
 
-// If T::legacy_id exists, it becomes true; otherwise false.
+// If T::integer_id exists, it becomes true; otherwise false.
 template <typename T>
-constexpr bool has_legacy_id_v = has_legacy_id<T>::value;
+constexpr bool has_integer_id_v = has_integer_id<T>::value;
 
 } // namespace detail
 
@@ -242,10 +242,10 @@ private:
 
 
 template <typename T>
-class BaseDatabaseWithLegacyIdTable : public BaseDatabase<T>
+class BaseDatabaseWithIntegerIdTable : public BaseDatabase<T>
 {
 private:
-    using Self = BaseDatabaseWithLegacyIdTable;
+    using Self = BaseDatabaseWithIntegerIdTable;
     using Super = BaseDatabase<T>;
 
 
@@ -258,28 +258,29 @@ public:
     using KeysIterator = typename Super::KeysIterator;
     using ValuesIterator = typename Super::ValuesIterator;
 
-    using LegacyMapType = std::unordered_map<int, IdType>;
+    using IntegerMapType = std::unordered_map<int, IdType>;
 
 
 
-    optional<IdType> get_id_from_legacy(int legacy_id)
+    optional<IdType> get_id_from_integer(int integer_id)
     {
-        static_assert(Traits::has_legacy_id, "DB does not support legacy ID.");
+        static_assert(
+            Traits::has_integer_id, "DB does not support integer ID.");
 
-        const auto itr = _by_legacy_id.find(legacy_id);
-        if (itr != std::end(_by_legacy_id))
+        const auto itr = _by_integer_id.find(integer_id);
+        if (itr != std::end(_by_integer_id))
             return itr->second;
 
-        return retrieve_legacy_id_from_lua(legacy_id);
+        return retrieve_integer_id_from_lua(integer_id);
     }
 
 
 
     using Super::operator[]; // Don't hide overload super class has.
 
-    optional_ref<DataType> operator[](int legacy_id)
+    optional_ref<DataType> operator[](int integer_id)
     {
-        if (const auto id = get_id_from_legacy(legacy_id))
+        if (const auto id = get_id_from_integer(integer_id))
         {
             return (*this)[*id];
         }
@@ -293,15 +294,16 @@ public:
 
     using Super::ensure; // Don't hide overload super class has.
 
-    const DataType& ensure(int legacy_id)
+    const DataType& ensure(int integer_id)
     {
-        const auto id = get_id_from_legacy(legacy_id);
+        const auto id = get_id_from_integer(integer_id);
 
         if (!id)
         {
             throw sol::error{
-                "No data entry with legacy ID \"" + std::to_string(legacy_id) +
-                "\" of type \"" + Traits::type_id + "\" exists."};
+                "No data entry with integer ID \"" +
+                std::to_string(integer_id) + "\" of type \"" + Traits::type_id +
+                "\" exists."};
         }
 
         return this->ensure(*id);
@@ -313,9 +315,9 @@ public:
 
     template <typename... Args>
     std::string
-    get_text(int legacy_id, const I18NKey& property_name, Args&&... args)
+    get_text(int integer_id, const I18NKey& property_name, Args&&... args)
     {
-        const auto id = *get_id_from_legacy(legacy_id);
+        const auto id = *get_id_from_integer(integer_id);
         return i18n::s.get_data_text(
             PrototypeId{Traits::type_id},
             id,
@@ -329,11 +331,11 @@ public:
 
     template <typename... Args>
     optional<std::string> get_text_optional(
-        int legacy_id,
+        int integer_id,
         const I18NKey& property_name,
         Args&&... args)
     {
-        const auto id = *get_id_from_legacy(legacy_id);
+        const auto id = *get_id_from_integer(integer_id);
         return i18n::s.get_data_text_optional(
             PrototypeId{Traits::type_id},
             id,
@@ -344,17 +346,17 @@ public:
 
 
 protected:
-    LegacyMapType _by_legacy_id;
+    IntegerMapType _by_integer_id;
 
 
 
 private:
-    optional<IdType> retrieve_legacy_id_from_lua(int legacy_id)
+    optional<IdType> retrieve_integer_id_from_lua(int integer_id)
     {
-        if (const auto new_id =
-                Super::_data.by_legacy(PrototypeId{Traits::type_id}, legacy_id))
+        if (const auto new_id = Super::_data.by_integer(
+                PrototypeId{Traits::type_id}, integer_id))
         {
-            _by_legacy_id.emplace(legacy_id, *new_id);
+            _by_integer_id.emplace(integer_id, *new_id);
             return *new_id;
         }
         else
@@ -378,15 +380,15 @@ private:
     struct DatabaseTraits<ClassName> \
     { \
         using DataType = DataTypeName; \
-        static const constexpr bool has_legacy_id = \
-            detail::has_legacy_id_v<DataTypeName>; \
+        static const constexpr bool has_integer_id = \
+            detail::has_integer_id_v<DataTypeName>; \
         static const constexpr char* type_id = name; \
     }; \
     } \
     class ClassName \
         : public std::conditional_t< \
-              data::DatabaseTraits<ClassName>::has_legacy_id, \
-              data::BaseDatabaseWithLegacyIdTable<ClassName>, \
+              data::DatabaseTraits<ClassName>::has_integer_id, \
+              data::BaseDatabaseWithIntegerIdTable<ClassName>, \
               data::BaseDatabase<ClassName>> \
     { \
     public: \
@@ -394,8 +396,8 @@ private:
         DataTypeName convert(const lua::ConfigTable&, const std::string&); \
     };
 
-#define DATA_LEGACY_ID() \
-    const auto legacy_id = data.optional_or<int>("legacy_id", -1);
+#define DATA_INTEGER_ID() \
+    const auto integer_id = data.optional_or<int>("integer_id", -1);
 #define DATA_REQ(name, type) type name = data.required<type>(#name);
 #define DATA_REQ_FUNC(name) \
     sol::protected_function name##_ = \

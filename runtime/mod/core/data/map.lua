@@ -50,7 +50,7 @@ ELONA.data:add(
    "core.map",
    {
       test_world = {
-         legacy_id = 47,
+         integer_id = 47,
          appearance = 0,
          map_type = "world_map",
          outer_map = "core.test_world",
@@ -66,7 +66,7 @@ ELONA.data:add(
          default_ai_calm = 0,
       },
       test_world_north_border = {
-         legacy_id = 48,
+         integer_id = 48,
          appearance = 158,
          map_type = "guild",
          outer_map = "core.test_world",
@@ -84,7 +84,7 @@ ELONA.data:add(
          chara_filter = chara_filter_town(),
       },
       south_tyris = {
-         legacy_id = 44,
+         integer_id = 44,
          appearance = 0,
          map_type = "world_map",
          outer_map = "core.south_tyris",
@@ -100,7 +100,7 @@ ELONA.data:add(
          default_ai_calm = 0,
       },
       south_tyris_north_border = {
-         legacy_id = 45,
+         integer_id = 45,
          appearance = 158,
          map_type = "guild",
          outer_map = "core.south_tyris",
@@ -118,7 +118,7 @@ ELONA.data:add(
          chara_filter = chara_filter_town(),
       },
       the_smoke_and_pipe = {
-         legacy_id = 46,
+         integer_id = 46,
          appearance = 159,
          map_type = "guild",
          outer_map = "core.south_tyris",
@@ -136,7 +136,7 @@ ELONA.data:add(
          chara_filter = chara_filter_town(),
       },
       north_tyris = {
-         legacy_id = 4,
+         integer_id = 4,
          appearance = 0,
          map_type = "world_map",
          outer_map = "core.north_tyris",
@@ -152,7 +152,7 @@ ELONA.data:add(
          default_ai_calm = 0,
       },
       vernis = {
-         legacy_id = 5,
+         integer_id = 5,
          appearance = 132,
          map_type = "town",
          outer_map_position = { x = 26, y = 23 },
@@ -180,7 +180,7 @@ ELONA.data:add(
          }
       },
       yowyn = {
-         legacy_id = 12,
+         integer_id = 12,
          appearance = 142,
          map_type = "town",
          outer_map_position = { x = 43, y = 32 },
@@ -208,7 +208,7 @@ ELONA.data:add(
          }
       },
       palmia = {
-         legacy_id = 15,
+         integer_id = 15,
          appearance = 136,
          map_type = "town",
          outer_map_position = { x = 53, y = 24 },
@@ -236,7 +236,7 @@ ELONA.data:add(
          }
       },
       derphy = {
-         legacy_id = 14,
+         integer_id = 14,
          appearance = 142,
          map_type = "town",
          outer_map_position = { x = 14, y = 35 },
@@ -270,7 +270,7 @@ ELONA.data:add(
 
       },
       port_kapul = {
-         legacy_id = 11,
+         integer_id = 11,
          appearance = 132,
          map_type = "town",
          outer_map_position = { x = 3, y = 15 },
@@ -295,7 +295,7 @@ ELONA.data:add(
          }
       },
       noyel = {
-         legacy_id = 33,
+         integer_id = 33,
          appearance = 156,
          map_type = "town",
          outer_map_position = { x = 89, y = 14 },
@@ -322,7 +322,7 @@ ELONA.data:add(
          }
       },
       lumiest = {
-         legacy_id = 36,
+         integer_id = 36,
          appearance = 132,
          map_type = "town",
          outer_map_position = { x = 61, y = 32 },
@@ -353,7 +353,7 @@ ELONA.data:add(
          }
       },
       fields = {
-         legacy_id = 2,
+         integer_id = 2,
          appearance = 0,
          map_type = "field",
          outer_map = "core.north_tyris",
@@ -369,7 +369,7 @@ ELONA.data:add(
          default_ai_calm = 0,
       },
       your_home = {
-         legacy_id = 7,
+         integer_id = 7,
          map_type = "player_owned",
          entrance_type = "south",
          base_turn_cost = 10000,
@@ -392,7 +392,7 @@ ELONA.data:add(
          is_fixed = false,
       },
       show_house = {
-         legacy_id = 35,
+         integer_id = 35,
          map_type = "temporary",
          outer_map = "core.north_tyris",
          outer_map_position = { x = 35, y = 27 },
@@ -411,7 +411,7 @@ ELONA.data:add(
          prevents_monster_ball = true,
       },
       arena = {
-         legacy_id = 6,
+         integer_id = 6,
          appearance = 0,
          map_type = "temporary",
          outer_map = "core.north_tyris",
@@ -431,7 +431,7 @@ ELONA.data:add(
          prevents_monster_ball = true,
       },
       pet_arena = {
-         legacy_id = 40,
+         integer_id = 40,
          appearance = 0,
          map_type = "temporary",
          outer_map = "core.north_tyris",
@@ -452,7 +452,7 @@ ELONA.data:add(
          prevents_monster_ball = true,
       },
       quest = {
-         legacy_id = 13,
+         integer_id = 13,
          appearance = 0,
          map_type = "temporary",
          outer_map = "core.north_tyris",
@@ -471,7 +471,7 @@ ELONA.data:add(
          prevents_building_shelter = true,
       },
       lesimas = {
-         legacy_id = 3,
+         integer_id = 3,
          appearance = 139,
          map_type = "dungeon",
          outer_map = "core.north_tyris",
@@ -499,7 +499,7 @@ ELONA.data:add(
          end
       },
       the_void = {
-         legacy_id = 42,
+         integer_id = 42,
          appearance = 139,
          map_type = "dungeon",
          outer_map = "core.north_tyris",
@@ -521,7 +521,7 @@ ELONA.data:add(
          end
       },
       tower_of_fire = {
-         legacy_id = 16,
+         integer_id = 16,
          appearance = 145,
          map_type = "dungeon_tower",
          outer_map = "core.north_tyris",
@@ -541,7 +541,7 @@ ELONA.data:add(
          end
       },
       crypt_of_the_damned = {
-         legacy_id = 17,
+         integer_id = 17,
          appearance = 141,
          map_type = "dungeon",
          outer_map = "core.north_tyris",
@@ -561,7 +561,7 @@ ELONA.data:add(
          end
       },
       ancient_castle = {
-         legacy_id = 18,
+         integer_id = 18,
          appearance = 144,
          map_type = "dungeon_castle",
          outer_map = "core.north_tyris",
@@ -587,7 +587,7 @@ ELONA.data:add(
          end
       },
       dragons_nest = {
-         legacy_id = 19,
+         integer_id = 19,
          appearance = 146,
          map_type = "dungeon",
          outer_map = "core.north_tyris",
@@ -607,7 +607,7 @@ ELONA.data:add(
          end
       },
       mountain_pass = {
-         legacy_id = 26,
+         integer_id = 26,
          appearance = 146,
          map_type = "dungeon",
          outer_map = "core.north_tyris",
@@ -623,7 +623,7 @@ ELONA.data:add(
          default_ai_calm = 0,
       },
       puppy_cave = {
-         legacy_id = 27,
+         integer_id = 27,
          appearance = 146,
          map_type = "dungeon",
          outer_map = "core.north_tyris",
@@ -641,7 +641,7 @@ ELONA.data:add(
          generator = map.puppy_cave,
       },
       minotaurs_nest = {
-         legacy_id = 38,
+         integer_id = 38,
          appearance = 146,
          map_type = "dungeon",
          outer_map = "core.north_tyris",
@@ -667,7 +667,7 @@ ELONA.data:add(
          end
       },
       yeeks_nest = {
-         legacy_id = 28,
+         integer_id = 28,
          appearance = 146,
          map_type = "dungeon",
          outer_map = "core.north_tyris",
@@ -693,7 +693,7 @@ ELONA.data:add(
          end
       },
       pyramid = {
-         legacy_id = 37,
+         integer_id = 37,
          appearance = 160,
          map_type = "dungeon",
          outer_map = "core.north_tyris",
@@ -714,7 +714,7 @@ ELONA.data:add(
          end
       },
       lumiest_graveyard = {
-         legacy_id = 10,
+         integer_id = 10,
          appearance = 141,
          map_type = "shelter",
          outer_map = "core.north_tyris",
@@ -734,7 +734,7 @@ ELONA.data:add(
          end
       },
       truce_ground = {
-         legacy_id = 20,
+         integer_id = 20,
          appearance = 147,
          map_type = "shelter",
          outer_map = "core.north_tyris",
@@ -754,7 +754,7 @@ ELONA.data:add(
          end
       },
       jail = {
-         legacy_id = 41,
+         integer_id = 41,
          appearance = 161,
          map_type = "shelter",
          outer_map = "core.north_tyris",
@@ -774,7 +774,7 @@ ELONA.data:add(
          prevents_random_events = true,
       },
       cyber_dome = {
-         legacy_id = 21,
+         integer_id = 21,
          appearance = 148,
          map_type = "guild",
          outer_map = "core.north_tyris",
@@ -794,7 +794,7 @@ ELONA.data:add(
          end
       },
       larna = {
-         legacy_id = 25,
+         integer_id = 25,
          appearance = 142,
          map_type = "guild",
          outer_map = "core.north_tyris",
@@ -813,7 +813,7 @@ ELONA.data:add(
          chara_filter = chara_filter_town(),
       },
       miral_and_garoks_workshop = {
-         legacy_id = 34,
+         integer_id = 34,
          appearance = 157,
          map_type = "guild",
          outer_map_position = { x = 88, y = 25 },
@@ -832,7 +832,7 @@ ELONA.data:add(
          chara_filter = chara_filter_town(),
       },
       mansion_of_younger_sister = {
-         legacy_id = 29,
+         integer_id = 29,
          appearance = 162,
          map_type = "shelter",
          outer_map = "core.north_tyris",
@@ -852,7 +852,7 @@ ELONA.data:add(
          is_hidden_in_world_map = true,
       },
       embassy = {
-         legacy_id = 32,
+         integer_id = 32,
          appearance = 155,
          map_type = "guild",
          outer_map = "core.north_tyris",
@@ -871,7 +871,7 @@ ELONA.data:add(
          chara_filter = chara_filter_town(),
       },
       north_tyris_south_border = {
-         legacy_id = 43,
+         integer_id = 43,
          appearance = 158,
          map_type = "guild",
          outer_map = "core.north_tyris",
@@ -889,7 +889,7 @@ ELONA.data:add(
          chara_filter = chara_filter_town(),
       },
       fort_of_chaos_beast = {
-         legacy_id = 22,
+         integer_id = 22,
          appearance = 149,
          map_type = "shelter",
          outer_map = "core.north_tyris",
@@ -907,7 +907,7 @@ ELONA.data:add(
          chara_filter = chara_filter_town(),
       },
       fort_of_chaos_machine = {
-         legacy_id = 23,
+         integer_id = 23,
          appearance = 149,
          map_type = "shelter",
          outer_map = "core.north_tyris",
@@ -923,7 +923,7 @@ ELONA.data:add(
          default_ai_calm = 1,
       },
       fort_of_chaos_collapsed = {
-         legacy_id = 24,
+         integer_id = 24,
          appearance = 149,
          map_type = "shelter",
          outer_map = "core.north_tyris",
@@ -939,7 +939,7 @@ ELONA.data:add(
          default_ai_calm = 1,
       },
       shelter = {
-         legacy_id = 30,
+         integer_id = 30,
          appearance = 0,
          map_type = "player_owned",
          outer_map = "core.north_tyris",
@@ -960,7 +960,7 @@ ELONA.data:add(
          prevents_random_events = true,
       },
       test_site = {
-         legacy_id = 9,
+         integer_id = 9,
          appearance = 0,
          map_type = "shelter",
          outer_map = "core.north_tyris",
@@ -1017,47 +1017,47 @@ ELONA.data:add(
    "core.map",
    {
       museum = player_owned {
-         legacy_id = 101,
+         integer_id = 101,
          appearance = 151,
          is_indoor = true,
          chara_filter = chara_filter_museum_shop,
          deed = "core.deed_of_museum",
       },
       shop = player_owned {
-         legacy_id = 102,
+         integer_id = 102,
          is_indoor = true,
          appearance = 150,
          chara_filter = chara_filter_museum_shop,
          deed = "core.deed_of_shop",
       },
       crop = player_owned {
-         legacy_id = 103,
+         integer_id = 103,
          appearance = 152,
          is_indoor = false,
          deed = "core.deed_of_farm",
       },
       storage_house = player_owned {
-         legacy_id = 104,
+         integer_id = 104,
          appearance = 153,
          is_indoor = true,
          deed = "core.deed_of_storage_house",
       },
       ranch = player_owned {
-         legacy_id = 31,
+         integer_id = 31,
          appearance = 154,
          is_indoor = false,
          default_ai_calm = 1,
          deed = "core.deed_of_ranch",
       },
       your_dungeon = player_owned {
-         legacy_id = 39,
+         integer_id = 39,
          appearance = 138,
          is_indoor = true,
          default_ai_calm = 1,
          deed = "core.deed_of_dungeon",
       },
       random_dungeon = {
-         legacy_id = 8,
+         integer_id = 8,
          entrance_type = "stair_up",
          tile_set = "normal",
          base_turn_cost = 10000,

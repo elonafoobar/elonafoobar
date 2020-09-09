@@ -31,7 +31,7 @@ ELONA.data:add(
    "core.blending_recipe",
    {
       love_food = {
-         legacy_id = 200,
+         integer_id = 200,
          type = 1,
          required_turns = 10,
          required_skills = {
@@ -53,7 +53,7 @@ ELONA.data:add(
          end,
       },
       dyeing = {
-         legacy_id = 201,
+         integer_id = 201,
          type = 1,
          required_turns = 4,
          required_skills = {
@@ -73,7 +73,7 @@ ELONA.data:add(
          end,
       },
       poisoned_food = {
-         legacy_id = 202,
+         integer_id = 202,
          type = 1,
          required_turns = 7,
          required_skills = {
@@ -94,7 +94,7 @@ ELONA.data:add(
          end,
       },
       fireproof_coating = {
-         legacy_id = 203,
+         integer_id = 203,
          type = 1,
          required_turns = 15,
          required_skills = {
@@ -119,7 +119,7 @@ ELONA.data:add(
          end,
       },
       acidproof_coating = {
-         legacy_id = 204,
+         integer_id = 204,
          type = 1,
          required_turns = 15,
          required_skills = {
@@ -140,7 +140,7 @@ ELONA.data:add(
          end,
       },
       bait_attachment = {
-         legacy_id = 205,
+         integer_id = 205,
          type = 1,
          required_turns = 10,
          required_skills = {
@@ -166,7 +166,7 @@ ELONA.data:add(
          end,
       },
       blessed_item = {
-         legacy_id = 206,
+         integer_id = 206,
          type = 1,
          required_turns = 5,
          required_skills = {
@@ -193,7 +193,7 @@ ELONA.data:add(
          end,
       },
       well_refill = {
-         legacy_id = 207,
+         integer_id = 207,
          type = 2,
          required_turns = 3,
          required_skills = {
@@ -230,7 +230,7 @@ ELONA.data:add(
          end,
       },
       natural_potion = {
-         legacy_id = 208,
+         integer_id = 208,
          type = 2,
          required_turns = 16,
          required_skills = {
@@ -273,7 +273,7 @@ ELONA.data:add(
          end,
       },
       two_artifacts_fusion = {
-         legacy_id = 209,
+         integer_id = 209,
          type = 2,
          required_turns = 16,
          required_skills = {
@@ -289,7 +289,7 @@ ELONA.data:add(
          end,
       },
       three_artifacts_fusion = {
-         legacy_id = 210,
+         integer_id = 210,
          type = 2,
          required_turns = 16,
          required_skills = {
@@ -306,7 +306,7 @@ ELONA.data:add(
          end,
       },
       fried_potato = {
-         legacy_id = 898,
+         integer_id = 898,
          type = 0,
          required_turns = 16,
          required_hours = 15,
@@ -323,7 +323,7 @@ ELONA.data:add(
          on_success = create_item("core.fried_potato"),
       },
       mochi = {
-         legacy_id = 1156,
+         integer_id = 1156,
          type = 0,
          required_turns = 20,
          required_hours = 2,
@@ -339,7 +339,7 @@ ELONA.data:add(
          on_success = create_item("core.mochi"),
       },
       puff_puff_bread = {
-         legacy_id = 1187,
+         integer_id = 1187,
          type = 0,
          required_turns = 30,
          required_skills = {
@@ -353,7 +353,7 @@ ELONA.data:add(
          on_success = create_item("core.puff_puff_bread"),
       },
       dragon_slayer = {
-         legacy_id = 1191,
+         integer_id = 1191,
          type = 0,
          required_turns = 45,
          required_hours = 16,
@@ -370,7 +370,7 @@ ELONA.data:add(
          on_success = create_item("core.dragon_slayer"),
       },
       putitoro = {
-         legacy_id = 1192,
+         integer_id = 1192,
          type = 0,
          required_turns = 24,
          required_hours = 1,

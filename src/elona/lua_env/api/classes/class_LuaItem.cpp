@@ -65,12 +65,12 @@ void bind(sol::state& lua)
     // Properties
 
     /**
-     * @luadoc legacy_id field num
+     * @luadoc integer_id field num
      *
-     * [R] The legacy ID of this item.
+     * [R] The integer ID of this item.
      */
-    LuaItem.set("legacy_id", sol::property([](const ItemRef& self) {
-                    return the_item_db[self->id]->legacy_id;
+    LuaItem.set("integer_id", sol::property([](const ItemRef& self) {
+                    return the_item_db[self->id]->integer_id;
                 }));
 
     /**
@@ -234,7 +234,7 @@ void bind(sol::state& lua)
      */
     LuaItem.set("id", sol::property([](const ItemRef& self) {
                     return the_item_db
-                        .get_id_from_legacy(the_item_db[self->id]->legacy_id)
+                        .get_id_from_integer(the_item_db[self->id]->integer_id)
                         ->get();
                 }));
     /**
@@ -253,7 +253,7 @@ void bind(sol::state& lua)
      */
     LuaItem.set(
         "basename", sol::property([](const ItemRef& self) {
-            return elona::ioriginalnameref(the_item_db[self->id]->legacy_id);
+            return elona::ioriginalnameref(the_item_db[self->id]->integer_id);
         }));
 
     /**

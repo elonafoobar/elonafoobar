@@ -510,10 +510,10 @@ static std::string _make_buff_power_string(int skill_id)
 {
     const auto buff_id = the_ability_db[skill_id]->ability_type % 1000;
     const auto duration = buff_calc_duration(
-        *the_buff_db.get_id_from_legacy(buff_id),
+        *the_buff_db.get_id_from_integer(buff_id),
         calc_spell_power(cdata.player(), skill_id));
     const auto description = buff_get_description(
-        *the_buff_db.get_id_from_legacy(buff_id),
+        *the_buff_db.get_id_from_integer(buff_id),
         calc_spell_power(cdata.player(), skill_id));
     return std::to_string(duration) +
         i18n::s.get("core.ui.spell.turn_counter") + " " + description;

@@ -74,7 +74,7 @@ static void _process_chara_filter(const lua::WrappedFunction& chara_filter)
         auto chara_data = the_character_db[data::InstanceId{*it}];
         if (chara_data)
         {
-            dbid_ = chara_data->legacy_id;
+            dbid_ = chara_data->integer_id;
         }
         else
         {

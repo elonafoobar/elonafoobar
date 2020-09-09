@@ -60,7 +60,7 @@ void preload_sounds()
 
     for (const auto& se : the_sound_db.values())
     {
-        preload_sound_if_needed(se.file, se.legacy_id);
+        preload_sound_if_needed(se.file, se.integer_id);
     }
 }
 
@@ -83,12 +83,12 @@ void snd_inner(
     if (!g_config.sound())
         return;
 
-    int channel = sound.legacy_id;
+    int channel = sound.integer_id;
     if (channel > temporary_channels_head)
     {
         if (loop)
         {
-            switch (sound.legacy_id)
+            switch (sound.integer_id)
             {
             case 78: channel = 14; break;
             case 79: channel = 15; break;
@@ -108,7 +108,7 @@ void snd_inner(
                 {
                     if (snl_sound::is_playing(i) &&
                         soundlist[i - temporary_channels_head] ==
-                            sound.legacy_id)
+                            sound.integer_id)
                     {
                         channel = i;
                         found = true;
@@ -126,7 +126,7 @@ void snd_inner(
                     {
                         channel = i;
                         soundlist[i - temporary_channels_head] =
-                            sound.legacy_id;
+                            sound.integer_id;
                     }
                 }
             }
@@ -213,7 +213,7 @@ data::InstanceId get_default_music()
     }
     if (map_data.bgm != 0)
     {
-        music_id = the_music_db.get_id_from_legacy(map_data.bgm);
+        music_id = the_music_db.get_id_from_integer(map_data.bgm);
     }
     if (mdata_t::is_nefia(area_data[game_data.current_map].type))
     {

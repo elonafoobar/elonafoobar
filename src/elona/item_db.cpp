@@ -17,9 +17,9 @@
 namespace elona
 {
 
-void item_db_set_basic_stats(const ItemRef& item, int legacy_id)
+void item_db_set_basic_stats(const ItemRef& item, int integer_id)
 {
-    const auto& info = the_item_db.ensure(legacy_id);
+    const auto& info = the_item_db.ensure(integer_id);
     item->value = info.value;
     item->weight = info.weight;
     item->dice.rolls = info.dice_x;
@@ -33,11 +33,11 @@ void item_db_set_basic_stats(const ItemRef& item, int legacy_id)
 
 
 
-void item_db_get_description(const ItemRef& item, int legacy_id)
+void item_db_get_description(const ItemRef& item, int integer_id)
 {
     (void)item;
 
-    const auto& info = the_item_db.ensure(legacy_id);
+    const auto& info = the_item_db.ensure(integer_id);
     const auto& locale_key_prefix = info.locale_key_prefix;
     if (auto text = i18n::s.get_optional(locale_key_prefix + ".description_0"))
     {
@@ -59,23 +59,23 @@ void item_db_get_description(const ItemRef& item, int legacy_id)
 
 
 
-void item_db_get_charge_level(const ItemRef& item, int legacy_id)
+void item_db_get_charge_level(const ItemRef& item, int integer_id)
 {
     (void)item;
 
-    const auto& info = the_item_db.ensure(legacy_id);
+    const auto& info = the_item_db.ensure(integer_id);
     ichargelevel = info.chargelevel;
     reftype = (int)info.category;
 }
 
 
 
-void item_db_set_full_stats(const ItemRef& item, int legacy_id)
+void item_db_set_full_stats(const ItemRef& item, int integer_id)
 {
-    const auto& info = the_item_db.ensure(legacy_id);
+    const auto& info = the_item_db.ensure(integer_id);
 
     // Common initialization
-    item_db_set_basic_stats(item, legacy_id);
+    item_db_set_basic_stats(item, integer_id);
 
     item->id = info.id;
     item->set_number(1);
@@ -85,7 +85,7 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
     reftype = (int)info.category;
     reftypeminor = info.subcategory;
 
-    switch (legacy_id)
+    switch (integer_id)
     {
     case 792: item->param2 = 8; break;
     case 791:
@@ -1733,9 +1733,9 @@ void item_db_set_full_stats(const ItemRef& item, int legacy_id)
 
 
 
-void item_db_on_read(Character& reader, const ItemRef& item, int legacy_id)
+void item_db_on_read(Character& reader, const ItemRef& item, int integer_id)
 {
-    switch (legacy_id)
+    switch (integer_id)
     {
     case 783: decode_book(reader, item); break;
     case 747: read_normal_book(reader, item); break;
@@ -2264,11 +2264,11 @@ void item_db_on_read(Character& reader, const ItemRef& item, int legacy_id)
 
 
 
-void item_db_on_zap(const ItemRef& item, int legacy_id)
+void item_db_on_zap(const ItemRef& item, int integer_id)
 {
     (void)item;
 
-    switch (legacy_id)
+    switch (integer_id)
     {
     case 581:
         efid = 457;
@@ -2387,11 +2387,11 @@ void item_db_on_zap(const ItemRef& item, int legacy_id)
 void item_db_on_drink(
     Character& chara,
     const OptionalItemRef& item,
-    int legacy_id)
+    int integer_id)
 {
     assert(potionspill || item);
 
-    switch (legacy_id)
+    switch (integer_id)
     {
     case 771:
         efid = 1147;

@@ -378,7 +378,7 @@ bool Autopick::Matcher::matches(const ItemRef& item) const
     }
 
     /* Check item's name. */
-    const auto item_name = cnvitemname(the_item_db[item->id]->legacy_id);
+    const auto item_name = cnvitemname(the_item_db[item->id]->integer_id);
     // You have to know that the item is known as the name to match by the name.
     const auto you_know_the_name =
         item->identify_state != IdentifyState::unidentified;

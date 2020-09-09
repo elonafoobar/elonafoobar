@@ -1450,9 +1450,9 @@ TurnResult initialize_map()
         quest_refresh_list();
     }
 
-    auto legacy_id = area_data[game_data.current_map].id;
+    auto integer_id = area_data[game_data.current_map].id;
     auto map_id =
-        the_mapdef_db.get_id_from_legacy(legacy_id).value_or("").get();
+        the_mapdef_db.get_id_from_integer(integer_id).value_or("").get();
     auto event =
         lua::MapInitializedEvent(was_generated, map_id, game_data.current_map);
 

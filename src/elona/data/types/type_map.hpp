@@ -10,7 +10,7 @@ namespace elona
 struct MapDefData
 {
     data::InstanceId id;
-    int legacy_id;
+    int integer_id;
     int appearance{};
     mdata_t::MapType map_type;
     data::InstanceId outer_map{};

@@ -188,7 +188,7 @@ void _load_item_stat_text(const ItemRef& item, int& num_of_desc)
     if (item->dice.rolls != 0)
     {
         const auto pierce =
-            calc_rate_to_pierce(the_item_db[item->id]->legacy_id);
+            calc_rate_to_pierce(the_item_db[item->id]->integer_id);
         list(0, num_of_desc) =
             static_cast<int>(ItemDescriptionType::weapon_info);
         listn(0, num_of_desc) =

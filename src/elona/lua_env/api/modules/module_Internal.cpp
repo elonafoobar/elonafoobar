@@ -111,7 +111,7 @@ void Internal_set_quest_flag(const std::string& id, int value)
 
 void Internal_go_to_quest_map(const std::string& map_name, int dungeon_level)
 {
-    auto id = the_mapdef_db[data::InstanceId{map_name}]->legacy_id;
+    auto id = the_mapdef_db[data::InstanceId{map_name}]->integer_id;
     map_data.stair_down_pos =
         cdata.player().position.y * 1000 + cdata.player().position.x;
     game_data.destination_map = id;

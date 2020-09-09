@@ -683,9 +683,9 @@ std::string god_name(const GodId& id)
 
 
 
-std::string god_name(int legacy_god_id)
+std::string god_name(int integer_god_id)
 {
-    return god_name(core_god::int2godid(legacy_god_id));
+    return god_name(core_god::int2godid(integer_god_id));
 }
 
 
