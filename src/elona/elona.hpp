@@ -550,11 +550,6 @@ void title(
         snail::Window::FullscreenMode::windowed);
 
 
-int wpeek(int x, size_t index);
-
-void wpoke(int& x, size_t index, int y);
-
-
 
 // imported functions
 
@@ -595,12 +590,6 @@ int talk_conv(std::string&, int = 0);
 
 void onkey_0();
 
-
-
-void bload(const fs::path& filename, std::string& data, int size = 0, int = 0);
-
-
-void bsave(const fs::path& filename, const std::string& data);
 
 
 template <typename T, typename U = T, typename V = T>

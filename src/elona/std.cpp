@@ -139,39 +139,6 @@ void boxl(int x, int y, int width, int height, const snail::Color& color)
 
 
 
-void bload(const fs::path& filename, std::string& data, int size, int)
-{
-    if (size == 0)
-    {
-        size = data.size();
-    }
-    std::ifstream in{filename.native(), std::ios::binary};
-    if (!in)
-    {
-        throw std::runtime_error(
-            u8"Error: fail to read " + filename.to_u8string());
-    }
-    auto buf = read_binary(in, size).first;
-    data = std::string{buf.get(), static_cast<size_t>(size)};
-
-    // Trim trailing NUL bytes from the string that was read.
-    data.erase(std::remove(data.begin(), data.end(), '\0'), data.end());
-}
-
-
-
-void bsave(const fs::path& filename, const std::string& data)
-{
-    std::ofstream out{filename.native(), std::ios::binary};
-    if (!out)
-    {
-        throw std::runtime_error(
-            u8"Error: fail to write " + filename.to_u8string());
-    }
-    out.write(reinterpret_cast<const char*>(data.c_str()), data.size());
-}
-
-
 /**
  * Creates a new window buffer with the specified width and height at index @a
  * window_id.
@@ -943,35 +910,6 @@ void title(
     snail::hsp::title(title_str, display_mode, fullscreen_mode);
 }
 
-
-
-int wpeek(int x, size_t index)
-{
-    if (index == 0)
-    {
-        return x >> 16;
-    }
-    else
-    {
-        assert(index == 2);
-        return x & 0xffff;
-    }
-}
-
-
-
-void wpoke(int& x, size_t index, int y)
-{
-    if (index == 0)
-    {
-        x = wpeek(x, 2) + (y << 16);
-    }
-    else
-    {
-        assert(index == 2);
-        x = (wpeek(x, 0) << 16) + y;
-    }
-}
 
 
 /**
