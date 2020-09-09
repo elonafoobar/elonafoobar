@@ -990,7 +990,7 @@ void draw_npc_chara_chip(const Character& chara, int dx, int dy, int ground_)
 
         if (chara.emotion_icon != 0)
         {
-            draw_emo(chara, x + 4, y - offset_y / 4 - 16);
+            draw_emo(chara, dx + 4, dy - offset_y / 4 - 16);
         }
     }
     else
