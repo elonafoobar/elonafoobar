@@ -152,7 +152,7 @@ std::pair<Extent, size_t> PicLoader::find_extent(
 
 void PicLoader::load(
     const fs::path& image_file,
-    const IdType& id,
+    data::FullyQualifiedId id,
     PageType type)
 {
     snail::Image img{image_file, snail::Color{0, 0, 0}};

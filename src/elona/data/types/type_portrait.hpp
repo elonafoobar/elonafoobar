@@ -12,7 +12,7 @@ namespace elona
 struct PortraitData
 {
     data::InstanceId id;
-    SharedId key;
+    data::FullyQualifiedId key;
     Extent rect;
     optional<fs::path> filepath;
 };

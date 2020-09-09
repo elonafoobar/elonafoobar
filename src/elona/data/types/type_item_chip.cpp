@@ -68,7 +68,8 @@ ItemChipData ItemChipDB::convert(
         legacy_id,
         Extent{x, y, width, height, frame_width},
         ItemChip{
-            SharedId(std::string(Traits::type_id) + data_id_separator + id),
+            data::make_fqid(
+                data::PrototypeId{Traits::type_id}, data::InstanceId{id}),
             offset_y,
             stack_height,
             shadow,

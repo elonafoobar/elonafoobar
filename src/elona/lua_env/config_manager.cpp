@@ -38,11 +38,11 @@ ConfigManager::ConfigManager(LuaEnv& lua)
 void ConfigManager::load_schema(
     std::istream& in,
     const std::string& filename,
-    SharedId mod_id)
+    const std::string& mod_id)
 {
     std::string s{
         std::istreambuf_iterator<char>{in}, std::istreambuf_iterator<char>{}};
-    _impl["load_schema"](s, filename, mod_id.get());
+    _impl["load_schema"](s, filename, mod_id);
 }
 
 

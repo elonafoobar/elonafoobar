@@ -6,6 +6,7 @@
 
 #include "../util/range.hpp"
 #include "config.hpp"
+#include "defines.hpp"
 
 #ifdef ELONA_OS_WINDOWS
 #include <windows.h>

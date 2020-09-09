@@ -26,7 +26,7 @@ struct Item;
 struct ItemChip
 {
     // NOTE: fully qualified to avoid ID collisions in pic_loader
-    SharedId key; // core.item_chip#core.putitoro
+    data::FullyQualifiedId key; // e.g., core.item_chip#core.putitoro
 
     int offset_y;
     int stack_height;
@@ -42,7 +42,7 @@ extern std::vector<ItemChip> item_chips;
 struct CharaChip
 {
     // NOTE: fully qualified to avoid ID collisions in pic_loader
-    SharedId key; // core.chara_chip#core.putit
+    data::FullyQualifiedId key; // e.g., core.chara_chip#core.putit
 
     int offset_y;
 };
@@ -54,7 +54,7 @@ extern std::vector<CharaChip> chara_chips;
 optional_ref<const Extent> draw_get_rect_chara(int);
 optional_ref<const Extent> draw_get_rect_item(int);
 optional_ref<const Extent> draw_get_rect_portrait(const std::string&);
-optional_ref<const Extent> draw_get_rect(const std::string&);
+optional_ref<const Extent> draw_get_rect(data::FullyQualifiedId id);
 
 optional_ref<const Extent> prepare_item_image(int id, int color);
 optional_ref<const Extent>
