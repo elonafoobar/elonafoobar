@@ -207,15 +207,15 @@ optional_ref<const Extent> draw_get_rect_item(int id)
  */
 optional_ref<const Extent> draw_get_rect_portrait(const std::string& key)
 {
-    return loader[data::make_fqid("core.portrait", data::InstanceId{key})
-                      .get()];
+    return draw_get_rect(
+        data::make_fqid("core.portrait", data::InstanceId{key}));
 }
 
 
 
-optional_ref<const Extent> draw_get_rect(const std::string& key)
+optional_ref<const Extent> draw_get_rect(data::FullyQualifiedId id)
 {
-    return loader[key];
+    return loader[id];
 }
 
 
@@ -900,7 +900,7 @@ void initialize_item_chips(const ItemChipDB& db)
 
     for (const auto& chip_data : db.values())
     {
-        SharedId key = chip_data.chip.key;
+        const auto key = chip_data.chip.key;
         int legacy_id = chip_data.legacy_id;
 
         // insert chip data into global vector.
@@ -936,7 +936,7 @@ void initialize_portraits(const PortraitDB& db)
 
     for (const auto& portrait_data : db.values())
     {
-        SharedId key = portrait_data.key;
+        const auto key = portrait_data.key;
 
         if (portrait_data.filepath)
         {
@@ -965,7 +965,7 @@ void initialize_chara_chips(const CharaChipDB& db)
 
     for (const auto& chip_data : db.values())
     {
-        SharedId key = chip_data.chip.key;
+        const auto key = chip_data.chip.key;
         int legacy_id = chip_data.legacy_id;
 
         // Insert chip data into global vector.

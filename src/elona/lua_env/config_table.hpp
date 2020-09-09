@@ -1,9 +1,11 @@
 #pragma once
+
 #include "../../thirdparty/sol2/sol.hpp"
 #include "../optional.hpp"
 #include "../position.hpp"
-#include "../shared_id.hpp"
 #include "lua_enums.hpp"
+
+
 
 namespace elona
 {
@@ -22,15 +24,9 @@ public:
     {
     }
 
-    ConfigTable(sol::table storage, std::string id)
+    ConfigTable(sol::table storage, const std::string& id)
         : storage(storage)
         , id(id)
-    {
-    }
-
-    ConfigTable(sol::table storage, SharedId id)
-        : storage(storage)
-        , id(id.get())
     {
     }
 

@@ -55,10 +55,8 @@ CharaChipData CharaChipDB::convert(
         legacy_id,
         Extent{x, y, width, height},
         CharaChip{
-            SharedId{
-                data::make_fqid(
-                    data::PrototypeId{Traits::type_id}, data::InstanceId{id})
-                    .get()},
+            data::make_fqid(
+                data::PrototypeId{Traits::type_id}, data::InstanceId{id}),
             offset_y,
         },
         filepath,

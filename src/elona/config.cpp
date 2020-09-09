@@ -559,7 +559,7 @@ void config_load_all_schema()
             {
                 std::ifstream in{schema_path.native()};
                 lua::lua->get_config_manager().load_schema(
-                    in, schema_path.to_u8string(), SharedId{mod_manifest.id});
+                    in, schema_path.to_u8string(), mod_manifest.id);
             }
         }
     }
@@ -567,7 +567,9 @@ void config_load_all_schema()
 
 
 
-void config_load_schema(const std::string& config_schema, SharedId mod_id)
+void config_load_schema(
+    const std::string& config_schema,
+    const std::string& mod_id)
 {
     std::istringstream in{config_schema};
     lua::lua->get_config_manager().load_schema(in, "[string stream]", mod_id);

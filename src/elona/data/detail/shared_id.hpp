@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "defines.hpp"
+#include "../../defines.hpp"
 
 // Supresses "unused variable" warning due to Boost.Flyweight library in Clang
 // compiler.
@@ -21,7 +21,7 @@
 
 
 
-namespace elona
+namespace elona::data::detail
 {
 
 // Share memory across common instances of string IDs.
@@ -34,4 +34,4 @@ using SharedId = boost::flyweight<
     boost::flyweights::no_tracking,
     boost::flyweights::no_locking>;
 
-} // namespace elona
+} // namespace elona::data::detail

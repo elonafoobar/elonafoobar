@@ -5,9 +5,9 @@
 #include "../../snail/image.hpp"
 #include "../../thirdparty/ordered_map/ordered_map.h"
 #include "../../util/noncopyable.hpp"
+#include "../data/id.hpp"
 #include "../filesystem.hpp"
 #include "../optional.hpp"
-#include "../shared_id.hpp"
 #include "extent.hpp"
 
 
@@ -241,8 +241,7 @@ public:
     };
 
 
-    using IdType = SharedId;
-    using MapType = tsl::ordered_map<IdType, Extent>;
+    using MapType = tsl::ordered_map<data::FullyQualifiedId, Extent>;
 
     void clear();
 
@@ -250,7 +249,7 @@ public:
      * Loads a single sprite into a buffer of the provided type into
      * which it will fit. May allocate a new buffer if none are found.
      */
-    void load(const fs::path&, const IdType&, PageType);
+    void load(const fs::path&, data::FullyQualifiedId, PageType);
 
     /***
      * Loads a map of rectangular extents indexed by an ID
@@ -266,18 +265,13 @@ public:
      */
     void add_predefined_extents(const fs::path&, const MapType&, PageType);
 
-    optional_ref<const Extent> operator[](const IdType& id) const
+    optional_ref<const Extent> operator[](data::FullyQualifiedId id) const
     {
         const auto itr = storage.find(id);
         if (itr == std::end(storage))
             return none;
         else
             return itr->second;
-    }
-
-    optional_ref<const Extent> operator[](const std::string& inner_id) const
-    {
-        return (*this)[SharedId(inner_id)];
     }
 
     std::vector<int> get_buffers_of_type(PageType type)

@@ -4,7 +4,6 @@
 
 #include "../snail/window.hpp"
 #include "filesystem.hpp"
-#include "shared_id.hpp"
 
 
 
@@ -55,7 +54,9 @@ private:
 void config_load_all_schema();
 
 /// for testing
-void config_load_schema(const std::string& config_schema, SharedId mod_id);
+void config_load_schema(
+    const std::string& config_schema,
+    const std::string& mod_id);
 
 void config_load_options();
 

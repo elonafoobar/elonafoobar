@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../shared_id.hpp"
 #include "lua_submodule.hpp"
 
 
@@ -21,8 +20,10 @@ public:
 
 
     /// Load configuration schema from @a in.
-    void
-    load_schema(std::istream& in, const std::string& filename, SharedId mod_id);
+    void load_schema(
+        std::istream& in,
+        const std::string& filename,
+        const std::string& mod_id);
 
     /// Load configuration from @a in.
     void load_options(std::istream& in, const std::string& filename);

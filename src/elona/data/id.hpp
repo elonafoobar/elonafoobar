@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../serialization/concepts.hpp"
-#include "../shared_id.hpp"
+#include "detail/shared_id.hpp"
 
 
 
@@ -17,13 +17,6 @@ struct _Id
 {
     /// Constructs empty ID.
     _Id() = default;
-
-
-    /// Constructs ID from @a id.
-    explicit _Id(SharedId id)
-        : _inner(id)
-    {
-    }
 
 
     /// Constructs ID from @a id.
