@@ -24,6 +24,11 @@ function disable_wizard() end
 
 --- Returns whether you are Wizard or not. It is opposite to `Debug.is_muggle`.
 --
+--  Note: You might want to make a limitation of "unless you are Wizard". For
+--  example, if you make an achievement system, Wizard players can obtain all of
+--  them much easier than you expect. However, before calling `Debug.is_wizard`,
+--  remember that Elona is a single-player game.
+--
 --  @treturn boolean `true` if Wizard mode; otherwise `false`.
 --  @function is_wizard
 function is_wizard() end

@@ -1,5 +1,5 @@
-local Handle = require("handle")
-local serpent = require("serpent")
+local Handle = require("kernel.handle")
+local serpent = require("kernel.serpent")
 
 local Serial = {}
 
@@ -44,7 +44,7 @@ resolve_handles = function(data, seen)
    end
 end
 
-Serial.save = function(s)
+function Serial.save(s)
    s = remove_volatile_data(s)
    local dump = serpent.dump(s)
    return dump

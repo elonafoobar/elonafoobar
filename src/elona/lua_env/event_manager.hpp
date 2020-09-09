@@ -55,10 +55,6 @@ public:
     void remove_unknown_events();
 
     void clear();
-
-
-private:
-    void init_events();
 };
 
 } // namespace lua

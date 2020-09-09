@@ -57,26 +57,21 @@ void Console::init_constants()
 
 void Console::init_environment()
 {
-    {
-        auto term = env().create_named("term");
-        term.set_function(
-            "print", [this](const std::string& s) { _term.print(s); });
-        term.set_function(
-            "println", [this](const std::string& s) { _term.println(s); });
-        term.set_function("delete_line", [this]() { _term.delete_line(); });
-        term.set_function(
-            "set_input", [this](const std::string& s) { _input = s; });
-    }
+    auto term = env().create_named("term");
+    term.set_function(
+        "print", [this](const std::string& s) { _term.print(s); });
+    term.set_function(
+        "println", [this](const std::string& s) { _term.println(s); });
+    term.set_function("delete_line", [this]() { _term.delete_line(); });
+    term.set_function(
+        "set_input", [this](const std::string& s) { _input = s; });
 
     register_builtin_commands();
 
-    env().raw_set(
-        "shell",
-        safe_script_file(
-            filesystem::dirs::data() / "script" / "kernel" / "ush.lua"));
+    env()["shell"] = env()["kernel"]["USH"]["new_shell"](term);
     env()["shell"]["inject_core_api"](
         lua().get_api_manager().get_core_api_table());
-    env()["shell"]["register_builtins"]();
+    env()["shell"]["register_builtins"](env()["builtin_commands"]);
 }
 
 

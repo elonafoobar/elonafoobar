@@ -12,7 +12,6 @@
 #include "modules/module_Env.cpp"
 #include "modules/module_FOV.cpp"
 #include "modules/module_GUI.cpp"
-#include "modules/module_I18N.cpp"
 #include "modules/module_Input.cpp"
 #include "modules/module_Internal.cpp"
 #include "modules/module_Inventory.cpp"
@@ -51,7 +50,6 @@ void bind(sol::table core)
     ELONA_LUA_API_BIND_MODULE(Env);
     ELONA_LUA_API_BIND_MODULE(FOV);
     ELONA_LUA_API_BIND_MODULE(GUI);
-    ELONA_LUA_API_BIND_MODULE(I18N);
     ELONA_LUA_API_BIND_MODULE(Input);
     ELONA_LUA_API_BIND_MODULE(Internal);
     ELONA_LUA_API_BIND_MODULE(Inventory);

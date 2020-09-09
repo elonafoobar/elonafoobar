@@ -1,10 +1,14 @@
+local Config = {}
+
+
+
 -- These two are passed by C++ side.
-local json5_parse = json5_parse
-local json5_stringify = json5_stringify
+local json5_parse = _ENV.native.JSON5.parse
+local json5_stringify = _ENV.native.JSON5.stringify
 
 
 
-local eval_in_dsl_env = require("config_dsl")
+local eval_in_dsl_env = require("kernel.config_dsl")
 
 
 
@@ -36,10 +40,6 @@ local function make_schema(schema)
 
    return result
 end
-
-
-
-local Config = {}
 
 
 

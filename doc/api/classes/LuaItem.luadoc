@@ -14,10 +14,10 @@ function change_material(material_id) end
 --  @tfield num legacy_id
 
 --- [RW] The item's position.
---  @tfield num pos
+--  @tfield num position
 
 --- [RW] The number of charges this item holds (for rods, bait, etc.)
---  @tfield num count
+--  @tfield num charges
 
 --- [RW] The subname of this item. Controls the character index of
 --  corpses, etc.
@@ -50,7 +50,7 @@ function change_material(material_id) end
 --  <code>4</code>: Harvestable item in harvest quests
 --  @tfield num own_state
 
---- [R] The material ID of this item. To change it, use
+--- [RW] The material ID of this item. To change it, use
 --  LuaItem.change_material.
 --  @tfield string material
 
@@ -81,17 +81,23 @@ function change_material(material_id) end
 --- [RW] The flag if the item is fireproof.
 --  @tfield boolean is_fireproof
 
---- [RW] The flag if the item has charge.
---  @tfield boolean has_charge
+--- [RW] The flag if the item is coldproof.
+--  @tfield boolean is_coldproof
 
 --- [RW] The flag if the item is precious.
 --  @tfield boolean is_precious
 
---- [RW] The flag if the item is aphrodisiac.
---  @tfield boolean is_aphrodisiac
+--- [RW] The flag if the item has charge.
+--  @tfield boolean has_charges
 
 --- [RW] The flag if the item has cooldown time.
 --  @tfield boolean has_cooldown_time
+
+--- [RW] The flag if the item is aphrodisiac.
+--  @tfield boolean is_aphrodisiac
+
+--- [RW] The flag if the item is poisoned.
+--  @tfield boolean is_poisoned
 
 --- [RW] The flag if the item is blessed by Ehekatl.
 --  @tfield boolean is_blessed_by_ehekatl
@@ -99,26 +105,23 @@ function change_material(material_id) end
 --- [RW] The flag if the item is stolen.
 --  @tfield boolean is_stolen
 
---- [RW] The flag if the item is alive.
---  @tfield boolean is_alive
-
 --- [RW] The flag if the item is quest target.
 --  @tfield boolean is_quest_target
 
 --- [RW] The flag if the item is marked as no-drop.
---  @tfield boolean is_marked_as_no_drop
+--  @tfield boolean is_no_drop
 
---- [RW] The flag if the item is poisoned.
---  @tfield boolean is_poisoned
+--- [RW] The flag if the item is alive.
+--  @tfield boolean is_alive
 
 --- [RW] The flag if the item is eternal force.
 --  @tfield boolean is_eternal_force
 
---- [RW] The flag if the item is showroom only.
---  @tfield boolean is_showroom_only
-
 --- [RW] The flag if the item is handmade.
 --  @tfield boolean is_handmade
+
+--- [RW] The flag if the item is showroom only.
+--  @tfield boolean is_showroom_only
 
 --- [R] The prototype data of the character.
 --  @tfield table prototype

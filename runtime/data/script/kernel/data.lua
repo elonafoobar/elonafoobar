@@ -1,5 +1,7 @@
-local DataRegistry = {}
+local Data = {}
 
+
+local DataRegistry = {}
 
 
 local reserved_fields = {
@@ -180,12 +182,8 @@ function DataRegistry:get(proto_id, inst_id)
 end
 
 
-
--- Public APIs
-local data = {}
-
 -- @treturn DataRegistry
-function data.new_registry()
+function Data.new_registry()
    local reg = {}
    local mt = {
       -- These fields are private. You have to access this metatable through
@@ -201,4 +199,4 @@ function data.new_registry()
    return reg, mt
 end
 
-return data
+return Data

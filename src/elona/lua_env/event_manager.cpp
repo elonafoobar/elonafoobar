@@ -41,7 +41,7 @@ EventResult EventManager::trigger(const BaseEvent& event)
         sol::error error = result;
         auto message =
             "Error triggering event "s + event.id + ":" + error.what();
-        txt(message, Message::color{ColorIndex::red});
+        // txt(message, Message::color{ColorIndex::red});
         std::cerr << message << std::endl;
         ELONA_ERROR("lua.event") << message;
 
@@ -64,8 +64,12 @@ void EventManager::clear()
 {
     env() = sol::environment(*lua_state(), sol::create, lua_state()->globals());
 
-    safe_script_file(
-        filesystem::dirs::data() / "script" / "kernel" / "event.lua");
+    safe_script(R"(
+Event = kernel.Event
+Event.__clear_all_events() -- TODO make it private
+remove_unknown_events = Event.remove_unknown_events
+Event.remove_unknown_events = nil
+)");
 
     sol::table core = lua().get_api_manager().get_core_api_table();
     core["Event"] = env()["Event"];

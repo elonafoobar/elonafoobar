@@ -13,11 +13,6 @@ ExportManager::ExportManager(LuaEnv& lua)
     : LuaSubmodule(lua)
 {
     env().set("Exports", lua_state()->create_table());
-
-    safe_script(
-        R"(
-scan_exports = require("private/scan_exports")
-)");
 }
 
 
@@ -27,7 +22,7 @@ void ExportManager::register_all_exports()
 
     auto result = safe_script(
         R"(
-Exports = scan_exports(_API_TABLE)
+Exports = kernel.Export.scan_exports(_API_TABLE)
 )",
         &sol::script_pass_on_error);
 

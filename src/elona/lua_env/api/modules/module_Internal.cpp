@@ -11,6 +11,7 @@
 #include "../../../menu.hpp"
 #include "../../../shop.hpp"
 #include "../../../ui.hpp"
+#include "../../fmt.hpp"
 #include "../../interface.hpp"
 #include "../common.hpp"
 
@@ -263,6 +264,16 @@ void Internal_strange_scientist_pick_reward()
 
 
 
+fmt::ParseResult Internal_parse_fmt(
+    const std::string& src,
+    sol::this_state state)
+{
+    fmt::FormatParser parser{src, state};
+    return parser.parse();
+}
+
+
+
 void bind(sol::table api_table)
 {
     /* clang-format off */
@@ -277,6 +288,7 @@ void bind(sol::table api_table)
     ELONA_LUA_API_BIND_FUNCTION("generate_fighters_guild_target", Internal_generate_fighters_guild_target);
     ELONA_LUA_API_BIND_FUNCTION("leave_map", Internal_leave_map);
     ELONA_LUA_API_BIND_FUNCTION("strange_scientist_pick_reward", Internal_strange_scientist_pick_reward);
+    ELONA_LUA_API_BIND_FUNCTION("parse_fmt", Internal_parse_fmt);
 
     /* clang-format on */
 }

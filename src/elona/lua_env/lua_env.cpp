@@ -38,11 +38,10 @@ LuaEnv::LuaEnv()
         sol::lib::utf8);
 
     // Add executable directory to package.path
-    fs::path kernel_path = filesystem::dirs::data() / "script" / "kernel";
-    fs::path prelude_path = filesystem::dirs::data() / "script" / "prelude";
+    fs::path script_path = filesystem::dirs::data() / "script";
     lua_->safe_script(
-        u8"package.path = [[" + kernel_path.to_u8string() + "/?.lua;" +
-        prelude_path.to_u8string() + "/?.lua;]]..package.path"s);
+        u8"package.path = [[" + script_path.to_u8string() +
+        "/?.lua;]]..package.path"s);
 
     // Make sure the API environment is initialized first so any
     // dependent managers can add new internal C++ methods to it (like

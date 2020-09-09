@@ -39,16 +39,6 @@ public:
 public:
     explicit APIManager(LuaEnv&);
 
-    /***
-     * Loads Lua library files in data/lua for API implementations
-     * that are handled in Lua instead of C++.
-     *
-     * This is done by LuaEnv on construction. It must be done before
-     * any mods can be loaded, because they all implicitly depend on
-     * these libraries.
-     */
-    void load_lua_support_libraries();
-
     void clear();
     void init_from_mods();
 
@@ -76,13 +66,31 @@ public:
 
 
 private:
-    /***
-     * Returns true if the Elona table has already been loaded into
-     * the API manager's Lua environment.
+    /**
+     * Loads native modules (i.e., libraries implemented in C++ side).
+     * It adds "native" table to Lua's global namespace.
      */
-    bool is_loaded();
+    void load_native();
 
+    /**
+     * Load prelude module, available in all mod's environments.
+     * It adds "prelude" table to Lua's global namespace.
+     */
     void load_prelude();
+
+    /**
+     * Load kernel modules. It is totally internal and not exposed to mods.
+     * It adds "kernel" table to Lua's global namespace.
+     */
+    void load_kernel();
+
+    /**
+     * Load core modules. They can be retrieved via "ELONA.require()".
+     * It adds "core" table to Lua's global namespace.
+     */
+    void load_core();
+
+    void load_library(const fs::path& path, const std::string& library_name);
 
     /***
      * Attempts to locate an API module under a namespace. For
