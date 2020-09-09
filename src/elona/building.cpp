@@ -99,7 +99,7 @@ void add_heirloom_if_valuable_enough(
     }
     else if (heirlooms.back().value < value)
     {
-        heirlooms.push_back({heirloom, value});
+        heirlooms.back() = {heirloom, value};
         range::sort(heirlooms, [](const auto& a, const auto& b) {
             return a.value > b.value;
         });
