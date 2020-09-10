@@ -372,7 +372,7 @@ void ModManager::create_mod_from_template(
     auto new_mod_manifest = ModManifest::load(to / "mod.json");
     new_mod_manifest.id = new_mod_id;
     new_mod_manifest.version = new_mod_version;
-    new_mod_manifest.name = new_mod_id;
+    new_mod_manifest.name.default_text = new_mod_id;
     new_mod_manifest.save();
 }
 

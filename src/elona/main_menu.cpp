@@ -1494,7 +1494,7 @@ MainMenuResult main_menu_mods_develop()
     {
         list(0, template_count) = template_count;
         listn(0, template_count) = tmpl.id + " v" + tmpl.version.to_string();
-        listn(1, template_count) = tmpl.name;
+        listn(1, template_count) = tmpl.name.localize(g_config.language());
         mod_id_and_versions.emplace_back(tmpl.id, tmpl.version);
         key_list(template_count) = key_select(template_count);
         ++template_count;

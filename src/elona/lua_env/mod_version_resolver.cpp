@@ -82,8 +82,18 @@ auto calculate_loading_order(
         const auto& version = pair.second;
         sorter.add(mod);
 
-        for (const auto& dep_mod_id : index.get_dependencies(mod, version))
+        for (const auto& [dep_mod_id, _] : index.get_dependencies(mod, version))
         {
+            sorter.add_dependency(mod, dep_mod_id);
+        }
+        for (const auto& [dep_mod_id, version_requirement] :
+             index.get_optional_dependencies(mod, version))
+        {
+            const auto itr = mod_versions.find(dep_mod_id);
+            if (itr == std::end(mod_versions))
+                continue;
+            if (!version_requirement.is_satisfied(itr->second))
+                continue;
             sorter.add_dependency(mod, dep_mod_id);
         }
     }
@@ -182,12 +192,17 @@ ModIndex ModIndex::traverse(const fs::path& mod_root_dir)
         const auto& id = manifest.id;
         const auto& version = manifest.version;
         const auto& dependencies = manifest.dependencies;
+        const auto& optional_dependencies = manifest.optional_dependencies;
 
         if (mods.find(id) == std::end(mods))
         {
             mods.emplace(id, std::vector<IndexEntry>{});
         }
-        mods[id].push_back(IndexEntry{version, dependencies});
+        mods[id].push_back(IndexEntry{
+            version,
+            dependencies,
+            optional_dependencies,
+        });
     }
 
     return ModIndex{mods};
@@ -218,8 +233,8 @@ ModIndex::QueryResult ModIndex::query_latest(
 
 
 
-std::vector<std::string> ModIndex::get_dependencies(
-    const std::string& id,
+const ModIndex::IndexEntry& ModIndex::get_index_entry(
+    const ModId& id,
     const semver::Version& version) const
 {
     const auto itr = _mods.find(id);
@@ -232,12 +247,7 @@ std::vector<std::string> ModIndex::get_dependencies(
     {
         if (v.version == version)
         {
-            std::vector<std::string> ret;
-            for (const auto& pair : v.dependencies)
-            {
-                ret.push_back(pair.first);
-            }
-            return ret;
+            return v;
         }
     }
     throw std::runtime_error{
@@ -258,12 +268,15 @@ std::string ModIndex::to_string() const
         for (const auto& mod : versions)
         {
             ss << "* " << id << "-" << mod.version.to_string() << std::endl;
-            for (const auto& dep_pair : mod.dependencies)
+            for (const auto& [dep_id, dep_req] : mod.dependencies)
             {
-                const auto& dep_id = dep_pair.first;
-                const auto& dep_req = dep_pair.second;
                 ss << "  -> " << dep_id << " (" << dep_req.to_string() << ")"
                    << std::endl;
+            }
+            for (const auto& [dep_id, dep_req] : mod.optional_dependencies)
+            {
+                ss << "  -> " << dep_id << " (" << dep_req.to_string()
+                   << ") optional" << std::endl;
             }
         }
         ss << std::endl;

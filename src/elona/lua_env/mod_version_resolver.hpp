@@ -67,11 +67,15 @@ struct ModLock
 struct ModIndex
 {
 public:
+    using ModId = std::string;
+    using Dependencies = std::unordered_map<ModId, semver::VersionRequirement>;
+
+
     struct IndexEntry
     {
         semver::Version version;
-        std::unordered_map<std::string, semver::VersionRequirement>
-            dependencies;
+        Dependencies dependencies;
+        Dependencies optional_dependencies;
     };
 
 
@@ -82,29 +86,46 @@ public:
     static ModIndex traverse(const fs::path& mod_root_dir);
 
 
-    ModIndex(
-        const std::unordered_map<std::string, std::vector<IndexEntry>>& mods)
+    ModIndex(const std::unordered_map<ModId, std::vector<IndexEntry>>& mods)
         : _mods(mods)
     {
     }
 
 
     QueryResult query_latest(
-        const std::string& id,
+        const ModId& id,
         const semver::VersionRequirement& requirement) const;
 
 
-    std::vector<std::string> get_dependencies(
-        const std::string& id,
-        const semver::Version& version) const;
+    const Dependencies& get_dependencies(
+        const ModId& id,
+        const semver::Version& version) const
+    {
+        return get_index_entry(id, version).dependencies;
+    }
+
+
+    const Dependencies& get_optional_dependencies(
+        const ModId& id,
+        const semver::Version& version) const
+    {
+        return get_index_entry(id, version).optional_dependencies;
+    }
 
 
     // for debugging
     std::string to_string() const;
 
 
+
 private:
-    std::unordered_map<std::string, std::vector<IndexEntry>> _mods;
+    std::unordered_map<ModId, std::vector<IndexEntry>> _mods;
+
+
+
+    const IndexEntry& get_index_entry(
+        const ModId& id,
+        const semver::Version& version) const;
 };
 
 
